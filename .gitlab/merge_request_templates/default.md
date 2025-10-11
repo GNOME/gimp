@@ -12,4 +12,4 @@
   Only human created works please! 
   
 - You can request the devs to allow installable packages to be
-  generated from this MR by writting ~Package: in the comments -->
+  generated from this MR by writing ~Package: in the comments -->

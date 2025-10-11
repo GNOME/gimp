@@ -139,7 +139,7 @@ file_open_image (Gimp                *gimp,
         }
     }
 
-  if (! file_open_valid_permissions (file, error))
+  if (g_file_is_native (file) && ! file_open_valid_permissions (file, error))
     return NULL;
 
   if (! file_proc)
@@ -248,7 +248,15 @@ file_open_image (Gimp                *gimp,
     {
       if (image)
         {
-          /* Only set the load procedure if it hasn't already been set. */
+          /* Only set the load procedure if it hasn't already been set.
+           * The reason is that we want to know the information of the
+           * inner format, in case loading the file went through
+           * intermediate container file formats procedures, typically
+           * the procedures registered by the file-compressor plug-in.
+           *
+           * E.g. it could be used for our compressed XCF, but also for
+           * commonly compressed formats such as .hgt.zip.
+           */
           if (! gimp_image_get_load_proc (image))
             gimp_image_set_load_proc (image, file_proc);
 
@@ -561,11 +569,12 @@ file_open_with_proc_and_display (Gimp                *gimp,
               basename = g_path_get_basename (gimp_file_get_utf8_name (file));
 
               gimp_item_rename (GIMP_ITEM (layer), basename, NULL);
-              gimp_image_undo_free (image);
-              gimp_image_clean_all (image);
 
               g_free (basename);
             }
+
+          gimp_image_undo_free (image);
+          gimp_image_clean_all (image);
         }
 
       if (gimp_create_display (image->gimp, image, gimp_unit_pixel (), 1.0,
@@ -788,7 +797,7 @@ file_open_link_image (Gimp                *gimp,
                                                           GIMP_FILE_PROCEDURE_GROUP_OPEN,
                                                           file, error);
 
-  if (! file_open_valid_permissions (file, error))
+  if (g_file_is_native (file) && ! file_open_valid_permissions (file, error))
     return NULL;
 
   if (g_file_is_native (file) && file_proc != NULL)
@@ -814,7 +823,9 @@ file_open_link_image (Gimp                *gimp,
           layer = gimp_link_layer_new (image, link);
           gimp_image_add_layer (image, layer, NULL, 0, FALSE);
 
-          gimp_image_set_load_proc (image, gimp_link_get_load_proc (link));
+          if (! gimp_image_get_load_proc (image))
+            gimp_image_set_load_proc (image, gimp_link_get_load_proc (link));
+
           file_proc = gimp_image_get_load_proc (image);
           if (mime_type)
             *mime_type = g_slist_nth_data (file_proc->mime_types_list, 0);
@@ -944,14 +955,11 @@ file_open_file_proc_is_import (GimpPlugInProcedure *file_proc)
 
   proc_name = gimp_object_get_name (file_proc);
 
-  return (g_strcmp0 (proc_name, "gimp-xcf-load") != 0 &&
-          /* Assuming that all file-compressor file are XCF.
-           * So far, this is always true with current file-compressor
-           * implementation.
-           */
-          g_strcmp0 (proc_name, "file-gz-load")  != 0 &&
-          g_strcmp0 (proc_name, "file-bz2-load") != 0 &&
-          g_strcmp0 (proc_name, "file-xz-load")  != 0);
+  /* Even when loading through an intermediate container format plug-in
+   * (e.g. file-compressor), the stored procedure shall be the inner
+   * format.
+   */
+  return (g_strcmp0 (proc_name, "gimp-xcf-load") != 0);
 }
 
 static gboolean

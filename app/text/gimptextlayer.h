@@ -66,6 +66,7 @@ GimpText  * gimp_text_layer_get_text    (GimpTextLayer *layer);
 void        gimp_text_layer_set_text    (GimpTextLayer *layer,
                                          GimpText      *text);
 void        gimp_text_layer_discard     (GimpTextLayer *layer);
+void        gimp_text_layer_retrieve    (GimpTextLayer *layer);
 void        gimp_text_layer_set         (GimpTextLayer *layer,
                                          const gchar   *undo_desc,
                                          const gchar   *first_property_name,

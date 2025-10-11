@@ -36,7 +36,7 @@ libgimpcolor = library('gimpcolor-' + gimp_api_version,
   libgimpcolor_sources,
   include_directories: rootInclude,
   dependencies: [
-    cairo, gdk_pixbuf, gegl, lcms, math,
+    cairo, gdk_pixbuf, gegl, gexiv2, lcms, math,
   ],
   c_args: [ '-DG_LOG_DOMAIN="LibGimpColor"', '-DGIMP_COLOR_COMPILATION', ],
   link_with: [ libgimpbase, ],

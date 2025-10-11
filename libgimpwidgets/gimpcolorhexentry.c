@@ -163,16 +163,19 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
   gtk_entry_set_completion (GTK_ENTRY (entry), completion);
   g_object_unref (completion);
 
-  g_signal_connect (entry, "focus-out-event",
-                    G_CALLBACK (gimp_color_hex_entry_events),
-                    NULL);
-  g_signal_connect (entry, "key-press-event",
-                    G_CALLBACK (gimp_color_hex_entry_events),
-                    NULL);
+  g_signal_connect_object (entry, "focus-out-event",
+                           G_CALLBACK (gimp_color_hex_entry_events),
+                           NULL, 0);
+  g_signal_connect_object (entry, "key-press-event",
+                           G_CALLBACK (gimp_color_hex_entry_events),
+                           NULL, 0);
+  g_signal_connect_object (entry, "key-release-event",
+                           G_CALLBACK (gimp_color_hex_entry_events),
+                           NULL, 0);
 
-  g_signal_connect (completion, "match-selected",
-                    G_CALLBACK (gimp_color_hex_entry_matched),
-                    entry);
+  g_signal_connect_object (completion, "match-selected",
+                           G_CALLBACK (gimp_color_hex_entry_matched),
+                           entry, 0);
 }
 
 static void
@@ -263,7 +266,8 @@ static gboolean
 gimp_color_hex_entry_events (GtkWidget *widget,
                              GdkEvent  *event)
 {
-  GimpColorHexEntry *entry = GIMP_COLOR_HEX_ENTRY (widget);
+  GimpColorHexEntry *entry       = GIMP_COLOR_HEX_ENTRY (widget);
+  gboolean           check_color = FALSE;
 
   switch (event->type)
     {
@@ -271,39 +275,52 @@ gimp_color_hex_entry_events (GtkWidget *widget,
       {
         GdkEventKey *kevent = (GdkEventKey *) event;
 
-        if (kevent->keyval != GDK_KEY_Return   &&
-            kevent->keyval != GDK_KEY_KP_Enter &&
-            kevent->keyval != GDK_KEY_ISO_Enter)
-          break;
-        /*  else fall through  */
+        if (kevent->keyval == GDK_KEY_Return   ||
+            kevent->keyval == GDK_KEY_KP_Enter ||
+            kevent->keyval == GDK_KEY_ISO_Enter)
+          check_color = TRUE;
       }
 
+    case GDK_KEY_RELEASE:
     case GDK_FOCUS_CHANGE:
       {
         const gchar *text;
         gchar        buffer[8];
         guchar       rgb[3];
+        gsize        len;
 
         text = gtk_entry_get_text (GTK_ENTRY (widget));
+        len  = strlen (text);
 
-        gegl_color_get_pixel (entry->color, babl_format ("R'G'B' u8"), rgb);
-        g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", rgb[0], rgb[1], rgb[2]);
-
-        if (g_ascii_strcasecmp (buffer, text) != 0)
+        if (len >= 6 || check_color)
           {
-            GeglColor *color = NULL;
-            gsize      len   = strlen (text);
+            gegl_color_get_pixel (entry->color, babl_format ("R'G'B' u8"),
+                                  rgb);
+            g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x",
+                        rgb[0], rgb[1], rgb[2]);
 
-            if (len > 0 &&
-                ((color = gimp_color_parse_hex_substring (text, len)) ||
-                 (color = gimp_color_parse_name (text))))
+            if (g_ascii_strcasecmp (buffer, text) != 0)
               {
-                gimp_color_hex_entry_set_color (entry, color);
-                g_object_unref (color);
-              }
-            else
-              {
-                gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+                GeglColor *color = NULL;
+                gint       position;
+
+                position = gtk_editable_get_position (GTK_EDITABLE (widget));
+
+                if (len > 0 &&
+                    ((color = gimp_color_parse_hex_substring (text, len)) ||
+                     (color = gimp_color_parse_name (text))))
+                  {
+                    gimp_color_hex_entry_set_color (entry, color);
+                    g_object_unref (color);
+
+                    if (! check_color)
+                      gtk_editable_set_position (GTK_EDITABLE (entry),
+                                                 position);
+                  }
+                else if (event->type == GDK_FOCUS_CHANGE || check_color)
+                  {
+                    gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+                  }
               }
           }
       }

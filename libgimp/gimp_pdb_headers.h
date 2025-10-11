@@ -67,6 +67,7 @@
 #include <libgimp/gimpitem_pdb.h>
 #include <libgimp/gimpitemtransform_pdb.h>
 #include <libgimp/gimplayer_pdb.h>
+#include <libgimp/gimplinklayer_pdb.h>
 #include <libgimp/gimpmessage_pdb.h>
 #include <libgimp/gimppainttools_pdb.h>
 #include <libgimp/gimppalette_pdb.h>

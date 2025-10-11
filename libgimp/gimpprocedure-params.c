@@ -1895,7 +1895,7 @@ gimp_procedure_add_text_layer_return_value (GimpProcedure *procedure,
  *
  * Add a new #GimpVectorLayer argument to @procedure.
  *
- * Since: 3.0
+ * Since: 3.2
  **/
 void
 gimp_procedure_add_vector_layer_argument (GimpProcedure *procedure,
@@ -1921,7 +1921,7 @@ gimp_procedure_add_vector_layer_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpVectorLayer auxiliary argument to @procedure.
  *
- * Since: 3.0
+ * Since: 3.2
  **/
 void
 gimp_procedure_add_vector_layer_aux_argument (GimpProcedure *procedure,
@@ -1947,7 +1947,7 @@ gimp_procedure_add_vector_layer_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpVectorLayer return value to @procedure.
  *
- * Since: 3.0
+ * Since: 3.2
  **/
 void
 gimp_procedure_add_vector_layer_return_value (GimpProcedure *procedure,
@@ -1960,6 +1960,84 @@ gimp_procedure_add_vector_layer_return_value (GimpProcedure *procedure,
   _gimp_procedure_add_return_value (procedure,
                                     gimp_param_spec_vector_layer (name, nick, blurb,
                                                                   none_ok, flags));
+}
+
+/**
+ * gimp_procedure_add_link_layer_argument:
+ * @procedure:   the #GimpProcedure.
+ * @name:        the name of the argument to be created.
+ * @nick:        the label used in #GimpProcedureDialog.
+ * @blurb: (nullable): a more detailed help description.
+ * @none_ok:     Whether no is a valid value.
+ * @flags:       argument flags.
+ *
+ * Add a new #GimpLinkLayer argument to @procedure.
+ *
+ * Since: 3.2
+ **/
+void
+gimp_procedure_add_link_layer_argument (GimpProcedure *procedure,
+                                        const gchar   *name,
+                                        const gchar   *nick,
+                                        const gchar   *blurb,
+                                        gboolean       none_ok,
+                                        GParamFlags    flags)
+{
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_link_layer (name, nick, blurb,
+                                                            none_ok, flags));
+}
+
+/**
+ * gimp_procedure_add_link_layer_aux_argument:
+ * @procedure:   the #GimpProcedure.
+ * @name:        the name of the argument to be created.
+ * @nick:        the label used in #GimpProcedureDialog.
+ * @blurb: (nullable): a more detailed help description.
+ * @none_ok:     Whether no is a valid value.
+ * @flags:       argument flags.
+ *
+ * Add a new #GimpLinkLayer auxiliary argument to @procedure.
+ *
+ * Since: 3.2
+ **/
+void
+    gimp_procedure_add_link_layer_aux_argument (GimpProcedure *procedure,
+                                                const gchar   *name,
+                                                const gchar   *nick,
+                                                const gchar   *blurb,
+                                                gboolean       none_ok,
+                                                GParamFlags    flags)
+{
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_link_layer (name, nick, blurb,
+                                                                none_ok, flags));
+}
+
+/**
+ * gimp_procedure_add_link_layer_return_value:
+ * @procedure:   the #GimpProcedure.
+ * @name:        the name of the argument to be created.
+ * @nick:        the label used in #GimpProcedureDialog.
+ * @blurb: (nullable): a more detailed help description.
+ * @none_ok:     Whether no is a valid value.
+ * @flags:       argument flags.
+ *
+ * Add a new #GimpLinkLayer return value to @procedure.
+ *
+ * Since: 3.2
+ **/
+void
+gimp_procedure_add_link_layer_return_value (GimpProcedure *procedure,
+                                            const gchar   *name,
+                                            const gchar   *nick,
+                                            const gchar   *blurb,
+                                            gboolean       none_ok,
+                                            GParamFlags    flags)
+{
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_link_layer (name, nick, blurb,
+                                                                none_ok, flags));
 }
 
 /**

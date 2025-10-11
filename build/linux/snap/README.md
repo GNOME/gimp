@@ -9,6 +9,7 @@ Base rule to update the "GNU Image Manipulation Program" entry:
 
 * Regularly, a .snap will be generated at each tagged commit.
   In the process, it will be auto submitted to Snap Store.
+  (Any case, **please double-check on Snapcraft** if everything is done.)
 
 ## Maintaining the packages
 
@@ -16,6 +17,8 @@ Base rule to update the "GNU Image Manipulation Program" entry:
   which contains a base of libraries, some of which are dependencies of GIMP.
   The runtime version is determined by the `base:` snap version in snapcraft.yaml.
   It is recommended to update that key value following Ubuntu release cycle.
+  (Don't forget to notify the 3P plugins developers on https://forum.snapcraft.io/c/snapcrafters
+  and/or https://discourse.ubuntu.com/c/project/app-center)
 
 * Other GIMP dependencies which are not available in the GNOME runtime snap
   should be listed in `build-packages:` and/or `stage-packages:` keys if
@@ -34,11 +37,11 @@ ls "$(echo /snap/gnome*-sdk/current/usr/lib/$(gcc -print-multiarch)/pkgconfig)"
 
 ## Versioning the snap
 
-Aside from (un)commenting and bumping babl and gegl source-tag and
-setting the version of gimp, we:
+Unlike the flatpak, we do not need to manually set babl, gegl or GIMP tags, just:
 
-* For a **nightly** build, set "devel" on "grade" and
-  use "experimental" on build-id at gimp part "meson-parameters".
+* For a **nightly** build, set "devel" on "grade",
+  use "experimental" on build-id at gimp part "meson-parameters" and
+  add "name: gimp-experimental".
 
 * For a new **development** series, set "stable" on "grade" and
   use "preview" on build-id at gimp part "meson-parameters".

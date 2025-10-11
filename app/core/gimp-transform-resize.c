@@ -353,7 +353,7 @@ gimp_transform_resize_crop (const GimpVector2 *orig_points,
 
   if (r.area == 0)
     {
-      /* saveguard if something went wrong, adjust and give warning */
+      /* safeguard if something went wrong, adjust and give warning */
       gimp_transform_resize_adjust (orig_points, n_points,
                                     x1, y1, x2, y2);
       g_printerr ("no rectangle found by algorithm, no cropping done\n");

@@ -28,7 +28,7 @@
  * GimpFileProcedure:
  *
  * File procedures implement file support. They cannot be created directly.
- * Instead, you will create an instance of one of the sublasses (such as export
+ * Instead, you will create an instance of one of the subclasses (such as export
  * or load procedures). This provides a common interface for file-related
  * functions on these objects.
  **/

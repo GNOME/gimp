@@ -13,7 +13,7 @@ spec:
     test_pipeline:
       description: 'Pipelines used only for testing'
       options:
-        - GIMP_CI_MESON_GCC #trigger the Debian GCC build (rare usefulness)
+        - GIMP_CI_MESON_CLANG #trigger the Debian Clang build (rare usefulness)
         - GIMP_CI_RASTER_ICONS #trigger the Debian Clang build without vector icons (rare usefulness)
         - GIMP_CI_CPPCHECK #trigger cppcheck (static code analysis)
         - none
@@ -30,7 +30,7 @@ workflow:
 ##################################################
 
 ## 1. On MERGE REQUESTS, the following are triggered:
-## - Abbreviated Linux Clang build
+## - Abbreviated Linux build
 ## - Building quality tests (static code analysis)
 ## - clang-format (static code analysis)
 ## - Execution tests (dynamic code analysis)
@@ -44,7 +44,7 @@ workflow:
   # GitLab is quite sensitive about rules 'if' order so be careful
 
 ## 3. On COMMITS except tags.
-## - Linux Clang build
+## - Linux build
 ## - Building quality tests (static code analysis)
 ## - Execution tests (dynamic code analysis)
 ## - Source tarball
@@ -81,9 +81,11 @@ workflow:
       - 'scheduler_failure'
   needs: []
   # Default Docker image (keep variables: DEB_VERSION: consistent with devel-docs/os-support.txt)
-  image: debian:${DEB_VERSION}
+  image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   variables:
     DEB_VERSION: "bookworm"
+    UMFPACK: libumfpack5
+    RUNNER: "x86_64_v3"
     # Common cloning procedure
     GIT_DEPTH: "1"
     GIT_SUBMODULE_STRATEGY: none
@@ -101,28 +103,30 @@ stages:
   - analysis
   - distribution
 
-## AppImage CI (Debian) ##
-.debian:
+
+## Common GNU/Linux 64-bit CI (Debian) ##
+.debian-nonreloc:
   extends: .default
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:AppImage.*/'
-      interruptible: true
-    - if: '$GIMP_CI_APPIMAGE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_APPIMAGE.*/'
+    - <<: *CI_MERGE
+    - <<: *CI_COMMIT
+      variables: {}
+    - if: '$GIMP_CI_MESON_CLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_CLANG.*/'
+      variables:
+        CC: clang
+        CXX: clang++
+        CC_LD: lld
+        CXX_LD: lld
+        TOOLCHAIN: "clang lld"
+        VARIANT: -clang
+    - if: '$GIMP_CI_RASTER_ICONS != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_RASTER_ICONS.*/'
+      variables:
+        MESON_OPTIONS: "-Dvector-icons=false"
+        VARIANT: "-raster"
     - <<: *CI_RELEASE
-  parallel:
-    matrix:
-      - RUNNER: [aarch64, x86_64_v3]
-  tags:
-    - $RUNNER
-  image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
-  variables:
-    CC: "clang"
-    CXX: "clang++"
-    CC_LD: lld
-    CXX_LD: lld
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
-  timeout: 20m
+  timeout: 30m
 
 .debian_environ: &ENVIRON
 # See: https://testing.developer.gimp.org/core/setup/build/#preparing-for-building
@@ -138,38 +142,33 @@ stages:
 - export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
 - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
 
-deps-debian:
-  extends: .debian
+deps-debian-nonreloc:
+  extends: .debian-nonreloc
   stage: dependencies
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
+  image: quay.io/buildah/stable
   variables:
     GIT_STRATEGY: none
-    PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   script:
-    - export container=docker
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - export BUILDAH_FORMAT=docker
+    - export STORAGE_DRIVER=vfs
+    - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     # Install deps
     - echo "FROM debian:${DEB_VERSION}" > Dockerfile
     - echo "WORKDIR $CI_PROJECT_DIR" >> Dockerfile
-    - echo "RUN printf \"\e[0Ksection_start:0000000001:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Debian $DEB_VERSION\n\"" >> Dockerfile
     - echo "RUN apt-get update -qq" >> Dockerfile
     ## 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
     - echo "RUN apt-get install -qq -y --no-install-recommends ca-certificates" >> Dockerfile
     ## Build-time only dependencies
     - echo "RUN apt-get install -qq -y --no-install-recommends \\" >> Dockerfile
-    - echo "appstream
+    - echo "${TOOLCHAIN:-build-essential}
+            appstream
             bison
-            clang
             desktop-file-utils
             flex
             gi-docgen
             git
             gobject-introspection
             libgtk-3-bin
-            lld
             meson
             valac
             xsltproc" >> Dockerfile
@@ -182,6 +181,7 @@ deps-debian:
             glib-networking
             graphviz
             graphviz-dev
+            gvfs
             iso-codes
             libaa1-dev
             libappstream-dev
@@ -195,6 +195,7 @@ deps-debian:
             libgtk-3-dev
             libgudev-1.0-dev
             libheif-dev
+            $LIBHEIF_PLUGINS
             libjson-glib-dev
             libjxl-dev
             liblcms2-dev
@@ -210,7 +211,7 @@ deps-debian:
             librsvg2-dev
             libsuitesparse-dev
             libtiff-dev
-            libumfpack5
+            $UMFPACK
             libunwind-dev
             libwebp-dev
             libwmf-dev
@@ -221,35 +222,39 @@ deps-debian:
             python3
             python3-gi
             python3-gi-cairo" >> Dockerfile
-    - echo "RUN printf \"\e[0Ksection_end:0000000002:deps_install\r\e[0K\n\"" >> Dockerfile
     # Prepare environ
     - echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
-    - echo "RUN printf \"\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment\n\"" >> Dockerfile2;
+    - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:environ[collapsed=true]\r\e[0KPreparing build environment\n\"" >> Dockerfile2;
     - echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/lib/$([ "$(uname -m)" = 'aarch64' ] && echo "aarch64-linux-gnu/" || echo "x86_64-linux-gnu/")pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
     - echo "ENV XDG_DATA_DIRS=\"${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}\"" >> Dockerfile2;
-    - echo "ENV CC=\"$CC\"" >> Dockerfile2;
-    - echo "ENV CXX=\"$CXX\"" >> Dockerfile2;
-    - echo "ENV CC_LD=\"$CC_LD\"" >> Dockerfile2;
-    - echo "ENV CXX_LD=\"$CXX_LD\"" >> Dockerfile2;
+    - if [ "$VARIANT" = "-clang" ]; then
+        echo "ENV CC=\"$CC\"" >> Dockerfile2;
+        echo "ENV CXX=\"$CXX\"" >> Dockerfile2;
+        echo "ENV CC_LD=\"$CC_LD\"" >> Dockerfile2;
+        echo "ENV CXX_LD=\"$CXX_LD\"" >> Dockerfile2;
+      fi
     - echo "ENV CLICOLOR_FORCE=\"1\"" >> Dockerfile2;
-    - echo "RUN printf \"\e[0Ksection_end:`date +%s`:environ\r\e[0K\n\"" >> Dockerfile2;
+    - echo "RUN printf \"\e[0Ksection_end:\`date +%s\`:environ\r\e[0K\n\"" >> Dockerfile2;
     # Build some dependencies
     ## Build babl
-    - echo "RUN printf \"\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\n\"" >> Dockerfile2;
+    - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:babl_build[collapsed=true]\r\e[0KBuilding babl\n\"" >> Dockerfile2;
     - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/babl.git | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" babl >> Dockerfile2;
     - echo "RUN meson setup babl/_build-${RUNNER} babl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION" >> Dockerfile2;
     - echo "RUN ninja -C babl/_build-${RUNNER}" >> Dockerfile2;
     - echo "RUN ninja -C babl/_build-${RUNNER} install" >> Dockerfile2;
-    - echo "RUN printf \"\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\n\"" >> Dockerfile2;
+    - echo "RUN printf \"\e[0Ksection_end:\`date +%s\`:babl_build\r\e[0K\n\"" >> Dockerfile2;
     ## Build GEGL
-    - echo "RUN printf \"\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n\"" >> Dockerfile2;
+    - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n\"" >> Dockerfile2;
     - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/gegl.git | grep -oi \"GEGL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git" gegl >> Dockerfile2;
     - echo "RUN meson setup gegl/_build-${RUNNER} gegl -Dprefix=\"${GIMP_PREFIX}\" $PKGCONF_RELOCATABLE_OPTION -Dworkshop=true" >> Dockerfile2;
     - echo "RUN ninja -C gegl/_build-${RUNNER}" >> Dockerfile2;
     - echo "RUN ninja -C gegl/_build-${RUNNER} install" >> Dockerfile2;
-    - echo "RUN printf \"\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n\"" >> Dockerfile2;
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
-    - if [ -f 'Dockerfile2' ]; then /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-debian-${DEB_VERSION}-${RUNNER}-temp --cache=false --no-push --verbosity=warn; fi
+    - echo "RUN printf \"\e[0Ksection_end:\`date +%s\`:gegl_build\r\e[0K\n\"" >> Dockerfile2;
+    #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
+    - printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Debian $DEB_VERSION\n"
+    - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile --tag $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h 2>&1 | grep -v STEP && buildah push --log-level error $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} 2>&1 | grep -v STEP
+    - printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
+    - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile2 --no-cache 2>&1 | grep -v STEP
   artifacts:
     paths:
       - _install-${RUNNER}/
@@ -259,79 +264,12 @@ deps-debian:
       - gegl/_build-${RUNNER}/config.h
     expire_in: 2 hours
 
-gimp-debian:
-  extends: .debian
-  needs: ["deps-debian"]
-  stage: build
-  variables:
-    GIT_SUBMODULE_STRATEGY: recursive
-  script:
-    - *ENVIRON
-    # Build GIMP
-    - printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
-    - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
-                                   -Dgi-docgen=disabled
-                                   -Dpkgconfig.relocatable=true
-                                   -Drelocatable-bundle=yes
-                                   -Dcheck-update=yes
-                                   -Dbuild-id=org.gimp.GIMP_official.AppImage.$(uname -m)
-    - cd _build-${RUNNER}
-    - ninja
-    - printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
-    # Create bundle
-    - printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating bundle\n"
-    - ninja install > ninja_install.log 2>&1 || { cat ninja_install.log; exit 1; }
-    - cd ..
-    - sh build/linux/appimage/3_dist-gimp-goappimage.sh --bundle-only > goappimage.log 2>&1 || { cat goappimage.log; exit 1; }
-    - printf "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K\n"
-  artifacts:
-    paths:
-      - AppDir*/
-      - appimageignore*
-      - _build-${RUNNER}/meson-logs/meson-log.txt
-      - _build-${RUNNER}/config.h
-    expire_in: 2 days
-
-
-## GNU/Linux 64-bit CIs (Debian) ##
-.debian-nonreloc:
-  extends: .debian
-  rules:
-    - <<: *CI_MERGE
-    - <<: *CI_COMMIT
-      variables: {}
-    - if: '$GIMP_CI_MESON_GCC != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_GCC.*/'
-      variables:
-        CC: "cc"
-        CXX: "c++"
-        CC_LD: bfd
-        CXX_LD: bfd
-        VARIANT: "-gcc"
-    - if: '$GIMP_CI_RASTER_ICONS != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_RASTER_ICONS.*/'
-      variables:
-        MESON_OPTIONS: "-Dvector-icons=false"
-        VARIANT: "-raster"
-    - <<: *CI_RELEASE
-  parallel:
-    matrix:
-      - RUNNER: x86_64_v3
-  tags: []
-
-deps-debian-nonreloc:
-  extends: .debian-nonreloc
-  stage: !reference [deps-debian, stage]
-  image: !reference [deps-debian, image]
-  variables:
-    GIT_STRATEGY: none
-  script:
-    - !reference [deps-debian, script]
-  artifacts: !reference [deps-debian, artifacts]
-
 gimp-debian-nonreloc:
   extends: .debian-nonreloc
   needs: ["deps-debian-nonreloc"]
-  stage: !reference [gimp-debian, stage]
-  variables: !reference [gimp-debian, variables]
+  stage: build
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
   script:
     - *ENVIRON
     # Check building
@@ -353,7 +291,7 @@ gimp-debian-nonreloc:
         git diff;
         exit 1;
       fi
-    - if [ "$VARIANT" != "-gcc" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
+    - if [ "$VARIANT" != "-clang" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
         ninja dist > ninja_dist.log 2>&1 || { cat ninja_dist.log; exit 1; };
       fi
     - printf "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K\n"
@@ -369,6 +307,71 @@ gimp-debian-nonreloc:
       - _build-${RUNNER}/config.h
     reports:
       junit: "_build-${RUNNER}/meson-logs/testlog.junit.xml"
+    expire_in: 2 days
+
+
+## AppImage CI (Debian) ##
+.debian:
+  extends: .debian-nonreloc
+  rules:
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:AppImage.*/'
+      interruptible: true
+    - if: '$GIMP_CI_APPIMAGE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_APPIMAGE.*/'
+    - <<: *CI_RELEASE
+  parallel:
+    matrix:
+      - RUNNER: [aarch64, x86_64_v3]
+  tags:
+    - $RUNNER
+  variables:
+    #FIXME: remove this variables: key and go back to relying on .default DEB_VERSION on GIMP 3.3/3.4
+    DEB_VERSION: "trixie"
+    UMFPACK: libumfpack6
+    LIBHEIF_PLUGINS: "libheif-plugin-dav1d libheif-plugin-aomenc libheif-plugin-libde265 libheif-plugin-x265 libheif-plugin-j2kdec libheif-plugin-j2kenc"
+
+deps-debian:
+  extends: .debian
+  stage: !reference [deps-debian-nonreloc, stage]
+  image: !reference [deps-debian-nonreloc, image]
+  variables:
+    GIT_STRATEGY: none
+    PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
+  script:
+    - !reference [deps-debian-nonreloc, script]
+  artifacts: !reference [deps-debian-nonreloc, artifacts] 
+
+gimp-debian:
+  extends: .debian
+  needs: ["deps-debian"]
+  stage: !reference [gimp-debian-nonreloc, stage]
+  variables:
+    #FIXME: remove this variables: key and go back to relying on gimp-debian-nonreloc variables: on GIMP 3.3/3.4
+    GIT_SUBMODULE_STRATEGY: recursive
+  script:
+    - *ENVIRON
+    # Build GIMP
+    - printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
+    - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
+                                   -Dgi-docgen=disabled
+                                   -Dpkgconfig.relocatable=true
+                                   -Drelocatable-bundle=yes
+                                   -Dcheck-update=yes
+                                   -Dbuild-id=org.gimp.GIMP_official.AppImage.$(uname -m)
+    - cd _build-${RUNNER}
+    - ninja
+    - printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
+    # Create bundle
+    - printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating AppDir bundle\n"
+    - ninja install > ninja_install.log 2>&1 || { cat ninja_install.log; exit 1; }
+    - cd ..
+    - sh build/linux/appimage/3_dist-gimp-goappimage.sh --bundle-only > goappimage.log 2>&1 || { cat goappimage.log; exit 1; }
+    - printf "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K\n"
+  artifacts:
+    paths:
+      - AppDir*/
+      - appimageignore*
+      - _build-${RUNNER}/meson-logs/meson-log.txt
+      - _build-${RUNNER}/config.h
     expire_in: 2 days
 
 
@@ -392,6 +395,7 @@ gimp-debian-nonreloc:
     MESON_DIST: 0
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install"
+  #30min is enough only if no module was updated/rebuilt, we need more time in case of module bumps
   timeout: 90m
 
 deps-flatpak:
@@ -401,8 +405,7 @@ deps-flatpak:
     - sh build/linux/flatpak/1_build-deps-flatpakbuilder.sh
   artifacts:
     paths:
-      - _build-$RUNNER.tar
-      - flatpak-builder.log
+      - _build-$RUNNER.tar.zst
       - babl-meson-log.tar
       - gegl-meson-log.tar
     expire_in: 2 hours
@@ -431,6 +434,7 @@ gimp-flatpak:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Snap.*/'
       interruptible: true
     - if: '$GIMP_CI_SNAP != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_SNAP.*/'
+    - <<: *CI_RELEASE
   parallel:
     matrix:
       - RUNNER: [aarch64, x86_64_v3]
@@ -440,22 +444,24 @@ gimp-flatpak:
   variables:
     SNAPCRAFT_BASE_VERSION: "8_core24"
     RUNNER: x86_64_v3
-  timeout: 20m
+  timeout: 30m
 
 deps-snap:
   extends: .snap
   stage: dependencies
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
+  image: quay.io/buildah/stable
   script:
+    - export BUILDAH_FORMAT=docker
+    - export STORAGE_DRIVER=vfs
+    - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    # Install deps
     - echo "FROM ghcr.io/canonical/snapcraft:${SNAPCRAFT_BASE_VERSION}" > Dockerfile
     - echo "ENTRYPOINT [\"\"]" >> Dockerfile
     - echo "WORKDIR $CI_PROJECT_DIR" >> Dockerfile
     - echo "ENV GITLAB_CI=1" >> Dockerfile
     - echo "ENV RUNNER=$RUNNER" >> Dockerfile
     - echo "RUN apt-get update -y" >> Dockerfile
-    - echo "RUN apt-get install -y curl jq squashfs-tools sudo" >> Dockerfile
+    - echo "RUN apt-get install -y curl jq squashfs-tools sudo git" >> Dockerfile
     # https://github.com/canonical/snapcraft-rocks/issues/37
     - echo "RUN cp -r /usr/lib/python3.*/site-packages/extensions/* /usr/share/snapcraft/extensions/" >> Dockerfile
     # https://github.com/canonical/snapcraft-rocks/issues/33
@@ -464,8 +470,9 @@ deps-snap:
     # Build babl and GEGL
     - echo "FROM $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}" > Dockerfile2;
     - echo "RUN sh build/linux/snap/1_build-deps-snapcraft.sh" >> Dockerfile2;
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} --cache=true --cache-ttl=120h --image-fs-extract-retry 1 --verbosity=warn
-    - if [ -f 'Dockerfile2' ]; then /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile2 --destination build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}-temp --cache=false --no-push --verbosity=warn; fi
+    #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
+    - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile --tag $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h 2>&1 | grep -v STEP && buildah push --log-level error $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} 2>&1 | grep -v STEP
+    - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile2 --no-cache 2>&1 | grep -v STEP
   artifacts:
     paths:
       - _install-$RUNNER.tar
@@ -527,10 +534,7 @@ gimp-snap:
         STORE_OPTION: '-Dms-store=true'
   parallel:
     matrix:
-      - RUNNER: windows-aarch64
-        MSYSTEM_PREFIX: clangarm64
-      - RUNNER: win32-ps
-        MSYSTEM_PREFIX: clang64
+      - RUNNER: [windows-aarch64, win32-ps]
   tags:
     - $RUNNER
   variables:
@@ -538,9 +542,9 @@ gimp-snap:
     #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
-    # FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
-    - $GIMP_PREFIX = "$PWD\_install-$MSYSTEM_PREFIX".Replace('\', '/')
-  timeout: 40m
+    - if (-not $env:MSYSTEM_PREFIX) { $env:MSYSTEM_PREFIX = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'clangarm64' } else { 'clang64' }}
+    - $GIMP_PREFIX = "$PWD\_install-$env:MSYSTEM_PREFIX"
+  timeout: 30m
 
 .win_environ: &WIN_ENVIRON
 # See: https://testing.developer.gimp.org/core/setup/build/windows/#prepare-for-building
@@ -560,9 +564,9 @@ deps-win:
     - build\windows\1_build-deps-msys2.ps1
   artifacts:
     paths:
-      - _install-$MSYSTEM_PREFIX/
-      - babl/_build-$MSYSTEM_PREFIX/meson-logs/meson-log.txt
-      - gegl/_build-$MSYSTEM_PREFIX/meson-logs/meson-log.txt
+      - _install-*/
+      - babl/_build-*/meson-logs/meson-log.txt
+      - gegl/_build-*/meson-logs/meson-log.txt
     expire_in: 2 hours
 
 gimp-win:
@@ -578,14 +582,14 @@ gimp-win:
     - build\windows\2_build-gimp-msys2.ps1
   artifacts:
     paths:
-      - gimp-$MSYSTEM_PREFIX/
-      - _build-$MSYSTEM_PREFIX/meson-logs/meson-log.txt
-      - _build-$MSYSTEM_PREFIX/done-dll.list
+      - gimp-*/
+      - _build-*/meson-logs/meson-log.txt
+      - _build-*/done-dll.list
       # Needed by dist-installer-weekly and dist-store-weekly
-      - _build-$MSYSTEM_PREFIX/config.h
-      - _build-$MSYSTEM_PREFIX/plug-ins/file_associations.list
-      - _build-$MSYSTEM_PREFIX/build/windows/installer/
-      - _build-$MSYSTEM_PREFIX/build/windows/store/
+      - _build-*/config.h
+      - _build-*/plug-ins/file_associations.list
+      - _build-*/build/windows/installer/
+      - _build-*/build/windows/store/
     expire_in: 2 days
 
 
@@ -594,12 +598,10 @@ gimp-win:
   extends: .win
   parallel:
     matrix:
-      - RUNNER: win32-ps
-        MSYSTEM_PREFIX: mingw32
+      - RUNNER: [win32-ps]
   variables:
+    MSYSTEM_PREFIX: mingw32
     MINGW_PACKAGE_PREFIX: mingw-w64-i686
-    CC: cc
-    CXX: c++
 
 deps-win-eol:
   extends: .win-eol
@@ -669,6 +671,8 @@ meson-health:
     - <<: *CI_MERGE
     - <<: *CI_COMMIT
   stage: analysis
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
   script:
     - apt-get update -qq
     - apt-get install -qq -y --no-install-recommends git shellcheck devscripts
@@ -692,6 +696,19 @@ clang-format:
       - fetch_upstream.log
       - fetch_origin.log
     expire_in: 2 days
+
+branches-check:
+  extends: .default
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+  stage: analysis
+  variables:
+    GIT_DEPTH: "0"
+  script:
+    - apt-get update -qq
+    - apt-get install -qq -y --no-install-recommends git
+    - sh .gitlab/check_dead_branches.sh
+  allow_failure: true
 
 cppcheck:
   extends: .default
@@ -809,6 +826,7 @@ dist-appimage-weekly:
 include:
   project: GNOME/citemplates
   file: flatpak/flatpak_ci_initiative.yml
+  ref: 42fbc2526a7680b6a4f284a210e63e3973ea6dae
 
 dist-flatpak-weekly:
   extends:

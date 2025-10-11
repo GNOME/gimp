@@ -407,7 +407,7 @@ we added a limitation on the range of the parameter. The lower
 limitation is a simple number, and the upper limitation is a constant
 macro (+GIMP_MAX_IMAGE_SIZE+) defined in
 https://gitlab.gnome.org/GNOME/gimp/tree/master/libgimpbase/gimplimits.h[libgimpbase/gimplimits.h].
-In order to make sure this constand will indeed be defined when parsing
+In order to make sure this constant will indeed be defined when parsing
 this function, the file
 https://gitlab.gnome.org/GNOME/gimp/tree/master/libgimpbase/gimpbase.h[libgimpbase/gimpbase.h]
 (which includes

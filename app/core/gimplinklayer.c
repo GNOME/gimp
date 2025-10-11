@@ -185,6 +185,7 @@ gimp_link_layer_class_init (GimpLinkLayerClass *klass)
 
   gimp_object_class->get_memsize    = gimp_link_layer_get_memsize;
 
+  /* TODO: make a custom icon "gimp-link-layer". */
   viewable_class->default_icon_name = "emblem-symbolic-link";
   viewable_class->default_name      = _("Link Layer");
 
@@ -929,6 +930,15 @@ gimp_link_layer_set_transform (GimpLinkLayer         *layer,
   layer->p->interpolation = interpolation_type;
 
   return rendered;
+}
+
+gboolean
+gimp_item_is_link_layer (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return (GIMP_IS_LINK_LAYER (item) &&
+          gimp_link_layer_is_monitored (GIMP_LINK_LAYER (item)));
 }
 
 void

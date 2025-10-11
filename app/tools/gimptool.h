@@ -163,6 +163,8 @@ struct _GimpToolClass
   void            (* options_notify)      (GimpTool              *tool,
                                            GimpToolOptions       *options,
                                            const GParamSpec      *pspec);
+
+  gboolean           is_destructive;
 };
 
 

@@ -42,6 +42,7 @@ pdb_names = [
   'item_transform',
   'item',
   'layer',
+  'link_layer',
   'message',
   'paint_tools',
   'palette_select',

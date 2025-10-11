@@ -104,8 +104,11 @@ gimp_channel_new (GimpImage   *image,
  * Create a new channel from a color component
  *
  * This procedure creates a new channel from a color component.
+ *
  * The new channel still needs to be added to the image, as this is not
- * automatic. Add the new channel with gimp_image_insert_channel().
+ * automatic. Add the new channel with
+ * [method@Gimp.Image.insert_channel].
+ *
  * Other attributes, such as channel visibility, should be set with
  * explicit procedure calls.
  *
@@ -148,8 +151,10 @@ gimp_channel_new_from_component (GimpImage       *image,
  * Copy a channel.
  *
  * This procedure copies the specified channel and returns the copy.
+ *
  * The new channel still needs to be added to the image, as this is not
- * automatic. Add the new channel with gimp_image_insert_channel().
+ * automatic. Add the new channel with
+ * [method@Gimp.Image.insert_channel].
  *
  * Returns: (transfer none): The newly copied channel.
  **/

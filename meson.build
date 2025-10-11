@@ -1,6 +1,6 @@
 project('gimp',
   'c', 'cpp',
-  version: '3.1.3',
+  version: '3.1.5',
   meson_version: '>=0.61.0',
   default_options: [
     'cpp_std=gnu++14',
@@ -65,7 +65,7 @@ gimp_api_name = 'gimp-' + gimp_api_version
 
 
 # Libtool versioning
-gimp_interface_age = 3
+gimp_interface_age = 1
 
 gimp_binary_age = 100 * gimp_app_version_minor + gimp_app_version_micro
 lt_current      = 100 * gimp_app_version_minor + gimp_app_version_micro - gimp_interface_age
@@ -128,7 +128,7 @@ fs        = import('fs')
 
 cc        = meson.get_compiler('c')
 cxx       = meson.get_compiler('cpp')
-prefix    = get_option('prefix')
+prefix    = get_option('prefix').replace('\\', '/')
 buildtype = get_option('buildtype')
 exec_ver  = '-' + gimp_app_version
 
@@ -330,10 +330,13 @@ endif
 
 # DEBUG SYMBOLS
 debugging_format = 'disabled'
-if get_option('buildtype') == 'debug' or get_option('buildtype') == 'debugoptimized'
+if buildtype == 'debug' or buildtype == 'debugoptimized'
   if not platform_windows
     # DWARF symbols for GCC and LLDB on Unix
     debugging_format = 'native'
+  elif cc.get_argument_syntax() == 'msvc'
+    # CodeView symbols for DIA or DbgHelp debuggers and LLDB on Windows
+    debugging_format = 'Native'
   elif platform_windows and get_option('win-debugging') == 'native' and cc.has_argument('-gcodeview') and cc.has_link_argument('-Wl,--pdb=') and cc.get_id() == 'clang'
     # CodeView symbols for DIA or DbgHelp debuggers and LLDB on Windows
     debugging_format = 'native'
@@ -406,7 +409,7 @@ winsock           = platform_windows ? cc.find_library('ws2_32') : no_dep
 mscms             = platform_windows ? cc.find_library('mscms') : no_dep
 atk_minver        = '2.4.0'
 atk               = dependency('atk',                version: '>='+atk_minver)
-babl_minver       = '0.1.114'
+babl_minver       = '0.1.116'
 babl              = dependency('babl-0.1',           version: '>='+babl_minver, required: false)
 if not babl.found()
   # babl changed its pkg-config name from 'babl' to 'babl-0.1' in version
@@ -428,7 +431,7 @@ freetype2_minver  = '2.1.7'
 freetype2         = dependency('freetype2',          version: '>='+freetype2_minver)
 gdk_pixbuf_minver = '2.30.8'
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>='+gdk_pixbuf_minver)
-gegl_minver       = '0.4.62'
+gegl_minver       = '0.4.64'
 gegl              = dependency('gegl-0.4',           version: '>='+gegl_minver)
 exiv2_minver      = '0.27.4'
 exiv2             = dependency('exiv2',              version: '>='+exiv2_minver)
@@ -441,6 +444,18 @@ gio_specific      = dependency(gio_specific_name)
 
 glib_minver       = '2.70.0'
 glib              = dependency('glib-2.0',           version: '>='+glib_minver)
+glib_version_split = glib_minver.split('.')
+glib_major = glib_version_split[0].to_int()
+glib_minor = glib_version_split[1].to_int()
+glib_min_macro = 'GLIB_VERSION_@0@_@1@'.format(glib_major, glib_minor)
+add_project_arguments('-DGLIB_VERSION_MIN_REQUIRED=' + glib_min_macro, language: 'c')
+# XXX: ideally the MIN_REQUIRED and MAX_ALLOWED should be the same
+# version but we have a bunch of GLIB_CHECK_VERSION() conditional code
+# (higher being 2.76.0). So we use this max version to avoid useless
+# warnings. We should clean up all conditional code once we bump the
+# minimum requirement.
+add_project_arguments('-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_76', language: 'c')
+
 gi                = dependency('gobject-introspection-1.0')
 
 gobject           = dependency('gobject-2.0',        version: '>='+glib_minver)
@@ -448,6 +463,12 @@ gmodule           = dependency('gmodule-no-export-2.0')
 
 gtk3_minver       = '3.24.0'
 gtk3              = dependency('gtk+-3.0',           version: '>='+gtk3_minver)
+gtk_version_split = gtk3_minver.split('.')
+gtk_major = gtk_version_split[0].to_int()
+gtk_minor = gtk_version_split[1].to_int()
+gtk_min_macro = 'GDK_VERSION_@0@_@1@'.format(gtk_major, gtk_minor)
+add_project_arguments('-DGDK_VERSION_MIN_REQUIRED=' + gtk_min_macro, language: 'c')
+add_project_arguments('-DGDK_VERSION_MAX_ALLOWED=' + gtk_min_macro, language: 'c')
 
 harfbuzz_minver   = '2.8.2'
 harfbuzz          = dependency('harfbuzz',           version: '>='+harfbuzz_minver)
@@ -1211,7 +1232,7 @@ dbus_run_session = find_program('dbus-run-session', required: get_option('headle
 if xvfb_run.found() and dbus_run_session.found()
   conf.set('HAVE_XVFB_RUN', true)
   add_test_setup('headless',
-    exe_wrapper: find_program('build' / 'meson' / 'run_test_env.sh'),
+    exe_wrapper: find_program('tools' / 'run_test_env.sh'),
     is_default: true,
   )
 endif
@@ -1696,7 +1717,7 @@ if is_git_repository
   endif
 
   if git.found()
-    git_submodule_check = run_command(meson.project_source_root() / 'build/meson/check-gimp-data.py',
+    git_submodule_check = run_command(meson.project_source_root() / 'tools/check-gimp-data.py',
                                       check: false)
     if git_submodule_check.returncode() != 0
       submodule_warning = 'gimp-data submodule seems outdated. Possibly run from the source repository: git submodule update'
@@ -2028,7 +2049,7 @@ pkgconfig.generate(libgimpui,
 # Install native debug data (.pdb) on Windows
 # Ideally meson should take care of it automatically.
 # See: https://github.com/mesonbuild/meson/issues/12977
-if debugging_format == 'native'
+if platform_windows and debugging_format == 'native' and cc.get_argument_syntax() != 'msvc'
   install_win_debug_script = find_program('build/windows/2_bundle-gimp-uni_sym.py')
   meson.add_install_script(install_win_debug_script)
 endif

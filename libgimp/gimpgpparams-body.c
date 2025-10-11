@@ -289,6 +289,11 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                              param_def->meta.m_id.none_ok,
                                              flags);
 
+      if (! strcmp (param_def->type_name, "GimpParamLinkLayer"))
+        return gimp_param_spec_link_layer (name, nick, blurb,
+                                           param_def->meta.m_id.none_ok,
+                                           flags);
+
       if (! strcmp (param_def->type_name, "GimpParamGroupLayer"))
         return gimp_param_spec_group_layer (name, nick, blurb,
                                            param_def->meta.m_id.none_ok,
@@ -725,6 +730,10 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
         {
           type_name = "GimpParamVectorLayer";
         }
+      else if (value_type == GIMP_TYPE_LINK_LAYER)
+        {
+          type_name = "GimpParamLinkLayer";
+        }
       else if (value_type == GIMP_TYPE_GROUP_LAYER)
         {
           type_name = "GimpParamGroupLayer";
@@ -1031,10 +1040,10 @@ gimp_gp_param_to_value (gpointer        gimp,
   else if (GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value))
     {
       gimp_value_set_double_array (value,
-                                  (const gdouble *)
-                                  param->data.d_array.data,
-                                  param->data.d_array.size /
-                                  sizeof (gdouble));
+                                   (const gdouble *)
+                                   param->data.d_array.data,
+                                   param->data.d_array.size /
+                                   sizeof (gdouble));
     }
   else if (GIMP_VALUE_HOLDS_COLOR_ARRAY (value))
     {

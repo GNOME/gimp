@@ -146,6 +146,7 @@ gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
   tool_class->button_press   = gimp_measure_tool_button_press;
   tool_class->button_release = gimp_measure_tool_button_release;
   tool_class->motion         = gimp_measure_tool_motion;
+  tool_class->is_destructive = FALSE;
 
   tr_class->recalc_matrix    = gimp_measure_tool_recalc_matrix;
   tr_class->get_undo_desc    = gimp_measure_tool_get_undo_desc;

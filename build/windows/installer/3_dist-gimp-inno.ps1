@@ -26,7 +26,7 @@ Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0)
 ## Install or Update Inno (if needed)
 ## (We need to ensure that TLS 1.2 is enabled because of some runners)
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest https://jrsoftware.org/download.php/is.exe -OutFile ..\is.exe
+Invoke-WebRequest https://files.jrsoftware.org/is/6/innosetup-6.5.4.exe -OutFile ..\is.exe
 $inno_version_downloaded = (Get-Item ..\is.exe).VersionInfo.ProductVersion -replace ' ',''
 $broken_inno = Get-ChildItem $env:TMP -Filter *.isl.bak -ErrorAction SilentlyContinue
 $inno_version = Get-ItemProperty Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty DisplayVersion
@@ -233,14 +233,14 @@ $sha256 = (Get-FileHash $INSTALLER -Algorithm SHA256 | Select-Object -ExpandProp
 Write-Output "(INFO): $INSTALLER SHA-256: $sha256"
 if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
   {
-    [System.IO.File]::WriteAllText("$GIMP_BASE\$INSTALLER.SHA256SUMS", "$sha256 *$INSTALLER", $Utf8NoBomEncoding)
+    [System.IO.File]::WriteAllText("$PWD\$INSTALLER.SHA256SUMS", "$sha256 *$INSTALLER", $Utf8NoBomEncoding)
     #Set-Content $INSTALLER.SHA256SUMS "$sha256 *$INSTALLER" -Encoding utf8NoBOM -NoNewline
   }
 $sha512 = (Get-FileHash $INSTALLER -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()
 Write-Output "(INFO): $INSTALLER SHA-512: $sha512"
 if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
   {
-    [System.IO.File]::WriteAllText("$GIMP_BASE\$INSTALLER.SHA512SUMS", "$sha512 *$INSTALLER", $Utf8NoBomEncoding)
+    [System.IO.File]::WriteAllText("$PWD\$INSTALLER.SHA512SUMS", "$sha512 *$INSTALLER", $Utf8NoBomEncoding)
     #Set-Content $INSTALLER.SHA512SUMS "$sha512 *$INSTALLER" -Encoding utf8NoBOM -NoNewline
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_trust$([char]13)$([char]27)[0K"

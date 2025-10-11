@@ -464,12 +464,10 @@ gimp_image_window_constructed (GObject *object)
         }
     }
 
-#ifndef GDK_WINDOWING_QUARTZ
-  /* Docs says that macOS always returns FALSE but we actually want to create
-   * our custom macOS menu.
-   */
+#ifdef GDK_WINDOWING_QUARTZ
+  menus_quartz_app_menu (private->gimp);
+#else
   use_app_menu = gtk_application_prefers_app_menu (GTK_APPLICATION (private->gimp->app));
-#endif /* !GDK_WINDOWING_QUARTZ */
 
   if (use_app_menu)
     {
@@ -482,6 +480,7 @@ gimp_image_window_constructed (GObject *object)
       gtk_application_set_app_menu (GTK_APPLICATION (private->gimp->app),
                                     G_MENU_MODEL (app_menu_model));
     }
+#endif
 
   /* Create the hbox that contains docks and images */
   private->hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -706,7 +705,7 @@ gimp_image_window_configure_event (GtkWidget         *widget,
   if (GTK_WIDGET_CLASS (parent_class)->configure_event)
     GTK_WIDGET_CLASS (parent_class)->configure_event (widget, event);
 
-  /* If the window size has changed, make sure additoinal logic is run
+  /* If the window size has changed, make sure additional logic is run
    * in the display shell's size-allocate
    */
   if (event->width  != current_width ||
@@ -2125,7 +2124,7 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
                                         NULL /*new_entry_id*/,
                                         gimp_widget_get_monitor (GTK_WIDGET (window)));
     }
-  else
+  else if (private->initial_monitor != NULL)
     {
       /*  we are in construction, use the initial monitor; calling
        *  gimp_widget_get_monitor() would get us the monitor where the

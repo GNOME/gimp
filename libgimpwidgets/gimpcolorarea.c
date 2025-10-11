@@ -138,7 +138,7 @@ G_DEFINE_TYPE (GimpColorArea, gimp_color_area, GTK_TYPE_DRAWING_AREA)
 
 static guint gimp_color_area_signals[LAST_SIGNAL] = { 0 };
 
-static const GtkTargetEntry target = { "application/x-color", 0 };
+static const GtkTargetEntry target = { "application/x-geglcolor", 0 };
 
 
 static void
@@ -609,7 +609,7 @@ gimp_color_area_set_type (GimpColorArea     *area,
  * @drag_mask: The bitmask of buttons that can start the drag.
  *
  * Allows dragging the color displayed with buttons identified by
- * @drag_mask. The drag supports targets of type "application/x-color".
+ * @drag_mask. The drag supports targets of type "application/x-geglcolor".
  *
  * Note that setting a @drag_mask of 0 disables the drag ability.
  **/

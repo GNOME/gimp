@@ -1023,7 +1023,7 @@ gimp_page_selector_selection_changed (GtkIconView      *icon_view,
       gchar *text;
 
       if (n_selected == selector->n_pages)
-        text = g_strdup_printf (ngettext ("%d page selected",
+        text = g_strdup_printf (ngettext ("The page is selected",
                                           "All %d pages selected", n_selected),
                                 n_selected);
       else

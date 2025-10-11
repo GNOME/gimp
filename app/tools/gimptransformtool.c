@@ -98,7 +98,8 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
 {
   GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
-  tool_class->control  = gimp_transform_tool_control;
+  tool_class->control        = gimp_transform_tool_control;
+  tool_class->is_destructive = FALSE;
 
   klass->recalc_matrix = NULL;
   klass->get_undo_desc = gimp_transform_tool_real_get_undo_desc;

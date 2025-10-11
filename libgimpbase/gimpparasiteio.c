@@ -33,6 +33,10 @@
 #include <glib.h>
 
 #include "gimpparasiteio.h"
+#include "gimpversion-private.h"
+
+
+GIMP_WARNING_API_BREAK("Undeprecate this whole API and make it private instead")
 
 
 /**
@@ -47,6 +51,15 @@
  **/
 
 
+/**
+ * gimp_pixpipe_params_init:
+ * @params:
+ *
+ * Do not use this function. It is deprecated and will be removed
+ * eventually.
+ *
+ * Deprecated: 3.2: Only for core use.
+ */
 void
 gimp_pixpipe_params_init (GimpPixPipeParams *params)
 {
@@ -71,18 +84,28 @@ gimp_pixpipe_params_init (GimpPixPipeParams *params)
     params->rank[i] = 0;
 }
 
+/**
+ * gimp_pixpipe_params_parse:
+ * @parameters:
+ * @params:
+ *
+ * Do not use this function. It is deprecated and will be removed
+ * eventually.
+ *
+ * Deprecated: 3.2: Only for core use.
+ */
 void
-gimp_pixpipe_params_parse (const gchar       *string,
+gimp_pixpipe_params_parse (const gchar       *parameters,
                            GimpPixPipeParams *params)
 {
   gchar *copy;
   gchar *p, *q, *r;
   gint   i;
 
-  g_return_if_fail (string != NULL);
+  g_return_if_fail (parameters != NULL);
   g_return_if_fail (params != NULL);
 
-  copy = g_strdup (string);
+  copy = g_strdup (parameters);
 
   q = copy;
   while ((p = strtok (q, " \r\n")) != NULL)
@@ -166,6 +189,15 @@ gimp_pixpipe_params_parse (const gchar       *string,
   g_free (copy);
 }
 
+/**
+ * gimp_pixpipe_params_build:
+ * @params:
+ *
+ * Do not use this function. It is deprecated and will be removed
+ * eventually.
+ *
+ * Deprecated: 3.2: Only for core use.
+ */
 gchar *
 gimp_pixpipe_params_build (GimpPixPipeParams *params)
 {
@@ -192,6 +224,15 @@ gimp_pixpipe_params_build (GimpPixPipeParams *params)
   return g_string_free (str, FALSE);
 }
 
+/**
+ * gimp_pixpipe_params_free:
+ * @params:
+ *
+ * Do not use this function. It is deprecated and will be removed
+ * eventually.
+ *
+ * Deprecated: 3.2: Only for core use.
+ */
 void
 gimp_pixpipe_params_free (GimpPixPipeParams *params)
 {

@@ -3929,6 +3929,9 @@ static void   gimp_prop_coordinates_notify_unit (GObject       *config,
  * properties, which will usually represent X and Y coordinates, and
  * their associated unit property.
  *
+ * If @unit_format is %NULL, the unit will default to inch. Otherwise it
+ * must be the name of a property of type %GimpParamUnit:
+ *
  * Returns: (transfer full): A new #GimpSizeEntry widget.
  *
  * Since: 2.4
@@ -3955,19 +3958,18 @@ gimp_prop_coordinates_new (GObject                   *config,
     {
       GParamSpec *pspec_unit = NULL;
 
-      pspec_unit = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                                 unit_property_name);
+      pspec_unit = check_param_spec_w (config, unit_property_name,
+                                       GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
 
-      if (pspec_unit && GIMP_IS_PARAM_SPEC_UNIT (pspec_unit))
-        {
-          show_pixels   = gimp_param_spec_unit_pixel_allowed (pspec_unit);
-          show_percents = gimp_param_spec_unit_percent_allowed (pspec_unit);
+      g_return_val_if_fail (pspec_unit != NULL, NULL);
 
-          if (show_pixels)
-            show_resolution = FALSE;
+      show_pixels   = gimp_param_spec_unit_pixel_allowed (pspec_unit);
+      show_percents = gimp_param_spec_unit_percent_allowed (pspec_unit);
 
-          g_object_get (config, unit_property_name, &unit_type, NULL);
-        }
+      if (show_pixels)
+        show_resolution = FALSE;
+
+      g_object_get (config, unit_property_name, &unit_type, NULL);
     }
   else
     {

@@ -1230,7 +1230,22 @@ gimp_group_layer_get_bounding_box (GimpLayer *layer)
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
 
-  /* for pass-through groups, use the group's calculated bounding box, instead
+  /* With #4634 were reported to us cases where the get_bounding_box()
+   * was smaller than the calculated bounding box. But we also had the
+   * opposite case, which is that the get_bounding_box() value was
+   * bigger than the computed bounding_box (e.g. when having a
+   * pass-through group layer with a single transparent layer, smaller
+   * than the canvas: applying an effect only affects this layer,
+   * whereas the actual render of the layer group contains the below
+   * layers). Cf. #15004.
+   *
+   * XXX It feels like the parent's get_bounding_box() implementation
+   * (which gets the source node bounding box) is bugged and should not
+   * return what it does. This should likely be looked closer into.
+   * For now, I get the union bounding box of both these results.
+   *
+   * Older explanation for #4634:
+   * for pass-through groups, use the group's calculated bounding box, instead
    * of the source-node's bounding box, since we don't update the bounding box
    * on all events that may affect the latter, and since it includes the
    * bounding box of the backdrop.  this means we can't attach filters that may
@@ -1239,9 +1254,17 @@ gimp_group_layer_get_bounding_box (GimpLayer *layer)
    * through groups makes little sense anyway.
    */
   if (private->pass_through)
-    return private->bounding_box;
+    {
+      GeglRectangle rect = GIMP_LAYER_CLASS (parent_class)->get_bounding_box (layer);
+
+      gegl_rectangle_bounding_box (&rect, &private->bounding_box, &rect);
+
+      return rect;
+    }
   else
-    return GIMP_LAYER_CLASS (parent_class)->get_bounding_box (layer);
+    {
+      return GIMP_LAYER_CLASS (parent_class)->get_bounding_box (layer);
+    }
 }
 
 static void

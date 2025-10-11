@@ -155,6 +155,7 @@ gimp_align_tool_class_init (GimpAlignToolClass *klass)
   tool_class->cursor_update  = gimp_align_tool_cursor_update;
   tool_class->can_undo       = gimp_align_tool_can_undo;
   tool_class->undo           = gimp_align_tool_undo;
+  tool_class->is_destructive = FALSE;
 
   draw_tool_class->draw      = gimp_align_tool_draw;
 }

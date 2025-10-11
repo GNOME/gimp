@@ -24,6 +24,7 @@ static GtkWidget   *appwin            = NULL;
 static GtkNotebook *options_note_book = NULL;
 
 static GtkWidget *pointlightwid;
+static GtkWidget *viewpointlightwid;
 static GtkWidget *dirlightwid;
 
 static GtkWidget *sphere_page    = NULL;
@@ -110,16 +111,19 @@ lightmenu_callback (GimpProcedureConfig *config)
     {
       gtk_widget_set_visible (dirlightwid, FALSE);
       gtk_widget_set_visible (pointlightwid, TRUE);
+      gtk_widget_set_visible (viewpointlightwid, TRUE);
     }
   else if (light_type == DIRECTIONAL_LIGHT)
     {
       gtk_widget_set_visible (dirlightwid, TRUE);
       gtk_widget_set_visible (pointlightwid, FALSE);
+      gtk_widget_set_visible (viewpointlightwid, FALSE);
     }
   else
     {
       gtk_widget_set_visible (dirlightwid, FALSE);
       gtk_widget_set_visible (pointlightwid, FALSE);
+      gtk_widget_set_visible (viewpointlightwid, FALSE);
     }
 
   if (mapvals.livepreview)
@@ -434,13 +438,22 @@ main_dialog (GimpProcedure       *procedure,
                                     "options-frame",
                                     "general-options", FALSE,
                                     "general-box");
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
-                                        "depth", 1.0);
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "options-box",
-                                  "options-frame",
-                                  "antialiasing",
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin),
+                                  "antialias-box",
                                   "depth",
                                   "threshold",
+                                  NULL);
+  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+                                        "depth", 1.0);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
+                                    "antialias-frame",
+                                    "antialiasing", FALSE,
+                                    "antialias-box");
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "options-box",
+                                  "options-frame",
+                                  "antialias-frame",
                                   NULL);
 
   g_signal_connect (config, "notify::transparent-background",
@@ -537,7 +550,6 @@ main_dialog (GimpProcedure       *procedure,
   g_signal_connect (config, "notify::light-position-z",
                     G_CALLBACK (update_preview),
                     config);
-  lightmenu_callback (config);
 
   /* Viewpoint Tab */
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
@@ -551,10 +563,10 @@ main_dialog (GimpProcedure       *procedure,
                                          NULL);
   gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
                                   GTK_ORIENTATION_HORIZONTAL);
-  pointlightwid = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
-                                                    "viewpoint-position-frame",
-                                                    "viewpoint-position-label", FALSE,
-                                                    "viewpoint-position-box");
+  viewpointlightwid = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
+                                                        "viewpoint-position-frame",
+                                                        "viewpoint-position-label", FALSE,
+                                                        "viewpoint-position-box");
 
   gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
                                         "first-axis-x", 1.0);
@@ -636,6 +648,7 @@ main_dialog (GimpProcedure       *procedure,
   g_signal_connect (config, "notify::second-axis-z",
                     G_CALLBACK (update_preview),
                     config);
+  lightmenu_callback (config);
 
   /* Material Tab */
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),

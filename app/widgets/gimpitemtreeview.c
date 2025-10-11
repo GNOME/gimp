@@ -2245,7 +2245,7 @@ gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
 
           /* Also immediately pass a release event at same position.
            * Without this, we get weird pointer as though a quick drag'n
-           * drop occured.
+           * drop occurred.
            */
           new_event->type = GDK_BUTTON_RELEASE;
           gtk_main_do_event (new_event);

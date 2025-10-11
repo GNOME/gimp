@@ -224,18 +224,14 @@ gimp_user_install_run (GimpUserInstall *install,
 
   if (install->migrate)
     {
-      gchar *verstring;
-
-      /* TODO: these 2 strings should be merged into one, but it was not
-       * possible to do it at implementation time, in order not to break
-       * string freeze.
-       */
-      verstring = g_strdup_printf ("%d.%d", install->old_major, install->old_minor);
       user_install_log (install,
-                        _("It seems you have used GIMP %s before.  "
+                        /* TRANSLATORS: the %d.%d replacement strings
+                         * will be a series version (e.g. 2.10). The %s
+                         * replacement will be a directory.
+                         */
+                        _("It seems you have used GIMP %d.%d before.  "
                           "GIMP will now migrate your user settings to '%s'."),
-                        verstring, dirname);
-      g_free (verstring);
+                        install->old_major, install->old_minor, dirname);
     }
   else
     {
@@ -730,6 +726,20 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
                g_strcmp0 (action_match, "view-zoom-2-1")  == 0 ||
                g_strcmp0 (action_match, "view-zoom-1-1")  == 0)
         accel_variant = TRUE;
+      /* Various "vectors" actions renamed to "path" in 3.2. */
+      else if (g_strcmp0 (action_match, "tools-vector") == 0)
+        new_action_name = g_strdup ("tools-path");
+      else if (g_strcmp0 (action_match, "dialogs-vector") == 0)
+        new_action_name = g_strdup ("dialogs-path");
+      else if (g_strcmp0 (action_match, "layers-text-along-vectors") == 0)
+        new_action_name = g_strdup ("layers-text-along-path");
+      else if (g_strcmp0 (action_match, "layers-text-to-vectors") == 0)
+        new_action_name = g_strdup ("layers-text-to-path");
+      else if (g_strcmp0 (action_match, "view-snap-to-vectors") == 0)
+        new_action_name = g_strdup ("view-snap-to-path");
+      /* Generalized in GIMP 3.2 (works on text, link and vector layers). */
+      else if (g_strcmp0 (action_match, "layers-text-discard") == 0)
+        new_action_name = g_strdup ("layers-rasterize");
 
       if (new_action_name == NULL)
         new_action_name = g_strdup (action_match);
@@ -837,11 +847,12 @@ user_update_post_process_menurc_over20 (gpointer user_data)
 }
 
 #define SHORTCUTSRC_UPDATE_PATTERN \
-  "\"("                            \
-  "tools-vector|"                  \
-  "dialogs-vectors|"               \
-  "layers-text-.*-vectors|"        \
-  "view-snap-to-vectors"           \
+  "\"("                       "|" \
+  "tools-vector"              "|" \
+  "dialogs-vectors"           "|" \
+  "layers-text-.*-vectors"    "|" \
+  "view-snap-to-vectors"      "|" \
+  "layers-text-discard"           \
   ")\""
 
 static gboolean
@@ -875,6 +886,11 @@ user_update_shortcutsrc (const GMatchInfo *matched_value,
     {
       /* Renamed in GIMP 3.2. */
       g_string_append (new_value, "\"view-snap-to-path\"");
+    }
+  else if (g_strcmp0 (match, "\"layers-text-discard\"") == 0)
+    {
+      /* Generalized in GIMP 3.2 (works on text, link and vector layers). */
+      g_string_append (new_value, "\"layers-rasterize\"");
     }
 
   g_free (match);
@@ -935,7 +951,8 @@ user_update_controllerrc (const GMatchInfo *matched_value,
   "\\(position [0-9]* [0-9]*\\)"         "|" \
   "\\(size [0-9]* [0-9]*\\)"             "|" \
   "\\(left-docks-width \"?[0-9]*\"?\\)"  "|" \
-  "\\(right-docks-width \"?[0-9]*\"?\\)"
+  "\\(right-docks-width \"?[0-9]*\"?\\)" "|" \
+  "\"gimp-vectors-list\""
 
 static gboolean
 user_update_sessionrc_2to3 (const GMatchInfo *matched_value,
@@ -947,7 +964,12 @@ user_update_sessionrc_2to3 (const GMatchInfo *matched_value,
 
   original = g_match_info_fetch (matched_value, 0);
 
-  if (install->scale_factor != 1 && install->scale_factor > 0)
+  if (g_strcmp0 (original, "\"gimp-vectors-list\"") == 0)
+    {
+      /* Renamed in GIMP 3.2. */
+      g_string_append (new_value, "\"gimp-path-list\"");
+    }
+  else if (install->scale_factor != 1 && install->scale_factor > 0)
     {
       /* GTK < 3.0 didn't have scale factor support. It means that any
        * size and position back then would be in real pixel size. Now
@@ -1445,7 +1467,6 @@ user_install_migrate_files (GimpUserInstall *install)
                   post_process_callback = user_update_post_process_menurc_over20;
                   /* menurc becomes shortcutsrc in 3.0. */
                   new_dest              = "shortcutsrc";
-                  break;
                 }
             }
           else if (strcmp (basename, "shortcutsrc") == 0)

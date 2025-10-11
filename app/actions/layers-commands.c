@@ -150,6 +150,7 @@ static void   layers_add_mask_callback        (GtkWidget             *dialog,
                                                GimpAddMaskType        add_mask_type,
                                                GimpChannel           *channel,
                                                gboolean               invert,
+                                               gboolean               edit_mask,
                                                gpointer               user_data);
 static void   layers_scale_callback           (GtkWidget             *dialog,
                                                GimpViewable          *viewable,
@@ -1105,56 +1106,56 @@ layers_delete_cmd_callback (GimpAction *action,
 }
 
 void
-layers_link_discard_cmd_callback (GimpAction *action,
-                                  GVariant   *value,
-                                  gpointer    data)
+layers_rasterize_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpImage *image;
   GList     *layers;
   GList     *iter;
+
   return_if_no_layers (image, layers, data);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_PROPERTIES,
-                               _("Discard Links"));
+                               _("Rasterize Layers"));
+
   for (iter = layers; iter; iter = iter->next)
-    if (GIMP_IS_LINK_LAYER (iter->data))
-      gimp_link_layer_discard (GIMP_LINK_LAYER (iter->data));
+    {
+      if (gimp_item_is_link_layer (iter->data))
+        gimp_link_layer_discard (GIMP_LINK_LAYER (iter->data));
+      else if (gimp_item_is_text_layer (iter->data))
+        gimp_text_layer_discard (GIMP_TEXT_LAYER (iter->data));
+      else if (gimp_item_is_vector_layer (iter->data))
+        gimp_vector_layer_discard (GIMP_VECTOR_LAYER (iter->data));
+    }
+
   gimp_image_undo_group_end (image);
 }
 
 void
-layers_link_monitor_cmd_callback (GimpAction *action,
-                                  GVariant   *value,
-                                  gpointer    data)
+layers_retrieve_cmd_callback (GimpAction *action,
+                              GVariant   *value,
+                              gpointer    data)
 {
   GimpImage *image;
   GList     *layers;
   GList     *iter;
+
   return_if_no_layers (image, layers, data);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_PROPERTIES,
-                               _("Monitor Links"));
-  for (iter = layers; iter; iter = iter->next)
-    if (GIMP_IS_LINK_LAYER (iter->data))
-      gimp_link_layer_monitor (GIMP_LINK_LAYER (iter->data));
-  gimp_image_undo_group_end (image);
-}
+                               _("Revert Rasterize"));
 
-void
-layers_text_discard_cmd_callback (GimpAction *action,
-                                  GVariant   *value,
-                                  gpointer    data)
-{
-  GimpImage *image;
-  GList     *layers;
-  GList     *iter;
-  return_if_no_layers (image, layers, data);
-
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT,
-                               _("Discard Text Information"));
   for (iter = layers; iter; iter = iter->next)
-    if (GIMP_IS_TEXT_LAYER (iter->data))
-      gimp_text_layer_discard (GIMP_TEXT_LAYER (iter->data));
+    {
+      if (GIMP_IS_LINK_LAYER (iter->data) && ! gimp_item_is_link_layer (iter->data))
+        gimp_link_layer_monitor (GIMP_LINK_LAYER (iter->data));
+      else if (GIMP_IS_TEXT_LAYER (iter->data) && ! gimp_item_is_text_layer (iter->data))
+        gimp_text_layer_retrieve (GIMP_TEXT_LAYER (iter->data));
+      else if (GIMP_IS_VECTOR_LAYER (iter->data) && ! gimp_item_is_vector_layer (iter->data))
+        gimp_vector_layer_retrieve (GIMP_VECTOR_LAYER (iter->data));
+    }
+
   gimp_image_undo_group_end (image);
 }
 
@@ -1568,6 +1569,7 @@ layers_mask_add_cmd_callback (GimpAction *action,
                                           widget,
                                           config->layer_add_mask_type,
                                           config->layer_add_mask_invert,
+                                          config->layer_add_mask_edit_mask,
                                           layers_add_mask_callback,
                                           NULL);
 
@@ -1643,7 +1645,9 @@ layers_mask_add_last_vals_cmd_callback (GimpAction *action,
       if (config->layer_add_mask_invert)
         gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
 
-      gimp_layer_add_mask (iter->data, mask, TRUE, NULL);
+      gimp_layer_add_mask (iter->data, mask,
+                           config->layer_add_mask_edit_mask,
+                           TRUE, NULL);
     }
 
   gimp_image_undo_group_end (image);
@@ -1760,7 +1764,7 @@ layers_mask_show_cmd_callback (GimpAction *action,
             {
               /* if switching "show mask" on, and any selected layer's
                * mask is already visible, bail out because that's
-               * exactly the logic we use in the ui for multile
+               * exactly the logic we use in the ui for multiple
                * visible layer masks.
                */
               return;
@@ -1811,7 +1815,7 @@ layers_mask_disable_cmd_callback (GimpAction *action,
             {
               /* if switching "disable mask" on, and any selected
                * layer's mask is already disabled, bail out because
-               * that's exactly the logic we use in the ui for multile
+               * that's exactly the logic we use in the ui for multiple
                * disabled layer masks.
                */
               return;
@@ -2591,6 +2595,7 @@ layers_add_mask_callback (GtkWidget       *dialog,
                           GimpAddMaskType  add_mask_type,
                           GimpChannel     *channel,
                           gboolean         invert,
+                          gboolean         edit_mask,
                           gpointer         user_data)
 {
   GimpImage        *image  = gimp_item_get_image (GIMP_ITEM (layers->data));
@@ -2600,8 +2605,9 @@ layers_add_mask_callback (GtkWidget       *dialog,
   GError           *error = NULL;
 
   g_object_set (config,
-                "layer-add-mask-type",   add_mask_type,
-                "layer-add-mask-invert", invert,
+                "layer-add-mask-type",      add_mask_type,
+                "layer-add-mask-invert",    invert,
+                "layer-add-mask-edit-mask", edit_mask,
                 NULL);
 
   gimp_image_undo_group_start (image,
@@ -2617,7 +2623,7 @@ layers_add_mask_callback (GtkWidget       *dialog,
       if (config->layer_add_mask_invert)
         gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
 
-      if (! gimp_layer_add_mask (iter->data, mask, TRUE, &error))
+      if (! gimp_layer_add_mask (iter->data, mask, edit_mask, TRUE, &error))
         {
           gimp_message_literal (image->gimp,
                                 G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
@@ -2723,25 +2729,6 @@ layers_vector_fill_stroke_cmd_callback (GimpAction *action,
                                                 widget);
       gtk_widget_show (dialog);
     }
-}
-
-void
-layers_vector_discard_cmd_callback (GimpAction *action,
-                                    GVariant   *value,
-                                    gpointer    data)
-{
-  GimpImage *image;
-  GimpLayer *layer;
-  GList     *layers;
-  return_if_no_layers (image, layers, data);
-
-  if (g_list_length (layers) != 1)
-    return;
-
-  layer = layers->data;
-
-  if (GIMP_IS_VECTOR_LAYER (layer))
-    gimp_vector_layer_discard (GIMP_VECTOR_LAYER (layer));
 }
 
 static void

@@ -89,13 +89,14 @@ gimp_selection_tool_class_init (GimpSelectionToolClass *klass)
 {
   GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
-  tool_class->control       = gimp_selection_tool_control;
-  tool_class->modifier_key  = gimp_selection_tool_modifier_key;
-  tool_class->key_press     = gimp_edit_selection_tool_key_press;
-  tool_class->oper_update   = gimp_selection_tool_oper_update;
-  tool_class->cursor_update = gimp_selection_tool_cursor_update;
+  tool_class->control        = gimp_selection_tool_control;
+  tool_class->modifier_key   = gimp_selection_tool_modifier_key;
+  tool_class->key_press      = gimp_edit_selection_tool_key_press;
+  tool_class->oper_update    = gimp_selection_tool_oper_update;
+  tool_class->cursor_update  = gimp_selection_tool_cursor_update;
+  tool_class->is_destructive = FALSE;
 
-  klass->have_selection     = gimp_selection_tool_real_have_selection;
+  klass->have_selection      = gimp_selection_tool_real_have_selection;
 }
 
 static void

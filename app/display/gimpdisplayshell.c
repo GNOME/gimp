@@ -920,6 +920,7 @@ gimp_display_shell_finalize (GObject *object)
   g_clear_object (&shell->no_image_options);
   g_clear_pointer (&shell->title,  g_free);
   g_clear_pointer (&shell->status, g_free);
+  g_clear_weak_pointer (&shell->picked_layer);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

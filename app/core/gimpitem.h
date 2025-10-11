@@ -399,3 +399,6 @@ gboolean        gimp_item_mask_intersect     (GimpItem           *item,
 
 gboolean        gimp_item_is_in_set          (GimpItem           *item,
                                               GimpItemSet         set);
+
+gboolean        gimp_item_is_rasterizable    (GimpItem           *item);
+gboolean        gimp_item_is_rasterized      (GimpItem           *item);

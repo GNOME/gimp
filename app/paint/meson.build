@@ -63,6 +63,6 @@ libapppaint = static_library('apppaint',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-Paint"',
   dependencies: [
-    cairo, gegl, gdk_pixbuf, libmypaint,
+    cairo, gegl, gdk_pixbuf, gexiv2, libmypaint,
   ],
 )

@@ -1190,10 +1190,7 @@ gimp_font_get_sample_string (PangoContext         *context,
    */
   hb_font = hb_font_create_sub_font (hb_font);
   hb_ft_font_set_funcs (hb_font);
-  /* TODO: use hb_ft_font_lock_face/hb_ft_font_unlock_face() when we
-   * bump to harfbuzz >= 2.6.5.
-   */
-  face = hb_ft_font_get_face (hb_font);
+  face = hb_ft_font_lock_face (hb_font);
 
   /* Are there actual cases where this function could return NULL while
    * it's not a bug in the code?
@@ -1281,6 +1278,7 @@ gimp_font_get_sample_string (PangoContext         *context,
         }
     }
 
+  hb_ft_font_unlock_face (hb_font);
   hb_font_destroy (hb_font);
   g_object_unref (font);
 

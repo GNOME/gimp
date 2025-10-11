@@ -8,11 +8,11 @@ if [ -z "$APPDIR" ]; then
 fi
 
 
-## Minimum runtime-sandboxed paths. See: #13527, #13603 and #13001
+## Minimum runtime paths. See: #13527 and #13603
 export PATH="${APPDIR}/usr/bin/:$PATH"
 unset LD_PRELOAD
 unset LD_LIBRARY_PATH
-export XDG_DATA_DIRS="${APPDIR}/usr/share/"
+export XDG_DATA_DIRS="${APPDIR}/usr/share/:$XDG_DATA_DIRS"
 
 
 ## Other needed runtime paths (added by 3_dist-gimp-goappimage.sh)

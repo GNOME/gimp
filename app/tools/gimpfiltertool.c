@@ -57,12 +57,17 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "core/gimplinklayer.h"
 #include "core/gimplist.h"
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 #include "core/gimpsettings.h"
 #include "core/gimptoolinfo.h"
+
+#include "path/gimpvectorlayer.h"
+
+#include "text/gimptextlayer.h"
 
 #include "widgets/gimplayermodebox.h"
 #include "widgets/gimppropwidgets.h"
@@ -228,6 +233,7 @@ gimp_filter_tool_class_init (GimpFilterToolClass *klass)
   tool_class->oper_update    = gimp_filter_tool_oper_update;
   tool_class->cursor_update  = gimp_filter_tool_cursor_update;
   tool_class->options_notify = gimp_filter_tool_options_notify;
+  tool_class->is_destructive = FALSE;
 
   color_tool_class->can_pick = gimp_filter_tool_can_pick_color;
   color_tool_class->pick     = gimp_filter_tool_pick_color;
@@ -422,14 +428,18 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
           /* TODO: Once we can serialize GimpDrawable, remove so that filters with
            * aux nodes can be non-destructive */
-          if (gegl_node_has_pad (filter_tool->operation, "aux") ||
+          if (gegl_node_has_pad (filter_tool->operation, "aux")         ||
               (g_strcmp0 (operation_name, "gegl:gegl") == 0 &&
-               g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL))
+               g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL) ||
+              gimp_item_is_vector_layer (GIMP_ITEM (drawable))          ||
+              gimp_item_is_text_layer (GIMP_ITEM (drawable))            ||
+              gimp_item_is_link_layer (GIMP_ITEM (drawable)))
             {
               GParamSpec  *param_spec;
               GObject     *obj = G_OBJECT (tool_info->tool_options);
               gchar       *tooltip;
               const gchar *disabled_reason;
+              gboolean     show_merge;
 
               param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (obj),
                                                          "merge-filter");
@@ -437,15 +447,23 @@ gimp_filter_tool_initialize (GimpTool     *tool,
               toggle =
                 gtk_check_button_new_with_mnemonic (g_param_spec_get_nick (param_spec));
 
-              gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
+              show_merge = (! gimp_item_is_vector_layer (GIMP_ITEM (drawable)) &&
+                            ! gimp_item_is_text_layer (GIMP_ITEM (drawable))   &&
+                            ! gimp_item_is_link_layer (GIMP_ITEM (drawable)));
+              gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), show_merge);
               gtk_widget_set_sensitive (toggle, FALSE);
 
               if (gegl_node_has_pad (filter_tool->operation, "aux"))
                 disabled_reason = _("Disabled because this filter depends on another image.");
+              else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)))
+                disabled_reason = _("Disabled because filters cannot be merged on vector layers.");
+              else if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+                disabled_reason = _("Disabled because filters cannot be merged on link layers.");
+              else if (gimp_item_is_text_layer (GIMP_ITEM (drawable)))
+                disabled_reason = _("Disabled because filters cannot be merged on text layers.");
               else
-                /* TODO: localize when string freeze is over. */
-                disabled_reason = "Disabled because GEGL Graph is unsafe.\nFor development purpose, "
-                                  "set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.";
+                disabled_reason = _("Disabled because GEGL Graph is unsafe.\nFor development purpose, "
+                                    "set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.");
 
               tooltip = g_strdup_printf ("%s\n<i>%s</i>", g_param_spec_get_blurb (param_spec), disabled_reason);
               gimp_help_set_help_data_with_markup (toggle, tooltip, NULL);
@@ -551,46 +569,51 @@ gimp_filter_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_COMMIT:
       if (filter_tool->filter)
-        drawable = gimp_drawable_filter_get_drawable (filter_tool->filter);
-
-      /* TODO: Expand non-destructive editing to other drawables
-       * besides layers and channels */
-      if ((! GIMP_IS_LAYER (drawable) && ! GIMP_IS_CHANNEL (drawable)) ||
-          GIMP_IS_LAYER_MASK (drawable)                                ||
-          (! filter_tool->existing_filter && options->merge_filter))
-        non_destructive = FALSE;
-
-      if (filter_tool->operation)
         {
-          gegl_node_get (filter_tool->operation,
-                         "operation", &operation_name,
-                         NULL);
+          drawable = gimp_drawable_filter_get_drawable (filter_tool->filter);
 
-          if (! g_strcmp0 (operation_name, "gegl:nop"))
+          /* TODO: Expand non-destructive editing to other drawables
+           * besides layers and channels */
+          if ((! GIMP_IS_LAYER (drawable) && ! GIMP_IS_CHANNEL (drawable)) ||
+              GIMP_IS_LAYER_MASK (drawable)                                ||
+              (! filter_tool->existing_filter && options->merge_filter))
             non_destructive = FALSE;
 
-          /* TODO: Once we can serialize GimpDrawable, remove so that filters with
-           * aux nodes can be non-destructive */
-          if (gegl_node_has_pad (filter_tool->operation, "aux") ||
-              /* GEGL graph is dangerous even without using third-party
-               * effects, because it may run any effect. E.g.  it can
-               * run sink effects overwriting any local files with user
-               * rights. We leave a way in through an environment
-               * variable because it is a useful tool for GEGL ops
-               * developers but it should only be set while knowing what
-               * you are doing.
-               */
-              (g_strcmp0 (operation_name, "gegl:gegl") == 0 &&
-               g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL))
-            non_destructive = FALSE;
+          if (filter_tool->operation)
+            {
+              gegl_node_get (filter_tool->operation,
+                             "operation", &operation_name,
+                             NULL);
 
-          g_free (operation_name);
+              if (! g_strcmp0 (operation_name, "gegl:nop"))
+                non_destructive = FALSE;
+
+              /* TODO: Once we can serialize GimpDrawable, remove so that
+               * filters with aux nodes can be non-destructive */
+              if (gegl_node_has_pad (filter_tool->operation, "aux") ||
+                  /* GEGL graph is dangerous even without using third-party
+                   * effects, because it may run any effect. E.g.  it can
+                   * run sink effects overwriting any local files with user
+                   * rights. We leave a way in through an environment
+                   * variable because it is a useful tool for GEGL ops
+                   * developers but it should only be set while knowing what
+                   * you are doing.
+                   */
+                  (g_strcmp0 (operation_name, "gegl:gegl") == 0 &&
+                   g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL))
+                non_destructive = FALSE;
+
+              g_free (operation_name);
+            }
+
+          /* Ensure that filters applied to group, vector or link layers are
+           * non-destructive */
+          if (GIMP_IS_GROUP_LAYER (drawable)                   ||
+              gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
+              gimp_item_is_text_layer (GIMP_ITEM (drawable))   ||
+              gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+            non_destructive = TRUE;
         }
-
-      /* Ensure that filters applied to group layers are non-destructive */
-      if (GIMP_IS_GROUP_LAYER (drawable))
-        non_destructive = TRUE;
-
       gimp_filter_tool_commit (filter_tool, non_destructive);
       break;
     }
@@ -1553,6 +1576,10 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
   merge_filter = options->merge_filter;
   if (gegl_node_has_pad (filter_tool->operation, "aux"))
     merge_filter = TRUE;
+  else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
+           gimp_item_is_text_layer (GIMP_ITEM (drawable))   ||
+           gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+    merge_filter = FALSE;
 
   g_object_set (filter_tool->filter,
                 "to-be-merged", merge_filter,
@@ -2561,26 +2588,37 @@ gimp_filter_tool_get_drawable_area (GimpFilterTool *filter_tool,
       gimp_item_get_offset (GIMP_ITEM (drawable),
                             drawable_offset_x, drawable_offset_y);
 
-      switch (settings->region)
+      if (GIMP_IS_GROUP_LAYER (drawable) &&
+          gimp_layer_get_mode (GIMP_LAYER (drawable)) == GIMP_LAYER_MODE_PASS_THROUGH)
         {
-        case GIMP_FILTER_REGION_SELECTION:
-          if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                                          &drawable_area->x,
-                                          &drawable_area->y,
-                                          &drawable_area->width,
-                                          &drawable_area->height))
-            {
-              drawable_area->x      = 0;
-              drawable_area->y      = 0;
-              drawable_area->width  = 1;
-              drawable_area->height = 1;
-            }
-          break;
+          GeglRectangle rect = gimp_drawable_get_bounding_box (drawable);
 
-        case GIMP_FILTER_REGION_DRAWABLE:
-          drawable_area->width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-          drawable_area->height = gimp_item_get_height (GIMP_ITEM (drawable));
-          break;
+          drawable_area->width  = rect.width;
+          drawable_area->height = rect.height;
+        }
+      else
+        {
+          switch (settings->region)
+            {
+            case GIMP_FILTER_REGION_SELECTION:
+              if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                              &drawable_area->x,
+                                              &drawable_area->y,
+                                              &drawable_area->width,
+                                              &drawable_area->height))
+                {
+                  drawable_area->x      = 0;
+                  drawable_area->y      = 0;
+                  drawable_area->width  = 1;
+                  drawable_area->height = 1;
+                }
+              break;
+
+            case GIMP_FILTER_REGION_DRAWABLE:
+              drawable_area->width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+              drawable_area->height = gimp_item_get_height (GIMP_ITEM (drawable));
+              break;
+            }
         }
 
       return TRUE;

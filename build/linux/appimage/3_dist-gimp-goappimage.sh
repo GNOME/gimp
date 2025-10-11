@@ -179,14 +179,18 @@ bund_usr ()
                    $(dirname $(echo /$2 | sed "s|*|no_scape|g"))"
       ;;
   esac
+  unset not_found_tpath found_tpath
   for path in $search_path; do
     expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
-    if [ ! -d "$expanded_path" ]; then
+    if (echo ${2##*/} | grep -q '\*' && echo "$(echo $expanded_path/${2##*/})" | grep -q '\*') || (! echo ${2##*/} | grep -q '\*' && [ ! -e "$expanded_path/${2##*/}" ]); then
+      not_found_tpath=true
       continue
+    else
+      found_tpath=true
     fi
 
     #Copy found targets from search_path to bundle dir
-    for target_path in $(find $expanded_path -maxdepth 1 -name ${2##*/}); do
+    for target_path in $(find -L $expanded_path -maxdepth 1 -name ${2##*/} 2>/dev/null); do
       dest_path="$(dirname $(echo $target_path | sed -e "s|^$1/|${USR_DIR}/|" -e t -e "s|^/|${USR_DIR}/|"))"
       output_dest_path="$dest_path"
       if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
@@ -237,6 +241,11 @@ bund_usr ()
       fi
     done
   done
+
+  if [ "$not_found_tpath" ] && [ -z "$found_tpath" ] && [ "$3" != '--bundler' ] && [ "$5" != '--bundler' ]; then
+    printf "\033[31m(ERROR)\033[0m: not found $2 in none of the search paths.\n"
+    exit 1
+  fi
 
   #Undo the tweak done above
   cd ..
@@ -295,6 +304,7 @@ prep_pkg "xapps-common"
 bund_usr "$UNIX_PREFIX" "share/glib-*/schemas"
 ### Glib commonly required modules
 bund_usr "$UNIX_PREFIX" "lib/gvfs/*.so"
+bund_usr "$UNIX_PREFIX" "lib/libproxy/libpxbackend*.so" --dest "${LIB_DIR}/${LIB_SUBDIR}"
 bund_usr "$UNIX_PREFIX" "lib/gio/modules/*"
 conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio/modules"
 conf_app GIO_EXTRA_MODULES "" --no-expand
@@ -315,6 +325,7 @@ conf_app GTK_PATH "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0"
 prep_pkg "ibus-gtk3"
 bund_usr "$UNIX_PREFIX" "lib/gtk-3.0/*.*.*/immodules/*.so" --bundler
 conf_app GTK_IM_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*/immodules.cache"
+conf_app GTK_MODULES "" --no-expand
 
 ## Core features
 bund_usr "$GIMP_PREFIX" "lib/libbabl*"
@@ -330,20 +341,35 @@ lang_list=$(echo $(ls po/*.po | sed -e 's|po/||g' -e 's|.po||g' | sort) | tr '\n
 for lang in $lang_list; do
   bund_usr "$GIMP_PREFIX" share/locale/$lang/LC_MESSAGES
   # Needed for eventually used widgets, GTK inspector etc
-  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk3*.mo
+  if ! echo "$(echo $UNIX_PREFIX/share/locale/$lang/LC_MESSAGES/gtk3*.mo)" | grep -q '\*'; then
+    bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk3*.mo
+  fi
   # For language list in text tool options
-  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*3.mo
+  if ! echo "$(echo $UNIX_PREFIX/share/locale/$lang/LC_MESSAGES/iso_639*3.mo)" | grep -q '\*'; then 
+    bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*3.mo
+  fi
 done
 bund_usr "$GIMP_PREFIX" "etc/gimp"
 
 ## Other features and plug-ins
 ### mypaint brushes
 bund_usr "$UNIX_PREFIX" "share/mypaint-data/2.0"
+####https://salsa.debian.org/multimedia-team/mypaint-brushes/-/merge_requests/2
+for myb in $(find "$USR_DIR/share/mypaint-data/2.0/brushes/Dieterle" -iname "*.myb"); do
+  sed -i -e 's|surfacemap_x|gridmap_x|g' -e 's|surfacemap_y|gridmap_y|g' $myb;
+done
 ### Needed for 'th' word breaking in Text tool etc
 bund_usr "$UNIX_PREFIX" "share/libthai"
 conf_app LIBTHAI_DICTDIR "share/libthai"
+### Needed for file-heif work
+bund_usr "$UNIX_PREFIX" "lib/libheif/plugins/*.so"
+conf_app LIBHEIF_PLUGIN_PATH "${LIB_DIR}/${LIB_SUBDIR}libheif/plugins"
 ### Needed for full CJK and Cyrillic support in file-pdf
 bund_usr "$UNIX_PREFIX" "share/poppler"
+### Needed for file-ps work. See: #14785
+bund_usr "$UNIX_PREFIX" "share/ghostscript/*/iccprofiles/*.icc"
+bund_usr "$UNIX_PREFIX" "share/ghostscript/*/Resource/Init"
+conf_app GS_LIB "share/ghostscript/10*/Resource/Init"
 ### file-wmf support
 bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/Nimbus*" --dest "share/libwmf/fonts"
 bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/StandardSymbols*" --dest "share/libwmf/fonts"
@@ -358,9 +384,6 @@ if [ "$GIMP_UNSTABLE" ] || [ -z "$GIMP_RELEASE" ]; then
   ### Needed for GTK inspector
   bund_usr "$UNIX_PREFIX" "lib/libEGL*"
   bund_usr "$UNIX_PREFIX" "lib/libGL*"
-  bund_usr "$UNIX_PREFIX" "lib/dri*"
-  #TODO: remove this on Debian Trixie (which have Mesa 24.2)
-  conf_app LIBGL_DRIVERS_PATH "${LIB_DIR}/${LIB_SUBDIR}dri"
 fi
 ### Debug dialog
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
@@ -374,7 +397,8 @@ wipe_usr ${LIB_DIR}/*.pyc
 conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand
 #### JavaScript plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/gjs*"
-bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-1.0/Gjs*" --dest "${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"
+bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-*/Gjs*.typelib" --dest "${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"
+bund_usr "$UNIX_PREFIX" "lib/girepository-*/GioUnix*.typelib"
 ####FIXME: lua crashes with loop: See: #11895
 #bund_usr "$UNIX_PREFIX" "bin/luajit" --rename "lua"
 #bund_usr "$UNIX_PREFIX" "lib/liblua5.1-lgi*"

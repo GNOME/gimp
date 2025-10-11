@@ -469,8 +469,8 @@ struct _EXRLoader
         channels_.layers (layerNames);
 
         name   = *std::next(layerNames.begin(), index);
-        result = (gchar *) g_memdup2 (name.c_str () + '\0',
-                                      strlen (name.c_str ()) + 1);
+        result = (gchar *) g_memdup2 (name.c_str(),
+                                      name.size() + 1);
       }
     return result;
   }

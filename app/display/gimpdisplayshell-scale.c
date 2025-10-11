@@ -246,7 +246,7 @@ gimp_display_shell_scale_get_image_size (GimpDisplayShell *shell,
  * @w:
  * @h:
  *
- * Gets the screen-space boudning box of the image, after it has
+ * Gets the screen-space bounding box of the image, after it has
  * been transformed (i.e., scaled, rotated, and scrolled).
  **/
 void
@@ -290,7 +290,7 @@ gimp_display_shell_scale_get_image_bounds (GimpDisplayShell *shell,
  * @w:
  * @h:
  *
- * Gets the screen-space boudning box of the image, after it has
+ * Gets the screen-space bounding box of the image, after it has
  * been scaled and scrolled, but before it has been rotated.
  **/
 void
@@ -320,7 +320,7 @@ gimp_display_shell_scale_get_image_unrotated_bounds (GimpDisplayShell *shell,
  * @w:
  * @h:
  *
- * Gets the screen-space boudning box of the image content, after it has
+ * Gets the screen-space bounding box of the image content, after it has
  * been transformed (i.e., scaled, rotated, and scrolled).
  **/
 void
@@ -375,7 +375,7 @@ gimp_display_shell_scale_get_image_bounding_box (GimpDisplayShell *shell,
  * @w:
  * @h:
  *
- * Gets the screen-space boudning box of the image content, after it has
+ * Gets the screen-space bounding box of the image content, after it has
  * been scaled and scrolled, but before it has been rotated.
  **/
 void
@@ -1289,9 +1289,9 @@ gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
                                                          &new_scale_width,
                                                          &new_scale_height);
 
-      *vertically   = (current_scale_width  >  shell->disp_width &&
+      *horizontally = (current_scale_width  >  shell->disp_width &&
                        new_scale_width      <= shell->disp_width);
-      *horizontally = (current_scale_height >  shell->disp_height &&
+      *vertically   = (current_scale_height >  shell->disp_height &&
                        new_scale_height     <= shell->disp_height);
     }
 

@@ -80,6 +80,10 @@
 #  undef RGB
 #endif
 
+#ifdef GDK_WINDOWING_QUARTZ
+#include <Cocoa/Cocoa.h>
+#endif
+
 #include <locale.h>
 
 #include "gimp.h"
@@ -227,16 +231,33 @@ gimp_main (GType  plug_in_type,
   /* Use Dr. Mingw (dumps backtrace on crash) if it is available. */
   {
     time_t   t;
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+    gchar   *plugin_dir;
+    size_t   codeview_path_len;
     gchar   *codeview_path;
+#endif
     gchar   *filename;
     gchar   *dir;
     wchar_t *plug_in_backtrace_path_utf16;
 
-    /* FIXME: https://github.com/jrfonseca/drmingw/issues/91 */
-    codeview_path = g_build_filename (gimp_installation_directory (),
-                                      "bin", NULL);
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+    /* FIXME: https://github.com/jrfonseca/drmingw/issues/91
+     * FIXME: This needs to take into account the plugin path
+    plugin_dir = ???
+    codeview_path_len = strlen (g_getenv ("_NT_SYMBOL_PATH") ? g_getenv ("_NT_SYMBOL_PATH") : "") + strlen (plugin_dir) + 2;
+    codeview_path = g_try_malloc (codeview_path_len);
+    if (codeview_path == NULL)
+      {
+        g_warning ("Failed to allocate memory");
+      }
+    if (g_getenv ("_NT_SYMBOL_PATH"))
+      g_snprintf (codeview_path, codeview_path_len, "%s;%s", plugin_dir, g_getenv ("_NT_SYMBOL_PATH"));
+    else
+      g_snprintf (codeview_path, codeview_path_len, "%s", plugin_dir);
     g_setenv ("_NT_SYMBOL_PATH", codeview_path, TRUE);
     g_free (codeview_path);
+    g_free (plugin_dir);*/
+#endif
 
     /* This has to be the non-roaming directory (i.e., the local
      * directory) as backtraces correspond to the binaries on this
@@ -336,6 +357,14 @@ gimp_main (GType  plug_in_type,
     }
 
 #endif /* G_OS_WIN32 */
+
+#ifdef GDK_WINDOWING_QUARTZ
+  /* Sets activation policy to prevent plugins from appearing as separate apps
+   * in Dock.
+   * Makes plugins behave as helper processes of GIMP on macOS.
+   */
+  [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+#endif
 
   g_assert (plug_in_type != G_TYPE_NONE);
 

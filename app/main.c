@@ -1,4 +1,4 @@
-﻿/* GIMP - The GNU Image Manipulation Program
+/* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -475,7 +475,7 @@ gimp_early_configuration (void)
   if (user_gimprc)
     user_gimprc_file = g_file_new_for_commandline_arg (user_gimprc);
 
-  /* GimpEarlyRc is reponsible for reading "gimprc" files for the
+  /* GimpEarlyRc is responsible for reading "gimprc" files for the
    * sole purpose of getting some configuration data that is needed
    * in the early initialization phase
    */
@@ -761,10 +761,10 @@ main (int    argc,
 
   /* The GIMP option group is just an empty option group, created for
    * the sole purpose of running a post-parse hook before any other of
-   * dependant libraries are run. This makes it possible to apply
+   * dependent libraries are run. This makes it possible to apply
    * options from configuration data obtained from "gimprc" files,
    * before other libraries have a chance to run some of their
-   * intialization code.
+   * initialization code.
    */
   gimp_group = g_option_group_new ("gimp", "", "", NULL, NULL);
   g_option_group_set_parse_hooks (gimp_group, NULL,

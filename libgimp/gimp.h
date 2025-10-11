@@ -57,6 +57,7 @@
 #include <libgimp/gimpitem.h>
 #include <libgimp/gimplayer.h>
 #include <libgimp/gimplayermask.h>
+#include <libgimp/gimplinklayer.h>
 #include <libgimp/gimploadprocedure.h>
 #include <libgimp/gimppalette.h>
 #include <libgimp/gimpparamspecs.h>

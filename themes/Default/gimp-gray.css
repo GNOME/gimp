@@ -33,23 +33,23 @@
 
 /* Background color for hovered items to "stick out". */
 @define-color hover-color            #bbbbbb;
-/* Background color when we want widgets-in-widgets to differenciate. It
+/* Background color when we want widgets-in-widgets to differentiate. It
  * will usually be "less extreme", i.e. darker on a light theme, or
  * lighter on a dark theme.
  */
 @define-color widget-bg-color        rgb(100,100,100);
 /* Color for selected items, in particular when their usual background
- * color is @widget-bg-color or @bg-color. It will usually be ligher on
+ * color is @widget-bg-color or @bg-color. It will usually be lighter on
  * a light theme, or darker on a dark theme.
  */
 @define-color selected-color         #898989;
 
 /* Background color more extreme in the theme tendency, i.e. darker on a
- * dark theme, ligther on a light theme. */
+ * dark theme, lighter on a light theme. */
 @define-color extreme-bg-color       #898989;
 /* Color for a selected item to "stick out" when @extreme-bg-color is
  * used. It will usually be darker than @bg-color on a light theme,
- * ligher on a dark theme.
+ * lighter on a dark theme.
  */
 @define-color extreme-selected-color #656565;
 

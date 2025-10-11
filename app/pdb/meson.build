@@ -49,6 +49,7 @@ libappinternalprocs_sources = [
   'item-cmds.c',
   'item-transform-cmds.c',
   'layer-cmds.c',
+  'link-layer-cmds.c',
   'message-cmds.c',
   'paint-tools-cmds.c',
   'palette-cmds.c',
@@ -74,7 +75,7 @@ libapppdb = static_library('apppdb',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-PDB"',
   dependencies: [
-    cairo, gegl, gdk_pixbuf,
+    cairo, gegl, gdk_pixbuf, gexiv2
   ],
 )
 
@@ -84,7 +85,7 @@ libappinternalprocs = static_library('appinternalprocs',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-PDB"',
   dependencies: [
-    cairo, gegl, gdk_pixbuf, pangocairo, pango,
+    cairo, gegl, gdk_pixbuf, gexiv2, pangocairo, pango,
   ],
   sources: [
     pdbgen

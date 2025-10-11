@@ -88,6 +88,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include <archive.h>
+#include <archive_entry.h>
 #include <zlib.h>
 #include <bzlib.h>
 #include <lzma.h>
@@ -201,6 +203,9 @@ static gboolean            xz_load                  (GFile                 *infi
                                                      GFile                 *outfile);
 static gboolean            xz_export                (GFile                 *infile,
                                                      GFile                 *outfile);
+
+static gboolean            zip_load                 (GFile                 *infile,
+                                                     GFile                 *outfile);
 static goffset             get_file_info            (GFile                 *file);
 
 
@@ -215,58 +220,77 @@ static const CompressorEntry compressors[] =
   {
     N_("gzip archive"),
     "application/x-gzip",
-    "xcf.gz,xcfgz", /* FIXME "xcf.gz,gz,xcfgz" */
+    "gz,xcf.gz,xcfgz",
     "0,string,\037\213",
     ".xcfgz",
     ".gz",
 
     "file-gz-load",
-    "loads files compressed with gzip",
-    "This procedure loads files in the gzip compressed format.",
+    N_("Loads files compressed with gzip"),
+    N_("This procedure loads files in the gzip compressed format."),
     gzip_load,
 
     "file-gz-export",
-    "saves files compressed with gzip",
-    "This procedure saves files in the gzip compressed format.",
+    N_("Exports files compressed with gzip"),
+    N_("This procedure exports files in the gzip compressed format."),
     gzip_export
   },
 
   {
     N_("bzip archive"),
     "application/x-bzip",
-    "xcf.bz2,xcfbz2", /* FIXME "xcf.bz2,bz2,xcfbz2" */
+    "bz2,xcf.bz2,xcfbz2",
     "0,string,BZh",
     ".xcfbz2",
     ".bz2",
 
     "file-bz2-load",
-    "loads files compressed with bzip2",
-    "This procedure loads files in the bzip2 compressed format.",
+    N_("Loads files compressed with bzip2"),
+    N_("This procedure loads files in the bzip2 compressed format."),
     bzip2_load,
 
     "file-bz2-export",
-    "saves files compressed with bzip2",
-    "This procedure saves files in the bzip2 compressed format.",
+    N_("Exports files compressed with bzip2"),
+    N_("This procedure exports files in the bzip2 compressed format."),
     bzip2_export
   },
 
   {
     N_("xz archive"),
     "application/x-xz",
-    "xcf.xz,xcfxz", /* FIXME "xcf.xz,xz,xcfxz" */
+    "xz,xcf.xz,xcfxz",
     "0,string,\3757zXZ\x00",
     ".xcfxz",
     ".xz",
 
     "file-xz-load",
-    "loads files compressed with xz",
-    "This procedure loads files in the xz compressed format.",
+    N_("Loads files compressed with xz"),
+    N_("This procedure loads files in the xz compressed format."),
     xz_load,
 
     "file-xz-export",
-    "saves files compressed with xz",
-    "This procedure saves files in the xz compressed format.",
+    N_("Exports files compressed with xz"),
+    N_("This procedure exports files in the xz compressed format."),
     xz_export
+  },
+
+  {
+    N_("zip archive"),
+    "application/zip",
+    "zip,hgt.zip",
+    "0,string,PK\x03\x04",
+    ".xcfzip",
+    ".zip",
+
+    "file-zip-load",
+    N_("Loads files compressed with zip"),
+    N_("This procedure loads files in the zip compressed format."),
+    zip_load,
+
+    NULL,
+    NULL,
+    NULL,
+    NULL
   }
 };
 
@@ -297,7 +321,8 @@ compressor_query_procedures (GimpPlugIn *plug_in)
       const CompressorEntry *compressor = &compressors[i];
 
       list = g_list_append (list, g_strdup (compressor->load_proc));
-      list = g_list_append (list, g_strdup (compressor->save_proc));
+      if (compressor->save_proc)
+        list = g_list_append (list, g_strdup (compressor->save_proc));
     }
 
   return list;
@@ -322,14 +347,14 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
                                                (gpointer) compressor, NULL);
 
           gimp_procedure_set_documentation (procedure,
-                                            compressor->load_blurb,
-                                            compressor->load_help,
+                                            _(compressor->load_blurb),
+                                            _(compressor->load_help),
                                             name);
 
           gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                           compressor->magic);
         }
-      else if (! strcmp (name, compressor->save_proc))
+      else if (compressor->save_proc && ! strcmp (name, compressor->save_proc))
         {
           procedure = gimp_export_procedure_new (plug_in, name,
                                                  GIMP_PDB_PROC_TYPE_PLUGIN,
@@ -339,8 +364,8 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
           gimp_procedure_set_image_types (procedure, "RGB*, GRAY*, INDEXED*");
 
           gimp_procedure_set_documentation (procedure,
-                                            compressor->save_blurb,
-                                            compressor->save_help,
+                                            _(compressor->save_blurb),
+                                            _(compressor->save_help),
                                             name);
         }
 
@@ -387,8 +412,7 @@ compressor_load (GimpProcedure         *procedure,
   gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
                                       GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-  image = load_image (compressor, file, run_mode,
-                      &status, &error);
+  image = load_image (compressor, file, run_mode, &status, &error);
 
   return_vals = gimp_procedure_new_return_values (procedure, status, error);
 
@@ -526,9 +550,17 @@ load_image (const CompressorEntry  *compressor,
 
   if (image)
     {
+      GFile *xcf_file;
+
       *status = GIMP_PDB_SUCCESS;
 
-      gimp_image_set_file (image, file);
+      if ((xcf_file = gimp_image_get_xcf_file (image)))
+        /* Replace the temporary file with the actual source file, but
+         * only if the inner format was actually XCF.
+         */
+        gimp_image_set_file (image, file);
+
+      g_clear_object (&xcf_file);
     }
   else
     {
@@ -1007,6 +1039,79 @@ xz_export (GFile *infile,
 
   lzma_end (&strm);
   ret = TRUE;
+
+ out:
+  if (in)
+    fclose (in);
+
+  if (out)
+    fclose (out);
+
+  return ret;
+}
+
+static gboolean
+zip_load (GFile *infile,
+          GFile *outfile)
+{
+  gboolean              ret;
+  FILE                 *in;
+  FILE                 *out;
+  struct archive       *a;
+  struct archive_entry *entry;
+  gint                  r;
+
+  ret = FALSE;
+  in  = NULL;
+  out = NULL;
+
+  in = g_fopen (g_file_peek_path (infile), "rb");
+  if (!in)
+    goto out;
+
+  out = g_fopen (g_file_peek_path (outfile), "wb");
+  if (! out)
+    goto out;
+
+  if ((a = archive_read_new ()))
+    {
+      const gchar *name = gimp_file_get_utf8_name (infile);
+
+      archive_read_support_format_all (a);
+
+      r = archive_read_open_filename (a, name, 10240);
+      if (r != ARCHIVE_OK)
+        {
+          archive_read_close (a);
+          archive_read_free (a);
+
+          goto out;
+        }
+
+      if (archive_read_next_header (a, &entry) == ARCHIVE_OK)
+        {
+          r = archive_read_data_into_fd (a, fileno (out));
+
+          if (r != ARCHIVE_OK)
+            {
+              archive_read_close (a);
+              archive_read_free (a);
+
+              goto out;
+            }
+          ret = TRUE;
+
+          if (archive_read_next_header (a, &entry) != ARCHIVE_EOF)
+            /* Leave a chance for the load to succeed (in case the first
+             * file happens to be an image file), yet still warns. This
+             * procedure expects that the archive contains a single
+             * file.
+             */
+            g_message (_("This zip archive contains more than one file."));
+        }
+      archive_read_close (a);
+      archive_read_free (a);
+    }
 
  out:
   if (in)

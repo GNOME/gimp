@@ -242,6 +242,7 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
   tool_class->oper_update      = gimp_text_tool_oper_update;
   tool_class->cursor_update    = gimp_text_tool_cursor_update;
   tool_class->get_popup        = gimp_text_tool_get_popup;
+  tool_class->is_destructive   = FALSE;
 
   draw_tool_class->draw        = gimp_text_tool_draw;
 }
@@ -1772,15 +1773,15 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
 
                                      _("Create _New Layer"), RESPONSE_NEW,
                                      _("_Cancel"),           GTK_RESPONSE_CANCEL,
-                                     _("_Edit"),             GTK_RESPONSE_ACCEPT,
+                                     _("_Edit Anyway"),      GTK_RESPONSE_ACCEPT,
 
                                      NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           RESPONSE_NEW,
-                                           GTK_RESPONSE_ACCEPT,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            RESPONSE_NEW,
+                                            GTK_RESPONSE_ACCEPT,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
@@ -1794,13 +1795,8 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
                       vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  label = gtk_label_new (_("The layer you selected is a text layer but "
-                           "it has been modified using other tools. "
-                           "Editing the layer with the text tool will "
-                           "discard these modifications."
-                           "\n\n"
-                           "You can edit the layer or create a new "
-                           "text layer from its text attributes."));
+  label = gtk_label_new (_("The text layer you picked was rasterized. "
+                           "Editing its text will discard any modifications."));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);

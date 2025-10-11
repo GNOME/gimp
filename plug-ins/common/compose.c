@@ -41,6 +41,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "libgimpbase/gimpversion-private.h"
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -762,17 +763,17 @@ compose_run (GimpProcedure        *procedure,
         }
     }
 
-    if (strcmp (name, RECOMPOSE_PROC) != 0)
-      {
-        compose_idx = gimp_procedure_config_get_choice_id (config, "compose-type");
+  if (strcmp (name, RECOMPOSE_PROC) != 0)
+    {
+      compose_idx = gimp_procedure_config_get_choice_id (config, "compose-type");
 
-        if (compose_idx >= 0 && compose_idx < G_N_ELEMENTS (compose_dsc))
-          {
-            g_strlcpy (composevals.compose_type,
-                       compose_dsc[compose_idx].compose_type,
-                       sizeof (composevals.compose_type));
-          }
-      }
+      if (compose_idx >= 0 && compose_idx < G_N_ELEMENTS (compose_dsc))
+        {
+          g_strlcpy (composevals.compose_type,
+                     compose_dsc[compose_idx].compose_type,
+                     sizeof (composevals.compose_type));
+        }
+    }
 
   gimp_progress_init (_("Composing"));
 
@@ -861,13 +862,17 @@ static GeglBuffer *
 get_buffer_with_filters (GimpLayer *layer)
 {
   GimpImage  *image = gimp_item_get_image (GIMP_ITEM (layer));
-  GimpLayer  *temp  = gimp_layer_copy (layer);
+  GimpImage  *tmp_image;
+  GimpLayer  *temp;
   GeglBuffer *src_buffer;
   GeglBuffer *dst_buffer;
 
-  gimp_image_insert_layer (image, temp, NULL,
-                           gimp_image_get_item_position (image,
-                                                         GIMP_ITEM (layer)));
+  tmp_image = gimp_image_new (gimp_image_get_width (image),
+                              gimp_image_get_height (image),
+                              gimp_image_get_base_type (image));
+  temp = gimp_layer_new_from_drawable (GIMP_DRAWABLE (layer), tmp_image);
+
+  gimp_image_insert_layer (tmp_image, temp, NULL, 0);
 
   gimp_drawable_merge_filters (GIMP_DRAWABLE (temp));
 
@@ -877,8 +882,8 @@ get_buffer_with_filters (GimpLayer *layer)
 
   gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dst_buffer, NULL);
 
-  gimp_image_remove_layer (image, temp);
   g_object_unref (src_buffer);
+  gimp_image_delete (tmp_image);
 
   return dst_buffer;
 }
@@ -1034,6 +1039,23 @@ compose (const gchar         *compose_type,
           compose_idx = j;
           break;
         }
+    }
+
+  GIMP_WARNING_API_BREAK("Update 'decompose-type' choices? See discussion in MR !2424.")
+  /* TODO: The strings used in decompose.c's "decompose-type" do not match
+   * the values of compose_type for YCbCr values. We'll need to wait until
+   * the next API break to fix. For now, we can do additional checks if the
+   * loop above fails when called for Recompose. */
+  if (compose_idx < 0)
+    {
+      if (g_ascii_strcasecmp (compose_type, "ycbcr470f") == 0)
+        compose_idx = 9;
+      else if (g_ascii_strcasecmp (compose_type, "ycbcr709f") == 0)
+        compose_idx = 10;
+      else if (g_ascii_strcasecmp (compose_type, "ycbcr470") == 0)
+        compose_idx = 7;
+      else if (g_ascii_strcasecmp (compose_type, "ycbcr709") == 0)
+        compose_idx = 8;
     }
 
   if (compose_idx < 0)

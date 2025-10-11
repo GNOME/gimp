@@ -378,7 +378,7 @@ gimp_canvas_layer_boundary_set_layers (GimpCanvasLayerBoundary *boundary,
         }
 
       if (x1        != (gint) x ||
-          x1        != (gint) y ||
+          y1        != (gint) y ||
           (x2 - x1) != (gint) w ||
           (y2 - y1) != (gint) h ||
           edit_mask != private->edit_mask)

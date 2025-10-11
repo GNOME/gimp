@@ -28,6 +28,6 @@ libapppropgui = static_library('apppropgui',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-PropGUI"',
   dependencies: [
-    gegl, gtk3,
+    gegl, gtk3, gexiv2
   ],
 )

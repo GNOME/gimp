@@ -383,6 +383,18 @@ package Gimp::CodeGen::pdb;
 		     take_value_func => 'g_value_set_object ($value, $var)',
 		     headers         => [ qw("path/gimpvectorlayer.h") ] },
 
+    link_layer  => { name            => 'LINK_LAYER',
+		     gtype           => 'GIMP_TYPE_LINK_LAYER',
+		     type            => 'GimpLinkLayer *',
+		     const_type      => 'GimpLinkLayer *',
+		     init_value      => 'NULL',
+		     out_annotate    => '(transfer none)',
+		     get_value_func  => '$var = g_value_get_object ($value)',
+		     dup_value_func  => '$var = GIMP_VALUES_GET_LINK_LAYER ($value)',
+		     set_value_func  => 'g_value_set_object ($value, $var)',
+		     take_value_func => 'g_value_set_object ($value, $var)',
+		     headers         => [ qw("core/gimplinklayer.h") ] },
+
     group_layer => { name            => 'GROUP_LAYER',
 		     gtype           => 'GIMP_TYPE_GROUP_LAYER',
 		     type            => 'GimpGroupLayer *',
@@ -476,7 +488,7 @@ package Gimp::CodeGen::pdb;
 		     get_value_func  => '$var = g_value_get_object ($value)',
 		     dup_value_func  => '$var = GIMP_VALUES_DUP_FILE ($value)',
 		     set_value_func  => 'g_value_set_object ($value, $var)',
-		     take_value_func => 'g_value_set_object ($value, $var)' },
+		     take_value_func => 'g_value_take_object ($value, $var)' },
 
     parasite    => { name            => 'PARASITE',
 		     gtype           => 'GIMP_TYPE_PARASITE',

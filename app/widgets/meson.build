@@ -280,6 +280,6 @@ libappwidgets = static_library('appwidgets',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-Widgets"',
   dependencies: [
-    gegl, gtk3,
+    gegl, gtk3, gexiv2,
   ],
 )

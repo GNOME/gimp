@@ -6,22 +6,22 @@
 # redarmy <redarmy@linuxaid.com.cn>, 2004.
 # 神州散人 <kappa8086@gmail.com>, 2008.
 # Aron Xu <aronmalache@163.com>, 2008.
-# lumingzh <lumingzh@qq.com>, 2022.
+# lumingzh <lumingzh@qq.com>, 2022-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-07 18:06+0000\n"
-"PO-Revision-Date: 2022-07-10 11:05+0800\n"
+"POT-Creation-Date: 2025-09-22 20:48+0000\n"
+"PO-Revision-Date: 2025-09-23 08:28+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
-"Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
+"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 42.0\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Gtranslator 49.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: data/tips/gimp-tips.xml.in:18
 msgid ""
@@ -48,8 +48,8 @@ msgstr "您可以在图层对话框中右点图层的文本标签进行许多图
 
 #: data/tips/gimp-tips.xml.in:37
 msgid ""
-"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
-"xcf</tt>). This preserves the layers and many aspects of your work-in-"
+"Saving an image uses XCF, GIMP's native file format (file extension "
+"<tt>.xcf</tt>). This preserves the layers and many aspects of your work-in-"
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
@@ -143,9 +143,9 @@ msgstr ""
 
 #: data/tips/gimp-tips.xml.in:116
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
-"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
-"be saved compressed. Of course loading compressed images works too."
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
+"<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
+"will be saved compressed. Of course loading compressed images works too."
 msgstr ""
 "GIMP 支持实时的 gzip 压缩。只要在文件名后面加上 <tt>.gz</tt>（或者 <tt>.bz2</"
 "tt>，如果您安装了 bzip2 的话）您的图像就会被压缩保存起来。当然加载压缩的图像"
@@ -211,27 +211,13 @@ msgstr ""
 
 #: data/tips/gimp-tips.xml.in:175
 msgid ""
-"After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
-"you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. If \"Save Keyboard "
-"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP. You "
-"should probably disable \"Dynamic Keyboard Shortcuts\" afterwards, to "
-"prevent accidentally assigning/reassigning shortcuts."
-msgstr ""
-"当您在首选项对话框中启用了“动态快捷键”以后，您就可以重新分配快捷键了。只要弹"
-"出菜单，选择一个菜单项，然后按新的快捷键组合就行了。如果启用了“保存快捷键”，"
-"退出 GIMP 时，这些新的快捷键将会被保存下来。之后您可以禁用“动态快捷键”，以避"
-"免意外分配/重新分配快捷键。"
-
-#: data/tips/gimp-tips.xml.in:186
-msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
 msgstr ""
 "如果您的屏幕太乱了，您可以在一个图像窗口中按 <tt>Tab</tt> 键来隐藏或显示工具"
 "箱和其它的对话框。"
 
-#: data/tips/gimp-tips.xml.in:193
+#: data/tips/gimp-tips.xml.in:182
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -239,16 +225,16 @@ msgstr ""
 "<tt>Shift</tt>+点击 图层对话框的眼睛图标可以隐藏除此以外的其它所有图层。再次 "
 "<tt>Shift</tt>+点击 显示所有的图层。"
 
-#: data/tips/gimp-tips.xml.in:199
+#: data/tips/gimp-tips.xml.in:188
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
 "mask's preview in the Layers dialog toggles viewing the mask directly."
 msgstr ""
 "<tt>Ctrl</tt>+点击 图层对话框中的图层蒙板的预览可以切换图层蒙板的效果。"
-"<tt>Alt</tt>+点击 图层对话框中的图层蒙版的预览可以直接开关蒙版显示。"
+"<tt>Alt</tt>+点击 图层对话框中的图层蒙板的预览可以直接开关蒙板显示。"
 
-#: data/tips/gimp-tips.xml.in:206
+#: data/tips/gimp-tips.xml.in:195
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -256,7 +242,7 @@ msgstr ""
 "您可以使用 <tt>Ctrl</tt>+<tt>Tab</tt> 在一幅图像的各个图层之间循环切换(只要您"
 "的窗口管理器没有捕捉那些键……)。"
 
-#: data/tips/gimp-tips.xml.in:212
+#: data/tips/gimp-tips.xml.in:201
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -266,20 +252,33 @@ msgstr ""
 "使用油漆桶填充工具时 <tt>Ctrl</tt>+点击 可以让它使用背景色而不是前景色。类似"
 "地，<tt>Ctrl</tt>+点击 用于颜色拾取工具可以设定背景色而不是前景色。"
 
-#: data/tips/gimp-tips.xml.in:220
+#: data/tips/gimp-tips.xml.in:209
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr ""
 "使用旋转工具时，<tt>Ctrl</tt>+拖动 可以使得旋转角度限制在 15 度的整倍数。"
 
-#: data/tips/gimp-tips.xml.in:226
+#: data/tips/gimp-tips.xml.in:215
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the \"Auto\" button in the Levels tool "
 "(Colors→Levels). If there are any color casts, you can correct them with the "
 "Curves tool (Colors→Curves)."
 msgstr ""
-"如果您扫描的一些照片看起来色彩不足，您可以使用色阶工具（[颜色]→[色阶]）中"
-"的“自动”按钮轻松改进它们的色调范围。如果有什么颜色损失，您可以用曲线工具（[颜"
+"如果您扫描的一些照片看起来色彩不足，您可以使用色阶工具（[颜色]→[色阶]）中的"
+"“自动”按钮轻松改进它们的色调范围。如果有什么颜色损失，您可以用曲线工具（[颜"
 "色]→[曲线]）把它们纠正回来。"
+
+#~ msgid ""
+#~ "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences "
+#~ "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
+#~ "selecting a menu item, and pressing the desired key combination. If "
+#~ "\"Save Keyboard Shortcuts\" is enabled, the key bindings are saved when "
+#~ "you exit GIMP. You should probably disable \"Dynamic Keyboard Shortcuts\" "
+#~ "afterwards, to prevent accidentally assigning/reassigning shortcuts."
+#~ msgstr ""
+#~ "当您在首选项对话框中启用了“动态快捷键”以后，您就可以重新分配快捷键了。只要"
+#~ "弹出菜单，选择一个菜单项，然后按新的快捷键组合就行了。如果启用了“保存快捷"
+#~ "键”，退出 GIMP 时，这些新的快捷键将会被保存下来。之后您可以禁用“动态快捷"
+#~ "键”，以避免意外分配/重新分配快捷键。"

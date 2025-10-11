@@ -152,7 +152,7 @@ gimp_id_table_insert (GimpIdTable *id_table, gpointer data)
  * @data: The data to associate with the id
  *
  * Insert data in the id table with a specific ID. If data already
- * exsts with the given ID, this function fails.
+ * exists with the given ID, this function fails.
  *
  * Returns: The used ID if successful, -1 if it was already in use.
  **/

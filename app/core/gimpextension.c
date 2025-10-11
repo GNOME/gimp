@@ -406,16 +406,25 @@ gimp_extension_load (GimpExtension  *extension,
   metadata = as_metadata_new ();
   success = as_metadata_parse_file (metadata, file, AS_FORMAT_KIND_XML, error);
 
+  if (success)
+    {
 #if AS_CHECK_VERSION(1, 0, 0)
-  components = as_metadata_get_components (metadata);
-  component  = as_component_box_index (components, 0);
+      components = as_metadata_get_components (metadata);
+      component  = as_component_box_index (components, 0);
 #else
-  components = as_metadata_get_components (metadata);
-  component  = g_ptr_array_index (components, 0);
+      components = as_metadata_get_components (metadata);
+      component  = g_ptr_array_index (components, 0);
 #endif
+    }
 
   g_object_unref (file);
   g_free (path);
+
+  if (!success)
+    {
+      return success;
+    }
+
 
   if (success && as_component_get_kind (component) != AS_COMPONENT_KIND_ADDON)
     {

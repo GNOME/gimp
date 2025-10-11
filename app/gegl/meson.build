@@ -56,5 +56,6 @@ libappgegl = static_library('appgegl',
     cairo,
     gegl,
     gdk_pixbuf,
+    gexiv2
   ],
 )

@@ -1218,7 +1218,8 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       /* group meter */
       if (group_info->has_meter)
         {
-          GeglColor *color = gegl_color_new (NULL);
+          GeglColor *color    = gegl_color_new (NULL);
+          gdouble    interval = priv->update_interval;
 
           meter = gimp_meter_new (priv->gimp, group_data->n_meter_values);
           group_data->meter = GIMP_METER (meter);
@@ -1226,7 +1227,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
                                    g_dgettext (NULL, group_info->description),
                                    NULL);
           gimp_meter_set_history_resolution (GIMP_METER (meter),
-                                             priv->update_interval / 1000.0);
+                                             interval / 1000.0);
           gimp_meter_set_history_duration (GIMP_METER (meter),
                                            priv->history_duration / 1000.0);
           gtk_box_pack_start (GTK_BOX (vbox2), meter, FALSE, FALSE, 0);
@@ -3318,7 +3319,7 @@ gimp_dashboard_field_to_string (GimpDashboard *dashboard,
   const FieldInfo      *field_info    = &group_info->fields[field];
   const VariableInfo   *variable_info = &variables[field_info->variable];
   const VariableData   *variable_data = &priv->variables[field_info->variable];
-  /* Tranlators: "N/A" is an abbreviation for "not available" */
+  /* Translators: "N/A" is an abbreviation for "not available" */
   const gchar          *str           = C_("dashboard-value", "N/A");
   gboolean              static_str    = TRUE;
   gboolean              show_limit    = TRUE;
@@ -4922,8 +4923,10 @@ gimp_dashboard_set_update_interval (GimpDashboard              *dashboard,
 
           if (group_data->meter)
             {
+              gdouble interval = update_interval;
+
               gimp_meter_set_history_resolution (group_data->meter,
-                                                 update_interval / 1000.0);
+                                                 interval / 1000.0);
             }
         }
 

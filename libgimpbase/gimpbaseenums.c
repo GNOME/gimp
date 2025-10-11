@@ -1789,6 +1789,70 @@ gimp_text_justification_get_type (void)
 }
 
 GType
+gimp_text_outline_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_TEXT_OUTLINE_NONE, "GIMP_TEXT_OUTLINE_NONE", "none" },
+    { GIMP_TEXT_OUTLINE_STROKE_ONLY, "GIMP_TEXT_OUTLINE_STROKE_ONLY", "stroke-only" },
+    { GIMP_TEXT_OUTLINE_STROKE_FILL, "GIMP_TEXT_OUTLINE_STROKE_FILL", "stroke-fill" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_TEXT_OUTLINE_NONE, NC_("text-outline", "Filled"), NULL },
+    { GIMP_TEXT_OUTLINE_STROKE_ONLY, NC_("text-outline", "Outlined"), NULL },
+    { GIMP_TEXT_OUTLINE_STROKE_FILL, NC_("text-outline", "Outlined and filled"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpTextOutline", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "text-outline");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_text_outline_direction_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_TEXT_OUTLINE_DIRECTION_OUTER, "GIMP_TEXT_OUTLINE_DIRECTION_OUTER", "outer" },
+    { GIMP_TEXT_OUTLINE_DIRECTION_INNER, "GIMP_TEXT_OUTLINE_DIRECTION_INNER", "inner" },
+    { GIMP_TEXT_OUTLINE_DIRECTION_CENTERED, "GIMP_TEXT_OUTLINE_DIRECTION_CENTERED", "centered" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_TEXT_OUTLINE_DIRECTION_OUTER, NC_("text-outline-direction", "Outer"), NULL },
+    { GIMP_TEXT_OUTLINE_DIRECTION_INNER, NC_("text-outline-direction", "Inner"), NULL },
+    { GIMP_TEXT_OUTLINE_DIRECTION_CENTERED, NC_("text-outline-direction", "Centered"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpTextOutlineDirection", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "text-outline-direction");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_transfer_mode_get_type (void)
 {
   static const GEnumValue values[] =

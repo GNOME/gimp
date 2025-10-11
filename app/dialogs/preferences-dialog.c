@@ -2476,6 +2476,9 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "layer-add-mask-invert",
                           _("Invert mask"),
                           GTK_BOX (vbox2));
+  prefs_check_button_add (object, "layer-add-mask-edit-mask",
+                          _("Edit mask immediately"),
+                          GTK_BOX (vbox2));
 
   /*  Merge Layers Dialog  */
   vbox2 = prefs_frame_new (_("Merge Layers Dialog"),

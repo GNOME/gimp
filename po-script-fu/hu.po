@@ -13,16 +13,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-02-28 19:23+0000\n"
-"PO-Revision-Date: 2025-02-28 20:40+0100\n"
-"Last-Translator: Balázs Meskó <mesko.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2025-09-01 10:57+0000\n"
+"PO-Revision-Date: 2025-09-01 15:59+0200\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
@@ -218,7 +218,7 @@ msgstr "Script-Fu mappaválasztó"
 msgid "Error while executing %s:"
 msgstr "Hiba „%s” végrehajtása közben:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:417
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:541
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Hiba „%s” betöltése közben:"
@@ -237,17 +237,14 @@ msgstr "Rézsútos keret hozzáadása egy képhez"
 
 #. v3 >>> additional argument
 #: plug-ins/script-fu/scripts/add-bevel.scm:206
-#| msgid "Thickness"
 msgid "_Thickness"
 msgstr "_Vastagság"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:207
-#| msgid "Work on copy"
 msgid "_Work on copy"
 msgstr "_Munka a másolaton"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:208
-#| msgid "Keep bump layer"
 msgid "_Keep bump layer"
 msgstr "_Buckaréteg megtartása"
 
@@ -550,7 +547,6 @@ msgid "Stain"
 msgstr "Folt"
 
 #: plug-ins/script-fu/scripts/coffee.scm:132
-#| msgid "_Coffee Stain..."
 msgid "_Stain..."
 msgstr "_Folt…"
 
@@ -559,7 +555,6 @@ msgid "Add layers of stain or blotch marks"
 msgstr "Foltokat vagy foltos jeleket tartalmazó rétegek hozzáadása"
 
 #: plug-ins/script-fu/scripts/coffee.scm:139
-#| msgid "Number of lines"
 msgid "Number of stains to add"
 msgstr "Hozzáadandó foltok száma"
 
@@ -571,14 +566,38 @@ msgstr "Csak sötétítés"
 msgid "Gradient to color stains"
 msgstr "Színátmenet színes foltokká"
 
-#: plug-ins/script-fu/scripts/difference-clouds.scm:76
-#| msgid "_Difference Clouds..."
+#: plug-ins/script-fu/scripts/difference-clouds.scm:82
 msgid "_Difference Clouds"
 msgstr "_Különbségfelhők"
 
-#: plug-ins/script-fu/scripts/difference-clouds.scm:77
+#: plug-ins/script-fu/scripts/difference-clouds.scm:83
 msgid "Solid noise applied with Difference layer mode"
 msgstr "„Különbség” rétegmódban létrehozott egyenletes zaj"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:89
+msgid "Random Seed"
+msgstr "Véletlenszerű kiindulóérték"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:90
+msgid "Levels"
+msgstr "Szintek"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:91
+#| msgid "_Tileable Blur..."
+msgid "Tileable"
+msgstr "Csempézhető"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:92
+msgid "Turbulent"
+msgstr "Turbulens"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:93
+msgid "X"
+msgstr "X"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:94
+msgid "Y"
+msgstr "Y"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm:112
 msgid "_Distort..."
@@ -734,7 +753,6 @@ msgid "Flatten image"
 msgstr "Kép lapítása"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:63
-#| msgid "Using _Paths"
 msgid "_Using Paths"
 msgstr "Út_vonalak használata"
 
@@ -775,12 +793,10 @@ msgid "Drawing _Simple Objects"
 msgstr "_Egyszerű objektumok rajzolása"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:140
-#| msgid "Create and Use _Selections"
 msgid "_Create and Use Selections"
 msgstr "Kiválasztások _létrehozása és használata"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:150
-#| msgid "_[Table of Contents]"
 msgid "_Table of Contents"
 msgstr "_Tartalomjegyzék"
 
@@ -949,22 +965,18 @@ msgstr ""
 "előtérszínnel megrajzolt sugarakkal"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:124
-#| msgid "Number of lines"
 msgid "_Number of lines"
 msgstr "_Vonalak száma"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:125
-#| msgid "Sharpness (degrees)"
 msgid "S_harpness (degrees)"
 msgstr "É_lesség (fokban)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:126
-#| msgid "Offset radius"
 msgid "O_ffset radius"
 msgstr "Eltolás _sugara"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:127
-#| msgid "Randomness"
 msgid "Ran_domness"
 msgstr "Véletlenszerűsé_g"
 
@@ -1117,8 +1129,8 @@ msgstr "J_ava-leképezés…"
 #: plug-ins/script-fu/scripts/palette-export.scm:426
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
-"Az aktív paletta exportálása mint java.util.Hashtable&lt;Karakterlánc,"
-"Szín&gt;"
+"Az aktív paletta exportálása mint "
+"java.util.Hashtable&lt;Karakterlánc,Szín&gt;"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:59
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:45
@@ -1167,12 +1179,10 @@ msgid "_Pattern name"
 msgstr "_Minta neve"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
-#| msgid "_Patterns"
 msgid "My Pattern"
 msgstr "Saját minta"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
-#| msgid "_Patterns"
 msgid "mypattern"
 msgstr "saját_minta"
 
@@ -1221,17 +1231,14 @@ msgstr ""
 "réteghez"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:90
-#| msgid "Rippling strength"
 msgid "Ri_ppling strength"
 msgstr "_Fodrozás erőssége"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:91
-#| msgid "Number of frames"
 msgid "_Number of frames"
 msgstr "_Képkockák száma"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:92
-#| msgid "Edge behavior"
 msgid "Edge _behavior"
 msgstr "_Szél viselkedése"
 
@@ -1374,22 +1381,18 @@ msgstr ""
 "csempézéshez"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:84
-#| msgid "Radius"
 msgid "Ra_dius"
 msgstr "_Sugár"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:85
-#| msgid "Blur vertically"
 msgid "Blur _vertically"
 msgstr "_Függőleges elmosás"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:86
-#| msgid "Blur horizontally"
 msgid "Blur _horizontally"
 msgstr "_Vízszintes elmosás"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:87
-#| msgid "Blur type"
 msgid "Blur _type"
 msgstr "Elmosás _típusa"
 

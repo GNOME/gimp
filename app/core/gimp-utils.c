@@ -605,7 +605,7 @@ gimp_get_fill_params (GimpContext   *context,
  * @start_y:
  * @end_x:
  * @end_y:
- * @n_snap_lines: Number evenly disributed lines to snap to.
+ * @n_snap_lines: Number evenly distributed lines to snap to.
  * @offset_angle: The angle by which to offset the lines, in degrees.
  * @xres:         The horizontal resolution.
  * @yres:         The vertical resolution.

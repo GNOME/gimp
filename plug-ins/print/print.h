@@ -53,4 +53,5 @@ typedef struct
   gboolean            use_full_page;
   gboolean            draw_crop_marks;
   GtkPrintOperation  *operation;
+  gboolean            has_layout_gui;
 } PrintData;

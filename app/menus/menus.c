@@ -20,6 +20,10 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef PLATFORM_OSX
+#include <AppKit/AppKit.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 
 #include "menus-types.h"
@@ -52,7 +56,11 @@
 
 /*  private variables  */
 
-static gboolean   menurc_deleted      = FALSE;
+static gboolean menurc_deleted = FALSE;
+
+#ifdef PLATFORM_OSX
+static Gimp    *unique_gimp    = NULL;
+#endif
 
 
 /*  public functions  */
@@ -542,3 +550,115 @@ menus_get_image_manager_singleton (Gimp *gimp)
 
   return image_ui_manager;
 }
+
+#ifdef PLATFORM_OSX
+@interface GimpappMenuHandler : NSObject
+@end
+
+@implementation GimpappMenuHandler
++ (void) gimpShowAbout:(id) sender
+{
+  GimpUIManager *ui_manager = menus_get_image_manager_singleton (unique_gimp);
+
+  gimp_ui_manager_activate_action (ui_manager, "dialogs", "dialogs-about");
+}
+
++ (void) gimpShowWelcomeDialog:(id) sender
+{
+  GimpUIManager *ui_manager = menus_get_image_manager_singleton (unique_gimp);
+
+  gimp_ui_manager_activate_action (ui_manager, "dialogs", "dialogs-welcome");
+}
+
++ (void) gimpShowPreferences:(id) sender
+{
+  GimpUIManager *ui_manager = menus_get_image_manager_singleton (unique_gimp);
+
+  gimp_ui_manager_activate_action (ui_manager, "dialogs", "dialogs-preferences");
+}
+
++ (void) gimpShowInputDevices:(id) sender
+{
+  GimpUIManager *ui_manager = menus_get_image_manager_singleton (unique_gimp);
+
+  gimp_ui_manager_activate_action (ui_manager, "dialogs", "dialogs-input-devices");
+}
+
++ (void) gimpShowKeyboardShortcuts:(id) sender
+{
+  GimpUIManager *ui_manager = menus_get_image_manager_singleton (unique_gimp);
+
+  gimp_ui_manager_activate_action (ui_manager, "dialogs", "dialogs-keyboard-shortcuts");
+}
+
++ (void) gimpQuit:(id) sender
+{
+  GimpUIManager *ui_manager = menus_get_image_manager_singleton (unique_gimp);
+
+  gimp_ui_manager_activate_action (ui_manager, "file", "file-quit");
+}
+@end
+
+void
+menus_quartz_app_menu (Gimp *gimp)
+{
+  NSMenu     *main_menu;
+  NSMenuItem *app_menu_item;
+  NSMenu     *app_menu;
+  NSInteger   last_index;
+  NSMenuItem *item;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  unique_gimp = gimp;
+
+  main_menu     = [NSApp mainMenu];
+  app_menu_item = [main_menu itemAtIndex:0];
+  app_menu      = [app_menu_item submenu];
+
+  /* On macOS, some standard menu items (e.g. "Hide", "Hide Others", "Show All", "Quit")
+   * are automatically provided by the system rather than created by our application.
+   * For the items we need to customize, we override their default behavior with our own
+   * implementations. In addition, we extend the menu with extra entries specific to
+   * our application’s functionality. */
+
+  [app_menu setTitle:@"GIMP"];
+
+  /* About */
+  item = [app_menu itemAtIndex:0];
+  [item setTarget:[GimpappMenuHandler class]];
+  [item setAction:@selector (gimpShowAbout:)];
+
+  /* Welcome Dialog */
+  item = [[NSMenuItem alloc] initWithTitle:@"Welcome Dialog"
+                                    action:@selector (gimpShowWelcomeDialog:)
+                             keyEquivalent:@""];
+  [item setTarget:[GimpappMenuHandler class]];
+  [app_menu insertItem:item atIndex:1];
+
+  /* Settings */
+  item = [app_menu itemAtIndex:3];
+  [item setTarget:[GimpappMenuHandler class]];
+  [item setAction:@selector (gimpShowPreferences:)];
+
+  /* Input Devices */
+  item = [[NSMenuItem alloc] initWithTitle:@"Input Devices"
+                                    action:@selector (gimpShowInputDevices:)
+                             keyEquivalent:@""];
+  [item setTarget:[GimpappMenuHandler class]];
+  [app_menu insertItem:item atIndex:4];
+
+  /* Keyboard Shortcuts */
+  item = [[NSMenuItem alloc] initWithTitle:@"Keyboard Shortcuts"
+                                    action:@selector (gimpShowKeyboardShortcuts:)
+                             keyEquivalent:@""];
+  [item setTarget:[GimpappMenuHandler class]];
+  [app_menu insertItem:item atIndex:5];
+
+  /* Quit */
+  last_index = [app_menu numberOfItems] - 1;
+  item       = [app_menu itemAtIndex:last_index];
+  [item setTarget:[GimpappMenuHandler class]];
+  [item setAction:@selector (gimpQuit:)];
+}
+#endif

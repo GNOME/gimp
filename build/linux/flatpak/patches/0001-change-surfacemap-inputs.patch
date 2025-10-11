@@ -1,0 +1,294 @@
+From ff9d830d78fcec17d87d5259ecfaa254c2a27276 Mon Sep 17 00:00:00 2001
+From: cmyk-student <118295169+cmyk-student@users.noreply.github.com>
+Date: Sun, 13 Jul 2025 09:40:56 -0400
+Subject: [PATCH] Brushes: Change surfacemap inputs to gridmap
+
+brushsettings.json in libmypaint does not
+have "surfacemap_x" or "surfacemap_y"
+brush inputs, which causes a warning when
+trying to load /Dieterle brushes in libmypaint.
+"surfacemap" was an older name for these
+inputs, which were ultimately renamed to
+"gridmap" in libmypaint.
+This patch renames them in mypaint-brushes
+as well, so that they can load without
+warnings.
+---
+ brushes/Dieterle/Blender.myb         | 4 ++--
+ brushes/Dieterle/Dissolver.myb       | 4 ++--
+ brushes/Dieterle/Eraser.myb          | 4 ++--
+ brushes/Dieterle/Fan#1.myb           | 4 ++--
+ brushes/Dieterle/Flat2#1.myb         | 4 ++--
+ brushes/Dieterle/Flight_Feathers.myb | 4 ++--
+ brushes/Dieterle/Posterizer.myb      | 4 ++--
+ brushes/Dieterle/Round#1.myb         | 4 ++--
+ brushes/Dieterle/Splash.myb          | 4 ++--
+ brushes/Dieterle/Tail_Feathers.myb   | 4 ++--
+ brushes/Dieterle/Tail_Feathers2.myb  | 4 ++--
+ brushes/Dieterle/WateryFlatbrush.myb | 4 ++--
+ 12 files changed, 24 insertions(+), 24 deletions(-)
+
+diff --git a/brushes/Dieterle/Blender.myb b/brushes/Dieterle/Blender.myb
+index 138940c..996a742 100644
+--- a/brushes/Dieterle/Blender.myb
++++ b/brushes/Dieterle/Blender.myb
+@@ -669,7 +669,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_x": [
++                "gridmap_x": [
+                     [
+                         0.0, 
+                         0.0
+@@ -679,7 +679,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_y": [
++                "gridmap_y": [
+                     [
+                         0.0, 
+                         0.0
+diff --git a/brushes/Dieterle/Dissolver.myb b/brushes/Dieterle/Dissolver.myb
+index 9514427..dfea759 100644
+--- a/brushes/Dieterle/Dissolver.myb
++++ b/brushes/Dieterle/Dissolver.myb
+@@ -665,7 +665,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_x": [
++                "gridmap_x": [
+                     [
+                         0.0, 
+                         0.0
+@@ -675,7 +675,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_y": [
++                "gridmap_y": [
+                     [
+                         0.0, 
+                         0.0
+diff --git a/brushes/Dieterle/Eraser.myb b/brushes/Dieterle/Eraser.myb
+index 6fae185..d9b706f 100644
+--- a/brushes/Dieterle/Eraser.myb
++++ b/brushes/Dieterle/Eraser.myb
+@@ -665,7 +665,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_x": [
++                "gridmap_x": [
+                     [
+                         0.0, 
+                         0.0
+@@ -675,7 +675,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_y": [
++                "gridmap_y": [
+                     [
+                         0.0, 
+                         0.0
+diff --git a/brushes/Dieterle/Fan#1.myb b/brushes/Dieterle/Fan#1.myb
+index 51c6427..1d1d0a3 100644
+--- a/brushes/Dieterle/Fan#1.myb
++++ b/brushes/Dieterle/Fan#1.myb
+@@ -822,7 +822,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_x": [
++                "gridmap_x": [
+                     [
+                         0.0, 
+                         0.0
+@@ -832,7 +832,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_y": [
++                "gridmap_y": [
+                     [
+                         0.0, 
+                         0.0
+diff --git a/brushes/Dieterle/Flat2#1.myb b/brushes/Dieterle/Flat2#1.myb
+index 9979afd..b11ec18 100644
+--- a/brushes/Dieterle/Flat2#1.myb
++++ b/brushes/Dieterle/Flat2#1.myb
+@@ -646,7 +646,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_x": [
++                "gridmap_x": [
+                     [
+                         0.0, 
+                         0.0
+@@ -656,7 +656,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_y": [
++                "gridmap_y": [
+                     [
+                         0.0, 
+                         0.0
+diff --git a/brushes/Dieterle/Flight_Feathers.myb b/brushes/Dieterle/Flight_Feathers.myb
+index 3ee7c33..c881b50 100644
+--- a/brushes/Dieterle/Flight_Feathers.myb
++++ b/brushes/Dieterle/Flight_Feathers.myb
+@@ -631,7 +631,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_x": [
++                "gridmap_x": [
+                     [
+                         0.0, 
+                         0.0
+@@ -641,7 +641,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_y": [
++                "gridmap_y": [
+                     [
+                         0.0, 
+                         0.0
+diff --git a/brushes/Dieterle/Posterizer.myb b/brushes/Dieterle/Posterizer.myb
+index 6d702cb..a789ed7 100644
+--- a/brushes/Dieterle/Posterizer.myb
++++ b/brushes/Dieterle/Posterizer.myb
+@@ -691,7 +691,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_x": [
++                "gridmap_x": [
+                     [
+                         0.0, 
+                         0.0
+@@ -701,7 +701,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_y": [
++                "gridmap_y": [
+                     [
+                         0.0, 
+                         0.0
+diff --git a/brushes/Dieterle/Round#1.myb b/brushes/Dieterle/Round#1.myb
+index 4b0840f..8b32d1a 100644
+--- a/brushes/Dieterle/Round#1.myb
++++ b/brushes/Dieterle/Round#1.myb
+@@ -787,7 +787,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_x": [
++                "gridmap_x": [
+                     [
+                         0.0, 
+                         0.0
+@@ -797,7 +797,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_y": [
++                "gridmap_y": [
+                     [
+                         0.0, 
+                         0.0
+diff --git a/brushes/Dieterle/Splash.myb b/brushes/Dieterle/Splash.myb
+index eec09a0..3655e39 100644
+--- a/brushes/Dieterle/Splash.myb
++++ b/brushes/Dieterle/Splash.myb
+@@ -710,7 +710,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_x": [
++                "gridmap_x": [
+                     [
+                         0.0, 
+                         0.0
+@@ -720,7 +720,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_y": [
++                "gridmap_y": [
+                     [
+                         0.0, 
+                         0.0
+diff --git a/brushes/Dieterle/Tail_Feathers.myb b/brushes/Dieterle/Tail_Feathers.myb
+index 1ecd6c7..a58b7d9 100644
+--- a/brushes/Dieterle/Tail_Feathers.myb
++++ b/brushes/Dieterle/Tail_Feathers.myb
+@@ -562,7 +562,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_x": [
++                "gridmap_x": [
+                     [
+                         0.0, 
+                         0.0
+@@ -572,7 +572,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_y": [
++                "gridmap_y": [
+                     [
+                         0.0, 
+                         0.0
+diff --git a/brushes/Dieterle/Tail_Feathers2.myb b/brushes/Dieterle/Tail_Feathers2.myb
+index eb7c72a..d8c54ca 100644
+--- a/brushes/Dieterle/Tail_Feathers2.myb
++++ b/brushes/Dieterle/Tail_Feathers2.myb
+@@ -638,7 +638,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_x": [
++                "gridmap_x": [
+                     [
+                         0.0, 
+                         0.0
+@@ -648,7 +648,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_y": [
++                "gridmap_y": [
+                     [
+                         0.0, 
+                         0.0
+diff --git a/brushes/Dieterle/WateryFlatbrush.myb b/brushes/Dieterle/WateryFlatbrush.myb
+index 61faafe..3cba89a 100644
+--- a/brushes/Dieterle/WateryFlatbrush.myb
++++ b/brushes/Dieterle/WateryFlatbrush.myb
+@@ -782,7 +782,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_x": [
++                "gridmap_x": [
+                     [
+                         0.0, 
+                         0.0
+@@ -792,7 +792,7 @@
+                         0.0
+                     ]
+                 ], 
+-                "surfacemap_y": [
++                "gridmap_y": [
+                     [
+                         0.0, 
+                         0.0

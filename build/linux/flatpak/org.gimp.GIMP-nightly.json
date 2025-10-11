@@ -29,6 +29,7 @@
         "--filesystem=/tmp",
         "--filesystem=xdg-run/gvfs",
         "--filesystem=xdg-run/gvfsd",
+        "--unset-env=GTK_MODULES",
         "--talk-name=org.gtk.vfs.*",
         "--talk-name=org.freedesktop.FileManager1",
         "--talk-name=org.gnome.Shell.Screenshot",
@@ -98,10 +99,8 @@
             ],
             "buildsystem": "meson",
             "config-opts": [
-                "-Dintrospection=false",
                 "-Dpython3=false",
-                "-Dtools=false",
-                "-Dvapi=false"
+                "-Dtools=false"
             ],
             "modules": [
                 {
@@ -109,8 +108,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.5.tar.gz",
-                            "sha256": "e1671f744e379a87ba0c984617406fdf8c0ad0c594e5122f525b2fb7c28d394d",
+                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.7.tar.gz",
+                            "sha256": "5e292b02614dbc0cee40fe1116db2f42f63ef6b2ba430c77b614e17b8d61a638",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 769,
@@ -134,8 +133,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.3.5.tar.gz",
-                    "sha256": "cb0c88710c906c9bfc59027eb147e780d508c7be1a90b43af3ec9e3c2987b70d",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.1.tar.gz",
+                    "sha256": "0d75aa277c33a4ed1fce2e272126f2d8dbd01adda82d7cf4fe67b99f6f7eedce",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -161,8 +160,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.2.1.tar.gz",
-                            "sha256": "b2c8a44c3e4695b74e9644c76f5f5480767355c6f98cde58ba0e82b4ad8c63ce",
+                            "url": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.2.2.tar.gz",
+                            "sha256": "b4275d83fb95521510e389b8d13af10298ed5bed1c8e13efd961d91b1105e462",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 223366,
@@ -207,6 +206,32 @@
                         "/include",
                         "/lib/pkgconfig"
                     ]
+                },
+                {
+                    "name": "openjph",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/aous72/OpenJPH/archive/refs/tags/0.24.2.tar.gz",
+                            "sha256": "c99218752b15b5b2afca3b0e4d4f0ddf1ac19f94dbcbe11874fe492d44ed3e2d",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 375199,
+                                "stable-only": true,
+                                "url-template": "https://github.com/aous72/OpenJPH/archive/refs/tags/$version.tar.gz"
+                            }
+                        }
+                    ],
+                    "buildsystem": "cmake-ninja",
+                    "builddir": true,
+                    "config-opts": [
+                        "-DOJPH_ENABLE_TIFF_SUPPORT=OFF",
+                        "-DOJPH_BUILD_EXECUTABLES=OFF"
+                    ],
+                    "cleanup": [
+                        "/include",
+                        "/lib/pkgconfig"
+                    ]
                 }
             ]
         },
@@ -215,8 +240,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-25.08.0.tar.xz",
-                    "sha256": "425ed4d4515a093bdcdbbaac6876f20617451edc710df6a4fd6c45dd67eb418d",
+                    "url": "https://poppler.freedesktop.org/poppler-25.10.0.tar.xz",
+                    "sha256": "6b5e9bb64dabb15787a14db1675291c7afaf9387438cc93a4fb7f6aec4ee6fe0",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -239,6 +264,7 @@
                 "-DENABLE_LIBOPENJPEG=openjpeg2",
                 "-DENABLE_BOOST=OFF",
                 "-DENABLE_NSS3=OFF",
+                "-DENABLE_GPGME=OFF",
                 "-DENABLE_QT5=OFF",
                 "-DENABLE_QT6=OFF"
             ],
@@ -322,8 +348,15 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10060rc1/ghostscript-10.06.0rc1.tar.gz",
-                    "sha512": "5702574db8465c7af7d608029a0f86c9a16c249585fb912fb748ea0c077dadef420f8ae4648688b78389ce125de3a8719094154655baa6cc999dec06929a43a8"
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10060/ghostscript-10.06.0.tar.gz",
+                    "sha512": "21ba2110693cfb98126f06daff410b0a94ae9b1690b867a383aa82b56a817ffd237044e024c2cf26daa6efe4d5cf8903db8e637c4629f0c8a0eb325a30fdc0cb",
+                    "x-checker-data": {
+                        "//": "Bypass broken url-template with anitya checker - See https://github.com/flathub/flatpak-external-data-checker/issues/360",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/ArtifexSoftware/ghostpdl-downloads/releases/latest",
+                        "version-query": ".name | split(\" \") | .[1]",
+                        "url-query": ".assets[] | select(.name|test(\"^ghostscript-(.*).tar.gz$\")) | .browser_download_url"
+                    }
                 },
                 {
                     "type": "shell",
@@ -448,6 +481,13 @@
                         "stable-only": true,
                         "url-template": "https://github.com/mypaint/mypaint-brushes/releases/download/v$version/mypaint-brushes-$version.tar.xz"
                     }
+                },
+                {
+                    "//": "https://gitlab.gnome.org/GNOME/gimp/-/issues/14461",
+                    "type": "patch",
+                    "paths": [
+                        "patches/0001-change-surfacemap-inputs.patch"
+                    ]
                 }
             ]
         },
@@ -564,9 +604,9 @@
                     ]
                 }
             ],
-           "buildsystem": "cmake-ninja",
-           "builddir": true,
-           "config-opts": [
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
                 "-DUTILS=OFF",
                 "-DTESTS=OFF"
             ],
@@ -666,8 +706,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/13.1.2/graphviz-13.1.2.tar.gz",
-                    "sha256": "0e79b8402e8ea13f05c0fc0e30604f1d0731cd3f60f85850cedac7e0ee420ef8",
+                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/14.0.1/graphviz-14.0.1.tar.gz",
+                    "sha256": "a969b754ecd9e25cc93b2d299cc03f573ff65c5d3595350fa22678c028b8de52",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1249,
@@ -676,15 +716,15 @@
                     }
                 }
             ],
-            "buildsystem": "autotools",
+            "buildsystem": "cmake-ninja",
             "config-opts": [
-                "--with-gdk=no",
-                "--with-gtk=no",
-                "--with-poppler=no",
-                "--with-rsvg=no",
-                "--with-webp=no",
-                "--with-x=no",
-                "--with-xlib=no"
+                "-DWITH_GDK=OFF",
+                "-DWITH_GTK=OFF",
+                "-DWITH_GHOSTSCRIPT=OFF",
+                "-DWITH_POPPLER=OFF",
+                "-DWITH_RSVG=OFF",
+                "-DWITH_WEBP=OFF",
+                "-DWITH_X=OFF"
             ],
             "cleanup": [
                 "/bin/??",

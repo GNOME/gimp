@@ -99,6 +99,7 @@ pdb_wrappers_sources = [
   'gimpitem_pdb.c',
   'gimpitemtransform_pdb.c',
   'gimplayer_pdb.c',
+  'gimplinklayer_pdb.c',
   'gimpmessage_pdb.c',
   'gimppainttools_pdb.c',
   'gimppalette_pdb.c',
@@ -159,6 +160,7 @@ pdb_wrappers_headers = [
   'gimpitem_pdb.h',
   'gimpitemtransform_pdb.h',
   'gimplayer_pdb.h',
+  'gimplinklayer_pdb.h',
   'gimpmessage_pdb.h',
   'gimppainttools_pdb.h',
   'gimppalette_pdb.h',
@@ -200,6 +202,7 @@ libgimp_sources_introspectable = [
   'gimpitem.c',
   'gimplayer.c',
   'gimplayermask.c',
+  'gimplinklayer.c',
   'gimploadprocedure.c',
   'gimppalette.c',
   'gimpparamspecs.c',
@@ -263,6 +266,7 @@ libgimp_headers_introspectable = [
   'gimpitem.h',
   'gimplayer.h',
   'gimplayermask.h',
+  'gimplinklayer.h',
   'gimploadprocedure.h',
   'gimppalette.h',
   'gimpparamspecs.h',
@@ -357,6 +361,32 @@ libgimpui_introspectable = [
 ]
 
 
+if glib.version().version_compare('>=2.86')
+  if not platform_windows
+    gio_specific_gir = 'GioUnix-2.0'
+    gio_specific_vapi = 'gio-unix-2.0'
+  else
+    gio_specific_gir = 'GioWin32-2.0'
+    gio_specific_vapi = 'gio-windows-2.0'
+  endif
+else
+  gio_specific_gir = ''
+  gio_specific_vapi = ''
+endif
+
+libgimp_deps_table = [
+    { 'gir': 'Babl-0.1',          'vapi': 'babl-0.1',        },
+    { 'gir': 'cairo-1.0',         'vapi': 'cairo-1.0',       },
+    { 'gir': 'GdkPixbuf-2.0',     'vapi': 'gdk-pixbuf-2.0',  },
+    { 'gir': 'Gegl-0.4',          'vapi': 'gegl-0.4',        },
+    { 'gir': 'Gio-2.0',           'vapi': 'gio-2.0',         },
+    { 'gir': gio_specific_gir,    'vapi': gio_specific_vapi, },
+    { 'gir': 'GLib-2.0',          'vapi': 'glib-2.0',        },
+    { 'gir': 'GObject-2.0',       'vapi': 'gobject-2.0',     },
+    { 'gir': 'Pango-1.0',         'vapi': 'gtk+-3.0',        },
+  ]
+
+
 libgimp = library('gimp-'+ gimp_api_version,
   libgimp_sources,
   include_directories: rootInclude,
@@ -391,6 +421,7 @@ libgimp_dep = declare_dependency(
     cairo,
     gdk_pixbuf,
     gegl,
+    gexiv2,
   ],
   link_with: [
     libgimp,
@@ -408,7 +439,6 @@ libgimpui = library('gimpui-'+ gimp_api_version,
   libgimpui_sources,
   dependencies: [
     libgimp_dep,
-    gexiv2,
     gtk3,
   ],
   sources: [
@@ -485,16 +515,12 @@ elif get_option('b_sanitize') != 'none'
   warnings += gobject_introspection_warning
 else
   have_gobject_introspection = true
-  libgimp_gir_includes = [
-    'Babl-0.1',
-    'cairo-1.0',
-    'GdkPixbuf-2.0',
-    'Gegl-0.4',
-    'Gio-2.0',
-    'GLib-2.0',
-    'GObject-2.0',
-    'Pango-1.0',
-  ]
+  libgimp_gir_includes = []
+  foreach dep : libgimp_deps_table
+    if dep['gir'] != ''
+      libgimp_gir_includes += [dep['gir']]
+    endif
+  endforeach
 
   gir_args = [
     '-DGIMP_COMPILATION',
@@ -558,16 +584,12 @@ else
   endif
 
   if have_vala
-    vapi_deps = [
-      'babl-0.1',
-      'cairo-1.0',
-      'gdk-pixbuf-2.0',
-      'gegl-0.4',
-      'gio-2.0',
-      'glib-2.0',
-      'gobject-2.0',
-      'gtk+-3.0',
-    ]
+    vapi_deps = []
+    foreach dep : libgimp_deps_table
+      if dep['vapi'] != ''
+        vapi_deps += [dep['vapi']]
+      endif
+    endforeach
 
     libgimp_vapi = gnome.generate_vapi('gimp-' + gimp_api_version,
       sources: libgimp_gir[0],

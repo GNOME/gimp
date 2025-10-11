@@ -2011,7 +2011,7 @@ control_compress_left (GimpGradient        *gradient,
       range_l = range_r = drag_seg;
     }
 
-  /* Calculate left bound for dragged hadle */
+  /* Calculate left bound for dragged handle */
 
   if (drag_seg == range_l)
     lbound = range_l->prev->left + 2.0 * EPSILON;

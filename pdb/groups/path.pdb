@@ -15,11 +15,16 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 sub path_new {
-    $blurb = 'Creates a new empty path object.';
+    $blurb = 'Create a new empty path object.';
 
     $help = <<'HELP';
-Creates a new empty path object. The path object needs to be added to
-the image using gimp_image_insert_path().
+This procedure creates a new empty path object.
+If @name is %NULL, a default path name will be used.
+
+
+The new path still needs to be added to the image as this is not
+automatic. Add the new path with the [method@Image.insert_path]
+method.
 HELP
 
     &simon_pdb_misc('2005', '2.4');
@@ -27,7 +32,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-        { name => 'name', type => 'string',
+        { name => 'name', type => 'string', none_ok => 1,
           desc => 'the name of the new path object.' }
     );
 
@@ -47,11 +52,15 @@ CODE
 }
 
 sub path_new_from_text_layer {
-    $blurb = 'Creates a new path object from a text layer.';
+    $blurb = 'Create a new path object from a text layer.';
 
     $help = <<'HELP';
-Creates a new path object from a text layer. The path object needs to
-be added to the image using gimp_image_insert_path().
+This procedure creates a new path object from a text layer.
+
+
+The new path still needs to be added to the image as this is not
+automatic. Add the new path with the [method@Image.insert_path]
+method.
 HELP
 
     &marcus_pdb_misc('2008', '2.6');
@@ -95,6 +104,11 @@ sub path_copy {
 
     $help = <<'HELP';
 This procedure copies the specified path object and returns the copy.
+
+
+The new path still needs to be added to the image as this is not
+automatic. Add the new path with the [method@Image.insert_path]
+method.
 HELP
 
     barak_pdb_misc('2008', '2.6');

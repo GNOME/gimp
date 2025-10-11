@@ -76,6 +76,7 @@ struct _GimpLinkPrivate
   GimpImageBaseType    base_type;
   GimpPrecision        precision;
   GimpPlugInProcedure *load_proc;
+  const gchar         *mime_type;
 };
 
 static void       gimp_link_finalize          (GObject           *object);
@@ -298,8 +299,8 @@ gimp_link_update_buffer (GimpLink      *link,
     {
       GimpImage         *image;
       GimpPDBStatusType  status;
-      const gchar       *mime_type = NULL;
 
+      link->p->mime_type = NULL;
       image = file_open_image (link->p->gimp,
                                gimp_get_user_context (link->p->gimp),
                                progress,
@@ -313,7 +314,8 @@ gimp_link_update_buffer (GimpLink      *link,
                                 */
                                GIMP_RUN_NONINTERACTIVE,
                                &link->p->is_vector,
-                               &status, &mime_type, &real_error);
+                               &status, &link->p->mime_type,
+                               &real_error);
 
       if (image && status == GIMP_PDB_SUCCESS)
         {
@@ -633,6 +635,14 @@ gimp_link_set_absolute_path (GimpLink *link,
   g_return_if_fail (GIMP_IS_LINK (link));
 
   link->p->absolute_path = absolute_path;
+}
+
+const gchar *
+gimp_link_get_mime_type (GimpLink *link)
+{
+  g_return_val_if_fail (GIMP_IS_LINK (link), NULL);
+
+  return link->p->mime_type;
 }
 
 void

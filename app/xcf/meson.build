@@ -13,6 +13,6 @@ libappxcf = static_library('appxcf',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-XCF"',
   dependencies: [
-    cairo, gegl, gdk_pixbuf, zlib
+    cairo, gegl, gdk_pixbuf, gexiv2, zlib
   ],
 )

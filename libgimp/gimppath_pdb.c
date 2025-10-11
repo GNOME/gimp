@@ -39,12 +39,16 @@
 /**
  * gimp_path_new:
  * @image: The image.
- * @name: the name of the new path object.
+ * @name: (nullable): the name of the new path object.
  *
- * Creates a new empty path object.
+ * Create a new empty path object.
  *
- * Creates a new empty path object. The path object needs to be added
- * to the image using gimp_image_insert_path().
+ * This procedure creates a new empty path object. If @name is %NULL, a
+ * default path name will be used.
+ *
+ * The new path still needs to be added to the image as this is not
+ * automatic. Add the new path with the [method@Image.insert_path]
+ * method.
  *
  * Returns: (transfer none):
  *          the current path object, 0 if no path exists in the image.
@@ -82,10 +86,13 @@ gimp_path_new (GimpImage   *image,
  * @image: The image.
  * @layer: The text layer.
  *
- * Creates a new path object from a text layer.
+ * Create a new path object from a text layer.
  *
- * Creates a new path object from a text layer. The path object needs
- * to be added to the image using gimp_image_insert_path().
+ * This procedure creates a new path object from a text layer.
+ *
+ * The new path still needs to be added to the image as this is not
+ * automatic. Add the new path with the [method@Image.insert_path]
+ * method.
  *
  * Returns: (transfer none): The path of the text layer.
  *
@@ -125,6 +132,10 @@ gimp_path_new_from_text_layer (GimpImage *image,
  *
  * This procedure copies the specified path object and returns the
  * copy.
+ *
+ * The new path still needs to be added to the image as this is not
+ * automatic. Add the new path with the [method@Image.insert_path]
+ * method.
  *
  * Returns: (transfer none): The newly copied path object.
  *

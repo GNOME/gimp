@@ -201,7 +201,7 @@ help in that regard:
      * HEIC: e.g. libde265 and libx265 support (for
              respectively decoding and encoding of HEVC).
      * AVIF: e.g. libaom decoder and encoder (for AV1 encoding and
-             decoding), prefered over rav1e.
+             decoding), preferred over rav1e.
      * HEJ2: OpenJPEG (for JPEG2000 inside HEIF).
 
      If you don't compile libheif with the correct flags (see libheif
@@ -489,5 +489,5 @@ reconfiguration:
   % ninja reconfigure
 
 Verify that the optional features you wanted are now shown as `true`,
-otherwise follow similar advices than above to make sure they are
+otherwise follow similar advice as above to make sure they are
 visible to your setup.

@@ -6,6 +6,130 @@
 This is the development branch of GIMP.
 
 
+Overview of Changes from GIMP 3.1.4 to GIMP 3.2-RC1
+===================================================
+
+Core:
+
+  - macOS: "Quit" from the dock's right-click menu will now follow our
+    standard Quit procedure, by intercepting the
+    applicationShouldTerminate signal, instead of forcing the
+    application to close (hence losing unsaved changes).
+  - "Add Layer Mask" will now have an "Edit mask immediately" checkbox
+    allowing to decide whether to go into Edit Mask state or not. This
+    setting is saved across repetitive actions, as all other settings in
+    this dialog.
+  - Filters on pass-through group layers will no longer be limited to
+    its children layers' bounding box, but to the actual bounding box,
+    which includes all lower layers. This also implies that empty
+    pass-through group layers can have an effect which will work like
+    "adjustment layers" in other software.
+  - New actions "layers-rasterize" and "layers-retrieve" to respectively
+    rasterize and un-rasterize text, link or vector layers (rasterizing
+    these layers is now always revertable, though any painting edit done
+    after the rasterization is obviously lost).
+  - Actions "layers-link-discard", "layers-vector-discard" and
+    "layers-text-discard" have been removed. Only the latter existed in
+    previous stable versions so any custom shortcut associated to
+    "layers-text-discard" will be migrated as shortcut of
+    "layers-rasterize".
+
+Tools:
+
+  - Bucket Fill tool: it will be prevented to work on non-rasterized
+    link and vector layers.
+  - All tools drawing directly on layers are now blocked when a text,
+    link or vector layer is selected. An error message will suggest you
+    rasterize these layers explicitly first, in order to be able to do
+    any "destructive" action.
+
+Graphical User Interface:
+
+  - "Monitor Linked Image" and "Discard Link Information" menu items
+    added to Layer menu when the selected layer is a link layer.
+  - The GimpColorHexEntry will now update the chosen color as you type.
+  - Use a standard, yet extended, AppMenu on macOS.
+
+Plug-Ins:
+
+  - file-compressor: add zip decompression support. This allows support
+    for .hgt.zip files, as well as other formats compressed with zip.
+
+API:
+
+  - The following libgimpbase API are now deprecated:
+    * gimp_pixpipe_params_init
+    * gimp_pixpipe_params_parse
+    * gimp_pixpipe_params_build
+    * gimp_pixpipe_params_free
+  - New libgimp functions:
+    * gimp_vector_layer_get_enable_fill
+    * gimp_vector_layer_get_enable_stroke
+    * gimp_vector_layer_get_fill_color
+    * gimp_vector_layer_get_path
+    * gimp_vector_layer_get_stroke_cap_style
+    * gimp_vector_layer_get_stroke_color
+    * gimp_vector_layer_get_stroke_dash_offset
+    * gimp_vector_layer_get_stroke_dash_pattern
+    * gimp_vector_layer_get_stroke_join_style
+    * gimp_vector_layer_get_stroke_miter_limit
+    * gimp_vector_layer_get_stroke_width
+    * gimp_vector_layer_get_stroke_width_unit
+    * gimp_vector_layer_set_enable_fill
+    * gimp_vector_layer_set_enable_stroke
+    * gimp_vector_layer_set_fill_color
+    * gimp_vector_layer_set_stroke_cap_style
+    * gimp_vector_layer_set_stroke_color
+    * gimp_vector_layer_set_stroke_dash_offset
+    * gimp_vector_layer_set_stroke_dash_pattern
+    * gimp_vector_layer_set_stroke_join_style
+    * gimp_vector_layer_set_stroke_miter_limit
+    * gimp_vector_layer_set_stroke_width
+    * gimp_vector_layer_set_stroke_width_unit
+    * gimp_item_is_vector_layer
+    * gimp_item_id_is_link_layer
+    * gimp_item_is_link_layer
+    * gimp_link_layer_discard
+    * gimp_link_layer_get_by_id
+    * gimp_link_layer_get_file
+    * gimp_link_layer_get_type
+    * gimp_link_layer_monitor
+    * gimp_link_layer_new
+    * gimp_link_layer_set_file
+    * gimp_param_link_layer_get_type
+    * gimp_param_spec_link_layer
+    * gimp_procedure_add_link_layer_argument
+    * gimp_procedure_add_link_layer_aux_argument
+    * gimp_procedure_add_link_layer_return_value
+    * gimp_link_layer_get_mime_type
+    * gimp_text_layer_get_outline
+    * gimp_text_layer_get_outline_antialias
+    * gimp_text_layer_get_outline_cap_style
+    * gimp_text_layer_get_outline_color
+    * gimp_text_layer_get_outline_dash_offset
+    * gimp_text_layer_get_outline_direction
+    * gimp_text_layer_get_outline_join_style
+    * gimp_text_layer_get_outline_miter_limit
+    * gimp_text_layer_get_outline_width
+    * gimp_text_layer_set_outline
+    * gimp_text_layer_set_outline_antialias
+    * gimp_text_layer_set_outline_cap_style
+    * gimp_text_layer_set_outline_color
+    * gimp_text_layer_set_outline_dash_offset
+    * gimp_text_layer_set_outline_direction
+    * gimp_text_layer_set_outline_join_style
+    * gimp_text_layer_set_outline_miter_limit
+    * gimp_text_layer_set_outline_width
+  - New libgimp class: GimpLinkLayer
+  - New libgimpbase enum types:
+    * GimpTextOutline
+    * GimpTextOutlineDirection
+
+Build:
+
+  - Depends on babl 0.1.116 and GEGL 0.4.64.
+
+
 Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
 =================================================
 
@@ -57,6 +181,9 @@ Tools:
   - The Paths tool has updated UI to create vector layers.
   - Text tool: bold, italic and underline can now be applied with
     commonly used shortcuts (Ctrl+b, i and u respectively).
+  - Vector and Link layers cannot be painted on, and filters cannot be
+    merged on them. They now need to be explicitly downgraded to raster
+    layers.
 
 Graphical User Interface:
 
@@ -105,6 +232,10 @@ Plug-Ins:
       implemented and removed in 2004).
   - Raw Image data plug-in dialog redesigned to be on a two-column
     layout to avoid over-high dialog.
+  - Print: in sandboxed environments (Flatpak, Snap), the print Settings
+    are now displayed as a second dialog after the portal print dialog.
+    This 2-step workflow is a work-around to the inability to tweak the
+    print dialog when the print portal is in use.
 
 API:
 
@@ -118,6 +249,15 @@ API:
     * gimp_context_get_paint_fade_repeat()
     * gimp_context_set_paint_fade_length()
     * gimp_context_set_paint_fade_repeat()
+    * gimp_item_id_is_vector_layer()
+    * gimp_param_spec_vector_layer()
+    * gimp_procedure_add_vector_layer_argument()
+    * gimp_procedure_add_vector_layer_aux_argument()
+    * gimp_procedure_add_vector_layer_return_value()
+    * gimp_vector_layer_discard()
+    * gimp_vector_layer_get_by_id()
+    * gimp_vector_layer_new()
+    * gimp_vector_layer_refresh()
   - GimpSizeEntry (libgimpwidget) can now parse mathematical expressions
     in their reference value spin buttons too.
   - GimpColorScales (libgimpwidget) will now set its decimals to 0 when

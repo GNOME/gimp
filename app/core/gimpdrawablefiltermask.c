@@ -108,8 +108,7 @@ gimp_drawable_filter_mask_rename (GimpItem     *item,
                                   GError      **error)
 {
   g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-               /* TODO: localized after string freeze. */
-               "Cannot rename effect masks.");
+               _("Cannot rename effect masks."));
 
   return FALSE;
 }

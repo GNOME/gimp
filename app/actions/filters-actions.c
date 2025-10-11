@@ -29,13 +29,18 @@
 
 #include "core/gimp-filter-history.h"
 #include "core/gimpimage.h"
+#include "core/gimpgrouplayer.h"
+#include "core/gimplinklayer.h"
 #include "core/gimplayermask.h"
+
+#include "path/gimpvectorlayer.h"
 
 #include "pdb/gimpprocedure.h"
 
 #include "widgets/gimpaction.h"
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpstringaction.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -48,11 +53,12 @@
 
 /*  local function prototypes  */
 
-static void   filters_actions_set_tooltips    (GimpActionGroup             *group,
-                                               const GimpStringActionEntry *entries,
-                                               gint                         n_entries);
-static void   filters_actions_history_changed (Gimp                        *gimp,
-                                               GimpActionGroup             *group);
+static void     filters_actions_set_tooltips    (GimpActionGroup             *group,
+                                                 const GimpStringActionEntry *entries,
+                                                 gint                         n_entries);
+static void     filters_actions_history_changed (Gimp                        *gimp,
+                                                 GimpActionGroup             *group);
+static gboolean filters_is_non_interactive      (const gchar                 *action_name);
 
 
 /*  private variables  */
@@ -748,6 +754,7 @@ static const GimpEnumActionEntry filters_repeat_actions[] =
 void
 filters_actions_setup (GimpActionGroup *group)
 {
+  static gboolean           first_setup = TRUE;
   GimpProcedureActionEntry *entries;
   gint                      n_entries;
   gint                      i;
@@ -776,6 +783,21 @@ filters_actions_setup (GimpActionGroup *group)
   filters_actions_set_tooltips (group, filters_interactive_actions,
                                 G_N_ELEMENTS (filters_interactive_actions));
 
+  /* XXX Hardcoded list to prevent expensive node/graph creation of a
+   * well-known list of operations.
+   * This whole code will disappear when we'll support filters with aux
+   * input non-destructively anyway.
+   */
+  if (first_setup)
+    {
+      actions_filter_set_aux ("filters-variable-blur");
+      actions_filter_set_aux ("filters-oilify");
+      actions_filter_set_aux ("filters-lens-blur");
+      actions_filter_set_aux ("filters-gaussian-blur-selective");
+      actions_filter_set_aux ("filters-displace");
+      actions_filter_set_aux ("filters-bump-map");
+    }
+
   gegl_actions = g_strv_builder_new ();
   op_classes   = gimp_gegl_get_op_classes (TRUE);
 
@@ -802,7 +824,7 @@ filters_actions_setup (GimpActionGroup *group)
            * operations end up generating the same action name. Typically we
            * don't want a third-party operation called "my-op" to have the same
            * action name than "my_op" (which is to say that one will be
-           * overrided by the other).
+           * overridden by the other).
            */
           g_free (action_name);
           action_name = g_strdup_printf ("filters-%s-%d", formatted_op_name, i++);
@@ -861,6 +883,23 @@ filters_actions_setup (GimpActionGroup *group)
           g_free (short_label);
         }
 
+      /* Identify third-party filters based on operations with an
+       * auxiliary pad in first setup because of slowness on Windows.
+       * See #14781.
+       */
+      if (first_setup)
+        {
+          GeglNode *node = gegl_node_new ();
+
+          gegl_node_set (node,
+                         "operation", op_class->name,
+                         NULL);
+
+          if (gegl_node_has_pad (node, "aux"))
+            actions_filter_set_aux (action_name);
+
+          g_clear_object (&node);
+        }
       g_strv_builder_add (gegl_actions, action_name);
 
       g_free (label);
@@ -910,6 +949,8 @@ filters_actions_setup (GimpActionGroup *group)
                            group, 0);
 
   filters_actions_history_changed (group->gimp, group);
+
+  first_setup = FALSE;
 }
 
 void
@@ -917,11 +958,14 @@ filters_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
   GimpImage    *image;
+  GList        *actions;
+  GList        *iter;
   gboolean      writable       = FALSE;
   gboolean      gray           = FALSE;
   gboolean      alpha          = FALSE;
   gboolean      supports_alpha = FALSE;
   gboolean      is_group       = FALSE;
+  gboolean      force_nde      = FALSE;
 
   image = action_data_get_image (data);
 
@@ -949,6 +993,11 @@ filters_actions_update (GimpActionGroup *group,
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
             is_group = TRUE;
+
+          if (GIMP_IS_GROUP_LAYER (drawable)                   ||
+              gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
+              gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+            force_nde = TRUE;
         }
 
       g_list_free (drawables);
@@ -957,134 +1006,82 @@ filters_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
-  SET_SENSITIVE ("filters-alien-map",               writable);
-  SET_SENSITIVE ("filters-antialias",               writable && !is_group);
-  SET_SENSITIVE ("filters-apply-canvas",            writable);
-  SET_SENSITIVE ("filters-apply-lens",              writable);
-  SET_SENSITIVE ("filters-bayer-matrix",            writable);
-  SET_SENSITIVE ("filters-bloom",                   writable);
-  SET_SENSITIVE ("filters-brightness-contrast",     writable);
-  SET_SENSITIVE ("filters-bump-map",                writable && !is_group);
+  actions = gimp_action_group_list_actions (group);
+  for (iter = actions; iter; iter = iter->next)
+    {
+      GimpAction  *action = iter->data;
+      const gchar *action_name;
+
+      action_name = gimp_action_get_name (action);
+
+      if (filters_is_non_interactive (action_name))
+        {
+          /* Even I'm not sure they should, right now non-interactive
+           * actions are always applied destructively. So these filters
+           * are incompatible with layers where non-destructivity is
+           * mandatory.
+           */
+          SET_SENSITIVE (action_name, writable && ! force_nde);
+        }
+      else if (GIMP_IS_STRING_ACTION (action))
+        {
+          const gchar *opname;
+
+          opname = GIMP_STRING_ACTION (action)->value;
+
+          if (opname == NULL)
+            /* These are the filters-recent-*, repeat and reshow handled
+             * below.
+             */
+            continue;
+
+          if (g_strcmp0 (opname, "gegl:gegl") == 0)
+            {
+              /* GEGL graph filter can only be run destructively, unless
+               * the GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT environment
+               * variable is set.
+               */
+              SET_SENSITIVE (gimp_action_get_name (action), writable &&
+                             (g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") != NULL || ! force_nde));
+            }
+          else if (gegl_has_operation (opname))
+            {
+              gboolean sensitive = writable;
+
+              if (sensitive && force_nde)
+                /* Operations with auxiliary inputs can only be applied
+                 * destructively. Therefore they must be deactivated on
+                 * types of layers where filters can only be applied
+                 * non-destructively.
+                 */
+                sensitive = ! actions_filter_get_aux (action_name);
+
+              SET_SENSITIVE (gimp_action_get_name (action), sensitive);
+            }
+        }
+    }
+  g_list_free (actions);
+
+  /* Special-cased filters */
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
-  SET_SENSITIVE ("filters-cartoon",                 writable);
-  SET_SENSITIVE ("filters-channel-mixer",           writable);
-  SET_SENSITIVE ("filters-checkerboard",            writable);
   SET_SENSITIVE ("filters-color-balance",           writable && !gray);
-  SET_SENSITIVE ("filters-color-enhance",           writable && !gray);
-  SET_SENSITIVE ("filters-color-exchange",          writable);
+  SET_SENSITIVE ("filters-color-enhance",           writable && !force_nde && !gray);
   SET_SENSITIVE ("filters-colorize",                writable && !gray);
-  SET_SENSITIVE ("filters-dither",                  writable);
-  SET_SENSITIVE ("filters-color-rotate",            writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",          writable && supports_alpha);
-  SET_SENSITIVE ("filters-component-extract",       writable);
-  SET_SENSITIVE ("filters-convolution-matrix",      writable);
-  SET_SENSITIVE ("filters-cubism",                  writable);
-  SET_SENSITIVE ("filters-curves",                  writable);
-  SET_SENSITIVE ("filters-deinterlace",             writable);
   SET_SENSITIVE ("filters-desaturate",              writable && !gray);
-  SET_SENSITIVE ("filters-difference-of-gaussians", writable);
-  SET_SENSITIVE ("filters-diffraction-patterns",    writable);
-  SET_SENSITIVE ("filters-dilate",                  writable && !is_group);
-  SET_SENSITIVE ("filters-displace",                writable && !is_group);
-  SET_SENSITIVE ("filters-distance-map",            writable);
+
   SET_SENSITIVE ("filters-dropshadow",              writable && alpha);
   SET_SENSITIVE ("filters-edge",                    writable && !is_group);
-  SET_SENSITIVE ("filters-edge-laplace",            writable);
-  SET_SENSITIVE ("filters-edge-neon",               writable);
-  SET_SENSITIVE ("filters-edge-sobel",              writable);
-  SET_SENSITIVE ("filters-emboss",                  writable);
-  SET_SENSITIVE ("filters-engrave",                 writable);
-  SET_SENSITIVE ("filters-erode",                   writable);
-  SET_SENSITIVE ("filters-exposure",                writable);
-  SET_SENSITIVE ("filters-fattal-2002",             writable);
-  SET_SENSITIVE ("filters-focus-blur",              writable);
-  SET_SENSITIVE ("filters-fractal-trace",           writable);
-  SET_SENSITIVE ("filters-gaussian-blur",           writable);
-  SET_SENSITIVE ("filters-gaussian-blur-selective", writable && !is_group);
-  SET_SENSITIVE ("filters-gegl-graph",              writable && !is_group);
-  SET_SENSITIVE ("filters-grid",                    writable);
-  SET_SENSITIVE ("filters-high-pass",               writable);
-  SET_SENSITIVE ("filters-hue-chroma",              writable);
   SET_SENSITIVE ("filters-hue-saturation",          writable && !gray);
-  SET_SENSITIVE ("filters-illusion",                writable);
-  SET_SENSITIVE ("filters-invert-linear",           writable && !is_group);
-  SET_SENSITIVE ("filters-invert-perceptual",       writable && !is_group);
-  SET_SENSITIVE ("filters-invert-value",            writable && !is_group);
-  SET_SENSITIVE ("filters-image-gradient",          writable);
-  SET_SENSITIVE ("filters-kaleidoscope",            writable);
-  SET_SENSITIVE ("filters-lens-blur",               writable && !is_group);
-  SET_SENSITIVE ("filters-lens-distortion",         writable);
-  SET_SENSITIVE ("filters-lens-flare",              writable);
-  SET_SENSITIVE ("filters-levels",                  writable);
-  SET_SENSITIVE ("filters-linear-sinusoid",         writable);
-  SET_SENSITIVE ("filters-little-planet",           writable);
   SET_SENSITIVE ("filters-long-shadow",             writable && alpha);
-  SET_SENSITIVE ("filters-mantiuk-2006",            writable);
-  SET_SENSITIVE ("filters-maze",                    writable);
-  SET_SENSITIVE ("filters-mean-curvature-blur",     writable);
-  SET_SENSITIVE ("filters-median-blur",             writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
-  SET_SENSITIVE ("filters-mosaic",                  writable);
-  SET_SENSITIVE ("filters-motion-blur-circular",    writable);
-  SET_SENSITIVE ("filters-motion-blur-linear",      writable);
-  SET_SENSITIVE ("filters-motion-blur-zoom",        writable);
-  SET_SENSITIVE ("filters-newsprint",               writable);
-  SET_SENSITIVE ("filters-noise-cell",              writable);
-  SET_SENSITIVE ("filters-noise-cie-lch",           writable);
   SET_SENSITIVE ("filters-noise-hsv",               writable && !gray);
-  SET_SENSITIVE ("filters-noise-hurl",              writable);
-  SET_SENSITIVE ("filters-noise-perlin",            writable);
-  SET_SENSITIVE ("filters-noise-pick",              writable);
-  SET_SENSITIVE ("filters-noise-reduction",         writable);
-  SET_SENSITIVE ("filters-noise-rgb",               writable);
-  SET_SENSITIVE ("filters-noise-simplex",           writable);
-  SET_SENSITIVE ("filters-noise-slur",              writable);
-  SET_SENSITIVE ("filters-noise-solid",             writable);
-  SET_SENSITIVE ("filters-noise-spread",            writable);
-  SET_SENSITIVE ("filters-normal-map",              writable);
-  SET_SENSITIVE ("filters-offset",                  writable);
-  SET_SENSITIVE ("filters-oilify",                  writable && !is_group);
-  SET_SENSITIVE ("filters-panorama-projection",     writable);
-  SET_SENSITIVE ("filters-photocopy",               writable);
-  SET_SENSITIVE ("filters-pixelize",                writable);
-  SET_SENSITIVE ("filters-plasma",                  writable);
-  SET_SENSITIVE ("filters-polar-coordinates",       writable);
-  SET_SENSITIVE ("filters-posterize",               writable);
-  SET_SENSITIVE ("filters-recursive-transform",     writable);
   SET_SENSITIVE ("filters-red-eye-removal",         writable && !gray);
-  SET_SENSITIVE ("filters-reinhard-2005",           writable);
-  SET_SENSITIVE ("filters-rgb-clip",                writable);
-  SET_SENSITIVE ("filters-ripple",                  writable);
   SET_SENSITIVE ("filters-saturation",              writable && !gray);
   SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
   SET_SENSITIVE ("filters-sepia",                   writable && !gray);
-  SET_SENSITIVE ("filters-shadows-highlights",      writable);
-  SET_SENSITIVE ("filters-shift",                   writable);
-  SET_SENSITIVE ("filters-sinus",                   writable);
-  SET_SENSITIVE ("filters-slic",                    writable);
-  SET_SENSITIVE ("filters-snn-mean",                writable);
-  SET_SENSITIVE ("filters-softglow",                writable);
-  SET_SENSITIVE ("filters-spherize",                writable);
-  SET_SENSITIVE ("filters-spiral",                  writable);
-  SET_SENSITIVE ("filters-stretch-contrast",        writable);
-  SET_SENSITIVE ("filters-stretch-contrast-hsv",    writable);
-  SET_SENSITIVE ("filters-stress",                  writable);
-  SET_SENSITIVE ("filters-supernova",               writable);
-  SET_SENSITIVE ("filters-threshold",               writable);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
-  SET_SENSITIVE ("filters-tile-glass",              writable);
-  SET_SENSITIVE ("filters-tile-paper",              writable);
-  SET_SENSITIVE ("filters-tile-seamless",           writable);
-  SET_SENSITIVE ("filters-unsharp-mask",            writable);
-  SET_SENSITIVE ("filters-value-propagate",         writable);
-  SET_SENSITIVE ("filters-variable-blur",           writable && !is_group);
-  SET_SENSITIVE ("filters-video-degradation",       writable);
-  SET_SENSITIVE ("filters-vignette",                writable);
-  SET_SENSITIVE ("filters-waterpixels",             writable);
-  SET_SENSITIVE ("filters-waves",                   writable);
-  SET_SENSITIVE ("filters-whirl-pinch",             writable);
-  SET_SENSITIVE ("filters-wind",                    writable);
 
 #undef SET_SENSITIVE
 
@@ -1335,4 +1332,20 @@ filters_actions_history_changed (Gimp            *gimp,
                     "procedure", NULL,
                     NULL);
     }
+}
+
+static gboolean
+filters_is_non_interactive (const gchar *action_name)
+{
+  gint i;
+
+  for (i = 0; i < G_N_ELEMENTS (filters_actions); i++)
+    if (g_strcmp0 (filters_actions[i].name, action_name) == 0)
+      return TRUE;
+
+  for (i = 0; i < G_N_ELEMENTS (filters_settings_actions); i++)
+    if (g_strcmp0 (filters_settings_actions[i].name, action_name) == 0)
+      return TRUE;
+
+  return FALSE;
 }

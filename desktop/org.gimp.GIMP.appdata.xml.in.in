@@ -33,7 +33,7 @@
       anything. The advanced scripting interface allows everything
       from the simplest task to the most complex image manipulation
       procedures to be easily scripted. GIMP is available for Linux,
-      Microsoft Windows and OS X.
+      Microsoft Windows and macOS.
     </p>
   </description>
   <url type="bugtracker">@BUG_REPORT_URL@</url>
@@ -60,7 +60,6 @@
       <caption>Scanned engraving being edited in GIMP. Artwork by Liam (CC0)</caption>
     </screenshot>
   </screenshots>
-  <update_contact>gimp-developer-list_at_gnome.org</update_contact>
   <keywords>
     <keyword>GIMP</keyword>
     <keyword>Photoshop</keyword>
@@ -82,7 +81,7 @@
   </provides>
 
   <releases>
-    <release version="3.1.4" date="2025-08-14" type="development">
+    <release version="3.1.4" date="2025-08-31" type="development">
       <description>
         <p>
         Our second development release finally contains the initial implementation of the two new types of

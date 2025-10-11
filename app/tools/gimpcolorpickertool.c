@@ -120,14 +120,15 @@ gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass)
   GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
   GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
 
-  object_class->constructed = gimp_color_picker_tool_constructed;
-  object_class->dispose     = gimp_color_picker_tool_dispose;
+  object_class->constructed  = gimp_color_picker_tool_constructed;
+  object_class->dispose      = gimp_color_picker_tool_dispose;
 
-  tool_class->control       = gimp_color_picker_tool_control;
-  tool_class->modifier_key  = gimp_color_picker_tool_modifier_key;
-  tool_class->oper_update   = gimp_color_picker_tool_oper_update;
+  tool_class->control        = gimp_color_picker_tool_control;
+  tool_class->modifier_key   = gimp_color_picker_tool_modifier_key;
+  tool_class->oper_update    = gimp_color_picker_tool_oper_update;
+  tool_class->is_destructive = FALSE;
 
-  color_tool_class->picked  = gimp_color_picker_tool_picked;
+  color_tool_class->picked   = gimp_color_picker_tool_picked;
 }
 
 static void

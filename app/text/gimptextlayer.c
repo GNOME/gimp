@@ -590,25 +590,52 @@ gimp_text_layer_set (GimpTextLayer *layer,
 void
 gimp_text_layer_discard (GimpTextLayer *layer)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
 
-  if (! layer->text)
+  if (layer->modified)
     return;
 
-  gimp_image_undo_push_text_layer (gimp_item_get_image (GIMP_ITEM (layer)),
-                                   _("Discard Text Information"),
-                                   layer, NULL);
+  image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  gimp_text_layer_set_text (layer, NULL);
+  gimp_image_undo_push_text_layer_modified (image, NULL, layer);
+  g_object_set (layer, "modified", TRUE, NULL);
+
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
+  /* Though technically selected layers are not changed, it will trigger
+   * actions update, so that visibility of any action depending on text
+   * layers being rasterized or not will be updated.
+   */
+  g_signal_emit_by_name (image, "selected-layers-changed");
+}
+
+void
+gimp_text_layer_retrieve (GimpTextLayer *layer)
+{
+  GimpImage *image;
+
+  g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
+
+  if (! layer->modified)
+    return;
+
+  image = gimp_item_get_image (GIMP_ITEM (layer));
+
+  gimp_image_undo_push_text_layer_modified (image, NULL, layer);
+  gimp_image_undo_push_drawable_mod (image, NULL, GIMP_DRAWABLE (layer), TRUE);
+  g_object_set (layer, "modified", FALSE, NULL);
+
+  gimp_text_layer_render (layer);
+  gimp_image_flush (image);
 }
 
 gboolean
 gimp_item_is_text_layer (GimpItem *item)
 {
-  return (GIMP_IS_TEXT_LAYER (item)    &&
-          GIMP_TEXT_LAYER (item)->text &&
-          GIMP_TEXT_LAYER (item)->modified == FALSE);
+  return (GIMP_IS_TEXT_LAYER (item) && ! GIMP_TEXT_LAYER (item)->modified);
 }
 
 

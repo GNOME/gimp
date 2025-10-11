@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-06 18:46+0000\n"
-"PO-Revision-Date: 2025-07-07 08:28+0200\n"
+"POT-Creation-Date: 2025-10-08 21:36+0000\n"
+"PO-Revision-Date: 2025-10-09 00:40+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
@@ -238,15 +238,15 @@ msgstr "(ჩასწორება)"
 msgid "Export Image as %s"
 msgstr "გამოსახულების გატანა, როგორც %s"
 
-#: libgimp/gimpimagemetadata.c:124
+#: libgimp/gimpimagemetadata.c:201
 msgid "Background"
 msgstr "ფონი"
 
-#: libgimp/gimpimagemetadata-save.c:770 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:796 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:445
+#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:448
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -363,45 +363,45 @@ msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d დამთხვევა"
 
-#: libgimp/gimpprocedure.c:2162
+#: libgimp/gimpprocedure.c:2161
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "პროცედურამ %s გასაბრუნებელი მნიშვნელობები არ დააბრუნა"
 
-#: libgimp/gimpprocedure.c:2368
+#: libgimp/gimpprocedure.c:2367
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2380
+#: libgimp/gimpprocedure.c:2379
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
 "(#%d). Expected %s, got %s."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2415
+#: libgimp/gimpprocedure.c:2414
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2429
+#: libgimp/gimpprocedure.c:2428
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2473
+#: libgimp/gimpprocedure.c:2472
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2483
+#: libgimp/gimpprocedure.c:2482
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -540,12 +540,12 @@ msgid ""
 msgstr ""
 
 #: libgimp/gimpresolutionentry-private.c:144
-#: libgimp/gimpvectorloadprocedure.c:125
+#: libgimp/gimpvectorloadprocedure.c:126
 msgid "_Keep aspect ratio"
 msgstr "_საწყისი თანაფარდობის შენარჩუნება"
 
 #: libgimp/gimpresolutionentry-private.c:145
-#: libgimp/gimpvectorloadprocedure.c:126
+#: libgimp/gimpvectorloadprocedure.c:127
 msgid "Force dimensions with aspect ratio"
 msgstr ""
 
@@ -555,49 +555,49 @@ msgstr ""
 msgid "pixels/%a"
 msgstr "პიქსელი/%a"
 
-#: libgimp/gimpvectorloadprocedure.c:111
+#: libgimp/gimpvectorloadprocedure.c:112
 msgid "_Width (pixels)"
 msgstr "_სიგანე (პიქსელებში)"
 
-#: libgimp/gimpvectorloadprocedure.c:118
+#: libgimp/gimpvectorloadprocedure.c:119
 msgid "_Height (pixels)"
 msgstr ""
 
-#: libgimp/gimpvectorloadprocedure.c:130
+#: libgimp/gimpvectorloadprocedure.c:131
 msgid "_Prefer native dimensions"
 msgstr ""
 
-#: libgimp/gimpvectorloadprocedure.c:131
+#: libgimp/gimpvectorloadprocedure.c:132
 msgid "Load and use dimensions from source file"
 msgstr ""
 
-#: libgimp/gimpvectorloadprocedure.c:139
+#: libgimp/gimpvectorloadprocedure.c:142
 msgid "Resolu_tion"
 msgstr "_გაფართოება"
 
-#: libgimp/gimpvectorloadprocedure.c:140
+#: libgimp/gimpvectorloadprocedure.c:143
 msgid "Pixel Density: number of pixels per physical unit"
 msgstr ""
 
-#: libgimp/gimpvectorloadprocedure.c:145
+#: libgimp/gimpvectorloadprocedure.c:148
 msgid "Unit"
 msgstr "ერთეული"
 
-#: libgimp/gimpvectorloadprocedure.c:146
+#: libgimp/gimpvectorloadprocedure.c:149
 msgid "Physical unit"
 msgstr "ფიზიკური ერთეული"
 
-#: libgimp/gimpvectorloadprocedure.c:368
+#: libgimp/gimpvectorloadprocedure.c:371
 msgid ""
 "dimensions could neither be extracted nor computed from the vector image's "
 "data."
 msgstr ""
 
-#: libgimp/gimpvectorloadprocedure.c:373
+#: libgimp/gimpvectorloadprocedure.c:376
 msgid "Vector image loading plug-in failed: "
 msgstr ""
 
-#: libgimp/gimpvectorloadprocedure.c:397
+#: libgimp/gimpvectorloadprocedure.c:400
 msgid ""
 "Dimensions cannot be 0 and no native dimensions could be extracted from the "
 "vector image."
@@ -1626,76 +1626,106 @@ msgid "Filled"
 msgstr "შევსებული"
 
 #: libgimpbase/gimpbaseenums.c:1804
+msgctxt "text-outline"
+msgid "Filled"
+msgstr "შევსებული"
+
+#: libgimpbase/gimpbaseenums.c:1805
+msgctxt "text-outline"
+msgid "Outlined"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:1806
+msgctxt "text-outline"
+msgid "Outlined and filled"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:1836
+msgctxt "text-outline-direction"
+msgid "Outer"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:1837
+msgctxt "text-outline-direction"
+msgid "Inner"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:1838
+msgctxt "text-outline-direction"
+msgid "Centered"
+msgstr "შუაზე გასწორებული"
+
+#: libgimpbase/gimpbaseenums.c:1868
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "ჩრდილები"
 
-#: libgimpbase/gimpbaseenums.c:1805
+#: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "შუატონები"
 
-#: libgimpbase/gimpbaseenums.c:1806
+#: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "განათება"
 
-#: libgimpbase/gimpbaseenums.c:1835
+#: libgimpbase/gimpbaseenums.c:1899
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "ნორმალური(წინ)"
 
-#: libgimpbase/gimpbaseenums.c:1836
+#: libgimpbase/gimpbaseenums.c:1900
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "ჩასწორება (უკუღმა)"
 
-#: libgimpbase/gimpbaseenums.c:1867
+#: libgimpbase/gimpbaseenums.c:1931
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "მორგება"
 
-#: libgimpbase/gimpbaseenums.c:1868
+#: libgimpbase/gimpbaseenums.c:1932
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Clip"
 
-#: libgimpbase/gimpbaseenums.c:1869
+#: libgimpbase/gimpbaseenums.c:1933
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "პასუხისთვის ამოჭერით"
 
-#: libgimpbase/gimpbaseenums.c:1870
+#: libgimpbase/gimpbaseenums.c:1934
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "ასპექტით ამოჭრა"
 
-#: libgimpbase/gimpmetadata.c:1218
+#: libgimpbase/gimpmetadata.c:1223
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "მეტამონაცემების წაკითხვა მხოლოდ ლოკალური ფაილებიდანაა შესაძლებელი"
 
-#: libgimpbase/gimpmetadata.c:1274
+#: libgimpbase/gimpmetadata.c:1279
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "მეტამონაცემების ჩაწერა მხოლოდ ლოკალურ ფაილებშია შესაძლებელი"
 
-#: libgimpbase/gimpmetadata.c:1323
+#: libgimpbase/gimpmetadata.c:1328
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "EXIF მონაცემების არასწორი ზომა."
 
-#: libgimpbase/gimpmetadata.c:1368
+#: libgimpbase/gimpmetadata.c:1373
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "EXIF მონაცემების ანალიზის შეცდომა."
 
-#: libgimpbase/gimpmetadata.c:1420
+#: libgimpbase/gimpmetadata.c:1425
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "IPTC მონაცემების ანალიზის შეცდომა."
 
-#: libgimpbase/gimpmetadata.c:1468
+#: libgimpbase/gimpmetadata.c:1473
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "XMP მონაცემების ანალიზის შეცდომა."
@@ -1730,32 +1760,32 @@ msgctxt "unit-plural"
 msgid "percent"
 msgstr "პროცენტი"
 
-#: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
+#: libgimpbase/gimputils.c:222 libgimpbase/gimputils.c:227
 msgid "(invalid UTF-8 string)"
 msgstr "(არასწორი UTF-8 ბწკარი)"
 
-#: libgimpbase/gimputils.c:395
+#: libgimpbase/gimputils.c:397
 msgid "File path is NULL"
 msgstr "ფაილის მისამართი ცარიელია"
 
-#: libgimpbase/gimputils.c:403
+#: libgimpbase/gimputils.c:405
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "UTF-8 ფაილის სახელის განიერ სტრიქონად გარდაქმნის შეცდომა"
 
-#: libgimpbase/gimputils.c:411
+#: libgimpbase/gimputils.c:413
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() -ის შეცდომა"
 
-#: libgimpbase/gimputils.c:450
+#: libgimpbase/gimputils.c:452
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr ""
 
-#: libgimpbase/gimputils.c:478
+#: libgimpbase/gimputils.c:480
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr ""
 
-#: libgimpbase/gimputils.c:502
+#: libgimpbase/gimputils.c:504
 msgid "Calling ShowItems failed: "
 msgstr ""
 
@@ -2374,10 +2404,15 @@ msgid "One page selected"
 msgstr "მონიშნულია ერთი გვერდი"
 
 #: libgimpwidgets/gimppageselector.c:1026
+#, c-format
+msgid "The page is selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "მონიშნულია %d გვერდი"
+
 #: libgimpwidgets/gimppageselector.c:1030
 #, c-format
 msgid "%d page selected"
-msgid_plural "All %d pages selected"
+msgid_plural "%d pages selected"
 msgstr[0] "მონიშნულია %d გვერდი"
 
 #: libgimpwidgets/gimppatheditor.c:199
@@ -2435,21 +2470,21 @@ msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] ""
 
-#: libgimpwidgets/gimpwidgets.c:259
+#: libgimpwidgets/gimpwidgets.c:260
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:263
+#: libgimpwidgets/gimpwidgets.c:264
 msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:279
+#: libgimpwidgets/gimpwidgets.c:280
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:283
+#: libgimpwidgets/gimpwidgets.c:284
 msgid "_Randomize"
 msgstr ""
 

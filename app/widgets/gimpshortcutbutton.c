@@ -386,7 +386,7 @@ gimp_shortcut_button_focus_out_event (GimpShortcutButton* button,
                                       gpointer            user_data)
 {
   /* On losing focus, we untoggle, so we don't have to grab anything.
-   * Let's avoid cases with several shortcut buttons all grabing the
+   * Let's avoid cases with several shortcut buttons all grabbing the
    * same shortcuts for instance.
    */
   if (button->priv->timer != 0)

@@ -805,7 +805,7 @@ language_get_system_lang_id (void)
 #elif defined PLATFORM_OSX
   NSString *langs;
 
-  /* In macOS, the user sets a list of prefered languages and the
+  /* In macOS, the user sets a list of preferred languages and the
    * software respects this preference order. I.e. that just storing the
    * top-prefered lang would not be enough. What if GIMP didn't have
    * translations for it, then it would fallback to the second lang. If

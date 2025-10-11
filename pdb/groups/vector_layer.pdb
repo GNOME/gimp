@@ -18,10 +18,10 @@
 
 
 sub vector_layer_new {
-    $blurb = 'Creates a new vector layer.';
+    $blurb = 'Create a new vector layer.';
 
     $help = <<'HELP';
-This procedure creates a new path layer displaying the specified @path. By
+This procedure creates a new vector layer displaying the specified @path. By
 default, the fill and stroke properties will be defined by the context.
 
 
@@ -123,16 +123,857 @@ CODE
     );
 }
 
+sub vector_layer_get_path {
+    $blurb = 'Gets the path from the vector layer if one is associated with it.';
+
+    $help = <<'HELP';
+This procedure returns the path from the vector layer if one is associated with it.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer' }
+    );
+
+    @outargs = (
+        { name => 'path', type => 'path',
+          desc => 'The path associated with the vector layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  path = gimp_vector_layer_get_path (layer);
+
+  if (! path)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub vector_layer_get_enable_stroke {
+    $blurb = 'Check if stroke is enabled in the vector layer.';
+
+    $help = <<'HELP';
+This procedure checks if stroke is enabled in the specified vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer' }
+    );
+
+    @outargs = (
+        { name => 'enable_stroke', type => 'boolean',
+          desc => 'If the stroke is enabled on the vector layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    g_object_get (options,
+                  "enable-stroke", &enable_stroke,
+                  NULL);
+}
+CODE
+    );
+}
+
+sub vector_layer_set_enable_stroke {
+    $blurb = 'Set whether the stroke is enabled on the vector layer.';
+
+    $help = <<'HELP';
+This procedure sets the stroke's visibility in the vector layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer' },
+        { name => 'enable_stroke', type => 'boolean',
+          desc => 'Whether to enable the stroke on the vector layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    {
+      g_object_set (options,
+                    "enable-stroke", &enable_stroke,
+                    NULL);
+    }
+}
+CODE
+    );
+}
+
+sub vector_layer_get_stroke_color {
+    $blurb = 'Get the color of the stroke in a vector layer.';
+
+    $help = <<'HELP';
+This procedure returns the color of the stroke in a vector layer.
+HELP
+
+    &marcus_pdb_misc('2008', '2.6');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' }
+    );
+
+    @outargs = (
+        { name => 'color', type => 'geglcolor',
+          desc => 'The color of the stroke.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    color = gegl_color_duplicate (gimp_context_get_foreground (
+                                    GIMP_CONTEXT (options->stroke_options)));
+}
+CODE
+    );
+}
+
+sub vector_layer_get_stroke_width {
+    $blurb = 'Get the stroke width of a vector layer.';
+
+    $help = <<'HELP';
+This procedure returns the stroke width in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' }
+    );
+
+    @outargs = (
+        { name => 'width', type => "0 <= double",
+          desc => 'The stroke width.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    width = gimp_stroke_options_get_width (options->stroke_options);
+}
+CODE
+    );
+}
+
+sub vector_layer_get_stroke_width_unit {
+    $blurb = 'Get the stroke width unit of a vector layer.';
+
+    $help = <<'HELP';
+This procedure returns the stroke width unit in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' }
+    );
+
+    @outargs = (
+        { name => 'unit', type => 'unit',
+          desc => 'The stroke width unit.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    unit = gimp_stroke_options_get_unit (options->stroke_options);
+}
+CODE
+    );
+}
+
+sub vector_layer_get_stroke_cap_style {
+    $blurb = 'Get the stroke cap style of a vector layer.';
+
+    $help = <<'HELP';
+This procedure returns the stroke cap style in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' }
+    );
+
+    @outargs = (
+        { name => 'cap_style', type => 'enum GimpCapStyle',
+          desc => 'The stroke cap style.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    cap_style = gimp_stroke_options_get_cap_style (options->stroke_options);
+}
+CODE
+    );
+}
+
+sub vector_layer_get_stroke_join_style {
+    $blurb = 'Get the stroke join style of a vector layer.';
+
+    $help = <<'HELP';
+This procedure returns the stroke join style in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' }
+    );
+
+    @outargs = (
+        { name => 'join_style', type => 'enum GimpJoinStyle',
+          desc => 'The stroke join style.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    join_style = gimp_stroke_options_get_join_style (options->stroke_options);
+}
+CODE
+    );
+}
+
+sub vector_layer_get_stroke_miter_limit {
+    $blurb = 'Get the stroke miter limit of a vector layer.';
+
+    $help = <<'HELP';
+This procedure returns the stroke miter limit in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' }
+    );
+
+    @outargs = (
+        { name => 'miter', type => "0 <= double",
+          desc => 'The stroke miter limit.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    miter = gimp_stroke_options_get_miter_limit (options->stroke_options);
+}
+CODE
+    );
+}
+
+sub vector_layer_get_stroke_dash_offset {
+    $blurb = 'Get the stroke dash offset of a vector layer.';
+
+    $help = <<'HELP';
+This procedure returns the stroke dash offset in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' }
+    );
+
+    @outargs = (
+        { name => 'dash_offset', type => "0 <= double",
+          desc => 'The stroke dash offset.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    dash_offset = gimp_stroke_options_get_dash_offset (options->stroke_options);
+}
+CODE
+    );
+}
+
+sub vector_layer_get_stroke_dash_pattern {
+    $blurb = 'Get the stroke dash pattern of a vector layer.';
+
+    $help = <<'HELP';
+This procedure returns the stroke dash pattern in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' }
+    );
+
+    @outargs = (
+        { name => 'dashes', type => 'doublearray', void_ret => 1,
+          desc => 'The stroke dash pattern array.',
+          array => { desc => 'The number of dashes in the dash_pattern array' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    {
+      GArray *pattern =
+        gimp_stroke_options_get_dash_info (options->stroke_options);
+
+      dashes = gimp_dash_pattern_to_double_array (pattern, &num_dashes);
+    }
+}
+CODE
+    );
+}
+
+sub vector_layer_set_stroke_color {
+    $blurb = 'Set the color of the stroke in the vector layer.';
+
+    $help = <<'HELP';
+This procedure sets the stroke color in the vector layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer' },
+        { name => 'color', type => 'geglcolor',
+          desc => 'The color to use for the stroke' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    gimp_context_set_foreground (GIMP_CONTEXT (options->stroke_options),
+                                 color);
+}
+CODE
+    );
+}
+
+sub vector_layer_set_stroke_width {
+    $blurb = 'Set the stroke width of a vector layer.';
+
+    $help = <<'HELP';
+This procedure sets the stroke width in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' },
+        { name => 'width', type => "0 <= double",
+          desc => 'The stroke width.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    g_object_set (options->stroke_options,
+                  "width", width,
+                  NULL);
+}
+CODE
+    );
+}
+
+sub vector_layer_set_stroke_width_unit {
+    $blurb = 'Set the stroke width unit of a vector layer.';
+
+    $help = <<'HELP';
+This procedure sets the stroke width unit in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' },
+        { name => 'unit', type => 'unit',
+          desc => 'The stroke width unit.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    g_object_set (options->stroke_options,
+                  "unit", unit,
+                  NULL);
+}
+CODE
+    );
+}
+
+sub vector_layer_set_stroke_cap_style {
+    $blurb = 'Set the stroke cap style of a vector layer.';
+
+    $help = <<'HELP';
+This procedure sets the stroke cap style in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' },
+        { name => 'cap_style', type => 'enum GimpCapStyle',
+          desc => 'The stroke cap style.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    g_object_set (options->stroke_options,
+                  "cap-style", cap_style,
+                  NULL);
+}
+CODE
+    );
+}
+
+sub vector_layer_set_stroke_join_style {
+    $blurb = 'Set the stroke join style of a vector layer.';
+
+    $help = <<'HELP';
+This procedure sets the stroke join style in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' },
+        { name => 'join_style', type => 'enum GimpJoinStyle',
+          desc => 'The stroke join style.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    g_object_set (options->stroke_options,
+                  "join-style", join_style,
+                  NULL);
+}
+CODE
+    );
+}
+
+sub vector_layer_set_stroke_miter_limit {
+    $blurb = 'Set the stroke miter limit of a vector layer.';
+
+    $help = <<'HELP';
+This procedure sets the stroke miter limit in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' },
+        { name => 'miter', type => "0 <= double",
+          desc => 'The stroke miter limit.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    g_object_set (options->stroke_options,
+                  "miter-limit", miter,
+                  NULL);
+}
+CODE
+    );
+}
+
+sub vector_layer_set_stroke_dash_offset {
+    $blurb = 'Set the stroke dash offset of a vector layer.';
+
+    $help = <<'HELP';
+This procedure sets the stroke dash offset in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' },
+        { name => 'dash_offset', type => "0 <= double",
+          desc => 'The stroke dash offset.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    g_object_set (options->stroke_options,
+                  "dash-offset", dash_offset,
+                  NULL);
+}
+CODE
+    );
+}
+
+sub vector_layer_set_stroke_dash_pattern {
+    $blurb = 'Set the stroke dash pattern of a vector layer.';
+
+    $help = <<'HELP';
+This procedure sets the stroke dash pattern in a vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' },
+        { name => 'dashes', type => 'doublearray',
+          desc => 'The line dash pattern setting',
+          array => { desc => 'The number of dashes in the dash pattern array' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+  GArray                 *pattern = NULL;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    {
+      if (num_dashes > 0)
+        {
+          pattern = gimp_dash_pattern_from_double_array (num_dashes, dashes);
+
+          if (! pattern)
+            success = FALSE;
+        }
+
+      if (success)
+        gimp_stroke_options_take_dash_pattern (options->stroke_options,
+                                               GIMP_DASH_CUSTOM, pattern);
+    }
+}
+CODE
+    );
+}
+
+sub vector_layer_get_enable_fill {
+    $blurb = 'Check if fill is enabled in the vector layer.';
+
+    $help = <<'HELP';
+This procedure checks if fill is enabled in the specified vector layer.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer' }
+    );
+
+    @outargs = (
+        { name => 'enable_fill', type => 'boolean',
+          desc => 'If the fill is enabled on the vector layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    g_object_get (options,
+                  "enable-fill", &enable_fill,
+                  NULL);
+}
+CODE
+    );
+}
+
+sub vector_layer_set_enable_fill {
+    $blurb = 'Set whether the fill is enabled on the vector layer.';
+
+    $help = <<'HELP';
+This procedure sets the fill's visibility in the vector layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer' },
+        { name => 'enable_fill', type => 'boolean',
+          desc => 'Whether to enable the fill on the vector layer' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    g_object_set (options,
+                  "enable-fill", enable_fill,
+                  NULL);
+}
+CODE
+    );
+}
+
+sub vector_layer_get_fill_color {
+    $blurb = 'Get the color of the fill in a vector layer.';
+
+    $help = <<'HELP';
+This procedure returns the color of the fill in a vector layer.
+HELP
+
+    &marcus_pdb_misc('2008', '2.6');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' }
+    );
+
+    @outargs = (
+        { name => 'color', type => 'geglcolor',
+          desc => 'The color of the fill.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    color =
+      gegl_color_duplicate (gimp_context_get_foreground (
+                              GIMP_CONTEXT (options->fill_options)));
+}
+CODE
+    );
+}
+
+sub vector_layer_set_fill_color {
+    $blurb = 'Set the color of the fill in the vector layer.';
+
+    $help = <<'HELP';
+This procedure sets the fill color in the vector layer 'layer'.
+HELP
+
+    &alxsa_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer' },
+        { name => 'color', type => 'geglcolor',
+          desc => 'The color to use for the fill' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    gimp_context_set_foreground (GIMP_CONTEXT (options->fill_options),
+                                 color);
+}
+CODE
+    );
+}
+
 @headers = qw("libgimpbase/gimpbase.h"
               "core/gimpcontext.h"
+              "core/gimpdashpattern.h"
+              "core/gimpstrokeoptions.h"
               "path/gimpvectorlayer.h"
+              "path/gimpvectorlayeroptions.h"
               "gimppdb-utils.h"
               "gimppdberror.h"
               "gimp-intl.h");
 
 @procs = qw(vector_layer_new
             vector_layer_refresh
-            vector_layer_discard);
+            vector_layer_discard
+            vector_layer_get_enable_fill
+            vector_layer_get_enable_stroke
+            vector_layer_get_fill_color
+            vector_layer_get_path
+            vector_layer_get_stroke_cap_style
+            vector_layer_get_stroke_color
+            vector_layer_get_stroke_dash_offset
+            vector_layer_get_stroke_dash_pattern
+            vector_layer_get_stroke_join_style
+            vector_layer_get_stroke_miter_limit
+            vector_layer_get_stroke_width
+            vector_layer_get_stroke_width_unit
+            vector_layer_set_enable_fill
+            vector_layer_set_enable_stroke
+            vector_layer_set_fill_color
+            vector_layer_set_stroke_cap_style
+            vector_layer_set_stroke_color
+            vector_layer_set_stroke_dash_offset
+            vector_layer_set_stroke_dash_pattern
+            vector_layer_set_stroke_join_style
+            vector_layer_set_stroke_miter_limit
+            vector_layer_set_stroke_width
+            vector_layer_set_stroke_width_unit);
 
 %exports = (app => [@procs], lib => [@procs]);
 

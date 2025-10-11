@@ -50,6 +50,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
@@ -70,6 +71,7 @@
 #define MOVE_MASK    GDK_MOD1_MASK
 #define INSDEL_MASK  gimp_get_toggle_behavior_mask ()
 
+#define RESPONSE_NEW 1
 
 /*  local function prototypes  */
 
@@ -141,11 +143,20 @@ static void     gimp_path_tool_to_selection_extended
                                                    GdkModifierType        state);
 
 static void     gimp_path_tool_create_vector_layer(GimpPathTool          *path_tool,
-						                           GtkWidget             *button);
+                                                   GtkWidget             *button);
 static void     gimp_path_tool_vector_change_notify
                                                   (GObject               *options,
                                                    const GParamSpec      *pspec,
                                                    GimpVectorLayer       *layer);
+
+static void     gimp_path_tool_set_layer          (GimpPathTool          *path_tool,
+                                                   GimpVectorLayer       *vector_layer);
+
+static void     gimp_path_tool_confirm_dialog     (GimpPathTool          *path_tool,
+                                                   GimpVectorLayer       *layer);
+static void     gimp_path_tool_confirm_response   (GimpViewableDialog    *dialog,
+                                                   gint                   response_id,
+                                                   GimpPathTool          *path_tool);
 
 
 G_DEFINE_TYPE (GimpPathTool, gimp_path_tool, GIMP_TYPE_DRAW_TOOL)
@@ -187,6 +198,7 @@ gimp_path_tool_class_init (GimpPathToolClass *klass)
   tool_class->motion         = gimp_path_tool_motion;
   tool_class->modifier_key   = gimp_path_tool_modifier_key;
   tool_class->cursor_update  = gimp_path_tool_cursor_update;
+  tool_class->is_destructive = FALSE;
 }
 
 static void
@@ -517,36 +529,14 @@ gimp_path_tool_image_selected_layers_changed (GimpPathTool *path_tool)
   /* If we've selected a single vector layer, make its path editable */
   if (current_layers                      &&
       g_list_length (current_layers) == 1 &&
-      gimp_item_is_vector_layer (GIMP_ITEM (current_layers->data)))
+      GIMP_IS_VECTOR_LAYER (GIMP_ITEM (current_layers->data)))
     {
       GimpVectorLayer *vector_layer = current_layers->data;
 
-      gimp_path_tool_set_path (path_tool,
-                               gimp_vector_layer_get_path (vector_layer));
-
-      g_object_set (options,
-                    "enable-fill",   vector_layer->options->enable_fill,
-                    "enable_stroke", vector_layer->options->enable_stroke,
-                    NULL);
-      gimp_config_sync (G_OBJECT (vector_layer->options->stroke_options),
-                        G_OBJECT (options->stroke_options), 0);
-      gimp_config_sync (G_OBJECT (vector_layer->options->fill_options),
-                        G_OBJECT (options->fill_options), 0);
-
-      g_signal_connect_object (options, "notify::enable-fill",
-                               G_CALLBACK (gimp_path_tool_vector_change_notify),
-                               vector_layer, 0);
-      g_signal_connect_object (options, "notify::enable-stroke",
-                               G_CALLBACK (gimp_path_tool_vector_change_notify),
-                               vector_layer, 0);
-      g_signal_connect_object (options->fill_options, "notify",
-                               G_CALLBACK (gimp_path_tool_vector_change_notify),
-                               vector_layer, 0);
-      g_signal_connect_object (options->stroke_options, "notify",
-                               G_CALLBACK (gimp_path_tool_vector_change_notify),
-                               vector_layer, 0);
-
-      path_tool->current_vector_layer = vector_layer;
+      if (gimp_item_is_vector_layer (GIMP_ITEM (current_layers->data)))
+        gimp_path_tool_set_layer (path_tool, vector_layer);
+      else
+        gimp_path_tool_confirm_dialog (path_tool, vector_layer);
     }
 }
 
@@ -812,7 +802,7 @@ gimp_path_tool_to_selection_extended (GimpPathTool    *path_tool,
 
 static void
 gimp_path_tool_create_vector_layer (GimpPathTool *path_tool,
-				                    GtkWidget    *button)
+                                    GtkWidget    *button)
 {
   GimpImage       *image;
   GimpVectorLayer *layer;
@@ -847,7 +837,7 @@ gimp_path_tool_create_vector_layer (GimpPathTool *path_tool,
     }
 
   layer = gimp_vector_layer_new (image, path_tool->path,
-				                 gimp_get_user_context (image->gimp));
+                                 gimp_get_user_context (image->gimp));
   path_tool->current_vector_layer = layer;
 
   gimp_image_add_layer (image,
@@ -931,5 +921,146 @@ gimp_path_tool_vector_change_notify (GObject          *options,
     {
       gimp_vector_layer_refresh (layer);
       gimp_image_flush (image);
+    }
+}
+
+static void
+gimp_path_tool_set_layer (GimpPathTool    *path_tool,
+                          GimpVectorLayer *vector_layer)
+{
+  GimpPathOptions *options;
+
+  g_return_if_fail (GIMP_IS_PATH_TOOL (path_tool));
+  g_return_if_fail (path_tool->current_vector_layer == NULL);
+
+  options = GIMP_PATH_TOOL_GET_OPTIONS (path_tool);
+
+  gimp_path_tool_set_path (path_tool,
+                           gimp_vector_layer_get_path (vector_layer));
+
+  g_object_set (options,
+                "enable-fill",   vector_layer->options->enable_fill,
+                "enable_stroke", vector_layer->options->enable_stroke,
+                NULL);
+  gimp_config_sync (G_OBJECT (vector_layer->options->stroke_options),
+                    G_OBJECT (options->stroke_options), 0);
+  gimp_config_sync (G_OBJECT (vector_layer->options->fill_options),
+                    G_OBJECT (options->fill_options), 0);
+
+  g_signal_connect_object (options, "notify::enable-fill",
+                           G_CALLBACK (gimp_path_tool_vector_change_notify),
+                           vector_layer, 0);
+  g_signal_connect_object (options, "notify::enable-stroke",
+                           G_CALLBACK (gimp_path_tool_vector_change_notify),
+                           vector_layer, 0);
+  g_signal_connect_object (options->fill_options, "notify",
+                           G_CALLBACK (gimp_path_tool_vector_change_notify),
+                           vector_layer, 0);
+  g_signal_connect_object (options->stroke_options, "notify",
+                           G_CALLBACK (gimp_path_tool_vector_change_notify),
+                           vector_layer, 0);
+
+  path_tool->current_vector_layer = vector_layer;
+}
+
+static void
+gimp_path_tool_confirm_dialog (GimpPathTool    *path_tool,
+                               GimpVectorLayer *layer)
+{
+  GimpTool         *tool    = GIMP_TOOL (path_tool);
+  GimpContext      *context = gimp_get_user_context (tool->tool_info->gimp);
+  GimpDisplay      *display = gimp_context_get_display (context);
+  GimpDisplayShell *shell   = display ? gimp_display_get_shell (display) : NULL;
+  GtkWidget        *dialog;
+  GtkWidget        *vbox;
+  GtkWidget        *label;
+
+  if (path_tool->confirm_dialog)
+    {
+      gtk_window_present (GTK_WINDOW (path_tool->confirm_dialog));
+      return;
+    }
+
+  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, layer),
+                                     GIMP_CONTEXT (gimp_tool_get_options (tool)),
+                                     _("Confirm Path Editing"),
+                                     "gimp-path-tool-confirm",
+                                     GIMP_ICON_LAYER_VECTOR_LAYER,
+                                     _("Confirm Path Editing"),
+                                     GTK_WIDGET (shell),
+                                     gimp_standard_help_func, NULL,
+
+                                     _("Create _New Layer"), RESPONSE_NEW,
+                                     _("_Cancel"),           GTK_RESPONSE_CANCEL,
+                                     _("_Edit Anyway"),      GTK_RESPONSE_ACCEPT,
+
+                                     NULL);
+
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                            RESPONSE_NEW,
+                                            GTK_RESPONSE_ACCEPT,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
+
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gimp_path_tool_confirm_response),
+                    path_tool);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  label = gtk_label_new (_("The vector layer you picked was rasterized. "
+                           "Editing its path will discard any modifications."));
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  gtk_widget_show (dialog);
+
+  path_tool->confirm_dialog = dialog;
+  g_signal_connect_swapped (dialog, "destroy",
+                            G_CALLBACK (g_nullify_pointer),
+                            &path_tool->confirm_dialog);
+}
+
+static void
+gimp_path_tool_confirm_response (GimpViewableDialog *dialog,
+                                 gint                response_id,
+                                 GimpPathTool       *path_tool)
+{
+  GimpVectorLayer *layer = dialog->viewables ? dialog->viewables->data : NULL;
+  GimpImage       *image;
+  GimpPath        *path;
+
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+
+  if (layer && layer->options)
+    {
+      switch (response_id)
+        {
+        case RESPONSE_NEW:
+          path  = gimp_vector_layer_get_path (layer);
+          image = gimp_item_get_image (GIMP_ITEM (path));
+          path  = GIMP_PATH (gimp_item_duplicate (GIMP_ITEM (path),
+                                                  G_TYPE_FROM_INSTANCE (path)));
+          gimp_image_add_path (image, path, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+          gimp_path_tool_set_path (path_tool, path);
+          gimp_path_tool_create_vector_layer (path_tool, NULL);
+          break;
+
+        case GTK_RESPONSE_ACCEPT:
+          gimp_vector_layer_retrieve (layer);
+          gimp_path_tool_set_layer (path_tool, layer);
+          break;
+
+        default:
+          break;
+        }
     }
 }

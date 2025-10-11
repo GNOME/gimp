@@ -42,6 +42,6 @@ libapptext = static_library('apptext',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-Text"',
   dependencies: [
-    gegl, gdk_pixbuf, harfbuzz, pangocairo, pangoft2,
+    gegl, gdk_pixbuf, gexiv2, harfbuzz, pangocairo, pangoft2,
   ],
 )

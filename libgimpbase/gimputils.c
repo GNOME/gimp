@@ -77,11 +77,13 @@
  * Utilities of general interest
  **/
 
+#ifndef G_OS_WIN32
 static gboolean gimp_utils_generic_available (const gchar *program,
                                               gint         major,
                                               gint         minor);
 static gboolean gimp_utils_gdb_available     (gint         major,
                                               gint         minor);
+#endif
 
 /**
  * gimp_utf8_strtrim:
@@ -1714,12 +1716,12 @@ gimp_bind_text_domain (const gchar *domain_name,
 
 /* Private functions. */
 
+#ifndef G_OS_WIN32
 static gboolean
 gimp_utils_generic_available (const gchar *program,
                               gint         major,
                               gint         minor)
 {
-#ifndef G_OS_WIN32
   pid_t pid;
   int   out_fd[2];
 
@@ -1824,15 +1826,17 @@ gimp_utils_generic_available (const gchar *program,
               (installed_major > major ||
                (installed_major == major && installed_minor >= minor)));
     }
-#endif
 
   /* Fork failed, or Win32. */
   return FALSE;
 }
+#endif
 
+#ifndef G_OS_WIN32
 static gboolean
 gimp_utils_gdb_available (gint major,
                           gint minor)
 {
   return gimp_utils_generic_available ("gdb", major, minor);
 }
+#endif

@@ -156,7 +156,8 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
 
   gimp_object_class->get_memsize    = gimp_vector_layer_get_memsize;
 
-  viewable_class->default_icon_name = "gimp-vector-layer";
+  /* TODO: make a custom icon "gimp-vector-layer". */
+  viewable_class->default_icon_name = "gimp-tool-path";
   viewable_class->default_name      = _("Vector Layer");
 
   layer_class->translate            = gimp_vector_layer_translate;
@@ -376,8 +377,8 @@ gimp_vector_layer_duplicate (GimpItem *item,
 
   if (GIMP_IS_VECTOR_LAYER (new_item))
     {
-      GimpVectorLayer        *vector_layer     = GIMP_VECTOR_LAYER (item);
-      GimpVectorLayer        *new_vector_layer = GIMP_VECTOR_LAYER (new_item);
+      GimpVectorLayer *vector_layer     = GIMP_VECTOR_LAYER (item);
+      GimpVectorLayer *new_vector_layer = GIMP_VECTOR_LAYER (new_item);
 
       if (vector_layer->options)
         {
@@ -390,7 +391,7 @@ gimp_vector_layer_duplicate (GimpItem *item,
               GimpPath *new_path;
 
               new_path = GIMP_PATH (gimp_item_duplicate (GIMP_ITEM (path),
-                                    G_TYPE_FROM_INSTANCE (GIMP_ITEM (path))));
+                                                         G_TYPE_FROM_INSTANCE (GIMP_ITEM (path))));
 
               g_object_set (new_options, "path", new_path, NULL);
             }
@@ -523,7 +524,7 @@ gimp_vector_layer_removed_options_path (GimpVectorLayer *layer)
   if (layer->options)
     {
       gimp_image_undo_push_vector_layer (gimp_item_get_image (GIMP_ITEM (layer)),
-                                         _("Discard Vector Informations"),
+                                         _("Discard Vector Information"),
                                          layer, NULL);
 
       g_object_set (layer->options, "path", NULL, NULL);
@@ -616,8 +617,24 @@ gimp_vector_layer_get_path (GimpVectorLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (layer), NULL);
 
+  return layer->options->path;
+}
+
+/**
+ * gimp_vector_layer_get_options:
+ * @layer: a #GimpVectorLayer
+ *
+ * Gets the vector layer options from @layer if one is associated with it.
+ *
+  * Return value: a #GimpVectorLayerOptions or %NULL if no options are set.
+ */
+GimpVectorLayerOptions *
+gimp_vector_layer_get_options (GimpVectorLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (layer), NULL);
+
   if (gimp_item_is_vector_layer (GIMP_ITEM (layer)))
-    return layer->options->path;
+    return layer->options;
 
   return NULL;
 }
@@ -639,28 +656,52 @@ gimp_vector_layer_refresh (GimpVectorLayer *layer)
 void
 gimp_vector_layer_discard (GimpVectorLayer *layer)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_VECTOR_LAYER (layer));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
 
-  if (! layer->options)
+  if (layer->modified)
     return;
 
-  if (layer->options->path)
-    gimp_image_undo_push_vector_layer (gimp_item_get_image (GIMP_ITEM (layer)),
-                                       _("Discard Vector Information"),
-                                       layer, NULL);
+  image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  g_object_set (layer, "vector-layer-options", NULL, NULL);
+  gimp_image_undo_push_vector_layer_modified (image, NULL, layer);
+  g_object_set (layer, "modified", TRUE, NULL);
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
 }
 
+void
+gimp_vector_layer_retrieve (GimpVectorLayer *layer)
+{
+  GimpImage *image;
+
+  g_return_if_fail (GIMP_IS_VECTOR_LAYER (layer));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
+
+  if (! layer->modified)
+    return;
+
+  image = gimp_item_get_image (GIMP_ITEM (layer));
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                               _("Revert Rasterize Vector Layer"));
+
+  gimp_image_undo_push_vector_layer_modified (image, NULL, layer);
+  gimp_image_undo_push_drawable_mod (image, NULL, GIMP_DRAWABLE (layer), TRUE);
+  g_object_set (layer, "modified", FALSE, NULL);
+
+  gimp_image_undo_group_end (image);
+  gimp_vector_layer_render (layer);
+  gimp_image_flush (image);
+}
+
 gboolean
 gimp_item_is_vector_layer (GimpItem *item)
 {
-  return (GIMP_IS_VECTOR_LAYER (item) &&
-          GIMP_VECTOR_LAYER (item)->options);
+  return (GIMP_IS_VECTOR_LAYER (item) && ! GIMP_VECTOR_LAYER (item)->modified);
 }
 
 

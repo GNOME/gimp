@@ -872,7 +872,7 @@ gimp_palette_load_acb (GimpContext   *context,
         {
           g_free (palette_entry);
           g_free (full_palette_name);
-          g_object_unref (color);
+          g_clear_object (&color);
 
           g_printerr ("Invalid ACB palette color code");
           break;
@@ -880,63 +880,65 @@ gimp_palette_load_acb (GimpContext   *context,
 
       if (color_space == 0)
         {
-          gchar rgb[3];
+          guchar rgb[3];
 
           if (! g_input_stream_read_all (input, rgb, sizeof (rgb),
                                          &bytes_read, NULL, error))
             {
               g_free (palette_entry);
               g_free (full_palette_name);
-              g_object_unref (color);
+              g_clear_object (&color);
 
               g_printerr ("Invalid ACB palette colors");
               break;
             }
 
-          gegl_color_set_pixel (color, babl_format ("R'G'B u8"), rgb);
+          gegl_color_set_pixel (color, babl_format ("R'G'B' u8"), rgb);
           color_ok = TRUE;
         }
       else if (color_space == 2)
         {
-          gchar cmyk[4];
+          guchar cmyk[4];
+          gfloat cmyk_f[4];
 
           if (! g_input_stream_read_all (input, cmyk, sizeof (cmyk),
                                          &bytes_read, NULL, error))
             {
               g_free (palette_entry);
               g_free (full_palette_name);
-              g_object_unref (color);
+              g_clear_object (&color);
 
               g_printerr ("Invalid ACB palette colors");
               break;
             }
 
           for (gint j = 0; j < 4; j++)
-            cmyk[j] = ((255 - cmyk[j]) / 2.55f) + 0.5f;
+            cmyk_f[j] = (((255 - cmyk[j]) / 2.55f) + 0.5f) / 100.0f;
 
-          gegl_color_set_pixel (color, babl_format ("cmyk u8"), cmyk);
+          gegl_color_set_pixel (color, babl_format ("CMYK float"), cmyk_f);
           color_ok = TRUE;
         }
       else if (color_space == 7)
         {
-          gchar lab[3];
+          guchar lab[3];
+          gfloat lab_f[3];
 
           if (! g_input_stream_read_all (input, lab, sizeof (lab),
                                          &bytes_read, NULL, error))
             {
               g_free (palette_entry);
               g_free (full_palette_name);
-              g_object_unref (color);
+              g_clear_object (&color);
 
               g_printerr ("Invalid ACB palette colors");
               break;
             }
 
-          lab[0] = (lab[0] / 2.55f) + 0.5f;
-          lab[1] = lab[1] - 128;
-          lab[2] = lab[2] - 128;
+          lab_f[0] = (lab[0] / 2.55f) + 0.5f;
+          lab_f[1] = ((gfloat) lab[1]) - 128;
+          lab_f[2] = ((gfloat) lab[2]) - 128;
 
-          gegl_color_set_pixel (color, babl_format ("CIE Lab u8"), lab);
+          gegl_color_set_pixel (color, babl_format ("CIE Lab float"), lab_f);
           color_ok = TRUE;
         }
 
@@ -945,7 +947,7 @@ gimp_palette_load_acb (GimpContext   *context,
 
       g_free (palette_entry);
       g_free (full_palette_name);
-      g_object_unref (color);
+      g_clear_object (&color);
 
       if (! color_ok)
         {

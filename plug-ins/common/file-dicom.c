@@ -344,6 +344,7 @@ load_image (GFile   *file,
   gint        bits_stored       = 0;
   gint        high_bit          = 0;
   guint8     *pix_buf           = NULL;
+  guint64     pixbuf_size       = 0;
   gboolean    is_signed         = FALSE;
   guint8      in_sequence       = 0;
   gboolean    implicit_encoding = FALSE;
@@ -399,6 +400,7 @@ load_image (GFile   *file,
       guint16  ctx_us;
       guint8  *value;
       guint32  tag;
+      size_t   actual_read;
 
       if (fread (&group_word, 1, 2, dicom) == 0)
         break;
@@ -503,15 +505,24 @@ load_image (GFile   *file,
 
       if (element_length >= (G_MAXUINT - 6))
         {
-          g_message ("'%s' seems to have an incorrect value field length.",
-                     gimp_file_get_utf8_name (file));
-          gimp_quit ();
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                       _("'%s' has an incorrect value for field size. Possibly corrupt image."),
+                       gimp_file_get_utf8_name (file));
+          g_free (dicominfo);
+          fclose (dicom);
+          return NULL;
         }
 
       /* Read contents. Allocate a bit more to make room for casts to int
        below. */
       value = g_new0 (guint8, element_length + 4);
-      fread (value, 1, element_length, dicom);
+      actual_read = fread (value, 1, element_length, dicom);
+      if (actual_read < element_length)
+        {
+          g_warning ("Missing data: needed %u bytes, got %u. Possibly corrupt image.",
+                     element_length, (guint32) actual_read);
+          element_length = actual_read;
+        }
 
       /* ignore everything inside of a sequence */
       if (in_sequence)
@@ -524,7 +535,7 @@ load_image (GFile   *file,
       if (big_endian && group_word != 0x0002)
         ctx_us = GUINT16_SWAP_LE_BE (ctx_us);
 
-      g_debug ("group: %04x, element: %04x, length: %d",
+      g_debug ("group: %04x, element: %04x, length: %u",
                group_word, element_word, element_length);
       g_debug ("Value: %s", (char*)value);
       /* Recognize some critical tags */
@@ -658,6 +669,7 @@ load_image (GFile   *file,
       if (group_word == 0x7fe0 && element_word == 0x0010)
         {
           pix_buf = value;
+          pixbuf_size = element_length;
         }
       else
         {
@@ -688,25 +700,50 @@ load_image (GFile   *file,
         }
     }
 
+  g_debug ("Bpp: %d, wxh: %u x %u, spp: %d\n", bpp, width, height, samples_per_pixel);
+
   if ((bpp != 8) && (bpp != 16))
     {
-      g_message ("'%s' has a bpp of %d which GIMP cannot handle.",
-                 gimp_file_get_utf8_name (file), bpp);
-      gimp_quit ();
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("'%s' has a bpp of %d which GIMP cannot handle."),
+                   gimp_file_get_utf8_name (file), bpp);
+      g_free (pix_buf);
+      g_free (dicominfo);
+      fclose (dicom);
+      return NULL;
     }
 
   if ((width > GIMP_MAX_IMAGE_SIZE) || (height > GIMP_MAX_IMAGE_SIZE))
     {
-      g_message ("'%s' has a larger image size (%d x %d) than GIMP can handle.",
-                 gimp_file_get_utf8_name (file), width, height);
-      gimp_quit ();
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("'%s' has a larger image size (%d x %d) than GIMP can handle."),
+                   gimp_file_get_utf8_name (file), width, height);
+      g_free (pix_buf);
+      g_free (dicominfo);
+      fclose (dicom);
+      return NULL;
     }
 
   if (samples_per_pixel > 3)
     {
-      g_message ("'%s' has samples per pixel of %d which GIMP cannot handle.",
-                 gimp_file_get_utf8_name (file), samples_per_pixel);
-      gimp_quit ();
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("'%s' has samples per pixel of %d which GIMP cannot handle."),
+                   gimp_file_get_utf8_name (file), samples_per_pixel);
+      g_free (pix_buf);
+      g_free (dicominfo);
+      fclose (dicom);
+      return NULL;
+    }
+
+  if ((guint64) width * height * (bpp >> 3) * samples_per_pixel > pixbuf_size)
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("'%s' has not enough pixel data. Possibly corrupt image."),
+                   gimp_file_get_utf8_name (file));
+      g_free (pix_buf);
+      g_free (dicominfo);
+      fclose (dicom);
+      return NULL;
     }
 
   dicominfo->width  = width;

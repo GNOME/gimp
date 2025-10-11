@@ -81,6 +81,7 @@ enum
 
   PROP_LAYER_ADD_MASK_TYPE,
   PROP_LAYER_ADD_MASK_INVERT,
+  PROP_LAYER_ADD_MASK_EDIT_MASK,
 
   PROP_LAYER_MERGE_TYPE,
   PROP_LAYER_MERGE_ACTIVE_GROUP_ONLY,
@@ -387,6 +388,13 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                             "Default layer mask invert",
                             LAYER_ADD_MASK_INVERT_BLURB,
                             FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_ADD_MASK_EDIT_MASK,
+                            "layer-add-mask-edit-mask",
+                            "Default layer mask: edit mask immediately",
+                            LAYER_ADD_MASK_EDIT_MASK,
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_MERGE_TYPE,
@@ -716,6 +724,9 @@ gimp_dialog_config_set_property (GObject      *object,
     case PROP_LAYER_ADD_MASK_INVERT:
       config->layer_add_mask_invert = g_value_get_boolean (value);
       break;
+    case PROP_LAYER_ADD_MASK_EDIT_MASK:
+      config->layer_add_mask_edit_mask = g_value_get_boolean (value);
+      break;
 
     case PROP_LAYER_MERGE_TYPE:
       config->layer_merge_type = g_value_get_enum (value);
@@ -907,6 +918,9 @@ gimp_dialog_config_get_property (GObject    *object,
       break;
     case PROP_LAYER_ADD_MASK_INVERT:
       g_value_set_boolean (value, config->layer_add_mask_invert);
+      break;
+    case PROP_LAYER_ADD_MASK_EDIT_MASK:
+      g_value_set_boolean (value, config->layer_add_mask_edit_mask);
       break;
 
     case PROP_LAYER_MERGE_TYPE:

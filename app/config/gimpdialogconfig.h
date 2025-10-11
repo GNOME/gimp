@@ -78,6 +78,7 @@ struct _GimpDialogConfig
 
   GimpAddMaskType           layer_add_mask_type;
   gboolean                  layer_add_mask_invert;
+  gboolean                  layer_add_mask_edit_mask;
 
   GimpMergeType             layer_merge_type;
   gboolean                  layer_merge_active_group_only;

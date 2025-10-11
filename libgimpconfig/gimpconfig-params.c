@@ -307,8 +307,8 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
       const gchar *type_name  = g_type_name (value_type);
 
       if (value_type == G_TYPE_FILE                        ||
-          /* These types are not visibile in libgimpconfig so we compare
-           * with type names instead.
+          /* These types are not visible in libgimpconfig
+           * so we compare with type names instead.
            */
           g_strcmp0 (type_name, "GimpImage")          == 0 ||
           g_strcmp0 (type_name, "GimpDisplay")        == 0 ||
@@ -316,6 +316,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
           g_strcmp0 (type_name, "GimpLayer")          == 0 ||
           g_strcmp0 (type_name, "GimpGroupLayer")     == 0 ||
           g_strcmp0 (type_name, "GimpTextLayer")      == 0 ||
+          g_strcmp0 (type_name, "GimpVectorLayer")    == 0 ||
           g_strcmp0 (type_name, "GimpChannel")        == 0 ||
           g_strcmp0 (type_name, "GimpItem")           == 0 ||
           g_strcmp0 (type_name, "GimpLayerMask")      == 0 ||

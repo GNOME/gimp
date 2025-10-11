@@ -109,6 +109,7 @@ gimp_magnify_tool_class_init (GimpMagnifyToolClass *klass)
   tool_class->motion         = gimp_magnify_tool_motion;
   tool_class->modifier_key   = gimp_magnify_tool_modifier_key;
   tool_class->cursor_update  = gimp_magnify_tool_cursor_update;
+  tool_class->is_destructive = FALSE;
 
   draw_tool_class->draw      = gimp_magnify_tool_draw;
 }

@@ -1144,8 +1144,10 @@ register_path_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-new");
   gimp_procedure_set_static_help (procedure,
-                                  "Creates a new empty path object.",
-                                  "Creates a new empty path object. The path object needs to be added to the image using 'gimp-image-insert-path'.",
+                                  "Create a new empty path object.",
+                                  "This procedure creates a new empty path object. If @name is %NULL, a default path name will be used.\n"
+                                  "\n"
+                                  "The new path still needs to be added to the image as this is not automatic. Add the new path with the [method@Image.insert_path] method.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
@@ -1161,7 +1163,7 @@ register_path_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "the name of the new path object.",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1180,8 +1182,10 @@ register_path_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-path-new-from-text-layer");
   gimp_procedure_set_static_help (procedure,
-                                  "Creates a new path object from a text layer.",
-                                  "Creates a new path object from a text layer. The path object needs to be added to the image using 'gimp-image-insert-path'.",
+                                  "Create a new path object from a text layer.",
+                                  "This procedure creates a new path object from a text layer.\n"
+                                  "\n"
+                                  "The new path still needs to be added to the image as this is not automatic. Add the new path with the [method@Image.insert_path] method.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Marcus Heese <heese@cip.ifi.lmu.de>",
@@ -1216,7 +1220,9 @@ register_path_procs (GimpPDB *pdb)
                                "gimp-path-copy");
   gimp_procedure_set_static_help (procedure,
                                   "Copy a path object.",
-                                  "This procedure copies the specified path object and returns the copy.",
+                                  "This procedure copies the specified path object and returns the copy.\n"
+                                  "\n"
+                                  "The new path still needs to be added to the image as this is not automatic. Add the new path with the [method@Image.insert_path] method.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Barak Itkin <lightningismyname@gmail.com>",

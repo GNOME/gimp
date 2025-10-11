@@ -540,15 +540,15 @@ welcome_dialog_create_welcome_page (Gimp      *gimp,
                     "\xf0\x9f\x8c\x90",
                     _("GIMP website"), "https://www.gimp.org/");
   welcome_add_link (GTK_GRID (grid), 0, &row,
-                    /* "graduation cap" emoticone in UTF-8. */
-                    "\xf0\x9f\x8e\x93",
-                    _("Tutorials"),
-                    "https://www.gimp.org/tutorials/");
-  welcome_add_link (GTK_GRID (grid), 0, &row,
                     /* "open book" emoticone in UTF-8. */
                     "\xf0\x9f\x93\x96",
                     _("Documentation"),
                     "https://docs.gimp.org/");
+  welcome_add_link (GTK_GRID (grid), 0, &row,
+                    /* "graduation cap" emoticone in UTF-8. */
+                    "\xf0\x9f\x8e\x93",
+                    _("Community Tutorials"),
+                    "https://www.gimp.org/tutorials/");
 
   /* XXX: should we add API docs for plug-in developers once it's
    * properly set up? */
@@ -1123,13 +1123,26 @@ welcome_dialog_create_release_page (Gimp      *gimp,
       gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_set_visible (hbox, TRUE);
 
-      tmp = g_strdup_printf (GIMP_VERSION);
-      if (GIMP_MINOR_VERSION % 2 == 0 && ! strstr (tmp, "RC"))
-        release_link = g_strdup_printf ("https://www.gimp.org/release-notes/gimp-%d.%d.html",
-                                        GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
+      if (GIMP_MINOR_VERSION % 2 == 0)
+        {
+          if (GIMP_MICRO_VERSION == 0)
+#ifdef GIMP_RC_VERSION
+            release_link = g_strdup_printf ("https://www.gimp.org/release/%d.%d.0-RC%d/",
+                                            GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION,
+                                            GIMP_RC_VERSION);
+#else
+            release_link = g_strdup_printf ("https://www.gimp.org/release-notes/gimp-%d.%d.html",
+                                            GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
+#endif
+          else
+            release_link = g_strdup_printf ("https://www.gimp.org/release/%d.%d.%d/",
+                                            GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION,
+                                            GIMP_MICRO_VERSION);
+        }
       else
-        release_link = g_strdup ("https://www.gimp.org/");
-      g_free (tmp);
+        {
+          release_link = g_strdup ("https://www.gimp.org/");
+        }
 
       widget = gtk_link_button_new_with_label (release_link, _("Learn more"));
       gtk_widget_set_visible (widget, TRUE);
@@ -1382,7 +1395,7 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
     {
       GList *windows = gimp_get_image_windows (gimp);
 
-      /* Losing forcus on the welcome dialog on purpose for the main GUI
+      /* Losing focus on the welcome dialog on purpose for the main GUI
        * to be more readable.
        */
       if (windows)

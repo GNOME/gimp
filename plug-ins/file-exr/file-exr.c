@@ -306,6 +306,9 @@ load_image (GFile                 *file,
                               gimp_image_get_default_new_layer_mode (image));
       gimp_image_insert_layer (image, layer, NULL, -1);
 
+      if (i > -1)
+        g_free (layer_name);
+
       buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
       format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
       bpp = babl_format_get_bytes_per_pixel (format);

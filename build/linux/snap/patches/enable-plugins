@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# Set LD_LIBRARY_PATH for third-party plugins.
+#
+# Each third-party plugin snap may provide a
+# add-ld-library-path file so GIMP can find the
+# plugin's .so's. The file should provide a path
+# relative to ${SNAP}/gimp-plugins, which is the
+# mount point for the GIMP snap's generic content
+# interface plug.
+#
+
+for path_file in "$SNAP"/gimp-plugins/*.conf/add-ld-library-path; do
+  if [ -f "$path_file" ]; then
+    while IFS= read -r path || [ -n "${path}" ]; do
+      LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${SNAP}/gimp-plugins/${path}"
+    done < "${path_file}"
+  fi
+done
+export LD_LIBRARY_PATH
+
+exec "$@"

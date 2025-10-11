@@ -659,6 +659,9 @@ _("Sets the default mask for the 'Add Layer Mask' dialog.")
 #define LAYER_ADD_MASK_INVERT_BLURB \
 _("Sets the default 'invert mask' state for the 'Add Layer Mask' dialog.")
 
+#define LAYER_ADD_MASK_EDIT_MASK \
+_("Sets the default 'edit mask' state for the 'Add Layer Mask' dialog.")
+
 #define LAYER_MERGE_TYPE_BLURB \
 _("Sets the default merge type for the 'Merge Visible Layers' dialog.")
 

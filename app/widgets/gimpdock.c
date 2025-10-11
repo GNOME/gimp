@@ -292,11 +292,8 @@ gimp_dock_dropped_cb (GtkWidget *notebook,
    */
   if (gimp_dockbook_get_dock (dockbook) == dock)
     {
-      GList *children    = gtk_container_get_children (GTK_CONTAINER (dockable));
-      gint   n_dockables = g_list_length (children);
-      gint   n_books     = g_list_length (gimp_dock_get_dockbooks (dock));
-
-      g_list_free (children);
+      gint n_dockables = gtk_notebook_get_n_pages (GTK_NOTEBOOK (dockbook));
+      gint n_books     = g_list_length (gimp_dock_get_dockbooks (dock));
 
       if (n_books == 1 && n_dockables == 1)
         return TRUE; /* successfully do nothing */

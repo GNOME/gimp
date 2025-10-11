@@ -78,6 +78,8 @@ gboolean    gimp_link_layer_set_transform        (GimpLinkLayer         *layer,
                                                   GimpInterpolationType  interpolation_type,
                                                   gboolean               push_undo);
 
+gboolean    gimp_item_is_link_layer              (GimpItem              *item);
+
 /* Only to be used for XCF loading/saving. */
 
 guint32     gimp_link_layer_get_xcf_flags        (GimpLinkLayer         *layer);

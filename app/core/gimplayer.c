@@ -991,10 +991,10 @@ gimp_layer_duplicate (GimpItem *item,
 
           mask = gimp_item_duplicate (GIMP_ITEM (layer->mask),
                                       G_TYPE_FROM_INSTANCE (layer->mask));
-          gimp_layer_add_mask (new_layer, GIMP_LAYER_MASK (mask), FALSE, NULL);
+          gimp_layer_add_mask (new_layer, GIMP_LAYER_MASK (mask),
+                               layer->edit_mask, FALSE, NULL);
 
           new_layer->apply_mask = layer->apply_mask;
-          new_layer->edit_mask  = layer->edit_mask;
           new_layer->show_mask  = layer->show_mask;
         }
     }
@@ -1917,6 +1917,7 @@ gimp_layer_get_mask (GimpLayer *layer)
 GimpLayerMask *
 gimp_layer_add_mask (GimpLayer      *layer,
                      GimpLayerMask  *mask,
+                     gboolean        edit_mask,
                      gboolean        push_undo,
                      GError        **error)
 {
@@ -1958,7 +1959,7 @@ gimp_layer_add_mask (GimpLayer      *layer,
 
   layer->mask = g_object_ref_sink (mask);
   layer->apply_mask = TRUE;
-  layer->edit_mask  = TRUE;
+  layer->edit_mask  = edit_mask;
   layer->show_mask  = FALSE;
 
   gimp_layer_mask_set_layer (mask, layer);
@@ -2987,6 +2988,9 @@ gimp_layer_update_effective_mode (GimpLayer *layer)
       composite_space != layer->effective_composite_space ||
       composite_mode  != layer->effective_composite_mode)
     {
+      GeglRectangle rect = GIMP_LAYER_GET_CLASS (layer)->get_bounding_box (layer);
+      GeglRectangle rect2;
+
       layer->effective_mode            = mode;
       layer->effective_blend_space     = blend_space;
       layer->effective_composite_space = composite_space;
@@ -2997,7 +3001,15 @@ gimp_layer_update_effective_mode (GimpLayer *layer)
       if (gimp_filter_peek_node (GIMP_FILTER (layer)))
         gimp_layer_update_mode_node (layer);
 
-      gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+      /* The effective mode change might be enough to shrink the
+       * effective bounding box. This may happen in particular for
+       * pass-through group layers changed to other modes. So make sure
+       * we update a box containing both the old and new boundaries.
+       */
+      rect2 = GIMP_LAYER_GET_CLASS (layer)->get_bounding_box (layer);
+      gegl_rectangle_bounding_box (&rect, &rect, &rect2);
+
+      gimp_drawable_update (GIMP_DRAWABLE (layer), rect.x, rect.y, rect.width, rect.height);
     }
 }
 

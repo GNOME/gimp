@@ -32,10 +32,47 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpVectorLayer* gimp_vector_layer_new     (GimpImage       *image,
-                                            GimpPath        *path);
-gboolean         gimp_vector_layer_refresh (GimpVectorLayer *layer);
-gboolean         gimp_vector_layer_discard (GimpVectorLayer *layer);
+GimpVectorLayer* gimp_vector_layer_new                     (GimpImage        *image,
+                                                            GimpPath         *path);
+gboolean         gimp_vector_layer_refresh                 (GimpVectorLayer  *layer);
+gboolean         gimp_vector_layer_discard                 (GimpVectorLayer  *layer);
+gboolean         gimp_vector_layer_get_enable_fill         (GimpVectorLayer  *layer);
+gboolean         gimp_vector_layer_get_enable_stroke       (GimpVectorLayer  *layer);
+GeglColor*       gimp_vector_layer_get_fill_color          (GimpVectorLayer  *layer);
+GimpPath*        gimp_vector_layer_get_path                (GimpVectorLayer  *layer);
+GimpCapStyle     gimp_vector_layer_get_stroke_cap_style    (GimpVectorLayer  *layer);
+GeglColor*       gimp_vector_layer_get_stroke_color        (GimpVectorLayer  *layer);
+gdouble          gimp_vector_layer_get_stroke_dash_offset  (GimpVectorLayer  *layer);
+gboolean         gimp_vector_layer_get_stroke_dash_pattern (GimpVectorLayer  *layer,
+                                                            gsize            *num_dashes,
+                                                            gdouble         **dashes);
+GimpJoinStyle    gimp_vector_layer_get_stroke_join_style   (GimpVectorLayer  *layer);
+gdouble          gimp_vector_layer_get_stroke_miter_limit  (GimpVectorLayer  *layer);
+gdouble          gimp_vector_layer_get_stroke_width        (GimpVectorLayer  *layer);
+GimpUnit*        gimp_vector_layer_get_stroke_width_unit   (GimpVectorLayer  *layer);
+gboolean         gimp_vector_layer_set_enable_fill         (GimpVectorLayer  *layer,
+                                                            gboolean          enable_fill);
+gboolean         gimp_vector_layer_set_enable_stroke       (GimpVectorLayer  *layer,
+                                                            gboolean          enable_stroke);
+gboolean         gimp_vector_layer_set_fill_color          (GimpVectorLayer  *layer,
+                                                            GeglColor        *color);
+gboolean         gimp_vector_layer_set_stroke_cap_style    (GimpVectorLayer  *layer,
+                                                            GimpCapStyle      cap_style);
+gboolean         gimp_vector_layer_set_stroke_color        (GimpVectorLayer  *layer,
+                                                            GeglColor        *color);
+gboolean         gimp_vector_layer_set_stroke_dash_offset  (GimpVectorLayer  *layer,
+                                                            gdouble           dash_offset);
+gboolean         gimp_vector_layer_set_stroke_dash_pattern (GimpVectorLayer  *layer,
+                                                            gsize             num_dashes,
+                                                            const gdouble    *dashes);
+gboolean         gimp_vector_layer_set_stroke_join_style   (GimpVectorLayer  *layer,
+                                                            GimpJoinStyle     join_style);
+gboolean         gimp_vector_layer_set_stroke_miter_limit  (GimpVectorLayer  *layer,
+                                                            gdouble           miter);
+gboolean         gimp_vector_layer_set_stroke_width        (GimpVectorLayer  *layer,
+                                                            gdouble           width);
+gboolean         gimp_vector_layer_set_stroke_width_unit   (GimpVectorLayer  *layer,
+                                                            GimpUnit         *unit);
 
 
 G_END_DECLS
