@@ -48,7 +48,7 @@ sudo snapcraft prime --destructive-mode --build-for=$(dpkg --print-architecture)
 
 if [ "$GITLAB_CI" ]; then
   ## On CI, make the .snap prematurely on each runner since snapcraft does not allow multiple prime/ directories
-  eval "$(sed -n -e '/NAME=/,/GIMP_VERSION=/ { s/  //; p }' build/linux/snap/3_dist-gimp-snapcraft.sh)"
+  eval "$(sed -n -e '/NAME=/,/TRACK=/ { s/  //; p }' build/linux/snap/3_dist-gimp-snapcraft.sh)"
   eval "$(grep 'snapcraft pack' build/linux/snap/3_dist-gimp-snapcraft.sh | sed 's/  //')"
 fi
 printf "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K\n"

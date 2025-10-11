@@ -26,21 +26,16 @@ printf "\e[0Ksection_start:`date +%s`:snap_info\r\e[0KGetting snap global info\n
 #(we do not use config.h like other scripts because the info needs to be on snapcraft.yaml too
 #so taking such info from the .yaml ensures we not forget to manually update it)
 cp build/linux/snap/snapcraft.yaml .
-
 ## Set proper Snap name and update track
 NAME=$(awk '/^name:/ { print $2 }' snapcraft.yaml)
 TRACK=$(awk -F. '/-Dbuild-id=/ { print $NF }' snapcraft.yaml)
-
-## Get info about GIMP version
-GIMP_VERSION=$(awk -F"'" '/version:/ {print $2; exit}' meson.build)
-gimp_release=$([ "$(awk '/^grade:/ { print $2 }' snapcraft.yaml)" != 'devel' ] && echo true || echo false)
-printf "(INFO): Name: $NAME (track: $TRACK) | Version: $GIMP_VERSION\n"
+printf "(INFO): Name: $NAME (track: $TRACK)\n"
 
 ## Autodetects what archs will be packaged
 supported_archs=$(find . -maxdepth 1 -iname "*.snap")
 if [ "$supported_archs" = '' ]; then
   printf "(INFO): Arch: $(dpkg --print-architecture)\n"
-  export supported_archs="./temp_${NAME}_${GIMP_VERSION}_$(dpkg --print-architecture).snap"
+  export supported_archs="./temp_${NAME}_$(dpkg --print-architecture).snap"
 elif echo "$supported_archs" | grep -q 'arm64' && ! echo "$supported_archs" | grep -q 'amd64'; then
   printf '(INFO): Arch: arm64\n'
 elif ! echo "$supported_archs" | grep -q 'arm64' && echo "$supported_archs" | grep -q 'amd64'; then
@@ -57,7 +52,7 @@ SNAP=$(echo "$SNAP" | sed 's|^\./temp_||')
 printf "\e[0Ksection_start:`date +%s`:${SNAP}_making[collapsed=true]\r\e[0KFinishing ${SNAP}\n"
 if [ -z "$GITLAB_CI" ]; then
   #as explained in 2_build-gimp-snapcraft.sh, we can only make snaps this way locally due to snapcraft design
-  sudo snapcraft pack --destructive-mode --output temp_${NAME}_${GIMP_VERSION}_$(dpkg --print-architecture).snap
+  sudo snapcraft pack --destructive-mode --output temp_${NAME}_$(dpkg --print-architecture).snap
 fi
 mv temp_${SNAP} ${SNAP}
 printf "(INFO): Suceeded. To test this build, install it from the artifact with: sudo snap install --dangerous ${SNAP}\n"
@@ -65,7 +60,7 @@ printf "\e[0Ksection_end:`date +%s`:${SNAP}_making\r\e[0K\n"
 
 
 # Generate shasums for .snap
-if [ "$gimp_release" = false ] || echo "$GIMP_VERSION" | grep -q 'git'; then
+if [ "$CI_COMMIT_TAG" != "$(git describe --all | sed 's|tags/||')" ]; then
   printf "\e[0Ksection_start:`date +%s`:${SNAP}_trust[collapsed=true]\r\e[0KChecksumming ${SNAP}\n"
   printf "(INFO): ${SNAP} SHA-256: $(sha256sum ${SNAP} | cut -d ' ' -f 1)\n"
   printf "(INFO): ${SNAP} SHA-512: $(sha512sum ${SNAP} | cut -d ' ' -f 1)\n"
