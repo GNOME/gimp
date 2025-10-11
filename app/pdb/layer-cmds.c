@@ -1225,7 +1225,7 @@ register_layer_procs (GimpPDB *pdb)
                                   "\n"
                                   "The new layer still needs to be added to the image as this is not automatic. Add the new layer with the [method@Image.insert_layer] method.\n"
                                   "\n"
-                                  "Other attributes such as layer mask modes and offsets should be set with explicit procedure calls.",
+                                  "Other attributes such as layer mask and offsets should be set with explicit procedure calls.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -1293,7 +1293,11 @@ register_layer_procs (GimpPDB *pdb)
                                "gimp-layer-new-from-visible");
   gimp_procedure_set_static_help (procedure,
                                   "Create a new layer from what is visible in an image.",
-                                  "This procedure creates a new layer from what is visible in the given image. The new layer still needs to be added to the destination image, as this is not automatic. Add the new layer with the 'gimp-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+                                  "This procedure creates a new layer from what is visible in the given image.\n"
+                                  "\n"
+                                  "The new layer still needs to be added to the image as this is not automatic. Add the new layer with the [method@Image.insert_layer] method.\n"
+                                  "\n"
+                                  "Other attributes such as layer mask and offsets should be set with explicit procedure calls.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Sven Neumann <sven@gimp.org>",
@@ -1335,7 +1339,11 @@ register_layer_procs (GimpPDB *pdb)
                                "gimp-layer-new-from-drawable");
   gimp_procedure_set_static_help (procedure,
                                   "Create a new layer by copying an existing drawable.",
-                                  "This procedure creates a new layer as a copy of the specified drawable. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+                                  "This procedure creates a new layer as a copy of the specified drawable.\n"
+                                  "\n"
+                                  "The new layer still needs to be added to the image as this is not automatic. Add the new layer with the [method@Image.insert_layer] method.\n"
+                                  "\n"
+                                  "Other attributes such as layer mask and offsets should be set with explicit procedure calls.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -1370,7 +1378,11 @@ register_layer_procs (GimpPDB *pdb)
                                "gimp-layer-copy");
   gimp_procedure_set_static_help (procedure,
                                   "Copy a layer.",
-                                  "This procedure copies the specified layer and returns the copy. The newly copied layer is for use within the original layer's image. It should not be subsequently added to any other image.",
+                                  "This procedure copies the specified layer and returns the copy. The newly copied layer is for use within the original layer's image. It should not be subsequently added to any other image.\n"
+                                  "\n"
+                                  "The new layer still needs to be added to the image as this is not automatic. Add the new layer with the [method@Image.insert_layer] method.\n"
+                                  "\n"
+                                  "Other attributes such as layer mask and offsets should be set with explicit procedure calls.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
