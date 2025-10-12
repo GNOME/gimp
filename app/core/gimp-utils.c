@@ -154,7 +154,9 @@ gimp_get_default_language (const gchar *category)
 {
   gchar *lang;
   gchar *p;
+#ifndef G_OS_WIN32
   gint   cat = LC_CTYPE;
+#endif
 
   if (! category)
     category = "LC_CTYPE";
