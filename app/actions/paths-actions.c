@@ -81,7 +81,7 @@ static const GimpActionEntry paths_actions[] =
   { "paths-merge-selected", NULL,
     NC_("paths-action", "Mer_ge Selected Paths"), NULL, { NULL }, NULL,
     paths_merge_selected_cmd_callback,
-    GIMP_HELP_PATH_MERGE_SELECT },
+    GIMP_HELP_PATH_MERGE_SELECTED },
 
   { "paths-merge-visible", NULL,
     NC_("paths-action", "Merge _Visible Paths"), NULL, { NULL }, NULL,
