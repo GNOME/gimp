@@ -64,8 +64,6 @@ gboolean    gimp_link_layer_set_link_with_matrix (GimpLinkLayer         *layer,
                                                   gint                   offset_y,
                                                   gboolean               push_undo);
 
-void        gimp_link_layer_discard              (GimpLinkLayer         *layer);
-void        gimp_link_layer_monitor              (GimpLinkLayer         *layer);
 gboolean    gimp_link_layer_is_monitored         (GimpLinkLayer         *layer);
 
 gboolean    gimp_link_layer_get_transform        (GimpLinkLayer         *layer,

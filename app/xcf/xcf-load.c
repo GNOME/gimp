@@ -68,6 +68,7 @@
 #include "core/gimpparasitelist.h"
 #include "core/gimppattern.h"
 #include "core/gimpprogress.h"
+#include "core/gimprasterizable.h"
 #include "core/gimpselection.h"
 #include "core/gimpstrokeoptions.h"
 #include "core/gimpsymmetry.h"
@@ -1021,7 +1022,9 @@ xcf_load_image (Gimp     *gimp,
                                           "vector-layer-options", options,
                                           NULL);
           g_object_unref (options);
-          GIMP_VECTOR_LAYER (vlayer)->modified = vdata->modified;
+
+          if (vdata->modified)
+            gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (vlayer));
 
           if (selected)
             {

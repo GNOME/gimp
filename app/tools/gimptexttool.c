@@ -45,6 +45,7 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer-floating-selection.h"
 #include "core/gimplist.h"
+#include "core/gimprasterizable.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 
@@ -1350,7 +1351,7 @@ gimp_text_tool_layer_notify (GimpTextLayer    *layer,
 
   if (! strcmp (pspec->name, "modified"))
     {
-      if (layer->modified)
+      if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
         gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
     }
   else if (! strcmp (pspec->name, "text"))
@@ -1909,7 +1910,7 @@ gimp_text_tool_set_drawable (GimpTextTool *text_tool,
       if (layer == text_tool->layer && layer->text == text_tool->text)
         return TRUE;
 
-      if (layer->modified)
+      if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
         {
           if (confirm)
             {
@@ -2109,12 +2110,10 @@ gimp_text_tool_apply (GimpTextTool *text_tool,
 
   if (push_undo)
     {
-      if (layer->modified)
+      if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
         {
           undo_group = TRUE;
           gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
-
-          gimp_image_undo_push_text_layer_modified (image, NULL, layer);
 
           /*  see comment in gimp_text_layer_set()  */
           gimp_image_undo_push_drawable_mod (image, NULL,
@@ -2129,12 +2128,10 @@ gimp_text_tool_apply (GimpTextTool *text_tool,
   g_list_free (text_tool->pending);
   text_tool->pending = NULL;
 
-  if (push_undo)
+  if (undo_group)
     {
-      g_object_set (layer, "modified", FALSE, NULL);
-
-      if (undo_group)
-        gimp_image_undo_group_end (image);
+      gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
+      gimp_image_undo_group_end (image);
     }
 
   gimp_text_tool_frame_item (text_tool);

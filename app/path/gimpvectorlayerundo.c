@@ -30,9 +30,9 @@
 #include "path-types.h"
 
 #include "core/gimp-memsize.h"
+#include "core/gimp-utils.h"
 #include "core/gimpitem.h"
 #include "core/gimpitemundo.h"
-#include "core/gimp-utils.h"
 
 #include "gimpvectorlayer.h"
 #include "gimpvectorlayeroptions.h"
@@ -126,10 +126,6 @@ gimp_vector_layer_undo_constructed (GObject *object)
         {
           vector_undo->vector_layer_options = gimp_config_duplicate (GIMP_CONFIG (vector_layer->options));
         }
-      break;
-
-    case GIMP_UNDO_VECTOR_LAYER_MODIFIED:
-      vector_undo->modified = vector_layer->modified;
       break;
 
     default:
@@ -244,18 +240,6 @@ gimp_vector_layer_undo_pop (GimpUndo            *undo,
 
           vector_undo->vector_layer_options = vector_layer_options;
         }
-      break;
-
-    case GIMP_UNDO_VECTOR_LAYER_MODIFIED:
-      {
-        gboolean modified;
-
-        modified = vector_layer->modified;
-        g_object_set (vector_layer, "modified", vector_undo->modified, NULL);
-        vector_undo->modified = modified;
-
-        gimp_viewable_invalidate_preview (GIMP_VIEWABLE (vector_layer));
-      }
       break;
 
     default:

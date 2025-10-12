@@ -127,10 +127,6 @@ gimp_text_undo_constructed (GObject *object)
         }
       break;
 
-    case GIMP_UNDO_TEXT_LAYER_MODIFIED:
-      text_undo->modified = layer->modified;
-      break;
-
     case GIMP_UNDO_TEXT_LAYER_CONVERT:
       text_undo->format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
       break;
@@ -245,24 +241,6 @@ gimp_text_undo_pop (GimpUndo            *undo,
 
           text_undo->text = text;
         }
-      break;
-
-    case GIMP_UNDO_TEXT_LAYER_MODIFIED:
-      {
-        gboolean modified;
-
-#if 0
-        g_print ("setting layer->modified from %s to %s\n",
-                 layer->modified ? "TRUE" : "FALSE",
-                 text_undo->modified ? "TRUE" : "FALSE");
-#endif
-
-        modified = layer->modified;
-        g_object_set (layer, "modified", text_undo->modified, NULL);
-        text_undo->modified = modified;
-
-        gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
-      }
       break;
 
     case GIMP_UNDO_TEXT_LAYER_CONVERT:

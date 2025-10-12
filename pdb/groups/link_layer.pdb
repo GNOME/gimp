@@ -107,7 +107,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_link_layer_discard (layer);
+  gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
 }
 CODE
     );
@@ -133,7 +133,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_link_layer_monitor (layer);
+  gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
 }
 CODE
     );
@@ -242,6 +242,7 @@ CODE
 }
 @headers = qw("core/gimplink.h"
               "core/gimplinklayer.h"
+              "core/gimprasterizable.h"
               "gimppdberror.h"
               "gimp-intl.h");
 

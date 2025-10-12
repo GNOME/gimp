@@ -618,10 +618,8 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_LAYER_END_TRANSFORM,   /*< desc="End transforming group layer"   >*/
   GIMP_UNDO_GROUP_LAYER_CONVERT,         /*< desc="Convert group layer"            >*/
   GIMP_UNDO_TEXT_LAYER,                  /*< desc="Text layer"                     >*/
-  GIMP_UNDO_TEXT_LAYER_MODIFIED,         /*< desc="Text layer modification"        >*/
   GIMP_UNDO_TEXT_LAYER_CONVERT,          /*< desc="Convert text layer"             >*/
   GIMP_UNDO_VECTOR_LAYER,                /*< desc="Vector layer"                   >*/
-  GIMP_UNDO_VECTOR_LAYER_MODIFIED,       /*< desc="Vector layer modification"      >*/
   GIMP_UNDO_LAYER_MASK_ADD,              /*< desc="Add layer masks"                >*/
   GIMP_UNDO_LAYER_MASK_REMOVE,           /*< desc="Delete layer masks"             >*/
   GIMP_UNDO_LAYER_MASK_APPLY,            /*< desc="Apply layer masks"              >*/
@@ -643,6 +641,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_FILTER_REMOVE,               /*< desc="Remove effect"                  >*/
   GIMP_UNDO_FILTER_REORDER,              /*< desc="Reorder effect"                 >*/
   GIMP_UNDO_FILTER_MODIFIED,             /*< desc="Effect modification"            >*/
+  GIMP_UNDO_RASTERIZABLE,                /*< desc="Text, link or vector layer"     >*/
 
   GIMP_UNDO_CANT                         /*< desc="Not undoable"                   >*/
 } GimpUndoType;

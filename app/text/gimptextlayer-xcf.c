@@ -32,6 +32,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer-xcf.h"
 #include "core/gimpparasitelist.h"
+#include "core/gimprasterizable.h"
 
 #include "gimptext.h"
 #include "gimptext-parasite.h"
@@ -153,7 +154,7 @@ gimp_text_layer_get_xcf_flags (GimpTextLayer *text_layer)
   if (! text_layer->auto_rename)
     flags |= TEXT_LAYER_XCF_DONT_AUTO_RENAME;
 
-  if (text_layer->modified)
+  if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (text_layer)))
     flags |= TEXT_LAYER_XCF_MODIFIED;
 
   return flags;
@@ -167,6 +168,8 @@ gimp_text_layer_set_xcf_flags (GimpTextLayer *text_layer,
 
   g_object_set (text_layer,
                 "auto-rename", (flags & TEXT_LAYER_XCF_DONT_AUTO_RENAME) == 0,
-                "modified",    (flags & TEXT_LAYER_XCF_MODIFIED)         != 0,
                 NULL);
+
+  if ((flags & TEXT_LAYER_XCF_MODIFIED) != 0)
+    gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (text_layer));
 }

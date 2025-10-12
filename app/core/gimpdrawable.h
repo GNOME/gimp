@@ -234,3 +234,5 @@ void              gimp_drawable_start_paint          (GimpDrawable    *drawable)
 gboolean          gimp_drawable_end_paint            (GimpDrawable    *drawable);
 gboolean          gimp_drawable_flush_paint          (GimpDrawable    *drawable);
 gboolean          gimp_drawable_is_painting          (GimpDrawable    *drawable);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpDrawable, g_object_unref);

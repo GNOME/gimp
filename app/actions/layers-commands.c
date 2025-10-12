@@ -53,6 +53,7 @@
 #include "core/gimplist.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-auto-shrink.h"
+#include "core/gimprasterizable.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 #include "core/gimpprogress.h"
@@ -1121,12 +1122,8 @@ layers_rasterize_cmd_callback (GimpAction *action,
 
   for (iter = layers; iter; iter = iter->next)
     {
-      if (gimp_item_is_link_layer (iter->data))
-        gimp_link_layer_discard (GIMP_LINK_LAYER (iter->data));
-      else if (gimp_item_is_text_layer (iter->data))
-        gimp_text_layer_discard (GIMP_TEXT_LAYER (iter->data));
-      else if (gimp_item_is_vector_layer (iter->data))
-        gimp_vector_layer_discard (GIMP_VECTOR_LAYER (iter->data));
+      if (GIMP_IS_RASTERIZABLE (iter->data) && ! gimp_rasterizable_is_rasterized (iter->data))
+        gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (iter->data));
     }
 
   gimp_image_undo_group_end (image);
@@ -1148,12 +1145,8 @@ layers_retrieve_cmd_callback (GimpAction *action,
 
   for (iter = layers; iter; iter = iter->next)
     {
-      if (GIMP_IS_LINK_LAYER (iter->data) && ! gimp_item_is_link_layer (iter->data))
-        gimp_link_layer_monitor (GIMP_LINK_LAYER (iter->data));
-      else if (GIMP_IS_TEXT_LAYER (iter->data) && ! gimp_item_is_text_layer (iter->data))
-        gimp_text_layer_retrieve (GIMP_TEXT_LAYER (iter->data));
-      else if (GIMP_IS_VECTOR_LAYER (iter->data) && ! gimp_item_is_vector_layer (iter->data))
-        gimp_vector_layer_retrieve (GIMP_VECTOR_LAYER (iter->data));
+      if (GIMP_IS_RASTERIZABLE (iter->data) && gimp_rasterizable_is_rasterized (iter->data))
+        gimp_rasterizable_restore (GIMP_RASTERIZABLE (iter->data));
     }
 
   gimp_image_undo_group_end (image);

@@ -37,7 +37,6 @@ struct _GimpTextUndo
   GimpText         *text;
   const GParamSpec *pspec;
   GValue           *value;
-  gboolean          modified;
   const Babl       *format;
 };
 

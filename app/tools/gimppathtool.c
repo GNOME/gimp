@@ -35,6 +35,7 @@
 #include "core/gimpimage-pick-item.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
+#include "core/gimprasterizable.h"
 #include "core/gimpstrokeoptions.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
@@ -149,9 +150,8 @@ static void     gimp_path_tool_vector_change_notify
                                                    const GParamSpec      *pspec,
                                                    GimpVectorLayer       *layer);
 
-static void     gimp_path_tool_vector_layer_modified
-                                                  (GimpVectorLayer       *layer,
-                                                   const GParamSpec      *pspec,
+static void     gimp_path_tool_layer_rasterized   (GimpVectorLayer       *layer,
+                                                   gboolean               is_rasterized,
                                                    GimpPathTool          *tool);
 
 static void     gimp_path_tool_set_layer          (GimpPathTool          *path_tool,
@@ -903,11 +903,11 @@ gimp_path_tool_vector_change_notify (GObject          *options,
 }
 
 static void
-gimp_path_tool_vector_layer_modified (GimpVectorLayer  *layer,
-                                      const GParamSpec *pspec,
-                                      GimpPathTool     *tool)
+gimp_path_tool_layer_rasterized (GimpVectorLayer  *layer,
+                                 gboolean          is_rasterized,
+                                 GimpPathTool     *tool)
 {
-  if (! layer->modified && ! GIMP_TOOL (tool)->display)
+  if (! is_rasterized && ! GIMP_TOOL (tool)->display)
     {
       GList *current_layers = NULL;
 
@@ -919,7 +919,7 @@ gimp_path_tool_vector_layer_modified (GimpVectorLayer  *layer,
           current_layers->data == layer)
         gimp_path_tool_set_layer (tool, layer);
     }
-  else if (layer->modified && GIMP_TOOL (tool)->display)
+  else if (is_rasterized && GIMP_TOOL (tool)->display)
     {
       gimp_path_tool_set_layer (tool, NULL);
     }
@@ -948,7 +948,7 @@ gimp_path_tool_set_layer (GimpPathTool    *path_tool,
                                             path_tool->current_vector_layer);
 
       g_signal_handlers_disconnect_by_func (path_tool->current_vector_layer,
-                                            G_CALLBACK (gimp_path_tool_vector_layer_modified),
+                                            G_CALLBACK (gimp_path_tool_layer_rasterized),
                                             path_tool);
     }
 
@@ -980,8 +980,8 @@ gimp_path_tool_set_layer (GimpPathTool    *path_tool,
                                G_CALLBACK (gimp_path_tool_vector_change_notify),
                                vector_layer, 0);
 
-      g_signal_connect_object (vector_layer, "notify::modified",
-                               G_CALLBACK (gimp_path_tool_vector_layer_modified),
+      g_signal_connect_object (vector_layer, "set-rasterized",
+                               G_CALLBACK (gimp_path_tool_layer_rasterized),
                                path_tool, 0);
     }
 }
@@ -1078,7 +1078,7 @@ gimp_path_tool_confirm_response (GimpViewableDialog *dialog,
           break;
 
         case GTK_RESPONSE_ACCEPT:
-          gimp_vector_layer_retrieve (layer);
+          gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
           gimp_path_tool_set_layer (path_tool, layer);
           break;
 

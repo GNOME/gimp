@@ -43,11 +43,11 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitemtree.h"
-#include "gimpobjectqueue.h"
-#include "gimpprogress.h"
-
 #include "gimplink.h"
 #include "gimplinklayer.h"
+#include "gimpobjectqueue.h"
+#include "gimpprogress.h"
+#include "gimprasterizable.h"
 
 #include "gimp-intl.h"
 
@@ -86,6 +86,9 @@ struct _GimpLinkLayerPrivate
    */
   gboolean               keep_monitoring;
 };
+
+static void       gimp_link_layer_rasterizable_iface_init
+                                                 (GimpRasterizableInterface *iface);
 
 static void       gimp_link_layer_finalize       (GObject           *object);
 static void       gimp_link_layer_get_property   (GObject           *object,
@@ -140,6 +143,9 @@ static void       gimp_link_layer_push_undo      (GimpDrawable      *drawable,
                                                   gint               width,
                                                   gint               height);
 
+static void       gimp_link_layer_set_rasterized (GimpRasterizable  *rasterizable,
+                                                  gboolean           rasterized);
+
 static void       gimp_link_layer_convert_type   (GimpLayer         *layer,
                                                   GimpImage         *dest_image,
                                                   const Babl        *new_format,
@@ -162,7 +168,10 @@ static gboolean
                                                   gint              *new_offset_y);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpLinkLayer, gimp_link_layer, GIMP_TYPE_LAYER)
+G_DEFINE_TYPE_WITH_CODE (GimpLinkLayer, gimp_link_layer, GIMP_TYPE_LAYER,
+                         G_ADD_PRIVATE (GimpLinkLayer)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_RASTERIZABLE,
+                                                gimp_link_layer_rasterizable_iface_init))
 
 #define parent_class gimp_link_layer_parent_class
 
@@ -243,6 +252,12 @@ gimp_link_layer_init (GimpLinkLayer *layer)
   layer->p->interpolation = GIMP_INTERPOLATION_NONE;
 
   layer->p->keep_monitoring = FALSE;
+}
+
+static void
+gimp_link_layer_rasterizable_iface_init (GimpRasterizableInterface *iface)
+{
+  iface->set_rasterized = gimp_link_layer_set_rasterized;
 }
 
 static void
@@ -678,6 +693,24 @@ gimp_link_layer_push_undo (GimpDrawable *drawable,
 }
 
 static void
+gimp_link_layer_set_rasterized (GimpRasterizable *rasterizable,
+                                gboolean          rasterized)
+{
+  GimpLinkLayer *layer = GIMP_LINK_LAYER (rasterizable);
+
+  if (rasterized)
+    {
+      gimp_link_freeze (layer->p->link);
+    }
+  else
+    {
+      gimp_link_thaw (layer->p->link);
+      gimp_matrix3_identity (&layer->p->matrix);
+      gimp_link_layer_render_link (layer);
+    }
+}
+
+static void
 gimp_link_layer_convert_type (GimpLayer         *layer,
                               GimpImage         *dest_image,
                               const Babl        *new_format,
@@ -820,44 +853,6 @@ gimp_link_layer_set_link_with_matrix (GimpLinkLayer         *layer,
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
 
   return rendered;
-}
-
-/**
- * gimp_link_layer_discard:
- * @layer: a #GimpLinkLayer
- *
- * Discards the link. This makes @layer behave like a
- * normal layer.
- */
-void
-gimp_link_layer_discard (GimpLinkLayer *layer)
-{
-  g_return_if_fail (GIMP_IS_LINK_LAYER (layer));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
-
-  gimp_image_undo_push_link_layer (gimp_item_get_image (GIMP_ITEM (layer)),
-                                   _("Discard Link"), layer);
-
-  gimp_link_freeze (layer->p->link);
-
-  /* Triggers thumbnail update. */
-  gimp_drawable_update_all (GIMP_DRAWABLE (layer));
-  /* Triggers contextual menu update. */
-  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
-}
-
-void
-gimp_link_layer_monitor (GimpLinkLayer *layer)
-{
-  g_return_if_fail (GIMP_IS_LINK_LAYER (layer));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
-
-  gimp_image_undo_push_link_layer (gimp_item_get_image (GIMP_ITEM (layer)),
-                                   _("Monitor Link"), layer);
-
-  gimp_link_thaw (layer->p->link);
-  gimp_matrix3_identity (&layer->p->matrix);
-  gimp_link_layer_render_link (layer);
 }
 
 gboolean

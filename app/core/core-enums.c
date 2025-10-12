@@ -1266,10 +1266,8 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_GROUP_LAYER_END_TRANSFORM, "GIMP_UNDO_GROUP_LAYER_END_TRANSFORM", "group-layer-end-transform" },
     { GIMP_UNDO_GROUP_LAYER_CONVERT, "GIMP_UNDO_GROUP_LAYER_CONVERT", "group-layer-convert" },
     { GIMP_UNDO_TEXT_LAYER, "GIMP_UNDO_TEXT_LAYER", "text-layer" },
-    { GIMP_UNDO_TEXT_LAYER_MODIFIED, "GIMP_UNDO_TEXT_LAYER_MODIFIED", "text-layer-modified" },
     { GIMP_UNDO_TEXT_LAYER_CONVERT, "GIMP_UNDO_TEXT_LAYER_CONVERT", "text-layer-convert" },
     { GIMP_UNDO_VECTOR_LAYER, "GIMP_UNDO_VECTOR_LAYER", "vector-layer" },
-    { GIMP_UNDO_VECTOR_LAYER_MODIFIED, "GIMP_UNDO_VECTOR_LAYER_MODIFIED", "vector-layer-modified" },
     { GIMP_UNDO_LAYER_MASK_ADD, "GIMP_UNDO_LAYER_MASK_ADD", "layer-mask-add" },
     { GIMP_UNDO_LAYER_MASK_REMOVE, "GIMP_UNDO_LAYER_MASK_REMOVE", "layer-mask-remove" },
     { GIMP_UNDO_LAYER_MASK_APPLY, "GIMP_UNDO_LAYER_MASK_APPLY", "layer-mask-apply" },
@@ -1291,6 +1289,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_FILTER_REMOVE, "GIMP_UNDO_FILTER_REMOVE", "filter-remove" },
     { GIMP_UNDO_FILTER_REORDER, "GIMP_UNDO_FILTER_REORDER", "filter-reorder" },
     { GIMP_UNDO_FILTER_MODIFIED, "GIMP_UNDO_FILTER_MODIFIED", "filter-modified" },
+    { GIMP_UNDO_RASTERIZABLE, "GIMP_UNDO_RASTERIZABLE", "rasterizable" },
     { GIMP_UNDO_CANT, "GIMP_UNDO_CANT", "cant" },
     { 0, NULL, NULL }
   };
@@ -1382,10 +1381,8 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_GROUP_LAYER_END_TRANSFORM, NC_("undo-type", "End transforming group layer"), NULL },
     { GIMP_UNDO_GROUP_LAYER_CONVERT, NC_("undo-type", "Convert group layer"), NULL },
     { GIMP_UNDO_TEXT_LAYER, NC_("undo-type", "Text layer"), NULL },
-    { GIMP_UNDO_TEXT_LAYER_MODIFIED, NC_("undo-type", "Text layer modification"), NULL },
     { GIMP_UNDO_TEXT_LAYER_CONVERT, NC_("undo-type", "Convert text layer"), NULL },
     { GIMP_UNDO_VECTOR_LAYER, NC_("undo-type", "Vector layer"), NULL },
-    { GIMP_UNDO_VECTOR_LAYER_MODIFIED, NC_("undo-type", "Vector layer modification"), NULL },
     { GIMP_UNDO_LAYER_MASK_ADD, NC_("undo-type", "Add layer masks"), NULL },
     { GIMP_UNDO_LAYER_MASK_REMOVE, NC_("undo-type", "Delete layer masks"), NULL },
     { GIMP_UNDO_LAYER_MASK_APPLY, NC_("undo-type", "Apply layer masks"), NULL },
@@ -1407,6 +1404,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_FILTER_REMOVE, NC_("undo-type", "Remove effect"), NULL },
     { GIMP_UNDO_FILTER_REORDER, NC_("undo-type", "Reorder effect"), NULL },
     { GIMP_UNDO_FILTER_MODIFIED, NC_("undo-type", "Effect modification"), NULL },
+    { GIMP_UNDO_RASTERIZABLE, NC_("undo-type", "Text, link or vector layer"), NULL },
     { GIMP_UNDO_CANT, NC_("undo-type", "Not undoable"), NULL },
     { 0, NULL, NULL }
   };

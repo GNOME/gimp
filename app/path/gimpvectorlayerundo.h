@@ -43,7 +43,6 @@ struct _GimpVectorLayerUndo
   GimpVectorLayerOptions *vector_layer_options;
   const GParamSpec       *pspec;
   GValue                 *value;
-  gboolean                modified;
 };
 
 struct _GimpVectorLayerUndoClass

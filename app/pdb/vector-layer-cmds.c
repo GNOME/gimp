@@ -38,6 +38,7 @@
 #include "core/gimpdashpattern.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimprasterizable.h"
 #include "core/gimpstrokeoptions.h"
 #include "path/gimppath.h"
 #include "path/gimpvectorlayer.h"
@@ -139,7 +140,7 @@ vector_layer_discard_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_vector_layer_discard (layer);
+      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
     }
 
   return gimp_procedure_get_return_values (procedure, success,

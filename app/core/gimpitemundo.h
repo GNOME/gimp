@@ -45,3 +45,5 @@ struct _GimpItemUndoClass
 
 
 GType   gimp_item_undo_get_type (void) G_GNUC_CONST;
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpItemUndo, g_object_unref);

@@ -33,6 +33,7 @@
 #include "core/gimplink.h"
 #include "core/gimplinklayer.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimprasterizable.h"
 
 #include "gimppdb.h"
 #include "gimppdberror.h"
@@ -120,7 +121,7 @@ link_layer_discard_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_link_layer_discard (layer);
+      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -142,7 +143,7 @@ link_layer_monitor_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_link_layer_monitor (layer);
+      gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
     }
 
   return gimp_procedure_get_return_values (procedure, success,

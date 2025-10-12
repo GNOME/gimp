@@ -49,6 +49,7 @@
 #include "core/gimpitemtree.h"
 #include "core/gimpparasitelist.h"
 #include "core/gimppattern.h"
+#include "core/gimprasterizable.h"
 #include "core/gimptempbuf.h"
 
 #include "gimptext.h"
@@ -64,13 +65,15 @@ enum
   PROP_0,
   PROP_TEXT,
   PROP_AUTO_RENAME,
-  PROP_MODIFIED
 };
 
 struct _GimpTextLayerPrivate
 {
   GimpTextDirection base_dir;
 };
+
+static void       gimp_text_layer_rasterizable_iface_init
+                                                 (GimpRasterizableInterface *iface);
 
 static void       gimp_text_layer_finalize       (GObject           *object);
 static void       gimp_text_layer_get_property   (GObject           *object,
@@ -81,6 +84,9 @@ static void       gimp_text_layer_set_property   (GObject           *object,
                                                   guint              property_id,
                                                   const GValue      *value,
                                                   GParamSpec        *pspec);
+
+static void       gimp_text_layer_set_rasterized (GimpRasterizable  *rasterizable,
+                                                  gboolean           rasterized);
 
 static gint64     gimp_text_layer_get_memsize    (GimpObject        *object,
                                                   gint64            *gui_size);
@@ -123,7 +129,10 @@ static void       gimp_text_layer_render_layout  (GimpTextLayer     *layer,
                                                   GimpTextLayout    *layout);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER)
+G_DEFINE_TYPE_WITH_CODE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER,
+                         G_ADD_PRIVATE (GimpTextLayer)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_RASTERIZABLE,
+                                                gimp_text_layer_rasterizable_iface_init))
 
 #define parent_class gimp_text_layer_parent_class
 
@@ -182,12 +191,6 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
                             NULL, NULL,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MODIFIED,
-                            "modified",
-                            NULL, NULL,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -197,6 +200,12 @@ gimp_text_layer_init (GimpTextLayer *layer)
   layer->text_parasite        = NULL;
   layer->text_parasite_is_old = FALSE;
   layer->private              = gimp_text_layer_get_instance_private (layer);
+}
+
+static void
+gimp_text_layer_rasterizable_iface_init (GimpRasterizableInterface *iface)
+{
+  iface->set_rasterized = gimp_text_layer_set_rasterized;
 }
 
 static void
@@ -225,9 +234,6 @@ gimp_text_layer_get_property (GObject      *object,
     case PROP_AUTO_RENAME:
       g_value_set_boolean (value, text_layer->auto_rename);
       break;
-    case PROP_MODIFIED:
-      g_value_set_boolean (value, text_layer->modified);
-      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -251,14 +257,19 @@ gimp_text_layer_set_property (GObject      *object,
     case PROP_AUTO_RENAME:
       text_layer->auto_rename = g_value_get_boolean (value);
       break;
-    case PROP_MODIFIED:
-      text_layer->modified = g_value_get_boolean (value);
-      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_text_layer_set_rasterized (GimpRasterizable *rasterizable,
+                                gboolean          rasterized)
+{
+  if (! rasterized)
+    gimp_text_layer_render (GIMP_TEXT_LAYER (rasterizable));
 }
 
 static gint64
@@ -284,7 +295,7 @@ gimp_text_layer_size_changed (GimpViewable *viewable)
    * gimp_drawable_size_changed () if the layer has been rasterized by
    * a transform. This prevents filters like Drop Shadow from being
    * cropped just by typing */
-  if (text_layer->modified)
+  if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (text_layer)))
     GIMP_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
 }
 
@@ -352,8 +363,11 @@ gimp_text_layer_set_buffer (GimpDrawable        *drawable,
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
   GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
+  gboolean       is_rasterized;
 
-  if (push_undo && ! layer->modified)
+  is_rasterized = gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer));
+
+  if (push_undo && ! is_rasterized)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE_MOD,
                                  undo_desc);
 
@@ -361,12 +375,9 @@ gimp_text_layer_set_buffer (GimpDrawable        *drawable,
                                                   push_undo, undo_desc,
                                                   buffer, bounds);
 
-  if (push_undo && ! layer->modified)
+  if (push_undo && ! is_rasterized)
     {
-      gimp_image_undo_push_text_layer_modified (image, NULL, layer);
-
-      g_object_set (drawable, "modified", TRUE, NULL);
-
+      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
       gimp_image_undo_group_end (image);
     }
 }
@@ -382,20 +393,20 @@ gimp_text_layer_push_undo (GimpDrawable *drawable,
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
   GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
+  gboolean       is_rasterized;
 
-  if (! layer->modified)
+  is_rasterized = gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer));
+
+  if (! is_rasterized)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE, undo_desc);
 
   GIMP_DRAWABLE_CLASS (parent_class)->push_undo (drawable, undo_desc,
                                                  buffer,
                                                  x, y, width, height);
 
-  if (! layer->modified)
+  if (! is_rasterized)
     {
-      gimp_image_undo_push_text_layer_modified (image, NULL, layer);
-
-      g_object_set (drawable, "modified", TRUE, NULL);
-
+      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
       gimp_image_undo_group_end (image);
     }
 }
@@ -414,8 +425,8 @@ gimp_text_layer_convert_type (GimpLayer         *layer,
   GimpTextLayer *text_layer = GIMP_TEXT_LAYER (layer);
   GimpImage     *image      = gimp_item_get_image (GIMP_ITEM (text_layer));
 
-  if (! text_layer->text   ||
-      text_layer->modified ||
+  if (! text_layer->text                                          ||
+      gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)) ||
       layer_dither_type != GEGL_DITHER_NONE)
     {
       GIMP_LAYER_CLASS (parent_class)->convert_type (layer, dest_image,
@@ -550,10 +561,8 @@ gimp_text_layer_set (GimpTextLayer *layer,
 
   g_object_freeze_notify (G_OBJECT (layer));
 
-  if (layer->modified)
+  if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
     {
-      gimp_image_undo_push_text_layer_modified (image, NULL, layer);
-
       /*  pass copy_tiles = TRUE so we not only ref the tiles; after
        *  being a text layer again, undo doesn't care about the
        *  layer's pixels any longer because they are generated, so
@@ -568,74 +577,21 @@ gimp_text_layer_set (GimpTextLayer *layer,
   gimp_image_undo_push_text_layer (image, undo_desc, layer, NULL);
 
   va_start (var_args, first_property_name);
-
   g_object_set_valist (G_OBJECT (text), first_property_name, var_args);
-
   va_end (var_args);
 
-  g_object_set (layer, "modified", FALSE, NULL);
+  gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
 
   g_object_thaw_notify (G_OBJECT (layer));
 
   gimp_image_undo_group_end (image);
 }
 
-/**
- * gimp_text_layer_discard:
- * @layer: a #GimpTextLayer
- *
- * Discards the text information. This makes @layer behave like a
- * normal layer.
- */
-void
-gimp_text_layer_discard (GimpTextLayer *layer)
-{
-  GimpImage *image;
-
-  g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
-
-  if (layer->modified)
-    return;
-
-  image = gimp_item_get_image (GIMP_ITEM (layer));
-
-  gimp_image_undo_push_text_layer_modified (image, NULL, layer);
-  g_object_set (layer, "modified", TRUE, NULL);
-
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
-  /* Though technically selected layers are not changed, it will trigger
-   * actions update, so that visibility of any action depending on text
-   * layers being rasterized or not will be updated.
-   */
-  g_signal_emit_by_name (image, "selected-layers-changed");
-}
-
-void
-gimp_text_layer_retrieve (GimpTextLayer *layer)
-{
-  GimpImage *image;
-
-  g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
-
-  if (! layer->modified)
-    return;
-
-  image = gimp_item_get_image (GIMP_ITEM (layer));
-
-  gimp_image_undo_push_text_layer_modified (image, NULL, layer);
-  gimp_image_undo_push_drawable_mod (image, NULL, GIMP_DRAWABLE (layer), TRUE);
-  g_object_set (layer, "modified", FALSE, NULL);
-
-  gimp_text_layer_render (layer);
-  gimp_image_flush (image);
-}
-
 gboolean
 gimp_item_is_text_layer (GimpItem *item)
 {
-  return (GIMP_IS_TEXT_LAYER (item) && ! GIMP_TEXT_LAYER (item)->modified);
+  return (GIMP_IS_TEXT_LAYER (item) &&
+          ! gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (item)));
 }
 
 

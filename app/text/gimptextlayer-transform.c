@@ -29,6 +29,7 @@
 
 #include "core/gimp-transform-utils.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimprasterizable.h"
 
 #include "gimptext.h"
 #include "gimptextlayer.h"
@@ -169,7 +170,7 @@ static gboolean
 gimp_text_layer_get_transformation (GimpTextLayer *layer,
                                     GimpMatrix3   *matrix)
 {
-  if (! layer->text || layer->modified)
+  if (! layer->text || gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
     return FALSE;
 
   gimp_text_get_transformation (layer->text, matrix);

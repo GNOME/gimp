@@ -200,6 +200,11 @@ GimpUndo * gimp_image_undo_push_group_layer_convert (GimpImage      *image,
                                                      const gchar    *undo_desc,
                                                      GimpGroupLayer *group);
 
+/*  rasterizable undos  */
+
+GimpUndo * gimp_image_undo_push_rasterizable        (GimpImage        *image,
+                                                     const gchar      *undo_desc,
+                                                     GimpRasterizable *rasterizable);
 
 /*  text layer undos  */
 
@@ -207,9 +212,6 @@ GimpUndo * gimp_image_undo_push_text_layer          (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpTextLayer *layer,
                                                      const GParamSpec *pspec);
-GimpUndo * gimp_image_undo_push_text_layer_modified (GimpImage     *image,
-                                                     const gchar   *undo_desc,
-                                                     GimpTextLayer *layer);
 GimpUndo * gimp_image_undo_push_text_layer_convert  (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpTextLayer *layer);
@@ -226,10 +228,6 @@ GimpUndo * gimp_image_undo_push_vector_layer        (GimpImage        *image,
                                                      const gchar      *undo_desc,
                                                      GimpVectorLayer  *layer,
                                                      const GParamSpec *pspec);
-GimpUndo * gimp_image_undo_push_vector_layer_modified
-                                                    (GimpImage       *image,
-                                                     const gchar     *undo_desc,
-                                                     GimpVectorLayer *layer);
 
 /*  layer mask undos  */
 

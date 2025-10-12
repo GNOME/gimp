@@ -42,6 +42,7 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpstrokeoptions.h"
 #include "core/gimpparasitelist.h"
+#include "core/gimprasterizable.h"
 
 #include "gimpvectorlayer.h"
 #include "gimpvectorlayeroptions.h"
@@ -54,11 +55,14 @@ enum
 {
   PROP_0,
   PROP_VECTOR_LAYER_OPTIONS,
-  PROP_MODIFIED
 };
 
 
 /* local function declarations */
+
+static void       gimp_vector_layer_rasterizable_iface_init
+                                                    (GimpRasterizableInterface *iface);
+
 
 static void       gimp_vector_layer_finalize        (GObject                *object);
 static void       gimp_vector_layer_get_property    (GObject                *object,
@@ -69,6 +73,10 @@ static void       gimp_vector_layer_set_property    (GObject                *obj
                                                      guint                   property_id,
                                                      const GValue           *value,
                                                      GParamSpec             *pspec);
+
+static void       gimp_vector_layer_set_rasterized  (GimpRasterizable *rasterizable,
+                                                     gboolean          rasterized);
+
 static void       gimp_vector_layer_set_vector_options
                                                     (GimpVectorLayer        *layer,
                                                      GimpVectorLayerOptions *options);
@@ -132,7 +140,9 @@ static void       gimp_vector_layer_removed_options_path
                                                     (GimpVectorLayer        *layer);
 
 
-G_DEFINE_TYPE (GimpVectorLayer, gimp_vector_layer, GIMP_TYPE_LAYER)
+G_DEFINE_TYPE_WITH_CODE (GimpVectorLayer, gimp_vector_layer, GIMP_TYPE_LAYER,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_RASTERIZABLE,
+                                                gimp_vector_layer_rasterizable_iface_init))
 
 #define parent_class gimp_vector_layer_parent_class
 
@@ -180,19 +190,18 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
                            "vector-layer-options", NULL, NULL,
                            GIMP_TYPE_VECTOR_LAYER_OPTIONS,
                            G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MODIFIED,
-                            "modified",
-                            NULL, NULL,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
 gimp_vector_layer_init (GimpVectorLayer *layer)
 {
   layer->options  = NULL;
-  layer->modified = FALSE;
+}
+
+static void
+gimp_vector_layer_rasterizable_iface_init (GimpRasterizableInterface *iface)
+{
+  iface->set_rasterized = gimp_vector_layer_set_rasterized;
 }
 
 static void
@@ -222,9 +231,6 @@ gimp_vector_layer_get_property (GObject    *object,
     case PROP_VECTOR_LAYER_OPTIONS:
       g_value_set_object (value, vector_layer->options);
       break;
-    case PROP_MODIFIED:
-      g_value_set_boolean (value, vector_layer->modified);
-      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -245,14 +251,19 @@ gimp_vector_layer_set_property (GObject      *object,
     case PROP_VECTOR_LAYER_OPTIONS:
       gimp_vector_layer_set_vector_options (vector_layer, g_value_get_object (value));
       break;
-    case PROP_MODIFIED:
-      vector_layer->modified = g_value_get_boolean (value);
-      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_vector_layer_set_rasterized (GimpRasterizable *rasterizable,
+                                  gboolean          rasterized)
+{
+  if (! rasterized)
+    gimp_vector_layer_render (GIMP_VECTOR_LAYER (rasterizable));
 }
 
 static void
@@ -303,8 +314,11 @@ gimp_vector_layer_set_buffer (GimpDrawable        *drawable,
 {
   GimpVectorLayer *layer = GIMP_VECTOR_LAYER (drawable);
   GimpImage       *image = gimp_item_get_image (GIMP_ITEM (layer));
+  gboolean         is_rasterized;
 
-  if (push_undo && ! layer->modified)
+  is_rasterized = gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer));
+
+  if (push_undo && ! is_rasterized)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE_MOD,
                                  undo_desc);
 
@@ -312,12 +326,9 @@ gimp_vector_layer_set_buffer (GimpDrawable        *drawable,
                                                   push_undo, undo_desc,
                                                   buffer, bounds);
 
-  if (push_undo && ! layer->modified)
+  if (push_undo && ! is_rasterized)
     {
-      gimp_image_undo_push_vector_layer_modified (image, NULL, layer);
-
-      g_object_set (drawable, "modified", TRUE, NULL);
-
+      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
       gimp_image_undo_group_end (image);
     }
 }
@@ -333,20 +344,20 @@ gimp_vector_layer_push_undo (GimpDrawable *drawable,
 {
   GimpVectorLayer *layer = GIMP_VECTOR_LAYER (drawable);
   GimpImage       *image = gimp_item_get_image (GIMP_ITEM (layer));
+  gboolean         is_rasterized;
 
-  if (! layer->modified)
+  is_rasterized = gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer));
+
+  if (! is_rasterized)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE, undo_desc);
 
   GIMP_DRAWABLE_CLASS (parent_class)->push_undo (drawable, undo_desc,
                                                  buffer,
                                                  x, y, width, height);
 
-  if (! layer->modified)
+  if (! is_rasterized)
     {
-      gimp_image_undo_push_vector_layer_modified (image, NULL, layer);
-
-      g_object_set (drawable, "modified", TRUE, NULL);
-
+      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
       gimp_image_undo_group_end (image);
     }
 }
@@ -646,62 +657,11 @@ gimp_vector_layer_refresh (GimpVectorLayer *layer)
     gimp_vector_layer_render (layer);
 }
 
-/**
- * gimp_vector_layer_discard:
- * @layer: a #GimpVectorLayer
- *
- * Discards the vector information. This makes @layer behave like a
- * normal layer.
- */
-void
-gimp_vector_layer_discard (GimpVectorLayer *layer)
-{
-  GimpImage *image;
-
-  g_return_if_fail (GIMP_IS_VECTOR_LAYER (layer));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
-
-  if (layer->modified)
-    return;
-
-  image = gimp_item_get_image (GIMP_ITEM (layer));
-
-  gimp_image_undo_push_vector_layer_modified (image, NULL, layer);
-  g_object_set (layer, "modified", TRUE, NULL);
-
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
-  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
-}
-
-void
-gimp_vector_layer_retrieve (GimpVectorLayer *layer)
-{
-  GimpImage *image;
-
-  g_return_if_fail (GIMP_IS_VECTOR_LAYER (layer));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
-
-  if (! layer->modified)
-    return;
-
-  image = gimp_item_get_image (GIMP_ITEM (layer));
-
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_PROPERTIES,
-                               _("Revert Rasterize Vector Layer"));
-
-  gimp_image_undo_push_vector_layer_modified (image, NULL, layer);
-  gimp_image_undo_push_drawable_mod (image, NULL, GIMP_DRAWABLE (layer), TRUE);
-  g_object_set (layer, "modified", FALSE, NULL);
-
-  gimp_image_undo_group_end (image);
-  gimp_vector_layer_render (layer);
-  gimp_image_flush (image);
-}
-
 gboolean
 gimp_item_is_vector_layer (GimpItem *item)
 {
-  return (GIMP_IS_VECTOR_LAYER (item) && ! GIMP_VECTOR_LAYER (item)->modified);
+  return (GIMP_IS_VECTOR_LAYER (item) &&
+          ! gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (item)));
 }
 
 
@@ -817,7 +777,7 @@ gimp_vector_layer_changed_options (GimpVectorLayer *layer)
   GimpItem *item = GIMP_ITEM (layer);
 
   if (layer->options && ! layer->options->path)
-    gimp_vector_layer_discard (layer);
+    gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
   else if (gimp_item_is_attached (item))
     gimp_vector_layer_refresh (layer);
 }
