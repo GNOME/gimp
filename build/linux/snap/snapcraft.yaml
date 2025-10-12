@@ -1,6 +1,6 @@
-name: gimp-experimental
+name: gimp
 adopt-info: gimp
-grade: devel
+grade: stable
 base: core24
 compression: lzo
 confinement: strict
@@ -90,14 +90,7 @@ parts:
   babl:
     source: https://gitlab.gnome.org/GNOME/babl.git
     source-depth: 1
-    override-pull: |
-      if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" != 'gimp' ]; then
-        craftctl default
-      else
-        repo="https://gitlab.gnome.org/GNOME/$CRAFT_PART_NAME.git"
-        tag_branch=$(git ls-remote --exit-code --refs --sort=version:refname "$repo" "refs/tags/$(echo "$CRAFT_PART_NAME" | tr '[:lower:]' '[:upper:]')_[0-9]*_[0-9]*_[0-9]*" | tail -n 1 | sed 's|.*refs/tags/||')
-        git clone --branch "$tag_branch" --depth 1 "$repo" .
-      fi
+    source-tag: BABL_0_1_114
     build-environment: *SNAP_ENVIRON
     plugin: meson
     meson-parameters:
@@ -111,14 +104,7 @@ parts:
       - babl
     source: https://gitlab.gnome.org/GNOME/gegl.git
     source-depth: 1
-    override-pull: |
-      if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" != 'gimp' ]; then
-        craftctl default
-      else
-        repo="https://gitlab.gnome.org/GNOME/$CRAFT_PART_NAME.git"
-        tag_branch=$(git ls-remote --exit-code --refs --sort=version:refname "$repo" "refs/tags/$(echo "$CRAFT_PART_NAME" | tr '[:lower:]' '[:upper:]')_[0-9]*_[0-9]*_[0-9]*" | tail -n 1 | sed 's|.*refs/tags/||')
-        git clone --branch "$tag_branch" --depth 1 "$repo" .
-      fi
+    source-tag: GEGL_0_4_62
     build-environment: *SNAP_ENVIRON
     plugin: meson
     meson-parameters:
@@ -140,8 +126,9 @@ parts:
     after:
       - babl
       - gegl
-    source: .
-    source-type: local
+    source: https://gitlab.gnome.org/GNOME/gimp.git
+    source-depth: 1
+    source-tag: GIMP_3_1_4
     override-pull: |
       craftctl default
       craftctl set version="$(awk -F"'" '/version:/ {print $2; exit}' $CRAFT_PART_SRC/meson.build)"
@@ -154,7 +141,7 @@ parts:
       - -Drelocatable-bundle=yes
       - -Dcheck-update=no
       - -Denable-default-bin=enabled
-      - -Dbuild-id=org.gimp.GIMP.snapcraft.experimental
+      - -Dbuild-id=org.gimp.GIMP.snapcraft.preview
     build-packages:
       - bison
       - flex
