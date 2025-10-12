@@ -28,7 +28,7 @@ printf "\e[0Ksection_start:`date +%s`:snap_info\r\e[0KGetting snap global info\n
 cp build/linux/snap/snapcraft.yaml .
 ## Set proper Snap name and update track
 NAME=$(awk '/^name:/ { print $2 }' snapcraft.yaml)
-TRACK=$(awk -F. '/-Dbuild-id=/ { print $NF }' snapcraft.yaml); if [ "$NAME" = 'gimp' ]; then $track_text=" (track: $TRACK)"; fi
+TRACK=$(awk -F. '/-Dbuild-id=/ { print $NF }' snapcraft.yaml); if [ "$NAME" = 'gimp' ]; then track_text=" (track: $TRACK)"; fi
 printf "(INFO): Name: ${NAME}${track_text}\n"
 
 ## Autodetects what archs will be packaged
