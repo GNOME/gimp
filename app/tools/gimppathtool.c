@@ -149,6 +149,11 @@ static void     gimp_path_tool_vector_change_notify
                                                    const GParamSpec      *pspec,
                                                    GimpVectorLayer       *layer);
 
+static void     gimp_path_tool_vector_layer_modified
+                                                  (GimpVectorLayer       *layer,
+                                                   const GParamSpec      *pspec,
+                                                   GimpPathTool          *tool);
+
 static void     gimp_path_tool_set_layer          (GimpPathTool          *path_tool,
                                                    GimpVectorLayer       *vector_layer);
 
@@ -504,24 +509,7 @@ gimp_path_tool_image_changed (GimpPathTool *path_tool,
 static void
 gimp_path_tool_image_selected_layers_changed (GimpPathTool *path_tool)
 {
-  GimpPathOptions *options        = GIMP_PATH_TOOL_GET_OPTIONS (path_tool);
-  GList           *current_layers = NULL;
-
-  if (path_tool->current_vector_layer)
-    {
-      g_signal_handlers_disconnect_by_func (options,
-                                            gimp_path_tool_vector_change_notify,
-                                            path_tool->current_vector_layer);
-      g_signal_handlers_disconnect_by_func (options->fill_options,
-                                            gimp_path_tool_vector_change_notify,
-                                            path_tool->current_vector_layer);
-      g_signal_handlers_disconnect_by_func (options->stroke_options,
-                                            gimp_path_tool_vector_change_notify,
-                                            path_tool->current_vector_layer);
-
-      path_tool->current_vector_layer = NULL;
-      gimp_path_tool_set_path (path_tool, NULL);
-    }
+  GList *current_layers = NULL;
 
   if (path_tool->current_image)
     current_layers = gimp_image_get_selected_layers (path_tool->current_image);
@@ -537,6 +525,10 @@ gimp_path_tool_image_selected_layers_changed (GimpPathTool *path_tool)
         gimp_path_tool_set_layer (path_tool, vector_layer);
       else
         gimp_path_tool_confirm_dialog (path_tool, vector_layer);
+    }
+  else
+    {
+      gimp_path_tool_set_layer (path_tool, NULL);
     }
 }
 
@@ -838,7 +830,14 @@ gimp_path_tool_create_vector_layer (GimpPathTool *path_tool,
 
   layer = gimp_vector_layer_new (image, path_tool->path,
                                  gimp_get_user_context (image->gimp));
-  path_tool->current_vector_layer = layer;
+  g_object_set (layer->options,
+                "enable-fill",   options->enable_fill,
+                "enable-stroke", options->enable_stroke,
+                NULL);
+  gimp_config_sync (G_OBJECT (options->fill_options),
+                    G_OBJECT (layer->options->fill_options), 0);
+  gimp_config_sync (G_OBJECT (options->stroke_options),
+                    G_OBJECT (layer->options->stroke_options), 0);
 
   gimp_image_add_layer (image,
                         GIMP_LAYER (layer),
@@ -846,28 +845,7 @@ gimp_path_tool_create_vector_layer (GimpPathTool *path_tool,
                         -1,
                         TRUE);
 
-  g_object_set (layer->options,
-                "enable-fill",   options->enable_fill,
-                "enable-stroke", options->enable_stroke,
-                NULL);
-
-  gimp_config_sync (G_OBJECT (options->fill_options),
-                    G_OBJECT (layer->options->fill_options), 0);
-  gimp_config_sync (G_OBJECT (options->stroke_options),
-                    G_OBJECT (layer->options->stroke_options), 0);
-
-  g_signal_connect_object (options, "notify::enable-fill",
-                           G_CALLBACK (gimp_path_tool_vector_change_notify),
-                           layer, 0);
-  g_signal_connect_object (options, "notify::enable-stroke",
-                           G_CALLBACK (gimp_path_tool_vector_change_notify),
-                           layer, 0);
-  g_signal_connect_object (options->fill_options, "notify",
-                           G_CALLBACK (gimp_path_tool_vector_change_notify),
-                           layer, 0);
-  g_signal_connect_object (options->stroke_options, "notify",
-                           G_CALLBACK (gimp_path_tool_vector_change_notify),
-                           layer, 0);
+  gimp_path_tool_set_layer (path_tool, layer);
 
   gimp_vector_layer_refresh (layer);
   gimp_image_flush (image);
@@ -925,42 +903,87 @@ gimp_path_tool_vector_change_notify (GObject          *options,
 }
 
 static void
+gimp_path_tool_vector_layer_modified (GimpVectorLayer  *layer,
+                                      const GParamSpec *pspec,
+                                      GimpPathTool     *tool)
+{
+  if (! layer->modified && ! GIMP_TOOL (tool)->display)
+    {
+      GList *current_layers = NULL;
+
+      if (tool->current_image)
+        current_layers = gimp_image_get_selected_layers (tool->current_image);
+
+      if (current_layers                      &&
+          g_list_length (current_layers) == 1 &&
+          current_layers->data == layer)
+        gimp_path_tool_set_layer (tool, layer);
+    }
+  else if (layer->modified && GIMP_TOOL (tool)->display)
+    {
+      gimp_path_tool_set_layer (tool, NULL);
+    }
+}
+
+static void
 gimp_path_tool_set_layer (GimpPathTool    *path_tool,
                           GimpVectorLayer *vector_layer)
 {
   GimpPathOptions *options;
 
   g_return_if_fail (GIMP_IS_PATH_TOOL (path_tool));
-  g_return_if_fail (path_tool->current_vector_layer == NULL);
 
   options = GIMP_PATH_TOOL_GET_OPTIONS (path_tool);
 
-  gimp_path_tool_set_path (path_tool,
-                           gimp_vector_layer_get_path (vector_layer));
+  if (path_tool->current_vector_layer)
+    {
+      g_signal_handlers_disconnect_by_func (options,
+                                            gimp_path_tool_vector_change_notify,
+                                            path_tool->current_vector_layer);
+      g_signal_handlers_disconnect_by_func (options->fill_options,
+                                            gimp_path_tool_vector_change_notify,
+                                            path_tool->current_vector_layer);
+      g_signal_handlers_disconnect_by_func (options->stroke_options,
+                                            gimp_path_tool_vector_change_notify,
+                                            path_tool->current_vector_layer);
 
-  g_object_set (options,
-                "enable-fill",   vector_layer->options->enable_fill,
-                "enable_stroke", vector_layer->options->enable_stroke,
-                NULL);
-  gimp_config_sync (G_OBJECT (vector_layer->options->stroke_options),
-                    G_OBJECT (options->stroke_options), 0);
-  gimp_config_sync (G_OBJECT (vector_layer->options->fill_options),
-                    G_OBJECT (options->fill_options), 0);
-
-  g_signal_connect_object (options, "notify::enable-fill",
-                           G_CALLBACK (gimp_path_tool_vector_change_notify),
-                           vector_layer, 0);
-  g_signal_connect_object (options, "notify::enable-stroke",
-                           G_CALLBACK (gimp_path_tool_vector_change_notify),
-                           vector_layer, 0);
-  g_signal_connect_object (options->fill_options, "notify",
-                           G_CALLBACK (gimp_path_tool_vector_change_notify),
-                           vector_layer, 0);
-  g_signal_connect_object (options->stroke_options, "notify",
-                           G_CALLBACK (gimp_path_tool_vector_change_notify),
-                           vector_layer, 0);
+      g_signal_handlers_disconnect_by_func (path_tool->current_vector_layer,
+                                            G_CALLBACK (gimp_path_tool_vector_layer_modified),
+                                            path_tool);
+    }
 
   path_tool->current_vector_layer = vector_layer;
+  gimp_path_tool_set_path (path_tool,
+                           vector_layer ?  gimp_vector_layer_get_path (vector_layer) : NULL);
+
+  if (vector_layer)
+    {
+      g_object_set (options,
+                    "enable-fill",   vector_layer->options->enable_fill,
+                    "enable_stroke", vector_layer->options->enable_stroke,
+                    NULL);
+      gimp_config_sync (G_OBJECT (vector_layer->options->stroke_options),
+                        G_OBJECT (options->stroke_options), 0);
+      gimp_config_sync (G_OBJECT (vector_layer->options->fill_options),
+                        G_OBJECT (options->fill_options), 0);
+
+      g_signal_connect_object (options, "notify::enable-fill",
+                               G_CALLBACK (gimp_path_tool_vector_change_notify),
+                               vector_layer, 0);
+      g_signal_connect_object (options, "notify::enable-stroke",
+                               G_CALLBACK (gimp_path_tool_vector_change_notify),
+                               vector_layer, 0);
+      g_signal_connect_object (options->fill_options, "notify",
+                               G_CALLBACK (gimp_path_tool_vector_change_notify),
+                               vector_layer, 0);
+      g_signal_connect_object (options->stroke_options, "notify",
+                               G_CALLBACK (gimp_path_tool_vector_change_notify),
+                               vector_layer, 0);
+
+      g_signal_connect_object (vector_layer, "notify::modified",
+                               G_CALLBACK (gimp_path_tool_vector_layer_modified),
+                               path_tool, 0);
+    }
 }
 
 static void
@@ -1060,6 +1083,7 @@ gimp_path_tool_confirm_response (GimpViewableDialog *dialog,
           break;
 
         default:
+          gimp_path_tool_set_layer (path_tool, NULL);
           break;
         }
     }
