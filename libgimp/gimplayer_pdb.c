@@ -492,6 +492,7 @@ gimp_layer_set_offsets (GimpLayer *layer,
  * This procedure creates a layer mask for the specified layer.
  * Layer masks serve as an additional alpha channel for a layer.
  * Different types of masks are allowed for initialisation:
+ *
  * - white mask (leaves the layer fully visible);
  * - black mask (gives the layer complete transparency);
  * - the layer's alpha channel (either a copy, or a transfer, which

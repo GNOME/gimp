@@ -1605,6 +1605,7 @@ register_layer_procs (GimpPDB *pdb)
                                   "Create a layer mask for the specified layer.",
                                   "This procedure creates a layer mask for the specified layer.\n"
                                   "Layer masks serve as an additional alpha channel for a layer. Different types of masks are allowed for initialisation:\n"
+                                  "\n"
                                   "- white mask (leaves the layer fully visible);\n"
                                   "- black mask (gives the layer complete transparency);\n"
                                   "- the layer's alpha channel (either a copy, or a transfer, which leaves the layer fully visible, but which may be more useful than a white mask);\n"
