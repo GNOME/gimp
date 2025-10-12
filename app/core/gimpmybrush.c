@@ -26,45 +26,44 @@
 #include "core-types.h"
 
 #include "gimp-memsize.h"
-#include "gimpmybrush.h"
 #include "gimpmybrush-load.h"
 #include "gimpmybrush-private.h"
+#include "gimpmybrush.h"
 #include "gimptagged.h"
 
 #include "gimp-intl.h"
 
 
-static void          gimp_mybrush_tagged_iface_init     (GimpTaggedInterface  *iface);
+enum
+{
+  PROP_0,
+  PROP_SPECTRAL_BLENDING,
+  N_PROPERTIES
+};
 
-static void          gimp_mybrush_finalize              (GObject              *object);
-static void          gimp_mybrush_set_property          (GObject              *object,
-                                                         guint                 property_id,
-                                                         const GValue         *value,
-                                                         GParamSpec           *pspec);
-static void          gimp_mybrush_get_property          (GObject              *object,
-                                                         guint                 property_id,
-                                                         GValue               *value,
-                                                         GParamSpec           *pspec);
 
-static gint64        gimp_mybrush_get_memsize           (GimpObject           *object,
-                                                         gint64               *gui_size);
+static void gimp_mybrush_tagged_iface_init (GimpTaggedInterface *iface);
 
-static gchar       * gimp_mybrush_get_description       (GimpViewable         *viewable,
-                                                         gchar               **tooltip);
+static void gimp_mybrush_finalize (GObject *object);
+static void gimp_mybrush_set_property (GObject *object, guint property_id,
+                                       const GValue *value, GParamSpec *pspec);
+static void gimp_mybrush_get_property (GObject *object, guint property_id,
+                                       GValue *value, GParamSpec *pspec);
 
-static void          gimp_mybrush_dirty                 (GimpData             *data);
-static const gchar * gimp_mybrush_get_extension         (GimpData             *data);
+static gint64 gimp_mybrush_get_memsize (GimpObject *object, gint64 *gui_size);
 
-static gchar       * gimp_mybrush_get_checksum          (GimpTagged           *tagged);
+static gchar *gimp_mybrush_get_description (GimpViewable *viewable, gchar **tooltip);
 
+static void         gimp_mybrush_dirty (GimpData *data);
+static const gchar *gimp_mybrush_get_extension (GimpData *data);
+
+static gchar *gimp_mybrush_get_checksum (GimpTagged *tagged);
 
 G_DEFINE_TYPE_WITH_CODE (GimpMybrush, gimp_mybrush, GIMP_TYPE_DATA,
                          G_ADD_PRIVATE (GimpMybrush)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
-                                                gimp_mybrush_tagged_iface_init))
+                             G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED, gimp_mybrush_tagged_iface_init))
 
 #define parent_class gimp_mybrush_parent_class
-
 
 static void
 gimp_mybrush_class_init (GimpMybrushClass *klass)
@@ -74,17 +73,25 @@ gimp_mybrush_class_init (GimpMybrushClass *klass)
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
 
-  object_class->finalize            = gimp_mybrush_finalize;
-  object_class->get_property        = gimp_mybrush_get_property;
-  object_class->set_property        = gimp_mybrush_set_property;
+  object_class->finalize     = gimp_mybrush_finalize;
+  object_class->get_property = gimp_mybrush_get_property;
+  object_class->set_property = gimp_mybrush_set_property;
 
-  gimp_object_class->get_memsize    = gimp_mybrush_get_memsize;
+  gimp_object_class->get_memsize = gimp_mybrush_get_memsize;
 
   viewable_class->default_icon_name = "gimp-tool-mypaint-brush";
   viewable_class->get_description   = gimp_mybrush_get_description;
 
-  data_class->dirty                 = gimp_mybrush_dirty;
-  data_class->get_extension         = gimp_mybrush_get_extension;
+  data_class->dirty         = gimp_mybrush_dirty;
+  data_class->get_extension = gimp_mybrush_get_extension;
+
+  g_object_class_install_property (object_class,
+                                  PROP_SPECTRAL_BLENDING,
+                                  g_param_spec_boolean ("spectral-blending",
+                                                       "Spectral Blending",
+                                                       "Enable spectral blending for this brush",
+                                                       FALSE,
+                                                       G_PARAM_READWRITE));
 }
 
 static void
@@ -106,6 +113,7 @@ gimp_mybrush_init (GimpMybrush *brush)
   brush->priv->posterize     = 0.0;
   brush->priv->posterize_num = 1.0;
   brush->priv->eraser        = FALSE;
+  brush->priv->spectral_blending = FALSE;
 }
 
 static void
@@ -119,13 +127,16 @@ gimp_mybrush_finalize (GObject *object)
 }
 
 static void
-gimp_mybrush_set_property (GObject      *object,
-                           guint         property_id,
-                           const GValue *value,
-                           GParamSpec   *pspec)
+gimp_mybrush_set_property (GObject *object, guint property_id,
+                           const GValue *value, GParamSpec *pspec)
 {
+  GimpMybrush *brush = GIMP_MYBRUSH (object);
+
   switch (property_id)
     {
+    case PROP_SPECTRAL_BLENDING:
+      brush->priv->spectral_blending = g_value_get_boolean (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -133,13 +144,15 @@ gimp_mybrush_set_property (GObject      *object,
 }
 
 static void
-gimp_mybrush_get_property (GObject    *object,
-                           guint       property_id,
-                           GValue     *value,
-                           GParamSpec *pspec)
+gimp_mybrush_get_property (GObject *object, guint property_id, GValue *value, GParamSpec *pspec)
 {
+  GimpMybrush *brush = GIMP_MYBRUSH (object);
+
   switch (property_id)
     {
+    case PROP_SPECTRAL_BLENDING:
+      g_value_set_boolean (value, brush->priv->spectral_blending);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -147,26 +160,22 @@ gimp_mybrush_get_property (GObject    *object,
 }
 
 static gint64
-gimp_mybrush_get_memsize (GimpObject *object,
-                          gint64     *gui_size)
+gimp_mybrush_get_memsize (GimpObject *object, gint64 *gui_size)
 {
   GimpMybrush *brush   = GIMP_MYBRUSH (object);
   gint64       memsize = 0;
 
   memsize += gimp_string_get_memsize (brush->priv->brush_json);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
-                                                                  gui_size);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object, gui_size);
 }
 
 static gchar *
-gimp_mybrush_get_description (GimpViewable  *viewable,
-                              gchar        **tooltip)
+gimp_mybrush_get_description (GimpViewable *viewable, gchar **tooltip)
 {
   GimpMybrush *brush = GIMP_MYBRUSH (viewable);
 
-  return g_strdup_printf ("%s",
-                          gimp_object_get_name (brush));
+  return g_strdup_printf ("%s", gimp_object_get_name (brush));
 }
 
 static void
@@ -191,8 +200,7 @@ gimp_mybrush_get_checksum (GimpTagged *tagged)
     {
       GChecksum *checksum = g_checksum_new (G_CHECKSUM_MD5);
 
-      g_checksum_update (checksum,
-                         (const guchar *) brush->priv->brush_json,
+      g_checksum_update (checksum, (const guchar *) brush->priv->brush_json,
                          strlen (brush->priv->brush_json));
 
       checksum_string = g_strdup (g_checksum_get_string (checksum));
@@ -206,15 +214,12 @@ gimp_mybrush_get_checksum (GimpTagged *tagged)
 /*  public functions  */
 
 GimpData *
-gimp_mybrush_new (GimpContext *context,
-                  const gchar *name)
+gimp_mybrush_new (GimpContext *context, const gchar *name)
 {
   g_return_val_if_fail (name != NULL, NULL);
 
-  return g_object_new (GIMP_TYPE_MYBRUSH,
-                       "name",      name,
-                       "mime-type", "image/x-gimp-myb",
-                       NULL);
+  return g_object_new (GIMP_TYPE_MYBRUSH, "name", name, "mime-type",
+                       "image/x-gimp-myb", NULL);
 }
 
 GimpData *
@@ -274,7 +279,6 @@ gimp_mybrush_get_gain (GimpMybrush *brush)
   return brush->priv->gain;
 }
 
-
 gdouble
 gimp_mybrush_get_pigment (GimpMybrush *brush)
 {
@@ -313,4 +317,22 @@ gimp_mybrush_get_is_eraser (GimpMybrush *brush)
   g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), FALSE);
 
   return brush->priv->eraser;
+}
+
+gboolean gimp_mybrush_get_spectral_blending (GimpMybrush *brush)
+{
+  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), FALSE);
+
+  return brush->priv->spectral_blending;
+}
+
+void gimp_mybrush_set_spectral_blending (GimpMybrush *brush, gboolean value)
+{
+  g_return_if_fail (GIMP_IS_MYBRUSH (brush));
+
+  if (brush->priv->spectral_blending != value)
+    {
+      brush->priv->spectral_blending = value;
+      gimp_mybrush_dirty (GIMP_DATA (brush));
+    }
 }
