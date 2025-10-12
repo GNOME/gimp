@@ -213,7 +213,7 @@ class HistogramExport(Gimp.PlugIn):
                 _("Exports the image histogram to a text file (CSV)"),
                 globals()["__doc__"],  # This includes the docstring, on the top of the file
                 name)
-            procedure.set_menu_label(_("_Export histogram..."))
+            procedure.set_menu_label(_("_Export Histogram..."))
             procedure.set_attribution("João S. O. Bueno",
                                       "(c) GPL V3.0 or later",
                                       "2014")
