@@ -29,6 +29,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpmybrush.h"
 #include "core/gimppaintinfo.h"
+#include "core/gimpmybrush-private.h"
 
 #include "gimpmybrushoptions.h"
 
@@ -48,7 +49,9 @@ enum
   PROP_POSTERIZE,
   PROP_POSTERIZE_NUM,
   PROP_ERASER,
-  PROP_NO_ERASING
+  PROP_NO_ERASING,
+  PROP_SPECTRAL_BLENDING,
+  N_PROPERTIES
 };
 
 
@@ -83,8 +86,8 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
   GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
   GimpContextClass *context_class = GIMP_CONTEXT_CLASS (klass);
 
-  object_class->set_property     = gimp_mybrush_options_set_property;
-  object_class->get_property     = gimp_mybrush_options_get_property;
+  object_class->set_property = gimp_mybrush_options_set_property;
+  object_class->get_property = gimp_mybrush_options_get_property;
 
   context_class->mybrush_changed = gimp_mybrush_options_mybrush_changed;
 
@@ -161,6 +164,14 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
                             _("Never decrease alpha of existing pixels"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (
+      object_class, PROP_SPECTRAL_BLENDING,
+      g_param_spec_boolean ("spectral-blending", "Spectral Blending",
+                            "Enable spectral blending", FALSE, G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_PIGMENT,
+                                   g_param_spec_double ("pigment", "Pigment", "Pigment intensity",
+                                                        0.0, 1.0, 0.5, G_PARAM_READWRITE));
 }
 
 static void
@@ -220,6 +231,9 @@ gimp_mybrush_options_set_property (GObject      *object,
     case PROP_NO_ERASING:
       options->no_erasing = g_value_get_boolean (value);
       break;
+    case PROP_SPECTRAL_BLENDING:
+      options->spectral_blending = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -270,6 +284,9 @@ gimp_mybrush_options_get_property (GObject    *object,
     case PROP_NO_ERASING:
       g_value_set_boolean (value, options->no_erasing);
       break;
+    case PROP_SPECTRAL_BLENDING:
+      g_value_set_boolean (value, options->spectral_blending);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -292,7 +309,8 @@ gimp_mybrush_options_mybrush_changed (GimpContext *context,
                   "pigment",      gimp_mybrush_get_pigment (brush),
                   "posterize",    gimp_mybrush_get_posterize (brush),
                   "posterizenum", gimp_mybrush_get_posterize_num (brush),
-                  "eraser",       gimp_mybrush_get_is_eraser (brush),
+                  "eraser",       gimp_mybrush_get_is_eraser (brush), 
+                  "spectral-blending", gimp_mybrush_get_spectral_blending (brush),
                   NULL);
 }
 
