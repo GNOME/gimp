@@ -557,7 +557,7 @@ main (int    argc,
   GError         *error              = NULL;
 #ifdef G_OS_WIN32
   gchar          *utf8_name;
-  wchar_t        *name  ;
+  wchar_t        *name;
 #endif
 #ifndef GIMP_CONSOLE_COMPILATION
   GKeyFile       *flatpak_keyfile;
