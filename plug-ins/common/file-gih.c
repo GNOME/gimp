@@ -270,6 +270,7 @@ gih_export (GimpProcedure        *procedure,
   GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
   GimpExportReturn   export    = GIMP_EXPORT_IGNORE;
   GimpLayer        **layers    = NULL;
+  gint               n_layers  = 1;
   GimpParasite      *parasite;
   GimpImage         *orig_image;
   GError            *error     = NULL;
@@ -283,6 +284,10 @@ gih_export (GimpProcedure        *procedure,
 
   orig_image = image;
 
+  export   = gimp_export_options_get_image (options, &image);
+  layers   = gimp_image_get_layers (image);
+  n_layers = gimp_core_object_array_get_length ((GObject **) layers);
+
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       GParamSpec *spec;
@@ -294,6 +299,9 @@ gih_export (GimpProcedure        *procedure,
       G_GNUC_BEGIN_IGNORE_DEPRECATIONS
       gimp_pixpipe_params_init (&gihparams);
       G_GNUC_END_IGNORE_DEPRECATIONS
+
+      /* Match initial number of cells to layer count */
+      g_object_set (config, "num-cells", n_layers, NULL);
 
       /*  Possibly retrieve data  */
       parasite = gimp_image_get_parasite (orig_image,
@@ -338,8 +346,9 @@ gih_export (GimpProcedure        *procedure,
           G_GNUC_END_IGNORE_DEPRECATIONS
 
           g_object_set (config,
-                        "num-cells", gihparams.ncells,
-                        "dimension", gihparams.dim,
+                        "cell-width",  gihparams.cellwidth,
+                        "cell-height", gihparams.cellheight,
+                        "dimension",   gihparams.dim,
                         NULL);
 
           if (gihparams.dim > 0)
@@ -406,9 +415,6 @@ gih_export (GimpProcedure        *procedure,
           goto out;
         }
     }
-
-  export = gimp_export_options_get_image (options, &image);
-  layers = gimp_image_get_layers (image);
 
   g_object_get (config,
                 "spacing",         &spacing,
@@ -523,6 +529,8 @@ gih_cell_width_notify (GimpProcedureConfig *config,
                        GimpProcedureDialog *dialog)
 {
   GimpImage      *image;
+  GimpLayer     **layers         = NULL;
+  gint            n_layers       = 1;
   GParamSpec     *spec;
   gchar          *info_text;
   gchar          *grid_text      = NULL;
@@ -548,6 +556,10 @@ gih_cell_width_notify (GimpProcedureConfig *config,
 
   image = g_object_get_data (G_OBJECT (dialog), "image");
   rank0 = g_object_get_data (G_OBJECT (dialog), "rank0");
+
+  layers   = gimp_image_get_layers (image);
+  n_layers = gimp_core_object_array_get_length ((GObject **) layers);
+  g_free (layers);
 
   g_object_get (config,
                 "cell-width",  &cell_width,
@@ -583,7 +595,8 @@ gih_cell_width_notify (GimpProcedureConfig *config,
                                (grid_text != NULL || width_warning != NULL) && height_warning != NULL ? " / " : "",
                                height_warning != NULL ? height_warning : "");
 
-  spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "num-cells");
+  spec          = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                                "num-cells");
   old_max_cells = G_PARAM_SPEC_INT (spec)->maximum;
   max_cells     = n_horiz_cells * n_vert_cells;
 
@@ -592,6 +605,7 @@ gih_cell_width_notify (GimpProcedureConfig *config,
   else
     num_cells = MIN (max_cells, num_cells);
 
+  max_cells = MAX (max_cells, n_layers);
   G_PARAM_SPEC_INT (spec)->maximum = max_cells;
   widget = gimp_procedure_dialog_get_widget (dialog, "num-cells", G_TYPE_NONE);
   g_object_set (widget, "upper", (gdouble) max_cells, NULL);
@@ -681,6 +695,12 @@ gih_save_dialog (GimpImage           *image,
   gint                 dimension;
   gboolean             run;
 
+  g_object_get (config,
+                "selection-modes", &selection,
+                "ranks",           &rank_bytes,
+                "num-cells",       &num_cells,
+                NULL);
+
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
                                              image);
@@ -706,15 +726,12 @@ gih_save_dialog (GimpImage           *image,
                     G_CALLBACK (gih_dimension_notify),
                     &cellw_adjust);
 
+  /* Set initial number of cells to original value */
+  g_object_set (config, "num-cells", num_cells, NULL);
+
   /*
    * Ranks / Selection: ______ ______ ______ ______ ______
    */
-
-  g_object_get (config,
-                "selection-modes", &selection,
-                "ranks",           &rank_bytes,
-                "num-cells",       &num_cells,
-                NULL);
   if (selection == NULL || g_strv_length (selection) != GIMP_PIXPIPE_MAXDIM)
     {
       GStrvBuilder *builder = g_strv_builder_new ();
