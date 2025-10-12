@@ -78,6 +78,11 @@ static const GimpActionEntry paths_actions[] =
     paths_delete_cmd_callback,
     GIMP_HELP_PATH_DELETE },
 
+  { "paths-merge-selected", NULL,
+    NC_("paths-action", "Mer_ge Selected Paths"), NULL, { NULL }, NULL,
+    paths_merge_selected_cmd_callback,
+    GIMP_HELP_PATH_MERGE_SELECT },
+
   { "paths-merge-visible", NULL,
     NC_("paths-action", "Merge _Visible Paths"), NULL, { NULL }, NULL,
     paths_merge_visible_cmd_callback,
@@ -422,6 +427,7 @@ paths_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("paths-new-last-values", image);
   SET_SENSITIVE ("paths-duplicate",       n_selected_paths > 0);
   SET_SENSITIVE ("paths-delete",          n_selected_paths > 0);
+  SET_SENSITIVE ("paths-merge-selected",  n_selected_paths > 0);
   SET_SENSITIVE ("paths-merge-visible",   n_paths > 1);
 
   SET_SENSITIVE ("paths-raise",           n_selected_paths > 0 && have_prev && !first_selected);
