@@ -1002,7 +1002,6 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
                               "<edit name=\"family\" mode=\"prepend\" binding=\"strong\"><string>%s</string></edit>",
                               escaped_fullname);
       g_free (escaped_fullname);
-      g_free (family);
 
       escaped_file = g_markup_escape_text (file, -1);
       g_string_append_printf (xml,
@@ -1010,7 +1009,10 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
                               escaped_file);
       g_free (escaped_file);
 
-      if (psname != NULL && g_utf8_validate (psname, -1, NULL))
+      /*Skia behaves in a way such that pango recognizes every font in the family as Bold, unless we don't match with the psname.
+       * Until we figure out why, this is the best we can do. (see issue #14659)
+      */
+      if (psname != NULL && g_utf8_validate (psname, -1, NULL) && g_strcmp0 (family, "Skia"))
         {
           psname = g_markup_escape_text (psname, -1);
           g_string_append_printf (xml,
@@ -1018,6 +1020,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
                                   psname);
           g_free (psname);
         }
+      g_free (family);
 
       if (style != NULL && g_utf8_validate (style, -1, NULL))
         {
