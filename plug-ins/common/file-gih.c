@@ -284,9 +284,9 @@ gih_export (GimpProcedure        *procedure,
 
   orig_image = image;
 
-  export   = gimp_export_options_get_image (options, &image);
   layers   = gimp_image_get_layers (image);
   n_layers = gimp_core_object_array_get_length ((GObject **) layers);
+  g_free (layers);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -415,6 +415,9 @@ gih_export (GimpProcedure        *procedure,
           goto out;
         }
     }
+
+  export = gimp_export_options_get_image (options, &image);
+  layers = gimp_image_get_layers (image);
 
   g_object_get (config,
                 "spacing",         &spacing,
