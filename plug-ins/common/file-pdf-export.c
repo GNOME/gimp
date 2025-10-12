@@ -245,6 +245,11 @@ static void             drawText                 (GimpLayer            *layer,
                                                   cairo_t              *cr,
                                                   gdouble               x_res,
                                                   gdouble               y_res);
+static void             drawPath                 (GimpLayer            *layer,
+                                                  gdouble               opacity,
+                                                  cairo_t              *cr,
+                                                  gdouble               x_res,
+                                                  gdouble               y_res);
 
 static gboolean         draw_layer               (GimpLayer           **layers,
                                                   gint                  n_layers,
@@ -1802,6 +1807,156 @@ drawText (GimpLayer *layer,
   cairo_restore (cr);
 }
 
+static void
+drawPath (GimpLayer *layer,
+          gdouble    opacity,
+          cairo_t   *cr,
+          gdouble    x_res,
+          gdouble    y_res)
+{
+  GimpVectorLayer *vector_layer;
+  GimpPath        *path;
+  GeglColor       *color;
+  gdouble          rgb[3];
+  gboolean         set_fill;
+  gboolean         set_stroke;
+  gsize            num_strokes;
+  gint            *strokes;
+  gboolean         closed = FALSE;
+
+  vector_layer = GIMP_VECTOR_LAYER (layer);
+  path         = gimp_vector_layer_get_path (vector_layer);
+
+  set_fill   = gimp_vector_layer_get_enable_fill (vector_layer);
+  set_stroke = gimp_vector_layer_get_enable_stroke (vector_layer);
+
+  cairo_save (cr);
+
+  /* Create path in Cairo */
+  strokes = gimp_path_get_strokes (path, &num_strokes);
+  for (gint s = 0; s < num_strokes; s++)
+    {
+      GimpPathStrokeType  type;
+      gdouble            *control_points;
+      gsize               num_points;
+      gsize               num_indexes;
+
+      type = gimp_path_stroke_get_points (path, strokes[s], &num_points,
+                                          &control_points, &closed);
+
+      if (type == GIMP_PATH_STROKE_TYPE_BEZIER)
+        {
+          num_indexes = num_points / 2;
+
+          if (num_indexes >= 3)
+            cairo_move_to (cr, control_points[2], control_points[3]);
+
+          for (gint i = 2; i < (num_indexes + (closed ? 2 : - 1)); i += 3)
+            {
+              gdouble vals[6] = { 0 };
+
+              for (gint j = 0; j < 3; j++)
+                {
+                  gint index = ((i + j) % num_indexes) * 2;
+
+                  vals[(j * 2)]     = control_points[index];
+                  vals[(j * 2) + 1] = control_points[index + 1];
+                }
+
+              cairo_curve_to (cr, vals[0], vals[1], vals[2], vals[3], vals[4],
+                              vals[5]);
+            }
+
+          if (closed && num_points > 3)
+            cairo_close_path (cr);
+        }
+      break;
+    }
+
+  /* Add fill/stroke to Cairo path */
+  if (set_fill)
+    {
+      color = gimp_vector_layer_get_fill_color (vector_layer);
+      gegl_color_get_pixel (color,
+                            babl_format_with_space ("R'G'B' double", NULL),
+                            rgb);
+      cairo_set_source_rgb (cr, rgb[0], rgb[1], rgb[2]);
+      g_object_unref (color);
+
+      if (set_stroke)
+        cairo_fill_preserve (cr);
+      else
+        cairo_fill (cr);
+    }
+
+  if (set_stroke)
+    {
+      cairo_line_join_t  join_style;
+      cairo_line_cap_t   cap_style;
+      gdouble            stroke_width;
+      gdouble            miter_limit;
+      gdouble            dash_offset;
+      gsize              num_dashes;
+      gdouble           *dash_pattern;
+
+      color = gimp_vector_layer_get_stroke_color (vector_layer);
+      gegl_color_get_pixel (color,
+                            babl_format_with_space ("R'G'B' double", NULL),
+                            rgb);
+      cairo_set_source_rgb (cr, rgb[0], rgb[1], rgb[2]);
+      g_object_unref (color);
+
+      stroke_width = gimp_vector_layer_get_stroke_width (vector_layer);
+      cairo_set_line_width (cr, stroke_width);
+
+      miter_limit = gimp_vector_layer_get_stroke_miter_limit (vector_layer);
+      cairo_set_miter_limit (cr, miter_limit);
+
+      switch (gimp_vector_layer_get_stroke_cap_style (vector_layer))
+        {
+        case GIMP_CAP_ROUND:
+          cap_style = CAIRO_LINE_CAP_ROUND;
+          break;
+        case GIMP_CAP_SQUARE:
+          cap_style = CAIRO_LINE_CAP_SQUARE;
+          break;
+        default:
+          cap_style = CAIRO_LINE_CAP_BUTT;
+          break;
+        }
+      cairo_set_line_cap (cr, cap_style);
+
+      switch (gimp_vector_layer_get_stroke_join_style (vector_layer))
+        {
+        case GIMP_JOIN_ROUND:
+          join_style = CAIRO_LINE_JOIN_ROUND;
+          break;
+        case GIMP_JOIN_BEVEL:
+          join_style = CAIRO_LINE_JOIN_BEVEL;
+          break;
+        default:
+          join_style = CAIRO_LINE_JOIN_MITER;
+          break;
+        }
+      cairo_set_line_join (cr, join_style);
+
+      dash_offset = gimp_vector_layer_get_stroke_dash_offset (vector_layer);
+      gimp_vector_layer_get_stroke_dash_pattern (vector_layer, &num_dashes,
+                                                 &dash_pattern);
+      if (num_dashes > 0)
+        {
+          for (gint i = 0; i < num_dashes; i++)
+            dash_pattern[i] *= stroke_width;
+
+          cairo_set_dash (cr, dash_pattern, num_dashes, dash_offset);
+        }
+
+      cairo_stroke (cr);
+    }
+
+  cairo_restore (cr);
+}
+
 static gboolean
 draw_layer (GimpLayer           **layers,
             gint                  n_layers,
@@ -1903,7 +2058,9 @@ draw_layer (GimpLayer           **layers,
 
       gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
 
-      if (! gimp_item_is_text_layer (GIMP_ITEM (layer)) || convert_text)
+      if ((! gimp_item_is_text_layer (GIMP_ITEM (layer))    &&
+           ! gimp_item_is_vector_layer (GIMP_ITEM (layer))) ||
+          convert_text)
         {
           /* For raster layers */
 
@@ -1953,10 +2110,14 @@ draw_layer (GimpLayer           **layers,
 
           g_object_unref (layer_color);
         }
-      else
+      else if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
         {
           /* For text layers */
           drawText (layer, opacity, cr, x_res, y_res);
+        }
+      else if (gimp_item_is_vector_layer (GIMP_ITEM (layer)))
+        {
+          drawPath (layer, opacity, cr, x_res, y_res);
         }
 
       /* draw new page if "layers as pages" option is checked */
