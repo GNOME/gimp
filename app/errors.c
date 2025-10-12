@@ -321,7 +321,9 @@ gimp_eek (const gchar *reason,
           ! the_errors_gimp->no_interface         &&
           backtrace_file)
         {
+#ifndef G_OS_WIN32
           FILE     *fd;
+#endif
           gboolean  has_backtrace = TRUE;
 
           /* If GUI backtrace enabled (it is disabled by default), it

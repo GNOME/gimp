@@ -358,7 +358,7 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
 
   if (UuidToString (guid, &s) != S_OK)
     return FALSE;
-  guidstring = g_strdup (s);
+  guidstring = g_strdup ((char *) s);
   RpcStringFree (&s);
 
   if (FAILED ((hresult = IDirectInput8_CreateDevice (store->directinput8,

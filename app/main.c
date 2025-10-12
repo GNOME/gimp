@@ -555,6 +555,10 @@ main (int    argc,
   GOptionGroup   *gimp_group         = NULL;
   gchar          *backtrace_file     = NULL;
   GError         *error              = NULL;
+#ifdef G_OS_WIN32
+  gchar          *utf8_name;
+  wchar_t        *name;
+#endif
 #ifndef GIMP_CONSOLE_COMPILATION
   GKeyFile       *flatpak_keyfile;
 #endif
@@ -607,8 +611,8 @@ main (int    argc,
 
 #ifdef G_OS_WIN32
   /* Make Inno aware of gimp process avoiding broken install/unninstall */
-  char    *utf8_name = g_strdup_printf ("GIMP-%s", GIMP_MUTEX_VERSION);
-  wchar_t *name      = g_utf8_to_utf16 (utf8_name, -1, NULL, NULL, NULL);
+  utf8_name = g_strdup_printf ("GIMP-%s", GIMP_MUTEX_VERSION);
+  name      = g_utf8_to_utf16 (utf8_name, -1, NULL, NULL, NULL);
 
   CreateMutexW (NULL, FALSE, name);
 
@@ -625,8 +629,10 @@ main (int    argc,
     const gchar *install_dir;
     gchar       *bin_dir;
     LPWSTR       w_bin_dir;
+#ifdef ENABLE_RELOCATABLE_RESOURCES
     size_t       path_len;
     gchar       *path;
+#endif
 
     /* On Windows, set DLL search path to $INSTALLDIR/bin so that .exe
      * plug-ins processes in the plug-ins directory can find libgimp and
