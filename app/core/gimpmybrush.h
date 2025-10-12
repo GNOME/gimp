@@ -38,6 +38,8 @@ struct _GimpMybrush
   GimpData            parent_instance;
 
   GimpMybrushPrivate *priv;
+  gboolean            spectral_blending;
+  gdouble             pigment;
 };
 
 struct _GimpMybrushClass
@@ -63,3 +65,4 @@ gdouble       gimp_mybrush_get_posterize        (GimpMybrush *brush);
 gdouble       gimp_mybrush_get_posterize_num    (GimpMybrush *brush);
 gdouble       gimp_mybrush_get_offset_by_random (GimpMybrush *brush);
 gboolean      gimp_mybrush_get_is_eraser        (GimpMybrush *brush);
+gboolean      gimp_mybrush_get_spectral_blending (GimpMybrush *brush);
