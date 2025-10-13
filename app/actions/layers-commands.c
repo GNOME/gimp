@@ -1130,9 +1130,9 @@ layers_rasterize_cmd_callback (GimpAction *action,
 }
 
 void
-layers_retrieve_cmd_callback (GimpAction *action,
-                              GVariant   *value,
-                              gpointer    data)
+layers_revert_rasterize_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
 {
   GimpImage *image;
   GList     *layers;

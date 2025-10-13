@@ -81,7 +81,7 @@ void   layers_delete_cmd_callback             (GimpAction *action,
 void   layers_rasterize_cmd_callback          (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   layers_retrieve_cmd_callback           (GimpAction *action,
+void   layers_revert_rasterize_cmd_callback   (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
 

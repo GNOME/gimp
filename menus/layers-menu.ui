@@ -66,7 +66,7 @@
         <item><attribute name="action">app.layers-vector-fill-stroke</attribute></item>
 
         <item><attribute name="action">app.layers-rasterize</attribute></item>
-        <item><attribute name="action">app.layers-retrieve</attribute></item>
+        <item><attribute name="action">app.layers-revert-rasterize</attribute></item>
       </section>
       <section>
         <item><attribute name="action">app.layers-resize</attribute></item>

@@ -188,10 +188,10 @@ static const GimpActionEntry layers_actions[] =
     layers_rasterize_cmd_callback,
     GIMP_HELP_LAYER_TEXT_DISCARD },
 
-  { "layers-retrieve", GIMP_ICON_TOOL_TEXT,
+  { "layers-revert-rasterize", GIMP_ICON_TOOL_TEXT,
     NC_("layers-action", "_Revert Rasterize"), NULL, { NULL },
     NC_("layers-action", "Turn rasterized layers back into text, link or vector layers"),
-    layers_retrieve_cmd_callback,
+    layers_revert_rasterize_cmd_callback,
     GIMP_HELP_LAYER_TEXT_DISCARD },
 
   { "layers-text-to-path", GIMP_ICON_TOOL_TEXT,
@@ -1068,7 +1068,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-flatten-image",     !fs && !ac);
 
   SET_VISIBLE   ("layers-rasterize",         has_rasterizable);
-  SET_VISIBLE   ("layers-retrieve",          has_rasterized);
+  SET_VISIBLE   ("layers-revert-rasterize",  has_rasterized);
 
   SET_VISIBLE   ("layers-text-to-path",      n_text_layers > 0 && !ac);
   SET_VISIBLE   ("layers-text-along-path",   text_layer && !ac);
