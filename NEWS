@@ -42,6 +42,11 @@ Tools:
     link or vector layer is selected. An error message will suggest you
     rasterize these layers explicitly first, in order to be able to do
     any "destructive" action.
+  - Text tool: dialog when trying to edit a rasterized layer text has
+    been reworded.
+  - Path tool: selecting a vector layer when the Path tool is active
+    will pop a dialog up, similar to the one which we have in Text tool
+    when a text layer is picked.
 
 Graphical User Interface:
 
@@ -54,6 +59,10 @@ Plug-Ins:
 
   - file-compressor: add zip decompression support. This allows support
     for .hgt.zip files, as well as other formats compressed with zip.
+  - SVG: initial export support, including support for vector, text and
+    link layers natively. Raster layers and masks are optionally
+    embedded as either PNG or JPEG base64-encoded data.
+  - Gimpressionist: edit button labels to more appropriate wording.
 
 API:
 
@@ -120,14 +129,28 @@ API:
     * gimp_text_layer_set_outline_join_style
     * gimp_text_layer_set_outline_miter_limit
     * gimp_text_layer_set_outline_width
+    * gimp_param_rasterizable_get_type
+    * gimp_param_spec_rasterizable
+    * gimp_rasterizable_get_type
+    * gimp_rasterizable_is_rasterized
+    * gimp_rasterizable_rasterize
+    * gimp_rasterizable_restore
   - New libgimp class: GimpLinkLayer
   - New libgimpbase enum types:
     * GimpTextOutline
     * GimpTextOutlineDirection
+  - New libgimpwidgets macros:
+    * GIMP_ICON_LAYER_LINK_LAYER
+    * GIMP_ICON_LAYER_VECTOR_LAYER
+  - libgimpwidgets: GimpBrowser search entry ported to GtkSearchEntry.
+  - New libgimp interface: GimpRasterizable. GimpLinkLayer,
+    GimpTextLayer and GimpVectorLayer now implement this interface.
 
 Build:
 
   - Depends on babl 0.1.116 and GEGL 0.4.64.
+  - The stable Snap package (on Snap Store) has been officially passed
+    over to the GIMP team.
 
 
 Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
