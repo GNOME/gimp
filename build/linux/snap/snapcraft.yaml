@@ -91,6 +91,10 @@ parts:
     source: https://gitlab.gnome.org/GNOME/babl.git
     source-depth: 1
     override-pull: |
+      if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" = 'gimp' ]; then
+        printf '\033[31m(ERROR)\033[0m non-tagged source can not be deployed to gimp snap. Please, change grade to stable\n' 
+        exit 1
+      fi
       if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" != 'gimp' ]; then
         craftctl default
       else
