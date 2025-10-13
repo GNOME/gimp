@@ -240,6 +240,7 @@ HELP
 CODE
     );
 }
+
 @headers = qw("core/gimplink.h"
               "core/gimplinklayer.h"
               "core/gimprasterizable.h"
