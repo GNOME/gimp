@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-10 20:57+0000\n"
-"PO-Revision-Date: 2025-10-11 21:54+0200\n"
+"POT-Creation-Date: 2025-10-13 08:24+0000\n"
+"PO-Revision-Date: 2025-10-13 10:25+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -323,11 +323,11 @@ msgstr "Pokaži stran nastavitev s poskusnimi funkcionalnostmi"
 msgid "Show an image submenu with debug actions"
 msgstr "Pokaži podmeni slike z dejanji razhroščevanja"
 
-#: app/main.c:757
+#: app/main.c:763
 msgid "[FILE|URI...]"
 msgstr "[DATOTEKA|URI...]"
 
-#: app/main.c:787
+#: app/main.c:793
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -335,20 +335,20 @@ msgstr ""
 "GIMP ne more inicializirati grafičnega uporabniškega vmesnika.\n"
 "Prepričajte se, da obstaja prava nastavitev za vaše zaslonsko okolje."
 
-#: app/main.c:851
+#: app/main.c:857
 msgid "Another GIMP instance is already running."
 msgstr "GIMP je že zagnan."
 
-#: app/main.c:940
+#: app/main.c:946
 msgid "GIMP output. Type any character to close this window."
 msgstr "Izhod GIMP. Pritisnite kateri koli znak, da se okno zapre."
 
-#: app/main.c:941
+#: app/main.c:947
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Pritisnite katero koli tipko, da zaprete to okno)\n"
 
-#: app/main.c:958
+#: app/main.c:964
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Izhod programa GIMP. To okno lahko pomanjšate, vendar ga ne zapirajte."
 
@@ -582,7 +582,7 @@ msgid "Tools"
 msgstr "Orodja"
 
 #: app/actions/actions.c:243 app/dialogs/dialogs.c:384
-#: app/tools/gimppathtool.c:167
+#: app/tools/gimppathtool.c:183
 msgid "Paths"
 msgstr "Poti"
 
@@ -2513,15 +2513,16 @@ msgstr "240 s"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:376 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimptexttool.c:1775 app/tools/gimptransformgridtool.c:1264
-#: app/tools/gimptransformtool.c:429 app/widgets/gimpactionview.c:621
-#: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:665
-#: app/widgets/gimpcontrollerlist.c:556 app/widgets/gimpdeviceeditor.c:463
-#: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
-#: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
-#: app/widgets/gimphelp.c:773 app/widgets/gimpiconpicker.c:489
-#: app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148
-#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:706
+#: app/tools/gimppathtool.c:1017 app/tools/gimptexttool.c:1775
+#: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
+#: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
+#: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:556
+#: app/widgets/gimpdeviceeditor.c:463 app/widgets/gimpdeviceinfoeditor.c:1160
+#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:336
+#: app/widgets/gimphelp.c:438 app/widgets/gimphelp.c:773
+#: app/widgets/gimpiconpicker.c:489 app/widgets/gimpmodifierseditor.c:688
+#: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
+#: app/widgets/gimpsettingsbox.c:706
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
@@ -7118,8 +7119,8 @@ msgid "Rasterize Layers"
 msgstr "Rasteriziraj plasti"
 
 #: app/actions/layers-commands.c:1147
-msgid "Retrieve Layers Information"
-msgstr "Pridobi podatke o plasteh"
+msgid "Revert Rasterize"
+msgstr "Povrni rasteriziranje"
 
 #: app/actions/layers-commands.c:1175
 msgid "Add Paths"
@@ -13134,11 +13135,11 @@ msgstr "Ustvarjanje mape »%s« ..."
 msgid "Cannot create folder '%s': %s"
 msgstr "Mape »%s« ni mogoče ustvariti: %s"
 
-#: app/core/gimp-utils.c:585 app/core/gimpfilloptions.c:431
+#: app/core/gimp-utils.c:587 app/core/gimpfilloptions.c:431
 msgid "No patterns available for this operation."
 msgstr "Za ta postopek vzorci niso na voljo."
 
-#: app/core/gimp-utils.c:1128
+#: app/core/gimp-utils.c:1130
 #, c-format
 msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
@@ -13146,17 +13147,17 @@ msgstr ""
 "Usodna napaka pri razčlenjevanju datoteke virov Photoshop: RLE-stisnjeni "
 "podatki so okvarjeni."
 
-#: app/core/gimp-utils.c:1741
+#: app/core/gimp-utils.c:1743
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "Ta razčlenjevalnik ne podpira prekrivnih seznamov."
 
-#: app/core/gimp-utils.c:1764
+#: app/core/gimp-utils.c:1766
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> mora biti znotraj oznak <ol> ali <ul>."
 
-#: app/core/gimp-utils.c:1769
+#: app/core/gimp-utils.c:1771
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Neznana oznaka: <%s>."
@@ -14852,47 +14853,47 @@ msgstr "Datoteka je izbrisana"
 msgid "No file was set"
 msgstr "Nobena datoteka ni nastavljena"
 
-#: app/core/gimplinklayer.c:189 app/core/gimplinklayer.c:1077
+#: app/core/gimplinklayer.c:190 app/core/gimplinklayer.c:1078
 msgid "Link Layer"
 msgstr "Povezana plast"
 
-#: app/core/gimplinklayer.c:197
+#: app/core/gimplinklayer.c:198
 msgid "Rename Link Layer"
 msgstr "Preimenuj povezano plast"
 
-#: app/core/gimplinklayer.c:198
+#: app/core/gimplinklayer.c:199
 msgid "Move Link Layer"
 msgstr "Premakni povezano plast"
 
-#: app/core/gimplinklayer.c:199
+#: app/core/gimplinklayer.c:200
 msgid "Scale Link Layer"
 msgstr "Spremeni merilo povezane plasti"
 
-#: app/core/gimplinklayer.c:200
+#: app/core/gimplinklayer.c:201
 msgid "Resize Link Layer"
 msgstr "Spremeni velikost povezane plasti"
 
-#: app/core/gimplinklayer.c:201
+#: app/core/gimplinklayer.c:202
 msgid "Flip Link Layer"
 msgstr "Prezrcali povezano plast"
 
-#: app/core/gimplinklayer.c:202
+#: app/core/gimplinklayer.c:203
 msgid "Rotate Link Layer"
 msgstr "Zasukaj povezano plast"
 
-#: app/core/gimplinklayer.c:203 app/core/gimplinklayer.c:553
+#: app/core/gimplinklayer.c:204 app/core/gimplinklayer.c:554
 msgid "Transform Link Layer"
 msgstr "Preoblikuj povezano plast"
 
-#: app/core/gimplinklayer.c:781
+#: app/core/gimplinklayer.c:782
 msgid "Set layer link"
 msgstr "Nastavi povezavo plasti"
 
-#: app/core/gimplinklayer.c:838
+#: app/core/gimplinklayer.c:839
 msgid "Discard Link"
 msgstr "Zavrzi povezavo"
 
-#: app/core/gimplinklayer.c:855
+#: app/core/gimplinklayer.c:856
 msgid "Monitor Link"
 msgstr "Spremljaj povezavo"
 
@@ -21485,41 +21486,45 @@ msgstr "V medpomnilniku ni poti"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Poti ni mogoče uvoziti iz »%s«: %s"
 
-#: app/path/gimpvectorlayer.c:160 app/tools/gimppathtool.c:834
+#: app/path/gimpvectorlayer.c:161 app/tools/gimppathtool.c:815
 msgid "Vector Layer"
 msgstr "Vektorska plast"
 
-#: app/path/gimpvectorlayer.c:170
+#: app/path/gimpvectorlayer.c:171
 msgid "Rename Vector Layer"
 msgstr "Preimenuj vektorsko plast"
 
-#: app/path/gimpvectorlayer.c:171
+#: app/path/gimpvectorlayer.c:172
 msgid "Move Vector Layer"
 msgstr "Premakni vektorsko plast"
 
-#: app/path/gimpvectorlayer.c:172
+#: app/path/gimpvectorlayer.c:173
 msgid "Scale Vector Layer"
 msgstr "Spremeni merilo vektorske plasti"
 
-#: app/path/gimpvectorlayer.c:173
+#: app/path/gimpvectorlayer.c:174
 msgid "Resize Vector Layer"
 msgstr "Spremeni velikost vektorske plasti"
 
-#: app/path/gimpvectorlayer.c:174
+#: app/path/gimpvectorlayer.c:175
 msgid "Flip Vector Layer"
 msgstr "Prezrcali vektorsko plast"
 
-#: app/path/gimpvectorlayer.c:175
+#: app/path/gimpvectorlayer.c:176
 msgid "Rotate Vector Layer"
 msgstr "Zasukaj vektorsko plast"
 
-#: app/path/gimpvectorlayer.c:176
+#: app/path/gimpvectorlayer.c:177
 msgid "Transform Vector Layer"
 msgstr "Preoblikuj vektorsko plast"
 
-#: app/path/gimpvectorlayer.c:526
+#: app/path/gimpvectorlayer.c:527
 msgid "Discard Vector Information"
 msgstr "Zavrzi podatke o vektorju"
+
+#: app/path/gimpvectorlayer.c:690
+msgid "Revert Rasterize Vector Layer"
+msgstr "Povrni rasteriziranje vektorske plasti"
 
 #: app/path/gimpvectorlayeroptions.c:114
 msgid "Fill Style"
@@ -24981,13 +24986,33 @@ msgstr "Izbor iz poti"
 msgid "Create New Vector Layer"
 msgstr "Ustvari novo vektorsko plast"
 
-#: app/tools/gimppathtool.c:168
+#: app/tools/gimppathtool.c:184
 msgid "Paths Tool: Create and edit paths"
 msgstr "Orodje Poti: Ustvari in uredi poti"
 
-#: app/tools/gimppathtool.c:169
+#: app/tools/gimppathtool.c:185
 msgid "Pat_hs"
 msgstr "Po_ti"
+
+#: app/tools/gimppathtool.c:1009 app/tools/gimppathtool.c:1012
+msgid "Confirm Path Editing"
+msgstr "Potrdi urejanje poti"
+
+#: app/tools/gimppathtool.c:1016 app/tools/gimptexttool.c:1774
+msgid "Create _New Layer"
+msgstr "Ustvari _novo plast"
+
+#: app/tools/gimppathtool.c:1018 app/tools/gimptexttool.c:1776
+msgid "_Edit Anyway"
+msgstr "Vs_eeno uredi"
+
+#: app/tools/gimppathtool.c:1040
+msgid ""
+"The vector layer you picked was rasterized. Editing its path will discard "
+"any modifications."
+msgstr ""
+"Vektorska plast, ki ste jo izbrali, je bila rasterizirana. Urejanje njene "
+"poti bo zavrglo vse spremembe."
 
 #: app/tools/gimppenciltool.c:54
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -25545,14 +25570,6 @@ msgstr "Preoblikuj plast besedila"
 #: app/tools/gimptexttool.c:1767 app/tools/gimptexttool.c:1770
 msgid "Confirm Text Editing"
 msgstr "Potrdi urejevanje besedila"
-
-#: app/tools/gimptexttool.c:1774
-msgid "Create _New Layer"
-msgstr "Ustvari _novo plast"
-
-#: app/tools/gimptexttool.c:1776
-msgid "_Edit Anyway"
-msgstr "Vs_eeno uredi"
 
 #: app/tools/gimptexttool.c:1798
 msgid ""
