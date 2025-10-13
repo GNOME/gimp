@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-01 23:59+0000\n"
-"PO-Revision-Date: 2025-10-03 07:39+0800\n"
+"POT-Creation-Date: 2025-10-13 01:43+0000\n"
+"PO-Revision-Date: 2025-10-13 09:59+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1209,7 +1209,7 @@ msgstr "变化分布："
 msgid "Graph of the Current Settings"
 msgstr "当前设置的曲线图"
 
-#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:562
+#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:169
 #: plug-ins/filter-browser/filter-browser.c:727 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1215 plug-ins/gfig/gfig-dialog.c:1360
@@ -1977,7 +1977,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:608
 #: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:556
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:733
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
@@ -2018,7 +2018,7 @@ msgstr "选项"
 #. Preview area, top of column
 #. preview
 #: plug-ins/common/curve-bend.c:1095 plug-ins/gimpressionist/orientmap.c:589
-#: plug-ins/gimpressionist/sizemap.c:458 plug-ins/print/print-page-layout.c:180
+#: plug-ins/gimpressionist/sizemap.c:462 plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "预览"
 
@@ -2664,11 +2664,12 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-tga.c:1217
-#: plug-ins/common/file-tim.c:622 plug-ins/common/file-xbm.c:1026
-#: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
-#: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
-#: plug-ins/file-fli/fli-gimp.c:766 plug-ins/file-icns/file-icns-export.c:824
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:771
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
+#: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
+#: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
+#: plug-ins/file-fits/fits.c:646 plug-ins/file-fli/fli-gimp.c:766
+#: plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2284
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
@@ -4604,6 +4605,7 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "下边框超出边界（须 < %d）：%d"
 
 #: plug-ins/common/file-pcx.c:1266 plug-ins/common/file-qoi.c:369
+#: plug-ins/common/file-svg.c:780 plug-ins/common/file-svg.c:796
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "写入文件“%s”失败：%s"
@@ -4888,7 +4890,7 @@ msgstr "PNG 图像"
 msgid "APNG image"
 msgstr "APNG 图像"
 
-#: plug-ins/common/file-png.c:331
+#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:335
 msgid "PNG"
 msgstr "PNG"
 
@@ -5430,7 +5432,7 @@ msgid ""
 "and height values will be used."
 msgstr "如果启用，在导出时将保持宽高比例。否则将使用指定的宽度和高度值。"
 
-#: plug-ins/common/file-ps.c:565 plug-ins/map-object/map-object-ui.c:723
+#: plug-ins/common/file-ps.c:565 plug-ins/map-object/map-object-ui.c:732
 msgid "Rotation"
 msgstr "旋转"
 
@@ -6268,49 +6270,82 @@ msgstr "读入时遇到文件结束符"
 msgid "Write error occurred"
 msgstr "出现写错误"
 
-#: plug-ins/common/file-svg.c:173
+#: plug-ins/common/file-svg.c:260
 msgid "SVG image"
 msgstr "SVG 图像"
 
-#: plug-ins/common/file-svg.c:186
+#: plug-ins/common/file-svg.c:273
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:195
+#: plug-ins/common/file-svg.c:282
 msgid "_Paths"
 msgstr "路径(_P)"
 
-#: plug-ins/common/file-svg.c:196
+#: plug-ins/common/file-svg.c:283
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr "是否以及如何导入路径使其可用于路径工具"
 
-#: plug-ins/common/file-svg.c:197
+#: plug-ins/common/file-svg.c:284
 msgid "Don't import paths"
 msgstr "不要导入路径"
 
-#: plug-ins/common/file-svg.c:198
+#: plug-ins/common/file-svg.c:285
 msgid "Import paths individually"
 msgstr "分别导入路径"
 
-#: plug-ins/common/file-svg.c:199
+#: plug-ins/common/file-svg.c:286
 msgid "Merge imported paths"
 msgstr "合并导入的路径"
+
+#: plug-ins/common/file-svg.c:298
+msgid "Scalable Vector Graphic"
+msgstr "可缩放矢量图形"
+
+#: plug-ins/common/file-svg.c:301
+msgid "Export vector layers in SVG file format"
+msgstr "以 SVG 文件格式导出矢量图层"
+
+#: plug-ins/common/file-svg.c:302
+msgid "Export vector layers in SVG file format (Scalable Vector Graphic)"
+msgstr "以 SVG 文件格式导出矢量图层（可缩放矢量图形）"
+
+#: plug-ins/common/file-svg.c:327
+msgid "_Title"
+msgstr "标题(_T)"
+
+#: plug-ins/common/file-svg.c:328
+msgid "Optional <title> for SVG"
+msgstr "SVG 的可选 <title>"
+
+#: plug-ins/common/file-svg.c:333
+msgid "Em_bed raster layers as"
+msgstr "光栅图层内嵌为(_B)"
+
+#: plug-ins/common/file-svg.c:336 plug-ins/file-jpeg/jpeg.c:195
+#: plug-ins/file-tiff/file-tiff.c:251
+msgid "JPEG"
+msgstr "JPEG"
+
+#: plug-ins/common/file-svg.c:337
+msgid "Do not export raster layers"
+msgstr "不要导出光栅图层"
 
 #. We need to ask explicitly before using the "unlimited" size
 #. * option (XML_PARSE_HUGE in libxml) because it is considered
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:245
+#: plug-ins/common/file-svg.c:384
 msgid "Disable safety size limits?"
 msgstr "禁用安全大小限制吗？"
 
-#: plug-ins/common/file-svg.c:250
+#: plug-ins/common/file-svg.c:389
 msgid "_No"
 msgstr "否(_N)"
 
-#: plug-ins/common/file-svg.c:251
+#: plug-ins/common/file-svg.c:390
 msgid "_Yes"
 msgstr "是(_Y)"
 
@@ -6324,7 +6359,7 @@ msgstr "是(_Y)"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:275
+#: plug-ins/common/file-svg.c:414
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6333,26 +6368,36 @@ msgstr ""
 "发生了解析错误。\n"
 "禁用安全限制可能会有帮助。恶意 SVG 文件可能会用此消耗过多内存。"
 
-#: plug-ins/common/file-svg.c:287
+#: plug-ins/common/file-svg.c:426
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "为了安全原因，该选项应仅用于信任的输入！"
 
-#: plug-ins/common/file-svg.c:294
+#: plug-ins/common/file-svg.c:433
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "不带阻止解析巨量数据的限制来重试吗？"
 
-#: plug-ins/common/file-svg.c:558 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/common/file-svg.c:735 plug-ins/file-exr/file-exr.c:381
 #: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "未知原因"
 
-#: plug-ins/common/file-svg.c:564
+#: plug-ins/common/file-svg.c:741
 msgid "Rendering SVG"
 msgstr "渲染 SVG"
 
-#: plug-ins/common/file-svg.c:574
+#: plug-ins/common/file-svg.c:751
 msgid "Rendered SVG"
 msgstr "已渲染的 SVG"
+
+#: plug-ins/common/file-svg.c:1102
+msgid ""
+"The SVG format only requires viewers to display image links for SVG, PNG, "
+"and JPEG images.\n"
+"Your image links external image files in other formats which may not show up "
+"in all viewers."
+msgstr ""
+"SVG 格式仅需要查看器显示 SVG、PNG 和 JPEG 图像的链接。\n"
+"您其它格式的外部图像文件链接可能无法在所有查看器显示。"
 
 #: plug-ins/common/file-tga.c:262 plug-ins/common/file-tga.c:288
 msgid "TarGA image"
@@ -7677,15 +7722,15 @@ msgstr "边缘增强"
 msgid "NL Filter"
 msgstr "NL 滤波"
 
-#: plug-ins/common/plugin-browser.c:169
+#: plug-ins/common/plugin-browser.c:168
 msgid "_Plug-In Browser"
 msgstr "插件浏览器(_P)"
 
-#: plug-ins/common/plugin-browser.c:174
+#: plug-ins/common/plugin-browser.c:173
 msgid "Display information about plug-ins"
 msgstr "显示关于插件的信息"
 
-#: plug-ins/common/plugin-browser.c:175
+#: plug-ins/common/plugin-browser.c:174
 msgid ""
 "Allows one to browse the plug-in menus system. You can search for plug-in "
 "names, sort by name or menu location and you can view a tree representation "
@@ -7695,38 +7740,38 @@ msgstr ""
 "允许浏览插件菜单系统。您可以搜索插件名称，按名称或菜单位置排序且您可以查看表"
 "现插件菜单的树形列表。也可以帮助您找到新安装插件在菜单中的位置。"
 
-#: plug-ins/common/plugin-browser.c:373
+#: plug-ins/common/plugin-browser.c:372
 #: plug-ins/filter-browser/filter-browser.c:608
 msgid "Searching by name"
 msgstr "按名称搜索"
 
-#: plug-ins/common/plugin-browser.c:389
+#: plug-ins/common/plugin-browser.c:388
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
 msgstr[0] "%d 个插件"
 
-#: plug-ins/common/plugin-browser.c:398
+#: plug-ins/common/plugin-browser.c:397
 #: plug-ins/filter-browser/filter-browser.c:675
 msgid "No matches for your query"
 msgstr "您的查询无匹配结果"
 
-#: plug-ins/common/plugin-browser.c:401
+#: plug-ins/common/plugin-browser.c:400
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
 msgstr[0] "共有 %d 个插件和您的查询匹配"
 
-#: plug-ins/common/plugin-browser.c:532
+#: plug-ins/common/plugin-browser.c:531
 #: plug-ins/filter-browser/filter-browser.c:677
 msgid "No matches"
 msgstr "无匹配"
 
-#: plug-ins/common/plugin-browser.c:558
+#: plug-ins/common/plugin-browser.c:556
 msgid "Plug-in Browser"
 msgstr "插件浏览器"
 
-#: plug-ins/common/plugin-browser.c:603 plug-ins/common/unit-editor.c:114
+#: plug-ins/common/plugin-browser.c:601 plug-ins/common/unit-editor.c:114
 #: plug-ins/metadata/metadata-editor.c:609
 #: plug-ins/metadata/metadata-editor.c:645
 #: plug-ins/metadata/metadata-editor.c:652
@@ -7734,23 +7779,23 @@ msgstr "插件浏览器"
 msgid "Name"
 msgstr "名称"
 
-#: plug-ins/common/plugin-browser.c:611 plug-ins/common/plugin-browser.c:674
+#: plug-ins/common/plugin-browser.c:609 plug-ins/common/plugin-browser.c:670
 msgid "Menu Path"
 msgstr "菜单路径"
 
-#: plug-ins/common/plugin-browser.c:619 plug-ins/common/plugin-browser.c:683
+#: plug-ins/common/plugin-browser.c:617 plug-ins/common/plugin-browser.c:679
 msgid "Image Types"
 msgstr "图像类型"
 
-#: plug-ins/common/plugin-browser.c:629 plug-ins/common/plugin-browser.c:692
+#: plug-ins/common/plugin-browser.c:627 plug-ins/common/plugin-browser.c:688
 msgid "Installation Date"
 msgstr "安装日期"
 
-#: plug-ins/common/plugin-browser.c:653
+#: plug-ins/common/plugin-browser.c:649
 msgid "List View"
 msgstr "列表视图"
 
-#: plug-ins/common/plugin-browser.c:715
+#: plug-ins/common/plugin-browser.c:710
 msgid "Tree View"
 msgstr "树形视图"
 
@@ -8274,7 +8319,8 @@ msgstr "再制(_U)"
 #: plug-ins/common/sphere-designer.c:2774
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
-#: plug-ins/gimpressionist/presets.c:1071
+#: plug-ins/gimpressionist/orientmap.c:623
+#: plug-ins/gimpressionist/presets.c:1071 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/gradient-flare/gradient-flare.c:3054
 #: plug-ins/gradient-flare/gradient-flare.c:3337
 msgid "_Delete"
@@ -10205,10 +10251,6 @@ msgstr "以 JPEG 格式导出文件"
 #: plug-ins/file-jpeg/jpeg.c:186
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "将文件导出为有损的，被广泛支持的 JPEG 格式"
-
-#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:251
-msgid "JPEG"
-msgstr "JPEG"
 
 #: plug-ins/file-jpeg/jpeg.c:216
 msgid "S_moothing"
@@ -12922,10 +12964,12 @@ msgid "Orientation Map Editor"
 msgstr "方向映射编辑器"
 
 #: plug-ins/gimpressionist/orientmap.c:552
+#: plug-ins/gimpressionist/sizemap.c:425
 msgid "Vectors"
 msgstr "矢量"
 
 #: plug-ins/gimpressionist/orientmap.c:563
+#: plug-ins/gimpressionist/sizemap.c:436
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -12934,33 +12978,32 @@ msgstr ""
 "个新矢量。"
 
 #: plug-ins/gimpressionist/orientmap.c:587
-#: plug-ins/gimpressionist/sizemap.c:456
+#: plug-ins/gimpressionist/sizemap.c:460
 msgid "Adjust the preview's brightness"
 msgstr "调整预览的亮度"
 
 #: plug-ins/gimpressionist/orientmap.c:609
+#: plug-ins/gimpressionist/sizemap.c:483
 msgid "Select previous vector"
 msgstr "选择前一个矢量"
 
 #: plug-ins/gimpressionist/orientmap.c:615
+#: plug-ins/gimpressionist/sizemap.c:490
 msgid "Select next vector"
 msgstr "选择后一个矢量"
 
 #: plug-ins/gimpressionist/orientmap.c:617
-#: plug-ins/gimpressionist/sizemap.c:488
+#: plug-ins/gimpressionist/sizemap.c:492
 msgid "A_dd"
 msgstr "添加(_D)"
 
 #: plug-ins/gimpressionist/orientmap.c:621
+#: plug-ins/gimpressionist/sizemap.c:497
 msgid "Add new vector"
 msgstr "添加新矢量"
 
-#: plug-ins/gimpressionist/orientmap.c:623
-#: plug-ins/gimpressionist/sizemap.c:495
-msgid "_Kill"
-msgstr "删除(_K)"
-
 #: plug-ins/gimpressionist/orientmap.c:627
+#: plug-ins/gimpressionist/sizemap.c:504
 msgid "Delete selected vector"
 msgstr "删除选中矢量"
 
@@ -12981,11 +13024,12 @@ msgid "Vortex_3"
 msgstr "漩涡 3(_3)"
 
 #: plug-ins/gimpressionist/orientmap.c:651
-#: plug-ins/gimpressionist/sizemap.c:539
+#: plug-ins/gimpressionist/sizemap.c:543
 msgid "_Voronoi"
 msgstr "沃罗诺伊(_V)"
 
 #: plug-ins/gimpressionist/orientmap.c:659
+#: plug-ins/gimpressionist/sizemap.c:550
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -12996,6 +13040,7 @@ msgid "A_ngle:"
 msgstr "角度(_N)："
 
 #: plug-ins/gimpressionist/orientmap.c:670
+#: plug-ins/gimpressionist/sizemap.c:514
 msgid "Change the angle of the selected vector"
 msgstr "改变选中向量的角度"
 
@@ -13012,6 +13057,7 @@ msgid "_Strength:"
 msgstr "力度(_S)："
 
 #: plug-ins/gimpressionist/orientmap.c:691
+#: plug-ins/gimpressionist/sizemap.c:525
 msgid "Change the strength of the selected vector"
 msgstr "改变选中向量的强度"
 
@@ -13020,7 +13066,7 @@ msgid "S_trength exp.:"
 msgstr "强度指数(_T)："
 
 #: plug-ins/gimpressionist/orientmap.c:702
-#: plug-ins/gimpressionist/sizemap.c:532
+#: plug-ins/gimpressionist/sizemap.c:536
 msgid "Change the exponent of the strength"
 msgstr "改变强度的指数"
 
@@ -13217,59 +13263,17 @@ msgstr "打开尺寸映射编辑器"
 msgid "Size Map Editor"
 msgstr "尺寸映射编辑器"
 
-#: plug-ins/gimpressionist/sizemap.c:425
-msgid "Smvectors"
-msgstr "Smvectors"
-
-#: plug-ins/gimpressionist/sizemap.c:435
-msgid ""
-"The smvector-field. Left-click to move selected smvector, Right-click to "
-"point it towards mouse, Middle-click to add a new smvector."
-msgstr ""
-"Smvector 区域。点击左键移动选中的 smvector，点击右键使它指向鼠标的方向，点击"
-"中键添加新的 smvector。"
-
-#: plug-ins/gimpressionist/sizemap.c:479
-msgid "Select previous smvector"
-msgstr "选择前一个 smvector"
-
-#: plug-ins/gimpressionist/sizemap.c:486
-msgid "Select next smvector"
-msgstr "选择后一个 smvector"
-
-#: plug-ins/gimpressionist/sizemap.c:493
-msgid "Add new smvector"
-msgstr "添加新的 smvector"
-
-#: plug-ins/gimpressionist/sizemap.c:500
-msgid "Delete selected smvector"
-msgstr "删除选中的 smvector"
-
-#: plug-ins/gimpressionist/sizemap.c:508
+#: plug-ins/gimpressionist/sizemap.c:512
 msgid "_Size:"
 msgstr "大小(_S)："
 
-#: plug-ins/gimpressionist/sizemap.c:510
-msgid "Change the angle of the selected smvector"
-msgstr "改变选中的 smvector 的角度"
-
-#: plug-ins/gimpressionist/sizemap.c:518
+#: plug-ins/gimpressionist/sizemap.c:522
 msgid "S_trength:"
 msgstr "强度(_T)："
 
-#: plug-ins/gimpressionist/sizemap.c:521
-msgid "Change the strength of the selected smvector"
-msgstr "改变选中的 smvector 的强度"
-
-#: plug-ins/gimpressionist/sizemap.c:529
+#: plug-ins/gimpressionist/sizemap.c:533
 msgid "St_rength exp.:"
 msgstr "强度指数(_R)："
-
-#: plug-ins/gimpressionist/sizemap.c:546
-msgid ""
-"Voronoi-mode makes only the smvector closest to the given point have any "
-"influence"
-msgstr "沃罗诺伊模式仅使 smvector 最接近具有任何影响的给定点"
 
 #: plug-ins/gradient-flare/gradient-flare.c:741
 msgid "Addition"
@@ -14967,12 +14971,12 @@ msgstr "环境映射(_E)"
 msgid "General Options"
 msgstr "常规选项"
 
-#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:459
+#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:468
 msgid "Light Settings"
 msgstr "光源设置"
 
-#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:491
-#: plug-ins/map-object/map-object-ui.c:703
+#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:500
+#: plug-ins/map-object/map-object-ui.c:712
 #: plug-ins/print/print-page-layout.c:385
 msgid "Position"
 msgstr "位置"
@@ -15326,41 +15330,41 @@ msgstr "方盒(_B)"
 msgid "C_ylinder"
 msgstr "圆柱体(_Y)"
 
-#: plug-ins/map-object/map-object-ui.c:477
+#: plug-ins/map-object/map-object-ui.c:486
 msgid "Direction Vector"
 msgstr "方向矢量"
 
-#: plug-ins/map-object/map-object-ui.c:547
+#: plug-ins/map-object/map-object-ui.c:556
 msgid "Viewpoint Position"
 msgstr "观察点位置"
 
-#: plug-ins/map-object/map-object-ui.c:569
+#: plug-ins/map-object/map-object-ui.c:578
 msgid "First Axis"
 msgstr "第一个坐标轴"
 
-#: plug-ins/map-object/map-object-ui.c:589
+#: plug-ins/map-object/map-object-ui.c:598
 msgid "Second Axis"
 msgstr "第二个坐标轴"
 
-#: plug-ins/map-object/map-object-ui.c:646
+#: plug-ins/map-object/map-object-ui.c:655
 msgid "Intensity Levels"
 msgstr "强度级别"
 
-#: plug-ins/map-object/map-object-ui.c:660
+#: plug-ins/map-object/map-object-ui.c:669
 msgid "Reflectivity"
 msgstr "反射率"
 
-#: plug-ins/map-object/map-object-ui.c:763
-#: plug-ins/map-object/map-object-ui.c:863
+#: plug-ins/map-object/map-object-ui.c:772
+#: plug-ins/map-object/map-object-ui.c:872
 #: plug-ins/print/print-page-layout.c:254
 msgid "Size"
 msgstr "大小"
 
-#: plug-ins/map-object/map-object-ui.c:776
+#: plug-ins/map-object/map-object-ui.c:785
 msgid "Map Images to Box Faces"
 msgstr "将图像映射到方盒表面"
 
-#: plug-ins/map-object/map-object-ui.c:844
+#: plug-ins/map-object/map-object-ui.c:853
 msgid "Images for the Cap Faces"
 msgstr "上下底面的图像"
 
@@ -16652,6 +16656,42 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
 
+#~ msgid "_Kill"
+#~ msgstr "删除(_K)"
+
+#~ msgid "Smvectors"
+#~ msgstr "Smvectors"
+
+#~ msgid ""
+#~ "The smvector-field. Left-click to move selected smvector, Right-click to "
+#~ "point it towards mouse, Middle-click to add a new smvector."
+#~ msgstr ""
+#~ "Smvector 区域。点击左键移动选中的 smvector，点击右键使它指向鼠标的方向，点"
+#~ "击中键添加新的 smvector。"
+
+#~ msgid "Select previous smvector"
+#~ msgstr "选择前一个 smvector"
+
+#~ msgid "Select next smvector"
+#~ msgstr "选择后一个 smvector"
+
+#~ msgid "Add new smvector"
+#~ msgstr "添加新的 smvector"
+
+#~ msgid "Delete selected smvector"
+#~ msgstr "删除选中的 smvector"
+
+#~ msgid "Change the angle of the selected smvector"
+#~ msgstr "改变选中的 smvector 的角度"
+
+#~ msgid "Change the strength of the selected smvector"
+#~ msgstr "改变选中的 smvector 的强度"
+
+#~ msgid ""
+#~ "Voronoi-mode makes only the smvector closest to the given point have any "
+#~ "influence"
+#~ msgstr "沃罗诺伊模式仅使 smvector 最接近具有任何影响的给定点"
+
 #~ msgid "CSource cannot be run non-interactively."
 #~ msgstr "C 源代码只能以交互模式运行。"
 
@@ -17158,9 +17198,6 @@ msgstr "从扫描仪/相机传送数据"
 #~ "height to specify a maximum height)"
 #~ msgstr ""
 #~ "载入 SVG 使用的高度（像素）。（0 为原始高度，负数高度为指定最大高度）"
-
-#~ msgid "Render Scalable Vector Graphics"
-#~ msgstr "渲染可缩放矢量图形"
 
 #, c-format
 #~ msgid "TGA format does not support multiple layers."
