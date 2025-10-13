@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-06 17:43+0000\n"
-"PO-Revision-Date: 2025-10-06 20:42+0200\n"
+"POT-Creation-Date: 2025-10-13 15:13+0000\n"
+"PO-Revision-Date: 2025-10-13 17:45+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -1218,7 +1218,7 @@ msgstr "Mutasjonsavstand:"
 msgid "Graph of the Current Settings"
 msgstr "Graf for dei gjeldande innstillingane"
 
-#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:562
+#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:169
 #: plug-ins/filter-browser/filter-browser.c:727 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1215 plug-ins/gfig/gfig-dialog.c:1360
@@ -2008,7 +2008,7 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:608
 #: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:556
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:733
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
@@ -2049,7 +2049,7 @@ msgstr "Innstillingar"
 #. Preview area, top of column
 #. preview
 #: plug-ins/common/curve-bend.c:1095 plug-ins/gimpressionist/orientmap.c:589
-#: plug-ins/gimpressionist/sizemap.c:458 plug-ins/print/print-page-layout.c:180
+#: plug-ins/gimpressionist/sizemap.c:462 plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Førehandsvising"
 
@@ -2702,11 +2702,12 @@ msgstr "«%s»: EOF eller feil ved lesing av palettdata"
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-tga.c:1217
-#: plug-ins/common/file-tim.c:622 plug-ins/common/file-xbm.c:1026
-#: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
-#: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
-#: plug-ins/file-fli/fli-gimp.c:766 plug-ins/file-icns/file-icns-export.c:824
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:771
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
+#: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
+#: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
+#: plug-ins/file-fits/fits.c:646 plug-ins/file-fli/fli-gimp.c:766
+#: plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2284
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
@@ -4682,6 +4683,7 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Nedre kant utanfor grensene (må vere mindre enn %d): %d"
 
 #: plug-ins/common/file-pcx.c:1266 plug-ins/common/file-qoi.c:369
+#: plug-ins/common/file-svg.c:780 plug-ins/common/file-svg.c:796
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Klarte ikkje skriva til fila «%s»: %s"
@@ -4975,7 +4977,7 @@ msgstr "PNG-bilete"
 msgid "APNG image"
 msgstr "APNG-bilete"
 
-#: plug-ins/common/file-png.c:331
+#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:335
 msgid "PNG"
 msgstr "PNG"
 
@@ -5529,7 +5531,7 @@ msgstr ""
 "Viss slått på, vert sideforholdet uendra ved eksport. Elles vert verdiane "
 "for høgd og breidd brukte."
 
-#: plug-ins/common/file-ps.c:565 plug-ins/map-object/map-object-ui.c:723
+#: plug-ins/common/file-ps.c:565 plug-ins/map-object/map-object-ui.c:732
 msgid "Rotation"
 msgstr "Rotasjon"
 
@@ -6379,49 +6381,82 @@ msgstr "fann EOF ved lesinga"
 msgid "Write error occurred"
 msgstr "Det oppstod ein skrivefeil"
 
-#: plug-ins/common/file-svg.c:173
+#: plug-ins/common/file-svg.c:260
 msgid "SVG image"
 msgstr "SVG-bilete"
 
-#: plug-ins/common/file-svg.c:186
+#: plug-ins/common/file-svg.c:273
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:195
+#: plug-ins/common/file-svg.c:282
 msgid "_Paths"
 msgstr "_Banar"
 
-#: plug-ins/common/file-svg.c:196
+#: plug-ins/common/file-svg.c:283
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr "Om og korleis importera banar slik at dei kan brukast av baneverktøya"
 
-#: plug-ins/common/file-svg.c:197
+#: plug-ins/common/file-svg.c:284
 msgid "Don't import paths"
 msgstr "Ikkje importer banar"
 
-#: plug-ins/common/file-svg.c:198
+#: plug-ins/common/file-svg.c:285
 msgid "Import paths individually"
 msgstr "Importer banane kvar for seg"
 
-#: plug-ins/common/file-svg.c:199
+#: plug-ins/common/file-svg.c:286
 msgid "Merge imported paths"
 msgstr "Føy saman dei importerte stiane"
+
+#: plug-ins/common/file-svg.c:298
+msgid "Scalable Vector Graphic"
+msgstr "Skalerbar vektorgrafikk"
+
+#: plug-ins/common/file-svg.c:301
+msgid "Export vector layers in SVG file format"
+msgstr "Eksporter vektorlag i SVG-filformat"
+
+#: plug-ins/common/file-svg.c:302
+msgid "Export vector layers in SVG file format (Scalable Vector Graphic)"
+msgstr "Eksporter vektorlag i SVG-filformat (Scalable Vector Graphic)"
+
+#: plug-ins/common/file-svg.c:327
+msgid "_Title"
+msgstr "_Tittel"
+
+#: plug-ins/common/file-svg.c:328
+msgid "Optional <title> for SVG"
+msgstr "Valfri <title> for SVG"
+
+#: plug-ins/common/file-svg.c:333
+msgid "Em_bed raster layers as"
+msgstr "_Bygg inn rasterlag som"
+
+#: plug-ins/common/file-svg.c:336 plug-ins/file-jpeg/jpeg.c:195
+#: plug-ins/file-tiff/file-tiff.c:251
+msgid "JPEG"
+msgstr "JPEG"
+
+#: plug-ins/common/file-svg.c:337
+msgid "Do not export raster layers"
+msgstr "Ikkje eksporter rasterlag"
 
 #. We need to ask explicitly before using the "unlimited" size
 #. * option (XML_PARSE_HUGE in libxml) because it is considered
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:245
+#: plug-ins/common/file-svg.c:384
 msgid "Disable safety size limits?"
 msgstr "Vil du slå av grensene for tryggingsstorleiken?"
 
-#: plug-ins/common/file-svg.c:250
+#: plug-ins/common/file-svg.c:389
 msgid "_No"
 msgstr "_Nei"
 
-#: plug-ins/common/file-svg.c:251
+#: plug-ins/common/file-svg.c:390
 msgid "_Yes"
 msgstr "_Ja"
 
@@ -6435,7 +6470,7 @@ msgstr "_Ja"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:275
+#: plug-ins/common/file-svg.c:414
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6445,26 +6480,38 @@ msgstr ""
 "Å slå av tryggingsgrensene kan hjelpa. Skadelege SVG-filer kan bruka dette "
 "til å bruka for mykje minne."
 
-#: plug-ins/common/file-svg.c:287
+#: plug-ins/common/file-svg.c:426
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "Av tryggingsgrunnar bør denne berre brukast på inndata du stolar på!"
 
-#: plug-ins/common/file-svg.c:294
+#: plug-ins/common/file-svg.c:433
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "Prøve på nytt utan grenser for å unngå å handsama store datamengder?"
 
-#: plug-ins/common/file-svg.c:558 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/common/file-svg.c:735 plug-ins/file-exr/file-exr.c:381
 #: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "Ukjend årsak"
 
-#: plug-ins/common/file-svg.c:564
+#: plug-ins/common/file-svg.c:741
 msgid "Rendering SVG"
 msgstr "Lager SVG"
 
-#: plug-ins/common/file-svg.c:574
+#: plug-ins/common/file-svg.c:751
 msgid "Rendered SVG"
 msgstr "Teikna SVG"
+
+#: plug-ins/common/file-svg.c:1102
+msgid ""
+"The SVG format only requires viewers to display image links for SVG, PNG, "
+"and JPEG images.\n"
+"Your image links external image files in other formats which may not show up "
+"in all viewers."
+msgstr ""
+"SVG -formatet krev at berre biletlekjene vert viste for SVG-, PNG- og JPEG -"
+"bilete.\n"
+"Biletet ditt lenkjer til eksterne biletfiler i andre format som kanskje "
+"ikkje vert viste i alle biletvisarane."
 
 #: plug-ins/common/file-tga.c:262 plug-ins/common/file-tga.c:288
 msgid "TarGA image"
@@ -7823,15 +7870,15 @@ msgstr "Kantforbetring"
 msgid "NL Filter"
 msgstr "NL Filter"
 
-#: plug-ins/common/plugin-browser.c:169
+#: plug-ins/common/plugin-browser.c:168
 msgid "_Plug-In Browser"
 msgstr "_Lesar for programtillegg"
 
-#: plug-ins/common/plugin-browser.c:174
+#: plug-ins/common/plugin-browser.c:173
 msgid "Display information about plug-ins"
 msgstr "Vis informasjon om programtillegga"
 
-#: plug-ins/common/plugin-browser.c:175
+#: plug-ins/common/plugin-browser.c:174
 msgid ""
 "Allows one to browse the plug-in menus system. You can search for plug-in "
 "names, sort by name or menu location and you can view a tree representation "
@@ -7844,40 +7891,40 @@ msgstr ""
 "hjelp for å finna ut kvar dei nye programtillegga har installert seg i "
 "menyane."
 
-#: plug-ins/common/plugin-browser.c:373
+#: plug-ins/common/plugin-browser.c:372
 #: plug-ins/filter-browser/filter-browser.c:608
 msgid "Searching by name"
 msgstr "Søkjar på namn"
 
-#: plug-ins/common/plugin-browser.c:389
+#: plug-ins/common/plugin-browser.c:388
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
 msgstr[0] "%d programtillegg"
 msgstr[1] "%d programtillegg"
 
-#: plug-ins/common/plugin-browser.c:398
+#: plug-ins/common/plugin-browser.c:397
 #: plug-ins/filter-browser/filter-browser.c:675
 msgid "No matches for your query"
 msgstr "Ingen treff på søket"
 
-#: plug-ins/common/plugin-browser.c:401
+#: plug-ins/common/plugin-browser.c:400
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
 msgstr[0] "Fann %d programtillegg som passa spørringa"
 msgstr[1] "Fann %d programtillegg som passa spørringa"
 
-#: plug-ins/common/plugin-browser.c:532
+#: plug-ins/common/plugin-browser.c:531
 #: plug-ins/filter-browser/filter-browser.c:677
 msgid "No matches"
 msgstr "Ingen treff"
 
-#: plug-ins/common/plugin-browser.c:558
+#: plug-ins/common/plugin-browser.c:556
 msgid "Plug-in Browser"
 msgstr "Lesar for programtillegg"
 
-#: plug-ins/common/plugin-browser.c:603 plug-ins/common/unit-editor.c:114
+#: plug-ins/common/plugin-browser.c:601 plug-ins/common/unit-editor.c:114
 #: plug-ins/metadata/metadata-editor.c:609
 #: plug-ins/metadata/metadata-editor.c:645
 #: plug-ins/metadata/metadata-editor.c:652
@@ -7885,23 +7932,23 @@ msgstr "Lesar for programtillegg"
 msgid "Name"
 msgstr "Namn"
 
-#: plug-ins/common/plugin-browser.c:611 plug-ins/common/plugin-browser.c:674
+#: plug-ins/common/plugin-browser.c:609 plug-ins/common/plugin-browser.c:670
 msgid "Menu Path"
 msgstr "Menysti"
 
-#: plug-ins/common/plugin-browser.c:619 plug-ins/common/plugin-browser.c:683
+#: plug-ins/common/plugin-browser.c:617 plug-ins/common/plugin-browser.c:679
 msgid "Image Types"
 msgstr "Bilettype"
 
-#: plug-ins/common/plugin-browser.c:629 plug-ins/common/plugin-browser.c:692
+#: plug-ins/common/plugin-browser.c:627 plug-ins/common/plugin-browser.c:688
 msgid "Installation Date"
 msgstr "Installasjonsdato"
 
-#: plug-ins/common/plugin-browser.c:653
+#: plug-ins/common/plugin-browser.c:649
 msgid "List View"
 msgstr "Listeform"
 
-#: plug-ins/common/plugin-browser.c:715
+#: plug-ins/common/plugin-browser.c:710
 msgid "Tree View"
 msgstr "Trevising"
 
@@ -8436,7 +8483,8 @@ msgstr "D_uplikat"
 #: plug-ins/common/sphere-designer.c:2774
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
-#: plug-ins/gimpressionist/presets.c:1071
+#: plug-ins/gimpressionist/orientmap.c:623
+#: plug-ins/gimpressionist/presets.c:1071 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/gradient-flare/gradient-flare.c:3054
 #: plug-ins/gradient-flare/gradient-flare.c:3337
 msgid "_Delete"
@@ -10392,10 +10440,6 @@ msgstr "Eksporterer filer i JPEG-filformat"
 #: plug-ins/file-jpeg/jpeg.c:186
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "Eksporterer filer det mykje brukte JPEG-filformatet"
-
-#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:251
-msgid "JPEG"
-msgstr "JPEG"
 
 #: plug-ins/file-jpeg/jpeg.c:216
 msgid "S_moothing"
@@ -13177,10 +13221,12 @@ msgid "Orientation Map Editor"
 msgstr "Retningskarthandsamaren"
 
 #: plug-ins/gimpressionist/orientmap.c:552
+#: plug-ins/gimpressionist/sizemap.c:425
 msgid "Vectors"
 msgstr "Vektorar"
 
 #: plug-ins/gimpressionist/orientmap.c:563
+#: plug-ins/gimpressionist/sizemap.c:436
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -13190,33 +13236,32 @@ msgstr ""
 "til ein vektor."
 
 #: plug-ins/gimpressionist/orientmap.c:587
-#: plug-ins/gimpressionist/sizemap.c:456
+#: plug-ins/gimpressionist/sizemap.c:460
 msgid "Adjust the preview's brightness"
 msgstr "Juster lysverdien for førehandsvisinga"
 
 #: plug-ins/gimpressionist/orientmap.c:609
+#: plug-ins/gimpressionist/sizemap.c:483
 msgid "Select previous vector"
 msgstr "Vel førre vektor"
 
 #: plug-ins/gimpressionist/orientmap.c:615
+#: plug-ins/gimpressionist/sizemap.c:490
 msgid "Select next vector"
 msgstr "Vel neste vektor"
 
 #: plug-ins/gimpressionist/orientmap.c:617
-#: plug-ins/gimpressionist/sizemap.c:488
+#: plug-ins/gimpressionist/sizemap.c:492
 msgid "A_dd"
 msgstr "Legg _til"
 
 #: plug-ins/gimpressionist/orientmap.c:621
+#: plug-ins/gimpressionist/sizemap.c:497
 msgid "Add new vector"
 msgstr "Legg til ny vektor"
 
-#: plug-ins/gimpressionist/orientmap.c:623
-#: plug-ins/gimpressionist/sizemap.c:495
-msgid "_Kill"
-msgstr "_Fjern"
-
 #: plug-ins/gimpressionist/orientmap.c:627
+#: plug-ins/gimpressionist/sizemap.c:504
 msgid "Delete selected vector"
 msgstr "Fjern den markerte vektoren"
 
@@ -13237,11 +13282,12 @@ msgid "Vortex_3"
 msgstr "Vortex_3"
 
 #: plug-ins/gimpressionist/orientmap.c:651
-#: plug-ins/gimpressionist/sizemap.c:539
+#: plug-ins/gimpressionist/sizemap.c:543
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
 #: plug-ins/gimpressionist/orientmap.c:659
+#: plug-ins/gimpressionist/sizemap.c:550
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -13253,6 +13299,7 @@ msgid "A_ngle:"
 msgstr "Vi_nkel:"
 
 #: plug-ins/gimpressionist/orientmap.c:670
+#: plug-ins/gimpressionist/sizemap.c:514
 msgid "Change the angle of the selected vector"
 msgstr "Endra vinkelen til den valde vektoren"
 
@@ -13269,6 +13316,7 @@ msgid "_Strength:"
 msgstr "_Styrke:"
 
 #: plug-ins/gimpressionist/orientmap.c:691
+#: plug-ins/gimpressionist/sizemap.c:525
 msgid "Change the strength of the selected vector"
 msgstr "Endra styrken til den valde vektoren"
 
@@ -13277,7 +13325,7 @@ msgid "S_trength exp.:"
 msgstr "S_tyrkeeksp.:"
 
 #: plug-ins/gimpressionist/orientmap.c:702
-#: plug-ins/gimpressionist/sizemap.c:532
+#: plug-ins/gimpressionist/sizemap.c:536
 msgid "Change the exponent of the strength"
 msgstr "Endra styrkeeksponenten"
 
@@ -13474,61 +13522,17 @@ msgstr "Opnar storleikshandsamaren"
 msgid "Size Map Editor"
 msgstr "Storleikshandsamaren"
 
-#: plug-ins/gimpressionist/sizemap.c:425
-msgid "Smvectors"
-msgstr "Sm-vektorar"
-
-#: plug-ins/gimpressionist/sizemap.c:435
-msgid ""
-"The smvector-field. Left-click to move selected smvector, Right-click to "
-"point it towards mouse, Middle-click to add a new smvector."
-msgstr ""
-"Smvektorfeltet. Venstreklikk for å flytta vald smvektor. Høgreklikk for å "
-"snu smvektoren i retning musemarkøren. Midtklikk for å leggja til ein "
-"smvektor."
-
-#: plug-ins/gimpressionist/sizemap.c:479
-msgid "Select previous smvector"
-msgstr "Vel den førre smvektoren"
-
-#: plug-ins/gimpressionist/sizemap.c:486
-msgid "Select next smvector"
-msgstr "Vel den neste smvektoren"
-
-#: plug-ins/gimpressionist/sizemap.c:493
-msgid "Add new smvector"
-msgstr "Legg til ny smvektor"
-
-#: plug-ins/gimpressionist/sizemap.c:500
-msgid "Delete selected smvector"
-msgstr "Slett den valde smvektoren"
-
-#: plug-ins/gimpressionist/sizemap.c:508
+#: plug-ins/gimpressionist/sizemap.c:512
 msgid "_Size:"
 msgstr "_Storleik:"
 
-#: plug-ins/gimpressionist/sizemap.c:510
-msgid "Change the angle of the selected smvector"
-msgstr "Endra vinkelen for den valde smvektoren"
-
-#: plug-ins/gimpressionist/sizemap.c:518
+#: plug-ins/gimpressionist/sizemap.c:522
 msgid "S_trength:"
 msgstr "S_tyrke:"
 
-#: plug-ins/gimpressionist/sizemap.c:521
-msgid "Change the strength of the selected smvector"
-msgstr "Endra styrken for den valde smvektoren"
-
-#: plug-ins/gimpressionist/sizemap.c:529
+#: plug-ins/gimpressionist/sizemap.c:533
 msgid "St_rength exp.:"
 msgstr "Sty_rkeeksp.:"
-
-#: plug-ins/gimpressionist/sizemap.c:546
-msgid ""
-"Voronoi-mode makes only the smvector closest to the given point have any "
-"influence"
-msgstr ""
-"Voronoi-Modus: Berre smvektoren nærast det gjevne punktet har nokon verknad"
 
 #: plug-ins/gradient-flare/gradient-flare.c:741
 msgid "Addition"
@@ -15230,12 +15234,12 @@ msgstr "_Omgivnadskart"
 msgid "General Options"
 msgstr "Generelle innstillingar"
 
-#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:459
+#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:468
 msgid "Light Settings"
 msgstr "Lyssetjingar"
 
-#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:491
-#: plug-ins/map-object/map-object-ui.c:703
+#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:500
+#: plug-ins/map-object/map-object-ui.c:712
 #: plug-ins/print/print-page-layout.c:385
 msgid "Position"
 msgstr "Posisjon"
@@ -15589,41 +15593,41 @@ msgstr "_Boks"
 msgid "C_ylinder"
 msgstr "S_ylinder"
 
-#: plug-ins/map-object/map-object-ui.c:477
+#: plug-ins/map-object/map-object-ui.c:486
 msgid "Direction Vector"
 msgstr "Retningsvektor"
 
-#: plug-ins/map-object/map-object-ui.c:547
+#: plug-ins/map-object/map-object-ui.c:556
 msgid "Viewpoint Position"
 msgstr "Posisjonen for utsiktspunktet"
 
-#: plug-ins/map-object/map-object-ui.c:569
+#: plug-ins/map-object/map-object-ui.c:578
 msgid "First Axis"
 msgstr "Første akse"
 
-#: plug-ins/map-object/map-object-ui.c:589
+#: plug-ins/map-object/map-object-ui.c:598
 msgid "Second Axis"
 msgstr "Andre akse"
 
-#: plug-ins/map-object/map-object-ui.c:646
+#: plug-ins/map-object/map-object-ui.c:655
 msgid "Intensity Levels"
 msgstr "Intensitetsnivå"
 
-#: plug-ins/map-object/map-object-ui.c:660
+#: plug-ins/map-object/map-object-ui.c:669
 msgid "Reflectivity"
 msgstr "Refleksjonsevne"
 
-#: plug-ins/map-object/map-object-ui.c:763
-#: plug-ins/map-object/map-object-ui.c:863
+#: plug-ins/map-object/map-object-ui.c:772
+#: plug-ins/map-object/map-object-ui.c:872
 #: plug-ins/print/print-page-layout.c:254
 msgid "Size"
 msgstr "Storleik"
 
-#: plug-ins/map-object/map-object-ui.c:776
+#: plug-ins/map-object/map-object-ui.c:785
 msgid "Map Images to Box Faces"
 msgstr "Bilete til bokssidene"
 
-#: plug-ins/map-object/map-object-ui.c:844
+#: plug-ins/map-object/map-object-ui.c:853
 msgid "Images for the Cap Faces"
 msgstr "Bilete for endeflatene"
 
@@ -16945,6 +16949,45 @@ msgstr "Fann ikkje TWAIN-drivaren. Ikkje råd å skanna"
 msgid "Transferring data from scanner/camera"
 msgstr "Overfører data frå skannar/kamera"
 
+#~ msgid "_Kill"
+#~ msgstr "_Fjern"
+
+#~ msgid "Smvectors"
+#~ msgstr "Sm-vektorar"
+
+#~ msgid ""
+#~ "The smvector-field. Left-click to move selected smvector, Right-click to "
+#~ "point it towards mouse, Middle-click to add a new smvector."
+#~ msgstr ""
+#~ "Smvektorfeltet. Venstreklikk for å flytta vald smvektor. Høgreklikk for å "
+#~ "snu smvektoren i retning musemarkøren. Midtklikk for å leggja til ein "
+#~ "smvektor."
+
+#~ msgid "Select previous smvector"
+#~ msgstr "Vel den førre smvektoren"
+
+#~ msgid "Select next smvector"
+#~ msgstr "Vel den neste smvektoren"
+
+#~ msgid "Add new smvector"
+#~ msgstr "Legg til ny smvektor"
+
+#~ msgid "Delete selected smvector"
+#~ msgstr "Slett den valde smvektoren"
+
+#~ msgid "Change the angle of the selected smvector"
+#~ msgstr "Endra vinkelen for den valde smvektoren"
+
+#~ msgid "Change the strength of the selected smvector"
+#~ msgstr "Endra styrken for den valde smvektoren"
+
+#~ msgid ""
+#~ "Voronoi-mode makes only the smvector closest to the given point have any "
+#~ "influence"
+#~ msgstr ""
+#~ "Voronoi-Modus: Berre smvektoren nærast det gjevne punktet har nokon "
+#~ "verknad"
+
 #~ msgid "CSource cannot be run non-interactively."
 #~ msgstr "CSource kan ikkje køyrast interaktivt."
 
@@ -17486,9 +17529,6 @@ msgstr "Overfører data frå skannar/kamera"
 #~ msgstr ""
 #~ "Høgde (i pikslar) for å lasta inn SVG-en. (0 for originalhøgde, ei "
 #~ "negativ høgde for å spesifisere ei maksimal høgde)"
-
-#~ msgid "Render Scalable Vector Graphics"
-#~ msgstr "Lager skalerbar vektorgrafikk (SVG)"
 
 #~ msgid "TGA format does not support multiple layers."
 #~ msgstr "TGA-formatet har ikkje støtte for fleire lag."
