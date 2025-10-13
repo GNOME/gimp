@@ -739,6 +739,7 @@ EXPORTS
 	gimp_param_palette_get_type
 	gimp_param_path_get_type
 	gimp_param_pattern_get_type
+	gimp_param_rasterizable_get_type
 	gimp_param_resource_get_type
 	gimp_param_selection_get_type
 	gimp_param_spec_brush
@@ -762,6 +763,7 @@ EXPORTS
 	gimp_param_spec_palette
 	gimp_param_spec_path
 	gimp_param_spec_pattern
+	gimp_param_spec_rasterizable
 	gimp_param_spec_resource
 	gimp_param_spec_resource_defaults_to_context
 	gimp_param_spec_resource_none_allowed
@@ -1003,6 +1005,10 @@ EXPORTS
 	gimp_progress_uninstall
 	gimp_progress_update
 	gimp_quit
+	gimp_rasterizable_get_type
+	gimp_rasterizable_is_rasterized
+	gimp_rasterizable_rasterize
+	gimp_rasterizable_restore
 	gimp_resource_delete
 	gimp_resource_duplicate
 	gimp_resource_get_by_id

@@ -403,6 +403,16 @@ gimp_param_spec_link_layer ("$name",
                             $flags)
 CODE
     }
+    elsif ($pdbtype eq 'rasterizable') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+	$pspec = <<CODE;
+gimp_param_spec_rasterizable ("$name",
+                              "$nick",
+                              "$blurb",
+                              $none_ok,
+                              $flags)
+CODE
+    }
     elsif ($pdbtype eq 'layer') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;

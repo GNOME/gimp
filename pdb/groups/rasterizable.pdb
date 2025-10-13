@@ -1,0 +1,153 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# Rasterizable PDB API
+# Copyright (C) 2025 Jehan
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+sub rasterizable_rasterize {
+    $blurb = 'Rasterize the object.';
+
+    $help = <<'HELP';
+This procedure makes the item behave like a typical raster layer.
+
+
+Note that the source information (text contents and properties for a
+text layer, source file for a link layer, path and render properties for
+a vector layer, etc.) are not actually discarded, and it is possible to
+retrieve the original behavior with [method@Gimp.Rasterizable.restore].
+HELP
+
+    &jehan_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'item', type => 'rasterizable',
+          desc => 'The rasterizable item' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (! gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (item)))
+    {
+      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (item));
+    }
+  else
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("This item has already been rasterized."));
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub rasterizable_restore {
+    $blurb = 'Revert the rasterization of @item.';
+
+    $help = <<'HELP';
+Restore the information making the item non-destructive, such as text
+contents and properties of a text layer, source file of a link layer,
+path and render properties of a vector layer, etc.
+
+This item won't behave anymore like a raster item. In particular, it
+will prevent direct modification of its pixels and will be rendered when
+its properties are updated.
+HELP
+
+    &jehan_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'item', type => 'rasterizable',
+          desc => 'The rasterizable item' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (item)))
+    {
+      gimp_rasterizable_restore (GIMP_RASTERIZABLE (item));
+    }
+  else
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("This item has not been rasterized."));
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub rasterizable_is_rasterized {
+    $blurb = 'Return whether @item has been rasterized.';
+
+    $help = <<'HELP';
+This procedure returns %TRUE if the specified @item has been previously
+rasterized. In this case, you should treat this @item as the generic
+raster variant.
+
+
+For instance, a [class@Gimp.TextLayer] object implements the
+%GimpRasterizable interface. If a text layer instance were to return
+%TRUE, you should only consider its rendering as returned by
+[method@Gimp.Drawable.get_buffer].
+
+
+On the other hand, if this returned %FALSE, depending on your intents,
+you may prefer to use the text contents and its properties with the
+various procedures provided by the [class@Gimp.TextLayer] class interface.
+HELP
+
+    &jehan_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'item', type => 'rasterizable',
+          desc => 'The rasterizable item' }
+    );
+    @outargs = (
+	{ name => 'is_rasterized', type => 'boolean',
+	  desc => 'TRUE if @item is rasterized' }
+    );
+
+
+    %invoke = (
+        code => <<'CODE'
+{
+  is_rasterized = gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (item));
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimprasterizable.h"
+              "gimppdberror.h"
+              "gimp-intl.h");
+
+@procs = qw(rasterizable_rasterize
+            rasterizable_restore
+            rasterizable_is_rasterized);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Rasterizable procedures';
+$doc_title = 'gimprasterizable';
+$doc_short_desc = 'Functions for querying and manipulating rasterizable items.';
+$doc_long_desc = 'Functions for querying and manipulating rasterizable items.';
+
+1;

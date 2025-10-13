@@ -395,6 +395,18 @@ package Gimp::CodeGen::pdb;
 		     take_value_func => 'g_value_set_object ($value, $var)',
 		     headers         => [ qw("core/gimplinklayer.h") ] },
 
+    rasterizable  => { name            => 'RASTERIZABLE',
+		     gtype           => 'GIMP_TYPE_RASTERIZABLE',
+		     type            => 'GimpRasterizable *',
+		     const_type      => 'GimpRasterizable *',
+		     init_value      => 'NULL',
+		     out_annotate    => '(transfer none)',
+		     get_value_func  => '$var = g_value_get_object ($value)',
+		     dup_value_func  => '$var = GIMP_VALUES_GET_RASTERIZABLE ($value)',
+		     set_value_func  => 'g_value_set_object ($value, $var)',
+		     take_value_func => 'g_value_set_object ($value, $var)',
+		     headers         => [ qw("core/gimprasterizable.h") ] },
+
     group_layer => { name            => 'GROUP_LAYER',
 		     gtype           => 'GIMP_TYPE_GROUP_LAYER',
 		     type            => 'GimpGroupLayer *',

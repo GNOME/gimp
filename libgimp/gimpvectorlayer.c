@@ -29,8 +29,8 @@ struct _GimpVectorLayer
 };
 
 
-
-G_DEFINE_TYPE (GimpVectorLayer, gimp_vector_layer, GIMP_TYPE_LAYER)
+G_DEFINE_TYPE_WITH_CODE (GimpVectorLayer, gimp_vector_layer, GIMP_TYPE_LAYER,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_RASTERIZABLE, NULL))
 
 #define parent_class gimp_vector_layer_parent_class
 

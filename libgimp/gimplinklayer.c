@@ -30,8 +30,8 @@ struct _GimpLinkLayer
 };
 
 
-
-G_DEFINE_TYPE (GimpLinkLayer, gimp_link_layer, GIMP_TYPE_LAYER)
+G_DEFINE_TYPE_WITH_CODE (GimpLinkLayer, gimp_link_layer, GIMP_TYPE_LAYER,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_RASTERIZABLE, NULL))
 
 #define parent_class gimp_link_layer_parent_class
 

@@ -30,8 +30,8 @@ struct _GimpTextLayer
 };
 
 
-
-G_DEFINE_TYPE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER)
+G_DEFINE_TYPE_WITH_CODE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_RASTERIZABLE, NULL))
 
 #define parent_class gimp_text_layer_parent_class
 

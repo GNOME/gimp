@@ -693,6 +693,87 @@ gimp_param_spec_link_layer (const gchar *name,
 
 
 /*
+ * GIMP_TYPE_PARAM_RASTERIZABLE
+ */
+
+static void   gimp_param_rasterizable_class_init (GParamSpecClass *klass);
+static void   gimp_param_rasterizable_init       (GParamSpec      *pspec);
+
+GType
+gimp_param_rasterizable_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_rasterizable_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecItem),
+        0,
+        (GInstanceInitFunc) gimp_param_rasterizable_init
+      };
+
+      type = g_type_register_static (GIMP_TYPE_PARAM_DRAWABLE,
+                                     "GimpParamRasterizable", &info, 0);
+    }
+
+  return type;
+}
+
+static void
+gimp_param_rasterizable_class_init (GParamSpecClass *klass)
+{
+  klass->value_type = GIMP_TYPE_RASTERIZABLE;
+}
+
+static void
+gimp_param_rasterizable_init (GParamSpec *pspec)
+{
+}
+
+/**
+ * gimp_param_spec_rasterizable:
+ * @name:    Canonical name of the property specified.
+ * @nick:    Nick name of the property specified.
+ * @blurb:   Description of the property specified.
+ * @none_ok: Whether no is a valid value.
+ * @flags:   Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecRasterizable specifying a
+ * [type@Rasterizable] property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer floating): The newly created
+ * #GimpParamSpecRasterizable.
+ *
+ * Since: 3.2
+ **/
+GParamSpec *
+gimp_param_spec_rasterizable (const gchar *name,
+                              const gchar *nick,
+                              const gchar *blurb,
+                              gboolean     none_ok,
+                              GParamFlags  flags)
+{
+  GimpParamSpecItem *ispec;
+
+  ispec = g_param_spec_internal (GIMP_TYPE_PARAM_RASTERIZABLE,
+                                 name, nick, blurb, flags);
+
+  g_return_val_if_fail (ispec, NULL);
+
+  ispec->none_ok = none_ok ? TRUE : FALSE;
+
+  return G_PARAM_SPEC (ispec);
+}
+
+
+/*
  * GIMP_TYPE_PARAM_GROUP_LAYER
  */
 

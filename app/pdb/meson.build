@@ -62,6 +62,7 @@ libappinternalprocs_sources = [
   'pdb-cmds.c',
   'plug-in-cmds.c',
   'progress-cmds.c',
+  'rasterizable-cmds.c',
   'resource-cmds.c',
   'selection-cmds.c',
   'text-layer-cmds.c',

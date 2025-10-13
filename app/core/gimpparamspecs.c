@@ -40,6 +40,7 @@
 #include "gimppalette.h"
 #include "gimpparamspecs.h"
 #include "gimppattern.h"
+#include "gimprasterizable.h"
 #include "gimpselection.h"
 
 #include "path/gimppath.h"

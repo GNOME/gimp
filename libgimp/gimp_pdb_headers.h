@@ -78,6 +78,7 @@
 #include <libgimp/gimppatterns_pdb.h>
 #include <libgimp/gimppatternselect_pdb.h>
 #include <libgimp/gimpprogress_pdb.h>
+#include <libgimp/gimprasterizable_pdb.h>
 #include <libgimp/gimpresource_pdb.h>
 #include <libgimp/gimpselection_pdb.h>
 #include <libgimp/gimptextlayer_pdb.h>

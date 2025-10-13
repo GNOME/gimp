@@ -337,6 +337,18 @@ G_BEGIN_DECLS
   g_value_set_object (gimp_value_array_index (args, n), value)
 
 
+/*  rasterizable  */
+
+#define GIMP_VALUES_GET_RASTERIZABLE(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_GET_RASTERIZABLE_ID(args, n) \
+  gimp_item_get_id (g_value_get_object (gimp_value_array_index (args, n)))
+
+#define GIMP_VALUES_SET_RASTERIZABLE(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
+
 /*  group layer */
 
 #define GIMP_VALUES_GET_GROUP_LAYER(args, n) \

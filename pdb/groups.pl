@@ -53,6 +53,7 @@
     pdb
     plug_in
     progress
+    rasterizable
     resource
     selection
     text_layer

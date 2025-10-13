@@ -164,6 +164,24 @@ GParamSpec * gimp_param_spec_link_layer       (const gchar  *name,
                                                gboolean      none_ok,
                                                GParamFlags   flags);
 
+
+/*
+ * GIMP_TYPE_PARAM_RASTERIZABLE
+ */
+
+#define GIMP_VALUE_HOLDS_RASTERIZABLE(value)   (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_RASTERIZABLE))
+#define GIMP_TYPE_PARAM_RASTERIZABLE           (gimp_param_rasterizable_get_type ())
+#define GIMP_IS_PARAM_SPEC_RASTERIZABLE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_RASTERIZABLE))
+
+GType        gimp_param_rasterizable_get_type   (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_rasterizable       (const gchar  *name,
+                                                 const gchar  *nick,
+                                                 const gchar  *blurb,
+                                                 gboolean      none_ok,
+                                                 GParamFlags   flags);
+
+
 /*
  * GIMP_TYPE_PARAM_GROUP_LAYER
  */
