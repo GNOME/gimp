@@ -100,29 +100,6 @@ CODE
     );
 }
 
-sub vector_layer_discard {
-    $blurb = 'Discard the vector layer information.';
-
-    $help = <<'HELP';
-Discards the vector information. This makes the layer behave like a normal layer.
-HELP
-
-    &alxsa_pdb_misc('2025', '3.2');
-
-    @inargs = (
-        { name => 'layer', type => 'vector_layer',
-          desc => 'The vector layer' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
-}
-CODE
-    );
-}
-
 sub vector_layer_get_path {
     $blurb = 'Gets the path from the vector layer if one is associated with it.';
 
@@ -951,7 +928,6 @@ CODE
 
 @procs = qw(vector_layer_new
             vector_layer_refresh
-            vector_layer_discard
             vector_layer_get_enable_fill
             vector_layer_get_enable_stroke
             vector_layer_get_fill_color

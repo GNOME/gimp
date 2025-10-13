@@ -107,50 +107,6 @@ link_layer_new_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-link_layer_discard_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
-{
-  gboolean success = TRUE;
-  GimpLinkLayer *layer;
-
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-link_layer_monitor_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
-{
-  gboolean success = TRUE;
-  GimpLinkLayer *layer;
-
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 link_layer_get_file_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
@@ -284,53 +240,6 @@ register_link_layer_procs (GimpPDB *pdb)
                                                                "The new link layer. The object belongs to libgimp and you should not free it.",
                                                                FALSE,
                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-link-layer-discard
-   */
-  procedure = gimp_procedure_new (link_layer_discard_invoker, FALSE);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-link-layer-discard");
-  gimp_procedure_set_static_help (procedure,
-                                  "Discard the link layer information.",
-                                  "Discards the link information. This makes the layer behave like a normal layer.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Jehan",
-                                         "Jehan",
-                                         "2025");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_link_layer ("layer",
-                                                           "layer",
-                                                           "The link layer",
-                                                           FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-link-layer-monitor
-   */
-  procedure = gimp_procedure_new (link_layer_monitor_invoker, FALSE);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-link-layer-monitor");
-  gimp_procedure_set_static_help (procedure,
-                                  "Retrieve the link layer information.",
-                                  "Retrieve the link information. This makes the layer behave like a link layer after the link information has been discarded.\n"
-                                  "Since the source file will be monitored again, it may change the layer's render.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Jehan",
-                                         "Jehan",
-                                         "2025");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_link_layer ("layer",
-                                                           "layer",
-                                                           "The link layer",
-                                                           FALSE,
-                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

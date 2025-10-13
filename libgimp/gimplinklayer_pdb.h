@@ -34,8 +34,6 @@ G_BEGIN_DECLS
 
 GimpLinkLayer* gimp_link_layer_new           (GimpImage     *image,
                                               GFile         *file);
-gboolean       gimp_link_layer_discard       (GimpLinkLayer *layer);
-gboolean       gimp_link_layer_monitor       (GimpLinkLayer *layer);
 GFile*         gimp_link_layer_get_file      (GimpLinkLayer *layer);
 gboolean       gimp_link_layer_set_file      (GimpLinkLayer *layer,
                                               GFile         *file);

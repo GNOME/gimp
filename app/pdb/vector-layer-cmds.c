@@ -126,28 +126,6 @@ vector_layer_refresh_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vector_layer_discard_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
-{
-  gboolean success = TRUE;
-  GimpVectorLayer *layer;
-
-  layer = g_value_get_object (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 vector_layer_get_enable_fill_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
@@ -1016,29 +994,6 @@ register_vector_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Rerender the vector layer",
                                   "This procedure causes the vector layer to refresh itself after changes.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Alex S.",
-                                         "Alex S.",
-                                         "2025");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vector_layer ("layer",
-                                                             "layer",
-                                                             "The vector layer",
-                                                             FALSE,
-                                                             GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-vector-layer-discard
-   */
-  procedure = gimp_procedure_new (vector_layer_discard_invoker, FALSE);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vector-layer-discard");
-  gimp_procedure_set_static_help (procedure,
-                                  "Discard the vector layer information.",
-                                  "Discards the vector information. This makes the layer behave like a normal layer.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Alex S.",

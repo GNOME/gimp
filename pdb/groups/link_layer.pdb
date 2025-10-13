@@ -90,55 +90,6 @@ CODE
     );
 }
 
-sub link_layer_discard {
-    $blurb = 'Discard the link layer information.';
-
-    $help = <<'HELP';
-Discards the link information. This makes the layer behave like a normal layer.
-HELP
-
-    &jehan_pdb_misc('2025', '3.2');
-
-    @inargs = (
-        { name => 'layer', type => 'link_layer',
-          desc => 'The link layer' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
-}
-CODE
-    );
-}
-
-sub link_layer_monitor {
-    $blurb = 'Retrieve the link layer information.';
-
-    $help = <<'HELP';
-Retrieve the link information. This makes the layer behave like a link
-layer after the link information has been discarded.
-
-Since the source file will be monitored again, it may change the layer's render.
-HELP
-
-    &jehan_pdb_misc('2025', '3.2');
-
-    @inargs = (
-        { name => 'layer', type => 'link_layer',
-          desc => 'The link layer' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
-}
-CODE
-    );
-}
-
 sub link_layer_get_file {
     $blurb = 'Get the monitored file.';
 
@@ -248,8 +199,6 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(link_layer_new
-            link_layer_discard
-            link_layer_monitor
             link_layer_get_file
             link_layer_set_file
             link_layer_get_mime_type);

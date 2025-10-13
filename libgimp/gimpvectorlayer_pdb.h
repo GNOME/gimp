@@ -35,7 +35,6 @@ G_BEGIN_DECLS
 GimpVectorLayer* gimp_vector_layer_new                     (GimpImage        *image,
                                                             GimpPath         *path);
 gboolean         gimp_vector_layer_refresh                 (GimpVectorLayer  *layer);
-gboolean         gimp_vector_layer_discard                 (GimpVectorLayer  *layer);
 gboolean         gimp_vector_layer_get_enable_fill         (GimpVectorLayer  *layer);
 gboolean         gimp_vector_layer_get_enable_stroke       (GimpVectorLayer  *layer);
 GeglColor*       gimp_vector_layer_get_fill_color          (GimpVectorLayer  *layer);

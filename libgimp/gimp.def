@@ -681,12 +681,10 @@ EXPORTS
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity
 	gimp_layer_set_show_mask
-	gimp_link_layer_discard
 	gimp_link_layer_get_by_id
 	gimp_link_layer_get_file
 	gimp_link_layer_get_mime_type
 	gimp_link_layer_get_type
-	gimp_link_layer_monitor
 	gimp_link_layer_new
 	gimp_link_layer_set_file
 	gimp_list_images
@@ -1113,7 +1111,6 @@ EXPORTS
 	gimp_unit_new
 	gimp_update_metadata
 	gimp_user_time
-	gimp_vector_layer_discard
 	gimp_vector_layer_get_by_id
 	gimp_vector_layer_get_enable_fill
 	gimp_vector_layer_get_enable_stroke
