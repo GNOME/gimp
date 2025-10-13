@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-02 00:31+0000\n"
-"PO-Revision-Date: 2025-10-02 11:21+0300\n"
+"POT-Creation-Date: 2025-10-13 15:00+0000\n"
+"PO-Revision-Date: 2025-10-13 18:09+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1218,7 +1218,7 @@ msgstr "Відстань мутацій:"
 msgid "Graph of the Current Settings"
 msgstr "Графік поточних параметрів"
 
-#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:562
+#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:169
 #: plug-ins/filter-browser/filter-browser.c:727 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1215 plug-ins/gfig/gfig-dialog.c:1360
@@ -2013,7 +2013,7 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:608
 #: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:556
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:733
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
@@ -2054,7 +2054,7 @@ msgstr "Параметри"
 #. Preview area, top of column
 #. preview
 #: plug-ins/common/curve-bend.c:1095 plug-ins/gimpressionist/orientmap.c:589
-#: plug-ins/gimpressionist/sizemap.c:458 plug-ins/print/print-page-layout.c:180
+#: plug-ins/gimpressionist/sizemap.c:462 plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Перегляд"
 
@@ -2707,11 +2707,12 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-tga.c:1217
-#: plug-ins/common/file-tim.c:622 plug-ins/common/file-xbm.c:1026
-#: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
-#: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
-#: plug-ins/file-fli/fli-gimp.c:766 plug-ins/file-icns/file-icns-export.c:824
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:771
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
+#: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
+#: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
+#: plug-ins/file-fits/fits.c:646 plug-ins/file-fli/fli-gimp.c:766
+#: plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2284
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
@@ -2813,8 +2814,6 @@ msgid "Loads files compressed with gzip"
 msgstr "Завантажує файли, які стиснуто за допомогою gzip"
 
 #: plug-ins/common/file-compressor.c:230
-#| msgid ""
-#| "This plug-in loads files in the various Netpbm portable file formats."
 msgid "This procedure loads files in the gzip compressed format."
 msgstr "Ця процедура завантажує файли у стисненому форматі gzip."
 
@@ -2823,7 +2822,6 @@ msgid "Exports files compressed with gzip"
 msgstr "Експортує файли, які стиснуто за допомогою gzip"
 
 #: plug-ins/common/file-compressor.c:235
-#| msgid "Exports files in the PNM file format"
 msgid "This procedure exports files in the gzip compressed format."
 msgstr "Ця процедура експортує файли у стисненому форматі gzip."
 
@@ -2836,8 +2834,6 @@ msgid "Loads files compressed with bzip2"
 msgstr "Завантажує файли, які стиснуто за допомогою bzip2"
 
 #: plug-ins/common/file-compressor.c:249
-#| msgid ""
-#| "This plug-in loads files in the various Netpbm portable file formats."
 msgid "This procedure loads files in the bzip2 compressed format."
 msgstr "Ця процедура завантажує файли у стисненому форматі bzip2."
 
@@ -2846,8 +2842,6 @@ msgid "Exports files compressed with bzip2"
 msgstr "Експортує файли, які стиснуто за допомогою bzip2"
 
 #: plug-ins/common/file-compressor.c:254
-#| msgid ""
-#| "This plug-in loads files in the various Netpbm portable file formats."
 msgid "This procedure exports files in the bzip2 compressed format."
 msgstr "Ця процедура експортує файли у стисненому форматі bzip2."
 
@@ -2860,18 +2854,14 @@ msgid "Loads files compressed with xz"
 msgstr "Завантажує файли, які стиснуто за допомогою xz"
 
 #: plug-ins/common/file-compressor.c:268
-#| msgid ""
-#| "This plug-in loads files in the various Netpbm portable file formats."
 msgid "This procedure loads files in the xz compressed format."
 msgstr "Ця процедура завантажує файли у стисненому форматі xz."
 
 #: plug-ins/common/file-compressor.c:272
-#| msgid "Error reading compressed data. "
 msgid "Exports files compressed with xz"
 msgstr "Експортує файли, які стиснуто за допомогою xz"
 
 #: plug-ins/common/file-compressor.c:273
-#| msgid "Exports files in the PNM file format"
 msgid "This procedure exports files in the xz compressed format."
 msgstr "Ця процедура експортує файли у стисненому форматі xz."
 
@@ -2884,8 +2874,6 @@ msgid "Loads files compressed with zip"
 msgstr "Завантажує файли, які стиснуто за допомогою zip"
 
 #: plug-ins/common/file-compressor.c:287
-#| msgid ""
-#| "This plug-in loads files in the various Netpbm portable file formats."
 msgid "This procedure loads files in the zip compressed format."
 msgstr "Ця процедура завантажує файли у стисненому форматі zip."
 
@@ -4729,6 +4717,7 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Нижня межа знаходиться за припустимими межами (має бути < %d): %d"
 
 #: plug-ins/common/file-pcx.c:1266 plug-ins/common/file-qoi.c:369
+#: plug-ins/common/file-svg.c:780 plug-ins/common/file-svg.c:796
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
@@ -5027,7 +5016,7 @@ msgstr "Зображення PNG"
 msgid "APNG image"
 msgstr "Зображення APNG"
 
-#: plug-ins/common/file-png.c:331
+#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:335
 msgid "PNG"
 msgstr "PNG"
 
@@ -5600,7 +5589,7 @@ msgstr ""
 "Якщо увімкнено, при експортуванні буде збережено пропорції. Якщо не буде "
 "увімкнено, буде використано значення ширини і висоти."
 
-#: plug-ins/common/file-ps.c:565 plug-ins/map-object/map-object-ui.c:723
+#: plug-ins/common/file-ps.c:565 plug-ins/map-object/map-object-ui.c:732
 msgid "Rotation"
 msgstr "Обертання"
 
@@ -6454,51 +6443,89 @@ msgstr "Неочікуваний кінець файлу на зчитуванн
 msgid "Write error occurred"
 msgstr "Помилка при записі"
 
-#: plug-ins/common/file-svg.c:173
+#: plug-ins/common/file-svg.c:260
 msgid "SVG image"
 msgstr "Зображення SVG"
 
-#: plug-ins/common/file-svg.c:186
+#: plug-ins/common/file-svg.c:273
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:195
+#: plug-ins/common/file-svg.c:282
 msgid "_Paths"
 msgstr "К_онтури"
 
-#: plug-ins/common/file-svg.c:196
+#: plug-ins/common/file-svg.c:283
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
 "Чи слід імпортувати контури так, щоб ними можна було скористатися у "
 "інструменті контурів, і як це робити"
 
-#: plug-ins/common/file-svg.c:197
+#: plug-ins/common/file-svg.c:284
 msgid "Don't import paths"
 msgstr "Не імпортувати контури"
 
-#: plug-ins/common/file-svg.c:198
+#: plug-ins/common/file-svg.c:285
 msgid "Import paths individually"
 msgstr "Імпортувати контури окремо"
 
-#: plug-ins/common/file-svg.c:199
+#: plug-ins/common/file-svg.c:286
 msgid "Merge imported paths"
 msgstr "Об'єднати імпортовані контури"
+
+#: plug-ins/common/file-svg.c:298
+#| msgid "Render Scalable Vector Graphics"
+msgid "Scalable Vector Graphic"
+msgstr "Масштабована векторна графіка"
+
+#: plug-ins/common/file-svg.c:301
+#| msgid "exports files in GIF file format"
+msgid "Export vector layers in SVG file format"
+msgstr "Експортувати векторні шари у форматі файлів SVG"
+
+#: plug-ins/common/file-svg.c:302
+msgid "Export vector layers in SVG file format (Scalable Vector Graphic)"
+msgstr ""
+"Експортувати векторні шари у форматі файлів SVG (Scalable Vector Graphic)"
+
+#: plug-ins/common/file-svg.c:327
+#| msgid "_Title:"
+msgid "_Title"
+msgstr "_Заголовок"
+
+#: plug-ins/common/file-svg.c:328
+msgid "Optional <title> for SVG"
+msgstr "Необов'язковий <title> для SVG"
+
+#: plug-ins/common/file-svg.c:333
+msgid "Em_bed raster layers as"
+msgstr "В_будувати растрові шари як"
+
+#: plug-ins/common/file-svg.c:336 plug-ins/file-jpeg/jpeg.c:195
+#: plug-ins/file-tiff/file-tiff.c:251
+msgid "JPEG"
+msgstr "JPEG"
+
+#: plug-ins/common/file-svg.c:337
+#| msgid "Try to export as interlaced"
+msgid "Do not export raster layers"
+msgstr "Не експортувати растрові шари"
 
 #. We need to ask explicitly before using the "unlimited" size
 #. * option (XML_PARSE_HUGE in libxml) because it is considered
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:245
+#: plug-ins/common/file-svg.c:384
 msgid "Disable safety size limits?"
 msgstr "Вимкнути безпекові обмеження на розмір?"
 
-#: plug-ins/common/file-svg.c:250
+#: plug-ins/common/file-svg.c:389
 msgid "_No"
 msgstr "_Ні"
 
-#: plug-ins/common/file-svg.c:251
+#: plug-ins/common/file-svg.c:390
 msgid "_Yes"
 msgstr "_Так"
 
@@ -6512,7 +6539,7 @@ msgstr "_Так"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:275
+#: plug-ins/common/file-svg.c:414
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6523,28 +6550,40 @@ msgstr ""
 "зловмисниками файли SVG можуть скористатися зняттям обмежень для споживання "
 "надто великого об'єму пам'яті."
 
-#: plug-ins/common/file-svg.c:287
+#: plug-ins/common/file-svg.c:426
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr ""
 "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
-#: plug-ins/common/file-svg.c:294
+#: plug-ins/common/file-svg.c:433
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Повторити без обмежень, які накладаються на обробку великих масивів даних?"
 
-#: plug-ins/common/file-svg.c:558 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/common/file-svg.c:735 plug-ins/file-exr/file-exr.c:381
 #: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "Невідома причина"
 
-#: plug-ins/common/file-svg.c:564
+#: plug-ins/common/file-svg.c:741
 msgid "Rendering SVG"
 msgstr "Візуалізація SVG"
 
-#: plug-ins/common/file-svg.c:574
+#: plug-ins/common/file-svg.c:751
 msgid "Rendered SVG"
 msgstr "Створений SVG"
+
+#: plug-ins/common/file-svg.c:1102
+msgid ""
+"The SVG format only requires viewers to display image links for SVG, PNG, "
+"and JPEG images.\n"
+"Your image links external image files in other formats which may not show up "
+"in all viewers."
+msgstr ""
+"Формат SVG потребує засобів перегляду для показу посилань на зображення для"
+" зображень SVG, PNG і JPEG.\n"
+"Ваше зображення посилається на файли зовнішніх зображень в інших форматах,"
+" які може бути показано не в усіх програмах для перегляду."
 
 #: plug-ins/common/file-tga.c:262 plug-ins/common/file-tga.c:288
 msgid "TarGA image"
@@ -7917,15 +7956,15 @@ msgstr "_Удосконалення країв"
 msgid "NL Filter"
 msgstr "Нелінійний фільтр"
 
-#: plug-ins/common/plugin-browser.c:169
+#: plug-ins/common/plugin-browser.c:168
 msgid "_Plug-In Browser"
 msgstr "Огляд _додатків"
 
-#: plug-ins/common/plugin-browser.c:174
+#: plug-ins/common/plugin-browser.c:173
 msgid "Display information about plug-ins"
 msgstr "Показати інформацію про розширення"
 
-#: plug-ins/common/plugin-browser.c:175
+#: plug-ins/common/plugin-browser.c:174
 msgid ""
 "Allows one to browse the plug-in menus system. You can search for plug-in "
 "names, sort by name or menu location and you can view a tree representation "
@@ -7937,12 +7976,12 @@ msgstr ""
 "переглядати ієрархічне представлення меню додатків. Також стане у пригоді "
 "для пошуку місця, куди встановлені додатки додають себе у меню."
 
-#: plug-ins/common/plugin-browser.c:373
+#: plug-ins/common/plugin-browser.c:372
 #: plug-ins/filter-browser/filter-browser.c:608
 msgid "Searching by name"
 msgstr "Триває пошук за назвою"
 
-#: plug-ins/common/plugin-browser.c:389
+#: plug-ins/common/plugin-browser.c:388
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
@@ -7950,12 +7989,12 @@ msgstr[0] "%d розширення"
 msgstr[1] "%d розширення"
 msgstr[2] "%d розширень"
 
-#: plug-ins/common/plugin-browser.c:398
+#: plug-ins/common/plugin-browser.c:397
 #: plug-ins/filter-browser/filter-browser.c:675
 msgid "No matches for your query"
 msgstr "Відповідностей не знайдено"
 
-#: plug-ins/common/plugin-browser.c:401
+#: plug-ins/common/plugin-browser.c:400
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
@@ -7963,16 +8002,16 @@ msgstr[0] "%d модуль відповідає запиту"
 msgstr[1] "%d модулі відповідає запиту"
 msgstr[2] "%d модулів відповідає запиту"
 
-#: plug-ins/common/plugin-browser.c:532
+#: plug-ins/common/plugin-browser.c:531
 #: plug-ins/filter-browser/filter-browser.c:677
 msgid "No matches"
 msgstr "Немає відповідностей"
 
-#: plug-ins/common/plugin-browser.c:558
+#: plug-ins/common/plugin-browser.c:556
 msgid "Plug-in Browser"
 msgstr "Огляд доповнень"
 
-#: plug-ins/common/plugin-browser.c:603 plug-ins/common/unit-editor.c:114
+#: plug-ins/common/plugin-browser.c:601 plug-ins/common/unit-editor.c:114
 #: plug-ins/metadata/metadata-editor.c:609
 #: plug-ins/metadata/metadata-editor.c:645
 #: plug-ins/metadata/metadata-editor.c:652
@@ -7980,23 +8019,23 @@ msgstr "Огляд доповнень"
 msgid "Name"
 msgstr "Назва"
 
-#: plug-ins/common/plugin-browser.c:611 plug-ins/common/plugin-browser.c:674
+#: plug-ins/common/plugin-browser.c:609 plug-ins/common/plugin-browser.c:670
 msgid "Menu Path"
 msgstr "Шлях у меню"
 
-#: plug-ins/common/plugin-browser.c:619 plug-ins/common/plugin-browser.c:683
+#: plug-ins/common/plugin-browser.c:617 plug-ins/common/plugin-browser.c:679
 msgid "Image Types"
 msgstr "Типи зображень"
 
-#: plug-ins/common/plugin-browser.c:629 plug-ins/common/plugin-browser.c:692
+#: plug-ins/common/plugin-browser.c:627 plug-ins/common/plugin-browser.c:688
 msgid "Installation Date"
 msgstr "Дата встановлення"
 
-#: plug-ins/common/plugin-browser.c:653
+#: plug-ins/common/plugin-browser.c:649
 msgid "List View"
 msgstr "У вигляді списку"
 
-#: plug-ins/common/plugin-browser.c:715
+#: plug-ins/common/plugin-browser.c:710
 msgid "Tree View"
 msgstr "У вигляді дерева"
 
@@ -8530,7 +8569,8 @@ msgstr "_Дублювати"
 #: plug-ins/common/sphere-designer.c:2774
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
-#: plug-ins/gimpressionist/presets.c:1071
+#: plug-ins/gimpressionist/orientmap.c:623
+#: plug-ins/gimpressionist/presets.c:1071 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/gradient-flare/gradient-flare.c:3054
 #: plug-ins/gradient-flare/gradient-flare.c:3337
 msgid "_Delete"
@@ -10493,10 +10533,6 @@ msgstr "Експортує файли у форматі JPEG"
 #: plug-ins/file-jpeg/jpeg.c:186
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "Експортує файли у широкопідтримуваному форматі JPEG із втратою якості"
-
-#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:251
-msgid "JPEG"
-msgstr "JPEG"
 
 #: plug-ins/file-jpeg/jpeg.c:216
 msgid "S_moothing"
@@ -13314,10 +13350,12 @@ msgid "Orientation Map Editor"
 msgstr "Редактор мап орієнтації"
 
 #: plug-ins/gimpressionist/orientmap.c:552
+#: plug-ins/gimpressionist/sizemap.c:425
 msgid "Vectors"
 msgstr "Вектори"
 
 #: plug-ins/gimpressionist/orientmap.c:563
+#: plug-ins/gimpressionist/sizemap.c:436
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -13326,33 +13364,32 @@ msgstr ""
 "правою - вказує вектор, клацання середньою - додає новий вектор."
 
 #: plug-ins/gimpressionist/orientmap.c:587
-#: plug-ins/gimpressionist/sizemap.c:456
+#: plug-ins/gimpressionist/sizemap.c:460
 msgid "Adjust the preview's brightness"
 msgstr "Налаштовування яскравості перегляду"
 
 #: plug-ins/gimpressionist/orientmap.c:609
+#: plug-ins/gimpressionist/sizemap.c:483
 msgid "Select previous vector"
 msgstr "Вибрати попередній вектор"
 
 #: plug-ins/gimpressionist/orientmap.c:615
+#: plug-ins/gimpressionist/sizemap.c:490
 msgid "Select next vector"
 msgstr "Вибрати наступний вектор"
 
 #: plug-ins/gimpressionist/orientmap.c:617
-#: plug-ins/gimpressionist/sizemap.c:488
+#: plug-ins/gimpressionist/sizemap.c:492
 msgid "A_dd"
 msgstr "Д_одати"
 
 #: plug-ins/gimpressionist/orientmap.c:621
+#: plug-ins/gimpressionist/sizemap.c:497
 msgid "Add new vector"
 msgstr "Додати новий вектор"
 
-#: plug-ins/gimpressionist/orientmap.c:623
-#: plug-ins/gimpressionist/sizemap.c:495
-msgid "_Kill"
-msgstr "В_идалити"
-
 #: plug-ins/gimpressionist/orientmap.c:627
+#: plug-ins/gimpressionist/sizemap.c:504
 msgid "Delete selected vector"
 msgstr "Видалити вибраний вектор"
 
@@ -13373,11 +13410,12 @@ msgid "Vortex_3"
 msgstr "Вихор_3"
 
 #: plug-ins/gimpressionist/orientmap.c:651
-#: plug-ins/gimpressionist/sizemap.c:539
+#: plug-ins/gimpressionist/sizemap.c:543
 msgid "_Voronoi"
 msgstr "_Вороний"
 
 #: plug-ins/gimpressionist/orientmap.c:659
+#: plug-ins/gimpressionist/sizemap.c:550
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -13389,6 +13427,7 @@ msgid "A_ngle:"
 msgstr "_Кут:"
 
 #: plug-ins/gimpressionist/orientmap.c:670
+#: plug-ins/gimpressionist/sizemap.c:514
 msgid "Change the angle of the selected vector"
 msgstr "Зміна кута вибраного вектора"
 
@@ -13405,6 +13444,7 @@ msgid "_Strength:"
 msgstr "_Сила:"
 
 #: plug-ins/gimpressionist/orientmap.c:691
+#: plug-ins/gimpressionist/sizemap.c:525
 msgid "Change the strength of the selected vector"
 msgstr "Зміна довжини вибраного вектора"
 
@@ -13413,7 +13453,7 @@ msgid "S_trength exp.:"
 msgstr "_Експонента сили:"
 
 #: plug-ins/gimpressionist/orientmap.c:702
-#: plug-ins/gimpressionist/sizemap.c:532
+#: plug-ins/gimpressionist/sizemap.c:536
 msgid "Change the exponent of the strength"
 msgstr "Зміна експоненти сили"
 
@@ -13610,61 +13650,17 @@ msgstr "Відкрити редактор мапи розмірів"
 msgid "Size Map Editor"
 msgstr "Редактор мапи розмірів"
 
-#: plug-ins/gimpressionist/sizemap.c:425
-msgid "Smvectors"
-msgstr "Sm-вектори"
-
-#: plug-ins/gimpressionist/sizemap.c:435
-msgid ""
-"The smvector-field. Left-click to move selected smvector, Right-click to "
-"point it towards mouse, Middle-click to add a new smvector."
-msgstr ""
-"Поле sm-вектор. Ліва кнопка миші - переміщення вибраного sm-вектора, права "
-"кнопка - вказування sm-вектора мишею, середня кнопка - додавання нового sm-"
-"вектора."
-
-#: plug-ins/gimpressionist/sizemap.c:479
-msgid "Select previous smvector"
-msgstr "Вибрати попередній sm-вектор"
-
-#: plug-ins/gimpressionist/sizemap.c:486
-msgid "Select next smvector"
-msgstr "Вибрати наступний sm-вектор"
-
-#: plug-ins/gimpressionist/sizemap.c:493
-msgid "Add new smvector"
-msgstr "Додати новий sm-вектор"
-
-#: plug-ins/gimpressionist/sizemap.c:500
-msgid "Delete selected smvector"
-msgstr "Видалити вибраний sm-вектор"
-
-#: plug-ins/gimpressionist/sizemap.c:508
+#: plug-ins/gimpressionist/sizemap.c:512
 msgid "_Size:"
 msgstr "_Розмір:"
 
-#: plug-ins/gimpressionist/sizemap.c:510
-msgid "Change the angle of the selected smvector"
-msgstr "Змінити кут вибраного sm-вектора"
-
-#: plug-ins/gimpressionist/sizemap.c:518
+#: plug-ins/gimpressionist/sizemap.c:522
 msgid "S_trength:"
 msgstr "_Сила:"
 
-#: plug-ins/gimpressionist/sizemap.c:521
-msgid "Change the strength of the selected smvector"
-msgstr "Змінити довжину вибраного sm-вектора"
-
-#: plug-ins/gimpressionist/sizemap.c:529
+#: plug-ins/gimpressionist/sizemap.c:533
 msgid "St_rength exp.:"
 msgstr "_Експонента сили:"
-
-#: plug-ins/gimpressionist/sizemap.c:546
-msgid ""
-"Voronoi-mode makes only the smvector closest to the given point have any "
-"influence"
-msgstr ""
-"В режимі \"Вороний\" лише найближчий до заданої точки sm-вектор має вплив"
 
 #: plug-ins/gradient-flare/gradient-flare.c:741
 msgid "Addition"
@@ -15367,12 +15363,12 @@ msgstr "Мапа с_ередовища"
 msgid "General Options"
 msgstr "Загальні параметри"
 
-#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:459
+#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:468
 msgid "Light Settings"
 msgstr "Параметри світла"
 
-#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:491
-#: plug-ins/map-object/map-object-ui.c:703
+#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:500
+#: plug-ins/map-object/map-object-ui.c:712
 #: plug-ins/print/print-page-layout.c:385
 msgid "Position"
 msgstr "Позиція"
@@ -15727,41 +15723,41 @@ msgstr "_Паралелепіпед"
 msgid "C_ylinder"
 msgstr "_Циліндр"
 
-#: plug-ins/map-object/map-object-ui.c:477
+#: plug-ins/map-object/map-object-ui.c:486
 msgid "Direction Vector"
 msgstr "Вектор напрямку"
 
-#: plug-ins/map-object/map-object-ui.c:547
+#: plug-ins/map-object/map-object-ui.c:556
 msgid "Viewpoint Position"
 msgstr "Позиція точки перегляду"
 
-#: plug-ins/map-object/map-object-ui.c:569
+#: plug-ins/map-object/map-object-ui.c:578
 msgid "First Axis"
 msgstr "Перша вісь"
 
-#: plug-ins/map-object/map-object-ui.c:589
+#: plug-ins/map-object/map-object-ui.c:598
 msgid "Second Axis"
 msgstr "Друга вісь"
 
-#: plug-ins/map-object/map-object-ui.c:646
+#: plug-ins/map-object/map-object-ui.c:655
 msgid "Intensity Levels"
 msgstr "Рівні інтенсивності"
 
-#: plug-ins/map-object/map-object-ui.c:660
+#: plug-ins/map-object/map-object-ui.c:669
 msgid "Reflectivity"
 msgstr "Коефіцієнт відбиття"
 
-#: plug-ins/map-object/map-object-ui.c:763
-#: plug-ins/map-object/map-object-ui.c:863
+#: plug-ins/map-object/map-object-ui.c:772
+#: plug-ins/map-object/map-object-ui.c:872
 #: plug-ins/print/print-page-layout.c:254
 msgid "Size"
 msgstr "Розмір"
 
-#: plug-ins/map-object/map-object-ui.c:776
+#: plug-ins/map-object/map-object-ui.c:785
 msgid "Map Images to Box Faces"
 msgstr "Спроектувати на площину паралелепіпеда"
 
-#: plug-ins/map-object/map-object-ui.c:844
+#: plug-ins/map-object/map-object-ui.c:853
 msgid "Images for the Cap Faces"
 msgstr "Зображення для основного циліндра"
 
@@ -17084,6 +17080,44 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
 
+#~ msgid "_Kill"
+#~ msgstr "В_идалити"
+
+#~ msgid "Smvectors"
+#~ msgstr "Sm-вектори"
+
+#~ msgid ""
+#~ "The smvector-field. Left-click to move selected smvector, Right-click to "
+#~ "point it towards mouse, Middle-click to add a new smvector."
+#~ msgstr ""
+#~ "Поле sm-вектор. Ліва кнопка миші - переміщення вибраного sm-вектора, "
+#~ "права кнопка - вказування sm-вектора мишею, середня кнопка - додавання "
+#~ "нового sm-вектора."
+
+#~ msgid "Select previous smvector"
+#~ msgstr "Вибрати попередній sm-вектор"
+
+#~ msgid "Select next smvector"
+#~ msgstr "Вибрати наступний sm-вектор"
+
+#~ msgid "Add new smvector"
+#~ msgstr "Додати новий sm-вектор"
+
+#~ msgid "Delete selected smvector"
+#~ msgstr "Видалити вибраний sm-вектор"
+
+#~ msgid "Change the angle of the selected smvector"
+#~ msgstr "Змінити кут вибраного sm-вектора"
+
+#~ msgid "Change the strength of the selected smvector"
+#~ msgstr "Змінити довжину вибраного sm-вектора"
+
+#~ msgid ""
+#~ "Voronoi-mode makes only the smvector closest to the given point have any "
+#~ "influence"
+#~ msgstr ""
+#~ "В режимі \"Вороний\" лише найближчий до заданої точки sm-вектор має вплив"
+
 #~ msgid "CSource cannot be run non-interactively."
 #~ msgstr "CSource не можна запускати у неінтерактивному режимі."
 
@@ -17675,9 +17709,6 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgstr ""
 #~ "Висота (у пікселях) для завантаження файла SVG. (0 — початкова висота, "
 #~ "від'ємне значення — визначення максимальної висоти)"
-
-#~ msgid "Render Scalable Vector Graphics"
-#~ msgstr "Створити Scalable Vector Graphics"
 
 #~ msgid "Resolution to use for rendering the WMF"
 #~ msgstr "Роздільність, яку слід використати для обробки WMF"
