@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-29 14:45+0000\n"
-"PO-Revision-Date: 2025-09-29 17:02+0200\n"
+"POT-Creation-Date: 2025-10-02 11:34+0000\n"
+"PO-Revision-Date: 2025-10-04 07:23+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -160,15 +160,15 @@ msgstr ""
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "თუ გნებავთ გასვლა დაუყოვნებლივ, გამოიძახეთ GIMP პარამეტრით --quit."
 
-#: app/gimp-update.c:429
+#: app/gimp-update.c:432
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "ალბათ არ გაქვთ GIO-ის უკანაბოლოები და გჭირდებათ, დააყენოთ GVFS?"
 
-#: app/gimp-update.c:434
+#: app/gimp-update.c:437
 msgid "Perhaps you are missing GIO backends."
 msgstr "ალბათ არ გაქვთ GIO-ის უკანაბოლოები."
 
-#: app/gimp-update.c:466
+#: app/gimp-update.c:474
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -2540,8 +2540,8 @@ msgid "Enter a description for the marker"
 msgstr "შეიყვანეთ სანიშნის აღწერა"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
-#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:247
-#: app/dialogs/file-open-dialog.c:288
+#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:248
+#: app/dialogs/file-open-dialog.c:293
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1248 app/display/gimpdisplayshell-dnd.c:646
@@ -15562,9 +15562,14 @@ msgid "Search extensions matching these keywords"
 msgstr "გაფართოებების საკვანძო სიტყვებით ძებნა"
 
 #: app/dialogs/file-open-dialog.c:140 app/dialogs/file-open-dialog.c:165
-#: app/dialogs/file-open-dialog.c:279
+#: app/dialogs/file-open-dialog.c:284
 msgid "Open layers"
 msgstr "ფენების გახსნა"
+
+#: app/dialogs/file-open-dialog.c:252
+#, c-format
+msgid "Opening '%s' failed."
+msgstr "'%s'-ის გახსნის შეცდომა."
 
 #: app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
@@ -21227,7 +21232,7 @@ msgstr "გამოსახულების ავტოამოჭრა"
 msgid "Autocrop layer"
 msgstr "ფენის ავტოამოჭრა"
 
-#: app/pdb/image-cmds.c:2556
+#: app/pdb/image-cmds.c:2564
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -22946,7 +22951,7 @@ msgstr "წკაპი ვერტიკალურსა და ჰორი
 
 #: app/tools/gimpfiltertool.c:771
 msgid "Click to move the split guide"
-msgstr ""
+msgstr "დააწკაპუნეთ გაყოფის გიდის გადასაადგილებლად"
 
 #: app/tools/gimpfiltertool.c:773
 #, c-format
@@ -25827,7 +25832,7 @@ msgstr "HTML ნოტაცია (sRGB):"
 
 #: app/widgets/gimpcolormapselection.c:523
 msgid "Only indexed images have a colormap."
-msgstr ""
+msgstr "ფერების რუკა, მხოლოდ, დაინდექსებულ გამოსახულებებს გააჩნიათ."
 
 #: app/widgets/gimpcompressioncombobox.c:102
 msgctxt "compression"
@@ -25859,7 +25864,7 @@ msgstr "მოზრდილი მინიატურები"
 
 #: app/widgets/gimpcontrollereditor.c:202
 msgid "_Dump events from this controller"
-msgstr ""
+msgstr "მოვლენების _დამპი ამ კონტროლერიდან"
 
 #: app/widgets/gimpcontrollereditor.c:206
 msgid "_Enable this controller"
@@ -26024,6 +26029,9 @@ msgid ""
 "\n"
 "You already have a keyboard controller in your list of active controllers."
 msgstr ""
+"შეიძლება არსებობდეს, მხოლოდ, ერთი აქტიური კლავიატურის კონტროლერი.\n"
+"\n"
+"თქვენ უკვე გაქვთ კლავიატურის კონტროლერი აქტიური კონტროლერების სიაში."
 
 #: app/widgets/gimpcontrollerlist.c:516
 msgid ""
@@ -26031,6 +26039,9 @@ msgid ""
 "\n"
 "You already have a wheel controller in your list of active controllers."
 msgstr ""
+"შეიძლება არსებობდეს, მხოლოდ, ერთი აქტიური ბორბლის კონტროლერი.\n"
+"\n"
+"თქვენ უკვე გაქვთ ბორბლის კონტროლერი თქვენს აქტიური კონტროლერების სიაში."
 
 #: app/widgets/gimpcontrollerlist.c:550
 msgid "Remove Controller?"
@@ -26132,6 +26143,8 @@ msgstr "თქვენი ვერსია მხარდაუჭერე�
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
+"იმისათვის, რომ დაგვეხმაროთ, გავაუმჯობესოთ GIMP, შეგიძლიათ მოგვწეროთ ამ "
+"შეცდომის შესახებ ამ მარტივი ნაბიჯებით:"
 
 #: app/widgets/gimpcriticaldialog.c:255 app/widgets/gimpcriticaldialog.c:657
 msgid "Copy the bug information to the clipboard by clicking: "
@@ -26221,7 +26234,7 @@ msgstr ""
 
 #: app/widgets/gimpcriticaldialog.c:449
 msgid "There was not enough memory to complete the operation."
-msgstr ""
+msgstr "ოპერაციის დასასრულებლად მეხსიერება საკმარისი არაა."
 
 #: app/widgets/gimpcriticaldialog.c:452
 msgid "A sharing violation occurred."
