@@ -1,4 +1,4 @@
-name: gimp-experimental
+name: gimp
 adopt-info: gimp
 grade: devel
 base: core24
