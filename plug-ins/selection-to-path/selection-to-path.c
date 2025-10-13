@@ -557,8 +557,8 @@ do_points (spline_list_array_type  in_splines,
 
           if (SPLINE_DEGREE (seg) == LINEAR)
             gimp_path_bezier_stroke_lineto (path, stroke,
-                                               START_POINT (seg).x,
-                                               START_POINT (seg).y);
+                                            START_POINT (seg).x,
+                                            START_POINT (seg).y);
           else if (SPLINE_DEGREE (seg) == CUBIC)
             gimp_path_bezier_stroke_cubicto (path, stroke,
                                              CONTROL2 (seg).x,
