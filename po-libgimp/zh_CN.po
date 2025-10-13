@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-08 23:20+0000\n"
-"PO-Revision-Date: 2025-10-09 07:33+0800\n"
+"POT-Creation-Date: 2025-10-10 20:59+0000\n"
+"PO-Revision-Date: 2025-10-11 09:31+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1560,12 +1560,12 @@ msgstr "点"
 #: libgimpbase/gimpbaseenums.c:1667
 msgctxt "stroke-method"
 msgid "Stroke line"
-msgstr "笔触线"
+msgstr "描边线条"
 
 #: libgimpbase/gimpbaseenums.c:1668
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
-msgstr "使用绘画工具勾画"
+msgstr "使用绘画工具描边"
 
 #: libgimpbase/gimpbaseenums.c:1701
 msgctxt "text-direction"
