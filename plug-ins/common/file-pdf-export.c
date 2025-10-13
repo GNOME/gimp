@@ -1826,9 +1826,8 @@ drawPath (GimpLayer *layer,
 
   vector_layer = GIMP_VECTOR_LAYER (layer);
   path         = gimp_vector_layer_get_path (vector_layer);
-
-  set_fill   = gimp_vector_layer_get_enable_fill (vector_layer);
-  set_stroke = gimp_vector_layer_get_enable_stroke (vector_layer);
+  set_fill     = gimp_vector_layer_get_enable_fill (vector_layer);
+  set_stroke   = gimp_vector_layer_get_enable_stroke (vector_layer);
 
   cairo_save (cr);
 
@@ -1853,24 +1852,23 @@ drawPath (GimpLayer *layer,
 
           for (gint i = 2; i < (num_indexes + (closed ? 2 : - 1)); i += 3)
             {
-              gdouble vals[6] = { 0 };
+              gdouble delta[6] = { 0 };
 
               for (gint j = 0; j < 3; j++)
                 {
                   gint index = ((i + j) % num_indexes) * 2;
 
-                  vals[(j * 2)]     = control_points[index];
-                  vals[(j * 2) + 1] = control_points[index + 1];
+                  delta[(j * 2)]     = control_points[index];
+                  delta[(j * 2) + 1] = control_points[index + 1];
                 }
 
-              cairo_curve_to (cr, vals[0], vals[1], vals[2], vals[3], vals[4],
-                              vals[5]);
+              cairo_curve_to (cr, delta[0], delta[1], delta[2], delta[3],
+                              delta[4], delta[5]);
             }
 
           if (closed && num_points > 3)
             cairo_close_path (cr);
         }
-      break;
     }
 
   /* Add fill/stroke to Cairo path */
