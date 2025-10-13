@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-09 22:42+0000\n"
-"PO-Revision-Date: 2025-10-10 07:43+0800\n"
+"POT-Creation-Date: 2025-10-12 20:58+0000\n"
+"PO-Revision-Date: 2025-10-13 10:08+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -325,11 +325,11 @@ msgstr "显示带有实验性特性的首选项页面"
 msgid "Show an image submenu with debug actions"
 msgstr "显示带有调试动作的图像子菜单"
 
-#: app/main.c:757
+#: app/main.c:763
 msgid "[FILE|URI...]"
 msgstr "[文件|URI…]"
 
-#: app/main.c:787
+#: app/main.c:793
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -337,20 +337,20 @@ msgstr ""
 "GIMP 无法初始化图形用户界面。\n"
 "请确定您已正确安装和配置显示环境。"
 
-#: app/main.c:851
+#: app/main.c:857
 msgid "Another GIMP instance is already running."
 msgstr "另一个 GIMP 实例已在运行。"
 
-#: app/main.c:940
+#: app/main.c:946
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP 输出。键入任意字符以关闭此窗口。"
 
-#: app/main.c:941
+#: app/main.c:947
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "（键入任意字符关闭本窗口）\n"
 
-#: app/main.c:958
+#: app/main.c:964
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP 输出。您可以最小化该窗口，但请不要关闭窗口。"
 
@@ -581,7 +581,7 @@ msgid "Tools"
 msgstr "工具"
 
 #: app/actions/actions.c:243 app/dialogs/dialogs.c:384
-#: app/tools/gimppathtool.c:167
+#: app/tools/gimppathtool.c:183
 msgid "Paths"
 msgstr "路径"
 
@@ -2499,15 +2499,16 @@ msgstr "240 秒"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:376 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimptexttool.c:1775 app/tools/gimptransformgridtool.c:1264
-#: app/tools/gimptransformtool.c:429 app/widgets/gimpactionview.c:621
-#: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:665
-#: app/widgets/gimpcontrollerlist.c:556 app/widgets/gimpdeviceeditor.c:463
-#: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
-#: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
-#: app/widgets/gimphelp.c:773 app/widgets/gimpiconpicker.c:489
-#: app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148
-#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:706
+#: app/tools/gimppathtool.c:1017 app/tools/gimptexttool.c:1775
+#: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
+#: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
+#: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:556
+#: app/widgets/gimpdeviceeditor.c:463 app/widgets/gimpdeviceinfoeditor.c:1160
+#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:336
+#: app/widgets/gimphelp.c:438 app/widgets/gimphelp.c:773
+#: app/widgets/gimpiconpicker.c:489 app/widgets/gimpmodifierseditor.c:688
+#: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
+#: app/widgets/gimpsettingsbox.c:706
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -6144,7 +6145,7 @@ msgstr "没有选中的图层或通道可以填充。"
 
 #: app/actions/items-commands.c:358 app/actions/items-commands.c:396
 msgid "There are no selected layers or channels to stroke to."
-msgstr "没有选中的图层或通道可以勾画。"
+msgstr "没有选中的图层或通道可以描边。"
 
 #: app/actions/layers-actions.c:55
 msgctxt "layers-action"
@@ -6186,7 +6187,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "编辑图层的名字"
 
-#: app/actions/layers-actions.c:79 app/actions/layers-actions.c:1060
+#: app/actions/layers-actions.c:79 app/actions/layers-actions.c:1034
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "新建图层(_N)…"
@@ -6196,7 +6197,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "创建新图层并将其添加到图像"
 
-#: app/actions/layers-actions.c:85 app/actions/layers-actions.c:1061
+#: app/actions/layers-actions.c:85 app/actions/layers-actions.c:1035
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "新建图层(_N)"
@@ -6348,649 +6349,609 @@ msgstr "将所有的图层合并为一个并删除透明"
 
 #: app/actions/layers-actions.c:186
 msgctxt "layers-action"
-msgid "_Discard Link Information"
-msgstr "丢弃链接信息(_D)"
-
-#: app/actions/layers-actions.c:187
-msgctxt "layers-action"
-msgid "Turn this link layer into a normal layer"
-msgstr "将此链接图层转换为普通图层"
-
-#: app/actions/layers-actions.c:192
-msgctxt "layers-action"
 msgid "_Rasterize"
 msgstr "栅格化(_R)"
 
-#: app/actions/layers-actions.c:193
+#: app/actions/layers-actions.c:187
 msgctxt "layers-action"
 msgid "Turn selected text, link or vector layers into raster layers"
 msgstr "将选中的文字、链接或矢量图层转换为光栅图层"
 
-#: app/actions/layers-actions.c:198
+#: app/actions/layers-actions.c:192
 msgctxt "layers-action"
-msgid "_Retrieve Layers Information"
-msgstr "取回图层信息(_R)"
+msgid "_Revert Rasterize"
+msgstr "恢复栅格化(_R)"
 
-#: app/actions/layers-actions.c:199
+#: app/actions/layers-actions.c:193
 msgctxt "layers-action"
 msgid "Turn rasterized layers back into text, link or vector layers"
 msgstr "将栅格化图层转换回文字、链接或矢量图层"
 
-#: app/actions/layers-actions.c:204
-msgctxt "layers-action"
-msgid "_Monitor Linked Image"
-msgstr "监视链接的图像(_M)"
-
-#: app/actions/layers-actions.c:205
-msgctxt "layers-action"
-msgid "Discard any transformation and monitor the linked file again"
-msgstr "丢弃任何变换并再次监视链接的文件"
-
-#: app/actions/layers-actions.c:210
-msgctxt "layers-action"
-msgid "_Discard Text Information"
-msgstr "丢弃文字信息(_D)"
-
-#: app/actions/layers-actions.c:211
-msgctxt "layers-action"
-msgid "Turn these text layers into normal layers"
-msgstr "将这些文字图层转换为普通图层"
-
-#: app/actions/layers-actions.c:216
+#: app/actions/layers-actions.c:198
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "文字转为路径(_P)"
 
-#: app/actions/layers-actions.c:217
+#: app/actions/layers-actions.c:199
 msgctxt "layers-action"
 msgid "Create paths from text layers"
 msgstr "从这些文字图层创建路径"
 
-#: app/actions/layers-actions.c:222
+#: app/actions/layers-actions.c:204
 msgctxt "layers-action"
 msgid "Text alon_g Path"
 msgstr "文字对齐路径(_G)"
 
-#: app/actions/layers-actions.c:223
+#: app/actions/layers-actions.c:205
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "沿当前路径对齐该图层的文字"
 
-#: app/actions/layers-actions.c:228
+#: app/actions/layers-actions.c:210
 msgctxt "layers-action"
 msgid "Fill / Stroke..."
 msgstr "填充 / 描边…"
 
-#: app/actions/layers-actions.c:229
+#: app/actions/layers-actions.c:211
 msgctxt "layers-action"
 msgid "Edit the fill and stroke of this vector layer"
-msgstr "编辑此矢量图层的填充和描边"
+msgstr "编辑此矢量图层的填充和轮廓"
 
-#: app/actions/layers-actions.c:234
-msgctxt "layers-action"
-msgid "Discard Vector Information"
-msgstr "丢弃矢量信息"
-
-#: app/actions/layers-actions.c:235
-msgctxt "layers-action"
-msgid "Turn this vector layer into a normal layer"
-msgstr "将此矢量图层转换为普通图层"
-
-#: app/actions/layers-actions.c:240
+#: app/actions/layers-actions.c:216
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
 msgstr "图层边界大小(_O)…"
 
-#: app/actions/layers-actions.c:241
+#: app/actions/layers-actions.c:217
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "调整图层尺寸"
 
-#: app/actions/layers-actions.c:246
+#: app/actions/layers-actions.c:222
 msgctxt "layers-action"
 msgid "Layers to _Image Size"
 msgstr "图层到图像大小(_I)"
 
-#: app/actions/layers-actions.c:247
+#: app/actions/layers-actions.c:223
 msgctxt "layers-action"
 msgid "Resize the layers to the size of the image"
 msgstr "将图层大小缩放为图像大小"
 
-#: app/actions/layers-actions.c:252
+#: app/actions/layers-actions.c:228
 msgctxt "layers-action"
 msgid "_Scale Layer..."
 msgstr "缩放图层(_S)…"
 
-#: app/actions/layers-actions.c:253
+#: app/actions/layers-actions.c:229
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
 msgstr "改变此图层内容的大小"
 
-#: app/actions/layers-actions.c:258
+#: app/actions/layers-actions.c:234
 msgctxt "layers-action"
 msgid "_Resize Layers to Selection"
 msgstr "缩放图层到选区(_R)"
 
-#: app/actions/layers-actions.c:259
+#: app/actions/layers-actions.c:235
 msgctxt "layers-action"
 msgid "Resize the layers to the extents of the selection"
 msgstr "改变图层大小到选区的范围"
 
-#: app/actions/layers-actions.c:264
+#: app/actions/layers-actions.c:240
 msgctxt "layers-action"
 msgid "Crop Layers to C_ontent"
 msgstr "剪裁图层到内容"
 
-#: app/actions/layers-actions.c:265
+#: app/actions/layers-actions.c:241
 msgctxt "layers-action"
 msgid ""
 "Crop the layers to the extents of their content (remove empty borders from "
 "the layer)"
 msgstr "剪裁图层到内容的范围（从图层中删除空白处）"
 
-#: app/actions/layers-actions.c:270 app/actions/layers-actions.c:280
+#: app/actions/layers-actions.c:246 app/actions/layers-actions.c:256
 msgctxt "layers-action"
 msgid "Add La_yer Masks..."
 msgstr "添加图层蒙板(_Y)…"
 
-#: app/actions/layers-actions.c:272 app/actions/layers-actions.c:282
+#: app/actions/layers-actions.c:248 app/actions/layers-actions.c:258
 msgctxt "layers-action"
 msgid ""
 "Add masks to selected layers that allows non-destructive editing of "
 "transparency"
 msgstr "为选中图层添加蒙板以允许对透明度的非破坏性编辑"
 
-#: app/actions/layers-actions.c:287
+#: app/actions/layers-actions.c:263
 msgctxt "layers-action"
 msgid "Add La_yer Masks with Last Values"
 msgstr "用上次的值添加图层蒙板(_Y)"
 
-#: app/actions/layers-actions.c:289
+#: app/actions/layers-actions.c:265
 msgctxt "layers-action"
 msgid "Add mask to selected layers with last used values"
 msgstr "按上次使用的值为选中图层添加蒙板"
 
-#: app/actions/layers-actions.c:294
+#: app/actions/layers-actions.c:270
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "添加透明通道(_H)"
 
-#: app/actions/layers-actions.c:295
+#: app/actions/layers-actions.c:271
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
 msgstr "添加透明度信息到图层"
 
-#: app/actions/layers-actions.c:300
+#: app/actions/layers-actions.c:276
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "删除透明通道(_R)"
 
-#: app/actions/layers-actions.c:301
+#: app/actions/layers-actions.c:277
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
 msgstr "删除图层的透明度信息"
 
-#: app/actions/layers-actions.c:309
+#: app/actions/layers-actions.c:285
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "编辑图层蒙板(_E)"
 
-#: app/actions/layers-actions.c:310
+#: app/actions/layers-actions.c:286
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "在图层蒙板上工作"
 
-#: app/actions/layers-actions.c:316
+#: app/actions/layers-actions.c:292
 msgctxt "layers-action"
 msgid "S_how Layer Masks"
 msgstr "显示图层蒙板(_H)"
 
-#: app/actions/layers-actions.c:322
+#: app/actions/layers-actions.c:298
 msgctxt "layers-action"
 msgid "_Disable Layer Masks"
 msgstr "禁用图层蒙板(_D)"
 
-#: app/actions/layers-actions.c:323
+#: app/actions/layers-actions.c:299
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer masks"
 msgstr "摒弃图层蒙板特效"
 
-#: app/actions/layers-actions.c:329
+#: app/actions/layers-actions.c:305
 msgctxt "layers-action"
 msgid "Toggle Layer _Visibility"
 msgstr "切换图层可见性(_V)"
 
-#: app/actions/layers-actions.c:335
+#: app/actions/layers-actions.c:311
 msgctxt "layers-action"
 msgid "L_ock Pixels of Layer"
 msgstr "锁定图层像素(_O)"
 
-#: app/actions/layers-actions.c:341
+#: app/actions/layers-actions.c:317
 msgctxt "layers-action"
 msgid "L_ock Position of Layer"
 msgstr "锁定图层位置(_O)"
 
-#: app/actions/layers-actions.c:347
+#: app/actions/layers-actions.c:323
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "锁定透明通道(_A)"
 
-#: app/actions/layers-actions.c:349
+#: app/actions/layers-actions.c:325
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr "在图像上更改时保留透明度信息"
 
-#: app/actions/layers-actions.c:358 app/actions/layers-actions.c:385
-#: app/actions/layers-actions.c:412
+#: app/actions/layers-actions.c:334 app/actions/layers-actions.c:361
+#: app/actions/layers-actions.c:388
 msgctxt "layers-action"
 msgid "Auto"
 msgstr "自动"
 
-#: app/actions/layers-actions.c:359
+#: app/actions/layers-actions.c:335
 msgctxt "layers-action"
 msgid "Layer Blend Space: Auto"
 msgstr "图层混合空间：自动"
 
-#: app/actions/layers-actions.c:364 app/actions/layers-actions.c:391
+#: app/actions/layers-actions.c:340 app/actions/layers-actions.c:367
 msgctxt "layers-action"
 msgid "RGB (linear)"
 msgstr "RGB（线性）"
 
-#: app/actions/layers-actions.c:365
+#: app/actions/layers-actions.c:341
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (linear)"
 msgstr "图层混合空间：RGB（线性）"
 
-#: app/actions/layers-actions.c:370 app/actions/layers-actions.c:397
+#: app/actions/layers-actions.c:346 app/actions/layers-actions.c:373
 msgctxt "layers-action"
 msgid "RGB (from color profile)"
 msgstr "RGB（来自特性文件）"
 
-#: app/actions/layers-actions.c:371
+#: app/actions/layers-actions.c:347
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (from color profile)"
 msgstr "图层混合空间：RGB（来自特性文件）"
 
-#: app/actions/layers-actions.c:376 app/actions/layers-actions.c:403
+#: app/actions/layers-actions.c:352 app/actions/layers-actions.c:379
 msgctxt "layers-action"
 msgid "RGB (perceptual)"
 msgstr "RGB（感知）"
 
-#: app/actions/layers-actions.c:377
+#: app/actions/layers-actions.c:353
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (perceptual)"
 msgstr "图层混合空间：RGB（感知）"
 
-#: app/actions/layers-actions.c:386
+#: app/actions/layers-actions.c:362
 msgctxt "layers-action"
 msgid "Layer Composite Space: Auto"
 msgstr "图层合成空间：自动"
 
-#: app/actions/layers-actions.c:392
+#: app/actions/layers-actions.c:368
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (linear)"
 msgstr "图层合成空间：RGB（线性）"
 
-#: app/actions/layers-actions.c:398
+#: app/actions/layers-actions.c:374
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (from color profile)"
 msgstr "图层合成空间：RGB（来自特性文件）"
 
-#: app/actions/layers-actions.c:404
+#: app/actions/layers-actions.c:380
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (perceptual)"
 msgstr "图层合成空间：RGB（感知）"
 
-#: app/actions/layers-actions.c:413
+#: app/actions/layers-actions.c:389
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Auto"
 msgstr "图层合成模式：自动"
 
-#: app/actions/layers-actions.c:418
+#: app/actions/layers-actions.c:394
 msgctxt "layers-action"
 msgid "Union"
 msgstr "联合"
 
-#: app/actions/layers-actions.c:419
+#: app/actions/layers-actions.c:395
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Union"
 msgstr "图层合成模式：联合"
 
-#: app/actions/layers-actions.c:424
+#: app/actions/layers-actions.c:400
 msgctxt "layers-action"
 msgid "Clip to Backdrop"
 msgstr "剪辑至背景"
 
-#: app/actions/layers-actions.c:425
+#: app/actions/layers-actions.c:401
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Backdrop"
 msgstr "图层合成模式：剪辑至背景"
 
-#: app/actions/layers-actions.c:430
+#: app/actions/layers-actions.c:406
 msgctxt "layers-action"
 msgid "Clip to Layer"
 msgstr "剪辑至图层"
 
-#: app/actions/layers-actions.c:431
+#: app/actions/layers-actions.c:407
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Layer"
 msgstr "图层合成模式：剪辑至图层"
 
-#: app/actions/layers-actions.c:436
+#: app/actions/layers-actions.c:412
 msgctxt "layers-action"
 msgid "Intersection"
 msgstr "交集"
 
-#: app/actions/layers-actions.c:437
+#: app/actions/layers-actions.c:413
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Intersection"
 msgstr "图层合成模式：交集"
 
-#: app/actions/layers-actions.c:445
+#: app/actions/layers-actions.c:421
 msgctxt "layers-action"
 msgid "None"
 msgstr "无"
 
-#: app/actions/layers-actions.c:446
+#: app/actions/layers-actions.c:422
 msgctxt "layers-action"
 msgid "Layer Color Tag: Clear"
 msgstr "图层颜色标签：清空"
 
-#: app/actions/layers-actions.c:451
+#: app/actions/layers-actions.c:427
 msgctxt "layers-action"
 msgid "Blue"
 msgstr "蓝色"
 
-#: app/actions/layers-actions.c:452
+#: app/actions/layers-actions.c:428
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Blue"
 msgstr "图层颜色标签：设为蓝色"
 
-#: app/actions/layers-actions.c:457
+#: app/actions/layers-actions.c:433
 msgctxt "layers-action"
 msgid "Green"
 msgstr "绿色"
 
-#: app/actions/layers-actions.c:458
+#: app/actions/layers-actions.c:434
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Green"
 msgstr "图层颜色标签：设为绿色"
 
-#: app/actions/layers-actions.c:463
+#: app/actions/layers-actions.c:439
 msgctxt "layers-action"
 msgid "Yellow"
 msgstr "黄色"
 
-#: app/actions/layers-actions.c:464
+#: app/actions/layers-actions.c:440
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Yellow"
 msgstr "图层颜色标签：设为黄色"
 
-#: app/actions/layers-actions.c:469
+#: app/actions/layers-actions.c:445
 msgctxt "layers-action"
 msgid "Orange"
 msgstr "橙色"
 
-#: app/actions/layers-actions.c:470
+#: app/actions/layers-actions.c:446
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Orange"
 msgstr "图层颜色标签：设为橙色"
 
-#: app/actions/layers-actions.c:475
+#: app/actions/layers-actions.c:451
 msgctxt "layers-action"
 msgid "Brown"
 msgstr "棕色"
 
-#: app/actions/layers-actions.c:476
+#: app/actions/layers-actions.c:452
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Brown"
 msgstr "图层颜色标签：设为棕色"
 
-#: app/actions/layers-actions.c:481
+#: app/actions/layers-actions.c:457
 msgctxt "layers-action"
 msgid "Red"
 msgstr "红色"
 
-#: app/actions/layers-actions.c:482
+#: app/actions/layers-actions.c:458
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Red"
 msgstr "图层颜色标签：设为红色"
 
-#: app/actions/layers-actions.c:487
+#: app/actions/layers-actions.c:463
 msgctxt "layers-action"
 msgid "Violet"
 msgstr "紫色"
 
-#: app/actions/layers-actions.c:488
+#: app/actions/layers-actions.c:464
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Violet"
 msgstr "图层颜色标签：设为紫色"
 
-#: app/actions/layers-actions.c:493
+#: app/actions/layers-actions.c:469
 msgctxt "layers-action"
 msgid "Gray"
 msgstr "灰色"
 
-#: app/actions/layers-actions.c:494
+#: app/actions/layers-actions.c:470
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Gray"
 msgstr "图层颜色标签：设为灰色"
 
-#: app/actions/layers-actions.c:502
+#: app/actions/layers-actions.c:478
 msgctxt "layers-action"
 msgid "Apply Layer _Masks"
 msgstr "应用图层蒙板(_M)"
 
-#: app/actions/layers-actions.c:503
+#: app/actions/layers-actions.c:479
 msgctxt "layers-action"
 msgid "Apply the effect of the layer masks and remove them"
 msgstr "应用图层蒙板特效并移除它们"
 
-#: app/actions/layers-actions.c:508
+#: app/actions/layers-actions.c:484
 msgctxt "layers-action"
 msgid "Delete Layer Mas_ks"
 msgstr "删除图层蒙板(_K)"
 
-#: app/actions/layers-actions.c:509
+#: app/actions/layers-actions.c:485
 msgctxt "layers-action"
 msgid "Remove layer masks and their effect"
 msgstr "移除图层蒙板及其特效"
 
-#: app/actions/layers-actions.c:517
+#: app/actions/layers-actions.c:493
 msgctxt "layers-action"
 msgid "_Masks to Selection"
 msgstr "蒙板到选区(_M)"
 
-#: app/actions/layers-actions.c:518
+#: app/actions/layers-actions.c:494
 msgctxt "layers-action"
 msgid "Replace the selection with the layer masks"
 msgstr "用图层蒙板替代选区"
 
-#: app/actions/layers-actions.c:523
+#: app/actions/layers-actions.c:499
 msgctxt "layers-action"
 msgid "_Add Masks to Selection"
 msgstr "添加蒙板至选区(_A)"
 
-#: app/actions/layers-actions.c:524
+#: app/actions/layers-actions.c:500
 msgctxt "layers-action"
 msgid "Add the layer masks to the current selection"
 msgstr "将图层蒙板添加到当前选区"
 
-#: app/actions/layers-actions.c:529
+#: app/actions/layers-actions.c:505
 msgctxt "layers-action"
 msgid "_Subtract Masks from Selection"
 msgstr "从选区中减去蒙板(_S)"
 
-#: app/actions/layers-actions.c:530
+#: app/actions/layers-actions.c:506
 msgctxt "layers-action"
 msgid "Subtract the layer masks from the current selection"
 msgstr "从当前选区中减去图层蒙板"
 
-#: app/actions/layers-actions.c:535
+#: app/actions/layers-actions.c:511
 msgctxt "layers-action"
 msgid "_Intersect Masks with Selection"
 msgstr "将蒙板与选区相交(_I)"
 
-#: app/actions/layers-actions.c:536
+#: app/actions/layers-actions.c:512
 msgctxt "layers-action"
 msgid "Intersect the layer masks with the current selection"
 msgstr "图层蒙板和当前选区的交集"
 
-#: app/actions/layers-actions.c:544
+#: app/actions/layers-actions.c:520
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "透明通道到选区(_P)"
 
-#: app/actions/layers-actions.c:546
+#: app/actions/layers-actions.c:522
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "用图层的透明通道替换选区"
 
-#: app/actions/layers-actions.c:551
+#: app/actions/layers-actions.c:527
 msgctxt "layers-action"
 msgid "A_dd Alpha to Selection"
 msgstr "添加透明到选区(_D)"
 
-#: app/actions/layers-actions.c:553
+#: app/actions/layers-actions.c:529
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "将图层的透明通道添加到当前选区"
 
-#: app/actions/layers-actions.c:558
+#: app/actions/layers-actions.c:534
 msgctxt "layers-action"
 msgid "_Subtract Alpha from Selection"
 msgstr "从选区减去透明(_S)"
 
-#: app/actions/layers-actions.c:560
+#: app/actions/layers-actions.c:536
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "从当前选区减去图层的透明通道"
 
-#: app/actions/layers-actions.c:565
+#: app/actions/layers-actions.c:541
 msgctxt "layers-action"
 msgid "_Intersect Alpha with Selection"
 msgstr "透明与选区相交(_I)"
 
-#: app/actions/layers-actions.c:567
+#: app/actions/layers-actions.c:543
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "图层的透明通道和当前选区的交集"
 
-#: app/actions/layers-actions.c:575
+#: app/actions/layers-actions.c:551
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "选择顶端图层(_T)"
 
-#: app/actions/layers-actions.c:576
+#: app/actions/layers-actions.c:552
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "选择最顶端图层"
 
-#: app/actions/layers-actions.c:581
+#: app/actions/layers-actions.c:557
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "选择底端图层(_B)"
 
-#: app/actions/layers-actions.c:582
+#: app/actions/layers-actions.c:558
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "选择最底端图层"
 
-#: app/actions/layers-actions.c:587
+#: app/actions/layers-actions.c:563
 msgctxt "layers-action"
 msgid "Select _Previous Layers"
 msgstr "选择前一图层(_P)"
 
-#: app/actions/layers-actions.c:589
+#: app/actions/layers-actions.c:565
 msgctxt "layers-action"
 msgid ""
 "Select the layers above each currently selected layer. Layers will not be "
 "selected outside their current group level."
 msgstr "选择当前每个选中图层上面的图层。不会选择在其当前图层组级别之外的图层。"
 
-#: app/actions/layers-actions.c:595
+#: app/actions/layers-actions.c:571
 msgctxt "layers-action"
 msgid "Select _Next Layers"
 msgstr "选择后一图层(_N)"
 
-#: app/actions/layers-actions.c:597
+#: app/actions/layers-actions.c:573
 msgctxt "layers-action"
 msgid ""
 "Select the layers below each currently selected layer. Layers will not be "
 "selected outside their current group level."
 msgstr "选择当前每个选中图层下面的图层。不会选择在其当前图层组级别之外的图层。"
 
-#: app/actions/layers-actions.c:603
+#: app/actions/layers-actions.c:579
 msgctxt "layers-action"
 msgid "Select Previous Layers (flattened view)"
 msgstr "选择前一图层（平整视图）"
 
-#: app/actions/layers-actions.c:604
+#: app/actions/layers-actions.c:580
 msgctxt "layers-action"
 msgid "Select the layers above each currently selected layer"
 msgstr "选择当前每个选中图层上面的图层"
 
-#: app/actions/layers-actions.c:609
+#: app/actions/layers-actions.c:585
 msgctxt "layers-action"
 msgid "Select Next Layers (flattened view)"
 msgstr "选择后一图层（平整视图）"
 
-#: app/actions/layers-actions.c:610
+#: app/actions/layers-actions.c:586
 msgctxt "layers-action"
 msgid "Select the layers below each currently selected layer"
 msgstr "选择当前每个选中图层下面的图层"
 
-#: app/actions/layers-actions.c:618
+#: app/actions/layers-actions.c:594
 msgctxt "layers-action"
 msgid "Layer Opacity: Set"
 msgstr "图层不透明度：设置"
 
-#: app/actions/layers-actions.c:622
+#: app/actions/layers-actions.c:598
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Transparent"
 msgstr "图层不透明度：完全透明"
 
-#: app/actions/layers-actions.c:626
+#: app/actions/layers-actions.c:602
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Opaque"
 msgstr "图层不透明度：完全不透明"
 
-#: app/actions/layers-actions.c:630
+#: app/actions/layers-actions.c:606
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Transparent"
 msgstr "图层不透明度：更加透明"
 
-#: app/actions/layers-actions.c:634
+#: app/actions/layers-actions.c:610
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Opaque"
 msgstr "图层不透明度：更加不透明"
 
-#: app/actions/layers-actions.c:638
+#: app/actions/layers-actions.c:614
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Transparent"
 msgstr "图层不透明度：增大 10% 透明"
 
-#: app/actions/layers-actions.c:642
+#: app/actions/layers-actions.c:618
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Opaque"
 msgstr "图层不透明度：增大 10% 不透明"
 
-#: app/actions/layers-actions.c:650
+#: app/actions/layers-actions.c:626
 msgctxt "layers-action"
 msgid "Layer Mode: Select First"
 msgstr "图层模式：选择第一个"
 
-#: app/actions/layers-actions.c:654
+#: app/actions/layers-actions.c:630
 msgctxt "layers-action"
 msgid "Layer Mode: Select Last"
 msgstr "图层模式：选择最后一个"
 
-#: app/actions/layers-actions.c:658
+#: app/actions/layers-actions.c:634
 msgctxt "layers-action"
 msgid "Layer Mode: Select Previous"
 msgstr "图层模式：选择上一个"
 
-#: app/actions/layers-actions.c:662
+#: app/actions/layers-actions.c:638
 msgctxt "layers-action"
 msgid "Layer Mode: Select Next"
 msgstr "图层模式：选择下一个"
@@ -6998,18 +6959,18 @@ msgstr "图层模式：选择下一个"
 #. Will be followed with e.g. "Shift-Click
 #. on thumbnail"
 #.
-#: app/actions/layers-actions.c:691
+#: app/actions/layers-actions.c:667
 msgid "Shortcut: "
 msgstr "快捷键："
 
 #. Will be prepended with a modifier key
 #. string, e.g. "Shift"
 #.
-#: app/actions/layers-actions.c:696
+#: app/actions/layers-actions.c:672
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-单击图层停靠中的缩略图"
 
-#: app/actions/layers-actions.c:1055 app/actions/layers-actions.c:1056
+#: app/actions/layers-actions.c:1029 app/actions/layers-actions.c:1030
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "到新图层(_N)"
@@ -7089,8 +7050,8 @@ msgid "Rasterize Layers"
 msgstr "栅格化图层"
 
 #: app/actions/layers-commands.c:1147
-msgid "Retrieve Layers Information"
-msgstr "取回图层信息"
+msgid "Revert Rasterize"
+msgstr "恢复栅格化"
 
 #: app/actions/layers-commands.c:1175
 msgid "Add Paths"
@@ -7585,7 +7546,7 @@ msgstr "按上次的值填充路径"
 #: app/actions/paths-actions.c:123
 msgctxt "paths-action"
 msgid "Stro_ke Paths..."
-msgstr "勾画路径(_K)…"
+msgstr "描边路径(_K)…"
 
 #: app/actions/paths-actions.c:124
 msgctxt "paths-action"
@@ -7595,7 +7556,7 @@ msgstr "沿路径勾画"
 #: app/actions/paths-actions.c:129
 msgctxt "paths-action"
 msgid "Stro_ke Paths"
-msgstr "勾画路径(_K)"
+msgstr "描边路径(_K)"
 
 #: app/actions/paths-actions.c:130
 msgctxt "paths-action"
@@ -7905,7 +7866,7 @@ msgstr "填充路径"
 
 #: app/actions/paths-commands.c:667
 msgid "Stroke Path"
-msgstr "勾画路径"
+msgstr "描边路径"
 
 #: app/actions/patterns-actions.c:43
 msgctxt "patterns-action"
@@ -8212,7 +8173,7 @@ msgstr "按上次使用的值填充选区"
 #: app/actions/select-actions.c:129
 msgctxt "select-action"
 msgid "_Stroke Selection..."
-msgstr "勾画选区(_S)…"
+msgstr "描边选区(_S)…"
 
 #: app/actions/select-actions.c:130
 msgctxt "select-action"
@@ -8222,12 +8183,12 @@ msgstr "沿选区的轮廓涂画"
 #: app/actions/select-actions.c:135
 msgctxt "select-action"
 msgid "_Stroke Selection with last values"
-msgstr "按上次使用的值勾画选区(_S)"
+msgstr "按上次使用的值描边选区(_S)"
 
 #: app/actions/select-actions.c:136
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
-msgstr "按上次使用的值勾画选区"
+msgstr "按上次使用的值描边选区"
 
 #: app/actions/select-commands.c:156
 msgid "Feather Selection"
@@ -8289,7 +8250,7 @@ msgstr "填充选区轮廓"
 
 #: app/actions/select-commands.c:479
 msgid "Stroke Selection"
-msgstr "勾画选区"
+msgstr "描边选区"
 
 #: app/actions/templates-actions.c:42
 msgctxt "templates-action"
@@ -12913,27 +12874,27 @@ msgstr "正在创建文件夹“%s”…"
 msgid "Cannot create folder '%s': %s"
 msgstr "无法创建“%s”文件夹：%s"
 
-#: app/core/gimp-utils.c:585 app/core/gimpfilloptions.c:431
+#: app/core/gimp-utils.c:587 app/core/gimpfilloptions.c:431
 msgid "No patterns available for this operation."
 msgstr "没有可供此操作使用的图案。"
 
-#: app/core/gimp-utils.c:1128
+#: app/core/gimp-utils.c:1130
 #, c-format
 msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
 msgstr "Photoshop 资源文件中出现致命解析错误：RLE 压缩数据损坏。"
 
-#: app/core/gimp-utils.c:1741
+#: app/core/gimp-utils.c:1743
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "该解析器不支持瓦状层叠式列表。"
 
-#: app/core/gimp-utils.c:1764
+#: app/core/gimp-utils.c:1766
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> 必须内置 <ol> 或 <ul> 标签。"
 
-#: app/core/gimp-utils.c:1769
+#: app/core/gimp-utils.c:1771
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "未知标签 <%s>。"
@@ -13220,7 +13181,7 @@ msgstr "填充通道"
 #: app/core/gimpchannel.c:265
 msgctxt "undo-type"
 msgid "Stroke Channel"
-msgstr "勾画通道"
+msgstr "描边通道"
 
 #: app/core/gimpchannel.c:266
 msgctxt "undo-type"
@@ -13306,7 +13267,7 @@ msgstr "无法填充空通道。"
 
 #: app/core/gimpchannel.c:824
 msgid "Cannot stroke empty channel."
-msgstr "无法勾画空通道。"
+msgstr "无法描边空通道。"
 
 #: app/core/gimpchannel.c:1676
 msgctxt "undo-type"
@@ -14589,47 +14550,47 @@ msgstr "该文件已被删除"
 msgid "No file was set"
 msgstr "未设定文件"
 
-#: app/core/gimplinklayer.c:189 app/core/gimplinklayer.c:1077
+#: app/core/gimplinklayer.c:190 app/core/gimplinklayer.c:1078
 msgid "Link Layer"
 msgstr "链接图层"
 
-#: app/core/gimplinklayer.c:197
+#: app/core/gimplinklayer.c:198
 msgid "Rename Link Layer"
 msgstr "重命名链接图层"
 
-#: app/core/gimplinklayer.c:198
+#: app/core/gimplinklayer.c:199
 msgid "Move Link Layer"
 msgstr "移动链接图层"
 
-#: app/core/gimplinklayer.c:199
+#: app/core/gimplinklayer.c:200
 msgid "Scale Link Layer"
 msgstr "缩放链接图层"
 
-#: app/core/gimplinklayer.c:200
+#: app/core/gimplinklayer.c:201
 msgid "Resize Link Layer"
 msgstr "改变链接图层大小"
 
-#: app/core/gimplinklayer.c:201
+#: app/core/gimplinklayer.c:202
 msgid "Flip Link Layer"
 msgstr "翻转链接图层"
 
-#: app/core/gimplinklayer.c:202
+#: app/core/gimplinklayer.c:203
 msgid "Rotate Link Layer"
 msgstr "旋转链接图层"
 
-#: app/core/gimplinklayer.c:203 app/core/gimplinklayer.c:553
+#: app/core/gimplinklayer.c:204 app/core/gimplinklayer.c:554
 msgid "Transform Link Layer"
 msgstr "变换链接图层"
 
-#: app/core/gimplinklayer.c:781
+#: app/core/gimplinklayer.c:782
 msgid "Set layer link"
 msgstr "设置图层链接"
 
-#: app/core/gimplinklayer.c:838
+#: app/core/gimplinklayer.c:839
 msgid "Discard Link"
 msgstr "丢弃链接"
 
-#: app/core/gimplinklayer.c:855
+#: app/core/gimplinklayer.c:856
 msgid "Monitor Link"
 msgstr "监视链接"
 
@@ -14908,7 +14869,7 @@ msgstr "填充选区"
 #: app/core/gimpselection.c:175
 msgctxt "undo-type"
 msgid "Stroke Selection"
-msgstr "勾画选区"
+msgstr "描边选区"
 
 #: app/core/gimpselection.c:192
 msgctxt "undo-type"
@@ -14961,7 +14922,7 @@ msgstr "没有可填充的选区。"
 
 #: app/core/gimpselection.c:344
 msgid "There is no selection to stroke."
-msgstr "没有可勾画的选区。"
+msgstr "没有可描边的选区。"
 
 #: app/core/gimpselection.c:753
 msgid "Unable to cut or copy because the selected region is empty."
@@ -17403,7 +17364,7 @@ msgstr "填充选区轮廓和填充路径对话框"
 #. Stroke Options Dialog
 #: app/dialogs/preferences-dialog.c:2618
 msgid "Stroke Selection & Stroke Path Dialogs"
-msgstr "勾画选区和勾画路径对话框"
+msgstr "描边选区和描边路径对话框"
 
 #: app/dialogs/preferences-dialog.c:2641 app/dialogs/preferences-dialog.c:2642
 msgid "Help System"
@@ -18230,7 +18191,7 @@ msgstr "选择笔触样式"
 
 #: app/dialogs/stroke-dialog.c:130
 msgid "_Stroke"
-msgstr "笔触(_S)"
+msgstr "描边(_S)"
 
 #: app/dialogs/stroke-dialog.c:174
 msgid "Line"
@@ -21059,7 +21020,7 @@ msgstr "填充路径"
 #: app/path/gimppath.c:241
 msgctxt "undo-type"
 msgid "Stroke Path"
-msgstr "勾画路径"
+msgstr "描边路径"
 
 #: app/path/gimppath.c:242
 msgctxt "undo-type"
@@ -21142,41 +21103,45 @@ msgstr "缓冲区中未找到路径"
 msgid "Failed to import paths from '%s': %s"
 msgstr "无法从“%s”导入路径：%s"
 
-#: app/path/gimpvectorlayer.c:160 app/tools/gimppathtool.c:834
+#: app/path/gimpvectorlayer.c:161 app/tools/gimppathtool.c:815
 msgid "Vector Layer"
 msgstr "矢量图层"
 
-#: app/path/gimpvectorlayer.c:170
+#: app/path/gimpvectorlayer.c:171
 msgid "Rename Vector Layer"
 msgstr "重命名矢量图层"
 
-#: app/path/gimpvectorlayer.c:171
+#: app/path/gimpvectorlayer.c:172
 msgid "Move Vector Layer"
 msgstr "移动矢量图层"
 
-#: app/path/gimpvectorlayer.c:172
+#: app/path/gimpvectorlayer.c:173
 msgid "Scale Vector Layer"
 msgstr "缩放矢量图层"
 
-#: app/path/gimpvectorlayer.c:173
+#: app/path/gimpvectorlayer.c:174
 msgid "Resize Vector Layer"
 msgstr "改变矢量图层大小"
 
-#: app/path/gimpvectorlayer.c:174
+#: app/path/gimpvectorlayer.c:175
 msgid "Flip Vector Layer"
 msgstr "翻转矢量图层"
 
-#: app/path/gimpvectorlayer.c:175
+#: app/path/gimpvectorlayer.c:176
 msgid "Rotate Vector Layer"
 msgstr "旋转矢量图层"
 
-#: app/path/gimpvectorlayer.c:176
+#: app/path/gimpvectorlayer.c:177
 msgid "Transform Vector Layer"
 msgstr "变换矢量图层"
 
-#: app/path/gimpvectorlayer.c:526
+#: app/path/gimpvectorlayer.c:527
 msgid "Discard Vector Information"
 msgstr "丢弃矢量信息"
+
+#: app/path/gimpvectorlayer.c:690
+msgid "Revert Rasterize Vector Layer"
+msgstr "恢复栅格化的矢量图层"
 
 #: app/path/gimpvectorlayeroptions.c:114
 msgid "Fill Style"
@@ -21722,7 +21687,7 @@ msgstr "创建链接图层失败"
 
 #: app/pdb/path-cmds.c:325
 msgid "Remove path stroke"
-msgstr "删除路径笔触"
+msgstr "移除路径笔触"
 
 #: app/pdb/path-cmds.c:362
 msgid "Close path stroke"
@@ -22725,19 +22690,19 @@ msgstr "考虑选中图层中的像素且作为线条艺术闭合使用填充色
 
 #: app/tools/gimpbucketfilloptions.c:250
 msgid "Stroke borders"
-msgstr "勾画边界"
+msgstr "描边边界"
 
 #: app/tools/gimpbucketfilloptions.c:251
 msgid "Stroke fill borders with last stroke options"
-msgstr "用上次勾画选项勾画填充边界"
+msgstr "用上次描边选项勾画填充边界"
 
 #: app/tools/gimpbucketfilloptions.c:257
 msgid "Stroke tool"
-msgstr "勾画工具"
+msgstr "描边工具"
 
 #: app/tools/gimpbucketfilloptions.c:258
 msgid "The tool to stroke the fill borders with"
-msgstr "勾画填充边界使用的工具"
+msgstr "描边填充边界使用的工具"
 
 #: app/tools/gimpbucketfilloptions.c:263
 msgid "Automatic closure"
@@ -24557,13 +24522,31 @@ msgstr "从路径创建选区"
 msgid "Create New Vector Layer"
 msgstr "创建新矢量图层"
 
-#: app/tools/gimppathtool.c:168
+#: app/tools/gimppathtool.c:184
 msgid "Paths Tool: Create and edit paths"
 msgstr "路径工具：创建并编辑路径"
 
-#: app/tools/gimppathtool.c:169
+#: app/tools/gimppathtool.c:185
 msgid "Pat_hs"
 msgstr "路径(_H)"
+
+#: app/tools/gimppathtool.c:1009 app/tools/gimppathtool.c:1012
+msgid "Confirm Path Editing"
+msgstr "确认路径编辑"
+
+#: app/tools/gimppathtool.c:1016 app/tools/gimptexttool.c:1774
+msgid "Create _New Layer"
+msgstr "新建图层(_N)"
+
+#: app/tools/gimppathtool.c:1018 app/tools/gimptexttool.c:1776
+msgid "_Edit Anyway"
+msgstr "仍然编辑(_E)"
+
+#: app/tools/gimppathtool.c:1040
+msgid ""
+"The vector layer you picked was rasterized. Editing its path will discard "
+"any modifications."
+msgstr "您选中的矢量图层已栅格化。编辑其路径将丢弃所有修改。"
 
 #: app/tools/gimppenciltool.c:54
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -25108,46 +25091,31 @@ msgstr "文字框："
 
 #: app/tools/gimptexttool.c:1194
 msgid "Reshape Text Layer"
-msgstr "反栅格化文字图层"
+msgstr "重塑文字图层"
 
 #: app/tools/gimptexttool.c:1767 app/tools/gimptexttool.c:1770
 msgid "Confirm Text Editing"
-msgstr "确认编辑文字"
-
-#: app/tools/gimptexttool.c:1774
-msgid "Create _New Layer"
-msgstr "新建图层(_N)"
-
-#: app/tools/gimptexttool.c:1776
-msgid "_Edit"
-msgstr "编辑(_E)"
+msgstr "确认文字编辑"
 
 #: app/tools/gimptexttool.c:1798
 msgid ""
-"The layer you selected is a text layer but it has been modified using other "
-"tools. Editing the layer with the text tool will discard these "
-"modifications.\n"
-"\n"
-"You can edit the layer or create a new text layer from its text attributes."
-msgstr ""
-"您所选的图层是一个文字图层，但是它已被其他工具修改过。使用文字工具编辑此图层"
-"将丢弃这些修改。\n"
-"\n"
-"您可以编辑此图层或者从它的文字属性创建新的文字图层。"
+"The text layer you picked was rasterized. Editing its text will discard any "
+"modifications."
+msgstr "您选中的文字图层已栅格化。编辑其文字将丢弃所有修改。"
 
-#: app/tools/gimptexttool.c:2398
+#: app/tools/gimptexttool.c:2393
 msgid "Text is required."
 msgstr "需要文字。"
 
-#: app/tools/gimptexttool.c:2401
+#: app/tools/gimptexttool.c:2396
 msgid "No image."
 msgstr "无图像。"
 
-#: app/tools/gimptexttool.c:2404
+#: app/tools/gimptexttool.c:2399
 msgid "No layer."
 msgstr "无图层。"
 
-#: app/tools/gimptexttool.c:2415
+#: app/tools/gimptexttool.c:2410
 msgid "Exactly one path must be selected."
 msgstr "必须选择一个路径。"
 
@@ -29294,6 +29262,61 @@ msgstr "工具预设菜单"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
+
+#~ msgid "Retrieve Layers Information"
+#~ msgstr "取回图层信息"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Discard Link Information"
+#~ msgstr "丢弃链接信息(_D)"
+
+#~ msgctxt "layers-action"
+#~ msgid "Turn this link layer into a normal layer"
+#~ msgstr "将此链接图层转换为普通图层"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Retrieve Layers Information"
+#~ msgstr "取回图层信息(_R)"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Monitor Linked Image"
+#~ msgstr "监视链接的图像(_M)"
+
+#~ msgctxt "layers-action"
+#~ msgid "Discard any transformation and monitor the linked file again"
+#~ msgstr "丢弃任何变换并再次监视链接的文件"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Discard Text Information"
+#~ msgstr "丢弃文字信息(_D)"
+
+#~ msgctxt "layers-action"
+#~ msgid "Turn these text layers into normal layers"
+#~ msgstr "将这些文字图层转换为普通图层"
+
+#~ msgctxt "layers-action"
+#~ msgid "Discard Vector Information"
+#~ msgstr "丢弃矢量信息"
+
+#~ msgctxt "layers-action"
+#~ msgid "Turn this vector layer into a normal layer"
+#~ msgstr "将此矢量图层转换为普通图层"
+
+#~ msgid "_Edit"
+#~ msgstr "编辑(_E)"
+
+#~ msgid ""
+#~ "The layer you selected is a text layer but it has been modified using "
+#~ "other tools. Editing the layer with the text tool will discard these "
+#~ "modifications.\n"
+#~ "\n"
+#~ "You can edit the layer or create a new text layer from its text "
+#~ "attributes."
+#~ msgstr ""
+#~ "您所选的图层是一个文字图层，但是它已被其他工具修改过。使用文字工具编辑此图"
+#~ "层将丢弃这些修改。\n"
+#~ "\n"
+#~ "您可以编辑此图层或者从它的文字属性创建新的文字图层。"
 
 #~ msgid "Discard Links"
 #~ msgstr "丢弃链接"
