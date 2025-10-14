@@ -75,9 +75,11 @@ API:
     * gimp_vector_layer_get_enable_fill
     * gimp_vector_layer_get_enable_stroke
     * gimp_vector_layer_get_fill_color
+    * gimp_vector_layer_get_fill_pattern
     * gimp_vector_layer_get_path
     * gimp_vector_layer_get_stroke_cap_style
     * gimp_vector_layer_get_stroke_color
+    * gimp_vector_layer_get_stroke_pattern
     * gimp_vector_layer_get_stroke_dash_offset
     * gimp_vector_layer_get_stroke_dash_pattern
     * gimp_vector_layer_get_stroke_join_style
@@ -136,13 +138,6 @@ API:
   - Removed libgimp functions:
     * gimp_vector_layer_discard (since 3.1.2, but never in a stable
       release).
-  - gimp_item_is_is_text_layer() will now always return TRUE for a layer
-    which is a text layer in backend, even if it has been rasterized. It
-    used not to, probably because the "Discard Text Information" was not
-    reversible (except by undoing), whereas now we can "Revert
-    Rasterize". Instead you should use gimp_rasterizable_is_rasterized()
-    to determine whether to consider a GimpTextLayer as a raster layer
-    or as a text layer.
   - New libgimp class: GimpLinkLayer
   - New libgimpbase enum types:
     * GimpTextOutline
@@ -153,6 +148,15 @@ API:
   - libgimpwidgets: GimpBrowser search entry ported to GtkSearchEntry.
   - New libgimp interface: GimpRasterizable. GimpLinkLayer,
     GimpTextLayer and GimpVectorLayer now implement this interface.
+  - gimp_item_is_is_text_layer() will now always return TRUE for a layer
+    which is a text layer in backend, even if it has been rasterized. It
+    used not to, probably because the "Discard Text Information" was not
+    reversible (except by undoing), whereas now we can "Revert
+    Rasterize". Instead you should use gimp_rasterizable_is_rasterized()
+    to determine whether to consider a GimpTextLayer as a raster layer
+    or as a text layer.
+  - GimpLabelEntry (libgimpwidgets) accepts a NULL value and will
+    convert it to empty string.
 
 Build:
 
