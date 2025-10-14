@@ -1269,14 +1269,7 @@ svg_export_layers (GimpItem             **layers,
     {
       if (gimp_item_get_visible (items[i]))
         {
-          if (gimp_item_is_vector_layer (items[i]))
-            {
-              GimpVectorLayer *layer = GIMP_VECTOR_LAYER (items[i]);
-
-              svg_export_path (layer, layer_ids[LAYER_ID_VECTOR]++, str,
-                               extra_spacing);
-            }
-          else if (gimp_item_is_group (items[i]))
+          if (gimp_item_is_group (items[i]))
             {
               svg_export_group_header (GIMP_GROUP_LAYER (items[i]),
                                        layer_ids[LAYER_ID_GROUP]++, str,
@@ -1285,19 +1278,30 @@ svg_export_layers (GimpItem             **layers,
                                  str, config, extra_spacing, error);
               g_string_append_printf (str, "%s</g>\n", extra_spacing);
             }
-          else if (gimp_item_is_text_layer (items[i]))
+          else if (GIMP_IS_RASTERIZABLE (items[i]) &&
+                   ! gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (items[i])))
             {
-              GimpTextLayer *layer = GIMP_TEXT_LAYER (items[i]);
+              if (GIMP_IS_VECTOR_LAYER (items[i]))
+                {
+                  GimpVectorLayer *layer = GIMP_VECTOR_LAYER (items[i]);
 
-              svg_export_text (layer, layer_ids[LAYER_ID_TEXT]++, str,
-                               extra_spacing);
-            }
-          else if (gimp_item_is_link_layer (items[i]))
-            {
-              GimpLinkLayer *layer = GIMP_LINK_LAYER (items[i]);
+                  svg_export_path (layer, layer_ids[LAYER_ID_VECTOR]++, str,
+                                   extra_spacing);
+                }
+              else if (GIMP_IS_TEXT_LAYER (items[i]))
+                {
+                  GimpTextLayer *layer = GIMP_TEXT_LAYER (items[i]);
 
-              svg_export_link_layer (layer, layer_ids[LAYER_ID_LINK]++, str,
-                                     extra_spacing);
+                  svg_export_text (layer, layer_ids[LAYER_ID_TEXT]++, str,
+                                   extra_spacing);
+                }
+              else if (GIMP_IS_LINK_LAYER (items[i]))
+                {
+                  GimpLinkLayer *layer = GIMP_LINK_LAYER (items[i]);
+
+                  svg_export_link_layer (layer, layer_ids[LAYER_ID_LINK]++, str,
+                                         extra_spacing);
+                }
             }
           else if (format_id != EXPORT_FORMAT_NONE)
             {
