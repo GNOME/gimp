@@ -331,16 +331,27 @@ gimp_proc_view_create_args (GimpProcedure *procedure,
       gchar      *desc;
       gchar      *blurb;
 
-      desc = gimp_param_spec_get_desc (pspec);
+      desc  = gimp_param_spec_get_desc (pspec);
+      blurb = (gchar *) g_param_spec_get_blurb (pspec);
+      if (blurb != NULL)
+        blurb = g_markup_escape_text (blurb, -1);
 
       if (desc)
         {
-          blurb = g_strconcat (g_param_spec_get_blurb (pspec), " ", desc, NULL);
-          g_free (desc);
-        }
-      else
-        {
-          blurb = g_strdup (g_param_spec_get_blurb (pspec));
+          if (blurb != NULL)
+            {
+              gchar *tmp;
+
+              tmp = g_strconcat (blurb, " ", desc, NULL);
+              g_free (desc);
+              g_free (blurb);
+
+              blurb = tmp;
+            }
+          else
+            {
+              blurb = g_strstrip (desc);
+            }
         }
 
       /* name */
