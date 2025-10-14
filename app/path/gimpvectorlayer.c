@@ -380,7 +380,7 @@ static GimpItem *
 gimp_vector_layer_duplicate (GimpItem *item,
                              GType     new_type)
 {
-  GimpItem  *new_item;
+  GimpItem *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
@@ -412,6 +412,9 @@ gimp_vector_layer_duplicate (GimpItem *item,
                         NULL);
           g_object_unref (new_options);
         }
+
+      if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (vector_layer)))
+        gimp_rasterizable_set_undo_rasterized (GIMP_RASTERIZABLE (new_vector_layer), TRUE);
     }
 
   return new_item;

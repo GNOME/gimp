@@ -397,6 +397,9 @@ gimp_link_layer_duplicate (GimpItem *item,
 
       new_layer->p->keep_monitoring = FALSE;
 
+      if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
+        gimp_rasterizable_set_undo_rasterized (GIMP_RASTERIZABLE (new_layer), TRUE);
+
       g_clear_object (&link);
     }
 

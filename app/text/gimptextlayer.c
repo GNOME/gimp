@@ -333,6 +333,9 @@ gimp_text_layer_duplicate (GimpItem *item,
         }
 
       new_layer->private->base_dir = layer->private->base_dir;
+
+      if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
+        gimp_rasterizable_set_undo_rasterized (GIMP_RASTERIZABLE (new_layer), TRUE);
     }
 
   return new_item;
