@@ -249,13 +249,6 @@ struct world_t
   atmos   atmos[MAXATMOS];
 };
 
-struct camera_t
-{
-  GimpVector4 location, lookat, up, right;
-  short  type;
-  double fov, tilt;
-};
-
 
 typedef struct _Designer      Designer;
 typedef struct _DesignerClass DesignerClass;
