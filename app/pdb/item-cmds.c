@@ -167,9 +167,8 @@ item_id_is_text_layer_invoker (GimpProcedure         *procedure,
     {
       GimpItem *item = gimp_item_get_by_id (gimp, item_id);
 
-      text_layer = (GIMP_IS_LAYER (item) &&
-                    ! gimp_item_is_removed (item) &&
-                    gimp_item_is_text_layer (item));
+      text_layer = (GIMP_IS_TEXT_LAYER (item) &&
+                    ! gimp_item_is_removed (item));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -200,9 +199,8 @@ item_id_is_vector_layer_invoker (GimpProcedure         *procedure,
     {
       GimpItem *item = gimp_item_get_by_id (gimp, item_id);
 
-      vector_layer = (GIMP_IS_LAYER (item) &&
-                      ! gimp_item_is_removed (item) &&
-                      gimp_item_is_vector_layer (item));
+      vector_layer = (GIMP_IS_VECTOR_LAYER (item) &&
+                      ! gimp_item_is_removed (item));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -264,9 +262,8 @@ item_id_is_link_layer_invoker (GimpProcedure         *procedure,
     {
       GimpItem *item = gimp_item_get_by_id (gimp, item_id);
 
-      text_layer = (GIMP_IS_LAYER (item) &&
-                    ! gimp_item_is_removed (item) &&
-                    gimp_item_is_link_layer (item));
+      text_layer = (GIMP_IS_LINK_LAYER (item) &&
+                    ! gimp_item_is_removed (item));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
