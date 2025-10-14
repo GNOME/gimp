@@ -260,7 +260,12 @@ svg_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("SVG image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads files in the SVG file format",
+                                        _("Loads files in SVG file format"),
+                                        /* TODO: let's localize after we
+                                         * add support for vector and/or
+                                         * text and link layers:
+                                         * _("Loads SVG (Scalable Vector Graphic) files")
+                                         */
                                         "Renders SVG files to raster graphics "
                                         "using librsvg.",
                                         name);
@@ -298,8 +303,8 @@ svg_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("Scalable Vector Graphic"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Export vector layers in SVG file format"),
-                                        _("Export vector layers in SVG file format "
+                                        _("Exports files in SVG file format"),
+                                        _("Exports files in SVG file format "
                                           "(Scalable Vector Graphic)"),
                                         name);
       gimp_procedure_set_attribution (procedure,
@@ -673,14 +678,14 @@ svg_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-svg_export (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
-            GimpImage            *image,
-            GFile                *file,
-            GimpExportOptions    *options,
-            GimpMetadata         *metadata,
-            GimpProcedureConfig  *config,
-            gpointer              run_data)
+svg_export (GimpProcedure       *procedure,
+            GimpRunMode          run_mode,
+            GimpImage           *image,
+            GFile               *file,
+            GimpExportOptions   *options,
+            GimpMetadata        *metadata,
+            GimpProcedureConfig *config,
+            gpointer             run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
@@ -1202,7 +1207,7 @@ svg_export_file (GimpImage            *image,
                  GError              **error)
 {
   GimpLayer **layers;
-  gchar      *title;
+  gchar      *title        = NULL;
   GString    *str          = g_string_new (NULL);
   gint        layer_ids[6] = { 0 };
 
@@ -1235,6 +1240,8 @@ svg_export_file (GimpImage            *image,
   g_free (layers);
 
   g_string_append (str, "</svg>\n");
+
+  g_free (title);
 
   return str;
 }
@@ -1319,10 +1326,10 @@ svg_export_layers (GimpItem             **layers,
 }
 
 static void
-svg_export_group_header (GimpGroupLayer        *group,
-                         gint                   group_id,
-                         GString               *str,
-                         gchar                 *spacing)
+svg_export_group_header (GimpGroupLayer *group,
+                         gint            group_id,
+                         GString        *str,
+                         gchar          *spacing)
 {
   gchar   *name;
   gdouble  opacity;
@@ -1708,10 +1715,10 @@ svg_export_text_lines (GimpTextLayer *layer,
 }
 
 static void
-svg_export_link_layer (GimpLinkLayer         *layer,
-                       gint                   link_id,
-                       GString               *str,
-                       gchar                 *spacing)
+svg_export_link_layer (GimpLinkLayer *layer,
+                       gint           link_id,
+                       GString       *str,
+                       gchar         *spacing)
 {
   GFile   *file;
   gchar   *name;
@@ -1752,12 +1759,12 @@ svg_export_link_layer (GimpLinkLayer         *layer,
 }
 
 static void
-svg_export_raster (GimpDrawable         *layer,
-                   gint                 *layer_ids,
-                   GString              *str,
-                   gint                  format_id,
-                   gchar                *spacing,
-                   GError              **error)
+svg_export_raster (GimpDrawable  *layer,
+                   gint          *layer_ids,
+                   GString       *str,
+                   gint           format_id,
+                   gchar         *spacing,
+                   GError       **error)
 {
   GimpProcedure  *procedure;
   GimpValueArray *return_vals = NULL;
