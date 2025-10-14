@@ -150,14 +150,16 @@ gimp_label_entry_set_property (GObject      *object,
     {
     case PROP_VALUE:
         {
-          GtkEntryBuffer *buffer = gtk_entry_get_buffer (GTK_ENTRY (entry->entry));
+          GtkEntryBuffer *buffer   = gtk_entry_get_buffer (GTK_ENTRY (entry->entry));
+          const gchar    *new_text = g_value_get_string (value);
+          const gchar    *text     = gtk_entry_buffer_get_text (buffer);
 
           /* Avoid looping forever since we have bound this widget's
            * "value" property with the entry button "value" property.
            */
-          if (g_strcmp0 (gtk_entry_buffer_get_text (buffer),
-                         g_value_get_string (value)) != 0)
-            gtk_entry_buffer_set_text (buffer, g_value_get_string (value), -1);
+          if ((new_text == NULL && g_strcmp0 (text, "") != 0) ||
+              (new_text != NULL && g_strcmp0 (text, new_text) != 0))
+            gtk_entry_buffer_set_text (buffer, new_text ? new_text : "", -1);
 
           g_signal_emit (object, gimp_label_entry_signals[VALUE_CHANGED], 0);
         }
