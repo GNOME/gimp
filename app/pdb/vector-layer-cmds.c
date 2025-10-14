@@ -38,6 +38,7 @@
 #include "core/gimpdashpattern.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimppattern.h"
 #include "core/gimprasterizable.h"
 #include "core/gimpstrokeoptions.h"
 #include "path/gimppath.h"
@@ -225,9 +226,16 @@ vector_layer_get_fill_color_invoker (GimpProcedure         *procedure,
         success = FALSE;
 
       if (success)
-        color =
-          gegl_color_duplicate (gimp_context_get_foreground (
-                                  GIMP_CONTEXT (options->fill_options)));
+        {
+          GimpCustomStyle style = gimp_fill_options_get_custom_style (options->fill_options);
+
+          if (style == GIMP_CUSTOM_STYLE_SOLID_COLOR ||
+              ! gimp_context_get_pattern (GIMP_CONTEXT (options->fill_options)))
+            color =
+              gegl_color_duplicate (gimp_context_get_foreground (GIMP_CONTEXT (options->fill_options)));
+          else
+            success = FALSE;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -235,6 +243,50 @@ vector_layer_get_fill_color_invoker (GimpProcedure         *procedure,
 
   if (success)
     g_value_take_object (gimp_value_array_index (return_vals, 1), color);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+vector_layer_get_fill_pattern_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpVectorLayer *layer;
+  GimpPattern *pattern = NULL;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpVectorLayerOptions *options;
+
+      options = gimp_vector_layer_get_options (layer);
+      if (! options)
+        success = FALSE;
+
+      if (success)
+        {
+          GimpCustomStyle style = gimp_fill_options_get_custom_style (options->fill_options);
+
+          if (style == GIMP_CUSTOM_STYLE_PATTERN)
+            pattern = gimp_context_get_pattern (GIMP_CONTEXT (options->fill_options));
+
+          if (pattern == NULL)
+            success = FALSE;
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_object (gimp_value_array_index (return_vals, 1), pattern);
 
   return return_vals;
 }
@@ -331,8 +383,15 @@ vector_layer_get_stroke_color_invoker (GimpProcedure         *procedure,
         success = FALSE;
 
       if (success)
-        color = gegl_color_duplicate (gimp_context_get_foreground (
-                                        GIMP_CONTEXT (options->stroke_options)));
+        {
+          GimpCustomStyle style = gimp_fill_options_get_custom_style (GIMP_FILL_OPTIONS (options->stroke_options));
+
+          if (style == GIMP_CUSTOM_STYLE_SOLID_COLOR ||
+              ! gimp_context_get_pattern (GIMP_CONTEXT (options->stroke_options)))
+            color = gegl_color_duplicate (gimp_context_get_foreground (GIMP_CONTEXT (options->stroke_options)));
+          else
+            success = FALSE;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -340,6 +399,50 @@ vector_layer_get_stroke_color_invoker (GimpProcedure         *procedure,
 
   if (success)
     g_value_take_object (gimp_value_array_index (return_vals, 1), color);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+vector_layer_get_stroke_pattern_invoker (GimpProcedure         *procedure,
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpVectorLayer *layer;
+  GimpPattern *pattern = NULL;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpVectorLayerOptions *options;
+
+      options = gimp_vector_layer_get_options (layer);
+      if (! options)
+        success = FALSE;
+
+      if (success)
+        {
+          GimpCustomStyle style = gimp_fill_options_get_custom_style (GIMP_FILL_OPTIONS (options->stroke_options));
+
+          if (style == GIMP_CUSTOM_STYLE_PATTERN)
+            pattern = gimp_context_get_pattern (GIMP_CONTEXT (options->stroke_options));
+
+          if (pattern == NULL)
+            success = FALSE;
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_object (gimp_value_array_index (return_vals, 1), pattern);
 
   return return_vals;
 }
@@ -1074,7 +1177,9 @@ register_vector_layer_procs (GimpPDB *pdb)
                                "gimp-vector-layer-get-fill-color");
   gimp_procedure_set_static_help (procedure,
                                   "Get the color of the fill in a vector layer.",
-                                  "This procedure returns the color of the fill in a vector layer.",
+                                  "This procedure returns the color of the fill in a vector layer.\n"
+                                  "\n"
+                                  "Note that there won't be both a fill color and pattern, so either this procedure or [method@Gimp.VectorLayer.get_fill_pattern] will return %NULL at any given time.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Alex S.",
@@ -1093,6 +1198,39 @@ register_vector_layer_procs (GimpPDB *pdb)
                                                           FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vector-layer-get-fill-pattern
+   */
+  procedure = gimp_procedure_new (vector_layer_get_fill_pattern_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-vector-layer-get-fill-pattern");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the pattern of the fill in a vector layer.",
+                                  "This procedure returns the pattern of the fill in a vector layer.\n"
+                                  "\n"
+                                  "Note that there won't be both a fill color and pattern, so either this procedure or [method@Gimp.VectorLayer.get_fill_color] will return %NULL at any given time.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vector_layer ("layer",
+                                                             "layer",
+                                                             "The vector layer.",
+                                                             FALSE,
+                                                             GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_pattern ("pattern",
+                                                            "pattern",
+                                                            "The pattern of the fill.",
+                                                            FALSE,
+                                                            NULL,
+                                                            FALSE,
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1163,7 +1301,9 @@ register_vector_layer_procs (GimpPDB *pdb)
                                "gimp-vector-layer-get-stroke-color");
   gimp_procedure_set_static_help (procedure,
                                   "Get the color of the stroke in a vector layer.",
-                                  "This procedure returns the color of the stroke in a vector layer.",
+                                  "This procedure returns the color of the stroke in a vector layer.\n"
+                                  "\n"
+                                  "Note that there won't be both a stroke color and pattern, so either this procedure or [method@Gimp.VectorLayer.get_stroke_pattern] will return %NULL at any given time.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Alex S.",
@@ -1182,6 +1322,39 @@ register_vector_layer_procs (GimpPDB *pdb)
                                                           FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vector-layer-get-stroke-pattern
+   */
+  procedure = gimp_procedure_new (vector_layer_get_stroke_pattern_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-vector-layer-get-stroke-pattern");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the pattern of the stroke in a vector layer.",
+                                  "This procedure returns the pattern of the fill in a vector layer.\n"
+                                  "\n"
+                                  "Note that there won't be both a stroke color and pattern, so either this procedure or [method@Gimp.VectorLayer.get_stroke_color] will return %NULL at any given time.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vector_layer ("layer",
+                                                             "layer",
+                                                             "The vector layer.",
+                                                             FALSE,
+                                                             GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_pattern ("pattern",
+                                                            "pattern",
+                                                            "The pattern of the fill.",
+                                                            FALSE,
+                                                            NULL,
+                                                            FALSE,
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

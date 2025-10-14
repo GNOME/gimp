@@ -1115,6 +1115,7 @@ EXPORTS
 	gimp_vector_layer_get_enable_fill
 	gimp_vector_layer_get_enable_stroke
 	gimp_vector_layer_get_fill_color
+	gimp_vector_layer_get_fill_pattern
 	gimp_vector_layer_get_path
 	gimp_vector_layer_get_stroke_cap_style
 	gimp_vector_layer_get_stroke_color
@@ -1122,6 +1123,7 @@ EXPORTS
 	gimp_vector_layer_get_stroke_dash_pattern
 	gimp_vector_layer_get_stroke_join_style
 	gimp_vector_layer_get_stroke_miter_limit
+	gimp_vector_layer_get_stroke_pattern
 	gimp_vector_layer_get_stroke_width
 	gimp_vector_layer_get_stroke_width_unit
 	gimp_vector_layer_get_type

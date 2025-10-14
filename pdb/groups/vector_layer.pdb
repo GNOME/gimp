@@ -209,6 +209,11 @@ sub vector_layer_get_stroke_color {
 
     $help = <<'HELP';
 This procedure returns the color of the stroke in a vector layer.
+
+
+Note that there won't be both a stroke color and pattern, so either this
+procedure or [method@Gimp.VectorLayer.get_stroke_pattern] will return
+%NULL at any given time.
 HELP
 
     &alxsa_pdb_misc('2025', '3.2');
@@ -233,8 +238,63 @@ HELP
     success = FALSE;
 
   if (success)
-    color = gegl_color_duplicate (gimp_context_get_foreground (
-                                    GIMP_CONTEXT (options->stroke_options)));
+    {
+      GimpCustomStyle style = gimp_fill_options_get_custom_style (GIMP_FILL_OPTIONS (options->stroke_options));
+
+      if (style == GIMP_CUSTOM_STYLE_SOLID_COLOR ||
+          ! gimp_context_get_pattern (GIMP_CONTEXT (options->stroke_options)))
+        color = gegl_color_duplicate (gimp_context_get_foreground (GIMP_CONTEXT (options->stroke_options)));
+      else
+        success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub vector_layer_get_stroke_pattern {
+    $blurb = 'Get the pattern of the stroke in a vector layer.';
+
+    $help = <<'HELP';
+This procedure returns the pattern of the fill in a vector layer.
+
+
+Note that there won't be both a stroke color and pattern, so either this
+procedure or [method@Gimp.VectorLayer.get_stroke_color] will return
+%NULL at any given time.
+HELP
+
+    &jehan_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' }
+    );
+
+    @outargs = (
+        { name => 'pattern', type => 'pattern',
+          desc => 'The pattern of the fill.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    {
+      GimpCustomStyle style = gimp_fill_options_get_custom_style (GIMP_FILL_OPTIONS (options->stroke_options));
+
+      if (style == GIMP_CUSTOM_STYLE_PATTERN)
+        pattern = gimp_context_get_pattern (GIMP_CONTEXT (options->stroke_options));
+
+      if (pattern == NULL)
+        success = FALSE;
+    }
 }
 CODE
     );
@@ -850,6 +910,11 @@ sub vector_layer_get_fill_color {
 
     $help = <<'HELP';
 This procedure returns the color of the fill in a vector layer.
+
+
+Note that there won't be both a fill color and pattern, so either this
+procedure or [method@Gimp.VectorLayer.get_fill_pattern] will return
+%NULL at any given time.
 HELP
 
     &alxsa_pdb_misc('2025', '3.2');
@@ -874,9 +939,64 @@ HELP
     success = FALSE;
 
   if (success)
-    color =
-      gegl_color_duplicate (gimp_context_get_foreground (
-                              GIMP_CONTEXT (options->fill_options)));
+    {
+      GimpCustomStyle style = gimp_fill_options_get_custom_style (options->fill_options);
+
+      if (style == GIMP_CUSTOM_STYLE_SOLID_COLOR ||
+          ! gimp_context_get_pattern (GIMP_CONTEXT (options->fill_options)))
+        color =
+          gegl_color_duplicate (gimp_context_get_foreground (GIMP_CONTEXT (options->fill_options)));
+      else
+        success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub vector_layer_get_fill_pattern {
+    $blurb = 'Get the pattern of the fill in a vector layer.';
+
+    $help = <<'HELP';
+This procedure returns the pattern of the fill in a vector layer.
+
+
+Note that there won't be both a fill color and pattern, so either this
+procedure or [method@Gimp.VectorLayer.get_fill_color] will return
+%NULL at any given time.
+HELP
+
+    &jehan_pdb_misc('2025', '3.2');
+
+    @inargs = (
+        { name => 'layer', type => 'vector_layer',
+          desc => 'The vector layer.' }
+    );
+
+    @outargs = (
+        { name => 'pattern', type => 'pattern',
+          desc => 'The pattern of the fill.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpVectorLayerOptions *options;
+
+  options = gimp_vector_layer_get_options (layer);
+  if (! options)
+    success = FALSE;
+
+  if (success)
+    {
+      GimpCustomStyle style = gimp_fill_options_get_custom_style (options->fill_options);
+
+      if (style == GIMP_CUSTOM_STYLE_PATTERN)
+        pattern = gimp_context_get_pattern (GIMP_CONTEXT (options->fill_options));
+
+      if (pattern == NULL)
+        success = FALSE;
+    }
 }
 CODE
     );
@@ -931,9 +1051,11 @@ CODE
             vector_layer_get_enable_fill
             vector_layer_get_enable_stroke
             vector_layer_get_fill_color
+            vector_layer_get_fill_pattern
             vector_layer_get_path
             vector_layer_get_stroke_cap_style
             vector_layer_get_stroke_color
+            vector_layer_get_stroke_pattern
             vector_layer_get_stroke_dash_offset
             vector_layer_get_stroke_dash_pattern
             vector_layer_get_stroke_join_style

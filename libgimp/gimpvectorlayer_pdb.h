@@ -38,9 +38,11 @@ gboolean         gimp_vector_layer_refresh                 (GimpVectorLayer  *la
 gboolean         gimp_vector_layer_get_enable_fill         (GimpVectorLayer  *layer);
 gboolean         gimp_vector_layer_get_enable_stroke       (GimpVectorLayer  *layer);
 GeglColor*       gimp_vector_layer_get_fill_color          (GimpVectorLayer  *layer);
+GimpPattern*     gimp_vector_layer_get_fill_pattern        (GimpVectorLayer  *layer);
 GimpPath*        gimp_vector_layer_get_path                (GimpVectorLayer  *layer);
 GimpCapStyle     gimp_vector_layer_get_stroke_cap_style    (GimpVectorLayer  *layer);
 GeglColor*       gimp_vector_layer_get_stroke_color        (GimpVectorLayer  *layer);
+GimpPattern*     gimp_vector_layer_get_stroke_pattern      (GimpVectorLayer  *layer);
 gdouble          gimp_vector_layer_get_stroke_dash_offset  (GimpVectorLayer  *layer);
 gboolean         gimp_vector_layer_get_stroke_dash_pattern (GimpVectorLayer  *layer,
                                                             gsize            *num_dashes,
