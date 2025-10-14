@@ -27,6 +27,7 @@
 
 #include "gimp.h"
 #include "gimpchannel.h"
+#include "gimpdrawable-filters.h"
 #include "gimpimage.h"
 #include "gimpimage-private.h"
 #include "gimpimage-quick-mask.h"
@@ -113,6 +114,8 @@ gimp_image_set_quick_mask_state (GimpImage *image,
           if (floating_sel &&
               gimp_layer_get_floating_sel_drawable (floating_sel) == GIMP_DRAWABLE (mask))
             floating_sel_anchor (floating_sel);
+
+          gimp_drawable_merge_filters (GIMP_DRAWABLE (mask));
 
           gimp_item_to_selection (GIMP_ITEM (mask),
                                   GIMP_CHANNEL_OP_REPLACE,
