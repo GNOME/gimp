@@ -78,7 +78,7 @@ gimp_pattern_finalize (GObject *object)
  * size without changing its ratio. If the pattern is smaller than this size to
  * begin with, it will not be scaled up.
  *
- * If @max_width or @max_height are %NULL, the buffer is returned in the pattern's
+ * If @max_width or @max_height are 0, the buffer is returned in the pattern's
  * native size.
  *
  * Make sure you called [func@Gegl.init] before calling any function using
