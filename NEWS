@@ -24,10 +24,10 @@ Core:
     which includes all lower layers. This also implies that empty
     pass-through group layers can have an effect which will work like
     "adjustment layers" in other software.
-  - New actions "layers-rasterize" and "layers-retrieve" to respectively
-    rasterize and un-rasterize text, link or vector layers (rasterizing
-    these layers is now always revertable, though any painting edit done
-    after the rasterization is obviously lost).
+  - New actions "layers-rasterize" and "layers-revert-rasterize" to
+    respectively rasterize and un-rasterize text, link or vector layers
+    (rasterizing these layers is now always revertable, though any
+    painting edit done after the rasterization is obviously lost).
   - Actions "layers-link-discard", "layers-vector-discard" and
     "layers-text-discard" have been removed. Only the latter existed in
     previous stable versions so any custom shortcut associated to
@@ -98,11 +98,9 @@ API:
     * gimp_item_is_vector_layer
     * gimp_item_id_is_link_layer
     * gimp_item_is_link_layer
-    * gimp_link_layer_discard
     * gimp_link_layer_get_by_id
     * gimp_link_layer_get_file
     * gimp_link_layer_get_type
-    * gimp_link_layer_monitor
     * gimp_link_layer_new
     * gimp_link_layer_set_file
     * gimp_param_link_layer_get_type
@@ -135,6 +133,16 @@ API:
     * gimp_rasterizable_is_rasterized
     * gimp_rasterizable_rasterize
     * gimp_rasterizable_restore
+  - Removed libgimp functions:
+    * gimp_vector_layer_discard (since 3.1.2, but never in a stable
+      release).
+  - gimp_item_is_is_text_layer() will now always return TRUE for a layer
+    which is a text layer in backend, even if it has been rasterized. It
+    used not to, probably because the "Discard Text Information" was not
+    reversible (except by undoing), whereas now we can "Revert
+    Rasterize". Instead you should use gimp_rasterizable_is_rasterized()
+    to determine whether to consider a GimpTextLayer as a raster layer
+    or as a text layer.
   - New libgimp class: GimpLinkLayer
   - New libgimpbase enum types:
     * GimpTextOutline
