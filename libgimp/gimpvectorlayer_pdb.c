@@ -206,7 +206,7 @@ gimp_vector_layer_get_enable_stroke (GimpVectorLayer *layer)
  *
  * Returns: (transfer full): The color of the fill.
  *
- * Since: 2.6
+ * Since: 3.2
  **/
 GeglColor *
 gimp_vector_layer_get_fill_color (GimpVectorLayer *layer)
@@ -315,7 +315,7 @@ gimp_vector_layer_get_stroke_cap_style (GimpVectorLayer *layer)
  *
  * Returns: (transfer full): The color of the stroke.
  *
- * Since: 2.6
+ * Since: 3.2
  **/
 GeglColor *
 gimp_vector_layer_get_stroke_color (GimpVectorLayer *layer)

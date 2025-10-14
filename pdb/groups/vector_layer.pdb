@@ -211,7 +211,7 @@ sub vector_layer_get_stroke_color {
 This procedure returns the color of the stroke in a vector layer.
 HELP
 
-    &marcus_pdb_misc('2008', '2.6');
+    &alxsa_pdb_misc('2025', '3.2');
 
     @inargs = (
         { name => 'layer', type => 'vector_layer',
@@ -852,7 +852,7 @@ sub vector_layer_get_fill_color {
 This procedure returns the color of the fill in a vector layer.
 HELP
 
-    &marcus_pdb_misc('2008', '2.6');
+    &alxsa_pdb_misc('2025', '3.2');
 
     @inargs = (
         { name => 'layer', type => 'vector_layer',

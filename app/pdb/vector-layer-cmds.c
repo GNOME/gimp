@@ -1077,9 +1077,9 @@ register_vector_layer_procs (GimpPDB *pdb)
                                   "This procedure returns the color of the fill in a vector layer.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                         "Marcus Heese",
-                                         "2008");
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vector_layer ("layer",
                                                              "layer",
@@ -1166,9 +1166,9 @@ register_vector_layer_procs (GimpPDB *pdb)
                                   "This procedure returns the color of the stroke in a vector layer.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                         "Marcus Heese",
-                                         "2008");
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vector_layer ("layer",
                                                              "layer",
