@@ -262,6 +262,9 @@ static gboolean gimp_item_tree_view_search_clicked             (GtkWidget       
 static gboolean gimp_item_tree_view_move_cursor                (GimpItemTreeView *tree_view,
                                                                 guint             keyval,
                                                                 GdkModifierType   modifiers);
+static void     gimp_item_tree_view_blink_item_column          (GimpItemTreeView *view,
+                                                                GimpItem         *item,
+                                                                gint              column);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpItemTreeView, gimp_item_tree_view,
@@ -1014,32 +1017,14 @@ void
 gimp_item_tree_view_blink_lock (GimpItemTreeView *view,
                                 GimpItem         *item)
 {
-  GtkTreeIter  *iter;
-  GtkTreePath  *path;
-  GdkRectangle  rect;
+  gimp_item_tree_view_blink_item_column (view, item, 1);
+}
 
-  g_return_if_fail (GIMP_IS_ITEM_TREE_VIEW (view));
-  g_return_if_fail (GIMP_IS_ITEM (item));
-
-  /* Find the item in the tree view. */
-  iter = _gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
-                                      GIMP_VIEWABLE (item));
-  path = gtk_tree_model_get_path (GIMP_CONTAINER_TREE_VIEW (view)->model, iter);
-
-  /* Scroll dockable to make sure the cell is showing. */
-  gtk_tree_view_scroll_to_cell (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
-                                gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1),
-                                FALSE, 0.0, 0.0);
-
-  /* Now blink the lock cell of the specified item. */
-  gtk_tree_view_get_cell_area (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
-                               gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, 1),
-                               &rect);
-  gtk_tree_view_convert_bin_window_to_widget_coords (GIMP_CONTAINER_TREE_VIEW (view)->view,
-                                                     rect.x, rect.y, &rect.x, &rect.y);
-  gimp_widget_blink_rect (GTK_WIDGET (GIMP_CONTAINER_TREE_VIEW (view)->view), &rect);
-
-  gtk_tree_path_free (path);
+void
+gimp_item_tree_view_blink_item (GimpItemTreeView *view,
+                                GimpItem         *item)
+{
+  gimp_item_tree_view_blink_item_column (view, item, 3);
 }
 
 GtkWidget *
@@ -2443,4 +2428,37 @@ gimp_item_tree_view_move_cursor (GimpItemTreeView *view,
     }
 
   return TRUE;
+}
+
+static void
+gimp_item_tree_view_blink_item_column (GimpItemTreeView *view,
+                                       GimpItem         *item,
+                                       gint              column)
+{
+  GtkTreeIter  *iter;
+  GtkTreePath  *path;
+  GdkRectangle  rect;
+
+  g_return_if_fail (GIMP_IS_ITEM_TREE_VIEW (view));
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  /* Find the item in the tree view. */
+  iter = _gimp_container_view_lookup (GIMP_CONTAINER_VIEW (view),
+                                      GIMP_VIEWABLE (item));
+  path = gtk_tree_model_get_path (GIMP_CONTAINER_TREE_VIEW (view)->model, iter);
+
+  /* Scroll dockable to make sure the cell is showing. */
+  gtk_tree_view_scroll_to_cell (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
+                                gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, column),
+                                FALSE, 0.0, 0.0);
+
+  /* Now blink the specified column. */
+  gtk_tree_view_get_cell_area (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
+                               gtk_tree_view_get_column (GIMP_CONTAINER_TREE_VIEW (view)->view, column),
+                               &rect);
+  gtk_tree_view_convert_bin_window_to_widget_coords (GIMP_CONTAINER_TREE_VIEW (view)->view,
+                                                     rect.x, rect.y, &rect.x, &rect.y);
+  gimp_widget_blink_rect (GTK_WIDGET (GIMP_CONTAINER_TREE_VIEW (view)->view), &rect);
+
+  gtk_tree_path_free (path);
 }

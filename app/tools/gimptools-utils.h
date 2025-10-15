@@ -20,5 +20,7 @@
 
 void   gimp_tools_blink_lock_box    (Gimp     *gimp,
                                      GimpItem *item);
+void   gimp_tools_blink_item        (Gimp     *gimp,
+                                     GimpItem *item);
 
 void   gimp_tools_show_tool_options (Gimp *gimp);

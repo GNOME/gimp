@@ -39,6 +39,9 @@
 #include "gimptools-utils.h"
 
 
+static GimpItemTreeView * gimp_tools_get_tree_view_for (Gimp     *gimp,
+                                                        GimpItem *item);
+
 
 /*  public functions  */
 
@@ -46,37 +49,26 @@ void
 gimp_tools_blink_lock_box (Gimp     *gimp,
                            GimpItem *item)
 {
-  GtkWidget        *dockable;
   GimpItemTreeView *view;
-  GdkMonitor       *monitor;
-  const gchar      *identifier;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  if (GIMP_IS_LAYER (item))
-    identifier = "gimp-layer-list";
-  else if (GIMP_IS_CHANNEL (item))
-    identifier = "gimp-channel-list";
-  else if (GIMP_IS_PATH (item))
-    identifier = "gimp-path-list";
-  else
-    return;
-
-  monitor = gimp_get_monitor_at_pointer ();
-
-  dockable = gimp_window_strategy_show_dockable_dialog (
-    GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-    gimp,
-    gimp_dialog_factory_get_singleton (),
-    monitor,
-    identifier);
-
-  if (! dockable)
-    return;
-
-  view = GIMP_ITEM_TREE_VIEW (gtk_bin_get_child (GTK_BIN (dockable)));
+  view = gimp_tools_get_tree_view_for (gimp, item);
   gimp_item_tree_view_blink_lock (view, item);
+}
+
+void
+gimp_tools_blink_item (Gimp     *gimp,
+                       GimpItem *item)
+{
+  GimpItemTreeView *view;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  view = gimp_tools_get_tree_view_for (gimp, item);
+  gimp_item_tree_view_blink_item (view, item);
 }
 
 void
@@ -92,4 +84,43 @@ gimp_tools_show_tool_options (Gimp *gimp)
                                              gimp,
                                              gimp_dialog_factory_get_singleton (),
                                              monitor, "gimp-tool-options");
+}
+
+
+/*  Private functions  */
+
+static GimpItemTreeView *
+gimp_tools_get_tree_view_for (Gimp     *gimp,
+                              GimpItem *item)
+{
+  GtkWidget        *dockable;
+  GimpItemTreeView *view;
+  GdkMonitor       *monitor;
+  const gchar      *identifier;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  if (GIMP_IS_LAYER (item))
+    identifier = "gimp-layer-list";
+  else if (GIMP_IS_CHANNEL (item))
+    identifier = "gimp-channel-list";
+  else if (GIMP_IS_PATH (item))
+    identifier = "gimp-path-list";
+  else
+    g_return_val_if_reached (NULL);
+
+  monitor  = gimp_get_monitor_at_pointer ();
+  dockable = gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
+                                                        gimp,
+                                                        gimp_dialog_factory_get_singleton (),
+                                                        monitor,
+                                                        identifier);
+
+  if (! dockable)
+    return NULL;
+
+  view = GIMP_ITEM_TREE_VIEW (gtk_bin_get_child (GTK_BIN (dockable)));
+
+  return view;
 }

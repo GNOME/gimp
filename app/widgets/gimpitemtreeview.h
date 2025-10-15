@@ -139,6 +139,8 @@ void        gimp_item_tree_view_add_lock          (GimpItemTreeView *view,
                                                    const gchar      *help_id);
 void        gimp_item_tree_view_blink_lock        (GimpItemTreeView *view,
                                                    GimpItem         *item);
+void        gimp_item_tree_view_blink_item        (GimpItemTreeView *view,
+                                                   GimpItem         *item);
 
 GtkWidget * gimp_item_tree_view_get_new_button    (GimpItemTreeView *view);
 GtkWidget * gimp_item_tree_view_get_delete_button (GimpItemTreeView *view);

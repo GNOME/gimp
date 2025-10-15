@@ -754,23 +754,29 @@ gimp_tool_button_press (GimpTool            *tool,
                                 ! (state & gimp_get_extend_selection_mask ()));
               if (! GIMP_IS_SOURCE_TOOL (tool) || ! constrain_only)
                 {
+                  /* TRANSLATORS: this is a menu path. Make sure you use
+                   * the same translations you used for the "Rasterize"
+                   * action under the "Layer" menu.
+                   */
+                  gchar *menu_path = _("Layer > Rasterize");
+
                   if (gimp_item_is_text_layer (GIMP_ITEM (drawable)))
                     {
-                      gimp_tool_message_literal (tool, display,
-                                                 _("Text layers must be rasterized "
-                                                   "before they can be painted on."));
+                      /* TRANSLATORS: the string between parentheses will be a menu path. */
+                      gimp_tool_message (tool, display, _("Text layers must be rasterized (%s)."), menu_path);
+                      gimp_tools_blink_item (display->gimp, GIMP_ITEM (drawable));
                     }
                   else if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
                     {
-                      gimp_tool_message_literal (tool, display,
-                                                 _("Link layers must be rasterized "
-                                                   "before they can be painted on."));
+                      /* TRANSLATORS: the string between parentheses will be a menu path. */
+                      gimp_tool_message (tool, display, _("Link layers must be rasterized (%s)."), menu_path);
+                      gimp_tools_blink_item (display->gimp, GIMP_ITEM (drawable));
                     }
                   else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)))
                     {
-                      gimp_tool_message_literal (tool, display,
-                                                 _("Vector layers must be rasterized "
-                                                   "before they can be painted on."));
+                      /* TRANSLATORS: the string between parentheses will be a menu path. */
+                      gimp_tool_message (tool, display, _("Vector layers must be rasterized (%s)."), menu_path);
+                      gimp_tools_blink_item (display->gimp, GIMP_ITEM (drawable));
                     }
                   else
                     {
