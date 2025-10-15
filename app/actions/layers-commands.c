@@ -183,6 +183,10 @@ static gint   layers_mode_index               (GimpLayerMode          layer_mode
                                                const GimpLayerMode   *modes,
                                                gint                   n_modes);
 
+static void   layers_vector_show_fill_stroke  (GimpAction            *action,
+                                               GVariant              *value,
+                                               gpointer               data);
+
 
 /*  private variables  */
 
@@ -213,7 +217,7 @@ layers_edit_cmd_callback (GimpAction *action,
     }
   else if (gimp_item_is_vector_layer (GIMP_ITEM (layers->data)))
     {
-      layers_vector_fill_stroke_cmd_callback (action, value, data);
+      layers_vector_show_fill_stroke (action, value, data);
     }
   else
     {
@@ -2693,37 +2697,6 @@ layers_scale_callback (GtkWidget             *dialog,
     }
 }
 
-void
-layers_vector_fill_stroke_cmd_callback (GimpAction *action,
-                                        GVariant   *value,
-                                        gpointer    data)
-{
-  GimpImage *image;
-  GimpLayer *layer;
-  GList     *layers;
-  GtkWidget *widget;
-  return_if_no_layers (image, layers, data);
-  return_if_no_widget (widget, data);
-
-  if (g_list_length (layers) != 1)
-    return;
-
-  layer = layers->data;
-
-  if (GIMP_IS_VECTOR_LAYER (layer))
-    {
-      GtkWidget *dialog;
-
-      dialog = vector_layer_options_dialog_new (GIMP_VECTOR_LAYER (layer),
-                                                action_data_get_context (data),
-                                                _("Fill / Stroke"),
-                                                "gimp-vector-layer-stroke",
-                                                GIMP_HELP_LAYER_VECTOR_FILL_STROKE,
-                                                widget);
-      gtk_widget_show (dialog);
-    }
-}
-
 static void
 layers_resize_callback (GtkWidget    *dialog,
                         GimpViewable *viewable,
@@ -2781,4 +2754,35 @@ layers_mode_index (GimpLayerMode         layer_mode,
     i++;
 
   return i;
+}
+
+static void
+layers_vector_show_fill_stroke (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  GList     *layers;
+  GtkWidget *widget;
+  return_if_no_layers (image, layers, data);
+  return_if_no_widget (widget, data);
+
+  if (g_list_length (layers) != 1)
+    return;
+
+  layer = layers->data;
+
+  if (GIMP_IS_VECTOR_LAYER (layer))
+    {
+      GtkWidget *dialog;
+
+      dialog = vector_layer_options_dialog_new (GIMP_VECTOR_LAYER (layer),
+                                                action_data_get_context (data),
+                                                _("Fill / Stroke"),
+                                                "gimp-vector-layer-stroke",
+                                                GIMP_HELP_LAYER_VECTOR_FILL_STROKE,
+                                                widget);
+      gtk_widget_show (dialog);
+    }
 }

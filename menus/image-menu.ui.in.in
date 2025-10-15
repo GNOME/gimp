@@ -435,9 +435,6 @@
         <item><attribute name="action">app.layers-text-to-path</attribute></item>
         <item><attribute name="action">app.layers-text-along-path</attribute></item>
 
-        <!-- Vector Layers -->
-        <item><attribute name="action">app.layers-vector-fill-stroke</attribute></item>
-
         <!-- Action shared to text, vector and link layers -->
         <item><attribute name="action">app.layers-rasterize</attribute></item>
         <item><attribute name="action">app.layers-revert-rasterize</attribute></item>

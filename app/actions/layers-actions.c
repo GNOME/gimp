@@ -206,12 +206,6 @@ static const GimpActionEntry layers_actions[] =
     layers_text_along_path_cmd_callback,
     GIMP_HELP_LAYER_TEXT_ALONG_PATH },
 
-  { "layers-vector-fill-stroke", NULL,
-    NC_("layers-action", "Fill / Stroke..."), NULL, { NULL },
-    NC_("layers-action", "Edit the fill and stroke of this vector layer"),
-    layers_vector_fill_stroke_cmd_callback,
-    GIMP_HELP_LAYER_VECTOR_FILL_STROKE },
-
   { "layers-resize", GIMP_ICON_OBJECT_RESIZE,
     NC_("layers-action", "Layer B_oundary Size..."), NULL, { NULL },
     NC_("layers-action", "Adjust the layer dimensions"),
@@ -1072,8 +1066,6 @@ layers_actions_update (GimpActionGroup *group,
 
   SET_VISIBLE   ("layers-text-to-path",      n_text_layers > 0 && !ac);
   SET_VISIBLE   ("layers-text-along-path",   text_layer && !ac);
-
-  SET_VISIBLE   ("layers-vector-fill-stroke", vector_layer && !ac);
 
   SET_SENSITIVE ("layers-resize",          n_selected_layers == 1 && all_writable && all_movable && !ac);
   SET_SENSITIVE ("layers-resize-to-image", all_writable && all_movable && !ac);
