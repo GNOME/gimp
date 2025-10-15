@@ -2345,6 +2345,35 @@ gimp_text_tool_toggle_tag (GimpTextTool *text_tool,
 }
 
 void
+gimp_text_tool_paste_clipboard_unformatted (GimpTextTool *text_tool)
+{
+  GimpDisplayShell *shell;
+  GtkClipboard     *clipboard;
+  gchar            *unformatted_text;
+
+  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
+
+  shell = gimp_display_get_shell (GIMP_TOOL (text_tool)->display);
+
+  clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
+                                        GDK_SELECTION_CLIPBOARD);
+
+  unformatted_text = gtk_clipboard_wait_for_text (clipboard);
+
+  if (unformatted_text)
+    {
+      /* First delete text in the current selection (possibly empty),
+       * in order to allow overwriting. */
+      gtk_text_buffer_delete_selection (GTK_TEXT_BUFFER (text_tool->buffer),
+                                        TRUE, TRUE);
+
+      gimp_text_buffer_insert (text_tool->buffer, unformatted_text);
+    }
+
+  g_free (unformatted_text);
+}
+
+void
 gimp_text_tool_create_path (GimpTextTool *text_tool)
 {
   GimpPath *path;

@@ -8,6 +8,7 @@
       <item><attribute name="action">text-tool.text-tool-cut</attribute></item>
       <item><attribute name="action">text-tool.text-tool-copy</attribute></item>
       <item><attribute name="action">text-tool.text-tool-paste</attribute></item>
+      <item><attribute name="action">text-tool.text-tool-paste-unformatted</attribute></item>
       <item><attribute name="action">text-tool.text-tool-delete</attribute></item>
       <section>
         <item><attribute name="action">text-tool.text-tool-toggle-bold</attribute></item>

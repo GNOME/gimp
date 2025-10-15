@@ -61,6 +61,12 @@ static const GimpActionEntry text_tool_actions[] =
     text_tool_paste_cmd_callback,
     GIMP_HELP_TEXT_TOOL_PASTE },
 
+  { "text-tool-paste-unformatted", NULL,
+    NC_("text-tool-action", "Paste un_formatted text"), NULL,
+    { "<primary><shift>V", NULL }, NULL,
+    text_tool_paste_unformatted_cmd_callback,
+    NULL },
+
   { "text-tool-toggle-bold", GIMP_ICON_FORMAT_TEXT_BOLD,
     NC_("text-tool-action", "_Bold"), NULL, { "<primary>B", NULL }, NULL,
     text_tool_toggle_bold_cmd_callback,
@@ -204,17 +210,18 @@ text_tool_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("text-tool-cut",              text_sel);
-  SET_SENSITIVE ("text-tool-copy",             text_sel);
-  SET_SENSITIVE ("text-tool-paste",            clip);
-  SET_SENSITIVE ("text-tool-toggle-bold",      text_sel);
-  SET_SENSITIVE ("text-tool-toggle-italic",    text_sel);
-  SET_SENSITIVE ("text-tool-toggle-underline", text_sel);
-  SET_SENSITIVE ("text-tool-delete",           text_sel);
-  SET_SENSITIVE ("text-tool-clear",            text_layer);
-  SET_SENSITIVE ("text-tool-load",             image);
-  SET_SENSITIVE ("text-tool-text-to-path",     text_layer);
-  SET_SENSITIVE ("text-tool-text-along-path",  text_layer && g_list_length (paths) == 1);
+  SET_SENSITIVE ("text-tool-cut",               text_sel);
+  SET_SENSITIVE ("text-tool-copy",              text_sel);
+  SET_SENSITIVE ("text-tool-paste",             clip);
+  SET_SENSITIVE ("text-tool-paste-unformatted", clip);
+  SET_SENSITIVE ("text-tool-toggle-bold",       text_sel);
+  SET_SENSITIVE ("text-tool-toggle-italic",     text_sel);
+  SET_SENSITIVE ("text-tool-toggle-underline",  text_sel);
+  SET_SENSITIVE ("text-tool-delete",            text_sel);
+  SET_SENSITIVE ("text-tool-clear",             text_layer);
+  SET_SENSITIVE ("text-tool-load",              image);
+  SET_SENSITIVE ("text-tool-text-to-path",      text_layer);
+  SET_SENSITIVE ("text-tool-text-along-path",   text_layer && g_list_length (paths) == 1);
 
   direction = gimp_text_tool_get_direction (text_tool);
   for (i = 0; i < G_N_ELEMENTS (text_tool_direction_actions); i++)
