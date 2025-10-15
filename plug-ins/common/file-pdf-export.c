@@ -250,6 +250,8 @@ static void             drawPath                 (GimpLayer            *layer,
                                                   cairo_t              *cr,
                                                   gdouble               x_res,
                                                   gdouble               y_res);
+static void             draw_path_pattern        (cairo_t              *cr,
+                                                  GimpPattern          *pattern);
 
 static gboolean         draw_layer               (GimpLayer           **layers,
                                                   gint                  n_layers,
@@ -1815,7 +1817,8 @@ drawPath (GimpLayer *layer,
           gdouble    y_res)
 {
   GimpVectorLayer *vector_layer;
-  GimpPath        *path;
+  GimpPath        *path    = NULL;
+  GimpPattern     *pattern = NULL;
   GeglColor       *color;
   gdouble          rgb[3];
   gboolean         set_fill;
@@ -1875,11 +1878,20 @@ drawPath (GimpLayer *layer,
   if (set_fill)
     {
       color = gimp_vector_layer_get_fill_color (vector_layer);
-      gegl_color_get_pixel (color,
-                            babl_format_with_space ("R'G'B' double", NULL),
-                            rgb);
-      cairo_set_source_rgb (cr, rgb[0], rgb[1], rgb[2]);
-      g_object_unref (color);
+      if (color)
+        {
+          gegl_color_get_pixel (color,
+                                babl_format_with_space ("R'G'B' double", NULL),
+                                rgb);
+          cairo_set_source_rgb (cr, rgb[0], rgb[1], rgb[2]);
+          g_object_unref (color);
+        }
+      else
+        {
+          pattern = gimp_vector_layer_get_fill_pattern (vector_layer);
+
+          draw_path_pattern (cr, pattern);
+        }
 
       if (set_stroke)
         cairo_fill_preserve (cr);
@@ -1898,11 +1910,20 @@ drawPath (GimpLayer *layer,
       gdouble           *dash_pattern;
 
       color = gimp_vector_layer_get_stroke_color (vector_layer);
-      gegl_color_get_pixel (color,
-                            babl_format_with_space ("R'G'B' double", NULL),
-                            rgb);
-      cairo_set_source_rgb (cr, rgb[0], rgb[1], rgb[2]);
-      g_object_unref (color);
+      if (color)
+        {
+          gegl_color_get_pixel (color,
+                                babl_format_with_space ("R'G'B' double", NULL),
+                                rgb);
+          cairo_set_source_rgb (cr, rgb[0], rgb[1], rgb[2]);
+          g_object_unref (color);
+        }
+      else
+        {
+          pattern = gimp_vector_layer_get_stroke_pattern (vector_layer);
+
+          draw_path_pattern (cr, pattern);
+        }
 
       stroke_width = gimp_vector_layer_get_stroke_width (vector_layer);
       cairo_set_line_width (cr, stroke_width);
@@ -1953,6 +1974,42 @@ drawPath (GimpLayer *layer,
     }
 
   cairo_restore (cr);
+}
+
+static void
+draw_path_pattern (cairo_t     *cr,
+                   GimpPattern *pattern)
+{
+  cairo_surface_t *pattern_image = NULL;
+  GimpImage       *temp_image;
+  GimpLayer       *temp_layer;
+  gint             width;
+  gint             height;
+  GeglBuffer      *src_buffer;
+  GeglBuffer      *dst_buffer;
+
+  src_buffer = gimp_pattern_get_buffer (pattern, 0, 0,
+                                        babl_format ("R'G'B' u8"));
+  width      = gegl_buffer_get_width (src_buffer);
+  height     = gegl_buffer_get_height (src_buffer);
+  temp_image = gimp_image_new (width, height, GIMP_RGB);
+  temp_layer = gimp_layer_new (temp_image, NULL, width, height,
+                               GIMP_RGBA_IMAGE, 100.0,
+                               GIMP_LAYER_MODE_NORMAL);
+  gimp_image_insert_layer (temp_image, temp_layer, NULL, 0);
+  dst_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (temp_layer));
+  gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dst_buffer, NULL);
+
+  g_object_unref (src_buffer);
+  g_object_unref (dst_buffer);
+
+  pattern_image = get_cairo_surface (GIMP_DRAWABLE (temp_layer), FALSE,
+                                     NULL);
+  gimp_image_delete (temp_image);
+
+  cairo_set_source_surface (cr, pattern_image, 0, 0);
+  cairo_surface_destroy (pattern_image);
+  cairo_pattern_set_extend (cairo_get_source (cr), CAIRO_EXTEND_REPEAT);
 }
 
 static gboolean
