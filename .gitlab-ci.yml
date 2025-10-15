@@ -514,7 +514,7 @@ gimp-snap:
       interruptible: true
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/ && $CI_JOB_NAME !~ /.*mingw32.*/ && $CI_JOB_NAME !~ /.*installer.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/ && $CI_JOB_NAME !~ /.*eol.*/ && $CI_JOB_NAME !~ /.*installer.*/'
       interruptible: true
       variables:
         STORE_OPTION: '-Dms-store=true'
@@ -525,7 +525,7 @@ gimp-snap:
     - if: '($GIMP_CI_WIN_INSTALLER != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_WIN_INSTALLER.*/) && $CI_JOB_NAME !~ /.*store.*/'
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '($GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/) && $CI_JOB_NAME !~ /.*mingw32.*/ && $CI_JOB_NAME !~ /.*installer.*/'
+    - if: '($GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/) && $CI_JOB_NAME !~ /.*eol.*/ && $CI_JOB_NAME !~ /.*installer.*/'
       variables:
         STORE_OPTION: '-Dms-store=true'
     - <<: *CI_RELEASE
