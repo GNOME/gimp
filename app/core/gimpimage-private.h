@@ -138,6 +138,7 @@ struct _GimpImagePrivate
   gboolean           quick_mask_state;      /*  TRUE if quick mask is on       */
   gboolean           quick_mask_inverted;   /*  TRUE if quick mask is inverted */
   GeglColor         *quick_mask_color;      /*  rgba triplet of the color      */
+  GList             *quick_mask_selected;   /*  Drawables selected to revert   */
 
   /*  Undo apparatus  */
   GimpUndoStack     *undo_stack;            /*  stack for undo operations    */

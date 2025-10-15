@@ -39,9 +39,6 @@
 #include "gimp-intl.h"
 
 
-#define CHANNEL_WAS_ACTIVE (0x2)
-
-
 /*  public functions  */
 
 void
@@ -51,7 +48,6 @@ gimp_image_set_quick_mask_state (GimpImage *image,
   GimpImagePrivate *private;
   GimpChannel      *selection;
   GimpChannel      *mask;
-  gboolean          channel_was_active;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
@@ -60,27 +56,18 @@ gimp_image_set_quick_mask_state (GimpImage *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  /*  Keep track of the state so that we can make the right drawable
-   *  active again when deactiviting quick mask (see bug #134371).
-   */
-  if (private->quick_mask_state)
-    channel_was_active = (private->quick_mask_state & CHANNEL_WAS_ACTIVE) != 0;
-  else
-    channel_was_active = (gimp_image_get_selected_channels (image) != NULL);
-
   /*  Set private->quick_mask_state early so we can return early when
    *  being called recursively.
    */
-  private->quick_mask_state = (active
-                               ? TRUE | (channel_was_active ?
-                                         CHANNEL_WAS_ACTIVE : 0)
-                               : FALSE);
+  private->quick_mask_state = active;
 
   selection = gimp_image_get_mask (image);
   mask      = gimp_image_get_quick_mask (image);
 
   if (active)
     {
+      private->quick_mask_selected = gimp_image_get_selected_drawables (image);
+
       if (! mask)
         {
           GimpLayer *floating_sel;
@@ -115,7 +102,8 @@ gimp_image_set_quick_mask_state (GimpImage *image,
     {
       if (mask)
         {
-          GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
+          GimpLayer *floating_sel  = gimp_image_get_floating_selection (image);
+          GType      selected_type = GIMP_TYPE_LAYER;
 
           gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,
                                        C_("undo-type", "Disable Quick Mask"));
@@ -134,11 +122,16 @@ gimp_image_set_quick_mask_state (GimpImage *image,
                                   TRUE, FALSE, 0.0, 0.0);
           gimp_image_remove_channel (image, mask, TRUE, NULL);
 
-          if (! channel_was_active)
-            gimp_image_unset_selected_channels (image);
+          if (private->quick_mask_selected)
+            selected_type = G_TYPE_FROM_INSTANCE (private->quick_mask_selected->data);
+
+          gimp_image_set_selected_items (image, selected_type,
+                                         private->quick_mask_selected);
 
           gimp_image_undo_group_end (image);
         }
+
+      g_clear_pointer (&private->quick_mask_selected, g_list_free);
     }
 
   gimp_image_quick_mask_changed (image);
