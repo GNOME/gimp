@@ -39,6 +39,7 @@
 #include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimplist.h"
+#include "core/gimprasterizable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo-push.h"
 
@@ -461,7 +462,9 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
       gtk_widget_set_sensitive (editor->lower_button,
                                 index < last_editable);
       gtk_widget_set_sensitive (editor->merge_button,
-                                ! is_group);
+                                ! is_group &&
+                                (! GIMP_IS_RASTERIZABLE (editor->drawable) ||
+                                 gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (editor->drawable))));
       gtk_widget_set_sensitive (editor->remove_button,
                                 is_editable);
     }
