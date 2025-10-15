@@ -312,8 +312,7 @@ layers_edit_vector_cmd_callback (GimpAction *action,
     }
 
   if (GIMP_IS_PATH_TOOL (active_tool))
-    gimp_path_tool_set_path (GIMP_PATH_TOOL (active_tool),
-                             GIMP_VECTOR_LAYER (layer)->options->path);
+    gimp_path_tool_set_path (GIMP_PATH_TOOL (active_tool), GIMP_VECTOR_LAYER (layer), NULL);
 }
 
 void

@@ -139,7 +139,7 @@ paths_edit_cmd_callback (GimpAction *action,
     }
 
   if (GIMP_IS_PATH_TOOL (active_tool))
-    gimp_path_tool_set_path (GIMP_PATH_TOOL (active_tool), paths->data);
+    gimp_path_tool_set_path (GIMP_PATH_TOOL (active_tool), NULL, paths->data);
 }
 
 void

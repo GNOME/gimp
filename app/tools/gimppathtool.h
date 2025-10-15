@@ -64,4 +64,5 @@ void    gimp_path_tool_register (GimpToolRegisterCallback  callback,
 GType   gimp_path_tool_get_type (void) G_GNUC_CONST;
 
 void    gimp_path_tool_set_path (GimpPathTool             *path_tool,
+                                 GimpVectorLayer          *layer,
                                  GimpPath                 *path);
