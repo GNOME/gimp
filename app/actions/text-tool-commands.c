@@ -85,6 +85,16 @@ text_tool_paste_cmd_callback (GimpAction *action,
 }
 
 void
+text_tool_paste_unformatted_cmd_callback (GimpAction *action,
+                                          GVariant   *value,
+                                          gpointer    data)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
+
+  gimp_text_tool_paste_clipboard_unformatted (text_tool);
+}
+
+void
 text_tool_toggle_bold_cmd_callback (GimpAction *action,
                                     GVariant   *value,
                                     gpointer    data)

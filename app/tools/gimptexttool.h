@@ -112,6 +112,8 @@ void       gimp_text_tool_delete_selection       (GimpTextTool  *text_tool);
 void       gimp_text_tool_cut_clipboard          (GimpTextTool  *text_tool);
 void       gimp_text_tool_copy_clipboard         (GimpTextTool  *text_tool);
 void       gimp_text_tool_paste_clipboard        (GimpTextTool  *text_tool);
+void       gimp_text_tool_paste_clipboard_unformatted
+                                                 (GimpTextTool  *text_tool);
 void       gimp_text_tool_toggle_tag             (GimpTextTool  *text_tool,
                                                   GtkTextTag    *tag);
 
