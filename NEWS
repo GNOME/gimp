@@ -33,6 +33,12 @@ Core:
     previous stable versions so any custom shortcut associated to
     "layers-text-discard" will be migrated as shortcut of
     "layers-rasterize".
+  - When the GUI binary is run with --no-interface (-i) CLI option, we
+    branch on the same codebase as gimp-console. Therefore even though
+    this GUI binary still links with GTK, it won't run any GTK code and
+    can therefore be run on headless servers.
+  - Action "layers-vector-fill-stroke" removed (only available since
+    3.1.4, not in any stable release).
 
 Tools:
 
@@ -54,6 +60,8 @@ Graphical User Interface:
     added to Layer menu when the selected layer is a link layer.
   - The GimpColorHexEntry will now update the chosen color as you type.
   - Use a standard, yet extended, AppMenu on macOS.
+  - Advertize the menu path to "Rasterize" items in error messages when
+    trying to edit a rasterizable drawable.
 
 Plug-Ins:
 
@@ -136,7 +144,7 @@ API:
     * gimp_rasterizable_rasterize
     * gimp_rasterizable_restore
   - Removed libgimp functions:
-    * gimp_vector_layer_discard (since 3.1.2, but never in a stable
+    * gimp_vector_layer_discard (since 3.1.4, but never in a stable
       release).
   - New libgimp class: GimpLinkLayer
   - New libgimpbase enum types:
