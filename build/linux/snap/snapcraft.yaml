@@ -1,6 +1,6 @@
-name: gimp-experimental
+name: gimp
 adopt-info: gimp
-grade: devel
+grade: stable
 base: core24
 compression: lzo
 confinement: strict
@@ -148,15 +148,9 @@ parts:
     after:
       - babl
       - gegl
-    source: .
-    source-type: local
-    override-pull: |
-      craftctl default
-      if ! git describe --tags --exact-match >/dev/null 2>&1 && [ "$SNAPCRAFT_PROJECT_NAME" = 'gimp' ]; then
-        printf '\033[31m(ERROR)\033[0m non-tagged source can not be deployed to gimp snap. Please, checkout gimp repo to a tagged commit\n' 
-        exit 1
-      fi
-      craftctl set version="$(awk -F"'" '/version:/ {print $2; exit}' $CRAFT_PART_SRC/meson.build)"
+    source: https://gitlab.gnome.org/GNOME/gimp.git
+    source-depth: 1
+    source-tag: GIMP_3_1_4
     build-environment: *SNAP_ENVIRON
     plugin: meson
     meson-parameters:
@@ -166,7 +160,7 @@ parts:
       - -Drelocatable-bundle=yes
       - -Dcheck-update=no
       - -Denable-default-bin=enabled
-      - -Dbuild-id=org.gimp.GIMP.snapcraft.experimental
+      - -Dbuild-id=org.gimp.GIMP.snapcraft.preview
     build-packages:
       - bison
       - flex
