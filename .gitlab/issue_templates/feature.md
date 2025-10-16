@@ -10,7 +10,7 @@ It is important that you fill all the fields of the template. -->
 - If the feature is UI-related, please DO NOT REPORT HERE but on
   gimp-ux: https://gitlab.gnome.org/Teams/GIMP/Design/gimp-ux/-/issues;
 - If the feature is about some image file format on GIMP, first check if it
-  is not already listed on https://developer.gimp.org/core/standards/images,
+  is not already listed on https://developer.gimp.org/core/coding/standards/images,
   then you can make the request, ideally linking relevant resources (e.g. specs);
 - If you have a patch, see: https://developer.gimp.org/core/submit-patch/ -->
 
