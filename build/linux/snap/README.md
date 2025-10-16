@@ -43,8 +43,10 @@ Unlike the flatpak, we do not need to manually set babl, gegl or GIMP tags, just
   use "experimental" on build-id at gimp part "meson-parameters" and
   add "name: gimp-experimental".
 
-* For a new **development** series, set "stable" on "grade" and
+* For a **development** series, set "stable" on "grade" and
   use "preview" on build-id at gimp part "meson-parameters".
 
-* For a new **stable** series, set "stable" on "grade" and
+* For a **stable** series, set "stable" on "grade" and
   use "latest" on build-id at gimp part "meson-parameters".
+  *Important: if GIMP major version was bumped, so
+  bump gimp-plugins `content:` too*.
