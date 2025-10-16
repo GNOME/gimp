@@ -7,7 +7,7 @@ It is important that you fill all the fields of the template. -->
 ### Environment/Versions
 
 - GIMP version number:
-- Package: <!--[flatpak? Installer from gimp.org? If another installer, tell us where from] (write it after the > symbol)-->
+- Package: <!--[Flatpak? Snap? Installer from gimp.org? MS Store package? If another installer, tell us where from] (write it after the > symbol)-->
 - Operating System: <!--[Windows? macOS? Linux? All? Add OS versions too] (write it after the > symbol) -->
 - (if Linux) Display system: <!--[X11? Wayland? Which compositor and version?] (write it after the > symbol) -->
 
