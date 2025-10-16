@@ -68,7 +68,7 @@ plugs:
     target: $SNAP/npu-libs
   gimp-plugins:
     interface: content
-    content: gimp-plugins
+    content: gimp-plugins-3
     target: $SNAP/gimp-plugins
 
 parts:
