@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 13:10+0200\n"
-"PO-Revision-Date: 2025-10-08 13:17+0200\n"
+"POT-Creation-Date: 2025-10-17 09:53+0200\n"
+"PO-Revision-Date: 2025-10-17 10:15+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -44,7 +44,7 @@ msgstr "Esempio di plugin in C"
 #: ../plug-ins/common/nl-filter.c:215 ../plug-ins/common/qbist.c:254
 #: ../plug-ins/common/sample-colorize.c:425
 #: ../plug-ins/common/smooth-palette.c:193 ../plug-ins/common/sparkle.c:301
-#: ../plug-ins/common/sphere-designer.c:3199 ../plug-ins/common/tile.c:222
+#: ../plug-ins/common/sphere-designer.c:3192 ../plug-ins/common/tile.c:222
 #: ../plug-ins/common/tile-small.c:311 ../plug-ins/common/van-gogh-lic.c:242
 #: ../plug-ins/common/warp.c:344 ../plug-ins/common/wavelet-decompose.c:179
 #: ../plug-ins/flame/flame.c:297
@@ -77,8 +77,8 @@ msgstr "Esempio plugin in C"
 #: ../plug-ins/common/file-heif.c:2487
 #: ../plug-ins/common/file-pdf-export.c:1069
 #: ../plug-ins/common/file-pdf-load.c:585 ../plug-ins/common/qbist.c:839
-#: ../plug-ins/common/qbist.c:881 ../plug-ins/common/sphere-designer.c:2291
-#: ../plug-ins/common/sphere-designer.c:2655
+#: ../plug-ins/common/qbist.c:881 ../plug-ins/common/sphere-designer.c:2284
+#: ../plug-ins/common/sphere-designer.c:2648
 #: ../plug-ins/common/unit-editor.c:427 ../plug-ins/flame/flame.c:617
 #: ../plug-ins/flame/flame.c:822
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1513
@@ -156,7 +156,7 @@ msgstr "Esempio di plugin in JavaScript (GJS)"
 #: ../extensions/goat-exercises/goat-exercise-py3.py:79
 #: ../plug-ins/common/cml-explorer.c:1375 ../plug-ins/common/file-heif.c:2488
 #: ../plug-ins/common/file-pdf-load.c:586
-#: ../plug-ins/common/sphere-designer.c:2656
+#: ../plug-ins/common/sphere-designer.c:2649
 #: ../plug-ins/common/unit-editor.c:260 ../plug-ins/file-exr/file-exr.c:458
 #: ../plug-ins/file-psd/psd-load.c:3896 ../plug-ins/flame/flame.c:823
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1403
@@ -1046,8 +1046,8 @@ msgstr "Seme Casuale"
 #: ../plug-ins/common/cml-explorer.c:2355 ../plug-ins/common/curve-bend.c:1249
 #: ../plug-ins/common/curve-bend.c:1788 ../plug-ins/common/file-cel.c:989
 #: ../plug-ins/common/qbist.c:840 ../plug-ins/common/qbist.c:995
-#: ../plug-ins/common/sphere-designer.c:2294
-#: ../plug-ins/common/sphere-designer.c:2704 ../plug-ins/flame/flame.c:619
+#: ../plug-ins/common/sphere-designer.c:2287
+#: ../plug-ins/common/sphere-designer.c:2697 ../plug-ins/flame/flame.c:619
 #: ../plug-ins/flame/flame.c:1234
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1514
@@ -1064,8 +1064,8 @@ msgstr "A_pri"
 #: ../plug-ins/common/cml-explorer.c:2145 ../plug-ins/common/curve-bend.c:1261
 #: ../plug-ins/common/curve-bend.c:1823
 #: ../plug-ins/common/file-pdf-export.c:1068 ../plug-ins/common/qbist.c:882
-#: ../plug-ins/common/qbist.c:1003 ../plug-ins/common/sphere-designer.c:2294
-#: ../plug-ins/common/sphere-designer.c:2712 ../plug-ins/flame/flame.c:619
+#: ../plug-ins/common/qbist.c:1003 ../plug-ins/common/sphere-designer.c:2287
+#: ../plug-ins/common/sphere-designer.c:2705 ../plug-ins/flame/flame.c:619
 #: ../plug-ins/flame/flame.c:1242
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
@@ -1236,7 +1236,7 @@ msgid "Graph of the Current Settings"
 msgstr "Grafico delle impostazioni correnti"
 
 #: ../plug-ins/common/cml-explorer.c:2012
-#: ../plug-ins/common/plugin-browser.c:562
+#: ../plug-ins/common/plugin-browser.c:560
 #: ../plug-ins/common/procedure-browser.c:169
 #: ../plug-ins/filter-browser/filter-browser.c:727
 #: ../plug-ins/gfig/gfig-dialog.c:355 ../plug-ins/gfig/gfig-dialog.c:1215
@@ -1261,7 +1261,7 @@ msgstr "Salva parametri Esploratore CML"
 #: ../plug-ins/common/file-png.c:1923 ../plug-ins/common/file-raw-data.c:1509
 #: ../plug-ins/common/file-raw-data.c:1538 ../plug-ins/common/file-sunras.c:614
 #: ../plug-ins/common/file-tga.c:1225 ../plug-ins/common/file-tim.c:630
-#: ../plug-ins/common/file-xmc.c:1272 ../plug-ins/common/sphere-designer.c:2205
+#: ../plug-ins/common/file-xmc.c:1272 ../plug-ins/common/sphere-designer.c:2198
 #: ../plug-ins/file-bmp/bmp-export.c:336 ../plug-ins/file-fli/fli-gimp.c:799
 #: ../plug-ins/file-icns/file-icns-export.c:444
 #: ../plug-ins/file-ico/ico-export.c:1366
@@ -2036,12 +2036,12 @@ msgstr "Impossibile operare su selezioni vuote."
 #: ../plug-ins/common/file-raw-data.c:796
 #: ../plug-ins/common/file-raw-data.c:1841
 #: ../plug-ins/common/file-seattle-filmworks.c:232
-#: ../plug-ins/common/file-sunras.c:435 ../plug-ins/common/file-svg.c:556
+#: ../plug-ins/common/file-sunras.c:435 ../plug-ins/common/file-svg.c:754
 #: ../plug-ins/common/file-tga.c:427 ../plug-ins/common/file-tim.c:278
 #: ../plug-ins/common/file-wbmp.c:250 ../plug-ins/common/file-wbmp.c:329
 #: ../plug-ins/common/file-xbm.c:725 ../plug-ins/common/file-xmc.c:656
 #: ../plug-ins/common/file-xmc.c:895 ../plug-ins/common/file-xwd.c:465
-#: ../plug-ins/common/sphere-designer.c:2094
+#: ../plug-ins/common/sphere-designer.c:2087
 #: ../plug-ins/file-bmp/bmp-load.c:276 ../plug-ins/file-dds/ddsread.c:169
 #: ../plug-ins/file-faxg3/faxg3.c:260 ../plug-ins/file-fits/fits.c:368
 #: ../plug-ins/file-fli/fli-gimp.c:440 ../plug-ins/file-fli/fli-gimp.c:491
@@ -2080,7 +2080,7 @@ msgstr "Opzioni"
 #. preview
 #: ../plug-ins/common/curve-bend.c:1095
 #: ../plug-ins/gimpressionist/orientmap.c:589
-#: ../plug-ins/gimpressionist/sizemap.c:458
+#: ../plug-ins/gimpressionist/sizemap.c:462
 #: ../plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Anteprima"
@@ -2129,7 +2129,7 @@ msgstr "Scambia le due curve"
 
 #. The Reset button
 #: ../plug-ins/common/curve-bend.c:1232
-#: ../plug-ins/common/sphere-designer.c:2654
+#: ../plug-ins/common/sphere-designer.c:2647
 #: ../plug-ins/common/tile-small.c:522 ../plug-ins/gimpressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:912
 msgid "_Reset"
@@ -2739,10 +2739,11 @@ msgstr ""
 #: ../plug-ins/common/file-pix.c:636 ../plug-ins/common/file-png.c:1915
 #: ../plug-ins/common/file-pnm.c:1623 ../plug-ins/common/file-ps.c:1368
 #: ../plug-ins/common/file-qoi.c:350 ../plug-ins/common/file-sunras.c:605
-#: ../plug-ins/common/file-tga.c:1217 ../plug-ins/common/file-tim.c:622
-#: ../plug-ins/common/file-xbm.c:1026 ../plug-ins/common/file-xpm.c:682
-#: ../plug-ins/common/file-xwd.c:693 ../plug-ins/file-bmp/bmp-export.c:328
-#: ../plug-ins/file-fits/fits.c:646 ../plug-ins/file-fli/fli-gimp.c:766
+#: ../plug-ins/common/file-svg.c:792 ../plug-ins/common/file-tga.c:1217
+#: ../plug-ins/common/file-tim.c:622 ../plug-ins/common/file-xbm.c:1026
+#: ../plug-ins/common/file-xpm.c:682 ../plug-ins/common/file-xwd.c:693
+#: ../plug-ins/file-bmp/bmp-export.c:328 ../plug-ins/file-fits/fits.c:646
+#: ../plug-ins/file-fli/fli-gimp.c:766
 #: ../plug-ins/file-icns/file-icns-export.c:824
 #: ../plug-ins/file-ico/ico-export.c:1358
 #: ../plug-ins/file-ico/ico-export.c:1572
@@ -4753,6 +4754,7 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Bordo inferiore fuori dai limiti (deve essere < %d): %d"
 
 #: ../plug-ins/common/file-pcx.c:1266 ../plug-ins/common/file-qoi.c:369
+#: ../plug-ins/common/file-svg.c:801 ../plug-ins/common/file-svg.c:817
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Fallita la scrittura sul file \"%s\": %s"
@@ -5063,7 +5065,7 @@ msgstr "Immagine PNG"
 msgid "APNG image"
 msgstr "Immagine APNG"
 
-#: ../plug-ins/common/file-png.c:331
+#: ../plug-ins/common/file-png.c:331 ../plug-ins/common/file-svg.c:356
 msgid "PNG"
 msgstr "PNG"
 
@@ -5632,7 +5634,7 @@ msgstr ""
 "Se abilitata, le proporzioni verranno mantenute durante l'esportazione. "
 "Altrimenti verranno utilizzati i valori di larghezza e altezza."
 
-#: ../plug-ins/common/file-ps.c:565 ../plug-ins/map-object/map-object-ui.c:723
+#: ../plug-ins/common/file-ps.c:565 ../plug-ins/map-object/map-object-ui.c:732
 msgid "Rotation"
 msgstr "Rotazione"
 
@@ -6498,51 +6500,88 @@ msgstr "EOF riscontrato in lettura"
 msgid "Write error occurred"
 msgstr "Errore di scrittura"
 
-#: ../plug-ins/common/file-svg.c:173
+#: ../plug-ins/common/file-svg.c:276
 msgid "SVG image"
 msgstr "Immagine SVG"
 
-#: ../plug-ins/common/file-svg.c:186
+#: ../plug-ins/common/file-svg.c:279
+msgid "Loads files in SVG file format"
+msgstr "Carica file in formato SVG"
+
+#: ../plug-ins/common/file-svg.c:294
 msgid "SVG"
 msgstr "SVG"
 
-#: ../plug-ins/common/file-svg.c:195
+#: ../plug-ins/common/file-svg.c:303
 msgid "_Paths"
 msgstr "_Tracciati"
 
-#: ../plug-ins/common/file-svg.c:196
+#: ../plug-ins/common/file-svg.c:304
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
 "Se e come importare i tracciati in modo che possano essere utilizzati con lo "
 "strumento tracciati"
 
-#: ../plug-ins/common/file-svg.c:197
+#: ../plug-ins/common/file-svg.c:305
 msgid "Don't import paths"
 msgstr "Non importare i tracciati"
 
-#: ../plug-ins/common/file-svg.c:198
+#: ../plug-ins/common/file-svg.c:306
 msgid "Import paths individually"
 msgstr "Importa i tracciati singolarmente"
 
-#: ../plug-ins/common/file-svg.c:199
+#: ../plug-ins/common/file-svg.c:307
 msgid "Merge imported paths"
 msgstr "Fondi tracciati importati"
+
+#: ../plug-ins/common/file-svg.c:319
+msgid "Scalable Vector Graphic"
+msgstr "Scalable Vector Graphic"
+
+#: ../plug-ins/common/file-svg.c:322
+msgid "Exports files in SVG file format"
+msgstr "Esporta file in formato file SVG"
+
+#: ../plug-ins/common/file-svg.c:323
+msgid "Exports files in SVG file format (Scalable Vector Graphic)"
+msgstr "Esporta file in formato SVG (Scalable Vector Graphic)"
+
+#: ../plug-ins/common/file-svg.c:348
+msgid "_Title"
+msgstr "_Titolo"
+
+#: ../plug-ins/common/file-svg.c:349
+msgid "Optional <title> for SVG"
+msgstr "Titolo opzionale per l'SVG"
+
+#: ../plug-ins/common/file-svg.c:354
+msgid "Em_bed raster layers as"
+msgstr "I_ncorpora livelli raster come"
+
+#: ../plug-ins/common/file-svg.c:357 ../plug-ins/file-jpeg/jpeg.c:195
+#: ../plug-ins/file-tiff/file-tiff.c:251
+msgid "JPEG"
+msgstr "JPEG"
+
+#: ../plug-ins/common/file-svg.c:358
+msgid "Do not export raster layers"
+msgstr "Non esportare i livelli raster"
 
 #. We need to ask explicitly before using the "unlimited" size
 #. * option (XML_PARSE_HUGE in libxml) because it is considered
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: ../plug-ins/common/file-svg.c:245
+#: ../plug-ins/common/file-svg.c:405
 msgid "Disable safety size limits?"
 msgstr "Disattivare i limiti dimensioni di sicurezza?"
 
-#: ../plug-ins/common/file-svg.c:250
+#: ../plug-ins/common/file-svg.c:410
 msgid "_No"
 msgstr "_No"
 
-#: ../plug-ins/common/file-svg.c:251
+#: ../plug-ins/common/file-svg.c:411
 msgid "_Yes"
 msgstr "_Sì"
 
@@ -6556,7 +6595,7 @@ msgstr "_Sì"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: ../plug-ins/common/file-svg.c:275
+#: ../plug-ins/common/file-svg.c:435
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6566,28 +6605,38 @@ msgstr ""
 "La disattivazione dei limiti di sicurezza può essere d'aiuto. I file SVG "
 "dannosi potrebbero farne uso per non consumare troppa memoria."
 
-#: ../plug-ins/common/file-svg.c:287
+#: ../plug-ins/common/file-svg.c:447
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr ""
 "Per motivi di sicurezza, questo dovrebbe essere usato solo per ingressi "
 "attendibili!"
 
-#: ../plug-ins/common/file-svg.c:294
+#: ../plug-ins/common/file-svg.c:454
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "Riprovare senza limiti che impediscano l'analisi di dati molto grandi?"
 
-#: ../plug-ins/common/file-svg.c:558 ../plug-ins/file-exr/file-exr.c:381
+#: ../plug-ins/common/file-svg.c:756 ../plug-ins/file-exr/file-exr.c:381
 #: ../plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "Motivo sconosciuto"
 
-#: ../plug-ins/common/file-svg.c:564
+#: ../plug-ins/common/file-svg.c:762
 msgid "Rendering SVG"
 msgstr "Rendering SVG"
 
-#: ../plug-ins/common/file-svg.c:574
+#: ../plug-ins/common/file-svg.c:772
 msgid "Rendered SVG"
 msgstr "SVG renderizzato"
+
+#: ../plug-ins/common/file-svg.c:1123
+msgid ""
+"The SVG format only requires viewers to display image links for SVG, PNG, "
+"and JPEG images.\n"
+"Your image links external image files in other formats which may not show up "
+"in all viewers."
+msgstr ""
+"Il formato SVG richiede ai visualizzatori di visualizzare solo i collegamenti alle immagini SVG, PNG e JPEG.\n"
+"L'immagine collega file di immagini esterni in altri formati che potrebbero non essere visualizzati in tutti i visualizzatori."
 
 #: ../plug-ins/common/file-tga.c:262 ../plug-ins/common/file-tga.c:288
 msgid "TarGA image"
@@ -7954,15 +8003,15 @@ msgstr "Miglioramento bordi"
 msgid "NL Filter"
 msgstr "Filtro NL"
 
-#: ../plug-ins/common/plugin-browser.c:169
+#: ../plug-ins/common/plugin-browser.c:168
 msgid "_Plug-In Browser"
 msgstr "Navigatore _plug-in"
 
-#: ../plug-ins/common/plugin-browser.c:174
+#: ../plug-ins/common/plugin-browser.c:173
 msgid "Display information about plug-ins"
 msgstr "Mostra le informazioni sui plug-in"
 
-#: ../plug-ins/common/plugin-browser.c:175
+#: ../plug-ins/common/plugin-browser.c:174
 msgid ""
 "Allows one to browse the plug-in menus system. You can search for plug-in "
 "names, sort by name or menu location and you can view a tree representation "
@@ -7974,40 +8023,40 @@ msgstr ""
 "rappresentazione ad albero dei menu dei plug-in. Può anche essere di aiuto "
 "per scoprire dove si sono installati i nuovi plug-in nei menu."
 
-#: ../plug-ins/common/plugin-browser.c:373
+#: ../plug-ins/common/plugin-browser.c:372
 #: ../plug-ins/filter-browser/filter-browser.c:608
 msgid "Searching by name"
 msgstr "Ricerca per nome"
 
-#: ../plug-ins/common/plugin-browser.c:389
+#: ../plug-ins/common/plugin-browser.c:388
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
 msgstr[0] "%d plug-in"
 msgstr[1] "%d plug-in"
 
-#: ../plug-ins/common/plugin-browser.c:398
+#: ../plug-ins/common/plugin-browser.c:397
 #: ../plug-ins/filter-browser/filter-browser.c:675
 msgid "No matches for your query"
 msgstr "Nessun riscontro dalla ricerca"
 
-#: ../plug-ins/common/plugin-browser.c:401
+#: ../plug-ins/common/plugin-browser.c:400
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
 msgstr[0] "%d plug-in corrisponde nella ricerca"
 msgstr[1] "%d plug-in corrispondono nella ricerca"
 
-#: ../plug-ins/common/plugin-browser.c:532
+#: ../plug-ins/common/plugin-browser.c:531
 #: ../plug-ins/filter-browser/filter-browser.c:677
 msgid "No matches"
 msgstr "Nessun riscontro"
 
-#: ../plug-ins/common/plugin-browser.c:558
+#: ../plug-ins/common/plugin-browser.c:556
 msgid "Plug-in Browser"
 msgstr "Navigatore plug-in"
 
-#: ../plug-ins/common/plugin-browser.c:603 ../plug-ins/common/unit-editor.c:114
+#: ../plug-ins/common/plugin-browser.c:601 ../plug-ins/common/unit-editor.c:114
 #: ../plug-ins/metadata/metadata-editor.c:609
 #: ../plug-ins/metadata/metadata-editor.c:645
 #: ../plug-ins/metadata/metadata-editor.c:652
@@ -8015,26 +8064,26 @@ msgstr "Navigatore plug-in"
 msgid "Name"
 msgstr "Nome"
 
-#: ../plug-ins/common/plugin-browser.c:611
-#: ../plug-ins/common/plugin-browser.c:674
+#: ../plug-ins/common/plugin-browser.c:609
+#: ../plug-ins/common/plugin-browser.c:670
 msgid "Menu Path"
 msgstr "Percorso menu"
 
-#: ../plug-ins/common/plugin-browser.c:619
-#: ../plug-ins/common/plugin-browser.c:683
+#: ../plug-ins/common/plugin-browser.c:617
+#: ../plug-ins/common/plugin-browser.c:679
 msgid "Image Types"
 msgstr "Tipi di immagine"
 
-#: ../plug-ins/common/plugin-browser.c:629
-#: ../plug-ins/common/plugin-browser.c:692
+#: ../plug-ins/common/plugin-browser.c:627
+#: ../plug-ins/common/plugin-browser.c:688
 msgid "Installation Date"
 msgstr "Data di installazione"
 
-#: ../plug-ins/common/plugin-browser.c:653
+#: ../plug-ins/common/plugin-browser.c:649
 msgid "List View"
 msgstr "Vista ad elenco"
 
-#: ../plug-ins/common/plugin-browser.c:715
+#: ../plug-ins/common/plugin-browser.c:710
 msgid "Tree View"
 msgstr "Vista ad albero"
 
@@ -8477,115 +8526,117 @@ msgstr "Scintillio"
 msgid "Additional Options"
 msgstr "Opzioni aggiuntive"
 
-#: ../plug-ins/common/sphere-designer.c:335
+#: ../plug-ins/common/sphere-designer.c:328
 #: ../plug-ins/gimpressionist/general.c:173
 msgid "Solid"
 msgstr "Tinta unita"
 
-#: ../plug-ins/common/sphere-designer.c:336
+#: ../plug-ins/common/sphere-designer.c:329
 msgid "Checker"
 msgstr "Scacchiera"
 
-#: ../plug-ins/common/sphere-designer.c:337
+#: ../plug-ins/common/sphere-designer.c:330
 msgid "Marble"
 msgstr "Marmo"
 
-#: ../plug-ins/common/sphere-designer.c:338
+#: ../plug-ins/common/sphere-designer.c:331
 msgid "Lizard"
 msgstr "Lucertola"
 
-#: ../plug-ins/common/sphere-designer.c:339
+#: ../plug-ins/common/sphere-designer.c:332
 msgid "Phong"
 msgstr "Phong"
 
-#: ../plug-ins/common/sphere-designer.c:340 ../plug-ins/flame/flame.c:944
+#: ../plug-ins/common/sphere-designer.c:333 ../plug-ins/flame/flame.c:944
 msgid "Noise"
 msgstr "Rumore"
 
-#: ../plug-ins/common/sphere-designer.c:341
+#: ../plug-ins/common/sphere-designer.c:334
 msgid "Wood"
 msgstr "Legno"
 
-#: ../plug-ins/common/sphere-designer.c:342 ../plug-ins/flame/flame.c:928
+#: ../plug-ins/common/sphere-designer.c:335 ../plug-ins/flame/flame.c:928
 #: ../plug-ins/gfig/gfig-dialog.c:399
 msgid "Spiral"
 msgstr "Spirale"
 
-#: ../plug-ins/common/sphere-designer.c:343
+#: ../plug-ins/common/sphere-designer.c:336
 msgid "Spots"
 msgstr "Macchie"
 
-#: ../plug-ins/common/sphere-designer.c:409
+#: ../plug-ins/common/sphere-designer.c:402
 msgid "Sphere _Designer..."
 msgstr "_Designer sfera..."
 
-#: ../plug-ins/common/sphere-designer.c:413
+#: ../plug-ins/common/sphere-designer.c:406
 msgid "Create an image of a textured sphere"
 msgstr "Crea un'immagine di una sfera con texture"
 
-#: ../plug-ins/common/sphere-designer.c:1834
-#: ../plug-ins/common/sphere-designer.c:2798
-#: ../plug-ins/common/sphere-designer.c:2826
+#: ../plug-ins/common/sphere-designer.c:1827
+#: ../plug-ins/common/sphere-designer.c:2791
+#: ../plug-ins/common/sphere-designer.c:2819
 msgid "Texture"
 msgstr "Trama"
 
-#: ../plug-ins/common/sphere-designer.c:1836
+#: ../plug-ins/common/sphere-designer.c:1829
 msgid "Bumpmap"
 msgstr "Mappa a sbalzo"
 
-#: ../plug-ins/common/sphere-designer.c:1838
-#: ../plug-ins/common/sphere-designer.c:2800
+#: ../plug-ins/common/sphere-designer.c:1831
+#: ../plug-ins/common/sphere-designer.c:2793
 msgid "Light"
 msgstr "Luce"
 
-#: ../plug-ins/common/sphere-designer.c:2101
+#: ../plug-ins/common/sphere-designer.c:2094
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr "\"%s\" non è un file di salvataggio valido."
 
-#: ../plug-ins/common/sphere-designer.c:2281
+#: ../plug-ins/common/sphere-designer.c:2274
 msgid "Open File"
 msgstr "Apri file"
 
-#: ../plug-ins/common/sphere-designer.c:2281
+#: ../plug-ins/common/sphere-designer.c:2274
 msgid "Save File"
 msgstr "Salva file"
 
-#: ../plug-ins/common/sphere-designer.c:2650
+#: ../plug-ins/common/sphere-designer.c:2643
 msgid "Sphere Designer"
 msgstr "Designer sfera"
 
-#: ../plug-ins/common/sphere-designer.c:2751
+#: ../plug-ins/common/sphere-designer.c:2744
 msgid "Layers"
 msgstr "Livelli"
 
-#: ../plug-ins/common/sphere-designer.c:2762
+#: ../plug-ins/common/sphere-designer.c:2755
 #: ../plug-ins/gradient-flare/gradient-flare.c:3051
 msgid "_New"
 msgstr "_Nuovo"
 
-#: ../plug-ins/common/sphere-designer.c:2768
+#: ../plug-ins/common/sphere-designer.c:2761
 msgid "D_uplicate"
 msgstr "D_uplica"
 
-#: ../plug-ins/common/sphere-designer.c:2774
+#: ../plug-ins/common/sphere-designer.c:2767
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:887
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1369
+#: ../plug-ins/gimpressionist/orientmap.c:623
 #: ../plug-ins/gimpressionist/presets.c:1071
+#: ../plug-ins/gimpressionist/sizemap.c:499
 #: ../plug-ins/gradient-flare/gradient-flare.c:3054
 #: ../plug-ins/gradient-flare/gradient-flare.c:3337
 msgid "_Delete"
 msgstr "Eli_mina"
 
-#: ../plug-ins/common/sphere-designer.c:2784
+#: ../plug-ins/common/sphere-designer.c:2777
 msgid "Properties"
 msgstr "Proprietà"
 
-#: ../plug-ins/common/sphere-designer.c:2799
+#: ../plug-ins/common/sphere-designer.c:2792
 msgid "Bump"
 msgstr "Sbalzo"
 
-#: ../plug-ins/common/sphere-designer.c:2807
+#: ../plug-ins/common/sphere-designer.c:2800
 #: ../plug-ins/gimpressionist/orientmap.c:638
 #: ../plug-ins/lighting/lighting-main.c:211
 #: ../plug-ins/lighting/lighting-main.c:334
@@ -8596,84 +8647,84 @@ msgstr "Sbalzo"
 msgid "Type"
 msgstr "Tipo"
 
-#: ../plug-ins/common/sphere-designer.c:2831
+#: ../plug-ins/common/sphere-designer.c:2824
 #: ../plug-ins/imagemap/imap_preferences.c:463
 #: ../plug-ins/pagecurl/pagecurl.c:228
 msgid "Colors"
 msgstr "Colori"
 
-#: ../plug-ins/common/sphere-designer.c:2834
-#: ../plug-ins/common/sphere-designer.c:2845
+#: ../plug-ins/common/sphere-designer.c:2827
+#: ../plug-ins/common/sphere-designer.c:2838
 msgid "Color Selection Dialog"
 msgstr "Finestra di selezione del colore"
 
-#: ../plug-ins/common/sphere-designer.c:2857
+#: ../plug-ins/common/sphere-designer.c:2850
 msgid "Scale"
 msgstr "Scala"
 
-#: ../plug-ins/common/sphere-designer.c:2865
+#: ../plug-ins/common/sphere-designer.c:2858
 msgid "Turbulence"
 msgstr "Turbolenza"
 
-#: ../plug-ins/common/sphere-designer.c:2873
+#: ../plug-ins/common/sphere-designer.c:2866
 msgid "Amount"
 msgstr "Ammontare"
 
-#: ../plug-ins/common/sphere-designer.c:2881
+#: ../plug-ins/common/sphere-designer.c:2874
 msgid "Exp."
 msgstr "Esp."
 
-#: ../plug-ins/common/sphere-designer.c:2888
+#: ../plug-ins/common/sphere-designer.c:2881
 msgid "Transformations"
 msgstr "Trasformazioni"
 
-#: ../plug-ins/common/sphere-designer.c:2897
+#: ../plug-ins/common/sphere-designer.c:2890
 #: ../plug-ins/map-object/map-object-main.c:391
 msgid "Scale X"
 msgstr "Scala X"
 
-#: ../plug-ins/common/sphere-designer.c:2905
+#: ../plug-ins/common/sphere-designer.c:2898
 #: ../plug-ins/map-object/map-object-main.c:396
 msgid "Scale Y"
 msgstr "Scala Y"
 
-#: ../plug-ins/common/sphere-designer.c:2913
+#: ../plug-ins/common/sphere-designer.c:2906
 #: ../plug-ins/map-object/map-object-main.c:401
 msgid "Scale Z"
 msgstr "Scala Z"
 
-#: ../plug-ins/common/sphere-designer.c:2922
+#: ../plug-ins/common/sphere-designer.c:2915
 msgid "Rotate X"
 msgstr "Rotazione X"
 
-#: ../plug-ins/common/sphere-designer.c:2930
+#: ../plug-ins/common/sphere-designer.c:2923
 msgid "Rotate Y"
 msgstr "Rotazione Y"
 
-#: ../plug-ins/common/sphere-designer.c:2938
+#: ../plug-ins/common/sphere-designer.c:2931
 msgid "Rotate Z"
 msgstr "Rotazione Z"
 
-#: ../plug-ins/common/sphere-designer.c:2947
+#: ../plug-ins/common/sphere-designer.c:2940
 #: ../plug-ins/map-object/map-object-main.c:165
 msgid "Position X"
 msgstr "Posizione X"
 
-#: ../plug-ins/common/sphere-designer.c:2955
+#: ../plug-ins/common/sphere-designer.c:2948
 #: ../plug-ins/map-object/map-object-main.c:170
 msgid "Position Y"
 msgstr "Posizione Y"
 
-#: ../plug-ins/common/sphere-designer.c:2963
+#: ../plug-ins/common/sphere-designer.c:2956
 #: ../plug-ins/map-object/map-object-main.c:175
 msgid "Position Z"
 msgstr "Posizione Z"
 
-#: ../plug-ins/common/sphere-designer.c:3094
+#: ../plug-ins/common/sphere-designer.c:3087
 msgid "Rendering sphere"
 msgstr "Rendering sfera"
 
-#: ../plug-ins/common/sphere-designer.c:3213
+#: ../plug-ins/common/sphere-designer.c:3206
 msgid "Region selected for plug-in is empty"
 msgstr "La regione selezionata per il plug-in è vuota"
 
@@ -9212,7 +9263,7 @@ msgstr "Scomposizione Wavelet"
 
 #: ../plug-ins/common/wavelet-decompose.c:130
 msgid "Scal_es"
-msgstr "Piastr_elle"
+msgstr "Placch_e"
 
 #: ../plug-ins/common/wavelet-decompose.c:136
 msgid "Create a layer group to store the _decomposition"
@@ -10544,10 +10595,6 @@ msgstr "Esporta file in formato JPEG"
 #: ../plug-ins/file-jpeg/jpeg.c:186
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "Esporta file nel formato, con perdite ma molto supportato, JPEG"
-
-#: ../plug-ins/file-jpeg/jpeg.c:195 ../plug-ins/file-tiff/file-tiff.c:251
-msgid "JPEG"
-msgstr "JPEG"
 
 #: ../plug-ins/file-jpeg/jpeg.c:216
 msgid "S_moothing"
@@ -13316,10 +13363,12 @@ msgid "Orientation Map Editor"
 msgstr "Modifica mappa di orientamento"
 
 #: ../plug-ins/gimpressionist/orientmap.c:552
+#: ../plug-ins/gimpressionist/sizemap.c:425
 msgid "Vectors"
 msgstr "Vettori"
 
 #: ../plug-ins/gimpressionist/orientmap.c:563
+#: ../plug-ins/gimpressionist/sizemap.c:436
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -13329,33 +13378,32 @@ msgstr ""
 "aggiungere un nuovo vettore."
 
 #: ../plug-ins/gimpressionist/orientmap.c:587
-#: ../plug-ins/gimpressionist/sizemap.c:456
+#: ../plug-ins/gimpressionist/sizemap.c:460
 msgid "Adjust the preview's brightness"
 msgstr "Imposta la luminosità dell'anteprima"
 
 #: ../plug-ins/gimpressionist/orientmap.c:609
+#: ../plug-ins/gimpressionist/sizemap.c:483
 msgid "Select previous vector"
 msgstr "Selezioni vettore precedente"
 
 #: ../plug-ins/gimpressionist/orientmap.c:615
+#: ../plug-ins/gimpressionist/sizemap.c:490
 msgid "Select next vector"
 msgstr "Seleziona vettore successivo"
 
 #: ../plug-ins/gimpressionist/orientmap.c:617
-#: ../plug-ins/gimpressionist/sizemap.c:488
+#: ../plug-ins/gimpressionist/sizemap.c:492
 msgid "A_dd"
 msgstr "A_ggiungi"
 
 #: ../plug-ins/gimpressionist/orientmap.c:621
+#: ../plug-ins/gimpressionist/sizemap.c:497
 msgid "Add new vector"
 msgstr "Aggiungi nuovo vettore"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
-#: ../plug-ins/gimpressionist/sizemap.c:495
-msgid "_Kill"
-msgstr "_Rimuovi"
-
 #: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/gimpressionist/sizemap.c:504
 msgid "Delete selected vector"
 msgstr "Cancella vettore selezionato"
 
@@ -13376,11 +13424,12 @@ msgid "Vortex_3"
 msgstr "Vortice_3"
 
 #: ../plug-ins/gimpressionist/orientmap.c:651
-#: ../plug-ins/gimpressionist/sizemap.c:539
+#: ../plug-ins/gimpressionist/sizemap.c:543
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
 #: ../plug-ins/gimpressionist/orientmap.c:659
+#: ../plug-ins/gimpressionist/sizemap.c:550
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -13393,6 +13442,7 @@ msgid "A_ngle:"
 msgstr "A_ngolo:"
 
 #: ../plug-ins/gimpressionist/orientmap.c:670
+#: ../plug-ins/gimpressionist/sizemap.c:514
 msgid "Change the angle of the selected vector"
 msgstr "Cambia l'angolo del vettore selezionato"
 
@@ -13409,6 +13459,7 @@ msgid "_Strength:"
 msgstr "_Forza:"
 
 #: ../plug-ins/gimpressionist/orientmap.c:691
+#: ../plug-ins/gimpressionist/sizemap.c:525
 msgid "Change the strength of the selected vector"
 msgstr "Cambia la forza del vettore selezionato"
 
@@ -13417,7 +13468,7 @@ msgid "S_trength exp.:"
 msgstr "Esponente forza:"
 
 #: ../plug-ins/gimpressionist/orientmap.c:702
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/gimpressionist/sizemap.c:536
 msgid "Change the exponent of the strength"
 msgstr "Cambia l'esponente della forza"
 
@@ -13619,62 +13670,17 @@ msgstr "Apre l'editor della mappa dimensione"
 msgid "Size Map Editor"
 msgstr "Modifica la mappa della dimensione"
 
-#: ../plug-ins/gimpressionist/sizemap.c:425
-msgid "Smvectors"
-msgstr "Vettori sm"
-
-#: ../plug-ins/gimpressionist/sizemap.c:435
-msgid ""
-"The smvector-field. Left-click to move selected smvector, Right-click to "
-"point it towards mouse, Middle-click to add a new smvector."
-msgstr ""
-"Il campo vettori sm. Fare clic con il tasto sinistro per spostare i vettori "
-"sm selezionati, con il destro per puntarli verso il mouse, medio per "
-"aggiungere un nuovo vettore."
-
-#: ../plug-ins/gimpressionist/sizemap.c:479
-msgid "Select previous smvector"
-msgstr "Selezione vettore sm precedente "
-
-#: ../plug-ins/gimpressionist/sizemap.c:486
-msgid "Select next smvector"
-msgstr "Seleziona vettore sm successivo"
-
-#: ../plug-ins/gimpressionist/sizemap.c:493
-msgid "Add new smvector"
-msgstr "Aggiungi nuovo vettore sm"
-
-#: ../plug-ins/gimpressionist/sizemap.c:500
-msgid "Delete selected smvector"
-msgstr "Cancella vettore sm selezionato"
-
-#: ../plug-ins/gimpressionist/sizemap.c:508
+#: ../plug-ins/gimpressionist/sizemap.c:512
 msgid "_Size:"
 msgstr "Dimen_sione:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:510
-msgid "Change the angle of the selected smvector"
-msgstr "Cambia l'angolo dei vettori sm selezionati"
-
-#: ../plug-ins/gimpressionist/sizemap.c:518
+#: ../plug-ins/gimpressionist/sizemap.c:522
 msgid "S_trength:"
 msgstr "For_za:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
-msgid "Change the strength of the selected smvector"
-msgstr "Cambia la forza del vettore sm selezionato"
-
-#: ../plug-ins/gimpressionist/sizemap.c:529
+#: ../plug-ins/gimpressionist/sizemap.c:533
 msgid "St_rength exp.:"
 msgstr "Esponente fo_rza:"
-
-#: ../plug-ins/gimpressionist/sizemap.c:546
-msgid ""
-"Voronoi-mode makes only the smvector closest to the given point have any "
-"influence"
-msgstr ""
-"La modalità Voronoi fa in modo che solo il vettore sm più vicino ad un punto "
-"dato abbia influenza"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:741
 msgid "Addition"
@@ -15325,13 +15331,13 @@ msgid "General Options"
 msgstr "Opzioni generali"
 
 #: ../plug-ins/lighting/lighting-ui.c:313
-#: ../plug-ins/map-object/map-object-ui.c:459
+#: ../plug-ins/map-object/map-object-ui.c:468
 msgid "Light Settings"
 msgstr "Configurazione luce"
 
 #: ../plug-ins/lighting/lighting-ui.c:332
-#: ../plug-ins/map-object/map-object-ui.c:491
-#: ../plug-ins/map-object/map-object-ui.c:703
+#: ../plug-ins/map-object/map-object-ui.c:500
+#: ../plug-ins/map-object/map-object-ui.c:712
 #: ../plug-ins/print/print-page-layout.c:385
 msgid "Position"
 msgstr "Posizione"
@@ -15685,41 +15691,41 @@ msgstr "Cu_bo"
 msgid "C_ylinder"
 msgstr "Cilin_dro"
 
-#: ../plug-ins/map-object/map-object-ui.c:477
+#: ../plug-ins/map-object/map-object-ui.c:486
 msgid "Direction Vector"
 msgstr "Vettore direzione"
 
-#: ../plug-ins/map-object/map-object-ui.c:547
+#: ../plug-ins/map-object/map-object-ui.c:556
 msgid "Viewpoint Position"
 msgstr "Posizione punto di vista"
 
-#: ../plug-ins/map-object/map-object-ui.c:569
+#: ../plug-ins/map-object/map-object-ui.c:578
 msgid "First Axis"
 msgstr "Primo asse"
 
-#: ../plug-ins/map-object/map-object-ui.c:589
+#: ../plug-ins/map-object/map-object-ui.c:598
 msgid "Second Axis"
 msgstr "Secondo asse"
 
-#: ../plug-ins/map-object/map-object-ui.c:646
+#: ../plug-ins/map-object/map-object-ui.c:655
 msgid "Intensity Levels"
 msgstr "Livelli di intensità"
 
-#: ../plug-ins/map-object/map-object-ui.c:660
+#: ../plug-ins/map-object/map-object-ui.c:669
 msgid "Reflectivity"
 msgstr "Riflettività"
 
-#: ../plug-ins/map-object/map-object-ui.c:763
-#: ../plug-ins/map-object/map-object-ui.c:863
+#: ../plug-ins/map-object/map-object-ui.c:772
+#: ../plug-ins/map-object/map-object-ui.c:872
 #: ../plug-ins/print/print-page-layout.c:254
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../plug-ins/map-object/map-object-ui.c:776
+#: ../plug-ins/map-object/map-object-ui.c:785
 msgid "Map Images to Box Faces"
 msgstr "Mappa Immagini sulle facciate di un cubo"
 
-#: ../plug-ins/map-object/map-object-ui.c:844
+#: ../plug-ins/map-object/map-object-ui.c:853
 msgid "Images for the Cap Faces"
 msgstr "Immagini per le basi"
 
