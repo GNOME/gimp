@@ -45,6 +45,8 @@ Unlike the flatpak, we do not need to manually set babl, gegl or GIMP tags, just
 
 * For a **development** series, set "stable" on "grade" and
   use "preview" on build-id at gimp part "meson-parameters".
+  *Important: if the API points to a future GIMP major version, so
+  bump gimp-plugins `content:` too*.
 
 * For a **stable** series, set "stable" on "grade" and
   use "latest" on build-id at gimp part "meson-parameters".
