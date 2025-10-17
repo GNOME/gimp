@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-02 11:26+0000\n"
-"PO-Revision-Date: 2025-10-04 07:19+0200\n"
+"POT-Creation-Date: 2025-10-13 09:51+0000\n"
+"PO-Revision-Date: 2025-10-13 13:12+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -1193,7 +1193,7 @@ msgstr "მუტაციის განაწილება:"
 msgid "Graph of the Current Settings"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:562
+#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:169
 #: plug-ins/filter-browser/filter-browser.c:727 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1215 plug-ins/gfig/gfig-dialog.c:1360
@@ -1946,7 +1946,7 @@ msgstr ""
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:608
 #: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:556
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:733
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
@@ -1987,7 +1987,7 @@ msgstr "მორგება"
 #. Preview area, top of column
 #. preview
 #: plug-ins/common/curve-bend.c:1095 plug-ins/gimpressionist/orientmap.c:589
-#: plug-ins/gimpressionist/sizemap.c:458 plug-ins/print/print-page-layout.c:180
+#: plug-ins/gimpressionist/sizemap.c:462 plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "მინიატურა"
 
@@ -2425,7 +2425,7 @@ msgstr ""
 #: plug-ins/common/web-browser.c:211
 #, c-format
 msgid "There was not enough memory to complete the operation."
-msgstr ""
+msgstr "ოპერაციის დასასრულებლად მეხსიერება საკმარისი არაა."
 
 #: plug-ins/common/despeckle.c:414 plug-ins/common/despeckle.c:792
 msgid "Despeckle"
@@ -2631,11 +2631,12 @@ msgstr ""
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-tga.c:1217
-#: plug-ins/common/file-tim.c:622 plug-ins/common/file-xbm.c:1026
-#: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
-#: plug-ins/file-bmp/bmp-export.c:328 plug-ins/file-fits/fits.c:646
-#: plug-ins/file-fli/fli-gimp.c:766 plug-ins/file-icns/file-icns-export.c:824
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:771
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
+#: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
+#: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
+#: plug-ins/file-fits/fits.c:646 plug-ins/file-fli/fli-gimp.c:766
+#: plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2284
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
@@ -4543,6 +4544,7 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr ""
 
 #: plug-ins/common/file-pcx.c:1266 plug-ins/common/file-qoi.c:369
+#: plug-ins/common/file-svg.c:780 plug-ins/common/file-svg.c:796
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr ""
@@ -4820,7 +4822,7 @@ msgstr "PNG გამოსახულება"
 msgid "APNG image"
 msgstr "APNG გამოსახულება"
 
-#: plug-ins/common/file-png.c:331
+#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:335
 msgid "PNG"
 msgstr "PNG"
 
@@ -5361,7 +5363,7 @@ msgid ""
 "and height values will be used."
 msgstr ""
 
-#: plug-ins/common/file-ps.c:565 plug-ins/map-object/map-object-ui.c:723
+#: plug-ins/common/file-ps.c:565 plug-ins/map-object/map-object-ui.c:732
 msgid "Rotation"
 msgstr "შემობრუნება"
 
@@ -6181,49 +6183,82 @@ msgstr ""
 msgid "Write error occurred"
 msgstr "ჩაწერის შეცდომა"
 
-#: plug-ins/common/file-svg.c:173
+#: plug-ins/common/file-svg.c:260
 msgid "SVG image"
 msgstr "SVG გამოსახულება"
 
-#: plug-ins/common/file-svg.c:186
+#: plug-ins/common/file-svg.c:273
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:195
+#: plug-ins/common/file-svg.c:282
 msgid "_Paths"
 msgstr "_კონტურები"
 
-#: plug-ins/common/file-svg.c:196
+#: plug-ins/common/file-svg.c:283
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:197
+#: plug-ins/common/file-svg.c:284
 msgid "Don't import paths"
 msgstr "კონტურები შემოტანილი არ იქნება"
 
-#: plug-ins/common/file-svg.c:198
+#: plug-ins/common/file-svg.c:285
 msgid "Import paths individually"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:199
+#: plug-ins/common/file-svg.c:286
 msgid "Merge imported paths"
 msgstr "შემოტანილი კონტურების შერწყმა"
+
+#: plug-ins/common/file-svg.c:298
+msgid "Scalable Vector Graphic"
+msgstr ""
+
+#: plug-ins/common/file-svg.c:301
+msgid "Export vector layers in SVG file format"
+msgstr ""
+
+#: plug-ins/common/file-svg.c:302
+msgid "Export vector layers in SVG file format (Scalable Vector Graphic)"
+msgstr ""
+
+#: plug-ins/common/file-svg.c:327
+msgid "_Title"
+msgstr "_სათაური"
+
+#: plug-ins/common/file-svg.c:328
+msgid "Optional <title> for SVG"
+msgstr ""
+
+#: plug-ins/common/file-svg.c:333
+msgid "Em_bed raster layers as"
+msgstr ""
+
+#: plug-ins/common/file-svg.c:336 plug-ins/file-jpeg/jpeg.c:195
+#: plug-ins/file-tiff/file-tiff.c:251
+msgid "JPEG"
+msgstr "JPEG"
+
+#: plug-ins/common/file-svg.c:337
+msgid "Do not export raster layers"
+msgstr ""
 
 #. We need to ask explicitly before using the "unlimited" size
 #. * option (XML_PARSE_HUGE in libxml) because it is considered
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:245
+#: plug-ins/common/file-svg.c:384
 msgid "Disable safety size limits?"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:250
+#: plug-ins/common/file-svg.c:389
 msgid "_No"
 msgstr "_არა"
 
-#: plug-ins/common/file-svg.c:251
+#: plug-ins/common/file-svg.c:390
 msgid "_Yes"
 msgstr "_დიახ"
 
@@ -6237,32 +6272,40 @@ msgstr "_დიახ"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:275
+#: plug-ins/common/file-svg.c:414
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
 "consume too much memory."
 msgstr ""
 
-#: plug-ins/common/file-svg.c:287
+#: plug-ins/common/file-svg.c:426
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:294
+#: plug-ins/common/file-svg.c:433
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:558 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/common/file-svg.c:735 plug-ins/file-exr/file-exr.c:381
 #: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "უცნობი მიზეზი"
 
-#: plug-ins/common/file-svg.c:564
+#: plug-ins/common/file-svg.c:741
 msgid "Rendering SVG"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:574
+#: plug-ins/common/file-svg.c:751
 msgid "Rendered SVG"
+msgstr ""
+
+#: plug-ins/common/file-svg.c:1102
+msgid ""
+"The SVG format only requires viewers to display image links for SVG, PNG, "
+"and JPEG images.\n"
+"Your image links external image files in other formats which may not show up "
+"in all viewers."
 msgstr ""
 
 #: plug-ins/common/file-tga.c:262 plug-ins/common/file-tga.c:288
@@ -7538,15 +7581,15 @@ msgstr ""
 msgid "NL Filter"
 msgstr ""
 
-#: plug-ins/common/plugin-browser.c:169
+#: plug-ins/common/plugin-browser.c:168
 msgid "_Plug-In Browser"
 msgstr ""
 
-#: plug-ins/common/plugin-browser.c:174
+#: plug-ins/common/plugin-browser.c:173
 msgid "Display information about plug-ins"
 msgstr ""
 
-#: plug-ins/common/plugin-browser.c:175
+#: plug-ins/common/plugin-browser.c:174
 msgid ""
 "Allows one to browse the plug-in menus system. You can search for plug-in "
 "names, sort by name or menu location and you can view a tree representation "
@@ -7554,40 +7597,40 @@ msgid ""
 "installed themselves in the menus."
 msgstr ""
 
-#: plug-ins/common/plugin-browser.c:373
+#: plug-ins/common/plugin-browser.c:372
 #: plug-ins/filter-browser/filter-browser.c:608
 msgid "Searching by name"
 msgstr "სახელით ძებნა"
 
-#: plug-ins/common/plugin-browser.c:389
+#: plug-ins/common/plugin-browser.c:388
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
 msgstr[0] "%d დამატება"
 msgstr[1] "%d დამატება"
 
-#: plug-ins/common/plugin-browser.c:398
+#: plug-ins/common/plugin-browser.c:397
 #: plug-ins/filter-browser/filter-browser.c:675
 msgid "No matches for your query"
 msgstr "დათხვევა არ არსებობს"
 
-#: plug-ins/common/plugin-browser.c:401
+#: plug-ins/common/plugin-browser.c:400
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
 msgstr[0] ""
 msgstr[1] ""
 
-#: plug-ins/common/plugin-browser.c:532
+#: plug-ins/common/plugin-browser.c:531
 #: plug-ins/filter-browser/filter-browser.c:677
 msgid "No matches"
 msgstr "დათხვევა არ არსებობს"
 
-#: plug-ins/common/plugin-browser.c:558
+#: plug-ins/common/plugin-browser.c:556
 msgid "Plug-in Browser"
 msgstr "დამატებების დათვალიერება"
 
-#: plug-ins/common/plugin-browser.c:603 plug-ins/common/unit-editor.c:114
+#: plug-ins/common/plugin-browser.c:601 plug-ins/common/unit-editor.c:114
 #: plug-ins/metadata/metadata-editor.c:609
 #: plug-ins/metadata/metadata-editor.c:645
 #: plug-ins/metadata/metadata-editor.c:652
@@ -7595,23 +7638,23 @@ msgstr "დამატებების დათვალიერება"
 msgid "Name"
 msgstr "სახელი"
 
-#: plug-ins/common/plugin-browser.c:611 plug-ins/common/plugin-browser.c:674
+#: plug-ins/common/plugin-browser.c:609 plug-ins/common/plugin-browser.c:670
 msgid "Menu Path"
 msgstr "მენიუს ბილიკი"
 
-#: plug-ins/common/plugin-browser.c:619 plug-ins/common/plugin-browser.c:683
+#: plug-ins/common/plugin-browser.c:617 plug-ins/common/plugin-browser.c:679
 msgid "Image Types"
 msgstr "გამოსახულების ტიპები"
 
-#: plug-ins/common/plugin-browser.c:629 plug-ins/common/plugin-browser.c:692
+#: plug-ins/common/plugin-browser.c:627 plug-ins/common/plugin-browser.c:688
 msgid "Installation Date"
 msgstr "დაყენების თარიღი"
 
-#: plug-ins/common/plugin-browser.c:653
+#: plug-ins/common/plugin-browser.c:649
 msgid "List View"
 msgstr "სიის ხედი"
 
-#: plug-ins/common/plugin-browser.c:715
+#: plug-ins/common/plugin-browser.c:710
 msgid "Tree View"
 msgstr "ხისმაგვარი ხედი"
 
@@ -8133,7 +8176,8 @@ msgstr "_დუბლირება"
 #: plug-ins/common/sphere-designer.c:2774
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
-#: plug-ins/gimpressionist/presets.c:1071
+#: plug-ins/gimpressionist/orientmap.c:623
+#: plug-ins/gimpressionist/presets.c:1071 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/gradient-flare/gradient-flare.c:3054
 #: plug-ins/gradient-flare/gradient-flare.c:3337
 msgid "_Delete"
@@ -10040,10 +10084,6 @@ msgstr ""
 #: plug-ins/file-jpeg/jpeg.c:186
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr ""
-
-#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:251
-msgid "JPEG"
-msgstr "JPEG"
 
 #: plug-ins/file-jpeg/jpeg.c:216
 msgid "S_moothing"
@@ -12705,43 +12745,44 @@ msgid "Orientation Map Editor"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:552
+#: plug-ins/gimpressionist/sizemap.c:425
 msgid "Vectors"
 msgstr "ვექტორები"
 
 #: plug-ins/gimpressionist/orientmap.c:563
+#: plug-ins/gimpressionist/sizemap.c:436
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:587
-#: plug-ins/gimpressionist/sizemap.c:456
+#: plug-ins/gimpressionist/sizemap.c:460
 msgid "Adjust the preview's brightness"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:609
+#: plug-ins/gimpressionist/sizemap.c:483
 msgid "Select previous vector"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:615
+#: plug-ins/gimpressionist/sizemap.c:490
 msgid "Select next vector"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:617
-#: plug-ins/gimpressionist/sizemap.c:488
+#: plug-ins/gimpressionist/sizemap.c:492
 msgid "A_dd"
 msgstr "_დამატება"
 
 #: plug-ins/gimpressionist/orientmap.c:621
+#: plug-ins/gimpressionist/sizemap.c:497
 msgid "Add new vector"
 msgstr "ახალი ვექტორის დამატება"
 
-#: plug-ins/gimpressionist/orientmap.c:623
-#: plug-ins/gimpressionist/sizemap.c:495
-msgid "_Kill"
-msgstr "_მოკვლა"
-
 #: plug-ins/gimpressionist/orientmap.c:627
+#: plug-ins/gimpressionist/sizemap.c:504
 msgid "Delete selected vector"
 msgstr "არჩეული ვექტორის წაშლა"
 
@@ -12762,11 +12803,12 @@ msgid "Vortex_3"
 msgstr "წიბო_3"
 
 #: plug-ins/gimpressionist/orientmap.c:651
-#: plug-ins/gimpressionist/sizemap.c:539
+#: plug-ins/gimpressionist/sizemap.c:543
 msgid "_Voronoi"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:659
+#: plug-ins/gimpressionist/sizemap.c:550
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -12777,6 +12819,7 @@ msgid "A_ngle:"
 msgstr "_კუთხე:"
 
 #: plug-ins/gimpressionist/orientmap.c:670
+#: plug-ins/gimpressionist/sizemap.c:514
 msgid "Change the angle of the selected vector"
 msgstr ""
 
@@ -12793,6 +12836,7 @@ msgid "_Strength:"
 msgstr "_სიძლიერე:"
 
 #: plug-ins/gimpressionist/orientmap.c:691
+#: plug-ins/gimpressionist/sizemap.c:525
 msgid "Change the strength of the selected vector"
 msgstr ""
 
@@ -12801,7 +12845,7 @@ msgid "S_trength exp.:"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:702
-#: plug-ins/gimpressionist/sizemap.c:532
+#: plug-ins/gimpressionist/sizemap.c:536
 msgid "Change the exponent of the strength"
 msgstr ""
 
@@ -12998,56 +13042,16 @@ msgstr ""
 msgid "Size Map Editor"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:425
-msgid "Smvectors"
-msgstr ""
-
-#: plug-ins/gimpressionist/sizemap.c:435
-msgid ""
-"The smvector-field. Left-click to move selected smvector, Right-click to "
-"point it towards mouse, Middle-click to add a new smvector."
-msgstr ""
-
-#: plug-ins/gimpressionist/sizemap.c:479
-msgid "Select previous smvector"
-msgstr ""
-
-#: plug-ins/gimpressionist/sizemap.c:486
-msgid "Select next smvector"
-msgstr ""
-
-#: plug-ins/gimpressionist/sizemap.c:493
-msgid "Add new smvector"
-msgstr ""
-
-#: plug-ins/gimpressionist/sizemap.c:500
-msgid "Delete selected smvector"
-msgstr ""
-
-#: plug-ins/gimpressionist/sizemap.c:508
+#: plug-ins/gimpressionist/sizemap.c:512
 msgid "_Size:"
 msgstr "_ზომა:"
 
-#: plug-ins/gimpressionist/sizemap.c:510
-msgid "Change the angle of the selected smvector"
-msgstr ""
-
-#: plug-ins/gimpressionist/sizemap.c:518
+#: plug-ins/gimpressionist/sizemap.c:522
 msgid "S_trength:"
 msgstr "_სიძლიერე:"
 
-#: plug-ins/gimpressionist/sizemap.c:521
-msgid "Change the strength of the selected smvector"
-msgstr ""
-
-#: plug-ins/gimpressionist/sizemap.c:529
+#: plug-ins/gimpressionist/sizemap.c:533
 msgid "St_rength exp.:"
-msgstr ""
-
-#: plug-ins/gimpressionist/sizemap.c:546
-msgid ""
-"Voronoi-mode makes only the smvector closest to the given point have any "
-"influence"
 msgstr ""
 
 #: plug-ins/gradient-flare/gradient-flare.c:741
@@ -14741,12 +14745,12 @@ msgstr ""
 msgid "General Options"
 msgstr "ზოგადი პარამეტრები"
 
-#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:459
+#: plug-ins/lighting/lighting-ui.c:313 plug-ins/map-object/map-object-ui.c:468
 msgid "Light Settings"
 msgstr ""
 
-#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:491
-#: plug-ins/map-object/map-object-ui.c:703
+#: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:500
+#: plug-ins/map-object/map-object-ui.c:712
 #: plug-ins/print/print-page-layout.c:385
 msgid "Position"
 msgstr "მდებარეობა"
@@ -15100,41 +15104,41 @@ msgstr ""
 msgid "C_ylinder"
 msgstr "_ცილინდრი"
 
-#: plug-ins/map-object/map-object-ui.c:477
+#: plug-ins/map-object/map-object-ui.c:486
 msgid "Direction Vector"
 msgstr "მიმართულების ვექტორი"
 
-#: plug-ins/map-object/map-object-ui.c:547
+#: plug-ins/map-object/map-object-ui.c:556
 msgid "Viewpoint Position"
 msgstr "ხედის წერტილის მდებარეობა"
 
-#: plug-ins/map-object/map-object-ui.c:569
+#: plug-ins/map-object/map-object-ui.c:578
 msgid "First Axis"
 msgstr "პირველი ღერძი"
 
-#: plug-ins/map-object/map-object-ui.c:589
+#: plug-ins/map-object/map-object-ui.c:598
 msgid "Second Axis"
 msgstr "მეორე ღერძი"
 
-#: plug-ins/map-object/map-object-ui.c:646
+#: plug-ins/map-object/map-object-ui.c:655
 msgid "Intensity Levels"
 msgstr "ინტენსვობის დონეები"
 
-#: plug-ins/map-object/map-object-ui.c:660
+#: plug-ins/map-object/map-object-ui.c:669
 msgid "Reflectivity"
 msgstr "არეკვლადობა"
 
-#: plug-ins/map-object/map-object-ui.c:763
-#: plug-ins/map-object/map-object-ui.c:863
+#: plug-ins/map-object/map-object-ui.c:772
+#: plug-ins/map-object/map-object-ui.c:872
 #: plug-ins/print/print-page-layout.c:254
 msgid "Size"
 msgstr "ზომა"
 
-#: plug-ins/map-object/map-object-ui.c:776
+#: plug-ins/map-object/map-object-ui.c:785
 msgid "Map Images to Box Faces"
 msgstr ""
 
-#: plug-ins/map-object/map-object-ui.c:844
+#: plug-ins/map-object/map-object-ui.c:853
 msgid "Images for the Cap Faces"
 msgstr ""
 
@@ -16400,6 +16404,9 @@ msgstr ""
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "_Kill"
+#~ msgstr "_მოკვლა"
 
 #, c-format
 #~ msgid "Frame %d of %d"
