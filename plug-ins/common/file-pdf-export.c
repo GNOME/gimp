@@ -246,7 +246,8 @@ static void             drawText                 (GimpLayer            *layer,
                                                   gdouble               x_res,
                                                   gdouble               y_res);
 
-static gboolean         draw_layer               (GimpLayer           **layers,
+static gboolean         draw_layer               (GimpImage            *image,
+                                                  GimpLayer           **layers,
                                                   gint                  n_layers,
                                                   GimpProcedureConfig  *config,
                                                   gboolean              single_image,
@@ -664,11 +665,6 @@ pdf_export_image (GimpProcedure        *procedure,
   FILE            *fp;
   gint             i;
   gboolean         layers_as_pages = FALSE;
-  gboolean         fill_background_color;
-
-  g_object_get (config,
-                "fill-background-color", &fill_background_color,
-                NULL);
 
   if (single_image)
     g_object_get (config, "layers-as-pages", &layers_as_pages, NULL);
@@ -761,31 +757,10 @@ pdf_export_image (GimpProcedure        *procedure,
       layers   = gimp_image_get_layers (image);
       n_layers = gimp_core_object_array_get_length ((GObject **) layers);
 
-      /* First fill image with opaque background color
-       * when last layer has transparency and user chose that option.
-       * Later we paint the same layer and others layers with transparency.
-       */
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layers[n_layers - 1])) &&
-          fill_background_color)
-        {
-          GeglColor *color;
-          double     rgb[3];
-
-          cairo_rectangle (cr, 0.0, 0.0,
-                           gimp_image_get_width  (image),
-                           gimp_image_get_height (image));
-          color = gimp_context_get_background ();
-          gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' double", NULL), rgb);
-          cairo_set_source_rgb (cr, rgb[0], rgb[1], rgb[2]);
-          cairo_fill (cr);
-
-          g_object_unref (color);
-        }
-
       /* Now, we should loop over the layers of each image */
       for (j = 0; j < n_layers; j++)
         {
-          if (! draw_layer (layers, n_layers, config,
+          if (! draw_layer (image, layers, n_layers, config,
                             single_image, j, cr, x_res, y_res,
                             gimp_procedure_get_name (procedure),
                             show_progress,
@@ -1803,7 +1778,8 @@ drawText (GimpLayer *layer,
 }
 
 static gboolean
-draw_layer (GimpLayer           **layers,
+draw_layer (GimpImage            *image,
+            GimpLayer           **layers,
             gint                  n_layers,
             GimpProcedureConfig  *config,
             gboolean              single_image,
@@ -1826,10 +1802,12 @@ draw_layer (GimpLayer           **layers,
   gboolean   reverse_order   = FALSE;
   gboolean   root_layers_only;
   gboolean   convert_text;
+  gboolean   fill_background_color;
 
   g_object_get (config,
-                "vectorize",           &vectorize,
-                "ignore-hidden",       &ignore_hidden,
+                "vectorize",             &vectorize,
+                "ignore-hidden",         &ignore_hidden,
+                "fill-background-color", &fill_background_color,
                 NULL);
 
   if (single_image)
@@ -1861,7 +1839,7 @@ draw_layer (GimpLayer           **layers,
 
       for (i = 0; children[i] != NULL; i++)
         {
-          if (! draw_layer ((GimpLayer **) children, children_num,
+          if (! draw_layer (image, (GimpLayer **) children, children_num,
                             config, single_image, i,
                             cr, x_res, y_res, name,
                             show_progress,
@@ -1884,9 +1862,42 @@ draw_layer (GimpLayer           **layers,
       cairo_surface_t *mask_image = NULL;
       GimpLayerMask   *mask       = NULL;
       gint             x, y;
+      gboolean         fill_page  = FALSE;
 
       if (show_progress)
         gimp_progress_update (progress_start);
+
+      /* First fill layer with opaque background color when either
+       * multi-layered or this is the first layer at the top level
+       * and user chose that option.
+       * Later we paint over it with the layer's content.
+       */
+      if (layers_as_pages)
+        {
+          if ((root_layers_only && (layer_level == 0 || j == 0)) ||
+              ! root_layers_only)
+            fill_page = TRUE;
+        }
+      else
+        {
+          if (layer_level == 0 && j == 0)
+            fill_page = TRUE;
+        }
+
+      if (fill_page && fill_background_color)
+        {
+          GeglColor *color = NULL;
+          gdouble    rgb[3];
+
+          cairo_rectangle (cr, 0.0, 0.0,
+                           gimp_image_get_width  (image),
+                           gimp_image_get_height (image));
+          color = gimp_context_get_background ();
+          gegl_color_get_pixel (color, babl_format ("R'G'B' double"), rgb);
+          cairo_set_source_rgb (cr, rgb[0], rgb[1], rgb[2]);
+          cairo_fill (cr);
+          g_clear_object (&color);
+        }
 
       /* Only render layer mask if it's not disabled */
       if (gimp_layer_get_mask (layer) && gimp_layer_get_apply_mask (layer))
