@@ -41,12 +41,14 @@
 # aspect ratio = rapporto proporzioni
 # link layer = livello collegato
 # vector layer = livello vettoriale
+# raster = raster (invariato)
+# rasterize = rasterizzare (invariato=trasformare in formato raster, per es. da formato vettoriale)
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-17 09:43+0200\n"
-"PO-Revision-Date: 2025-10-17 09:53+0200\n"
+"PO-Revision-Date: 2025-10-17 13:59+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -7077,14 +7079,12 @@ msgid "Remove %d Layers"
 msgstr "Rimuovi %d livelli"
 
 #: ../app/actions/layers-commands.c:1124
-#, fuzzy
 msgid "Rasterize Layers"
-msgstr "Rasterizza filtri"
+msgstr "Rasterizza livelli"
 
 #: ../app/actions/layers-commands.c:1147
-#, fuzzy
 msgid "Revert Rasterize"
-msgstr "Ricarica immagine"
+msgstr "Annulla rasterizza"
 
 #: ../app/actions/layers-commands.c:1171
 msgid "Add Paths"
@@ -12805,10 +12805,9 @@ msgid "Effect modification"
 msgstr "Modifica effetto"
 
 #: ../app/core/core-enums.c:1407
-#, fuzzy
 msgctxt "undo-type"
 msgid "Text, link or vector layer"
-msgstr "Trasforma livello vettoriale"
+msgstr "Livello testo, collegamento o vettoriale"
 
 #: ../app/core/core-enums.c:1408
 msgctxt "undo-type"
@@ -15236,15 +15235,15 @@ msgstr ""
 
 #. TRANSLATORS: the %s will be a type of item, i.e. "Text Layer".
 #: ../app/core/gimprasterizable.c:100
-#, fuzzy, c-format
+#, c-format
 msgid "Rasterize %s"
-msgstr "Rasterizza filtri"
+msgstr "Rasterizza %s"
 
 #. TRANSLATORS: the %s will be a type of item, i.e. "Text Layer".
 #: ../app/core/gimprasterizable.c:137
-#, fuzzy, c-format
+#, c-format
 msgid "Revert Rasterize %s"
-msgstr "Ricaricare \"%s\" a \"%s\"?"
+msgstr "Annulla rasterizza %s"
 
 #: ../app/core/gimpselection.c:173
 msgctxt "undo-type"
@@ -24048,10 +24047,8 @@ msgstr ""
 "Disabilitato perché i filtri non possono essere fusi su livelli collegati."
 
 #: ../app/tools/gimpfiltertool.c:463
-#, fuzzy
 msgid "Disabled because filters cannot be merged on text layers."
-msgstr ""
-"Disabilitato perché i filtri non possono essere fusi su livelli vettoriali."
+msgstr "Disabilitato perché i filtri non possono essere fusi su livelli testo."
 
 #: ../app/tools/gimpfiltertool.c:465
 msgid ""
@@ -25238,9 +25235,8 @@ msgid "Pat_hs"
 msgstr "_Tracciati"
 
 #: ../app/tools/gimppathtool.c:734
-#, fuzzy
 msgid "Create Vector Layer from Path"
-msgstr "Crea nuovo livello vettoriale"
+msgstr "Crea livello vettoriale da tracciato"
 
 #: ../app/tools/gimppathtool.c:1041 ../app/tools/gimppathtool.c:1044
 msgid "Confirm Path Editing"

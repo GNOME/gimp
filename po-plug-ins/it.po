@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-17 09:53+0200\n"
-"PO-Revision-Date: 2025-10-17 10:15+0200\n"
+"PO-Revision-Date: 2025-10-17 13:25+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -13755,7 +13755,7 @@ msgstr "Usa sovrampionamento adattivo nel rendering"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:891
 msgid "_Max depth"
-msgstr "Profondità max"
+msgstr "Profondità _max"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:892
 msgid "Max depth for adaptive supersampling"
