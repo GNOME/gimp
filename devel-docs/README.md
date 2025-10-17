@@ -1,101 +1,13 @@
----
-title: Developers documentation
----
+# This file is read-only, please check https://developer.gimp.org
 
-This manual holds information that you will find useful if you
-develop a GIMP plug-in or want to contribute to the GIMP core.
+All the developer documentation is exclusively hosted on
+[GIMP Developer website](https://developer.gimp.org/).
 
-People only interested into plug-ins can probably read just the
-[Plug-in development](#plug-in-development) section. If you wish to
-contribute to all parts of GIMP, the whole documentation is of interest.
+The `devel-docs` dir only contains some branch-specific information that
+can not be hosted on the developer website, which is mainly the
+**os-support.txt** file and the **modules explanation** below.
 
-[TOC]
-
-## Plug-in and Filters development
-
-All needed information for Plug-in and Filters development is documented on the
-[Resource Development](https://developer.gimp.org/resource/)
-section of GIMP Developer website, with exception of the following:
-
-### Porting from GIMP 2 plug-ins
-
-Take a look at our [porting guide](GIMP3-plug-in-porting-guide/README.md).
-
-### Themes
-
-GTK3 uses CSS themes. Don't be fooled though. It's not real CSS in that
-it doesn't have all the features of real web CSS, and since it's for
-desktop applications, some things are necessarily different. What it
-means is mostly that it "looks similar" enough that people used to web
-styling should not be too disorientated.
-
-You can start by looking at the [official
-documentation](https://docs.gtk.org/gtk3/migrating-themes.html) for
-theme migration (from GTK+2 to 3), which gives a good overview, though
-it's far from being perfect unfortunately.
-
-Another good idea would be to look at existing well maintained GTK3
-themes to get inspiration and see how things work.
-
-Finally you can look at our existing themes, like the [System
-theme](https://gitlab.gnome.org/GNOME/gimp/-/blob/master/themes/System/gimp.css).
-Note though that this `System` theme is pretty bare, and that's its goal
-(try to theme as few as possible over whatever is the current real
-GTK system theme).
-
-As a last trick for theme makers, we recommend to work with the
-GtkInspector tool, which allows you to test CSS rules live in the `CSS`
-tab. You can run the `GtkInspector` by going to the `File > Debug` menu
-and selecting `Start GtkInspector` menu item.
-
-It also allows you to find the name of a widget to use in your CSS
-rules. To do so:
-
-* Start the `GtkInspector`;
-* go on the "Objects" tab;
-* click the "target" 🞋 icon on the headerbar's top-left, then pick in
-  GIMP interface the widget you are interested to style;
-* the widget name will be displayed on the top of the information area
-  of the dialog.
-* Feel free to browse the various sections to see the class hierarchy,
-  CSS nodes and so on.
-* The second top-left button (just next to the target icon) allows you
-  to switch between the details of the selected widget and the widget
-  hierarchy (container widgets containing other widgets), which is also
-  very useful information.
-
-Additionally you can quickly switch between the light and dark variant
-of a same theme by going to "Visual" tab and switching the "Dark
-Variant" button ON or OFF.
-
-
-## Core development
-
-When writing code, any core developer is expected to follow:
-
-- GIMP's [coding style](https://developer.gimp.org/core/coding_style/);
-- the [directory structure](#directory-structure-of-gimp-source-tree)
-
-[GIMP's developer site](https://developer.gimp.org/) contain various valuable resources.
-
-Finally the [debugging-tips](https://developer.gimp.org/core/debug/debugging-tips/) file contain many very
-useful tricks to help you debugging in various common cases.
-
-### Newcomers
-
-If this is your first time contributing to GIMP, you might be interested
-by [build instructions](https://developer.gimp.org/core/setup/).
-
-You might also like to read these instructions on the process of
-[submitting patches](https://developer.gimp.org/core/submit-patch/).
-
-### TODO: Core Contributors
-
-As a core dev, you can trigger .appimage, .flatpak standalone packages,
-.exe Windows installer or Microsoft Store/.msixbundle to be generated
-with the MR code as explained in [gitlab-mr.md](gitlab-mr.md).
-
-### Directory structure of GIMP source tree
+![gimp-module-dependencies.svg](gimp-module-dependencies.svg){height=1120px}.
 
 GIMP source tree can be divided into the main application, libraries, plug-ins,
 data files and some stuff that don't fit into these categories. Here are the
@@ -103,39 +15,39 @@ top-level directories:
 
 | Folder          | Description |
 | ---             | ---         |
-| app/            | Source code of the main GIMP application             |
-| app-tools/      | Source code of distributed tools                     |
-| build/          | Scripts for creating binary packages                 |
-| data/           | Data files: dynamics, gradients, palettes…           |
-| desktop/        | Desktop integration files                            |
-| devel-docs/     | Developers documentation                             |
-| docs/           | Users documentation                                  |
-| etc/            | Configuration files installed with GIMP              |
-| extensions/     | Source code of extensions                            |
-| gimp-data/      | Raster or image data files                           |
-| libgimp/        | Library for plug-ins (core does not link against)    |
-| libgimpbase/    | Basic functions shared by core and plug-ins          |
-| libgimpcolor/   | Color-related functions shared by core and plug-ins  |
-| libgimpconfig/  | Config functions shared by core and plug-ins         |
-| libgimpmath/    | Mathematic operations useful for core and plug-ins   |
+| app/            | Source code of the main GIMP application                                              |
+| app-tools/      | Source code of distributed tools                                                      |
+| build/          | Scripts for creating binary packages                                                  |
+| data/           | Data files: dynamics, gradients, palettes…                                            |
+| desktop/        | Desktop integration files                                                             |
+| devel-docs/     | Developers documentation generation files                                             |
+| docs/           | CLI and rc files documentation (manpages)                                             |
+| etc/            | Configuration files installed with GIMP                                               |
+| extensions/     | Source code of extensions                                                             |
+| gimp-data/      | Raster or image data files                                                            |
+| **libgimp/**    | Library for plug-ins (core does not link against) (**can have auto-generated files**) |
+| libgimpbase/    | Basic functions shared by core and plug-ins                                           |
+| libgimpcolor/   | Color-related functions shared by core and plug-ins                                   |
+| libgimpconfig/  | Config functions shared by core and plug-ins                                          |
+| libgimpmath/    | Mathematic operations useful for core and plug-ins                                    |
 | libgimpmodule/  | Abstracts dynamic loading of modules (used to implement loadable color selectors and display filters) |
-| libgimpthumb/   | Thumbnail functions shared by core and plug-ins      |
-| libgimpwidgets/ | User interface elements (widgets) and utility functions shared by core and plug-ins                   |
-| menus/          | XML/XSL files used to generate menus                 |
-| modules/        | Color selectors and display filters loadable at run-time |
-| pdb/            | Scripts for PDB source code generation               |
-| plug-ins/       | Source code for plug-ins distributed with GIMP       |
-| po/             | Translations of strings used in the core application |
-| po-libgimp/     | Translations of strings used in libgimp              |
-| po-plug-ins/    | Translations of strings used in C plug-ins           |
-| po-python/      | Translations of strings used in Python plug-ins      |
-| po-script-fu/   | Translations of strings used in Script-Fu scripts    |
-| po-tags/        | Translations of strings used in tags                 |
-| po-tips/        | Translations of strings used in tips                 |
-| po-windows-installer/ | Translations of strings used in the Windows installer |
-| themes/         | Official themes                                      |
-| tools/          | Source code for non-distributed GIMP-related tools   |
-| .gitlab/        | Gitlab-related templates or scripts                  |
+| libgimpthumb/   | Thumbnail functions shared by core and plug-ins                                       |
+| libgimpwidgets/ | User interface elements (widgets) and utility functions shared by core and plug-ins   |
+| menus/          | XML/XSL files used to generate menus                                                  |
+| modules/        | Color selectors and display filters loadable at run-time                              |
+| pdb/            | Scripts for PDB source code generation                                                |
+| plug-ins/       | Source code for plug-ins distributed with GIMP                                        |
+| po/             | Translations of strings used in the core application                                  |
+| po-libgimp/     | Translations of strings used in libgimp                                               |
+| po-plug-ins/    | Translations of strings used in C plug-ins                                            |
+| po-python/      | Translations of strings used in Python plug-ins                                       |
+| po-script-fu/   | Translations of strings used in Script-Fu scripts                                     |
+| po-tags/        | Translations of strings used in tags                                                  |
+| po-tips/        | Translations of strings used in tips                                                  |
+| po-windows-installer/ | Translations of strings used in the Windows installer                           |
+| themes/         | Official themes                                                                       |
+| tools/          | Source code for non-distributed GIMP-related tools                                    |
+| .gitlab/        | Gitlab-related templates or scripts                                                   |
 
 The source code of the main GIMP application is found in the `app/` directory:
 
@@ -153,7 +65,7 @@ The source code of the main GIMP application is found in the `app/` directory:
 | app/menus/      | Code for menus (depends: GTK)                                                    |
 | app/operations/ | Custom GEGL operations (depends: GEGL)                                           |
 | app/paint/      | Paint core that provides different ways to paint strokes (depends: GEGL)         |
-| app/pdb/        | Core side of the Procedural Database, exposes internal functionality             |
+| **app/pdb/**    | Core side of the Procedural Database, exposes internal functionality. (**can have auto-generated files**) |
 | app/plug-in/    | Plug-in handling in **core**                                                     |
 | app/propgui/    | Property widgets generated from config properties (depends: GTK)                 |
 | app/tests/      | Core unit testing framework                                                      |
@@ -163,20 +75,8 @@ The source code of the main GIMP application is found in the `app/` directory:
 | app/widgets/    | Collection of widgets used in the application GUI                                |
 | app/xcf/        | XCF file handling in **core**                                                    |
 
-#### Auto-generated Files
+This README file is read-only.
 
-Please notice that some files in the source are generated from other
-sources. All those files have a short notice about being generated
-somewhere at the top. Among them are the files ending in `pdb.[ch]` in
-the `libgimp/` directory and the files ending in `cmds.c` in the
-`app/pdb/` subdirectory. Those are generated from the respective `.pdb`
-files in `pdb/groups`.
-
-Other files are:
-
-* `AUTHORS` from `authors.xml`
-
-You should also check out [gimp-module-dependencies.svg](gimp-module-dependencies.svg).
-**TODO**: this SVG file is interesting yet very outdated. It should not
-be considered as some kind dependency rule and should be updated.
-
+Remember: all the developer documentation is exclusively hosted on
+[GIMP Developer website](https://developer.gimp.org/). Do
+not search nor add documentation files on this dir.
