@@ -44,6 +44,8 @@ libgimpwidgets_sources_introspectable = files(
   'gimpcolorprofileview.c',
   'gimpcolorscale.c',
   'gimpcolorscaleentry.c',
+  'gimpcolorscales.c',
+  'gimpcolorselect.c',
   'gimpcolorselection.c',
   'gimpcolorselector.c',
   'gimpdialog.c',
@@ -92,8 +94,6 @@ libgimpwidgets_sources_introspectable = files(
 
 libgimpwidgets_sources = [
   libgimpwidgets_sources_introspectable,
-  'gimpcolorscales.c',
-  'gimpcolorselect.c',
   'gimpcontroller.c',
   'gimpeevl.c',
   'gimpfileentry.c',
@@ -128,6 +128,8 @@ libgimpwidgets_headers_introspectable = files(
   'gimpcolorprofileview.h',
   'gimpcolorscale.h',
   'gimpcolorscaleentry.h',
+  'gimpcolorscales.h',
+  'gimpcolorselect.h',
   'gimpcolorselection.h',
   'gimpcolorselector.h',
   'gimpdialog.h',
@@ -178,8 +180,6 @@ libgimpwidgets_headers_introspectable = files(
 
 libgimpwidgets_headers = [
   libgimpwidgets_headers_introspectable,
-  'gimpcolorscales.h',
-  'gimpcolorselect.h',
   'gimpcontroller.h',
 ]
 
