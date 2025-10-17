@@ -75,7 +75,6 @@ When writing code, any core developer is expected to follow:
 
 - GIMP's [coding style](https://developer.gimp.org/core/coding_style/);
 - the [directory structure](#directory-structure-of-gimp-source-tree)
-- our [header file inclusion policy](includes.txt)
 
 [GIMP's developer site](https://developer.gimp.org/) contain various valuable resources.
 
@@ -181,69 +180,3 @@ You should also check out [gimp-module-dependencies.svg](gimp-module-dependencie
 **TODO**: this SVG file is interesting yet very outdated. It should not
 be considered as some kind dependency rule and should be updated.
 
-### Advanced concepts
-
-#### XCF
-
-The `XCF` format is the core image format of GIMP, which mirrors
-features made available in GIMP. More than an image format, you may
-consider it as a work or project format, as it is not made for finale
-presentation of an artwork but for the work-in-progress process.
-
-Developers are welcome to read the [specifications of XCF](https://developer.gimp.org/core/standards/xcf/).
-
-#### Locks
-
-Items in an image can be locked in various ways to prevent different
-types of edits.
-
-This is further explained in [the specifications of locks](https://developer.gimp.org/core/specifications/locks/).
-
-#### UI Framework
-
-GIMP has an evolved GUI framework, with a toolbox, dockables, menus…
-
-This document describing how the GIMP UI framework functions and how it
-is [implemented](ui-framework.txt) might be of interest.
-
-#### Contexts
-
-GIMP uses a lot a concept of "contexts". We recommend reading more about
-[how GimpContexts are used in GIMP](contexts.txt).
-
-#### Undo
-
-GIMP undo system can be challenging at times. This [quick overview of
-the undo system](undo.txt) can be of interest as a first introduction.
-
-#### Parasites
-
-GIMP has a concept of "parasite" data which basically correspond to
-persistent or semi-persistent data which can be attached to images or
-items (layers, channels, paths) within an image. These parasites are
-saved in the XCF format.
-
-Parasites can also be attached globally to the GIMP session.
-
-Parasite contents is format-free and you can use any parasite name,
-nevertheless GIMP itself uses parasite so you should read the
-[descriptions of known parasites](parasites.txt).
-
-#### Metadata
-
-GIMP supports Exif, IPTC and XMP metadata as well as various image
-format-specific metadata. The topic is quite huge and complex, if not
-overwhelming.
-
-This [old document](https://developer.gimp.org/core/specifications/exif_handling/)
-might be of interest (or maybe not, it has not been recently reviewed and might
-be widely outdated; in any case, it is not a complete document at all as we
-definitely do a lot more nowadays). **TODO**: review this document and delete or
-update it depending of whether it still makes sense.
-
-#### Tagging
-
-Various data in GIMP can be tagged across sessions.
-
-This document on [how resource tagging in GIMP works](tagging.txt) may
-be of interest.
