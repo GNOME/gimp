@@ -2871,7 +2871,7 @@ makewindow (void)
   gtk_widget_show (amountscale);
 
   adjustment = gtk_adjustment_new (1.0, 0.0, 1.0, 0.1, 1.0, 0.0);
-  expscale = gimp_spin_scale_new (adjustment, _("Exp."), 2);
+  expscale = gimp_spin_scale_new (adjustment, _("Exponent"), 2);
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
