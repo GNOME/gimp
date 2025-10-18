@@ -43,11 +43,14 @@
 #include "core/gimpprogress.h"
 #include "core/gimpcontainer.h"
 
+#include "file/file-open.h"
+
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevicemanager.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdnd.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdockcolumns.h"
@@ -248,6 +251,11 @@ static void      gimp_image_window_page_reordered      (GtkNotebook         *not
                                                         GtkWidget           *widget,
                                                         gint                 page_num,
                                                         GimpImageWindow     *window);
+static void      gimp_image_window_drop_uri_list       (GtkWidget           *widget,
+                                                        gint                 x,
+                                                        gint                 y,
+                                                        GList               *uri_list,
+                                                        gpointer             data);
 static void      gimp_image_window_disconnect_from_active_shell
                                                        (GimpImageWindow *window);
 
@@ -517,6 +525,10 @@ gimp_image_window_constructed (GObject *object)
   gtk_notebook_set_show_border (GTK_NOTEBOOK (private->notebook), FALSE);
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (private->notebook), GTK_POS_TOP);
+
+  gimp_dnd_uri_list_dest_add (GTK_WIDGET (window),
+                              gimp_image_window_drop_uri_list,
+                              NULL);
 
   gtk_paned_pack1 (GTK_PANED (private->right_hpane), private->notebook,
                    TRUE, TRUE);
@@ -2187,6 +2199,71 @@ gimp_image_window_page_reordered (GtkNotebook     *notebook,
                           page_num);
 
   gtk_notebook_reorder_child (notebook, widget, page_num);
+}
+
+static void
+gimp_image_window_drop_uri_list (GtkWidget *widget,
+                                 gint       x,
+                                 gint       y,
+                                 GList     *uri_list,
+                                 gpointer   data)
+{
+  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (widget);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GimpDisplay            *active_display;
+  GList                  *list;
+
+  if (! private->active_shell)
+    return;
+
+  active_display = private->active_shell->display;
+  if (! active_display)
+    return;
+
+  for (list = uri_list; list; list = g_list_next (list))
+    {
+      GFile             *file  = g_file_new_for_uri (list->data);
+      GimpPDBStatusType  status;
+      GError            *error = NULL;
+      gboolean           warn  = FALSE;
+
+      if (! active_display)
+        {
+          /* It seems as if GIMP is being torn down for quitting. Bail out. */
+          g_object_unref (file);
+          return;
+        }
+      else
+        {
+          /*  open any subsequent images in a new display  */
+          GimpImage *new_image;
+
+          new_image = file_open_with_display (private->gimp,
+                                              gimp_get_user_context (private->gimp),
+                                              NULL,
+                                              file, FALSE,
+                                              G_OBJECT (gimp_widget_get_monitor (widget)),
+                                              &status, &error);
+
+          if (! new_image && status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
+            warn = TRUE;
+        }
+
+      /* Something above might have run a few rounds of the main loop. Check
+       * that shell->display is still there, otherwise ignore this as the app
+       * is being torn down for quitting.
+       */
+      if (warn && active_display)
+        {
+          gimp_message (private->gimp, G_OBJECT (active_display),
+                        GIMP_MESSAGE_ERROR,
+                        _("Opening '%s' failed:\n\n%s"),
+                        gimp_file_get_utf8_name (file), error->message);
+          g_clear_error (&error);
+        }
+
+      g_object_unref (file);
+    }
 }
 
 static void
