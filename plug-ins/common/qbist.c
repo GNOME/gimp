@@ -929,7 +929,7 @@ dialog_run (GimpProcedure       *procedure,
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
-                                      _("G-Qbist"));
+                                      _("Qbist"));
 
   vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "qbist-vbox", "anti-aliasing",
