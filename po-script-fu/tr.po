@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-20 15:34+0000\n"
-"PO-Revision-Date: 2025-09-22 23:06+0300\n"
+"POT-Creation-Date: 2025-09-27 11:50+0000\n"
+"PO-Revision-Date: 2025-10-12 23:09+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -106,7 +106,7 @@ msgstr "_Kapat"
 
 #: plug-ins/script-fu/console/script-fu-console.c:187
 msgid "_Browse..."
-msgstr "_Gözat..."
+msgstr "_Göz At..."
 
 #: plug-ins/script-fu/console/script-fu-console.c:246
 msgid "Save Script-Fu Console Output"
@@ -228,7 +228,7 @@ msgstr "%s yüklenirken hata:"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:72
 msgid "Bumpmap"
-msgstr "Derinlik etkisi"
+msgstr "Derinlik etkisi eşlemi"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:199
 msgid "Add B_evel..."
@@ -506,7 +506,7 @@ msgstr "Arka plan yok (yalnız ayrı katman için)"
 #: plug-ins/script-fu/scripts/lava.scm:144
 #: plug-ins/script-fu/scripts/xach-effect.scm:139
 msgid "Keep selection"
-msgstr "Seçileni koru"
+msgstr "Seçimi koru"
 
 #: plug-ins/script-fu/scripts/circuit.scm:146
 #: plug-ins/script-fu/scripts/lava.scm:145
@@ -519,7 +519,7 @@ msgstr "_Bezimsileştir..."
 
 #: plug-ins/script-fu/scripts/clothify.scm:66
 msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr "Seçilen bölgeye (ya da alfaya) bezimsi bir desen ekle"
+msgstr "Seçili bölgeye (ya da alfaya) bezimsi desen ekle"
 
 #: plug-ins/script-fu/scripts/clothify.scm:72
 msgid "Blur X"
@@ -575,7 +575,7 @@ msgstr "Değişik katman kipiyle uygulanmış yoğun gürültü"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:89
 msgid "Random Seed"
-msgstr "Rastgele Tohum"
+msgstr "Rastgele Parçacık"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:90
 msgid "Levels"
@@ -932,7 +932,7 @@ msgstr "_Lav..."
 
 #: plug-ins/script-fu/scripts/lava.scm:134
 msgid "Fill the current selection with lava"
-msgstr "Seçilen alanı lav ile doldur"
+msgstr "Geçerli seçimi lav ile doldur"
 
 #: plug-ins/script-fu/scripts/lava.scm:140
 msgid "Seed"
@@ -1197,7 +1197,7 @@ msgstr "_Perspektif..."
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:197
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr "Seçilen bölgeye (ya da alfaya) perspektif gölgesi ekle"
+msgstr "Seçili bölgeye (ya da alfaya) perspektif gölgesi ekle"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:203
 msgid "Angle"
@@ -1445,15 +1445,15 @@ msgstr "Yönü tersine çevir"
 
 #: plug-ins/script-fu/scripts/weave.scm:425
 msgid "_Weave..."
-msgstr "_Hasır..."
+msgstr "_Dokuma..."
 
 #: plug-ins/script-fu/scripts/weave.scm:426
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"Kaplama ya da derinlik etkisi olarak kullanılmak üzere dokuma etkisiyle "
-"doldurulmuş yeni katman oluştur"
+"Kaplama ya da derinlik etkisi eşlemi olarak kullanılmak üzere dokuma "
+"etkisiyle doldurulmuş yeni katman oluştur"
 
 #: plug-ins/script-fu/scripts/weave.scm:432
 msgid "Ribbon width"
