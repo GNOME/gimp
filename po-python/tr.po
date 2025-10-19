@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-29 08:50+0000\n"
-"PO-Revision-Date: 2025-08-29 13:42+0300\n"
+"POT-Creation-Date: 2025-10-13 17:44+0000\n"
+"PO-Revision-Date: 2025-10-18 18:37+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 "X-POOTLE-MTIME: 1420937120.000000\n"
 
 #: plug-ins/python/colorxhtml.py:78
@@ -50,8 +50,7 @@ msgstr "Karakterleri dosyadan o_ku"
 
 #: plug-ins/python/colorxhtml.py:223
 msgid "Read characters from file, if true, or use text entry"
-msgstr ""
-"Karakterleri dosyadan oku, eğer doğru ise, ya da metin girdisini kullan"
+msgstr "Karakterleri dosyadan oku, eğer doğru ise, ya da metin girişini kullan"
 
 #: plug-ins/python/colorxhtml.py:225
 msgid "Charac_ters"
@@ -201,7 +200,7 @@ msgstr "Görüntü histogramını metin dosyasına aktar (CSV)"
 
 # komut olduğu için Başlık Düzeni tercih edildi
 #: plug-ins/python/histogram-export.py:216
-msgid "_Export histogram..."
+msgid "_Export Histogram..."
 msgstr "_Histogramı Dışa Aktar..."
 
 #. TODO: GFile props still don't have labels + only load existing files
@@ -264,7 +263,6 @@ msgid "Export palette as Krita .kpl"
 msgstr "Paleti Krita .kpl olarak dışa aktar"
 
 #: plug-ins/python/palette-export-as-kpl.py:170
-#| msgid "_Sort Palette..."
 msgid "_Krita palette..."
 msgstr "_Krita paleti..."
 
@@ -273,7 +271,6 @@ msgid "_Palette to export"
 msgstr "Dışa aktarılacak _palet"
 
 #: plug-ins/python/palette-export-as-kpl.py:184
-#| msgid "_File..."
 msgid "_File (.kpl)"
 msgstr "_Dosya (.kpl)"
 
@@ -330,7 +327,7 @@ msgstr "Düzenlenen palet"
 
 #: plug-ins/python/palette-offset.py:66
 msgid "The newly created palette when read-only, otherwise the input palette"
-msgstr "Salt okunursa yeni oluşturulan palet ya da değilse giriş paleti"
+msgstr "Salt okunursa yeni oluşturulan palet ya da değilse girdi paleti"
 
 #. TODO: Re-incorporate LAB and LCHab options with GeglColor
 #: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
@@ -565,7 +562,7 @@ msgstr "_Temizle"
 
 #: plug-ins/python/python-console/python-console.py:83
 msgid "_Browse..."
-msgstr "_Gözat..."
+msgstr "_Göz At..."
 
 #: plug-ins/python/python-console/python-console.py:84
 #: plug-ins/python/python-console/python-console.py:227
@@ -704,7 +701,7 @@ msgstr "Lissajous"
 
 #: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
 msgid "Curve Type"
-msgstr "Eğri Tipi"
+msgstr "Eğri Türü"
 
 #: plug-ins/python/spyro-plus.py:1488
 msgid ""
