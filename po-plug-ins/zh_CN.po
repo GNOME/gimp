@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-14 22:58+0000\n"
-"PO-Revision-Date: 2025-10-15 08:05+0800\n"
+"POT-Creation-Date: 2025-10-19 10:03+0000\n"
+"PO-Revision-Date: 2025-10-19 19:04+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -68,7 +68,7 @@ msgstr "C 语言插件示例"
 #: plug-ins/common/cml-explorer.c:2144 plug-ins/common/cml-explorer.c:2354
 #: plug-ins/common/curve-bend.c:1787 plug-ins/common/curve-bend.c:1822
 #: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2487
-#: plug-ins/common/file-pdf-export.c:1069 plug-ins/common/file-pdf-load.c:585
+#: plug-ins/common/file-pdf-export.c:1051 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
 #: plug-ins/common/sphere-designer.c:2284
 #: plug-ins/common/sphere-designer.c:2648 plug-ins/common/unit-editor.c:427
@@ -81,8 +81,8 @@ msgstr "C 语言插件示例"
 #: plug-ins/gfig/gfig-dialog.c:828 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
-#: plug-ins/gradient-flare/gradient-flare.c:3337
-#: plug-ins/gradient-flare/gradient-flare.c:3451
+#: plug-ins/gradient-flare/gradient-flare.c:3340
+#: plug-ins/gradient-flare/gradient-flare.c:3454
 #: plug-ins/ifs-compose/ifs-compose.c:913
 #: plug-ins/ifs-compose/ifs-compose.c:2608
 #: plug-ins/ifs-compose/ifs-compose.c:2645 plug-ins/imagemap/imap_browse.c:80
@@ -147,7 +147,7 @@ msgstr "JavaScript（GJS）插件示例"
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/gradient-flare/gradient-flare.c:3452
+#: plug-ins/gradient-flare/gradient-flare.c:3455
 #: plug-ins/ifs-compose/ifs-compose.c:914
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
@@ -295,7 +295,7 @@ msgid "Left edge"
 msgstr "左边界"
 
 #: plug-ins/common/align-layers.c:206 plug-ins/common/align-layers.c:228
-#: plug-ins/gradient-flare/gradient-flare.c:2925
+#: plug-ins/gradient-flare/gradient-flare.c:2928
 msgid "Center"
 msgstr "中心"
 
@@ -1041,7 +1041,7 @@ msgstr "打开(_O)"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1459 plug-ins/common/cml-explorer.c:2145
 #: plug-ins/common/curve-bend.c:1261 plug-ins/common/curve-bend.c:1823
-#: plug-ins/common/file-pdf-export.c:1068 plug-ins/common/qbist.c:882
+#: plug-ins/common/file-pdf-export.c:1050 plug-ins/common/qbist.c:882
 #: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2705 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1242
@@ -1229,7 +1229,7 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/cml-explorer.c:2210 plug-ins/common/curve-bend.c:762
 #: plug-ins/common/file-dicom.c:1578 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
-#: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:680
+#: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1923 plug-ins/common/file-raw-data.c:1509
 #: plug-ins/common/file-raw-data.c:1538 plug-ins/common/file-sunras.c:614
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:630
@@ -2038,7 +2038,7 @@ msgstr "修改曲线"
 
 #. The Copy button
 #: plug-ins/common/curve-bend.c:1195
-#: plug-ins/gradient-flare/gradient-flare.c:3053
+#: plug-ins/gradient-flare/gradient-flare.c:3056
 msgid "_Copy"
 msgstr "复制(_C)"
 
@@ -4610,15 +4610,15 @@ msgstr "下边框超出边界（须 < %d）：%d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "写入文件“%s”失败：%s"
 
-#: plug-ins/common/file-pdf-export.c:321 plug-ins/common/file-pdf-load.c:198
+#: plug-ins/common/file-pdf-export.c:329 plug-ins/common/file-pdf-load.c:198
 msgid "Portable Document Format"
 msgstr "便携式文档格式"
 
-#: plug-ins/common/file-pdf-export.c:324 plug-ins/common/file-pdf-export.c:410
+#: plug-ins/common/file-pdf-export.c:332 plug-ins/common/file-pdf-export.c:418
 msgid "Save files in PDF format"
 msgstr "以 PDF 格式保存文件"
 
-#: plug-ins/common/file-pdf-export.c:325 plug-ins/common/file-pdf-export.c:411
+#: plug-ins/common/file-pdf-export.c:333 plug-ins/common/file-pdf-export.c:419
 msgid ""
 "Saves files in Adobe's Portable Document Format. PDF is designed to be "
 "easily processed by a variety of different platforms, and is a distant "
@@ -4627,90 +4627,90 @@ msgstr ""
 "将文件保存为 Adobe 的便携式文档格式。PDF 设计为多种不同平台便于处理，且为 "
 "PostScript 远房表亲的文件格式。"
 
-#: plug-ins/common/file-pdf-export.c:337 plug-ins/common/file-pdf-load.c:214
+#: plug-ins/common/file-pdf-export.c:345 plug-ins/common/file-pdf-load.c:214
 msgid "PDF"
 msgstr "PDF"
 
-#: plug-ins/common/file-pdf-export.c:347 plug-ins/common/file-pdf-export.c:437
+#: plug-ins/common/file-pdf-export.c:355 plug-ins/common/file-pdf-export.c:445
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "可能的话将位图转换为矢量图形(_B)"
 
-#: plug-ins/common/file-pdf-export.c:348 plug-ins/common/file-pdf-export.c:438
+#: plug-ins/common/file-pdf-export.c:356 plug-ins/common/file-pdf-export.c:446
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "可能的话将位图转换为矢量图形"
 
-#: plug-ins/common/file-pdf-export.c:353 plug-ins/common/file-pdf-export.c:443
+#: plug-ins/common/file-pdf-export.c:361 plug-ins/common/file-pdf-export.c:451
 msgid "O_mit hidden layers and layers with zero opacity"
 msgstr "忽略隐藏图层和完全透明图层(_M)"
 
-#: plug-ins/common/file-pdf-export.c:354 plug-ins/common/file-pdf-export.c:444
+#: plug-ins/common/file-pdf-export.c:362 plug-ins/common/file-pdf-export.c:452
 msgid "Non-visible layers will not be exported"
 msgstr "不可见的图层不会导出"
 
-#: plug-ins/common/file-pdf-export.c:359 plug-ins/common/file-pdf-export.c:449
+#: plug-ins/common/file-pdf-export.c:367 plug-ins/common/file-pdf-export.c:457
 msgid "_Apply layer masks"
 msgstr "应用图层蒙板(_A)"
 
-#: plug-ins/common/file-pdf-export.c:360 plug-ins/common/file-pdf-export.c:450
+#: plug-ins/common/file-pdf-export.c:368 plug-ins/common/file-pdf-export.c:458
 msgid ""
 "Apply layer masks before saving (Keeping the mask will not change the "
 "output, only the PDF structure)"
 msgstr "保存前应用图层蒙板（保留蒙板不会改变输出，仅影响 PDF 结构）"
 
-#: plug-ins/common/file-pdf-export.c:366
+#: plug-ins/common/file-pdf-export.c:374
 msgid "La_yers as pages"
 msgstr "图层作为页面(_Y)"
 
-#: plug-ins/common/file-pdf-export.c:367
+#: plug-ins/common/file-pdf-export.c:375
 msgid "Layers as pages (bottom layers first)."
 msgstr "图层作为页面（底端图层为第一）。"
 
-#: plug-ins/common/file-pdf-export.c:372
+#: plug-ins/common/file-pdf-export.c:380
 msgid "Re_verse order"
 msgstr "反转顺序(_V)"
 
-#: plug-ins/common/file-pdf-export.c:373
+#: plug-ins/common/file-pdf-export.c:381
 msgid "Reverse the pages order (top layers first)."
 msgstr "反转页面顺序（顶端图层为第一）。"
 
-#: plug-ins/common/file-pdf-export.c:378
+#: plug-ins/common/file-pdf-export.c:386
 msgid "Roo_t layers only"
 msgstr "仅根图层(_T)"
 
-#: plug-ins/common/file-pdf-export.c:379
+#: plug-ins/common/file-pdf-export.c:387
 msgid "Only the root layers are considered pages"
 msgstr "仅根图层作为页面"
 
-#: plug-ins/common/file-pdf-export.c:384
+#: plug-ins/common/file-pdf-export.c:392
 msgid "Convert te_xt layers to image"
 msgstr "转换文字图层为图像(_X)"
 
-#: plug-ins/common/file-pdf-export.c:385
+#: plug-ins/common/file-pdf-export.c:393
 msgid "Convert text layers to raster graphics"
 msgstr "转换文字图层为光栅位图图形"
 
-#: plug-ins/common/file-pdf-export.c:390 plug-ins/common/file-pdf-export.c:456
+#: plug-ins/common/file-pdf-export.c:398 plug-ins/common/file-pdf-export.c:464
 msgid "_Fill transparent areas with background color"
 msgstr "用背景色填充透明区域(_F)"
 
-#: plug-ins/common/file-pdf-export.c:391 plug-ins/common/file-pdf-export.c:457
+#: plug-ins/common/file-pdf-export.c:399 plug-ins/common/file-pdf-export.c:465
 msgid ""
 "Fill transparent areas with background color if layer has an alpha channel"
 msgstr "如果图层有透明通道则使用背景色填充透明区域"
 
-#: plug-ins/common/file-pdf-export.c:404
+#: plug-ins/common/file-pdf-export.c:412
 msgid "_Create multipage PDF..."
 msgstr "创建多页面 PDF(_C)…"
 
-#: plug-ins/common/file-pdf-export.c:463
+#: plug-ins/common/file-pdf-export.c:471
 msgid "Save to"
 msgstr "保存到"
 
-#: plug-ins/common/file-pdf-export.c:464
+#: plug-ins/common/file-pdf-export.c:472
 msgid "The URI of the file to save to"
 msgstr "文件保存的地址"
 
-#: plug-ins/common/file-pdf-export.c:691
+#: plug-ins/common/file-pdf-export.c:694
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -4722,7 +4722,7 @@ msgstr ""
 "%s\n"
 "请确保您输入了有效文件名且选中的位置不是只读！"
 
-#: plug-ins/common/file-pdf-export.c:980
+#: plug-ins/common/file-pdf-export.c:962
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4733,48 +4733,48 @@ msgstr ""
 "建议在导出前将您的文字图层转换为图像或安装缺少的字体，否则您的设计可能不会正"
 "确显示。"
 
-#: plug-ins/common/file-pdf-export.c:1050
+#: plug-ins/common/file-pdf-export.c:1032
 msgid "Export Image as Multi-Page PDF"
 msgstr "导出图像为多页面 PDF"
 
-#: plug-ins/common/file-pdf-export.c:1051
+#: plug-ins/common/file-pdf-export.c:1033
 #: plug-ins/metadata/metadata-editor.c:5604
 msgid "_Export"
 msgstr "导出(_E)"
 
-#: plug-ins/common/file-pdf-export.c:1060
+#: plug-ins/common/file-pdf-export.c:1042
 msgid "Save to:"
 msgstr "保存到："
 
-#: plug-ins/common/file-pdf-export.c:1064
+#: plug-ins/common/file-pdf-export.c:1046
 msgid "Browse..."
 msgstr "浏览…"
 
-#: plug-ins/common/file-pdf-export.c:1065
+#: plug-ins/common/file-pdf-export.c:1047
 msgid "Multipage PDF export"
 msgstr "多页面 PDF 导出"
 
-#: plug-ins/common/file-pdf-export.c:1109
+#: plug-ins/common/file-pdf-export.c:1091
 msgid "Remove the selected pages"
 msgstr "删除选中页面"
 
-#: plug-ins/common/file-pdf-export.c:1123
+#: plug-ins/common/file-pdf-export.c:1105
 msgid "Add this image"
 msgstr "添加该图像"
 
-#: plug-ins/common/file-pdf-export.c:1219
-#: plug-ins/common/file-pdf-export.c:1292
-#: plug-ins/common/file-pdf-export.c:1390 plug-ins/common/file-ps.c:2217
+#: plug-ins/common/file-pdf-export.c:1201
+#: plug-ins/common/file-pdf-export.c:1274
+#: plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2217
 #: plug-ins/file-tiff/file-tiff-load.c:1563
 #, c-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: plug-ins/common/file-pdf-export.c:1259
+#: plug-ins/common/file-pdf-export.c:1241
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "错误！为了保存该文件，应该添加至少一副图像！"
 
-#: plug-ins/common/file-pdf-export.c:1437 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-export.c:1419 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "无法处理该图像的尺寸（无论宽度或高度）。"
 
@@ -8312,7 +8312,7 @@ msgid "Layers"
 msgstr "图层"
 
 #: plug-ins/common/sphere-designer.c:2755
-#: plug-ins/gradient-flare/gradient-flare.c:3051
+#: plug-ins/gradient-flare/gradient-flare.c:3054
 msgid "_New"
 msgstr "新建(_N)"
 
@@ -8325,8 +8325,8 @@ msgstr "再制(_U)"
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
 #: plug-ins/gimpressionist/orientmap.c:623
 #: plug-ins/gimpressionist/presets.c:1071 plug-ins/gimpressionist/sizemap.c:499
-#: plug-ins/gradient-flare/gradient-flare.c:3054
-#: plug-ins/gradient-flare/gradient-flare.c:3337
+#: plug-ins/gradient-flare/gradient-flare.c:3057
+#: plug-ins/gradient-flare/gradient-flare.c:3340
 msgid "_Delete"
 msgstr "删除(_D)"
 
@@ -8943,11 +8943,10 @@ msgid "Flow step %d"
 msgstr "按照第 %d 步"
 
 #: plug-ins/common/wavelet-decompose.c:117
-msgid "_Wavelet-decompose..."
+msgid "_Wavelet Decompose..."
 msgstr "小波分解(_W)…"
 
 #: plug-ins/common/wavelet-decompose.c:121
-#: plug-ins/common/wavelet-decompose.c:375
 msgid "Wavelet decompose"
 msgstr "小波分解"
 
@@ -8972,7 +8971,8 @@ msgid "Add a layer mask to each scales layer"
 msgstr "为每级别图层添加图层蒙板"
 
 #: plug-ins/common/wavelet-decompose.c:202
-msgid "Wavelet-Decompose"
+#: plug-ins/common/wavelet-decompose.c:375
+msgid "Wavelet Decompose"
 msgstr "小波分解"
 
 #: plug-ins/common/wavelet-decompose.c:210
@@ -9349,7 +9349,7 @@ msgstr "像素格式"
 
 #: plug-ins/file-dds/dds.c:222 plug-ins/file-dds/dds.c:285
 #: plug-ins/file-dds/dds.c:302 plug-ins/file-webp/file-webp.c:180
-#: plug-ins/gradient-flare/gradient-flare.c:2605
+#: plug-ins/gradient-flare/gradient-flare.c:2608
 msgid "Default"
 msgstr "默认"
 
@@ -11536,10 +11536,10 @@ msgstr "类别：%s"
 #. *    Scales
 #.
 #: plug-ins/filter-browser/filter-browser.c:462
-#: plug-ins/gradient-flare/gradient-flare.c:2949
-#: plug-ins/gradient-flare/gradient-flare.c:3699
-#: plug-ins/gradient-flare/gradient-flare.c:3801
-#: plug-ins/gradient-flare/gradient-flare.c:3932
+#: plug-ins/gradient-flare/gradient-flare.c:2952
+#: plug-ins/gradient-flare/gradient-flare.c:3702
+#: plug-ins/gradient-flare/gradient-flare.c:3804
+#: plug-ins/gradient-flare/gradient-flare.c:3935
 msgid "Parameters"
 msgstr "参数"
 
@@ -11810,7 +11810,7 @@ msgstr "火焰"
 
 #: plug-ins/flame/flame.c:1226 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
-#: plug-ins/gradient-flare/gradient-flare.c:3052
+#: plug-ins/gradient-flare/gradient-flare.c:3055
 msgid "_Edit"
 msgstr "编辑(_E)"
 
@@ -12170,7 +12170,7 @@ msgid "Rendering fractal"
 msgstr "渲染分形"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:878
-#: plug-ins/gradient-flare/gradient-flare.c:3328
+#: plug-ins/gradient-flare/gradient-flare.c:3331
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "您确定要从列表和磁盘中删除“%s”吗？"
@@ -12257,7 +12257,7 @@ msgid "Create rectangle"
 msgstr "创建矩形"
 
 #: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
-#: plug-ins/gradient-flare/gradient-flare.c:3990
+#: plug-ins/gradient-flare/gradient-flare.c:3993
 #: plug-ins/imagemap/imap_main.c:1580 plug-ins/imagemap/imap-menu.ui:171
 #: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
@@ -12284,7 +12284,7 @@ msgid "Create arc"
 msgstr "创建弧线"
 
 #: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
-#: plug-ins/gradient-flare/gradient-flare.c:4007
+#: plug-ins/gradient-flare/gradient-flare.c:4010
 #: plug-ins/imagemap/imap_main.c:1582 plug-ins/imagemap/imap-menu.ui:176
 #: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
@@ -12758,7 +12758,7 @@ msgid "Adds random noise to the color"
 msgstr "给颜色添加随机的噪点"
 
 #: plug-ins/gimpressionist/general.c:141
-#: plug-ins/gradient-flare/gradient-flare.c:3646
+#: plug-ins/gradient-flare/gradient-flare.c:3649
 msgid "_General"
 msgstr "常规(_G)"
 
@@ -13366,7 +13366,7 @@ msgid "Threshold for adaptive supersampling"
 msgstr "用于自适应超级采样的阈值"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
-#: plug-ins/gradient-flare/gradient-flare.c:2506
+#: plug-ins/gradient-flare/gradient-flare.c:2505
 msgid "Gradient Flare"
 msgstr "渐变闪光"
 
@@ -13405,183 +13405,183 @@ msgstr ""
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "无法写入渐变闪光文件“%s”：%s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2550
+#: plug-ins/gradient-flare/gradient-flare.c:2549
 msgid "A_uto update preview"
 msgstr "自动更新预览(_U)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2604
+#: plug-ins/gradient-flare/gradient-flare.c:2607
 msgid "'Default' is created."
 msgstr "“默认”已创建。"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2905
+#: plug-ins/gradient-flare/gradient-flare.c:2908
 msgid "_X:"
 msgstr "_X："
 
-#: plug-ins/gradient-flare/gradient-flare.c:2909
+#: plug-ins/gradient-flare/gradient-flare.c:2912
 msgid "_Y:"
 msgstr "_Y："
 
-#: plug-ins/gradient-flare/gradient-flare.c:2983
+#: plug-ins/gradient-flare/gradient-flare.c:2986
 msgid "_Settings"
 msgstr "设置(_S)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3121
+#: plug-ins/gradient-flare/gradient-flare.c:3124
 msgid "S_elector"
 msgstr "选择器(_E)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3185
+#: plug-ins/gradient-flare/gradient-flare.c:3188
 msgid "New Gradient Flare"
 msgstr "新建渐变闪光"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3188
+#: plug-ins/gradient-flare/gradient-flare.c:3191
 msgid "Enter a name for the new GFlare"
 msgstr "给新的渐变闪光输入一个名字"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3189
+#: plug-ins/gradient-flare/gradient-flare.c:3192
 msgid "Unnamed"
 msgstr "未命名"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3209
-#: plug-ins/gradient-flare/gradient-flare.c:3291
+#: plug-ins/gradient-flare/gradient-flare.c:3212
+#: plug-ins/gradient-flare/gradient-flare.c:3294
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "名字“%s”已经被使用！"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3265
+#: plug-ins/gradient-flare/gradient-flare.c:3268
 msgid "Copy Gradient Flare"
 msgstr "复制渐变闪光"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3268
+#: plug-ins/gradient-flare/gradient-flare.c:3271
 msgid "Enter a name for the copied GFlare"
 msgstr "给已复制的渐变闪光输入一个名字"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3322
+#: plug-ins/gradient-flare/gradient-flare.c:3325
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "无法删除！至少要有一个渐变闪光。"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3332
+#: plug-ins/gradient-flare/gradient-flare.c:3335
 msgid "Delete Gradient Flare"
 msgstr "删除渐变闪光"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3404
+#: plug-ins/gradient-flare/gradient-flare.c:3407
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "在 gflares_list 中没有找到 %s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3446
+#: plug-ins/gradient-flare/gradient-flare.c:3449
 msgid "Gradient Flare Editor"
 msgstr "渐变闪光编辑器"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3450
+#: plug-ins/gradient-flare/gradient-flare.c:3453
 msgid "_Rescan Gradients"
 msgstr "重新扫描渐变(_R)"
 
 #. Glow
-#: plug-ins/gradient-flare/gradient-flare.c:3569
+#: plug-ins/gradient-flare/gradient-flare.c:3572
 msgid "Glow Paint Options"
 msgstr "辉光绘画选项"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3579
-#: plug-ins/gradient-flare/gradient-flare.c:3605
-#: plug-ins/gradient-flare/gradient-flare.c:3631
+#: plug-ins/gradient-flare/gradient-flare.c:3582
+#: plug-ins/gradient-flare/gradient-flare.c:3608
+#: plug-ins/gradient-flare/gradient-flare.c:3634
 msgid "Opacity:"
 msgstr "不透明度："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3591
-#: plug-ins/gradient-flare/gradient-flare.c:3617
-#: plug-ins/gradient-flare/gradient-flare.c:3643
+#: plug-ins/gradient-flare/gradient-flare.c:3594
+#: plug-ins/gradient-flare/gradient-flare.c:3620
+#: plug-ins/gradient-flare/gradient-flare.c:3646
 msgid "Paint mode:"
 msgstr "绘画模式："
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3595
+#: plug-ins/gradient-flare/gradient-flare.c:3598
 msgid "Rays Paint Options"
 msgstr "射线绘画选项"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3621
+#: plug-ins/gradient-flare/gradient-flare.c:3624
 msgid "Second Flares Paint Options"
 msgstr "二次闪光绘画选项"
 
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3672
-#: plug-ins/gradient-flare/gradient-flare.c:3772
-#: plug-ins/gradient-flare/gradient-flare.c:3905
+#: plug-ins/gradient-flare/gradient-flare.c:3675
+#: plug-ins/gradient-flare/gradient-flare.c:3775
+#: plug-ins/gradient-flare/gradient-flare.c:3908
 msgid "Gradients"
 msgstr "渐变"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3683
-#: plug-ins/gradient-flare/gradient-flare.c:3785
-#: plug-ins/gradient-flare/gradient-flare.c:3916
+#: plug-ins/gradient-flare/gradient-flare.c:3686
+#: plug-ins/gradient-flare/gradient-flare.c:3788
+#: plug-ins/gradient-flare/gradient-flare.c:3919
 msgid "Radial gradient:"
 msgstr "径向渐变："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3687
-#: plug-ins/gradient-flare/gradient-flare.c:3789
+#: plug-ins/gradient-flare/gradient-flare.c:3690
+#: plug-ins/gradient-flare/gradient-flare.c:3792
 msgid "Angular gradient:"
 msgstr "角度渐变："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3691
-#: plug-ins/gradient-flare/gradient-flare.c:3793
+#: plug-ins/gradient-flare/gradient-flare.c:3694
+#: plug-ins/gradient-flare/gradient-flare.c:3796
 msgid "Angular size gradient:"
 msgstr "角度大小渐变："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3710
-#: plug-ins/gradient-flare/gradient-flare.c:3812
-#: plug-ins/gradient-flare/gradient-flare.c:3943
+#: plug-ins/gradient-flare/gradient-flare.c:3713
+#: plug-ins/gradient-flare/gradient-flare.c:3815
+#: plug-ins/gradient-flare/gradient-flare.c:3946
 msgid "Size (%):"
 msgstr "大小（%）："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3721
-#: plug-ins/gradient-flare/gradient-flare.c:3823
-#: plug-ins/gradient-flare/gradient-flare.c:3954
+#: plug-ins/gradient-flare/gradient-flare.c:3724
+#: plug-ins/gradient-flare/gradient-flare.c:3826
+#: plug-ins/gradient-flare/gradient-flare.c:3957
 msgid "Rotation:"
 msgstr "旋转："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3732
-#: plug-ins/gradient-flare/gradient-flare.c:3834
-#: plug-ins/gradient-flare/gradient-flare.c:3965
+#: plug-ins/gradient-flare/gradient-flare.c:3735
+#: plug-ins/gradient-flare/gradient-flare.c:3837
+#: plug-ins/gradient-flare/gradient-flare.c:3968
 msgid "Hue rotation:"
 msgstr "色相旋转："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3746
+#: plug-ins/gradient-flare/gradient-flare.c:3749
 msgid "G_low"
 msgstr "辉光(_L)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3845
+#: plug-ins/gradient-flare/gradient-flare.c:3848
 msgid "# of Spikes:"
 msgstr "光芒数量："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3856
+#: plug-ins/gradient-flare/gradient-flare.c:3859
 msgid "Spike thickness:"
 msgstr "光芒厚度："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3870
+#: plug-ins/gradient-flare/gradient-flare.c:3873
 msgid "_Rays"
 msgstr "射线(_R)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3920
+#: plug-ins/gradient-flare/gradient-flare.c:3923
 msgid "Size factor gradient:"
 msgstr "大小系数渐变："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3924
+#: plug-ins/gradient-flare/gradient-flare.c:3927
 msgid "Probability gradient:"
 msgstr "可能性渐变："
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3982
+#: plug-ins/gradient-flare/gradient-flare.c:3985
 msgid "Shape of Second Flares"
 msgstr "二次闪光的形状"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4041
+#: plug-ins/gradient-flare/gradient-flare.c:4044
 msgid "Random seed:"
 msgstr "随机种子："
 
-#: plug-ins/gradient-flare/gradient-flare.c:4055
+#: plug-ins/gradient-flare/gradient-flare.c:4058
 msgid "_Second Flares"
 msgstr "二次闪光(_S)"
 
@@ -16659,6 +16659,9 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid "Wavelet-Decompose"
+#~ msgstr "小波分解"
 
 #~ msgid "Export vector layers in SVG file format"
 #~ msgstr "以 SVG 文件格式导出矢量图层"
