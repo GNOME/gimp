@@ -70,10 +70,10 @@ static void     gimp_container_entry_clear_items  (GimpContainerView      *view)
 
 static void     gimp_container_entry_changed      (GtkEntry               *entry,
                                                    GimpContainerView      *view);
-static void   gimp_container_entry_match_selected (GtkEntryCompletion     *widget,
-                                                   GtkTreeModel           *model,
-                                                   GtkTreeIter            *iter,
-                                                   GimpContainerView      *view);
+static gboolean gimp_container_entry_match_selected (GtkEntryCompletion     *widget,
+                                                     GtkTreeModel           *model,
+                                                     GtkTreeIter            *iter,
+                                                     GimpContainerView      *view);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerEntry, gimp_container_entry,
@@ -382,11 +382,20 @@ gimp_container_entry_changed (GtkEntry          *entry,
     return;
 
   text = gtk_entry_get_text (entry);
-  object = gimp_container_get_child_by_name (container, text);
 
-  g_set_weak_pointer (&container_entry->viewable, GIMP_VIEWABLE (object));
+  /* don't change a valid selection. If we arrive here after selecting an entry from the list, don't do anything.
+   * If we arrive here after typing the full resource name, look for it in the container and set it.
+   * There is a difference, because some resources share the same display name e.g. 2 different fonts named "Holiday",
+   * it's not possible to get the correct one from the container based on display name, as it's not unique.
+  */
+  if (container_entry->viewable == NULL || g_strcmp0 (gimp_object_get_name (container_entry->viewable), text))
+    {
+      object = gimp_container_get_child_by_name (container, text);
 
-  _gimp_container_view_selection_changed (view);
+      g_set_weak_pointer (&container_entry->viewable, GIMP_VIEWABLE (object));
+
+      _gimp_container_view_selection_changed (view);
+    }
 
   if (container_entry->viewable)
     {
@@ -403,11 +412,22 @@ gimp_container_entry_changed (GtkEntry          *entry,
     }
 }
 
-static void
+static gboolean
 gimp_container_entry_match_selected (GtkEntryCompletion *widget,
                                      GtkTreeModel       *model,
                                      GtkTreeIter        *iter,
                                      GimpContainerView  *view)
 {
+  GimpContainerEntry *container_entry = GIMP_CONTAINER_ENTRY (GTK_ENTRY (view));
+  GimpViewRenderer   *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                      -1);
+  g_set_weak_pointer (&container_entry->viewable, renderer->viewable);
+  g_object_unref (renderer);
+
   _gimp_container_view_selection_changed (view);
+
+  return FALSE;
 }
