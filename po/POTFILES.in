@@ -394,6 +394,7 @@ app/pdb/layer-cmds.c
 app/pdb/link-layer-cmds.c
 app/pdb/path-cmds.c
 app/pdb/pdb-cmds.c
+app/pdb/rasterizable-cmds.c
 app/pdb/resource-cmds.c
 app/pdb/selection-cmds.c
 app/pdb/text-layer-cmds.c
