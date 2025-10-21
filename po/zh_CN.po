@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-16 23:16+0000\n"
-"PO-Revision-Date: 2025-10-17 08:18+0800\n"
+"POT-Creation-Date: 2025-10-21 17:07+0000\n"
+"PO-Revision-Date: 2025-10-22 07:57+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -2470,7 +2470,7 @@ msgstr "240 秒"
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
-#: app/actions/text-tool-commands.c:154 app/actions/tool-options-commands.c:210
+#: app/actions/text-tool-commands.c:164 app/actions/tool-options-commands.c:210
 #: app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136
 #: app/dialogs/color-profile-dialog.c:154
 #: app/dialogs/color-profile-dialog.c:172
@@ -2569,8 +2569,9 @@ msgstr "为该标记添加描述"
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:646 app/widgets/gimplayertreeview.c:796
-#: app/widgets/gimptoolbox.c:843 app/widgets/gimptoolbox-dnd.c:178
+#: app/display/gimpdisplayshell-dnd.c:646 app/display/gimpimagewindow.c:2260
+#: app/widgets/gimplayertreeview.c:796 app/widgets/gimptoolbox.c:843
+#: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -8399,11 +8400,11 @@ msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "竖排，从左到右（竖直方向）"
 
-#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:150
+#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:160
 msgid "Open Text File (UTF-8)"
 msgstr "打开文本文件 (UTF-8)"
 
-#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:155
+#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:165
 #: app/dialogs/file-open-location-dialog.c:81
 #: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:790
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
@@ -8411,7 +8412,7 @@ msgstr "打开文本文件 (UTF-8)"
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:256
+#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:266
 #: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
 #: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1650
@@ -8436,90 +8437,95 @@ msgstr "粘贴(_P)"
 
 #: app/actions/text-tool-actions.c:65
 msgctxt "text-tool-action"
+msgid "Paste un_formatted text"
+msgstr "粘贴无格式文本(_F)"
+
+#: app/actions/text-tool-actions.c:71
+msgctxt "text-tool-action"
 msgid "_Bold"
 msgstr "粗体(_B)"
 
-#: app/actions/text-tool-actions.c:70
+#: app/actions/text-tool-actions.c:76
 msgctxt "text-tool-action"
 msgid "_Italic"
 msgstr "斜体(_I)"
 
-#: app/actions/text-tool-actions.c:75
+#: app/actions/text-tool-actions.c:81
 msgctxt "text-tool-action"
 msgid "_Underline"
 msgstr "下划线(_U)"
 
-#: app/actions/text-tool-actions.c:80
+#: app/actions/text-tool-actions.c:86
 msgctxt "text-tool-action"
 msgid "_Delete"
 msgstr "删除(_D)"
 
-#: app/actions/text-tool-actions.c:85
+#: app/actions/text-tool-actions.c:91
 msgctxt "text-tool-action"
 msgid "_Open text file..."
 msgstr "打开文本文件(_O)…"
 
-#: app/actions/text-tool-actions.c:90
+#: app/actions/text-tool-actions.c:96
 msgctxt "text-tool-action"
 msgid "Cl_ear"
 msgstr "清空(_E)"
 
-#: app/actions/text-tool-actions.c:91
+#: app/actions/text-tool-actions.c:97
 msgctxt "text-tool-action"
 msgid "Clear all text"
 msgstr "清空所有文字"
 
-#: app/actions/text-tool-actions.c:96
+#: app/actions/text-tool-actions.c:102
 msgctxt "text-tool-action"
 msgid "Text to _Path"
 msgstr "文字转为路径(_P)"
 
-#: app/actions/text-tool-actions.c:98
+#: app/actions/text-tool-actions.c:104
 msgctxt "text-tool-action"
 msgid "Create a path from the outlines of the current text"
 msgstr "以当前文字的轮廓创建路径"
 
-#: app/actions/text-tool-actions.c:103
+#: app/actions/text-tool-actions.c:109
 msgctxt "text-tool-action"
 msgid "Text _along Path"
 msgstr "文字对齐路径(_A)"
 
-#: app/actions/text-tool-actions.c:105
+#: app/actions/text-tool-actions.c:111
 msgctxt "text-tool-action"
 msgid "Bend the text along the currently active path"
 msgstr "沿当前的活动路径排列文字"
 
-#: app/actions/text-tool-actions.c:113
+#: app/actions/text-tool-actions.c:119
 msgctxt "text-tool-action"
 msgid "From left to right"
 msgstr "从左到右"
 
-#: app/actions/text-tool-actions.c:118
+#: app/actions/text-tool-actions.c:124
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "从右到左"
 
-#: app/actions/text-tool-actions.c:123
+#: app/actions/text-tool-actions.c:129
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "竖排，从右到左（混合方向）"
 
-#: app/actions/text-tool-actions.c:128
+#: app/actions/text-tool-actions.c:134
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "竖排，从右到左（竖直方向）"
 
-#: app/actions/text-tool-actions.c:133
+#: app/actions/text-tool-actions.c:139
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "竖排，从左到右（混合方向）"
 
-#: app/actions/text-tool-actions.c:138
+#: app/actions/text-tool-actions.c:144
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "竖排，从左到右（竖直方向）"
 
-#: app/actions/text-tool-commands.c:218
+#: app/actions/text-tool-commands.c:228
 #, c-format
 msgid "Text along path failed: %s"
 msgstr "文字对齐路径失败：%s"
@@ -21711,6 +21717,16 @@ msgstr "扩展路径笔触"
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "数据标签“%s”不是典型的标识符"
 
+#: app/pdb/rasterizable-cmds.c:65
+#, c-format
+msgid "This item has already been rasterized."
+msgstr "此项目已经被栅格化。"
+
+#: app/pdb/rasterizable-cmds.c:96
+#, c-format
+msgid "This item has not been rasterized."
+msgstr "此项目未被栅格化。"
+
 #: app/pdb/resource-cmds.c:468
 #, c-format
 msgid "Resource '%s' is not renamable"
@@ -25093,23 +25109,23 @@ msgid ""
 "modifications."
 msgstr "您选中的文字图层已栅格化。编辑其文字将丢弃所有修改。"
 
-#: app/tools/gimptexttool.c:2390
+#: app/tools/gimptexttool.c:2419
 msgid "Text is required."
 msgstr "需要文字。"
 
-#: app/tools/gimptexttool.c:2393
+#: app/tools/gimptexttool.c:2422
 msgid "No image."
 msgstr "无图像。"
 
-#: app/tools/gimptexttool.c:2396
+#: app/tools/gimptexttool.c:2425
 msgid "No layer."
 msgstr "无图层。"
 
-#: app/tools/gimptexttool.c:2407
+#: app/tools/gimptexttool.c:2436
 msgid "Exactly one path must be selected."
 msgstr "必须选择一个路径。"
 
-#: app/tools/gimptexttool-editor.c:1396
+#: app/tools/gimptexttool-editor.c:1406
 msgid "GIMP Text Editor"
 msgstr "GIMP 文字编辑器"
 
