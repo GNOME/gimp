@@ -155,6 +155,24 @@
         </ul>
       </description>
     </release>
+
+    <release version="3.0.6" date="2025-10-04">
+      <url type="details">https://www.gimp.org/release/3.0.6/</url>
+      <description>
+        <p>
+        This micro release in the 3.0 series fixes some major bugs, assorted with various usability improvements.
+        </p>
+        <ul>
+          <li demo="brush-list,brush-list:viewables-follow-theme">
+          New toggle in Brushes and Fonts dialogs to render their previews using theme colors
+          </li>
+          <li>The Print plug-in now pops a second dialog for fine-tuning prints in sandboxed environments (e.g. Flatpak or Snap)</li>
+          <li>A bug in Windows prevented GIMP to work when the system was set to specific locales</li>
+          <li>Various usability issues have been handled</li>
+          <li>Reported instabilities and vulnerabilities were fixed</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.0.4" date="2025-05-17">
       <description>
         <p>
