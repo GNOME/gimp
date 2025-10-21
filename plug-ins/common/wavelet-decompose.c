@@ -382,8 +382,8 @@ wavelet_decompose_dialog (GimpProcedure *procedure,
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
   /* scales */
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                         "scales", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "scales", 1.0);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               NULL);

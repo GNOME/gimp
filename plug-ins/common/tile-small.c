@@ -651,8 +651,8 @@ tileit_dialog (GimpProcedure       *procedure,
   /* Lower frame saying how many segments */
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog), "segments-label",
                                    _("Number of Segments"), FALSE, FALSE);
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "num-tiles", 1);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "num-tiles", 1);
   g_signal_connect_object (config, "notify::num-tiles",
                            G_CALLBACK (tileit_config_update),
                            NULL, 0);

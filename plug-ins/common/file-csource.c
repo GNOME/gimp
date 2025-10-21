@@ -947,8 +947,8 @@ save_dialog (GimpImage     *image,
                                              GIMP_PROCEDURE_CONFIG (config),
                                              image);
 
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                         "opacity", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "opacity", 1.0);
 
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                        "save-alpha", TRUE, config, "rgb565",

@@ -280,7 +280,7 @@ main_dialog (GimpProcedure       *procedure,
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                    "general-options", _("General Options"),
                                    FALSE, FALSE);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "distance", 1.0);
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "general-box",
                                   "transparent-background",
