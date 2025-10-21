@@ -69,6 +69,7 @@ Graphical User Interface:
   - Use a standard, yet extended, AppMenu on macOS.
   - Advertize the menu path to "Rasterize" items in error messages when
     trying to edit a rasterizable drawable.
+  - Dragging a file to the image tab bar opens the file as a new image.
 
 Plug-Ins:
 
