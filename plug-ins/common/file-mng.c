@@ -1627,16 +1627,16 @@ mng_save_dialog (GimpImage     *image,
                                             G_TYPE_NONE);
   gtk_widget_set_margin_bottom (combo, 6);
 
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "png-compression", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "png-compression", 1.0);
   gtk_widget_set_margin_bottom (scale, 6);
 
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "jpeg-quality", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "jpeg-quality", 1.0);
   gtk_widget_set_margin_bottom (scale, 6);
 
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "jpeg-smoothing", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "jpeg-smoothing", 1.0);
   gtk_widget_set_margin_bottom (scale, 6);
 
   /* MNG Animation Options */

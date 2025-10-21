@@ -468,8 +468,8 @@ destripe_dialog (GimpProcedure *procedure,
   preview = gimp_procedure_dialog_get_drawable_preview (GIMP_PROCEDURE_DIALOG (dialog),
                                                         "preview", drawable);
 
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "avg-width", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "avg-width", 1.0);
   gtk_widget_set_margin_bottom (scale, 12);
 
   button = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),

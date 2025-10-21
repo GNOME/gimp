@@ -275,12 +275,12 @@ blinds_dialog (GimpProcedure *procedure,
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_widget_set_margin_bottom (hbox, 12);
 
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "angle-displacement", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "angle-displacement", 1.0);
   gtk_widget_set_margin_bottom (scale, 12);
 
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                         "num-segments", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "num-segments", 1.0);
 
   vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "blinds-vbox", "blinds-hbox",

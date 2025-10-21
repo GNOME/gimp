@@ -865,8 +865,8 @@ save_dialog (GimpImage     *image,
                                              GIMP_PROCEDURE_CONFIG (config),
                                              image);
 
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                         "threshold", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "threshold", 1.0);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
   gtk_widget_show (dialog);

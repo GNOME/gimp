@@ -1107,12 +1107,12 @@ nlfilter_dialog (GimpProcedure *procedure,
                                             "filter", GIMP_TYPE_INT_RADIO_FRAME);
   gtk_widget_set_margin_bottom (frame, 12);
 
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "alpha", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "alpha", 1.0);
   gtk_widget_set_margin_bottom (scale, 12);
 
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "radius", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "radius", 1.0);
   gtk_widget_set_margin_bottom (scale, 12);
 
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),

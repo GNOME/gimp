@@ -444,7 +444,7 @@ main_dialog (GimpProcedure       *procedure,
                                   "depth",
                                   "threshold",
                                   NULL);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "depth", 1.0);
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
                                     "antialias-frame",
@@ -568,11 +568,11 @@ main_dialog (GimpProcedure       *procedure,
                                                         "viewpoint-position-label", FALSE,
                                                         "viewpoint-position-box");
 
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "first-axis-x", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "first-axis-y", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "first-axis-z", 1.0);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                    "first-axis-label", _("First Axis"),
@@ -588,11 +588,11 @@ main_dialog (GimpProcedure       *procedure,
                                     "first-axis-label", FALSE,
                                     "first-axis-box");
 
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "second-axis-x", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "second-axis-y", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "second-axis-z", 1.0);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                    "second-axis-label", _("Second Axis"),
@@ -702,11 +702,11 @@ main_dialog (GimpProcedure       *procedure,
                     config);
 
   /* Orientation Tab */
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "position-x", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "position-y", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "position-z", 1.0);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                    "orientation-position-label", _("Position"),
@@ -722,11 +722,11 @@ main_dialog (GimpProcedure       *procedure,
                                     "orientation-position-label", FALSE,
                                     "orientation-position-box");
 
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "rotation-angle-x", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "rotation-angle-y", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "rotation-angle-z", 1.0);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                    "rotation-angle-label", _("Rotation"),
@@ -798,14 +798,14 @@ main_dialog (GimpProcedure       *procedure,
                                     "box-drawable-label", FALSE,
                                     "box-drawable-box");
 
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
-                                                 "x-scale", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
+                                                "x-scale", 1.0);
   gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0, 5.0, TRUE);
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
-                                                 "y-scale", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
+                                                "y-scale", 1.0);
   gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0, 5.0, TRUE);
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
-                                                 "z-scale", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
+                                                "z-scale", 1.0);
   gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0, 5.0, TRUE);
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin),
                                   "box-scale-box",
@@ -862,11 +862,11 @@ main_dialog (GimpProcedure       *procedure,
                                     "cyl-drawable-label", FALSE,
                                     "cyl-drawable-box");
 
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
-                                                 "cylinder-radius", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
+                                                "cylinder-radius", 1.0);
   gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0, 2.0, TRUE);
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
-                                                 "cylinder-length", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
+                                                "cylinder-length", 1.0);
   gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0, 2.0, TRUE);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                    "cyl-size-label", _("Size"),

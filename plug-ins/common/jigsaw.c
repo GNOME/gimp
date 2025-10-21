@@ -2570,12 +2570,12 @@ jigsaw_dialog (GimpProcedure *procedure,
                                       _("Jigsaw"));
 
   /* xtiles */
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "x", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "x", 1.0);
 
   /* ytiles */
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "y", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "y", 1.0);
   gtk_widget_set_margin_bottom (scale, 12);
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
@@ -2588,12 +2588,12 @@ jigsaw_dialog (GimpProcedure *procedure,
                                     FALSE, "num-tiles-vbox");
 
   /* number of blending lines */
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "blend-lines", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "blend-lines", 1.0);
 
   /* blending amount */
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "blend-amount", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "blend-amount", 1.0);
   gtk_widget_set_margin_bottom (scale, 12);
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),

@@ -283,8 +283,8 @@ save_dialog (GimpProcedure *procedure,
   gtk_entry_set_width_chars (GTK_ENTRY (real_entry), 20);
   gtk_entry_set_activates_default (GTK_ENTRY (real_entry), TRUE);
 
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                         "spacing", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "spacing", 1.0);
 
   vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "gbr-vbox", "description", "spacing",

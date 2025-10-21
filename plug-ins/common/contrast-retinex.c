@@ -315,16 +315,16 @@ retinex_dialog (GimpProcedure *procedure,
                                             "scales-mode", G_TYPE_NONE);
   gtk_widget_set_margin_bottom (combo, 12);
 
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "scale", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "scale", 1.0);
   gtk_widget_set_margin_bottom (scale, 12);
 
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "nscales", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "nscales", 1.0);
   gtk_widget_set_margin_bottom (scale, 12);
 
-  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "cvar", 1.0);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "cvar", 1.0);
   gtk_widget_set_margin_bottom (scale, 12);
 
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
