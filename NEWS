@@ -39,6 +39,8 @@ Core:
     can therefore be run on headless servers.
   - Action "layers-vector-fill-stroke" removed (only available since
     3.1.4, not in any stable release).
+  - Non-destructive filters on quick mask are merged (onto the selection
+    channel) when editing the quick mask mode.
 
 Tools:
 
@@ -48,11 +50,16 @@ Tools:
     link or vector layer is selected. An error message will suggest you
     rasterize these layers explicitly first, in order to be able to do
     any "destructive" action.
-  - Text tool: dialog when trying to edit a rasterized layer text has
-    been reworded.
-  - Path tool: selecting a vector layer when the Path tool is active
-    will pop a dialog up, similar to the one which we have in Text tool
-    when a text layer is picked.
+  - Text tool:
+    * Dialog when trying to edit a rasterized layer text has been reworded.
+    * Support pasting unformatted text with action text-tool-paste-unformatted
+      (shortcut Ctrl|Primary-Shift-v by default).
+  - Path tool:
+    * Selecting a vector layer when the Path tool is active will pop a
+      dialog up, similar to the one which we have in Text tool when a
+      text layer is picked.
+    * Improved logic for the creation and selection of vector layers and
+      paths when the tool is active.
 
 Graphical User Interface:
 
@@ -71,6 +78,9 @@ Plug-Ins:
     link layers natively. Raster layers and masks are optionally
     embedded as either PNG or JPEG base64-encoded data.
   - Gimpressionist: edit button labels to more appropriate wording.
+  - PDF:
+    * supporting for exporting vector layers as paths.
+    * background fill is set on all pages for multi-page PDFs.
 
 API:
 
@@ -171,6 +181,8 @@ Build:
   - Depends on babl 0.1.116 and GEGL 0.4.64.
   - The stable Snap package (on Snap Store) has been officially passed
     over to the GIMP team.
+  - Cleanup done in devel-docs/ with more developer documentation moved
+    over to the developer website.
 
 
 Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
