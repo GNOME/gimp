@@ -81,6 +81,27 @@
   </provides>
 
   <releases>
+    <release version="3.2.0~rc1" date="2025-11-01" type="development">
+      <description>
+        <p>
+        Introducing the first release candidate of what will eventually become GIMP 3.2!
+        Since GIMP 3.1.4 development version, here is what happened:
+        </p>
+        <ul>
+          <li>Text, link or vector layer must now be explicitly rasterized for direct pixel edits</li>
+          <li>Path tool interaction have been reworked</li>
+          <li>New "Paste unformatted text" action in text tool</li>
+          <li>Dragging a file to the image tab bar opens the file as a new image</li>
+          <li>New "Edit mask immediately" checkbox in "Edit Layer Mask" dialog</li>
+          <li>Filters on a pass-through group layer are no longer limited to its children's bounding box</li>
+          <li>Import of hgt.zip format added</li>
+          <li>Export of SVG format added</li>
+          <li>PDF format export will export vector layer as paths</li>
+          <li>Many new API for text, vector and link layers for plug-in developers</li>
+          <li>Improved support of macOS application menu and quit action</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.1.4" date="2025-08-31" type="development">
       <description>
         <p>
