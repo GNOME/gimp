@@ -40,12 +40,10 @@ Core:
   - Action "layers-vector-fill-stroke" removed (only available since
     3.1.4, not in any stable release).
   - Non-destructive filters on quick mask are merged (onto the selection
-    channel) when editing the quick mask mode.
+    channel) when exiting the quick mask mode.
 
 Tools:
 
-  - Bucket Fill tool: it will be prevented to work on non-rasterized
-    link and vector layers.
   - All tools drawing directly on layers are now blocked when a text,
     link or vector layer is selected. An error message will suggest you
     rasterize these layers explicitly first, in order to be able to do
@@ -63,8 +61,8 @@ Tools:
 
 Graphical User Interface:
 
-  - "Monitor Linked Image" and "Discard Link Information" menu items
-    added to Layer menu when the selected layer is a link layer.
+  - "Rasterize" and "Revert Rasterize" menu items added to Layer menu
+    when the selected layer is a text, link or vector layer.
   - The GimpColorHexEntry will now update the chosen color as you type.
   - Use a standard, yet extended, AppMenu on macOS.
   - Advertize the menu path to "Rasterize" items in error messages when
@@ -74,7 +72,8 @@ Graphical User Interface:
 Plug-Ins:
 
   - file-compressor: add zip decompression support. This allows support
-    for .hgt.zip files, as well as other formats compressed with zip.
+    for loading .hgt.zip files, as well as other formats compressed with
+    zip.
   - SVG: initial export support, including support for vector, text and
     link layers natively. Raster layers and masks are optionally
     embedded as either PNG or JPEG base64-encoded data.
