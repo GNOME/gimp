@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-17 00:24+0000\n"
-"PO-Revision-Date: 2025-10-17 13:02+0200\n"
+"POT-Creation-Date: 2025-10-22 15:37+0000\n"
+"PO-Revision-Date: 2025-10-22 17:40+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -70,7 +70,7 @@ msgstr "Primer vstavka v C"
 #: plug-ins/common/cml-explorer.c:2144 plug-ins/common/cml-explorer.c:2354
 #: plug-ins/common/curve-bend.c:1787 plug-ins/common/curve-bend.c:1822
 #: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2487
-#: plug-ins/common/file-pdf-export.c:1069 plug-ins/common/file-pdf-load.c:585
+#: plug-ins/common/file-pdf-export.c:1051 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
 #: plug-ins/common/sphere-designer.c:2284
 #: plug-ins/common/sphere-designer.c:2648 plug-ins/common/unit-editor.c:427
@@ -83,8 +83,8 @@ msgstr "Primer vstavka v C"
 #: plug-ins/gfig/gfig-dialog.c:828 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
-#: plug-ins/gradient-flare/gradient-flare.c:3337
-#: plug-ins/gradient-flare/gradient-flare.c:3451
+#: plug-ins/gradient-flare/gradient-flare.c:3340
+#: plug-ins/gradient-flare/gradient-flare.c:3454
 #: plug-ins/ifs-compose/ifs-compose.c:913
 #: plug-ins/ifs-compose/ifs-compose.c:2608
 #: plug-ins/ifs-compose/ifs-compose.c:2645 plug-ins/imagemap/imap_browse.c:80
@@ -150,7 +150,7 @@ msgstr "Primer vstavka v JavaScriptu (GJS)"
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/gradient-flare/gradient-flare.c:3452
+#: plug-ins/gradient-flare/gradient-flare.c:3455
 #: plug-ins/ifs-compose/ifs-compose.c:914
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
@@ -299,7 +299,7 @@ msgid "Left edge"
 msgstr "levi rob"
 
 #: plug-ins/common/align-layers.c:206 plug-ins/common/align-layers.c:228
-#: plug-ins/gradient-flare/gradient-flare.c:2925
+#: plug-ins/gradient-flare/gradient-flare.c:2928
 msgid "Center"
 msgstr "sredinsko"
 
@@ -1049,7 +1049,7 @@ msgstr "_Odpri"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1459 plug-ins/common/cml-explorer.c:2145
 #: plug-ins/common/curve-bend.c:1261 plug-ins/common/curve-bend.c:1823
-#: plug-ins/common/file-pdf-export.c:1068 plug-ins/common/qbist.c:882
+#: plug-ins/common/file-pdf-export.c:1050 plug-ins/common/qbist.c:882
 #: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2705 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1242
@@ -1238,7 +1238,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/cml-explorer.c:2210 plug-ins/common/curve-bend.c:762
 #: plug-ins/common/file-dicom.c:1578 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
-#: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:680
+#: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1923 plug-ins/common/file-raw-data.c:1509
 #: plug-ins/common/file-raw-data.c:1538 plug-ins/common/file-sunras.c:614
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:630
@@ -2066,7 +2066,7 @@ msgstr "Spremeni krivulje"
 
 #. The Copy button
 #: plug-ins/common/curve-bend.c:1195
-#: plug-ins/gradient-flare/gradient-flare.c:3053
+#: plug-ins/gradient-flare/gradient-flare.c:3056
 msgid "_Copy"
 msgstr "_Kopiraj"
 
@@ -4691,15 +4691,15 @@ msgstr "Spodnji rob je zunaj meja (mora biti < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Pisanje v datoteko »%s« ni uspelo: %s"
 
-#: plug-ins/common/file-pdf-export.c:321 plug-ins/common/file-pdf-load.c:198
+#: plug-ins/common/file-pdf-export.c:329 plug-ins/common/file-pdf-load.c:198
 msgid "Portable Document Format"
 msgstr "PDF (Portable Document Format)"
 
-#: plug-ins/common/file-pdf-export.c:324 plug-ins/common/file-pdf-export.c:410
+#: plug-ins/common/file-pdf-export.c:332 plug-ins/common/file-pdf-export.c:418
 msgid "Save files in PDF format"
 msgstr "Shrani datoteke v zapisu PDF"
 
-#: plug-ins/common/file-pdf-export.c:325 plug-ins/common/file-pdf-export.c:411
+#: plug-ins/common/file-pdf-export.c:333 plug-ins/common/file-pdf-export.c:419
 msgid ""
 "Saves files in Adobe's Portable Document Format. PDF is designed to be "
 "easily processed by a variety of different platforms, and is a distant "
@@ -4709,31 +4709,31 @@ msgstr ""
 "zasnovan tako, da ga je lahko enostavno obdelati na različnih platformah in "
 "je oddaljeni bratranec PostScripta."
 
-#: plug-ins/common/file-pdf-export.c:337 plug-ins/common/file-pdf-load.c:214
+#: plug-ins/common/file-pdf-export.c:345 plug-ins/common/file-pdf-load.c:214
 msgid "PDF"
 msgstr "PDF"
 
-#: plug-ins/common/file-pdf-export.c:347 plug-ins/common/file-pdf-export.c:437
+#: plug-ins/common/file-pdf-export.c:355 plug-ins/common/file-pdf-export.c:445
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "Pretvori _bitne slike v vektorsko grafiko, kjer je to mogoče"
 
-#: plug-ins/common/file-pdf-export.c:348 plug-ins/common/file-pdf-export.c:438
+#: plug-ins/common/file-pdf-export.c:356 plug-ins/common/file-pdf-export.c:446
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Pretvori bitne slike v vektorsko grafiko, kjer je to mogoče"
 
-#: plug-ins/common/file-pdf-export.c:353 plug-ins/common/file-pdf-export.c:443
+#: plug-ins/common/file-pdf-export.c:361 plug-ins/common/file-pdf-export.c:451
 msgid "O_mit hidden layers and layers with zero opacity"
 msgstr "_Izpusti skrite plasti in plasti z ničelno prekrivnostjo"
 
-#: plug-ins/common/file-pdf-export.c:354 plug-ins/common/file-pdf-export.c:444
+#: plug-ins/common/file-pdf-export.c:362 plug-ins/common/file-pdf-export.c:452
 msgid "Non-visible layers will not be exported"
 msgstr "Nevidne plasti ne bodo izvožene"
 
-#: plug-ins/common/file-pdf-export.c:359 plug-ins/common/file-pdf-export.c:449
+#: plug-ins/common/file-pdf-export.c:367 plug-ins/common/file-pdf-export.c:457
 msgid "_Apply layer masks"
 msgstr "_Uveljavi maske plasti"
 
-#: plug-ins/common/file-pdf-export.c:360 plug-ins/common/file-pdf-export.c:450
+#: plug-ins/common/file-pdf-export.c:368 plug-ins/common/file-pdf-export.c:458
 msgid ""
 "Apply layer masks before saving (Keeping the mask will not change the "
 "output, only the PDF structure)"
@@ -4741,60 +4741,60 @@ msgstr ""
 "Pred shranjevanjem uveljavi maske plasti (ohranjanje maske ne bo spremenilo "
 "izhoda, samo strukturo PDF)"
 
-#: plug-ins/common/file-pdf-export.c:366
+#: plug-ins/common/file-pdf-export.c:374
 msgid "La_yers as pages"
 msgstr "Plasti _kot strani"
 
-#: plug-ins/common/file-pdf-export.c:367
+#: plug-ins/common/file-pdf-export.c:375
 msgid "Layers as pages (bottom layers first)."
 msgstr "Plasti kot strani (najprej spodnje plasti)."
 
-#: plug-ins/common/file-pdf-export.c:372
+#: plug-ins/common/file-pdf-export.c:380
 msgid "Re_verse order"
 msgstr "Preobrni _zaporedje"
 
-#: plug-ins/common/file-pdf-export.c:373
+#: plug-ins/common/file-pdf-export.c:381
 msgid "Reverse the pages order (top layers first)."
 msgstr "Obratno zaporedje strani (najprej vrhnje plasti)."
 
-#: plug-ins/common/file-pdf-export.c:378
+#: plug-ins/common/file-pdf-export.c:386
 msgid "Roo_t layers only"
 msgstr "Samo korenske plas_ti"
 
-#: plug-ins/common/file-pdf-export.c:379
+#: plug-ins/common/file-pdf-export.c:387
 msgid "Only the root layers are considered pages"
 msgstr "Samo korenske plasti veljajo za strani"
 
-#: plug-ins/common/file-pdf-export.c:384
+#: plug-ins/common/file-pdf-export.c:392
 msgid "Convert te_xt layers to image"
 msgstr "Pretvori _besedilne plasti v sliko"
 
-#: plug-ins/common/file-pdf-export.c:385
+#: plug-ins/common/file-pdf-export.c:393
 msgid "Convert text layers to raster graphics"
 msgstr "Pretvori besedilne plasti v rastrsko grafiko"
 
-#: plug-ins/common/file-pdf-export.c:390 plug-ins/common/file-pdf-export.c:456
+#: plug-ins/common/file-pdf-export.c:398 plug-ins/common/file-pdf-export.c:464
 msgid "_Fill transparent areas with background color"
 msgstr "_Zapolni prosojna področja z barvo ozadja"
 
-#: plug-ins/common/file-pdf-export.c:391 plug-ins/common/file-pdf-export.c:457
+#: plug-ins/common/file-pdf-export.c:399 plug-ins/common/file-pdf-export.c:465
 msgid ""
 "Fill transparent areas with background color if layer has an alpha channel"
 msgstr "Zapolni prosojna področja z barvo ozadja, če ima plast kanal alfa"
 
-#: plug-ins/common/file-pdf-export.c:404
+#: plug-ins/common/file-pdf-export.c:412
 msgid "_Create multipage PDF..."
 msgstr "_Ustvari večstranski PDF ..."
 
-#: plug-ins/common/file-pdf-export.c:463
+#: plug-ins/common/file-pdf-export.c:471
 msgid "Save to"
 msgstr "Shrani v"
 
-#: plug-ins/common/file-pdf-export.c:464
+#: plug-ins/common/file-pdf-export.c:472
 msgid "The URI of the file to save to"
 msgstr "URI datoteke, v katero bo shranjeno"
 
-#: plug-ins/common/file-pdf-export.c:691
+#: plug-ins/common/file-pdf-export.c:694
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -4807,7 +4807,7 @@ msgstr ""
 "Prepričajte se, da ste vnesli veljavno ime datoteke in da na izbranem mestu "
 "ni dovoljeno le branje!"
 
-#: plug-ins/common/file-pdf-export.c:980
+#: plug-ins/common/file-pdf-export.c:962
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4818,48 +4818,48 @@ msgstr ""
 "Priporočamo, da svoje plasti besedila pretvorite v sliko ali da namestite "
 "manjkajoče pisave pred izvozom, sicer vaše oblikovanje ne bo videti pravilno."
 
-#: plug-ins/common/file-pdf-export.c:1050
+#: plug-ins/common/file-pdf-export.c:1032
 msgid "Export Image as Multi-Page PDF"
 msgstr "Izvozi sliko kot večstranski PDF"
 
-#: plug-ins/common/file-pdf-export.c:1051
+#: plug-ins/common/file-pdf-export.c:1033
 #: plug-ins/metadata/metadata-editor.c:5604
 msgid "_Export"
 msgstr "I_zvozi"
 
-#: plug-ins/common/file-pdf-export.c:1060
+#: plug-ins/common/file-pdf-export.c:1042
 msgid "Save to:"
 msgstr "Shrani v:"
 
-#: plug-ins/common/file-pdf-export.c:1064
+#: plug-ins/common/file-pdf-export.c:1046
 msgid "Browse..."
 msgstr "Prebrskaj ..."
 
-#: plug-ins/common/file-pdf-export.c:1065
+#: plug-ins/common/file-pdf-export.c:1047
 msgid "Multipage PDF export"
 msgstr "Izvoz večstranskega PDF"
 
-#: plug-ins/common/file-pdf-export.c:1109
+#: plug-ins/common/file-pdf-export.c:1091
 msgid "Remove the selected pages"
 msgstr "Izbrišite izbrane strani"
 
-#: plug-ins/common/file-pdf-export.c:1123
+#: plug-ins/common/file-pdf-export.c:1105
 msgid "Add this image"
 msgstr "Dodaj to sliko"
 
-#: plug-ins/common/file-pdf-export.c:1219
-#: plug-ins/common/file-pdf-export.c:1292
-#: plug-ins/common/file-pdf-export.c:1390 plug-ins/common/file-ps.c:2217
+#: plug-ins/common/file-pdf-export.c:1201
+#: plug-ins/common/file-pdf-export.c:1274
+#: plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2217
 #: plug-ins/file-tiff/file-tiff-load.c:1563
 #, c-format
 msgid "Page %d"
 msgstr "Stran %d"
 
-#: plug-ins/common/file-pdf-export.c:1259
+#: plug-ins/common/file-pdf-export.c:1241
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Napaka! Če želite shraniti datoteko, morate dodati vsaj eno sliko!"
 
-#: plug-ins/common/file-pdf-export.c:1437 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-export.c:1419 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Velikosti slike ni mogoče obvladati (širina ali višina)."
 
@@ -8473,7 +8473,7 @@ msgid "Layers"
 msgstr "Plasti"
 
 #: plug-ins/common/sphere-designer.c:2755
-#: plug-ins/gradient-flare/gradient-flare.c:3051
+#: plug-ins/gradient-flare/gradient-flare.c:3054
 msgid "_New"
 msgstr "_Nov"
 
@@ -8486,8 +8486,8 @@ msgstr "Po_dvoji"
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
 #: plug-ins/gimpressionist/orientmap.c:623
 #: plug-ins/gimpressionist/presets.c:1071 plug-ins/gimpressionist/sizemap.c:499
-#: plug-ins/gradient-flare/gradient-flare.c:3054
-#: plug-ins/gradient-flare/gradient-flare.c:3337
+#: plug-ins/gradient-flare/gradient-flare.c:3057
+#: plug-ins/gradient-flare/gradient-flare.c:3340
 msgid "_Delete"
 msgstr "I_zbriši"
 
@@ -9110,11 +9110,10 @@ msgid "Flow step %d"
 msgstr "Korak poteka %d ..."
 
 #: plug-ins/common/wavelet-decompose.c:117
-msgid "_Wavelet-decompose..."
-msgstr "_Razstavi valček …"
+msgid "_Wavelet Decompose..."
+msgstr "Razstavi _valček …"
 
 #: plug-ins/common/wavelet-decompose.c:121
-#: plug-ins/common/wavelet-decompose.c:375
 msgid "Wavelet decompose"
 msgstr "Razstavi valček"
 
@@ -9139,8 +9138,9 @@ msgid "Add a layer mask to each scales layer"
 msgstr "Dodaj masko plasti vsaki plasti lestvice"
 
 #: plug-ins/common/wavelet-decompose.c:202
-msgid "Wavelet-Decompose"
-msgstr "Razstavljanje valčka"
+#: plug-ins/common/wavelet-decompose.c:375
+msgid "Wavelet Decompose"
+msgstr "Razstavi valček"
 
 #: plug-ins/common/wavelet-decompose.c:210
 msgid "Decomposition"
@@ -9521,7 +9521,7 @@ msgstr "Oblika slikovnih točk"
 
 #: plug-ins/file-dds/dds.c:222 plug-ins/file-dds/dds.c:285
 #: plug-ins/file-dds/dds.c:302 plug-ins/file-webp/file-webp.c:180
-#: plug-ins/gradient-flare/gradient-flare.c:2605
+#: plug-ins/gradient-flare/gradient-flare.c:2608
 msgid "Default"
 msgstr "privzeta"
 
@@ -11790,10 +11790,10 @@ msgstr "Kategorije: %s"
 #. *    Scales
 #.
 #: plug-ins/filter-browser/filter-browser.c:462
-#: plug-ins/gradient-flare/gradient-flare.c:2949
-#: plug-ins/gradient-flare/gradient-flare.c:3699
-#: plug-ins/gradient-flare/gradient-flare.c:3801
-#: plug-ins/gradient-flare/gradient-flare.c:3932
+#: plug-ins/gradient-flare/gradient-flare.c:2952
+#: plug-ins/gradient-flare/gradient-flare.c:3702
+#: plug-ins/gradient-flare/gradient-flare.c:3804
+#: plug-ins/gradient-flare/gradient-flare.c:3935
 msgid "Parameters"
 msgstr "Parametri"
 
@@ -12071,7 +12071,7 @@ msgstr "Plamen"
 
 #: plug-ins/flame/flame.c:1226 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
-#: plug-ins/gradient-flare/gradient-flare.c:3052
+#: plug-ins/gradient-flare/gradient-flare.c:3055
 msgid "_Edit"
 msgstr "_Uredi"
 
@@ -12432,7 +12432,7 @@ msgid "Rendering fractal"
 msgstr "Upodabljanje fraktala ..."
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:878
-#: plug-ins/gradient-flare/gradient-flare.c:3328
+#: plug-ins/gradient-flare/gradient-flare.c:3331
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Ste prepričani, da želite izbrisati »%s« s seznama in z diska?"
@@ -12519,7 +12519,7 @@ msgid "Create rectangle"
 msgstr "Ustvari pravokotnik"
 
 #: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
-#: plug-ins/gradient-flare/gradient-flare.c:3990
+#: plug-ins/gradient-flare/gradient-flare.c:3993
 #: plug-ins/imagemap/imap_main.c:1580 plug-ins/imagemap/imap-menu.ui:171
 #: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
@@ -12546,7 +12546,7 @@ msgid "Create arc"
 msgstr "Ustvari lok"
 
 #: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
-#: plug-ins/gradient-flare/gradient-flare.c:4007
+#: plug-ins/gradient-flare/gradient-flare.c:4010
 #: plug-ins/imagemap/imap_main.c:1582 plug-ins/imagemap/imap-menu.ui:176
 #: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
@@ -13026,7 +13026,7 @@ msgid "Adds random noise to the color"
 msgstr "Barvi doda naključni šum"
 
 #: plug-ins/gimpressionist/general.c:141
-#: plug-ins/gradient-flare/gradient-flare.c:3646
+#: plug-ins/gradient-flare/gradient-flare.c:3649
 msgid "_General"
 msgstr "_Splošno"
 
@@ -13635,7 +13635,7 @@ msgid "Threshold for adaptive supersampling"
 msgstr "Prag za prilegajoče nadvzorčenje"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
-#: plug-ins/gradient-flare/gradient-flare.c:2506
+#: plug-ins/gradient-flare/gradient-flare.c:2505
 msgid "Gradient Flare"
 msgstr "Odblesk s prelivi"
 
@@ -13676,183 +13676,183 @@ msgstr ""
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "Datoteke odbleska s prelivi GFlare »%s« ni mogoče zapisati: %s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2550
+#: plug-ins/gradient-flare/gradient-flare.c:2549
 msgid "A_uto update preview"
 msgstr "_Samodejno posodobi predogled"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2604
+#: plug-ins/gradient-flare/gradient-flare.c:2607
 msgid "'Default' is created."
 msgstr "Ustvarjen je »privzeti«."
 
-#: plug-ins/gradient-flare/gradient-flare.c:2905
+#: plug-ins/gradient-flare/gradient-flare.c:2908
 msgid "_X:"
 msgstr "_X:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2909
+#: plug-ins/gradient-flare/gradient-flare.c:2912
 msgid "_Y:"
 msgstr "_Y:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2983
+#: plug-ins/gradient-flare/gradient-flare.c:2986
 msgid "_Settings"
 msgstr "_Nastavitve"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3121
+#: plug-ins/gradient-flare/gradient-flare.c:3124
 msgid "S_elector"
 msgstr "_Izbirnik"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3185
+#: plug-ins/gradient-flare/gradient-flare.c:3188
 msgid "New Gradient Flare"
 msgstr "Nov odblesk s prelivi"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3188
+#: plug-ins/gradient-flare/gradient-flare.c:3191
 msgid "Enter a name for the new GFlare"
 msgstr "Vnesite ime za nov odblesk s prelivi GFlare"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3189
+#: plug-ins/gradient-flare/gradient-flare.c:3192
 msgid "Unnamed"
 msgstr "Neimenovano"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3209
-#: plug-ins/gradient-flare/gradient-flare.c:3291
+#: plug-ins/gradient-flare/gradient-flare.c:3212
+#: plug-ins/gradient-flare/gradient-flare.c:3294
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "Ime »%s« je že v uporabi!"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3265
+#: plug-ins/gradient-flare/gradient-flare.c:3268
 msgid "Copy Gradient Flare"
 msgstr "Kopiraj odblesk s prelivi"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3268
+#: plug-ins/gradient-flare/gradient-flare.c:3271
 msgid "Enter a name for the copied GFlare"
 msgstr "Vnesite ime za kopirani odblesk s prelivi GFlare"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3322
+#: plug-ins/gradient-flare/gradient-flare.c:3325
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Ni mogoče izbrisati! Obstajati mora vsaj en odblesk s prelivi GFlare."
 
-#: plug-ins/gradient-flare/gradient-flare.c:3332
+#: plug-ins/gradient-flare/gradient-flare.c:3335
 msgid "Delete Gradient Flare"
 msgstr "Izbriši odblesk s prelivi"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3404
+#: plug-ins/gradient-flare/gradient-flare.c:3407
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "v gflares_list ni mogoče najti %s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3446
+#: plug-ins/gradient-flare/gradient-flare.c:3449
 msgid "Gradient Flare Editor"
 msgstr "Urejevalnik odbleska s prelivi"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3450
+#: plug-ins/gradient-flare/gradient-flare.c:3453
 msgid "_Rescan Gradients"
 msgstr "P_reglej prelive"
 
 #. Glow
-#: plug-ins/gradient-flare/gradient-flare.c:3569
+#: plug-ins/gradient-flare/gradient-flare.c:3572
 msgid "Glow Paint Options"
 msgstr "Možnosti slikanja odbleska"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3579
-#: plug-ins/gradient-flare/gradient-flare.c:3605
-#: plug-ins/gradient-flare/gradient-flare.c:3631
+#: plug-ins/gradient-flare/gradient-flare.c:3582
+#: plug-ins/gradient-flare/gradient-flare.c:3608
+#: plug-ins/gradient-flare/gradient-flare.c:3634
 msgid "Opacity:"
 msgstr "Prekrivnost:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3591
-#: plug-ins/gradient-flare/gradient-flare.c:3617
-#: plug-ins/gradient-flare/gradient-flare.c:3643
+#: plug-ins/gradient-flare/gradient-flare.c:3594
+#: plug-ins/gradient-flare/gradient-flare.c:3620
+#: plug-ins/gradient-flare/gradient-flare.c:3646
 msgid "Paint mode:"
 msgstr "Način risanja:"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3595
+#: plug-ins/gradient-flare/gradient-flare.c:3598
 msgid "Rays Paint Options"
 msgstr "Možnosti slikanja žarkov"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3621
+#: plug-ins/gradient-flare/gradient-flare.c:3624
 msgid "Second Flares Paint Options"
 msgstr "Možnosti slikanja sekundarnih odbleskov"
 
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3672
-#: plug-ins/gradient-flare/gradient-flare.c:3772
-#: plug-ins/gradient-flare/gradient-flare.c:3905
+#: plug-ins/gradient-flare/gradient-flare.c:3675
+#: plug-ins/gradient-flare/gradient-flare.c:3775
+#: plug-ins/gradient-flare/gradient-flare.c:3908
 msgid "Gradients"
 msgstr "Prelivi"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3683
-#: plug-ins/gradient-flare/gradient-flare.c:3785
-#: plug-ins/gradient-flare/gradient-flare.c:3916
+#: plug-ins/gradient-flare/gradient-flare.c:3686
+#: plug-ins/gradient-flare/gradient-flare.c:3788
+#: plug-ins/gradient-flare/gradient-flare.c:3919
 msgid "Radial gradient:"
 msgstr "Krožni preliv:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3687
-#: plug-ins/gradient-flare/gradient-flare.c:3789
+#: plug-ins/gradient-flare/gradient-flare.c:3690
+#: plug-ins/gradient-flare/gradient-flare.c:3792
 msgid "Angular gradient:"
 msgstr "Kotni preliv:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3691
-#: plug-ins/gradient-flare/gradient-flare.c:3793
+#: plug-ins/gradient-flare/gradient-flare.c:3694
+#: plug-ins/gradient-flare/gradient-flare.c:3796
 msgid "Angular size gradient:"
 msgstr "Velikost kota preliva:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3710
-#: plug-ins/gradient-flare/gradient-flare.c:3812
-#: plug-ins/gradient-flare/gradient-flare.c:3943
+#: plug-ins/gradient-flare/gradient-flare.c:3713
+#: plug-ins/gradient-flare/gradient-flare.c:3815
+#: plug-ins/gradient-flare/gradient-flare.c:3946
 msgid "Size (%):"
 msgstr "Velikost (%):"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3721
-#: plug-ins/gradient-flare/gradient-flare.c:3823
-#: plug-ins/gradient-flare/gradient-flare.c:3954
+#: plug-ins/gradient-flare/gradient-flare.c:3724
+#: plug-ins/gradient-flare/gradient-flare.c:3826
+#: plug-ins/gradient-flare/gradient-flare.c:3957
 msgid "Rotation:"
 msgstr "Sukanje:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3732
-#: plug-ins/gradient-flare/gradient-flare.c:3834
-#: plug-ins/gradient-flare/gradient-flare.c:3965
+#: plug-ins/gradient-flare/gradient-flare.c:3735
+#: plug-ins/gradient-flare/gradient-flare.c:3837
+#: plug-ins/gradient-flare/gradient-flare.c:3968
 msgid "Hue rotation:"
 msgstr "Zasuk obarvanosti:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3746
+#: plug-ins/gradient-flare/gradient-flare.c:3749
 msgid "G_low"
 msgstr "_Žarenje"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3845
+#: plug-ins/gradient-flare/gradient-flare.c:3848
 msgid "# of Spikes:"
 msgstr "# žarkov:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3856
+#: plug-ins/gradient-flare/gradient-flare.c:3859
 msgid "Spike thickness:"
 msgstr "Debelina žarkov:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3870
+#: plug-ins/gradient-flare/gradient-flare.c:3873
 msgid "_Rays"
 msgstr "_Žarki"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3920
+#: plug-ins/gradient-flare/gradient-flare.c:3923
 msgid "Size factor gradient:"
 msgstr "Preliv s faktorjem velikosti:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3924
+#: plug-ins/gradient-flare/gradient-flare.c:3927
 msgid "Probability gradient:"
 msgstr "Verjetnostni preliv:"
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3982
+#: plug-ins/gradient-flare/gradient-flare.c:3985
 msgid "Shape of Second Flares"
 msgstr "Oblika sekundarnih odbleskov"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4041
+#: plug-ins/gradient-flare/gradient-flare.c:4044
 msgid "Random seed:"
 msgstr "Zrno naključja:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4055
+#: plug-ins/gradient-flare/gradient-flare.c:4058
 msgid "_Second Flares"
 msgstr "_Sekundarni odbleski"
 
