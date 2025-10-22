@@ -470,6 +470,11 @@ gimp_image_merge_group_layer (GimpImage      *image,
    */
    if (pass_through_buffer)
     {
+      /* The group duplicate may be smaller than actual render in case
+       * of pass-through groups.
+       */
+      gimp_item_set_size (GIMP_ITEM (layer), rect.width, rect.height);
+
       if (rect.x != 0 || rect.y != 0)
         {
           GeglBuffer *buffer;
