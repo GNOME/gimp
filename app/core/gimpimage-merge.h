@@ -29,6 +29,7 @@ GList       * gimp_image_merge_down            (GimpImage      *image,
                                                 GimpContext    *context,
                                                 GimpMergeType   merge_type,
                                                 GimpProgress   *progress,
+                                                GimpItem      **blink_item,
                                                 GError        **error);
 GimpLayer   * gimp_image_merge_group_layer     (GimpImage      *image,
                                                 GimpGroupLayer *group);

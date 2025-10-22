@@ -80,6 +80,7 @@
 
 #include "tools/gimppathtool.h"
 #include "tools/gimptexttool.h"
+#include "tools/gimptools-utils.h"
 #include "tools/tool_manager.h"
 
 #include "dialogs/dialogs.h"
@@ -927,6 +928,7 @@ layers_merge_down_cmd_callback (GimpAction *action,
   GimpImage   *image;
   GList       *layers;
   GimpDisplay *display;
+  GimpItem    *item  = NULL;
   GError      *error = NULL;
 
   return_if_no_layers (image, layers, data);
@@ -934,13 +936,16 @@ layers_merge_down_cmd_callback (GimpAction *action,
 
   layers = gimp_image_merge_down (image, layers, action_data_get_context (data),
                                   GIMP_EXPAND_AS_NECESSARY,
-                                  GIMP_PROGRESS (display), &error);
+                                  GIMP_PROGRESS (display),
+                                  &item, &error);
 
   if (error)
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (display), GIMP_MESSAGE_WARNING,
                             error->message);
+      if (item)
+        gimp_tools_blink_item (image->gimp, item);
       g_clear_error (&error);
       return;
     }

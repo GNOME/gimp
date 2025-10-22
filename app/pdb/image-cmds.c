@@ -1608,7 +1608,7 @@ image_merge_down_invoker (GimpProcedure         *procedure,
           GList *layers;
 
           layers = gimp_image_merge_down (image, merge_layers, context,
-                                          merge_type, progress, error);
+                                          merge_type, progress, NULL, error);
           g_list_free (merge_layers);
 
           if (! layers)

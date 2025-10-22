@@ -273,6 +273,7 @@ gimp_image_merge_down (GimpImage      *image,
                        GimpContext    *context,
                        GimpMergeType   merge_type,
                        GimpProgress   *progress,
+                       GimpItem      **blink_item,
                        GError        **error)
 {
   GList       *merged_layers = NULL;
@@ -299,6 +300,18 @@ gimp_image_merge_down (GimpImage      *image,
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                _("Cannot merge down a floating selection."));
+          if (blink_item)
+            *blink_item = GIMP_ITEM (list->data);
+          g_list_free (layers);
+          g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
+          return NULL;
+        }
+      if (gimp_layer_get_mode (list->data) == GIMP_LAYER_MODE_PASS_THROUGH)
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("Cannot merge down a pass through layer group."));
+          if (blink_item)
+            *blink_item = GIMP_ITEM (list->data);
           g_list_free (layers);
           g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
           return NULL;
@@ -308,6 +321,8 @@ gimp_image_merge_down (GimpImage      *image,
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                _("Cannot merge down an invisible layer."));
+          if (blink_item)
+            *blink_item = GIMP_ITEM (list->data);
           g_list_free (layers);
           g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
           return NULL;
@@ -334,6 +349,8 @@ gimp_image_merge_down (GimpImage      *image,
                 {
                   g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                        _("Cannot merge down to a layer group."));
+                  if (blink_item)
+                    *blink_item = GIMP_ITEM (layer);
                   g_list_free (layers);
                   g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
                   return NULL;
@@ -343,6 +360,8 @@ gimp_image_merge_down (GimpImage      *image,
                 {
                   g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                        _("The layer to merge down to is locked."));
+                  if (blink_item)
+                    *blink_item = GIMP_ITEM (layer);
                   g_list_free (layers);
                   g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
                   return NULL;
