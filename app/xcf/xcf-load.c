@@ -1024,7 +1024,7 @@ xcf_load_image (Gimp     *gimp,
           g_object_unref (options);
 
           if (vdata->modified)
-            gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (vlayer));
+            gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (vlayer), FALSE);
 
           if (selected)
             {

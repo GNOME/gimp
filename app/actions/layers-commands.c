@@ -1137,7 +1137,7 @@ layers_rasterize_cmd_callback (GimpAction *action,
   for (iter = layers; iter; iter = iter->next)
     {
       if (GIMP_IS_RASTERIZABLE (iter->data) && ! gimp_rasterizable_is_rasterized (iter->data))
-        gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (iter->data));
+        gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (iter->data), TRUE);
     }
 
   gimp_image_undo_group_end (image);

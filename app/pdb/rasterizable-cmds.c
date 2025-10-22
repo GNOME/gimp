@@ -57,7 +57,7 @@ rasterizable_rasterize_invoker (GimpProcedure         *procedure,
     {
       if (! gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (item)))
         {
-          gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (item));
+          gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (item), TRUE);
         }
       else
         {

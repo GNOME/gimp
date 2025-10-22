@@ -86,11 +86,11 @@ gimp_rasterizable_default_init (GimpRasterizableInterface *iface)
  * Rasterize @rasterizable.
  **/
 void
-gimp_rasterizable_rasterize (GimpRasterizable *rasterizable)
+gimp_rasterizable_rasterize (GimpRasterizable *rasterizable,
+                             gboolean          push_undo)
 {
   GimpRasterizablePrivate *private;
   GimpImage               *image;
-  gchar                   *undo_text;
 
   g_return_if_fail (GIMP_IS_RASTERIZABLE (rasterizable));
   g_return_if_fail (! gimp_rasterizable_is_rasterized (rasterizable));
@@ -98,17 +98,24 @@ gimp_rasterizable_rasterize (GimpRasterizable *rasterizable)
   private = GIMP_RASTERIZABLE_GET_PRIVATE (rasterizable);
   image   = gimp_item_get_image (GIMP_ITEM (rasterizable));
 
-  /* TRANSLATORS: the %s will be a type of item, i.e. "Text Layer". */
-  undo_text = g_strdup_printf (_("Rasterize %s"),
-                               GIMP_VIEWABLE_GET_CLASS (rasterizable)->default_name);
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_PROPERTIES, undo_text);
+  if (push_undo)
+    {
+      gchar *undo_text;
 
-  gimp_image_undo_push_rasterizable (image, NULL, rasterizable);
+      /* TRANSLATORS: the %s will be a type of item, i.e. "Text Layer". */
+      undo_text = g_strdup_printf (_("Rasterize %s"),
+                                   GIMP_VIEWABLE_GET_CLASS (rasterizable)->default_name);
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_PROPERTIES, undo_text);
+      gimp_image_undo_push_rasterizable (image, NULL, rasterizable);
+
+      g_free (undo_text);
+    }
 
   private->rasterized = TRUE;
   g_signal_emit (rasterizable, gimp_rasterizable_signals[SET_RASTERIZED], 0, TRUE);
 
-  gimp_image_undo_group_end (image);
+  if (push_undo)
+    gimp_image_undo_group_end (image);
 
   /* Triggers thumbnail update. */
   gimp_drawable_update_all (GIMP_DRAWABLE (rasterizable));

@@ -36,7 +36,8 @@ struct _GimpRasterizableInterface
 };
 
 
-void       gimp_rasterizable_rasterize           (GimpRasterizable  *rasterizable);
+void       gimp_rasterizable_rasterize           (GimpRasterizable  *rasterizable,
+                                                  gboolean           push_undo);
 void       gimp_rasterizable_restore             (GimpRasterizable  *rasterizable);
 
 gboolean   gimp_rasterizable_is_rasterized       (GimpRasterizable  *rasterizable);

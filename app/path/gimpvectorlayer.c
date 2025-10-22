@@ -329,7 +329,7 @@ gimp_vector_layer_set_buffer (GimpDrawable        *drawable,
 
   if (push_undo && ! is_rasterized)
     {
-      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
+      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer), push_undo);
       gimp_image_undo_group_end (image);
     }
 }
@@ -358,7 +358,7 @@ gimp_vector_layer_push_undo (GimpDrawable *drawable,
 
   if (! is_rasterized)
     {
-      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
+      gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer), TRUE);
       gimp_image_undo_group_end (image);
     }
 }
@@ -809,7 +809,7 @@ gimp_vector_layer_changed_options (GimpVectorLayer *layer)
   GimpItem *item = GIMP_ITEM (layer);
 
   if (layer->options && ! layer->options->path)
-    gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer));
+    gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer), TRUE);
   else if (gimp_item_is_attached (item))
     gimp_vector_layer_refresh (layer);
 }

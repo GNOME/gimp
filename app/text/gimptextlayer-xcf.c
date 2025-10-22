@@ -170,5 +170,5 @@ gimp_text_layer_set_xcf_flags (GimpTextLayer *text_layer,
                                      (flags & TEXT_LAYER_XCF_DONT_AUTO_RENAME) == 0);
 
   if ((flags & TEXT_LAYER_XCF_MODIFIED) != 0)
-    gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (text_layer));
+    gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (text_layer), FALSE);
 }
