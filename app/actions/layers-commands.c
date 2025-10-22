@@ -965,7 +965,10 @@ layers_merge_group_cmd_callback (GimpAction *action,
   GList     *layers;
   GList     *merge_layers = NULL;
   GList     *iter;
+  GtkWidget *widget;
+
   return_if_no_layers (image, layers, data);
+  return_if_no_widget (widget, data);
 
   for (iter = layers; iter; iter = iter->next)
     {
@@ -1020,6 +1023,18 @@ layers_merge_group_cmd_callback (GimpAction *action,
 
           if (iter2 == NULL)
             merge_layers = g_list_prepend (merge_layers, iter->data);
+        }
+    }
+
+  for (iter = merge_layers; iter; iter = iter->next)
+    {
+      if (gimp_layer_get_mode (iter->data) == GIMP_LAYER_MODE_PASS_THROUGH)
+        {
+          gimp_message_literal (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                                _("Cannot merge a pass through layer group."));
+          gimp_tools_blink_item (image->gimp, GIMP_ITEM (iter->data));
+          g_list_free (merge_layers);
+          return;
         }
     }
 
