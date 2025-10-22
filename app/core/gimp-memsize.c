@@ -273,6 +273,8 @@ gimp_g_value_get_memsize (GValue *value)
         memsize += gimp_g_object_get_memsize (g_value_get_object (value));
       else if (strcmp ("GimpFont", G_VALUE_TYPE_NAME (value)) == 0)
         memsize += gimp_g_object_get_memsize (g_value_get_object (value));
+      else if (strcmp ("GimpPath", G_VALUE_TYPE_NAME (value)) == 0)
+        memsize += gimp_g_object_get_memsize (g_value_get_object (value));
       else if (strcmp ("GeglColor", G_VALUE_TYPE_NAME (value)) == 0)
         /* Internal knowledge of contents of private data. */
         memsize += sizeof (GeglColor) + sizeof (const Babl *) + 48;
