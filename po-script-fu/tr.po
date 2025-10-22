@@ -946,9 +946,10 @@ msgstr "Boyut"
 msgid "Roughness"
 msgstr "Engebelik"
 
+# Arayüzdeki konumu gereği başlık düzenine ihtiyaç duymuyor
 #: plug-ins/script-fu/scripts/lava.scm:143
 msgid "Gradient"
-msgstr "Renk Geçişi"
+msgstr "Renk geçişi"
 
 #: plug-ins/script-fu/scripts/lava.scm:146
 msgid "Use current gradient"
