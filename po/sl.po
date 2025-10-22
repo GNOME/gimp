@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-17 08:16+0000\n"
-"PO-Revision-Date: 2025-10-17 13:03+0200\n"
+"POT-Creation-Date: 2025-10-22 15:34+0000\n"
+"PO-Revision-Date: 2025-10-22 17:35+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2484,7 +2484,7 @@ msgstr "240 s"
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
-#: app/actions/text-tool-commands.c:154 app/actions/tool-options-commands.c:210
+#: app/actions/text-tool-commands.c:164 app/actions/tool-options-commands.c:210
 #: app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136
 #: app/dialogs/color-profile-dialog.c:154
 #: app/dialogs/color-profile-dialog.c:172
@@ -2583,8 +2583,9 @@ msgstr "Vnesite opis oznake"
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:646 app/widgets/gimplayertreeview.c:796
-#: app/widgets/gimptoolbox.c:843 app/widgets/gimptoolbox-dnd.c:178
+#: app/display/gimpdisplayshell-dnd.c:646 app/display/gimpimagewindow.c:2260
+#: app/widgets/gimplayertreeview.c:796 app/widgets/gimptoolbox.c:843
+#: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -8491,11 +8492,11 @@ msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Navpična, od leve proti desni (pokončna usmerjenost)"
 
-#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:150
+#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:160
 msgid "Open Text File (UTF-8)"
 msgstr "Odpri datoteko z besedilom (UTF-8)"
 
-#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:155
+#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:165
 #: app/dialogs/file-open-location-dialog.c:81
 #: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:790
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
@@ -8503,7 +8504,7 @@ msgstr "Odpri datoteko z besedilom (UTF-8)"
 msgid "_Open"
 msgstr "_Odpri"
 
-#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:256
+#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:266
 #: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
 #: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1650
@@ -8528,90 +8529,95 @@ msgstr "_Prilepi"
 
 #: app/actions/text-tool-actions.c:65
 msgctxt "text-tool-action"
+msgid "Paste un_formatted text"
+msgstr "Prilepi neo_blikovano besedilo"
+
+#: app/actions/text-tool-actions.c:71
+msgctxt "text-tool-action"
 msgid "_Bold"
 msgstr "_Krepko"
 
-#: app/actions/text-tool-actions.c:70
+#: app/actions/text-tool-actions.c:76
 msgctxt "text-tool-action"
 msgid "_Italic"
 msgstr "_Ležeče"
 
-#: app/actions/text-tool-actions.c:75
+#: app/actions/text-tool-actions.c:81
 msgctxt "text-tool-action"
 msgid "_Underline"
 msgstr "_Podčrtano"
 
-#: app/actions/text-tool-actions.c:80
+#: app/actions/text-tool-actions.c:86
 msgctxt "text-tool-action"
 msgid "_Delete"
 msgstr "I_zbriši"
 
-#: app/actions/text-tool-actions.c:85
+#: app/actions/text-tool-actions.c:91
 msgctxt "text-tool-action"
 msgid "_Open text file..."
 msgstr "_Odpri besedilno datoteko ..."
 
-#: app/actions/text-tool-actions.c:90
+#: app/actions/text-tool-actions.c:96
 msgctxt "text-tool-action"
 msgid "Cl_ear"
 msgstr "Po_čisti"
 
-#: app/actions/text-tool-actions.c:91
+#: app/actions/text-tool-actions.c:97
 msgctxt "text-tool-action"
 msgid "Clear all text"
 msgstr "Počisti vse besedilo"
 
-#: app/actions/text-tool-actions.c:96
+#: app/actions/text-tool-actions.c:102
 msgctxt "text-tool-action"
 msgid "Text to _Path"
 msgstr "Besedilo v _pot"
 
-#: app/actions/text-tool-actions.c:98
+#: app/actions/text-tool-actions.c:104
 msgctxt "text-tool-action"
 msgid "Create a path from the outlines of the current text"
 msgstr "Iz orisa trenutnega besedila ustvari pot"
 
-#: app/actions/text-tool-actions.c:103
+#: app/actions/text-tool-actions.c:109
 msgctxt "text-tool-action"
 msgid "Text _along Path"
 msgstr "Besedilo _vzdolž poti"
 
-#: app/actions/text-tool-actions.c:105
+#: app/actions/text-tool-actions.c:111
 msgctxt "text-tool-action"
 msgid "Bend the text along the currently active path"
 msgstr "Ovij besedilo te plasti vzdolž trenutne poti"
 
-#: app/actions/text-tool-actions.c:113
+#: app/actions/text-tool-actions.c:119
 msgctxt "text-tool-action"
 msgid "From left to right"
 msgstr "Od leve proti desni"
 
-#: app/actions/text-tool-actions.c:118
+#: app/actions/text-tool-actions.c:124
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "Od desne proti levi"
 
-#: app/actions/text-tool-actions.c:123
+#: app/actions/text-tool-actions.c:129
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Navpična, desna proti levi (mešana usmerjenost)"
 
-#: app/actions/text-tool-actions.c:128
+#: app/actions/text-tool-actions.c:134
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Navpična, desna proti levi (pokončna usmerjenost)"
 
-#: app/actions/text-tool-actions.c:133
+#: app/actions/text-tool-actions.c:139
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Navpična, od leve proti desni (mešana usmerjenost)"
 
-#: app/actions/text-tool-actions.c:138
+#: app/actions/text-tool-actions.c:144
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Navpična, od leve proti desni (pokončna usmerjenost)"
 
-#: app/actions/text-tool-commands.c:218
+#: app/actions/text-tool-commands.c:228
 #, c-format
 msgid "Text along path failed: %s"
 msgstr "Besedilo vzdolž poti je spodletelo: %s"
@@ -22116,6 +22122,16 @@ msgstr "Razširi potezo poti"
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Podatkovna oznaka »%s« ni kanonski identifikator"
 
+#: app/pdb/rasterizable-cmds.c:65
+#, c-format
+msgid "This item has already been rasterized."
+msgstr "Ta element je že rasteriziran."
+
+#: app/pdb/rasterizable-cmds.c:96
+#, c-format
+msgid "This item has not been rasterized."
+msgstr "Ta elemen ni bil rasteriziran."
+
 #: app/pdb/resource-cmds.c:468
 #, c-format
 msgid "Resource '%s' is not renamable"
@@ -25569,23 +25585,23 @@ msgstr ""
 "Besedilna plast, ki ste jo izbrali, je bila rasterizirana. Urejanje besedila "
 "bo zavrglo vse spremembe."
 
-#: app/tools/gimptexttool.c:2390
+#: app/tools/gimptexttool.c:2419
 msgid "Text is required."
 msgstr "Besedilo je obvezno."
 
-#: app/tools/gimptexttool.c:2393
+#: app/tools/gimptexttool.c:2422
 msgid "No image."
 msgstr "Ni slike."
 
-#: app/tools/gimptexttool.c:2396
+#: app/tools/gimptexttool.c:2425
 msgid "No layer."
 msgstr "Ni plasti."
 
-#: app/tools/gimptexttool.c:2407
+#: app/tools/gimptexttool.c:2436
 msgid "Exactly one path must be selected."
 msgstr "Izbrana mora biti natanko ena pot."
 
-#: app/tools/gimptexttool-editor.c:1396
+#: app/tools/gimptexttool-editor.c:1406
 msgid "GIMP Text Editor"
 msgstr "Urejevalnik besedila GIMP"
 
@@ -29796,11 +29812,3 @@ msgstr "Meni Prednastavitve orodja"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Meni Zgodovina razveljavitev"
-
-#~ msgctxt "layers-action"
-#~ msgid "Fill / Stroke..."
-#~ msgstr "Polnilo / poteza …"
-
-#~ msgctxt "layers-action"
-#~ msgid "Edit the fill and stroke of this vector layer"
-#~ msgstr "Uredi polnilo in potezo te vektorske plasti"
