@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-20 15:32+0000\n"
-"PO-Revision-Date: 2025-09-20 23:28+0300\n"
+"POT-Creation-Date: 2025-10-08 20:33+0000\n"
+"PO-Revision-Date: 2025-10-12 23:04+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
-msgstr "_Gözat..."
+msgstr "_Göz At..."
 
 #: libgimp/gimpdrawablechooser.c:238
 msgid "Browse..."
@@ -256,7 +256,7 @@ msgstr "(düzenle)"
 msgid "Export Image as %s"
 msgstr "Görüntüyü %s Olarak Dışa Aktar"
 
-#: libgimp/gimpimagemetadata.c:196
+#: libgimp/gimpimagemetadata.c:201
 msgid "Background"
 msgstr "Arka plan"
 
@@ -1666,46 +1666,76 @@ msgid "Filled"
 msgstr "Doldurulmuş"
 
 #: libgimpbase/gimpbaseenums.c:1804
+msgctxt "text-outline"
+msgid "Filled"
+msgstr "Doldurulmuş"
+
+#: libgimpbase/gimpbaseenums.c:1805
+msgctxt "text-outline"
+msgid "Outlined"
+msgstr "Çerçeveli"
+
+#: libgimpbase/gimpbaseenums.c:1806
+msgctxt "text-outline"
+msgid "Outlined and filled"
+msgstr "Çerçeveli ve doldurulmuş"
+
+#: libgimpbase/gimpbaseenums.c:1836
+msgctxt "text-outline-direction"
+msgid "Outer"
+msgstr "Dış"
+
+#: libgimpbase/gimpbaseenums.c:1837
+msgctxt "text-outline-direction"
+msgid "Inner"
+msgstr "İç"
+
+#: libgimpbase/gimpbaseenums.c:1838
+msgctxt "text-outline-direction"
+msgid "Centered"
+msgstr "Ortalanmış"
+
+#: libgimpbase/gimpbaseenums.c:1868
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Gölgeler"
 
-#: libgimpbase/gimpbaseenums.c:1805
+#: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Orta tonlar"
 
-#: libgimpbase/gimpbaseenums.c:1806
+#: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Vurgular"
 
-#: libgimpbase/gimpbaseenums.c:1835
+#: libgimpbase/gimpbaseenums.c:1899
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal (İleri)"
 
-#: libgimpbase/gimpbaseenums.c:1836
+#: libgimpbase/gimpbaseenums.c:1900
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Düzeltici (Geri)"
 
-#: libgimpbase/gimpbaseenums.c:1867
+#: libgimpbase/gimpbaseenums.c:1931
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Ayarla"
 
-#: libgimpbase/gimpbaseenums.c:1868
+#: libgimpbase/gimpbaseenums.c:1932
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Kırp"
 
-#: libgimpbase/gimpbaseenums.c:1869
+#: libgimpbase/gimpbaseenums.c:1933
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Sonuca kırp"
 
-#: libgimpbase/gimpbaseenums.c:1870
+#: libgimpbase/gimpbaseenums.c:1934
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "En boy oranı ile kırp"
@@ -1928,10 +1958,10 @@ msgid ""
 "LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
 "intent really gives you relative colorimetric."
 msgstr ""
-"Görüntü renk uzayınızdan görüntü aygıtınıza renklerin nasıl dönüştürüleceği. "
-"Bağıl renk ölçer genellikle en iyi seçenektir. Bir LUT ekran profili "
-"kullandığınız sürece (çoğu ekran profilleri matristir), algısal aralık "
-"seçmeniz size gerçekten bağıl renk ölçümü verir."
+"Görüntünüzün renk uzayınızdan görüntü aygıtınıza renklerin nasıl "
+"dönüştürüleceği. Bağıl renk ölçer genellikle en iyi seçenektir. Bir LUT "
+"ekran profili kullandığınız sürece (çoğu ekran profilleri matristir), "
+"algısal aralık seçmeniz size gerçekten bağıl renk ölçümü verir."
 
 #: libgimpconfig/gimpcolorconfig.c:86
 msgid ""
@@ -1952,9 +1982,8 @@ msgid ""
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best."
 msgstr ""
-"Görüntünüzün renk uzayından, çıktı simülasyon aygıtına (genellikle "
-"ekranınız) renklerin nasıl dönüştürüleceği. Tümünü deneyin ve en iyi "
-"görüneni seçin."
+"Görüntünüzün renk uzayından, çıktı benzetim aygıtına (genellikle ekranınız) "
+"renklerin nasıl dönüştürüleceği. Tümünü deneyin ve en iyi görüneni seçin."
 
 #: libgimpconfig/gimpcolorconfig.c:99
 msgid ""
@@ -2455,10 +2484,15 @@ msgid "One page selected"
 msgstr "Bir sayfa seçildi"
 
 #: libgimpwidgets/gimppageselector.c:1026
+#, c-format
+msgid "The page is selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "%d sayfa seçildi"
+
 #: libgimpwidgets/gimppageselector.c:1030
 #, c-format
 msgid "%d page selected"
-msgid_plural "All %d pages selected"
+msgid_plural "%d pages selected"
 msgstr[0] "%d sayfa seçildi"
 
 #: libgimpwidgets/gimppatheditor.c:199
@@ -2475,7 +2509,7 @@ msgstr "Seçili klasörü aşağı taşı"
 
 #: libgimpwidgets/gimppatheditor.c:253
 msgid "Remove the selected folder from the list"
-msgstr "Seçilen klasörü listeden kaldır"
+msgstr "Seçili klasörü listeden kaldır"
 
 #: libgimpwidgets/gimppatheditor.c:279
 msgid "Writable"
@@ -3214,7 +3248,7 @@ msgstr "Maviyi görememe (mavi duyarsızlığı)"
 
 #: modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Eksik renk canlandırma filtresi (Brettel-Vienot-Mollon algoritması)"
+msgstr "Eksik renk benzetim süzgeci (Brettel-Vienot-Mollon algoritması)"
 
 #: modules/display-filter-color-blind.c:253
 msgid "Type"
