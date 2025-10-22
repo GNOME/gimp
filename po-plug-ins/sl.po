@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-13 02:12+0000\n"
-"PO-Revision-Date: 2025-10-13 10:28+0200\n"
+"POT-Creation-Date: 2025-10-17 00:24+0000\n"
+"PO-Revision-Date: 2025-10-17 13:02+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -44,7 +44,7 @@ msgstr "Primer vstavka v C"
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
-#: plug-ins/common/sphere-designer.c:3199 plug-ins/common/tile.c:222
+#: plug-ins/common/sphere-designer.c:3192 plug-ins/common/tile.c:222
 #: plug-ins/common/tile-small.c:311 plug-ins/common/van-gogh-lic.c:242
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:179
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
@@ -72,8 +72,8 @@ msgstr "Primer vstavka v C"
 #: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2487
 #: plug-ins/common/file-pdf-export.c:1069 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
-#: plug-ins/common/sphere-designer.c:2291
-#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
+#: plug-ins/common/sphere-designer.c:2284
+#: plug-ins/common/sphere-designer.c:2648 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:822
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1513
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1551
@@ -144,7 +144,7 @@ msgstr "Primer vstavka v JavaScriptu (GJS)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
-#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2656
+#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2649
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:458
 #: plug-ins/file-psd/psd-load.c:3896 plug-ins/flame/flame.c:823
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
@@ -1034,8 +1034,8 @@ msgstr "Naključno zrno"
 #: plug-ins/common/cml-explorer.c:1451 plug-ins/common/cml-explorer.c:2355
 #: plug-ins/common/curve-bend.c:1249 plug-ins/common/curve-bend.c:1788
 #: plug-ins/common/file-cel.c:989 plug-ins/common/qbist.c:840
-#: plug-ins/common/qbist.c:995 plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:619
+#: plug-ins/common/qbist.c:995 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/sphere-designer.c:2697 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1234
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1514
@@ -1050,8 +1050,8 @@ msgstr "_Odpri"
 #: plug-ins/common/cml-explorer.c:1459 plug-ins/common/cml-explorer.c:2145
 #: plug-ins/common/curve-bend.c:1261 plug-ins/common/curve-bend.c:1823
 #: plug-ins/common/file-pdf-export.c:1068 plug-ins/common/qbist.c:882
-#: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:619
+#: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/sphere-designer.c:2705 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1242
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
@@ -1242,7 +1242,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/file-png.c:1923 plug-ins/common/file-raw-data.c:1509
 #: plug-ins/common/file-raw-data.c:1538 plug-ins/common/file-sunras.c:614
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:630
-#: plug-ins/common/file-xmc.c:1272 plug-ins/common/sphere-designer.c:2205
+#: plug-ins/common/file-xmc.c:1272 plug-ins/common/sphere-designer.c:2198
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:444
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1588
@@ -2005,12 +2005,12 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:608
 #: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:733
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:754
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
 #: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
-#: plug-ins/common/sphere-designer.c:2094 plug-ins/file-bmp/bmp-load.c:276
+#: plug-ins/common/sphere-designer.c:2087 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
 #: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
 #: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:552
@@ -2093,7 +2093,7 @@ msgid "Swap the two curves"
 msgstr "Zamenjaj krivulji"
 
 #. The Reset button
-#: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2654
+#: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2647
 #: plug-ins/common/tile-small.c:522 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:912
 msgid "_Reset"
@@ -2699,7 +2699,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:771
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:792
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
 #: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
@@ -4686,7 +4686,7 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Spodnji rob je zunaj meja (mora biti < %d): %d"
 
 #: plug-ins/common/file-pcx.c:1266 plug-ins/common/file-qoi.c:369
-#: plug-ins/common/file-svg.c:780 plug-ins/common/file-svg.c:796
+#: plug-ins/common/file-svg.c:801 plug-ins/common/file-svg.c:817
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Pisanje v datoteko »%s« ni uspelo: %s"
@@ -4980,7 +4980,7 @@ msgstr "Slika PNG"
 msgid "APNG image"
 msgstr "Slika APNG"
 
-#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:335
+#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:356
 msgid "PNG"
 msgstr "PNG"
 
@@ -6384,66 +6384,69 @@ msgstr "Pri branju je prišlo do nepredvidenega konca datoteke"
 msgid "Write error occurred"
 msgstr "Prišlo je do napake pri pisanju"
 
-#: plug-ins/common/file-svg.c:260
+#: plug-ins/common/file-svg.c:276
 msgid "SVG image"
 msgstr "Slika SVG"
 
-#: plug-ins/common/file-svg.c:273
+#: plug-ins/common/file-svg.c:279
+msgid "Loads files in SVG file format"
+msgstr "Naloži datoteke v zapisu datotek SVG"
+
+#: plug-ins/common/file-svg.c:294
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:282
+#: plug-ins/common/file-svg.c:303
 msgid "_Paths"
 msgstr "_Poti"
 
-#: plug-ins/common/file-svg.c:283
+#: plug-ins/common/file-svg.c:304
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr "Ali in kako uvoziti poti, da jih je mogoče uporabiti z orodjem poti"
 
-#: plug-ins/common/file-svg.c:284
+#: plug-ins/common/file-svg.c:305
 msgid "Don't import paths"
 msgstr "Ne uvozi poti"
 
-#: plug-ins/common/file-svg.c:285
+#: plug-ins/common/file-svg.c:306
 msgid "Import paths individually"
 msgstr "Uvozi poti posamično"
 
-#: plug-ins/common/file-svg.c:286
+#: plug-ins/common/file-svg.c:307
 msgid "Merge imported paths"
 msgstr "Spoji uvožene poti"
 
-#: plug-ins/common/file-svg.c:298
+#: plug-ins/common/file-svg.c:319
 msgid "Scalable Vector Graphic"
 msgstr "SVG (Scalable Vector Graphics)"
 
-#: plug-ins/common/file-svg.c:301
-msgid "Export vector layers in SVG file format"
-msgstr "Izvozi vektorske plasti v zapisu datotek SVG"
+#: plug-ins/common/file-svg.c:322
+msgid "Exports files in SVG file format"
+msgstr "Izvozi datoteke v zapisu datotek SVG"
 
-#: plug-ins/common/file-svg.c:302
-msgid "Export vector layers in SVG file format (Scalable Vector Graphic)"
-msgstr ""
-"Izvozi vektorske plasti v zapisu datoteke SVG (Scalable Vector Graphic)"
+#: plug-ins/common/file-svg.c:323
+msgid "Exports files in SVG file format (Scalable Vector Graphic)"
+msgstr "Izvozi datoteke v zapisu SVG (Scalable Vector Graphic)"
 
-#: plug-ins/common/file-svg.c:327
+#: plug-ins/common/file-svg.c:348
 msgid "_Title"
 msgstr "_Naslov"
 
-#: plug-ins/common/file-svg.c:328
+#: plug-ins/common/file-svg.c:349
 msgid "Optional <title> for SVG"
 msgstr "Neobvezni <title> (naslov) za SVG"
 
-#: plug-ins/common/file-svg.c:333
+#: plug-ins/common/file-svg.c:354
 msgid "Em_bed raster layers as"
 msgstr "V_delaj rastrske plasti kot"
 
-#: plug-ins/common/file-svg.c:336 plug-ins/file-jpeg/jpeg.c:195
+#: plug-ins/common/file-svg.c:357 plug-ins/file-jpeg/jpeg.c:195
 #: plug-ins/file-tiff/file-tiff.c:251
 msgid "JPEG"
 msgstr "JPEG"
 
-#: plug-ins/common/file-svg.c:337
+#: plug-ins/common/file-svg.c:358
 msgid "Do not export raster layers"
 msgstr "Ne izvozi rastrskih plasti"
 
@@ -6452,15 +6455,15 @@ msgstr "Ne izvozi rastrskih plasti"
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:384
+#: plug-ins/common/file-svg.c:405
 msgid "Disable safety size limits?"
 msgstr "Ali želite onemogočito varnostne omejitve velikosti?"
 
-#: plug-ins/common/file-svg.c:389
+#: plug-ins/common/file-svg.c:410
 msgid "_No"
 msgstr "_Ne"
 
-#: plug-ins/common/file-svg.c:390
+#: plug-ins/common/file-svg.c:411
 msgid "_Yes"
 msgstr "_Da"
 
@@ -6474,7 +6477,7 @@ msgstr "_Da"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:414
+#: plug-ins/common/file-svg.c:435
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6484,30 +6487,30 @@ msgstr ""
 "Morda bo pomagalo onemogočiti varnostne omejitve. Zlonamerne datoteke SVG "
 "lahko to uporabijo, da porabijo preveč pomnilnika."
 
-#: plug-ins/common/file-svg.c:426
+#: plug-ins/common/file-svg.c:447
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "Iz varnostnih razlogov to uporabite samo za zaupanja vreden vnos!"
 
-#: plug-ins/common/file-svg.c:433
+#: plug-ins/common/file-svg.c:454
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Ali želite poskusiti znova brez omejitev, ki preprečujejo razčlenjevanje "
 "ogromnih količin podatkov?"
 
-#: plug-ins/common/file-svg.c:735 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/common/file-svg.c:756 plug-ins/file-exr/file-exr.c:381
 #: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "Neznani razlog"
 
-#: plug-ins/common/file-svg.c:741
+#: plug-ins/common/file-svg.c:762
 msgid "Rendering SVG"
 msgstr "Upodabljanje SVG ..."
 
-#: plug-ins/common/file-svg.c:751
+#: plug-ins/common/file-svg.c:772
 msgid "Rendered SVG"
 msgstr "Upodobljeni SVG"
 
-#: plug-ins/common/file-svg.c:1102
+#: plug-ins/common/file-svg.c:1123
 msgid ""
 "The SVG format only requires viewers to display image links for SVG, PNG, "
 "and JPEG images.\n"
@@ -8388,97 +8391,97 @@ msgstr "Zablešči"
 msgid "Additional Options"
 msgstr "Dodatne možnosti"
 
-#: plug-ins/common/sphere-designer.c:335 plug-ins/gimpressionist/general.c:173
+#: plug-ins/common/sphere-designer.c:328 plug-ins/gimpressionist/general.c:173
 msgid "Solid"
 msgstr "Enakomerno"
 
-#: plug-ins/common/sphere-designer.c:336
+#: plug-ins/common/sphere-designer.c:329
 msgid "Checker"
 msgstr "Šahovnica"
 
-#: plug-ins/common/sphere-designer.c:337
+#: plug-ins/common/sphere-designer.c:330
 msgid "Marble"
 msgstr "Marmor"
 
-#: plug-ins/common/sphere-designer.c:338
+#: plug-ins/common/sphere-designer.c:331
 msgid "Lizard"
 msgstr "Kuščar"
 
-#: plug-ins/common/sphere-designer.c:339
+#: plug-ins/common/sphere-designer.c:332
 msgid "Phong"
 msgstr "Phong"
 
-#: plug-ins/common/sphere-designer.c:340 plug-ins/flame/flame.c:944
+#: plug-ins/common/sphere-designer.c:333 plug-ins/flame/flame.c:944
 msgid "Noise"
 msgstr "Šum"
 
-#: plug-ins/common/sphere-designer.c:341
+#: plug-ins/common/sphere-designer.c:334
 msgid "Wood"
 msgstr "Les"
 
-#: plug-ins/common/sphere-designer.c:342 plug-ins/flame/flame.c:928
+#: plug-ins/common/sphere-designer.c:335 plug-ins/flame/flame.c:928
 #: plug-ins/gfig/gfig-dialog.c:399 plug-ins/gfig/gfig-menu.ui:79
 msgid "Spiral"
 msgstr "Spirala"
 
-#: plug-ins/common/sphere-designer.c:343
+#: plug-ins/common/sphere-designer.c:336
 msgid "Spots"
 msgstr "Pike"
 
-#: plug-ins/common/sphere-designer.c:409
+#: plug-ins/common/sphere-designer.c:402
 msgid "Sphere _Designer..."
 msgstr "_Oblikovalec krogle ..."
 
-#: plug-ins/common/sphere-designer.c:413
+#: plug-ins/common/sphere-designer.c:406
 msgid "Create an image of a textured sphere"
 msgstr "Ustvari sliko krogle s teksturo"
 
-#: plug-ins/common/sphere-designer.c:1834
-#: plug-ins/common/sphere-designer.c:2798
-#: plug-ins/common/sphere-designer.c:2826
+#: plug-ins/common/sphere-designer.c:1827
+#: plug-ins/common/sphere-designer.c:2791
+#: plug-ins/common/sphere-designer.c:2819
 msgid "Texture"
 msgstr "Tekstura"
 
-#: plug-ins/common/sphere-designer.c:1836
+#: plug-ins/common/sphere-designer.c:1829
 msgid "Bumpmap"
 msgstr "Poslikava odtisa"
 
-#: plug-ins/common/sphere-designer.c:1838
-#: plug-ins/common/sphere-designer.c:2800
+#: plug-ins/common/sphere-designer.c:1831
+#: plug-ins/common/sphere-designer.c:2793
 msgid "Light"
 msgstr "Svetloba"
 
-#: plug-ins/common/sphere-designer.c:2101
+#: plug-ins/common/sphere-designer.c:2094
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr "»%s« ni veljavna datoteka za shranjevanje."
 
-#: plug-ins/common/sphere-designer.c:2281
+#: plug-ins/common/sphere-designer.c:2274
 msgid "Open File"
 msgstr "Odpri datoteko"
 
-#: plug-ins/common/sphere-designer.c:2281
+#: plug-ins/common/sphere-designer.c:2274
 msgid "Save File"
 msgstr "Shrani datoteko"
 
-#: plug-ins/common/sphere-designer.c:2650
+#: plug-ins/common/sphere-designer.c:2643
 msgid "Sphere Designer"
 msgstr "Oblikovalec krogle"
 
-#: plug-ins/common/sphere-designer.c:2751
+#: plug-ins/common/sphere-designer.c:2744
 msgid "Layers"
 msgstr "Plasti"
 
-#: plug-ins/common/sphere-designer.c:2762
+#: plug-ins/common/sphere-designer.c:2755
 #: plug-ins/gradient-flare/gradient-flare.c:3051
 msgid "_New"
 msgstr "_Nov"
 
-#: plug-ins/common/sphere-designer.c:2768
+#: plug-ins/common/sphere-designer.c:2761
 msgid "D_uplicate"
 msgstr "Po_dvoji"
 
-#: plug-ins/common/sphere-designer.c:2774
+#: plug-ins/common/sphere-designer.c:2767
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
 #: plug-ins/gimpressionist/orientmap.c:623
@@ -8488,15 +8491,15 @@ msgstr "Po_dvoji"
 msgid "_Delete"
 msgstr "I_zbriši"
 
-#: plug-ins/common/sphere-designer.c:2784
+#: plug-ins/common/sphere-designer.c:2777
 msgid "Properties"
 msgstr "Lastnosti"
 
-#: plug-ins/common/sphere-designer.c:2799
+#: plug-ins/common/sphere-designer.c:2792
 msgid "Bump"
 msgstr "Odtisni"
 
-#: plug-ins/common/sphere-designer.c:2807
+#: plug-ins/common/sphere-designer.c:2800
 #: plug-ins/gimpressionist/orientmap.c:638
 #: plug-ins/lighting/lighting-main.c:211 plug-ins/lighting/lighting-main.c:334
 #: plug-ins/lighting/lighting-main.c:393 plug-ins/lighting/lighting-main.c:452
@@ -8504,83 +8507,83 @@ msgstr "Odtisni"
 msgid "Type"
 msgstr "Vrsta"
 
-#: plug-ins/common/sphere-designer.c:2831
+#: plug-ins/common/sphere-designer.c:2824
 #: plug-ins/imagemap/imap_preferences.c:463 plug-ins/pagecurl/pagecurl.c:228
 msgid "Colors"
 msgstr "Barve"
 
-#: plug-ins/common/sphere-designer.c:2834
-#: plug-ins/common/sphere-designer.c:2845
+#: plug-ins/common/sphere-designer.c:2827
+#: plug-ins/common/sphere-designer.c:2838
 msgid "Color Selection Dialog"
 msgstr "Pogovorno okno izbire barve"
 
-#: plug-ins/common/sphere-designer.c:2857
+#: plug-ins/common/sphere-designer.c:2850
 msgid "Scale"
 msgstr "Merilo"
 
-#: plug-ins/common/sphere-designer.c:2865
+#: plug-ins/common/sphere-designer.c:2858
 msgid "Turbulence"
 msgstr "Turbulenca"
 
-#: plug-ins/common/sphere-designer.c:2873
+#: plug-ins/common/sphere-designer.c:2866
 msgid "Amount"
 msgstr "Količina"
 
-#: plug-ins/common/sphere-designer.c:2881
+#: plug-ins/common/sphere-designer.c:2874
 msgid "Exp."
 msgstr "Eksp."
 
-#: plug-ins/common/sphere-designer.c:2888
+#: plug-ins/common/sphere-designer.c:2881
 msgid "Transformations"
 msgstr "Transformacije"
 
-#: plug-ins/common/sphere-designer.c:2897
+#: plug-ins/common/sphere-designer.c:2890
 #: plug-ins/map-object/map-object-main.c:391
 msgid "Scale X"
 msgstr "Sprememba merila X"
 
-#: plug-ins/common/sphere-designer.c:2905
+#: plug-ins/common/sphere-designer.c:2898
 #: plug-ins/map-object/map-object-main.c:396
 msgid "Scale Y"
 msgstr "Sprememba merila Y"
 
-#: plug-ins/common/sphere-designer.c:2913
+#: plug-ins/common/sphere-designer.c:2906
 #: plug-ins/map-object/map-object-main.c:401
 msgid "Scale Z"
 msgstr "Sprememba merila Z"
 
-#: plug-ins/common/sphere-designer.c:2922
+#: plug-ins/common/sphere-designer.c:2915
 msgid "Rotate X"
 msgstr "Zasukaj X"
 
-#: plug-ins/common/sphere-designer.c:2930
+#: plug-ins/common/sphere-designer.c:2923
 msgid "Rotate Y"
 msgstr "Zasukaj Y"
 
-#: plug-ins/common/sphere-designer.c:2938
+#: plug-ins/common/sphere-designer.c:2931
 msgid "Rotate Z"
 msgstr "Zasukaj Z"
 
-#: plug-ins/common/sphere-designer.c:2947
+#: plug-ins/common/sphere-designer.c:2940
 #: plug-ins/map-object/map-object-main.c:165
 msgid "Position X"
 msgstr "Položaj X"
 
-#: plug-ins/common/sphere-designer.c:2955
+#: plug-ins/common/sphere-designer.c:2948
 #: plug-ins/map-object/map-object-main.c:170
 msgid "Position Y"
 msgstr "Položaj Y"
 
-#: plug-ins/common/sphere-designer.c:2963
+#: plug-ins/common/sphere-designer.c:2956
 #: plug-ins/map-object/map-object-main.c:175
 msgid "Position Z"
 msgstr "Položaj Z"
 
-#: plug-ins/common/sphere-designer.c:3094
+#: plug-ins/common/sphere-designer.c:3087
 msgid "Rendering sphere"
 msgstr "Upodabljanje krogle ..."
 
-#: plug-ins/common/sphere-designer.c:3213
+#: plug-ins/common/sphere-designer.c:3206
 msgid "Region selected for plug-in is empty"
 msgstr "Izbrano področje za vstavek je prazno"
 
