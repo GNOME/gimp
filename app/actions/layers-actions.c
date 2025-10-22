@@ -55,7 +55,7 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_EDIT },
 
   { "layers-edit-text", GIMP_ICON_EDIT,
-    NC_("layers-action", "Edit Te_xt on canvas"), NULL, { NULL },
+    NC_("layers-action", "Edit Te_xt on Canvas"), NULL, { NULL },
     NC_("layers-action", "Edit this text layer content on canvas"),
     layers_edit_text_cmd_callback,
     GIMP_HELP_LAYER_EDIT },
