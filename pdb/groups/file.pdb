@@ -114,6 +114,10 @@ HELP
 
           if (! gimp_image_get_file (image))
             gimp_image_set_imported_file (image, file);
+
+          gimp_image_clean_all (image);
+          gimp_image_undo_disable (image);
+          gimp_image_undo_enable (image);
         }
     }
 
@@ -441,6 +445,7 @@ CODE
 
 
 @headers = qw("core/gimp.h"
+              "core/gimpimage-undo.h"
               "plug-in/gimppluginmanager-file.h"
               "file/file-open.h"
               "file/file-save.h"

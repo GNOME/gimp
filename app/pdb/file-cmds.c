@@ -32,6 +32,7 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"
@@ -122,6 +123,10 @@ file_load_invoker (GimpProcedure         *procedure,
 
           if (! gimp_image_get_file (image))
             gimp_image_set_imported_file (image, file);
+
+          gimp_image_clean_all (image);
+          gimp_image_undo_disable (image);
+          gimp_image_undo_enable (image);
         }
     }
 
