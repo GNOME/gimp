@@ -154,6 +154,7 @@ gimp_rasterizable_restore (GimpRasterizable *rasterizable)
 
   gimp_image_undo_group_end (image);
   gimp_image_flush (image);
+  g_free (undo_text);
 }
 
 /**
