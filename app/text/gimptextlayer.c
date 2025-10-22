@@ -46,7 +46,6 @@
 #include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
-#include "core/gimpitemtree.h"
 #include "core/gimpparasitelist.h"
 #include "core/gimppattern.h"
 #include "core/gimprasterizable.h"
@@ -64,7 +63,6 @@ enum
 {
   PROP_0,
   PROP_TEXT,
-  PROP_AUTO_RENAME,
 };
 
 struct _GimpTextLayerPrivate
@@ -95,10 +93,6 @@ static void       gimp_text_layer_size_changed   (GimpViewable      *viewable);
 
 static GimpItem * gimp_text_layer_duplicate      (GimpItem          *item,
                                                   GType              new_type);
-static gboolean   gimp_text_layer_rename         (GimpItem          *item,
-                                                  const gchar       *new_name,
-                                                  const gchar       *undo_desc,
-                                                  GError           **error);
 
 static void       gimp_text_layer_set_buffer     (GimpDrawable      *drawable,
                                                   gboolean           push_undo,
@@ -158,7 +152,7 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   viewable_class->size_changed      = gimp_text_layer_size_changed;
 
   item_class->duplicate             = gimp_text_layer_duplicate;
-  item_class->rename                = gimp_text_layer_rename;
+  item_class->rename                = gimp_rasterizable_rename;
 
 #if 0
   item_class->scale                 = gimp_text_layer_scale;
@@ -185,12 +179,6 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
                            NULL, NULL,
                            GIMP_TYPE_TEXT,
                            GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_AUTO_RENAME,
-                            "auto-rename",
-                            NULL, NULL,
-                            TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -231,9 +219,6 @@ gimp_text_layer_get_property (GObject      *object,
     case PROP_TEXT:
       g_value_set_object (value, text_layer->text);
       break;
-    case PROP_AUTO_RENAME:
-      g_value_set_boolean (value, text_layer->auto_rename);
-      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -253,9 +238,6 @@ gimp_text_layer_set_property (GObject      *object,
     {
     case PROP_TEXT:
       gimp_text_layer_set_text (text_layer, g_value_get_object (value));
-      break;
-    case PROP_AUTO_RENAME:
-      text_layer->auto_rename = g_value_get_boolean (value);
       break;
 
     default:
@@ -333,28 +315,14 @@ gimp_text_layer_duplicate (GimpItem *item,
         }
 
       new_layer->private->base_dir = layer->private->base_dir;
+      gimp_rasterizable_set_auto_rename (GIMP_RASTERIZABLE (new_layer),
+                                         gimp_rasterizable_get_auto_rename (GIMP_RASTERIZABLE (layer)));
 
       if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
         gimp_rasterizable_set_undo_rasterized (GIMP_RASTERIZABLE (new_layer), TRUE);
     }
 
   return new_item;
-}
-
-static gboolean
-gimp_text_layer_rename (GimpItem     *item,
-                        const gchar  *new_name,
-                        const gchar  *undo_desc,
-                        GError      **error)
-{
-  if (GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc, error))
-    {
-      g_object_set (item, "auto-rename", FALSE, NULL);
-
-      return TRUE;
-    }
-
-  return FALSE;
 }
 
 static void
@@ -700,6 +668,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
   GimpImage      *image;
   GimpContainer  *container;
   GimpTextLayout *layout;
+  gchar          *name = NULL;
   gdouble         xres;
   gdouble         yres;
   gint            width;
@@ -763,39 +732,19 @@ gimp_text_layer_render (GimpTextLayer *layer)
         }
     }
 
-  if (layer->auto_rename)
+  if (layer->text->text)
     {
-      GimpItem *item = GIMP_ITEM (layer);
-      gchar    *name = NULL;
-
-      if (layer->text->text)
-        {
-          name = gimp_utf8_strtrim (layer->text->text, 30);
-        }
-      else if (layer->text->markup)
-        {
-          gchar *tmp = gimp_markup_extract_text (layer->text->markup);
-          name = gimp_utf8_strtrim (tmp, 30);
-          g_free (tmp);
-        }
-
-      if (! name || ! name[0])
-        {
-          g_free (name);
-          name = g_strdup (_("Empty Text Layer"));
-        }
-
-      if (gimp_item_is_attached (item))
-        {
-          gimp_item_tree_rename_item (gimp_item_get_tree (item), item,
-                                      name, FALSE, NULL);
-          g_free (name);
-        }
-      else
-        {
-          gimp_object_take_name (GIMP_OBJECT (layer), name);
-        }
+      name = gimp_utf8_strtrim (layer->text->text, 30);
     }
+  else if (layer->text->markup)
+    {
+      gchar *tmp = gimp_markup_extract_text (layer->text->markup);
+      name = gimp_utf8_strtrim (tmp, 30);
+      g_free (tmp);
+    }
+
+  gimp_rasterizable_auto_rename (GIMP_RASTERIZABLE (layer), NULL, name);
+  g_free (name);
 
   if (width > 0 && height > 0)
     gimp_text_layer_render_layout (layer, layout);

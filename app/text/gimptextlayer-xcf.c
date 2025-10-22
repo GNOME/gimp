@@ -151,7 +151,7 @@ gimp_text_layer_get_xcf_flags (GimpTextLayer *text_layer)
 
   g_return_val_if_fail (GIMP_IS_TEXT_LAYER (text_layer), 0);
 
-  if (! text_layer->auto_rename)
+  if (! gimp_rasterizable_get_auto_rename (GIMP_RASTERIZABLE (text_layer)))
     flags |= TEXT_LAYER_XCF_DONT_AUTO_RENAME;
 
   if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (text_layer)))
@@ -166,9 +166,8 @@ gimp_text_layer_set_xcf_flags (GimpTextLayer *text_layer,
 {
   g_return_if_fail (GIMP_IS_TEXT_LAYER (text_layer));
 
-  g_object_set (text_layer,
-                "auto-rename", (flags & TEXT_LAYER_XCF_DONT_AUTO_RENAME) == 0,
-                NULL);
+  gimp_rasterizable_set_auto_rename (GIMP_RASTERIZABLE (text_layer),
+                                     (flags & TEXT_LAYER_XCF_DONT_AUTO_RENAME) == 0);
 
   if ((flags & TEXT_LAYER_XCF_MODIFIED) != 0)
     gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (text_layer));

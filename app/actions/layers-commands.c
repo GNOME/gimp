@@ -2572,12 +2572,9 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
       gimp_image_flush (image);
     }
 
-  if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
-    {
-      g_object_set (layer,
-                    "auto-rename", rename_text_layer,
-                    NULL);
-    }
+  if (GIMP_IS_RASTERIZABLE (layer))
+    gimp_rasterizable_set_auto_rename (GIMP_RASTERIZABLE (layer),
+                                       rename_text_layer);
 
   gtk_widget_destroy (dialog);
 }

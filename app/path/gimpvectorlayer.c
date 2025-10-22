@@ -174,6 +174,7 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
 
   item_class->removed               = gimp_vector_layer_removed;
   item_class->duplicate             = gimp_vector_layer_duplicate;
+  item_class->rename                = gimp_rasterizable_rename;
   item_class->scale                 = gimp_vector_layer_scale;
   item_class->flip                  = gimp_vector_layer_flip;
   item_class->rotate                = gimp_vector_layer_rotate;
@@ -794,6 +795,10 @@ gimp_vector_layer_render_path (GimpVectorLayer *layer)
                       NULL, NULL);
 
   g_list_free (drawables);
+
+  gimp_rasterizable_auto_rename (GIMP_RASTERIZABLE (layer),
+                                 GIMP_OBJECT (layer->options->path),
+                                 NULL);
 
   gimp_selection_resume (GIMP_SELECTION (selection));
 }

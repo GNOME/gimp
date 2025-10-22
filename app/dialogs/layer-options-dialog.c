@@ -34,6 +34,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplink.h"
 #include "core/gimplinklayer.h"
+#include "core/gimprasterizable.h"
 
 #include "path/gimppath.h"
 #include "path/gimpvectorlayer.h"
@@ -179,7 +180,7 @@ layer_options_dialog_new (GimpImage                *image,
   private->initial_path       = NULL;
 
   if (layer && gimp_item_is_text_layer (GIMP_ITEM (layer)))
-    private->rename_text_layers = GIMP_TEXT_LAYER (layer)->auto_rename;
+    private->rename_text_layers = gimp_rasterizable_get_auto_rename (GIMP_RASTERIZABLE (layer));
 
   dialog = item_options_dialog_new (image, GIMP_ITEM (layer), context,
                                     parent, title, role,

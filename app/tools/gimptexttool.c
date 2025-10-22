@@ -330,7 +330,7 @@ gimp_text_tool_remove_empty_text_layer (GimpTextTool *text_tool)
 {
   GimpTextLayer *text_layer = text_tool->layer;
 
-  if (text_layer && text_layer->auto_rename)
+  if (text_layer && gimp_rasterizable_get_auto_rename (GIMP_RASTERIZABLE (text_layer)))
     {
       GimpText *text = gimp_text_layer_get_text (text_layer);
 

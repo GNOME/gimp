@@ -31,17 +31,31 @@ struct _GimpRasterizableInterface
   GTypeInterface base_iface;
 
   /*  signals            */
-  void   (* set_rasterized)                      (GimpRasterizable *rasterizable,
-                                                  gboolean          rasterized);
+  void   (* set_rasterized)                      (GimpRasterizable  *rasterizable,
+                                                  gboolean           rasterized);
 };
 
 
-void       gimp_rasterizable_rasterize           (GimpRasterizable *rasterizable);
-void       gimp_rasterizable_restore             (GimpRasterizable *rasterizable);
+void       gimp_rasterizable_rasterize           (GimpRasterizable  *rasterizable);
+void       gimp_rasterizable_restore             (GimpRasterizable  *rasterizable);
 
-gboolean   gimp_rasterizable_is_rasterized       (GimpRasterizable *rasterizable);
+gboolean   gimp_rasterizable_is_rasterized       (GimpRasterizable  *rasterizable);
+
+void       gimp_rasterizable_set_auto_rename     (GimpRasterizable  *rasterizable,
+                                                  gboolean           auto_rename);
+gboolean   gimp_rasterizable_get_auto_rename     (GimpRasterizable  *rasterizable);
+
+
+/* Overwrite rename() of GimpItemClass of all children. */
+gboolean   gimp_rasterizable_rename              (GimpItem          *item,
+                                                  const gchar       *new_name,
+                                                  const gchar       *undo_desc,
+                                                  GError           **error);
+/* Shared code to rename the rasterizable. */
+void       gimp_rasterizable_auto_rename         (GimpRasterizable  *rasterizable,
+                                                  GimpObject        *rename_data,
+                                                  const gchar       *rename_string);
 
 /* To be used for undo steps only */
-
-void       gimp_rasterizable_set_undo_rasterized (GimpRasterizable *rasterizable,
-                                                  gboolean          rasterize);
+void       gimp_rasterizable_set_undo_rasterized (GimpRasterizable  *rasterizable,
+                                                  gboolean           rasterize);

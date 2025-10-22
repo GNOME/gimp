@@ -27,6 +27,7 @@
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
+#include "gimpitemtree.h"
 #include "gimprasterizable.h"
 
 #include "gimp-intl.h"
@@ -44,6 +45,7 @@ typedef struct _GimpRasterizablePrivate GimpRasterizablePrivate;
 struct _GimpRasterizablePrivate
 {
   gboolean rasterized;
+  gboolean auto_rename;
 };
 
 #define GIMP_RASTERIZABLE_GET_PRIVATE(obj) (gimp_rasterizable_get_private ((GimpRasterizable *) (obj)))
@@ -166,6 +168,85 @@ gimp_rasterizable_is_rasterized (GimpRasterizable *rasterizable)
 }
 
 void
+gimp_rasterizable_set_auto_rename (GimpRasterizable *rasterizable,
+                                   gboolean          auto_rename)
+{
+  GimpRasterizablePrivate *private;
+
+  g_return_if_fail (GIMP_IS_RASTERIZABLE (rasterizable));
+
+  private = GIMP_RASTERIZABLE_GET_PRIVATE (rasterizable);
+  private->auto_rename = auto_rename;
+}
+
+gboolean
+gimp_rasterizable_get_auto_rename (GimpRasterizable *rasterizable)
+{
+  GimpRasterizablePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_RASTERIZABLE (rasterizable), TRUE);
+
+  private = GIMP_RASTERIZABLE_GET_PRIVATE (rasterizable);
+
+  return private->auto_rename;
+}
+
+gboolean
+gimp_rasterizable_rename (GimpItem     *item,
+                          const gchar  *new_name,
+                          const gchar  *undo_desc,
+                          GError      **error)
+{
+  GTypeClass *klass;
+  GTypeClass *parent_class;
+
+  klass        = g_type_class_peek (G_TYPE_FROM_INSTANCE (item));
+  parent_class = g_type_class_peek_parent (klass);
+  if (GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc, error))
+    {
+      gimp_rasterizable_set_auto_rename (GIMP_RASTERIZABLE (item), FALSE);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+void
+gimp_rasterizable_auto_rename (GimpRasterizable *rasterizable,
+                               GimpObject       *rename_data,
+                               const gchar      *rename_string)
+{
+  if (gimp_rasterizable_get_auto_rename (rasterizable))
+    {
+      GimpItem *item = GIMP_ITEM (rasterizable);
+      gchar    *name = NULL;
+
+      if (rename_data)
+        name = g_strdup (gimp_object_get_name (rename_data));
+      else if (rename_string)
+        name = g_strdup (rename_string);
+
+      if (! name || ! name[0])
+        {
+          g_free (name);
+          name = g_strdup (GIMP_VIEWABLE_GET_CLASS (rasterizable)->default_name);
+        }
+
+      if (gimp_item_is_attached (item))
+        {
+          gimp_item_tree_rename_item (gimp_item_get_tree (item), item,
+                                      name, FALSE, NULL);
+          g_free (name);
+        }
+      else
+        {
+          gimp_object_take_name (GIMP_OBJECT (rasterizable), name);
+        }
+    }
+}
+
+void
 gimp_rasterizable_set_undo_rasterized (GimpRasterizable *rasterizable,
                                        gboolean          rasterized)
 {
@@ -197,6 +278,9 @@ gimp_rasterizable_get_private (GimpRasterizable *rasterizable)
   if (! private)
     {
       private = g_slice_new0 (GimpRasterizablePrivate);
+
+      private->rasterized  = FALSE;
+      private->auto_rename = TRUE;
 
       g_object_set_qdata_full ((GObject *) rasterizable, private_key, private,
                                (GDestroyNotify) gimp_rasterizable_private_finalize);
