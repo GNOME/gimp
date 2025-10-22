@@ -87,7 +87,6 @@
 #include "dialogs/layer-options-dialog.h"
 #include "dialogs/resize-dialog.h"
 #include "dialogs/scale-dialog.h"
-#include "dialogs/vector-layer-options-dialog.h"
 
 #include "actions.h"
 #include "items-commands.h"
@@ -110,6 +109,7 @@ static void   layers_new_callback             (GtkWidget             *dialog,
                                                gdouble                layer_opacity,
                                                GimpFillType           layer_fill_type,
                                                GimpLink              *link,
+                                               GimpPath              *path,
                                                gint                   layer_width,
                                                gint                   layer_height,
                                                gint                   layer_offset_x,
@@ -134,6 +134,7 @@ static void   layers_edit_attributes_callback (GtkWidget             *dialog,
                                                gdouble                layer_opacity,
                                                GimpFillType           layer_fill_type,
                                                GimpLink              *link,
+                                               GimpPath              *path,
                                                gint                   layer_width,
                                                gint                   layer_height,
                                                gint                   layer_offset_x,
@@ -183,10 +184,6 @@ static gint   layers_mode_index               (GimpLayerMode          layer_mode
                                                const GimpLayerMode   *modes,
                                                gint                   n_modes);
 
-static void   layers_vector_show_fill_stroke  (GimpAction            *action,
-                                               GVariant              *value,
-                                               gpointer               data);
-
 
 /*  private variables  */
 
@@ -212,17 +209,11 @@ layers_edit_cmd_callback (GimpAction *action,
     return;
 
   if (gimp_item_is_text_layer (GIMP_ITEM (layers->data)))
-    {
-      layers_edit_text_cmd_callback (action, value, data);
-    }
+    layers_edit_text_cmd_callback (action, value, data);
   else if (gimp_item_is_vector_layer (GIMP_ITEM (layers->data)))
-    {
-      layers_vector_show_fill_stroke (action, value, data);
-    }
+    layers_edit_vector_cmd_callback (action, value, data);
   else
-    {
-      layers_edit_attributes_cmd_callback (action, value, data);
-    }
+    layers_edit_attributes_cmd_callback (action, value, data);
 }
 
 void
@@ -2359,6 +2350,7 @@ layers_new_callback (GtkWidget              *dialog,
                      gdouble                 layer_opacity,
                      GimpFillType            layer_fill_type,
                      GimpLink               *link,
+                     GimpPath               *path,
                      gint                    layer_width,
                      gint                    layer_height,
                      gint                    layer_offset_x,
@@ -2478,6 +2470,7 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
                                  gdouble                 layer_opacity,
                                  GimpFillType            unused1,
                                  GimpLink               *link,
+                                 GimpPath               *path,
                                  gint                    unused2,
                                  gint                    unused3,
                                  gint                    layer_offset_x,
@@ -2507,7 +2500,7 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
       layer_lock_position   != gimp_item_get_lock_position (item)     ||
       layer_lock_visibility != gimp_item_get_lock_visibility (item)   ||
       layer_lock_alpha      != gimp_layer_get_lock_alpha (layer)      ||
-      link)
+      link || path)
     {
       gimp_image_undo_group_start (image,
                                    GIMP_UNDO_GROUP_ITEM_PROPERTIES,
@@ -2541,8 +2534,9 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
       if (layer_opacity != gimp_layer_get_opacity (layer))
         gimp_layer_set_opacity (layer, layer_opacity, TRUE);
 
-      if (layer_offset_x != gimp_item_get_offset_x (item) ||
-          layer_offset_y != gimp_item_get_offset_y (item))
+      if (! gimp_item_is_vector_layer (item) &&
+          (layer_offset_x != gimp_item_get_offset_x (item) ||
+           layer_offset_y != gimp_item_get_offset_y (item)))
         {
           gimp_item_translate (item,
                                layer_offset_x - gimp_item_get_offset_x (item),
@@ -2570,6 +2564,9 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
 
       if (GIMP_IS_LINK_LAYER (layer) && link)
         gimp_link_layer_set_link (GIMP_LINK_LAYER (layer), link, TRUE);
+
+      if (gimp_item_is_vector_layer (item) && path)
+          gimp_vector_layer_set_path (GIMP_VECTOR_LAYER (layer), path, TRUE);
 
       gimp_image_undo_group_end (image);
       gimp_image_flush (image);
@@ -2753,35 +2750,4 @@ layers_mode_index (GimpLayerMode         layer_mode,
     i++;
 
   return i;
-}
-
-static void
-layers_vector_show_fill_stroke (GimpAction *action,
-                                GVariant   *value,
-                                gpointer    data)
-{
-  GimpImage *image;
-  GimpLayer *layer;
-  GList     *layers;
-  GtkWidget *widget;
-  return_if_no_layers (image, layers, data);
-  return_if_no_widget (widget, data);
-
-  if (g_list_length (layers) != 1)
-    return;
-
-  layer = layers->data;
-
-  if (GIMP_IS_VECTOR_LAYER (layer))
-    {
-      GtkWidget *dialog;
-
-      dialog = vector_layer_options_dialog_new (GIMP_VECTOR_LAYER (layer),
-                                                action_data_get_context (data),
-                                                _("Fill / Stroke"),
-                                                "gimp-vector-layer-stroke",
-                                                GIMP_HELP_LAYER_VECTOR_FILL_STROKE,
-                                                widget);
-      gtk_widget_show (dialog);
-    }
 }

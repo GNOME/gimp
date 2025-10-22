@@ -56,7 +56,6 @@ libappdialogs_sources = [
   'tips-dialog.c',
   'tips-parser.c',
   'user-install-dialog.c',
-  'vector-layer-options-dialog.c',
   'welcome-dialog.c',
   gitversion_h,
   welcome_dialog_data_c,

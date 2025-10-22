@@ -35,10 +35,15 @@
 #include "core/gimplink.h"
 #include "core/gimplinklayer.h"
 
+#include "path/gimppath.h"
+#include "path/gimpvectorlayer.h"
+
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
 
+#include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerlistview.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimplayermodebox.h"
 #include "widgets/gimpopendialog.h"
 #include "widgets/gimpviewabledialog.h"
@@ -74,6 +79,7 @@ struct _LayerOptionsDialog
   GtkWidget                *offset_se;
 
   GimpLink                 *link;
+  GimpPath                 *initial_path;
 };
 
 
@@ -100,6 +106,8 @@ static void   layer_options_dialog_rename_toggled (GtkWidget          *widget,
                                                    LayerOptionsDialog *private);
 
 static void   layer_options_file_set              (GtkFileChooserButton *widget,
+                                                   LayerOptionsDialog   *private);
+static void   layer_options_dialog_path_selected  (GimpContainerView    *view,
                                                    LayerOptionsDialog   *private);
 
 
@@ -168,6 +176,7 @@ layer_options_dialog_new (GimpImage                *image,
   private->user_data          = user_data;
 
   private->link               = NULL;
+  private->initial_path       = NULL;
 
   if (layer && gimp_item_is_text_layer (GIMP_ITEM (layer)))
     private->rename_text_layers = GIMP_TEXT_LAYER (layer)->auto_rename;
@@ -321,69 +330,72 @@ layer_options_dialog_new (GimpImage                *image,
       row += 2;
     }
 
-  /*  The offset labels  */
-  label = gtk_label_new (_("Offset X:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, row, 1, 1);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Offset Y:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, row + 1, 1, 1);
-  gtk_widget_show (label);
-
-  /*  The offset sizeentry  */
-  adjustment = gtk_adjustment_new (0, 1, 1, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adjustment, 1.0, 2);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
-
-  private->offset_se = gimp_size_entry_new (1, gimp_unit_pixel (), "%a",
-                                            TRUE, TRUE, FALSE, 10,
-                                            GIMP_SIZE_ENTRY_UPDATE_SIZE);
-
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->offset_se),
-                             GTK_SPIN_BUTTON (spinbutton), NULL);
-  gtk_grid_attach (GTK_GRID (private->offset_se), spinbutton, 1, 0, 1, 1);
-  gtk_widget_show (spinbutton);
-
-  gtk_grid_attach (GTK_GRID (grid), private->offset_se, 1, row, 1, 2);
-  gtk_widget_show (private->offset_se);
-
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset_se),
-                            gimp_unit_pixel ());
-
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 0,
-                                  xres, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 1,
-                                  yres, FALSE);
-
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->offset_se), 0,
-                                         -GIMP_MAX_IMAGE_SIZE,
-                                         GIMP_MAX_IMAGE_SIZE);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->offset_se), 1,
-                                         -GIMP_MAX_IMAGE_SIZE,
-                                         GIMP_MAX_IMAGE_SIZE);
-
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->offset_se), 0,
-                            0, gimp_image_get_width  (image));
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->offset_se), 1,
-                            0, gimp_image_get_height (image));
-
-  if (layer)
+  if (layer && ! gimp_item_is_vector_layer (GIMP_ITEM (layer)))
     {
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0,
-                                  gimp_item_get_offset_x (GIMP_ITEM (layer)));
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1,
-                                  gimp_item_get_offset_y (GIMP_ITEM (layer)));
-    }
-  else
-    {
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0, 0);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1, 0);
-    }
+      /*  The offset labels  */
+      label = gtk_label_new (_("Offset X:"));
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_grid_attach (GTK_GRID (grid), label, 0, row, 1, 1);
+      gtk_widget_show (label);
 
-  row += 2;
+      label = gtk_label_new (_("Offset Y:"));
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_grid_attach (GTK_GRID (grid), label, 0, row + 1, 1, 1);
+      gtk_widget_show (label);
+
+      /*  The offset sizeentry  */
+      adjustment = gtk_adjustment_new (0, 1, 1, 1, 10, 0);
+      spinbutton = gimp_spin_button_new (adjustment, 1.0, 2);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+      gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
+
+      private->offset_se = gimp_size_entry_new (1, gimp_unit_pixel (), "%a",
+                                                TRUE, TRUE, FALSE, 10,
+                                                GIMP_SIZE_ENTRY_UPDATE_SIZE);
+
+      gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->offset_se),
+                                 GTK_SPIN_BUTTON (spinbutton), NULL);
+      gtk_grid_attach (GTK_GRID (private->offset_se), spinbutton, 1, 0, 1, 1);
+      gtk_widget_show (spinbutton);
+
+      gtk_grid_attach (GTK_GRID (grid), private->offset_se, 1, row, 1, 2);
+      gtk_widget_show (private->offset_se);
+
+      gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset_se),
+                                gimp_unit_pixel ());
+
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 0,
+                                      xres, FALSE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 1,
+                                      yres, FALSE);
+
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->offset_se), 0,
+                                             -GIMP_MAX_IMAGE_SIZE,
+                                             GIMP_MAX_IMAGE_SIZE);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->offset_se), 1,
+                                             -GIMP_MAX_IMAGE_SIZE,
+                                             GIMP_MAX_IMAGE_SIZE);
+
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->offset_se), 0,
+                                0, gimp_image_get_width  (image));
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->offset_se), 1,
+                                0, gimp_image_get_height (image));
+
+      if (layer)
+        {
+          gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0,
+                                      gimp_item_get_offset_x (GIMP_ITEM (layer)));
+          gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1,
+                                      gimp_item_get_offset_y (GIMP_ITEM (layer)));
+        }
+      else
+        {
+          gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0, 0);
+          gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1, 0);
+        }
+
+      row += 2;
+    }
 
   if (layer)
     {
@@ -403,7 +415,7 @@ layer_options_dialog_new (GimpImage                *image,
       gtk_container_add (GTK_CONTAINER (frame), view);
       gtk_widget_show (view);
 
-      if (GIMP_IS_LINK_LAYER (layer))
+      if (gimp_item_is_link_layer (GIMP_ITEM (layer)))
         {
           GtkWidget *open_dialog;
           GimpLink  *link;
@@ -441,6 +453,20 @@ layer_options_dialog_new (GimpImage                *image,
                                   G_BINDING_BIDIRECTIONAL);
           gtk_widget_set_visible (button, TRUE);
         }
+      else if (gimp_item_is_vector_layer (GIMP_ITEM (layer)))
+        {
+          combo = gimp_container_combo_box_new (gimp_image_get_paths (image),
+                                                context, GIMP_VIEW_SIZE_SMALL, 1);
+          gimp_container_view_set_1_selected (GIMP_CONTAINER_VIEW (combo),
+                                              GIMP_VIEWABLE (gimp_vector_layer_get_path (GIMP_VECTOR_LAYER (layer))));
+          g_signal_connect (combo, "selection-changed",
+                            G_CALLBACK (layer_options_dialog_path_selected),
+                            private);
+          gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                    _("_Associated path:"), 0.0, 0.5,
+                                    combo, 2);
+          gtk_widget_set_visible (combo, TRUE);
+        }
     }
   else
     {
@@ -463,10 +489,11 @@ layer_options_dialog_new (GimpImage                *image,
                             G_BINDING_SYNC_CREATE |
                             G_BINDING_INVERT_BOOLEAN);
 
-  g_object_bind_property (G_OBJECT (button),             "active",
-                          G_OBJECT (private->offset_se), "sensitive",
-                          G_BINDING_SYNC_CREATE |
-                          G_BINDING_INVERT_BOOLEAN);
+  if (private->offset_se)
+    g_object_bind_property (G_OBJECT (button),             "active",
+                            G_OBJECT (private->offset_se), "sensitive",
+                            G_BINDING_SYNC_CREATE |
+                            G_BINDING_INVERT_BOOLEAN);
 
   button = item_options_dialog_add_switch (dialog,
                                            GIMP_ICON_LOCK_ALPHA,
@@ -503,6 +530,20 @@ layer_options_dialog_new (GimpImage                *image,
 static void
 layer_options_dialog_free (LayerOptionsDialog *private)
 {
+  /* If not cleared already, it means we cancel.
+   * Let's revert silently.
+   */
+  if (private->initial_path)
+    {
+      GimpLayer *layer = private->layer;
+
+      g_return_if_fail (GIMP_IS_VECTOR_LAYER (layer));
+
+      gimp_vector_layer_set_path (GIMP_VECTOR_LAYER (layer), private->initial_path, FALSE);
+      g_clear_object (&private->initial_path);
+    }
+  g_clear_object (&private->link);
+
   g_slice_free (LayerOptionsDialog, private);
 }
 
@@ -519,11 +560,12 @@ layer_options_dialog_callback (GtkWidget    *dialog,
                                gboolean      item_lock_visibility,
                                gpointer      user_data)
 {
-  LayerOptionsDialog *private = user_data;
-  gint                width   = 0;
-  gint                height  = 0;
-  gint                offset_x;
-  gint                offset_y;
+  LayerOptionsDialog *private  = user_data;
+  GimpPath           *path     = NULL;
+  gint                width    = 0;
+  gint                height   = 0;
+  gint                offset_x = 0;
+  gint                offset_y = 0;
 
   if (private->size_se)
     {
@@ -535,12 +577,22 @@ layer_options_dialog_callback (GtkWidget    *dialog,
                                           1));
     }
 
-  offset_x =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se),
-                                      0));
-  offset_y =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se),
-                                      1));
+  if (private->offset_se)
+    {
+      offset_x =
+        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se),
+                                          0));
+      offset_y =
+        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se),
+                                          1));
+    }
+
+  if (gimp_item_is_vector_layer (item) && private->initial_path)
+    {
+      path = gimp_vector_layer_get_path (GIMP_VECTOR_LAYER (item));
+      gimp_vector_layer_set_path (GIMP_VECTOR_LAYER (item), private->initial_path, FALSE);
+      g_clear_object (&private->initial_path);
+    }
 
   private->callback (dialog,
                      image,
@@ -554,6 +606,7 @@ layer_options_dialog_callback (GtkWidget    *dialog,
                      private->opacity / 100.0,
                      private->fill_type,
                      private->link,
+                     path,
                      width,
                      height,
                      offset_x,
@@ -667,4 +720,36 @@ layer_options_file_set (GtkFileChooserButton *widget,
         }
     }
   g_clear_object (&file);
+}
+
+static void
+layer_options_dialog_path_selected (GimpContainerView  *view,
+                                    LayerOptionsDialog *private)
+{
+  GimpViewable    *item     = gimp_container_view_get_1_selected (view);
+  GimpPath        *new_path = NULL;
+  GimpPath        *path;
+  GimpVectorLayer *layer;
+
+  g_return_if_fail (GIMP_IS_VECTOR_LAYER (private->layer));
+
+  layer = GIMP_VECTOR_LAYER (private->layer);
+
+  if (item)
+    new_path = GIMP_PATH (item);
+
+  path = gimp_vector_layer_get_path (GIMP_VECTOR_LAYER (private->layer));
+
+  if (new_path && new_path != path)
+    {
+      g_return_if_fail (GIMP_IS_PATH (new_path));
+      gimp_vector_layer_set_path (layer, new_path, FALSE);
+
+      if (private->initial_path == new_path)
+        g_clear_object (&private->initial_path);
+      else if (private->initial_path == NULL)
+        private->initial_path = g_object_ref (path);
+
+      gimp_vector_layer_refresh (layer);
+    }
 }

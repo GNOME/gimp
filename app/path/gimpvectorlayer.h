@@ -55,6 +55,9 @@ GimpVectorLayer         * gimp_vector_layer_new         (GimpImage       *image,
                                                          GimpPath        *path,
                                                          GimpContext     *context);
 
+void                      gimp_vector_layer_set_path    (GimpVectorLayer *layer,
+                                                         GimpPath        *path,
+                                                         gboolean         push_undo);
 GimpPath                * gimp_vector_layer_get_path    (GimpVectorLayer *layer);
 
 GimpVectorLayerOptions  * gimp_vector_layer_get_options (GimpVectorLayer *layer);

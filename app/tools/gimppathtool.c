@@ -144,6 +144,12 @@ static void     gimp_path_tool_to_selection_extended
                                                    GdkModifierType        state);
 
 static void     gimp_path_tool_create_vector_layer(GimpPathTool          *path_tool);
+
+static void     gimp_path_tool_vector_layer_path_changed
+                                                  (GimpVectorLayerOptions *options,
+                                                   const GParamSpec       *pspec,
+                                                   GimpPathTool           *tool);
+
 static void     gimp_path_tool_vector_change_notify
                                                   (GObject               *options,
                                                    const GParamSpec      *pspec,
@@ -664,7 +670,8 @@ gimp_path_tool_set_path (GimpPathTool    *path_tool,
   g_return_if_fail (path == NULL || GIMP_IS_PATH (path));
   g_return_if_fail (layer == NULL || path == NULL);
 
-  tool = GIMP_TOOL (path_tool);options = GIMP_PATH_TOOL_GET_OPTIONS (path_tool);
+  tool    = GIMP_TOOL (path_tool);
+  options = GIMP_PATH_TOOL_GET_OPTIONS (path_tool);
 
   if (layer != NULL)
     path = gimp_vector_layer_get_path (layer);
@@ -885,6 +892,14 @@ gimp_path_tool_create_vector_layer (GimpPathTool *path_tool)
 }
 
 static void
+gimp_path_tool_vector_layer_path_changed (GimpVectorLayerOptions *options,
+                                          const GParamSpec       *pspec,
+                                          GimpPathTool           *tool)
+{
+  gimp_path_tool_set_path (tool, tool->current_vector_layer, NULL);
+}
+
+static void
 gimp_path_tool_vector_change_notify (GObject          *options,
                                      const GParamSpec *pspec,
                                      GimpVectorLayer  *layer)
@@ -958,7 +973,8 @@ static void
 gimp_path_tool_set_layer (GimpPathTool    *path_tool,
                           GimpVectorLayer *vector_layer)
 {
-  GimpPathOptions *options;
+  GimpPathOptions        *options;
+  GimpVectorLayerOptions *layer_options;
 
   g_return_if_fail (GIMP_IS_PATH_TOOL (path_tool));
 
@@ -966,6 +982,11 @@ gimp_path_tool_set_layer (GimpPathTool    *path_tool,
 
   if (path_tool->current_vector_layer)
     {
+      layer_options = gimp_vector_layer_get_options (path_tool->current_vector_layer);
+      g_signal_handlers_disconnect_by_func (layer_options,
+                                            gimp_path_tool_vector_layer_path_changed,
+                                            path_tool);
+
       g_signal_handlers_disconnect_by_func (options,
                                             gimp_path_tool_vector_change_notify,
                                             path_tool->current_vector_layer);
@@ -986,6 +1007,11 @@ gimp_path_tool_set_layer (GimpPathTool    *path_tool,
 
   if (vector_layer)
     {
+      layer_options = gimp_vector_layer_get_options (vector_layer);
+      g_signal_connect_object (layer_options, "notify::path",
+                               G_CALLBACK (gimp_path_tool_vector_layer_path_changed),
+                               path_tool, 0);
+
       g_object_set (options,
                     "enable-fill",   vector_layer->options->enable_fill,
                     "enable_stroke", vector_layer->options->enable_stroke,

@@ -618,6 +618,30 @@ gimp_vector_layer_new (GimpImage   *image,
   return layer;
 }
 
+void
+gimp_vector_layer_set_path (GimpVectorLayer *layer,
+                            GimpPath        *path,
+                            gboolean         push_undo)
+{
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
+
+  if (push_undo)
+    {
+      GParamSpec *pspec;
+
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (layer->options), "path");
+      gimp_image_undo_push_vector_layer (image,
+                                         _("Change Vector Layer Path"),
+                                         layer, pspec);
+    }
+
+  g_object_set (layer->options,
+                "path", path,
+                NULL);
+
+  gimp_image_flush (image);
+}
+
 /**
  * gimp_vector_layer_get_path:
  * @layer: a #GimpVectorLayer

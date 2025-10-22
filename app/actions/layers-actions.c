@@ -64,8 +64,8 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_EDIT },
 
   { "layers-edit-vector", GIMP_ICON_TOOL_PATH,
-    NC_("layers-action", "Path Tool"), NULL, { NULL },
-    NC_("layers-action", "Activate the path tool on this vector layer's path"),
+    NC_("layers-action", "Edit Vector on Canvas"), NULL, { NULL },
+    NC_("layers-action", "Activate the path tool on this vector layer"),
     layers_edit_vector_cmd_callback,
     GIMP_HELP_TOOL_PATH },
 
