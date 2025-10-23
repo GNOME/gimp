@@ -1194,15 +1194,40 @@ void
 gimp_widget_free_native_handle (GtkWidget  *widget,
                                 GBytes    **window_handle)
 {
+  GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
+#ifdef GDK_WINDOWING_WAYLAND
+  GdkWindow *surface;
+#endif
+
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (window_handle != NULL);
 
-  #ifdef GDK_WINDOWING_WAYLAND
-  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()) &&
-      /* The GdkWindow is likely already destroyed. */
-      gtk_widget_get_window (widget) != NULL)
-    gdk_wayland_window_unexport_handle (gtk_widget_get_window (widget));
-  #endif
+  g_signal_handlers_disconnect_by_func (toplevel,
+                                        G_CALLBACK (gimp_widget_set_handle_on_mapped),
+                                        window_handle);
+  g_signal_handlers_disconnect_by_func (widget,
+                                        G_CALLBACK (gimp_widget_set_handle_on_mapped),
+                                        window_handle);
+  g_signal_handlers_disconnect_by_func (widget,
+                                        G_CALLBACK (gimp_widget_set_handle_on_realize),
+                                        window_handle);
+
+#ifdef GDK_WINDOWING_WAYLAND
+  surface = gtk_widget_get_window (widget);
+
+  if (surface != NULL && GDK_IS_WAYLAND_WINDOW (surface))
+    {
+      gint count;
+
+      count = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (surface),
+                                                  "gimp_widget_set_handle_on_mapped-call-count"));
+      g_object_set_data (G_OBJECT (surface),
+                         "gimp_widget_set_handle_on_mapped-call-count",
+                         NULL);
+      while (count--)
+        gdk_wayland_window_unexport_handle (surface);
+    }
+#endif
 
   g_clear_pointer (window_handle, g_bytes_unref);
 }
@@ -1356,6 +1381,15 @@ gimp_widget_set_handle_on_mapped (GtkWidget    *widget,
 #ifdef GDK_WINDOWING_WAYLAND
   if (GDK_IS_WAYLAND_WINDOW (surface))
     {
+      gint count;
+
+      count = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (surface),
+                                                  "gimp_widget_set_handle_on_mapped-call-count"));
+      count += 1;
+      g_object_set_data (G_OBJECT (surface),
+                         "gimp_widget_set_handle_on_mapped-call-count",
+                         GINT_TO_POINTER (count));
+
       /* I don't run this on "realize" event because somehow it locks
        * the whole processus in Wayland. The "map-event" happens
        * slightly after the window became visible and I didn't
