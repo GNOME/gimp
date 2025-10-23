@@ -43,6 +43,7 @@
 #include "core/gimplinklayer.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
+#include "core/gimprasterizable.h"
 #include "core/gimpselection.h"
 #include "core/gimpunit.h"
 
