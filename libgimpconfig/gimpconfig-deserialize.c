@@ -764,10 +764,21 @@ gimp_config_deserialize_object (GValue     *value,
         }
 
       type = g_type_from_name (type_name);
-      g_free (type_name);
 
-      if (! g_type_is_a (type, prop_spec->value_type))
-        return G_TOKEN_STRING;
+      if (type == 0)
+        {
+          g_scanner_error (scanner, "Unknown object type: %s", type_name);
+          g_free (type_name);
+          return G_TOKEN_NONE;
+        }
+      else if (! g_type_is_a (type, prop_spec->value_type))
+        {
+          g_scanner_error (scanner, "Invalid object type: %s", type_name);
+          g_free (type_name);
+          return G_TOKEN_NONE;
+        }
+
+      g_free (type_name);
     }
 
   if (! prop_object)
