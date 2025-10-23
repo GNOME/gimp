@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-29 17:50+0000\n"
-"PO-Revision-Date: 2025-09-29 23:04+0300\n"
+"POT-Creation-Date: 2025-10-22 15:19+0000\n"
+"PO-Revision-Date: 2025-10-23 17:25+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -56,18 +56,24 @@ msgstr ""
 "між різними графічними форматами тощо."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:30
+#| msgid ""
+#| "GIMP is expandable and extensible. It is designed to be augmented with "
+#| "plug-ins and extensions to do just about anything. The advanced scripting "
+#| "interface allows everything from the simplest task to the most complex "
+#| "image manipulation procedures to be easily scripted. GIMP is available "
+#| "for Linux, Microsoft Windows and OS X."
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
 "interface allows everything from the simplest task to the most complex image "
 "manipulation procedures to be easily scripted. GIMP is available for Linux, "
-"Microsoft Windows and OS X."
+"Microsoft Windows and macOS."
 msgstr ""
 "GIMP легко розбирається і розширюється. Вона розроблена, щоби через "
 "доповнення модулями і розширеннями робити усе, що завгодно. Додатковий "
 "інтерфейс сценаріїв дозволяє легко запрограмувати усе від найпростіших "
 "завдань до найскладніших процедур обробки зображень. GIMP доступний для "
-"Linux, Microsoft Windows та OS X."
+"Linux, Microsoft Windows та macOS."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:48
 msgid ""
@@ -162,12 +168,12 @@ msgstr ""
 "GNU. Якщо це не так, дивіться https://www.gnu.org/licenses/"
 
 #. TRANSLATORS: title for info message in terminal window
-#: app/app.c:534
+#: app/app.c:541
 msgid "INFO"
 msgstr "ВІДОМОСТІ"
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:536
+#: app/app.c:543
 msgid ""
 "GIMP is now running as a background process. You can quit anytime with Ctrl-"
 "C (SIGINT)."
@@ -176,21 +182,21 @@ msgstr ""
 "програми за допомогою Ctrl-C (SIGINT)."
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:539
+#: app/app.c:546
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr ""
 "Якщо ви хочете негайно завершити роботу програми, запустіть GIMP з "
 "параметром --quit."
 
-#: app/gimp-update.c:429
+#: app/gimp-update.c:432
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Можливо, не вистачає механізму GIO, і треба встановити GVFS?"
 
-#: app/gimp-update.c:434
+#: app/gimp-update.c:437
 msgid "Perhaps you are missing GIO backends."
 msgstr "Можливо, у вас не вистачає модулів обробки GIO."
 
-#: app/gimp-update.c:466
+#: app/gimp-update.c:474
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -327,11 +333,11 @@ msgstr "Показувати сторінку налаштувань із екс
 msgid "Show an image submenu with debug actions"
 msgstr "Показати підменю зображення із пунктами діагностики"
 
-#: app/main.c:757
+#: app/main.c:760
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: app/main.c:787
+#: app/main.c:790
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -339,20 +345,20 @@ msgstr ""
 "GIMP не може ініціалізувати графічний інтерфейс.\n"
 "Перевірте правильність параметрів вашого графічного середовища."
 
-#: app/main.c:851
+#: app/main.c:859
 msgid "Another GIMP instance is already running."
 msgstr "Вже запущена інша копія GIMP"
 
-#: app/main.c:940
+#: app/main.c:948
 msgid "GIMP output. Type any character to close this window."
 msgstr "Вивід GIMP. Введіть будь-який символ для закриття цього вікна."
 
-#: app/main.c:941
+#: app/main.c:949
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Введіть будь-який символ для закриття цього вікна.)\n"
 
-#: app/main.c:958
+#: app/main.c:966
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вивід GIMP. Ви можете згорнути це вікно, але не закривати його."
 
@@ -2581,11 +2587,11 @@ msgid "Enter a description for the marker"
 msgstr "Введіть опис позначки"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
-#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:247
-#: app/dialogs/file-open-dialog.c:288
+#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:248
+#: app/dialogs/file-open-dialog.c:293
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1248 app/display/gimpdisplayshell-dnd.c:646
+#: app/dialogs/welcome-dialog.c:1257 app/display/gimpdisplayshell-dnd.c:646
 #: app/widgets/gimplayertreeview.c:796 app/widgets/gimptoolbox.c:843
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -2599,7 +2605,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2438
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2439
 #: app/core/gimppalette.c:586 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -13074,11 +13080,11 @@ msgstr "Створення теки «%s»…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Не вдалось створити теку \"%s\": %s"
 
-#: app/core/gimp-utils.c:577 app/core/gimpfilloptions.c:431
+#: app/core/gimp-utils.c:579 app/core/gimpfilloptions.c:431
 msgid "No patterns available for this operation."
 msgstr "Немає доступних текстур для цієї операції."
 
-#: app/core/gimp-utils.c:1120
+#: app/core/gimp-utils.c:1122
 #, c-format
 msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
@@ -13086,18 +13092,18 @@ msgstr ""
 "Критична помилка під час обробки файла ресурсів Photoshop: пошкоджено "
 "стиснені RLE дані."
 
-#: app/core/gimp-utils.c:1665
+#: app/core/gimp-utils.c:1667
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr ""
 "У цьому засобі обробки не передбачено підтримки упорядкованих списків."
 
-#: app/core/gimp-utils.c:1688
+#: app/core/gimp-utils.c:1690
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> має бути вкладено до теґів <ol> або <ul>."
 
-#: app/core/gimp-utils.c:1693
+#: app/core/gimp-utils.c:1695
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Невідомий програмі теґ <%s>."
@@ -13961,137 +13967,137 @@ msgstr "Перетворити групу шарів"
 msgid "Symmetry"
 msgstr "Симетрія"
 
-#: app/core/gimpimage.c:2073 app/pdb/drawable-filter-cmds.c:681
+#: app/core/gimpimage.c:2074 app/pdb/drawable-filter-cmds.c:681
 #: app/widgets/gimpdrawabletreeview-filters.c:740
 msgid "Remove filter"
 msgstr "Вилучити фільтр"
 
-#: app/core/gimpimage.c:2683
+#: app/core/gimpimage.c:2684
 msgid " (exported)"
 msgstr " (експортовано)"
 
-#: app/core/gimpimage.c:2687
+#: app/core/gimpimage.c:2688
 msgid " (overwritten)"
 msgstr " (перезаписано)"
 
-#: app/core/gimpimage.c:2696
+#: app/core/gimpimage.c:2697
 msgid " (imported)"
 msgstr " (імпортовано)"
 
-#: app/core/gimpimage.c:2870 app/core/gimpimage.c:2884
-#: app/core/gimpimage.c:2927
+#: app/core/gimpimage.c:2871 app/core/gimpimage.c:2885
+#: app/core/gimpimage.c:2928
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Режим шару «%s» було додано у %s"
 
-#: app/core/gimpimage.c:2947
+#: app/core/gimpimage.c:2948
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Групи шарів було додано у %s"
 
-#: app/core/gimpimage.c:2954
+#: app/core/gimpimage.c:2955
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Маски для груп шарів було додано у %s"
 
-#: app/core/gimpimage.c:2961
+#: app/core/gimpimage.c:2962
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Блокування позицій для груп шарів було додано у %s"
 
-#: app/core/gimpimage.c:2968
+#: app/core/gimpimage.c:2969
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Блокування каналу прозорості для груп шарів було додано у %s"
 
-#: app/core/gimpimage.c:2976 app/core/gimpimage.c:3027
+#: app/core/gimpimage.c:2977 app/core/gimpimage.c:3028
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Блокування видимості було додано у %s"
 
-#: app/core/gimpimage.c:2987
+#: app/core/gimpimage.c:2988
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Формат даних щодо шрифту у текстовому шарі було змінено у %s"
 
-#: app/core/gimpimage.c:2995
+#: app/core/gimpimage.c:2996
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "До %s було додано ефекти шарів"
 
-#: app/core/gimpimage.c:3007
+#: app/core/gimpimage.c:3008
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Новий простір відчуттєвого злиття кольорів було додано у %s"
 
-#: app/core/gimpimage.c:3036
+#: app/core/gimpimage.c:3037
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Було додано позначення декількох контурів у %s"
 
-#: app/core/gimpimage.c:3048
+#: app/core/gimpimage.c:3049
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Зберігання міток кольорів у контурі було додано у %s"
 
-#: app/core/gimpimage.c:3055
+#: app/core/gimpimage.c:3056
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Зберігання блокувань у контурі було додано у %s"
 
-#: app/core/gimpimage.c:3069
+#: app/core/gimpimage.c:3070
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 "Підтримку зображень із великою бітовою розрядністю кольорів було додано у %s"
 
-#: app/core/gimpimage.c:3077
+#: app/core/gimpimage.c:3078
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Кодування зображень із великою глибиною кольорів було виправлено у %s"
 
-#: app/core/gimpimage.c:3085
+#: app/core/gimpimage.c:3086
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Додано вбудовані засоби стискання zlib у %s"
 
-#: app/core/gimpimage.c:3102
+#: app/core/gimpimage.c:3103
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 "Підтримку файлів зображень, розмір яких перевищує 4 ГБ, було додано у %s"
 
-#: app/core/gimpimage.c:3109
+#: app/core/gimpimage.c:3110
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Було додано позначення декількох шарів у %s"
 
-#: app/core/gimpimage.c:3126
+#: app/core/gimpimage.c:3127
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "У %s додано напрямні поза полотном"
 
-#: app/core/gimpimage.c:3137
+#: app/core/gimpimage.c:3138
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Набір записів та пошук за взірцем у назві запису було додано у %s"
 
-#: app/core/gimpimage.c:3143
+#: app/core/gimpimage.c:3144
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Було додано позначення декількох каналів у %s"
 
-#: app/core/gimpimage.c:3258
+#: app/core/gimpimage.c:3259
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Змінити роздільність зображення"
 
-#: app/core/gimpimage.c:3310
+#: app/core/gimpimage.c:3311
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
 
-#: app/core/gimpimage.c:4363
+#: app/core/gimpimage.c:4364
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14099,47 +14105,47 @@ msgstr ""
 "не вдалося перевірити додаток «gimp-comment»: коментар містить некоректні "
 "символи UTF-8"
 
-#: app/core/gimpimage.c:4425
+#: app/core/gimpimage.c:4426
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Додати шум до зображення"
 
-#: app/core/gimpimage.c:4470
+#: app/core/gimpimage.c:4471
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
-#: app/core/gimpimage.c:5443
+#: app/core/gimpimage.c:5444
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додати шар"
 
-#: app/core/gimpimage.c:5487 app/core/gimpimage.c:5518
+#: app/core/gimpimage.c:5488 app/core/gimpimage.c:5519
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
-#: app/core/gimpimage.c:5512
+#: app/core/gimpimage.c:5513
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
-#: app/core/gimpimage.c:5669
+#: app/core/gimpimage.c:5670
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
-#: app/core/gimpimage.c:5699 app/core/gimpimage.c:5724
+#: app/core/gimpimage.c:5700 app/core/gimpimage.c:5725
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
-#: app/core/gimpimage.c:5784
+#: app/core/gimpimage.c:5785
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додати контур"
 
-#: app/core/gimpimage.c:5819 app/core/gimpimage.c:5827
+#: app/core/gimpimage.c:5820 app/core/gimpimage.c:5828
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -14394,12 +14400,12 @@ msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Недостатньо видимих контурів для об'єднання. Необхідно принаймні два контури."
 
-#: app/core/gimpimage-quick-mask.c:88
+#: app/core/gimpimage-quick-mask.c:75
 msgctxt "undo-type"
 msgid "Enable Quick Mask"
 msgstr "Увімкнути швидку маску"
 
-#: app/core/gimpimage-quick-mask.c:120
+#: app/core/gimpimage-quick-mask.c:108
 msgctxt "undo-type"
 msgid "Disable Quick Mask"
 msgstr "Вимкнути швидку маску"
@@ -15868,9 +15874,15 @@ msgid "Search extensions matching these keywords"
 msgstr "Шукати розширення за цими ключовими словами"
 
 #: app/dialogs/file-open-dialog.c:140 app/dialogs/file-open-dialog.c:165
-#: app/dialogs/file-open-dialog.c:279
+#: app/dialogs/file-open-dialog.c:284
 msgid "Open layers"
 msgstr "Відкрити шари"
+
+#: app/dialogs/file-open-dialog.c:252
+#, c-format
+#| msgid "Opening '%s' failed: %s"
+msgid "Opening '%s' failed."
+msgstr "Не вдалося відкрити «%s»."
 
 #: app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
@@ -18399,7 +18411,7 @@ msgid "_Next Tip"
 msgstr "_Наступна"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1094
+#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1103
 msgid "Learn more"
 msgstr "Дізнатись більше"
 
@@ -18532,7 +18544,6 @@ msgid "Documentation"
 msgstr "Документація"
 
 #: app/dialogs/welcome-dialog.c:478
-#| msgid "Tutorials"
 msgid "Community Tutorials"
 msgstr "Підручники спільноти"
 
@@ -21675,7 +21686,7 @@ msgstr "Автообтинання зображення"
 msgid "Autocrop layer"
 msgstr "Автообтинання шару"
 
-#: app/pdb/image-cmds.c:2556
+#: app/pdb/image-cmds.c:2564
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
