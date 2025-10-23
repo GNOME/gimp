@@ -22,7 +22,6 @@
 #ifndef __FILE_TIFF_LOAD_H__
 #define __FILE_TIFF_LOAD_H__
 
-#define LOAD_PROC      "file-tiff-load"
 
 typedef enum
 {

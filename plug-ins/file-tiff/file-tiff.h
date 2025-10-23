@@ -5,6 +5,8 @@
 #ifndef __FILE_TIFF_H__
 #define __FILE_TIFF_H__
 
+#define LOAD_PROC   "file-tiff-load"
+#define EXPORT_PROC "file-tiff-export"
 
 typedef enum
 {
@@ -18,8 +20,9 @@ typedef enum
 } GimpCompression;
 
 
-gint             gimp_compression_to_tiff_compression (GimpCompression compression);
-GimpCompression  tiff_compression_to_gimp_compression (gint            compression);
+gint              gimp_compression_to_tiff_compression (GimpCompression  compression);
+GimpCompression   tiff_compression_to_gimp_compression (gint             compression);
+const gchar     * gimp_compression_to_nick             (GimpCompression  compression);
 
 
 #endif /* __FILE_TIFF_H__ */

@@ -1212,12 +1212,29 @@ load_image (GimpProcedure        *procedure,
         writer = gimp_config_writer_new_from_string (string);
 
         gimp_config_writer_open (writer, "compression");
-        gimp_config_writer_printf (writer, "%d", gimp_compression);
+        gimp_config_writer_string (writer, gimp_compression_to_nick (gimp_compression));
         gimp_config_writer_close (writer);
 
         gimp_config_writer_finish (writer, NULL, NULL);
 
-        parasite = gimp_parasite_new ("GimpProcedureConfig-file-tiff-save-last",
+        /* This parasite name is kinda feeble and it is hard to
+         * automatize in a robust way since it depends on code private
+         * to libgimp:
+         *
+         * 1. The first part is the config type name as returned by
+         *    hidden _gimp_procedure_create_run_config(), which is
+         *    usually "GimpProcedureConfigRun-" followed by the
+         *    procedure name. Note that this is different from the type
+         *    name of the config returned by
+         *    gimp_procedure_create_config().
+         * 2. Then "-last" is appended per private function
+         *    gimp_procedure_config_parasite_name().
+         *
+         * So we just recreate it manually hoping it won't break.
+         * Hopefully it should not since it would break usual settings
+         * remembrance (in parasite, as well as config files) anyway.
+         */
+        parasite = gimp_parasite_new ("GimpProcedureConfigRun-" EXPORT_PROC "-last",
                                       GIMP_PARASITE_PERSISTENT,
                                       string->len + 1, string->str);
         gimp_image_attach_parasite (*image, parasite);

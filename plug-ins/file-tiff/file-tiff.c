@@ -57,7 +57,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define EXPORT_PROC    "file-tiff-export"
 #define PLUG_IN_BINARY "file-tiff"
 
 
@@ -67,6 +66,8 @@ typedef struct _TiffClass TiffClass;
 struct _Tiff
 {
   GimpPlugIn      parent_instance;
+
+  GimpChoice     *compression_choice;
 };
 
 struct _TiffClass
@@ -136,6 +137,14 @@ tiff_class_init (TiffClass *klass)
 static void
 tiff_init (Tiff *tiff)
 {
+  tiff->compression_choice = gimp_choice_new_with_values ("none",          GIMP_COMPRESSION_NONE,          _("None"),              NULL,
+                                                          "lzw",           GIMP_COMPRESSION_LZW,           _("LZW"),               NULL,
+                                                          "packbits",      GIMP_COMPRESSION_PACKBITS,      _("Pack Bits"),         NULL,
+                                                          "adobe_deflate", GIMP_COMPRESSION_ADOBE_DEFLATE, _("Deflate"),           NULL,
+                                                          "jpeg",          GIMP_COMPRESSION_JPEG,          _("JPEG"),              NULL,
+                                                          "ccittfax3",     GIMP_COMPRESSION_CCITTFAX3,     _("CCITT Group 3 fax"), NULL,
+                                                          "ccittfax4",     GIMP_COMPRESSION_CCITTFAX4,     _("CCITT Group 4 fax"), NULL,
+                                                          NULL);
 }
 
 static GList *
@@ -154,6 +163,7 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                       const gchar *name)
 {
   GimpProcedure *procedure = NULL;
+  Tiff          *tiff      = TIFF (plug_in);
 
   if (! strcmp (name, LOAD_PROC))
     {
@@ -244,14 +254,7 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_choice_argument (procedure, "compression",
                                           _("Co_mpression"),
                                           _("Compression type"),
-                                          gimp_choice_new_with_values ("none",          GIMP_COMPRESSION_NONE,          _("None"),              NULL,
-                                                                       "lzw",           GIMP_COMPRESSION_LZW,           _("LZW"),               NULL,
-                                                                       "packbits",      GIMP_COMPRESSION_PACKBITS,      _("Pack Bits"),         NULL,
-                                                                       "adobe_deflate", GIMP_COMPRESSION_ADOBE_DEFLATE, _("Deflate"),           NULL,
-                                                                       "jpeg",          GIMP_COMPRESSION_JPEG,          _("JPEG"),              NULL,
-                                                                       "ccittfax3",     GIMP_COMPRESSION_CCITTFAX3,     _("CCITT Group 3 fax"), NULL,
-                                                                       "ccittfax4",     GIMP_COMPRESSION_CCITTFAX4,     _("CCITT Group 4 fax"), NULL,
-                                                                       NULL),
+                                          tiff->compression_choice,
                                           "none", G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "save-transparent-pixels",
@@ -579,4 +582,22 @@ tiff_compression_to_gimp_compression (gint compression)
     }
 
   return GIMP_COMPRESSION_NONE;
+}
+
+const gchar *
+gimp_compression_to_nick (GimpCompression compression)
+{
+  GList      *nicks;
+  GimpPlugIn *plug_in = gimp_get_plug_in ();
+  Tiff       *tiff    = TIFF (plug_in);
+
+  nicks = gimp_choice_list_nicks (tiff->compression_choice);
+
+  for (GList *iter = nicks; iter; iter = iter->next)
+    {
+      if (gimp_choice_get_id (tiff->compression_choice, iter->data) == compression)
+        return iter->data;
+    }
+
+  return "none";
 }
