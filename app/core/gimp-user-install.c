@@ -919,30 +919,46 @@ user_update_templaterc (const GMatchInfo *matched_value,
 }
 
 #define CONTROLLERRC_UPDATE_PATTERN \
-  "\\(map \"(scroll|cursor)-[^\"]*\\bcontrol\\b[^\"]*\""
+  "\\(map \"(scroll|cursor)-[^\"]*\\bcontrol\\b[^\"]*\""    "|" \
+  "\\(controller \"GimpControllerMouse\"\\)"
 
 static gboolean
 user_update_controllerrc (const GMatchInfo *matched_value,
                           GString          *new_value,
                           gpointer          data)
 {
-  gchar  *original;
-  gchar  *replacement;
-  GRegex *regexp = NULL;
+  gchar *original;
 
-  /* No need of a complicated pattern here.
-   * CONTROLLERRC_UPDATE_PATTERN took care of it first.
-   */
-  regexp   = g_regex_new ("\\bcontrol\\b", 0, 0, NULL);
   original = g_match_info_fetch (matched_value, 0);
 
-  replacement = g_regex_replace (regexp, original, -1, 0,
-                                 "primary", 0, NULL);
-  g_string_append (new_value, replacement);
+  if (g_str_has_prefix (original, "(controller"))
+    {
+      /* GimpControllerMouse was removed in commit 76ddf4421c (for GIMP
+       * 3.0). Just removing this line would technically create an
+       * invalid GimpControllerInfo, but this goes together with a
+       * sanitization to remove invalid controllers with
+       * gimp_controller_search_invalid().
+       */
+    }
+  else
+    {
+      gchar  *replacement;
+      GRegex *regexp = NULL;
+
+      /* No need of a complicated pattern here.
+       * CONTROLLERRC_UPDATE_PATTERN took care of it first.
+       */
+      regexp = g_regex_new ("\\bcontrol\\b", 0, 0, NULL);
+
+      replacement = g_regex_replace (regexp, original, -1, 0,
+                                     "primary", 0, NULL);
+      g_string_append (new_value, replacement);
+
+      g_free (replacement);
+      g_regex_unref (regexp);
+    }
 
   g_free (original);
-  g_free (replacement);
-  g_regex_unref (regexp);
 
   return FALSE;
 }
