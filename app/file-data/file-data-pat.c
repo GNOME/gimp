@@ -218,7 +218,7 @@ file_pat_pattern_to_image (Gimp        *gimp,
 
   gimp_config_writer_finish (writer, NULL, NULL);
 
-  parasite = gimp_parasite_new ("GimpProcedureConfig-file-pat-save-last",
+  parasite = gimp_parasite_new ("GimpProcedureConfigRun-file-pat-export-last",
                                 GIMP_PARASITE_PERSISTENT,
                                 string->len + 1, string->str);
   gimp_image_parasite_attach (image, parasite, FALSE);
