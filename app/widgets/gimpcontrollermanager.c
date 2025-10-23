@@ -71,6 +71,9 @@ static gboolean   gimp_controller_manager_event_mapped  (GimpControllerInfo     
                                                          const gchar               *action_name,
                                                          GimpControllerManager     *manager);
 
+static gboolean   gimp_controller_search_invalid        (GimpObject                *object,
+                                                         gpointer                   user_data);
+
 
 G_DEFINE_TYPE (GimpControllerManager, gimp_controller_manager,
                GIMP_TYPE_LIST)
@@ -164,8 +167,9 @@ void
 gimp_controller_manager_restore (GimpControllerManager *self,
                                  GimpUIManager         *ui_manager)
 {
-  GFile  *file;
-  GError *error = NULL;
+  GFile      *file;
+  GimpObject *found;
+  GError     *error = NULL;
 
   g_return_if_fail (GIMP_IS_CONTROLLER_MANAGER (self));
   g_return_if_fail (GIMP_IS_UI_MANAGER (ui_manager));
@@ -216,6 +220,16 @@ gimp_controller_manager_restore (GimpControllerManager *self,
     }
 
   gimp_list_reverse (GIMP_LIST (self));
+
+  while ((found = gimp_container_search (GIMP_CONTAINER (self),
+                                        (GimpContainerSearchFunc) gimp_controller_search_invalid,
+                                        NULL)))
+    /* Clean out the manager off invalid controllers. This may happen
+     * in particular with the removed GimpControllerMouse, which our
+     * migration code would translate as a deserialized
+     * GimpControllerInfo with NULL controller.
+     */
+    gimp_container_remove (GIMP_CONTAINER (self), found);
 
   g_object_unref (file);
 }
@@ -361,4 +375,11 @@ gimp_controller_manager_event_mapped (GimpControllerInfo        *info,
     }
 
   return FALSE;
+}
+
+static gboolean
+gimp_controller_search_invalid (GimpObject *object,
+                                gpointer    user_data)
+{
+  return (GIMP_CONTROLLER_INFO (object)->controller == NULL);
 }
