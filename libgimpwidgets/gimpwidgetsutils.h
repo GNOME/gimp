@@ -68,7 +68,7 @@ const Babl         * gimp_widget_get_render_space    (GtkWidget       *widget,
                                                       GimpColorConfig *config);
 
 void                 gimp_widget_set_native_handle   (GtkWidget        *widget,
-                                                      GBytes          **handle);
+                                                      GBytes          **window_handle);
 void                 gimp_widget_free_native_handle  (GtkWidget        *widget,
                                                       GBytes          **window_handle);
 
