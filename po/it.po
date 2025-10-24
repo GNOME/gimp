@@ -47,8 +47,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-17 09:43+0200\n"
-"PO-Revision-Date: 2025-10-17 13:59+0200\n"
+"POT-Creation-Date: 2025-10-24 11:16+0200\n"
+"PO-Revision-Date: 2025-10-24 11:21+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -535,7 +535,7 @@ msgid "Tools"
 msgstr "Strumenti"
 
 #: ../app/actions/actions.c:243 ../app/dialogs/dialogs.c:384
-#: ../app/tools/gimppathtool.c:182
+#: ../app/tools/gimppathtool.c:188
 msgid "Paths"
 msgstr "Tracciati"
 
@@ -2439,7 +2439,7 @@ msgstr "240 secondi"
 #: ../app/actions/gradients-commands.c:80 ../app/actions/plug-in-commands.c:187
 #: ../app/actions/templates-commands.c:248
 #: ../app/actions/text-editor-commands.c:65
-#: ../app/actions/text-tool-commands.c:154
+#: ../app/actions/text-tool-commands.c:164
 #: ../app/actions/tool-options-commands.c:210
 #: ../app/actions/window-commands.c:77
 #: ../app/dialogs/color-profile-dialog.c:136
@@ -2471,13 +2471,12 @@ msgstr "240 secondi"
 #: ../app/dialogs/template-options-dialog.c:118
 #: ../app/dialogs/path-export-dialog.c:88
 #: ../app/dialogs/path-import-dialog.c:93
-#: ../app/dialogs/vector-layer-options-dialog.c:104
 #: ../app/display/gimpdisplayshell-close.c:181
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:131
 #: ../app/tools/gimpfiltertool.c:376
-#: ../app/tools/gimpforegroundselecttool.c:333 ../app/tools/gimppathtool.c:1049
+#: ../app/tools/gimpforegroundselecttool.c:333 ../app/tools/gimppathtool.c:1075
 #: ../app/tools/gimptexttool.c:1776 ../app/tools/gimptransformgridtool.c:1264
 #: ../app/tools/gimptransformtool.c:429 ../app/widgets/gimpactionview.c:621
 #: ../app/widgets/gimpcolordialog.c:492
@@ -2550,8 +2549,8 @@ msgstr "Inserire una descrizione per il marcatore"
 #: ../app/dialogs/file-open-location-dialog.c:217
 #: ../app/dialogs/file-open-location-dialog.c:233
 #: ../app/display/gimpdisplayshell-dnd.c:646
-#: ../app/widgets/gimplayertreeview.c:796 ../app/widgets/gimptoolbox.c:843
-#: ../app/widgets/gimptoolbox-dnd.c:178
+#: ../app/display/gimpimagewindow.c:2260 ../app/widgets/gimplayertreeview.c:796
+#: ../app/widgets/gimptoolbox.c:843 ../app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -6053,7 +6052,7 @@ msgstr "Riflessione"
 msgid "Rotating"
 msgstr "Rotazione"
 
-#: ../app/actions/image-commands.c:880 ../app/actions/layers-commands.c:1416
+#: ../app/actions/image-commands.c:880 ../app/actions/layers-commands.c:1427
 msgid "Cannot crop because the current selection is empty."
 msgstr "Non è possibile ritagliare perché la regione selezionata è vuota."
 
@@ -6104,7 +6103,7 @@ msgid "Scale Image"
 msgstr "Scala immagine"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1520 ../app/actions/layers-commands.c:2678
+#: ../app/actions/image-commands.c:1520 ../app/actions/layers-commands.c:2692
 #: ../app/dialogs/preferences-dialog.c:1750
 #: ../app/pdb/image-transform-cmds.c:124 ../app/pdb/item-transform-cmds.c:595
 #: ../app/pdb/layer-cmds.c:375 ../app/tools/gimpscaletool.c:122
@@ -6181,7 +6180,7 @@ msgstr "Attiva l'azione di modifica predefinita per questo tipo di livello"
 
 #: ../app/actions/layers-actions.c:61
 msgctxt "layers-action"
-msgid "Edit Te_xt on canvas"
+msgid "Edit Te_xt on Canvas"
 msgstr "Modifica _testo sull'immagine"
 
 #: ../app/actions/layers-actions.c:62
@@ -6191,14 +6190,13 @@ msgstr "Modifica il contenuto di questo livello di testo sull'immagine"
 
 #: ../app/actions/layers-actions.c:67
 msgctxt "layers-action"
-msgid "Path Tool"
-msgstr "Strumento tracciato"
+msgid "Edit Vector on Canvas"
+msgstr "Modifica _vettore sull'immagine"
 
 #: ../app/actions/layers-actions.c:68
 msgctxt "layers-action"
-msgid "Activate the path tool on this vector layer's path"
-msgstr ""
-"Attiva lo strumento tracciato sul tracciato di questo livello vettoriale"
+msgid "Activate the path tool on this vector layer"
+msgstr "Attiva lo strumento tracciato su questo livello vettoriale"
 
 #: ../app/actions/layers-actions.c:73
 msgctxt "layers-action"
@@ -6378,7 +6376,8 @@ msgstr "_Rasterizza"
 #: ../app/actions/layers-actions.c:187
 msgctxt "layers-action"
 msgid "Turn selected text, link or vector layers into raster layers"
-msgstr "Trasforma i livelli selezionati di testo, collegati o vettoriali in raster"
+msgstr ""
+"Trasforma i livelli selezionati di testo, collegati o vettoriali in raster"
 
 #: ../app/actions/layers-actions.c:192
 msgctxt "layers-action"
@@ -6999,15 +6998,15 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "A _nuovo livello"
 
-#: ../app/actions/layers-commands.c:351 ../app/actions/layers-commands.c:2514
+#: ../app/actions/layers-commands.c:343 ../app/actions/layers-commands.c:2527
 msgid "Layer Attributes"
 msgstr "Attributi di livello"
 
-#: ../app/actions/layers-commands.c:354
+#: ../app/actions/layers-commands.c:346
 msgid "Edit Layer Attributes"
 msgstr "Modifica attributi livello"
 
-#: ../app/actions/layers-commands.c:423
+#: ../app/actions/layers-commands.c:415
 #: ../app/widgets/gimpdrawabletreeview.c:649
 #: ../app/widgets/gimplayertreeview.c:915
 msgid "New Layer"
@@ -7015,101 +7014,105 @@ msgid_plural "New Layers"
 msgstr[0] "Nuovo livello"
 msgstr[1] "Nuovi livelli"
 
-#: ../app/actions/layers-commands.c:424
+#: ../app/actions/layers-commands.c:416
 #, c-format
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
 msgstr[0] "Crea un nuovo livello"
 msgstr[1] "Crea %d nuovi livelli"
 
-#: ../app/actions/layers-commands.c:509 ../app/actions/layers-commands.c:2397
+#: ../app/actions/layers-commands.c:501 ../app/actions/layers-commands.c:2409
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Nuovo livello"
 msgstr[1] "Nuovi livelli"
 
-#: ../app/actions/layers-commands.c:591
+#: ../app/actions/layers-commands.c:583
 msgid "Visible"
 msgstr "Visibile"
 
-#: ../app/actions/layers-commands.c:621
+#: ../app/actions/layers-commands.c:613
 msgid "New layer group"
 msgid_plural "New layer groups"
 msgstr[0] "Nuovo gruppo di livelli"
 msgstr[1] "Nuovi gruppi di livelli"
 
-#: ../app/actions/layers-commands.c:743
+#: ../app/actions/layers-commands.c:735
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "Alza il livello"
 msgstr[1] "Alza i livelli"
 
-#: ../app/actions/layers-commands.c:778
+#: ../app/actions/layers-commands.c:770
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "Alza il livello fino in cima"
 msgstr[1] "Alza i livelli fino in cima"
 
-#: ../app/actions/layers-commands.c:822
+#: ../app/actions/layers-commands.c:814
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "Abbassa i livelli"
 msgstr[1] "Abbassa il livello"
 
-#: ../app/actions/layers-commands.c:859
+#: ../app/actions/layers-commands.c:851
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "Abbassa il livello fino in fondo"
 msgstr[1] "Abbassa i livelli fino in fondo"
 
-#: ../app/actions/layers-commands.c:886
+#: ../app/actions/layers-commands.c:878
 msgid "Duplicate layers"
 msgstr "Duplica livelli"
 
 #: ../app/actions/layers-commands.c:1034
+msgid "Cannot merge a pass through layer group."
+msgstr "Impossibile fondere un gruppo livelli passante."
+
+#: ../app/actions/layers-commands.c:1045
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "Fondi %d gruppi di livelli"
 
-#: ../app/actions/layers-commands.c:1095
+#: ../app/actions/layers-commands.c:1106
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Rimuovi %d livelli"
 
-#: ../app/actions/layers-commands.c:1124
+#: ../app/actions/layers-commands.c:1135
 msgid "Rasterize Layers"
 msgstr "Rasterizza livelli"
 
-#: ../app/actions/layers-commands.c:1147
+#: ../app/actions/layers-commands.c:1158
 msgid "Revert Rasterize"
 msgstr "Annulla rasterizza"
 
-#: ../app/actions/layers-commands.c:1171
+#: ../app/actions/layers-commands.c:1182
 msgid "Add Paths"
 msgstr "Aggiungi tracciati"
 
-#: ../app/actions/layers-commands.c:1300
+#: ../app/actions/layers-commands.c:1311
 msgid "Set Layer Boundary Size"
 msgstr "Imposta dimensioni margini del livello"
 
-#: ../app/actions/layers-commands.c:1330
+#: ../app/actions/layers-commands.c:1341
 msgid "Layers to Image Size"
 msgstr "Livelli a dimensione immagine"
 
-#: ../app/actions/layers-commands.c:1382
+#: ../app/actions/layers-commands.c:1393
 msgid "Scale Layer"
 msgstr "Scala livello"
 
-#: ../app/actions/layers-commands.c:1421
+#: ../app/actions/layers-commands.c:1432
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "Ritaglia il livello alla selezione"
 msgstr[1] "Ritaglia %d livelli alla selezione"
 
-#: ../app/actions/layers-commands.c:1486
+#: ../app/actions/layers-commands.c:1497
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7117,114 +7120,110 @@ msgstr ""
 "Impossibile ritagliare perché i livelli selezionati hanno contenuti o sono "
 "già stati ritagliati ai loro contenuti."
 
-#: ../app/actions/layers-commands.c:1492
+#: ../app/actions/layers-commands.c:1503
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "Ritaglia il livello al contenuto"
 msgstr[1] "Ritaglia %d livelli al contenuto"
 
-#: ../app/actions/layers-commands.c:1631 ../app/actions/layers-commands.c:2611
+#: ../app/actions/layers-commands.c:1642 ../app/actions/layers-commands.c:2625
 msgid "Add Layer Masks"
 msgstr "Aggiungi maschere di livello"
 
-#: ../app/actions/layers-commands.c:1685
+#: ../app/actions/layers-commands.c:1696
 msgid "Apply Layer Masks"
 msgstr "Applica maschere di livello"
 
-#: ../app/actions/layers-commands.c:1689
+#: ../app/actions/layers-commands.c:1700
 msgid "Delete Layer Masks"
 msgstr "Elimina maschere di livello"
 
-#: ../app/actions/layers-commands.c:1780
+#: ../app/actions/layers-commands.c:1791
 msgid "Show Layer Masks"
 msgstr "Mostra maschere di livello"
 
-#: ../app/actions/layers-commands.c:1831
+#: ../app/actions/layers-commands.c:1842
 msgid "Disable Layer Masks"
 msgstr "Disabilita maschere di livello"
 
-#: ../app/actions/layers-commands.c:1870
+#: ../app/actions/layers-commands.c:1881
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Maschere a selezione"
 
-#: ../app/actions/layers-commands.c:1874
+#: ../app/actions/layers-commands.c:1885
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Aggiungi maschere alla selezione"
 
-#: ../app/actions/layers-commands.c:1878
+#: ../app/actions/layers-commands.c:1889
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Sottrai maschere dalla selezione"
 
-#: ../app/actions/layers-commands.c:1882
+#: ../app/actions/layers-commands.c:1893
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Interseca maschere con la selezione"
 
-#: ../app/actions/layers-commands.c:1905
+#: ../app/actions/layers-commands.c:1916
 msgid "Add Alpha Channel"
 msgstr "Aggiungi canale alfa"
 
-#: ../app/actions/layers-commands.c:1926
+#: ../app/actions/layers-commands.c:1937
 msgid "Remove Alpha Channel"
 msgstr "Rimuovi canale alfa"
 
-#: ../app/actions/layers-commands.c:1954 ../app/core/gimpchannel-select.c:433
+#: ../app/actions/layers-commands.c:1965 ../app/core/gimpchannel-select.c:433
 #: ../app/core/gimplayer.c:437
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa a selezione"
 
-#: ../app/actions/layers-commands.c:1958 ../app/core/gimpchannel-select.c:427
+#: ../app/actions/layers-commands.c:1969 ../app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Aggiungi alfa alla selezione"
 
-#: ../app/actions/layers-commands.c:1962 ../app/core/gimpchannel-select.c:430
+#: ../app/actions/layers-commands.c:1973 ../app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Sottrai alfa dalla selezione"
 
-#: ../app/actions/layers-commands.c:1966 ../app/core/gimpchannel-select.c:436
+#: ../app/actions/layers-commands.c:1977 ../app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Interseca alfa con la selezione"
 
-#: ../app/actions/layers-commands.c:1979
+#: ../app/actions/layers-commands.c:1990
 msgid "Empty Selection"
 msgstr "Svuota selezione"
 
-#: ../app/actions/layers-commands.c:2009 ../app/actions/layers-commands.c:2053
+#: ../app/actions/layers-commands.c:2020 ../app/actions/layers-commands.c:2064
 #: ../app/widgets/gimplayertreeview.c:1091
 msgid "Set layers opacity"
 msgstr "Imposta l'opacità dei livelli"
 
-#: ../app/actions/layers-commands.c:2123
+#: ../app/actions/layers-commands.c:2134
 msgid "Set layers' blend space"
 msgstr "Imposta lo spazio fusione dei livelli"
 
-#: ../app/actions/layers-commands.c:2177
+#: ../app/actions/layers-commands.c:2188
 msgid "Set layers' composite space"
 msgstr "Imposta lo spazio composito dei livelli"
 
-#: ../app/actions/layers-commands.c:2231
+#: ../app/actions/layers-commands.c:2242
 msgid "Set layers' composite mode"
 msgstr "Imposta la modalità composita dei livelli"
 
-#: ../app/actions/layers-commands.c:2316
+#: ../app/actions/layers-commands.c:2327
 msgid "Lock alpha channels"
 msgstr "Blocca i canali alfa"
 
-#: ../app/actions/layers-commands.c:2316
+#: ../app/actions/layers-commands.c:2327
 msgid "Unlock alpha channels"
 msgstr "Sblocca i canali alfa"
-
-#: ../app/actions/layers-commands.c:2781
-msgid "Fill / Stroke"
-msgstr "Riempi / Delinea"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -8012,7 +8011,6 @@ msgstr "Reimposta tutti i filtri"
 #: ../app/dialogs/preferences-dialog.c:1175
 #: ../app/dialogs/print-size-dialog.c:122 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:128
-#: ../app/dialogs/vector-layer-options-dialog.c:103
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:375 ../app/tools/gimptransformgridtool.c:1261
 #: ../app/widgets/gimpcolordialog.c:491
@@ -8463,12 +8461,12 @@ msgid "Vertical, left to right (upright orientation)"
 msgstr "Verticale, da sinistra a destra (orientamento verticale)"
 
 #: ../app/actions/text-editor-commands.c:61
-#: ../app/actions/text-tool-commands.c:150
+#: ../app/actions/text-tool-commands.c:160
 msgid "Open Text File (UTF-8)"
 msgstr "Apri file di testo (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:66
-#: ../app/actions/text-tool-commands.c:155
+#: ../app/actions/text-tool-commands.c:165
 #: ../app/dialogs/file-open-location-dialog.c:81
 #: ../app/dialogs/path-import-dialog.c:94 ../app/dialogs/welcome-dialog.c:790
 #: ../app/widgets/gimpiconpicker.c:490 ../app/widgets/gimpopendialog.c:87
@@ -8477,7 +8475,7 @@ msgid "_Open"
 msgstr "_Apri"
 
 #: ../app/actions/text-editor-commands.c:140
-#: ../app/actions/text-tool-commands.c:256 ../app/config/gimpconfig-file.c:73
+#: ../app/actions/text-tool-commands.c:266 ../app/config/gimpconfig-file.c:73
 #: ../app/core/gimppalette-import.c:526 ../app/plug-in/gimpenvirontable.c:289
 #: ../app/plug-in/gimpinterpreterdb.c:234
 #: ../app/tools/gimpfiltertool-settings.c:170
@@ -8503,90 +8501,95 @@ msgstr "_Incolla"
 
 #: ../app/actions/text-tool-actions.c:65
 msgctxt "text-tool-action"
+msgid "Paste un_formatted text"
+msgstr "Incolla testo _non formattato."
+
+#: ../app/actions/text-tool-actions.c:71
+msgctxt "text-tool-action"
 msgid "_Bold"
 msgstr "_Grassetto"
 
-#: ../app/actions/text-tool-actions.c:70
+#: ../app/actions/text-tool-actions.c:76
 msgctxt "text-tool-action"
 msgid "_Italic"
 msgstr "_Corsivo"
 
-#: ../app/actions/text-tool-actions.c:75
+#: ../app/actions/text-tool-actions.c:81
 msgctxt "text-tool-action"
 msgid "_Underline"
 msgstr "_Sottolineato"
 
-#: ../app/actions/text-tool-actions.c:80
+#: ../app/actions/text-tool-actions.c:86
 msgctxt "text-tool-action"
 msgid "_Delete"
 msgstr "_Elimina"
 
-#: ../app/actions/text-tool-actions.c:85
+#: ../app/actions/text-tool-actions.c:91
 msgctxt "text-tool-action"
 msgid "_Open text file..."
 msgstr "Apri file di test_o..."
 
-#: ../app/actions/text-tool-actions.c:90
+#: ../app/actions/text-tool-actions.c:96
 msgctxt "text-tool-action"
 msgid "Cl_ear"
 msgstr "_Pulisci"
 
-#: ../app/actions/text-tool-actions.c:91
+#: ../app/actions/text-tool-actions.c:97
 msgctxt "text-tool-action"
 msgid "Clear all text"
 msgstr "Pulisci tutto il testo"
 
-#: ../app/actions/text-tool-actions.c:96
+#: ../app/actions/text-tool-actions.c:102
 msgctxt "text-tool-action"
 msgid "Text to _Path"
 msgstr "Testo a t_racciato"
 
-#: ../app/actions/text-tool-actions.c:98
+#: ../app/actions/text-tool-actions.c:104
 msgctxt "text-tool-action"
 msgid "Create a path from the outlines of the current text"
 msgstr "Crea un tracciato dai contorni del testo corrente"
 
-#: ../app/actions/text-tool-actions.c:103
+#: ../app/actions/text-tool-actions.c:109
 msgctxt "text-tool-action"
 msgid "Text _along Path"
 msgstr "Testo lungo il tr_acciato"
 
-#: ../app/actions/text-tool-actions.c:105
+#: ../app/actions/text-tool-actions.c:111
 msgctxt "text-tool-action"
 msgid "Bend the text along the currently active path"
 msgstr "Disponi il testo lungo il tracciato correntemente attivo"
 
-#: ../app/actions/text-tool-actions.c:113
+#: ../app/actions/text-tool-actions.c:119
 msgctxt "text-tool-action"
 msgid "From left to right"
 msgstr "Da sinistra a destra"
 
-#: ../app/actions/text-tool-actions.c:118
+#: ../app/actions/text-tool-actions.c:124
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "Da destra a sinistra"
 
-#: ../app/actions/text-tool-actions.c:123
+#: ../app/actions/text-tool-actions.c:129
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Verticale, da destra a sinistra (orientamento misto)"
 
-#: ../app/actions/text-tool-actions.c:128
+#: ../app/actions/text-tool-actions.c:134
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Verticale, da destra a sinistra (orientamento verticale)"
 
-#: ../app/actions/text-tool-actions.c:133
+#: ../app/actions/text-tool-actions.c:139
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Verticale, da sinistra a destra (orientamento misto)"
 
-#: ../app/actions/text-tool-actions.c:138
+#: ../app/actions/text-tool-actions.c:144
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Verticale, da sinistra a destra (orientamento verticale)"
 
-#: ../app/actions/text-tool-commands.c:218
+#: ../app/actions/text-tool-commands.c:228
 #, c-format
 msgid "Text along path failed: %s"
 msgstr "Testo lungo il tracciato fallito: %s"
@@ -14528,43 +14531,47 @@ msgstr "Appiattisci immagine"
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Impossibile appiattire un'immagine senza nessun livello visibile."
 
-#: ../app/core/gimpimage-merge.c:301
+#: ../app/core/gimpimage-merge.c:302
 msgid "Cannot merge down a floating selection."
 msgstr "Impossibile fondere in basso una selezione fluttuante."
 
-#: ../app/core/gimpimage-merge.c:310
+#: ../app/core/gimpimage-merge.c:312
+msgid "Cannot merge down a pass through layer group."
+msgstr "Impossibile fondere un gruppo livelli passante."
+
+#: ../app/core/gimpimage-merge.c:323
 msgid "Cannot merge down an invisible layer."
 msgstr "Impossibile fondere un livello invisibile."
 
-#: ../app/core/gimpimage-merge.c:336
+#: ../app/core/gimpimage-merge.c:351
 msgid "Cannot merge down to a layer group."
 msgstr "Impossibile fondere in un gruppo di livelli."
 
-#: ../app/core/gimpimage-merge.c:345
+#: ../app/core/gimpimage-merge.c:362
 #: ../app/widgets/gimpdrawabletreeview-filters.c:717
 msgid "The layer to merge down to is locked."
 msgstr "Il livello da fondere in basso è bloccato."
 
-#: ../app/core/gimpimage-merge.c:360
+#: ../app/core/gimpimage-merge.c:379
 msgid "There is no visible layer to merge down to."
 msgstr "Nessun livello visibile su cui fondere in basso."
 
-#: ../app/core/gimpimage-merge.c:385
+#: ../app/core/gimpimage-merge.c:404
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Fondi in basso"
 
-#: ../app/core/gimpimage-merge.c:429
+#: ../app/core/gimpimage-merge.c:448
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Fondi il gruppo di livelli"
 
-#: ../app/core/gimpimage-merge.c:562
+#: ../app/core/gimpimage-merge.c:586
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Fondi tracciati visibili"
 
-#: ../app/core/gimpimage-merge.c:598
+#: ../app/core/gimpimage-merge.c:622
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Non ci sono abbastanza tracciati visibili da fondere. Ce ne devono essere "
@@ -14928,39 +14935,39 @@ msgstr "Il file è stato eliminato"
 msgid "No file was set"
 msgstr "Nessun file impostato"
 
-#: ../app/core/gimplinklayer.c:199 ../app/core/gimplinklayer.c:1076
+#: ../app/core/gimplinklayer.c:192
 msgid "Link Layer"
 msgstr "Livello collegato"
 
-#: ../app/core/gimplinklayer.c:207
+#: ../app/core/gimplinklayer.c:200
 msgid "Rename Link Layer"
 msgstr "Rinomina livello collegato"
 
-#: ../app/core/gimplinklayer.c:208
+#: ../app/core/gimplinklayer.c:201
 msgid "Move Link Layer"
 msgstr "Sposta livello collegato"
 
-#: ../app/core/gimplinklayer.c:209
+#: ../app/core/gimplinklayer.c:202
 msgid "Scale Link Layer"
 msgstr "Scala livello collegato"
 
-#: ../app/core/gimplinklayer.c:210
+#: ../app/core/gimplinklayer.c:203
 msgid "Resize Link Layer"
 msgstr "Ridimensiona livello collegato"
 
-#: ../app/core/gimplinklayer.c:211
+#: ../app/core/gimplinklayer.c:204
 msgid "Flip Link Layer"
 msgstr "Rifletti livello collegato"
 
-#: ../app/core/gimplinklayer.c:212
+#: ../app/core/gimplinklayer.c:205
 msgid "Rotate Link Layer"
 msgstr "Ruota livello collegato"
 
-#: ../app/core/gimplinklayer.c:213 ../app/core/gimplinklayer.c:572
+#: ../app/core/gimplinklayer.c:206 ../app/core/gimplinklayer.c:537
 msgid "Transform Link Layer"
 msgstr "Trasforma livello collegato"
 
-#: ../app/core/gimplinklayer.c:818
+#: ../app/core/gimplinklayer.c:783
 msgid "Set layer link"
 msgstr "Imposta livello collegato"
 
@@ -15234,13 +15241,13 @@ msgstr ""
 "corrispondente."
 
 #. TRANSLATORS: the %s will be a type of item, i.e. "Text Layer".
-#: ../app/core/gimprasterizable.c:100
+#: ../app/core/gimprasterizable.c:106
 #, c-format
 msgid "Rasterize %s"
 msgstr "Rasterizza %s"
 
 #. TRANSLATORS: the %s will be a type of item, i.e. "Text Layer".
-#: ../app/core/gimprasterizable.c:137
+#: ../app/core/gimprasterizable.c:146
 #, c-format
 msgid "Revert Rasterize %s"
 msgstr "Annulla rasterizza %s"
@@ -15736,17 +15743,17 @@ msgid "Channel _name:"
 msgstr "_Nome canale:"
 
 #: ../app/dialogs/channel-options-dialog.c:128
-#: ../app/dialogs/layer-options-dialog.c:180
+#: ../app/dialogs/layer-options-dialog.c:190
 msgid "Lock _pixels"
 msgstr "Blocca i _pixel"
 
 #: ../app/dialogs/channel-options-dialog.c:129
-#: ../app/dialogs/layer-options-dialog.c:181
+#: ../app/dialogs/layer-options-dialog.c:191
 msgid "Lock position and _size"
 msgstr "Blocca posizione e dimen_sione"
 
 #: ../app/dialogs/channel-options-dialog.c:130
-#: ../app/dialogs/layer-options-dialog.c:182
+#: ../app/dialogs/layer-options-dialog.c:192
 #: ../app/widgets/gimpdrawabletreeview.c:176
 #: ../app/widgets/gimpitemtreeview.c:596
 msgid "Lock visibility"
@@ -16428,77 +16435,81 @@ msgstr "Modifica masch_era immediatamente"
 msgid "Please select a channel first"
 msgstr "Selezionare prima un canale"
 
-#: ../app/dialogs/layer-options-dialog.c:178
+#: ../app/dialogs/layer-options-dialog.c:188
 msgid "Layer _name:"
 msgstr "_Nome livello:"
 
-#: ../app/dialogs/layer-options-dialog.c:201
+#: ../app/dialogs/layer-options-dialog.c:211
 #: ../app/widgets/gimpdeviceinfoeditor.c:376
 msgid "_Mode:"
 msgstr "_Modalità:"
 
-#: ../app/dialogs/layer-options-dialog.c:219
+#: ../app/dialogs/layer-options-dialog.c:229
 msgid "_Blend space:"
 msgstr "Spazio _fusione:"
 
-#: ../app/dialogs/layer-options-dialog.c:229
+#: ../app/dialogs/layer-options-dialog.c:239
 msgid "Compos_ite space:"
 msgstr "Spazio compos_ito:"
 
-#: ../app/dialogs/layer-options-dialog.c:241
+#: ../app/dialogs/layer-options-dialog.c:251
 msgid "Composite mo_de:"
 msgstr "Mo_dalità composita:"
 
-#: ../app/dialogs/layer-options-dialog.c:255
+#: ../app/dialogs/layer-options-dialog.c:265
 msgid "_Opacity:"
 msgstr "_Opacità:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:268 ../app/tools/gimpmeasuretool.c:816
+#: ../app/dialogs/layer-options-dialog.c:278 ../app/tools/gimpmeasuretool.c:816
 msgid "Width:"
 msgstr "Larghezza:"
 
-#: ../app/dialogs/layer-options-dialog.c:273 ../app/tools/gimpmeasuretool.c:844
+#: ../app/dialogs/layer-options-dialog.c:283 ../app/tools/gimpmeasuretool.c:844
 msgid "Height:"
 msgstr "Altezza:"
 
 #. The offset labels
-#: ../app/dialogs/layer-options-dialog.c:325
+#: ../app/dialogs/layer-options-dialog.c:337
 msgid "Offset X:"
 msgstr "Scostamento X:"
 
-#: ../app/dialogs/layer-options-dialog.c:330
+#: ../app/dialogs/layer-options-dialog.c:342
 msgid "Offset Y:"
 msgstr "Scostamento Y:"
 
-#: ../app/dialogs/layer-options-dialog.c:395
+#: ../app/dialogs/layer-options-dialog.c:408
 #: ../app/widgets/gimpcolordisplayeditor.c:280
 msgid "Active Filters"
 msgstr "Filtri attivi"
 
-#: ../app/dialogs/layer-options-dialog.c:414
+#: ../app/dialogs/layer-options-dialog.c:427
 msgid "Select Linked Image"
 msgstr "Seleziona immagine collegata"
 
-#: ../app/dialogs/layer-options-dialog.c:424
+#: ../app/dialogs/layer-options-dialog.c:437
 msgid "_Linked image:"
 msgstr "Immagine co_llegata:"
 
 #. Absolute path checkbox.
-#: ../app/dialogs/layer-options-dialog.c:434
+#: ../app/dialogs/layer-options-dialog.c:447
 msgid "S_tore with absolute path"
 msgstr "Memorizza con percorso assolu_to"
 
-#: ../app/dialogs/layer-options-dialog.c:450 ../app/dialogs/resize-dialog.c:510
+#: ../app/dialogs/layer-options-dialog.c:467
+msgid "_Associated path:"
+msgstr "Percorso _associato:"
+
+#: ../app/dialogs/layer-options-dialog.c:477 ../app/dialogs/resize-dialog.c:510
 #: ../app/widgets/gimptemplateeditor.c:489
 msgid "_Fill with:"
 msgstr "_Riempi con:"
 
-#: ../app/dialogs/layer-options-dialog.c:473
+#: ../app/dialogs/layer-options-dialog.c:501
 msgid "Lock _alpha"
 msgstr "Blocca _alfa"
 
-#: ../app/dialogs/layer-options-dialog.c:485
+#: ../app/dialogs/layer-options-dialog.c:513
 msgid "Set name from _text"
 msgstr "Imposta il nome dal _testo"
 
@@ -18778,18 +18789,6 @@ msgstr "Blocca la _posizione del tracciato"
 msgid "Lock path _visibility"
 msgstr "_Visibilità blocco tracciato"
 
-#: ../app/dialogs/vector-layer-options-dialog.c:99
-msgid "Edit Vector Layer Attributes"
-msgstr "Modifica attributi livello vettoriale"
-
-#: ../app/dialogs/vector-layer-options-dialog.c:105
-msgid "_Apply"
-msgstr "_Applica"
-
-#: ../app/dialogs/vector-layer-options-dialog.c:274
-msgid "Fill/Stroke Vector Layer"
-msgstr "Riempi/Delinea livello vettoriale "
-
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: ../app/dialogs/welcome-dialog.c:206
 #, c-format
@@ -20685,7 +20684,7 @@ msgstr "Dividi"
 #: ../app/operations/operations-enums.c:290
 msgctxt "layer-mode"
 msgid "Pass through"
-msgstr "Passa attraverso"
+msgstr "Passante"
 
 #: ../app/operations/operations-enums.c:291
 msgctxt "layer-mode"
@@ -21052,7 +21051,7 @@ msgstr[1] ""
 msgid "Documents"
 msgstr "Documenti"
 
-#: ../app/gui/splash.c:183
+#: ../app/gui/splash.c:199
 msgid "GIMP Startup"
 msgstr "Avvio di GIMP"
 
@@ -21653,41 +21652,45 @@ msgstr "Nessun tracciato trovato nel buffer"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Impossibile importare tracciati da '%s': %s"
 
-#: ../app/path/gimpvectorlayer.c:171 ../app/tools/gimppathtool.c:844
+#: ../app/path/gimpvectorlayer.c:171 ../app/tools/gimppathtool.c:851
 msgid "Vector Layer"
 msgstr "Livello vettoriale"
 
-#: ../app/path/gimpvectorlayer.c:181
+#: ../app/path/gimpvectorlayer.c:182
 msgid "Rename Vector Layer"
 msgstr "Rinomina livello vettoriale"
 
-#: ../app/path/gimpvectorlayer.c:182
+#: ../app/path/gimpvectorlayer.c:183
 msgid "Move Vector Layer"
 msgstr "Sposta livello vettoriale"
 
-#: ../app/path/gimpvectorlayer.c:183
+#: ../app/path/gimpvectorlayer.c:184
 msgid "Scale Vector Layer"
 msgstr "Scala livello vettoriale"
 
-#: ../app/path/gimpvectorlayer.c:184
+#: ../app/path/gimpvectorlayer.c:185
 msgid "Resize Vector Layer"
 msgstr "Ridimensiona livello vettoriale"
 
-#: ../app/path/gimpvectorlayer.c:185
+#: ../app/path/gimpvectorlayer.c:186
 msgid "Flip Vector Layer"
 msgstr "Rifletti livello vettoriale"
 
-#: ../app/path/gimpvectorlayer.c:186
+#: ../app/path/gimpvectorlayer.c:187
 msgid "Rotate Vector Layer"
 msgstr "Ruota livello vettoriale"
 
-#: ../app/path/gimpvectorlayer.c:187
+#: ../app/path/gimpvectorlayer.c:188
 msgid "Transform Vector Layer"
 msgstr "Trasforma livello vettoriale"
 
-#: ../app/path/gimpvectorlayer.c:541
+#: ../app/path/gimpvectorlayer.c:542
 msgid "Discard Vector Information"
 msgstr "Abbandona le informazioni vettoriali"
+
+#: ../app/path/gimpvectorlayer.c:635
+msgid "Change Vector Layer Path"
+msgstr "Cambia percorso livello vettoriale"
 
 #: ../app/path/gimpvectorlayeroptions.c:114
 msgid "Fill Style"
@@ -22319,6 +22322,16 @@ msgstr "Estendi delineatura tracciato"
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "L'etichetta dati \"%s\" non è un identificativo canonico"
 
+#: ../app/pdb/rasterizable-cmds.c:65
+#, c-format
+msgid "This item has already been rasterized."
+msgstr "Questo elemento è già stato rasterizzato."
+
+#: ../app/pdb/rasterizable-cmds.c:96
+#, c-format
+msgid "This item has not been rasterized."
+msgstr "Questo elemento non è stato rasterizzato."
+
 #: ../app/pdb/resource-cmds.c:468
 #, c-format
 msgid "Resource '%s' is not renamable"
@@ -22943,49 +22956,45 @@ msgstr "Formato markup non valido nel parassita testo"
 msgid "Empty text parasite"
 msgstr "Parassita testo vuoto"
 
-#: ../app/text/gimptextlayer.c:157
+#: ../app/text/gimptextlayer.c:151
 msgid "Text Layer"
 msgstr "Livello testo"
 
-#: ../app/text/gimptextlayer.c:170
+#: ../app/text/gimptextlayer.c:164
 msgid "Rename Text Layer"
 msgstr "Rinomina livello di testo"
 
-#: ../app/text/gimptextlayer.c:171
+#: ../app/text/gimptextlayer.c:165
 msgid "Move Text Layer"
 msgstr "Sposta livello di testo"
 
-#: ../app/text/gimptextlayer.c:172
+#: ../app/text/gimptextlayer.c:166
 msgid "Scale Text Layer"
 msgstr "Scala livello di testo"
 
-#: ../app/text/gimptextlayer.c:173
+#: ../app/text/gimptextlayer.c:167
 msgid "Resize Text Layer"
 msgstr "Ridimensiona livello di testo"
 
-#: ../app/text/gimptextlayer.c:174
+#: ../app/text/gimptextlayer.c:168
 msgid "Flip Text Layer"
 msgstr "Rifletti livello testo"
 
-#: ../app/text/gimptextlayer.c:175
+#: ../app/text/gimptextlayer.c:169
 msgid "Rotate Text Layer"
 msgstr "Ruota livello testo"
 
-#: ../app/text/gimptextlayer.c:176
+#: ../app/text/gimptextlayer.c:170
 msgid "Transform Text Layer"
 msgstr "Trasforma livello di testo"
 
-#: ../app/text/gimptextlayer.c:722
+#: ../app/text/gimptextlayer.c:691
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 "A causa della mancanza di qualsiasi carattere, la funzionalità di testo non "
 "è disponibile."
 
-#: ../app/text/gimptextlayer.c:785
-msgid "Empty Text Layer"
-msgstr "Livello testo vuoto"
-
-#: ../app/text/gimptextlayer.c:956
+#: ../app/text/gimptextlayer.c:905
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -25221,40 +25230,42 @@ msgstr ""
 msgid "Selection from Path"
 msgstr "Selezione dal tracciato"
 
-#: ../app/tools/gimppathoptions.c:577 ../app/tools/gimppathtool.c:731
-#: ../app/tools/gimppathtool.c:1018
+#: ../app/tools/gimppathoptions.c:577 ../app/tools/gimppathtool.c:738
+#: ../app/tools/gimppathtool.c:1044
 msgid "Create New Vector Layer"
 msgstr "Crea nuovo livello vettoriale"
 
-#: ../app/tools/gimppathtool.c:183
+#: ../app/tools/gimppathtool.c:189
 msgid "Paths Tool: Create and edit paths"
 msgstr "Strumento tracciati: crea e modifica tracciati"
 
-#: ../app/tools/gimppathtool.c:184
+#: ../app/tools/gimppathtool.c:190
 msgid "Pat_hs"
 msgstr "_Tracciati"
 
-#: ../app/tools/gimppathtool.c:734
+#: ../app/tools/gimppathtool.c:741
 msgid "Create Vector Layer from Path"
 msgstr "Crea livello vettoriale da tracciato"
 
-#: ../app/tools/gimppathtool.c:1041 ../app/tools/gimppathtool.c:1044
+#: ../app/tools/gimppathtool.c:1067 ../app/tools/gimppathtool.c:1070
 msgid "Confirm Path Editing"
 msgstr "Conferma modifica tracciato"
 
-#: ../app/tools/gimppathtool.c:1048 ../app/tools/gimptexttool.c:1775
+#: ../app/tools/gimppathtool.c:1074 ../app/tools/gimptexttool.c:1775
 msgid "Create _New Layer"
 msgstr "Crea un _nuovo livello"
 
-#: ../app/tools/gimppathtool.c:1050 ../app/tools/gimptexttool.c:1777
+#: ../app/tools/gimppathtool.c:1076 ../app/tools/gimptexttool.c:1777
 msgid "_Edit Anyway"
 msgstr "Modifica comunqu_e"
 
-#: ../app/tools/gimppathtool.c:1072
+#: ../app/tools/gimppathtool.c:1098
 msgid ""
 "The vector layer you picked was rasterized. Editing its path will discard "
 "any modifications."
-msgstr "Il livello vettoriale selezionato è stato rasterizzato. Modificandone il percorso, tutte le modifiche verranno annullate."
+msgstr ""
+"Il livello vettoriale selezionato è stato rasterizzato. Modificandone il "
+"percorso, tutte le modifiche verranno annullate."
 
 #: ../app/tools/gimppenciltool.c:54
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -25830,25 +25841,27 @@ msgstr "Conferma modifica del testo"
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
-msgstr "Il livello di testo selezionato è stato rasterizzato. Modificando il testo, tutte le modifiche verranno ignorate."
+msgstr ""
+"Il livello di testo selezionato è stato rasterizzato. Modificando il testo, "
+"tutte le modifiche verranno ignorate."
 
-#: ../app/tools/gimptexttool.c:2390
+#: ../app/tools/gimptexttool.c:2419
 msgid "Text is required."
 msgstr "È necessario un testo."
 
-#: ../app/tools/gimptexttool.c:2393
+#: ../app/tools/gimptexttool.c:2422
 msgid "No image."
 msgstr "Nessuna immagine."
 
-#: ../app/tools/gimptexttool.c:2396
+#: ../app/tools/gimptexttool.c:2425
 msgid "No layer."
 msgstr "Nessun livello."
 
-#: ../app/tools/gimptexttool.c:2407
+#: ../app/tools/gimptexttool.c:2436
 msgid "Exactly one path must be selected."
 msgstr "Esattamente un tracciato deve essere selezionato."
 
-#: ../app/tools/gimptexttool-editor.c:1396
+#: ../app/tools/gimptexttool-editor.c:1406
 msgid "GIMP Text Editor"
 msgstr "Modifica del testo di GIMP"
 

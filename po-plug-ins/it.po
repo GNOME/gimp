@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-17 09:53+0200\n"
-"PO-Revision-Date: 2025-10-17 13:25+0200\n"
+"POT-Creation-Date: 2025-10-24 11:21+0200\n"
+"PO-Revision-Date: 2025-10-24 11:22+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -75,7 +75,7 @@ msgstr "Esempio plugin in C"
 #: ../plug-ins/common/curve-bend.c:1822
 #: ../plug-ins/common/file-gif-export.c:1209
 #: ../plug-ins/common/file-heif.c:2487
-#: ../plug-ins/common/file-pdf-export.c:1069
+#: ../plug-ins/common/file-pdf-export.c:1051
 #: ../plug-ins/common/file-pdf-load.c:585 ../plug-ins/common/qbist.c:839
 #: ../plug-ins/common/qbist.c:881 ../plug-ins/common/sphere-designer.c:2284
 #: ../plug-ins/common/sphere-designer.c:2648
@@ -90,8 +90,8 @@ msgstr "Esempio plugin in C"
 #: ../plug-ins/gimpressionist/orientmap.c:528
 #: ../plug-ins/gimpressionist/presets.c:646
 #: ../plug-ins/gimpressionist/sizemap.c:401
-#: ../plug-ins/gradient-flare/gradient-flare.c:3337
-#: ../plug-ins/gradient-flare/gradient-flare.c:3451
+#: ../plug-ins/gradient-flare/gradient-flare.c:3340
+#: ../plug-ins/gradient-flare/gradient-flare.c:3454
 #: ../plug-ins/ifs-compose/ifs-compose.c:913
 #: ../plug-ins/ifs-compose/ifs-compose.c:2608
 #: ../plug-ins/ifs-compose/ifs-compose.c:2645
@@ -163,7 +163,7 @@ msgstr "Esempio di plugin in JavaScript (GJS)"
 #: ../plug-ins/gimpressionist/orientmap.c:529
 #: ../plug-ins/gimpressionist/presets.c:647
 #: ../plug-ins/gimpressionist/sizemap.c:402
-#: ../plug-ins/gradient-flare/gradient-flare.c:3452
+#: ../plug-ins/gradient-flare/gradient-flare.c:3455
 #: ../plug-ins/ifs-compose/ifs-compose.c:914
 #: ../plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
@@ -253,7 +253,7 @@ msgstr "Stile _orizzontale"
 
 #: ../plug-ins/common/align-layers.c:193 ../plug-ins/common/align-layers.c:215
 #: ../plug-ins/common/file-ps.c:430 ../plug-ins/common/file-ps.c:439
-#: ../plug-ins/file-dds/dds.c:198 ../plug-ins/file-tiff/file-tiff.c:247
+#: ../plug-ins/file-dds/dds.c:198 ../plug-ins/file-tiff/file-tiff.c:140
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:345
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:355
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:365
@@ -294,7 +294,7 @@ msgid "Left edge"
 msgstr "Bordo sinistro"
 
 #: ../plug-ins/common/align-layers.c:206 ../plug-ins/common/align-layers.c:228
-#: ../plug-ins/gradient-flare/gradient-flare.c:2925
+#: ../plug-ins/gradient-flare/gradient-flare.c:2928
 msgid "Center"
 msgstr "Centro"
 
@@ -628,8 +628,8 @@ msgstr "Strisce"
 #: ../plug-ins/file-jpeg/jpeg-load.c:252
 #: ../plug-ins/file-psd/psd-image-res-load.c:1093
 #: ../plug-ins/file-psd/psd-load.c:3102 ../plug-ins/file-sgi/sgi.c:456
-#: ../plug-ins/file-tiff/file-tiff-load.c:1561
-#: ../plug-ins/file-tiff/file-tiff-load.c:2385
+#: ../plug-ins/file-tiff/file-tiff-load.c:1578
+#: ../plug-ins/file-tiff/file-tiff-load.c:2402
 #: ../plug-ins/file-webp/file-webp-load.c:159
 #: ../plug-ins/gfig/gfig-dialog.c:559 ../plug-ins/gfig/gfig-dialog.c:1287
 #: ../plug-ins/gimpressionist/general.c:147
@@ -1063,7 +1063,7 @@ msgstr "A_pri"
 #: ../plug-ins/common/cml-explorer.c:1459
 #: ../plug-ins/common/cml-explorer.c:2145 ../plug-ins/common/curve-bend.c:1261
 #: ../plug-ins/common/curve-bend.c:1823
-#: ../plug-ins/common/file-pdf-export.c:1068 ../plug-ins/common/qbist.c:882
+#: ../plug-ins/common/file-pdf-export.c:1050 ../plug-ins/common/qbist.c:882
 #: ../plug-ins/common/qbist.c:1003 ../plug-ins/common/sphere-designer.c:2287
 #: ../plug-ins/common/sphere-designer.c:2705 ../plug-ins/flame/flame.c:619
 #: ../plug-ins/flame/flame.c:1242
@@ -1257,7 +1257,7 @@ msgstr "Salva parametri Esploratore CML"
 #: ../plug-ins/common/cml-explorer.c:2210 ../plug-ins/common/curve-bend.c:762
 #: ../plug-ins/common/file-dicom.c:1578 ../plug-ins/common/file-farbfeld.c:372
 #: ../plug-ins/common/file-mng.c:875 ../plug-ins/common/file-mng.c:1225
-#: ../plug-ins/common/file-pcx.c:1200 ../plug-ins/common/file-pdf-export.c:680
+#: ../plug-ins/common/file-pcx.c:1200 ../plug-ins/common/file-pdf-export.c:683
 #: ../plug-ins/common/file-png.c:1923 ../plug-ins/common/file-raw-data.c:1509
 #: ../plug-ins/common/file-raw-data.c:1538 ../plug-ins/common/file-sunras.c:614
 #: ../plug-ins/common/file-tga.c:1225 ../plug-ins/common/file-tim.c:630
@@ -2101,7 +2101,7 @@ msgstr "Modifica curve"
 
 #. The Copy button
 #: ../plug-ins/common/curve-bend.c:1195
-#: ../plug-ins/gradient-flare/gradient-flare.c:3053
+#: ../plug-ins/gradient-flare/gradient-flare.c:3056
 msgid "_Copy"
 msgstr "_Copia"
 
@@ -4342,7 +4342,7 @@ msgstr "micio"
 msgid "tortoise (slower)"
 msgstr "tartaruga (più lento)"
 
-#: ../plug-ins/common/file-jpegxl.c:227 ../plug-ins/file-tiff/file-tiff.c:265
+#: ../plug-ins/common/file-jpegxl.c:227 ../plug-ins/file-tiff/file-tiff.c:268
 msgid "Export as CMY_K"
 msgstr "Esporta come CMY_K"
 
@@ -4759,18 +4759,18 @@ msgstr "Bordo inferiore fuori dai limiti (deve essere < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Fallita la scrittura sul file \"%s\": %s"
 
-#: ../plug-ins/common/file-pdf-export.c:321
+#: ../plug-ins/common/file-pdf-export.c:329
 #: ../plug-ins/common/file-pdf-load.c:198
 msgid "Portable Document Format"
 msgstr "Portable Document Format (PDF)"
 
-#: ../plug-ins/common/file-pdf-export.c:324
-#: ../plug-ins/common/file-pdf-export.c:410
+#: ../plug-ins/common/file-pdf-export.c:332
+#: ../plug-ins/common/file-pdf-export.c:418
 msgid "Save files in PDF format"
 msgstr "Salva file in formato PDF"
 
-#: ../plug-ins/common/file-pdf-export.c:325
-#: ../plug-ins/common/file-pdf-export.c:411
+#: ../plug-ins/common/file-pdf-export.c:333
+#: ../plug-ins/common/file-pdf-export.c:419
 msgid ""
 "Saves files in Adobe's Portable Document Format. PDF is designed to be "
 "easily processed by a variety of different platforms, and is a distant "
@@ -4780,38 +4780,38 @@ msgstr ""
 "facilmente elaborato da una varietà di piattaforme diverse ed è un lontano "
 "cugino di PostScript."
 
-#: ../plug-ins/common/file-pdf-export.c:337
+#: ../plug-ins/common/file-pdf-export.c:345
 #: ../plug-ins/common/file-pdf-load.c:214
 msgid "PDF"
 msgstr "PDF"
 
-#: ../plug-ins/common/file-pdf-export.c:347
-#: ../plug-ins/common/file-pdf-export.c:437
+#: ../plug-ins/common/file-pdf-export.c:355
+#: ../plug-ins/common/file-pdf-export.c:445
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "Converti le _bitmap in grafica vettoriale ove possibile"
 
-#: ../plug-ins/common/file-pdf-export.c:348
-#: ../plug-ins/common/file-pdf-export.c:438
+#: ../plug-ins/common/file-pdf-export.c:356
+#: ../plug-ins/common/file-pdf-export.c:446
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Converti bitmap in grafica vettoriale ove possibile"
 
-#: ../plug-ins/common/file-pdf-export.c:353
-#: ../plug-ins/common/file-pdf-export.c:443
+#: ../plug-ins/common/file-pdf-export.c:361
+#: ../plug-ins/common/file-pdf-export.c:451
 msgid "O_mit hidden layers and layers with zero opacity"
 msgstr "O_metti livelli nascosti e con opacità a zero"
 
-#: ../plug-ins/common/file-pdf-export.c:354
-#: ../plug-ins/common/file-pdf-export.c:444
+#: ../plug-ins/common/file-pdf-export.c:362
+#: ../plug-ins/common/file-pdf-export.c:452
 msgid "Non-visible layers will not be exported"
 msgstr "I livelli invisibili non verranno esportati"
 
-#: ../plug-ins/common/file-pdf-export.c:359
-#: ../plug-ins/common/file-pdf-export.c:449
+#: ../plug-ins/common/file-pdf-export.c:367
+#: ../plug-ins/common/file-pdf-export.c:457
 msgid "_Apply layer masks"
 msgstr "_Applica maschere di livello"
 
-#: ../plug-ins/common/file-pdf-export.c:360
-#: ../plug-ins/common/file-pdf-export.c:450
+#: ../plug-ins/common/file-pdf-export.c:368
+#: ../plug-ins/common/file-pdf-export.c:458
 msgid ""
 "Apply layer masks before saving (Keeping the mask will not change the "
 "output, only the PDF structure)"
@@ -4819,64 +4819,64 @@ msgstr ""
 "Applica le maschere di livello prima di salvare (mantenendo la maschera non "
 "cambierà il risultato, solo la struttura del PDF)"
 
-#: ../plug-ins/common/file-pdf-export.c:366
+#: ../plug-ins/common/file-pdf-export.c:374
 msgid "La_yers as pages"
 msgstr "Li_velli come pagine"
 
-#: ../plug-ins/common/file-pdf-export.c:367
+#: ../plug-ins/common/file-pdf-export.c:375
 msgid "Layers as pages (bottom layers first)."
 msgstr "Livelli come pagine (prima i livelli in basso)."
 
-#: ../plug-ins/common/file-pdf-export.c:372
+#: ../plug-ins/common/file-pdf-export.c:380
 msgid "Re_verse order"
 msgstr "In_verti l'ordine"
 
-#: ../plug-ins/common/file-pdf-export.c:373
+#: ../plug-ins/common/file-pdf-export.c:381
 msgid "Reverse the pages order (top layers first)."
 msgstr "Inverti l'ordine delle pagine (prima i livelli in alto)"
 
-#: ../plug-ins/common/file-pdf-export.c:378
+#: ../plug-ins/common/file-pdf-export.c:386
 msgid "Roo_t layers only"
 msgstr "Solo livelli _radice"
 
-#: ../plug-ins/common/file-pdf-export.c:379
+#: ../plug-ins/common/file-pdf-export.c:387
 msgid "Only the root layers are considered pages"
 msgstr "Solo i livelli radice vengono considerati pagine"
 
-#: ../plug-ins/common/file-pdf-export.c:384
+#: ../plug-ins/common/file-pdf-export.c:392
 msgid "Convert te_xt layers to image"
 msgstr "Converti i livelli _testo in immagine"
 
-#: ../plug-ins/common/file-pdf-export.c:385
+#: ../plug-ins/common/file-pdf-export.c:393
 msgid "Convert text layers to raster graphics"
 msgstr "Converti i livelli testo in grafica raster"
 
-#: ../plug-ins/common/file-pdf-export.c:390
-#: ../plug-ins/common/file-pdf-export.c:456
+#: ../plug-ins/common/file-pdf-export.c:398
+#: ../plug-ins/common/file-pdf-export.c:464
 msgid "_Fill transparent areas with background color"
 msgstr "_Riempi le aree trasparenti con il colore di sfondo"
 
-#: ../plug-ins/common/file-pdf-export.c:391
-#: ../plug-ins/common/file-pdf-export.c:457
+#: ../plug-ins/common/file-pdf-export.c:399
+#: ../plug-ins/common/file-pdf-export.c:465
 msgid ""
 "Fill transparent areas with background color if layer has an alpha channel"
 msgstr ""
 "Riempie le aree trasparenti con il colore di sfondo se il livello non ha un "
 "canale alfa"
 
-#: ../plug-ins/common/file-pdf-export.c:404
+#: ../plug-ins/common/file-pdf-export.c:412
 msgid "_Create multipage PDF..."
 msgstr "_Crea PDF multipagina..."
 
-#: ../plug-ins/common/file-pdf-export.c:463
+#: ../plug-ins/common/file-pdf-export.c:471
 msgid "Save to"
 msgstr "Salva su"
 
-#: ../plug-ins/common/file-pdf-export.c:464
+#: ../plug-ins/common/file-pdf-export.c:472
 msgid "The URI of the file to save to"
 msgstr "L'URI del file su cui salvare"
 
-#: ../plug-ins/common/file-pdf-export.c:691
+#: ../plug-ins/common/file-pdf-export.c:694
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -4889,7 +4889,7 @@ msgstr ""
 "Assicurarsi di aver inserito un nome file valido e che la posizione scelta "
 "consenta la scrittura!"
 
-#: ../plug-ins/common/file-pdf-export.c:980
+#: ../plug-ins/common/file-pdf-export.c:962
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4901,48 +4901,48 @@ msgstr ""
 "font mancanti prima dell'esportazione, altrimenti il risultato potrebbe non "
 "apparire come desiderato."
 
-#: ../plug-ins/common/file-pdf-export.c:1050
+#: ../plug-ins/common/file-pdf-export.c:1032
 msgid "Export Image as Multi-Page PDF"
 msgstr "Esporta immagine come PDF multipagine"
 
-#: ../plug-ins/common/file-pdf-export.c:1051
+#: ../plug-ins/common/file-pdf-export.c:1033
 #: ../plug-ins/metadata/metadata-editor.c:5604
 msgid "_Export"
 msgstr "_Esporta"
 
-#: ../plug-ins/common/file-pdf-export.c:1060
+#: ../plug-ins/common/file-pdf-export.c:1042
 msgid "Save to:"
 msgstr "Salva in:"
 
-#: ../plug-ins/common/file-pdf-export.c:1064
+#: ../plug-ins/common/file-pdf-export.c:1046
 msgid "Browse..."
 msgstr "Sfoglia..."
 
-#: ../plug-ins/common/file-pdf-export.c:1065
+#: ../plug-ins/common/file-pdf-export.c:1047
 msgid "Multipage PDF export"
 msgstr "Esportazione PDF multipagina"
 
-#: ../plug-ins/common/file-pdf-export.c:1109
+#: ../plug-ins/common/file-pdf-export.c:1091
 msgid "Remove the selected pages"
 msgstr "Rimuovi le pagine selezionate"
 
-#: ../plug-ins/common/file-pdf-export.c:1123
+#: ../plug-ins/common/file-pdf-export.c:1105
 msgid "Add this image"
 msgstr "Aggiungi questa immagine"
 
-#: ../plug-ins/common/file-pdf-export.c:1219
-#: ../plug-ins/common/file-pdf-export.c:1292
-#: ../plug-ins/common/file-pdf-export.c:1390 ../plug-ins/common/file-ps.c:2217
-#: ../plug-ins/file-tiff/file-tiff-load.c:1563
+#: ../plug-ins/common/file-pdf-export.c:1201
+#: ../plug-ins/common/file-pdf-export.c:1274
+#: ../plug-ins/common/file-pdf-export.c:1372 ../plug-ins/common/file-ps.c:2217
+#: ../plug-ins/file-tiff/file-tiff-load.c:1580
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
 
-#: ../plug-ins/common/file-pdf-export.c:1259
+#: ../plug-ins/common/file-pdf-export.c:1241
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Errore! Per salvare il file, deve essere aggiunta almeno un'immagine!"
 
-#: ../plug-ins/common/file-pdf-export.c:1437
+#: ../plug-ins/common/file-pdf-export.c:1419
 #: ../plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
@@ -5109,7 +5109,7 @@ msgstr "Scrivi spezzone pHYs (metadati PNG)"
 msgid "Write tIME chunk (PNG metadata)"
 msgstr "Scrivi spezzone tIME (metadati PNG)"
 
-#: ../plug-ins/common/file-png.c:381 ../plug-ins/file-tiff/file-tiff.c:258
+#: ../plug-ins/common/file-png.c:381 ../plug-ins/file-tiff/file-tiff.c:261
 msgid "Save color _values from transparent pixels"
 msgstr "Salva i _valori colore dai pixel trasparenti"
 
@@ -6560,7 +6560,7 @@ msgid "Em_bed raster layers as"
 msgstr "I_ncorpora livelli raster come"
 
 #: ../plug-ins/common/file-svg.c:357 ../plug-ins/file-jpeg/jpeg.c:195
-#: ../plug-ins/file-tiff/file-tiff.c:251
+#: ../plug-ins/file-tiff/file-tiff.c:144
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -6635,8 +6635,10 @@ msgid ""
 "Your image links external image files in other formats which may not show up "
 "in all viewers."
 msgstr ""
-"Il formato SVG richiede ai visualizzatori di visualizzare solo i collegamenti alle immagini SVG, PNG e JPEG.\n"
-"L'immagine collega file di immagini esterni in altri formati che potrebbero non essere visualizzati in tutti i visualizzatori."
+"Il formato SVG richiede ai visualizzatori di visualizzare solo i "
+"collegamenti alle immagini SVG, PNG e JPEG.\n"
+"L'immagine collega file di immagini esterni in altri formati che potrebbero "
+"non essere visualizzati in tutti i visualizzatori."
 
 #: ../plug-ins/common/file-tga.c:262 ../plug-ins/common/file-tga.c:288
 msgid "TarGA image"
@@ -8609,7 +8611,7 @@ msgid "Layers"
 msgstr "Livelli"
 
 #: ../plug-ins/common/sphere-designer.c:2755
-#: ../plug-ins/gradient-flare/gradient-flare.c:3051
+#: ../plug-ins/gradient-flare/gradient-flare.c:3054
 msgid "_New"
 msgstr "_Nuovo"
 
@@ -8623,8 +8625,8 @@ msgstr "D_uplica"
 #: ../plug-ins/gimpressionist/orientmap.c:623
 #: ../plug-ins/gimpressionist/presets.c:1071
 #: ../plug-ins/gimpressionist/sizemap.c:499
-#: ../plug-ins/gradient-flare/gradient-flare.c:3054
-#: ../plug-ins/gradient-flare/gradient-flare.c:3337
+#: ../plug-ins/gradient-flare/gradient-flare.c:3057
+#: ../plug-ins/gradient-flare/gradient-flare.c:3340
 msgid "_Delete"
 msgstr "Eli_mina"
 
@@ -9253,11 +9255,10 @@ msgid "Flow step %d"
 msgstr "Passo di flusso %d"
 
 #: ../plug-ins/common/wavelet-decompose.c:117
-msgid "_Wavelet-decompose..."
-msgstr "Scomposizione-_Wavelet..."
+msgid "_Wavelet Decompose..."
+msgstr "Scomposizione _Wavelet..."
 
 #: ../plug-ins/common/wavelet-decompose.c:121
-#: ../plug-ins/common/wavelet-decompose.c:375
 msgid "Wavelet decompose"
 msgstr "Scomposizione Wavelet"
 
@@ -9282,8 +9283,9 @@ msgid "Add a layer mask to each scales layer"
 msgstr "Aggiungi una maschera di livello per ogni livello placche"
 
 #: ../plug-ins/common/wavelet-decompose.c:202
-msgid "Wavelet-Decompose"
-msgstr "Scomposizione-Wavelet"
+#: ../plug-ins/common/wavelet-decompose.c:375
+msgid "Wavelet Decompose"
+msgstr "Scomposizione Wavelet"
 
 #: ../plug-ins/common/wavelet-decompose.c:210
 msgid "Decomposition"
@@ -9668,7 +9670,7 @@ msgstr "Formato pixel"
 
 #: ../plug-ins/file-dds/dds.c:222 ../plug-ins/file-dds/dds.c:285
 #: ../plug-ins/file-dds/dds.c:302 ../plug-ins/file-webp/file-webp.c:180
-#: ../plug-ins/gradient-flare/gradient-flare.c:2605
+#: ../plug-ins/gradient-flare/gradient-flare.c:2608
 msgid "Default"
 msgstr "Predefinito"
 
@@ -11299,15 +11301,35 @@ msgstr "Numero di canali non valido: %hu"
 msgid "Could not open '%s' for writing."
 msgstr "Impossibile aprire '%s' in scrittura"
 
-#: ../plug-ins/file-tiff/file-tiff.c:164 ../plug-ins/file-tiff/file-tiff.c:210
+#: ../plug-ins/file-tiff/file-tiff.c:141
+msgid "LZW"
+msgstr "LZW"
+
+#: ../plug-ins/file-tiff/file-tiff.c:142
+msgid "Pack Bits"
+msgstr "Pack bits"
+
+#: ../plug-ins/file-tiff/file-tiff.c:143
+msgid "Deflate"
+msgstr "Deflate"
+
+#: ../plug-ins/file-tiff/file-tiff.c:145
+msgid "CCITT Group 3 fax"
+msgstr "Fax CCITT gruppo 3"
+
+#: ../plug-ins/file-tiff/file-tiff.c:146
+msgid "CCITT Group 4 fax"
+msgstr "Fax CCITT gruppo 4"
+
+#: ../plug-ins/file-tiff/file-tiff.c:174 ../plug-ins/file-tiff/file-tiff.c:220
 msgid "TIFF or BigTIFF image"
 msgstr "Immagine TIFF o BigTIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:167
+#: ../plug-ins/file-tiff/file-tiff.c:177
 msgid "Loads files of the TIFF and BigTIFF file formats"
 msgstr "Carica file in formato TIFF e BigTIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:168
+#: ../plug-ins/file-tiff/file-tiff.c:178
 msgid ""
 "Loads files of the Tag Image File Format (TIFF) and its 64-bit offsets "
 "variant (BigTIFF)"
@@ -11315,15 +11337,15 @@ msgstr ""
 "Carica i file del formato Tag Image File Format (TIFF) e la sua variante con "
 "offset a 64 bit (BigTIFF)"
 
-#: ../plug-ins/file-tiff/file-tiff.c:199
+#: ../plug-ins/file-tiff/file-tiff.c:209
 msgid "_Keep empty space around imported layers"
 msgstr "Mantieni lo spazio vuoto attorno ai livelli importati (_k)"
 
-#: ../plug-ins/file-tiff/file-tiff.c:213
+#: ../plug-ins/file-tiff/file-tiff.c:223
 msgid "Exports files in the TIFF or BigTIFF file formats"
 msgstr "Esporta file in formato TIFF o BigTIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:214
+#: ../plug-ins/file-tiff/file-tiff.c:224
 msgid ""
 "Exports files in the Tag Image File Format (TIFF) or its 64-bit offsets "
 "variant (BigTIFF) able to support much bigger file sizes"
@@ -11332,15 +11354,15 @@ msgstr ""
 "con offset a 64 bit (BigTIFF) in grado di supportare dimensioni di file "
 "molto più grandi."
 
-#: ../plug-ins/file-tiff/file-tiff.c:226
+#: ../plug-ins/file-tiff/file-tiff.c:236
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:238
+#: ../plug-ins/file-tiff/file-tiff.c:248
 msgid "Export in _BigTIFF variant file format"
 msgstr "Esporta nella variante di formato _BigTIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:239
+#: ../plug-ins/file-tiff/file-tiff.c:249
 msgid ""
 "The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
 "4GiB files and bigger"
@@ -11348,35 +11370,15 @@ msgstr ""
 "Il formato file variante BigTIFF utilizza offset a 64 bit, supportando "
 "quindi file da 4GiB e più grandi"
 
-#: ../plug-ins/file-tiff/file-tiff.c:245
+#: ../plug-ins/file-tiff/file-tiff.c:255
 msgid "Co_mpression"
 msgstr "Co_mpressione"
 
-#: ../plug-ins/file-tiff/file-tiff.c:246
+#: ../plug-ins/file-tiff/file-tiff.c:256
 msgid "Compression type"
 msgstr "Tipo di compressione"
 
-#: ../plug-ins/file-tiff/file-tiff.c:248
-msgid "LZW"
-msgstr "LZW"
-
-#: ../plug-ins/file-tiff/file-tiff.c:249
-msgid "Pack Bits"
-msgstr "Pack bits"
-
-#: ../plug-ins/file-tiff/file-tiff.c:250
-msgid "Deflate"
-msgstr "Deflate"
-
-#: ../plug-ins/file-tiff/file-tiff.c:252
-msgid "CCITT Group 3 fax"
-msgstr "Fax CCITT gruppo 3"
-
-#: ../plug-ins/file-tiff/file-tiff.c:253
-msgid "CCITT Group 4 fax"
-msgstr "Fax CCITT gruppo 4"
-
-#: ../plug-ins/file-tiff/file-tiff.c:259
+#: ../plug-ins/file-tiff/file-tiff.c:262
 msgid ""
 "Keep the color data masked by an alpha channel intact (do not store "
 "premultiplied components)"
@@ -11384,36 +11386,36 @@ msgstr ""
 "Mantieni intatti i dati del colore mascherati da un canale alfa (non "
 "memorizzare componenti premoltiplicati)"
 
-#: ../plug-ins/file-tiff/file-tiff.c:266
+#: ../plug-ins/file-tiff/file-tiff.c:269
 msgid "Create a CMYK TIFF image using the soft-proofing color profile"
 msgstr ""
 "Crea una immagine TIFF CMYK usando il profilo di colore del provino video"
 
-#: ../plug-ins/file-tiff/file-tiff.c:271
+#: ../plug-ins/file-tiff/file-tiff.c:274
 msgid "Save La_yers"
 msgstr "Salva li_velli"
 
-#: ../plug-ins/file-tiff/file-tiff.c:272
+#: ../plug-ins/file-tiff/file-tiff.c:275
 msgid "Save Layers"
 msgstr "Salva livelli"
 
-#: ../plug-ins/file-tiff/file-tiff.c:277
+#: ../plug-ins/file-tiff/file-tiff.c:280
 msgid "Crop L_ayers"
 msgstr "Rit_aglia livelli"
 
-#: ../plug-ins/file-tiff/file-tiff.c:278
+#: ../plug-ins/file-tiff/file-tiff.c:281
 msgid "Crop Layers"
 msgstr "Ritaglia livelli"
 
-#: ../plug-ins/file-tiff/file-tiff.c:283
+#: ../plug-ins/file-tiff/file-tiff.c:286
 msgid "Save _GeoTIFF data"
 msgstr "Salva dati _GeoTIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:284
+#: ../plug-ins/file-tiff/file-tiff.c:287
 msgid "Save GeoTIFF data"
 msgstr "Salva dati GeoTIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:423
+#: ../plug-ins/file-tiff/file-tiff.c:426
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -11608,29 +11610,29 @@ msgstr ""
 msgid "Could not create a new image: %s"
 msgstr "Impossibile creare una nuova immagine: %s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1342
+#: ../plug-ins/file-tiff/file-tiff-load.c:1359
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Tipo unità risoluzione sconosciuta %d, si assume sia dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1352
+#: ../plug-ins/file-tiff/file-tiff-load.c:1369
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 "Attenzione: risoluzione specificata senza tipo di unità, si assume sia dpi"
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1360
+#: ../plug-ins/file-tiff/file-tiff-load.c:1377
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 "Attenzione: nessuna info sulla risoluzione y, si assume sia uguale a quella x"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1381
+#: ../plug-ins/file-tiff/file-tiff-load.c:1398
 msgid "Invalid image resolution info, using default"
 msgstr "Informazioni risoluzione immagine non valide, uso le predefinite"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1443
+#: ../plug-ins/file-tiff/file-tiff-load.c:1460
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Impossibile leggere la mappa colori da \"%s\""
@@ -11640,23 +11642,23 @@ msgstr "Impossibile leggere la mappa colori da \"%s\""
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:1533
+#: ../plug-ins/file-tiff/file-tiff-load.c:1550
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "Numero extra di canali sospetto: %d. Immagine probabilmente rovinata."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1598
+#: ../plug-ins/file-tiff/file-tiff-load.c:1615
 msgid "TIFF Channel"
 msgstr "Canale TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1756
+#: ../plug-ins/file-tiff/file-tiff-load.c:1773
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Nessun dato leggibile dal TIFF \"%s\". Il file è probabilmente rovinato."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1792
-#: ../plug-ins/file-tiff/file-tiff-load.c:1836
+#: ../plug-ins/file-tiff/file-tiff-load.c:1809
+#: ../plug-ins/file-tiff/file-tiff-load.c:1853
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
@@ -11664,48 +11666,48 @@ msgstr ""
 "Errore aprendo temporaneamente %s file '%s' per il caricamento dei metadati "
 "tiff: %s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1917
+#: ../plug-ins/file-tiff/file-tiff-load.c:1934
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 "%s: formato immagine non supportato, nessun caricatore RGBA disponibile"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2032
-#: ../plug-ins/file-tiff/file-tiff-load.c:2229
+#: ../plug-ins/file-tiff/file-tiff-load.c:2049
+#: ../plug-ins/file-tiff/file-tiff-load.c:2246
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 "Lettura piastrella fallita. L'immagine potrebbe essere rovinata alla riga %d."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:2041
-#: ../plug-ins/file-tiff/file-tiff-load.c:2238
+#: ../plug-ins/file-tiff/file-tiff-load.c:2058
+#: ../plug-ins/file-tiff/file-tiff-load.c:2255
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Lettura scanline fallita. L'immagine potrebbe essere rovinata alla riga %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2993
+#: ../plug-ins/file-tiff/file-tiff-load.c:3010
 msgid "Import from TIFF"
 msgstr "Importa da TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:3001
+#: ../plug-ins/file-tiff/file-tiff-load.c:3018
 msgid "_Show reduced images"
 msgstr "Mo_stra immagini ridotte"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:3046
+#: ../plug-ins/file-tiff/file-tiff-load.c:3063
 msgid "Process extra channel as:"
 msgstr "Elabora canale extra come:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:3049
+#: ../plug-ins/file-tiff/file-tiff-load.c:3066
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa _non-premoltiplicato"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:3050
+#: ../plug-ins/file-tiff/file-tiff-load.c:3067
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pre_moltiplicato"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:3051
+#: ../plug-ins/file-tiff/file-tiff-load.c:3068
 msgid "Channe_l"
 msgstr "Cana_le"
 
@@ -11950,10 +11952,10 @@ msgstr "Categorie: %s"
 #. *    Scales
 #.
 #: ../plug-ins/filter-browser/filter-browser.c:462
-#: ../plug-ins/gradient-flare/gradient-flare.c:2949
-#: ../plug-ins/gradient-flare/gradient-flare.c:3699
-#: ../plug-ins/gradient-flare/gradient-flare.c:3801
-#: ../plug-ins/gradient-flare/gradient-flare.c:3932
+#: ../plug-ins/gradient-flare/gradient-flare.c:2952
+#: ../plug-ins/gradient-flare/gradient-flare.c:3702
+#: ../plug-ins/gradient-flare/gradient-flare.c:3804
+#: ../plug-ins/gradient-flare/gradient-flare.c:3935
 msgid "Parameters"
 msgstr "Parametri"
 
@@ -12230,7 +12232,7 @@ msgstr "Fiamme"
 
 #: ../plug-ins/flame/flame.c:1226 ../plug-ins/gimpressionist/orientation.c:190
 #: ../plug-ins/gimpressionist/size.c:199
-#: ../plug-ins/gradient-flare/gradient-flare.c:3052
+#: ../plug-ins/gradient-flare/gradient-flare.c:3055
 msgid "_Edit"
 msgstr "_Modifica"
 
@@ -12591,7 +12593,7 @@ msgid "Rendering fractal"
 msgstr "Rendering frattale"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:878
-#: ../plug-ins/gradient-flare/gradient-flare.c:3328
+#: ../plug-ins/gradient-flare/gradient-flare.c:3331
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Siete sicuri di voler cancellare \"%s\" dalla lista e dal disco?"
@@ -12678,7 +12680,7 @@ msgid "Create rectangle"
 msgstr "Crea rettangolo"
 
 #: ../plug-ins/gfig/gfig-dialog.c:389
-#: ../plug-ins/gradient-flare/gradient-flare.c:3990
+#: ../plug-ins/gradient-flare/gradient-flare.c:3993
 #: ../plug-ins/imagemap/imap_main.c:1580
 msgid "Circle"
 msgstr "Cerchio"
@@ -12704,7 +12706,7 @@ msgid "Create arc"
 msgstr "Crea arco"
 
 #: ../plug-ins/gfig/gfig-dialog.c:395
-#: ../plug-ins/gradient-flare/gradient-flare.c:4007
+#: ../plug-ins/gradient-flare/gradient-flare.c:4010
 #: ../plug-ins/imagemap/imap_main.c:1582
 msgid "Polygon"
 msgstr "Poligono"
@@ -13141,7 +13143,7 @@ msgid "Adds random noise to the color"
 msgstr "Aggiunge rumore casuale al colore"
 
 #: ../plug-ins/gimpressionist/general.c:141
-#: ../plug-ins/gradient-flare/gradient-flare.c:3646
+#: ../plug-ins/gradient-flare/gradient-flare.c:3649
 msgid "_General"
 msgstr "_Generale"
 
@@ -13770,7 +13772,7 @@ msgid "Threshold for adaptive supersampling"
 msgstr "Soglia per il sovrampionamento adattivo"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1009
-#: ../plug-ins/gradient-flare/gradient-flare.c:2506
+#: ../plug-ins/gradient-flare/gradient-flare.c:2505
 msgid "Gradient Flare"
 msgstr "Chiarore a gradiente"
 
@@ -13811,183 +13813,183 @@ msgstr ""
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "Errore di scrittura file chiarore a gradiente '%s': %s"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2550
+#: ../plug-ins/gradient-flare/gradient-flare.c:2549
 msgid "A_uto update preview"
 msgstr "A_utoaggiorna l'anteprima"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2604
+#: ../plug-ins/gradient-flare/gradient-flare.c:2607
 msgid "'Default' is created."
 msgstr "Creato 'predefinito'."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2905
+#: ../plug-ins/gradient-flare/gradient-flare.c:2908
 msgid "_X:"
 msgstr "_X:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2909
+#: ../plug-ins/gradient-flare/gradient-flare.c:2912
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2983
+#: ../plug-ins/gradient-flare/gradient-flare.c:2986
 msgid "_Settings"
 msgstr "_Impostazioni"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3121
+#: ../plug-ins/gradient-flare/gradient-flare.c:3124
 msgid "S_elector"
 msgstr "S_elettore"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3185
+#: ../plug-ins/gradient-flare/gradient-flare.c:3188
 msgid "New Gradient Flare"
 msgstr "Nuovo chiarore a gradiente"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3188
+#: ../plug-ins/gradient-flare/gradient-flare.c:3191
 msgid "Enter a name for the new GFlare"
 msgstr "Digitate un nome per il nuovo c. a gradiente"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3189
+#: ../plug-ins/gradient-flare/gradient-flare.c:3192
 msgid "Unnamed"
 msgstr "Senzanome"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3209
-#: ../plug-ins/gradient-flare/gradient-flare.c:3291
+#: ../plug-ins/gradient-flare/gradient-flare.c:3212
+#: ../plug-ins/gradient-flare/gradient-flare.c:3294
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "Il nome \"%s\" è già in uso!"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3265
+#: ../plug-ins/gradient-flare/gradient-flare.c:3268
 msgid "Copy Gradient Flare"
 msgstr "Copia chiarore a gradiente"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3268
+#: ../plug-ins/gradient-flare/gradient-flare.c:3271
 msgid "Enter a name for the copied GFlare"
 msgstr "Digitate un nome per il c. a gradiente copiato"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3322
+#: ../plug-ins/gradient-flare/gradient-flare.c:3325
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Impossibile eliminare! Dev'esserci almeno un c. a gradiente."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3332
+#: ../plug-ins/gradient-flare/gradient-flare.c:3335
 msgid "Delete Gradient Flare"
 msgstr "Elimina chiarore a gradiente"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3404
+#: ../plug-ins/gradient-flare/gradient-flare.c:3407
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "non è stato trovato %s in gflare_list"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3446
+#: ../plug-ins/gradient-flare/gradient-flare.c:3449
 msgid "Gradient Flare Editor"
 msgstr "Editor c. a gradiente"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3450
+#: ../plug-ins/gradient-flare/gradient-flare.c:3453
 msgid "_Rescan Gradients"
 msgstr "Aggio_rna gradienti"
 
 #. Glow
-#: ../plug-ins/gradient-flare/gradient-flare.c:3569
+#: ../plug-ins/gradient-flare/gradient-flare.c:3572
 msgid "Glow Paint Options"
 msgstr "Opzioni disegno alone"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3579
-#: ../plug-ins/gradient-flare/gradient-flare.c:3605
-#: ../plug-ins/gradient-flare/gradient-flare.c:3631
+#: ../plug-ins/gradient-flare/gradient-flare.c:3582
+#: ../plug-ins/gradient-flare/gradient-flare.c:3608
+#: ../plug-ins/gradient-flare/gradient-flare.c:3634
 msgid "Opacity:"
 msgstr "Opacità:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3591
-#: ../plug-ins/gradient-flare/gradient-flare.c:3617
-#: ../plug-ins/gradient-flare/gradient-flare.c:3643
+#: ../plug-ins/gradient-flare/gradient-flare.c:3594
+#: ../plug-ins/gradient-flare/gradient-flare.c:3620
+#: ../plug-ins/gradient-flare/gradient-flare.c:3646
 msgid "Paint mode:"
 msgstr "Modalità disegno:"
 
 #. Rays
-#: ../plug-ins/gradient-flare/gradient-flare.c:3595
+#: ../plug-ins/gradient-flare/gradient-flare.c:3598
 msgid "Rays Paint Options"
 msgstr "Opzioni disegno a raggi"
 
 #. Rays
-#: ../plug-ins/gradient-flare/gradient-flare.c:3621
+#: ../plug-ins/gradient-flare/gradient-flare.c:3624
 msgid "Second Flares Paint Options"
 msgstr "Opzioni disegno riverberi secondari"
 
 #.
 #. *  Gradient Menus
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:3672
-#: ../plug-ins/gradient-flare/gradient-flare.c:3772
-#: ../plug-ins/gradient-flare/gradient-flare.c:3905
+#: ../plug-ins/gradient-flare/gradient-flare.c:3675
+#: ../plug-ins/gradient-flare/gradient-flare.c:3775
+#: ../plug-ins/gradient-flare/gradient-flare.c:3908
 msgid "Gradients"
 msgstr "Gradienti"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3683
-#: ../plug-ins/gradient-flare/gradient-flare.c:3785
-#: ../plug-ins/gradient-flare/gradient-flare.c:3916
+#: ../plug-ins/gradient-flare/gradient-flare.c:3686
+#: ../plug-ins/gradient-flare/gradient-flare.c:3788
+#: ../plug-ins/gradient-flare/gradient-flare.c:3919
 msgid "Radial gradient:"
 msgstr "Gradiente radiale:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3687
-#: ../plug-ins/gradient-flare/gradient-flare.c:3789
+#: ../plug-ins/gradient-flare/gradient-flare.c:3690
+#: ../plug-ins/gradient-flare/gradient-flare.c:3792
 msgid "Angular gradient:"
 msgstr "Gradiente angolare:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3691
-#: ../plug-ins/gradient-flare/gradient-flare.c:3793
+#: ../plug-ins/gradient-flare/gradient-flare.c:3694
+#: ../plug-ins/gradient-flare/gradient-flare.c:3796
 msgid "Angular size gradient:"
 msgstr "Gradiente angolare della dimensione:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3710
-#: ../plug-ins/gradient-flare/gradient-flare.c:3812
-#: ../plug-ins/gradient-flare/gradient-flare.c:3943
+#: ../plug-ins/gradient-flare/gradient-flare.c:3713
+#: ../plug-ins/gradient-flare/gradient-flare.c:3815
+#: ../plug-ins/gradient-flare/gradient-flare.c:3946
 msgid "Size (%):"
 msgstr "Dimensione (%):"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3721
-#: ../plug-ins/gradient-flare/gradient-flare.c:3823
-#: ../plug-ins/gradient-flare/gradient-flare.c:3954
+#: ../plug-ins/gradient-flare/gradient-flare.c:3724
+#: ../plug-ins/gradient-flare/gradient-flare.c:3826
+#: ../plug-ins/gradient-flare/gradient-flare.c:3957
 msgid "Rotation:"
 msgstr "Rotazione:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3732
-#: ../plug-ins/gradient-flare/gradient-flare.c:3834
-#: ../plug-ins/gradient-flare/gradient-flare.c:3965
+#: ../plug-ins/gradient-flare/gradient-flare.c:3735
+#: ../plug-ins/gradient-flare/gradient-flare.c:3837
+#: ../plug-ins/gradient-flare/gradient-flare.c:3968
 msgid "Hue rotation:"
 msgstr "Rotazione tonalità:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3746
+#: ../plug-ins/gradient-flare/gradient-flare.c:3749
 msgid "G_low"
 msgstr "A_lone"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3845
+#: ../plug-ins/gradient-flare/gradient-flare.c:3848
 msgid "# of Spikes:"
 msgstr "n° di scintillii:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3856
+#: ../plug-ins/gradient-flare/gradient-flare.c:3859
 msgid "Spike thickness:"
 msgstr "Spessore scintillii:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3870
+#: ../plug-ins/gradient-flare/gradient-flare.c:3873
 msgid "_Rays"
 msgstr "_Raggi"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3920
+#: ../plug-ins/gradient-flare/gradient-flare.c:3923
 msgid "Size factor gradient:"
 msgstr "Gradiente a fattore dimensione:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3924
+#: ../plug-ins/gradient-flare/gradient-flare.c:3927
 msgid "Probability gradient:"
 msgstr "Gradiente a probabilità:"
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:3982
+#: ../plug-ins/gradient-flare/gradient-flare.c:3985
 msgid "Shape of Second Flares"
 msgstr "Forma dei riverberi secondari"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:4041
+#: ../plug-ins/gradient-flare/gradient-flare.c:4044
 msgid "Random seed:"
 msgstr "Seme casuale:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:4055
+#: ../plug-ins/gradient-flare/gradient-flare.c:4058
 msgid "_Second Flares"
 msgstr "Riverberi _secondari"
 
@@ -15661,7 +15663,7 @@ msgstr "_Anteprima!"
 
 #: ../plug-ins/map-object/map-object-ui.c:385
 msgid "Show _wireframe"
-msgstr "Mostra anteprima a sc_heletro"
+msgstr "Mostra _grata"
 
 #: ../plug-ins/map-object/map-object-ui.c:394
 msgid "Update preview _live"
