@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-02 11:19+0000\n"
-"PO-Revision-Date: 2025-08-02 17:01+0200\n"
+"POT-Creation-Date: 2025-10-22 16:43+0000\n"
+"PO-Revision-Date: 2025-10-24 17:57+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -188,7 +188,7 @@ msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Eksporter bilethistogrammet til ei tekstfil (CSV)"
 
 #: plug-ins/python/histogram-export.py:216
-msgid "_Export histogram..."
+msgid "_Export Histogram..."
 msgstr "_Eksporter histogram …"
 
 #. TODO: GFile props still don't have labels + only load existing files
