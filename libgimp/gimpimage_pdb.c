@@ -2084,8 +2084,11 @@ gimp_image_clean_all (GimpImage *image)
  * needs to be saved. Note that saving the image does not automatically
  * set the dirty count to 0, you need to call
  * [method@Gimp.Image.clean_all] after calling a save procedure to make
- * the image clean. When loading an image using e.g.
- * [func@Gimp.file_load] the image will be marked as dirty too.
+ * the image clean.
+ *
+ * When loading an image using e.g. [func@Gimp.file_load] the image
+ * will be marked as clean, but loading an image calling directly the
+ * accurate file format procedure may return a dirty image.
  *
  * Returns: TRUE if the image has unsaved changes.
  **/
