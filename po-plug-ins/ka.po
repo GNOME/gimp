@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-13 09:51+0000\n"
-"PO-Revision-Date: 2025-10-13 13:12+0200\n"
+"POT-Creation-Date: 2025-10-19 15:00+0000\n"
+"PO-Revision-Date: 2025-10-20 06:26+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:113
 msgid "Plug-In Example in _C"
@@ -38,7 +38,7 @@ msgstr "დამატების მაგალითი C-ში"
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
-#: plug-ins/common/sphere-designer.c:3199 plug-ins/common/tile.c:222
+#: plug-ins/common/sphere-designer.c:3192 plug-ins/common/tile.c:222
 #: plug-ins/common/tile-small.c:311 plug-ins/common/van-gogh-lic.c:242
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:179
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
@@ -64,10 +64,10 @@ msgstr "დამატების მაგალითი C-ში"
 #: plug-ins/common/cml-explorer.c:2144 plug-ins/common/cml-explorer.c:2354
 #: plug-ins/common/curve-bend.c:1787 plug-ins/common/curve-bend.c:1822
 #: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2487
-#: plug-ins/common/file-pdf-export.c:1069 plug-ins/common/file-pdf-load.c:585
+#: plug-ins/common/file-pdf-export.c:1051 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
-#: plug-ins/common/sphere-designer.c:2291
-#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
+#: plug-ins/common/sphere-designer.c:2284
+#: plug-ins/common/sphere-designer.c:2648 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:822
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1513
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1551
@@ -77,8 +77,8 @@ msgstr "დამატების მაგალითი C-ში"
 #: plug-ins/gfig/gfig-dialog.c:828 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
-#: plug-ins/gradient-flare/gradient-flare.c:3337
-#: plug-ins/gradient-flare/gradient-flare.c:3451
+#: plug-ins/gradient-flare/gradient-flare.c:3340
+#: plug-ins/gradient-flare/gradient-flare.c:3454
 #: plug-ins/ifs-compose/ifs-compose.c:913
 #: plug-ins/ifs-compose/ifs-compose.c:2608
 #: plug-ins/ifs-compose/ifs-compose.c:2645 plug-ins/imagemap/imap_browse.c:80
@@ -135,13 +135,13 @@ msgstr "დამატების მაგალითი JavaScript-ში (
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
-#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2656
+#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2649
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:458
 #: plug-ins/file-psd/psd-load.c:3896 plug-ins/flame/flame.c:823
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/gradient-flare/gradient-flare.c:3452
+#: plug-ins/gradient-flare/gradient-flare.c:3455
 #: plug-ins/ifs-compose/ifs-compose.c:914
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
@@ -285,7 +285,7 @@ msgid "Left edge"
 msgstr "მარცხენა კიდე"
 
 #: plug-ins/common/align-layers.c:206 plug-ins/common/align-layers.c:228
-#: plug-ins/gradient-flare/gradient-flare.c:2925
+#: plug-ins/gradient-flare/gradient-flare.c:2928
 msgid "Center"
 msgstr "ცენტრი"
 
@@ -1013,8 +1013,8 @@ msgstr "შემთხვევითი მარცვალი"
 #: plug-ins/common/cml-explorer.c:1451 plug-ins/common/cml-explorer.c:2355
 #: plug-ins/common/curve-bend.c:1249 plug-ins/common/curve-bend.c:1788
 #: plug-ins/common/file-cel.c:989 plug-ins/common/qbist.c:840
-#: plug-ins/common/qbist.c:995 plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:619
+#: plug-ins/common/qbist.c:995 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/sphere-designer.c:2697 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1234
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1514
@@ -1028,9 +1028,9 @@ msgstr "_გახსნა"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1459 plug-ins/common/cml-explorer.c:2145
 #: plug-ins/common/curve-bend.c:1261 plug-ins/common/curve-bend.c:1823
-#: plug-ins/common/file-pdf-export.c:1068 plug-ins/common/qbist.c:882
-#: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:619
+#: plug-ins/common/file-pdf-export.c:1050 plug-ins/common/qbist.c:882
+#: plug-ins/common/qbist.c:1003 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/sphere-designer.c:2705 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1242
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
@@ -1213,11 +1213,11 @@ msgstr ""
 #: plug-ins/common/cml-explorer.c:2210 plug-ins/common/curve-bend.c:762
 #: plug-ins/common/file-dicom.c:1578 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
-#: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:680
+#: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1923 plug-ins/common/file-raw-data.c:1509
 #: plug-ins/common/file-raw-data.c:1538 plug-ins/common/file-sunras.c:614
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:630
-#: plug-ins/common/file-xmc.c:1272 plug-ins/common/sphere-designer.c:2205
+#: plug-ins/common/file-xmc.c:1272 plug-ins/common/sphere-designer.c:2198
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:444
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1588
@@ -1946,12 +1946,12 @@ msgstr ""
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:608
 #: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:733
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:754
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
 #: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
-#: plug-ins/common/sphere-designer.c:2094 plug-ins/file-bmp/bmp-load.c:276
+#: plug-ins/common/sphere-designer.c:2087 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
 #: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
 #: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:552
@@ -2007,7 +2007,7 @@ msgstr "მრუდების შეცვლა"
 
 #. The Copy button
 #: plug-ins/common/curve-bend.c:1195
-#: plug-ins/gradient-flare/gradient-flare.c:3053
+#: plug-ins/gradient-flare/gradient-flare.c:3056
 msgid "_Copy"
 msgstr "_კოპირება"
 
@@ -2034,7 +2034,7 @@ msgid "Swap the two curves"
 msgstr "ორი მრუდის მიმოცვლა"
 
 #. The Reset button
-#: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2654
+#: plug-ins/common/curve-bend.c:1232 plug-ins/common/sphere-designer.c:2647
 #: plug-ins/common/tile-small.c:522 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:912
 msgid "_Reset"
@@ -2631,7 +2631,7 @@ msgstr ""
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:771
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:792
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
 #: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
@@ -4544,110 +4544,110 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr ""
 
 #: plug-ins/common/file-pcx.c:1266 plug-ins/common/file-qoi.c:369
-#: plug-ins/common/file-svg.c:780 plug-ins/common/file-svg.c:796
+#: plug-ins/common/file-svg.c:801 plug-ins/common/file-svg.c:817
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:321 plug-ins/common/file-pdf-load.c:198
+#: plug-ins/common/file-pdf-export.c:329 plug-ins/common/file-pdf-load.c:198
 msgid "Portable Document Format"
 msgstr "PDF"
 
-#: plug-ins/common/file-pdf-export.c:324 plug-ins/common/file-pdf-export.c:410
+#: plug-ins/common/file-pdf-export.c:332 plug-ins/common/file-pdf-export.c:418
 msgid "Save files in PDF format"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:325 plug-ins/common/file-pdf-export.c:411
+#: plug-ins/common/file-pdf-export.c:333 plug-ins/common/file-pdf-export.c:419
 msgid ""
 "Saves files in Adobe's Portable Document Format. PDF is designed to be "
 "easily processed by a variety of different platforms, and is a distant "
 "cousin of PostScript."
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:337 plug-ins/common/file-pdf-load.c:214
+#: plug-ins/common/file-pdf-export.c:345 plug-ins/common/file-pdf-load.c:214
 msgid "PDF"
 msgstr "PDF"
 
-#: plug-ins/common/file-pdf-export.c:347 plug-ins/common/file-pdf-export.c:437
+#: plug-ins/common/file-pdf-export.c:355 plug-ins/common/file-pdf-export.c:445
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:348 plug-ins/common/file-pdf-export.c:438
+#: plug-ins/common/file-pdf-export.c:356 plug-ins/common/file-pdf-export.c:446
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:353 plug-ins/common/file-pdf-export.c:443
+#: plug-ins/common/file-pdf-export.c:361 plug-ins/common/file-pdf-export.c:451
 msgid "O_mit hidden layers and layers with zero opacity"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:354 plug-ins/common/file-pdf-export.c:444
+#: plug-ins/common/file-pdf-export.c:362 plug-ins/common/file-pdf-export.c:452
 msgid "Non-visible layers will not be exported"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:359 plug-ins/common/file-pdf-export.c:449
+#: plug-ins/common/file-pdf-export.c:367 plug-ins/common/file-pdf-export.c:457
 msgid "_Apply layer masks"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:360 plug-ins/common/file-pdf-export.c:450
+#: plug-ins/common/file-pdf-export.c:368 plug-ins/common/file-pdf-export.c:458
 msgid ""
 "Apply layer masks before saving (Keeping the mask will not change the "
 "output, only the PDF structure)"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:366
+#: plug-ins/common/file-pdf-export.c:374
 msgid "La_yers as pages"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:367
+#: plug-ins/common/file-pdf-export.c:375
 msgid "Layers as pages (bottom layers first)."
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:372
+#: plug-ins/common/file-pdf-export.c:380
 msgid "Re_verse order"
 msgstr "შებრუნებული მიმდე_ვრობით"
 
-#: plug-ins/common/file-pdf-export.c:373
+#: plug-ins/common/file-pdf-export.c:381
 msgid "Reverse the pages order (top layers first)."
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:378
+#: plug-ins/common/file-pdf-export.c:386
 msgid "Roo_t layers only"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:379
+#: plug-ins/common/file-pdf-export.c:387
 msgid "Only the root layers are considered pages"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:384
+#: plug-ins/common/file-pdf-export.c:392
 msgid "Convert te_xt layers to image"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:385
+#: plug-ins/common/file-pdf-export.c:393
 msgid "Convert text layers to raster graphics"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:390 plug-ins/common/file-pdf-export.c:456
+#: plug-ins/common/file-pdf-export.c:398 plug-ins/common/file-pdf-export.c:464
 msgid "_Fill transparent areas with background color"
 msgstr "გამჭვირვალე ადგილების ფონის ფერით _შევსება"
 
-#: plug-ins/common/file-pdf-export.c:391 plug-ins/common/file-pdf-export.c:457
+#: plug-ins/common/file-pdf-export.c:399 plug-ins/common/file-pdf-export.c:465
 msgid ""
 "Fill transparent areas with background color if layer has an alpha channel"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:404
+#: plug-ins/common/file-pdf-export.c:412
 msgid "_Create multipage PDF..."
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:463
+#: plug-ins/common/file-pdf-export.c:471
 msgid "Save to"
 msgstr "შენახვა მისამართზე"
 
-#: plug-ins/common/file-pdf-export.c:464
+#: plug-ins/common/file-pdf-export.c:472
 msgid "The URI of the file to save to"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:691
+#: plug-ins/common/file-pdf-export.c:694
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -4656,7 +4656,7 @@ msgid ""
 "read only!"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:980
+#: plug-ins/common/file-pdf-export.c:962
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4664,48 +4664,48 @@ msgid ""
 "missing fonts before exporting, otherwise your design may not look right."
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:1050
+#: plug-ins/common/file-pdf-export.c:1032
 msgid "Export Image as Multi-Page PDF"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:1051
+#: plug-ins/common/file-pdf-export.c:1033
 #: plug-ins/metadata/metadata-editor.c:5604
 msgid "_Export"
 msgstr "გატანა"
 
-#: plug-ins/common/file-pdf-export.c:1060
+#: plug-ins/common/file-pdf-export.c:1042
 msgid "Save to:"
 msgstr "შენახვა მისამართზე:"
 
-#: plug-ins/common/file-pdf-export.c:1064
+#: plug-ins/common/file-pdf-export.c:1046
 msgid "Browse..."
 msgstr "მოძებნა..."
 
-#: plug-ins/common/file-pdf-export.c:1065
+#: plug-ins/common/file-pdf-export.c:1047
 msgid "Multipage PDF export"
 msgstr "მულტიგვერდიან PDF-ში გატანა"
 
-#: plug-ins/common/file-pdf-export.c:1109
+#: plug-ins/common/file-pdf-export.c:1091
 msgid "Remove the selected pages"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:1123
+#: plug-ins/common/file-pdf-export.c:1105
 msgid "Add this image"
 msgstr "ამ გამოსახულების დამატება"
 
-#: plug-ins/common/file-pdf-export.c:1219
-#: plug-ins/common/file-pdf-export.c:1292
-#: plug-ins/common/file-pdf-export.c:1390 plug-ins/common/file-ps.c:2217
+#: plug-ins/common/file-pdf-export.c:1201
+#: plug-ins/common/file-pdf-export.c:1274
+#: plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2217
 #: plug-ins/file-tiff/file-tiff-load.c:1563
 #, c-format
 msgid "Page %d"
 msgstr "%d გვერდი"
 
-#: plug-ins/common/file-pdf-export.c:1259
+#: plug-ins/common/file-pdf-export.c:1241
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 
-#: plug-ins/common/file-pdf-export.c:1437 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-export.c:1419 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
 
@@ -4822,7 +4822,7 @@ msgstr "PNG გამოსახულება"
 msgid "APNG image"
 msgstr "APNG გამოსახულება"
 
-#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:335
+#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:356
 msgid "PNG"
 msgstr "PNG"
 
@@ -6183,65 +6183,69 @@ msgstr ""
 msgid "Write error occurred"
 msgstr "ჩაწერის შეცდომა"
 
-#: plug-ins/common/file-svg.c:260
+#: plug-ins/common/file-svg.c:276
 msgid "SVG image"
 msgstr "SVG გამოსახულება"
 
-#: plug-ins/common/file-svg.c:273
+#: plug-ins/common/file-svg.c:279
+msgid "Loads files in SVG file format"
+msgstr "SVG ფორმატის ფაილის ჩატვირთვა"
+
+#: plug-ins/common/file-svg.c:294
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:282
+#: plug-ins/common/file-svg.c:303
 msgid "_Paths"
 msgstr "_კონტურები"
 
-#: plug-ins/common/file-svg.c:283
+#: plug-ins/common/file-svg.c:304
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:284
+#: plug-ins/common/file-svg.c:305
 msgid "Don't import paths"
 msgstr "კონტურები შემოტანილი არ იქნება"
 
-#: plug-ins/common/file-svg.c:285
+#: plug-ins/common/file-svg.c:306
 msgid "Import paths individually"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:286
+#: plug-ins/common/file-svg.c:307
 msgid "Merge imported paths"
 msgstr "შემოტანილი კონტურების შერწყმა"
 
-#: plug-ins/common/file-svg.c:298
+#: plug-ins/common/file-svg.c:319
 msgid "Scalable Vector Graphic"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:301
-msgid "Export vector layers in SVG file format"
+#: plug-ins/common/file-svg.c:322
+msgid "Exports files in SVG file format"
+msgstr "ფაილების გატანა SVG ფორმატში"
+
+#: plug-ins/common/file-svg.c:323
+msgid "Exports files in SVG file format (Scalable Vector Graphic)"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:302
-msgid "Export vector layers in SVG file format (Scalable Vector Graphic)"
-msgstr ""
-
-#: plug-ins/common/file-svg.c:327
+#: plug-ins/common/file-svg.c:348
 msgid "_Title"
 msgstr "_სათაური"
 
-#: plug-ins/common/file-svg.c:328
+#: plug-ins/common/file-svg.c:349
 msgid "Optional <title> for SVG"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:333
+#: plug-ins/common/file-svg.c:354
 msgid "Em_bed raster layers as"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:336 plug-ins/file-jpeg/jpeg.c:195
+#: plug-ins/common/file-svg.c:357 plug-ins/file-jpeg/jpeg.c:195
 #: plug-ins/file-tiff/file-tiff.c:251
 msgid "JPEG"
 msgstr "JPEG"
 
-#: plug-ins/common/file-svg.c:337
+#: plug-ins/common/file-svg.c:358
 msgid "Do not export raster layers"
 msgstr ""
 
@@ -6250,15 +6254,15 @@ msgstr ""
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:384
+#: plug-ins/common/file-svg.c:405
 msgid "Disable safety size limits?"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:389
+#: plug-ins/common/file-svg.c:410
 msgid "_No"
 msgstr "_არა"
 
-#: plug-ins/common/file-svg.c:390
+#: plug-ins/common/file-svg.c:411
 msgid "_Yes"
 msgstr "_დიახ"
 
@@ -6272,35 +6276,35 @@ msgstr "_დიახ"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:414
+#: plug-ins/common/file-svg.c:435
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
 "consume too much memory."
 msgstr ""
 
-#: plug-ins/common/file-svg.c:426
+#: plug-ins/common/file-svg.c:447
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:433
+#: plug-ins/common/file-svg.c:454
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:735 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/common/file-svg.c:756 plug-ins/file-exr/file-exr.c:381
 #: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "უცნობი მიზეზი"
 
-#: plug-ins/common/file-svg.c:741
+#: plug-ins/common/file-svg.c:762
 msgid "Rendering SVG"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:751
+#: plug-ins/common/file-svg.c:772
 msgid "Rendered SVG"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:1102
+#: plug-ins/common/file-svg.c:1123
 msgid ""
 "The SVG format only requires viewers to display image links for SVG, PNG, "
 "and JPEG images.\n"
@@ -8083,115 +8087,115 @@ msgstr ""
 msgid "Additional Options"
 msgstr "დამატებითი პარამეტრები"
 
-#: plug-ins/common/sphere-designer.c:335 plug-ins/gimpressionist/general.c:173
+#: plug-ins/common/sphere-designer.c:328 plug-ins/gimpressionist/general.c:173
 msgid "Solid"
 msgstr "მყარი"
 
-#: plug-ins/common/sphere-designer.c:336
+#: plug-ins/common/sphere-designer.c:329
 msgid "Checker"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:337
+#: plug-ins/common/sphere-designer.c:330
 msgid "Marble"
 msgstr "Marble"
 
-#: plug-ins/common/sphere-designer.c:338
+#: plug-ins/common/sphere-designer.c:331
 msgid "Lizard"
 msgstr "ხვლიკი"
 
-#: plug-ins/common/sphere-designer.c:339
+#: plug-ins/common/sphere-designer.c:332
 msgid "Phong"
 msgstr "ფონგი"
 
-#: plug-ins/common/sphere-designer.c:340 plug-ins/flame/flame.c:944
+#: plug-ins/common/sphere-designer.c:333 plug-ins/flame/flame.c:944
 msgid "Noise"
 msgstr "ხმაური"
 
-#: plug-ins/common/sphere-designer.c:341
+#: plug-ins/common/sphere-designer.c:334
 msgid "Wood"
 msgstr "შეშა"
 
-#: plug-ins/common/sphere-designer.c:342 plug-ins/flame/flame.c:928
+#: plug-ins/common/sphere-designer.c:335 plug-ins/flame/flame.c:928
 #: plug-ins/gfig/gfig-dialog.c:399 plug-ins/gfig/gfig-menu.ui:79
 msgid "Spiral"
 msgstr "სპირალური"
 
-#: plug-ins/common/sphere-designer.c:343
+#: plug-ins/common/sphere-designer.c:336
 msgid "Spots"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:409
+#: plug-ins/common/sphere-designer.c:402
 msgid "Sphere _Designer..."
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:413
+#: plug-ins/common/sphere-designer.c:406
 msgid "Create an image of a textured sphere"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:1834
-#: plug-ins/common/sphere-designer.c:2798
-#: plug-ins/common/sphere-designer.c:2826
+#: plug-ins/common/sphere-designer.c:1827
+#: plug-ins/common/sphere-designer.c:2791
+#: plug-ins/common/sphere-designer.c:2819
 msgid "Texture"
 msgstr "ტექსტურა"
 
-#: plug-ins/common/sphere-designer.c:1836
+#: plug-ins/common/sphere-designer.c:1829
 msgid "Bumpmap"
 msgstr "რელიეფური"
 
-#: plug-ins/common/sphere-designer.c:1838
-#: plug-ins/common/sphere-designer.c:2800
+#: plug-ins/common/sphere-designer.c:1831
+#: plug-ins/common/sphere-designer.c:2793
 msgid "Light"
 msgstr "მსუბუქი"
 
-#: plug-ins/common/sphere-designer.c:2101
+#: plug-ins/common/sphere-designer.c:2094
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2281
+#: plug-ins/common/sphere-designer.c:2274
 msgid "Open File"
 msgstr "ფაილის გახსნა"
 
-#: plug-ins/common/sphere-designer.c:2281
+#: plug-ins/common/sphere-designer.c:2274
 msgid "Save File"
 msgstr "ფაილის შენახვა"
 
-#: plug-ins/common/sphere-designer.c:2650
+#: plug-ins/common/sphere-designer.c:2643
 msgid "Sphere Designer"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2751
+#: plug-ins/common/sphere-designer.c:2744
 msgid "Layers"
 msgstr "ფენები"
 
-#: plug-ins/common/sphere-designer.c:2762
-#: plug-ins/gradient-flare/gradient-flare.c:3051
+#: plug-ins/common/sphere-designer.c:2755
+#: plug-ins/gradient-flare/gradient-flare.c:3054
 msgid "_New"
 msgstr "_ახალი"
 
-#: plug-ins/common/sphere-designer.c:2768
+#: plug-ins/common/sphere-designer.c:2761
 msgid "D_uplicate"
 msgstr "_დუბლირება"
 
-#: plug-ins/common/sphere-designer.c:2774
+#: plug-ins/common/sphere-designer.c:2767
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
 #: plug-ins/gimpressionist/orientmap.c:623
 #: plug-ins/gimpressionist/presets.c:1071 plug-ins/gimpressionist/sizemap.c:499
-#: plug-ins/gradient-flare/gradient-flare.c:3054
-#: plug-ins/gradient-flare/gradient-flare.c:3337
+#: plug-ins/gradient-flare/gradient-flare.c:3057
+#: plug-ins/gradient-flare/gradient-flare.c:3340
 msgid "_Delete"
 msgstr "_წაშლა"
 
-#: plug-ins/common/sphere-designer.c:2784
+#: plug-ins/common/sphere-designer.c:2777
 msgid "Properties"
 msgstr "თვისებები"
 
-#: plug-ins/common/sphere-designer.c:2799
+#: plug-ins/common/sphere-designer.c:2792
 msgid "Bump"
 msgstr "რელიეფი"
 
-#: plug-ins/common/sphere-designer.c:2807
+#: plug-ins/common/sphere-designer.c:2800
 #: plug-ins/gimpressionist/orientmap.c:638
 #: plug-ins/lighting/lighting-main.c:211 plug-ins/lighting/lighting-main.c:334
 #: plug-ins/lighting/lighting-main.c:393 plug-ins/lighting/lighting-main.c:452
@@ -8199,83 +8203,83 @@ msgstr "რელიეფი"
 msgid "Type"
 msgstr "ტიპით"
 
-#: plug-ins/common/sphere-designer.c:2831
+#: plug-ins/common/sphere-designer.c:2824
 #: plug-ins/imagemap/imap_preferences.c:463 plug-ins/pagecurl/pagecurl.c:228
 msgid "Colors"
 msgstr "ფერები"
 
-#: plug-ins/common/sphere-designer.c:2834
-#: plug-ins/common/sphere-designer.c:2845
+#: plug-ins/common/sphere-designer.c:2827
+#: plug-ins/common/sphere-designer.c:2838
 msgid "Color Selection Dialog"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2857
+#: plug-ins/common/sphere-designer.c:2850
 msgid "Scale"
 msgstr "მასშტაბი"
 
-#: plug-ins/common/sphere-designer.c:2865
+#: plug-ins/common/sphere-designer.c:2858
 msgid "Turbulence"
 msgstr "ტურბულენტობა"
 
-#: plug-ins/common/sphere-designer.c:2873
+#: plug-ins/common/sphere-designer.c:2866
 msgid "Amount"
 msgstr "რაოდენობა"
 
-#: plug-ins/common/sphere-designer.c:2881
+#: plug-ins/common/sphere-designer.c:2874
 msgid "Exp."
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2888
+#: plug-ins/common/sphere-designer.c:2881
 msgid "Transformations"
 msgstr "გარდაქმნები"
 
-#: plug-ins/common/sphere-designer.c:2897
+#: plug-ins/common/sphere-designer.c:2890
 #: plug-ins/map-object/map-object-main.c:391
 msgid "Scale X"
 msgstr "მასშტაბი X"
 
-#: plug-ins/common/sphere-designer.c:2905
+#: plug-ins/common/sphere-designer.c:2898
 #: plug-ins/map-object/map-object-main.c:396
 msgid "Scale Y"
 msgstr "მასშტაბი Y"
 
-#: plug-ins/common/sphere-designer.c:2913
+#: plug-ins/common/sphere-designer.c:2906
 #: plug-ins/map-object/map-object-main.c:401
 msgid "Scale Z"
 msgstr "მასშტაბი Z"
 
-#: plug-ins/common/sphere-designer.c:2922
+#: plug-ins/common/sphere-designer.c:2915
 msgid "Rotate X"
 msgstr "შებრუნება X"
 
-#: plug-ins/common/sphere-designer.c:2930
+#: plug-ins/common/sphere-designer.c:2923
 msgid "Rotate Y"
 msgstr "შებრუნება Y"
 
-#: plug-ins/common/sphere-designer.c:2938
+#: plug-ins/common/sphere-designer.c:2931
 msgid "Rotate Z"
 msgstr "შებრუნება Z"
 
-#: plug-ins/common/sphere-designer.c:2947
+#: plug-ins/common/sphere-designer.c:2940
 #: plug-ins/map-object/map-object-main.c:165
 msgid "Position X"
 msgstr "მდებარეობის X"
 
-#: plug-ins/common/sphere-designer.c:2955
+#: plug-ins/common/sphere-designer.c:2948
 #: plug-ins/map-object/map-object-main.c:170
 msgid "Position Y"
 msgstr "მდებარეობის Y"
 
-#: plug-ins/common/sphere-designer.c:2963
+#: plug-ins/common/sphere-designer.c:2956
 #: plug-ins/map-object/map-object-main.c:175
 msgid "Position Z"
 msgstr "მდებარეობა Z"
 
-#: plug-ins/common/sphere-designer.c:3094
+#: plug-ins/common/sphere-designer.c:3087
 msgid "Rendering sphere"
 msgstr "სფეროს რენდერი"
 
-#: plug-ins/common/sphere-designer.c:3213
+#: plug-ins/common/sphere-designer.c:3206
 msgid "Region selected for plug-in is empty"
 msgstr ""
 
@@ -8790,13 +8794,12 @@ msgid "Flow step %d"
 msgstr ""
 
 #: plug-ins/common/wavelet-decompose.c:117
-msgid "_Wavelet-decompose..."
-msgstr ""
+msgid "_Wavelet Decompose..."
+msgstr "პატარა ტალღის _დაშლა..."
 
 #: plug-ins/common/wavelet-decompose.c:121
-#: plug-ins/common/wavelet-decompose.c:375
 msgid "Wavelet decompose"
-msgstr ""
+msgstr "პატარა ტალღის დაშლა"
 
 #: plug-ins/common/wavelet-decompose.c:130
 msgid "Scal_es"
@@ -8819,8 +8822,9 @@ msgid "Add a layer mask to each scales layer"
 msgstr ""
 
 #: plug-ins/common/wavelet-decompose.c:202
-msgid "Wavelet-Decompose"
-msgstr ""
+#: plug-ins/common/wavelet-decompose.c:375
+msgid "Wavelet Decompose"
+msgstr "პატარა ტალღის დაშლა"
 
 #: plug-ins/common/wavelet-decompose.c:210
 msgid "Decomposition"
@@ -9196,7 +9200,7 @@ msgstr "პიქსელის ფორმატი"
 
 #: plug-ins/file-dds/dds.c:222 plug-ins/file-dds/dds.c:285
 #: plug-ins/file-dds/dds.c:302 plug-ins/file-webp/file-webp.c:180
-#: plug-ins/gradient-flare/gradient-flare.c:2605
+#: plug-ins/gradient-flare/gradient-flare.c:2608
 msgid "Default"
 msgstr "ნაგულისხმევი"
 
@@ -11319,10 +11323,10 @@ msgstr "კატეგორიები: %s"
 #. *    Scales
 #.
 #: plug-ins/filter-browser/filter-browser.c:462
-#: plug-ins/gradient-flare/gradient-flare.c:2949
-#: plug-ins/gradient-flare/gradient-flare.c:3699
-#: plug-ins/gradient-flare/gradient-flare.c:3801
-#: plug-ins/gradient-flare/gradient-flare.c:3932
+#: plug-ins/gradient-flare/gradient-flare.c:2952
+#: plug-ins/gradient-flare/gradient-flare.c:3702
+#: plug-ins/gradient-flare/gradient-flare.c:3804
+#: plug-ins/gradient-flare/gradient-flare.c:3935
 msgid "Parameters"
 msgstr "პარამეტრები"
 
@@ -11593,7 +11597,7 @@ msgstr ""
 
 #: plug-ins/flame/flame.c:1226 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
-#: plug-ins/gradient-flare/gradient-flare.c:3052
+#: plug-ins/gradient-flare/gradient-flare.c:3055
 msgid "_Edit"
 msgstr "_ჩასწორება"
 
@@ -11949,7 +11953,7 @@ msgid "Rendering fractal"
 msgstr ""
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:878
-#: plug-ins/gradient-flare/gradient-flare.c:3328
+#: plug-ins/gradient-flare/gradient-flare.c:3331
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr ""
@@ -12034,7 +12038,7 @@ msgid "Create rectangle"
 msgstr "მართხკუთხედის შექმნა"
 
 #: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
-#: plug-ins/gradient-flare/gradient-flare.c:3990
+#: plug-ins/gradient-flare/gradient-flare.c:3993
 #: plug-ins/imagemap/imap_main.c:1580 plug-ins/imagemap/imap-menu.ui:171
 #: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
@@ -12061,7 +12065,7 @@ msgid "Create arc"
 msgstr "რკალის შექმნა"
 
 #: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
-#: plug-ins/gradient-flare/gradient-flare.c:4007
+#: plug-ins/gradient-flare/gradient-flare.c:4010
 #: plug-ins/imagemap/imap_main.c:1582 plug-ins/imagemap/imap-menu.ui:176
 #: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
@@ -12535,7 +12539,7 @@ msgid "Adds random noise to the color"
 msgstr ""
 
 #: plug-ins/gimpressionist/general.c:141
-#: plug-ins/gradient-flare/gradient-flare.c:3646
+#: plug-ins/gradient-flare/gradient-flare.c:3649
 msgid "_General"
 msgstr "ზოგადი"
 
@@ -13141,7 +13145,7 @@ msgid "Threshold for adaptive supersampling"
 msgstr ""
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
-#: plug-ins/gradient-flare/gradient-flare.c:2506
+#: plug-ins/gradient-flare/gradient-flare.c:2505
 msgid "Gradient Flare"
 msgstr ""
 
@@ -13177,183 +13181,183 @@ msgstr ""
 msgid "Failed to write GFlare file '%s': %s"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:2550
+#: plug-ins/gradient-flare/gradient-flare.c:2549
 msgid "A_uto update preview"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:2604
+#: plug-ins/gradient-flare/gradient-flare.c:2607
 msgid "'Default' is created."
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:2905
+#: plug-ins/gradient-flare/gradient-flare.c:2908
 msgid "_X:"
 msgstr "_X:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2909
+#: plug-ins/gradient-flare/gradient-flare.c:2912
 msgid "_Y:"
 msgstr "_Y:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2983
+#: plug-ins/gradient-flare/gradient-flare.c:2986
 msgid "_Settings"
 msgstr "მორგება"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3121
+#: plug-ins/gradient-flare/gradient-flare.c:3124
 msgid "S_elector"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3185
+#: plug-ins/gradient-flare/gradient-flare.c:3188
 msgid "New Gradient Flare"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3188
+#: plug-ins/gradient-flare/gradient-flare.c:3191
 msgid "Enter a name for the new GFlare"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3189
+#: plug-ins/gradient-flare/gradient-flare.c:3192
 msgid "Unnamed"
 msgstr "უსახელო"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3209
-#: plug-ins/gradient-flare/gradient-flare.c:3291
+#: plug-ins/gradient-flare/gradient-flare.c:3212
+#: plug-ins/gradient-flare/gradient-flare.c:3294
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3265
+#: plug-ins/gradient-flare/gradient-flare.c:3268
 msgid "Copy Gradient Flare"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3268
+#: plug-ins/gradient-flare/gradient-flare.c:3271
 msgid "Enter a name for the copied GFlare"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3322
+#: plug-ins/gradient-flare/gradient-flare.c:3325
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3332
+#: plug-ins/gradient-flare/gradient-flare.c:3335
 msgid "Delete Gradient Flare"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3404
+#: plug-ins/gradient-flare/gradient-flare.c:3407
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3446
+#: plug-ins/gradient-flare/gradient-flare.c:3449
 msgid "Gradient Flare Editor"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3450
+#: plug-ins/gradient-flare/gradient-flare.c:3453
 msgid "_Rescan Gradients"
 msgstr ""
 
 #. Glow
-#: plug-ins/gradient-flare/gradient-flare.c:3569
+#: plug-ins/gradient-flare/gradient-flare.c:3572
 msgid "Glow Paint Options"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3579
-#: plug-ins/gradient-flare/gradient-flare.c:3605
-#: plug-ins/gradient-flare/gradient-flare.c:3631
+#: plug-ins/gradient-flare/gradient-flare.c:3582
+#: plug-ins/gradient-flare/gradient-flare.c:3608
+#: plug-ins/gradient-flare/gradient-flare.c:3634
 msgid "Opacity:"
 msgstr "გაუმჭვირვალობა:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3591
-#: plug-ins/gradient-flare/gradient-flare.c:3617
-#: plug-ins/gradient-flare/gradient-flare.c:3643
+#: plug-ins/gradient-flare/gradient-flare.c:3594
+#: plug-ins/gradient-flare/gradient-flare.c:3620
+#: plug-ins/gradient-flare/gradient-flare.c:3646
 msgid "Paint mode:"
 msgstr "ხატვის რეჟიმი:"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3595
+#: plug-ins/gradient-flare/gradient-flare.c:3598
 msgid "Rays Paint Options"
 msgstr ""
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3621
+#: plug-ins/gradient-flare/gradient-flare.c:3624
 msgid "Second Flares Paint Options"
 msgstr ""
 
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3672
-#: plug-ins/gradient-flare/gradient-flare.c:3772
-#: plug-ins/gradient-flare/gradient-flare.c:3905
+#: plug-ins/gradient-flare/gradient-flare.c:3675
+#: plug-ins/gradient-flare/gradient-flare.c:3775
+#: plug-ins/gradient-flare/gradient-flare.c:3908
 msgid "Gradients"
 msgstr "გრადაციები"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3683
-#: plug-ins/gradient-flare/gradient-flare.c:3785
-#: plug-ins/gradient-flare/gradient-flare.c:3916
+#: plug-ins/gradient-flare/gradient-flare.c:3686
+#: plug-ins/gradient-flare/gradient-flare.c:3788
+#: plug-ins/gradient-flare/gradient-flare.c:3919
 msgid "Radial gradient:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3687
-#: plug-ins/gradient-flare/gradient-flare.c:3789
+#: plug-ins/gradient-flare/gradient-flare.c:3690
+#: plug-ins/gradient-flare/gradient-flare.c:3792
 msgid "Angular gradient:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3691
-#: plug-ins/gradient-flare/gradient-flare.c:3793
+#: plug-ins/gradient-flare/gradient-flare.c:3694
+#: plug-ins/gradient-flare/gradient-flare.c:3796
 msgid "Angular size gradient:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3710
-#: plug-ins/gradient-flare/gradient-flare.c:3812
-#: plug-ins/gradient-flare/gradient-flare.c:3943
+#: plug-ins/gradient-flare/gradient-flare.c:3713
+#: plug-ins/gradient-flare/gradient-flare.c:3815
+#: plug-ins/gradient-flare/gradient-flare.c:3946
 msgid "Size (%):"
 msgstr "ზომა (%):"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3721
-#: plug-ins/gradient-flare/gradient-flare.c:3823
-#: plug-ins/gradient-flare/gradient-flare.c:3954
+#: plug-ins/gradient-flare/gradient-flare.c:3724
+#: plug-ins/gradient-flare/gradient-flare.c:3826
+#: plug-ins/gradient-flare/gradient-flare.c:3957
 msgid "Rotation:"
 msgstr "შემობრუნება:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3732
-#: plug-ins/gradient-flare/gradient-flare.c:3834
-#: plug-ins/gradient-flare/gradient-flare.c:3965
+#: plug-ins/gradient-flare/gradient-flare.c:3735
+#: plug-ins/gradient-flare/gradient-flare.c:3837
+#: plug-ins/gradient-flare/gradient-flare.c:3968
 msgid "Hue rotation:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3746
+#: plug-ins/gradient-flare/gradient-flare.c:3749
 msgid "G_low"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3845
+#: plug-ins/gradient-flare/gradient-flare.c:3848
 msgid "# of Spikes:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3856
+#: plug-ins/gradient-flare/gradient-flare.c:3859
 msgid "Spike thickness:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3870
+#: plug-ins/gradient-flare/gradient-flare.c:3873
 msgid "_Rays"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3920
+#: plug-ins/gradient-flare/gradient-flare.c:3923
 msgid "Size factor gradient:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3924
+#: plug-ins/gradient-flare/gradient-flare.c:3927
 msgid "Probability gradient:"
 msgstr ""
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3982
+#: plug-ins/gradient-flare/gradient-flare.c:3985
 msgid "Shape of Second Flares"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:4041
+#: plug-ins/gradient-flare/gradient-flare.c:4044
 msgid "Random seed:"
 msgstr "შემთხვევითი მარცვალი:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4055
+#: plug-ins/gradient-flare/gradient-flare.c:4058
 msgid "_Second Flares"
 msgstr ""
 
