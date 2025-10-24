@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-25 16:27+0000\n"
-"PO-Revision-Date: 2025-05-26 03:36+0200\n"
+"POT-Creation-Date: 2025-10-17 00:26+0000\n"
+"PO-Revision-Date: 2025-10-17 10:15+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 #: plug-ins/python/colorxhtml.py:78
 msgid "Save as colored HTML text..."
@@ -70,6 +70,26 @@ msgstr "ცალკე CSS ფაილის ჩაწერა"
 #: plug-ins/python/colorxhtml.py:235
 msgid "Choose File"
 msgstr "ფაილის არჩევა"
+
+#: plug-ins/python/file-openraster.py:504
+#: plug-ins/python/file-openraster.py:505
+msgid "export an OpenRaster (.ora) file"
+msgstr ""
+
+#: plug-ins/python/file-openraster.py:507
+#: plug-ins/python/file-openraster.py:513
+msgid "OpenRaster"
+msgstr ""
+
+#: plug-ins/python/file-openraster.py:514
+#: plug-ins/python/file-openraster.py:515
+msgid "load an OpenRaster (.ora) file"
+msgstr ""
+
+#: plug-ins/python/file-openraster.py:524
+#: plug-ins/python/file-openraster.py:525
+msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgstr ""
 
 #: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
@@ -169,7 +189,7 @@ msgid "Exports the image histogram to a text file (CSV)"
 msgstr ""
 
 #: plug-ins/python/histogram-export.py:216
-msgid "_Export histogram..."
+msgid "_Export Histogram..."
 msgstr "ჰისტოგრამის _გატანა..."
 
 #. TODO: GFile props still don't have labels + only load existing files
@@ -240,7 +260,6 @@ msgid "_Palette to export"
 msgstr "გასატანი _პალიტრა"
 
 #: plug-ins/python/palette-export-as-kpl.py:184
-#| msgid "_File..."
 msgid "_File (.kpl)"
 msgstr "_ფაილი (.kpl)"
 
