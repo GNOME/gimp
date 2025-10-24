@@ -99,6 +99,7 @@
       </description>
     </release>
     <release version="3.0.4" date="2025-05-17">
+      <url type="details">https://www.gimp.org/release/3.0.4/</url>
       <description>
         <p>
         This second micro release in the 3.0 series fixes various bugs and improves usability in several parts of the interface:
@@ -122,6 +123,7 @@
       </description>
     </release>
     <release version="3.0.2" date="2025-03-23">
+      <url type="details">https://www.gimp.org/release/3.0.2/</url>
       <description>
         <p>
         As could be expected from a major release, a few critical bugs slipped through our testing!
@@ -130,6 +132,7 @@
       </description>
     </release>
     <release version="3.0.0" date="2025-03-16">
+      <url type="details">https://www.gimp.org/release/3.0.0/</url>
       <description>
         <p>
         Our initial release for the next generation in image manipulation!
