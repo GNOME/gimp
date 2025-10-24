@@ -41,6 +41,12 @@ Core:
     3.1.4, not in any stable release).
   - Non-destructive filters on quick mask are merged (onto the selection
     channel) when exiting the quick mask mode.
+  - Vector layers are now properly auto-renamed when changing their
+    associated path (unless the layer was explicitely named).
+  - It is not possible to "Merge Down" onto a pass-through layer group
+    anymore.
+  - "Merge Layer Groups" cannot be applied to pass-through groups
+    anymore.
 
 Tools:
 
@@ -58,6 +64,9 @@ Tools:
       text layer is picked.
     * Improved logic for the creation and selection of vector layers and
       paths when the tool is active.
+    * Double clicking a vector layer would activate the Path tool on it.
+      The setting to change the path is moved to the layer options
+      dialog.
 
 Graphical User Interface:
 
@@ -68,6 +77,8 @@ Graphical User Interface:
   - Advertize the menu path to "Rasterize" items in error messages when
     trying to edit a rasterizable drawable.
   - Dragging a file to the image tab bar opens the file as a new image.
+  - Additionally to status error messages, the layer blocking a "Merge
+    Down" is now blinked on the Layers dialog to draw attention.
 
 Plug-Ins:
 
@@ -175,6 +186,9 @@ API:
     or as a text layer.
   - GimpLabelEntry (libgimpwidgets) accepts a NULL value and will
     convert it to empty string.
+  - gimp_file_load() as well as the image returned by a
+    GimpLoadProcedure are now always returned as "clean" and with empty
+    undo stack.
 
 Build:
 
