@@ -2086,9 +2086,10 @@ gimp_image_clean_all (GimpImage *image)
  * [method@Gimp.Image.clean_all] after calling a save procedure to make
  * the image clean.
  *
- * When loading an image using e.g. [func@Gimp.file_load] the image
- * will be marked as clean, but loading an image calling directly the
- * accurate file format procedure may return a dirty image.
+ * When loading an image using e.g. [func@Gimp.file_load], or when
+ * created by a [class@Gimp.LoadProcedure], the image will be marked as
+ * clean. In other cases, it may sometimes be useful to clean
+ * programmatically created image yourself.
  *
  * Returns: TRUE if the image has unsaved changes.
  **/

@@ -284,6 +284,13 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
   if (image != NULL && metadata != NULL && flags != GIMP_METADATA_LOAD_NONE)
     _gimp_image_metadata_load_finish (image, NULL, metadata, flags);
 
+  if (image)
+    {
+      gimp_image_clean_all (image);
+      gimp_image_undo_disable (image);
+      gimp_image_undo_enable (image);
+    }
+
   /* This is debug printing to help plug-in developers figure out best
    * practices.
    */
