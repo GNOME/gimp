@@ -349,6 +349,11 @@ gimp_text_class_init (GimpTextClass *klass)
                             0.0, 8192.0, 4.0,
                             GIMP_PARAM_STATIC_STRINGS |
                             GIMP_CONFIG_PARAM_DEFAULTS);
+   GIMP_CONFIG_PROP_UNIT (object_class, PROP_OUTLINE_UNIT,
+                          "outline-unit",
+                          NULL, NULL,
+                          TRUE, FALSE, gimp_unit_pixel (),
+                          GIMP_PARAM_STATIC_STRINGS);
    GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_DIRECTION,
                           "outline-direction", NULL, NULL,
                           GIMP_TYPE_TEXT_OUTLINE_DIRECTION,
@@ -522,6 +527,9 @@ gimp_text_get_property (GObject      *object,
     case PROP_OUTLINE_WIDTH:
       g_value_set_double (value, text->outline_width);
       break;
+    case PROP_OUTLINE_UNIT:
+      g_value_set_object (value, text->outline_unit);
+      break;
     case PROP_OUTLINE_DIRECTION:
       g_value_set_enum (value, text->outline_direction);
       break;
@@ -681,6 +689,9 @@ gimp_text_set_property (GObject      *object,
       }
     case PROP_OUTLINE_WIDTH:
       text->outline_width = g_value_get_double (value);
+      break;
+    case PROP_OUTLINE_UNIT:
+      text->outline_unit = g_value_get_object (value);
       break;
     case PROP_OUTLINE_DIRECTION:
       text->outline_direction = g_value_get_enum (value);
@@ -857,7 +868,7 @@ gimp_text_serialize_property (GimpConfig       *config,
                                                              (GimpContainerSearchFunc) gimp_font_match_by_lookup_name,
                                                              (gpointer) altered_font_name));
                   /* in case pango returns a non existant font name */
-                  if (font == NULL) 
+                  if (font == NULL)
                     {
                       font = GIMP_FONT (gimp_font_get_standard ());
                       font_name = "gimpfont";

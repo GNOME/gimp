@@ -1780,6 +1780,7 @@ gimp_text_layer_set_outline_miter_limit (GimpTextLayer *layer,
 /**
  * gimp_text_layer_get_outline_width:
  * @layer: The text layer.
+ * @outline_unit: (out) (transfer none): The unit used for the outline width.
  *
  * Get the outline width from a text layer.
  *
@@ -1791,7 +1792,8 @@ gimp_text_layer_set_outline_miter_limit (GimpTextLayer *layer,
  * Since: 3.2
  **/
 gdouble
-gimp_text_layer_get_outline_width (GimpTextLayer *layer)
+gimp_text_layer_get_outline_width (GimpTextLayer  *layer,
+                                   GimpUnit      **outline_unit)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1807,7 +1809,10 @@ gimp_text_layer_get_outline_width (GimpTextLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    outline_width = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+    {
+      outline_width = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+      *outline_unit = GIMP_VALUES_GET_UNIT (return_vals, 2);
+    }
 
   gimp_value_array_unref (return_vals);
 
@@ -1818,6 +1823,7 @@ gimp_text_layer_get_outline_width (GimpTextLayer *layer)
  * gimp_text_layer_set_outline_width:
  * @layer: The text layer.
  * @outline_width: The text outline width.
+ * @outline_unit: The unit to use for the outline width.
  *
  * Set the outline width from a text layer.
  *
@@ -1830,7 +1836,8 @@ gimp_text_layer_get_outline_width (GimpTextLayer *layer)
  **/
 gboolean
 gimp_text_layer_set_outline_width (GimpTextLayer *layer,
-                                   gdouble        outline_width)
+                                   gdouble        outline_width,
+                                   GimpUnit      *outline_unit)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1839,6 +1846,7 @@ gimp_text_layer_set_outline_width (GimpTextLayer *layer,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_DOUBLE, outline_width,
+                                          GIMP_TYPE_UNIT, outline_unit,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),

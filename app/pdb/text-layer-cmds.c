@@ -1440,6 +1440,7 @@ text_layer_get_outline_width_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpTextLayer *layer;
   gdouble outline_width = 0.0;
+  GimpUnit *outline_unit = NULL;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -1447,6 +1448,7 @@ text_layer_get_outline_width_invoker (GimpProcedure         *procedure,
     {
        g_object_get (gimp_text_layer_get_text (layer),
                      "outline-width", &outline_width,
+                     "outline-unit",  &outline_unit,
                      NULL);
     }
 
@@ -1454,7 +1456,10 @@ text_layer_get_outline_width_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), outline_width);
+    {
+      g_value_set_double (gimp_value_array_index (return_vals, 1), outline_width);
+      g_value_set_object (gimp_value_array_index (return_vals, 2), outline_unit);
+    }
 
   return return_vals;
 }
@@ -1470,15 +1475,18 @@ text_layer_set_outline_width_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpTextLayer *layer;
   gdouble outline_width;
+  GimpUnit *outline_unit;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
   outline_width = g_value_get_double (gimp_value_array_index (args, 1));
+  outline_unit = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
       gimp_text_layer_set (layer,
                            _("Set text layer attribute"),
                            "outline-width", outline_width,
+                           "outline-unit",  outline_unit,
                            NULL);
     }
 
@@ -2941,6 +2949,14 @@ register_text_layer_procs (GimpPDB *pdb)
                                                         "The text outline width",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_unit ("outline-unit",
+                                                         "outline unit",
+                                                         "The unit used for the outline width",
+                                                         FALSE,
+                                                         FALSE,
+                                                         gimp_unit_inch (),
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2970,6 +2986,14 @@ register_text_layer_procs (GimpPDB *pdb)
                                                     "The text outline width",
                                                     0.0, 8192.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_unit ("outline-unit",
+                                                     "outline unit",
+                                                     "The unit to use for the outline width",
+                                                     TRUE,
+                                                     FALSE,
+                                                     gimp_unit_inch (),
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

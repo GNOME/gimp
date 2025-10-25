@@ -52,6 +52,7 @@ struct _GimpText
   GimpPattern              *outline_pattern;
   GeglColor                *outline_foreground;
   gdouble                   outline_width;
+  GimpUnit                 *outline_unit;
   GimpTextOutlineDirection  outline_direction;
   GimpCapStyle              outline_cap_style;
   GimpJoinStyle             outline_join_style;

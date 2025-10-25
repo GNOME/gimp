@@ -1445,7 +1445,9 @@ HELP
 
     @outargs = (
         { name => 'outline_width', type => 'double',
-          desc => 'The text outline width' }
+          desc => 'The text outline width' },
+        { name => 'outline_unit', type => 'unit',
+          desc => 'The unit used for the outline width' }
     );
 
     %invoke = (
@@ -1453,6 +1455,7 @@ HELP
 {
    g_object_get (gimp_text_layer_get_text (layer),
                  "outline-width", &outline_width,
+                 "outline-unit",  &outline_unit,
                  NULL);
 }
 CODE
@@ -1472,7 +1475,9 @@ HELP
         { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'outline_width', type => '0.0 <= double <= 8192.0',
-          desc => 'The text outline width' }
+          desc => 'The text outline width' },
+        { name => 'outline_unit', type => 'unit', allow_pixel => 1,
+          desc => 'The unit to use for the outline width' }
     );
 
     %invoke = (
@@ -1481,6 +1486,7 @@ HELP
   gimp_text_layer_set (layer,
                        _("Set text layer attribute"),
                        "outline-width", outline_width,
+                       "outline-unit",  outline_unit,
                        NULL);
 }
 CODE
