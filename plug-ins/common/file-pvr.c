@@ -286,6 +286,7 @@ load_image (GFile        *file,
   GimpLayer  *layer       = NULL;
   gboolean    has_alpha   = FALSE;
   gboolean    has_mipmaps = FALSE;
+  gint        n_components;
   gsize       file_size;
   gsize       file_start;
   gchar       magic[5];
@@ -332,8 +333,7 @@ load_image (GFile        *file,
                        gimp_file_get_utf8_name (file));
           return NULL;
         }
-
-      file_size -= 16;
+      file_size -= (global_header_size + 8);
     }
   else if (g_strcmp0 (magic, "PVRT") != 0)
     {
@@ -375,6 +375,8 @@ load_image (GFile        *file,
   if (pixel_mode == MODE_ARGB1555 || pixel_mode == MODE_ARGB4444)
     has_alpha = TRUE;
 
+  n_components = has_alpha ? 4 : 3;
+
   if (data_format == MODE_TWIDDLE_MIPMAP    ||
       data_format == MODE_COMPRESSED_MIPMAP ||
       data_format == MODE_SMALL_VQ_MIPMAP   ||
@@ -392,7 +394,6 @@ load_image (GFile        *file,
       gint    mipmap_width  = 1;
       gint    mipmap_height = 1;
       gint    mipmap_offset = 1;
-      gint    n_components  = has_alpha ? 4 : 3;
       guchar *data;
 
       data = g_malloc0 (header_file_size);
@@ -453,8 +454,6 @@ load_image (GFile        *file,
     }
   else if (data_format == MODE_RECTANGLE)
     {
-      gint n_components  = has_alpha ? 4 : 3;
-
       layer = gimp_layer_new (image, NULL, width, height,
                               (has_alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE),
                               100, gimp_image_get_default_new_layer_mode (image));
@@ -473,7 +472,6 @@ load_image (GFile        *file,
            data_format == MODE_COMPRESSED_MIPMAP ||
            data_format == MODE_SMALL_VQ_MIPMAP)
     {
-      gint   n_components   = has_alpha ? 4 : 3;
       gint   code_data_size = 256 * 2 * 4;
       gint   mipmap_width   = (gint) pow (2, (3));
       gint   mipmap_height  = (gint) pow (2, (3));
