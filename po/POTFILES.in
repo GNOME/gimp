@@ -256,7 +256,6 @@ app/dialogs/user-install-dialog.c
 app/dialogs/path-export-dialog.c
 app/dialogs/path-import-dialog.c
 app/dialogs/path-options-dialog.c
-app/dialogs/vector-layer-options-dialog.c
 app/dialogs/welcome-dialog.c
 
 app/display/display-enums.c
