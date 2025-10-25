@@ -204,8 +204,8 @@ static const gchar *arrange_names[ARRANGE_NUM_VALUES] =
   N_("With random power (0,10)"),
   N_("With random power (0,1)"),
   N_("With gradient power (0,1)"),
-  N_("Multiply rand. value (0,1)"),
-  N_("Multiply rand. value (0,2)"),
+  N_("Multiply random value (0,1)"),
+  N_("Multiply random value (0,2)"),
   N_("Multiply gradient (0,1)"),
   N_("With p and random (0,1)"),
 };
@@ -226,11 +226,11 @@ static const gchar *initial_value_names[CML_INITIAL_NUM_VALUES] =
   N_("All white"),
   N_("The first row of the image"),
   N_("Continuous gradient"),
-  N_("Continuous grad. w/o gap"),
-  N_("Random, ch. independent"),
+  N_("Continuous gradient, without gap"),
+  N_("Random, channel independent"),
   N_("Random shared"),
-  N_("Randoms from seed"),
-  N_("Randoms from seed (shared)")
+  N_("Random from seed"),
+  N_("Random from seed (shared)")
 };
 
 #define CML_PARAM_NUM   15
