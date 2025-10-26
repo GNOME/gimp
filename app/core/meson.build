@@ -191,6 +191,7 @@ libappcore_sources = [
   'gimplayermaskpropundo.c',
   'gimplayermaskundo.c',
   'gimplayerpropundo.c',
+  'gimplayervectormask.c',
   'gimplayerstack.c',
   'gimplayerundo.c',
   'gimplineart.c',
