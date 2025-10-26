@@ -48,6 +48,8 @@
 #include "core/gimplayerpropundo.h"
 #include "core/gimplayer-floating-selection.h"
 #include "core/gimplayer-new.h"
+#include "core/gimplayermask.h"
+#include "core/gimplayervectormask.h"
 #include "core/gimplink.h"
 #include "core/gimplinklayer.h"
 #include "core/gimplist.h"
@@ -152,6 +154,7 @@ static void   layers_add_mask_callback        (GtkWidget             *dialog,
                                                GList                 *layers,
                                                GimpAddMaskType        add_mask_type,
                                                GimpChannel           *channel,
+                                               GimpPath              *path,
                                                gboolean               invert,
                                                gboolean               edit_mask,
                                                gpointer               user_data);
@@ -304,7 +307,8 @@ layers_edit_vector_cmd_callback (GimpAction *action,
     }
 
   if (GIMP_IS_PATH_TOOL (active_tool))
-    gimp_path_tool_set_path (GIMP_PATH_TOOL (active_tool), GIMP_VECTOR_LAYER (layer), NULL);
+    gimp_path_tool_set_path (GIMP_PATH_TOOL (active_tool),
+                             GIMP_RASTERIZABLE (layer), NULL);
 }
 
 void
@@ -2604,6 +2608,7 @@ layers_add_mask_callback (GtkWidget       *dialog,
                           GList           *layers,
                           GimpAddMaskType  add_mask_type,
                           GimpChannel     *channel,
+                          GimpPath        *path,
                           gboolean         invert,
                           gboolean         edit_mask,
                           gpointer         user_data)
@@ -2626,21 +2631,51 @@ layers_add_mask_callback (GtkWidget       *dialog,
 
   for (iter = layers; iter; iter = iter->next)
     {
-      mask = gimp_layer_create_mask (iter->data,
-                                     config->layer_add_mask_type,
-                                     channel);
-
-      if (config->layer_add_mask_invert)
-        gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
-
-      if (! gimp_layer_add_mask (iter->data, mask, edit_mask, TRUE, &error))
+      if (! path)
         {
-          gimp_message_literal (image->gimp,
-                                G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
-                                error->message);
-          g_object_unref (mask);
-          g_clear_error (&error);
-          return;
+          mask = gimp_layer_create_mask (iter->data,
+                                         config->layer_add_mask_type,
+                                         channel);
+
+          if (config->layer_add_mask_invert)
+            gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
+
+          if (! gimp_layer_add_mask (iter->data, mask, edit_mask, TRUE,
+                                     &error))
+            {
+              gimp_message_literal (image->gimp,
+                                    G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                                    error->message);
+              g_object_unref (mask);
+              g_clear_error (&error);
+              return;
+            }
+        }
+      else
+        {
+          GimpImage           *image;
+          GimpItem            *item = GIMP_ITEM (iter->data);
+          GimpLayerVectorMask *vector_mask;
+
+          image = gimp_item_get_image (item);
+
+          vector_mask = gimp_layer_vector_mask_new (image, path,
+                                                    gimp_item_get_width  (item),
+                                                    gimp_item_get_height (item),
+                                                    "Vector Mask");
+
+          if (! gimp_layer_add_mask (iter->data, GIMP_LAYER_MASK (vector_mask),
+                                     edit_mask, TRUE, &error))
+            {
+              gimp_message_literal (image->gimp,
+                                    G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                                    error->message);
+              g_object_unref (vector_mask);
+              g_clear_error (&error);
+              return;
+            }
+
+          gimp_layer_vector_mask_render (vector_mask);
         }
     }
 

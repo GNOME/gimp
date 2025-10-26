@@ -40,16 +40,16 @@ struct _GimpPathTool
 {
   GimpDrawTool     parent_instance;
 
-  GimpImage       *current_image;
-  GimpVectorLayer *current_vector_layer;
+  GimpImage        *current_image;
+  GimpRasterizable *current_vector;
 
-  GimpPath        *path;           /*  the current Path data   */
-  GimpPathMode     saved_mode;     /*  used by modifier_key()  */
+  GimpPath         *path;           /*  the current Path data   */
+  GimpPathMode      saved_mode;     /*  used by modifier_key()  */
 
-  GimpToolWidget  *widget;
-  GimpToolWidget  *grab_widget;
+  GimpToolWidget   *widget;
+  GimpToolWidget   *grab_widget;
 
-  GtkWidget       *confirm_dialog;
+  GtkWidget        *confirm_dialog;
 };
 
 struct _GimpPathToolClass
@@ -64,5 +64,5 @@ void    gimp_path_tool_register (GimpToolRegisterCallback  callback,
 GType   gimp_path_tool_get_type (void) G_GNUC_CONST;
 
 void    gimp_path_tool_set_path (GimpPathTool             *path_tool,
-                                 GimpVectorLayer          *layer,
+                                 GimpRasterizable         *layer,
                                  GimpPath                 *path);

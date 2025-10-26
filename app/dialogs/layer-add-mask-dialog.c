@@ -31,6 +31,8 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
+#include "path/gimppath.h"
+
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
@@ -49,10 +51,13 @@ struct _LayerAddMaskDialog
   GList               *layers;
   GimpAddMaskType      add_mask_type;
   GimpChannel         *channel;
+  GimpPath            *path;
   gboolean             invert;
   gboolean             edit_mask;
   GimpAddMaskCallback  callback;
   gpointer             user_data;
+
+  GtkWidget           *stack;
 };
 
 
@@ -63,6 +68,8 @@ static void   layer_add_mask_dialog_response         (GtkWidget          *dialog
                                                       gint                response_id,
                                                       LayerAddMaskDialog *private);
 static void   layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
+                                                      LayerAddMaskDialog *private);
+static void   layer_add_mask_dialog_path_selected    (GimpContainerView  *view,
                                                       LayerAddMaskDialog *private);
 
 
@@ -80,14 +87,18 @@ layer_add_mask_dialog_new (GList               *layers,
 {
   LayerAddMaskDialog *private;
   GtkWidget          *dialog;
+  GtkWidget          *main_vbox;
   GtkWidget          *vbox;
   GtkWidget          *hbox;
+  GtkWidget          *switcher;
   GtkWidget          *frame;
   GtkWidget          *combo;
   GtkWidget          *button;
   GimpImage          *image;
   GimpChannel        *channel;
   GList              *channels;
+  GimpPath           *path;
+  GList              *paths;
   gchar              *title;
   gchar              *desc;
   gint                n_layers = g_list_length (layers);
@@ -128,9 +139,9 @@ layer_add_mask_dialog_new (GList               *layers,
   g_free (desc);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
@@ -141,12 +152,24 @@ layer_add_mask_dialog_new (GList               *layers,
                     G_CALLBACK (layer_add_mask_dialog_response),
                     private);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+                      main_vbox, TRUE, TRUE, 0);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
+  /* Switcher */
+  switcher = gtk_stack_switcher_new ();
+  gtk_box_pack_start (GTK_BOX (main_vbox), switcher, TRUE, TRUE, 0);
+  gtk_widget_set_visible (switcher, TRUE);
+
+  private->stack = gtk_stack_new ();
+  gtk_stack_switcher_set_stack (GTK_STACK_SWITCHER (switcher),
+                                GTK_STACK (private->stack));
+  gtk_box_pack_start (GTK_BOX (main_vbox), private->stack, TRUE, TRUE, 0);
+  gtk_widget_set_visible (private->stack, TRUE);
+
+  /* Raster masks */
   frame =
     gimp_enum_radio_frame_new (GIMP_TYPE_ADD_MASK_TYPE,
                                gtk_label_new (_("Initialize Layer Mask to:")),
@@ -155,8 +178,9 @@ layer_add_mask_dialog_new (GList               *layers,
                                &button);
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
                                    private->add_mask_type);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_stack_add_titled (GTK_STACK (private->stack),
+                        frame, "raster-mask",
+                        _("Raster"));
   gtk_widget_show (frame);
 
   image = gimp_item_get_image (GIMP_ITEM (layers->data));
@@ -184,6 +208,38 @@ layer_add_mask_dialog_new (GList               *layers,
   gimp_container_view_set_1_selected (GIMP_CONTAINER_VIEW (combo),
                                       GIMP_VIEWABLE (channel));
 
+  /* Vector masks */
+  frame = gimp_frame_new (_("Initialize Layer Mask to:"));
+  gtk_stack_add_titled (GTK_STACK (private->stack),
+                        frame,
+                        "vector-mask",
+                        _("Vector"));
+  gtk_widget_set_visible (frame, TRUE);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_set_visible (vbox, TRUE);
+
+  combo = gimp_container_combo_box_new (gimp_image_get_paths (image),
+                                        context,
+                                        GIMP_VIEW_SIZE_SMALL, 1);
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
+  gtk_widget_set_visible (combo, TRUE);
+
+  g_signal_connect (combo, "selection-changed",
+                    G_CALLBACK (layer_add_mask_dialog_path_selected),
+                    private);
+
+  paths = gimp_image_get_selected_paths (image);
+  if (paths)
+    path = paths->data;
+  else
+    path = GIMP_PATH (gimp_container_get_first_child (gimp_image_get_paths (image)));
+
+  gimp_container_view_set_1_selected (GIMP_CONTAINER_VIEW (combo),
+                                      GIMP_VIEWABLE (path));
+
+  /* General options */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -226,20 +282,40 @@ layer_add_mask_dialog_response (GtkWidget          *dialog,
   if (response_id == GTK_RESPONSE_OK)
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (private->layers->data));
+      GimpPath  *path  = NULL;
 
-      if (private->add_mask_type == GIMP_ADD_MASK_CHANNEL &&
-          ! private->channel)
+      if (g_strcmp0 (gtk_stack_get_visible_child_name (GTK_STACK (private->stack)),
+                     "raster-mask") == 0)
         {
-          gimp_message_literal (image->gimp,
-                                G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
-                                _("Please select a channel first"));
-          return;
+          if (private->add_mask_type == GIMP_ADD_MASK_CHANNEL &&
+              ! private->channel)
+            {
+              gimp_message_literal (image->gimp,
+                                    G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                                    _("Please select a channel first"));
+              return;
+            }
+        }
+      else
+        {
+          if (! private->path)
+            {
+              gimp_message_literal (image->gimp,
+                                    G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                                    _("Please select a path first"));
+              return;
+            }
+          else
+            {
+              path = private->path;
+            }
         }
 
       private->callback (dialog,
                          private->layers,
                          private->add_mask_type,
                          private->channel,
+                         path,
                          private->invert,
                          private->edit_mask,
                          private->user_data);
@@ -255,4 +331,11 @@ layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
                                         LayerAddMaskDialog *private)
 {
   private->channel = GIMP_CHANNEL (gimp_container_view_get_1_selected (view));
+}
+
+static void
+layer_add_mask_dialog_path_selected (GimpContainerView  *view,
+                                     LayerAddMaskDialog *private)
+{
+  private->path = GIMP_PATH (gimp_container_view_get_1_selected (view));
 }

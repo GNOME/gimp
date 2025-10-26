@@ -35,6 +35,9 @@
 #include "core/gimpimage-pick-item.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
+#include "core/gimplayervectormask.h"
 #include "core/gimprasterizable.h"
 #include "core/gimpstrokeoptions.h"
 #include "core/gimptoolinfo.h"
@@ -153,14 +156,14 @@ static void     gimp_path_tool_vector_layer_path_changed
 static void     gimp_path_tool_vector_change_notify
                                                   (GObject               *options,
                                                    const GParamSpec      *pspec,
-                                                   GimpVectorLayer       *layer);
+                                                   GimpRasterizable      *layer);
 
-static void     gimp_path_tool_layer_rasterized   (GimpVectorLayer       *layer,
+static void     gimp_path_tool_layer_rasterized   (GimpRasterizable      *layer,
                                                    gboolean               is_rasterized,
                                                    GimpPathTool          *tool);
 
 static void     gimp_path_tool_set_layer          (GimpPathTool          *path_tool,
-                                                   GimpVectorLayer       *vector_layer);
+                                                   GimpRasterizable      *layer);
 
 static void     gimp_path_tool_confirm_dialog     (GimpPathTool          *path_tool,
                                                    GimpVectorLayer       *layer);
@@ -532,22 +535,31 @@ gimp_path_tool_image_changed (GimpPathTool *path_tool,
 static void
 gimp_path_tool_image_selected_layers_changed (GimpPathTool *path_tool)
 {
-  GList *current_layers = NULL;
+  GList         *current_layers = NULL;
+  GimpLayerMask *mask           = NULL;
 
   if (path_tool->current_image)
     current_layers = gimp_image_get_selected_layers (path_tool->current_image);
 
   /* If we've selected a single vector layer, make its path editable */
   if (current_layers                      &&
-      g_list_length (current_layers) == 1 &&
-      GIMP_IS_VECTOR_LAYER (GIMP_ITEM (current_layers->data)))
+      g_list_length (current_layers) == 1)
     {
-      GimpVectorLayer *vector_layer = current_layers->data;
+      mask = gimp_layer_get_mask (GIMP_LAYER (current_layers->data));
 
-      if (gimp_item_is_vector_layer (GIMP_ITEM (current_layers->data)))
-        gimp_path_tool_set_layer (path_tool, vector_layer);
-      else
-        gimp_path_tool_confirm_dialog (path_tool, vector_layer);
+      if (GIMP_IS_VECTOR_LAYER (GIMP_ITEM (current_layers->data)))
+        {
+          GimpVectorLayer *vector_layer = current_layers->data;
+
+          if (gimp_item_is_vector_layer (GIMP_ITEM (current_layers->data)))
+            gimp_path_tool_set_layer (path_tool, GIMP_RASTERIZABLE (vector_layer));
+          else
+            gimp_path_tool_confirm_dialog (path_tool, vector_layer);
+        }
+      else if (mask && GIMP_IS_LAYER_VECTOR_MASK (mask))
+        {
+          gimp_path_tool_set_layer (path_tool, GIMP_RASTERIZABLE (mask));
+        }
     }
   else
     {
@@ -626,6 +638,10 @@ gimp_path_tool_tool_path_end_change (GimpToolWidget *tool_path,
       g_object_unref (undo);
     }
 
+  if (path_tool->current_vector &&
+      GIMP_IS_LAYER_VECTOR_MASK (path_tool->current_vector))
+    gimp_layer_vector_mask_render (GIMP_LAYER_VECTOR_MASK (path_tool->current_vector));
+
   gimp_image_flush (image);
 }
 
@@ -658,9 +674,9 @@ gimp_path_tool_path_removed (GimpPath     *path,
 }
 
 void
-gimp_path_tool_set_path (GimpPathTool    *path_tool,
-                         GimpVectorLayer *layer,
-                         GimpPath        *path)
+gimp_path_tool_set_path (GimpPathTool     *path_tool,
+                         GimpRasterizable *layer,
+                         GimpPath         *path)
 {
   GimpTool        *tool;
   GimpItem        *item = NULL;
@@ -674,7 +690,12 @@ gimp_path_tool_set_path (GimpPathTool    *path_tool,
   options = GIMP_PATH_TOOL_GET_OPTIONS (path_tool);
 
   if (layer != NULL)
-    path = gimp_vector_layer_get_path (layer);
+    {
+      if (gimp_item_is_vector_layer (GIMP_ITEM (layer)))
+        path = gimp_vector_layer_get_path (GIMP_VECTOR_LAYER (layer));
+      else if (GIMP_IS_LAYER_VECTOR_MASK (layer))
+        path = gimp_layer_vector_mask_get_path (GIMP_LAYER_VECTOR_MASK (layer));
+    }
 
   if (path)
     item = GIMP_ITEM (path);
@@ -682,7 +703,7 @@ gimp_path_tool_set_path (GimpPathTool    *path_tool,
   if (path == path_tool->path)
     return;
 
-  if (path_tool->current_vector_layer && path && ! layer)
+  if (path_tool->current_vector && path && ! layer)
     {
       GimpImage *image      = path_tool->current_image;
       GList     *all_layers = gimp_image_get_layer_list (image);
@@ -846,7 +867,7 @@ gimp_path_tool_create_vector_layer (GimpPathTool *path_tool)
   /* If there's already an active vector layer, or no paths are
    * selected, create a new blank path.
    */
-  if (path_tool->current_vector_layer || ! path_tool->path)
+  if (path_tool->current_vector || ! path_tool->path)
     {
       GimpPath *new_path = gimp_path_new (image, _("Vector Layer"));
 
@@ -855,13 +876,13 @@ gimp_path_tool_create_vector_layer (GimpPathTool *path_tool)
 
       g_signal_handlers_disconnect_by_func (options,
                                             gimp_path_tool_vector_change_notify,
-                                            path_tool->current_vector_layer);
+                                            path_tool->current_vector);
       g_signal_handlers_disconnect_by_func (options->fill_options,
                                             gimp_path_tool_vector_change_notify,
-                                            path_tool->current_vector_layer);
+                                            path_tool->current_vector);
       g_signal_handlers_disconnect_by_func (options->stroke_options,
                                             gimp_path_tool_vector_change_notify,
-                                            path_tool->current_vector_layer);
+                                            path_tool->current_vector);
     }
 
   layer = gimp_vector_layer_new (image, path_tool->path,
@@ -881,7 +902,7 @@ gimp_path_tool_create_vector_layer (GimpPathTool *path_tool)
                         -1,
                         TRUE);
 
-  gimp_path_tool_set_layer (path_tool, layer);
+  gimp_path_tool_set_layer (path_tool, GIMP_RASTERIZABLE (layer));
 
   gimp_vector_layer_refresh (layer);
   gimp_image_flush (image);
@@ -896,60 +917,73 @@ gimp_path_tool_vector_layer_path_changed (GimpVectorLayerOptions *options,
                                           const GParamSpec       *pspec,
                                           GimpPathTool           *tool)
 {
-  gimp_path_tool_set_path (tool, tool->current_vector_layer, NULL);
+  gimp_path_tool_set_path (tool, tool->current_vector, NULL);
 }
 
 static void
 gimp_path_tool_vector_change_notify (GObject          *options,
                                      const GParamSpec *pspec,
-                                     GimpVectorLayer  *layer)
+                                     GimpRasterizable *layer)
 {
-  GimpImage *image;
-  gboolean   needs_update = FALSE;
+  GimpImage       *image;
+  GimpVectorLayer *vector_layer = NULL;
+  gboolean         needs_update = FALSE;
 
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  if (GIMP_IS_STROKE_OPTIONS (options))
+  if (gimp_item_is_vector_layer (GIMP_ITEM (layer)))
+    vector_layer = GIMP_VECTOR_LAYER (layer);
+
+  if (vector_layer)
     {
-      GimpStrokeOptions *stroke_options = GIMP_STROKE_OPTIONS (options);
+      if (GIMP_IS_STROKE_OPTIONS (options))
+        {
+          GimpStrokeOptions *stroke_options = GIMP_STROKE_OPTIONS (options);
 
-      gimp_config_sync (G_OBJECT (stroke_options),
-                        G_OBJECT (layer->options->stroke_options), 0);
+          gimp_config_sync (G_OBJECT (stroke_options),
+                            G_OBJECT (vector_layer->options->stroke_options),
+                                      0);
 
-      needs_update = TRUE;
-    }
-  else if (GIMP_IS_FILL_OPTIONS (options))
-    {
-      GimpFillOptions *fill_options = GIMP_FILL_OPTIONS (options);
+          needs_update = TRUE;
+        }
+      else if (GIMP_IS_FILL_OPTIONS (options))
+        {
+          GimpFillOptions *fill_options = GIMP_FILL_OPTIONS (options);
 
-      gimp_config_sync (G_OBJECT (fill_options),
-                        G_OBJECT (layer->options->fill_options), 0);
+          gimp_config_sync (G_OBJECT (fill_options),
+                            G_OBJECT (vector_layer->options->fill_options),
+                                      0);
 
-      needs_update = TRUE;
-    }
-  else if (GIMP_IS_PATH_OPTIONS (options))
-    {
-      GimpPathOptions *path_options = GIMP_PATH_OPTIONS (options);
+          needs_update = TRUE;
+        }
+      else if (GIMP_IS_PATH_OPTIONS (options))
+        {
+          GimpPathOptions *path_options = GIMP_PATH_OPTIONS (options);
 
-      g_object_set (layer->options,
-                    "enable-fill", path_options->enable_fill,
-                    "enable-stroke", path_options->enable_stroke,
-                    NULL);
+          g_object_set (vector_layer->options,
+                        "enable-fill", path_options->enable_fill,
+                        "enable-stroke", path_options->enable_stroke,
+                        NULL);
 
-      needs_update = TRUE;
+          needs_update = TRUE;
+        }
     }
 
   if (needs_update)
     {
-      gimp_vector_layer_refresh (layer);
+      if (vector_layer)
+        gimp_vector_layer_refresh (vector_layer);
+      else if (GIMP_IS_LAYER_VECTOR_MASK (layer))
+        gimp_layer_vector_mask_render (GIMP_LAYER_VECTOR_MASK (layer));
+
       gimp_image_flush (image);
     }
 }
 
 static void
-gimp_path_tool_layer_rasterized (GimpVectorLayer  *layer,
-                                 gboolean          is_rasterized,
-                                 GimpPathTool     *tool)
+gimp_path_tool_layer_rasterized (GimpRasterizable  *layer,
+                                 gboolean           is_rasterized,
+                                 GimpPathTool      *tool)
 {
   if (! is_rasterized && ! GIMP_TOOL (tool)->display)
     {
@@ -961,7 +995,7 @@ gimp_path_tool_layer_rasterized (GimpVectorLayer  *layer,
       if (current_layers                      &&
           g_list_length (current_layers) == 1 &&
           current_layers->data == layer)
-        gimp_path_tool_set_layer (tool, layer);
+        gimp_path_tool_set_layer (tool, GIMP_RASTERIZABLE (layer));
     }
   else if (is_rasterized && GIMP_TOOL (tool)->display)
     {
@@ -970,40 +1004,50 @@ gimp_path_tool_layer_rasterized (GimpVectorLayer  *layer,
 }
 
 static void
-gimp_path_tool_set_layer (GimpPathTool    *path_tool,
-                          GimpVectorLayer *vector_layer)
+gimp_path_tool_set_layer (GimpPathTool     *path_tool,
+                          GimpRasterizable *layer)
 {
   GimpPathOptions        *options;
+  GimpVectorLayer        *vector_layer = NULL;
   GimpVectorLayerOptions *layer_options;
 
   g_return_if_fail (GIMP_IS_PATH_TOOL (path_tool));
 
   options = GIMP_PATH_TOOL_GET_OPTIONS (path_tool);
 
-  if (path_tool->current_vector_layer)
+  if (path_tool->current_vector &&
+      gimp_item_is_vector_layer (GIMP_ITEM (path_tool->current_vector)))
+    vector_layer = GIMP_VECTOR_LAYER (path_tool->current_vector);
+
+  if (vector_layer)
     {
-      layer_options = gimp_vector_layer_get_options (path_tool->current_vector_layer);
+      layer_options = gimp_vector_layer_get_options (vector_layer);
       g_signal_handlers_disconnect_by_func (layer_options,
                                             gimp_path_tool_vector_layer_path_changed,
                                             path_tool);
 
       g_signal_handlers_disconnect_by_func (options,
                                             gimp_path_tool_vector_change_notify,
-                                            path_tool->current_vector_layer);
+                                            path_tool->current_vector);
       g_signal_handlers_disconnect_by_func (options->fill_options,
                                             gimp_path_tool_vector_change_notify,
-                                            path_tool->current_vector_layer);
+                                            path_tool->current_vector);
       g_signal_handlers_disconnect_by_func (options->stroke_options,
                                             gimp_path_tool_vector_change_notify,
-                                            path_tool->current_vector_layer);
+                                            path_tool->current_vector);
 
-      g_signal_handlers_disconnect_by_func (path_tool->current_vector_layer,
+      g_signal_handlers_disconnect_by_func (path_tool->current_vector,
                                             G_CALLBACK (gimp_path_tool_layer_rasterized),
                                             path_tool);
     }
 
-  path_tool->current_vector_layer = vector_layer;
-  gimp_path_tool_set_path (path_tool, vector_layer, NULL);
+  path_tool->current_vector = layer;
+  gimp_path_tool_set_path (path_tool, layer, NULL);
+
+  vector_layer = NULL;
+  if (path_tool->current_vector &&
+      gimp_item_is_vector_layer (GIMP_ITEM (path_tool->current_vector)))
+    vector_layer = GIMP_VECTOR_LAYER (path_tool->current_vector);
 
   if (vector_layer)
     {
@@ -1137,7 +1181,7 @@ gimp_path_tool_confirm_response (GimpViewableDialog *dialog,
 
         case GTK_RESPONSE_ACCEPT:
           gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
-          gimp_path_tool_set_layer (path_tool, layer);
+          gimp_path_tool_set_layer (path_tool, GIMP_RASTERIZABLE (layer));
           break;
 
         default:

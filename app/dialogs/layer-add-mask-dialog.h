@@ -22,6 +22,7 @@ typedef void (* GimpAddMaskCallback) (GtkWidget       *dialog,
                                       GList           *layers,
                                       GimpAddMaskType  add_mask_type,
                                       GimpChannel     *channel,
+                                      GimpPath        *path,
                                       gboolean         invert,
                                       gboolean         edit_mask,
                                       gpointer         user_data);
