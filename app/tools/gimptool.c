@@ -28,6 +28,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimplayervectormask.h"
 #include "core/gimplinklayer.h"
 #include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
@@ -739,12 +740,13 @@ gimp_tool_button_press (GimpTool            *tool,
       drawables = gimp_image_get_selected_drawables (image);
       for (GList *iter = drawables; iter; iter = iter->next)
         {
-          GimpDrawable *drawable    = iter->data;
-          GimpItem     *locked_item = NULL;
+          GimpDrawable  *drawable    = iter->data;
+          GimpItem      *locked_item = NULL;
 
           if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
               gimp_item_is_link_layer (GIMP_ITEM (drawable))   ||
               gimp_item_is_text_layer (GIMP_ITEM (drawable))   ||
+              GIMP_IS_LAYER_VECTOR_MASK (drawable)             ||
               gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
             {
               gboolean constrain_only;
@@ -777,6 +779,14 @@ gimp_tool_button_press (GimpTool            *tool,
                       /* TRANSLATORS: the string between parentheses will be a menu path. */
                       gimp_tool_message (tool, display, _("Vector layers must be rasterized (%s)."), menu_path);
                       gimp_tools_blink_item (display->gimp, GIMP_ITEM (drawable));
+                    }
+                  else if (GIMP_IS_LAYER_VECTOR_MASK (drawable))
+                    {
+                      GimpLayer *layer =
+                        gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable));
+                      /* TRANSLATORS: the string between parentheses will be a menu path. */
+                      gimp_tool_message (tool, display, _("Vector masks must be rasterized (%s)."), menu_path);
+                      gimp_tools_blink_item (display->gimp, GIMP_ITEM (layer));
                     }
                   else
                     {

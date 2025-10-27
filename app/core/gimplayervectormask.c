@@ -38,7 +38,6 @@
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
-#include "gimplayermask.h"
 #include "gimplayervectormask.h"
 
 #include "gimp-intl.h"
@@ -100,6 +99,7 @@ gimp_layer_vector_mask_render (GimpLayerVectorMask *layer_mask)
   GimpDrawable *drawable = GIMP_DRAWABLE (layer_mask);
   GimpLayer    *layer    = NULL;
   GeglBuffer   *buffer   = NULL;
+  GeglColor    *color    = NULL;
   GimpItem     *item     = GIMP_ITEM (layer_mask);
   GimpImage    *image    = gimp_item_get_image (item);
   gint          x        = 0;
@@ -124,9 +124,9 @@ gimp_layer_vector_mask_render (GimpLayerVectorMask *layer_mask)
   gimp_item_set_offset (GIMP_ITEM (layer_mask), x, y);
 
   /* make the layer background transparent */
-  gimp_drawable_fill (GIMP_DRAWABLE (layer_mask),
-                      gimp_get_user_context (image->gimp),
-                      GIMP_FILL_BACKGROUND);
+  color = gegl_color_new ("black");
+  gimp_channel_set_color (GIMP_CHANNEL (layer_mask), color, FALSE);
+  g_clear_object (&color);
 
   /* render path to the layer */
   gimp_layer_vector_mask_render_path (layer_mask);
@@ -199,7 +199,7 @@ gimp_layer_vector_mask_new (GimpImage   *image,
 
   layer_mask->path = path;
 
-  /*  set the layer_mask color and opacity  */
+  /*  set the layer_mask opacity  */
   gimp_channel_set_show_masked (GIMP_CHANNEL (layer_mask), TRUE);
 
   /*  selection mask variables  */

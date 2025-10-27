@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include "gimplayermask.h"
+
 
 #define GIMP_TYPE_LAYER_VECTOR_MASK            (gimp_layer_vector_mask_get_type ())
 #define GIMP_LAYER_VECTOR_MASK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER_VECTOR_MASK, GimpLayerVectorMask))
