@@ -132,6 +132,7 @@ gimp_component_editor_init (GimpComponentEditor *editor)
   g_object_unref (list);
 
   gtk_tree_view_set_headers_visible (editor->view, FALSE);
+  gtk_tree_view_set_enable_search (editor->view, FALSE);
 
   editor->eye_column = gtk_tree_view_column_new ();
   gtk_tree_view_append_column (editor->view, editor->eye_column);
