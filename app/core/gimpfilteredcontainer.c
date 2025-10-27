@@ -188,11 +188,17 @@ gimp_filtered_container_set_property (GObject      *object,
                                       GParamSpec   *pspec)
 {
   GimpFilteredContainer *filtered_container = GIMP_FILTERED_CONTAINER (object);
+  gint                   freeze_count;
 
   switch (property_id)
     {
     case PROP_SRC_CONTAINER:
       filtered_container->src_container = g_value_dup_object (value);
+
+      freeze_count = gimp_container_freeze_count (filtered_container->src_container);
+      while (freeze_count-- > 0)
+        gimp_filtered_container_src_freeze (filtered_container->src_container,
+                                            filtered_container);
 
       g_signal_connect (filtered_container->src_container, "notify::sort-func",
                         G_CALLBACK (gimp_filtered_container_src_sort_func),
