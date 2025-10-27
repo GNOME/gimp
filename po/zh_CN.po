@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-21 17:07+0000\n"
-"PO-Revision-Date: 2025-10-22 07:57+0800\n"
+"POT-Creation-Date: 2025-10-26 16:29+0000\n"
+"PO-Revision-Date: 2025-10-27 08:18+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -581,7 +581,7 @@ msgid "Tools"
 msgstr "工具"
 
 #: app/actions/actions.c:243 app/dialogs/dialogs.c:384
-#: app/tools/gimppathtool.c:182
+#: app/tools/gimppathtool.c:188
 msgid "Paths"
 msgstr "路径"
 
@@ -2493,13 +2493,12 @@ msgstr "240 秒"
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
 #: app/dialogs/path-export-dialog.c:88 app/dialogs/path-import-dialog.c:93
-#: app/dialogs/vector-layer-options-dialog.c:104
 #: app/display/gimpdisplayshell-close.c:181
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:376 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1049 app/tools/gimptexttool.c:1776
+#: app/tools/gimppathtool.c:1075 app/tools/gimptexttool.c:1776
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:556
@@ -6034,7 +6033,7 @@ msgstr "翻转"
 msgid "Rotating"
 msgstr "旋转"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1416
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1427
 msgid "Cannot crop because the current selection is empty."
 msgstr "无法剪裁，因为当前选区为空。"
 
@@ -6083,7 +6082,7 @@ msgid "Scale Image"
 msgstr "缩放图像"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2678
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2692
 #: app/dialogs/preferences-dialog.c:1750 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
@@ -6160,7 +6159,7 @@ msgstr "为该类型图层激活默认编辑动作"
 
 #: app/actions/layers-actions.c:61
 msgctxt "layers-action"
-msgid "Edit Te_xt on canvas"
+msgid "Edit Te_xt on Canvas"
 msgstr "在画布上编辑文字(_X)"
 
 #: app/actions/layers-actions.c:62
@@ -6170,13 +6169,13 @@ msgstr "在画布上编辑该文字图层内容"
 
 #: app/actions/layers-actions.c:67
 msgctxt "layers-action"
-msgid "Path Tool"
-msgstr "路径工具"
+msgid "Edit Vector on Canvas"
+msgstr "在画布上编辑矢量"
 
 #: app/actions/layers-actions.c:68
 msgctxt "layers-action"
-msgid "Activate the path tool on this vector layer's path"
-msgstr "在此矢量图层的路径上激活路径工具"
+msgid "Activate the path tool on this vector layer"
+msgstr "在此矢量图层上激活路径工具"
 
 #: app/actions/layers-actions.c:73
 msgctxt "layers-action"
@@ -6966,219 +6965,219 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "到新图层(_N)"
 
-#: app/actions/layers-commands.c:351 app/actions/layers-commands.c:2514
+#: app/actions/layers-commands.c:343 app/actions/layers-commands.c:2527
 msgid "Layer Attributes"
 msgstr "图层属性"
 
-#: app/actions/layers-commands.c:354
+#: app/actions/layers-commands.c:346
 msgid "Edit Layer Attributes"
 msgstr "编辑图层属性"
 
-#: app/actions/layers-commands.c:423 app/widgets/gimpdrawabletreeview.c:649
+#: app/actions/layers-commands.c:415 app/widgets/gimpdrawabletreeview.c:649
 #: app/widgets/gimplayertreeview.c:915
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "新建图层"
 
-#: app/actions/layers-commands.c:424
+#: app/actions/layers-commands.c:416
 #, c-format
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
 msgstr[0] "创建 %d 个新图层"
 
-#: app/actions/layers-commands.c:509 app/actions/layers-commands.c:2397
+#: app/actions/layers-commands.c:501 app/actions/layers-commands.c:2409
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "新建图层"
 
-#: app/actions/layers-commands.c:591
+#: app/actions/layers-commands.c:583
 msgid "Visible"
 msgstr "可见"
 
-#: app/actions/layers-commands.c:621
+#: app/actions/layers-commands.c:613
 msgid "New layer group"
 msgid_plural "New layer groups"
 msgstr[0] "新建图层组"
 
-#: app/actions/layers-commands.c:743
+#: app/actions/layers-commands.c:735
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "升高图层"
 
-#: app/actions/layers-commands.c:778
+#: app/actions/layers-commands.c:770
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "图层升至顶端"
 
-#: app/actions/layers-commands.c:822
+#: app/actions/layers-commands.c:814
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "降低图层"
 
-#: app/actions/layers-commands.c:859
+#: app/actions/layers-commands.c:851
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "图层降至底端"
 
-#: app/actions/layers-commands.c:886
+#: app/actions/layers-commands.c:878
 msgid "Duplicate layers"
 msgstr "再制图层"
 
 #: app/actions/layers-commands.c:1034
+msgid "Cannot merge a pass through layer group."
+msgstr "无法合并通过模式的图层组。"
+
+#: app/actions/layers-commands.c:1045
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "合并 %d 图层组"
 
-#: app/actions/layers-commands.c:1095
+#: app/actions/layers-commands.c:1106
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "删除 %d 图层"
 
-#: app/actions/layers-commands.c:1124
+#: app/actions/layers-commands.c:1135
 msgid "Rasterize Layers"
 msgstr "栅格化图层"
 
-#: app/actions/layers-commands.c:1147
+#: app/actions/layers-commands.c:1158
 msgid "Revert Rasterize"
 msgstr "恢复栅格化"
 
-#: app/actions/layers-commands.c:1171
+#: app/actions/layers-commands.c:1182
 msgid "Add Paths"
 msgstr "添加路径"
 
-#: app/actions/layers-commands.c:1300
+#: app/actions/layers-commands.c:1311
 msgid "Set Layer Boundary Size"
 msgstr "设置图层边界大小"
 
-#: app/actions/layers-commands.c:1330
+#: app/actions/layers-commands.c:1341
 msgid "Layers to Image Size"
 msgstr "图层到图像大小"
 
-#: app/actions/layers-commands.c:1382
+#: app/actions/layers-commands.c:1393
 msgid "Scale Layer"
 msgstr "缩放图层"
 
-#: app/actions/layers-commands.c:1421
+#: app/actions/layers-commands.c:1432
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "剪裁 %d 个图层到选区"
 
-#: app/actions/layers-commands.c:1486
+#: app/actions/layers-commands.c:1497
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
 msgstr "无法剪裁，因为选中的图层都没有内容或它们已被剪裁到内容。"
 
-#: app/actions/layers-commands.c:1492
+#: app/actions/layers-commands.c:1503
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "剪裁 %d 个图层到内容"
 
-#: app/actions/layers-commands.c:1631 app/actions/layers-commands.c:2611
+#: app/actions/layers-commands.c:1642 app/actions/layers-commands.c:2625
 msgid "Add Layer Masks"
 msgstr "添加图层蒙板"
 
-#: app/actions/layers-commands.c:1685
+#: app/actions/layers-commands.c:1696
 msgid "Apply Layer Masks"
 msgstr "应用图层蒙板"
 
-#: app/actions/layers-commands.c:1689
+#: app/actions/layers-commands.c:1700
 msgid "Delete Layer Masks"
 msgstr "删除图层蒙板"
 
-#: app/actions/layers-commands.c:1780
+#: app/actions/layers-commands.c:1791
 msgid "Show Layer Masks"
 msgstr "显示图层蒙板"
 
-#: app/actions/layers-commands.c:1831
+#: app/actions/layers-commands.c:1842
 msgid "Disable Layer Masks"
 msgstr "禁用图层蒙板"
 
-#: app/actions/layers-commands.c:1870
+#: app/actions/layers-commands.c:1881
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "蒙板到选区"
 
-#: app/actions/layers-commands.c:1874
+#: app/actions/layers-commands.c:1885
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "添加蒙板到选区"
 
-#: app/actions/layers-commands.c:1878
+#: app/actions/layers-commands.c:1889
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "从选区减去蒙板"
 
-#: app/actions/layers-commands.c:1882
+#: app/actions/layers-commands.c:1893
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "蒙板与选区相交"
 
-#: app/actions/layers-commands.c:1905
+#: app/actions/layers-commands.c:1916
 msgid "Add Alpha Channel"
 msgstr "添加透明通道"
 
-#: app/actions/layers-commands.c:1926
+#: app/actions/layers-commands.c:1937
 msgid "Remove Alpha Channel"
 msgstr "删除透明通道"
 
-#: app/actions/layers-commands.c:1954 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1965 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:437
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "透明到选区"
 
-#: app/actions/layers-commands.c:1958 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1969 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "添加透明到选区"
 
-#: app/actions/layers-commands.c:1962 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1973 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "从选区减去透明"
 
-#: app/actions/layers-commands.c:1966 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1977 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "透明与选区相交"
 
-#: app/actions/layers-commands.c:1979
+#: app/actions/layers-commands.c:1990
 msgid "Empty Selection"
 msgstr "空选区"
 
-#: app/actions/layers-commands.c:2009 app/actions/layers-commands.c:2053
+#: app/actions/layers-commands.c:2020 app/actions/layers-commands.c:2064
 #: app/widgets/gimplayertreeview.c:1091
 msgid "Set layers opacity"
 msgstr "设置图层不透明度"
 
-#: app/actions/layers-commands.c:2123
+#: app/actions/layers-commands.c:2134
 msgid "Set layers' blend space"
 msgstr "设置图层混合空间"
 
-#: app/actions/layers-commands.c:2177
+#: app/actions/layers-commands.c:2188
 msgid "Set layers' composite space"
 msgstr "设置图层合成空间"
 
-#: app/actions/layers-commands.c:2231
+#: app/actions/layers-commands.c:2242
 msgid "Set layers' composite mode"
 msgstr "设置图层合成模式"
 
-#: app/actions/layers-commands.c:2316
+#: app/actions/layers-commands.c:2327
 msgid "Lock alpha channels"
 msgstr "锁定透明通道"
 
-#: app/actions/layers-commands.c:2316
+#: app/actions/layers-commands.c:2327
 msgid "Unlock alpha channels"
 msgstr "解锁透明通道"
-
-#: app/actions/layers-commands.c:2781
-msgid "Fill / Stroke"
-msgstr "填充 / 描边"
 
 #: app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -7959,7 +7958,6 @@ msgstr "重置所有滤镜"
 #: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:223
 #: app/dialogs/preferences-dialog.c:1175 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
-#: app/dialogs/vector-layer-options-dialog.c:103
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:375 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:326
@@ -14152,43 +14150,47 @@ msgstr "平整图像"
 msgid "Cannot flatten an image without any visible layer."
 msgstr "无法在无可见图层时平整图像。"
 
-#: app/core/gimpimage-merge.c:301
+#: app/core/gimpimage-merge.c:302
 msgid "Cannot merge down a floating selection."
 msgstr "无法向下合并浮动选区。"
 
-#: app/core/gimpimage-merge.c:310
+#: app/core/gimpimage-merge.c:312
+msgid "Cannot merge down a pass through layer group."
+msgstr "无法向下合并通过模式的图层组。"
+
+#: app/core/gimpimage-merge.c:323
 msgid "Cannot merge down an invisible layer."
 msgstr "无法向下合并不可见图层。"
 
-#: app/core/gimpimage-merge.c:336
+#: app/core/gimpimage-merge.c:351
 msgid "Cannot merge down to a layer group."
 msgstr "无法向下合并到图层组。"
 
-#: app/core/gimpimage-merge.c:345
+#: app/core/gimpimage-merge.c:362
 #: app/widgets/gimpdrawabletreeview-filters.c:717
 msgid "The layer to merge down to is locked."
 msgstr "要向下合并的目标图层已被锁定。"
 
-#: app/core/gimpimage-merge.c:360
+#: app/core/gimpimage-merge.c:379
 msgid "There is no visible layer to merge down to."
 msgstr "没有可见图层可以向下合并。"
 
-#: app/core/gimpimage-merge.c:385
+#: app/core/gimpimage-merge.c:404
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "向下合并"
 
-#: app/core/gimpimage-merge.c:429
+#: app/core/gimpimage-merge.c:448
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "合并图层组"
 
-#: app/core/gimpimage-merge.c:562
+#: app/core/gimpimage-merge.c:586
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "合并可见路径"
 
-#: app/core/gimpimage-merge.c:598
+#: app/core/gimpimage-merge.c:622
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "没有足够多的可见路径可合并。至少需要两个。"
 
@@ -14541,39 +14543,39 @@ msgstr "该文件已被删除"
 msgid "No file was set"
 msgstr "未设定文件"
 
-#: app/core/gimplinklayer.c:199 app/core/gimplinklayer.c:1076
+#: app/core/gimplinklayer.c:192
 msgid "Link Layer"
 msgstr "链接图层"
 
-#: app/core/gimplinklayer.c:207
+#: app/core/gimplinklayer.c:200
 msgid "Rename Link Layer"
 msgstr "重命名链接图层"
 
-#: app/core/gimplinklayer.c:208
+#: app/core/gimplinklayer.c:201
 msgid "Move Link Layer"
 msgstr "移动链接图层"
 
-#: app/core/gimplinklayer.c:209
+#: app/core/gimplinklayer.c:202
 msgid "Scale Link Layer"
 msgstr "缩放链接图层"
 
-#: app/core/gimplinklayer.c:210
+#: app/core/gimplinklayer.c:203
 msgid "Resize Link Layer"
 msgstr "改变链接图层大小"
 
-#: app/core/gimplinklayer.c:211
+#: app/core/gimplinklayer.c:204
 msgid "Flip Link Layer"
 msgstr "翻转链接图层"
 
-#: app/core/gimplinklayer.c:212
+#: app/core/gimplinklayer.c:205
 msgid "Rotate Link Layer"
 msgstr "旋转链接图层"
 
-#: app/core/gimplinklayer.c:213 app/core/gimplinklayer.c:572
+#: app/core/gimplinklayer.c:206 app/core/gimplinklayer.c:537
 msgid "Transform Link Layer"
 msgstr "变换链接图层"
 
-#: app/core/gimplinklayer.c:818
+#: app/core/gimplinklayer.c:783
 msgid "Set layer link"
 msgstr "设置图层链接"
 
@@ -14840,13 +14842,13 @@ msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr "无法执行 %s 回调。相应的插件可能已崩溃。"
 
 #. TRANSLATORS: the %s will be a type of item, i.e. "Text Layer".
-#: app/core/gimprasterizable.c:100
+#: app/core/gimprasterizable.c:106
 #, c-format
 msgid "Rasterize %s"
 msgstr "栅格化%s"
 
 #. TRANSLATORS: the %s will be a type of item, i.e. "Text Layer".
-#: app/core/gimprasterizable.c:137
+#: app/core/gimprasterizable.c:146
 #, c-format
 msgid "Revert Rasterize %s"
 msgstr "恢复栅格化%s"
@@ -15349,17 +15351,17 @@ msgid "Channel _name:"
 msgstr "通道名称(_N)："
 
 #: app/dialogs/channel-options-dialog.c:128
-#: app/dialogs/layer-options-dialog.c:180
+#: app/dialogs/layer-options-dialog.c:190
 msgid "Lock _pixels"
 msgstr "锁定像素(_P)"
 
 #: app/dialogs/channel-options-dialog.c:129
-#: app/dialogs/layer-options-dialog.c:181
+#: app/dialogs/layer-options-dialog.c:191
 msgid "Lock position and _size"
 msgstr "锁定位置和大小(_S)"
 
 #: app/dialogs/channel-options-dialog.c:130
-#: app/dialogs/layer-options-dialog.c:182
+#: app/dialogs/layer-options-dialog.c:192
 #: app/widgets/gimpdrawabletreeview.c:176 app/widgets/gimpitemtreeview.c:596
 msgid "Lock visibility"
 msgstr "锁定可见性"
@@ -16016,77 +16018,81 @@ msgstr "立即编辑蒙板(_E)"
 msgid "Please select a channel first"
 msgstr "请先选择通道"
 
-#: app/dialogs/layer-options-dialog.c:178
+#: app/dialogs/layer-options-dialog.c:188
 msgid "Layer _name:"
 msgstr "图层名字(_N)："
 
-#: app/dialogs/layer-options-dialog.c:201
+#: app/dialogs/layer-options-dialog.c:211
 #: app/widgets/gimpdeviceinfoeditor.c:376
 msgid "_Mode:"
 msgstr "模式(_M)："
 
-#: app/dialogs/layer-options-dialog.c:219
+#: app/dialogs/layer-options-dialog.c:229
 msgid "_Blend space:"
 msgstr "混合空间(_B)："
 
-#: app/dialogs/layer-options-dialog.c:229
+#: app/dialogs/layer-options-dialog.c:239
 msgid "Compos_ite space:"
 msgstr "合成空间(_I)："
 
-#: app/dialogs/layer-options-dialog.c:241
+#: app/dialogs/layer-options-dialog.c:251
 msgid "Composite mo_de:"
 msgstr "合成模式(_D)："
 
-#: app/dialogs/layer-options-dialog.c:255
+#: app/dialogs/layer-options-dialog.c:265
 msgid "_Opacity:"
 msgstr "不透明度(_O)："
 
 #. The size labels
-#: app/dialogs/layer-options-dialog.c:268 app/tools/gimpmeasuretool.c:816
+#: app/dialogs/layer-options-dialog.c:278 app/tools/gimpmeasuretool.c:816
 msgid "Width:"
 msgstr "宽度："
 
-#: app/dialogs/layer-options-dialog.c:273 app/tools/gimpmeasuretool.c:844
+#: app/dialogs/layer-options-dialog.c:283 app/tools/gimpmeasuretool.c:844
 msgid "Height:"
 msgstr "高度："
 
 #. The offset labels
-#: app/dialogs/layer-options-dialog.c:325
+#: app/dialogs/layer-options-dialog.c:337
 msgid "Offset X:"
 msgstr "偏移 X："
 
-#: app/dialogs/layer-options-dialog.c:330
+#: app/dialogs/layer-options-dialog.c:342
 msgid "Offset Y:"
 msgstr "偏移 Y："
 
-#: app/dialogs/layer-options-dialog.c:395
+#: app/dialogs/layer-options-dialog.c:408
 #: app/widgets/gimpcolordisplayeditor.c:280
 msgid "Active Filters"
 msgstr "活动滤镜"
 
-#: app/dialogs/layer-options-dialog.c:414
+#: app/dialogs/layer-options-dialog.c:427
 msgid "Select Linked Image"
 msgstr "选择链接的图像"
 
-#: app/dialogs/layer-options-dialog.c:424
+#: app/dialogs/layer-options-dialog.c:437
 msgid "_Linked image:"
 msgstr "链接的图像(_L)："
 
 #. Absolute path checkbox.
-#: app/dialogs/layer-options-dialog.c:434
+#: app/dialogs/layer-options-dialog.c:447
 msgid "S_tore with absolute path"
 msgstr "以绝对路径存储(_T)"
 
-#: app/dialogs/layer-options-dialog.c:450 app/dialogs/resize-dialog.c:510
+#: app/dialogs/layer-options-dialog.c:467
+msgid "_Associated path:"
+msgstr "相关路径(_A)："
+
+#: app/dialogs/layer-options-dialog.c:477 app/dialogs/resize-dialog.c:510
 #: app/widgets/gimptemplateeditor.c:489
 msgid "_Fill with:"
 msgstr "填充(_F)："
 
-#: app/dialogs/layer-options-dialog.c:473
+#: app/dialogs/layer-options-dialog.c:501
 msgid "Lock _alpha"
 msgstr "锁定透明(_A)"
 
-#: app/dialogs/layer-options-dialog.c:485
+#: app/dialogs/layer-options-dialog.c:513
 msgid "Set name from _text"
 msgstr "以文字设定名字(_T)"
 
@@ -18311,18 +18317,6 @@ msgstr "锁定路径位置(_P)"
 msgid "Lock path _visibility"
 msgstr "锁定路径可见性(_V)"
 
-#: app/dialogs/vector-layer-options-dialog.c:99
-msgid "Edit Vector Layer Attributes"
-msgstr "编辑矢量图层属性"
-
-#: app/dialogs/vector-layer-options-dialog.c:105
-msgid "_Apply"
-msgstr "应用(_A)"
-
-#: app/dialogs/vector-layer-options-dialog.c:274
-msgid "Fill/Stroke Vector Layer"
-msgstr "填充/描边矢量图层"
-
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:206
 #, c-format
@@ -20502,7 +20496,7 @@ msgstr[0] "从崩溃中抢救了 %d 张图像。您想要尝试并恢复它们�
 msgid "Documents"
 msgstr "文档"
 
-#: app/gui/splash.c:183
+#: app/gui/splash.c:199
 msgid "GIMP Startup"
 msgstr "GIMP 启动"
 
@@ -21098,41 +21092,45 @@ msgstr "缓冲区中未找到路径"
 msgid "Failed to import paths from '%s': %s"
 msgstr "无法从“%s”导入路径：%s"
 
-#: app/path/gimpvectorlayer.c:171 app/tools/gimppathtool.c:844
+#: app/path/gimpvectorlayer.c:171 app/tools/gimppathtool.c:851
 msgid "Vector Layer"
 msgstr "矢量图层"
 
-#: app/path/gimpvectorlayer.c:181
+#: app/path/gimpvectorlayer.c:182
 msgid "Rename Vector Layer"
 msgstr "重命名矢量图层"
 
-#: app/path/gimpvectorlayer.c:182
+#: app/path/gimpvectorlayer.c:183
 msgid "Move Vector Layer"
 msgstr "移动矢量图层"
 
-#: app/path/gimpvectorlayer.c:183
+#: app/path/gimpvectorlayer.c:184
 msgid "Scale Vector Layer"
 msgstr "缩放矢量图层"
 
-#: app/path/gimpvectorlayer.c:184
+#: app/path/gimpvectorlayer.c:185
 msgid "Resize Vector Layer"
 msgstr "改变矢量图层大小"
 
-#: app/path/gimpvectorlayer.c:185
+#: app/path/gimpvectorlayer.c:186
 msgid "Flip Vector Layer"
 msgstr "翻转矢量图层"
 
-#: app/path/gimpvectorlayer.c:186
+#: app/path/gimpvectorlayer.c:187
 msgid "Rotate Vector Layer"
 msgstr "旋转矢量图层"
 
-#: app/path/gimpvectorlayer.c:187
+#: app/path/gimpvectorlayer.c:188
 msgid "Transform Vector Layer"
 msgstr "变换矢量图层"
 
-#: app/path/gimpvectorlayer.c:541
+#: app/path/gimpvectorlayer.c:542
 msgid "Discard Vector Information"
 msgstr "丢弃矢量信息"
+
+#: app/path/gimpvectorlayer.c:635
+msgid "Change Vector Layer Path"
+msgstr "更改矢量图层路径"
 
 #: app/path/gimpvectorlayeroptions.c:114
 msgid "Fill Style"
@@ -21750,8 +21748,8 @@ msgstr "创建文字图层失败"
 #: app/pdb/text-layer-cmds.c:1076 app/pdb/text-layer-cmds.c:1134
 #: app/pdb/text-layer-cmds.c:1190 app/pdb/text-layer-cmds.c:1248
 #: app/pdb/text-layer-cmds.c:1306 app/pdb/text-layer-cmds.c:1364
-#: app/pdb/text-layer-cmds.c:1422 app/pdb/text-layer-cmds.c:1480
-#: app/pdb/text-layer-cmds.c:1515
+#: app/pdb/text-layer-cmds.c:1422 app/pdb/text-layer-cmds.c:1487
+#: app/pdb/text-layer-cmds.c:1523
 msgid "Set text layer attribute"
 msgstr "设定文字图层属性"
 
@@ -22346,47 +22344,43 @@ msgstr "文字内嵌中无效的标记格式"
 msgid "Empty text parasite"
 msgstr "空白文字内嵌"
 
-#: app/text/gimptextlayer.c:157
+#: app/text/gimptextlayer.c:151
 msgid "Text Layer"
 msgstr "文字图层"
 
-#: app/text/gimptextlayer.c:170
+#: app/text/gimptextlayer.c:164
 msgid "Rename Text Layer"
 msgstr "重命名文字图层"
 
-#: app/text/gimptextlayer.c:171
+#: app/text/gimptextlayer.c:165
 msgid "Move Text Layer"
 msgstr "移动文字图层"
 
-#: app/text/gimptextlayer.c:172
+#: app/text/gimptextlayer.c:166
 msgid "Scale Text Layer"
 msgstr "缩放文字图层"
 
-#: app/text/gimptextlayer.c:173
+#: app/text/gimptextlayer.c:167
 msgid "Resize Text Layer"
 msgstr "改变文字图层大小"
 
-#: app/text/gimptextlayer.c:174
+#: app/text/gimptextlayer.c:168
 msgid "Flip Text Layer"
 msgstr "翻转文字图层"
 
-#: app/text/gimptextlayer.c:175
+#: app/text/gimptextlayer.c:169
 msgid "Rotate Text Layer"
 msgstr "旋转文字图层"
 
-#: app/text/gimptextlayer.c:176
+#: app/text/gimptextlayer.c:170
 msgid "Transform Text Layer"
 msgstr "变换文字图层"
 
-#: app/text/gimptextlayer.c:722
+#: app/text/gimptextlayer.c:691
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "由于缺少字体，文字功能不可用。"
 
-#: app/text/gimptextlayer.c:785
-msgid "Empty Text Layer"
-msgstr "空白文字图层"
-
-#: app/text/gimptextlayer.c:956
+#: app/text/gimptextlayer.c:905
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -24519,36 +24513,36 @@ msgstr ""
 msgid "Selection from Path"
 msgstr "从路径创建选区"
 
-#: app/tools/gimppathoptions.c:577 app/tools/gimppathtool.c:731
-#: app/tools/gimppathtool.c:1018
+#: app/tools/gimppathoptions.c:577 app/tools/gimppathtool.c:738
+#: app/tools/gimppathtool.c:1044
 msgid "Create New Vector Layer"
 msgstr "创建新矢量图层"
 
-#: app/tools/gimppathtool.c:183
+#: app/tools/gimppathtool.c:189
 msgid "Paths Tool: Create and edit paths"
 msgstr "路径工具：创建并编辑路径"
 
-#: app/tools/gimppathtool.c:184
+#: app/tools/gimppathtool.c:190
 msgid "Pat_hs"
 msgstr "路径(_H)"
 
-#: app/tools/gimppathtool.c:734
+#: app/tools/gimppathtool.c:741
 msgid "Create Vector Layer from Path"
 msgstr "从路径创建矢量图层"
 
-#: app/tools/gimppathtool.c:1041 app/tools/gimppathtool.c:1044
+#: app/tools/gimppathtool.c:1067 app/tools/gimppathtool.c:1070
 msgid "Confirm Path Editing"
 msgstr "确认路径编辑"
 
-#: app/tools/gimppathtool.c:1048 app/tools/gimptexttool.c:1775
+#: app/tools/gimppathtool.c:1074 app/tools/gimptexttool.c:1775
 msgid "Create _New Layer"
 msgstr "新建图层(_N)"
 
-#: app/tools/gimppathtool.c:1050 app/tools/gimptexttool.c:1777
+#: app/tools/gimppathtool.c:1076 app/tools/gimptexttool.c:1777
 msgid "_Edit Anyway"
 msgstr "仍然编辑(_E)"
 
-#: app/tools/gimppathtool.c:1072
+#: app/tools/gimppathtool.c:1098
 msgid ""
 "The vector layer you picked was rasterized. Editing its path will discard "
 "any modifications."
@@ -29284,6 +29278,25 @@ msgid "Undo History Menu"
 msgstr "撤消历史菜单"
 
 #~ msgctxt "layers-action"
+#~ msgid "Path Tool"
+#~ msgstr "路径工具"
+
+#~ msgid "Fill / Stroke"
+#~ msgstr "填充 / 描边"
+
+#~ msgid "Edit Vector Layer Attributes"
+#~ msgstr "编辑矢量图层属性"
+
+#~ msgid "_Apply"
+#~ msgstr "应用(_A)"
+
+#~ msgid "Fill/Stroke Vector Layer"
+#~ msgstr "填充/描边矢量图层"
+
+#~ msgid "Empty Text Layer"
+#~ msgstr "空白文字图层"
+
+#~ msgctxt "layers-action"
 #~ msgid "Fill / Stroke..."
 #~ msgstr "填充 / 描边…"
 
@@ -30201,10 +30214,6 @@ msgstr "撤消历史菜单"
 #~ msgctxt "align-reference-type"
 #~ msgid "Active channel"
 #~ msgstr "活动通道"
-
-#~ msgctxt "align-reference-type"
-#~ msgid "Active path"
-#~ msgstr "活动路径"
 
 #~ msgid "Click to add this layer to the list"
 #~ msgstr "单击以将此图层添加到列表"
