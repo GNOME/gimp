@@ -252,7 +252,6 @@ pvr_load (GimpProcedure         *procedure,
       g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
                    gimp_file_get_utf8_name (file), g_strerror (errno));
-      fclose (fp);
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                error);
