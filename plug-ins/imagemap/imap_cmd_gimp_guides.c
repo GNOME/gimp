@@ -113,7 +113,7 @@ gimp_guides_ok_cb(gpointer data)
 
    /* Create the areas */
 
-   subcommand_start(_("Use Gimp Guides"));
+   subcommand_start(_("Use GIMP Guides"));
 
    for (hg = hguides; hg && hg->next;
         hg = (all) ? hg->next : hg->next->next) {
@@ -143,7 +143,7 @@ make_gimp_guides_dialog(void)
    GtkWidget *grid, *frame, *hbox, *vbox;
    GtkWidget *label;
 
-   dialog = data->dialog = make_default_dialog(_("Use Gimp Guides"));
+   dialog = data->dialog = make_default_dialog(_("Use GIMP Guides"));
    default_dialog_set_ok_cb(dialog, gimp_guides_ok_cb, data);
    grid = default_dialog_add_grid (dialog);
 
@@ -250,7 +250,7 @@ gimp_guides_command_new (ObjectList_t *list,
    GimpGuidesCommand_t *command = g_new(GimpGuidesCommand_t, 1);
    command->list = list;
    command->drawable = drawable;
-   return command_init(&command->parent, _("Use Gimp Guides"),
+   return command_init(&command->parent, _("Use GIMP Guides"),
                        &gimp_guides_command_class);
 }
 
