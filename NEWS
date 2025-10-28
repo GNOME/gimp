@@ -92,6 +92,7 @@ Plug-Ins:
   - PDF:
     * supporting for exporting vector layers as paths.
     * background fill is set on all pages for multi-page PDFs.
+  - PVR textures: new import support.
 
 API:
 
@@ -164,6 +165,8 @@ API:
     * gimp_rasterizable_is_rasterized
     * gimp_rasterizable_rasterize
     * gimp_rasterizable_restore
+    * gimp_file_procedure_get_meta
+    * gimp_file_procedure_set_meta
   - Removed libgimp functions:
     * gimp_vector_layer_discard (since 3.1.4, but never in a stable
       release).
