@@ -485,9 +485,11 @@ file_proc_find_by_extension (GSList   *procs,
 
   if (ext)
     {
-      GSList *p;
+      GimpPlugInProcedure *meta_proc     = NULL;
+      gchar               *dot           = g_strrstr (ext, ".");
+      gboolean             known_sub_ext = FALSE;
 
-      for (p = procs; p; p = g_slist_next (p))
+      for (GSList *p = procs; p; p = g_slist_next (p))
         {
           GimpPlugInProcedure *proc = p->data;
 
@@ -502,9 +504,32 @@ file_proc_find_by_extension (GSList   *procs,
 
               return proc;
             }
+
+          if (dot && dot != ext)
+            {
+              if (! meta_proc && proc->meta_extensions_list &&
+                  g_slist_find_custom (proc->meta_extensions_list,
+                                       dot + 1,
+                                       (GCompareFunc) g_ascii_strcasecmp))
+                {
+                  meta_proc = proc;
+                }
+              else if (! known_sub_ext)
+                {
+                  *dot = '\0';
+                  if (g_slist_find_custom (proc->extensions_list,
+                                           ext + 1,
+                                           (GCompareFunc) g_ascii_strcasecmp))
+                    known_sub_ext = TRUE;
+                  *dot = '.';
+                }
+            }
         }
 
       g_free (ext);
+
+      if (known_sub_ext && meta_proc)
+        return meta_proc;
     }
 
   return NULL;

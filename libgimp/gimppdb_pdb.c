@@ -850,6 +850,7 @@ _gimp_pdb_get_proc_attribution (const gchar  *procedure_name,
  * _gimp_pdb_set_file_proc_load_handler:
  * @procedure_name: The name of the procedure to be used for loading.
  * @extensions: comma separated list of extensions this handler can load (i.e. \"jpg,jpeg\").
+ * @meta_extensions: comma separated list of meta extensions this handler can load (i.e. \"gz\").
  * @prefixes: comma separated list of prefixes this handler can load (i.e. \"http:,ftp:\").
  * @magics: comma separated list of magic file information this handler can load (i.e. \"0,string,GIF\").
  *
@@ -863,6 +864,7 @@ _gimp_pdb_get_proc_attribution (const gchar  *procedure_name,
 gboolean
 _gimp_pdb_set_file_proc_load_handler (const gchar *procedure_name,
                                       const gchar *extensions,
+                                      const gchar *meta_extensions,
                                       const gchar *prefixes,
                                       const gchar *magics)
 {
@@ -873,6 +875,7 @@ _gimp_pdb_set_file_proc_load_handler (const gchar *procedure_name,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, procedure_name,
                                           G_TYPE_STRING, extensions,
+                                          G_TYPE_STRING, meta_extensions,
                                           G_TYPE_STRING, prefixes,
                                           G_TYPE_STRING, magics,
                                           G_TYPE_NONE);
@@ -893,6 +896,7 @@ _gimp_pdb_set_file_proc_load_handler (const gchar *procedure_name,
  * _gimp_pdb_set_file_proc_export_handler:
  * @procedure_name: The name of the procedure to be used for saving.
  * @extensions: comma separated list of extensions this handler can export as (i.e. \"jpg,jpeg\").
+ * @meta_extensions: comma separated list of meta extensions this handler can load (i.e. \"gz\").
  * @prefixes: comma separated list of prefixes this handler can export to (i.e. \"http:,ftp:\").
  *
  * Registers a file export handler procedure.
@@ -905,6 +909,7 @@ _gimp_pdb_set_file_proc_load_handler (const gchar *procedure_name,
 gboolean
 _gimp_pdb_set_file_proc_export_handler (const gchar *procedure_name,
                                         const gchar *extensions,
+                                        const gchar *meta_extensions,
                                         const gchar *prefixes)
 {
   GimpValueArray *args;
@@ -914,6 +919,7 @@ _gimp_pdb_set_file_proc_export_handler (const gchar *procedure_name,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, procedure_name,
                                           G_TYPE_STRING, extensions,
+                                          G_TYPE_STRING, meta_extensions,
                                           G_TYPE_STRING, prefixes,
                                           G_TYPE_NONE);
 

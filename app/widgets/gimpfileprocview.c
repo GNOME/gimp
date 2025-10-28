@@ -62,7 +62,8 @@ static void            gimp_file_proc_view_selection_changed      (GtkTreeSelect
 
 static GtkFileFilter * gimp_file_proc_view_process_procedure      (GimpPlugInProcedure *file_proc,
                                                                    GtkFileFilter       *all);
-static gchar         * gimp_file_proc_view_pattern_from_extension (const gchar         *extension);
+static gchar         * gimp_file_proc_view_pattern_from_extension (const gchar         *extension,
+                                                                   gboolean             is_meta);
 
 
 G_DEFINE_TYPE (GimpFileProcView, gimp_file_proc_view, GTK_TYPE_TREE_VIEW)
@@ -110,13 +111,15 @@ gimp_file_proc_view_finalize (GObject *object)
 }
 
 GtkWidget *
-gimp_file_proc_view_new (Gimp        *gimp,
-                         GSList      *procedures,
-                         const gchar *automatic,
-                         const gchar *automatic_help_id)
+gimp_file_proc_view_new (Gimp                   *gimp,
+                         GSList                 *procedures,
+                         GimpFileProcedureGroup  file_proc_group,
+                         const gchar            *automatic,
+                         const gchar            *automatic_help_id)
 {
   GtkFileFilter     *all_filter;
   GtkTreeView       *view;
+  GimpFileProcView  *proc_view;
   GtkTreeViewColumn *column;
   GtkCellRenderer   *cell;
   GtkListStore      *store;
@@ -136,9 +139,9 @@ gimp_file_proc_view_new (Gimp        *gimp,
                        "model",      store,
                        "rules-hint", TRUE,
                        NULL);
-
   g_object_unref (store);
 
+  proc_view  = GIMP_FILE_PROC_VIEW (view);
   all_filter = gtk_file_filter_new ();
 
   for (list = procedures; list; list = g_slist_next (list))
@@ -154,33 +157,38 @@ gimp_file_proc_view_new (Gimp        *gimp,
           if (label)
             {
               GtkFileFilter *filter;
+              gchar         *extensions;
+
+              switch (file_proc_group)
+                {
+                case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+                  extensions = gimp_plug_in_procedure_get_save_extensions (proc, FALSE);
+                  break;
+                case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+                  extensions = gimp_plug_in_procedure_get_export_extensions (proc, FALSE);
+                  break;
+                default:
+                  extensions = gimp_plug_in_procedure_get_open_extensions (proc);
+                  break;
+                }
 
               filter = gimp_file_proc_view_process_procedure (proc, all_filter);
               gtk_list_store_append (store, &iter);
               gtk_list_store_set (store, &iter,
                                   COLUMN_PROC,       proc,
                                   COLUMN_LABEL,      label,
-                                  COLUMN_EXTENSIONS, proc->extensions,
+                                  COLUMN_EXTENSIONS, extensions,
                                   COLUMN_HELP_ID,    help_id,
                                   COLUMN_FILTER,     filter,
                                   -1);
               if (filter != NULL)
                 g_object_unref (filter);
+
+              g_free (extensions);
             }
 
-          for (list2 = proc->extensions_list;
-               list2;
-               list2 = g_slist_next (list2))
-            {
-              GimpFileProcView *proc_view = GIMP_FILE_PROC_VIEW (view);
-              const gchar      *ext       = list2->data;
-              const gchar      *dot       = strchr (ext, '.');
-
-              if (dot && dot != ext)
-                proc_view->meta_extensions =
-                  g_list_append (proc_view->meta_extensions,
-                                 g_strdup (dot + 1));
-            }
+          for (list2 = proc->meta_extensions_list; list2; list2 = list2->next)
+            proc_view->meta_extensions = g_list_append (proc_view->meta_extensions, g_strdup (list2->data));
         }
     }
 
@@ -405,7 +413,7 @@ gimp_file_proc_view_process_procedure (GimpPlugInProcedure *file_proc,
       const gchar *extension = list->data;
       gchar       *pattern;
 
-      pattern = gimp_file_proc_view_pattern_from_extension (extension);
+      pattern = gimp_file_proc_view_pattern_from_extension (extension, FALSE);
       gtk_file_filter_add_pattern (filter, pattern);
       gtk_file_filter_add_pattern (all, pattern);
       g_free (pattern);
@@ -435,6 +443,41 @@ gimp_file_proc_view_process_procedure (GimpPlugInProcedure *file_proc,
         }
     }
 
+  for (list = file_proc->meta_extensions_list;
+       list;
+       list = g_slist_next (list), i++)
+    {
+      const gchar *extension = list->data;
+      gchar       *pattern;
+
+      pattern = gimp_file_proc_view_pattern_from_extension (extension, TRUE);
+      gtk_file_filter_add_pattern (filter, pattern);
+      gtk_file_filter_add_pattern (all, pattern);
+      g_free (pattern);
+
+      if (i == 0)
+        {
+          g_string_append (str, " (");
+        }
+      else if (i <= MAX_EXTENSIONS)
+        {
+          g_string_append (str, ", ");
+        }
+
+      if (i < MAX_EXTENSIONS)
+        {
+          g_string_append (str, "*.");
+          g_string_append (str, extension);
+        }
+      else if (i == MAX_EXTENSIONS)
+        {
+          g_string_append (str, "...");
+        }
+    }
+
+  if (i > 0)
+    g_string_append (str, ")");
+
   gtk_file_filter_set_name (filter, str->str);
   g_string_free (str, TRUE);
 
@@ -442,7 +485,8 @@ gimp_file_proc_view_process_procedure (GimpPlugInProcedure *file_proc,
 }
 
 static gchar *
-gimp_file_proc_view_pattern_from_extension (const gchar *extension)
+gimp_file_proc_view_pattern_from_extension (const gchar *extension,
+                                            gboolean     is_meta)
 {
   gchar *pattern;
   gchar *p;
@@ -457,9 +501,12 @@ gimp_file_proc_view_pattern_from_extension (const gchar *extension)
 
   len = strlen (extension);
 
-  pattern = g_new (gchar, 4 + 4 * len);
+  pattern = g_new (gchar, 6 + 4 * len);
 
-  strcpy (pattern, "*.");
+  if (is_meta)
+    strcpy (pattern, "*.*.");
+  else
+    strcpy (pattern, "*.");
 
   for (i = 0, p = pattern + 2; i < len; i++, p+= 4)
     {

@@ -83,10 +83,12 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_get_proc_attribution           (const gcha
                                                                       gchar            **date);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_load_handler     (const gchar       *procedure_name,
                                                                       const gchar       *extensions,
+                                                                      const gchar       *meta_extensions,
                                                                       const gchar       *prefixes,
                                                                       const gchar       *magics);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_export_handler   (const gchar       *procedure_name,
                                                                       const gchar       *extensions,
+                                                                      const gchar       *meta_extensions,
                                                                       const gchar       *prefixes);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_priority         (const gchar       *procedure_name,
                                                                       gint               priority);

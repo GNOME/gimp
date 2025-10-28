@@ -38,6 +38,8 @@ typedef struct _GimpFileProcedurePrivate
   gchar    *format_name;
   gchar    *mime_types;
   gchar    *extensions;
+  gboolean  is_meta;
+  gchar    *meta_extensions;
   gchar    *prefixes;
   gchar    *magics;
   gint      priority;
@@ -93,11 +95,12 @@ gimp_file_procedure_finalize (GObject *object)
   procedure = GIMP_FILE_PROCEDURE (object);
   priv      = gimp_file_procedure_get_instance_private (procedure);
 
-  g_clear_pointer (&priv->format_name, g_free);
-  g_clear_pointer (&priv->mime_types,  g_free);
-  g_clear_pointer (&priv->extensions,  g_free);
-  g_clear_pointer (&priv->prefixes,    g_free);
-  g_clear_pointer (&priv->magics,      g_free);
+  g_clear_pointer (&priv->format_name,     g_free);
+  g_clear_pointer (&priv->mime_types,      g_free);
+  g_clear_pointer (&priv->extensions,      g_free);
+  g_clear_pointer (&priv->meta_extensions, g_free);
+  g_clear_pointer (&priv->prefixes,        g_free);
+  g_clear_pointer (&priv->magics,          g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -262,6 +265,77 @@ gimp_file_procedure_get_extensions (GimpFileProcedure *procedure)
   priv = gimp_file_procedure_get_instance_private (procedure);
 
   return priv->extensions;
+}
+
+/**
+ * gimp_file_procedure_set_meta:
+ * @procedure: A file procedure.
+ * @is_meta: Whether @procedure is a meta file procedure.
+ * @meta_extensions: A comma separated list of generic extensions this procedure can
+ *                   handle (i.e. "gz").
+ *
+ * Some [class@Gimp.LoadProcedure] or [class@Gimp.ExportProcedure] may
+ * actually be a *meta* procedure. Meta procedures are typically
+ * supporting container formats which will call another procedure for
+ * the actual format within the container.
+ *
+ * Note that you should still call [method@FileProcedure.set_extensions],
+ * usually with a list of standard full formats, such as "xcf.gz,xcfgz",
+ * or again "hgt.zip". Nevertheless the @meta_extensions should be only
+ * "gz" or "zip" respectively. This would allow this meta format to work
+ * even on less common combinations. For instance, I could export an
+ * image as "png.gz" even though it is not explicitly listed.
+ *
+ * Since: 3.2
+ **/
+void
+gimp_file_procedure_set_meta (GimpFileProcedure *procedure,
+                              gboolean           is_meta,
+                              const gchar       *meta_extensions)
+{
+  GimpFileProcedurePrivate *priv;
+
+  g_return_if_fail (GIMP_IS_FILE_PROCEDURE (procedure));
+  g_return_if_fail ((! is_meta && meta_extensions == NULL) ||
+                    (is_meta && meta_extensions != NULL && strlen (meta_extensions) > 0));
+
+  priv = gimp_file_procedure_get_instance_private (procedure);
+  g_clear_pointer (&priv->meta_extensions, g_free);
+
+  priv->is_meta = is_meta;
+  if (is_meta)
+    priv->meta_extensions = g_strdup (meta_extensions);
+}
+
+/**
+ * gimp_file_procedure_get_meta:
+ * @procedure: A file procedure object.
+ * @meta_extensions: (out) (nullable): The generic meta extensions,
+ *                                     optionally.
+ *
+ * Returns whether @procedure is a meta file procedure as set with
+ * [method@FileProcedure.set_meta]. If @meta_extensions is not %NULL,
+ * the generic extensions will be returned too.
+ *
+ * Returns: %TRUE is @procedure is a meta file procedure.
+ *
+ * Since: 3.2
+ **/
+gboolean
+gimp_file_procedure_get_meta (GimpFileProcedure  *procedure,
+                              const gchar       **meta_extensions)
+{
+  GimpFileProcedurePrivate *priv;
+
+  g_return_val_if_fail (GIMP_IS_FILE_PROCEDURE (procedure), FALSE);
+  g_return_val_if_fail (meta_extensions == NULL || *meta_extensions == NULL, FALSE);
+
+  priv = gimp_file_procedure_get_instance_private (procedure);
+
+  if (meta_extensions)
+    *meta_extensions = priv->meta_extensions;
+
+  return priv->is_meta;
 }
 
 /**

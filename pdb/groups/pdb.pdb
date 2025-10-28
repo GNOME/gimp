@@ -888,6 +888,9 @@ HELP
         { name => 'extensions', type => 'string', no_validate => 1,
           desc => 'comma separated list of extensions this handler
                    can load (i.e. "jpg,jpeg")' },
+        { name => 'meta_extensions', type => 'string', no_validate => 1,
+          desc => 'comma separated list of meta extensions this handler
+                   can load (i.e. "gz")' },
         { name => 'prefixes', type => 'string', no_validate => 1,
           desc => 'comma separated list of prefixes this handler
                    can load (i.e. "http:,ftp:")' },
@@ -906,11 +909,13 @@ HELP
     {
       success = gimp_plug_in_set_file_proc_load_handler (plug_in,
                                                          procedure_name,
-                                                         extensions, prefixes,
-                                                         magics, error);
+                                                         extensions, meta_extensions,
+                                                         prefixes, magics, error);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -934,6 +939,9 @@ HELP
         { name => 'extensions', type => 'string', no_validate => 1,
           desc => 'comma separated list of extensions this handler
                    can export as (i.e. "jpg,jpeg")' },
+        { name => 'meta_extensions', type => 'string', no_validate => 1,
+          desc => 'comma separated list of meta extensions this handler
+                   can load (i.e. "gz")' },
         { name => 'prefixes', type => 'string', no_validate => 1,
           desc => 'comma separated list of prefixes this handler
                    can export to (i.e. "http:,ftp:")' }
@@ -949,11 +957,13 @@ HELP
     {
       success = gimp_plug_in_set_file_proc_save_handler (plug_in,
                                                          procedure_name,
-                                                         extensions, prefixes,
-                                                         error);
+                                                         extensions, meta_extensions,
+                                                         prefixes, error);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );

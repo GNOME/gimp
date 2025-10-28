@@ -305,6 +305,7 @@ gboolean
 gimp_plug_in_set_file_proc_load_handler (GimpPlugIn   *plug_in,
                                          const gchar  *proc_name,
                                          const gchar  *extensions,
+                                         const gchar  *meta_extensions,
                                          const gchar  *prefixes,
                                          const gchar  *magics,
                                          GError      **error)
@@ -354,7 +355,7 @@ gimp_plug_in_set_file_proc_load_handler (GimpPlugIn   *plug_in,
       return FALSE;
     }
 
-  gimp_plug_in_procedure_set_file_proc (proc, extensions, prefixes, magics);
+  gimp_plug_in_procedure_set_file_proc (proc, extensions, meta_extensions, prefixes, magics);
 
   gimp_plug_in_manager_add_load_procedure (plug_in->manager, proc);
 
@@ -365,6 +366,7 @@ gboolean
 gimp_plug_in_set_file_proc_save_handler (GimpPlugIn   *plug_in,
                                          const gchar  *proc_name,
                                          const gchar  *extensions,
+                                         const gchar  *meta_extensions,
                                          const gchar  *prefixes,
                                          GError      **error)
 {
@@ -412,7 +414,7 @@ gimp_plug_in_set_file_proc_save_handler (GimpPlugIn   *plug_in,
       return FALSE;
     }
 
-  gimp_plug_in_procedure_set_file_proc (proc, extensions, prefixes, NULL);
+  gimp_plug_in_procedure_set_file_proc (proc, extensions, meta_extensions, prefixes, NULL);
 
   gimp_plug_in_manager_add_save_procedure (plug_in->manager, proc);
 

@@ -278,9 +278,10 @@ gimp_file_dialog_set_property (GObject      *object,
       dialog->file_filter_label = g_value_dup_string (value);
       break;
     case PROP_FILE_PROCS:
+      dialog->file_proc_group = g_value_get_enum (value);
       dialog->file_procs =
         gimp_plug_in_manager_get_file_procedures (dialog->gimp->plug_in_manager,
-                                                  g_value_get_enum (value));
+                                                  dialog->file_proc_group);
       break;
     case PROP_FILE_PROCS_ALL_IMAGES:
       dialog->file_procs_all_images =
@@ -770,6 +771,7 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
 
   dialog->proc_view = gimp_file_proc_view_new (dialog->gimp,
                                                dialog->file_procs,
+                                               dialog->file_proc_group,
                                                dialog->automatic_label,
                                                dialog->automatic_help_id);
   gtk_container_add (GTK_CONTAINER (scrolled_window), dialog->proc_view);
@@ -849,16 +851,17 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
 
           if (uri && strlen (uri))
             {
-              const gchar *last_dot = strrchr (uri, '.');
+              const gchar *img_dot  = strrchr (uri, '.');
+              const gchar *meta_dot = NULL;
 
               /*  if the dot is before the last slash, ignore it  */
-              if (last_dot && strrchr (uri, '/') > last_dot)
-                last_dot = NULL;
+              if (img_dot && strrchr (uri, '/') > img_dot)
+                img_dot = NULL;
 
               /*  check if the uri has a "meta extension" (e.g. foo.bar.gz)
                *  and try to truncate both extensions away.
                */
-              if (last_dot && last_dot != uri)
+              if (img_dot && img_dot != uri)
                 {
                   GList *list;
 
@@ -868,33 +871,68 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
                     {
                       const gchar *ext = list->data;
 
-                      if (! strcmp (ext, last_dot + 1))
+                      if (! strcmp (ext, img_dot + 1))
                         {
-                          const gchar *p = last_dot - 1;
+                          const gchar *p = img_dot - 1;
 
                           while (p > uri && *p != '.')
                             p--;
 
                           if (p != uri && *p == '.')
                             {
-                              last_dot = p;
+                              meta_dot = img_dot;
+                              img_dot  = p;
                               break;
                             }
                         }
                     }
                 }
 
-              if (last_dot != uri)
+              if (img_dot != uri)
                 {
-                  GString *s = g_string_new (uri);
-                  GFile   *file;
-                  gchar   *basename;
+                  GString  *s = g_string_new (uri);
+                  GFile    *file;
+                  gchar    *basename;
+                  gboolean  proc_is_meta;
 
-                  if (last_dot)
-                    g_string_truncate (s, last_dot - uri);
+                  proc_is_meta = (proc->meta_extensions != NULL);
+
+                  if (meta_dot)
+                    g_string_truncate (s, meta_dot - uri);
+                  if (img_dot && ! proc_is_meta)
+                    g_string_truncate (s, img_dot - uri);
 
                   g_string_append (s, ".");
-                  g_string_append (s, (gchar *) proc->extensions_list->data);
+                  if (proc_is_meta)
+                    {
+                      if (img_dot)
+                        {
+                          g_string_append (s, (gchar *) proc->meta_extensions_list->data);
+                        }
+                      else
+                        {
+                          gchar *ext = NULL;
+
+                          switch (dialog->file_proc_group)
+                            {
+                            case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+                              ext = gimp_plug_in_procedure_get_export_extensions (proc, TRUE);
+                              break;
+                            case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+                              ext = gimp_plug_in_procedure_get_save_extensions (proc, TRUE);
+                              break;
+                            default:
+                            }
+
+                          g_string_append (s, ext);
+
+                          g_free (ext);
+                        }
+                    }
+                  else
+                    {
+                      g_string_append (s, (gchar *) proc->extensions_list->data);
+                    }
 
                   file = g_file_new_for_uri (s->str);
                   g_string_free (s, TRUE);
@@ -903,6 +941,8 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
 
                   basename = g_path_get_basename (gimp_file_get_utf8_name (file));
                   gtk_file_chooser_set_current_name (chooser, basename);
+
+                  g_object_unref (file);
                   g_free (basename);
                 }
             }

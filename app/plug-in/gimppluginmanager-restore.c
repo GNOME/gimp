@@ -801,6 +801,7 @@ gimp_plug_in_manager_add_to_db (GimpPlugInManager   *manager,
         {
           gimp_plug_in_procedure_set_file_proc (proc,
                                                 proc->extensions,
+                                                proc->meta_extensions,
                                                 proc->prefixes,
                                                 NULL);
 
@@ -810,6 +811,7 @@ gimp_plug_in_manager_add_to_db (GimpPlugInManager   *manager,
         {
           gimp_plug_in_procedure_set_file_proc (proc,
                                                 proc->extensions,
+                                                proc->meta_extensions,
                                                 proc->prefixes,
                                                 proc->magics);
 

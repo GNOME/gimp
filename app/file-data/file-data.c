@@ -64,7 +64,7 @@ file_data_init (Gimp *gimp)
                                    strlen ("gimp-brush") + 1,
                                    NULL);
   gimp_plug_in_procedure_set_image_types (proc, NULL);
-  gimp_plug_in_procedure_set_file_proc (proc, "gbr, gbp", "",
+  gimp_plug_in_procedure_set_file_proc (proc, "gbr, gbp", NULL, "",
                                         "20, string, GIMP");
   gimp_plug_in_procedure_set_mime_types (proc, "image/gimp-x-gbr");
   gimp_plug_in_procedure_set_handles_remote (proc);
@@ -124,7 +124,7 @@ file_data_init (Gimp *gimp)
 #if 0
   /* do not register as file procedure */
   gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
-  gimp_plug_in_procedure_set_file_proc (proc, "gbr", "", NULL);
+  gimp_plug_in_procedure_set_file_proc (proc, "gbr", NULL, "", NULL);
   gimp_plug_in_procedure_set_mime_types (proc, "image/x-gimp-gbr");
   gimp_plug_in_procedure_set_handles_remote (proc);
 #endif
@@ -198,7 +198,7 @@ file_data_init (Gimp *gimp)
                                    strlen ("gimp-brush") + 1,
                                    NULL);
   gimp_plug_in_procedure_set_image_types (proc, NULL);
-  gimp_plug_in_procedure_set_file_proc (proc, "gih", "", "");
+  gimp_plug_in_procedure_set_file_proc (proc, "gih", NULL, "", "");
   gimp_plug_in_procedure_set_mime_types (proc, "image/gimp-x-gih");
   gimp_plug_in_procedure_set_handles_remote (proc);
 
@@ -255,7 +255,7 @@ file_data_init (Gimp *gimp)
 #if 0
   /* do not register as file procedure */
   gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
-  gimp_plug_in_procedure_set_file_proc (proc, "gih", "", NULL);
+  gimp_plug_in_procedure_set_file_proc (proc, "gih", NULL, "", NULL);
   gimp_plug_in_procedure_set_mime_types (proc, "image/x-gimp-gih");
   gimp_plug_in_procedure_set_handles_remote (proc);
 #endif
@@ -336,7 +336,7 @@ file_data_init (Gimp *gimp)
                                    strlen ("gimp-pattern") + 1,
                                    NULL);
   gimp_plug_in_procedure_set_image_types (proc, NULL);
-  gimp_plug_in_procedure_set_file_proc (proc, "pat", "",
+  gimp_plug_in_procedure_set_file_proc (proc, "pat", NULL, "",
                                         "20,string,GPAT");
   gimp_plug_in_procedure_set_mime_types (proc, "image/gimp-x-pat");
   gimp_plug_in_procedure_set_handles_remote (proc);
@@ -392,7 +392,7 @@ file_data_init (Gimp *gimp)
 #if 0
   /* do not register as file procedure */
   gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
-  gimp_plug_in_procedure_set_file_proc (proc, "pat", "", NULL);
+  gimp_plug_in_procedure_set_file_proc (proc, "pat", NULL, "", NULL);
   gimp_plug_in_procedure_set_mime_types (proc, "image/x-gimp-pat");
   gimp_plug_in_procedure_set_handles_remote (proc);
 #endif
@@ -459,7 +459,7 @@ file_data_init (Gimp *gimp)
                                    (const guint8 *) "gimp-plugin",
                                    strlen ("gimp-plugin") + 1,
                                    NULL);
-  gimp_plug_in_procedure_set_file_proc (proc, "gex", "",
+  gimp_plug_in_procedure_set_file_proc (proc, "gex", NULL, "",
                                         "20, string, GIMP");
   gimp_plug_in_procedure_set_generic_file_proc (proc, TRUE);
   gimp_plug_in_procedure_set_mime_types (proc, "image/gimp-x-gex");

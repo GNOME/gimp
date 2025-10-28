@@ -48,15 +48,16 @@ struct _GimpFileProcViewClass
 
 GType                 gimp_file_proc_view_get_type    (void) G_GNUC_CONST;
 
-GtkWidget           * gimp_file_proc_view_new         (Gimp                 *gimp,
-                                                       GSList               *procedures,
-                                                       const gchar          *automatic,
-                                                       const gchar          *automatic_help_id);
+GtkWidget           * gimp_file_proc_view_new         (Gimp                    *gimp,
+                                                       GSList                  *procedures,
+                                                       GimpFileProcedureGroup   file_proc_group,
+                                                       const gchar             *automatic,
+                                                       const gchar             *automatic_help_id);
 
-GimpPlugInProcedure * gimp_file_proc_view_get_proc    (GimpFileProcView     *view,
-                                                       gchar               **label,
-                                                       GtkFileFilter       **filter);
-gboolean              gimp_file_proc_view_set_proc    (GimpFileProcView     *view,
-                                                       GimpPlugInProcedure  *proc);
+GimpPlugInProcedure * gimp_file_proc_view_get_proc    (GimpFileProcView        *view,
+                                                       gchar                  **label,
+                                                       GtkFileFilter          **filter);
+gboolean              gimp_file_proc_view_set_proc    (GimpFileProcView        *view,
+                                                       GimpPlugInProcedure     *proc);
 
-gchar               * gimp_file_proc_view_get_help_id (GimpFileProcView     *view);
+gchar               * gimp_file_proc_view_get_help_id (GimpFileProcView        *view);

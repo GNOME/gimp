@@ -850,13 +850,15 @@ pdb_set_file_proc_load_handler_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   const gchar *procedure_name;
   const gchar *extensions;
+  const gchar *meta_extensions;
   const gchar *prefixes;
   const gchar *magics;
 
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
   extensions = g_value_get_string (gimp_value_array_index (args, 1));
-  prefixes = g_value_get_string (gimp_value_array_index (args, 2));
-  magics = g_value_get_string (gimp_value_array_index (args, 3));
+  meta_extensions = g_value_get_string (gimp_value_array_index (args, 2));
+  prefixes = g_value_get_string (gimp_value_array_index (args, 3));
+  magics = g_value_get_string (gimp_value_array_index (args, 4));
 
   if (success)
     {
@@ -867,11 +869,13 @@ pdb_set_file_proc_load_handler_invoker (GimpProcedure         *procedure,
         {
           success = gimp_plug_in_set_file_proc_load_handler (plug_in,
                                                              procedure_name,
-                                                             extensions, prefixes,
-                                                             magics, error);
+                                                             extensions, meta_extensions,
+                                                             prefixes, magics, error);
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -889,11 +893,13 @@ pdb_set_file_proc_export_handler_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   const gchar *procedure_name;
   const gchar *extensions;
+  const gchar *meta_extensions;
   const gchar *prefixes;
 
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
   extensions = g_value_get_string (gimp_value_array_index (args, 1));
-  prefixes = g_value_get_string (gimp_value_array_index (args, 2));
+  meta_extensions = g_value_get_string (gimp_value_array_index (args, 2));
+  prefixes = g_value_get_string (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -904,11 +910,13 @@ pdb_set_file_proc_export_handler_invoker (GimpProcedure         *procedure,
         {
           success = gimp_plug_in_set_file_proc_save_handler (plug_in,
                                                              procedure_name,
-                                                             extensions, prefixes,
-                                                             error);
+                                                             extensions, meta_extensions,
+                                                             prefixes, error);
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1964,6 +1972,13 @@ register_pdb_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("meta-extensions",
+                                                       "meta extensions",
+                                                       "comma separated list of meta extensions this handler can load (i.e. \"gz\")",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("prefixes",
                                                        "prefixes",
                                                        "comma separated list of prefixes this handler can load (i.e. \"http:,ftp:\")",
@@ -2005,6 +2020,13 @@ register_pdb_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("extensions",
                                                        "extensions",
                                                        "comma separated list of extensions this handler can export as (i.e. \"jpg,jpeg\")",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("meta-extensions",
+                                                       "meta extensions",
+                                                       "comma separated list of meta extensions this handler can load (i.e. \"gz\")",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));

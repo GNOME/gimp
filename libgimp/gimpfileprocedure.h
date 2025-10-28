@@ -61,6 +61,11 @@ const gchar   * gimp_file_procedure_get_mime_types  (GimpFileProcedure *procedur
 void            gimp_file_procedure_set_extensions  (GimpFileProcedure *procedure,
                                                      const gchar       *extensions);
 const gchar   * gimp_file_procedure_get_extensions  (GimpFileProcedure *procedure);
+void            gimp_file_procedure_set_meta        (GimpFileProcedure *procedure,
+                                                     gboolean          is_meta,
+                                                     const gchar       *meta_extensions);
+gboolean        gimp_file_procedure_get_meta        (GimpFileProcedure *procedure,
+                                                     const gchar       **meta_extensions);
 
 void            gimp_file_procedure_set_prefixes    (GimpFileProcedure *procedure,
                                                      const gchar       *prefixes);

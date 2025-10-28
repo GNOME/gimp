@@ -130,7 +130,7 @@ xcf_init (Gimp *gimp)
                                    strlen ("gimp-wilber") + 1,
                                    NULL);
   gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
-  gimp_plug_in_procedure_set_file_proc (proc, "xcf", "", NULL);
+  gimp_plug_in_procedure_set_file_proc (proc, "xcf", NULL, "", NULL);
   gimp_plug_in_procedure_set_mime_types (proc, "image/x-xcf");
   gimp_plug_in_procedure_set_handles_remote (proc);
 
@@ -186,7 +186,7 @@ xcf_init (Gimp *gimp)
                                    strlen ("gimp-wilber") + 1,
                                    NULL);
   gimp_plug_in_procedure_set_image_types (proc, NULL);
-  gimp_plug_in_procedure_set_file_proc (proc, "xcf", "",
+  gimp_plug_in_procedure_set_file_proc (proc, "xcf", NULL, "",
                                         "0,string,gimp\\040xcf\\040");
   gimp_plug_in_procedure_set_mime_types (proc, "image/x-xcf");
   gimp_plug_in_procedure_set_handles_remote (proc);

@@ -329,6 +329,7 @@ EXPORTS
 	gimp_file_procedure_get_format_name
 	gimp_file_procedure_get_handles_remote
 	gimp_file_procedure_get_magics
+	gimp_file_procedure_get_meta
 	gimp_file_procedure_get_mime_types
 	gimp_file_procedure_get_prefixes
 	gimp_file_procedure_get_priority
@@ -337,6 +338,7 @@ EXPORTS
 	gimp_file_procedure_set_format_name
 	gimp_file_procedure_set_handles_remote
 	gimp_file_procedure_set_magics
+	gimp_file_procedure_set_meta
 	gimp_file_procedure_set_mime_types
 	gimp_file_procedure_set_prefixes
 	gimp_file_procedure_set_priority

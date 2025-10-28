@@ -348,15 +348,18 @@ gimp_export_procedure_get_property (GObject    *object,
 static void
 gimp_export_procedure_install (GimpProcedure *procedure)
 {
-  GimpFileProcedure *file_proc = GIMP_FILE_PROCEDURE (procedure);
+  GimpFileProcedure *file_proc       = GIMP_FILE_PROCEDURE (procedure);
+  const gchar       *meta_extensions = NULL;
   const gchar       *mime_types;
   gint               priority;
 
   gimp_export_procedure_add_metadata (GIMP_EXPORT_PROCEDURE (procedure));
   GIMP_PROCEDURE_CLASS (parent_class)->install (procedure);
 
+  (void) gimp_file_procedure_get_meta (file_proc, &meta_extensions),
   _gimp_pdb_set_file_proc_export_handler (gimp_procedure_get_name (procedure),
                                           gimp_file_procedure_get_extensions (file_proc),
+                                          meta_extensions,
                                           gimp_file_procedure_get_prefixes (file_proc));
 
   if (gimp_file_procedure_get_handles_remote (file_proc))
