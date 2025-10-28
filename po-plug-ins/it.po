@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-24 11:21+0200\n"
-"PO-Revision-Date: 2025-10-24 12:30+0200\n"
+"POT-Creation-Date: 2025-10-28 13:19+0100\n"
+"PO-Revision-Date: 2025-10-28 13:26+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -2031,8 +2031,8 @@ msgstr "Impossibile operare su selezioni vuote."
 #: ../plug-ins/common/file-pcx.c:533 ../plug-ins/common/file-png.c:800
 #: ../plug-ins/common/file-png.c:1370 ../plug-ins/common/file-ps.c:1158
 #: ../plug-ins/common/file-ps.c:3738 ../plug-ins/common/file-psp.c:2638
-#: ../plug-ins/common/file-psp.c:2688 ../plug-ins/common/file-qoi.c:275
-#: ../plug-ins/common/file-raw-data.c:608
+#: ../plug-ins/common/file-psp.c:2688 ../plug-ins/common/file-pvr.c:253
+#: ../plug-ins/common/file-qoi.c:275 ../plug-ins/common/file-raw-data.c:608
 #: ../plug-ins/common/file-raw-data.c:796
 #: ../plug-ins/common/file-raw-data.c:1841
 #: ../plug-ins/common/file-seattle-filmworks.c:232
@@ -2910,16 +2910,16 @@ msgstr "Carica file compressi con zip"
 msgid "This procedure loads files in the zip compressed format."
 msgstr "Questa procedura carica file nel formato compresso zip."
 
-#: ../plug-ins/common/file-compressor.c:471
+#: ../plug-ins/common/file-compressor.c:473
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Nessuna estensione plausibile, salvataggio come XCF compresso."
 
-#: ../plug-ins/common/file-compressor.c:491
+#: ../plug-ins/common/file-compressor.c:493
 #, c-format
 msgid "Compressing '%s'"
 msgstr "Compressione \"%s\""
 
-#: ../plug-ins/common/file-compressor.c:529
+#: ../plug-ins/common/file-compressor.c:531
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
 "Nessuna estensione plausibile, tentativo di salvataggio tramite il magic del "
@@ -2930,7 +2930,7 @@ msgstr ""
 #. * procedure expects that the archive contains a single
 #. * file.
 #.
-#: ../plug-ins/common/file-compressor.c:1110
+#: ../plug-ins/common/file-compressor.c:1112
 msgid "This zip archive contains more than one file."
 msgstr "Questo archivio zip contiene più di un file."
 
@@ -4567,8 +4567,10 @@ msgstr "Carica file in formato PAA Bohemia Interactive"
 
 #: ../plug-ins/common/file-paa.c:232 ../plug-ins/common/file-paa.c:269
 #: ../plug-ins/common/file-paa.c:290 ../plug-ins/common/file-pcx.c:646
-#: ../plug-ins/common/file-tim.c:364 ../plug-ins/common/file-tim.c:390
-#: ../plug-ins/common/file-tim.c:453 ../plug-ins/common/file-tim.c:498
+#: ../plug-ins/common/file-pvr.c:307 ../plug-ins/common/file-pvr.c:350
+#: ../plug-ins/common/file-pvr.c:362 ../plug-ins/common/file-tim.c:364
+#: ../plug-ins/common/file-tim.c:390 ../plug-ins/common/file-tim.c:453
+#: ../plug-ins/common/file-tim.c:498
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Impossibile leggere l'intestazione da '%s'"
@@ -5996,6 +5998,63 @@ msgstr "Blocco attributi immagine generale mancante."
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Esportazione non ancora implementata."
+
+#: ../plug-ins/common/file-pvr.c:211
+msgid "PVR Image"
+msgstr "Immagine PVR"
+
+#: ../plug-ins/common/file-pvr.c:214
+msgid "Load file in the PVR file format"
+msgstr "Carica file in formato PVR"
+
+#: ../plug-ins/common/file-pvr.c:215
+msgid "Load file in the PowerVR texture file format"
+msgstr "Carica file in formato motivo PowerVR"
+
+#: ../plug-ins/common/file-pvr.c:321 ../plug-ins/common/file-pvr.c:331
+#, c-format
+msgid "Could not read GBIX header from '%s'"
+msgstr "Impossibile leggere intestazione GBIX da '%s'"
+
+#: ../plug-ins/common/file-pvr.c:340
+#, c-format
+msgid "Unsupported PVR format: %s"
+msgstr "Formato PVR non supportato %s"
+
+#: ../plug-ins/common/file-pvr.c:404
+#, c-format
+msgid "Incomplete PVR header data."
+msgstr "Dati intestazione PVR incompleti."
+
+#: ../plug-ins/common/file-pvr.c:440
+#, c-format
+msgid "Unable to decode twiddled PVR texture"
+msgstr "Impossibile decodificare motivo PVR modificato"
+
+#: ../plug-ins/common/file-pvr.c:465
+#, c-format
+msgid "Unable to decode PVR texture"
+msgstr "Impossibile decodificare motivo PVR"
+
+#: ../plug-ins/common/file-pvr.c:496
+#, c-format
+msgid "Incomplete PVR codebook data."
+msgstr "Dati incompleti del codebook PVR."
+
+#: ../plug-ins/common/file-pvr.c:537
+#, c-format
+msgid "Incomplete PVR data."
+msgstr "Dati PVR incompleti."
+
+#: ../plug-ins/common/file-pvr.c:546
+#, c-format
+msgid "Unable to decode compressed PVR texture"
+msgstr "Impossibile decodificare il motivo PVR compresso"
+
+#: ../plug-ins/common/file-pvr.c:562
+#, c-format
+msgid "Unsupported PVR texture format: %d"
+msgstr "Formato motivo PVR non supportato: %d"
 
 #: ../plug-ins/common/file-qoi.c:139 ../plug-ins/common/file-qoi.c:166
 msgid "Quite OK Image"
@@ -7847,11 +7906,11 @@ msgstr "Grado di decadimento dei contorni di ogni pezzo"
 
 #: ../plug-ins/common/jigsaw.c:510
 msgid "Hi_ghlight"
-msgstr "_Alteluci"
+msgstr "E_videnzia"
 
 #: ../plug-ins/common/jigsaw.c:511
 msgid "The amount of highlighting on the edges of each piece"
-msgstr "Ammontare delle alteluci ai contorni di ogni pezzo"
+msgstr "Quantità di evidenziazione sui contorni di ogni pezzo"
 
 #: ../plug-ins/common/jigsaw.c:554
 msgid "Assembling jigsaw"
@@ -8673,8 +8732,8 @@ msgid "Amount"
 msgstr "Ammontare"
 
 #: ../plug-ins/common/sphere-designer.c:2874
-msgid "Exp."
-msgstr "Esp."
+msgid "Exponent"
+msgstr "Esponente"
 
 #: ../plug-ins/common/sphere-designer.c:2881
 msgid "Transformations"
