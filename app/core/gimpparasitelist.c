@@ -328,13 +328,13 @@ gimp_parasite_list_remove (GimpParasiteList *list,
                            const gchar      *name)
 {
   g_return_if_fail (GIMP_IS_PARASITE_LIST (list));
+  g_return_if_fail (name != NULL && strlen (name) > 0);
 
   if (list->table)
     {
-      GimpParasite *parasite = NULL;
+      GimpParasite *parasite;
 
-      if (name != NULL)
-        parasite = (GimpParasite *) gimp_parasite_list_find (list, name);
+      parasite = (GimpParasite *) gimp_parasite_list_find (list, name);
 
       if (parasite)
         {
