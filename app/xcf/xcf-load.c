@@ -357,7 +357,7 @@ xcf_load_image (Gimp     *gimp,
     }
 
 
-/* check for simulation bpc parasite */
+  /* check for simulation bpc parasite */
   parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
                                        "image-simulation-bpc");
   if (parasite)
