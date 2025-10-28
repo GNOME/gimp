@@ -149,8 +149,11 @@ gimp_attach_parasite (const GimpParasite *parasite)
  *
  * Removes a global parasite.
  *
- * This procedure detaches a global parasite from. It has no return
- * values.
+ * This procedure detaches a global parasite.
+ *
+ * It will return %FALSE if @name is invalid (%NULL or empty string)
+ * and %TRUE otherwise (even if there was no parasite removed, because
+ * no parasite was named like this).
  *
  * Returns: TRUE on success.
  *

@@ -141,7 +141,10 @@ detach_parasite_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_parasite_detach (gimp, name);
+      if (name && strlen (name) > 0)
+        gimp_parasite_detach (gimp, name);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -333,7 +336,9 @@ register_gimp_procs (GimpPDB *pdb)
                                "gimp-detach-parasite");
   gimp_procedure_set_static_help (procedure,
                                   "Removes a global parasite.",
-                                  "This procedure detaches a global parasite from. It has no return values.",
+                                  "This procedure detaches a global parasite.\n"
+                                  "\n"
+                                  "It will return %FALSE if @name is invalid (%NULL or empty string) and %TRUE otherwise (even if there was no parasite removed, because no parasite was named like this).",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Jay Cox",

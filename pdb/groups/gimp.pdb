@@ -119,7 +119,12 @@ sub detach_parasite {
     $blurb = 'Removes a global parasite.';
 
     $help = <<'HELP';
-This procedure detaches a global parasite from. It has no return values.
+This procedure detaches a global parasite.
+
+
+It will return %FALSE if @name is invalid (%NULL or empty string) and
+%TRUE otherwise (even if there was no parasite removed, because no
+parasite was named like this).
 HELP
 
     &jay_pdb_misc('1998', '2.8');
@@ -132,7 +137,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_parasite_detach (gimp, name);
+  if (name && strlen (name) > 0)
+    gimp_parasite_detach (gimp, name);
+  else
+    success = FALSE;
 }
 CODE
     );

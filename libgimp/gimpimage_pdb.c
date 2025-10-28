@@ -3427,8 +3427,11 @@ gimp_image_attach_parasite (GimpImage          *image,
  *
  * Removes a parasite from an image.
  *
- * This procedure detaches a parasite from an image. It has no return
- * values.
+ * This procedure detaches a parasite from an image.
+ *
+ * It will return %FALSE if @name is invalid (%NULL or empty string)
+ * and %TRUE otherwise (even if there was no parasite removed, because
+ * no parasite was named like this).
  *
  * Returns: TRUE on success.
  *
