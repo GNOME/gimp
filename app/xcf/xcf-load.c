@@ -4346,7 +4346,7 @@ xcf_load_parasite (XcfInfo *info)
       return NULL;
     }
 
-  if (!name)
+  if (! name || strlen (name) == 0)
     {
       g_printerr ("Parasite has no name! Possibly corrupt XCF file.\n");
       return NULL;
