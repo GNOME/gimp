@@ -84,7 +84,7 @@ documents_open_cmd_callback (GimpAction *action,
   GimpContext         *context;
   GimpContainer       *container;
   GimpImagefile       *imagefile;
-  GList               *images  = NULL;
+  GList               *images = NULL;
   GList               *list;
 
   context   = gimp_container_view_get_context (editor->view);
@@ -95,7 +95,8 @@ documents_open_cmd_callback (GimpAction *action,
   if (gimp_container_view_get_selected (editor->view, &images) > 1)
     {
       for (list = images; list; list = list->next)
-        documents_open_image (GTK_WIDGET (editor), context, GIMP_IMAGEFILE (list->data));
+        documents_open_image (GTK_WIDGET (editor), context,
+                              GIMP_IMAGEFILE (list->data));
 
       g_list_free (list);
     }
@@ -220,11 +221,9 @@ documents_remove_cmd_callback (GimpAction *action,
                                GVariant   *value,
                                gpointer    data)
 {
-  GimpContainerEditor *editor  = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context = gimp_container_view_get_context (editor->view);
-  GimpImagefile       *imagefile = gimp_context_get_imagefile (context);
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   const gchar         *uri;
-  GList               *images  = NULL;
+  GList               *images = NULL;
   GList               *list;
 
   if (gimp_container_view_get_selected (editor->view, &images) > 1)
@@ -235,7 +234,8 @@ documents_remove_cmd_callback (GimpAction *action,
 
           gtk_recent_manager_remove_item (gtk_recent_manager_get_default (),
                                           uri, NULL);
-          gimp_container_view_set_1_selected (editor->view, GIMP_VIEWABLE (list->data));
+          gimp_container_view_set_1_selected (editor->view,
+                                              GIMP_VIEWABLE (list->data));
           gimp_container_view_remove_active (editor->view);
         }
       g_list_free (list);
