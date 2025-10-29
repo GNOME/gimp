@@ -95,6 +95,7 @@ enum
   HANDLES_VECTOR,
   THUMB_LOADER,
   BATCH_INTERPRETER,
+  META_EXTENSIONS,
 };
 
 
@@ -152,6 +153,8 @@ plug_in_rc_parse (Gimp    *gimp,
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "extensions", GINT_TO_POINTER (EXTENSIONS));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
+                              "meta-extensions", GINT_TO_POINTER (META_EXTENSIONS));
+  g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "prefixes", GINT_TO_POINTER (PREFIXES));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "magics", GINT_TO_POINTER (MAGICS));
@@ -170,6 +173,8 @@ plug_in_rc_parse (Gimp    *gimp,
 
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
                               "extensions", GINT_TO_POINTER (EXTENSIONS));
+  g_scanner_scope_add_symbol (scanner, SAVE_PROC,
+                              "meta-extensions", GINT_TO_POINTER (META_EXTENSIONS));
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
                               "prefixes", GINT_TO_POINTER (PREFIXES));
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
@@ -661,6 +666,18 @@ plug_in_file_or_batch_proc_deserialize (GScanner            *scanner,
 
                   g_free (proc->extensions);
                   proc->extensions = extensions;
+                }
+              break;
+
+            case META_EXTENSIONS:
+                {
+                  gchar *extensions;
+
+                  if (! gimp_scanner_parse_string (scanner, &extensions))
+                    return G_TOKEN_STRING;
+
+                  g_free (proc->meta_extensions);
+                  proc->meta_extensions = extensions;
                 }
               break;
 
@@ -1426,6 +1443,13 @@ plug_in_rc_write (GSList  *plug_in_defs,
                     {
                       gimp_config_writer_open (writer, "extensions");
                       gimp_config_writer_string (writer, proc->extensions);
+                      gimp_config_writer_close (writer);
+                    }
+
+                  if (proc->meta_extensions && *proc->meta_extensions)
+                    {
+                      gimp_config_writer_open (writer, "meta-extensions");
+                      gimp_config_writer_string (writer, proc->meta_extensions);
                       gimp_config_writer_close (writer);
                     }
 
