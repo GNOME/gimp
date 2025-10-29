@@ -27,7 +27,6 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
@@ -126,9 +125,6 @@ static void         gimp_dockbook_page_reordered    (GtkNotebook    *notebook,
                                                      GtkWidget      *child,
                                                      guint           page_num);
 
-static gboolean     gimp_dockbook_tab_scroll_cb     (GtkWidget      *widget,
-                                                     GdkEventScroll *event);
-
 static gboolean     gimp_dockbook_menu_button_press (GimpDockbook   *dockbook,
                                                      GdkEventButton *bevent,
                                                      GtkWidget      *button);
@@ -142,7 +138,7 @@ static void         gimp_dockbook_help_func         (const gchar    *help_id,
                                                      gpointer        help_data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpDockbook, gimp_dockbook, GTK_TYPE_NOTEBOOK)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDockbook, gimp_dockbook, GIMP_TYPE_NOTEBOOK)
 
 #define parent_class gimp_dockbook_parent_class
 
@@ -224,12 +220,6 @@ gimp_dockbook_init (GimpDockbook *dockbook)
   gtk_notebook_set_show_border (notebook, FALSE);
   gtk_notebook_set_show_tabs (notebook, TRUE);
   gtk_notebook_set_group_name (notebook, "gimp-dockbook");
-
-  gtk_widget_add_events (GTK_WIDGET (notebook),
-                         GDK_SCROLL_MASK);
-  g_signal_connect (GTK_WIDGET (notebook), "scroll-event",
-                    G_CALLBACK (gimp_dockbook_tab_scroll_cb),
-                    NULL);
 
   gtk_drag_dest_set (GTK_WIDGET (dockbook),
                      0,
@@ -529,41 +519,6 @@ gimp_dockbook_page_removed (GtkNotebook *notebook,
 
       g_list_free (children);
     }
-}
-
-/* Restore GTK2 behavior of mouse-scrolling to switch between
- * notebook tabs. References Geany's notebook_tab_bar_click_cb ()
- * at https://github.com/geany/geany/blob/master/src/notebook.c
- */
-static gboolean
-gimp_dockbook_tab_scroll_cb (GtkWidget      *widget,
-                             GdkEventScroll *event)
-{
-  GtkNotebook *notebook = GTK_NOTEBOOK (widget);
-  GtkWidget   *page     = NULL;
-
-  page = gtk_notebook_get_nth_page (notebook,
-                                    gtk_notebook_get_current_page (notebook));
-  if (! page)
-    return FALSE;
-
-  switch (event->direction)
-    {
-    case GDK_SCROLL_RIGHT:
-    case GDK_SCROLL_DOWN:
-      gtk_notebook_next_page (notebook);
-      break;
-
-    case GDK_SCROLL_LEFT:
-    case GDK_SCROLL_UP:
-      gtk_notebook_prev_page (notebook);
-      break;
-
-    default:
-      break;
-    }
-
-  return TRUE;
 }
 
 static void

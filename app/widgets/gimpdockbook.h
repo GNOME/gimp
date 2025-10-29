@@ -20,6 +20,7 @@
 
 #pragma once
 
+#include "libgimpwidgets/gimpwidgets.h"
 
 #define GIMP_TYPE_DOCKBOOK            (gimp_dockbook_get_type ())
 #define GIMP_DOCKBOOK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCKBOOK, GimpDockbook))
@@ -41,18 +42,18 @@ typedef struct _GimpDockbookPrivate  GimpDockbookPrivate;
  * GimpDockbook:
  *
  * Holds GimpDockables which are presented on different tabs using
- * GtkNotebook.
+ * GimpNotebook.
  */
 struct _GimpDockbook
 {
-  GtkNotebook parent_instance;
+  GimpNotebook parent_instance;
 
   GimpDockbookPrivate *p;
 };
 
 struct _GimpDockbookClass
 {
-  GtkNotebookClass parent_class;
+  GimpNotebookClass parent_class;
 
   void (* dockable_added)     (GimpDockbook *dockbook,
                                GimpDockable *dockable);
