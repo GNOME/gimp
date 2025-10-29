@@ -224,12 +224,23 @@ documents_remove_cmd_callback (GimpAction *action,
   GimpContext         *context = gimp_container_view_get_context (editor->view);
   GimpImagefile       *imagefile = gimp_context_get_imagefile (context);
   const gchar         *uri;
+  GList               *images  = NULL;
+  GList               *list;
 
-  uri = gimp_object_get_name (imagefile);
+  if (gimp_container_view_get_selected (editor->view, &images) > 1)
+    {
+      for (list = images; list; list = list->next)
+        {
+          uri = gimp_object_get_name (GIMP_IMAGEFILE (list->data));
 
-  gtk_recent_manager_remove_item (gtk_recent_manager_get_default (), uri, NULL);
-
-  gimp_container_view_remove_active (editor->view);
+          gtk_recent_manager_remove_item (gtk_recent_manager_get_default (),
+                                          uri, NULL);
+          gimp_container_view_set_1_selected (editor->view, GIMP_VIEWABLE (list->data));
+          gimp_container_view_remove_active (editor->view);
+        }
+      g_list_free (list);
+      g_list_free (images);
+    }
 }
 
 void

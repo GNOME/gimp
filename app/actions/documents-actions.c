@@ -69,8 +69,8 @@ static const GimpActionEntry documents_actions[] =
     GIMP_HELP_DOCUMENT_SHOW_IN_FILE_MANAGER },
 
   { "documents-remove", GIMP_ICON_LIST_REMOVE,
-    NC_("documents-action", "Remove _Entry"), NULL, { NULL },
-    NC_("documents-action", "Remove the selected entry"),
+    NC_("documents-action", "Remove _Entries"), NULL, { NULL },
+    NC_("documents-action", "Remove the selected entries"),
     documents_remove_cmd_callback,
     GIMP_HELP_DOCUMENT_REMOVE },
 
