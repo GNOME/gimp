@@ -69,6 +69,7 @@ typedef struct _GimpLabelColor                GimpLabelColor;
 typedef struct _GimpLabelEntry                GimpLabelEntry;
 typedef struct _GimpLabelSpin                 GimpLabelSpin;
 typedef struct _GimpMemsizeEntry              GimpMemsizeEntry;
+typedef struct _GimpNotebook                  GimpNotebook;
 typedef struct _GimpNumberPairEntry           GimpNumberPairEntry;
 typedef struct _GimpOffsetArea                GimpOffsetArea;
 typedef struct _GimpPageSelector              GimpPageSelector;

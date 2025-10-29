@@ -293,6 +293,9 @@ EXPORTS
 	gimp_memsize_entry_new
 	gimp_memsize_entry_set_value
 	gimp_monitor_get_color_profile
+	gimp_notebook_append_page
+	gimp_notebook_get_type
+	gimp_notebook_new
 	gimp_number_pair_entry_get_aspect
 	gimp_number_pair_entry_get_default_text
 	gimp_number_pair_entry_get_default_values
