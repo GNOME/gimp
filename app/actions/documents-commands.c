@@ -84,20 +84,34 @@ documents_open_cmd_callback (GimpAction *action,
   GimpContext         *context;
   GimpContainer       *container;
   GimpImagefile       *imagefile;
+  GList               *images  = NULL;
+  GList               *list;
 
   context   = gimp_container_view_get_context (editor->view);
   container = gimp_container_view_get_container (editor->view);
 
   imagefile = gimp_context_get_imagefile (context);
 
-  if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
+  if (gimp_container_view_get_selected (editor->view, &images) > 1)
     {
-      documents_open_image (GTK_WIDGET (editor), context, imagefile);
+      for (list = images; list; list = list->next)
+        documents_open_image (GTK_WIDGET (editor), context, GIMP_IMAGEFILE (list->data));
+
+      g_list_free (list);
     }
   else
     {
-      file_file_open_dialog (context->gimp, NULL, GTK_WIDGET (editor));
+      if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
+        {
+          documents_open_image (GTK_WIDGET (editor), context, imagefile);
+        }
+      else
+        {
+          file_file_open_dialog (context->gimp, NULL, GTK_WIDGET (editor));
+        }
     }
+  if (images)
+    g_list_free (images);
 }
 
 void

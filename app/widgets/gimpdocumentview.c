@@ -106,6 +106,8 @@ gimp_document_view_new (GimpViewType     view_type,
 
   editor = GIMP_CONTAINER_EDITOR (document_view);
 
+  gimp_container_editor_set_selection_mode (editor, GTK_SELECTION_MULTIPLE);
+
   document_view->open_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
                                    "documents-open",
