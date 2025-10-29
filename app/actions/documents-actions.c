@@ -39,8 +39,8 @@
 static const GimpActionEntry documents_actions[] =
 {
   { "documents-open", GIMP_ICON_DOCUMENT_OPEN,
-    NC_("documents-action", "_Open Image"), NULL, { NULL },
-    NC_("documents-action", "Open the selected entry"),
+    NC_("documents-action", "_Open Images"), NULL, { NULL },
+    NC_("documents-action", "Open the selected entries"),
     documents_open_cmd_callback,
     GIMP_HELP_DOCUMENT_OPEN },
 
@@ -69,8 +69,8 @@ static const GimpActionEntry documents_actions[] =
     GIMP_HELP_DOCUMENT_SHOW_IN_FILE_MANAGER },
 
   { "documents-remove", GIMP_ICON_LIST_REMOVE,
-    NC_("documents-action", "Remove _Entry"), NULL, { NULL },
-    NC_("documents-action", "Remove the selected entry"),
+    NC_("documents-action", "Remove _Entries"), NULL, { NULL },
+    NC_("documents-action", "Remove the selected entries"),
     documents_remove_cmd_callback,
     GIMP_HELP_DOCUMENT_REMOVE },
 
