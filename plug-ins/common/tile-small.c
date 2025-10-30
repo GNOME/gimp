@@ -117,7 +117,7 @@ static gboolean  tileit_dialog          (GimpProcedure       *procedure,
                                          GimpProcedureConfig *config,
                                          GimpDrawable        *drawable);
 
-static void      tileit_scale_update    (GimpLabelSpin       *entry,
+static void      tileit_scale_update    (GtkAdjustment       *adj,
                                          gint                *value);
 static void      tileit_config_update   (GimpProcedureConfig *config);
 
@@ -183,6 +183,7 @@ typedef struct
   gint           y;        /* Y - pos of tile   */
   GtkAdjustment *r_adj;    /* row adjustment    */
   GtkAdjustment *c_adj;    /* column adjustment */
+  GtkAdjustment *opacity_adj;
   GtkWidget     *applybut; /* The apply button  */
 } Exp_Call;
 
@@ -639,8 +640,9 @@ tileit_dialog (GimpProcedure       *procedure,
 
   /* Widget for selecting the Opacity */
 
-  scale = gimp_scale_entry_new (_("O_pacity:"), opacity, 0, 100, 0);
-  g_signal_connect (scale, "value-changed",
+  exp_call.opacity_adj = gtk_adjustment_new (opacity, 0, 100, 1.0, 10.0, 0.0);
+  scale = gimp_spin_scale_new (exp_call.opacity_adj, _("O_pacity"), 0);
+  g_signal_connect (exp_call.opacity_adj, "value-changed",
                     G_CALLBACK (tileit_scale_update),
                     &opacity);
 
@@ -886,10 +888,10 @@ tileit_radio_update (GtkWidget *widget,
 
 
 static void
-tileit_scale_update (GimpLabelSpin *scale,
+tileit_scale_update (GtkAdjustment *adj,
                      gint          *value)
 {
-  *value = RINT (gimp_label_spin_get_value (scale));
+  *value = RINT (gtk_adjustment_get_value (adj));
 
   dialog_update_preview ();
 }

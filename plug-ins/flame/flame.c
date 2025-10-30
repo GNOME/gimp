@@ -107,7 +107,7 @@ static void             combo_callback         (GtkWidget            *widget,
                                                 gpointer              data);
 static void             init_mutants           (GimpProcedureConfig  *proc_config);
 
-static void    flame_scale_entry_update_double (GimpLabelSpin        *entry,
+static void    flame_scale_entry_update_double (GtkAdjustment        *adj,
                                                 gdouble              *value);
 
 static void          flame_update_settings_aux (GimpProcedureConfig  *proc_config);
@@ -804,16 +804,17 @@ edit_callback (GtkWidget *widget,
 
   if (edit_dialog == NULL)
     {
-      GtkWidget *main_vbox;
-      GtkWidget *frame;
-      GtkWidget *grid;
-      GtkWidget *vbox;
-      GtkWidget *hbox;
-      GtkWidget *button;
-      GtkWidget *combo;
-      GtkWidget *label;
-      GtkWidget *scale;
-      gint       i, j;
+      GtkAdjustment *adj;
+      GtkWidget     *main_vbox;
+      GtkWidget     *frame;
+      GtkWidget     *grid;
+      GtkWidget     *vbox;
+      GtkWidget     *hbox;
+      GtkWidget     *button;
+      GtkWidget     *combo;
+      GtkWidget     *label;
+      GtkWidget     *scale;
+      gint           i, j;
 
       edit_dialog = gimp_dialog_new (_("Edit Flame"), PLUG_IN_ROLE,
                                      parent, GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -884,14 +885,14 @@ edit_callback (GtkWidget *widget,
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 
-      scale = gimp_scale_entry_new (_("_Speed:"), pick_speed, 0.05, 0.5, 2);
-      gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.01, 0.1);
+      adj = gtk_adjustment_new (pick_speed, 0.05, 0.5, 0.01, 0.1, 0);
+      scale = gimp_spin_scale_new (adj, _("Speed"), 2);
 
-      g_object_set_data (G_OBJECT (scale), "config",  proc_config);
-      g_signal_connect (scale, "value-changed",
+      g_object_set_data (G_OBJECT (adj), "config",  proc_config);
+      g_signal_connect (adj, "value-changed",
                         G_CALLBACK (flame_scale_entry_update_double),
                         &pick_speed);
-      g_signal_connect_swapped (scale, "value-changed",
+      g_signal_connect_swapped (adj, "value-changed",
                                 G_CALLBACK (set_edit_preview),
                                 proc_config);
       gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 6);
@@ -1365,14 +1366,14 @@ flame_dialog (Flame                *flame,
 }
 
 static void
-flame_scale_entry_update_double (GimpLabelSpin *entry,
+flame_scale_entry_update_double (GtkAdjustment *adj,
                                  gdouble       *value)
 {
   GimpProcedureConfig *proc_config;
 
-  proc_config = g_object_get_data (G_OBJECT (entry), "config");
+  proc_config = g_object_get_data (G_OBJECT (adj), "config");
 
-  *value = gimp_label_spin_get_value (entry);
+  *value = gtk_adjustment_get_value (adj);
 
   flame_update_settings_aux (proc_config);
 }
