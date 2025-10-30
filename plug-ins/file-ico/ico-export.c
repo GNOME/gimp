@@ -1455,8 +1455,8 @@ ani_export_image (GFile                *file,
       if (status != GIMP_PDB_SUCCESS)
         {
           ico_save_info_free (&info);
-          g_free (ani_info->inam);
-          g_free (ani_info->iart);
+          g_clear_pointer (&ani_info->inam, g_free);
+          g_clear_pointer (&ani_info->iart, g_free);
           fclose (fp);
           return GIMP_PDB_EXECUTION_ERROR;
         }

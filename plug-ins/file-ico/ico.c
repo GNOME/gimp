@@ -715,18 +715,17 @@ ani_export (GimpProcedure        *procedure,
                     "cursor-name",   NULL,
                     "author-name",   NULL,
                     "default-delay", header.jif_rate,
-                    "hot-spot-x",   x_array,
-                    "hot-spot-y",   y_array,
+                    "hot-spot-x",    x_array,
+                    "hot-spot-y",    y_array,
                     NULL);
-      g_free (new_hot_spot_x);
-      g_free (new_hot_spot_y);
-
-      g_free (inam);
-      g_free (iart);
-      g_free (ani_info.inam);
-      g_free (ani_info.iart);
-      memset (&ani_info, 0, sizeof (AniSaveInfo));
     }
+
+  g_free (new_hot_spot_x);
+  g_free (new_hot_spot_y);
+  g_free (ani_info.inam);
+  g_free (ani_info.iart);
+  gimp_array_free (x_array);
+  gimp_array_free (y_array);
 
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
