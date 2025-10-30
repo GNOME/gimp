@@ -1094,11 +1094,42 @@ drawable_sub_thumbnail_invoker (GimpProcedure         *procedure,
 
           if (buf)
             {
-              width                = gimp_temp_buf_get_width  (buf);
-              height               = gimp_temp_buf_get_height (buf);
-              bpp                  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (buf));
-              thumbnail_data       = g_bytes_new (gimp_temp_buf_get_data (buf),
-                                                  gimp_temp_buf_get_data_size (buf));
+              const Babl *format      = gimp_temp_buf_get_format (buf);
+              const Babl *rgb_format  = babl_format ("R'G'B' u8");
+              const Babl *rgba_format = babl_format ("R'G'B'A u8");
+              const Babl *fish        = NULL;
+
+              if (babl_format_has_alpha (format) && format != rgba_format)
+                {
+                  fish   = babl_fish (format, rgba_format);
+                  format = rgba_format;
+                }
+              else if (! babl_format_has_alpha (format) && format != rgb_format)
+                {
+                  fish   = babl_fish (format, rgb_format);
+                  format = rgb_format;
+                }
+
+              width  = gimp_temp_buf_get_width  (buf);
+              height = gimp_temp_buf_get_height (buf);
+              bpp    = babl_format_get_bytes_per_pixel (format);
+              if (fish)
+                {
+                  guchar *data;
+                  gint    data_size = bpp * width * height;
+
+                  data = g_malloc (data_size);
+                  babl_process (fish, gimp_temp_buf_get_data (buf), data,
+                                width * height);
+
+                  thumbnail_data = g_bytes_new (data, data_size);
+                  g_free (data);
+                }
+              else
+                {
+                  thumbnail_data = g_bytes_new (gimp_temp_buf_get_data (buf),
+                                                gimp_temp_buf_get_data_size (buf));
+                }
 
               gimp_temp_buf_unref (buf);
             }
