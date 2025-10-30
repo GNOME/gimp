@@ -1179,11 +1179,17 @@ gimp_widget_set_native_handle (GtkWidget  *widget,
  *
  * Disposes a widget's native window handle created, possibly
  * asynchronously, by a previous call to [func@GimpUi.widget_set_native_handle].
- * Call this function on `dispose()` or `finalize()`.
  *
  * Depending on the platform, this function may also execute other
  * necessary clean up so you should call it and not simply free the
  * [struct@GLib.Bytes] yourself.
+ *
+ * You should call this function in the `dispose()` implementation of
+ * your custom widget **before** chaining up with the parent class'
+ * `dispose()` call. The first call to the parent's `dispose()` will
+ * destroy the `GdkWindow` which will prevent this function to do part
+ * of its cleanup when run after. This may result in crashes on some
+ * platforms.
  *
  * This is safe to call even if deferenced @window_handle is %NULL, i.e.
  * that you don't have to check if the window handle was actually set.
