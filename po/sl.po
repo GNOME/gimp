@@ -10,16 +10,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-08 18:09+0000\n"
-"PO-Revision-Date: 2025-10-08 23:02+0200\n"
+"POT-Creation-Date: 2025-10-29 00:21+0000\n"
+"PO-Revision-Date: 2025-10-29 22:05+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 2.2.1\n"
 
@@ -160,12 +160,12 @@ msgstr ""
 "prejeli, si oglejte https://www.gnu.org/licenses/"
 
 #. TRANSLATORS: title for info message in terminal window
-#: app/app.c:534
+#: app/app.c:541
 msgid "INFO"
 msgstr "PODROBNOSTI"
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:536
+#: app/app.c:543
 msgid ""
 "GIMP is now running as a background process. You can quit anytime with Ctrl-"
 "C (SIGINT)."
@@ -174,7 +174,7 @@ msgstr ""
 "(SIGINT)."
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:539
+#: app/app.c:546
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Če želite namesto tega takoj prenehati, pokličite GIMP s --quit."
 
@@ -323,11 +323,11 @@ msgstr "Pokaži stran nastavitev s poskusnimi funkcionalnostmi"
 msgid "Show an image submenu with debug actions"
 msgstr "Pokaži podmeni slike z dejanji razhroščevanja"
 
-#: app/main.c:757
+#: app/main.c:760
 msgid "[FILE|URI...]"
 msgstr "[DATOTEKA|URI...]"
 
-#: app/main.c:787
+#: app/main.c:790
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -335,20 +335,20 @@ msgstr ""
 "GIMP ne more inicializirati grafičnega uporabniškega vmesnika.\n"
 "Prepričajte se, da obstaja prava nastavitev za vaše zaslonsko okolje."
 
-#: app/main.c:851
+#: app/main.c:859
 msgid "Another GIMP instance is already running."
 msgstr "GIMP je že zagnan."
 
-#: app/main.c:940
+#: app/main.c:948
 msgid "GIMP output. Type any character to close this window."
 msgstr "Izhod GIMP. Pritisnite kateri koli znak, da se okno zapre."
 
-#: app/main.c:941
+#: app/main.c:949
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Pritisnite katero koli tipko, da zaprete to okno)\n"
 
-#: app/main.c:958
+#: app/main.c:966
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Izhod programa GIMP. To okno lahko pomanjšate, vendar ga ne zapirajte."
 
@@ -2595,7 +2595,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2438
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2439
 #: app/core/gimppalette.c:586 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -6190,7 +6190,7 @@ msgstr "Aktiviraj privzeto dejanje urejanja za to vrsto plasti"
 
 #: app/actions/layers-actions.c:58
 msgctxt "layers-action"
-msgid "Edit Te_xt on canvas"
+msgid "Edit Te_xt on Canvas"
 msgstr "Uredi bese_dilo na platnu"
 
 #: app/actions/layers-actions.c:59
@@ -10523,12 +10523,12 @@ msgstr "Barva prosojnosti po meri 2"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Če je omogočeno, bo slika postala aktivna, ko njeno okno dobi pozornost. To "
-"je uporabno za upravljalnike oken, ki uporabljajo »klikni za "
-"pozornost« (angl. »click to focus«)."
+"je uporabno za upravljalnike oken, ki uporabljajo »klikni za pozornost« "
+"(angl. »click to focus«)."
 
 #: app/config/gimprc-blurbs.h:23 app/config/gimprc-blurbs.h:28
 msgid "Sets the dynamics search path."
@@ -13021,11 +13021,11 @@ msgstr "Ustvarjanje mape »%s« ..."
 msgid "Cannot create folder '%s': %s"
 msgstr "Mape »%s« ni mogoče ustvariti: %s"
 
-#: app/core/gimp-utils.c:577 app/core/gimpfilloptions.c:431
+#: app/core/gimp-utils.c:579 app/core/gimpfilloptions.c:431
 msgid "No patterns available for this operation."
 msgstr "Za ta postopek vzorci niso na voljo."
 
-#: app/core/gimp-utils.c:1120
+#: app/core/gimp-utils.c:1122
 #, c-format
 msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
@@ -13033,17 +13033,17 @@ msgstr ""
 "Usodna napaka pri razčlenjevanju datoteke virov Photoshop: RLE-stisnjeni "
 "podatki so okvarjeni."
 
-#: app/core/gimp-utils.c:1665
+#: app/core/gimp-utils.c:1667
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "Ta razčlenjevalnik ne podpira prekrivnih seznamov."
 
-#: app/core/gimp-utils.c:1688
+#: app/core/gimp-utils.c:1690
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> mora biti znotraj oznak <ol> ali <ul>."
 
-#: app/core/gimp-utils.c:1693
+#: app/core/gimp-utils.c:1695
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Neznana oznaka: <%s>."
@@ -13911,136 +13911,136 @@ msgstr "Preoblikuj skupino plasti"
 msgid "Symmetry"
 msgstr "Simetrija"
 
-#: app/core/gimpimage.c:2073 app/pdb/drawable-filter-cmds.c:681
+#: app/core/gimpimage.c:2074 app/pdb/drawable-filter-cmds.c:681
 #: app/widgets/gimpdrawabletreeview-filters.c:740
 msgid "Remove filter"
 msgstr "Odstrani filter"
 
-#: app/core/gimpimage.c:2683
+#: app/core/gimpimage.c:2684
 msgid " (exported)"
 msgstr " (izvožena)"
 
-#: app/core/gimpimage.c:2687
+#: app/core/gimpimage.c:2688
 msgid " (overwritten)"
 msgstr " (prepisana)"
 
-#: app/core/gimpimage.c:2696
+#: app/core/gimpimage.c:2697
 msgid " (imported)"
 msgstr " (uvožena)"
 
-#: app/core/gimpimage.c:2870 app/core/gimpimage.c:2884
-#: app/core/gimpimage.c:2927
+#: app/core/gimpimage.c:2871 app/core/gimpimage.c:2885
+#: app/core/gimpimage.c:2928
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Način plasti »%s« je bil dodan v %s"
 
-#: app/core/gimpimage.c:2947
+#: app/core/gimpimage.c:2948
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Skupine plasti so bile dodane v %s"
 
-#: app/core/gimpimage.c:2954
+#: app/core/gimpimage.c:2955
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maske na skupinah plasti so bile dodane v %s"
 
-#: app/core/gimpimage.c:2961
+#: app/core/gimpimage.c:2962
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Zaklepi položaja na skupinah plasti so bili dodani v %s"
 
-#: app/core/gimpimage.c:2968
+#: app/core/gimpimage.c:2969
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Zaklepi kanala alfa na skupinah plasti so bili dodani v %s"
 
-#: app/core/gimpimage.c:2976 app/core/gimpimage.c:3027
+#: app/core/gimpimage.c:2977 app/core/gimpimage.c:3028
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Zaklepi vidnosti so bili dodani v %s"
 
-#: app/core/gimpimage.c:2987
+#: app/core/gimpimage.c:2988
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Oblika informacij o pisavi v plasti besedila je bila spremenjena v %s"
 
-#: app/core/gimpimage.c:2995
+#: app/core/gimpimage.c:2996
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Učinki plasti so bili dodani v %s"
 
-#: app/core/gimpimage.c:3007
+#: app/core/gimpimage.c:3008
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "V %s je bilo dodan nov zaznavni prostor za zlivanje"
 
-#: app/core/gimpimage.c:3036
+#: app/core/gimpimage.c:3037
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Izbor več plasti je bil dodan v %s"
 
-#: app/core/gimpimage.c:3048
+#: app/core/gimpimage.c:3049
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Podpora za barvne značke v poti je bila dodana v %s"
 
-#: app/core/gimpimage.c:3055
+#: app/core/gimpimage.c:3056
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Shranjevanje zaklepov v poteh je bilo dodano v %s"
 
-#: app/core/gimpimage.c:3069
+#: app/core/gimpimage.c:3070
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Slike z visoko bitno globino so dodane v %s"
 
-#: app/core/gimpimage.c:3077
+#: app/core/gimpimage.c:3078
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Kodiranje slik z visoko bitno globino je bilo popravljeno v %s"
 
-#: app/core/gimpimage.c:3085
+#: app/core/gimpimage.c:3086
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "V %s je bilo dodano notranje stiskanje zlib"
 
-#: app/core/gimpimage.c:3102
+#: app/core/gimpimage.c:3103
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Podpora za slikovne datoteke, večje od 4 GB, je bila dodana v %s"
 
-#: app/core/gimpimage.c:3109
+#: app/core/gimpimage.c:3110
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Izbor več plasti je bil dodan v %s"
 
-#: app/core/gimpimage.c:3126
+#: app/core/gimpimage.c:3127
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Vodila izven platna dodana v %s"
 
-#: app/core/gimpimage.c:3137
+#: app/core/gimpimage.c:3138
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "Element določen in iskanje vzorca v imenu elementa so bili dodani v %s."
 
-#: app/core/gimpimage.c:3143
+#: app/core/gimpimage.c:3144
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Izbor več kanalov je bil dodan v %s"
 
-#: app/core/gimpimage.c:3258
+#: app/core/gimpimage.c:3259
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Spremeni ločljivost slike"
 
-#: app/core/gimpimage.c:3310
+#: app/core/gimpimage.c:3311
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Spremeni enoto slike"
 
-#: app/core/gimpimage.c:4363
+#: app/core/gimpimage.c:4364
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14048,47 +14048,47 @@ msgstr ""
 "Preverjanje veljavnosti parazita »gimp-comment« ni uspelo: komentar vsebuje "
 "neveljaven UTF-8"
 
-#: app/core/gimpimage.c:4425
+#: app/core/gimpimage.c:4426
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Sliki dodaj zajedalca"
 
-#: app/core/gimpimage.c:4470
+#: app/core/gimpimage.c:4471
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Odstrani zajedalca s slike"
 
-#: app/core/gimpimage.c:5443
+#: app/core/gimpimage.c:5444
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodaj plast"
 
-#: app/core/gimpimage.c:5487 app/core/gimpimage.c:5518
+#: app/core/gimpimage.c:5488 app/core/gimpimage.c:5519
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Odstrani plast"
 
-#: app/core/gimpimage.c:5512
+#: app/core/gimpimage.c:5513
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Odstrani plavajoči izbor"
 
-#: app/core/gimpimage.c:5669
+#: app/core/gimpimage.c:5670
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodaj kanal"
 
-#: app/core/gimpimage.c:5699 app/core/gimpimage.c:5724
+#: app/core/gimpimage.c:5700 app/core/gimpimage.c:5725
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Odstrani kanal"
 
-#: app/core/gimpimage.c:5784
+#: app/core/gimpimage.c:5785
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodaj pot"
 
-#: app/core/gimpimage.c:5819 app/core/gimpimage.c:5827
+#: app/core/gimpimage.c:5820 app/core/gimpimage.c:5828
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Odstrani pot"
@@ -14340,12 +14340,12 @@ msgstr "Spoji vidne poti"
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "Ni dovolj vidnih poti, da bi jih spojili. Potrebujete vsaj dve."
 
-#: app/core/gimpimage-quick-mask.c:88
+#: app/core/gimpimage-quick-mask.c:75
 msgctxt "undo-type"
 msgid "Enable Quick Mask"
 msgstr "Omogoči hitro masko"
 
-#: app/core/gimpimage-quick-mask.c:120
+#: app/core/gimpimage-quick-mask.c:108
 msgctxt "undo-type"
 msgid "Disable Quick Mask"
 msgstr "Onemogoči hitro masko"
@@ -15979,8 +15979,8 @@ msgid ""
 "\"Maximum new image size\" in the Preferences dialog (currently %s)."
 msgstr ""
 "Slika izbrane velikosti bi zasedla več pomnilnika, kot je največ dovoljeno "
-"glede na nastavitev »Največja velikost slike« v pogovornem oknu "
-"»Nastavitve« (trenutno nastavljeno na %s)."
+"glede na nastavitev »Največja velikost slike« v pogovornem oknu »Nastavitve« "
+"(trenutno nastavljeno na %s)."
 
 #: app/dialogs/image-properties-dialog.c:60
 #: app/dialogs/image-properties-dialog.c:63
@@ -21470,11 +21470,11 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:863
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' "
+"(#%d). Expected %s, got %s."
 msgstr ""
-"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« (#"
-"%d). Pričakovano %s, prejeto %s."
+"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« "
+"(#%d). Pričakovano %s, prejeto %s."
 
 #: app/pdb/gimpprocedure.c:900
 #, c-format
@@ -21518,8 +21518,8 @@ msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow pixel unit."
 msgstr ""
-"Procedura »%s« je vrnila »gimp_unit_pixel()« kot vrnjeno vrednost GimpUnit #"
-"%d '%s'. Ta vrnjena vrednost ne dovoli enot slikovnih točk."
+"Procedura »%s« je vrnila »gimp_unit_pixel()« kot vrnjeno vrednost GimpUnit "
+"#%d '%s'. Ta vrnjena vrednost ne dovoli enot slikovnih točk."
 
 #: app/pdb/gimpprocedure.c:973
 #, c-format
@@ -26652,8 +26652,8 @@ msgstr "Navedene poti ni mogoče najti."
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
-"Datoteka .exe ni veljavna (ne-Microsoftova Win32 .exe ali napaka v sliki ."
-"exe)."
+"Datoteka .exe ni veljavna (ne-Microsoftova Win32 .exe ali napaka v "
+"sliki .exe)."
 
 #: app/widgets/gimpcriticaldialog.c:428
 msgid "The operating system denied access to the specified file."
@@ -28715,7 +28715,7 @@ msgstr "Napaka pri ustvarjanju ‘%s’: "
 msgid "Invalid image mode and precision combination."
 msgstr "Neveljavna kombinacija načina slike in natančnosti."
 
-#: app/xcf/xcf-load.c:505
+#: app/xcf/xcf-load.c:504
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28724,7 +28724,7 @@ msgstr ""
 "Najden okvarjen parazit »exif-data«.\n"
 "Migracija podatkov Exif je spodletela: %s"
 
-#: app/xcf/xcf-load.c:544
+#: app/xcf/xcf-load.c:543
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28732,7 +28732,7 @@ msgstr ""
 "Najden okvarjen parazit »gimp-metadata«.\n"
 "Migracija podatkov XMP je spodletela."
 
-#: app/xcf/xcf-load.c:568
+#: app/xcf/xcf-load.c:567
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28745,19 +28745,19 @@ msgstr ""
 "Če ne veste, kaj je XMP, tega najverjetneje niti ne potrebujete. Javljena "
 "napaka: %s."
 
-#: app/xcf/xcf-load.c:923
+#: app/xcf/xcf-load.c:922
 msgid "Linked Layers"
 msgstr "Povezane plasti"
 
-#: app/xcf/xcf-load.c:933
+#: app/xcf/xcf-load.c:932
 msgid "Linked Channels"
 msgstr "Povezani kanali"
 
-#: app/xcf/xcf-load.c:958
+#: app/xcf/xcf-load.c:957
 msgid "Linked Paths"
 msgstr "Povezane poti"
 
-#: app/xcf/xcf-load.c:1005
+#: app/xcf/xcf-load.c:1004
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -28765,7 +28765,7 @@ msgstr ""
 "Datoteka XCF je okvarjena!  Naložen je njen začetni pravilno oblikovan del, "
 "vendar ne v celoti."
 
-#: app/xcf/xcf-load.c:1025
+#: app/xcf/xcf-load.c:1024
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -28773,7 +28773,7 @@ msgstr ""
 "Datoteka XCF je okvarjena!  Iz nje ni bilo mogoče rešiti niti najmanjšega "
 "dela podatkov."
 
-#: app/xcf/xcf-load.c:1183
+#: app/xcf/xcf-load.c:1182
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28783,7 +28783,7 @@ msgstr ""
 "ni pravilno shranila indeksiranega kataloga barv.\n"
 "Zamenjevanje s sivinskim naborom."
 
-#: app/xcf/xcf-load.c:2576
+#: app/xcf/xcf-load.c:2575
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28795,7 +28795,7 @@ msgstr ""
 "prezrta in filter morda ne bo pravilno izrisan.\n"
 "To se ne bi smelo zgoditi. Težavo sporočite razvijalcem filtra."
 
-#: app/xcf/xcf-load.c:3518
+#: app/xcf/xcf-load.c:3517
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
