@@ -116,9 +116,9 @@ static void      gimp_init_i18n               (void);
 static void      gimp_init_malloc             (void);
 
 #if defined (G_OS_WIN32) && !defined (GIMP_CONSOLE_COMPILATION)
-static void      gimp_open_console_window     (void);
+static void      gimp_attach_console_window     (void);
 #else
-#define gimp_open_console_window() /* as nothing */
+#define gimp_attach_console_window() /* as nothing */
 #endif
 
 static const gchar        *system_gimprc     = NULL;
@@ -562,9 +562,7 @@ main (int    argc,
   gint            retval;
   gint            i;
 
-#ifdef ENABLE_WIN32_DEBUG_CONSOLE
-  gimp_open_console_window ();
-#endif
+  gimp_attach_console_window ();
 
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
   /* remove MacOS session identifier from the command line args */
@@ -748,7 +746,7 @@ main (int    argc,
                (strcmp (arg, "-?") == 0) ||
                (strncmp (arg, "--help-", 7) == 0))
         {
-          gimp_open_console_window ();
+          gimp_attach_console_window ();
         }
 #endif
     }
@@ -780,7 +778,7 @@ main (int    argc,
     {
       if (error)
         {
-          gimp_open_console_window ();
+          gimp_attach_console_window ();
           g_print ("%s\n", error->message);
           g_error_free (error);
         }
@@ -844,7 +842,7 @@ main (int    argc,
 #endif
 
   if (no_interface || be_verbose || console_messages || batch_commands != NULL)
-    gimp_open_console_window ();
+    gimp_attach_console_window ();
 
   if (no_interface)
     new_instance = TRUE;
@@ -943,29 +941,17 @@ WinMain (struct HINSTANCE__ *hInstance,
 static void
 wait_console_window (void)
 {
-  FILE *console = g_fopen ("CONOUT$", "w");
-
-  SetConsoleTitleW (g_utf8_to_utf16 (_("GIMP output. Type any character to close this window."), -1, NULL, NULL, NULL));
-  fprintf (console, _("(Type any character to close this window)\n"));
-  fflush (console);
-  _getch ();
+  g_print (_ ("(Type any character to close this window)\n"));
 }
 
 static void
-gimp_open_console_window (void)
+gimp_attach_console_window (void)
 {
-  if (((HANDLE) _get_osfhandle (fileno (stdout)) == INVALID_HANDLE_VALUE ||
-       (HANDLE) _get_osfhandle (fileno (stderr)) == INVALID_HANDLE_VALUE) && AllocConsole ())
+  if (AttachConsole (ATTACH_PARENT_PROCESS) != 0)
     {
-      if ((HANDLE) _get_osfhandle (fileno (stdout)) == INVALID_HANDLE_VALUE)
-        freopen ("CONOUT$", "w", stdout);
-
-      if ((HANDLE) _get_osfhandle (fileno (stderr)) == INVALID_HANDLE_VALUE)
-        freopen ("CONOUT$", "w", stderr);
-
-      SetConsoleTitleW (g_utf8_to_utf16 (_("GIMP output. You can minimize "
-                                           "this window, but don't close "
-                                           "it."), -1, NULL, NULL, NULL));
+      freopen ("CONOUT$", "w", stdout);
+      freopen ("CONOUT$", "w", stderr);
+      _flushall ();
 
       atexit (wait_console_window);
     }
@@ -1035,7 +1021,7 @@ gimp_option_dump_gimprc (const gchar  *option_name,
 {
   GimpConfigDumpFormat format = GIMP_CONFIG_DUMP_NONE;
 
-  gimp_open_console_window ();
+  gimp_attach_console_window ();
 
   if (strcmp (option_name, "--dump-gimprc") == 0)
     format = GIMP_CONFIG_DUMP_GIMPRC;
@@ -1107,7 +1093,7 @@ gimp_option_dump_pdb_procedures_deprecated (const gchar  *option_name,
 static void
 gimp_show_version_and_exit (void)
 {
-  gimp_open_console_window ();
+  gimp_attach_console_window ();
   gimp_version_show (be_verbose);
 
   app_exit (EXIT_SUCCESS);
@@ -1116,7 +1102,7 @@ gimp_show_version_and_exit (void)
 static void
 gimp_show_license_and_exit (void)
 {
-  gimp_open_console_window ();
+  gimp_attach_console_window ();
   gimp_version_show (be_verbose);
 
   g_print ("\n%s\n\n", GIMP_LICENSE);

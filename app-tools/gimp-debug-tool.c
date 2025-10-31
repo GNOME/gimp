@@ -25,6 +25,8 @@
  * So we call instead a separate program, then exit.
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -34,6 +36,9 @@
 #include <gio/gio.h>
 #include <glib.h>
 #include <glib/gi18n.h>
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
 
 #include <gtk/gtk.h>
 
@@ -56,10 +61,19 @@ main (int    argc,
   gchar       *error;
   GtkWidget   *dialog;
 
+#ifdef G_OS_WIN32
+  if (AttachConsole (ATTACH_PARENT_PROCESS) != 0)
+    {
+      freopen ("CONOUT$", "w", stdout);
+      freopen ("CONOUT$", "w", stderr);
+      _flushall ();
+    }
+#endif
+
   if (argc != 6 && argc != 8)
     {
-      g_print ("Usage: gimp-debug-tool-2.0 [PROGRAM] [PID] [REASON] [MESSAGE] [BT_FILE] "
-               "([LAST_VERSION] [RELEASE_TIMESTAMP])\n");
+      g_print ("Usage: gimp-debug-tool-%s [PROGRAM] [PID] [REASON] [MESSAGE] [BT_FILE] "
+               "([LAST_VERSION] [RELEASE_TIMESTAMP])\n", GIMP_APP_VERSION);
       exit (EXIT_FAILURE);
     }
 

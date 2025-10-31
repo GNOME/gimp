@@ -610,18 +610,6 @@ appstream = dependency('appstream', version: '>='+appstream_minver)
 
 libarchive = dependency('libarchive')
 
-
-################################################################################
-# Check for debug console (Win32)
-
-if platform_windows
-  enable_win32_debug_console = get_option('win32-debug-console').enabled() or \
-                               (get_option('win32-debug-console').auto() and (not stable or not release))
-  conf.set('ENABLE_WIN32_DEBUG_CONSOLE', enable_win32_debug_console)
-  # When we'll depend on meson >= 1.1.0, we can just use:
-  # conf.set('ENABLE_WIN32_DEBUG_CONSOLE', get_option('win32-debug-console').enable_auto_if(not stable or not release).enabled())
-endif
-
 ################################################################################
 # Check for 32-bit DLLs (Win32 64-bit)
 

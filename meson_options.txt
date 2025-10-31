@@ -1,7 +1,6 @@
 # Build properties
 option('ansi',              type: 'boolean', value: false,  description: 'Turn on strict ansi')
 option('enable-console-bin',type: 'boolean', value: true,   description: 'Build a console-only binary which does not link GTK')
-option('win32-debug-console',type:'feature', value: 'auto', description: 'Open a console when starting the program')
 option('enable-multiproc',  type: 'boolean', value: true,   description: 'Support for multiple processors')
 option('profiling',         type: 'boolean', value: false,  description: 'Enable profiling')
 option('windows-installer', type: 'boolean', value: false,  description: 'Generate files needed for the Inno Windows installer')
