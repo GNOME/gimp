@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-31 00:40+0000\n"
-"PO-Revision-Date: 2025-10-31 11:10+0100\n"
+"POT-Creation-Date: 2025-10-31 16:56+0000\n"
+"PO-Revision-Date: 2025-10-31 19:11+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2484,7 +2484,7 @@ msgstr "240 s"
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
-#: app/actions/text-tool-commands.c:164 app/actions/tool-options-commands.c:210
+#: app/actions/text-tool-commands.c:167 app/actions/tool-options-commands.c:210
 #: app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136
 #: app/dialogs/color-profile-dialog.c:154
 #: app/dialogs/color-profile-dialog.c:172
@@ -2512,7 +2512,7 @@ msgstr "240 s"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:376 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1075 app/tools/gimptexttool.c:1776
+#: app/tools/gimppathtool.c:1075 app/tools/gimptexttool.c:1784
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:556
@@ -8490,11 +8490,11 @@ msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Navpična, od leve proti desni (pokončna usmerjenost)"
 
-#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:160
+#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:163
 msgid "Open Text File (UTF-8)"
 msgstr "Odpri datoteko z besedilom (UTF-8)"
 
-#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:165
+#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:168
 #: app/dialogs/file-open-location-dialog.c:81
 #: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:790
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
@@ -8502,7 +8502,7 @@ msgstr "Odpri datoteko z besedilom (UTF-8)"
 msgid "_Open"
 msgstr "_Odpri"
 
-#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:266
+#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:280
 #: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
 #: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1650
@@ -8585,37 +8585,42 @@ msgctxt "text-tool-action"
 msgid "Bend the text along the currently active path"
 msgstr "Ovij besedilo te plasti vzdolž trenutne poti"
 
-#: app/actions/text-tool-actions.c:119
+#: app/actions/text-tool-actions.c:116
+msgctxt "text-tool-action"
+msgid "Restore On-Canvas Editor Position"
+msgstr "Obnovi položaj urejevalnika na platnu"
+
+#: app/actions/text-tool-actions.c:124
 msgctxt "text-tool-action"
 msgid "From left to right"
 msgstr "Od leve proti desni"
 
-#: app/actions/text-tool-actions.c:124
+#: app/actions/text-tool-actions.c:129
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "Od desne proti levi"
 
-#: app/actions/text-tool-actions.c:129
+#: app/actions/text-tool-actions.c:134
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Navpična, desna proti levi (mešana usmerjenost)"
 
-#: app/actions/text-tool-actions.c:134
+#: app/actions/text-tool-actions.c:139
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Navpična, desna proti levi (pokončna usmerjenost)"
 
-#: app/actions/text-tool-actions.c:139
+#: app/actions/text-tool-actions.c:144
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Navpična, od leve proti desni (mešana usmerjenost)"
 
-#: app/actions/text-tool-actions.c:144
+#: app/actions/text-tool-actions.c:149
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Navpična, od leve proti desni (pokončna usmerjenost)"
 
-#: app/actions/text-tool-commands.c:228
+#: app/actions/text-tool-commands.c:231
 #, c-format
 msgid "Text along path failed: %s"
 msgstr "Besedilo vzdolž poti je spodletelo: %s"
@@ -8803,450 +8808,460 @@ msgstr "Uredi to prednastavitev orodja"
 
 #: app/actions/tools-actions.c:48
 msgctxt "tools-action"
+msgid "Activate _Last Tool"
+msgstr "Aktiviraj _zadnje orodje"
+
+#: app/actions/tools-actions.c:49
+msgctxt "tools-action"
+msgid "Switch back to the last activated tool"
+msgstr "Preklopi nazaj na zadnje aktivirano orodje"
+
+#: app/actions/tools-actions.c:57
+msgctxt "tools-action"
 msgid "_By Color"
 msgstr "Po _barvi"
 
-#: app/actions/tools-actions.c:49
+#: app/actions/tools-actions.c:58
 msgctxt "tools-action"
 msgid "Select regions with similar colors"
 msgstr "Izberi področja podobnih barv"
 
-#: app/actions/tools-actions.c:54 app/actions/tools-actions.c:60
+#: app/actions/tools-actions.c:63 app/actions/tools-actions.c:69
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
 msgstr "_Poljubni zasuk ..."
 
-#: app/actions/tools-actions.c:55
+#: app/actions/tools-actions.c:64
 msgctxt "tools-action"
 msgid "Rotate drawable by an arbitrary angle"
 msgstr "Zasukaj risalni element pod poljubnim kotom"
 
-#: app/actions/tools-actions.c:61
+#: app/actions/tools-actions.c:70
 msgctxt "tools-action"
 msgid "Rotate image by an arbitrary angle"
 msgstr "Zasukaj sliko pod poljubnim kotom"
 
-#: app/actions/tools-actions.c:163
+#: app/actions/tools-actions.c:172
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
 msgstr "Hitrost barvne pršilke: nastavi"
 
-#: app/actions/tools-actions.c:167
+#: app/actions/tools-actions.c:176
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Minimum"
 msgstr "Hitrost barvne pršilke: nastavi na najmanjšo"
 
-#: app/actions/tools-actions.c:171
+#: app/actions/tools-actions.c:180
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Maximum"
 msgstr "Hitrost barvne pršilke: nastavi na najvišjo"
 
-#: app/actions/tools-actions.c:175
+#: app/actions/tools-actions.c:184
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 1"
 msgstr "Hitrost barvne pršilke: zmanjšaj za 1"
 
-#: app/actions/tools-actions.c:179
+#: app/actions/tools-actions.c:188
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 1"
 msgstr "Hitrost barvne pršilke: zvišaj za 1"
 
-#: app/actions/tools-actions.c:183
+#: app/actions/tools-actions.c:192
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 10"
 msgstr "Hitrost barvne pršilke: zmanjšaj za 10"
 
-#: app/actions/tools-actions.c:187
+#: app/actions/tools-actions.c:196
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 10"
 msgstr "Hitrost barvne pršilke: zvišaj za 10"
 
-#: app/actions/tools-actions.c:195
+#: app/actions/tools-actions.c:204
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set"
 msgstr "Pretok barvne pršilke: nastavi"
 
-#: app/actions/tools-actions.c:199
+#: app/actions/tools-actions.c:208
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Minimum"
 msgstr "Pretok barvne pršilke: nastavi na najmanjšega"
 
-#: app/actions/tools-actions.c:203
+#: app/actions/tools-actions.c:212
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Maximum"
 msgstr "Pretok barvne pršilke: nastavi na največjega"
 
-#: app/actions/tools-actions.c:207
+#: app/actions/tools-actions.c:216
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 1"
 msgstr "Pretok barvne pršilke: zmanjšaj za 1"
 
-#: app/actions/tools-actions.c:211
+#: app/actions/tools-actions.c:220
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 1"
 msgstr "Pretok barvne pršilke: povečaj za 1"
 
-#: app/actions/tools-actions.c:215
+#: app/actions/tools-actions.c:224
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 10"
 msgstr "Pretok barvne pršilke: zmanjšaj za 10"
 
-#: app/actions/tools-actions.c:219
+#: app/actions/tools-actions.c:228
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
 msgstr "Pretok barvne pršilke: povečaj za 10"
 
-#: app/actions/tools-actions.c:290
+#: app/actions/tools-actions.c:299
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set"
 msgstr "Prekrivnost orodja: nastavi"
 
-#: app/actions/tools-actions.c:294
+#: app/actions/tools-actions.c:303
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
 msgstr "Prosojnost orodja: nastavi na privzeto vrednost"
 
-#: app/actions/tools-actions.c:298
+#: app/actions/tools-actions.c:307
 msgctxt "tools-action"
 msgid "Tool's Opacity: Minimize"
 msgstr "Prekrivnost orodja: pomanjšaj"
 
-#: app/actions/tools-actions.c:302
+#: app/actions/tools-actions.c:311
 msgctxt "tools-action"
 msgid "Tool's Opacity: Maximize"
 msgstr "Prosojnost orodja: povečaj"
 
-#: app/actions/tools-actions.c:306
+#: app/actions/tools-actions.c:315
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 1"
 msgstr "Prekrivnost orodja: zmanjšaj za 1"
 
-#: app/actions/tools-actions.c:310
+#: app/actions/tools-actions.c:319
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 1"
 msgstr "Prekrivnost orodja: povečaj za 1"
 
-#: app/actions/tools-actions.c:314
+#: app/actions/tools-actions.c:323
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 10"
 msgstr "Prekrivnost orodja: zmanjšaj za 10"
 
-#: app/actions/tools-actions.c:318
+#: app/actions/tools-actions.c:327
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 10"
 msgstr "Prekrivnost orodja: povečaj za 10"
 
-#: app/actions/tools-actions.c:322
+#: app/actions/tools-actions.c:331
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease Relative"
 msgstr "Prekrivnost orodja: zmanjšaj relativno"
 
-#: app/actions/tools-actions.c:326
+#: app/actions/tools-actions.c:335
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase Relative"
 msgstr "Prekrivnost orodja: povečaj relativno"
 
-#: app/actions/tools-actions.c:334
+#: app/actions/tools-actions.c:343
 msgctxt "tools-action"
 msgid "Tool's Size: Set"
 msgstr "Velikost orodja: nastavi"
 
-#: app/actions/tools-actions.c:338
+#: app/actions/tools-actions.c:347
 msgctxt "tools-action"
 msgid "Tool's Size: Set to Default Value"
 msgstr "Velikost orodja: ponastavi na privzeto vrednost"
 
-#: app/actions/tools-actions.c:342
+#: app/actions/tools-actions.c:351
 msgctxt "tools-action"
 msgid "Tool's Size: Minimize"
 msgstr "Velikost orodja: pomanjšaj"
 
-#: app/actions/tools-actions.c:346
+#: app/actions/tools-actions.c:355
 msgctxt "tools-action"
 msgid "Tool's Size: Maximize"
 msgstr "Velikost orodja: povečaj"
 
-#: app/actions/tools-actions.c:350
+#: app/actions/tools-actions.c:359
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 1"
 msgstr "Velikost orodja: zmanjšaj za 1"
 
-#: app/actions/tools-actions.c:354
+#: app/actions/tools-actions.c:363
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 1"
 msgstr "Velikost orodja: povečaj za 1"
 
-#: app/actions/tools-actions.c:358
+#: app/actions/tools-actions.c:367
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 10"
 msgstr "Velikost orodja: zmanjšaj za 10"
 
-#: app/actions/tools-actions.c:362
+#: app/actions/tools-actions.c:371
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 10"
 msgstr "Velikost orodja: povečaj za 10"
 
-#: app/actions/tools-actions.c:366
+#: app/actions/tools-actions.c:375
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease Relative"
 msgstr "Velikost orodja: zmanjšaj relativno"
 
-#: app/actions/tools-actions.c:370
+#: app/actions/tools-actions.c:379
 msgctxt "tools-action"
 msgid "Tool's Size: Increase Relative"
 msgstr "Velikost orodja: povečaj relativno"
 
-#: app/actions/tools-actions.c:378
+#: app/actions/tools-actions.c:387
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set"
 msgstr "Razmerje stranic orodja: nastavi"
 
-#: app/actions/tools-actions.c:382
+#: app/actions/tools-actions.c:391
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set To Default Value"
 msgstr "Razmerje stranic orodja: nastavi na privzeto vrednost"
 
-#: app/actions/tools-actions.c:386
+#: app/actions/tools-actions.c:395
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Minimize"
 msgstr "Razmerje stranic orodja: pomanjšaj"
 
-#: app/actions/tools-actions.c:390
+#: app/actions/tools-actions.c:399
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Maximize"
 msgstr "Razmerje stranic orodja: povečaj"
 
-#: app/actions/tools-actions.c:394
+#: app/actions/tools-actions.c:403
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 0.1"
 msgstr "Razmerje stranic orodja: zmanjšaj za 0,1"
 
-#: app/actions/tools-actions.c:398
+#: app/actions/tools-actions.c:407
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 0.1"
 msgstr "Razmerje stranic orodja: povečaj za 0,1"
 
-#: app/actions/tools-actions.c:402
+#: app/actions/tools-actions.c:411
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 1"
 msgstr "Razmerje stranic orodja: zmanjšaj za 1"
 
-#: app/actions/tools-actions.c:406
+#: app/actions/tools-actions.c:415
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 1"
 msgstr "Razmerje stranic orodja: povečaj za 1"
 
-#: app/actions/tools-actions.c:410
+#: app/actions/tools-actions.c:419
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease Relative"
 msgstr "Razmerje stranic orodja: zmanjšaj relativno"
 
-#: app/actions/tools-actions.c:414
+#: app/actions/tools-actions.c:423
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase Relative"
 msgstr "Razmerje stranic orodja: povečaj relativno"
 
-#: app/actions/tools-actions.c:422
+#: app/actions/tools-actions.c:431
 msgctxt "tools-action"
 msgid "Tool's Angle: Set"
 msgstr "Kot orodja: določi"
 
-#: app/actions/tools-actions.c:426
+#: app/actions/tools-actions.c:435
 msgctxt "tools-action"
 msgid "Tool's Angle: Set Angle To Default Value"
 msgstr "Kot orodja: nastavi kot na privzeto vrednost"
 
-#: app/actions/tools-actions.c:430
+#: app/actions/tools-actions.c:439
 msgctxt "tools-action"
 msgid "Tool's Angle: Minimize"
 msgstr "Kot orodja: pomanjšaj"
 
-#: app/actions/tools-actions.c:434
+#: app/actions/tools-actions.c:443
 msgctxt "tools-action"
 msgid "Tool's Angle: Maximize"
 msgstr "Kot orodja: povečaj"
 
-#: app/actions/tools-actions.c:438
+#: app/actions/tools-actions.c:447
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease by 1°"
 msgstr "Kot orodja: zmanjšaj za 1°"
 
-#: app/actions/tools-actions.c:442
+#: app/actions/tools-actions.c:451
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase by 1°"
 msgstr "Kot orodja: povečaj za 1°"
 
-#: app/actions/tools-actions.c:446
+#: app/actions/tools-actions.c:455
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease by 15°"
 msgstr "Kot orodja: zmanjšaj za 15°"
 
-#: app/actions/tools-actions.c:450
+#: app/actions/tools-actions.c:459
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase by 15°"
 msgstr "Kot orodja: povečaj za 15°"
 
-#: app/actions/tools-actions.c:454
+#: app/actions/tools-actions.c:463
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease Relative"
 msgstr "Kot orodja: zmanjšaj relativno"
 
-#: app/actions/tools-actions.c:458
+#: app/actions/tools-actions.c:467
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase Relative"
 msgstr "Kot orodja: povečaj relativno"
 
-#: app/actions/tools-actions.c:466
+#: app/actions/tools-actions.c:475
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set"
 msgstr "Razmik orodja: določi"
 
-#: app/actions/tools-actions.c:470
+#: app/actions/tools-actions.c:479
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set To Default Value"
 msgstr "Razmik orodja: nastavi na privzeto vrednost"
 
-#: app/actions/tools-actions.c:474
+#: app/actions/tools-actions.c:483
 msgctxt "tools-action"
 msgid "Tool's Spacing: Minimize"
 msgstr "Razmik orodja: pomanjšaj"
 
-#: app/actions/tools-actions.c:478
+#: app/actions/tools-actions.c:487
 msgctxt "tools-action"
 msgid "Tool's Spacing: Maximize"
 msgstr "Razmik orodja: povečaj"
 
-#: app/actions/tools-actions.c:482
+#: app/actions/tools-actions.c:491
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease by 1"
 msgstr "Razmik orodja: zmanjšaj za 1"
 
-#: app/actions/tools-actions.c:486
+#: app/actions/tools-actions.c:495
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase by 1"
 msgstr "Razmik orodja: povečaj za 1"
 
-#: app/actions/tools-actions.c:490
+#: app/actions/tools-actions.c:499
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease by 10"
 msgstr "Razmik orodja: zmanjšaj za 10"
 
-#: app/actions/tools-actions.c:494
+#: app/actions/tools-actions.c:503
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase by 10"
 msgstr "Razmik orodja: povečaj za 10"
 
-#: app/actions/tools-actions.c:498
+#: app/actions/tools-actions.c:507
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease Relative"
 msgstr "Razmik orodja: zmanjšaj relativno"
 
-#: app/actions/tools-actions.c:502
+#: app/actions/tools-actions.c:511
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase Relative"
 msgstr "Razmik orodja: povečaj relativno"
 
-#: app/actions/tools-actions.c:510
+#: app/actions/tools-actions.c:519
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set"
 msgstr "Trdota orodja: nastavi"
 
-#: app/actions/tools-actions.c:514
+#: app/actions/tools-actions.c:523
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set to Default Value"
 msgstr "Trdota orodja: nastavi na privzeto vrednost"
 
-#: app/actions/tools-actions.c:518
+#: app/actions/tools-actions.c:527
 msgctxt "tools-action"
 msgid "Tool's Hardness: Minimize"
 msgstr "Trdota orodja: pomanjšaj"
 
-#: app/actions/tools-actions.c:522
+#: app/actions/tools-actions.c:531
 msgctxt "tools-action"
 msgid "Tool's Hardness: Maximize"
 msgstr "Trdota orodja: povečaj"
 
-#: app/actions/tools-actions.c:526
+#: app/actions/tools-actions.c:535
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 1"
 msgstr "Trdota orodja: zmanjšaj za 1"
 
-#: app/actions/tools-actions.c:530
+#: app/actions/tools-actions.c:539
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 1"
 msgstr "Trdota orodja: povečaj za 1"
 
-#: app/actions/tools-actions.c:534
+#: app/actions/tools-actions.c:543
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 10"
 msgstr "Trdota orodja: zmanjšaj za 10"
 
-#: app/actions/tools-actions.c:538
+#: app/actions/tools-actions.c:547
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 10"
 msgstr "Trdota orodja: povečaj za 10"
 
-#: app/actions/tools-actions.c:542
+#: app/actions/tools-actions.c:551
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease Relative"
 msgstr "Trdota orodja: zmanjšaj relativno"
 
-#: app/actions/tools-actions.c:546
+#: app/actions/tools-actions.c:555
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase Relative"
 msgstr "Trdota orodja: povečaj relativno"
 
-#: app/actions/tools-actions.c:554
+#: app/actions/tools-actions.c:563
 msgctxt "tools-action"
 msgid "Tool's Force: Set"
 msgstr "Sila orodja: nastavi"
 
-#: app/actions/tools-actions.c:558
+#: app/actions/tools-actions.c:567
 msgctxt "tools-action"
 msgid "Tool's Force: Set to Default Value"
 msgstr "Sila orodja: nastavi na privzeto vrednost"
 
-#: app/actions/tools-actions.c:562
+#: app/actions/tools-actions.c:571
 msgctxt "tools-action"
 msgid "Tool's Force: Minimize"
 msgstr "Sila orodja: pomanjšaj"
 
-#: app/actions/tools-actions.c:566
+#: app/actions/tools-actions.c:575
 msgctxt "tools-action"
 msgid "Tool's Force: Maximize"
 msgstr "Sila orodja: povečaj"
 
-#: app/actions/tools-actions.c:570
+#: app/actions/tools-actions.c:579
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease by 1"
 msgstr "Sila orodja: zmanjšaj za 1"
 
-#: app/actions/tools-actions.c:574
+#: app/actions/tools-actions.c:583
 msgctxt "tools-action"
 msgid "Tool's Force: Increase by 1"
 msgstr "Sila orodja: povečaj za 1"
 
-#: app/actions/tools-actions.c:578
+#: app/actions/tools-actions.c:587
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease by 10"
 msgstr "Sila orodja: zmanjšaj za 10"
 
-#: app/actions/tools-actions.c:582
+#: app/actions/tools-actions.c:591
 msgctxt "tools-action"
 msgid "Tool's Force: Increase by 10"
 msgstr "Sila orodja: povečaj za 10"
 
-#: app/actions/tools-actions.c:586
+#: app/actions/tools-actions.c:595
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease Relative"
 msgstr "Sila orodja: zmanjšaj relativno"
 
-#: app/actions/tools-actions.c:590
+#: app/actions/tools-actions.c:599
 msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
 msgstr "Sila orodja: povečaj relativno"
 
-#: app/actions/tools-actions.c:817
+#: app/actions/tools-actions.c:830
 #, c-format
 msgid "Activate tool \"%s\""
 msgstr "Aktiviraj orodje »%s«"
@@ -19063,23 +19078,23 @@ msgstr "V"
 msgid "_Sample Merged"
 msgstr "_Vzorči spojeno"
 
-#: app/display/gimpdisplayshell.c:557
+#: app/display/gimpdisplayshell.c:562
 msgid "Access the image menu"
 msgstr "Dostopi do menija slike"
 
-#: app/display/gimpdisplayshell.c:720
+#: app/display/gimpdisplayshell.c:725
 msgid "Zoom image when window size changes"
 msgstr "Prilagodi povečavo slike ob spremenjeni velikosti okna"
 
-#: app/display/gimpdisplayshell.c:749
+#: app/display/gimpdisplayshell.c:754
 msgid "Toggle Quick Mask"
 msgstr "Vključi/izključi hitro masko"
 
-#: app/display/gimpdisplayshell.c:764
+#: app/display/gimpdisplayshell.c:769
 msgid "Navigate the image display"
 msgstr "Krmari po prikazu slike"
 
-#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1598
+#: app/display/gimpdisplayshell.c:823 app/display/gimpdisplayshell.c:1691
 #: app/widgets/gimptoolbox.c:273
 msgid "Drop image files here to open them"
 msgstr "Semkaj spustite datoteke slik, ki jih želite odpreti."
@@ -20751,7 +20766,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Spremeni barve v sivinske odtenke"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1485
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1488
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:277
@@ -20797,7 +20812,7 @@ msgstr "Zamenjaj delno prosojnost z barvo"
 msgid "The color"
 msgstr "Barva"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1448
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1451
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -22740,7 +22755,7 @@ msgstr ""
 "Nekaterih pisav ni mogoče naložiti: \n"
 "%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1648
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1656
 msgid "Add Text Layer"
 msgstr "Dodaj plast besedila"
 
@@ -22752,43 +22767,43 @@ msgstr "Nepravilna oblika označevanja v besedilnem parazitu"
 msgid "Empty text parasite"
 msgstr "Sprazni parazit besedila"
 
-#: app/text/gimptextlayer.c:151
+#: app/text/gimptextlayer.c:158
 msgid "Text Layer"
 msgstr "Plast besedila"
 
-#: app/text/gimptextlayer.c:164
+#: app/text/gimptextlayer.c:171
 msgid "Rename Text Layer"
 msgstr "Preimenuj plast besedila"
 
-#: app/text/gimptextlayer.c:165
+#: app/text/gimptextlayer.c:172
 msgid "Move Text Layer"
 msgstr "Premakni plast besedila"
 
-#: app/text/gimptextlayer.c:166
+#: app/text/gimptextlayer.c:173
 msgid "Scale Text Layer"
 msgstr "Spremeni merilo plasti besedila"
 
-#: app/text/gimptextlayer.c:167
+#: app/text/gimptextlayer.c:174
 msgid "Resize Text Layer"
 msgstr "Spremeni velikost plasti z besedilom"
 
-#: app/text/gimptextlayer.c:168
+#: app/text/gimptextlayer.c:175
 msgid "Flip Text Layer"
 msgstr "Prezrcali plast besedila"
 
-#: app/text/gimptextlayer.c:169
+#: app/text/gimptextlayer.c:176
 msgid "Rotate Text Layer"
 msgstr "Zasukaj plast besedila"
 
-#: app/text/gimptextlayer.c:170
+#: app/text/gimptextlayer.c:177
 msgid "Transform Text Layer"
 msgstr "Preoblikuj plast besedila"
 
-#: app/text/gimptextlayer.c:691
+#: app/text/gimptextlayer.c:785
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Zaradi odsotnosti vseh pisav funkcionalnost besedila ni na voljo."
 
-#: app/text/gimptextlayer.c:905
+#: app/text/gimptextlayer.c:999
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -23859,26 +23874,26 @@ msgstr "%s: preklopi izvirno in filtrirano"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: preklopi vodoravno in navpično"
 
-#: app/tools/gimpfiltertool.c:1281
+#: app/tools/gimpfiltertool.c:1284
 msgid "Edit filter"
 msgstr "Uredi filter"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1461
+#: app/tools/gimpfiltertool.c:1464
 msgid "Blending Options"
 msgstr "Možnosti zlivanja"
 
-#: app/tools/gimpfiltertool.c:1972 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1975 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Uvozi nastavitve »%s«"
 
-#: app/tools/gimpfiltertool.c:1974 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1977 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Izvozi nastavitve »%s«"
 
-#: app/tools/gimpfiltertool.c:2239
+#: app/tools/gimpfiltertool.c:2242
 #, c-format
 msgid "Editing '%s'..."
 msgstr "Urejanje »%s« ..."
@@ -24998,11 +25013,11 @@ msgstr "Ustvari vektorsko plast iz poti"
 msgid "Confirm Path Editing"
 msgstr "Potrdi urejanje poti"
 
-#: app/tools/gimppathtool.c:1074 app/tools/gimptexttool.c:1775
+#: app/tools/gimppathtool.c:1074 app/tools/gimptexttool.c:1783
 msgid "Create _New Layer"
 msgstr "Ustvari _novo plast"
 
-#: app/tools/gimppathtool.c:1076 app/tools/gimptexttool.c:1777
+#: app/tools/gimppathtool.c:1076 app/tools/gimptexttool.c:1785
 msgid "_Edit Anyway"
 msgstr "Vs_eeno uredi"
 
@@ -25543,35 +25558,35 @@ msgstr "Polje:"
 msgid "Language:"
 msgstr "Jezik:"
 
-#: app/tools/gimptexttool.c:219
+#: app/tools/gimptexttool.c:220
 msgid "Text"
 msgstr "Besedilo"
 
-#: app/tools/gimptexttool.c:220
+#: app/tools/gimptexttool.c:221
 msgid "Text Tool: Create or edit text layers"
 msgstr "Orodje za besedilo: Ustvari ali uredi plasti besedila"
 
-#: app/tools/gimptexttool.c:221
+#: app/tools/gimptexttool.c:222
 msgid "Te_xt"
 msgstr "_Besedilo"
 
-#: app/tools/gimptexttool.c:1032
+#: app/tools/gimptexttool.c:1040
 msgid "Fonts are still loading"
 msgstr "Pisave so še vedno nalagajo"
 
-#: app/tools/gimptexttool.c:1043
+#: app/tools/gimptexttool.c:1051
 msgid "Text box: "
 msgstr "Besedilno polje: "
 
-#: app/tools/gimptexttool.c:1195
+#: app/tools/gimptexttool.c:1203
 msgid "Reshape Text Layer"
 msgstr "Preoblikuj plast besedila"
 
-#: app/tools/gimptexttool.c:1768 app/tools/gimptexttool.c:1771
+#: app/tools/gimptexttool.c:1776 app/tools/gimptexttool.c:1779
 msgid "Confirm Text Editing"
 msgstr "Potrdi urejevanje besedila"
 
-#: app/tools/gimptexttool.c:1799
+#: app/tools/gimptexttool.c:1807
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
@@ -25579,23 +25594,23 @@ msgstr ""
 "Besedilna plast, ki ste jo izbrali, je bila rasterizirana. Urejanje besedila "
 "bo zavrglo vse spremembe."
 
-#: app/tools/gimptexttool.c:2419
+#: app/tools/gimptexttool.c:2427
 msgid "Text is required."
 msgstr "Besedilo je obvezno."
 
-#: app/tools/gimptexttool.c:2422
+#: app/tools/gimptexttool.c:2430
 msgid "No image."
 msgstr "Ni slike."
 
-#: app/tools/gimptexttool.c:2425
+#: app/tools/gimptexttool.c:2433
 msgid "No layer."
 msgstr "Ni plasti."
 
-#: app/tools/gimptexttool.c:2436
+#: app/tools/gimptexttool.c:2444
 msgid "Exactly one path must be selected."
 msgstr "Izbrana mora biti natanko ena pot."
 
-#: app/tools/gimptexttool-editor.c:1406
+#: app/tools/gimptexttool-editor.c:1468
 msgid "GIMP Text Editor"
 msgstr "Urejevalnik besedila GIMP"
 
@@ -28702,47 +28717,55 @@ msgstr "Zapisovanje besedilne datoteke »%s« ni uspelo: %s"
 msgid "_Use selected font"
 msgstr "_Uporabi izbrano pisavo"
 
-#: app/widgets/gimptextstyleeditor.c:214 app/widgets/gimptextstyleeditor.c:1327
+#: app/widgets/gimptextstyleeditor.c:255
+msgid "Drag to move the text style editor"
+msgstr "Povlecite za premik urejevalnika sloga besedila"
+
+#: app/widgets/gimptextstyleeditor.c:275 app/widgets/gimptextstyleeditor.c:1415
 msgid "Change font of selected text"
 msgstr "Spremeni pisavo izbranega besedila"
 
-#: app/widgets/gimptextstyleeditor.c:224
+#: app/widgets/gimptextstyleeditor.c:285
 msgid "Change size of selected text"
 msgstr "Spremeni velikost izbranega besedila"
 
-#: app/widgets/gimptextstyleeditor.c:243
+#: app/widgets/gimptextstyleeditor.c:299
+msgid "Restore On-Canvas Editor Position"
+msgstr "Obnovi položaj urejevalnika na platnu"
+
+#: app/widgets/gimptextstyleeditor.c:321
 msgid "Clear style of selected text"
 msgstr "Počisti slog izbranega besedila"
 
-#: app/widgets/gimptextstyleeditor.c:254 app/widgets/gimptextstyleeditor.c:265
+#: app/widgets/gimptextstyleeditor.c:332 app/widgets/gimptextstyleeditor.c:343
 msgid "Change color of selected text"
 msgstr "Spremeni barvo izbranega besedila"
 
-#: app/widgets/gimptextstyleeditor.c:281
+#: app/widgets/gimptextstyleeditor.c:359
 msgid "Change kerning of selected text"
 msgstr "Spremeni spodsekavanje izbranega besedila"
 
-#: app/widgets/gimptextstyleeditor.c:297
+#: app/widgets/gimptextstyleeditor.c:375
 msgid "Change baseline of selected text"
 msgstr "Spremeni osnovnico izbranega besedila"
 
-#: app/widgets/gimptextstyleeditor.c:336
+#: app/widgets/gimptextstyleeditor.c:414
 msgid "Bold"
 msgstr "Krepko"
 
-#: app/widgets/gimptextstyleeditor.c:339
+#: app/widgets/gimptextstyleeditor.c:417
 msgid "Italic"
 msgstr "Ležeče"
 
-#: app/widgets/gimptextstyleeditor.c:342
+#: app/widgets/gimptextstyleeditor.c:420
 msgid "Underline"
 msgstr "Podčrtano"
 
-#: app/widgets/gimptextstyleeditor.c:345
+#: app/widgets/gimptextstyleeditor.c:423
 msgid "Strikethrough"
 msgstr "Prečrtano"
 
-#: app/widgets/gimptextstyleeditor.c:1319
+#: app/widgets/gimptextstyleeditor.c:1407
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
 msgstr "Pisava »%s« na tem sistemu ni na voljo"
