@@ -551,57 +551,54 @@ gimp_image_merge_group_layer (GimpImage      *image,
 
 /* merging paths */
 GimpPath *
-gimp_image_merge_selected_paths (GimpImage  *image,
-                                 GError    **error)
+gimp_image_merge_paths (GimpImage  *image,
+                        GList      *paths,
+                        GError    **error)
 {
-  GList *list;
-  GList *merge_list = NULL;
+  GList    *list;
+  gboolean  visible;
+  GimpPath *path;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  merge_list = gimp_image_get_selected_paths (image);
-
-  if (! merge_list || g_list_length (merge_list) < 2)
+  if (paths && paths->next)
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("Not enough visible paths for a merge. "
-                             "There must be at least two."));
-      return NULL;
-    }
-  else
-    {
-      GimpPath *path;
       GimpPath *target_path;
       gchar    *name;
       gint      pos;
 
-      merge_list = g_list_reverse (merge_list);
       gimp_set_busy (image->gimp);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_PATHS_MERGE,
                                    C_("undo-type", "Merge Selected Paths"));
 
-      path = GIMP_PATH (merge_list->data);
+      path = GIMP_PATH (paths->data);
 
-      name = g_strdup (gimp_object_get_name (path));
-      pos = gimp_item_get_index (GIMP_ITEM (path));
+      name    = g_strdup (gimp_object_get_name (path));
+      pos     = gimp_item_get_index (GIMP_ITEM (path));
+      visible = gimp_item_get_visible (GIMP_ITEM (path));
 
       target_path = GIMP_PATH (gimp_item_duplicate (GIMP_ITEM (path),
                                                     GIMP_TYPE_PATH));
       gimp_image_remove_path (image, path, TRUE, NULL);
 
-      for (list = g_list_next (merge_list);
+      for (list = g_list_next (paths);
            list;
            list = g_list_next (list))
         {
           path = list->data;
 
           gimp_path_add_strokes (path, target_path);
+
+          if (! visible)
+            visible = gimp_item_get_visible (GIMP_ITEM (path));
+
           gimp_image_remove_path (image, path, TRUE, NULL);
         }
 
       gimp_object_take_name (GIMP_OBJECT (target_path), name);
+      gimp_item_set_visible (GIMP_ITEM (target_path), visible, FALSE);
 
       /* FIXME tree */
       gimp_image_add_path (image, target_path, NULL, pos, TRUE);
@@ -610,6 +607,13 @@ gimp_image_merge_selected_paths (GimpImage  *image,
       gimp_image_undo_group_end (image);
 
       return target_path;
+    }
+  else
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("Not enough selected paths for a merge. "
+                             "There must be at least two."));
+      return NULL;
     }
 }
 

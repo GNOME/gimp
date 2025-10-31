@@ -497,26 +497,43 @@ paths_delete_cmd_callback (GimpAction *action,
                           _("Paths attached to vector layers weren't deleted"));
 }
 
+
 void
 paths_merge_selected_cmd_callback (GimpAction *action,
                                    GVariant   *value,
                                    gpointer    data)
 {
   GimpImage   *image;
+  GimpPath    *path;
   GList       *paths;
   GtkWidget   *widget;
-  GError      *error = NULL;
+  GList       *list;
+  GList       *merge_list = NULL;
+  GError      *error      = NULL;
   return_if_no_paths (image, paths, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_image_merge_selected_paths (image, &error))
+  paths = gimp_image_get_selected_paths (image);
+
+  for (list = paths; list; list = g_list_next (list))
+    {
+      path = list->data;
+
+      if (path)
+        merge_list = g_list_prepend (merge_list, path);
+    }
+  merge_list = g_list_reverse (merge_list);
+
+  if (! gimp_image_merge_paths (image, merge_list, &error))
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
                             error->message);
       g_clear_error (&error);
+      g_list_free (merge_list);
       return;
     }
+  g_list_free (merge_list);
 
   gimp_image_flush (image);
 }
