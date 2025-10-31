@@ -19,6 +19,7 @@ gimp_debug_tool = executable('gimp-debug-tool' + exec_ver,
     libappwidgets,
     libgimpbase,
   ],
+  win_subsystem: 'windows',
   install: true,
   install_dir: gimp_debug_tool_dir
 )
