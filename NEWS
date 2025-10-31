@@ -47,6 +47,12 @@ Core:
     anymore.
   - "Merge Layer Groups" cannot be applied to pass-through groups
     anymore.
+  - Multi-selection implemented in Document history in order to load or
+    remove multiple images at once.
+  - New "tools-swap" action (default shortcut: Shift-X) to activate the
+    previously used tool.
+  - When committing or canceling filters, GIMP will automatically swap
+    back to the previously used tool.
 
 Tools:
 
@@ -58,6 +64,11 @@ Tools:
     * Dialog when trying to edit a rasterized layer text has been reworded.
     * Support pasting unformatted text with action text-tool-paste-unformatted
       (shortcut Ctrl|Primary-Shift-v by default).
+    * On-Canvas style editor now has a move area allowing to move the
+      GUI on a different position on canvas. This position is remembered
+      per-text layer. When the position has been manually set, a reset
+      button will also appear in the on-canvas editor (allowing to get
+      back to default positionning).
   - Path tool:
     * Selecting a vector layer when the Path tool is active will pop a
       dialog up, similar to the one which we have in Text tool when a
@@ -192,6 +203,12 @@ API:
   - gimp_file_load() as well as the image returned by a
     GimpLoadProcedure are now always returned as "clean" and with empty
     undo stack.
+  - gimp_drawable_get_thumbnail_data() and
+    gimp_drawable_get_sub_thumbnail_data() implementations updated to
+    always return sRGB(A) 8-bit.
+  - gimp_widget_free_native_handle() implementation improved and docs
+    updated with important information on how to use it (disregarding
+    the new information, crashes on Wayland may happen).
 
 Build:
 
