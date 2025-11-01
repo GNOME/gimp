@@ -85,7 +85,7 @@ parts:
       - BABL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
       - GEGL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4
       #FIXME: GNOME SDK is not setting this runtime var required by glib-networking test on gimp build
-      - GIO_MODULE_DIR: /snap/gnome-46-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gio/modules
+      - GIO_MODULE_DIR: ${SNAPCRAFT_GNOME_SDK:-/snap/gnome-46-2404-sdk/current/}usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gio/modules
 
   babl:
     source: https://gitlab.gnome.org/GNOME/babl.git
