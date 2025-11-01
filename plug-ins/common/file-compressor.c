@@ -487,7 +487,7 @@ export_image (const CompressorEntry  *compressor,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s", gimp_pdb_get_last_error (gimp_get_pdb ()));
 
-      return GIMP_PDB_EXECUTION_ERROR;
+      return gimp_pdb_get_last_status (gimp_get_pdb ());
     }
 
   gimp_progress_init_printf (_("Compressing '%s'"),
