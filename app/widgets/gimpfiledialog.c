@@ -922,6 +922,11 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
                               ext = gimp_plug_in_procedure_get_save_extensions (proc, TRUE);
                               break;
                             default:
+                              /* Should not happen, it's an
+                               * GTK_FILE_CHOOSER_ACTION_SAVE file
+                               * chooser.
+                               */
+                              g_return_if_reached ();
                             }
 
                           g_string_append (s, ext);
