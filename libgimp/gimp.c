@@ -201,7 +201,7 @@ gimp_main (GType  plug_in_type,
   gint i, j, k;
 
   /* Make plugins output available on console */
-  if (AttachConsole (ATTACH_PARENT_PROCESS) != 0)
+  if (AttachConsole (ATTACH_PARENT_PROCESS) != 0 && ! g_getenv ("TERM") && ! g_getenv ("SHELL"))
     {
       freopen ("CONOUT$", "w", stdout);
       freopen ("CONOUT$", "w", stderr);

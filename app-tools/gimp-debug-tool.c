@@ -62,7 +62,7 @@ main (int    argc,
   GtkWidget   *dialog;
 
 #ifdef G_OS_WIN32
-  if (AttachConsole (ATTACH_PARENT_PROCESS) != 0)
+  if (AttachConsole (ATTACH_PARENT_PROCESS) != 0 && ! g_getenv ("TERM") && ! g_getenv ("SHELL"))
     {
       freopen ("CONOUT$", "w", stdout);
       freopen ("CONOUT$", "w", stderr);

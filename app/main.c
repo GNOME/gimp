@@ -841,9 +841,6 @@ main (int    argc,
 #endif
 #endif
 
-  if (no_interface || be_verbose || console_messages || batch_commands != NULL)
-    gimp_attach_console_window ();
-
   if (no_interface)
     new_instance = TRUE;
 
@@ -947,6 +944,15 @@ wait_console_window (void)
 static void
 gimp_attach_console_window (void)
 {
+  /* If run on non-native shell, do nothing */ 
+  if (g_getenv ("TERM") || g_getenv ("SHELL"))
+    {
+      g_printerr ("Non-native shell detected, GIMP may "
+                  "behave unexpectedly on Unix shells in Windows.\n");
+      return;
+    }
+
+  /* If run on native shell, attach to it */
   if (AttachConsole (ATTACH_PARENT_PROCESS) != 0)
     {
       freopen ("CONOUT$", "w", stdout);
