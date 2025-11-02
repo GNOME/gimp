@@ -39,6 +39,7 @@
 #include "core/gimpdrawablefilter.h"
 #include "core/gimpfilloptions.h"
 #include "core/gimplist.h"
+#include "core/gimplayer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
@@ -394,6 +395,17 @@ gimp_drawable_tree_view_insert_item (GimpContainerView *view,
   filters   = gimp_drawable_get_filters (GIMP_DRAWABLE (viewable));
   n_filters = gimp_container_get_n_children (filters);
 
+  /* Also account for mask filters */
+  if (GIMP_IS_LAYER (viewable) && gimp_layer_get_mask (GIMP_LAYER (viewable)))
+    {
+      GimpDrawable *mask =
+        GIMP_DRAWABLE (gimp_layer_get_mask (GIMP_LAYER (viewable)));
+
+      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (mask));
+
+      n_filters += gimp_container_get_n_children (filters);
+    }
+
   gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                       drawable_view->priv->model_column_filters,
                       n_filters > 0,
@@ -591,6 +603,20 @@ gimp_drawable_tree_view_filters_changed (GimpDrawable         *drawable,
       gint n_editable;
 
       gimp_drawable_n_editable_filters (drawable, &n_editable, NULL, NULL);
+
+        /* Also account for mask filters */
+      if (GIMP_IS_LAYER (drawable) &&
+          gimp_layer_get_mask (GIMP_LAYER (drawable)))
+        {
+          GimpDrawable *mask;
+          gint          n_mask_editable = 0;
+
+          mask = GIMP_DRAWABLE (gimp_layer_get_mask (GIMP_LAYER (drawable)));
+
+          gimp_drawable_n_editable_filters (mask, &n_mask_editable, NULL,
+                                            NULL);
+          n_editable += n_mask_editable;
+        }
 
       gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                           view->priv->model_column_filters,

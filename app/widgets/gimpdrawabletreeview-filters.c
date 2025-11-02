@@ -38,6 +38,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawablefilter.h"
+#include "core/gimplayer.h"
 #include "core/gimplist.h"
 #include "core/gimprasterizable.h"
 #include "core/gimpimage.h"
@@ -60,7 +61,9 @@ struct _GimpDrawableTreeViewFiltersEditor
 
   GtkWidget          *popover;
   GtkWidget          *vbox;
+  GtkWidget          *stack;
   GtkWidget          *view;
+  GtkWidget          *mask_view;
 
   GtkWidget          *options;
   GtkWidget          *visible_button;
@@ -71,10 +74,18 @@ struct _GimpDrawableTreeViewFiltersEditor
   GtkWidget          *remove_button;
 
   GQuark              notify_temporary_handler;
+  GQuark              notify_temporary_mask_handler;
 };
 
-
+static void   gimp_drawable_filters_editor_create_view
+                                              (GimpDrawableTreeView  *view,
+                                               GimpDrawable          *drawable,
+                                               GimpContainer         *filters,
+                                               gboolean               is_mask);
 static void   gimp_drawable_filters_editor_set_sensitive
+                                              (GimpDrawableTreeView  *view);
+static GimpDrawable *
+              gimp_drawable_filters_editor_get_active_drawable
                                               (GimpDrawableTreeView  *view);
 
 static void   gimp_drawable_filters_editor_view_selection_changed
@@ -120,20 +131,29 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
 {
   GimpDrawableTreeViewFiltersEditor *editor    = view->editor;
   GimpContainerTreeView             *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  GimpDrawable                      *mask      = NULL;
   GimpContainer                     *filters;
+  GimpContainer                     *mask_filters;
   GList                             *list;
   gint                               n_editable;
+  gint                               n_mask_editable;
   gboolean                           visible   = FALSE;
 
+  mask_filters    = NULL;
+  n_mask_editable = 0;
   /* Prevents "duplicate" filter views if you click the popover too fast */
-  if (editor && editor->view)
+  if (editor && (editor->view || editor->mask_view))
     _gimp_drawable_tree_view_filter_editor_hide (view);
+
+  if (GIMP_IS_LAYER (drawable))
+    mask = GIMP_DRAWABLE (gimp_layer_get_mask (GIMP_LAYER (drawable)));
 
   if (! editor)
     {
       GtkWidget   *vbox;
       GtkWidget   *image;
       GtkWidget   *label;
+      GtkWidget   *switcher;
       gchar       *text;
       GtkIconSize  button_icon_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
       gint         pixel_icon_size  = 16;
@@ -154,15 +174,14 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
       /*  main vbox  */
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, button_spacing);
       gtk_container_add (GTK_CONTAINER (editor->popover), vbox);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
 
       gimp_help_connect (vbox, NULL, gimp_standard_help_func,
                          GIMP_HELP_LAYER_EFFECTS, NULL, NULL);
 
       /*  top label  */
       label = gtk_label_new (NULL);
-      text = g_strdup_printf ("<b>%s</b>",
-                              _("Layer Effects"));
+      text = g_strdup_printf ("<b>%s</b>", _("Filters"));
       gtk_label_set_markup (GTK_LABEL (label), text);
       g_free (text);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -171,12 +190,28 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
       /*  main vbox within  */
       editor->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, button_spacing);
       gtk_box_pack_end (GTK_BOX (vbox), editor->vbox, TRUE, TRUE, 0);
-      gtk_widget_show (editor->vbox);
+      gtk_widget_set_visible (editor->vbox, TRUE);
 
       /*  bottom buttons  */
       editor->options = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, button_spacing);
       gtk_box_pack_end (GTK_BOX (editor->vbox), editor->options, FALSE, FALSE, 0);
-      gtk_widget_show (editor->options);
+      gtk_widget_set_visible (editor->options, TRUE);
+
+      if (GIMP_IS_LAYER (drawable))
+        {
+          switcher = gtk_stack_switcher_new ();
+          gtk_widget_set_halign (switcher, GTK_ALIGN_CENTER);
+          gtk_box_pack_start (GTK_BOX (editor->vbox), switcher, TRUE, TRUE, 0);
+          gtk_widget_set_visible (switcher, TRUE);
+
+          editor->stack = gtk_stack_new ();
+          gtk_stack_switcher_set_stack (GTK_STACK_SWITCHER (switcher),
+                                        GTK_STACK (editor->stack));
+
+          gtk_box_pack_start (GTK_BOX (editor->vbox), editor->stack, TRUE,
+                                       TRUE, 0);
+          gtk_widget_set_visible (editor->stack, TRUE);
+        }
 
       /*  "visible" button  */
       editor->visible_button = gtk_toggle_button_new ();
@@ -280,6 +315,8 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
     }
 
   filters = gimp_drawable_get_filters (drawable);
+  if (mask)
+    mask_filters = gimp_drawable_get_filters (mask);
 
   for (list = GIMP_LIST (filters)->queue->tail;
        list;
@@ -302,44 +339,20 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
                                      gimp_drawable_filters_editor_visible_all_toggled,
                                      view);
 
+  editor->drawable = drawable;
+
   gimp_drawable_n_editable_filters (drawable, &n_editable, NULL, NULL);
+  if (mask)
+    gimp_drawable_n_editable_filters (mask, &n_mask_editable, NULL, NULL);
 
   /*  only show if we have at least one editable filter  */
-  if (n_editable > 0)
+  if (n_editable > 0 || n_mask_editable > 0)
+    gimp_drawable_filters_editor_create_view (view, drawable, filters, FALSE);
+  if (n_mask_editable > 0 || mask)
+    gimp_drawable_filters_editor_create_view (view, mask, mask_filters, TRUE);
+
+  if (n_editable + n_mask_editable > 0)
     {
-      GtkWidget *scrolled_window;
-
-      editor->drawable = drawable;
-
-      editor->view = gimp_container_list_view_new (filters,
-                                                   gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view)),
-                                                   GIMP_VIEW_SIZE_SMALL, 0);
-
-      editor->notify_temporary_handler =
-        gimp_container_add_handler (filters, "notify::temporary",
-                                    G_CALLBACK (gimp_drawable_filters_editor_temporary_changed),
-                                    view);
-
-      g_signal_connect (drawable, "filters-changed",
-                        G_CALLBACK (gimp_drawable_filters_editor_filters_changed),
-                        view);
-
-      g_signal_connect (editor->view, "selection-changed",
-                        G_CALLBACK (gimp_drawable_filters_editor_view_selection_changed),
-                        view);
-      g_signal_connect_object (editor->view, "item-activated",
-                               G_CALLBACK (gimp_drawable_filters_editor_view_item_activated),
-                               view, 0);
-
-      gtk_box_pack_start (GTK_BOX (editor->vbox), editor->view,
-                          TRUE, TRUE, 0);
-      gtk_widget_show (editor->view);
-
-      scrolled_window = GIMP_CONTAINER_BOX (editor->view)->scrolled_win;
-      gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                      GTK_POLICY_NEVER,
-                                      GTK_POLICY_NEVER);
-
       gimp_drawable_filters_editor_set_sensitive (view);
 
       gtk_popover_set_pointing_to (GTK_POPOVER (editor->popover), rect);
@@ -348,6 +361,13 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
       g_signal_connect_swapped (editor->popover, "closed",
                                 G_CALLBACK (_gimp_drawable_tree_view_filter_editor_hide),
                                 view);
+
+      /* Show mask section at start if mask if active */
+      if (editor->stack                                            &&
+          GIMP_IS_LAYER (drawable)                                 &&
+          gimp_layer_get_edit_mask (GIMP_LAYER (drawable)))
+        gtk_stack_set_visible_child_name (GTK_STACK (editor->stack),
+                                          "layer-mask-filters");
 
       return TRUE;
     }
@@ -379,6 +399,23 @@ _gimp_drawable_tree_view_filter_editor_hide (GimpDrawableTreeView *view)
                                      editor->notify_temporary_handler);
       editor->notify_temporary_handler = 0;
     }
+  if (editor->notify_temporary_mask_handler)
+    {
+      GimpDrawable  *mask;
+      GimpContainer *filters;
+
+      mask = GIMP_DRAWABLE (gimp_layer_get_mask (GIMP_LAYER (editor->drawable)));
+
+      filters = gimp_drawable_get_filters (mask);
+
+      g_signal_handlers_disconnect_by_func (mask,
+                                            gimp_drawable_filters_editor_filters_changed,
+                                            view);
+
+      gimp_container_remove_handler (filters,
+                                     editor->notify_temporary_mask_handler);
+      editor->notify_temporary_mask_handler = 0;
+    }
 
   gtk_popover_popdown (GTK_POPOVER (editor->popover));
 
@@ -392,6 +429,17 @@ _gimp_drawable_tree_view_filter_editor_hide (GimpDrawableTreeView *view)
                                             view);
 
       g_clear_pointer (&editor->view, gtk_widget_destroy);
+    }
+  if (editor->mask_view)
+    {
+      g_signal_handlers_disconnect_by_func (editor->mask_view,
+                                            gimp_drawable_filters_editor_view_selection_changed,
+                                            view);
+      g_signal_handlers_disconnect_by_func (editor->mask_view,
+                                            gimp_drawable_filters_editor_view_item_activated,
+                                            view);
+
+      g_clear_pointer (&editor->mask_view, gtk_widget_destroy);
     }
 
   editor->drawable = NULL;
@@ -408,20 +456,105 @@ _gimp_drawable_tree_view_filter_editor_destroy (GimpDrawableTreeView *view)
 
   _gimp_drawable_tree_view_filter_editor_hide (view);
 
+  g_clear_pointer (&editor->stack, gtk_widget_destroy);
   g_clear_pointer (&editor->popover, gtk_widget_destroy);
   g_clear_pointer (&view->editor, g_free);
 }
 
 static void
+gimp_drawable_filters_editor_create_view (GimpDrawableTreeView *view,
+                                          GimpDrawable         *drawable,
+                                          GimpContainer        *filters,
+                                          gboolean              is_mask)
+{
+  GimpDrawableTreeViewFiltersEditor *editor = view->editor;
+  GimpContainerView                 *container;
+  GtkWidget                         *scrolled_window;
+
+  container = GIMP_CONTAINER_VIEW (view);
+
+  if (! is_mask)
+    {
+      editor->view = gimp_container_list_view_new (filters,
+                                                   gimp_container_view_get_context (container),
+                                                   GIMP_VIEW_SIZE_SMALL, 0);
+      editor->notify_temporary_handler =
+        gimp_container_add_handler (filters, "notify::temporary",
+                                    G_CALLBACK (gimp_drawable_filters_editor_temporary_changed),
+                                    view);
+    }
+  else
+    {
+      editor->mask_view = gimp_container_list_view_new (filters,
+                                                        gimp_container_view_get_context (container),
+                                                        GIMP_VIEW_SIZE_SMALL, 0);
+      editor->notify_temporary_mask_handler =
+        gimp_container_add_handler (filters, "notify::temporary",
+                                    G_CALLBACK (gimp_drawable_filters_editor_temporary_changed),
+                                    view);
+    }
+
+  g_signal_connect (drawable, "filters-changed",
+                    G_CALLBACK (gimp_drawable_filters_editor_filters_changed),
+                    view);
+
+  if (! is_mask)
+    {
+      g_signal_connect (editor->view, "selection-changed",
+                        G_CALLBACK (gimp_drawable_filters_editor_view_selection_changed),
+                        view);
+      g_signal_connect_object (editor->view, "item-activated",
+                               G_CALLBACK (gimp_drawable_filters_editor_view_item_activated),
+                               view, 0);
+
+      if (GIMP_IS_LAYER (drawable))
+        gtk_stack_add_titled (GTK_STACK (editor->stack),
+                              editor->view,
+                              "layer-filters",
+                              _("Layer"));
+      else
+        gtk_box_pack_start (GTK_BOX (editor->vbox), editor->view,
+                            TRUE, TRUE, 0);
+      gtk_widget_set_visible (editor->view, TRUE);
+
+      scrolled_window = GIMP_CONTAINER_BOX (editor->view)->scrolled_win;
+      gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                      GTK_POLICY_NEVER, GTK_POLICY_NEVER);
+    }
+  else
+    {
+      g_signal_connect (editor->mask_view, "selection-changed",
+                        G_CALLBACK (gimp_drawable_filters_editor_view_selection_changed),
+                        view);
+      g_signal_connect_object (editor->mask_view, "item-activated",
+                               G_CALLBACK (gimp_drawable_filters_editor_view_item_activated),
+                               view, 0);
+
+      gtk_stack_add_titled (GTK_STACK (editor->stack),
+                            editor->mask_view,
+                            "layer-mask-filters",
+                            _("Mask"));
+      gtk_widget_set_visible (editor->mask_view, TRUE);
+
+      scrolled_window = GIMP_CONTAINER_BOX (editor->mask_view)->scrolled_win;
+      gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                      GTK_POLICY_NEVER, GTK_POLICY_NEVER);
+    }
+}
+
+static void
 gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
 {
-  GimpDrawableTreeViewFiltersEditor *editor= view->editor;
+  GimpDrawableTreeViewFiltersEditor *editor = view->editor;
+  GimpDrawable                      *active_drawable;
   gboolean                           editable;
   gint                               n_editable;
   gint                               first_editable;
   gint                               last_editable;
 
-  editable = gimp_drawable_n_editable_filters (editor->drawable,
+  active_drawable = gimp_drawable_filters_editor_get_active_drawable (view);
+
+  editable = gimp_drawable_n_editable_filters (active_drawable,
                                                &n_editable,
                                                &first_editable,
                                                &last_editable);
@@ -441,13 +574,13 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
       gboolean       is_editable = FALSE;
       gint           index;
 
-      filters = gimp_drawable_get_filters (editor->drawable);
+      filters = gimp_drawable_get_filters (active_drawable);
 
       index = gimp_container_get_child_index (filters,
                                               GIMP_OBJECT (editor->filter));
 
       /*  do not allow merging down effects on group layers  */
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (editor->drawable)))
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (active_drawable)))
         is_group = TRUE;
 
       is_editable = (index >= first_editable &&
@@ -463,11 +596,25 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
                                 index < last_editable);
       gtk_widget_set_sensitive (editor->merge_button,
                                 ! is_group &&
-                                (! GIMP_IS_RASTERIZABLE (editor->drawable) ||
-                                 gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (editor->drawable))));
+                                (! GIMP_IS_RASTERIZABLE (active_drawable) ||
+                                 gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (active_drawable))));
       gtk_widget_set_sensitive (editor->remove_button,
                                 is_editable);
     }
+}
+
+static GimpDrawable *
+gimp_drawable_filters_editor_get_active_drawable (GimpDrawableTreeView *view)
+{
+  GimpDrawableTreeViewFiltersEditor *editor = view->editor;
+
+  if (GIMP_IS_LAYER (editor->drawable) &&
+      editor->stack                    &&
+      g_strcmp0 (gtk_stack_get_visible_child_name (GTK_STACK (editor->stack)),
+                 "layer-mask-filters") == 0)
+    return GIMP_DRAWABLE (gimp_layer_get_mask (GIMP_LAYER (editor->drawable)));
+
+  return editor->drawable;
 }
 
 static void
@@ -517,16 +664,21 @@ gimp_drawable_filters_editor_filters_changed (GimpDrawable         *drawable,
                                               GimpDrawableTreeView *view)
 {
   GimpContainer *filters;
+  GtkWidget     *active_view;
   gint           n_filters;
   gint           height;
 
   filters   = gimp_drawable_get_filters (drawable);
   n_filters = gimp_container_get_n_children (filters);
 
-  height = gimp_container_view_get_view_size (GIMP_CONTAINER_VIEW (view->editor->view), NULL);
+  active_view = view->editor->view;
+  if (! active_view)
+    active_view = view->editor->mask_view;
+
+  height = gimp_container_view_get_view_size (GIMP_CONTAINER_VIEW (active_view), NULL);
 
   /*  it doesn't get any more hackish  */
-  gtk_widget_set_size_request (view->editor->view,
+  gtk_widget_set_size_request (active_view,
                                -1, (height + 6) * n_filters);
 
   gimp_drawable_filters_editor_set_sensitive (view);
@@ -536,14 +688,15 @@ static void
 gimp_drawable_filters_editor_visible_all_toggled (GtkWidget            *widget,
                                                   GimpDrawableTreeView *view)
 {
-  GimpDrawableTreeViewFiltersEditor *editor = view->editor;
-  GimpContainer                     *filters;
-  GList                             *list;
-  gboolean                           visible;
+  GimpDrawable  *active_drawable;
+  GimpContainer *filters;
+  GList         *list;
+  gboolean       visible;
+
+  active_drawable = gimp_drawable_filters_editor_get_active_drawable (view);
 
   visible = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-
-  filters = gimp_drawable_get_filters (editor->drawable);
+  filters = gimp_drawable_get_filters (active_drawable);
 
   for (list = GIMP_LIST (filters)->queue->head;
        list;
@@ -557,8 +710,8 @@ gimp_drawable_filters_editor_visible_all_toggled (GtkWidget            *widget,
         }
     }
 
-  gimp_drawable_update (editor->drawable, 0, 0, -1, -1);
-  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (editor->drawable)));
+  gimp_drawable_update (active_drawable, 0, 0, -1, -1);
+  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (active_drawable)));
 }
 
 static void
@@ -635,6 +788,7 @@ gimp_drawable_filters_editor_raise_clicked (GtkWidget            *widget,
                                             GimpDrawableTreeView *view)
 {
   GimpDrawableTreeViewFiltersEditor *editor = view->editor;
+  GimpDrawable                      *active_drawable;
   GimpImage                         *image;
 
   if (! GIMP_IS_DRAWABLE_FILTER (editor->filter))
@@ -649,7 +803,8 @@ gimp_drawable_filters_editor_raise_clicked (GtkWidget            *widget,
       return;
     }
 
-  if (gimp_drawable_raise_filter (editor->drawable,
+  active_drawable = gimp_drawable_filters_editor_get_active_drawable (view);
+  if (gimp_drawable_raise_filter (active_drawable,
                                   GIMP_FILTER (editor->filter)))
     {
       gimp_image_flush (image);
@@ -661,6 +816,7 @@ gimp_drawable_filters_editor_lower_clicked (GtkWidget            *widget,
                                             GimpDrawableTreeView *view)
 {
   GimpDrawableTreeViewFiltersEditor *editor = view->editor;
+  GimpDrawable                      *active_drawable;
   GimpImage                         *image;
 
   if (! GIMP_IS_DRAWABLE_FILTER (editor->filter))
@@ -675,7 +831,8 @@ gimp_drawable_filters_editor_lower_clicked (GtkWidget            *widget,
       return;
     }
 
-  if (gimp_drawable_lower_filter (editor->drawable,
+  active_drawable = gimp_drawable_filters_editor_get_active_drawable (view);
+  if (gimp_drawable_lower_filter (active_drawable,
                                   GIMP_FILTER (editor->filter)))
     {
       gimp_image_flush (image);
@@ -688,11 +845,13 @@ gimp_drawable_filters_editor_merge_clicked (GtkWidget            *widget,
 {
   GimpDrawableTreeViewFiltersEditor *editor = view->editor;
   GimpContext                       *context;
+  GimpDrawable                      *active_drawable;
   GimpToolInfo                      *active_tool;
 
   if (! GIMP_IS_DRAWABLE_FILTER (editor->filter))
     return;
 
+  active_drawable = gimp_drawable_filters_editor_get_active_drawable (view);
   /* Commit GEGL-based tools before trying to merge filters */
   context     = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view));
   active_tool = gimp_context_get_tool (context);
@@ -705,12 +864,12 @@ gimp_drawable_filters_editor_merge_clicked (GtkWidget            *widget,
                                    gimp_context_get_display (context));
     }
 
-  if (! gimp_viewable_get_children (GIMP_VIEWABLE (editor->drawable)))
+  if (! gimp_viewable_get_children (GIMP_VIEWABLE (active_drawable)))
     {
       GimpImage *image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
 
       /* Don't merge if the layer is currently locked */
-      if (gimp_item_get_lock_content (GIMP_ITEM (editor->drawable)))
+      if (gimp_item_get_lock_content (GIMP_ITEM (active_drawable)))
         {
           gimp_message_literal (image->gimp, G_OBJECT (view),
                                 GIMP_MESSAGE_WARNING,
@@ -718,7 +877,7 @@ gimp_drawable_filters_editor_merge_clicked (GtkWidget            *widget,
           return;
         }
 
-      gimp_drawable_merge_filters (GIMP_DRAWABLE (editor->drawable));
+      gimp_drawable_merge_filters (GIMP_DRAWABLE (active_drawable));
 
       _gimp_drawable_tree_view_filter_editor_hide (view);
 
@@ -732,16 +891,19 @@ gimp_drawable_filters_editor_remove_clicked (GtkWidget            *widget,
 {
   GimpDrawableTreeViewFiltersEditor *editor = view->editor;
   GimpContainer                     *filters;
+  GimpDrawable                      *active_drawable;
   GimpImage                         *image;
 
   if (! GIMP_IS_DRAWABLE_FILTER (editor->filter))
     return;
 
-  filters = gimp_drawable_get_filters (editor->drawable);
+  active_drawable = gimp_drawable_filters_editor_get_active_drawable (view);
+
+  filters = gimp_drawable_get_filters (active_drawable);
   image   = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
 
   gimp_image_undo_push_filter_remove (image, _("Remove filter"),
-                                      editor->drawable,
+                                      active_drawable,
                                       editor->filter);
 
   gimp_drawable_filter_abort (editor->filter);
