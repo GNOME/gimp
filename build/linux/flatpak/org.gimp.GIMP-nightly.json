@@ -789,7 +789,7 @@
                 {
                     "type": "shell",
                     "commands": [
-                        "xsltproc -o desktop/org.gimp.GIMP.appdata.xml.in.in build/linux/flatpak/remove-future-appdata-release.xslt desktop/org.gimp.GIMP.appdata.xml.in.in"
+                        "sed -i '/<release[^>]*date=\"TODO\"[^>]*>/,/<\/release>/d' desktop/org.gimp.GIMP.appdata.xml.in.in"
                     ]
                 }
             ],
