@@ -185,8 +185,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.24.zip",
-                            "sha256": "1e33358dc545a3258af213e2fb0ebb84e6d970bb098d774c33bdacfbdde4a087",
+                            "url": "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.25.zip",
+                            "sha256": "5ce391d1d09ff2f6b21af492fa72bd693e416a4a682ec48c04f91e5c0e16f383",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 242778,
