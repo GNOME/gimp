@@ -212,10 +212,30 @@ parts:
       craftctl default
 
   command-chain-plugins:
-    plugin: dump
-    source: build/linux/snap/patches/
-    override-pull: |
+    plugin: nil
+    override-prime: |
       craftctl default
-      chmod +x enable-plugins
-    organize:
-      enable-plugins: command-chain/enable-plugins
+      mkdir -p $CRAFT_PRIME/command-chain
+      echo '#!/bin/sh
+      #
+      # Set LD_LIBRARY_PATH for third-party plugins.
+      #
+      # Each third-party plugin snap may provide a
+      # add-ld-library-path file so GIMP can find the
+      # plugin .so. The file should provide a path
+      # relative to ${SNAP}/gimp-plugins, which is the
+      # mount point for the GIMP snap generic content
+      # interface plug.
+      #
+
+      for path_file in "${SNAP}"/gimp-plugins/*.conf/add-ld-library-path; do
+        if [ -f "${path_file}" ]; then
+          while IFS= read -r path || [ -n "${path}" ]; do
+            LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${SNAP}/gimp-plugins/${path}"
+          done < "${path_file}"
+        fi
+      done
+      export LD_LIBRARY_PATH
+
+      exec "$@"' > $CRAFT_PRIME/command-chain/enable-plugins
+      chmod +x $CRAFT_PRIME/command-chain/enable-plugins
