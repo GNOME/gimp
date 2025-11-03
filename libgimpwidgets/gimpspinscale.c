@@ -287,7 +287,7 @@ gimp_spin_scale_get_preferred_width (GtkWidget *widget,
 
       /* ~3 chars for the ellipses */
       *minimum_width += char_pixels * 3;
-      *natural_width += char_pixels * 3;
+      *natural_width += char_pixels * strlen (scale->label);
     }
 
   pango_font_metrics_unref (metrics);
