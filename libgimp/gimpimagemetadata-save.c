@@ -898,6 +898,19 @@ gimp_image_metadata_save_filter (GimpImage            *image,
       g_strfreev (iptc_data);
     }
 
+  if (support_exif)
+    {
+      /* Remove all old thumbnail metadata: third-party software may have
+       * written tags we don't expect. */
+      gexiv2_metadata_try_erase_exif_thumbnail (new_g2metadata, &code_error);
+      if (code_error)
+        {
+          g_warning ("%s: failed to erase EXIF thumbnail: %s",
+                     G_STRFUNC, code_error->message);
+          g_clear_error (&code_error);
+        }
+    }
+
   if (flags & GIMP_METADATA_SAVE_THUMBNAIL && support_exif)
     {
       GdkPixbuf *thumb_pixbuf;
@@ -1016,17 +1029,6 @@ gimp_image_metadata_save_filter (GimpImage            *image,
         }
 
       g_object_unref (thumb_pixbuf);
-    }
-  else
-    {
-      /* Remove Thumbnail */
-      gexiv2_metadata_try_erase_exif_thumbnail (new_g2metadata, &code_error);
-      if (code_error)
-        {
-          g_warning ("%s: failed to erase EXIF thumbnail: %s\n",
-                     G_STRFUNC, code_error->message);
-          g_clear_error (&code_error);
-        }
     }
 
   if (flags & GIMP_METADATA_SAVE_COLOR_PROFILE)
