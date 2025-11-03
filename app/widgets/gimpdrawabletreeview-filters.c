@@ -363,9 +363,7 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
                                 view);
 
       /* Show mask section at start if mask if active */
-      if (editor->stack                                            &&
-          GIMP_IS_LAYER (drawable)                                 &&
-          gimp_layer_get_edit_mask (GIMP_LAYER (drawable)))
+      if (mask && gimp_layer_get_edit_mask (GIMP_LAYER (drawable)))
         gtk_stack_set_visible_child_name (GTK_STACK (editor->stack),
                                           "layer-mask-filters");
 
@@ -533,7 +531,7 @@ gimp_drawable_filters_editor_create_view (GimpDrawableTreeView *view,
       gtk_stack_add_titled (GTK_STACK (editor->stack),
                             editor->mask_view,
                             "layer-mask-filters",
-                            _("Mask"));
+                            _("Layer Mask"));
       gtk_widget_set_visible (editor->mask_view, TRUE);
 
       scrolled_window = GIMP_CONTAINER_BOX (editor->mask_view)->scrolled_win;
