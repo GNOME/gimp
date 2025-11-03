@@ -35,10 +35,11 @@
 #include "core/gimp-palettes.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "app/core/gimpimage-colormap.h"
+#include "core/gimpimage-colormap.h"
 #include "core/gimppalettemru.h"
 
 #include "gimpcolorhistory.h"
+#include "gimpdnd.h"
 
 #include "gimp-intl.h"
 
@@ -97,6 +98,11 @@ static void   gimp_color_history_color_changed                  (GtkWidget      
 static void   gimp_color_history_image_changed                  (GimpContext       *context,
                                                                  GimpImage         *image,
                                                                  GimpColorHistory  *history);
+
+/* Drag and Drop */
+static void   gimp_color_history_drag_color                     (GtkWidget         *widget,
+                                                                 GeglColor        **color,
+                                                                 gpointer           data);
 
 /* Utils */
 static void   gimp_color_history_reorganize                     (GimpColorHistory  *history);
@@ -278,11 +284,11 @@ gimp_color_history_set_property (GObject      *object,
             gtk_widget_show (button);
 
             color_area = gimp_color_area_new (black, GIMP_COLOR_AREA_SMALL_CHECKS,
-                                              GDK_BUTTON2_MASK);
+                                              GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
             gimp_color_area_set_color_config (GIMP_COLOR_AREA (color_area),
                                               history->context->gimp->config->color_management);
             gtk_container_add (GTK_CONTAINER (button), color_area);
-            gtk_widget_show (color_area);
+            gtk_widget_set_visible (color_area, TRUE);
 
             g_signal_connect (button, "clicked",
                               G_CALLBACK (gimp_color_history_color_clicked),
@@ -291,6 +297,10 @@ gimp_color_history_set_property (GObject      *object,
             g_signal_connect (color_area, "color-changed",
                               G_CALLBACK (gimp_color_history_color_changed),
                               GINT_TO_POINTER (i));
+
+            gimp_dnd_color_source_add (GTK_WIDGET (button),
+                                       gimp_color_history_drag_color,
+                                       color_area);
 
             history->buttons[i]     = button;
             history->color_areas[i] = color_area;
@@ -572,10 +582,21 @@ gimp_color_history_image_changed (GimpContext      *context,
 }
 
 static void
+gimp_color_history_drag_color (GtkWidget  *widget,
+                               GeglColor **color,
+                               gpointer    data)
+{
+  GimpColorArea *color_area = GIMP_COLOR_AREA (data);
+
+  if (color_area)
+    *color = gegl_color_duplicate (gimp_color_area_get_color (color_area));
+}
+
+static void
 gimp_color_history_reorganize (GimpColorHistory *history)
 {
   GtkWidget   *button;
-  gint       i;
+  gint         i;
 
   g_return_if_fail (history->buttons[0] && GTK_IS_BUTTON (history->buttons[0]));
 
