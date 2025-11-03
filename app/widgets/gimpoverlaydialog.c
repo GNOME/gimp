@@ -194,7 +194,7 @@ gimp_overlay_dialog_init (GimpOverlayDialog *dialog)
 
   dialog->action_area = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog->action_area),
-                             GTK_BUTTONBOX_END);
+                             GTK_BUTTONBOX_CENTER);
   gtk_widget_set_parent (dialog->action_area, GTK_WIDGET (dialog));
   gtk_widget_show (dialog->action_area);
 }
