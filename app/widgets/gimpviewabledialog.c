@@ -70,7 +70,8 @@ G_DEFINE_TYPE (GimpViewableDialog, gimp_viewable_dialog, GIMP_TYPE_DIALOG)
 static void
 gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->dispose      = gimp_viewable_dialog_dispose;
   object_class->get_property = gimp_viewable_dialog_get_property;
@@ -97,6 +98,15 @@ gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT));
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_enum ("tool-icon-size",
+                                                              NULL, NULL,
+                                                              GTK_TYPE_ICON_SIZE,
+                                                              GTK_ICON_SIZE_LARGE_TOOLBAR,
+                                                              GIMP_PARAM_READABLE));
+
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpViewableDialog");
 }
 
 static void
@@ -177,7 +187,8 @@ gimp_viewable_dialog_set_property (GObject      *object,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpViewableDialog *dialog = GIMP_VIEWABLE_DIALOG (object);
+  GimpViewableDialog *dialog    = GIMP_VIEWABLE_DIALOG (object);
+  GtkIconSize         icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
 
   switch (property_id)
     {
@@ -193,9 +204,15 @@ gimp_viewable_dialog_set_property (GObject      *object,
       break;
 
     case PROP_ICON_NAME:
+      gtk_widget_style_get (GTK_WIDGET (dialog),
+                            "tool-icon-size", &icon_size,
+                            NULL);
+      icon_size = (icon_size < GTK_ICON_SIZE_LARGE_TOOLBAR) ?
+                   GTK_ICON_SIZE_LARGE_TOOLBAR : icon_size;
+
       gtk_image_set_from_icon_name (GTK_IMAGE (dialog->icon),
                                     g_value_get_string (value),
-                                    GTK_ICON_SIZE_LARGE_TOOLBAR);
+                                    icon_size);
       break;
 
     case PROP_DESC:
@@ -337,7 +354,9 @@ gimp_viewable_dialog_set_viewables (GimpViewableDialog *dialog,
 
   if (g_list_length (viewables) == 1 && viewables->data)
     {
-      GimpViewable *viewable = viewables->data;
+      GimpViewable *viewable   = viewables->data;
+      GtkIconSize   icon_size  = GTK_ICON_SIZE_DND;
+      gint          pixel_size = 32;
       GtkWidget    *box;
 
       g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
@@ -349,10 +368,20 @@ gimp_viewable_dialog_set_viewables (GimpViewableDialog *dialog,
 
       box = gtk_widget_get_parent (dialog->icon);
 
+      /* Get view icon size based on icon theme size */
+      gtk_widget_style_get (GTK_WIDGET (dialog),
+                            "tool-icon-size", &icon_size,
+                            NULL);
+      icon_size = (icon_size < GTK_ICON_SIZE_LARGE_TOOLBAR) ?
+                   GTK_ICON_SIZE_LARGE_TOOLBAR : icon_size;
+      gtk_icon_size_lookup (icon_size, &pixel_size, NULL);
+      pixel_size *= (4.0f / 3.0f);
+
       g_set_weak_pointer (&dialog->view,
-                          gimp_view_new (context, viewable, 32, 1, TRUE));
+                          gimp_view_new (context, viewable, pixel_size, 1,
+                          TRUE));
       gtk_box_pack_end (GTK_BOX (box), dialog->view, FALSE, FALSE, 2);
-      gtk_widget_show (dialog->view);
+      gtk_widget_set_visible (dialog->view, TRUE);
 
       gimp_viewable_dialog_name_changed (GIMP_OBJECT (viewable), dialog);
 
