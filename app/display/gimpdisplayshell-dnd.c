@@ -258,7 +258,6 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
       gimp_image_add_layer (image, new_layer,
                             GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-      gimp_drawable_enable_resize_undo (GIMP_DRAWABLE (new_layer));
 
       gimp_image_undo_group_end (image);
 

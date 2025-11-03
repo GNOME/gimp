@@ -5666,7 +5666,6 @@ gimp_image_add_layers (GimpImage   *image,
 
       gimp_image_add_layer (image, GIMP_LAYER (new_item),
                             parent, position, TRUE);
-      gimp_drawable_enable_resize_undo (GIMP_DRAWABLE (new_item));
       position++;
     }
 
