@@ -778,6 +778,8 @@ script_fu_script_get_i18n (SFScript  *script,
                            gchar    **domain,
                            gchar    **catalog)
 {
+  g_return_if_fail (script != NULL);
+
   *domain  = g_strdup (script->i18n_domain_name);
   *catalog = g_strdup (script->i18n_catalog_relative_path);
 }

@@ -382,5 +382,8 @@ script_fu_get_i18n_for_proc (const gchar *proc_name,
                              gchar      **declared_i18n_catalog)
 {
   SFScript *script = script_fu_find_script (proc_name);
-  script_fu_script_get_i18n (script, declared_i18n_domain, declared_i18n_catalog);
+
+  if (script != NULL)
+    script_fu_script_get_i18n (script, declared_i18n_domain,
+                               declared_i18n_catalog);
 }
