@@ -681,6 +681,7 @@ tooltip decoration {
   background-color: @bg-color;
   border-color: @border-color;
   border-width: 1px;
+  border-style: solid;
 }
 
 /* The border around a frame */
