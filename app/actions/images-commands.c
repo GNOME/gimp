@@ -112,6 +112,9 @@ images_delete_image_cmd_callback (GimpAction *action,
   if (image && gimp_container_have (container, GIMP_OBJECT (image)))
     {
       if (gimp_image_get_display_count (image) == 0)
-        g_object_unref (image);
+        {
+          gimp_container_remove (container, GIMP_OBJECT (image));
+          g_object_unref (image);
+        }
     }
 }
