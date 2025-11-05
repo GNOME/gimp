@@ -519,7 +519,11 @@ write_dds (GFile               *file,
     {
       if (! is_mipmap_chain_valid &&
           mipmaps == DDS_MIPMAP_EXISTING)
-        mipmaps = DDS_MIPMAP_NONE;
+        {
+          g_object_set (config,
+                        "mipmaps", "none",
+                        NULL);
+        }
 
       if (! save_dialog (image, drawable, procedure, config))
         return GIMP_PDB_CANCEL;
