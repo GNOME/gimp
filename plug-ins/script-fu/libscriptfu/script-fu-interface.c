@@ -342,27 +342,17 @@ script_fu_interface_dialog (SFScript  *script,
               {
               case SF_SLIDER:
                 {
-                  GtkWidget *spinbutton;
+                  // This widget does not need a colon after the label, so just
+                  // use the original label without it.
+                  g_free (label_text);
 
-                  widget = gimp_scale_entry_new ("",
-                                                 arg->value.sfa_adjustment.value,
-                                                 arg->default_value.sfa_adjustment.lower,
-                                                 arg->default_value.sfa_adjustment.upper,
-                                                 arg->default_value.sfa_adjustment.digits);
-
-                  /* #12157 We should not need to set value, since we just passed it.
-                   * But seems to be a flaw in the widget.
-                   * The comments in gimp_label_spin_init, says it inits to bogus.
-                   */
-                  gimp_label_spin_set_value ((GimpLabelSpin*)widget, arg->value.sfa_adjustment.value);
-
-                  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (widget),
-                                                  arg->default_value.sfa_adjustment.step,
-                                                  arg->default_value.sfa_adjustment.page);
-                  spinbutton = gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (widget));
-                  adj_widget = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
-
-                  gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
+                  adj_widget = gtk_adjustment_new (arg->value.sfa_adjustment.value,
+                                                   arg->default_value.sfa_adjustment.lower,
+                                                   arg->default_value.sfa_adjustment.upper,
+                                                   arg->default_value.sfa_adjustment.step,
+                                                   arg->default_value.sfa_adjustment.page,
+                                                   0.0);
+                  widget = gimp_spin_scale_new (adj_widget, arg->label, arg->default_value.sfa_adjustment.digits);
                 }
                 break;
 
@@ -888,23 +878,14 @@ script_fu_reset (SFScript *script)
           {
             /* Reset the widget's underlying GtkAdjustment.
              * The widget knows its own GtkAdjustment.
-             * The widget is a GimpScaleEntry or a GimpSpinButton.
+             * The widget is a GimpSpinScale or a GimpSpinButton.
              */
             GtkAdjustment *adj_widget = NULL;
 
             switch (script->args[i].default_value.sfa_adjustment.type)
               {
-              case SF_SLIDER:  /* GimpScaleEntry */
-                {
-                  /* Widget knows its range which knows its adjustment. */
-                  /* Unfortunately, gimp_scale_entry_get_range returns GtkWidget*, we must downcast.*/
-                  GtkRange *range = GTK_RANGE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (widget)));
-
-                  adj_widget = gtk_range_get_adjustment (range);
-                }
-                break;
-
-              case SF_SPINNER:  /* GimpSpinButton */
+              case SF_SLIDER:  /* GimpSpinScale */
+              case SF_SPINNER: /* GimpSpinButton */
                 adj_widget = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget));
                 break;
               }
