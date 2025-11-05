@@ -30,6 +30,8 @@
 
 
 /* definitions and variables */
+#define COLORSEL_CMYK_LOWER 0.f
+#define COLORSEL_CMYK_UPPER 100.f
 
 #define COLORSEL_TYPE_CMYK            (colorsel_cmyk_get_type ())
 #define COLORSEL_CMYK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), COLORSEL_TYPE_CMYK, ColorselCmyk))
@@ -76,7 +78,7 @@ static void   colorsel_cmyk_set_simulation (GimpColorSelector *selector,
                                             GimpColorRenderingIntent intent,
                                             gboolean           bpc);
 
-static void   colorsel_cmyk_scale_update   (GimpLabelSpin     *scale,
+static void   colorsel_cmyk_scale_update   (GimpSpinScale     *scale,
                                             ColorselCmyk      *module);
 static void   colorsel_cmyk_config_changed (ColorselCmyk      *module);
 
@@ -172,8 +174,15 @@ colorsel_cmyk_init (ColorselCmyk *module)
 
   for (i = 0; i < 4; i++)
     {
-      module->scales[i] = gimp_scale_entry_new (gettext (cmyk_labels[i]),
-                                                0.0, 0.0, 100.0, 0);
+      GtkAdjustment *adj = NULL;
+      gdouble step, page;
+
+      gimp_range_estimate_settings (COLORSEL_CMYK_LOWER, COLORSEL_CMYK_UPPER,
+                                    &step, &page, NULL);
+
+      adj = gtk_adjustment_new (0.0, COLORSEL_CMYK_LOWER, COLORSEL_CMYK_UPPER,
+                                step, page, 0);
+      module->scales[i] = gimp_spin_scale_new (adj, gettext (cmyk_labels[i]), 0);
       gimp_help_set_help_data (module->scales[i], gettext (cmyk_tips[i]), NULL);
 
       g_signal_connect (module->scales[i], "value-changed",
@@ -254,7 +263,7 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
                                        module);
 
       cmyk[i] *= 100.0;
-      gimp_label_spin_set_value (GIMP_LABEL_SPIN (module->scales[i]), cmyk[i]);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON (module->scales[i]), cmyk[i]);
 
       g_signal_handlers_unblock_by_func (module->scales[i],
                                          colorsel_cmyk_scale_update,
@@ -341,7 +350,7 @@ colorsel_cmyk_set_simulation (GimpColorSelector *selector,
 }
 
 static void
-colorsel_cmyk_scale_update (GimpLabelSpin *scale,
+colorsel_cmyk_scale_update (GimpSpinScale *scale,
                             ColorselCmyk  *module)
 {
   GimpColorProfile        *cmyk_profile = NULL;
@@ -352,7 +361,7 @@ colorsel_cmyk_scale_update (GimpLabelSpin *scale,
   gfloat                   cmyk_values[4];
 
   for (gint i = 0; i < 4; i++)
-    cmyk_values[i] = gimp_label_spin_get_value (GIMP_LABEL_SPIN (module->scales[i])) / 100.0;
+    cmyk_values[i] = gtk_spin_button_get_value (GTK_SPIN_BUTTON (module->scales[i])) / 100.0;
 
   if (module->simulation_profile)
     cmyk_profile = module->simulation_profile;
