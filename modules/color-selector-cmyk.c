@@ -138,7 +138,7 @@ colorsel_cmyk_class_finalize (ColorselCmykClass *klass)
 static void
 colorsel_cmyk_init (ColorselCmyk *module)
 {
-  GtkWidget *grid;
+  GtkWidget *vbox;
   gint       i;
 
   static const gchar * const cmyk_labels[] =
@@ -164,13 +164,9 @@ colorsel_cmyk_init (ColorselCmyk *module)
 
   gtk_box_set_spacing (GTK_BOX (module), 6);
 
-  grid = gtk_grid_new ();
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
 
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 1);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
-
-  gtk_box_pack_start (GTK_BOX (module), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_box_pack_start (GTK_BOX (module), vbox, FALSE, FALSE, 0);
 
   for (i = 0; i < 4; i++)
     {
@@ -189,8 +185,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
                         G_CALLBACK (colorsel_cmyk_scale_update),
                         module);
 
-      gtk_grid_attach (GTK_GRID (grid), module->scales[i], 1, i, 3, 1);
-      gtk_widget_show (module->scales[i]);
+      gtk_box_pack_start (GTK_BOX (vbox), module->scales[i], FALSE, FALSE, 0);
     }
 
   module->tic_label = gtk_label_new (NULL);
@@ -199,9 +194,10 @@ colorsel_cmyk_init (ColorselCmyk *module)
   gimp_label_set_attributes (GTK_LABEL (module->tic_label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_grid_attach (GTK_GRID (grid), module->tic_label, 1, 4, 3, 1);
-  gtk_widget_set_visible (module->tic_label, TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), module->tic_label, FALSE, FALSE, 0);
   gimp_widget_set_identifier (module->tic_label, "total-ink-coverage");
+
+  gtk_widget_show_all (vbox);
 
   module->name_label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (module->name_label), 0.0);
