@@ -431,6 +431,9 @@ documents_raise_display (GimpDisplay  *display,
 
   image = gimp_display_get_image (display);
 
+  if (! image)
+    return;
+
   file = gimp_image_get_file (image);
   if (! file)
     file = gimp_image_get_imported_file (image);
