@@ -464,7 +464,7 @@ gimp_spin_scale_draw (GtkWidget *widget,
        * (typically when displaying non-Western languages).
        */
       cairo_move_to (cr, layout_offset_x,
-                     text_area.y - ink.y + text_area.height / 2 - ink.height / 2);
+                     text_area.y - ink.y + (double)text_area.height / 2 - (double)ink.height / 2);
       gdk_cairo_set_source_rgba (cr, &text_color);
       pango_cairo_show_layout (cr, scale->layout);
 
@@ -475,7 +475,7 @@ gimp_spin_scale_draw (GtkWidget *widget,
       cairo_clip (cr);
 
       cairo_move_to (cr, layout_offset_x,
-                     text_area.y - ink.y + text_area.height / 2 - ink.height / 2);
+                     text_area.y - ink.y + (double)text_area.height / 2 - (double)ink.height / 2);
       gdk_cairo_set_source_rgba (cr, &bar_text_color);
       pango_cairo_show_layout (cr, scale->layout);
     }
