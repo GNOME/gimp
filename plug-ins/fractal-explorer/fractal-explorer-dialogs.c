@@ -874,9 +874,6 @@ explorer_dialog (GimpProcedure       *procedure,
                                    "color-function-label", _("Color Function"),
                                    FALSE, FALSE);
 
-  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "red-function-label", _("Red"),
-                                   FALSE, FALSE);
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                       "red-function-box",
                                       "red-mode",
@@ -884,12 +881,9 @@ explorer_dialog (GimpProcedure       *procedure,
                                       NULL);
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "red-function-frame",
-                                    "red-function-label", FALSE,
+                                    NULL, FALSE,
                                     "red-function-box");
 
-  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "green-function-label", _("Green"),
-                                   FALSE, FALSE);
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                       "green-function-box",
                                       "green-mode",
@@ -897,12 +891,9 @@ explorer_dialog (GimpProcedure       *procedure,
                                       NULL);
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "green-function-frame",
-                                    "green-function-label", FALSE,
+                                    NULL, FALSE,
                                     "green-function-box");
 
-  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "blue-function-label", _("Blue"),
-                                   FALSE, FALSE);
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                       "blue-function-box",
                                       "blue-mode",
@@ -910,7 +901,7 @@ explorer_dialog (GimpProcedure       *procedure,
                                       NULL);
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "blue-function-frame",
-                                    "blue-function-label", FALSE,
+                                    NULL, FALSE,
                                     "blue-function-box");
 
   hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
