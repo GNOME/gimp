@@ -53,6 +53,10 @@ Core:
     previously used tool.
   - When committing or canceling filters, GIMP will automatically swap
     back to the previously used tool.
+  - Windows: standard output and error output are now properly
+    redirected to the parent console in native shells, just like on
+    Linux or macOS. As a consequence build option -Dwin32-debug-console
+    has been removed.
 
 Tools:
 
@@ -90,6 +94,10 @@ Graphical User Interface:
   - Dragging a file to the image tab bar opens the file as a new image.
   - Additionally to status error messages, the layer blocking a "Merge
     Down" is now blinked on the Layers dialog to draw attention.
+  - GimpViewableDialog header icon and view will now scale based on user
+    custom icon size.
+  - Color history colors can now be dragged and dropped, to fill or set
+    colors as expected, as any other color area widgets.
 
 Plug-Ins:
 
@@ -104,6 +112,9 @@ Plug-Ins:
     * supporting for exporting vector layers as paths.
     * background fill is set on all pages for multi-page PDFs.
   - PVR textures: new import support.
+  - Replacing scale entries by spin scale widgets in various plug-ins.
+  - Animation Playback and ImageMap plug-ins can now be closed with
+    Escape like other plug-ins.
 
 API:
 
@@ -217,6 +228,9 @@ Build:
     over to the GIMP team.
   - Cleanup done in devel-docs/ with more developer documentation moved
     over to the developer website.
+  - Build option -Dwin32-debug-console removed (cf. Core section).
+  - Windows builds: GEGL is not built anymore with Matting Levin because
+    it is highly unstable (crashes) on this OS.
 
 
 Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
