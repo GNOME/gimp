@@ -118,6 +118,8 @@ static void        sda_realize_callback      (GtkWidget       *widget,
 static void        sda_size_callback         (GtkWidget       *widget,
                                               GtkAllocation   *allocation,
                                               gpointer         data);
+static gboolean    key_press_callback        (GtkWidget       *widget,
+                                              GdkEventKey     *event);
 
 static void        window_destroy            (GtkWidget       *widget,
                                               GimpPlay        *play);
@@ -758,6 +760,9 @@ build_dialog (GimpPlay *play,
   g_signal_connect (window, "destroy",
                     G_CALLBACK (window_destroy),
                     play);
+  g_signal_connect (window, "key-press-event",
+                    G_CALLBACK (key_press_callback),
+                    NULL);
   g_signal_connect (window, "popup-menu",
                     G_CALLBACK (popup_menu),
                     play);
@@ -1273,6 +1278,19 @@ do_step (void)
 
 /*  Callbacks  */
 
+static gboolean
+key_press_callback (GtkWidget   *widget,
+                    GdkEventKey *event)
+{
+  switch (event->keyval)
+    {
+    case GDK_KEY_Escape:
+      gtk_window_close (GTK_WINDOW (widget));
+      return TRUE;
+    }
+  return FALSE;
+}
+
 static void
 window_destroy (GtkWidget *widget,
                 GimpPlay  *play)
@@ -1720,7 +1738,7 @@ timeline_changed (GtkWidget     *range,
                   gdouble        value,
                   gpointer       data)
 {
-  if (value < total_frames)
+  if (value < total_frames && value >= 0)
     {
       frame_number = (gint) value;
 

@@ -1256,59 +1256,64 @@ key_timeout_cb(gpointer data)
 }
 
 static gboolean
-key_press_cb(GtkWidget *widget, GdkEventKey *event)
+key_press_cb (GtkWidget   *widget,
+              GdkEventKey *event)
 {
-   gboolean handled = FALSE;
-   gboolean shift = event->state & GDK_SHIFT_MASK;
-   gboolean ctrl = event->state & GDK_CONTROL_MASK;
-   Command_t *command;
+  Command_t *command;
+  gboolean   handled = FALSE;
+  gboolean   shift   = event->state & GDK_SHIFT_MASK;
+  gboolean   ctrl    = event->state & GDK_CONTROL_MASK;
 
-   if (_timeout)
-      g_source_remove(_timeout);
-   _timeout = 0;
+  if (_timeout)
+    g_source_remove (_timeout);
+  _timeout = 0;
 
-   switch (event->keyval) {
-   case GDK_KEY_Left:
+  switch (event->keyval)
+    {
+    case GDK_KEY_Left:
       if (ctrl)
-         move_sash_selected_objects(-1, 0, shift);
+        move_sash_selected_objects (-1, 0, shift);
       else
-         move_selected_objects(-1, 0, shift);
+        move_selected_objects (-1, 0, shift);
       handled = TRUE;
       break;
-   case GDK_KEY_Right:
+    case GDK_KEY_Right:
       if (ctrl)
-         move_sash_selected_objects(1, 0, shift);
+        move_sash_selected_objects (1, 0, shift);
       else
-         move_selected_objects(1, 0, shift);
+        move_selected_objects (1, 0, shift);
       handled = TRUE;
       break;
-   case GDK_KEY_Up:
+    case GDK_KEY_Up:
       if (ctrl)
-         move_sash_selected_objects(0, -1, shift);
+        move_sash_selected_objects (0, -1, shift);
       else
-         move_selected_objects(0, -1, shift);
+        move_selected_objects (0, -1, shift);
       handled = TRUE;
       break;
-   case GDK_KEY_Down:
+    case GDK_KEY_Down:
       if (ctrl)
-         move_sash_selected_objects(0, 1, shift);
+        move_sash_selected_objects (0, 1, shift);
       else
-         move_selected_objects(0, 1, shift);
+        move_selected_objects (0, 1, shift);
       handled = TRUE;
       break;
-   case GDK_KEY_Tab:
+    case GDK_KEY_Tab:
       if (shift)
-         command = select_prev_command_new(_shapes);
+        command = select_prev_command_new (_shapes);
       else
-         command = select_next_command_new(_shapes);
+        command = select_next_command_new (_shapes);
       command_execute(command);
       handled = TRUE;
       break;
-   }
-   if (handled)
-      g_signal_stop_emission_by_name(widget, "key-press-event");
+    case GDK_KEY_Escape:
+      handled = TRUE;
+      gtk_window_close (GTK_WINDOW (widget));
+    }
+  if (handled)
+    g_signal_stop_emission_by_name (widget, "key-press-event");
 
-   return handled;
+  return handled;
 }
 
 static gboolean
