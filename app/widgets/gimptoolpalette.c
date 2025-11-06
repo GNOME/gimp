@@ -256,10 +256,7 @@ gimp_tool_palette_height_for_width (GtkWidget *widget,
                                            &button_width, &button_height,
                                            &min_columns, &min_rows);
 
-  if (button_width != 0)
-    tool_columns = MAX (min_columns, width / button_width);
-  else
-    tool_columns = min_columns;
+  tool_columns = MAX (min_columns, width / button_width);
   tool_rows    = n_tools / tool_columns;
 
   if (n_tools % tool_columns)
