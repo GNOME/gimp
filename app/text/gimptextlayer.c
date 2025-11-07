@@ -258,7 +258,12 @@ gimp_text_layer_set_rasterized (GimpRasterizable *rasterizable,
                                 gboolean          rasterized)
 {
   if (! rasterized)
-    gimp_text_layer_render (GIMP_TEXT_LAYER (rasterizable));
+    {
+      if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (rasterizable)))
+        gimp_layer_add_alpha (GIMP_LAYER (rasterizable));
+
+      gimp_text_layer_render (GIMP_TEXT_LAYER (rasterizable));
+    }
 }
 
 static gint64
