@@ -494,7 +494,6 @@ gimp_gegl_op_blacklisted (const gchar *name,
   static const gchar * const name_blacklist[] =
   {
     /* these ops are blacklisted for other reasons */
-    "gegl:color", /* pointless */
     "gegl:contrast-curve",
     "gegl:convert-format", /* pointless */
     "gegl:ditto", /* pointless */
