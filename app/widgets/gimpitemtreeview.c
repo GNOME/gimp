@@ -1024,7 +1024,16 @@ void
 gimp_item_tree_view_blink_item (GimpItemTreeView *view,
                                 GimpItem         *item)
 {
-  gimp_item_tree_view_blink_item_column (view, item, 3);
+  GimpContainerTreeView *container_view;
+  gint                   item_index;
+
+  container_view = GIMP_CONTAINER_TREE_VIEW (view);
+
+  item_index =
+    gimp_container_tree_view_get_main_column_position (container_view);
+
+  if (item_index > -1)
+    gimp_item_tree_view_blink_item_column (view, item, item_index);
 }
 
 GtkWidget *

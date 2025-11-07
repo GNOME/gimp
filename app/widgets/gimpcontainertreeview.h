@@ -114,6 +114,9 @@ void        gimp_container_tree_view_set_main_column_title
                                               (GimpContainerTreeView *tree_view,
                                                const gchar           *title);
 
+gint        gimp_container_tree_view_get_main_column_position
+                                              (GimpContainerTreeView *tree_view);
+
 void        gimp_container_tree_view_add_toggle_cell
                                               (GimpContainerTreeView *tree_view,
                                                GtkCellRenderer       *cell);

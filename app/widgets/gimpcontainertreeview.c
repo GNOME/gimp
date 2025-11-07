@@ -484,6 +484,23 @@ gimp_container_tree_view_set_main_column_title (GimpContainerTreeView *tree_view
                                   title);
 }
 
+gint
+gimp_container_tree_view_get_main_column_position (GimpContainerTreeView *tree_view)
+{
+  g_return_val_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view), -1);
+
+  for (gint i = 0; i < tree_view->n_model_columns; i++)
+    {
+      GtkTreeViewColumn *column;
+
+      column = gtk_tree_view_get_column (tree_view->view, i);
+      if (tree_view->main_column == column)
+        return i;
+    }
+
+  return -1;
+}
+
 void
 gimp_container_tree_view_add_toggle_cell (GimpContainerTreeView *tree_view,
                                           GtkCellRenderer       *cell)
