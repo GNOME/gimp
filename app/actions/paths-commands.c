@@ -49,6 +49,8 @@
 #include "path/gimppath-import.h"
 #include "path/gimpvectorlayer.h"
 
+#include "tools/gimptools-utils.h"
+
 #include "widgets/gimpaction.h"
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimphelp-ids.h"
@@ -470,31 +472,38 @@ paths_delete_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GList     *paths;
-  gboolean   attached_to_vector_layer = FALSE;
+  GtkWidget *widget;
   return_if_no_paths (image, paths, data);
+  return_if_no_widget (widget, data);
 
   paths = g_list_copy (paths);
+
+  /* Initial check to make sure none are connected to vector layers */
+  for (GList *iter = paths; iter; iter = iter->next)
+    {
+      if (gimp_path_attached_to_vector_layer (GIMP_PATH (iter->data), image))
+        {
+          gimp_message_literal (image->gimp, G_OBJECT (widget),
+                                GIMP_MESSAGE_WARNING,
+                                _("Cannot delete paths attached to vector "
+                                  "layers"));
+          gimp_tools_blink_item (image->gimp, GIMP_ITEM (iter->data));
+          g_list_free (paths);
+          return;
+        }
+    }
+
   /* TODO: proper undo group. */
   gimp_image_undo_group_start (image,
                                GIMP_UNDO_GROUP_PATHS_IMPORT,
                                _("Remove Paths"));
 
   for (GList *iter = paths; iter; iter = iter->next)
-    {
-      /* Verify path is not attached to vector layer */
-      if (! gimp_path_attached_to_vector_layer (GIMP_PATH (iter->data), image))
-        gimp_image_remove_path (image, iter->data, TRUE, NULL);
-      else
-        attached_to_vector_layer = TRUE;
-    }
+    gimp_image_remove_path (image, iter->data, TRUE, NULL);
 
   gimp_image_undo_group_end (image);
   gimp_image_flush (image);
   g_list_free (paths);
-
-  if (attached_to_vector_layer)
-    gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                          _("Paths attached to vector layers weren't deleted"));
 }
 
 void
