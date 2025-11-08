@@ -335,13 +335,13 @@ gimp_link_layer_duplicate (GimpItem *item,
       gint           width;
       gint           height;
 
+      gimp_config_sync (G_OBJECT (layer), G_OBJECT (new_layer), 0);
+
       if (layer->p->link)
         {
           link = gimp_link_duplicate (layer->p->link);
           gimp_link_layer_set_link (new_layer, link, FALSE);
         }
-
-      gimp_config_sync (G_OBJECT (layer), G_OBJECT (new_layer), 0);
 
       buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
       width  = gegl_buffer_get_width (buffer);
