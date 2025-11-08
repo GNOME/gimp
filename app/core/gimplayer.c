@@ -1942,10 +1942,11 @@ gimp_layer_add_mask (GimpLayer      *layer,
       return NULL;
     }
 
-  if ((gimp_item_get_width (GIMP_ITEM (layer)) !=
+  if (! GIMP_IS_GROUP_LAYER (layer) &&
+      ((gimp_item_get_width (GIMP_ITEM (layer)) !=
        gimp_item_get_width (GIMP_ITEM (mask))) ||
       (gimp_item_get_height (GIMP_ITEM (layer)) !=
-       gimp_item_get_height (GIMP_ITEM (mask))))
+       gimp_item_get_height (GIMP_ITEM (mask)))))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("Cannot add layer mask of different "
@@ -2025,7 +2026,10 @@ gimp_layer_create_mask (GimpLayer       *layer,
   GimpItem      *item;
   GimpLayerMask *mask;
   GimpImage     *image;
+  guint          width;
+  guint          height;
   gchar         *mask_name;
+  GeglRectangle  rect;
   GeglColor     *black = gegl_color_new ("black");
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
@@ -2036,13 +2040,16 @@ gimp_layer_create_mask (GimpLayer       *layer,
   item     = GIMP_ITEM (layer);
   image    = gimp_item_get_image (item);
 
+  /* Since empty pass through layer groups are larger than their item
+   * width/height, we'll get those from the bounding box instead */
+  rect   = gimp_layer_get_bounding_box (drawable);
+  width  = rect.width;
+  height = rect.height;
+
   mask_name = g_strdup_printf (_("%s mask"),
                                gimp_object_get_name (layer));
 
-  mask = gimp_layer_mask_new (image,
-                              gimp_item_get_width  (item),
-                              gimp_item_get_height (item),
-                              mask_name, black);
+  mask = gimp_layer_mask_new (image, width, height, mask_name, black);
 
   g_free (mask_name);
   g_object_unref (black);
@@ -2081,8 +2088,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
                                        C_("undo-type", "Transfer Alpha to Mask"),
                                        NULL,
                                        0, 0,
-                                       gimp_item_get_width  (item),
-                                       gimp_item_get_height (item));
+                                       width, height);
 
               gimp_gegl_apply_set_alpha (gimp_drawable_get_buffer (drawable),
                                          NULL, NULL,
@@ -2115,13 +2121,12 @@ gimp_layer_create_mask (GimpLayer       *layer,
                                   gimp_image_get_width  (image),
                                   gimp_image_get_height (image),
                                   offset_x, offset_y,
-                                  gimp_item_get_width  (item),
-                                  gimp_item_get_height (item),
+                                  width, height,
                                   &copy_x, &copy_y,
                                   &copy_width, &copy_height);
 
-        if (copy_width  < gimp_item_get_width  (item) ||
-            copy_height < gimp_item_get_height (item) ||
+        if (copy_width  < width  ||
+            copy_height < height ||
             channel_empty)
           gimp_channel_clear (GIMP_CHANNEL (mask), NULL, FALSE);
 
@@ -2168,8 +2173,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
 
             src_buffer =
               gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                               gimp_item_get_width  (item),
-                                               gimp_item_get_height (item)),
+                                               width, height),
                                copy_format);
 
             gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
