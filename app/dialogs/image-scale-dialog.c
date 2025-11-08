@@ -242,8 +242,8 @@ image_scale_confirm_large (ImageScaleDialog *private,
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (widget)->box,
                              _("Scaling the image to the chosen size will "
                                "make it use more memory than what is "
-                               "configured as \"Maximum Image Size\" in the "
-                               "Preferences dialog (currently %s)."), size);
+                               "configured as \"Maximum new image size\" in "
+                               "the Preferences dialog (currently %s)."), size);
   g_free (size);
 
   gtk_widget_show (widget);
