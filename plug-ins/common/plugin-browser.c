@@ -113,9 +113,7 @@ static GimpValueArray * browser_run              (GimpProcedure        *procedur
                                                   gpointer              run_data);
 
 static GtkWidget * browser_dialog_new             (void);
-static void        browser_dialog_response        (GtkWidget        *widget,
-                                                   gint              response_id,
-                                                   PluginBrowser    *browser);
+static void        browser_dialog_quit            (PluginBrowser    *browser);
 static void        browser_list_selection_changed (GtkTreeSelection *selection,
                                                    PluginBrowser    *browser);
 static void        browser_tree_selection_changed (GtkTreeSelection *selection,
@@ -563,9 +561,9 @@ browser_dialog_new (void)
   gtk_window_set_default_size (GTK_WINDOW (browser->dialog),
                                DBL_WIDTH, DBL_HEIGHT);
 
-  g_signal_connect (browser->dialog, "response",
-                    G_CALLBACK (browser_dialog_response),
-                    browser);
+  g_signal_connect_swapped (browser->dialog, "response",
+                            G_CALLBACK (browser_dialog_quit),
+                            browser);
 
   browser->browser = gimp_browser_new ();
   gtk_container_set_border_width (GTK_CONTAINER (browser->browser), 12);
@@ -576,6 +574,9 @@ browser_dialog_new (void)
   g_signal_connect (browser->browser, "search",
                     G_CALLBACK (browser_search),
                     browser);
+  g_signal_connect_swapped (browser->browser, "stop-search",
+                            G_CALLBACK (browser_dialog_quit),
+                            browser);
 
   /* left = notebook */
 
@@ -728,9 +729,7 @@ browser_dialog_new (void)
 }
 
 static void
-browser_dialog_response (GtkWidget     *widget,
-                         gint           response_id,
-                         PluginBrowser *browser)
+browser_dialog_quit (PluginBrowser *browser)
 {
   gtk_widget_destroy (browser->dialog);
   gtk_main_quit ();

@@ -96,6 +96,8 @@ static void       browser_search            (GimpBrowser           *browser,
                                              const gchar           *query_text,
                                              gint                   search_type,
                                              GimpProcBrowserDialog *dialog);
+static void       browser_stop_search       (GimpBrowser           *browser,
+                                             GimpProcBrowserDialog *dialog);
 
 
 G_DEFINE_TYPE (GimpProcBrowserDialog, gimp_proc_browser_dialog, GIMP_TYPE_DIALOG)
@@ -162,6 +164,9 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
 
   g_signal_connect (dialog->browser, "search",
                     G_CALLBACK (browser_search),
+                    dialog);
+  g_signal_connect (dialog->browser, "stop-search",
+                    G_CALLBACK (browser_stop_search),
                     dialog);
 
   /* list : list in a scrolled_win */
@@ -508,4 +513,11 @@ browser_search (GimpBrowser           *browser,
 
       gimp_browser_show_message (browser, _("No matches"));
     }
+}
+
+static void
+browser_stop_search (GimpBrowser           *browser,
+                     GimpProcBrowserDialog *dialog)
+{
+  gtk_widget_destroy (GTK_WIDGET (dialog));
 }
