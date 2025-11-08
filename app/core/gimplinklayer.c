@@ -841,12 +841,16 @@ gimp_link_layer_get_transform (GimpLinkLayer         *layer,
 {
   g_return_val_if_fail (GIMP_IS_LINK_LAYER (layer), FALSE);
 
-  *matrix        = layer->p->matrix;
-  *offset_x      = layer->p->offset_x;
-  *offset_y      = layer->p->offset_y;
-  *interpolation = layer->p->interpolation;
+  if (matrix)
+    *matrix = layer->p->matrix;
+  if (offset_x)
+    *offset_x = layer->p->offset_x;
+  if (offset_y)
+    *offset_y = layer->p->offset_y;
+  if (interpolation)
+    *interpolation = layer->p->interpolation;
 
-  return ! gimp_matrix3_is_identity (matrix);
+  return ! gimp_matrix3_is_identity (&layer->p->matrix);
 }
 
 gboolean

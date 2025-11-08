@@ -745,7 +745,8 @@ xcf_save_layer_props (XcfInfo    *info,
   else if (GIMP_IS_LINK_LAYER (layer))
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_LINK_LAYER, error, layer), ;);
-      xcf_check_error (xcf_save_prop (info, image, PROP_TRANSFORM, error, layer), ;);
+      if (gimp_link_layer_get_transform (GIMP_LINK_LAYER (layer), NULL, NULL, NULL, NULL))
+        xcf_check_error (xcf_save_prop (info, image, PROP_TRANSFORM, error, layer), ;);
     }
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
