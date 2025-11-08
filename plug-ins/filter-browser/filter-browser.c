@@ -694,9 +694,7 @@ filter_browser_search (GimpBrowser            *gimp_browser,
 }
 
 static void
-browser_dialog_response (GtkWidget            *widget,
-                         gint                  response_id,
-                         FilterBrowserPrivate *browser)
+browser_dialog_quit (FilterBrowserPrivate *browser)
 {
   gtk_widget_destroy (browser->dialog);
   g_list_free (browser->filters);
@@ -733,8 +731,8 @@ filter_browser_run (GimpProcedure       *procedure,
   gtk_window_set_default_size (GTK_WINDOW (browser->dialog),
                                FILTER_BROWSER_WIDTH, FILTER_BROWSER_HEIGHT);
 
-  g_signal_connect (browser->dialog, "response",
-                    G_CALLBACK (browser_dialog_response), browser);
+  g_signal_connect_swapped (browser->dialog, "response",
+                            G_CALLBACK (browser_dialog_quit), browser);
 
   browser->browser = gimp_browser_new ();
   gimp_browser_add_search_types (GIMP_BROWSER (browser->browser),
@@ -748,6 +746,9 @@ filter_browser_run (GimpProcedure       *procedure,
   gtk_widget_show (browser->browser);
 
   g_signal_connect (browser->browser, "search", G_CALLBACK (filter_browser_search), browser);
+  g_signal_connect_swapped (browser->browser, "stop-search",
+                            G_CALLBACK (browser_dialog_quit),
+                            browser);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_IN);

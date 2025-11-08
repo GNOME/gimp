@@ -50,6 +50,7 @@
 enum
 {
   SEARCH,
+  STOP_SEARCH,
   LAST_SIGNAL
 };
 
@@ -79,6 +80,8 @@ static void      gimp_browser_combo_changed    (GtkComboBox           *combo,
                                                 GimpBrowser           *browser);
 static void      gimp_browser_entry_changed    (GtkEntry              *entry,
                                                 GimpBrowser           *browser);
+static void      gimp_browser_stop_search      (GtkSearchEntry        *entry,
+                                                GimpBrowser           *browser);
 static gboolean  gimp_browser_search_timeout   (gpointer               data);
 
 
@@ -104,6 +107,21 @@ gimp_browser_class_init (GimpBrowserClass *klass)
                   G_TYPE_NONE, 2,
                   G_TYPE_STRING,
                   G_TYPE_INT);
+
+  /**
+   * GimpBrowser::stop-search:
+   * @browser: the object which received the signal
+   *
+   * This signal is emitted when the search operation was stopped by user input.
+   */
+  browser_signals[STOP_SEARCH] =
+    g_signal_new ("stop-search",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->dispose = gimp_browser_dispose;
 }
@@ -137,6 +155,9 @@ gimp_browser_init (GimpBrowser *browser)
 
   g_signal_connect (browser->search_entry, "changed",
                     G_CALLBACK (gimp_browser_entry_changed),
+                    browser);
+  g_signal_connect (browser->search_entry, "stop-search",
+                    G_CALLBACK (gimp_browser_stop_search),
                     browser);
 
   /* count label */
@@ -407,6 +428,13 @@ gimp_browser_entry_changed (GtkEntry    *entry,
                             GimpBrowser *browser)
 {
   gimp_browser_queue_search (browser);
+}
+
+static void
+gimp_browser_stop_search (GtkSearchEntry *entry,
+                          GimpBrowser    *browser)
+{
+  g_signal_emit (browser, browser_signals[STOP_SEARCH], 0);
 }
 
 static gboolean
