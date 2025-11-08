@@ -64,9 +64,16 @@ main (int    argc,
 #ifdef G_OS_WIN32
   if (AttachConsole (ATTACH_PARENT_PROCESS) != 0 && ! g_getenv ("TERM") && ! g_getenv ("SHELL"))
     {
-      freopen ("CONOUT$", "w", stdout);
-      freopen ("CONOUT$", "w", stderr);
+      /* 'r' is needed to prevent interleaving and '+' to support colors */
+      freopen ("CONOUT$", "r+", stdout);
+      freopen ("CONOUT$", "r+", stderr);
       _flushall ();
+
+      {
+        /* CTRL+C handling */
+        HANDLE hIn = GetStdHandle (STD_INPUT_HANDLE);
+        SetConsoleMode (hIn, ENABLE_PROCESSED_INPUT);
+      }
     }
 #endif
 
