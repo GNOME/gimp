@@ -79,6 +79,8 @@ static void      gimp_browser_combo_changed    (GtkComboBox           *combo,
                                                 GimpBrowser           *browser);
 static void      gimp_browser_entry_changed    (GtkEntry              *entry,
                                                 GimpBrowser           *browser);
+static void      gimp_browser_stop_search      (GtkSearchEntry        *entry,
+                                                GimpBrowser           *browser);
 static gboolean  gimp_browser_search_timeout   (gpointer               data);
 
 
@@ -137,6 +139,9 @@ gimp_browser_init (GimpBrowser *browser)
 
   g_signal_connect (browser->search_entry, "changed",
                     G_CALLBACK (gimp_browser_entry_changed),
+                    browser);
+  g_signal_connect (browser->search_entry, "stop-search",
+                    G_CALLBACK (gimp_browser_stop_search),
                     browser);
 
   /* count label */
@@ -407,6 +412,15 @@ gimp_browser_entry_changed (GtkEntry    *entry,
                             GimpBrowser *browser)
 {
   gimp_browser_queue_search (browser);
+}
+
+static void
+gimp_browser_stop_search (GtkSearchEntry *entry,
+                          GimpBrowser    *browser)
+{
+  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (browser));
+
+  gtk_dialog_response (GTK_DIALOG (toplevel), GTK_RESPONSE_CLOSE);
 }
 
 static gboolean
