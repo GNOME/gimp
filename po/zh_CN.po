@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-26 16:29+0000\n"
-"PO-Revision-Date: 2025-10-27 08:18+0800\n"
+"POT-Creation-Date: 2025-10-31 19:28+0000\n"
+"PO-Revision-Date: 2025-11-01 07:54+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -2464,13 +2464,13 @@ msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 秒"
 
-#: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:238
+#: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263
 #: app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
 #: app/actions/file-commands.c:472 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
-#: app/actions/text-tool-commands.c:164 app/actions/tool-options-commands.c:210
+#: app/actions/text-tool-commands.c:167 app/actions/tool-options-commands.c:210
 #: app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136
 #: app/dialogs/color-profile-dialog.c:154
 #: app/dialogs/color-profile-dialog.c:172
@@ -2498,12 +2498,12 @@ msgstr "240 秒"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:376 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1075 app/tools/gimptexttool.c:1776
+#: app/tools/gimppathtool.c:1075 app/tools/gimptexttool.c:1784
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:556
 #: app/widgets/gimpdeviceeditor.c:463 app/widgets/gimpdeviceinfoeditor.c:1160
-#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:336
+#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:337
 #: app/widgets/gimphelp.c:438 app/widgets/gimphelp.c:773
 #: app/widgets/gimpiconpicker.c:489 app/widgets/gimpmodifierseditor.c:688
 #: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
@@ -2563,7 +2563,7 @@ msgstr "添加标记"
 msgid "Enter a description for the marker"
 msgstr "为该标记添加描述"
 
-#: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
+#: app/actions/data-commands.c:90 app/actions/documents-commands.c:418
 #: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:254
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:217
@@ -2588,7 +2588,7 @@ msgstr ""
 msgid "Untitled"
 msgstr "无标题"
 
-#: app/actions/data-commands.c:224 app/actions/documents-commands.c:195
+#: app/actions/data-commands.c:224 app/actions/documents-commands.c:210
 #: app/actions/file-commands.c:578
 #, c-format
 msgid "Can't show file in file manager: %s"
@@ -3334,13 +3334,13 @@ msgstr "以网格方式查看(_G)"
 
 #: app/actions/documents-actions.c:42
 msgctxt "documents-action"
-msgid "_Open Image"
+msgid "_Open Images"
 msgstr "打开图像(_O)"
 
 #: app/actions/documents-actions.c:43
 msgctxt "documents-action"
-msgid "Open the selected entry"
-msgstr "打开选中的项"
+msgid "Open the selected entries"
+msgstr "打开选中的条目"
 
 #: app/actions/documents-actions.c:48
 msgctxt "documents-action"
@@ -3384,13 +3384,13 @@ msgstr "在文件管理器中显示图像的位置"
 
 #: app/actions/documents-actions.c:72
 msgctxt "documents-action"
-msgid "Remove _Entry"
-msgstr "删除项目(_E)"
+msgid "Remove _Entries"
+msgstr "移除条目(_E)"
 
 #: app/actions/documents-actions.c:73
 msgctxt "documents-action"
-msgid "Remove the selected entry"
-msgstr "删除选中的项"
+msgid "Remove the selected entries"
+msgstr "移除选中的条目"
 
 #: app/actions/documents-actions.c:78
 msgctxt "documents-action"
@@ -3432,20 +3432,20 @@ msgctxt "documents-action"
 msgid "Remove entries for which the corresponding file is not available"
 msgstr "将不可用的相关文件项目删除"
 
-#: app/actions/documents-commands.c:231
+#: app/actions/documents-commands.c:256
 msgid "Clear Document History"
 msgstr "清除文档历史"
 
-#: app/actions/documents-commands.c:239 app/actions/edit-commands.c:171
+#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:171
 #: app/dialogs/preferences-dialog.c:616
 msgid "Cl_ear"
 msgstr "清除(_E)"
 
-#: app/actions/documents-commands.c:254
+#: app/actions/documents-commands.c:279
 msgid "Clear the Recent Documents list?"
 msgstr "清除最近文档的列表？"
 
-#: app/actions/documents-commands.c:257
+#: app/actions/documents-commands.c:282
 msgid ""
 "Clearing the document history will permanently remove all images from the "
 "recent documents list."
@@ -8398,11 +8398,11 @@ msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "竖排，从左到右（竖直方向）"
 
-#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:160
+#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:163
 msgid "Open Text File (UTF-8)"
 msgstr "打开文本文件 (UTF-8)"
 
-#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:165
+#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:168
 #: app/dialogs/file-open-location-dialog.c:81
 #: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:790
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
@@ -8410,7 +8410,7 @@ msgstr "打开文本文件 (UTF-8)"
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:266
+#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:280
 #: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
 #: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1650
@@ -8493,37 +8493,42 @@ msgctxt "text-tool-action"
 msgid "Bend the text along the currently active path"
 msgstr "沿当前的活动路径排列文字"
 
-#: app/actions/text-tool-actions.c:119
+#: app/actions/text-tool-actions.c:116
+msgctxt "text-tool-action"
+msgid "Restore On-Canvas Editor Position"
+msgstr "还原画布上编辑器的位置"
+
+#: app/actions/text-tool-actions.c:124
 msgctxt "text-tool-action"
 msgid "From left to right"
 msgstr "从左到右"
 
-#: app/actions/text-tool-actions.c:124
+#: app/actions/text-tool-actions.c:129
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "从右到左"
 
-#: app/actions/text-tool-actions.c:129
+#: app/actions/text-tool-actions.c:134
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "竖排，从右到左（混合方向）"
 
-#: app/actions/text-tool-actions.c:134
+#: app/actions/text-tool-actions.c:139
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "竖排，从右到左（竖直方向）"
 
-#: app/actions/text-tool-actions.c:139
+#: app/actions/text-tool-actions.c:144
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "竖排，从左到右（混合方向）"
 
-#: app/actions/text-tool-actions.c:144
+#: app/actions/text-tool-actions.c:149
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "竖排，从左到右（竖直方向）"
 
-#: app/actions/text-tool-commands.c:228
+#: app/actions/text-tool-commands.c:231
 #, c-format
 msgid "Text along path failed: %s"
 msgstr "文字对齐路径失败：%s"
@@ -8709,450 +8714,460 @@ msgstr "编辑此工具的预设"
 
 #: app/actions/tools-actions.c:48
 msgctxt "tools-action"
+msgid "Activate _Last Tool"
+msgstr "激活上次工具(_L)"
+
+#: app/actions/tools-actions.c:49
+msgctxt "tools-action"
+msgid "Switch back to the last activated tool"
+msgstr "切换回上次激活的工具"
+
+#: app/actions/tools-actions.c:57
+msgctxt "tools-action"
 msgid "_By Color"
 msgstr "按颜色(_B)"
 
-#: app/actions/tools-actions.c:49
+#: app/actions/tools-actions.c:58
 msgctxt "tools-action"
 msgid "Select regions with similar colors"
 msgstr "按相似的颜色选择区域"
 
-#: app/actions/tools-actions.c:54 app/actions/tools-actions.c:60
+#: app/actions/tools-actions.c:63 app/actions/tools-actions.c:69
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
 msgstr "任意旋转(_A)…"
 
-#: app/actions/tools-actions.c:55
+#: app/actions/tools-actions.c:64
 msgctxt "tools-action"
 msgid "Rotate drawable by an arbitrary angle"
 msgstr "任意角度旋转可绘区"
 
-#: app/actions/tools-actions.c:61
+#: app/actions/tools-actions.c:70
 msgctxt "tools-action"
 msgid "Rotate image by an arbitrary angle"
 msgstr "任意角度旋转图像"
 
-#: app/actions/tools-actions.c:163
+#: app/actions/tools-actions.c:172
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
 msgstr "喷枪速率：设置"
 
-#: app/actions/tools-actions.c:167
+#: app/actions/tools-actions.c:176
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Minimum"
 msgstr "喷枪速率：设为最小值"
 
-#: app/actions/tools-actions.c:171
+#: app/actions/tools-actions.c:180
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Maximum"
 msgstr "喷枪速率：设为最大值"
 
-#: app/actions/tools-actions.c:175
+#: app/actions/tools-actions.c:184
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 1"
 msgstr "喷枪速率：减小 1"
 
-#: app/actions/tools-actions.c:179
+#: app/actions/tools-actions.c:188
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 1"
 msgstr "喷枪速率：增大 1"
 
-#: app/actions/tools-actions.c:183
+#: app/actions/tools-actions.c:192
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 10"
 msgstr "喷枪速率：减小 10"
 
-#: app/actions/tools-actions.c:187
+#: app/actions/tools-actions.c:196
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 10"
 msgstr "喷枪速率：增大 10"
 
-#: app/actions/tools-actions.c:195
+#: app/actions/tools-actions.c:204
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set"
 msgstr "喷枪流量：设置"
 
-#: app/actions/tools-actions.c:199
+#: app/actions/tools-actions.c:208
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Minimum"
 msgstr "喷枪流量：设为最小值"
 
-#: app/actions/tools-actions.c:203
+#: app/actions/tools-actions.c:212
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Maximum"
 msgstr "喷枪流量：设为最大值"
 
-#: app/actions/tools-actions.c:207
+#: app/actions/tools-actions.c:216
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 1"
 msgstr "喷枪流量：减小 1"
 
-#: app/actions/tools-actions.c:211
+#: app/actions/tools-actions.c:220
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 1"
 msgstr "喷枪流量：增大 1"
 
-#: app/actions/tools-actions.c:215
+#: app/actions/tools-actions.c:224
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 10"
 msgstr "喷枪流量：减小 10"
 
-#: app/actions/tools-actions.c:219
+#: app/actions/tools-actions.c:228
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
 msgstr "喷枪流量：增大 10"
 
-#: app/actions/tools-actions.c:290
+#: app/actions/tools-actions.c:299
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set"
 msgstr "工具的不透明度：设置"
 
-#: app/actions/tools-actions.c:294
+#: app/actions/tools-actions.c:303
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
 msgstr "工具的不透明度：设为默认值"
 
-#: app/actions/tools-actions.c:298
+#: app/actions/tools-actions.c:307
 msgctxt "tools-action"
 msgid "Tool's Opacity: Minimize"
 msgstr "工具的不透明度：最小值"
 
-#: app/actions/tools-actions.c:302
+#: app/actions/tools-actions.c:311
 msgctxt "tools-action"
 msgid "Tool's Opacity: Maximize"
 msgstr "工具的不透明度：最大值"
 
-#: app/actions/tools-actions.c:306
+#: app/actions/tools-actions.c:315
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 1"
 msgstr "工具的不透明度：减小 1"
 
-#: app/actions/tools-actions.c:310
+#: app/actions/tools-actions.c:319
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 1"
 msgstr "工具的不透明度：增大 1"
 
-#: app/actions/tools-actions.c:314
+#: app/actions/tools-actions.c:323
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 10"
 msgstr "工具的不透明度：减小 10"
 
-#: app/actions/tools-actions.c:318
+#: app/actions/tools-actions.c:327
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 10"
 msgstr "工具的不透明度：增大 10"
 
-#: app/actions/tools-actions.c:322
+#: app/actions/tools-actions.c:331
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease Relative"
 msgstr "工具的不透明度：相对减小"
 
-#: app/actions/tools-actions.c:326
+#: app/actions/tools-actions.c:335
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase Relative"
 msgstr "工具的不透明度：相对增大"
 
-#: app/actions/tools-actions.c:334
+#: app/actions/tools-actions.c:343
 msgctxt "tools-action"
 msgid "Tool's Size: Set"
 msgstr "工具的大小：设置"
 
-#: app/actions/tools-actions.c:338
+#: app/actions/tools-actions.c:347
 msgctxt "tools-action"
 msgid "Tool's Size: Set to Default Value"
 msgstr "工具的大小：设为默认值"
 
-#: app/actions/tools-actions.c:342
+#: app/actions/tools-actions.c:351
 msgctxt "tools-action"
 msgid "Tool's Size: Minimize"
 msgstr "工具的大小：最小值"
 
-#: app/actions/tools-actions.c:346
+#: app/actions/tools-actions.c:355
 msgctxt "tools-action"
 msgid "Tool's Size: Maximize"
 msgstr "工具的大小：最大值"
 
-#: app/actions/tools-actions.c:350
+#: app/actions/tools-actions.c:359
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 1"
 msgstr "工具的大小：减小 1"
 
-#: app/actions/tools-actions.c:354
+#: app/actions/tools-actions.c:363
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 1"
 msgstr "工具的大小：增大 1"
 
-#: app/actions/tools-actions.c:358
+#: app/actions/tools-actions.c:367
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 10"
 msgstr "工具的大小：减小 10"
 
-#: app/actions/tools-actions.c:362
+#: app/actions/tools-actions.c:371
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 10"
 msgstr "工具的大小：增大 10"
 
-#: app/actions/tools-actions.c:366
+#: app/actions/tools-actions.c:375
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease Relative"
 msgstr "工具的大小：相对减小"
 
-#: app/actions/tools-actions.c:370
+#: app/actions/tools-actions.c:379
 msgctxt "tools-action"
 msgid "Tool's Size: Increase Relative"
 msgstr "工具的大小：相对增大"
 
-#: app/actions/tools-actions.c:378
+#: app/actions/tools-actions.c:387
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set"
 msgstr "工具的宽高比：设置"
 
-#: app/actions/tools-actions.c:382
+#: app/actions/tools-actions.c:391
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set To Default Value"
 msgstr "工具的宽高比：设为默认值"
 
-#: app/actions/tools-actions.c:386
+#: app/actions/tools-actions.c:395
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Minimize"
 msgstr "工具的宽高比：最小值"
 
-#: app/actions/tools-actions.c:390
+#: app/actions/tools-actions.c:399
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Maximize"
 msgstr "工具的宽高比：最大值"
 
-#: app/actions/tools-actions.c:394
+#: app/actions/tools-actions.c:403
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 0.1"
 msgstr "工具的宽高比：减小 0.1"
 
-#: app/actions/tools-actions.c:398
+#: app/actions/tools-actions.c:407
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 0.1"
 msgstr "工具的宽高比：增大 0.1"
 
-#: app/actions/tools-actions.c:402
+#: app/actions/tools-actions.c:411
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 1"
 msgstr "工具的宽高比：减小 1"
 
-#: app/actions/tools-actions.c:406
+#: app/actions/tools-actions.c:415
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 1"
 msgstr "工具的宽高比：增大 1"
 
-#: app/actions/tools-actions.c:410
+#: app/actions/tools-actions.c:419
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease Relative"
 msgstr "工具的宽高比：相对减小"
 
-#: app/actions/tools-actions.c:414
+#: app/actions/tools-actions.c:423
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase Relative"
 msgstr "工具的宽高比：相对增大"
 
-#: app/actions/tools-actions.c:422
+#: app/actions/tools-actions.c:431
 msgctxt "tools-action"
 msgid "Tool's Angle: Set"
 msgstr "工具的角度：设置"
 
-#: app/actions/tools-actions.c:426
+#: app/actions/tools-actions.c:435
 msgctxt "tools-action"
 msgid "Tool's Angle: Set Angle To Default Value"
 msgstr "工具的角度：设为默认值"
 
-#: app/actions/tools-actions.c:430
+#: app/actions/tools-actions.c:439
 msgctxt "tools-action"
 msgid "Tool's Angle: Minimize"
 msgstr "工具的角度：最小值"
 
-#: app/actions/tools-actions.c:434
+#: app/actions/tools-actions.c:443
 msgctxt "tools-action"
 msgid "Tool's Angle: Maximize"
 msgstr "工具的角度：最大值"
 
-#: app/actions/tools-actions.c:438
+#: app/actions/tools-actions.c:447
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease by 1°"
 msgstr "工具的角度：减小 1°"
 
-#: app/actions/tools-actions.c:442
+#: app/actions/tools-actions.c:451
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase by 1°"
 msgstr "工具的角度：增大 1°"
 
-#: app/actions/tools-actions.c:446
+#: app/actions/tools-actions.c:455
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease by 15°"
 msgstr "工具的角度：减小 15°"
 
-#: app/actions/tools-actions.c:450
+#: app/actions/tools-actions.c:459
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase by 15°"
 msgstr "工具的角度：增大 15°"
 
-#: app/actions/tools-actions.c:454
+#: app/actions/tools-actions.c:463
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease Relative"
 msgstr "工具的角度：相对减小"
 
-#: app/actions/tools-actions.c:458
+#: app/actions/tools-actions.c:467
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase Relative"
 msgstr "工具的角度：相对增大"
 
-#: app/actions/tools-actions.c:466
+#: app/actions/tools-actions.c:475
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set"
 msgstr "工具的间距：设置"
 
-#: app/actions/tools-actions.c:470
+#: app/actions/tools-actions.c:479
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set To Default Value"
 msgstr "工具的间距：设为默认值"
 
-#: app/actions/tools-actions.c:474
+#: app/actions/tools-actions.c:483
 msgctxt "tools-action"
 msgid "Tool's Spacing: Minimize"
 msgstr "工具的间距：最小值"
 
-#: app/actions/tools-actions.c:478
+#: app/actions/tools-actions.c:487
 msgctxt "tools-action"
 msgid "Tool's Spacing: Maximize"
 msgstr "工具的间距：最大值"
 
-#: app/actions/tools-actions.c:482
+#: app/actions/tools-actions.c:491
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease by 1"
 msgstr "工具的间距：减小 1"
 
-#: app/actions/tools-actions.c:486
+#: app/actions/tools-actions.c:495
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase by 1"
 msgstr "工具的间距：增大 1"
 
-#: app/actions/tools-actions.c:490
+#: app/actions/tools-actions.c:499
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease by 10"
 msgstr "工具的间距：减小 10"
 
-#: app/actions/tools-actions.c:494
+#: app/actions/tools-actions.c:503
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase by 10"
 msgstr "工具的间距：增大 10"
 
-#: app/actions/tools-actions.c:498
+#: app/actions/tools-actions.c:507
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease Relative"
 msgstr "工具的间距：相对减小"
 
-#: app/actions/tools-actions.c:502
+#: app/actions/tools-actions.c:511
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase Relative"
 msgstr "工具的间距：相对增大"
 
-#: app/actions/tools-actions.c:510
+#: app/actions/tools-actions.c:519
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set"
 msgstr "工具的硬度：设置"
 
-#: app/actions/tools-actions.c:514
+#: app/actions/tools-actions.c:523
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set to Default Value"
 msgstr "工具的硬度：设为默认值"
 
-#: app/actions/tools-actions.c:518
+#: app/actions/tools-actions.c:527
 msgctxt "tools-action"
 msgid "Tool's Hardness: Minimize"
 msgstr "工具的硬度：最小值"
 
-#: app/actions/tools-actions.c:522
+#: app/actions/tools-actions.c:531
 msgctxt "tools-action"
 msgid "Tool's Hardness: Maximize"
 msgstr "工具的硬度：最大值"
 
-#: app/actions/tools-actions.c:526
+#: app/actions/tools-actions.c:535
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 1"
 msgstr "工具的硬度：减小 1"
 
-#: app/actions/tools-actions.c:530
+#: app/actions/tools-actions.c:539
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 1"
 msgstr "工具的硬度：增大 1"
 
-#: app/actions/tools-actions.c:534
+#: app/actions/tools-actions.c:543
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 10"
 msgstr "工具的硬度：减小 10"
 
-#: app/actions/tools-actions.c:538
+#: app/actions/tools-actions.c:547
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 10"
 msgstr "工具的硬度：增大 10"
 
-#: app/actions/tools-actions.c:542
+#: app/actions/tools-actions.c:551
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease Relative"
 msgstr "工具的硬度：相对减小"
 
-#: app/actions/tools-actions.c:546
+#: app/actions/tools-actions.c:555
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase Relative"
 msgstr "工具的硬度：相对增大"
 
-#: app/actions/tools-actions.c:554
+#: app/actions/tools-actions.c:563
 msgctxt "tools-action"
 msgid "Tool's Force: Set"
 msgstr "工具的力度：设置"
 
-#: app/actions/tools-actions.c:558
+#: app/actions/tools-actions.c:567
 msgctxt "tools-action"
 msgid "Tool's Force: Set to Default Value"
 msgstr "工具的力度：设为默认值"
 
-#: app/actions/tools-actions.c:562
+#: app/actions/tools-actions.c:571
 msgctxt "tools-action"
 msgid "Tool's Force: Minimize"
 msgstr "工具的力度：最小值"
 
-#: app/actions/tools-actions.c:566
+#: app/actions/tools-actions.c:575
 msgctxt "tools-action"
 msgid "Tool's Force: Maximize"
 msgstr "工具的力度：最大值"
 
-#: app/actions/tools-actions.c:570
+#: app/actions/tools-actions.c:579
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease by 1"
 msgstr "工具的力度：减小 1"
 
-#: app/actions/tools-actions.c:574
+#: app/actions/tools-actions.c:583
 msgctxt "tools-action"
 msgid "Tool's Force: Increase by 1"
 msgstr "工具的力度：增大 1"
 
-#: app/actions/tools-actions.c:578
+#: app/actions/tools-actions.c:587
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease by 10"
 msgstr "工具的力度：减小 10"
 
-#: app/actions/tools-actions.c:582
+#: app/actions/tools-actions.c:591
 msgctxt "tools-action"
 msgid "Tool's Force: Increase by 10"
 msgstr "工具的力度：增大 10"
 
-#: app/actions/tools-actions.c:586
+#: app/actions/tools-actions.c:595
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease Relative"
 msgstr "工具的力度：相对减小"
 
-#: app/actions/tools-actions.c:590
+#: app/actions/tools-actions.c:599
 msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
 msgstr "工具的力度：相对增大"
 
-#: app/actions/tools-actions.c:817
+#: app/actions/tools-actions.c:830
 #, c-format
 msgid "Activate tool \"%s\""
 msgstr "激活“%s”工具"
@@ -11449,7 +11464,7 @@ msgstr "历史中保存动作的最大数量。"
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
 #: app/core/gimp-units.c:185 app/gui/session.c:309 app/menus/shortcuts-rc.c:148
-#: app/plug-in/plug-in-rc.c:252 app/tools/gimp-tools.c:504
+#: app/plug-in/plug-in-rc.c:257 app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "严重解析错误"
 
@@ -15281,7 +15296,7 @@ msgstr ""
 "lumingzh <lumingzh@qq.com>, 2016-2025.\n"
 "驿窗 <classenu@163.com>, 2024."
 
-#: app/dialogs/about-dialog.c:236 app/widgets/gimpfiledialog.c:359
+#: app/dialogs/about-dialog.c:236 app/widgets/gimpfiledialog.c:360
 msgid "_Help"
 msgstr "帮助(_H)"
 
@@ -18712,23 +18727,23 @@ msgstr "高"
 msgid "_Sample Merged"
 msgstr "位样合并(_S)"
 
-#: app/display/gimpdisplayshell.c:557
+#: app/display/gimpdisplayshell.c:562
 msgid "Access the image menu"
 msgstr "获取图像菜单"
 
-#: app/display/gimpdisplayshell.c:720
+#: app/display/gimpdisplayshell.c:725
 msgid "Zoom image when window size changes"
 msgstr "当窗口大小改变时缩放图像"
 
-#: app/display/gimpdisplayshell.c:749
+#: app/display/gimpdisplayshell.c:754
 msgid "Toggle Quick Mask"
 msgstr "切换快速蒙板"
 
-#: app/display/gimpdisplayshell.c:764
+#: app/display/gimpdisplayshell.c:769
 msgid "Navigate the image display"
 msgstr "导航图像显示"
 
-#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1598
+#: app/display/gimpdisplayshell.c:823 app/display/gimpdisplayshell.c:1691
 #: app/widgets/gimptoolbox.c:273
 msgid "Drop image files here to open them"
 msgstr "拖动图像到此处以打开"
@@ -19542,7 +19557,7 @@ msgstr "GIMP 扩展"
 #: app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195
 #: app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198
 #: app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201
-#: app/plug-in/gimppluginprocedure.c:1022
+#: app/plug-in/gimppluginprocedure.c:1024
 msgid "RGB"
 msgstr "RGB"
 
@@ -19561,7 +19576,7 @@ msgstr "RGB-透明"
 #: app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233
 #: app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236
 #: app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239
-#: app/plug-in/gimppluginprocedure.c:1040
+#: app/plug-in/gimppluginprocedure.c:1042
 msgid "Grayscale"
 msgstr "灰度"
 
@@ -19610,7 +19625,7 @@ msgstr "透明度分量"
 msgid "Indexed-alpha"
 msgstr "索引色-透明"
 
-#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1058
+#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1060
 msgid "Indexed"
 msgstr "索引"
 
@@ -20377,7 +20392,7 @@ msgid "Turn colors into shades of gray"
 msgstr "将颜色转换为灰度色调"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1485
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1488
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:277
@@ -20422,7 +20437,7 @@ msgstr "使用颜色替换半透明部分"
 msgid "The color"
 msgstr "颜色"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1448
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1451
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -21152,7 +21167,7 @@ msgstr "添加滤镜"
 msgid "Plug-in"
 msgstr "插件"
 
-#: app/pdb/drawable-cmds.c:1131 app/tools/gimpforegroundselecttool.c:1041
+#: app/pdb/drawable-cmds.c:1192 app/tools/gimpforegroundselecttool.c:1041
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "前景选择"
@@ -21710,7 +21725,7 @@ msgstr "添加路径笔触"
 msgid "Extend path stroke"
 msgstr "扩展路径笔触"
 
-#: app/pdb/pdb-cmds.c:1185 app/pdb/pdb-cmds.c:1227
+#: app/pdb/pdb-cmds.c:1193 app/pdb/pdb-cmds.c:1235
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "数据标签“%s”不是典型的标识符"
@@ -21874,35 +21889,35 @@ msgstr "正在初始化插件"
 msgid "Starting Extensions"
 msgstr "正在启动扩展"
 
-#: app/plug-in/gimppluginprocedure.c:1026
+#: app/plug-in/gimppluginprocedure.c:1028
 msgid "RGB without alpha"
 msgstr "RGB 无透明"
 
-#: app/plug-in/gimppluginprocedure.c:1030
+#: app/plug-in/gimppluginprocedure.c:1032
 msgid "RGB with alpha"
 msgstr "RGB 带透明"
 
-#: app/plug-in/gimppluginprocedure.c:1044
+#: app/plug-in/gimppluginprocedure.c:1046
 msgid "Grayscale without alpha"
 msgstr "灰度无透明"
 
-#: app/plug-in/gimppluginprocedure.c:1048
+#: app/plug-in/gimppluginprocedure.c:1050
 msgid "Grayscale with alpha"
 msgstr "灰度带透明"
 
-#: app/plug-in/gimppluginprocedure.c:1062
+#: app/plug-in/gimppluginprocedure.c:1064
 msgid "Indexed without alpha"
 msgstr "索引色无透明"
 
-#: app/plug-in/gimppluginprocedure.c:1066
+#: app/plug-in/gimppluginprocedure.c:1068
 msgid "Indexed with alpha"
 msgstr "索引色带透明"
 
-#: app/plug-in/gimppluginprocedure.c:1077
+#: app/plug-in/gimppluginprocedure.c:1079
 msgid "This plug-in only works on the following layer types:"
 msgstr "该插件仅适用于以下图层类型："
 
-#: app/plug-in/gimppluginprocedure.c:1321
+#: app/plug-in/gimppluginprocedure.c:1433
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -21911,7 +21926,7 @@ msgstr ""
 "“%s”调用错误：\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1333
+#: app/plug-in/gimppluginprocedure.c:1445
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -21920,22 +21935,22 @@ msgstr ""
 "“%s”执行错误：\n"
 "%s"
 
-#: app/plug-in/plug-in-rc.c:238
+#: app/plug-in/plug-in-rc.c:243
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "跳过“%s”：错误的 GIMP 协议版本。"
 
-#: app/plug-in/plug-in-rc.c:245
+#: app/plug-in/plug-in-rc.c:250
 #, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "跳过“%s”：pluginrc 文件格式版本错误。"
 
-#: app/plug-in/plug-in-rc.c:547
+#: app/plug-in/plug-in-rc.c:552
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "图标类型“%s”无效"
 
-#: app/plug-in/plug-in-rc.c:562
+#: app/plug-in/plug-in-rc.c:567
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "图标类型“%ld”无效"
@@ -22332,7 +22347,7 @@ msgstr ""
 "有些字体无法加载：\n"
 "%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1648
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1656
 msgid "Add Text Layer"
 msgstr "添加文字图层"
 
@@ -22344,43 +22359,43 @@ msgstr "文字内嵌中无效的标记格式"
 msgid "Empty text parasite"
 msgstr "空白文字内嵌"
 
-#: app/text/gimptextlayer.c:151
+#: app/text/gimptextlayer.c:158
 msgid "Text Layer"
 msgstr "文字图层"
 
-#: app/text/gimptextlayer.c:164
+#: app/text/gimptextlayer.c:171
 msgid "Rename Text Layer"
 msgstr "重命名文字图层"
 
-#: app/text/gimptextlayer.c:165
+#: app/text/gimptextlayer.c:172
 msgid "Move Text Layer"
 msgstr "移动文字图层"
 
-#: app/text/gimptextlayer.c:166
+#: app/text/gimptextlayer.c:173
 msgid "Scale Text Layer"
 msgstr "缩放文字图层"
 
-#: app/text/gimptextlayer.c:167
+#: app/text/gimptextlayer.c:174
 msgid "Resize Text Layer"
 msgstr "改变文字图层大小"
 
-#: app/text/gimptextlayer.c:168
+#: app/text/gimptextlayer.c:175
 msgid "Flip Text Layer"
 msgstr "翻转文字图层"
 
-#: app/text/gimptextlayer.c:169
+#: app/text/gimptextlayer.c:176
 msgid "Rotate Text Layer"
 msgstr "旋转文字图层"
 
-#: app/text/gimptextlayer.c:170
+#: app/text/gimptextlayer.c:177
 msgid "Transform Text Layer"
 msgstr "变换文字图层"
 
-#: app/text/gimptextlayer.c:691
+#: app/text/gimptextlayer.c:785
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "由于缺少字体，文字功能不可用。"
 
-#: app/text/gimptextlayer.c:905
+#: app/text/gimptextlayer.c:999
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -23410,26 +23425,26 @@ msgstr "%s：切换原始图片和应用滤镜图片"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s：切换水平视图和竖直视图"
 
-#: app/tools/gimpfiltertool.c:1281
+#: app/tools/gimpfiltertool.c:1284
 msgid "Edit filter"
 msgstr "编辑滤镜"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1461
+#: app/tools/gimpfiltertool.c:1464
 msgid "Blending Options"
 msgstr "混合选项"
 
-#: app/tools/gimpfiltertool.c:1972 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1975 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "导入“%s”设置"
 
-#: app/tools/gimpfiltertool.c:1974 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1977 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "导出“%s”设置"
 
-#: app/tools/gimpfiltertool.c:2239
+#: app/tools/gimpfiltertool.c:2242
 #, c-format
 msgid "Editing '%s'..."
 msgstr "正在编辑“%s”…"
@@ -24534,11 +24549,11 @@ msgstr "从路径创建矢量图层"
 msgid "Confirm Path Editing"
 msgstr "确认路径编辑"
 
-#: app/tools/gimppathtool.c:1074 app/tools/gimptexttool.c:1775
+#: app/tools/gimppathtool.c:1074 app/tools/gimptexttool.c:1783
 msgid "Create _New Layer"
 msgstr "新建图层(_N)"
 
-#: app/tools/gimppathtool.c:1076 app/tools/gimptexttool.c:1777
+#: app/tools/gimppathtool.c:1076 app/tools/gimptexttool.c:1785
 msgid "_Edit Anyway"
 msgstr "仍然编辑(_E)"
 
@@ -25069,57 +25084,57 @@ msgstr "文字框："
 msgid "Language:"
 msgstr "语言："
 
-#: app/tools/gimptexttool.c:219
+#: app/tools/gimptexttool.c:220
 msgid "Text"
 msgstr "文字"
 
-#: app/tools/gimptexttool.c:220
+#: app/tools/gimptexttool.c:221
 msgid "Text Tool: Create or edit text layers"
 msgstr "文字工具：创建或编辑文字图层"
 
-#: app/tools/gimptexttool.c:221
+#: app/tools/gimptexttool.c:222
 msgid "Te_xt"
 msgstr "文字(_X)"
 
-#: app/tools/gimptexttool.c:1032
+#: app/tools/gimptexttool.c:1040
 msgid "Fonts are still loading"
 msgstr "字体仍在加载中"
 
-#: app/tools/gimptexttool.c:1043
+#: app/tools/gimptexttool.c:1051
 msgid "Text box: "
 msgstr "文字框："
 
-#: app/tools/gimptexttool.c:1195
+#: app/tools/gimptexttool.c:1203
 msgid "Reshape Text Layer"
 msgstr "重塑文字图层"
 
-#: app/tools/gimptexttool.c:1768 app/tools/gimptexttool.c:1771
+#: app/tools/gimptexttool.c:1776 app/tools/gimptexttool.c:1779
 msgid "Confirm Text Editing"
 msgstr "确认文字编辑"
 
-#: app/tools/gimptexttool.c:1799
+#: app/tools/gimptexttool.c:1807
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
 msgstr "您选中的文字图层已栅格化。编辑其文字将丢弃所有修改。"
 
-#: app/tools/gimptexttool.c:2419
+#: app/tools/gimptexttool.c:2427
 msgid "Text is required."
 msgstr "需要文字。"
 
-#: app/tools/gimptexttool.c:2422
+#: app/tools/gimptexttool.c:2430
 msgid "No image."
 msgstr "无图像。"
 
-#: app/tools/gimptexttool.c:2425
+#: app/tools/gimptexttool.c:2433
 msgid "No layer."
 msgstr "无图层。"
 
-#: app/tools/gimptexttool.c:2436
+#: app/tools/gimptexttool.c:2444
 msgid "Exactly one path must be selected."
 msgstr "必须选择一个路径。"
 
-#: app/tools/gimptexttool-editor.c:1406
+#: app/tools/gimptexttool-editor.c:1468
 msgid "GIMP Text Editor"
 msgstr "GIMP 文字编辑器"
 
@@ -27327,24 +27342,24 @@ msgstr "按扩展名"
 msgid "All export images"
 msgstr "全部导出图像"
 
-#: app/widgets/gimpfiledialog.c:787
+#: app/widgets/gimpfiledialog.c:789
 msgid "Show _All Files"
 msgstr "显示全部文件(_A)"
 
-#: app/widgets/gimpfiledialog.c:819
+#: app/widgets/gimpfiledialog.c:821
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "选择文件类型 (%s)(_T)"
 
-#: app/widgets/gimpfiledialog.c:821
+#: app/widgets/gimpfiledialog.c:823
 msgid "Select File _Type"
 msgstr "选择文件类型 (_T)"
 
-#: app/widgets/gimpfileprocview.c:199
+#: app/widgets/gimpfileprocview.c:207
 msgid "File Type"
 msgstr "文件类型"
 
-#: app/widgets/gimpfileprocview.c:211
+#: app/widgets/gimpfileprocview.c:219
 msgctxt "File extension"
 msgid "Extensions"
 msgstr "扩展名"
@@ -28181,47 +28196,55 @@ msgstr "写入文本文件“%s”失败：%s"
 msgid "_Use selected font"
 msgstr "使用选中字体(_U)"
 
-#: app/widgets/gimptextstyleeditor.c:214 app/widgets/gimptextstyleeditor.c:1327
+#: app/widgets/gimptextstyleeditor.c:255
+msgid "Drag to move the text style editor"
+msgstr "拖拽以移动文字样式编辑器"
+
+#: app/widgets/gimptextstyleeditor.c:275 app/widgets/gimptextstyleeditor.c:1415
 msgid "Change font of selected text"
 msgstr "改变选中文字的字体"
 
-#: app/widgets/gimptextstyleeditor.c:224
+#: app/widgets/gimptextstyleeditor.c:285
 msgid "Change size of selected text"
 msgstr "改变选中文字的大小"
 
-#: app/widgets/gimptextstyleeditor.c:243
+#: app/widgets/gimptextstyleeditor.c:299
+msgid "Restore On-Canvas Editor Position"
+msgstr "还原画布上编辑器的位置"
+
+#: app/widgets/gimptextstyleeditor.c:321
 msgid "Clear style of selected text"
 msgstr "清除选中文字的样式"
 
-#: app/widgets/gimptextstyleeditor.c:254 app/widgets/gimptextstyleeditor.c:265
+#: app/widgets/gimptextstyleeditor.c:332 app/widgets/gimptextstyleeditor.c:343
 msgid "Change color of selected text"
 msgstr "改变选中文字的颜色"
 
-#: app/widgets/gimptextstyleeditor.c:281
+#: app/widgets/gimptextstyleeditor.c:359
 msgid "Change kerning of selected text"
 msgstr "改变选中文字的字距"
 
-#: app/widgets/gimptextstyleeditor.c:297
+#: app/widgets/gimptextstyleeditor.c:375
 msgid "Change baseline of selected text"
 msgstr "改变选中文字的基线"
 
-#: app/widgets/gimptextstyleeditor.c:336
+#: app/widgets/gimptextstyleeditor.c:414
 msgid "Bold"
 msgstr "粗体"
 
-#: app/widgets/gimptextstyleeditor.c:339
+#: app/widgets/gimptextstyleeditor.c:417
 msgid "Italic"
 msgstr "斜体"
 
-#: app/widgets/gimptextstyleeditor.c:342
+#: app/widgets/gimptextstyleeditor.c:420
 msgid "Underline"
 msgstr "下划线"
 
-#: app/widgets/gimptextstyleeditor.c:345
+#: app/widgets/gimptextstyleeditor.c:423
 msgid "Strikethrough"
 msgstr "删除线"
 
-#: app/widgets/gimptextstyleeditor.c:1319
+#: app/widgets/gimptextstyleeditor.c:1407
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
 msgstr "字体“%s”在此系统上不可用"
@@ -28611,7 +28634,7 @@ msgstr "创建“%s”时出错："
 msgid "Invalid image mode and precision combination."
 msgstr "无效的图像模式和精度组合。"
 
-#: app/xcf/xcf-load.c:560
+#: app/xcf/xcf-load.c:559
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28620,7 +28643,7 @@ msgstr ""
 "发现内嵌“exif-数据”已损坏。\n"
 "Exif 数据无法被迁移：%s"
 
-#: app/xcf/xcf-load.c:599
+#: app/xcf/xcf-load.c:598
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28628,7 +28651,7 @@ msgstr ""
 "发现内嵌“gimp-元数据”已损坏。\n"
 "XMP 数据无法被迁移。"
 
-#: app/xcf/xcf-load.c:623
+#: app/xcf/xcf-load.c:622
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28639,31 +28662,31 @@ msgstr ""
 "通过旧版本 GIMP 保存的损坏 XMP 元数据无法转换且会被忽略。\n"
 "如果您不知道 XMP 是什么，很可能您并不需要它。报告的错误：%s。"
 
-#: app/xcf/xcf-load.c:1102
+#: app/xcf/xcf-load.c:1101
 msgid "Linked Layers"
 msgstr "链接的图层"
 
-#: app/xcf/xcf-load.c:1112
+#: app/xcf/xcf-load.c:1111
 msgid "Linked Channels"
 msgstr "链接的通道"
 
-#: app/xcf/xcf-load.c:1137
+#: app/xcf/xcf-load.c:1136
 msgid "Linked Paths"
 msgstr "链接的路径"
 
-#: app/xcf/xcf-load.c:1184
+#: app/xcf/xcf-load.c:1183
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "此 XCF 文件已损坏！已尽可能抢救图像数据，但抢救得到的部分不完整。"
 
-#: app/xcf/xcf-load.c:1204
+#: app/xcf/xcf-load.c:1203
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "此 XCF 文件已损坏！未能抢救任何图像数据。"
 
-#: app/xcf/xcf-load.c:1361
+#: app/xcf/xcf-load.c:1360
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28673,7 +28696,7 @@ msgstr ""
 "未能正确地保存索引颜色表。\n"
 "将使用灰度颜色表取代原颜色表。"
 
-#: app/xcf/xcf-load.c:2943
+#: app/xcf/xcf-load.c:2942
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28685,7 +28708,7 @@ msgstr ""
 "染。\n"
 "这种情况不应发生。您应将该问题报告给滤镜的开发者。"
 
-#: app/xcf/xcf-load.c:3827
+#: app/xcf/xcf-load.c:3826
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
