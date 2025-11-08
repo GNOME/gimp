@@ -175,11 +175,11 @@ gimp_layer_new_from_pixbuf (GimpImage     *image,
  * Since: 2.8
  */
 GimpLayer *
-gimp_layer_new_from_surface (GimpImage            *image,
-                             const gchar          *name,
-                             cairo_surface_t      *surface,
-                             gdouble               progress_start,
-                             gdouble               progress_end)
+gimp_layer_new_from_surface (GimpImage       *image,
+                             const gchar     *name,
+                             cairo_surface_t *surface,
+                             gdouble          progress_start,
+                             gdouble          progress_end)
 {
   GeglBuffer    *src_buffer;
   GeglBuffer    *dest_buffer;
