@@ -56,7 +56,11 @@ Core:
   - Windows: standard output and error output are now properly
     redirected to the parent console in native shells, just like on
     Linux or macOS. As a consequence build option -Dwin32-debug-console
-    has been removed.
+    has been removed. Ctrl-C is properly handled too, and output
+    contains colors.
+  - Paths attached to a vector layer cannot be deleted anymore.
+  - Text layer rendering has been made much more robust, even when with
+    very big dimensions.
 
 Tools:
 
@@ -82,6 +86,9 @@ Tools:
     * Double clicking a vector layer would activate the Path tool on it.
       The setting to change the path is moved to the layer options
       dialog.
+  - Transform tools are not initialized anymore when they are selected
+    after an automatic tool swap (when a filter tool is committed or
+    canceled; cf. Core section).
 
 Graphical User Interface:
 
@@ -98,6 +105,15 @@ Graphical User Interface:
     custom icon size.
   - Color history colors can now be dragged and dropped, to fill or set
     colors as expected, as any other color area widgets.
+  - It is now possible to select different objects with the same name
+    when listed in a GimpContainerEntry (typically, 2 fonts named the
+    same, when you are trying to select one of them in the font entry of
+    Text tool options or of the on-canvas GUI; this was already working
+    in the Fonts dockable, but not in the container entries).
+  - We can now properly blink paths in the Paths dockable too (it used
+    to only work for layers and channels). This will be used for
+    actions, to raise awareness to reasons why an action cannot be
+    executed.
 
 Plug-Ins:
 
@@ -118,108 +134,118 @@ Plug-Ins:
 
 API:
 
-  - The following libgimpbase API are now deprecated:
-    * gimp_pixpipe_params_init
-    * gimp_pixpipe_params_parse
-    * gimp_pixpipe_params_build
-    * gimp_pixpipe_params_free
-  - New libgimp functions:
-    * gimp_vector_layer_get_enable_fill
-    * gimp_vector_layer_get_enable_stroke
-    * gimp_vector_layer_get_fill_color
-    * gimp_vector_layer_get_fill_pattern
-    * gimp_vector_layer_get_path
-    * gimp_vector_layer_get_stroke_cap_style
-    * gimp_vector_layer_get_stroke_color
-    * gimp_vector_layer_get_stroke_pattern
-    * gimp_vector_layer_get_stroke_dash_offset
-    * gimp_vector_layer_get_stroke_dash_pattern
-    * gimp_vector_layer_get_stroke_join_style
-    * gimp_vector_layer_get_stroke_miter_limit
-    * gimp_vector_layer_get_stroke_width
-    * gimp_vector_layer_get_stroke_width_unit
-    * gimp_vector_layer_set_enable_fill
-    * gimp_vector_layer_set_enable_stroke
-    * gimp_vector_layer_set_fill_color
-    * gimp_vector_layer_set_stroke_cap_style
-    * gimp_vector_layer_set_stroke_color
-    * gimp_vector_layer_set_stroke_dash_offset
-    * gimp_vector_layer_set_stroke_dash_pattern
-    * gimp_vector_layer_set_stroke_join_style
-    * gimp_vector_layer_set_stroke_miter_limit
-    * gimp_vector_layer_set_stroke_width
-    * gimp_vector_layer_set_stroke_width_unit
-    * gimp_item_is_vector_layer
-    * gimp_item_id_is_link_layer
-    * gimp_item_is_link_layer
-    * gimp_link_layer_get_by_id
-    * gimp_link_layer_get_file
-    * gimp_link_layer_get_type
-    * gimp_link_layer_new
-    * gimp_link_layer_set_file
-    * gimp_param_link_layer_get_type
-    * gimp_param_spec_link_layer
-    * gimp_procedure_add_link_layer_argument
-    * gimp_procedure_add_link_layer_aux_argument
-    * gimp_procedure_add_link_layer_return_value
-    * gimp_link_layer_get_mime_type
-    * gimp_text_layer_get_outline
-    * gimp_text_layer_get_outline_antialias
-    * gimp_text_layer_get_outline_cap_style
-    * gimp_text_layer_get_outline_color
-    * gimp_text_layer_get_outline_dash_offset
-    * gimp_text_layer_get_outline_direction
-    * gimp_text_layer_get_outline_join_style
-    * gimp_text_layer_get_outline_miter_limit
-    * gimp_text_layer_get_outline_width
-    * gimp_text_layer_set_outline
-    * gimp_text_layer_set_outline_antialias
-    * gimp_text_layer_set_outline_cap_style
-    * gimp_text_layer_set_outline_color
-    * gimp_text_layer_set_outline_dash_offset
-    * gimp_text_layer_set_outline_direction
-    * gimp_text_layer_set_outline_join_style
-    * gimp_text_layer_set_outline_miter_limit
-    * gimp_text_layer_set_outline_width
-    * gimp_param_rasterizable_get_type
-    * gimp_param_spec_rasterizable
-    * gimp_rasterizable_get_type
-    * gimp_rasterizable_is_rasterized
-    * gimp_rasterizable_rasterize
-    * gimp_rasterizable_restore
-    * gimp_file_procedure_get_meta
-    * gimp_file_procedure_set_meta
-  - Removed libgimp functions:
-    * gimp_vector_layer_discard (since 3.1.4, but never in a stable
-      release).
-  - New libgimp class: GimpLinkLayer
-  - New libgimpbase enum types:
-    * GimpTextOutline
-    * GimpTextOutlineDirection
-  - New libgimpwidgets macros:
-    * GIMP_ICON_LAYER_LINK_LAYER
-    * GIMP_ICON_LAYER_VECTOR_LAYER
-  - libgimpwidgets: GimpBrowser search entry ported to GtkSearchEntry.
-  - New libgimp interface: GimpRasterizable. GimpLinkLayer,
-    GimpTextLayer and GimpVectorLayer now implement this interface.
-  - gimp_item_is_is_text_layer() will now always return TRUE for a layer
-    which is a text layer in backend, even if it has been rasterized. It
-    used not to, probably because the "Discard Text Information" was not
-    reversible (except by undoing), whereas now we can "Revert
-    Rasterize". Instead you should use gimp_rasterizable_is_rasterized()
-    to determine whether to consider a GimpTextLayer as a raster layer
-    or as a text layer.
-  - GimpLabelEntry (libgimpwidgets) accepts a NULL value and will
-    convert it to empty string.
-  - gimp_file_load() as well as the image returned by a
-    GimpLoadProcedure are now always returned as "clean" and with empty
-    undo stack.
-  - gimp_drawable_get_thumbnail_data() and
-    gimp_drawable_get_sub_thumbnail_data() implementations updated to
-    always return sRGB(A) 8-bit.
-  - gimp_widget_free_native_handle() implementation improved and docs
-    updated with important information on how to use it (disregarding
-    the new information, crashes on Wayland may happen).
+  - libgimpbase:
+    + New enum types:
+      * GimpTextOutline
+      * GimpTextOutlineDirection
+    + Deprecated functions:
+      * gimp_pixpipe_params_init
+      * gimp_pixpipe_params_parse
+      * gimp_pixpipe_params_build
+      * gimp_pixpipe_params_free
+  - libgimpcolor:
+    + New functions:
+      * gimp_cairo_surface_get_buffer
+    + Deprecated functions:
+      * gimp_cairo_surface_create_buffer
+  - libgimpwidgets:
+    + New macros:
+      * GIMP_ICON_LAYER_LINK_LAYER
+      * GIMP_ICON_LAYER_VECTOR_LAYER
+    + GimpBrowser search entry ported to GtkSearchEntry.
+    + GimpLabelEntry accepts a NULL value and will convert it to empty
+      string.
+    + gimp_widget_free_native_handle() implementation improved and docs
+      updated with important information on how to use it (disregarding
+      the new information, crashes on Wayland may happen).
+  - libgimp:
+    + New functions:
+      * gimp_vector_layer_get_enable_fill
+      * gimp_vector_layer_get_enable_stroke
+      * gimp_vector_layer_get_fill_color
+      * gimp_vector_layer_get_fill_pattern
+      * gimp_vector_layer_get_path
+      * gimp_vector_layer_get_stroke_cap_style
+      * gimp_vector_layer_get_stroke_color
+      * gimp_vector_layer_get_stroke_pattern
+      * gimp_vector_layer_get_stroke_dash_offset
+      * gimp_vector_layer_get_stroke_dash_pattern
+      * gimp_vector_layer_get_stroke_join_style
+      * gimp_vector_layer_get_stroke_miter_limit
+      * gimp_vector_layer_get_stroke_width
+      * gimp_vector_layer_get_stroke_width_unit
+      * gimp_vector_layer_set_enable_fill
+      * gimp_vector_layer_set_enable_stroke
+      * gimp_vector_layer_set_fill_color
+      * gimp_vector_layer_set_stroke_cap_style
+      * gimp_vector_layer_set_stroke_color
+      * gimp_vector_layer_set_stroke_dash_offset
+      * gimp_vector_layer_set_stroke_dash_pattern
+      * gimp_vector_layer_set_stroke_join_style
+      * gimp_vector_layer_set_stroke_miter_limit
+      * gimp_vector_layer_set_stroke_width
+      * gimp_vector_layer_set_stroke_width_unit
+      * gimp_item_is_vector_layer
+      * gimp_item_id_is_link_layer
+      * gimp_item_is_link_layer
+      * gimp_link_layer_get_by_id
+      * gimp_link_layer_get_file
+      * gimp_link_layer_get_type
+      * gimp_link_layer_new
+      * gimp_link_layer_set_file
+      * gimp_param_link_layer_get_type
+      * gimp_param_spec_link_layer
+      * gimp_procedure_add_link_layer_argument
+      * gimp_procedure_add_link_layer_aux_argument
+      * gimp_procedure_add_link_layer_return_value
+      * gimp_link_layer_get_mime_type
+      * gimp_text_layer_get_outline
+      * gimp_text_layer_get_outline_antialias
+      * gimp_text_layer_get_outline_cap_style
+      * gimp_text_layer_get_outline_color
+      * gimp_text_layer_get_outline_dash_offset
+      * gimp_text_layer_get_outline_direction
+      * gimp_text_layer_get_outline_join_style
+      * gimp_text_layer_get_outline_miter_limit
+      * gimp_text_layer_get_outline_width
+      * gimp_text_layer_set_outline
+      * gimp_text_layer_set_outline_antialias
+      * gimp_text_layer_set_outline_cap_style
+      * gimp_text_layer_set_outline_color
+      * gimp_text_layer_set_outline_dash_offset
+      * gimp_text_layer_set_outline_direction
+      * gimp_text_layer_set_outline_join_style
+      * gimp_text_layer_set_outline_miter_limit
+      * gimp_text_layer_set_outline_width
+      * gimp_param_rasterizable_get_type
+      * gimp_param_spec_rasterizable
+      * gimp_rasterizable_get_type
+      * gimp_rasterizable_is_rasterized
+      * gimp_rasterizable_rasterize
+      * gimp_rasterizable_restore
+      * gimp_file_procedure_get_meta
+      * gimp_file_procedure_set_meta
+    + Removed functions:
+      * gimp_vector_layer_discard (since 3.1.4, but never in a stable
+        release).
+    + New classes:
+      * GimpLinkLayer
+    + New interfaces:
+      * GimpRasterizable: GimpLinkLayer, GimpTextLayer and
+        GimpVectorLayer now implement this interface.
+    + gimp_item_is_is_text_layer() will now always return TRUE for a
+      layer which is a text layer in backend, even if it has been
+      rasterized. It used not to, probably because the "Discard Text
+      Information" was not reversible (except by undoing), whereas now
+      we can "Revert Rasterize". Instead you should use
+      gimp_rasterizable_is_rasterized() to determine whether to consider
+      a GimpTextLayer as a raster layer or as a text layer.
+    + gimp_file_load() as well as the image returned by a
+      GimpLoadProcedure are now always returned as "clean" and with
+      empty undo stack.
+    + gimp_drawable_get_thumbnail_data() and
+      gimp_drawable_get_sub_thumbnail_data() implementations updated to
+      always return sRGB(A) 8-bit.
 
 Build:
 
