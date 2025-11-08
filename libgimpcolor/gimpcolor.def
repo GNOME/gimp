@@ -8,6 +8,7 @@ EXPORTS
 	gimp_bilinear_rgb
 	gimp_cairo_checkerboard_create
 	gimp_cairo_surface_create_buffer
+	gimp_cairo_surface_get_buffer
 	gimp_cairo_surface_get_format
 	gimp_color_is_out_of_gamut
 	gimp_color_is_out_of_self_gamut

@@ -30,8 +30,12 @@ cairo_pattern_t * gimp_cairo_checkerboard_create   (cairo_t         *cr,
                                                     const GeglColor *dark);
 
 const Babl      * gimp_cairo_surface_get_format    (cairo_surface_t *surface);
+GIMP_DEPRECATED_FOR(gimp_cairo_surface_get_buffer)
 GeglBuffer      * gimp_cairo_surface_create_buffer (cairo_surface_t *surface,
                                                     const Babl      *format);
+GeglBuffer      * gimp_cairo_surface_get_buffer    (cairo_surface_t *surface,
+                                                    const Babl      *format,
+                                                    gboolean         sync_back);
 
 
 /*  some useful macros for writing directly to a Cairo surface  */

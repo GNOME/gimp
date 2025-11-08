@@ -1430,7 +1430,7 @@ get_cairo_surface (GimpDrawable  *drawable,
       return NULL;
     }
 
-  dest_buffer = gimp_cairo_surface_create_buffer (surface, NULL);
+  dest_buffer = gimp_cairo_surface_get_buffer (surface, NULL, TRUE);
   if (as_mask)
     {
       /* src_buffer represents a mask in "Y u8", "Y u16", etc. formats.
@@ -1442,7 +1442,9 @@ get_cairo_surface (GimpDrawable  *drawable,
       gegl_buffer_set_format (dest_buffer, babl_format ("Y u8"));
     }
 
+  gegl_buffer_freeze_changed (dest_buffer);
   gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
+  gegl_buffer_thaw_changed (dest_buffer);
 
   cairo_surface_mark_dirty (surface);
 
