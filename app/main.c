@@ -955,8 +955,9 @@ gimp_attach_console_window (void)
   /* If run on native shell, attach to it */
   if (AttachConsole (ATTACH_PARENT_PROCESS) != 0)
     {
-      freopen ("CONOUT$", "w", stdout);
-      freopen ("CONOUT$", "w", stderr);
+      /* 'r' is needed to prevent interleaving and '+' to support colors */
+      freopen ("CONOUT$", "r+", stdout);
+      freopen ("CONOUT$", "r+", stderr);
       _flushall ();
 
       {
