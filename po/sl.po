@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-31 16:56+0000\n"
-"PO-Revision-Date: 2025-10-31 19:11+0100\n"
+"POT-Creation-Date: 2025-11-08 13:04+0000\n"
+"PO-Revision-Date: 2025-11-08 15:21+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -323,11 +323,11 @@ msgstr "Pokaži stran nastavitev s poskusnimi funkcionalnostmi"
 msgid "Show an image submenu with debug actions"
 msgstr "Pokaži podmeni slike z dejanji razhroščevanja"
 
-#: app/main.c:760
+#: app/main.c:758
 msgid "[FILE|URI...]"
 msgstr "[DATOTEKA|URI...]"
 
-#: app/main.c:790
+#: app/main.c:788
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -335,22 +335,14 @@ msgstr ""
 "GIMP ne more inicializirati grafičnega uporabniškega vmesnika.\n"
 "Prepričajte se, da obstaja prava nastavitev za vaše zaslonsko okolje."
 
-#: app/main.c:859
+#: app/main.c:854
 msgid "Another GIMP instance is already running."
 msgstr "GIMP je že zagnan."
 
-#: app/main.c:948
-msgid "GIMP output. Type any character to close this window."
-msgstr "Izhod GIMP. Pritisnite kateri koli znak, da se okno zapre."
-
-#: app/main.c:949
+#: app/main.c:941
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Pritisnite katero koli tipko, da zaprete to okno)\n"
-
-#: app/main.c:966
-msgid "GIMP output. You can minimize this window, but don't close it."
-msgstr "Izhod programa GIMP. To okno lahko pomanjšate, vendar ga ne zapirajte."
 
 #: app/sanity.c:546
 #, c-format
@@ -1114,7 +1106,7 @@ msgstr[2] "Spusti kanala na dno"
 msgstr[3] "Spusti kanale na dno"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
-#: app/display/gimpdisplayshell-dnd.c:703 app/widgets/gimpchanneltreeview.c:260
+#: app/display/gimpdisplayshell-dnd.c:702 app/widgets/gimpchanneltreeview.c:260
 #: app/widgets/gimplayertreeview.c:838
 #, c-format
 msgid "%s Channel Copy"
@@ -2582,7 +2574,7 @@ msgstr "Vnesite opis oznake"
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:646 app/display/gimpimagewindow.c:2260
+#: app/display/gimpdisplayshell-dnd.c:645 app/display/gimpimagewindow.c:2260
 #: app/widgets/gimplayertreeview.c:796 app/widgets/gimptoolbox.c:843
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -7875,23 +7867,23 @@ msgctxt "paths-action"
 msgid "Select the path below the current path"
 msgstr "Izberi pot pod trenutno potjo"
 
-#: app/actions/paths-commands.c:174 app/actions/paths-commands.c:928
+#: app/actions/paths-commands.c:176 app/actions/paths-commands.c:937
 msgid "Path Attributes"
 msgstr "Lastnosti poti"
 
-#: app/actions/paths-commands.c:177
+#: app/actions/paths-commands.c:179
 msgid "Edit Path Attributes"
 msgstr "Uredi lastnosti poti"
 
-#: app/actions/paths-commands.c:216
+#: app/actions/paths-commands.c:218
 msgid "New Path"
 msgstr "Nova pot"
 
-#: app/actions/paths-commands.c:219
+#: app/actions/paths-commands.c:221
 msgid "Create a New Path"
 msgstr "Ustvari novo pot"
 
-#: app/actions/paths-commands.c:286
+#: app/actions/paths-commands.c:288
 msgid "Raise Path"
 msgid_plural "Raise Paths"
 msgstr[0] "Dvigni poti"
@@ -7899,7 +7891,7 @@ msgstr[1] "Dvigni pot"
 msgstr[2] "Dvigni poti"
 msgstr[3] "Dvigni poti"
 
-#: app/actions/paths-commands.c:324
+#: app/actions/paths-commands.c:326
 msgid "Raise Path to Top"
 msgid_plural "Raise Paths to Top"
 msgstr[0] "Dvigni poti na vrh"
@@ -7907,7 +7899,7 @@ msgstr[1] "Dvigni pot na vrh"
 msgstr[2] "Dvigni poti na vrh"
 msgstr[3] "Dvigni poti na vrh"
 
-#: app/actions/paths-commands.c:371
+#: app/actions/paths-commands.c:373
 msgid "Lower Path"
 msgid_plural "Lower Paths"
 msgstr[0] "Spusti poti"
@@ -7915,7 +7907,7 @@ msgstr[1] "Spusti pot"
 msgstr[2] "Spusti poti"
 msgstr[3] "Spusti poti"
 
-#: app/actions/paths-commands.c:411
+#: app/actions/paths-commands.c:413
 msgid "Lower Path to Bottom"
 msgid_plural "Lower Paths to Bottom"
 msgstr[0] "Spusti poti na dno"
@@ -7923,27 +7915,27 @@ msgstr[1] "Spusti pot na dno"
 msgstr[2] "Spusti poti na dno"
 msgstr[3] "Spusti poti na dno"
 
-#: app/actions/paths-commands.c:441
+#: app/actions/paths-commands.c:443
 msgid "Duplicate Paths"
 msgstr "Podvoji poti"
 
-#: app/actions/paths-commands.c:480
+#: app/actions/paths-commands.c:488
+msgid "Cannot delete paths attached to vector layers"
+msgstr "Poti, pripete vektorskim plastem, ni možno izbrisati"
+
+#: app/actions/paths-commands.c:499
 msgid "Remove Paths"
 msgstr "Odstrani poti"
 
-#: app/actions/paths-commands.c:497
-msgid "Paths attached to vector layers weren't deleted"
-msgstr "Poti, pripete vektorskim plastem, niso bile izbrisane"
-
-#: app/actions/paths-commands.c:559
+#: app/actions/paths-commands.c:568
 msgid "Paths to selection"
 msgstr "Poti v izbor"
 
-#: app/actions/paths-commands.c:639
+#: app/actions/paths-commands.c:648
 msgid "Fill Path"
 msgstr "Zapolni pot"
 
-#: app/actions/paths-commands.c:667
+#: app/actions/paths-commands.c:676
 msgid "Stroke Path"
 msgstr "Vleci poteze po poti"
 
@@ -10551,7 +10543,7 @@ msgstr "Napaka pri razločevanju »%%s«: vrstica daljša od %s znakov."
 
 #: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206
 #: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145
-#: app/gui/themes.c:720 app/tools/gimpfiltertool-settings.c:229
+#: app/gui/themes.c:722 app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Napaka pri pisanju »%s«: %s"
@@ -13097,7 +13089,7 @@ msgstr "Izvajanje podrejenega procesa »%s« je spodletelo (%s)"
 msgid "tags-locale:C"
 msgstr "tips-locale:sl"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:732
+#: app/core/gimp-tags.c:156 app/gui/themes.c:734
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Napaka pri zapiranju »%s«: %s"
@@ -14232,22 +14224,22 @@ msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Odstrani plavajoči izbor"
 
-#: app/core/gimpimage.c:5705
+#: app/core/gimpimage.c:5704
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodaj kanal"
 
-#: app/core/gimpimage.c:5735 app/core/gimpimage.c:5760
+#: app/core/gimpimage.c:5734 app/core/gimpimage.c:5759
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Odstrani kanal"
 
-#: app/core/gimpimage.c:5820
+#: app/core/gimpimage.c:5819
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodaj pot"
 
-#: app/core/gimpimage.c:5855 app/core/gimpimage.c:5863
+#: app/core/gimpimage.c:5854 app/core/gimpimage.c:5862
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Odstrani pot"
@@ -14600,23 +14592,23 @@ msgstr[3] "%d plasti"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Sličice za predogled »%s« ni mogoče odpreti: %s"
 
-#: app/core/gimpitem.c:1855 app/core/gimpitem.c:1922
-#: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimptransformtool.c:730
+#: app/core/gimpitem.c:1858 app/core/gimpitem.c:1925
+#: app/display/gimpdisplayshell-dnd.c:379 app/tools/gimptransformtool.c:730
 #: app/widgets/gimpdrawabletreeview-filters.c:589
 msgid "A selected layer's pixels are locked."
 msgstr "Slikovne točke izbrane plasti so zaklenjene."
 
-#: app/core/gimpitem.c:2231
+#: app/core/gimpitem.c:2234
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Pripni zajedalca"
 
-#: app/core/gimpitem.c:2241
+#: app/core/gimpitem.c:2244
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Elementu pripni zajedalca"
 
-#: app/core/gimpitem.c:2292 app/core/gimpitem.c:2299
+#: app/core/gimpitem.c:2295 app/core/gimpitem.c:2302
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Odstrani zajedalca z elementa"
@@ -16253,12 +16245,12 @@ msgstr "_Spremeni merilo"
 #, c-format
 msgid ""
 "Scaling the image to the chosen size will make it use more memory than what "
-"is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
-"%s)."
+"is configured as \"Maximum new image size\" in the Preferences dialog "
+"(currently %s)."
 msgstr ""
 "Sprememba merila slike na izbrano velikost bi zahtevala več pomnilnika, kot "
 "to dovoljuje nastavitev »Največja velikost slike« v pogovornem oknu "
-"»Nastavitve« (trenutno %s)."
+"Nastavitve (trenutno %s)."
 
 #: app/dialogs/image-scale-dialog.c:258
 msgid ""
@@ -19179,49 +19171,49 @@ msgid "The image has been exported to '%s'."
 msgstr "Slika izvožena v »%s«."
 
 #: app/display/gimpdisplayshell-dnd.c:253
-#: app/display/gimpdisplayshell-dnd.c:706
-#: app/display/gimpdisplayshell-dnd.c:765
+#: app/display/gimpdisplayshell-dnd.c:705
+#: app/display/gimpdisplayshell-dnd.c:764
 msgid "Drop New Layer"
 msgstr "Spusti novo plast"
 
-#: app/display/gimpdisplayshell-dnd.c:296
+#: app/display/gimpdisplayshell-dnd.c:295
 msgid "Drop New Path"
 msgstr "Spusti novo pot"
 
-#: app/display/gimpdisplayshell-dnd.c:371 app/tools/gimpbucketfilltool.c:613
+#: app/display/gimpdisplayshell-dnd.c:370 app/tools/gimpbucketfilltool.c:613
 #: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
 #: app/tools/gimpselectiontool.c:568
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Slikovnih točk skupin plasti ni mogoče spremeniti."
 
-#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:340
+#: app/display/gimpdisplayshell-dnd.c:389 app/tools/gimpfiltertool.c:340
 #: app/tools/gimppainttool.c:355 app/tools/gimptransformtool.c:739
 #: app/widgets/gimpdrawabletreeview-filters.c:582
 msgid "A selected layer is not visible."
 msgstr "Izbrana plast je nevidna."
 
-#: app/display/gimpdisplayshell-dnd.c:446
+#: app/display/gimpdisplayshell-dnd.c:445
 #: app/widgets/gimpdrawabletreeview.c:470
 #: app/widgets/gimpdrawabletreeview.c:676
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Spusti vzorec na plast"
 
-#: app/display/gimpdisplayshell-dnd.c:468
+#: app/display/gimpdisplayshell-dnd.c:467
 #: app/widgets/gimpdrawabletreeview.c:501
 #: app/widgets/gimpdrawabletreeview.c:696
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Spusti barvo na plast"
 
-#: app/display/gimpdisplayshell-dnd.c:596 app/widgets/gimpitemtreeview.c:1583
+#: app/display/gimpdisplayshell-dnd.c:595 app/widgets/gimpitemtreeview.c:1592
 #: app/widgets/gimplayertreeview.c:787
 msgid "Drop layers"
 msgstr "Spusti plasti"
 
-#: app/display/gimpdisplayshell-dnd.c:739
-#: app/display/gimpdisplayshell-dnd.c:756 app/widgets/gimplayertreeview.c:864
+#: app/display/gimpdisplayshell-dnd.c:738
+#: app/display/gimpdisplayshell-dnd.c:755 app/widgets/gimplayertreeview.c:864
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Spuščen medpomnilnik"
@@ -22799,11 +22791,11 @@ msgstr "Zasukaj plast besedila"
 msgid "Transform Text Layer"
 msgstr "Preoblikuj plast besedila"
 
-#: app/text/gimptextlayer.c:785
+#: app/text/gimptextlayer.c:790
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Zaradi odsotnosti vseh pisav funkcionalnost besedila ni na voljo."
 
-#: app/text/gimptextlayer.c:999
+#: app/text/gimptextlayer.c:1004
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -28219,7 +28211,7 @@ msgstr "Predmetu določite izključen zaklep vidljivosti"
 msgid "Select items by patterns and store item sets"
 msgstr "Izberi elemente po vzorcih in shrani množice elementov"
 
-#: app/widgets/gimpitemtreeview.c:1728
+#: app/widgets/gimpitemtreeview.c:1737
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
@@ -29273,7 +29265,7 @@ msgstr ""
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
 msgstr "Napaka pri zapisovanju XCF: nepodprt BPC pri pisanju slikovnih pik: %d"
 
-#: app-tools/gimp-debug-tool.c:87
+#: app-tools/gimp-debug-tool.c:101
 msgid "GIMP Crash Debug"
 msgstr "Razhroščevanje sesutja GIMP"
 
