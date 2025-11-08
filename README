@@ -1,14 +1,16 @@
                    ------------------------------
                    GNU Image Manipulation Program
-                        3.1 Development Branch
+                       3.2 Release Candidate
                    ------------------------------
 
-This is an unstable development release in the GIMP 3.1 series.
+This is a release candidate for upcoming version 3.2.0 of GIMP.
+This is not considered stable yet, unless testing tell us it is.
+Therefore save your work early and often. If you want a stable
+version, please use GIMP 3.0 instead.
 
 If you think you found a bug in this version, please make sure that it
-hasn't been reported earlier and that it is not just new stuff that is
-still being worked on and obviously not quite finished yet. If neither
-of these, please report it!
+hasn't been reported earlier and report it! We are at the verge of
+releasing the next minor version of GIMP, so any report helps.
 
 If you want to hack on GIMP, please read the file devel-docs/README.md.
 For detailed installation instructions, see the file INSTALL.
@@ -79,11 +81,11 @@ also included in that page.
 The look of GIMP's interface can be customized like any other GTK+ app
 by editing files in `${XDG_CONFIG_HOME}/gtk-3.0/` (settings.ini and
 gtk.css in particular) or by using "themes" (ready-made customizations).
-Additionally, GIMP reads `${XDG_CONFIG_HOME}/GIMP/3.0/gimp.css` so you
+Additionally, GIMP reads `${XDG_CONFIG_HOME}/GIMP/3.2/gimp.css` so you
 can have settings that only apply to GIMP.
 
 You can also manually change the keybindings to any of your choice by
-editing: `${XDG_CONFIG_HOME}/GIMP/3.0/shortcutsrc`.
+editing: `${XDG_CONFIG_HOME}/GIMP/3.2/shortcutsrc`.
 
 
 Have fun,
