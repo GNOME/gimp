@@ -219,7 +219,7 @@ gimp_layer_new_from_surface (GimpImage            *image,
   if (layer == NULL)
     return NULL;
 
-  src_buffer = gimp_cairo_surface_create_buffer (surface, NULL);
+  src_buffer = gimp_cairo_surface_get_buffer (surface, NULL, FALSE);
   dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE,

@@ -1059,7 +1059,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 #else
   format = babl_format_with_space ("cairo-ARGB32", gimp_text_layout_get_space (layout));
 #endif
-  buffer = gimp_cairo_surface_create_buffer (surface, format);
+  buffer = gimp_cairo_surface_get_buffer (surface, format, FALSE);
 
   gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
                          gimp_drawable_get_buffer (drawable), NULL);

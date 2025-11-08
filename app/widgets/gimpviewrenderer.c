@@ -1300,13 +1300,14 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
                                                 width, height);
 
       src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
-      dest_buffer = gimp_cairo_surface_create_buffer (tmp_surface, NULL);
+      dest_buffer = gimp_cairo_surface_get_buffer (tmp_surface, NULL, TRUE);
 
       transform =
         gimp_view_renderer_get_color_transform (renderer, widget,
                                                 gegl_buffer_get_format (src_buffer),
                                                 gegl_buffer_get_format (dest_buffer));
 
+      gegl_buffer_freeze_changed (dest_buffer);
       if (transform)
         {
           gimp_color_transform_process_buffer (transform,
@@ -1327,6 +1328,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
                                  dest_buffer,
                                  GEGL_RECTANGLE (0, 0, 0, 0));
         }
+      gegl_buffer_thaw_changed (dest_buffer);
 
       g_object_unref (src_buffer);
       g_object_unref (dest_buffer);

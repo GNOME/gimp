@@ -31,6 +31,7 @@
 #include "gimpcolortypes.h"
 
 #include "gimpcairo.h"
+#include "gimpcolor-private.h"
 
 
 /**
@@ -41,6 +42,11 @@
  * Utility functions that make cairo easier to use with GIMP color
  * data types.
  **/
+
+
+static void gimp_cairo_surface_buffer_changed (GeglBuffer          *buffer,
+                                               const GeglRectangle *rect,
+                                               cairo_surface_t     *surface);
 
 
 /**
@@ -171,29 +177,138 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
  * Returns: (transfer full): a #GeglBuffer
  *
  * Since: 2.10
+ *
+ * Deprecated: 3.2: Use gimp_cairo_surface_get_buffer().
  **/
 GeglBuffer *
 gimp_cairo_surface_create_buffer (cairo_surface_t *surface,
                                   const Babl      *format)
 {
-  GeglBuffer     *buffer;
-  GeglRectangle   extent = {0};
+  return gimp_cairo_surface_get_buffer (surface, format, TRUE);
+}
+
+/**
+ * gimp_cairo_surface_get_buffer:
+ * @surface: a Cairo surface
+ * @format:  a Babl format.
+ * @sync_back: whether changes on the returned buffer should be synced
+ *             back to @surface.
+ *
+ * This function returns a [class@Gegl.Buffer] containing @surface's
+ * pixels. It must only be called on image surfaces, calling it on other
+ * surface types is an error.
+ *
+ * If @format is set, the returned buffer will use it. It has to map
+ * with @surface Cairo format. If unset, the buffer format will be
+ * determined from @surface. The main difference is that automatically
+ * determined format has sRGB space and TRC by default.
+ *
+ * If you want the changes to the returned buffer to be synced back to
+ * @surface data, set @sync_back to %TRUE. If you don't need this and
+ * only want a copy of @surface at a given time, %FALSE will be less
+ * costly.
+ *
+ * When @sync_back is %TRUE, [method@Gegl.Buffer.freeze_changed] and
+ * [method@Gegl.Buffer.thaw_changed] may be useful to block intermediate
+ * syncing.
+ *
+ * Returns: (transfer full): a #GeglBuffer
+ *
+ * Since: 3.2
+ **/
+GeglBuffer *
+gimp_cairo_surface_get_buffer (cairo_surface_t *surface,
+                               const Babl      *format,
+                               gboolean         sync_back)
+{
+  const Babl    *surface_format;
+  GeglBuffer    *buffer;
+  GeglRectangle  extent = {0};
+  gint           rowstride;
+  gint           bpp;
 
   g_return_val_if_fail (surface != NULL, NULL);
-  g_return_val_if_fail (cairo_surface_get_type (surface) ==
-                        CAIRO_SURFACE_TYPE_IMAGE, NULL);
-  g_return_val_if_fail (format == NULL ||
-                        babl_format_get_bytes_per_pixel (format) == babl_format_get_bytes_per_pixel (gimp_cairo_surface_get_format (surface)),
-                        NULL);
+  g_return_val_if_fail (cairo_surface_get_type (surface) == CAIRO_SURFACE_TYPE_IMAGE, NULL);
+
+  surface_format = gimp_cairo_surface_get_format (surface);
+  rowstride      = cairo_image_surface_get_stride (surface);
+  bpp            = babl_format_get_bytes_per_pixel (surface_format);
+
+  g_return_val_if_fail (format == NULL || babl_format_get_bytes_per_pixel (format) == bpp, NULL);
 
   if (format == NULL)
-    format = gimp_cairo_surface_get_format (surface);
+    format = surface_format;
+
   extent.width  = cairo_image_surface_get_width  (surface);
   extent.height = cairo_image_surface_get_height (surface);
 
-  buffer = gegl_buffer_new (&extent, format);
+  if ( ! sync_back || rowstride % bpp != 0 ||
+      extent.width * extent.height > GIMP_LINEAR_BUFFER_MAX_SIZE)
+    buffer = gegl_buffer_new (&extent, format);
+  else
+    return gegl_buffer_linear_new_from_data (cairo_image_surface_get_data (surface),
+                                             format, &extent, rowstride,
+                                             (GDestroyNotify) cairo_surface_destroy,
+                                             cairo_surface_reference (surface));
 
-  gegl_buffer_set (buffer, &extent, 0, format, cairo_image_surface_get_data (surface), cairo_image_surface_get_stride (surface));
+  gegl_buffer_set (buffer, &extent, 0, format,
+                   cairo_image_surface_get_data (surface),
+                   rowstride);
+
+  if (sync_back)
+    {
+      /* Making sure we don't work on a destroyed surface. */
+      g_object_set_data_full (G_OBJECT (buffer),
+                              "gimp-cairo-surface-get-buffer-surface",
+                              cairo_surface_reference (surface),
+                              (GDestroyNotify) cairo_surface_destroy);
+      gegl_buffer_signal_connect (buffer, "changed",
+                                  G_CALLBACK (gimp_cairo_surface_buffer_changed),
+                                  surface);
+    }
 
   return buffer;
+}
+
+
+/* Private functions */
+
+static void
+gimp_cairo_surface_buffer_changed (GeglBuffer          *buffer,
+                                   const GeglRectangle *rect,
+                                   cairo_surface_t     *surface)
+{
+  unsigned char *data;
+  gint           stride;
+  gint           bpp;
+
+  data   = cairo_image_surface_get_data (surface);
+  stride = cairo_image_surface_get_stride (surface);
+  bpp    = babl_format_get_bytes_per_pixel (gegl_buffer_get_format (buffer));
+
+  data += stride * rect->y + rect->x * bpp;
+
+  if ((rect->x == 0 && rect->width == gegl_buffer_get_width (buffer)) || rect->height == 1)
+    {
+      gegl_buffer_get (buffer, rect, 1.0, NULL,
+                       data, stride, GEGL_ABYSS_NONE);
+    }
+  else
+    {
+      GeglRectangle extent;
+
+      extent.x      = rect->x;
+      extent.width  = rect->width;
+      extent.height = 1;
+
+      for (gint y = rect->y; y < rect->y + rect->height; y++)
+        {
+          extent.y = y;
+          gegl_buffer_get (buffer, &extent, 1.0, NULL,
+                           data, stride, GEGL_ABYSS_NONE);
+          data += stride;
+        }
+    }
+
+  cairo_surface_mark_dirty (surface);
 }

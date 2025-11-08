@@ -19,6 +19,8 @@
 #ifndef __GIMP_COLOR_PRIVATE_H__
 #define __GIMP_COLOR_PRIVATE_H__
 
+#define GIMP_LINEAR_BUFFER_MAX_SIZE 4096
+
 /* Legacy definition to calculate luminance from sRGB.
  *
  * These values and macro are specific to a "RGB float" to "Y float"
