@@ -959,6 +959,16 @@ gimp_attach_console_window (void)
       freopen ("CONOUT$", "w", stderr);
       _flushall ();
 
+      {
+        /* CTRL+C handling */
+        HANDLE hIn = GetStdHandle (STD_INPUT_HANDLE);
+        DWORD  mode;
+
+        GetConsoleMode (hIn, &mode);
+        mode |= ENABLE_PROCESSED_INPUT;
+        SetConsoleMode (hIn, mode);
+      }
+
       atexit (wait_console_window);
     }
 }
