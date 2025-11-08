@@ -74,7 +74,7 @@ tools_swap_cmd_callback (GimpAction *action,
 
   return_if_no_gimp (gimp, data);
 
-  tool_manager_swap_tools (gimp);
+  tool_manager_swap_tools (gimp, FALSE);
 }
 
 void

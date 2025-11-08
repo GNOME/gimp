@@ -484,7 +484,7 @@ swap_tools (gconstpointer data)
               gimp_context_set_tool (user_context, second_tool_info);
               g_assert (gimp_context_get_tool (user_context) == second_tool_info);
 
-              tool_manager_swap_tools (gimp);
+              tool_manager_swap_tools (gimp, FALSE);
               g_assert (gimp_context_get_tool (user_context) == first_tool_info);
             }
         }

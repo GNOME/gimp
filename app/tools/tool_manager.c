@@ -56,6 +56,7 @@ struct _GimpToolManager
   GSList        *tool_stack;
 
   GList         *history;
+  gboolean       block_initialization;
 
   GimpToolGroup *active_tool_group;
 
@@ -121,8 +122,9 @@ tool_manager_init (Gimp *gimp)
 
   tool_manager = g_slice_new0 (GimpToolManager);
 
-  tool_manager->gimp    = gimp;
-  tool_manager->history = NULL;
+  tool_manager->gimp                 = gimp;
+  tool_manager->history              = NULL;
+  tool_manager->block_initialization = FALSE;
 
   g_object_set_qdata (G_OBJECT (gimp), tool_manager_quark, tool_manager);
 
@@ -282,7 +284,8 @@ tool_manager_pop_tool (Gimp *gimp)
 }
 
 void
-tool_manager_swap_tools (Gimp *gimp)
+tool_manager_swap_tools (Gimp     *gimp,
+                         gboolean  block_initialization)
 {
   GimpToolManager *tool_manager;
 
@@ -291,8 +294,12 @@ tool_manager_swap_tools (Gimp *gimp)
   tool_manager = tool_manager_get (gimp);
 
   if (g_list_length (tool_manager->history) > 1)
-    gimp_context_set_tool (tool_manager->gimp->user_context,
-                           g_list_nth_data (tool_manager->history, 1));
+    {
+      tool_manager->block_initialization = block_initialization;
+      gimp_context_set_tool (tool_manager->gimp->user_context,
+                             g_list_nth_data (tool_manager->history, 1));
+      tool_manager->block_initialization = FALSE;
+    }
 }
 
 gboolean
@@ -816,8 +823,9 @@ tool_manager_tool_changed (GimpContext     *user_context,
   tool_manager_select_tool (tool_manager, new_tool);
 
   /* Auto-activate any transform or GEGL operation tools */
-  if (GIMP_IS_TRANSFORM_GRID_TOOL (new_tool) ||
-      GIMP_IS_GEGL_TOOL (new_tool))
+  if (! tool_manager->block_initialization &&
+      (GIMP_IS_TRANSFORM_GRID_TOOL (new_tool) ||
+       GIMP_IS_GEGL_TOOL (new_tool)))
     {
       GimpDisplay *new_display;
 

@@ -27,7 +27,8 @@ void       tool_manager_push_tool                  (Gimp             *gimp,
                                                     GimpTool         *tool);
 void       tool_manager_pop_tool                   (Gimp             *gimp);
 
-void       tool_manager_swap_tools                 (Gimp             *gimp);
+void       tool_manager_swap_tools                 (Gimp             *gimp,
+                                                    gboolean          block_initialization);
 
 gboolean   tool_manager_initialize_active          (Gimp             *gimp,
                                                     GimpDisplay      *display);
