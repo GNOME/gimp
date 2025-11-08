@@ -766,16 +766,13 @@ explorer_dialog (GimpProcedure       *procedure,
                                     "parameter-input-label", FALSE,
                                     "parameter-input-box");
 
-  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "parameter-type-label", _("Fractal Type"),
-                                   FALSE, FALSE);
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                   "parameter-type-box",
                                   "fractal-type",
                                   NULL);
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "parameter-type-frame",
-                                    "parameter-type-label", FALSE,
+                                    NULL, FALSE,
                                     "parameter-type-box");
 
   vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
