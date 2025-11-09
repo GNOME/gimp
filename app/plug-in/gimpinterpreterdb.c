@@ -38,6 +38,10 @@
 
 #include "libgimpbase/gimpbase.h"
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #include "plug-in-types.h"
 
 #include "gimpinterpreterdb.h"
@@ -121,11 +125,44 @@ gimp_interpreter_db_new (gboolean verbose)
   return db;
 }
 
+#ifdef G_OS_WIN32
+static gboolean
+might_be_console_process (void)
+{
+  /* check for Unix console */
+  if (g_getenv ("TERM") || g_getenv ("SHELL"))
+    return TRUE;
+
+  /* check for Windows console (taken from gspawn-win32.c) */
+  gboolean attached_to_self = AttachConsole (GetCurrentProcessId ());
+  g_return_val_if_fail (! attached_to_self, TRUE);
+
+  switch (GetLastError ())
+    {
+    case ERROR_ACCESS_DENIED:
+      return TRUE;
+    case ERROR_INVALID_HANDLE:
+      return FALSE;
+    }
+  g_return_val_if_reached (FALSE);
+}
+#endif
+
 void
 gimp_interpreter_db_load (GimpInterpreterDB *db,
                           GList             *path)
 {
   GList *list;
+#ifdef G_OS_WIN32
+  static gboolean console_checked = FALSE;
+  static gboolean is_console = FALSE;
+
+  if (!console_checked)
+    {
+      is_console      = might_be_console_process ();
+      console_checked = TRUE;
+    }
+#endif
 
   g_return_if_fail (GIMP_IS_INTERPRETER_DB (db));
 
@@ -168,8 +205,32 @@ gimp_interpreter_db_load (GimpInterpreterDB *db,
                 {
                   GFile *file = g_file_enumerator_get_child (enumerator, info);
 
-                  gimp_interpreter_db_load_interp_file (db, file);
-
+                  gchar *basename = g_file_get_basename (file);
+#ifndef G_OS_WIN32
+                  /* Unix: always load regular .interp file */
+                  if (! g_strrstr (basename, "_win"))
+                    {
+                      gimp_interpreter_db_load_interp_file (db, file);
+                    }
+#else
+                  if (! g_strrstr (basename, "_win"))
+                    {
+                      /* Windows: only load regular .interp file if on console */
+                      if (is_console)
+                        {
+                          gimp_interpreter_db_load_interp_file (db, file);
+                        }
+                    }
+                  else
+                    {
+                      /* Windows: load special _win .interp file if not on console */
+                      if (! is_console)
+                        {
+                          gimp_interpreter_db_load_interp_file (db, file);
+                        }
+                    }
+#endif
+                  g_free (basename);
                   g_object_unref (file);
                 }
 
