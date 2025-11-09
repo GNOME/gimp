@@ -98,11 +98,10 @@ with open("config.h") as file:
 ### Needed to not pollute output. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/8877
 bundle(MSYSTEM_PREFIX, "bin/gdbus.exe")
 ### Needed for hyperlink support etc... See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12288
-####...when running from `gimp*.exe --verboses`
+####...when running from `gimp*.exe` on console
 bundle(MSYSTEM_PREFIX, "bin/gspawn*-console.exe")
-if not os.getenv("GIMP_UNSTABLE") and os.getenv("GIMP_RELEASE"):
-  ####...when running from `gimp*.exe`
-  bundle(MSYSTEM_PREFIX, "bin/gspawn*-helper.exe")
+####...when running from `gimp*.exe` from shortcut
+bundle(MSYSTEM_PREFIX, "bin/gspawn*-helper.exe")
 ### Needed for file dialogs (only .compiled file is needed on MS Windows)
 bundle(MSYSTEM_PREFIX, "share/glib-*/schemas/gschemas.compiled")
 ### Needed to open remote files
