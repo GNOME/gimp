@@ -391,7 +391,7 @@ Source: "{#ASSETS_DIR}\installsplash_bottom.bmp"; Flags: dontcopy
 #define OPTIONAL_EXT="*.pdb,*.lua,*.py"
 Source: "{#MAIN_BUNDLE}\etc\gimp\*"; DestDir: "{app}\etc\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\default.env"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter*.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\extensions\*"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\extensions"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\*"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#MAIN_BUNDLE}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
@@ -1807,7 +1807,19 @@ begin
 begin
 	InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter.interp');
 	DebugMsg('PrepareInterp','Writing interpreter file for gimp-script-fu-interpreter: ' + InterpFile);
+	InterpContent := 'gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
+						       'gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
+						       '/usr/bin/gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
+						       ',ScriptFu,E,,scm,,' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + ','#10;
 
+	if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
+	begin
+		DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
+		SuppressibleMsgBox(CustomMessage('ErrorUpdatingScriptFu') + ' (2)',mbInformation,mb_ok,IDOK);
+	end;
+
+	InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter_win.interp');
+	DebugMsg('PrepareInterp','Writing interpreter file for gimp-script-fu-interpreter: ' + InterpFile);
 	InterpContent := 'gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
 						       'gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
 						       '/usr/bin/gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
