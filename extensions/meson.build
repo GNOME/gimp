@@ -1,5 +1,6 @@
 subdir('goat-exercises')
 
+#.interp file read by gimp_interpreter_db_load_interp_file in gimpinterpreterdb.c
 if have_lua and not meson.is_cross_build() and is_variable('lua') and lua.found() and (platform_windows or not relocatable_bundle)
   lua_config = configuration_data()
   # For Windows, we set the binary name only.

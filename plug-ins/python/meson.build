@@ -38,17 +38,17 @@ foreach plugin : python_plugins
   endforeach
 endforeach
 
-# Fallback fix to the problem of non-configured interpreters (needed by MSIX)
+#.interp file read by gimp_interpreter_db_load_interp_file in gimpinterpreterdb.c
 if (platform_windows or platform_osx) and not meson.is_cross_build() and python.found()
   python_config = configuration_data()
   if platform_windows
-    if not stable or not release
-      #python.exe is prefered in unstable versions because of error output
-      python_config.set('PYTHON_EXE', 'python.exe')
-    else
-      #pythonw.exe is prefered in stable releases because it works silently
-      python_config.set('PYTHON_EXE', 'pythonw.exe')
-    endif
+    # python.exe is needed for plug-ins error output if `gimp*.exe` is run from console
+    python_config.set('PYTHON_EXE', 'python.exe')
+
+    # pythonw.exe is needed to run plug-ins silently if `gimp*.exe` is run from shortcut
+    install_data('pygimp_win.interp',
+      install_dir: gimpplugindir / 'interpreters',
+    )
   else
     # A 'python3' symlink is created on macOS.
     python_config.set('PYTHON_EXE', 'python3')
