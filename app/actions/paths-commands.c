@@ -514,9 +514,31 @@ paths_merge_visible_cmd_callback (GimpAction *action,
   GimpImage   *image;
   GList       *paths;
   GtkWidget   *widget;
+  GimpPath    *path;
+  GList       *list;
   GError      *error = NULL;
   return_if_no_paths (image, paths, data);
   return_if_no_widget (widget, data);
+
+  /* Make sure none of the visible paths are attached to vector layers
+   * before attempting to merge them. */
+  for (list = gimp_image_get_path_iter (image);
+       list;
+       list = g_list_next (list))
+    {
+      path = list->data;
+
+      if (gimp_item_get_visible (GIMP_ITEM (path)) &&
+          gimp_path_attached_to_vector_layer (path, image))
+        {
+          gimp_message_literal (image->gimp, NULL,
+                                GIMP_MESSAGE_WARNING,
+                                _("Cannot merge paths attached to vector "
+                                  "layers"));
+          gimp_tools_blink_item (image->gimp, GIMP_ITEM (path));
+          return;
+        }
+    }
 
   if (! gimp_image_merge_visible_paths (image, &error))
     {
