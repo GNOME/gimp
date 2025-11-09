@@ -46,12 +46,20 @@ if not meson.is_cross_build()
       ],
     )
 
-    # Fallback fix to the problem of non-configured interpreters
+    #.interp file read by gimp_interpreter_db_load_interp_file in gimpinterpreterdb.c
     scriptfu_config = configuration_data()
     scriptfu_config.set('SCRIPTFU_PATH', '')
     configure_file(
       input : 'gimp-script-fu-interpreter.interp.in',
       output: 'gimp-script-fu-interpreter.interp',
+      configuration: scriptfu_config,
+      install: true,
+      install_dir: gimpplugindir / 'interpreters',
+    )
+
+    configure_file(
+      input : 'gimp-script-fu-interpreter.interp.in',
+      output: 'gimp-script-fu-interpreter_win.interp',
       configuration: scriptfu_config,
       install: true,
       install_dir: gimpplugindir / 'interpreters',

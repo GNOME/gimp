@@ -407,7 +407,7 @@ Source: "{#MAIN_BUNDLE}\*.lua"; DestDir: "{app}"; Excludes: "share\gimp\*.lua"; 
 #ifdef PYTHON
 Source: "{#MAIN_BUNDLE}\etc\ssl\*"; DestDir: "{app}\etc\ssl"; Components: {#PY_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\py*.env"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ"; Components: {#PY_ARCHS}; Flags: {#COMMON_FLAGS}
-Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#PY_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp*.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#PY_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#MAIN_BUNDLE}\*.py"; DestDir: "{app}"; Components: {#PY_ARCHS}; Flags: {#COMMON_FLAGS}
 #endif
 Source: "{#MAIN_BUNDLE}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: dontcopy {#COMMON_FLAGS}
@@ -523,6 +523,7 @@ Type: filesandordirs; Name: "{app}\include\gexiv2"
 Type: files; Name: "{app}\uninst\uninst.inf"
 Type: files; Name: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\lua.interp"
 Type: files; Name: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\pygimp.env"
+Type: files; Name: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\pygimp_win.env"
 
 
 ;4.3 KEYS TO BE REGISTERED
@@ -1750,23 +1751,28 @@ begin
 	begin
 		StatusLabel(CustomMessage('SettingUpPyGimp'),'');
 
+		//python.exe is needed for plug-ins error output if `gimp*.exe` is run from console
 		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp.interp');
-    DebugMsg('PrepareInterp','Writing interpreter file for gimp-python: ' + InterpFile);
-
-#if Defined(GIMP_UNSTABLE) || !Defined(GIMP_RELEASE)
-		//python.exe is prefered in unstable versions because of error output
-		#define PYTHON="python.exe"
-#else
-	  //pythonw.exe is prefered in stable releases because it works silently
-		#define PYTHON="pythonw.exe"
-#endif
-
-		InterpContent := 'python=' + ExpandConstant('{app}\bin\{#PYTHON}') + #10 +
-		                 'python3=' + ExpandConstant('{app}\bin\{#PYTHON}') + #10 +
-		                 '/usr/bin/python=' + ExpandConstant('{app}\bin\{#PYTHON}') + #10 +
-		                 '/usr/bin/python3=' + ExpandConstant('{app}\bin\{#PYTHON}') + #10 +
+        DebugMsg('PrepareInterp','Writing interpreter file for gimp-python: ' + InterpFile);
+		InterpContent := 'python=' + ExpandConstant('{app}\bin\python.exe') + #10 +
+		                 'python3=' + ExpandConstant('{app}\bin\python.exe') + #10 +
+		                 '/usr/bin/python=' + ExpandConstant('{app}\bin\python.exe') + #10 +
+		                 '/usr/bin/python3=' + ExpandConstant('{app}\bin\python.exe') + #10 +
 		                 ':Python:E::py::python:'#10;
+		if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
+		begin
+			DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
+			SuppressibleMsgBox(CustomMessage('ErrorUpdatingPython') + ' (2)',mbInformation,mb_ok,IDOK);
+		end;
 
+		//pythonw.exe is needed to run plug-ins silently if `gimp*.exe` is run from shortcut
+		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp_win.interp');
+        DebugMsg('PrepareInterp','Writing interpreter file for gimp-python: ' + InterpFile);
+		InterpContent := 'python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
+		                 'python3=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
+		                 '/usr/bin/python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
+		                 '/usr/bin/python3=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
+		                 ':Python:E::py::python:'#10;
 		if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
 		begin
 			DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');

@@ -158,11 +158,10 @@ bundle(GIMP_PREFIX, "lib/girepository-*/*.typelib")
 bundle(MSYSTEM_PREFIX, "lib/girepository-*/*.typelib")
 bundle(MSYSTEM_PREFIX, "bin/libgirepository-*.dll")
 #### Python support
-#####python.exe is needed for plug-ins output in `gimp-console*.exe`
+#####python.exe is needed for plug-ins error output if `gimp*.exe` is run from console
 bundle(MSYSTEM_PREFIX, "bin/python.exe")
-if not os.getenv("GIMP_UNSTABLE") and os.getenv("GIMP_RELEASE"):
-  #####pythonw.exe is needed to run plug-ins silently in `gimp*.exe`
-  bundle(MSYSTEM_PREFIX, "bin/pythonw.exe")
+#####pythonw.exe is needed to run plug-ins silently if `gimp*.exe` is run from shortcut
+bundle(MSYSTEM_PREFIX, "bin/pythonw.exe")
 bundle(MSYSTEM_PREFIX, "lib/python*")
 clean(GIMP_DISTRIB, "lib/python*/*.pyc")
 #####Needed for internet connection on python. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/14722
