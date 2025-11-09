@@ -646,7 +646,7 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView *view,
   GimpItem  *item;
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
-                               _("New Layer"));
+                               C_("singular", "New Layer"));
 
   item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->new_item (image);
 

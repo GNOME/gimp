@@ -912,7 +912,7 @@ gimp_layer_tree_view_item_new (GimpImage *image)
   GimpLayer *new_layer;
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
-                               _("New Layer"));
+                               C_("singular", "New Layer"));
 
   new_layer = gimp_layer_new (image,
                               gimp_image_get_width (image),
