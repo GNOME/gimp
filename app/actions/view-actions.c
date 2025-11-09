@@ -992,19 +992,21 @@ view_actions_set_zoom (GimpActionGroup  *group,
 {
   GimpImageWindow *window;
   GimpMenuModel   *model;
-  gchar           *str;
   gchar           *label;
+  gdouble          value;
 
   g_object_get (shell->zoom,
-                "percentage", &str,
+                "value", &value,
                 NULL);
 
   window = gimp_display_shell_get_window (shell);
   model  = gimp_image_window_get_menubar_model (window);
-  label  = g_strdup_printf (_("_Zoom (%s)"), str);
+  if (value >= 0.15)
+    label = g_strdup_printf (_("_Zoom (%.0f%%)"), value * 100.0);
+  else
+    label = g_strdup_printf (_("_Zoom (%.2f%%)"), value * 100.0);
   gimp_menu_model_set_title (model, "/View/Zoom", label);
   g_free (label);
-  g_free (str);
 }
 
 static void
