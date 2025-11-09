@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-19 15:00+0000\n"
-"PO-Revision-Date: 2025-10-20 15:38+0200\n"
+"POT-Creation-Date: 2025-10-26 16:26+0000\n"
+"PO-Revision-Date: 2025-11-04 16:35+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -261,7 +261,7 @@ msgstr "_Vassrett stil"
 
 #: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
-#: plug-ins/file-dds/dds.c:198 plug-ins/file-tiff/file-tiff.c:247
+#: plug-ins/file-dds/dds.c:198 plug-ins/file-tiff/file-tiff.c:140
 #: plug-ins/fractal-explorer/fractal-explorer.c:345
 #: plug-ins/fractal-explorer/fractal-explorer.c:355
 #: plug-ins/fractal-explorer/fractal-explorer.c:365
@@ -625,8 +625,8 @@ msgstr "Persienne"
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:3102 plug-ins/file-sgi/sgi.c:456
-#: plug-ins/file-tiff/file-tiff-load.c:1561
-#: plug-ins/file-tiff/file-tiff-load.c:2385
+#: plug-ins/file-tiff/file-tiff-load.c:1578
+#: plug-ins/file-tiff/file-tiff-load.c:2402
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1287 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:241
@@ -2005,8 +2005,9 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3738
 #: plug-ins/common/file-psp.c:2638 plug-ins/common/file-psp.c:2688
-#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:608
-#: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1841
+#: plug-ins/common/file-pvr.c:253 plug-ins/common/file-qoi.c:275
+#: plug-ins/common/file-raw-data.c:608 plug-ins/common/file-raw-data.c:796
+#: plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:754
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
@@ -4274,7 +4275,7 @@ msgstr "kattunge"
 msgid "tortoise (slower)"
 msgstr "skjelpadde (tregare)"
 
-#: plug-ins/common/file-jpegxl.c:227 plug-ins/file-tiff/file-tiff.c:265
+#: plug-ins/common/file-jpegxl.c:227 plug-ins/file-tiff/file-tiff.c:268
 msgid "Export as CMY_K"
 msgstr "Eksporter som CMY_K"
 
@@ -4497,8 +4498,10 @@ msgstr "Last inn fila i Bohemia interaktivt PAA-format"
 
 #: plug-ins/common/file-paa.c:232 plug-ins/common/file-paa.c:269
 #: plug-ins/common/file-paa.c:290 plug-ins/common/file-pcx.c:646
-#: plug-ins/common/file-tim.c:364 plug-ins/common/file-tim.c:390
-#: plug-ins/common/file-tim.c:453 plug-ins/common/file-tim.c:498
+#: plug-ins/common/file-pvr.c:308 plug-ins/common/file-pvr.c:351
+#: plug-ins/common/file-pvr.c:363 plug-ins/common/file-tim.c:364
+#: plug-ins/common/file-tim.c:390 plug-ins/common/file-tim.c:453
+#: plug-ins/common/file-tim.c:498
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Kan ikkje lese header i «%s»"
@@ -4849,7 +4852,7 @@ msgstr "Legg til dette biletet"
 #: plug-ins/common/file-pdf-export.c:1201
 #: plug-ins/common/file-pdf-export.c:1274
 #: plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2217
-#: plug-ins/file-tiff/file-tiff-load.c:1563
+#: plug-ins/file-tiff/file-tiff-load.c:1580
 #, c-format
 msgid "Page %d"
 msgstr "Side %d"
@@ -5021,7 +5024,7 @@ msgstr "Skriv pHYs-del (PNG metadata)"
 msgid "Write tIME chunk (PNG metadata)"
 msgstr "Skriv tIME-del (PNG metadata)"
 
-#: plug-ins/common/file-png.c:381 plug-ins/file-tiff/file-tiff.c:258
+#: plug-ins/common/file-png.c:381 plug-ins/file-tiff/file-tiff.c:261
 msgid "Save color _values from transparent pixels"
 msgstr "Lagra farge_verdiar frå gjennomsiktige pikslar"
 
@@ -5892,6 +5895,63 @@ msgstr "Manglar den generelle biletattributtblokka."
 msgid "Exporting not implemented yet."
 msgstr "Eksporten er ikkje implementert ennå."
 
+#: plug-ins/common/file-pvr.c:211
+msgid "PVR Image"
+msgstr "PVR-bilete"
+
+#: plug-ins/common/file-pvr.c:214
+msgid "Load file in the PVR file format"
+msgstr "Last inn fila i PVR-formatetet"
+
+#: plug-ins/common/file-pvr.c:215
+msgid "Load file in the PowerVR texture file format"
+msgstr "Last inn fila i teksturfilformatet PowerVR"
+
+#: plug-ins/common/file-pvr.c:322 plug-ins/common/file-pvr.c:332
+#, c-format
+msgid "Could not read GBIX header from '%s'"
+msgstr "Klarte ikkje lesa GBIX-header frå «%s»"
+
+#: plug-ins/common/file-pvr.c:341
+#, c-format
+msgid "Unsupported PVR format: %s"
+msgstr "Har ikkje støtte for PVR-formatet «%s»"
+
+#: plug-ins/common/file-pvr.c:405
+#, c-format
+msgid "Incomplete PVR header data."
+msgstr "Ufullstendige PVR-headerdata."
+
+#: plug-ins/common/file-pvr.c:441
+#, c-format
+msgid "Unable to decode twiddled PVR texture"
+msgstr "Kan ikkje dekoda vridd PVR-tekstur"
+
+#: plug-ins/common/file-pvr.c:466
+#, c-format
+msgid "Unable to decode PVR texture"
+msgstr "Kan ikkje dekoda PVR-tekstur"
+
+#: plug-ins/common/file-pvr.c:497
+#, c-format
+msgid "Incomplete PVR codebook data."
+msgstr "Ufullstendige PVR-kodebokdata."
+
+#: plug-ins/common/file-pvr.c:538
+#, c-format
+msgid "Incomplete PVR data."
+msgstr "Ufullstendige PVR-data."
+
+#: plug-ins/common/file-pvr.c:547
+#, c-format
+msgid "Unable to decode compressed PVR texture"
+msgstr "Kan ikkje dekoda komprimert PVR-tekstur"
+
+#: plug-ins/common/file-pvr.c:563
+#, c-format
+msgid "Unsupported PVR texture format: %d"
+msgstr "Har ikkje støtte for PVR teksturformatet: %d"
+
 #: plug-ins/common/file-qoi.c:139 plug-ins/common/file-qoi.c:166
 msgid "Quite OK Image"
 msgstr "Heilt OK bilete"
@@ -6423,7 +6483,6 @@ msgid "Exports files in SVG file format"
 msgstr "Eksporterer filer i SVG-filformat"
 
 #: plug-ins/common/file-svg.c:323
-#| msgid "Export vector layers in SVG file format (Scalable Vector Graphic)"
 msgid "Exports files in SVG file format (Scalable Vector Graphic)"
 msgstr "Eksporter filer in SVG-fil-format (Scalable Vector Graphic)"
 
@@ -6440,7 +6499,7 @@ msgid "Em_bed raster layers as"
 msgstr "_Bygg inn rasterlag som"
 
 #: plug-ins/common/file-svg.c:357 plug-ins/file-jpeg/jpeg.c:195
-#: plug-ins/file-tiff/file-tiff.c:251
+#: plug-ins/file-tiff/file-tiff.c:144
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -11141,15 +11200,35 @@ msgstr "Ugyldig tal på kanalar: %hu"
 msgid "Could not open '%s' for writing."
 msgstr "Klarte ikkje opna «%s» for skriving."
 
-#: plug-ins/file-tiff/file-tiff.c:164 plug-ins/file-tiff/file-tiff.c:210
+#: plug-ins/file-tiff/file-tiff.c:141
+msgid "LZW"
+msgstr "LZW"
+
+#: plug-ins/file-tiff/file-tiff.c:142
+msgid "Pack Bits"
+msgstr "Pakk bitar"
+
+#: plug-ins/file-tiff/file-tiff.c:143
+msgid "Deflate"
+msgstr "Deflate"
+
+#: plug-ins/file-tiff/file-tiff.c:145
+msgid "CCITT Group 3 fax"
+msgstr "CCITT Gruppe 3 faks"
+
+#: plug-ins/file-tiff/file-tiff.c:146
+msgid "CCITT Group 4 fax"
+msgstr "CCITT Group 4 faks"
+
+#: plug-ins/file-tiff/file-tiff.c:174 plug-ins/file-tiff/file-tiff.c:220
 msgid "TIFF or BigTIFF image"
 msgstr "TIFF- eller Big TIFF-bilete"
 
-#: plug-ins/file-tiff/file-tiff.c:167
+#: plug-ins/file-tiff/file-tiff.c:177
 msgid "Loads files of the TIFF and BigTIFF file formats"
 msgstr "Lastar inn filer i filformata TIFF og BigTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:168
+#: plug-ins/file-tiff/file-tiff.c:178
 msgid ""
 "Loads files of the Tag Image File Format (TIFF) and its 64-bit offsets "
 "variant (BigTIFF)"
@@ -11157,15 +11236,15 @@ msgstr ""
 "Lastar filer i Tag Image File-Formatet (TIFF) og i den 64-bitars varianten "
 "(BigTIFF)"
 
-#: plug-ins/file-tiff/file-tiff.c:199
+#: plug-ins/file-tiff/file-tiff.c:209
 msgid "_Keep empty space around imported layers"
 msgstr "_Behald tomme plassar rundt importerte lag"
 
-#: plug-ins/file-tiff/file-tiff.c:213
+#: plug-ins/file-tiff/file-tiff.c:223
 msgid "Exports files in the TIFF or BigTIFF file formats"
 msgstr "Eksporterer filer i formata TIFF og BigTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:214
+#: plug-ins/file-tiff/file-tiff.c:224
 msgid ""
 "Exports files in the Tag Image File Format (TIFF) or its 64-bit offsets "
 "variant (BigTIFF) able to support much bigger file sizes"
@@ -11173,15 +11252,15 @@ msgstr ""
 "Eksporterer filer i Tag Image File-formatet (TIFF) eller i 64-bitars-"
 "varianten (BigTIFF) som er i stand til å handsama mykje større filer"
 
-#: plug-ins/file-tiff/file-tiff.c:226
+#: plug-ins/file-tiff/file-tiff.c:236
 msgid "TIFF"
 msgstr "TIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:238
+#: plug-ins/file-tiff/file-tiff.c:248
 msgid "Export in _BigTIFF variant file format"
 msgstr "Eksporter i _BigTIFF-variant filformat"
 
-#: plug-ins/file-tiff/file-tiff.c:239
+#: plug-ins/file-tiff/file-tiff.c:249
 msgid ""
 "The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
 "4GiB files and bigger"
@@ -11189,35 +11268,15 @@ msgstr ""
 "Filformatet i BigTIFF-variant brukar 64-bitars forskyvingar, og har såleis "
 "støtte for filer over 4GiB"
 
-#: plug-ins/file-tiff/file-tiff.c:245
+#: plug-ins/file-tiff/file-tiff.c:255
 msgid "Co_mpression"
 msgstr "_Komprimering"
 
-#: plug-ins/file-tiff/file-tiff.c:246
+#: plug-ins/file-tiff/file-tiff.c:256
 msgid "Compression type"
 msgstr "Kompressjonstype"
 
-#: plug-ins/file-tiff/file-tiff.c:248
-msgid "LZW"
-msgstr "LZW"
-
-#: plug-ins/file-tiff/file-tiff.c:249
-msgid "Pack Bits"
-msgstr "Pakk bitar"
-
-#: plug-ins/file-tiff/file-tiff.c:250
-msgid "Deflate"
-msgstr "Deflate"
-
-#: plug-ins/file-tiff/file-tiff.c:252
-msgid "CCITT Group 3 fax"
-msgstr "CCITT Gruppe 3 faks"
-
-#: plug-ins/file-tiff/file-tiff.c:253
-msgid "CCITT Group 4 fax"
-msgstr "CCITT Group 4 faks"
-
-#: plug-ins/file-tiff/file-tiff.c:259
+#: plug-ins/file-tiff/file-tiff.c:262
 msgid ""
 "Keep the color data masked by an alpha channel intact (do not store "
 "premultiplied components)"
@@ -11225,37 +11284,37 @@ msgstr ""
 "Hald fargedataa maskert av ein alfakanal intakt (ikkje lagra "
 "førehandsmultipliserte komponentar)"
 
-#: plug-ins/file-tiff/file-tiff.c:266
+#: plug-ins/file-tiff/file-tiff.c:269
 msgid "Create a CMYK TIFF image using the soft-proofing color profile"
 msgstr ""
 "Opprett eit CMYK TIFF-bilete ved å bruka fargeprofilen for "
 "utskriftssimuleringa"
 
-#: plug-ins/file-tiff/file-tiff.c:271
+#: plug-ins/file-tiff/file-tiff.c:274
 msgid "Save La_yers"
 msgstr "Lagra _laga"
 
-#: plug-ins/file-tiff/file-tiff.c:272
+#: plug-ins/file-tiff/file-tiff.c:275
 msgid "Save Layers"
 msgstr "Lagra laga"
 
-#: plug-ins/file-tiff/file-tiff.c:277
+#: plug-ins/file-tiff/file-tiff.c:280
 msgid "Crop L_ayers"
 msgstr "_Beskjer laga"
 
-#: plug-ins/file-tiff/file-tiff.c:278
+#: plug-ins/file-tiff/file-tiff.c:281
 msgid "Crop Layers"
 msgstr "Beskjer laga"
 
-#: plug-ins/file-tiff/file-tiff.c:283
+#: plug-ins/file-tiff/file-tiff.c:286
 msgid "Save _GeoTIFF data"
 msgstr "Lagra _Geo TIFF-data"
 
-#: plug-ins/file-tiff/file-tiff.c:284
+#: plug-ins/file-tiff/file-tiff.c:287
 msgid "Save GeoTIFF data"
 msgstr "Lagra Geo TIFF-data"
 
-#: plug-ins/file-tiff/file-tiff.c:423
+#: plug-ins/file-tiff/file-tiff.c:426
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -11446,29 +11505,29 @@ msgstr "Ugyldig eller ukjend komprimering %u. Set kompresjonen til null."
 msgid "Could not create a new image: %s"
 msgstr "Klarte ikkje oppretta eit nytt bilete: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1342
+#: plug-ins/file-tiff/file-tiff-load.c:1359
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Ukjend oppløysingseining-type %d, går ut frå at det er dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1352
+#: plug-ins/file-tiff/file-tiff-load.c:1369
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Åtvaring: oppløysinga spesifisert utan einingstype, går ut frå dpi"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1360
+#: plug-ins/file-tiff/file-tiff-load.c:1377
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 "Åtvaring: manglar informasjon om y-oppløysinga, går ut at det er den same "
 "som x"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1381
+#: plug-ins/file-tiff/file-tiff-load.c:1398
 msgid "Invalid image resolution info, using default"
 msgstr "Ugyldig info om biletoppløysing, brukar standard"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1443
+#: plug-ins/file-tiff/file-tiff-load.c:1460
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Klarte ikkje få fargekartet frå «%s»"
@@ -11478,22 +11537,22 @@ msgstr "Klarte ikkje få fargekartet frå «%s»"
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1533
+#: plug-ins/file-tiff/file-tiff-load.c:1550
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "Mistenkeleg tal på ekstra kanalar: %d. Mogleg øydelagt bilete."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1598
+#: plug-ins/file-tiff/file-tiff-load.c:1615
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1756
+#: plug-ins/file-tiff/file-tiff-load.c:1773
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr "Klarte ikkje lesa data frå TIFF «%s». Mogleg feil i fila."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1792
-#: plug-ins/file-tiff/file-tiff-load.c:1836
+#: plug-ins/file-tiff/file-tiff-load.c:1809
+#: plug-ins/file-tiff/file-tiff-load.c:1853
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
@@ -11501,45 +11560,45 @@ msgstr ""
 "Feil i forsøk på å opna den temporære %s fila «%s» for å lasta inn tiff "
 "metadata: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1917
+#: plug-ins/file-tiff/file-tiff-load.c:1934
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: Inga støtte for biletformatet. Ingen RGBA-lastar tilgjengeleg"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2032
-#: plug-ins/file-tiff/file-tiff-load.c:2229
+#: plug-ins/file-tiff/file-tiff-load.c:2049
+#: plug-ins/file-tiff/file-tiff-load.c:2246
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "Lesinga av flisa feila. Kan vera feil i biletet i linje %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2041
-#: plug-ins/file-tiff/file-tiff-load.c:2238
+#: plug-ins/file-tiff/file-tiff-load.c:2058
+#: plug-ins/file-tiff/file-tiff-load.c:2255
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Klarte ikkje lesa skannelinja. Biletet kan vera øydelagt på linje %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2993
+#: plug-ins/file-tiff/file-tiff-load.c:3010
 msgid "Import from TIFF"
 msgstr "Importer frå TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3001
+#: plug-ins/file-tiff/file-tiff-load.c:3018
 msgid "_Show reduced images"
 msgstr "_Vis reduserte bilete"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3046
+#: plug-ins/file-tiff/file-tiff-load.c:3063
 msgid "Process extra channel as:"
 msgstr "Prosesser ekstra kanal som:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3049
+#: plug-ins/file-tiff/file-tiff-load.c:3066
 msgid "_Non-premultiplied alpha"
 msgstr "Ikkje-premultiplisert alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3050
+#: plug-ins/file-tiff/file-tiff-load.c:3067
 msgid "Pre_multiplied alpha"
 msgstr "_Premultiplisert alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3051
+#: plug-ins/file-tiff/file-tiff-load.c:3068
 msgid "Channe_l"
 msgstr "_Kanal"
 
