@@ -81,7 +81,8 @@
   </provides>
 
   <releases>
-    <release version="3.2.0~rc1" date="2025-11-01" type="development">
+    <release version="3.2.0~rc1" date="TODO" type="development">
+      <url type="details">https://www.gimp.org/release/3.2.0-RC1/</url>
       <description>
         <p>
         Introducing the first release candidate of what will eventually become GIMP 3.2!
@@ -108,6 +109,7 @@
       </description>
     </release>
     <release version="3.1.4" date="2025-08-31" type="development">
+      <url type="details">https://www.gimp.org/release/3.1.4/</url>
       <description>
         <p>
         Our second development release finally contains the initial implementation of the two new types of
@@ -138,6 +140,7 @@
       </description>
     </release>
     <release version="3.1.2" date="2025-06-22" type="development">
+      <url type="details">https://www.gimp.org/release/3.1.2/</url>
       <description>
         <p>
         GIMP 3.1.2 is the first development release leading to the next stable 3.2 series.
