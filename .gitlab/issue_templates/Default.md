@@ -2,6 +2,9 @@
 This is the default template for bug reports.
 For feature requests, performance issues and security reports, please switch instead to the appropriate template in the "Choose a template" list.
 
+No AI-generated reports allowed! Please actually test and verify issues
+and reproduction steps yourself before posting.
+
 It is important that you fill all the fields of the template. -->
 
 ### Environment/Versions
