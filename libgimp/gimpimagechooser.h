@@ -39,6 +39,7 @@ GimpImage *    gimp_image_chooser_get_image    (GimpImageChooser  *chooser);
 void           gimp_image_chooser_set_image    (GimpImageChooser  *chooser,
                                                 GimpImage         *image);
 
+GtkWidget *    gimp_image_chooser_get_label    (GimpImageChooser  *widget);
 
 G_END_DECLS
 
