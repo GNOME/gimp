@@ -195,8 +195,8 @@ lic_create_procedure (GimpPlugIn  *plug_in,
                                           G_PARAM_READWRITE);
 
       gimp_procedure_add_double_argument (procedure, "noise-magnitude",
-                                          _("_Noise Magnitude"),
-                                          _("Noise Magnitude"),
+                                          _("_Noise magnitude"),
+                                          _("Noise magnitude"),
                                           1.0, 5.0, 2.0,
                                           G_PARAM_READWRITE);
 

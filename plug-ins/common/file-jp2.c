@@ -363,7 +363,7 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                           G_PARAM_READWRITE);
 
       gimp_procedure_add_choice_argument (procedure, "compliance",
-                                          _("Co_mpliance Profile"),
+                                          _("Co_mpliance profile"),
                                           _("Set to ensure compliance with Digital Cinema Specifications"),
                                           gimp_choice_new_with_values ("standard",     0,               _("Standard Profile"),  NULL,
                                                                        "cinema-2k-24", OPJ_CINEMA2K_24, _("Cinema2K (24 FPS)"), NULL,
@@ -451,7 +451,7 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                           G_PARAM_READWRITE);
 
       gimp_procedure_add_choice_argument (procedure, "compliance",
-                                          _("Co_mpliance Profile"),
+                                          _("Co_mpliance profile"),
                                           _("Set to ensure compliance with Digital Cinema Specifications"),
                                           gimp_choice_new_with_values ("standard",     0,               _("Standard Profile"),  NULL,
                                                                        "cinema-2k-24", OPJ_CINEMA2K_24, _("Cinema2K (24 FPS)"), NULL,

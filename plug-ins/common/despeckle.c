@@ -190,7 +190,7 @@ despeckle_create_procedure (GimpPlugIn  *plug_in,
                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_choice_argument (procedure, "type",
-                                          _("_Filter Type"),
+                                          _("_Filter type"),
                                           _("Filter type"),
                                           gimp_choice_new_with_values ("median",             0,                 _("Median"),             NULL,
                                                                        "adaptive",           FILTER_ADAPTIVE,   _("Adaptive"),           NULL,

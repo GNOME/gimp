@@ -267,7 +267,7 @@ sparkle_create_procedure (GimpPlugIn  *plug_in,
                                            G_PARAM_READWRITE);
 
       gimp_procedure_add_choice_argument (procedure, "color-type",
-                                          _("_Color type"),
+                                          _("_Color Type"),
                                           _("Color of sparkles"),
                                           gimp_choice_new_with_values ("natural-color",    NATURAL,    _("Natural color"),    NULL,
                                                                        "foreground-color", FOREGROUND, _("Foreground color"), NULL,

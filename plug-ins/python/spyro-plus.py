@@ -1484,7 +1484,7 @@ class SpyroWindow():
 
             # Curve type
             row = 0
-            label_in_table(_("Curve Type"), table, row,
+            label_in_table(_("Curve type"), table, row,
                            _("An Epitrochoid pattern is when the moving gear is on the outside of the fixed gear."))
             self.curve_type_combo = set_combo_in_table(curve_types, True, table, row,
                                                        self.curve_type_changed)
@@ -1547,7 +1547,7 @@ class SpyroWindow():
                 "Number of teeth of fixed gear. The size of the fixed gear is "
                 "proportional to the number of teeth."
             )
-            label_in_table(_("Fixed Gear Teeth"), gear_table, row, fixed_gear_tooltip)
+            label_in_table(_("Fixed gear teeth"), gear_table, row, fixed_gear_tooltip)
             self.outer_teeth_adj = Gtk.Adjustment(value=self.p.outer_teeth,
                                                   lower=10, upper=180,
                                                   step_increment=1)
@@ -1558,7 +1558,7 @@ class SpyroWindow():
                 "Number of teeth of moving gear. The size of the moving gear is "
                 "proportional to the number of teeth."
             )
-            label_in_table(_("Moving Gear Teeth"), gear_table, row, moving_gear_tooltip)
+            label_in_table(_("Moving gear teeth"), gear_table, row, moving_gear_tooltip)
             self.inner_teeth_adj = Gtk.Adjustment.new(self.p.inner_teeth, 2, 100, 1, 10, 0)
             hscale_in_table(self.inner_teeth_adj, gear_table, row, self.inner_teeth_changed)
 
@@ -1575,17 +1575,17 @@ class SpyroWindow():
             kit_table = create_table(5)
 
             row = 0
-            label_in_table(_("Fixed Gear Teeth"), kit_table, row, fixed_gear_tooltip)
+            label_in_table(_("Fixed gear teeth"), kit_table, row, fixed_gear_tooltip)
             self.kit_outer_teeth_combo = set_combo_in_table([str(t) for t in ring_teeth], False, kit_table, row,
                                                             self.kit_outer_teeth_combo_changed)
 
             row += 1
-            label_in_table(_("Moving Gear Teeth"), kit_table, row, moving_gear_tooltip)
+            label_in_table(_("Moving gear teeth"), kit_table, row, moving_gear_tooltip)
             self.kit_inner_teeth_combo = set_combo_in_table([str(t) for t in wheel_teeth], False, kit_table, row,
                                                             self.kit_inner_teeth_combo_changed)
 
             row += 1
-            label_in_table(_("Hole Number"), kit_table, row,
+            label_in_table(_("Hole number"), kit_table, row,
                            _("Hole #1 is at the edge of the gear. "
                              "The maximum hole number is near the center. "
                              "The maximum hole number is different for each gear."))
@@ -1597,19 +1597,19 @@ class SpyroWindow():
             visual_table = create_table(5)
 
             row = 0
-            label_in_table(_("Flower Petals"), visual_table, row,
+            label_in_table(_("Flower petals"), visual_table, row,
                            _("The number of petals in the pattern."))
             self.petals_adj = Gtk.Adjustment.new(self.p.petals, 2, 100, 1, 5, 0)
             hscale_in_table(self.petals_adj, visual_table, row, self.petals_changed, cols=3)
 
             row += 1
-            label_in_table(_("Petal Skip"), visual_table, row,
+            label_in_table(_("Petal skip"), visual_table, row,
                            _( "The number of petals to advance for drawing the next petal."))
             self.petal_skip_adj = Gtk.Adjustment.new(self.p.petal_skip, 1, 50, 1, 5, 0)
             hscale_in_table(self.petal_skip_adj, visual_table, row, self.petal_skip_changed, cols=3)
 
             row += 1
-            label_in_table(_("Hole Radius(%)"), visual_table, row,
+            label_in_table(_("Hole radius(%)"), visual_table, row,
                             _("The radius of the hole in the center of the pattern "
                               "where nothing will be drawn. Given as a percentage of the "
                               "size of the pattern. A value of 0 will produce no hole. "
@@ -2282,13 +2282,13 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
             procedure.add_double_argument ("morph", _("_Morph"),
                                            _("Morph shape of fixed gear, between 0 and 1. Only used by some shapes."),
                                            0.0, 1.0, 0.0, GObject.ParamFlags.READWRITE)
-            procedure.add_int_argument ("fixed-teeth", _("Fi_xed Gear Teeth"),
+            procedure.add_int_argument ("fixed-teeth", _("Fi_xed gear teeth"),
                                         _("Number of teeth for fixed gear."),
                                         0, GLib.MAXINT, 96, GObject.ParamFlags.READWRITE)
-            procedure.add_int_argument ("moving-teeth", _("Mo_ving Gear Teeth"),
+            procedure.add_int_argument ("moving-teeth", _("Mo_ving gear teeth"),
                                         _("Number of teeth for fixed gear."),
                                         0, GLib.MAXINT, 36, GObject.ParamFlags.READWRITE)
-            procedure.add_double_argument ("hole_percent", _("_Hole Radius (%)"),
+            procedure.add_double_argument ("hole_percent", _("_Hole radius (%)"),
                                            _("Location of hole in moving gear in percent, where 100 means that "
                                              "the hole is at the edge of the gear, and 0 means the hole is at the center"),
                                            0.0, 100.0, 100.0, GObject.ParamFlags.READWRITE)

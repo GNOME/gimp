@@ -60,7 +60,7 @@ _gimp_prop_gui_new_channel_mixer (GObject                  *config,
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
 
-  frame = gimp_frame_new (_("Red channel"));
+  frame = gimp_frame_new (_("Red Channel"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -81,7 +81,7 @@ _gimp_prop_gui_new_channel_mixer (GObject                  *config,
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
 
-  frame = gimp_frame_new (_("Green channel"));
+  frame = gimp_frame_new (_("Green Channel"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -102,7 +102,7 @@ _gimp_prop_gui_new_channel_mixer (GObject                  *config,
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
 
-  frame = gimp_frame_new (_("Blue channel"));
+  frame = gimp_frame_new (_("Blue Channel"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

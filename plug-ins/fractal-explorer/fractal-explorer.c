@@ -253,8 +253,8 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
                                       "December, 1998");
 
       gimp_procedure_add_choice_argument (procedure, "fractal-type",
-                                          _("Fr_actal Type"),
-                                          _("Type of Fractal Pattern"),
+                                          _("Fr_actal type"),
+                                          _("Type of fractal pattern"),
                                           gimp_choice_new_with_values ("mandelbrot", 0, _("Mandelbrot"), NULL,
                                                                        "julia",      1, _("Julia"),      NULL,
                                                                        "barnsley-1", 2, _("Barnsley 1"), NULL,
@@ -300,18 +300,18 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_add_double_argument (procedure, "cx",
                                           _("C_X"),
-                                          _("cx value"),
+                                          _("CX value"),
                                           -2.5000, 2.5000, -0.75,
                                           G_PARAM_READWRITE);
 
       gimp_procedure_add_double_argument (procedure, "cy",
                                           _("C_Y"),
-                                          _("cy value"),
+                                          _("CY value"),
                                           -2.5000, 2.5000, -0.2,
                                           G_PARAM_READWRITE);
 
       gimp_procedure_add_choice_argument (procedure, "color-mode",
-                                          _("Color mode"),
+                                          _("Color Mode"),
                                           _("Apply specified color map or active gradient to final image"),
                                           gimp_choice_new_with_values ("colormap", 0, _("As specified above"),                   NULL,
                                                                        "gradient", 1, _("Apply active gradient to final image"), NULL,
