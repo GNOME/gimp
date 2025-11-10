@@ -1272,7 +1272,7 @@ gfig_prefs_action (GSimpleAction *action,
       gtk_widget_show (grid);
 
       scale_data = gtk_adjustment_new (selvals.maxundo, MIN_UNDO, MAX_UNDO, 1.0, 10.0, 0.0);
-      undo_scale = gimp_spin_scale_new (scale_data, _("Max undo:"), 1);
+      undo_scale = gimp_spin_scale_new (scale_data, _("Max undo"), 1);
       g_signal_connect (scale_data, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.maxundo);
@@ -1381,7 +1381,7 @@ gfig_grid_action (GSimpleAction *action,
       gtk_widget_show (grid);
 
       scale_data = gtk_adjustment_new (selvals.opts.gridspacing, MIN_GRID, MAX_GRID, 1.0, 10.0, 0.0);
-      grid_scale = gimp_spin_scale_new (scale_data, _("Grid spacing:"), 1);
+      grid_scale = gimp_spin_scale_new (scale_data, _("Grid spacing"), 1);
       g_signal_connect (scale_data, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.opts.gridspacing);
@@ -1396,7 +1396,7 @@ gfig_grid_action (GSimpleAction *action,
                                  (gpointer) &gfig_opt_widget.gridspacing);
 
       scale_data = gtk_adjustment_new (selvals.opts.grid_sectors_desired, 5, 360, 1.0, 10.0, 0.0);
-      sectors_scale = gimp_spin_scale_new (scale_data, _("Polar grid sectors desired:"), 1);
+      sectors_scale = gimp_spin_scale_new (scale_data, _("Polar grid sectors desired"), 1);
       g_signal_connect (sectors_scale, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.opts.grid_sectors_desired);
@@ -1412,7 +1412,7 @@ gfig_grid_action (GSimpleAction *action,
                                  (gpointer) &gfig_opt_widget.grid_sectors_desired);
 
       scale_data = gtk_adjustment_new (selvals.opts.grid_radius_interval, 5, 360, 1.0, 10.0, 0.0);
-      radius_scale = gimp_spin_scale_new (scale_data, _("Polar grid radius interval:"), 1);
+      radius_scale = gimp_spin_scale_new (scale_data, _("Polar grid radius interval"), 1);
       g_signal_connect (scale_data, "value-changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &selvals.opts.grid_radius_interval);
@@ -1686,7 +1686,7 @@ num_sides_widget (const gchar *d_title,
   gtk_widget_show (grid);
 
   scale_data = gtk_adjustment_new (*num_sides, adj_min, adj_max, 1.0, 10.0, 0.0);
-  scale = gimp_spin_scale_new (scale_data, _("Sides:"), 1);
+  scale = gimp_spin_scale_new (scale_data, _("Sides"), 1);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     num_sides);
