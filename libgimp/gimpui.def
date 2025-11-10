@@ -74,6 +74,7 @@ EXPORTS
 	gimp_prop_drawable_chooser_new
 	gimp_prop_font_chooser_new
 	gimp_prop_gradient_chooser_new
+	gimp_prop_image_chooser_new
 	gimp_prop_palette_chooser_new
 	gimp_prop_pattern_chooser_new
 	gimp_prop_resolution_entry_new
