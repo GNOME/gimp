@@ -22,6 +22,10 @@ EXPORTS
 	gimp_font_chooser_new
 	gimp_gradient_chooser_get_type
 	gimp_gradient_chooser_new
+	gimp_image_chooser_get_image
+	gimp_image_chooser_get_type
+	gimp_image_chooser_new
+	gimp_image_chooser_set_image
 	gimp_image_combo_box_get_type
 	gimp_image_combo_box_new
 	gimp_layer_combo_box_get_type

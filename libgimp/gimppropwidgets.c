@@ -147,6 +147,66 @@ gimp_prop_pattern_chooser_new (GObject     *config,
 }
 
 /**
+ * gimp_prop_image_chooser_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of a [class@Gimp.Image] property.
+ * @chooser_title: (nullable): title for the poppable dialog.
+ *
+ * Creates a [class@GimpUi.ImageChooser] controlled by the specified property.
+ *
+ * Returns: (transfer full): A new [class@GimpUi.ImageChooser].
+ *
+ * Since: 3.0
+ */
+GtkWidget *
+gimp_prop_image_chooser_new (GObject     *config,
+                             const gchar *property_name,
+                             const gchar *chooser_title)
+{
+  GParamSpec   *param_spec;
+  GtkWidget    *prop_chooser;
+  GimpImage    *initial_image = NULL;
+  gchar        *title         = NULL;
+  const gchar  *label;
+
+  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                             property_name);
+
+  g_return_val_if_fail (param_spec != NULL, NULL);
+  g_return_val_if_fail (g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), G_TYPE_PARAM_OBJECT) &&
+                        g_type_is_a (param_spec->value_type, GIMP_TYPE_IMAGE), NULL);
+
+  g_object_get (config,
+                property_name, &initial_image,
+                NULL);
+
+  label = g_param_spec_get_nick (param_spec);
+
+  if (chooser_title == NULL)
+    {
+      gchar *canonical;
+
+      canonical = gimp_utils_make_canonical_menu_label (label);
+      title = g_strdup_printf (_("Choose image: %s"), canonical);
+      g_free (canonical);
+    }
+  else
+    {
+      title = g_strdup (chooser_title);
+    }
+
+  prop_chooser = gimp_image_chooser_new (title, label, initial_image);
+  g_clear_object (&initial_image);
+  g_free (title);
+
+  g_object_bind_property (prop_chooser, "image",
+                          config,       property_name,
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
+  return prop_chooser;
+}
+
+/**
  * gimp_prop_drawable_chooser_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of a [class@Gimp.Drawable] property.

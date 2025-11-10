@@ -907,6 +907,10 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     {
       widget = gimp_prop_pattern_chooser_new (G_OBJECT (priv->config), property, _("Pattern Chooser"));
     }
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_IMAGE)
+    {
+      widget = gimp_prop_image_chooser_new (G_OBJECT (priv->config), property, NULL);
+    }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) && (pspec->value_type == GIMP_TYPE_DRAWABLE ||
                                               pspec->value_type == GIMP_TYPE_LAYER    ||
                                               pspec->value_type == GIMP_TYPE_CHANNEL))

@@ -84,6 +84,8 @@
 #include "widgets/gimpgradientselect.h"
 #include "widgets/gimphelp.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpimageselect.h"
+#include "widgets/gimpimageview.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimppaletteselect.h"
 #include "widgets/gimppatternselect.h"
@@ -643,6 +645,12 @@ gui_pdb_dialog_new (Gimp          *gimp,
       dialog_role = "gimp-gradient-selection";
       help_id     = GIMP_HELP_GRADIENT_DIALOG;
     }
+  else if (contents_type == GIMP_TYPE_IMAGE)
+    {
+      dialog_type = GIMP_TYPE_IMAGE_SELECT;
+      dialog_role = "gimp-image-selection";
+      help_id     = GIMP_HELP_IMAGE_DIALOG;
+    }
   else if (contents_type == GIMP_TYPE_PALETTE)
     {
       dialog_type = GIMP_TYPE_PALETTE_SELECT;
@@ -768,6 +776,10 @@ gui_pdb_dialog_set (Gimp          *gimp,
       klass = g_type_class_peek (GIMP_TYPE_GRADIENT_SELECT);
       container = gimp_data_factory_get_container (gimp->gradient_factory);
     }
+  else if (contents_type == GIMP_TYPE_IMAGE)
+    {
+      klass = g_type_class_peek (GIMP_TYPE_IMAGE_SELECT);
+    }
   else if (contents_type == GIMP_TYPE_PALETTE)
     {
       klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT);
@@ -828,6 +840,8 @@ gui_pdb_dialog_close (Gimp        *gimp,
     klass = g_type_class_peek (GIMP_TYPE_FONT_SELECT);
   else if (contents_type == GIMP_TYPE_GRADIENT)
     klass = g_type_class_peek (GIMP_TYPE_GRADIENT_SELECT);
+  else if (contents_type == GIMP_TYPE_IMAGE)
+    klass = g_type_class_peek (GIMP_TYPE_IMAGE_SELECT);
   else if (contents_type == GIMP_TYPE_PALETTE)
     klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT);
   else if (contents_type == GIMP_TYPE_PATTERN)

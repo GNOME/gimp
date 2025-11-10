@@ -424,9 +424,91 @@ CODE
 
 }
 
+sub images_popup {
+    $blurb = 'Invokes the image selection dialog.';
+    $help  = 'Opens a dialog letting a user choose an image.';
+
+    &alxsa_pdb_misc('2025');
+
+    @inargs = (
+      { name => 'callback', type => 'string', non_empty => 1,
+        desc => 'The callback PDB proc to call when user chooses an image' },
+      { name => 'popup_title', type => 'string',
+        desc => 'Title of the image selection dialog' },
+      { name => 'initial_image', type => 'image', none_ok => 1, no_validate => 1,
+        desc => 'The image to set as the initial choice' },
+      { name => 'parent_window', type => 'bytes', none_ok => 1,
+        desc => 'An optional parent window handle for the popup to be set transient to' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->no_interface ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+      ! gimp_pdb_dialog_new (gimp, context, progress,
+                             GIMP_TYPE_IMAGE,
+                             parent_window, popup_title, callback,
+                             GIMP_OBJECT (initial_image),
+                             NULL))
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub images_close_popup {
+    $blurb = 'Close the image selection dialog.';
+    $help  = 'Closes an open image selection dialog.';
+
+    &alxsa_pdb_misc('2025');
+
+    @inargs = (
+      { name => 'callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered for this pop-up' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->no_interface ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+      ! gimp_pdb_dialog_close (gimp, GIMP_TYPE_IMAGE, callback))
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub images_set_popup {
+    $blurb = 'Sets the selected image in a image selection dialog.';
+    $help  = $blurb;
+
+    &alxsa_pdb_misc('2025');
+
+    @inargs = (
+      { name => 'callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered for this pop-up' },
+      { name => 'image', type => 'image', no_validate => 1,
+        desc => 'The image to set as selected' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->no_interface ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+      ! gimp_pdb_dialog_set (gimp, GIMP_TYPE_IMAGE, callback, GIMP_OBJECT (image), NULL))
+    success = FALSE;
+}
+CODE
+    );
+}
 
 @headers = qw("libgimpbase/gimpbase.h"
+              "core/gimp.h"
               "core/gimpchannel-select.h"
+              "core/gimpdatafactory.h"
               "gimppdb-utils.h"
               "gimppdbcontext.h"
               "gimp-intl.h");
@@ -437,7 +519,10 @@ CODE
             image_select_round_rectangle
             image_select_ellipse
             image_select_polygon
-            image_select_item);
+            image_select_item
+            images_popup
+            images_close_popup
+            images_set_popup);
 
 %exports = (app => [@procs], lib => [@procs]);
 

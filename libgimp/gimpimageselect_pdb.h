@@ -68,6 +68,13 @@ gboolean gimp_image_select_polygon          (GimpImage      *image,
 gboolean gimp_image_select_item             (GimpImage      *image,
                                              GimpChannelOps  operation,
                                              GimpItem       *item);
+gboolean gimp_images_popup                  (const gchar    *callback,
+                                             const gchar    *popup_title,
+                                             GimpImage      *initial_image,
+                                             GBytes         *parent_window);
+gboolean gimp_images_close_popup            (const gchar    *callback);
+gboolean gimp_images_set_popup              (const gchar    *callback,
+                                             GimpImage      *image);
 
 
 G_END_DECLS
