@@ -364,7 +364,7 @@ msgstr "Parıltı ekle"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "Prepare for GIF"
-msgstr "GIF İçin Hazırla"
+msgstr "GIF için hazırla"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:239
 msgid "Speed (pixels/frame)"
@@ -521,13 +521,15 @@ msgstr "_Bezimsileştir..."
 msgid "Add a cloth-like texture to the selected region (or alpha)"
 msgstr "Seçili bölgeye (ya da alfaya) bezimsi desen ekle"
 
+# Konumu geneği tümce düzeni kullanıldı
 #: plug-ins/script-fu/scripts/clothify.scm:72
 msgid "Blur X"
-msgstr "X Bulanıklığı"
+msgstr "X bulanıklığı"
 
+# Konumu geneği tümce düzeni kullanıldı
 #: plug-ins/script-fu/scripts/clothify.scm:73
 msgid "Blur Y"
-msgstr "Y Bulanıklığı"
+msgstr "Y bulanıklığı"
 
 #: plug-ins/script-fu/scripts/clothify.scm:74
 msgid "Azimuth"
@@ -573,9 +575,10 @@ msgstr "_Başka Bulutlar"
 msgid "Solid noise applied with Difference layer mode"
 msgstr "Değişik katman kipiyle uygulanmış yoğun gürültü"
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/script-fu/scripts/difference-clouds.scm:89
 msgid "Random Seed"
-msgstr "Rastgele Parçacık"
+msgstr "Rastgele parçacık"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:90
 msgid "Levels"
@@ -587,7 +590,7 @@ msgstr "Döşenebilir"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:92
 msgid "Turbulent"
-msgstr "Çalkantı"
+msgstr "Türbülans"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:93
 msgid "X"
@@ -638,13 +641,15 @@ msgstr "_Gölge (eski)..."
 msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr "Seçili bölgeye (ya da alfaya) gölge ekle"
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/script-fu/scripts/drop-shadow.scm:177
 msgid "Offset X"
-msgstr "X Konumu"
+msgstr "X konumu"
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset Y"
-msgstr "Y Konumu"
+msgstr "Y konumu"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:179
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:206
@@ -1042,9 +1047,10 @@ msgstr "_Eski Fotoğraf..."
 msgid "Make an image look like an old photo"
 msgstr "Bir görüntünün eski fotoğraf gibi görünmesini sağla"
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "Defocus"
-msgstr "Odak Dışına Çıkar"
+msgstr "Odak dışına çıkar"
 
 #. since this plug-in uses the fuzzy-border plug-in, I used the
 #. values of the latter, with the exception of the initial value
@@ -1350,9 +1356,10 @@ msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
 "Geçerli görüntüyü dönen bir küreye uyarlayarak, bir canlandırma oluştur"
 
+# Konumu gereği tümce düzeni kullanıldı.
 #: plug-ins/script-fu/scripts/spinning-globe.scm:123
 msgid "Frames"
-msgstr "Kare Sayısı"
+msgstr "Kare sayısı"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm:124
 msgid "Turn from left to right"
