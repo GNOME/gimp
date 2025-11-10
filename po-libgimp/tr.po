@@ -1558,12 +1558,12 @@ msgstr "HSV Değeri"
 #: libgimpbase/gimpbaseenums.c:1573
 msgctxt "select-criterion"
 msgid "LCh Lightness"
-msgstr "LCh Açıklığı"
+msgstr "LCh Açıklık"
 
 #: libgimpbase/gimpbaseenums.c:1574
 msgctxt "select-criterion"
 msgid "LCh Chroma"
-msgstr "LCh Renk Saflığı"
+msgstr "LCh Renk Parlaklığı"
 
 #: libgimpbase/gimpbaseenums.c:1575
 msgctxt "select-criterion"
@@ -2208,7 +2208,6 @@ msgstr "Yükleme başarısız"
 msgid "Not loaded"
 msgstr "Yüklenmedi"
 
-# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: libgimpthumb/gimpthumb-utils.c:153
 #, c-format
 msgid ""
@@ -2218,7 +2217,6 @@ msgstr ""
 "Geçerli bir küçük resim klasörü belirlenemedi.\n"
 "Küçük resimler (%s) geçici dosyaları yerine dizinde depolanacaktır."
 
-# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: libgimpthumb/gimpthumb-utils.c:299 libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
@@ -2274,7 +2272,6 @@ msgstr "ICC renk profili (*.icc, *.icm)"
 msgid "_Save"
 msgstr "_Kaydet"
 
-# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:347
 #: libgimpwidgets/gimppatheditor.c:288
 msgid "Folder"
@@ -2385,7 +2382,6 @@ msgstr "Ya_rdım"
 msgid "Show file location in the file manager"
 msgstr "Dosya yöneticisinde dosya konumunu göster"
 
-# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: libgimpwidgets/gimpfileentry.c:237
 msgid "Open a file selector to browse your folders"
 msgstr "Klasörlerinize göz atmak için bir dosya seçici açın"
@@ -2394,7 +2390,6 @@ msgstr "Klasörlerinize göz atmak için bir dosya seçici açın"
 msgid "Open a file selector to browse your files"
 msgstr "Dosyalarınıza göz atmak için bir dosya seçici açın"
 
-# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: libgimpwidgets/gimpfileentry.c:250
 msgid "Indicates whether or not the folder exists"
 msgstr "Klasörün var olup olmadığını göster"
@@ -2408,7 +2403,6 @@ msgstr "Dosyanın var olup olmadığını göster"
 msgid "Can't show file in file manager: %s"
 msgstr "Dosya, dosya yöneticisinde gösterilemiyor: %s"
 
-# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: libgimpwidgets/gimpfileentry.c:454
 msgid "Select Folder"
 msgstr "Klasör Seç"
@@ -2670,7 +2664,7 @@ msgstr "_L"
 
 #: libgimpwidgets/gimpwidgetsenums.c:137
 msgid "LCh Lightness"
-msgstr "LCh Açıklığı"
+msgstr "LCh Açıklık"
 
 #: libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
@@ -2679,7 +2673,7 @@ msgstr "_C"
 
 #: libgimpwidgets/gimpwidgetsenums.c:138
 msgid "LCh Chroma"
-msgstr "LCh Renk Saflığı"
+msgstr "LCh Renk Parlaklığı"
 
 #: libgimpwidgets/gimpwidgetsenums.c:139
 msgctxt "color-selector-channel"
