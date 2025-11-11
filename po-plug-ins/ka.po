@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-07 14:07+0000\n"
-"PO-Revision-Date: 2025-11-07 15:32+0100\n"
+"POT-Creation-Date: 2025-11-10 21:04+0000\n"
+"PO-Revision-Date: 2025-11-11 04:15+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -644,8 +644,8 @@ msgid "Border size unit of measure"
 msgstr "საზღვრის საზომი ერთეული"
 
 #: plug-ins/common/border-average.c:150
-msgid "Bucket Si_ze"
-msgstr ""
+msgid "Bucket si_ze"
+msgstr "ბაკეტის _ზომა"
 
 #: plug-ins/common/border-average.c:151
 msgid "Bits for bucket size"
@@ -2373,8 +2373,8 @@ msgid "Filter box radius"
 msgstr ""
 
 #: plug-ins/common/despeckle.c:193
-msgid "_Filter Type"
-msgstr "ფილტრის _ტიპი"
+msgid "_Filter type"
+msgstr "_ფილტრის ტიპი"
 
 #: plug-ins/common/despeckle.c:194
 msgid "Filter type"
@@ -3944,7 +3944,7 @@ msgid "CPRL"
 msgstr "CPRL"
 
 #: plug-ins/common/file-jp2.c:366 plug-ins/common/file-jp2.c:454
-msgid "Co_mpliance Profile"
+msgid "Co_mpliance profile"
 msgstr "სტანდარტის დაცვის პრ_ოფილი"
 
 #: plug-ins/common/file-jp2.c:367 plug-ins/common/file-jp2.c:455
@@ -7413,11 +7413,11 @@ msgid "Action"
 msgstr "ქმედება"
 
 #: plug-ins/common/hot.c:280
-msgid "Reduce Luminance"
-msgstr ""
+msgid "Reduce luminance"
+msgstr "განათებულობის შემცირება"
 
 #: plug-ins/common/hot.c:281
-msgid "Reduce Saturation"
+msgid "Reduce saturation"
 msgstr "გაჯერებულობის შემცირება"
 
 #: plug-ins/common/hot.c:282
@@ -8109,7 +8109,7 @@ msgid "Draw a border of spikes around the image"
 msgstr ""
 
 #: plug-ins/common/sparkle.c:270
-msgid "_Color type"
+msgid "_Color Type"
 msgstr "_ფერის ტიპი"
 
 #: plug-ins/common/sparkle.c:271
@@ -8639,11 +8639,11 @@ msgid "Filter length"
 msgstr "ფილტრის სიგრძე"
 
 #: plug-ins/common/van-gogh-lic.c:198
-msgid "_Noise Magnitude"
+msgid "_Noise magnitude"
 msgstr "_ხმაურის სიმძლავრე"
 
 #: plug-ins/common/van-gogh-lic.c:199
-msgid "Noise Magnitude"
+msgid "Noise magnitude"
 msgstr "ხმაურის სიმძლავრე"
 
 #: plug-ins/common/van-gogh-lic.c:204
@@ -9677,7 +9677,7 @@ msgstr ""
 
 #: plug-ins/file-fits/fits.c:180 plug-ins/file-fits/fits.c:218
 msgid "Flexible Image Transport System"
-msgstr ""
+msgstr "FITS გამოსახულება"
 
 #: plug-ins/file-fits/fits.c:183
 msgid "Load file of the FITS file format"
@@ -11796,11 +11796,11 @@ msgid "Render fractal art"
 msgstr ""
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:256
-msgid "Fr_actal Type"
-msgstr "_ფრაქტალის ტიპი"
+msgid "Fr_actal type"
+msgstr "ფრ_აქტალის ტიპი"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:257
-msgid "Type of Fractal Pattern"
+msgid "Type of fractal pattern"
 msgstr ""
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:258
@@ -11883,19 +11883,19 @@ msgid "C_X"
 msgstr "C_X"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:303
-msgid "cx value"
-msgstr "cx მნიშვნელობა"
+msgid "CX value"
+msgstr "CX მნიშვნელობა"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:308
 msgid "C_Y"
 msgstr "C_Y"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:309
-msgid "cy value"
-msgstr "cy მნიშვნელობა"
+msgid "CY value"
+msgstr "CY მნიშვნელობა"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:314
-msgid "Color mode"
+msgid "Color Mode"
 msgstr "ფერის რეჟიმი"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:315
@@ -12337,8 +12337,8 @@ msgid "Antialiasing"
 msgstr "მომრგვალება"
 
 #: plug-ins/gfig/gfig-dialog.c:1275
-msgid "Max undo:"
-msgstr "მაქს დაბრუნება:"
+msgid "Max undo"
+msgstr "მაქს დაბრუნება"
 
 #: plug-ins/gfig/gfig-dialog.c:1282 plug-ins/gimpressionist/general.c:194
 msgid "Transparent"
@@ -12364,15 +12364,15 @@ msgid "Radius"
 msgstr "რადიუსი"
 
 #: plug-ins/gfig/gfig-dialog.c:1384
-msgid "Grid spacing:"
-msgstr "ბადის დაშორება:"
+msgid "Grid spacing"
+msgstr "ბადის დაშორება"
 
 #: plug-ins/gfig/gfig-dialog.c:1399
-msgid "Polar grid sectors desired:"
+msgid "Polar grid sectors desired"
 msgstr ""
 
 #: plug-ins/gfig/gfig-dialog.c:1415
-msgid "Polar grid radius interval:"
+msgid "Polar grid radius interval"
 msgstr ""
 
 #: plug-ins/gfig/gfig-dialog.c:1431
@@ -12410,8 +12410,8 @@ msgid "Grid color:"
 msgstr "ბადის ფერი:"
 
 #: plug-ins/gfig/gfig-dialog.c:1689
-msgid "Sides:"
-msgstr "მხარეები:"
+msgid "Sides"
+msgstr "მხარეები"
 
 #: plug-ins/gfig/gfig-dialog.c:1698
 msgid "Right"
@@ -12561,7 +12561,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/brush.c:626 plug-ins/gimpressionist/paper.c:202
 msgid "Relief:"
-msgstr ""
+msgstr "რელიეფი:"
 
 #: plug-ins/gimpressionist/brush.c:628 plug-ins/gimpressionist/paper.c:204
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
@@ -14885,6 +14885,7 @@ msgid "Position of viewpoint (x,y,z)"
 msgstr ""
 
 #: plug-ins/map-object/map-object-main.c:154
+#: plug-ins/map-object/map-object-main.c:186
 #: plug-ins/map-object/map-object-main.c:202
 msgid "Y"
 msgstr "Y"
@@ -14906,10 +14907,6 @@ msgstr ""
 #: plug-ins/map-object/map-object-main.c:192
 msgid "First axis of object (x,y,z)"
 msgstr ""
-
-#: plug-ins/map-object/map-object-main.c:186
-msgid "y"
-msgstr "y"
 
 #: plug-ins/map-object/map-object-main.c:198
 #: plug-ins/map-object/map-object-main.c:203
@@ -14950,15 +14947,15 @@ msgid "Type of lightsource"
 msgstr ""
 
 #: plug-ins/map-object/map-object-main.c:231
-msgid "Point Light"
+msgid "Point light"
 msgstr "წერტილი სინათლე"
 
 #: plug-ins/map-object/map-object-main.c:232
-msgid "Directional Light"
+msgid "Directional light"
 msgstr "მიმართული სინათლე"
 
 #: plug-ins/map-object/map-object-main.c:233
-msgid "No Light"
+msgid "No light"
 msgstr "სინათლის გარეშე"
 
 #: plug-ins/map-object/map-object-main.c:239
@@ -16461,6 +16458,18 @@ msgstr ""
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "_Filter Type"
+#~ msgstr "ფილტრის _ტიპი"
+
+#~ msgid "cx value"
+#~ msgstr "cx მნიშვნელობა"
+
+#~ msgid "cy value"
+#~ msgstr "cy მნიშვნელობა"
+
+#~ msgid "y"
+#~ msgstr "y"
 
 #~ msgid "Radius:"
 #~ msgstr "რადიუსი:"
