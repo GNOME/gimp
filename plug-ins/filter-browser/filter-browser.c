@@ -86,6 +86,8 @@ G_DEFINE_TYPE (FilterBrowser, filter_browser, GIMP_TYPE_PLUG_IN)
 GIMP_MAIN (FILTER_BROWSER_TYPE)
 DEFINE_STD_SET_I18N
 
+static GMainLoop *main_loop = NULL;
+
 static GtkWidget *
 create_filter_param_details (GParamSpec   *pspec,
                              GtkSizeGroup *sg_label,
@@ -699,7 +701,8 @@ browser_dialog_response (GtkWidget            *widget,
   gtk_widget_destroy (browser->dialog);
   g_list_free (browser->filters);
   g_free (browser);
-  g_main_loop_quit (g_main_loop_new (NULL, TRUE));
+  g_main_loop_quit (main_loop);
+  g_main_loop_unref (main_loop);
 }
 
 static GimpValueArray *
@@ -807,7 +810,9 @@ filter_browser_run (GimpProcedure       *procedure,
                            gtk_list_box_get_row_at_index (browser->filter_list, 0));
 
   gtk_widget_show (GTK_WIDGET (browser->dialog));
-  g_main_loop_run (g_main_loop_new (NULL, TRUE));
+
+  main_loop = g_main_loop_new (NULL, TRUE);
+  g_main_loop_run (main_loop);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
