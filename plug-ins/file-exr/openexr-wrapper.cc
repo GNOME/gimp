@@ -98,7 +98,6 @@ struct _EXRLoader
       {
         layers_only_ = true;
 
-
         for (std::set<std::string>::const_iterator i = layerNames.begin();
              i != layerNames.end(); ++i)
           {
@@ -117,19 +116,28 @@ struct _EXRLoader
 
     can_load_ = true;
 
+    /* Capitalization matters - channel "R" and "r" are both red,
+     * but unless you use the specific one mentioned in the file,
+     * it won't load. */
     if (channels_.findChannel(prefix + "R") ||
         channels_.findChannel(prefix + "G") ||
-        channels_.findChannel(prefix + "B"))
+        channels_.findChannel(prefix + "B") ||
+        channels_.findChannel(prefix + "r") ||
+        channels_.findChannel(prefix + "g") ||
+        channels_.findChannel(prefix + "b"))
       {
         format_string_ = "RGB";
         image_type_ = IMAGE_TYPE_RGB;
 
-        if ((chan = channels_.findChannel(prefix + "R")))
+        if ((chan = channels_.findChannel(prefix + "R")) ||
+            (chan = channels_.findChannel(prefix + "r")))
           pt_ = chan->type;
-        else if ((chan = channels_.findChannel(prefix + "G")))
+        else if ((chan = channels_.findChannel(prefix + "G")) ||
+                 (chan = channels_.findChannel(prefix + "g")))
           pt_ = chan->type;
-        else
-          pt_ = channels_.findChannel(prefix + "B")->type;
+        else if ((chan = channels_.findChannel(prefix + "B")) ||
+                 (chan = channels_.findChannel(prefix + "b")))
+          pt_ = chan->type;
       }
     else if (channels_.findChannel(prefix + "Y") &&
              (channels_.findChannel(prefix + "RY") ||
@@ -142,12 +150,15 @@ struct _EXRLoader
          * RY/BY chroma channels */
         pt_ = channels_.findChannel(prefix + "Y")->type;
       }
-    else if (channels_.findChannel(prefix + "Y"))
+    else if (channels_.findChannel(prefix + "Y") ||
+             channels_.findChannel(prefix + "y"))
       {
         format_string_ = "Y";
         image_type_ = IMAGE_TYPE_GRAY;
 
-        pt_ = channels_.findChannel(prefix + "Y")->type;
+        if ((chan = channels_.findChannel(prefix + "Y")) ||
+            (chan = channels_.findChannel(prefix + "y")))
+          pt_ = chan->type;
       }
     else
       {
@@ -186,6 +197,11 @@ struct _EXRLoader
     if (channels_.findChannel(prefix + "A"))
       {
         format_string_.append(prefix + "A");
+        has_alpha_ = true;
+      }
+    else if (channels_.findChannel(prefix + "a"))
+      {
+        format_string_.append(prefix + "a");
         has_alpha_ = true;
       }
     else
@@ -241,21 +257,47 @@ struct _EXRLoader
 
       case IMAGE_TYPE_YUV:
       case IMAGE_TYPE_GRAY:
-        fb.insert(prefix + "Y", Slice(pt_, base, bpp, 0, 1, 1, 0.5));
-        if (hasAlpha())
+        if (channels_.findChannel(prefix + "Y"))
           {
-            fb.insert(prefix + "A", Slice(pt_, base + bpc_, bpp, 0, 1, 1, 1.0));
+            fb.insert(prefix + "Y", Slice(pt_, base, bpp, 0, 1, 1, 0.5));
+            if (hasAlpha())
+              {
+                fb.insert(prefix + "A", Slice(pt_, base + bpc_, bpp, 0, 1, 1, 1.0));
+              }
+          }
+        else
+          {
+            {
+              fb.insert(prefix + "y", Slice(pt_, base, bpp, 0, 1, 1, 0.5));
+              if (hasAlpha())
+                {
+                  fb.insert(prefix + "a", Slice(pt_, base + bpc_, bpp, 0, 1, 1, 1.0));
+                }
+            }
           }
         break;
 
       case IMAGE_TYPE_RGB:
       default:
-        fb.insert(prefix + "R", Slice(pt_, base + (bpc_ * 0), bpp, 0, 1, 1, 0.0));
-        fb.insert(prefix + "G", Slice(pt_, base + (bpc_ * 1), bpp, 0, 1, 1, 0.0));
-        fb.insert(prefix + "B", Slice(pt_, base + (bpc_ * 2), bpp, 0, 1, 1, 0.0));
-        if (hasAlpha())
+        if (channels_.findChannel(prefix + "R"))
           {
-            fb.insert(prefix + "A", Slice(pt_, base + (bpc_ * 3), bpp, 0, 1, 1, 1.0));
+            fb.insert(prefix + "R", Slice(pt_, base + (bpc_ * 0), bpp, 0, 1, 1, 0.0));
+            fb.insert(prefix + "G", Slice(pt_, base + (bpc_ * 1), bpp, 0, 1, 1, 0.0));
+            fb.insert(prefix + "B", Slice(pt_, base + (bpc_ * 2), bpp, 0, 1, 1, 0.0));
+            if (hasAlpha())
+              {
+                fb.insert(prefix + "A", Slice(pt_, base + (bpc_ * 3), bpp, 0, 1, 1, 1.0));
+              }
+          }
+        else
+          {
+            fb.insert(prefix + "r", Slice(pt_, base + (bpc_ * 0), bpp, 0, 1, 1, 0.0));
+            fb.insert(prefix + "g", Slice(pt_, base + (bpc_ * 1), bpp, 0, 1, 1, 0.0));
+            fb.insert(prefix + "b", Slice(pt_, base + (bpc_ * 2), bpp, 0, 1, 1, 0.0));
+            if (hasAlpha())
+              {
+                fb.insert(prefix + "a", Slice(pt_, base + (bpc_ * 3), bpp, 0, 1, 1, 1.0));
+              }
           }
       }
 
