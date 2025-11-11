@@ -1397,10 +1397,10 @@ gfig_grid_action (GSimpleAction *action,
 
       scale_data = gtk_adjustment_new (selvals.opts.grid_sectors_desired, 5, 360, 1.0, 10.0, 0.0);
       sectors_scale = gimp_spin_scale_new (scale_data, _("Polar grid sectors desired"), 1);
-      g_signal_connect (sectors_scale, "value-changed",
+      g_signal_connect (scale_data, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.opts.grid_sectors_desired);
-      g_signal_connect (sectors_scale, "value-changed",
+      g_signal_connect (scale_data, "value-changed",
                         G_CALLBACK (draw_grid_clear),
                         NULL);
       gtk_grid_attach (GTK_GRID (grid), sectors_scale, 0, 3, 3, 1);
