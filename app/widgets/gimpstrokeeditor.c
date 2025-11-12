@@ -146,12 +146,14 @@ gimp_stroke_editor_constructed (GObject *object)
 
   box = gimp_prop_enum_icon_box_new (G_OBJECT (options), "cap-style",
                                      "gimp-cap", 0, 0);
+  gtk_widget_set_halign (box, GTK_ALIGN_START);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Cap style:"), 0.0, 0.5,
                             box, 2);
 
   box = gimp_prop_enum_icon_box_new (G_OBJECT (options), "join-style",
                                      "gimp-join", 0, 0);
+  gtk_widget_set_halign (box, GTK_ALIGN_START);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Join style:"), 0.0, 0.5,
                             box, 2);
