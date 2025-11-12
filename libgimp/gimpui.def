@@ -22,6 +22,11 @@ EXPORTS
 	gimp_font_chooser_new
 	gimp_gradient_chooser_get_type
 	gimp_gradient_chooser_new
+	gimp_image_chooser_get_image
+	gimp_image_chooser_get_label
+	gimp_image_chooser_get_type
+	gimp_image_chooser_new
+	gimp_image_chooser_set_image
 	gimp_image_combo_box_get_type
 	gimp_image_combo_box_new
 	gimp_layer_combo_box_get_type
@@ -70,6 +75,7 @@ EXPORTS
 	gimp_prop_drawable_chooser_new
 	gimp_prop_font_chooser_new
 	gimp_prop_gradient_chooser_new
+	gimp_prop_image_chooser_new
 	gimp_prop_palette_chooser_new
 	gimp_prop_pattern_chooser_new
 	gimp_prop_resolution_entry_new

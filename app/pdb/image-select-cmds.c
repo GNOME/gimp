@@ -34,7 +34,9 @@
 
 #include "pdb-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel-select.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
@@ -347,6 +349,93 @@ image_select_item_invoker (GimpProcedure         *procedure,
                                   pdb_context->feather_radius_y);
         }
       else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+images_popup_invoker (GimpProcedure         *procedure,
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *callback;
+  const gchar *popup_title;
+  GimpImage *initial_image;
+  GBytes *parent_window;
+
+  callback = g_value_get_string (gimp_value_array_index (args, 0));
+  popup_title = g_value_get_string (gimp_value_array_index (args, 1));
+  initial_image = g_value_get_object (gimp_value_array_index (args, 2));
+  parent_window = g_value_get_boxed (gimp_value_array_index (args, 3));
+
+  if (success)
+    {
+      if (gimp->no_interface ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+          ! gimp_pdb_dialog_new (gimp, context, progress,
+                                 GIMP_TYPE_IMAGE,
+                                 parent_window, popup_title, callback,
+                                 GIMP_OBJECT (initial_image),
+                                 NULL))
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+images_close_popup_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *callback;
+
+  callback = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      if (gimp->no_interface ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+          ! gimp_pdb_dialog_close (gimp, GIMP_TYPE_IMAGE, callback))
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+images_set_popup_invoker (GimpProcedure         *procedure,
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *callback;
+  GimpImage *image;
+
+  callback = g_value_get_string (gimp_value_array_index (args, 0));
+  image = g_value_get_object (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      if (gimp->no_interface ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+          ! gimp_pdb_dialog_set (gimp, GIMP_TYPE_IMAGE, callback, GIMP_OBJECT (image), NULL))
         success = FALSE;
     }
 
@@ -710,6 +799,103 @@ register_image_select_procs (GimpPDB *pdb)
                                                      "The item to render to the selection",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-images-popup
+   */
+  procedure = gimp_procedure_new (images_popup_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-images-popup");
+  gimp_procedure_set_static_help (procedure,
+                                  "Invokes the image selection dialog.",
+                                  "Opens a dialog letting a user choose an image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("callback",
+                                                       "callback",
+                                                       "The callback PDB proc to call when user chooses an image",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("popup-title",
+                                                       "popup title",
+                                                       "Title of the image selection dialog",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("initial-image",
+                                                      "initial image",
+                                                      "The image to set as the initial choice",
+                                                      TRUE,
+                                                      GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boxed ("parent-window",
+                                                   "parent window",
+                                                   "An optional parent window handle for the popup to be set transient to",
+                                                   G_TYPE_BYTES,
+                                                   GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-images-close-popup
+   */
+  procedure = gimp_procedure_new (images_close_popup_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-images-close-popup");
+  gimp_procedure_set_static_help (procedure,
+                                  "Close the image selection dialog.",
+                                  "Closes an open image selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("callback",
+                                                       "callback",
+                                                       "The name of the callback registered for this pop-up",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-images-set-popup
+   */
+  procedure = gimp_procedure_new (images_set_popup_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-images-set-popup");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the selected image in a image selection dialog.",
+                                  "Sets the selected image in a image selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("callback",
+                                                       "callback",
+                                                       "The name of the callback registered for this pop-up",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image to set as selected",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

@@ -447,3 +447,114 @@ gimp_image_select_item (GimpImage      *image,
 
   return success;
 }
+
+/**
+ * gimp_images_popup:
+ * @callback: The callback PDB proc to call when user chooses an image.
+ * @popup_title: Title of the image selection dialog.
+ * @initial_image: (nullable): The image to set as the initial choice.
+ * @parent_window: (nullable): An optional parent window handle for the popup to be set transient to.
+ *
+ * Invokes the image selection dialog.
+ *
+ * Opens a dialog letting a user choose an image.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_images_popup (const gchar *callback,
+                   const gchar *popup_title,
+                   GimpImage   *initial_image,
+                   GBytes      *parent_window)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, callback,
+                                          G_TYPE_STRING, popup_title,
+                                          GIMP_TYPE_IMAGE, initial_image,
+                                          G_TYPE_BYTES, parent_window,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-images-popup",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_images_close_popup:
+ * @callback: The name of the callback registered for this pop-up.
+ *
+ * Close the image selection dialog.
+ *
+ * Closes an open image selection dialog.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_images_close_popup (const gchar *callback)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, callback,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-images-close-popup",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_images_set_popup:
+ * @callback: The name of the callback registered for this pop-up.
+ * @image: The image to set as selected.
+ *
+ * Sets the selected image in a image selection dialog.
+ *
+ * Sets the selected image in a image selection dialog.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_images_set_popup (const gchar *callback,
+                       GimpImage   *image)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, callback,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-images-set-popup",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}

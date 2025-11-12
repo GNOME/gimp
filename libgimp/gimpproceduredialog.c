@@ -913,6 +913,10 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     {
       widget = gimp_prop_drawable_chooser_new (G_OBJECT (priv->config), property, NULL);
     }
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_IMAGE)
+    {
+      widget = gimp_prop_image_chooser_new (G_OBJECT (priv->config), property, NULL);
+    }
   else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_ENUM)
     {
       GimpIntStore *store;
@@ -962,6 +966,8 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
             label = gimp_resource_chooser_get_label (GIMP_RESOURCE_CHOOSER (widget));
           else if (GIMP_IS_DRAWABLE_CHOOSER (widget))
             label = gimp_drawable_chooser_get_label (GIMP_DRAWABLE_CHOOSER (widget));
+          else if (GIMP_IS_IMAGE_CHOOSER (widget))
+            label = gimp_image_chooser_get_label (GIMP_IMAGE_CHOOSER (widget));
         }
 
       if (label != NULL)
@@ -2915,6 +2921,10 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
   else if (GIMP_IS_DRAWABLE_CHOOSER (widget))
     {
       label = gimp_drawable_chooser_get_label (GIMP_DRAWABLE_CHOOSER (widget));
+    }
+  else if (GIMP_IS_IMAGE_CHOOSER (widget))
+    {
+      label = gimp_image_chooser_get_label (GIMP_IMAGE_CHOOSER (widget));
     }
   else if (GIMP_IS_FILE_CHOOSER (widget))
     {
