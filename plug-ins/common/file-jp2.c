@@ -1354,14 +1354,15 @@ load_image (GimpProcedure     *procedure,
   GimpColorProfile    *profile    = NULL;
   GimpImage           *gimp_image = NULL;
   GimpLayer           *layer;
+  GeglBuffer          *buffer     = NULL;
+  guchar              *pixels     = NULL;
+  gsize                pixels_size;
   GimpImageType        image_type;
   GimpImageBaseType    base_type;
   gint                 width;
   gint                 height;
   gint                 num_components;
-  GeglBuffer          *buffer;
   gint                 i, j, k, it;
-  guchar              *pixels;
   const Babl          *file_format;
   gint                 bpp;
   GimpPrecision        image_precision;
@@ -1627,7 +1628,15 @@ load_image (GimpProcedure     *procedure,
   bpp = babl_format_get_bytes_per_pixel (file_format);
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-  pixels = g_new0 (guchar, width * bpp);
+
+  if (! g_size_checked_mul (&pixels_size, width, (bpp * (precision_scaled / 8))))
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Defined row size is too large in JP2 image '%s'."),
+                   gimp_file_get_utf8_name (file));
+      goto out;
+    }
+  pixels = g_new0 (guchar, pixels_size);
 
   for (i = 0; i < height; i++)
     {
@@ -1653,13 +1662,13 @@ load_image (GimpProcedure     *procedure,
         gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i, width, 1), 0,
                          file_format, pixels, GEGL_AUTO_ROWSTRIDE);
     }
-
-  g_free (pixels);
-
-  g_object_unref (buffer);
   gimp_progress_update (1.0);
 
  out:
+  if (pixels)
+    g_free (pixels);
+  if (buffer)
+    g_object_unref (buffer);
   if (profile)
     g_object_unref (profile);
   if (image)
