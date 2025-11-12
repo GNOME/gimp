@@ -372,7 +372,8 @@ gimp_enum_icon_box_new_with_range (GType            enum_type,
 
   enum_class = g_type_class_ref (enum_type);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  hbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbox), GTK_BUTTONBOX_EXPAND);
   g_object_weak_ref (G_OBJECT (hbox),
                      (GWeakNotify) g_type_class_unref, enum_class);
 
