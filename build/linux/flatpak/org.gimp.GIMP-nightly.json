@@ -22,6 +22,7 @@
         "--share=network",
         "--socket=fallback-x11",
         "--socket=wayland",
+        "--socket=pulseaudio",
         "--device=dri",
         "--filesystem=host",
         "--filesystem=xdg-config/GIMP:create",
