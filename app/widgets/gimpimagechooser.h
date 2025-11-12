@@ -55,6 +55,6 @@ GtkWidget    * gimp_image_chooser_new          (GimpContext         *context,
                                                 gint                 view_size,
                                                 gint                 view_border_width);
 
-GimpImage *    gimp_image_chooser_get_image    (GimpImageChooser    *chooser);
+GimpImage    * gimp_image_chooser_get_image    (GimpImageChooser    *chooser);
 void           gimp_image_chooser_set_image    (GimpImageChooser    *chooser,
                                                 GimpImage           *image);
