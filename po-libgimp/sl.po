@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-08 20:33+0000\n"
-"PO-Revision-Date: 2025-10-08 23:04+0200\n"
+"POT-Creation-Date: 2025-11-13 03:21+0000\n"
+"PO-Revision-Date: 2025-11-13 09:04+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -173,60 +173,60 @@ msgstr "Obreži plasti"
 msgid "Resize Image to Layers"
 msgstr "Spremeni velikost slike na plasti"
 
-#: libgimp/gimpexportprocedure.c:550
+#: libgimp/gimpexportprocedure.c:553
 msgid "Save _Exif"
 msgstr "Shrani _Exif"
 
-#: libgimp/gimpexportprocedure.c:551
+#: libgimp/gimpexportprocedure.c:554
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Shranite metapodatke Exif (zapis Exchangeable image file)"
 
-#: libgimp/gimpexportprocedure.c:559
+#: libgimp/gimpexportprocedure.c:562
 msgid "Save _IPTC"
 msgstr "Shrani _IPTC"
 
-#: libgimp/gimpexportprocedure.c:560
+#: libgimp/gimpexportprocedure.c:563
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
 "Shranite metapodatke IPTC (International Press Telecommunications Council)"
 
-#: libgimp/gimpexportprocedure.c:568
+#: libgimp/gimpexportprocedure.c:571
 msgid "Save _XMP"
 msgstr "Shrani _XMP"
 
-#: libgimp/gimpexportprocedure.c:569
+#: libgimp/gimpexportprocedure.c:572
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Shranite metapodatke XMP (Extensible Metadata Platform)"
 
-#: libgimp/gimpexportprocedure.c:577
+#: libgimp/gimpexportprocedure.c:580
 msgid "Save color _profile"
 msgstr "Shrani barvni _profil"
 
-#: libgimp/gimpexportprocedure.c:578
+#: libgimp/gimpexportprocedure.c:581
 msgid "Save the ICC color profile as metadata"
 msgstr "Shranite barvni profil slike ICC kot metapodatke"
 
-#: libgimp/gimpexportprocedure.c:586
+#: libgimp/gimpexportprocedure.c:589
 msgid "Save _thumbnail"
 msgstr "Shrani _ogledno sliico"
 
-#: libgimp/gimpexportprocedure.c:587
+#: libgimp/gimpexportprocedure.c:590
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Shranite manjšo inačico slike kot metapodatke"
 
-#: libgimp/gimpexportprocedure.c:595
+#: libgimp/gimpexportprocedure.c:598
 msgid "Save c_omment"
 msgstr "Shrani k_omentar"
 
-#: libgimp/gimpexportprocedure.c:596
+#: libgimp/gimpexportprocedure.c:599
 msgid "Save a comment as metadata"
 msgstr "Shrani komentar kot metapodatke"
 
-#: libgimp/gimpexportprocedure.c:600
+#: libgimp/gimpexportprocedure.c:603
 msgid "Comment"
 msgstr "Komentar"
 
-#: libgimp/gimpexportprocedure.c:601
+#: libgimp/gimpexportprocedure.c:604
 msgid "Image comment"
 msgstr "Komentar slike"
 
@@ -256,7 +256,7 @@ msgstr "Ozadje"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:448
+#: libgimp/gimploadprocedure.c:276 libgimp/gimpvectorloadprocedure.c:448
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -289,77 +289,77 @@ msgstr "Napaka pri klicu"
 msgid "cancelled"
 msgstr "Preklicano"
 
-#: libgimp/gimpprocbrowserdialog.c:152
+#: libgimp/gimpprocbrowserdialog.c:150
 msgid "by name"
 msgstr "po imenu"
 
-#: libgimp/gimpprocbrowserdialog.c:153
+#: libgimp/gimpprocbrowserdialog.c:151
 msgid "by description"
 msgstr "po opisu"
 
-#: libgimp/gimpprocbrowserdialog.c:154
+#: libgimp/gimpprocbrowserdialog.c:152
 msgid "by help"
 msgstr "po pomoči"
 
-#: libgimp/gimpprocbrowserdialog.c:155
+#: libgimp/gimpprocbrowserdialog.c:153
 msgid "by authors"
 msgstr "po avtorjih"
 
-#: libgimp/gimpprocbrowserdialog.c:156
+#: libgimp/gimpprocbrowserdialog.c:154
 msgid "by copyright"
 msgstr "po avtorskih pravicah"
 
-#: libgimp/gimpprocbrowserdialog.c:157
+#: libgimp/gimpprocbrowserdialog.c:155
 msgid "by date"
 msgstr "po datumu"
 
-#: libgimp/gimpprocbrowserdialog.c:158
+#: libgimp/gimpprocbrowserdialog.c:156
 msgid "by type"
 msgstr "po vrsti"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:358 libgimp/gimpprocbrowserdialog.c:516
-#: libgimpwidgets/gimpbrowser.c:161
+#: libgimp/gimpprocbrowserdialog.c:351 libgimp/gimpprocbrowserdialog.c:509
+#: libgimpwidgets/gimpbrowser.c:144
 msgid "No matches"
 msgstr "Ni zadetkov"
 
-#: libgimp/gimpprocbrowserdialog.c:361
+#: libgimp/gimpprocbrowserdialog.c:354
 msgid "Search term invalid or incomplete"
 msgstr "Iskani pojem ni veljaven ali nepopoln"
 
-#: libgimp/gimpprocbrowserdialog.c:370
+#: libgimp/gimpprocbrowserdialog.c:363
 msgid "Searching"
 msgstr "Iskanje"
 
-#: libgimp/gimpprocbrowserdialog.c:382
+#: libgimp/gimpprocbrowserdialog.c:375
 msgid "Searching by name"
 msgstr "Iskanje po imenu"
 
-#: libgimp/gimpprocbrowserdialog.c:403
+#: libgimp/gimpprocbrowserdialog.c:396
 msgid "Searching by description"
 msgstr "Iskanje po opisu"
 
-#: libgimp/gimpprocbrowserdialog.c:411
+#: libgimp/gimpprocbrowserdialog.c:404
 msgid "Searching by help"
 msgstr "Iskanje po pomoči"
 
-#: libgimp/gimpprocbrowserdialog.c:419
+#: libgimp/gimpprocbrowserdialog.c:412
 msgid "Searching by authors"
 msgstr "Iskanje po avtorjih"
 
-#: libgimp/gimpprocbrowserdialog.c:427
+#: libgimp/gimpprocbrowserdialog.c:420
 msgid "Searching by copyright"
 msgstr "Iskanje po copyrightu"
 
-#: libgimp/gimpprocbrowserdialog.c:435
+#: libgimp/gimpprocbrowserdialog.c:428
 msgid "Searching by date"
 msgstr "Iskanje po datumu"
 
-#: libgimp/gimpprocbrowserdialog.c:443
+#: libgimp/gimpprocbrowserdialog.c:436
 msgid "Searching by type"
 msgstr "Iskanje po vrsti"
 
-#: libgimp/gimpprocbrowserdialog.c:456
+#: libgimp/gimpprocbrowserdialog.c:449
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -368,11 +368,11 @@ msgstr[1] "%d procedura"
 msgstr[2] "%d proceduri"
 msgstr[3] "%d procedure"
 
-#: libgimp/gimpprocbrowserdialog.c:465
+#: libgimp/gimpprocbrowserdialog.c:458
 msgid "No matches for your query"
 msgstr "Vaše povpraševanje ni vrnilo zadetkov"
 
-#: libgimp/gimpprocbrowserdialog.c:469
+#: libgimp/gimpprocbrowserdialog.c:462
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -501,11 +501,11 @@ msgstr "Izbirnik palet"
 msgid "Pattern Chooser"
 msgstr "Izbirnik vzorcev"
 
-#: libgimp/gimpproceduredialog.c:2789
+#: libgimp/gimpproceduredialog.c:2795
 msgid "Reset to _Initial Values"
 msgstr "Ponastavi na _začetne vrednosti"
 
-#: libgimp/gimpproceduredialog.c:2798
+#: libgimp/gimpproceduredialog.c:2804
 msgid "Reset to _Factory Defaults"
 msgstr "Ponastavi na _tovarniške vrednosti"
 
@@ -545,17 +545,22 @@ msgstr "Datum:"
 msgid "Copyright:"
 msgstr "Nosilec avtorskih pravic:"
 
-#: libgimp/gimppropwidgets.c:191
+#: libgimp/gimppropwidgets.c:190
+#, c-format
+msgid "Choose image: %s"
+msgstr "Izberi sliko: %s"
+
+#: libgimp/gimppropwidgets.c:251
 #, c-format
 msgid "Choose layer: %s"
 msgstr "Izberi plast: %s"
 
-#: libgimp/gimppropwidgets.c:193
+#: libgimp/gimppropwidgets.c:253
 #, c-format
 msgid "Choose channel: %s"
 msgstr "Izberi kanal: %s"
 
-#: libgimp/gimppropwidgets.c:195
+#: libgimp/gimppropwidgets.c:255
 #, c-format
 msgid "Choose drawable: %s"
 msgstr "Izberi risani predmet: %s"
@@ -2226,10 +2231,6 @@ msgstr "Sličica za predogled ne vsebuje oznake Thumb::URI"
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Sličice za predogled %s ni bilo mogoče ustvariti: %s"
-
-#: libgimpwidgets/gimpbrowser.c:134
-msgid "_Search:"
-msgstr "Na_jdi:"
 
 #: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
