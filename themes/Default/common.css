@@ -660,9 +660,9 @@ button.radio image {
 /* Create appearance of toggle group for enum radio buttons */
 buttonbox.horizontal button.radio
 {
-  border-top: 1px solid @edge-border-color;
+  border-top:    1px solid @edge-border-color;
   border-bottom: 1px solid @edge-border-color;
-  border-left: 1px solid @edge-border-color;
+  border-left:   1px solid @edge-border-color;
 }
 
 buttonbox.horizontal button.radio:last-child
@@ -672,8 +672,8 @@ buttonbox.horizontal button.radio:last-child
 
 buttonbox.vertical button.radio
 {
-  border-top: 1px solid @edge-border-color;
-  border-left: 1px solid @edge-border-color;
+  border-top:   1px solid @edge-border-color;
+  border-left:  1px solid @edge-border-color;
   border-right: 1px solid @edge-border-color;
 }
 
