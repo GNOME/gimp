@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-08 13:04+0000\n"
-"PO-Revision-Date: 2025-11-08 15:21+0100\n"
+"POT-Creation-Date: 2025-11-11 03:17+0000\n"
+"PO-Revision-Date: 2025-11-11 08:28+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -7867,7 +7867,7 @@ msgctxt "paths-action"
 msgid "Select the path below the current path"
 msgstr "Izberi pot pod trenutno potjo"
 
-#: app/actions/paths-commands.c:176 app/actions/paths-commands.c:937
+#: app/actions/paths-commands.c:176 app/actions/paths-commands.c:958
 msgid "Path Attributes"
 msgstr "Lastnosti poti"
 
@@ -7927,15 +7927,19 @@ msgstr "Poti, pripete vektorskim plastem, ni možno izbrisati"
 msgid "Remove Paths"
 msgstr "Odstrani poti"
 
-#: app/actions/paths-commands.c:568
+#: app/actions/paths-commands.c:535
+msgid "Cannot merge paths attached to vector layers"
+msgstr "Poti, pripete vektorskim plastem, ni možno spojiti"
+
+#: app/actions/paths-commands.c:589
 msgid "Paths to selection"
 msgstr "Poti v izbor"
 
-#: app/actions/paths-commands.c:648
+#: app/actions/paths-commands.c:669
 msgid "Fill Path"
 msgstr "Zapolni pot"
 
-#: app/actions/paths-commands.c:676
+#: app/actions/paths-commands.c:697
 msgid "Stroke Path"
 msgstr "Vleci poteze po poti"
 
@@ -8496,7 +8500,7 @@ msgstr "_Odpri"
 
 #: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:280
 #: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526
-#: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
+#: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:295
 #: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1650
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -10099,30 +10103,35 @@ msgstr "Po_vrni povečavo (%d%%)"
 msgid "Re_vert Zoom"
 msgstr "Po_vrni povečavo"
 
-#: app/actions/view-actions.c:1004
+#: app/actions/view-actions.c:1005
 #, c-format
-msgid "_Zoom (%s)"
-msgstr "_Povečava (%s)"
+msgid "_Zoom (%.0f%%)"
+msgstr "_Povečava (%.0f %%)"
+
+#: app/actions/view-actions.c:1007
+#, c-format
+msgid "_Zoom (%.2f%%)"
+msgstr "_Povečava (%.2f %%)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
-#: app/actions/view-actions.c:1024
+#: app/actions/view-actions.c:1026
 msgid "(H+V) "
 msgstr "(V+N) "
 
 #. please preserve the trailing space
 #. H: Horizontal
-#: app/actions/view-actions.c:1030
+#: app/actions/view-actions.c:1032
 msgid "(H) "
 msgstr "(V) "
 
 #. please preserve the trailing space
 #. V: Vertical
-#: app/actions/view-actions.c:1036
+#: app/actions/view-actions.c:1038
 msgid "(V) "
 msgstr "(N) "
 
-#: app/actions/view-actions.c:1045
+#: app/actions/view-actions.c:1047
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Prezrcali %s in zasukaj (%d°)"
@@ -10549,7 +10558,7 @@ msgid "Error writing '%s': %s"
 msgstr "Napaka pri pisanju »%s«: %s"
 
 #: app/config/gimpconfig-file.c:184 app/plug-in/gimpenvirontable.c:374
-#: app/plug-in/gimpinterpreterdb.c:268 app/tools/gimpfiltertool-settings.c:182
+#: app/plug-in/gimpinterpreterdb.c:329 app/tools/gimpfiltertool-settings.c:182
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Napaka pri branju »%s«: %s"
@@ -13131,7 +13140,7 @@ msgstr "Ustvarjanje mape »%s« ..."
 msgid "Cannot create folder '%s': %s"
 msgstr "Mape »%s« ni mogoče ustvariti: %s"
 
-#: app/core/gimp-utils.c:587 app/core/gimpfilloptions.c:431
+#: app/core/gimp-utils.c:587 app/core/gimpfilloptions.c:450
 msgid "No patterns available for this operation."
 msgstr "Za ta postopek vzorci niso na voljo."
 
@@ -13835,7 +13844,7 @@ msgid "Cannot rename effect masks."
 msgstr "Mask učinkov ni mogoče preimenovati."
 
 #: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:735
-#: app/core/gimplayer.c:2039 app/core/gimplayermask.c:294
+#: app/core/gimplayer.c:2049 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "Maska %s"
@@ -13844,67 +13853,67 @@ msgstr "Maska %s"
 msgid "Output type"
 msgstr "Vrsta izhoda"
 
-#: app/core/gimpfilloptions.c:112
+#: app/core/gimpfilloptions.c:115
 msgid "Style"
 msgstr "Slog"
 
-#: app/core/gimpfilloptions.c:120
+#: app/core/gimpfilloptions.c:123
 msgid "Custom style"
 msgstr "Slog po meri"
 
-#: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101
+#: app/core/gimpfilloptions.c:131 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:183 app/tools/gimpselectionoptions.c:89
 #: app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
 msgstr "Glajenje robov"
 
-#: app/core/gimpfilloptions.c:135 app/tools/gimpbucketfilloptions.c:193
+#: app/core/gimpfilloptions.c:138 app/tools/gimpbucketfilloptions.c:193
 #: app/tools/gimpselectionoptions.c:96
 msgid "Feather edges"
 msgstr "Operjeni robovi"
 
-#: app/core/gimpfilloptions.c:136 app/tools/gimpbucketfilloptions.c:194
+#: app/core/gimpfilloptions.c:139 app/tools/gimpbucketfilloptions.c:194
 msgid "Enable feathering of fill edges"
 msgstr "Omogoči operjanje robov polnjenja"
 
-#: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:107
+#: app/core/gimpfilloptions.c:145 app/paint/gimpmybrushoptions.c:107
 #: app/tools/gimpbucketfilloptions.c:200 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:160
 msgid "Radius"
 msgstr "Radij"
 
-#: app/core/gimpfilloptions.c:143 app/tools/gimpbucketfilloptions.c:201
+#: app/core/gimpfilloptions.c:146 app/tools/gimpbucketfilloptions.c:201
 #: app/tools/gimpselectionoptions.c:104
 msgid "Radius of feathering"
 msgstr "Polmer operjanja"
 
-#: app/core/gimpfilloptions.c:393 app/core/gimpfilloptions.c:506
+#: app/core/gimpfilloptions.c:412 app/core/gimpfilloptions.c:525
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Zapolni z barvo ospredja"
 
-#: app/core/gimpfilloptions.c:398 app/core/gimpfilloptions.c:509
+#: app/core/gimpfilloptions.c:417 app/core/gimpfilloptions.c:528
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Zapolni z barvo ozadja"
 
-#: app/core/gimpfilloptions.c:408
+#: app/core/gimpfilloptions.c:427
 msgctxt "undo-type"
 msgid "Fill with Middle Gray (CIELAB) Color"
 msgstr "Zapolni s srednjo sivo barvo (CIELAB) "
 
-#: app/core/gimpfilloptions.c:414
+#: app/core/gimpfilloptions.c:433
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Zapolni z belo"
 
-#: app/core/gimpfilloptions.c:421
+#: app/core/gimpfilloptions.c:440
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Zapolni s prosojnostjo"
 
-#: app/core/gimpfilloptions.c:437 app/core/gimpfilloptions.c:512
+#: app/core/gimpfilloptions.c:456 app/core/gimpfilloptions.c:531
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Zapolni z vzorcem"
@@ -14723,69 +14732,69 @@ msgstr ""
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Maske plasti ni mogoče dodati, ker jo plast že ima."
 
-#: app/core/gimplayer.c:1951
+#: app/core/gimplayer.c:1952
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Maske drugačnih mer, kot so mere plasti, ni mogoče dodati."
 
-#: app/core/gimplayer.c:1957
+#: app/core/gimplayer.c:1958
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Dodaj maske plasti"
 
-#: app/core/gimplayer.c:2081
+#: app/core/gimplayer.c:2088
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Prenesi alfo v masko"
 
-#: app/core/gimplayer.c:2248
+#: app/core/gimplayer.c:2252
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Uveljavi maske plasti"
 
-#: app/core/gimplayer.c:2249
+#: app/core/gimplayer.c:2253
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Izbriši maske plasti"
 
-#: app/core/gimplayer.c:2356
+#: app/core/gimplayer.c:2360
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Omogoči maske plasti"
 
-#: app/core/gimplayer.c:2357
+#: app/core/gimplayer.c:2361
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Onemogoči maske plasti"
 
-#: app/core/gimplayer.c:2438
+#: app/core/gimplayer.c:2442
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Pokaži maske plasti"
 
-#: app/core/gimplayer.c:2517
+#: app/core/gimplayer.c:2521
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodaj kanal alfa"
 
-#: app/core/gimplayer.c:2547
+#: app/core/gimplayer.c:2551
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Odstrani kanal alfa"
 
-#: app/core/gimplayer.c:2568
+#: app/core/gimplayer.c:2572
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Plast na velikost slike"
 
-#: app/core/gimplayer.c:2751
+#: app/core/gimplayer.c:2755
 msgid "Set layer's blend space"
 msgstr "Nastavi prostor zlivanja plasti"
 
-#: app/core/gimplayer.c:2798
+#: app/core/gimplayer.c:2802
 msgid "Set layer's composite space"
 msgstr "Nastavi prostor skladanja plasti"
 
-#: app/core/gimplayer.c:2845
+#: app/core/gimplayer.c:2849
 msgid "Set layer's composite mode"
 msgstr "Nastavi način skladanja plasti"
 
@@ -20784,7 +20793,7 @@ msgstr ""
 
 #: app/operations/gimpoperationoffset.c:125
 #: app/operations/gimpoperationoffset.c:126 app/tools/gimpoffsettool.c:579
-#: app/widgets/gimpfilleditor.c:138 app/widgets/gimpfilleditor.c:150
+#: app/widgets/gimpfilleditor.c:146 app/widgets/gimpfilleditor.c:165
 msgid "Fill Color"
 msgstr "Barva polnila"
 
@@ -22184,12 +22193,12 @@ msgstr "Prazno ime spremenljivke v okoljski datoteki %s"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Neveljavno ime spremenljivke v okoljski datoteki %s: %s"
 
-#: app/plug-in/gimpinterpreterdb.c:303 app/plug-in/gimpinterpreterdb.c:400
+#: app/plug-in/gimpinterpreterdb.c:364 app/plug-in/gimpinterpreterdb.c:461
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
 msgstr "Nepravilen sklic prevajalnika v prevajalni datoteki %s: %s"
 
-#: app/plug-in/gimpinterpreterdb.c:372
+#: app/plug-in/gimpinterpreterdb.c:433
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Niz z nepravilnim dvojiškim nizom v prevajalski datoteki %s"
@@ -22356,15 +22365,15 @@ msgid "invalid value '%ld' for icon type"
 msgstr "neveljavna vrednost »%ld« za vrsto ikone"
 
 #: app/propgui/gimppropgui-channel-mixer.c:63
-msgid "Red channel"
+msgid "Red Channel"
 msgstr "Rdeči kanal"
 
 #: app/propgui/gimppropgui-channel-mixer.c:84
-msgid "Green channel"
+msgid "Green Channel"
 msgstr "Zeleni kanal"
 
 #: app/propgui/gimppropgui-channel-mixer.c:105
-msgid "Blue channel"
+msgid "Blue Channel"
 msgstr "Modri kanal"
 
 #: app/propgui/gimppropgui-color-balance.c:94
@@ -27854,11 +27863,11 @@ msgctxt "File extension"
 msgid "Extensions"
 msgstr "Razširitve"
 
-#: app/widgets/gimpfilleditor.c:161
+#: app/widgets/gimpfilleditor.c:176
 msgid "Fill BG Color"
 msgstr "Zapolni z barvo ozadja"
 
-#: app/widgets/gimpfilleditor.c:185
+#: app/widgets/gimpfilleditor.c:200
 msgid "_Antialiasing"
 msgstr "_Glajenje robov"
 
@@ -29265,7 +29274,7 @@ msgstr ""
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
 msgstr "Napaka pri zapisovanju XCF: nepodprt BPC pri pisanju slikovnih pik: %d"
 
-#: app-tools/gimp-debug-tool.c:101
+#: app-tools/gimp-debug-tool.c:108
 msgid "GIMP Crash Debug"
 msgstr "Razhroščevanje sesutja GIMP"
 
