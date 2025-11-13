@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-22 15:19+0000\n"
-"PO-Revision-Date: 2025-10-23 17:25+0300\n"
+"POT-Creation-Date: 2025-10-31 10:27+0000\n"
+"PO-Revision-Date: 2025-10-31 21:29+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -56,12 +56,6 @@ msgstr ""
 "між різними графічними форматами тощо."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:30
-#| msgid ""
-#| "GIMP is expandable and extensible. It is designed to be augmented with "
-#| "plug-ins and extensions to do just about anything. The advanced scripting "
-#| "interface allows everything from the simplest task to the most complex "
-#| "image manipulation procedures to be easily scripted. GIMP is available "
-#| "for Linux, Microsoft Windows and OS X."
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
@@ -6205,8 +6199,10 @@ msgid "Activate the default edit action for this type of layer"
 msgstr "Використати типову дій з редагування для цього типу шарів"
 
 #: app/actions/layers-actions.c:58
+#| msgctxt "layers-action"
+#| msgid "Edit Te_xt on canvas"
 msgctxt "layers-action"
-msgid "Edit Te_xt on canvas"
+msgid "Edit Te_xt on Canvas"
 msgstr "Змінити _текст на полотні"
 
 #: app/actions/layers-actions.c:59
@@ -15880,7 +15876,6 @@ msgstr "Відкрити шари"
 
 #: app/dialogs/file-open-dialog.c:252
 #, c-format
-#| msgid "Opening '%s' failed: %s"
 msgid "Opening '%s' failed."
 msgstr "Не вдалося відкрити «%s»."
 
@@ -21170,7 +21165,7 @@ msgstr "Додати фільтр"
 msgid "Plug-in"
 msgstr "Додаток"
 
-#: app/pdb/drawable-cmds.c:1131 app/tools/gimpforegroundselecttool.c:1041
+#: app/pdb/drawable-cmds.c:1192 app/tools/gimpforegroundselecttool.c:1041
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Вибір переднього плану"
@@ -28834,7 +28829,7 @@ msgstr "Помилка при створенні «%s»:"
 msgid "Invalid image mode and precision combination."
 msgstr "Хибне поєднання режиму зображення і точності."
 
-#: app/xcf/xcf-load.c:505
+#: app/xcf/xcf-load.c:504
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28843,7 +28838,7 @@ msgstr ""
 "Виявлено пошкоджені паразитом 'exif-data'.\n"
 "Дані exif не можна перенести: %s"
 
-#: app/xcf/xcf-load.c:544
+#: app/xcf/xcf-load.c:543
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28851,7 +28846,7 @@ msgstr ""
 "Виявлено пошкодження додатка «gimp-metadata».\n"
 "Не вдалося перенести дані XMP."
 
-#: app/xcf/xcf-load.c:568
+#: app/xcf/xcf-load.c:567
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28864,32 +28859,32 @@ msgstr ""
 "Якщо ви нічого не знаєте про XMP, ймовірно, ці дані вам не потрібні. "
 "Повідомлення про помилку: %s."
 
-#: app/xcf/xcf-load.c:923
+#: app/xcf/xcf-load.c:922
 msgid "Linked Layers"
 msgstr "Пов'язані шари"
 
-#: app/xcf/xcf-load.c:933
+#: app/xcf/xcf-load.c:932
 msgid "Linked Channels"
 msgstr "Пов'язані канали"
 
-#: app/xcf/xcf-load.c:958
+#: app/xcf/xcf-load.c:957
 msgid "Linked Paths"
 msgstr "Пов'язані контури"
 
-#: app/xcf/xcf-load.c:1005
+#: app/xcf/xcf-load.c:1004
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "Цей файл XCF зіпсований! Деяку його частину все ж вийшло відновити."
 
-#: app/xcf/xcf-load.c:1025
+#: app/xcf/xcf-load.c:1024
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Цей файл XCF пошкоджений! Не вдалось відновити навіть малу його частину!"
 
-#: app/xcf/xcf-load.c:1183
+#: app/xcf/xcf-load.c:1182
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28899,7 +28894,7 @@ msgstr ""
 "неправильно зберігає індексовані мапи кольорів.\n"
 "Поточна мапа буде замінена на мапу у градаціях сірого."
 
-#: app/xcf/xcf-load.c:2576
+#: app/xcf/xcf-load.c:2575
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28912,7 +28907,7 @@ msgstr ""
 "Цього не повинно було статися. Вам слід повідомити про цю проблему "
 "розробникам фільтра."
 
-#: app/xcf/xcf-load.c:3518
+#: app/xcf/xcf-load.c:3517
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
