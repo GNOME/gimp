@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-07 08:03+0000\n"
-"PO-Revision-Date: 2025-11-07 09:54+0100\n"
+"POT-Creation-Date: 2025-11-13 03:22+0000\n"
+"PO-Revision-Date: 2025-11-13 09:05+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -610,7 +610,7 @@ msgstr "Rolete"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:417
-#: plug-ins/common/file-jp2.c:1619 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-jp2.c:1620 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
@@ -659,7 +659,7 @@ msgid "Border size unit of measure"
 msgstr "Merska enota velikosti obrobe"
 
 #: plug-ins/common/border-average.c:150
-msgid "Bucket Si_ze"
+msgid "Bucket si_ze"
 msgstr "Velikost _vedra"
 
 #: plug-ins/common/border-average.c:151
@@ -1220,7 +1220,7 @@ msgstr "Graf trenutnih nastavitev"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:727 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:730 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1210 plug-ins/gfig/gfig-dialog.c:1355
 #: plug-ins/ifs-compose/ifs-compose.c:1213
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -2437,7 +2437,7 @@ msgid "Filter box radius"
 msgstr "Polmer polja filtra"
 
 #: plug-ins/common/despeckle.c:193
-msgid "_Filter Type"
+msgid "_Filter type"
 msgstr "Vrsta _filtra"
 
 #: plug-ins/common/despeckle.c:194
@@ -2608,7 +2608,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
-#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1375
+#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1376
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
@@ -2693,7 +2693,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:358
-#: plug-ins/common/file-jp2.c:1804 plug-ins/common/file-jpegxl.c:1389
+#: plug-ins/common/file-jp2.c:1813 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
@@ -4071,7 +4071,7 @@ msgid "CPRL"
 msgstr "CPRL"
 
 #: plug-ins/common/file-jp2.c:366 plug-ins/common/file-jp2.c:454
-msgid "Co_mpliance Profile"
+msgid "Co_mpliance profile"
 msgstr "Profil s_kladnosti"
 
 #: plug-ins/common/file-jp2.c:367 plug-ins/common/file-jp2.c:455
@@ -4145,66 +4145,71 @@ msgstr "Ime barvnega profila, uporabljenega za izvoz CMYK."
 msgid "Profile: %s"
 msgstr "Profil: %s"
 
-#: plug-ins/common/file-jp2.c:1383 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2.c:1384 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "»%s« ni mogoče odpreti za branje."
 
-#: plug-ins/common/file-jp2.c:1392
+#: plug-ins/common/file-jp2.c:1393
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "Dekodirnika za »%s« ni uspelo inicializirati, je zmanjkalo pomnilnika?"
 
-#: plug-ins/common/file-jp2.c:1408
+#: plug-ins/common/file-jp2.c:1409
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Parametrov dekodirnika za »%s« ni mogoče nastaviti."
 
-#: plug-ins/common/file-jp2.c:1416
+#: plug-ins/common/file-jp2.c:1417
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "Glave JP2 iz »%s« ni mogoče prebrati."
 
-#: plug-ins/common/file-jp2.c:1424
+#: plug-ins/common/file-jp2.c:1425
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "Slike JP2 v »%s« ni mogoče dekodirati."
 
-#: plug-ins/common/file-jp2.c:1432
+#: plug-ins/common/file-jp2.c:1433
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "Slike JP2 v »%s« ni mogoče dekompresirati."
 
-#: plug-ins/common/file-jp2.c:1463
+#: plug-ins/common/file-jp2.c:1464
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "Slike CIELAB JP2 v »%s« ni mogoče dekodirati."
 
-#: plug-ins/common/file-jp2.c:1520
+#: plug-ins/common/file-jp2.c:1521
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "Neznan barvni prostor v kodnem toku JP2 »%s«."
 
-#: plug-ins/common/file-jp2.c:1531
+#: plug-ins/common/file-jp2.c:1532
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "Slike YCbCr JP2 »%s« ni mogoče pretvoriti v RGB."
 
-#: plug-ins/common/file-jp2.c:1541
+#: plug-ins/common/file-jp2.c:1542
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "Slike CMYK JP2 »%s« ni mogoče pretvoriti v RGB."
 
-#: plug-ins/common/file-jp2.c:1553
+#: plug-ins/common/file-jp2.c:1554
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "Slike xvYCC JP2 »%s« ni mogoče pretvoriti v RGB."
 
-#: plug-ins/common/file-jp2.c:1580
+#: plug-ins/common/file-jp2.c:1581
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Nepodprti barvni prostor v sliki JP2 »%s«."
+
+#: plug-ins/common/file-jp2.c:1635
+#, c-format
+msgid "Defined row size is too large in JP2 image '%s'."
+msgstr "Določena velikost vrstice je prevelika v sliki JP2 »%s«."
 
 #: plug-ins/common/file-jpegxl.c:141 plug-ins/common/file-jpegxl.c:168
 msgid "JPEG XL image"
@@ -7695,11 +7700,11 @@ msgid "Action"
 msgstr "Dejanje"
 
 #: plug-ins/common/hot.c:280
-msgid "Reduce Luminance"
+msgid "Reduce luminance"
 msgstr "Zmanjšaj svetlost"
 
 #: plug-ins/common/hot.c:281
-msgid "Reduce Saturation"
+msgid "Reduce saturation"
 msgstr "Zmanjšaj nasičenost"
 
 #: plug-ins/common/hot.c:282
@@ -7949,7 +7954,7 @@ msgstr ""
 "namestili v menije."
 
 #: plug-ins/common/plugin-browser.c:372
-#: plug-ins/filter-browser/filter-browser.c:608
+#: plug-ins/filter-browser/filter-browser.c:610
 msgid "Searching by name"
 msgstr "Iskanje po imenu"
 
@@ -7963,7 +7968,7 @@ msgstr[2] "%d vstavka"
 msgstr[3] "%d vstavki"
 
 #: plug-ins/common/plugin-browser.c:397
-#: plug-ins/filter-browser/filter-browser.c:675
+#: plug-ins/filter-browser/filter-browser.c:677
 msgid "No matches for your query"
 msgstr "Ni zadetkov"
 
@@ -7977,7 +7982,7 @@ msgstr[2] "%d vstavka ustrezata povpraševanju"
 msgstr[3] "%d vstavki ustrezajo povpraševanju"
 
 #: plug-ins/common/plugin-browser.c:531
-#: plug-ins/filter-browser/filter-browser.c:677
+#: plug-ins/filter-browser/filter-browser.c:679
 msgid "No matches"
 msgstr "Ni zadetkov"
 
@@ -8413,7 +8418,7 @@ msgid "Draw a border of spikes around the image"
 msgstr "Nariši rob iz žarkov okoli slike"
 
 #: plug-ins/common/sparkle.c:270
-msgid "_Color type"
+msgid "_Color Type"
 msgstr "Vrsta _barve"
 
 #: plug-ins/common/sparkle.c:271
@@ -8950,11 +8955,11 @@ msgid "Filter length"
 msgstr "Dolžina filtra"
 
 #: plug-ins/common/van-gogh-lic.c:198
-msgid "_Noise Magnitude"
+msgid "_Noise magnitude"
 msgstr "Obseg _šuma"
 
 #: plug-ins/common/van-gogh-lic.c:199
-msgid "Noise Magnitude"
+msgid "Noise magnitude"
 msgstr "Obseg šuma"
 
 #: plug-ins/common/van-gogh-lic.c:204
@@ -11824,17 +11829,17 @@ msgstr "Spodletelo dekodiranje sličice animiranega WebP iz »%s«"
 msgid "Frame %d (%dms)"
 msgstr "Sličica %d (%d ms)"
 
-#: plug-ins/filter-browser/filter-browser.c:286
-#: plug-ins/filter-browser/filter-browser.c:321
+#: plug-ins/filter-browser/filter-browser.c:288
+#: plug-ins/filter-browser/filter-browser.c:323
 msgid "Allowed values:"
 msgstr "Dovoljene vrednosti:"
 
-#: plug-ins/filter-browser/filter-browser.c:419
+#: plug-ins/filter-browser/filter-browser.c:421
 #, c-format
 msgid "Operation name: %s"
 msgstr "Ime operacije: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:432
+#: plug-ins/filter-browser/filter-browser.c:434
 #, c-format
 msgid "Categories: %s"
 msgstr "Kategorije: %s"
@@ -11845,7 +11850,7 @@ msgstr "Kategorije: %s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:462
+#: plug-ins/filter-browser/filter-browser.c:464
 #: plug-ins/gradient-flare/gradient-flare.c:2952
 #: plug-ins/gradient-flare/gradient-flare.c:3702
 #: plug-ins/gradient-flare/gradient-flare.c:3804
@@ -11853,28 +11858,28 @@ msgstr "Kategorije: %s"
 msgid "Parameters"
 msgstr "Parametri"
 
-#: plug-ins/filter-browser/filter-browser.c:494
+#: plug-ins/filter-browser/filter-browser.c:496
 msgid "Additional Information"
 msgstr "Dodatne podrobnosti"
 
-#: plug-ins/filter-browser/filter-browser.c:500
+#: plug-ins/filter-browser/filter-browser.c:502
 #, c-format
 msgid "License: %s"
 msgstr "Dovoljenje: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:611
+#: plug-ins/filter-browser/filter-browser.c:613
 msgid "Searching by title"
 msgstr "Iskanje po imenu"
 
-#: plug-ins/filter-browser/filter-browser.c:614
+#: plug-ins/filter-browser/filter-browser.c:616
 msgid "Searching by description"
 msgstr "Iskanje po opisu"
 
-#: plug-ins/filter-browser/filter-browser.c:617
+#: plug-ins/filter-browser/filter-browser.c:619
 msgid "Searching by category"
 msgstr "Iskanje po kategorijah"
 
-#: plug-ins/filter-browser/filter-browser.c:682
+#: plug-ins/filter-browser/filter-browser.c:684
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
@@ -11883,7 +11888,7 @@ msgstr[1] "%d vstavek ustreza povpraševanju filtra"
 msgstr[2] "%d vstavka ustrezata povpraševanju filtra"
 msgstr[3] "%d vstavki ustrezajo povpraševanju filtra"
 
-#: plug-ins/filter-browser/filter-browser.c:688
+#: plug-ins/filter-browser/filter-browser.c:690
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
@@ -11892,31 +11897,31 @@ msgstr[1] "%d filter"
 msgstr[2] "%d fittra"
 msgstr[3] "%d filtti"
 
-#: plug-ins/filter-browser/filter-browser.c:721
+#: plug-ins/filter-browser/filter-browser.c:724
 msgid "GEGL Filter Browser"
 msgstr "Brskalnik filtrov GEGL"
 
-#: plug-ins/filter-browser/filter-browser.c:738
+#: plug-ins/filter-browser/filter-browser.c:741
 msgid "by name"
 msgstr "po imenu"
 
-#: plug-ins/filter-browser/filter-browser.c:739
+#: plug-ins/filter-browser/filter-browser.c:742
 msgid "by title"
 msgstr "po naslovu"
 
-#: plug-ins/filter-browser/filter-browser.c:740
+#: plug-ins/filter-browser/filter-browser.c:743
 msgid "by description"
 msgstr "po opisu"
 
-#: plug-ins/filter-browser/filter-browser.c:827
+#: plug-ins/filter-browser/filter-browser.c:832
 msgid "_GEGL Filter Browser"
 msgstr "Brskalnik filtrov _GEGL"
 
-#: plug-ins/filter-browser/filter-browser.c:832
+#: plug-ins/filter-browser/filter-browser.c:837
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "Prikaži informacije o razpoložljivih operacijah GEGL (tj. filtrih)."
 
-#: plug-ins/filter-browser/filter-browser.c:834
+#: plug-ins/filter-browser/filter-browser.c:839
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
@@ -12274,11 +12279,11 @@ msgid "Render fractal art"
 msgstr "Upodobi umetniški fraktal"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:256
-msgid "Fr_actal Type"
+msgid "Fr_actal type"
 msgstr "Vrst_a fraktala"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:257
-msgid "Type of Fractal Pattern"
+msgid "Type of fractal pattern"
 msgstr "Vrsta vzorca fraktala"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:258
@@ -12361,19 +12366,19 @@ msgid "C_X"
 msgstr "C_X"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:303
-msgid "cx value"
-msgstr "Vrednost cx"
+msgid "CX value"
+msgstr "Vrednost CX"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:308
 msgid "C_Y"
 msgstr "C_Y"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:309
-msgid "cy value"
-msgstr "Vrednost cy"
+msgid "CY value"
+msgstr "Vrednost CY"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:314
-msgid "Color mode"
+msgid "Color Mode"
 msgstr "Barvni način"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:315
@@ -12818,8 +12823,8 @@ msgid "Antialiasing"
 msgstr "Glajenje robov"
 
 #: plug-ins/gfig/gfig-dialog.c:1275
-msgid "Max undo:"
-msgstr "Največje število razveljavitev:"
+msgid "Max undo"
+msgstr "Največje število razveljavitev"
 
 #: plug-ins/gfig/gfig-dialog.c:1282 plug-ins/gimpressionist/general.c:194
 msgid "Transparent"
@@ -12847,16 +12852,16 @@ msgid "Radius"
 msgstr "Radij"
 
 #: plug-ins/gfig/gfig-dialog.c:1384
-msgid "Grid spacing:"
-msgstr "Razmik mreže:"
+msgid "Grid spacing"
+msgstr "Razmik mreže"
 
 #: plug-ins/gfig/gfig-dialog.c:1399
-msgid "Polar grid sectors desired:"
-msgstr "Želeni sektorji polarne mreže:"
+msgid "Polar grid sectors desired"
+msgstr "Želeni sektorji polarne mreže"
 
 #: plug-ins/gfig/gfig-dialog.c:1415
-msgid "Polar grid radius interval:"
-msgstr "Interval polmera polarne mreže:"
+msgid "Polar grid radius interval"
+msgstr "Interval polmera polarne mreže"
 
 #: plug-ins/gfig/gfig-dialog.c:1431
 msgid "Isometric"
@@ -12893,8 +12898,8 @@ msgid "Grid color:"
 msgstr "Barva mreže:"
 
 #: plug-ins/gfig/gfig-dialog.c:1689
-msgid "Sides:"
-msgstr "Strani:"
+msgid "Sides"
+msgstr "Strani"
 
 #: plug-ins/gfig/gfig-dialog.c:1698
 msgid "Right"
@@ -15390,6 +15395,7 @@ msgid "Position of viewpoint (x,y,z)"
 msgstr "Položaj gledišča (x,y,z)"
 
 #: plug-ins/map-object/map-object-main.c:154
+#: plug-ins/map-object/map-object-main.c:186
 #: plug-ins/map-object/map-object-main.c:202
 msgid "Y"
 msgstr "Y"
@@ -15411,10 +15417,6 @@ msgstr "Položaj predmeta (x,y,z)"
 #: plug-ins/map-object/map-object-main.c:192
 msgid "First axis of object (x,y,z)"
 msgstr "Prva os predmeta (x,y,z)"
-
-#: plug-ins/map-object/map-object-main.c:186
-msgid "y"
-msgstr "y"
 
 #: plug-ins/map-object/map-object-main.c:198
 #: plug-ins/map-object/map-object-main.c:203
@@ -15455,15 +15457,15 @@ msgid "Type of lightsource"
 msgstr "Vrsta vira svetlobe"
 
 #: plug-ins/map-object/map-object-main.c:231
-msgid "Point Light"
+msgid "Point light"
 msgstr "Točkasta svetloba"
 
 #: plug-ins/map-object/map-object-main.c:232
-msgid "Directional Light"
+msgid "Directional light"
 msgstr "Usmerjena svetloba"
 
 #: plug-ins/map-object/map-object-main.c:233
-msgid "No Light"
+msgid "No light"
 msgstr "Brez svetlobe"
 
 #: plug-ins/map-object/map-object-main.c:239
