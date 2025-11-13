@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-13 02:13+0000\n"
-"PO-Revision-Date: 2025-10-13 10:23+0200\n"
+"POT-Creation-Date: 2025-11-11 03:20+0000\n"
+"PO-Revision-Date: 2025-11-11 08:27+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org\n"
 "Language: sl\n"
@@ -201,7 +201,7 @@ msgstr "_Izvozi histogram ..."
 #. TODO: GFile props still don't have labels + only load existing files
 #. (here we likely want to create a new file).
 #: plug-ins/python/histogram-export.py:224
-msgid "Histogram File"
+msgid "Histogram file"
 msgstr "Datoteka histograma"
 
 #: plug-ins/python/histogram-export.py:225
@@ -209,23 +209,23 @@ msgid "Histogram export file"
 msgstr "Izvozna datoteka histograma"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "_Bucket Size"
+msgid "_Bucket size"
 msgstr "Velikost _vedra"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "Bucket Size"
+msgid "Bucket size"
 msgstr "Velikost vedra"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample _Average"
+msgid "Sample _average"
 msgstr "Vzorči povpre_čje"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample Average"
+msgid "Sample average"
 msgstr "Vzorči povprečje"
 
 #: plug-ins/python/histogram-export.py:232
-msgid "Pixel Count"
+msgid "Pixel count"
 msgstr "Število slik. točk"
 
 #: plug-ins/python/histogram-export.py:233
@@ -237,7 +237,7 @@ msgid "Percent"
 msgstr "Odstotek"
 
 #: plug-ins/python/histogram-export.py:235
-msgid "Output _format"
+msgid "Output _Format"
 msgstr "Izho_dni zapis"
 
 #: plug-ins/python/histogram-export.py:235
@@ -690,8 +690,8 @@ msgstr "Epitrohoida"
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
-msgid "Curve Type"
+#: plug-ins/python/spyro-plus.py:1487
+msgid "Curve type"
 msgstr "Vrsta krivulje"
 
 #: plug-ins/python/spyro-plus.py:1488
@@ -751,7 +751,7 @@ msgstr ""
 "je sorazmerna s številom zobcev."
 
 #: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
-msgid "Fixed Gear Teeth"
+msgid "Fixed gear teeth"
 msgstr "Zobci fiksnega zobnika"
 
 #: plug-ins/python/spyro-plus.py:1558
@@ -763,7 +763,7 @@ msgstr ""
 "številom zobcev."
 
 #: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
-msgid "Moving Gear Teeth"
+msgid "Moving gear teeth"
 msgstr "Zobci gibljivega zobnika"
 
 #: plug-ins/python/spyro-plus.py:1566
@@ -779,7 +779,7 @@ msgstr ""
 "luknja na robu zobnika."
 
 #: plug-ins/python/spyro-plus.py:1588
-msgid "Hole Number"
+msgid "Hole number"
 msgstr "Številka luknje"
 
 #: plug-ins/python/spyro-plus.py:1589
@@ -791,7 +791,7 @@ msgstr ""
 "središča. Najvišja številka luknje se za vsak zobnik razlikuje."
 
 #: plug-ins/python/spyro-plus.py:1600
-msgid "Flower Petals"
+msgid "Flower petals"
 msgstr "Cvetni listi"
 
 #: plug-ins/python/spyro-plus.py:1601
@@ -799,7 +799,7 @@ msgid "The number of petals in the pattern."
 msgstr "Število cvetnih listov v vzorcu."
 
 #: plug-ins/python/spyro-plus.py:1606
-msgid "Petal Skip"
+msgid "Petal skip"
 msgstr "Preskoči cvetni list"
 
 #: plug-ins/python/spyro-plus.py:1607
@@ -809,7 +809,7 @@ msgstr ""
 "lista."
 
 #: plug-ins/python/spyro-plus.py:1612
-msgid "Hole Radius(%)"
+msgid "Hole radius(%)"
 msgstr "Polmer luknje (%)"
 
 #: plug-ins/python/spyro-plus.py:1613
@@ -990,6 +990,10 @@ msgstr ""
 msgid "Spyrogimp..."
 msgstr "Spiro-gimp ..."
 
+#: plug-ins/python/spyro-plus.py:2267
+msgid "Curve Type"
+msgstr "Vrsta krivulje"
+
 #: plug-ins/python/spyro-plus.py:2271
 msgid "rack"
 msgstr "Pladenj"
@@ -1019,7 +1023,7 @@ msgstr ""
 "liki."
 
 #: plug-ins/python/spyro-plus.py:2285
-msgid "Fi_xed Gear Teeth"
+msgid "Fi_xed gear teeth"
 msgstr "Zobci fi_ksnega zobnika"
 
 #: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
@@ -1027,11 +1031,11 @@ msgid "Number of teeth for fixed gear."
 msgstr "Število zobcev fiksnega zobatega kolesa."
 
 #: plug-ins/python/spyro-plus.py:2288
-msgid "Mo_ving Gear Teeth"
+msgid "Mo_ving gear teeth"
 msgstr "Zobci giblji_vega zobnika"
 
 #: plug-ins/python/spyro-plus.py:2291
-msgid "_Hole Radius (%)"
+msgid "_Hole radius (%)"
 msgstr "Pol_mer luknje (%)"
 
 #: plug-ins/python/spyro-plus.py:2292
