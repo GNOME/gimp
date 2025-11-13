@@ -345,7 +345,10 @@ gimp_item_list_named_new (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   for (iter = items; iter; iter = iter->next)
-    g_return_val_if_fail (g_type_is_a (G_OBJECT_TYPE (iter->data), item_type), NULL);
+    {
+      g_return_val_if_fail (iter->data && ((GTypeInstance*) (iter->data))->g_class, NULL);
+      g_return_val_if_fail (g_type_is_a (G_OBJECT_TYPE (iter->data), item_type), NULL);
+    }
 
   if (! items)
     {
