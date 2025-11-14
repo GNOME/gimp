@@ -126,6 +126,7 @@ GimpSpinScale button {
     padding: 0 1px 0 1px;
 }
 
+
 /* Create appearance of toggle group for enum radio buttons */
 buttonbox button.radio
 {
@@ -141,26 +142,26 @@ buttonbox button.radio image
 
 buttonbox.horizontal button.radio
 {
-  border-top:    1px solid @edge-border-color;
-  border-bottom: 1px solid @edge-border-color;
-  border-left:   1px solid @edge-border-color;
+  border-top:    1px solid @borders;
+  border-bottom: 1px solid @borders;
+  border-left:   1px solid @borders;
 }
 
 buttonbox.horizontal button.radio:last-child
 {
-  border-right: 1px solid @edge-border-color;
+  border-right: 1px solid @borders;
 }
 
 buttonbox.vertical button.radio
 {
-  border-top:   1px solid @edge-border-color;
-  border-left:  1px solid @edge-border-color;
-  border-right: 1px solid @edge-border-color;
+  border-top:   1px solid @borders;
+  border-left:  1px solid @borders;
+  border-right: 1px solid @borders;
 }
 
 buttonbox.vertical button.radio:last-child
 {
-  border-bottom: 1px solid @edge-border-color;
+  border-bottom: 1px solid @borders;
 }
 
 buttonbox.horizontal button.radio:not(:first-child)
