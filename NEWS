@@ -23,7 +23,8 @@ Core:
     its children layers' bounding box, but to the actual bounding box,
     which includes all lower layers. This also implies that empty
     pass-through group layers can have an effect which will work like
-    "adjustment layers" in other software.
+    "adjustment layers" in other software. Masks bounding box on empty
+    pass-through groups should also be the size of the group's render.
   - New actions "layers-rasterize" and "layers-revert-rasterize" to
     respectively rasterize and un-rasterize text, link or vector layers
     (rasterizing these layers is now always revertable, though any
@@ -58,9 +59,13 @@ Core:
     Linux or macOS. As a consequence build option -Dwin32-debug-console
     has been removed. Ctrl-C is properly handled too, and output
     contains colors.
-  - Paths attached to a vector layer cannot be deleted anymore.
+  - Paths attached to a vector layer cannot be deleted or merged anymore.
   - Text layer rendering has been made much more robust, even when with
     very big dimensions.
+  - GIMP on Windows is now able to detect if it is being run from either
+    console or shortcut, and use the python.exe interpreter in the
+    former case, or pythonw.exe in latter case (silent output).
+  - Fixed vulnerability: ZDI-CAN-28376 (XCF loading).
 
 Tools:
 
@@ -131,6 +136,7 @@ Plug-Ins:
   - Replacing scale entries by spin scale widgets in various plug-ins.
   - Animation Playback and ImageMap plug-ins can now be closed with
     Escape like other plug-ins.
+  - Fixed vulnerability: ZDI-CAN-28248 (JP2 image loading).
 
 API:
 
@@ -225,6 +231,9 @@ API:
       * gimp_rasterizable_restore
       * gimp_file_procedure_get_meta
       * gimp_file_procedure_set_meta
+      * gimp_images_close_popup
+      * gimp_images_popup
+      * gimp_images_set_popup
     + Removed functions:
       * gimp_vector_layer_discard (since 3.1.4, but never in a stable
         release).
@@ -246,6 +255,16 @@ API:
     + gimp_drawable_get_thumbnail_data() and
       gimp_drawable_get_sub_thumbnail_data() implementations updated to
       always return sRGB(A) 8-bit.
+  - libgimpui:
+    + New functions:
+      * gimp_image_chooser_get_image
+      * gimp_image_chooser_get_label
+      * gimp_image_chooser_get_type
+      * gimp_image_chooser_new
+      * gimp_image_chooser_set_image
+      * gimp_prop_image_chooser_new
+    + New classes:
+      * GimpImageChooser
 
 Build:
 
@@ -257,6 +276,9 @@ Build:
   - Build option -Dwin32-debug-console removed (cf. Core section).
   - Windows builds: GEGL is not built anymore with Matting Levin because
     it is highly unstable (crashes) on this OS.
+  - Flatpak nightly builds will now show the correct version on `flatpak
+    list`.
+  - Our .exe installer will now have a dark mode (with Inno Setup 6.6.0).
 
 
 Overview of Changes from GIMP 3.1.2 to GIMP 3.1.4
