@@ -52,21 +52,33 @@ $env:PATH = "${win_sdk_path}bin\${win_sdk_version}.0\$cpu_arch;${win_sdk_path}Ap
 ## msstore-cli (ONLY FOR RELEASES)
 if ("$CI_COMMIT_TAG" -eq (git describe --tags --exact-match))
   {
+    #.NET runtime required by msstore-cli (and its PowerShell counterpart)
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    $msstore_tag = (Invoke-WebRequest https://api.github.com/repos/microsoft/msstore-cli/releases | ConvertFrom-Json)[0].tag_name
-    
-    #.NET runtime required by msstore-cli
-    $xmlObject = New-Object XML
-    $xmlObject.Load("https://raw.githubusercontent.com/microsoft/msstore-cli/refs/heads/rel/$msstore_tag/MSStore.API/MSStore.API.csproj")
-    $dotnet_major = ($xmlObject.Project.PropertyGroup.TargetFramework | Out-String) -replace "`r`n",'' -replace 'net',''
-    $dotnet_tag = ((Invoke-WebRequest https://api.github.com/repos/dotnet/runtime/releases | ConvertFrom-Json).tag_name | Select-String "$dotnet_major" | Select-Object -First 1).ToString() -replace 'v',''
-    if (-not (Test-Path "$Env:ProgramFiles\dotnet\shared\Microsoft.NETCore.App\$dotnet_major*\"))
+    $msstore_tag = (Invoke-WebRequest https://api.github.com/repos/microsoft/msstore-cli/releases/latest | ConvertFrom-Json).tag_name
+    $dotnet_msstore = ([xml](Invoke-WebRequest "https://raw.githubusercontent.com/microsoft/msstore-cli/refs/heads/rel/$msstore_tag/MSStore.API/MSStore.API.csproj").Content).Project.PropertyGroup.TargetFramework
+    $powershell_tag = (Invoke-WebRequest https://api.github.com/repos/PowerShell/PowerShell/releases/latest | ConvertFrom-Json).tag_name
+    $dotnet_powershell = ([xml](Invoke-WebRequest "https://raw.githubusercontent.com/PowerShell/PowerShell/refs/tags/$powershell_tag/PowerShell.Common.props").Content).Project.PropertyGroup.TargetFramework
+    foreach ($dotnet in $dotnet_msstore, $dotnet_powershell)
       {
-        Write-Output "(INFO): downloading .NET v$dotnet_tag"
-        Invoke-WebRequest https://aka.ms/dotnet/$dotnet_major/dotnet-runtime-win-$cpu_arch.zip -OutFile ${PARENT_DIR}dotnet-runtime.zip
-        Expand-Archive ${PARENT_DIR}dotnet-runtime.zip ${PARENT_DIR}dotnet-runtime -Force
-        $env:PATH = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime);" + $env:PATH
-        $env:DOTNET_ROOT = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime)"
+        $dotnet_major = ($dotnet | Out-String) -replace "`r`n",'' -replace 'net',''
+        $dotnet_tag = ((Invoke-WebRequest https://api.github.com/repos/dotnet/runtime/releases | ConvertFrom-Json).tag_name | Select-String "$dotnet_major" | Select-Object -First 1).ToString() -replace 'v',''
+        if (-not (Test-Path "$Env:ProgramFiles\dotnet\shared\Microsoft.NETCore.App\$dotnet_major*\") -and -not (Test-Path "${PARENT_DIR}dotnet-runtime"))
+          {
+            Write-Output "(INFO): downloading .NET v$dotnet_tag"
+            Invoke-WebRequest https://aka.ms/dotnet/$dotnet_major/dotnet-runtime-win-$cpu_arch.zip -OutFile ${PARENT_DIR}dotnet-runtime.zip
+            Expand-Archive ${PARENT_DIR}dotnet-runtime.zip ${PARENT_DIR}dotnet-runtime -Force
+            $env:PATH = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime);" + $env:PATH
+            $env:DOTNET_ROOT = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime)"
+          }
+      }
+
+    #powershell required by msstore-cli. See: https://github.com/microsoft/msstore-cli/issues/70
+    if (-not (Test-Path Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\App Paths\pwsh.exe') -and $PSVersionTable.PSVersion.Major -lt 6)
+      {
+        Write-Output "(INFO): downloading PowerShell $powershell_tag"
+        Invoke-WebRequest https://github.com/PowerShell/PowerShell/releases/download/$powershell_tag/PowerShell-$($powershell_tag -replace 'v','')-win-$cpu_arch.zip -OutFile ${PARENT_DIR}PowerShell.zip
+        Expand-Archive ${PARENT_DIR}PowerShell.zip ${PARENT_DIR}PowerShell -Force
+        $env:PATH = "$(Resolve-Path $PWD\${PARENT_DIR}PowerShell);" + $env:PATH
       }
 
     #msstore-cli itself
@@ -471,20 +483,20 @@ if ("$CI_COMMIT_TAG" -eq (git describe --tags --exact-match))
     ### Set product_id (which is not confidential) needed by HTTP calls of some commands
     if ($GIMP_UNSTABLE -or $GIMP_RC_VERSION)
       {
-        $PRODUCT_ID="9NZVDVP54JMR"
+        $env:PRODUCT_ID="9NZVDVP54JMR"
       }
     else
       {
-        $PRODUCT_ID="9PNSJCLXDZ0V"
+        $env:PRODUCT_ID="9PNSJCLXDZ0V"
       }
 
     ## Create submission and upload .msixupload file to it
-    msstore publish $OUTPUT_DIR\$MSIX_ARTIFACT -id $PRODUCT_ID -nc
+    msstore publish $OUTPUT_DIR\$MSIX_ARTIFACT -id $env:PRODUCT_ID -nc
 
-    ## Update submission info (if PS6 or up. See: https://github.com/microsoft/msstore-cli/issues/70)
-    if ($PSVersionTable.PSVersion.Major -ge 6)
+    ## Update submission info (if PS6 or up. Check the section 1 of this script)
+    pwsh
       {
-        $jsonObject = msstore submission get $PRODUCT_ID | ConvertFrom-Json -AsHashtable
+        $jsonObject = msstore submission get $env:PRODUCT_ID | ConvertFrom-Json -AsHashtable
         ###Get changelog from Linux appdata
         $xmlObject = New-Object XML
         $xmlObject.Load("$PWD\desktop\org.gimp.GIMP.appdata.xml.in.in")
@@ -496,10 +508,10 @@ if ("$CI_COMMIT_TAG" -eq (git describe --tags --exact-match))
         $store_changelog = ($xmlObject.component.releases.release[0].description.SelectNodes(".//p | .//li") | ForEach-Object { $text = ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' '; if ($_.Name -eq 'li') { "- $text" } else { $text } } ) -join "`n"
         $jsonObject."Listings"."en-us"."BaseListing".'ReleaseNotes' = "$store_changelog"
         ###Send submission info
-        msstore submission updateMetadata $PRODUCT_ID ($jsonObject | ConvertTo-Json -Depth 100)
+        msstore submission updateMetadata $env:PRODUCT_ID ($jsonObject | ConvertTo-Json -Depth 100)
       }
 
     ## Start certification then publishing
-    msstore submission publish $PRODUCT_ID
+    msstore submission publish $env:PRODUCT_ID
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_submission$([char]13)$([char]27)[0K"
   }
