@@ -25,3 +25,7 @@ paned.vertical > separator {
 button:not(.flat) {
   box-shadow: 0 1px @extreme-bg-color inset;
 }
+
+buttonbox button.radio:not(:checked) {
+  box-shadow: 0 1px @extreme-bg-color inset;
+}

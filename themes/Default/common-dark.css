@@ -42,3 +42,7 @@ GimpSpinScale entry progress {
 progressbar trough progress {
   background-color: @hover-color;
 }
+
+buttonbox button.radio:not(:checked) {
+  background-color: @stronger-border-color;
+}
