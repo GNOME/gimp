@@ -907,6 +907,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   box = gimp_prop_enum_icon_box_new (config, "justify", "format-justify", 0, 0);
   gtk_widget_set_halign (box, GTK_ALIGN_START);
+  gtk_box_set_homogeneous (GTK_BOX (box), FALSE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("Justify:"), 0.0, 0.5,
                             box, 2);
