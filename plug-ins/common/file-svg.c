@@ -220,6 +220,8 @@ static gchar       * svg_get_color_string    (GimpVectorLayer       *layer,
                                               const gchar           *type);
 static gchar       * svg_get_hex_color       (GeglColor             *color);
 
+static gboolean     svg_drawable_has_transparency (GimpDrawable     *drawable);
+
 #if LIBRSVG_CHECK_VERSION(2, 46, 0)
 static GimpUnit      * svg_rsvg_to_gimp_unit (RsvgUnit               unit);
 static void              svg_destroy_surface (guchar                *pixels,
@@ -353,9 +355,9 @@ svg_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_choice_argument (procedure, "raster-export-format",
                                           _("Em_bed raster layers as"),
                                           NULL,
-                                          gimp_choice_new_with_values ("png",  EXPORT_FORMAT_PNG,  _("PNG"),                         NULL,
-                                                                       "jpeg", EXPORT_FORMAT_JPEG, _("JPEG"),                        NULL,
-                                                                       "none", EXPORT_FORMAT_NONE, _("Do not export raster layers"), NULL,
+                                          gimp_choice_new_with_values ("png",  EXPORT_FORMAT_PNG,  _("PNG (always)"),                            NULL,
+                                                                       "jpeg", EXPORT_FORMAT_JPEG, _("JPEG (for opaque images, PNG otherwise)"), NULL,
+                                                                       "none", EXPORT_FORMAT_NONE, _("Do not export raster layers"),             NULL,
                                                                        NULL),
                                           "png",
                                           G_PARAM_READWRITE);
@@ -2025,6 +2027,9 @@ svg_export_raster (GimpDrawable  *layer,
       has_layer_mask = TRUE;
     }
 
+  if (format_id == EXPORT_FORMAT_JPEG && svg_drawable_has_transparency (layer))
+    format_id = EXPORT_FORMAT_PNG;
+
   if (format_id == EXPORT_FORMAT_PNG)
     {
       temp_file = gimp_temp_file ("png");
@@ -2264,4 +2269,39 @@ svg_get_hex_color (GeglColor *color)
   hex_color = g_strdup_printf ("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
 
   return hex_color;
+}
+
+static gboolean
+svg_drawable_has_transparency (GimpDrawable *drawable)
+{
+  if (gimp_drawable_has_alpha (drawable))
+    {
+      GeglBuffer         *buffer;
+      GeglBufferIterator *iter;
+
+      buffer = gimp_drawable_get_buffer (drawable);
+      iter   = gegl_buffer_iterator_new (buffer, NULL, 0, babl_format ("A float"),
+                                         GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          gfloat *d = iter->items[0].data;
+          gint    i;
+
+          for (i = 0; i < iter->length; i++)
+            {
+              if (*d != 1.0)
+                {
+                  g_object_unref (buffer);
+                  return TRUE;
+                }
+
+              d++;
+            }
+        }
+
+      g_object_unref (buffer);
+    }
+
+  return FALSE;
 }
