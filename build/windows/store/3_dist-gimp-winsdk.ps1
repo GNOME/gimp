@@ -341,7 +341,7 @@ if (((Test-Path $arm64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem
   {
     $MSIXBUNDLE = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_neutral.msixbundle"
     $MSIX_ARTIFACT = "$MSIXBUNDLE"
-    if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
+    if (($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT) -and -not $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
       {
         $MSIXUPLOAD = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_x64_arm64_bundle.msixupload"
         $MSIX_ARTIFACT = "$MSIXUPLOAD"
@@ -357,7 +357,7 @@ if (((Test-Path $arm64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem
     Remove-Item _TempOutput/ -Recurse
 
     ## Make .msixupload (ONLY FOR RELEASES)
-    if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
+    if (($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT) -and -not $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
       {
         Write-Output "(INFO): creating $MSIXUPLOAD for submission"
         Compress-Archive -Path "*.appxsym","*.msixbundle" -DestinationPath "$MSIXUPLOAD.zip"
@@ -426,7 +426,7 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
 
 # 6.B. SIGN .MSIX OR .MSIXBUNDLE PACKAGE (NOT THE BINARIES)
 # (Partner Center does the same thing, for free, before publishing)
-if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
+if ((-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT) -and -not $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
   {
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}[collapsed=true]$([char]13)$([char]27)[0KSelf-signing $MSIX_ARTIFACT (for testing purposes)"
     $sign_output = & signtool sign /debug /fd sha256 /a /f $(Resolve-Path build\windows\store\pseudo-gimp*.pfx) /p eek $MSIX_ARTIFACT
