@@ -511,8 +511,6 @@ find "$USR_DIR/share/metainfo" \( -iname *.appdata.xml -and ! -iname $APP_ID*.ap
 sed -i "s/org.gimp.GIMP</${APP_ID}</g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
 sed -i "s/gimp.desktop/${APP_ID}.desktop/g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
 sed -i "/<release[^>]*date=\"TODO\"[^>]*>/,/<\/release>/d" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
-#https://github.com/probonopd/go-appimage/issues/272
-#v=$(awk -F"'" '/version:/ {print $2; exit}' meson.build | sed 's/-/~/' | tr '[:upper:]' '[:lower:]'); grep -q "version=\"$v\"" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml" || sed -i "/<releases>/a <release version=\"$v\" date=\"$(date --iso-8601)\" type=\"snapshot\"></release>" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K\n"
 
 
