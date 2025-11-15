@@ -4,7 +4,7 @@
                    ------------------------------
 
 This is a release candidate for upcoming version 3.2.0 of GIMP.
-This is not considered stable yet, unless testing tell us it is.
+This is not considered stable yet, unless testing tells us it is.
 Therefore save your work early and often. If you want a stable
 version, please use GIMP 3.0 instead.
 
@@ -78,7 +78,7 @@ also included in that page.
 4. Customizing
 ==============
 
-The look of GIMP's interface can be customized like any other GTK+ app
+The look of GIMP's interface can be customized like any other GTK app
 by editing files in `${XDG_CONFIG_HOME}/gtk-3.0/` (settings.ini and
 gtk.css in particular) or by using "themes" (ready-made customizations).
 Additionally, GIMP reads `${XDG_CONFIG_HOME}/GIMP/3.2/gimp.css` so you
