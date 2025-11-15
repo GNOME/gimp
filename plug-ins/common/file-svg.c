@@ -187,15 +187,18 @@ static void          svg_export_layers       (GimpItem             **layers,
 static void          svg_export_group_header (GimpGroupLayer        *group,
                                               gint                   group_id,
                                               GString               *str,
+                                              GimpProcedureConfig   *config,
                                               gchar                 *spacing);
 static void          svg_export_path         (GimpVectorLayer       *layer,
                                               gint                   vector_id,
                                               GString               *str,
+                                              GimpProcedureConfig   *config,
                                               gchar                 *spacing);
 static gchar       * svg_export_path_data    (GimpPath              *paths);
 static void          svg_export_text         (GimpTextLayer         *layer,
                                               gint                   text_id,
                                               GString               *str,
+                                              GimpProcedureConfig   *config,
                                               gchar                 *spacing);
 static void          svg_export_text_lines   (GimpTextLayer         *layer,
                                               GString               *str,
@@ -203,16 +206,19 @@ static void          svg_export_text_lines   (GimpTextLayer         *layer,
 static void          svg_export_link_layer   (GimpLinkLayer         *layer,
                                               gint                   link_id,
                                               GString               *str,
+                                              GimpProcedureConfig   *config,
                                               gchar                 *spacing);
 static void          svg_export_raster       (GimpDrawable          *layer,
                                               gint                  *layer_ids,
                                               GString               *str,
                                               gint                   format_id,
+                                              GimpProcedureConfig   *config,
                                               gchar                 *spacing,
                                               GError               **error);
 static void          svg_export_layer_mask   (GimpLayerMask         *mask,
                                               gint                  *layer_ids,
                                               GString               *str,
+                                              GimpProcedureConfig   *config,
                                               gchar                 *spacing,
                                               GError               **error);
 
@@ -359,6 +365,16 @@ svg_create_procedure (GimpPlugIn  *plug_in,
                                                                        NULL),
                                           "png",
                                           G_PARAM_READWRITE);
+
+      gimp_procedure_add_boolean_argument (procedure, "inkscape-svg",
+                                           _("As In_kscape SVG"),
+                                           _("Include Inkscape-specific "
+                                             "attributes in exported SVG."
+                                             "The exported SVG may not be "
+                                             "compatible with all viewers."),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
+
     }
 
   return procedure;
@@ -1134,7 +1150,8 @@ export_dialog (GimpImage     *image,
       gtk_box_reorder_child (GTK_BOX (box), hint, 0);
     }
 
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "svg-box", NULL);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "svg-box",
+                              "inkscape-svg", NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
@@ -1515,7 +1532,7 @@ svg_export_layers (GimpItem             **layers,
             {
               svg_export_group_header (GIMP_GROUP_LAYER (items[i]),
                                        layer_ids[LAYER_ID_GROUP]++, str,
-                                       extra_spacing);
+                                       config, extra_spacing);
               svg_export_layers (NULL, GIMP_GROUP_LAYER (items[i]), layer_ids,
                                  str, config, extra_spacing, error);
               g_string_append_printf (str, "%s</g>\n", extra_spacing);
@@ -1528,27 +1545,27 @@ svg_export_layers (GimpItem             **layers,
                   GimpVectorLayer *layer = GIMP_VECTOR_LAYER (items[i]);
 
                   svg_export_path (layer, layer_ids[LAYER_ID_VECTOR]++, str,
-                                   extra_spacing);
+                                   config, extra_spacing);
                 }
               else if (GIMP_IS_TEXT_LAYER (items[i]))
                 {
                   GimpTextLayer *layer = GIMP_TEXT_LAYER (items[i]);
 
                   svg_export_text (layer, layer_ids[LAYER_ID_TEXT]++, str,
-                                   extra_spacing);
+                                   config, extra_spacing);
                 }
               else if (GIMP_IS_LINK_LAYER (items[i]))
                 {
                   GimpLinkLayer *layer = GIMP_LINK_LAYER (items[i]);
 
                   svg_export_link_layer (layer, layer_ids[LAYER_ID_LINK]++, str,
-                                         extra_spacing);
+                                         config, extra_spacing);
                 }
             }
           else if (format_id != EXPORT_FORMAT_NONE)
             {
               svg_export_raster (GIMP_DRAWABLE (items[i]), layer_ids, str,
-                                 format_id, extra_spacing, error);
+                                 format_id, config, extra_spacing, error);
             }
         }
       gimp_progress_update ((gdouble) (n_layers - i) / n_layers);
@@ -1561,19 +1578,32 @@ svg_export_layers (GimpItem             **layers,
 }
 
 static void
-svg_export_group_header (GimpGroupLayer *group,
-                         gint            group_id,
-                         GString        *str,
-                         gchar          *spacing)
+svg_export_group_header (GimpGroupLayer      *group,
+                         gint                 group_id,
+                         GString             *str,
+                         GimpProcedureConfig *config,
+                         gchar               *spacing)
 {
-  gchar   *name;
-  gdouble  opacity;
+  gchar    *name;
+  gdouble   opacity;
+  gboolean  inkscape_svg = FALSE;
+
+  g_object_get (config, "inkscape-svg", &inkscape_svg, NULL);
 
   name    = g_strdup_printf ("group%d", group_id);
   opacity = gimp_layer_get_opacity (GIMP_LAYER (group)) / 100.0f;
 
-  g_string_append_printf (str, "%s<g id=\"%s\" opacity=\"%f\">\n",
-                          spacing, name, opacity);
+  if (inkscape_svg)
+    g_string_append_printf (str,
+                            "%s<g id=\"%s\" "
+                            "inkscape:label=\"%s\" "
+                            "inkscape:groupmode=\"layer\" "
+                            "opacity=\"%f\">\n",
+                            spacing, name,
+                            gimp_item_get_name (GIMP_ITEM (group)), opacity);
+  else
+    g_string_append_printf (str, "%s<g id=\"%s\" opacity=\"%f\">\n",
+                            spacing, name, opacity);
   g_free (name);
 }
 
@@ -1618,10 +1648,11 @@ svg_export_image_size (GimpImage *image,
 }
 
 static void
-svg_export_path (GimpVectorLayer *layer,
-                 gint             vector_id,
-                 GString         *str,
-                 gchar           *spacing)
+svg_export_path (GimpVectorLayer     *layer,
+                 gint                 vector_id,
+                 GString             *str,
+                 GimpProcedureConfig *config,
+                 gchar               *spacing)
 {
   GimpPath    *path;
   gchar       *name;
@@ -1636,6 +1667,9 @@ svg_export_path (GimpVectorLayer *layer,
   gdouble      stroke_dash_offset;
   gsize        num_dashes;
   gdouble     *stroke_dash_pattern;
+  gboolean     inkscape_svg = FALSE;
+
+  g_object_get (config, "inkscape-svg", &inkscape_svg, NULL);
 
   path = gimp_vector_layer_get_path (layer);
   if (! path)
@@ -1703,6 +1737,12 @@ svg_export_path (GimpVectorLayer *layer,
                           spacing, stroke_capstyle,
                           spacing, stroke_joinstyle,
                           spacing, stroke_miter_limit);
+
+  if (inkscape_svg)
+    g_string_append_printf (str,
+                            "%s       inkscape:label=\"%s\"\n",
+                            spacing,
+                            gimp_item_get_name (GIMP_ITEM (layer)));
 
   if (num_dashes > 0)
     {
@@ -1798,10 +1838,11 @@ svg_export_path_data (GimpPath *path)
 }
 
 static void
-svg_export_text (GimpTextLayer *layer,
-                 gint           text_id,
-                 GString       *str,
-                 gchar         *spacing)
+svg_export_text (GimpTextLayer       *layer,
+                 gint                 text_id,
+                 GString             *str,
+                 GimpProcedureConfig *config,
+                 gchar               *spacing)
 {
   gchar                *name;
   gint                  x     = 0;
@@ -1818,6 +1859,9 @@ svg_export_text (GimpTextLayer *layer,
   PangoFontMap         *fontmap;
   PangoFont            *font;
   PangoContext         *context;
+  gboolean              inkscape_svg = FALSE;
+
+  g_object_get (config, "inkscape-svg", &inkscape_svg, NULL);
 
   name = g_strdup_printf ("text%d", text_id);
 
@@ -1841,6 +1885,12 @@ svg_export_text (GimpTextLayer *layer,
                           spacing, hex_color);
   g_free (hex_color);
   g_free (name);
+
+  if (inkscape_svg)
+    g_string_append_printf (str,
+                            "%s       inkscape:label=\"%s\"\n",
+                            spacing,
+                            gimp_item_get_name (GIMP_ITEM (layer)));
 
   /* Font style */
   font_size = gimp_text_layer_get_font_size (layer, &unit);
@@ -1950,10 +2000,11 @@ svg_export_text_lines (GimpTextLayer *layer,
 }
 
 static void
-svg_export_link_layer (GimpLinkLayer *layer,
-                       gint           link_id,
-                       GString       *str,
-                       gchar         *spacing)
+svg_export_link_layer (GimpLinkLayer       *layer,
+                       gint                 link_id,
+                       GString             *str,
+                       GimpProcedureConfig *config,
+                       gchar               *spacing)
 {
   GFile   *file;
   gchar   *name;
@@ -1963,6 +2014,9 @@ svg_export_link_layer (GimpLinkLayer *layer,
   gdouble  opacity;
   gint     x;
   gint     y;
+  gboolean inkscape_svg = FALSE;
+
+  g_object_get (config, "inkscape-svg", &inkscape_svg, NULL);
 
   width   = gimp_drawable_get_width (GIMP_DRAWABLE (layer));
   height  = gimp_drawable_get_height (GIMP_DRAWABLE (layer));
@@ -1980,26 +2034,36 @@ svg_export_link_layer (GimpLinkLayer *layer,
                           "%s       y=\"%d\"\n"
                           "%s       width=\"%d\"\n"
                           "%s       height=\"%d\"\n"
-                          "%s       opacity=\"%f\"\n"
-                          "%s       href=\"%s\" />\n",
+                          "%s       opacity=\"%f\"\n",
                           spacing, name,
                           spacing, x,
                           spacing, y,
                           spacing, width,
                           spacing, height,
-                          spacing, opacity,
+                          spacing, opacity);
+
+  if (inkscape_svg)
+    g_string_append_printf (str,
+                            "%s       inkscape:label=\"%s\"\n",
+                            spacing,
+                            gimp_item_get_name (GIMP_ITEM (layer)));
+
+  g_string_append_printf (str,
+                          "%s       href=\"%s\" />\n",
                           spacing, path);
+
   g_free (name);
   g_free (path);
 }
 
 static void
-svg_export_raster (GimpDrawable  *layer,
-                   gint          *layer_ids,
-                   GString       *str,
-                   gint           format_id,
-                   gchar         *spacing,
-                   GError       **error)
+svg_export_raster (GimpDrawable         *layer,
+                   gint                 *layer_ids,
+                   GString              *str,
+                   gint                  format_id,
+                   GimpProcedureConfig  *config,
+                   gchar                *spacing,
+                   GError              **error)
 {
   GimpProcedure  *procedure;
   GimpValueArray *return_vals = NULL;
@@ -2015,13 +2079,16 @@ svg_export_raster (GimpDrawable  *layer,
   gdouble         opacity;
   gboolean        include_color_profile;
   gboolean        has_layer_mask;
+  gboolean        inkscape_svg = FALSE;
   const gchar    *mimetype;
+
+  g_object_get (config, "inkscape-svg", &inkscape_svg, NULL);
 
   has_layer_mask = FALSE;
   if (GIMP_IS_LAYER (layer) && gimp_layer_get_mask (GIMP_LAYER (layer)))
     {
       svg_export_layer_mask (gimp_layer_get_mask (GIMP_LAYER (layer)),
-                             layer_ids, str, spacing, error);
+                             layer_ids, str, config, spacing, error);
       has_layer_mask = TRUE;
     }
 
@@ -2143,6 +2210,12 @@ svg_export_raster (GimpDrawable  *layer,
                               spacing, height,
                               spacing, opacity);
 
+      if (inkscape_svg)
+        g_string_append_printf (str,
+                                "%s       inkscape:label=\"%s\"\n",
+                                spacing,
+                                gimp_item_get_name (GIMP_ITEM (layer)));
+
       if (has_layer_mask)
         g_string_append_printf (str,
                                 "%s       mask=\"url(#mask%d)\"\n",
@@ -2162,11 +2235,12 @@ svg_export_raster (GimpDrawable  *layer,
 }
 
 static void
-svg_export_layer_mask (GimpLayerMask  *mask,
-                       gint           *layer_ids,
-                       GString        *str,
-                       gchar          *spacing,
-                       GError        **error)
+svg_export_layer_mask (GimpLayerMask        *mask,
+                       gint                 *layer_ids,
+                       GString              *str,
+                       GimpProcedureConfig  *config,
+                       gchar                *spacing,
+                       GError              **error)
 {
   gchar *name;
   gchar *extra_spacing;
@@ -2192,7 +2266,7 @@ svg_export_layer_mask (GimpLayerMask  *mask,
   extra_spacing = g_strdup_printf ("%s  ", spacing);
 
   svg_export_raster (GIMP_DRAWABLE (mask), layer_ids, str, EXPORT_FORMAT_PNG,
-                     extra_spacing, error);
+                     config, extra_spacing, error);
 
   g_free (extra_spacing);
   g_string_append_printf (str, "</mask>\n");
