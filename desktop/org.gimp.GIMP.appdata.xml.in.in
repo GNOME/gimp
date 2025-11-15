@@ -17,15 +17,14 @@
   <summary>Create images and edit photographs</summary>
   <description>
     <p>
-      GIMP is an acronym for GNU Image Manipulation Program. It is a
-      freely distributed program for such tasks as photo retouching,
-      image composition and image authoring.
+      GIMP is an acronym for GNU Image Manipulation Program. It is
+      Community-driven Free Software for high-end image creation and manipulation.
     </p>
     <p>
-      It has many capabilities. It can be used as a simple paint
-      program, an expert quality photo retouching program, an online
-      batch processing system, a mass production image renderer, an
-      image format converter, etc.
+      It has many capabilities. It can be used as a paint program,
+      an expert quality photo retouching program, image composition,
+      an online batch processing system, a mass production image
+      renderer, an image format converter, etc.
     </p>
     <p>
       GIMP is expandable and extensible. It is designed to be
