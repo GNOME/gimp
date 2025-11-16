@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-13 03:22+0000\n"
-"PO-Revision-Date: 2025-11-13 09:05+0100\n"
+"POT-Creation-Date: 2025-11-16 00:25+0000\n"
+"PO-Revision-Date: 2025-11-16 01:46+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2006,7 +2006,7 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-raw-data.c:608 plug-ins/common/file-raw-data.c:796
 #: plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:754
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:756
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
@@ -2697,7 +2697,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:792
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:794
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
 #: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
@@ -4691,7 +4691,7 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Spodnji rob je zunaj meja (mora biti < %d): %d"
 
 #: plug-ins/common/file-pcx.c:1266 plug-ins/common/file-qoi.c:369
-#: plug-ins/common/file-svg.c:801 plug-ins/common/file-svg.c:817
+#: plug-ins/common/file-svg.c:803 plug-ins/common/file-svg.c:819
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Pisanje v datoteko »%s« ni uspelo: %s"
@@ -4985,7 +4985,7 @@ msgstr "Slika PNG"
 msgid "APNG image"
 msgstr "Slika APNG"
 
-#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:356
+#: plug-ins/common/file-png.c:331
 msgid "PNG"
 msgstr "PNG"
 
@@ -6446,69 +6446,72 @@ msgstr "Pri branju je prišlo do nepredvidenega konca datoteke"
 msgid "Write error occurred"
 msgstr "Prišlo je do napake pri pisanju"
 
-#: plug-ins/common/file-svg.c:276
+#: plug-ins/common/file-svg.c:278
 msgid "SVG image"
 msgstr "Slika SVG"
 
-#: plug-ins/common/file-svg.c:279
+#: plug-ins/common/file-svg.c:281
 msgid "Loads files in SVG file format"
 msgstr "Naloži datoteke v zapisu datotek SVG"
 
-#: plug-ins/common/file-svg.c:294
+#: plug-ins/common/file-svg.c:296
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:303
+#: plug-ins/common/file-svg.c:305
 msgid "_Paths"
 msgstr "_Poti"
 
-#: plug-ins/common/file-svg.c:304
+#: plug-ins/common/file-svg.c:306
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr "Ali in kako uvoziti poti, da jih je mogoče uporabiti z orodjem poti"
 
-#: plug-ins/common/file-svg.c:305
+#: plug-ins/common/file-svg.c:307
 msgid "Don't import paths"
 msgstr "Ne uvozi poti"
 
-#: plug-ins/common/file-svg.c:306
+#: plug-ins/common/file-svg.c:308
 msgid "Import paths individually"
 msgstr "Uvozi poti posamično"
 
-#: plug-ins/common/file-svg.c:307
+#: plug-ins/common/file-svg.c:309
 msgid "Merge imported paths"
 msgstr "Spoji uvožene poti"
 
-#: plug-ins/common/file-svg.c:319
+#: plug-ins/common/file-svg.c:321
 msgid "Scalable Vector Graphic"
 msgstr "SVG (Scalable Vector Graphics)"
 
-#: plug-ins/common/file-svg.c:322
+#: plug-ins/common/file-svg.c:324
 msgid "Exports files in SVG file format"
 msgstr "Izvozi datoteke v zapisu datotek SVG"
 
-#: plug-ins/common/file-svg.c:323
+#: plug-ins/common/file-svg.c:325
 msgid "Exports files in SVG file format (Scalable Vector Graphic)"
 msgstr "Izvozi datoteke v zapisu SVG (Scalable Vector Graphic)"
 
-#: plug-ins/common/file-svg.c:348
+#: plug-ins/common/file-svg.c:350
 msgid "_Title"
 msgstr "_Naslov"
 
-#: plug-ins/common/file-svg.c:349
+#: plug-ins/common/file-svg.c:351
 msgid "Optional <title> for SVG"
 msgstr "Neobvezni <title> (naslov) za SVG"
 
-#: plug-ins/common/file-svg.c:354
+#: plug-ins/common/file-svg.c:356
 msgid "Em_bed raster layers as"
 msgstr "V_delaj rastrske plasti kot"
 
-#: plug-ins/common/file-svg.c:357 plug-ins/file-jpeg/jpeg.c:195
-#: plug-ins/file-tiff/file-tiff.c:144
-msgid "JPEG"
-msgstr "JPEG"
-
 #: plug-ins/common/file-svg.c:358
+msgid "PNG (always)"
+msgstr "PNG (vedno)"
+
+#: plug-ins/common/file-svg.c:359
+msgid "JPEG (for opaque images, PNG otherwise)"
+msgstr "JPEG (za neprosojne slike, sicer PNG)"
+
+#: plug-ins/common/file-svg.c:360
 msgid "Do not export raster layers"
 msgstr "Ne izvozi rastrskih plasti"
 
@@ -6517,15 +6520,15 @@ msgstr "Ne izvozi rastrskih plasti"
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:405
+#: plug-ins/common/file-svg.c:407
 msgid "Disable safety size limits?"
 msgstr "Ali želite onemogočito varnostne omejitve velikosti?"
 
-#: plug-ins/common/file-svg.c:410
+#: plug-ins/common/file-svg.c:412
 msgid "_No"
 msgstr "_Ne"
 
-#: plug-ins/common/file-svg.c:411
+#: plug-ins/common/file-svg.c:413
 msgid "_Yes"
 msgstr "_Da"
 
@@ -6539,7 +6542,7 @@ msgstr "_Da"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:435
+#: plug-ins/common/file-svg.c:437
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6549,30 +6552,30 @@ msgstr ""
 "Morda bo pomagalo onemogočiti varnostne omejitve. Zlonamerne datoteke SVG "
 "lahko to uporabijo, da porabijo preveč pomnilnika."
 
-#: plug-ins/common/file-svg.c:447
+#: plug-ins/common/file-svg.c:449
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "Iz varnostnih razlogov to uporabite samo za zaupanja vreden vnos!"
 
-#: plug-ins/common/file-svg.c:454
+#: plug-ins/common/file-svg.c:456
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Ali želite poskusiti znova brez omejitev, ki preprečujejo razčlenjevanje "
 "ogromnih količin podatkov?"
 
-#: plug-ins/common/file-svg.c:756 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/common/file-svg.c:758 plug-ins/file-exr/file-exr.c:381
 #: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "Neznani razlog"
 
-#: plug-ins/common/file-svg.c:762
+#: plug-ins/common/file-svg.c:764
 msgid "Rendering SVG"
 msgstr "Upodabljanje SVG ..."
 
-#: plug-ins/common/file-svg.c:772
+#: plug-ins/common/file-svg.c:774
 msgid "Rendered SVG"
 msgstr "Upodobljeni SVG"
 
-#: plug-ins/common/file-svg.c:1123
+#: plug-ins/common/file-svg.c:1125
 msgid ""
 "The SVG format only requires viewers to display image links for SVG, PNG, "
 "and JPEG images.\n"
@@ -10504,6 +10507,10 @@ msgstr "Izvozi datoteke v zapisu slikovnih datotek JPEG"
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr ""
 "Izvozi datoteke v široko podprtem zapisu slikovnih datotek JPEG z izgubami."
+
+#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:144
+msgid "JPEG"
+msgstr "JPEG"
 
 #: plug-ins/file-jpeg/jpeg.c:216
 msgid "S_moothing"
