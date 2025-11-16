@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-12 21:02+0000\n"
-"PO-Revision-Date: 2025-10-13 09:50+0800\n"
+"POT-Creation-Date: 2025-11-11 03:20+0000\n"
+"PO-Revision-Date: 2025-11-12 08:01+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -198,7 +198,7 @@ msgstr "导出直方图(_E)…"
 #. TODO: GFile props still don't have labels + only load existing files
 #. (here we likely want to create a new file).
 #: plug-ins/python/histogram-export.py:224
-msgid "Histogram File"
+msgid "Histogram file"
 msgstr "直方图文件"
 
 #: plug-ins/python/histogram-export.py:225
@@ -206,23 +206,23 @@ msgid "Histogram export file"
 msgstr "直方图导出文件"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "_Bucket Size"
+msgid "_Bucket size"
 msgstr "桶大小(_B)"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "Bucket Size"
+msgid "Bucket size"
 msgstr "桶大小"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample _Average"
+msgid "Sample _average"
 msgstr "样本平均(_A)"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample Average"
+msgid "Sample average"
 msgstr "样本平均"
 
 #: plug-ins/python/histogram-export.py:232
-msgid "Pixel Count"
+msgid "Pixel count"
 msgstr "像素计数"
 
 #: plug-ins/python/histogram-export.py:233
@@ -234,7 +234,7 @@ msgid "Percent"
 msgstr "百分比"
 
 #: plug-ins/python/histogram-export.py:235
-msgid "Output _format"
+msgid "Output _Format"
 msgstr "输出格式(_F)"
 
 #: plug-ins/python/histogram-export.py:235
@@ -685,8 +685,8 @@ msgstr "外旋轮线"
 msgid "Lissajous"
 msgstr "利萨如曲线"
 
-#: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
-msgid "Curve Type"
+#: plug-ins/python/spyro-plus.py:1487
+msgid "Curve type"
 msgstr "曲线类型"
 
 #: plug-ins/python/spyro-plus.py:1488
@@ -739,7 +739,7 @@ msgid ""
 msgstr "固定齿轮的齿数。固定齿轮的大小是与齿数成比例的。"
 
 #: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
-msgid "Fixed Gear Teeth"
+msgid "Fixed gear teeth"
 msgstr "固定轮齿"
 
 #: plug-ins/python/spyro-plus.py:1558
@@ -749,7 +749,7 @@ msgid ""
 msgstr "移动齿轮的齿数。移动齿轮的大小是与齿数成比例的。"
 
 #: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
-msgid "Moving Gear Teeth"
+msgid "Moving gear teeth"
 msgstr "移动轮齿"
 
 #: plug-ins/python/spyro-plus.py:1566
@@ -763,7 +763,7 @@ msgid ""
 msgstr "孔洞与移动齿轮中心的距离。100% 表示孔洞在齿轮的边缘上。"
 
 #: plug-ins/python/spyro-plus.py:1588
-msgid "Hole Number"
+msgid "Hole number"
 msgstr "孔洞号码"
 
 #: plug-ins/python/spyro-plus.py:1589
@@ -775,7 +775,7 @@ msgstr ""
 "的。"
 
 #: plug-ins/python/spyro-plus.py:1600
-msgid "Flower Petals"
+msgid "Flower petals"
 msgstr "花瓣"
 
 #: plug-ins/python/spyro-plus.py:1601
@@ -783,7 +783,7 @@ msgid "The number of petals in the pattern."
 msgstr "图案中的花瓣数量。"
 
 #: plug-ins/python/spyro-plus.py:1606
-msgid "Petal Skip"
+msgid "Petal skip"
 msgstr "跳过花瓣"
 
 #: plug-ins/python/spyro-plus.py:1607
@@ -791,7 +791,7 @@ msgid "The number of petals to advance for drawing the next petal."
 msgstr "绘制下个花瓣前跳过的花瓣数量。"
 
 #: plug-ins/python/spyro-plus.py:1612
-msgid "Hole Radius(%)"
+msgid "Hole radius(%)"
 msgstr "孔洞半径（%）"
 
 #: plug-ins/python/spyro-plus.py:1613
@@ -961,6 +961,10 @@ msgstr "使用当前的工具设置来绘制斯派罗图案。图案的大小和
 msgid "Spyrogimp..."
 msgstr "斯派罗图案…"
 
+#: plug-ins/python/spyro-plus.py:2267
+msgid "Curve Type"
+msgstr "曲线类型"
+
 #: plug-ins/python/spyro-plus.py:2271
 msgid "rack"
 msgstr "支架"
@@ -986,7 +990,7 @@ msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
 msgstr "固定齿轮的变形，在 0 和 1 之间。仅被部分形状使用。"
 
 #: plug-ins/python/spyro-plus.py:2285
-msgid "Fi_xed Gear Teeth"
+msgid "Fi_xed gear teeth"
 msgstr "固定齿轮齿数(_X)"
 
 #: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
@@ -994,11 +998,11 @@ msgid "Number of teeth for fixed gear."
 msgstr "固定齿轮的齿数。"
 
 #: plug-ins/python/spyro-plus.py:2288
-msgid "Mo_ving Gear Teeth"
+msgid "Mo_ving gear teeth"
 msgstr "移动齿轮齿数(_V)"
 
 #: plug-ins/python/spyro-plus.py:2291
-msgid "_Hole Radius (%)"
+msgid "_Hole radius (%)"
 msgstr "孔洞半径（%）(_H)"
 
 #: plug-ins/python/spyro-plus.py:2292
