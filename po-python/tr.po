@@ -512,7 +512,7 @@ msgstr "B-renk"
 
 #: plug-ins/python/palette-sort.py:479
 msgid "Chroma (LCHab)"
-msgstr "Renk saflığı (LCHab)"
+msgstr "Renk parlaklığı (LCHab)"
 
 #: plug-ins/python/palette-sort.py:480
 msgid "Hue (LCHab)"
@@ -757,9 +757,10 @@ msgid ""
 msgstr ""
 "Sabit dişli diş sayısı. Sabit dişlinin boyutu diş sayısıyla orantılıdır."
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
 msgid "Fixed Gear Teeth"
-msgstr "Sabit Dişli Dişleri"
+msgstr "Sabit dişli dişleri"
 
 #: plug-ins/python/spyro-plus.py:1558
 msgid ""
@@ -769,9 +770,10 @@ msgstr ""
 "Hareketli dişlilerin diş sayısı. Hareket eden dişlinin boyutu diş sayısıyla "
 "orantılıdır."
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
 msgid "Moving Gear Teeth"
-msgstr "Hareketli Dişli Dişleri"
+msgstr "Hareketli dişli dişleri"
 
 #: plug-ins/python/spyro-plus.py:1566
 msgid "Hole percent"
@@ -785,9 +787,10 @@ msgstr ""
 "Delik, hareketli dişlinin merkezinden ne kadar uzakta. %100, deliğin "
 "dişlinin kenarında olduğu anlamına gelir."
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:1588
 msgid "Hole Number"
-msgstr "Delik Sayısı"
+msgstr "Delik sayısı"
 
 #: plug-ins/python/spyro-plus.py:1589
 msgid ""
@@ -797,25 +800,28 @@ msgstr ""
 "Delik #1 dişlinin kenarında. Azami delik sayısı merkeze yakındır. Her dişli "
 "için azami delik sayısı farklıdır."
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:1600
 msgid "Flower Petals"
-msgstr "Çiçek Yaprakları"
+msgstr "Çiçek yaprakları"
 
 #: plug-ins/python/spyro-plus.py:1601
 msgid "The number of petals in the pattern."
 msgstr "Örüntüdeki yaprakların sayısı."
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:1606
 msgid "Petal Skip"
-msgstr "Yaprak Atla"
+msgstr "Yaprak atla"
 
 #: plug-ins/python/spyro-plus.py:1607
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "Sonraki yaprağı çizmeyi sürdürmek için yaprak sayısı."
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:1612
 msgid "Hole Radius(%)"
-msgstr "Boşluk Yarıçapı(%)"
+msgstr "Boşluk yarıçapı(%)"
 
 #: plug-ins/python/spyro-plus.py:1613
 msgid ""
@@ -1006,7 +1012,7 @@ msgstr "çerçeve"
 
 #: plug-ins/python/spyro-plus.py:2279
 msgid "Si_des"
-msgstr "_Taraflar"
+msgstr "_Yanlar"
 
 #: plug-ins/python/spyro-plus.py:2280
 msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
@@ -1024,21 +1030,24 @@ msgstr ""
 "Sabit dişlinin, 0 ile 1 arasında, dönüşüm şekli. Yalnızca bazı şekillerce "
 "kullanılır."
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:2285
 msgid "Fi_xed Gear Teeth"
-msgstr "_Sabit Dişli Dişleri"
+msgstr "_Sabit dişli dişleri"
 
 #: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
 msgid "Number of teeth for fixed gear."
 msgstr "Sabit dişlideki diş sayısı."
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:2288
 msgid "Mo_ving Gear Teeth"
-msgstr "_Hareketli Dişli Dişleri"
+msgstr "_Hareketli dişli dişleri"
 
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:2291
 msgid "_Hole Radius (%)"
-msgstr "_Boşluk Yarıçapı (%)"
+msgstr "_Boşluk yarıçapı (%)"
 
 #: plug-ins/python/spyro-plus.py:2292
 msgid ""
