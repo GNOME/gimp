@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-11 03:17+0000\n"
-"PO-Revision-Date: 2025-11-11 08:28+0100\n"
+"POT-Creation-Date: 2025-11-16 00:23+0000\n"
+"PO-Revision-Date: 2025-11-16 01:50+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -38,26 +38,26 @@ msgstr "Ustvari slike in uredi fotografije"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:19
 msgid ""
-"GIMP is an acronym for GNU Image Manipulation Program. It is a freely "
-"distributed program for such tasks as photo retouching, image composition "
-"and image authoring."
+"GIMP is an acronym for GNU Image Manipulation Program. It is Community-"
+"driven Free Software for high-end image creation and manipulation."
 msgstr ""
 "GIMP je okrajšava polnega angleškega imena, GNU Image Manipulation Program. "
-"Je prosto dostopen program, namenjen retuši fotografij, tvorbi in avtorstvu "
-"slik."
+"To je prosto dostopen program, ki ga poganja skupnost, namenjen vrhunski "
+"retuši fotografij, tvorbi in avtorstvu slik."
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:24
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:23
 msgid ""
-"It has many capabilities. It can be used as a simple paint program, an "
-"expert quality photo retouching program, an online batch processing system, "
-"a mass production image renderer, an image format converter, etc."
+"It has many capabilities. It can be used as a paint program, an expert "
+"quality photo retouching program, image composition, an online batch "
+"processing system, a mass production image renderer, an image format "
+"converter, etc."
 msgstr ""
-"Ima veliko zmogljivih funkcij. Uporabite ga lahko kot enostavni program za "
-"risanje, kot strokovno kakovosten program za retušo fotografij, spletni "
-"sistem za paketno obdelavo, masovni upodobljevalnik slik, pretvornik med "
+"Ima veliko zmogljivih funkcij. Uporabite ga lahko kot program za risanje, "
+"kot strokovno kakovosten program za retušo fotografij, sestavo slik, spletni "
+"sistem za paketno obdelavo, masovni izrisovalnik slik, pretvornik med "
 "slikovnimi zapisi itn."
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:30
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:29
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
@@ -71,7 +71,7 @@ msgstr ""
 "procedur obdelave slik. GIMP je na voljo za sisteme Linux, Microsoft Windows "
 "in macOS."
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:48
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:47
 msgid ""
 "Scene 4 cut 15 of \"ZeMarmot\" being edited in GIMP. Illustration by Aryeom "
 "(CC by-sa 4.0 International)"
@@ -79,7 +79,7 @@ msgstr ""
 "Prizor 4, rez 15: \"ZeMarmot\", ki je bil urejen v GIMP-u. Ilustracija "
 "Aryeom (CC by-sa 4.0 International)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:52
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:51
 msgid ""
 "Gull on beach photograph being edited in GIMP. Photo by Iana (CC by-sa 4.0 "
 "International)"
@@ -87,14 +87,14 @@ msgstr ""
 "Fotografija galeba na plaži, urejeno v GIMP-u. Fotografija Iana (CC by-sa "
 "4.0 International)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:56
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:55
 msgid ""
 "Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 "
 "International)"
 msgstr ""
 "Portret Sofiie, urejen v GIMP-u. Foto: Sofia (CC by-sa 4.0 International)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:60
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:59
 msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
 msgstr "Skenirana gravura, urejena v GIMP-u. Umetniško delo Liama (CC0)"
 
@@ -22068,7 +22068,7 @@ msgstr ""
 "Ločljivost slike je prekoračila meje, zato bo uporabljena privzeta "
 "ločljivost."
 
-#: app/pdb/image-select-cmds.c:305 app/tools/gimpfreeselecttool.c:105
+#: app/pdb/image-select-cmds.c:307 app/tools/gimpfreeselecttool.c:105
 msgid "Free Select"
 msgstr "Prosto izbiranje"
 
@@ -25547,15 +25547,15 @@ msgstr "Možnosti orisa"
 msgid "Outline Direction:"
 msgstr "Smer orisa:"
 
-#: app/tools/gimptextoptions.c:911
+#: app/tools/gimptextoptions.c:912
 msgid "Justify:"
 msgstr "Poravnaj:"
 
-#: app/tools/gimptextoptions.c:941
+#: app/tools/gimptextoptions.c:942
 msgid "Box:"
 msgstr "Polje:"
 
-#: app/tools/gimptextoptions.c:983
+#: app/tools/gimptextoptions.c:984
 msgid "Language:"
 msgstr "Jezik:"
 
@@ -28581,23 +28581,23 @@ msgstr "%d ppi"
 msgid "Line width:"
 msgstr "Širina črte:"
 
-#: app/widgets/gimpstrokeeditor.c:150
+#: app/widgets/gimpstrokeeditor.c:151
 msgid "_Cap style:"
 msgstr "Slog _zaključkov:"
 
-#: app/widgets/gimpstrokeeditor.c:156
+#: app/widgets/gimpstrokeeditor.c:158
 msgid "_Join style:"
 msgstr "_Slog stikališča:"
 
-#: app/widgets/gimpstrokeeditor.c:163
+#: app/widgets/gimpstrokeeditor.c:165
 msgid "_Miter limit:"
 msgstr "Meja _sredice:"
 
-#: app/widgets/gimpstrokeeditor.c:169
+#: app/widgets/gimpstrokeeditor.c:171
 msgid "Dash pattern:"
 msgstr "Črtkani vzorec:"
 
-#: app/widgets/gimpstrokeeditor.c:236
+#: app/widgets/gimpstrokeeditor.c:238
 msgid "Dash _preset:"
 msgstr "Prednastavitev _črtkane črte:"
 
