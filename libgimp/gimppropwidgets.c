@@ -207,6 +207,74 @@ gimp_prop_image_chooser_new (GObject     *config,
 }
 
 /**
+ * gimp_prop_item_chooser_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of a [class@Gimp.Item] property.
+ * @chooser_title: (nullable): title for the poppable dialog.
+ *
+ * Creates a [class@GimpUi.ItemChooser] controlled by the specified property.
+ *
+ * Returns: (transfer full): A new [class@GimpUi.ItemChooser].
+ *
+ * Since: 3.0
+ */
+GtkWidget *
+gimp_prop_item_chooser_new (GObject     *config,
+                            const gchar *property_name,
+                            const gchar *chooser_title)
+{
+  GParamSpec  *param_spec;
+  GtkWidget   *prop_chooser;
+  GimpItem    *initial_item = NULL;
+  gchar       *title        = NULL;
+  const gchar *label;
+
+  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                             property_name);
+
+  g_return_val_if_fail (param_spec != NULL, NULL);
+  g_return_val_if_fail (g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), G_TYPE_PARAM_OBJECT) &&
+                        g_type_is_a (param_spec->value_type, GIMP_TYPE_ITEM), NULL);
+
+  g_object_get (config,
+                property_name, &initial_item,
+                NULL);
+
+  label = g_param_spec_get_nick (param_spec);
+
+  if (chooser_title == NULL)
+    {
+      gchar *canonical;
+
+      canonical = gimp_utils_make_canonical_menu_label (label);
+      if (g_type_is_a (param_spec->value_type, GIMP_TYPE_LAYER))
+        title = g_strdup_printf (_("Choose layer: %s"), canonical);
+      if (g_type_is_a (param_spec->value_type, GIMP_TYPE_CHANNEL))
+        title = g_strdup_printf (_("Choose channel: %s"), canonical);
+      if (g_type_is_a (param_spec->value_type, GIMP_TYPE_PATH))
+        title = g_strdup_printf (_("Choose path: %s"), canonical);
+      else
+        title = g_strdup_printf (_("Choose item: %s"), canonical);
+      g_free (canonical);
+    }
+  else
+    {
+      title = g_strdup (chooser_title);
+    }
+
+  prop_chooser = gimp_item_chooser_new (title, label, param_spec->value_type,
+                                        initial_item);
+  g_clear_object (&initial_item);
+  g_free (title);
+
+  g_object_bind_property (prop_chooser, "item",
+                          config,       property_name,
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
+  return prop_chooser;
+}
+
+/**
  * gimp_prop_drawable_chooser_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of a [class@Gimp.Drawable] property.

@@ -51,6 +51,7 @@ typedef struct _GimpBrushChooser              GimpBrushChooser;
 typedef struct _GimpFontChooser               GimpFontChooser;
 typedef struct _GimpGradientChooser           GimpGradientChooser;
 typedef struct _GimpImageChooser              GimpImageChooser;
+typedef struct _GimpItemChooser               GimpItemChooser;
 typedef struct _GimpPaletteChooser            GimpPaletteChooser;
 typedef struct _GimpPatternChooser            GimpPatternChooser;
 

@@ -1427,3 +1427,117 @@ gimp_item_get_parasite_list (GimpItem *item)
 
   return parasites;
 }
+
+/**
+ * gimp_items_popup:
+ * @callback: The callback PDB proc to call when user chooses an item.
+ * @popup_title: Title of the item selection dialog.
+ * @item_type: The name of the GIMP_TYPE_ITEM subtype.
+ * @initial_item: (nullable): The item to set as the initial choice.
+ * @parent_window: (nullable): An optional parent window handle for the popup to be set transient to.
+ *
+ * Invokes the item selection dialog.
+ *
+ * Opens a dialog letting a user choose an item .
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_items_popup (const gchar *callback,
+                  const gchar *popup_title,
+                  const gchar *item_type,
+                  GimpItem    *initial_item,
+                  GBytes      *parent_window)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, callback,
+                                          G_TYPE_STRING, popup_title,
+                                          G_TYPE_STRING, item_type,
+                                          GIMP_TYPE_ITEM, initial_item,
+                                          G_TYPE_BYTES, parent_window,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-items-popup",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_items_close_popup:
+ * @callback: The name of the callback registered for this pop-up.
+ *
+ * Close the item selection dialog.
+ *
+ * Closes an open item selection dialog.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_items_close_popup (const gchar *callback)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, callback,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-items-close-popup",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_items_set_popup:
+ * @callback: The name of the callback registered for this pop-up.
+ * @item: The item to set as selected.
+ *
+ * Sets the selected item in a item selection dialog.
+ *
+ * Sets the selected item in a item selection dialog.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_items_set_popup (const gchar *callback,
+                      GimpItem    *item)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, callback,
+                                          GIMP_TYPE_ITEM, item,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-items-set-popup",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}

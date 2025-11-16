@@ -1121,7 +1121,92 @@ CODE
     );
 }
 
-@headers = qw("core/gimpgrouplayer.h"
+sub items_popup {
+    $blurb = 'Invokes the item selection dialog.';
+    $help  = 'Opens a dialog letting a user choose an item .';
+
+    &alxsa_pdb_misc('2025');
+
+    @inargs = (
+      { name => 'callback', type => 'string', non_empty => 1,
+        desc => 'The callback PDB proc to call when user chooses an item ' },
+      { name => 'popup_title', type => 'string',
+        desc => 'Title of the item  selection dialog' },
+      { name => 'item_type', type => 'string', non_empty => 1,
+        desc => 'The name of the GIMP_TYPE_ITEM subtype' },
+      { name => 'initial_item', type => 'item ', none_ok => 1, no_validate => 1,
+        desc => 'The item  to set as the initial choice' },
+      { name => 'parent_window', type => 'bytes', none_ok => 1,
+        desc => 'An optional parent window handle for the popup to be set transient to' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->no_interface ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+      ! gimp_pdb_dialog_new (gimp, context, progress,
+                             g_type_from_name (item_type),
+                             parent_window, popup_title, callback,
+                             GIMP_OBJECT (initial_item),
+                             NULL))
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub items_close_popup {
+    $blurb = 'Close the item  selection dialog.';
+    $help  = 'Closes an open item  selection dialog.';
+
+    &alxsa_pdb_misc('2025');
+
+    @inargs = (
+      { name => 'callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered for this pop-up' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->no_interface ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+      ! gimp_pdb_dialog_close (gimp, GIMP_TYPE_ITEM, callback))
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub items_set_popup {
+    $blurb = 'Sets the selected item in a item selection dialog.';
+    $help  = $blurb;
+
+    &alxsa_pdb_misc('2025');
+
+    @inargs = (
+      { name => 'callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered for this pop-up' },
+      { name => 'item', type => 'item', no_validate => 1,
+        desc => 'The item to set as selected' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->no_interface ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+      ! gimp_pdb_dialog_set (gimp, GIMP_TYPE_ITEM, callback, GIMP_OBJECT (item), NULL))
+    success = FALSE;
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimp.h"
+              "core/gimpdatafactory.h"
+              "core/gimpgrouplayer.h"
               "core/gimplayermask.h"
               "core/gimplinklayer.h"
               "core/gimplist.h"
@@ -1159,7 +1244,10 @@ CODE
             item_get_tattoo item_set_tattoo
             item_attach_parasite item_detach_parasite
             item_get_parasite
-            item_get_parasite_list);
+            item_get_parasite_list
+            items_popup
+            items_close_popup
+            items_set_popup);
 
 %exports = (app => [@procs], lib => [@procs]);
 

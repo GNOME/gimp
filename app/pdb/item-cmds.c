@@ -31,6 +31,8 @@
 
 #include "pdb-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
@@ -1111,6 +1113,95 @@ item_get_parasite_list_invoker (GimpProcedure         *procedure,
     g_value_take_boxed (gimp_value_array_index (return_vals, 1), parasites);
 
   return return_vals;
+}
+
+static GimpValueArray *
+items_popup_invoker (GimpProcedure         *procedure,
+                     Gimp                  *gimp,
+                     GimpContext           *context,
+                     GimpProgress          *progress,
+                     const GimpValueArray  *args,
+                     GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *callback;
+  const gchar *popup_title;
+  const gchar *item_type;
+  GimpItem *initial_item;
+  GBytes *parent_window;
+
+  callback = g_value_get_string (gimp_value_array_index (args, 0));
+  popup_title = g_value_get_string (gimp_value_array_index (args, 1));
+  item_type = g_value_get_string (gimp_value_array_index (args, 2));
+  initial_item = g_value_get_object (gimp_value_array_index (args, 3));
+  parent_window = g_value_get_boxed (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      if (gimp->no_interface ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+          ! gimp_pdb_dialog_new (gimp, context, progress,
+                                 g_type_from_name (item_type),
+                                 parent_window, popup_title, callback,
+                                 GIMP_OBJECT (initial_item),
+                                 NULL))
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+items_close_popup_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *callback;
+
+  callback = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      if (gimp->no_interface ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+          ! gimp_pdb_dialog_close (gimp, GIMP_TYPE_ITEM, callback))
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+items_set_popup_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *callback;
+  GimpItem *item;
+
+  callback = g_value_get_string (gimp_value_array_index (args, 0));
+  item = g_value_get_object (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      if (gimp->no_interface ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+          ! gimp_pdb_dialog_set (gimp, GIMP_TYPE_ITEM, callback, GIMP_OBJECT (item), NULL))
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 void
@@ -2199,6 +2290,110 @@ register_item_procs (GimpPDB *pdb)
                                                        "The names of currently attached parasites",
                                                        G_TYPE_STRV,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-items-popup
+   */
+  procedure = gimp_procedure_new (items_popup_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-items-popup");
+  gimp_procedure_set_static_help (procedure,
+                                  "Invokes the item selection dialog.",
+                                  "Opens a dialog letting a user choose an item .",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("callback",
+                                                       "callback",
+                                                       "The callback PDB proc to call when user chooses an item",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("popup-title",
+                                                       "popup title",
+                                                       "Title of the item selection dialog",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("item-type",
+                                                       "item type",
+                                                       "The name of the GIMP_TYPE_ITEM subtype",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item ("initial-item",
+                                                     "initial item",
+                                                     "The item to set as the initial choice",
+                                                     TRUE,
+                                                     GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boxed ("parent-window",
+                                                   "parent window",
+                                                   "An optional parent window handle for the popup to be set transient to",
+                                                   G_TYPE_BYTES,
+                                                   GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-items-close-popup
+   */
+  procedure = gimp_procedure_new (items_close_popup_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-items-close-popup");
+  gimp_procedure_set_static_help (procedure,
+                                  "Close the item selection dialog.",
+                                  "Closes an open item selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("callback",
+                                                       "callback",
+                                                       "The name of the callback registered for this pop-up",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-items-set-popup
+   */
+  procedure = gimp_procedure_new (items_set_popup_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-items-set-popup");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the selected item in a item selection dialog.",
+                                  "Sets the selected item in a item selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2025");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("callback",
+                                                       "callback",
+                                                       "The name of the callback registered for this pop-up",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The item to set as selected",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }
