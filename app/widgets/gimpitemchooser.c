@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppickablechooser.c
+ * gimpitemchooser.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -613,20 +613,20 @@ gimp_item_chooser_image_changed (GimpContext     *context,
 }
 
 static void
-gimp_item_chooser_item_activated (GimpContainerView   *view,
-                                  GimpItem        *item,
-                                  GimpItemChooser *chooser)
+gimp_item_chooser_item_activated (GimpContainerView *view,
+                                  GimpItem          *item,
+                                  GimpItemChooser   *chooser)
 {
   g_signal_emit (chooser, signals[ACTIVATE], 0, item);
 }
 
 static void
-gimp_item_chooser_items_selected (GimpContainerView   *view,
-                                  GimpItemChooser *chooser)
+gimp_item_chooser_items_selected (GimpContainerView *view,
+                                  GimpItemChooser   *chooser)
 {
   GimpItem *item = NULL;
-  gint          n_items;
-  GList        *items;
+  gint      n_items;
+  GList    *items;
 
   n_items = gimp_container_view_get_selected (view, &items);
 

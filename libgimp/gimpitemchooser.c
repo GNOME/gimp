@@ -591,6 +591,9 @@ gimp_item_chooser_draw (GimpItemChooser *chooser)
     }
   else
     {
+      /* TODO: GimpItems like GimpPath do not have a built-in drawable,
+       * but it is possible to get a preview from it. We should add a
+       * standard way to generate this preview. */
       if (chooser->item)
         gtk_label_set_text (GTK_LABEL (chooser->preview_title),
                             gimp_item_get_name (chooser->item));
