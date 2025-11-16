@@ -50,7 +50,7 @@ $win_sdk_path = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432N
 $env:PATH = "${win_sdk_path}bin\${win_sdk_version}.0\$cpu_arch;${win_sdk_path}App Certification Kit;" + $env:PATH
 
 ## msstore-cli (ONLY FOR RELEASES)
-if ("$CI_COMMIT_TAG" -eq (git describe --tags --exact-match))
+if ("$CI_COMMIT_TAG" -eq (git describe --tags --exact-match 2>$null))
   {
     #.NET runtime required by msstore-cli (and its PowerShell counterpart)
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -473,7 +473,7 @@ if ($GITLAB_CI)
 
 
 # 7. SUBMIT .MSIXUPLOAD TO MS STORE (ONLY FOR RELEASES)
-if ("$CI_COMMIT_TAG" -eq (git describe --tags --exact-match))
+if ("$CI_COMMIT_TAG" -eq (git describe --tags --exact-match 2>$null))
   {
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_submission[collapsed=true]$([char]13)$([char]27)[0KSubmitting $MSIX_ARTIFACT to Microsoft Store"
     ## Needed credentials for submission
