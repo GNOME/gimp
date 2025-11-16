@@ -7,6 +7,7 @@ libgimp/gimpdrawablechooser.c
 libgimp/gimpexportoptions.c
 libgimp/gimpexportprocedure.c
 libgimp/gimpexportproceduredialog.c
+libgimp/gimpimagechooser.c
 libgimp/gimpimagemetadata.c
 libgimp/gimpimagemetadata-save.c
 libgimp/gimploadprocedure.c
