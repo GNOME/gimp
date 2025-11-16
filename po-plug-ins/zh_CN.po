@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-07 06:44+0000\n"
-"PO-Revision-Date: 2025-11-08 09:49+0800\n"
+"POT-Creation-Date: 2025-11-15 13:58+0000\n"
+"PO-Revision-Date: 2025-11-16 08:10+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -605,7 +605,7 @@ msgstr "百叶窗"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:417
-#: plug-ins/common/file-jp2.c:1619 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-jp2.c:1620 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
@@ -654,7 +654,7 @@ msgid "Border size unit of measure"
 msgstr "边界大小的测量单位"
 
 #: plug-ins/common/border-average.c:150
-msgid "Bucket Si_ze"
+msgid "Bucket si_ze"
 msgstr "油漆桶大小(_Z)"
 
 #: plug-ins/common/border-average.c:151
@@ -1211,7 +1211,7 @@ msgstr "当前设置的曲线图"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:727 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:730 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1210 plug-ins/gfig/gfig-dialog.c:1355
 #: plug-ins/ifs-compose/ifs-compose.c:1213
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -1978,7 +1978,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-raw-data.c:608 plug-ins/common/file-raw-data.c:796
 #: plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:754
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:756
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
@@ -2406,7 +2406,7 @@ msgid "Filter box radius"
 msgstr "过滤器箱体半径"
 
 #: plug-ins/common/despeckle.c:193
-msgid "_Filter Type"
+msgid "_Filter type"
 msgstr "过滤器类型(_F)"
 
 #: plug-ins/common/despeckle.c:194
@@ -2575,7 +2575,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
-#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1375
+#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1376
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
@@ -2658,11 +2658,11 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:358
-#: plug-ins/common/file-jp2.c:1804 plug-ins/common/file-jpegxl.c:1389
+#: plug-ins/common/file-jp2.c:1813 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:792
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:794
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
 #: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
@@ -4004,7 +4004,7 @@ msgid "CPRL"
 msgstr "CPRL"
 
 #: plug-ins/common/file-jp2.c:366 plug-ins/common/file-jp2.c:454
-msgid "Co_mpliance Profile"
+msgid "Co_mpliance profile"
 msgstr "合规配置(_M)"
 
 #: plug-ins/common/file-jp2.c:367 plug-ins/common/file-jp2.c:455
@@ -4077,66 +4077,71 @@ msgstr "用于 CMYK 导出的特性文件的名称。"
 msgid "Profile: %s"
 msgstr "特性文件：%s"
 
-#: plug-ins/common/file-jp2.c:1383 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2.c:1384 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "无法打开“%s”并读取"
 
-#: plug-ins/common/file-jp2.c:1392
+#: plug-ins/common/file-jp2.c:1393
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "为“%s”初始化解码器失败，内存不足吗？"
 
-#: plug-ins/common/file-jp2.c:1408
+#: plug-ins/common/file-jp2.c:1409
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "无法对“%s”的解码器设置参数。"
 
-#: plug-ins/common/file-jp2.c:1416
+#: plug-ins/common/file-jp2.c:1417
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "无法从“%s”读取 JP2 文件头。"
 
-#: plug-ins/common/file-jp2.c:1424
+#: plug-ins/common/file-jp2.c:1425
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "无法解码“%s”中的 JP2 图像。"
 
-#: plug-ins/common/file-jp2.c:1432
+#: plug-ins/common/file-jp2.c:1433
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "无法解压缩“%s”中的 JP2 图像。"
 
-#: plug-ins/common/file-jp2.c:1463
+#: plug-ins/common/file-jp2.c:1464
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "无法解码“%s”中的 CIELAB JP2 图像。"
 
-#: plug-ins/common/file-jp2.c:1520
+#: plug-ins/common/file-jp2.c:1521
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "JP2 码流“%s”带有未知色彩空间。"
 
-#: plug-ins/common/file-jp2.c:1531
+#: plug-ins/common/file-jp2.c:1532
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "无法转换 YCbCr JP2 图像“%s”为 RGB。"
 
-#: plug-ins/common/file-jp2.c:1541
+#: plug-ins/common/file-jp2.c:1542
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "无法转换“%s”中的 CMYK JP2 图像为 RGB。"
 
-#: plug-ins/common/file-jp2.c:1553
+#: plug-ins/common/file-jp2.c:1554
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "无法转换“%s”中的 xvYCC JP2 图像为 RGB。"
 
-#: plug-ins/common/file-jp2.c:1580
+#: plug-ins/common/file-jp2.c:1581
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "不支持 JP2 图像“%s”中的色彩空间。"
+
+#: plug-ins/common/file-jp2.c:1635
+#, c-format
+msgid "Defined row size is too large in JP2 image '%s'."
+msgstr "定义的行大小在 JP2 图像“%s”中太大了。"
 
 #: plug-ins/common/file-jpegxl.c:141 plug-ins/common/file-jpegxl.c:168
 msgid "JPEG XL image"
@@ -4605,7 +4610,7 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "下边框超出边界（须 < %d）：%d"
 
 #: plug-ins/common/file-pcx.c:1266 plug-ins/common/file-qoi.c:369
-#: plug-ins/common/file-svg.c:801 plug-ins/common/file-svg.c:817
+#: plug-ins/common/file-svg.c:803 plug-ins/common/file-svg.c:819
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "写入文件“%s”失败：%s"
@@ -4890,7 +4895,7 @@ msgstr "PNG 图像"
 msgid "APNG image"
 msgstr "APNG 图像"
 
-#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:356
+#: plug-ins/common/file-png.c:331
 msgid "PNG"
 msgstr "PNG"
 
@@ -6327,69 +6332,72 @@ msgstr "读入时遇到文件结束符"
 msgid "Write error occurred"
 msgstr "出现写错误"
 
-#: plug-ins/common/file-svg.c:276
+#: plug-ins/common/file-svg.c:278
 msgid "SVG image"
 msgstr "SVG 图像"
 
-#: plug-ins/common/file-svg.c:279
+#: plug-ins/common/file-svg.c:281
 msgid "Loads files in SVG file format"
 msgstr "加载 SVG 格式的文件"
 
-#: plug-ins/common/file-svg.c:294
+#: plug-ins/common/file-svg.c:296
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:303
+#: plug-ins/common/file-svg.c:305
 msgid "_Paths"
 msgstr "路径(_P)"
 
-#: plug-ins/common/file-svg.c:304
+#: plug-ins/common/file-svg.c:306
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr "是否以及如何导入路径使其可用于路径工具"
 
-#: plug-ins/common/file-svg.c:305
+#: plug-ins/common/file-svg.c:307
 msgid "Don't import paths"
 msgstr "不要导入路径"
 
-#: plug-ins/common/file-svg.c:306
+#: plug-ins/common/file-svg.c:308
 msgid "Import paths individually"
 msgstr "分别导入路径"
 
-#: plug-ins/common/file-svg.c:307
+#: plug-ins/common/file-svg.c:309
 msgid "Merge imported paths"
 msgstr "合并导入的路径"
 
-#: plug-ins/common/file-svg.c:319
+#: plug-ins/common/file-svg.c:321
 msgid "Scalable Vector Graphic"
 msgstr "可缩放矢量图形"
 
-#: plug-ins/common/file-svg.c:322
+#: plug-ins/common/file-svg.c:324
 msgid "Exports files in SVG file format"
 msgstr "以 SVG 文件格式导出文件"
 
-#: plug-ins/common/file-svg.c:323
+#: plug-ins/common/file-svg.c:325
 msgid "Exports files in SVG file format (Scalable Vector Graphic)"
 msgstr "以 SVG 文件格式导出文件（可缩放矢量图形）"
 
-#: plug-ins/common/file-svg.c:348
+#: plug-ins/common/file-svg.c:350
 msgid "_Title"
 msgstr "标题(_T)"
 
-#: plug-ins/common/file-svg.c:349
+#: plug-ins/common/file-svg.c:351
 msgid "Optional <title> for SVG"
 msgstr "SVG 的可选 <title>"
 
-#: plug-ins/common/file-svg.c:354
+#: plug-ins/common/file-svg.c:356
 msgid "Em_bed raster layers as"
 msgstr "光栅图层内嵌为(_B)"
 
-#: plug-ins/common/file-svg.c:357 plug-ins/file-jpeg/jpeg.c:195
-#: plug-ins/file-tiff/file-tiff.c:144
-msgid "JPEG"
-msgstr "JPEG"
-
 #: plug-ins/common/file-svg.c:358
+msgid "PNG (always)"
+msgstr "PNG（总是）"
+
+#: plug-ins/common/file-svg.c:359
+msgid "JPEG (for opaque images, PNG otherwise)"
+msgstr "JPEG（用于不透明图像，否则选 PNG）"
+
+#: plug-ins/common/file-svg.c:360
 msgid "Do not export raster layers"
 msgstr "不要导出光栅图层"
 
@@ -6398,15 +6406,15 @@ msgstr "不要导出光栅图层"
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:405
+#: plug-ins/common/file-svg.c:407
 msgid "Disable safety size limits?"
 msgstr "禁用安全大小限制吗？"
 
-#: plug-ins/common/file-svg.c:410
+#: plug-ins/common/file-svg.c:412
 msgid "_No"
 msgstr "否(_N)"
 
-#: plug-ins/common/file-svg.c:411
+#: plug-ins/common/file-svg.c:413
 msgid "_Yes"
 msgstr "是(_Y)"
 
@@ -6420,7 +6428,7 @@ msgstr "是(_Y)"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:435
+#: plug-ins/common/file-svg.c:437
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6429,28 +6437,28 @@ msgstr ""
 "发生了解析错误。\n"
 "禁用安全限制可能会有帮助。恶意 SVG 文件可能会用此消耗过多内存。"
 
-#: plug-ins/common/file-svg.c:447
+#: plug-ins/common/file-svg.c:449
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "为了安全原因，该选项应仅用于信任的输入！"
 
-#: plug-ins/common/file-svg.c:454
+#: plug-ins/common/file-svg.c:456
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "不带阻止解析巨量数据的限制来重试吗？"
 
-#: plug-ins/common/file-svg.c:756 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/common/file-svg.c:758 plug-ins/file-exr/file-exr.c:381
 #: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "未知原因"
 
-#: plug-ins/common/file-svg.c:762
+#: plug-ins/common/file-svg.c:764
 msgid "Rendering SVG"
 msgstr "渲染 SVG"
 
-#: plug-ins/common/file-svg.c:772
+#: plug-ins/common/file-svg.c:774
 msgid "Rendered SVG"
 msgstr "已渲染的 SVG"
 
-#: plug-ins/common/file-svg.c:1123
+#: plug-ins/common/file-svg.c:1125
 msgid ""
 "The SVG format only requires viewers to display image links for SVG, PNG, "
 "and JPEG images.\n"
@@ -7554,11 +7562,11 @@ msgid "Action"
 msgstr "动作"
 
 #: plug-ins/common/hot.c:280
-msgid "Reduce Luminance"
+msgid "Reduce luminance"
 msgstr "降低亮度"
 
 #: plug-ins/common/hot.c:281
-msgid "Reduce Saturation"
+msgid "Reduce saturation"
 msgstr "降低饱和度"
 
 #: plug-ins/common/hot.c:282
@@ -7802,7 +7810,7 @@ msgstr ""
 "现插件菜单的树形列表。也可以帮助您找到新安装插件在菜单中的位置。"
 
 #: plug-ins/common/plugin-browser.c:372
-#: plug-ins/filter-browser/filter-browser.c:608
+#: plug-ins/filter-browser/filter-browser.c:610
 msgid "Searching by name"
 msgstr "按名称搜索"
 
@@ -7813,7 +7821,7 @@ msgid_plural "%d plug-ins"
 msgstr[0] "%d 个插件"
 
 #: plug-ins/common/plugin-browser.c:397
-#: plug-ins/filter-browser/filter-browser.c:675
+#: plug-ins/filter-browser/filter-browser.c:677
 msgid "No matches for your query"
 msgstr "您的查询无匹配结果"
 
@@ -7824,7 +7832,7 @@ msgid_plural "%d plug-ins match your query"
 msgstr[0] "共有 %d 个插件和您的查询匹配"
 
 #: plug-ins/common/plugin-browser.c:531
-#: plug-ins/filter-browser/filter-browser.c:677
+#: plug-ins/filter-browser/filter-browser.c:679
 msgid "No matches"
 msgstr "无匹配"
 
@@ -8252,7 +8260,7 @@ msgid "Draw a border of spikes around the image"
 msgstr "在图像的边缘处添加闪光边框"
 
 #: plug-ins/common/sparkle.c:270
-msgid "_Color type"
+msgid "_Color Type"
 msgstr "颜色类型(_C)"
 
 #: plug-ins/common/sparkle.c:271
@@ -8786,11 +8794,11 @@ msgid "Filter length"
 msgstr "滤镜长度"
 
 #: plug-ins/common/van-gogh-lic.c:198
-msgid "_Noise Magnitude"
+msgid "_Noise magnitude"
 msgstr "噪点量级(_N)"
 
 #: plug-ins/common/van-gogh-lic.c:199
-msgid "Noise Magnitude"
+msgid "Noise magnitude"
 msgstr "噪点量级"
 
 #: plug-ins/common/van-gogh-lic.c:204
@@ -10312,6 +10320,10 @@ msgstr "以 JPEG 格式导出文件"
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "将文件导出为有损的，被广泛支持的 JPEG 格式"
 
+#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:144
+msgid "JPEG"
+msgstr "JPEG"
+
 #: plug-ins/file-jpeg/jpeg.c:216
 msgid "S_moothing"
 msgstr "平滑(_M)"
@@ -11570,17 +11582,17 @@ msgstr "从“%s”解码 WebP 动画帧失败"
 msgid "Frame %d (%dms)"
 msgstr "第 %d 帧（%dms）"
 
-#: plug-ins/filter-browser/filter-browser.c:286
-#: plug-ins/filter-browser/filter-browser.c:321
+#: plug-ins/filter-browser/filter-browser.c:288
+#: plug-ins/filter-browser/filter-browser.c:323
 msgid "Allowed values:"
 msgstr "允许的值："
 
-#: plug-ins/filter-browser/filter-browser.c:419
+#: plug-ins/filter-browser/filter-browser.c:421
 #, c-format
 msgid "Operation name: %s"
 msgstr "操作名称：%s"
 
-#: plug-ins/filter-browser/filter-browser.c:432
+#: plug-ins/filter-browser/filter-browser.c:434
 #, c-format
 msgid "Categories: %s"
 msgstr "类别：%s"
@@ -11591,7 +11603,7 @@ msgstr "类别：%s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:462
+#: plug-ins/filter-browser/filter-browser.c:464
 #: plug-ins/gradient-flare/gradient-flare.c:2952
 #: plug-ins/gradient-flare/gradient-flare.c:3702
 #: plug-ins/gradient-flare/gradient-flare.c:3804
@@ -11599,64 +11611,64 @@ msgstr "类别：%s"
 msgid "Parameters"
 msgstr "参数"
 
-#: plug-ins/filter-browser/filter-browser.c:494
+#: plug-ins/filter-browser/filter-browser.c:496
 msgid "Additional Information"
 msgstr "附加信息"
 
-#: plug-ins/filter-browser/filter-browser.c:500
+#: plug-ins/filter-browser/filter-browser.c:502
 #, c-format
 msgid "License: %s"
 msgstr "许可证：%s"
 
-#: plug-ins/filter-browser/filter-browser.c:611
+#: plug-ins/filter-browser/filter-browser.c:613
 msgid "Searching by title"
 msgstr "按标题搜索"
 
-#: plug-ins/filter-browser/filter-browser.c:614
+#: plug-ins/filter-browser/filter-browser.c:616
 msgid "Searching by description"
 msgstr "按描述搜索"
 
-#: plug-ins/filter-browser/filter-browser.c:617
+#: plug-ins/filter-browser/filter-browser.c:619
 msgid "Searching by category"
 msgstr "按分类搜索"
 
-#: plug-ins/filter-browser/filter-browser.c:682
+#: plug-ins/filter-browser/filter-browser.c:684
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
 msgstr[0] "%d 个滤镜和您的查询匹配"
 
-#: plug-ins/filter-browser/filter-browser.c:688
+#: plug-ins/filter-browser/filter-browser.c:690
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
 msgstr[0] "%d 个滤镜"
 
-#: plug-ins/filter-browser/filter-browser.c:721
+#: plug-ins/filter-browser/filter-browser.c:724
 msgid "GEGL Filter Browser"
 msgstr "GEGL 滤镜浏览器"
 
-#: plug-ins/filter-browser/filter-browser.c:738
+#: plug-ins/filter-browser/filter-browser.c:741
 msgid "by name"
 msgstr "按名称"
 
-#: plug-ins/filter-browser/filter-browser.c:739
+#: plug-ins/filter-browser/filter-browser.c:742
 msgid "by title"
 msgstr "按标题"
 
-#: plug-ins/filter-browser/filter-browser.c:740
+#: plug-ins/filter-browser/filter-browser.c:743
 msgid "by description"
 msgstr "按描述"
 
-#: plug-ins/filter-browser/filter-browser.c:827
+#: plug-ins/filter-browser/filter-browser.c:832
 msgid "_GEGL Filter Browser"
 msgstr "_GEGL 滤镜浏览器"
 
-#: plug-ins/filter-browser/filter-browser.c:832
+#: plug-ins/filter-browser/filter-browser.c:837
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "显示关于可用 GEGL 操作的信息（如滤镜等）。"
 
-#: plug-ins/filter-browser/filter-browser.c:834
+#: plug-ins/filter-browser/filter-browser.c:839
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
@@ -11760,7 +11772,7 @@ msgstr "马蹄"
 
 #: plug-ins/flame/flame.c:924 plug-ins/gfig/gfig-dialog.c:1430
 msgid "Polar"
-msgstr "极线"
+msgstr "极坐标"
 
 #: plug-ins/flame/flame.c:925
 msgid "Bent"
@@ -12013,11 +12025,11 @@ msgid "Render fractal art"
 msgstr "渲染分形艺术"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:256
-msgid "Fr_actal Type"
+msgid "Fr_actal type"
 msgstr "分形类型(_A)"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:257
-msgid "Type of Fractal Pattern"
+msgid "Type of fractal pattern"
 msgstr "分形图案的类型"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:258
@@ -12100,19 +12112,19 @@ msgid "C_X"
 msgstr "C_X"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:303
-msgid "cx value"
-msgstr "cx 值"
+msgid "CX value"
+msgstr "CX 值"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:308
 msgid "C_Y"
 msgstr "C_Y"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:309
-msgid "cy value"
-msgstr "cy 值"
+msgid "CY value"
+msgstr "CY 值"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:314
-msgid "Color mode"
+msgid "Color Mode"
 msgstr "色彩模式"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:315
@@ -12480,7 +12492,7 @@ msgstr "工具选项"
 
 #: plug-ins/gfig/gfig-dialog.c:468
 msgid "_Stroke"
-msgstr "笔触(_S)"
+msgstr "描边(_S)"
 
 #: plug-ins/gfig/gfig-dialog.c:489 plug-ins/gfig/gfig-dialog.c:1284
 msgid "Foreground"
@@ -12556,8 +12568,8 @@ msgid "Antialiasing"
 msgstr "抗锯齿"
 
 #: plug-ins/gfig/gfig-dialog.c:1275
-msgid "Max undo:"
-msgstr "最大撤消次数："
+msgid "Max undo"
+msgstr "最多撤消"
 
 #: plug-ins/gfig/gfig-dialog.c:1282 plug-ins/gimpressionist/general.c:194
 msgid "Transparent"
@@ -12583,16 +12595,16 @@ msgid "Radius"
 msgstr "半径"
 
 #: plug-ins/gfig/gfig-dialog.c:1384
-msgid "Grid spacing:"
-msgstr "网格间距："
+msgid "Grid spacing"
+msgstr "网格间距"
 
 #: plug-ins/gfig/gfig-dialog.c:1399
-msgid "Polar grid sectors desired:"
-msgstr "需要的极坐标网格扇区："
+msgid "Polar grid sectors desired"
+msgstr "需要的极坐标网格扇区"
 
 #: plug-ins/gfig/gfig-dialog.c:1415
-msgid "Polar grid radius interval:"
-msgstr "极坐标网格的半径间隔："
+msgid "Polar grid radius interval"
+msgstr "极坐标网格的半径间隔"
 
 #: plug-ins/gfig/gfig-dialog.c:1431
 msgid "Isometric"
@@ -12629,8 +12641,8 @@ msgid "Grid color:"
 msgstr "网格颜色："
 
 #: plug-ins/gfig/gfig-dialog.c:1689
-msgid "Sides:"
-msgstr "边数："
+msgid "Sides"
+msgstr "边数"
 
 #: plug-ins/gfig/gfig-dialog.c:1698
 msgid "Right"
@@ -15111,6 +15123,7 @@ msgid "Position of viewpoint (x,y,z)"
 msgstr "观察点位置（x,y,z）"
 
 #: plug-ins/map-object/map-object-main.c:154
+#: plug-ins/map-object/map-object-main.c:186
 #: plug-ins/map-object/map-object-main.c:202
 msgid "Y"
 msgstr "Y"
@@ -15132,10 +15145,6 @@ msgstr "对象位置（x,y,z）"
 #: plug-ins/map-object/map-object-main.c:192
 msgid "First axis of object (x,y,z)"
 msgstr "对象的第一个坐标轴（x,y,z）"
-
-#: plug-ins/map-object/map-object-main.c:186
-msgid "y"
-msgstr "y"
 
 #: plug-ins/map-object/map-object-main.c:198
 #: plug-ins/map-object/map-object-main.c:203
@@ -15176,15 +15185,15 @@ msgid "Type of lightsource"
 msgstr "光源的类型"
 
 #: plug-ins/map-object/map-object-main.c:231
-msgid "Point Light"
+msgid "Point light"
 msgstr "点光源"
 
 #: plug-ins/map-object/map-object-main.c:232
-msgid "Directional Light"
-msgstr "方向光源"
+msgid "Directional light"
+msgstr "定向光源"
 
 #: plug-ins/map-object/map-object-main.c:233
-msgid "No Light"
+msgid "No light"
 msgstr "无光源"
 
 #: plug-ins/map-object/map-object-main.c:239
@@ -16712,6 +16721,18 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid "_Filter Type"
+#~ msgstr "过滤器类型(_F)"
+
+#~ msgid "cx value"
+#~ msgstr "cx 值"
+
+#~ msgid "cy value"
+#~ msgstr "cy 值"
+
+#~ msgid "y"
+#~ msgstr "y"
 
 #~ msgid "_Speed:"
 #~ msgstr "速度(_S)："
