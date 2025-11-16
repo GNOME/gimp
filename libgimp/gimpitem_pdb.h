@@ -79,6 +79,14 @@ gboolean      gimp_item_detach_parasite     (GimpItem           *item,
 GimpParasite* gimp_item_get_parasite        (GimpItem           *item,
                                              const gchar        *name);
 gchar**       gimp_item_get_parasite_list   (GimpItem           *item);
+gboolean      gimp_items_popup              (const gchar        *callback,
+                                             const gchar        *popup_title,
+                                             const gchar        *item_type,
+                                             GimpItem           *initial_item,
+                                             GBytes             *parent_window);
+gboolean      gimp_items_close_popup        (const gchar        *callback);
+gboolean      gimp_items_set_popup          (const gchar        *callback,
+                                             GimpItem           *item);
 
 
 G_END_DECLS
