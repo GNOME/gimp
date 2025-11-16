@@ -10,6 +10,7 @@ libgimp/gimpexportproceduredialog.c
 libgimp/gimpimagechooser.c
 libgimp/gimpimagemetadata.c
 libgimp/gimpimagemetadata-save.c
+libgimp/gimpitemchooser.c
 libgimp/gimploadprocedure.c
 libgimp/gimpparamspecs-desc.c
 libgimp/gimppatternchooser.c

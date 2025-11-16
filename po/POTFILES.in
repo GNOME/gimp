@@ -611,6 +611,7 @@ app/widgets/gimpimagechooser.c
 app/widgets/gimpimagecommenteditor.c
 app/widgets/gimpimageprofileview.c
 app/widgets/gimpimagepropview.c
+app/widgets/gimpitemchooser.c
 app/widgets/gimpitemtreeview.c
 app/widgets/gimpitemtreeview-search.c
 app/widgets/gimplayermodebox.c
