@@ -777,6 +777,8 @@ gimp_layer_get_description (GimpViewable  *viewable,
       drawable = gimp_layer_get_floating_sel_drawable (GIMP_LAYER (viewable));
       if (GIMP_IS_LAYER_MASK (drawable))
         header = _("Floating Mask");
+      if (GIMP_IS_CHANNEL (drawable))
+        header = _("Floating Channel");
       else if (GIMP_IS_LAYER (drawable))
         header = _("Floating Layer");
       /* TRANSLATORS: the first %s will be the type of floating item, i.e.
