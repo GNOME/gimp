@@ -2876,14 +2876,14 @@ load_dialog (GFile         *file,
 
       file_size = get_file_info (file);
 
-      entry = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
-                                                    "offset", 1.0);
+      entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                     "offset", 1.0);
       gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), 0, file_size, FALSE);
-      entry = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
-                                                    "width", 1.0);
+      entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                     "width", 1.0);
       gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), 1, file_size, FALSE);
-      entry = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
-                                                    "height", 1.0);
+      entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                     "height", 1.0);
       gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), 1, file_size, FALSE);
 
       gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
