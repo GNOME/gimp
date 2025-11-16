@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-08 22:21+0000\n"
-"PO-Revision-Date: 2025-11-09 09:04+0800\n"
+"POT-Creation-Date: 2025-11-15 13:49+0000\n"
+"PO-Revision-Date: 2025-11-16 08:16+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -49,23 +49,23 @@ msgstr "创建图像或编辑照片"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:19
 msgid ""
-"GIMP is an acronym for GNU Image Manipulation Program. It is a freely "
-"distributed program for such tasks as photo retouching, image composition "
-"and image authoring."
+"GIMP is an acronym for GNU Image Manipulation Program. It is Community-"
+"driven Free Software for high-end image creation and manipulation."
 msgstr ""
-"GIMP 是 GNU 图像处理程序 (GNU Image Manipulation Program) 的缩写。GIMP 是一个"
-"可自由分发的程序，可用于照片的后期处理、图像合成处理和图像出版。"
+"GIMP 是 GNU 图像处理程序（GNU Image Manipulation Program）的缩写。GIMP 是一个"
+"由社区驱动用于高端图像创作和处理的自由软件。"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:24
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:23
 msgid ""
-"It has many capabilities. It can be used as a simple paint program, an "
-"expert quality photo retouching program, an online batch processing system, "
-"a mass production image renderer, an image format converter, etc."
+"It has many capabilities. It can be used as a paint program, an expert "
+"quality photo retouching program, image composition, an online batch "
+"processing system, a mass production image renderer, an image format "
+"converter, etc."
 msgstr ""
-"GIMP 功能强大。它可以作为简单的画图程序、专家级的照片后期程序、在线批处理程"
-"序、大批量图像渲染器或者图片格式转化器等。"
+"GIMP 功能强大。它可以作为简单的画图程序，专家级的照片后期程序，图像合成、在线"
+"批处理程序，大批量图像渲染器或者图像格式转化器等使用。"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:30
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:29
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
@@ -77,7 +77,7 @@ msgstr ""
 "复杂的图像处理过程，GIMP 的先进脚本接口都允许你将它们轻松写成脚本。GIMP 可用"
 "于 Linux、Microsoft Windows 和 macOS。"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:48
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:47
 msgid ""
 "Scene 4 cut 15 of \"ZeMarmot\" being edited in GIMP. Illustration by Aryeom "
 "(CC by-sa 4.0 International)"
@@ -85,21 +85,21 @@ msgstr ""
 "GIMP 中正在编辑的“ZeMarmot”场景 4 剪辑 15。创作者 Aryeom（CC by-sa 4.0 "
 "International）"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:52
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:51
 msgid ""
 "Gull on beach photograph being edited in GIMP. Photo by Iana (CC by-sa 4.0 "
 "International)"
 msgstr ""
 "GIMP 中正在编辑的海滩上的海鸥。拍摄者 Iana（CC by-sa 4.0 International）"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:56
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:55
 msgid ""
 "Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 "
 "International)"
 msgstr ""
 "GIMP 中正在编辑的索菲亚的人像。拍摄者索菲亚（CC by-sa 4.0 International）"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:60
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:59
 msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
 msgstr "GIMP 中正在编辑的扫描版画。创作者 Liam（CC0）"
 
@@ -7790,7 +7790,7 @@ msgctxt "paths-action"
 msgid "Select the path below the current path"
 msgstr "选择当前路径下方的路径"
 
-#: app/actions/paths-commands.c:176 app/actions/paths-commands.c:937
+#: app/actions/paths-commands.c:176 app/actions/paths-commands.c:958
 msgid "Path Attributes"
 msgstr "路径属性"
 
@@ -7838,15 +7838,19 @@ msgstr "无法删除附加到矢量图层的路径"
 msgid "Remove Paths"
 msgstr "移除路径"
 
-#: app/actions/paths-commands.c:568
+#: app/actions/paths-commands.c:535
+msgid "Cannot merge paths attached to vector layers"
+msgstr "无法合并附加到矢量图层的路径"
+
+#: app/actions/paths-commands.c:589
 msgid "Paths to selection"
 msgstr "路径到选区"
 
-#: app/actions/paths-commands.c:648
+#: app/actions/paths-commands.c:669
 msgid "Fill Path"
 msgstr "填充路径"
 
-#: app/actions/paths-commands.c:676
+#: app/actions/paths-commands.c:697
 msgid "Stroke Path"
 msgstr "描边路径"
 
@@ -8404,7 +8408,7 @@ msgstr "打开(_O)"
 
 #: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:280
 #: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526
-#: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
+#: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:295
 #: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1650
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -10000,30 +10004,35 @@ msgstr "恢复缩放 (%d%%)(_V)"
 msgid "Re_vert Zoom"
 msgstr "恢复缩放(_V)"
 
-#: app/actions/view-actions.c:1004
+#: app/actions/view-actions.c:1005
 #, c-format
-msgid "_Zoom (%s)"
-msgstr "缩放 (%s)(_Z)"
+msgid "_Zoom (%.0f%%)"
+msgstr "缩放 (%.0f%%)(_Z)"
+
+#: app/actions/view-actions.c:1007
+#, c-format
+msgid "_Zoom (%.2f%%)"
+msgstr "缩放 (%.2f%%)(_Z)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
-#: app/actions/view-actions.c:1024
+#: app/actions/view-actions.c:1026
 msgid "(H+V) "
 msgstr "(H+V) "
 
 #. please preserve the trailing space
 #. H: Horizontal
-#: app/actions/view-actions.c:1030
+#: app/actions/view-actions.c:1032
 msgid "(H) "
 msgstr "(H+V) "
 
 #. please preserve the trailing space
 #. V: Vertical
-#: app/actions/view-actions.c:1036
+#: app/actions/view-actions.c:1038
 msgid "(V) "
 msgstr "(V) "
 
-#: app/actions/view-actions.c:1045
+#: app/actions/view-actions.c:1047
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "翻转%s和旋转(%d°)(_F)"
@@ -10443,7 +10452,7 @@ msgid "Error writing '%s': %s"
 msgstr "写入“%s”时出错：%s"
 
 #: app/config/gimpconfig-file.c:184 app/plug-in/gimpenvirontable.c:374
-#: app/plug-in/gimpinterpreterdb.c:268 app/tools/gimpfiltertool-settings.c:182
+#: app/plug-in/gimpinterpreterdb.c:329 app/tools/gimpfiltertool-settings.c:182
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "读取“%s”时出错：%s"
@@ -13549,7 +13558,7 @@ msgid "Cannot rename effect masks."
 msgstr "无法重命名特效蒙板。"
 
 #: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:735
-#: app/core/gimplayer.c:2039 app/core/gimplayermask.c:294
+#: app/core/gimplayer.c:2049 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "%s 蒙板"
@@ -14421,69 +14430,69 @@ msgstr ""
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "无法添加图层蒙板，因为已有一个。"
 
-#: app/core/gimplayer.c:1951
+#: app/core/gimplayer.c:1952
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "无法添加跟指定图层尺寸不同的图层蒙板。"
 
-#: app/core/gimplayer.c:1957
+#: app/core/gimplayer.c:1958
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "添加图层蒙板"
 
-#: app/core/gimplayer.c:2081
+#: app/core/gimplayer.c:2088
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "将透明度转移到蒙板"
 
-#: app/core/gimplayer.c:2248
+#: app/core/gimplayer.c:2252
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "应用图层蒙板"
 
-#: app/core/gimplayer.c:2249
+#: app/core/gimplayer.c:2253
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "删除图层蒙板"
 
-#: app/core/gimplayer.c:2356
+#: app/core/gimplayer.c:2360
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "启用图层蒙板"
 
-#: app/core/gimplayer.c:2357
+#: app/core/gimplayer.c:2361
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "禁用图层蒙板"
 
-#: app/core/gimplayer.c:2438
+#: app/core/gimplayer.c:2442
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "显示图层蒙板"
 
-#: app/core/gimplayer.c:2517
+#: app/core/gimplayer.c:2521
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "添加透明通道"
 
-#: app/core/gimplayer.c:2547
+#: app/core/gimplayer.c:2551
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "删除透明通道"
 
-#: app/core/gimplayer.c:2568
+#: app/core/gimplayer.c:2572
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "图层到图像大小"
 
-#: app/core/gimplayer.c:2751
+#: app/core/gimplayer.c:2755
 msgid "Set layer's blend space"
 msgstr "设置图层混合空间"
 
-#: app/core/gimplayer.c:2798
+#: app/core/gimplayer.c:2802
 msgid "Set layer's composite space"
 msgstr "设置图层合成空间"
 
-#: app/core/gimplayer.c:2845
+#: app/core/gimplayer.c:2849
 msgid "Set layer's composite mode"
 msgstr "设置图层合成模式"
 
@@ -21654,7 +21663,7 @@ msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "图像分辨率超出范围，使用默认的分辨率替代。"
 
-#: app/pdb/image-select-cmds.c:305 app/tools/gimpfreeselecttool.c:105
+#: app/pdb/image-select-cmds.c:307 app/tools/gimpfreeselecttool.c:105
 msgid "Free Select"
 msgstr "自由选择"
 
@@ -21779,12 +21788,12 @@ msgstr "环境文件 %s 中含有空变量名"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "环境文件 %s 中含有非法变量名：%s"
 
-#: app/plug-in/gimpinterpreterdb.c:303 app/plug-in/gimpinterpreterdb.c:400
+#: app/plug-in/gimpinterpreterdb.c:364 app/plug-in/gimpinterpreterdb.c:461
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
 msgstr "解释器文件 %s 中引用的错误的解释器：%s"
 
-#: app/plug-in/gimpinterpreterdb.c:372
+#: app/plug-in/gimpinterpreterdb.c:433
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
 msgstr "解释器文件 %s 中的错误的二进制格式串"
@@ -21948,15 +21957,15 @@ msgid "invalid value '%ld' for icon type"
 msgstr "图标类型“%ld”无效"
 
 #: app/propgui/gimppropgui-channel-mixer.c:63
-msgid "Red channel"
+msgid "Red Channel"
 msgstr "红色通道"
 
 #: app/propgui/gimppropgui-channel-mixer.c:84
-msgid "Green channel"
+msgid "Green Channel"
 msgstr "绿色通道"
 
 #: app/propgui/gimppropgui-channel-mixer.c:105
-msgid "Blue channel"
+msgid "Blue Channel"
 msgstr "蓝色通道"
 
 #: app/propgui/gimppropgui-color-balance.c:94
@@ -25064,15 +25073,15 @@ msgstr "轮廓选项"
 msgid "Outline Direction:"
 msgstr "轮廓方向："
 
-#: app/tools/gimptextoptions.c:911
+#: app/tools/gimptextoptions.c:912
 msgid "Justify:"
 msgstr "对齐："
 
-#: app/tools/gimptextoptions.c:941
+#: app/tools/gimptextoptions.c:942
 msgid "Box:"
 msgstr "文字框："
 
-#: app/tools/gimptextoptions.c:983
+#: app/tools/gimptextoptions.c:984
 msgid "Language:"
 msgstr "语言："
 
@@ -28051,23 +28060,23 @@ msgstr "%d ppi"
 msgid "Line width:"
 msgstr "线宽："
 
-#: app/widgets/gimpstrokeeditor.c:150
+#: app/widgets/gimpstrokeeditor.c:151
 msgid "_Cap style:"
 msgstr "帽盖样式(_C)："
 
-#: app/widgets/gimpstrokeeditor.c:156
+#: app/widgets/gimpstrokeeditor.c:158
 msgid "_Join style:"
 msgstr "接合样式(_J)："
 
-#: app/widgets/gimpstrokeeditor.c:163
+#: app/widgets/gimpstrokeeditor.c:165
 msgid "_Miter limit:"
 msgstr "斜接限制(_M)："
 
-#: app/widgets/gimpstrokeeditor.c:169
+#: app/widgets/gimpstrokeeditor.c:171
 msgid "Dash pattern:"
 msgstr "虚线模式："
 
-#: app/widgets/gimpstrokeeditor.c:236
+#: app/widgets/gimpstrokeeditor.c:238
 msgid "Dash _preset:"
 msgstr "虚线预设(_P)："
 
