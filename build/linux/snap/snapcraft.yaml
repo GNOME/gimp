@@ -1,6 +1,6 @@
 name: gimp-experimental
 adopt-info: gimp
-grade: stable
+grade: stable #see parts:babl_or_gegl:override-pull
 base: core24
 compression: lzo
 confinement: strict
