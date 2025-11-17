@@ -330,7 +330,10 @@ gimp_prop_drawable_chooser_new (GObject     *config,
       title = g_strdup (chooser_title);
     }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
   prop_chooser = gimp_drawable_chooser_new (title, label, param_spec->value_type, initial_drawable);
+#pragma GCC diagnostic pop
   g_clear_object (&initial_drawable);
   g_free (title);
 

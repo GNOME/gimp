@@ -666,10 +666,26 @@ gimp_procedure_dialog_set_ok_label (GimpProcedureDialog *dialog,
  *       See [method@Gimp.Procedure.add_file_argument].
  * - %G_TYPE_PARAM_UNIT:
  *     * %GIMP_TYPE_UNIT_COMBO_BOX
+ * - %GIMP_TYPE_PARAM_ITEM (any subtype, such as layer, channel or path):
+ *     * %GIMP_TYPE_ITEM_CHOOSER (default): a widget allowing to choose
+ *       among items of the specific subtype, within all images opened in
+ *       GIMP.
+ *     * %GIMP_TYPE_DRAWABLE_CHOOSER (deprecated): this type of widget
+ *       is now deprecated. You should update your code to request a
+ *       %GimpItemChooser instead.
+ * - %GIMP_TYPE_PARAM_IMAGE:
+ *     * %GIMP_TYPE_IMAGE_CHOOSER: a widget allowing to choose among
+ *       images opened in GIMP.
  *
  * If the @widget_type is not supported for the actual type of
  * @property, the function will fail. To keep the default, set to
  * %G_TYPE_NONE.
+ *
+ * Note that this function will not ensure that its default returned
+ * widget type will always be the same. If you want to make sure that no
+ * breakage will ensure in your code, in particular if you are further
+ * tweaking the widget with `GTK` or `libgimpui` API, you should always
+ * call with the specific @widget_type.
  *
  * If a widget has already been created for this procedure, it will be
  * returned instead (even if with a different @widget_type).
@@ -907,13 +923,16 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     {
       widget = gimp_prop_pattern_chooser_new (G_OBJECT (priv->config), property, _("Pattern Chooser"));
     }
-  else if (G_IS_PARAM_SPEC_OBJECT (pspec) && (pspec->value_type == GIMP_TYPE_DRAWABLE ||
-                                              pspec->value_type == GIMP_TYPE_LAYER    ||
-                                              pspec->value_type == GIMP_TYPE_CHANNEL))
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec)                      &&
+           g_type_is_a (pspec->value_type, GIMP_TYPE_DRAWABLE) &&
+           widget_type == GIMP_TYPE_DRAWABLE_CHOOSER)
     {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
       widget = gimp_prop_drawable_chooser_new (G_OBJECT (priv->config), property, NULL);
+#pragma GCC diagnostic pop
     }
-  else if (G_IS_PARAM_SPEC_OBJECT (pspec) && (pspec->value_type == GIMP_TYPE_PATH))
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec) && g_type_is_a (pspec->value_type, GIMP_TYPE_ITEM))
     {
       widget = gimp_prop_item_chooser_new (G_OBJECT (priv->config), property, NULL);
     }
@@ -965,15 +984,28 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
       if (label == NULL)
         {
           if (GIMP_IS_LABELED (widget))
-            label = gimp_labeled_get_label (GIMP_LABELED (widget));
+            {
+              label = gimp_labeled_get_label (GIMP_LABELED (widget));
+            }
           else if (GIMP_IS_RESOURCE_CHOOSER (widget))
-            label = gimp_resource_chooser_get_label (GIMP_RESOURCE_CHOOSER (widget));
+            {
+              label = gimp_resource_chooser_get_label (GIMP_RESOURCE_CHOOSER (widget));
+            }
           else if (GIMP_IS_DRAWABLE_CHOOSER (widget))
-            label = gimp_drawable_chooser_get_label (GIMP_DRAWABLE_CHOOSER (widget));
+            {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+              label = gimp_drawable_chooser_get_label (GIMP_DRAWABLE_CHOOSER (widget));
+#pragma GCC diagnostic pop
+            }
           else if (GIMP_IS_ITEM_CHOOSER (widget))
-            label = gimp_item_chooser_get_label (GIMP_ITEM_CHOOSER (widget));
+            {
+              label = gimp_item_chooser_get_label (GIMP_ITEM_CHOOSER (widget));
+            }
           else if (GIMP_IS_IMAGE_CHOOSER (widget))
-            label = gimp_image_chooser_get_label (GIMP_IMAGE_CHOOSER (widget));
+            {
+              label = gimp_image_chooser_get_label (GIMP_IMAGE_CHOOSER (widget));
+            }
         }
 
       if (label != NULL)
@@ -2926,7 +2958,10 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
     }
   else if (GIMP_IS_DRAWABLE_CHOOSER (widget))
     {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
       label = gimp_drawable_chooser_get_label (GIMP_DRAWABLE_CHOOSER (widget));
+#pragma GCC diagnostic pop
     }
   else if (GIMP_IS_ITEM_CHOOSER (widget))
     {

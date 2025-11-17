@@ -664,11 +664,6 @@ gui_pdb_dialog_new (Gimp          *gimp,
       dialog_role = "gimp-pattern-selection";
       help_id     = GIMP_HELP_PATTERN_DIALOG;
     }
-  else if (g_type_is_a (contents_type, GIMP_TYPE_DRAWABLE))
-    {
-      dialog_type = GIMP_TYPE_PICKABLE_SELECT;
-      dialog_role = "gimp-pickable-selection";
-    }
   else if (g_type_is_a (contents_type, GIMP_TYPE_ITEM))
     {
       dialog_type = GIMP_TYPE_ITEM_SELECT;
@@ -769,40 +764,36 @@ gui_pdb_dialog_set (Gimp          *gimp,
 
   if (contents_type == GIMP_TYPE_BRUSH)
     {
-      klass = g_type_class_peek (GIMP_TYPE_BRUSH_SELECT);
+      klass = g_type_class_ref (GIMP_TYPE_BRUSH_SELECT);
       container = gimp_data_factory_get_container (gimp->brush_factory);
     }
   else if (contents_type == GIMP_TYPE_FONT)
     {
-      klass = g_type_class_peek (GIMP_TYPE_FONT_SELECT);
+      klass = g_type_class_ref (GIMP_TYPE_FONT_SELECT);
       container = gimp_data_factory_get_container (gimp->font_factory);
     }
   else if (contents_type == GIMP_TYPE_GRADIENT)
     {
-      klass = g_type_class_peek (GIMP_TYPE_GRADIENT_SELECT);
+      klass = g_type_class_ref (GIMP_TYPE_GRADIENT_SELECT);
       container = gimp_data_factory_get_container (gimp->gradient_factory);
     }
   else if (contents_type == GIMP_TYPE_IMAGE)
     {
-      klass = g_type_class_peek (GIMP_TYPE_IMAGE_SELECT);
+      klass = g_type_class_ref (GIMP_TYPE_IMAGE_SELECT);
     }
   else if (contents_type == GIMP_TYPE_PALETTE)
     {
-      klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT);
+      klass = g_type_class_ref (GIMP_TYPE_PALETTE_SELECT);
       container = gimp_data_factory_get_container (gimp->palette_factory);
     }
   else if (contents_type == GIMP_TYPE_PATTERN)
     {
-      klass = g_type_class_peek (GIMP_TYPE_PATTERN_SELECT);
+      klass = g_type_class_ref (GIMP_TYPE_PATTERN_SELECT);
       container = gimp_data_factory_get_container (gimp->pattern_factory);
     }
-  else if (contents_type == GIMP_TYPE_DRAWABLE)
+  else if (g_type_is_a (contents_type, GIMP_TYPE_ITEM))
     {
-      klass = g_type_class_peek (GIMP_TYPE_PICKABLE_SELECT);
-    }
-  else if (contents_type == GIMP_TYPE_ITEM)
-    {
-      klass = g_type_class_peek (GIMP_TYPE_ITEM_SELECT);
+      klass = g_type_class_ref (GIMP_TYPE_ITEM_SELECT);
     }
 
   g_return_val_if_fail (klass != NULL, FALSE);
@@ -830,9 +821,12 @@ gui_pdb_dialog_set (Gimp          *gimp,
         g_object_set_valist (G_OBJECT (dialog), prop_name, args);
 
       gtk_window_present (GTK_WINDOW (dialog));
+      g_type_class_unref (klass);
 
       return TRUE;
     }
+
+  g_type_class_unref (klass);
 
   return FALSE;
 }
@@ -856,9 +850,7 @@ gui_pdb_dialog_close (Gimp        *gimp,
     klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT);
   else if (contents_type == GIMP_TYPE_PATTERN)
     klass = g_type_class_peek (GIMP_TYPE_PATTERN_SELECT);
-  else if (contents_type == GIMP_TYPE_DRAWABLE)
-    klass = g_type_class_peek (GIMP_TYPE_PICKABLE_SELECT);
-  else if (contents_type == GIMP_TYPE_ITEM)
+  else if (g_type_is_a (contents_type, GIMP_TYPE_ITEM))
     klass = g_type_class_peek (GIMP_TYPE_ITEM_SELECT);
 
   if (klass)
