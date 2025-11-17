@@ -31,9 +31,16 @@ if [ -z "$ver" ]; then
 else
   major=$(echo "$ver" | cut -d'.' -f1)
   minor=$(echo "$ver" | cut -d'.' -f2)
-  micro=$(echo "$ver" | cut -d'.' -f3)
-
-  TAG=GIMP_${major}_${minor}_${micro}
+  micro_rc=$(echo "$ver" | cut -d'.' -f3)
+  echo $micro_rc | grep -- '-'  > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    micro=$(echo "$micro_rc" | cut -d'-' -f1)
+    rc=$(echo "$micro_rc" | cut -d'-' -f2)
+    TAG=GIMP_${major}_${minor}_${micro}_$rc
+  else
+    micro=$micro_rc
+    TAG=GIMP_${major}_${minor}_${micro}
+  fi
 
   git --no-pager show $TAG >/dev/null 2>&1
   if [ $? -ne 0 ]; then
@@ -51,9 +58,9 @@ else
   # The previous tag will be in the same branch. For instance 3.0.4 is
   # previous to 3.0.6 even if we may have released 3.1 versions
   # in-between.
-  PREV_TAG=$(git ls-remote --tags --exit-code --refs  "https://gitlab.gnome.org/GNOME/gimp.git" |grep -o "GIMP_[0-9]*_[0-9]*_[0-9]*" | sort --version-sort | grep -B1 $TAG | head -1)
+  PREV_TAG=$(git ls-remote --tags --exit-code --refs  "https://gitlab.gnome.org/GNOME/gimp.git" |grep -o "GIMP_[0-9]*_[0-9]*_[0-9]*\(_RC[0-9]*\)\?" | sort --version-sort | grep -B1 $TAG | head -1)
   # The intermediate tag is the actual version we released before.
-  INTERMEDIATE_TAG=$(git ls-remote --tags --sort=taggerdate --exit-code --refs  "https://gitlab.gnome.org/GNOME/gimp.git" |grep -o "GIMP_[0-9]*_[0-9]*_[0-9]*" | grep -B1 $TAG | head -1)
+  INTERMEDIATE_TAG=$(git ls-remote --tags --sort=taggerdate --exit-code --refs  "https://gitlab.gnome.org/GNOME/gimp.git" |grep -o "GIMP_[0-9]*_[0-9]*_[0-9]*\(_RC[0-9]*\)\?" | grep -B1 $TAG | head -1)
 fi
 
 #if [ $is_dev_release -eq 0 ]; then
@@ -95,7 +102,15 @@ cur_date=`git log -1 --format=%ci $TAG`
 get_issues_mrs()
 {
   base_url=$1
-  version="$major.$minor.$micro"
+  if [ $micro -eq 0 ]; then
+    if [ -z $rc ]; then
+      version="$major.$minor"
+    else
+      version="$major.$minor+$rc"
+    fi
+  else
+    version="$major.$minor.$micro"
+  fi
 
   closed_issues=
   merged_mrs=
