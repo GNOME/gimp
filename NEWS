@@ -234,6 +234,13 @@ API:
       * gimp_images_close_popup
       * gimp_images_popup
       * gimp_images_set_popup
+      * gimp_items_close_popup
+      * gimp_items_popup
+      * gimp_items_set_popup
+    + Deprecated functions:
+      * gimp_drawables_close_popup
+      * gimp_drawables_popup
+      * gimp_drawables_set_popup
     + Removed functions:
       * gimp_vector_layer_discard (since 3.1.4, but never in a stable
         release).
@@ -263,8 +270,17 @@ API:
       * gimp_image_chooser_new
       * gimp_image_chooser_set_image
       * gimp_prop_image_chooser_new
+      * gimp_item_chooser_get_item
+      * gimp_item_chooser_get_label
+      * gimp_item_chooser_get_type
+      * gimp_item_chooser_new
+      * gimp_item_chooser_set_item
+      * gimp_prop_item_chooser_new
     + New classes:
       * GimpImageChooser
+      * GimpItemChooser
+    + Deprecated Classes:
+      * GimpDrawableChooser
 
 Build:
 
