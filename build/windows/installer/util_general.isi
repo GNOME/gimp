@@ -176,8 +176,14 @@ end;
 
 function GetThemedBgColor: TColor;
 begin
-  if IsDarkInstallMode then
-    Result := $2b2b2b
-  else
-    Result := $ffffff;
+	if HighContrastActive then
+	begin
+		Result := clWindow;
+	end else
+	begin
+		if IsDarkInstallMode then
+			Result := $2b2b2b
+		else
+			Result := $ffffff;
+	end;
 end;
