@@ -31,15 +31,15 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GimpItemChooser, gimp_item_chooser, GIMP, ITEM_CHOOSER, GtkBox)
 
 
-GtkWidget *    gimp_item_chooser_new          (const gchar      *title,
-                                               const gchar      *label,
-                                               GType             item_type,
-                                               GimpItem         *item);
+GtkWidget * gimp_item_chooser_new       (const gchar      *title,
+                                         const gchar      *label,
+                                         GType             item_type,
+                                         GimpItem         *item);
 
-GimpItem *     gimp_item_chooser_get_item     (GimpItemChooser  *chooser);
-void           gimp_item_chooser_set_item     (GimpItemChooser  *chooser,
-                                               GimpItem         *item);
-GtkWidget    * gimp_item_chooser_get_label    (GimpItemChooser  *widget);
+GimpItem  * gimp_item_chooser_get_item  (GimpItemChooser  *chooser);
+void        gimp_item_chooser_set_item  (GimpItemChooser  *chooser,
+                                         GimpItem         *item);
+GtkWidget * gimp_item_chooser_get_label (GimpItemChooser  *widget);
 
 
 G_END_DECLS

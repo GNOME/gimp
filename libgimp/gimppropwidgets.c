@@ -216,7 +216,7 @@ gimp_prop_image_chooser_new (GObject     *config,
  *
  * Returns: (transfer full): A new [class@GimpUi.ItemChooser].
  *
- * Since: 3.0
+ * Since: 3.2
  */
 GtkWidget *
 gimp_prop_item_chooser_new (GObject     *config,
@@ -285,6 +285,8 @@ gimp_prop_item_chooser_new (GObject     *config,
  * Returns: (transfer full): A new [class@GimpUi.DrawableChooser].
  *
  * Since: 3.0
+ *
+ * Deprecated: 3.2: Use gimp_prop_item_chooser_new().
  */
 GtkWidget *
 gimp_prop_drawable_chooser_new (GObject     *config,

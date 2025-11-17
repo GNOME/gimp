@@ -32,12 +32,15 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+GIMP_DEPRECATED_FOR(gimp_items_popup)
 gboolean gimp_drawables_popup       (const gchar  *callback,
                                      const gchar  *popup_title,
                                      const gchar  *drawable_type,
                                      GimpDrawable *initial_drawable,
                                      GBytes       *parent_window);
+GIMP_DEPRECATED_FOR(gimp_items_close_popup)
 gboolean gimp_drawables_close_popup (const gchar  *callback);
+GIMP_DEPRECATED_FOR(gimp_items_set_popup)
 gboolean gimp_drawables_set_popup   (const gchar  *callback,
                                      GimpDrawable *drawable);
 

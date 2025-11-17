@@ -32,14 +32,20 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GimpDrawableChooser, gimp_drawable_chooser, GIMP, DRAWABLE_CHOOSER, GtkBox)
 
 
-GtkWidget *    gimp_drawable_chooser_new          (const gchar          *title,
+GIMP_DEPRECATED_FOR(gimp_item_chooser_new)
+GtkWidget    * gimp_drawable_chooser_new          (const gchar          *title,
                                                    const gchar          *label,
                                                    GType                 drawable_type,
                                                    GimpDrawable         *drawable);
 
+GIMP_DEPRECATED_FOR(gimp_item_chooser_get_item)
 GimpDrawable * gimp_drawable_chooser_get_drawable (GimpDrawableChooser  *chooser);
+
+GIMP_DEPRECATED_FOR(gimp_item_chooser_set_item)
 void           gimp_drawable_chooser_set_drawable (GimpDrawableChooser  *chooser,
                                                    GimpDrawable         *drawable);
+
+GIMP_DEPRECATED_FOR(gimp_item_chooser_get_label)
 GtkWidget    * gimp_drawable_chooser_get_label    (GimpDrawableChooser  *widget);
 
 

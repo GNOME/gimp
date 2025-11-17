@@ -44,6 +44,8 @@
  * process to pop up a drawable selection dialog.
  *
  * Since: 3.0
+ *
+ * Deprecated: 3.2: Use GimpItemChooser.
  **/
 
 #define CELL_SIZE 40
@@ -358,6 +360,8 @@ gimp_drawable_chooser_get_property (GObject    *object,
  * Returns: A [class@GimpUi.DrawableChooser.
  *
  * Since: 3.0
+ *
+ * Deprecated: 3.2: Use gimp_item_chooser_new().
  */
 GtkWidget *
 gimp_drawable_chooser_new (const gchar  *title,
@@ -394,6 +398,8 @@ gimp_drawable_chooser_new (const gchar  *title,
  * Returns: (transfer none): an internal copy of the drawable which must not be freed.
  *
  * Since: 3.0
+ *
+ * Deprecated: 3.2: Use gimp_item_chooser_get_item().
  */
 GimpDrawable *
 gimp_drawable_chooser_get_drawable (GimpDrawableChooser *chooser)
@@ -412,6 +418,8 @@ gimp_drawable_chooser_get_drawable (GimpDrawableChooser *chooser)
  * This will select the drawable in both the button and any chooser popup.
  *
  * Since: 3.0
+ *
+ * Deprecated: 3.2: Use gimp_item_chooser_set_item().
  */
 void
 gimp_drawable_chooser_set_drawable (GimpDrawableChooser *chooser,
@@ -437,7 +445,10 @@ gimp_drawable_chooser_set_drawable (GimpDrawableChooser *chooser,
  * Returns the label widget.
  *
  * Returns: (transfer none): the [class@Gtk.Widget] showing the label text.
+ *
  * Since: 3.0
+ *
+ * Deprecated: 3.2: Use gimp_item_chooser_get_label().
  */
 GtkWidget *
 gimp_drawable_chooser_get_label (GimpDrawableChooser *chooser)

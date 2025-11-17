@@ -54,6 +54,8 @@ GtkWidget     * gimp_prop_image_chooser_new     (GObject              *config,
 GtkWidget     * gimp_prop_item_chooser_new      (GObject              *config,
                                                  const gchar          *property_name,
                                                  const gchar          *chooser_title);
+
+GIMP_DEPRECATED_FOR(gimp_prop_item_chooser_new)
 GtkWidget     * gimp_prop_drawable_chooser_new  (GObject              *config,
                                                  const gchar          *property_name,
                                                  const gchar          *chooser_title);

@@ -140,13 +140,15 @@ register_drawable_select_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawables-popup");
   gimp_procedure_set_static_help (procedure,
-                                  "Invokes the drawable selection dialog.",
-                                  "Opens a dialog letting a user choose an drawable.",
+                                  "Deprecated: Use 'gimp-items-popup' instead.",
+                                  "Deprecated: Use 'gimp-items-popup' instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "Jehan",
-                                         "Jehan",
-                                         "2023");
+                                         "",
+                                         "",
+                                         "");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gimp-items-popup");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("callback",
                                                        "callback",
@@ -190,13 +192,15 @@ register_drawable_select_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawables-close-popup");
   gimp_procedure_set_static_help (procedure,
-                                  "Close the drawable selection dialog.",
-                                  "Closes an open drawable selection dialog.",
+                                  "Deprecated: Use 'gimp-items-close-popup' instead.",
+                                  "Deprecated: Use 'gimp-items-close-popup' instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "Jehan",
-                                         "Jehan",
-                                         "2023");
+                                         "",
+                                         "",
+                                         "");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gimp-items-close-popup");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("callback",
                                                        "callback",
@@ -214,13 +218,15 @@ register_drawable_select_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawables-set-popup");
   gimp_procedure_set_static_help (procedure,
-                                  "Sets the selected drawable in a drawable selection dialog.",
-                                  "Sets the selected drawable in a drawable selection dialog.",
+                                  "Deprecated: Use 'gimp-items-set-popup' instead.",
+                                  "Deprecated: Use 'gimp-items-set-popup' instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "Jehan",
-                                         "Jehan",
-                                         "2023");
+                                         "",
+                                         "",
+                                         "");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gimp-items-set-popup");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("callback",
                                                        "callback",

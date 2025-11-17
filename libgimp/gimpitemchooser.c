@@ -42,7 +42,7 @@
  * The chooser contains an optional label and a button which queries the core
  * process to pop up a item selection dialog.
  *
- * Since: 3.0
+ * Since: 3.2
  **/
 
 #define CELL_SIZE 40
@@ -357,7 +357,7 @@ gimp_item_chooser_get_property (GObject    *object,
  *
  * Returns: A [class@GimpUi.ItemChooser.
  *
- * Since: 3.0
+ * Since: 3.2
  */
 GtkWidget *
 gimp_item_chooser_new (const gchar  *title,
@@ -393,7 +393,7 @@ gimp_item_chooser_new (const gchar  *title,
  *
  * Returns: (transfer none): an internal copy of the item which must not be freed.
  *
- * Since: 3.0
+ * Since: 3.2
  */
 GimpItem *
 gimp_item_chooser_get_item (GimpItemChooser *chooser)
@@ -411,7 +411,7 @@ gimp_item_chooser_get_item (GimpItemChooser *chooser)
  * Sets the currently selected item.
  * This will select the item in both the button and any chooser popup.
  *
- * Since: 3.0
+ * Since: 3.2
  */
 void
 gimp_item_chooser_set_item (GimpItemChooser *chooser,
@@ -437,7 +437,7 @@ gimp_item_chooser_set_item (GimpItemChooser *chooser,
  * Returns the label widget.
  *
  * Returns: (transfer none): the [class@Gtk.Widget] showing the label text.
- * Since: 3.0
+ * Since: 3.2
  */
 GtkWidget *
 gimp_item_chooser_get_label (GimpItemChooser *chooser)

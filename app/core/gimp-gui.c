@@ -418,7 +418,6 @@ gimp_pdb_dialog_new (Gimp          *gimp,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (g_type_is_a (contents_type, GIMP_TYPE_RESOURCE) ||
-                        g_type_is_a (contents_type, GIMP_TYPE_DRAWABLE) ||
                         g_type_is_a (contents_type, GIMP_TYPE_ITEM)     ||
                         g_type_is_a (contents_type, GIMP_TYPE_IMAGE), FALSE);
   g_return_val_if_fail (object == NULL ||
