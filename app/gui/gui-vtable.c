@@ -90,7 +90,6 @@
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimppaletteselect.h"
 #include "widgets/gimppatternselect.h"
-#include "widgets/gimppickableselect.h"
 #include "widgets/gimpprogressdialog.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
