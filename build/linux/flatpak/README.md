@@ -105,7 +105,7 @@ process specific of the org.gimp.GIMP repo on flathub), we:
   set "Nightly" on "desktop-file-name-prefix", and
   add "app-id":"org.gimp.GIMP.Nightly" and top "branch":"master".
 
-* For a new **development** series, add "development" on "tags",
+* For a new **development** series (RCs included), add "development" on "tags",
   use "dev" on build-id at gimp module "config-opts", and
   set "beta" on "desktop-file-name-prefix".
 
