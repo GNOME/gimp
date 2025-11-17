@@ -19,6 +19,15 @@ if (-not $GITLAB_CI)
     $PARENT_DIR = '\..'
   }
 
+$current_tag = $(git describe --tags --exact-match 2>$null)
+if ("$CI_COMMIT_TAG" -eq "$current_tag")
+  {
+    echo "hey"
+  }
+else
+  {
+    echo "I am nightly"
+  }
 
 # Install the required (pre-built) packages for babl, GEGL and GIMP
 if (-not $env:VCPKG_ROOT -or (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf))
