@@ -982,7 +982,7 @@ CODE
         if ($proc->{deprecated}) {
 	    $out->{register} .= <<CODE;
   gimp_procedure_set_deprecated (procedure,
-                                 "\"$proc->{deprecated}\"");
+                                 "$proc->{deprecated}");
 CODE
 	}
 
