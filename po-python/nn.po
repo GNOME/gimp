@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-22 16:43+0000\n"
-"PO-Revision-Date: 2025-10-24 17:57+0200\n"
+"POT-Creation-Date: 2025-11-11 03:20+0000\n"
+"PO-Revision-Date: 2025-11-11 17:54+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -194,7 +194,7 @@ msgstr "_Eksporter histogram …"
 #. TODO: GFile props still don't have labels + only load existing files
 #. (here we likely want to create a new file).
 #: plug-ins/python/histogram-export.py:224
-msgid "Histogram File"
+msgid "Histogram file"
 msgstr "Histogramfil"
 
 #: plug-ins/python/histogram-export.py:225
@@ -202,23 +202,23 @@ msgid "Histogram export file"
 msgstr "Eksportfil for histogram"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "_Bucket Size"
+msgid "_Bucket size"
 msgstr "_Bøttestorleik"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "Bucket Size"
+msgid "Bucket size"
 msgstr "Bøttestorleik"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample _Average"
+msgid "Sample _average"
 msgstr "_Prøvegjennomsnitt"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample Average"
+msgid "Sample average"
 msgstr "Prøvegjennomsnitt"
 
 #: plug-ins/python/histogram-export.py:232
-msgid "Pixel Count"
+msgid "Pixel count"
 msgstr "Pikselteljing"
 
 #: plug-ins/python/histogram-export.py:233
@@ -230,7 +230,7 @@ msgid "Percent"
 msgstr "Prosent"
 
 #: plug-ins/python/histogram-export.py:235
-msgid "Output _format"
+msgid "Output _Format"
 msgstr "_Utformat"
 
 #: plug-ins/python/histogram-export.py:235
@@ -683,8 +683,8 @@ msgstr "Epitrokoide"
 msgid "Lissajous"
 msgstr "Lissajousfigur"
 
-#: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
-msgid "Curve Type"
+#: plug-ins/python/spyro-plus.py:1487
+msgid "Curve type"
 msgstr "Kurvetype"
 
 #: plug-ins/python/spyro-plus.py:1488
@@ -746,7 +746,7 @@ msgstr ""
 "proporsjonal med talet på tenner."
 
 #: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
-msgid "Fixed Gear Teeth"
+msgid "Fixed gear teeth"
 msgstr "Tenner i fast tannhjul"
 
 #: plug-ins/python/spyro-plus.py:1558
@@ -758,7 +758,7 @@ msgstr ""
 "proporsjonal med talet på tenner."
 
 #: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
-msgid "Moving Gear Teeth"
+msgid "Moving gear teeth"
 msgstr "Tenner i det roterande tannhjulet"
 
 #: plug-ins/python/spyro-plus.py:1566
@@ -774,7 +774,7 @@ msgstr ""
 "er på kanten av hjulet."
 
 #: plug-ins/python/spyro-plus.py:1588
-msgid "Hole Number"
+msgid "Hole number"
 msgstr "Holnummer"
 
 #: plug-ins/python/spyro-plus.py:1589
@@ -786,7 +786,7 @@ msgstr ""
 "høgaste holnummeret er ulikt for kvart hjul."
 
 #: plug-ins/python/spyro-plus.py:1600
-msgid "Flower Petals"
+msgid "Flower petals"
 msgstr "Kronblad"
 
 #: plug-ins/python/spyro-plus.py:1601
@@ -794,7 +794,7 @@ msgid "The number of petals in the pattern."
 msgstr "Talet på kronblad i mønsteret."
 
 #: plug-ins/python/spyro-plus.py:1606
-msgid "Petal Skip"
+msgid "Petal skip"
 msgstr "Hopp over kronblad"
 
 #: plug-ins/python/spyro-plus.py:1607
@@ -802,7 +802,7 @@ msgid "The number of petals to advance for drawing the next petal."
 msgstr "Talet på kronblad som skal hoppast over for å teikna neste kronblad."
 
 #: plug-ins/python/spyro-plus.py:1612
-msgid "Hole Radius(%)"
+msgid "Hole radius(%)"
 msgstr "Holradius (%)"
 
 #: plug-ins/python/spyro-plus.py:1613
@@ -985,6 +985,10 @@ msgstr ""
 msgid "Spyrogimp..."
 msgstr "Spyrogimp ..."
 
+#: plug-ins/python/spyro-plus.py:2267
+msgid "Curve Type"
+msgstr "Kurvetype"
+
 #: plug-ins/python/spyro-plus.py:2271
 msgid "rack"
 msgstr "hylle"
@@ -1014,7 +1018,7 @@ msgstr ""
 "av formene."
 
 #: plug-ins/python/spyro-plus.py:2285
-msgid "Fi_xed Gear Teeth"
+msgid "Fi_xed gear teeth"
 msgstr "Tenner i _fast tannhjul"
 
 #: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
@@ -1022,11 +1026,11 @@ msgid "Number of teeth for fixed gear."
 msgstr "Talet på tenner i det faste tannhjulet."
 
 #: plug-ins/python/spyro-plus.py:2288
-msgid "Mo_ving Gear Teeth"
+msgid "Mo_ving gear teeth"
 msgstr "Tenner i det _roterande hjulet"
 
 #: plug-ins/python/spyro-plus.py:2291
-msgid "_Hole Radius (%)"
+msgid "_Hole radius (%)"
 msgstr "_Holradius (%)"
 
 #: plug-ins/python/spyro-plus.py:2292
