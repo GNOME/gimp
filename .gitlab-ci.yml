@@ -187,6 +187,7 @@ deps-debian-nonreloc:
             libaa1-dev
             libappstream-dev
             libarchive-dev
+            libasound2-dev
             libbz2-dev
             libcfitsio-dev
             libgexiv2-dev
