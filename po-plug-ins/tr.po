@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-10 19:13+0000\n"
-"PO-Revision-Date: 2025-11-08 20:00+0300\n"
+"POT-Creation-Date: 2025-11-18 07:54+0000\n"
+"PO-Revision-Date: 2025-11-18 17:03+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -618,7 +618,7 @@ msgstr "Kesitler"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:417
-#: plug-ins/common/file-jp2.c:1619 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-jp2.c:1620 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
 #: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
@@ -666,10 +666,7 @@ msgstr "Kalınlık ölçü birimi"
 msgid "Border size unit of measure"
 msgstr "Kenarlık boyutu ölçü birimi"
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/common/border-average.c:150
-#, fuzzy
-#| msgid "Bucket Si_ze"
 msgid "Bucket si_ze"
 msgstr "_Kova boyutu"
 
@@ -913,11 +910,11 @@ msgid "With gradient power (0,1)"
 msgstr "Renk geçiş üssü ile (0,1)"
 
 #: plug-ins/common/cml-explorer.c:207
-msgid "Multiply rand. value (0,1)"
+msgid "Multiply random value (0,1)"
 msgstr "Rastgele değeri çoğalt (0,1)"
 
 #: plug-ins/common/cml-explorer.c:208
-msgid "Multiply rand. value (0,2)"
+msgid "Multiply random value (0,2)"
 msgstr "Rastgele değeri çoğalt (0,2)"
 
 #: plug-ins/common/cml-explorer.c:209
@@ -949,11 +946,11 @@ msgid "Continuous gradient"
 msgstr "Sürekli renk geçişi"
 
 #: plug-ins/common/cml-explorer.c:229
-msgid "Continuous grad. w/o gap"
+msgid "Continuous gradient, without gap"
 msgstr "Sürekli renk geçişi, boşluksuz"
 
 #: plug-ins/common/cml-explorer.c:230
-msgid "Random, ch. independent"
+msgid "Random, channel independent"
 msgstr "Kanal bağımsız rastgele"
 
 #: plug-ins/common/cml-explorer.c:231
@@ -961,11 +958,11 @@ msgid "Random shared"
 msgstr "Rastgele paylaşılmış"
 
 #: plug-ins/common/cml-explorer.c:232
-msgid "Randoms from seed"
+msgid "Random from seed"
 msgstr "Parçacıktan rastgele"
 
 #: plug-ins/common/cml-explorer.c:233
-msgid "Randoms from seed (shared)"
+msgid "Random from seed (shared)"
 msgstr "Parçacıktan rastgele (paylaşılmış)"
 
 # CML Explorer içinde başlık düzeni kullanılması gerekiyor fakat
@@ -1182,15 +1179,15 @@ msgid "Use cyclic range"
 msgstr "Dönüşsel erim kullan"
 
 #: plug-ins/common/cml-explorer.c:1793
-msgid "Mod. rate:"
-msgstr "Düzenleme oranı:"
+msgid "Modification rate:"
+msgstr "Başkalaşım oranı:"
 
 #: plug-ins/common/cml-explorer.c:1800
-msgid "Env. sensitivity:"
+msgid "Environment sensitivity:"
 msgstr "Çevresel duyarlılık:"
 
 #: plug-ins/common/cml-explorer.c:1807
-msgid "Diffusion dist.:"
+msgid "Diffusion distance:"
 msgstr "Yayılma mesafesi:"
 
 #: plug-ins/common/cml-explorer.c:1814
@@ -1221,7 +1218,7 @@ msgid "Plot a Graph of the Settings"
 msgstr "Ayarların Grafiğini Çiz"
 
 #: plug-ins/common/cml-explorer.c:1897
-msgid "Ch. sensitivity:"
+msgid "Channel sensitivity:"
 msgstr "Kanal duyarlılığı:"
 
 #: plug-ins/common/cml-explorer.c:1905
@@ -1229,7 +1226,7 @@ msgid "Mutation rate:"
 msgstr "Başkalaşım oranı:"
 
 #: plug-ins/common/cml-explorer.c:1913
-msgid "Mutation dist.:"
+msgid "Mutation distance:"
 msgstr "Başkalaşım mesafesi:"
 
 #: plug-ins/common/cml-explorer.c:2008
@@ -1238,7 +1235,7 @@ msgstr "Geçerli Ayarların Çizgesi"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:727 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:730 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1210 plug-ins/gfig/gfig-dialog.c:1355
 #: plug-ins/ifs-compose/ifs-compose.c:1213
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -2030,7 +2027,7 @@ msgstr "Boş seçimler üzerinde işlenemiyor."
 #: plug-ins/common/file-raw-data.c:608 plug-ins/common/file-raw-data.c:796
 #: plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:754
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:756
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
@@ -2464,10 +2461,8 @@ msgid "Filter box radius"
 msgstr "Süzgeç kutusu yarıçapı"
 
 #: plug-ins/common/despeckle.c:193
-#, fuzzy
-#| msgid "Filter type"
 msgid "_Filter type"
-msgstr "Süzgeç türü"
+msgstr "_Süzgeç türü"
 
 #: plug-ins/common/despeckle.c:194
 msgid "Filter type"
@@ -2546,7 +2541,6 @@ msgstr "_Genişlik"
 msgid "Averaging filter width"
 msgstr "Ortalama süzgeç genişliği"
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/common/destripe.c:147
 msgid "Create _histogram"
 msgstr "_Histogram oluştur"
@@ -2640,7 +2634,7 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
-#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1375
+#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1376
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
@@ -2725,11 +2719,11 @@ msgstr "'%s': EOF (dosya sonu) ya da palet verisi okunurken hata"
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:358
-#: plug-ins/common/file-jp2.c:1804 plug-ins/common/file-jpegxl.c:1389
+#: plug-ins/common/file-jp2.c:1813 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:792
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:794
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
 #: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
@@ -3577,7 +3571,7 @@ msgstr "Genişlik Uyuşmuyor!"
 
 #: plug-ins/common/file-gih.c:530
 msgid "Height Mismatch!"
-msgstr "Yükseklik Uyuşmuyor"
+msgstr "Yükseklik Uyuşmuyor!"
 
 #: plug-ins/common/file-gih.c:577
 #, c-format
@@ -4103,10 +4097,7 @@ msgstr "PCRL"
 msgid "CPRL"
 msgstr "CPRL"
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/common/file-jp2.c:366 plug-ins/common/file-jp2.c:454
-#, fuzzy
-#| msgid "Co_mpliance Profile"
 msgid "Co_mpliance profile"
 msgstr "_Uyumluluk profili"
 
@@ -4181,66 +4172,71 @@ msgstr "CMYK dışa aktarma için kullanılan renk profilinin adı."
 msgid "Profile: %s"
 msgstr "Profil: %s"
 
-#: plug-ins/common/file-jp2.c:1383 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2.c:1384 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "'%s' dosyası okumak için açılamadı"
 
-#: plug-ins/common/file-jp2.c:1392
+#: plug-ins/common/file-jp2.c:1393
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "'%s' için kod çözücü başlatılamadı, bellek yetersiz mi?"
 
-#: plug-ins/common/file-jp2.c:1408
+#: plug-ins/common/file-jp2.c:1409
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "'%s' için çözümleme parametreleri ayarlanamadı."
 
-#: plug-ins/common/file-jp2.c:1416
+#: plug-ins/common/file-jp2.c:1417
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "'%s' dosyasından JP2 başlık bilgisi okunamadı."
 
-#: plug-ins/common/file-jp2.c:1424
+#: plug-ins/common/file-jp2.c:1425
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "JP2 görüntüsü '%s' içinde çözülemedi."
 
-#: plug-ins/common/file-jp2.c:1432
+#: plug-ins/common/file-jp2.c:1433
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "JP2 görüntüsü '%s' içinde çıkartılamadı."
 
-#: plug-ins/common/file-jp2.c:1463
+#: plug-ins/common/file-jp2.c:1464
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "CIELAB JP2 görüntüsü '%s' içinde çözülemedi."
 
-#: plug-ins/common/file-jp2.c:1520
+#: plug-ins/common/file-jp2.c:1521
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "JP2 codestream '%s' içinde bilinmeyen renk uzayı."
 
-#: plug-ins/common/file-jp2.c:1531
+#: plug-ins/common/file-jp2.c:1532
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "'%s' YCbCr JP2 görüntüsü RGB'ye dönüştürülemedi."
 
-#: plug-ins/common/file-jp2.c:1541
+#: plug-ins/common/file-jp2.c:1542
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "'%s' içindeki CMYK JP2 görüntüsü RGB'ye dönüştürülemedi."
 
-#: plug-ins/common/file-jp2.c:1553
+#: plug-ins/common/file-jp2.c:1554
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "'%s' içindeki xvYCC JP2 görüntüsü RGB'ye dönüştürülemedi."
 
-#: plug-ins/common/file-jp2.c:1580
+#: plug-ins/common/file-jp2.c:1581
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "'%s' JP2 görüntüsü içinde desteklenmeyen renk uzayı."
+
+#: plug-ins/common/file-jp2.c:1635
+#, c-format
+msgid "Defined row size is too large in JP2 image '%s'."
+msgstr "'%s' JP2 görüntüsü içinde tanımlanan satır boyutu çok büyük."
 
 #: plug-ins/common/file-jpegxl.c:141 plug-ins/common/file-jpegxl.c:168
 msgid "JPEG XL image"
@@ -4726,7 +4722,7 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Alt kenarlık sınırlamaların dışında (< %d olmalıdır): %d"
 
 #: plug-ins/common/file-pcx.c:1266 plug-ins/common/file-qoi.c:369
-#: plug-ins/common/file-svg.c:801 plug-ins/common/file-svg.c:817
+#: plug-ins/common/file-svg.c:803 plug-ins/common/file-svg.c:819
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "'%s' dosyasına yazılamadı: %s"
@@ -5020,7 +5016,7 @@ msgstr "PNG görüntüsü"
 msgid "APNG image"
 msgstr "APNG görüntüsü"
 
-#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:356
+#: plug-ins/common/file-png.c:331
 msgid "PNG"
 msgstr "PNG"
 
@@ -6490,73 +6486,76 @@ msgstr "Okunurken EOF (dosya sonu) ile karşılaşıldı"
 msgid "Write error occurred"
 msgstr "Yazım hatası oluştu"
 
-#: plug-ins/common/file-svg.c:276
+#: plug-ins/common/file-svg.c:278
 msgid "SVG image"
 msgstr "SVG görüntüsü"
 
-#: plug-ins/common/file-svg.c:279
+#: plug-ins/common/file-svg.c:281
 msgid "Loads files in SVG file format"
 msgstr "SVG dosya biçimindeki dosyaları yükler"
 
-#: plug-ins/common/file-svg.c:294
+#: plug-ins/common/file-svg.c:296
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:303
+#: plug-ins/common/file-svg.c:305
 msgid "_Paths"
 msgstr "_Yollar"
 
-#: plug-ins/common/file-svg.c:304
+#: plug-ins/common/file-svg.c:306
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
 "Yol aracıyla kullanılabilmeleri için yolların içe aktarılma durumu ve nasıl "
 "aktarılacağı"
 
-#: plug-ins/common/file-svg.c:305
+#: plug-ins/common/file-svg.c:307
 msgid "Don't import paths"
 msgstr "Yolları içe aktarma"
 
-#: plug-ins/common/file-svg.c:306
+#: plug-ins/common/file-svg.c:308
 msgid "Import paths individually"
 msgstr "Yolları tek tek içe aktar"
 
-#: plug-ins/common/file-svg.c:307
+#: plug-ins/common/file-svg.c:309
 msgid "Merge imported paths"
 msgstr "İçe aktarılmış yolları birleştir"
 
-#: plug-ins/common/file-svg.c:319
+#: plug-ins/common/file-svg.c:321
 msgid "Scalable Vector Graphic"
 msgstr "Ölçeklenebilir Vektör Grafikleri"
 
-#: plug-ins/common/file-svg.c:322
+#: plug-ins/common/file-svg.c:324
 msgid "Exports files in SVG file format"
 msgstr "Dosyaları SVG dosyası biçiminde dışa aktarır"
 
-#: plug-ins/common/file-svg.c:323
+#: plug-ins/common/file-svg.c:325
 msgid "Exports files in SVG file format (Scalable Vector Graphic)"
 msgstr ""
 "Dosyaları SVG dosyası biçiminde dışa aktarır (Ölçeklenebilir Vektör "
 "Grafikleri)"
 
-#: plug-ins/common/file-svg.c:348
+#: plug-ins/common/file-svg.c:350
 msgid "_Title"
 msgstr "_Başlık"
 
-#: plug-ins/common/file-svg.c:349
+#: plug-ins/common/file-svg.c:351
 msgid "Optional <title> for SVG"
 msgstr "SVG için isteğe bağlı <title>"
 
-#: plug-ins/common/file-svg.c:354
+#: plug-ins/common/file-svg.c:356
 msgid "Em_bed raster layers as"
 msgstr "Raster katmanlarını farklı _göm"
 
-#: plug-ins/common/file-svg.c:357 plug-ins/file-jpeg/jpeg.c:195
-#: plug-ins/file-tiff/file-tiff.c:144
-msgid "JPEG"
-msgstr "JPEG"
-
 #: plug-ins/common/file-svg.c:358
+msgid "PNG (always)"
+msgstr "PNG (her zaman)"
+
+#: plug-ins/common/file-svg.c:359
+msgid "JPEG (for opaque images, PNG otherwise)"
+msgstr "JPEG (mat görüntüler için, diğer durumda PNG)"
+
+#: plug-ins/common/file-svg.c:360
 msgid "Do not export raster layers"
 msgstr "Raster katmanlarını dışa aktarma"
 
@@ -6565,15 +6564,15 @@ msgstr "Raster katmanlarını dışa aktarma"
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:405
+#: plug-ins/common/file-svg.c:407
 msgid "Disable safety size limits?"
 msgstr "Güvenlik boyut sınırları devre dışı bırakılsın mı?"
 
-#: plug-ins/common/file-svg.c:410
+#: plug-ins/common/file-svg.c:412
 msgid "_No"
 msgstr "_Hayır"
 
-#: plug-ins/common/file-svg.c:411
+#: plug-ins/common/file-svg.c:413
 msgid "_Yes"
 msgstr "_Evet"
 
@@ -6587,7 +6586,7 @@ msgstr "_Evet"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:435
+#: plug-ins/common/file-svg.c:437
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6597,29 +6596,29 @@ msgstr ""
 "Güvenlik sınırlarını devre dışı bırakmak yardımcı olabilir. Kötü amaçlı SVG "
 "dosyaları bunu çok bellek tüketmek için kullanabilir."
 
-#: plug-ins/common/file-svg.c:447
+#: plug-ins/common/file-svg.c:449
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "Güvenlik nedeniyle, bu yalnızca güvenilir girdi için kullanılmalıdır!"
 
-#: plug-ins/common/file-svg.c:454
+#: plug-ins/common/file-svg.c:456
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Büyük verileri ayrıştırmayı engelleyen sınırlar olmadan yeniden denensin mi?"
 
-#: plug-ins/common/file-svg.c:756 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/common/file-svg.c:758 plug-ins/file-exr/file-exr.c:381
 #: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "Bilinmeyen sebep"
 
-#: plug-ins/common/file-svg.c:762
+#: plug-ins/common/file-svg.c:764
 msgid "Rendering SVG"
 msgstr "SVG İşleniyor"
 
-#: plug-ins/common/file-svg.c:772
+#: plug-ins/common/file-svg.c:774
 msgid "Rendered SVG"
 msgstr "SVG İşlendi"
 
-#: plug-ins/common/file-svg.c:1123
+#: plug-ins/common/file-svg.c:1125
 msgid ""
 "The SVG format only requires viewers to display image links for SVG, PNG, "
 "and JPEG images.\n"
@@ -7022,7 +7021,7 @@ msgid ""
 msgstr ""
 "X11 Fare İmleci animasyon kesitinin yalnızca ilk karesini yükler; bu kare, "
 "küçük resim olarak kullanılmak için nominal boyutu küçük boyuta en yakın "
-"olanıdır."
+"olanıdır"
 
 #: plug-ins/common/file-xmc.c:354
 msgid "Exports files of X11 cursor file"
@@ -7749,20 +7748,11 @@ msgstr "İşle_m"
 msgid "Action"
 msgstr "İşlem"
 
-# Luma metodunun Luminance metodundan farkı var,
-# o sebeple "Renk Parlaklığı" olarak çevirdim
-# https://docs.gimp.org/2.10/en/gimp-filter-desaturate.html
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/common/hot.c:280
-#, fuzzy
-#| msgid "Reduce Luminance"
 msgid "Reduce luminance"
 msgstr "Renk parlaklığını azalt"
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/common/hot.c:281
-#, fuzzy
-#| msgid "Reduce Saturation"
 msgid "Reduce saturation"
 msgstr "Doygunluğu azalt"
 
@@ -8016,7 +8006,7 @@ msgstr ""
 "kendilerini nereye kurduklarını bulmak için de yardımcı olabilir."
 
 #: plug-ins/common/plugin-browser.c:372
-#: plug-ins/filter-browser/filter-browser.c:608
+#: plug-ins/filter-browser/filter-browser.c:610
 msgid "Searching by name"
 msgstr "Ada göre aranıyor"
 
@@ -8027,7 +8017,7 @@ msgid_plural "%d plug-ins"
 msgstr[0] "%d eklenti"
 
 #: plug-ins/common/plugin-browser.c:397
-#: plug-ins/filter-browser/filter-browser.c:675
+#: plug-ins/filter-browser/filter-browser.c:677
 msgid "No matches for your query"
 msgstr "Sorgunuza uygun eşleşme yok"
 
@@ -8038,7 +8028,7 @@ msgid_plural "%d plug-ins match your query"
 msgstr[0] "Sorgunuzla eşleşen %d eklenti"
 
 #: plug-ins/common/plugin-browser.c:531
-#: plug-ins/filter-browser/filter-browser.c:677
+#: plug-ins/filter-browser/filter-browser.c:679
 msgid "No matches"
 msgstr "Eşleşme yok"
 
@@ -8476,10 +8466,7 @@ msgstr "Kenarlık e_kle"
 msgid "Draw a border of spikes around the image"
 msgstr "Görüntünün çevresindeki çivilerin kenarlığını çiz"
 
-# Konumu gereği başlık düzeni kullanıldı
 #: plug-ins/common/sparkle.c:270
-#, fuzzy
-#| msgid "_Color type"
 msgid "_Color Type"
 msgstr "_Renk Türü"
 
@@ -8619,7 +8606,7 @@ msgstr "S_il"
 msgid "Properties"
 msgstr "Özellikler"
 
-# Konumu gereği başlık düzenine gerek yok
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/common/sphere-designer.c:2792
 msgid "Bump"
 msgstr "Derinlik etkisi"
@@ -9025,17 +9012,11 @@ msgstr "_Süzgeç uzunluğu"
 msgid "Filter length"
 msgstr "Süzgeç uzunluğu"
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/common/van-gogh-lic.c:198
-#, fuzzy
-#| msgid "_Noise Magnitude"
 msgid "_Noise magnitude"
 msgstr "_Gürültü büyüklüğü"
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/common/van-gogh-lic.c:199
-#, fuzzy
-#| msgid "Noise Magnitude"
 msgid "Noise magnitude"
 msgstr "Gürültü büyüklüğü"
 
@@ -10590,6 +10571,10 @@ msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr ""
 "Dosyaları kayıplı, yaygın olarak desteklenen JPEG biçiminde dışa aktarır"
 
+#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:144
+msgid "JPEG"
+msgstr "JPEG"
+
 #: plug-ins/file-jpeg/jpeg.c:216
 msgid "S_moothing"
 msgstr "_Pürüzsüzleştir"
@@ -11912,17 +11897,17 @@ msgstr "Canlandırmalı WebP çerçevesi kodu '%s' dosyasından çözülemedi"
 msgid "Frame %d (%dms)"
 msgstr "Çerçeve %d (%dms)"
 
-#: plug-ins/filter-browser/filter-browser.c:286
-#: plug-ins/filter-browser/filter-browser.c:321
+#: plug-ins/filter-browser/filter-browser.c:288
+#: plug-ins/filter-browser/filter-browser.c:323
 msgid "Allowed values:"
 msgstr "İzin verilen değerler:"
 
-#: plug-ins/filter-browser/filter-browser.c:419
+#: plug-ins/filter-browser/filter-browser.c:421
 #, c-format
 msgid "Operation name: %s"
 msgstr "İşlem adı: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:432
+#: plug-ins/filter-browser/filter-browser.c:434
 #, c-format
 msgid "Categories: %s"
 msgstr "Kategoriler: %s"
@@ -11933,7 +11918,7 @@ msgstr "Kategoriler: %s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:462
+#: plug-ins/filter-browser/filter-browser.c:464
 #: plug-ins/gradient-flare/gradient-flare.c:2952
 #: plug-ins/gradient-flare/gradient-flare.c:3702
 #: plug-ins/gradient-flare/gradient-flare.c:3804
@@ -11941,64 +11926,64 @@ msgstr "Kategoriler: %s"
 msgid "Parameters"
 msgstr "Parametreler"
 
-#: plug-ins/filter-browser/filter-browser.c:494
+#: plug-ins/filter-browser/filter-browser.c:496
 msgid "Additional Information"
 msgstr "Ek Bilgi"
 
-#: plug-ins/filter-browser/filter-browser.c:500
+#: plug-ins/filter-browser/filter-browser.c:502
 #, c-format
 msgid "License: %s"
 msgstr "Lisans: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:611
+#: plug-ins/filter-browser/filter-browser.c:613
 msgid "Searching by title"
 msgstr "Başlığa göre aranıyor"
 
-#: plug-ins/filter-browser/filter-browser.c:614
+#: plug-ins/filter-browser/filter-browser.c:616
 msgid "Searching by description"
 msgstr "Açıklamaya göre aranıyor"
 
-#: plug-ins/filter-browser/filter-browser.c:617
+#: plug-ins/filter-browser/filter-browser.c:619
 msgid "Searching by category"
 msgstr "Kategoriye göre aranıyor"
 
-#: plug-ins/filter-browser/filter-browser.c:682
+#: plug-ins/filter-browser/filter-browser.c:684
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
 msgstr[0] "sorgunuzla eşleşen %d süzgeç"
 
-#: plug-ins/filter-browser/filter-browser.c:688
+#: plug-ins/filter-browser/filter-browser.c:690
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
 msgstr[0] "%d süzgeç"
 
-#: plug-ins/filter-browser/filter-browser.c:721
+#: plug-ins/filter-browser/filter-browser.c:724
 msgid "GEGL Filter Browser"
 msgstr "GEGL Süzgeç Tarayıcı"
 
-#: plug-ins/filter-browser/filter-browser.c:738
+#: plug-ins/filter-browser/filter-browser.c:741
 msgid "by name"
 msgstr "ada göre"
 
-#: plug-ins/filter-browser/filter-browser.c:739
+#: plug-ins/filter-browser/filter-browser.c:742
 msgid "by title"
 msgstr "başlığa göre"
 
-#: plug-ins/filter-browser/filter-browser.c:740
+#: plug-ins/filter-browser/filter-browser.c:743
 msgid "by description"
 msgstr "açıklamaya göre"
 
-#: plug-ins/filter-browser/filter-browser.c:827
+#: plug-ins/filter-browser/filter-browser.c:832
 msgid "_GEGL Filter Browser"
 msgstr "_GEGL Süzgeç Tarayıcı"
 
-#: plug-ins/filter-browser/filter-browser.c:832
+#: plug-ins/filter-browser/filter-browser.c:837
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "Var olan GEGL işlemleri (yani süzgeçler) hakkında bilgi görüntüle."
 
-#: plug-ins/filter-browser/filter-browser.c:834
+#: plug-ins/filter-browser/filter-browser.c:839
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
@@ -12357,17 +12342,11 @@ msgstr "_Fraktal Tarayıcı..."
 msgid "Render fractal art"
 msgstr "Fraktal sanatı işle"
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/fractal-explorer/fractal-explorer.c:256
-#, fuzzy
-#| msgid "Fr_actal Type"
 msgid "Fr_actal type"
 msgstr "_Fraktal türü"
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/fractal-explorer/fractal-explorer.c:257
-#, fuzzy
-#| msgid "Type of Fractal Pattern"
 msgid "Type of fractal pattern"
 msgstr "Fraktal örüntü türü"
 
@@ -12451,25 +12430,18 @@ msgid "C_X"
 msgstr "C_X"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:303
-#, fuzzy
-#| msgid "value"
 msgid "CX value"
-msgstr "değer"
+msgstr "CX değeri"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:308
 msgid "C_Y"
 msgstr "C_Y"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:309
-#, fuzzy
-#| msgid "value"
 msgid "CY value"
-msgstr "değer"
+msgstr "CY değeri"
 
-# Konumu gereği Başlık Düzeni kullanıldı
 #: plug-ins/fractal-explorer/fractal-explorer.c:314
-#, fuzzy
-#| msgid "Color mode"
 msgid "Color Mode"
 msgstr "Renk Kipi"
 
@@ -12921,8 +12893,8 @@ msgid "Antialiasing"
 msgstr "Kenar yumuşatma"
 
 #: plug-ins/gfig/gfig-dialog.c:1275
-msgid "Max undo:"
-msgstr "En çok geri alım:"
+msgid "Max undo"
+msgstr "En çok geri alım"
 
 #: plug-ins/gfig/gfig-dialog.c:1282 plug-ins/gimpressionist/general.c:194
 msgid "Transparent"
@@ -12950,16 +12922,16 @@ msgid "Radius"
 msgstr "Yarıçap"
 
 #: plug-ins/gfig/gfig-dialog.c:1384
-msgid "Grid spacing:"
-msgstr "Izgara boşluğu:"
+msgid "Grid spacing"
+msgstr "Izgara boşluğu"
 
 #: plug-ins/gfig/gfig-dialog.c:1399
-msgid "Polar grid sectors desired:"
-msgstr "İstenilen kutupsal ızgara dilimleri:"
+msgid "Polar grid sectors desired"
+msgstr "İstenilen kutupsal ızgara dilimleri"
 
 #: plug-ins/gfig/gfig-dialog.c:1415
-msgid "Polar grid radius interval:"
-msgstr "Kutupsal ızgara yarıçapı aralığı:"
+msgid "Polar grid radius interval"
+msgstr "Kutupsal ızgara yarıçapı aralığı"
 
 #: plug-ins/gfig/gfig-dialog.c:1431
 msgid "Isometric"
@@ -12996,8 +12968,8 @@ msgid "Grid color:"
 msgstr "Izgara rengi:"
 
 #: plug-ins/gfig/gfig-dialog.c:1689
-msgid "Sides:"
-msgstr "Yanlar:"
+msgid "Sides"
+msgstr "Yanlar"
 
 #: plug-ins/gfig/gfig-dialog.c:1698
 msgid "Right"
@@ -15565,24 +15537,15 @@ msgstr "Işık kaynağı türü"
 msgid "Type of lightsource"
 msgstr "Işık kaynağı türü"
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/map-object/map-object-main.c:231
-#, fuzzy
-#| msgid "Point Light"
 msgid "Point light"
 msgstr "Nokta ışık"
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/map-object/map-object-main.c:232
-#, fuzzy
-#| msgid "Directional Light"
 msgid "Directional light"
 msgstr "Yönlü ışık"
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/map-object/map-object-main.c:233
-#, fuzzy
-#| msgid "No Light"
 msgid "No light"
 msgstr "Işık yok"
 
@@ -17149,22 +17112,3 @@ msgstr "TWAIN sürücüsü bulunamadı, tarama yapılamıyor"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
-
-# Bulunduğu yer gereği tümce düzeni kullanıldı
-#~ msgid "_Filter Type"
-#~ msgstr "_Süzgeç türü"
-
-# Konumu gereği tümce düzeni kullanıldı
-#~ msgid "cx value"
-#~ msgstr "CX değeri"
-
-# Konumu gereği tümce düzeni kullanıldı
-#~ msgid "cy value"
-#~ msgstr "CY değeri"
-
-# Konumu gereği başlık düzeni kullanıldı
-#~ msgid "y"
-#~ msgstr "Y"
-
-#~ msgid "Radius:"
-#~ msgstr "Yarıçap:"
