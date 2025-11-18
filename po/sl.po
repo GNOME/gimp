@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-16 00:23+0000\n"
-"PO-Revision-Date: 2025-11-16 01:50+0100\n"
+"POT-Creation-Date: 2025-11-18 07:50+0000\n"
+"PO-Revision-Date: 2025-11-18 10:42+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -32,9 +32,9 @@ msgstr "Ekipa GIMP"
 msgid "GNU Image Manipulation Program"
 msgstr "GIMP – program GNU za obdelavo slik"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:17 desktop/gimp.desktop.in.in:6
-msgid "Create images and edit photographs"
-msgstr "Ustvari slike in uredi fotografije"
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:17
+msgid "High-end image creation and manipulation"
+msgstr "Vrhunsko ustvarjanje in obdelovanje slik"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:19
 msgid ""
@@ -101,6 +101,10 @@ msgstr "Skenirana gravura, urejena v GIMP-u. Umetniško delo Liama (CC0)"
 #: desktop/gimp.desktop.in.in:5
 msgid "Image Editor"
 msgstr "Urejevalnik slik"
+
+#: desktop/gimp.desktop.in.in:6
+msgid "Create images and edit photographs"
+msgstr "Ustvari slike in uredi fotografije"
 
 #. TRANSLATORS: Search terms to find this application.
 #. 1. Do NOT translate or localize the semicolons!
@@ -389,7 +393,7 @@ msgid "Buffers"
 msgstr "Medpomnilniki"
 
 #: app/actions/actions.c:123 app/dialogs/dialogs.c:380
-#: app/propgui/gimppropgui-newsprint.c:160
+#: app/propgui/gimppropgui-newsprint.c:160 app/widgets/gimpitemchooser.c:294
 #: app/widgets/gimppickablechooser.c:292
 msgid "Channels"
 msgstr "Kanali"
@@ -498,12 +502,14 @@ msgid "Image"
 msgstr "Slika"
 
 #: app/actions/actions.c:195 app/dialogs/dialogs.c:338
+#: app/widgets/gimpimagechooser.c:185 app/widgets/gimpitemchooser.c:213
 #: app/widgets/gimppickablechooser.c:211
 msgid "Images"
 msgstr "Slike"
 
 #: app/actions/actions.c:198 app/dialogs/dialogs.c:376
-#: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablechooser.c:267
+#: app/dialogs/resize-dialog.c:171 app/widgets/gimpitemchooser.c:269
+#: app/widgets/gimppickablechooser.c:267
 msgid "Layers"
 msgstr "Plasti"
 
@@ -574,7 +580,7 @@ msgid "Tools"
 msgstr "Orodja"
 
 #: app/actions/actions.c:243 app/dialogs/dialogs.c:384
-#: app/tools/gimppathtool.c:188
+#: app/tools/gimppathtool.c:188 app/widgets/gimpitemchooser.c:319
 msgid "Paths"
 msgstr "Poti"
 
@@ -13844,7 +13850,7 @@ msgid "Cannot rename effect masks."
 msgstr "Mask učinkov ni mogoče preimenovati."
 
 #: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:735
-#: app/core/gimplayer.c:2049 app/core/gimplayermask.c:294
+#: app/core/gimplayer.c:2051 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "Maska %s"
@@ -14631,7 +14637,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zasidraj plavajoči izbor"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1079
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1081
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14712,6 +14718,10 @@ msgid "Floating Mask"
 msgstr "Plavajoča maska"
 
 #: app/core/gimplayer.c:781
+msgid "Floating Channel"
+msgstr "Plavajoči kanal"
+
+#: app/core/gimplayer.c:783
 msgid "Floating Layer"
 msgstr "Plavajoča plast"
 
@@ -14719,7 +14729,7 @@ msgstr "Plavajoča plast"
 #. * either a "Floating Layer" or "Floating Mask" usually. The second will
 #. * be a layer name.
 #.
-#: app/core/gimplayer.c:786
+#: app/core/gimplayer.c:788
 #, c-format
 msgid ""
 "%s\n"
@@ -14728,73 +14738,73 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1940
+#: app/core/gimplayer.c:1942
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Maske plasti ni mogoče dodati, ker jo plast že ima."
 
-#: app/core/gimplayer.c:1952
+#: app/core/gimplayer.c:1954
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Maske drugačnih mer, kot so mere plasti, ni mogoče dodati."
 
-#: app/core/gimplayer.c:1958
+#: app/core/gimplayer.c:1960
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Dodaj maske plasti"
 
-#: app/core/gimplayer.c:2088
+#: app/core/gimplayer.c:2090
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Prenesi alfo v masko"
 
-#: app/core/gimplayer.c:2252
+#: app/core/gimplayer.c:2254
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Uveljavi maske plasti"
 
-#: app/core/gimplayer.c:2253
+#: app/core/gimplayer.c:2255
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Izbriši maske plasti"
 
-#: app/core/gimplayer.c:2360
+#: app/core/gimplayer.c:2362
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Omogoči maske plasti"
 
-#: app/core/gimplayer.c:2361
+#: app/core/gimplayer.c:2363
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Onemogoči maske plasti"
 
-#: app/core/gimplayer.c:2442
+#: app/core/gimplayer.c:2444
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Pokaži maske plasti"
 
-#: app/core/gimplayer.c:2521
+#: app/core/gimplayer.c:2523
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodaj kanal alfa"
 
-#: app/core/gimplayer.c:2551
+#: app/core/gimplayer.c:2553
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Odstrani kanal alfa"
 
-#: app/core/gimplayer.c:2572
+#: app/core/gimplayer.c:2574
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Plast na velikost slike"
 
-#: app/core/gimplayer.c:2755
+#: app/core/gimplayer.c:2757
 msgid "Set layer's blend space"
 msgstr "Nastavi prostor zlivanja plasti"
 
-#: app/core/gimplayer.c:2802
+#: app/core/gimplayer.c:2804
 msgid "Set layer's composite space"
 msgstr "Nastavi prostor skladanja plasti"
 
-#: app/core/gimplayer.c:2849
+#: app/core/gimplayer.c:2851
 msgid "Set layer's composite mode"
 msgstr "Nastavi način skladanja plasti"
 
@@ -28200,6 +28210,11 @@ msgstr[1] "Indeksirane barve (%d barva, monokromatsko)"
 msgstr[2] "Indeksirane barve (%d barvi)"
 msgstr[3] "Indeksirane barve (%d barve)"
 
+#: app/widgets/gimpitemchooser.c:243 app/widgets/gimpitemchooser.c:571
+#: app/widgets/gimppickablechooser.c:241 app/widgets/gimppickablechooser.c:524
+msgid "Select an image in the left pane"
+msgstr "Izberite sliko iz levega podokna"
+
 #: app/widgets/gimpitemtreeview.c:570
 msgid "Set Item Exclusive Content Lock"
 msgstr "Predmetu določite izključen zaklep vsebine"
@@ -28398,10 +28413,6 @@ msgid ""
 msgstr ""
 "Povratnega klica %s ni mogoče pognati.\n"
 "%s"
-
-#: app/widgets/gimppickablechooser.c:241 app/widgets/gimppickablechooser.c:524
-msgid "Select an image in the left pane"
-msgstr "Izberite sliko iz levega podokna"
 
 #: app/widgets/gimppluginview.c:146
 msgid "Plug-In"
