@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-13 03:21+0000\n"
-"PO-Revision-Date: 2025-11-13 09:04+0100\n"
+"POT-Creation-Date: 2025-11-18 07:54+0000\n"
+"PO-Revision-Date: 2025-11-18 10:42+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -27,7 +27,8 @@ msgstr ""
 msgid "_Browse..."
 msgstr "Pre_brskaj ..."
 
-#: libgimp/gimpdrawablechooser.c:238
+#: libgimp/gimpdrawablechooser.c:240 libgimp/gimpimagechooser.c:218
+#: libgimp/gimpitemchooser.c:237
 msgid "Browse..."
 msgstr "Prebrskaj ..."
 
@@ -481,31 +482,31 @@ msgstr "_Shrani nastavitve"
 msgid "Store current settings for later reuse"
 msgstr "Shrani trenutne nastavitve za kasnejšo rabo"
 
-#: libgimp/gimpproceduredialog.c:892
+#: libgimp/gimpproceduredialog.c:908
 msgid "Brush Chooser"
 msgstr "Izbirnik čopičev"
 
-#: libgimp/gimpproceduredialog.c:896
+#: libgimp/gimpproceduredialog.c:912
 msgid "Font Chooser"
 msgstr "Izbirnik pisav"
 
-#: libgimp/gimpproceduredialog.c:900
+#: libgimp/gimpproceduredialog.c:916
 msgid "Gradient Chooser"
 msgstr "Izbirnik prelivov"
 
-#: libgimp/gimpproceduredialog.c:904
+#: libgimp/gimpproceduredialog.c:920
 msgid "Palette Chooser"
 msgstr "Izbirnik palet"
 
-#: libgimp/gimpproceduredialog.c:908
+#: libgimp/gimpproceduredialog.c:924
 msgid "Pattern Chooser"
 msgstr "Izbirnik vzorcev"
 
-#: libgimp/gimpproceduredialog.c:2795
+#: libgimp/gimpproceduredialog.c:2833
 msgid "Reset to _Initial Values"
 msgstr "Ponastavi na _začetne vrednosti"
 
-#: libgimp/gimpproceduredialog.c:2804
+#: libgimp/gimpproceduredialog.c:2842
 msgid "Reset to _Factory Defaults"
 msgstr "Ponastavi na _tovarniške vrednosti"
 
@@ -550,17 +551,27 @@ msgstr "Nosilec avtorskih pravic:"
 msgid "Choose image: %s"
 msgstr "Izberi sliko: %s"
 
-#: libgimp/gimppropwidgets.c:251
+#: libgimp/gimppropwidgets.c:251 libgimp/gimppropwidgets.c:321
 #, c-format
 msgid "Choose layer: %s"
 msgstr "Izberi plast: %s"
 
-#: libgimp/gimppropwidgets.c:253
+#: libgimp/gimppropwidgets.c:253 libgimp/gimppropwidgets.c:323
 #, c-format
 msgid "Choose channel: %s"
 msgstr "Izberi kanal: %s"
 
 #: libgimp/gimppropwidgets.c:255
+#, c-format
+msgid "Choose path: %s"
+msgstr "Izberi pot: %s"
+
+#: libgimp/gimppropwidgets.c:257
+#, c-format
+msgid "Choose item: %s"
+msgstr "Izberi element: %s"
+
+#: libgimp/gimppropwidgets.c:325
 #, c-format
 msgid "Choose drawable: %s"
 msgstr "Izberi risani predmet: %s"
