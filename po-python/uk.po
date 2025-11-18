@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-13 17:44+0000\n"
-"PO-Revision-Date: 2025-10-13 20:48+0300\n"
+"POT-Creation-Date: 2025-11-13 08:43+0000\n"
+"PO-Revision-Date: 2025-11-13 15:44+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -190,14 +190,14 @@ msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Експорт гістограми зображення до текстового файлу (CSV)"
 
 #: plug-ins/python/histogram-export.py:216
-#| msgid "_Export histogram..."
 msgid "_Export Histogram..."
 msgstr "_Експортувати гістограму..."
 
 #. TODO: GFile props still don't have labels + only load existing files
 #. (here we likely want to create a new file).
 #: plug-ins/python/histogram-export.py:224
-msgid "Histogram File"
+#| msgid "Histogram File"
+msgid "Histogram file"
 msgstr "Файл гістограми"
 
 #: plug-ins/python/histogram-export.py:225
@@ -205,23 +205,28 @@ msgid "Histogram export file"
 msgstr "Файл експортування гістограми"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "_Bucket Size"
+#| msgid "_Bucket Size"
+msgid "_Bucket size"
 msgstr "_Розмір ділянки"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "Bucket Size"
+#| msgid "Bucket Size"
+msgid "Bucket size"
 msgstr "Розмір ділянки"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample _Average"
+#| msgid "Sample _Average"
+msgid "Sample _average"
 msgstr "_Середнє за вибіркою"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample Average"
+#| msgid "Sample Average"
+msgid "Sample average"
 msgstr "Вибіркове середнє"
 
 #: plug-ins/python/histogram-export.py:232
-msgid "Pixel Count"
+#| msgid "Pixel Count"
+msgid "Pixel count"
 msgstr "Кількість пікселів"
 
 #: plug-ins/python/histogram-export.py:233
@@ -233,7 +238,8 @@ msgid "Percent"
 msgstr "Відсоток"
 
 #: plug-ins/python/histogram-export.py:235
-msgid "Output _format"
+#| msgid "Output _format"
+msgid "Output _Format"
 msgstr "_Формат виводу"
 
 #: plug-ins/python/histogram-export.py:235
@@ -691,8 +697,9 @@ msgstr "Епітрохоїда"
 msgid "Lissajous"
 msgstr "Ліссажу"
 
-#: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
-msgid "Curve Type"
+#: plug-ins/python/spyro-plus.py:1487
+#| msgid "Curve Type"
+msgid "Curve type"
 msgstr "Тип кривої"
 
 #: plug-ins/python/spyro-plus.py:1488
@@ -756,7 +763,8 @@ msgstr ""
 "пропорційним до кількості зубців."
 
 #: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
-msgid "Fixed Gear Teeth"
+#| msgid "Fixed Gear Teeth"
+msgid "Fixed gear teeth"
 msgstr "Зубець нерухомої шестерні"
 
 #: plug-ins/python/spyro-plus.py:1558
@@ -768,7 +776,8 @@ msgstr ""
 "кількості зубців."
 
 #: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
-msgid "Moving Gear Teeth"
+#| msgid "Moving Gear Teeth"
+msgid "Moving gear teeth"
 msgstr "Зубець рухомої шестерні"
 
 #: plug-ins/python/spyro-plus.py:1566
@@ -784,7 +793,8 @@ msgstr ""
 "що заглиблення розташовано на краю шестерні."
 
 #: plug-ins/python/spyro-plus.py:1588
-msgid "Hole Number"
+#| msgid "Hole Number"
+msgid "Hole number"
 msgstr "Кількість прорізів"
 
 #: plug-ins/python/spyro-plus.py:1589
@@ -796,7 +806,8 @@ msgstr ""
 "можна досягти поблизу центра."
 
 #: plug-ins/python/spyro-plus.py:1600
-msgid "Flower Petals"
+#| msgid "Flower Petals"
+msgid "Flower petals"
 msgstr "Квіткові пелюстки"
 
 #: plug-ins/python/spyro-plus.py:1601
@@ -804,7 +815,8 @@ msgid "The number of petals in the pattern."
 msgstr "Кількість пелюсток у візерунку."
 
 #: plug-ins/python/spyro-plus.py:1606
-msgid "Petal Skip"
+#| msgid "Petal Skip"
+msgid "Petal skip"
 msgstr "Пропуск у пелюстках"
 
 #: plug-ins/python/spyro-plus.py:1607
@@ -812,7 +824,8 @@ msgid "The number of petals to advance for drawing the next petal."
 msgstr "Пропущені пелюстки між двома послідовними пелюстками"
 
 #: plug-ins/python/spyro-plus.py:1612
-msgid "Hole Radius(%)"
+#| msgid "Hole Radius(%)"
+msgid "Hole radius(%)"
 msgstr "Радіус дірки (%)"
 
 #: plug-ins/python/spyro-plus.py:1613
@@ -998,6 +1011,10 @@ msgstr ""
 msgid "Spyrogimp..."
 msgstr "Спіроґімп…"
 
+#: plug-ins/python/spyro-plus.py:2267
+msgid "Curve Type"
+msgstr "Тип кривої"
+
 #: plug-ins/python/spyro-plus.py:2271
 msgid "rack"
 msgstr "кремальєра"
@@ -1028,7 +1045,8 @@ msgstr ""
 "форм."
 
 #: plug-ins/python/spyro-plus.py:2285
-msgid "Fi_xed Gear Teeth"
+#| msgid "Fi_xed Gear Teeth"
+msgid "Fi_xed gear teeth"
 msgstr "З_убець нерухомої шестерні"
 
 #: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
@@ -1036,11 +1054,13 @@ msgid "Number of teeth for fixed gear."
 msgstr "Кількість зубців нерухомої шестерні."
 
 #: plug-ins/python/spyro-plus.py:2288
-msgid "Mo_ving Gear Teeth"
+#| msgid "Mo_ving Gear Teeth"
+msgid "Mo_ving gear teeth"
 msgstr "Зубець _рухомої шестерні"
 
 #: plug-ins/python/spyro-plus.py:2291
-msgid "_Hole Radius (%)"
+#| msgid "_Hole Radius (%)"
+msgid "_Hole radius (%)"
 msgstr "Радіус д_ірки (%)"
 
 #: plug-ins/python/spyro-plus.py:2292
