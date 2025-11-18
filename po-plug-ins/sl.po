@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-16 00:25+0000\n"
-"PO-Revision-Date: 2025-11-16 01:46+0100\n"
+"POT-Creation-Date: 2025-11-18 07:54+0000\n"
+"PO-Revision-Date: 2025-11-18 10:44+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -902,11 +902,11 @@ msgid "With gradient power (0,1)"
 msgstr "Na gradientno potenco (0,1)"
 
 #: plug-ins/common/cml-explorer.c:207
-msgid "Multiply rand. value (0,1)"
+msgid "Multiply random value (0,1)"
 msgstr "Pomnoži naključno vrednost (0,1)"
 
 #: plug-ins/common/cml-explorer.c:208
-msgid "Multiply rand. value (0,2)"
+msgid "Multiply random value (0,2)"
 msgstr "Pomnoži naključno vrednost (0,2)"
 
 #: plug-ins/common/cml-explorer.c:209
@@ -938,23 +938,23 @@ msgid "Continuous gradient"
 msgstr "Zvezen preliv"
 
 #: plug-ins/common/cml-explorer.c:229
-msgid "Continuous grad. w/o gap"
+msgid "Continuous gradient, without gap"
 msgstr "Zvezen preliv brez preskokov"
 
 #: plug-ins/common/cml-explorer.c:230
-msgid "Random, ch. independent"
-msgstr "Naključno, neodv. od kanala"
+msgid "Random, channel independent"
+msgstr "Naključno, neodvisno od kanala"
 
 #: plug-ins/common/cml-explorer.c:231
 msgid "Random shared"
 msgstr "Naključno, porazdeljeno"
 
 #: plug-ins/common/cml-explorer.c:232
-msgid "Randoms from seed"
+msgid "Random from seed"
 msgstr "Naključno iz zrna"
 
 #: plug-ins/common/cml-explorer.c:233
-msgid "Randoms from seed (shared)"
+msgid "Random from seed (shared)"
 msgstr "Naključno iz zrna (porazdeljeno)"
 
 #: plug-ins/common/cml-explorer.c:299 plug-ins/common/cml-explorer.c:307
@@ -1167,16 +1167,16 @@ msgid "Use cyclic range"
 msgstr "Uporabi cikličen obseg"
 
 #: plug-ins/common/cml-explorer.c:1793
-msgid "Mod. rate:"
-msgstr "Hitrost spr.:"
+msgid "Modification rate:"
+msgstr "Hitrost spreminjanja:"
 
 #: plug-ins/common/cml-explorer.c:1800
-msgid "Env. sensitivity:"
+msgid "Environment sensitivity:"
 msgstr "Občutljivost okolja:"
 
 #: plug-ins/common/cml-explorer.c:1807
-msgid "Diffusion dist.:"
-msgstr "Odd. razpršenosti:"
+msgid "Diffusion distance:"
+msgstr "Oddaljenost razpršenosti:"
 
 #: plug-ins/common/cml-explorer.c:1814
 msgid "# of subranges:"
@@ -1203,7 +1203,7 @@ msgid "Plot a Graph of the Settings"
 msgstr "Nariši graf nastavitev"
 
 #: plug-ins/common/cml-explorer.c:1897
-msgid "Ch. sensitivity:"
+msgid "Channel sensitivity:"
 msgstr "Občutljivost kanala:"
 
 #: plug-ins/common/cml-explorer.c:1905
@@ -1211,8 +1211,8 @@ msgid "Mutation rate:"
 msgstr "Hitrost mutiranja:"
 
 #: plug-ins/common/cml-explorer.c:1913
-msgid "Mutation dist.:"
-msgstr "Porazdel. mutiranja:"
+msgid "Mutation distance:"
+msgstr "Oddaljenost mutiranja:"
 
 #: plug-ins/common/cml-explorer.c:2008
 msgid "Graph of the Current Settings"
