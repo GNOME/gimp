@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-10 19:25+0000\n"
-"PO-Revision-Date: 2025-11-10 21:10+0100\n"
+"POT-Creation-Date: 2025-11-11 03:19+0000\n"
+"PO-Revision-Date: 2025-11-11 18:02+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -12805,8 +12805,8 @@ msgid "Antialiasing"
 msgstr "Utjamning"
 
 #: plug-ins/gfig/gfig-dialog.c:1275
-msgid "Max undo:"
-msgstr "Maks angra.:"
+msgid "Max undo"
+msgstr "Maks angra"
 
 #: plug-ins/gfig/gfig-dialog.c:1282 plug-ins/gimpressionist/general.c:194
 msgid "Transparent"
@@ -12834,16 +12834,16 @@ msgid "Radius"
 msgstr "Radius"
 
 #: plug-ins/gfig/gfig-dialog.c:1384
-msgid "Grid spacing:"
-msgstr "Maskevidde:"
+msgid "Grid spacing"
+msgstr "Maskevidde"
 
 #: plug-ins/gfig/gfig-dialog.c:1399
-msgid "Polar grid sectors desired:"
-msgstr "Talet på polare sektorar:"
+msgid "Polar grid sectors desired"
+msgstr "Ønskte polare sektorar"
 
 #: plug-ins/gfig/gfig-dialog.c:1415
-msgid "Polar grid radius interval:"
-msgstr "Radiusintervall for polare sirklar:"
+msgid "Polar grid radius interval"
+msgstr "Radiusintervall for polarnett"
 
 #: plug-ins/gfig/gfig-dialog.c:1431
 msgid "Isometric"
@@ -12880,8 +12880,8 @@ msgid "Grid color:"
 msgstr "Nettfarge:"
 
 #: plug-ins/gfig/gfig-dialog.c:1689
-msgid "Sides:"
-msgstr "Sider:"
+msgid "Sides"
+msgstr "Sider"
 
 #: plug-ins/gfig/gfig-dialog.c:1698
 msgid "Right"
