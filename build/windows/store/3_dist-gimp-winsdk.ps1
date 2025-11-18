@@ -494,7 +494,7 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
     msstore publish $OUTPUT_DIR\$MSIX_ARTIFACT -id $env:PRODUCT_ID -nc
 
     ## Update submission info (if PS6 or up. Check the section 1 of this script)
-    pwsh
+    pwsh -Command `
       {
         $jsonObject = msstore submission get $env:PRODUCT_ID | ConvertFrom-Json -AsHashtable
         ###Get changelog from Linux appdata
