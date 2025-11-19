@@ -226,7 +226,6 @@ file_save_cmd_callback (GimpAction *action,
   Gimp         *gimp;
   GimpDisplay  *display;
   GimpImage    *image;
-  GList        *drawables;
   GtkWidget    *widget;
   GimpSaveMode  save_mode;
   GFile        *file  = NULL;
@@ -238,14 +237,6 @@ file_save_cmd_callback (GimpAction *action,
   image = gimp_display_get_image (display);
 
   save_mode = (GimpSaveMode) g_variant_get_int32 (value);
-
-  drawables = gimp_image_get_selected_drawables (image);
-  if (! drawables)
-    {
-      g_list_free (drawables);
-      return;
-    }
-  g_list_free (drawables);
 
   file = gimp_image_get_file (image);
 
