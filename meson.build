@@ -101,11 +101,19 @@ conf.set('GIMP_RC_VERSION', release and gimp_app_version_rc > 0 ? gimp_app_versi
 conf.set('GIMP_IS_RC_GIT', gimp_rc_git ? 1 : false)
 
 # Mutex version
-if not stable
-  conf.set_quoted('GIMP_MUTEX_VERSION', gimp_app_version)
+if not stable and gimp_app_version_rc <= 0
+  gimp_mutex_version = gimp_app_version
+elif gimp_app_version_rc > 0
+  # same as unstable gimp_app_version. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/15341
+  if gimp_app_version_minor == 0
+    gimp_mutex_version = (gimp_app_version_major - 1).to_string() + '.' + '99'
+  else
+    gimp_mutex_version = gimp_app_version_major.to_string() + '.' + (gimp_app_version_minor - 1).to_string()
+  endif
 else
-  conf.set_quoted('GIMP_MUTEX_VERSION', gimp_app_version_major.to_string())
+  gimp_mutex_version = gimp_app_version_major.to_string()
 endif
+conf.set_quoted('GIMP_MUTEX_VERSION', gimp_mutex_version)
 
 versionconfig = configuration_data()
 versionconfig.set('GIMP_FULL_NAME',     full_name)

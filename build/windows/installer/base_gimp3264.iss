@@ -85,13 +85,9 @@
 #include BUILD_DIR + "\config_clean.h"
 
 ;Main GIMP versions:
-;Get GIMP_MUTEX_VERSION (used for internal versioning control)
-#if Defined(GIMP_UNSTABLE)
-	#define GIMP_MUTEX_VERSION GIMP_APP_VERSION
-#else
-	#define GIMP_MUTEX_VERSION=Copy(GIMP_APP_VERSION,1,Pos(".",GIMP_APP_VERSION)-1)
-#endif
-;Get FULL_GIMP_VERSION (used by ITs)
+;1) Get GIMP_MUTEX_VERSION (used for internal versioning control)
+;Taken from config_clean.h
+;2) Get FULL_GIMP_VERSION (used by ITs)
 #define ORIGINAL_GIMP_VERSION GIMP_VERSION
 #if Defined(GIMP_RC_VERSION)
 	#define GIMP_VERSION=Copy(GIMP_VERSION,1,Pos("-",GIMP_VERSION)-1)
@@ -101,7 +97,7 @@
 #else
 	#define FULL_GIMP_VERSION GIMP_VERSION + "." + REVISION
 #endif
-;Get CUSTOM_GIMP_VERSION (that the users see)
+;3) Get CUSTOM_GIMP_VERSION (that the users see)
 #if !Defined(REVISION) || REVISION=="0"
 	#define CUSTOM_GIMP_VERSION ORIGINAL_GIMP_VERSION
 #else
