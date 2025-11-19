@@ -69,7 +69,6 @@ file_save (Gimp                *gimp,
   GFile             *local_file = NULL;
   gboolean           mounted    = TRUE;
   GError            *my_error   = NULL;
-  GList             *drawables_list;
   GimpExportOptions *options    = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
@@ -96,15 +95,6 @@ file_save (Gimp                *gimp,
    * way (e.g. crops, resize, filter run at export or others).
    */
   options = g_object_new (GIMP_TYPE_EXPORT_OPTIONS, NULL);
-
-  drawables_list = gimp_image_get_selected_drawables (image);
-
-  if (! drawables_list)
-    {
-      g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("There is no active layer to save"));
-      goto out;
-    }
 
   /* FIXME enable these tests for remote files again, needs testing */
   if (g_file_is_native (file) &&
