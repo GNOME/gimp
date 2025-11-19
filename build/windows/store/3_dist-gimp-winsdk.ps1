@@ -62,13 +62,13 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
       {
         $dotnet_major = ($dotnet | Out-String) -replace "`r`n",'' -replace 'net',''
         $dotnet_tag = ((Invoke-WebRequest https://api.github.com/repos/dotnet/runtime/releases | ConvertFrom-Json).tag_name | Select-String "$dotnet_major" | Select-Object -First 1).ToString() -replace 'v',''
-        if (-not (Test-Path "$Env:ProgramFiles\dotnet\shared\Microsoft.NETCore.App\$dotnet_major*\") -and -not (Test-Path "${PARENT_DIR}dotnet-runtime"))
+        if (-not (Test-Path "$Env:ProgramFiles\dotnet\shared\Microsoft.NETCore.App\$dotnet_major*\") -and -not (Test-Path "${PARENT_DIR}dotnet-runtime-${dotnet_major}"))
           {
             Write-Output "(INFO): downloading .NET v$dotnet_tag"
-            Invoke-WebRequest https://aka.ms/dotnet/$dotnet_major/dotnet-runtime-win-$cpu_arch.zip -OutFile ${PARENT_DIR}dotnet-runtime.zip
-            Expand-Archive ${PARENT_DIR}dotnet-runtime.zip ${PARENT_DIR}dotnet-runtime -Force
-            $env:PATH = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime);" + $env:PATH
-            $env:DOTNET_ROOT = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime)"
+            Invoke-WebRequest https://aka.ms/dotnet/$dotnet_major/dotnet-runtime-win-$cpu_arch.zip -OutFile ${PARENT_DIR}dotnet-runtime-${dotnet_major}.zip
+            Expand-Archive ${PARENT_DIR}dotnet-runtime-${dotnet_major}.zip ${PARENT_DIR}dotnet-runtime-${dotnet_major} -Force
+            $env:PATH = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime-${dotnet_major});" + $env:PATH
+            $env:DOTNET_ROOT = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime-${dotnet_major})"
           }
       }
 
