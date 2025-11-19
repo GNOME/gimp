@@ -505,8 +505,9 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
             Write-Host "(ERROR): appdata does not match main meson file. Submission can't be done." -ForegroundColor red
             exit 1
           }
-        $store_changelog = ($xmlObject.component.releases.release[0].description.SelectNodes(".//p | .//li") | ForEach-Object { $text = ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' '; if ($_.Name -eq 'li') { "- $text" } else { $text } } ) -join "`n"
-        $jsonObject."Listings"."en-us"."BaseListing".'ReleaseNotes' = "$store_changelog"
+        $jsonObject."Listings"."en-us"."BaseListing".'ShortDescription' = ($xmlObject.component.summary).Trim()
+        $jsonObject."Listings"."en-us"."BaseListing".'Description' = ($xmlObject.component.description.SelectNodes(".//p") | ForEach-Object { ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' ' } ) -join "`n`n"
+        $jsonObject."Listings"."en-us"."BaseListing".'ReleaseNotes' = ($xmlObject.component.releases.release[0].description.SelectNodes(".//p | .//li") | ForEach-Object { $text = ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' '; if ($_.Name -eq 'li') { "- $text" } else { $text } } ) -join "`n"
         ###Send submission info
         msstore submission updateMetadata $env:PRODUCT_ID ($jsonObject | ConvertTo-Json -Depth 100)
       }
