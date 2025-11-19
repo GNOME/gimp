@@ -103,7 +103,8 @@ help in that regard:
   7. The file-compressor plug-in requires zlib, libbzip2, and liblzma to
      be installed. All these libraries are required dependencies.
 
-  8. For metadata access GIMP requires the gexiv2 @GEXIV2_REQUIRED_VERSION@ or newer library.
+  8. For metadata access, GIMP requires GExiv2 @GEXIV2_REQUIRED_VERSION@ or newer, but
+     below @GEXIV2_MAX_VERSION@ (as the API changed).
      It is hosted at: https://gitlab.gnome.org/GNOME/gexiv2/
 
   9. libpng, libjpeg, libtiff, librsvg and lcms are hard dependencies
@@ -246,7 +247,7 @@ help in that regard:
      freetype2            @FREETYPE2_REQUIRED_VERSION@
      GDK-PixBuf           @GDK_PIXBUF_REQUIRED_VERSION@
      GEGL                 @GEGL_REQUIRED_VERSION@
-     gexiv2               @GEXIV2_REQUIRED_VERSION@
+     gexiv2               @GEXIV2_REQUIRED_VERSION@ (< @GEXIV2_MAX_VERSION@)
      GIO
      GLib                 @GLIB_REQUIRED_VERSION@
      glib-networking
