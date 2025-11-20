@@ -14,6 +14,8 @@ elif [ $(basename "$PWD") = 'flatpak' ]; then
   cd ../../..
 fi
 
+flatpak --version
+exit 1
 
 # Install part of the deps
 if which flatpak-builder >/dev/null 2>&1; then
