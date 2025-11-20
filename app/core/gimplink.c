@@ -369,12 +369,12 @@ gimp_link_update_buffer (GimpLink      *link,
 static void
 gimp_link_start_monitoring (GimpLink *link)
 {
-  /* TODO: As of GLib 2.86.1-1, GFileMonitors created with the
-   * G_FILE_MONITOR_WATCH_HARD_LINKS flag are not monitored on Windows.
-   * We will temporarily use the G_FILE_MONITOR_NONE flag on Windows until
-   * this is resolved */
+  /* GFileMonitors created with the G_FILE_MONITOR_WATCH_HARD_LINKS flag
+   * are not monitored on Windows. This was resolved in MR glib!4901.
+   * TODO: remove the top #ifdef when we bump the GLib requirement.
+   */
   link->p->monitor = g_file_monitor (link->p->file,
-#ifdef G_OS_WIN32
+#ifdef G_OS_WIN32 && ! GLIB_CHECK_VERSION(2, 86, 3)
                                      G_FILE_MONITOR_NONE,
 #else
                                      G_FILE_MONITOR_WATCH_HARD_LINKS,
