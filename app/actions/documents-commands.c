@@ -226,7 +226,7 @@ documents_remove_cmd_callback (GimpAction *action,
   GList               *images = NULL;
   GList               *list;
 
-  if (gimp_container_view_get_selected (editor->view, &images) > 1)
+  if (gimp_container_view_get_selected (editor->view, &images) > 0)
     {
       for (list = images; list; list = list->next)
         {
