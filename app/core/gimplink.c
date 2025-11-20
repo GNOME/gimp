@@ -374,7 +374,7 @@ gimp_link_start_monitoring (GimpLink *link)
    * TODO: remove the top #ifdef when we bump the GLib requirement.
    */
   link->p->monitor = g_file_monitor (link->p->file,
-#ifdef G_OS_WIN32 && ! GLIB_CHECK_VERSION(2, 86, 3)
+#if defined(G_OS_WIN32) && ! GLIB_CHECK_VERSION(2, 86, 3)
                                      G_FILE_MONITOR_NONE,
 #else
                                      G_FILE_MONITOR_WATCH_HARD_LINKS,
