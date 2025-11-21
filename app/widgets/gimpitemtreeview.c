@@ -1170,6 +1170,8 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
                                           item_view_class->item_type,
                                           view);
   gimp_item_tree_view_floating_selection_changed (view->priv->image, view);
+
+  gtk_widget_set_sensitive (GTK_WIDGET (view), (image != NULL));
 }
 
 static gboolean
