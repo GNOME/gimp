@@ -120,6 +120,12 @@ gimp_color_set_alpha (GeglColor *color,
  *   }
  * ```
  *
+ * Note that this relation is not transitive, because it is based on a
+ * color distance algorithm. It means that if color1 is perceptually
+ * identical to color2, which is perceptually identical to color3, it
+ * does not mean that color1 is perceptually identical to color3, as far
+ * this algorithm is concerned.
+ *
  * Returns: whether the 2 colors can be considered the same for the human eyes.
  *
  * Since: 3.0
