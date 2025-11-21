@@ -80,6 +80,7 @@ struct _GimpColorArea
 
   GimpColorAreaType   type;
   GeglColor          *color;
+  GeglColor          *rendered;
   guint               draw_border  : 1;
   guint               needs_render : 1;
 
@@ -237,6 +238,7 @@ gimp_color_area_init (GimpColorArea *area)
   area->rowstride   = 0;
   area->draw_border = FALSE;
   area->color       = gegl_color_new ("black");
+  area->rendered    = NULL;
 
   gtk_drag_dest_set (GTK_WIDGET (area),
                      GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -267,6 +269,7 @@ gimp_color_area_finalize (GObject *object)
 
   g_clear_pointer (&area->buf, g_free);
   g_clear_object (&area->color);
+  g_clear_object (&area->rendered);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -528,7 +531,8 @@ gimp_color_area_set_color (GimpColorArea *area,
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
   g_return_if_fail (GEGL_IS_COLOR (color));
 
-  if (! gimp_color_is_perceptually_identical (area->color, color))
+  if (! area->rendered ||
+      ! gimp_color_is_perceptually_identical (area->rendered, color))
     {
       area->needs_render = TRUE;
       gtk_widget_queue_draw (GTK_WIDGET (area));
@@ -740,6 +744,9 @@ gimp_color_area_render_buf (GtkWidget         *widget,
   guchar         opaque[4];
   guchar        *p;
   gdouble        frac;
+
+  g_clear_object (&area->rendered);
+  area->rendered = gegl_color_duplicate (color);
 
   switch (type)
     {
