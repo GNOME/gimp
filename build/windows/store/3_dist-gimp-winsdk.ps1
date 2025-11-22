@@ -473,7 +473,7 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
     ## Needed credentials for submission
     ### Connect with our Microsoft Entra credentials (stored on GitLab)
     ### (The last one can be revoked at any time in MS Entra Admin center)
-    msstore reconfigure --tenantId $TENANT_ID --sellerId $SELLER_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET
+    msstore reconfigure --tenantId $TENANT_ID --sellerId $SELLER_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     ### Set product_id (which is not confidential) needed by HTTP calls of some commands
     if ($GIMP_UNSTABLE -or $GIMP_RC_VERSION)
       {
@@ -485,12 +485,12 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
       }
 
     ## Create submission and upload .msixupload file to it
-    msstore publish $OUTPUT_DIR\$MSIX_ARTIFACT -id $env:PRODUCT_ID -nc
+    msstore publish $OUTPUT_DIR\$MSIX_ARTIFACT -id $env:PRODUCT_ID -nc; if ("$LASTEXITCODE" -gt '0') { exit 1 }
 
     ## Update submission info (if PS6 or up. Check the section 1 of this script)
     pwsh -Command `
       {
-        $jsonObject = msstore submission get $env:PRODUCT_ID | ConvertFrom-Json -AsHashtable
+        $jsonObject = msstore submission get $env:PRODUCT_ID | ConvertFrom-Json -AsHashtable; if ("$LASTEXITCODE" -gt '0') { exit 1 }
         ###Get changelog from Linux appdata
         $xmlObject = New-Object XML
         $xmlObject.Load("$PWD\desktop\org.gimp.GIMP.appdata.xml.in.in")
@@ -503,10 +503,10 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
         $jsonObject."Listings"."en-us"."BaseListing".'Description' = ($xmlObject.component.description.SelectNodes(".//p") | ForEach-Object { ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' ' } ) -join "`n`n"
         $jsonObject."Listings"."en-us"."BaseListing".'ReleaseNotes' = ($xmlObject.component.releases.release[0].description.SelectNodes(".//p | .//li") | ForEach-Object { $text = ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' '; if ($_.Name -eq 'li') { "- $text" } else { $text } } ) -join "`n"
         ###Send submission info
-        msstore submission updateMetadata $env:PRODUCT_ID ($jsonObject | ConvertTo-Json -Depth 100)
+        msstore submission updateMetadata $env:PRODUCT_ID ($jsonObject | ConvertTo-Json -Depth 100); if ("$LASTEXITCODE" -gt '0') { exit 1 }
       }
 
     ## Start certification then publishing
-    msstore submission publish $env:PRODUCT_ID
+    msstore submission publish $env:PRODUCT_ID; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_submission$([char]13)$([char]27)[0K"
   }
