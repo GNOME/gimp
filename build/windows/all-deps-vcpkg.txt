@@ -1,8 +1,0 @@
-# DEPS AT BUILD-TIME ONLY
-pkgconf \
-
-# DEPS AT RUNTIME
-#glib \
-#json-glib \
-#libjpeg-turbo \
-#libpng
