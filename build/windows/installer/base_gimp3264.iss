@@ -515,6 +515,8 @@ Type: files; Name: "{app}\bin\python3*.exe"
 ;Uneeded shipped headers in 3.0 RC3 (we now ship only babl, gegl and gimp)
 Type: filesandordirs; Name: "{app}\include\exiv2"
 Type: filesandordirs; Name: "{app}\include\gexiv2"
+;Old uneeded typelibs (not distributed since 3.1.4)
+Type: files; Name: "{app}\lib\girepository-1.0\*.typelib"
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
