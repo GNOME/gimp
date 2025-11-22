@@ -374,6 +374,7 @@ gimp-debian:
       - appimageignore*
       - _build-${RUNNER}/meson-logs/meson-log.txt
       - _build-${RUNNER}/config.h
+      - _build-${RUNNER}/
     expire_in: 2 days
 
 
