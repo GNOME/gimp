@@ -619,10 +619,11 @@ gimp_edit_selection_tool_active_modifier_key (GimpTool        *tool,
   edit_select->constrain = (state & gimp_get_constrain_behavior_mask () ?
                             TRUE : FALSE);
 
-  /* If we didn't came here due to a mouse release, immediately update
-   * the position of the thing we move.
+  /* If we didn't came here due to a mouse release and we've moved before,
+   * immediately update the position of the thing we move.
    */
-  if (state & GDK_BUTTON1_MASK)
+  if ((state & GDK_BUTTON1_MASK) &&
+      ! edit_select->first_move)
     {
       gimp_edit_selection_tool_update_motion (edit_select,
                                               edit_select->last_motion_x,
