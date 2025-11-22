@@ -41,7 +41,8 @@ static GString * gimp_path_export            (GimpImage   *image,
 static void      gimp_path_export_image_size (GimpImage   *image,
                                               GString     *str);
 static void      gimp_path_export_path       (GimpPath    *paths,
-                                              GString     *str);
+                                              GString     *str,
+                                              gint         path_id);
 static gchar   * gimp_path_export_path_data  (GimpPath    *paths);
 
 
@@ -139,7 +140,8 @@ static GString *
 gimp_path_export (GimpImage *image,
                   GList     *path)
 {
-  GString *str = g_string_new (NULL);
+  GString *str     = g_string_new (NULL);
+  gint     path_id = 1;
   GList   *list;
 
   g_string_append_printf (str,
@@ -161,7 +163,7 @@ gimp_path_export (GimpImage *image,
     path = gimp_image_get_path_iter (image);
 
   for (list = path; list; list = list->next)
-    gimp_path_export_path (GIMP_PATH (list->data), str);
+    gimp_path_export_path (GIMP_PATH (list->data), str, path_id++);
 
   g_string_append (str, "</svg>\n");
 
@@ -210,21 +212,24 @@ gimp_path_export_image_size (GimpImage *image,
 
 static void
 gimp_path_export_path (GimpPath *path,
-                       GString  *str)
+                       GString  *str,
+                       gint      path_id)
 {
-  const gchar *name = gimp_object_get_name (path);
-  gchar       *data = gimp_path_export_path_data (path);
-  gchar       *esc_name;
+  gchar *name;
+  gchar *data = gimp_path_export_path_data (path);
 
-  esc_name = g_markup_escape_text (name, strlen (name));
+  /* SVG specification states the id attribute must not contain whitespace.
+   * Rather than filter user names, we'll just define a generic,
+   * auto-incrementing id. */
+  name = g_strdup_printf ("path%d", path_id);
 
   g_string_append_printf (str,
                           "  <path id=\"%s\"\n"
                           "        fill=\"none\" stroke=\"black\" stroke-width=\"1\"\n"
                           "        d=\"%s\" />\n",
-                          esc_name, data);
+                          name, data);
 
-  g_free (esc_name);
+  g_free (name);
   g_free (data);
 }
 
