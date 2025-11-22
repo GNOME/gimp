@@ -39,7 +39,11 @@
 #include "gimp-intl.h"
 
 
+#if defined(ARCH_X86_64) || defined(ARCH_PPC64)
+#define PATTERN_MAX_SIZE 8192
+#else
 #define PATTERN_MAX_SIZE 1024
+#endif
 
 enum
 {
