@@ -235,7 +235,7 @@ foreach ($bundle in $supported_archs)
     conf_manifest 'neutral' "$msix_arch"
     ### Set Identity Name
     conf_manifest '@IDENTITY_NAME@' "$IDENTITY_NAME"
-    ### Set Display Name (the name shown in MS Store)
+    ### Set Display Name (the name shown in MS Store, on Start Menu etc)
     if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
       {
         $display_name='GIMP (Insider)'
@@ -253,12 +253,6 @@ foreach ($bundle in $supported_archs)
     conf_manifest '@CUSTOM_GIMP_VERSION@' "$CUSTOM_GIMP_VERSION"
     ### Set some things based on GIMP mutex version (major.minor or major)
     conf_manifest '@GIMP_MUTEX_VERSION@' "$GIMP_MUTEX_VERSION"
-    #### Needed to differentiate on Start Menu etc 
-    if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
-      {
-        $channel_suffix=" (Insider)"
-      }
-    conf_manifest '@CHANNEL_SUFFIX@' "$channel_suffix"
     #### Needed to differentiate on PowerShell etc
     if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
       {
