@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-18 07:50+0000\n"
-"PO-Revision-Date: 2025-11-18 10:42+0100\n"
+"POT-Creation-Date: 2025-11-20 21:03+0000\n"
+"PO-Revision-Date: 2025-11-21 10:42+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2478,7 +2478,7 @@ msgstr "240 s"
 
 #: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263
 #: app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
-#: app/actions/file-commands.c:472 app/actions/gradient-editor-commands.c:410
+#: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
@@ -2601,7 +2601,7 @@ msgid "Untitled"
 msgstr "Neimenovano"
 
 #: app/actions/data-commands.c:224 app/actions/documents-commands.c:210
-#: app/actions/file-commands.c:578
+#: app/actions/file-commands.c:569
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Datoteke ni mogoče pokazati v upravljalniku datotek: %s"
@@ -4236,7 +4236,7 @@ msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Zapri program za obdelavo slik GIMP"
 
-#: app/actions/file-actions.c:137 app/actions/file-actions.c:308
+#: app/actions/file-actions.c:137 app/actions/file-actions.c:305
 msgctxt "file-action"
 msgid "_Save"
 msgstr "_Shrani"
@@ -4280,7 +4280,7 @@ msgctxt "file-action"
 msgid "Save this image and close its window"
 msgstr "Shrani to sliko in zapri njeno okno"
 
-#: app/actions/file-actions.c:163 app/actions/file-actions.c:353
+#: app/actions/file-actions.c:163 app/actions/file-actions.c:350
 msgctxt "file-action"
 msgid "E_xport..."
 msgstr "I_zvozi ..."
@@ -4310,17 +4310,17 @@ msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "Izvozi sliko v različne vrste datotek, kot sta PNG in JPEG"
 
-#: app/actions/file-actions.c:314
+#: app/actions/file-actions.c:311
 msgctxt "file-action"
 msgid "_Save..."
 msgstr "_Shrani ..."
 
-#: app/actions/file-actions.c:320
+#: app/actions/file-actions.c:317
 #, c-format
 msgid "Export to %s"
 msgstr "Izvozi v %s"
 
-#: app/actions/file-actions.c:336
+#: app/actions/file-actions.c:333
 #, c-format
 msgid "Over_write %s"
 msgstr "Prepi_ši %s"
@@ -4328,12 +4328,12 @@ msgstr "Prepi_ši %s"
 #. TRANSLATORS: the %s will be replaced by the file name of a
 #. * recently opened image.
 #.
-#: app/actions/file-actions.c:408
+#: app/actions/file-actions.c:403
 #, c-format
 msgid "Open \"%s\""
 msgstr "Odpri »%s«"
 
-#: app/actions/file-commands.c:121 app/actions/file-commands.c:602
+#: app/actions/file-commands.c:121 app/actions/file-commands.c:593
 #: app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "Odpri sliko"
@@ -4346,45 +4346,45 @@ msgstr "Odpri sliko kot plasti"
 msgid "Open Image as Link Layer"
 msgstr "Odpri sliko kot povezano plast"
 
-#: app/actions/file-commands.c:330
+#: app/actions/file-commands.c:321
 msgid "No changes need to be saved"
 msgstr "Nobenih sprememb ni potrebno shraniti"
 
-#: app/actions/file-commands.c:337 app/actions/file-commands.c:814
+#: app/actions/file-commands.c:328 app/actions/file-commands.c:805
 #: app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Shrani sliko"
 
-#: app/actions/file-commands.c:343
+#: app/actions/file-commands.c:334
 msgid "Save a Copy of the Image"
 msgstr "Shrani kopijo slike"
 
-#: app/actions/file-commands.c:421
+#: app/actions/file-commands.c:412
 msgid "Create New Template"
 msgstr "Ustvari novo predlogo"
 
-#: app/actions/file-commands.c:425
+#: app/actions/file-commands.c:416
 msgid "Enter a name for this template"
 msgstr "Vnesite ime za predlogo"
 
-#: app/actions/file-commands.c:455
+#: app/actions/file-commands.c:446
 msgid "Revert failed. No file name associated with this image."
 msgstr "Povrnitev ni uspela. Nobena datoteka ni povezana s to sliko."
 
-#: app/actions/file-commands.c:467
+#: app/actions/file-commands.c:458
 msgid "Revert Image"
 msgstr "Povrni sliko"
 
-#: app/actions/file-commands.c:473
+#: app/actions/file-commands.c:464
 msgid "_Revert"
 msgstr "Po_vrni"
 
-#: app/actions/file-commands.c:491
+#: app/actions/file-commands.c:482
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Želite povrniti »%s« v »%s«?"
 
-#: app/actions/file-commands.c:496
+#: app/actions/file-commands.c:487
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -4392,11 +4392,11 @@ msgstr ""
 "S povrnitvijo slike v zadnje shranjeno stanje boste izgubili vse spremembe "
 "in podatke za razveljavitve."
 
-#: app/actions/file-commands.c:836
+#: app/actions/file-commands.c:827
 msgid "(Unnamed Template)"
 msgstr "(neimenovana predloga)"
 
-#: app/actions/file-commands.c:883
+#: app/actions/file-commands.c:874
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -7016,8 +7016,7 @@ msgstr "Lastnosti plasti"
 msgid "Edit Layer Attributes"
 msgstr "Uredi lastnosti plasti"
 
-#: app/actions/layers-commands.c:415 app/widgets/gimpdrawabletreeview.c:649
-#: app/widgets/gimplayertreeview.c:915
+#: app/actions/layers-commands.c:415
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Novih plasti"
@@ -19808,11 +19807,11 @@ msgstr ""
 "Podprte so samo poti datotek, značilne za platforme: »%s« ni mogoče odpreti "
 "kot povezave."
 
-#: app/file/file-open.c:985 app/file/file-save.c:132
+#: app/file/file-open.c:985 app/file/file-save.c:122
 msgid "Not a regular file"
 msgstr "Ni veljavna datoteka"
 
-#: app/file/file-open.c:994 app/file/file-save.c:141
+#: app/file/file-open.c:994 app/file/file-save.c:131
 msgid "Permission denied"
 msgstr "Ni ustreznih dovoljenj"
 
@@ -19844,15 +19843,11 @@ msgstr "Preneseno %s podatkov slike s strežnika"
 msgid "Uploaded %s of image data"
 msgstr "Preneseno %s podatkov slike na strežnik"
 
-#: app/file/file-save.c:105
-msgid "There is no active layer to save"
-msgstr "Ni aktivne plasti, da bi jo shranili."
-
-#: app/file/file-save.c:125
+#: app/file/file-save.c:115
 msgid "Failed to get file information"
 msgstr "Informacij o datoteki ni bilo mogoče pridobiti"
 
-#: app/file/file-save.c:297
+#: app/file/file-save.c:287
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Z vtičnikom %s ni mogoče shraniti slike"
@@ -27753,6 +27748,11 @@ msgstr "Zakleni položaj in velikost"
 #: app/widgets/gimpdrawabletreeview.c:368
 msgid "Cannot select items while a floating selection is active."
 msgstr "Medtem, ko je plavajoči izbor dejaven, elementov ni mogoče izbrati."
+
+#: app/widgets/gimpdrawabletreeview.c:649 app/widgets/gimplayertreeview.c:915
+msgctxt "singular"
+msgid "New Layer"
+msgstr "Nova plast"
 
 #: app/widgets/gimpdrawabletreeview-filters.c:165
 msgid "Layer Effects"
