@@ -48,7 +48,10 @@ enum
   PROP_POSTERIZE,
   PROP_POSTERIZE_NUM,
   PROP_ERASER,
-  PROP_NO_ERASING
+  PROP_NO_ERASING,
+  PROP_SIMULATE_TABLET_INPUT,
+  PROP_SIMULATED_PRESSURE,
+  PROP_SIMULATED_WHEEL,
 };
 
 
@@ -161,6 +164,26 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
                             _("Never decrease alpha of existing pixels"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SIMULATE_TABLET_INPUT,
+                            "simulate-tablet-input",
+                            _("Simulate Stylus Input"),
+                            _("Override input device's pressure and barrel rotation"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SIMULATED_PRESSURE,
+                           "simulated-pressure",
+                           _("Pressure"),
+                           _("This value will override the actual pressure from your input device"),
+                           0.0, 1.0, 0.5,
+                           GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SIMULATED_WHEEL,
+                           "simulated-wheel",
+                           _("Wheel/Rotation"),
+                           _("This value will override the barrel rotation (called \"Twist\" in MyPaint) "
+                             "from your input device"),
+                           0.0, 1.0, 0.5,
+                           GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -220,6 +243,15 @@ gimp_mybrush_options_set_property (GObject      *object,
     case PROP_NO_ERASING:
       options->no_erasing = g_value_get_boolean (value);
       break;
+    case PROP_SIMULATE_TABLET_INPUT:
+      options->simulate_tablet_input = g_value_get_boolean (value);
+      break;
+    case PROP_SIMULATED_PRESSURE:
+      options->simulated_pressure = g_value_get_double (value);
+      break;
+    case PROP_SIMULATED_WHEEL:
+      options->simulated_wheel = g_value_get_double (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -269,6 +301,15 @@ gimp_mybrush_options_get_property (GObject    *object,
       break;
     case PROP_NO_ERASING:
       g_value_set_boolean (value, options->no_erasing);
+      break;
+    case PROP_SIMULATE_TABLET_INPUT:
+      g_value_set_boolean (value, options->simulate_tablet_input);
+      break;
+    case PROP_SIMULATED_PRESSURE:
+      g_value_set_double (value, options->simulated_pressure);
+      break;
+    case PROP_SIMULATED_WHEEL:
+      g_value_set_double (value, options->simulated_wheel);
       break;
 
     default:

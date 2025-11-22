@@ -82,7 +82,10 @@ static void      gimp_mybrush_core_motion         (GimpPaintCore     *paint_core
                                                    GimpSymmetry      *sym,
                                                    guint32            time,
                                                    gfloat             view_zoom,
-                                                   gfloat             view_rotation);
+                                                   gfloat             view_rotation,
+                                                   gboolean           simulate_tablet_input,
+                                                   gfloat             fake_pressure,
+                                                   gfloat             fake_barrel_rotation);
 static void      gimp_mybrush_core_create_brushes (GimpMybrushCore   *mybrush,
                                                    GimpDrawable      *drawable,
                                                    GimpPaintOptions  *paint_options,
@@ -233,7 +236,10 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_MOTION:
       gimp_mybrush_core_motion (paint_core, drawables->data, paint_options,
                                 sym, time, mybrush_options->view_zoom,
-                                mybrush_options->view_rotation);
+                                mybrush_options->view_rotation,
+                                mybrush_options->simulate_tablet_input,
+                                mybrush_options->simulated_pressure,
+                                mybrush_options->simulated_wheel);
       break;
 
     case GIMP_PAINT_STATE_FINISH:
@@ -255,7 +261,10 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
                           GimpSymmetry     *sym,
                           guint32           time,
                           gfloat            view_zoom,
-                          gfloat            view_rotation)
+                          gfloat            view_rotation,
+                          gboolean          simulate_tablet_input,
+                          gfloat            fake_pressure,
+                          gfloat            fake_barrel_rotation)
 {
   GimpMybrushCore  *mybrush = GIMP_MYBRUSH_CORE (paint_core);
   MyPaintRectangle  rect;
@@ -305,7 +314,7 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
                                      1.0f, /* Pretend the cursor hasn't moved in a while */
                                      view_zoom,
                                      view_rotation,
-                                     coords.wheel);
+                                     simulate_tablet_input ? fake_barrel_rotation : coords.wheel);
         }
 
       dt = 0.015;
@@ -370,13 +379,13 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
                                  (MyPaintSurface2 *) mybrush->private->surface,
                                  coords.x,
                                  coords.y,
-                                 pressure,
+                                 simulate_tablet_input ? fake_pressure : pressure,
                                  coords.xtilt,
                                  coords.ytilt,
                                  dt,
                                  view_zoom,
                                  view_rotation,
-                                 coords.wheel);
+                                 simulate_tablet_input ? fake_barrel_rotation : coords.wheel);
     }
 
   mybrush->private->last_time = time;

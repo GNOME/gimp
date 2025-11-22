@@ -48,6 +48,10 @@ struct _GimpMybrushOptions
   gdouble           posterize_num;
   gboolean          eraser;
   gboolean          no_erasing;
+
+  gboolean          simulate_tablet_input;
+  gdouble           simulated_pressure;
+  gdouble           simulated_wheel;
 };
 
 struct _GimpMybrushOptionsClass
