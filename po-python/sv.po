@@ -11,15 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-25 22:17+0200\n"
-"PO-Revision-Date: 2025-07-25 22:27+0200\n"
+"POT-Creation-Date: 2025-11-10 19:14+0000\n"
+"PO-Revision-Date: 2025-11-10 21:13+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 #: plug-ins/python/colorxhtml.py:78
 msgid "Save as colored HTML text..."
@@ -192,13 +192,13 @@ msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Exporterar bildens histogram till en textfil (CSV)"
 
 #: plug-ins/python/histogram-export.py:216
-msgid "_Export histogram..."
+msgid "_Export Histogram..."
 msgstr "_Exportera histogram…"
 
 #. TODO: GFile props still don't have labels + only load existing files
 #. (here we likely want to create a new file).
 #: plug-ins/python/histogram-export.py:224
-msgid "Histogram File"
+msgid "Histogram file"
 msgstr "Histogramfil"
 
 #: plug-ins/python/histogram-export.py:225
@@ -206,23 +206,23 @@ msgid "Histogram export file"
 msgstr "Fil för histogramexport"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "_Bucket Size"
+msgid "_Bucket size"
 msgstr "_Hinkstorlek"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "Bucket Size"
+msgid "Bucket size"
 msgstr "Hinkstorlek"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample _Average"
+msgid "Sample _average"
 msgstr "Samplings_medel"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample Average"
+msgid "Sample average"
 msgstr "Samplingsmedel"
 
 #: plug-ins/python/histogram-export.py:232
-msgid "Pixel Count"
+msgid "Pixel count"
 msgstr "Antal bildpunkter"
 
 #: plug-ins/python/histogram-export.py:233
@@ -234,7 +234,7 @@ msgid "Percent"
 msgstr "Procent"
 
 #: plug-ins/python/histogram-export.py:235
-msgid "Output _format"
+msgid "Output _Format"
 msgstr "Utmatnings_format"
 
 #: plug-ins/python/histogram-export.py:235
@@ -687,8 +687,8 @@ msgstr "Epitrokoid"
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
-msgid "Curve Type"
+#: plug-ins/python/spyro-plus.py:1487
+msgid "Curve type"
 msgstr "Kurvtyp"
 
 #: plug-ins/python/spyro-plus.py:1488
@@ -751,7 +751,7 @@ msgstr ""
 "proportionell till antalet kuggar."
 
 #: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
-msgid "Fixed Gear Teeth"
+msgid "Fixed gear teeth"
 msgstr "Kuggar i fast kugghjul"
 
 #: plug-ins/python/spyro-plus.py:1558
@@ -763,7 +763,7 @@ msgstr ""
 "proportionell till antalet kuggar."
 
 #: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
-msgid "Moving Gear Teeth"
+msgid "Moving gear teeth"
 msgstr "Kuggar i rörligt kugghjul"
 
 #: plug-ins/python/spyro-plus.py:1566
@@ -779,7 +779,7 @@ msgstr ""
 "hålet är på kugghjulets kant."
 
 #: plug-ins/python/spyro-plus.py:1588
-msgid "Hole Number"
+msgid "Hole number"
 msgstr "Hålnummer"
 
 #: plug-ins/python/spyro-plus.py:1589
@@ -791,7 +791,7 @@ msgstr ""
 "maximala hålnumret är olika för varje kugghjul."
 
 #: plug-ins/python/spyro-plus.py:1600
-msgid "Flower Petals"
+msgid "Flower petals"
 msgstr "Blomblad"
 
 #: plug-ins/python/spyro-plus.py:1601
@@ -799,7 +799,7 @@ msgid "The number of petals in the pattern."
 msgstr "Antalet blomblad i mönstret."
 
 #: plug-ins/python/spyro-plus.py:1606
-msgid "Petal Skip"
+msgid "Petal skip"
 msgstr "Blombladshopp"
 
 #: plug-ins/python/spyro-plus.py:1607
@@ -807,7 +807,7 @@ msgid "The number of petals to advance for drawing the next petal."
 msgstr "Antalet blomblad att gå framåt för att rita nästa blomblad."
 
 #: plug-ins/python/spyro-plus.py:1612
-msgid "Hole Radius(%)"
+msgid "Hole radius(%)"
 msgstr "Hålradie(%)"
 
 #: plug-ins/python/spyro-plus.py:1613
@@ -989,6 +989,10 @@ msgstr ""
 msgid "Spyrogimp..."
 msgstr "Spirogimp…"
 
+#: plug-ins/python/spyro-plus.py:2267
+msgid "Curve Type"
+msgstr "Kurvtyp"
+
 #: plug-ins/python/spyro-plus.py:2271
 msgid "rack"
 msgstr "kuggstång"
@@ -1017,7 +1021,7 @@ msgstr ""
 "former."
 
 #: plug-ins/python/spyro-plus.py:2285
-msgid "Fi_xed Gear Teeth"
+msgid "Fi_xed gear teeth"
 msgstr "Kuggar i _fast kugghjul"
 
 #: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
@@ -1025,11 +1029,11 @@ msgid "Number of teeth for fixed gear."
 msgstr "Antalet kuggar i fast kugghjul."
 
 #: plug-ins/python/spyro-plus.py:2288
-msgid "Mo_ving Gear Teeth"
+msgid "Mo_ving gear teeth"
 msgstr "Kuggar i _rörligt kugghjul"
 
 #: plug-ins/python/spyro-plus.py:2291
-msgid "_Hole Radius (%)"
+msgid "_Hole radius (%)"
 msgstr "_Hålradie (%)"
 
 #: plug-ins/python/spyro-plus.py:2292
