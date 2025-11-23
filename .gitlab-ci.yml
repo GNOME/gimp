@@ -219,11 +219,14 @@ deps-debian-nonreloc:
             libwmf-dev
             libxmu-dev
             libxpm-dev
+            locales
             mypaint-brushes
             poppler-data
             python3
             python3-gi
             python3-gi-cairo" >> Dockerfile
+    - echo "RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen" >> Dockerfile
+    - echo "RUN locale-gen" >> Dockerfile
     # Prepare environ
     - echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:environ[collapsed=true]\r\e[0KPreparing build environment\n\"" >> Dockerfile2;

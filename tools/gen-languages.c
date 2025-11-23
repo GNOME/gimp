@@ -280,6 +280,26 @@ gimp_language_store_parser_init (GError **error)
       goto cleanup;
     }
 
+  locale = setlocale (LC_ALL, NULL);
+  if (g_strcmp0 (locale, "C") == 0 || g_strcmp0 (locale, "POSIX") == 0)
+    {
+      /* Note: we do not care about what we set, except not C or POSIX.
+       * It may be any valid locale. This needs to be set so that this
+       * script works even on build systems with C or POSIX locale. In
+       * these 2 cases only, the LANGUAGE is ignored and our whole
+       * self-localizing code below would be basically moot.
+       */
+      g_setenv ("LC_ALL", "en_US.UTF-8", TRUE);
+      if (setlocale (LC_ALL, "") == NULL)
+        {
+          g_printerr ("ERROR: %s: setlocale() failed. "
+                      "The build system needs to be set up for localization. "
+                      "Please install at least \"en_US.UTF-8\" or set a locale other than C or POSIX.\n",
+                      __FILE__);
+          exit (EXIT_FAILURE);
+        }
+    }
+
   /* Generate the localized language names. */
   g_hash_table_iter_init (&lang_iter, l10n_lang_list);
   gimp_bind_text_domain ("iso_639_3", ISOCODES_LOCALEDIR);
