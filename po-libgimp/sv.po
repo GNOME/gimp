@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-07-10 21:29+0000\n"
-"PO-Revision-Date: 2025-08-05 22:45+0200\n"
+"POT-Creation-Date: 2025-11-18 10:57+0000\n"
+"PO-Revision-Date: 2025-11-22 14:59+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -20,13 +20,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "_Bläddra…"
 
-#: libgimp/gimpdrawablechooser.c:238
+#: libgimp/gimpdrawablechooser.c:240 libgimp/gimpimagechooser.c:218
+#: libgimp/gimpitemchooser.c:237
 msgid "Browse..."
 msgstr "Bläddra…"
 
@@ -178,59 +179,59 @@ msgstr "Beskär lager"
 msgid "Resize Image to Layers"
 msgstr "Ändra storlek på bild till lager"
 
-#: libgimp/gimpexportprocedure.c:550
+#: libgimp/gimpexportprocedure.c:553
 msgid "Save _Exif"
 msgstr "Spara _Exif"
 
-#: libgimp/gimpexportprocedure.c:551
+#: libgimp/gimpexportprocedure.c:554
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Spara Exif-metadata (Exchangeable image file format)"
 
-#: libgimp/gimpexportprocedure.c:559
+#: libgimp/gimpexportprocedure.c:562
 msgid "Save _IPTC"
 msgstr "Spara _IPTC"
 
-#: libgimp/gimpexportprocedure.c:560
+#: libgimp/gimpexportprocedure.c:563
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr "Spara IPTC-metadata (International Press Telecommunications Council)"
 
-#: libgimp/gimpexportprocedure.c:568
+#: libgimp/gimpexportprocedure.c:571
 msgid "Save _XMP"
 msgstr "Spara _XMP"
 
-#: libgimp/gimpexportprocedure.c:569
+#: libgimp/gimpexportprocedure.c:572
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Spara XMP-metadata (Extensible Metadata Platform)"
 
-#: libgimp/gimpexportprocedure.c:577
+#: libgimp/gimpexportprocedure.c:580
 msgid "Save color _profile"
 msgstr "Spara färg_profil"
 
-#: libgimp/gimpexportprocedure.c:578
+#: libgimp/gimpexportprocedure.c:581
 msgid "Save the ICC color profile as metadata"
 msgstr "Spara ICC-färgprofilen som metadata"
 
-#: libgimp/gimpexportprocedure.c:586
+#: libgimp/gimpexportprocedure.c:589
 msgid "Save _thumbnail"
 msgstr "Spara _miniatyrbild"
 
-#: libgimp/gimpexportprocedure.c:587
+#: libgimp/gimpexportprocedure.c:590
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Spara en mindre representation av bilden som metadata"
 
-#: libgimp/gimpexportprocedure.c:595
+#: libgimp/gimpexportprocedure.c:598
 msgid "Save c_omment"
 msgstr "Spara k_ommentar"
 
-#: libgimp/gimpexportprocedure.c:596
+#: libgimp/gimpexportprocedure.c:599
 msgid "Save a comment as metadata"
 msgstr "Spara en kommentar som metadata"
 
-#: libgimp/gimpexportprocedure.c:600
+#: libgimp/gimpexportprocedure.c:603
 msgid "Comment"
 msgstr "Kommentar"
 
-#: libgimp/gimpexportprocedure.c:601
+#: libgimp/gimpexportprocedure.c:604
 msgid "Image comment"
 msgstr "Bildkommentar"
 
@@ -252,15 +253,15 @@ msgstr "(redigera)"
 msgid "Export Image as %s"
 msgstr "Exportera bild som %s"
 
-#: libgimp/gimpimagemetadata.c:124
+#: libgimp/gimpimagemetadata.c:201
 msgid "Background"
 msgstr "Bakgrund"
 
-#: libgimp/gimpimagemetadata-save.c:770 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:796 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:445
+#: libgimp/gimploadprocedure.c:276 libgimp/gimpvectorloadprocedure.c:448
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -294,88 +295,88 @@ msgstr "anropsfel"
 msgid "cancelled"
 msgstr "avbruten"
 
-#: libgimp/gimpprocbrowserdialog.c:152
+#: libgimp/gimpprocbrowserdialog.c:150
 msgid "by name"
 msgstr "efter namn"
 
-#: libgimp/gimpprocbrowserdialog.c:153
+#: libgimp/gimpprocbrowserdialog.c:151
 msgid "by description"
 msgstr "efter beskrivning"
 
-#: libgimp/gimpprocbrowserdialog.c:154
+#: libgimp/gimpprocbrowserdialog.c:152
 msgid "by help"
 msgstr "efter hjälp"
 
-#: libgimp/gimpprocbrowserdialog.c:155
+#: libgimp/gimpprocbrowserdialog.c:153
 msgid "by authors"
 msgstr "efter upphovsmän"
 
-#: libgimp/gimpprocbrowserdialog.c:156
+#: libgimp/gimpprocbrowserdialog.c:154
 msgid "by copyright"
 msgstr "efter copyright"
 
-#: libgimp/gimpprocbrowserdialog.c:157
+#: libgimp/gimpprocbrowserdialog.c:155
 msgid "by date"
 msgstr "efter datum"
 
-#: libgimp/gimpprocbrowserdialog.c:158
+#: libgimp/gimpprocbrowserdialog.c:156
 msgid "by type"
 msgstr "efter typ"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:358 libgimp/gimpprocbrowserdialog.c:516
-#: libgimpwidgets/gimpbrowser.c:161
+#: libgimp/gimpprocbrowserdialog.c:351 libgimp/gimpprocbrowserdialog.c:509
+#: libgimpwidgets/gimpbrowser.c:144
 msgid "No matches"
 msgstr "Inga sökträffar"
 
-#: libgimp/gimpprocbrowserdialog.c:361
+#: libgimp/gimpprocbrowserdialog.c:354
 msgid "Search term invalid or incomplete"
 msgstr "Söktermen är ogiltig eller ofullständig"
 
-#: libgimp/gimpprocbrowserdialog.c:370
+#: libgimp/gimpprocbrowserdialog.c:363
 msgid "Searching"
 msgstr "Söker"
 
-#: libgimp/gimpprocbrowserdialog.c:382
+#: libgimp/gimpprocbrowserdialog.c:375
 msgid "Searching by name"
 msgstr "Söker efter namn"
 
-#: libgimp/gimpprocbrowserdialog.c:403
+#: libgimp/gimpprocbrowserdialog.c:396
 msgid "Searching by description"
 msgstr "Söker efter beskrivning"
 
-#: libgimp/gimpprocbrowserdialog.c:411
+#: libgimp/gimpprocbrowserdialog.c:404
 msgid "Searching by help"
 msgstr "Söker efter hjälp"
 
-#: libgimp/gimpprocbrowserdialog.c:419
+#: libgimp/gimpprocbrowserdialog.c:412
 msgid "Searching by authors"
 msgstr "Söker efter upphovsmän"
 
-#: libgimp/gimpprocbrowserdialog.c:427
+#: libgimp/gimpprocbrowserdialog.c:420
 msgid "Searching by copyright"
 msgstr "Söker efter copyright"
 
-#: libgimp/gimpprocbrowserdialog.c:435
+#: libgimp/gimpprocbrowserdialog.c:428
 msgid "Searching by date"
 msgstr "Söker efter datum"
 
-#: libgimp/gimpprocbrowserdialog.c:443
+#: libgimp/gimpprocbrowserdialog.c:436
 msgid "Searching by type"
 msgstr "Söker efter typ"
 
-#: libgimp/gimpprocbrowserdialog.c:456
+#: libgimp/gimpprocbrowserdialog.c:449
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d procedur"
 msgstr[1] "%d procedurer"
 
-#: libgimp/gimpprocbrowserdialog.c:465
+#: libgimp/gimpprocbrowserdialog.c:458
 msgid "No matches for your query"
 msgstr "Inga träffar för din sökning"
 
-#: libgimp/gimpprocbrowserdialog.c:469
+#: libgimp/gimpprocbrowserdialog.c:462
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -483,31 +484,31 @@ msgstr "_Spara inställningar"
 msgid "Store current settings for later reuse"
 msgstr "Lagra aktuella inställningar för att använda dem igen senare"
 
-#: libgimp/gimpproceduredialog.c:892
+#: libgimp/gimpproceduredialog.c:908
 msgid "Brush Chooser"
 msgstr "Penselväljare"
 
-#: libgimp/gimpproceduredialog.c:896
+#: libgimp/gimpproceduredialog.c:912
 msgid "Font Chooser"
 msgstr "Typsnittsväljare"
 
-#: libgimp/gimpproceduredialog.c:900
+#: libgimp/gimpproceduredialog.c:916
 msgid "Gradient Chooser"
 msgstr "Gradientväljare"
 
-#: libgimp/gimpproceduredialog.c:904
+#: libgimp/gimpproceduredialog.c:920
 msgid "Palette Chooser"
 msgstr "Palettväljare"
 
-#: libgimp/gimpproceduredialog.c:908
+#: libgimp/gimpproceduredialog.c:924
 msgid "Pattern Chooser"
 msgstr "Mönsterväljare"
 
-#: libgimp/gimpproceduredialog.c:2789
+#: libgimp/gimpproceduredialog.c:2833
 msgid "Reset to _Initial Values"
 msgstr "Återställ till _ursprungsvärden"
 
-#: libgimp/gimpproceduredialog.c:2798
+#: libgimp/gimpproceduredialog.c:2842
 msgid "Reset to _Factory Defaults"
 msgstr "Återställ till _fabriksinställningar"
 
@@ -547,17 +548,32 @@ msgstr "Datum:"
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: libgimp/gimppropwidgets.c:191
+#: libgimp/gimppropwidgets.c:190
+#, c-format
+msgid "Choose image: %s"
+msgstr "Välj bild: %s"
+
+#: libgimp/gimppropwidgets.c:251 libgimp/gimppropwidgets.c:321
 #, c-format
 msgid "Choose layer: %s"
 msgstr "Välj lager: %s"
 
-#: libgimp/gimppropwidgets.c:193
+#: libgimp/gimppropwidgets.c:253 libgimp/gimppropwidgets.c:323
 #, c-format
 msgid "Choose channel: %s"
 msgstr "Välj kanal: %s"
 
-#: libgimp/gimppropwidgets.c:195
+#: libgimp/gimppropwidgets.c:255
+#, c-format
+msgid "Choose path: %s"
+msgstr "Välj bana: %s"
+
+#: libgimp/gimppropwidgets.c:257
+#, c-format
+msgid "Choose item: %s"
+msgstr "Välj objekt: %s"
+
+#: libgimp/gimppropwidgets.c:325
 #, c-format
 msgid "Choose drawable: %s"
 msgstr "Välj rityta: %s"
@@ -571,12 +587,12 @@ msgstr ""
 "i fysisk enhet"
 
 #: libgimp/gimpresolutionentry-private.c:144
-#: libgimp/gimpvectorloadprocedure.c:125
+#: libgimp/gimpvectorloadprocedure.c:126
 msgid "_Keep aspect ratio"
 msgstr "_Behåll bildförhållande"
 
 #: libgimp/gimpresolutionentry-private.c:145
-#: libgimp/gimpvectorloadprocedure.c:126
+#: libgimp/gimpvectorloadprocedure.c:127
 msgid "Force dimensions with aspect ratio"
 msgstr "Tvinga dimensioner med bildförhållande"
 
@@ -586,50 +602,50 @@ msgstr "Tvinga dimensioner med bildförhållande"
 msgid "pixels/%a"
 msgstr "bildpunkter/%a"
 
-#: libgimp/gimpvectorloadprocedure.c:111
+#: libgimp/gimpvectorloadprocedure.c:112
 msgid "_Width (pixels)"
 msgstr "_Bredd (bildpunkter)"
 
-#: libgimp/gimpvectorloadprocedure.c:118
+#: libgimp/gimpvectorloadprocedure.c:119
 msgid "_Height (pixels)"
 msgstr "_Höjd (bildpunkter)"
 
-#: libgimp/gimpvectorloadprocedure.c:130
+#: libgimp/gimpvectorloadprocedure.c:131
 msgid "_Prefer native dimensions"
 msgstr "_Föredra inhemska dimensioner"
 
-#: libgimp/gimpvectorloadprocedure.c:131
+#: libgimp/gimpvectorloadprocedure.c:132
 msgid "Load and use dimensions from source file"
 msgstr "Läs in och använd dimensioner från källfil"
 
-#: libgimp/gimpvectorloadprocedure.c:139
+#: libgimp/gimpvectorloadprocedure.c:142
 msgid "Resolu_tion"
 msgstr "U_pplösning"
 
-#: libgimp/gimpvectorloadprocedure.c:140
+#: libgimp/gimpvectorloadprocedure.c:143
 msgid "Pixel Density: number of pixels per physical unit"
 msgstr "Bildpunktsdensitet: antal bildpunkter per fysisk enhet"
 
-#: libgimp/gimpvectorloadprocedure.c:145
+#: libgimp/gimpvectorloadprocedure.c:148
 msgid "Unit"
 msgstr "Enhet"
 
-#: libgimp/gimpvectorloadprocedure.c:146
+#: libgimp/gimpvectorloadprocedure.c:149
 msgid "Physical unit"
 msgstr "Fysisk enhet"
 
-#: libgimp/gimpvectorloadprocedure.c:368
+#: libgimp/gimpvectorloadprocedure.c:371
 msgid ""
 "dimensions could neither be extracted nor computed from the vector image's "
 "data."
 msgstr ""
 "dimensioner kunde varken extraheras eller beräknas från vektorbildens data."
 
-#: libgimp/gimpvectorloadprocedure.c:373
+#: libgimp/gimpvectorloadprocedure.c:376
 msgid "Vector image loading plug-in failed: "
 msgstr "Insticksmodul för vektorbildsinläsning misslyckades: "
 
-#: libgimp/gimpvectorloadprocedure.c:397
+#: libgimp/gimpvectorloadprocedure.c:400
 msgid ""
 "Dimensions cannot be 0 and no native dimensions could be extracted from the "
 "vector image."
@@ -1661,76 +1677,106 @@ msgid "Filled"
 msgstr "Fylld"
 
 #: libgimpbase/gimpbaseenums.c:1804
+msgctxt "text-outline"
+msgid "Filled"
+msgstr "Fylld"
+
+#: libgimpbase/gimpbaseenums.c:1805
+msgctxt "text-outline"
+msgid "Outlined"
+msgstr "Kontur"
+
+#: libgimpbase/gimpbaseenums.c:1806
+msgctxt "text-outline"
+msgid "Outlined and filled"
+msgstr "Kontur och fylld"
+
+#: libgimpbase/gimpbaseenums.c:1836
+msgctxt "text-outline-direction"
+msgid "Outer"
+msgstr "Yttre"
+
+#: libgimpbase/gimpbaseenums.c:1837
+msgctxt "text-outline-direction"
+msgid "Inner"
+msgstr "Inre"
+
+#: libgimpbase/gimpbaseenums.c:1838
+msgctxt "text-outline-direction"
+msgid "Centered"
+msgstr "Centrerad"
+
+#: libgimpbase/gimpbaseenums.c:1868
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Skuggor"
 
-#: libgimpbase/gimpbaseenums.c:1805
+#: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Mellantoner"
 
-#: libgimpbase/gimpbaseenums.c:1806
+#: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Högdagrar"
 
-#: libgimpbase/gimpbaseenums.c:1835
+#: libgimpbase/gimpbaseenums.c:1899
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal (Framåt)"
 
-#: libgimpbase/gimpbaseenums.c:1836
+#: libgimpbase/gimpbaseenums.c:1900
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Korrektiv (Bakåt)"
 
-#: libgimpbase/gimpbaseenums.c:1867
+#: libgimpbase/gimpbaseenums.c:1931
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Justera"
 
-#: libgimpbase/gimpbaseenums.c:1868
+#: libgimpbase/gimpbaseenums.c:1932
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Klipp"
 
-#: libgimpbase/gimpbaseenums.c:1869
+#: libgimpbase/gimpbaseenums.c:1933
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Beskär till resultat"
 
-#: libgimpbase/gimpbaseenums.c:1870
+#: libgimpbase/gimpbaseenums.c:1934
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Beskär med förhållande"
 
-#: libgimpbase/gimpmetadata.c:1218
+#: libgimpbase/gimpmetadata.c:1223
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Kan endast läsa in metadata från lokala filer"
 
-#: libgimpbase/gimpmetadata.c:1274
+#: libgimpbase/gimpmetadata.c:1279
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Kan endast spara metadata till lokala filer"
 
-#: libgimpbase/gimpmetadata.c:1323
+#: libgimpbase/gimpmetadata.c:1328
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Ogiltig storlek på Exif-data."
 
-#: libgimpbase/gimpmetadata.c:1368
+#: libgimpbase/gimpmetadata.c:1373
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Misslyckades med tolkning av Exif-data."
 
-#: libgimpbase/gimpmetadata.c:1420
+#: libgimpbase/gimpmetadata.c:1425
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Tolkning av IPTC-data misslyckades."
 
-#: libgimpbase/gimpmetadata.c:1468
+#: libgimpbase/gimpmetadata.c:1473
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Misslyckades med tolkning av XMP-data."
@@ -1765,32 +1811,32 @@ msgctxt "unit-plural"
 msgid "percent"
 msgstr "procent"
 
-#: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
+#: libgimpbase/gimputils.c:222 libgimpbase/gimputils.c:227
 msgid "(invalid UTF-8 string)"
 msgstr "(ogiltig UTF-8-sträng)"
 
-#: libgimpbase/gimputils.c:395
+#: libgimpbase/gimputils.c:397
 msgid "File path is NULL"
 msgstr "Filsökväg är NULL"
 
-#: libgimpbase/gimputils.c:403
+#: libgimpbase/gimputils.c:405
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Fel vid konvertering av UTF-8-filnamn till breda tecken"
 
-#: libgimpbase/gimputils.c:411
+#: libgimpbase/gimputils.c:413
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() misslyckades"
 
-#: libgimpbase/gimputils.c:450
+#: libgimpbase/gimputils.c:452
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Kan inte konvertera ”%s” till en giltig NSURL."
 
-#: libgimpbase/gimputils.c:478
+#: libgimpbase/gimputils.c:480
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Misslyckades med att ansluta till org.freedesktop.FileManager1: "
 
-#: libgimpbase/gimputils.c:502
+#: libgimpbase/gimputils.c:504
 msgid "Calling ShowItems failed: "
 msgstr "Misslyckades med att anropa ShowItems: "
 
@@ -2196,10 +2242,6 @@ msgstr "Miniatyrbilden innehåller ingen Thumb::URI-tagg"
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Kunde inte skapa miniatyrbild för %s: %s"
 
-#: libgimpwidgets/gimpbrowser.c:134
-msgid "_Search:"
-msgstr "_Sök:"
-
 #: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
 msgstr "_Förgrundsfärg"
@@ -2442,12 +2484,18 @@ msgid "One page selected"
 msgstr "En sida markerad"
 
 #: libgimpwidgets/gimppageselector.c:1026
+#, c-format
+msgid "The page is selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "Sidan är markerad"
+msgstr[1] "Alla %d sidor markerade"
+
 #: libgimpwidgets/gimppageselector.c:1030
 #, c-format
 msgid "%d page selected"
-msgid_plural "All %d pages selected"
+msgid_plural "%d pages selected"
 msgstr[0] "%d sida markerad"
-msgstr[1] "Alla %d sidor markerade"
+msgstr[1] "%d sidor markerade"
 
 #: libgimpwidgets/gimppatheditor.c:199
 msgid "Add a new folder"
@@ -3237,6 +3285,9 @@ msgstr "Kontrastcykler"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrast"
+
+#~ msgid "_Search:"
+#~ msgstr "_Sök:"
 
 #~ msgctxt "pdb-proc-type"
 #~ msgid "GIMP Extension"
