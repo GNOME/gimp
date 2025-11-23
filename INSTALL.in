@@ -220,20 +220,36 @@ help in that regard:
 
         https://github.com/jrfonseca/drmingw
 
- 17. Optional step if compiling GIMP from git (unneeded from tarball): you need
+ 17. When optional language selection is configured in (i.e. iso-codes
+     is found), GIMP will use language data not only at runtime, but
+     will also use this package to self-localize the list of supported
+     languages during build-time. It means that the build system must be
+     set up for localization. In particular the build system will either
+     need to be set to any locale other than C or POSIX (these 2 locales
+     block all localization attempts), or you will need to have at least
+     the en_US.UTF-8 locale installed.
+     The latter can be done with the following commands with root access:
+
+         echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
+         locale-gen
+
+     If this locale is installed, our build script will try and set it
+     as temporary locale when current locale is C or POSIX.
+
+ 18. Optional step if compiling GIMP from git (unneeded from tarball): you need
      to initialize submodules with command `git submodule update --init`.
 
- 18. Configure GIMP by running `meson _build`. You may want to pass some
+ 19. Configure GIMP by running `meson _build`. You may want to pass some
      options to it, see below.
 
- 19. Build GIMP by running `ninja -C _build'.
+ 20. Build GIMP by running `ninja -C _build'.
 
- 20. Install GIMP by running `ninja -C _build install'. In order to
+ 21. Install GIMP by running `ninja -C _build install'. In order to
      avoid clashes with other versions of GIMP, we install a binary
      called gimp-@GIMP_APP_VERSION@. By default there's also a link created so that
      you can type 'gimp' to start gimp-@GIMP_APP_VERSION@.
 
- 21. Summary of required packages and what version you need:
+ 22. Summary of required packages and what version you need:
 
      Package Name         Version
 
@@ -270,7 +286,7 @@ help in that regard:
      Python               @PYTHON3_REQUIRED_VERSION@
      zlib
 
- 22. Summary of optional packages:
+ 23. Summary of optional packages:
 
      Package Name        Version        Feature
 
@@ -296,7 +312,7 @@ help in that regard:
      webkit              @WEBKITGTK_REQUIRED_VERSION@         Help browser & webpage
      vala                -              Vala plug-ins
 
- 23. Summary of optional runtime dependencies:
+ 24. Summary of optional runtime dependencies:
 
      darktable >= 1.7, with lua support enabled for raw loading
      RawTherapee >= 5.2 for raw loading
@@ -308,7 +324,7 @@ help in that regard:
      dot for "Show Image Graph" (unstable branches)
      xdg-desktop-portal implemented for your desktop for various D-Bus API (screenshot, color-picking…)
 
- 24. Summary of experimental or unmaintained dependencies:
+ 25. Summary of experimental or unmaintained dependencies:
 
      Lua 5.1 (or LuaJIT) and LGI: Lua plug-in example is disabled by
        default because of stability issues with the Lua binding.
