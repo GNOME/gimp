@@ -337,7 +337,7 @@ load_image (GFile        *file,
       width      = bitMapHeader->w;
       height     = bitMapHeader->h;
       nPlanes    = bitMapHeader->nPlanes;
-      row_length = (width + 15) / 16;
+      row_length = ((width + 15) / 16) * 2;
       pixel_size = nPlanes / 8;
       aspect_x   = bitMapHeader->xAspect;
       aspect_y   = bitMapHeader->yAspect;
@@ -375,6 +375,18 @@ load_image (GFile        *file,
             {
               /* EHB mode adds 32 more colors. Each are half the RGB values
                * of the first 32 colors */
+              if (palette_size < 32)
+                {
+                  g_set_error (error, G_FILE_ERROR,
+                               g_file_error_from_errno (errno),
+                               _("Invalid ILBM colormap size"));
+                  return NULL;
+                }
+              else if (palette_size > 32)
+                {
+                  palette_size = 32;
+                }
+
               for (gint j = 0; j < palette_size * 2; j++)
                 {
                   gint offset_index = j + 32;
@@ -386,7 +398,7 @@ load_image (GFile        *file,
                   gimp_cmap[offset_index * 3 + 2] =
                     colorMap->colorRegister[j].blue / 2;
                 }
-              /* EHB mode always has 64 colors */
+              /* EHB mode always has 64 colors in total */
               palette_size = 64;
             }
         }
@@ -447,7 +459,7 @@ load_image (GFile        *file,
         {
           guchar *pixel_row;
 
-          pixel_row = g_malloc (width * pixel_size * sizeof (guchar));
+          pixel_row = g_malloc0 (width * pixel_size);
 
           /* PBM uses one byte per pixel index */
           if (ILBM_imageIsPBM (true_image))
@@ -459,7 +471,7 @@ load_image (GFile        *file,
           else
             deleave_rgb_row (bitplanes, pixel_row, width, nPlanes, pixel_size);
 
-          bitplanes += (row_length * 2 * nPlanes);
+          bitplanes += (row_length * nPlanes);
 
           gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y_height, width, 1), 0,
                            NULL, pixel_row, GEGL_AUTO_ROWSTRIDE);
@@ -528,7 +540,7 @@ deleave_ham_row (const guchar *gimp_cmap,
   /* Deleave rows */
   for (gint i = 0; i < row_length; i++)
     {
-      for (gint j = 0; j < 8; j++)
+      for (gint j = 0; j < nPlanes; j++)
         {
           guint8 bitmask = (1 << (8 - j)) - (1 << (7 - j));
           guint8 control = 0;
@@ -590,11 +602,11 @@ deleave_ham_row (const guchar *gimp_cmap,
 }
 
 static void
-deleave_rgb_row (IFF_UByte  *bitplanes,
-                     guchar *pixel_row,
-                     gint    width,
-                     gint    nPlanes,
-                     gint    pixel_size)
+deleave_rgb_row (IFF_UByte *bitplanes,
+                 guchar    *pixel_row,
+                 gint       width,
+                 gint       nPlanes,
+                 gint       pixel_size)
 {
   gint row_length    = ((width + 15) / 16) * 2;
   gint current_pixel = 0;
