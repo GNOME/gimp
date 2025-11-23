@@ -674,7 +674,7 @@ load_image (GFile   *file,
             GError **error)
 {
   GInputStream    *input;
-  GeglBuffer      *buffer;
+  GeglBuffer      *buffer    = NULL;
   GimpImage * volatile image = NULL;
   GimpLayer       *layer;
   char             buf[BUFLEN + 4];  /* buffer for random things like scanning */
@@ -707,6 +707,9 @@ load_image (GFile   *file,
 
       g_object_unref (input);
       g_free (pnminfo);
+
+      if (buffer)
+        g_object_unref (buffer);
 
       if (image)
         gimp_image_delete (image);
@@ -1060,6 +1063,7 @@ pnm_load_raw (PNMScanner *scan,
   const Babl   *format = NULL;
   gint          bpc;
   guchar       *data, *d;
+  gsize         data_size;
   gushort      *s;
   gint          x, y, i;
   gint          start, end, scanlines;
@@ -1070,7 +1074,12 @@ pnm_load_raw (PNMScanner *scan,
     bpc = 1;
 
   /* No overflow as long as gimp_tile_height() < 1365 = 2^(31 - 18) / 6 */
-  data = g_new (guchar, gimp_tile_height () * info->xres * info->np * bpc);
+  if (! g_size_checked_mul (&data_size, gimp_tile_height (), info->xres) ||
+      ! g_size_checked_mul (&data_size, data_size, info->np)             ||
+      ! g_size_checked_mul (&data_size, data_size, bpc))
+    CHECK_FOR_ERROR (FALSE, info->jmpbuf, _("Unsupported maximum value."));
+
+  data = g_new (guchar, data_size);
 
   input = pnmscanner_input (scan);
 
