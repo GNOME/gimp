@@ -466,7 +466,9 @@ deps-snap:
     - echo "ENV GITLAB_CI=1" >> Dockerfile
     - echo "ENV RUNNER=$RUNNER" >> Dockerfile
     - echo "RUN apt-get update -y" >> Dockerfile
-    - echo "RUN apt-get install -y curl jq squashfs-tools sudo git" >> Dockerfile
+    - echo "RUN apt-get install -y curl jq squashfs-tools sudo git locales" >> Dockerfile
+    - echo "RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen" >> Dockerfile
+    - echo "RUN locale-gen" >> Dockerfile
     # https://github.com/canonical/snapcraft-rocks/issues/37
     - echo "RUN cp -r /usr/lib/python3.*/site-packages/extensions/* /usr/share/snapcraft/extensions/" >> Dockerfile
     # https://github.com/canonical/snapcraft-rocks/issues/33
