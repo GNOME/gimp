@@ -54,7 +54,7 @@ if (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf)
   {
     & "$env:VCPKG_ROOT\vcpkg.exe" upgrade --no-dry-run
     & "$env:VCPKG_ROOT\vcpkg.exe" install (Get-Content build/windows/all-deps-uni.txt | Select-String 'vcpkg:' | ForEach-Object { ($_ -split '\|vcpkg:')[1] })
-    $env:PKG_CONFIG="$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_TRIPLET\tools\pkgconf\pkgconf.exe"; $env:CC='clang-cl' 
+    $env:PKG_CONFIG="$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_TRIPLET\tools\pkgconf\pkgconf.exe"; $env:CC='clang-cl'; $env:CXX='clang-cl' 
   }
 else
   {
@@ -163,6 +163,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 self_build babl
 if ($env:VCPKG_ROOT)
   {
+    self_build gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch')
     exit 0
   }
 self_build gegl
