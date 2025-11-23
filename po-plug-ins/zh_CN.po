@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-15 13:58+0000\n"
-"PO-Revision-Date: 2025-11-16 08:10+0800\n"
+"POT-Creation-Date: 2025-11-18 20:43+0000\n"
+"PO-Revision-Date: 2025-11-20 10:41+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -897,11 +897,11 @@ msgid "With gradient power (0,1)"
 msgstr "使用斜率幂值（0,1）"
 
 #: plug-ins/common/cml-explorer.c:207
-msgid "Multiply rand. value (0,1)"
+msgid "Multiply random value (0,1)"
 msgstr "乘以随机值（0,1）"
 
 #: plug-ins/common/cml-explorer.c:208
-msgid "Multiply rand. value (0,2)"
+msgid "Multiply random value (0,2)"
 msgstr "乘以随机值（0,2）"
 
 #: plug-ins/common/cml-explorer.c:209
@@ -933,11 +933,11 @@ msgid "Continuous gradient"
 msgstr "连续梯度"
 
 #: plug-ins/common/cml-explorer.c:229
-msgid "Continuous grad. w/o gap"
+msgid "Continuous gradient, without gap"
 msgstr "无区间的连续梯度"
 
 #: plug-ins/common/cml-explorer.c:230
-msgid "Random, ch. independent"
+msgid "Random, channel independent"
 msgstr "随机，各通道独立"
 
 #: plug-ins/common/cml-explorer.c:231
@@ -945,11 +945,11 @@ msgid "Random shared"
 msgstr "共享随机"
 
 #: plug-ins/common/cml-explorer.c:232
-msgid "Randoms from seed"
+msgid "Random from seed"
 msgstr "来自种子的随机数"
 
 #: plug-ins/common/cml-explorer.c:233
-msgid "Randoms from seed (shared)"
+msgid "Random from seed (shared)"
 msgstr "来自种子的随机数（共享）"
 
 #: plug-ins/common/cml-explorer.c:299 plug-ins/common/cml-explorer.c:307
@@ -1151,23 +1151,23 @@ msgstr "合成："
 
 #: plug-ins/common/cml-explorer.c:1780
 msgid "Misc arrange:"
-msgstr "其他处理："
+msgstr "杂项安排："
 
 #: plug-ins/common/cml-explorer.c:1784
 msgid "Use cyclic range"
 msgstr "使用循环范围"
 
 #: plug-ins/common/cml-explorer.c:1793
-msgid "Mod. rate:"
+msgid "Modification rate:"
 msgstr "修改率："
 
 #: plug-ins/common/cml-explorer.c:1800
-msgid "Env. sensitivity:"
+msgid "Environment sensitivity:"
 msgstr "环境敏感度："
 
 #: plug-ins/common/cml-explorer.c:1807
-msgid "Diffusion dist.:"
-msgstr "漫反射分布："
+msgid "Diffusion distance:"
+msgstr "扩散距离："
 
 #: plug-ins/common/cml-explorer.c:1814
 msgid "# of subranges:"
@@ -1194,20 +1194,20 @@ msgid "Plot a Graph of the Settings"
 msgstr "绘制此设置的曲线图"
 
 #: plug-ins/common/cml-explorer.c:1897
-msgid "Ch. sensitivity:"
-msgstr "通道灵敏度："
+msgid "Channel sensitivity:"
+msgstr "通道敏感度："
 
 #: plug-ins/common/cml-explorer.c:1905
 msgid "Mutation rate:"
-msgstr "变化率："
+msgstr "突变率："
 
 #: plug-ins/common/cml-explorer.c:1913
-msgid "Mutation dist.:"
-msgstr "变化分布："
+msgid "Mutation distance:"
+msgstr "突变距离："
 
 #: plug-ins/common/cml-explorer.c:2008
 msgid "Graph of the Current Settings"
-msgstr "当前设置的曲线图"
+msgstr "当前设置的图表"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:169
@@ -16721,6 +16721,9 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid "Mod. rate:"
+#~ msgstr "修改率："
 
 #~ msgid "_Filter Type"
 #~ msgstr "过滤器类型(_F)"
