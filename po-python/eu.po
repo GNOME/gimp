@@ -11,8 +11,8 @@
 msgid ""
 msgstr "Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-17 13:29+0000\n"
-"PO-Revision-Date: 2025-08-18 10:00+0100\n"
+"POT-Creation-Date: 2025-11-20 21:07+0000\n"
+"PO-Revision-Date: 2025-11-22 10:00+0100\n"
 "Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
@@ -192,13 +192,13 @@ msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Irudi-histograma testu-fitxategi batera (CSV) esportatzen du"
 
 #: plug-ins/python/histogram-export.py:216
-msgid "_Export histogram..."
+msgid "_Export Histogram..."
 msgstr "_Esportatu histograma..."
 
 #. TODO: GFile props still don't have labels + only load existing files
 #. (here we likely want to create a new file).
 #: plug-ins/python/histogram-export.py:224
-msgid "Histogram File"
+msgid "Histogram file"
 msgstr "Histograma-fitxategia"
 
 #: plug-ins/python/histogram-export.py:225
@@ -206,23 +206,23 @@ msgid "Histogram export file"
 msgstr "Histogramaren esportazio-fitxategia"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "_Bucket Size"
-msgstr "_Baldearen tamaina"
+msgid "_Bucket size"
+msgstr "_Betetze-tamaina"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "Bucket Size"
-msgstr "Baldearen tamaina"
+msgid "Bucket size"
+msgstr "Betetze-tamaina"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample _Average"
+msgid "Sample _average"
 msgstr "Batez besteko _lagina"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample Average"
+msgid "Sample average"
 msgstr "Batez besteko lagina"
 
 #: plug-ins/python/histogram-export.py:232
-msgid "Pixel Count"
+msgid "Pixel count"
 msgstr "Pixel zenbaketa"
 
 #: plug-ins/python/histogram-export.py:233
@@ -234,7 +234,7 @@ msgid "Percent"
 msgstr "Ehunekoa"
 
 #: plug-ins/python/histogram-export.py:235
-msgid "Output _format"
+msgid "Output _Format"
 msgstr "Irteerako _formatua"
 
 #: plug-ins/python/histogram-export.py:235
@@ -684,8 +684,8 @@ msgstr "Epitrokoidea"
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
-msgid "Curve Type"
+#: plug-ins/python/spyro-plus.py:1487
+msgid "Curve type"
 msgstr "Kurba mota"
 
 #: plug-ins/python/spyro-plus.py:1488
@@ -734,7 +734,7 @@ msgid ""
 msgstr "Horzdun gurpil finkoaren hortz kopurua. Gurpil finkoaren tamaina hortz kopuruaren araberakoa da."
 
 #: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
-msgid "Fixed Gear Teeth"
+msgid "Fixed gear teeth"
 msgstr "Horzdun gurpil finkoaren hortzak"
 
 #: plug-ins/python/spyro-plus.py:1558
@@ -744,7 +744,7 @@ msgid ""
 msgstr "Horzdun gurpil mugikorraren hortz kopurua. Gurpil mugikorraren tamaina hortz kopuruaren araberakoa da."
 
 #: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
-msgid "Moving Gear Teeth"
+msgid "Moving gear teeth"
 msgstr "Horzdun gurpil mugikorraren hortzak"
 
 #: plug-ins/python/spyro-plus.py:1566
@@ -755,10 +755,10 @@ msgstr "Zuloaren ehunekoa"
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
-msgstr "ZUloa horzdun gurpil mugikorraren erdigunetik zein distantziara dagoen. %100ek esan nahi du zuloa gurpilaren ertzean dagoela."
+msgstr "Zuloa horzdun gurpil mugikorraren erdigunetik zein distantziara dagoen. %100ek esan nahi du zuloa gurpilaren ertzean dagoela."
 
 #: plug-ins/python/spyro-plus.py:1588
-msgid "Hole Number"
+msgid "Hole number"
 msgstr "Zulo-zenbakia"
 
 #: plug-ins/python/spyro-plus.py:1589
@@ -768,7 +768,7 @@ msgid ""
 msgstr "#1 zuloa horzdun gurpilaren ertzean dago. Zulo-zenbaki handiena erdigunetik hurbil dago. Zulo-zenbaki handiena desberdina da gurpil bakoitzerako."
 
 #: plug-ins/python/spyro-plus.py:1600
-msgid "Flower Petals"
+msgid "Flower petals"
 msgstr "Lore-petaloak"
 
 #: plug-ins/python/spyro-plus.py:1601
@@ -776,7 +776,7 @@ msgid "The number of petals in the pattern."
 msgstr "Ereduaren petalo kopurua"
 
 #: plug-ins/python/spyro-plus.py:1606
-msgid "Petal Skip"
+msgid "Petal skip"
 msgstr "Petaloen jauzia"
 
 #: plug-ins/python/spyro-plus.py:1607
@@ -784,7 +784,7 @@ msgid "The number of petals to advance for drawing the next petal."
 msgstr "Aurrera egin behar den petalo kopurua hurrengo petaloa marrazteko."
 
 #: plug-ins/python/spyro-plus.py:1612
-msgid "Hole Radius(%)"
+msgid "Hole radius(%)"
 msgstr "Zulo-erradioa (%)"
 
 #: plug-ins/python/spyro-plus.py:1613
@@ -945,6 +945,10 @@ msgstr "Tresnaren uneko ezarpenak erabiltzen ditu espirografo-ereduak marrazteko
 msgid "Spyrogimp..."
 msgstr "Spyrogimp..."
 
+#: plug-ins/python/spyro-plus.py:2267
+msgid "Curve Type"
+msgstr "Kurba mota"
+
 #: plug-ins/python/spyro-plus.py:2271
 msgid "rack"
 msgstr "apala"
@@ -970,7 +974,7 @@ msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
 msgstr "Horzdun gurpil finkoaren forma morfologikoa, 0 eta 1 artekoa. Zenbait formatan soilik erabilia."
 
 #: plug-ins/python/spyro-plus.py:2285
-msgid "Fi_xed Gear Teeth"
+msgid "Fi_xed gear teeth"
 msgstr "Horzdun gurpil finkoaren _hortzak"
 
 #: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
@@ -978,11 +982,11 @@ msgid "Number of teeth for fixed gear."
 msgstr "Horzdun gurpil finkoaren hortz kopurua"
 
 #: plug-ins/python/spyro-plus.py:2288
-msgid "Mo_ving Gear Teeth"
+msgid "Mo_ving gear teeth"
 msgstr "Horzdun gurpil _mugikorraren hortzak"
 
 #: plug-ins/python/spyro-plus.py:2291
-msgid "_Hole Radius (%)"
+msgid "_Hole radius (%)"
 msgstr "_Zulo-erradioa (%)"
 
 #: plug-ins/python/spyro-plus.py:2292
