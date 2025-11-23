@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-08 16:55+0000\n"
-"PO-Revision-Date: 2025-11-08 20:06+0300\n"
+"POT-Creation-Date: 2025-11-20 20:50+0000\n"
+"PO-Revision-Date: 2025-11-22 18:13+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -38,61 +38,65 @@ msgstr "GIMP takımı"
 msgid "GNU Image Manipulation Program"
 msgstr "GNU Görüntü İşleme Programı"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:17 desktop/gimp.desktop.in.in:6
-msgid "Create images and edit photographs"
-msgstr "Görüntü oluşturur ve fotoğraf düzenler"
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:17
+msgid "High-end image creation and manipulation"
+msgstr "Yüksek nitelikli görüntü oluşturma ve işleme"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:19
 msgid ""
-"GIMP is an acronym for GNU Image Manipulation Program. It is a freely distributed program for such "
-"tasks as photo retouching, image composition and image authoring."
+"GIMP is an acronym for GNU Image Manipulation Program. It is Community-driven Free Software for high-"
+"end image creation and manipulation."
 msgstr ""
-"GIMP, GNU Image Manipulation Program tümcesinin kısaltmasıdır. Fotoğraf rötuşlama, görüntü kompozisyonu "
-"ve görüntü oluşturma gibi görevler için özgürce dağıtılan bir programdır."
+"GIMP, GNU Image Manipulation Program (GNU Görüntü İşleme Programı) sözcüklerinin kısaltmasıdır. Yüksek "
+"nitelikli görüntü oluşturma ve işleme için toplulukça geliştirilen özgür yazılımdır."
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:24
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:23
 msgid ""
-"It has many capabilities. It can be used as a simple paint program, an expert quality photo retouching "
-"program, an online batch processing system, a mass production image renderer, an image format "
-"converter, etc."
+"It has many capabilities. It can be used as a paint program, an expert quality photo retouching "
+"program, image composition, an online batch processing system, a mass production image renderer, an "
+"image format converter, etc."
 msgstr ""
-"Birçok yeteneğe sahiptir. Basit bir boyama programı, uzman kalite fotoğraf rötuş programı, çevrim içi "
-"toplu işleme sistemi, seri üretim görüntü gerçekleyici, görüntü biçim dönüştürücü vb. olarak "
+"Birçok yeteneği vardır. Boyama programı, uzman nitelikte fotoğraf rötuş programı, görüntü gerçekleyici, "
+"çevrim içi toplu işleme sistemi, seri üretim görüntü işleyici, görüntü biçimi dönüştürücü vb. olarak "
 "kullanılabilir."
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:30
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:29
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-ins and extensions to do "
 "just about anything. The advanced scripting interface allows everything from the simplest task to the "
 "most complex image manipulation procedures to be easily scripted. GIMP is available for Linux, "
 "Microsoft Windows and macOS."
 msgstr ""
-"GIMP genişletilebilir ve geliştirilebilirdir. Eklentiler ve uzantılar ile genişletilebilecek şekilde "
-"tasarlanmıştır. Gelişmiş betik arayüzü en basit görevden en karmaşık görüntü işleme yöntemlerine kadar "
+"GIMP genişletilebilir ve geliştirilebilirdir. Eklentiler ve uzantılar ile genişletilebilecek biçimde "
+"tasarlanmıştır. Gelişmiş betik arayüzü en basit görevden en karmaşık görüntü işleme yöntemlerine dek "
 "her şeyi kolayca betiklemenize olanak sağlar. GIMP Linux, Microsoft Windows ve macOS işletim "
 "sistemlerinde kullanılabilirdir."
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:48
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:47
 msgid ""
 "Scene 4 cut 15 of \"ZeMarmot\" being edited in GIMP. Illustration by Aryeom (CC by-sa 4.0 International)"
 msgstr ""
 "\"ZeMarmot\"un 4. sahnesinin 15. kesiti GIMP’te düzenleniyor. Çizer: Aryeom (CC by-sa 4.0 International)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:52
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:51
 msgid "Gull on beach photograph being edited in GIMP. Photo by Iana (CC by-sa 4.0 International)"
 msgstr "Kumsaldaki martı fotoğrafı GIMP’te düzenleniyor. Fotoğrafçı: Iana (CC by-sa 4.0 International)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:56
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:55
 msgid "Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 International)"
 msgstr "Sofiia’nın portresi GIMP’te düzenleniyor. Fotoğrafçı: Sofia (CC by-sa 4.0 International)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:60
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:59
 msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
 msgstr "Taranmış oyma GIMP’te düzenleniyor. Sanatçı: Liam (CC0)"
 
 #: desktop/gimp.desktop.in.in:5
 msgid "Image Editor"
 msgstr "Görüntü Düzenleyici"
+
+#: desktop/gimp.desktop.in.in:6
+msgid "Create images and edit photographs"
+msgstr "Görüntü oluşturur ve fotoğraf düzenler"
 
 #. TRANSLATORS: Search terms to find this application.
 #. 1. Do NOT translate or localize the semicolons!
@@ -367,7 +371,7 @@ msgid "Buffers"
 msgstr "Tamponlar"
 
 #: app/actions/actions.c:123 app/dialogs/dialogs.c:380 app/propgui/gimppropgui-newsprint.c:160
-#: app/widgets/gimppickablechooser.c:292
+#: app/widgets/gimpitemchooser.c:294 app/widgets/gimppickablechooser.c:292
 msgid "Channels"
 msgstr "Kanallar"
 
@@ -469,12 +473,13 @@ msgstr "Yardım"
 msgid "Image"
 msgstr "Görüntü"
 
-#: app/actions/actions.c:195 app/dialogs/dialogs.c:338 app/widgets/gimppickablechooser.c:211
+#: app/actions/actions.c:195 app/dialogs/dialogs.c:338 app/widgets/gimpimagechooser.c:185
+#: app/widgets/gimpitemchooser.c:213 app/widgets/gimppickablechooser.c:211
 msgid "Images"
 msgstr "Görüntüler"
 
 #: app/actions/actions.c:198 app/dialogs/dialogs.c:376 app/dialogs/resize-dialog.c:171
-#: app/widgets/gimppickablechooser.c:267
+#: app/widgets/gimpitemchooser.c:269 app/widgets/gimppickablechooser.c:267
 msgid "Layers"
 msgstr "Katmanlar"
 
@@ -543,6 +548,7 @@ msgid "Tools"
 msgstr "Araçlar"
 
 #: app/actions/actions.c:243 app/dialogs/dialogs.c:384 app/tools/gimppathtool.c:188
+#: app/widgets/gimpitemchooser.c:319
 msgid "Paths"
 msgstr "Yollar"
 
@@ -2425,7 +2431,7 @@ msgstr "240 Saniye"
 
 #: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263
 #: app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
-#: app/actions/file-commands.c:472 app/actions/gradient-editor-commands.c:410
+#: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521 app/actions/gradients-commands.c:80
 #: app/actions/plug-in-commands.c:187 app/actions/templates-commands.c:248
 #: app/actions/text-editor-commands.c:65 app/actions/text-tool-commands.c:167
@@ -2532,7 +2538,7 @@ msgstr ""
 msgid "Untitled"
 msgstr "Başlıksız"
 
-#: app/actions/data-commands.c:224 app/actions/documents-commands.c:210 app/actions/file-commands.c:578
+#: app/actions/data-commands.c:224 app/actions/documents-commands.c:210 app/actions/file-commands.c:569
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Dosya yöneticisinde dosya gösteremez: %s"
@@ -4146,7 +4152,7 @@ msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "GNU Görüntü İşleme Programı’ndan Çık"
 
-#: app/actions/file-actions.c:137 app/actions/file-actions.c:308
+#: app/actions/file-actions.c:137 app/actions/file-actions.c:305
 msgctxt "file-action"
 msgid "_Save"
 msgstr "_Kaydet"
@@ -4188,7 +4194,7 @@ msgctxt "file-action"
 msgid "Save this image and close its window"
 msgstr "Bu görüntüyü kaydet ve penceresini kapat"
 
-#: app/actions/file-actions.c:163 app/actions/file-actions.c:353
+#: app/actions/file-actions.c:163 app/actions/file-actions.c:350
 msgctxt "file-action"
 msgid "E_xport..."
 msgstr "_Dışa Aktar..."
@@ -4218,17 +4224,17 @@ msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "Görüntüyü PNG veya JPEG gibi çeşitli dosya biçimlerinde dışa aktar"
 
-#: app/actions/file-actions.c:314
+#: app/actions/file-actions.c:311
 msgctxt "file-action"
 msgid "_Save..."
 msgstr "_Kaydet..."
 
-#: app/actions/file-actions.c:320
+#: app/actions/file-actions.c:317
 #, c-format
 msgid "Export to %s"
 msgstr "%s konumuna dışa aktar"
 
-#: app/actions/file-actions.c:336
+#: app/actions/file-actions.c:333
 #, c-format
 msgid "Over_write %s"
 msgstr "%s Dosyası _Üzerine Yaz"
@@ -4236,12 +4242,12 @@ msgstr "%s Dosyası _Üzerine Yaz"
 #. TRANSLATORS: the %s will be replaced by the file name of a
 #. * recently opened image.
 #.
-#: app/actions/file-actions.c:408
+#: app/actions/file-actions.c:403
 #, c-format
 msgid "Open \"%s\""
 msgstr "\"%s\" Aç"
 
-#: app/actions/file-commands.c:121 app/actions/file-commands.c:602 app/widgets/gimpopendialog.c:84
+#: app/actions/file-commands.c:121 app/actions/file-commands.c:593 app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "Görüntü Aç"
 
@@ -4253,44 +4259,44 @@ msgstr "Görüntüyü Katman Olarak Aç"
 msgid "Open Image as Link Layer"
 msgstr "Görüntüyü Bağlantı Katmanı Olarak Aç"
 
-#: app/actions/file-commands.c:330
+#: app/actions/file-commands.c:321
 msgid "No changes need to be saved"
 msgstr "Kaydedilmesi gereken değişiklik yok"
 
-#: app/actions/file-commands.c:337 app/actions/file-commands.c:814 app/widgets/gimpsavedialog.c:139
+#: app/actions/file-commands.c:328 app/actions/file-commands.c:805 app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Görüntüyü Kaydet"
 
-#: app/actions/file-commands.c:343
+#: app/actions/file-commands.c:334
 msgid "Save a Copy of the Image"
 msgstr "Görüntünün bir Kopyasını Kaydet"
 
-#: app/actions/file-commands.c:421
+#: app/actions/file-commands.c:412
 msgid "Create New Template"
 msgstr "Yeni Şablon Oluştur"
 
-#: app/actions/file-commands.c:425
+#: app/actions/file-commands.c:416
 msgid "Enter a name for this template"
 msgstr "Bu şablon için bir ad girin"
 
-#: app/actions/file-commands.c:455
+#: app/actions/file-commands.c:446
 msgid "Revert failed. No file name associated with this image."
 msgstr "Geri dönülemedi. Bu görüntü ile ilişkilendirilmiş bir dosya adı yok."
 
-#: app/actions/file-commands.c:467
+#: app/actions/file-commands.c:458
 msgid "Revert Image"
 msgstr "Görüntüyü Geri Döndür"
 
-#: app/actions/file-commands.c:473
+#: app/actions/file-commands.c:464
 msgid "_Revert"
 msgstr "_Geri Döndür"
 
-#: app/actions/file-commands.c:491
+#: app/actions/file-commands.c:482
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "'%s'dan '%s'a geri dönsün mü?"
 
-#: app/actions/file-commands.c:496
+#: app/actions/file-commands.c:487
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all changes, including all undo "
 "information."
@@ -4298,11 +4304,11 @@ msgstr ""
 "Görüntüyü diskte kaydedilmiş durumuna geri döndürerek, tüm geri alma bilgisini de içerecek biçimde tüm "
 "değişiklikleri yitireceksiniz."
 
-#: app/actions/file-commands.c:836
+#: app/actions/file-commands.c:827
 msgid "(Unnamed Template)"
 msgstr "(Adsız Şablon)"
 
-#: app/actions/file-commands.c:883
+#: app/actions/file-commands.c:874
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -6897,8 +6903,7 @@ msgstr "Katman Öznitelikleri"
 msgid "Edit Layer Attributes"
 msgstr "Katman Özniteliklerini Düzenle"
 
-#: app/actions/layers-commands.c:415 app/widgets/gimpdrawabletreeview.c:649
-#: app/widgets/gimplayertreeview.c:915
+#: app/actions/layers-commands.c:415
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Yeni Katman"
@@ -7723,7 +7728,7 @@ msgctxt "paths-action"
 msgid "Select the path below the current path"
 msgstr "Geçerli yolun altındaki yolu seç"
 
-#: app/actions/paths-commands.c:176 app/actions/paths-commands.c:937
+#: app/actions/paths-commands.c:176 app/actions/paths-commands.c:958
 msgid "Path Attributes"
 msgstr "Yol Öznitelikleri"
 
@@ -7771,15 +7776,19 @@ msgstr "Vektör katmanlarına ekli yollar silinmedi"
 msgid "Remove Paths"
 msgstr "Yolları Kaldır"
 
-#: app/actions/paths-commands.c:568
+#: app/actions/paths-commands.c:535
+msgid "Cannot merge paths attached to vector layers"
+msgstr "Vektör katmanlarına ekli yollar birleştirilemez"
+
+#: app/actions/paths-commands.c:589
 msgid "Paths to selection"
 msgstr "Yollardan seçime"
 
-#: app/actions/paths-commands.c:648
+#: app/actions/paths-commands.c:669
 msgid "Fill Path"
 msgstr "Yolu Doldur"
 
-#: app/actions/paths-commands.c:676
+#: app/actions/paths-commands.c:697
 msgid "Stroke Path"
 msgstr "Yolu Darbele"
 
@@ -8334,7 +8343,7 @@ msgstr "_Aç"
 
 #: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:280
 #: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526 app/plug-in/gimpenvirontable.c:289
-#: app/plug-in/gimpinterpreterdb.c:234 app/tools/gimpfiltertool-settings.c:170
+#: app/plug-in/gimpinterpreterdb.c:295 app/tools/gimpfiltertool-settings.c:170
 #: app/widgets/gimptextbuffer.c:1650
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -9936,30 +9945,35 @@ msgstr "Yakınlaştırmayı Ge_ri Al (%%%d)"
 msgid "Re_vert Zoom"
 msgstr "Yakınlaştırmayı _Geri Al"
 
-#: app/actions/view-actions.c:1004
+#: app/actions/view-actions.c:1005
 #, c-format
-msgid "_Zoom (%s)"
-msgstr "_Yakınlaştır (%s)"
+msgid "_Zoom (%.0f%%)"
+msgstr "_Yakınlaştır (%%%.0f)"
+
+#: app/actions/view-actions.c:1007
+#, c-format
+msgid "_Zoom (%.2f%%)"
+msgstr "_Yakınlaştır (%%%.2f)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
-#: app/actions/view-actions.c:1024
+#: app/actions/view-actions.c:1026
 msgid "(H+V) "
 msgstr "(Y+D) "
 
 #. please preserve the trailing space
 #. H: Horizontal
-#: app/actions/view-actions.c:1030
+#: app/actions/view-actions.c:1032
 msgid "(H) "
 msgstr "(Y) "
 
 #. please preserve the trailing space
 #. V: Vertical
-#: app/actions/view-actions.c:1036
+#: app/actions/view-actions.c:1038
 msgid "(V) "
 msgstr "(D) "
 
-#: app/actions/view-actions.c:1045
+#: app/actions/view-actions.c:1047
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Çevir %s & Döndür (%d°)"
@@ -10373,7 +10387,7 @@ msgstr "'%%s' ayrıştırma hatası: satır %s karakterden daha uzun."
 msgid "Error writing '%s': %s"
 msgstr "'%s' yazma hatası: %s"
 
-#: app/config/gimpconfig-file.c:184 app/plug-in/gimpenvirontable.c:374 app/plug-in/gimpinterpreterdb.c:268
+#: app/config/gimpconfig-file.c:184 app/plug-in/gimpenvirontable.c:374 app/plug-in/gimpinterpreterdb.c:329
 #: app/tools/gimpfiltertool-settings.c:182
 #, c-format
 msgid "Error reading '%s': %s"
@@ -10524,7 +10538,7 @@ msgid ""
 msgstr ""
 "Bulanıklık seçimi ve kova doldurma gibi araçlar, bir parçacık doldurma algoritmasındaki bölge tabanında "
 "bulunur. Parçacık doldurma, seçili pikselin başlangıcında ve özgünün belirli eşik değerinden daha büyük "
-"olan piksel yoğunluğunun farkına kadar tüm işlemlerle başlar. Bu değer, öntanımlı eşiği belirtir."
+"olan piksel yoğunluğunun farkına dek tüm işlemlerle başlar. Bu değer, öntanımlı eşiği belirtir."
 
 #: app/config/gimprc-blurbs.h:145
 msgid ""
@@ -10556,7 +10570,7 @@ msgstr "Etkin olduğunda, seçili kendiliğinden genişletme katmanı ayarları 
 
 #: app/config/gimprc-blurbs.h:194
 msgid "Sets the browser used by the help system."
-msgstr "Yardım sistemi tarafından kullanılacak tarayıcıyı ayarlar."
+msgstr "Yardım sistemince kullanılacak tarayıcıyı ayarlar."
 
 #: app/config/gimprc-blurbs.h:202
 msgid "How many recent settings to keep around in filter tools."
@@ -11337,7 +11351,7 @@ msgid ""
 "undo-size limit is reached."
 msgstr ""
 "Geri alınabilir işlemlerin en düşük sayısını ayarlar. Daha çok geri alma düzeyi, geri alma boyutu "
-"sınırına ulaşılana kadar kullanılabilir olarak tutulur."
+"sınırına ulaşılana dek kullanılabilir olarak tutulur."
 
 #: app/config/gimprc-blurbs.h:782
 msgid ""
@@ -12786,7 +12800,7 @@ msgstr "'%s' klasör oluşturuluyor..."
 msgid "Cannot create folder '%s': %s"
 msgstr "'%s' klasörü oluşturulamadı: %s"
 
-#: app/core/gimp-utils.c:587 app/core/gimpfilloptions.c:431
+#: app/core/gimp-utils.c:587 app/core/gimpfilloptions.c:450
 msgid "No patterns available for this operation."
 msgstr "Bu işlem için kullanılır örüntü yok."
 
@@ -13448,7 +13462,7 @@ msgstr "'%s' GEGL işlemi geçersiz aux girdi adı '%s' ile çağrıldı."
 msgid "Cannot rename effect masks."
 msgstr "Etki maskeleri yeniden adlandırılamıyor."
 
-#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:735 app/core/gimplayer.c:2039
+#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:735 app/core/gimplayer.c:2051
 #: app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
@@ -13458,66 +13472,66 @@ msgstr "%s maskesi"
 msgid "Output type"
 msgstr "Çıktı türü"
 
-#: app/core/gimpfilloptions.c:112
+#: app/core/gimpfilloptions.c:115
 msgid "Style"
 msgstr "Biçem"
 
-#: app/core/gimpfilloptions.c:120
+#: app/core/gimpfilloptions.c:123
 msgid "Custom style"
 msgstr "Özel biçem"
 
 # Menü ögesi olmadığı için tümce düzeni yeğlendi
-#: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101 app/tools/gimpbucketfilloptions.c:183
+#: app/core/gimpfilloptions.c:131 app/pdb/gimppdbcontext.c:101 app/tools/gimpbucketfilloptions.c:183
 #: app/tools/gimpselectionoptions.c:89 app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
 msgstr "Kenar yumuşatma"
 
-#: app/core/gimpfilloptions.c:135 app/tools/gimpbucketfilloptions.c:193
+#: app/core/gimpfilloptions.c:138 app/tools/gimpbucketfilloptions.c:193
 #: app/tools/gimpselectionoptions.c:96
 msgid "Feather edges"
 msgstr "Kenarları tüyle"
 
-#: app/core/gimpfilloptions.c:136 app/tools/gimpbucketfilloptions.c:194
+#: app/core/gimpfilloptions.c:139 app/tools/gimpbucketfilloptions.c:194
 msgid "Enable feathering of fill edges"
 msgstr "Doldurma kenarlarını tüylemeyi etkinleştir"
 
-#: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:107 app/tools/gimpbucketfilloptions.c:200
+#: app/core/gimpfilloptions.c:145 app/paint/gimpmybrushoptions.c:107 app/tools/gimpbucketfilloptions.c:200
 #: app/tools/gimpcoloroptions.c:86 app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:160
 msgid "Radius"
 msgstr "Yarıçap"
 
-#: app/core/gimpfilloptions.c:143 app/tools/gimpbucketfilloptions.c:201
+#: app/core/gimpfilloptions.c:146 app/tools/gimpbucketfilloptions.c:201
 #: app/tools/gimpselectionoptions.c:104
 msgid "Radius of feathering"
 msgstr "Tüyleme yarıçapı"
 
-#: app/core/gimpfilloptions.c:393 app/core/gimpfilloptions.c:506
+#: app/core/gimpfilloptions.c:412 app/core/gimpfilloptions.c:525
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Ön Plan Rengi İle Doldur"
 
-#: app/core/gimpfilloptions.c:398 app/core/gimpfilloptions.c:509
+#: app/core/gimpfilloptions.c:417 app/core/gimpfilloptions.c:528
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Arka Plan Rengi İle Doldur"
 
-#: app/core/gimpfilloptions.c:408
+#: app/core/gimpfilloptions.c:427
 msgctxt "undo-type"
 msgid "Fill with Middle Gray (CIELAB) Color"
 msgstr "Orta Gri (CIELAB) Renkle Doldur"
 
-#: app/core/gimpfilloptions.c:414
+#: app/core/gimpfilloptions.c:433
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Beyaz İle Doldur"
 
-#: app/core/gimpfilloptions.c:421
+#: app/core/gimpfilloptions.c:440
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Saydamlık İle Doldur"
 
-#: app/core/gimpfilloptions.c:437 app/core/gimpfilloptions.c:512
+#: app/core/gimpfilloptions.c:456 app/core/gimpfilloptions.c:531
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Örüntü İle Doldur"
@@ -14232,7 +14246,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Yüzen Seçimi Çıpala"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1079
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1081
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to a layer mask or channel."
 msgstr "Yüzen seçimden yeni katman oluşturulamıyor çünkü bu bir katman maskesine ya da kanala ait."
@@ -14310,6 +14324,10 @@ msgid "Floating Mask"
 msgstr "Yüzen Maske"
 
 #: app/core/gimplayer.c:781
+msgid "Floating Channel"
+msgstr "Yüzen Kanal"
+
+#: app/core/gimplayer.c:783
 msgid "Floating Layer"
 msgstr "Yüzen Katman"
 
@@ -14317,7 +14335,7 @@ msgstr "Yüzen Katman"
 #. * either a "Floating Layer" or "Floating Mask" usually. The second will
 #. * be a layer name.
 #.
-#: app/core/gimplayer.c:786
+#: app/core/gimplayer.c:788
 #, c-format
 msgid ""
 "%s\n"
@@ -14326,73 +14344,73 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1940
+#: app/core/gimplayer.c:1942
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Katmanın zaten bir maskesi olduğundan bir katman maskesi eklemek olanaksız."
 
-#: app/core/gimplayer.c:1951
+#: app/core/gimplayer.c:1954
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Belirlenmiş katman dışında farklı boyutlardaki katman maskesi eklenemiyor."
 
-#: app/core/gimplayer.c:1957
+#: app/core/gimplayer.c:1960
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Katman Maskeleri Ekle"
 
-#: app/core/gimplayer.c:2081
+#: app/core/gimplayer.c:2090
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Alfayı Maskeye Aktar"
 
-#: app/core/gimplayer.c:2248
+#: app/core/gimplayer.c:2254
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Katman Maskelerini Uygula"
 
-#: app/core/gimplayer.c:2249
+#: app/core/gimplayer.c:2255
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Katman Maskelerini Sil"
 
-#: app/core/gimplayer.c:2356
+#: app/core/gimplayer.c:2362
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Katman Maskelerini Etkinleştir"
 
-#: app/core/gimplayer.c:2357
+#: app/core/gimplayer.c:2363
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Katman Maskelerini Devre Dışı Bırak"
 
-#: app/core/gimplayer.c:2438
+#: app/core/gimplayer.c:2444
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Katman Maskelerini Göster"
 
-#: app/core/gimplayer.c:2517
+#: app/core/gimplayer.c:2523
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Alfa Kanalı Ekle"
 
-#: app/core/gimplayer.c:2547
+#: app/core/gimplayer.c:2553
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Alfa Kanalını Kaldır"
 
-#: app/core/gimplayer.c:2568
+#: app/core/gimplayer.c:2574
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Katmandan Görüntü Boyutuna"
 
-#: app/core/gimplayer.c:2751
+#: app/core/gimplayer.c:2757
 msgid "Set layer's blend space"
 msgstr "Katmanın harmanlama alanını ayarla"
 
-#: app/core/gimplayer.c:2798
+#: app/core/gimplayer.c:2804
 msgid "Set layer's composite space"
 msgstr "Katmanın birleşik alanını ayarla"
 
-#: app/core/gimplayer.c:2845
+#: app/core/gimplayer.c:2851
 msgid "Set layer's composite mode"
 msgstr "Katmanın birleşik kipini ayarla"
 
@@ -16379,7 +16397,7 @@ msgstr "_Takas alanı sıkıştırma oranı:"
 msgid "Number of _threads to use:"
 msgstr "Kullanılacak _parçacık sayısı:"
 
-# Konumu gereği başlık düzeni tercih edildi.
+# Konumu gereği başlık düzeni kullanıldı.
 # Tarihi bir hata olduğu için düzeltme gönderilmedi.
 #: app/dialogs/preferences-dialog.c:1257
 msgid "Network access"
@@ -19248,11 +19266,11 @@ msgstr "'%s' açılamadı: %s"
 msgid "Only platform-native file paths are supported: '%s' cannot be opened as link."
 msgstr "Yalnızca platforma özgü dosya yolları desteklenir: '%s' bağlantı olarak açılamaz."
 
-#: app/file/file-open.c:985 app/file/file-save.c:132
+#: app/file/file-open.c:985 app/file/file-save.c:122
 msgid "Not a regular file"
 msgstr "Normal bir dosya değil"
 
-#: app/file/file-open.c:994 app/file/file-save.c:141
+#: app/file/file-open.c:994 app/file/file-save.c:131
 msgid "Permission denied"
 msgstr "İzin reddedildi"
 
@@ -19284,15 +19302,11 @@ msgstr "Görüntü verisinin %s kadarı indirildi"
 msgid "Uploaded %s of image data"
 msgstr "Görüntü verisinin %s kadarı yüklendi"
 
-#: app/file/file-save.c:105
-msgid "There is no active layer to save"
-msgstr "Kaydetmek için etkin katman yok"
-
-#: app/file/file-save.c:125
+#: app/file/file-save.c:115
 msgid "Failed to get file information"
 msgstr "Dosya bilgisi alınamadı"
 
-#: app/file/file-save.c:297
+#: app/file/file-save.c:287
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "%s eklentisi görüntüyü kaydedemedi"
@@ -20243,7 +20257,7 @@ msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "Pikselleri ötele, isteğe bağlı olarak sınırlarda toparla"
 
 #: app/operations/gimpoperationoffset.c:125 app/operations/gimpoperationoffset.c:126
-#: app/tools/gimpoffsettool.c:579 app/widgets/gimpfilleditor.c:138 app/widgets/gimpfilleditor.c:150
+#: app/tools/gimpoffsettool.c:579 app/widgets/gimpfilleditor.c:146 app/widgets/gimpfilleditor.c:165
 msgid "Fill Color"
 msgstr "Renk Doldur"
 
@@ -21467,7 +21481,7 @@ msgstr "Katmanı kendiliğinden kırp"
 msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Görüntü çözünürlüğü izin verilen sınırların dışında, öntanımlı çözünürlük kullanılacak."
 
-#: app/pdb/image-select-cmds.c:305 app/tools/gimpfreeselecttool.c:105
+#: app/pdb/image-select-cmds.c:307 app/tools/gimpfreeselecttool.c:105
 msgid "Free Select"
 msgstr "Serbest Seçim"
 
@@ -21587,12 +21601,12 @@ msgstr "%s ortam dosyası içinde boş değişken adı"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "%s ortam dosyası içinde geçersiz değişken adı: %s"
 
-#: app/plug-in/gimpinterpreterdb.c:303 app/plug-in/gimpinterpreterdb.c:400
+#: app/plug-in/gimpinterpreterdb.c:364 app/plug-in/gimpinterpreterdb.c:461
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
 msgstr "%s yorumlayıcı dosyası içinde kötü yorumlayıcı başvurusu: %s"
 
-#: app/plug-in/gimpinterpreterdb.c:372
+#: app/plug-in/gimpinterpreterdb.c:433
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
 msgstr "%s yorumlayıcı dosyası içinde kötü ikili biçimi dizgesi"
@@ -21752,19 +21766,16 @@ msgstr "'%s' geçersiz değerinin olduğu simge türü"
 msgid "invalid value '%ld' for icon type"
 msgstr "'%ld' geçersiz değerinin olduğu simge türü"
 
-# Konumu gereği başlık düzeni kullanıldı
 #: app/propgui/gimppropgui-channel-mixer.c:63
-msgid "Red channel"
+msgid "Red Channel"
 msgstr "Kırmızı Kanal"
 
-# Konumu gereği başlık düzeni kullanıldı
 #: app/propgui/gimppropgui-channel-mixer.c:84
-msgid "Green channel"
+msgid "Green Channel"
 msgstr "Yeşil Kanal"
 
-# Konumu gereği başlık düzeni kullanıldı
 #: app/propgui/gimppropgui-channel-mixer.c:105
-msgid "Blue channel"
+msgid "Blue Channel"
 msgstr "Mavi Kanal"
 
 #: app/propgui/gimppropgui-color-balance.c:94
@@ -23187,7 +23198,7 @@ msgstr ""
 
 #: app/tools/gimpfiltertool.c:786
 msgid "Click to switch the original and filtered sides"
-msgstr "Özgün ve filtrelenmiş taraf arasında geçiş yapmak için tıklayın"
+msgstr "Özgün ve süzülmüş taraf arasında geçiş yapmak için tıklayın"
 
 #: app/tools/gimpfiltertool.c:790
 msgid "Click to switch between vertical and horizontal"
@@ -23200,7 +23211,7 @@ msgstr "Bölünmüş kılavuzu taşımak için tıklayın"
 #: app/tools/gimpfiltertool.c:796
 #, c-format
 msgid "%s: switch original and filtered"
-msgstr "%s: özgün ve filtrelenmiş taraf arasında geçiş yap"
+msgstr "%s: özgün ve süzülmüş taraf arasında geçiş yap"
 
 #: app/tools/gimpfiltertool.c:797
 #, c-format
@@ -24827,15 +24838,15 @@ msgstr "Çerçeve Seçenekleri"
 msgid "Outline Direction:"
 msgstr "Çerçeve Yönü:"
 
-#: app/tools/gimptextoptions.c:911
+#: app/tools/gimptextoptions.c:912
 msgid "Justify:"
 msgstr "Hizala:"
 
-#: app/tools/gimptextoptions.c:941
+#: app/tools/gimptextoptions.c:942
 msgid "Box:"
 msgstr "Kutu:"
 
-#: app/tools/gimptextoptions.c:983
+#: app/tools/gimptextoptions.c:984
 msgid "Language:"
 msgstr "Dil:"
 
@@ -26966,6 +26977,11 @@ msgstr "Konum ve boyutu kilitle"
 msgid "Cannot select items while a floating selection is active."
 msgstr "Yüzen seçim etkinken öge seçilemez."
 
+#: app/widgets/gimpdrawabletreeview.c:649 app/widgets/gimplayertreeview.c:915
+msgctxt "singular"
+msgid "New Layer"
+msgstr "Yeni Katman"
+
 #: app/widgets/gimpdrawabletreeview-filters.c:165
 msgid "Layer Effects"
 msgstr "Katman Etkileri"
@@ -27081,11 +27097,11 @@ msgctxt "File extension"
 msgid "Extensions"
 msgstr "Uzantılar"
 
-#: app/widgets/gimpfilleditor.c:161
+#: app/widgets/gimpfilleditor.c:176
 msgid "Fill BG Color"
 msgstr "AP Renk Doldur"
 
-#: app/widgets/gimpfilleditor.c:185
+#: app/widgets/gimpfilleditor.c:200
 msgid "_Antialiasing"
 msgstr "_Kenar Yumuşatma"
 
@@ -27409,6 +27425,11 @@ msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] "İndeksli Renk (%d renk)"
 
+#: app/widgets/gimpitemchooser.c:243 app/widgets/gimpitemchooser.c:571
+#: app/widgets/gimppickablechooser.c:241 app/widgets/gimppickablechooser.c:524
+msgid "Select an image in the left pane"
+msgstr "Sol bölümden bir görüntü seç"
+
 #: app/widgets/gimpitemtreeview.c:570
 msgid "Set Item Exclusive Content Lock"
 msgstr "Ögeye Özel İçerik Kilidi Ayarla"
@@ -27606,10 +27627,6 @@ msgstr ""
 "%s geri çağırmasını çalıştırmak olanaksız.\n"
 "%s"
 
-#: app/widgets/gimppickablechooser.c:241 app/widgets/gimppickablechooser.c:524
-msgid "Select an image in the left pane"
-msgstr "Sol bölümden bir görüntü seç"
-
 #: app/widgets/gimppluginview.c:146
 msgid "Plug-In"
 msgstr "Uyumlu ek"
@@ -27640,7 +27657,7 @@ msgstr "Tüm XCF görüntüleri"
 #: app/widgets/gimpsavedialog.c:262
 #, c-format
 msgid "Keep compression disabled to make the XCF file readable by %s and later."
-msgstr "XCF dosyasını %s ve üstü tarafından okunabilir yapmak için sıkıştırmayı kapalı tut."
+msgstr "XCF dosyasını %s ve üstünce okunabilir yapmak için sıkıştırmayı kapalı tut."
 
 #: app/widgets/gimpsavedialog.c:326
 msgid "Save this _XCF file with better but slower compression"
@@ -27782,23 +27799,23 @@ msgstr "%d ppi"
 msgid "Line width:"
 msgstr "Çizgi genişliği:"
 
-#: app/widgets/gimpstrokeeditor.c:150
+#: app/widgets/gimpstrokeeditor.c:151
 msgid "_Cap style:"
 msgstr "_Tepe biçemi:"
 
-#: app/widgets/gimpstrokeeditor.c:156
+#: app/widgets/gimpstrokeeditor.c:158
 msgid "_Join style:"
 msgstr "_Birleştirme biçemi:"
 
-#: app/widgets/gimpstrokeeditor.c:163
+#: app/widgets/gimpstrokeeditor.c:165
 msgid "_Miter limit:"
 msgstr "_Köşe sınırı:"
 
-#: app/widgets/gimpstrokeeditor.c:169
+#: app/widgets/gimpstrokeeditor.c:171
 msgid "Dash pattern:"
 msgstr "Çizgi örüntüsü:"
 
-#: app/widgets/gimpstrokeeditor.c:236
+#: app/widgets/gimpstrokeeditor.c:238
 msgid "Dash _preset:"
 msgstr "Çizgi _önayarı:"
 
@@ -28396,7 +28413,7 @@ msgstr "Bağlantılı Yollar"
 
 #: app/xcf/xcf-load.c:1183
 msgid "This XCF file is corrupt!  I have loaded as much of it as I can, but it is incomplete."
-msgstr "Bu XCF dosyası bozulmuş! Yapabildiğim kadar çok yükledim, ama tamamlanamadı."
+msgstr "Bu XCF dosyası bozulmuş! Yapabildiğimce çok yükledim, ama tamamlanamadı."
 
 #: app/xcf/xcf-load.c:1203
 msgid "This XCF file is corrupt!  I could not even salvage any partial image data from it."
@@ -29012,3 +29029,6 @@ msgstr "Araç Önayarları Menüsü"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Geri Alma Geçmişi Menüsü"
+
+#~ msgid "There is no active layer to save"
+#~ msgstr "Kaydetmek için etkin katman yok"
