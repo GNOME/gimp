@@ -12,8 +12,8 @@
 msgid ""
 msgstr "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-08-17 13:28+0000\n"
-"PO-Revision-Date: 2025-08-18 10:00+0100\n"
+"POT-Creation-Date: 2025-11-20 21:05+0000\n"
+"PO-Revision-Date: 2025-11-21 10:00+0100\n"
 "Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -26,7 +26,8 @@ msgstr "Project-Id-Version: gimp master\n"
 msgid "_Browse..."
 msgstr "_Arakatu..."
 
-#: libgimp/gimpdrawablechooser.c:238
+#: libgimp/gimpdrawablechooser.c:240 libgimp/gimpimagechooser.c:218
+#: libgimp/gimpitemchooser.c:237
 msgid "Browse..."
 msgstr "Arakatu..."
 
@@ -169,59 +170,59 @@ msgstr "Moztu geruzak"
 msgid "Resize Image to Layers"
 msgstr "Aldatu irudien tamaina geruzetara"
 
-#: libgimp/gimpexportprocedure.c:550
+#: libgimp/gimpexportprocedure.c:553
 msgid "Save _Exif"
 msgstr "Gorde _EXIFa"
 
-#: libgimp/gimpexportprocedure.c:551
+#: libgimp/gimpexportprocedure.c:554
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Gorde EXIF (Exchangeable image file format) metadatuak"
 
-#: libgimp/gimpexportprocedure.c:559
+#: libgimp/gimpexportprocedure.c:562
 msgid "Save _IPTC"
 msgstr "Gorde _IPTCa"
 
-#: libgimp/gimpexportprocedure.c:560
+#: libgimp/gimpexportprocedure.c:563
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr "Gorde IPTC (International Press Telecommunications Council) metadatuak"
 
-#: libgimp/gimpexportprocedure.c:568
+#: libgimp/gimpexportprocedure.c:571
 msgid "Save _XMP"
 msgstr "Gorde _XMPa"
 
-#: libgimp/gimpexportprocedure.c:569
+#: libgimp/gimpexportprocedure.c:572
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Gorde XMP (Extensible Metadata Platforma) metadatuak"
 
-#: libgimp/gimpexportprocedure.c:577
+#: libgimp/gimpexportprocedure.c:580
 msgid "Save color _profile"
 msgstr "Gorde kolore-_profila"
 
-#: libgimp/gimpexportprocedure.c:578
+#: libgimp/gimpexportprocedure.c:581
 msgid "Save the ICC color profile as metadata"
 msgstr "Gorde ICC kolore-profila metadatu gisa"
 
-#: libgimp/gimpexportprocedure.c:586
+#: libgimp/gimpexportprocedure.c:589
 msgid "Save _thumbnail"
 msgstr "Gorde _miniatura"
 
-#: libgimp/gimpexportprocedure.c:587
+#: libgimp/gimpexportprocedure.c:590
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Gorde irudiaren ordezko txikiagoa metadatu gisa"
 
-#: libgimp/gimpexportprocedure.c:595
+#: libgimp/gimpexportprocedure.c:598
 msgid "Save c_omment"
 msgstr "Gorde ir_uzkina"
 
-#: libgimp/gimpexportprocedure.c:596
+#: libgimp/gimpexportprocedure.c:599
 msgid "Save a comment as metadata"
 msgstr "Gorde iruzkina metadatu gisa"
 
-#: libgimp/gimpexportprocedure.c:600
+#: libgimp/gimpexportprocedure.c:603
 msgid "Comment"
 msgstr "Iruzkina"
 
-#: libgimp/gimpexportprocedure.c:601
+#: libgimp/gimpexportprocedure.c:604
 msgid "Image comment"
 msgstr "Irudi-iruzkina"
 
@@ -243,15 +244,15 @@ msgstr "(editatu)"
 msgid "Export Image as %s"
 msgstr "Esportatu irudia %s gisa"
 
-#: libgimp/gimpimagemetadata.c:196
+#: libgimp/gimpimagemetadata.c:201
 msgid "Background"
 msgstr "Atzeko planoa"
 
-#: libgimp/gimpimagemetadata-save.c:787 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:796 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:445
+#: libgimp/gimploadprocedure.c:276 libgimp/gimpvectorloadprocedure.c:448
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -282,88 +283,88 @@ msgstr "deiaren errorea"
 msgid "cancelled"
 msgstr "bertan behera utzita"
 
-#: libgimp/gimpprocbrowserdialog.c:152
+#: libgimp/gimpprocbrowserdialog.c:150
 msgid "by name"
 msgstr "izenaren arabera"
 
-#: libgimp/gimpprocbrowserdialog.c:153
+#: libgimp/gimpprocbrowserdialog.c:151
 msgid "by description"
 msgstr "azalpenaren arabera"
 
-#: libgimp/gimpprocbrowserdialog.c:154
+#: libgimp/gimpprocbrowserdialog.c:152
 msgid "by help"
 msgstr "laguntzaren arabera"
 
-#: libgimp/gimpprocbrowserdialog.c:155
+#: libgimp/gimpprocbrowserdialog.c:153
 msgid "by authors"
 msgstr "egileen arabera"
 
-#: libgimp/gimpprocbrowserdialog.c:156
+#: libgimp/gimpprocbrowserdialog.c:154
 msgid "by copyright"
 msgstr "copyright-aren arabera"
 
-#: libgimp/gimpprocbrowserdialog.c:157
+#: libgimp/gimpprocbrowserdialog.c:155
 msgid "by date"
 msgstr "dataren arabera"
 
-#: libgimp/gimpprocbrowserdialog.c:158
+#: libgimp/gimpprocbrowserdialog.c:156
 msgid "by type"
 msgstr "motaren arabera"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:358 libgimp/gimpprocbrowserdialog.c:516
-#: libgimpwidgets/gimpbrowser.c:161
+#: libgimp/gimpprocbrowserdialog.c:351 libgimp/gimpprocbrowserdialog.c:509
+#: libgimpwidgets/gimpbrowser.c:144
 msgid "No matches"
 msgstr "Bat etortzerik ez"
 
-#: libgimp/gimpprocbrowserdialog.c:361
+#: libgimp/gimpprocbrowserdialog.c:354
 msgid "Search term invalid or incomplete"
 msgstr "Bilaketako terminoa baliogabea edo osatu gabea"
 
-#: libgimp/gimpprocbrowserdialog.c:370
+#: libgimp/gimpprocbrowserdialog.c:363
 msgid "Searching"
 msgstr "Bilatzen"
 
-#: libgimp/gimpprocbrowserdialog.c:382
+#: libgimp/gimpprocbrowserdialog.c:375
 msgid "Searching by name"
 msgstr "Izenaren arabera bilatzen"
 
-#: libgimp/gimpprocbrowserdialog.c:403
+#: libgimp/gimpprocbrowserdialog.c:396
 msgid "Searching by description"
 msgstr "Azalpenaren arabera bilatzen"
 
-#: libgimp/gimpprocbrowserdialog.c:411
+#: libgimp/gimpprocbrowserdialog.c:404
 msgid "Searching by help"
 msgstr "Laguntzaren arabera bilatzen"
 
-#: libgimp/gimpprocbrowserdialog.c:419
+#: libgimp/gimpprocbrowserdialog.c:412
 msgid "Searching by authors"
 msgstr "Egileen arabera bilatzen"
 
-#: libgimp/gimpprocbrowserdialog.c:427
+#: libgimp/gimpprocbrowserdialog.c:420
 msgid "Searching by copyright"
 msgstr "Copyright-aren arabera bilatzen"
 
-#: libgimp/gimpprocbrowserdialog.c:435
+#: libgimp/gimpprocbrowserdialog.c:428
 msgid "Searching by date"
 msgstr "Dataren arabera bilatzen"
 
-#: libgimp/gimpprocbrowserdialog.c:443
+#: libgimp/gimpprocbrowserdialog.c:436
 msgid "Searching by type"
 msgstr "Motaren arabera bilatzen"
 
-#: libgimp/gimpprocbrowserdialog.c:456
+#: libgimp/gimpprocbrowserdialog.c:449
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "Prozedura %d"
 msgstr[1] "%d prozedura"
 
-#: libgimp/gimpprocbrowserdialog.c:465
+#: libgimp/gimpprocbrowserdialog.c:458
 msgid "No matches for your query"
 msgstr "Ez dago bat etortzerik zure kontsultarako"
 
-#: libgimp/gimpprocbrowserdialog.c:469
+#: libgimp/gimpprocbrowserdialog.c:462
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -461,31 +462,31 @@ msgstr "_Gorde ezarpenak"
 msgid "Store current settings for later reuse"
 msgstr "Bitegiratu uneko ezarpenak geroago erabili ahal izateko"
 
-#: libgimp/gimpproceduredialog.c:892
+#: libgimp/gimpproceduredialog.c:908
 msgid "Brush Chooser"
 msgstr "Brotxaren hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:896
+#: libgimp/gimpproceduredialog.c:912
 msgid "Font Chooser"
 msgstr "Letra-tipoen hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:900
+#: libgimp/gimpproceduredialog.c:916
 msgid "Gradient Chooser"
 msgstr "Gradienteen hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:904
+#: libgimp/gimpproceduredialog.c:920
 msgid "Palette Chooser"
 msgstr "Paleten hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:908
+#: libgimp/gimpproceduredialog.c:924
 msgid "Pattern Chooser"
 msgstr "Ereduen hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:2789
+#: libgimp/gimpproceduredialog.c:2833
 msgid "Reset to _Initial Values"
 msgstr "Berrezarri _hasierako balioak"
 
-#: libgimp/gimpproceduredialog.c:2798
+#: libgimp/gimpproceduredialog.c:2842
 msgid "Reset to _Factory Defaults"
 msgstr "Berrezarri _fabrikako lehenetsiak"
 
@@ -525,17 +526,32 @@ msgstr "Eguna:"
 msgid "Copyright:"
 msgstr "Copyright-a:"
 
-#: libgimp/gimppropwidgets.c:191
+#: libgimp/gimppropwidgets.c:190
+#, c-format
+msgid "Choose image: %s"
+msgstr "Aukeratu irudia: %s"
+
+#: libgimp/gimppropwidgets.c:251 libgimp/gimppropwidgets.c:321
 #, c-format
 msgid "Choose layer: %s"
 msgstr "Aukeratu geruza: %s"
 
-#: libgimp/gimppropwidgets.c:193
+#: libgimp/gimppropwidgets.c:253 libgimp/gimppropwidgets.c:323
 #, c-format
 msgid "Choose channel: %s"
 msgstr "Aukeratu kanala: %s"
 
-#: libgimp/gimppropwidgets.c:195
+#: libgimp/gimppropwidgets.c:255
+#, c-format
+msgid "Choose path: %s"
+msgstr "Aukeratu bidea: %s"
+
+#: libgimp/gimppropwidgets.c:257
+#, c-format
+msgid "Choose item: %s"
+msgstr "Aukeratu elementua: %s"
+
+#: libgimp/gimppropwidgets.c:325
 #, c-format
 msgid "Choose drawable: %s"
 msgstr "Aukeratu marrazgaia: %s"
@@ -547,12 +563,12 @@ msgid ""
 msgstr "Unitate hau pixel-dentsitatea hautatzeko eta dimentsioak unitate fisikoetan erakusteko erabiltzen da"
 
 #: libgimp/gimpresolutionentry-private.c:144
-#: libgimp/gimpvectorloadprocedure.c:125
+#: libgimp/gimpvectorloadprocedure.c:126
 msgid "_Keep aspect ratio"
 msgstr "_Mantendu aspektu-erlazioa"
 
 #: libgimp/gimpresolutionentry-private.c:145
-#: libgimp/gimpvectorloadprocedure.c:126
+#: libgimp/gimpvectorloadprocedure.c:127
 msgid "Force dimensions with aspect ratio"
 msgstr "Behartu aspektu-erlazioa duten dimentsioak"
 
@@ -562,49 +578,49 @@ msgstr "Behartu aspektu-erlazioa duten dimentsioak"
 msgid "pixels/%a"
 msgstr "pixel/%a"
 
-#: libgimp/gimpvectorloadprocedure.c:111
+#: libgimp/gimpvectorloadprocedure.c:112
 msgid "_Width (pixels)"
 msgstr "_Zabalera (pixeletan)"
 
-#: libgimp/gimpvectorloadprocedure.c:118
+#: libgimp/gimpvectorloadprocedure.c:119
 msgid "_Height (pixels)"
 msgstr "_Altuera (pixeletan)"
 
-#: libgimp/gimpvectorloadprocedure.c:130
+#: libgimp/gimpvectorloadprocedure.c:131
 msgid "_Prefer native dimensions"
 msgstr "_Hobetsi jatorrizko dimentsioak"
 
-#: libgimp/gimpvectorloadprocedure.c:131
+#: libgimp/gimpvectorloadprocedure.c:132
 msgid "Load and use dimensions from source file"
 msgstr "Kargatu eta erabili iturburu-fitxategiko dimentsioak"
 
-#: libgimp/gimpvectorloadprocedure.c:139
+#: libgimp/gimpvectorloadprocedure.c:142
 msgid "Resolu_tion"
 msgstr "Berei_zmena"
 
-#: libgimp/gimpvectorloadprocedure.c:140
+#: libgimp/gimpvectorloadprocedure.c:143
 msgid "Pixel Density: number of pixels per physical unit"
 msgstr "Pixel-dentsitatea: pixel kopurua unitate fisiko bakoitzeko"
 
-#: libgimp/gimpvectorloadprocedure.c:145
+#: libgimp/gimpvectorloadprocedure.c:148
 msgid "Unit"
 msgstr "Unitatea"
 
-#: libgimp/gimpvectorloadprocedure.c:146
+#: libgimp/gimpvectorloadprocedure.c:149
 msgid "Physical unit"
 msgstr "Unitate fisikoa"
 
-#: libgimp/gimpvectorloadprocedure.c:368
+#: libgimp/gimpvectorloadprocedure.c:371
 msgid ""
 "dimensions could neither be extracted nor computed from the vector image's "
 "data."
 msgstr "Dimentsioak ezin izan dira erauzi edo kalkulatu irudi bektorialaren datuetarako."
 
-#: libgimp/gimpvectorloadprocedure.c:373
+#: libgimp/gimpvectorloadprocedure.c:376
 msgid "Vector image loading plug-in failed: "
 msgstr "Irudi bektoriala kargatzeko pluginak huts egin du: "
 
-#: libgimp/gimpvectorloadprocedure.c:397
+#: libgimp/gimpvectorloadprocedure.c:400
 msgid ""
 "Dimensions cannot be 0 and no native dimensions could be extracted from the "
 "vector image."
@@ -1633,76 +1649,106 @@ msgid "Filled"
 msgstr "Beteta"
 
 #: libgimpbase/gimpbaseenums.c:1804
+msgctxt "text-outline"
+msgid "Filled"
+msgstr "Beteta"
+
+#: libgimpbase/gimpbaseenums.c:1805
+msgctxt "text-outline"
+msgid "Outlined"
+msgstr "Eskematikoa"
+
+#: libgimpbase/gimpbaseenums.c:1806
+msgctxt "text-outline"
+msgid "Outlined and filled"
+msgstr "Eskematikoa eta beteta"
+
+#: libgimpbase/gimpbaseenums.c:1836
+msgctxt "text-outline-direction"
+msgid "Outer"
+msgstr "Kanpokoa"
+
+#: libgimpbase/gimpbaseenums.c:1837
+msgctxt "text-outline-direction"
+msgid "Inner"
+msgstr "Barnekoa"
+
+#: libgimpbase/gimpbaseenums.c:1838
+msgctxt "text-outline-direction"
+msgid "Centered"
+msgstr "Zentratuta"
+
+#: libgimpbase/gimpbaseenums.c:1868
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Itzalak"
 
-#: libgimpbase/gimpbaseenums.c:1805
+#: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Tarteko tonuak"
 
-#: libgimpbase/gimpbaseenums.c:1806
+#: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Argi-ukituak"
 
-#: libgimpbase/gimpbaseenums.c:1835
+#: libgimpbase/gimpbaseenums.c:1899
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normala (aurrera)"
 
-#: libgimpbase/gimpbaseenums.c:1836
+#: libgimpbase/gimpbaseenums.c:1900
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Zentzagarria (atzera)"
 
-#: libgimpbase/gimpbaseenums.c:1867
+#: libgimpbase/gimpbaseenums.c:1931
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Doitu"
 
-#: libgimpbase/gimpbaseenums.c:1868
+#: libgimpbase/gimpbaseenums.c:1932
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Klipa"
 
-#: libgimpbase/gimpbaseenums.c:1869
+#: libgimpbase/gimpbaseenums.c:1933
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Moztu emaitzara"
 
-#: libgimpbase/gimpbaseenums.c:1870
+#: libgimpbase/gimpbaseenums.c:1934
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Moztu itxurarekin"
 
-#: libgimpbase/gimpmetadata.c:1224
+#: libgimpbase/gimpmetadata.c:1223
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Metadatuak fitxategi lokaletatik soilik karga daitezke"
 
-#: libgimpbase/gimpmetadata.c:1280
+#: libgimpbase/gimpmetadata.c:1279
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Metadatuak fitxategi lokaletan soilik gorde daitezke"
 
-#: libgimpbase/gimpmetadata.c:1329
+#: libgimpbase/gimpmetadata.c:1328
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "EXIF datuen baliogabeko tamaina."
 
-#: libgimpbase/gimpmetadata.c:1374
+#: libgimpbase/gimpmetadata.c:1373
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "EXIF datuen analisiak huts egin du."
 
-#: libgimpbase/gimpmetadata.c:1426
+#: libgimpbase/gimpmetadata.c:1425
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "IPTC datuen analisiak huts egin du."
 
-#: libgimpbase/gimpmetadata.c:1474
+#: libgimpbase/gimpmetadata.c:1473
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "XMP datuen analisiak huts egin du."
@@ -1737,32 +1783,32 @@ msgctxt "unit-plural"
 msgid "percent"
 msgstr "ehunekoa"
 
-#: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
+#: libgimpbase/gimputils.c:222 libgimpbase/gimputils.c:227
 msgid "(invalid UTF-8 string)"
 msgstr "(UTF-8 kate baliogabea)"
 
-#: libgimpbase/gimputils.c:395
+#: libgimpbase/gimputils.c:397
 msgid "File path is NULL"
 msgstr "Fitxategi-bidea NULL da"
 
-#: libgimpbase/gimputils.c:403
+#: libgimpbase/gimputils.c:405
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Errorea UTF-8 fitxategi-izena karaktere zabaletara bihurtzean"
 
-#: libgimpbase/gimputils.c:411
+#: libgimpbase/gimputils.c:413
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() funtzioak huts egin du"
 
-#: libgimpbase/gimputils.c:450
+#: libgimpbase/gimputils.c:452
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Ezin da '%s' baliozko NSURL bihurtu."
 
-#: libgimpbase/gimputils.c:478
+#: libgimpbase/gimputils.c:480
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "org.freedesktop.FileManager1 konexioak huts egin du: "
 
-#: libgimpbase/gimputils.c:502
+#: libgimpbase/gimputils.c:504
 msgid "Calling ShowItems failed: "
 msgstr "ShowItems deiak huts egin du: "
 
@@ -2138,10 +2184,6 @@ msgstr "Koadro txikiak ez du Thumb::URI etiketa"
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Ezin izan da '%s'(r)en koadro txikia sortu: %s"
 
-#: libgimpwidgets/gimpbrowser.c:134
-msgid "_Search:"
-msgstr "_Bilatu:"
-
 #: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
 msgstr "A_urreko planoaren kolorea"
@@ -2361,7 +2403,7 @@ msgstr "Ez da ezer hautatu"
 
 #: libgimpwidgets/gimppageselector.c:289
 msgid "Open _pages as"
-msgstr "Ireki _orrialdeak honela"
+msgstr "Ireki _orriak honela"
 
 #. Select all button & range entry
 #: libgimpwidgets/gimppageselector.c:301
@@ -2379,15 +2421,21 @@ msgstr "%d. orria"
 
 #: libgimpwidgets/gimppageselector.c:1019
 msgid "One page selected"
-msgstr "Orrialde bat hautatuta"
+msgstr "Orri bat hautatuta"
 
 #: libgimpwidgets/gimppageselector.c:1026
+#, c-format
+msgid "The page is selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "Orria hautatuta dago"
+msgstr[1] "Orri guztiak (%d) hautatuta"
+
 #: libgimpwidgets/gimppageselector.c:1030
 #, c-format
 msgid "%d page selected"
-msgid_plural "All %d pages selected"
-msgstr[0] "Orrialde %d hautatuta"
-msgstr[1] "%d orrialde hautatuta"
+msgid_plural "%d pages selected"
+msgstr[0] "Orri %d hautatuta"
+msgstr[1] "%d orri hautatuta"
 
 #: libgimpwidgets/gimppatheditor.c:199
 msgid "Add a new folder"
@@ -3166,6 +3214,9 @@ msgstr "Kontraste-zikloak"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrastea"
+
+#~ msgid "_Search:"
+#~ msgstr "_Bilatu:"
 
 #~ msgctxt "pdb-proc-type"
 #~ msgid "GIMP Extension"
