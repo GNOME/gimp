@@ -48,20 +48,24 @@ def bundle(src_root, pattern):
     else:
       shutil.copy2(src_path, dest_path)
       ## Process .typelib dependencies
-      if str(src_path).endswith(".typelib"):
+          if str(src_path).endswith(".typelib"):
         def process_typelib(path, typelib_list=None):
-          cmd = ['g-ir-inspect', '--print-typelibs', os.path.basename(path).split('-')[0]]
+          # Collect and copy transitive GI typelib dependencies exactly once.
+          if typelib_list is None:
+            typelib_list = set()
+          name = os.path.basename(path)
+          base = name.split('-')[0]
+          cmd = ['g-ir-inspect', '--print-typelibs', base]
           result = subprocess.run(cmd, capture_output=True, text=True)
           for line in result.stdout.splitlines():
             typelib = line.replace("typelib: ", "").strip()
-            if typelib_list is None:
-              typelib_list = set()
-            if typelib not in typelib_list:
+            if typelib and typelib not in typelib_list:
               typelib_list.add(typelib)
               typelib_path = Path(f"{MSYSTEM_PREFIX}/lib/girepository-1.0/{typelib}.typelib")
               if typelib_path.exists():
                 shutil.copy2(typelib_path, dest_path.parent)
-              process_typelib(typelib)
+                # Recurse with the same visited set to avoid duplicates/loops
+                process_typelib(typelib, typelib_list)
         process_typelib(src_path)
 
 def clean(base_path, pattern):
@@ -113,7 +117,7 @@ bundle(GIMP_PREFIX, "share/icons/hicolor")
 ### Needed to loading icons in GUI
 bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders.cache")
 bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-png.dll")
-bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/pixbufloader_svg.dll")
+bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-svg.dll")
 
 
 ## CORE FEATURES.
@@ -211,7 +215,7 @@ for dir in ["bin", "lib"]:
 ## .PDB/CODEVIEW DEBUG SYMBOLS (from babl, gegl and GIMP binaries)
 if "32" not in MSYSTEM_PREFIX:
   bundle(GIMP_PREFIX, "bin/*.pdb")
-### Remove .pdb without corresponding binaries (depends on what was choosen to be bundled above)
+### Remove .pdb without corresponding binaries (depends on what was chosen to be bundled above)
 files = os.listdir(GIMP_DISTRIB / "bin")
 binaries = {os.path.splitext(file)[0] for file in files if file.endswith(('.exe', '.dll'))}
 for file in files:
