@@ -1223,8 +1223,9 @@ _gimp_drawable_sub_thumbnail (GimpDrawable  *drawable,
  *
  * Extract the foreground of a drawable using a given trimap.
  *
- * Image Segmentation by Uniform Color Clustering, see
- * https://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf
+ * This procedure extracts the foreground from @drawable using @mask as
+ * a trimap. Set white as foreground, black as background and uncertain
+ * pixels as any other value, for the tri-map.
  *
  * Returns: TRUE on success.
  *

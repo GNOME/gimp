@@ -427,8 +427,8 @@ gimp_heal_laplace_loop (gfloat *pixels,
 
 /* Original Algorithm Design:
  *
- * T. Georgiev, "Photoshop Healing Brush: a Tool for Seamless Cloning
- * http://www.tgeorgiev.net/Photoshop_Healing.pdf
+ * T. Georgiev, "Photoshop Healing Brush: a Tool for Seamless Cloning"
+ * See: https://developer.gimp.org/core/algorithm/healing/
  */
 static void
 gimp_heal (GeglBuffer          *src_buffer,

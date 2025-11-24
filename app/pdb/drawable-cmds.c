@@ -2222,7 +2222,7 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-foreground-extract");
   gimp_procedure_set_static_help (procedure,
                                   "Extract the foreground of a drawable using a given trimap.",
-                                  "Image Segmentation by Uniform Color Clustering, see https://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf",
+                                  "This procedure extracts the foreground from @drawable using @mask as a trimap. Set white as foreground, black as background and uncertain pixels as any other value, for the tri-map.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Gerald Friedland <fland@inf.fu-berlin.de>, Kristian Jantz <jantz@inf.fu-berlin.de>, Sven Neumann <sven@gimp.org>",
