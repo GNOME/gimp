@@ -1201,8 +1201,9 @@ sub drawable_foreground_extract {
     $blurb = 'Extract the foreground of a drawable using a given trimap.';
 
     $help = <<'HELP';
-Image Segmentation by Uniform Color Clustering, see
-https://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf
+This procedure extracts the foreground from @drawable using @mask as a trimap.
+Set white as foreground, black as background and uncertain pixels as
+any other value, for the tri-map.
 HELP
 
     $author    = 'Gerald Friedland <fland@inf.fu-berlin.de>, Kristian Jantz <jantz@inf.fu-berlin.de>, Sven Neumann <sven@gimp.org>';
