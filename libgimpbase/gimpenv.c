@@ -36,6 +36,10 @@
 #include <gio/gio.h>
 #include <glib/gstdio.h>
 
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
+
 #include "gimpbasetypes.h"
 
 #define __GIMP_ENV_C__
