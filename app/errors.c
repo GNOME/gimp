@@ -32,6 +32,9 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
 
 #include "core/core-types.h"
 
