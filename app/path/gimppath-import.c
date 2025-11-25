@@ -67,6 +67,8 @@
     .direction = 0.0  \
   }
 
+#define GOT_SIGN          0x1
+#define GOT_EXPONENT_SIGN 0x2
 
 typedef struct
 {
@@ -103,6 +105,16 @@ typedef struct
   gchar        *id;
   GList        *strokes;
 } SvgPath;
+
+
+typedef enum
+{
+  IN_PREINTEGER,
+  IN_INTEGER,
+  IN_FRACTION,
+  IN_PREEXPONENT,
+  IN_EXPONENT
+} SvgNumberInput;
 
 
 static gboolean  gimp_path_import  (GimpImage            *image,
@@ -1383,6 +1395,13 @@ static void  parse_path_default_xy (ParsePathContext *ctx,
                                     gint              n_params);
 static void  parse_path_do_cmd     (ParsePathContext *ctx,
                                     gboolean          final);
+static gint  parse_number          (ParsePathContext *ctx,
+                                    const char       *data);
+static void  path_end_of_number    (ParsePathContext *ctx,
+                                    gdouble           val,
+                                    gint              sign,
+                                    gint              exp_sign,
+                                    gint              exp);
 
 
 static GList *
@@ -1390,140 +1409,19 @@ parse_path_data (const gchar *data)
 {
   ParsePathContext ctx;
 
-  gboolean  in_num        = FALSE;
-  gboolean  in_frac       = FALSE;
-  gboolean  in_exp        = FALSE;
-  gboolean  exp_wait_sign = FALSE;
-  gdouble   val           = 0.0;
-  gchar     c             = 0;
-  gint      sign          = 0;
-  gint      exp           = 0;
-  gint      exp_sign      = 0;
-  gdouble   frac          = 0.0;
-  gint      i;
+  gchar c = 0;
+  gint  i;
 
   memset (&ctx, 0, sizeof (ParsePathContext));
 
-  for (i = 0; ; i++)
+  for (i = 0; data[i] != '\0'; i++)
     {
       c = data[i];
 
-      if (c >= '0' && c <= '9')
+      if ((c >= '0' && c <= '9') || c == '+' || c == '-' || c == '.')
         {
           /* digit */
-          if (in_num)
-            {
-              if (in_exp)
-                {
-                  exp = (exp * 10) + c - '0';
-                  exp_wait_sign = FALSE;
-                }
-              else if (in_frac)
-                val += (frac *= 0.1) * (c - '0');
-              else
-                val = (val * 10) + c - '0';
-            }
-          else
-            {
-              in_num = TRUE;
-              in_frac = FALSE;
-              in_exp = FALSE;
-              exp = 0;
-              exp_sign = 1;
-              exp_wait_sign = FALSE;
-              val = c - '0';
-              sign = 1;
-            }
-        }
-      else if (c == '.')
-        {
-          if (! in_num)
-            {
-              in_num = TRUE;
-              val = 0;
-            }
-
-          in_frac = TRUE;
-          frac = 1;
-        }
-      else if ((c == 'E' || c == 'e') && in_num)
-        {
-          in_exp = TRUE;
-          exp_wait_sign = TRUE;
-          exp = 0;
-          exp_sign = 1;
-        }
-      else if ((c == '+' || c == '-') && in_exp)
-        {
-          exp_sign = c == '+' ? 1 : -1;
-        }
-      else if (in_num)
-        {
-          /* end of number */
-
-          val *= sign * pow (10, exp_sign * exp);
-
-          if (ctx.rel)
-            {
-              /* Handle relative coordinates. This switch statement attempts
-                 to determine _what_ the coords are relative to. This is
-                 underspecified in the 12 Apr working draft. */
-              switch (ctx.cmd)
-                {
-                case 'l':
-                case 'm':
-                case 'c':
-                case 's':
-                case 'q':
-                case 't':
-                  /* rule: even-numbered params are x-relative, odd-numbered
-                     are y-relative */
-                  if ((ctx.param & 1) == 0)
-                    val += ctx.cpx;
-                  else if ((ctx.param & 1) == 1)
-                    val += ctx.cpy;
-                  break;
-
-                case 'a':
-                  /* rule: sixth and seventh are x and y, rest are not
-                     relative */
-                  if (ctx.param == 5)
-                    val += ctx.cpx;
-                  else if (ctx.param == 6)
-                    val += ctx.cpy;
-                  break;
-
-                case 'h':
-                  /* rule: x-relative */
-                  val += ctx.cpx;
-                  break;
-
-                case 'v':
-                  /* rule: y-relative */
-                  val += ctx.cpy;
-                  break;
-                }
-            }
-
-          ctx.params[ctx.param++] = val;
-          parse_path_do_cmd (&ctx, FALSE);
-          in_num = FALSE;
-        }
-
-      if (c == '\0')
-        {
-          break;
-        }
-      else if ((c == '+' || c == '-') && ! exp_wait_sign)
-        {
-          sign = c == '+' ? 1 : -1;
-          val = 0;
-          in_num = TRUE;
-          in_frac = FALSE;
-          in_exp = FALSE;
-          exp = 0;
-          exp_sign = 1;
-          exp_wait_sign = FALSE;
+          i += parse_number (&ctx, data + i) - 1;
         }
       else if (c == 'z' || c == 'Z')
         {
@@ -1781,4 +1679,177 @@ parse_path_do_cmd (ParsePathContext *ctx,
       ctx->param = 0;
       break;
     }
+}
+
+static gint
+parse_number (ParsePathContext *ctx,
+              const char       *data)
+{
+  gint     length         = 0;
+  /* Current location within the number */
+  gint     in             = IN_PREINTEGER;
+  /* [bitfield] Having 2 of each of these is an error */
+  gint     got            = 0x0;
+  /* Set to true if the number should end after a char */
+  gboolean end            = FALSE;
+  /* Set to true if the number ended due to an error */
+  gboolean error          = FALSE;
+  gdouble  value          = 0.0;
+  gdouble  fraction       = 1.0;
+  /* Presume the INTEGER is positive if it has no sign */
+  gint     sign           = +1;
+  gint     exponent       = 0;
+  /* Presume the EXPONENT is positive if it has no sign */
+  gint     exponent_sign  = +1;
+
+  while (data[length] != '\0' && ! end && ! error)
+    {
+      gchar c = data[length];
+
+      switch (in)
+        {
+        case IN_PREINTEGER: /* No numbers yet, we're just starting out */
+          /* LEGAL: + - .->FRACTION DIGIT->INTEGER */
+          if (c == '+' || c == '-')
+            {
+              if (got & GOT_SIGN)
+                {
+                  error = TRUE; /* Two signs: not allowed */
+                }
+              else
+                {
+                  sign = c == '+' ? +1 : -1;
+                  got |= GOT_SIGN;
+                }
+            }
+          else if (c == '.')
+            {
+              in = IN_FRACTION;
+            }
+          else if (c >= '0' && c <= '9')
+            {
+              value = c - '0';
+              in =IN_INTEGER;
+            }
+          break;
+
+        case IN_INTEGER: /* Previous character(s) was/were digit(s) */
+          /* LEGAL: DIGIT .->FRACTION E->PREEXPONENT */
+          if (c >= '0' && c <= '9')
+            value = value * 10 + (c - '0');
+          else if (c == '.')
+            in = IN_FRACTION;
+          else if (c == 'e' || c == 'E')
+            in = IN_PREEXPONENT;
+          else
+            end = TRUE;
+          break;
+
+        case IN_FRACTION: /* Previously, digit(s) in the fractional part */
+          /* LEGAL: DIGIT E->PREEXPONENT */
+          if (c >= '0' && c <= '9')
+            {
+              fraction *= 0.1;
+              value    += fraction * (c - '0');
+            }
+          else if (c == 'e' || c == 'E')
+            {
+              in = IN_PREEXPONENT;
+            }
+          else
+            {
+              end = TRUE;
+            }
+          break;
+
+        case IN_PREEXPONENT: /* Right after E */
+          /* LEGAL: + - DIGIT->EXPONENT */
+          if (c == '+' || c == '-')
+            {
+              if (got & GOT_EXPONENT_SIGN)
+                {
+                  error = TRUE; /* Two signs: not allowed */
+                }
+              else
+                {
+                  exponent_sign = c == '+' ? +1 : -1;
+                  got |= GOT_EXPONENT_SIGN;
+                }
+            }
+          else if (c >= '0' && c <= '9')
+            {
+              exponent = c - '0';
+              in       = IN_EXPONENT;
+            }
+          break;
+
+        case IN_EXPONENT: /* After E and the sign, if applicable */
+          /* LEGAL: DIGIT */
+          if (c >= '0' && c <= '9')
+            exponent = exponent * 10 + (c - '0');
+          else
+            end = TRUE;
+          break;
+        }
+      length++;
+    }
+
+  path_end_of_number (ctx, value, sign, exponent_sign, exponent);
+
+  return end ? length - 1 : length;
+}
+
+static void
+path_end_of_number (ParsePathContext *ctx,
+                    gdouble           val,
+                    gint              sign,
+                    gint              exp_sign,
+                    gint              exp)
+{
+  val *= sign * pow (10, exp_sign * exp);
+
+  if (ctx->rel)
+    {
+      /* Handle relative coordinates. This switch statement attempts
+         to determine _what_ the coords are relative to. This is
+         underspecified in the 12 Apr working draft. */
+      switch (ctx->cmd)
+        {
+        case 'l':
+        case 'm':
+        case 'c':
+        case 's':
+        case 'q':
+        case 't':
+          /* rule: even-numbered params are x-relative, odd-numbered
+             are y-relative */
+          if ((ctx->param & 1) == 0)
+              val += ctx->cpx;
+          else if ((ctx->param & 1) == 1)
+              val += ctx->cpy;
+          break;
+
+        case 'a':
+          /* rule: sixth and seventh are x and y, rest are not
+             relative */
+          if (ctx->param == 5)
+              val += ctx->cpx;
+          else if (ctx->param == 6)
+              val += ctx->cpy;
+          break;
+
+        case 'h':
+          /* rule: x-relative */
+          val += ctx->cpx;
+          break;
+
+        case 'v':
+          /* rule: y-relative */
+          val += ctx->cpy;
+          break;
+        }
+    }
+  ctx->params[ctx->param++] = val;
+
+  parse_path_do_cmd (ctx, FALSE);
 }
