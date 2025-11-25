@@ -17,6 +17,10 @@
 
 #include "config.h"
 
+#ifdef _WIN32
+#include <stdio.h>
+#endif
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 

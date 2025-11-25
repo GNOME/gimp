@@ -37,6 +37,11 @@
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
+#ifndef HAVE_UNISTD_H
+#include <io.h>
+#define popen  _popen
+#define pclose _pclose
+#endif
 #endif
 
 

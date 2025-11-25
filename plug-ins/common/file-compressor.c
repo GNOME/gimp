@@ -78,6 +78,9 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#ifdef _WIN32
+#include <io.h>
+#endif
 
 #include <glib/gstdio.h>
 #ifndef _O_BINARY

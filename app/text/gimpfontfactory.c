@@ -23,6 +23,10 @@
 
 #include "config.h"
 
+#ifdef _WIN32
+#include <io.h>
+#endif
+
 #include <fcntl.h>
 #include <glib/gstdio.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
