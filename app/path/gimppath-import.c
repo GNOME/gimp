@@ -1224,11 +1224,14 @@ static gboolean
 parse_svg_transform (const gchar *value,
                      GimpMatrix3 *matrix)
 {
-  gint i;
+  gint   i;
+  gchar *safe_value;
+
+  safe_value = g_strstrip (g_strdup (value));
 
   gimp_matrix3_identity (matrix);
 
-  for (i = 0; value[i]; i++)
+  for (i = 0; safe_value[i]; i++)
     {
       GimpMatrix3  trafo;
       gchar        keyword[32];
@@ -1239,31 +1242,31 @@ parse_svg_transform (const gchar *value,
       gimp_matrix3_identity (&trafo);
 
       /* skip initial whitespace */
-      while (g_ascii_isspace (value[i]))
+      while (g_ascii_isspace (safe_value[i]))
         i++;
 
       /* parse keyword */
       for (key_len = 0; key_len < sizeof (keyword); key_len++)
         {
-          gchar c = value[i];
+          gchar c = safe_value[i];
 
           if (g_ascii_isalpha (c) || c == '-')
-            keyword[key_len] = value[i++];
+            keyword[key_len] = safe_value[i++];
           else
             break;
         }
 
       if (key_len >= sizeof (keyword))
-        return FALSE;
+        goto out;
 
       keyword[key_len] = '\0';
 
       /* skip whitespace */
-      while (g_ascii_isspace (value[i]))
+      while (g_ascii_isspace (safe_value[i]))
         i++;
 
-      if (value[i] != '(')
-        return FALSE;
+      if (safe_value[i] != '(')
+        goto out;
       i++;
 
       for (n_args = 0; ; n_args++)
@@ -1272,29 +1275,33 @@ parse_svg_transform (const gchar *value,
           gchar *end_ptr;
 
           /* skip whitespace */
-          while (g_ascii_isspace (value[i]))
+          while (g_ascii_isspace (safe_value[i]))
             i++;
 
-          c = value[i];
+          c = safe_value[i];
           if (g_ascii_isdigit (c) || c == '+' || c == '-' || c == '.')
             {
               if (n_args == G_N_ELEMENTS (args))
-                return FALSE; /* too many args */
+                goto out; /* too many args */
 
-              args[n_args] = g_ascii_strtod (value + i, &end_ptr);
-              i = end_ptr - value;
+              args[n_args] = g_ascii_strtod (safe_value + i, &end_ptr);
+              i = end_ptr - safe_value;
 
-              while (g_ascii_isspace (value[i]))
+              while (g_ascii_isspace (safe_value[i]))
                 i++;
 
               /* skip optional comma */
-              if (value[i] == ',')
+              if (safe_value[i] == ',')
                 i++;
             }
           else if (c == ')')
-            break;
+            {
+              break;
+            }
           else
-            return FALSE;
+            {
+              goto out;
+            }
         }
 
       /* OK, have parsed keyword and args, now calculate the transform matrix */
@@ -1302,7 +1309,7 @@ parse_svg_transform (const gchar *value,
       if (strcmp (keyword, "matrix") == 0)
         {
           if (n_args != 6)
-            return FALSE;
+            goto out;
 
           gimp_matrix3_affine (&trafo,
                                args[0], args[1],
@@ -1314,7 +1321,7 @@ parse_svg_transform (const gchar *value,
           if (n_args == 1)
             args[1] = 0.0;
           else if (n_args != 2)
-            return FALSE;
+            goto out;
 
           gimp_matrix3_translate (&trafo, args[0], args[1]);
         }
@@ -1323,7 +1330,7 @@ parse_svg_transform (const gchar *value,
           if (n_args == 1)
             args[1] = args[0];
           else if (n_args != 2)
-            return FALSE;
+            goto out;
 
           gimp_matrix3_scale (&trafo, args[0], args[1]);
         }
@@ -1340,25 +1347,25 @@ parse_svg_transform (const gchar *value,
               gimp_matrix3_translate (&trafo, args[1], args[2]);
             }
           else
-            return FALSE;
+            goto out;
         }
       else if (strcmp (keyword, "skewX") == 0)
         {
           if (n_args != 1)
-            return FALSE;
+            goto out;
 
           gimp_matrix3_xshear (&trafo, tan (gimp_deg_to_rad (args[0])));
         }
       else if (strcmp (keyword, "skewY") == 0)
         {
           if (n_args != 1)
-            return FALSE;
+            goto out;
 
           gimp_matrix3_yshear (&trafo, tan (gimp_deg_to_rad (args[0])));
         }
       else
         {
-          return FALSE; /* unknown keyword */
+          goto out; /* unknown keyword */
         }
 
       gimp_matrix3_invert (&trafo);
@@ -1368,6 +1375,10 @@ parse_svg_transform (const gchar *value,
   gimp_matrix3_invert (matrix);
 
   return TRUE;
+
+out:
+  g_free (safe_value);
+  return FALSE;
 }
 
 
