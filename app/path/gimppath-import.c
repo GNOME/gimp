@@ -1285,7 +1285,7 @@ parse_svg_transform (const gchar *value,
                 goto out; /* too many args */
 
               args[n_args] = g_ascii_strtod (safe_value + i, &end_ptr);
-              i = end_ptr - safe_value;
+              i            = end_ptr - safe_value;
 
               while (g_ascii_isspace (safe_value[i]))
                 i++;
@@ -1696,22 +1696,22 @@ static gint
 parse_number (ParsePathContext *ctx,
               const char       *data)
 {
-  gint     length         = 0;
+  gint     length        = 0;
   /* Current location within the number */
-  gint     in             = IN_PREINTEGER;
+  gint     in            = IN_PREINTEGER;
   /* [bitfield] Having 2 of each of these is an error */
-  gint     got            = 0x0;
+  gint     got           = 0x0;
   /* Set to true if the number should end after a char */
-  gboolean end            = FALSE;
+  gboolean end           = FALSE;
   /* Set to true if the number ended due to an error */
-  gboolean error          = FALSE;
-  gdouble  value          = 0.0;
-  gdouble  fraction       = 1.0;
+  gboolean error         = FALSE;
+  gdouble  value         = 0.0;
+  gdouble  fraction      = 1.0;
   /* Presume the INTEGER is positive if it has no sign */
-  gint     sign           = +1;
-  gint     exponent       = 0;
+  gint     sign          = +1;
+  gint     exponent      = 0;
   /* Presume the EXPONENT is positive if it has no sign */
-  gint     exponent_sign  = +1;
+  gint     exponent_sign = +1;
 
   while (data[length] != '\0' && ! end && ! error)
     {
@@ -1740,7 +1740,7 @@ parse_number (ParsePathContext *ctx,
           else if (c >= '0' && c <= '9')
             {
               value = c - '0';
-              in =IN_INTEGER;
+              in    = IN_INTEGER;
             }
           break;
 
@@ -1761,7 +1761,7 @@ parse_number (ParsePathContext *ctx,
           if (c >= '0' && c <= '9')
             {
               fraction *= 0.1;
-              value    += fraction * (c - '0');
+              value += fraction * (c - '0');
             }
           else if (c == 'e' || c == 'E')
             {
@@ -1835,18 +1835,18 @@ path_end_of_number (ParsePathContext *ctx,
           /* rule: even-numbered params are x-relative, odd-numbered
              are y-relative */
           if ((ctx->param & 1) == 0)
-              val += ctx->cpx;
+            val += ctx->cpx;
           else if ((ctx->param & 1) == 1)
-              val += ctx->cpy;
+            val += ctx->cpy;
           break;
 
         case 'a':
           /* rule: sixth and seventh are x and y, rest are not
              relative */
           if (ctx->param == 5)
-              val += ctx->cpx;
+            val += ctx->cpx;
           else if (ctx->param == 6)
-              val += ctx->cpy;
+            val += ctx->cpy;
           break;
 
         case 'h':
