@@ -770,10 +770,8 @@ libjpeg = dependency('libjpeg')
 
 zlib = dependency('zlib')
 
-# Compiler-provided headers can't be found in crossroads environment
-if not meson.is_cross_build()
-  bz2 = cc.find_library('bz2')
-else
+bz2 = cc.find_library('bz2', required: false)
+if not bz2.found()
   bz2 = dependency('bzip2')
 endif
 
