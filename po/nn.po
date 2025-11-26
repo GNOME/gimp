@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-10 19:23+0000\n"
-"PO-Revision-Date: 2025-11-10 21:03+0100\n"
+"POT-Creation-Date: 2025-11-26 17:23+0000\n"
+"PO-Revision-Date: 2025-11-26 18:49+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -27,32 +27,31 @@ msgstr "GIMP-teamet"
 msgid "GNU Image Manipulation Program"
 msgstr "GNU bilethandsamingsprogram"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:17 desktop/gimp.desktop.in.in:6
-msgid "Create images and edit photographs"
-msgstr "Lag bilete og rediger foto"
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:17
+msgid "High-end image creation and manipulation"
+msgstr "Avansert biletlaging og bilethandsaming"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:19
 msgid ""
-"GIMP is an acronym for GNU Image Manipulation Program. It is a freely "
-"distributed program for such tasks as photo retouching, image composition "
-"and image authoring."
+"GIMP is an acronym for GNU Image Manipulation Program. It is Community-"
+"driven Free Software for high-end image creation and manipulation."
 msgstr ""
 "GIMP er akronym for GNU \"Image Manipulation Program\" («GNU sitt "
-"biletbehandsamingsprogram»). Det er eit gratis program for retusjering av "
-"foto, biletkomposisjon og biletredigering."
+"bilethandsamingsprogram»). Det er eit gratis program for retusjering av "
+"foto, biletkomposisjon og biletredigering drive av fellesskapet."
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:24
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:23
 msgid ""
-"It has many capabilities. It can be used as a simple paint program, an "
-"expert quality photo retouching program, an online batch processing system, "
-"a mass production image renderer, an image format converter, etc."
+"It has many capabilities. It can be used as a paint program, an expert "
+"quality photo retouching program, image composition, an online batch "
+"processing system, a mass production image renderer, an image format "
+"converter, etc."
 msgstr ""
-"Det har mange eigenskapar og kan brukast som eit enkelt teikne- og "
-"måleprogram, til retusjering av foto med topp kvalitet, til satsvis "
-"prosessering på nett, for å masseprodusera bilete, for å byta mellom ulike "
-"biletformat og mykje meir."
+"Det har mange eigenskapar og kan brukast som eit teikneprogram, til "
+"retusjering av foto med topp kvalitet, til satsvis prosessering på nett, for "
+"å masseprodusera bilete, for å byta mellom ulike biletformat og mykje meir."
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:30
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:29
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
@@ -66,7 +65,7 @@ msgstr ""
 "spesielle verktøy for enkle oppgåver eller kompliserte bilethansamingar som "
 "lett kan skriptast. GIMP er tilgjengeleg for Linux, Windows og OS X."
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:48
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:47
 msgid ""
 "Scene 4 cut 15 of \"ZeMarmot\" being edited in GIMP. Illustration by Aryeom "
 "(CC by-sa 4.0 International)"
@@ -74,14 +73,14 @@ msgstr ""
 "Scene 4 utsnitt 15 av «ZeMarmot» redigert i GIMP. Illustrasjon av Aryeom (CC "
 "by-sa 4.0 International)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:52
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:51
 msgid ""
 "Gull on beach photograph being edited in GIMP. Photo by Iana (CC by-sa 4.0 "
 "International)"
 msgstr ""
 "Måke på strand er redigert i GIMP. Foto v Iana (CC by-sa 4.0 International)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:56
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:55
 msgid ""
 "Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 "
 "International)"
@@ -89,13 +88,17 @@ msgstr ""
 "Portrett av Sofiia redigert i GIMP. Foto av Sofia (CC by-sa 4.0 "
 "International)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:60
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:59
 msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
 msgstr "Scanna gravering redigert i GIMP. Kunstverk av Liam (CC0)k"
 
 #: desktop/gimp.desktop.in.in:5
 msgid "Image Editor"
 msgstr "Bilethandsamar"
+
+#: desktop/gimp.desktop.in.in:6
+msgid "Create images and edit photographs"
+msgstr "Lag bilete og rediger foto"
 
 #. TRANSLATORS: Search terms to find this application.
 #. 1. Do NOT translate or localize the semicolons!
@@ -381,7 +384,7 @@ msgid "Buffers"
 msgstr "Bufferar"
 
 #: app/actions/actions.c:123 app/dialogs/dialogs.c:380
-#: app/propgui/gimppropgui-newsprint.c:160
+#: app/propgui/gimppropgui-newsprint.c:160 app/widgets/gimpitemchooser.c:294
 #: app/widgets/gimppickablechooser.c:292
 msgid "Channels"
 msgstr "Kanalar"
@@ -490,12 +493,14 @@ msgid "Image"
 msgstr "Bilete"
 
 #: app/actions/actions.c:195 app/dialogs/dialogs.c:338
+#: app/widgets/gimpimagechooser.c:185 app/widgets/gimpitemchooser.c:213
 #: app/widgets/gimppickablechooser.c:211
 msgid "Images"
 msgstr "Bilete"
 
 #: app/actions/actions.c:198 app/dialogs/dialogs.c:376
-#: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablechooser.c:267
+#: app/dialogs/resize-dialog.c:171 app/widgets/gimpitemchooser.c:269
+#: app/widgets/gimppickablechooser.c:267
 msgid "Layers"
 msgstr "Lag"
 
@@ -566,7 +571,7 @@ msgid "Tools"
 msgstr "Verktøy"
 
 #: app/actions/actions.c:243 app/dialogs/dialogs.c:384
-#: app/tools/gimppathtool.c:188
+#: app/tools/gimppathtool.c:188 app/widgets/gimpitemchooser.c:319
 msgid "Paths"
 msgstr "Banar"
 
@@ -2455,7 +2460,7 @@ msgstr "240 sekund"
 
 #: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263
 #: app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
-#: app/actions/file-commands.c:472 app/actions/gradient-editor-commands.c:410
+#: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
@@ -2578,7 +2583,7 @@ msgid "Untitled"
 msgstr "Utan namn"
 
 #: app/actions/data-commands.c:224 app/actions/documents-commands.c:210
-#: app/actions/file-commands.c:578
+#: app/actions/file-commands.c:569
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Kan ikkje visa fila i filhandsamaren: %s"
@@ -4215,7 +4220,7 @@ msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Avslutt GIMP"
 
-#: app/actions/file-actions.c:137 app/actions/file-actions.c:308
+#: app/actions/file-actions.c:137 app/actions/file-actions.c:305
 msgctxt "file-action"
 msgid "_Save"
 msgstr "_Lagra"
@@ -4259,7 +4264,7 @@ msgctxt "file-action"
 msgid "Save this image and close its window"
 msgstr "Lagra dette biletet og lukk biletvindauget"
 
-#: app/actions/file-actions.c:163 app/actions/file-actions.c:353
+#: app/actions/file-actions.c:163 app/actions/file-actions.c:350
 msgctxt "file-action"
 msgid "E_xport..."
 msgstr "_Eksporter …"
@@ -4289,17 +4294,17 @@ msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "Eksporter biletet til ulike format som t.d. PNG eller JPEG"
 
-#: app/actions/file-actions.c:314
+#: app/actions/file-actions.c:311
 msgctxt "file-action"
 msgid "_Save..."
 msgstr "_Lagra …"
 
-#: app/actions/file-actions.c:320
+#: app/actions/file-actions.c:317
 #, c-format
 msgid "Export to %s"
 msgstr "Eksporter til %s"
 
-#: app/actions/file-actions.c:336
+#: app/actions/file-actions.c:333
 #, c-format
 msgid "Over_write %s"
 msgstr "Over_skriv %s"
@@ -4307,12 +4312,12 @@ msgstr "Over_skriv %s"
 #. TRANSLATORS: the %s will be replaced by the file name of a
 #. * recently opened image.
 #.
-#: app/actions/file-actions.c:408
+#: app/actions/file-actions.c:403
 #, c-format
 msgid "Open \"%s\""
 msgstr "Opna «%s»"
 
-#: app/actions/file-commands.c:121 app/actions/file-commands.c:602
+#: app/actions/file-commands.c:121 app/actions/file-commands.c:593
 #: app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "Opna biletet"
@@ -4325,45 +4330,45 @@ msgstr "Opna biletet som lag"
 msgid "Open Image as Link Layer"
 msgstr "Opna biletet som lenkjelag"
 
-#: app/actions/file-commands.c:330
+#: app/actions/file-commands.c:321
 msgid "No changes need to be saved"
 msgstr "Det er ingen endringar som treng lagrast"
 
-#: app/actions/file-commands.c:337 app/actions/file-commands.c:814
+#: app/actions/file-commands.c:328 app/actions/file-commands.c:805
 #: app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Lagra biletet"
 
-#: app/actions/file-commands.c:343
+#: app/actions/file-commands.c:334
 msgid "Save a Copy of the Image"
 msgstr "Lagra ein kopi av biletet"
 
-#: app/actions/file-commands.c:421
+#: app/actions/file-commands.c:412
 msgid "Create New Template"
 msgstr "Opprett ny mal"
 
-#: app/actions/file-commands.c:425
+#: app/actions/file-commands.c:416
 msgid "Enter a name for this template"
 msgstr "Skriv inn eit namn på denne malen"
 
-#: app/actions/file-commands.c:455
+#: app/actions/file-commands.c:446
 msgid "Revert failed. No file name associated with this image."
 msgstr "Tilbakestillinga mislukka. Finn ingen filer med dette namnet."
 
-#: app/actions/file-commands.c:467
+#: app/actions/file-commands.c:458
 msgid "Revert Image"
 msgstr "Tilbakestill biletet"
 
-#: app/actions/file-commands.c:473
+#: app/actions/file-commands.c:464
 msgid "_Revert"
 msgstr "_Tilbakestill"
 
-#: app/actions/file-commands.c:491
+#: app/actions/file-commands.c:482
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Tilbakestill «%s» til «%s»?"
 
-#: app/actions/file-commands.c:496
+#: app/actions/file-commands.c:487
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -4371,11 +4376,11 @@ msgstr ""
 "Ved å tilbakestilla biletet til førre lagring, mister du alle endringane, "
 "også angreinformasjonen."
 
-#: app/actions/file-commands.c:836
+#: app/actions/file-commands.c:827
 msgid "(Unnamed Template)"
 msgstr "(Mal utan namn)"
 
-#: app/actions/file-commands.c:883
+#: app/actions/file-commands.c:874
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -6998,8 +7003,7 @@ msgstr "Laginnstillingane"
 msgid "Edit Layer Attributes"
 msgstr "Rediger lagattributta"
 
-#: app/actions/layers-commands.c:415 app/widgets/gimpdrawabletreeview.c:649
-#: app/widgets/gimplayertreeview.c:915
+#: app/actions/layers-commands.c:415
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Nytt lag"
@@ -7057,8 +7061,6 @@ msgid "Duplicate layers"
 msgstr "Dupliser laga"
 
 #: app/actions/layers-commands.c:1034
-#, fuzzy
-#| msgid "Cannot merge down to a layer group."
 msgid "Cannot merge a pass through layer group."
 msgstr "Kan ikkje flette ned til ei laggruppe."
 
@@ -10067,13 +10069,11 @@ msgstr "Tilbakestill _forstørringa"
 
 #: app/actions/view-actions.c:1005
 #, c-format
-#| msgid "_Zoom (%s)"
 msgid "_Zoom (%.0f%%)"
 msgstr "_Forstørr (%.0f%%)"
 
 #: app/actions/view-actions.c:1007
 #, c-format
-#| msgid "_Zoom (%s)"
 msgid "_Zoom (%.2f%%)"
 msgstr "_Forstørr (%.2f%%)"
 
@@ -13233,11 +13233,11 @@ msgstr "Pensel"
 msgid "Brush Spacing"
 msgstr "Penselavstand"
 
-#: app/core/gimpbrushclipboard.c:190
+#: app/core/gimpbrushclipboard.c:194
 msgid "Clipboard Mask"
 msgstr "Utklippstavle-maske"
 
-#: app/core/gimpbrushclipboard.c:192 app/core/gimppatternclipboard.c:167
+#: app/core/gimpbrushclipboard.c:196 app/core/gimppatternclipboard.c:171
 msgid "Clipboard Image"
 msgstr "Utklippstavle-bilete"
 
@@ -13788,7 +13788,7 @@ msgid "Cannot rename effect masks."
 msgstr "Kan ikkje gje effektmaskene nytt namn."
 
 #: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:735
-#: app/core/gimplayer.c:2049 app/core/gimplayermask.c:294
+#: app/core/gimplayer.c:2051 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "%s maske"
@@ -14010,7 +14010,7 @@ msgid "Symmetry"
 msgstr "Symmetri"
 
 #: app/core/gimpimage.c:2076 app/pdb/drawable-filter-cmds.c:702
-#: app/widgets/gimpdrawabletreeview-filters.c:743
+#: app/widgets/gimpdrawabletreeview-filters.c:784
 msgid "Remove filter"
 msgstr "Fjern filteret"
 
@@ -14412,8 +14412,6 @@ msgid "Cannot merge down a floating selection."
 msgstr "Kan ikkje fletta eit flytande utval nedover."
 
 #: app/core/gimpimage-merge.c:312
-#, fuzzy
-#| msgid "Cannot merge down to a layer group."
 msgid "Cannot merge down a pass through layer group."
 msgstr "Kan ikkje flette ned til ei laggruppe."
 
@@ -14426,7 +14424,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "Kan ikkje flette ned til ei laggruppe."
 
 #: app/core/gimpimage-merge.c:362
-#: app/widgets/gimpdrawabletreeview-filters.c:717
+#: app/widgets/gimpdrawabletreeview-filters.c:758
 msgid "The layer to merge down to is locked."
 msgstr "Laget som skal flettast nedover er låst."
 
@@ -14548,7 +14546,7 @@ msgstr "Fekk ikkje til å opna miniatyren «%s»: %s"
 
 #: app/core/gimpitem.c:1858 app/core/gimpitem.c:1925
 #: app/display/gimpdisplayshell-dnd.c:379 app/tools/gimptransformtool.c:730
-#: app/widgets/gimpdrawabletreeview-filters.c:589
+#: app/widgets/gimpdrawabletreeview-filters.c:630
 msgid "A selected layer's pixels are locked."
 msgstr "Pikslane i det merkte laget er låst."
 
@@ -14576,7 +14574,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Forankra det flytande utvalet"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1079
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1081
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14657,6 +14655,10 @@ msgid "Floating Mask"
 msgstr "Flytande maske"
 
 #: app/core/gimplayer.c:781
+msgid "Floating Channel"
+msgstr "Flytande kanal"
+
+#: app/core/gimplayer.c:783
 msgid "Floating Layer"
 msgstr "Flytande lag"
 
@@ -14664,7 +14666,7 @@ msgstr "Flytande lag"
 #. * either a "Floating Layer" or "Floating Mask" usually. The second will
 #. * be a layer name.
 #.
-#: app/core/gimplayer.c:786
+#: app/core/gimplayer.c:788
 #, c-format
 msgid ""
 "%s\n"
@@ -14673,75 +14675,75 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1940
+#: app/core/gimplayer.c:1942
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan ikkje legga til ei lagmaske fordi laget har ei slik maske frå før."
 
-#: app/core/gimplayer.c:1952
+#: app/core/gimplayer.c:1954
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan ikkje legga til lagmaske med andre dimensjonar enn det som det "
 "spesifiserte laget har."
 
-#: app/core/gimplayer.c:1958
+#: app/core/gimplayer.c:1960
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Legg til lagmasker"
 
-#: app/core/gimplayer.c:2088
+#: app/core/gimplayer.c:2090
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Overfør alfa til maske"
 
-#: app/core/gimplayer.c:2252
+#: app/core/gimplayer.c:2254
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Bruk lagmasker"
 
-#: app/core/gimplayer.c:2253
+#: app/core/gimplayer.c:2255
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Slett lagmasker"
 
-#: app/core/gimplayer.c:2360
+#: app/core/gimplayer.c:2362
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Slå på lagmaskene"
 
-#: app/core/gimplayer.c:2361
+#: app/core/gimplayer.c:2363
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Slå av lagmaskene"
 
-#: app/core/gimplayer.c:2442
+#: app/core/gimplayer.c:2444
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Vis lagmaskene"
 
-#: app/core/gimplayer.c:2521
+#: app/core/gimplayer.c:2523
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Legg til alfakanal"
 
-#: app/core/gimplayer.c:2551
+#: app/core/gimplayer.c:2553
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Fjern alfakanal"
 
-#: app/core/gimplayer.c:2572
+#: app/core/gimplayer.c:2574
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Laget til biletstorleik"
 
-#: app/core/gimplayer.c:2755
+#: app/core/gimplayer.c:2757
 msgid "Set layer's blend space"
 msgstr "Set blandeområdet for laget"
 
-#: app/core/gimplayer.c:2802
+#: app/core/gimplayer.c:2804
 msgid "Set layer's composite space"
 msgstr "Set den samanslåtte plassen for laget"
 
-#: app/core/gimplayer.c:2849
+#: app/core/gimplayer.c:2851
 msgid "Set layer's composite mode"
 msgstr "Set samansetjingsmodus for laget"
 
@@ -19137,7 +19139,7 @@ msgstr "Kan ikkje endra pikslane i laggrupper."
 
 #: app/display/gimpdisplayshell-dnd.c:389 app/tools/gimpfiltertool.c:340
 #: app/tools/gimppainttool.c:355 app/tools/gimptransformtool.c:739
-#: app/widgets/gimpdrawabletreeview-filters.c:582
+#: app/widgets/gimpdrawabletreeview-filters.c:623
 msgid "A selected layer is not visible."
 msgstr "Eit merkt lag er ikkje synleg."
 
@@ -19737,11 +19739,11 @@ msgid ""
 msgstr ""
 "Har støtte berre for filbanar på plattforma. Kan ikkje opna «%s» som lenkje."
 
-#: app/file/file-open.c:985 app/file/file-save.c:132
+#: app/file/file-open.c:985 app/file/file-save.c:122
 msgid "Not a regular file"
 msgstr "Ikkje ei vanleg fil"
 
-#: app/file/file-open.c:994 app/file/file-save.c:141
+#: app/file/file-open.c:994 app/file/file-save.c:131
 msgid "Permission denied"
 msgstr "Tilgang nekta"
 
@@ -19773,15 +19775,11 @@ msgstr "%s av biletdata er lasta ned"
 msgid "Uploaded %s of image data"
 msgstr "%s av biletdata er lasta opp"
 
-#: app/file/file-save.c:105
-msgid "There is no active layer to save"
-msgstr "Det er ingen gjeldande lag å lagra"
-
-#: app/file/file-save.c:125
+#: app/file/file-save.c:115
 msgid "Failed to get file information"
 msgstr "Fekk ikkje tak i filinformasjonen"
 
-#: app/file/file-save.c:297
+#: app/file/file-save.c:287
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Programtillegget %s klarte ikkje lagra biletet"
@@ -20976,11 +20974,11 @@ msgstr "Sideforholdet for blekkdråpen"
 msgid "Ink Blob Angle"
 msgstr "Vinkelen for blekkdråpen"
 
-#: app/paint/gimpmybrushcore.c:107
+#: app/paint/gimpmybrushcore.c:106
 msgid "Mybrush"
 msgstr "Mybrush"
 
-#: app/paint/gimpmybrushcore.c:160
+#: app/paint/gimpmybrushcore.c:159
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "Ingen MyPaint-penslar tilgjengelege for bruk med dette verktøyet."
 
@@ -21402,29 +21400,29 @@ msgstr "Roter banen"
 msgid "Transform Path"
 msgstr "Transformer banen"
 
-#: app/path/gimppath-export.c:95
+#: app/path/gimppath-export.c:96
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "Feil ved skriving av SVG-fila «%s»: %s"
 
-#: app/path/gimppath-import.c:344
+#: app/path/gimppath-import.c:356
 msgid "Import Paths"
 msgstr "Importer banar"
 
-#: app/path/gimppath-import.c:355
+#: app/path/gimppath-import.c:367
 msgid "Imported Path"
 msgstr "Importert bane"
 
-#: app/path/gimppath-import.c:386
+#: app/path/gimppath-import.c:398
 #, c-format
 msgid "No paths found in '%s'"
 msgstr "Fann ingen banar i «%s»"
 
-#: app/path/gimppath-import.c:390
+#: app/path/gimppath-import.c:402
 msgid "No paths found in the buffer"
 msgstr "Fann ingen banar i bufferen"
 
-#: app/path/gimppath-import.c:400
+#: app/path/gimppath-import.c:412
 #, c-format
 msgid "Failed to import paths from '%s': %s"
 msgstr "Greidde ikkje å importera banar frå «%s»: %s"
@@ -22012,7 +22010,7 @@ msgid ""
 msgstr ""
 "Biletoppløysinga er utanfor grensene, brukar standard oppløysing i staden."
 
-#: app/pdb/image-select-cmds.c:305 app/tools/gimpfreeselecttool.c:105
+#: app/pdb/image-select-cmds.c:307 app/tools/gimpfreeselecttool.c:105
 msgid "Free Select"
 msgstr "Frihandsutval"
 
@@ -22088,7 +22086,7 @@ msgstr "Elementet er alt rastert."
 #: app/pdb/rasterizable-cmds.c:96
 #, c-format
 msgid "This item has not been rasterized."
-msgstr "Dette elementet er ikkje rastert enno"
+msgstr "Dette elementet er ikkje rastert."
 
 #: app/pdb/resource-cmds.c:468
 #, c-format
@@ -23193,7 +23191,7 @@ msgid "No selected drawables."
 msgstr "Ingen teikneelement vald."
 
 #: app/tools/gimpbucketfilltool.c:621 app/tools/gimpforegroundselecttool.c:309
-#: app/tools/gimppaintselecttool.c:380
+#: app/tools/gimppaintselecttool.c:401
 msgid "The active layer is not visible."
 msgstr "Det gjeldande laget er ikkje synleg."
 
@@ -23654,38 +23652,38 @@ msgstr "Type (%s)"
 msgid "Move: "
 msgstr "Flytt: "
 
-#: app/tools/gimpeditselectiontool.c:1029
-#: app/tools/gimpeditselectiontool.c:1391
+#: app/tools/gimpeditselectiontool.c:1030
+#: app/tools/gimpeditselectiontool.c:1392
 msgid "Move Floating Selection"
 msgstr "Flytt det flytande utvalet"
 
-#: app/tools/gimpeditselectiontool.c:1275 app/tools/gimpmovetool.c:294
+#: app/tools/gimpeditselectiontool.c:1276 app/tools/gimpmovetool.c:294
 msgid "There are no paths to move."
 msgstr "Det er ingen bane å flytta."
 
-#: app/tools/gimpeditselectiontool.c:1283
+#: app/tools/gimpeditselectiontool.c:1284
 msgid "A selected path's position is locked."
 msgstr "Plasseringa av dei merkte banane er låst."
 
-#: app/tools/gimpeditselectiontool.c:1296 app/tools/gimpmovetool.c:339
+#: app/tools/gimpeditselectiontool.c:1297 app/tools/gimpmovetool.c:339
 msgid "There is no layer to move."
 msgstr "Det er ingen lag å flytta."
 
-#: app/tools/gimpeditselectiontool.c:1305
-#: app/tools/gimpeditselectiontool.c:1332 app/tools/gimpmovetool.c:348
+#: app/tools/gimpeditselectiontool.c:1306
+#: app/tools/gimpeditselectiontool.c:1333 app/tools/gimpmovetool.c:348
 msgid "The selected layer's position is locked."
 msgstr "Den merkte lagplassering er låst."
 
-#: app/tools/gimpeditselectiontool.c:1310 app/tools/gimpgradienttool.c:283
+#: app/tools/gimpeditselectiontool.c:1311 app/tools/gimpgradienttool.c:283
 #: app/tools/gimpmovetool.c:350
 msgid "The selected layer's pixels are locked."
 msgstr "Pikslane i det gjeldande laget er låst."
 
-#: app/tools/gimpeditselectiontool.c:1321
+#: app/tools/gimpeditselectiontool.c:1322
 msgid "A selected channel's position is locked."
 msgstr "Plasseringa av den merkte kanalen er låst."
 
-#: app/tools/gimpeditselectiontool.c:1343 app/tools/gimpmovetool.c:367
+#: app/tools/gimpeditselectiontool.c:1344 app/tools/gimpmovetool.c:367
 msgid "A selected layer's position is locked."
 msgstr "Den merkte lagplassering er låst."
 
@@ -23767,14 +23765,17 @@ msgid "Disabled because this filter depends on another image."
 msgstr "Slått av fordi dette filteret avhenger av eit anna bilete."
 
 #: app/tools/gimpfiltertool.c:459
+#: app/widgets/gimpdrawabletreeview-filters.c:484
 msgid "Disabled because filters cannot be merged on vector layers."
 msgstr "Slått av fordi filtera kan ikkje flettast saman med vektorlag."
 
 #: app/tools/gimpfiltertool.c:461
+#: app/widgets/gimpdrawabletreeview-filters.c:487
 msgid "Disabled because filters cannot be merged on link layers."
 msgstr "Slått av fordi filtera kan ikkje flettast saman med lenkjelag."
 
 #: app/tools/gimpfiltertool.c:463
+#: app/widgets/gimpdrawabletreeview-filters.c:490
 msgid "Disabled because filters cannot be merged on text layers."
 msgstr "Slått av fordi filter kan ikkje flettast saman med tekstlag."
 
@@ -24142,7 +24143,7 @@ msgstr "Klikk-og-dra for å laga ein fargeovergang"
 msgid "Cannot paint on multiple drawables. Select only one."
 msgstr "Kan ikkje teikna på fleire teikneelement. Vel berre eitt."
 
-#: app/tools/gimpgradienttool.c:262 app/tools/gimppaintselecttool.c:352
+#: app/tools/gimpgradienttool.c:262 app/tools/gimppaintselecttool.c:373
 #: app/tools/gimpwarptool.c:783
 msgid "No active drawables."
 msgstr "Ingen teikneelement i bruk."
@@ -24856,15 +24857,15 @@ msgstr "Verktøyet for å teikna utval: Marker objekt ved grovteikning"
 msgid "P_aint Select"
 msgstr "_Teikna utval"
 
-#: app/tools/gimppaintselecttool.c:349
+#: app/tools/gimppaintselecttool.c:370
 msgid "Cannot paint select on multiple layers. Select only one layer."
 msgstr "Kan ikkje teikna på utval i fleire lag. Vel berre eitt lag."
 
-#: app/tools/gimppaintselecttool.c:368
+#: app/tools/gimppaintselecttool.c:389
 msgid "Cannot paint select on layer groups."
 msgstr "Kan ikkje teikna utval på laggrupper."
 
-#: app/tools/gimppaintselecttool.c:708
+#: app/tools/gimppaintselecttool.c:704
 msgctxt "command"
 msgid "Paint Select"
 msgstr "Teikna utval"
@@ -25484,15 +25485,15 @@ msgstr "Innstillingar for omriss"
 msgid "Outline Direction:"
 msgstr "Retning for omriss:"
 
-#: app/tools/gimptextoptions.c:911
+#: app/tools/gimptextoptions.c:912
 msgid "Justify:"
 msgstr "Justering:"
 
-#: app/tools/gimptextoptions.c:941
+#: app/tools/gimptextoptions.c:942
 msgid "Box:"
 msgstr "Boks:"
 
-#: app/tools/gimptextoptions.c:983
+#: app/tools/gimptextoptions.c:984
 msgid "Language:"
 msgstr "Språk:"
 
@@ -27012,7 +27013,7 @@ msgstr "Fann ikkje den spesifiserte banen."
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
-"exe-fila er ugyldig. (Ikkje Microsoft Win32.exe, eller feil i .exe-biletet)."
+".exe-fila er ugyldig. (Ikkje Microsoft Win32.exe, eller feil i .exe-biletet)."
 
 #: app/widgets/gimpcriticaldialog.c:428
 msgid "The operating system denied access to the specified file."
@@ -27678,36 +27679,43 @@ msgstr "Lås plassering og storleik"
 msgid "Cannot select items while a floating selection is active."
 msgstr "Kan ikkje velja element når eit flytande utval er slått på."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:165
+#: app/widgets/gimpdrawabletreeview.c:649 app/widgets/gimplayertreeview.c:915
+msgctxt "singular"
+msgid "New Layer"
+msgstr "Nytt lag"
+
+#: app/widgets/gimpdrawabletreeview-filters.c:170
 msgid "Layer Effects"
 msgstr "Lageffektar"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:195
+#: app/widgets/gimpdrawabletreeview-filters.c:200
 msgid "Toggle the visibility of all filters."
 msgstr "Slå visinga av banen av/på."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:211
+#: app/widgets/gimpdrawabletreeview-filters.c:216
 msgid "Edit the selected filter."
 msgstr "Rediger det valde filteret."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:227
+#: app/widgets/gimpdrawabletreeview-filters.c:232
 msgid "Raise filter one step up in the stack."
 msgstr "Flytt filteret opp eit hakk i lagstabelen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:242
+#: app/widgets/gimpdrawabletreeview-filters.c:247
 msgid "Lower filter one step down in the stack."
 msgstr "Flytt filteret ned eit hakk i stabelen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:258
+#: app/widgets/gimpdrawabletreeview-filters.c:263
+#: app/widgets/gimpdrawabletreeview-filters.c:498
+#: app/widgets/gimpdrawabletreeview-filters.c:508
 msgid "Merge all active filters down."
 msgstr "Flett alle filtera som er i bruk nedover."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:274
+#: app/widgets/gimpdrawabletreeview-filters.c:279
 msgid "Remove the selected filter."
 msgstr "Fjern det merkte filteret."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:648
-#: app/widgets/gimpdrawabletreeview-filters.c:674
+#: app/widgets/gimpdrawabletreeview-filters.c:689
+#: app/widgets/gimpdrawabletreeview-filters.c:715
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Kan ikkje endra rekkjefølgja på eit filter som er redigert."
 
@@ -28009,7 +28017,7 @@ msgstr "Talde: "
 
 #: app/widgets/gimphistogrameditor.c:153
 msgid "Percentile: "
-msgstr "Prosentil:"
+msgstr "Prosentil: "
 
 #: app/widgets/gimphistogrameditor.c:179
 msgid "Histogram channel"
@@ -28128,6 +28136,11 @@ msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] "Indeksert farge"
 msgstr[1] "Indeksert farge (%d fargar)"
+
+#: app/widgets/gimpitemchooser.c:243 app/widgets/gimpitemchooser.c:571
+#: app/widgets/gimppickablechooser.c:241 app/widgets/gimppickablechooser.c:524
+msgid "Select an image in the left pane"
+msgstr "Vel eit bilete i det venstre feltet"
 
 #: app/widgets/gimpitemtreeview.c:570
 msgid "Set Item Exclusive Content Lock"
@@ -28324,10 +28337,6 @@ msgstr ""
 "Det er uråd å køyra %s ein gong til.\n"
 "%s"
 
-#: app/widgets/gimppickablechooser.c:241 app/widgets/gimppickablechooser.c:524
-msgid "Select an image in the left pane"
-msgstr "Vel eit bilete i det venstre feltet"
-
 #: app/widgets/gimppluginview.c:146
 msgid "Plug-In"
 msgstr "Programtillegg"
@@ -28505,23 +28514,23 @@ msgstr "%d ppi"
 msgid "Line width:"
 msgstr "Strekbreidd:"
 
-#: app/widgets/gimpstrokeeditor.c:150
+#: app/widgets/gimpstrokeeditor.c:151
 msgid "_Cap style:"
 msgstr "_Endestil:"
 
-#: app/widgets/gimpstrokeeditor.c:156
+#: app/widgets/gimpstrokeeditor.c:158
 msgid "_Join style:"
 msgstr "_Koplingsstil:"
 
-#: app/widgets/gimpstrokeeditor.c:163
+#: app/widgets/gimpstrokeeditor.c:165
 msgid "_Miter limit:"
 msgstr "_Gjæringsgrense:"
 
-#: app/widgets/gimpstrokeeditor.c:169
+#: app/widgets/gimpstrokeeditor.c:171
 msgid "Dash pattern:"
 msgstr "Strekmønster:"
 
-#: app/widgets/gimpstrokeeditor.c:236
+#: app/widgets/gimpstrokeeditor.c:238
 msgid "Dash _preset:"
 msgstr "For_valde strekar:"
 
@@ -29754,6 +29763,9 @@ msgstr "Meny for verktøyinnstillingane"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Angre angreloggen"
+
+#~ msgid "There is no active layer to save"
+#~ msgstr "Det er ingen gjeldande lag å lagra"
 
 #~ msgid "GIMP output. Type any character to close this window."
 #~ msgstr "GIMP-melding. Trykk ein tast for å lukka vindauget."
