@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-11 03:19+0000\n"
-"PO-Revision-Date: 2025-11-11 18:02+0100\n"
+"POT-Creation-Date: 2025-11-26 17:07+0000\n"
+"PO-Revision-Date: 2025-11-26 18:19+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -609,11 +609,11 @@ msgstr "Persienne"
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:417
-#: plug-ins/common/file-jp2.c:1619 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:429
+#: plug-ins/common/file-jp2.c:1620 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
-#: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
+#: plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:820 plug-ins/common/file-raw-data.c:2004
 #: plug-ins/common/file-sunras.c:1059 plug-ins/common/file-tga.c:1103
 #: plug-ins/common/file-tim.c:402 plug-ins/common/file-tim.c:509
@@ -902,12 +902,12 @@ msgid "With gradient power (0,1)"
 msgstr "Med gradert eksponent (0,1)"
 
 #: plug-ins/common/cml-explorer.c:207
-msgid "Multiply rand. value (0,1)"
-msgstr "Multipl. tilfeldig verdi (0,1)"
+msgid "Multiply random value (0,1)"
+msgstr "Multipliser tilfeldig verdi (0,1)"
 
 #: plug-ins/common/cml-explorer.c:208
-msgid "Multiply rand. value (0,2)"
-msgstr "Multipl. tilfeldig verdi (0,2)"
+msgid "Multiply random value (0,2)"
+msgstr "Multipliser tilfeldig verdi (0,2)"
 
 #: plug-ins/common/cml-explorer.c:209
 msgid "Multiply gradient (0,1)"
@@ -938,23 +938,23 @@ msgid "Continuous gradient"
 msgstr "Kontinuerleg fargeovergang"
 
 #: plug-ins/common/cml-explorer.c:229
-msgid "Continuous grad. w/o gap"
-msgstr "Kont. fargeovergang u/ mellomrom"
+msgid "Continuous gradient, without gap"
+msgstr "Samanhengande fargeovergang utan mellomrom"
 
 #: plug-ins/common/cml-explorer.c:230
-msgid "Random, ch. independent"
-msgstr "Tilfeldig, kanaluavh"
+msgid "Random, channel independent"
+msgstr "Tilfeldig, kanaluavhengig"
 
 #: plug-ins/common/cml-explorer.c:231
 msgid "Random shared"
 msgstr "Tilfeldig, delt"
 
 #: plug-ins/common/cml-explorer.c:232
-msgid "Randoms from seed"
+msgid "Random from seed"
 msgstr "Tilfeldig frå frø"
 
 #: plug-ins/common/cml-explorer.c:233
-msgid "Randoms from seed (shared)"
+msgid "Random from seed (shared)"
 msgstr "Tilfeldig frå frø (delt)"
 
 #: plug-ins/common/cml-explorer.c:299 plug-ins/common/cml-explorer.c:307
@@ -1167,15 +1167,15 @@ msgid "Use cyclic range"
 msgstr "Bruk sykliske område"
 
 #: plug-ins/common/cml-explorer.c:1793
-msgid "Mod. rate:"
-msgstr "Endringsgrad:"
+msgid "Modification rate:"
+msgstr "Modifiseringsrate:"
 
 #: plug-ins/common/cml-explorer.c:1800
-msgid "Env. sensitivity:"
+msgid "Environment sensitivity:"
 msgstr "Omgivnadsfølsemd:"
 
 #: plug-ins/common/cml-explorer.c:1807
-msgid "Diffusion dist.:"
+msgid "Diffusion distance:"
 msgstr "Diffusjonsavstand:"
 
 #: plug-ins/common/cml-explorer.c:1814
@@ -1203,7 +1203,7 @@ msgid "Plot a Graph of the Settings"
 msgstr "Vis innstillingane grafisk"
 
 #: plug-ins/common/cml-explorer.c:1897
-msgid "Ch. sensitivity:"
+msgid "Channel sensitivity:"
 msgstr "Kanalfølsemd:"
 
 #: plug-ins/common/cml-explorer.c:1905
@@ -1211,7 +1211,7 @@ msgid "Mutation rate:"
 msgstr "Mutasjonsrate:"
 
 #: plug-ins/common/cml-explorer.c:1913
-msgid "Mutation dist.:"
+msgid "Mutation distance:"
 msgstr "Mutasjonsavstand:"
 
 #: plug-ins/common/cml-explorer.c:2008
@@ -1220,7 +1220,7 @@ msgstr "Graf for dei gjeldande innstillingane"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:727 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:730 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1210 plug-ins/gfig/gfig-dialog.c:1355
 #: plug-ins/ifs-compose/ifs-compose.c:1213
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -2009,7 +2009,7 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/common/file-raw-data.c:608 plug-ins/common/file-raw-data.c:796
 #: plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:754
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:756
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
@@ -2611,7 +2611,7 @@ msgstr "EOF (filslutt) eller feil ved lesing av biletheading"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
-#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1375
+#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1376
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
@@ -2696,11 +2696,11 @@ msgstr "«%s»: EOF eller feil ved lesing av palettdata"
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:358
-#: plug-ins/common/file-jp2.c:1804 plug-ins/common/file-jpegxl.c:1389
+#: plug-ins/common/file-jp2.c:1813 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
-#: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
+#: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:792
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:794
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
 #: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
@@ -3304,7 +3304,7 @@ msgstr "rammeinfo"
 msgid "local colormap"
 msgstr "lokalt fargekart"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:434
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:446
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr ""
@@ -3953,7 +3953,7 @@ msgstr "Ugyldig eller manglande ILBM-bilete"
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "ILBM inneheld ingen biletedata ‒ truleg ei palettfil"
 
-#: plug-ins/common/file-iff.c:363
+#: plug-ins/common/file-iff.c:363 plug-ins/common/file-iff.c:382
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "Ugyldig storleik på ILBM-fargekartet"
@@ -4143,66 +4143,71 @@ msgstr "Namnet på fargeprofilen bruk for XCMYK-eksport."
 msgid "Profile: %s"
 msgstr "Profil: %s"
 
-#: plug-ins/common/file-jp2.c:1383 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2.c:1384 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Klarte ikkje opna «%s» for lesing"
 
-#: plug-ins/common/file-jp2.c:1392
+#: plug-ins/common/file-jp2.c:1393
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "Klarte ikkje setja opp dekodar for «%s», ikkje meir minne?"
 
-#: plug-ins/common/file-jp2.c:1408
+#: plug-ins/common/file-jp2.c:1409
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Klarte ikkje setja parametrane på dekodinga for «%s»."
 
-#: plug-ins/common/file-jp2.c:1416
+#: plug-ins/common/file-jp2.c:1417
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "Kan ikkje lesa JP2-header frå «%s»."
 
-#: plug-ins/common/file-jp2.c:1424
+#: plug-ins/common/file-jp2.c:1425
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "Klarte ikkje dekoda JP2-biletet i «%s»."
 
-#: plug-ins/common/file-jp2.c:1432
+#: plug-ins/common/file-jp2.c:1433
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "Klarte ikkje dekomprimera JP2-biletet i «%s»."
 
-#: plug-ins/common/file-jp2.c:1463
+#: plug-ins/common/file-jp2.c:1464
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "Klarte ikkje dekoda CIELAB JP2-bilete i «%s»."
 
-#: plug-ins/common/file-jp2.c:1520
+#: plug-ins/common/file-jp2.c:1521
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "Ukjend fargemodell i JP2-kodestraumen «%s»."
 
-#: plug-ins/common/file-jp2.c:1531
+#: plug-ins/common/file-jp2.c:1532
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "Klarte ikkje konverta YCbCr JP2 bilete «%s» til RGB."
 
-#: plug-ins/common/file-jp2.c:1541
+#: plug-ins/common/file-jp2.c:1542
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "Klarte ikkje konverta CMYK JP2 bilete «%s» til RGB."
 
-#: plug-ins/common/file-jp2.c:1553
+#: plug-ins/common/file-jp2.c:1554
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "Klarte ikkje konverta YCC JP2 bilete «%s» til RGB."
 
-#: plug-ins/common/file-jp2.c:1580
+#: plug-ins/common/file-jp2.c:1581
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Fargemodell utan støtte i JP2-biletet «%s»."
+
+#: plug-ins/common/file-jp2.c:1635
+#, c-format
+msgid "Defined row size is too large in JP2 image '%s'."
+msgstr "Definert radstorleik for stor i JP2-biletet «%s»."
 
 #: plug-ins/common/file-jpegxl.c:141 plug-ins/common/file-jpegxl.c:168
 msgid "JPEG XL image"
@@ -4308,7 +4313,7 @@ msgstr ""
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
-#: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:725
+#: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:728
 #: plug-ins/common/file-raw-data.c:812
 #: plug-ins/common/file-seattle-filmworks.c:244
 #: plug-ins/common/file-seattle-filmworks.c:283
@@ -4658,7 +4663,7 @@ msgstr "Uvanleg PCX-variant, gir opp"
 msgid "Import from PCX"
 msgstr "Importer frå PCX"
 
-#: plug-ins/common/file-pcx.c:1151 plug-ins/common/file-pnm.c:1619
+#: plug-ins/common/file-pcx.c:1151 plug-ins/common/file-pnm.c:1628
 msgid "Cannot export images with alpha channel."
 msgstr "Kan ikkje eksportera bilete som inneheld alfakanal."
 
@@ -4683,7 +4688,7 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Nedre kant utanfor grensene (må vere mindre enn %d): %d"
 
 #: plug-ins/common/file-pcx.c:1266 plug-ins/common/file-qoi.c:369
-#: plug-ins/common/file-svg.c:801 plug-ins/common/file-svg.c:817
+#: plug-ins/common/file-svg.c:803 plug-ins/common/file-svg.c:819
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Klarte ikkje skriva til fila «%s»: %s"
@@ -4977,7 +4982,7 @@ msgstr "PNG-bilete"
 msgid "APNG image"
 msgstr "APNG-bilete"
 
-#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:356
+#: plug-ins/common/file-png.c:331
 msgid "PNG"
 msgstr "PNG"
 
@@ -5293,71 +5298,71 @@ msgstr "Eksporterer filer i PFM-filformat"
 msgid "PFM export handles all images without transparency."
 msgstr "PFM-eksport handsamar alle bilete utan gjennomsikt."
 
-#: plug-ins/common/file-pnm.c:723 plug-ins/common/file-pnm.c:755
-#: plug-ins/common/file-pnm.c:764 plug-ins/common/file-pnm.c:779
-#: plug-ins/common/file-pnm.c:794 plug-ins/common/file-pnm.c:1000
-#: plug-ins/common/file-pnm.c:1096 plug-ins/common/file-pnm.c:1185
-#: plug-ins/common/file-pnm.c:1246
+#: plug-ins/common/file-pnm.c:726 plug-ins/common/file-pnm.c:758
+#: plug-ins/common/file-pnm.c:767 plug-ins/common/file-pnm.c:782
+#: plug-ins/common/file-pnm.c:797 plug-ins/common/file-pnm.c:1003
+#: plug-ins/common/file-pnm.c:1105 plug-ins/common/file-pnm.c:1194
+#: plug-ins/common/file-pnm.c:1255
 msgid "Premature end of file."
 msgstr "Uventa filslutt."
 
-#: plug-ins/common/file-pnm.c:743
+#: plug-ins/common/file-pnm.c:746
 msgid "File not in a supported format."
 msgstr "Fila har eit ugyldig format."
 
-#: plug-ins/common/file-pnm.c:758
+#: plug-ins/common/file-pnm.c:761
 msgid "Invalid X resolution."
 msgstr "Ugyldig X-oppløysing."
 
-#: plug-ins/common/file-pnm.c:760 plug-ins/common/file-pnm.c:934
+#: plug-ins/common/file-pnm.c:763 plug-ins/common/file-pnm.c:937
 msgid "Image width is larger than GIMP can handle."
 msgstr "Biletet er breiare enn det GIMP kan handsama."
 
-#: plug-ins/common/file-pnm.c:767
+#: plug-ins/common/file-pnm.c:770
 msgid "Invalid Y resolution."
 msgstr "Ugyldig X-oppløysing."
 
-#: plug-ins/common/file-pnm.c:769
+#: plug-ins/common/file-pnm.c:772
 msgid "Image height is larger than GIMP can handle."
 msgstr "Biletet er høgare enn det GIMP kan handsama."
 
-#: plug-ins/common/file-pnm.c:783
+#: plug-ins/common/file-pnm.c:786
 msgid "Bogus scale factor."
 msgstr "Falsk skaleringsfaktor."
 
-#: plug-ins/common/file-pnm.c:785
+#: plug-ins/common/file-pnm.c:788
 msgid "Unsupported scale factor."
 msgstr "Ugyldig skaleringsfaktor."
 
-#: plug-ins/common/file-pnm.c:799
+#: plug-ins/common/file-pnm.c:802 plug-ins/common/file-pnm.c:1080
 msgid "Unsupported maximum value."
 msgstr "Ugyldig maksimalverdi."
 
-#: plug-ins/common/file-pnm.c:928
+#: plug-ins/common/file-pnm.c:931
 msgid "PAM: Unsupported unofficial PNM variant."
 msgstr "PAM: Uoffisiell PNM-variant vert ikkje støtta."
 
-#: plug-ins/common/file-pnm.c:932
+#: plug-ins/common/file-pnm.c:935
 msgid "PAM: Premature end of file."
 msgstr "PAM: uventa filslutt."
 
-#: plug-ins/common/file-pnm.c:936
+#: plug-ins/common/file-pnm.c:939
 msgid "PAM: Invalid X resolution."
 msgstr "PAM: ugyldig X-oppløysing."
 
-#: plug-ins/common/file-pnm.c:938
+#: plug-ins/common/file-pnm.c:941
 msgid "PAM: Invalid Y resolution."
 msgstr "PAM: ugyldig Y-oppløysing."
 
-#: plug-ins/common/file-pnm.c:940
+#: plug-ins/common/file-pnm.c:943
 msgid "PAM: Invalid maximum value."
 msgstr "PAM: ugyldig maksimalverdi."
 
-#: plug-ins/common/file-pnm.c:942
+#: plug-ins/common/file-pnm.c:945
 msgid "PAM: Invalid depth."
 msgstr "PAM: ugyldig djupn."
 
-#: plug-ins/common/file-pnm.c:944
+#: plug-ins/common/file-pnm.c:947
 msgid "PAM: Unsupported tupltype."
 msgstr "PAM: tupl-type utan støtte."
 
@@ -6438,69 +6443,72 @@ msgstr "fann EOF ved lesinga"
 msgid "Write error occurred"
 msgstr "Det oppstod ein skrivefeil"
 
-#: plug-ins/common/file-svg.c:276
+#: plug-ins/common/file-svg.c:278
 msgid "SVG image"
 msgstr "SVG-bilete"
 
-#: plug-ins/common/file-svg.c:279
+#: plug-ins/common/file-svg.c:281
 msgid "Loads files in SVG file format"
 msgstr "Lastar inn filer i SVG-filformat"
 
-#: plug-ins/common/file-svg.c:294
+#: plug-ins/common/file-svg.c:296
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:303
+#: plug-ins/common/file-svg.c:305
 msgid "_Paths"
 msgstr "_Banar"
 
-#: plug-ins/common/file-svg.c:304
+#: plug-ins/common/file-svg.c:306
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr "Om og korleis importera banar slik at dei kan brukast av baneverktøya"
 
-#: plug-ins/common/file-svg.c:305
+#: plug-ins/common/file-svg.c:307
 msgid "Don't import paths"
 msgstr "Ikkje importer banar"
 
-#: plug-ins/common/file-svg.c:306
+#: plug-ins/common/file-svg.c:308
 msgid "Import paths individually"
 msgstr "Importer banane kvar for seg"
 
-#: plug-ins/common/file-svg.c:307
+#: plug-ins/common/file-svg.c:309
 msgid "Merge imported paths"
 msgstr "Føy saman dei importerte stiane"
 
-#: plug-ins/common/file-svg.c:319
+#: plug-ins/common/file-svg.c:321
 msgid "Scalable Vector Graphic"
 msgstr "Skalerbar vektorgrafikk"
 
-#: plug-ins/common/file-svg.c:322
+#: plug-ins/common/file-svg.c:324
 msgid "Exports files in SVG file format"
 msgstr "Eksporterer filer i SVG-filformat"
 
-#: plug-ins/common/file-svg.c:323
+#: plug-ins/common/file-svg.c:325
 msgid "Exports files in SVG file format (Scalable Vector Graphic)"
 msgstr "Eksporter filer in SVG-fil-format (Scalable Vector Graphic)"
 
-#: plug-ins/common/file-svg.c:348
+#: plug-ins/common/file-svg.c:350
 msgid "_Title"
 msgstr "_Tittel"
 
-#: plug-ins/common/file-svg.c:349
+#: plug-ins/common/file-svg.c:351
 msgid "Optional <title> for SVG"
 msgstr "Valfri <title> for SVG"
 
-#: plug-ins/common/file-svg.c:354
+#: plug-ins/common/file-svg.c:356
 msgid "Em_bed raster layers as"
 msgstr "_Bygg inn rasterlag som"
 
-#: plug-ins/common/file-svg.c:357 plug-ins/file-jpeg/jpeg.c:195
-#: plug-ins/file-tiff/file-tiff.c:144
-msgid "JPEG"
-msgstr "JPEG"
-
 #: plug-ins/common/file-svg.c:358
+msgid "PNG (always)"
+msgstr "PNG (alltid)"
+
+#: plug-ins/common/file-svg.c:359
+msgid "JPEG (for opaque images, PNG otherwise)"
+msgstr "JPEG (for gjennomsiktige bilete, elles PNG)"
+
+#: plug-ins/common/file-svg.c:360
 msgid "Do not export raster layers"
 msgstr "Ikkje eksporter rasterlag"
 
@@ -6509,15 +6517,15 @@ msgstr "Ikkje eksporter rasterlag"
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:405
+#: plug-ins/common/file-svg.c:407
 msgid "Disable safety size limits?"
 msgstr "Vil du slå av grensene for tryggingsstorleiken?"
 
-#: plug-ins/common/file-svg.c:410
+#: plug-ins/common/file-svg.c:412
 msgid "_No"
 msgstr "_Nei"
 
-#: plug-ins/common/file-svg.c:411
+#: plug-ins/common/file-svg.c:413
 msgid "_Yes"
 msgstr "_Ja"
 
@@ -6531,7 +6539,7 @@ msgstr "_Ja"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:435
+#: plug-ins/common/file-svg.c:437
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6541,28 +6549,28 @@ msgstr ""
 "Å slå av tryggingsgrensene kan hjelpa. Skadelege SVG-filer kan bruka dette "
 "til å bruka for mykje minne."
 
-#: plug-ins/common/file-svg.c:447
+#: plug-ins/common/file-svg.c:449
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "Av tryggingsgrunnar bør denne berre brukast på inndata du stolar på!"
 
-#: plug-ins/common/file-svg.c:454
+#: plug-ins/common/file-svg.c:456
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "Prøve på nytt utan grenser for å unngå å handsama store datamengder?"
 
-#: plug-ins/common/file-svg.c:756 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/common/file-svg.c:758 plug-ins/file-exr/file-exr.c:381
 #: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "Ukjend årsak"
 
-#: plug-ins/common/file-svg.c:762
+#: plug-ins/common/file-svg.c:764
 msgid "Rendering SVG"
 msgstr "Lager SVG"
 
-#: plug-ins/common/file-svg.c:772
+#: plug-ins/common/file-svg.c:774
 msgid "Rendered SVG"
 msgstr "Teikna SVG"
 
-#: plug-ins/common/file-svg.c:1123
+#: plug-ins/common/file-svg.c:1125
 msgid ""
 "The SVG format only requires viewers to display image links for SVG, PNG, "
 "and JPEG images.\n"
@@ -7953,7 +7961,7 @@ msgstr ""
 "menyane."
 
 #: plug-ins/common/plugin-browser.c:372
-#: plug-ins/filter-browser/filter-browser.c:608
+#: plug-ins/filter-browser/filter-browser.c:610
 msgid "Searching by name"
 msgstr "Søkjar på namn"
 
@@ -7965,7 +7973,7 @@ msgstr[0] "%d programtillegg"
 msgstr[1] "%d programtillegg"
 
 #: plug-ins/common/plugin-browser.c:397
-#: plug-ins/filter-browser/filter-browser.c:675
+#: plug-ins/filter-browser/filter-browser.c:677
 msgid "No matches for your query"
 msgstr "Ingen treff på søket"
 
@@ -7977,7 +7985,7 @@ msgstr[0] "Fann %d programtillegg som passa spørringa"
 msgstr[1] "Fann %d programtillegg som passa spørringa"
 
 #: plug-ins/common/plugin-browser.c:531
-#: plug-ins/filter-browser/filter-browser.c:677
+#: plug-ins/filter-browser/filter-browser.c:679
 msgid "No matches"
 msgstr "Ingen treff"
 
@@ -10501,6 +10509,10 @@ msgstr "Eksporterer filer i JPEG-filformat"
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "Eksporterer filer det mykje brukte JPEG-filformatet"
 
+#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:144
+msgid "JPEG"
+msgstr "JPEG"
+
 #: plug-ins/file-jpeg/jpeg.c:216
 msgid "S_moothing"
 msgstr "_Utjamning"
@@ -11815,17 +11827,17 @@ msgstr "Lukkast ikkje å dekoda animert WebP-ramme frå «%s»"
 msgid "Frame %d (%dms)"
 msgstr "Ramme %d (%dms)"
 
-#: plug-ins/filter-browser/filter-browser.c:286
-#: plug-ins/filter-browser/filter-browser.c:321
+#: plug-ins/filter-browser/filter-browser.c:288
+#: plug-ins/filter-browser/filter-browser.c:323
 msgid "Allowed values:"
 msgstr "Tillatne verdiar:"
 
-#: plug-ins/filter-browser/filter-browser.c:419
+#: plug-ins/filter-browser/filter-browser.c:421
 #, c-format
 msgid "Operation name: %s"
 msgstr "Operasjonsnamn: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:432
+#: plug-ins/filter-browser/filter-browser.c:434
 #, c-format
 msgid "Categories: %s"
 msgstr "Kategoriar: %s"
@@ -11836,7 +11848,7 @@ msgstr "Kategoriar: %s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:462
+#: plug-ins/filter-browser/filter-browser.c:464
 #: plug-ins/gradient-flare/gradient-flare.c:2952
 #: plug-ins/gradient-flare/gradient-flare.c:3702
 #: plug-ins/gradient-flare/gradient-flare.c:3804
@@ -11844,66 +11856,66 @@ msgstr "Kategoriar: %s"
 msgid "Parameters"
 msgstr "Parameter"
 
-#: plug-ins/filter-browser/filter-browser.c:494
+#: plug-ins/filter-browser/filter-browser.c:496
 msgid "Additional Information"
 msgstr "Tilleggsinformasjon"
 
-#: plug-ins/filter-browser/filter-browser.c:500
+#: plug-ins/filter-browser/filter-browser.c:502
 #, c-format
 msgid "License: %s"
 msgstr "Lisens: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:611
+#: plug-ins/filter-browser/filter-browser.c:613
 msgid "Searching by title"
 msgstr "Søkjer på tittel"
 
-#: plug-ins/filter-browser/filter-browser.c:614
+#: plug-ins/filter-browser/filter-browser.c:616
 msgid "Searching by description"
 msgstr "Søkjer på beskriving"
 
-#: plug-ins/filter-browser/filter-browser.c:617
+#: plug-ins/filter-browser/filter-browser.c:619
 msgid "Searching by category"
 msgstr "Søkjer på kategori"
 
-#: plug-ins/filter-browser/filter-browser.c:682
+#: plug-ins/filter-browser/filter-browser.c:684
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
 msgstr[0] "%d filter passar spørjinga"
 msgstr[1] "%d filter passar spørjinga"
 
-#: plug-ins/filter-browser/filter-browser.c:688
+#: plug-ins/filter-browser/filter-browser.c:690
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
 msgstr[0] "%d filter"
 msgstr[1] "%d filter"
 
-#: plug-ins/filter-browser/filter-browser.c:721
+#: plug-ins/filter-browser/filter-browser.c:724
 msgid "GEGL Filter Browser"
 msgstr "GEGL Filter-lesar"
 
-#: plug-ins/filter-browser/filter-browser.c:738
+#: plug-ins/filter-browser/filter-browser.c:741
 msgid "by name"
 msgstr "etter namn"
 
-#: plug-ins/filter-browser/filter-browser.c:739
+#: plug-ins/filter-browser/filter-browser.c:742
 msgid "by title"
 msgstr "etter tittel"
 
-#: plug-ins/filter-browser/filter-browser.c:740
+#: plug-ins/filter-browser/filter-browser.c:743
 msgid "by description"
 msgstr "etter beskriving"
 
-#: plug-ins/filter-browser/filter-browser.c:827
+#: plug-ins/filter-browser/filter-browser.c:832
 msgid "_GEGL Filter Browser"
 msgstr "_GEGL Filter-lesar"
 
-#: plug-ins/filter-browser/filter-browser.c:832
+#: plug-ins/filter-browser/filter-browser.c:837
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "Vis informasjon om tilgjengelege GEGL-operasjonar (dvs. filter)."
 
-#: plug-ins/filter-browser/filter-browser.c:834
+#: plug-ins/filter-browser/filter-browser.c:839
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
@@ -17002,6 +17014,9 @@ msgstr "Fann ikkje TWAIN-drivaren. Ikkje råd å skanna"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Overfører data frå skannar/kamera"
+
+#~ msgid "Mod. rate:"
+#~ msgstr "Endringsgrad:"
 
 #~ msgid "_Filter Type"
 #~ msgstr "_Filtertype"
