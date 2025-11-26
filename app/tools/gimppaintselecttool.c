@@ -110,6 +110,10 @@ static void      gimp_paint_select_tool_cursor_update      (GimpTool            
                                                             GimpDisplay          *display);
 static void      gimp_paint_select_tool_draw               (GimpDrawTool         *draw_tool);
 
+static void      gimp_paint_select_tool_progress           (GeglNode            *ps_node,
+                                                            gdouble              value,
+                                                            GimpProgress        *progress);
+
 static void      gimp_paint_select_tool_halt               (GimpPaintSelectTool  *ps_tool);
 
 static void      gimp_paint_select_tool_update_image_mask  (GimpPaintSelectTool  *ps_tool,
@@ -307,7 +311,13 @@ gimp_paint_select_tool_button_release (GimpTool              *tool,
         }
 
       gegl_node_set (ps_tool->render_node, "buffer", &result, NULL);
+      g_signal_connect (ps_tool->ps_node, "progress",
+                        G_CALLBACK (gimp_paint_select_tool_progress),
+                        ps_tool);
       gegl_node_process (ps_tool->render_node);
+      g_signal_handlers_disconnect_by_func (ps_tool->ps_node,
+                                            G_CALLBACK (gimp_paint_select_tool_progress),
+                                            ps_tool);
 
       g_timer_stop (timer);
       g_printerr ("processing graph takes %.3f s\n\n", g_timer_elapsed (timer, NULL));
@@ -634,6 +644,16 @@ gimp_paint_select_tool_options_notify (GimpTool         *tool,
     {
       gimp_paint_select_tool_toggle_scribbles_visibility (ps_tool);
     }
+}
+
+static void
+gimp_paint_select_tool_progress (GeglNode     *ps_node,
+                                 gdouble       value,
+                                 GimpProgress *progress)
+{
+  gimp_progress_set_value (progress, value);
+  while (g_main_context_pending (NULL))
+    g_main_context_iteration (NULL, FALSE);
 }
 
 static void
