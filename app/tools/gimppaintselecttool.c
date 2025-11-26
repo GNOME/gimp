@@ -515,15 +515,7 @@ gimp_paint_select_tool_motion (GimpTool         *tool,
   GimpPaintSelectTool *ps_tool = GIMP_PAINT_SELECT_TOOL (tool);
   GimpDrawTool        *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  static guint32 last_time = 0;
-
   GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
-
-  /* don't let the events come in too fast, ignore below a delay of 100 ms */
-  if (time - last_time < 100)
-    return;
-
-  last_time = time;
 
   if (state & GDK_BUTTON1_MASK)
     {
