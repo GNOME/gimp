@@ -428,7 +428,7 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
           private->active_curve = input_curve;
 
           gimp_curve_view_set_x_axis_label (GIMP_CURVE_VIEW (private->curve_view),
-                                            inputs[i].label);
+                                            gettext (inputs[i].label));
         }
       else if (use_input)
         {
