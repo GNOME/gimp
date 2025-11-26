@@ -55,6 +55,8 @@ struct _GimpPaintSelectTool
   GeglNode              *render_node;
 
   GimpVector2            last_pos;
+
+  gboolean               process;
 };
 
 struct _GimpPaintSelectToolClass
