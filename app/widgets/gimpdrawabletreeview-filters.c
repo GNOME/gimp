@@ -492,7 +492,7 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
           else
             /* TODO: Translate after string freeze */
             disabled_reason = "Disabled because filters cannot be merged "
-                                "on group layers.";
+                              "on group layers.";
 
           tooltip = g_strdup_printf ("%s\n<i>%s</i>",
                                      _("Merge all active filters down."),
