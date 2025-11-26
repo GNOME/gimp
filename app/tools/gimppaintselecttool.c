@@ -560,10 +560,12 @@ gimp_paint_select_tool_motion (GimpTool         *tool,
 
       if (distance >= 2.f)
         {
+          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
           ps_tool->last_pos.x = coords->x;
           ps_tool->last_pos.y = coords->y;
 
           ps_tool->process |= gimp_paint_select_tool_paint_scribble (ps_tool);
+          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
         }
     }
 }
