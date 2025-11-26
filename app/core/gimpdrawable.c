@@ -46,6 +46,7 @@
 #include "gimpdrawable-shadow.h"
 #include "gimpdrawable-transform.h"
 #include "gimpdrawablefilter.h"
+#include "gimpdrawablefiltermask.h"
 #include "gimpfilterstack.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
@@ -111,6 +112,9 @@ static GeglNode * gimp_drawable_get_node           (GimpFilter        *filter);
 static void       gimp_drawable_removed            (GimpItem          *item);
 static GimpItem * gimp_drawable_duplicate          (GimpItem          *item,
                                                     GType              new_type);
+static void       gimp_drawable_convert            (GimpItem          *item,
+                                                    GimpImage         *dest_image,
+                                                    GType              old_type);
 static void       gimp_drawable_scale              (GimpItem          *item,
                                                     gint               new_width,
                                                     gint               new_height,
@@ -303,6 +307,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   item_class->removed             = gimp_drawable_removed;
   item_class->duplicate           = gimp_drawable_duplicate;
+  item_class->convert             = gimp_drawable_convert;
   item_class->scale               = gimp_drawable_scale;
   item_class->resize              = gimp_drawable_resize;
   item_class->flip                = gimp_drawable_flip;
@@ -597,6 +602,39 @@ gimp_drawable_duplicate (GimpItem *item,
     }
 
   return new_item;
+}
+
+static void
+gimp_drawable_convert (GimpItem  *item,
+                       GimpImage *dest_image,
+                       GType      old_type)
+{
+  GimpContainer *filters;
+
+  filters = gimp_drawable_get_filters (GIMP_DRAWABLE (item));
+  if (gimp_container_get_n_children (filters) > 0)
+    {
+      GList *filter_list;
+
+      for (filter_list = GIMP_LIST (filters)->queue->tail;
+           filter_list;
+           filter_list = g_list_previous (filter_list))
+        {
+          if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+            {
+              GimpDrawableFilter     *filter = filter_list->data;
+              GimpDrawableFilterMask *mask;
+
+              mask = gimp_drawable_filter_get_mask (filter);
+
+              if (mask)
+                gimp_drawable_convert (GIMP_ITEM (mask), dest_image,
+                                       GIMP_TYPE_DRAWABLE_FILTER_MASK);
+            }
+        }
+    }
+
+  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image, old_type);
 }
 
 static void
