@@ -273,10 +273,31 @@ gimp_paint_select_tool_button_release (GimpTool              *tool,
                                        GimpButtonReleaseType  release_type,
                                        GimpDisplay           *display)
 {
-  GimpDrawTool  *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpPaintSelectTool    *ps_tool   = GIMP_PAINT_SELECT_TOOL (tool);
+  GimpDrawTool           *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpPaintSelectOptions *options   = GIMP_PAINT_SELECT_TOOL_GET_OPTIONS (ps_tool);
+  GTimer                 *timer     = g_timer_new ();
+  GeglBuffer             *result;
 
   gimp_draw_tool_pause (draw_tool);
   gimp_tool_control_halt (tool->control);
+
+  while (g_main_context_pending (NULL))
+    g_main_context_iteration (NULL, FALSE);
+
+  gegl_node_set (ps_tool->render_node, "buffer", &result, NULL);
+  gegl_node_process (ps_tool->render_node);
+
+  g_timer_stop (timer);
+  g_printerr ("processing graph takes %.3f s\n\n", g_timer_elapsed (timer, NULL));
+  g_timer_destroy (timer);
+
+  gimp_paint_select_tool_update_image_mask (ps_tool,
+                                            result,
+                                            ps_tool->drawable_off_x,
+                                            ps_tool->drawable_off_y,
+                                            options->mode);
+  g_object_unref (result);
   gimp_draw_tool_resume (draw_tool);
 }
 
@@ -522,15 +543,13 @@ gimp_paint_select_tool_motion (GimpTool         *tool,
             {
               GimpPaintSelectOptions *options = GIMP_PAINT_SELECT_TOOL_GET_OPTIONS (ps_tool);
               GeglRectangle  local_region;
-              GeglBuffer  *result;
-              GTimer      *timer;
 
               local_region = gimp_paint_select_tool_get_local_region (display,
-                                                       coords->x, coords->y,
-                                                       ps_tool->drawable_off_x,
-                                                       ps_tool->drawable_off_y,
-                                                       ps_tool->drawable_width,
-                                                       ps_tool->drawable_height);
+                                                                      coords->x, coords->y,
+                                                                      ps_tool->drawable_off_x,
+                                                                      ps_tool->drawable_off_y,
+                                                                      ps_tool->drawable_width,
+                                                                      ps_tool->drawable_height);
 
               if (options->mode == GIMP_PAINT_SELECT_MODE_ADD)
                 {
@@ -559,21 +578,6 @@ gimp_paint_select_tool_motion (GimpTool         *tool,
                   gegl_node_set (ps_tool->ps_node,
                                  "use_local_region", FALSE, NULL);
                 }
-
-              gegl_node_set (ps_tool->render_node, "buffer", &result, NULL);
-
-              timer = g_timer_new ();;
-              gegl_node_process (ps_tool->render_node);
-              g_timer_stop (timer);
-              g_printerr ("processing graph takes %.3f s\n\n", g_timer_elapsed (timer, NULL));
-              g_timer_destroy (timer);
-
-              gimp_paint_select_tool_update_image_mask (ps_tool,
-                                                        result,
-                                                        ps_tool->drawable_off_x,
-                                                        ps_tool->drawable_off_y,
-                                                        options->mode);
-              g_object_unref (result);
             }
 
           gimp_tool_control_activate (tool->control);
