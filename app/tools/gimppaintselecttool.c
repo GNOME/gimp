@@ -231,7 +231,8 @@ gimp_paint_select_tool_button_press (GimpTool            *tool,
                                      GimpButtonPressType  press_type,
                                      GimpDisplay         *display)
 {
-  GimpPaintSelectTool  *ps_tool = GIMP_PAINT_SELECT_TOOL (tool);
+  GimpPaintSelectTool *ps_tool = GIMP_PAINT_SELECT_TOOL (tool);
+  GeglColor           *grey    = gegl_color_new ("#888");
 
   if (tool->display && display != tool->display)
      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
@@ -247,9 +248,14 @@ gimp_paint_select_tool_button_press (GimpTool            *tool,
   ps_tool->last_pos.x = coords->x;
   ps_tool->last_pos.y = coords->y;
 
+  /* Always reset the "scribbles" to start with a blank slate. */
+  gegl_buffer_set_color (ps_tool->trimap, NULL, grey);
+
   ps_tool->process = gimp_paint_select_tool_paint_scribble (ps_tool);
 
   gimp_tool_control_activate (tool->control);
+
+  g_object_unref (grey);
 }
 
 static void
