@@ -502,6 +502,12 @@ button.titlebutton
 {
   border-color: transparent;
   box-shadow: none;
+  color: @fg-color;
+}
+
+button.titlebutton image
+{
+  color: @fg-color;
 }
 
 button:checked, button.titlebutton:hover {
