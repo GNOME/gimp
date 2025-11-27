@@ -119,8 +119,7 @@ static void      gimp_paint_select_tool_halt                        (GimpPaintSe
 static void      gimp_paint_select_tool_update_image_mask           (GimpPaintSelectTool   *ps_tool,
                                                                      GeglBuffer            *buffer,
                                                                      gint                   offset_x,
-                                                                     gint                   offset_y,
-                                                                     GimpPaintSelectMode    mode);
+                                                                     gint                   offset_y);
 static void      gimp_paint_select_tool_init_buffers                (GimpPaintSelectTool   *ps_tool,
                                                                      GimpImage             *image,
                                                                      GimpDrawable          *drawable);
@@ -230,8 +229,9 @@ gimp_paint_select_tool_button_press (GimpTool            *tool,
                                      GimpButtonPressType  press_type,
                                      GimpDisplay         *display)
 {
-  GimpPaintSelectTool *ps_tool = GIMP_PAINT_SELECT_TOOL (tool);
-  GeglColor           *grey    = gegl_color_new ("#888");
+  GimpPaintSelectTool    *ps_tool = GIMP_PAINT_SELECT_TOOL (tool);
+  GimpPaintSelectOptions *options = GIMP_PAINT_SELECT_TOOL_GET_OPTIONS (ps_tool);
+  GeglColor              *grey    = gegl_color_new ("#888");
 
   if (tool->display && display != tool->display)
      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
@@ -249,6 +249,18 @@ gimp_paint_select_tool_button_press (GimpTool            *tool,
 
   /* Always reset the "scribbles" to start with a blank slate. */
   gegl_buffer_set_color (ps_tool->trimap, NULL, grey);
+
+  if (options->mode == GIMP_PAINT_SELECT_MODE_ADD)
+    {
+      gegl_node_set (ps_tool->ps_node, "mode", 0, NULL);
+      gegl_node_set (ps_tool->threshold_node, "value", 0.99, NULL);
+    }
+  else
+    {
+      gegl_node_set (ps_tool->ps_node, "mode", 1, NULL);
+      gegl_node_set (ps_tool->threshold_node, "value", 0.01, NULL);
+    }
+  ps_tool->painting_mode = options->mode;
 
   ps_tool->process = gimp_paint_select_tool_paint_scribble (ps_tool);
 
@@ -273,11 +285,10 @@ gimp_paint_select_tool_button_release (GimpTool              *tool,
 
   if (ps_tool->process)
     {
-      GimpPaintSelectOptions *options = GIMP_PAINT_SELECT_TOOL_GET_OPTIONS (ps_tool);
-      GTimer                 *timer   = g_timer_new ();
-      GimpProgress           *progress;
-      GeglBuffer             *result;
-      GeglRectangle           local_region;
+      GTimer        *timer = g_timer_new ();
+      GimpProgress  *progress;
+      GeglBuffer    *result;
+      GeglRectangle  local_region;
 
       progress = gimp_progress_start (GIMP_PROGRESS (tool), FALSE,
                                       "%s", "Selecting");
@@ -304,17 +315,6 @@ gimp_paint_select_tool_button_release (GimpTool              *tool,
                          "use_local_region", FALSE, NULL);
         }
 
-      if (options->mode == GIMP_PAINT_SELECT_MODE_ADD)
-        {
-          gegl_node_set (ps_tool->ps_node, "mode", 0, NULL);
-          gegl_node_set (ps_tool->threshold_node, "value", 0.99, NULL);
-        }
-      else
-        {
-          gegl_node_set (ps_tool->ps_node, "mode", 1, NULL);
-          gegl_node_set (ps_tool->threshold_node, "value", 0.01, NULL);
-        }
-
       gegl_node_set (ps_tool->render_node, "buffer", &result, NULL);
       g_signal_connect (ps_tool->ps_node, "progress",
                         G_CALLBACK (gimp_paint_select_tool_progress),
@@ -331,8 +331,7 @@ gimp_paint_select_tool_button_release (GimpTool              *tool,
       gimp_paint_select_tool_update_image_mask (ps_tool,
                                                 result,
                                                 ps_tool->drawable_off_x,
-                                                ps_tool->drawable_off_y,
-                                                options->mode);
+                                                ps_tool->drawable_off_y);
       if (progress)
         gimp_progress_end (progress);
       g_object_unref (result);
@@ -691,8 +690,7 @@ static void
 gimp_paint_select_tool_update_image_mask (GimpPaintSelectTool *ps_tool,
                                           GeglBuffer          *buffer,
                                           gint                 offset_x,
-                                          gint                 offset_y,
-                                          GimpPaintSelectMode  mode)
+                                          gint                 offset_y)
 {
   GimpTool       *tool = GIMP_TOOL (ps_tool);
   GimpChannelOps  op;
@@ -701,7 +699,7 @@ gimp_paint_select_tool_update_image_mask (GimpPaintSelectTool *ps_tool,
     {
       GimpImage *image = gimp_display_get_image (tool->display);
 
-      if (mode == GIMP_PAINT_SELECT_MODE_ADD)
+      if (ps_tool->painting_mode == GIMP_PAINT_SELECT_MODE_ADD)
         op = GIMP_CHANNEL_OP_ADD;
       else
         op = GIMP_CHANNEL_OP_SUBTRACT;
@@ -797,7 +795,7 @@ gimp_paint_select_tool_paint_scribble (GimpPaintSelectTool *ps_tool)
      an optimization should be triggered.
    */
 
-  if (options->mode == GIMP_PAINT_SELECT_MODE_ADD)
+  if (ps_tool->painting_mode == GIMP_PAINT_SELECT_MODE_ADD)
     {
       scribble_value = 1.f;
     }
