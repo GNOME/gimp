@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-15 13:49+0000\n"
-"PO-Revision-Date: 2025-11-16 08:16+0800\n"
+"POT-Creation-Date: 2025-11-20 20:50+0000\n"
+"PO-Revision-Date: 2025-11-21 09:44+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -43,9 +43,9 @@ msgstr "GIMP 团队"
 msgid "GNU Image Manipulation Program"
 msgstr "GNU 图像处理程序"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:17 desktop/gimp.desktop.in.in:6
-msgid "Create images and edit photographs"
-msgstr "创建图像或编辑照片"
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:17
+msgid "High-end image creation and manipulation"
+msgstr "高端图像创作和处理"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:19
 msgid ""
@@ -106,6 +106,10 @@ msgstr "GIMP 中正在编辑的扫描版画。创作者 Liam（CC0）"
 #: desktop/gimp.desktop.in.in:5
 msgid "Image Editor"
 msgstr "图像编辑器"
+
+#: desktop/gimp.desktop.in.in:6
+msgid "Create images and edit photographs"
+msgstr "创建图像或编辑照片"
 
 #. TRANSLATORS: Search terms to find this application.
 #. 1. Do NOT translate or localize the semicolons!
@@ -388,7 +392,7 @@ msgid "Buffers"
 msgstr "缓冲区"
 
 #: app/actions/actions.c:123 app/dialogs/dialogs.c:380
-#: app/propgui/gimppropgui-newsprint.c:160
+#: app/propgui/gimppropgui-newsprint.c:160 app/widgets/gimpitemchooser.c:294
 #: app/widgets/gimppickablechooser.c:292
 msgid "Channels"
 msgstr "通道"
@@ -497,12 +501,14 @@ msgid "Image"
 msgstr "图像"
 
 #: app/actions/actions.c:195 app/dialogs/dialogs.c:338
+#: app/widgets/gimpimagechooser.c:185 app/widgets/gimpitemchooser.c:213
 #: app/widgets/gimppickablechooser.c:211
 msgid "Images"
 msgstr "图像"
 
 #: app/actions/actions.c:198 app/dialogs/dialogs.c:376
-#: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablechooser.c:267
+#: app/dialogs/resize-dialog.c:171 app/widgets/gimpitemchooser.c:269
+#: app/widgets/gimppickablechooser.c:267
 msgid "Layers"
 msgstr "图层"
 
@@ -573,7 +579,7 @@ msgid "Tools"
 msgstr "工具"
 
 #: app/actions/actions.c:243 app/dialogs/dialogs.c:384
-#: app/tools/gimppathtool.c:188
+#: app/tools/gimppathtool.c:188 app/widgets/gimpitemchooser.c:319
 msgid "Paths"
 msgstr "路径"
 
@@ -2458,7 +2464,7 @@ msgstr "240 秒"
 
 #: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263
 #: app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
-#: app/actions/file-commands.c:472 app/actions/gradient-editor-commands.c:410
+#: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
@@ -2581,7 +2587,7 @@ msgid "Untitled"
 msgstr "无标题"
 
 #: app/actions/data-commands.c:224 app/actions/documents-commands.c:210
-#: app/actions/file-commands.c:578
+#: app/actions/file-commands.c:569
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "无法在文件管理器中显示文件：%s"
@@ -4207,7 +4213,7 @@ msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "退出 GNU 图像处理程序"
 
-#: app/actions/file-actions.c:137 app/actions/file-actions.c:308
+#: app/actions/file-actions.c:137 app/actions/file-actions.c:305
 msgctxt "file-action"
 msgid "_Save"
 msgstr "保存(_S)"
@@ -4249,7 +4255,7 @@ msgctxt "file-action"
 msgid "Save this image and close its window"
 msgstr "保存此图像并关闭窗口"
 
-#: app/actions/file-actions.c:163 app/actions/file-actions.c:353
+#: app/actions/file-actions.c:163 app/actions/file-actions.c:350
 msgctxt "file-action"
 msgid "E_xport..."
 msgstr "导出(_X)…"
@@ -4279,17 +4285,17 @@ msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "将图像导出到如 PNG 或 JPEG 的多种文件格式"
 
-#: app/actions/file-actions.c:314
+#: app/actions/file-actions.c:311
 msgctxt "file-action"
 msgid "_Save..."
 msgstr "保存(_S)…"
 
-#: app/actions/file-actions.c:320
+#: app/actions/file-actions.c:317
 #, c-format
 msgid "Export to %s"
 msgstr "导出到 %s"
 
-#: app/actions/file-actions.c:336
+#: app/actions/file-actions.c:333
 #, c-format
 msgid "Over_write %s"
 msgstr "覆盖(_W) %s"
@@ -4297,12 +4303,12 @@ msgstr "覆盖(_W) %s"
 #. TRANSLATORS: the %s will be replaced by the file name of a
 #. * recently opened image.
 #.
-#: app/actions/file-actions.c:408
+#: app/actions/file-actions.c:403
 #, c-format
 msgid "Open \"%s\""
 msgstr "打开“%s”"
 
-#: app/actions/file-commands.c:121 app/actions/file-commands.c:602
+#: app/actions/file-commands.c:121 app/actions/file-commands.c:593
 #: app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "打开图像"
@@ -4315,56 +4321,56 @@ msgstr "作为图层打开图像"
 msgid "Open Image as Link Layer"
 msgstr "作为链接图层打开图像"
 
-#: app/actions/file-commands.c:330
+#: app/actions/file-commands.c:321
 msgid "No changes need to be saved"
 msgstr "没有需要保存的修改"
 
-#: app/actions/file-commands.c:337 app/actions/file-commands.c:814
+#: app/actions/file-commands.c:328 app/actions/file-commands.c:805
 #: app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "保存图像"
 
-#: app/actions/file-commands.c:343
+#: app/actions/file-commands.c:334
 msgid "Save a Copy of the Image"
 msgstr "保存图像的副本"
 
-#: app/actions/file-commands.c:421
+#: app/actions/file-commands.c:412
 msgid "Create New Template"
 msgstr "新建模板"
 
-#: app/actions/file-commands.c:425
+#: app/actions/file-commands.c:416
 msgid "Enter a name for this template"
 msgstr "给这个模板输入一个名字"
 
-#: app/actions/file-commands.c:455
+#: app/actions/file-commands.c:446
 msgid "Revert failed. No file name associated with this image."
 msgstr "恢复失败。没有名字与此图像相关的文件。"
 
-#: app/actions/file-commands.c:467
+#: app/actions/file-commands.c:458
 msgid "Revert Image"
 msgstr "恢复图像"
 
-#: app/actions/file-commands.c:473
+#: app/actions/file-commands.c:464
 msgid "_Revert"
 msgstr "恢复(_R)"
 
-#: app/actions/file-commands.c:491
+#: app/actions/file-commands.c:482
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "将“%s”恢复到“%s”？"
 
-#: app/actions/file-commands.c:496
+#: app/actions/file-commands.c:487
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
 "如果将图像恢复到硬盘上保存的状态，您将会丢失所有的改变，包括所有的撤消信息。"
 
-#: app/actions/file-commands.c:836
+#: app/actions/file-commands.c:827
 msgid "(Unnamed Template)"
 msgstr "（未命名模板）"
 
-#: app/actions/file-commands.c:883
+#: app/actions/file-commands.c:874
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -6965,8 +6971,7 @@ msgstr "图层属性"
 msgid "Edit Layer Attributes"
 msgstr "编辑图层属性"
 
-#: app/actions/layers-commands.c:415 app/widgets/gimpdrawabletreeview.c:649
-#: app/widgets/gimplayertreeview.c:915
+#: app/actions/layers-commands.c:415
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "新建图层"
@@ -13558,7 +13563,7 @@ msgid "Cannot rename effect masks."
 msgstr "无法重命名特效蒙板。"
 
 #: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:735
-#: app/core/gimplayer.c:2049 app/core/gimplayermask.c:294
+#: app/core/gimplayer.c:2051 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "%s 蒙板"
@@ -14331,7 +14336,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "固定浮动选区"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1079
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1081
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14410,6 +14415,10 @@ msgid "Floating Mask"
 msgstr "浮动蒙板"
 
 #: app/core/gimplayer.c:781
+msgid "Floating Channel"
+msgstr "浮动通道"
+
+#: app/core/gimplayer.c:783
 msgid "Floating Layer"
 msgstr "浮动图层"
 
@@ -14417,7 +14426,7 @@ msgstr "浮动图层"
 #. * either a "Floating Layer" or "Floating Mask" usually. The second will
 #. * be a layer name.
 #.
-#: app/core/gimplayer.c:786
+#: app/core/gimplayer.c:788
 #, c-format
 msgid ""
 "%s\n"
@@ -14426,73 +14435,73 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1940
+#: app/core/gimplayer.c:1942
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "无法添加图层蒙板，因为已有一个。"
 
-#: app/core/gimplayer.c:1952
+#: app/core/gimplayer.c:1954
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "无法添加跟指定图层尺寸不同的图层蒙板。"
 
-#: app/core/gimplayer.c:1958
+#: app/core/gimplayer.c:1960
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "添加图层蒙板"
 
-#: app/core/gimplayer.c:2088
+#: app/core/gimplayer.c:2090
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "将透明度转移到蒙板"
 
-#: app/core/gimplayer.c:2252
+#: app/core/gimplayer.c:2254
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "应用图层蒙板"
 
-#: app/core/gimplayer.c:2253
+#: app/core/gimplayer.c:2255
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "删除图层蒙板"
 
-#: app/core/gimplayer.c:2360
+#: app/core/gimplayer.c:2362
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "启用图层蒙板"
 
-#: app/core/gimplayer.c:2361
+#: app/core/gimplayer.c:2363
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "禁用图层蒙板"
 
-#: app/core/gimplayer.c:2442
+#: app/core/gimplayer.c:2444
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "显示图层蒙板"
 
-#: app/core/gimplayer.c:2521
+#: app/core/gimplayer.c:2523
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "添加透明通道"
 
-#: app/core/gimplayer.c:2551
+#: app/core/gimplayer.c:2553
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "删除透明通道"
 
-#: app/core/gimplayer.c:2572
+#: app/core/gimplayer.c:2574
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "图层到图像大小"
 
-#: app/core/gimplayer.c:2755
+#: app/core/gimplayer.c:2757
 msgid "Set layer's blend space"
 msgstr "设置图层混合空间"
 
-#: app/core/gimplayer.c:2802
+#: app/core/gimplayer.c:2804
 msgid "Set layer's composite space"
 msgstr "设置图层合成空间"
 
-#: app/core/gimplayer.c:2849
+#: app/core/gimplayer.c:2851
 msgid "Set layer's composite mode"
 msgstr "设置图层合成模式"
 
@@ -19426,11 +19435,11 @@ msgid ""
 "Only platform-native file paths are supported: '%s' cannot be opened as link."
 msgstr "仅支持平台原生的文件路径：“%s”无法作为链接打开。"
 
-#: app/file/file-open.c:985 app/file/file-save.c:132
+#: app/file/file-open.c:985 app/file/file-save.c:122
 msgid "Not a regular file"
 msgstr "不是普通文件"
 
-#: app/file/file-open.c:994 app/file/file-save.c:141
+#: app/file/file-open.c:994 app/file/file-save.c:131
 msgid "Permission denied"
 msgstr "访问被拒绝"
 
@@ -19462,15 +19471,11 @@ msgstr "下载了大小为 %s 的图像数据"
 msgid "Uploaded %s of image data"
 msgstr "上传了大小为 %s 的图像数据"
 
-#: app/file/file-save.c:105
-msgid "There is no active layer to save"
-msgstr "没有激活图层可以保存"
-
-#: app/file/file-save.c:125
+#: app/file/file-save.c:115
 msgid "Failed to get file information"
 msgstr "无法获取文件信息"
 
-#: app/file/file-save.c:297
+#: app/file/file-save.c:287
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "%s 插件无法保存图像"
@@ -27246,6 +27251,11 @@ msgstr "锁定位置和大小"
 msgid "Cannot select items while a floating selection is active."
 msgstr "当浮动选区激活时无法选择项目。"
 
+#: app/widgets/gimpdrawabletreeview.c:649 app/widgets/gimplayertreeview.c:915
+msgctxt "singular"
+msgid "New Layer"
+msgstr "新建图层"
+
 #: app/widgets/gimpdrawabletreeview-filters.c:165
 msgid "Layer Effects"
 msgstr "图层特效"
@@ -27691,6 +27701,11 @@ msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] "索引颜色（%d 个颜色）"
 
+#: app/widgets/gimpitemchooser.c:243 app/widgets/gimpitemchooser.c:571
+#: app/widgets/gimppickablechooser.c:241 app/widgets/gimppickablechooser.c:524
+msgid "Select an image in the left pane"
+msgstr "在左侧面板中选择图像"
+
 #: app/widgets/gimpitemtreeview.c:570
 msgid "Set Item Exclusive Content Lock"
 msgstr "设置项目唯一内容锁定"
@@ -27883,10 +27898,6 @@ msgid ""
 msgstr ""
 "无法运行 %s 调用。\n"
 "%s"
-
-#: app/widgets/gimppickablechooser.c:241 app/widgets/gimppickablechooser.c:524
-msgid "Select an image in the left pane"
-msgstr "在左侧面板中选择图像"
 
 #: app/widgets/gimppluginview.c:146
 msgid "Plug-In"
@@ -29300,6 +29311,9 @@ msgstr "工具预设菜单"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
+
+#~ msgid "There is no active layer to save"
+#~ msgstr "没有激活图层可以保存"
 
 #~ msgid "GIMP output. Type any character to close this window."
 #~ msgstr "GIMP 输出。键入任意字符以关闭此窗口。"
