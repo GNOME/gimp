@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-10 21:04+0000\n"
-"PO-Revision-Date: 2025-11-11 04:15+0100\n"
+"POT-Creation-Date: 2025-11-25 23:31+0000\n"
+"PO-Revision-Date: 2025-11-26 02:30+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -594,11 +594,11 @@ msgstr "ჟალუზები"
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:417
-#: plug-ins/common/file-jp2.c:1619 plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:429
+#: plug-ins/common/file-jp2.c:1620 plug-ins/common/file-pcx.c:710
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:726
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
-#: plug-ins/common/file-pnm.c:845 plug-ins/common/file-qoi.c:296
+#: plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:820 plug-ins/common/file-raw-data.c:2004
 #: plug-ins/common/file-sunras.c:1059 plug-ins/common/file-tga.c:1103
 #: plug-ins/common/file-tim.c:402 plug-ins/common/file-tim.c:509
@@ -887,12 +887,12 @@ msgid "With gradient power (0,1)"
 msgstr ""
 
 #: plug-ins/common/cml-explorer.c:207
-msgid "Multiply rand. value (0,1)"
-msgstr ""
+msgid "Multiply random value (0,1)"
+msgstr "შემთხვევითი მნიშვნელობის გამრავლება (0,1)"
 
 #: plug-ins/common/cml-explorer.c:208
-msgid "Multiply rand. value (0,2)"
-msgstr ""
+msgid "Multiply random value (0,2)"
+msgstr "შემთხვევითი მნიშვნელობის გამრავლება (0,2)"
 
 #: plug-ins/common/cml-explorer.c:209
 msgid "Multiply gradient (0,1)"
@@ -923,11 +923,11 @@ msgid "Continuous gradient"
 msgstr "უწყვეტი გრადიენტი"
 
 #: plug-ins/common/cml-explorer.c:229
-msgid "Continuous grad. w/o gap"
-msgstr ""
+msgid "Continuous gradient, without gap"
+msgstr "უწყვეტი გრადიენტი, გაწელვის გარეშე"
 
 #: plug-ins/common/cml-explorer.c:230
-msgid "Random, ch. independent"
+msgid "Random, channel independent"
 msgstr ""
 
 #: plug-ins/common/cml-explorer.c:231
@@ -935,11 +935,11 @@ msgid "Random shared"
 msgstr "შემთხვევითი გაზიარებული"
 
 #: plug-ins/common/cml-explorer.c:232
-msgid "Randoms from seed"
+msgid "Random from seed"
 msgstr "შემთხვევითი თესლიდან"
 
 #: plug-ins/common/cml-explorer.c:233
-msgid "Randoms from seed (shared)"
+msgid "Random from seed (shared)"
 msgstr "შემთხვევითი თესლიდან (გაზიარებული)"
 
 #: plug-ins/common/cml-explorer.c:299 plug-ins/common/cml-explorer.c:307
@@ -1142,16 +1142,16 @@ msgid "Use cyclic range"
 msgstr ""
 
 #: plug-ins/common/cml-explorer.c:1793
-msgid "Mod. rate:"
-msgstr ""
+msgid "Modification rate:"
+msgstr "ცვლილების სიხშირე:"
 
 #: plug-ins/common/cml-explorer.c:1800
-msgid "Env. sensitivity:"
+msgid "Environment sensitivity:"
 msgstr ""
 
 #: plug-ins/common/cml-explorer.c:1807
-msgid "Diffusion dist.:"
-msgstr ""
+msgid "Diffusion distance:"
+msgstr "დიფუზიის მანძილი:"
 
 #: plug-ins/common/cml-explorer.c:1814
 msgid "# of subranges:"
@@ -1178,16 +1178,16 @@ msgid "Plot a Graph of the Settings"
 msgstr ""
 
 #: plug-ins/common/cml-explorer.c:1897
-msgid "Ch. sensitivity:"
-msgstr ""
+msgid "Channel sensitivity:"
+msgstr "არხის მგრძნობელობა:"
 
 #: plug-ins/common/cml-explorer.c:1905
 msgid "Mutation rate:"
 msgstr "მუტაციის სიხშირე:"
 
 #: plug-ins/common/cml-explorer.c:1913
-msgid "Mutation dist.:"
-msgstr "მუტაციის განაწილება:"
+msgid "Mutation distance:"
+msgstr "მუტაციის მანძილი:"
 
 #: plug-ins/common/cml-explorer.c:2008
 msgid "Graph of the Current Settings"
@@ -1195,7 +1195,7 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:727 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:730 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1210 plug-ins/gfig/gfig-dialog.c:1355
 #: plug-ins/ifs-compose/ifs-compose.c:1213
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -1947,7 +1947,7 @@ msgstr ""
 #: plug-ins/common/file-raw-data.c:608 plug-ins/common/file-raw-data.c:796
 #: plug-ins/common/file-raw-data.c:1841
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:754
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:756
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
@@ -2542,7 +2542,7 @@ msgstr ""
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
-#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1375
+#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1376
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
@@ -2625,11 +2625,11 @@ msgstr ""
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:358
-#: plug-ins/common/file-jp2.c:1804 plug-ins/common/file-jpegxl.c:1389
+#: plug-ins/common/file-jp2.c:1813 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1083 plug-ins/common/file-pix.c:636
-#: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1623
+#: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:792
+#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:794
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
 #: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:682
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
@@ -3202,7 +3202,7 @@ msgstr "კადრის ინფორმაცია"
 msgid "local colormap"
 msgstr "ლოკალური ფერების რუკა"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:434
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:446
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr ""
@@ -3833,7 +3833,7 @@ msgstr "არასწორი, ან ნაკლული ILBM გამო
 msgid "ILBM contains no image data - likely a palette file"
 msgstr ""
 
-#: plug-ins/common/file-iff.c:363
+#: plug-ins/common/file-iff.c:363 plug-ins/common/file-iff.c:382
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "არასწორი ILBM ფერების რუკის ზომა"
@@ -4017,65 +4017,70 @@ msgstr ""
 msgid "Profile: %s"
 msgstr "პროფილი: %s"
 
-#: plug-ins/common/file-jp2.c:1383 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-jp2.c:1384 plug-ins/common/file-wmf.c:238
 #: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr ""
 
-#: plug-ins/common/file-jp2.c:1392
+#: plug-ins/common/file-jp2.c:1393
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr ""
 
-#: plug-ins/common/file-jp2.c:1408
+#: plug-ins/common/file-jp2.c:1409
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr ""
 
-#: plug-ins/common/file-jp2.c:1416
+#: plug-ins/common/file-jp2.c:1417
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr ""
 
-#: plug-ins/common/file-jp2.c:1424
+#: plug-ins/common/file-jp2.c:1425
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr ""
 
-#: plug-ins/common/file-jp2.c:1432
+#: plug-ins/common/file-jp2.c:1433
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr ""
 
-#: plug-ins/common/file-jp2.c:1463
+#: plug-ins/common/file-jp2.c:1464
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr ""
 
-#: plug-ins/common/file-jp2.c:1520
+#: plug-ins/common/file-jp2.c:1521
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr ""
 
-#: plug-ins/common/file-jp2.c:1531
+#: plug-ins/common/file-jp2.c:1532
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr ""
 
-#: plug-ins/common/file-jp2.c:1541
+#: plug-ins/common/file-jp2.c:1542
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr ""
 
-#: plug-ins/common/file-jp2.c:1553
+#: plug-ins/common/file-jp2.c:1554
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr ""
 
-#: plug-ins/common/file-jp2.c:1580
+#: plug-ins/common/file-jp2.c:1581
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
+msgstr ""
+
+#: plug-ins/common/file-jp2.c:1635
+#, c-format
+msgid "Defined row size is too large in JP2 image '%s'."
 msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:141 plug-ins/common/file-jpegxl.c:168
@@ -4176,7 +4181,7 @@ msgstr ""
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
-#: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:725
+#: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:728
 #: plug-ins/common/file-raw-data.c:812
 #: plug-ins/common/file-seattle-filmworks.c:244
 #: plug-ins/common/file-seattle-filmworks.c:283
@@ -4519,7 +4524,7 @@ msgstr ""
 msgid "Import from PCX"
 msgstr "PCX-დან შემოტანა"
 
-#: plug-ins/common/file-pcx.c:1151 plug-ins/common/file-pnm.c:1619
+#: plug-ins/common/file-pcx.c:1151 plug-ins/common/file-pnm.c:1628
 msgid "Cannot export images with alpha channel."
 msgstr ""
 
@@ -4544,7 +4549,7 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr ""
 
 #: plug-ins/common/file-pcx.c:1266 plug-ins/common/file-qoi.c:369
-#: plug-ins/common/file-svg.c:801 plug-ins/common/file-svg.c:817
+#: plug-ins/common/file-svg.c:803 plug-ins/common/file-svg.c:819
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr ""
@@ -4822,7 +4827,7 @@ msgstr "PNG გამოსახულება"
 msgid "APNG image"
 msgstr "APNG გამოსახულება"
 
-#: plug-ins/common/file-png.c:331 plug-ins/common/file-svg.c:356
+#: plug-ins/common/file-png.c:331
 msgid "PNG"
 msgstr "PNG"
 
@@ -5130,71 +5135,71 @@ msgstr ""
 msgid "PFM export handles all images without transparency."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:723 plug-ins/common/file-pnm.c:755
-#: plug-ins/common/file-pnm.c:764 plug-ins/common/file-pnm.c:779
-#: plug-ins/common/file-pnm.c:794 plug-ins/common/file-pnm.c:1000
-#: plug-ins/common/file-pnm.c:1096 plug-ins/common/file-pnm.c:1185
-#: plug-ins/common/file-pnm.c:1246
+#: plug-ins/common/file-pnm.c:726 plug-ins/common/file-pnm.c:758
+#: plug-ins/common/file-pnm.c:767 plug-ins/common/file-pnm.c:782
+#: plug-ins/common/file-pnm.c:797 plug-ins/common/file-pnm.c:1003
+#: plug-ins/common/file-pnm.c:1105 plug-ins/common/file-pnm.c:1194
+#: plug-ins/common/file-pnm.c:1255
 msgid "Premature end of file."
 msgstr "ფაილის მოულოდნელი დასასრული."
 
-#: plug-ins/common/file-pnm.c:743
+#: plug-ins/common/file-pnm.c:746
 msgid "File not in a supported format."
 msgstr "ფაილის ფორმატი მხარდაუჭერელია."
 
-#: plug-ins/common/file-pnm.c:758
+#: plug-ins/common/file-pnm.c:761
 msgid "Invalid X resolution."
 msgstr "არასწორი X გარჩევადობა."
 
-#: plug-ins/common/file-pnm.c:760 plug-ins/common/file-pnm.c:934
+#: plug-ins/common/file-pnm.c:763 plug-ins/common/file-pnm.c:937
 msgid "Image width is larger than GIMP can handle."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:767
+#: plug-ins/common/file-pnm.c:770
 msgid "Invalid Y resolution."
 msgstr "არასწორი Y გარჩევადობა."
 
-#: plug-ins/common/file-pnm.c:769
+#: plug-ins/common/file-pnm.c:772
 msgid "Image height is larger than GIMP can handle."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:783
+#: plug-ins/common/file-pnm.c:786
 msgid "Bogus scale factor."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:785
+#: plug-ins/common/file-pnm.c:788
 msgid "Unsupported scale factor."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:799
+#: plug-ins/common/file-pnm.c:802 plug-ins/common/file-pnm.c:1080
 msgid "Unsupported maximum value."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:928
+#: plug-ins/common/file-pnm.c:931
 msgid "PAM: Unsupported unofficial PNM variant."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:932
+#: plug-ins/common/file-pnm.c:935
 msgid "PAM: Premature end of file."
 msgstr "PAM: ფაილის მოულოდნელი დასასრული."
 
-#: plug-ins/common/file-pnm.c:936
+#: plug-ins/common/file-pnm.c:939
 msgid "PAM: Invalid X resolution."
 msgstr "PAM: არასწორი X გარჩევადობა."
 
-#: plug-ins/common/file-pnm.c:938
+#: plug-ins/common/file-pnm.c:941
 msgid "PAM: Invalid Y resolution."
 msgstr "PAM: არასწორი Y გარჩევადობა."
 
-#: plug-ins/common/file-pnm.c:940
+#: plug-ins/common/file-pnm.c:943
 msgid "PAM: Invalid maximum value."
 msgstr "PAM: არასწორი მაქსიმალური მნიშვნელობა."
 
-#: plug-ins/common/file-pnm.c:942
+#: plug-ins/common/file-pnm.c:945
 msgid "PAM: Invalid depth."
 msgstr "PAM: არასწორი სიღრმე."
 
-#: plug-ins/common/file-pnm.c:944
+#: plug-ins/common/file-pnm.c:947
 msgid "PAM: Unsupported tupltype."
 msgstr ""
 
@@ -6240,69 +6245,72 @@ msgstr ""
 msgid "Write error occurred"
 msgstr "ჩაწერის შეცდომა"
 
-#: plug-ins/common/file-svg.c:276
+#: plug-ins/common/file-svg.c:278
 msgid "SVG image"
 msgstr "SVG გამოსახულება"
 
-#: plug-ins/common/file-svg.c:279
+#: plug-ins/common/file-svg.c:281
 msgid "Loads files in SVG file format"
 msgstr "SVG ფორმატის ფაილის ჩატვირთვა"
 
-#: plug-ins/common/file-svg.c:294
+#: plug-ins/common/file-svg.c:296
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:303
+#: plug-ins/common/file-svg.c:305
 msgid "_Paths"
 msgstr "_კონტურები"
 
-#: plug-ins/common/file-svg.c:304
+#: plug-ins/common/file-svg.c:306
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:305
+#: plug-ins/common/file-svg.c:307
 msgid "Don't import paths"
 msgstr "კონტურები შემოტანილი არ იქნება"
 
-#: plug-ins/common/file-svg.c:306
+#: plug-ins/common/file-svg.c:308
 msgid "Import paths individually"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:307
+#: plug-ins/common/file-svg.c:309
 msgid "Merge imported paths"
 msgstr "შემოტანილი კონტურების შერწყმა"
 
-#: plug-ins/common/file-svg.c:319
+#: plug-ins/common/file-svg.c:321
 msgid "Scalable Vector Graphic"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:322
+#: plug-ins/common/file-svg.c:324
 msgid "Exports files in SVG file format"
 msgstr "ფაილების გატანა SVG ფორმატში"
 
-#: plug-ins/common/file-svg.c:323
+#: plug-ins/common/file-svg.c:325
 msgid "Exports files in SVG file format (Scalable Vector Graphic)"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:348
+#: plug-ins/common/file-svg.c:350
 msgid "_Title"
 msgstr "_სათაური"
 
-#: plug-ins/common/file-svg.c:349
+#: plug-ins/common/file-svg.c:351
 msgid "Optional <title> for SVG"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:354
+#: plug-ins/common/file-svg.c:356
 msgid "Em_bed raster layers as"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:357 plug-ins/file-jpeg/jpeg.c:195
-#: plug-ins/file-tiff/file-tiff.c:144
-msgid "JPEG"
-msgstr "JPEG"
-
 #: plug-ins/common/file-svg.c:358
+msgid "PNG (always)"
+msgstr ""
+
+#: plug-ins/common/file-svg.c:359
+msgid "JPEG (for opaque images, PNG otherwise)"
+msgstr ""
+
+#: plug-ins/common/file-svg.c:360
 msgid "Do not export raster layers"
 msgstr ""
 
@@ -6311,15 +6319,15 @@ msgstr ""
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:405
+#: plug-ins/common/file-svg.c:407
 msgid "Disable safety size limits?"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:410
+#: plug-ins/common/file-svg.c:412
 msgid "_No"
 msgstr "_არა"
 
-#: plug-ins/common/file-svg.c:411
+#: plug-ins/common/file-svg.c:413
 msgid "_Yes"
 msgstr "_დიახ"
 
@@ -6333,35 +6341,35 @@ msgstr "_დიახ"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:435
+#: plug-ins/common/file-svg.c:437
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
 "consume too much memory."
 msgstr ""
 
-#: plug-ins/common/file-svg.c:447
+#: plug-ins/common/file-svg.c:449
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:454
+#: plug-ins/common/file-svg.c:456
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:756 plug-ins/file-exr/file-exr.c:381
+#: plug-ins/common/file-svg.c:758 plug-ins/file-exr/file-exr.c:381
 #: plug-ins/file-exr/file-exr.c:395
 msgid "Unknown reason"
 msgstr "უცნობი მიზეზი"
 
-#: plug-ins/common/file-svg.c:762
+#: plug-ins/common/file-svg.c:764
 msgid "Rendering SVG"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:772
+#: plug-ins/common/file-svg.c:774
 msgid "Rendered SVG"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:1123
+#: plug-ins/common/file-svg.c:1125
 msgid ""
 "The SVG format only requires viewers to display image links for SVG, PNG, "
 "and JPEG images.\n"
@@ -7659,7 +7667,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/plugin-browser.c:372
-#: plug-ins/filter-browser/filter-browser.c:608
+#: plug-ins/filter-browser/filter-browser.c:610
 msgid "Searching by name"
 msgstr "სახელით ძებნა"
 
@@ -7671,7 +7679,7 @@ msgstr[0] "%d დამატება"
 msgstr[1] "%d დამატება"
 
 #: plug-ins/common/plugin-browser.c:397
-#: plug-ins/filter-browser/filter-browser.c:675
+#: plug-ins/filter-browser/filter-browser.c:677
 msgid "No matches for your query"
 msgstr "დათხვევა არ არსებობს"
 
@@ -7683,7 +7691,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: plug-ins/common/plugin-browser.c:531
-#: plug-ins/filter-browser/filter-browser.c:677
+#: plug-ins/filter-browser/filter-browser.c:679
 msgid "No matches"
 msgstr "დათხვევა არ არსებობს"
 
@@ -8940,7 +8948,7 @@ msgstr "მითითებული DLL ფაილი ვერ მოი�
 
 #: plug-ins/common/web-browser.c:208
 msgid "There is no application associated with the given file name extension."
-msgstr ""
+msgstr "მითითებული ფაილის გამოსახულებასთან აპლიკაციები ასოცირებული არაა."
 
 #: plug-ins/common/web-browser.c:214
 msgid "A sharing violation occurred."
@@ -10144,6 +10152,10 @@ msgstr ""
 #: plug-ins/file-jpeg/jpeg.c:186
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:144
+msgid "JPEG"
+msgstr "JPEG"
 
 #: plug-ins/file-jpeg/jpeg.c:216
 msgid "S_moothing"
@@ -11357,17 +11369,17 @@ msgstr ""
 msgid "Frame %d (%dms)"
 msgstr ""
 
-#: plug-ins/filter-browser/filter-browser.c:286
-#: plug-ins/filter-browser/filter-browser.c:321
+#: plug-ins/filter-browser/filter-browser.c:288
+#: plug-ins/filter-browser/filter-browser.c:323
 msgid "Allowed values:"
 msgstr "ნებადართული მნიშვნელობები:"
 
-#: plug-ins/filter-browser/filter-browser.c:419
+#: plug-ins/filter-browser/filter-browser.c:421
 #, c-format
 msgid "Operation name: %s"
 msgstr "ოპერაციის სახელი: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:432
+#: plug-ins/filter-browser/filter-browser.c:434
 #, c-format
 msgid "Categories: %s"
 msgstr "კატეგორიები: %s"
@@ -11378,7 +11390,7 @@ msgstr "კატეგორიები: %s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:462
+#: plug-ins/filter-browser/filter-browser.c:464
 #: plug-ins/gradient-flare/gradient-flare.c:2952
 #: plug-ins/gradient-flare/gradient-flare.c:3702
 #: plug-ins/gradient-flare/gradient-flare.c:3804
@@ -11386,66 +11398,66 @@ msgstr "კატეგორიები: %s"
 msgid "Parameters"
 msgstr "პარამეტრები"
 
-#: plug-ins/filter-browser/filter-browser.c:494
+#: plug-ins/filter-browser/filter-browser.c:496
 msgid "Additional Information"
 msgstr "დამატებითი პარამეტრები"
 
-#: plug-ins/filter-browser/filter-browser.c:500
+#: plug-ins/filter-browser/filter-browser.c:502
 #, c-format
 msgid "License: %s"
 msgstr "ლიცენზია: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:611
+#: plug-ins/filter-browser/filter-browser.c:613
 msgid "Searching by title"
 msgstr "სათაურით ძებნა"
 
-#: plug-ins/filter-browser/filter-browser.c:614
+#: plug-ins/filter-browser/filter-browser.c:616
 msgid "Searching by description"
 msgstr "აღწერით ძებნა"
 
-#: plug-ins/filter-browser/filter-browser.c:617
+#: plug-ins/filter-browser/filter-browser.c:619
 msgid "Searching by category"
 msgstr "კატეგორიით ძებნა"
 
-#: plug-ins/filter-browser/filter-browser.c:682
+#: plug-ins/filter-browser/filter-browser.c:684
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
 msgstr[0] "თქვენს მოთხოვნას ემთხვევა %d ფილტრი"
 msgstr[1] "თქვენს მოთხოვნას ემთხვევა %d ფილტრი"
 
-#: plug-ins/filter-browser/filter-browser.c:688
+#: plug-ins/filter-browser/filter-browser.c:690
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
 msgstr[0] "%d ფილტრი"
 msgstr[1] "%d ფილტრი"
 
-#: plug-ins/filter-browser/filter-browser.c:721
+#: plug-ins/filter-browser/filter-browser.c:724
 msgid "GEGL Filter Browser"
 msgstr ""
 
-#: plug-ins/filter-browser/filter-browser.c:738
+#: plug-ins/filter-browser/filter-browser.c:741
 msgid "by name"
 msgstr "სახელით"
 
-#: plug-ins/filter-browser/filter-browser.c:739
+#: plug-ins/filter-browser/filter-browser.c:742
 msgid "by title"
 msgstr "სათაურით"
 
-#: plug-ins/filter-browser/filter-browser.c:740
+#: plug-ins/filter-browser/filter-browser.c:743
 msgid "by description"
 msgstr "აღწერით"
 
-#: plug-ins/filter-browser/filter-browser.c:827
+#: plug-ins/filter-browser/filter-browser.c:832
 msgid "_GEGL Filter Browser"
 msgstr ""
 
-#: plug-ins/filter-browser/filter-browser.c:832
+#: plug-ins/filter-browser/filter-browser.c:837
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr ""
 
-#: plug-ins/filter-browser/filter-browser.c:834
+#: plug-ins/filter-browser/filter-browser.c:839
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
