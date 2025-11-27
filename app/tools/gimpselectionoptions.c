@@ -49,17 +49,19 @@ enum
 };
 
 
-static void   gimp_selection_options_set_property  (GObject       *object,
-                                                    guint          property_id,
-                                                    const GValue  *value,
-                                                    GParamSpec    *pspec);
-static void   gimp_selection_options_get_property  (GObject       *object,
-                                                    guint          property_id,
-                                                    GValue        *value,
-                                                    GParamSpec    *pspec);
-static void   gimp_selection_options_style_updated (GimpGuiConfig *config,
-                                                    GParamSpec    *pspec,
-                                                    GtkWidget     *box);
+static void          gimp_selection_options_set_property  (GObject       *object,
+                                                           guint          property_id,
+                                                           const GValue  *value,
+                                                           GParamSpec    *pspec);
+static void          gimp_selection_options_get_property  (GObject       *object,
+                                                           guint          property_id,
+                                                           GValue        *value,
+                                                           GParamSpec    *pspec);
+
+static const gchar * gimp_selection_options_get_modifiers (GimpChannelOps   operation);
+static void          gimp_selection_options_style_updated (GimpGuiConfig   *config,
+                                                           GParamSpec      *pspec,
+                                                           GtkWidget       *box);
 
 
 
@@ -175,6 +177,120 @@ gimp_selection_options_get_property (GObject    *object,
     }
 }
 
+GtkWidget *
+gimp_selection_options_gui (GimpToolOptions *tool_options)
+{
+  GObject              *config  = G_OBJECT (tool_options);
+  GimpSelectionOptions *options = GIMP_SELECTION_OPTIONS (tool_options);
+  GtkWidget            *vbox    = gimp_tool_options_gui (tool_options);
+  GtkWidget            *button;
+  GtkWidget            *mode_box;
+
+  /*  the selection operation radio buttons  */
+  mode_box = gimp_selection_options_get_mode_box (tool_options, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), mode_box, FALSE, FALSE, 0);
+  gtk_widget_show (mode_box);
+  options->mode_box = mode_box;
+
+  /*  the antialias toggle button  */
+  button = gimp_prop_check_button_new (config, "antialias", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+
+  options->antialias_toggle = button;
+
+  /*  the feather frame  */
+  {
+    GtkWidget *frame;
+    GtkWidget *scale;
+
+    /*  the feather radius scale  */
+    scale = gimp_prop_spin_scale_new (config, "feather-radius",
+                                      1.0, 10.0, 1);
+
+    frame = gimp_prop_expanding_frame_new (config, "feather", NULL,
+                                           scale, NULL);
+    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  }
+
+  return vbox;
+}
+
+GtkWidget *
+gimp_selection_options_get_mode_box (GimpToolOptions *tool_options,
+                                     GimpChannelOps   min_op,
+                                     GimpChannelOps   max_op)
+{
+  GObject       *config     = G_OBJECT (tool_options);
+  GimpContext   *context    = GIMP_CONTEXT (tool_options);
+  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (context->gimp->config);
+  GtkWidget     *hbox;
+  GtkWidget     *label;
+  GtkWidget     *box;
+  GList         *children;
+  GList         *list;
+  gint           i;
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+
+  label = gtk_label_new (_("Mode:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  box = gimp_prop_enum_icon_box_new (config, "operation", "gimp-selection",
+                                     min_op, max_op);
+
+  g_signal_connect_object (gui_config,
+                           "notify::override-theme-icon-size",
+                           G_CALLBACK (gimp_selection_options_style_updated),
+                           box, G_CONNECT_AFTER);
+  g_signal_connect_object (gui_config,
+                           "notify::custom-icon-size",
+                           G_CALLBACK (gimp_selection_options_style_updated),
+                           box, G_CONNECT_AFTER);
+  gimp_selection_options_style_updated (gui_config, NULL, box);
+
+  gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
+
+  children = gtk_container_get_children (GTK_CONTAINER (box));
+
+  /*  add modifier keys to the tooltips  */
+  for (list = children, i = 0; list; list = list->next, i++)
+    {
+      GtkWidget   *button   = list->data;
+      const gchar *modifier = gimp_selection_options_get_modifiers (i);
+      gchar       *tooltip;
+
+      if (! modifier)
+        continue;
+
+      tooltip = gtk_widget_get_tooltip_text (button);
+
+      if (tooltip)
+        {
+          gchar *tip = g_strdup_printf ("%s  <b>%s</b>", tooltip, modifier);
+
+          gimp_help_set_help_data_with_markup (button, tip, NULL);
+
+          g_free (tip);
+          g_free (tooltip);
+        }
+      else
+        {
+          gimp_help_set_help_data (button, modifier, NULL);
+        }
+    }
+
+  if (GIMP_CHANNEL_OP_REPLACE >= min_op &&
+      GIMP_CHANNEL_OP_REPLACE <= max_op)
+    /*  move GIMP_CHANNEL_OP_REPLACE to the front  */
+    gtk_box_reorder_child (GTK_BOX (box),
+                           GTK_WIDGET (children->next->next->data), 0);
+
+  g_list_free (children);
+
+  return hbox;
+}
+
 static const gchar *
 gimp_selection_options_get_modifiers (GimpChannelOps operation)
 {
@@ -205,109 +321,6 @@ gimp_selection_options_get_modifiers (GimpChannelOps operation)
     }
 
   return gimp_get_mod_string (modifiers);
-}
-
-GtkWidget *
-gimp_selection_options_gui (GimpToolOptions *tool_options)
-{
-  GObject              *config     = G_OBJECT (tool_options);
-  GimpContext          *context    = GIMP_CONTEXT (tool_options);
-  GimpGuiConfig        *gui_config = GIMP_GUI_CONFIG (context->gimp->config);
-  GimpSelectionOptions *options    = GIMP_SELECTION_OPTIONS (tool_options);
-  GtkWidget            *vbox       = gimp_tool_options_gui (tool_options);
-  GtkWidget            *button;
-
-  /*  the selection operation radio buttons  */
-  {
-    GtkWidget *hbox;
-    GtkWidget *label;
-    GtkWidget *box;
-    GList     *children;
-    GList     *list;
-    gint       i;
-
-    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
-
-    options->mode_box = hbox;
-
-    label = gtk_label_new (_("Mode:"));
-    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-    gtk_widget_show (label);
-
-    box = gimp_prop_enum_icon_box_new (config, "operation",
-                                       "gimp-selection", 0, 0);
-
-    g_signal_connect_object (gui_config,
-                             "notify::override-theme-icon-size",
-                             G_CALLBACK (gimp_selection_options_style_updated),
-                             box, G_CONNECT_AFTER);
-    g_signal_connect_object (gui_config,
-                             "notify::custom-icon-size",
-                             G_CALLBACK (gimp_selection_options_style_updated),
-                             box, G_CONNECT_AFTER);
-    gimp_selection_options_style_updated (gui_config, NULL, box);
-
-    gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
-
-    children = gtk_container_get_children (GTK_CONTAINER (box));
-
-    /*  add modifier keys to the tooltips  */
-    for (list = children, i = 0; list; list = list->next, i++)
-      {
-        GtkWidget   *button   = list->data;
-        const gchar *modifier = gimp_selection_options_get_modifiers (i);
-        gchar       *tooltip;
-
-        if (! modifier)
-          continue;
-
-        tooltip = gtk_widget_get_tooltip_text (button);
-
-        if (tooltip)
-          {
-            gchar *tip = g_strdup_printf ("%s  <b>%s</b>", tooltip, modifier);
-
-            gimp_help_set_help_data_with_markup (button, tip, NULL);
-
-            g_free (tip);
-            g_free (tooltip);
-          }
-        else
-          {
-            gimp_help_set_help_data (button, modifier, NULL);
-          }
-      }
-
-    /*  move GIMP_CHANNEL_OP_REPLACE to the front  */
-    gtk_box_reorder_child (GTK_BOX (box),
-                           GTK_WIDGET (children->next->next->data), 0);
-
-    g_list_free (children);
-  }
-
-  /*  the antialias toggle button  */
-  button = gimp_prop_check_button_new (config, "antialias", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-
-  options->antialias_toggle = button;
-
-  /*  the feather frame  */
-  {
-    GtkWidget *frame;
-    GtkWidget *scale;
-
-    /*  the feather radius scale  */
-    scale = gimp_prop_spin_scale_new (config, "feather-radius",
-                                      1.0, 10.0, 1);
-
-    frame = gimp_prop_expanding_frame_new (config, "feather", NULL,
-                                           scale, NULL);
-    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  }
-
-  return vbox;
 }
 
 static void

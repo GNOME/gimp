@@ -46,6 +46,12 @@ struct _GimpSelectionOptions
 };
 
 
-GType       gimp_selection_options_get_type (void) G_GNUC_CONST;
+GType        gimp_selection_options_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_selection_options_gui      (GimpToolOptions *tool_options);
+GtkWidget  * gimp_selection_options_gui         (GimpToolOptions *tool_options);
+
+/* For usage in gimppaintselectoptions.c */
+
+GtkWidget * gimp_selection_options_get_mode_box (GimpToolOptions *tool_options,
+                                                 GimpChannelOps   min_op,
+                                                 GimpChannelOps   max_op);

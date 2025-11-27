@@ -35,7 +35,7 @@ struct _GimpPaintSelectOptions
 {
   GimpToolOptions        parent_instance;
 
-  GimpPaintSelectMode    mode;
+  GimpChannelOps         operation;
   gint                   stroke_width;
   gboolean               show_scribbles;
 };

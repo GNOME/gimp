@@ -26,12 +26,11 @@
 
 #include "tools-types.h"
 
-#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "core/gimptooloptions.h"
 #include "gimppaintselectoptions.h"
+#include "gimpselectionoptions.h"
 #include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
@@ -40,7 +39,7 @@
 enum
 {
   PROP_0,
-  PROP_MODE,
+  PROP_OPERATION,
   PROP_STROKE_WIDTH,
   PROP_SHOW_SCRIBBLES,
 };
@@ -68,13 +67,11 @@ gimp_paint_select_options_class_init (GimpPaintSelectOptionsClass *klass)
   object_class->set_property = gimp_paint_select_options_set_property;
   object_class->get_property = gimp_paint_select_options_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_MODE,
-                         "mode",
-                         _("Mode"),
-                         _("Paint over areas to mark pixels for "
-                           "inclusion or exclusion from selection"),
-                         GIMP_TYPE_PAINT_SELECT_MODE,
-                         GIMP_PAINT_SELECT_MODE_ADD,
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_OPERATION,
+                         "operation",
+                         NULL, NULL,
+                         GIMP_TYPE_CHANNEL_OPS,
+                         GIMP_CHANNEL_OP_ADD,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT  (object_class, PROP_STROKE_WIDTH,
@@ -107,8 +104,8 @@ gimp_paint_select_options_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_MODE:
-      options->mode = g_value_get_enum (value);
+    case PROP_OPERATION:
+      options->operation = g_value_get_enum (value);
       break;
 
     case PROP_STROKE_WIDTH:
@@ -135,8 +132,8 @@ gimp_paint_select_options_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_MODE:
-      g_value_set_enum (value, options->mode);
+    case PROP_OPERATION:
+      g_value_set_enum (value, options->operation);
       break;
 
     case PROP_STROKE_WIDTH:
@@ -167,54 +164,20 @@ gimp_paint_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *hbox;
   GtkWidget *button;
-  GtkWidget *frame;
-  GList     *children;
-  GList     *radio_children;
-  GList     *list;
   GtkWidget *scale;
-  gint       i;
 
-  frame = gimp_prop_enum_radio_frame_new (config, "mode", NULL,
-                                          0, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  /* Mode box */
+  hbox = gimp_selection_options_get_mode_box (tool_options,
+                                              GIMP_CHANNEL_OP_ADD,
+                                              GIMP_CHANNEL_OP_SUBTRACT);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
+  /* stroke width */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_set_visible (hbox, TRUE);
 
-  /* add modifier to tooltips */
-  children = gtk_container_get_children (GTK_CONTAINER (frame));
-  radio_children = gtk_container_get_children (GTK_CONTAINER (children->data));
-  for (list = radio_children, i = 0; list; list = list->next, i++)
-    {
-      GtkWidget   *button   = list->data;
-      const gchar *modifier = NULL;
-      const gchar *label    = NULL;
-
-      if (i == 0)
-        modifier = gimp_get_mod_string (gimp_get_extend_selection_mask ());
-      else if (i == 1)
-        modifier = gimp_get_mod_string (gimp_get_modify_selection_mask ());
-
-      if (! modifier)
-        continue;
-
-      label = gtk_button_get_label (GTK_BUTTON (button));
-
-      if (label)
-        {
-          gchar *tip = g_strdup_printf ("%s  <b>%s</b>", label, modifier);
-
-          gimp_help_set_help_data_with_markup (button, tip, NULL);
-
-          g_free (tip);
-        }
-    }
-  g_list_free (children);
-  g_list_free (radio_children);
-  g_list_free (list);
-
-  /* stroke width */
   scale = gimp_prop_spin_scale_new (config, "stroke-width",
                                     1.0, 10.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);

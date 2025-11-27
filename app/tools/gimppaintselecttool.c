@@ -250,7 +250,7 @@ gimp_paint_select_tool_button_press (GimpTool            *tool,
   /* Always reset the "scribbles" to start with a blank slate. */
   gegl_buffer_set_color (ps_tool->trimap, NULL, grey);
 
-  if (options->mode == GIMP_PAINT_SELECT_MODE_ADD)
+  if (options->operation == GIMP_CHANNEL_OP_ADD)
     {
       gegl_node_set (ps_tool->ps_node, "mode", 0, NULL);
       gegl_node_set (ps_tool->threshold_node, "value", 0.99, NULL);
@@ -260,7 +260,7 @@ gimp_paint_select_tool_button_press (GimpTool            *tool,
       gegl_node_set (ps_tool->ps_node, "mode", 1, NULL);
       gegl_node_set (ps_tool->threshold_node, "value", 0.01, NULL);
     }
-  ps_tool->painting_mode = options->mode;
+  ps_tool->painting_op = options->operation;
 
   ps_tool->process = gimp_paint_select_tool_paint_scribble (ps_tool);
 
@@ -375,7 +375,7 @@ gimp_paint_select_tool_cursor_update (GimpTool         *tool,
   GimpPaintSelectOptions *options  = GIMP_PAINT_SELECT_TOOL_GET_OPTIONS (tool);
   GimpCursorModifier      modifier = GIMP_CURSOR_MODIFIER_NONE;
 
-  if (options->mode == GIMP_PAINT_SELECT_MODE_ADD)
+  if (options->operation == GIMP_CHANNEL_OP_ADD)
     {
       modifier = GIMP_CURSOR_MODIFIER_PLUS;
     }
@@ -500,24 +500,24 @@ gimp_paint_select_tool_modifier_key (GimpTool        *tool,
       key == modify_mask ||
       key == GDK_MOD1_MASK)
     {
-      GimpPaintSelectMode button_mode = options->mode;
+      GimpChannelOps button_op = options->operation;
 
       state &= extend_mask | modify_mask | GDK_MOD1_MASK;
 
       if (press)
         {
           if (key == state || ! state)
-            ps_tool->saved_mode = options->mode;
+            ps_tool->saved_op = options->operation;
         }
       else
         {
           if (! state)
-            button_mode = ps_tool->saved_mode;
+            button_op = ps_tool->saved_op;
         }
 
       if (state & GDK_MOD1_MASK)
         {
-          button_mode = ps_tool->saved_mode;
+          button_op = ps_tool->saved_op;
         }
       else if (state & (extend_mask | modify_mask))
         {
@@ -526,11 +526,11 @@ gimp_paint_select_tool_modifier_key (GimpTool        *tool,
           switch (op)
             {
             case GIMP_CHANNEL_OP_ADD:
-              button_mode = GIMP_PAINT_SELECT_MODE_ADD;
+              button_op = GIMP_CHANNEL_OP_ADD;
               break;
 
             case GIMP_CHANNEL_OP_SUBTRACT:
-              button_mode = GIMP_PAINT_SELECT_MODE_SUBTRACT;
+              button_op = GIMP_CHANNEL_OP_SUBTRACT;
               break;
 
             default:
@@ -538,8 +538,8 @@ gimp_paint_select_tool_modifier_key (GimpTool        *tool,
             }
         }
 
-      if (button_mode != options->mode)
-        g_object_set (options, "mode", button_mode, NULL);
+      if (button_op != options->operation)
+        g_object_set (options, "operation", button_op, NULL);
     }
 }
 
@@ -692,24 +692,18 @@ gimp_paint_select_tool_update_image_mask (GimpPaintSelectTool *ps_tool,
                                           gint                 offset_x,
                                           gint                 offset_y)
 {
-  GimpTool       *tool = GIMP_TOOL (ps_tool);
-  GimpChannelOps  op;
+  GimpTool *tool = GIMP_TOOL (ps_tool);
 
   if (tool->display)
     {
       GimpImage *image = gimp_display_get_image (tool->display);
-
-      if (ps_tool->painting_mode == GIMP_PAINT_SELECT_MODE_ADD)
-        op = GIMP_CHANNEL_OP_ADD;
-      else
-        op = GIMP_CHANNEL_OP_SUBTRACT;
 
       gimp_channel_select_buffer (gimp_image_get_mask (image),
                                   C_("command", "Paint Select"),
                                   buffer,
                                   offset_x,
                                   offset_y,
-                                  op,
+                                  ps_tool->painting_op,
                                   FALSE,
                                   0,
                                   0);
@@ -795,7 +789,7 @@ gimp_paint_select_tool_paint_scribble (GimpPaintSelectTool *ps_tool)
      an optimization should be triggered.
    */
 
-  if (ps_tool->painting_mode == GIMP_PAINT_SELECT_MODE_ADD)
+  if (ps_tool->painting_op == GIMP_CHANNEL_OP_ADD)
     {
       scribble_value = 1.f;
     }
