@@ -6,8 +6,67 @@
 This is the development branch of GIMP.
 
 
-Overview of Changes from GIMP 3.1.4 to GIMP 3.2-RC1
-===================================================
+Overview of Changes from GIMP 3.2.0 RC1 to GIMP 3.2.0 RC2
+=========================================================
+
+Core:
+
+  - Historical restriction preventing saving and exporting when no
+    drawables are selected has been removed as moot. Our export API (and
+    therefore export plug-ins) does not have such requirements anymore
+    (and plug-ins are able to query the selected layers or channels if
+    necessary).
+  - SVG exporting now uses opaque path IDs for the 'id' attribute, and
+    not the GUI-visible path name anymore, to match the SVG specs. The
+    path ID has a limited character set and is not meant to be
+    human-readable.
+  - Clipboard brush and pattern max size limit bumped to 8192 on 64-bit
+    (and stays 1024 on 32-bit architecture).
+  - Path importing from SVG was updated to a copy of the latest C-based
+    librsvg code, making it much more robust.
+  - Proper textual warnings are added when trying to merge filters which
+    cannot be merged.
+
+Tools:
+
+  - MyPaint Brushes: stylus barrel rotation is now supported, when
+    relevant to the specific brush selected.
+  - Paint Select (Playground):
+    * Processing only happens at button release.
+    * More events are processed.
+    * Do not process the graph when all events are inside selection when
+      adding to selection, or outside selection when removing from
+      selection.
+    * Improved local region computation.
+    * Add progression feedback (relies on a patch on libmaxflow, waiting
+      for review).
+    * Reset the scribbles at every stroke.
+
+Graphical User Interface:
+
+  - Define headerbar button colors to ensure they match our theme style.
+
+Plug-Ins:
+
+  - Vulnerabilities fixed: ZDI-CAN-28311, ZDI-CAN-28273.
+
+Build:
+
+  - Package maintainership instructions were moved to the developer
+    website.
+  - Various fixes regarding versioning and RC status on several
+    packages, to handle name clashes and inconsistencies.
+  - Add the ability to localize strings at build time as a build
+    requirement. Technically it implies for us that the build system is
+    set to a locale other than C or POSIX, or that the en_US.UTF-8 is
+    installed on the system. This was causing our list of language not
+    to be properly self-localized in Preferences.
+  - Current scheduled MSVC jobs will build GEGL without ctx until proper
+    fixes are made to make it buildable for this platform.
+
+
+Overview of Changes from GIMP 3.1.4 to GIMP 3.2.0 RC1
+=====================================================
 
 Core:
 
@@ -281,6 +340,10 @@ API:
       * GimpItemChooser
     + Deprecated Classes:
       * GimpDrawableChooser
+
+Metadata:
+
+  - Making GIMP's project vision clearer in metadata description.
 
 Build:
 
