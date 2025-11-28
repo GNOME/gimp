@@ -97,7 +97,7 @@ extern "C"
  */
 
 
-enum
+enum Algorithm : guint
 {
   ALGORITHM_PAINT_BUF              = 1u << 31,
   ALGORITHM_PAINT_MASK             = 1u << 30,
