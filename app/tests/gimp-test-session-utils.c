@@ -22,7 +22,9 @@
 #include <gtk/gtk.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef G_OS_WIN32
 #include <utime.h>
+#endif
 
 #include "libgimpbase/gimpbase.h"
 
