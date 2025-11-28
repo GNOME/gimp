@@ -3,7 +3,7 @@ project('gimp',
   version: '3.2.0-RC1+git',
   meson_version: '>=0.61.0',
   default_options: [
-    'cpp_std=gnu++14',
+    'cpp_std=c++14',
     'buildtype=debugoptimized',
   ],
 )
@@ -405,16 +405,23 @@ endif
 conf.set('ENABLE_RELOCATABLE_RESOURCES', relocatable_bundle)
 
 
-math              = cc.find_library('m')
+math              = cc.find_library('m', required: false)
+if platform_windows
+  #Needed otherwise compilers get angry with the headers provided by UCRT
+  compiler_args +='-D_USE_MATH_DEFINES'
+endif
+
 # libdl is only required on Linux. On Windows and some (all?) BSD, it
 # doesn't exist, but the API exists in libc by default (see #8604). On
 # macOS, it apparently exists but linking it explicitly is actually
 # unneeded as well.
 dl                = cc.find_library('dl', required: platform_linux)
+
 rpc               = platform_windows ? cc.find_library('rpcrt4') : no_dep
 dbghelp           = platform_windows ? cc.find_library('dbghelp') : no_dep
 winsock           = platform_windows ? cc.find_library('ws2_32') : no_dep
 mscms             = platform_windows ? cc.find_library('mscms') : no_dep
+
 atk_minver        = '2.4.0'
 atk               = dependency('atk',                version: '>='+atk_minver)
 babl_minver       = '0.1.116'
