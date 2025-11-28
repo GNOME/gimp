@@ -21,7 +21,9 @@
 #include "config.h"
 
 #include <string.h>
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
 
 #include <gexiv2/gexiv2.h>
 
