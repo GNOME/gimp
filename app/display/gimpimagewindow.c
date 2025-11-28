@@ -23,9 +23,9 @@
 #include <gtk/gtk.h>
 
 #ifdef G_OS_WIN32
+#include <windows.h>
 #include <windef.h>
 #include <winbase.h>
-#include <windows.h>
 #endif
 
 #include "libgimpbase/gimpbase.h"
