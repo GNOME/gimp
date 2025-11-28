@@ -802,18 +802,18 @@ load_resource_lrfx (const PSDlayerres  *res_a,
               else
                 shadow = &ls_a->isdw;
 
-              if (psd_read (input, &shadow->size,      4, error) < 4 ||
-                  psd_read (input, &shadow->ver,       4, error) < 4 ||
-                  psd_read (input, &temp,             16, error) < 2 ||
-                  psd_read (input, &shadow->color[0],  2, error) < 2 ||
-                  psd_read (input, &shadow->color[1],  2, error) < 2 ||
-                  psd_read (input, &shadow->color[2],  2, error) < 2 ||
-                  psd_read (input, &shadow->color[3],  2, error) < 2 ||
-                  psd_read (input, &shadow->color[4],  2, error) < 2 ||
-                  psd_read (input, &bim,               4, error) < 4 ||
-                  psd_read (input, &shadow->blendsig,  4, error) < 4 ||
-                  psd_read (input, &shadow->effecton,  1, error) < 1 ||
-                  psd_read (input, &shadow->anglefx,   1, error) < 1 ||
+              if (psd_read (input, &shadow->size,      4, error) < 4  ||
+                  psd_read (input, &shadow->ver,       4, error) < 4  ||
+                  psd_read (input, &temp,             16, error) < 16 ||
+                  psd_read (input, &shadow->color[0],  2, error) < 2  ||
+                  psd_read (input, &shadow->color[1],  2, error) < 2  ||
+                  psd_read (input, &shadow->color[2],  2, error) < 2  ||
+                  psd_read (input, &shadow->color[3],  2, error) < 2  ||
+                  psd_read (input, &shadow->color[4],  2, error) < 2  ||
+                  psd_read (input, &bim,               4, error) < 4  ||
+                  psd_read (input, &shadow->blendsig,  4, error) < 4  ||
+                  psd_read (input, &shadow->effecton,  1, error) < 1  ||
+                  psd_read (input, &shadow->anglefx,   1, error) < 1  ||
                   psd_read (input, &shadow->opacity,   1, error) < 1)
                 {
                   psd_set_error (error);
@@ -845,18 +845,19 @@ load_resource_lrfx (const PSDlayerres  *res_a,
             }
           else if (memcmp (effectname, "oglw", 4) == 0)
             {
+              gchar   bim[4];
+              guint16 temp[4];
 
               if (psd_read (input, &ls_a->oglw.size,      4, error) < 4 ||
                   psd_read (input, &ls_a->oglw.ver,       4, error) < 4 ||
-                  psd_read (input, &ls_a->oglw.blur,      4, error) < 4 ||
-                  psd_read (input, &ls_a->oglw.intensity, 4, error) < 4 ||
+                  psd_read (input, &temp,                 8, error) < 8 ||
                   psd_read (input, &ls_a->oglw.color[0],  2, error) < 2 ||
                   psd_read (input, &ls_a->oglw.color[1],  2, error) < 2 ||
                   psd_read (input, &ls_a->oglw.color[2],  2, error) < 2 ||
                   psd_read (input, &ls_a->oglw.color[3],  2, error) < 2 ||
                   psd_read (input, &ls_a->oglw.color[4],  2, error) < 2 ||
+                  psd_read (input, &bim,                  4, error) < 4 ||
                   psd_read (input, &ls_a->oglw.blendsig,  4, error) < 4 ||
-                  psd_read (input, &ls_a->oglw.effect,    4, error) < 4 ||
                   psd_read (input, &ls_a->oglw.effecton,  1, error) < 1 ||
                   psd_read (input, &ls_a->oglw.opacity,   1, error) < 1)
                 {
@@ -864,7 +865,13 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                   return -1;
                 }
 
-              ls_a->oglw.size = GUINT32_TO_BE (ls_a->oglw.size);
+              ls_a->oglw.size      = GUINT32_TO_BE (ls_a->oglw.size);
+              ls_a->oglw.ver       = GUINT32_TO_BE (ls_a->oglw.ver);
+              ls_a->oglw.blur      = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[0]),
+                                                     GUINT16_TO_BE (temp[1]));
+              ls_a->oglw.intensity = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[2]),
+                                                     GUINT16_TO_BE (temp[3]));
+
               if (ls_a->oglw.size == 42)
                 {
                   if (psd_read (input, &ls_a->oglw.natcolor[0], 2, error) < 2 ||

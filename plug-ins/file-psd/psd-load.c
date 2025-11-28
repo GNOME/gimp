@@ -2796,6 +2796,43 @@ add_legacy_layer_effects (GimpLayer *layer,
       g_object_unref (color);
     }
 
+  if (lyr_a->layer_styles->oglw.effecton == 1)
+    {
+      PSDLayerStyleGlow   oglw;
+      GimpLayerMode       mode;
+      GimpDrawableFilter *filter;
+      GeglColor          *color = gegl_color_new ("none");
+      gdouble             blur;
+
+      oglw = lyr_a->layer_styles->oglw;
+
+      blur = (oglw.blur / 250.0) * 100.0;
+
+      if (oglw.ver == 0)
+        convert_legacy_psd_color (color, oglw.color, space, ibm_pc_format);
+      else if (oglw.ver == 2)
+        convert_legacy_psd_color (color, oglw.natcolor, space, ibm_pc_format);
+
+      convert_psd_mode (oglw.blendsig, &mode);
+
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gegl:dropshadow",
+                                                /* TODO: Translate after string freeze */
+                                                "Outer Glow (imported)",
+                                                GIMP_LAYER_MODE_REPLACE,
+                                                1.0,
+                                                "x",           0,
+                                                "y",           0,
+                                                "radius",      blur,
+                                                "grow-radius", blur,
+                                                "color",       color,
+                                                "opacity",     oglw.opacity / 255.0,
+                                                NULL);
+
+      g_object_unref (filter);
+      g_object_unref (color);
+    }
+
   if (lyr_a->layer_styles->isdw.effecton == 1)
     {
       PSDLayerStyleShadow  isdw;
