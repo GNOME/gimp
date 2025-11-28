@@ -34,6 +34,7 @@
 
 #ifdef G_OS_WIN32
 #include <windows.h>
+#include <process.h>
 #endif
 
 #include <cairo.h>
