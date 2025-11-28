@@ -64,7 +64,7 @@ BEGIN
 END
 
 #include "winuser.h"
-1	ICON	QUOTE(TOP_SRCDIR) "/gimp-data/images/logo/gimp.ico"
-2	ICON	QUOTE(TOP_SRCDIR) "/gimp-data/images/logo/fileicon-xcf.ico"
-3	ICON	QUOTE(TOP_SRCDIR) "/gimp-data/images/logo/fileicon.ico"
-CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST QUOTE(TOP_SRCDIR) "/build/windows/gimp.manifest"
+1	ICON	"gimp-data/images/logo/gimp.ico"
+2	ICON	"gimp-data/images/logo/fileicon-xcf.ico"
+3	ICON	"gimp-data/images/logo/fileicon.ico"
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "build/windows/gimp.manifest"

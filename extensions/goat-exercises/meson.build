@@ -1,7 +1,7 @@
 # C version
 
 extension_name = 'org.gimp.extension.goat-exercises'
-plug_in_name   = 'goat-exercise'
+plugin_name   = 'goat-exercise'
 
 plugin_sources = [
   'goat-exercise-c.c',
@@ -11,9 +11,8 @@ if platform_windows
   plugin_sources += windows.compile_resources(
     gimp_plugins_rc,
     args: [
-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plug_in_name + '-c.exe'),
-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plug_in_name),
-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
+      rc_define_flag, rc_define_fmt.format('ORIGINALFILENAME_STR', plugin_name+'-c.exe'),
+      rc_define_flag, rc_define_fmt.format('INTERNALNAME_STR', plugin_name),
     ],
     include_directories: [
       rootInclude, appInclude,
@@ -21,7 +20,7 @@ if platform_windows
   )
 endif
 
-exe = executable(plug_in_name + '-c',
+exe = executable(plugin_name + '-c',
   plugin_sources,
   dependencies: [
     libgimpui_dep,

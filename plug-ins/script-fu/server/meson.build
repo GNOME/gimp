@@ -1,7 +1,7 @@
 
 scriptfuInclude = include_directories('..')
 
-executable_name = 'script-fu-server'
+plugin_name = 'script-fu-server'
 
 plugin_sourcecode = [
   'script-fu-server.c',
@@ -14,9 +14,8 @@ if not meson.is_cross_build()
     plugin_sources += windows.compile_resources(
       plugin_rc,
       args: [
-        '--define', 'ORIGINALFILENAME_STR="@0@"'.format(executable_name+'.exe'),
-        '--define', 'INTERNALNAME_STR="@0@"'    .format(executable_name),
-        '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
+        rc_define_flag, rc_define_fmt.format('ORIGINALFILENAME_STR', plugin_name+'.exe'),
+        rc_define_flag, rc_define_fmt.format('INTERNALNAME_STR', plugin_name),
       ],
       include_directories: [
         rootInclude, appInclude,
@@ -30,7 +29,7 @@ if not meson.is_cross_build()
 
   # Note the server rolls its own log, no need for a different G_LOG_DOMAIN
 
-  plugin_exe = executable(executable_name,
+  plugin_exe = executable(plugin_name,
                           plugin_sources,
                           dependencies: [
                             libgimpui_dep,
@@ -46,5 +45,5 @@ if not meson.is_cross_build()
                           link_with : libscriptfu,
                           win_subsystem: 'windows',
                           install: true,
-                          install_dir: gimpplugindir / 'plug-ins' / executable_name)
+                          install_dir: gimpplugindir / 'plug-ins' / plugin_name)
 endif

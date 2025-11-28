@@ -166,9 +166,8 @@ if platform_windows
   console_rc_file = windows.compile_resources(
     gimp_app_console_rc,
     args: [
-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(console_rc_name+'.exe'),
-      '--define', 'INTERNALNAME_STR="@0@"'    .format(console_rc_name),
-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
+      rc_define_flag, rc_define_fmt.format('ORIGINALFILENAME_STR', console_rc_name+'.exe'),
+      rc_define_flag, rc_define_fmt.format('INTERNALNAME_STR', console_rc_name),
     ],
     include_directories: [
       rootInclude, appInclude,
@@ -184,9 +183,8 @@ if platform_windows
   gui_rc_file = windows.compile_resources(
     gimp_app_rc,
     args: [
-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(gui_rc_name+'.exe'),
-      '--define', 'INTERNALNAME_STR="@0@"'    .format(gui_rc_name),
-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
+      rc_define_flag, rc_define_fmt.format('ORIGINALFILENAME_STR', gui_rc_name+'.exe'),
+      rc_define_flag, rc_define_fmt.format('INTERNALNAME_STR', gui_rc_name),
     ],
     include_directories: [
       rootInclude, appInclude,

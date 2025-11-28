@@ -10,9 +10,8 @@ if cfitsio_dep.found()
     plugin_sources += windows.compile_resources(
       gimp_plugins_rc,
       args: [
-        '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
-        '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
-        '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
+        rc_define_flag, rc_define_fmt.format('ORIGINALFILENAME_STR', plugin_name+'.exe'),
+        rc_define_flag, rc_define_fmt.format('INTERNALNAME_STR', plugin_name),
       ],
       include_directories: [
         rootInclude, appInclude,

@@ -200,6 +200,16 @@ if platform_windows
   # AC_CHECK_PROG(ms_librarian, lib.exe, yes, no)
   # AM_CONDITIONAL(MS_LIB_AVAILABLE, test "x$ms_librarian" = xyes)
   # compiler_args += '-Wl,--large-address-aware'
+
+  if cc.get_argument_syntax() == 'msvc'
+    # MSVC's rc.exe style: /DKey=Value'
+    rc_define_flag = [] 
+    rc_define_fmt  = '/D@0@=@1@'
+  else
+    # GNU's windres.exe style: --define Key="Value"
+    rc_define_flag = ['--define']
+    rc_define_fmt  = '@0@="@1@"'
+  endif
 endif
 
 # on OSX ObjC and C sources are mixed so adding objc to the linkflags
