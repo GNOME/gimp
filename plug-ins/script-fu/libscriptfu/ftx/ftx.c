@@ -251,7 +251,7 @@ pointer foreign_mkdir(scheme *sc, pointer args)
   pointer     rest;
   pointer     second_arg;
   char       *dirname;
-  mode_t      mode;
+  int         mode;
   int         retcode;
 
   if (args == sc->NIL)
@@ -274,7 +274,7 @@ pointer foreign_mkdir(scheme *sc, pointer args)
   else
     mode = 0777;
 
-  retcode = g_mkdir(dirname, (mode_t)mode);
+  retcode = g_mkdir(dirname, mode);
   if (retcode == 0)
     return sc->T;
   else
