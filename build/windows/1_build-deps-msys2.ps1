@@ -52,8 +52,8 @@ if (-not $env:MSYSTEM_PREFIX -and $env:MSYS_ROOT)
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):deps_install[collapsed=true]$([char]13)$([char]27)[0KInstalling dependencies provided by $(if ("$env:VCPKG_ROOT") {'vcpkg'} else {'MSYS2'})"
 if (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf)
   {
-    & "$env:VCPKG_ROOT\vcpkg.exe" upgrade --no-dry-run
-    & "$env:VCPKG_ROOT\vcpkg.exe" install (Get-Content build/windows/all-deps-uni.txt | Select-String 'vcpkg:' | ForEach-Object { ($_ -split '\|vcpkg:')[1] })
+    & "$env:VCPKG_ROOT\vcpkg.exe" upgrade --no-dry-run; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+    & "$env:VCPKG_ROOT\vcpkg.exe" install --resurse (Get-Content build/windows/all-deps-uni.txt | Select-String 'vcpkg:' | ForEach-Object { ($_ -split '\|vcpkg:')[1] }); if ("$LASTEXITCODE" -gt '0') { exit 1 }
     $env:PKG_CONFIG="$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_TRIPLET\tools\pkgconf\pkgconf.exe"; $env:CC='clang-cl'; $env:CXX='clang-cl' 
   }
 else
