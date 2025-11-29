@@ -121,3 +121,14 @@ main (int    argc,
 
   exit (EXIT_SUCCESS);
 }
+
+#ifdef G_OS_WIN32
+int WINAPI
+WinMain (HINSTANCE hInstance,
+         HINSTANCE hPrevInstance,
+         LPSTR     lpCmdLine,
+         int       nCmdShow)
+{
+  return main (__argc, __argv);
+}
+#endif
