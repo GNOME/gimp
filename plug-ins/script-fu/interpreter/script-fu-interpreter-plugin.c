@@ -22,6 +22,9 @@
  */
 
 #include "config.h"
+#ifdef _WIN32
+#include <windows.h>
+#endif
 #include <glib.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>  /* gimp_ui_init */
@@ -95,6 +98,17 @@ int main (int argc, char *argv[])
 
   g_debug ("Exit script-fu-interpreter.");
 }
+
+#ifdef G_OS_WIN32
+int WINAPI
+WinMain (HINSTANCE hInstance,
+         HINSTANCE hPrevInstance,
+         LPSTR     lpCmdLine,
+         int       nCmdShow)
+{
+  return main (__argc, __argv);
+}
+#endif
 
 /* A callback from GIMP.
  * A method of GimpPlugin.
