@@ -918,17 +918,11 @@ main (int    argc,
  * used on MSVC builds only.
  */
 
-#ifdef __GNUC__
-#  ifndef _stdcall
-#    define _stdcall  __attribute__((stdcall))
-#  endif
-#endif
-
-int _stdcall
-WinMain (struct HINSTANCE__ *hInstance,
-         struct HINSTANCE__ *hPrevInstance,
-         char               *lpszCmdLine,
-         int                 nCmdShow)
+int WINAPI
+WinMain (HINSTANCE hInstance,
+         HINSTANCE hPrevInstance,
+         LPSTR     lpCmdLine,
+         int       nCmdShow)
 {
   return main (__argc, __argv);
 }
