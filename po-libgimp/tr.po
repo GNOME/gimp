@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-16 00:58+0000\n"
-"PO-Revision-Date: 2025-11-16 13:52+0300\n"
+"POT-Creation-Date: 2025-11-18 13:47+0000\n"
+"PO-Revision-Date: 2025-11-18 17:01+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -33,7 +33,8 @@ msgstr ""
 msgid "_Browse..."
 msgstr "_Göz At..."
 
-#: libgimp/gimpdrawablechooser.c:238
+#: libgimp/gimpdrawablechooser.c:240 libgimp/gimpimagechooser.c:218
+#: libgimp/gimpitemchooser.c:237
 msgid "Browse..."
 msgstr "Göz At..."
 
@@ -485,31 +486,31 @@ msgstr "Ayarları _Kaydet"
 msgid "Store current settings for later reuse"
 msgstr "Geçerli ayarları daha sonra yeniden kullanmak için depola"
 
-#: libgimp/gimpproceduredialog.c:892
+#: libgimp/gimpproceduredialog.c:908
 msgid "Brush Chooser"
 msgstr "Fırça Seçici"
 
-#: libgimp/gimpproceduredialog.c:896
+#: libgimp/gimpproceduredialog.c:912
 msgid "Font Chooser"
 msgstr "Yazı Tipi Seçici"
 
-#: libgimp/gimpproceduredialog.c:900
+#: libgimp/gimpproceduredialog.c:916
 msgid "Gradient Chooser"
 msgstr "Renk Geçişi Seçici"
 
-#: libgimp/gimpproceduredialog.c:904
+#: libgimp/gimpproceduredialog.c:920
 msgid "Palette Chooser"
 msgstr "Palet Seçici"
 
-#: libgimp/gimpproceduredialog.c:908
+#: libgimp/gimpproceduredialog.c:924
 msgid "Pattern Chooser"
 msgstr "Örüntü Seçici"
 
-#: libgimp/gimpproceduredialog.c:2795
+#: libgimp/gimpproceduredialog.c:2833
 msgid "Reset to _Initial Values"
 msgstr "_Başlangıç Değerlerine Sıfırla"
 
-#: libgimp/gimpproceduredialog.c:2804
+#: libgimp/gimpproceduredialog.c:2842
 msgid "Reset to _Factory Defaults"
 msgstr "_Fabrika Öntanımlılarına Sıfırla"
 
@@ -554,17 +555,27 @@ msgstr "Telif Hakkı:"
 msgid "Choose image: %s"
 msgstr "Görüntü seç: %s"
 
-#: libgimp/gimppropwidgets.c:251
+#: libgimp/gimppropwidgets.c:251 libgimp/gimppropwidgets.c:321
 #, c-format
 msgid "Choose layer: %s"
 msgstr "Katman seç: %s"
 
-#: libgimp/gimppropwidgets.c:253
+#: libgimp/gimppropwidgets.c:253 libgimp/gimppropwidgets.c:323
 #, c-format
 msgid "Choose channel: %s"
 msgstr "Kanal seç: %s"
 
 #: libgimp/gimppropwidgets.c:255
+#, c-format
+msgid "Choose path: %s"
+msgstr "Yol seç: %s"
+
+#: libgimp/gimppropwidgets.c:257
+#, c-format
+msgid "Choose item: %s"
+msgstr "Öge seç: %s"
+
+#: libgimp/gimppropwidgets.c:325
 #, c-format
 msgid "Choose drawable: %s"
 msgstr "Çizilebilir seç: %s"
@@ -3276,6 +3287,3 @@ msgstr "Karşıtlık dönüşleri"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Karşıtlık"
-
-#~ msgid "_Search:"
-#~ msgstr "_Ara:"
