@@ -382,9 +382,6 @@ gimp_row_button_press_event (GtkWidget      *widget,
 
       if (GTK_IS_LIST_BOX (list_box))
         {
-          gtk_list_box_select_row (GTK_LIST_BOX (list_box),
-                                   GTK_LIST_BOX_ROW (widget));
-
           if (context_menu)
             {
               GtkWidget *editor = gtk_widget_get_ancestor (widget,
