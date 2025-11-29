@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-27 11:50+0000\n"
-"PO-Revision-Date: 2025-10-12 23:09+0300\n"
+"POT-Creation-Date: 2025-11-16 01:00+0000\n"
+"PO-Revision-Date: 2025-11-16 13:56+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
 #: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
@@ -951,7 +951,7 @@ msgstr "Boyut"
 msgid "Roughness"
 msgstr "Engebelik"
 
-# Arayüzdeki konumu gereği başlık düzenine ihtiyaç duymuyor
+# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/script-fu/scripts/lava.scm:143
 msgid "Gradient"
 msgstr "Renk geçişi"
