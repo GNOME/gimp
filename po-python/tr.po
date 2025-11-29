@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-10-13 17:44+0000\n"
-"PO-Revision-Date: 2025-10-18 18:37+0300\n"
+"POT-Creation-Date: 2025-11-16 01:00+0000\n"
+"PO-Revision-Date: 2025-11-16 13:55+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -206,32 +206,32 @@ msgstr "_Histogramı Dışa Aktar..."
 #. TODO: GFile props still don't have labels + only load existing files
 #. (here we likely want to create a new file).
 #: plug-ins/python/histogram-export.py:224
-msgid "Histogram File"
-msgstr "Histogram Dosyası"
+msgid "Histogram file"
+msgstr "Histogram dosyası"
 
 #: plug-ins/python/histogram-export.py:225
 msgid "Histogram export file"
 msgstr "Histogram dış aktarım dosyası"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "_Bucket Size"
-msgstr "_Kova Boyutu"
+msgid "_Bucket size"
+msgstr "_Kova boyutu"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "Bucket Size"
-msgstr "Kova Boyutu"
+msgid "Bucket size"
+msgstr "Kova boyutu"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample _Average"
-msgstr "Örnek _Ortalama"
+msgid "Sample _average"
+msgstr "Örnek _ortalama"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample Average"
-msgstr "Örnek Ortalama"
+msgid "Sample average"
+msgstr "Örnek ortalama"
 
 #: plug-ins/python/histogram-export.py:232
-msgid "Pixel Count"
-msgstr "Piksel Sayısı"
+msgid "Pixel count"
+msgstr "Piksel sayısı"
 
 #: plug-ins/python/histogram-export.py:233
 msgid "Normalized"
@@ -242,8 +242,8 @@ msgid "Percent"
 msgstr "Yüzde"
 
 #: plug-ins/python/histogram-export.py:235
-msgid "Output _format"
-msgstr "Çıktı _biçimi"
+msgid "Output _Format"
+msgstr "Çıktı _Biçimi"
 
 #: plug-ins/python/histogram-export.py:235
 msgid "Output format"
@@ -699,9 +699,9 @@ msgstr "Epitrokoit"
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
-msgid "Curve Type"
-msgstr "Eğri Türü"
+#: plug-ins/python/spyro-plus.py:1487
+msgid "Curve type"
+msgstr "Eğri türü"
 
 #: plug-ins/python/spyro-plus.py:1488
 msgid ""
@@ -757,9 +757,8 @@ msgid ""
 msgstr ""
 "Sabit dişli diş sayısı. Sabit dişlinin boyutu diş sayısıyla orantılıdır."
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
-msgid "Fixed Gear Teeth"
+msgid "Fixed gear teeth"
 msgstr "Sabit dişli dişleri"
 
 #: plug-ins/python/spyro-plus.py:1558
@@ -770,9 +769,8 @@ msgstr ""
 "Hareketli dişlilerin diş sayısı. Hareket eden dişlinin boyutu diş sayısıyla "
 "orantılıdır."
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
-msgid "Moving Gear Teeth"
+msgid "Moving gear teeth"
 msgstr "Hareketli dişli dişleri"
 
 #: plug-ins/python/spyro-plus.py:1566
@@ -787,9 +785,8 @@ msgstr ""
 "Delik, hareketli dişlinin merkezinden ne kadar uzakta. %100, deliğin "
 "dişlinin kenarında olduğu anlamına gelir."
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:1588
-msgid "Hole Number"
+msgid "Hole number"
 msgstr "Delik sayısı"
 
 #: plug-ins/python/spyro-plus.py:1589
@@ -800,27 +797,24 @@ msgstr ""
 "Delik #1 dişlinin kenarında. Azami delik sayısı merkeze yakındır. Her dişli "
 "için azami delik sayısı farklıdır."
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:1600
-msgid "Flower Petals"
+msgid "Flower petals"
 msgstr "Çiçek yaprakları"
 
 #: plug-ins/python/spyro-plus.py:1601
 msgid "The number of petals in the pattern."
 msgstr "Örüntüdeki yaprakların sayısı."
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:1606
-msgid "Petal Skip"
+msgid "Petal skip"
 msgstr "Yaprak atla"
 
 #: plug-ins/python/spyro-plus.py:1607
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "Sonraki yaprağı çizmeyi sürdürmek için yaprak sayısı."
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:1612
-msgid "Hole Radius(%)"
+msgid "Hole radius(%)"
 msgstr "Boşluk yarıçapı(%)"
 
 #: plug-ins/python/spyro-plus.py:1613
@@ -1002,6 +996,10 @@ msgstr ""
 msgid "Spyrogimp..."
 msgstr "Spyrogimp..."
 
+#: plug-ins/python/spyro-plus.py:2267
+msgid "Curve Type"
+msgstr "Eğri Türü"
+
 #: plug-ins/python/spyro-plus.py:2271
 msgid "rack"
 msgstr "raf"
@@ -1030,23 +1028,20 @@ msgstr ""
 "Sabit dişlinin, 0 ile 1 arasında, dönüşüm şekli. Yalnızca bazı şekillerce "
 "kullanılır."
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:2285
-msgid "Fi_xed Gear Teeth"
+msgid "Fi_xed gear teeth"
 msgstr "_Sabit dişli dişleri"
 
 #: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
 msgid "Number of teeth for fixed gear."
 msgstr "Sabit dişlideki diş sayısı."
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:2288
-msgid "Mo_ving Gear Teeth"
+msgid "Mo_ving gear teeth"
 msgstr "_Hareketli dişli dişleri"
 
-# Konumu gereği tümce düzeni kullanıldı
 #: plug-ins/python/spyro-plus.py:2291
-msgid "_Hole Radius (%)"
+msgid "_Hole radius (%)"
 msgstr "_Boşluk yarıçapı (%)"
 
 #: plug-ins/python/spyro-plus.py:2292
