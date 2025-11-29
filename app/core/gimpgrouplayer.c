@@ -1257,6 +1257,14 @@ gimp_group_layer_get_bounding_box (GimpLayer *layer)
     {
       GeglRectangle rect = GIMP_LAYER_CLASS (parent_class)->get_bounding_box (layer);
 
+      if (rect.width == 0 && rect.height == 0)
+        {
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
+
+          rect.width  = gimp_image_get_width (image);
+          rect.height = gimp_image_get_height (image);
+        }
+
       gegl_rectangle_bounding_box (&rect, &private->bounding_box, &rect);
 
       return rect;
