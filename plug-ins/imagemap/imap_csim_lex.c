@@ -35,6 +35,7 @@
 /* First, we deal with  platform-specific or compiler-specific issues. */
 
 /* begin standard C headers. */
+#include "config.h"
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
