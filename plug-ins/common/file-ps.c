@@ -552,7 +552,7 @@ ps_create_procedure (GimpPlugIn  *plug_in,
                                           gimp_choice_new_with_values ("inch",       0, _("Inch"),        NULL,
                                                                        "millimeter", 1, _("Millimeter"),   NULL,
                                                                        NULL),
-                                          "inch", G_PARAM_READWRITE);
+                                          "millimeter", G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "keep-ratio",
                                            _("_Keep aspect ratio"),
