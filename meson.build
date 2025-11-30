@@ -581,8 +581,15 @@ if meson.is_cross_build() and not meson.can_run_host_binaries()
 else # not meson.is_cross_build() or meson.can_run_host_binaries()
     glib_networking_works_run = cc.run(
       '''#include <gio/gio.h>
+      #include <stdio.h>
       int main() {
-        return !g_tls_backend_supports_tls (g_tls_backend_get_default ());
+        GTlsBackend *module = g_tls_backend_get_default ();
+        if (!g_tls_backend_supports_tls (module)) {
+          fprintf (stderr, "No valid SSL/TLS module found (%s). Maybe you need to set GIO_MODULE_DIR?\n", G_OBJECT_TYPE_NAME (module));
+          return 1;
+        }
+        fprintf (stdout, "Valid SSL/TLS module found (%s).\n", G_OBJECT_TYPE_NAME (module));
+        return 0;
       }''',
       dependencies: gio,
     )
