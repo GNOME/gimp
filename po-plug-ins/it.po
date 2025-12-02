@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-27 08:06+0100\n"
-"PO-Revision-Date: 2025-11-27 08:16+0100\n"
+"POT-Creation-Date: 2025-12-02 17:21+0100\n"
+"PO-Revision-Date: 2025-12-02 17:21+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -158,7 +158,7 @@ msgstr "Esempio di plugin in JavaScript (GJS)"
 #: ../plug-ins/common/file-pdf-load.c:586
 #: ../plug-ins/common/sphere-designer.c:2649
 #: ../plug-ins/common/unit-editor.c:260 ../plug-ins/file-exr/file-exr.c:458
-#: ../plug-ins/file-psd/psd-load.c:3896 ../plug-ins/flame/flame.c:824
+#: ../plug-ins/file-psd/psd-load.c:3933 ../plug-ins/flame/flame.c:824
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: ../plug-ins/gimpressionist/orientmap.c:529
 #: ../plug-ins/gimpressionist/presets.c:647
@@ -627,7 +627,7 @@ msgstr "Strisce"
 #: ../plug-ins/file-faxg3/faxg3.c:578 ../plug-ins/file-fits/fits.c:673
 #: ../plug-ins/file-jpeg/jpeg-load.c:252
 #: ../plug-ins/file-psd/psd-image-res-load.c:1093
-#: ../plug-ins/file-psd/psd-load.c:3102 ../plug-ins/file-sgi/sgi.c:456
+#: ../plug-ins/file-psd/psd-load.c:3139 ../plug-ins/file-sgi/sgi.c:456
 #: ../plug-ins/file-tiff/file-tiff-load.c:1578
 #: ../plug-ins/file-tiff/file-tiff-load.c:2402
 #: ../plug-ins/file-webp/file-webp-load.c:159
@@ -2835,88 +2835,88 @@ msgstr "Opaci_tà"
 msgid "Opacity"
 msgstr "Opacità"
 
-#: ../plug-ins/common/file-compressor.c:221
+#: ../plug-ins/common/file-compressor.c:224
 msgid "gzip archive"
 msgstr "archivio gzip"
 
-#: ../plug-ins/common/file-compressor.c:229
+#: ../plug-ins/common/file-compressor.c:232
 msgid "Loads files compressed with gzip"
 msgstr "Carica file compressi con gzip"
 
-#: ../plug-ins/common/file-compressor.c:230
+#: ../plug-ins/common/file-compressor.c:233
 msgid "This procedure loads files in the gzip compressed format."
 msgstr "Questa procedura carica file nel formato compresso gzip."
 
-#: ../plug-ins/common/file-compressor.c:234
+#: ../plug-ins/common/file-compressor.c:237
 msgid "Exports files compressed with gzip"
 msgstr "Esporta file compressi con gzip"
 
-#: ../plug-ins/common/file-compressor.c:235
+#: ../plug-ins/common/file-compressor.c:238
 msgid "This procedure exports files in the gzip compressed format."
 msgstr "Questa procedura esporta file nel formato compresso gzip."
 
-#: ../plug-ins/common/file-compressor.c:240
+#: ../plug-ins/common/file-compressor.c:243
 msgid "bzip archive"
 msgstr "archivio bzip"
 
-#: ../plug-ins/common/file-compressor.c:248
+#: ../plug-ins/common/file-compressor.c:251
 msgid "Loads files compressed with bzip2"
 msgstr "Carica file compressi con bzip2"
 
-#: ../plug-ins/common/file-compressor.c:249
+#: ../plug-ins/common/file-compressor.c:252
 msgid "This procedure loads files in the bzip2 compressed format."
 msgstr "Questa procedura carica file nel formato compresso bzip2."
 
-#: ../plug-ins/common/file-compressor.c:253
+#: ../plug-ins/common/file-compressor.c:256
 msgid "Exports files compressed with bzip2"
 msgstr "Esporta file compressi con bzip2"
 
-#: ../plug-ins/common/file-compressor.c:254
+#: ../plug-ins/common/file-compressor.c:257
 msgid "This procedure exports files in the bzip2 compressed format."
 msgstr "Questa procedura esporta file nel formato compresso bzip2."
 
-#: ../plug-ins/common/file-compressor.c:259
+#: ../plug-ins/common/file-compressor.c:262
 msgid "xz archive"
 msgstr "archivio xz"
 
-#: ../plug-ins/common/file-compressor.c:267
+#: ../plug-ins/common/file-compressor.c:270
 msgid "Loads files compressed with xz"
 msgstr "Carica file compressi con xz"
 
-#: ../plug-ins/common/file-compressor.c:268
+#: ../plug-ins/common/file-compressor.c:271
 msgid "This procedure loads files in the xz compressed format."
 msgstr "Questa procedura carica file nel formato compresso xz."
 
-#: ../plug-ins/common/file-compressor.c:272
+#: ../plug-ins/common/file-compressor.c:275
 msgid "Exports files compressed with xz"
 msgstr "Esporta file compressi con xz"
 
-#: ../plug-ins/common/file-compressor.c:273
+#: ../plug-ins/common/file-compressor.c:276
 msgid "This procedure exports files in the xz compressed format."
 msgstr "Questa procedura esporta file nel formato compresso xz."
 
-#: ../plug-ins/common/file-compressor.c:278
+#: ../plug-ins/common/file-compressor.c:281
 msgid "zip archive"
 msgstr "archivio zip"
 
-#: ../plug-ins/common/file-compressor.c:286
+#: ../plug-ins/common/file-compressor.c:289
 msgid "Loads files compressed with zip"
 msgstr "Carica file compressi con zip"
 
-#: ../plug-ins/common/file-compressor.c:287
+#: ../plug-ins/common/file-compressor.c:290
 msgid "This procedure loads files in the zip compressed format."
 msgstr "Questa procedura carica file nel formato compresso zip."
 
-#: ../plug-ins/common/file-compressor.c:473
+#: ../plug-ins/common/file-compressor.c:476
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Nessuna estensione plausibile, salvataggio come XCF compresso."
 
-#: ../plug-ins/common/file-compressor.c:493
+#: ../plug-ins/common/file-compressor.c:496
 #, c-format
 msgid "Compressing '%s'"
 msgstr "Compressione \"%s\""
 
-#: ../plug-ins/common/file-compressor.c:531
+#: ../plug-ins/common/file-compressor.c:534
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
 "Nessuna estensione plausibile, tentativo di salvataggio tramite il magic del "
@@ -2927,7 +2927,7 @@ msgstr ""
 #. * procedure expects that the archive contains a single
 #. * file.
 #.
-#: ../plug-ins/common/file-compressor.c:1112
+#: ../plug-ins/common/file-compressor.c:1115
 msgid "This zip archive contains more than one file."
 msgstr "Questo archivio zip contiene più di un file."
 
@@ -7936,7 +7936,7 @@ msgstr "Numero di pezzi"
 
 #: ../plug-ins/common/jigsaw.c:2600
 msgid "Bevel Edges"
-msgstr "Contorni in rilievo"
+msgstr "Contorni rilievo"
 
 #: ../plug-ins/common/mail.c:186
 msgid "Send by E_mail..."
@@ -10868,7 +10868,7 @@ msgstr ""
 "Photoshop non supporta le immagini indicizzate che hanno più di un livello. "
 "I livelli verranno uniti durante l'esportazione."
 
-#: ../plug-ins/file-psd/psd-export.c:2833 ../plug-ins/file-psd/psd-load.c:3935
+#: ../plug-ins/file-psd/psd-export.c:2833 ../plug-ins/file-psd/psd-load.c:3972
 msgid "Compatibility Notice"
 msgstr "Nota di compatibilità"
 
@@ -10972,38 +10972,38 @@ msgstr "Larghezza maschera di livello non supportata o non valida: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Dimensioni maschera di livello non supportate o non valide: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:2232 ../plug-ins/file-psd/psd-load.c:3075
+#: ../plug-ins/file-psd/psd-load.c:2232 ../plug-ins/file-psd/psd-load.c:3112
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modalità di compressione non supportata: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2813
+#: ../plug-ins/file-psd/psd-load.c:2850
 msgid "Inner Shadow"
 msgstr "Ombra interna"
 
-#: ../plug-ins/file-psd/psd-load.c:2814
+#: ../plug-ins/file-psd/psd-load.c:2851
 msgid "imported"
 msgstr "importata"
 
-#: ../plug-ins/file-psd/psd-load.c:3237
+#: ../plug-ins/file-psd/psd-load.c:3274
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:3460
+#: ../plug-ins/file-psd/psd-load.c:3497
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Dimensione canale non supportata o non valida."
 
-#: ../plug-ins/file-psd/psd-load.c:3529
+#: ../plug-ins/file-psd/psd-load.c:3566
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Fallita la decompressione dati"
 
-#: ../plug-ins/file-psd/psd-load.c:3912
+#: ../plug-ins/file-psd/psd-load.c:3949
 msgid "Duotone Import"
 msgstr "Importazione Duotone"
 
-#: ../plug-ins/file-psd/psd-load.c:3913
+#: ../plug-ins/file-psd/psd-load.c:3950
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -11013,7 +11013,7 @@ msgstr ""
 "I dati dello spazio colore Duotone sono stati salvati\n"
 "e possono essere riapplicati all'esportazione."
 
-#: ../plug-ins/file-psd/psd-load.c:3936
+#: ../plug-ins/file-psd/psd-load.c:3973
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
