@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-27 12:11+0000\n"
-"PO-Revision-Date: 2025-09-27 17:21+0200\n"
+"POT-Creation-Date: 2025-11-23 21:20+0000\n"
+"PO-Revision-Date: 2025-11-24 17:28+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -34,7 +34,8 @@ msgstr ""
 msgid "_Browse..."
 msgstr "G_ennemse …"
 
-#: libgimp/gimpdrawablechooser.c:238
+#: libgimp/gimpdrawablechooser.c:240 libgimp/gimpimagechooser.c:218
+#: libgimp/gimpitemchooser.c:237
 msgid "Browse..."
 msgstr "Gennemse …"
 
@@ -185,59 +186,59 @@ msgstr "Beskær lag"
 msgid "Resize Image to Layers"
 msgstr "Ændr billedets størrelse til lagene"
 
-#: libgimp/gimpexportprocedure.c:550
+#: libgimp/gimpexportprocedure.c:553
 msgid "Save _Exif"
 msgstr "Gem _Exif"
 
-#: libgimp/gimpexportprocedure.c:551
+#: libgimp/gimpexportprocedure.c:554
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Gem Exif-metadata (Exchangeable image file format)"
 
-#: libgimp/gimpexportprocedure.c:559
+#: libgimp/gimpexportprocedure.c:562
 msgid "Save _IPTC"
 msgstr "Gem _IPTC"
 
-#: libgimp/gimpexportprocedure.c:560
+#: libgimp/gimpexportprocedure.c:563
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr "Gem IPTC-metadata (International Press Telecommunications Council)"
 
-#: libgimp/gimpexportprocedure.c:568
+#: libgimp/gimpexportprocedure.c:571
 msgid "Save _XMP"
 msgstr "Gem _XMP"
 
-#: libgimp/gimpexportprocedure.c:569
+#: libgimp/gimpexportprocedure.c:572
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Gem XMP-metadata (Extensible Metadata Platform)"
 
-#: libgimp/gimpexportprocedure.c:577
+#: libgimp/gimpexportprocedure.c:580
 msgid "Save color _profile"
 msgstr "Gem _farveprofil"
 
-#: libgimp/gimpexportprocedure.c:578
+#: libgimp/gimpexportprocedure.c:581
 msgid "Save the ICC color profile as metadata"
 msgstr "Gem ICC-farveprofilen som metadata"
 
-#: libgimp/gimpexportprocedure.c:586
+#: libgimp/gimpexportprocedure.c:589
 msgid "Save _thumbnail"
 msgstr "Gem minia_ture"
 
-#: libgimp/gimpexportprocedure.c:587
+#: libgimp/gimpexportprocedure.c:590
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Gem en mindre udgave af billedet som metadata"
 
-#: libgimp/gimpexportprocedure.c:595
+#: libgimp/gimpexportprocedure.c:598
 msgid "Save c_omment"
 msgstr "Gem _kommentar"
 
-#: libgimp/gimpexportprocedure.c:596
+#: libgimp/gimpexportprocedure.c:599
 msgid "Save a comment as metadata"
 msgstr "Gem en kommentar som metadata"
 
-#: libgimp/gimpexportprocedure.c:600
+#: libgimp/gimpexportprocedure.c:603
 msgid "Comment"
 msgstr "Kommentar"
 
-#: libgimp/gimpexportprocedure.c:601
+#: libgimp/gimpexportprocedure.c:604
 msgid "Image comment"
 msgstr "Billedkommentar"
 
@@ -259,15 +260,15 @@ msgstr "(redigér)"
 msgid "Export Image as %s"
 msgstr "Eksportér billede som %s"
 
-#: libgimp/gimpimagemetadata.c:196
+#: libgimp/gimpimagemetadata.c:201
 msgid "Background"
 msgstr "Baggrund"
 
-#: libgimp/gimpimagemetadata-save.c:778 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:796 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:449
+#: libgimp/gimploadprocedure.c:276 libgimp/gimpvectorloadprocedure.c:448
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -301,77 +302,77 @@ msgstr "fejl i kald"
 msgid "cancelled"
 msgstr "afbrudt"
 
-#: libgimp/gimpprocbrowserdialog.c:152
+#: libgimp/gimpprocbrowserdialog.c:150
 msgid "by name"
 msgstr "efter navn"
 
-#: libgimp/gimpprocbrowserdialog.c:153
+#: libgimp/gimpprocbrowserdialog.c:151
 msgid "by description"
 msgstr "efter beskrivelse"
 
-#: libgimp/gimpprocbrowserdialog.c:154
+#: libgimp/gimpprocbrowserdialog.c:152
 msgid "by help"
 msgstr "efter hjælp"
 
-#: libgimp/gimpprocbrowserdialog.c:155
+#: libgimp/gimpprocbrowserdialog.c:153
 msgid "by authors"
 msgstr "efter forfattere"
 
-#: libgimp/gimpprocbrowserdialog.c:156
+#: libgimp/gimpprocbrowserdialog.c:154
 msgid "by copyright"
 msgstr "efter ophavsret"
 
-#: libgimp/gimpprocbrowserdialog.c:157
+#: libgimp/gimpprocbrowserdialog.c:155
 msgid "by date"
 msgstr "efter dato"
 
-#: libgimp/gimpprocbrowserdialog.c:158
+#: libgimp/gimpprocbrowserdialog.c:156
 msgid "by type"
 msgstr "efter type"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:358 libgimp/gimpprocbrowserdialog.c:516
-#: libgimpwidgets/gimpbrowser.c:161
+#: libgimp/gimpprocbrowserdialog.c:351 libgimp/gimpprocbrowserdialog.c:509
+#: libgimpwidgets/gimpbrowser.c:144
 msgid "No matches"
 msgstr "Ingen fundet"
 
-#: libgimp/gimpprocbrowserdialog.c:361
+#: libgimp/gimpprocbrowserdialog.c:354
 msgid "Search term invalid or incomplete"
 msgstr "Søgebetingelse er ugyldig eller ufuldstændig"
 
-#: libgimp/gimpprocbrowserdialog.c:370
+#: libgimp/gimpprocbrowserdialog.c:363
 msgid "Searching"
 msgstr "Søgning"
 
-#: libgimp/gimpprocbrowserdialog.c:382
+#: libgimp/gimpprocbrowserdialog.c:375
 msgid "Searching by name"
 msgstr "Søgning efter navn"
 
-#: libgimp/gimpprocbrowserdialog.c:403
+#: libgimp/gimpprocbrowserdialog.c:396
 msgid "Searching by description"
 msgstr "Søgning efter beskrivelse"
 
-#: libgimp/gimpprocbrowserdialog.c:411
+#: libgimp/gimpprocbrowserdialog.c:404
 msgid "Searching by help"
 msgstr "Søgning efter hjælp"
 
-#: libgimp/gimpprocbrowserdialog.c:419
+#: libgimp/gimpprocbrowserdialog.c:412
 msgid "Searching by authors"
 msgstr "Søgning efter forfattere"
 
-#: libgimp/gimpprocbrowserdialog.c:427
+#: libgimp/gimpprocbrowserdialog.c:420
 msgid "Searching by copyright"
 msgstr "Søgning efter ophavsret"
 
-#: libgimp/gimpprocbrowserdialog.c:435
+#: libgimp/gimpprocbrowserdialog.c:428
 msgid "Searching by date"
 msgstr "Søgning efter dato"
 
-#: libgimp/gimpprocbrowserdialog.c:443
+#: libgimp/gimpprocbrowserdialog.c:436
 msgid "Searching by type"
 msgstr "Søgning efter type"
 
-#: libgimp/gimpprocbrowserdialog.c:456
+#: libgimp/gimpprocbrowserdialog.c:449
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -379,12 +380,12 @@ msgstr[0] "%d procedure"
 msgstr[1] "%d procedurer"
 
 # "for your query" er lidt svær og sådan set overflødig
-#: libgimp/gimpprocbrowserdialog.c:465
+#: libgimp/gimpprocbrowserdialog.c:458
 msgid "No matches for your query"
 msgstr "Ingen fundet"
 
 # "for your query" er lidt svær og sådan set overflødig
-#: libgimp/gimpprocbrowserdialog.c:469
+#: libgimp/gimpprocbrowserdialog.c:462
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -492,31 +493,31 @@ msgstr "_Gem indstillinger"
 msgid "Store current settings for later reuse"
 msgstr "Gem aktuelle indstillinger til brug senere"
 
-#: libgimp/gimpproceduredialog.c:892
+#: libgimp/gimpproceduredialog.c:908
 msgid "Brush Chooser"
 msgstr "Penselvælger"
 
-#: libgimp/gimpproceduredialog.c:896
+#: libgimp/gimpproceduredialog.c:912
 msgid "Font Chooser"
 msgstr "Skrifttypevælger"
 
-#: libgimp/gimpproceduredialog.c:900
+#: libgimp/gimpproceduredialog.c:916
 msgid "Gradient Chooser"
 msgstr "Farveovergangsvælger"
 
-#: libgimp/gimpproceduredialog.c:904
+#: libgimp/gimpproceduredialog.c:920
 msgid "Palette Chooser"
 msgstr "Paletvælger"
 
-#: libgimp/gimpproceduredialog.c:908
+#: libgimp/gimpproceduredialog.c:924
 msgid "Pattern Chooser"
 msgstr "Mønstervælger"
 
-#: libgimp/gimpproceduredialog.c:2680
+#: libgimp/gimpproceduredialog.c:2833
 msgid "Reset to _Initial Values"
 msgstr "Nulstil _til de oprindelige værdier"
 
-#: libgimp/gimpproceduredialog.c:2689
+#: libgimp/gimpproceduredialog.c:2842
 msgid "Reset to _Factory Defaults"
 msgstr "Nulstil til fabriksstandard"
 
@@ -556,17 +557,32 @@ msgstr "Dato:"
 msgid "Copyright:"
 msgstr "Ophavsret:"
 
-#: libgimp/gimppropwidgets.c:191
+#: libgimp/gimppropwidgets.c:190
+#, c-format
+msgid "Choose image: %s"
+msgstr "Vælg billede: %s"
+
+#: libgimp/gimppropwidgets.c:251 libgimp/gimppropwidgets.c:321
 #, c-format
 msgid "Choose layer: %s"
 msgstr "Vælg lag: %s"
 
-#: libgimp/gimppropwidgets.c:193
+#: libgimp/gimppropwidgets.c:253 libgimp/gimppropwidgets.c:323
 #, c-format
 msgid "Choose channel: %s"
 msgstr "Vælg kanal: %s"
 
-#: libgimp/gimppropwidgets.c:195
+#: libgimp/gimppropwidgets.c:255
+#, c-format
+msgid "Choose path: %s"
+msgstr "Vælg kurve: %s"
+
+#: libgimp/gimppropwidgets.c:257
+#, c-format
+msgid "Choose item: %s"
+msgstr "Vælg element: %s"
+
+#: libgimp/gimppropwidgets.c:325
 #, c-format
 msgid "Choose drawable: %s"
 msgstr "Vælg tegneflade: %s"
@@ -580,12 +596,12 @@ msgstr ""
 "enheder"
 
 #: libgimp/gimpresolutionentry-private.c:144
-#: libgimp/gimpvectorloadprocedure.c:125
+#: libgimp/gimpvectorloadprocedure.c:126
 msgid "_Keep aspect ratio"
 msgstr "_Bevar højde-breddeforhold"
 
 #: libgimp/gimpresolutionentry-private.c:145
-#: libgimp/gimpvectorloadprocedure.c:126
+#: libgimp/gimpvectorloadprocedure.c:127
 msgid "Force dimensions with aspect ratio"
 msgstr "Indret dimensioner til højde-breddeforhold"
 
@@ -595,50 +611,50 @@ msgstr "Indret dimensioner til højde-breddeforhold"
 msgid "pixels/%a"
 msgstr "pixels/%a"
 
-#: libgimp/gimpvectorloadprocedure.c:111
+#: libgimp/gimpvectorloadprocedure.c:112
 msgid "_Width (pixels)"
 msgstr "_Bredde (pixels)"
 
-#: libgimp/gimpvectorloadprocedure.c:118
+#: libgimp/gimpvectorloadprocedure.c:119
 msgid "_Height (pixels)"
 msgstr "_Højde (pixels)"
 
-#: libgimp/gimpvectorloadprocedure.c:130
+#: libgimp/gimpvectorloadprocedure.c:131
 msgid "_Prefer native dimensions"
 msgstr "_Foretræk oprindelige dimensioner"
 
-#: libgimp/gimpvectorloadprocedure.c:131
+#: libgimp/gimpvectorloadprocedure.c:132
 msgid "Load and use dimensions from source file"
 msgstr "Indlæs og brug dimensioner fra kildefil"
 
-#: libgimp/gimpvectorloadprocedure.c:143
+#: libgimp/gimpvectorloadprocedure.c:142
 msgid "Resolu_tion"
 msgstr "Opl_øsning"
 
-#: libgimp/gimpvectorloadprocedure.c:144
+#: libgimp/gimpvectorloadprocedure.c:143
 msgid "Pixel Density: number of pixels per physical unit"
 msgstr "Pixeltæthed: antal pixel per fysisk enhed"
 
-#: libgimp/gimpvectorloadprocedure.c:149
+#: libgimp/gimpvectorloadprocedure.c:148
 msgid "Unit"
 msgstr "Enhed"
 
-#: libgimp/gimpvectorloadprocedure.c:150
+#: libgimp/gimpvectorloadprocedure.c:149
 msgid "Physical unit"
 msgstr "Fysisk enhed"
 
-#: libgimp/gimpvectorloadprocedure.c:372
+#: libgimp/gimpvectorloadprocedure.c:371
 msgid ""
 "dimensions could neither be extracted nor computed from the vector image's "
 "data."
 msgstr ""
 "dimensioner kunne hverken udtrækkes eller beregnes fra vektorbilledets data."
 
-#: libgimp/gimpvectorloadprocedure.c:377
+#: libgimp/gimpvectorloadprocedure.c:376
 msgid "Vector image loading plug-in failed: "
 msgstr "Udvidelsesmodul til indlæsning af vektorbilleder fejlede: "
 
-#: libgimp/gimpvectorloadprocedure.c:401
+#: libgimp/gimpvectorloadprocedure.c:400
 msgid ""
 "Dimensions cannot be 0 and no native dimensions could be extracted from the "
 "vector image."
@@ -1681,76 +1697,106 @@ msgid "Filled"
 msgstr "Udfyldt"
 
 #: libgimpbase/gimpbaseenums.c:1804
+msgctxt "text-outline"
+msgid "Filled"
+msgstr "Udfyldt"
+
+#: libgimpbase/gimpbaseenums.c:1805
+msgctxt "text-outline"
+msgid "Outlined"
+msgstr "Omrids"
+
+#: libgimpbase/gimpbaseenums.c:1806
+msgctxt "text-outline"
+msgid "Outlined and filled"
+msgstr "Udfyldt og med omrids"
+
+#: libgimpbase/gimpbaseenums.c:1836
+msgctxt "text-outline-direction"
+msgid "Outer"
+msgstr "Ydre"
+
+#: libgimpbase/gimpbaseenums.c:1837
+msgctxt "text-outline-direction"
+msgid "Inner"
+msgstr "Indre"
+
+#: libgimpbase/gimpbaseenums.c:1838
+msgctxt "text-outline-direction"
+msgid "Centered"
+msgstr "Centreret"
+
+#: libgimpbase/gimpbaseenums.c:1868
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Skygger"
 
-#: libgimpbase/gimpbaseenums.c:1805
+#: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Mellemtoner"
 
-#: libgimpbase/gimpbaseenums.c:1806
+#: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Højlys"
 
-#: libgimpbase/gimpbaseenums.c:1835
+#: libgimpbase/gimpbaseenums.c:1899
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal (fremad)"
 
-#: libgimpbase/gimpbaseenums.c:1836
+#: libgimpbase/gimpbaseenums.c:1900
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Korrigerende (tilbage)"
 
-#: libgimpbase/gimpbaseenums.c:1867
+#: libgimpbase/gimpbaseenums.c:1931
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Justér"
 
-#: libgimpbase/gimpbaseenums.c:1868
+#: libgimpbase/gimpbaseenums.c:1932
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Klip"
 
-#: libgimpbase/gimpbaseenums.c:1869
+#: libgimpbase/gimpbaseenums.c:1933
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Beskær til resultat"
 
-#: libgimpbase/gimpbaseenums.c:1870
+#: libgimpbase/gimpbaseenums.c:1934
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Beskær med forhold"
 
-#: libgimpbase/gimpmetadata.c:1218
+#: libgimpbase/gimpmetadata.c:1223
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Kan kun indlæse metadata fra lokale filer"
 
-#: libgimpbase/gimpmetadata.c:1274
+#: libgimpbase/gimpmetadata.c:1279
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Kan kun gemme metadata til lokale filer"
 
-#: libgimpbase/gimpmetadata.c:1323
+#: libgimpbase/gimpmetadata.c:1328
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Ugyldig Exif-datastørrelse."
 
-#: libgimpbase/gimpmetadata.c:1368
+#: libgimpbase/gimpmetadata.c:1373
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Fortolkning af Exif-data mislykkedes."
 
-#: libgimpbase/gimpmetadata.c:1420
+#: libgimpbase/gimpmetadata.c:1425
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Fortolkning af IPTC-data mislykkedes."
 
-#: libgimpbase/gimpmetadata.c:1468
+#: libgimpbase/gimpmetadata.c:1473
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Fortolkning af XMP-data mislykkedes."
@@ -2231,10 +2277,6 @@ msgstr "Miniature indeholder ikke et Thumb::URI-mærkat"
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Kunne ikke oprette miniature for %s: %s"
 
-#: libgimpwidgets/gimpbrowser.c:134
-msgid "_Search:"
-msgstr "_Søg:"
-
 #: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
 msgstr "_Forgrundsfarve"
@@ -2328,7 +2370,7 @@ msgid "HSV"
 msgstr "HSV"
 
 #: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
-#: modules/color-selector-cmyk.c:301 modules/color-selector-cmyk.c:385
+#: modules/color-selector-cmyk.c:321 modules/color-selector-cmyk.c:405
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
@@ -2478,12 +2520,18 @@ msgid "One page selected"
 msgstr "En side valgt"
 
 #: libgimpwidgets/gimppageselector.c:1026
+#, c-format
+msgid "The page is selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "Siden er valgt"
+msgstr[1] "Alle %d sider er valgt"
+
 #: libgimpwidgets/gimppageselector.c:1030
 #, c-format
 msgid "%d page selected"
-msgid_plural "All %d pages selected"
+msgid_plural "%d pages selected"
 msgstr[0] "%d side valgt"
-msgstr[1] "Alle %d sider valgt"
+msgstr[1] "%d sider valgt"
 
 #: libgimpwidgets/gimppatheditor.c:199
 msgid "Add a new folder"
@@ -2731,51 +2779,55 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Formindsk"
 
-#: modules/color-selector-cmyk.c:85
+#: modules/color-selector-cmyk.c:87
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK-farvevælger (bruger farveprofil)"
 
-#: modules/color-selector-cmyk.c:119
+#: modules/color-selector-cmyk.c:121
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:143
+#: modules/color-selector-cmyk.c:145
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:147
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:147
+#: modules/color-selector-cmyk.c:149
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:151
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:153
+#: modules/color-selector-cmyk.c:155
 msgid "Cyan"
 msgstr "Cyan"
 
-#: modules/color-selector-cmyk.c:154
+#: modules/color-selector-cmyk.c:156
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:157
 msgid "Yellow"
 msgstr "Gul"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:158
 msgid "Black"
 msgstr "Sort"
 
-#: modules/color-selector-cmyk.c:288 modules/color-selector-cmyk.c:367
+#: modules/color-selector-cmyk.c:265
+msgid "Total Ink Coverage"
+msgstr "Total blækdækning"
+
+#: modules/color-selector-cmyk.c:308 modules/color-selector-cmyk.c:387
 msgid "Profile: (none)"
 msgstr "Profil: (ingen)"
 
@@ -3277,6 +3329,9 @@ msgstr "Kontrastcyklusser"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrast"
+
+#~ msgid "_Search:"
+#~ msgstr "_Søg:"
 
 #~ msgctxt "pdb-proc-type"
 #~ msgid "GIMP Extension"
