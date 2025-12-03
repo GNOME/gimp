@@ -359,9 +359,8 @@ gimp_plug_in_procedure_get_sensitive (GimpProcedure  *procedure,
   else if (g_list_length (drawables) == 1 &&
            (proc->sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_DRAWABLE) == 0)
     sensitive = FALSE;
-  else if (image && g_list_length (drawables) == 0 &&
-           (proc->sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES) == 0)
-    sensitive = FALSE;
+  else if (image && g_list_length (drawables) == 0)
+    sensitive = proc->sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES;
   else if (g_list_length (drawables) > 1 &&
            (proc->sensitivity_mask & GIMP_PROCEDURE_SENSITIVE_DRAWABLES) == 0)
     sensitive = FALSE;
