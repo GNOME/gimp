@@ -161,6 +161,10 @@ gimp_init_for_gui_testing_internal (gboolean  show_gui,
 
   /* from main() */
   gimp_log_init ();
+  g_object_set (gegl_config (),
+                "use-opencl",          FALSE,
+                "application-license", "GPL3",
+                NULL);
   gegl_init (NULL, NULL);
 
   /* Introduce an error margin for positions written to sessionrc */
