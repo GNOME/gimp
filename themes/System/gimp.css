@@ -78,6 +78,13 @@ GimpTextStyleEditor button {
     padding: 0px 2px 0px 2px;
 }
 
+GimpDock :not(toolbutton) > button + button,
+GimpOverlayDialog button + button,
+GimpToolDialog :not(headerbar) button + button,
+GimpTextStyleEditor button + button {
+    margin-right: 4px;
+}
+
 GimpToolDialog headerbar {
     min-height: 0;
 }
