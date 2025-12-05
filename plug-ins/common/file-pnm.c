@@ -693,7 +693,7 @@ load_image (GFile   *file,
     return NULL;
 
   /* allocate the necessary structures */
-  pnminfo = g_new (PNMInfo, 1);
+  pnminfo = g_new0 (PNMInfo, 1);
 
   pnminfo->tupltype = NULL;
 
