@@ -88,20 +88,19 @@ static gboolean gimp_ui_initialized = FALSE;
 /**
  * gimp_ui_init:
  * @prog_name: The name of the plug-in which will be passed as argv[0] to
- *             gtk_init(). It's a convention to use the name of the
+ *             `gtk_init()`. It's a convention to use the name of the
  *             executable and _not_ the PDB procedure name.
  *
- * This function initializes GTK+ with gtk_init().
- * It also initializes Gegl and Babl.
+ * This function initializes GTK with [func@Gtk.init], as well as GEGL and
+ * babl.
  *
  * It also sets up various other things so that the plug-in user looks
- * and behaves like the GIMP core. This includes selecting the GTK+
- * theme and setting up the help system as chosen in the GIMP
- * preferences. Any plug-in that provides a user interface should call
- * this function.
+ * and behaves like the GIMP core. This includes selecting the GTK theme
+ * and setting up the help system as chosen in GIMP preferences. Any
+ * plug-in that provides a user interface should call this function.
  *
- * It can safely be called more than once.
- * Calls after the first return quickly with no effect.
+ * It can safely be called more than once. Calls after the first return
+ * quickly with no effect.
  **/
 void
 gimp_ui_init (const gchar *prog_name)
