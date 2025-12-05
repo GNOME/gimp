@@ -41,14 +41,20 @@ Tools:
     * Add progression feedback (relies on a patch on libmaxflow, waiting
       for review).
     * Reset the scribbles at every stroke.
+    * Use the same mode box widgets as other selection tools.
 
 Graphical User Interface:
 
   - Define headerbar button colors to ensure they match our theme style.
+  - Add more spacing between buttons in default CSS.
 
 Plug-Ins:
 
   - Vulnerabilities fixed: ZDI-CAN-28311, ZDI-CAN-28273.
+  - PSD: legacy PSD Outer Glow layer style now imported (it uses
+    gegl:dropshadow with certain preset values to replicate the
+    Photoshop filter).
+  - PS/EPS: default export unit is set to millimiter instead of inch.
 
 Build:
 
@@ -63,6 +69,11 @@ Build:
     to be properly self-localized in Preferences.
   - Current scheduled MSVC jobs will build GEGL without ctx until proper
     fixes are made to make it buildable for this platform.
+  - Our C++ standard is now ISO C++ 14 (instead of GNU C++ 14) to make
+    GIMP compile with clang-cl (wrapper to MSVC) on Windows.
+  - Add support to MSVC's resource compiler: this allows us to support
+    both rc.exe (MSVC) and windres.exe (GNU).
+  - GIMP was made to be compilable on both GNU compilers and MSVC.
 
 
 Overview of Changes from GIMP 3.1.4 to GIMP 3.2.0 RC1
