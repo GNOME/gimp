@@ -41,7 +41,7 @@ if gi_docgen.found()
   endif
 
   install_symlink(fs.name(devel_logo.full_path()),
-                  install_dir: get_option('datadir') / 'doc' / 'gimp-@0@'.format(gimp_app_version) / 'images',
+                  install_dir: get_option('datadir') / 'doc' / 'gimp-' + gimp_api_version / 'images',
                   pointing_to: installed_image)
 endif
 
