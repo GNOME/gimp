@@ -331,7 +331,7 @@ layer_options_dialog_new (GimpImage                *image,
       row += 2;
     }
 
-  if (layer && ! gimp_item_is_vector_layer (GIMP_ITEM (layer)))
+  if (! layer || ! gimp_item_is_vector_layer (GIMP_ITEM (layer)))
     {
       /*  The offset labels  */
       label = gtk_label_new (_("Offset X:"));
