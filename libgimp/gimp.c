@@ -1154,10 +1154,6 @@ _gimp_config (GPConfig *config)
                 "application-license", "GPL3",
                 NULL);
 
-  /* XXX Running gegl_init() before gegl_config() is not appreciated by
-   * GEGL and generates a bunch of CRITICALs.
-   */
-
   g_clear_object (&_check_custom_color1);
   _check_custom_color1 = gegl_color_new (NULL);
   pixel = g_bytes_get_data (config->check_custom_color1, &bpp);

@@ -290,16 +290,14 @@ gimp_plug_in_class_init (GimpPlugInClass *klass)
 
   g_object_class_install_properties (object_class, N_PROPS, props);
 
-  /* GIMP uses GeglColor so GEGL must be init.
-   * GEGL depends on BABL so it must be init.
-   *
-   * XXX Usually would call gegl_init which calls babl_init.
-   * But when call gegl_init before gegl_config,
-   * GEGL loads its libraries (also called plugins) twice
-   * and GObject throws CRITICAL re multiple register of GTypes
-   * "Two different plugins tried to register".
-   * See related XXX comment in libgimp/gimp.c
-   * See gegl#427
+  /* libgimp creates GeglColor-s in _gimp_config(), which requires at
+   * least babl to be initialized.
+   * We don't call gegl_init() because gegl_config() does not appreciate
+   * being called after, which generates a bunch of CRITICALs (see
+   * commit b06fe36970c and gegl#427).
+   * Therefore gegl_init() still needs to be called manually by plug-ins
+   * if necessary (it is called by gimp_ui_init() too, but this only
+   * applies to GUI plug-ins).
    */
   babl_init ();
 }
