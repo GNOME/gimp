@@ -134,8 +134,6 @@ gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
   GeglColor      *color1_default;
   GeglColor      *color2_default;
 
-  gegl_init (NULL, NULL);
-
   color1_default = gegl_color_new (NULL);
   gegl_color_set_pixel (color1_default, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR1);
   color2_default = gegl_color_new (NULL);
