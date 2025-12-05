@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp gimp-3-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-12-05 06:12+0000\n"
-"PO-Revision-Date: 2025-12-05 13:35+0700\n"
+"PO-Revision-Date: 2025-12-05 18:59+0700\n"
 "Last-Translator: \n"
 "Language-Team: Thai <th@li.org>\n"
 "Language: th\n"
@@ -39,74 +39,74 @@ msgstr "รวมเลเยอร์ที่มองเห็น"
 #: libgimp/gimpexportoptions.c:356
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr ""
+msgstr "ปลั๊กอิน %s ไม่สามารถจัดการออฟเซต ขนาด หรือความทึบของเลเยอร์ได้"
 
 #: libgimp/gimpexportoptions.c:365 libgimp/gimpexportoptions.c:374
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr ""
+msgstr "ปลั๊กอิน %s สามารถจัดการเลเยอร์เป็นเฟรมภาพเคลื่อนไหวได้อย่างเดียวเท่านั้น"
 
 #: libgimp/gimpexportoptions.c:366 libgimp/gimpexportoptions.c:375
 msgid "Save as Animation"
-msgstr ""
+msgstr "บันทึกเป็นภาพเคลื่อนไหว"
 
 #: libgimp/gimpexportoptions.c:375 libgimp/gimpexportoptions.c:384
 #: libgimp/gimpexportoptions.c:393 libgimp/gimpexportoptions.c:411
 msgid "Flatten Image"
-msgstr ""
+msgstr "ยุบรวมภาพ"
 
 #: libgimp/gimpexportoptions.c:392
 #, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr ""
+msgstr "ปลั๊กอิน %s ไม่สามารถจัดการความโปร่งใสได้"
 
 #: libgimp/gimpexportoptions.c:401
 #, c-format
 msgid "%s plug-in can't handle layer effects"
-msgstr ""
+msgstr "ปลั๊กอิน %s ไม่สามารถจัดการเอฟเฟกต์ของเลเยอร์ได้"
 
 #: libgimp/gimpexportoptions.c:402
 msgid "Merge Layer Effects"
-msgstr ""
+msgstr "รวมเอฟเฟกต์ของเลเยอร์"
 
 #: libgimp/gimpexportoptions.c:410
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
-msgstr ""
+msgstr "ปลั๊กอิน %s ไม่สามารถจัดการเลเยอร์โปร่งใสได้"
 
 #: libgimp/gimpexportoptions.c:419
 #, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr ""
+msgstr "ปลั๊กอิน %s ไม่สามารถจัดการมาสก์ของเลเยอร์ได้"
 
 #: libgimp/gimpexportoptions.c:420
 msgid "Apply Layer Masks"
-msgstr ""
+msgstr "นำมาสก์ของเลเยอร์ไปใช้"
 
 #: libgimp/gimpexportoptions.c:428
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr ""
+msgstr "ปลั๊กอิน %s สามารถจัดการได้เฉพาะภาพ RGB เท่านั้น"
 
 #: libgimp/gimpexportoptions.c:429 libgimp/gimpexportoptions.c:467
 #: libgimp/gimpexportoptions.c:476
 msgid "Convert to RGB"
-msgstr ""
+msgstr "แปลงเป็น RGB"
 
 #: libgimp/gimpexportoptions.c:437
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr ""
+msgstr "ปลั๊กอิน %s สามารถจัดการได้เฉพาะภาพเฉดเทาเท่านั้น"
 
 #: libgimp/gimpexportoptions.c:438 libgimp/gimpexportoptions.c:467
 #: libgimp/gimpexportoptions.c:488
 msgid "Convert to Grayscale"
-msgstr ""
+msgstr "แปลงเป็นเฉดเทา"
 
 #: libgimp/gimpexportoptions.c:446
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr ""
+msgstr "ปลั๊กอิน %s สามารถจัดการได้เฉพาะภาพดัชนีสีเท่านั้น"
 
 #: libgimp/gimpexportoptions.c:447 libgimp/gimpexportoptions.c:476
 #: libgimp/gimpexportoptions.c:486
@@ -144,7 +144,7 @@ msgstr ""
 #: libgimp/gimpexportoptions.c:496
 #, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr ""
+msgstr "ปลั๊กอิน %s ต้องการแชนเนลอัลฟา"
 
 #: libgimp/gimpexportoptions.c:497
 msgid "Add Alpha Channel"
