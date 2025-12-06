@@ -423,6 +423,7 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
 if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
   {
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}[collapsed=true]$([char]13)$([char]27)[0KSelf-signing $MSIX_ARTIFACT (for testing purposes)"
+    ## Check if certificate for nightly builds is fine
     $sign_output = & signtool sign /debug /fd sha256 /a /f $(Resolve-Path build\windows\store\pseudo-gimp*.pfx) /p eek $MSIX_ARTIFACT
     Write-Output $sign_output
     if ($sign_output -like "*After expiry filter, 0 certs were left*")
@@ -446,6 +447,14 @@ if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
         Write-Output "(INFO): $MSIX_ARTIFACT SHA-512: $sha512"
         Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}$([char]13)$([char]27)[0K"
       }
+
+    ## Check in advance if the CLIENT_SECRET we will use in the future tagged pipeline is fine
+    $latest_msix_secret = New-Object -TypeName System.DateTime -ArgumentList 2026, 3, 22
+    if ($CI_COMMIT_TAG -and $(Get-Date) -ge $latest_msix_secret)
+      {
+        $expired_secret = "$latest_msix_secret"
+        Write-Host "(ERROR): Submission secret for releases expired on $expired_secret. Please follow https://developer.gimp.org/core/maintainer/accounts/msstore/ then commit its expire date on 'build\windows\store\*.ps1'." -ForegroundColor red
+      }
   }
 
 
@@ -458,7 +467,7 @@ if ($GITLAB_CI)
       {
         Move-Item pseudo-gimp*.pfx $OUTPUT_DIR
       }
-    if ($sha256_pfx)
+    if ($sha256_pfx -or $expired_secret)
       {
         exit 1
       }
