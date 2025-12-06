@@ -50,18 +50,18 @@ def bundle(src_root, pattern):
       ## Process .typelib dependencies
       if str(src_path).endswith(".typelib"):
         def process_typelib(path, typelib_list=None):
+          if typelib_list is None:
+            typelib_list = set()
           cmd = ['g-ir-inspect', '--print-typelibs', os.path.basename(path).split('-')[0]]
           result = subprocess.run(cmd, capture_output=True, text=True)
           for line in result.stdout.splitlines():
             typelib = line.replace("typelib: ", "").strip()
-            if typelib_list is None:
-              typelib_list = set()
-            if typelib not in typelib_list:
+            if typelib and typelib not in typelib_list:
               typelib_list.add(typelib)
               typelib_path = Path(f"{MSYSTEM_PREFIX}/lib/girepository-1.0/{typelib}.typelib")
               if typelib_path.exists():
                 shutil.copy2(typelib_path, dest_path.parent)
-              process_typelib(typelib)
+                process_typelib(typelib, typelib_list)
         process_typelib(src_path)
 
 def clean(base_path, pattern):
