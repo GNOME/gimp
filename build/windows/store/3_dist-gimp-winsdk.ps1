@@ -445,7 +445,6 @@ if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
         Write-Output "(INFO): $MSIX_ARTIFACT SHA-256: $sha256"
         $sha512 = (Get-FileHash $MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()
         Write-Output "(INFO): $MSIX_ARTIFACT SHA-512: $sha512"
-        Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}$([char]13)$([char]27)[0K"
       }
 
     ## Check in advance if the CLIENT_SECRET we will use in the future tagged pipeline is fine
@@ -459,6 +458,7 @@ if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
             Write-Host "(ERROR): Submission secret for releases expired. Please follow https://developer.gimp.org/core/maintainer/accounts/msstore/ then commit its expire date on 'build\windows\store\*.ps1'." -ForegroundColor red
           }
       }
+    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}$([char]13)$([char]27)[0K"
   }
 
 
