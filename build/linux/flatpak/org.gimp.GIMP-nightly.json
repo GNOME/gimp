@@ -240,8 +240,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-25.11.0.tar.xz",
-                    "sha256": "63f155142b77349e2bccaef148e754e7506ab1641e713b83af4f54a8f8b15369",
+                    "url": "https://poppler.freedesktop.org/poppler-25.12.0.tar.xz",
+                    "sha256": "c18b40eb36b1a0c5b86e29ca054bf0770304583da4f2cdd42fe86eca6a20de48",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -703,8 +703,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/14.0.4/graphviz-14.0.4.tar.gz",
-                    "sha256": "26d0fb9fa863f8d6353d10dd89b396c200a3431b7996944f720e3635c76116ba",
+                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/14.0.5/graphviz-14.0.5.tar.gz",
+                    "sha256": "8109553a15e2c2340a6290e520e629225689f8511ec5a68117a4f6cd9920015d",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1249,
