@@ -80,6 +80,26 @@
   </provides>
 
   <releases>
+    <release version="3.2.0~rc2" date="TODO" type="development">
+      <url type="details">https://www.gimp.org/release/3.2.0-RC2/</url>
+      <description>
+        <p>
+        With this second release candidate, we are getting closer to GIMP 3.2 than ever!
+        As expected from the RC window, which is string and feature-frozen, the contents of this version is mostly bug fixes,
+        though a few feature-like changes were made too. Highlights include:
+        </p>
+        <ul>
+          <li>Outer Glow layer style can now be imported from PSD files (converted as drop shadow, replicating the effect)</li>
+          <li demo="toolbox:mypaint-brush">
+          The MyPaint Brushes tool now supports stylus barrel rotation on relevant brushes
+          </li>
+          <li>The Paint Select tool's UX has been improved (though it is still in Playground)</li>
+          <li>Various UX and theming fixes</li>
+          <li>A lot of bug fixes</li>
+          <li>Many build improvements, in particular to allow MSVC compilation support</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.2.0~rc1" date="2025-11-17" type="development">
       <url type="details">https://www.gimp.org/release/3.2.0-RC1/</url>
       <description>
