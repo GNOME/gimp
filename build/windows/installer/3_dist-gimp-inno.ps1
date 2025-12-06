@@ -227,19 +227,6 @@ Remove-Item "$INNO_PATH\Languages\Unofficial" -Recurse -Force
 
 # 6. GENERATE CHECKSUMS IN GNU FORMAT
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_trust[collapsed=true]$([char]13)$([char]27)[0KChecksumming $INSTALLER"
-## Check in advance if the certificate we will use in the future tagged pipeline is fine
-if ((-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT) -and $CI_COMMIT_TAG)
-  {
-    $jsonObject = Invoke-RestMethod -Uri https://www.gimp.org/gimp_versions.json
-    $latest_installer = (@($jsonObject.DEVELOPMENT + $jsonObject.STABLE) | ForEach-Object { $_.windows } | Where-Object { $_.date } | Sort-Object { [datetime]$_.date } -Descending | Select-Object -First 1 -ExpandProperty filename)
-    Invoke-WebRequest https://download.gimp.org/gimp/v$($latest_installer -replace '.*?(\d+\.\d+).*','$1')/windows/$latest_installer -OutFile gimp.exe
-    $latest_installer_cert = Get-AuthenticodeSignature gimp.exe
-    if ($latest_installer_cert.SignerCertificate.NotAfter -lt (Get-Date))
-      {
-        $expired_pfx = $($latest_installer_cert.SignerCertificate.NotAfter) 
-        Write-Host "(ERROR): Signing certificate for releases expired on $expired_pfx" -ForegroundColor Red
-      }
-  }
 ## (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
 $Utf8NoBomEncoding = New-Object -TypeName System.Text.UTF8Encoding -ArgumentList $False
 $sha256 = (Get-FileHash $INSTALLER -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
@@ -255,6 +242,20 @@ if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
   {
     [System.IO.File]::WriteAllText("$PWD\$INSTALLER.SHA512SUMS", "$sha512 *$INSTALLER", $Utf8NoBomEncoding)
     #Set-Content $INSTALLER.SHA512SUMS "$sha512 *$INSTALLER" -Encoding utf8NoBOM -NoNewline
+  }
+## Check in advance if the certificate we will use in the future tagged pipeline is fine
+if ((-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT) -and $CI_COMMIT_TAG)
+  {
+    $jsonObject = Invoke-RestMethod -Uri https://www.gimp.org/gimp_versions.json
+    $latest_installer = (@($jsonObject.DEVELOPMENT + $jsonObject.STABLE) | ForEach-Object { $_.windows } | Where-Object { $_.date } | Sort-Object { [datetime]$_.date } -Descending | Select-Object -First 1 -ExpandProperty filename)
+    Invoke-WebRequest https://download.gimp.org/gimp/v$($latest_installer -replace '.*?(\d+\.\d+).*','$1')/windows/$latest_installer -OutFile gimp.exe
+    $latest_installer_cert = (Get-AuthenticodeSignature gimp.exe).SignerCertificate.NotAfter
+    Write-Output "(INFO): Certificate expire date is: $latest_installer_cert"
+    if ((Get-Date) -gt $latest_installer_cert)
+      {
+        $expired_pfx = $latest_installer_cert
+        Write-Host "(ERROR): Signing certificate for releases expired." -ForegroundColor Red
+      }
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_trust$([char]13)$([char]27)[0K"
 
