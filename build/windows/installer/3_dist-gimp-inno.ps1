@@ -247,8 +247,9 @@ if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
 if ((-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT) -and $CI_COMMIT_TAG)
   {
     $latest_installer_cert = New-Object -TypeName System.DateTime -ArgumentList 2027, 2, 28
+    $future_date = New-Object -TypeName System.DateTime -ArgumentList 2028, 3, 22
     Write-Output "(INFO): Certificate expire date is: $latest_installer_cert"
-    if ((Get-Date) -ge $latest_installer_cert)
+    if ($future_date -ge $latest_msix_secret)
       {
         $expired_pfx = $latest_installer_cert
         Write-Host "(ERROR): Signing certificate for releases expired. Please ask the owner to issue a new one then commit its expire date on 'build\windows\installer\*.ps1'." -ForegroundColor Red

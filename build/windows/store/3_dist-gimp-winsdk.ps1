@@ -451,8 +451,9 @@ if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
     if ($CI_COMMIT_TAG)
       {
         $latest_msix_secret = New-Object -TypeName System.DateTime -ArgumentList 2026, 3, 22
+        $future_date = New-Object -TypeName System.DateTime -ArgumentList 2028, 3, 22
         Write-Output "(INFO): CLIENT_SECRET expire date is: $latest_msix_secret"
-        if ((Get-Date) -ge $latest_msix_secret)
+        if ($future_date -ge $latest_msix_secret)
           {
             $expired_secret = "$latest_msix_secret"
             Write-Host "(ERROR): Submission secret for releases expired. Please follow https://developer.gimp.org/core/maintainer/accounts/msstore/ then commit its expire date on 'build\windows\store\*.ps1'." -ForegroundColor red

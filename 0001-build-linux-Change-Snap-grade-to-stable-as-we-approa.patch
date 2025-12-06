@@ -1,0 +1,25 @@
+From a3d99e82462974d4efba491001d8c64446034ffe Mon Sep 17 00:00:00 2001
+From: Bruno Lopes <brunvonlope@outlook.com>
+Date: Sat, 6 Dec 2025 10:49:04 -0300
+Subject: [PATCH] build/linux: Change Snap grade to stable as we approach 3.2
+ RC2
+
+---
+ build/linux/snap/snapcraft.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/build/linux/snap/snapcraft.yaml b/build/linux/snap/snapcraft.yaml
+index b57752c305..5d4bb3c007 100644
+--- a/build/linux/snap/snapcraft.yaml
++++ b/build/linux/snap/snapcraft.yaml
+@@ -1,6 +1,6 @@
+ name: gimp-experimental
+ adopt-info: gimp
+-grade: devel #see parts:babl_or_gegl:override-pull
++grade: stable #see parts:babl_or_gegl:override-pull
+ base: core24
+ compression: lzo
+ confinement: strict
+-- 
+2.49.0.windows.1
+
