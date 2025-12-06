@@ -59,6 +59,10 @@ sudo snapcraft pull --destructive-mode --build-for=$(dpkg --print-architecture) 
 printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
 
 printf "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\n"
+if [ "$CI_COMMIT_TAG" ] && grep 'grade: devel' build/linux/snap/snapcraft.yaml >/dev/null 2>&1; then
+  printf '\033[31m(ERROR)\033[0m: non-tagged babl and GEGL source should not be used on CI_COMMIT_TAG pipelines. Please, change grade value to stable\n'
+  exit 1
+fi
 sudo snapcraft stage babl --destructive-mode --build-for=$(dpkg --print-architecture) --verbosity=verbose
 if [ "$GITLAB_CI" ]; then
   tar cf babl-meson-log.tar /root/parts/babl/build/meson-logs/meson-log.txt >/dev/null 2>&1
