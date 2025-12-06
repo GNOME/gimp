@@ -1,0 +1,678 @@
+From 92c12b098d7eae28b1ae5732200d863219f2d494 Mon Sep 17 00:00:00 2001
+From: Bruno Lopes <brunvonlope@outlook.com>
+Date: Sun, 7 Dec 2025 11:05:00 -0300
+Subject: [PATCH] Disable some things due to lack of packages
+
+I plan to fix that later
+---
+ app/actions/tools-actions.c        | 36 -------------
+ app/actions/tools-commands.c       | 85 ------------------------------
+ app/core/gimp-data-factories.c     | 16 ------
+ app/core/gimp.c                    |  9 ----
+ app/core/meson.build               |  4 --
+ app/dialogs/dialogs-constructors.c |  9 ----
+ app/dialogs/dialogs.c              |  2 -
+ app/dialogs/meson.build            |  1 -
+ app/file-data/file-data.c          | 51 ------------------
+ app/file-data/meson.build          |  1 -
+ app/paint/gimp-paint.c             |  2 -
+ app/paint/meson.build              |  3 --
+ app/tools/gimp-tools.c             |  5 --
+ app/tools/gimppaintoptions-gui.c   |  4 +-
+ app/tools/meson.build              |  2 -
+ app/widgets/meson.build            |  2 -
+ devel-docs/meson.build             |  2 +-
+ docs/meson.build                   |  2 +-
+ etc/meson.build                    |  2 +-
+ libgimp/meson.build                |  4 +-
+ meson.build                        | 46 ++++++----------
+ 21 files changed, 23 insertions(+), 265 deletions(-)
+
+diff --git a/app/actions/tools-actions.c b/app/actions/tools-actions.c
+index 9efa957edb..64e7981cfc 100644
+--- a/app/actions/tools-actions.c
++++ b/app/actions/tools-actions.c
+@@ -230,29 +230,6 @@ static const GimpEnumActionEntry tools_airbrush_flow_actions[] =
+     NULL }
+ };
+ 
+-static const GimpEnumActionEntry tools_mybrush_radius_actions[] =
+-{
+-  { "tools-mypaint-brush-radius-set", GIMP_ICON_TOOL_MYPAINT_BRUSH,
+-    "Set MyPaint Brush Radius", NULL, { NULL }, NULL,
+-    GIMP_ACTION_SELECT_SET, TRUE,
+-    NULL }
+-};
+-
+-static const GimpDoubleActionEntry tools_mybrush_pixel_size_actions[] =
+-{
+-  { "tools-mypaint-brush-pixel-size-set", GIMP_ICON_TOOL_MYPAINT_BRUSH,
+-    "Set MyPaint Brush Diameter in Pixel", NULL, { NULL }, NULL,
+-    1.0, NULL }
+-};
+-
+-static const GimpEnumActionEntry tools_mybrush_hardness_actions[] =
+-{
+-  { "tools-mypaint-brush-hardness-set", GIMP_ICON_TOOL_MYPAINT_BRUSH,
+-    "Set MyPaint Brush Hardness", NULL, { NULL }, NULL,
+-    GIMP_ACTION_SELECT_SET, TRUE,
+-    NULL }
+-};
+-
+ static const GimpEnumActionEntry tools_foreground_select_brush_size_actions[] =
+ {
+   { "tools-foreground-select-brush-size-set",
+@@ -731,19 +708,6 @@ tools_actions_setup (GimpActionGroup *group)
+                                       G_N_ELEMENTS (tools_airbrush_flow_actions),
+                                       tools_airbrush_flow_cmd_callback);
+ 
+-  gimp_action_group_add_enum_actions (group, NULL,
+-                                      tools_mybrush_radius_actions,
+-                                      G_N_ELEMENTS (tools_mybrush_radius_actions),
+-                                      tools_mybrush_radius_cmd_callback);
+-  gimp_action_group_add_double_actions (group, NULL,
+-                                        tools_mybrush_pixel_size_actions,
+-                                        G_N_ELEMENTS (tools_mybrush_pixel_size_actions),
+-                                        tools_mybrush_pixel_size_cmd_callback);
+-  gimp_action_group_add_enum_actions (group, NULL,
+-                                      tools_mybrush_hardness_actions,
+-                                      G_N_ELEMENTS (tools_mybrush_hardness_actions),
+-                                      tools_mybrush_hardness_cmd_callback);
+-
+   gimp_action_group_add_enum_actions (group, NULL,
+                                       tools_foreground_select_brush_size_actions,
+                                       G_N_ELEMENTS (tools_foreground_select_brush_size_actions),
+diff --git a/app/actions/tools-commands.c b/app/actions/tools-commands.c
+index 7a4d19d081..26a67ce7a5 100644
+--- a/app/actions/tools-commands.c
++++ b/app/actions/tools-commands.c
+@@ -33,7 +33,6 @@
+ 
+ #include "paint/gimpinkoptions.h"
+ #include "paint/gimpairbrushoptions.h"
+-#include "paint/gimpmybrushoptions.h"
+ 
+ #include "widgets/gimpaction.h"
+ #include "widgets/gimpenumaction.h"
+@@ -481,90 +480,6 @@ tools_airbrush_flow_cmd_callback (GimpAction *action,
+     }
+ }
+ 
+-void
+-tools_mybrush_radius_cmd_callback (GimpAction *action,
+-                                   GVariant   *value,
+-                                   gpointer    data)
+-{
+-  GimpContext          *context;
+-  GimpToolInfo         *tool_info;
+-  GimpActionSelectType  select_type;
+-  return_if_no_context (context, data);
+-
+-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+-
+-  tool_info = gimp_context_get_tool (context);
+-
+-  if (tool_info && GIMP_IS_MYBRUSH_OPTIONS (tool_info->tool_options))
+-    {
+-      action_select_property (select_type,
+-                              action_data_get_display (data),
+-                              G_OBJECT (tool_info->tool_options),
+-                              "radius",
+-                              0.1, 0.1, 0.5, 1.0, FALSE);
+-    }
+-}
+-
+-void
+-tools_mybrush_pixel_size_cmd_callback (GimpAction *action,
+-                                       GVariant   *value,
+-                                       gpointer    data)
+-{
+-  GimpContext          *context;
+-  GimpToolInfo         *tool_info;
+-  gdouble               dvalue;
+-  return_if_no_context (context, data);
+-
+-  dvalue = g_variant_get_double (value);
+-  /* Dividing by 2.0 because the parameter is the size of the brush,
+-   * hence the diameter and this tool uses the radius as parameter.
+-   * Furthermore MyPaint brush radius is stored as a natural logarithm
+-   * radius.
+-   */
+-  dvalue = log (dvalue / 2.0);
+-
+-  tool_info = gimp_context_get_tool (context);
+-
+-  if (tool_info && GIMP_IS_MYBRUSH_OPTIONS (tool_info->tool_options))
+-    {
+-      GParamSpec *pspec;
+-
+-      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_info->tool_options),
+-                                            "radius");
+-      dvalue = CLAMP (dvalue,
+-                      G_PARAM_SPEC_DOUBLE (pspec)->minimum,
+-                      G_PARAM_SPEC_DOUBLE (pspec)->maximum);
+-
+-      g_object_set (G_OBJECT (tool_info->tool_options),
+-                    "radius", dvalue,
+-                    NULL);
+-    }
+-}
+-
+-void
+-tools_mybrush_hardness_cmd_callback (GimpAction *action,
+-                                     GVariant   *value,
+-                                     gpointer    data)
+-{
+-  GimpContext          *context;
+-  GimpToolInfo         *tool_info;
+-  GimpActionSelectType  select_type;
+-  return_if_no_context (context, data);
+-
+-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+-
+-  tool_info = gimp_context_get_tool (context);
+-
+-  if (tool_info && GIMP_IS_MYBRUSH_OPTIONS (tool_info->tool_options))
+-    {
+-      action_select_property (select_type,
+-                              action_data_get_display (data),
+-                              G_OBJECT (tool_info->tool_options),
+-                              "hardness",
+-                              0.001, 0.01, 0.1, 1.0, FALSE);
+-    }
+-}
+-
+ void
+ tools_fg_select_brush_size_cmd_callback (GimpAction *action,
+                                          GVariant   *value,
+diff --git a/app/core/gimp-data-factories.c b/app/core/gimp-data-factories.c
+index 06818f3435..6616363972 100644
+--- a/app/core/gimp-data-factories.c
++++ b/app/core/gimp-data-factories.c
+@@ -122,22 +122,6 @@ gimp_data_factories_init (Gimp *gimp)
+                                        GIMP_DYNAMICS_FILE_EXTENSION,
+                                        TRUE);
+ 
+-  gimp->mybrush_factory =
+-    gimp_data_loader_factory_new (gimp,
+-                                  GIMP_TYPE_MYBRUSH,
+-                                  "mypaint-brush-path",
+-                                  "mypaint-brush-path-writable",
+-                                  "mypaint-brush-paths",
+-                                  NULL,
+-                                  NULL);
+-  gimp_object_set_static_name (GIMP_OBJECT (gimp->mybrush_factory),
+-                               "mypaint brush factory");
+-  gimp_data_loader_factory_add_loader (gimp->mybrush_factory,
+-                                       "MyPaint Brush",
+-                                       gimp_mybrush_load,
+-                                       GIMP_MYBRUSH_FILE_EXTENSION,
+-                                       FALSE);
+-
+   gimp->pattern_factory =
+     gimp_data_loader_factory_new (gimp,
+                                   GIMP_TYPE_PATTERN,
+diff --git a/app/core/gimp.c b/app/core/gimp.c
+index e59145209b..5b6891cb19 100644
+--- a/app/core/gimp.c
++++ b/app/core/gimp.c
+@@ -306,7 +306,6 @@ gimp_constructed (GObject *object)
+ 
+   gimp_paint_init (gimp);
+ 
+-  gimp->extension_manager = gimp_extension_manager_new (gimp);
+   gimp->plug_in_manager   = gimp_plug_in_manager_new (gimp);
+   gimp->pdb               = gimp_pdb_new (gimp);
+ 
+@@ -315,11 +314,6 @@ gimp_constructed (GObject *object)
+ 
+   /*  create user and default context  */
+   gimp_contexts_init (gimp);
+-
+-  /* Initialize the extension manager early as its contents may be used
+-   * at the very start (e.g. the splash image).
+-   */
+-  gimp_extension_manager_initialize (gimp->extension_manager);
+ }
+ 
+ static void
+@@ -395,8 +389,6 @@ gimp_finalize (GObject *object)
+                               gimp_brush_get_standard (gimp->user_context));
+   standards = g_list_prepend (standards,
+                               gimp_dynamics_get_standard (gimp->user_context));
+-  standards = g_list_prepend (standards,
+-                              gimp_mybrush_get_standard (gimp->user_context));
+   standards = g_list_prepend (standards,
+                               gimp_pattern_get_standard (gimp->user_context));
+   standards = g_list_prepend (standards,
+@@ -581,7 +573,6 @@ gimp_real_exit (Gimp     *gimp,
+     g_print ("EXIT: %s\n", G_STRFUNC);
+ 
+   gimp_plug_in_manager_exit (gimp->plug_in_manager);
+-  gimp_extension_manager_exit (gimp->extension_manager);
+   gimp_modules_unload (gimp);
+ 
+   gimp_data_factories_save (gimp);
+diff --git a/app/core/meson.build b/app/core/meson.build
+index 656d36a9c2..ad36d3ccc3 100644
+--- a/app/core/meson.build
++++ b/app/core/meson.build
+@@ -125,9 +125,6 @@ libappcore_sources = [
+   'gimpdynamics.c',
+   'gimpdynamicsoutput.c',
+   'gimperror.c',
+-  'gimpextension-error.c',
+-  'gimpextension.c',
+-  'gimpextensionmanager.c',
+   'gimpfilloptions.c',
+   'gimpfilter.c',
+   'gimpfilteredcontainer.c',
+@@ -199,7 +196,6 @@ libappcore_sources = [
+   'gimplinklayerundo.c',
+   'gimplist.c',
+   'gimpmaskundo.c',
+-  'gimpmybrush-load.c',
+   'gimpmybrush.c',
+   'gimpobject.c',
+   'gimpobjectqueue.c',
+diff --git a/app/dialogs/dialogs-constructors.c b/app/dialogs/dialogs-constructors.c
+index de9bf98725..650b4085c9 100644
+--- a/app/dialogs/dialogs-constructors.c
++++ b/app/dialogs/dialogs-constructors.c
+@@ -148,15 +148,6 @@ dialogs_preferences_get (GimpDialogFactory *factory,
+   return preferences_dialog_create (context->gimp);
+ }
+ 
+-GtkWidget *
+-dialogs_extensions_get (GimpDialogFactory *factory,
+-                        GimpContext       *context,
+-                        GimpUIManager     *ui_manager,
+-                        gint               view_size)
+-{
+-  return extensions_dialog_new (context->gimp);
+-}
+-
+ GtkWidget *
+ dialogs_keyboard_shortcuts_get (GimpDialogFactory *factory,
+                                 GimpContext       *context,
+diff --git a/app/dialogs/dialogs.c b/app/dialogs/dialogs.c
+index 7c15ce47ff..add8fa8968 100644
+--- a/app/dialogs/dialogs.c
++++ b/app/dialogs/dialogs.c
+@@ -296,8 +296,6 @@ static const GimpDialogFactoryEntry entries[] =
+             dialogs_close_all_get,          TRUE, FALSE, FALSE),
+   TOPLEVEL ("gimp-quit-dialog",
+             dialogs_quit_get,               TRUE, FALSE, FALSE),
+-  TOPLEVEL ("gimp-extensions-dialog",
+-            dialogs_extensions_get,         TRUE, TRUE,  TRUE),
+ 
+   /*  docks  */
+   DOCK ("gimp-dock",
+diff --git a/app/dialogs/meson.build b/app/dialogs/meson.build
+index 672cd934eb..d49a1958bc 100644
+--- a/app/dialogs/meson.build
++++ b/app/dialogs/meson.build
+@@ -22,7 +22,6 @@ libappdialogs_sources = [
+   'data-delete-dialog.c',
+   'dialogs-constructors.c',
+   'dialogs.c',
+-  'extensions-dialog.c',
+   'file-open-dialog.c',
+   'file-open-location-dialog.c',
+   'file-save-dialog.c',
+diff --git a/app/file-data/file-data.c b/app/file-data/file-data.c
+index 1c9113d479..1c77c129f6 100644
+--- a/app/file-data/file-data.c
++++ b/app/file-data/file-data.c
+@@ -445,57 +445,6 @@ file_data_init (Gimp *gimp)
+   gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
+   g_object_unref (procedure);
+ 
+-  /*  file-gex-load  */
+-  file = g_file_new_for_path ("file-gex-load");
+-  procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
+-  g_object_unref (file);
+-
+-  procedure->proc_type    = GIMP_PDB_PROC_TYPE_INTERNAL;
+-  procedure->marshal_func = file_gex_load_invoker;
+-
+-  proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+-  proc->menu_label = g_strdup (_("GIMP extension"));
+-  gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
+-                                   (const guint8 *) "gimp-plugin",
+-                                   strlen ("gimp-plugin") + 1,
+-                                   NULL);
+-  gimp_plug_in_procedure_set_file_proc (proc, "gex", NULL, "",
+-                                        "20, string, GIMP");
+-  gimp_plug_in_procedure_set_generic_file_proc (proc, TRUE);
+-  gimp_plug_in_procedure_set_mime_types (proc, "image/gimp-x-gex");
+-  gimp_plug_in_procedure_set_handles_remote (proc);
+-
+-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "file-gex-load");
+-  gimp_procedure_set_static_help (procedure,
+-                                  "Loads GIMP extension",
+-                                  "Loads GIMP extension",
+-                                  NULL);
+-  gimp_procedure_set_static_attribution (procedure,
+-                                         "Jehan", "Jehan", "2019");
+-
+-  gimp_procedure_add_argument (procedure,
+-                               gimp_param_spec_enum ("run-mode",
+-                                                     "Dummy Param",
+-                                                     "Dummy parameter",
+-                                                     GIMP_TYPE_RUN_MODE,
+-                                                     GIMP_RUN_INTERACTIVE,
+-                                                     GIMP_PARAM_READWRITE));
+-  gimp_procedure_add_argument (procedure,
+-                               g_param_spec_object ("file",
+-                                                    "File",
+-                                                    "The file to load",
+-                                                    G_TYPE_FILE,
+-                                                    GIMP_PARAM_READWRITE));
+-
+-  gimp_procedure_add_return_value (procedure,
+-                                   gimp_param_spec_string ("extension-id",
+-                                                           "ID of installed extension",
+-                                                           "Identifier of the newly installed extension",
+-                                                           FALSE, TRUE, FALSE, NULL,
+-                                                           GIMP_PARAM_READWRITE));
+-
+-  gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
+-  g_object_unref (procedure);
+ }
+ 
+ void
+diff --git a/app/file-data/meson.build b/app/file-data/meson.build
+index 9489eda9fb..5fdf498c9b 100644
+--- a/app/file-data/meson.build
++++ b/app/file-data/meson.build
+@@ -1,7 +1,6 @@
+ 
+ libappfiledata_sources = [
+   'file-data-gbr.c',
+-  'file-data-gex.c',
+   'file-data-gih.c',
+   'file-data-pat.c',
+   'file-data.c',
+diff --git a/app/paint/gimp-paint.c b/app/paint/gimp-paint.c
+index f3904a33b0..0e7b0e4e0c 100644
+--- a/app/paint/gimp-paint.c
++++ b/app/paint/gimp-paint.c
+@@ -34,7 +34,6 @@
+ #include "gimperaser.h"
+ #include "gimpheal.h"
+ #include "gimpink.h"
+-#include "gimpmybrushcore.h"
+ #include "gimppaintoptions.h"
+ #include "gimppaintbrush.h"
+ #include "gimppencil.h"
+@@ -65,7 +64,6 @@ gimp_paint_init (Gimp *gimp)
+     gimp_perspective_clone_register,
+     gimp_heal_register,
+     gimp_clone_register,
+-    gimp_mybrush_core_register,
+     gimp_ink_register,
+     gimp_airbrush_register,
+     gimp_eraser_register,
+diff --git a/app/paint/meson.build b/app/paint/meson.build
+index 5b0c5d406e..2b1bed5066 100644
+--- a/app/paint/meson.build
++++ b/app/paint/meson.build
+@@ -36,9 +36,6 @@ libapppaint_sources = [
+   'gimpink.c',
+   'gimpinkoptions.c',
+   'gimpinkundo.c',
+-  'gimpmybrushcore.c',
+-  'gimpmybrushoptions.c',
+-  'gimpmybrushsurface.c',
+   'gimppaintbrush.c',
+   'gimppaintcore-loops.cc',
+   'gimppaintcore-stroke.c',
+diff --git a/app/tools/gimp-tools.c b/app/tools/gimp-tools.c
+index 7179c09358..241f8a8300 100644
+--- a/app/tools/gimp-tools.c
++++ b/app/tools/gimp-tools.c
+@@ -181,7 +181,6 @@ gimp_tools_init (Gimp *gimp)
+     gimp_eraser_tool_register,
+     gimp_airbrush_tool_register,
+     gimp_ink_tool_register,
+-    gimp_mybrush_tool_register,
+     gimp_clone_tool_register,
+     gimp_heal_tool_register,
+     gimp_perspective_clone_tool_register,
+@@ -720,10 +719,6 @@ gimp_tools_register (GType                   tool_type,
+     {
+       paint_core_name = "gimp-ink";
+     }
+-  else if (tool_type == GIMP_TYPE_MYBRUSH_TOOL)
+-    {
+-      paint_core_name = "gimp-mybrush";
+-    }
+   else
+     {
+       paint_core_name = "gimp-paintbrush";
+diff --git a/app/tools/gimppaintoptions-gui.c b/app/tools/gimppaintoptions-gui.c
+index 02f3f40c37..2d02b0edd9 100644
+--- a/app/tools/gimppaintoptions-gui.c
++++ b/app/tools/gimppaintoptions-gui.c
+@@ -121,7 +121,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
+       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
+       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
+       tool_type == GIMP_TYPE_HEAL_TOOL       ||
+-      tool_type == GIMP_TYPE_MYBRUSH_TOOL    ||
+       tool_type == GIMP_TYPE_SMUDGE_TOOL)
+     {
+       gtk_widget_set_sensitive (menu, FALSE);
+@@ -135,8 +134,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
+ 
+   /*  temp debug foo, disabled in stable  */
+   if (FALSE &&
+-      g_type_is_a (tool_type, GIMP_TYPE_PAINT_TOOL) &&
+-      tool_type != GIMP_TYPE_MYBRUSH_TOOL)
++      g_type_is_a (tool_type, GIMP_TYPE_PAINT_TOOL))
+     {
+       GtkWidget *button;
+ 
+diff --git a/app/tools/meson.build b/app/tools/meson.build
+index 91e976c6fd..b2ae47b0b6 100644
+--- a/app/tools/meson.build
++++ b/app/tools/meson.build
+@@ -78,8 +78,6 @@ libapptools_sources = [
+   'gimpmeasuretool.c',
+   'gimpmoveoptions.c',
+   'gimpmovetool.c',
+-  'gimpmybrushoptions-gui.c',
+-  'gimpmybrushtool.c',
+   'gimpnpointdeformationoptions.c',
+   'gimpnpointdeformationtool.c',
+   'gimpoffsettool.c',
+diff --git a/app/widgets/meson.build b/app/widgets/meson.build
+index b038b1a7e2..db63568865 100644
+--- a/app/widgets/meson.build
++++ b/app/widgets/meson.build
+@@ -119,8 +119,6 @@ libappwidgets_sources = [
+   'gimperrorconsole.c',
+   'gimperrordialog.c',
+   'gimpexportdialog.c',
+-  'gimpextensionlist.c',
+-  'gimpextensiondetails.c',
+   'gimpfgbgeditor.c',
+   'gimpfgbgview.c',
+   'gimpfiledialog.c',
+diff --git a/devel-docs/meson.build b/devel-docs/meson.build
+index 7dd25ed1ba..234a951148 100644
+--- a/devel-docs/meson.build
++++ b/devel-docs/meson.build
+@@ -8,6 +8,6 @@ mkdb_args_common = [
+   '--name-space=gimp',
+ ]
+ 
+-if gi_docgen.found() and have_gobject_introspection
++if not platform_windows
+   subdir('reference')
+ endif
+diff --git a/docs/meson.build b/docs/meson.build
+index 1f8a37f706..bcba9436fe 100644
+--- a/docs/meson.build
++++ b/docs/meson.build
+@@ -8,7 +8,7 @@ manconf.set('gimplocaledir',  prefix / localedir)
+ manconf.set('gimpplugindir',  prefix / gimpplugindir)
+ manconf.set('manpage_gimpdir', '$XDG_CONFIG_HOME/' + gimpdir / gimp_app_version)
+ manconf.set('gimpsysconfdir', prefix / gimpsysconfdir)
+-manconf.set('mypaint_brushes_dir', mypaint_brushes_dir)
++manconf.set('mypaint_brushes_dir', 'none')
+ 
+ 
+ man_files = [
+diff --git a/etc/meson.build b/etc/meson.build
+index c4cae6f864..944616bd1d 100644
+--- a/etc/meson.build
++++ b/etc/meson.build
+@@ -1,6 +1,6 @@
+ etcconf = configuration_data()
+ etcconf.set('GIMP_APP_VERSION', gimp_app_version)
+-etcconf.set('mypaint_brushes_dir', mypaint_brushes_dir)
++etcconf.set('mypaint_brushes_dir', 'none')
+ 
+ 
+ install_data(
+diff --git a/libgimp/meson.build b/libgimp/meson.build
+index c12e60c2cd..8301ccdda4 100644
+--- a/libgimp/meson.build
++++ b/libgimp/meson.build
+@@ -501,7 +501,9 @@ libgimpui_introspectable_files = [
+   libgimpwidgets_introspectable,
+ ]
+ 
+-if meson.is_cross_build() and not get_option('can-crosscompile-gir')
++if platform_windows
++  have_gobject_introspection = false
++elif meson.is_cross_build() and not get_option('can-crosscompile-gir')
+   have_gobject_introspection = false
+   gobject_introspection_warning = '\n      '.join(['',
+     'GObject Introspection is disabled while cross-compiling because',
+diff --git a/meson.build b/meson.build
+index ccdaab3881..563a91adef 100644
+--- a/meson.build
++++ b/meson.build
+@@ -288,7 +288,7 @@ warning_cflags_common = [
+   '-fno-common',
+ 
+   '-Wformat',
+-  '-Wformat-security',
++  '-Wno-format-security',
+   '-Winit-self',
+   '-Wlogical-op',
+   '-Wmissing-declarations',
+@@ -419,6 +419,7 @@ math              = cc.find_library('m', required: false)
+ if platform_windows
+   #Needed otherwise compilers get angry with the headers provided by UCRT
+   compiler_args +='-D_USE_MATH_DEFINES'
++  compiler_args +='/D_CRT_SECURE_NO_WARNINGS'
+ endif
+ 
+ # libdl is only required on Linux. On Windows and some (all?) BSD, it
+@@ -503,17 +504,11 @@ json_glib         = dependency('json-glib-1.0',      version: '>='+json_glib_min
+ lcms_minver       = '2.8'
+ lcms              = dependency('lcms2',              version: '>='+lcms_minver)
+ libmypaint_minver = '1.5.0'
+-libmypaint        = dependency('libmypaint',         version: '>='+libmypaint_minver)
+-mypaint_brushes   = dependency('mypaint-brushes-2.0')
++libmypaint        = dependency('libmypaint',         required: false)
++mypaint_brushes   = dependency('mypaint-brushes-2.0', required: false)
+ 
+-if relocatable_bundle
+-  mypaint_brushes_dir = '${gimp_installation_dir}'\
+-                        /'share'/'mypaint-data'/'2.0'/'brushes'
+-else
+-  mypaint_brushes_dir = mypaint_brushes.get_variable(pkgconfig: 'brushesdir')
+-endif
+ 
+-conf.set_quoted('MYPAINT_BRUSHES_DIR', mypaint_brushes_dir)
++conf.set_quoted('MYPAINT_BRUSHES_DIR', 'none')
+ 
+ pango_minver = '1.50.0'
+ if platform_osx
+@@ -639,7 +634,7 @@ endif
+ # Check for extension support
+ 
+ appstream_minver = '0.16.1'
+-appstream = dependency('appstream', version: '>='+appstream_minver)
++appstream = dependency('appstream', required: false)
+ 
+ libarchive = dependency('libarchive')
+ 
+@@ -977,7 +972,7 @@ poppler_minver = '0.69.0'
+ poppler_data_minver = '0.4.9'
+ poppler = [
+   dependency('poppler-glib', version: '>='+poppler_minver),
+-  dependency('poppler-data', version: '>='+poppler_data_minver),
++  dependency('poppler-data', required: false),
+ ]
+ 
+ cairopdf_minver = '1.12.2'
+@@ -1108,9 +1103,6 @@ pygobject_found = run_command(python, '-c',
+                               check: false).returncode() == 0
+ message('Found PyGObject: @0@'.format(pygobject_found))
+ 
+-if not pygobject_found
+-  error('PyGObject is required.')
+-endif
+ 
+ ## Javascript
+ 
+@@ -1703,7 +1695,6 @@ install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif_minver)
+ install_conf.set('LIBJXL_REQUIRED_VERSION',       jpegxl_minver)
+ install_conf.set('LIBLZMA_REQUIRED_VERSION',      liblzma_minver)
+ install_conf.set('LIBTIFF_REQUIRED_VERSION',      libtiff_minver)
+-install_conf.set('LIBMYPAINT_REQUIRED_VERSION',   libmypaint_minver)
+ install_conf.set('LIBPNG_REQUIRED_VERSION',       libpng_minver)
+ install_conf.set('OPENEXR_REQUIRED_VERSION',      openexr_minver)
+ install_conf.set('OPENJPEG_REQUIRED_VERSION',     openjpeg_minver)
+@@ -1899,7 +1890,14 @@ if get_option('debug-self-in-build')
+  gimp_run_env.set('GIMP_DEBUG_SELF', '1')
+ endif
+ 
+-if meson.can_run_host_binaries() and have_gobject_introspection
++if enable_console_bin
++    gimp_real_exe = gimpconsole_exe
++  else
++    gimp_real_exe = gimpmain_exe
++  endif
++gimp_exe_depends = [gimp_real_exe] + plugin_custom_targets
++
++if meson.can_run_host_binaries() and not platform_windows
+   if enable_console_bin
+     gimp_real_exe = gimpconsole_exe
+   else
+@@ -1968,18 +1966,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
+       gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', plugin_exe)
+     endforeach
+   endif
+-else
+-  # Cross-builds require an existing native GIMP installed, unless we
+-  # can run target binaries.
+-  native_gimp_exe = find_program([gimpconsole_exe_name, gimpmain_exe_name],
+-                                 native: true, required: false)
+-
+-  if not native_gimp_exe.found()
+-    error('When cross-compiling, the build requires either an exe_wrapper or a native GIMP installed (@0@ or @1@).'.format(gimpconsole_exe_name, gimpmain_exe_name))
+-  endif
+-
+-  gimp_run_env.set('GIMP_SELF_IN_BUILD', native_gimp_exe.full_path())
+-  gimp_exe_depends = []
+ endif
+ 
+ gimp_exe = find_program('tools'/'in-build-gimp.py')
+@@ -2166,7 +2152,7 @@ final_message = [
+ '''  Test appdata         @0@'''.format(appstreamcli.found()),
+ '',
+ '''Documentation:''',
+-'''  libgimp API Reference: @0@'''.format(gi_docgen.found() and have_gobject_introspection),
++'''  libgimp API Reference: @0@'''.format(gi_docgen.found()),
+ '',
+ '''Bug report URL: @0@'''.format(bug_report_url),
+ ]
+-- 
+2.49.0.windows.1
+

@@ -54,7 +54,10 @@ if (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf)
   {
     & "$env:VCPKG_ROOT\vcpkg.exe" upgrade --no-dry-run; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     & "$env:VCPKG_ROOT\vcpkg.exe" install --recurse (Get-Content build/windows/all-deps-uni.txt | Select-String 'vcpkg:' | ForEach-Object { ($_ -split '\|vcpkg:')[1] }); if ("$LASTEXITCODE" -gt '0') { exit 1 }
-    $env:PKG_CONFIG="$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_TRIPLET\tools\pkgconf\pkgconf.exe"; $env:CC='clang-cl'; $env:CXX='clang-cl' 
+    #Needed for finding perl on CI
+    & "$env:VCPKG_ROOT\vcpkg.exe" remove aom; $env:VCPKG_DEFAULT_BINARY_CACHE="$env:VCPKG_ROOT/buildtrees/aom"; & "$env:VCPKG_ROOT\vcpkg.exe" install --recurse aom; Remove-Item env:VCPKG_DEFAULT_BINARY_CACHE
+    #FIXME: appstream, libmypaint, poppler-data and pygobject are missing on vcpkg
+    git apply -v 'build\windows\patches\0001-Disable-some-core-featuers-due-to-lack-of-vcpkg-pack.patch'; cd gimp-data; git apply -v '..\build\windows\patches\0001-images-Do-not-build-splash-image-on-MSVC.patch'; cd ..
   }
 else
   {
@@ -72,7 +75,7 @@ if (-not $GIMP_PREFIX)
   {
     $GIMP_PREFIX = "$PWD\_install"
   }
-Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,7) -replace '> ','' -replace '- ','')
+Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,9) -replace '> ','' -replace '- ','')
 
 
 # Build babl and GEGL
@@ -160,12 +163,13 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build$([char]13)$([char]27)[0K"
   }
 
-self_build babl
 if ($env:VCPKG_ROOT)
   {
-    self_build gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch', 'build\windows\patches\0001-gegl-Use-vs_module_defs-for-MSVC.patch')
+    self_build babl @('-Denable-gir=false')
+    self_build gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch', 'build\windows\patches\0001-gegl-Use-vs_module_defs-for-MSVC.patch') @('-Dintrospection=false')
     exit 0
   }
+self_build babl
 self_build gegl
 if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32')
   {

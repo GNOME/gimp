@@ -538,7 +538,7 @@ gimp-snap:
     - if: '($GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/) && $CI_JOB_NAME !~ /.*eol.*/ && $CI_JOB_NAME !~ /.*installer.*/'
       variables:
         STORE_OPTION: '-Dms-store=true'
-    - if: '($GIMP_CI_MESON_MSVC != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_MSVC.*/) && $CI_JOB_NAME =~ /.*deps.*/ && $CI_JOB_NAME !~ /.*eol.*/ && $CI_JOB_NAME !~ /.*aarch64.*/'
+    - if: '($GIMP_CI_MESON_MSVC != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_MSVC.*/) && $CI_JOB_NAME !~ /.*installer.*/ && $CI_JOB_NAME !~ /.*store.*/ && $CI_JOB_NAME !~ /.*eol.*/ && $CI_JOB_NAME !~ /.*aarch64.*/'
       variables:
         VCPKG_ROOT: "$CI_PROJECT_DIR/vcpkg"
         VARIANT: "-msvc"
@@ -557,9 +557,9 @@ gimp-snap:
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
     - $GIMP_PREFIX = "$PWD\_install-$(if (-not $env:MSYSTEM_PREFIX) { $(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower()) } else { $env:MSYSTEM_PREFIX })"
-    - if ("$VARIANT" -eq '-msvc') { if (-not (Test-Path $env:VCPKG_ROOT)) { git clone --depth 1 https://github.com/microsoft/vcpkg; .\vcpkg\bootstrap-vcpkg.bat }; pip install meson }
+    - if ("$VARIANT" -eq '-msvc') { if (-not (Test-Path $env:VCPKG_ROOT)) { git clone --depth 1 --branch gitlab-gnome-remove https://github.com/BillyONeal/vcpkg; .\vcpkg\bootstrap-vcpkg.bat }; pip install meson }
     - if ("$VARIANT" -eq '-msvc') { $VSINSTALLDIR = $(vswhere -products * -latest -property installationPath); Import-Module "$VSINSTALLDIR\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell -VsInstallPath "$VSINSTALLDIR" -SkipAutomaticLocation -DevCmdArguments "-arch=$(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower())" }   
-  timeout: 90m
+  timeout: 120m
 
 .win_environ: &WIN_ENVIRON
 # See: https://testing.developer.gimp.org/core/setup/build/windows/#prepare-for-building
@@ -570,6 +570,8 @@ gimp-snap:
 ## Runtime vars
 - $env:PATH = "$GIMP_PREFIX/bin;$env:VCPKG_ROOT/installed/$env:VCPKG_DEFAULT_TRIPLET/bin;$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/bin;$env:PATH"
 - $env:GI_TYPELIB_PATH = "$GIMP_PREFIX/lib/girepository-1.0;$env:VCPKG_ROOT/installed/$env:VCPKG_DEFAULT_TRIPLET/lib/girepository-1.0;$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/lib/girepository-1.0"
+## MSVC-specific vars
+- $env:CC='clang-cl'; $env:CXX='clang-cl'; $env:PKG_CONFIG="$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_TRIPLET\tools\pkgconf\pkgconf.exe"; $env:PATH="$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_TRIPLET\tools\glib;$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_TRIPLET\tools\gdk-pixbuf;$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_TRIPLET\tools\gettext\bin;$(Resolve-Path $env:VCPKG_ROOT\downloads\tools\perl\*.*\perl\bin -ErrorAction SilentlyContinue);$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_TRIPLET\tools\libxml2;$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_TRIPLET\tools\libxslt;$env:PATH"; $env:GIO_MODULE_DIR="$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_TRIPLET\plugins\glib-networking"
 - Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):win_environ$([char]13)$([char]27)[0K"
 
 deps-win:
