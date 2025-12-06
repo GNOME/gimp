@@ -583,10 +583,11 @@ main_dialog (GimpProcedure       *procedure,
                                   "first-axis-y",
                                   "first-axis-z",
                                   NULL);
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
-                                    "first-axis-frame",
-                                    "first-axis-label", FALSE,
-                                    "first-axis-box");
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
+                                            "first-axis-frame",
+                                            "first-axis-label", FALSE,
+                                            "first-axis-box");
+  gtk_widget_set_hexpand (frame, TRUE);
 
   gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (appwin),
                                         "second-axis-x", 1.0);
@@ -603,10 +604,11 @@ main_dialog (GimpProcedure       *procedure,
                                   "second-axis-y",
                                   "second-axis-z",
                                   NULL);
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
-                                    "second-axis-frame",
-                                    "second-axis-label", FALSE,
-                                    "second-axis-box");
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
+                                            "second-axis-frame",
+                                            "second-axis-label", FALSE,
+                                            "second-axis-box");
+  gtk_widget_set_hexpand (frame, TRUE);
 
   hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin),
                                          "axis-box",
