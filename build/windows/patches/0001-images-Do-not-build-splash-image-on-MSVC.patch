@@ -1,0 +1,32 @@
+From cb8e9047788b3b2c8c5c0c699a624fa67f1bc22c Mon Sep 17 00:00:00 2001
+From: Bruno Lopes <brunvonlope@outlook.com>
+Date: Sun, 7 Dec 2025 18:15:16 -0300
+Subject: [PATCH] images: Do not build splash image on MSVC
+
+Since we don't have PyGobject on vcpkg yet
+---
+ images/meson.build | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/images/meson.build b/images/meson.build
+index 5cb2b60..8d9c924 100644
+--- a/images/meson.build
++++ b/images/meson.build
+@@ -9,7 +9,7 @@ splash = custom_target('gimp-splash.png',
+                                   '--batch-interpreter', 'python-fu-eval',
+                                   '-b', '-', '--quit'],
+                        feed: true,
+-                       build_by_default: true,
++                       build_by_default: false,
+                        env: gimp_run_env,
+                        install_dir: gimpdatadir / 'images',
+                        install: true)
+@@ -31,5 +31,3 @@ if get_option('windows-installer')
+ endif
+ 
+ subdir('logo')
+-
+-install_data('sidrat.data', install_dir: gimpdatadir / 'images')
+-- 
+2.49.0.windows.1
+
