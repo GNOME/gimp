@@ -134,7 +134,6 @@ parts:
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - -Ddocs=false
       - -Dgi-docgen=disabled
-      - -Dworkshop=true
     build-packages:
       - libmaxflow-dev
       - libopenexr-dev #https://github.com/ubuntu/gnome-sdk/issues/321
