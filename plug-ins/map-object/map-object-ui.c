@@ -301,7 +301,7 @@ main_dialog (GimpProcedure       *procedure,
              GimpDrawable        *drawable)
 {
   GtkWidget     *main_hbox;
-  GtkWidget     *vbox;
+  GtkWidget     *preview_box;
   GtkWidget     *hbox;
   GtkWidget     *frame;
   GtkWidget     *button;
@@ -320,14 +320,14 @@ main_dialog (GimpProcedure       *procedure,
 
   /* Create the Preview */
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_widget_show (vbox);
+  preview_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_widget_show (preview_box);
 
   /* Add preview widget and various buttons to the first part */
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (preview_box), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   gtk_widget_realize (appwin);
@@ -349,7 +349,7 @@ main_dialog (GimpProcedure       *procedure,
                     previewarea);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (preview_box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   button = gtk_button_new_with_mnemonic (_("_Preview!"));
@@ -384,7 +384,7 @@ main_dialog (GimpProcedure       *procedure,
 
   toggle = gtk_check_button_new_with_mnemonic (_("Show _wireframe"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mapvals.showgrid);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (preview_box), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -393,7 +393,7 @@ main_dialog (GimpProcedure       *procedure,
 
   toggle = gtk_check_button_new_with_mnemonic (_("Update preview _live"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mapvals.livepreview);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (preview_box), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -925,8 +925,8 @@ main_dialog (GimpProcedure       *procedure,
                                               NULL);
   gtk_orientable_set_orientation (GTK_ORIENTABLE (main_hbox),
                                   GTK_ORIENTATION_HORIZONTAL);
-  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (main_hbox), vbox, 0);
+  gtk_box_pack_start (GTK_BOX (main_hbox), preview_box, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (main_hbox), preview_box, 0);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (appwin), "main-hbox", NULL);
 
