@@ -246,15 +246,18 @@ if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
 ## Check in advance if the certificate we will use in the future tagged pipeline is fine
 if ((-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT) -and $CI_COMMIT_TAG)
   {
-    $jsonObject = Invoke-RestMethod -Uri https://www.gimp.org/gimp_versions.json
-    $latest_installer = (@($jsonObject.DEVELOPMENT + $jsonObject.STABLE) | ForEach-Object { $_.windows } | Where-Object { $_.date } | Sort-Object { [datetime]$_.date } -Descending | Select-Object -First 1 -ExpandProperty filename)
-    Invoke-WebRequest https://download.gimp.org/gimp/v$($latest_installer -replace '.*?(\d+\.\d+).*','$1')/windows/$latest_installer -OutFile gimp.exe
-    $latest_installer_cert = (Get-AuthenticodeSignature gimp.exe).SignerCertificate.NotAfter
+    #GIMP main server and mirrors (or Invoke-WebRequest) are unbearably slow so
+    #we manually check the expire date set on the latest released .exe installer
+    $latest_installer_cert = New-Object -TypeName System.DateTime -ArgumentList 2027, 2, 28
+    #$jsonObject = Invoke-RestMethod -Uri https://www.gimp.org/gimp_versions.json
+    #$latest_installer = (@($jsonObject.DEVELOPMENT + $jsonObject.STABLE) | ForEach-Object { $_.windows } | Where-Object { $_.date } | Sort-Object { [datetime]$_.date } -Descending | Select-Object -First 1 -ExpandProperty filename)
+    #Invoke-WebRequest https://download.gimp.org/gimp/v$($latest_installer -replace '.*?(\d+\.\d+).*','$1')/windows/$latest_installer -OutFile gimp.exe
+    #$latest_installer_cert = (Get-AuthenticodeSignature gimp.exe).SignerCertificate.NotAfter
     Write-Output "(INFO): Certificate expire date is: $latest_installer_cert"
-    if ((Get-Date) -gt $latest_installer_cert)
+    if ((Get-Date) -ge $latest_installer_cert)
       {
         $expired_pfx = $latest_installer_cert
-        Write-Host "(ERROR): Signing certificate for releases expired." -ForegroundColor Red
+        Write-Host "(ERROR): Signing certificate for releases expired. Please ask the owner to issue a new one then commit its expire date on 'build\windows\installer\*.ps1'." -ForegroundColor Red
       }
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_trust$([char]13)$([char]27)[0K"
