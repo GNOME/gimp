@@ -460,7 +460,7 @@ dump_describe_param (GParamSpec *param_spec)
         "The integer size can contain a suffix of 'B', 'K', 'M' or 'G' which "
         "makes GIMP interpret the size as being specified in bytes, kilobytes, "
         "megabytes or gigabytes. If no suffix is specified the size defaults "
-        "to being specified in kilobytes.";
+        "to being specified in bytes.";
     }
   else if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (param_spec))
     {

@@ -74,7 +74,7 @@ images that wouldn't fit into memory otherwise.  If you have a lot of RAM, you
 may want to set this to a higher value.  The integer size can contain a suffix
 of 'B', 'K', 'M' or 'G' which makes GIMP interpret the size as being specified
 in bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
-size defaults to being specified in kilobytes.
+size defaults to being specified in bytes.
 
 .TP
 (use-opencl no)
@@ -332,7 +332,7 @@ the undo stack. Regardless of this setting, at least as many undo-levels as
 configured can be undone.  The integer size can contain a suffix of 'B', 'K',
 \&'M' or 'G' which makes GIMP interpret the size as being specified in bytes,
 kilobytes, megabytes or gigabytes. If no suffix is specified the size defaults
-to being specified in kilobytes.
+to being specified in bytes.
 
 .TP
 (undo-preview-size large)
@@ -385,7 +385,7 @@ The thumbnail in the Open dialog will be automatically updated if the file
 being previewed is smaller than the size set here.  The integer size can
 contain a suffix of 'B', 'K', 'M' or 'G' which makes GIMP interpret the size
 as being specified in bytes, kilobytes, megabytes or gigabytes. If no suffix
-is specified the size defaults to being specified in kilobytes.
+is specified the size defaults to being specified in bytes.
 
 .TP
 (color-management
@@ -948,7 +948,7 @@ GIMP will warn the user if an attempt is made to create an image that would
 take more memory than the size specified here.  The integer size can contain a
 suffix of 'B', 'K', 'M' or 'G' which makes GIMP interpret the size as being
 specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
-specified the size defaults to being specified in kilobytes.
+specified the size defaults to being specified in bytes.
 
 .TP
 (toolbox-color-area yes)

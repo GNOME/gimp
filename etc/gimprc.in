@@ -45,7 +45,7 @@
 # you may want to set this to a higher value.  The integer size can contain a
 # suffix of 'B', 'K', 'M' or 'G' which makes GIMP interpret the size as being
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
-# specified the size defaults to being specified in kilobytes.
+# specified the size defaults to being specified in bytes.
 # 
 # (tile-cache-size 2g)
 
@@ -264,7 +264,7 @@
 # as configured can be undone.  The integer size can contain a suffix of 'B',
 # 'K', 'M' or 'G' which makes GIMP interpret the size as being specified in
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
-# size defaults to being specified in kilobytes.
+# size defaults to being specified in bytes.
 # 
 # (undo-size 1g)
 
@@ -310,7 +310,7 @@
 # being previewed is smaller than the size set here.  The integer size can
 # contain a suffix of 'B', 'K', 'M' or 'G' which makes GIMP interpret the
 # size as being specified in bytes, kilobytes, megabytes or gigabytes. If no
-# suffix is specified the size defaults to being specified in kilobytes.
+# suffix is specified the size defaults to being specified in bytes.
 # 
 # (thumbnail-filesize-limit 4M)
 
@@ -745,7 +745,7 @@
 # take more memory than the size specified here.  The integer size can
 # contain a suffix of 'B', 'K', 'M' or 'G' which makes GIMP interpret the
 # size as being specified in bytes, kilobytes, megabytes or gigabytes. If no
-# suffix is specified the size defaults to being specified in kilobytes.
+# suffix is specified the size defaults to being specified in bytes.
 # 
 # (max-new-image-size 128M)
 
