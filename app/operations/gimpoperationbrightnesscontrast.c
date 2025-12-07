@@ -61,6 +61,7 @@ gimp_operation_brightness_contrast_class_init (GimpOperationBrightnessContrastCl
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:brightness-contrast",
+                                 "title",       _("Brightness-Contrast"),
                                  "categories",  "color",
                                  "description", _("Adjust brightness and contrast"),
                                  NULL);

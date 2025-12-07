@@ -63,6 +63,7 @@ gimp_operation_curves_class_init (GimpOperationCurvesClass *klass)
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:curves",
+                                 "title",       _("Curves"),
                                  "categories",  "color",
                                  "description", _("Adjust color curves"),
                                  NULL);
