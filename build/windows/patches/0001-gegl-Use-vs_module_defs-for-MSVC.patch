@@ -1,0 +1,24 @@
+From 74e3e32be8c33ab1c39fd00287f405bf07a60f00 Mon Sep 17 00:00:00 2001
+From: Bruno Lopes <brunvonlope@outlook.com>
+Date: Sun, 7 Dec 2025 19:35:28 -0300
+Subject: [PATCH] gegl: Use vs_module_defs for MSVC
+
+---
+ gegl/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/gegl/meson.build b/gegl/meson.build
+index 0548b06..58bd422 100644
+--- a/gegl/meson.build
++++ b/gegl/meson.build
+@@ -135,6 +135,7 @@ gegl_lib = library(api_name,
+ 
+   link_with: simd_extra,
+   link_args: gegl_ldflags,
++  vs_module_defs: gegl_def,
+   install: true,
+   version: so_version,
+ )
+-- 
+2.49.0.windows.1
+
