@@ -62,6 +62,7 @@ gimp_operation_color_balance_class_init (GimpOperationColorBalanceClass *klass)
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:color-balance",
+                                 "title",       _("Color Balance"),
                                  "categories",  "color",
                                  "description", _("Adjust color distribution"),
                                  NULL);

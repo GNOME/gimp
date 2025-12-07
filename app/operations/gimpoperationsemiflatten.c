@@ -79,6 +79,7 @@ gimp_operation_semi_flatten_class_init (GimpOperationSemiFlattenClass *klass)
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:semi-flatten",
+                                 "title",       _("Semi-Flatten"),
                                  "categories",  "color",
                                  "description", _("Replace partial transparency with a color"),
                                  NULL);

@@ -82,6 +82,7 @@ gimp_operation_desaturate_class_init (GimpOperationDesaturateClass *klass)
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:desaturate",
+                                 "title",       _("Desaturate"),
                                  "categories",  "color",
                                  "description", _("Turn colors into shades of gray"),
                                  NULL);

@@ -81,6 +81,7 @@ gimp_operation_posterize_class_init (GimpOperationPosterizeClass *klass)
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:posterize",
+                                 "title",       _("Posterize"),
                                  "categories",  "color",
                                  "description", _("Reduce to a limited set of colors"),
                                  NULL);

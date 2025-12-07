@@ -62,6 +62,7 @@ gimp_operation_hue_saturation_class_init (GimpOperationHueSaturationClass *klass
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:hue-saturation",
+                                 "title",       _("Hue-Saturation"),
                                  "categories",  "color",
                                  "description", _("Adjust hue, saturation, and lightness"),
                                  NULL);

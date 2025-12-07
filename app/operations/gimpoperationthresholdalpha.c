@@ -75,6 +75,7 @@ gimp_operation_threshold_alpha_class_init (GimpOperationThresholdAlphaClass *kla
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:threshold-alpha",
+                                 "title",       _("Threshold Alpha"),
                                  "categories",  "color",
                                  "description",
                                  _("Make transparency all-or-nothing, by "
