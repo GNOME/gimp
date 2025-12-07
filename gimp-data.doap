@@ -89,5 +89,11 @@
       <gnome:userid>jehanp</gnome:userid>
     </foaf:Person>
   </maintainer>
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Aryeom</foaf:name>
+      <gnome:userid>aryeomhan</gnome:userid>
+    </foaf:Person>
+  </maintainer>
 
 </Project>
