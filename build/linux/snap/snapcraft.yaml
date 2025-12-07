@@ -184,7 +184,7 @@ parts:
       - libxpm-dev #https://github.com/ubuntu/gnome-sdk/issues/319
       - xsltproc
     stage-packages:
-      - libgexiv2-2
+      - gir1.2-gexiv2-0.10
       - libgs10
       - libheif-plugin-dav1d
       - libheif-plugin-aomenc
