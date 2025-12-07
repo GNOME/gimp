@@ -435,7 +435,8 @@ mscms             = platform_windows ? cc.find_library('mscms') : no_dep
 atk_minver        = '2.4.0'
 atk               = dependency('atk',                version: '>='+atk_minver)
 babl_minver       = '0.1.116'
-babl              = dependency('babl-0.1',           version: '>='+babl_minver)
+babl_name         = 'babl-0.1'
+babl              = dependency(babl_name,            version: '>='+babl_minver)
 # TODO: we want to bump to Cairo 1.17.2 when possible in order to use
 # CAIRO_FORMAT_RGBA128F unconditionally. At time of writing, it's not possible
 # because of our bookworm availability requirement.
