@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp gimp-3-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-12-05 06:12+0000\n"
-"PO-Revision-Date: 2025-12-05 18:59+0700\n"
+"PO-Revision-Date: 2025-12-07 12:16+0700\n"
 "Last-Translator: \n"
 "Language-Team: Thai <th@li.org>\n"
 "Language: th\n"
@@ -114,32 +114,36 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
+"แปลงเป็นดัชนีสีโดยใช้การตั้งค่าเริ่มต้น\n"
+"(ทำด้วยตัวเองเพื่อปรับแต่งผลลัพธ์)"
 
 #: libgimp/gimpexportoptions.c:456
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr ""
+msgstr "ปลั๊กอิน %s สามารถจัดการได้เฉพาะภาพดัชนีสีบิตแมป (สองสี) เท่านั้น"
 
 #: libgimp/gimpexportoptions.c:457
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
+"แปลงเป็นดัชนีสีโดยใช้การตั้งค่าเริ่มต้นของบิตแมป\n"
+"(ทำด้วยตัวเองเพื่อปรับแต่งผลลัพธ์)"
 
 #: libgimp/gimpexportoptions.c:466
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr ""
+msgstr "ปลั๊กอิน %s สามารถจัดการได้เฉพาะภาพ RGB หรือเฉดเทาเท่านั้น"
 
 #: libgimp/gimpexportoptions.c:475
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
-msgstr ""
+msgstr "ปลั๊กอิน %s สามารถจัดการได้เฉพาะภาพ RGB หรือดัชนีสีเท่านั้น"
 
 #: libgimp/gimpexportoptions.c:485
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr ""
+msgstr "ปลั๊กอิน %s สามารถจัดการได้เฉพาะภาพเฉดเทาหรือดัชนีสีเท่านั้น"
 
 #: libgimp/gimpexportoptions.c:496
 #, c-format
@@ -148,20 +152,20 @@ msgstr "ปลั๊กอิน %s ต้องการแชนเนลอ�
 
 #: libgimp/gimpexportoptions.c:497
 msgid "Add Alpha Channel"
-msgstr ""
+msgstr "เพิ่มแชนเนลอัลฟา"
 
 #: libgimp/gimpexportoptions.c:505
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
-msgstr ""
+msgstr "ปลั๊กอิน %s ต้องการครอบตัดเลเยอร์ให้เท่ากับขอบเขตภาพ"
 
 #: libgimp/gimpexportoptions.c:506
 msgid "Crop Layers"
-msgstr ""
+msgstr "ครอบตัดเลเยอร์"
 
 #: libgimp/gimpexportoptions.c:506
 msgid "Resize Image to Layers"
-msgstr ""
+msgstr "ปรับขนาดภาพให้เท่าเลเยอร์"
 
 #: libgimp/gimpexportprocedure.c:550
 msgid "Save _Exif"
@@ -248,113 +252,114 @@ msgstr "GIMP"
 #: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:449
 #, c-format
 msgid ""
-"This file loading plug-in returned SUCCESS as a status without an image. "
-"This is a bug in the plug-in code. Contact the plug-in developer."
+"This file loading plug-in returned SUCCESS as a status without an image. This is a bug in "
+"the plug-in code. Contact the plug-in developer."
 msgstr ""
+"ปลั๊กอินสำหรับโหลดไฟล์นี้คืนค่า SUCCESS เป็นสถานะโดยไม่มีภาพ นี่เป็นบั๊กในโค้ดของปลั๊กอิน กรุณาติดต่อผู้พัฒนาปลั๊กอิน"
 
 #: libgimp/gimpparamspecs-desc.c:68
 msgid "Allowed values:"
-msgstr ""
+msgstr "ค่าที่อนุญาต:"
 
 #. procedure executed successfully
 #: libgimp/gimppdb.c:335
 msgid "success"
-msgstr ""
+msgstr "สำเร็จ"
 
 #. procedure execution failed
 #: libgimp/gimppdb.c:339
 msgid "execution error"
-msgstr ""
+msgstr "การสั่งทำงานผิดพลาด"
 
 #. procedure called incorrectly
 #: libgimp/gimppdb.c:343
 msgid "calling error"
-msgstr ""
+msgstr "การเรียกผิดพลาด"
 
 #. procedure execution cancelled
 #: libgimp/gimppdb.c:347
 msgid "cancelled"
-msgstr ""
+msgstr "ถูกยกเลิก"
 
 #: libgimp/gimpprocbrowserdialog.c:152
 msgid "by name"
-msgstr ""
+msgstr "ตามชื่อ"
 
 #: libgimp/gimpprocbrowserdialog.c:153
 msgid "by description"
-msgstr ""
+msgstr "ตามคำอธิบาย"
 
 #: libgimp/gimpprocbrowserdialog.c:154
 msgid "by help"
-msgstr ""
+msgstr "ตามวิธีใช้"
 
 #: libgimp/gimpprocbrowserdialog.c:155
 msgid "by authors"
-msgstr ""
+msgstr "ตามผู้จัดทำ"
 
 #: libgimp/gimpprocbrowserdialog.c:156
 msgid "by copyright"
-msgstr ""
+msgstr "ตามลิขสิทธิ์"
 
 #: libgimp/gimpprocbrowserdialog.c:157
 msgid "by date"
-msgstr ""
+msgstr "ตามวันที่"
 
 #: libgimp/gimpprocbrowserdialog.c:158
 msgid "by type"
-msgstr ""
+msgstr "ตามชนิด"
 
 #. count label
 #: libgimp/gimpprocbrowserdialog.c:358 libgimp/gimpprocbrowserdialog.c:516
 #: libgimpwidgets/gimpbrowser.c:161
 msgid "No matches"
-msgstr ""
+msgstr "ไม่มีรายการตรงกัน"
 
 #: libgimp/gimpprocbrowserdialog.c:361
 msgid "Search term invalid or incomplete"
-msgstr ""
+msgstr "คำค้นหาไม่ถูกต้องหรือไม่สมบูรณ์"
 
 #: libgimp/gimpprocbrowserdialog.c:370
 msgid "Searching"
-msgstr ""
+msgstr "กำลังค้นหา"
 
 #: libgimp/gimpprocbrowserdialog.c:382
 msgid "Searching by name"
-msgstr ""
+msgstr "กำลังค้นหาตามชื่อ"
 
 #: libgimp/gimpprocbrowserdialog.c:403
 msgid "Searching by description"
-msgstr ""
+msgstr "กำลังค้นหาตามคำอธิบาย"
 
 #: libgimp/gimpprocbrowserdialog.c:411
 msgid "Searching by help"
-msgstr ""
+msgstr "กำลังค้นหาตามวิธีใช้"
 
 #: libgimp/gimpprocbrowserdialog.c:419
 msgid "Searching by authors"
-msgstr ""
+msgstr "กำลังค้นหาตามผู้จัดทำ"
 
 #: libgimp/gimpprocbrowserdialog.c:427
 msgid "Searching by copyright"
-msgstr ""
+msgstr "กำลังค้นหาตามลิขสิทธิ์"
 
 #: libgimp/gimpprocbrowserdialog.c:435
 msgid "Searching by date"
-msgstr ""
+msgstr "กำลังค้นหาตามวันที่"
 
 #: libgimp/gimpprocbrowserdialog.c:443
 msgid "Searching by type"
-msgstr ""
+msgstr "กำลังค้นหาตามชนิด"
 
 #: libgimp/gimpprocbrowserdialog.c:456
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
-msgstr[0] ""
+msgstr[0] "%d โพรซีเดอร์"
 
 #: libgimp/gimpprocbrowserdialog.c:465
 msgid "No matches for your query"
-msgstr ""
+msgstr "ไม่มีรายการตรงกันสำหรับคำค้นของคุณ"
 
 #: libgimp/gimpprocbrowserdialog.c:469
 #, c-format
@@ -370,29 +375,29 @@ msgstr ""
 #: libgimp/gimpprocedure.c:2367
 #, c-format
 msgid ""
-"Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
-"Expected %s, got %s."
+"Procedure '%s' returned a wrong value type for return value '%s' (#%d). Expected %s, got "
+"%s."
 msgstr ""
 
 #: libgimp/gimpprocedure.c:2379
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' "
-"(#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#%d). Expected "
+"%s, got %s."
 msgstr ""
 
 #: libgimp/gimpprocedure.c:2414
 #, c-format
 msgid ""
-"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
-"is out of range."
+"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value is out of "
+"range."
 msgstr ""
 
 #: libgimp/gimpprocedure.c:2428
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
-"%s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %s). This "
+"value is out of range."
 msgstr ""
 
 #: libgimp/gimpprocedure.c:2472
@@ -402,19 +407,17 @@ msgstr ""
 
 #: libgimp/gimpprocedure.c:2482
 #, c-format
-msgid ""
-"Procedure '%s' has been called with an invalid UTF-8 string for argument "
-"'%s'."
+msgid "Procedure '%s' has been called with an invalid UTF-8 string for argument '%s'."
 msgstr ""
 
 #: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
-msgstr ""
+msgstr "เ_ปิด"
 
 #: libgimp/gimpproceduredialog.c:316 libgimp/gimpproceduredialog.c:615
 msgid "_Export"
-msgstr ""
+msgstr "_ส่งออก"
 
 #: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
 #: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
@@ -422,24 +425,24 @@ msgstr ""
 #: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
 #: libgimpwidgets/gimpquerybox.c:481
 msgid "_OK"
-msgstr ""
+msgstr "_ตกลง"
 
 #: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
-msgstr ""
+msgstr "ตั้_งค่าใหม่"
 
 #: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
-#: libgimpwidgets/gimpfilechooser.c:714 libgimpwidgets/gimpfileentry.c:465
-#: libgimpwidgets/gimpquerybox.c:276 libgimpwidgets/gimpquerybox.c:339
-#: libgimpwidgets/gimpquerybox.c:405 libgimpwidgets/gimpquerybox.c:481
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:182 libgimpwidgets/gimpfilechooser.c:714
+#: libgimpwidgets/gimpfileentry.c:465 libgimpwidgets/gimpquerybox.c:276
+#: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
+#: libgimpwidgets/gimpquerybox.c:481
 msgid "_Cancel"
-msgstr ""
+msgstr "_ยกเลิก"
 
 #: libgimp/gimpproceduredialog.c:379
 msgid "_Load Saved Settings"
-msgstr ""
+msgstr "โ_หลดการตั้งค่าที่บันทึกไว้"
 
 #: libgimp/gimpproceduredialog.c:380
 msgid "Load settings saved with \"Save Settings\" button"
@@ -447,7 +450,7 @@ msgstr ""
 
 #: libgimp/gimpproceduredialog.c:392
 msgid "_Save Settings"
-msgstr ""
+msgstr "_บันทึกการตั้งค่า"
 
 #: libgimp/gimpproceduredialog.c:393
 msgid "Store current settings for later reuse"
@@ -455,67 +458,67 @@ msgstr ""
 
 #: libgimp/gimpproceduredialog.c:892
 msgid "Brush Chooser"
-msgstr ""
+msgstr "กล่องเลือกแปรง"
 
 #: libgimp/gimpproceduredialog.c:896
 msgid "Font Chooser"
-msgstr ""
+msgstr "กล่องเลือกแบบอักษร"
 
 #: libgimp/gimpproceduredialog.c:900
 msgid "Gradient Chooser"
-msgstr ""
+msgstr "กล่องเลือกการไล่สี"
 
 #: libgimp/gimpproceduredialog.c:904
 msgid "Palette Chooser"
-msgstr ""
+msgstr "กล่องเลือกจานสี"
 
 #: libgimp/gimpproceduredialog.c:908
 msgid "Pattern Chooser"
-msgstr ""
+msgstr "กล่องเลือกลวดลาย"
 
 #: libgimp/gimpproceduredialog.c:2680
 msgid "Reset to _Initial Values"
-msgstr ""
+msgstr "ตั้งค่าใหม่เป็นค่าเ_ริ่มแรก"
 
 #: libgimp/gimpproceduredialog.c:2689
 msgid "Reset to _Factory Defaults"
-msgstr ""
+msgstr "ตั้งค่าใหม่เป็นค่าจาก_โรงงาน"
 
 #: libgimp/gimpprocview.c:176
 msgid "Image types:"
-msgstr ""
+msgstr "ชนิดภาพ:"
 
 #: libgimp/gimpprocview.c:179
 msgid "Menu label:"
-msgstr ""
+msgstr "ฉลากเมนู:"
 
 #: libgimp/gimpprocview.c:187
 msgid "Menu path:"
-msgstr ""
+msgstr "เส้นทางเมนู:"
 
 #: libgimp/gimpprocview.c:202
 msgid "Parameters"
-msgstr ""
+msgstr "พารามิเตอร์"
 
 #: libgimp/gimpprocview.c:216
 msgid "Return Values"
-msgstr ""
+msgstr "ค่าส่งกลับ"
 
 #: libgimp/gimpprocview.c:231
 msgid "Additional Information"
-msgstr ""
+msgstr "ข้อมูลเพิ่มเติม"
 
 #: libgimp/gimpprocview.c:263
 msgid "Authors:"
-msgstr ""
+msgstr "ผู้จัดทำ:"
 
 #: libgimp/gimpprocview.c:266
 msgid "Date:"
-msgstr ""
+msgstr "วันที่:"
 
 #: libgimp/gimpprocview.c:269
 msgid "Copyright:"
-msgstr ""
+msgstr "ลิขสิทธิ์:"
 
 #: libgimp/gimppropwidgets.c:191
 #, c-format
@@ -533,34 +536,29 @@ msgid "Choose drawable: %s"
 msgstr ""
 
 #: libgimp/gimpresolutionentry-private.c:136
-msgid ""
-"This unit is used to select the pixel density and show dimensions in "
-"physical unit"
+msgid "This unit is used to select the pixel density and show dimensions in physical unit"
 msgstr ""
 
-#: libgimp/gimpresolutionentry-private.c:144
-#: libgimp/gimpvectorloadprocedure.c:125
+#: libgimp/gimpresolutionentry-private.c:144 libgimp/gimpvectorloadprocedure.c:125
 msgid "_Keep aspect ratio"
-msgstr ""
+msgstr "_คงสัดส่วนเดิม"
 
-#: libgimp/gimpresolutionentry-private.c:145
-#: libgimp/gimpvectorloadprocedure.c:126
+#: libgimp/gimpresolutionentry-private.c:145 libgimp/gimpvectorloadprocedure.c:126
 msgid "Force dimensions with aspect ratio"
 msgstr ""
 
-#: libgimp/gimpresolutionentry-private.c:199
-#: libgimp/gimpresolutionentry-private.c:200
+#: libgimp/gimpresolutionentry-private.c:199 libgimp/gimpresolutionentry-private.c:200
 #, c-format
 msgid "pixels/%a"
-msgstr ""
+msgstr "พิกเซล/%a"
 
 #: libgimp/gimpvectorloadprocedure.c:111
 msgid "_Width (pixels)"
-msgstr ""
+msgstr "ความ_กว้าง (พิกเซล)"
 
 #: libgimp/gimpvectorloadprocedure.c:118
 msgid "_Height (pixels)"
-msgstr ""
+msgstr "ความ_สูง (พิกเซล)"
 
 #: libgimp/gimpvectorloadprocedure.c:130
 msgid "_Prefer native dimensions"
@@ -587,9 +585,7 @@ msgid "Physical unit"
 msgstr ""
 
 #: libgimp/gimpvectorloadprocedure.c:372
-msgid ""
-"dimensions could neither be extracted nor computed from the vector image's "
-"data."
+msgid "dimensions could neither be extracted nor computed from the vector image's data."
 msgstr ""
 
 #: libgimp/gimpvectorloadprocedure.c:377
@@ -598,8 +594,7 @@ msgstr ""
 
 #: libgimp/gimpvectorloadprocedure.c:401
 msgid ""
-"Dimensions cannot be 0 and no native dimensions could be extracted from the "
-"vector image."
+"Dimensions cannot be 0 and no native dimensions could be extracted from the vector image."
 msgstr ""
 
 #. TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
@@ -1842,21 +1837,20 @@ msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:58
 msgid ""
-"When enabled, GIMP will try to use the display color profile from the "
-"windowing system.  The configured monitor profile is then only used as a "
-"fallback."
+"When enabled, GIMP will try to use the display color profile from the windowing system.  "
+"The configured monitor profile is then only used as a fallback."
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:63
 msgid ""
-"The preferred RGB working space color profile. It will be offered next to "
-"the built-in RGB profile when a color profile can be chosen."
+"The preferred RGB working space color profile. It will be offered next to the built-in "
+"RGB profile when a color profile can be chosen."
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:67
 msgid ""
-"The preferred grayscale working space color profile. It will be offered next "
-"to the built-in grayscale profile when a color profile can be chosen."
+"The preferred grayscale working space color profile. It will be offered next to the built-"
+"in grayscale profile when a color profile can be chosen."
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:71
@@ -1865,50 +1859,44 @@ msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:74
 msgid ""
-"The color profile to use for soft-proofing from your image's color space to "
-"some other color space, including soft-proofing to a printer or other output "
-"device profile."
+"The color profile to use for soft-proofing from your image's color space to some other "
+"color space, including soft-proofing to a printer or other output device profile."
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:79
 msgid ""
-"How colors are converted from your image's color space to your display "
-"device. Relative colorimetric is usually the best choice. Unless you use a "
-"LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
-"intent really gives you relative colorimetric."
+"How colors are converted from your image's color space to your display device. Relative "
+"colorimetric is usually the best choice. Unless you use a LUT monitor profile (most "
+"monitor profiles are matrix), choosing perceptual intent really gives you relative "
+"colorimetric."
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:86
-msgid ""
-"Do use black point compensation (unless you know you have a reason not to)."
+msgid "Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:90
-msgid ""
-"When disabled, image display might be of better quality at the cost of speed."
+msgid "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:94
 msgid ""
-"How colors are converted from your image's color space to the output "
-"simulation device (usually your monitor). Try them all and choose what looks "
-"the best."
+"How colors are converted from your image's color space to the output simulation device "
+"(usually your monitor). Try them all and choose what looks the best."
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:99
-msgid ""
-"Try with and without black point compensation and choose what looks best."
+msgid "Try with and without black point compensation and choose what looks best."
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:103
-msgid ""
-"When disabled, soft-proofing might be of better quality at the cost of speed."
+msgid "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:107
 msgid ""
-"When enabled, the soft-proofing will mark colors which can not be "
-"represented in the target color space."
+"When enabled, the soft-proofing will mark colors which can not be represented in the "
+"target color space."
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:111
@@ -1916,13 +1904,11 @@ msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:114
-msgid ""
-"When enabled, set the color scales to display 0...255 instead of percentages"
+msgid "When enabled, set the color scales to display 0...255 instead of percentages"
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:118
-msgid ""
-"When enabled, set the color scales to display HSV blend mode instead of LCh"
+msgid "When enabled, set the color scales to display HSV blend mode instead of LCh"
 msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:225
@@ -2151,8 +2137,8 @@ msgstr ""
 
 #: libgimpwidgets/gimpcolorhexentry.c:125
 msgid ""
-"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
-"CSS color names."
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color "
+"names."
 msgstr ""
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:107
@@ -2167,8 +2153,7 @@ msgstr ""
 msgid "_Save"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:347
-#: libgimpwidgets/gimppatheditor.c:288
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:347 libgimpwidgets/gimppatheditor.c:288
 msgid "Folder"
 msgstr ""
 
@@ -2372,8 +2357,7 @@ msgstr ""
 msgid "One page selected"
 msgstr ""
 
-#: libgimpwidgets/gimppageselector.c:1026
-#: libgimpwidgets/gimppageselector.c:1030
+#: libgimpwidgets/gimppageselector.c:1026 libgimpwidgets/gimppageselector.c:1030
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -2401,8 +2385,7 @@ msgstr ""
 
 #: libgimpwidgets/gimppickbutton.c:143
 msgid ""
-"Click the eyedropper, then click a color anywhere on your screen to select "
-"that color."
+"Click the eyedropper, then click a color anywhere on your screen to select that color."
 msgstr ""
 
 #. toggle button to (de)activate the instant preview
@@ -2434,8 +2417,8 @@ msgstr[0] ""
 
 #: libgimpwidgets/gimpwidgets.c:260
 msgid ""
-"Use this value for random number generator seed - this allows you to repeat "
-"a given \"random\" operation"
+"Use this value for random number generator seed - this allows you to repeat a given "
+"\"random\" operation"
 msgstr ""
 
 #: libgimpwidgets/gimpwidgets.c:264
@@ -2954,8 +2937,7 @@ msgid "Reading from %s"
 msgstr ""
 
 #: modules/controller-linux-input.c:569 modules/controller-linux-input.c:623
-#: modules/controller-midi.c:436 modules/controller-midi.c:497
-#: modules/controller-midi.c:568
+#: modules/controller-midi.c:436 modules/controller-midi.c:497 modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
 msgstr ""
@@ -2981,9 +2963,7 @@ msgid "Channel:"
 msgstr ""
 
 #: modules/controller-midi.c:222
-msgid ""
-"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
-"channels."
+msgid "The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."
 msgstr ""
 
 #: modules/controller-midi.c:226
@@ -3015,10 +2995,9 @@ msgstr ""
 
 #: modules/display-filter-aces-rrt.c:84
 msgid ""
-"ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color "
-"display filter, using a luminance-only approximation of the ACES RRT, a pre-"
-"defined filmic look to be used before ODT (display or output space ICC "
-"profile)"
+"ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color display filter, "
+"using a luminance-only approximation of the ACES RRT, a pre-defined filmic look to be "
+"used before ODT (display or output space ICC profile)"
 msgstr ""
 
 #: modules/display-filter-aces-rrt.c:121
