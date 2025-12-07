@@ -484,6 +484,7 @@ gimp_icon_picker_menu_from_file (GtkWidget      *widget,
                                         _("_Open"), _("_Cancel"));
 
   filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("Image files"));
   gtk_file_filter_add_pixbuf_formats (filter);
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
 
