@@ -1,7 +1,7 @@
 project('gimp',
   'c', 'cpp',
   version: '3.2.0-RC1+git',
-  meson_version: '>=0.61.0',
+  meson_version: '>=1.2.0',
   default_options: [
     'cpp_std=c++14',
     'buildtype=debugoptimized',
