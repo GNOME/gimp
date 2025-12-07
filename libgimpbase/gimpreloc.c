@@ -16,11 +16,11 @@
 #include <limits.h>
 #include <string.h>
 
-#if defined(ENABLE_RELOCATABLE_RESOURCES) && ! defined(G_OS_WIN32)
+#if defined(ENABLE_RELOCATABLE_RESOURCES) && ! defined(_WIN32)
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#endif /* ENABLE_RELOCATABLE_RESOURCES && ! G_OS_WIN32 */
+#endif /* ENABLE_RELOCATABLE_RESOURCES && ! _WIN32 */
 
 #include <gio/gio.h>
 #include <glib.h>
