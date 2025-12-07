@@ -330,10 +330,8 @@ conf_app GTK_MODULES "" --no-expand
 ## Core features
 bund_usr "$GIMP_PREFIX" "lib/libbabl*"
 bund_usr "$GIMP_PREFIX" "lib/babl-*/*.so"
-conf_app BABL_PATH "${LIB_DIR}/${LIB_SUBDIR}babl-*"
 bund_usr "$GIMP_PREFIX" "lib/libgegl*"
 bund_usr "$GIMP_PREFIX" "lib/gegl-*/*"
-conf_app GEGL_PATH "${LIB_DIR}/${LIB_SUBDIR}gegl-*"
 bund_usr "$GIMP_PREFIX" "lib/libgimp*"
 bund_usr "$GIMP_PREFIX" "lib/gimp"
 bund_usr "$GIMP_PREFIX" "share/gimp"
