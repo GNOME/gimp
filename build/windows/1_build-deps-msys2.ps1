@@ -163,7 +163,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 self_build babl
 if ($env:VCPKG_ROOT)
   {
-    self_build gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch')
+    self_build gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch', 'build\windows\patches\0001-gegl-Use-vs_module_defs-for-MSVC.patch')
     exit 0
   }
 self_build gegl
