@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp gimp-3-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-12-05 06:12+0000\n"
-"PO-Revision-Date: 2025-12-07 12:16+0700\n"
+"PO-Revision-Date: 2025-12-07 21:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: Thai <th@li.org>\n"
 "Language: th\n"
@@ -365,50 +365,50 @@ msgstr "ไม่มีรายการตรงกันสำหรับค
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
-msgstr[0] ""
+msgstr[0] "%d โพรซีเดอร์ตรงกับคำค้นของคุณ"
 
 #: libgimp/gimpprocedure.c:2161
 #, c-format
 msgid "Procedure '%s' returned no return values"
-msgstr ""
+msgstr "โพรซีเดอร์ '%s' ไม่ได้คืนค่าส่งกลับใดมา"
 
 #: libgimp/gimpprocedure.c:2367
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). Expected %s, got "
 "%s."
-msgstr ""
+msgstr "โพรซีเดอร์ '%s' คืนค่าชนิดของค่าที่ผิดสำหรับค่าส่งกลับ '%s' (#%d) ต้องการ %s แต่ได้รับ %s"
 
 #: libgimp/gimpprocedure.c:2379
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#%d). Expected "
 "%s, got %s."
-msgstr ""
+msgstr "โพรซีเดอร์ '%s' ถูกเรียกด้วยชนิดของค่าที่ผิดสำหรับอาร์กิวเมนต์ '%s' (#%d) ต้องการ %s แต่ได้รับ %s"
 
 #: libgimp/gimpprocedure.c:2414
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value is out of "
 "range."
-msgstr ""
+msgstr "โพรซีเดอร์ '%s' คืนค่า '%s' เป็นค่าส่งกลับ '%s' (#%d, ชนิด %s) ค่านี้อยู่นอกช่วง"
 
 #: libgimp/gimpprocedure.c:2428
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %s). This "
 "value is out of range."
-msgstr ""
+msgstr "โพรซีเดอร์ '%s' ถูกเรียกด้วยค่า '%s' สำหรับอาร์กิวเมนต์ '%s' (#%d, ชนิด %s) ค่านี้อยู่นอกช่วง"
 
 #: libgimp/gimpprocedure.c:2472
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
-msgstr ""
+msgstr "โพรซีเดอร์ '%s' คืนค่าสตริง UTF-8 ที่ไม่ถูกต้องสำหรับอาร์กิวเมนต์ '%s'"
 
 #: libgimp/gimpprocedure.c:2482
 #, c-format
 msgid "Procedure '%s' has been called with an invalid UTF-8 string for argument '%s'."
-msgstr ""
+msgstr "โพรซีเดอร์ '%s' ถูกเรียกด้วยสตริง UTF-8 ที่ไม่ถูกต้องสำหรับอาร์กิวเมนต์ '%s'"
 
 #: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -446,7 +446,7 @@ msgstr "โ_หลดการตั้งค่าที่บันทึก�
 
 #: libgimp/gimpproceduredialog.c:380
 msgid "Load settings saved with \"Save Settings\" button"
-msgstr ""
+msgstr "โหลดการตั้งค่าที่บันทึกไว้ด้วยปุ่ม \"บันทึกการตั้งค่า\""
 
 #: libgimp/gimpproceduredialog.c:392
 msgid "_Save Settings"
@@ -454,7 +454,7 @@ msgstr "_บันทึกการตั้งค่า"
 
 #: libgimp/gimpproceduredialog.c:393
 msgid "Store current settings for later reuse"
-msgstr ""
+msgstr "เก็บการตั้งค่าปัจจุบันสำหรับใช้ในภายหลัง"
 
 #: libgimp/gimpproceduredialog.c:892
 msgid "Brush Chooser"
@@ -523,21 +523,21 @@ msgstr "ลิขสิทธิ์:"
 #: libgimp/gimppropwidgets.c:191
 #, c-format
 msgid "Choose layer: %s"
-msgstr ""
+msgstr "เลือกเลเยอร์: %s"
 
 #: libgimp/gimppropwidgets.c:193
 #, c-format
 msgid "Choose channel: %s"
-msgstr ""
+msgstr "เลือกแชนเนล: %s"
 
 #: libgimp/gimppropwidgets.c:195
 #, c-format
 msgid "Choose drawable: %s"
-msgstr ""
+msgstr "เลือกวัตถุ: %s"
 
 #: libgimp/gimpresolutionentry-private.c:136
 msgid "This unit is used to select the pixel density and show dimensions in physical unit"
-msgstr ""
+msgstr "หน่วยนี้ใช้สำหรับเลือกความหนาแน่นของพิกเซลและแสดงค่ามิติในหน่วยทางกายภาพ"
 
 #: libgimp/gimpresolutionentry-private.c:144 libgimp/gimpvectorloadprocedure.c:125
 msgid "_Keep aspect ratio"
@@ -545,7 +545,7 @@ msgstr "_คงสัดส่วนเดิม"
 
 #: libgimp/gimpresolutionentry-private.c:145 libgimp/gimpvectorloadprocedure.c:126
 msgid "Force dimensions with aspect ratio"
-msgstr ""
+msgstr "บังคับค่ามิติให้เป็นไปตามสัดส่วน"
 
 #: libgimp/gimpresolutionentry-private.c:199 libgimp/gimpresolutionentry-private.c:200
 #, c-format
@@ -562,40 +562,40 @@ msgstr "ความ_สูง (พิกเซล)"
 
 #: libgimp/gimpvectorloadprocedure.c:130
 msgid "_Prefer native dimensions"
-msgstr ""
+msgstr "_ต้องการค่ามิติแบบเฉพาะระบบ"
 
 #: libgimp/gimpvectorloadprocedure.c:131
 msgid "Load and use dimensions from source file"
-msgstr ""
+msgstr "โหลดและใช้ค่ามิติจากไฟล์ต้นฉบับ"
 
 #: libgimp/gimpvectorloadprocedure.c:143
 msgid "Resolu_tion"
-msgstr ""
+msgstr "ความ_ละเอียด"
 
 #: libgimp/gimpvectorloadprocedure.c:144
 msgid "Pixel Density: number of pixels per physical unit"
-msgstr ""
+msgstr "ความหนาแน่นของพิกเซล: จำนวนพิกเซลต่อหน่วยทางกายภาพ"
 
 #: libgimp/gimpvectorloadprocedure.c:149
 msgid "Unit"
-msgstr ""
+msgstr "หน่วย"
 
 #: libgimp/gimpvectorloadprocedure.c:150
 msgid "Physical unit"
-msgstr ""
+msgstr "หน่วยทางกายภาพ"
 
 #: libgimp/gimpvectorloadprocedure.c:372
 msgid "dimensions could neither be extracted nor computed from the vector image's data."
-msgstr ""
+msgstr "ไม่สามารถดึงหรือคำนวณค่ามิติจากข้อมูลของภาพเวกเตอร์ได้"
 
 #: libgimp/gimpvectorloadprocedure.c:377
 msgid "Vector image loading plug-in failed: "
-msgstr ""
+msgstr "ปลั๊กอินสำหรับโหลดภาพเวกเตอร์ล้มเหลว: "
 
 #: libgimp/gimpvectorloadprocedure.c:401
 msgid ""
 "Dimensions cannot be 0 and no native dimensions could be extracted from the vector image."
-msgstr ""
+msgstr "ค่ามิติต้องไม่เป็น 0 และไม่สามารถดึงค่ามิติแบบเฉพาะระบบจากภาพเวกเตอร์ได้"
 
 #. TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
 #. * followed by 2D dimensions with unit, e.g. "200 inch x 400 inch"
@@ -603,1222 +603,1222 @@ msgstr ""
 #: libgimp/gimpvectorloadproceduredialog.c:131
 #, c-format
 msgid "Source %s file size: %%.%df %s × %%.%df %s"
-msgstr ""
+msgstr "ขนาดไฟล์ %s ต้นฉบับ: %%.%df %s × %%.%df %s"
 
 #. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
 #: libgimp/gimpvectorloadproceduredialog.c:168
 #, c-format
 msgid "Source %s file's aspect ratio: %%.%df × %%.%df"
-msgstr ""
+msgstr "สัดส่วนภาพของไฟล์ %s ต้นฉบับ: %%.%df × %%.%df"
 
 #: libgimp/gimpvectorloadproceduredialog.c:176
 #, c-format
 msgid "Approximated source %s file size: %%.%df %s × %%.%df %s"
-msgstr ""
+msgstr "ขนาดไฟล์ %s ต้นฉบับโดยประมาณ: %%.%df %s × %%.%df %s"
 
 #. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
 #: libgimp/gimpvectorloadproceduredialog.c:189
 #, c-format
 msgid "The source %s file does not specify a size!"
-msgstr ""
+msgstr "ไฟล์ %s ต้นฉบับไม่ได้ระบุขนาดไว้!"
 
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
 #: libgimp/gimpvectorloadproceduredialog.c:330
 #, c-format
 msgid "Load %s Image"
-msgstr ""
+msgstr "โหลดภาพ %s"
 
 #: libgimpbase/gimpbaseenums.c:30
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
-msgstr ""
+msgstr "_ขาว (ความทึบเต็มที่)"
 
 #: libgimpbase/gimpbaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
-msgstr ""
+msgstr "_ดำ (ความโปร่งใสเต็มที่)"
 
 #: libgimpbase/gimpbaseenums.c:32
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
-msgstr ""
+msgstr "แ_ชนเนลอัลฟาของเลเยอร์"
 
 #: libgimpbase/gimpbaseenums.c:33
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
-msgstr ""
+msgstr "_ถ่ายโอนแชนเนลอัลฟาของเลเยอร์"
 
 #: libgimpbase/gimpbaseenums.c:34
 msgctxt "add-mask-type"
 msgid "_Selection"
-msgstr ""
+msgstr "_พื้นที่เลือก"
 
 #: libgimpbase/gimpbaseenums.c:35
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
-msgstr ""
+msgstr "สำเนาที่เป็นเ_ฉดเทาของเลเยอร์"
 
 #: libgimpbase/gimpbaseenums.c:36
 msgctxt "add-mask-type"
 msgid "C_hannel"
-msgstr ""
+msgstr "แ_ชนเนล"
 
 #: libgimpbase/gimpbaseenums.c:66
 msgctxt "brush-generated-shape"
 msgid "Circle"
-msgstr ""
+msgstr "วงกลม"
 
 #: libgimpbase/gimpbaseenums.c:67
 msgctxt "brush-generated-shape"
 msgid "Square"
-msgstr ""
+msgstr "จัตุรัส"
 
 #: libgimpbase/gimpbaseenums.c:68
 msgctxt "brush-generated-shape"
 msgid "Diamond"
-msgstr ""
+msgstr "ข้าวหลามตัด"
 
 #: libgimpbase/gimpbaseenums.c:98
 msgctxt "cap-style"
 msgid "Butt"
-msgstr ""
+msgstr "มุมฉาก"
 
 #: libgimpbase/gimpbaseenums.c:99
 msgctxt "cap-style"
 msgid "Round"
-msgstr ""
+msgstr "มน"
 
 #: libgimpbase/gimpbaseenums.c:100
 msgctxt "cap-style"
 msgid "Square"
-msgstr ""
+msgstr "เหลี่ยม"
 
 #: libgimpbase/gimpbaseenums.c:131
 msgctxt "channel-ops"
 msgid "Add to the current selection"
-msgstr ""
+msgstr "เพิ่มลงในพื้นที่เลือกปัจจุบัน"
 
 #: libgimpbase/gimpbaseenums.c:132
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
-msgstr ""
+msgstr "ลบออกจากพื้นที่เลือกปัจจุบัน"
 
 #: libgimpbase/gimpbaseenums.c:133
 msgctxt "channel-ops"
 msgid "Replace the current selection"
-msgstr ""
+msgstr "แทนที่พื้นที่เลือกปัจจุบัน"
 
 #: libgimpbase/gimpbaseenums.c:134
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
-msgstr ""
+msgstr "หาส่วนทับซ้อนกับพื้นที่เลือกปัจจุบัน"
 
 #: libgimpbase/gimpbaseenums.c:167
 msgctxt "channel-type"
 msgid "Red"
-msgstr ""
+msgstr "แดง"
 
 #: libgimpbase/gimpbaseenums.c:168
 msgctxt "channel-type"
 msgid "Green"
-msgstr ""
+msgstr "เขียว"
 
 #: libgimpbase/gimpbaseenums.c:169
 msgctxt "channel-type"
 msgid "Blue"
-msgstr ""
+msgstr "น้ำเงิน"
 
 #: libgimpbase/gimpbaseenums.c:170
 msgctxt "channel-type"
 msgid "Gray"
-msgstr ""
+msgstr "เทา"
 
 #: libgimpbase/gimpbaseenums.c:171
 msgctxt "channel-type"
 msgid "Indexed"
-msgstr ""
+msgstr "ดัชนีสี"
 
 #: libgimpbase/gimpbaseenums.c:172
 msgctxt "channel-type"
 msgid "Alpha"
-msgstr ""
+msgstr "อัลฟา"
 
 #: libgimpbase/gimpbaseenums.c:202
 msgctxt "check-size"
 msgid "Small"
-msgstr ""
+msgstr "เล็ก"
 
 #: libgimpbase/gimpbaseenums.c:203
 msgctxt "check-size"
 msgid "Medium"
-msgstr ""
+msgstr "กลาง"
 
 #: libgimpbase/gimpbaseenums.c:204
 msgctxt "check-size"
 msgid "Large"
-msgstr ""
+msgstr "ใหญ่"
 
 #: libgimpbase/gimpbaseenums.c:238
 msgctxt "check-type"
 msgid "Light checks"
-msgstr ""
+msgstr "ตารางหมากรุกโทนสว่าง"
 
 #: libgimpbase/gimpbaseenums.c:239
 msgctxt "check-type"
 msgid "Mid-tone checks"
-msgstr ""
+msgstr "ตารางหมากรุกโทนกลาง"
 
 #: libgimpbase/gimpbaseenums.c:240
 msgctxt "check-type"
 msgid "Dark checks"
-msgstr ""
+msgstr "ตารางหมากรุกโทนมืด"
 
 #: libgimpbase/gimpbaseenums.c:241
 msgctxt "check-type"
 msgid "White only"
-msgstr ""
+msgstr "ขาวเท่านั้น"
 
 #: libgimpbase/gimpbaseenums.c:242
 msgctxt "check-type"
 msgid "Gray only"
-msgstr ""
+msgstr "เทาเท่านั้น"
 
 #: libgimpbase/gimpbaseenums.c:243
 msgctxt "check-type"
 msgid "Black only"
-msgstr ""
+msgstr "ดำเท่านั้น"
 
 #: libgimpbase/gimpbaseenums.c:244
 msgctxt "check-type"
 msgid "Custom checks"
-msgstr ""
+msgstr "ตารางหมากรุกกำหนดเอง"
 
 #: libgimpbase/gimpbaseenums.c:273
 msgctxt "clone-type"
 msgid "Image"
-msgstr ""
+msgstr "ภาพ"
 
 #: libgimpbase/gimpbaseenums.c:274
 msgctxt "clone-type"
 msgid "Pattern"
-msgstr ""
+msgstr "ลวดลาย"
 
 #: libgimpbase/gimpbaseenums.c:310
 msgctxt "color-tag"
 msgid "None"
-msgstr ""
+msgstr "ไม่มี"
 
 #: libgimpbase/gimpbaseenums.c:311
 msgctxt "color-tag"
 msgid "Blue"
-msgstr ""
+msgstr "น้ำเงิน"
 
 #: libgimpbase/gimpbaseenums.c:312
 msgctxt "color-tag"
 msgid "Green"
-msgstr ""
+msgstr "เขียว"
 
 #: libgimpbase/gimpbaseenums.c:313
 msgctxt "color-tag"
 msgid "Yellow"
-msgstr ""
+msgstr "เหลือง"
 
 #: libgimpbase/gimpbaseenums.c:314
 msgctxt "color-tag"
 msgid "Orange"
-msgstr ""
+msgstr "ส้ม"
 
 #: libgimpbase/gimpbaseenums.c:315
 msgctxt "color-tag"
 msgid "Brown"
-msgstr ""
+msgstr "น้ำตาล"
 
 #: libgimpbase/gimpbaseenums.c:316
 msgctxt "color-tag"
 msgid "Red"
-msgstr ""
+msgstr "แดง"
 
 #: libgimpbase/gimpbaseenums.c:317
 msgctxt "color-tag"
 msgid "Violet"
-msgstr ""
+msgstr "ม่วง"
 
 #: libgimpbase/gimpbaseenums.c:318
 msgctxt "color-tag"
 msgid "Gray"
-msgstr ""
+msgstr "เทา"
 
 #: libgimpbase/gimpbaseenums.c:351
 msgctxt "component-type"
 msgid "8-bit integer"
-msgstr ""
+msgstr "จำนวนเต็ม 8 บิต"
 
 #: libgimpbase/gimpbaseenums.c:352
 msgctxt "component-type"
 msgid "16-bit integer"
-msgstr ""
+msgstr "จำนวนเต็ม 16 บิต"
 
 #: libgimpbase/gimpbaseenums.c:353
 msgctxt "component-type"
 msgid "32-bit integer"
-msgstr ""
+msgstr "จำนวนเต็ม 32 บิต"
 
 #: libgimpbase/gimpbaseenums.c:354
 msgctxt "component-type"
 msgid "16-bit floating point"
-msgstr ""
+msgstr "จำนวนทศนิยมลอยตัว 16 บิต"
 
 #: libgimpbase/gimpbaseenums.c:355
 msgctxt "component-type"
 msgid "32-bit floating point"
-msgstr ""
+msgstr "จำนวนทศนิยมลอยตัว 32 บิต"
 
 #: libgimpbase/gimpbaseenums.c:356
 msgctxt "component-type"
 msgid "64-bit floating point"
-msgstr ""
+msgstr "จำนวนทศนิยมลอยตัว 64 บิต"
 
 #: libgimpbase/gimpbaseenums.c:387
 msgctxt "convert-palette-type"
 msgid "_Generate optimum palette"
-msgstr ""
+msgstr "_สร้างจานสีที่เสริมประสิทธิภาพดีแล้ว"
 
 #: libgimpbase/gimpbaseenums.c:388
 msgctxt "convert-palette-type"
 msgid "Use _web-optimized palette"
-msgstr ""
+msgstr "ใช้จานสีที่เสริมประสิทธิภาพผ่านเ_ว็บ"
 
 #: libgimpbase/gimpbaseenums.c:389
 msgctxt "convert-palette-type"
 msgid "Use _black and white (1-bit) palette"
-msgstr ""
+msgstr "ใช้จานสี_ขาวดำ (1 บิต)"
 
 #: libgimpbase/gimpbaseenums.c:390
 msgctxt "convert-palette-type"
 msgid "Use custom _palette"
-msgstr ""
+msgstr "ใช้_จานสีกำหนดเอง"
 
 #: libgimpbase/gimpbaseenums.c:419
 msgctxt "convolve-type"
 msgid "Blur"
-msgstr ""
+msgstr "เบลอ"
 
 #: libgimpbase/gimpbaseenums.c:420
 msgctxt "convolve-type"
 msgid "Sharpen"
-msgstr ""
+msgstr "ทำให้คมชัด"
 
 #: libgimpbase/gimpbaseenums.c:452
 msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
-msgstr ""
+msgstr "ความสว่าง (HSL)"
 
 #: libgimpbase/gimpbaseenums.c:453
 msgctxt "desaturate-mode"
 msgid "Luma"
-msgstr ""
+msgstr "ค่าความสว่าง"
 
 #: libgimpbase/gimpbaseenums.c:454
 msgctxt "desaturate-mode"
 msgid "Average (HSI Intensity)"
-msgstr ""
+msgstr "ค่าเฉลี่ย (ความเข้มของ HSL)"
 
 #: libgimpbase/gimpbaseenums.c:455
 msgctxt "desaturate-mode"
 msgid "Luminance"
-msgstr ""
+msgstr "ความส่องสว่าง"
 
 #: libgimpbase/gimpbaseenums.c:456
 msgctxt "desaturate-mode"
 msgid "Value (HSV)"
-msgstr ""
+msgstr "ค่า (HSV)"
 
 #: libgimpbase/gimpbaseenums.c:485
 msgctxt "dodge-burn-type"
 msgid "Dodge"
-msgstr ""
+msgstr "ดอดจ์"
 
 #: libgimpbase/gimpbaseenums.c:486
 msgctxt "dodge-burn-type"
 msgid "Burn"
-msgstr ""
+msgstr "เบิร์น"
 
 #: libgimpbase/gimpbaseenums.c:519
 msgctxt "fill-type"
 msgid "Foreground color"
-msgstr ""
+msgstr "สีพื้นหน้า"
 
 #: libgimpbase/gimpbaseenums.c:520
 msgctxt "fill-type"
 msgid "Background color"
-msgstr ""
+msgstr "สีพื้นหลัง"
 
 #: libgimpbase/gimpbaseenums.c:521
 msgctxt "fill-type"
 msgid "Middle Gray (CIELAB)"
-msgstr ""
+msgstr "สีเทากลาง (CIELAB)"
 
 #: libgimpbase/gimpbaseenums.c:522
 msgctxt "fill-type"
 msgid "White"
-msgstr ""
+msgstr "สีขาว"
 
 #: libgimpbase/gimpbaseenums.c:523
 msgctxt "fill-type"
 msgid "Transparency"
-msgstr ""
+msgstr "พื้นที่โปร่งใส"
 
 #: libgimpbase/gimpbaseenums.c:524
 msgctxt "fill-type"
 msgid "Pattern"
-msgstr ""
+msgstr "ลวดลาย"
 
 #: libgimpbase/gimpbaseenums.c:582
 msgctxt "gradient-blend-color-space"
 msgid "Perceptual RGB"
-msgstr ""
+msgstr "RGB แบบเชิงรับรู้"
 
 #: libgimpbase/gimpbaseenums.c:583
 msgctxt "gradient-blend-color-space"
 msgid "Linear RGB"
-msgstr ""
+msgstr "RGB แบบเชิงเส้น"
 
 #: libgimpbase/gimpbaseenums.c:584
 msgctxt "gradient-blend-color-space"
 msgid "CIE Lab"
-msgstr ""
+msgstr "CIE Lab"
 
 #: libgimpbase/gimpbaseenums.c:614
 msgctxt "gradient-segment-color"
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: libgimpbase/gimpbaseenums.c:615
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
-msgstr ""
+msgstr "HSV (ธาตุสีทวนเข็มนาฬิกา)"
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:618
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
-msgstr ""
+msgstr "HSV (ทวนเข็มนาฬิกา)"
 
 #: libgimpbase/gimpbaseenums.c:619
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
-msgstr ""
+msgstr "HSV (ธาตุสีตามเข็มนาฬิกา)"
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:622
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
-msgstr ""
+msgstr "HSV (ตามเข็มนาฬิกา)"
 
 #: libgimpbase/gimpbaseenums.c:655
 msgctxt "gradient-segment-type"
 msgid "Linear"
-msgstr ""
+msgstr "สม่ำเสมอแบบเชิงเส้น"
 
 #: libgimpbase/gimpbaseenums.c:656
 msgctxt "gradient-segment-type"
 msgid "Curved"
-msgstr ""
+msgstr "บิดโค้ง"
 
 #: libgimpbase/gimpbaseenums.c:657
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
-msgstr ""
+msgstr "บิดโค้งแบบไซน์"
 
 #: libgimpbase/gimpbaseenums.c:658
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
-msgstr ""
+msgstr "โค้งทรงกลม (เพิ่มขึ้น)"
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:661
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
-msgstr ""
+msgstr "โค้งทรงกลม (เพิ่ม)"
 
 #: libgimpbase/gimpbaseenums.c:662
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
-msgstr ""
+msgstr "โค้งทรงกลม (ลดลง)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:665
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
-msgstr ""
+msgstr "โค้งทรงกลม (ลด)"
 
 #: libgimpbase/gimpbaseenums.c:666
 msgctxt "gradient-segment-type"
 msgid "Step"
-msgstr ""
+msgstr "ขั้น"
 
 #: libgimpbase/gimpbaseenums.c:704
 msgctxt "gradient-type"
 msgid "Linear"
-msgstr ""
+msgstr "เชิงเส้น"
 
 #: libgimpbase/gimpbaseenums.c:705
 msgctxt "gradient-type"
 msgid "Bi-linear"
-msgstr ""
+msgstr "เชิงเส้นสองทิศทาง"
 
 #: libgimpbase/gimpbaseenums.c:706
 msgctxt "gradient-type"
 msgid "Radial"
-msgstr ""
+msgstr "เชิงรัศมี"
 
 #: libgimpbase/gimpbaseenums.c:707
 msgctxt "gradient-type"
 msgid "Square"
-msgstr ""
+msgstr "เชิงสี่เหลี่ยม"
 
 #: libgimpbase/gimpbaseenums.c:708
 msgctxt "gradient-type"
 msgid "Conical (symmetric)"
-msgstr ""
+msgstr "รูปกรวย (สมมาตร)"
 
 #. Translators: this is an abbreviated version of "Conical (symmetric)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:711
 msgctxt "gradient-type"
 msgid "Conical (sym)"
-msgstr ""
+msgstr "รูปกรวย (สมมาตร)"
 
 #: libgimpbase/gimpbaseenums.c:712
 msgctxt "gradient-type"
 msgid "Conical (asymmetric)"
-msgstr ""
+msgstr "รูปกรวย (อสมมาตร)"
 
 #. Translators: this is an abbreviated version of "Conical (asymmetric)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:715
 msgctxt "gradient-type"
 msgid "Conical (asym)"
-msgstr ""
+msgstr "รูปกรวย (อสมมาตร)"
 
 #: libgimpbase/gimpbaseenums.c:716
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
-msgstr ""
+msgstr "รูปทรง (เชิงมุม)"
 
 #: libgimpbase/gimpbaseenums.c:717
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
-msgstr ""
+msgstr "รูปทรง (ทรงกลม)"
 
 #: libgimpbase/gimpbaseenums.c:718
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
-msgstr ""
+msgstr "รูปทรง (รอยบุ๋ม)"
 
 #: libgimpbase/gimpbaseenums.c:719
 msgctxt "gradient-type"
 msgid "Spiral (clockwise)"
-msgstr ""
+msgstr "เกลียว (ตามเข็มนาฬิกา)"
 
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:722
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
-msgstr ""
+msgstr "เกลียว (ตามเข็มนาฬิกา)"
 
 #: libgimpbase/gimpbaseenums.c:723
 msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
-msgstr ""
+msgstr "เกลียว (ทวนเข็มนาฬิกา)"
 
 #. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:726
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
-msgstr ""
+msgstr "เกลียว (ทวนเข็มนาฬิกา)"
 
 #: libgimpbase/gimpbaseenums.c:758
 msgctxt "grid-style"
 msgid "Intersections (dots)"
-msgstr ""
+msgstr "จุดตัด (แบบจุด)"
 
 #: libgimpbase/gimpbaseenums.c:759
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
-msgstr ""
+msgstr "จุดตัด (แบบกากบาท)"
 
 #: libgimpbase/gimpbaseenums.c:760
 msgctxt "grid-style"
 msgid "Dashed"
-msgstr ""
+msgstr "เส้นประ"
 
 #: libgimpbase/gimpbaseenums.c:761
 msgctxt "grid-style"
 msgid "Double dashed"
-msgstr ""
+msgstr "เส้นประคู่"
 
 #: libgimpbase/gimpbaseenums.c:762
 msgctxt "grid-style"
 msgid "Solid"
-msgstr ""
+msgstr "เส้นทึบ"
 
 #: libgimpbase/gimpbaseenums.c:832
 msgctxt "icon-type"
 msgid "Icon name"
-msgstr ""
+msgstr "ชื่อไอคอน"
 
 #: libgimpbase/gimpbaseenums.c:833
 msgctxt "icon-type"
 msgid "Pixbuf"
-msgstr ""
+msgstr "พิกซ์บัฟ"
 
 #: libgimpbase/gimpbaseenums.c:834
 msgctxt "icon-type"
 msgid "Image file"
-msgstr ""
+msgstr "ไฟล์ภาพ"
 
 #: libgimpbase/gimpbaseenums.c:864
 msgctxt "image-base-type"
 msgid "RGB color"
-msgstr ""
+msgstr "สี RGB"
 
 #: libgimpbase/gimpbaseenums.c:865
 msgctxt "image-base-type"
 msgid "Grayscale"
-msgstr ""
+msgstr "เฉดเทา"
 
 #: libgimpbase/gimpbaseenums.c:866
 msgctxt "image-base-type"
 msgid "Indexed color"
-msgstr ""
+msgstr "สีแบบดัชนีสี"
 
 #: libgimpbase/gimpbaseenums.c:899
 msgctxt "image-type"
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: libgimpbase/gimpbaseenums.c:900
 msgctxt "image-type"
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB-อัลฟา"
 
 #: libgimpbase/gimpbaseenums.c:901
 msgctxt "image-type"
 msgid "Grayscale"
-msgstr ""
+msgstr "เฉดเทา"
 
 #: libgimpbase/gimpbaseenums.c:902
 msgctxt "image-type"
 msgid "Grayscale-alpha"
-msgstr ""
+msgstr "เฉดเทา-อัลฟา"
 
 #: libgimpbase/gimpbaseenums.c:903
 msgctxt "image-type"
 msgid "Indexed"
-msgstr ""
+msgstr "ดัชนีสี"
 
 #: libgimpbase/gimpbaseenums.c:904
 msgctxt "image-type"
 msgid "Indexed-alpha"
-msgstr ""
+msgstr "ดัชนีสี-อัลฟา"
 
 #: libgimpbase/gimpbaseenums.c:934
 msgctxt "ink-blob-type"
 msgid "Circle"
-msgstr ""
+msgstr "วงกลม"
 
 #: libgimpbase/gimpbaseenums.c:935
 msgctxt "ink-blob-type"
 msgid "Square"
-msgstr ""
+msgstr "จัตุรัส"
 
 #: libgimpbase/gimpbaseenums.c:936
 msgctxt "ink-blob-type"
 msgid "Diamond"
-msgstr ""
+msgstr "ข้าวหลามตัด"
 
 #: libgimpbase/gimpbaseenums.c:968
 msgctxt "interpolation-type"
 msgid "None"
-msgstr ""
+msgstr "ไม่มี"
 
 #: libgimpbase/gimpbaseenums.c:969
 msgctxt "interpolation-type"
 msgid "Linear"
-msgstr ""
+msgstr "เชิงเส้น"
 
 #: libgimpbase/gimpbaseenums.c:970
 msgctxt "interpolation-type"
 msgid "Cubic"
-msgstr ""
+msgstr "เชิงลูกบาศก์"
 
 #: libgimpbase/gimpbaseenums.c:971
 msgctxt "interpolation-type"
 msgid "NoHalo"
-msgstr ""
+msgstr "ไม่มีฮาโล"
 
 #: libgimpbase/gimpbaseenums.c:972
 msgctxt "interpolation-type"
 msgid "LoHalo"
-msgstr ""
+msgstr "ฮาโลต่ำ"
 
 #: libgimpbase/gimpbaseenums.c:1002
 msgctxt "join-style"
 msgid "Miter"
-msgstr ""
+msgstr "ปลายแหลม"
 
 #: libgimpbase/gimpbaseenums.c:1003
 msgctxt "join-style"
 msgid "Round"
-msgstr ""
+msgstr "มน"
 
 #: libgimpbase/gimpbaseenums.c:1004
 msgctxt "join-style"
 msgid "Bevel"
-msgstr ""
+msgstr "ปลายตัด"
 
 #: libgimpbase/gimpbaseenums.c:1065
 msgctxt "merge-type"
 msgid "Expanded as necessary"
-msgstr ""
+msgstr "ขยายตามที่จำเป็น"
 
 #: libgimpbase/gimpbaseenums.c:1066
 msgctxt "merge-type"
 msgid "Clipped to image"
-msgstr ""
+msgstr "ตัดเท่าภาพ"
 
 #: libgimpbase/gimpbaseenums.c:1067
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
-msgstr ""
+msgstr "ตัดเท่าเลเยอร์ด้านล่าง"
 
 #: libgimpbase/gimpbaseenums.c:1068
 msgctxt "merge-type"
 msgid "Flatten"
-msgstr ""
+msgstr "ยุบรวม"
 
 #: libgimpbase/gimpbaseenums.c:1162
 msgctxt "orientation-type"
 msgid "Horizontal"
-msgstr ""
+msgstr "แนวนอน"
 
 #: libgimpbase/gimpbaseenums.c:1163
 msgctxt "orientation-type"
 msgid "Vertical"
-msgstr ""
+msgstr "แนวตั้ง"
 
 #: libgimpbase/gimpbaseenums.c:1164
 msgctxt "orientation-type"
 msgid "Unknown"
-msgstr ""
+msgstr "ไม่ทราบ"
 
 #: libgimpbase/gimpbaseenums.c:1193
 msgctxt "paint-application-mode"
 msgid "Constant"
-msgstr ""
+msgstr "คงตัว"
 
 #: libgimpbase/gimpbaseenums.c:1194
 msgctxt "paint-application-mode"
 msgid "Incremental"
-msgstr ""
+msgstr "เพิ่มทีละส่วน"
 
 #: libgimpbase/gimpbaseenums.c:1255
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
-msgstr ""
+msgstr "โพรซีเดอร์ GIMP ภายใน"
 
 #: libgimpbase/gimpbaseenums.c:1256
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
-msgstr ""
+msgstr "ปลั๊กอิน GIMP"
 
 #: libgimpbase/gimpbaseenums.c:1257
 msgctxt "pdb-proc-type"
 msgid "GIMP Persistent Plug-In"
-msgstr ""
+msgstr "ส่วนเสริม GIMP แบบคงอยู่"
 
 #: libgimpbase/gimpbaseenums.c:1258
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
-msgstr ""
+msgstr "โพรซีเดอร์ชั่วคราว"
 
 #: libgimpbase/gimpbaseenums.c:1339
 msgctxt "precision"
 msgid "8-bit linear integer"
-msgstr ""
+msgstr "จำนวนเต็มเชิงเส้น 8 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1340
 msgctxt "precision"
 msgid "8-bit non-linear integer"
-msgstr ""
+msgstr "จำนวนเต็มไม่เชิงเส้น 8 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1341
 msgctxt "precision"
 msgid "8-bit perceptual integer"
-msgstr ""
+msgstr "จำนวนเต็มเชิงรับรู้ 8 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1342
 msgctxt "precision"
 msgid "16-bit linear integer"
-msgstr ""
+msgstr "จำนวนเต็มเชิงเส้น 16 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1343
 msgctxt "precision"
 msgid "16-bit non-linear integer"
-msgstr ""
+msgstr "จำนวนเต็มไม่เชิงเส้น 16 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1344
 msgctxt "precision"
 msgid "16-bit perceptual integer"
-msgstr ""
+msgstr "จำนวนเต็มเชิงรับรู้ 16 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1345
 msgctxt "precision"
 msgid "32-bit linear integer"
-msgstr ""
+msgstr "จำนวนเต็มเชิงเส้น 32 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1346
 msgctxt "precision"
 msgid "32-bit non-linear integer"
-msgstr ""
+msgstr "จำนวนเต็มไม่เชิงเส้น 32 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1347
 msgctxt "precision"
 msgid "32-bit perceptual integer"
-msgstr ""
+msgstr "จำนวนเต็มเชิงรับรู้ 32 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1348
 msgctxt "precision"
 msgid "16-bit linear floating point"
-msgstr ""
+msgstr "จำนวนทศนิยมลอยตัวเชิงเส้น 16 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1349
 msgctxt "precision"
 msgid "16-bit non-linear floating point"
-msgstr ""
+msgstr "จำนวนทศนิยมลอยตัวไม่เชิงเส้น 16 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1350
 msgctxt "precision"
 msgid "16-bit perceptual floating point"
-msgstr ""
+msgstr "จำนวนทศนิยมลอยตัวเชิงรับรู้ 16 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1351
 msgctxt "precision"
 msgid "32-bit linear floating point"
-msgstr ""
+msgstr "จำนวนทศนิยมลอยตัวเชิงเส้น 32 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1352
 msgctxt "precision"
 msgid "32-bit non-linear floating point"
-msgstr ""
+msgstr "จำนวนทศนิยมลอยตัวไม่เชิงเส้น 32 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1353
 msgctxt "precision"
 msgid "32-bit perceptual floating point"
-msgstr ""
+msgstr "จำนวนทศนิยมลอยตัวเชิงรับรู้ 32 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1354
 msgctxt "precision"
 msgid "64-bit linear floating point"
-msgstr ""
+msgstr "จำนวนทศนิยมลอยตัวเชิงเส้น 64 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1355
 msgctxt "precision"
 msgid "64-bit non-linear floating point"
-msgstr ""
+msgstr "จำนวนทศนิยมลอยตัวไม่เชิงเส้น 64 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1356
 msgctxt "precision"
 msgid "64-bit perceptual floating point"
-msgstr ""
+msgstr "จำนวนทศนิยมลอยตัวเชิงรับรู้ 64 บิต"
 
 #: libgimpbase/gimpbaseenums.c:1461
 msgctxt "repeat-mode"
 msgid "None (extend)"
-msgstr ""
+msgstr "ไม่มี (ขยาย)"
 
 #: libgimpbase/gimpbaseenums.c:1462
 msgctxt "repeat-mode"
 msgid "None (truncate)"
-msgstr ""
+msgstr "ไม่มี (ตัดทอน)"
 
 #: libgimpbase/gimpbaseenums.c:1463
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
-msgstr ""
+msgstr "คลื่นฟันเลื่อย"
 
 #: libgimpbase/gimpbaseenums.c:1464
 msgctxt "repeat-mode"
 msgid "Triangular wave"
-msgstr ""
+msgstr "คลื่นสามเหลี่ยม"
 
 #: libgimpbase/gimpbaseenums.c:1526
 msgctxt "run-mode"
 msgid "Run interactively"
-msgstr ""
+msgstr "เรียกทำงานแบบอินเทอร์แอคทีฟ"
 
 #: libgimpbase/gimpbaseenums.c:1527
 msgctxt "run-mode"
 msgid "Run non-interactively"
-msgstr ""
+msgstr "เรียกทำงานแบบไม่อินเทอร์แอคทีฟ"
 
 #: libgimpbase/gimpbaseenums.c:1528
 msgctxt "run-mode"
 msgid "Run with last used values"
-msgstr ""
+msgstr "เรียกทำงานด้วยค่าที่ใช้ล่าสุด"
 
 #: libgimpbase/gimpbaseenums.c:1566
 msgctxt "select-criterion"
 msgid "Composite"
-msgstr ""
+msgstr "ประกอบภาพ"
 
 #: libgimpbase/gimpbaseenums.c:1567
 msgctxt "select-criterion"
 msgid "Red"
-msgstr ""
+msgstr "แดง"
 
 #: libgimpbase/gimpbaseenums.c:1568
 msgctxt "select-criterion"
 msgid "Green"
-msgstr ""
+msgstr "เขียว"
 
 #: libgimpbase/gimpbaseenums.c:1569
 msgctxt "select-criterion"
 msgid "Blue"
-msgstr ""
+msgstr "น้ำเงิน"
 
 #: libgimpbase/gimpbaseenums.c:1570
 msgctxt "select-criterion"
 msgid "HSV Hue"
-msgstr ""
+msgstr "ธาตุสี HSV"
 
 #: libgimpbase/gimpbaseenums.c:1571
 msgctxt "select-criterion"
 msgid "HSV Saturation"
-msgstr ""
+msgstr "ความอิ่มสี HSV"
 
 #: libgimpbase/gimpbaseenums.c:1572
 msgctxt "select-criterion"
 msgid "HSV Value"
-msgstr ""
+msgstr "ค่า HSV"
 
 #: libgimpbase/gimpbaseenums.c:1573
 msgctxt "select-criterion"
 msgid "LCh Lightness"
-msgstr ""
+msgstr "ความสว่าง LCh"
 
 #: libgimpbase/gimpbaseenums.c:1574
 msgctxt "select-criterion"
 msgid "LCh Chroma"
-msgstr ""
+msgstr "ความสดสี LCh"
 
 #: libgimpbase/gimpbaseenums.c:1575
 msgctxt "select-criterion"
 msgid "LCh Hue"
-msgstr ""
+msgstr "ธาตุสี LCh"
 
 #: libgimpbase/gimpbaseenums.c:1576
 msgctxt "select-criterion"
 msgid "Alpha"
-msgstr ""
+msgstr "อัลฟา"
 
 #: libgimpbase/gimpbaseenums.c:1605
 msgctxt "size-type"
 msgid "Pixels"
-msgstr ""
+msgstr "พิกเซล"
 
 #: libgimpbase/gimpbaseenums.c:1606
 msgctxt "size-type"
 msgid "Points"
-msgstr ""
+msgstr "พอยต์"
 
 #: libgimpbase/gimpbaseenums.c:1667
 msgctxt "stroke-method"
 msgid "Stroke line"
-msgstr ""
+msgstr "ตีเส้น"
 
 #: libgimpbase/gimpbaseenums.c:1668
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
-msgstr ""
+msgstr "ตีเส้นด้วยเครื่องมือระบายสี"
 
 #: libgimpbase/gimpbaseenums.c:1701
 msgctxt "text-direction"
 msgid "From left to right"
-msgstr ""
+msgstr "จากซ้ายไปขวา"
 
 #: libgimpbase/gimpbaseenums.c:1702
 msgctxt "text-direction"
 msgid "From right to left"
-msgstr ""
+msgstr "จากขวาไปซ้าย"
 
 #: libgimpbase/gimpbaseenums.c:1703
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "แนวตั้ง จากขวาไปซ้าย (ทิศทางผสม)"
 
 #: libgimpbase/gimpbaseenums.c:1704
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "แนวตั้ง จากขวาไปซ้าย (ตั้งตรง)"
 
 #: libgimpbase/gimpbaseenums.c:1705
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "แนวตั้ง จากซ้ายไปขวา (ทิศทางผสม)"
 
 #: libgimpbase/gimpbaseenums.c:1706
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "แนวตั้ง จากซ้ายไปขวา (ตั้งตรง)"
 
 #: libgimpbase/gimpbaseenums.c:1737
 msgctxt "text-hint-style"
 msgid "None"
-msgstr ""
+msgstr "ไม่มี"
 
 #: libgimpbase/gimpbaseenums.c:1738
 msgctxt "text-hint-style"
 msgid "Slight"
-msgstr ""
+msgstr "เล็กน้อย"
 
 #: libgimpbase/gimpbaseenums.c:1739
 msgctxt "text-hint-style"
 msgid "Medium"
-msgstr ""
+msgstr "ปานกลาง"
 
 #: libgimpbase/gimpbaseenums.c:1740
 msgctxt "text-hint-style"
 msgid "Full"
-msgstr ""
+msgstr "เต็มรูปแบบ"
 
 #: libgimpbase/gimpbaseenums.c:1771
 msgctxt "text-justification"
 msgid "Left justified"
-msgstr ""
+msgstr "จัดเต็มแนวชิดซ้าย"
 
 #: libgimpbase/gimpbaseenums.c:1772
 msgctxt "text-justification"
 msgid "Right justified"
-msgstr ""
+msgstr "จัดเต็มแนวชิดขวา"
 
 #: libgimpbase/gimpbaseenums.c:1773
 msgctxt "text-justification"
 msgid "Centered"
-msgstr ""
+msgstr "จัดกึ่งกลาง"
 
 #: libgimpbase/gimpbaseenums.c:1774
 msgctxt "text-justification"
 msgid "Filled"
-msgstr ""
+msgstr "เติม"
 
 #: libgimpbase/gimpbaseenums.c:1804
 msgctxt "transfer-mode"
 msgid "Shadows"
-msgstr ""
+msgstr "เงา"
 
 #: libgimpbase/gimpbaseenums.c:1805
 msgctxt "transfer-mode"
 msgid "Midtones"
-msgstr ""
+msgstr "โทนกลาง"
 
 #: libgimpbase/gimpbaseenums.c:1806
 msgctxt "transfer-mode"
 msgid "Highlights"
-msgstr ""
+msgstr "สีเน้น"
 
 #: libgimpbase/gimpbaseenums.c:1835
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
-msgstr ""
+msgstr "ปกติ (เดินหน้า)"
 
 #: libgimpbase/gimpbaseenums.c:1836
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
-msgstr ""
+msgstr "แก้ไข (ถอยหลัง)"
 
 #: libgimpbase/gimpbaseenums.c:1867
 msgctxt "transform-resize"
 msgid "Adjust"
-msgstr ""
+msgstr "ปรับ"
 
 #: libgimpbase/gimpbaseenums.c:1868
 msgctxt "transform-resize"
 msgid "Clip"
-msgstr ""
+msgstr "ตัด"
 
 #: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transform-resize"
 msgid "Crop to result"
-msgstr ""
+msgstr "ครอบตัดเท่าผลลัพธ์"
 
 #: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transform-resize"
 msgid "Crop with aspect"
-msgstr ""
+msgstr "ครอบตัดด้วยสัดส่วน"
 
 #: libgimpbase/gimpmetadata.c:1218
 #, c-format
 msgid "Can load metadata only from local files"
-msgstr ""
+msgstr "สามารถโหลดข้อมูลกำกับได้จากไฟล์ในเครื่องเท่านั้น"
 
 #: libgimpbase/gimpmetadata.c:1274
 #, c-format
 msgid "Can save metadata only to local files"
-msgstr ""
+msgstr "สามารถบันทึกข้อมูลกำกับได้ลงในไฟล์ในเครื่องเท่านั้น"
 
 #: libgimpbase/gimpmetadata.c:1323
 #, c-format
 msgid "Invalid Exif data size."
-msgstr ""
+msgstr "ขนาดข้อมูล Exif ไม่ถูกต้อง"
 
 #: libgimpbase/gimpmetadata.c:1368
 #, c-format
 msgid "Parsing Exif data failed."
-msgstr ""
+msgstr "การแยกวิเคราะห์ข้อมูล Exif ล้มเหลว"
 
 #: libgimpbase/gimpmetadata.c:1420
 #, c-format
 msgid "Parsing IPTC data failed."
-msgstr ""
+msgstr "การแยกวิเคราะห์ข้อมูล IPTC ล้มเหลว"
 
 #: libgimpbase/gimpmetadata.c:1468
 #, c-format
 msgid "Parsing XMP data failed."
-msgstr ""
+msgstr "การแยกวิเคราะห์ข้อมูล XMP ล้มเหลว"
 
 #: libgimpbase/gimpunit.c:82
 msgctxt "unit-plural"
 msgid "pixels"
-msgstr ""
+msgstr "พิกเซล"
 
 #: libgimpbase/gimpunit.c:89
 msgctxt "unit-plural"
 msgid "inches"
-msgstr ""
+msgstr "นิ้ว"
 
 #: libgimpbase/gimpunit.c:95
 msgctxt "unit-plural"
 msgid "millimeters"
-msgstr ""
+msgstr "มิลลิเมตร"
 
 #: libgimpbase/gimpunit.c:102
 msgctxt "unit-plural"
 msgid "points"
-msgstr ""
+msgstr "พอยต์"
 
 #: libgimpbase/gimpunit.c:108
 msgctxt "unit-plural"
 msgid "picas"
-msgstr ""
+msgstr "ไพกา"
 
 #: libgimpbase/gimpunit.c:118
 msgctxt "unit-plural"
 msgid "percent"
-msgstr ""
+msgstr "เปอร์เซ็นต์"
 
 #: libgimpbase/gimputils.c:222 libgimpbase/gimputils.c:227
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(สตริง UTF-8 ไม่ถูกต้อง)"
 
 #: libgimpbase/gimputils.c:397
 msgid "File path is NULL"
-msgstr ""
+msgstr "พาธไฟล์เป็นค่าว่าง"
 
 #: libgimpbase/gimputils.c:405
 msgid "Error converting UTF-8 filename to wide char"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะแปลงชื่อไฟล์ UTF-8 เป็นอักขระกว้าง"
 
 #: libgimpbase/gimputils.c:413
 msgid "ILCreateFromPath() failed"
-msgstr ""
+msgstr "ILCreateFromPath() ล้มเหลว"
 
 #: libgimpbase/gimputils.c:452
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
-msgstr ""
+msgstr "ไม่สามารถแปลง '%s' ให้เป็น NSURL ที่ถูกต้องได้"
 
 #: libgimpbase/gimputils.c:480
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
-msgstr ""
+msgstr "การเชื่อมต่อกับ org.freedesktop.FileManager1 ล้มเหลว: "
 
 #: libgimpbase/gimputils.c:504
 msgid "Calling ShowItems failed: "
-msgstr ""
+msgstr "การเรียก ShowItems ล้มเหลว: "
 
 #: libgimpcolor/gimpcolorprofile.c:259
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
-msgstr ""
+msgstr "ดูเหมือนว่า '%s' จะไม่ใช่โปรไฟล์สี ICC"
 
 #: libgimpcolor/gimpcolorprofile.c:305
 msgid "Data does not appear to be an ICC color profile"
-msgstr ""
+msgstr "ดูเหมือนว่าข้อมูลจะไม่ใช่โปรไฟล์สี ICC"
 
 #: libgimpcolor/gimpcolorprofile.c:362
 msgid "Could not save color profile to memory"
-msgstr ""
+msgstr "ไม่สามารถบันทึกโปรไฟล์สีลงในหน่วยความจำได้"
 
 #: libgimpcolor/gimpcolorprofile.c:579
 msgid "(unnamed profile)"
-msgstr ""
+msgstr "(โปรไฟล์ไม่ได้ตั้งชื่อ)"
 
 #: libgimpcolor/gimpcolorprofile.c:621 libgimpwidgets/gimpcolorselect.c:2083
 #, c-format
 msgid "Model: %s"
-msgstr ""
+msgstr "รุ่น: %s"
 
 #: libgimpcolor/gimpcolorprofile.c:630
 #, c-format
 msgid "Manufacturer: %s"
-msgstr ""
+msgstr "ผู้ผลิต: %s"
 
 #: libgimpcolor/gimpcolorprofile.c:639
 #, c-format
 msgid "Copyright: %s"
-msgstr ""
+msgstr "ลิขสิทธิ์: %s"
 
 #: libgimpconfig/gimpconfigenums.c:25
 msgctxt "color-management-mode"
 msgid "No color management"
-msgstr ""
+msgstr "ไม่มีการจัดการสี"
 
 #: libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Color-managed display"
-msgstr ""
+msgstr "จอแสดงผลที่มีการจัดการสี"
 
 #: libgimpconfig/gimpconfigenums.c:27
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
-msgstr ""
+msgstr "การซอฟต์ปรู๊ฟ"
 
 #: libgimpconfig/gimpconfigenums.c:58
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
-msgstr ""
+msgstr "เชิงรับรู้"
 
 #: libgimpconfig/gimpconfigenums.c:59
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
-msgstr ""
+msgstr "วัดสีเทียบเคียง"
 
 #: libgimpconfig/gimpconfigenums.c:60
 msgctxt "color-rendering-intent"
 msgid "Saturation"
-msgstr ""
+msgstr "ความอิ่มสี"
 
 #: libgimpconfig/gimpconfigenums.c:61
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
-msgstr ""
+msgstr "วัดสีสัมบูรณ์"
 
 #. *
 #. * SECTION: gimpcolorconfig
@@ -1829,39 +1829,43 @@ msgstr ""
 #. *
 #: libgimpconfig/gimpcolorconfig.c:52
 msgid "How images are displayed on screen."
-msgstr ""
+msgstr "รูปแบบการแสดงภาพบนหน้าจอ"
 
 #: libgimpconfig/gimpcolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
-msgstr ""
+msgstr "โปรไฟล์สีของจอภาพ (หลัก) ของคุณ"
 
 #: libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the windowing system.  "
 "The configured monitor profile is then only used as a fallback."
 msgstr ""
+"เมื่อเปิดใช้งาน GIMP จะพยายามใช้โปรไฟล์สีจอภาพจากระบบจัดการหน้าต่าง "
+"และจะใช้โปรไฟล์จอภาพที่กำหนดค่าไว้เป็นค่าสำรอง"
 
 #: libgimpconfig/gimpcolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to the built-in "
 "RGB profile when a color profile can be chosen."
-msgstr ""
+msgstr "โปรไฟล์สีพื้นที่ทำงาน RGB ที่ต้องการ ซึ่งจะถูกแนะนำต่อจากโปรไฟล์ RGB ในตัวเมื่อสามารถเลือกโปรไฟล์สีได้"
 
 #: libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next to the built-"
 "in grayscale profile when a color profile can be chosen."
-msgstr ""
+msgstr "โปรไฟล์สีพื้นที่ทำงานเฉดเทาที่ต้องการ ซึ่งจะถูกแนะนำต่อจากโปรไฟล์เฉดเทาในตัวเมื่อสามารถเลือกโปรไฟล์สีได้"
 
 #: libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr ""
+msgstr "โปรไฟล์สี CMYK ที่ใช้แปลงระหว่าง RGB กับ CMYK"
 
 #: libgimpconfig/gimpcolorconfig.c:74
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to some other "
 "color space, including soft-proofing to a printer or other output device profile."
 msgstr ""
+"โปรไฟล์สีที่จะใช้สำหรับการซอฟต์ปรู๊ฟจากห้วงสีที่ใช้ในภาพของคุณเป็นห้วงสีอื่น ๆ "
+"รวมทั้งการซอฟต์ปรู๊ฟให้กับเครื่องพิมพ์หรือโปรไฟล์อุปกรณ์เอาต์พุตอื่น ๆ"
 
 #: libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1873,11 +1877,11 @@ msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:86
 msgid "Do use black point compensation (unless you know you have a reason not to)."
-msgstr ""
+msgstr "ใช้การชดเชยจุดดำ (เว้นแต่คุณจะมีเหตุผลที่จะไม่ใช้)"
 
 #: libgimpconfig/gimpcolorconfig.c:90
 msgid "When disabled, image display might be of better quality at the cost of speed."
-msgstr ""
+msgstr "เมื่อปิดใช้งาน การแสดงภาพอาจให้คุณภาพที่ดีขึ้นโดยแลกกับความเร็วที่อาจลดลง"
 
 #: libgimpconfig/gimpcolorconfig.c:94
 msgid ""
@@ -1905,79 +1909,79 @@ msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:114
 msgid "When enabled, set the color scales to display 0...255 instead of percentages"
-msgstr ""
+msgstr "เมื่อเปิดใช้งาน ให้กำหนดสเกลสีให้แสดง 0...255 แทนที่จะเป็นค่าเปอร์เซ็นต์"
 
 #: libgimpconfig/gimpcolorconfig.c:118
 msgid "When enabled, set the color scales to display HSV blend mode instead of LCh"
-msgstr ""
+msgstr "เมื่อเปิดใช้งาน ให้กำหนดสเกลสีให้แสดงโหมดกลืนสี HSV แทนที่จะเป็น LCh"
 
 #: libgimpconfig/gimpcolorconfig.c:225
 msgid "Mode of operation"
-msgstr ""
+msgstr "โหมดการดำเนินการ"
 
 #: libgimpconfig/gimpcolorconfig.c:233
 msgid "Preferred RGB profile"
-msgstr ""
+msgstr "โปรไฟล์ RGB ที่ต้องการ"
 
 #: libgimpconfig/gimpcolorconfig.c:240
 msgid "Preferred grayscale profile"
-msgstr ""
+msgstr "โปรไฟล์เฉดเทาที่ต้องการ"
 
 #: libgimpconfig/gimpcolorconfig.c:247
 msgid "CMYK profile"
-msgstr ""
+msgstr "โปรไฟล์ CMYK"
 
 #: libgimpconfig/gimpcolorconfig.c:254
 msgid "Monitor profile"
-msgstr ""
+msgstr "โปรไฟล์จอภาพ"
 
 #: libgimpconfig/gimpcolorconfig.c:261
 msgid "Use the system monitor profile"
-msgstr ""
+msgstr "ใช้โปรไฟล์จอภาพของระบบ"
 
 #: libgimpconfig/gimpcolorconfig.c:268
 msgid "Simulation profile for soft-proofing"
-msgstr ""
+msgstr "โปรไฟล์จำลองสำหรับการซอฟต์ปรู๊ฟ"
 
 #: libgimpconfig/gimpcolorconfig.c:275
 msgid "Display rendering intent"
-msgstr ""
+msgstr "การเรนเดอร์สีของจอภาพ"
 
 #: libgimpconfig/gimpcolorconfig.c:283
 msgid "Use black point compensation for the display"
-msgstr ""
+msgstr "ใช้การชดเชยจุดดำสำหรับการแสดงผล"
 
 #: libgimpconfig/gimpcolorconfig.c:290
 msgid "Optimize display color transformations"
-msgstr ""
+msgstr "ปรับการแปลงสีให้เหมาะสมสำหรับการแสดงผล"
 
 #: libgimpconfig/gimpcolorconfig.c:297
 msgid "Soft-proofing rendering intent"
-msgstr ""
+msgstr "วิธีเรนเดอร์สำหรับซอฟต์ปรู๊ฟ"
 
 #: libgimpconfig/gimpcolorconfig.c:305
 msgid "Use black point compensation for soft-proofing"
-msgstr ""
+msgstr "ใช้การชดเชยจุดดำสำหรับซอฟต์ปรู๊ฟ"
 
 #: libgimpconfig/gimpcolorconfig.c:312
 msgid "Optimize soft-proofing color transformations"
-msgstr ""
+msgstr "ปรับการแปลงสีให้เหมาะสมสำหรับการซอฟต์ปรู๊ฟ"
 
 #: libgimpconfig/gimpcolorconfig.c:319
 msgid "Mark out of gamut colors"
-msgstr ""
+msgstr "ทำเครื่องหมายสีเกินช่วง"
 
 #: libgimpconfig/gimpcolorconfig.c:326
 msgid "Out of gamut warning color"
-msgstr ""
+msgstr "สีแสดงคำเตือนเกี่ยวกับสีเกินช่วง"
 
 #: libgimpconfig/gimpcolorconfig.c:334
 msgid "Show RGB 0..255 scales"
-msgstr ""
+msgstr "แสดงสเกล 0..255 ของ RGB"
 
 #: libgimpconfig/gimpcolorconfig.c:341
 msgid "Show HSV instead of LCH"
-msgstr ""
+msgstr "แสดง HSV แทนที่จะเป็น LCH"
 
 #: libgimpconfig/gimpcolorconfig.c:706 libgimpconfig/gimpcolorconfig.c:895
 #, c-format
