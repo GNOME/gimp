@@ -50,7 +50,7 @@ Graphical User Interface:
 
 Plug-Ins:
 
-  - Vulnerabilities fixed: ZDI-CAN-28311, ZDI-CAN-28273.
+  - Vulnerabilities fixed: ZDI-CAN-28311, ZDI-CAN-28273, ZDI-CAN-28158.
   - PSD: legacy PSD Outer Glow layer style now imported (it uses
     gegl:dropshadow with certain preset values to replicate the
     Photoshop filter).
@@ -74,6 +74,8 @@ Build:
   - Add support to MSVC's resource compiler: this allows us to support
     both rc.exe (MSVC) and windres.exe (GNU).
   - GIMP was made to be compilable on both GNU compilers and MSVC.
+  - Automate verification of Windows signature certificate and MSIX
+    secret.
 
 
 Overview of Changes from GIMP 3.1.4 to GIMP 3.2.0 RC1
