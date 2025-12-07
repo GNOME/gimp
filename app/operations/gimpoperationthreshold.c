@@ -85,6 +85,7 @@ gimp_operation_threshold_class_init (GimpOperationThresholdClass *klass)
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:threshold",
+                                 "title",       _("Threshold"),
                                  "categories",  "color",
                                  "description", _("Reduce image to two colors using a threshold"),
                                  NULL);

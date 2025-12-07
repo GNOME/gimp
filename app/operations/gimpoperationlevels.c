@@ -60,6 +60,7 @@ gimp_operation_levels_class_init (GimpOperationLevelsClass *klass)
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:levels",
+                                 "title",       _("Levels"),
                                  "categories",  "color",
                                  "description", _("Adjust color levels"),
                                  NULL);
