@@ -89,6 +89,7 @@ gimp_operation_colorize_class_init (GimpOperationColorizeClass *klass)
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:colorize",
+                                 "title",       _("Colorize"),
                                  "categories",  "color",
                                  "description", _("Colorize the image"),
                                  NULL);

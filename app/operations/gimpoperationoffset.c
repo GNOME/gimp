@@ -116,6 +116,7 @@ gimp_operation_offset_class_init (GimpOperationOffsetClass *klass)
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:offset",
+                                 "title",       _("Offset"),
                                  "categories",  "transform",
                                  "description", _("Shift the pixels, optionally wrapping them at the borders"),
                                  NULL);
