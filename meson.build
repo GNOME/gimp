@@ -339,7 +339,7 @@ if platform_windows and cc.get_id() == 'gcc'
 endif
 
 
-if platform_windows and cc.get_id() == 'clang'
+if platform_windows and cc.get_id() == 'clang' or cc.get_id() == 'clang-cl'
   # Workaround to get colored output
   # https://github.com/msys2/MINGW-packages/issues/2988
   compiler_args += '-fansi-escape-codes'
