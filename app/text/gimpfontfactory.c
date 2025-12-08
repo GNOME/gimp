@@ -839,7 +839,6 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
       gpointer              font_info[PROPERTIES_COUNT];
       PangoFontDescription *pattern_pfd;
       gchar                *pattern_pfd_desc;
-      FT_Face               face;
 
       FcPatternGetString (fontset->fonts[i], FC_FILE, 0, (FcChar8 **) &file);
 
@@ -865,7 +864,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
 
          read (fd, buf, 4);
          g_close (fd, NULL);
-         
+
          if (buf[0] == 'w' && buf[1] == 'O' && buf[2] == 'F' && (buf[3] == 'F' || buf[3] == '2'))
            {
              g_string_append_printf (ignored_fonts, "- %s (WOFF[2] font)\n", file);
@@ -874,8 +873,8 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
            }
 
          if ((buf[0] != 0x00 || buf[1] != 0x01 || buf[2] != 0x00 || buf[3] != 0x00) && /* older truetype */
-	     (buf[0] != 't'  || buf[1] != 'y'  || buf[2] != 'p'  || buf[3] != '1')  && /* type1 wrapped in sfnt wrapper */
-	     (buf[0] != 't'  || buf[1] != 'r'  || buf[2] != 'u'  || buf[3] != 'e')  && /* truetype */
+             (buf[0] != 't'  || buf[1] != 'y'  || buf[2] != 'p'  || buf[3] != '1')  && /* type1 wrapped in sfnt wrapper */
+             (buf[0] != 't'  || buf[1] != 'r'  || buf[2] != 'u'  || buf[3] != 'e')  && /* truetype */
              (buf[0] != 'O'  || buf[1] != 'T'  || buf[2] != 'T'  || buf[3] != 'O')  && /* opentype */
              (buf[0] != 't'  || buf[1] != 't'  || buf[2] != 'c'  || buf[3] != 'f'))    /* truetype collection */
            {
