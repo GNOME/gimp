@@ -52,6 +52,10 @@
 #define STRICT
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include "appmodel.h"
+#ifndef PACKAGE_FULL_NAME_MAX_LENGTH
+#define PACKAGE_FULL_NAME_MAX_LENGTH 127
+#endif
 #include <io.h>
 #ifndef S_IWUSR
 # define S_IWUSR _S_IWRITE
@@ -318,10 +322,24 @@ gimp_directory (void)
 
 #elif defined G_OS_WIN32
 
+      WCHAR   msix_name[PACKAGE_FULL_NAME_MAX_LENGTH + 1];
+      guint32 length = PACKAGE_FULL_NAME_MAX_LENGTH + 1;
+
       char *conf_dir = get_known_folder (&FOLDERID_RoamingAppData);
 
       gimp_dir = g_build_filename (conf_dir,
                                    GIMPDIR, GIMP_USER_VERSION, NULL);
+
+      if (GetCurrentPackageFullName (&length, msix_name) == ERROR_SUCCESS && ! g_file_test (gimp_dir, G_FILE_TEST_IS_DIR))
+        {
+          conf_dir = get_known_folder (&FOLDERID_LocalAppData);
+
+          gchar *pkg_name = g_utf16_to_utf8 (msix_name, -1, NULL, NULL, NULL);
+          gimp_dir = g_build_filename (conf_dir, "Packages", pkg_name, "LocalCache",
+                                       "Roaming", GIMPDIR, GIMP_USER_VERSION, NULL);
+          g_free (pkg_name);
+        }
+
       g_free(conf_dir);
 
 #else /* UNIX */
