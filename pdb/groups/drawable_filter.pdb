@@ -123,6 +123,17 @@ HELP
       gegl_node_set (operation,
                      "operation", operation_name,
                      NULL);
+      if (gimp_operation_config_is_custom (gimp, operation_name))
+        {
+          GParamSpec *pspec  = gegl_node_find_property (operation, "config");
+          GType       otype  = pspec->value_type;
+          GObject    *config = g_object_new (otype, NULL);
+
+          gegl_node_set (operation, "config", config, NULL);
+
+          g_object_unref (config);
+        }
+
       filter = gimp_drawable_filter_new (drawable, name, operation, NULL);
       /* We don't have a libgimp function for setting the clipping
        * behavior. I want to look further into the whole logic first.
