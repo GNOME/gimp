@@ -890,15 +890,17 @@ gimp_drawable_get_pixel_at (GimpPickable *pickable,
                             gpointer      pixel)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (pickable);
+  GeglBuffer   *effects_buffer;
 
   /* do not make this a g_return_if_fail() */
   if (x < 0 || x >= gimp_item_get_width  (GIMP_ITEM (drawable)) ||
       y < 0 || y >= gimp_item_get_height (GIMP_ITEM (drawable)))
     return FALSE;
 
-  gegl_buffer_sample (gimp_drawable_get_buffer (drawable),
-                      x, y, NULL, pixel, format,
+  effects_buffer = gimp_drawable_get_buffer_with_effects (drawable);
+  gegl_buffer_sample (effects_buffer, x, y, NULL, pixel, format,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+  g_object_unref (effects_buffer);
 
   return TRUE;
 }
@@ -910,9 +912,12 @@ gimp_drawable_get_pixel_average (GimpPickable        *pickable,
                                  gpointer             pixel)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (pickable);
+  GeglBuffer   *effects_buffer;
 
-  return gimp_gegl_average_color (gimp_drawable_get_buffer (drawable),
-                                  rect, TRUE, GEGL_ABYSS_NONE, format, pixel);
+  effects_buffer = gimp_drawable_get_buffer_with_effects (drawable);
+  gimp_gegl_average_color (effects_buffer, rect, TRUE, GEGL_ABYSS_NONE, format,
+                           pixel);
+  g_object_unref (effects_buffer);
 }
 
 static void
