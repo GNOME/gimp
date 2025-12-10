@@ -26,6 +26,9 @@ Core:
     librsvg code, making it much more robust.
   - Proper textual warnings are added when trying to merge filters which
     cannot be merged.
+  - Initial font loading was greatly sped up (not validating them
+    through harfbuzz or freetype anymore, but checking the first bytes
+    of every font file; a bit less robust but much faster).
 
 Tools:
 
@@ -47,6 +50,8 @@ Graphical User Interface:
 
   - Define headerbar button colors to ensure they match our theme style.
   - Add more spacing between buttons in default CSS.
+  - Keyboard shortcut dialog hint improved (broke string freeze).
+  - New splash image.
 
 Plug-Ins:
 
@@ -55,6 +60,10 @@ Plug-Ins:
     gegl:dropshadow with certain preset values to replicate the
     Photoshop filter).
   - PS/EPS: default export unit is set to millimiter instead of inch.
+
+CLI:
+
+  - Added a Bash completion file our our command line interfaces.
 
 Build:
 
