@@ -64,7 +64,7 @@ if [ "$MODE" != '--bundle-only' ]; then
   standard_appimagetool_version=$("$standard_appimagetool" --version 2>&1 | sed -e 's/.*version \(.*\)), build.*/\1/')
 
   ## static runtime to be squashed by appimagetool with the files bundled by the bundler
-  static_runtime_version_online=$(curl -s 'https://api.github.com/repos/AppImage/type2-runtime/releases' |
+  static_runtime_version_online=$(curl -s 'https://api.github.com/repos/AppImage/type2-runtime/releases/latest' |
                                   grep -Po '"target_commitish":.*?[^\\]",' | head -1 |
                                   sed -e 's|target_commitish||g' -e 's|"||g' -e 's|:||g' -e 's|,||g' -e 's| ||g')
   wget https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-aarch64 -O runtime-aarch64 >/dev/null 2>&1
