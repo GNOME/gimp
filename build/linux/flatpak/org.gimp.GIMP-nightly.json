@@ -596,12 +596,6 @@
                         "stable-only": true,
                         "url-template": "https://github.com/HEASARC/cfitsio/archive/refs/tags/cfitsio-$version.tar.gz"
                     }
-                },
-                {
-                    "type": "patch",
-                    "paths": [
-                        "patches/0001-bump-CMake-min-required-version.patch"
-                    ]
                 }
             ],
             "buildsystem": "cmake-ninja",
