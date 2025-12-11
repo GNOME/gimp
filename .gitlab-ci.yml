@@ -836,7 +836,7 @@ dist-appimage-weekly:
   needs: ["gimp-debian"]
   stage: distribution
   script:
-    - sh build/linux/appimage/3_dist-gimp-goappimage.sh
+    - sh -x build/linux/appimage/3_dist-gimp-goappimage.sh
   artifacts:
     expose_as: 'Linux appimage'
     paths:
