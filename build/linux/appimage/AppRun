@@ -16,5 +16,18 @@ export XDG_DATA_DIRS="${APPDIR}/usr/share/:$XDG_DATA_DIRS"
 
 
 ## Other needed runtime paths (added by 3_dist-gimp-goappimage.sh)
-### FIXME: We need to run on squash-fs dir due to LD linux interpreter. See 3_dist-gimp-goappimage.sh
+### We need to run on APPDIR due to the bundled LD linux interpreter so
+### relative file paths on CLI are converted to absolute (OWD). See: #13636
+export OWD="$PWD"
 cd "$APPDIR"
+i="$#"
+while [ "$i" -gt 0 ]; do
+  arg=$1
+  # if arg does NOT start with slash or dash, then test for existence from $OWD
+  if [ "$arg" = "${arg#/}" -a "$arg" = "${arg#-}" -a -e "$OWD/$arg" ] ; then
+    arg="$OWD/$arg"
+  fi
+  set -- "$@" "$arg"
+  shift
+  i=$(($i-1))
+done
