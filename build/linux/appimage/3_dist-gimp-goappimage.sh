@@ -65,12 +65,17 @@ if [ "$MODE" != '--bundle-only' ]; then
 
   ## static runtime to be squashed by appimagetool with the files bundled by the bundler
   static_runtime_version_online=$(curl -s 'https://api.github.com/repos/AppImage/type2-runtime/releases' |
-                                  grep -Po '"target_commitish":.*?[^\\]",' | head -1 |
+                                  grep '"tag_name": "continuous"' | grep -Po '"target_commitish":.*?[^\\]",' | head -1 |
                                   sed -e 's|target_commitish||g' -e 's|"||g' -e 's|:||g' -e 's|,||g' -e 's| ||g')
   wget https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-aarch64 -O runtime-aarch64 >/dev/null 2>&1
   wget https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-x86_64 -O runtime-x86_64 >/dev/null 2>&1
   chmod +x "./runtime-$HOST_ARCH"
   static_runtime_version_downloaded=$("./runtime-$HOST_ARCH" --appimage-version 2>&1)
+  echo "static_runtime_version_downloaded is $static_runtime_version_downloaded"
+  echo "{static_runtime_version_downloaded#*commit/} is ${static_runtime_version_downloaded#*commit/}"
+  static_runtime_version_downloaded=$("./runtime-$HOST_ARCH" --appimage-version 2>&1)
+  echo "static_runtime_version_online is $static_runtime_version_online"
+  echo "(echo static_runtime_version_online | cut -c1-7) is $(echo "$static_runtime_version_online" | cut -c1-7)"
   chmod -x "./runtime-$HOST_ARCH"
   if [ "${static_runtime_version_downloaded#*commit/}" != "$(echo "$static_runtime_version_online" | cut -c1-7)" ]; then
     printf '\033[31m(ERROR)\033[0m: Downloaded runtime version differs from the one released online. Please, run again this script.\n'
