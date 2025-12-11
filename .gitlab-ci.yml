@@ -561,7 +561,7 @@ gimp-snap:
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
     - $GIMP_PREFIX = "$PWD\_install-$(if (-not $env:MSYSTEM_PREFIX) { $(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower()) } else { $env:MSYSTEM_PREFIX })"
-    - if ("$VARIANT" -eq '-msvc') { if (-not (Test-Path $env:VCPKG_ROOT)) { git clone --depth 1 --branch gitlab-gnome-remove https://github.com/BillyONeal/vcpkg; .\vcpkg\bootstrap-vcpkg.bat }; pip install meson }
+    - if ("$VARIANT" -eq '-msvc') { if (-not (Test-Path $env:VCPKG_ROOT)) { git clone --depth 1 https://github.com/microsoft/vcpkg; .\vcpkg\bootstrap-vcpkg.bat }; pip install meson }
     - if ("$VARIANT" -eq '-msvc') { $VSINSTALLDIR = $(vswhere -products * -latest -property installationPath); Import-Module "$VSINSTALLDIR\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell -VsInstallPath "$VSINSTALLDIR" -SkipAutomaticLocation -DevCmdArguments "-arch=$(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower())" }   
   timeout: 120m
 
