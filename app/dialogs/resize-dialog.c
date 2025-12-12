@@ -112,6 +112,8 @@ static void   reset_template_clicked (GtkWidget    *button,
                                       ResizeDialog *private);
 static void   ppi_select_toggled     (GtkWidget    *radio,
                                       ResizeDialog *private);
+static void   check_fill_sensitivity (GtkWidget    *widget,
+                                      ResizeDialog *private);
 
 /*  public function  */
 
@@ -228,9 +230,9 @@ resize_dialog_new (GimpViewable       *viewable,
                                      NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           RESPONSE_RESET,
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
+                                            RESPONSE_RESET,
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
@@ -487,6 +489,8 @@ resize_dialog_new (GimpViewable       *viewable,
                                   private->layer_set,
                                   G_CALLBACK (gimp_int_combo_box_get_active),
                                   &private->layer_set, NULL);
+      g_signal_connect (combo, "changed", G_CALLBACK (check_fill_sensitivity),
+                        private);
     }
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -526,12 +530,16 @@ resize_dialog_new (GimpViewable       *viewable,
       g_signal_connect (button, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &private->resize_text_layers);
+      g_signal_connect (button, "toggled", G_CALLBACK (check_fill_sensitivity),
+                        private);
 
       gimp_help_set_help_data (button,
                                _("Resizing text layers will make them uneditable"),
                                NULL);
 
       g_object_unref (size_group);
+
+      check_fill_sensitivity (NULL, private);
     }
 
   return dialog;
@@ -849,4 +857,17 @@ reset_template_clicked (GtkWidget    *button,
                         ResizeDialog *private)
 {
   gimp_context_set_template (private->context, NULL);
+}
+
+static void
+check_fill_sensitivity (GtkWidget    *widget,
+                        ResizeDialog *private)
+{
+  gboolean sensitive = TRUE;
+
+  if (private->layer_set == GIMP_ITEM_SET_NONE &&
+      ! private->resize_text_layers)
+    sensitive = FALSE;
+
+  gtk_widget_set_sensitive (private->fill_type_combo, sensitive);
 }
