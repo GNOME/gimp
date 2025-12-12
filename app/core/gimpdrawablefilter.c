@@ -1332,12 +1332,13 @@ gimp_drawable_filter_layer_mask_freeze (GimpDrawableFilter *filter)
                                         filter);
 }
 
-void gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
-                                        GeglRectangle      *rect)
+void
+gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
+                                   GeglRectangle      *rect)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
 
-  if (rect)
+  if (rect && filter->crop_enabled)
     {
       /* Some filters have built-in width/height properties that limit
        * the buffer size. If they have one in those roles, we can update
