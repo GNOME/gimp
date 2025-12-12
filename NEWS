@@ -61,9 +61,20 @@ Plug-Ins:
     Photoshop filter).
   - PS/EPS: default export unit is set to millimiter instead of inch.
 
+API:
+
+  - libgimpbase:
+    * gimp_directory() will now return the correct path of the
+      virtualized config directory on MSIX.
+
 CLI:
 
   - Added a Bash completion file our our command line interfaces.
+  - CLI option --show-debug-menu is not hidden anymore from the --help
+    output. I don't see a good reason to hide this option, except for
+    making it hardly discoverable. It is enough for the debug menu to be
+    hidden from the GUI by default and good that CLI options show a way
+    to bypass this for advanced users and contributors.
 
 Build:
 
@@ -85,6 +96,8 @@ Build:
   - GIMP was made to be compilable on both GNU compilers and MSVC.
   - Automate verification of Windows signature certificate and MSIX
     secret.
+  - Minimum requirement updates: babl 0.1.118 and GEGL 0.4.66.
+  - AppImage is now using fully relocatable babl and GEGL.
 
 
 Overview of Changes from GIMP 3.1.4 to GIMP 3.2.0 RC1
