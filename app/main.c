@@ -310,7 +310,7 @@ static const GOptionEntry main_entries[] =
     N_("Show a preferences page with experimental features"), NULL
   },
   {
-    "show-debug-menu", 0, G_OPTION_FLAG_HIDDEN,
+    "show-debug-menu", 0, 0,
     G_OPTION_ARG_NONE, &show_debug_menu,
     N_("Show an image submenu with debug actions"), NULL
   },

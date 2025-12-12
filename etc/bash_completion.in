@@ -34,6 +34,7 @@ __gimp()
         "--pdb-compat-mode"
         "--session"
         "--show-playground"
+        "--show-debug-menu"
         "--stack-trace-mode"
         "--system-gimprc"
         "--verbose"
