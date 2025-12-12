@@ -76,6 +76,7 @@ struct _GimpLayerTreeViewPrivate
   GtkWidget       *layer_mode_box;
   GtkAdjustment   *opacity_adjustment;
   GtkWidget       *anchor_button;
+  GtkWidget       *delete_mask_button;
 
   gint             model_column_mask;
   gint             model_column_mask_visible;
@@ -400,6 +401,11 @@ gimp_layer_tree_view_constructed (GObject *object)
                                   GIMP_TYPE_LAYER);
   gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
                          button, 7);
+
+  button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
+                                          "layers-mask-delete", NULL);
+  layer_view->priv->delete_mask_button = button;
+  gtk_widget_set_visible (layer_view->priv->delete_mask_button, FALSE);
 
   /*  Lock alpha toggle  */
 
@@ -1352,12 +1358,14 @@ static void
 gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
                                      GtkTreeIter       *iter)
 {
-  GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (layer_view);
+  GimpContainerTreeView *tree_view   = GIMP_CONTAINER_TREE_VIEW (layer_view);
   GimpViewRenderer      *layer_renderer;
   GimpViewRenderer      *mask_renderer;
-  GimpLayer             *layer      = NULL;
-  GimpLayerMask         *mask       = NULL;
-  GimpViewBorderType     layer_type = GIMP_VIEW_BORDER_BLACK;
+  GimpLayer             *layer       = NULL;
+  GimpLayerMask         *mask        = NULL;
+  GimpViewBorderType     layer_type  = GIMP_VIEW_BORDER_BLACK;
+  GtkWidget             *delete_button;
+  gboolean               mask_active = FALSE;
 
   gtk_tree_model_get (tree_view->model, iter,
                       GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &layer_renderer,
@@ -1374,6 +1382,9 @@ gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
     layer = GIMP_LAYER (mask_renderer->viewable);
 
   g_return_if_fail (layer != NULL);
+
+  delete_button =
+    gimp_item_tree_view_get_delete_button (GIMP_ITEM_TREE_VIEW (layer_view));
 
   if (mask_renderer && GIMP_IS_LAYER_MASK (mask_renderer->viewable))
     mask = GIMP_LAYER_MASK (mask_renderer->viewable);
@@ -1408,6 +1419,13 @@ gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
       /* Floating mask. */
       gimp_view_renderer_set_border_type (mask_renderer, GIMP_VIEW_BORDER_WHITE);
     }
+
+  /* Swap delete button based on mask or layer selection */
+  if (mask && gimp_layer_get_edit_mask (layer))
+    mask_active = TRUE;
+
+  gtk_widget_set_visible (delete_button, ! mask_active);
+  gtk_widget_set_visible (layer_view->priv->delete_mask_button, mask_active);
 
   if (layer_renderer)
     g_object_unref (layer_renderer);
