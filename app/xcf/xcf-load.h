@@ -18,6 +18,12 @@
 #pragma once
 
 
-GimpImage * xcf_load_image (Gimp     *gimp,
-                            XcfInfo  *info,
-                            GError  **error);
+GimpImage * xcf_load_image         (Gimp          *gimp,
+                                    XcfInfo       *info,
+                                    GError       **error);
+
+gboolean    xcf_load_magic_version (Gimp          *gimp,
+                                    GInputStream  *input,
+                                    GFile         *input_file,
+                                    GimpProgress  *progress,
+                                    XcfInfo       *info);
