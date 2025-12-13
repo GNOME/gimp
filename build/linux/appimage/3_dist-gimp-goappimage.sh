@@ -371,18 +371,15 @@ conf_app GS_LIB "share/ghostscript/10*/Resource/Init"
 ### file-wmf support
 bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/Nimbus*" --dest "share/libwmf/fonts"
 bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/StandardSymbols*" --dest "share/libwmf/fonts"
-# Note: we want the same test as around the global variable
-# show_debug_menu in app/main.c
-if [ "$GIMP_UNSTABLE" ] || [ -z "$GIMP_RELEASE" ]; then
-  ### Image graph support
-  bund_usr "$UNIX_PREFIX" "bin/libgvc*" --rename "bin/dot"
-  bund_usr "$UNIX_PREFIX" "lib/graphviz/config*"
-  bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_dot*"
-  bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_pango*"
-  ### Needed for GTK inspector
-  bund_usr "$UNIX_PREFIX" "lib/libEGL*"
-  bund_usr "$UNIX_PREFIX" "lib/libGL*"
-fi
+### Debug menu: if show_debug_menu is true in app/main.c or --show-debug-menu CLI option is set
+#### Image graph support
+bund_usr "$UNIX_PREFIX" "bin/libgvc*" --rename "bin/dot"
+bund_usr "$UNIX_PREFIX" "lib/graphviz/config*"
+bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_dot*"
+bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_pango*"
+#### Needed for GTK inspector
+bund_usr "$UNIX_PREFIX" "lib/libEGL*"
+bund_usr "$UNIX_PREFIX" "lib/libGL*"
 ### Debug dialog
 bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
 ### Introspected plug-ins
