@@ -143,10 +143,9 @@ bundle(MSYSTEM_PREFIX, "share/libthai")
 bundle(MSYSTEM_PREFIX, "share/poppler")
 ### Needed for file-wmf work
 bundle(MSYSTEM_PREFIX, "share/libwmf")
-### Needed for 'Show image graph'.
-### Note: we want the same test as around the global variable
-### show_debug_menu in app/main.c
-if (os.getenv("GIMP_UNSTABLE") or not os.getenv("GIMP_RELEASE")) and "32" not in MSYSTEM_PREFIX:
+### Needed for 'Show image graph'
+### if show_debug_menu is true in app/main.c or --show-debug-menu CLI option is set
+if "32" not in MSYSTEM_PREFIX:
   #### See: https://gitlab.gnome.org/GNOME/gimp/-/issues/6045
   bundle(MSYSTEM_PREFIX, "bin/dot.exe")
   #### See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12119
