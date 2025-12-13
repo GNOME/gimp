@@ -125,6 +125,8 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
           }
       }
 
+    git rev-parse --abbrev-ref HEAD
+
     ## Configure and/or build
     if (-not (Test-Path _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1)\build.ninja -Type Leaf))
       {
@@ -166,11 +168,11 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 if ($env:VCPKG_ROOT)
   {
     self_build babl @('-Denable-gir=false')
-    self_build gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch', 'build\windows\patches\0001-gegl-Use-vs_module_defs-for-MSVC.patch') @('-Dintrospection=false')
+    self_build gegl "bruno/gegl-arm-fix" @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch', 'build\windows\patches\0001-gegl-Use-vs_module_defs-for-MSVC.patch') @('-Dintrospection=false')
     exit 0
   }
 self_build babl
-self_build gegl
+self_build gegl "bruno/gegl-arm-fix" @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch', 'build\windows\patches\0001-gegl-Use-vs_module_defs-for-MSVC.patch')
 if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32')
   {
     self_build https://github.com/Exiv2/exiv2 "v0.28.7" @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DCMAKE_DLL_NAME_WITH_SOVERSION=ON', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF', '-DEXIV2_ENABLE_VIDEO=OFF')
