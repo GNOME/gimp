@@ -253,9 +253,6 @@ static void            xcf_fix_item_path       (GimpLayer    *layer,
 
 static void            xcf_load_free_vector_data (VectorLayerData *data);
 
-static gboolean        xcf_load_file_equal     (GFile        *file1,
-                                                GFile        *file2);
-
 
 #define xcf_progress_update(info) G_STMT_START  \
   {                                             \
@@ -319,7 +316,7 @@ xcf_load_magic_version (Gimp          *gimp,
  * Argument @loop_found should be NULL on the initial call. It is only
  * being used in recursive calls to stop earlier.
  */
-static gboolean
+gboolean
 xcf_load_image_header (Gimp           *gimp,
                        XcfInfo        *info,
                        gint           *width,
@@ -339,9 +336,10 @@ xcf_load_image_header (Gimp           *gimp,
   xcf_read_int32 (info, (guint32 *) image_type, 1);
   if (*image_type < GIMP_RGB || *image_type > GIMP_INDEXED)
     {
-      g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           /* TODO: localize after freeze ends. */
-                           "invalid image type.");
+      if (error)
+        g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             /* TODO: localize after freeze ends. */
+                             "invalid image type.");
       return FALSE;
     }
 
@@ -382,10 +380,11 @@ xcf_load_image_header (Gimp           *gimp,
               *precision = GIMP_PRECISION_FLOAT_LINEAR;
               break;
             default:
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           /* TODO: localize after freeze ends. */
-                           "Invalid image precision value %d for XCF version %d.",
-                           p, info->file_version);
+              if (error)
+                g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             /* TODO: localize after freeze ends. */
+                             "Invalid image precision value %d for XCF version %d.",
+                             p, info->file_version);
               return FALSE;
             }
         }
@@ -425,10 +424,11 @@ xcf_load_image_header (Gimp           *gimp,
               *precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
               break;
             default:
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           /* TODO: localize after freeze ends. */
-                           "Invalid image precision value %d for XCF version %d.",
-                           p, info->file_version);
+              if (error)
+                g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             /* TODO: localize after freeze ends. */
+                             "Invalid image precision value %d for XCF version %d.",
+                             p, info->file_version);
               return FALSE;
             }
         }
@@ -443,8 +443,9 @@ xcf_load_image_header (Gimp           *gimp,
 
   if (! gimp_babl_is_valid (*image_type, *precision))
     {
-      g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Invalid image mode and precision combination."));
+      if (error)
+        g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             _("Invalid image mode and precision combination."));
       return FALSE;
     }
 
@@ -465,9 +466,10 @@ xcf_load_image_header (Gimp           *gimp,
 
       if (! xcf_load_prop (info, &prop_type, &prop_size))
         {
-          g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                               /* TODO: localize after freeze ends. */
-                               "Failed reading image properties.");
+          if (error)
+            g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                 /* TODO: localize after freeze ends. */
+                                 "Failed reading image properties.");
           return FALSE;
         }
 
@@ -476,9 +478,10 @@ xcf_load_image_header (Gimp           *gimp,
 
       if (! xcf_skip_unknown_prop (info, prop_size))
         {
-          g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                               /* TODO: localize after freeze ends. */
-                               "Failed skipping image properties.");
+          if (error)
+            g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                 /* TODO: localize after freeze ends. */
+                                 "Failed skipping image properties.");
           return FALSE;
         }
     }
@@ -636,9 +639,10 @@ xcf_load_image_header (Gimp           *gimp,
 
   if (! xcf_seek_pos (info, reset_pos, NULL))
     {
-      g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           /* TODO: localize after freeze ends. */
-                           "Failed seeking back.");
+      if (error)
+        g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             /* TODO: localize after freeze ends. */
+                             "Failed seeking back.");
       return FALSE;
     }
 
@@ -1543,6 +1547,43 @@ hard_error:
   g_clear_object (&image);
 
   return NULL;
+}
+
+gboolean
+xcf_load_file_equal (GFile *file1,
+                     GFile *file2)
+{
+  GFileInfo   *info1;
+  GFileInfo   *info2;
+  const gchar *id1;
+  const gchar *id2;
+  gboolean     equal;
+
+  if (g_file_equal (file1, file2))
+    return TRUE;
+
+  info1 = g_file_query_info (file1,
+                             G_FILE_ATTRIBUTE_ID_FILE,
+                             /* This will follow symlinks by default. */
+                             G_FILE_QUERY_INFO_NONE,
+                             NULL, NULL);
+  info2 = g_file_query_info (file2,
+                             G_FILE_ATTRIBUTE_ID_FILE,
+                             G_FILE_QUERY_INFO_NONE,
+                             NULL, NULL);
+  id1 = g_file_info_get_attribute_string (info1, G_FILE_ATTRIBUTE_ID_FILE);
+  id2 = g_file_info_get_attribute_string (info2, G_FILE_ATTRIBUTE_ID_FILE);
+
+  /* If hard-linking is supported, this will verify 2 files are the same
+   * inode. If we don't have the ID attribute, we just assume these are
+   * different files.
+   */
+  equal = (id1 && id2 && g_strcmp0 (id1, id2) == 0);
+
+  g_object_unref (info1);
+  g_object_unref (info2);
+
+  return equal;
 }
 
 static void
@@ -5623,41 +5664,4 @@ xcf_load_free_vector_data (VectorLayerData *data)
   g_clear_pointer (&data->stroke_dashes, g_free);
 
   g_free (data);
-}
-
-static gboolean
-xcf_load_file_equal (GFile *file1,
-                     GFile *file2)
-{
-  GFileInfo   *info1;
-  GFileInfo   *info2;
-  const gchar *id1;
-  const gchar *id2;
-  gboolean     equal;
-
-  if (g_file_equal (file1, file2))
-    return TRUE;
-
-  info1 = g_file_query_info (file1,
-                             G_FILE_ATTRIBUTE_ID_FILE,
-                             /* This will follow symlinks by default. */
-                             G_FILE_QUERY_INFO_NONE,
-                             NULL, NULL);
-  info2 = g_file_query_info (file2,
-                             G_FILE_ATTRIBUTE_ID_FILE,
-                             G_FILE_QUERY_INFO_NONE,
-                             NULL, NULL);
-  id1 = g_file_info_get_attribute_string (info1, G_FILE_ATTRIBUTE_ID_FILE);
-  id2 = g_file_info_get_attribute_string (info2, G_FILE_ATTRIBUTE_ID_FILE);
-
-  /* If hard-linking is supported, this will verify 2 files are the same
-   * inode. If we don't have the ID attribute, we just assume these are
-   * different files.
-   */
-  equal = (id1 && id2 && g_strcmp0 (id1, id2) == 0);
-
-  g_object_unref (info1);
-  g_object_unref (info2);
-
-  return equal;
 }

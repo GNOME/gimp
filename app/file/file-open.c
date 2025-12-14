@@ -47,6 +47,9 @@
 #include "plug-in/gimppluginmanager-file.h"
 #include "plug-in/gimppluginprocedure.h"
 
+#include "xcf/xcf-private.h"
+#include "xcf/xcf-load.h"
+
 #include "file-import.h"
 #include "file-open.h"
 #include "file-remote.h"
@@ -57,6 +60,7 @@
 
 static GimpImage * file_open_link_image           (Gimp                *gimp,
                                                    GimpContext         *context,
+                                                   GimpImage           *dest_image,
                                                    GimpProgress        *progress,
                                                    GFile               *file,
                                                    gint                 vector_width,
@@ -524,7 +528,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
     run_mode = GIMP_RUN_NONINTERACTIVE;
 
   if (as_link)
-    image = file_open_link_image (gimp, context, progress,
+    image = file_open_link_image (gimp, context, NULL, progress,
                                   file, 0, 0, TRUE,
                                   as_new,
                                   file_proc,
@@ -642,7 +646,7 @@ file_open_layers (Gimp                *gimp,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (as_link)
-    new_image = file_open_link_image (gimp, context, progress,
+    new_image = file_open_link_image (gimp, context, dest_image, progress,
                                       file,
                                       gimp_image_get_width (dest_image),
                                       gimp_image_get_height (dest_image),
@@ -770,6 +774,7 @@ file_open_from_command_line (Gimp     *gimp,
 static GimpImage *
 file_open_link_image (Gimp                *gimp,
                       GimpContext         *context,
+                      GimpImage           *dest_image,
                       GimpProgress        *progress,
                       GFile               *file,
                       gint                 vector_width,
@@ -802,40 +807,85 @@ file_open_link_image (Gimp                *gimp,
 
   if (g_file_is_native (file) && file_proc != NULL)
     {
-      GimpLink *link = gimp_link_new (gimp, file,
-                                      vector_width, vector_height, vector_keep_ratio,
-                                      progress, error);
+      const gchar *proc_name  = gimp_object_get_name (file_proc);
+      GFile       *dest_file  = dest_image ? gimp_image_get_file (dest_image) : NULL;
+      gboolean     loop_found = FALSE;
 
-      if (gimp_link_is_broken (link))
+      if (dest_file && g_strcmp0 (proc_name, "gimp-xcf-load") == 0)
         {
-          *status = GIMP_PDB_EXECUTION_ERROR;
+          loop_found = xcf_load_file_equal (dest_file, file);
+
+          if (! loop_found)
+            {
+              GInputStream  *input;
+              GList         *parent_files;
+              GList         *loop_files = NULL;
+              XcfInfo        info       = { 0, };
+              gint           width;
+              gint           height;
+              gint           type;
+              GimpPrecision  precision;
+
+              parent_files = g_list_prepend (NULL, dest_file);
+
+              input = G_INPUT_STREAM (g_file_read (file, NULL, NULL));
+              if (input && xcf_load_magic_version (gimp, input, file, NULL, &info))
+                xcf_load_image_header (gimp, &info, &width, &height, &type, &precision,
+                                       parent_files, &loop_files, &loop_found, NULL);
+
+              g_clear_object (&input);
+              g_list_free (parent_files);
+              g_list_free_full (loop_files, g_object_unref);
+            }
+        }
+
+      if (loop_found)
+        {
+          if (error && ! *error)
+            g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                         /* TODO: localize after string freeze ends. */
+                         "Cycling link detected with %s.",
+                         g_file_peek_path (file));
         }
       else
         {
-          GimpLayer *layer;
-          gint       width;
-          gint       height;
+          GimpLink *link;
 
-          gimp_link_get_size (link, &width, &height);
-          image = gimp_image_new (gimp, width, height,
-                                  gimp_link_get_base_type (link),
-                                  gimp_link_get_precision (link));
-          layer = gimp_link_layer_new (image, link);
-          gimp_image_add_layer (image, layer, NULL, 0, FALSE);
+          link = gimp_link_new (gimp, file,
+                                vector_width, vector_height, vector_keep_ratio,
+                                progress, error);
 
-          if (! gimp_image_get_load_proc (image))
-            gimp_image_set_load_proc (image, gimp_link_get_load_proc (link));
+          if (gimp_link_is_broken (link))
+            {
+              *status = GIMP_PDB_EXECUTION_ERROR;
+            }
+          else
+            {
+              GimpLayer *layer;
+              gint       width;
+              gint       height;
 
-          file_proc = gimp_image_get_load_proc (image);
-          if (mime_type)
-            *mime_type = g_slist_nth_data (file_proc->mime_types_list, 0);
-          if (file_proc_handles_vector)
-            *file_proc_handles_vector = file_proc->handles_vector;
+              gimp_link_get_size (link, &width, &height);
+              image = gimp_image_new (gimp, width, height,
+                                      gimp_link_get_base_type (link),
+                                      gimp_link_get_precision (link));
+              layer = gimp_link_layer_new (image, link);
+              gimp_image_add_layer (image, layer, NULL, 0, FALSE);
 
-          *status = GIMP_PDB_SUCCESS;
+              if (! gimp_image_get_load_proc (image))
+                gimp_image_set_load_proc (image, gimp_link_get_load_proc (link));
+
+              file_proc = gimp_image_get_load_proc (image);
+              if (mime_type)
+                *mime_type = g_slist_nth_data (file_proc->mime_types_list, 0);
+              if (file_proc_handles_vector)
+                *file_proc_handles_vector = file_proc->handles_vector;
+
+              *status = GIMP_PDB_SUCCESS;
+            }
+
+          g_clear_object (&link);
         }
-
-      g_clear_object (&link);
     }
   else if (! g_file_is_native (file))
     {

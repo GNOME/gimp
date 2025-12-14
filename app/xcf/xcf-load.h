@@ -18,12 +18,25 @@
 #pragma once
 
 
-GimpImage * xcf_load_image         (Gimp          *gimp,
-                                    XcfInfo       *info,
-                                    GError       **error);
+GimpImage * xcf_load_image         (Gimp           *gimp,
+                                    XcfInfo        *info,
+                                    GError        **error);
 
-gboolean    xcf_load_magic_version (Gimp          *gimp,
-                                    GInputStream  *input,
-                                    GFile         *input_file,
-                                    GimpProgress  *progress,
-                                    XcfInfo       *info);
+gboolean    xcf_load_magic_version (Gimp           *gimp,
+                                    GInputStream   *input,
+                                    GFile          *input_file,
+                                    GimpProgress   *progress,
+                                    XcfInfo        *info);
+gboolean    xcf_load_image_header  (Gimp           *gimp,
+                                    XcfInfo        *info,
+                                    gint           *width,
+                                    gint           *height,
+                                    gint           *image_type,
+                                    GimpPrecision  *precision,
+                                    GList          *prev_files,
+                                    GList         **loop_files,
+                                    gboolean       *loop_found,
+                                    GError        **error);
+
+gboolean    xcf_load_file_equal    (GFile          *file1,
+                                    GFile          *file2);
