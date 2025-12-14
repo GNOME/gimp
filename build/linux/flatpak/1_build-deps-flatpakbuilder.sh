@@ -65,6 +65,7 @@ if [ "$GITLAB_CI" ]; then
   oras pull $built_deps_image && oras logout quay.io || true
   tar --zstd --xattrs -xf _build-$RUNNER.tar.zst || true
 fi
+
 eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=babl \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > flatpak-builder.log 2>&1
 if [ "$GITLAB_CI" ]; then
@@ -72,7 +73,7 @@ if [ "$GITLAB_CI" ]; then
 fi
 
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
-  tar --zstd --xattrs --exclude=.flatpak-builder/build/babl-1 --exclude=.flatpak-builder/build/gegl-1 -cf _build-$RUNNER.tar.zst .flatpak-builder/
+  tar --zstd --xattrs --exclude=.flatpak-builder/build/ -cf _build-$RUNNER.tar.zst .flatpak-builder/
   cat $NIGHTLY_CACHE_ORAS_TOKEN_FILE | oras login -u "${NIGHTLY_CACHE_ORAS_USER}" --password-stdin quay.io || true
   oras push $built_deps_image _build-$RUNNER.tar.zst && oras logout quay.io || true
   rm _build-$RUNNER.tar.zst
@@ -92,8 +93,26 @@ eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --keep-build-dirs --b
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
 if [ "$GITLAB_CI" ]; then
   xz --keep --stdout .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt > gegl-meson-log.xz
+  # Only keep the build directories long enough to keep a copy of meson
+  # logs for babl and GEGL.
+  rm -fr .flatpak-builder/build/*
   printf "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n"
 
-  ## Save built deps for 'gimp-flatpak' job
-  tar --zstd --xattrs -cf _build-$RUNNER.tar.zst .flatpak-builder/
+  ## Save built deps for 'gimp-flatpak' job ##
+  #
+  # Just passing .flatpak-builder/ as artifacts work, but the files all
+  # end up root, which flatpak-builder chokes on with "permission
+  # denied" in the next job.
+  # On the other hand, if I try to compress the whole thing (because tar
+  # is able to preserve permissions!), it's Gitlab CI which chokes on it
+  # with "Request Entity Too Large".
+  # So I do an in-between, and rename the folder itself in the end (so
+  # that .flatpak-builder/ itself doesn't end up belonging to root in
+  # the next job, by letting tar rebuild it).
+  for dir in .flatpak-builder/*; do
+    tar --zstd --xattrs -cf "$dir.tar.zst" "$dir"
+    rm -fr "$dir"
+  done
+  rm -fr flatpak-builder-deps
+  mv .flatpak-builder flatpak-builder-deps
 fi
