@@ -784,7 +784,7 @@
                     "type": "shell",
                     "commands": [
                         "sed -i \"/<release[^>]*date=\\\"TODO\\\"[^>]*>/,/<\\/release>/d\" desktop/org.gimp.GIMP.appdata.xml.in.in",
-                        "v=$(awk -F\"'\" '/version:/ {print $2; exit}' meson.build | sed 's/-/~/g' | tr '[:upper:]' '[:lower:]'); grep -q \"version=\\\"$v\\\"\" desktop/org.gimp.GIMP.appdata.xml.in.in || sed -i \"/<releases>/a <release version=\\\"$v\\\" date=\\\"$(date --iso-8601)\\\" type=\\\"snapshot\\\"></release>\" desktop/org.gimp.GIMP.appdata.xml.in.in"
+                        "appdata='desktop/org.gimp.GIMP.appdata.xml.in.in'; v=$(awk -F\"'\" '/version:/ {print $2; exit}' meson.build | sed 's/-/~/g' | tr '[:upper:]' '[:lower:]'); grep -q \"version=\\\"$v\\\"\" $appdata || grep -q \"date=\\\"$(date --iso-8601)\\\"\" $appdata || sed -i \"/<releases>/a <release version=\\\"$v\\\" date=\\\"$(date --iso-8601)\\\" type=\\\"snapshot\\\"></release>\" $appdata"
                     ]
                 }
             ],
