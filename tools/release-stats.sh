@@ -37,9 +37,11 @@ else
     micro=$(echo "$micro_rc" | cut -d'-' -f1)
     rc=$(echo "$micro_rc" | cut -d'-' -f2)
     TAG=GIMP_${major}_${minor}_${micro}_$rc
+    rel_version="${major}.${minor}.${micro} ${rc}"
   else
     micro=$micro_rc
     TAG=GIMP_${major}_${minor}_${micro}
+    rel_version="${major}.${minor}.${micro}"
   fi
 
   git --no-pager show $TAG >/dev/null 2>&1
@@ -73,14 +75,28 @@ fi
 prevmajor=$(echo "$PREV_TAG" | cut -d'_' -f2)
 prevminor=$(echo "$PREV_TAG" | cut -d'_' -f3)
 prevmicro=$(echo "$PREV_TAG" | cut -d'_' -f4)
+prevrc=$(echo "$PREV_TAG" | cut -d'_' -f5)
+if [ -z $prevrc ]; then
+  prev_version="$prevmajor.$prevminor.$prevmicro"
+  prev_uri="$prevmajor.$prevminor.$prevmicro"
+else
+  prev_version="$prevmajor.$prevminor.$prevmicro $prevrc"
+  prev_uri="$prevmajor.$prevminor.$prevmicro-$prevrc"
+fi
 
 intmajor=$(echo "$INTERMEDIATE_TAG" | cut -d'_' -f2)
 intminor=$(echo "$INTERMEDIATE_TAG" | cut -d'_' -f3)
 intmicro=$(echo "$INTERMEDIATE_TAG" | cut -d'_' -f4)
+intrc=$(echo "$INTERMEDIATE_TAG" | cut -d'_' -f5)
+if [ -z $intrc ]; then
+  int_version="$intmajor.$intminor.$intmicro"
+else
+  int_version="$intmajor.$intminor.$intmicro $intrc"
+fi
 
-echo "Previous Release: $prevmajor.$prevminor.$prevmicro"
+echo "Previous Release: $prev_version"
 if [ "$PREV_TAG" != "$INTERMEDIATE_TAG" ]; then
-  echo "Intermediate Release: $intmajor.$intminor.$intmicro"
+  echo "Intermediate Release: $int_version"
 fi
 
 #if [ $((prevmicro % 2)) -ne 0 ]; then
@@ -234,7 +250,7 @@ echo
 echo "-------------------------------------------"
 echo
 
-echo "Since [GIMP $prevmajor.$prevminor.$prevmicro](/release/$prevmajor.$prevminor.$prevmicro/), in the main GIMP repository:"
+echo "Since [GIMP $prev_version](/release/$prev_uri/), in the main GIMP repository:"
 echo
 echo "* $closed_issues reports were closed as FIXED."
 echo "* $merged_mrs merge requests were merged."
@@ -274,7 +290,7 @@ echo "* $i18n_n translations were updated: $i18n_comma."
 #echo "Statistics on C files:" `git diff --shortstat $PREV_TAG..$TAG  -- "*.[ch]" 2>/dev/null`
 
 echo
-echo "$contribs_n people contributed changes or fixes to GIMP $major.$minor.$micro codebase (order
+echo "$contribs_n people contributed changes or fixes to GIMP $rel_version codebase (order
 is determined by number of commits; some people are in several groups):"
 echo
 count_contributors 'app/ "libgimp*" pdb tools/pdbgen/' "%d developers to core code: %s"
@@ -324,7 +340,7 @@ if [ "$gegl_ver" != "$prev_gegl_ver" ]; then
   count_repo_contributors "../gegl" master "GEGL $gegl_ver is made of %d commits by %d contributors: %s" $prev_tag $cur_tag
 fi
 
-count_repo_contributors "../ctx.graphics" dev "[ctx](https://ctx.graphics/) had %d commits since $intmajor.$intminor.$intmicro release by %d contributors: %s"
+count_repo_contributors "../ctx.graphics" dev "[ctx](https://ctx.graphics/) had %d commits since $int_version release by %d contributors: %s"
 count_repo_contributors "../gimp-test-images" main "The \`gimp-test-images\` (unit testing repository) repository had %d commits by %d contributors: %s"
 count_repo_contributors "../gimp-macos-build" master "The \`gimp-macos-build\` (macOS packaging scripts) release had %d commits by %d contributors: %s"
 # TODO:
