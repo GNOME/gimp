@@ -1449,3 +1449,20 @@ gimp_plug_in_procedure_handle_return_values (GimpPlugInProcedure *proc,
       break;
     }
 }
+
+gboolean
+gimp_plug_in_procedure_is_xcf_load (GimpPlugInProcedure *file_proc)
+{
+  const gchar *proc_name;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (file_proc), TRUE);
+
+  proc_name = gimp_object_get_name (file_proc);
+
+  /* Even when loading through an intermediate container format plug-in
+   * (e.g. file-compressor), the stored procedure shall be the inner
+   * format.
+   * See commit bb9d8df855b.
+   */
+  return (g_strcmp0 (proc_name, "gimp-xcf-load") == 0);
+}

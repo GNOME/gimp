@@ -153,5 +153,6 @@ void          gimp_plug_in_procedure_set_batch_interpreter (GimpPlugInProcedure 
 void          gimp_plug_in_procedure_handle_return_values  (GimpPlugInProcedure *proc,
                                                             Gimp                *gimp,
                                                             GimpProgress        *progress,
-
                                                             GimpValueArray      *return_vals);
+
+gboolean      gimp_plug_in_procedure_is_xcf_load           (GimpPlugInProcedure *file_proc);

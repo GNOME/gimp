@@ -82,7 +82,6 @@ static void        file_open_convert_items        (GimpImage           *dest_ima
 static GList     * file_open_get_layers           (GimpImage           *image,
                                                    gboolean             merge_visible,
                                                    gint                *n_visible);
-static gboolean    file_open_file_proc_is_import  (GimpPlugInProcedure *file_proc);
 static gboolean    file_open_valid_permissions    (GFile               *file,
                                                    GError             **error);
 
@@ -294,7 +293,7 @@ file_open_image (Gimp                *gimp,
     {
       gimp_image_undo_disable (image);
 
-      if (file_open_file_proc_is_import (file_proc))
+      if (! gimp_plug_in_procedure_is_xcf_load (file_proc))
         {
           file_import_image (image, context, orig_file,
                              run_mode == GIMP_RUN_INTERACTIVE,
@@ -561,7 +560,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
       if (! file_proc)
         file_proc = gimp_image_get_load_proc (image);
 
-      if (file_open_file_proc_is_import (file_proc) &&
+      if (! gimp_plug_in_procedure_is_xcf_load (file_proc) &&
           gimp_image_get_n_layers (image) == 1)
         {
           GimpObject *layer = gimp_image_get_layer_iter (image)->data;
@@ -807,11 +806,10 @@ file_open_link_image (Gimp                *gimp,
 
   if (g_file_is_native (file) && file_proc != NULL)
     {
-      const gchar *proc_name  = gimp_object_get_name (file_proc);
-      GFile       *dest_file  = dest_image ? gimp_image_get_file (dest_image) : NULL;
-      gboolean     loop_found = FALSE;
+      GFile    *dest_file  = dest_image ? gimp_image_get_file (dest_image) : NULL;
+      gboolean  loop_found = FALSE;
 
-      if (dest_file && g_strcmp0 (proc_name, "gimp-xcf-load") == 0)
+      if (dest_file && gimp_plug_in_procedure_is_xcf_load (file_proc))
         {
           loop_found = xcf_load_file_equal (dest_file, file);
 
@@ -994,22 +992,6 @@ file_open_get_layers (GimpImage *image,
     }
 
   return layers;
-}
-
-static gboolean
-file_open_file_proc_is_import (GimpPlugInProcedure *file_proc)
-{
-  const gchar *proc_name;
-
-  g_return_val_if_fail (file_proc != NULL, TRUE);
-
-  proc_name = gimp_object_get_name (file_proc);
-
-  /* Even when loading through an intermediate container format plug-in
-   * (e.g. file-compressor), the stored procedure shall be the inner
-   * format.
-   */
-  return (g_strcmp0 (proc_name, "gimp-xcf-load") != 0);
 }
 
 static gboolean

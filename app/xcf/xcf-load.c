@@ -86,6 +86,7 @@
 #include "path/gimpvectorlayeroptions.h"
 
 #include "plug-in/gimppluginmanager-file.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "text/gimptextlayer.h"
 #include "text/gimptextlayer-xcf.h"
@@ -582,42 +583,34 @@ xcf_load_image_header (Gimp           *gimp,
                   file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
                                                                         GIMP_FILE_PROCEDURE_GROUP_OPEN,
                                                                         link_file, error);
-                  if (file_proc)
+                  if (file_proc && gimp_plug_in_procedure_is_xcf_load (file_proc))
                     {
-                      const gchar *proc_name = gimp_object_get_name (file_proc);
+                      GInputStream  *input;
+                      GList         *parent_files;
+                      XcfInfo        info2  = { 0, };
+                      gint           width2;
+                      gint           height2;
+                      gint           type2;
+                      GimpPrecision  precision2;
+                      gboolean       subloop_found = FALSE;
 
-                      /* This will work even with container formats. See
-                       * commit bb9d8df855b.
-                       */
-                      if (g_strcmp0 (proc_name, "gimp-xcf-load") == 0)
+                      parent_files = g_list_copy (prev_files);
+                      parent_files = g_list_prepend (parent_files, link_file);
+
+                      input = G_INPUT_STREAM (g_file_read (link_file, NULL, NULL));
+                      if (input && xcf_load_magic_version (gimp, input, link_file, NULL, &info2))
+                        xcf_load_image_header (gimp, &info2, &width2, &height2, &type2, &precision2,
+                                               parent_files, loop_files, &subloop_found, NULL);
+
+                      g_clear_object (&input);
+                      g_list_free (parent_files);
+
+                      if (subloop_found)
                         {
-                          GInputStream  *input;
-                          GList         *parent_files;
-                          XcfInfo        info2  = { 0, };
-                          gint           width2;
-                          gint           height2;
-                          gint           type2;
-                          GimpPrecision  precision2;
-                          gboolean       subloop_found = FALSE;
-
-                          parent_files = g_list_copy (prev_files);
-                          parent_files = g_list_prepend (parent_files, link_file);
-
-                          input = G_INPUT_STREAM (g_file_read (link_file, NULL, NULL));
-                          if (input && xcf_load_magic_version (gimp, input, link_file, NULL, &info2))
-                            xcf_load_image_header (gimp, &info2, &width2, &height2, &type2, &precision2,
-                                                   parent_files, loop_files, &subloop_found, NULL);
-
-                          g_clear_object (&input);
-                          g_list_free (parent_files);
-
-                          if (subloop_found)
-                            {
-                              *loop_files = g_list_prepend (*loop_files, link_file);
-                              if (loop_found)
-                                *loop_found = TRUE;
-                              break;
-                            }
+                          *loop_files = g_list_prepend (*loop_files, link_file);
+                          if (loop_found)
+                            *loop_found = TRUE;
+                          break;
                         }
                     }
 
