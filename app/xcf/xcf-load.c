@@ -1367,7 +1367,9 @@ xcf_load_image (Gimp     *gimp,
           layer = vlayer;
         }
 
-      /* If any layer has a transformation matrix, we apply it.
+      /* If any layer has a transformation matrix, we apply it after
+       * everything is loaded so that we are sure that order of props
+       * doesn't matter and also we need items to be already attached.
        *
        * XXX Right now, this can only be applied to link layers, but
        * eventually we should be able to port this to any type of layer
@@ -2644,6 +2646,11 @@ xcf_load_layer_props (XcfInfo    *info,
                       GList    *selected;
                       GList    *linked;
                       gboolean  floating;
+                      gint      raster_width;
+                      gint      raster_height;
+
+                      raster_width  = gimp_item_get_width (GIMP_ITEM (*layer));
+                      raster_height = gimp_item_get_height (GIMP_ITEM (*layer));
 
                       floating = (info->floating_sel == *layer);
                       selected = g_list_find (info->selected_layers, *layer);
@@ -2658,6 +2665,27 @@ xcf_load_layer_props (XcfInfo    *info,
 
                       gimp_link_layer_set_link (GIMP_LINK_LAYER (*layer), link, FALSE);
                       gimp_link_layer_set_xcf_flags (GIMP_LINK_LAYER (*layer), flags);
+
+                      if (! gimp_link_layer_is_monitored (GIMP_LINK_LAYER (*layer)) ||
+                          gimp_link_is_broken (gimp_link_layer_get_link (GIMP_LINK_LAYER (*layer))))
+                        {
+                          GeglColor *color = gegl_color_new ("transparent");
+
+                          /* Let's completely ignore the link size. The
+                           * stored buffer will be used instead, so we
+                           * should resize the item back to how it was.
+                           * We don't care about proper scaling here,
+                           * the buffer will be the real content.
+                           */
+                          gimp_item_resize (GIMP_ITEM (*layer),
+                                            gimp_get_user_context (info->gimp),
+                                            GIMP_FILL_WHITE,
+                                            raster_width, raster_height,
+                                            0, 0);
+                          gegl_buffer_set_color (gimp_drawable_get_buffer (GIMP_DRAWABLE (*layer)),
+                                                 NULL, color);
+                          g_object_unref (color);
+                        }
 
                       if (selected)
                         {
