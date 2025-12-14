@@ -69,7 +69,7 @@ static gboolean   file_open_dialog_open_layers (GtkWidget           *dialog,
 GtkWidget *
 file_open_dialog_new (Gimp *gimp)
 {
-  GtkWidget           *dialog;
+  GtkWidget *dialog;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
