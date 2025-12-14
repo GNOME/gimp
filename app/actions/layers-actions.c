@@ -773,6 +773,7 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       can_lock_alpha     = FALSE;
   gboolean       has_rasterizable   = FALSE;
   gboolean       has_rasterized     = FALSE;
+  gboolean       has_raster         = FALSE;
   gboolean       text_layer         = FALSE;
   gboolean       vector_layer       = FALSE;
   gboolean       bs_mutable         = FALSE; /* At least 1 selected layers' blend space is mutable.     */
@@ -939,7 +940,9 @@ layers_actions_update (GimpActionGroup *group,
             n_text_layers++;
 
           has_rasterizable = has_rasterizable || gimp_item_is_rasterizable (iter->data);
-          has_rasterized = has_rasterized || gimp_item_is_rasterized (iter->data);
+          has_rasterized   = has_rasterized || gimp_item_is_rasterized (iter->data);
+          has_raster       = (gimp_item_is_rasterized (iter->data) ||
+                              ! gimp_item_is_rasterizable (iter->data));
         }
 
       if (n_selected_layers == 1)
@@ -1100,7 +1103,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-mask-add-button",      n_selected_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-mask-add-last-values", n_selected_layers > 0 && !fs && !ac && have_no_masks);
 
-  SET_SENSITIVE ("layers-mask-apply",  have_writable && !fs && !ac && have_masks && have_no_groups);
+  SET_SENSITIVE ("layers-mask-apply",  have_writable && !fs && !ac && have_masks && have_no_groups && has_raster);
   SET_SENSITIVE ("layers-mask-delete", n_selected_layers > 0 && !fs && !ac && have_masks);
 
   SET_SENSITIVE ("layers-mask-edit",    n_selected_layers == 1 && !fs && !ac && have_masks);
