@@ -29,6 +29,9 @@ Core:
   - Initial font loading was greatly sped up (not validating them
     through harfbuzz or freetype anymore, but checking the first bytes
     of every font file; a bit less robust but much faster).
+  - A few safety checks were added when creating new link layers and
+    when loading XCF files with link layers to prevent infinite loops
+    with cycling links.
 
 Tools:
 
@@ -98,6 +101,9 @@ Build:
     secret.
   - Minimum requirement updates: babl 0.1.118 and GEGL 0.4.66.
   - AppImage is now using fully relocatable babl and GEGL.
+  - AppImages and Windows official builds will now always ship the debug
+    binaries for the hidden debug menu (which can be un-hidden with
+    --show-debug-menu CLI option).
 
 
 Overview of Changes from GIMP 3.1.4 to GIMP 3.2.0 RC1
