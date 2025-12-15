@@ -809,14 +809,14 @@ dev-docs:
       tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                                              &&
       sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                                              &&
       sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
-    - GIMP_VER=$(grep GIMP_VERSION _build*/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/') &&
-      APP_VER=$(echo $GIMP_VER | sed 's/\([0-9]\+\.[0-9]\+\)\..*/\1/')                       &&
-      DIR_NAME=gimp-api-docs-$GIMP_VER                                                       &&
-      mkdir $DIR_NAME                                                                        &&
-      mv "${GIMP_PREFIX}/share/doc/gimp-$APP_VER" $DIR_NAME/reference                        &&
-      TAR_NAME="$DIR_NAME.tar.xz"                                                            &&
-      tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                           &&
-      sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                           &&
+    - GIMP_VER=$(grep GIMP_VERSION _build*/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')          &&
+      API_VER=$(grep GIMP_PKGCONFIG_VERSION _build*/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/') &&
+      DIR_NAME=gimp-api-docs-$GIMP_VER                                                                &&
+      mkdir $DIR_NAME                                                                                 &&
+      mv "${GIMP_PREFIX}/share/doc/gimp-$API_VER" $DIR_NAME/reference                                 &&
+      TAR_NAME="$DIR_NAME.tar.xz"                                                                     &&
+      tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                                    &&
+      sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                                    &&
       sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
   artifacts:
     paths:
