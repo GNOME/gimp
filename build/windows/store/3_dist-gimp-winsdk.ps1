@@ -501,12 +501,19 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
     msstore publish $OUTPUT_DIR\$MSIX_ARTIFACT -id $env:PRODUCT_ID -nc; if ("$LASTEXITCODE" -gt '0') { exit 1 }
 
     ## Update submission info (if PS6 or up. Check the section 1 of this script)
+    $env:GIMP_VERSION="$GIMP_VERSION"
     pwsh -Command `
       {
         $jsonObject = msstore submission get $env:PRODUCT_ID | ConvertFrom-Json -AsHashtable; if ("$LASTEXITCODE" -gt '0') { exit 1 }
         ###Get changelog from Linux appdata
         $xmlObject = New-Object XML
         $xmlObject.Load("$PWD\desktop\org.gimp.GIMP.appdata.xml.in.in")
+        if ($xmlObject.component.releases.release[0].version -ne ("$env:GIMP_VERSION".ToLower() -replace '-','~'))
+          {
+            #This check is needed to ensure the right release notes etc when the submission is (rarely) done manually/locally
+            Write-Host "(WARNING): appdata does not match main meson file. Submission info can't be updated." -ForegroundColor yellow
+            exit 1
+          }
         $jsonObject."Listings"."en-us"."BaseListing".'ShortDescription' = ($xmlObject.component.summary).Trim()
         $jsonObject."Listings"."en-us"."BaseListing".'Description' = ($xmlObject.component.description.SelectNodes(".//p") | ForEach-Object { ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' ' } ) -join "`n`n"
         $jsonObject."Listings"."en-us"."BaseListing".'ReleaseNotes' = ($xmlObject.component.releases.release[0].description.SelectNodes(".//p | .//li") | ForEach-Object { $text = ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' '; if ($_.Name -eq 'li') { "- $text" } else { $text } } ) -join "`n"
