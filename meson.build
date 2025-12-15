@@ -1325,7 +1325,6 @@ localedir      = get_option('datadir') / 'locale'
 
 # Check for internal tools
 extract_vector_icon = find_program('tools'/'extract-vector-icon.sh')
-generate_changelog  = find_program('tools'/'generate_changelog.sh')
 generate_news       = find_program('tools'/'generate-news')
 gimppath2svg        = find_program('tools'/'gimppath2svg.py')
 module_dependencies = find_program('tools'/'module-dependencies.py')
@@ -1814,17 +1813,6 @@ if xmllint.found()
     install: false
   )
 endif
-
-custom_target('Changelog',
-  input : [ ],
-  output: [ 'Changelog', ],
-  command: [
-    generate_changelog,
-    meson.project_source_root(),
-    '@OUTPUT@'
-  ],
-  build_by_default: false,
-)
 
 meson.add_dist_script('meson_dist_script.py',
                       generate_version_h ?  gitversion_h.full_path() : gitversion_h,
