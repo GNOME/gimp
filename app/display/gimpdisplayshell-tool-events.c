@@ -258,8 +258,13 @@ gimp_display_shell_events (GtkWidget        *widget,
       {
         GdkEventFocus *fevent = (GdkEventFocus *) event;
 
-        if (fevent->in && shell->display->config->activate_on_focus)
-          set_display = TRUE;
+        if (fevent->in)
+          {
+            gimp_set_focused_once (gimp);
+
+            if (shell->display->config->activate_on_focus)
+              set_display = TRUE;
+          }
       }
       break;
 

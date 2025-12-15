@@ -133,6 +133,9 @@ struct _Gimp
 
   /*  the context used by the interface  */
   GimpContext            *user_context;
+
+  /*  GUI focus occured. See gtk#7534.  */
+  gboolean                focused_once;
 };
 
 struct _GimpClass
@@ -188,6 +191,9 @@ gboolean       gimp_is_restored            (Gimp                *gimp);
 
 void           gimp_exit                   (Gimp                *gimp,
                                             gboolean             force);
+
+void           gimp_set_focused_once       (Gimp                *gimp);
+gboolean       gimp_has_focused_once       (Gimp                *gimp);
 
 GList        * gimp_get_image_iter         (Gimp                *gimp);
 GList        * gimp_get_display_iter       (Gimp                *gimp);

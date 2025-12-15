@@ -50,6 +50,9 @@
 static gboolean devicerc_deleted = FALSE;
 
 
+static void gimp_devices_restore_on_focused_once (Gimp *gimp);
+
+
 /*  public functions  */
 
 void
@@ -87,69 +90,12 @@ gimp_devices_exit (Gimp *gimp)
 void
 gimp_devices_restore (Gimp *gimp)
 {
-  GimpDeviceManager *manager;
-  GList             *list;
-  GFile             *file;
-  GError            *error = NULL;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  manager = gimp_devices_get_manager (gimp);
-
-  g_return_if_fail (GIMP_IS_DEVICE_MANAGER (manager));
-
-  for (list = GIMP_LIST (manager)->queue->head;
-       list;
-       list = g_list_next (list))
-    {
-      GimpDeviceInfo *device_info = list->data;
-
-      gimp_device_info_save_tool (device_info);
-      gimp_device_info_set_default_tool (device_info);
-    }
-
-  file = gimp_directory_file ("devicerc", NULL);
-
-  if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
-
-  if (! gimp_config_deserialize_file (GIMP_CONFIG (manager),
-                                      file,
-                                      gimp,
-                                      &error))
-    {
-      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-        gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
-
-      g_error_free (error);
-      /* don't bail out here */
-    }
-
-  g_object_unref (file);
-
-  for (list = GIMP_LIST (manager)->queue->head;
-       list;
-       list = g_list_next (list))
-    {
-      GimpDeviceInfo *device_info = list->data;
-
-      if (! GIMP_TOOL_PRESET (device_info)->tool_options)
-        {
-          gimp_device_info_save_tool (device_info);
-
-          g_printerr ("%s: set default tool on loaded GimpDeviceInfo without tool options: %s\n",
-                      G_STRFUNC, gimp_object_get_name (device_info));
-        }
-    }
-
-  if (! GIMP_GUI_CONFIG (gimp->config)->devices_share_tool)
-    {
-      GimpDeviceInfo *current_device;
-
-      current_device = gimp_device_manager_get_current_device (manager);
-
-      gimp_device_info_restore_tool (current_device);
-    }
+  if (gimp_has_focused_once (gimp))
+    gimp_devices_restore_on_focused_once (gimp);
+  else
+    g_signal_connect (gimp, "focused-once",
+                      G_CALLBACK (gimp_devices_restore_on_focused_once),
+                      NULL);
 }
 
 void
@@ -394,4 +340,79 @@ gimp_devices_check_change (Gimp      *gimp,
     }
 
   return FALSE;
+}
+
+
+/* Private functions */
+
+static void
+gimp_devices_restore_on_focused_once (Gimp *gimp)
+{
+  GimpDeviceManager *manager;
+  GList             *list;
+  GFile             *file;
+  GError            *error = NULL;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  g_signal_handlers_disconnect_by_func (gimp,
+                                        G_CALLBACK (gimp_devices_restore_on_focused_once),
+                                        NULL);
+
+  manager = gimp_devices_get_manager (gimp);
+
+  g_return_if_fail (GIMP_IS_DEVICE_MANAGER (manager));
+
+  for (list = GIMP_LIST (manager)->queue->head;
+       list;
+       list = g_list_next (list))
+    {
+      GimpDeviceInfo *device_info = list->data;
+
+      gimp_device_info_save_tool (device_info);
+      gimp_device_info_set_default_tool (device_info);
+    }
+
+  file = gimp_directory_file ("devicerc", NULL);
+
+  if (gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (manager),
+                                      file,
+                                      gimp,
+                                      &error))
+    {
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+        gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+
+      g_error_free (error);
+      /* don't bail out here */
+    }
+
+  g_object_unref (file);
+
+  for (list = GIMP_LIST (manager)->queue->head;
+       list;
+       list = g_list_next (list))
+    {
+      GimpDeviceInfo *device_info = list->data;
+
+      if (! GIMP_TOOL_PRESET (device_info)->tool_options)
+        {
+          gimp_device_info_save_tool (device_info);
+
+          g_printerr ("%s: set default tool on loaded GimpDeviceInfo without tool options: %s\n",
+                      G_STRFUNC, gimp_object_get_name (device_info));
+        }
+    }
+
+  if (! GIMP_GUI_CONFIG (gimp->config)->devices_share_tool)
+    {
+      GimpDeviceInfo *current_device;
+
+      current_device = gimp_device_manager_get_current_device (manager);
+
+      gimp_device_info_restore_tool (current_device);
+    }
 }
