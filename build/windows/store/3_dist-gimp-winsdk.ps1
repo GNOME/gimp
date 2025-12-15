@@ -511,7 +511,7 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
         if ($xmlObject.component.releases.release[0].version -ne ("$env:GIMP_VERSION".ToLower() -replace '-','~'))
           {
             #This check is needed to ensure the right release notes etc when the submission is (rarely) done manually/locally
-            Write-Host "(WARNING): appdata does not match main meson file. Submission info can't be updated." -ForegroundColor warning
+            Write-Host "(WARNING): appdata does not match main meson file. Submission info can't be updated." -ForegroundColor yellow
             exit 1
           }
         $jsonObject."Listings"."en-us"."BaseListing".'ShortDescription' = ($xmlObject.component.summary).Trim()
