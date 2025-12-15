@@ -86,6 +86,10 @@ static void        splash_position_layouts     (GimpSplash     *splash,
 static gboolean    splash_area_draw            (GtkWidget      *widget,
                                                 cairo_t        *cr,
                                                 GimpSplash     *splash);
+static gboolean    splash_window_focus         (GtkWidget        *window,
+                                                GtkDirectionType  direction,
+                                                Gimp             *gimp);
+
 static void        splash_rectangle_union      (GdkRectangle   *dest,
                                                 PangoRectangle *pango_rect,
                                                 gint            offset_x,
@@ -128,7 +132,6 @@ splash_create (Gimp         *gimp,
   GdkRectangle        workarea;
   gint                max_width;
   gint                max_height;
-  gboolean            release_splash;
 #ifdef G_OS_WIN32
   STARTUPINFO         StartupInfo;
 
@@ -262,6 +265,10 @@ splash_create (Gimp         *gimp,
   gtk_box_pack_end (GTK_BOX (vbox), splash->progress, FALSE, FALSE, 0);
   gtk_widget_show (splash->progress);
 
+  g_signal_connect (splash->window, "focus",
+                    G_CALLBACK (splash_window_focus),
+                    gimp);
+
   gtk_widget_show (splash->window);
 
 #ifdef G_OS_WIN32
@@ -367,6 +374,19 @@ splash_area_draw (GtkWidget  *widget,
 
   cairo_move_to (cr, splash->lower_x, splash->lower_y);
   pango_cairo_show_layout (cr, splash->lower);
+
+  return FALSE;
+}
+
+static gboolean
+splash_window_focus (GtkWidget        *window,
+                     GtkDirectionType  direction,
+                     Gimp             *gimp)
+{
+  g_signal_handlers_disconnect_by_func (splash->window,
+                                        G_CALLBACK (splash_window_focus),
+                                        gimp);
+  gimp_set_focused_once (gimp);
 
   return FALSE;
 }

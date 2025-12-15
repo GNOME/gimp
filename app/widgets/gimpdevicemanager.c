@@ -77,6 +77,8 @@ static void   gimp_device_manager_get_property    (GObject           *object,
                                                    GValue            *value,
                                                    GParamSpec        *pspec);
 
+static void   gimp_device_manager_focused_once    (GimpDeviceManager *manager);
+
 static void   gimp_device_manager_display_opened  (GdkDisplayManager *disp_manager,
                                                    GdkDisplay        *display,
                                                    GimpDeviceManager *manager);
@@ -168,54 +170,17 @@ gimp_device_manager_constructed (GObject *object)
 {
   GimpDeviceManager        *manager = GIMP_DEVICE_MANAGER (object);
   GimpDeviceManagerPrivate *private = GET_PRIVATE (object);
-  GdkDisplayManager        *disp_manager;
-  GSList                   *displays;
-  GSList                   *list;
-  GdkDisplay               *display;
-  GdkSeat                  *seat;
-  GdkDevice                *pointer;
-  GimpDeviceInfo           *device_info;
-  GimpContext              *user_context;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_assert (GIMP_IS_GIMP (private->gimp));
 
-  disp_manager = gdk_display_manager_get ();
-
-  displays = gdk_display_manager_list_displays (disp_manager);
-
-  /*  present displays in the order in which they were opened  */
-  displays = g_slist_reverse (displays);
-
-  for (list = displays; list; list = g_slist_next (list))
-    {
-      gimp_device_manager_display_opened (disp_manager, list->data, manager);
-    }
-
-  g_slist_free (displays);
-
-  g_signal_connect (disp_manager, "display-opened",
-                    G_CALLBACK (gimp_device_manager_display_opened),
-                    manager);
-
-  display = gdk_display_get_default ();
-  seat    = gdk_display_get_default_seat (display);
-
-  pointer = gdk_seat_get_pointer (seat);
-
-  device_info = gimp_device_info_get_by_device (pointer);
-  gimp_device_manager_set_current_device (manager, device_info);
-
-  g_signal_connect_object (private->gimp->config, "notify::devices-share-tool",
-                           G_CALLBACK (gimp_device_manager_config_notify),
-                           manager, 0);
-
-  user_context = gimp_get_user_context (private->gimp);
-
-  g_signal_connect_object (user_context, "tool-changed",
-                           G_CALLBACK (gimp_device_manager_tool_changed),
-                           manager, 0);
+  if (gimp_has_focused_once (private->gimp))
+    gimp_device_manager_focused_once (manager);
+  else
+    g_signal_connect_object (private->gimp, "focused-once",
+                             G_CALLBACK (gimp_device_manager_focused_once),
+                             manager, G_CONNECT_SWAPPED);
 }
 
 static void
@@ -398,6 +363,59 @@ gimp_device_manager_reconfigure_pads (GimpDeviceManager *manager)
 /*  private functions  */
 
 static void
+gimp_device_manager_focused_once (GimpDeviceManager *manager)
+{
+  GimpDeviceManagerPrivate *private = GET_PRIVATE (manager);
+  GdkDisplayManager        *disp_manager;
+  GSList                   *displays;
+  GSList                   *list;
+  GdkDisplay               *display;
+  GdkSeat                  *seat;
+  GdkDevice                *pointer;
+  GimpDeviceInfo           *device_info;
+  GimpContext              *user_context;
+
+  g_signal_handlers_disconnect_by_func (private->gimp,
+                                        G_CALLBACK (gimp_device_manager_focused_once),
+                                        manager);
+
+  disp_manager = gdk_display_manager_get ();
+  displays     = gdk_display_manager_list_displays (disp_manager);
+
+  /*  present displays in the order in which they were opened  */
+  displays     = g_slist_reverse (displays);
+
+  for (list = displays; list; list = g_slist_next (list))
+    {
+      gimp_device_manager_display_opened (disp_manager, list->data, manager);
+    }
+
+  g_slist_free (displays);
+
+  g_signal_connect (disp_manager, "display-opened",
+                    G_CALLBACK (gimp_device_manager_display_opened),
+                    manager);
+
+  display = gdk_display_get_default ();
+  seat    = gdk_display_get_default_seat (display);
+
+  pointer = gdk_seat_get_pointer (seat);
+
+  device_info = gimp_device_info_get_by_device (pointer);
+  gimp_device_manager_set_current_device (manager, device_info);
+
+  g_signal_connect_object (private->gimp->config, "notify::devices-share-tool",
+                           G_CALLBACK (gimp_device_manager_config_notify),
+                           manager, 0);
+
+  user_context = gimp_get_user_context (private->gimp);
+
+  g_signal_connect_object (user_context, "tool-changed",
+                           G_CALLBACK (gimp_device_manager_tool_changed),
+                           manager, 0);
+}
+
+static void
 gimp_device_manager_display_opened (GdkDisplayManager *disp_manager,
                                     GdkDisplay        *display,
                                     GimpDeviceManager *manager)
@@ -427,6 +445,14 @@ gimp_device_manager_display_opened (GdkDisplayManager *disp_manager,
   device = gdk_seat_get_pointer (seat);
   gimp_device_manager_device_added (seat, device, manager);
 
+  /* XXX The whole reason why we created the "focused-once" signal on
+   * Gimp object is because on Wayland, GDK returns a NULL GdkDevice for
+   * tablet pads until a surface got in focus at least once (see
+   * gtk#7534). So we wait for this one-time focus before querying
+   * devices. It makes things a bit more bothersome, but is acceptable
+   * since anyway we can't do anything with input devices before we have
+   * a GUI.
+   */
   devices = gdk_seat_get_slaves (seat, GDK_SEAT_CAPABILITY_ALL);
 
   /*  create device info structures for present devices */
