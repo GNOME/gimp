@@ -2971,7 +2971,59 @@ add_adjustment_layer (GimpLayer *layer,
   GimpDrawableFilter *filter = NULL;
   PSDAdjustmentLayer *ladj   = lyr_a->adjustment_layer;
 
-  if (memcmp (ladj->type, PSD_LADJ_MIXER, 4) == 0)
+  if (memcmp (ladj->type, PSD_LADJ_BRIGHTNESS, 4) == 0)
+    {
+      gfloat brightness;
+      gfloat contrast;
+
+      /* TODO: The `brit` field is only written to in legacy PSDs.
+       * Modern PSD use Descriptors */
+      brightness = ladj->brightness / 128.0f;
+      contrast   = ladj->contrast / 128.0f;
+
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gimp:brightness-contrast",
+                                                NULL,
+                                                GIMP_LAYER_MODE_REPLACE,
+                                                1.0,
+                                                "brightness", brightness,
+                                                "contrast",   contrast,
+                                                NULL);
+    }
+  else if (memcmp (ladj->type, PSD_LADJ_BALANCE, 4) == 0)
+    {
+      GimpDrawableFilterConfig *config;
+
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gimp:color-balance",
+                                                NULL,
+                                                GIMP_LAYER_MODE_REPLACE,
+                                                1.0,
+                                                "range",         GIMP_TRANSFER_SHADOWS,
+                                                "cyan-red",      ladj->shadows[0] / 100.0f,
+                                                "magenta-green", ladj->shadows[1] / 100.0f,
+                                                "yellow-blue",   ladj->shadows[2] / 100.0f,
+                                                NULL);
+
+      config = gimp_drawable_filter_get_config (filter);
+
+      /* Shadows, midtones, and highlights have to be set separately,
+       * due to the filter design */
+      g_object_set (config, "range", GIMP_TRANSFER_MIDTONES, NULL);
+      gimp_drawable_filter_update (filter);
+      g_object_set (config, "cyan-red", ladj->midtones[0] / 100.0f, NULL);
+      g_object_set (config, "magenta-green", ladj->midtones[1] / 100.0f, NULL);
+      g_object_set (config, "yellow-blue", ladj->midtones[2] / 100.0f, NULL);
+      gimp_drawable_filter_update (filter);
+
+      g_object_set (config, "range", GIMP_TRANSFER_HIGHLIGHTS, NULL);
+      gimp_drawable_filter_update (filter);
+      g_object_set (config, "cyan-red", ladj->highlights[0] / 100.0f, NULL);
+      g_object_set (config, "magenta-green", ladj->highlights[1] / 100.0f, NULL);
+      g_object_set (config, "yellow-blue", ladj->highlights[2] / 100.0f, NULL);
+      gimp_drawable_filter_update (filter);
+    }
+  else if (memcmp (ladj->type, PSD_LADJ_MIXER, 4) == 0)
     {
       gfloat rgb_gain[9] = { 0 };
 
