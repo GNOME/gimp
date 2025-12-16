@@ -42,7 +42,7 @@ Author: generated from authors.xml.
 
 ## The following people have contributed art to GIMP:
 
-*Contributing icons, cursors, brushes, gradients, patterns, etc.*
+*Contributing splash images, icons, cursors, brushes, gradients, patterns, etc.*
 
 </xsl:text>
     <xsl:call-template name="contributor">
