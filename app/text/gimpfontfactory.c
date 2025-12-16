@@ -860,7 +860,16 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
        */
       {
          char buf[4] = {0};
-         int  fd     = g_open ((gchar *) file, O_RDONLY, 0);
+         int  fd;
+
+         errno = 0;
+         fd    = g_open ((gchar *) file, O_RDONLY, 0);
+         if (fd == -1)
+           {
+             g_string_append_printf (ignored_fonts, "- %s (access error: %s)\n", file, strerror (errno));
+             n_ignored++;
+             continue;
+           }
 
          read (fd, buf, 4);
          g_close (fd, NULL);
