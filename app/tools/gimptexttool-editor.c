@@ -2091,10 +2091,13 @@ gimp_text_tool_style_overlay_button_motion (GtkWidget      *widget,
                                            x, y,
                                            &x, &y);
 
-      gimp_ruler_get_range ((GimpRuler *) shell->hrule,
-                            &llimit, &rlimit, NULL);
-      gimp_ruler_get_range ((GimpRuler *) shell->vrule,
-                            &ulimit, &blimit, NULL);
+      gimp_display_shell_untransform_xy_f (shell,
+                                           0.0, 0.0,
+                                           &llimit, &ulimit);
+      gimp_display_shell_untransform_xy_f (shell,
+                                           (gdouble) shell->disp_width,
+                                           (gdouble) shell->disp_height,
+                                           &rlimit, &blimit);
 
       gimp_display_shell_get_overlay_corners (shell, text_tool->style_overlay,
                                               x, y,

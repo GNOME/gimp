@@ -1281,13 +1281,22 @@ gimp_display_shell_overlay_allocate (GtkWidget               *child,
                                      GtkAllocation           *allocation,
                                      GimpDisplayShellOverlay *overlay)
 {
-  gdouble tlx, tly, brx, bry;
-  gdouble llimit, rlimit, ulimit, blimit;
+  gdouble tlx;
+  gdouble tly;
+  gdouble brx;
+  gdouble bry;
+  gdouble llimit;
+  gdouble rlimit;
+  gdouble ulimit;
+  gdouble blimit;
 
-  gimp_ruler_get_range ((GimpRuler *) overlay->shell->hrule,
-                        &llimit, &rlimit, NULL);
-  gimp_ruler_get_range ((GimpRuler *) overlay->shell->vrule,
-                        &ulimit, &blimit, NULL);
+  gimp_display_shell_untransform_xy_f (overlay->shell,
+                                       0.0, 0.0,
+                                       &llimit, &ulimit);
+  gimp_display_shell_untransform_xy_f (overlay->shell,
+                                       (gdouble) overlay->shell->disp_width,
+                                       (gdouble) overlay->shell->disp_height,
+                                       &rlimit, &blimit);
 
   gimp_display_shell_get_overlay_corners (overlay->shell,
                                           child,
