@@ -674,17 +674,29 @@ typedef struct
 /* Adjustment Layer information */
 typedef struct
 {
-  gchar  *type;
+  gchar   *type;
+  gint16   version;
 
   /* Used by Threshold and Posterize */
-  gint16  level;
+  gint16   level;
 
   /* Used by Channel/Mono Mixer */
-  gint16  is_mono;
-  guchar  red[10];
-  guchar  green[10];
-  guchar  blue[10];
-  guchar  total[10];
+  gint16   is_mono;
+  guchar   red[10];
+  guchar   green[10];
+  guchar   blue[10];
+  guchar   total[10];
+
+  /* Used by Brightness-Contrast */
+  guchar   brightness;
+  guchar   contrast;
+
+  /* Used by Color Balance */
+  gchar    shadows[3];
+  gchar    midtones[3];
+  gchar    highlights[3];
+  gboolean preserve_luminosity;
+
 } PSDAdjustmentLayer;
 
 /* Partially or Unsupported Features */

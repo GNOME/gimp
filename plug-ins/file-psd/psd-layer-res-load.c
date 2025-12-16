@@ -197,6 +197,10 @@ static gint     load_resource_lnsr    (const PSDlayerres     *res_a,
                                        GInputStream          *input,
                                        GError               **error);
 
+/* Helper Methods */
+static gchar   convert_to_real_number (guchar                *values,
+                                       gint                   index);
+
 /* Public Functions */
 
 /* Returns < 0 for errors, else returns the size of the resource header
@@ -320,8 +324,6 @@ load_layer_resource (PSDlayerres   *res_a,
   /* Process layer resource blocks */
   if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0
       || memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0
       || memcmp (res_a->key, PSD_LADJ_BLACK_WHITE, 4) == 0
       || memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0
       || memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0
@@ -340,10 +342,12 @@ load_layer_resource (PSDlayerres   *res_a,
     }
 
   /* TODO: Implement all adjustment layers */
-  else if (memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0     ||
-           memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0    ||
-           memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0 ||
-           memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0)
+  else if (memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0      ||
+           memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0     ||
+           memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0  ||
+           memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0  ||
+           memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0 ||
+           memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0)
     {
       load_resource_ladj (res_a, lyr_a, input, error);
     }
@@ -518,14 +522,62 @@ load_resource_ladj (const PSDlayerres  *res_a,
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Adjustment layer", res_a->key);
 
-  if (memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0)
+  if (memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0)
     {
-      gint16 version = 0;
+      guchar brightness[2];
+      guchar contrast[2];
+      gint   unused;
 
+      lyr_a->adjustment_layer->type = g_malloc (4);
+      memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_BRIGHTNESS, 4);
+
+      if (psd_read (input, &lyr_a->adjustment_layer->version, 2, error) < 2 ||
+          psd_read (input, brightness, 2, error) < 2                        ||
+          psd_read (input, contrast, 2, error) < 2                          ||
+          psd_read (input, &unused, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      lyr_a->adjustment_layer->brightness = convert_to_real_number (brightness, 0);
+      lyr_a->adjustment_layer->contrast   = convert_to_real_number (contrast, 0);
+    }
+  else if (memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0)
+    {
+      guchar   data[18];
+      gboolean preserve_luminosity;
+
+      lyr_a->adjustment_layer->type = g_malloc (4);
+      memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_BALANCE, 4);
+
+      if (psd_read (input, data, 18, error) < 18 ||
+          psd_read (input, &preserve_luminosity, 2, error) < 2)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      for (gint i = 0; i < 6; i += 2)
+        lyr_a->adjustment_layer->shadows[(i / 2)] =
+          convert_to_real_number (data, i);
+
+      for (gint i = 0; i < 6; i += 2)
+        lyr_a->adjustment_layer->midtones[(i / 2)] =
+          convert_to_real_number (data, (i + 6));
+
+      for (gint i = 0; i < 6; i += 2)
+        lyr_a->adjustment_layer->highlights[(i / 2)] =
+          convert_to_real_number (data, (i + 12));
+
+      lyr_a->adjustment_layer->preserve_luminosity = preserve_luminosity;
+    }
+  else if (memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0)
+    {
       lyr_a->adjustment_layer->type = g_malloc (4);
       memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_MIXER, 4);
 
-      if (psd_read (input, &version, 2, error) < 2 ||
+      if (psd_read (input, &lyr_a->adjustment_layer->version, 2, error) < 2 ||
           psd_read (input, &lyr_a->adjustment_layer->is_mono, 2, error) < 2 ||
           psd_read (input, &lyr_a->adjustment_layer->red, 10, error) < 10   ||
           psd_read (input, &lyr_a->adjustment_layer->green, 10, error) < 10 ||
@@ -1122,4 +1174,15 @@ load_resource_lnsr (const PSDlayerres  *res_a,
    */
 
   return 0;
+}
+
+/* Helper methods */
+static gchar
+convert_to_real_number (guchar *values,
+                        gint    index)
+{
+  if (values[index] == 255)
+    return -(255 - values[index + 1]);
+  else
+    return values[index + 1];
 }
