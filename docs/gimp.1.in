@@ -6,23 +6,39 @@ gimp - an image manipulation and paint program.
 
 .SH SYNOPSIS
 .B gimp
-[\-h] [\-\-help] [\-\-help-all] [\-\-help-gtk] [-v] [\-\-version]
-[\-\-license] [\-\-verbose] [\-n] [\-\-new\-instance] [\-a] [\-\-as\-new]
-[\-i] [\-\-no\-interface] [\-d] [\-\-no\-data] [\-f] [\-\-no\-fonts]
+[\-h] [\-\-help] [\-\-help-all] [\-\-help-gegl] [\-\-help-gtk]
+[-v] [\-\-version] [\-\-license] [\-\-verbose] [\-n] [\-\-new\-instance]
+[\-a] [\-\-as\-new] [\-i] [\-\-no\-interface] [\-d] [\-\-no\-data] [\-f] [\-\-no\-fonts]
 [\-s] [\-\-no\-splash]  [\-\-no\-shm] [\-\-no\-cpu\-accel]
 [\-\-display \fIdisplay\fP] [\-\-session \fI<name>\fP]
 [\-g] [\-\-gimprc \fI<gimprc>\fP] [\-\-system\-gimprc \fI<gimprc>\fP]
-[\-\-dump\-gimprc\fP] [\-\-console\-messages] [\-\-debug\-handlers]
+[\-\-dump\-gimprc] [\-\-console\-messages] [\-\-debug\-handlers]
 [\-\-stack\-trace\-mode \fI<mode>\fP] [\-\-pdb\-compat\-mode \fI<mode>\fP]
-[\-\-batch\-interpreter \fI<procedure>\fP] [\-b] [\-\-batch \fI<command>\fP]
+[\-\-batch\-interpreter \fI<procedure>\fP] [\-b] [\-\-batch \fI<command>\fP] [\-\-quit]
+[\-\-show\-playground]  [\-\-show\-debug\-menu] [\-\-g\-fatal\-warnings]
+[\fIfilename\fP] ...
+
+.B gimp-console
+[\-h] [\-\-help] [\-\-help-all] [\-\-help-gegl] [\-\-help-gtk]
+[-v] [\-\-version] [\-\-license] [\-\-verbose] [\-n] [\-\-new\-instance]
+[\-a] [\-\-as\-new] [\-d] [\-\-no\-data] [\-f] [\-\-no\-fonts]
+[\-s] [\-\-no\-splash]  [\-\-no\-shm] [\-\-no\-cpu\-accel]
+[\-\-display \fIdisplay\fP] [\-\-session \fI<name>\fP]
+[\-g] [\-\-gimprc \fI<gimprc>\fP] [\-\-system\-gimprc \fI<gimprc>\fP]
+[\-\-dump\-gimprc] [\-\-console\-messages] [\-\-debug\-handlers]
+[\-\-stack\-trace\-mode \fI<mode>\fP] [\-\-pdb\-compat\-mode \fI<mode>\fP]
+[\-\-batch\-interpreter \fI<procedure>\fP] [\-b] [\-\-batch \fI<command>\fP] [\-\-quit]
+[\-\-show\-playground]  [\-\-show\-debug\-menu] [\-\-g\-fatal\-warnings]
 [\fIfilename\fP] ...
 
 
 .SH DESCRIPTION
 .PP
-GIMP is the \fIGNU Image Manipulation Program\fP. It is used to edit
-and manipulate images. It can load and save a variety of image formats
-and can be used to convert between formats.
+GIMP is an acronym for \fIGNU Image Manipulation Program\fP. It is
+Community-driven Free Software for high-end image creation and manipulation.
+.PP
+It is used to edit and manipulate images. It can load and save a variety
+of image formats and can be used to convert between formats.
 .PP
 GIMP can also be used as a paint program. It features a set of drawing
 and painting tools such as airbrush, clone, pencil, and paint
@@ -44,7 +60,7 @@ the \-\-no\-interface command\-line option.
 On platforms with the D-Bus message bus system, GIMP will by default check
 if an instance is already running in this user session. If it detects that,
 it will pass all filenames given on the command-line to the already running
-GIMP instance and quit. 
+GIMP instance and quit.
 
 
 .SH OPTIONS
@@ -90,9 +106,6 @@ in non-interactive situations where startup time is to be minimized.
 .B \-f, \-\-no\-fonts
 Do not load any fonts. No text functionality will be available if this
 option is used.
-.TP 8
-.B \-\-display \fIdisplay\fP
-Use the designated X display.
 .TP 8
 .B \-s, \-\-no\-splash
 Do not show the splash screen.
@@ -142,11 +155,45 @@ Execute \fI<command>\fP non-interactively. This option may appear
 multiple times.  The \fI<command>\fP is passed to the batch
 interpreter. When \fI<command>\fP is \fB-\fP the commands are read
 from standard input.
+.TP 8
+.B \-\-quit
+Immediately quit GIMP after opening images and running batch commands.
+This is useful when you run GIMP non-interactively through command line
+to process images with --batch-interpreter and --batch. Unless your
+batch scripts contain any interactive logic allowing to communicate
+with them, you usually want the process to end when it's done.
+.TP 8
+.B \-\-display \fIdisplay\fP
+Use the designated X display.
+.TP 8
+.B \-\-show\-playground
+The Preferences dialog will now contain a "Playground" page where you
+can enable experimental features. These features should be used at your
+own risk since they are hidden for a reason. If you already enabled an
+experimental feature, this page will always be visible, even without the
+option.
+.TP 8
+.B \-\-show\-debug\-menu
+With this option, the "File" menu will contain a "Debug" submenu,
+containing a few debugging actions. This is usually only useful for
+developers.
+.TP 8
+.B \-\-g\-fatal\-warnings
+Make all warnings fatal. This is usually used for easier debugging in a
+debugger. Most people have no reasons to set this option.
 
 
 .SH ENVIRONMENT
 GIMP respects a number of environment variables.
 .PP
+.TP 8
+.B XDG_CONFIG_HOME
+as the base directory relative to which user-specific configuration
+files should be written, per the XDG Base Directory Specification.
+
+This is the preferred way to select a custom configuration directory and
+the only one which will also ensure that configuration file formats are
+properly migrated across versions.
 .TP 8
 .B DISPLAY
 to get the default host and display number.
@@ -155,6 +202,10 @@ to get the default host and display number.
 to get the name of the personal GIMP directory. If unset @manpage_gimpdir@ is
 used.  If this is an absolute path, it is used as is.  If it is a
 relative path, it is taken to be a subdirectory of \fB$XDG_CONFIG_HOME\fP.
+
+This is a legacy environment variable, whose use is discouraged. In
+particular, it will prevent GIMP to migrate configuration file formats
+across version updates.
 .TP 8
 .B GIMP3_DATADIR
 to get the base location for data files such as brushes and patterns.
@@ -184,6 +235,16 @@ On Linux GIMP can be compiled with support for binary relocatibility.
 This will cause data, plug-ins and configuration files to be searched
 relative to the location of the gimp executable file unless overridden
 by the environment variables mentioned above.
+.TP 8
+.B GIMP_DEBUG_FONTS
+to get a list of unsupported fonts printed on \fIstderr\fP when starting
+GIMP, with an information message explaining why, for each file.
+.TP 8
+.B GIMP_BATCH_INTERPRETER
+to set the batch interpreter to be used.
+
+This is a legacy environment variable, whose use is discouraged. We
+recommend using --batch-interpreter option instead for every batch call.
 
 
 .SH FILES
@@ -340,7 +401,7 @@ tutorials, data sets, mailing list archives, and more.
 There is also a GIMP User Manual available at https://docs.gimp.org/
 that goes into much more detail about the interactive use of GIMP.
 
-The latest versions of GIMP and the GTK libs are always available at
+The latest versions of GIMP and our core libs are always available at
 https://download.gimp.org/.
 
 
