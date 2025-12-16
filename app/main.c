@@ -184,7 +184,20 @@ static const GOptionEntry main_entries[] =
     N_("Open images as new"), NULL
   },
   {
-    "no-interface", 'i', 0,
+    "no-interface", 'i',
+#ifdef GIMP_CONSOLE_COMPILATION
+    /* The CLI option is not removed for gimp-console because it allows
+     * to set the same options on either the GUI or the console
+     * binaries, as a no-brainer. We in fact also use this in build
+     * scripts which may make use of either one of the binaries to
+     * construct some images.
+     * Yet it's unnecessary to show this option in the CLI tool usage as
+     * it's basically a no-op.
+     */
+    G_OPTION_FLAG_HIDDEN,
+#else
+    0,
+#endif
     G_OPTION_ARG_NONE, &no_interface,
     N_("Run without a user interface"), NULL
   },
