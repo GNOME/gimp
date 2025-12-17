@@ -113,13 +113,6 @@ static const GimpActionEntry layers_actions[] =
     layers_delete_cmd_callback,
     GIMP_HELP_LAYER_DELETE },
 
-  /* TODO: Translate after string freeze */
-  { "layers-selected-delete", GIMP_ICON_EDIT_DELETE,
-    "Delete Selected Layers", NULL, { NULL },
-    "Delete selected layers or layer mask",
-    layers_selected_delete_cmd_callback,
-    GIMP_HELP_LAYER_DELETE },
-
   { "layers-raise", GIMP_ICON_GO_UP,
     NC_("layers-action", "_Raise Layers"), NULL, { NULL },
     NC_("layers-action", "Raise the selected layers one step in the layer stack"),
@@ -1045,7 +1038,6 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-new-group",        image && !indexed && !fs);
   SET_SENSITIVE ("layers-duplicate",        n_selected_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-delete",           n_selected_layers > 0 && !ac);
-  SET_SENSITIVE ("layers-selected-delete",  n_selected_layers > 0 && !ac);
 
   SET_SENSITIVE ("layers-mode-first",       n_selected_layers > 0 && !ac && first_mode);
   SET_SENSITIVE ("layers-mode-last",        n_selected_layers > 0 && !ac && last_mode);
