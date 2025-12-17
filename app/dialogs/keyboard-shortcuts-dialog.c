@@ -82,7 +82,7 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   gtk_widget_show (editor);
 
   hint = g_strdup_printf (_("To edit a shortcut key, select the "
-                            "corresponding row, click on its \"%s\""
+                            "corresponding row, click on its \"%s\" "
                             "column and type a new accelerator, "
                             "or press backspace to clear."), _("Shortcut"));
   box = gimp_hint_box_new (hint);
