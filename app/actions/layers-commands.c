@@ -1121,6 +1121,31 @@ layers_delete_cmd_callback (GimpAction *action,
 }
 
 void
+layers_selected_delete_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
+{
+  GimpImage *image;
+  GList     *layers;
+
+  return_if_no_image (image, data);
+
+  layers = gimp_image_get_selected_layers (image);
+
+  if (! layers)
+    return;
+
+  /* Call the appropriate delete function based on the selected type */
+  if (gimp_layer_get_mask (layers->data) &&
+      gimp_layer_get_edit_mask (layers->data))
+    layers_mask_apply_cmd_callback (action,
+                                    g_variant_new_int32 (GIMP_MASK_DISCARD),
+                                    data);
+  else
+    layers_delete_cmd_callback (action, value, data);
+}
+
+void
 layers_rasterize_cmd_callback (GimpAction *action,
                                GVariant   *value,
                                gpointer    data)
