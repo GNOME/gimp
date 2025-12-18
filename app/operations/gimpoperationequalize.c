@@ -212,6 +212,10 @@ gimp_operation_equalize_map (GimpOperationEqualize *self,
                              gfloat                 value)
 {
   gint index;
+
+  if (isnan (value))
+    value = 0;
+
   index = component * self->n_bins + \
             (gint) (CLAMP (value * (self->n_bins - 1), 0.0, self->n_bins - 1));
 
