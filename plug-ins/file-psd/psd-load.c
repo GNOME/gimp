@@ -2971,7 +2971,36 @@ add_adjustment_layer (GimpLayer *layer,
   GimpDrawableFilter *filter = NULL;
   PSDAdjustmentLayer *ladj   = lyr_a->adjustment_layer;
 
-  if (memcmp (ladj->type, PSD_LADJ_BRIGHTNESS, 4) == 0)
+  if (memcmp (ladj->type, PSD_LADJ_LEVEL, 4) == 0)
+    {
+      GimpDrawableFilterConfig *config;
+
+      filter =
+        gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                         "gimp:levels",
+                                         NULL,
+                                         GIMP_LAYER_MODE_REPLACE,
+                                         1.0,
+                                         NULL);
+
+      config = gimp_drawable_filter_get_config (filter);
+
+      for (gint i = 3; i >= 0; i--)
+        {
+          g_object_set (config, "channel", i, NULL);
+          gimp_drawable_filter_update (filter);
+          g_object_set (config,
+                        "trc",         GIMP_TRC_PERCEPTUAL,
+                        "low-input",   ladj->in_out_gamma[i][0] / 253,
+                        "high-input",  ladj->in_out_gamma[i][1] / 255,
+                        "low-output",  ladj->in_out_gamma[i][2] / 255,
+                        "high-output", ladj->in_out_gamma[i][3] / 255,
+                        "gamma",       ladj->in_out_gamma[i][4] / 100,
+                        NULL);
+          gimp_drawable_filter_update (filter);
+        }
+    }
+  else if (memcmp (ladj->type, PSD_LADJ_BRIGHTNESS, 4) == 0)
     {
       gfloat brightness;
       gfloat contrast;
@@ -3011,16 +3040,20 @@ add_adjustment_layer (GimpLayer *layer,
        * due to the filter design */
       g_object_set (config, "range", GIMP_TRANSFER_MIDTONES, NULL);
       gimp_drawable_filter_update (filter);
-      g_object_set (config, "cyan-red", ladj->midtones[0] / 100.0f, NULL);
-      g_object_set (config, "magenta-green", ladj->midtones[1] / 100.0f, NULL);
-      g_object_set (config, "yellow-blue", ladj->midtones[2] / 100.0f, NULL);
+      g_object_set (config,
+                    "cyan-red",      ladj->midtones[0] / 100.0f,
+                    "magenta-green", ladj->midtones[1] / 100.0f,
+                    "yellow-blue",   ladj->midtones[2] / 100.0f,
+                    NULL);
       gimp_drawable_filter_update (filter);
 
       g_object_set (config, "range", GIMP_TRANSFER_HIGHLIGHTS, NULL);
       gimp_drawable_filter_update (filter);
-      g_object_set (config, "cyan-red", ladj->highlights[0] / 100.0f, NULL);
-      g_object_set (config, "magenta-green", ladj->highlights[1] / 100.0f, NULL);
-      g_object_set (config, "yellow-blue", ladj->highlights[2] / 100.0f, NULL);
+      g_object_set (config,
+                    "cyan-red",      ladj->highlights[0] / 100.0f,
+                    "magenta-green", ladj->highlights[1] / 100.0f,
+                    "yellow-blue",   ladj->highlights[2] / 100.0f,
+                    NULL);
       gimp_drawable_filter_update (filter);
     }
   else if (memcmp (ladj->type, PSD_LADJ_MIXER, 4) == 0)

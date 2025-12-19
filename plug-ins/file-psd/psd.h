@@ -677,25 +677,23 @@ typedef struct
   gchar   *type;
   gint16   version;
 
-  /* Used by Threshold and Posterize */
-  gint16   level;
+  gint16   level;               /* Threshold and Posterize */
 
-  /* Used by Channel/Mono Mixer */
-  gint16   is_mono;
+  gint16   is_mono;             /* Channel/Mono Mixer */
   guchar   red[10];
   guchar   green[10];
   guchar   blue[10];
   guchar   total[10];
 
-  /* Used by Brightness-Contrast */
-  guchar   brightness;
+  guchar   brightness;          /* Brightness-Contrast */
   guchar   contrast;
 
-  /* Used by Color Balance */
-  gchar    shadows[3];
+  gchar    shadows[3];          /* Color Balance */
   gchar    midtones[3];
   gchar    highlights[3];
   gboolean preserve_luminosity;
+
+  gdouble  in_out_gamma[4][5];  /* Levels */
 
 } PSDAdjustmentLayer;
 

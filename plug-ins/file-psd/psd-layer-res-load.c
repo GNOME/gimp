@@ -322,8 +322,7 @@ load_layer_resource (PSDlayerres   *res_a,
     }
 
   /* Process layer resource blocks */
-  if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0
+  if (memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0
       || memcmp (res_a->key, PSD_LADJ_BLACK_WHITE, 4) == 0
       || memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0
       || memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0
@@ -342,7 +341,8 @@ load_layer_resource (PSDlayerres   *res_a,
     }
 
   /* TODO: Implement all adjustment layers */
-  else if (memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0      ||
+  else if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0      ||
+           memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0      ||
            memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0     ||
            memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0  ||
            memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0  ||
@@ -522,7 +522,41 @@ load_resource_ladj (const PSDlayerres  *res_a,
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Adjustment layer", res_a->key);
 
-  if (memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0)
+  if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0)
+    {
+      guchar  in_out[4][8];
+      gushort gamma[4];
+      guchar  remainder[10 * 25];
+
+      lyr_a->adjustment_layer->type = g_malloc (4);
+      memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_LEVEL, 4);
+
+      if (psd_read (input, &lyr_a->adjustment_layer->version, 2, error) < 2 ||
+          psd_read (input, in_out[0], 8, error) < 8                         ||
+          psd_read (input, &gamma[0], 2, error) < 2                         ||
+          psd_read (input, in_out[1], 8, error) < 8                         ||
+          psd_read (input, &gamma[1], 2, error) < 2                         ||
+          psd_read (input, in_out[2], 8, error) < 8                         ||
+          psd_read (input, &gamma[2], 2, error) < 2                         ||
+          psd_read (input, in_out[3], 8, error) < 8                         ||
+          psd_read (input, &gamma[3], 2, error) < 2                         ||
+          psd_read (input, remainder, 250, error) < 250)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      for (gint i = 0; i < 4; i++)
+        {
+          for (gint j = 0; j < 8; j += 2)
+            lyr_a->adjustment_layer->in_out_gamma[i][j / 2] =
+              in_out[i][j + 1];
+
+          lyr_a->adjustment_layer->in_out_gamma[i][4] =
+            GUINT16_FROM_BE (gamma[i]);
+        }
+    }
+  else if (memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0)
     {
       guchar brightness[2];
       guchar contrast[2];
@@ -559,16 +593,16 @@ load_resource_ladj (const PSDlayerres  *res_a,
         }
 
       for (gint i = 0; i < 6; i += 2)
-        lyr_a->adjustment_layer->shadows[(i / 2)] =
-          convert_to_real_number (data, i);
+        {
+          lyr_a->adjustment_layer->shadows[(i / 2)] =
+            convert_to_real_number (data, i);
 
-      for (gint i = 0; i < 6; i += 2)
-        lyr_a->adjustment_layer->midtones[(i / 2)] =
-          convert_to_real_number (data, (i + 6));
+          lyr_a->adjustment_layer->midtones[(i / 2)] =
+            convert_to_real_number (data, (i + 6));
 
-      for (gint i = 0; i < 6; i += 2)
-        lyr_a->adjustment_layer->highlights[(i / 2)] =
-          convert_to_real_number (data, (i + 12));
+          lyr_a->adjustment_layer->highlights[(i / 2)] =
+            convert_to_real_number (data, (i + 12));
+        }
 
       lyr_a->adjustment_layer->preserve_luminosity = preserve_luminosity;
     }
