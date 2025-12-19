@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-27 12:06+0000\n"
-"PO-Revision-Date: 2025-09-27 17:23+0200\n"
+"POT-Creation-Date: 2025-11-23 21:22+0000\n"
+"PO-Revision-Date: 2025-11-24 18:38+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -83,23 +83,23 @@ msgstr "Skriv en separat CSS-fil"
 msgid "Choose File"
 msgstr "Vælg fil"
 
-#: plug-ins/python/file-openraster.py:480
-#: plug-ins/python/file-openraster.py:481
+#: plug-ins/python/file-openraster.py:504
+#: plug-ins/python/file-openraster.py:505
 msgid "export an OpenRaster (.ora) file"
 msgstr "eksportér en OpenRaster-fil (.ora)"
 
-#: plug-ins/python/file-openraster.py:483
-#: plug-ins/python/file-openraster.py:489
+#: plug-ins/python/file-openraster.py:507
+#: plug-ins/python/file-openraster.py:513
 msgid "OpenRaster"
 msgstr "OpenRaster"
 
-#: plug-ins/python/file-openraster.py:490
-#: plug-ins/python/file-openraster.py:491
+#: plug-ins/python/file-openraster.py:514
+#: plug-ins/python/file-openraster.py:515
 msgid "load an OpenRaster (.ora) file"
 msgstr "indlæs en OpenRaster-fil (.ora)"
 
-#: plug-ins/python/file-openraster.py:500
-#: plug-ins/python/file-openraster.py:501
+#: plug-ins/python/file-openraster.py:524
+#: plug-ins/python/file-openraster.py:525
 msgid "loads a thumbnail from an OpenRaster (.ora) file"
 msgstr "indlæser et miniaturebillede fra en OpenRaster-fil (.ora)"
 
@@ -161,6 +161,7 @@ msgid "Save Gradient as CSS..."
 msgstr "Gem farveovergang som CSS …"
 
 #: plug-ins/python/gradients-save-as-css.py:140
+#: plug-ins/python/palette-export-as-kpl.py:176
 #: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
 #: plug-ins/python/palette-to-gradient.py:145
 #: plug-ins/python/python-console/python-console.py:323
@@ -168,6 +169,7 @@ msgid "Run mode"
 msgstr "Kørselstilstand"
 
 #: plug-ins/python/gradients-save-as-css.py:141
+#: plug-ins/python/palette-export-as-kpl.py:177
 #: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
 #: plug-ins/python/palette-to-gradient.py:146
 #: plug-ins/python/python-console/python-console.py:324
@@ -199,13 +201,13 @@ msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Eksporterer billedhistogrammet til en tekstfil (CSV)"
 
 #: plug-ins/python/histogram-export.py:216
-msgid "_Export histogram..."
+msgid "_Export Histogram..."
 msgstr "_Eksportér histogram …"
 
 #. TODO: GFile props still don't have labels + only load existing files
 #. (here we likely want to create a new file).
 #: plug-ins/python/histogram-export.py:224
-msgid "Histogram File"
+msgid "Histogram file"
 msgstr "Histogramfil"
 
 #: plug-ins/python/histogram-export.py:225
@@ -213,23 +215,23 @@ msgid "Histogram export file"
 msgstr "Eksportfil til histogram"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "_Bucket Size"
+msgid "_Bucket size"
 msgstr "_Spandstørrelse"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "Bucket Size"
+msgid "Bucket size"
 msgstr "Spandstørrelse"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample _Average"
+msgid "Sample _average"
 msgstr "_Prøvegennemsnit"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample Average"
+msgid "Sample average"
 msgstr "Prøvegennemsnit"
 
 #: plug-ins/python/histogram-export.py:232
-msgid "Pixel Count"
+msgid "Pixel count"
 msgstr "Antal pixels"
 
 #: plug-ins/python/histogram-export.py:233
@@ -241,12 +243,54 @@ msgid "Percent"
 msgstr "Procent"
 
 #: plug-ins/python/histogram-export.py:235
-msgid "Output _format"
+msgid "Output _Format"
 msgstr "O_utputformat"
 
 #: plug-ins/python/histogram-export.py:235
 msgid "Output format"
 msgstr "Outputformat"
+
+#: plug-ins/python/palette-export-as-kpl.py:55
+msgid "Options"
+msgstr "Indstillinger"
+
+#: plug-ins/python/palette-export-as-kpl.py:60
+msgid "_Export"
+msgstr "_Eksportér"
+
+#: plug-ins/python/palette-export-as-kpl.py:167
+#: plug-ins/python/palette-export-as-kpl.py:168
+msgid "Export palette as Krita .kpl"
+msgstr "Eksportér palet som Krita .kpl"
+
+#: plug-ins/python/palette-export-as-kpl.py:170
+msgid "_Krita palette..."
+msgstr "_Krita-palet …"
+
+#: plug-ins/python/palette-export-as-kpl.py:180
+msgid "_Palette to export"
+msgstr "_Palet der skal eksporteres"
+
+# NB den her har jeg ikke kunnet finde i head og plugins (hvilket undrer mig lidt. Der var en, men den var uoversat)
+#: plug-ins/python/palette-export-as-kpl.py:184
+msgid "_File (.kpl)"
+msgstr "_Fil (.kpl)"
+
+#: plug-ins/python/palette-export-as-kpl.py:187
+msgid "Commen_t"
+msgstr "Ko_mmentar"
+
+#: plug-ins/python/palette-export-as-kpl.py:188
+msgid "Optional comment"
+msgstr "Valgfri kommentar"
+
+#: plug-ins/python/palette-export-as-kpl.py:191
+msgid "Re_ad only"
+msgstr "Skrive_beskyttet"
+
+#: plug-ins/python/palette-export-as-kpl.py:192
+msgid "The palette will be locked on import"
+msgstr "Paletten vil blive låst ved import"
 
 #: plug-ins/python/palette-offset.py:48
 msgid "_Offset Palette..."
@@ -656,8 +700,8 @@ msgstr "Epitrokoide"
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
-msgid "Curve Type"
+#: plug-ins/python/spyro-plus.py:1487
+msgid "Curve type"
 msgstr "Kurvetype"
 
 #: plug-ins/python/spyro-plus.py:1488
@@ -719,7 +763,7 @@ msgstr ""
 "er proportional med antallet af tænder."
 
 #: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
-msgid "Fixed Gear Teeth"
+msgid "Fixed gear teeth"
 msgstr "Tænder i fastlåst tandhjul"
 
 #: plug-ins/python/spyro-plus.py:1558
@@ -731,7 +775,7 @@ msgstr ""
 "er proportional med antallet af tænder."
 
 #: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
-msgid "Moving Gear Teeth"
+msgid "Moving gear teeth"
 msgstr "Tænder i roterende tandhjul"
 
 #: plug-ins/python/spyro-plus.py:1566
@@ -747,7 +791,7 @@ msgstr ""
 "hullet er i tandhjulets kant."
 
 #: plug-ins/python/spyro-plus.py:1588
-msgid "Hole Number"
+msgid "Hole number"
 msgstr "Hulnummer"
 
 #: plug-ins/python/spyro-plus.py:1589
@@ -760,7 +804,7 @@ msgstr ""
 
 # Flower er overflødigt, da petals er en del af blomsten
 #: plug-ins/python/spyro-plus.py:1600
-msgid "Flower Petals"
+msgid "Flower petals"
 msgstr "Kronblade"
 
 #: plug-ins/python/spyro-plus.py:1601
@@ -768,7 +812,7 @@ msgid "The number of petals in the pattern."
 msgstr "Antal kronblade i mønsteret."
 
 #: plug-ins/python/spyro-plus.py:1606
-msgid "Petal Skip"
+msgid "Petal skip"
 msgstr "Overspring kronblade"
 
 #: plug-ins/python/spyro-plus.py:1607
@@ -776,7 +820,7 @@ msgid "The number of petals to advance for drawing the next petal."
 msgstr "Antal kronblade der skal gås frem for at tegne det næste kronblad."
 
 #: plug-ins/python/spyro-plus.py:1612
-msgid "Hole Radius(%)"
+msgid "Hole radius(%)"
 msgstr "Hulradius (%)"
 
 #: plug-ins/python/spyro-plus.py:1613
@@ -957,6 +1001,10 @@ msgstr ""
 msgid "Spyrogimp..."
 msgstr "Spyrogimp …"
 
+#: plug-ins/python/spyro-plus.py:2267
+msgid "Curve Type"
+msgstr "Kurvetype"
+
 #: plug-ins/python/spyro-plus.py:2271
 msgid "rack"
 msgstr "tandstang"
@@ -985,7 +1033,7 @@ msgstr ""
 "Omform det fastlåste tandhjul (mellem 0 og 1). Bruges kun af nogle former."
 
 #: plug-ins/python/spyro-plus.py:2285
-msgid "Fi_xed Gear Teeth"
+msgid "Fi_xed gear teeth"
 msgstr "T_ænder i fastlåst tandhjul"
 
 #: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
@@ -993,11 +1041,11 @@ msgid "Number of teeth for fixed gear."
 msgstr "Antal tænder i fastlåst tandhjul."
 
 #: plug-ins/python/spyro-plus.py:2288
-msgid "Mo_ving Gear Teeth"
+msgid "Mo_ving gear teeth"
 msgstr "_Tænder i roterende tandhjul"
 
 #: plug-ins/python/spyro-plus.py:2291
-msgid "_Hole Radius (%)"
+msgid "_Hole radius (%)"
 msgstr "_Hulradius (%)"
 
 #: plug-ins/python/spyro-plus.py:2292
@@ -1039,10 +1087,6 @@ msgid ""
 msgstr ""
 "Om der skal anvendes en lang farveovergang for at matche mønsterets længde. "
 "Gælder kun for nogle af værktøjerne."
-
-# NB den her har jeg ikke kunnet finde i head og plugins (hvilket undrer mig lidt. Der var en, men den var uoversat)
-#~ msgid "_File..."
-#~ msgstr "_File …"
 
 #~ msgid "Choose CSS file..."
 #~ msgstr "Vælg CSS-fil …"
