@@ -695,6 +695,10 @@ typedef struct
 
   gdouble  in_out_gamma[4][5];  /* Levels */
 
+  gboolean is_colorize;         /* Hue-Saturation */
+  gfloat   colorization[3];
+  gfloat   hsl[7][3];
+
 } PSDAdjustmentLayer;
 
 /* Partially or Unsupported Features */

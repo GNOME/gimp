@@ -3056,6 +3056,62 @@ add_adjustment_layer (GimpLayer *layer,
                     NULL);
       gimp_drawable_filter_update (filter);
     }
+  else if (memcmp (ladj->type, PSD_LADJ_HUE, 4) == 0 ||
+           memcmp (ladj->type, PSD_LADJ_HUE2, 4) == 0)
+    {
+      GeglColor *color = gegl_color_new ("white");
+
+      /* The difference between old and new Hue-Saturation settings
+       * is the denominator of the HSL values */
+      if (memcmp (ladj->type, PSD_LADJ_HUE2, 4) == 0)
+        {
+          ladj->colorization[0] /= 180;
+          ladj->colorization[1] /= 100;
+          ladj->colorization[2] /= 100;
+
+          ladj->hsl[0][0] /= 180;
+          ladj->hsl[0][1] /= 100;
+          ladj->hsl[0][2] /= 100;
+        }
+      else
+        {
+          for (gint i = 0; i < 3; i++)
+            {
+              ladj->colorization[i] /= 100;
+              ladj->hsl[0][i] /= 100;
+            }
+          ladj->colorization[2] = (ladj->colorization[2] + 1) / 2;
+        }
+
+      if (ladj->is_colorize)
+        {
+          filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                          "gimp:color-balance",
+                                          NULL,
+                                          GIMP_LAYER_MODE_REPLACE,
+                                          1.0,
+                                          "hue",        ladj->colorization[0],
+                                          "saturation", ladj->colorization[1],
+                                          "lightness",  ladj->colorization[2],
+                                          "color",      color,
+                                          NULL);
+        }
+      else
+        {
+          filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                          "gimp:hue-saturation",
+                                          NULL,
+                                          GIMP_LAYER_MODE_REPLACE,
+                                          1.0,
+                                          "range",      GIMP_HUE_RANGE_ALL,
+                                          "hue",        ladj->hsl[0][0],
+                                          "saturation", ladj->hsl[0][1],
+                                          "lightness",  ladj->hsl[0][2],
+                                          NULL);
+        }
+
+      g_clear_object (&color);
+    }
   else if (memcmp (ladj->type, PSD_LADJ_MIXER, 4) == 0)
     {
       gfloat rgb_gain[9] = { 0 };
