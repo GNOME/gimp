@@ -322,14 +322,12 @@ load_layer_resource (PSDlayerres   *res_a,
     }
 
   /* Process layer resource blocks */
-  if (memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_BLACK_WHITE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_SELECTIVE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_GRAD_MAP, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_PHOTO_FILT, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_EXPOSURE, 4) == 0)
+  if (memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0       ||
+      memcmp (res_a->key, PSD_LADJ_BLACK_WHITE, 4) == 0 ||
+      memcmp (res_a->key, PSD_LADJ_SELECTIVE, 4) == 0   ||
+      memcmp (res_a->key, PSD_LADJ_GRAD_MAP, 4) == 0    ||
+      memcmp (res_a->key, PSD_LADJ_PHOTO_FILT, 4) == 0  ||
+      memcmp (res_a->key, PSD_LADJ_EXPOSURE, 4) == 0)
     {
       if (lyr_a)
         {
@@ -342,12 +340,14 @@ load_layer_resource (PSDlayerres   *res_a,
 
   /* TODO: Implement all adjustment layers */
   else if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0      ||
+           memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0 ||
+           memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0    ||
+           memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0        ||
+           memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0       ||
            memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0      ||
            memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0     ||
            memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0  ||
-           memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0  ||
-           memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0 ||
-           memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0)
+           memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0)
     {
       load_resource_ladj (res_a, lyr_a, input, error);
     }
@@ -605,6 +605,44 @@ load_resource_ladj (const PSDlayerres  *res_a,
         }
 
       lyr_a->adjustment_layer->preserve_luminosity = preserve_luminosity;
+    }
+  else if (memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0 ||
+           memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0)
+    {
+      guchar padding;
+      guchar hsl[12];
+      guchar data[84];
+
+      lyr_a->adjustment_layer->type = g_malloc (4);
+      memcpy (lyr_a->adjustment_layer->type, res_a->key, 4);
+
+      if (psd_read (input, &lyr_a->adjustment_layer->version, 2, error) < 2     ||
+          psd_read (input, &lyr_a->adjustment_layer->is_colorize, 1, error) < 1 ||
+          psd_read (input, &padding, 1, error) < 1                              ||
+          psd_read (input, hsl, 12, error) < 12                                 ||
+          psd_read (input, data, 84, error) < 84)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      for (gint i = 0; i < 6; i += 2)
+        {
+          lyr_a->adjustment_layer->colorization[i / 2] =
+            convert_to_real_number (hsl, i);
+
+          lyr_a->adjustment_layer->hsl[0][i / 2] =
+            convert_to_real_number (hsl, i + 6);
+        }
+
+      for (gint i = 1; i < 7; i++)
+        {
+          gint base = ((i - 1) * 14);
+
+          for (gint j = 0; j < 6; j += 2)
+            lyr_a->adjustment_layer->hsl[i][j / 2] =
+              convert_to_real_number (data, base + j);
+        }
     }
   else if (memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0)
     {
