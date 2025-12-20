@@ -2171,11 +2171,12 @@ read_layer_block (FILE      *f,
                 }
               else
                 {
-                  if (channel_type > PSP_CHANNEL_BLUE)
+                  if ((ia->base_type == GIMP_RGB && channel_type > PSP_CHANNEL_BLUE) ||
+                      (ia->base_type != GIMP_RGB && channel_type >= PSP_CHANNEL_RED))
                     {
                       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                  _("Invalid channel type %d in channel information chunk"),
-                                  channel_type);
+                                   _("Invalid channel type %d in channel information chunk"),
+                                   channel_type);
                       return NULL;
                     }
 
