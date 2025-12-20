@@ -1613,9 +1613,14 @@ read_channel_data (FILE        *f,
                 {
                   guchar *p, *q;
 
-                  fread (buf, width, 1, f);
+                  if (fread (buf, 1, width, f) != width)
+                    {
+                      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                   _("Error reading data. Most likely unexpected end of file."));
+                      return -1;
+                    }
                   /* Contrary to what the PSP specification seems to suggest
-                    scanlines are not stored on a 4-byte boundary. */
+                     scanlines are not stored on a 4-byte boundary. */
                   p = buf;
                   q = pixels[y] + offset;
                   for (i = 0; i < width; i++)
@@ -1631,9 +1636,14 @@ read_channel_data (FILE        *f,
                 {
                   guint16 *p, *q;
 
-                  fread (buf, width * ia->bytes_per_sample, 1, f);
+                  if (fread (buf, ia->bytes_per_sample, width, f) != width)
+                    {
+                      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                   _("Error reading data. Most likely unexpected end of file."));
+                      return -1;
+                    }
                   /* Contrary to what the PSP specification seems to suggest
-                    scanlines are not stored on a 4-byte boundary. */
+                     scanlines are not stored on a 4-byte boundary. */
                   p = (guint16 *) buf;
                   q = (guint16 *) (pixels[y] + offset);
                   for (i = 0; i < width; i++)
