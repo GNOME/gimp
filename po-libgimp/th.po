@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp gimp-3-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-12-05 06:12+0000\n"
-"PO-Revision-Date: 2025-12-07 21:37+0700\n"
+"PO-Revision-Date: 2025-12-14 11:46+0700\n"
 "Last-Translator: \n"
 "Language-Team: Thai <th@li.org>\n"
 "Language: th\n"
@@ -31,8 +31,7 @@ msgstr "เรียกดู..."
 msgid "%s plug-in can't handle layers"
 msgstr "ปลั๊กอิน %s ไม่สามารถจัดการเลเยอร์ได้"
 
-#: libgimp/gimpexportoptions.c:348 libgimp/gimpexportoptions.c:357
-#: libgimp/gimpexportoptions.c:366 libgimp/gimpexportoptions.c:384
+#: libgimp/gimpexportoptions.c:348 libgimp/gimpexportoptions.c:357 libgimp/gimpexportoptions.c:366 libgimp/gimpexportoptions.c:384
 msgid "Merge Visible Layers"
 msgstr "รวมเลเยอร์ที่มองเห็น"
 
@@ -50,8 +49,7 @@ msgstr "ปลั๊กอิน %s สามารถจัดการเล�
 msgid "Save as Animation"
 msgstr "บันทึกเป็นภาพเคลื่อนไหว"
 
-#: libgimp/gimpexportoptions.c:375 libgimp/gimpexportoptions.c:384
-#: libgimp/gimpexportoptions.c:393 libgimp/gimpexportoptions.c:411
+#: libgimp/gimpexportoptions.c:375 libgimp/gimpexportoptions.c:384 libgimp/gimpexportoptions.c:393 libgimp/gimpexportoptions.c:411
 msgid "Flatten Image"
 msgstr "ยุบรวมภาพ"
 
@@ -88,8 +86,7 @@ msgstr "นำมาสก์ของเลเยอร์ไปใช้"
 msgid "%s plug-in can only handle RGB images"
 msgstr "ปลั๊กอิน %s สามารถจัดการได้เฉพาะภาพ RGB เท่านั้น"
 
-#: libgimp/gimpexportoptions.c:429 libgimp/gimpexportoptions.c:467
-#: libgimp/gimpexportoptions.c:476
+#: libgimp/gimpexportoptions.c:429 libgimp/gimpexportoptions.c:467 libgimp/gimpexportoptions.c:476
 msgid "Convert to RGB"
 msgstr "แปลงเป็น RGB"
 
@@ -98,8 +95,7 @@ msgstr "แปลงเป็น RGB"
 msgid "%s plug-in can only handle grayscale images"
 msgstr "ปลั๊กอิน %s สามารถจัดการได้เฉพาะภาพเฉดเทาเท่านั้น"
 
-#: libgimp/gimpexportoptions.c:438 libgimp/gimpexportoptions.c:467
-#: libgimp/gimpexportoptions.c:488
+#: libgimp/gimpexportoptions.c:438 libgimp/gimpexportoptions.c:467 libgimp/gimpexportoptions.c:488
 msgid "Convert to Grayscale"
 msgstr "แปลงเป็นเฉดเทา"
 
@@ -108,8 +104,7 @@ msgstr "แปลงเป็นเฉดเทา"
 msgid "%s plug-in can only handle indexed images"
 msgstr "ปลั๊กอิน %s สามารถจัดการได้เฉพาะภาพดัชนีสีเท่านั้น"
 
-#: libgimp/gimpexportoptions.c:447 libgimp/gimpexportoptions.c:476
-#: libgimp/gimpexportoptions.c:486
+#: libgimp/gimpexportoptions.c:447 libgimp/gimpexportoptions.c:476 libgimp/gimpexportoptions.c:486
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -251,11 +246,8 @@ msgstr "GIMP"
 
 #: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:449
 #, c-format
-msgid ""
-"This file loading plug-in returned SUCCESS as a status without an image. This is a bug in "
-"the plug-in code. Contact the plug-in developer."
-msgstr ""
-"ปลั๊กอินสำหรับโหลดไฟล์นี้คืนค่า SUCCESS เป็นสถานะโดยไม่มีภาพ นี่เป็นบั๊กในโค้ดของปลั๊กอิน กรุณาติดต่อผู้พัฒนาปลั๊กอิน"
+msgid "This file loading plug-in returned SUCCESS as a status without an image. This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr "ปลั๊กอินสำหรับโหลดไฟล์นี้คืนค่า SUCCESS เป็นสถานะโดยไม่มีภาพ นี่เป็นบั๊กในโค้ดของปลั๊กอิน กรุณาติดต่อผู้พัฒนาปลั๊กอิน"
 
 #: libgimp/gimpparamspecs-desc.c:68
 msgid "Allowed values:"
@@ -310,8 +302,7 @@ msgid "by type"
 msgstr "ตามชนิด"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:358 libgimp/gimpprocbrowserdialog.c:516
-#: libgimpwidgets/gimpbrowser.c:161
+#: libgimp/gimpprocbrowserdialog.c:358 libgimp/gimpprocbrowserdialog.c:516 libgimpwidgets/gimpbrowser.c:161
 msgid "No matches"
 msgstr "ไม่มีรายการตรงกัน"
 
@@ -374,30 +365,22 @@ msgstr "โพรซีเดอร์ '%s' ไม่ได้คืนค่า
 
 #: libgimp/gimpprocedure.c:2367
 #, c-format
-msgid ""
-"Procedure '%s' returned a wrong value type for return value '%s' (#%d). Expected %s, got "
-"%s."
+msgid "Procedure '%s' returned a wrong value type for return value '%s' (#%d). Expected %s, got %s."
 msgstr "โพรซีเดอร์ '%s' คืนค่าชนิดของค่าที่ผิดสำหรับค่าส่งกลับ '%s' (#%d) ต้องการ %s แต่ได้รับ %s"
 
 #: libgimp/gimpprocedure.c:2379
 #, c-format
-msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%d). Expected "
-"%s, got %s."
+msgid "Procedure '%s' has been called with a wrong value type for argument '%s' (#%d). Expected %s, got %s."
 msgstr "โพรซีเดอร์ '%s' ถูกเรียกด้วยชนิดของค่าที่ผิดสำหรับอาร์กิวเมนต์ '%s' (#%d) ต้องการ %s แต่ได้รับ %s"
 
 #: libgimp/gimpprocedure.c:2414
 #, c-format
-msgid ""
-"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value is out of "
-"range."
+msgid "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value is out of range."
 msgstr "โพรซีเดอร์ '%s' คืนค่า '%s' เป็นค่าส่งกลับ '%s' (#%d, ชนิด %s) ค่านี้อยู่นอกช่วง"
 
 #: libgimp/gimpprocedure.c:2428
 #, c-format
-msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %s). This "
-"value is out of range."
+msgid "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %s). This value is out of range."
 msgstr "โพรซีเดอร์ '%s' ถูกเรียกด้วยค่า '%s' สำหรับอาร์กิวเมนต์ '%s' (#%d, ชนิด %s) ค่านี้อยู่นอกช่วง"
 
 #: libgimp/gimpprocedure.c:2472
@@ -410,8 +393,7 @@ msgstr "โพรซีเดอร์ '%s' คืนค่าสตริง UT
 msgid "Procedure '%s' has been called with an invalid UTF-8 string for argument '%s'."
 msgstr "โพรซีเดอร์ '%s' ถูกเรียกด้วยสตริง UTF-8 ที่ไม่ถูกต้องสำหรับอาร์กิวเมนต์ '%s'"
 
-#: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
+#: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613 libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "เ_ปิด"
 
@@ -419,11 +401,8 @@ msgstr "เ_ปิด"
 msgid "_Export"
 msgstr "_ส่งออก"
 
-#: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
-#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
-#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:276
-#: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
-#: libgimpwidgets/gimpquerybox.c:481
+#: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617 libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713 libgimpwidgets/gimpfileentry.c:466
+#: libgimpwidgets/gimpquerybox.c:276 libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405 libgimpwidgets/gimpquerybox.c:481
 msgid "_OK"
 msgstr "_ตกลง"
 
@@ -431,11 +410,8 @@ msgstr "_ตกลง"
 msgid "_Reset"
 msgstr "ตั้_งค่าใหม่"
 
-#: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:182 libgimpwidgets/gimpfilechooser.c:714
-#: libgimpwidgets/gimpfileentry.c:465 libgimpwidgets/gimpquerybox.c:276
-#: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
+#: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552 libgimpwidgets/gimpcolorprofilechooserdialog.c:172 libgimpwidgets/gimpcolorprofilechooserdialog.c:182
+#: libgimpwidgets/gimpfilechooser.c:714 libgimpwidgets/gimpfileentry.c:465 libgimpwidgets/gimpquerybox.c:276 libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
 #: libgimpwidgets/gimpquerybox.c:481
 msgid "_Cancel"
 msgstr "_ยกเลิก"
@@ -593,8 +569,7 @@ msgid "Vector image loading plug-in failed: "
 msgstr "ปลั๊กอินสำหรับโหลดภาพเวกเตอร์ล้มเหลว: "
 
 #: libgimp/gimpvectorloadprocedure.c:401
-msgid ""
-"Dimensions cannot be 0 and no native dimensions could be extracted from the vector image."
+msgid "Dimensions cannot be 0 and no native dimensions could be extracted from the vector image."
 msgstr "ค่ามิติต้องไม่เป็น 0 และไม่สามารถดึงค่ามิติแบบเฉพาะระบบจากภาพเวกเตอร์ได้"
 
 #. TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
@@ -1836,23 +1811,15 @@ msgid "The color profile of your (primary) monitor."
 msgstr "โปรไฟล์สีของจอภาพ (หลัก) ของคุณ"
 
 #: libgimpconfig/gimpcolorconfig.c:58
-msgid ""
-"When enabled, GIMP will try to use the display color profile from the windowing system.  "
-"The configured monitor profile is then only used as a fallback."
-msgstr ""
-"เมื่อเปิดใช้งาน GIMP จะพยายามใช้โปรไฟล์สีจอภาพจากระบบจัดการหน้าต่าง "
-"และจะใช้โปรไฟล์จอภาพที่กำหนดค่าไว้เป็นค่าสำรอง"
+msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
+msgstr "เมื่อเปิดใช้งาน GIMP จะพยายามใช้โปรไฟล์สีจอภาพจากระบบจัดการหน้าต่าง และจะใช้โปรไฟล์จอภาพที่กำหนดค่าไว้เป็นค่าสำรอง"
 
 #: libgimpconfig/gimpcolorconfig.c:63
-msgid ""
-"The preferred RGB working space color profile. It will be offered next to the built-in "
-"RGB profile when a color profile can be chosen."
+msgid "The preferred RGB working space color profile. It will be offered next to the built-in RGB profile when a color profile can be chosen."
 msgstr "โปรไฟล์สีพื้นที่ทำงาน RGB ที่ต้องการ ซึ่งจะถูกแนะนำต่อจากโปรไฟล์ RGB ในตัวเมื่อสามารถเลือกโปรไฟล์สีได้"
 
 #: libgimpconfig/gimpcolorconfig.c:67
-msgid ""
-"The preferred grayscale working space color profile. It will be offered next to the built-"
-"in grayscale profile when a color profile can be chosen."
+msgid "The preferred grayscale working space color profile. It will be offered next to the built-in grayscale profile when a color profile can be chosen."
 msgstr "โปรไฟล์สีพื้นที่ทำงานเฉดเทาที่ต้องการ ซึ่งจะถูกแนะนำต่อจากโปรไฟล์เฉดเทาในตัวเมื่อสามารถเลือกโปรไฟล์สีได้"
 
 #: libgimpconfig/gimpcolorconfig.c:71
@@ -1860,20 +1827,16 @@ msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "โปรไฟล์สี CMYK ที่ใช้แปลงระหว่าง RGB กับ CMYK"
 
 #: libgimpconfig/gimpcolorconfig.c:74
-msgid ""
-"The color profile to use for soft-proofing from your image's color space to some other "
-"color space, including soft-proofing to a printer or other output device profile."
-msgstr ""
-"โปรไฟล์สีที่จะใช้สำหรับการซอฟต์ปรู๊ฟจากห้วงสีที่ใช้ในภาพของคุณเป็นห้วงสีอื่น ๆ "
-"รวมทั้งการซอฟต์ปรู๊ฟให้กับเครื่องพิมพ์หรือโปรไฟล์อุปกรณ์เอาต์พุตอื่น ๆ"
+msgid "The color profile to use for soft-proofing from your image's color space to some other color space, including soft-proofing to a printer or other output device profile."
+msgstr "โปรไฟล์สีที่จะใช้สำหรับการซอฟต์ปรู๊ฟจากห้วงสีที่ใช้ในภาพของคุณเป็นห้วงสีอื่น ๆ รวมทั้งการซอฟต์ปรู๊ฟให้กับเครื่องพิมพ์หรือโปรไฟล์อุปกรณ์เอาต์พุตอื่น ๆ"
 
 #: libgimpconfig/gimpcolorconfig.c:79
 msgid ""
-"How colors are converted from your image's color space to your display device. Relative "
-"colorimetric is usually the best choice. Unless you use a LUT monitor profile (most "
-"monitor profiles are matrix), choosing perceptual intent really gives you relative "
-"colorimetric."
+"How colors are converted from your image's color space to your display device. Relative colorimetric is usually the best choice. Unless you use a LUT monitor profile (most monitor "
+"profiles are matrix), choosing perceptual intent really gives you relative colorimetric."
 msgstr ""
+"รูปแบบการแปลงสีจากห้วงสีที่ใช้ในภาพของคุณสำหรับอุปกรณ์แสดงผลของคุณ การวัดสีเทียบเคียงมักจะเป็นตัวเลือกที่ดีที่สุด นอกจากว่าคุณจะใช้โปรไฟล์จอภาพ LUT (โปรไฟล์จอภาพส่วนใหญ่เป็นเมทริกซ์) "
+"การเลือกวิธีเชิงรับรู้จะช่วยให้คุณได้การวัดสีสัมบูรณ์อย่างแท้จริง"
 
 #: libgimpconfig/gimpcolorconfig.c:86
 msgid "Do use black point compensation (unless you know you have a reason not to)."
@@ -1884,28 +1847,24 @@ msgid "When disabled, image display might be of better quality at the cost of sp
 msgstr "เมื่อปิดใช้งาน การแสดงภาพอาจให้คุณภาพที่ดีขึ้นโดยแลกกับความเร็วที่อาจลดลง"
 
 #: libgimpconfig/gimpcolorconfig.c:94
-msgid ""
-"How colors are converted from your image's color space to the output simulation device "
-"(usually your monitor). Try them all and choose what looks the best."
-msgstr ""
+msgid "How colors are converted from your image's color space to the output simulation device (usually your monitor). Try them all and choose what looks the best."
+msgstr "วิธีที่สีถูกแปลงจากห้วงสีในภาพของคุณไปยังอุปกรณ์จำลองเอาต์พุต (โดยปกติจะเป็นจอภาพของคุณ) ให้ลองวิธีเหล่านั้นทั้งหมดและเลือกว่าแบบไหนดูดีที่สุด"
 
 #: libgimpconfig/gimpcolorconfig.c:99
 msgid "Try with and without black point compensation and choose what looks best."
-msgstr ""
+msgstr "ลองแบบมีและไม่มีการชดเชยจุดจำแล้วดูว่าแบบไหนดูดีที่สุด"
 
 #: libgimpconfig/gimpcolorconfig.c:103
 msgid "When disabled, soft-proofing might be of better quality at the cost of speed."
-msgstr ""
+msgstr "เมื่อปิดใช้งาน การซอฟต์ปรู๊ฟอาจให้คุณภาพที่ดีขึ้นโดยแลกกับความเร็วที่อาจลดลง"
 
 #: libgimpconfig/gimpcolorconfig.c:107
-msgid ""
-"When enabled, the soft-proofing will mark colors which can not be represented in the "
-"target color space."
-msgstr ""
+msgid "When enabled, the soft-proofing will mark colors which can not be represented in the target color space."
+msgstr "เมื่อเปิดใช้งาน การซอฟต์ปรู๊ฟจะมีการทำเครื่องหมายสีที่ไม่สามารถแสดงผลได้ในห้วงสีของอุปกรณ์เป้าหมาย"
 
 #: libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
-msgstr ""
+msgstr "สีที่จะใช้สำหรับทำเครื่องหมายสีที่อยู่นอกช่วง"
 
 #: libgimpconfig/gimpcolorconfig.c:114
 msgid "When enabled, set the color scales to display 0...255 instead of percentages"
@@ -1986,116 +1945,112 @@ msgstr "แสดง HSV แทนที่จะเป็น LCH"
 #: libgimpconfig/gimpcolorconfig.c:706 libgimpconfig/gimpcolorconfig.c:895
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
-msgstr ""
+msgstr "โปรไฟล์สี '%s' ไม่ได้มีไว้สำหรับห้วงสี RGB"
 
 #: libgimpconfig/gimpcolorconfig.c:749 libgimpconfig/gimpcolorconfig.c:945
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
-msgstr ""
+msgstr "โปรไฟล์สี '%s' ไม่ได้มีไว้สำหรับห้วงสี GRAY"
 
 #: libgimpconfig/gimpcolorconfig.c:792 libgimpconfig/gimpcolorconfig.c:995
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
-msgstr ""
+msgstr "โปรไฟล์สี '%s' ไม่ได้มีไว้สำหรับห้วงสี CMYK"
 
 #: libgimpconfig/gimpconfig-deserialize.c:124
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr ""
+msgstr "ค่าของโทเคน %s ไม่ถูกต้องในสตริง UTF-8"
 
 #. please don't translate 'yes' and 'no'
 #: libgimpconfig/gimpconfig-deserialize.c:505
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr ""
+msgstr "ต้องการ 'yes' หรือ 'no' สำหรับโทเคนบูลีน %s แต่ได้รับ '%s'"
 
 #: libgimpconfig/gimpconfig-deserialize.c:620
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr ""
+msgstr "ค่า '%s' ไม่ถูกต้องสำหรับโทเคน %s"
 
 #: libgimpconfig/gimpconfig-deserialize.c:635
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr ""
+msgstr "ค่า '%ld' ไม่ถูกต้องสำหรับโทเคน %s"
 
 #: libgimpconfig/gimpconfig-deserialize.c:704
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr ""
+msgstr "ขณะแยกวิเคราะห์โทเคน '%s': %s"
 
-#: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
-#: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
-#: libgimpwidgets/gimpcolorprofilestore.c:756
+#: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677 libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964 libgimpwidgets/gimpcolorprofilestore.c:756
 msgid "fatal parse error"
-msgstr ""
+msgstr "การแยกวิเคราะห์ผิดพลาดร้ายแรง"
 
 #: libgimpconfig/gimpconfig-path.c:513
 msgid "File has no path representation"
-msgstr ""
+msgstr "ไฟล์ไม่มีการแสดงเส้นทาง"
 
 #: libgimpconfig/gimpconfig-path.c:600
 #, c-format
 msgid "Cannot expand ${%s}"
-msgstr ""
+msgstr "ไม่สามารถขยาย ${%s}"
 
 #: libgimpconfig/gimpconfigwriter.c:95 libgimpconfig/gimpconfigwriter.c:727
 #, c-format
 msgid "Error writing to '%s': %s"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะเขียนลงใน '%s': %s"
 
 #: libgimpconfig/gimpconfigwriter.c:153
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
-msgstr ""
+msgstr "ไม่สามารถสร้างไดเรกทอรี '%s' สำหรับ '%s': "
 
 #: libgimpconfig/gimpconfigwriter.c:169
 #, c-format
 msgid "Could not create temporary file for '%s': "
-msgstr ""
+msgstr "ไม่สามารถสร้างไฟล์ชั่วคราวสำหรับ '%s': "
 
 #: libgimpconfig/gimpconfigwriter.c:837
 #, c-format
 msgid "Error writing '%s': %s"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะเขียน '%s': %s"
 
 #: libgimpconfig/gimpscanner.c:424
 msgid "invalid UTF-8 string"
-msgstr ""
+msgstr "สตริง UTF-8 ไม่ถูกต้อง"
 
 #. please don't translate 'yes' and 'no'
 #: libgimpconfig/gimpscanner.c:651
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
-msgstr ""
+msgstr "ต้องการ 'yes' หรือ 'no' สำหรับโทเคนบูลีน แต่ได้รับ '%s'"
 
 #: libgimpconfig/gimpscanner.c:991
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะแยกวิเคราะห์ '%s' ในบรรทัดที่ %d: %s"
 
-#: libgimpmodule/gimpmodule.c:223 libgimpmodule/gimpmodule.c:241
-#: libgimpmodule/gimpmodule.c:515 libgimpmodule/gimpmodule.c:538
-#: libgimpmodule/gimpmodule.c:589
+#: libgimpmodule/gimpmodule.c:223 libgimpmodule/gimpmodule.c:241 libgimpmodule/gimpmodule.c:515 libgimpmodule/gimpmodule.c:538 libgimpmodule/gimpmodule.c:589
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr ""
+msgstr "การโหลดมอดูล '%s' ผิดพลาด: %s"
 
 #: libgimpmodule/gimpmoduledb.c:458
 msgid "Module error"
-msgstr ""
+msgstr "มอดูลผิดพลาด"
 
 #: libgimpmodule/gimpmoduledb.c:459
 msgid "Loaded"
-msgstr ""
+msgstr "โหลดแล้ว"
 
 #: libgimpmodule/gimpmoduledb.c:460
 msgid "Load failed"
-msgstr ""
+msgstr "โหลดไม่สำเร็จ"
 
 #: libgimpmodule/gimpmoduledb.c:461
 msgid "Not loaded"
-msgstr ""
+msgstr "ไม่ได้โหลด"
 
 #: libgimpthumb/gimpthumb-utils.c:153
 #, c-format
@@ -2103,606 +2058,597 @@ msgid ""
 "Cannot determine a valid thumbnails directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
+"ไม่สามารถระบุไดเรกทอรีรูปย่อที่ถูกต้องได้\n"
+"รูปย่อจะถูกเก็บไว้ในโฟลเดอร์สำหรับไฟล์ชั่วคราว (%s) แทน"
 
 #: libgimpthumb/gimpthumb-utils.c:299 libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr ""
+msgstr "สร้างโฟลเดอร์รูปย่อ '%s' ไม่สำเร็จ"
 
 #: libgimpthumb/gimpthumbnail.c:523
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr ""
+msgstr "รูปย่อไม่มีป้ายกำกับ Thumb::URI"
 
 #: libgimpthumb/gimpthumbnail.c:920
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr ""
+msgstr "ไม่สามารถสร้างรูปย่อสำหรับ %s: %s"
 
 #: libgimpwidgets/gimpbrowser.c:134
 msgid "_Search:"
-msgstr ""
+msgstr "_ค้นหา"
 
 #: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
-msgstr ""
+msgstr "สีพื้นห_น้า"
 
 #: libgimpwidgets/gimpcolorbutton.c:376
 msgid "_Background Color"
-msgstr ""
+msgstr "สีพื้นห_ลัง"
 
 #: libgimpwidgets/gimpcolorbutton.c:381
 msgid "Blac_k"
-msgstr ""
+msgstr "สี_ดำ"
 
 #: libgimpwidgets/gimpcolorbutton.c:382
 msgid "_White"
-msgstr ""
+msgstr "สี_ขาว"
 
 #: libgimpwidgets/gimpcolorhexentry.c:125
-msgid ""
-"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color "
-"names."
-msgstr ""
+msgid "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color names."
+msgstr "สัญกรณ์สีฐานสิบหกตามที่ใช้ใน HTML และ CSS รายการนี้ยังยอมรับชื่อสี CSS ด้วย"
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:107
 msgid "All files (*.*)"
-msgstr ""
+msgstr "ไฟล์ทั้งหมด (*.*)"
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:112
 msgid "ICC color profile (*.icc, *.icm)"
-msgstr ""
+msgstr "โปรไฟล์สี ICC (*.icc, *.icm)"
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 msgid "_Save"
-msgstr ""
+msgstr "_บันทึก"
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:347 libgimpwidgets/gimppatheditor.c:288
 msgid "Folder"
-msgstr ""
+msgstr "โฟลเดอร์"
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:352
 msgid "Not a regular file."
-msgstr ""
+msgstr "ไม่ใช่ไฟล์ธรรมดา"
 
 #: libgimpwidgets/gimpcolorprofilestore.c:156
 msgid "Select color profile from disk..."
-msgstr ""
+msgstr "เลือกโปรไฟล์สีจากดิสก์..."
 
 #: libgimpwidgets/gimpcolorprofilestore.c:284
 msgctxt "profile"
 msgid "None"
-msgstr ""
+msgstr "ไม่มี"
 
 #: libgimpwidgets/gimpcolorprofileview.c:168
 msgid "Manufacturer: "
-msgstr ""
+msgstr "ผู้ผลิต: "
 
 #: libgimpwidgets/gimpcolorprofileview.c:180
 msgid "Copyright: "
-msgstr ""
+msgstr "ลิขสิทธิ์: "
 
 #: libgimpwidgets/gimpcolorscales.c:195
 msgid "Scales"
-msgstr ""
+msgstr "สเกล"
 
 #. TODO: in future, this could be a better thought localized
 #. * string, but for now, I had to preserve string freeze.
 #.
-#: libgimpwidgets/gimpcolorscales.c:359 libgimpwidgets/gimpcolorscales.c:691
-#: libgimpwidgets/gimpcolorselect.c:2094 modules/color-selector-water.c:206
-#: modules/color-selector-water.c:242 modules/color-selector-wheel.c:136
-#: modules/color-selector-wheel.c:175
+#: libgimpwidgets/gimpcolorscales.c:359 libgimpwidgets/gimpcolorscales.c:691 libgimpwidgets/gimpcolorselect.c:2094 modules/color-selector-water.c:206 modules/color-selector-water.c:242
+#: modules/color-selector-wheel.c:136 modules/color-selector-wheel.c:175
 msgid "Profile: sRGB"
-msgstr ""
+msgstr "โปรไฟล์: sRGB"
 
 #: libgimpwidgets/gimpcolorscales.c:456
 msgid "0..100"
-msgstr ""
+msgstr "0..100"
 
 #: libgimpwidgets/gimpcolorscales.c:458
 msgid "0..255"
-msgstr ""
+msgstr "0..255"
 
 #: libgimpwidgets/gimpcolorscales.c:479
 msgid "LCh"
-msgstr ""
+msgstr "LCh"
 
 #: libgimpwidgets/gimpcolorscales.c:481
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
-#: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
-#: modules/color-selector-cmyk.c:301 modules/color-selector-cmyk.c:385
-#: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
+#: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113 modules/color-selector-cmyk.c:301 modules/color-selector-cmyk.c:385 modules/color-selector-water.c:258
+#: modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
-msgstr ""
+msgstr "โปรไฟล์: %s"
 
-#: libgimpwidgets/gimpcolorscales.c:722 libgimpwidgets/gimpcolorselect.c:2126
-#: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
+#: libgimpwidgets/gimpcolorscales.c:722 libgimpwidgets/gimpcolorselect.c:2126 modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
 msgid "Profile: <i>unknown</i>"
-msgstr ""
+msgstr "โปรไฟล์: <i>ไม่ทราบ</i>"
 
-#: libgimpwidgets/gimpcolorselect.c:530 libgimpwidgets/gimpcolorselect.c:809
-#: libgimpwidgets/gimpcolorselect.c:826
+#: libgimpwidgets/gimpcolorselect.c:530 libgimpwidgets/gimpcolorselect.c:809 libgimpwidgets/gimpcolorselect.c:826
 msgid "Soft-Proof Profile: <i>unknown</i>"
-msgstr ""
+msgstr "โปรไฟล์ซอฟต์ปรู๊ฟ: <i>ไม่ทราบ</i>"
 
 #: libgimpwidgets/gimpcolorselect.c:793
 msgid "Soft-Proof Profile: sRGB"
-msgstr ""
+msgstr "โปรไฟล์ซอฟต์ปรู๊ฟ: sRGB"
 
 #: libgimpwidgets/gimpcolorselect.c:800
 #, c-format
 msgid "Soft-Proof Profile: %s"
-msgstr ""
+msgstr "โปรไฟล์ซอฟต์ปรู๊ฟ: %s"
 
 #: libgimpwidgets/gimpcolorselection.c:233
 msgid "Current:"
-msgstr ""
+msgstr "ปัจจุบัน:"
 
 #: libgimpwidgets/gimpcolorselection.c:242
 msgid "Old:"
-msgstr ""
+msgstr "เดิม:"
 
 #: libgimpwidgets/gimpcolorselection.c:327
 msgid "HTML _notation:"
-msgstr ""
+msgstr "_สัญกรณ์ HTML:"
 
 #: libgimpwidgets/gimpcontroller.c:114
 msgid "The controller's name"
-msgstr ""
+msgstr "ชื่อของตัวควบคุม"
 
 #: libgimpwidgets/gimpcontroller.c:122
 msgid "The controller's state, as human-readable string"
-msgstr ""
+msgstr "สถานะของตัวควบคุม ในรูปแบบของสตริงที่มนุษย์อ่านได้"
 
 #: libgimpwidgets/gimpdialog.c:196
 msgid "_Help"
-msgstr ""
+msgstr "_วิธีใช้"
 
 #: libgimpwidgets/gimpfileentry.c:166
 msgid "Show file location in the file manager"
-msgstr ""
+msgstr "แสดงตำแหน่งไฟล์ในตัวจัดการไฟล์"
 
 #: libgimpwidgets/gimpfileentry.c:237
 msgid "Open a file selector to browse your folders"
-msgstr ""
+msgstr "เปิดที่เลือกไฟล์เพื่อเรียกดูโฟลเดอร์ของคุณ"
 
 #: libgimpwidgets/gimpfileentry.c:238
 msgid "Open a file selector to browse your files"
-msgstr ""
+msgstr "เปิดที่เลือกไฟล์เพื่อเรียกดูไฟล์ของคุณ"
 
 #: libgimpwidgets/gimpfileentry.c:250
 msgid "Indicates whether or not the folder exists"
-msgstr ""
+msgstr "บ่งบอกว่าโฟลเดอร์มีอยู่หรือไม่"
 
 #: libgimpwidgets/gimpfileentry.c:251
 msgid "Indicates whether or not the file exists"
-msgstr ""
+msgstr "บ่งบอกว่าไฟล์มีอยู่หรือไม่"
 
 #: libgimpwidgets/gimpfileentry.c:427
 #, c-format
 msgid "Can't show file in file manager: %s"
-msgstr ""
+msgstr "ไม่สามารถแสดงไฟล์ในตัวจัดการไฟล์: %s"
 
 #: libgimpwidgets/gimpfileentry.c:454
 msgid "Select Folder"
-msgstr ""
+msgstr "เลือกโฟลเดอร์"
 
 #: libgimpwidgets/gimpfileentry.c:456
 msgid "Select File"
-msgstr ""
+msgstr "เลือกไฟล์"
 
 #: libgimpwidgets/gimphelpui.c:387
 msgid "Press F1 for more help"
-msgstr ""
+msgstr "กด F1 เพื่อขอความช่วยเหลือเพิ่มเติม"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
 #: libgimpwidgets/gimpintstore.c:256
 msgid "(Empty)"
-msgstr ""
+msgstr "(ว่าง)"
 
 #: libgimpwidgets/gimpmemsizeentry.c:242
 msgid "Kibibyte"
-msgstr ""
+msgstr "กิบิไบต์"
 
 #: libgimpwidgets/gimpmemsizeentry.c:243
 msgid "Mebibyte"
-msgstr ""
+msgstr "เมบิไบต์"
 
 #: libgimpwidgets/gimpmemsizeentry.c:244
 msgid "Gibibyte"
-msgstr ""
+msgstr "จิบิไบต์"
 
 #: libgimpwidgets/gimppageselector.c:182
 msgid "N Pages"
-msgstr ""
+msgstr "N หน้า"
 
 #: libgimpwidgets/gimppageselector.c:183
 msgid "The number of pages to open"
-msgstr ""
+msgstr "จำนวนหน้าที่จะเปิด"
 
 #: libgimpwidgets/gimppageselector.c:196
 msgid "Target"
-msgstr ""
+msgstr "เป้าหมาย"
 
 #: libgimpwidgets/gimppageselector.c:197
 msgid "the target to open to"
-msgstr ""
+msgstr "เป้าหมายที่จะใช้ในการเปิด"
 
 #. Count label
 #: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1014
 msgid "Nothing selected"
-msgstr ""
+msgstr "ไม่ได้เลือกสิ่งใด"
 
 #: libgimpwidgets/gimppageselector.c:289
 msgid "Open _pages as"
-msgstr ""
+msgstr "เปิด_หน้าเป็น"
 
 #. Select all button & range entry
 #: libgimpwidgets/gimppageselector.c:301
 msgid "Select _range:"
-msgstr ""
+msgstr "เลือก_ช่วง:"
 
 #: libgimpwidgets/gimppageselector.c:323
 msgid "Select _All"
-msgstr ""
+msgstr "เลือก_ทั้งหมด"
 
 #: libgimpwidgets/gimppageselector.c:444 libgimpwidgets/gimppageselector.c:621
 #, c-format
 msgid "Page %d"
-msgstr ""
+msgstr "หน้า %d"
 
 #: libgimpwidgets/gimppageselector.c:1019
 msgid "One page selected"
-msgstr ""
+msgstr "เลือกอยู่หนึ่งหน้า"
 
 #: libgimpwidgets/gimppageselector.c:1026 libgimpwidgets/gimppageselector.c:1030
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
-msgstr[0] ""
+msgstr[0] "เลือกอยู่ %d หน้า"
 
 #: libgimpwidgets/gimppatheditor.c:199
 msgid "Add a new folder"
-msgstr ""
+msgstr "เพิ่มโฟลเดอร์ใหม่"
 
 #: libgimpwidgets/gimppatheditor.c:217
 msgid "Move the selected folder up"
-msgstr ""
+msgstr "เลื่อนโฟลเดอร์ที่เลือกขึ้น"
 
 #: libgimpwidgets/gimppatheditor.c:235
 msgid "Move the selected folder down"
-msgstr ""
+msgstr "เลื่อนโฟลเดอร์ที่เลือกลง"
 
 #: libgimpwidgets/gimppatheditor.c:253
 msgid "Remove the selected folder from the list"
-msgstr ""
+msgstr "ลบโฟลเดอร์ที่เลือกออกจากรายชื่อ"
 
 #: libgimpwidgets/gimppatheditor.c:279
 msgid "Writable"
-msgstr ""
+msgstr "เขียนได้"
 
 #: libgimpwidgets/gimppickbutton.c:143
-msgid ""
-"Click the eyedropper, then click a color anywhere on your screen to select that color."
-msgstr ""
+msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
+msgstr "คลิกที่หลอดดูดสี แล้วคลิกที่สีบริเวณใดก็ได้บนหน้าจอของคุณเพื่อเลือกสีนั้น"
 
 #. toggle button to (de)activate the instant preview
 #: libgimpwidgets/gimppreview.c:284
 msgid "_Preview"
-msgstr ""
+msgstr "_แสดงตัวอย่าง"
 
 #: libgimpwidgets/gimppreviewarea.c:154
 msgid "Check Size"
-msgstr ""
+msgstr "ขนาดตารางหมากรุก"
 
 #: libgimpwidgets/gimppreviewarea.c:162
 msgid "Check Style"
-msgstr ""
+msgstr "สไตล์ตารางหมากรุก"
 
 #: libgimpwidgets/gimppreviewarea.c:170
 msgid "Custom Checks Color 1"
-msgstr ""
+msgstr "สีตารางหมากรุกกำหนดเอง 1"
 
 #: libgimpwidgets/gimppreviewarea.c:177
 msgid "Custom Checks Color 2"
-msgstr ""
+msgstr "สีตารางหมากรุกกำหนดเอง 2"
 
 #: libgimpwidgets/gimppropwidgets.c:2552
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
-msgstr[0] ""
+msgstr[0] "ช่องป้อนข้อความนี้จำกัดจำนวนอักขระไว้ที่ %d ตัว"
 
 #: libgimpwidgets/gimpwidgets.c:260
-msgid ""
-"Use this value for random number generator seed - this allows you to repeat a given "
-"\"random\" operation"
-msgstr ""
+msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
+msgstr "ใช้ค่านี้สำหรับซีดตัวสร้างหมายเลขสุ่ม ซึ่งให้คุณสามารถวนซ้ำการดำเนินการแบบสุ่มที่ระบุได้"
 
 #: libgimpwidgets/gimpwidgets.c:264
 msgid "_New Seed"
-msgstr ""
+msgstr "_ซีดใหม่"
 
 #: libgimpwidgets/gimpwidgets.c:280
 msgid "Seed random number generator with a generated random number"
-msgstr ""
+msgstr "ตัวสร้างหมายเลขสุ่มซีดที่มีหมายเลขแบบสุ่มที่สร้างขึ้น"
 
 #: libgimpwidgets/gimpwidgets.c:284
 msgid "_Randomize"
-msgstr ""
+msgstr "_สุ่ม"
 
 #: libgimpwidgets/gimpwidgets-private.c:51
 msgctxt "input-mode"
 msgid "Disabled"
-msgstr ""
+msgstr "ปิดใช้"
 
 #: libgimpwidgets/gimpwidgets-private.c:52
 msgctxt "input-mode"
 msgid "Screen"
-msgstr ""
+msgstr "หน้าจอ"
 
 #: libgimpwidgets/gimpwidgets-private.c:53
 msgctxt "input-mode"
 msgid "Window"
-msgstr ""
+msgstr "หน้าต่าง"
 
 #: libgimpwidgets/gimpwidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Square"
-msgstr ""
+msgstr "จัตุรัส"
 
 #: libgimpwidgets/gimpwidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Portrait"
-msgstr ""
+msgstr "แนวตั้ง"
 
 #: libgimpwidgets/gimpwidgetsenums.c:27
 msgctxt "aspect-type"
 msgid "Landscape"
-msgstr ""
+msgstr "แนวนอน"
 
 #: libgimpwidgets/gimpwidgetsenums.c:130
 msgctxt "color-selector-channel"
 msgid "_H"
-msgstr ""
+msgstr "_H"
 
 #: libgimpwidgets/gimpwidgetsenums.c:130
 msgid "HSV Hue"
-msgstr ""
+msgstr "ธาตุสี HSV"
 
 #: libgimpwidgets/gimpwidgetsenums.c:131
 msgctxt "color-selector-channel"
 msgid "_S"
-msgstr ""
+msgstr "_S"
 
 #: libgimpwidgets/gimpwidgetsenums.c:131
 msgid "HSV Saturation"
-msgstr ""
+msgstr "ความอิ่มสี HSV"
 
 #: libgimpwidgets/gimpwidgetsenums.c:132
 msgctxt "color-selector-channel"
 msgid "_V"
-msgstr ""
+msgstr "_V"
 
 #: libgimpwidgets/gimpwidgetsenums.c:132
 msgid "HSV Value"
-msgstr ""
+msgstr "ค่า HSV"
 
 #: libgimpwidgets/gimpwidgetsenums.c:133
 msgctxt "color-selector-channel"
 msgid "_R"
-msgstr ""
+msgstr "_R"
 
 #: libgimpwidgets/gimpwidgetsenums.c:133
 msgid "Red"
-msgstr ""
+msgstr "แดง"
 
 #: libgimpwidgets/gimpwidgetsenums.c:134
 msgctxt "color-selector-channel"
 msgid "_G"
-msgstr ""
+msgstr "_G"
 
 #: libgimpwidgets/gimpwidgetsenums.c:134
 msgid "Green"
-msgstr ""
+msgstr "เขียว"
 
 #: libgimpwidgets/gimpwidgetsenums.c:135
 msgctxt "color-selector-channel"
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: libgimpwidgets/gimpwidgetsenums.c:135
 msgid "Blue"
-msgstr ""
+msgstr "น้ำเงิน"
 
 #: libgimpwidgets/gimpwidgetsenums.c:136
 msgctxt "color-selector-channel"
 msgid "_A"
-msgstr ""
+msgstr "_A"
 
 #: libgimpwidgets/gimpwidgetsenums.c:136
 msgid "Alpha"
-msgstr ""
+msgstr "อัลฟา"
 
 #: libgimpwidgets/gimpwidgetsenums.c:137
 msgctxt "color-selector-channel"
 msgid "_L"
-msgstr ""
+msgstr "_L"
 
 #: libgimpwidgets/gimpwidgetsenums.c:137
 msgid "LCh Lightness"
-msgstr ""
+msgstr "ความสว่าง LCh"
 
 #: libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: libgimpwidgets/gimpwidgetsenums.c:138
 msgid "LCh Chroma"
-msgstr ""
+msgstr "ความสดสี LCh"
 
 #: libgimpwidgets/gimpwidgetsenums.c:139
 msgctxt "color-selector-channel"
 msgid "_h"
-msgstr ""
+msgstr "_h"
 
 #: libgimpwidgets/gimpwidgetsenums.c:139
 msgid "LCh Hue"
-msgstr ""
+msgstr "ธาตุสี LCh"
 
 #: libgimpwidgets/gimpwidgetsenums.c:169
 msgctxt "color-selector-model"
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: libgimpwidgets/gimpwidgetsenums.c:169
 msgid "RGB color model"
-msgstr ""
+msgstr "ตัวแบบสี RGB"
 
 #: libgimpwidgets/gimpwidgetsenums.c:170
 msgctxt "color-selector-model"
 msgid "LCH"
-msgstr ""
+msgstr "LCH"
 
 #: libgimpwidgets/gimpwidgetsenums.c:170
 msgid "CIE LCh color model"
-msgstr ""
+msgstr "ตัวแบบสี CIE LCh"
 
 #: libgimpwidgets/gimpwidgetsenums.c:171
 msgctxt "color-selector-model"
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #: libgimpwidgets/gimpwidgetsenums.c:171
 msgid "HSV color model"
-msgstr ""
+msgstr "ตัวแบบสี HSV"
 
 #: libgimpwidgets/gimpwidgetsenums.c:232
 msgctxt "page-selector-target"
 msgid "Layers"
-msgstr ""
+msgstr "เลเยอร์"
 
 #: libgimpwidgets/gimpwidgetsenums.c:233
 msgctxt "page-selector-target"
 msgid "Images"
-msgstr ""
+msgstr "ภาพ"
 
 #: libgimpwidgets/gimpwidgetsenums.c:294
 msgctxt "zoom-type"
 msgid "Zoom in"
-msgstr ""
+msgstr "ซูมเข้า"
 
 #: libgimpwidgets/gimpwidgetsenums.c:295
 msgctxt "zoom-type"
 msgid "Zoom out"
-msgstr ""
+msgstr "ซูมออก"
 
 #: modules/color-selector-cmyk.c:85
 msgid "CMYK color selector (using color profile)"
-msgstr ""
+msgstr "ที่เลือกสี CMYK (แบบใช้โปรไฟล์สี)"
 
 #: modules/color-selector-cmyk.c:119
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #. Cyan
 #: modules/color-selector-cmyk.c:143
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #. Magenta
 #: modules/color-selector-cmyk.c:145
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
 #. Yellow
 #: modules/color-selector-cmyk.c:147
 msgid "_Y"
-msgstr ""
+msgstr "_Y"
 
 #. Key (Black)
 #: modules/color-selector-cmyk.c:149
 msgid "_K"
-msgstr ""
+msgstr "_K"
 
 #: modules/color-selector-cmyk.c:153
 msgid "Cyan"
-msgstr ""
+msgstr "ฟ้าอมเขียว"
 
 #: modules/color-selector-cmyk.c:154
 msgid "Magenta"
-msgstr ""
+msgstr "แดงอมม่วง"
 
 #: modules/color-selector-cmyk.c:155
 msgid "Yellow"
-msgstr ""
+msgstr "เหลือง"
 
 #: modules/color-selector-cmyk.c:156
 msgid "Black"
-msgstr ""
+msgstr "ดำ"
 
 #: modules/color-selector-cmyk.c:288 modules/color-selector-cmyk.c:367
 msgid "Profile: (none)"
-msgstr ""
+msgstr "โปรไฟล์: (ไม่มี)"
 
 #: modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
-msgstr ""
+msgstr "ที่เลือกสีสไตล์สีน้ำ"
 
 #: modules/color-selector-water.c:130
 msgid "Watercolor"
-msgstr ""
+msgstr "สีน้ำ"
 
 #: modules/color-selector-water.c:197
 msgid "Pressure"
-msgstr ""
+msgstr "แรงดัน"
 
 #: modules/color-selector-wheel.c:76
 msgid "HSV color wheel"
-msgstr ""
+msgstr "วงล้อสี HSV"
 
 #: modules/color-selector-wheel.c:108
 msgid "Wheel"
-msgstr ""
+msgstr "วงล้อสี"
 
 #: modules/controller-dx-dinput.c:154
 msgid "DirectX DirectInput event controller"
-msgstr ""
+msgstr "ตัวควบคุมเหตุการณ์ DirectX DirectInput"
 
-#: modules/controller-dx-dinput.c:194 modules/controller-linux-input.c:218
-#: modules/controller-midi.c:212
+#: modules/controller-dx-dinput.c:194 modules/controller-linux-input.c:218 modules/controller-midi.c:212
 msgid "Device:"
-msgstr ""
+msgstr "อุปกรณ์:"
 
 #: modules/controller-dx-dinput.c:195
 msgid "The device to read DirectInput events from."
-msgstr ""
+msgstr "อุปกรณ์ที่จะใช้ในการอ่านเหตุการณ์ DirectInput"
 
 #: modules/controller-dx-dinput.c:204
 msgid "DirectX DirectInput"
-msgstr ""
+msgstr "DirectX DirectInput"
 
 #: modules/controller-dx-dinput.c:417
 #, c-format
 msgid "Button %d"
-msgstr ""
+msgstr "ปุ่ม %d"
 
 #: modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d Press"
-msgstr ""
+msgstr "กดปุ่ม %d"
 
 #: modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Release"
-msgstr ""
+msgstr "ปล่อยปุ่ม %d"
 
 #: modules/controller-dx-dinput.c:440 modules/controller-linux-input.c:90
 msgid "X Move Left"
@@ -2781,8 +2727,7 @@ msgstr ""
 msgid "DirectInput Events"
 msgstr ""
 
-#: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525
-#: modules/controller-midi.c:505
+#: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525 modules/controller-midi.c:505
 msgid "No device configured"
 msgstr ""
 
@@ -2934,14 +2879,12 @@ msgstr ""
 msgid "Linux Input Events"
 msgstr ""
 
-#: modules/controller-linux-input.c:551 modules/controller-midi.c:454
-#: modules/controller-midi.c:480
+#: modules/controller-linux-input.c:551 modules/controller-midi.c:454 modules/controller-midi.c:480
 #, c-format
 msgid "Reading from %s"
 msgstr ""
 
-#: modules/controller-linux-input.c:569 modules/controller-linux-input.c:623
-#: modules/controller-midi.c:436 modules/controller-midi.c:497 modules/controller-midi.c:568
+#: modules/controller-linux-input.c:569 modules/controller-linux-input.c:623 modules/controller-midi.c:436 modules/controller-midi.c:497 modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
 msgstr ""
@@ -2999,9 +2942,8 @@ msgstr ""
 
 #: modules/display-filter-aces-rrt.c:84
 msgid ""
-"ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color display filter, "
-"using a luminance-only approximation of the ACES RRT, a pre-defined filmic look to be "
-"used before ODT (display or output space ICC profile)"
+"ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color display filter, using a luminance-only approximation of the ACES RRT, a pre-defined filmic look to be used "
+"before ODT (display or output space ICC profile)"
 msgstr ""
 
 #: modules/display-filter-aces-rrt.c:121
