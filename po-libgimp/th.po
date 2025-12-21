@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp gimp-3-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-12-05 06:12+0000\n"
-"PO-Revision-Date: 2025-12-20 11:46+0700\n"
+"PO-Revision-Date: 2025-12-21 21:07+0700\n"
 "Last-Translator: \n"
 "Language-Team: Thai <th@li.org>\n"
 "Language: th\n"
@@ -2841,110 +2841,112 @@ msgstr "แกน X เอียงถอยหลัง"
 
 #: modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
-msgstr "ล้อแนวนอนหมุนย้อนกลับ"
+msgstr "หมุนล้อแนวนอนไปข้างหลัง"
 
 #: modules/controller-linux-input.c:105
 msgid "Horiz. Wheel Turn Forward"
-msgstr "ล้อแนวนอนหมุนขึ้นหน้า"
+msgstr "หมุนล้อแนวนอนไปข้างหน้า"
 
 #: modules/controller-linux-input.c:106
 msgid "Dial Turn Left"
-msgstr "ไดอัล เลี้ยวซ้าย"
+msgstr "หมุนปุ่มหมุนไปทางซ้าย"
 
 #: modules/controller-linux-input.c:107
 msgid "Dial Turn Right"
-msgstr "ไดอัล เลี้ยวขวา"
+msgstr "หมุนปุ่มหมุนไปทางขวา"
 
 #: modules/controller-linux-input.c:108
 msgid "Wheel Turn Left"
-msgstr ""
+msgstr "หมุนล้อไปทางซ้าย"
 
 #: modules/controller-linux-input.c:109
 msgid "Wheel Turn Right"
-msgstr ""
+msgstr "หมุนล้อไปทางขวา"
 
 #: modules/controller-linux-input.c:178
 msgid "Linux input event controller"
-msgstr ""
+msgstr "ตัวควบคุมเหตุการณ์ Linux input"
 
 #: modules/controller-linux-input.c:219
 msgid "The name of the device to read Linux Input events from."
-msgstr ""
+msgstr "ชื่อของอุปกรณ์ที่จะใช้ในการอ่านเหตุการณ์ Linux Input"
 
 #: modules/controller-linux-input.c:230
 msgid "Linux Input"
-msgstr ""
+msgstr "Linux Input"
 
 #: modules/controller-linux-input.c:513
 msgid "Linux Input Events"
-msgstr ""
+msgstr "เหตุการณ์ Linux Input"
 
 #: modules/controller-linux-input.c:551 modules/controller-midi.c:454 modules/controller-midi.c:480
 #, c-format
 msgid "Reading from %s"
-msgstr ""
+msgstr "อ่านจาก %s"
 
 #: modules/controller-linux-input.c:569 modules/controller-linux-input.c:623 modules/controller-midi.c:436 modules/controller-midi.c:497 modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
-msgstr ""
+msgstr "อุปกรณ์ใช้ไม่ได้: %s"
 
 #: modules/controller-linux-input.c:632 modules/controller-midi.c:577
 msgid "End of file"
-msgstr ""
+msgstr "จุดสิ้นสุดของไฟล์"
 
 #: modules/controller-midi.c:164
 msgid "MIDI event controller"
-msgstr ""
+msgstr "ตัวควบคุมเหตุการณ์ MIDI"
 
 #: modules/controller-midi.c:203
 msgid "The name of the device to read MIDI events from."
-msgstr ""
+msgstr "ชื่อของอุปกรณ์ที่จะใช้ในการอ่านเหตุการณ์ MIDI"
 
 #: modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr ""
+msgstr "ป้อน 'alsa' เพื่อใช้ซีเควนเซอร์ ALSA"
 
 #: modules/controller-midi.c:221
 msgid "Channel:"
-msgstr ""
+msgstr "ช่องสัญญาณ:"
 
 #: modules/controller-midi.c:222
 msgid "The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."
-msgstr ""
+msgstr "ช่องสัญญาณ MIDI ที่จะใช้ในการอ่านเหตุการณ์ ตั้งค่าเป็น -1 เพื่ออ่านจากช่องสัญญาณ MIDI ทั้งหมด"
 
 #: modules/controller-midi.c:226
 msgid "MIDI"
-msgstr ""
+msgstr "MIDI"
 
 #: modules/controller-midi.c:355
 #, c-format
 msgid "Note %02x on"
-msgstr ""
+msgstr "โน้ต %02x เปิด"
 
 #: modules/controller-midi.c:358
 #, c-format
 msgid "Note %02x off"
-msgstr ""
+msgstr "โน้ต %02x ปิด"
 
 #: modules/controller-midi.c:361
 #, c-format
 msgid "Controller %03d"
-msgstr ""
+msgstr "ตัวควบคุม %03d"
 
 #: modules/controller-midi.c:408
 msgid "MIDI Events"
-msgstr ""
+msgstr "เหตุการณ์ MIDI"
 
 #: modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
-msgstr ""
+msgstr "ตัวควบคุมอินพุต GIMP MIDI"
 
 #: modules/display-filter-aces-rrt.c:84
 msgid ""
 "ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color display filter, using a luminance-only approximation of the ACES RRT, a pre-defined filmic look to be used "
 "before ODT (display or output space ICC profile)"
 msgstr ""
+"ACES RRT (RRT = Reference Rendering Transform) ฟิลเตอร์แสดงผลเพื่อจำลองสีจาก HDR ให้เป็น SDR ซึ่งใช้การประมาณค่าเฉพาะความส่องสว่างจาก ACES RRT เพื่อสร้างลักษณะภาพคล้ายแผ่นฟิล์มที่กำหนดไว้ล่วงหน้า "
+"สำหรับใช้ก่อนขั้นตอน ODT (โปรไฟล์ ICC สำหรับการแสดงผลหรือพื้นที่เอาต์พุต)"
 
 #: modules/display-filter-aces-rrt.c:121
 msgid "Pre-transform change in stops"
