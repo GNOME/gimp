@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp gimp-3-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-12-05 06:12+0000\n"
-"PO-Revision-Date: 2025-12-21 21:07+0700\n"
+"PO-Revision-Date: 2025-12-21 21:20+0700\n"
 "Last-Translator: \n"
 "Language-Team: Thai <th@li.org>\n"
 "Language: th\n"
@@ -2950,131 +2950,131 @@ msgstr ""
 
 #: modules/display-filter-aces-rrt.c:121
 msgid "Pre-transform change in stops"
-msgstr ""
+msgstr "การเปลี่ยนค่าสต็อปก่อนเข้าสู่การแปลง"
 
 #: modules/display-filter-aces-rrt.c:126
 msgid "Aces RRT"
-msgstr ""
+msgstr "Aces RRT"
 
 #. Translators: "Clip Warning" is the name of a (color) display filter
 #. * that highlights pixels outside of the color space range.
 #. * Shown as a label description.
 #: modules/display-filter-clip-warning.c:125
 msgid "Clip warning color display filter"
-msgstr ""
+msgstr "ฟิลเตอร์แสดงสีเตือนข้อมูลหลุดขอบเขต"
 
 #: modules/display-filter-clip-warning.c:166
 msgid "Show shadows"
-msgstr ""
+msgstr "แสดงส่วนมืด"
 
 #: modules/display-filter-clip-warning.c:167
 msgid "Show warning for pixels with a negative component"
-msgstr ""
+msgstr "แสดงคำเตือนสำหรับพิกเซลที่มีค่าเป็นลบ"
 
 #: modules/display-filter-clip-warning.c:173
 msgid "Shadows color"
-msgstr ""
+msgstr "สีของส่วนมืด"
 
 #: modules/display-filter-clip-warning.c:174
 msgid "Shadows warning color"
-msgstr ""
+msgstr "สีเตือนส่วนมืด"
 
 #: modules/display-filter-clip-warning.c:185
 msgid "Show highlights"
-msgstr ""
+msgstr "แสดงส่วนสว่าง"
 
 #: modules/display-filter-clip-warning.c:186
 msgid "Show warning for pixels with a component greater than one"
-msgstr ""
+msgstr "แสดงคำเตือนสำหรับพิกเซลที่มีค่าเกินหนึ่ง"
 
 #: modules/display-filter-clip-warning.c:194
 msgid "Highlights color"
-msgstr ""
+msgstr "สีของส่วนสว่าง"
 
 #: modules/display-filter-clip-warning.c:195
 msgid "Highlights warning color"
-msgstr ""
+msgstr "สีเตือนส่วนสว่าง"
 
 #: modules/display-filter-clip-warning.c:206
 msgid "Show bogus"
-msgstr ""
+msgstr "แสดงค่าผิดปกติ"
 
 #: modules/display-filter-clip-warning.c:207
 msgid "Show warning for pixels with an infinite or NaN component"
-msgstr ""
+msgstr "แสดงคำเตือนสำหรับพิกเซลที่มีค่าเป็นอนันต์ หรือไม่ใช่ตัวเลข"
 
 #: modules/display-filter-clip-warning.c:215
 msgid "Bogus color"
-msgstr ""
+msgstr "สีของค่าผิดปกติ"
 
 #: modules/display-filter-clip-warning.c:216
 msgid "Bogus warning color"
-msgstr ""
+msgstr "สีเตือนค่าผิดปกติ"
 
 #: modules/display-filter-clip-warning.c:227
 msgid "Include alpha component"
-msgstr ""
+msgstr "รวมค่าอัลฟา"
 
 #: modules/display-filter-clip-warning.c:228
 msgid "Include alpha component in the warning"
-msgstr ""
+msgstr "รวมค่าอัลฟาในคำเตือน"
 
 #: modules/display-filter-clip-warning.c:234
 msgid "Include transparent pixels"
-msgstr ""
+msgstr "รวมพิกเซลโปร่งใส"
 
 #: modules/display-filter-clip-warning.c:235
 msgid "Include fully transparent pixels in the warning"
-msgstr ""
+msgstr "รวมพิกเซลโปร่งใสในคำเตือน"
 
 #: modules/display-filter-clip-warning.c:239
 msgid "Clip Warning"
-msgstr ""
+msgstr "การเตือนข้อมูลหลุดขอบเขต"
 
 #: modules/display-filter-color-blind.c:68
 msgid "Protanopia (insensitivity to red)"
-msgstr ""
+msgstr "ภาวะตาบอดสีแดง"
 
 #: modules/display-filter-color-blind.c:70
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "ภาวะตาบอดสีเขียว"
 
 #: modules/display-filter-color-blind.c:72
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "ภาวะตาบอดสีน้ำเงิน"
 
 #: modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
+msgstr "ฟิลเตอร์จำลองภาวะบกพร่องในการมองเห็นสี (อัลกอริทึม Brettel-Vienot-Mollon)"
 
 #: modules/display-filter-color-blind.c:253
 msgid "Type"
-msgstr ""
+msgstr "ชนิด"
 
 #: modules/display-filter-color-blind.c:254
 msgid "Color vision deficiency type"
-msgstr ""
+msgstr "ชนิดความบกพร่องในการมองเห็นสี"
 
 #: modules/display-filter-color-blind.c:259
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "ภาวะตาบอดสี"
 
 #: modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "ฟิลเตอร์แสดงสีแกมมา"
 
 #: modules/display-filter-gamma.c:123 modules/display-filter-gamma.c:128
 msgid "Gamma"
-msgstr ""
+msgstr "แกมมา"
 
 #: modules/display-filter-high-contrast.c:86
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "ฟิลเตอร์แสดงสีความเปรียบต่างสูง"
 
 #: modules/display-filter-high-contrast.c:123
 msgid "Contrast cycles"
-msgstr ""
+msgstr "รอบความเปรียบต่างสี"
 
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
-msgstr ""
+msgstr "ความเปรียบต่าง"
