@@ -602,7 +602,6 @@ var
   InstallType: String;
   InstallMode: (imNone, imSimple, imCustom, imRebootContinue);
   ConfigOverride: (coUndefined, coOverride, coDontOverride);
-	Force32bitInstall: Boolean;
 
 function WideCharToMultiByte(CodePage: Cardinal; dwFlags: DWORD; lpWideCharStr: String; cchWideCharStr: Integer;
                              lpMultiByteStr: PAnsiChar; cbMultiByte: Integer; lpDefaultChar: Integer;
@@ -647,36 +646,6 @@ end;
 
 
 //0. PRELIMINARY SETUP CODE
-
-//Existing 32-bit
-procedure Check32bitOverride;
-var i: Integer;
-	old: String;
-begin
-	Force32bitInstall := False;
-
-	old := LowerCase(GetPreviousData('32bitMode',''));
-
-	if old = 'true' then //ignore command line if previous install is already present
-		Force32bitInstall := True
-	else if old = 'false' then
-		Force32bitInstall := False
-	else
-		for i := 0 to ParamCount do //not a bug (in script anyway) - ParamCount returns the index of last ParamStr element, not the actual count
-			if ParamStr(i) = '/32' then
-			begin
-				Force32bitInstall := True;
-				break;
-			end;
-
-	DebugMsg('Check32bitOverride',BoolToStr(Force32bitInstall) + '[' + old + ']');
-end;
-
-procedure RegisterPreviousData(PreviousDataKey: Integer);
-begin
-	if Is64BitInstallMode() then
-		SetPreviousData(PreviousDataKey,'32BitMode',BoolToStr(Force32bitInstall));
-end;
 
 //Resume after reboot (if needed)
 function RestartSetupAfterReboot(): Boolean; forward;
@@ -757,14 +726,14 @@ begin
 	    InstallType := 'itDowngrade';
 	end;
 	DebugMsg('CheckInstallType','Installed GIMP {#GIMP_MUTEX_VERSION} is: ' + Installed_AppVersion + ', installer is: {#FULL_GIMP_VERSION}. So Install type is: ' + InstallType);
-	
+
 	//Inno does not support direct downgrade so let's block it to not break installs
-	if (not WizardSilent) and (InstallType = 'itDowngrade') then begin 
+	if (not WizardSilent) and (InstallType = 'itDowngrade') then begin
 	    if SuppressibleMsgBox(FmtMessage(CustomMessage('DowngradeError'), [Installed_AppVersion, '{#FULL_GIMP_VERSION}']), mbCriticalError, MB_OK, IDOK) = IDOK then begin
 			ShellExecAsOriginalUser('','ms-settings:appsfeatures','','',SW_SHOW,ewNoWait,ErrorCode);
 			Abort;
 		end;
-	end else if (WizardSilent) and (InstallType = 'itDowngrade') then begin 
+	end else if (WizardSilent) and (InstallType = 'itDowngrade') then begin
 	    DebugMsg('CheckInstallType',CustomMessage('DowngradeError'));
 		Abort;
 	end;
@@ -776,10 +745,8 @@ var Message,Buttons: TArrayOfString;
 #endif
 begin
 	CheckInstallType;
-	
-	ConfigOverride := coUndefined;
 
-	Check32bitOverride;
+	ConfigOverride := coUndefined;
 
 	Result := RestartSetupAfterReboot(); //resume install after reboot - skip all setting pages, and install directly
 
@@ -1025,12 +992,12 @@ begin
 		end else if InstallType = 'itInstall' then begin
 		    Caption := CustomMessage('Customize');
 		end;
-		   
+
 		OnClick := @CustomizeOnClick;
 	end;
 
 	MeasureLabel.Free;
-	
+
 end;
 
 
@@ -1501,13 +1468,13 @@ end;
 function Check3264(const pWhich: String): Boolean;
 begin
 	if pWhich = '64' then //x64 or arm64
-		Result := Is64BitInstallMode() and (not Force32bitInstall)
+		Result := Is64BitInstallMode()
 	else if pWhich = '32' then
-		Result := (not Is64BitInstallMode()) or Force32bitInstall
+		Result := (not Is64BitInstallMode())
 	else if pWhich = 'x64' then
-		Result := Is64BitInstallMode() and IsX64 and (not Force32bitInstall)
+		Result := Is64BitInstallMode() and IsX64
 	else if pWhich = 'arm64' then
-		Result := Is64BitInstallMode() and IsARM64 and (not Force32bitInstall)
+		Result := Is64BitInstallMode() and IsARM64
 	else
 		RaiseException('Unknown check');
 end;
