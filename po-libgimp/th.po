@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp gimp-3-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-12-05 06:12+0000\n"
-"PO-Revision-Date: 2025-12-14 11:46+0700\n"
+"PO-Revision-Date: 2025-12-20 11:46+0700\n"
 "Last-Translator: \n"
 "Language-Team: Thai <th@li.org>\n"
 "Language: th\n"
@@ -2652,208 +2652,208 @@ msgstr "ปล่อยปุ่ม %d"
 
 #: modules/controller-dx-dinput.c:440 modules/controller-linux-input.c:90
 msgid "X Move Left"
-msgstr ""
+msgstr "X ย้ายไปทางซ้าย"
 
 #: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:91
 msgid "X Move Right"
-msgstr ""
+msgstr "X ย้ายไปทางขวา"
 
 #: modules/controller-dx-dinput.c:449
 msgid "Y Move Away"
-msgstr ""
+msgstr "Y ย้ายออกห่าง"
 
 #: modules/controller-dx-dinput.c:452
 msgid "Y Move Near"
-msgstr ""
+msgstr "Y ย้ายเข้าใกล้"
 
 #: modules/controller-dx-dinput.c:458 modules/controller-linux-input.c:94
 msgid "Z Move Up"
-msgstr ""
+msgstr "Z ย้ายขึ้น"
 
 #: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:95
 msgid "Z Move Down"
-msgstr ""
+msgstr "Z ย้ายลง"
 
 #: modules/controller-dx-dinput.c:467
 msgid "X Axis Tilt Away"
-msgstr ""
+msgstr "แกน X เอียงออกห่าง"
 
 #: modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Near"
-msgstr ""
+msgstr "แกน X เอียงเข้าใกล้"
 
 #: modules/controller-dx-dinput.c:476 modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
-msgstr ""
+msgstr "แกน Y เอียงไปทางขวา"
 
 #: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
-msgstr ""
+msgstr "แกน Y เอียงไปทางซ้าย"
 
 #: modules/controller-dx-dinput.c:485 modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
-msgstr ""
+msgstr "แกน Z หมุนไปทางซ้าย"
 
 #: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
-msgstr ""
+msgstr "แกน Z หมุนไปทางขวา"
 
 #: modules/controller-dx-dinput.c:499
 #, c-format
 msgid "Slider %d Increase"
-msgstr ""
+msgstr "ตัวเลื่อน %d เพิ่มค่า"
 
 #: modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Decrease"
-msgstr ""
+msgstr "ตัวเลื่อน %d ลดค่า"
 
 #: modules/controller-dx-dinput.c:512
 #, c-format
 msgid "POV %d X View"
-msgstr ""
+msgstr "มุมมอง X ของ POV %d"
 
 #: modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d Y View"
-msgstr ""
+msgstr "มุมมอง Y ของ POV %d"
 
 #: modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Return"
-msgstr ""
+msgstr "POV %d ตีกลับ"
 
 #: modules/controller-dx-dinput.c:1079
 msgid "DirectInput Events"
-msgstr ""
+msgstr "เหตุการณ์ DirectInput"
 
 #: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525 modules/controller-midi.c:505
 msgid "No device configured"
-msgstr ""
+msgstr "ไม่ได้กำหนดค่าอุปกรณ์ไว้"
 
 #: modules/controller-dx-dinput.c:1115 modules/controller-linux-input.c:588
 msgid "Device not available"
-msgstr ""
+msgstr "อุปกรณ์ไม่พร้อมใช้งาน"
 
 #: modules/controller-linux-input.c:58
 msgid "Button 0"
-msgstr ""
+msgstr "ปุ่ม 0"
 
 #: modules/controller-linux-input.c:59
 msgid "Button 1"
-msgstr ""
+msgstr "ปุ่ม 1"
 
 #: modules/controller-linux-input.c:60
 msgid "Button 2"
-msgstr ""
+msgstr "ปุ่ม 2"
 
 #: modules/controller-linux-input.c:61
 msgid "Button 3"
-msgstr ""
+msgstr "ปุ่ม 3"
 
 #: modules/controller-linux-input.c:62
 msgid "Button 4"
-msgstr ""
+msgstr "ปุ่ม 4"
 
 #: modules/controller-linux-input.c:63
 msgid "Button 5"
-msgstr ""
+msgstr "ปุ่ม 5"
 
 #: modules/controller-linux-input.c:64
 msgid "Button 6"
-msgstr ""
+msgstr "ปุ่ม 6"
 
 #: modules/controller-linux-input.c:65
 msgid "Button 7"
-msgstr ""
+msgstr "ปุ่ม 7"
 
 #: modules/controller-linux-input.c:66
 msgid "Button 8"
-msgstr ""
+msgstr "ปุ่ม 8"
 
 #: modules/controller-linux-input.c:67
 msgid "Button 9"
-msgstr ""
+msgstr "ปุ่ม 9"
 
 #: modules/controller-linux-input.c:68
 msgid "Button Mouse"
-msgstr ""
+msgstr "ปุ่มเมาส์"
 
 #: modules/controller-linux-input.c:69
 msgid "Button Left"
-msgstr ""
+msgstr "ปุ่มซ้าย"
 
 #: modules/controller-linux-input.c:70
 msgid "Button Right"
-msgstr ""
+msgstr "ปุ่มขวา"
 
 #: modules/controller-linux-input.c:71
 msgid "Button Middle"
-msgstr ""
+msgstr "ปุ่มกลาง"
 
 #: modules/controller-linux-input.c:72
 msgid "Button Side"
-msgstr ""
+msgstr "ปุ่มด้านข้าง"
 
 #: modules/controller-linux-input.c:73
 msgid "Button Extra"
-msgstr ""
+msgstr "ปุ่มเพิ่มพิเศษ"
 
 #: modules/controller-linux-input.c:74
 msgid "Button Forward"
-msgstr ""
+msgstr "ปุ่มเดินหน้า"
 
 #: modules/controller-linux-input.c:75
 msgid "Button Back"
-msgstr ""
+msgstr "ปุ่มย้อนกลับ"
 
 #: modules/controller-linux-input.c:76
 msgid "Button Task"
-msgstr ""
+msgstr "ปุ่มงาน"
 
 #: modules/controller-linux-input.c:78
 msgid "Button Wheel"
-msgstr ""
+msgstr "ปุ่มล้อ"
 
 #: modules/controller-linux-input.c:81
 msgid "Button Gear Down"
-msgstr ""
+msgstr "ปุ่มเกียร์ลง"
 
 #: modules/controller-linux-input.c:84
 msgid "Button Gear Up"
-msgstr ""
+msgstr "ปุ่มเกียร์ขึ้น"
 
 #: modules/controller-linux-input.c:92
 msgid "Y Move Forward"
-msgstr ""
+msgstr "Y ย้ายขึ้นหน้า"
 
 #: modules/controller-linux-input.c:93
 msgid "Y Move Back"
-msgstr ""
+msgstr "Y ย้ายถอยหลัง"
 
 #: modules/controller-linux-input.c:97
 msgid "X Axis Tilt Forward"
-msgstr ""
+msgstr "แกน X เอียงขึ้นหน้า"
 
 #: modules/controller-linux-input.c:98
 msgid "X Axis Tilt Back"
-msgstr ""
+msgstr "แกน X เอียงถอยหลัง"
 
 #: modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
-msgstr ""
+msgstr "ล้อแนวนอนหมุนย้อนกลับ"
 
 #: modules/controller-linux-input.c:105
 msgid "Horiz. Wheel Turn Forward"
-msgstr ""
+msgstr "ล้อแนวนอนหมุนขึ้นหน้า"
 
 #: modules/controller-linux-input.c:106
 msgid "Dial Turn Left"
-msgstr ""
+msgstr "ไดอัล เลี้ยวซ้าย"
 
 #: modules/controller-linux-input.c:107
 msgid "Dial Turn Right"
-msgstr ""
+msgstr "ไดอัล เลี้ยวขวา"
 
 #: modules/controller-linux-input.c:108
 msgid "Wheel Turn Left"
