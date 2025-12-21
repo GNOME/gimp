@@ -869,15 +869,13 @@ procedure PrepareWelcomePage();
 begin
 	if not WizardSilent then
 	begin
+		//Inno does not support "repairing" a lost install so let's show Customize button to allow to repair installs
+		//Inno does not support changing components at reinstall or update so let's hide Customize to not break installs
 		WizardForm.NextButton.Visible := False;
-
 		if not (InstallType = 'itRepair') then begin
 		    btnInstall.Visible := True;
 		end;
 		btnInstall.TabOrder := 1;
-
-		//Inno does not support "repairing" a lost install so let's show Customize button to allow to repair installs
-		//Inno does not support changing components at reinstall or update so let's hide Customize to not break installs
 		if (InstallType = 'itRepair') or (InstallType = 'itInstall') then begin
 		    btnCustomize.Visible := True;
 		end;
@@ -885,7 +883,6 @@ begin
 		WizardForm.Bevel.Visible := False;
 		WizardForm.WelcomeLabel1.Visible := False;
 		WizardForm.WelcomeLabel2.Visible := False;
-
 		WelcomeBitmapBottom.Visible := True;
 	end;
 end;
@@ -934,6 +931,7 @@ begin
 
 	CheckInstallType;
 
+  //Install-Reinstall-Update button
 	btnInstall := TNewButton.Create(WizardForm);
 	with btnInstall do
 	begin
@@ -942,6 +940,8 @@ begin
 		Height := WizardForm.NextButton.Height;
 		Left := WizardForm.NextButton.Left;
 		Top := WizardForm.NextButton.Top;
+		Default := True;
+		Visible := False;
 		if InstallType = 'itInstall' then begin
 		    Caption := CustomMessage('Install');
 	    end else if InstallType = 'itReinstall' then begin
@@ -949,13 +949,11 @@ begin
 	    end else if InstallType = 'itUpdate' then begin
 		    Caption := CustomMessage('Update');
 		end;
-		Default := True;
-		Visible := False;
 
 		OnClick := @InstallOnClick;
 	end;
 
-	//used to measure text width
+	//Customize-Repair button
 	MeasureLabel := TNewStaticText.Create(WizardForm);
 	with MeasureLabel do
 	begin
@@ -969,22 +967,18 @@ begin
 		    Caption := CustomMessage('Customize');
 		end;
 	end;
-
 	btnCustomize := TNewButton.Create(WizardForm);
 	with btnCustomize do
 	begin
 		Parent := WizardForm;
 		Width := WizardForm.NextButton.Width;
-
 		if Width < (MeasureLabel.Width + ScaleX(8)) then
 			Width := MeasureLabel.Width + ScaleX(8);
-
 		Height := WizardForm.NextButton.Height;
 		Left := WizardForm.ClientWidth - (WizardForm.CancelButton.Left + WizardForm.CancelButton.Width);
 		//Left := WizardForm.BackButton.Left;
 		Top := WizardForm.NextButton.Top;
 		Visible := False;
-
 		if InstallType = 'itRepair' then begin
 		    Caption := CustomMessage('Repair');
 		end else if InstallType = 'itInstall' then begin
@@ -993,9 +987,7 @@ begin
 
 		OnClick := @CustomizeOnClick;
 	end;
-
 	MeasureLabel.Free;
-
 end;
 
 
@@ -1056,7 +1048,6 @@ begin
 		Top := WizardForm.ComponentsList.Top + Round(lblDescription.Height * 0.4);
 		Height := WizardForm.ComponentsList.Height - Round(lblDescription.Height * 0.4);
 	end;
-
 	lblDescription.Parent := WizardForm.ComponentsList.Parent; //place lblDescription above pnlDescription
 
 	lblComponentDescription := TNewStaticText.Create(pnlDescription);
