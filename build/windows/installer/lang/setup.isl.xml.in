@@ -48,7 +48,7 @@
 
     <config name="Repair">
       <value>&amp;Repair</value>
-    </config>    
+    </config>
     <config name="Install">
       <value>&amp;Install</value>
     </config>
@@ -184,27 +184,6 @@
 
     <config name="CreatingRestorePoint">
       <value>Trying to create Restore Point...</value>
-    </config>
-
-    <config name="RemovingOldVersion">
-      <value>Removing previous version of GIMP:</value>
-    </config>
-    <!-- %1 = version, %2 = installation directory; ran uninstaller, but it returned an error, or didn't remove everything -->
-    <config name="RemovingOldVersionFailed">
-      <value>GIMP %1 cannot be installed over your currently installed GIMP version, and the automatic uninstall of old version has failed.%n%nPlease remove the previous version of GIMP yourself before installing this version in %2, or choose a Custom install, and select a different installation folder.%n%nThe Setup will now exit.</value>
-    </config>
-    <!-- %1 = version, %2 = installation directory; couldn't find an uninstaller, or found several uninstallers -->
-    <config name="RemovingOldVersionCantUninstall">
-      <value>GIMP %1 cannot be installed over your currently installed GIMP version, and Setup couldn't determine how to remove the old version automatically.%n%nPlease remove the previous version of GIMP and any add-ons yourself before installing this version in %2, or choose a Custom install, and select a different installation folder.%n%nThe Setup will now exit.</value>
-    </config>
-
-    <config name="RebootRequiredFirst">
-      <value>Previous GIMP version was removed successfully, but Windows has to be restarted before the Setup can continue.%n%nAfter restarting your computer, Setup will continue next time an administrator logs in.</value>
-    </config>
-
-    <!-- Displayed if restart settings couldn't be read, or if the setup couldn't re-run itself -->
-    <config name="ErrorRestartingSetup">
-      <value>There was an error restarting the Setup. (%1)</value>
     </config>
 
     <config name="RemovingOldFiles">
