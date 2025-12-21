@@ -596,11 +596,13 @@ const
 	CP_ACP = 0;
 	CP_UTF8 = 65001;
   COLOR_HOTLIGHT = 26;
+	UNINSTALL_MAX_WAIT_TIME = 10000;
+	UNINSTALL_CHECK_TIME    =   250;
 
 var
 	//pgSimple: TWizardPage;
   InstallType: String;
-  InstallMode: (imNone, imSimple, imCustom, imRebootContinue);
+  InstallMode: (imNone, imSimple, imCustom);
   ConfigOverride: (coUndefined, coOverride, coDontOverride);
 
 function WideCharToMultiByte(CodePage: Cardinal; dwFlags: DWORD; lpWideCharStr: String; cchWideCharStr: Integer;
@@ -646,9 +648,6 @@ end;
 
 
 //0. PRELIMINARY SETUP CODE
-
-//Resume after reboot (if needed)
-function RestartSetupAfterReboot(): Boolean; forward;
 
 //Screen bit depth
 function GetDC(hWnd: Integer): Integer; external 'GetDC@User32 stdcall';
@@ -748,13 +747,7 @@ begin
 
 	ConfigOverride := coUndefined;
 
-	Result := RestartSetupAfterReboot(); //resume install after reboot - skip all setting pages, and install directly
-
-	if Result then
-		Result := BPPTooLowWarning();
-
-	if not Result then //no need to do anything else
-		exit;
+	Result := BPPTooLowWarning();
 
 //Unstable version warning
 #if Defined(GIMP_UNSTABLE) || Defined(GIMP_RC_VERSION) || !Defined(GIMP_RELEASE) || Defined(DEVEL_WARNING)
@@ -785,9 +778,6 @@ begin
 		Result := False;
 		exit;
 	end;
-
-	//if InstallMode <> imRebootContinue then
-	//	SuppressibleMsgBox(CustomMessage('UninstallWarning'),mbError,MB_OK,IDOK);
 end;
 
 
@@ -1206,187 +1196,6 @@ begin
   begin
     DebugMsg('RestorePoint','Failed to create restore point. Error code: ' + IntToStr(ResultCode));
   end;
-end;
-
-
-//Unistall old version of GIMP (only if needed)
-const
-  UNINSTALL_MAX_WAIT_TIME = 10000;
-	UNINSTALL_CHECK_TIME    =   250;
-
-type
-	TRemoveOldGIMPResult = (rogContinue, rogRestartRequired, rogUninstallFailed, rogCantUninstall);
-procedure DoUninstall(const UninstStr, InstallDir: String; const pInfoLabel: TNewStaticText; var oResult: TRemoveOldGIMPResult);
-var InResult: TRemoveOldGIMPResult;
-	ResultCode, i: Integer;
-begin
-	InResult := oResult;
-
-	DebugMsg('DoUninstall','Uninstall string: ' + UninstStr);
-
-	//when installing to same directory, assume that restart is required by default ...
-	if LowerCase(RemoveBackslashUnlessRoot(InstallDir)) = LowerCase(RemoveBackslashUnlessRoot(ExpandConstant('{app}'))) then
-		oResult := rogRestartRequired
-	else
-		oResult := InResult;
-
-	pInfoLabel.Caption := InstallDir;
-
-	if not Exec('>',UninstStr,'',SW_SHOW,ewWaitUntilTerminated,ResultCode) then
-	begin
-		DebugMsg('DoUninstall','Exec('+UninstStr+') failed: ' + IntToStr(ResultCode));
-
-		if not DirExists(InstallDir) then //old install directory doesn't exist, assume it was deleted, and Registry info is orphaned
-		begin
-			DebugMsg('DoUninstall','Install directory doesn'#39't exist: ' + InstallDir + ', resuming install');
-			oResult := InResult
-		end else
-		begin
-			oResult := rogUninstallFailed;
-		end;
-
-		exit;
-	end;
-
-	DebugMsg('DoUninstall','Exec succeeded, uninstaller result: ' + IntToStr(ResultCode));
-
-	//... unless the complete installation directory was removed on uninstall
-	i := 0;
-	while i < (UNINSTALL_MAX_WAIT_TIME / UNINSTALL_CHECK_TIME) do
-	begin
-		if not DirExists(ExpandConstant('{app}')) then
-		begin
-			DebugMsg('DoUninstall','Existing GIMP directory removed, restoring previous restart requirement');
-			oResult := InResult; //restore previous result
-			break;
-		end;
-		DebugMsg('DoUninstall','Waiting for ' + ExpandConstant('{app}') + ' to disappear [' + IntToStr(i) + ']');
-		Sleep(UNINSTALL_CHECK_TIME); //it may take a few seconds for the uninstaller to remove the directory after it's exited
-		Inc(i);
-	end;
-end;
-
-function RemoveOldGIMPVersions(): TRemoveOldGIMPResult;
-var lblInfo1,lblInfo2: TNewStaticText;
-	RootKey: Integer;
-	OldPath, UninstallString, WhichStr: String;
-begin
-	Result := rogContinue;
-
-	lblInfo1 := TNewStaticText.Create(WizardForm.PreparingPage);
-	with lblInfo1 do
-	begin
-		Parent := WizardForm.PreparingPage;
-		Left := 0;
-		Top := 0;
-		AutoSize := True;
-		WordWrap := True;
-		Width := WizardForm.PreparingPage.ClientWidth;
-
-		Caption := CustomMessage('RemovingOldVersion');
-	end;
-
-	lblInfo2 := TNewStaticText.Create(WizardForm.PreparingPage);
-	with lblInfo2 do
-	begin
-		Parent := WizardForm.PreparingPage;
-		Left := 0;
-		AutoSize := True;
-		WordWrap := True;
-		Width := WizardForm.PreparingPage.ClientWidth;
-		Top := lblInfo1.Height + ScaleY(8);
-	end;
-
-	if ExpandConstant('{param:debugresume|0}') = '1' then
-		Result := rogRestartRequired; //for testing
-
-	if Is64BitInstallMode() then
-		RootKey := HKLM32
-	else
-		RootKey := HKLM;
-
-	if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-	                  'Inno Setup: App Path') then
-	begin
-		if RegQueryStringValue(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-		                       'Inno Setup: App Path',OldPath) then
-		begin
-			DebugMsg('RemoveOldGIMPVersions','Found legacy GIMP install, removing');
-
-			if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-			                  'QuietUninstallString') then
-				WhichStr := 'QuietUninstallString'
-			else if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-			                       'UninstallString') then
-				WhichStr := 'UninstallString'
-			else
-			begin
-				Result := rogCantUninstall;
-				exit;
-			end;
-
-			if not RegQueryStringValue(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-			                           WhichStr,UninstallString) then
-			begin
-				Result := rogCantUninstall;
-				exit;
-			end;
-
-			if WhichStr = 'UninstallString' then
-				UninstallString := UninstallString + ' /SILENT';
-
-			UninstallString := UninstallString + ' /NORESTART';
-
-			DoUninstall(UninstallString, OldPath, lblInfo2, Result);
-		end;
-	end;
-
-	lblInfo1.Free;
-	lblInfo2.Free;
-end;
-
-procedure CreateRunOnceEntry; forward;
-
-function PrepareToInstall(var pNeedsRestart: Boolean): String;
-var	ChecksumBefore, ChecksumAfter: String;
-	RemoveResult: TRemoveOldGIMPResult;
-begin
-	ChecksumBefore := MakePendingFileRenameOperationsChecksum;
-
-  RemoveResult := RemoveOldGIMPVersions;
-
-	if RemoveResult = rogRestartRequired then //old version was uninstalled, but something was left behind, so to be safe a reboot
-	begin                                     //is enforced - this can only happen when reusing install directory
-
-		DebugMsg('PrepareToInstall','RemoveOldGIMPVersions requires restart');
-
-		ChecksumAfter := MakePendingFileRenameOperationsChecksum;
-		if (ChecksumBefore <> ChecksumAfter) or (ExpandConstant('{param:debugresume|0}') = '1') then
-		begin //this check is most likely redundant, since the uninstaller will be added to pending rename operations
-			CreateRunOnceEntry;
-			pNeedsRestart := True;
-			Result := CustomMessage('RebootRequiredFirst');
-		end;
-	end else
-	if RemoveResult = rogContinue then
-	begin
-		DebugMsg('PrepareToInstall','RemoveOldGIMPVersions finished successfully');
-		Result := ''; //old version was uninstalled successfully, nothing was left behind, so install can continue immediately
-	end else
-	if RemoveResult = rogUninstallFailed then
-	begin
-		DebugMsg('PrepareToInstall','RemoveOldGIMPVersions failed to uninstall old GIMP version');
-		Result := FmtMessage(CustomMessage('RemovingOldVersionFailed'),['{#CUSTOM_GIMP_VERSION}',ExpandConstant('{app}')]);
-	end else
-	if RemoveResult = rogCantUninstall then
-	begin
-		DebugMsg('PrepareToInstall','RemoveOldGIMPVersions failed to uninstall old GIMP version [1]');
-		Result := FmtMessage(CustomMessage('RemovingOldVersionCantUninstall'),['{#CUSTOM_GIMP_VERSION}',ExpandConstant('{app}')]);
-	end else
-	begin
-		DebugMsg('PrepareToInstall','Internal error 11');
-		Result := FmtMessage(CustomMessage('InternalError'),['11']); //should never happen
-	end;
 end;
 
 //remove .pdb files from previous installs
@@ -1871,7 +1680,7 @@ function ShouldSkipPage(pPageID: Integer): Boolean;
 begin
 	DebugMsg('ShouldSkipPage','ID: '+IntToStr(pPageID));
 
-	Result := ((InstallMode = imSimple) or (InstallMode = imRebootContinue)) and (pPageID <> wpFinished);
+	Result := (InstallMode = imSimple) and (pPageID <> wpFinished);
 	if Result then
 		DebugMsg('ShouldSkipPage','Yes')
 	else
@@ -1915,9 +1724,6 @@ begin
 		end;
 	end;
 end;
-
-//Reboot if needed
-#include "util_rebootcontinue.isi"
 
 
 #expr SaveToFile(AddBackslash(SourcePath) + "Preprocessed.iss")
