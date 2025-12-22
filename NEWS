@@ -9,6 +9,11 @@ This is the development branch of GIMP.
 Overview of Changes from GIMP 3.2.0 RC2 to GIMP 3.2.0 RC3
 =========================================================
 
+Core:
+
+  - In a Flatpak sandbox, GIMP will now show the native config directory
+    path in relevant places.
+
 Graphical User Interface:
 
   - Add conditional mask delete button on Layers dockable, shown when a
