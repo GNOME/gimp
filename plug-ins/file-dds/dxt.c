@@ -869,7 +869,7 @@ compress_BC1 (unsigned char       *dst,
       x = (i % ((w + 3) >> 2)) << 2;
       y = (i / ((w + 3) >> 2)) << 2;
       p = dst + BLOCK_OFFSET(x, y, w, 8);
-      extract_block(src, x, y, w, h, block);
+      extract_block (src, x, y, w, h, block);
       encode_color_block(p, block, DXT_BC1 | flags);
     }
 }
@@ -894,7 +894,7 @@ compress_BC2 (unsigned char       *dst,
       x = (i % ((w + 3) >> 2)) << 2;
       y = (i / ((w + 3) >> 2)) << 2;
       p = dst + BLOCK_OFFSET(x, y, w, 16);
-      extract_block(src, x, y, w, h, block);
+      extract_block (src, x, y, w, h, block);
       encode_alpha_block_BC2(p, block);
       encode_color_block(p + 8, block, DXT_BC2 | flags);
     }
@@ -920,7 +920,7 @@ compress_BC3 (unsigned char       *dst,
       x = (i % ((w + 3) >> 2)) << 2;
       y = (i / ((w + 3) >> 2)) << 2;
       p = dst + BLOCK_OFFSET(x, y, w, 16);
-      extract_block(src, x, y, w, h, block);
+      extract_block (src, x, y, w, h, block);
       encode_alpha_block_BC3(p, block, 0);
       encode_color_block(p + 8, block, DXT_BC3 | flags);
     }
@@ -945,7 +945,7 @@ compress_BC4 (unsigned char       *dst,
       x = (i % ((w + 3) >> 2)) << 2;
       y = (i / ((w + 3) >> 2)) << 2;
       p = dst + BLOCK_OFFSET(x, y, w, 8);
-      extract_block(src, x, y, w, h, block);
+      extract_block (src, x, y, w, h, block);
       encode_alpha_block_BC3(p, block, -1);
     }
 }
@@ -969,13 +969,41 @@ compress_BC5 (unsigned char       *dst,
       x = (i % ((w + 3) >> 2)) << 2;
       y = (i / ((w + 3) >> 2)) << 2;
       p = dst + BLOCK_OFFSET(x, y, w, 16);
-      extract_block(src, x, y, w, h, block);
+      extract_block (src, x, y, w, h, block);
       /* Pixels are ordered as BGRA (see write_layer)
        * First we encode red  -1+3: channel 2;
        * then we encode green -2+3: channel 1.
        */
       encode_alpha_block_BC3(p, block, -1);
       encode_alpha_block_BC3(p + 8, block, -2);
+    }
+}
+
+static void
+compress_BC7 (guchar       *dst,
+              const guchar *src,
+              gint          w,
+              gint          h,
+              bc7_params   *params)
+{
+  const guint block_count = BLOCK_COUNT (w, h);
+  guchar      block[64]   = { 0 };
+  guint       i;
+  guchar     *p;
+  gint        x;
+  gint        y;
+
+#ifdef _OPENMP
+#pragma omp parallel for schedule(dynamic, 256) private(block, p, x, y)
+#endif
+  for (i = 0; i < block_count; ++i)
+    {
+      x = (i % ((w + 3) >> 2)) << 2;
+      y = (i / ((w + 3) >> 2)) << 2;
+      p = dst + BLOCK_OFFSET (x, y, w, 16);
+
+      extract_block (src, x, y, w, h, block);
+      bc7_compress (p, block, params);
     }
 }
 
@@ -998,7 +1026,7 @@ compress_YCoCg (unsigned char       *dst,
       x = (i % ((w + 3) >> 2)) << 2;
       y = (i / ((w + 3) >> 2)) << 2;
       p = dst + BLOCK_OFFSET(x, y, w, 16);
-      extract_block(src, x, y, w, h, block);
+      extract_block (src, x, y, w, h, block);
       encode_alpha_block_BC3(p, block, 0);
       encode_YCoCg_block(p + 8, block);
     }
@@ -1019,6 +1047,7 @@ dxt_compress (unsigned char *dst,
   unsigned char *tmp = NULL;
   int j;
   unsigned char *s;
+  bc7_params     bc7_params;
 
   if (bpp == 1)
     {
@@ -1078,6 +1107,9 @@ dxt_compress (unsigned char *dst,
   h = height;
   s = tmp ? tmp : src;
 
+  if (format == DDS_COMPRESS_BC7)
+    bc7_initialize (&bc7_params, (flags & DXT_PERCEPTUAL));
+
   for (i = 0; i < mipmaps; ++i)
     {
       switch (format)
@@ -1100,6 +1132,9 @@ dxt_compress (unsigned char *dst,
           break;
         case DDS_COMPRESS_BC5:
           compress_BC5(dst + offset, s, w, h);
+          break;
+        case DDS_COMPRESS_BC7:
+          compress_BC7 (dst + offset, s, w, h, &bc7_params);
           break;
         case DDS_COMPRESS_YCOCGS:
           compress_YCoCg(dst + offset, s, w, h);

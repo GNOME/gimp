@@ -891,8 +891,8 @@ write_layer (FILE                *fp,
         }
     }
 
-  /* We want and assume BGRA ordered pixels for bpp >= 3 from here on */
-  if (bpp >= 3)
+  /* We want and assume BGRA ordered pixels for bpp >= 3 from here on  */
+  if (bpp >= 3 && compression != DDS_COMPRESS_BC7)
     swap_rb (src, w * h, bpp);
 
   if (compression == DDS_COMPRESS_BC3N)
@@ -1232,7 +1232,7 @@ write_volume_mipmaps (FILE                *fp,
     }
 
   /* We want and assume BGRA ordered pixels for bpp >= 3 from here on */
-  if (bpp >= 3)
+  if (bpp >= 3 && compression != DDS_COMPRESS_BC7)
     swap_rb (src, w * h * d, bpp);
 
   /* Pre-convert indexed images to RGB if not exporting as indexed */
@@ -1575,6 +1575,10 @@ write_image (FILE                *fp,
           dxgi_format = DXGI_FORMAT_BC5_UNORM;
           /*is_dx10 = TRUE;*/
           break;
+
+        case DDS_COMPRESS_BC7:
+          dxgi_format = DXGI_FORMAT_BC7_UNORM;
+          is_dx10 = TRUE;
         }
 
       if ((compression == DDS_COMPRESS_BC3N) ||
