@@ -23,8 +23,8 @@ eval "$(sed -n '/Install part/,/End of check/p' build/linux/flatpak/1_build-deps
 
 if [ "$GITLAB_CI" ]; then
   # Extract deps from previous job
-  for archive in flatpak-builder-deps/*; do
-    if [ "$archive" != "flatpak-builder-deps/build" ]; then
+  for archive in flatpak-builder-$RUNNER/*; do
+    if [ "$archive" != "flatpak-builder-$RUNNER/build" ]; then
       tar --zstd -xf "$archive"
     fi
   done

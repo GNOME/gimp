@@ -113,6 +113,6 @@ if [ "$GITLAB_CI" ]; then
     tar --zstd --xattrs -cf "$dir.tar.zst" "$dir"
     rm -fr "$dir"
   done
-  rm -fr flatpak-builder-deps
-  mv .flatpak-builder flatpak-builder-deps
+  rm -fr flatpak-builder-$RUNNER
+  mv .flatpak-builder flatpak-builder-$RUNNER
 fi

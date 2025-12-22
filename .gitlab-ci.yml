@@ -411,7 +411,7 @@ deps-flatpak:
     - sh build/linux/flatpak/1_build-deps-flatpakbuilder.sh
   artifacts:
     paths:
-      - flatpak-builder-deps
+      - flatpak-builder-$RUNNER
       - flatpak-builder.log*
       - babl-meson-log.xz
       - gegl-meson-log.xz
