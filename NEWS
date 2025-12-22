@@ -9,6 +9,20 @@ This is the development branch of GIMP.
 Overview of Changes from GIMP 3.2.0 RC2 to GIMP 3.2.0 RC3
 =========================================================
 
+Graphical User Interface:
+
+  - Add conditional mask delete button on Layers dockable, shown when a
+    layer mask is selected.
+
+Command Line Interface:
+
+  - Man page improved to up-to-date usage.
+  - CLI option --no-interface is now hidden on gimp-console usage.
+
+Plug-Ins:
+
+  - Fixed vulnerability ZDI-CAN-28232 in PSP import.
+
 Build:
 
   - GIMP docs is now versioned on $DATADIR/doc/gimp-$APIVER (where
