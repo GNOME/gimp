@@ -92,6 +92,8 @@ workflow:
     GIT_SUBMODULE_STRATEGY: none
     # Enable colorful output when supported (e.g. ninja, cppcheck)
     CLICOLOR_FORCE: "1"
+    # Disable timestamps on CI logs
+    FF_TIMESTAMPS: false
   # Common artifacts behavior
   artifacts:
     name: "${CI_JOB_NAME_SLUG}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
