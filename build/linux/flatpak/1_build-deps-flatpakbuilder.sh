@@ -63,15 +63,14 @@ fi
 if [ "$GITLAB_CI" ]; then
   built_deps_image="quay.io/gnome_infrastructure/gnome-nightly-cache:$(uname -m)-$(echo "org.gimp.GIMP.Nightly" | tr 'A-Z' 'a-z')-master"
   oras pull $built_deps_image && oras logout quay.io || true
-  tar --zstd --xattrs -xf _build-$RUNNER.tar.zst || true
+  tar --zstd --xattrs -xf _build-cached-$RUNNER.tar.zst || true
 fi
-eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=babl \
+eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --build-only --stop-at=babl \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > flatpak-builder.log 2>&1
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   tar --zstd --xattrs --exclude=.flatpak-builder/build/ -cf _build-$RUNNER.tar.zst .flatpak-builder/
   cat $NIGHTLY_CACHE_ORAS_TOKEN_FILE | oras login -u "${NIGHTLY_CACHE_ORAS_USER}" --password-stdin quay.io || true
-  oras push $built_deps_image _build-$RUNNER.tar.zst && oras logout quay.io || true
-  rm _build-$RUNNER.tar.zst
+  oras push $built_deps_image _build-cached-$RUNNER.tar.zst && oras logout quay.io || true
 fi
 printf "\e[0Ksection_end:`date +%s`:deps_build\r\e[0K\n"
 
@@ -88,9 +87,6 @@ eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --keep-build-dirs --b
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
 if [ "$GITLAB_CI" ]; then
   tar cf gegl-meson-log.tar .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt
-  # Only keep the build directories long enough to keep a copy of meson
-  # logs for babl and GEGL.
-  rm -fr .flatpak-builder/build/*
   printf "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n"
 
   ## Save built deps for 'gimp-flatpak' job ##
@@ -105,9 +101,10 @@ if [ "$GITLAB_CI" ]; then
   # that .flatpak-builder/ itself doesn't end up belonging to root in
   # the next job, by letting tar rebuild it).
   for dir in .flatpak-builder/*; do
-    tar --zstd --xattrs -cf "$dir.tar.zst" "$dir"
+    if [ "$dir" != ".flatpak-builder/build" ]; then
+      tar --zstd --xattrs -cf "$dir.tar.zst" "$dir"
+    fi
     rm -fr "$dir"
   done
-  rm -fr flatpak-builder-$RUNNER
-  mv .flatpak-builder flatpak-builder-$RUNNER
+  mv .flatpak-builder _build-$RUNNER
 fi

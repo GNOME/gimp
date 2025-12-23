@@ -23,10 +23,9 @@ eval "$(sed -n '/Install part/,/End of check/p' build/linux/flatpak/1_build-deps
 
 if [ "$GITLAB_CI" ]; then
   # Extract deps from previous job
-  for archive in flatpak-builder-$RUNNER/*; do
-    if [ "$archive" != "flatpak-builder-$RUNNER/build" ]; then
-      tar --zstd -xf "$archive"
-    fi
+  for archive in _build-$RUNNER/*; do
+    #see the rationale in 1_build-deps-flatpakbuilder.sh
+    tar --zstd -xf "$archive"
   done
 fi
 
@@ -54,7 +53,7 @@ eval $FLATPAK_BUILDER --disable-rofiles-fuse --finish-only --repo=repo \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
 if [ "$GITLAB_CI" ]; then
   tar cf repo-$(uname -m).tar repo/
-  
+
   ## On CI, make the .flatpak prematurely on each runner since build-bundle is not arch neutral
   eval "$(sed -n -e '/APP_ID=/,/BRANCH=/ { s/  //; p }' build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh)"
   eval "$(grep 'build-bundle repo' build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh | sed 's/  //')"
