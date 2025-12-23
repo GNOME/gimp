@@ -49,7 +49,7 @@ workflow:
 ## - Building quality tests (static code analysis)
 ## - Execution tests (dynamic code analysis)
 ## - Source tarball
-## - Developer documentation 
+## - Developer documentation
 .pipeline_commit: &CI_COMMIT
   if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_TAG == null'
   interruptible: true
@@ -59,7 +59,7 @@ workflow:
 ## - Source tarball
 ## - Developer documentation
 ## - Linux .appimage
-## - Inno Windows installer 
+## - Inno Windows installer
 ## - MS Store .msixupload
 .pipeline_release: &CI_RELEASE
   if: '$CI_COMMIT_TAG != null'
@@ -344,7 +344,7 @@ deps-debian:
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   script:
     - !reference [deps-debian-nonreloc, script]
-  artifacts: !reference [deps-debian-nonreloc, artifacts] 
+  artifacts: !reference [deps-debian-nonreloc, artifacts]
 
 gimp-debian:
   extends: .debian
@@ -412,9 +412,9 @@ deps-flatpak:
   artifacts:
     paths:
       - flatpak-builder-$RUNNER
-      - flatpak-builder.log*
-      - babl-meson-log.xz
-      - gegl-meson-log.xz
+      - flatpak-builder.log
+      - babl-meson-log.tar
+      - gegl-meson-log.tar
     expire_in: 2 hours
 
 gimp-flatpak:
@@ -563,7 +563,7 @@ gimp-snap:
   before_script:
     - $GIMP_PREFIX = "$PWD\_install-$(if (-not $env:MSYSTEM_PREFIX) { $(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower()) } else { $env:MSYSTEM_PREFIX })"
     - if ("$VARIANT" -eq '-msvc') { if (-not (Test-Path $env:VCPKG_ROOT)) { git clone --depth 1 https://github.com/microsoft/vcpkg; .\vcpkg\bootstrap-vcpkg.bat }; pip install meson }
-    - if ("$VARIANT" -eq '-msvc') { $VSINSTALLDIR = $(vswhere -products * -latest -property installationPath); Import-Module "$VSINSTALLDIR\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell -VsInstallPath "$VSINSTALLDIR" -SkipAutomaticLocation -DevCmdArguments "-arch=$(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower())" }   
+    - if ("$VARIANT" -eq '-msvc') { $VSINSTALLDIR = $(vswhere -products * -latest -property installationPath); Import-Module "$VSINSTALLDIR\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell -VsInstallPath "$VSINSTALLDIR" -SkipAutomaticLocation -DevCmdArguments "-arch=$(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower())" }
   timeout: 120m
 
 .win_environ: &WIN_ENVIRON
