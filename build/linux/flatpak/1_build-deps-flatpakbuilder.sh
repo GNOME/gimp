@@ -68,7 +68,7 @@ fi
 eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --build-only --stop-at=babl \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > flatpak-builder.log 2>&1
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
-  tar --zstd --xattrs --exclude=.flatpak-builder/build/ -cf _build-$RUNNER.tar.zst .flatpak-builder/
+  tar --zstd --xattrs --exclude=.flatpak-builder/build/ -cf _build-cached-$RUNNER.tar.zst .flatpak-builder/
   cat $NIGHTLY_CACHE_ORAS_TOKEN_FILE | oras login -u "${NIGHTLY_CACHE_ORAS_USER}" --password-stdin quay.io || true
   oras push $built_deps_image _build-cached-$RUNNER.tar.zst && oras logout quay.io || true
 fi
