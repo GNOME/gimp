@@ -57,7 +57,7 @@ if [ "$CI_PIPELINE_SOURCE" = 'schedule' ]; then
     printf "\033[31m(ERROR)\033[0m: Some dependencies sources are outdated. Please, update them on the manifest.\n"
     exit 1
   else
-    printf "(INFO): All dependencies sources are up to date. Building them...\n" 
+    printf "(INFO): All dependencies sources are up to date. Building them...\n"
   fi
 fi
 if [ "$GITLAB_CI" ]; then
@@ -65,13 +65,8 @@ if [ "$GITLAB_CI" ]; then
   oras pull $built_deps_image && oras logout quay.io || true
   tar --zstd --xattrs -xf _build-$RUNNER.tar.zst || true
 fi
-
 eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=babl \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > flatpak-builder.log 2>&1
-if [ "$GITLAB_CI" ]; then
-  xz flatpak-builder.log
-fi
-
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   tar --zstd --xattrs --exclude=.flatpak-builder/build/ -cf _build-$RUNNER.tar.zst .flatpak-builder/
   cat $NIGHTLY_CACHE_ORAS_TOKEN_FILE | oras login -u "${NIGHTLY_CACHE_ORAS_USER}" --password-stdin quay.io || true
@@ -84,7 +79,7 @@ printf "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding 
 eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=gegl \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
 if [ "$GITLAB_CI" ]; then
-  xz --keep --stdout .flatpak-builder/build/babl-1/_flatpak_build/meson-logs/meson-log.txt > babl-meson-log.xz
+  tar cf babl-meson-log.tar .flatpak-builder/build/babl-1/_flatpak_build/meson-logs/meson-log.txt
 fi
 printf "\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\n"
 
@@ -92,7 +87,7 @@ printf "\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding 
 eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=gimp \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
 if [ "$GITLAB_CI" ]; then
-  xz --keep --stdout .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt > gegl-meson-log.xz
+  tar cf gegl-meson-log.tar .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt
   # Only keep the build directories long enough to keep a copy of meson
   # logs for babl and GEGL.
   rm -fr .flatpak-builder/build/*
