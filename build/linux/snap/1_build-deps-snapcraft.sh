@@ -22,8 +22,9 @@ if ! which snapcraft >/dev/null 2>&1; then
 fi
 base_target=$(sed -n 's/^base:[[:space:]]*//p' build/linux/snap/snapcraft.yaml)
 base_host=$(grep 'SNAPCRAFT_BASE_VERSION:' .gitlab-ci.yml | sed 's/.*SNAPCRAFT_BASE_VERSION:[[:space:]]*"\([^_"]*\)_\([^"]*\)".*/\2/')
-if [ "$base_host" != "$base_target" ] && [ "$GITLAB_CI" ]; then
-  printf "\033[31m(ERROR)\033[0m: The $base_target base required in snapcraft.yaml is not installed. Please, change the snapcraft-rocks image in the following .gitlab-ci.yml var: SNAPCRAFT_BASE_VERSION.\n"
+if [ "$base_host" != "$base_target" ] && [ "$GITLAB_CI" ] || [ ! -d /snap/$base_target/ ]; then
+  ## Pre-base_target or Post-base_target fails since we use --destructive-mode (see more on 'snapcraft pull' below), let's prevent this
+  printf "\033[31m(ERROR)\033[0m: Installed base snap is too new or too old. Our snapcraft.yaml requires exactly $base_target. On CI, please, change the snapcraft-rocks image in the following .gitlab-ci.yml var: SNAPCRAFT_BASE_VERSION.\n"
   exit 1
 fi #End of check
 
