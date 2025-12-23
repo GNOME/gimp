@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-05-27 08:53+0000\n"
-"PO-Revision-Date: 2025-06-08 21:42+0200\n"
+"POT-Creation-Date: 2025-11-10 12:02+0000\n"
+"PO-Revision-Date: 2025-12-23 19:32+0100\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -76,6 +76,26 @@ msgstr "Записване на отдѐлен CSS файл"
 #: plug-ins/python/colorxhtml.py:235
 msgid "Choose File"
 msgstr "Избор на файл"
+
+#: plug-ins/python/file-openraster.py:504
+#: plug-ins/python/file-openraster.py:505
+msgid "export an OpenRaster (.ora) file"
+msgstr "Изнасяне във формат OpenRaster (.ora)"
+
+#: plug-ins/python/file-openraster.py:507
+#: plug-ins/python/file-openraster.py:513
+msgid "OpenRaster"
+msgstr "OpenRaster"
+
+#: plug-ins/python/file-openraster.py:514
+#: plug-ins/python/file-openraster.py:515
+msgid "load an OpenRaster (.ora) file"
+msgstr "Зареждане на файл във формат OpenRaster (.ora)"
+
+#: plug-ins/python/file-openraster.py:524
+#: plug-ins/python/file-openraster.py:525
+msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgstr "Зареждане на миниатюра от файл OpenRaster (.ora)"
 
 #: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
@@ -176,13 +196,13 @@ msgstr ""
 "Изнасяне на хистограмата на изображението към текст с разделители (CSV)"
 
 #: plug-ins/python/histogram-export.py:216
-msgid "_Export histogram..."
+msgid "_Export Histogram..."
 msgstr "_Изнасяне на хистограма…"
 
 #. TODO: GFile props still don't have labels + only load existing files
 #. (here we likely want to create a new file).
 #: plug-ins/python/histogram-export.py:224
-msgid "Histogram File"
+msgid "Histogram file"
 msgstr "Файл на хистограмата"
 
 #: plug-ins/python/histogram-export.py:225
@@ -190,23 +210,23 @@ msgid "Histogram export file"
 msgstr "Файл за изнасяне на хистограма…"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "_Bucket Size"
+msgid "_Bucket size"
 msgstr "_Размер на интервалите"
 
 #: plug-ins/python/histogram-export.py:227
-msgid "Bucket Size"
+msgid "Bucket size"
 msgstr "Размер на интервалите"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample _Average"
+msgid "Sample _average"
 msgstr "_Средна стойност на извадката"
 
 #: plug-ins/python/histogram-export.py:229
-msgid "Sample Average"
+msgid "Sample average"
 msgstr "Средна стойност на извадката"
 
 #: plug-ins/python/histogram-export.py:232
-msgid "Pixel Count"
+msgid "Pixel count"
 msgstr "Брой пиксели"
 
 #: plug-ins/python/histogram-export.py:233
@@ -218,7 +238,7 @@ msgid "Percent"
 msgstr "Процент"
 
 #: plug-ins/python/histogram-export.py:235
-msgid "Output _format"
+msgid "Output _Format"
 msgstr "Изходен _формат"
 
 #: plug-ins/python/histogram-export.py:235
@@ -675,8 +695,8 @@ msgstr "Епитрохоида"
 msgid "Lissajous"
 msgstr "Лисажу"
 
-#: plug-ins/python/spyro-plus.py:1487 plug-ins/python/spyro-plus.py:2267
-msgid "Curve Type"
+#: plug-ins/python/spyro-plus.py:1487
+msgid "Curve type"
 msgstr "Вид крива"
 
 #: plug-ins/python/spyro-plus.py:1488
@@ -737,7 +757,7 @@ msgstr ""
 "Брой зъби на неподвижното колело. Размерът му е пропорционален на броя зъби."
 
 #: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
-msgid "Fixed Gear Teeth"
+msgid "Fixed gear teeth"
 msgstr "Брой зъби на неподвижното колело"
 
 #: plug-ins/python/spyro-plus.py:1558
@@ -749,7 +769,7 @@ msgstr ""
 "зъбите."
 
 #: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
-msgid "Moving Gear Teeth"
+msgid "Moving gear teeth"
 msgstr "Брой зъби на подвижното колело"
 
 #: plug-ins/python/spyro-plus.py:1566
@@ -765,7 +785,7 @@ msgstr ""
 "той е на ръба на колелото."
 
 #: plug-ins/python/spyro-plus.py:1588
-msgid "Hole Number"
+msgid "Hole number"
 msgstr "Номер на дупка"
 
 #: plug-ins/python/spyro-plus.py:1589
@@ -777,7 +797,7 @@ msgstr ""
 "брой дупки е различен за всяко колело."
 
 #: plug-ins/python/spyro-plus.py:1600
-msgid "Flower Petals"
+msgid "Flower petals"
 msgstr "Венчелистчета"
 
 #: plug-ins/python/spyro-plus.py:1601
@@ -785,7 +805,7 @@ msgid "The number of petals in the pattern."
 msgstr "Брой венчелистчета в шарката."
 
 #: plug-ins/python/spyro-plus.py:1606
-msgid "Petal Skip"
+msgid "Petal skip"
 msgstr "Прескачане на венчелистчета"
 
 #: plug-ins/python/spyro-plus.py:1607
@@ -793,7 +813,7 @@ msgid "The number of petals to advance for drawing the next petal."
 msgstr "Брой венчелистчета, които да се прескочат за следващото."
 
 #: plug-ins/python/spyro-plus.py:1612
-msgid "Hole Radius(%)"
+msgid "Hole radius(%)"
 msgstr "Радиус на дупката [%]"
 
 #: plug-ins/python/spyro-plus.py:1613
@@ -977,6 +997,10 @@ msgstr ""
 msgid "Spyrogimp..."
 msgstr "Спирогимп…"
 
+#: plug-ins/python/spyro-plus.py:2267
+msgid "Curve Type"
+msgstr "Вид крива"
+
 #: plug-ins/python/spyro-plus.py:2271
 msgid "rack"
 msgstr "рейка"
@@ -1006,7 +1030,7 @@ msgstr ""
 "само към определени форми."
 
 #: plug-ins/python/spyro-plus.py:2285
-msgid "Fi_xed Gear Teeth"
+msgid "Fi_xed gear teeth"
 msgstr "_Брой зъби на неподвижното колело"
 
 #: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
@@ -1014,11 +1038,11 @@ msgid "Number of teeth for fixed gear."
 msgstr "Брой зъбци в неподвижното зъбно колело."
 
 #: plug-ins/python/spyro-plus.py:2288
-msgid "Mo_ving Gear Teeth"
+msgid "Mo_ving gear teeth"
 msgstr "Брой _зъби на подвижното колело"
 
 #: plug-ins/python/spyro-plus.py:2291
-msgid "_Hole Radius (%)"
+msgid "_Hole radius (%)"
 msgstr "_Радиус на дупката [%]"
 
 #: plug-ins/python/spyro-plus.py:2292
@@ -1060,56 +1084,3 @@ msgid ""
 msgstr ""
 "Дали да се приложи дълга преливка с дължина, отговаряща на шарката. "
 "Приложимо е само към определени инструменти."
-
-#~ msgid "Choose CSS file..."
-#~ msgstr "Избор на файл с CSS…"
-
-#~ msgid "Save as CSS file..."
-#~ msgstr "Запазване като файл с CSS…"
-
-#~ msgid "Read characters from file..."
-#~ msgstr "Изчитане на знаци от файл…"
-
-#~ msgid "Characters or file location"
-#~ msgstr "Знаци или местоположение на файл"
-
-#~ msgid ""
-#~ "If set, the Characters text entry will be used as a file name, from which "
-#~ "the characters will be read. Otherwise, the characters in the text entry "
-#~ "will be used to render the image."
-#~ msgstr ""
-#~ "Ако е зададено, въведеното в полето за знаци се разглежда като име на "
-#~ "файл, от който ще се изчетат знаците. В противен случай знаците там се "
-#~ "ползват за изобразяване."
-
-#~ msgid "Font Size(px)"
-#~ msgstr "Размер на шрифт [px]"
-
-#~ msgid "Write separate CSS file"
-#~ msgstr "Записване на отдѐлен файл с CSS"
-
-#~ msgid "_File to read or characters to use"
-#~ msgstr "_Файл за прочитане или знаци за ползване"
-
-#~ msgid "Off_set"
-#~ msgstr "От_местване"
-
-#~ msgid "Offset Palette..."
-#~ msgstr "Отместване на палитра…"
-
-#~ msgid ""
-#~ "The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"
-#~ msgstr ""
-#~ "Вид крива: 0 — спирограф, 1 — епитрохоида, 2 — синусоида, 3 — на Лисажу"
-
-#~ msgid "Shape of fixed gear"
-#~ msgstr "Форма на неподвижното колело"
-
-#~ msgid "Number of teeth for moving gear"
-#~ msgstr "Брой зъбци в подвижното зъбно колело"
-
-#~ msgid "Make height and width equal"
-#~ msgstr "Равни височина и широчина"
-
-#~ msgid "Tool to use for drawing the pattern."
-#~ msgstr "Инструмент за рисуване на шарката."
