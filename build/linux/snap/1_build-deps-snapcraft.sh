@@ -17,34 +17,31 @@ fi
 
 # Install part of the deps
 if ! which snapcraft >/dev/null 2>&1; then
-  printf '(INFO): installing snapcraft\n'
-  sudo apt update -y
-  sudo apt install -y snapd
-  sudo snap install snapd
-  sudo snap install snapcraft --classic
+  printf '\033[31m(ERROR)\033[0m: snapcraft not found. Please, install it on Ubuntu with: sudo snap install snapcraft --classic\n'
+  exit 1
 fi
-if [ "$GITLAB_CI" ]; then
-  base_target=$(sed -n 's/^base:[[:space:]]*//p' build/linux/snap/snapcraft.yaml)
-  base_host=$(grep 'SNAPCRAFT_BASE_VERSION:' .gitlab-ci.yml | sed 's/.*SNAPCRAFT_BASE_VERSION:[[:space:]]*"\([^_"]*\)_\([^"]*\)".*/\2/')
-  if [ "$base_host" != "$base_target" ]; then
-    printf "\033[31m(ERROR)\033[0m: The $base_target base required in snapcraft.yaml is not installed. Please, change the snapcraft-rocks image in the following .gitlab-ci.yml var: SNAPCRAFT_BASE_VERSION.\n"
-    exit 1
-  fi
+base_target=$(sed -n 's/^base:[[:space:]]*//p' build/linux/snap/snapcraft.yaml)
+base_host=$(grep 'SNAPCRAFT_BASE_VERSION:' .gitlab-ci.yml | sed 's/.*SNAPCRAFT_BASE_VERSION:[[:space:]]*"\([^_"]*\)_\([^"]*\)".*/\2/')
+if [ "$base_host" != "$base_target" ] && [ "$GITLAB_CI" ]; then
+  printf "\033[31m(ERROR)\033[0m: The $base_target base required in snapcraft.yaml is not installed. Please, change the snapcraft-rocks image in the following .gitlab-ci.yml var: SNAPCRAFT_BASE_VERSION.\n"
+  exit 1
 fi #End of check
 
-if [ "$GITLAB_CI" ] && [ "$1" = '--install-snaps' ]; then
-  #snapd can not be used to install snaps on CI since it is a daemon so we manually "install" them
+if [ -z "$GITLAB_CI" ] || [ "$1" = '--install-snaps' ]; then
   GNOME_SDK=$(grep '^_SDK_SNAP' $(sudo find $(dirname $(which snapcraft))/.. -name gnome.py | grep -i extensions) | sed -n "s/.*\"$base_target\": *\"\\([^\"]*\\)\".*/\\1/p")
   gnome_runtime=$(echo $GNOME_SDK | sed 's/-sdk//')
   mesa_runtime="mesa-$(echo $GNOME_SDK | sed -n 's/.*-\([0-9]\+\)-sdk/\1/p')"
   for snap in $GNOME_SDK $gnome_runtime $mesa_runtime; do
-    if [ ! -d /snap/$snap/ ]; then
+    if [ -z "$GITLAB_CI" ]; then
+      sudo snap install $snap
+    elif [ ! -d /snap/$snap/ ]; then
+      #snapd can not be used to install snaps on CI since it is a daemon so we manually "install" them
       curl --progress-bar -L -o ${snap}.snap $(curl --progress-bar -H 'Snap-Device-Series: 16' https://api.snapcraft.io/v2/snaps/info/$snap | jq -r --arg arch "$(dpkg --print-architecture)" '.["channel-map"][] | select(.channel.architecture == $arch and .channel.track == "latest" and .channel.risk == "stable") | .download.url')
       mkdir -p /snap/$snap/current
       unsquashfs -d /snap/$snap/current ${snap}.snap
     fi
   done
-  exit 0
+  if [ "$1" = '--install-snaps' ]; then exit 0; fi
 fi
 
 
@@ -68,7 +65,7 @@ if [ "$GITLAB_CI" ]; then
   tar cf babl-meson-log.tar /root/parts/babl/build/meson-logs/meson-log.txt >/dev/null 2>&1
 fi
 printf "\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\n"
-  
+
 printf "\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n"
 sudo snapcraft stage gegl --destructive-mode --build-for=$(dpkg --print-architecture) --verbosity=verbose
 if [ "$GITLAB_CI" ]; then
