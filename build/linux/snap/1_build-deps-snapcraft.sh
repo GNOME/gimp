@@ -33,6 +33,7 @@ if [ -z "$GITLAB_CI" ] || [ "$1" = '--install-snaps' ]; then
   mesa_runtime="mesa-$(echo $GNOME_SDK | sed -n 's/.*-\([0-9]\+\)-sdk/\1/p')"
   for snap in $GNOME_SDK $gnome_runtime $mesa_runtime; do
     if [ -z "$GITLAB_CI" ]; then
+      sudo snap refresh
       sudo snap install $snap
     elif [ ! -d /snap/$snap/ ]; then
       #snapd can not be used to install snaps on CI since it is a daemon so we manually "install" them
