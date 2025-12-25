@@ -285,7 +285,14 @@ conf_app ()
 
 wipe_usr ()
 {
-  find $USR_DIR -iname ${1##*/} -execdir rm -r -f "{}" \;
+  unset first_found
+  for target_path in $(find $USR_DIR -iname ${1##*/} 2>/dev/null); do
+    if [ -z "$first_found" ]; then
+      printf "(INFO): cleaning $USR_DIR/$1\n"
+      first_found=true
+    fi
+    rm -fr $target_path
+  done
 }
 
 ## Prepare AppDir
