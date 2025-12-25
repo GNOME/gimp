@@ -152,7 +152,10 @@ USR_DIR="$APP_DIR/usr"
 
 prep_pkg ()
 {
-  if [ "$GITLAB_CI" ]; then
+  if [ -z "$GITLAB_CI" ] && ! dpkg -s "$1" >/dev/null 2>&1; then
+    printf "\033[31m(ERROR)\033[0m: $1 package is not installed. Please, install it then call this script again.\n"
+    exit 1
+  elif [ "$GITLAB_CI" ]; then
     apt-get install -y --no-install-recommends $1 >/dev/null 2>&1
   fi
 }
