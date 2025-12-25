@@ -118,10 +118,12 @@ bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/pixbufloader_svg.dll")
 
 
 ## CORE FEATURES.
+bundle(GIMP_PREFIX, "bin/libbabl*.dll")
+bundle(GIMP_PREFIX, "lib/babl-*")
+bundle(GIMP_PREFIX, "bin/libgegl*.dll")
+bundle(GIMP_PREFIX, "lib/gegl-*")
 bundle(GIMP_PREFIX, "bin/libgimp*.dll")
 bundle(GIMP_PREFIX, "lib/gimp")
-bundle(GIMP_PREFIX, "lib/babl-*")
-bundle(GIMP_PREFIX, "lib/gegl-*")
 bundle(GIMP_PREFIX, "share/gimp")
 lang_array = [Path(f).stem for f in glob(str(Path(GIMP_SOURCE)/"po/*.po"))]
 for lang in lang_array:
@@ -192,10 +194,10 @@ fonts_conf.write_text(new_text)
 bundle(GIMP_PREFIX, "bin/gimp*.exe")
 ### Bundled just to promote GEGL. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10580
 bundle(GIMP_PREFIX, "bin/gegl.exe")
+### Deps (DLLs) of the binaries in 'bin' and 'lib' dirs
 ### We save the list of already copied DLLs to keep a state between 2_bundle-gimp-uni_dep runs.
 done_dll = Path(f"{os.getenv('MESON_BUILD_ROOT')}/done-dll.list")
 done_dll.unlink(missing_ok=True)
-### Deps (DLLs) of the binaries in 'bin' and 'lib' dirs
 for dir in ["bin", "lib"]:
   search_dir = GIMP_DISTRIB / dir
   print(f"Searching for dependencies of {search_dir} in {GIMP_PREFIX} and {MSYSTEM_PREFIX}")
