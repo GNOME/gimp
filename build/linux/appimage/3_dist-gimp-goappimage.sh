@@ -46,10 +46,8 @@ if [ ! "$(find $GIMP_DIR -maxdepth 1 -iname "AppDir*")" ] || [ "$MODE" = '--bund
     apt-get install -y --no-install-recommends file patchelf >/dev/null 2>&1
   fi
   bundler="$PWD/go-appimagetool.AppImage"
-  rm -f "$bundler" >/dev/null
-  wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
+  wget -c -O $bundler "https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2)" >/dev/null 2>&1
   bundler_text="go-appimagetool build: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${HOST_ARCH}.AppImage//")"
-  mv appimagetool-*.AppImage $bundler
   chmod +x "$bundler"
 fi
 
@@ -205,7 +203,7 @@ bund_usr ()
         printf "(INFO): bundling $target_path to $output_dest_path\n"
         mkdir -p $dest_path
         cp -ru $target_path $dest_path >/dev/null 2>&1 || continue
-        
+
         #Process .typelib dependencies
         if echo "$target_path" | grep -q '\.typelib$'; then
           process_typelib()
@@ -343,7 +341,7 @@ for lang in $lang_list; do
     bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk3*.mo
   fi
   # For language list in text tool options
-  if ! echo "$(echo $UNIX_PREFIX/share/locale/$lang/LC_MESSAGES/iso_639*3.mo)" | grep -q '\*'; then 
+  if ! echo "$(echo $UNIX_PREFIX/share/locale/$lang/LC_MESSAGES/iso_639*3.mo)" | grep -q '\*'; then
     bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*3.mo
   fi
 done
