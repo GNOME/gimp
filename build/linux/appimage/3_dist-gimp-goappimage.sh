@@ -257,7 +257,7 @@ conf_app ()
 {
   #Prefix from which to expand the var
   prefix=$UNIX_PREFIX
-    #actually, using conf_app to set babl, gegl or gimp vars is not needed when built relocatable
+  #actually, using conf_app to set babl, gegl or gimp vars is not needed when built relocatable
   #case $1 in
     #*BABL*|*GEGL*|*GIMP*)
       #prefix=$GIMP_PREFIX
@@ -381,8 +381,6 @@ bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_pango*"
 #### Needed for GTK inspector
 bund_usr "$UNIX_PREFIX" "lib/libEGL*"
 bund_usr "$UNIX_PREFIX" "lib/libGL*"
-### Debug dialog
-bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
 ### Introspected plug-ins
 bund_usr "$GIMP_PREFIX" "lib/girepository-*/*.typelib"
 conf_app GI_TYPELIB_PATH "${LIB_DIR}/${LIB_SUBDIR}girepository-*"
@@ -405,20 +403,21 @@ bund_usr "$UNIX_PREFIX" "lib/girepository-*/GioUnix*.typelib"
 
 ## Other binaries and deps (bundle them and do fine-tuning with bundling tool)
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
+bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
 bund_usr "$GIMP_PREFIX" "bin/gegl"
 bund_usr "$GIMP_PREFIX" "share/applications/*.desktop"
 ### go-appimagetool have too polluted output so we save as log. See: https://github.com/probonopd/go-appimage/issues/314
 "$bundler" -s deploy $(echo "$USR_DIR/share/applications/*.desktop") > appimagetool.log 2>&1 || { cat appimagetool.log; exit 1; }
-### Undo the mess which breaks babl and GEGL. See: https://github.com/probonopd/go-appimage/issues/315
+### Undo the mess which breaks babl and GEGL etc. See: https://github.com/probonopd/go-appimage/issues/315
 cp -r $APP_DIR/lib/* $USR_DIR/${LIB_DIR}
 rm -r $APP_DIR/lib
-### Fix not fully bundled GTK canberra module. See: https://github.com/probonopd/go-appimage/issues/332
-find "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/modules" -iname *canberra*.so -execdir ln -sf "{}" libcanberra-gtk-module.so \;
-### Ensure that LD is in right dir. See: https://github.com/probonopd/go-appimage/issues/49
 if [ "$HOST_ARCH" = 'x86_64' ]; then
   cp -r $APP_DIR/lib64 $USR_DIR
   rm -r $APP_DIR/lib64
 fi
+### Fix not fully bundled GTK canberra module. See: https://github.com/probonopd/go-appimage/issues/332
+find "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/modules" -iname *canberra*.so -execdir ln -sf "{}" libcanberra-gtk-module.so \;
+### Ensure that LD is configured. See: https://github.com/probonopd/go-appimage/issues/49
 chmod +x "$APP_DIR/$LD_LINUX"
 exec_list=$(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" ! -iname "*.so*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF)
 for exec in $exec_list; do
