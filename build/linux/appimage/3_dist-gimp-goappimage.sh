@@ -257,11 +257,11 @@ conf_app ()
 {
   #Prefix from which to expand the var
   prefix=$UNIX_PREFIX
-  case $1 in
     #actually, using conf_app to set babl, gegl or gimp vars is not needed when built relocatable
-    *BABL*|*GEGL*|*GIMP*)
-      prefix=$GIMP_PREFIX
-  esac
+  #case $1 in
+    #*BABL*|*GEGL*|*GIMP*)
+      #prefix=$GIMP_PREFIX
+  #esac
 
   #Get expanded var
   if [ "$3" != '--no-expand' ]; then
