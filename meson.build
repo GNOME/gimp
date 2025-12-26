@@ -2105,7 +2105,7 @@ pkgconfig.generate(libgimpui,
 # Ideally meson should take care of it automatically.
 # See: https://github.com/mesonbuild/meson/issues/12977
 if platform_windows and debugging_format == 'native' and cc.get_argument_syntax() != 'msvc'
-  install_win_debug_script = find_program('build/windows/2_bundle-gimp-uni_sym.py')
+  install_win_debug_script = find_program('tools/meson_install_win_debug.py')
   meson.add_install_script(install_win_debug_script)
 endif
 
