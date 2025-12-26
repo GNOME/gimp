@@ -135,7 +135,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
               {
                 if ("$dep" -ne 'babl' -and "$dep" -ne 'gegl')
                   {
-                    Add-Content meson.build "meson.add_install_script(find_program('$("$GIMP_DIR".Replace('\','/'))/build/windows/2_bundle-gimp-uni_sym.py'))"
+                    Add-Content meson.build "meson.add_install_script(find_program('$("$GIMP_DIR".Replace('\','/'))/tools/meson_install_win_debug.py'))"
                   }
                 $clang_opts_meson=@('-Dc_args=-"fansi-escape-codes -gcodeview"', '-Dcpp_args=-"fansi-escape-codes -gcodeview"', '-Dc_link_args="-Wl,--pdb="', '-Dcpp_link_args="-Wl,--pdb="')
               }
@@ -147,7 +147,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
           {
             if (-not "$env:VCPKG_ROOT" -and "$env:MSYSTEM_PREFIX" -ne 'MINGW32')
               {
-                Add-Content CMakeLists.txt "install(CODE `"execute_process(COMMAND `${Python3_EXECUTABLE`} $("$GIMP_DIR".Replace('\','/'))/build/windows/2_bundle-gimp-uni_sym.py`)`")"
+                Add-Content CMakeLists.txt "install(CODE `"execute_process(COMMAND `${Python3_EXECUTABLE`} $("$GIMP_DIR".Replace('\','/'))/tools/meson_install_win_debug.py`)`")"
                 $clang_opts_cmake=@('-DCMAKE_C_FLAGS="-gcodeview"', '-DCMAKE_CXX_FLAGS="-gcodeview"', '-DCMAKE_EXE_LINKER_FLAGS="-Wl,--pdb="', '-DCMAKE_SHARED_LINKER_FLAGS="-Wl,--pdb="', '-DCMAKE_MODULE_LINKER_FLAGS="-Wl,--pdb="')
               }
             cmake -G Ninja -B _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -DCMAKE_INSTALL_PREFIX="$GIMP_PREFIX" `
