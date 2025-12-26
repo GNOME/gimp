@@ -18,6 +18,7 @@ Graphical User Interface:
 
   - Add conditional mask delete button on Layers dockable, shown when a
     layer mask is selected.
+  - Reorder HLS to HSL in Hue Saturation GUI.
 
 Command Line Interface:
 
@@ -27,11 +28,14 @@ Command Line Interface:
 Plug-Ins:
 
   - Fixed vulnerability ZDI-CAN-28232 in PSP import.
+  - Fixed vulnerability ZDI-CAN-28599 in ICO import.
 
 Build:
 
   - GIMP docs is now versioned on $DATADIR/doc/gimp-$APIVER (where
     APIVER=3.0 right now).
+  - Drop Force32bitInstall option in Windows installer.
+  - Work has been started to move the macOS CI to our main Gitlab infra.
 
 
 Overview of Changes from GIMP 3.2.0 RC1 to GIMP 3.2.0 RC2
