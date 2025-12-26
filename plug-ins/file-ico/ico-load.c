@@ -69,7 +69,9 @@ ico_read_int32 (FILE    *fp,
   total = count;
   if (count > 0)
     {
-      ico_read_int8 (fp, (guint8 *) data, count * 4);
+      if (ico_read_int8 (fp, (guint8 *) data, count * 4) != (count * 4))
+        return FALSE;
+
       for (i = 0; i < count; i++)
         data[i] = GUINT32_FROM_LE (data[i]);
     }
@@ -88,7 +90,9 @@ ico_read_int16 (FILE    *fp,
   total = count;
   if (count > 0)
     {
-      ico_read_int8 (fp, (guint8 *) data, count * 2);
+      if (ico_read_int8 (fp, (guint8 *) data, count * 2) != (count * 2))
+        return FALSE;
+
       for (i = 0; i < count; i++)
         data[i] = GUINT16_FROM_LE (data[i]);
     }
@@ -109,8 +113,8 @@ ico_read_int8 (FILE   *fp,
   while (count > 0)
     {
       bytes = fread ((gchar *) data, sizeof (gchar), count, fp);
-      if (bytes <= 0) /* something bad happened */
-        break;
+      if (bytes != count) /* something bad happened */
+        return -1;
 
       count -= bytes;
       data += bytes;
@@ -489,16 +493,31 @@ ico_read_icon (FILE    *fp,
          data.used_clrs, data.bpp));
 
       palette = g_new0 (guint32, data.used_clrs);
-      ico_read_int8 (fp, (guint8 *) palette, data.used_clrs * 4);
+      if (ico_read_int8 (fp,
+                         (guint8 *) palette,
+                         data.used_clrs * 4) != (data.used_clrs * 4))
+        {
+          D(("skipping image: too large\n"));
+          return FALSE;
+        }
+
     }
 
   xor_map = ico_alloc_map (w, h, data.bpp, &length);
-  ico_read_int8 (fp, xor_map, length);
+  if (ico_read_int8 (fp, xor_map, length) != length)
+    {
+      D(("skipping image: too large\n"));
+      return FALSE;
+    }
   D(("  length of xor_map: %i\n", length));
 
   /* Read in and_map. It's padded out to 32 bits per line: */
   and_map = ico_alloc_map (w, h, 1, &length);
-  ico_read_int8 (fp, and_map, length);
+  if (! ico_read_int8 (fp, and_map, length) != length)
+    {
+      D(("skipping image: too large\n"));
+      return FALSE;
+    }
   D(("  length of and_map: %i\n", length));
 
   dest_vec = (guint32 *) buf;
