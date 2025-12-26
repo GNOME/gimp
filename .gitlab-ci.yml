@@ -415,8 +415,8 @@ deps-flatpak:
     paths:
       - _build-$RUNNER
       - flatpak-builder.log
-      - babl-meson-log.tar
-      - gegl-meson-log.tar
+      - babl-meson-log.txt
+      - gegl-meson-log.txt
     expire_in: 2 hours
 
 gimp-flatpak:
@@ -432,7 +432,7 @@ gimp-flatpak:
       - temp*.flatpak
       - repo*.tar
       - gimp-flatpak-builder.log
-      - gimp-meson-log.tar
+      - gimp-meson-log.txt
     expire_in: 2 days
 
 

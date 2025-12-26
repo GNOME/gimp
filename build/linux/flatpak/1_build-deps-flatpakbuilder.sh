@@ -78,7 +78,7 @@ printf "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding 
 eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=gegl \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
 if [ "$GITLAB_CI" ]; then
-  tar cf babl-meson-log.tar .flatpak-builder/build/babl-1/_flatpak_build/meson-logs/meson-log.txt
+  cp .flatpak-builder/build/babl-1/_flatpak_build/meson-logs/meson-log.txt babl-meson-log.txt
 fi
 printf "\e[0Ksection_end:`date +%s`:babl_build\r\e[0K\n"
 
@@ -86,7 +86,7 @@ printf "\e[0Ksection_start:`date +%s`:gegl_build[collapsed=true]\r\e[0KBuilding 
 eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=gimp \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
 if [ "$GITLAB_CI" ]; then
-  tar cf gegl-meson-log.tar .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt
+  cp .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt gegl-meson-log.txt
   printf "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K\n"
 
   ## Save built deps for 'gimp-flatpak' job ##
