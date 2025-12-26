@@ -195,7 +195,7 @@ if (Test-Path "$X86_BUNDLE")
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_files[collapsed=true]$([char]13)$([char]27)[0KGenerating 32-bit TWAIN dependencies list"
     $twain_list_file = 'build\windows\installer\base_twain32on64.list'
     Copy-Item $twain_list_file "$twain_list_file.bak"
-    $twain_list = (python build\windows\2_bundle-gimp-uni_dep.py --debug debug-only $(Resolve-Path $X86_BUNDLE/lib/gimp/*/plug-ins/twain/twain.exe) $env:MSYS_ROOT/mingw32/ $X86_BUNDLE/ 32 |
+    $twain_list = (python tools\lib_bundle.py --debug debug-only $(Resolve-Path $X86_BUNDLE/lib/gimp/*/plug-ins/twain/twain.exe) $env:MSYS_ROOT/mingw32/ $X86_BUNDLE/ 32 |
                   Select-String 'Installed' -CaseSensitive -Context 0,1000) -replace "  `t- ",'bin\'
     (Get-Content $twain_list_file) | Foreach-Object {$_ -replace "@DEPS_GENLIST@","$twain_list"} | Set-Content $twain_list_file
     (Get-Content $twain_list_file) | Select-string 'Installed' -notmatch | Set-Content $twain_list_file

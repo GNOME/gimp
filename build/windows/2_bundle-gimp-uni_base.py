@@ -204,7 +204,7 @@ for dir in ["bin", "lib"]:
   for ext in ("*.dll", "*.exe"):
     for dep in search_dir.rglob(ext):
       subprocess.run([
-        sys.executable, f"{GIMP_SOURCE}/build/windows/2_bundle-gimp-uni_dep.py",
+        sys.executable, f"{GIMP_SOURCE}/tools/lib_bundle.py",
         str(dep), f"{GIMP_PREFIX}/", f"{MSYSTEM_PREFIX}/",
         str(GIMP_DISTRIB), "--output-dll-list", done_dll.as_posix()
       ], check=True)
