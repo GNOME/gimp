@@ -156,20 +156,25 @@ def find_dependencies(obj, srcdirs):
       sys.exit(1)
     elif shutil.which(objdump) is None:
       # For native objdump case.
-      objdump = 'objdump.exe'
+      objdump = 'objdump'
+      if not is_macos and shutil.which('dumpbin'):
+        objdump = 'dumpbin'
       if is_macos and shutil.which('otool'):
         objdump = 'otool'
-      else:
-        objdump = 'objdump'
 
     if shutil.which(objdump) is None:
       sys.stderr.write("Executable doesn't exist: {}\n".format(objdump))
       sys.exit(1)
 
     if not is_macos:
-      result = subprocess.run([objdump, '-p', obj], stdout=subprocess.PIPE)
-      out = result.stdout.decode('utf-8')
-      regex = re.finditer(r"DLL Name: *(\S+.dll)", out, re.MULTILINE)
+      if objdump == 'dumpbin':
+        result = subprocess.run([objdump, '/DEPENDENTS', obj], stdout=subprocess.PIPE)
+        out = result.stdout.decode('utf-8')
+        regex = re.finditer(r'\b([\w\-.]+\.dll)\b', out, re.MULTILINE)
+      else:
+        result = subprocess.run([objdump, '-p', obj], stdout=subprocess.PIPE)
+        out = result.stdout.decode('utf-8')
+        regex = re.finditer(r"DLL Name: *(\S+.dll)", out, re.MULTILINE)
     else:
       if objdump == 'otool':
         result = subprocess.run(['otool', '-l', obj], stdout=subprocess.PIPE)
