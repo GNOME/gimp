@@ -566,7 +566,8 @@ gimp-snap:
     - $GIMP_PREFIX = "$PWD\_install-$(if (-not $env:MSYSTEM_PREFIX) { $(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower()) } else { $env:MSYSTEM_PREFIX })"
     - if ("$VARIANT" -eq '-msvc') { if (-not (Test-Path $env:VCPKG_ROOT)) { git clone --depth 1 https://github.com/microsoft/vcpkg; .\vcpkg\bootstrap-vcpkg.bat }; pip install meson }
     - if ("$VARIANT" -eq '-msvc') { $VSINSTALLDIR = $(vswhere -products * -latest -property installationPath); Import-Module "$VSINSTALLDIR\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell -VsInstallPath "$VSINSTALLDIR" -SkipAutomaticLocation -DevCmdArguments "-arch=$(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower())" }
-  timeout: 120m
+  #30min is enough only on msys2 or if no vcpkg port was updated/rebuilt, we need more time in case of port bumps
+  timeout: 150m
 
 .win_environ: &WIN_ENVIRON
 # See: https://testing.developer.gimp.org/core/setup/build/windows/#prepare-for-building
