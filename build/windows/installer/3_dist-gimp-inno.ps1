@@ -128,7 +128,7 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):i
 # 3. PREPARE INSTALLER "SOURCE"
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_source[collapsed=true]$([char]13)$([char]27)[0KMaking installer assets"
 ## Custom installer strings translations and other assets
-## (They are loaded with '-DBUILD_DIR')
+## (They are loaded with 'iscc -DBUILD_DIR' on section 5.)
 if (-not (Test-Path "$BUILD_DIR\build\windows\installer"))
   {
     Write-Host "(ERROR): Installer assets not found. You can tweak 'build\windows\2_build-gimp-msys2.ps1' or configure GIMP with '-Dwindows-installer=true' to build them." -ForegroundColor red
