@@ -743,8 +743,8 @@
             ],
             "buildsystem": "meson",
             "config-opts": [
-                "-Dwith-docs=false",
-                "-Dgi-docgen=disabled"
+                "-Dgi-docgen=disabled",
+                "-Dwith-docs=false"
             ],
             "cleanup": [
                 "/bin"
@@ -761,8 +761,8 @@
             ],
             "buildsystem": "meson",
             "config-opts": [
-                "-Ddocs=false",
                 "-Dgi-docgen=disabled",
+                "-Ddocs=false",
                 "-Dworkshop=true"
             ],
             "cleanup": [
@@ -787,8 +787,8 @@
             ],
             "buildsystem": "meson",
             "config-opts": [
-                "-Dgi-docgen=disabled",
                 "-Dicc-directory=/run/host/usr/share/color/icc/",
+                "-Dgi-docgen=disabled",
                 "-Dcheck-update=no",
                 "-Denable-default-bin=enabled",
                 "-Dbuild-id=org.gimp.GIMP.flatpak.nightly"
