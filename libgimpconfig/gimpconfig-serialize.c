@@ -642,7 +642,7 @@ gimp_config_serialize_value (const GValue *value,
 
       if (file)
         {
-          gchar *path     = g_file_get_uri (file);
+          gchar *path     = g_file_get_path (file);
           gchar *unexpand = NULL;
 
           if (path)
@@ -653,16 +653,37 @@ gimp_config_serialize_value (const GValue *value,
 
           if (unexpand)
             {
-              if (escaped)
-                gimp_config_string_append_escaped (str, unexpand);
-              else
-                g_string_append (str, unexpand);
+              gchar *full_uri;
+              gchar *scheme = g_file_get_uri_scheme (file);
 
+              full_uri = g_strconcat (scheme, ":///", unexpand, NULL);
+              g_free (scheme);
               g_free (unexpand);
+
+              if (escaped)
+                gimp_config_string_append_escaped (str, full_uri);
+              else
+                g_string_append (str, full_uri);
+
+              g_free (full_uri);
             }
           else
             {
-              g_string_append (str, "NULL");
+              gchar *uri = g_file_get_uri (file);
+
+              if (uri)
+                {
+                  if (escaped)
+                    gimp_config_string_append_escaped (str, uri);
+                  else
+                    g_string_append (str, uri);
+
+                  g_free (uri);
+                }
+              else
+                {
+                  g_string_append (str, "NULL");
+                }
             }
         }
       else
