@@ -47,8 +47,6 @@ layout:
   #FIXME: needed at runtime because babl, gegl and GIMP are not fully relocatable yet
   /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1:
     bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
-  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4:
-    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4
   /etc/gimp:
     bind: $SNAP/etc/gimp
 
@@ -92,7 +90,7 @@ parts:
     source-depth: 1
     override-pull: |
       if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" = 'gimp' ]; then
-        printf '\033[31m(ERROR)\033[0m non-tagged source can not be deployed to gimp snap. Please, change grade value to stable\n' 
+        printf '\033[31m(ERROR)\033[0m non-tagged source can not be deployed to gimp snap. Please, change grade value to stable\n'
         exit 1
       fi
       if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" != 'gimp' ]; then
@@ -117,7 +115,7 @@ parts:
     source-depth: 1
     override-pull: |
       if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" = 'gimp' ]; then
-        printf '\033[31m(ERROR)\033[0m non-tagged source can not be deployed to gimp snap. Please, change grade value to stable\n' 
+        printf '\033[31m(ERROR)\033[0m non-tagged source can not be deployed to gimp snap. Please, change grade value to stable\n'
         exit 1
       fi
       if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" != 'gimp' ]; then
@@ -134,6 +132,7 @@ parts:
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - -Ddocs=false
       - -Dgi-docgen=disabled
+      - -Drelocatable=enabled
     build-packages:
       - libmaxflow-dev
       - libopenexr-dev #https://github.com/ubuntu/gnome-sdk/issues/321
@@ -152,7 +151,7 @@ parts:
     override-pull: |
       craftctl default
       if ! git describe --tags --exact-match >/dev/null 2>&1 && [ "$SNAPCRAFT_PROJECT_NAME" = 'gimp' ]; then
-        printf '\033[31m(ERROR)\033[0m non-tagged source can not be deployed to gimp snap. Please, checkout gimp repo to a tagged commit\n' 
+        printf '\033[31m(ERROR)\033[0m non-tagged source can not be deployed to gimp snap. Please, checkout gimp repo to a tagged commit\n'
         exit 1
       fi
       craftctl set version="$(awk -F"'" '/version:/ {print $2; exit}' $CRAFT_PART_SRC/meson.build)"
