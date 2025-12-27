@@ -105,6 +105,7 @@ parts:
     meson-parameters:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
       - -Dwith-docs=false
 
@@ -131,6 +132,7 @@ parts:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - -Drelocatable=enabled
+      - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
       - -Ddocs=false
     build-packages:
@@ -161,6 +163,7 @@ parts:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - -Drelocatable-bundle=yes
+      - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
       - -Dcheck-update=no
       - -Denable-default-bin=enabled
