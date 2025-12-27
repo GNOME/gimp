@@ -441,16 +441,20 @@ ico_read_icon (FILE    *fp,
   palette = NULL;
 
   data.header_size = header_size;
-  ico_read_int32 (fp, &data.width, 1);
-  ico_read_int32 (fp, &data.height, 1);
-  ico_read_int16 (fp, &data.planes, 1);
-  ico_read_int16 (fp, &data.bpp, 1);
-  ico_read_int32 (fp, &data.compression, 1);
-  ico_read_int32 (fp, &data.image_size, 1);
-  ico_read_int32 (fp, &data.x_res, 1);
-  ico_read_int32 (fp, &data.y_res, 1);
-  ico_read_int32 (fp, &data.used_clrs, 1);
-  ico_read_int32 (fp, &data.important_clrs, 1);
+  if (ico_read_int32 (fp, &data.width, 1)   != 4     ||
+      ico_read_int32 (fp, &data.height, 1)  != 4     ||
+      ico_read_int16 (fp, &data.planes, 1)  != 2     ||
+      ico_read_int16 (fp, &data.bpp, 1) != 2         ||
+      ico_read_int32 (fp, &data.compression, 1) != 4 ||
+      ico_read_int32 (fp, &data.image_size, 1) != 4  ||
+      ico_read_int32 (fp, &data.x_res, 1) != 4       ||
+      ico_read_int32 (fp, &data.y_res, 1) != 4       ||
+      ico_read_int32 (fp, &data.used_clrs, 1) != 4   ||
+      ico_read_int32 (fp, &data.important_clrs, 1) != 4)
+    {
+      D(("skipping image: invalid header\n"));
+      return FALSE;
+    }
 
   D(("  header size %i, "
      "w %i, h %i, planes %i, size %i, bpp %i, used %i, imp %i.\n",
@@ -513,7 +517,7 @@ ico_read_icon (FILE    *fp,
 
   /* Read in and_map. It's padded out to 32 bits per line: */
   and_map = ico_alloc_map (w, h, 1, &length);
-  if (! ico_read_int8 (fp, and_map, length) != length)
+  if (ico_read_int8 (fp, and_map, length) != length)
     {
       D(("skipping image: too large\n"));
       return FALSE;
