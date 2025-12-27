@@ -88,7 +88,6 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
       {
         ### For tagged jobs (i.e. release or test jobs for upcoming releases), use the
         ### last tag. Otherwise use the default branch's HEAD.
-        $repo = if ($repo -notlike '*/*') { "https://gitlab.gnome.org/GNOME/$dep.git" } else { $repo }
         if (($repo -like '*babl*' -or $repo -like '*gegl*') -and $CI_COMMIT_TAG)
           {
             $tag_branch = (git ls-remote --exit-code --refs --sort=version:refname $repo refs/tags/$($dep.ToUpper())_[0-9]*_[0-9]*_[0-9]* | Select-Object -Last 1).Split('refs/')[-1]
@@ -165,12 +164,12 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 
 if ($env:VCPKG_ROOT)
   {
-    self_build babl @('-Denable-gir=false')
-    self_build gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch', 'build\windows\patches\0001-gegl-Use-vs_module_defs-for-MSVC.patch') @('-Dintrospection=false')
+    self_build https://gitlab.gnome.org/GNOME/babl @('-Denable-gir=false')
+    self_build https://gitlab.gnome.org/GNOME/gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch', 'build\windows\patches\0001-gegl-Use-vs_module_defs-for-MSVC.patch') @('-Dintrospection=false')
     exit 0
   }
-self_build babl
-self_build gegl
+self_build https://gitlab.gnome.org/GNOME/babl
+self_build https://gitlab.gnome.org/GNOME/gegl
 if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32')
   {
     self_build https://github.com/Exiv2/exiv2 "v0.28.7" @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DCMAKE_DLL_NAME_WITH_SOVERSION=ON', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF', '-DEXIV2_ENABLE_VIDEO=OFF')
