@@ -47,7 +47,7 @@ printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
 
 
 # Cleanup GIMP_PREFIX (not working) and export it to OSTree repo
-# https://github.com/flatpak/flatpak-builder/issues/14
+# FIXME: https://github.com/flatpak/flatpak-builder/issues/14
 printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating OSTree repo\n"
 eval $FLATPAK_BUILDER --disable-rofiles-fuse --finish-only --repo=repo \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json

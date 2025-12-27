@@ -22,7 +22,7 @@ eval "$(sed -n '/Install part/,/End of check/p' build/linux/flatpak/1_build-deps
 
 ## flat-manager (only for master branch)
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
-  #flat-manager is unreproducible: https://github.com/flatpak/flat-manager/issues/155
+  #FIXME: flat-manager is unreproducible: https://github.com/flatpak/flat-manager/issues/155
   flatmanager_text=" | flat-manager version: unknown"
 fi
 printf "(INFO): flatpak-builder version: $builder_version (over flatpak $(flatpak --version | sed 's|Flatpak ||'))${flatmanager_text}\n"
