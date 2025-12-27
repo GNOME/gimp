@@ -105,8 +105,8 @@ parts:
     meson-parameters:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-      - -Dwith-docs=false
       - -Dgi-docgen=disabled
+      - -Dwith-docs=false
 
   gegl:
     after:
@@ -130,9 +130,9 @@ parts:
     meson-parameters:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-      - -Ddocs=false
-      - -Dgi-docgen=disabled
       - -Drelocatable=enabled
+      - -Dgi-docgen=disabled
+      - -Ddocs=false
     build-packages:
       - libmaxflow-dev
       - libopenexr-dev #https://github.com/ubuntu/gnome-sdk/issues/321
@@ -160,8 +160,8 @@ parts:
     meson-parameters:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-      - -Dgi-docgen=disabled
       - -Drelocatable-bundle=yes
+      - -Dgi-docgen=disabled
       - -Dcheck-update=no
       - -Denable-default-bin=enabled
       - -Dbuild-id=org.gimp.GIMP.snapcraft.experimental
