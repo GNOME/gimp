@@ -215,7 +215,7 @@ foreach ($bundle in $supported_archs)
 
     # 3. PREPARE MSIX "SOURCE"
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_source[collapsed=true]$([char]13)$([char]27)[0KMaking assets for $msix_arch MSIX"
-    # (We test the existence of the icons here (and not on 3.2.) to avoid creating AppxManifest.xml for nothing)
+    # (We test the existence of the icons here (and not on section 3.2.) to avoid creating AppxManifest.xml for nothing)
     $icons_path = "$build_dir\build\windows\store\Assets"
     if (-not (Test-Path "$icons_path"))
       {
