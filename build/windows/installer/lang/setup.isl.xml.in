@@ -7,7 +7,7 @@
       <value>License Agreement</value>
     </config>
     <config name="AboutSetupNote">
-      <value>Setup built by Jernej Simonèiè, jernej-gimp@ena.si</value>
+      <value>Setup built by GIMP team, gimp.org</value>
     </config>
   </section>
 
