@@ -201,6 +201,11 @@ def copy_dlls(dll_list, srcdirs, destdir):
     dest_bindir = 'Frameworks'
   destbin = os.path.join(destdir, dest_bindir)
   os.makedirs(destbin, exist_ok=True)
+  if is_macos:
+    abs_binary = os.path.abspath(args.bin)
+    abs_destdir = os.path.abspath(destdir)
+    if abs_binary.startswith(abs_destdir + os.sep):
+      set_rpath(abs_binary, destbin)
   for dll in dll_list:
     if not os.path.exists(os.path.join(destbin, dll)):
       # Do not overwrite existing files.
@@ -211,12 +216,66 @@ def copy_dlls(dll_list, srcdirs, destdir):
         if os.path.isfile(full_file_name):
           sys.stdout.write("Bundling {} to {}\n".format(full_file_name, destbin))
           shutil.copy(full_file_name, destbin)
+          if is_macos:
+            set_rpath(os.path.join(destbin, dll))
           break
       else:
         # This should not happen. We determined that the dll is in one
         # of the srcdirs.
         sys.stderr.write("Missing DLL/DYLIB: {}\n".format(dll))
         sys.exit(1)
+
+def set_rpath(binary, destbin=None):
+  """
+  Remove all LC_RPATH entries except those identical to relative destbin,
+  and set it if not. Also rewrite LC_LOAD_DYLIB and LC_ID_DYLIB to use it.
+  """
+  result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE)
+  out = result.stdout.decode('utf-8', errors='replace')
+
+  # Handle LC_RPATH (only on executables)
+  if ".dylib" not in binary and ".so" not in binary:
+    regex = re.findall(r'path (.+?) \(offset', out)
+    new_rpath = os.path.join("@executable_path", os.path.relpath(destbin, os.path.dirname(os.path.abspath(binary))))
+    for old_rpath in regex:
+      if old_rpath == new_rpath:
+        continue
+      try:
+        subprocess.run(['install_name_tool', '-delete_rpath', old_rpath, binary], check=True)
+        #sys.stdout.write(f"Removed LC_RPATH {old_rpath} from {binary}\n")
+      except subprocess.CalledProcessError as e:
+        sys.stderr.write(f"Failed to remove rpath {old_rpath} from {binary}: {e}\n")
+    if new_rpath not in regex:
+      try:
+        subprocess.run(['install_name_tool', '-add_rpath', new_rpath, binary], check=True)
+        #sys.stdout.write(f"Added LC_RPATH {new_rpath} to {binary}\n")
+      except subprocess.CalledProcessError as e:
+        sys.stderr.write(f"Failed to add rpath {new_rpath} to {binary}: {e}\n")
+
+  # Handle LC_LOAD_DYLIB (on executables, shared libraries and shared modules)
+  regex = re.findall(r'name (.+?) \(offset', out)
+  for old_dylib_path in regex:
+    if old_dylib_path.startswith("/usr") or old_dylib_path.startswith("/System"):
+      continue
+    new_dylib_path = os.path.join("@rpath", os.path.basename(old_dylib_path))
+    if old_dylib_path != new_dylib_path:
+      try:
+        subprocess.run(['install_name_tool', '-change', old_dylib_path, new_dylib_path, binary], check=True)
+        #sys.stdout.write(f"Rewrote LC_LOAD_DYLIB {old_dylib_path} -> {new_dylib_path}\n")
+      except subprocess.CalledProcessError as e:
+        sys.stderr.write(f"Failed to rewrite LC_LOAD_DYLIB {old_dylib_path}: {e}\n")
+
+  # Handle LC_ID_DYLIB (only on shared libraries)
+  regex = re.search(r'cmd LC_ID_DYLIB.*?\n\s*name (.+?) \(offset', out, re.DOTALL)
+  if (".dylib" in binary or ".so" in binary) and regex:
+    old_dylib_path = regex.group(1).strip()
+    new_dylib_path = os.path.join("@rpath", os.path.basename(old_dylib_path))
+    if old_dylib_path != new_dylib_path:
+      try:
+        subprocess.run(['install_name_tool', '-id', new_dylib_path, binary], check=True)
+        #sys.stdout.write(f"Rewrote LC_ID_DYLIB {old_dylib_path} -> {new_dylib_path}\n")
+      except subprocess.CalledProcessError as e:
+        sys.stderr.write(f"Failed to rewrite LC_ID_DYLIB {old_dylib_path}: {e}\n")
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
