@@ -18,14 +18,9 @@
 </xsl:template>
 
 <xsl:template match="config">
-<xsl:value-of select="@name"/>=<xsl:value-of select="."/>
-<xsl:apply-templates select="@LANG_CHECK@" />
-<xsl:text>&#xA;</xsl:text>
-</xsl:template>
-<xsl:template match="config">
 <xsl:choose>
   <xsl:when test="@LANG_CHECK@">
-    <xsl:value-of select="@name"/>=<xsl:apply-templates select="@LANG_CHECK@" />
+    <xsl:value-of select="@name"/>=<xsl:value-of select="@LANG_CHECK@" />
   </xsl:when>
   <xsl:otherwise>
     <xsl:value-of select="@name"/>=<xsl:apply-templates select="value[not(@xml:lang)]" />
