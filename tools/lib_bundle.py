@@ -16,7 +16,7 @@
 # python3 lib_bundle.py /path/to/run /macOSenv/ /path/install
 #
 # In this case, the DYLIB dependencies for executable run will be extracted
-# and copied into /path/install/Contents/Resources/lib folder. To copy the DYLIB,
+# and copied into /path/install/Frameworks folder. To copy the DYLIB,
 # the root path to macOS environnment should be passed, here /macOSenv/ (usually /opt/local).
 
 import argparse
@@ -193,12 +193,12 @@ def find_dependencies(obj, srcdirs):
   else:
     return False
 
-# Copy a DLL/DYLIB set into the /destdir/bin or /destdir/Contents/Resource/lib directory
+# Copy a DLL/DYLIB set into the /destdir/bin or /destdir/Frameworks directory
 def copy_dlls(dll_list, srcdirs, destdir):
   global bindir
   dest_bindir = bindir
   if is_macos:
-    dest_bindir = 'Contents/Resources/lib'
+    dest_bindir = 'Frameworks'
   destbin = os.path.join(destdir, dest_bindir)
   os.makedirs(destbin, exist_ok=True)
   for dll in dll_list:
