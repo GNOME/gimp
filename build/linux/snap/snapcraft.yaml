@@ -45,8 +45,6 @@ apps:
 
 layout:
   #FIXME: needed at runtime because babl, gegl and GIMP are not fully relocatable yet
-  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1:
-    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
   /etc/gimp:
     bind: $SNAP/etc/gimp
 
@@ -105,6 +103,7 @@ parts:
     meson-parameters:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - -Drelocatable=enabled
       - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
       - -Dwith-docs=false
