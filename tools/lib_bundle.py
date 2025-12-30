@@ -217,7 +217,7 @@ def copy_dlls(dll_list, srcdirs, destdir):
           sys.stdout.write("Bundling {} to {}\n".format(full_file_name, destbin))
           shutil.copy(full_file_name, destbin)
           if is_macos:
-            set_rpath(os.path.join(destbin, dll))
+            set_rpath(os.path.join(destbin, dll), destbin)
           break
       else:
         # This should not happen. We determined that the dll is in one
@@ -233,8 +233,8 @@ def set_rpath(binary, destbin=None):
   result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE)
   out = result.stdout.decode('utf-8', errors='replace')
 
-  # Handle LC_RPATH (only on executables)
-  if ".dylib" not in binary and ".so" not in binary:
+  # Handle LC_RPATH (only on executables as a rule)
+  if (".dylib" not in binary and ".so" not in binary) or "cmd LC_RPATH" in out:
     regex = re.findall(r'path (.+?) \(offset', out)
     new_rpath = os.path.join("@executable_path", os.path.relpath(destbin, os.path.dirname(os.path.abspath(binary))))
     for old_rpath in regex:
@@ -252,7 +252,7 @@ def set_rpath(binary, destbin=None):
       except subprocess.CalledProcessError as e:
         sys.stderr.write(f"Failed to add rpath {new_rpath} to {binary}: {e}\n")
 
-  # Handle LC_LOAD_DYLIB (on executables, shared libraries and shared modules)
+  # Handle LC_LOAD_DYLIB (on executables, shared libraries)
   regex = re.findall(r'name (.+?) \(offset', out)
   for old_dylib_path in regex:
     if old_dylib_path.startswith("/usr") or old_dylib_path.startswith("/System"):
