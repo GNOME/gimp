@@ -277,13 +277,14 @@ def set_rpath(binary, destbin=None):
       except subprocess.CalledProcessError as e:
         sys.stderr.write(f"Failed to rewrite LC_ID_DYLIB {old_dylib_path}: {e}\n")
 
+  # Normalize signature after all the changes
   result = subprocess.run(["codesign", "-v", binary], capture_output=True, text=True)
   if "invalid signature" in result.stdout + result.stderr:
     try:
       subprocess.run(["codesign", "--sign", "-", "--force", "--preserve-metadata=entitlements,requirements,flags,runtime", binary], check=True, stderr=subprocess.DEVNULL)
       #sys.stdout.write(f"Re-signed {binary}\n")
     except subprocess.CalledProcessError as e:
-      sys.stderr.write(f"Failed to ad-hoc sign {file}: {e}\n")
+      sys.stderr.write(f"Failed to ad-hoc sign {binary}: {e}\n")
 
 
 if __name__ == "__main__":
