@@ -241,13 +241,13 @@ def set_rpath(binary, destbin=None):
       if old_rpath == new_rpath:
         continue
       try:
-        subprocess.run(['install_name_tool', '-delete_rpath', old_rpath, binary], check=True)
+        subprocess.run(['install_name_tool', '-delete_rpath', old_rpath, binary], check=True, stderr=subprocess.DEVNULL)
         #sys.stdout.write(f"Removed LC_RPATH {old_rpath} from {binary}\n")
       except subprocess.CalledProcessError as e:
         sys.stderr.write(f"Failed to remove rpath {old_rpath} from {binary}: {e}\n")
     if new_rpath not in regex:
       try:
-        subprocess.run(['install_name_tool', '-add_rpath', new_rpath, binary], check=True)
+        subprocess.run(['install_name_tool', '-add_rpath', new_rpath, binary], check=True, stderr=subprocess.DEVNULL)
         #sys.stdout.write(f"Added LC_RPATH {new_rpath} to {binary}\n")
       except subprocess.CalledProcessError as e:
         sys.stderr.write(f"Failed to add rpath {new_rpath} to {binary}: {e}\n")
@@ -260,7 +260,7 @@ def set_rpath(binary, destbin=None):
     new_dylib_path = os.path.join("@rpath", os.path.basename(old_dylib_path))
     if old_dylib_path != new_dylib_path:
       try:
-        subprocess.run(['install_name_tool', '-change', old_dylib_path, new_dylib_path, binary], check=True)
+        subprocess.run(['install_name_tool', '-change', old_dylib_path, new_dylib_path, binary], check=True, stderr=subprocess.DEVNULL)
         #sys.stdout.write(f"Rewrote LC_LOAD_DYLIB {old_dylib_path} -> {new_dylib_path}\n")
       except subprocess.CalledProcessError as e:
         sys.stderr.write(f"Failed to rewrite LC_LOAD_DYLIB {old_dylib_path}: {e}\n")
@@ -272,10 +272,19 @@ def set_rpath(binary, destbin=None):
     new_dylib_path = os.path.join("@rpath", os.path.basename(old_dylib_path))
     if old_dylib_path != new_dylib_path:
       try:
-        subprocess.run(['install_name_tool', '-id', new_dylib_path, binary], check=True)
+        subprocess.run(['install_name_tool', '-id', new_dylib_path, binary], check=True, stderr=subprocess.DEVNULL)
         #sys.stdout.write(f"Rewrote LC_ID_DYLIB {old_dylib_path} -> {new_dylib_path}\n")
       except subprocess.CalledProcessError as e:
         sys.stderr.write(f"Failed to rewrite LC_ID_DYLIB {old_dylib_path}: {e}\n")
+
+  result = subprocess.run(["codesign", "-v", binary], capture_output=True, text=True)
+  if "invalid signature" in result.stdout + result.stderr:
+    try:
+      subprocess.run(["codesign", "--sign", "-", "--force", "--preserve-metadata=entitlements,requirements,flags,runtime", binary], check=True, stderr=subprocess.DEVNULL)
+      #sys.stdout.write(f"Re-signed {binary}\n")
+    except subprocess.CalledProcessError as e:
+      sys.stderr.write(f"Failed to ad-hoc sign {file}: {e}\n")
+
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
