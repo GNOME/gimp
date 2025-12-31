@@ -261,8 +261,8 @@ WelcomeFontSize=12
 [Tasks]
 Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription: "{cm:AdditionalIcons}"
 [Icons]
-Name: "{autoprograms}\{#DISPLAY_NAME}"; Filename: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "{#DISPLAY_VERSION}"
-Name: "{autodesktop}\{#DISPLAY_NAME}"; Filename: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "{#DISPLAY_VERSION}"; Tasks: desktopicon
+Name: "{autoprograms}\{#DISPLAY_NAME}"; Filename: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "{#DISPLAY_NAME}"
+Name: "{autodesktop}\{#DISPLAY_NAME}"; Filename: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "{#DISPLAY_NAME}"; Tasks: desktopicon
 [Run]
 Filename: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"; Description: "{cm:LaunchGimp}"; Flags: unchecked postinstall nowait skipifsilent
 
