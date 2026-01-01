@@ -483,6 +483,8 @@ gmodule           = dependency('gmodule-no-export-2.0')
 
 gtk3_minver       = '3.24.0'
 gtk3              = dependency('gtk+-3.0',           version: '>='+gtk3_minver)
+gdk_specific_name = platform_osx ? 'gdk-quartz-3.0' : 'gdk-3.0'
+gdk_specific      = dependency(gdk_specific_name)
 gtk_version_split = gtk3_minver.split('.')
 gtk_major = gtk_version_split[0].to_int()
 gtk_minor = gtk_version_split[1].to_int()
