@@ -517,6 +517,8 @@ printf "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K\n"
 APPIMAGETOOL_APP_NAME="GIMP-${CUSTOM_GIMP_VERSION}-${ARCH}.AppImage"
 printf "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME\n"
 if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
+  #this allows users to optionally delta update with e.g. AppImageUpdate tool so without needing a browser
+  #see: https://github.com/AppImage/AppImageSpec/blob/6932f737883e5b57693398355587d6dc4666b729/draft.md?plain=1#L177
   update_info="--updateinformation zsync|https://download.gimp.org/gimp/GIMP-${CHANNEL}-${ARCH}.AppImage.zsync --file-url v$GIMP_APP_VERSION/linux/$APPIMAGETOOL_APP_NAME"
 fi
 "$standard_appimagetool" $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file appimageignore-$ARCH \
