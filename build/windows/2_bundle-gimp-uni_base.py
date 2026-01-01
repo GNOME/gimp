@@ -112,9 +112,9 @@ bundle(MSYSTEM_PREFIX, "share/icons/Adwaita")
 ### Needed by GTK to use icon themes. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5080
 bundle(GIMP_PREFIX, "share/icons/hicolor")
 ### Needed to loading icons in GUI
-bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders.cache")
 bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-png.dll")
 bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/pixbufloader_svg.dll")
+bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders.cache")
 
 
 ## CORE FEATURES.
