@@ -130,7 +130,7 @@ versionconfig.set('GIMP_API_VERSION',   gimp_api_version)
 pkgconfig = import('pkgconfig')
 i18n      = import('i18n')
 gnome     = import('gnome')
-pythonmod = import('python')
+python    = import('python').find_installation()
 simd      = import('unstable-simd')
 fs        = import('fs')
 
