@@ -1124,7 +1124,6 @@ perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
 python3_minver = '>=3.6'
 
-python = pythonmod.find_installation('python3', required: true)
 message('Found Python @0@'.format(python.language_version()))
 
 if not python.language_version().version_compare(python3_minver)
