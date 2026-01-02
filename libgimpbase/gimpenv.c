@@ -348,7 +348,7 @@ gimp_directory (void)
 
       if (g_file_test ("/.flatpak-info", G_FILE_TEST_EXISTS))
         {                       /* Linux flatpak version */
-          gchar *host_xdg_config_home = g_getenv ("HOST_XDG_CONFIG_HOME");
+          const gchar *host_xdg_config_home = g_getenv ("HOST_XDG_CONFIG_HOME");
 
           if (host_xdg_config_home == NULL)
             gimp_dir =  g_build_filename (g_get_home_dir (),
