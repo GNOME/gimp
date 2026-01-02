@@ -697,11 +697,14 @@ endif
 conf.set('HAVE_LIBBACKTRACE', libbacktrace.found())
 
 ## Check for libunwind
+# In most platforms, unw_*() functions are in the libunwind library.
+# In macOS, it is on libSystem (there we only need the SDK header).
 libunwind = ( get_option('libunwind')
   ? dependency('libunwind', version: '>=1.1.0', required: false)
   : no_dep
 )
-conf.set('HAVE_LIBUNWIND', libunwind.found())
+have_unwind = libunwind.found() or cc.has_header('unwind.h')
+conf.set('HAVE_LIBUNWIND', have_unwind ? 1 : false)
 
 ## Check for backtrace() API
 # In musl, backtrace() is in the libexecinfo library.
