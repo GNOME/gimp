@@ -1597,9 +1597,9 @@ conf.set_quoted('GIMP_APP_VERSION_STRING',gimp_app_version)
 conf.set_quoted('GIMP_APP_VERSION',       gimp_app_version)
 conf.set_quoted('GIMP_USER_VERSION',      gimp_app_version)
 
-conf.set_quoted('GIMP_DATA_VERSION',      gimp_app_version)
-conf.set_quoted('GIMP_PLUGIN_VERSION',    gimp_app_version)
-conf.set_quoted('GIMP_SYSCONF_VERSION',   gimp_app_version)
+conf.set_quoted('GIMP_DATA_VERSION',      gimp_api_version)
+conf.set_quoted('GIMP_PLUGIN_VERSION',    gimp_api_version)
+conf.set_quoted('GIMP_SYSCONF_VERSION',   gimp_api_version)
 conf.set_quoted('GIMP_TOOL_VERSION',      gimp_app_version)
 conf.set_quoted('GIMP_PKGCONFIG_VERSION', gimp_api_version)
 
