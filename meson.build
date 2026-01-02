@@ -494,6 +494,30 @@ add_project_arguments('-DGDK_VERSION_MAX_ALLOWED=' + gtk_min_macro, language: 'c
 
 harfbuzz_minver   = '2.8.2'
 harfbuzz          = dependency('harfbuzz',           version: '>='+harfbuzz_minver)
+
+if platform_osx and \
+   cc.run('''
+          #include <string.h>
+          #include <hb.h>
+
+          int
+          main (int argc, char **argv)
+          {
+            const char **shapers = hb_shape_list_shapers ();
+
+            for (int i = 0; shapers[i] != NULL; i++)
+              if (strcmp (shapers[i], "graphite2") == 0)
+                return 0;
+
+            return 1;
+          }
+          ''',
+          name: 'harfbuzz is built with graphite2 shaper',
+          dependencies: harfbuzz).returncode() != 0
+  error('harfbuzz must be built with graphite2 shaper on macOS.')
+endif
+
+
 json_glib_minver  = '1.2.6'
 json_glib         = dependency('json-glib-1.0',      version: '>='+json_glib_minver)
 lcms_minver       = '2.8'
