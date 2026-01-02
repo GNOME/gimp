@@ -203,7 +203,7 @@ if platform_windows
 
   if cc.get_argument_syntax() == 'msvc'
     # MSVC's rc.exe style: /DKey=Value'
-    rc_define_flag = [] 
+    rc_define_flag = []
     rc_define_fmt  = '/D@0@=@1@'
   else
     # GNU's windres.exe style: --define Key="Value"
@@ -448,8 +448,16 @@ fontconfig_minver = '2.12.4'
 fontconfig        = dependency(fontconfig_name,      version: '>='+fontconfig_minver)
 freetype2_minver  = '2.1.7'
 freetype2         = dependency('freetype2',          version: '>='+freetype2_minver)
+
 gdk_pixbuf_minver = '2.30.8'
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>='+gdk_pixbuf_minver)
+gdk_pixbuf_version_split = gdk_pixbuf_minver.split('.')
+gdk_pixbuf_major = gdk_pixbuf_version_split[0].to_int()
+gdk_pixbuf_minor = gdk_pixbuf_version_split[1].to_int()
+gdk_pixbuf_min_macro = 'GDK_PIXBUF_VERSION_@0@_@1@'.format(gdk_pixbuf_major, gdk_pixbuf_minor)
+add_project_arguments('-DGDK_PIXBUF_VERSION_MIN_REQUIRED=' + gdk_pixbuf_min_macro, language: 'c')
+add_project_arguments('-DGDK_PIXBUF_VERSION_MAX_ALLOWED=' + gdk_pixbuf_min_macro, language: 'c')
+
 gegl_minver       = '0.4.62'
 gegl              = dependency('gegl-0.4',           version: '>='+gegl_minver)
 exiv2_minver      = '0.27.4'
