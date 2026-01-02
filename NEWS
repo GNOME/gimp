@@ -36,6 +36,7 @@ Build:
     APIVER=3.0 right now).
   - Drop Force32bitInstall option in Windows installer.
   - Work has been started to move the macOS CI to our main Gitlab infra.
+  - The Flatpak package will now contain gimp-console as well.
 
 
 Overview of Changes from GIMP 3.2.0 RC1 to GIMP 3.2.0 RC2
