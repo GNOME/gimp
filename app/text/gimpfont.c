@@ -1365,6 +1365,15 @@ gimp_font_get_hash (GimpFont *font)
       guint                 length;
       const char           *hb_data;
 
+      if (pango_font == NULL)
+        {
+          printf("NULL FONT!\n");
+          printf("lookup name: %s\n", font->lookup_name);
+          printf("pfd: %p\n", pfd);
+          printf("font factory: %p\n", font_factory);
+          printf("pango context: %p\n", pango_context);
+          fflush(stdout);
+        }
       FcPatternGetString (pango_fc_font_get_pattern (pango_font), FC_FILE, 0, (FcChar8 **) &file);
 
       hb_blob  = hb_blob_create_from_file (file);
