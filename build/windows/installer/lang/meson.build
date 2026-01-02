@@ -64,8 +64,13 @@ foreach language : languages
   web_lang_code = lang_code.replace('_', '-')
   if 'default' in language
     lang_check = 'value[not(@xml:lang)]'
+  elif lang_code == web_lang_code
+    # Do not use lang() XPath function, because it would select too
+    # much. E.g. lang('pt') selects both pt and pt-BR localizations.
+    # See #13199.
+    lang_check = 'value[@xml:lang=\'@0@\']'.format(lang_code)
   else
-    lang_check = 'value[lang(\'@0@\')] | value[lang(\'@1@\')]'.format(lang_code, web_lang_code)
+    lang_check = 'value[@xml:lang=\'@0@\'] | value[@xml:lang=\'@1@\']'.format(lang_code, web_lang_code)
   endif
 
   gimp_ms_installer_lang_xsl = configure_file(
