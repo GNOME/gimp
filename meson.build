@@ -735,7 +735,7 @@ libunwind = ( get_option('libunwind')
   ? dependency('libunwind', version: '>=1.1.0', required: false)
   : no_dep
 )
-have_unwind = libunwind.found() or cc.has_header('unwind.h', required: false)
+have_unwind = libunwind.found() or cc.has_header('libunwind.h', required: false)
 conf.set('HAVE_LIBUNWIND', have_unwind ? 1 : false)
 
 ## Check for backtrace() API
