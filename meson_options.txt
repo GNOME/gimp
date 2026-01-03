@@ -5,6 +5,7 @@ option('enable-multiproc',  type: 'boolean', value: true,   description: 'Suppor
 option('profiling',         type: 'boolean', value: false,  description: 'Enable profiling')
 option('windows-installer', type: 'boolean', value: false,  description: 'Generate files needed for the Inno Windows installer')
 option('ms-store',          type: 'boolean', value: false,  description: 'Generate files needed for the Microsoft Store .msixupload and/or .msixbundle')
+option('dmg',               type: 'boolean', value: false,  description: 'Generate files needed for the macOS .dmg')
 
 option('relocatable-bundle', type: 'combo', value: 'platform-default',
                              description: 'build with resources considered bundled under the same prefix',
