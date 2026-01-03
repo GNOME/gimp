@@ -257,7 +257,10 @@ def set_rpath(binary, destbin=None):
   for old_dylib_path in regex:
     if old_dylib_path.startswith("/usr") or old_dylib_path.startswith("/System"):
       continue
-    new_dylib_path = os.path.join("@rpath", os.path.basename(old_dylib_path))
+    if ".framework" in old_dylib_path:
+      new_dylib_path = os.path.join("@rpath", old_dylib_path[old_dylib_path.rfind("/", 0, old_dylib_path.find(".framework")) + 1:])
+    else:
+      new_dylib_path = os.path.join("@rpath", os.path.basename(old_dylib_path))
     if old_dylib_path != new_dylib_path:
       try:
         subprocess.run(['install_name_tool', '-change', old_dylib_path, new_dylib_path, binary], check=True, stderr=subprocess.DEVNULL)
