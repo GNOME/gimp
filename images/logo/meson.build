@@ -368,13 +368,13 @@ if platform_osx and get_option('dmg')
   gimp_icns = custom_target('gimp.icns',
                             input : [ gen_gimp_icns_py ],
                             depend_files: [ 'gimp-logo.svg' ],
-                            depends: [ gimp_exe_depends ],
+                            depends: [ splash ],
                             output: [ 'gimp.icns' ],
                             command: [ gimp_exe,'-nidfs',
                                        '--batch-interpreter', 'python-fu-eval',
                                        '-b', '-', '--quit'],
                             feed: true,
-                            build_by_default: false,
+                            build_by_default: true,
                             env: gimp_run_env)
 
 
@@ -385,17 +385,17 @@ if platform_osx and get_option('dmg')
   gen_fileicon_icns_py = configure_file(input : 'gen-fileicon.py.in',
                                        output : 'gen-fileicon-icns.py',
                                        configuration : gen_fileicon_icns_conf)
-  custom_target('fileicon.icns',
-                input : [ gen_fileicon_icns_py ],
-                depend_files: [ 'gimp-logo-shadow.svg', 'fileicon-base-xcf.svg', 'fileicon-base.svg' ],
-                depends: [ gimp_exe_depends ],
-                output: [ 'stamp-fileicon.icns' ],
-                command: [ gimp_exe, '-nidfs',
-                           '--batch-interpreter', 'python-fu-eval',
-                           '-b', '-', '--quit'],
-                feed: true,
-                build_by_default: false,
-                env: gimp_run_env)
+  fileicon_icns = custom_target('fileicon.icns',
+                                input : [ gen_fileicon_icns_py ],
+                                depend_files: [ 'gimp-logo-shadow.svg', 'fileicon-base-xcf.svg', 'fileicon-base.svg' ],
+                                depends: [ gimp_icns ],
+                                output: [ 'stamp-fileicon.icns' ],
+                                command: [ gimp_exe, '-nidfs',
+                                           '--batch-interpreter', 'python-fu-eval',
+                                           '-b', '-', '--quit'],
+                                feed: true,
+                                build_by_default: true,
+                                env: gimp_run_env)
 
 
   ## gimp-dmg.png (macOS) ##
@@ -405,12 +405,12 @@ if platform_osx and get_option('dmg')
   gimp_dmg = custom_target('gimp-dmg.png',
                            input : [ gen_gimp_dmg_py ],
                            depend_files: [ 'gimp-logo-shadow.svg', '../macos/gimp-dmg.xcf.xz' ],
-                           depends: [ gimp_exe_depends ],
+                           depends: [ fileicon_icns ],
                            output: [ 'gimp-dmg.png' ],
                            command: [ gimp_exe,'-nidfs',
                                       '--batch-interpreter', 'python-fu-eval',
                                       '-b', '-', '--quit'],
                            feed: true,
-                           build_by_default: false,
+                           build_by_default: true,
                            env: gimp_run_env)
 endif
