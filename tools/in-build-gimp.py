@@ -39,7 +39,7 @@ try:
       regex = re.findall(r'path (.+?) \(offset', out)
       for new_rpath in rpath_array:
         if not new_rpath in regex:
-          subprocess.run(["install_name_tool", "-add_rpath", new_rpath, binary], check=True)
+          subprocess.run(["install_name_tool", "-add_rpath", new_rpath, binary], check=False)
 
   if "GIMP_DEBUG_SELF" in os.environ and shutil.which("gdb"):
     print(f"RUNNING: gdb --batch -x {os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py --args {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}")
