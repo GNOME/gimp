@@ -399,18 +399,20 @@ if platform_osx
 
 
   ## gimp-dmg.png (macOS) ##
-  gen_gimp_dmg_py = configure_file(input : 'gen-gimp-dmg.py.in',
-                                   output : 'gen-gimp-dmg.py',
-                                   configuration : gen_conf)
-  gimp_dmg = custom_target('gimp-dmg.png',
-                           input : [ gen_gimp_dmg_py ],
-                           depend_files: [ 'gimp-logo-shadow.svg', '../macos/gimp-dmg.xcf.xz' ],
-                           depends: [ gimp_exe_depends ],
-                           output: [ 'gimp-dmg.png' ],
-                           command: [ gimp_exe,'-nidfs',
-                                      '--batch-interpreter', 'python-fu-eval',
-                                      '-b', '-', '--quit'],
-                           feed: true,
-                           build_by_default: false,
-                           env: gimp_run_env)
+  if get_option('dmg')
+    gen_gimp_dmg_py = configure_file(input : 'gen-gimp-dmg.py.in',
+                                     output : 'gen-gimp-dmg.py',
+                                     configuration : gen_conf)
+    gimp_dmg = custom_target('gimp-dmg.png',
+                             input : [ gen_gimp_dmg_py ],
+                             depend_files: [ 'gimp-logo-shadow.svg', '../macos/gimp-dmg.xcf.xz' ],
+                             depends: [ gimp_exe_depends ],
+                             output: [ 'gimp-dmg.png' ],
+                             command: [ gimp_exe,'-nidfs',
+                                        '--batch-interpreter', 'python-fu-eval',
+                                        '-b', '-', '--quit'],
+                             feed: true,
+                             build_by_default: false,
+                             env: gimp_run_env)
+  endif
 endif
