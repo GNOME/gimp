@@ -59,10 +59,10 @@
 
 struct _GimpFontFactoryPrivate
 {
-  GSList                 *fonts_renaming_config;
-  gchar                  *conf;
-  gchar                  *sysconf;
-  PangoContext           *pango_context;
+  GSList       *fonts_renaming_config;
+  gchar        *conf;
+  gchar        *sysconf;
+  PangoContext *pango_context;
 };
 
 #define GET_PRIVATE(obj) (((GimpFontFactory *) (obj))->priv)
