@@ -526,7 +526,7 @@ if platform_osx and \
 endif
 
 
-json_glib_minver  = '1.2.6'
+json_glib_minver  = '1.8.0'
 json_glib         = dependency('json-glib-1.0',      version: '>='+json_glib_minver)
 lcms_minver       = '2.8'
 lcms              = dependency('lcms2',              version: '>='+lcms_minver)
