@@ -21,8 +21,8 @@ try:
   # Earlier code used to set DYLD_LIBRARY_PATH environment variable instead, but
   # it didn't work on contributor's builds because of System Integrity
   # Protection (SIP), though it did work in the CI which had older macOS.
-  # So, we just set LC_RPATH on binaries, but this restrict us to only one 'gimp_exe_depends' target for
-  # macOS (the splash screen). Otherwise, multiple install_name_tool procs would clash over the same bin. See: #14236
+  # So, we just set LC_RPATH on binaries, but this restrict us to only one
+  # target at a time. See: #14236 and gimp-data/images/logo/meson.build
   rpath_array = [f"{GIMP_GLOBAL_BUILD_ROOT}/libgimp",
                  f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpbase",
                  f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpcolor",
