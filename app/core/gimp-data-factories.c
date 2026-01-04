@@ -32,12 +32,14 @@
 #include "gimp-gradients.h"
 #include "gimp-memsize.h"
 #include "gimp-palettes.h"
+#include "gimp-utils.h"
 #include "gimpcontainer.h"
 #include "gimpbrush-load.h"
 #include "gimpbrush.h"
 #include "gimpbrushclipboard.h"
 #include "gimpbrushgenerated-load.h"
 #include "gimpbrushpipe-load.h"
+#include "gimpcurve.h"
 #include "gimpdataloaderfactory.h"
 #include "gimpdynamics.h"
 #include "gimpdynamics-load.h"
@@ -298,6 +300,52 @@ gimp_data_factories_exit (Gimp *gimp)
   g_clear_object (&gimp->font_factory);
   g_clear_object (&gimp->tool_preset_factory);
   g_clear_object (&gimp->tag_cache);
+}
+
+gboolean
+gimp_data_factories_wait (Gimp *gimp)
+{
+  GList    *data_types;
+  GList    *excluded;
+  gboolean  loaded = TRUE;
+
+  /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
+#define GIMPTYPE_TO_POINTER(t) ((gpointer) (guintptr) (t))
+  /* Curves are the only data type without a factory. */
+  excluded = g_list_prepend (NULL, GIMPTYPE_TO_POINTER (GIMP_TYPE_CURVE));
+#undef GIMPTYPE_TO_POINTER
+
+  data_types = gimp_get_type_children (GIMP_TYPE_DATA, NULL, excluded);
+  g_list_free (excluded);
+
+  /* TODO: when bumping GLib >= 2.80, use GPOINTER_TO_TYPE instead. */
+#define GIMPPOINTER_TO_TYPE(p) ((GType) (guintptr) (p))
+
+  for (GList *iter = data_types; iter; iter = iter->next)
+    {
+      GimpDataFactory *factory;
+
+      factory = gimp_get_data_factory (gimp, GIMPPOINTER_TO_TYPE (iter->data));
+
+      if (factory)
+        {
+          GimpAsyncSet *set;
+
+          set = gimp_data_factory_get_async_set (factory);
+          g_object_get (set, "empty", &loaded, NULL);
+          if (! loaded)
+            {
+              gimp_data_factory_data_wait (factory);
+              loaded = TRUE;
+            }
+        }
+    }
+
+#undef GIMPPOINTER_TO_TYPE
+
+  g_list_free (data_types);
+
+  return loaded;
 }
 
 gint64

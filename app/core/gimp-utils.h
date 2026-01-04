@@ -156,4 +156,8 @@ gboolean     gimp_win32_have_windows_ink           (void);
 
 #endif
 
+GList      * gimp_get_type_children                (GType              type,
+                                                    GList             *types,
+                                                    GList             *excluded);
+
 #endif /* __APP_GIMP_UTILS_H__ */

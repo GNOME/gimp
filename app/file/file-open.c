@@ -30,6 +30,7 @@
 #include "gegl/gimp-babl.h"
 
 #include "core/gimp.h"
+#include "core/gimp-data-factories.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdocumentlist.h"
 #include "core/gimpimage.h"
@@ -525,6 +526,8 @@ file_open_with_proc_and_display (Gimp                *gimp,
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (monitor == NULL || G_IS_OBJECT (monitor), NULL);
   g_return_val_if_fail (status != NULL, NULL);
+
+  gimp_data_factories_wait (gimp);
 
   if (gimp->no_interface)
     run_mode = GIMP_RUN_NONINTERACTIVE;
