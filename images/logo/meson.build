@@ -356,9 +356,9 @@ endif
 
 ################################################################################
 # MACOS ICONS
-# FIXME: All macOS icons are built separately, one at time. Building them
-# from Meson would cause parallelism clashes due to install_name_tool on
-# tools/in-build-gimp.py (check that file on gimp repo for more info).
+# macOS icons are built one at time. Building them without 'depends:' would
+# cause parallelism clashes due to install_name_tool on tools/in-build-gimp.py
+# (check that script on gimp repo for more info and issue gimp#14236 too).
 
 if platform_osx and get_option('dmg')
   ## gimp.icns (macOS) ##
