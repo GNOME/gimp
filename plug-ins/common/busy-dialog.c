@@ -310,6 +310,7 @@ busy_dialog (gint         read_fd,
   gtk_box_pack_start (GTK_BOX (vbox), box, TRUE, TRUE, 0);
   gtk_widget_show (box);
 
+  gimp_window_set_transient (GTK_WINDOW (window));
   gtk_window_present (GTK_WINDOW (window));
 
   gtk_main ();
