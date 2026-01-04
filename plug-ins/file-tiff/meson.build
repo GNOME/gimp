@@ -31,4 +31,12 @@ plugin_exe = executable(plugin_name,
                         win_subsystem: 'windows',
                         install: true,
                         install_dir: gimpplugindir / 'plug-ins' / plugin_name)
+
+# Ugly trick to add executables to plugin_custom_targets list (see root meson.build)
+plugin_custom_targets += custom_target('dummy-' + plugin_name,
+              input: plugin_exe,
+              output: 'dummy-' + plugin_name + '.dummy',
+              command: [python, '-c',
+                        'open("@OUTPUT@", "w").write("Nice. I was built before calling in-build-gimp.py\\n")'],
+              build_by_default: true)
 plugin_executables += [plugin_exe.full_path()]
