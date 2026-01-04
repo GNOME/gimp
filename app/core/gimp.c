@@ -74,6 +74,7 @@
 #include "gimppattern.h"
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
+#include "gimptoolpreset.h"
 #include "gimptreeproxy.h"
 
 #include "text/gimpfont.h"
@@ -1325,6 +1326,8 @@ gimp_get_data_factory (Gimp  *gimp,
     return gimp->dynamics_factory;
   else if (g_type_is_a (data_type, GIMP_TYPE_MYBRUSH))
     return gimp->mybrush_factory;
+  else if (g_type_is_a (data_type, GIMP_TYPE_TOOL_PRESET))
+    return gimp->tool_preset_factory;
 
   /* If we reach this, it means we forgot a data factory in our list! */
   g_return_val_if_reached (NULL);
