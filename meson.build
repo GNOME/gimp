@@ -1248,6 +1248,10 @@ desktop_validate    = find_program('desktop-file-validate', required: false)
 
 appstreamcli = find_program('appstreamcli', version: '>=0.15.3', required: get_option('appdata-test'))
 
+# Check for .typelib generation tools
+
+g_ir_compiler = find_program('g-ir-compiler')
+
 # Check for doc generation tools
 
 gi_docgen = find_program('gi-docgen', required: get_option('gi-docgen'))
@@ -1979,7 +1983,7 @@ if meson.can_run_host_binaries() and have_gobject_introspection
     gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpthumb')
     gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpwidgets')
   elif platform_osx
-    gimp_exe_depends += [gimp_exe_typelib]
+    gimp_exe_depends += [patched_libgimp_gir, patched_libgimpui_gir]
 
     gimp_run_env.set('GIMP_GI_DIR', gi.get_variable('libdir'))
 
