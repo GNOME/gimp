@@ -41,12 +41,34 @@ try:
         if not new_rpath in regex:
           subprocess.run(["install_name_tool", "-add_rpath", new_rpath, binary], check=True)
 
+  #Ensure the same python (sys.executable) from meson.build is used by plugins
+  #This is needed because sys.executable can not coincide with python3 from shebang
+  #(on MacPorts, there is no python3, so we would wrongly use Xcode python without GI)
+  python_symlink = shutil.which("python3")
+  pygobject_found=False
+  different_python=False
+  if python_symlink and not os.path.samefile(python_symlink, sys.executable):
+    result = subprocess.run([python_symlink,"-c","import sys, gi; version='3.0'; sys.exit(gi.check_version(version))"], check=False)
+    pygobject_found = (result.returncode == 0)
+  if not python_symlink or (python_symlink and not pygobject_found):
+    different_python=True
+    tmp_path = os.path.join(GIMP_GLOBAL_BUILD_ROOT, "tmp")
+    os.makedirs(tmp_path, exist_ok=True)
+    tmp_symlink = os.path.join(tmp_path, "python3")
+    if not os.path.exists(tmp_symlink):
+      os.symlink(sys.executable, tmp_symlink)
+    os.environ["PATH"] = tmp_path + os.pathsep + os.environ.get("PATH", "")
+
   if "GIMP_DEBUG_SELF" in os.environ and shutil.which("gdb"):
     print(f"RUNNING: gdb --batch -x {os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py --args {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}")
     subprocess.run(["gdb","--return-child-result","--batch","-x",f"{os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py","--args", os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:], stdin=sys.stdin, check=True)
   else:
     print(f"RUNNING: {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}")
     subprocess.run([os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:],stdin=sys.stdin, check=True)
+
+  if different_python:
+    os.environ["PATH"] = os.pathsep.join([p for p in os.environ["PATH"].split(os.pathsep) if p != tmp_path])
+    shutil.rmtree(tmp_path, ignore_errors=True)
 
   if "GIMP_TEMP_UPDATE_RPATH" in os.environ:
     for binary in os.environ["GIMP_TEMP_UPDATE_RPATH"].split(":"):
