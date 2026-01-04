@@ -155,3 +155,7 @@ gboolean     gimp_win32_have_windows_ink           (void);
 
 gint         gimp_version_cmp                      (const gchar       *v1,
                                                     const gchar       *v2);
+
+GList      * gimp_get_type_children                (GType              type,
+                                                    GList             *types,
+                                                    GList             *excluded);

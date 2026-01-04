@@ -892,7 +892,7 @@ gimp_is_restored (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
-  return gimp->initialized && gimp->restored;
+  return gimp->initialized && gimp->restored && gimp_data_factories_wait (gimp);
 }
 
 /**

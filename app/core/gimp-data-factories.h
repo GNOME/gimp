@@ -23,6 +23,8 @@ void      gimp_data_factories_add_builtin (Gimp               *gimp);
 void      gimp_data_factories_clear       (Gimp               *gimp);
 void      gimp_data_factories_exit        (Gimp               *gimp);
 
+gboolean  gimp_data_factories_wait        (Gimp               *gimp);
+
 gint64    gimp_data_factories_get_memsize (Gimp   *gimp,
                                            gint64 *gui_size);
 void      gimp_data_factories_data_clean  (Gimp   *gimp);

@@ -1630,6 +1630,50 @@ gimp_version_cmp (const gchar *v1,
     return -1;
 }
 
+/**
+ * gimp_get_type_children:
+ * @type: the %GType to find children types for.
+ * @types: set %NULL for the initial call (internal variable for
+ *         recursive calls).
+ * @excluded: a list of types to exclude.
+ *
+ * Gather and recursively return all the subtypes of @type (except any
+ * type listed in @excluded).
+ *
+ * Note that @type itself is not included, so if you wished to have it,
+ * you must add it yourself after calling this function.
+ *
+ * Returns: a list of %Gtypes.
+ */
+GList *
+gimp_get_type_children (GType  type,
+                        GList *types,
+                        GList *excluded)
+{
+  GType *dtypes;
+  guint  n_types;
+
+  dtypes = g_type_children (type, &n_types);
+
+  /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
+#define GIMPTYPE_TO_POINTER(t) ((gpointer) (guintptr) (t))
+
+  for (gint i = 0; i < n_types; i++)
+    {
+      if (g_list_find (excluded, GIMPTYPE_TO_POINTER (dtypes[i])))
+        continue;
+
+      types = gimp_get_type_children (dtypes[i], types, excluded);
+      types = g_list_prepend (types, GIMPTYPE_TO_POINTER (dtypes[i]));
+    }
+
+#undef GIMPTYPE_TO_POINTER
+
+  g_free (dtypes);
+
+  return types;
+}
+
 /* Private functions */
 
 
