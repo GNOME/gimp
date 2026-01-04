@@ -547,21 +547,22 @@ gui_wait (Gimp         *gimp,
     }
 
   if (GIMP_IS_CANCELABLE (waitable))
+    /* listens for a cancellation request */
+    input_async = gimp_parallel_run_async_independent ((GimpRunAsyncFunc) gui_wait_input_async,
+                                                       input_pipe);
+
+  while (! gimp_waitable_wait_for (waitable, 0.1 * G_TIME_SPAN_SECOND))
     {
-      /* listens for a cancellation request */
-      input_async = gimp_parallel_run_async_independent (
-        (GimpRunAsyncFunc) gui_wait_input_async,
-        input_pipe);
+      /* Making sure main GUI is not frozen while waiting. */
+      while (g_main_context_pending (NULL))
+        g_main_context_iteration (NULL, FALSE);
 
-      while (! gimp_waitable_wait_for (waitable, 0.1 * G_TIME_SPAN_SECOND))
+      /* check for a cancellation request */
+      if (input_async && gimp_waitable_try_wait (GIMP_WAITABLE (input_async)))
         {
-          /* check for a cancellation request */
-          if (gimp_waitable_try_wait (GIMP_WAITABLE (input_async)))
-            {
-              gimp_cancelable_cancel (GIMP_CANCELABLE (waitable));
+          gimp_cancelable_cancel (GIMP_CANCELABLE (waitable));
 
-              break;
-            }
+          break;
         }
     }
 
