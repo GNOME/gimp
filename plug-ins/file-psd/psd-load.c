@@ -3040,6 +3040,8 @@ get_json_color (JsonReader *reader, const Babl *space)
                 pixel[1] = get_json_double (color_reader, "value", 0.0) / 255.0;
               else if (json_string_equal (key, "Bl  "))
                 pixel[2] = get_json_double (color_reader, "value", 0.0) / 255.0;
+              else
+                g_printerr ("Unexpected color tag '%s' in color descriptor!\n", key);
 
               g_object_unref (color_reader);
             }
@@ -3049,7 +3051,7 @@ get_json_color (JsonReader *reader, const Babl *space)
         g_debug ("Pixel values: R: %f, G: %f, B: %f", pixel[0], pixel[1], pixel[2]);
 
       /* This is not specified in the documentation, but based on sample files,
-        * the color is assumed to be in the drawable's color space. */
+       * the color is assumed to be in the drawable's color space. */
 
       /* FIXME: Since this is double, should we set a linear space? */
       gegl_color_set_pixel (color, babl_format_with_space ("R'G'B' double", space),
@@ -3060,26 +3062,39 @@ get_json_color (JsonReader *reader, const Babl *space)
   return color;
 }
 
+#define PS_INNERSHADOW 0
+#define PS_DROPSHADOW  1
+#define PS_OUTERGLOW   2
+#define OP_COUNT       3
+
 static void
-json_read_dropshadow (JsonReader *reader, const Babl *space, GimpLayer *layer)
+json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint shadow_type)
 {
-  gboolean     enabled   = FALSE;
-  gboolean     present   = TRUE;        /* Not always present in descriptor*/
-  const gchar *mode      = NULL;
-  GeglColor   *color     = NULL;
+  gboolean     enabled    = FALSE;
+  gboolean     present    = TRUE;        /* Not always present in descriptor*/
+  const gchar *mode       = NULL;
+  GeglColor   *color      = NULL;
   /* FIXME: Figure out below what the real default values are in Photoshop */
-  gdouble      opacity   = 100.0;
-  gdouble      angle     =  90.0;
-  gdouble      distance  =  18.0;
-  gdouble      intensity =   0.0;
-  gdouble      blur      =  40.0;
+  gdouble      opacity    = 100.0;
+  gdouble      angle      =  90.0;
+  gdouble      distance   =  18.0;
+  gdouble      intensity  =   0.0;
+  gdouble      blur       =  40.0;
+  gdouble      range      =  50.0;
+  const gchar *gegl_op[OP_COUNT]
+                          = {"gegl:inner-glow",     /* Inner Shadow */
+                             "gegl:dropshadow",     /* Drop Shadow */
+                             "gegl:dropshadow"};    /* Outer Glow */
+
+
+  /* Used for drop shadow and inner shadow*/
 
   if (json_reader_read_member (reader, "descriptor"))
     {
       gint cnt = json_reader_count_elements (reader);
       gint i;
 
-      g_debug ("Parse dropshadow (%d elements)...\n", cnt);
+      IFDBG(3) g_debug ("Parse inner/drop shadow (%d elements)...", cnt);
 
       for (i = 0; i < cnt; i++)
         {
@@ -3089,7 +3104,7 @@ json_read_dropshadow (JsonReader *reader, const Babl *space, GimpLayer *layer)
               JsonReader  *obj_reader = json_reader_new (json_reader_get_current_node (reader));
               const gchar *key        = get_json_string (obj_reader, "key", "");
 
-              g_debug ("Index %d - Member key: %s.\n", i, key);
+              IFDBG(3) g_debug ("Index %d - Member key: %s.", i, key);
 
               /* For documentation purposes I also list the members we currently do not
               * interpret:
@@ -3098,7 +3113,14 @@ json_read_dropshadow (JsonReader *reader, const Babl *space, GimpLayer *layer)
               * - "Ckmt", float, pxl (0.0) PS calls this ChokeMatte
               * - "AntA", boolean (false). Seems to mean anti-alias.
               * - "TrnS", descriptor with several members, including curves.
+              *  Presumably this is a transform.
               * - "layerConceals" - boolean.
+              * Outer Glow has additional values:
+              * - "GlwT", an enum (name "BETE"), value seen: "SfBL".
+              *   This might be "Technique", dropdown value seen in screenshot": Softer.
+              * - "ShdN", float, percent, value seen 0.0.
+              * - "Inpr", float, percent, value seen 50.0.
+              *   This might be "Range", seen in OuterGlow screenshot.
               */
 
               if (json_string_equal (key, "enab"))
@@ -3116,12 +3138,13 @@ json_read_dropshadow (JsonReader *reader, const Babl *space, GimpLayer *layer)
               else if (json_string_equal (key, "Dstn"))
                 distance  = (gfloat) get_json_double (obj_reader, "value", 18.0);
               else if (json_string_equal (key, "Nose"))
-                /* Uncertain which member intensity, is it Nose, or Ckmt?.
-                 * Since the legacy value is percent, I chose Nose,
-                 * which means supposedly noise. */
+                /* This supposedly means noise. It seems to be equivalent to
+                 * the legacy "intensity" value. */
                 intensity = (gfloat) get_json_double (obj_reader, "value", 0.0);
               else if (json_string_equal (key, "blur"))
                 blur      = (gfloat) get_json_double (obj_reader, "value", 40.0);
+              else if (json_string_equal (key, "Inpr"))
+                range     = (gfloat) get_json_double (obj_reader, "value", 50.0);
 
               g_object_unref (obj_reader);
             }
@@ -3137,26 +3160,34 @@ json_read_dropshadow (JsonReader *reader, const Babl *space, GimpLayer *layer)
         {
           GimpDrawableFilter  *filter;
           GimpLayerMode        gimp_mode;
+          gchar               *filter_name = NULL;
           gdouble              x;
           gdouble              y;
           gdouble              gegl_blur;
           gdouble              radians;
+          gdouble              grow_radius = 0.0;
+          /* Inner Glow and DropShadow/OuterGlow have different names for the color parameter. */
+          const gchar         *gegl_color_param[OP_COUNT] = {"value", "color", "color"};
 
           radians = (M_PI / 180) * angle;
           x       = distance * cos (radians);
           y       = distance * sin (radians);
+          g_printerr ("Angle: %f - Radians: %f, x: %f; y: %f\n", angle, radians, x, y);
 
-          /* FIXME: Do we need this check done for the legacy filter? */
-          /*if (angle >= 0xFF00)
-            angle = (angle - 0xFF00) * -1;*/
+          if (fabs(angle) > 180.0)
+            angle = fmod (angle, 180.0);
 
-          g_debug ("Dropshadow angle: %f\n", angle);
+          if (angle < 0.0)
+            y = fabs (y) * -1.0;
+          else
+            y = fabs (y);
+          if ((angle > 90.0 && angle < 180.0) ||
+              (angle > -90.0 && angle < 0.0))
+            x = fabs (x) * -1.0;
+          else
+            x = fabs (x);
 
-          if (angle > 90.0 && angle < 180.0)
-            y *= -1;
-          else if (angle < -90.0 && angle > -180.0)
-            x *= -1;
-
+          g_printerr ("Adjusted x: %f; y: %f\n", x, y);
           gegl_blur = (blur / 250.0) * 100.0;
 
           /* FIXME Besides certain modes not working for Dropshadow in GIMP,
@@ -3165,28 +3196,55 @@ json_read_dropshadow (JsonReader *reader, const Babl *space, GimpLayer *layer)
            * conversion function.
            */
           convert_psd_effect_mode (mode, &gimp_mode);
-          g_printerr ("Drop Shadow: setting layer mode to Replace instead of %.4s.\n", mode);
-          /* Nose (intensity?) is not used in GEGL. */
-          g_debug ("Drop Shadow: Nose value: %f\n", intensity);
+          if (shadow_type == PS_DROPSHADOW)
+            {
+              IFDBG(3) g_debug ("DropShadow: setting layer mode to Replace instead of %.4s.", mode);
+              gimp_mode = GIMP_LAYER_MODE_REPLACE;
+            }
+          else if (shadow_type == PS_INNERSHADOW)
+            {
+              grow_radius = 1.0;
+              /* Opacity ranges from 0 - 2 so double opacity. */
+              opacity *= 2.0;
+              filter_name = g_strdup_printf ("%s (%s)", _("Inner Shadow"),
+                                             _("imported"));
+            }
+          else if (shadow_type == PS_OUTERGLOW)
+            {
+              /* Outer Glow has no angle/distance */
+              x = y = 0.0;
+              grow_radius = range / 100.0 * gegl_blur;
+              IFDBG(3) g_debug ("OuterGlow: setting layer mode to Replace instead of %.4s.", mode);
+              /* Modes like Screen don't work with this (is this a bug?). */
+              gimp_mode = GIMP_LAYER_MODE_REPLACE;
+              filter_name = g_strdup_printf ("%s (%s)", _("Outer Glow"),
+                                             _("imported"));
+            }
+
+          /* Nose (intensity) is not converted at this time. */
+          IFDBG(3) g_debug ("Drop/Inner Shadow: Angle: %f; Nose value: %f", angle, intensity);
 
           if (! color)
             {
               color = gegl_color_new ("none");
-              g_printerr ("WARNING: Color not initialized!\n");
+              IFDBG(3) g_debug ("WARNING: Drop/Inner Shadow Color not initialized!");
             }
 
           filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
-                                                    "gegl:dropshadow",
-                                                    NULL,
-                                                    GIMP_LAYER_MODE_REPLACE,
+                                                    gegl_op[shadow_type],
+                                                    filter_name,
+                                                    gimp_mode,
                                                     1.0,
-                                                    "x",       x,
-                                                    "y",       y,
-                                                    "radius",  gegl_blur,
-                                                    "color",   color,
-                                                    "opacity", opacity / 100.0,
+                                                    "x",           x,
+                                                    "y",           y,
+                                                    "grow-radius", grow_radius,
+                                                    "radius",      gegl_blur,
+                                                    gegl_color_param[shadow_type],
+                                                                   color,
+                                                    "opacity",     opacity / 100.0,
                                                     NULL);
 
+          g_free (filter_name);
           g_object_unref (filter);
         }
       g_object_unref (color);
@@ -3343,15 +3401,17 @@ add_layer_effects (GimpLayer *layer,
                       else if (json_string_equal (str, "DrSh"))
                         {
                           /* Read DropShadow settings */
-                          json_read_dropshadow (reader, space, layer);
+                          json_read_shadow (reader, space, layer, PS_DROPSHADOW);
                         }
                       else if (json_string_equal (str, "IrSh"))
                         {
                           /* Read InnerShadow settings */
+                          json_read_shadow (reader, space, layer, PS_INNERSHADOW);
                         }
                       else if (json_string_equal (str, "OrGl"))
                         {
                           /* Read OuterGlow settings */
+                          json_read_shadow (reader, space, layer, PS_OUTERGLOW);
                         }
                       else if (json_string_equal (str, "IrGl"))
                         {
