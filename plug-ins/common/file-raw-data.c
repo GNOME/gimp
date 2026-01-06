@@ -2649,16 +2649,7 @@ load_config_notify (GimpProcedureConfig  *config,
       file = g_object_get_data (G_OBJECT (preview), "procedure-file");
       file_size = get_file_size (file);
 
-      if (bitspp >= 8)
-        {
-          max_pixels = (file_size - offset) / (bpp * bitspp / 8);
-        }
-      else
-        {
-          if (bpp != 1)
-            g_printerr ("Unexpected value of bpp: %d, should be 1!", bpp);
-          max_pixels = ((file_size - offset) * 8) / bitspp;
-        }
+      max_pixels = ((file_size - offset) * 8) / (bpp * bitspp);
 
       if ((goffset) width * height > max_pixels)
         {
