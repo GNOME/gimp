@@ -229,7 +229,7 @@ static gboolean         raw_load_palette     (RawGimpData              *data,
                                               GFile                    *palette_file);
 
 /* support functions */
-static goffset          get_file_info        (GFile                    *file);
+static goffset          get_file_size        (GFile                    *file);
 static void             raw_read_row         (FILE                     *fp,
                                               guchar                   *buf,
                                               gint32                    offset,
@@ -863,7 +863,7 @@ hrz_load (GimpProcedure         *procedure,
 
 /* get file size from a filen */
 static goffset
-get_file_info (GFile *file)
+get_file_size (GFile *file)
 {
   GFileInfo *info;
   goffset    size = 0;
@@ -1850,7 +1850,7 @@ load_image (GFile                *file,
                           &pixel_format, &encoding, &endianness, &planar_configuration,
                           &palette_offset, &palette_type, &palette_file);
 
-  size = get_file_info (file);
+  size = get_file_size (file);
 
   switch (pixel_format)
     {
@@ -2714,7 +2714,7 @@ load_config_notify (GimpProcedureConfig  *config,
                     NULL);
 
       file = g_object_get_data (G_OBJECT (preview), "procedure-file");
-      file_size = get_file_info (file);
+      file_size = get_file_size (file);
 
       if (bitspp >= 8)
         {
@@ -2877,7 +2877,7 @@ load_dialog (GFile         *file,
       GtkWidget *entry;
       goffset    file_size;
 
-      file_size = get_file_info (file);
+      file_size = get_file_size (file);
 
       entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
                                                      "offset", 1.0);
