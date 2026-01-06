@@ -616,16 +616,27 @@ raw_load (GimpProcedure         *procedure,
         }
       else
         {
-          /* As a special exception, if the file looks like an HGT format
-           * from extension, yet it doesn't have the right size, we will
-           * degrade a bit the experience by adding sample spacing choice.
-           */
-          gboolean show_dialog = (! is_hgt || ! detect_sample_spacing (config, file, &error));
+          if (get_file_size (file) == 0)
+            {
+              g_set_error (&error,
+                           G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Unexpected end of file"));
 
-          if (error != NULL)
-            status = GIMP_PDB_EXECUTION_ERROR;
-          else if (show_dialog && ! load_dialog (file, procedure, G_OBJECT (config), is_hgt))
-            status = GIMP_PDB_CANCEL;
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+          else
+            {
+              /* As a special exception, if the file looks like an HGT format
+               * from extension, yet it doesn't have the right size, we will
+               * degrade a bit the experience by adding sample spacing choice.
+               */
+              gboolean show_dialog = (! is_hgt || ! detect_sample_spacing (config, file, &error));
+
+              if (error != NULL)
+                status = GIMP_PDB_EXECUTION_ERROR;
+              else if (show_dialog && ! load_dialog (file, procedure, G_OBJECT (config), is_hgt))
+                status = GIMP_PDB_CANCEL;
+            }
 
           close (preview_fd);
         }
