@@ -138,8 +138,24 @@ bundle(GIMP_PREFIX, "etc/gimp")
 
 
 ## OTHER FEATURES AND PLUG-INS.
+### Support for legacy Win clipboard images: https://gitlab.gnome.org/GNOME/gimp/-/issues/4802
+bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-bmp.dll")
+### Support for non .PAT patterns: https://gitlab.gnome.org/GNOME/gimp/-/issues/12351
+bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-jpeg.dll")
+bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-gif.dll")
+bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-tiff.dll")
 ### mypaint brushes
 bundle(MSYSTEM_PREFIX, "share/mypaint-data/2.0")
+### Needed for fontconfig
+bundle(MSYSTEM_PREFIX, "etc/fonts")
+#### Avoid other programs breaking the cache. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/1366
+fonts_conf = GIMP_DISTRIB / "etc/fonts/fonts.conf"
+text = fonts_conf.read_text()
+new_text = text.replace(
+  "LOCAL_APPDATA_FONTCONFIG_CACHE",
+  f"~/AppData/Local/GIMP/{os.getenv('GIMP_APP_VERSION')}/fontconfig/cache"
+)
+fonts_conf.write_text(new_text)
 ### Needed for 'th' word breaking in Text tool etc
 bundle(MSYSTEM_PREFIX, "share/libthai")
 ### Needed for full CJK and Cyrillic support in file-pdf
@@ -171,22 +187,6 @@ bundle(MSYSTEM_PREFIX, "etc/ssl/cert.pem")
 #bundle(MSYSTEM_PREFIX, "bin/luajit.exe")
 #bundle(MSYSTEM_PREFIX, "lib/lua")
 #bundle(MSYSTEM_PREFIX, "share/lua")
-### Support for legacy Win clipboard images: https://gitlab.gnome.org/GNOME/gimp/-/issues/4802
-bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-bmp.dll")
-### Support for non .PAT patterns: https://gitlab.gnome.org/GNOME/gimp/-/issues/12351
-bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-jpeg.dll")
-bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-gif.dll")
-bundle(MSYSTEM_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-tiff.dll")
-### Needed for fontconfig
-bundle(MSYSTEM_PREFIX, "etc/fonts")
-#### Avoid other programs breaking the cache. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/1366
-fonts_conf = GIMP_DISTRIB / "etc/fonts/fonts.conf"
-text = fonts_conf.read_text()
-new_text = text.replace(
-  "LOCAL_APPDATA_FONTCONFIG_CACHE",
-  f"~/AppData/Local/GIMP/{os.getenv('GIMP_APP_VERSION')}/fontconfig/cache"
-)
-fonts_conf.write_text(new_text)
 
 
 ## MAIN EXECUTABLES AND DEPENDENCIES
