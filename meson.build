@@ -1588,6 +1588,9 @@ else
 endif
 conf.set_quoted('CC_VERSION',     cc_version.strip())
 
+# Python version
+conf.set_quoted('PYTHON_VERSION', python.language_version())
+
 # Names
 conf.set_quoted('GIMP_PACKAGE',   meson.project_name())
 conf.set_quoted('PACKAGE_NAME',   meson.project_name())

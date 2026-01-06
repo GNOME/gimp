@@ -327,8 +327,9 @@ static void
 gimp_macos_setenv (const char * progname)
 {
   /* helper to set environment variables for GIMP to be relocatable.
-   * Due to the latest changes it is not recommended to set it in the shell
-   * wrapper anymore.
+   * Due to the latest changes on macOS, it is not recommended to set it in
+   * a shell wrapper inside Contents/MacOS (like AppImage's AppRun) anymore.
+   * That way, we make sure our python is called instead of system one etc
    */
   gchar  *resolved_path;
   /* on some OSX installations open file limit is 256 and GIMP needs more */
@@ -340,59 +341,66 @@ gimp_macos_setenv (const char * progname)
   resolved_path = g_canonicalize_filename (progname, NULL);
   if (resolved_path && ! g_getenv ("GIMP_NO_WRAPPER"))
     {
-      /* set path to the app folder to make sure that our python is called
-       * instead of system one
-       */
       static gboolean            show_playground   = TRUE;
 
       gchar   *path;
       gchar   *tmp;
-      gchar   *app_dir;
-      gchar   *res_dir;
+      gchar   *bin_dir;
+      gchar   *lib_dir;
+      gchar   *share_dir;
+      gchar   *etc_dir;
       size_t   path_len;
       struct   stat sb;
       gboolean need_pythonhome = TRUE;
 
-      app_dir = g_path_get_dirname (resolved_path);
-      tmp = g_strdup_printf ("%s/../Resources", app_dir);
-      res_dir = g_canonicalize_filename (tmp, NULL);
+      bin_dir = g_path_get_dirname (resolved_path);
+      tmp = g_strdup_printf ("%s/../Resources/lib", bin_dir);
+      lib_dir = g_canonicalize_filename (tmp, NULL);
       g_free (tmp);
-      if (res_dir && !stat (res_dir, &sb) && S_ISDIR (sb.st_mode))
+      tmp = g_strdup_printf ("%s/../Resources/share", bin_dir);
+      share_dir = g_canonicalize_filename (tmp, NULL);
+      g_free (tmp);
+      tmp = g_strdup_printf ("%s/../Resources/etc", bin_dir);
+      etc_dir = g_canonicalize_filename (tmp, NULL);
+      g_free (tmp);
+
+      /* Detect if we are running from bundle or from prefix */
+      if (share_dir && !stat (share_dir, &sb) && S_ISDIR (sb.st_mode))
         {
           g_print ("GIMP is started as MacOS application\n");
         }
       else
         {
-          tmp = g_strdup_printf ("%s/../share", app_dir);
-          res_dir = g_canonicalize_filename (tmp, NULL);
+          tmp = g_strdup_printf ("%s/../share", bin_dir);
+          share_dir = g_canonicalize_filename (tmp, NULL);
           g_free (tmp);
-          if (res_dir && !stat (res_dir, &sb) && S_ISDIR (sb.st_mode))
+          if (share_dir && !stat (share_dir, &sb) && S_ISDIR (sb.st_mode))
             {
-              g_free (res_dir);
+              g_free (share_dir);
 
               g_print ("GIMP is started in the build directory\n");
 
-              tmp = g_strdup_printf ("%s/..", app_dir); /* running in build dir */
-              res_dir = g_canonicalize_filename (tmp, NULL);
+              tmp = g_strdup_printf ("%s/..", bin_dir); /* running in build dir */
+              share_dir = g_canonicalize_filename (tmp, NULL);
               g_free (tmp);
             }
           else
             {
-              g_free (res_dir);
+              g_free (share_dir);
               return;
             }
         }
 
-      /* Detect we were built in homebrew for MacOS */
-      tmp = g_strdup_printf ("%s/Frameworks/Python.framework", res_dir);
+      /* Detect we were built in homebrew for MacOS (for PYTHONHOME purposes) */
+      tmp = g_strdup_printf ("%s/../Frameworks/Python.framework", share_dir);
       if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
         {
           g_print ("GIMP was built with homebrew\n");
           need_pythonhome = FALSE;
         }
       g_free (tmp);
-      /* Detect we were built in MacPorts for MacOS */
-      tmp = g_strdup_printf ("%s/Library/Frameworks/Python.framework", res_dir);
+      /* Detect we were built in MacPorts for MacOS (for PYTHONHOME purposes) */
+      tmp = g_strdup_printf ("%s/../Library/Frameworks/Python.framework", share_dir);
       if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
         {
           g_print ("GIMP was built with MacPorts\n");
@@ -400,7 +408,8 @@ gimp_macos_setenv (const char * progname)
         }
       g_free (tmp);
 
-      path_len = strlen (g_getenv ("PATH") ? g_getenv ("PATH") : "") + strlen (app_dir) + 2;
+      /* Minimum runtime paths */
+      path_len = strlen (g_getenv ("PATH") ? g_getenv ("PATH") : "") + strlen (bin_dir) + 2;
       path = g_try_malloc (path_len);
       if (path == NULL)
         {
@@ -408,54 +417,23 @@ gimp_macos_setenv (const char * progname)
           app_exit (EXIT_FAILURE);
         }
       if (g_getenv ("PATH"))
-        g_snprintf (path, path_len, "%s:%s", app_dir, g_getenv ("PATH"));
+        g_snprintf (path, path_len, "%s:%s", bin_dir, g_getenv ("PATH"));
       else
-        g_snprintf (path, path_len, "%s", app_dir);
-      g_free (app_dir);
-      /* (We set env vars to avoid using an ugly wrapper in the .app bundle) */
+        g_snprintf (path, path_len, "%s", bin_dir);
+      g_free (bin_dir);
       g_setenv ("PATH", path, TRUE);
       g_free (path);
-      tmp = g_strdup_printf ("%s/lib/gtk-3.0/3.0.0", res_dir);
-      g_setenv ("GTK_PATH", tmp, TRUE);
-      g_free (tmp);
-      tmp = g_strdup_printf ("%s/lib/gegl-0.4", res_dir);
-      g_setenv ("GEGL_PATH", tmp, TRUE);
-      g_free (tmp);
-      tmp = g_strdup_printf ("%s/lib/babl-0.1", res_dir);
+      tmp = g_strdup_printf ("%s/babl-0.1", lib_dir);
       g_setenv ("BABL_PATH", tmp, TRUE);
       g_free (tmp);
-      tmp = g_strdup_printf ("%s/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache", res_dir);
-      g_setenv ("GDK_PIXBUF_MODULE_FILE", tmp, TRUE);
-      g_free (tmp);
-      tmp = g_strdup_printf ("%s/etc/fonts", res_dir);
-      g_setenv ("FONTCONFIG_PATH", tmp, TRUE);
-      g_free (tmp);
-      tmp = g_strdup_printf ("%s/share/libthai", res_dir);
-      g_setenv ("LIBTHAI_DICTDIR", tmp, TRUE);
-      g_free (tmp);
-      if (need_pythonhome)
-        {
-          tmp = g_strdup_printf ("%s", res_dir);
-          g_setenv ("PYTHONHOME", tmp, TRUE);
-          g_free (tmp);
-        }
-      tmp = g_strdup_printf ("%s/lib/python3.9", res_dir);
-      g_setenv ("PYTHONPATH", tmp, TRUE);
-      g_free (tmp);
-      tmp = g_strdup_printf ("%s/lib/gio/modules", res_dir);
-      g_setenv ("GIO_MODULE_DIR", tmp, TRUE);
-      g_free (tmp);
-      tmp = g_strdup_printf ("%s/share/libwmf/fonts", res_dir);
-      g_setenv ("WMF_FONTDIR", tmp, TRUE);
+      tmp = g_strdup_printf ("%s/gegl-0.4", lib_dir);
+      g_setenv ("GEGL_PATH", tmp, TRUE);
       g_free (tmp);
       if (g_getenv ("XDG_DATA_DIRS"))
-        tmp = g_strdup_printf ("%s/share:%s", res_dir, g_getenv ("XDG_DATA_DIRS"));
+        tmp = g_strdup_printf ("%s:%s", share_dir, g_getenv ("XDG_DATA_DIRS"));
       else
-        tmp = g_strdup_printf ("%s/share", res_dir);
+        tmp = g_strdup_printf ("%s", share_dir);
       g_setenv ("XDG_DATA_DIRS", tmp, TRUE);
-      g_free (tmp);
-      tmp = g_strdup_printf ("%s/lib/girepository-1.0", res_dir);
-      g_setenv ("GI_TYPELIB_PATH", tmp, TRUE);
       g_free (tmp);
       if (g_getenv ("HOME") != NULL)
         {
@@ -464,7 +442,40 @@ gimp_macos_setenv (const char * progname)
           g_setenv ("XDG_CACHE_HOME", tmp, TRUE);
           g_free (tmp);
         }
-      g_free (res_dir);
+
+      /* Bare minimum to run GTK apps */
+      tmp = g_strdup_printf ("%s/gio/modules", lib_dir);
+      g_setenv ("GIO_MODULE_DIR", tmp, TRUE);
+      g_free (tmp);
+      tmp = g_strdup_printf ("%s/gdk-pixbuf-2.0/2.10.0/loaders.cache", lib_dir);
+      g_setenv ("GDK_PIXBUF_MODULE_FILE", tmp, TRUE);
+      g_free (tmp);
+      tmp = g_strdup_printf ("%s/gtk-3.0/3.0.0", lib_dir);
+      g_setenv ("GTK_PATH", tmp, TRUE);
+      g_free (tmp);
+
+      /* Other needed runtime paths (related to features) */
+      tmp = g_strdup_printf ("%s/fonts", etc_dir);
+      g_setenv ("FONTCONFIG_PATH", tmp, TRUE);
+      g_free (tmp);
+      tmp = g_strdup_printf ("%s/libthai", share_dir);
+      g_setenv ("LIBTHAI_DICTDIR", tmp, TRUE);
+      g_free (tmp);
+      tmp = g_strdup_printf ("%s/libwmf/fonts", share_dir);
+      g_setenv ("WMF_FONTDIR", tmp, TRUE);
+      g_free (tmp);
+      tmp = g_strdup_printf ("%s/girepository-1.0", lib_dir);
+      g_setenv ("GI_TYPELIB_PATH", tmp, TRUE);
+      g_free (tmp);
+      if (need_pythonhome)
+        {
+          tmp = g_strdup_printf ("%s/Library/Frameworks/Python.framework/Versions/%s", share_dir, PYTHON_VERSION);
+          g_setenv ("PYTHONHOME", tmp, TRUE);
+          g_free (tmp);
+        }
+      g_free (lib_dir);
+      g_free (share_dir);
+      g_free (etc_dir);
     }
   g_free (resolved_path);
 }
@@ -951,7 +962,7 @@ wait_console_window (void)
 static void
 gimp_attach_console_window (void)
 {
-  /* If run on non-native shell, do nothing */ 
+  /* If run on non-native shell, do nothing */
   if (g_getenv ("TERM") || g_getenv ("SHELL"))
     {
       g_printerr ("Non-native shell detected, GIMP may "
