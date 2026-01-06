@@ -205,6 +205,7 @@ def copy_dlls(dll_list, srcdirs, destdir):
     abs_binary = os.path.abspath(args.bin)
     abs_destdir = os.path.abspath(destdir)
     if abs_binary.startswith(abs_destdir + os.sep):
+      #check_macos_version(abs_binary)
       set_rpath(abs_binary, destbin)
   for dll in dll_list:
     if not os.path.exists(os.path.join(destbin, dll)):
@@ -214,6 +215,8 @@ def copy_dlls(dll_list, srcdirs, destdir):
           bindir = 'lib'
         full_file_name = os.path.join(srcdir, bindir, dll)
         if os.path.isfile(full_file_name):
+          if is_macos and not full_file_name.startswith(("/opt/local/", "/opt/homebrew/")):
+            check_macos_version(full_file_name)
           sys.stdout.write("Bundling {} to {}\n".format(full_file_name, destbin))
           shutil.copy(full_file_name, destbin)
           if is_macos:
@@ -224,6 +227,22 @@ def copy_dlls(dll_list, srcdirs, destdir):
         # of the srcdirs.
         sys.stderr.write("Missing DLL/DYLIB: {}\n".format(dll))
         sys.exit(1)
+
+def check_macos_version(binary):
+  """
+  Check LC_BUILD_VERSION for compatibility with MACOSX_DEPLOYMENT_TARGET
+  """
+  supported_minos = os.environ.get("MACOSX_DEPLOYMENT_TARGET")
+  if not supported_minos:
+    return
+
+  result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE, check=True)
+  out = result.stdout.decode('utf-8', errors='replace')
+
+  bin_minos = re.findall(r'minos\s+([\d\.]+)', out)[0]
+  if tuple(map(int, bin_minos.split('.'))) > tuple(map(int, supported_minos.split('.'))):
+    sys.stderr.write(f"\033[31m(ERROR)\033[0m: {binary} requires macOS {bin_minos}, which is higher than macOS {supported_minos} which GIMP was built against.\n")
+    sys.exit(1)
 
 def set_rpath(binary, destbin=None):
   """
