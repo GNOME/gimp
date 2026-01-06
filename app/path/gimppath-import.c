@@ -134,6 +134,11 @@ static void  svg_parser_start_element (GMarkupParseContext  *context,
                                        const gchar         **attribute_values,
                                        gpointer              user_data,
                                        GError              **error);
+static void  svg_parser_text          (GMarkupParseContext  *context,
+                                       const gchar          *text,
+                                       gsize                 text_len,
+                                       gpointer              user_data,
+                                       GError              **error);
 static void  svg_parser_end_element   (GMarkupParseContext  *context,
                                        const gchar          *element_name,
                                        gpointer              user_data,
@@ -143,7 +148,7 @@ static const GMarkupParser markup_parser =
 {
   svg_parser_start_element,
   svg_parser_end_element,
-  NULL,  /*  characters   */
+  svg_parser_text,
   NULL,  /*  passthrough  */
   NULL   /*  error        */
 };
@@ -190,7 +195,8 @@ static const SvgHandler svg_handlers[] =
   { "ellipse",  svg_handler_ellipse_start, NULL                },
   { "line",     svg_handler_line_start,    NULL                },
   { "polyline", svg_handler_poly_start,    NULL                },
-  { "polygon",  svg_handler_poly_start,    NULL                }
+  { "polygon",  svg_handler_poly_start,    NULL                },
+  { "title",    NULL,                      NULL                }
 };
 
 
@@ -479,6 +485,50 @@ svg_parser_start_element (GMarkupParseContext  *context,
   if (handler->start)
     handler->start (handler, attribute_names, attribute_values, parser);
 }
+
+static void
+svg_parser_text (GMarkupParseContext *context,
+                  const gchar         *text,
+                  gsize                text_len,
+                  gpointer             user_data,
+                  GError             **error)
+{
+  SvgParser  *parser = user_data;
+  SvgHandler *handler;
+
+  handler = g_queue_pop_head (parser->stack);
+
+  if (handler       &&
+      handler->name &&
+      strcmp (handler->name, "title") == 0)
+    {
+      gchar      *title = g_markup_escape_text (text, text_len);
+      SvgHandler *prior_handler;
+      GList      *paths;
+
+      prior_handler = g_queue_pop_head (parser->stack);
+
+      /* Replace path ID with title name if imported */
+      if (prior_handler && prior_handler->paths)
+        {
+          for (paths = prior_handler->paths; paths; paths = paths->next)
+            {
+              SvgPath *svg_path = paths->data;
+
+              if (svg_path->id)
+                g_free (svg_path->id);
+
+              svg_path->id = g_strdup (title);
+            }
+          g_list_free (paths);
+        }
+
+      g_queue_push_head (parser->stack, prior_handler);
+      g_free (title);
+    }
+  g_queue_push_head (parser->stack, handler);
+}
+
 
 static void
 svg_parser_end_element (GMarkupParseContext  *context,
@@ -1761,7 +1811,7 @@ parse_number (ParsePathContext *ctx,
           if (c >= '0' && c <= '9')
             {
               fraction *= 0.1;
-              value += fraction * (c - '0');
+              value    += fraction * (c - '0');
             }
           else if (c == 'e' || c == 'E')
             {

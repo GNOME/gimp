@@ -215,21 +215,27 @@ gimp_path_export_path (GimpPath *path,
                        GString  *str,
                        gint      path_id)
 {
-  gchar *name;
-  gchar *data = gimp_path_export_path_data (path);
+  const gchar *name = gimp_object_get_name (path);
+  gchar       *data = gimp_path_export_path_data (path);
+  gchar       *id;
+  gchar       *esc_name;
 
   /* SVG specification states the id attribute must not contain whitespace.
    * Rather than filter user names, we'll just define a generic,
    * auto-incrementing id. */
-  name = g_strdup_printf ("path%d", path_id);
+  id       = g_strdup_printf ("path%d", path_id);
+  esc_name = g_markup_escape_text (name, strlen (name));
 
   g_string_append_printf (str,
                           "  <path id=\"%s\"\n"
                           "        fill=\"none\" stroke=\"black\" stroke-width=\"1\"\n"
-                          "        d=\"%s\" />\n",
-                          name, data);
+                          "        d=\"%s\">\n"
+                          "        <title>%s</title>\n"
+                          "  </path>\n",
+                          id, data, esc_name);
 
-  g_free (name);
+  g_free (id);
+  g_free (esc_name);
   g_free (data);
 }
 
