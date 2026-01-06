@@ -1533,9 +1533,9 @@ load_resource_2000 (const PSDimageres  *res_a,
   gdouble   *controlpoints;
   gint32     x[3];
   gint32     y[3];
-  GimpPath  *path = NULL;
-  gint16     type = 0;
-  gint16     init_fill;
+  GimpPath  *path      = NULL;
+  gint16     type      = 0;
+  gint16     init_fill = 0;
   gint16     num_rec;
   gint16     path_rec;
   gint16     cntr;
