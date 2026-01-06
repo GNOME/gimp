@@ -224,7 +224,9 @@ load_image (GFile                  *file,
               goto error;
             }
 
-          name = g_strdup_printf (_("Frame %d (%dms)"), frame_num, iter.duration);
+          name = g_strdup_printf (_("Frame %d (%d%s)"),
+                                  frame_num, iter.duration, "ms");
+
           create_layer (image, outdata, 0, name, width, height);
           g_free (name);
 
