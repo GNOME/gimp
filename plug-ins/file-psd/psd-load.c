@@ -3065,7 +3065,8 @@ get_json_color (JsonReader *reader, const Babl *space)
 #define PS_INNERSHADOW 0
 #define PS_DROPSHADOW  1
 #define PS_OUTERGLOW   2
-#define OP_COUNT       3
+#define PS_FRAMEFX     3
+#define OP_COUNT       4
 
 static void
 json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint shadow_type,
@@ -3083,10 +3084,13 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
   gdouble      intensity  =   0.0;
   gdouble      blur       =  40.0;
   gdouble      range      =  50.0;
+  gdouble      size       =   0.0;
   const gchar *gegl_op[OP_COUNT]
                           = {"gegl:inner-glow",     /* Inner Shadow */
                              "gegl:dropshadow",     /* Drop Shadow */
-                             "gegl:dropshadow"};    /* Outer Glow */
+                             "gegl:dropshadow",     /* Outer Glow */
+                             "gegl:dropshadow"      /* Stroke */
+                            };
 
 
   /* Used for drop shadow and inner shadow*/
@@ -3111,11 +3115,12 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
               /* For documentation purposes I also list the members we currently do not
               * interpret:
               * - "showInDialog", boolean. Seems to be always true.
-              * - "uglg"", boolean (true) I guess this is "use global light".
-              * - "Ckmt", float, pxl (0.0) PS calls this ChokeMatte
+              * - "uglg"", boolean, this is "use global angle".
+              * - "Ckmt", float, pxl (0.0) PS calls this ChokeMatte - according to PhotoPea
+              *   This is equal to Spread (Pct).
               * - "AntA", boolean (false). Seems to mean anti-alias.
               * - "TrnS", descriptor with several members, including curves.
-              *  Presumably this is a transform.
+              *  Presumably this is a transform. Photoshop calls it Contour.
               * - "layerConceals" - boolean.
               * Outer Glow has additional values:
               * - "GlwT", an enum (name "BETE"), value seen: "SfBL".
@@ -3156,6 +3161,8 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
                 blur      = (gfloat) get_json_double (obj_reader, "value", 40.0);
               else if (json_string_equal (key, "Inpr"))
                 range     = (gfloat) get_json_double (obj_reader, "value", 50.0);
+              else if (json_string_equal (key, "Sz  "))
+                size      = (gfloat) get_json_double (obj_reader, "value", 50.0);
 
               g_object_unref (obj_reader);
             }
@@ -3178,7 +3185,12 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
           gdouble              radians;
           gdouble              grow_radius = 0.0;
           /* Inner Glow and DropShadow/OuterGlow have different names for the color parameter. */
-          const gchar         *gegl_color_param[OP_COUNT] = {"value", "color", "color"};
+          const gchar         *gegl_color_param[OP_COUNT]
+                                           = {"value",
+                                              "color",
+                                              "color",
+                                              "color"
+                                             };
 
           radians = (M_PI / 180) * angle;
           x       = distance * cos (radians);
@@ -3229,6 +3241,22 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
               /* Modes like Screen don't work with this (is this a bug?). */
               gimp_mode = GIMP_LAYER_MODE_REPLACE;
               filter_name = g_strdup_printf ("%s (%s)", _("Outer Glow"),
+                                             _("imported"));
+            }
+          else if (shadow_type == PS_FRAMEFX)
+            {
+              /* Stroke
+                 X/Y = 0; Blur = 0;
+                 Grow Radius = Sz; Opacity/Color as defined
+                 2 enums we don't know all possible values
+               */
+              /* Outer Glow has no angle/distance */
+              x = y = 0.0;
+              gegl_blur = 0.0;
+              grow_radius = size;
+              IFDBG(3) g_debug ("Stroke: setting layer mode to Replace instead of %.4s.", mode);
+              gimp_mode = GIMP_LAYER_MODE_REPLACE;
+              filter_name = g_strdup_printf ("%s (%s)", _("Stroke"),
                                              _("imported"));
             }
 
@@ -3446,6 +3474,8 @@ add_layer_effects (GimpLayer *layer,
                       else if (json_string_equal (str, "FrFX"))
                         {
                           /* Read FrameFX settings */
+                          json_read_shadow (reader, space, layer, PS_FRAMEFX,
+                                            img_a->global_light_angle);
                         }
                       else if (json_string_equal (str, "ChFX"))
                         {
