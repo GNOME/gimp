@@ -239,14 +239,22 @@ save_layer (GFile         *file,
       w = extent.width;
       h = extent.height;
 
-      /* Initialize the WebP configuration with a preset and fill in the
-       * remaining values */
-      WebPConfigPreset (&webp_config, preset, quality);
+      if (lossless)
+        {
+          WebPConfigInit (&webp_config);
+          WebPConfigLosslessPreset (&webp_config, 6);
+        }
+      else
+        {
+          /* Initialize the WebP configuration with a preset and fill in the
+           * remaining values */
+          WebPConfigPreset (&webp_config, preset, quality);
 
-      webp_config.lossless       = lossless;
-      webp_config.method         = 6;  /* better quality */
-      webp_config.alpha_quality  = alpha_quality;
-      webp_config.use_sharp_yuv  = use_sharp_yuv ? 1 : 0;
+          webp_config.lossless       = FALSE;
+          webp_config.method         = 6;  /* better quality */
+          webp_config.alpha_quality  = alpha_quality;
+          webp_config.use_sharp_yuv  = use_sharp_yuv ? 1 : 0;
+        }
 
       /* Prepare the WebP structure */
       WebPPictureInit (&picture);
@@ -708,13 +716,23 @@ save_animation (GFile         *file,
                 }
             }
 
-          WebPConfigPreset (&webp_config, preset, quality);
+          if (lossless)
+            {
+              WebPConfigInit (&webp_config);
+              WebPConfigLosslessPreset (&webp_config, 6);
+            }
+          else
+            {
+              /* Initialize the WebP configuration with a preset and fill in the
+               * remaining values */
+              WebPConfigPreset (&webp_config, preset, quality);
 
-          webp_config.lossless      = lossless;
-          webp_config.method        = 6;  /* better quality */
-          webp_config.alpha_quality = alpha_quality;
-          webp_config.exact         = 1;
-          webp_config.use_sharp_yuv = use_sharp_yuv ? 1 : 0;
+              webp_config.lossless       = FALSE;
+              webp_config.method         = 6;  /* better quality */
+              webp_config.alpha_quality  = alpha_quality;
+              webp_config.use_sharp_yuv  = use_sharp_yuv ? 1 : 0;
+            }
+          webp_config.exact = 1;
 
           WebPMemoryWriterInit (&mw);
 
