@@ -396,6 +396,18 @@ bund_usr "$UNIX_PREFIX" "bin/python*"
 bund_usr "$UNIX_PREFIX" "lib/python*"
 wipe_usr ${LIB_DIR}/*.pyc
 conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand
+##### Needed for internet connection on python
+prep_pkg "python3-certifi"
+pythonpath=$(echo ${USR_DIR}/${LIB_DIR}/${LIB_SUBDIR}python*)
+for d in "$pythonpath" "$pythonpath/site-packages"; do
+  sitecustomize="$d/sitecustomize.py"
+  code='\nimport os\nimport certifi\n\n# Only set if not already configured by user\nif not os.environ.get("SSL_CERT_FILE"):\n    os.environ["SSL_CERT_FILE"] = certifi.where()\n'
+  if [ -f "$sitecustomize" ] && ! grep -q 'import certifi' "$sitecustomize"; then
+    printf '%b' "$code" >> "$sitecustomize"
+  elif [ ! -f "$sitecustomize" ]; then
+    printf '%b' "$code" > "$sitecustomize"
+  fi
+done
 #### JavaScript plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/gjs*"
 bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-*/Gjs*.typelib" --dest "${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"
