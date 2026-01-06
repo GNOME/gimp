@@ -92,7 +92,7 @@ static gint             add_layers                 (GimpImage      *image,
 
 static void             add_legacy_layer_effects   (GimpLayer      *layer,
                                                     PSDlayer       *lyr_a,
-                                                    gboolean        ibm_pc_format);
+                                                    PSDimage       *img_a);
 
 static gint             add_merged_image           (GimpImage      *image,
                                                     PSDimage       *img_a,
@@ -1691,6 +1691,7 @@ add_image_resources (GimpImage     *image,
   img_a->alpha_id = NULL;
   img_a->alpha_id_count = 0;
   img_a->quick_mask_id = 0;
+  img_a->global_light_angle = 30;
 
   while (PSD_TELL(input) < img_a->image_res_start + img_a->image_res_len)
     {
@@ -2735,8 +2736,7 @@ add_layers (GimpImage     *image,
              * TODO: When we can load modern layer styles, only load these if
              * the file doesn't have modern layer style data. */
             if (lyr_a[lidx]->layer_styles->count > 0)
-              add_legacy_layer_effects (layer, lyr_a[lidx],
-                                        img_a->ibm_pc_format);
+              add_legacy_layer_effects (layer, lyr_a[lidx], img_a);
 
             /* Insert the layer */
             if (lyr_a[lidx]->group_type == 0 || /* normal layer */
@@ -2766,7 +2766,7 @@ add_layers (GimpImage     *image,
 static void
 add_legacy_layer_effects (GimpLayer *layer,
                           PSDlayer  *lyr_a,
-                          gboolean   ibm_pc_format)
+                          PSDimage  *img_a)
 {
   const Babl *format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
   const Babl *space  = babl_format_get_space (format);
@@ -2781,7 +2781,7 @@ add_legacy_layer_effects (GimpLayer *layer,
 
       sofi = lyr_a->layer_styles->sofi;
 
-      convert_legacy_psd_color (color, sofi.natcolor, space, ibm_pc_format);
+      convert_legacy_psd_color (color, sofi.natcolor, space, img_a->ibm_pc_format);
       convert_psd_mode (sofi.blend, &mode);
 
       filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
@@ -2809,9 +2809,9 @@ add_legacy_layer_effects (GimpLayer *layer,
       blur = (oglw.blur / 250.0) * 100.0;
 
       if (oglw.ver == 0)
-        convert_legacy_psd_color (color, oglw.color, space, ibm_pc_format);
+        convert_legacy_psd_color (color, oglw.color, space, img_a->ibm_pc_format);
       else if (oglw.ver == 2)
-        convert_legacy_psd_color (color, oglw.natcolor, space, ibm_pc_format);
+        convert_legacy_psd_color (color, oglw.natcolor, space, img_a->ibm_pc_format);
 
       convert_psd_mode (oglw.blendsig, &mode);
 
@@ -2854,20 +2854,25 @@ add_legacy_layer_effects (GimpLayer *layer,
       x       = isdw.distance * cos (radians);
       y       = isdw.distance * sin (radians);
 
-      if (isdw.angle >= 0xFF00)
-        isdw.angle = (isdw.angle - 0xFF00) * -1;
+      if (isdw.anglefx)
+        isdw.angle = (gfloat) img_a->global_light_angle;
 
-      if (isdw.angle > 90 && isdw.angle < 180)
-        y *= -1;
-      else if (isdw.angle < -90 && isdw.angle > -180)
-        x *= -1;
+      if (isdw.angle < 0.0)
+        y = fabs (y) * -1.0;
+      else
+        y = fabs (y);
+      if ((isdw.angle > 90.0 && isdw.angle < 180.0) ||
+          (isdw.angle > -90.0 && isdw.angle < 0.0))
+        x = fabs (x) * -1.0;
+      else
+        x = fabs (x);
 
       blur = (isdw.blur / 250.0) * 50.0;
 
       if (isdw.ver == 0)
-        convert_legacy_psd_color (color, isdw.color, space, ibm_pc_format);
+        convert_legacy_psd_color (color, isdw.color, space, img_a->ibm_pc_format);
       else if (isdw.ver == 2)
-        convert_legacy_psd_color (color, isdw.natcolor, space, ibm_pc_format);
+        convert_legacy_psd_color (color, isdw.natcolor, space, img_a->ibm_pc_format);
 
       convert_psd_mode (isdw.blendsig, &mode);
 
@@ -2910,20 +2915,25 @@ add_legacy_layer_effects (GimpLayer *layer,
       x       = dsdw.distance * cos (radians);
       y       = dsdw.distance * sin (radians);
 
-      if (dsdw.angle >= 0xFF00)
-        dsdw.angle = (dsdw.angle - 0xFF00) * -1;
+      if (dsdw.anglefx)
+        dsdw.angle = img_a->global_light_angle;
 
-      if (dsdw.angle > 90 && dsdw.angle < 180)
-        y *= -1;
-      else if (dsdw.angle < -90 && dsdw.angle > -180)
-        x *= -1;
+      if (dsdw.angle < 0.0)
+        y = fabs (y) * -1.0;
+      else
+        y = fabs (y);
+      if ((dsdw.angle > 90.0 && dsdw.angle < 180.0) ||
+          (dsdw.angle > -90.0 && dsdw.angle < 0.0))
+        x = fabs (x) * -1.0;
+      else
+        x = fabs (x);
 
       blur = (dsdw.blur / 250.0) * 100.0;
 
       if (dsdw.ver == 0)
-        convert_legacy_psd_color (color, dsdw.color, space, ibm_pc_format);
+        convert_legacy_psd_color (color, dsdw.color, space, img_a->ibm_pc_format);
       else if (dsdw.ver == 2)
-        convert_legacy_psd_color (color, dsdw.natcolor, space, ibm_pc_format);
+        convert_legacy_psd_color (color, dsdw.natcolor, space, img_a->ibm_pc_format);
 
       convert_psd_mode (dsdw.blendsig, &mode);
 

@@ -796,6 +796,7 @@ typedef struct
   guint32              *alpha_id;               /* Alpha channel ids (tattoos) */
   guint16               alpha_id_count;         /* Number of alpha channel id items */
   guint16               quick_mask_id;          /* Channel number containing quick mask */
+  gint32                global_light_angle;     /* Global Lighting Angle for Effect layers */
 
   GimpColorProfile     *cmyk_profile;
   gpointer              cmyk_transform;

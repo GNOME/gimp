@@ -825,8 +825,8 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                                                   GUINT16_TO_BE (temp[1]));
               shadow->intensity = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[2]),
                                                   GUINT16_TO_BE (temp[3]));
-              shadow->angle     = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[4]),
-                                                  GUINT16_TO_BE (temp[5]));
+              shadow->angle     = FIXED_TO_FLOAT (GINT16_TO_BE (temp[4]),
+                                                  GINT16_TO_BE (temp[5]));
               shadow->distance  = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[6]),
                                                   GUINT16_TO_BE (temp[7]));
 
