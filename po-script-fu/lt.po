@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-15 20:19+0000\n"
-"PO-Revision-Date: 2024-01-15 22:45+0200\n"
-"Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
+"POT-Creation-Date: 2025-09-17 14:40+0000\n"
+"PO-Revision-Date: 2026-01-07 15:48+0200\n"
+"Last-Translator: Aurimas Černius <aurimas.cernius@mailo.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
@@ -17,81 +17,65 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.8\n"
 
-#: plug-ins/script-fu/script-fu.c:122
+#: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
 msgstr "Script-Fu _konsolė"
 
-#: plug-ins/script-fu/script-fu.c:127
+#: plug-ins/script-fu/script-fu.c:124
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktyvi konsolė Script-Fu kūrimui"
 
-#: plug-ins/script-fu/script-fu.c:314
+#: plug-ins/script-fu/script-fu.c:317
 msgid "_GIMP Online"
 msgstr "_GIMP internete"
 
-#: plug-ins/script-fu/script-fu.c:315
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_User Manual"
 msgstr "_Naudotojo žinynas"
 
-#: plug-ins/script-fu/script-fu.c:318
+#: plug-ins/script-fu/script-fu.c:321
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:320
+#: plug-ins/script-fu/script-fu.c:323
 msgid "_Test"
 msgstr "_Testas"
 
-#: plug-ins/script-fu/script-fu.c:323
+#: plug-ins/script-fu/script-fu.c:326
 msgid "_Buttons"
 msgstr "_Mygtukai"
 
-#: plug-ins/script-fu/script-fu.c:325
+#: plug-ins/script-fu/script-fu.c:328
 msgid "_Logos"
 msgstr "_Logotipai"
 
-#: plug-ins/script-fu/script-fu.c:327
+#: plug-ins/script-fu/script-fu.c:330
 msgid "_Patterns"
 msgstr "_Raštai"
 
-#: plug-ins/script-fu/script-fu.c:330
+#: plug-ins/script-fu/script-fu.c:333
 msgid "_Web Page Themes"
 msgstr "_Tinklalapių temos"
 
-#: plug-ins/script-fu/script-fu.c:332
+#: plug-ins/script-fu/script-fu.c:335
 msgid "_Alien Glow"
 msgstr "_Ateivių švytėjimas"
 
-#: plug-ins/script-fu/script-fu.c:334
+#: plug-ins/script-fu/script-fu.c:337
 msgid "_Beveled Pattern"
 msgstr "_Nuožulnaus krašto raštas"
 
-#: plug-ins/script-fu/script-fu.c:336
+#: plug-ins/script-fu/script-fu.c:339
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: plug-ins/script-fu/script-fu.c:339
+#: plug-ins/script-fu/script-fu.c:342
 msgid "Alpha to _Logo"
 msgstr "Alfa į _logotipą"
 
-#: plug-ins/script-fu/script-fu.c:345
-msgid "_Refresh Scripts"
-msgstr "_Atnaujinti scenarijus"
-
-#: plug-ins/script-fu/script-fu.c:350
-msgid "Re-read all available Script-Fu scripts"
-msgstr "Iš naujo perskaityti visus prieinamus Script-Fu scenarijus"
-
-#: plug-ins/script-fu/script-fu.c:376
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr ""
-"Negalite naudoti „Atnaujinti scenarijus“, kol atvertas Script-Fu langas. "
-"Užverkite visus Script-Fu langus ir bandykite dar kartą."
-
-#: plug-ins/script-fu/script-fu-eval.c:50
+#: plug-ins/script-fu/script-fu-eval.c:52
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Scrip-Fu įvertinimo veiksenoje galimas tik neinteraktyvus iškvietimas"
 
@@ -122,8 +106,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Išsaugoti Script-Fu konsolės išvestį"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:888
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
+#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "_Atsisakyti"
 
@@ -148,27 +132,27 @@ msgstr "Sveiki paleidę TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "GIMP scenarijai Scheme kalba"
 
-#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/server/script-fu-server.c:918
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu serverio parametrai"
 
-#: plug-ins/script-fu/server/script-fu-server.c:889
+#: plug-ins/script-fu/server/script-fu-server.c:923
 msgid "_Start Server"
 msgstr "_Paleisti serverį"
 
-#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/server/script-fu-server.c:956
 msgid "Listen on IP:"
 msgstr "Klausytis IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:929
+#: plug-ins/script-fu/server/script-fu-server.c:963
 msgid "Server port:"
 msgstr "Serverio prievadas:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:935
+#: plug-ins/script-fu/server/script-fu-server.c:969
 msgid "Server logfile:"
 msgstr "Serverio žurnalo failas:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:948
+#: plug-ins/script-fu/server/script-fu-server.c:982
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -184,129 +168,126 @@ msgstr "_Paleisti serverį..."
 msgid "Server for remote Script-Fu operation"
 msgstr "Serveris nuotoliniam Script-Fu valdymui"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:187
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu negali apdoroti dviejų scenarijų tuo pačiu metu."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Jūs jau vykdote scenarijų „%s“."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:220
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
 msgid "_Reset"
 msgstr "_Atstatyti"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
 msgid "_OK"
 msgstr "_Gerai"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:276
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:326
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu spalvos pasirinkimas"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:405
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu failų pasirinkimas"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:456
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:408
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu aplankų pasirinkimas"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:852
+#. Log to stdout.  Later to Gimp.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:817
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Klaida vykdant %s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:357
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:541
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Klaida įkeliant %s:"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:72
 msgid "Bumpmap"
 msgstr "Įspaudas"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:189
+#: plug-ins/script-fu/scripts/add-bevel.scm:199
 msgid "Add B_evel..."
 msgstr "Pridėti n_uožulnumą..."
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:190
+#: plug-ins/script-fu/scripts/add-bevel.scm:200
 msgid "Add a beveled border to an image"
 msgstr "Pridėti paveikslėliui nuožulnų rėmelį"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:197
-msgid "Thickness"
-msgstr "Storis"
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:206
+msgid "_Thickness"
+msgstr "S_toris"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:198
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
-#: plug-ins/script-fu/scripts/old-photo.scm:104
-#: plug-ins/script-fu/scripts/round-corners.scm:145
-#: plug-ins/script-fu/scripts/slide.scm:262
-#: plug-ins/script-fu/scripts/spinning-globe.scm:111
-msgid "Work on copy"
-msgstr "Dirbti kopijoje"
+#: plug-ins/script-fu/scripts/add-bevel.scm:207
+msgid "_Work on copy"
+msgstr "_Dirbti kopijoje"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:199
-msgid "Keep bump layer"
-msgstr "Palikti nelygumų sluoksnį"
+#: plug-ins/script-fu/scripts/add-bevel.scm:208
+msgid "_Keep bump layer"
+msgstr "_Palikti nelygumų sluoksnį"
 
-#: plug-ins/script-fu/scripts/addborder.scm:123
+#: plug-ins/script-fu/scripts/addborder.scm:121
 msgid "Border Layer"
 msgstr "Rėmelio sluoksnis"
 
-#: plug-ins/script-fu/scripts/addborder.scm:177
+#: plug-ins/script-fu/scripts/addborder.scm:174
 msgid "Add _Border..."
 msgstr "Pridėti _rėmelį..."
 
-#: plug-ins/script-fu/scripts/addborder.scm:178
+#: plug-ins/script-fu/scripts/addborder.scm:175
 msgid "Add a border around an image"
 msgstr "Pridėti apie paveikslėlį rėmelį"
 
-#: plug-ins/script-fu/scripts/addborder.scm:185
+#: plug-ins/script-fu/scripts/addborder.scm:181
 msgid "Border X size"
 msgstr "Rėmelio X dydis"
 
-#: plug-ins/script-fu/scripts/addborder.scm:186
+#: plug-ins/script-fu/scripts/addborder.scm:182
 msgid "Border Y size"
 msgstr "Rėmelio Y dydis"
 
-#: plug-ins/script-fu/scripts/addborder.scm:187
+#: plug-ins/script-fu/scripts/addborder.scm:183
 msgid "Border color"
 msgstr "Rėmelio spalva"
 
-#: plug-ins/script-fu/scripts/addborder.scm:188
+#: plug-ins/script-fu/scripts/addborder.scm:184
 msgid "Delta value on color"
 msgstr "Spalvos delta reikšmė"
 
-#: plug-ins/script-fu/scripts/addborder.scm:189
-#: plug-ins/script-fu/scripts/drop-shadow.scm:183
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:212
+#: plug-ins/script-fu/scripts/addborder.scm:185
+#: plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:210
 msgid "Allow resizing"
 msgstr "Leisti keisti dydį"
 
-#: plug-ins/script-fu/scripts/blend-anim.scm:206
+#: plug-ins/script-fu/scripts/blend-anim.scm:202
 msgid "Frame"
 msgstr "Kadras"
 
-#: plug-ins/script-fu/scripts/blend-anim.scm:222
+#: plug-ins/script-fu/scripts/blend-anim.scm:218
 msgid "Blend Animation needs at least three source layers"
 msgstr "Pereinančiai animacijai turi būti bent trys šaltinio sluoksniai"
 
-#: plug-ins/script-fu/scripts/blend-anim.scm:228
+#: plug-ins/script-fu/scripts/blend-anim.scm:224
 msgid "_Blend..."
 msgstr "_Perėjimas..."
 
-#: plug-ins/script-fu/scripts/blend-anim.scm:229
+#: plug-ins/script-fu/scripts/blend-anim.scm:225
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
@@ -314,20 +295,20 @@ msgstr ""
 "Sukurti tarpinius sluoksnius sujungiančius du ar daugiau sluoksnių virš fono "
 "kaip animaciją"
 
-#: plug-ins/script-fu/scripts/blend-anim.scm:236
+#: plug-ins/script-fu/scripts/blend-anim.scm:231
 msgid "Intermediate frames"
 msgstr "Tarpiniai kadrai"
 
-#: plug-ins/script-fu/scripts/blend-anim.scm:237
+#: plug-ins/script-fu/scripts/blend-anim.scm:232
 msgid "Max. blur radius"
 msgstr "Maks. išliejimo spindulys"
 
-#: plug-ins/script-fu/scripts/blend-anim.scm:238
+#: plug-ins/script-fu/scripts/blend-anim.scm:233
 msgid "Looped"
 msgstr "Ciklinis"
 
 #. --- false form of "if-1"
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:217
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:218
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
@@ -335,11 +316,11 @@ msgstr ""
 "Naudojant išdeginimo scenarijų reikalingi du sluoksniai. Permatomo priekinio "
 "plano sluoksnio ir fono sluoksnio."
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:224
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:225
 msgid "B_urn-In..."
 msgstr "Iš_deginimas..."
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:225
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:226
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
@@ -379,78 +360,78 @@ msgstr "Paruošti GIF formatui"
 msgid "Speed (pixels/frame)"
 msgstr "Greitis (pikseliai/kadras)"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:205
+#: plug-ins/script-fu/scripts/carve-it.scm:207
 msgid "Carved Surface"
 msgstr "Padalintas paviršius"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:206
+#: plug-ins/script-fu/scripts/carve-it.scm:208
 msgid "Bevel Shadow"
 msgstr "Nuožulnaus krašto šešėlis"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:207
+#: plug-ins/script-fu/scripts/carve-it.scm:209
 msgid "Bevel Highlight"
 msgstr "Nuožulnaus krašto plotis"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:208
+#: plug-ins/script-fu/scripts/carve-it.scm:210
 msgid "Cast Shadow"
 msgstr "Sukurti šešėlį"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:209
+#: plug-ins/script-fu/scripts/carve-it.scm:211
 msgid "Inset"
 msgstr "Invertuoti"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:221
+#: plug-ins/script-fu/scripts/carve-it.scm:223
 msgid "Stencil C_arve..."
 msgstr "Trafaretinis _raižymas..."
 
-#: plug-ins/script-fu/scripts/carve-it.scm:222
+#: plug-ins/script-fu/scripts/carve-it.scm:224
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
 "Naudoti nurodytą piešinį kaip trafaretą išpjovai iš nurodyto paveikslėlio."
 
-#: plug-ins/script-fu/scripts/carve-it.scm:229
-msgid "Image to carve"
-msgstr "Graviruotinas paveikslėlis"
+#: plug-ins/script-fu/scripts/carve-it.scm:231
+msgid "Mask drawable"
+msgstr "Piešiama kaukė"
 
-#: plug-ins/script-fu/scripts/carve-it.scm:230
+#: plug-ins/script-fu/scripts/carve-it.scm:232
 msgid "Carve white areas"
 msgstr "Išgraviruoti baltas vietas"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:95
+#: plug-ins/script-fu/scripts/chrome-it.scm:153
 msgid "Background"
 msgstr "Fonas"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:96
+#: plug-ins/script-fu/scripts/chrome-it.scm:154
 msgid "Layer 1"
 msgstr "Sluoksnis 1"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:97
+#: plug-ins/script-fu/scripts/chrome-it.scm:155
 msgid "Layer 2"
 msgstr "Sluoksnis 2"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:98
+#: plug-ins/script-fu/scripts/chrome-it.scm:156
 msgid "Layer 3"
 msgstr "Sluoksnis 3"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:99
+#: plug-ins/script-fu/scripts/chrome-it.scm:157
 msgid "Drop Shadow"
 msgstr "Mesti šešėlį"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:227
+#: plug-ins/script-fu/scripts/chrome-it.scm:286
 msgid "Chrome"
 msgstr "Chromas"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:228
-#: plug-ins/script-fu/scripts/xach-effect.scm:68
+#: plug-ins/script-fu/scripts/chrome-it.scm:287
+#: plug-ins/script-fu/scripts/xach-effect.scm:69
 msgid "Highlight"
 msgstr "Paryškinimas"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:242
+#: plug-ins/script-fu/scripts/chrome-it.scm:307
 msgid "Stencil C_hrome..."
 msgstr "Trafaretinis c_hromas..."
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:243
+#: plug-ins/script-fu/scripts/chrome-it.scm:308
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
@@ -458,158 +439,186 @@ msgstr ""
 "Pasirinktam regionui (ar permatomumui) pridėti chromo efektą naudojant "
 "nurodytą (pilką) trafaretą"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:250
+#: plug-ins/script-fu/scripts/chrome-it.scm:314
 msgid "Chrome saturation"
 msgstr "Chromo sodrumas"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:251
+#: plug-ins/script-fu/scripts/chrome-it.scm:315
 msgid "Chrome lightness"
 msgstr "Chromo šviesumas"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:252
+#: plug-ins/script-fu/scripts/chrome-it.scm:316
 msgid "Chrome factor"
 msgstr "Chromo koeficientas"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:253
+#: plug-ins/script-fu/scripts/chrome-it.scm:317
 msgid "Environment map"
 msgstr "Aplinkos žemėlapis"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:256
+#: plug-ins/script-fu/scripts/chrome-it.scm:320
 msgid "Highlight balance"
 msgstr "Išryškinimo balansas"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:257
+#: plug-ins/script-fu/scripts/chrome-it.scm:321
 msgid "Chrome balance"
 msgstr "Chromo balansas"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:258
+#: plug-ins/script-fu/scripts/chrome-it.scm:322
 msgid "Chrome white areas"
 msgstr "Chromuoti baltus plotus"
 
-#: plug-ins/script-fu/scripts/circuit.scm:74
+#: plug-ins/script-fu/scripts/circuit.scm:72
 msgid "Effect layer"
 msgstr "Efekto sluoksnis"
 
-#: plug-ins/script-fu/scripts/circuit.scm:131
+#: plug-ins/script-fu/scripts/circuit.scm:135
 msgid "_Circuit..."
 msgstr "S_chema..."
 
-#: plug-ins/script-fu/scripts/circuit.scm:132
+#: plug-ins/script-fu/scripts/circuit.scm:136
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
 "Užpildyti pasirinktą regiona (ar permatomumą) trasomis, kokios yra ant "
 "mikroschemų"
 
-#: plug-ins/script-fu/scripts/circuit.scm:139
+#: plug-ins/script-fu/scripts/circuit.scm:142
 msgid "Oilify mask size"
 msgstr "Padidinti kaukę"
 
-#: plug-ins/script-fu/scripts/circuit.scm:140
+#: plug-ins/script-fu/scripts/circuit.scm:143
 msgid "Circuit seed"
 msgstr "Schemos sėkla"
 
-#: plug-ins/script-fu/scripts/circuit.scm:141
+#: plug-ins/script-fu/scripts/circuit.scm:144
 msgid "No background (only for separate layer)"
 msgstr "Nėra fono (tik atskiram sluoksniui)"
 
-#: plug-ins/script-fu/scripts/circuit.scm:142
-#: plug-ins/script-fu/scripts/lava.scm:141
-#: plug-ins/script-fu/scripts/xach-effect.scm:138
+#: plug-ins/script-fu/scripts/circuit.scm:145
+#: plug-ins/script-fu/scripts/lava.scm:144
+#: plug-ins/script-fu/scripts/xach-effect.scm:139
 msgid "Keep selection"
 msgstr "Palikti pasirinkimą"
 
-#: plug-ins/script-fu/scripts/circuit.scm:143
-#: plug-ins/script-fu/scripts/lava.scm:142
+#: plug-ins/script-fu/scripts/circuit.scm:146
+#: plug-ins/script-fu/scripts/lava.scm:145
 msgid "Separate layer"
 msgstr "Atskiras sluoksnis"
 
-#: plug-ins/script-fu/scripts/clothify.scm:52
+#: plug-ins/script-fu/scripts/clothify.scm:65
 msgid "_Clothify..."
 msgstr "Padengti a_udiniu..."
 
-#: plug-ins/script-fu/scripts/clothify.scm:53
+#: plug-ins/script-fu/scripts/clothify.scm:66
 msgid "Add a cloth-like texture to the selected region (or alpha)"
 msgstr ""
 "Pasirinktam regionui (ar permatomumui) pridėti audinį primenančią tekstūrą"
 
-#: plug-ins/script-fu/scripts/clothify.scm:60
+#: plug-ins/script-fu/scripts/clothify.scm:72
 msgid "Blur X"
 msgstr "Išlieti X"
 
-#: plug-ins/script-fu/scripts/clothify.scm:61
+#: plug-ins/script-fu/scripts/clothify.scm:73
 msgid "Blur Y"
 msgstr "Išlieti Y"
 
-#: plug-ins/script-fu/scripts/clothify.scm:62
+#: plug-ins/script-fu/scripts/clothify.scm:74
 msgid "Azimuth"
 msgstr "Azimutas"
 
-#: plug-ins/script-fu/scripts/clothify.scm:63
+#: plug-ins/script-fu/scripts/clothify.scm:75
 msgid "Elevation"
 msgstr "Iškilimas"
 
-#: plug-ins/script-fu/scripts/clothify.scm:64
+#: plug-ins/script-fu/scripts/clothify.scm:76
 msgid "Depth"
 msgstr "Gylis"
 
-#: plug-ins/script-fu/scripts/coffee.scm:37
+#: plug-ins/script-fu/scripts/coffee.scm:41
 msgid "Stain"
-msgstr "Dėmės"
+msgstr "Dėmė"
 
-#: plug-ins/script-fu/scripts/coffee.scm:91
-msgid "_Coffee Stain..."
-msgstr "_Kavos dėmė..."
+#: plug-ins/script-fu/scripts/coffee.scm:132
+msgid "_Stain..."
+msgstr "_Ištepti..."
 
-#: plug-ins/script-fu/scripts/coffee.scm:92
-msgid "Add realistic looking coffee stains to the image"
-msgstr "Pridėti tikroviškai atrodančias kavos dėmes paveikslėliui"
+#: plug-ins/script-fu/scripts/coffee.scm:133
+msgid "Add layers of stain or blotch marks"
+msgstr "Pridėti dėmių sluoksnius ar ištepimus"
 
-#: plug-ins/script-fu/scripts/coffee.scm:99
-msgid "Stains"
-msgstr "Dėmės"
+#: plug-ins/script-fu/scripts/coffee.scm:139
+msgid "Number of stains to add"
+msgstr "Pridedamų dėmių kiekis"
 
-#: plug-ins/script-fu/scripts/coffee.scm:100
+#: plug-ins/script-fu/scripts/coffee.scm:140
 msgid "Darken only"
 msgstr "Tik patamsinti"
 
-#: plug-ins/script-fu/scripts/difference-clouds.scm:70
+#: plug-ins/script-fu/scripts/coffee.scm:141
+msgid "Gradient to color stains"
+msgstr "Dėmių spalvos gradientas"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:82
 msgid "_Difference Clouds"
 msgstr "Skirtumų _debesys"
 
-#: plug-ins/script-fu/scripts/difference-clouds.scm:71
+#: plug-ins/script-fu/scripts/difference-clouds.scm:83
 msgid "Solid noise applied with Difference layer mode"
 msgstr "Nepertraukiamas triukšmas pritaikomas su Skirtumų sluoksnio veiksena"
 
-#: plug-ins/script-fu/scripts/distress-selection.scm:105
+#: plug-ins/script-fu/scripts/difference-clouds.scm:89
+msgid "Random Seed"
+msgstr "Atsitiktinė sėkla"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:90
+msgid "Levels"
+msgstr "Lygiai"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:91
+msgid "Tileable"
+msgstr "Plytelės"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:92
+msgid "Turbulent"
+msgstr "Turbolencija"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:93
+msgid "X"
+msgstr "X"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:94
+msgid "Y"
+msgstr "Y"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:112
 msgid "_Distort..."
 msgstr "_Iškraipyti..."
 
-#: plug-ins/script-fu/scripts/distress-selection.scm:106
+#: plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "Distress the selection"
 msgstr "Sumažinti žymėjimą"
 
-#: plug-ins/script-fu/scripts/distress-selection.scm:113
-msgid "_Threshold (bigger 1<-->254 smaller)"
-msgstr "Slenks_tis (didesnis 1<-->254 mažesnis)"
+#: plug-ins/script-fu/scripts/distress-selection.scm:119
+msgid "_Threshold"
+msgstr "_Slenkstis"
 
-#: plug-ins/script-fu/scripts/distress-selection.scm:114
+#: plug-ins/script-fu/scripts/distress-selection.scm:120
 msgid "_Spread"
 msgstr "Pa_skleisti"
 
-#: plug-ins/script-fu/scripts/distress-selection.scm:115
+#: plug-ins/script-fu/scripts/distress-selection.scm:121
 msgid "_Granularity (1 is low)"
 msgstr "_Grūdėtumas (1 yra mažas)"
 
-#: plug-ins/script-fu/scripts/distress-selection.scm:116
+#: plug-ins/script-fu/scripts/distress-selection.scm:122
 msgid "S_mooth"
 msgstr "G_lotnus"
 
-#: plug-ins/script-fu/scripts/distress-selection.scm:117
+#: plug-ins/script-fu/scripts/distress-selection.scm:123
 msgid "Smooth hor_izontally"
 msgstr "Glotninti hor_izontaliai"
 
-#: plug-ins/script-fu/scripts/distress-selection.scm:118
+#: plug-ins/script-fu/scripts/distress-selection.scm:124
 msgid "Smooth _vertically"
 msgstr "Glotninti _vertikaliai"
 
@@ -621,218 +630,226 @@ msgstr "_Mesti šešėlį..."
 msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr "Pridėti pasirinktos srities (arba permatomumo) šešėlį"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm:178
+#: plug-ins/script-fu/scripts/drop-shadow.scm:177
 msgid "Offset X"
 msgstr "X poslinkis"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm:179
+#: plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset Y"
 msgstr "Y poslinkis"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm:180
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:208
+#: plug-ins/script-fu/scripts/drop-shadow.scm:179
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:206
 #: plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Blur radius"
 msgstr "Suliejimo spindulys"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm:181
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:157
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:209
+#: plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:147
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:207
 msgid "Color"
 msgstr "Spalva"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm:182
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:210
+#: plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:208
 msgid "Opacity"
 msgstr "Nepermatomumas"
 
-#: plug-ins/script-fu/scripts/font-map.scm:161
+#: plug-ins/script-fu/scripts/font-map.scm:165
 msgid "Render _Font Map..."
 msgstr "Atvaizduoti šri_ftų žemėlapį..."
 
-#: plug-ins/script-fu/scripts/font-map.scm:162
+#: plug-ins/script-fu/scripts/font-map.scm:166
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
 "Sukurti paveikslėlį užpildytą šriftų atitinkančių šriftų pavadinimų filtrą "
 "peržiūromis"
 
-#: plug-ins/script-fu/scripts/font-map.scm:167
+#: plug-ins/script-fu/scripts/font-map.scm:169
 msgid "_Text"
 msgstr "_Tekstas"
 
-#: plug-ins/script-fu/scripts/font-map.scm:168
+#: plug-ins/script-fu/scripts/font-map.scm:170
 msgid "Use font _name as text"
 msgstr "Naudoti šrifto _pavadinimą kaip tekstą"
 
-#: plug-ins/script-fu/scripts/font-map.scm:169
+#: plug-ins/script-fu/scripts/font-map.scm:171
 msgid "_Labels"
 msgstr "_Užrašai"
 
-#: plug-ins/script-fu/scripts/font-map.scm:170
+#: plug-ins/script-fu/scripts/font-map.scm:172
 msgid "_Filter (regexp)"
 msgstr "_Filtruoti (regexp)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:171
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "Font _size (pixels)"
 msgstr "Šrifto _dydis (taškeliais)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:172
+#: plug-ins/script-fu/scripts/font-map.scm:174
 msgid "_Border (pixels)"
 msgstr "_Rėmelis (taškeliais)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "_Color scheme"
 msgstr "_Spalvų schema"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "Black on white"
 msgstr "Juoda ant balto"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "Active colors"
 msgstr "Aktyvios spalvos"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:140
 msgid "_Fuzzy Border..."
 msgstr "_Neryškus rėmelis..."
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:141
 msgid "Add a jagged, fuzzy border to an image"
 msgstr "Paveikslėliui pridėti dantytą, nelygų rėmelį"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:158
-#: plug-ins/script-fu/scripts/old-photo.scm:98
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:148
+#: plug-ins/script-fu/scripts/old-photo.scm:99
 msgid "Border size"
 msgstr "Rėmelio dydis"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:159
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
 msgid "Blur border"
 msgstr "Sulieti rėmelį"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
 msgid "Granularity (1 is Low)"
 msgstr "Grūdėtumas (1 yra mažas)"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:161
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:151
 msgid "Add shadow"
 msgstr "Pridėti šešėlį"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:162
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:152
 msgid "Shadow weight (%)"
 msgstr "Šešėlio stiprumas (%s)"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:164
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:153
+#: plug-ins/script-fu/scripts/old-photo.scm:105
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:268
+#: plug-ins/script-fu/scripts/spinning-globe.scm:127
+msgid "Work on copy"
+msgstr "Dirbti kopijoje"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:154
 msgid "Flatten image"
 msgstr "Suploti paveikslėlį"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:63
-msgid "Using _Paths"
-msgstr "_Kontūrų naudojimas"
+msgid "_Using Paths"
+msgstr "Kontūrų na_udojimas"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:64
-#: plug-ins/script-fu/scripts/gimp-online.scm:77
-#: plug-ins/script-fu/scripts/gimp-online.scm:90
-#: plug-ins/script-fu/scripts/gimp-online.scm:103
-#: plug-ins/script-fu/scripts/gimp-online.scm:116
-#: plug-ins/script-fu/scripts/gimp-online.scm:129
-#: plug-ins/script-fu/scripts/gimp-online.scm:142
-#: plug-ins/script-fu/scripts/gimp-online.scm:155
-#: plug-ins/script-fu/scripts/gimp-online.scm:167
+#: plug-ins/script-fu/scripts/gimp-online.scm:75
+#: plug-ins/script-fu/scripts/gimp-online.scm:86
+#: plug-ins/script-fu/scripts/gimp-online.scm:97
+#: plug-ins/script-fu/scripts/gimp-online.scm:108
+#: plug-ins/script-fu/scripts/gimp-online.scm:119
+#: plug-ins/script-fu/scripts/gimp-online.scm:130
+#: plug-ins/script-fu/scripts/gimp-online.scm:141
+#: plug-ins/script-fu/scripts/gimp-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Naudotojo žinyno žymelė"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:76
+#: plug-ins/script-fu/scripts/gimp-online.scm:74
 msgid "_Preparing your Images for the Web"
 msgstr "_Paveikslėlių paruošimas žiniatinkliui"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:89
+#: plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Darbas su skaitmeninių fotoaparatų nuotraukomis"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:102
+#: plug-ins/script-fu/scripts/gimp-online.scm:96
 msgid "Create, Open and Save _Files"
 msgstr "Kaip kurti, atverti ir išsaugoti _failus"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:115
+#: plug-ins/script-fu/scripts/gimp-online.scm:107
 msgid "_Basic Concepts"
 msgstr "_Pagrindiniai principai"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:128
+#: plug-ins/script-fu/scripts/gimp-online.scm:118
 msgid "How to Use _Dialogs"
 msgstr "Kaip naudoti _dialogus"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:141
+#: plug-ins/script-fu/scripts/gimp-online.scm:129
 msgid "Drawing _Simple Objects"
 msgstr "Paprastų _objektų piešimas"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:154
-msgid "Create and Use _Selections"
-msgstr "Kaip kurti ir naudoti _pažymėjimus"
+#: plug-ins/script-fu/scripts/gimp-online.scm:140
+msgid "_Create and Use Selections"
+msgstr "_Kurti ir naudoti žymėjimus"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:166
-msgid "_[Table of Contents]"
-msgstr "_[Turinys]"
+#: plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "_Table of Contents"
+msgstr "_Turinys"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:202
+#: plug-ins/script-fu/scripts/gimp-online.scm:184
 msgid "_Main Web Site"
 msgstr "_Pagrindinė žiniatinklio svetainė"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/gimp-online.scm:185
+#: plug-ins/script-fu/scripts/gimp-online.scm:196
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "Bookmark to the GIMP web site"
 msgstr "GIMP žiniatinklio svetainės žymelė"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:215
+#: plug-ins/script-fu/scripts/gimp-online.scm:195
 msgid "_Developer Web Site"
 msgstr "Žiniatinklio s_vetainė kūrėjams"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:228
+#: plug-ins/script-fu/scripts/gimp-online.scm:206
 msgid "_Roadmaps"
 msgstr "_Planai"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
+#: plug-ins/script-fu/scripts/gimp-online.scm:207
 msgid "Bookmark to the roadmaps of GIMP"
 msgstr "GIMP planų žymelė"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:241
+#: plug-ins/script-fu/scripts/gimp-online.scm:217
 msgid "_Bug Reports and Feature Requests"
 msgstr "Pranešimai apie _klaidas bei savybių prašymai"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/gimp-online.scm:218
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "GIMP klaidų registro žymelė"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:254
+#: plug-ins/script-fu/scripts/gimp-online.scm:228
 msgid "_User Manual Web Site"
 msgstr "_Naudotojo žinyno žiniatinklio svetainė"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:69
+#: plug-ins/script-fu/scripts/gradient-example.scm:73
 msgid "Custom _Gradient..."
 msgstr "Kitas _gradientas..."
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:70
+#: plug-ins/script-fu/scripts/gradient-example.scm:74
 msgid "Create an image filled with an example of the current gradient"
 msgstr "Sukurti paveikslėlį užpildytą esamo gradiento pavyzdžiu"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:75
-#: plug-ins/script-fu/scripts/mkbrush.scm:70
-#: plug-ins/script-fu/scripts/mkbrush.scm:140
-#: plug-ins/script-fu/scripts/mkbrush.scm:196
-#: plug-ins/script-fu/scripts/mkbrush.scm:265
+#: plug-ins/script-fu/scripts/gradient-example.scm:77
+#: plug-ins/script-fu/scripts/mkbrush.scm:69
+#: plug-ins/script-fu/scripts/mkbrush.scm:137
+#: plug-ins/script-fu/scripts/mkbrush.scm:191
+#: plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Width"
 msgstr "Plotis"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:76
-#: plug-ins/script-fu/scripts/mkbrush.scm:71
-#: plug-ins/script-fu/scripts/mkbrush.scm:141
-#: plug-ins/script-fu/scripts/mkbrush.scm:197
-#: plug-ins/script-fu/scripts/mkbrush.scm:266
+#: plug-ins/script-fu/scripts/gradient-example.scm:78
+#: plug-ins/script-fu/scripts/mkbrush.scm:70
+#: plug-ins/script-fu/scripts/mkbrush.scm:138
+#: plug-ins/script-fu/scripts/mkbrush.scm:192
+#: plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Height"
 msgstr "Aukštis"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:77
+#: plug-ins/script-fu/scripts/gradient-example.scm:79
 msgid "Gradient reverse"
 msgstr "Atvirkštinis gradientas"
 
@@ -844,42 +861,43 @@ msgstr "Naujos gairės iš _pažymėjimo"
 msgid "Create four guides around the bounding box of the current selection"
 msgstr "Sukurti keturias gaires apie dabartinį žymėjimą talpinančią dėžutę"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
 msgstr "Nauja gairė (_procentais)..."
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr "Pridėti gairę pozicijoje nurodytoje paveikslėlio dydžio procentais"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "_Direction"
 msgstr "_Kryptis"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Horizontal"
 msgstr "Horizontali"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Vertical"
 msgstr "Vertikali"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
 msgstr "_Padėtis (procentais)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:27
+#: plug-ins/script-fu/scripts/guides-new.scm:26
 msgid "New _Guide..."
 msgstr "Nauja _gairė..."
 
-#: plug-ins/script-fu/scripts/guides-new.scm:28
+#: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Pridėti gairę nurodytoje orientacijoje ir pozicijoje (taškeliais)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Position"
 msgstr "_Padėtis"
 
@@ -892,43 +910,43 @@ msgid "Remove all horizontal and vertical guides"
 msgstr "Pašalinti visas horizontalias ir vertikalias gaires"
 
 #. else
-#: plug-ins/script-fu/scripts/lava.scm:123
+#: plug-ins/script-fu/scripts/lava.scm:127
 msgid "Lava works with exactly one selected layer"
 msgstr "Lava veikia su vieninteliu pažymėtu sluoksniu"
 
-#: plug-ins/script-fu/scripts/lava.scm:129
+#: plug-ins/script-fu/scripts/lava.scm:133
 msgid "_Lava..."
 msgstr "_Lava..."
 
-#: plug-ins/script-fu/scripts/lava.scm:130
+#: plug-ins/script-fu/scripts/lava.scm:134
 msgid "Fill the current selection with lava"
 msgstr "Užpildyti esamą pažymėjimą lava"
 
-#: plug-ins/script-fu/scripts/lava.scm:137
+#: plug-ins/script-fu/scripts/lava.scm:140
 msgid "Seed"
 msgstr "Sėkla"
 
-#: plug-ins/script-fu/scripts/lava.scm:138
+#: plug-ins/script-fu/scripts/lava.scm:141
 msgid "Size"
 msgstr "Dydis"
 
-#: plug-ins/script-fu/scripts/lava.scm:139
+#: plug-ins/script-fu/scripts/lava.scm:142
 msgid "Roughness"
 msgstr "Grubumas"
 
-#: plug-ins/script-fu/scripts/lava.scm:140
+#: plug-ins/script-fu/scripts/lava.scm:143
 msgid "Gradient"
 msgstr "Gradientas"
 
-#: plug-ins/script-fu/scripts/lava.scm:143
+#: plug-ins/script-fu/scripts/lava.scm:146
 msgid "Use current gradient"
 msgstr "Naudoti esamą gradientą"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:106
+#: plug-ins/script-fu/scripts/line-nova.scm:117
 msgid "Line _Nova..."
 msgstr "Linijų _nova..."
 
-#: plug-ins/script-fu/scripts/line-nova.scm:107
+#: plug-ins/script-fu/scripts/line-nova.scm:118
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
@@ -936,111 +954,101 @@ msgstr ""
 "Užpildyti sluoksnį spinduliais sklindančiais iš jo centro naudojant "
 "priekinio plano spalvą"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:114
-msgid "Number of lines"
-msgstr "Eilučių kiekis"
+#: plug-ins/script-fu/scripts/line-nova.scm:124
+msgid "_Number of lines"
+msgstr "_Eilučių kiekis"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:115
-msgid "Sharpness (degrees)"
-msgstr "Aštrumas (laipsniais)"
+#: plug-ins/script-fu/scripts/line-nova.scm:125
+msgid "S_harpness (degrees)"
+msgstr "Aš_trumas (laipsniais)"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Offset radius"
-msgstr "Poslinkio spindulys"
+#: plug-ins/script-fu/scripts/line-nova.scm:126
+msgid "O_ffset radius"
+msgstr "P_oslinkio spindulys"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:117
-msgid "Randomness"
-msgstr "Atsitiktinumas"
+#: plug-ins/script-fu/scripts/line-nova.scm:127
+msgid "Ran_domness"
+msgstr "_Atsitiktinumas"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:63
+#: plug-ins/script-fu/scripts/mkbrush.scm:64
 msgid "_Rectangular..."
 msgstr "_Stačiakampis..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:64
+#: plug-ins/script-fu/scripts/mkbrush.scm:65
 msgid "Create a rectangular brush"
 msgstr "Sukurti stačiakampį teptuką"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:69
-#: plug-ins/script-fu/scripts/mkbrush.scm:139
-#: plug-ins/script-fu/scripts/mkbrush.scm:195
-#: plug-ins/script-fu/scripts/mkbrush.scm:264
+#: plug-ins/script-fu/scripts/mkbrush.scm:68
+#: plug-ins/script-fu/scripts/mkbrush.scm:136
+#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:257
 msgid "Name"
 msgstr "Pavadinimas"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:72
-#: plug-ins/script-fu/scripts/mkbrush.scm:143
-#: plug-ins/script-fu/scripts/mkbrush.scm:198
-#: plug-ins/script-fu/scripts/mkbrush.scm:268
+#: plug-ins/script-fu/scripts/mkbrush.scm:71
+#: plug-ins/script-fu/scripts/mkbrush.scm:140
+#: plug-ins/script-fu/scripts/mkbrush.scm:193
+#: plug-ins/script-fu/scripts/mkbrush.scm:261
 msgid "Spacing"
 msgstr "Intervalas"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:133
+#: plug-ins/script-fu/scripts/mkbrush.scm:132
 msgid "Re_ctangular, Feathered..."
 msgstr "Stačia_kampis, išlietais kraštais..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:134
+#: plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Create a rectangular brush with feathered edges"
 msgstr "Sukurti stačiakampį teptuką išlietais kraštais"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:142
-#: plug-ins/script-fu/scripts/mkbrush.scm:267
+#: plug-ins/script-fu/scripts/mkbrush.scm:139
+#: plug-ins/script-fu/scripts/mkbrush.scm:260
 msgid "Feathering"
 msgstr "Kraštų išliejimas"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:189
+#: plug-ins/script-fu/scripts/mkbrush.scm:186
 msgid "_Elliptical..."
 msgstr "_Elipsinis..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:187
 msgid "Create an elliptical brush"
 msgstr "Sukurti elipsinį teptuką"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:258
+#: plug-ins/script-fu/scripts/mkbrush.scm:253
 msgid "Elli_ptical, Feathered..."
 msgstr "Eli_psinis, išlietais kraštais..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:259
+#: plug-ins/script-fu/scripts/mkbrush.scm:254
 msgid "Create an elliptical brush with feathered edges"
 msgstr "Sukurti elipsinį teptuką išlietais kraštais"
 
-#: plug-ins/script-fu/scripts/old-photo.scm:89
+#: plug-ins/script-fu/scripts/old-photo.scm:91
 msgid "_Old Photo..."
 msgstr "_Sena fotografija..."
 
-#: plug-ins/script-fu/scripts/old-photo.scm:90
+#: plug-ins/script-fu/scripts/old-photo.scm:92
 msgid "Make an image look like an old photo"
 msgstr "Padaryti paveikslėlį atrodantį kaip sena fotografija"
 
-#: plug-ins/script-fu/scripts/old-photo.scm:97
+#: plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "Defocus"
 msgstr "Defokusuoti"
 
 #. since this plug-in uses the fuzzy-border plug-in, I used the
 #. values of the latter, with the exception of the initial value
 #. and the 'minimum' value.
-#: plug-ins/script-fu/scripts/old-photo.scm:102
+#: plug-ins/script-fu/scripts/old-photo.scm:103
 msgid "Sepia"
 msgstr "Sepija"
 
-#: plug-ins/script-fu/scripts/old-photo.scm:103
+#: plug-ins/script-fu/scripts/old-photo.scm:104
 msgid "Mottle"
 msgstr "Aptaškyti"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:226
-msgid "Folder for the output file"
-msgstr "Aplankas išvesties failui"
-
-#: plug-ins/script-fu/scripts/palette-export.scm:227
-msgid ""
-"The name of the file to create (if a file with this name already exist, it "
-"will be replaced)"
-msgstr "Failo pavadinimas (jei toks failas jau yra, jis bus pakeitas)"
-
-#: plug-ins/script-fu/scripts/palette-export.scm:235
+#: plug-ins/script-fu/scripts/palette-export.scm:162
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "Įvestas failo pavadinimas yra netinkamas."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:237
+#: plug-ins/script-fu/scripts/palette-export.scm:164
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
@@ -1048,11 +1056,28 @@ msgstr ""
 "Visi simboliai pavadinime yra arba nematomi, arba neleistini failų "
 "pavadinimuose."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:264
+#. Side effect.
+#. Tell the user the mangled path, might be different than user entered.
+#. The user should not need to search for the file.
+#: plug-ins/script-fu/scripts/palette-export.scm:199
+msgid "Exported palette to file: "
+msgstr "Eksportuota pelenė į failą: "
+
+#: plug-ins/script-fu/scripts/palette-export.scm:287
+msgid "Folder for the output file"
+msgstr "Aplankas išvesties failui"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:288
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr "Failo pavadinimas (jei toks failas jau yra, jis bus pakeitas)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:317
 msgid "_CSS stylesheet..."
 msgstr "_CSS stilių lentelė..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:265
+#: plug-ins/script-fu/scripts/palette-export.scm:318
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1060,27 +1085,27 @@ msgstr ""
 "Eksportuoti aktyvią paletę kaip CSS stilių su spalvos įrašo pavadinimu kaip "
 "klasės pavadinimu ir pačia spalva kaip spalvos atributu"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:290
+#: plug-ins/script-fu/scripts/palette-export.scm:338
 msgid "P_HP dictionary..."
 msgstr "P_HP žodynas..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:291
+#: plug-ins/script-fu/scripts/palette-export.scm:339
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Eksportuoti aktyvią paletę kaip PHP žodyną (pavadinimas => spalva)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:322
+#: plug-ins/script-fu/scripts/palette-export.scm:363
 msgid "_Python dictionary..."
 msgstr "_Python žodynas..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:323
+#: plug-ins/script-fu/scripts/palette-export.scm:364
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Eksportuoti aktyvią paletę kaip Python žodyną (pavadinimas: spalva)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:351
+#: plug-ins/script-fu/scripts/palette-export.scm:385
 msgid "_Text file..."
 msgstr "_Tekstinis failas..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:352
+#: plug-ins/script-fu/scripts/palette-export.scm:386
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
@@ -1088,142 +1113,141 @@ msgstr ""
 "Įrašyti visas paletės spalvas į tekstinį failą, po vieną šešioliktainę vertę "
 "eilutėje (be pavadinimų)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:398
+#: plug-ins/script-fu/scripts/palette-export.scm:425
 msgid "J_ava map..."
 msgstr "J_ava žodynas..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:399
+#: plug-ins/script-fu/scripts/palette-export.scm:426
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
 "Eksportuoti aktyvią paletę kaip java.util.Hashtable&lt;String, Color&gt;"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:58
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:45
 msgid "There is no image data in the clipboard to paste."
 msgstr "Iškarpinėje nėra įdėtinų paveikslėlio duomenų."
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
 msgid "Paste as New _Brush..."
 msgstr "Įdėti kaip naują _teptuką..."
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:66
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Įkelti iškarpinės turinį į naują teptuką"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "_Brush name"
 msgstr "_Teptuko pavadinimas"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "My Brush"
 msgstr "Mano teptukas"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "_File name"
 msgstr "_Failo pavadinimas"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
 msgid "mybrush"
 msgstr "manoteptukas"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:72
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 msgid "_Spacing"
 msgstr "_Intervalas"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:51
 msgid "Paste as New _Pattern..."
 msgstr "Įdėti kaip naują _raštą..."
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:53
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "Įkelti iškarpinės turinį į naują raštą"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "_Pattern name"
 msgstr "_Rašto pavadinimas"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "My Pattern"
 msgstr "Mano raštas"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "mypattern"
 msgstr "manoraštas"
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:197
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:196
 msgid "_Perspective..."
 msgstr "_Perspektyva..."
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:198
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:197
 msgid "Add a perspective shadow to the selected region (or alpha)"
 msgstr "Pasirinktam regionui (ar permatomumui) pridėti perspektyvinį šešėlį"
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:205
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:203
 msgid "Angle"
 msgstr "Kampas"
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:206
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:204
 msgid "Relative distance of horizon"
 msgstr "Santykinis horizonto nuotolis"
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:207
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:205
 msgid "Relative length of shadow"
 msgstr "Santykinis šešėlio ilgis"
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:211
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:209
 msgid "Interpolation"
 msgstr "Interpoliacija"
 
-#: plug-ins/script-fu/scripts/reverse-layers.scm:42
+#: plug-ins/script-fu/scripts/reverse-layers.scm:41
 msgid "Reverse Layer _Order"
 msgstr "Atvirkščia sluoksnių _tvarka"
 
-#: plug-ins/script-fu/scripts/reverse-layers.scm:43
+#: plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse the order of layers in the image"
 msgstr "Apsukti paveikslėlio sluoksnių tvarką"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:69
+#: plug-ins/script-fu/scripts/ripply-anim.scm:83
 msgid "_Rippling..."
 msgstr "_Raibuliavimas..."
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:70
+#: plug-ins/script-fu/scripts/ripply-anim.scm:84
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
 "Sukurti daugiasluoksnį paveikslėlį esamam paveikslėliui pridedant "
 "raibuliavimo efektą"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:77
-msgid "Rippling strength"
-msgstr "Raibuliavimo stiprumas"
+#: plug-ins/script-fu/scripts/ripply-anim.scm:90
+msgid "Ri_ppling strength"
+msgstr "_Raibuliavimo stiprumas"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:78
-#: plug-ins/script-fu/scripts/waves-anim.scm:105
-msgid "Number of frames"
-msgstr "Kadrų skaičius"
+#: plug-ins/script-fu/scripts/ripply-anim.scm:91
+msgid "_Number of frames"
+msgstr "_Kadrų skaičius"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:79
-msgid "Edge behavior"
-msgstr "Kampų elgsena"
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
+msgid "Edge _behavior"
+msgstr "Kampų _elgsena"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
 msgid "Wrap"
 msgstr "Apvynioti"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
 msgid "Smear"
 msgstr "Išterlioti"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
 msgid "Black"
 msgstr "Juoda"
 
-#: plug-ins/script-fu/scripts/round-corners.scm:131
+#: plug-ins/script-fu/scripts/round-corners.scm:132
 msgid "_Round Corners..."
 msgstr "_Apvalaini kampai..."
 
-#: plug-ins/script-fu/scripts/round-corners.scm:132
+#: plug-ins/script-fu/scripts/round-corners.scm:133
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr "Suapvalinti paveikslėlio kampus ir pageidaujant pridėti šešėlį ir foną"
@@ -1248,132 +1272,137 @@ msgstr "Šešėlio Y poslinkis"
 msgid "Add background"
 msgstr "Pridėti foną"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
 msgstr "Nus_tatyti spalvų paletę..."
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:55
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr "Pakeisti paveikslėlio spalvų paletę į nurodytos paletės spalvas."
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:62
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:60
 msgid "Palette"
 msgstr "Paletė"
 
-#: plug-ins/script-fu/scripts/selection-round.scm:139
+#: plug-ins/script-fu/scripts/selection-round.scm:143
 msgid "Rounded R_ectangle..."
 msgstr "Apvalainas _stačiakampis..."
 
-#: plug-ins/script-fu/scripts/selection-round.scm:140
+#: plug-ins/script-fu/scripts/selection-round.scm:144
 msgid "Round the corners of the current selection"
 msgstr "Suapvalinti esamo pažymėjimo kampus"
 
-#: plug-ins/script-fu/scripts/selection-round.scm:147
+#: plug-ins/script-fu/scripts/selection-round.scm:150
 msgid "R_adius (%)"
 msgstr "Di_ametras (%)"
 
-#: plug-ins/script-fu/scripts/selection-round.scm:148
+#: plug-ins/script-fu/scripts/selection-round.scm:151
 msgid "Co_ncave"
 msgstr "Į_gaubtas"
 
-#: plug-ins/script-fu/scripts/slide.scm:250
+#: plug-ins/script-fu/scripts/slide.scm:257
 msgid "_Slide..."
 msgstr "_Skaidrė..."
 
-#: plug-ins/script-fu/scripts/slide.scm:251
+#: plug-ins/script-fu/scripts/slide.scm:258
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
 msgstr ""
 "Paveikslėliui pridėti skaidrės rėmelį, krumpliaračio skylutes ir užrašus"
 
-#: plug-ins/script-fu/scripts/slide.scm:258
+#: plug-ins/script-fu/scripts/slide.scm:264
 msgid "Text"
 msgstr "Tekstas"
 
-#: plug-ins/script-fu/scripts/slide.scm:259
+#: plug-ins/script-fu/scripts/slide.scm:265
 msgid "Number"
 msgstr "Numeris"
 
-#: plug-ins/script-fu/scripts/slide.scm:260
+#: plug-ins/script-fu/scripts/slide.scm:266
 msgid "Font"
 msgstr "Šriftas"
 
-#: plug-ins/script-fu/scripts/slide.scm:261
+#: plug-ins/script-fu/scripts/slide.scm:267
 msgid "Font color"
 msgstr "Šrifto spalva"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:99
+#: plug-ins/script-fu/scripts/spinning-globe.scm:116
 msgid "_Spinning Globe..."
 msgstr "Besisukantis _gaublys..."
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:100
+#: plug-ins/script-fu/scripts/spinning-globe.scm:117
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr "Sukurti animaciją uždedant esamą paveikslėlį ant besisukančios sferos"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:107
+#: plug-ins/script-fu/scripts/spinning-globe.scm:123
 msgid "Frames"
 msgstr "Kadrai"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:108
+#: plug-ins/script-fu/scripts/spinning-globe.scm:124
 msgid "Turn from left to right"
 msgstr "Sukti iš kairės į dešinę"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:109
+#: plug-ins/script-fu/scripts/spinning-globe.scm:125
 msgid "Transparent background"
 msgstr "Permatomas fonas"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:110
+#: plug-ins/script-fu/scripts/spinning-globe.scm:126
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indeksas į n spalvų (0 = išlieka RGB)"
 
-#: plug-ins/script-fu/scripts/test-sphere.scm:247
-msgid "_Sphere..."
-msgstr "_Sfera..."
+#. Translator: this means "in the Scheme programming language" aka ScriptFu.
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:154
+msgid "Plug-In Example in _Scheme"
+msgstr "Įskiepio pavyzdys naudojant _Scheme"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:72
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:155
+msgid "Plug-in example in Scheme"
+msgstr "Įskiepio pavyzdys naudojant Scheme"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:77
 msgid "_Tileable Blur..."
 msgstr "Iškl_ojamas suliejimas..."
 
-#: plug-ins/script-fu/scripts/tileblur.scm:73
+#: plug-ins/script-fu/scripts/tileblur.scm:78
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr "Sulieti paveikslėlio kraštus taip, kad rezultatas būtų vientisas"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:80
-msgid "Radius"
-msgstr "Spindulys"
+#: plug-ins/script-fu/scripts/tileblur.scm:84
+msgid "Ra_dius"
+msgstr "_Spindulys"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:81
-msgid "Blur vertically"
-msgstr "Sulieti vertikaliai"
+#: plug-ins/script-fu/scripts/tileblur.scm:85
+msgid "Blur _vertically"
+msgstr "Sulieti _vertikaliai"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:82
-msgid "Blur horizontally"
-msgstr "Sulieti horizontaliai"
+#: plug-ins/script-fu/scripts/tileblur.scm:86
+msgid "Blur _horizontally"
+msgstr "Sulieti _horizontaliai"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
-msgid "Blur type"
-msgstr "Suliejimo tipas"
+#: plug-ins/script-fu/scripts/tileblur.scm:87
+msgid "Blur _type"
+msgstr "Suliejimo _tipas"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:87
 msgid "IIR"
 msgstr "IIR"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:87
 msgid "RLE"
 msgstr "RLE"
 
-#: plug-ins/script-fu/scripts/unsharp-mask.scm:88
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:103
 msgid "Mask size"
 msgstr "Kaukės dydis"
 
-#: plug-ins/script-fu/scripts/unsharp-mask.scm:89
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:104
 msgid "Mask opacity"
 msgstr "Kaukės nepermatomumas"
 
-#: plug-ins/script-fu/scripts/waves-anim.scm:95
+#: plug-ins/script-fu/scripts/waves-anim.scm:116
 msgid "_Waves..."
 msgstr "_Bangos..."
 
-#: plug-ins/script-fu/scripts/waves-anim.scm:96
+#: plug-ins/script-fu/scripts/waves-anim.scm:117
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
@@ -1381,23 +1410,27 @@ msgstr ""
 "Sukurti daugiasluoksnį paveikslėlį su efektu lyg į esamą paveikslėlį būtų "
 "mestas akmuo"
 
-#: plug-ins/script-fu/scripts/waves-anim.scm:103
+#: plug-ins/script-fu/scripts/waves-anim.scm:123
 msgid "Amplitude"
 msgstr "Amplitudė"
 
-#: plug-ins/script-fu/scripts/waves-anim.scm:104
+#: plug-ins/script-fu/scripts/waves-anim.scm:124
 msgid "Wavelength"
 msgstr "Bangos ilgis"
 
-#: plug-ins/script-fu/scripts/waves-anim.scm:106
+#: plug-ins/script-fu/scripts/waves-anim.scm:125
+msgid "Number of frames"
+msgstr "Kadrų skaičius"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:126
 msgid "Invert direction"
 msgstr "Invertuoti kryptį"
 
-#: plug-ins/script-fu/scripts/weave.scm:418
+#: plug-ins/script-fu/scripts/weave.scm:425
 msgid "_Weave..."
 msgstr "_Audimas..."
 
-#: plug-ins/script-fu/scripts/weave.scm:419
+#: plug-ins/script-fu/scripts/weave.scm:426
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
@@ -1405,83 +1438,111 @@ msgstr ""
 "Sukurti naują sluoksnį užpildytą bangavimo efektu panaudotu kaip padengimu "
 "ar iškilimu"
 
-#: plug-ins/script-fu/scripts/weave.scm:426
+#: plug-ins/script-fu/scripts/weave.scm:432
 msgid "Ribbon width"
 msgstr "Juostos plotis"
 
-#: plug-ins/script-fu/scripts/weave.scm:427
+#: plug-ins/script-fu/scripts/weave.scm:433
 msgid "Ribbon spacing"
 msgstr "Juostos tarpai"
 
-#: plug-ins/script-fu/scripts/weave.scm:428
+#: plug-ins/script-fu/scripts/weave.scm:434
 msgid "Shadow darkness"
 msgstr "Šešėlio tamsumas"
 
-#: plug-ins/script-fu/scripts/weave.scm:429
+#: plug-ins/script-fu/scripts/weave.scm:435
 msgid "Shadow depth"
 msgstr "Šešėlio gylis"
 
-#: plug-ins/script-fu/scripts/weave.scm:430
+#: plug-ins/script-fu/scripts/weave.scm:436
 msgid "Thread length"
 msgstr "Gijų ilgis"
 
-#: plug-ins/script-fu/scripts/weave.scm:431
+#: plug-ins/script-fu/scripts/weave.scm:437
 msgid "Thread density"
 msgstr "Gijų tankumas"
 
-#: plug-ins/script-fu/scripts/weave.scm:432
+#: plug-ins/script-fu/scripts/weave.scm:438
 msgid "Thread intensity"
 msgstr "Gijų intensyvumas"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm:92
+#: plug-ins/script-fu/scripts/xach-effect.scm:90
 msgid "Shadow"
 msgstr "Šešėlis"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm:121
+#: plug-ins/script-fu/scripts/xach-effect.scm:123
 msgid "_Xach-Effect..."
 msgstr "_Xach efektas..."
 
-#: plug-ins/script-fu/scripts/xach-effect.scm:122
+#: plug-ins/script-fu/scripts/xach-effect.scm:124
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr ""
 "Pasirinktam regionui (ar permatomumui) pridėti subtilų peršviečiamą trimatį "
 "efektą"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm:129
+#: plug-ins/script-fu/scripts/xach-effect.scm:130
 msgid "Highlight X offset"
 msgstr "Paryškinimo X poslinkis"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm:130
+#: plug-ins/script-fu/scripts/xach-effect.scm:131
 msgid "Highlight Y offset"
 msgstr "Paryškinimo Y poslinkis"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm:131
+#: plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight color"
 msgstr "Paryškinimo spalva"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm:132
+#: plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Highlight opacity"
 msgstr "Paryškinimo nepermatomumas"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm:133
+#: plug-ins/script-fu/scripts/xach-effect.scm:134
 msgid "Drop shadow color"
 msgstr "Metamo šešėlio spalva"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm:134
+#: plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow opacity"
 msgstr "Metamo šešėlio nepermatomumas"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm:135
+#: plug-ins/script-fu/scripts/xach-effect.scm:136
 msgid "Drop shadow blur radius"
 msgstr "Metamo šešėlio išliejimo spindulys"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm:136
+#: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow X offset"
 msgstr "Metamo šešėlio X poslinkis"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm:137
+#: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Drop shadow Y offset"
 msgstr "Metamo šešėlio Y poslinkis"
+
+#~ msgid "_Refresh Scripts"
+#~ msgstr "_Atnaujinti scenarijus"
+
+#~ msgid "Re-read all available Script-Fu scripts"
+#~ msgstr "Iš naujo perskaityti visus prieinamus Script-Fu scenarijus"
+
+#~ msgid ""
+#~ "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is "
+#~ "open.  Please close all Script-Fu windows and try again."
+#~ msgstr ""
+#~ "Negalite naudoti „Atnaujinti scenarijus“, kol atvertas Script-Fu langas. "
+#~ "Užverkite visus Script-Fu langus ir bandykite dar kartą."
+
+#~ msgid "Image to carve"
+#~ msgstr "Graviruotinas paveikslėlis"
+
+#~ msgid "Add realistic looking coffee stains to the image"
+#~ msgstr "Pridėti tikroviškai atrodančias kavos dėmes paveikslėliui"
+
+#~ msgid "Stains"
+#~ msgstr "Dėmės"
+
+#~ msgid "_Threshold (bigger 1<-->254 smaller)"
+#~ msgstr "Slenks_tis (didesnis 1<-->254 mažesnis)"
+
+#~ msgid "_Sphere..."
+#~ msgstr "_Sfera..."
 
 #~ msgid "Interactive Scheme Development"
 #~ msgstr "Interaktyvus schemų kūrimas"
@@ -2127,9 +2188,6 @@ msgstr "Metamo šešėlio Y poslinkis"
 #~ msgid "Image width"
 #~ msgstr "Paveikslėlio plotis"
 
-#~ msgid "Random seed"
-#~ msgstr "Atsitiktinė sėkla"
-
 #~ msgid "Scale X"
 #~ msgstr "X ištempimas"
 
@@ -2319,9 +2377,6 @@ msgstr "Metamo šešėlio Y poslinkis"
 #~ msgid "Render _Map..."
 #~ msgstr "Atvaizduoti že_mėlapį..."
 
-#~ msgid "Tile"
-#~ msgstr "Plytelė"
-
 #~ msgid "Create a State Of The Art chromed logo"
 #~ msgstr "Sukurti modernų chromuotą logotipą"
 
@@ -2352,9 +2407,6 @@ msgstr "Metamo šešėlio Y poslinkis"
 
 #~ msgid "Create an image filled with a swirly pattern"
 #~ msgstr "Sukurti paveikslėlį užpildytą sūkuriuotu raštu"
-
-#~ msgid "Number of times to whirl"
-#~ msgstr "Susukimų kiekis"
 
 #~ msgid "Quarter size"
 #~ msgstr "Ketvirčio dydis"
