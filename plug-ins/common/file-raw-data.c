@@ -1607,100 +1607,106 @@ export_image (GFile                *file,
 }
 
 static void
+get_pixel_format_sizes (RawType  image_type,
+                        gint    *bpp,
+                        gint    *bitspp)
+{
+  *bitspp = 8;
+
+  switch (image_type)
+    {
+    case RAW_RGB_8BPC: /* standard RGB */
+      *bpp    = 3;
+      break;
+
+    case RAW_RGB_16BPC:
+      *bpp    = 6;
+      break;
+
+    case RAW_RGB_32BPC:
+      *bpp    = 12;
+      break;
+
+    case RAW_RGB565:
+    case RAW_BGR565:
+      *bpp    = 2;
+      break;
+
+    case RAW_RGBA_8BPC:
+      *bpp    = 4;
+      break;
+
+    case RAW_RGBA_16BPC:
+      *bpp    = 8;
+      break;
+
+    case RAW_RGBA_32BPC:
+      *bpp    = 16;
+      break;
+
+    case RAW_GRAY_1BPP:
+      *bpp    = 1;
+      *bitspp = 1;
+      break;
+    case RAW_GRAY_2BPP:
+      *bpp    = 1;
+      *bitspp = 2;
+      break;
+    case RAW_GRAY_4BPP:
+      *bpp    = 1;
+      *bitspp = 4;
+      break;
+    case RAW_GRAY_8BPP:
+      *bpp   = 1;
+      break;
+
+    case RAW_INDEXED:
+      *bpp   = 1;
+      break;
+
+    case RAW_INDEXEDA:
+      *bpp   = 2;
+      break;
+
+    case RAW_GRAY_16BPP:
+      *bpp   = 2;
+      break;
+
+    case RAW_GRAY_32BPP:
+      *bpp   = 4;
+      break;
+
+    case RAW_GRAYA_8BPC:
+      *bpp   = 2;
+      break;
+
+    case RAW_GRAYA_16BPC:
+      *bpp   = 4;
+      break;
+
+    case RAW_GRAYA_32BPC:
+      *bpp   = 8;
+      break;
+    }
+}
+
+static void
 get_bpp (GimpProcedureConfig *config,
          gint                *bpp,
          gint                *bitspp)
 {
-  GimpProcedure *procedure;
+  GimpProcedure *procedure = gimp_procedure_config_get_procedure (config);
 
-  procedure = gimp_procedure_config_get_procedure (config);
-
-  *bitspp = 8;
   if (g_strcmp0 (gimp_procedure_get_name (procedure), LOAD_HGT_PROC) == 0)
     {
+      *bitspp = 8;
       *bpp = 2;
     }
   else
     {
-      RawType image_type;
+      RawType image_type = gimp_procedure_config_get_choice_id (config, "pixel-format");
 
-      image_type = gimp_procedure_config_get_choice_id (config, "pixel-format");
-
-      switch (image_type)
-        {
-        case RAW_RGB_8BPC:
-          *bpp = 3;
-          break;
-
-        case RAW_RGB_16BPC:
-          *bpp = 6;
-          break;
-
-        case RAW_RGB_32BPC:
-          *bpp = 12;
-          break;
-
-        case RAW_RGB565:
-        case RAW_BGR565:
-          *bpp = 2;
-          break;
-
-        case RAW_RGBA_8BPC:
-          *bpp = 4;
-          break;
-
-        case RAW_RGBA_16BPC:
-          *bpp = 8;
-          break;
-
-        case RAW_RGBA_32BPC:
-          *bpp = 16;
-          break;
-
-        case RAW_GRAY_1BPP:
-          *bpp    = 1;
-          *bitspp = 1;
-          break;
-        case RAW_GRAY_2BPP:
-          *bpp    = 1;
-          *bitspp = 2;
-          break;
-        case RAW_GRAY_4BPP:
-          *bpp    = 1;
-          *bitspp = 4;
-          break;
-        case RAW_GRAY_8BPP:
-          *bpp   = 1;
-          break;
-
-        case RAW_INDEXED:
-          *bpp   = 1;
-          break;
-
-        case RAW_INDEXEDA:
-          *bpp   = 2;
-          break;
-
-        case RAW_GRAY_16BPP:
-          *bpp   = 2;
-          break;
-
-        case RAW_GRAY_32BPP:
-          *bpp   = 4;
-          break;
-
-        case RAW_GRAYA_8BPC:
-          *bpp   = 2;
-          break;
-
-        case RAW_GRAYA_16BPC:
-          *bpp   = 4;
-          break;
-
-        case RAW_GRAYA_32BPC:
-          *bpp   = 8;
-          break;
-        }
+      get_pixel_format_sizes (image_type, bpp, bitspp);
     }
 }
 
@@ -1852,149 +1858,80 @@ load_image (GFile                *file,
 
   size = get_file_size (file);
 
+  get_pixel_format_sizes (pixel_format, &bpp, &bitspp);
+
   switch (pixel_format)
     {
-    case RAW_RGB_8BPC:        /* standard RGB */
-      bpp = 3;
-
+    case RAW_RGB_8BPC:
     case RAW_RGB_16BPC:
-      if (bpp == 0)
-        {
-          bpp = 6;
-          if (encoding == RAW_ENCODING_FLOAT)
-            precision = GIMP_PRECISION_HALF_NON_LINEAR;
-          else
-            precision = GIMP_PRECISION_U16_NON_LINEAR;
-        }
-
     case RAW_RGB_32BPC:
-      if (bpp == 0)
-        {
-          bpp = 12;
-          if (encoding == RAW_ENCODING_FLOAT)
-            precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
-          else
-            precision = GIMP_PRECISION_U32_NON_LINEAR;
-        }
 
-      ltype = GIMP_RGB_IMAGE;
-      itype = GIMP_RGB;
-      break;
-
-    case RAW_RGB565:       /* RGB565 */
-    case RAW_BGR565:       /* BGR565 */
-      bpp   = 2;
-      ltype = GIMP_RGB_IMAGE;
-      itype = GIMP_RGB;
-      break;
-
-    case RAW_RGBA_8BPC:       /* RGB + alpha */
-      bpp   = 4;
-      ltype = GIMP_RGBA_IMAGE;
-      itype = GIMP_RGB;
-      break;
-
-    case RAW_RGBA_16BPC:
-      bpp   = 8;
-      ltype = GIMP_RGBA_IMAGE;
-      itype = GIMP_RGB;
-      if (encoding == RAW_ENCODING_FLOAT)
-        precision = GIMP_PRECISION_HALF_NON_LINEAR;
-      else
-        precision = GIMP_PRECISION_U16_NON_LINEAR;
-      break;
-
-    case RAW_RGBA_32BPC:
-      bpp   = 16;
-      ltype = GIMP_RGBA_IMAGE;
-      itype = GIMP_RGB;
-      if (encoding == RAW_ENCODING_FLOAT)
-        precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
-      else
-        precision = GIMP_PRECISION_U32_NON_LINEAR;
-      break;
+    case RAW_RGB565:
+    case RAW_BGR565:
 
     case RAW_GRAY_1BPP:
-      bpp    = 1;
-      bitspp = 1;
-      ltype  = GIMP_RGB_IMAGE;
-      itype  = GIMP_RGB;
-      break;
     case RAW_GRAY_2BPP:
-      bpp    = 1;
-      bitspp = 2;
-      ltype  = GIMP_RGB_IMAGE;
-      itype  = GIMP_RGB;
-      break;
     case RAW_GRAY_4BPP:
-      bpp    = 1;
-      bitspp = 4;
-      ltype  = GIMP_RGB_IMAGE;
-      itype  = GIMP_RGB;
+      ltype = GIMP_RGB_IMAGE;
+      itype = GIMP_RGB;
       break;
+
+    case RAW_RGBA_8BPC:
+    case RAW_RGBA_16BPC:
+    case RAW_RGBA_32BPC:
+      ltype = GIMP_RGBA_IMAGE;
+      itype = GIMP_RGB;
+      break;
+
     case RAW_GRAY_8BPP:
-      bpp   = 1;
+    case RAW_GRAY_16BPP:
+    case RAW_GRAY_32BPP:
       ltype = GIMP_GRAY_IMAGE;
       itype = GIMP_GRAY;
       break;
 
-    case RAW_INDEXED:         /* Indexed */
-      bpp   = 1;
+    case RAW_INDEXED: /* Indexed */
       ltype = GIMP_INDEXED_IMAGE;
       itype = GIMP_INDEXED;
       break;
 
-    case RAW_INDEXEDA:        /* Indexed + alpha */
-      bpp   = 2;
+    case RAW_INDEXEDA: /* Indexed + alpha */
       ltype = GIMP_INDEXEDA_IMAGE;
       itype = GIMP_INDEXED;
       break;
 
-    case RAW_GRAY_16BPP:
-      bpp       = 2;
-      ltype     = GIMP_GRAY_IMAGE;
-      itype     = GIMP_GRAY;
-      if (encoding == RAW_ENCODING_FLOAT)
-        precision = GIMP_PRECISION_HALF_NON_LINEAR;
-      else
-        precision = GIMP_PRECISION_U16_NON_LINEAR;
-      break;
-
-    case RAW_GRAY_32BPP:
-      bpp       = 4;
-      ltype     = GIMP_GRAY_IMAGE;
-      itype     = GIMP_GRAY;
-      if (encoding == RAW_ENCODING_FLOAT)
-        precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
-      else
-        precision = GIMP_PRECISION_U32_NON_LINEAR;
-      break;
-
     case RAW_GRAYA_8BPC:
-      bpp       = 2;
-      ltype     = GIMP_GRAYA_IMAGE;
-      itype     = GIMP_GRAY;
-      precision = GIMP_PRECISION_U8_NON_LINEAR;
-      break;
-
     case RAW_GRAYA_16BPC:
-      bpp       = 4;
-      ltype     = GIMP_GRAYA_IMAGE;
-      itype     = GIMP_GRAY;
+    case RAW_GRAYA_32BPC:
+      ltype = GIMP_GRAYA_IMAGE;
+      itype = GIMP_GRAY;
+      break;
+    }
+
+  switch (pixel_format)
+    {
+    case RAW_RGB_16BPC:
+    case RAW_RGBA_16BPC:
+    case RAW_GRAY_16BPP:
+    case RAW_GRAYA_16BPC:
       if (encoding == RAW_ENCODING_FLOAT)
         precision = GIMP_PRECISION_HALF_NON_LINEAR;
       else
         precision = GIMP_PRECISION_U16_NON_LINEAR;
       break;
 
+    case RAW_RGB_32BPC:
+    case RAW_RGBA_32BPC:
+    case RAW_GRAY_32BPP:
     case RAW_GRAYA_32BPC:
-      bpp       = 8;
-      ltype     = GIMP_GRAYA_IMAGE;
-      itype     = GIMP_GRAY;
       if (encoding == RAW_ENCODING_FLOAT)
         precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
       else
         precision = GIMP_PRECISION_U32_NON_LINEAR;
+      break;
+
+    default:
+      precision = GIMP_PRECISION_U8_NON_LINEAR;
       break;
     }
 
