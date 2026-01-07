@@ -2613,6 +2613,67 @@ preview_update_size (GimpPreviewArea *preview)
   gtk_widget_set_size_request (GTK_WIDGET (preview), width, height);
 }
 
+static gboolean
+image_type_combox_box_sensitivity_func (const gchar *id,
+                                        gpointer     data)
+{
+  GimpChoice          *choice    = NULL;
+  GimpPreviewArea     *preview   = data;
+  GimpProcedureConfig *config    = NULL;
+  GimpProcedure       *procedure = NULL;
+  GFile               *file      = NULL;
+  GParamSpec          *pspec     = NULL;
+  gboolean             sensitive = FALSE;
+  goffset              file_size_bits;
+  gint                 bpp;
+  gint                 bitspp;
+  gint                 pixel_size_bits;
+
+  config = g_object_get_data (G_OBJECT (preview), "procedure-config");
+  file   = g_object_get_data (G_OBJECT (preview), "procedure-file");
+
+  file_size_bits = get_file_size (file) * 8;
+
+  procedure = gimp_procedure_config_get_procedure (config);
+  pspec     = gimp_procedure_find_argument (procedure, "pixel-format");
+  choice    = gimp_param_spec_choice_get_choice (pspec);
+
+  get_pixel_format_sizes (gimp_choice_get_id (choice, id),
+                          &bpp, &bitspp);
+  pixel_size_bits = bpp * bitspp;
+
+  sensitive = pixel_size_bits <= file_size_bits;
+
+  if (sensitive)
+    {
+      /* Check if the size of the current pixel format nick is larger than the
+       * file size. If it is, use the currently evalued nick instead. The nick
+       * should be the first sensitive one in the model. */
+      const gchar *current_id      = NULL;
+      goffset      pixel_size_bits = 0;
+
+      g_object_get (config,
+                    "pixel-format", &current_id,
+                    NULL);
+
+      get_pixel_format_sizes (gimp_choice_get_id (choice, current_id),
+                              &bpp, &bitspp);
+      pixel_size_bits = bpp * bitspp;
+
+      if (pixel_size_bits > file_size_bits)
+        {
+          /* This should, ideally, trigger only once during the lifetime of the
+           * plug-in. */
+          G_PARAM_SPEC_STRING (pspec)->default_value = (gchar *) id;
+          g_object_set (config,
+                        "pixel-format", id,
+                        NULL);
+        }
+    }
+
+  return sensitive;
+}
+
 static void
 load_config_notify (GimpProcedureConfig  *config,
                     GParamSpec           *pspec,
@@ -2798,10 +2859,19 @@ load_dialog (GFile         *file,
     }
   else
     {
-      GtkWidget *entry;
+      GtkWidget *entry               = NULL;
+      GtkWidget *combobox            = NULL;
+      GtkWidget *label_string_widget = NULL;
       goffset    file_size;
 
       file_size = get_file_size (file);
+
+      label_string_widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                              "pixel-format", GTK_TYPE_COMBO_BOX);
+      combobox = gimp_label_string_widget_get_widget (GIMP_LABEL_STRING_WIDGET (label_string_widget));
+      gimp_string_combo_box_set_sensitivity (GIMP_STRING_COMBO_BOX (combobox),
+                                             image_type_combox_box_sensitivity_func,
+                                             preview, NULL);
 
       entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
                                                      "offset", 1.0);
