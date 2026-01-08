@@ -21,7 +21,7 @@ ${MINGW_PACKAGE_PREFIX}-ghostscript
 ${MINGW_PACKAGE_PREFIX}-glib2|vcpkg:glib
 ${MINGW_PACKAGE_PREFIX}-glib-networking|vcpkg:glib-networking
 ${MINGW_PACKAGE_PREFIX}-gobject-introspection-runtime|vcpkg:gobject-introspection
-${MINGW_PACKAGE_PREFIX}-graphviz|vcpkg:graphviz
+${MINGW_PACKAGE_PREFIX}-graphviz
 ${MINGW_PACKAGE_PREFIX}-gtk3|vcpkg:gtk3
 ${MINGW_PACKAGE_PREFIX}-iso-codes
 ${MINGW_PACKAGE_PREFIX}-json-glib|vcpkg:json-glib
