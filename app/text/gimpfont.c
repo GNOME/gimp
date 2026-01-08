@@ -1349,6 +1349,8 @@ gimp_font_get_sample_string (PangoContext         *context,
 static const gchar *
 gimp_font_get_hash (GimpFont *font)
 {
+  g_return_val_if_fail (font, NULL);
+
   /* Computing the hash is expensive, so it's only done in a few case, such as
    * when serializing, when a similar fonts at deserialization looks like it
    * could be a good identity candidate.
@@ -1365,6 +1367,16 @@ gimp_font_get_hash (GimpFont *font)
       guint                 length;
       const char           *hb_data;
 
+      /* Some people had a crash in pango_fc_font_get_pattern() though
+       * we didn't have anyone providing further test results. The
+       * theory right now is that pango_font was NULL. Adding some
+       * CRITICAL here will protect from the direct crash, and it should
+       * also trigger better traces with variable listing if ever this
+       * happened again (though it may never happen again, because now
+       * we only run this once fonts are fully loaded).
+       * See #14139.
+       */
+      g_return_val_if_fail (pango_font, NULL);
       FcPatternGetString (pango_fc_font_get_pattern (pango_font), FC_FILE, 0, (FcChar8 **) &file);
 
       hb_blob  = hb_blob_create_from_file (file);
