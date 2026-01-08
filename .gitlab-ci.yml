@@ -607,7 +607,7 @@ gimp-win:
     - build\windows\2_build-gimp-msys2.ps1
   artifacts:
     paths:
-      - gimp-*/
+      - gimp-*n*/
       - _build-*/meson-logs/meson-log.txt
       - _build-*/done-dll.list
       # Needed by dist-installer-weekly and dist-store-weekly
