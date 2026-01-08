@@ -148,12 +148,12 @@ splash_create (Gimp         *gimp,
   GdkRectangle        workarea;
   gint                max_width;
   gint                max_height;
+  gboolean            release_splash;
 #ifdef G_OS_WIN32
   STARTUPINFO         StartupInfo;
 
   GetStartupInfo (&StartupInfo);
 #endif
-  gboolean            release_splash;
 
   g_return_if_fail (splash == NULL);
   g_return_if_fail (GDK_IS_MONITOR (monitor));

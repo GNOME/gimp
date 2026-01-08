@@ -129,12 +129,14 @@ gimp_interpreter_db_new (gboolean verbose)
 static gboolean
 might_be_console_process (void)
 {
+  gboolean attached_to_self;
+
   /* check for Unix console */
   if (g_getenv ("TERM") || g_getenv ("SHELL"))
     return TRUE;
 
   /* check for Windows console (taken from gspawn-win32.c) */
-  gboolean attached_to_self = AttachConsole (GetCurrentProcessId ());
+  attached_to_self = AttachConsole (GetCurrentProcessId ());
   g_return_val_if_fail (! attached_to_self, TRUE);
 
   switch (GetLastError ())
