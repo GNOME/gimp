@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+﻿/* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -452,6 +452,9 @@ gimp_macos_setenv (const char * progname)
       g_free (tmp);
       tmp = g_strdup_printf ("%s/gtk-3.0/3.0.0", lib_dir);
       g_setenv ("GTK_PATH", tmp, TRUE);
+      g_free (tmp);
+      tmp = g_strdup ("quartz");
+      g_setenv ("GTK_IM_MODULE", tmp, TRUE);
       g_free (tmp);
 
       /* Other needed runtime paths (related to features) */
