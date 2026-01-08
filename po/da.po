@@ -59,8 +59,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-27 12:09+0000\n"
-"PO-Revision-Date: 2025-09-27 17:20+0200\n"
+"POT-Creation-Date: 2026-01-08 02:02+0000\n"
+"PO-Revision-Date: 2026-01-08 16:44+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -113,13 +113,13 @@ msgid ""
 "ins and extensions to do just about anything. The advanced scripting "
 "interface allows everything from the simplest task to the most complex image "
 "manipulation procedures to be easily scripted. GIMP is available for Linux, "
-"Microsoft Windows and OS X."
+"Microsoft Windows and macOS."
 msgstr ""
 "GIMP kan udvides. Programmet er designet til at blive suppleret med "
 "udvidelsesmoduler og udvidelser til at gøre næsten alt. Den avancerede "
 "scriptinggrænseflade giver mulighed for nemt at scripte alt fra den "
 "simpleste opgave til de mest komplekse billedmanipulationsprocedurer. GIMP "
-"fås til Linux, Microsoft Windows og OS X."
+"fås til Linux, Microsoft Windows og macOS."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:48
 msgid ""
@@ -211,12 +211,12 @@ msgstr ""
 "Hvis ikke, så se https://www.gnu.org/licenses/"
 
 #. TRANSLATORS: title for info message in terminal window
-#: app/app.c:534
+#: app/app.c:541
 msgid "INFO"
 msgstr "INFO"
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:536
+#: app/app.c:543
 msgid ""
 "GIMP is now running as a background process. You can quit anytime with Ctrl-"
 "C (SIGINT)."
@@ -225,13 +225,21 @@ msgstr ""
 "helst med Ctrl-C (SIGINT)."
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:539
+#: app/app.c:546
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr ""
 "Hvis du i stedet ønsker at afslutte programmet med det samme, skal du kalde "
 "GIMP med --quit."
 
-#: app/gimp-update.c:452
+#: app/gimp-update.c:432
+msgid "Perhaps you are missing GIO backends and need to install GVFS?"
+msgstr "Måske mangler du GIO-backends og skal installere GVFS?"
+
+#: app/gimp-update.c:437
+msgid "Perhaps you are missing GIO backends."
+msgstr "Måske mangler du GIO-backends."
+
+#: app/gimp-update.c:474
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -282,97 +290,97 @@ msgstr "Start en ny instans af GIMP"
 msgid "Open images as new"
 msgstr "Åbn billeder som nye"
 
-#: app/main.c:189
+#: app/main.c:202
 msgid "Run without a user interface"
 msgstr "Start uden en brugergrænseflade"
 
-#: app/main.c:194
+#: app/main.c:207
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Indlæs ikke pensler, farveovergange, mønstre, …"
 
-#: app/main.c:199
+#: app/main.c:212
 msgid "Do not load any fonts"
 msgstr "Indlæs ikke nogen skrifttyper"
 
-#: app/main.c:204
+#: app/main.c:217
 msgid "Do not show a splash screen"
 msgstr "Vis ikke et opstartsbillede"
 
-#: app/main.c:209
+#: app/main.c:222
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Brug ikke delt hukommelse mellem GIMP og udvidelsesmoduler"
 
-#: app/main.c:214
+#: app/main.c:227
 msgid "Do not use special CPU acceleration functions"
 msgstr "Brug ikke specielle CPU-accelereringsfunktioner"
 
-#: app/main.c:219
+#: app/main.c:232
 msgid "Use an alternate sessionrc file"
 msgstr "Brug en alternativ sessionrc-fil"
 
-#: app/main.c:224
+#: app/main.c:237
 msgid "Use an alternate user gimprc file"
 msgstr "Brug en alternativ gimprc-brugerkonfigurationsfil"
 
-#: app/main.c:229
+#: app/main.c:242
 msgid "Use an alternate system gimprc file"
 msgstr "Brug en alternativ gimprc-systemkonfigurationsfil"
 
-#: app/main.c:234
+#: app/main.c:247
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Batchkommando som skal udføres (kan bruges flere gange)"
 
-#: app/main.c:239
+#: app/main.c:252
 msgid "The procedure to process batch commands with"
 msgstr "Den procedure som batchkommandoer skal udføres med"
 
-#: app/main.c:244
+#: app/main.c:257
 msgid "Quit immediately after performing requested actions"
 msgstr "Afslut umiddelbart efter at have udført de ønskede handlinger"
 
-#: app/main.c:249
+#: app/main.c:262
 msgid "Send messages to console instead of using a dialog"
 msgstr "Vis meddelelser i konsollen i stedet for i en dialog"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:255
+#: app/main.c:268
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Kompabilitetstilstand for proceduredatabase (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:261
+#: app/main.c:274
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Fejlsøgning i tilfælde af nedbrud (never|query|always)"
 
-#: app/main.c:266
+#: app/main.c:279
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Anvend ikke-fatale signalhåndteringer til fejlsøgning"
 
-#: app/main.c:271
+#: app/main.c:284
 msgid "Make all warnings fatal"
 msgstr "Gør alle advarsler fatale"
 
-#: app/main.c:276
+#: app/main.c:289
 msgid "Output a gimprc file with default settings"
 msgstr "Output en gimprc-fil med standardindstillinger"
 
-#: app/main.c:292
+#: app/main.c:305
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Output en sorteret liste af forældede procedurer i proceduredatabasen"
 
-#: app/main.c:297
+#: app/main.c:310
 msgid "Show a preferences page with experimental features"
 msgstr "Vis en indstillingsside med eksperimentelle funktioner"
 
-#: app/main.c:302
+#: app/main.c:315
 msgid "Show an image submenu with debug actions"
 msgstr "Vis en billedundermenu med fejlfindingshandlinger"
 
-#: app/main.c:757
+#: app/main.c:788
 msgid "[FILE|URI...]"
 msgstr "[FIL|URI …]"
 
-#: app/main.c:787
+#: app/main.c:818
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -380,22 +388,14 @@ msgstr ""
 "GIMP kunne ikke klargøre den grafiske brugergrænseflade.\n"
 "Sørg for at der findes en ordentlig opsætning for dit grafiske miljø."
 
-#: app/main.c:851
+#: app/main.c:884
 msgid "Another GIMP instance is already running."
 msgstr "En anden instans af GIMP kører allerede."
 
-#: app/main.c:940
-msgid "GIMP output. Type any character to close this window."
-msgstr "Output fra GIMP. Tryk på en tast for at lukke dette vindue."
-
-#: app/main.c:941
+#: app/main.c:965
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Tryk på en tast for at lukke dette vindue)\n"
-
-#: app/main.c:958
-msgid "GIMP output. You can minimize this window, but don't close it."
-msgstr "Output fra GIMP. Du kan minimere dette vindue, men luk det ikke."
 
 #: app/sanity.c:546
 #, c-format
@@ -1157,7 +1157,7 @@ msgstr[0] "Sænk kanal til bunden"
 msgstr[1] "Sænk kanaler til bunden"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
-#: app/display/gimpdisplayshell-dnd.c:703 app/widgets/gimpchanneltreeview.c:260
+#: app/display/gimpdisplayshell-dnd.c:702 app/widgets/gimpchanneltreeview.c:260
 #: app/widgets/gimplayertreeview.c:838
 #, c-format
 msgid "%s Channel Copy"
@@ -2525,7 +2525,7 @@ msgstr "240 sekunder"
 
 #: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:238
 #: app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
-#: app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:410
+#: app/actions/file-commands.c:440 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
@@ -2622,11 +2622,11 @@ msgid "Enter a description for the marker"
 msgstr "Indtast en beskrivelse af markøren"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
-#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:247
-#: app/dialogs/file-open-dialog.c:288
+#: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:248
+#: app/dialogs/file-open-dialog.c:293
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1248 app/display/gimpdisplayshell-dnd.c:646
+#: app/dialogs/welcome-dialog.c:1257 app/display/gimpdisplayshell-dnd.c:645
 #: app/widgets/gimplayertreeview.c:796 app/widgets/gimptoolbox.c:843
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -2640,14 +2640,14 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2438
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2439
 #: app/core/gimppalette.c:586 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Unavngivet"
 
 #: app/actions/data-commands.c:224 app/actions/documents-commands.c:195
-#: app/actions/file-commands.c:555
+#: app/actions/file-commands.c:546
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Kan ikke vise filen i filhåndtering: %s"
@@ -4293,7 +4293,7 @@ msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Afslut GNU Image Manipulation Program"
 
-#: app/actions/file-actions.c:131 app/actions/file-actions.c:302
+#: app/actions/file-actions.c:131 app/actions/file-actions.c:299
 msgctxt "file-action"
 msgid "_Save"
 msgstr "_Gem"
@@ -4337,7 +4337,7 @@ msgctxt "file-action"
 msgid "Save this image and close its window"
 msgstr "Gem billedet og luk dets vindue"
 
-#: app/actions/file-actions.c:157 app/actions/file-actions.c:347
+#: app/actions/file-actions.c:157 app/actions/file-actions.c:344
 msgctxt "file-action"
 msgid "E_xport..."
 msgstr "Ekspo_rtér …"
@@ -4367,17 +4367,17 @@ msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "Eksportér billedet til diverse filformater såsom PNG eller JPEG"
 
-#: app/actions/file-actions.c:308
+#: app/actions/file-actions.c:305
 msgctxt "file-action"
 msgid "_Save..."
 msgstr "_Gem …"
 
-#: app/actions/file-actions.c:314
+#: app/actions/file-actions.c:311
 #, c-format
 msgid "Export to %s"
 msgstr "Eksportér til %s"
 
-#: app/actions/file-actions.c:330
+#: app/actions/file-actions.c:327
 #, c-format
 msgid "Over_write %s"
 msgstr "Ove_rskriv %s"
@@ -4385,12 +4385,12 @@ msgstr "Ove_rskriv %s"
 #. TRANSLATORS: the %s will be replaced by the file name of a
 #. * recently opened image.
 #.
-#: app/actions/file-actions.c:402
+#: app/actions/file-actions.c:397
 #, c-format
 msgid "Open \"%s\""
 msgstr "Åbn “%s”"
 
-#: app/actions/file-commands.c:120 app/actions/file-commands.c:579
+#: app/actions/file-commands.c:120 app/actions/file-commands.c:570
 #: app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "Åbn billede"
@@ -4399,45 +4399,45 @@ msgstr "Åbn billede"
 msgid "Open Image as Layers"
 msgstr "Åbn billede som lag"
 
-#: app/actions/file-commands.c:307
+#: app/actions/file-commands.c:298
 msgid "No changes need to be saved"
 msgstr "Ingen ændringer skal gemmes"
 
-#: app/actions/file-commands.c:314 app/actions/file-commands.c:790
+#: app/actions/file-commands.c:305 app/actions/file-commands.c:781
 #: app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Gem billede"
 
-#: app/actions/file-commands.c:320
+#: app/actions/file-commands.c:311
 msgid "Save a Copy of the Image"
 msgstr "Gem en kopi af billedet"
 
-#: app/actions/file-commands.c:398
+#: app/actions/file-commands.c:389
 msgid "Create New Template"
 msgstr "Opret en ny skabelon"
 
-#: app/actions/file-commands.c:402
+#: app/actions/file-commands.c:393
 msgid "Enter a name for this template"
 msgstr "Indtast et navn til skabelonen"
 
-#: app/actions/file-commands.c:432
+#: app/actions/file-commands.c:423
 msgid "Revert failed. No file name associated with this image."
 msgstr "Genindlæsning mislykkedes. Billedet har ikke noget tilknyttet filnavn."
 
-#: app/actions/file-commands.c:444
+#: app/actions/file-commands.c:435
 msgid "Revert Image"
 msgstr "Gendan billede"
 
-#: app/actions/file-commands.c:450
+#: app/actions/file-commands.c:441
 msgid "_Revert"
 msgstr "Gen_dan"
 
-#: app/actions/file-commands.c:468
+#: app/actions/file-commands.c:459
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Gendan “%s” til “%s”?"
 
-#: app/actions/file-commands.c:473
+#: app/actions/file-commands.c:464
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -4445,11 +4445,11 @@ msgstr ""
 "Ved at gendanne billedet til den tilstand, der er gemt på disken, vil du "
 "miste alle ændringer, inklusive al fortrydelsesinformation."
 
-#: app/actions/file-commands.c:812
+#: app/actions/file-commands.c:803
 msgid "(Unnamed Template)"
 msgstr "(unavngivet skabelon)"
 
-#: app/actions/file-commands.c:859
+#: app/actions/file-commands.c:850
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -6274,7 +6274,7 @@ msgstr "Aktivér standardhandlingen til redigering af denne type lag"
 
 #: app/actions/layers-actions.c:58
 msgctxt "layers-action"
-msgid "Edit Te_xt on canvas"
+msgid "Edit Te_xt on Canvas"
 msgstr "Redigér _tekst på lærred"
 
 #: app/actions/layers-actions.c:59
@@ -8531,7 +8531,7 @@ msgstr "_Åbn"
 
 #: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:226
 #: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526
-#: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
+#: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:295
 #: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1650
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -10554,7 +10554,7 @@ msgid "Error writing '%s': %s"
 msgstr "Fejl ved skrivning af “%s”: %s"
 
 #: app/config/gimpconfig-file.c:184 app/plug-in/gimpenvirontable.c:374
-#: app/plug-in/gimpinterpreterdb.c:268 app/tools/gimpfiltertool-settings.c:182
+#: app/plug-in/gimpinterpreterdb.c:329 app/tools/gimpfiltertool-settings.c:182
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Fejl ved læsning af “%s”: %s"
@@ -13130,11 +13130,11 @@ msgstr "Opretter mappen “%s” …"
 msgid "Cannot create folder '%s': %s"
 msgstr "Kan ikke oprette mappen “%s”: %s"
 
-#: app/core/gimp-utils.c:577 app/core/gimpfilloptions.c:431
+#: app/core/gimp-utils.c:580 app/core/gimpfilloptions.c:431
 msgid "No patterns available for this operation."
 msgstr "Ingen mønstre tilgængelige for denne handling."
 
-#: app/core/gimp-utils.c:1120
+#: app/core/gimp-utils.c:1123
 #, c-format
 msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
@@ -13142,17 +13142,17 @@ msgstr ""
 "Fatal fortolkningsfejl i Photoshop-ressourcefilen: De RLE-komprimerede data "
 "er beskadigede."
 
-#: app/core/gimp-utils.c:1665
+#: app/core/gimp-utils.c:1668
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "Denne fortolker understøtter ikke overlappende lister."
 
-#: app/core/gimp-utils.c:1688
+#: app/core/gimp-utils.c:1691
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> skal være inden i mærkerne <ol> eller <ul>."
 
-#: app/core/gimp-utils.c:1693
+#: app/core/gimp-utils.c:1696
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Ukendt mærke <%s>."
@@ -13710,7 +13710,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdrawable.c:618 app/tools/gimpscaletool.c:121
+#: app/core/gimpdrawable.c:656 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalering"
@@ -14020,135 +14020,135 @@ msgstr "Transformer laggruppe"
 msgid "Symmetry"
 msgstr "Symmetri"
 
-#: app/core/gimpimage.c:2073 app/pdb/drawable-filter-cmds.c:681
+#: app/core/gimpimage.c:2074 app/pdb/drawable-filter-cmds.c:692
 #: app/widgets/gimpdrawabletreeview-filters.c:740
 msgid "Remove filter"
 msgstr "Fjern filter"
 
-#: app/core/gimpimage.c:2683
+#: app/core/gimpimage.c:2684
 msgid " (exported)"
 msgstr " (eksporteret)"
 
-#: app/core/gimpimage.c:2687
+#: app/core/gimpimage.c:2688
 msgid " (overwritten)"
 msgstr " (overskrevet)"
 
-#: app/core/gimpimage.c:2696
+#: app/core/gimpimage.c:2697
 msgid " (imported)"
 msgstr " (importeret)"
 
-#: app/core/gimpimage.c:2870 app/core/gimpimage.c:2884
-#: app/core/gimpimage.c:2927
+#: app/core/gimpimage.c:2871 app/core/gimpimage.c:2885
+#: app/core/gimpimage.c:2928
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Lagtilstanden “%s” blev tilføjet i %s"
 
-#: app/core/gimpimage.c:2947
+#: app/core/gimpimage.c:2948
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Laggrupper blev tilføjet i %s"
 
-#: app/core/gimpimage.c:2954
+#: app/core/gimpimage.c:2955
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Masker på laggrupper blev tilføjet i %s"
 
-#: app/core/gimpimage.c:2961
+#: app/core/gimpimage.c:2962
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Placeringslåse på laggrupper blev tilføjet i %s"
 
-#: app/core/gimpimage.c:2968
+#: app/core/gimpimage.c:2969
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Alfakanallåse på laggrupper blev tilføjet i %s"
 
-#: app/core/gimpimage.c:2976 app/core/gimpimage.c:3027
+#: app/core/gimpimage.c:2977 app/core/gimpimage.c:3028
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Synlighedslåse blev tilføjet i %s"
 
-#: app/core/gimpimage.c:2987
+#: app/core/gimpimage.c:2988
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Formatet på skrifttypeinformationen i tekstlaget blev ændret i %s"
 
-#: app/core/gimpimage.c:2995
+#: app/core/gimpimage.c:2996
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Lageffekter blev tilføjet i %s"
 
-#: app/core/gimpimage.c:3007
+#: app/core/gimpimage.c:3008
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Et nyt perceptuelt blandingsrum blev tilføjet i %s"
 
-#: app/core/gimpimage.c:3036
+#: app/core/gimpimage.c:3037
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Markering af flere kurver blev tilføjet i %s"
 
-#: app/core/gimpimage.c:3048
+#: app/core/gimpimage.c:3049
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Lagring af farvemærkater i kurver blev tilføjet i %s"
 
-#: app/core/gimpimage.c:3055
+#: app/core/gimpimage.c:3056
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Lagring af låse i kurver blev tilføjet i %s"
 
-#: app/core/gimpimage.c:3069
+#: app/core/gimpimage.c:3070
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Billeder med høj bitdybde blev tilføjet i %s"
 
-#: app/core/gimpimage.c:3077
+#: app/core/gimpimage.c:3078
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Kodning af billeder med høj bitdybde blev løst i %s"
 
-#: app/core/gimpimage.c:3085
+#: app/core/gimpimage.c:3086
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Intern zlib-komprimering blev tilføjet i %s"
 
-#: app/core/gimpimage.c:3102
+#: app/core/gimpimage.c:3103
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Understøttelse af billedfiler større end 4 GB blev tilføjet i %s"
 
-#: app/core/gimpimage.c:3109
+#: app/core/gimpimage.c:3110
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Markering af flere lag blev tilføjet i %s"
 
-#: app/core/gimpimage.c:3126
+#: app/core/gimpimage.c:3127
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Hjælpelinjer uden for lærredet blev tilføjet i %s"
 
-#: app/core/gimpimage.c:3137
+#: app/core/gimpimage.c:3138
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Elementsæt og mønstersøgning i elementets navn blev tilføjet i %s"
 
-#: app/core/gimpimage.c:3143
+#: app/core/gimpimage.c:3144
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Markering af flere kanaler blev tilføjet i %s"
 
-#: app/core/gimpimage.c:3258
+#: app/core/gimpimage.c:3259
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Skift billedopløsning"
 
-#: app/core/gimpimage.c:3310
+#: app/core/gimpimage.c:3311
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Skift billedenhed"
 
-#: app/core/gimpimage.c:4363
+#: app/core/gimpimage.c:4364
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14156,27 +14156,27 @@ msgstr ""
 "Validering af “gimp-comment”-parasit mislykkedes: Kommentar indeholder "
 "ugyldig UTF-8"
 
-#: app/core/gimpimage.c:4425
+#: app/core/gimpimage.c:4426
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Vedhæft parasit til billede"
 
-#: app/core/gimpimage.c:4470
+#: app/core/gimpimage.c:4471
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Fjern parasit fra billede"
 
-#: app/core/gimpimage.c:5443
+#: app/core/gimpimage.c:5444
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Tilføj lag"
 
-#: app/core/gimpimage.c:5487 app/core/gimpimage.c:5518
+#: app/core/gimpimage.c:5488 app/core/gimpimage.c:5519
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Fjern lag"
 
-#: app/core/gimpimage.c:5512
+#: app/core/gimpimage.c:5513
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Fjern flydende markering"
@@ -14454,12 +14454,12 @@ msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Der er ikke nok synlige kurver til en sammenlægning. Der skal være mindst to."
 
-#: app/core/gimpimage-quick-mask.c:88
+#: app/core/gimpimage-quick-mask.c:75
 msgctxt "undo-type"
 msgid "Enable Quick Mask"
 msgstr "Aktivér ekspresmaske"
 
-#: app/core/gimpimage-quick-mask.c:120
+#: app/core/gimpimage-quick-mask.c:108
 msgctxt "undo-type"
 msgid "Disable Quick Mask"
 msgstr "Deaktivér ekspresmaske"
@@ -14548,24 +14548,24 @@ msgstr[1] "%d lag"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Kunne ikke åbne miniaturen “%s”: %s"
 
-#: app/core/gimpitem.c:1850 app/core/gimpitem.c:1917
-#: app/display/gimpdisplayshell-dnd.c:380 app/tools/gimptransformtool.c:729
+#: app/core/gimpitem.c:1853 app/core/gimpitem.c:1920
+#: app/display/gimpdisplayshell-dnd.c:379 app/tools/gimptransformtool.c:729
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
 #: app/widgets/gimpdrawabletreeview-filters.c:586
 msgid "A selected layer's pixels are locked."
 msgstr "Et valgt lags pixels er låst."
 
-#: app/core/gimpitem.c:2226
+#: app/core/gimpitem.c:2229
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Vedhæft parasit"
 
-#: app/core/gimpitem.c:2236
+#: app/core/gimpitem.c:2239
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Vedhæft parasit til element"
 
-#: app/core/gimpitem.c:2287 app/core/gimpitem.c:2294
+#: app/core/gimpitem.c:2290 app/core/gimpitem.c:2297
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Fjern parasit fra element"
@@ -15952,9 +15952,14 @@ msgid "Search extensions matching these keywords"
 msgstr "Søg efter udvidelser, der matcher disse nøgleord"
 
 #: app/dialogs/file-open-dialog.c:140 app/dialogs/file-open-dialog.c:165
-#: app/dialogs/file-open-dialog.c:279
+#: app/dialogs/file-open-dialog.c:284
 msgid "Open layers"
 msgstr "Åbn lag"
+
+#: app/dialogs/file-open-dialog.c:252
+#, c-format
+msgid "Opening '%s' failed."
+msgstr "Åbning af “%s” mislykkedes."
 
 #: app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
@@ -18493,7 +18498,7 @@ msgid "_Next Tip"
 msgstr "_Næste tip"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1094
+#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1103
 msgid "Learn more"
 msgstr "Læs mere"
 
@@ -18616,12 +18621,12 @@ msgid "GIMP website"
 msgstr "GIMPs websted"
 
 #: app/dialogs/welcome-dialog.c:473
-msgid "Tutorials"
-msgstr "Vejledninger"
-
-#: app/dialogs/welcome-dialog.c:478
 msgid "Documentation"
 msgstr "Dokumentation"
+
+#: app/dialogs/welcome-dialog.c:478
+msgid "Community Tutorials"
+msgstr "Fællesskabsvejledninger"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
@@ -19070,49 +19075,49 @@ msgid "The image has been exported to '%s'."
 msgstr "Billedet er eksporteret til “%s”."
 
 #: app/display/gimpdisplayshell-dnd.c:253
-#: app/display/gimpdisplayshell-dnd.c:706
-#: app/display/gimpdisplayshell-dnd.c:765
+#: app/display/gimpdisplayshell-dnd.c:705
+#: app/display/gimpdisplayshell-dnd.c:764
 msgid "Drop New Layer"
 msgstr "Drop nyt lag"
 
-#: app/display/gimpdisplayshell-dnd.c:296
+#: app/display/gimpdisplayshell-dnd.c:295
 msgid "Drop New Path"
 msgstr "Drop ny kurve"
 
-#: app/display/gimpdisplayshell-dnd.c:371 app/tools/gimpbucketfilltool.c:611
+#: app/display/gimpdisplayshell-dnd.c:370 app/tools/gimpbucketfilltool.c:611
 #: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
 #: app/tools/gimpselectiontool.c:567
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Kan ikke ændre på pixels i grupperet lag."
 
-#: app/display/gimpdisplayshell-dnd.c:390 app/tools/gimpfiltertool.c:334
+#: app/display/gimpdisplayshell-dnd.c:389 app/tools/gimpfiltertool.c:334
 #: app/tools/gimppainttool.c:371 app/tools/gimptransformtool.c:738
 #: app/widgets/gimpdrawabletreeview-filters.c:579
 msgid "A selected layer is not visible."
 msgstr "Et markeret lag er ikke synligt."
 
-#: app/display/gimpdisplayshell-dnd.c:446
+#: app/display/gimpdisplayshell-dnd.c:445
 #: app/widgets/gimpdrawabletreeview.c:470
 #: app/widgets/gimpdrawabletreeview.c:676
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Drop mønster på lag"
 
-#: app/display/gimpdisplayshell-dnd.c:468
+#: app/display/gimpdisplayshell-dnd.c:467
 #: app/widgets/gimpdrawabletreeview.c:501
 #: app/widgets/gimpdrawabletreeview.c:696
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Drop farve på lag"
 
-#: app/display/gimpdisplayshell-dnd.c:596 app/widgets/gimpitemtreeview.c:1598
+#: app/display/gimpdisplayshell-dnd.c:595 app/widgets/gimpitemtreeview.c:1598
 #: app/widgets/gimplayertreeview.c:787
 msgid "Drop layers"
 msgstr "Drop lag"
 
-#: app/display/gimpdisplayshell-dnd.c:739
-#: app/display/gimpdisplayshell-dnd.c:756 app/widgets/gimplayertreeview.c:864
+#: app/display/gimpdisplayshell-dnd.c:738
+#: app/display/gimpdisplayshell-dnd.c:755 app/widgets/gimplayertreeview.c:864
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Droppet buffer"
@@ -19659,11 +19664,11 @@ msgstr "Klik og træk for at flytte omdrejningspunktet"
 msgid "Click-Drag to shear"
 msgstr "Klik og træk for at vride"
 
-#: app/file/file-open.c:137 app/file/file-save.c:132
+#: app/file/file-open.c:137 app/file/file-save.c:122
 msgid "Not a regular file"
 msgstr "Ikke en almindelig fil"
 
-#: app/file/file-open.c:146 app/file/file-save.c:141
+#: app/file/file-open.c:146 app/file/file-save.c:131
 msgid "Permission denied"
 msgstr "Tilladelse nægtet"
 
@@ -19715,15 +19720,11 @@ msgstr "Hentede %s billeddata"
 msgid "Uploaded %s of image data"
 msgstr "Overførte %s billeddata"
 
-#: app/file/file-save.c:105
-msgid "There is no active layer to save"
-msgstr "Der er ikke noget aktivt lag at gemme"
-
-#: app/file/file-save.c:125
+#: app/file/file-save.c:115
 msgid "Failed to get file information"
 msgstr "Kunne ikke hente filinformation"
 
-#: app/file/file-save.c:297
+#: app/file/file-save.c:287
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Udvidelsesmodulet %s kunne ikke gemme billedet"
@@ -21244,7 +21245,7 @@ msgstr "Tilføj filter"
 msgid "Plug-in"
 msgstr "Udvidelsesmodul"
 
-#: app/pdb/drawable-cmds.c:1131 app/tools/gimpforegroundselecttool.c:1041
+#: app/pdb/drawable-cmds.c:1192 app/tools/gimpforegroundselecttool.c:1041
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Markér forgrund"
@@ -21769,7 +21770,7 @@ msgstr "Beskær billede automatisk"
 msgid "Autocrop layer"
 msgstr "Beskær lag automatisk"
 
-#: app/pdb/image-cmds.c:2556
+#: app/pdb/image-cmds.c:2564
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -21877,12 +21878,12 @@ msgstr "Tomt variabelnavn i miljøfilen %s"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Ugyldigt variabelnavn i miljøfilen %s: %s"
 
-#: app/plug-in/gimpinterpreterdb.c:303 app/plug-in/gimpinterpreterdb.c:400
+#: app/plug-in/gimpinterpreterdb.c:364 app/plug-in/gimpinterpreterdb.c:461
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
 msgstr "Ugyldig fortolker anvendt i fortolkerfilen %s: %s"
 
-#: app/plug-in/gimpinterpreterdb.c:372
+#: app/plug-in/gimpinterpreterdb.c:433
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Ugyldig binær formatstreng i fortolkerfilen %s"
@@ -22435,7 +22436,7 @@ msgstr ""
 "wc med plexiglas i zoo."
 
 # %s er filnavnet
-#: app/text/gimpfontfactory.c:459
+#: app/text/gimpfontfactory.c:463
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -22965,7 +22966,7 @@ msgstr "Ingen markerede tegneflader."
 msgid "The active layer is not visible."
 msgstr "Det aktive lag er ikke synligt."
 
-#: app/tools/gimpbucketfilltool.c:626 app/tools/gimpeditselectiontool.c:1310
+#: app/tools/gimpbucketfilltool.c:626 app/tools/gimpeditselectiontool.c:1311
 #: app/tools/gimpgradienttool.c:283 app/tools/gimpmovetool.c:349
 msgid "The selected layer's pixels are locked."
 msgstr "Det markerede lags pixels er låst."
@@ -23439,33 +23440,33 @@ msgstr "Type (%s)"
 msgid "Move: "
 msgstr "Flyt: "
 
-#: app/tools/gimpeditselectiontool.c:1029
-#: app/tools/gimpeditselectiontool.c:1391
+#: app/tools/gimpeditselectiontool.c:1030
+#: app/tools/gimpeditselectiontool.c:1392
 msgid "Move Floating Selection"
 msgstr "Flyt flydende markering"
 
-#: app/tools/gimpeditselectiontool.c:1275 app/tools/gimpmovetool.c:293
+#: app/tools/gimpeditselectiontool.c:1276 app/tools/gimpmovetool.c:293
 msgid "There are no paths to move."
 msgstr "Der er ingen kurver at flytte."
 
-#: app/tools/gimpeditselectiontool.c:1283
+#: app/tools/gimpeditselectiontool.c:1284
 msgid "A selected path's position is locked."
 msgstr "En markeret kurves placering er låst."
 
-#: app/tools/gimpeditselectiontool.c:1296 app/tools/gimpmovetool.c:338
+#: app/tools/gimpeditselectiontool.c:1297 app/tools/gimpmovetool.c:338
 msgid "There is no layer to move."
 msgstr "Der er ikke noget lag at flytte."
 
-#: app/tools/gimpeditselectiontool.c:1305
-#: app/tools/gimpeditselectiontool.c:1332 app/tools/gimpmovetool.c:347
+#: app/tools/gimpeditselectiontool.c:1306
+#: app/tools/gimpeditselectiontool.c:1333 app/tools/gimpmovetool.c:347
 msgid "The selected layer's position is locked."
 msgstr "Det markerede lags placering er låst."
 
-#: app/tools/gimpeditselectiontool.c:1321
+#: app/tools/gimpeditselectiontool.c:1322
 msgid "A selected channel's position is locked."
 msgstr "En markeret kanals placering er låst."
 
-#: app/tools/gimpeditselectiontool.c:1343 app/tools/gimpmovetool.c:366
+#: app/tools/gimpeditselectiontool.c:1344 app/tools/gimpmovetool.c:366
 msgid "A selected layer's position is locked."
 msgstr "Et markeret lags placering er låst."
 
@@ -25295,7 +25296,7 @@ msgstr "_Auto"
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Juster automatisk til optimal binæriseringstærskel"
 
-#: app/tools/gimptool.c:1216
+#: app/tools/gimptool.c:1220
 msgid "Can't work on an empty image, add a layer first"
 msgstr "Kan ikke arbejde på et tomt billede. Tilføj først et lag"
 
@@ -26129,29 +26130,29 @@ msgstr "Rotér kurve"
 msgid "Transform Path"
 msgstr "Transformér kurve"
 
-#: app/vectors/gimppath-export.c:95
+#: app/vectors/gimppath-export.c:96
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "Skrivning af SVG-filen “%s” mislykkedes: %s"
 
-#: app/vectors/gimppath-import.c:344
+#: app/vectors/gimppath-import.c:356
 msgid "Import Paths"
 msgstr "Importér kurver"
 
-#: app/vectors/gimppath-import.c:355
+#: app/vectors/gimppath-import.c:367
 msgid "Imported Path"
 msgstr "Importeret kurve"
 
-#: app/vectors/gimppath-import.c:386
+#: app/vectors/gimppath-import.c:398
 #, c-format
 msgid "No paths found in '%s'"
 msgstr "Ingen kurver fundet i “%s”"
 
-#: app/vectors/gimppath-import.c:390
+#: app/vectors/gimppath-import.c:402
 msgid "No paths found in the buffer"
 msgstr "Ingen kurver fundet i bufferen"
 
-#: app/vectors/gimppath-import.c:400
+#: app/vectors/gimppath-import.c:412
 #, c-format
 msgid "Failed to import paths from '%s': %s"
 msgstr "Kunne ikke importere kurver fra “%s”: %s"
@@ -28944,7 +28945,7 @@ msgstr "Fejl ved oprettelse af “%s”: "
 msgid "Invalid image mode and precision combination."
 msgstr "Ugyldig kombination af billedtilstand og præcision."
 
-#: app/xcf/xcf-load.c:505
+#: app/xcf/xcf-load.c:504
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28953,7 +28954,7 @@ msgstr ""
 "Beskadiget “exif-data”-parasit opdaget.\n"
 "Exif-data kunne ikke migreres: %s"
 
-#: app/xcf/xcf-load.c:544
+#: app/xcf/xcf-load.c:543
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28961,7 +28962,7 @@ msgstr ""
 "Beskadiget “gimp-metadata”-parasit opdaget.\n"
 "XMP-data kunne ikke migreres."
 
-#: app/xcf/xcf-load.c:568
+#: app/xcf/xcf-load.c:567
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28974,19 +28975,19 @@ msgstr ""
 "Hvis du ikke ved, hvad XMP er, har du sandsynligvis ikke brug for det. "
 "Rapporteret fejl: %s."
 
-#: app/xcf/xcf-load.c:923
+#: app/xcf/xcf-load.c:922
 msgid "Linked Layers"
 msgstr "Sammenkædede lag"
 
-#: app/xcf/xcf-load.c:933
+#: app/xcf/xcf-load.c:932
 msgid "Linked Channels"
 msgstr "Sammenkædede kanaler"
 
-#: app/xcf/xcf-load.c:958
+#: app/xcf/xcf-load.c:957
 msgid "Linked Paths"
 msgstr "Sammenkædede kurver"
 
-#: app/xcf/xcf-load.c:1005
+#: app/xcf/xcf-load.c:1004
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -28994,7 +28995,7 @@ msgstr ""
 "Denne XCF-fil er beskadiget! Jeg har indlæst så meget jeg kan, men den er "
 "ufuldstændig."
 
-#: app/xcf/xcf-load.c:1025
+#: app/xcf/xcf-load.c:1024
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -29002,7 +29003,7 @@ msgstr ""
 "Denne XCF-fil er beskadiget! Jeg kunne ikke engang redde brudstykker af "
 "billeddata fra den."
 
-#: app/xcf/xcf-load.c:1183
+#: app/xcf/xcf-load.c:1182
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -29012,7 +29013,7 @@ msgstr ""
 "gemte ikke indekserede farvekort korrekt.\n"
 "Erstatter gråtoneskalakort."
 
-#: app/xcf/xcf-load.c:2576
+#: app/xcf/xcf-load.c:2575
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -29025,7 +29026,7 @@ msgstr ""
 "Dette burde ikke ske. Du bør rapportere problemet til filterets udviklere."
 
 # I den forrige er der ikke anførselstegn om versionsnummeret, så det udelades her
-#: app/xcf/xcf-load.c:3518
+#: app/xcf/xcf-load.c:3517
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
@@ -29064,7 +29065,7 @@ msgstr ""
 "Fejl ved skrivning af XCF: antallet af bit ikke understøttet ved skrivning "
 "af pixel: %d"
 
-#: app-tools/gimp-debug-tool.c:87
+#: app-tools/gimp-debug-tool.c:108
 msgid "GIMP Crash Debug"
 msgstr "GIMP-nedbrudsfejlfinding"
 
@@ -29629,6 +29630,15 @@ msgstr "Menu for værktøjsforudindstillinger"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Fortrydelseshistorik"
+
+#~ msgid "GIMP output. Type any character to close this window."
+#~ msgstr "Output fra GIMP. Tryk på en tast for at lukke dette vindue."
+
+#~ msgid "GIMP output. You can minimize this window, but don't close it."
+#~ msgstr "Output fra GIMP. Du kan minimere dette vindue, men luk det ikke."
+
+#~ msgid "There is no active layer to save"
+#~ msgstr "Der er ikke noget aktivt lag at gemme"
 
 #~ msgid "Painting in GIMP"
 #~ msgstr "Male i GIMP"
