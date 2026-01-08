@@ -453,6 +453,9 @@ gimp_macos_setenv (const char * progname)
       tmp = g_strdup_printf ("%s/gtk-3.0/3.0.0", lib_dir);
       g_setenv ("GTK_PATH", tmp, TRUE);
       g_free (tmp);
+      tmp = g_strdup ("quartz");
+      g_setenv ("GTK_IM_MODULE", tmp, TRUE);
+      g_free (tmp);
 
       /* Other needed runtime paths (related to features) */
       tmp = g_strdup_printf ("%s/fonts", etc_dir);
