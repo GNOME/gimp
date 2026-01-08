@@ -40,6 +40,16 @@
 #include "libgimp/libgimp-intl.h"
 
 
+typedef struct _GimpConfigInterfacePrivate GimpConfigInterfacePrivate;
+
+struct _GimpConfigInterfacePrivate
+{
+  guint xcf_version;
+};
+
+#define GIMP_CONFIG_INTERFACE_GET_PRIVATE(obj) (gimp_config_iface_get_private ((GimpConfigInterface *) (obj)))
+
+
 /*
  * GimpConfigIface:
  *
@@ -49,23 +59,26 @@
 
 /*  local function prototypes  */
 
-static void         gimp_config_iface_default_init (GimpConfigInterface *iface);
-static void         gimp_config_iface_base_init    (GimpConfigInterface *iface);
+static GimpConfigInterfacePrivate * gimp_config_iface_get_private      (GimpConfigInterface        *iface);
+static void                         gimp_config_iface_private_finalize (GimpConfigInterfacePrivate *private);
 
-static gboolean     gimp_config_iface_serialize    (GimpConfig          *config,
-                                                    GimpConfigWriter    *writer,
-                                                    gpointer             data);
-static gboolean     gimp_config_iface_deserialize  (GimpConfig          *config,
-                                                    GScanner            *scanner,
-                                                    gint                 nest_level,
-                                                    gpointer             data);
-static GimpConfig * gimp_config_iface_duplicate    (GimpConfig          *config);
-static gboolean     gimp_config_iface_equal        (GimpConfig          *a,
-                                                    GimpConfig          *b);
-static void         gimp_config_iface_reset        (GimpConfig          *config);
-static gboolean     gimp_config_iface_copy         (GimpConfig          *src,
-                                                    GimpConfig          *dest,
-                                                    GParamFlags          flags);
+static void                         gimp_config_iface_default_init     (GimpConfigInterface        *iface);
+static void                         gimp_config_iface_base_init        (GimpConfigInterface        *iface);
+
+static gboolean                     gimp_config_iface_serialize        (GimpConfig                 *config,
+                                                                        GimpConfigWriter           *writer,
+                                                                        gpointer                    data);
+static gboolean                     gimp_config_iface_deserialize      (GimpConfig                 *config,
+                                                                        GScanner                   *scanner,
+                                                                        gint                        nest_level,
+                                                                        gpointer                    data);
+static GimpConfig                 * gimp_config_iface_duplicate        (GimpConfig                 *config);
+static gboolean                     gimp_config_iface_equal            (GimpConfig                 *a,
+                                                                        GimpConfig                 *b);
+static void                         gimp_config_iface_reset            (GimpConfig                 *config);
+static gboolean                     gimp_config_iface_copy             (GimpConfig                 *src,
+                                                                        GimpConfig                 *dest,
+                                                                        GParamFlags                 flags);
 
 
 /*  private functions  */
@@ -266,6 +279,37 @@ gimp_config_iface_copy (GimpConfig  *src,
   return gimp_config_sync (G_OBJECT (src), G_OBJECT (dest), flags);
 }
 
+static GimpConfigInterfacePrivate *
+gimp_config_iface_get_private (GimpConfigInterface *iface)
+{
+  GimpConfigInterfacePrivate *private;
+
+  static GQuark private_key = 0;
+
+  if (! private_key)
+    private_key = g_quark_from_static_string ("gimp-config-iface-private");
+
+  private = g_object_get_qdata ((GObject *) iface, private_key);
+
+  if (! private)
+    {
+      private = g_slice_new0 (GimpConfigInterfacePrivate);
+
+      private->xcf_version = G_MAXUINT32;
+
+      g_object_set_qdata_full ((GObject *) iface, private_key, private,
+                               (GDestroyNotify) gimp_config_iface_private_finalize);
+    }
+
+  return private;
+}
+
+static void
+gimp_config_iface_private_finalize (GimpConfigInterfacePrivate *private)
+{
+  g_slice_free (GimpConfigInterfacePrivate, private);
+}
+
 
 /*  public functions  */
 
@@ -402,7 +446,7 @@ gimp_config_serialize_to_string (GimpConfig *config,
 
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
 
-  str = g_string_new (NULL);
+  str    = g_string_new (NULL);
   writer = gimp_config_writer_new_from_string (str);
 
   GIMP_CONFIG_GET_IFACE (config)->serialize (config, writer, data);
@@ -836,4 +880,50 @@ gimp_config_copy (GimpConfig  *src,
   g_object_thaw_notify (G_OBJECT (dest));
 
   return changed;
+}
+
+/**
+ * gimp_config_get_xcf_version:
+ * @config: a #GObject that implements the #GimpConfigInterface.
+ *
+ * Returns the current XCF version of the @config.
+ *
+ * Returns: the XCF version associated with the @config.
+ *
+ * Since: 3.2
+ **/
+guint
+gimp_config_get_xcf_version (GimpConfig *config)
+{
+  GimpConfigInterfacePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), G_MAXUINT32);
+
+  private = GIMP_CONFIG_INTERFACE_GET_PRIVATE (config);
+
+  return private->xcf_version;
+}
+
+/**
+ * gimp_config_set_xcf_version:
+ * @config: a #GObject that implements the #GimpConfigInterface.
+ * @xcf_version: a mask of GParamFlags
+ *
+ * Sets the current XCF version of the @config. This information can be used
+ * to adjust how properties are serialized depending on the version of the XCF
+ * that it is being saved to.
+ *
+ * Since: 3.2
+ **/
+void
+gimp_config_set_xcf_version (GimpConfig *config,
+                             guint       xcf_version)
+{
+  GimpConfigInterfacePrivate *private;
+
+  g_return_if_fail (GIMP_IS_CONFIG (config));
+
+  private = GIMP_CONFIG_INTERFACE_GET_PRIVATE (config);
+
+  private->xcf_version = xcf_version;
 }

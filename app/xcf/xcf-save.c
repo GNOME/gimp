@@ -556,6 +556,9 @@ xcf_save_image_props (XcfInfo    *info,
     {
       GimpGrid *grid = gimp_image_get_grid (image);
 
+      /* Set the XCF version so that the grid colors are written as GimpRGB
+       * values when saving in legacy (2.10 and below) XCF formats */
+      gimp_config_set_xcf_version (GIMP_CONFIG (grid), info->file_version);
       grid_parasite = gimp_grid_to_parasite (grid);
       gimp_parasite_list_add (private->parasites, grid_parasite);
     }

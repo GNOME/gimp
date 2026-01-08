@@ -129,6 +129,10 @@ gboolean   gimp_config_copy                  (GimpConfig          *src,
                                               GimpConfig          *dest,
                                               GParamFlags          flags);
 
+guint      gimp_config_get_xcf_version       (GimpConfig          *config);
+void       gimp_config_set_xcf_version       (GimpConfig          *config,
+                                              guint                xcf_version);
+
 
 G_END_DECLS
 
