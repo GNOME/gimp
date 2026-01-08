@@ -128,6 +128,7 @@ splash_create (Gimp         *gimp,
   GdkRectangle        workarea;
   gint                max_width;
   gint                max_height;
+  gboolean            release_splash;
 #ifdef G_OS_WIN32
   STARTUPINFO         StartupInfo;
 
