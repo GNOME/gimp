@@ -53,7 +53,7 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):g
 
 
 # Bundle GIMP
-Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle[collapsed=true]$([char]13)$([char]27)[0KCreating bundle"
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle[collapsed=true]$([char]13)$([char]27)[0K$(if (-not (Select-String -Quiet '-Dwindows-installer=true' meson-logs/meson-log.txt) -and -not (Select-String -Quiet '-Dms-store=true' meson-logs/meson-log.txt)) {'Installing as non-relocatable on GIMP_PREFIX'} else {'Creating bundle'})"
 ninja install | Out-File ninja_install.log; if ("$LASTEXITCODE" -gt '0') { Get-Content ninja_install.log; exit 1 }; Remove-Item ninja_install.log
 Set-Location ..
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle$([char]13)$([char]27)[0K"
