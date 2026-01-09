@@ -298,7 +298,7 @@ file_open_dialog_open_layers (GtkWidget           *dialog,
     {
       gimp_message (image->gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
                     _("Opening '%s' failed:\n\n%s"),
-                    gimp_file_get_utf8_name (file), error->message);
+                    gimp_file_get_utf8_name (file), error ? error->message: _("n/a"));
       g_clear_error (&error);
     }
 
