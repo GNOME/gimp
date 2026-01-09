@@ -41,6 +41,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayer-new.h"
 #include "core/gimplayermask.h"
+#include "core/gimplinklayer.h"
 #include "core/gimplist.h"
 #include "core/gimppattern.h"
 #include "core/gimpprogress.h"
@@ -49,9 +50,12 @@
 
 #include "path/gimppath.h"
 #include "path/gimppath-import.h"
+#include "path/gimpvectorlayer.h"
 
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
+
+#include "tools/gimptools-utils.h"
 
 #include "widgets/gimpdnd.h"
 
@@ -387,6 +391,35 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
           gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                                 GIMP_MESSAGE_ERROR,
                                 _("A selected layer is not visible."));
+          g_list_free (drawables);
+          return;
+        }
+
+      if (gimp_item_is_rasterizable (GIMP_ITEM (iter->data)) &&
+          ! gimp_item_is_rasterized (GIMP_ITEM (iter->data)))
+        {
+          gchar *menu_path = _("Layer > Rasterize");
+          gchar *message   = NULL;
+
+          if (gimp_item_is_text_layer (GIMP_ITEM (iter->data)))
+            message = g_strdup_printf (_("Text layers must be rasterized (%s)."),
+                                       menu_path);
+          else if (gimp_item_is_link_layer (GIMP_ITEM (iter->data)))
+            message = g_strdup_printf (_("Link layers must be rasterized (%s)."),
+                                       menu_path);
+          else if (gimp_item_is_vector_layer (GIMP_ITEM (iter->data)))
+            message = g_strdup_printf (_("Vector layers must be rasterized (%s)."),
+                                       menu_path);
+
+          if (message)
+            {
+              gimp_message_literal (shell->display->gimp,
+                                    G_OBJECT (shell->display),
+                                    GIMP_MESSAGE_ERROR,
+                                    message);
+              g_free (message);
+            }
+          gimp_tools_blink_item (shell->display->gimp, GIMP_ITEM (iter->data));
           g_list_free (drawables);
           return;
         }
