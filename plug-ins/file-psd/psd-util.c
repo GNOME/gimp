@@ -258,6 +258,28 @@ psd_read_len (GInputStream  *input,
 }
 
 gboolean
+psd_read_double (GInputStream  *input,
+                 gdouble       *data,
+                 GError       **error)
+{
+  union conv_double {
+    guint64 u64_tmp;
+    gdouble double_tmp;
+  } conv_double = {};
+
+  if (psd_read (input, &conv_double, 8, error) < 8)
+    {
+      psd_set_error (error);
+      return FALSE;
+    }
+
+  conv_double.u64_tmp = GUINT64_FROM_BE (conv_double.u64_tmp);
+  *data = conv_double.double_tmp;
+
+  return TRUE;
+}
+
+gboolean
 psd_seek (GInputStream  *input,
           goffset        offset,
           GSeekType      type,
