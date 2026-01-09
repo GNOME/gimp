@@ -170,7 +170,7 @@ if "32" not in MSYSTEM_PREFIX:
   #### See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12119
   bundle(MSYSTEM_PREFIX, "bin/libgvplugin_dot*.dll")
   bundle(MSYSTEM_PREFIX, "bin/libgvplugin_pango*.dll")
-  bundle(MSYSTEM_PREFIX, "bin/config6")
+  bundle(MSYSTEM_PREFIX, "bin/config8")
 ### Binaries for GObject Introspection support. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/13170
 bundle(GIMP_PREFIX, "lib/girepository-*/*.typelib")
 bundle(MSYSTEM_PREFIX, "bin/libgirepository-*.dll")
