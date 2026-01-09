@@ -735,7 +735,6 @@ file_open_link_image (Gimp                *gimp,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (G_IS_FILE (file) && g_file_is_native (file), NULL);
-  g_return_val_if_fail (file_proc != NULL, NULL);
   g_return_val_if_fail (status != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
