@@ -1360,11 +1360,11 @@ gimp_procedure_dialog_get_spin_scale (GimpProcedureDialog *dialog,
 
   if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_UINT ||
       G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT)
-  {
-    digits = 0;
-    step = MAX(step, 1.f);
-    page = MAX(page, step);
-  }
+    {
+      digits = 0;
+      step   = MAX (step, 1.f);
+      page   = MAX (page, step);
+    }
 
   widget = gimp_prop_spin_scale_new (G_OBJECT (priv->config),
                                      property, step, page, digits);
