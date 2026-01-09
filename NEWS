@@ -13,12 +13,13 @@ Core:
 
   - In a Flatpak sandbox, GIMP will now show the native config directory
     path in relevant places.
-  - Image files can now only be loaded when all fonts have been loaded.
+  - XCF files can now only be loaded when all fonts have been loaded.
     Font loading happens as a background task and can continue even
     after the GUI is present and usable (for people with a lot of
     fonts). When they try to load image files in such a case now, the
     loading will be delayed (this also includes files loaded from
     command line, or from a file browser starting GIMP).
+  - Default to 'quartz' IM on macOS for emoji keyboard support.
 
 Graphical User Interface:
 
@@ -36,6 +37,17 @@ Plug-Ins:
   - Fixed vulnerability ZDI-CAN-28232 in PSP import.
   - Fixed vulnerability ZDI-CAN-28599 in ICO import.
   - WebP lossless export made more efficient.
+
+API:
+
+  - libgimpconfig:
+    + GimpConfig objects can now be given a XCF version to force the
+      serialization to use older formats. This is used for serializing
+      some parasites in XCF and keep them compatible with older GIMP
+      versions.
+    + New functions:
+      * gimp_config_get_xcf_version()
+      * gimp_config_set_xcf_version()
 
 Build:
 
