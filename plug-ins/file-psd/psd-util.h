@@ -38,6 +38,10 @@ gboolean                psd_read_len           (GInputStream        *input,
                                                 gint                 psd_version,
                                                 GError            **error);
 
+gboolean                psd_read_double        (GInputStream        *input,
+                                                gdouble             *data,
+                                                GError            **error);
+
 gboolean                psd_seek               (GInputStream        *input,
                                                 goffset              offset,
                                                 GSeekType            type,
