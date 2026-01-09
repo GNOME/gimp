@@ -65,6 +65,7 @@
 
 #include "gimpbasetypes.h"
 #include "gimputils.h"
+#include "gimpversion-private.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -1578,6 +1579,7 @@ gimp_stack_trace_query (const gchar *prog_name)
 #endif
 }
 
+GIMP_WARNING_API_BREAK("gimp_range_estimate_settings(): add a gboolean integer_increments arg? And/or an optional GParamSpec arg. Cf. commit e735054347")
 /**
  * gimp_range_estimate_settings:
  * @lower: the lower value.
