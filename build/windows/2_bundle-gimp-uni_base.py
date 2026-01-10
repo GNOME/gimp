@@ -20,6 +20,9 @@ with open("config.h") as file:
     if match:
       key, value = match.groups()
       os.environ[key] = value.strip().strip('"').strip("'")
+if not os.getenv("ENABLE_RELOCATABLE_RESOURCES"):
+  print("\n\033[31m(ERROR)\033[0m: No relocatable GIMP build found. You can build GIMP with '-Drelocatable-bundle=yes' to make a build suitable for bundle creation.")
+  sys.exit(1)
 
 
 # Bundle deps and GIMP files
