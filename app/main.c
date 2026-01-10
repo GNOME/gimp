@@ -327,7 +327,7 @@ static void
 gimp_macos_setenv (const char * progname)
 {
   /* helper to set environment variables for GIMP to be relocatable.
-   * Due to the latest changes on macOS, it is not recommended to set it in
+   * Due to the changes on macOS 10.15, it is not recommended to set it in
    * a shell wrapper inside Contents/MacOS (like AppImage's AppRun) anymore.
    * LSEnvironment on Info.plist, limited to bundle scope, would not be enough.
    * That way, we make sure our python is called instead of system one etc
