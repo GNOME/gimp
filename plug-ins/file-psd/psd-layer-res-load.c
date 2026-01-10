@@ -519,14 +519,8 @@ load_layer_resource (PSDlayerres   *res_a,
           lyr_a->unsupported_features->show_gui     = TRUE;
         }
 
-      load_resource_unknown (res_a, lyr_a, input, error);
+      load_resource_llnk (res_a, lyr_a, input, error);
     }
-
-  else if (memcmp (res_a->key, PSD_LLL_LINKED_LAYER,     4) == 0 ||
-           memcmp (res_a->key, PSD_LLL_LINKED_LAYER_2,   4) == 0 ||
-           memcmp (res_a->key, PSD_LLL_LINKED_LAYER_3,   4) == 0 ||
-           memcmp (res_a->key, PSD_LLL_LINKED_LAYER_EXT, 4) == 0)
-    load_resource_llnk (res_a, lyr_a, input, error);
 
   else if (memcmp (res_a->key, PSD_LOTH_COMPOSITOR, 4) == 0)
     load_resource_cinf (res_a, lyr_a, input, error);
@@ -586,6 +580,7 @@ load_resource_lpla (const PSDlayerres  *res_a,
   gchar             type[4];
   guint32           version  = 0;
   gchar            *uniqueID = NULL;
+  JsonNode         *root     = NULL;
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Placed layer", res_a->key);
 
@@ -598,7 +593,7 @@ load_resource_lpla (const PSDlayerres  *res_a,
   version = GUINT32_FROM_BE (version);
   /* Expected
    * for plLd: type: plcL, version: 3,
-   * for SoLd: type: soLD, version: 4 (according to docs, also seen: 13), hmmm seems we are reading this wrong, type: 4, version 13 (probably descriptor version)
+   * for SoLd: type: soLD, version: 4
    * for SoLE, type: soLD, version: 4 or 5. */
 
    IFDBG(3) g_debug ("Placed layer type: %.4s, version: %u", type, version);
@@ -649,13 +644,27 @@ load_resource_lpla (const PSDlayerres  *res_a,
       IFDBG(3) g_debug ("Descriptor version: %u",
                         descriptor_version);
 
-      if (load_descriptor (input, res_a->ibm_pc_format, NULL, error) < 0)
+      if (parse_descriptor (input, res_a->ibm_pc_format, &root, error) == 0)
+        {
+          IFDBG(4) if (root) g_debug ("Placed Layer descriptor for layer %u:\n%s",
+                                      lyr_a->id, json_to_string (root, TRUE));
+        }
+      else
         return -1;
     }
   else if (version == 5)
     {
-      if (load_descriptor (input, res_a->ibm_pc_format, NULL, error) < 0)
+      if (parse_descriptor (input, res_a->ibm_pc_format, &root, error) == 0)
+        {
+          IFDBG(4) if (root) g_debug ("Placed Layer descriptor for layer %u:\n%s",
+                                      lyr_a->id, json_to_string (root, TRUE));
+        }
+      else
         return -1;
+    }
+  else
+    {
+      g_debug ("FIXME: Unknown version %u placed layer resource!", version);
     }
 
   if (! msg_flag && CONVERSION_WARNINGS)
@@ -670,44 +679,70 @@ load_resource_lpla (const PSDlayerres  *res_a,
   return 0;
 }
 
+#define LINK_TYPE_FILE_DATA 1
+#define LINK_TYPE_EXTERNAL  2
+#define LINK_TYPE_ALIAS     3
+
+static gint
+get_link_type (gchar *lnk_type)
+{
+  if (memcmp (lnk_type, "liFD", 4) == 0)
+    return LINK_TYPE_FILE_DATA;
+  else if (memcmp (lnk_type, "liFE", 4) == 0)
+    return LINK_TYPE_EXTERNAL;
+  else if (memcmp (lnk_type, "liFA", 4) == 0)
+    return LINK_TYPE_ALIAS;
+
+  return -1;
+}
+
 static gint
 load_resource_llnk (const PSDlayerres     *res_a,
                     PSDlayer              *lyr_a,
                     GInputStream          *input,
                     GError               **error)
 {
-  guint64  data_size, data_offset;
+  gsize    data_size = 0, file_data_size = 0;
+  goffset  data_offset, link_data_offset, next_block_offset;
+  guint16  next_block_size = 0;
   gchar    lnk_type[4]; /* 'liFD' linked file data, 'liFE' linked file external or 'liFA' linked file alias */
-  guint32  ver;
+  guint32  ver, desc_ver;
   gchar   *uniqueID;
   gchar   *original_filename;
   gchar    file_type[4];
   gchar    file_creator[4];
-  guint64  data_len;
-  gboolean file_open_descriptor = 0;
+  gboolean file_descriptor_present = 0;
   gint32   bread, bwritten;
+  gint     link_type;
+  gint     li = 0;
+  gint     res;
 
-  gint     lnk_count = 6;
-  gint     li;
+  IFDBG(2) g_debug ("Process layer resource block %.4s: linked layer data.",
+                    res_a->key);
 
-  IFDBG(2) g_debug ("Process layer resource block %.4s: linked layer data", res_a->key);
-
-  /* FIXME This really needs a count based on the number of placed layers we found..
-   *       For testing we set it here to 6 for our test file...
-   */
-
-  for (li = 0; li < lnk_count; li++)
+  link_data_offset = PSD_TELL(input);
+  if (psd_read (input, &data_size, 8, error) < 8)
     {
-      IFDBG(3) g_debug ("Linked data[%d], Offset: %" G_GOFFSET_FORMAT, li, PSD_TELL(input));
-      if (psd_read (input, &data_size, 8, error) < 8 ||
-          psd_read (input, &lnk_type, 4, error) < 4 ||
+      psd_set_error (error);
+      return -1;
+    }
+  data_size = GUINT64_FROM_BE (data_size);
+  next_block_offset = link_data_offset + data_size + 8;
+
+  li = 0;
+  while (TRUE)
+    {
+      IFDBG(3) g_debug ("Linked data[%d], Offset: %" G_GOFFSET_FORMAT, li, link_data_offset);
+      if (psd_read (input, (gchar *) &lnk_type, 4, error) < 4 ||
           psd_read (input, &ver, 4, error) < 4)
         {
           psd_set_error (error);
           return -1;
         }
 
-      data_size = GUINT64_FROM_BE (data_size);
+      IFDBG(3) g_debug ("Next data block offset: %" G_GSIZE_FORMAT, link_data_offset + data_size + 8);
+
+      link_type = get_link_type ((gchar *) &lnk_type);
       ver = GUINT32_FROM_BE (ver);
       IFDBG(3) g_debug ("Data size: %" G_GSIZE_FORMAT ", link type: %.4s, version %u", data_size, lnk_type, ver);
 
@@ -729,28 +764,201 @@ load_resource_llnk (const PSDlayerres     *res_a,
       IFDBG(3) g_debug ("Original filename: %s", original_filename);
       g_free (original_filename);
 
-      if (psd_read (input, &file_type, 4, error) < 4 ||
-          psd_read (input, &file_creator, 4, error) < 4 ||
-          psd_read (input, &data_len, 8, error) < 8 ||
-          psd_read (input, &file_open_descriptor, 1, error) < 1)
+      if (psd_read (input, &file_type,      4, error) < 4 ||
+          psd_read (input, &file_creator,   4, error) < 4 ||
+          psd_read (input, &file_data_size, 8, error) < 8 ||
+          psd_read (input, &file_descriptor_present, 1, error) < 1)
         {
           psd_set_error (error);
           return -1;
         }
-      data_len = GUINT64_FROM_BE (data_len);
-      IFDBG(3) g_debug ("File type: %.4s, creator: %.4s, data length: %" G_GSIZE_FORMAT ", file open: %u",
-                        file_type, file_creator, data_len, (guchar) file_open_descriptor);
+      file_data_size = GUINT64_FROM_BE (file_data_size);
+      IFDBG(3) g_debug ("File type: %.4s, creator: %.4s, data length: %" G_GSIZE_FORMAT
+                        ", file descriptor present: %u",
+                        file_type, file_creator, file_data_size,
+                        (guchar) file_descriptor_present);
 
-      data_offset = (PSD_TELL(input) + data_len + 3) / 4 * 4;
+      if (file_descriptor_present)
+        {
+          IFDBG(3) g_debug ("Offset descriptor: %" G_GOFFSET_FORMAT, PSD_TELL(input));
 
-      IFDBG(3) g_debug ("File data offset: %" G_GOFFSET_FORMAT ", real end offset: %" G_GOFFSET_FORMAT,
-                        PSD_TELL(input), data_offset);
+          if (psd_read (input, &desc_ver, 4, error) < 4)
+            {
+              psd_set_error (error);
+              return -1;
+            }
+          desc_ver = GUINT32_FROM_BE (desc_ver);
 
-      if (! psd_seek (input, data_offset, G_SEEK_SET, error))
+          IFDBG(4) g_debug ("Descriptor version: %u", desc_ver);
+
+          res = load_descriptor (input, res_a->ibm_pc_format, NULL, error);
+          if (res < 0)
+            return -1;
+          }
+
+      if (link_type == LINK_TYPE_EXTERNAL)
+        {
+          gint  external_desc_ver = 0;
+          gsize filesize          = 0;
+
+          if (psd_read (input, &external_desc_ver, 4, error) < 4)
+            {
+              psd_set_error (error);
+              return -1;
+            }
+          external_desc_ver = GUINT32_FROM_BE (external_desc_ver);
+
+          IFDBG(4) g_debug ("External link descriptor version: %u", external_desc_ver);
+
+          res = load_descriptor (input, res_a->ibm_pc_format, NULL, error);
+          if (res < 0)
+            return -1;
+
+          if (ver > 3)
+            {
+              /* Date/Time, I assume of latest update of linked file. */
+              guint32 year    = 0;
+              guchar  month   = 0, day = 0, hour = 0, minute = 0;
+              gdouble seconds = 0.0;
+
+              if (psd_read (input, &year, 4, error) < 4 ||
+                  psd_read (input, &month, 1, error) < 1 ||
+                  psd_read (input, &day, 1, error) < 1 ||
+                  psd_read (input, &hour, 1, error) < 1 ||
+                  psd_read (input, &minute, 1, error) < 1 ||
+                  ! psd_read_double (input, &seconds, error))
+                {
+                  psd_set_error (error);
+                  return -1;
+                }
+              year = GUINT32_FROM_BE (year);
+              IFDBG(3) g_debug ("File date/time: %u-%u-%u %u:%u:%f", year, month, day, hour, minute, seconds);
+            }
+          if (psd_read (input, &filesize, 8, error) < 8)
+            {
+              psd_set_error (error);
+              return -1;
+            }
+          filesize = GUINT64_FROM_BE (filesize);
+          IFDBG(3) g_debug ("Filesize: %" G_GSIZE_FORMAT, filesize);
+
+          /* Specs say actual file data follows here, but that is incorrect. */
+        }
+      else if (link_type == LINK_TYPE_FILE_DATA)
+        {
+          /* Actual image data is included here, e.g. a complete PNG including headers etc. */
+
+          data_offset = PSD_TELL(input) + file_data_size;
+          IFDBG(3) g_debug ("Offset of included file data: %" G_GOFFSET_FORMAT
+                            ", end offset: %" G_GOFFSET_FORMAT,
+                            PSD_TELL(input), data_offset);
+
+          /* FIXME Skip actual image data for now... */
+          if (! psd_seek (input, data_offset, G_SEEK_SET, error))
+            {
+              psd_set_error (error);
+              return -1;
+            }
+        }
+      else if (link_type == LINK_TYPE_ALIAS)
+        {
+          gsize dummy = 0;
+
+          /* We don't have an example of this yet. No idea how to interpret. */
+
+          /* 8 zeros according to specs */
+          if (psd_read (input, &dummy, 8, error) < 8)
+            {
+              psd_set_error (error);
+              return -1;
+            }
+        }
+
+      IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
+
+      if (ver >= 5)
+        {
+          gchar *utemp = NULL;
+
+          utemp = fread_unicode_string (&bread, &bwritten, 1,
+                                        res_a->ibm_pc_format,
+                                        input, error);
+          if (! utemp)
+            {
+              return -1;
+            }
+          IFDBG(3) g_debug ("Child Document ID: %s", utemp);
+          g_free (utemp);
+        }
+      if (ver >= 6)
+        {
+          gdouble mod_time;
+
+          if (! psd_read_double (input, &mod_time, error))
+            {
+              psd_set_error (error);
+              return -1;
+            }
+          IFDBG(3) g_debug ("Asset mod time: %f", mod_time);
+        }
+
+      if (ver >= 7)
+        {
+          guchar locked_state = 0;
+
+          if (psd_read (input, &locked_state, 1, error) < 1)
+            {
+              psd_set_error (error);
+              return -1;
+            }
+          IFDBG(3) g_debug ("Locked state: %u", locked_state);
+        }
+
+      if (link_type == LINK_TYPE_EXTERNAL && ver == 2)
+        {
+          /* FIXME Raw file data:
+           * Weird: the specs don't say anything about the version earlier
+           * when the raw file data was mentioned for external files.
+           * We probably need an example.
+           */
+          IFDBG(3) g_debug ("External link version 2: raw file data included. "
+                            "Never seen this yet! Please share an exmple.");
+        }
+
+      /* To make sure we arrive at the correct offset we seek to the expected
+       * location. */
+      next_block_offset = (next_block_offset + 3) / 4 * 4;
+      if (! psd_seek (input, next_block_offset, G_SEEK_SET, error))
         {
           psd_set_error (error);
           return -1;
         }
+      IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
+
+      link_data_offset = PSD_TELL(input);
+      if (link_type == LINK_TYPE_EXTERNAL)
+        {
+          if (psd_read (input, &data_size, 8, error) < 8)
+            {
+              psd_set_error (error);
+              return -1;
+            }
+          data_size = GUINT64_FROM_BE (data_size);
+          IFDBG(3) g_debug ("Next block data size: %" G_GSIZE_FORMAT, data_size);
+        }
+
+      if (psd_read (input, &next_block_size, 2, error) < 2)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      next_block_size = GUINT16_FROM_BE (next_block_size);
+      if (next_block_size == 0)
+        break;
+      next_block_offset += next_block_size;
+
+      IFDBG(3) g_debug ("Next block size: %u", next_block_size);
+      li++;
     }
 
   return 0;
