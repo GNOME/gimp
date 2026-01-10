@@ -1742,20 +1742,6 @@ load_descriptor (GInputStream  *input,
   JsonNode   *local          = NULL;
   JsonNode   *root           = NULL;
 
-  if (base_node == NULL || *base_node == NULL)
-    {
-      local = json_node_new (JSON_NODE_OBJECT);
-      obj = json_object_new ();
-      json_node_init_object (local, obj);
-      if (base_node)
-        *base_node = local;
-    }
-  else
-    {
-      root = *base_node;
-      obj = json_node_get_object (root);
-    }
-
   IFDBG(3) g_debug ("start load_descriptor - Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
   /* Read unicode string */
   uniqueID = fread_unicode_string (&bread, &bwritten, 1, ibm_pc_format,
@@ -1772,6 +1758,20 @@ load_descriptor (GInputStream  *input,
   classID_string = load_key (input, error);
   /* root class ID seems to always be 'null' */
   IFDBG(3) g_debug ("Class ID: %s", classID_string);
+  /* Initialize our json objects used to store the collected information. */
+  if (base_node == NULL || *base_node == NULL)
+    {
+      local = json_node_new (JSON_NODE_OBJECT);
+      obj = json_object_new ();
+      json_node_init_object (local, obj);
+      if (base_node)
+        *base_node = local;
+    }
+  else
+    {
+      root = *base_node;
+      obj = json_node_get_object (root);
+    }
 
   json_object_set_string_member (obj, "classID", classID_string);
 
