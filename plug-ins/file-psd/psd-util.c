@@ -316,7 +316,7 @@ fread_pascal_string (gint32        *bytes_read,
       return NULL;
     }
   (*bytes_read)++;
-  IFDBG(3) g_debug ("Pascal string length %d", len);
+  IFDBG(4) g_debug ("Pascal string length %d", len);
 
   if (len == 0)
     {
@@ -359,7 +359,7 @@ fread_pascal_string (gint32        *bytes_read,
   *bytes_written = strlen (utf8_str);
   g_free (str);
 
-  IFDBG(3) g_debug ("Pascal string: %s, bytes_read: %d, bytes_written: %d",
+  IFDBG(4) g_debug ("Pascal string: %s, bytes_read: %d, bytes_written: %d",
                     utf8_str, *bytes_read, *bytes_written);
 
   return utf8_str;
@@ -477,7 +477,7 @@ fread_unicode_string (gint32        *bytes_read,
   else
     len = GINT32_FROM_LE (len);
 
-  IFDBG(3) g_debug ("Unicode string length %d", len);
+  IFDBG(4) g_debug ("Unicode string length %d", len);
 
   if (len == 0)
     {
@@ -527,7 +527,7 @@ fread_unicode_string (gint32        *bytes_read,
   *bytes_written = utf8_str_len;
   g_free (utf16_str);
 
-  IFDBG(3) g_debug ("Unicode string: %s, bytes_read: %d, bytes_written: %d",
+  IFDBG(4) g_debug ("Unicode string: %s, bytes_read: %d, bytes_written: %d",
                     utf8_str, *bytes_read, *bytes_written);
 
   return utf8_str;
