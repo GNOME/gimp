@@ -424,9 +424,6 @@ gimp_macos_setenv (const char * progname)
       g_free (bin_dir);
       g_setenv ("PATH", path, TRUE);
       g_free (path);
-      tmp = g_strdup_printf ("%s/gegl-0.4", lib_dir);
-      g_setenv ("GEGL_PATH", tmp, TRUE);
-      g_free (tmp);
       if (g_getenv ("XDG_DATA_DIRS"))
         tmp = g_strdup_printf ("%s:%s", share_dir, g_getenv ("XDG_DATA_DIRS"));
       else
