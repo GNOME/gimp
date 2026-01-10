@@ -3076,6 +3076,8 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
   gboolean     present    = TRUE;        /* Not always present in descriptor*/
   gboolean     use_global_angle = FALSE;
   const gchar *mode       = NULL;
+  const gchar *style      = NULL;
+  const gchar *filltype   = NULL;
   GeglColor   *color      = NULL;
   /* FIXME: Figure out below what the real default values are in Photoshop */
   gdouble      opacity    = 100.0;
@@ -3163,6 +3165,19 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
                 range     = (gfloat) get_json_double (obj_reader, "value", 50.0);
               else if (json_string_equal (key, "Sz  "))
                 size      = (gfloat) get_json_double (obj_reader, "value", 50.0);
+              /* FIXME Stroke enums
+               * Our dropshadow only supports stroke on outside, not inside/centered.
+               * The second enum is to select between color, gradient and pattern.
+               * Same here: our dropshadow doesn't handle gradients or patterns.
+               */
+              else if (json_string_equal (key, "Styl"))
+                style     = get_json_string (obj_reader, "value", "OutF");
+              else if (json_string_equal (key, "PntT"))
+                filltype  = get_json_string (obj_reader, "value", "SClr");
+              else
+                {
+                  IFDBG(3) g_debug ("Key %s was not interpreted.", key);
+                }
 
               g_object_unref (obj_reader);
             }
