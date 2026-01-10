@@ -13,6 +13,16 @@ if not os.getenv("MESON_BUILD_ROOT"):
   # Let's prevent contributors from creating broken bundles
   print("\033[31m(ERROR)\033[0m: Script called standalone. Please build GIMP targeting installer or msix creation.")
   sys.exit(1)
+# Get variables from MESON_BUILD_ROOT/config.h that can be used on this script
+with open("config.h") as file:
+  for line in file:
+    match = re.match(r'^#define\s+(\S+)\s+(.*)', line)
+    if match:
+      key, value = match.groups()
+      os.environ[key] = value.strip().strip('"').strip("'")
+if not os.getenv("ENABLE_RELOCATABLE_RESOURCES"):
+  print("\n\033[31m(ERROR)\033[0m: No relocatable GIMP build found. You can build GIMP with '-Drelocatable-bundle=yes' to make a build suitable for bundle creation.")
+  sys.exit(1)
 
 
 # Bundle deps and GIMP files
@@ -85,12 +95,6 @@ GIMP_DISTRIB.mkdir(parents=True, exist_ok=True)
 (GIMP_DISTRIB / ".gitignore").write_text("*\n")
 ### Add a wrapper at tree root, less messy than having to look for the
 ### binary inside bin/, in the middle of all the DLLs.
-with open("config.h") as file:
-  for line in file:
-    match = re.match(r'^#define\s+(\S+)\s+(.*)', line)
-    if match:
-      key, value = match.groups()
-      os.environ[key] = value.strip().strip('"').strip("'")
 (GIMP_DISTRIB / "gimp.cmd").write_text(f"powershell bin\\gimp-{os.getenv('GIMP_MUTEX_VERSION')}.exe\n")
 
 
