@@ -16,10 +16,14 @@ if not os.getenv("MESON_BUILD_ROOT"):
 # Get variables from MESON_BUILD_ROOT/config.h that can be used on this script
 with open("config.h") as file:
   for line in file:
-    match = re.match(r'^#define\s+(\S+)\s+(.*)', line)
+    match = re.match(r'^#\s*define\s+(\S+)(?:\s+(.*))?$', line)
     if match:
       key, value = match.groups()
-      os.environ[key] = value.strip().strip('"').strip("'")
+      if value is None or not value.strip():
+        value = "1" #needed when there is no explicit value
+      else:
+        value = value.strip().strip('"').strip("'")
+      os.environ[key] = value
 if not os.getenv("ENABLE_RELOCATABLE_RESOURCES"):
   print("\n\033[31m(ERROR)\033[0m: No relocatable GIMP build found. You can build GIMP with '-Drelocatable-bundle=yes' to make a build suitable for bundle creation.")
   sys.exit(1)
