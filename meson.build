@@ -889,6 +889,8 @@ can_import_heic = false
 can_export_heic = false
 can_import_avif = false
 can_export_avif = false
+can_import_hej2 = false
+can_export_hej2 = false
 
 have_heif = libheif.found()
 if have_heif
@@ -962,12 +964,48 @@ if have_heif
     ''',
     dependencies: [ libheif ],
     name: 'export AVIF').returncode() == 0
+
+    can_import_hej2 = cc.run('''
+    #include <libheif/heif.h>
+    int main() {
+      int success;
+      heif_init (NULL);
+      success = heif_have_decoder_for_format (heif_compression_JPEG2000);
+      heif_deinit ();
+
+      if (success)
+        return 0;
+      else
+        return 1;
+    }
+    ''',
+    dependencies: [ libheif ],
+    name: 'import HEJ2').returncode() == 0
+
+    can_export_hej2 = cc.run('''
+    #include <libheif/heif.h>
+    int main() {
+      int success;
+      heif_init (NULL);
+      success = heif_have_encoder_for_format (heif_compression_JPEG2000);
+      heif_deinit ();
+
+      if (success)
+        return 0;
+      else
+        return 1;
+    }
+    ''',
+    dependencies: [ libheif ],
+    name: 'export HEJ2').returncode() == 0
   else
     # When cross-compiling and we can't run our test binaries.
     can_import_heic = true
     can_export_heic = true
     can_import_avif = true
     can_export_avif = true
+    can_import_hej2 = true
+    can_export_hej2 = true
   endif
 
   if not can_import_heic and not can_import_avif
@@ -2160,6 +2198,8 @@ final_message = [
                                 .format(can_import_heic, can_export_heic),
 '''  AVIF:                import: @0@ - export: @1@'''
                                 .format(can_import_avif, can_export_avif),
+'''  HEJ2:                import: @0@ - export: @1@'''
+                                .format(can_import_hej2, can_export_hej2),
 '''  PDF (export):        @0@'''.format(cairopdf.found()),
 '''  Print:               @0@'''.format(have_print),
 '''  Javascript plug-ins: @0@'''.format(have_javascript),
