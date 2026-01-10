@@ -329,6 +329,7 @@ gimp_macos_setenv (const char * progname)
   /* helper to set environment variables for GIMP to be relocatable.
    * Due to the latest changes on macOS, it is not recommended to set it in
    * a shell wrapper inside Contents/MacOS (like AppImage's AppRun) anymore.
+   * LSEnvironment on Info.plist, limited to bundle scope, would not be enough.
    * That way, we make sure our python is called instead of system one etc
    */
   gchar  *resolved_path;
@@ -466,6 +467,9 @@ gimp_macos_setenv (const char * progname)
       g_free (tmp);
       tmp = g_strdup_printf ("%s/libthai", share_dir);
       g_setenv ("LIBTHAI_DICTDIR", tmp, TRUE);
+      g_free (tmp);
+      tmp = g_strdup_printf ("%s/ghostscript/Resource/Init", share_dir);
+      g_setenv ("GS_LIB", tmp, TRUE);
       g_free (tmp);
       tmp = g_strdup_printf ("%s/libwmf/fonts", share_dir);
       g_setenv ("WMF_FONTDIR", tmp, TRUE);
