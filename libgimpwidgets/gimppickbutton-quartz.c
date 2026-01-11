@@ -240,7 +240,11 @@
 - (id)initWithButton:(GimpPickButton *)button forScreen:(NSScreen *)screen withController:(GimpPickWindowController *)_controller
 {
   self = [super initWithContentRect:screen.frame
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101200
                 styleMask:NSBorderlessWindowMask
+#else
+                styleMask:NSWindowStyleMaskBorderless
+#endif
                 backing:NSBackingStoreBuffered
                 defer:NO];
 
@@ -314,7 +318,11 @@
 
   controller.firstBecameKey = NO;
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101200
   event = [NSEvent enterExitEventWithType:NSMouseEntered
+#else
+  event = [NSEvent enterExitEventWithType:NSEventTypeMouseEntered
+#endif
                    location:[self mouseLocationOutsideOfEventStream]
                    modifierFlags:0
                    timestamp:[[NSApp currentEvent] timestamp]
