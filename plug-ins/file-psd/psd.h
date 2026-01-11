@@ -726,7 +726,7 @@ typedef struct
   guchar                group_type;             /* 0 -> not a group; 1 -> open folder; 2 -> closed folder; 3 -> end of group */
   guint16               color_tag[4];           /* 4 * 16 bit color components */
   PSDLayerStyles       *layer_styles;           /* Older format of layer styles */
-  PSDLayerEffects      *layer_effects;
+  PSDLayerEffects       layer_effects;          /* Layer Effects using descriptors */
 
   PSDSupport           *unsupported_features;
 } PSDlayer;

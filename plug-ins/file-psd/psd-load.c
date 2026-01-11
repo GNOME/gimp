@@ -2732,10 +2732,10 @@ add_layers (GimpImage     *image,
                 }
             }
 
-            /* Add legacy layer styles if applicable.
-             * TODO: When we can load modern layer styles, only load these if
-             * the file doesn't have modern layer style data. */
-            if (lyr_a[lidx]->layer_effects)
+            /* Add layer styles if applicable.
+             * Uses the modern descriptor based effects if available,
+             * otherwise the legacy effects. */
+            if (lyr_a[lidx]->layer_effects.effects)
               add_layer_effects (layer, lyr_a[lidx],
                                  img_a);
             else if (lyr_a[lidx]->layer_styles->count > 0)
@@ -3402,11 +3402,11 @@ add_layer_effects (GimpLayer *layer,
   const Babl *format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
   const Babl *space  = babl_format_get_space (format);
 
-  if (lyr_a->layer_effects && lyr_a->layer_effects->effects)
+  if (lyr_a->layer_effects.effects)
     {
       JsonReader *root_reader = NULL;
 
-      root_reader = json_reader_new (lyr_a->layer_effects->effects);
+      root_reader = json_reader_new (lyr_a->layer_effects.effects);
 
       if (json_reader_read_member (root_reader, "descriptor"))
         {
