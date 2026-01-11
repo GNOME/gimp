@@ -2319,6 +2319,28 @@ add_descriptor_vlls (const gchar  *key,
   return local;
 }
 
+static JsonNode*
+add_descriptor_float_list (const gchar  *key,
+                           const gchar  *type,
+                           const gchar  *float_type)
+{
+  JsonNode   *local;
+  JsonObject *obj;
+  gchar      *tmp;
+
+  local = json_node_new (JSON_NODE_OBJECT);
+  obj = json_object_new ();
+  json_node_init_object (local, obj);
+
+  json_object_set_string_member (obj, "key",   key);
+
+  tmp = g_strdup_printf ("%.4s", type);
+  json_object_set_string_member (obj, "type",  tmp);
+  g_free (tmp);
+
+  return local;
+}
+
 static gint
 load_type (GInputStream  *input,
            gboolean       ibm_pc_format,
@@ -2429,11 +2451,10 @@ load_type (GInputStream  *input,
   else if (memcmp (type, "UnFl ", 4) == 0)
     {
       /* Undocumented: Unit Floats */
-      gchar   floatkey[4] = "";
-      guint32 count       = 0;
-      gint    i;
-
-      g_message ("FIXME Type: %.4s - missing json conversion", type);
+      gchar      floatkey[4] = "";
+      guint32    count       = 0;
+      gint       i;
+      JsonArray *arr;
 
       if (psd_read (input, &floatkey, 4, error) < 4)
         {
@@ -2448,9 +2469,14 @@ load_type (GInputStream  *input,
       count = GUINT32_FROM_BE (count);
       IFDBG(3) g_debug ("Array[%u] of float of type: %.4s", count, floatkey);
 
+      *node = add_descriptor_float_list (key, type, floatkey);
+      arr = json_array_new ();
+      json_object_set_array_member (json_node_get_object (*node), "list", arr);
+
       for (i = 0; i < count; i++)
         {
           gdouble   data;
+          JsonNode *list_node;
 
           if (! psd_read_double (input, &data, error))
             {
@@ -2458,6 +2484,12 @@ load_type (GInputStream  *input,
               return -1;
             }
           IFDBG(3) g_debug ("[%i] - value: %f", i, data);
+
+          list_node = add_descriptor_double (key, "doub", data);
+          if (list_node)
+            json_array_add_element (arr, list_node);
+          else
+            g_printerr ("Failed to add array element!\n");
         }
     }
   else if (memcmp (type, "TEXT", 4) == 0)
@@ -2619,22 +2651,27 @@ load_type (GInputStream  *input,
   else if (memcmp (type, "ObAr", 4) == 0)
     {
       /* Undocumented: Object Array */
-      gint32  res;
-      guint32 count = 0;
+      gint32    res;
+      guint32   desc_ver  = 0;
+      JsonNode *desc_node = NULL;
 
-      g_message ("FIXME Type: %.4s - missing json conversion", type);
-
-      if (psd_read (input, &count, 4, error) < 4)
+      if (psd_read (input, &desc_ver, 4, error) < 4)
         {
           psd_set_error (error);
           return -1;
         }
-      count = GUINT32_FROM_BE (count);
+      desc_ver = GUINT32_FROM_BE (desc_ver);
 
-      IFDBG(3) g_debug ("Descriptor version: %u", count);
+      IFDBG(4) g_debug ("Descriptor version: %u", desc_ver);
 
+      /* Not sure what the difference is with Objc, except the extra
+       * descriptor version. It doesn't seem like there is an array of
+       * descriptors.
+       */
       IFDBG(3) g_debug ("Descriptor array begin");
-      res = load_descriptor (input, ibm_pc_format, NULL, error);
+      desc_node = add_descriptor_objc (key, type);
+      res = load_descriptor (input, ibm_pc_format, &desc_node, error);
+      *node = desc_node;
       IFDBG(3) g_debug ("Descriptor array end");
       if (res < 0)
         return res;
