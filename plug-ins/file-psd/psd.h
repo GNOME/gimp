@@ -680,6 +680,11 @@ typedef struct
   JsonNode                  *effects;
 } PSDLayerEffects;
 
+typedef struct
+{
+  guint32                    version;
+  JsonNode                  *smart_object_data;
+} PSDSmartObject;
 
 /* Partially or Unsupported Features */
 typedef struct
@@ -727,6 +732,7 @@ typedef struct
   guint16               color_tag[4];           /* 4 * 16 bit color components */
   PSDLayerStyles       *layer_styles;           /* Older format of layer styles */
   PSDLayerEffects       layer_effects;          /* Layer Effects using descriptors */
+  PSDSmartObject        smart_object;           /* Smart Object/Placed Layer */
 
   PSDSupport           *unsupported_features;
 } PSDlayer;

@@ -593,6 +593,8 @@ load_resource_lpla (const PSDlayerres  *res_a,
   version = GUINT32_FROM_BE (version);
   /* Expected
    * for plLd: type: plcL, version: 3,
+   * If the below is present, there usually also is one of the above present,
+   * but that can then be ignored.
    * for SoLd: type: soLD, version: 4
    * for SoLE, type: soLD, version: 4 or 5. */
 
@@ -630,6 +632,12 @@ load_resource_lpla (const PSDlayerres  *res_a,
       placed_layer_type = GUINT32_FROM_BE (placed_layer_type);
       IFDBG(3) g_debug ("Page number: %u, total pages: %u, anti alias policy: %u, placed layer type: %u",
                         page_num, total_pages, anti_alias_policy, placed_layer_type);
+      /* More info follows:
+       * - Transformation: 8 doubles
+       * - Warp: version (0), descriptor version (16), descriptor
+       */
+      lyr_a->smart_object.version = version;
+      /* FIXME: We could think of wrapping the above data in a json object. */
     }
   else if (version == 4)
     {
@@ -646,6 +654,15 @@ load_resource_lpla (const PSDlayerres  *res_a,
 
       if (parse_descriptor (input, res_a->ibm_pc_format, &root, error) == 0)
         {
+          if (lyr_a->smart_object.smart_object_data)
+            g_warning ("Duplicate smart object data ignored, shouldn't happen!");
+          else
+            {
+              lyr_a->smart_object.smart_object_data = root;
+              lyr_a->smart_object.version = version;
+            }
+
+          /* FIXME: Temporary show json output while we work on this. */
           IFDBG(4) if (root) g_debug ("Placed Layer descriptor for layer %u:\n%s",
                                       lyr_a->id, json_to_string (root, TRUE));
         }
@@ -656,6 +673,15 @@ load_resource_lpla (const PSDlayerres  *res_a,
     {
       if (parse_descriptor (input, res_a->ibm_pc_format, &root, error) == 0)
         {
+          if (lyr_a->smart_object.smart_object_data)
+            g_warning ("Duplicate smart object data ignored, shouldn't happen!");
+          else
+            {
+              lyr_a->smart_object.smart_object_data = root;
+              lyr_a->smart_object.version = version;
+            }
+
+          /* FIXME: Temporary show json output while we work on this. */
           IFDBG(4) if (root) g_debug ("Placed Layer descriptor for layer %u:\n%s",
                                       lyr_a->id, json_to_string (root, TRUE));
         }
