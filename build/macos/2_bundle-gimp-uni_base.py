@@ -326,12 +326,15 @@ for dir in ["MacOS", "Frameworks"]:
   for binary in search_dir.rglob("*"):
     if "Mach-O" in subprocess.run(["file", str(binary)], capture_output=True, text=True).stdout and ".dSYM" not in str(binary) and not binary.is_symlink():
       result = subprocess.run(["dsymutil", "--no-output", binary], capture_output=True, text=True)
-      if not "no debug symbols" in result.stdout + result.stderr:
+      if not "no debug symbols" in result.stdout + result.stderr and not "unable to open object file" in result.stdout + result.stderr:
         print(f"(INFO): generating debug symbols file as {binary}.dSYM")
         try:
           subprocess.run(["dsymutil", binary, "-o", f"{binary}.dSYM"], check=True, stderr=subprocess.DEVNULL)
         except subprocess.CalledProcessError as e:
           sys.stderr.write(f"Failed to generate debug symbols from {binary}: {e}\n")
+      elif "unable to open object file" in result.stdout + result.stderr:
+        print(f"\n\033[31m(ERROR)\033[0m: {binary} is orphaned from .o file for .dSYM generation. Please make sure its build dir is present")
+        sys.exit(1)
 
 
 ## FIXME: DEVELOPMENT FILES (bundle babl, gegl and gimp libs as .framework with Headers/ ?).
