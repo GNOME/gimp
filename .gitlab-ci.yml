@@ -684,8 +684,9 @@ deps-macos-inhouse:
   artifacts:
     paths:
       - _install-*
-      - babl/_build-*/meson-logs/meson-log.txt
-      - gegl/_build-*/meson-logs/meson-log.txt
+      # The full build dir is needed due to its .o for .dSYM creation on next job
+      - babl/_build-*
+      - gegl/_build-*
     expire_in: 2 hours
 
 gimp-macos-inhouse:
