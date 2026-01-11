@@ -2395,43 +2395,36 @@ load_type (GInputStream  *input,
     }
   else if (memcmp (type, "doub", 4) == 0)
     {
-      /* Double */
-      gdouble  *val;
-      guint64   tmp = 0;
+      gdouble data;
 
-      if (psd_read (input, &tmp, 8, error) < 8)
+      if (! psd_read_double (input, &data, error))
         {
           psd_set_error (error);
           return -1;
         }
-      tmp = GUINT64_FROM_BE (tmp);
-      val = (gpointer) &tmp;
 
-      IFDBG(3) g_debug ("double value: %f", *val);
-      *node = add_descriptor_double (key, type, *val);
+      IFDBG(3) g_debug ("double value: %f", data);
+      *node = add_descriptor_double (key, type, data);
     }
   else if (memcmp (type, "UntF", 4) == 0)
     {
       /* Unit float */
-      gchar    floatkey[4] = "";
-      gdouble *val;
-      guint64  tmp = 0;
+      gchar   floatkey[4] = "";
+      gdouble data;
 
       if (psd_read (input, &floatkey, 4, error) < 4)
         {
           psd_set_error (error);
           return -1;
         }
-      if (psd_read (input, &tmp, 8, error) < 8)
-        {
-          psd_set_error (error);
-          return -1;
-        }
-      tmp = GUINT64_FROM_BE (tmp);
-      val = (gpointer) &tmp;
+        if (! psd_read_double (input, &data, error))
+          {
+            psd_set_error (error);
+            return -1;
+          }
 
-      IFDBG(3) g_debug ("Float: %.4s, value: %f", floatkey, *val);
-      *node = add_descriptor_float (key, type, floatkey, *val);
+          IFDBG(3) g_debug ("Float: %.4s, value: %f", floatkey, data);
+      *node = add_descriptor_float (key, type, floatkey, data);
     }
   else if (memcmp (type, "UnFl ", 4) == 0)
     {
@@ -2457,20 +2450,14 @@ load_type (GInputStream  *input,
 
       for (i = 0; i < count; i++)
         {
-          gdouble  *val;
-          guint64   tmp = 0;
+          gdouble   data;
 
-          if (psd_read (input, &tmp, 8, error) < 8)
+          if (! psd_read_double (input, &data, error))
             {
               psd_set_error (error);
               return -1;
             }
-          /* double needs to be converted from BE, but there is no direct
-           * reverse for doubles, so use guint64 which is also 64 bits. */
-          tmp = GUINT64_FROM_BE (tmp);
-          val = (gpointer) &tmp;
-
-          IFDBG(3) g_debug ("[%i] - value: %f", i, *val);
+          IFDBG(3) g_debug ("[%i] - value: %f", i, data);
         }
     }
   else if (memcmp (type, "TEXT", 4) == 0)
