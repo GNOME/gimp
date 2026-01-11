@@ -816,13 +816,7 @@ read_layer_info (PSDimage      *img_a,
           IFDBG(3) g_debug ("Read info for layer %d at offset %" G_GOFFSET_FORMAT, lidx, PSD_TELL(input));
 
           /* Allocate layer record */
-          lyr_a[lidx] = (PSDlayer *) g_malloc (sizeof (PSDlayer) );
-
-          /* Initialise record */
-          lyr_a[lidx]->id = 0;
-          lyr_a[lidx]->group_type = 0;
-          lyr_a[lidx]->text.info = NULL;
-          lyr_a[lidx]->layer_effects = NULL;
+          lyr_a[lidx] = (PSDlayer *) g_malloc0 (sizeof (PSDlayer) );
 
           if (psd_read (input, &lyr_a[lidx]->top,          4, error) < 4 ||
               psd_read (input, &lyr_a[lidx]->left,         4, error) < 4 ||
