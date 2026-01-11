@@ -245,7 +245,7 @@ if os.path.exists(OPT_PREFIX / "bin/port"):
   bundle(OPT_PREFIX, "lib/nss/libnssutil3.dylib", "--dest", "Frameworks")
   bundle(OPT_PREFIX, "lib/nss/libnss3.dylib", "--dest", "Frameworks")
   bundle(OPT_PREFIX, "lib/nspr/*.dylib", "--dest", "Frameworks")
-### FIXME: Needed for file-ps work (but maintaining GS_LIB on app/main.c is tough)
+### Needed for file-ps work
 if os.path.exists(OPT_PREFIX / "bin/port"):
   bundle(OPT_PREFIX, "share/ghostscript/1*/iccprofiles/*.icc", "--dest", "Resources/ghostscript/iccprofiles")
   bundle(OPT_PREFIX, "share/ghostscript/1*/Resource/Init/*", "--dest", "Resources/ghostscript/Resource/Init")
