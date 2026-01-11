@@ -711,6 +711,11 @@ typedef struct
   JsonNode                  *effects;
 } PSDLayerEffects;
 
+typedef struct
+{
+  guint32                    version;
+  JsonNode                  *smart_object_data;
+} PSDSmartObject;
 
 /* Partially or Unsupported Features */
 typedef struct
@@ -759,6 +764,7 @@ typedef struct
   PSDLayerStyles       *layer_styles;           /* Older format of layer styles */
   PSDAdjustmentLayer   *adjustment_layer;       /* Adjustment layer data */
   PSDLayerEffects       layer_effects;          /* Layer Effects using descriptors */
+  PSDSmartObject        smart_object;           /* Smart Object/Placed Layer */
 
   PSDSupport           *unsupported_features;
 } PSDlayer;
