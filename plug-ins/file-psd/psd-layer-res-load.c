@@ -1005,8 +1005,7 @@ load_resource_lfx (const PSDlayerres  *res_a,
 
       if (parse_descriptor (input, res_a->ibm_pc_format, &root, error) == 0)
         {
-          lyr_a->layer_effects = g_new (PSDLayerEffects, 1);
-          lyr_a->layer_effects->effects = root;
+          lyr_a->layer_effects.effects = root;
 
           if (root)
             {
