@@ -70,12 +70,24 @@ file_raw_get_executable_path (const gchar *main_executable,
                                              kCFStringEncodingUTF8);
       if (bundle_id)
         {
-          OSStatus status;
+          OSStatus status = -1;
           CFURLRef bundle_url = NULL;
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101000
+          CFArrayRef urls;
+#endif
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101000
           status = LSFindApplicationForInfo (kLSUnknownCreator,
                                              bundle_id, NULL, NULL,
                                              &bundle_url);
+#else
+          urls = LSCopyApplicationURLsForBundleIdentifier (bundle_id, NULL);
+          if (urls && CFArrayGetCount(urls) > 0)
+            bundle_url = (CFURLRef)CFArrayGetValueAtIndex (urls, 0);
+          CFRelease (urls);
+          if (bundle_url)
+            status = 0;
+#endif
           if (status >= 0)
             {
               CFBundleRef  bundle;
@@ -85,7 +97,9 @@ file_raw_get_executable_path (const gchar *main_executable,
               CFIndex      len;
 
               bundle = CFBundleCreate (kCFAllocatorDefault, bundle_url);
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101000
               CFRelease (bundle_url);
+#endif
 
               exec_url = CFBundleCopyExecutableURL (bundle);
               absolute_url = CFURLCopyAbsoluteURL (exec_url);
