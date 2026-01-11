@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-01-10 13:34+0000\n"
-"PO-Revision-Date: 2026-01-11 16:13+0800\n"
+"PO-Revision-Date: 2026-01-11 16:16+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -10711,7 +10711,7 @@ msgstr "影像匯出時的預設註言。"
 
 #: app/config/gimprc-blurbs.h:240 app/dialogs/preferences-dialog.c:1566
 msgid "Export the image's thumbnail by default"
-msgstr "影像匯出時的預設縮圖。"
+msgstr "影像匯出時的預設縮圖"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
@@ -16025,15 +16025,13 @@ msgid "Configure Keyboard Shortcuts"
 msgstr "設定鍵盤快捷鍵組態"
 
 #: app/dialogs/keyboard-shortcuts-dialog.c:84
-#, fuzzy, c-format
-#| msgid ""
-#| "To edit a shortcut key, click on the corresponding row and type a new "
-#| "accelerator, or press backspace to clear."
+#, c-format
 msgid ""
 "To edit a shortcut key, select the corresponding row, click on its \"%s\" "
 "column and type a new accelerator, or press backspace to clear."
 msgstr ""
-"若要編輯快捷鍵，請點按對應的列並按下新的快捷鍵，或按 Backspace 退格鍵清除。"
+"若要編輯快捷鍵，請選取對應的列，再點按「%s」欄並輸入新的快捷鍵，或按 "
+"Backspace 退格鍵清除。"
 
 #: app/dialogs/keyboard-shortcuts-dialog.c:87 app/widgets/gimpactionview.c:293
 msgid "Shortcut"
@@ -20404,9 +20402,6 @@ msgid "Fill the original position of the cage with a plain color"
 msgstr "用純色填充籠套的原始位置"
 
 #: app/operations/gimpoperationcolorbalance.c:65
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Color Balance"
 msgid "Color Balance"
 msgstr "色彩平衡"
 
@@ -20415,9 +20410,6 @@ msgid "Adjust color distribution"
 msgstr "調整顏色分布"
 
 #: app/operations/gimpoperationcolorize.c:92
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Colorize"
 msgid "Colorize"
 msgstr "色彩化"
 
@@ -20440,9 +20432,6 @@ msgid "Adjust color curves"
 msgstr "調整顏色曲線"
 
 #: app/operations/gimpoperationdesaturate.c:85
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Desaturate"
 msgid "Desaturate"
 msgstr "去飽和度"
 
@@ -20463,9 +20452,6 @@ msgid "Choose shade of gray based on"
 msgstr "選擇灰色種類"
 
 #: app/operations/gimpoperationhuesaturation.c:65
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Hue-Saturation"
 msgid "Hue-Saturation"
 msgstr "色相及飽和度"
 
@@ -20488,9 +20474,6 @@ msgid "Fill Color"
 msgstr "填入色彩"
 
 #: app/operations/gimpoperationposterize.c:84
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Posterize"
 msgid "Posterize"
 msgstr "色調分離"
 
@@ -20503,11 +20486,8 @@ msgid "Posterize levels"
 msgstr "色調分離程度"
 
 #: app/operations/gimpoperationsemiflatten.c:82
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Semi-Flatten..."
 msgid "Semi-Flatten"
-msgstr "半整平(_S)…"
+msgstr "半整平"
 
 #: app/operations/gimpoperationsemiflatten.c:84
 msgid "Replace partial transparency with a color"
@@ -20548,11 +20528,8 @@ msgid "High threshold"
 msgstr "高閾值"
 
 #: app/operations/gimpoperationthresholdalpha.c:78
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Threshold Alpha..."
 msgid "Threshold Alpha"
-msgstr "閾值 Alpha(_T)…"
+msgstr "閾值 Alpha"
 
 #: app/operations/gimpoperationthresholdalpha.c:81
 msgid ""
