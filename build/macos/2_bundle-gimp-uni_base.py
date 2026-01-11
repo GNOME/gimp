@@ -332,7 +332,7 @@ for dir in ["MacOS", "Frameworks"]:
           subprocess.run(["dsymutil", binary, "-o", f"{binary}.dSYM"], check=True, stderr=subprocess.DEVNULL)
         except subprocess.CalledProcessError as e:
           sys.stderr.write(f"Failed to generate debug symbols from {binary}: {e}\n")
-      elif "unable to open object file" in result.stdout + result.stderr:
+      elif "unable to open object file" in result.stdout + result.stderr and not os.getenv("OPT_PREFIX") in result.stdout + result.stderr:
         print(f"\n\033[31m(ERROR)\033[0m: {binary} is orphaned from .o file for .dSYM generation. Please make sure its build dir is present")
         sys.exit(1)
 
