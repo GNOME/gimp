@@ -251,8 +251,6 @@ foreach ($bundle in $supported_archs)
     conf_manifest '@DISPLAY_NAME@' "$display_name"
     ### Set custom GIMP version (major.minor.micro+revision.0)
     conf_manifest '@CUSTOM_GIMP_VERSION@' "$CUSTOM_GIMP_VERSION"
-    ### Set some things based on GIMP mutex version (major.minor or major)
-    conf_manifest '@GIMP_MUTEX_VERSION@' "$GIMP_MUTEX_VERSION"
     #### Needed to differentiate on PowerShell etc
     if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
       {
