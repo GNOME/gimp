@@ -136,25 +136,8 @@ def clean(base_path, pattern):
 GIMP_DISTRIB.mkdir(parents=True, exist_ok=True)
 ### Prevent Git going crazy
 (GIMP_DISTRIB / ".." / ".gitignore").write_text("*\n")
-### Configure Info.plist
-text = (GIMP_SOURCE / "build/macos/Info.plist").read_text()
-if not os.getenv("GIMP_RELEASE") or os.getenv("GIMP_IS_RC_GIT"):
-    BUNDLE_IDENTIFIER = "org.gimp.gimp.internal"
-    BUNDLE_NAME = "GIMP (Nightly)"
-    MUTEX_SUFFIX = ""
-elif (os.getenv("GIMP_RELEASE") and os.getenv("GIMP_UNSTABLE")) or os.getenv("GIMP_RC_VERSION"):
-    BUNDLE_IDENTIFIER = "org.gimp.gimp.seed"
-    BUNDLE_NAME = "GIMP (Beta)"
-    MUTEX_SUFFIX = f"-{os.getenv('GIMP_MUTEX_VERSION')}"
-else:
-    BUNDLE_IDENTIFIER = "org.gimp.gimp"
-    BUNDLE_NAME = "GIMP"
-    MUTEX_SUFFIX = f"-{os.getenv('GIMP_MUTEX_VERSION')}"
-new_text = text.replace("%BUNDLE_IDENTIFIER%", BUNDLE_IDENTIFIER)
-new_text = new_text.replace("%BUNDLE_NAME%", BUNDLE_NAME)
-new_text = new_text.replace("%GIMP_VERSION%", os.getenv("GIMP_VERSION"))
-new_text = new_text.replace("%MUTEX_SUFFIX%", MUTEX_SUFFIX)
-(GIMP_DISTRIB / "Info.plist").write_text(new_text)
+### Info.plist (it will be configured by 3_dist-gimp-apple script)
+shutil.copy2(Path(f"{GIMP_SOURCE}/build/macos/Info.plist"), GIMP_DISTRIB)
 ### FIXME: Icon (generate Assets.car for Liquid Glass)
 (GIMP_DISTRIB / "Resources").mkdir(parents=True, exist_ok=True)
 shutil.copy2(Path(f"{os.getenv('MESON_BUILD_ROOT')}/gimp-data/images/logo/gimp.icns"), GIMP_DISTRIB / "Resources/AppIcon.icns")
