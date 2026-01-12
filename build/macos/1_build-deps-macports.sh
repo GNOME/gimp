@@ -63,7 +63,13 @@ self_build()
   dep=$(basename "$1" .git)
   printf "\e[0Ksection_start:`date +%s`:${dep}_build[collapsed=true]\r\e[0KBuilding $dep\n"
   if [ ! -d "$dep" ]; then
-    git clone --depth $GIT_DEPTH --branch ${2:-master} $1
+    if ( echo $1 | grep -q 'babl' || echo $1 | grep -q 'gegl' ) && [ "$CI_COMMIT_TAG" ]; then
+      tag_branch=$(git ls-remote --tags --exit-code --refs $1 | grep -oi "$(echo "$dep" | tr '[:lower:]' '[:upper:]')_[0-9]*_[0-9]*_[0-9]*" | sort --version-sort | tail -1)
+    else
+      tag_branch=${2:-master}
+    fi
+    printf "Using tag/branch of ${dep}: ${tag_branch}\n"
+    git clone --branch=$tag_branch --depth $GIT_DEPTH $1
   fi
   cd $dep
   git pull
