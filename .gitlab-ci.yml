@@ -702,6 +702,7 @@ gimp-macos-inhouse:
       - gimp-*.app
       - _build*/meson-logs/meson-log.txt
       - _build*/done-dylib.list
+    expire_in: 2 days
 
 
 ## Analysis ##
