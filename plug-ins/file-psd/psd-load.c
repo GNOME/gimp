@@ -2754,6 +2754,8 @@ add_layers (GimpImage     *image,
       g_free (lyr_a[lidx]->chn_info);
       g_free (lyr_a[lidx]->name);
       g_free (lyr_a[lidx]->layer_styles);
+      g_free (lyr_a[lidx]->layer_effects.effects);
+      g_free (lyr_a[lidx]->smart_object.smart_object_data);
       g_free (lyr_a[lidx]);
     }
   g_free (lyr_a);
