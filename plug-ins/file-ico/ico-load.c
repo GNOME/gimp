@@ -430,6 +430,7 @@ ico_read_icon (FILE    *fp,
                gint    *height)
 {
   IcoFileDataHeader   data;
+  gsize               data_size;
   gint                length;
   gint                x, y, w, h;
   guchar             *xor_map, *and_map;
@@ -479,7 +480,9 @@ ico_read_icon (FILE    *fp,
       return FALSE;
     }
 
-  if (data.width * data.height * 2 > maxsize)
+  if (! g_size_checked_mul (&data_size, data.width, data.height) ||
+      ! g_size_checked_mul (&data_size, data_size, 2)            ||
+      data_size > maxsize)
     {
       D(("skipping image: too large\n"));
       return FALSE;
@@ -749,7 +752,14 @@ ico_load_image (GFile        *file,
   image = gimp_image_new (max_width, max_height, GIMP_RGB);
 
   maxsize = max_width * max_height * 4;
-  buf = g_new (guchar, max_width * max_height * 4);
+  buf     = g_try_new (guchar, maxsize);
+  if (! buf)
+    {
+      g_free (info);
+      fclose (fp);
+      return NULL;
+    }
+
   for (i = 0; i < icon_count; i++)
     {
       GimpLayer *layer;
