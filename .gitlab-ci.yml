@@ -8,7 +8,7 @@ spec:
         - GIMP_CI_SNAP #trigger the snap build (base but slow)
         - GIMP_CI_WIN_INSTALLER #trigger all native MSYS2 builds then creates Inno Windows installer (base but slow)
         - GIMP_CI_MS_STORE #trigger arm64 and x64 native MSYS2 builds then creates a .msixbundle (base but slow)
-        - GIMP_CI_MACOS #trigger arm64 native macOS builds (base but slow)
+        - GIMP_CI_MACOS #trigger arm64 native macOS build then create a .dmg installer (base but slow)
         - none
       default: 'none'
     test_pipeline:
@@ -702,6 +702,9 @@ gimp-macos-inhouse:
       - gimp-*.app
       - _build*/meson-logs/meson-log.txt
       - _build*/done-dylib.list
+      # Needed by dist-mac-weekly
+      - _build-*/config.h
+      - _build-*/gimp-data/images/logo/gimp-dmg.png
     expire_in: 2 days
 
 
@@ -984,4 +987,20 @@ dist-store-weekly:
     paths:
     - build/windows/store/_Output/
     - winsdk.log
+    expire_in: 8 days
+
+dist-mac-weekly:
+  extends: .default
+  rules:
+    - !reference [.macos-inhouse, rules]
+  needs: ["gimp-macos-inhouse"]
+  stage: distribution
+  tags:
+    - macos
+  script:
+    - sh build/macos/3_dist-gimp-apple.sh
+  artifacts:
+    expose_as: 'macOS dmg'
+    paths:
+      - build/macos/_Output/
     expire_in: 8 days
