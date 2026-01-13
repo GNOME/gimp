@@ -62,7 +62,7 @@ if get_option('webkit-unmaintained')
     'name': 'help-browser',
   }
 endif
-  
+
 if platform_windows and host_cpu_family == 'x86'
   complex_plugins_list += {
     'name': 'twain',
@@ -87,7 +87,7 @@ endforeach
 subdir('python')
 
 foreach plugin : python_plugins
-  if plugin.get('name').startswith('file-') 
+  if plugin.get('name').startswith('file-')
     all_plugins_sources += [ meson.current_source_dir() / 'python' / plugin.get('name') + '.py' ]
   endif
 endforeach
@@ -111,6 +111,20 @@ if get_option('windows-installer') or get_option('ms-store')
       python,
       meson.current_source_dir() / 'generate_mime_ext.py',
       '--association',
+      '@OUTPUT@',
+    ] + all_plugins_sources,
+    build_by_default: true
+  )
+endif
+
+if get_option('dmg')
+  custom_target('file_associations_mac',
+    input : all_plugins_sources,
+    output : 'file_associations_mac.list',
+    command : [
+      python,
+      meson.current_source_dir() / 'generate_mime_ext.py',
+      '--pseudo-uti',
       '@OUTPUT@',
     ] + all_plugins_sources,
     build_by_default: true
