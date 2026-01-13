@@ -257,10 +257,10 @@ bundle(GIMP_PREFIX, "lib/girepository-*/*.typelib")
 bundle(OPT_PREFIX, "lib/libgirepository-*.dylib")
 #### Python support
 bundle(OPT_PREFIX, f"bin/python{os.getenv('PYTHON_VERSION')}", "--rename", "MacOS/python3")
-if os.path.exists(OPT_PREFIX / "bin/port"):
-  bundle(OPT_PREFIX, f"Library/Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}", "--dest", "Frameworks/Python.framework/Versions")
-else: #os.path.exists(OPT_PREFIX / "bin/brew"):
+if os.path.exists(OPT_PREFIX / "bin/brew") or (os.path.exists(OPT_PREFIX / "bin/port") and os.getenv('GITLAB_CI')):
   bundle(OPT_PREFIX, f"Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}", "--dest", "Frameworks/Python.framework/Versions")
+elif os.path.exists(OPT_PREFIX / "bin/port"):
+  bundle(OPT_PREFIX, f"Library/Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}", "--dest", "Frameworks/Python.framework/Versions")
 bundle(OPT_PREFIX, f"lib/python{os.getenv('PYTHON_VERSION')}/site-packages/*", "--dest", f"Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/lib/python{os.getenv('PYTHON_VERSION')}/site-packages")
 clean(GIMP_DISTRIB, "Frameworks/Python.framework/*.pyc")
 #####Needed for internet connection on python. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/14722
@@ -318,7 +318,7 @@ for dir in ["MacOS", "Frameworks"]:
           subprocess.run(["dsymutil", binary, "-o", f"{binary}.dSYM"], check=True, stderr=subprocess.DEVNULL)
         except subprocess.CalledProcessError as e:
           sys.stderr.write(f"Failed to generate debug symbols from {binary}: {e}\n")
-      elif "unable to open object file" in result.stdout + result.stderr and not os.getenv("OPT_PREFIX") in result.stdout + result.stderr:
+      elif "unable to open object file" in result.stdout + result.stderr and not os.getenv("OPT_PREFIX") in result.stdout + result.stderr and "Python.framework" not in str(binary):
         print(f"\n\033[31m(ERROR)\033[0m: {binary} is orphaned from .o file for .dSYM generation. Please make sure its build dir is present")
         sys.exit(1)
 

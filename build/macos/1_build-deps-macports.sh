@@ -28,15 +28,31 @@ if [ -z "$OPT_PREFIX" ]; then
     exit 1
   fi
 fi
+export MACOSX_DEPLOYMENT_TARGET=$(awk '/LSMinimumSystemVersion/{found=1} found && /<string>/{gsub(/.*<string>|<\/string>.*/, ""); print; exit}' build/macos/Info.plist)
 if [ "$OPT_PREFIX" != '/opt/local' ] && [ "$OPT_PREFIX" != '/opt/homebrew' ]; then
+  echo "macosx_deployment_target ${MACOSX_DEPLOYMENT_TARGET}" | tee -a ${OPT_PREFIX}/etc/macports/macports.conf >/dev/null 2>&1 || true
   sed -i .bak "s/^#build_arch.*/build_arch $(uname -m)/" "${OPT_PREFIX}/etc/macports/macports.conf" >/dev/null 2>&1 || true
-fi
-export MACOSX_DEPLOYMENT_TARGET=$(awk '/LSMinimumSystemVersion/{found=1} found && /<string>/{gsub(/.*<string>|<\/string>.*/, ""); print; exit}' build/macos/Info.plist) #End of config
+fi #End of config
 
 printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by $( [ -f "$OPT_PREFIX/bin/port" ] && echo MacPorts || echo Homebrew )\n"
 if [ -f "$OPT_PREFIX/bin/port" ]; then
   eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync && eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port upgrade outdated
-  eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | xargs)
+  if [ -f 'macports.tar.gz' ]; then
+    bsdtar xf macports.tar.gz -C / || true
+  fi
+  if [ "$1" = '--part1' ]; then
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | awk '{print} /vala/{exit}' | xargs)
+  elif [ "$1" = '--part2' ]; then
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | awk '{print} /appstream/{exit}' | xargs)
+  else
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | xargs)
+  fi
+  if echo "$CI_JOB_NAME" | grep -q 'deps'; then
+    bsdtar -cf macports.tar.gz --gzip "$OPT_PREFIX" || true
+  fi
+  if echo "$1" | grep -q 'part'; then
+    exit 0
+  fi
   git apply -v build/macos/patches/0001-meson-Patch-python-version.patch || true
 else
   brew upgrade --quiet

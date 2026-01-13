@@ -32,7 +32,7 @@
     <string>public.app-category.photography</string>
     <!--keep LSMinimumSystemVersion consistent with devel-docs/os-support.txt-->
     <key>LSMinimumSystemVersion</key>
-    <string>14.0</string>
+    <string>11.0</string>
     <key>NSHighResolutionCapable</key>
     <true/>
     <key>NSRequiresAquaSystemAppearance</key>
