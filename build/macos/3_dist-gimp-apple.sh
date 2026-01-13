@@ -130,7 +130,8 @@ conf_plist "%BUNDLE_NAME%" "$BUNDLE_NAME"
 conf_plist "%GIMP_VERSION%" "$CUSTOM_GIMP_VERSION"
 #### Needed to differentiate on zsh etc
 conf_plist "%MUTEX_SUFFIX%" "$MUTEX_SUFFIX"
-### FIXME: Configure associations
+### List supported filetypes
+sed -i '' "s|%FILE_TYPES%|$(tr -d '\n' < $BUILD_DIR/plug-ins/file_associations_mac.list)|g" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Info.plist"
 
 ## 4.2 FIXME: Create .DS_Store to set .dmg background and icon layout
 printf '(INFO): generating .DS_Store\n'
