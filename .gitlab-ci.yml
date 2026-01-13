@@ -680,7 +680,8 @@ deps-macos-inhouse:
   extends: .macos-inhouse
   stage: dependencies
   script:
-    - sh build/macos/1_build-deps-macports.sh
+    # Do not call sh since it is old bash on macOS, not the default zsh
+    - zsh build/macos/1_build-deps-macports.sh
   artifacts:
     paths:
       - _install-*
@@ -696,7 +697,8 @@ gimp-macos-inhouse:
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
-    - sh build/macos/2_build-gimp-macports.sh
+    # Do not call sh since it is old bash on macOS, not the default zsh
+    - zsh build/macos/2_build-gimp-macports.sh
   artifacts:
     paths:
       - gimp-*.app
@@ -998,7 +1000,8 @@ dist-mac-weekly:
   tags:
     - macos
   script:
-    - sh build/macos/3_dist-gimp-apple.sh
+    # Do not call sh since it is old bash on macOS, not the default zsh
+    - zsh build/macos/3_dist-gimp-apple.sh
   artifacts:
     expose_as: 'macOS dmg'
     paths:
