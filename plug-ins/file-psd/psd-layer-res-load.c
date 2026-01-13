@@ -143,17 +143,13 @@ static gint     load_resource_unknown (const PSDlayerres     *res_a,
                                        GInputStream          *input,
                                        GError               **error);
 
+/*  Single layer resources */
 static gint     load_resource_ladj    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
                                        GInputStream          *input,
                                        GError               **error);
 
 static gint     load_resource_lpla    (const PSDlayerres     *res_a,
-                                       PSDlayer              *lyr_a,
-                                       GInputStream          *input,
-                                       GError               **error);
-
-static gint     load_resource_llnk    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
                                        GInputStream          *input,
                                        GError               **error);
@@ -169,11 +165,6 @@ static gint     load_resource_lfx     (const PSDlayerres     *res_a,
                                        GError               **error);
 
 static gint     load_resource_ltyp    (const PSDlayerres     *res_a,
-                                       PSDlayer              *lyr_a,
-                                       GInputStream          *input,
-                                       GError               **error);
-
-static gint     load_resource_ltxt    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
                                        GInputStream          *input,
                                        GError               **error);
@@ -218,6 +209,18 @@ static gint     load_resource_cinf    (const PSDlayerres     *res_a,
                                        GInputStream          *input,
                                        GError               **error);
 
+/*  Image resources */
+static gint     load_resource_llnk    (const PSDlayerres     *res_a,
+                                       PSDimage              *img_a,
+                                       GInputStream          *input,
+                                       GError               **error);
+
+static gint     load_resource_ltxt    (const PSDlayerres     *res_a,
+                                       PSDimage              *img_a,
+                                       GInputStream          *input,
+                                       GError               **error);
+
+/*  Other functions */
 static gint     parse_text_info       (guint32                len,
                                        gchar                 *buf,
                                        GError               **error);
@@ -439,9 +442,6 @@ load_layer_resource (PSDlayerres   *res_a,
       load_resource_ltyp (res_a, lyr_a, input, error);
     }
 
-  else if (memcmp (res_a->key, PSD_LOTH_TEXT_ENGINE, 4) == 0)
-    load_resource_ltxt (res_a, lyr_a, input, error);
-
   else if (memcmp (res_a->key, PSD_LPRP_UNICODE, 4) == 0)
     {
       load_resource_luni (res_a, lyr_a, input, error);
@@ -508,26 +508,57 @@ load_layer_resource (PSDlayerres   *res_a,
       load_resource_lpla (res_a, lyr_a, input, error);
     }
 
-  else if (memcmp (res_a->key, PSD_LLL_LINKED_LAYER, 4) == 0
-           || memcmp (res_a->key, PSD_LLL_LINKED_LAYER_2, 4) == 0
-           || memcmp (res_a->key, PSD_LLL_LINKED_LAYER_3, 4) == 0
-           || memcmp (res_a->key, PSD_LLL_LINKED_LAYER_EXT, 4) == 0)
-    {
-      if (lyr_a)
-        {
-          lyr_a->unsupported_features->linked_layer = TRUE;
-          lyr_a->unsupported_features->show_gui     = TRUE;
-        }
-
-      load_resource_llnk (res_a, lyr_a, input, error);
-    }
-
   else if (memcmp (res_a->key, PSD_LOTH_COMPOSITOR, 4) == 0)
     load_resource_cinf (res_a, lyr_a, input, error);
 
   else
     {
       load_resource_unknown (res_a, lyr_a, input, error);
+    }
+
+  if (error && *error)
+    return -1;
+
+  /* Set file position to end of layer resource block */
+  if (! psd_seek (input, res_a->data_start + res_a->data_len, G_SEEK_SET, error))
+    {
+      psd_set_error (error);
+      return -1;
+    }
+
+  return 0;
+}
+
+gint
+load_resource (PSDlayerres   *res_a,
+               PSDimage      *img_a,
+               GInputStream  *input,
+               GError       **error)
+{
+  /* Set file position to start of layer resource data block */
+  if (! psd_seek (input, res_a->data_start, G_SEEK_SET, error))
+    {
+      psd_set_error (error);
+      return -1;
+    }
+
+  /* Process global layer resource blocks */
+  if (memcmp (res_a->key, PSD_LOTH_TEXT_ENGINE, 4) == 0)
+    load_resource_ltxt (res_a, img_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LLL_LINKED_LAYER, 4) == 0   ||
+      memcmp (res_a->key, PSD_LLL_LINKED_LAYER_2, 4) == 0 ||
+      memcmp (res_a->key, PSD_LLL_LINKED_LAYER_3, 4) == 0 ||
+      memcmp (res_a->key, PSD_LLL_LINKED_LAYER_EXT, 4) == 0)
+    {
+      load_resource_llnk (res_a, img_a, input, error);
+    }
+
+  /* Other resources seen here: fxrp, Patt, FMsk */
+
+  else
+    {
+      load_resource_unknown (res_a, NULL, input, error);
     }
 
   if (error && *error)
@@ -724,7 +755,7 @@ get_link_type (gchar *lnk_type)
 
 static gint
 load_resource_llnk (const PSDlayerres     *res_a,
-                    PSDlayer              *lyr_a,
+                    PSDimage              *img_a,
                     GInputStream          *input,
                     GError               **error)
 {
@@ -1166,7 +1197,7 @@ load_resource_ltyp (const PSDlayerres  *res_a,
 }
 
 static gint load_resource_ltxt (const PSDlayerres  *res_a,
-                                PSDlayer           *lyr_a,
+                                PSDimage           *img_a,
                                 GInputStream       *input,
                                 GError            **error)
 {

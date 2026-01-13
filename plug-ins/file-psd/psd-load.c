@@ -1505,13 +1505,12 @@ read_layer_block (PSDimage      *img_a,
               }
             else
               {
-                /* FIXME Loading layer resources here to a specific layer is probably
-                 * not right. We need to figure out what to do instead.
-                 * Most likely these resources are not connected to a layer so
-                 * lyr_a being NULL should not matter. e.g. PATT (pattern)
-                 * e.g. 0layers.psb has resources when lyr_a == NULL
+                /* Although these resources are called layer resources, they
+                 * are not connected to a single layer. They seem to be
+                 * resources that can be used by multiple layers,
+                 * e.g. a pattern or a linked layer.
                  */
-                if (load_layer_resource (&res_a, NULL, input, error) < 0)
+                if (load_resource (&res_a, img_a, input, error) < 0)
                   {
                     return NULL;
                   }
