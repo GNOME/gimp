@@ -32,5 +32,10 @@ gint  load_layer_resource       (PSDlayerres   *res_a,
                                  GInputStream  *input,
                                  GError       **error);
 
+gint  load_resource             (PSDlayerres   *res_a,
+                                 PSDimage      *img_a,
+                                 GInputStream  *input,
+                                 GError       **error);
+
 
 #endif /* __PSD_LAYER_RES_LOAD_H__ */
