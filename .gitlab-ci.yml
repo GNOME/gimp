@@ -706,6 +706,7 @@ gimp-macos-inhouse:
       - _build*/done-dylib.list
       # Needed by dist-mac-weekly
       - _build-*/config.h
+      - _build-*/plug-ins/file_associations_mac.list
       - _build-*/gimp-data/images/logo/gimp-dmg.png
     expire_in: 2 days
 

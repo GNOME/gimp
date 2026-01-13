@@ -39,5 +39,30 @@
     <false/>
     <key>NLSRequiresNativeExecution</key>
     <true/>
+    <key>CFBundleDocumentTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>xcf</string>
+          <string>XCF</string>
+        </array>
+        <key>CFBundleTypeMIMETypes</key>
+        <array>
+          <string>image/x-xcf</string>
+        </array>
+        <key>CFBundleTypeIconFiles</key>
+        <array>
+          <string>fileicon-xcf.icns</string>
+        </array>
+        <key>CFBundleTypeName</key>
+        <string>eXperimental Computing Facility file</string>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>LSHandlerRank</key>
+        <string>Default</string>
+      </dict>
+      %FILE_TYPES%
+    </array>
   </dict>
 </plist>

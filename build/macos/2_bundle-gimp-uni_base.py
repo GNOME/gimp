@@ -141,6 +141,8 @@ shutil.copy2(Path(f"{GIMP_SOURCE}/build/macos/Info.plist"), GIMP_DISTRIB)
 ### FIXME: Icon (generate Assets.car for Liquid Glass)
 (GIMP_DISTRIB / "Resources").mkdir(parents=True, exist_ok=True)
 shutil.copy2(Path(f"{os.getenv('MESON_BUILD_ROOT')}/gimp-data/images/logo/gimp.icns"), GIMP_DISTRIB / "Resources/AppIcon.icns")
+shutil.copy2(Path(f"{os.getenv('MESON_BUILD_ROOT')}/build/macos/fileicon-xcf.icns"), GIMP_DISTRIB / "Resources/fileicon-xcf.icns")
+shutil.copy2(Path(f"{os.getenv('MESON_BUILD_ROOT')}/build/macos/fileicon.icns"), GIMP_DISTRIB / "Resources/fileicon.icns")
 
 
 ## BUNDLE BASE (BARE MINIMUM TO RUN GTK APPS).
