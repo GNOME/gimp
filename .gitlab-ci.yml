@@ -647,7 +647,7 @@ gimp-win-eol:
   artifacts: !reference [gimp-win, artifacts]
 
 
-## macOS pipelines (Homebrew) ##
+## macOS pipelines (MacPorts) ##
 .macos-inhouse:
   extends: .default
   rules:
@@ -658,13 +658,13 @@ gimp-win-eol:
     - macos
   variables:
     #FIXME: Our runner #926 (by MacStadium) do not have cache nor timeout for MacPorts builds
-    OPT_PREFIX: /opt/homebrew
+    OPT_PREFIX: /opt/macports
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
     DMG_OPTION: '-Ddmg=true'
   before_script:
     - export GIMP_PREFIX="$PWD/_install-$(uname -m)"
     - export PATH="$OPT_PREFIX/bin:$PATH"
-  timeout: 30m
+  timeout: 150m
 
 .macos_environ: &MAC_ENVIRON
 - printf "\e[0Ksection_start:`date +%s`:macos_environ[collapsed=true]\r\e[0KPreparing build environment\n"
@@ -676,14 +676,39 @@ gimp-win-eol:
 - export GI_TYPELIB_PATH="${GIMP_PREFIX}/lib/girepository-1.0:${OPT_PREFIX}/lib/girepository-1.0"
 - printf "\e[0Ksection_end:`date +%s`:macos_environ\r\e[0K\n"
 
+deps-macos-inhouse-part1:
+  extends: .macos-inhouse
+  stage: dependencies
+  script:
+    # Do not call sh since it is old bash on macOS, not the default zsh
+    - zsh build/macos/1_build-deps-macports.sh --part1
+  artifacts:
+    paths:
+      - macports.tar.gz
+    expire_in: 2 hours
+
+deps-macos-inhouse-part2:
+  extends: .macos-inhouse
+  needs: ["deps-macos-inhouse-part1"]
+  stage: dependencies
+  script:
+    # Do not call sh since it is old bash on macOS, not the default zsh
+    - zsh build/macos/1_build-deps-macports.sh --part2
+  artifacts:
+    paths:
+      - macports.tar.gz
+    expire_in: 2 hours
+
 deps-macos-inhouse:
   extends: .macos-inhouse
+  needs: ["deps-macos-inhouse-part2"]
   stage: dependencies
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
     - zsh build/macos/1_build-deps-macports.sh
   artifacts:
     paths:
+      - macports.tar.gz
       - _install-*
       # The full build dir is needed due to its .o for .dSYM creation on next job
       - babl/_build-*
