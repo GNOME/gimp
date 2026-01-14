@@ -322,7 +322,7 @@ get_layer_resource_header (PSDlayerres   *res_a,
         block_len_size = 8;
       else
         block_len_size = 4;
-      IFDBG(3) g_debug ("PSB: Using block_len_size %d", block_len_size);
+      IFDBG(4) g_debug ("PSB: Using block_len_size %d", block_len_size);
     }
 
   if (psd_read (input, &res_a->data_len, block_len_size, error) < block_len_size)
