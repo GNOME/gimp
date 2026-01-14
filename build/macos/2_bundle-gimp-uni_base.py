@@ -148,7 +148,7 @@ shutil.copy2(Path(f"{os.getenv('MESON_BUILD_ROOT')}/gimp-data/images/logo/gimp.i
 bundle(GIMP_SOURCE, "build/macos/patches/xdg-email", "--dest", "MacOS")
 ### Needed for file dialogs (only .compiled file is needed on macOS)
 bundle(OPT_PREFIX, "share/glib-*/schemas/gschemas.compiled")
-### Needed to open remote files
+### Mostly bogus since we do use macOS API directly from gimp to open remote files
 if os.path.exists(OPT_PREFIX / "bin/port"):
   bundle(OPT_PREFIX, "lib/libproxy/libpxbackend*.dylib", "--dest", "Frameworks")
 bundle(OPT_PREFIX, "lib/gio")
@@ -193,7 +193,7 @@ for lang in lang_array:
   # Needed for eventually used widgets, GTK inspector etc
   if glob(f"{OPT_PREFIX}/share/locale/{lang}/LC_MESSAGES/gtk*.mo"):
     bundle(OPT_PREFIX, f"share/locale/{lang}/LC_MESSAGES/gtk*.mo")
-  # For language list in text tool options
+  # FIXME: For language list in text tool options (not working)
   if glob(f"{OPT_PREFIX}/share/locale/{lang}/LC_MESSAGES/iso_639_3.mo"):
     bundle(OPT_PREFIX, f"share/locale/{lang}/LC_MESSAGES/iso_639_3.mo")
 bundle(GIMP_PREFIX, "etc/gimp")
