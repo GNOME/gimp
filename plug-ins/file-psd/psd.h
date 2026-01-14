@@ -717,6 +717,28 @@ typedef struct
   JsonNode                  *smart_object_data;
 } PSDSmartObject;
 
+#define LINK_TYPE_FILE_DATA 1
+#define LINK_TYPE_EXTERNAL  2
+#define LINK_TYPE_ALIAS     3
+
+typedef struct PSDLinkedData
+{
+  gint                  link_type;
+  gchar                *link_id;
+  gchar                *original_filename;
+  gchar                 file_type[4];      /* e.g. 8BPS, PNG */
+  gsize                 data_size;         /* Embedded files */
+  goffset               data_offset;
+  JsonNode             *external_file;
+  struct PSDLinkedData *next;
+} PSDLinkedData;
+
+typedef struct
+{
+  PSDLinkedData *linked_data;
+  PSDLinkedData *last;
+} PSDLinkedFiles;
+
 /* Partially or Unsupported Features */
 typedef struct
 {
@@ -813,6 +835,7 @@ typedef struct
 /* PSD File data structures */
 typedef struct
 {
+  GFile                *psd_file;               /* A copy of the GFile */
   gboolean              merged_image_only;      /* Whether to load only the merged image data */
 
   guint16               version;                /* Version 1 (PSD) or 2 (PSB) */
@@ -846,6 +869,7 @@ typedef struct
   guint16               alpha_id_count;         /* Number of alpha channel id items */
   guint16               quick_mask_id;          /* Channel number containing quick mask */
   gint32                global_light_angle;     /* Global Lighting Angle for Effect layers */
+  PSDLinkedFiles        linked_files;           /* A list of linked/embedded files */
 
   GimpColorProfile     *cmyk_profile;
   gpointer              cmyk_transform;
