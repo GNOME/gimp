@@ -179,6 +179,9 @@ load_image (GFile        *file,
   img_a.ibm_pc_format  = FALSE;
   img_a.cmyk_transform = img_a.cmyk_transform_alpha = NULL;
   img_a.cmyk_profile = NULL;
+  img_a.linked_files.linked_data = NULL;
+  img_a.linked_files.last = NULL;
+  img_a.psd_file = file;
 
   initialize_unsupported (unsupported_features);
   img_a.unsupported_features = unsupported_features;
@@ -367,6 +370,10 @@ load_image_metadata (GFile        *file,
   img_a.alpha_id_count      = 0;
   img_a.quick_mask_id       = 0;
   img_a.cmyk_profile        = NULL;
+  img_a.psd_file            = file;
+  img_a.linked_files.linked_data
+                            = NULL;
+  img_a.linked_files.last   = NULL;
 
   initialize_unsupported (unsupported_features);
   img_a.unsupported_features = unsupported_features;

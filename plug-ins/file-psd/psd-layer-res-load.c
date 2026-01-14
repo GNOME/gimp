@@ -736,10 +736,6 @@ load_resource_lpla (const PSDlayerres  *res_a,
   return 0;
 }
 
-#define LINK_TYPE_FILE_DATA 1
-#define LINK_TYPE_EXTERNAL  2
-#define LINK_TYPE_ALIAS     3
-
 static gint
 get_link_type (gchar *lnk_type)
 {
