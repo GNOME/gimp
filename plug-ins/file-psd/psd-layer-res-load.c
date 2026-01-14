@@ -755,20 +755,17 @@ load_resource_llnk (const PSDlayerres     *res_a,
                     GInputStream          *input,
                     GError               **error)
 {
-  gsize    data_size = 0, file_data_size = 0;
-  goffset  data_offset, link_data_offset, next_block_offset;
-  guint16  next_block_size = 0;
-  gchar    lnk_type[4]; /* 'liFD' linked file data, 'liFE' linked file external or 'liFA' linked file alias */
-  guint32  ver, desc_ver;
-  gchar   *uniqueID;
-  gchar   *original_filename;
-  gchar    file_type[4];
-  gchar    file_creator[4];
-  gboolean file_descriptor_present = 0;
-  gint32   bread, bwritten;
-  gint     link_type;
-  gint     li = 0;
-  gint     res;
+  gsize          data_size = 0;
+  goffset        link_data_offset, next_block_offset;
+  guint16        next_block_size = 0;
+  gchar          lnk_type[4]; /* 'liFD' linked file data, 'liFE' linked file external or 'liFA' linked file alias */
+  guint32        ver, desc_ver;
+  gchar          file_creator[4];
+  gboolean       file_descriptor_present = 0;
+  gint32         bread, bwritten;
+  gint           li = 0;
+  gint           res;
+  PSDLinkedData *link_data = NULL;
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: linked layer data.",
                     res_a->key);
@@ -795,40 +792,52 @@ load_resource_llnk (const PSDlayerres     *res_a,
 
       IFDBG(3) g_debug ("Next data block offset: %" G_GSIZE_FORMAT, link_data_offset + data_size + 8);
 
-      link_type = get_link_type ((gchar *) &lnk_type);
+      link_data = g_new0 (PSDLinkedData, 1);
+      if (img_a->linked_files.linked_data == NULL)
+        {
+          img_a->linked_files.linked_data = link_data;
+          img_a->linked_files.last = link_data;
+        }
+      else
+        {
+          img_a->linked_files.last->next = link_data;
+          img_a->linked_files.last = link_data;
+        }
+
+      link_data->link_type = get_link_type ((gchar *) &lnk_type);
+
       ver = GUINT32_FROM_BE (ver);
       IFDBG(3) g_debug ("Data size: %" G_GSIZE_FORMAT ", link type: %.4s, version %u", data_size, lnk_type, ver);
 
-      uniqueID = fread_pascal_string (&bread, &bwritten, 1, input, error);
-      if (! uniqueID)
+      link_data->link_id = fread_pascal_string (&bread, &bwritten, 1, input, error);
+      if (! link_data->link_id)
         {
           return -1;
         }
-      g_free (uniqueID);
-      IFDBG(3) g_debug ("Unique ID: %s", uniqueID);
+      IFDBG(3) g_debug ("Unique file ID: %s", link_data->link_id);
 
-      original_filename = fread_unicode_string (&bread, &bwritten, 1,
-                                                res_a->ibm_pc_format,
-                                                input, error);
-      if (! original_filename)
+      link_data->original_filename = fread_unicode_string (&bread, &bwritten, 1,
+                                                           res_a->ibm_pc_format,
+                                                           input, error);
+      if (! link_data->original_filename)
         {
           return -1;
         }
-      IFDBG(3) g_debug ("Original filename: %s", original_filename);
-      g_free (original_filename);
 
-      if (psd_read (input, &file_type,      4, error) < 4 ||
-          psd_read (input, &file_creator,   4, error) < 4 ||
-          psd_read (input, &file_data_size, 8, error) < 8 ||
+      IFDBG(3) g_debug ("Original filename: %s", link_data->original_filename);
+
+      if (psd_read (input, &link_data->file_type, 4, error) < 4 ||
+          psd_read (input, &file_creator,         4, error) < 4 ||
+          psd_read (input, &link_data->data_size, 8, error) < 8 ||
           psd_read (input, &file_descriptor_present, 1, error) < 1)
         {
           psd_set_error (error);
           return -1;
         }
-      file_data_size = GUINT64_FROM_BE (file_data_size);
+      link_data->data_size = GUINT64_FROM_BE (link_data->data_size);
       IFDBG(3) g_debug ("File type: %.4s, creator: %.4s, data length: %" G_GSIZE_FORMAT
                         ", file descriptor present: %u",
-                        file_type, file_creator, file_data_size,
+                        link_data->file_type, file_creator, link_data->data_size,
                         (guchar) file_descriptor_present);
 
       if (file_descriptor_present)
@@ -844,12 +853,13 @@ load_resource_llnk (const PSDlayerres     *res_a,
 
           IFDBG(4) g_debug ("Descriptor version: %u", desc_ver);
 
+          /* Doesn't look like this descriptor has anything we need. */
           res = load_descriptor (input, res_a->ibm_pc_format, NULL, error);
           if (res < 0)
             return -1;
           }
 
-      if (link_type == LINK_TYPE_EXTERNAL)
+      if (link_data->link_type == LINK_TYPE_EXTERNAL)
         {
           gint  external_desc_ver = 0;
           gsize filesize          = 0;
@@ -863,9 +873,25 @@ load_resource_llnk (const PSDlayerres     *res_a,
 
           IFDBG(4) g_debug ("External link descriptor version: %u", external_desc_ver);
 
-          res = load_descriptor (input, res_a->ibm_pc_format, NULL, error);
-          if (res < 0)
-            return -1;
+          /* Descriptor with 'ExternalFileLink', consisting of 5 items:
+           *   + 'descVersion' (version = 1)
+           *   + 'Nm  ' (filename)
+           *   + 'fullPath', e.g. file://...
+           *   + 'alis' (alias) unknown
+           *   + 'relPath', (just the filename, is a relative path also possible?)
+           */
+
+          if (parse_descriptor (input, res_a->ibm_pc_format, &link_data->external_file, error) == 0)
+            {
+              /* Print json for debugging... */
+              IFDBG(4) if (link_data->external_file)
+                         g_debug ("External link descriptor:\n%s\n",
+                                  json_to_string (link_data->external_file, TRUE));
+            }
+          else
+            {
+              return -1;
+            }
 
           if (ver > 3)
             {
@@ -897,27 +923,28 @@ load_resource_llnk (const PSDlayerres     *res_a,
 
           /* Specs say actual file data follows here, but that is incorrect. */
         }
-      else if (link_type == LINK_TYPE_FILE_DATA)
+      else if (link_data->link_type == LINK_TYPE_FILE_DATA)
         {
           /* Actual image data is included here, e.g. a complete PNG including headers etc. */
 
-          data_offset = PSD_TELL(input) + file_data_size;
+          link_data->data_offset = PSD_TELL(input) + link_data->data_size;
           IFDBG(3) g_debug ("Offset of included file data: %" G_GOFFSET_FORMAT
                             ", end offset: %" G_GOFFSET_FORMAT,
-                            PSD_TELL(input), data_offset);
+                            PSD_TELL(input), link_data->data_offset);
 
           /* FIXME Skip actual image data for now... */
-          if (! psd_seek (input, data_offset, G_SEEK_SET, error))
+          if (! psd_seek (input, link_data->data_offset, G_SEEK_SET, error))
             {
               psd_set_error (error);
               return -1;
             }
         }
-      else if (link_type == LINK_TYPE_ALIAS)
+      else if (link_data->link_type == LINK_TYPE_ALIAS)
         {
           gsize dummy = 0;
 
-          /* We don't have an example of this yet. No idea how to interpret. */
+          /* FIXME We don't have an example of this yet. No idea how to interpret. */
+          g_debug ("Skipping alias link\n");
 
           /* 8 zeros according to specs */
           if (psd_read (input, &dummy, 8, error) < 8)
@@ -967,7 +994,7 @@ load_resource_llnk (const PSDlayerres     *res_a,
           IFDBG(3) g_debug ("Locked state: %u", locked_state);
         }
 
-      if (link_type == LINK_TYPE_EXTERNAL && ver == 2)
+      if (link_data->link_type == LINK_TYPE_EXTERNAL && ver == 2)
         {
           /* FIXME Raw file data:
            * Weird: the specs don't say anything about the version earlier
@@ -989,7 +1016,7 @@ load_resource_llnk (const PSDlayerres     *res_a,
       IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
 
       link_data_offset = PSD_TELL(input);
-      if (link_type == LINK_TYPE_EXTERNAL)
+      if (link_data->link_type == LINK_TYPE_EXTERNAL)
         {
           if (psd_read (input, &data_size, 8, error) < 8)
             {
