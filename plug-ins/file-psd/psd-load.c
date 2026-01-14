@@ -124,6 +124,8 @@ static void             psd_to_gimp_color_map      (guchar         *map256);
 static GimpImageType    get_gimp_image_type        (GimpImageBaseType image_base_type,
                                                     gboolean          alpha);
 
+static void             free_linked_files_data     (PSDimage        *img_a);
+
 static void             free_lyr_a                 (PSDlayer      **lyr_a,
                                                     gint            layer_count);
 
@@ -305,6 +307,7 @@ load_image (GFile        *file,
   IFDBG(2) g_debug ("Close file & return, image id: %d", gimp_image_get_id (image));
   IFDBG(1) g_debug ("\n----------------------------------------"
                     "----------------------------------------\n");
+  free_linked_files_data (&img_a);
 
   gimp_image_clean_all (image);
   gimp_image_undo_enable (image);
@@ -319,6 +322,8 @@ load_image (GFile        *file,
                    _("Error loading PSD file: %s"), error->message);
       g_error_free (error);
     }
+
+  free_linked_files_data (&img_a);
 
   /* Delete partially loaded image */
   if (image)
@@ -508,6 +513,8 @@ load_image_metadata (GFile        *file,
     }
 
   g_object_unref (input);
+
+  free_linked_files_data (&img_a);
 
   return image;
 }
@@ -764,6 +771,29 @@ read_image_resource_block (PSDimage      *img_a,
     }
 
   return 0;
+}
+
+static void
+free_linked_files_data (PSDimage *img_a)
+{
+  if (img_a->linked_files.linked_data)
+    {
+      PSDLinkedData *temp;
+
+      temp = img_a->linked_files.linked_data;
+      while (temp)
+        {
+          PSDLinkedData *temp2;
+
+          temp2 = temp;
+          temp  = temp->next;
+
+          g_free (temp2->link_id);
+          g_free (temp2->original_filename);
+          g_free (temp2->external_file);
+          g_free (temp2);
+        }
+    }
 }
 
 static void
