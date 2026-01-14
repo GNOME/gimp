@@ -98,6 +98,10 @@ static void             add_layer_effects          (GimpLayer      *layer,
                                                     PSDlayer       *lyr_a,
                                                     PSDimage       *img_a);
 
+static GimpLayer      * get_linked_layer           (GimpImage      *image,
+                                                    PSDlayer       *lyr_a,
+                                                    PSDimage       *img_a);
+
 static gint             add_merged_image           (GimpImage      *image,
                                                     PSDimage       *img_a,
                                                     GInputStream   *input,
@@ -2098,6 +2102,7 @@ add_layers (GimpImage     *image,
   gboolean              user_mask;
   gboolean              empty;
   gboolean              empty_mask;
+  gboolean              no_draw_layer;
   GeglBuffer           *buffer;
   GimpImageType         image_type;
   LayerModeInfo         mode_info;
@@ -2510,9 +2515,20 @@ add_layers (GimpImage     *image,
           image_type = get_gimp_image_type (img_a->base_type, TRUE);
           IFDBG(3) g_debug ("Layer type %d", image_type);
 
-          layer = gimp_layer_new (image, lyr_a[lidx]->name,
-                                  l_w, l_h, image_type,
-                                  100, GIMP_LAYER_MODE_NORMAL);
+          if (lyr_a[lidx]->smart_object.smart_object_data &&
+              img_a->linked_files.linked_data)
+            {
+              /* Creates external link layer. Does not work yet for
+               * embedded images. */
+              layer = get_linked_layer (image, lyr_a[lidx], img_a);
+            }
+          no_draw_layer = (layer != NULL);
+
+          if (! layer)
+            layer = gimp_layer_new (image, lyr_a[lidx]->name,
+                                    l_w, l_h, image_type,
+                                    100, GIMP_LAYER_MODE_NORMAL);
+
         }
 
       if (layer != NULL)
@@ -2601,7 +2617,7 @@ add_layers (GimpImage     *image,
             }
 
           /* Set the layer data */
-          if (lyr_a[lidx]->group_type == 0)
+          if (lyr_a[lidx]->group_type == 0 && ! no_draw_layer)
             {
               IFDBG(3) g_debug ("Draw layer");
 
@@ -3096,6 +3112,42 @@ get_json_color (JsonReader *reader, const Babl *space)
   return color;
 }
 
+static gboolean
+get_json_dimensions (JsonReader *reader, gdouble *width, gdouble *height)
+{
+  gboolean result = TRUE;
+
+  if (json_reader_read_member (reader, "descriptor"))
+    {
+      gint cnt = json_reader_count_elements (reader);
+      gint i;
+
+      for (i = 0; i < cnt; i++)
+        {
+          if (json_reader_read_element (reader, i))
+            {
+              JsonReader  *dim_reader = json_reader_new (json_reader_get_current_node (reader));
+              const gchar *key        = get_json_string (dim_reader, "key", "");
+
+              if (json_string_equal (key, "Wdth"))
+                *width = get_json_double (dim_reader, "value", 0.0);
+              else if (json_string_equal (key, "Hght"))
+                *height = get_json_double (dim_reader, "value", 0.0);
+
+              g_object_unref (dim_reader);
+            }
+          json_reader_end_element (reader);
+        }
+    }
+  else
+    {
+      result = FALSE;
+    }
+  json_reader_end_member (reader);
+
+  return result;
+}
+
 #define PS_INNERSHADOW 0
 #define PS_DROPSHADOW  1
 #define PS_OUTERGLOW   2
@@ -3547,6 +3599,173 @@ add_layer_effects (GimpLayer *layer,
       json_reader_end_member (root_reader);
       g_object_unref (root_reader);
     }
+}
+
+static GimpLayer *
+get_linked_layer (GimpImage *image,
+                  PSDlayer  *lyr_a,
+                  PSDimage  *img_a)
+{
+  GimpLayer *layer = NULL;
+
+  if (lyr_a->smart_object.smart_object_data)
+    {
+      JsonReader    *reader  = NULL;
+      gchar         *file_id = NULL;
+      gdouble        width   = 0.0;
+      gdouble        height  = 0.0;
+      PSDLinkedData *data    = NULL;
+
+      /* Get the ID of the file we're looking for. */
+
+      reader = json_reader_new (lyr_a->smart_object.smart_object_data);
+      if (json_reader_read_member (reader, "descriptor"))
+        {
+          gint         cnt     = json_reader_count_elements (reader);
+          gint         i;
+
+          /* Keys we are going to start with:
+           * 'Idnt' - unique identifier (TEXT)
+           * 'Sz  ' - dimensions, descriptor with subkeys 'Wdth' and 'Hght' of type double
+           * Maybe:
+           * 'Rslt' - probably resolution, double, values seen: 144.0, 72.0
+           */
+
+          for (i = 0; i < cnt; i++)
+            {
+              if (json_reader_read_element (reader, i))
+                {
+                  /* Since each element is an object, we need to init a new reader. */
+                  JsonReader  *obj_reader = json_reader_new (json_reader_get_current_node (reader));
+                  const gchar *key        = get_json_string (obj_reader, "key", "");
+
+                  if (json_string_equal (key, "Idnt"))
+                    {
+                      file_id = g_strdup (get_json_string (obj_reader, "value", ""));
+                    }
+                  else if (json_string_equal (key, "Sz  "))
+                    {
+                      if (! get_json_dimensions (obj_reader, &width, &height))
+                        g_debug ("WARNING: Could not read dimensions!");
+                    }
+                }
+              else
+                {
+                  const GError *error = json_reader_get_error (reader);
+
+                  g_debug ("Array index %d. Unable to read element: %s", i, error->message);
+                  break;
+                }
+              json_reader_end_element (reader);
+            }
+        }
+      else
+        {
+          g_debug ("Failed to read linked layer descriptor!");
+        }
+      IFDBG(3) g_debug ("Linked File ID: %s, dimensions: %.0fx%.0f", file_id, width, height);
+
+      json_reader_end_member (reader);
+      g_object_unref (reader);
+
+      data = img_a->linked_files.linked_data;
+      while (data && g_strcmp0 (data->link_id, file_id) != 0)
+        data = data->next;
+      g_free (file_id);
+
+      if (data)
+        {
+          /* found the right one*/
+          if (data->link_type == LINK_TYPE_EXTERNAL)
+            {
+              gchar    *full  = NULL;
+              gchar    *rel   = NULL;
+              gboolean  found = FALSE;
+              /* External file: determine if it exists, either at the full
+               * path specified, or alternatively in the same location as
+               * the current file. */
+
+              reader = json_reader_new (data->external_file);
+              if (json_reader_read_member (reader, "descriptor"))
+                {
+                  gint cnt = json_reader_count_elements (reader);
+                  gint i;
+
+                  for (i = 0; i < cnt; i++)
+                    {
+                      if (json_reader_read_element (reader, i))
+                        {
+                          /* Since each element is an object, we need to init a new reader. */
+                          JsonReader  *obj_reader = json_reader_new (json_reader_get_current_node (reader));
+                          const gchar *key        = get_json_string (obj_reader, "key", "");
+
+                          if (json_string_equal (key, "fullPath"))
+                            full = g_strdup (get_json_string (obj_reader, "value", ""));
+                          else if (json_string_equal (key, "relPath"))
+                            rel = g_strdup (get_json_string (obj_reader, "value", ""));
+
+                          g_object_unref (obj_reader);
+                        }
+                      else
+                        {
+                          const GError *error = json_reader_get_error (reader);
+
+                          g_debug ("Array index %d. Unable to read element: %s", i, error->message);
+                          break;
+                        }
+                      json_reader_end_element (reader);
+                      if (full && rel)
+                        break;
+                    }
+                }
+              json_reader_end_member (reader);
+
+              if (full)
+                {
+                  /* Check if file exists at specified absolute path. */
+                  GFile *file = g_file_new_for_uri (full);
+
+                  if (g_file_query_exists (file, NULL))
+                    {
+                      found = TRUE;
+                      layer = GIMP_LAYER (gimp_link_layer_new (image, file));
+                      IFDBG(3) g_debug ("Link layer created for external image %s",
+                                        gimp_file_get_utf8_name (file));
+                    }
+                  g_object_unref (file);
+                }
+              if (! found && rel)
+                {
+                  /* Check if file exists at path relative to the main psd. */
+                  gchar *path      = NULL;
+                  gchar *full_path = NULL;
+                  GFile *rel_file;
+
+                  path = g_path_get_dirname (g_file_get_parse_name (img_a->psd_file));
+                  if (path)
+                    {
+                      full_path = g_build_filename (path, rel, NULL);
+                      rel_file = g_file_new_for_path (full_path);
+                      g_free (full_path);
+                      if (g_file_query_exists (rel_file, NULL))
+                        {
+                          layer = GIMP_LAYER (gimp_link_layer_new (image, rel_file));
+                          IFDBG(3) g_debug ("Link layer created for external image %s",
+                                            gimp_file_get_utf8_name (rel_file));
+                        }
+                      g_object_unref (rel_file);
+                    }
+                  g_free (path);
+                }
+            }
+          else
+            {
+              IFDBG(3) g_debug ("Non external file link (original file '%s'): skipped for now",
+                                 data->original_filename);
+            }
+        }
+    }
+  return layer;
 }
 
 static gint
