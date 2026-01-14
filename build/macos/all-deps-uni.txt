@@ -40,7 +40,7 @@ libwmf -x11|homebrew:libwmf \
 mypaint-brushes|homebrew:mypaint-brushes \
 openexr \
 openjpeg \
-pango +quartz -x11 \
+pango +thai +quartz -x11 \
 poppler|homebrew:poppler \
 poppler-data \
 python313|homebrew:python \ py313-certifi|homebrew:certifi
