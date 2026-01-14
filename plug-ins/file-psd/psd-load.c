@@ -2097,6 +2097,8 @@ add_layers (GimpImage     *image,
   for (lidx = 0; lidx < img_a->num_layers; ++lidx)
     {
       IFDBG(2) g_debug ("Process Layer No %d (%s).", lidx, lyr_a[lidx]->name);
+      layer = NULL;
+      mask = NULL;
 
       /* Empty layer */
       if (lyr_a[lidx]->bottom - lyr_a[lidx]->top == 0
