@@ -563,7 +563,8 @@ gimp_text_layer_set (GimpTextLayer *layer,
   g_object_set_valist (G_OBJECT (text), first_property_name, var_args);
   va_end (var_args);
 
-  gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
+  if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
+    gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
 
   g_object_thaw_notify (G_OBJECT (layer));
 
