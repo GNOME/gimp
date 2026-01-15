@@ -424,9 +424,6 @@ gimp_macos_setenv (const char * progname)
       g_free (bin_dir);
       g_setenv ("PATH", path, TRUE);
       g_free (path);
-      tmp = g_strdup_printf ("%s/babl-0.1", lib_dir);
-      g_setenv ("BABL_PATH", tmp, TRUE);
-      g_free (tmp);
       tmp = g_strdup_printf ("%s/gegl-0.4", lib_dir);
       g_setenv ("GEGL_PATH", tmp, TRUE);
       g_free (tmp);
