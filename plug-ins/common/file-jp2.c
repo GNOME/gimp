@@ -333,7 +333,7 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_double_argument (procedure, "quality",
                                           _("_Quality"),
                                           _("Quality of exported image"),
-                                          0.0, 1.0, 0.9,
+                                          1.0, 100.0, 90.0,
                                           G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "ict",
@@ -421,7 +421,7 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_double_argument (procedure, "quality",
                                           _("_Quality"),
                                           _("Quality of exported image"),
-                                          0.0, 1.0, 0.9,
+                                          1.0, 100.0, 90.0,
                                           G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "ict",
@@ -1286,7 +1286,7 @@ export_dialog (GimpProcedure         *procedure,
 
   /* Quality as a GimpScaleEntry. */
   gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
-                                        "quality", 100.0);
+                                        "quality", 1.0);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "quality", "ict",
                               NULL);
@@ -1925,6 +1925,8 @@ export_image (GFile          *file,
   /* Quality of 0 is lossless */
   parameters.tcp_distoratio[0] = (quality == 100.0) ? 0 : quality;
   parameters.tcp_numlayers     = 1;
+  if (parameters.tcp_distoratio[0] > 0.0f)
+    parameters.cp_fixed_quality = 1;
 
   /* Encoding */
   if (! opj_setup_encoder (codec, &parameters, jp2_image))
