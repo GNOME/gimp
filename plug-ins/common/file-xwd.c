@@ -1717,7 +1717,7 @@ load_xwd_f2_d16_b16 (GFile           *file,
       if (offset+2 >= maxval)
         {
           g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                        _("Invalid colormap offset. Possibly corrupt image."));
+                       _("Invalid colormap offset. Possibly corrupt image."));
           return NULL;
         }
       cm = ColorMap + offset;
