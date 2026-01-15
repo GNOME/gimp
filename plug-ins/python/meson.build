@@ -49,9 +49,15 @@ if (platform_windows or platform_osx) and not meson.is_cross_build() and python.
     install_data('pygimp_win.interp',
       install_dir: gimpplugindir / 'interpreters',
     )
-  else
-    # A 'python3' symlink is created on macOS.
-    python_config.set('PYTHON_EXE', 'python3')
+  elif platform_osx
+    # python* is needed to run plug-ins with right build-time interpreter when non-relocatable
+    if not relocatable_bundle
+      python_config.set('PYTHON_EXE', python.path())
+
+    # python3 is needed to run plug-ins with right bundled interpreter when relocatable
+    else
+      python_config.set('PYTHON_EXE', 'python3')
+    endif
   endif
 
   configure_file(input : 'pygimp.interp.in',
