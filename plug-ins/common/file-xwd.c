@@ -1712,7 +1712,15 @@ load_xwd_f2_d16_b16 (GFile           *file,
 
   for (j = 0; j < ncols; j++)
     {
-      cm = ColorMap + xwdcolmap[j].l_pixel * 3;
+      goffset offset = xwdcolmap[j].l_pixel * 3;
+
+      if (offset+2 >= maxval)
+        {
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                        _("Invalid colormap offset. Possibly corrupt image."));
+          return NULL;
+        }
+      cm = ColorMap + offset;
       *(cm++) = (xwdcolmap[j].l_red >> 8);
       *(cm++) = (xwdcolmap[j].l_green >> 8);
       *cm = (xwdcolmap[j].l_blue >> 8);
