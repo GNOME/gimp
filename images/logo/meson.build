@@ -414,6 +414,21 @@ if platform_osx and get_option('dmg')
                                 build_by_default: true,
                                 env: gimp_run_env)
 
+  ## .VolumeIcon.icns (macOS) ##
+  gen_gimp_dmg_icns_py = configure_file(input : 'gen-gimp-dmg-icns.py.in',
+                                        output : 'gen-gimp-dmg-icns.py',
+                                        configuration : gen_conf)
+  gimp_dmg_icns = custom_target('.VolumeIcon.icns',
+                                input : [ gen_gimp_dmg_icns_py ],
+                                depend_files: [ 'gimp-logo.svg', 'dmg-base.svg' ],
+                                depends: [ fileicon_icns ],
+                                output: [ '.VolumeIcon.icns' ],
+                                command: [ gimp_exe,'-nidfs',
+                                           '--batch-interpreter', 'python-fu-eval',
+                                           '-b', '-', '--quit'],
+                                feed: true,
+                                build_by_default: true,
+                                env: gimp_run_env)
 
   ## gimp-dmg.png (macOS) ##
   gen_gimp_dmg_py = configure_file(input : 'gen-gimp-dmg.py.in',
@@ -422,7 +437,7 @@ if platform_osx and get_option('dmg')
   gimp_dmg = custom_target('gimp-dmg.png',
                            input : [ gen_gimp_dmg_py ],
                            depend_files: [ 'gimp-logo-shadow.svg', '../macos/gimp-dmg.xcf.xz' ],
-                           depends: [ fileicon_icns ],
+                           depends: [ gimp_dmg_icns ],
                            output: [ 'gimp-dmg.png' ],
                            command: [ gimp_exe,'-nidfs',
                                       '--batch-interpreter', 'python-fu-eval',

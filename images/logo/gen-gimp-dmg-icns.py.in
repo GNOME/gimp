@@ -1,0 +1,59 @@
+import os
+import sys
+
+gi.require_version('Gegl', '0.4')
+from gi.repository import Gegl
+
+dmg_base    = '@SRCDIR@/dmg-base.svg'
+logo        = '@SRCDIR@/gimp-logo.svg'
+output_path = '@BUILDDIR@/../../../build/macos/.VolumeIcon.icns'
+sizes       = [ 16, 18, 24, 32, 36, 48, 64, 128, 256, 512, 1024 ]
+
+image_size = max(sizes)
+image = Gimp.Image.new(image_size, image_size, Gimp.ImageBaseType.RGB)
+image.undo_disable()
+
+for size in sizes:
+  procedure   = Gimp.get_pdb().lookup_procedure("file-svg-load")
+  config      = procedure.create_config()
+
+  # 1. Loading the "HDD Volume" SVG base.
+  config.set_property("file", Gio.file_new_for_path(dmg_base))
+  base_size = size
+  config.set_property("width",  base_size)
+  config.set_property("height", base_size)
+  v = Gimp.Procedure.run(procedure, config)
+  if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+    sys.exit(70)
+  tmp_image = v.index(1)
+  drawables = tmp_image.get_selected_drawables()
+  layer = Gimp.Layer.new_from_drawable (drawables[0], image)
+  image.insert_layer(layer, None, 0)
+  tmp_image.delete()
+
+  # 2. Loading Wilber.
+  config.set_property("file", Gio.file_new_for_path(logo))
+  wilber_size = base_size * 9 / 17
+  config.set_property("width",  wilber_size)
+  config.set_property("height", wilber_size)
+  v = Gimp.Procedure.run(procedure, config)
+  if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+    sys.exit(70)
+  tmp_image = v.index(1)
+  drawables = tmp_image.get_selected_drawables()
+  layer2 = Gimp.Layer.new_from_drawable (drawables[0], image)
+  image.insert_layer(layer2, None, 0)
+  layer2.set_offsets((base_size - wilber_size) * 15 / 32, (base_size - wilber_size) * 15 / 40)
+  tmp_image.delete()
+
+  # 3. Merging the hdd design and Wilber on top.
+  image.merge_down(layer2, Gimp.MergeType.CLIP_TO_IMAGE)
+
+procedure = Gimp.get_pdb().lookup_procedure("file-icns-export")
+config    = procedure.create_config()
+drawables = image.get_selected_drawables()
+config.set_property("image", image)
+config.set_property("file", Gio.file_new_for_path(output_path))
+v = Gimp.Procedure.run(procedure, config)
+if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+  sys.exit(70)
