@@ -754,6 +754,7 @@ gimp-macos-inhouse:
       - _build-*/config.h
       - _build-*/plug-ins/file_associations_mac.list
       - _build-*/gimp-data/images/logo/gimp-dmg.png
+      - _build-*/build/macos/.VolumeIcon.icns
     expire_in: 2 days
 
 

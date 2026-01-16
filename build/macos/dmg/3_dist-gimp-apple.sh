@@ -155,8 +155,8 @@ tell application "Finder"
         set current view of container window to icon view
         set arrangement of icon view options of container window to not arranged
         set icon size of icon view options of container window to 110
-        set position of item "$BUNDLE_NAME.app" of container window to {97, 282}
-        set position of item "Applications" of container window to {353, 282}
+        set position of item "$BUNDLE_NAME.app" of container window to {192, 351}
+        set position of item "Applications" of container window to {448, 351}
         set position of item ".background" of container window to {0, 0}
         set position of item ".fseventsd" of container window to {450, 0}
         update without registering applications
@@ -168,6 +168,12 @@ bsdtar -cf build/macos/dmg/DS_Store.tar.xz --xz --options compression-level=9 -C
 printf "(INFO): Generated .DS_Store file. If it have a new layout, please commit it on 'build/macos/dmg/'.\n"
 fi
 bsdtar -xf build/macos/dmg/DS_Store.tar.xz -C "$DMG_MOUNT" .DS_Store
+
+## 4.3 Set custom .VolumeIcon.icns
+printf '(INFO): copying .VolumeIcon.icns\n'
+cp "$BUILD_DIR/build/macos/.VolumeIcon.icns" "$DMG_MOUNT"
+SetFile -c icnC "$DMG_MOUNT/.VolumeIcon.icns"
+SetFile -a C "$DMG_MOUNT"
 hdiutil detach "$DMG_MOUNT"
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K\n"
 
