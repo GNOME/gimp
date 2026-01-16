@@ -145,6 +145,7 @@ tell application "Finder"
         set bounds of container window to {1, 1, 641, 512}
         set background picture of icon view options of container window to POSIX file "$DMG_MOUNT/.background/gimp-dmg.png"
         set toolbar visible of container window to false
+        set pathbar visible of container window to false
         set statusbar visible of container window to false
         -- icons
         set current view of container window to icon view
