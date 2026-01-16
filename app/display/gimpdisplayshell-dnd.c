@@ -51,6 +51,7 @@
 #include "path/gimppath.h"
 #include "path/gimppath-import.h"
 #include "path/gimpvectorlayer.h"
+#include "path/gimpvectorlayeroptions.h"
 
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
@@ -395,20 +396,21 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
           return;
         }
 
+      /* We can drop colors on text layers, and colors and patterns on
+       * vector layers to change their fill. Otherwise, we want to prevent
+       * destructive fills on non-rasterized layers */
       if (gimp_item_is_rasterizable (GIMP_ITEM (iter->data)) &&
           ! gimp_item_is_rasterized (GIMP_ITEM (iter->data)))
         {
           gchar *menu_path = _("Layer > Rasterize");
           gchar *message   = NULL;
 
-          if (gimp_item_is_text_layer (GIMP_ITEM (iter->data)))
-            message = g_strdup_printf (_("Text layers must be rasterized (%s)."),
-                                       menu_path);
-          else if (gimp_item_is_link_layer (GIMP_ITEM (iter->data)))
+          if (gimp_item_is_link_layer (GIMP_ITEM (iter->data)))
             message = g_strdup_printf (_("Link layers must be rasterized (%s)."),
                                        menu_path);
-          else if (gimp_item_is_vector_layer (GIMP_ITEM (iter->data)))
-            message = g_strdup_printf (_("Vector layers must be rasterized (%s)."),
+          else if (gimp_item_is_text_layer (GIMP_ITEM (iter->data)) &&
+                   gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_PATTERN)
+            message = g_strdup_printf (_("Text layers must be rasterized (%s)."),
                                        menu_path);
 
           if (message)
@@ -418,10 +420,11 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
                                     GIMP_MESSAGE_ERROR,
                                     message);
               g_free (message);
+              gimp_tools_blink_item (shell->display->gimp,
+                                     GIMP_ITEM (iter->data));
+              g_list_free (drawables);
+              return;
             }
-          gimp_tools_blink_item (shell->display->gimp, GIMP_ITEM (iter->data));
-          g_list_free (drawables);
-          return;
         }
     }
 
@@ -432,20 +435,52 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
       /* FIXME: there should be a virtual method for this that the
        *        GimpTextLayer can override.
        */
-      if (gimp_item_is_text_layer (iter->data) &&
-          (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_FG_COLOR ||
-           gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_BG_COLOR))
+      if (gimp_item_is_text_layer (iter->data) ||
+          gimp_item_is_vector_layer (iter->data))
         {
-          GeglColor *color;
+          GimpVectorLayerOptions *vector_options = NULL;
+          GimpFillOptions        *vector_fill    = NULL;
+          GimpPattern            *pattern        = NULL;
+          GeglColor              *color          = NULL;
+
+          if (gimp_item_is_vector_layer (iter->data))
+            vector_options = gimp_vector_layer_get_options (iter->data);
+          if (vector_options)
+            vector_fill = vector_options->fill_options;
 
           if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_FG_COLOR)
             color = gimp_context_get_foreground (GIMP_CONTEXT (options));
-          else
+          else if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_BG_COLOR)
             color = gimp_context_get_background (GIMP_CONTEXT (options));
+          else
+            pattern = gimp_context_get_pattern (GIMP_CONTEXT (options));
 
-          gimp_text_layer_set (iter->data, NULL,
-                               "color", color,
-                               NULL);
+          if (color)
+            {
+              if (vector_fill)
+                {
+                  gimp_context_set_foreground (GIMP_CONTEXT (vector_fill),
+                                               color);
+                  gimp_fill_options_set_custom_style (vector_fill,
+                                                      GIMP_CUSTOM_STYLE_SOLID_COLOR);
+                  gimp_vector_layer_refresh (iter->data);
+                }
+              else
+                {
+                  gimp_text_layer_set (iter->data, NULL, "color", color, NULL);
+                }
+            }
+          else if (pattern)
+            {
+              if (vector_fill)
+                {
+                  gimp_context_set_pattern (GIMP_CONTEXT (vector_fill),
+                                            pattern);
+                  gimp_fill_options_set_custom_style (vector_fill,
+                                                      GIMP_CUSTOM_STYLE_PATTERN);
+                  gimp_vector_layer_refresh (iter->data);
+                }
+            }
         }
       else
         {
