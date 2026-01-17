@@ -402,6 +402,9 @@ load_layer_resource (PSDlayerres   *res_a,
       load_resource_lfx (res_a, lyr_a, input, error);
     }
 
+  else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)
+    load_resource_lrfx (res_a, lyr_a, input, error);
+
   else if (memcmp (res_a->key, PSD_LTYP_TYPE, 4) == 0
            || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
     {
@@ -558,6 +561,27 @@ load_resource_lfx (const PSDlayerres  *res_a,
                    GError            **error)
 {
   /* Load layer effects */
+
+  if (memcmp (res_a->key, PSD_LFX_FX2, 4) == 0)
+    {
+      guint32 oe_version, desc_version;
+      gint32  res;
+
+      if (psd_read (input, &oe_version, 4, error) < 4 ||
+          psd_read (input, &desc_version, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      oe_version   = GUINT32_FROM_BE (oe_version);
+      desc_version = GUINT32_FROM_BE (desc_version);
+
+      IFDBG(3) g_debug ("Objects based effects layer info: object effects version: %u, descriptor version: %u", oe_version, desc_version);
+
+      res = load_descriptor (res_a, lyr_a, input, error);
+      if (res < 0)
+        return res;
+    }
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Layer effects", res_a->key);
 
@@ -825,8 +849,10 @@ load_resource_lrfx (const PSDlayerres  *res_a,
       psd_set_error (error);
       return -1;
     }
-
+  ls_a->version = GUINT16_TO_BE (ls_a->version);
   ls_a->count = GUINT16_TO_BE (ls_a->count);
+  IFDBG(3) g_debug ("Version %u, count %u", ls_a->version, ls_a->count);
+
   for (i = 0; i < ls_a->count; i++)
     {
       if (psd_read (input, &signature,  4, error) < 4 ||
@@ -836,6 +862,7 @@ load_resource_lrfx (const PSDlayerres  *res_a,
           return -1;
         }
       effectname[4] = '\0';
+      IFDBG(3) g_debug ("Signature: %.4s, Effect name: %s", signature, effectname);
 
       /* Not sure if 8B64 is possible here but it won't hurt to check. */
       if (memcmp (signature, "8BIM", 4) != 0 &&
@@ -855,6 +882,9 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                   psd_set_error (error);
                   return -1;
                 }
+              IFDBG(3) g_debug ("cmnS (common state info) - size %u, version %u, visible: %u",
+                                GUINT32_TO_BE (ls_a->cmns.size), GUINT32_TO_BE (ls_a->cmns.ver),
+                                ls_a->cmns.visible );
             }
           else if (memcmp (effectname, "dsdw", 4) == 0 ||
                    memcmp (effectname, "isdw", 4) == 0)
@@ -895,6 +925,18 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                                                   GINT16_TO_BE (temp[5]));
               shadow->distance  = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[6]),
                                                   GUINT16_TO_BE (temp[7]));
+
+              IFDBG(3)
+                g_debug ("%s - size %u, version %u, effect enabled: %u, "
+                         "blur (pixels): %f, intensity (pct): %f, angle (degrees): %f, distance (pixels): %f, "
+                         "blendsig: %.4s, effect: %.4s, reuse angle: %u, opacity: %u",
+                         effectname,
+                         shadow->size, shadow->ver,
+                         shadow->effecton,
+                         shadow->blur, shadow->intensity,
+                         shadow->angle, shadow->distance,
+                         bim, shadow->blendsig,
+                         shadow->anglefx, shadow->opacity);
 
               if (shadow->ver == 2)
                 {
@@ -937,6 +979,13 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                                                      GUINT16_TO_BE (temp[1]));
               ls_a->oglw.intensity = FIXED_TO_FLOAT (GUINT16_TO_BE (temp[2]),
                                                      GUINT16_TO_BE (temp[3]));
+              IFDBG(3) g_debug ("oglw - size %u, version %u, effect enabled: %u, "
+                                "blur (pixels): %u, intensity (pct): %u, "
+                                "blendsig: %.4s, effect %.4s",
+                                ls_a->oglw.size, GUINT32_TO_BE (ls_a->oglw.ver),
+                                ls_a->oglw.effecton,
+                                ls_a->oglw.blur, ls_a->oglw.intensity,
+                                ls_a->oglw.blendsig, (gchar *) &ls_a->oglw.effect );
 
               if (ls_a->oglw.size == 42)
                 {
@@ -972,6 +1021,11 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                 }
 
               ls_a->iglw.size = GUINT32_TO_BE (ls_a->iglw.size);
+              IFDBG(3) g_debug ("iglw - size %u, version %u, effect enabled: %u, blur (pixels): %u, intensity (pct): %u, blendsig: %.4s, effect %.4s",
+                                ls_a->iglw.size, GUINT32_TO_BE (ls_a->iglw.ver),
+                                ls_a->iglw.effecton,
+                                ls_a->iglw.blur, ls_a->iglw.intensity,
+                                ls_a->iglw.blendsig, (gchar *) &ls_a->iglw.effect );
               if (ls_a->iglw.size == 43)
                 {
                   if (psd_read (input, &ls_a->iglw.invert,      1, error) < 1 ||
@@ -1019,6 +1073,11 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                 }
 
               ls_a->bevl.size = GUINT32_TO_BE (ls_a->bevl.size);
+              IFDBG(3) g_debug ("bevl - size %u, version %u, effect enabled: %u, highlightsig: %.4s, highlighteffect %.4s, shadowsig: %.4s, shadoweffect %.4s",
+                                ls_a->bevl.size, GUINT32_TO_BE (ls_a->bevl.ver),
+                                ls_a->bevl.enabled,
+                                &ls_a->bevl.highlightsig, &ls_a->bevl.highlighteffect,
+                                &ls_a->bevl.shadowsig, &ls_a->bevl.shadoweffect );
               if (ls_a->bevl.size == 78)
                 {
                   if (psd_read (input, &ls_a->bevl.highlightnatcolor[0], 2, error) < 2 ||
@@ -1063,6 +1122,10 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                   psd_set_error (error);
                   return -1;
                 }
+              IFDBG(3) g_debug ("sofi - size %u, version %u, enabled %u, blendsig: %.4s, blend %.4s, opacity %u",
+                                GUINT32_TO_BE (ls_a->sofi.size), GUINT32_TO_BE (ls_a->sofi.ver),
+                                ls_a->sofi.enabled,
+                                blendsig, ls_a->sofi.blend, 100 * ls_a->sofi.opacity / 255 );
             }
           else
             {
