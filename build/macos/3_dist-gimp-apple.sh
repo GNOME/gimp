@@ -117,6 +117,7 @@ if [ ! -f "$BG_PATH" ]; then
 fi
 
 ## 4.1 Configure Info.plist
+printf '(INFO): configuring Info.plist\n'
 conf_plist()
 {
   sed -i '' "s|$1|$2|g" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Info.plist"
@@ -132,6 +133,7 @@ conf_plist "%MUTEX_SUFFIX%" "$MUTEX_SUFFIX"
 ### FIXME: Configure associations
 
 ## 4.2 FIXME: Create .DS_Store to set .dmg background and icon layout
+printf '(INFO): generating .DS_Store\n'
 ln -s /Applications "$DMG_MOUNT/Applications"
 if [ -z "$GITLAB_CI" ]; then
   mkdir -p "$DMG_MOUNT/.background"
