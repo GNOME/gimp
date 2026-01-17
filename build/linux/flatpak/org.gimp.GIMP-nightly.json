@@ -645,16 +645,12 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.29.tar.gz",
-                            "sha256": "38240eee1b29e2bde47ebb5d61160207dc68668a54cac62c076bb5032013b1eb",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.31.tar.gz",
+                            "sha256": "6dd2a63ac9d32643b7cc636eab57bf4e57d0ed1fff926dfbc5d3d97f2d2be3a6",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 2540,
                                 "stable-only": true,
-                                "//": "https://github.com/OpenMathLib/OpenBLAS/issues/5324",
-                                "versions": {
-                                    "<": "0.3.30"
-                                },
                                 "url-template": "https://github.com/xianyi/OpenBLAS/archive/v$version.tar.gz"
                             }
                         }
