@@ -212,6 +212,11 @@ static gint     load_resource_lnsr    (const PSDlayerres     *res_a,
                                        GInputStream          *input,
                                        GError               **error);
 
+static gint     load_resource_cinf    (const PSDlayerres     *res_a,
+                                       PSDlayer              *lyr_a,
+                                       GInputStream          *input,
+                                       GError               **error);
+
 static gint     parse_text_info       (PSDlayer              *lyr_a,
                                        guint32                len,
                                        gchar                 *buf,
@@ -520,6 +525,10 @@ load_layer_resource (PSDlayerres   *res_a,
            memcmp (res_a->key, PSD_LLL_LINKED_LAYER_3,   4) == 0 ||
            memcmp (res_a->key, PSD_LLL_LINKED_LAYER_EXT, 4) == 0)
     load_resource_llnk (res_a, lyr_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LOTH_COMPOSITOR, 4) == 0)
+    load_resource_cinf (res_a, lyr_a, input, error);
+
   else
     {
       load_resource_unknown (res_a, lyr_a, input, error);
@@ -1418,6 +1427,30 @@ load_resource_lnsr (const PSDlayerres  *res_a,
    * moreover lnsr info is encoded in MacRoman, see
    * https://bugzilla.gnome.org/show_bug.cgi?id=753986#c4
    */
+
+  return 0;
+}
+
+static gint
+load_resource_cinf (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    GInputStream       *input,
+                    GError            **error)
+{
+  guint32 version;
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: Compositor Used (cinf)", res_a->key);
+
+  if (psd_read (input, &version, 4, error) < 4)
+    {
+      psd_set_error (error);
+      return -1;
+    }
+  version = GUINT32_FROM_BE (version);
+  IFDBG(3) g_debug ("Descriptor version (expecting 16): %u", version);
+
+  if (load_descriptor (res_a, lyr_a, input, error) < 0)
+    return -1;
 
   return 0;
 }
