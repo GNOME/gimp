@@ -3068,10 +3068,12 @@ get_json_color (JsonReader *reader, const Babl *space)
 #define OP_COUNT       3
 
 static void
-json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint shadow_type)
+json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint shadow_type,
+                  gint global_angle)
 {
   gboolean     enabled    = FALSE;
   gboolean     present    = TRUE;        /* Not always present in descriptor*/
+  gboolean     use_global_angle = FALSE;
   const gchar *mode       = NULL;
   GeglColor   *color      = NULL;
   /* FIXME: Figure out below what the real default values are in Photoshop */
@@ -3133,8 +3135,17 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
                 color     = get_json_color (obj_reader, space);
               else if (json_string_equal (key, "Opct"))
                 opacity   = (gfloat) get_json_double (obj_reader, "value", 100.0);
-              else if (json_string_equal (key, "lagl"))
-                angle     = (gfloat) get_json_double (obj_reader, "value", 90.0);
+              else if (json_string_equal (key, "uglg"))
+                {
+                  use_global_angle   = get_json_boolean (obj_reader, "value", FALSE);
+                  if (use_global_angle)
+                    {
+                      angle = global_angle;
+                      g_debug ("Using global lighting angle %d", global_angle);
+                    }
+                }
+              else if (! use_global_angle && json_string_equal (key, "lagl"))
+                angle     = (gfloat) get_json_double (obj_reader, "value", 30.0);
               else if (json_string_equal (key, "Dstn"))
                 distance  = (gfloat) get_json_double (obj_reader, "value", 18.0);
               else if (json_string_equal (key, "Nose"))
@@ -3401,17 +3412,20 @@ add_layer_effects (GimpLayer *layer,
                       else if (json_string_equal (str, "DrSh"))
                         {
                           /* Read DropShadow settings */
-                          json_read_shadow (reader, space, layer, PS_DROPSHADOW);
+                          json_read_shadow (reader, space, layer, PS_DROPSHADOW,
+                                            img_a->global_light_angle);
                         }
                       else if (json_string_equal (str, "IrSh"))
                         {
                           /* Read InnerShadow settings */
-                          json_read_shadow (reader, space, layer, PS_INNERSHADOW);
+                          json_read_shadow (reader, space, layer, PS_INNERSHADOW,
+                                            img_a->global_light_angle);
                         }
                       else if (json_string_equal (str, "OrGl"))
                         {
                           /* Read OuterGlow settings */
-                          json_read_shadow (reader, space, layer, PS_OUTERGLOW);
+                          json_read_shadow (reader, space, layer, PS_OUTERGLOW,
+                                            img_a->global_light_angle);
                         }
                       else if (json_string_equal (str, "IrGl"))
                         {
