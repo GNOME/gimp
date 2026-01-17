@@ -147,6 +147,16 @@ static gint     load_resource_ladj    (const PSDlayerres     *res_a,
                                        GInputStream          *input,
                                        GError               **error);
 
+static gint     load_resource_lpla    (const PSDlayerres     *res_a,
+                                       PSDlayer              *lyr_a,
+                                       GInputStream          *input,
+                                       GError               **error);
+
+static gint     load_resource_llnk    (const PSDlayerres     *res_a,
+                                       PSDlayer              *lyr_a,
+                                       GInputStream          *input,
+                                       GError               **error);
+
 static gint     load_resource_lfil    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
                                        GInputStream          *input,
@@ -480,7 +490,7 @@ load_layer_resource (PSDlayerres   *res_a,
           lyr_a->unsupported_features->show_gui     = TRUE;
         }
 
-      load_resource_unknown (res_a, lyr_a, input, error);
+      load_resource_lpla (res_a, lyr_a, input, error);
     }
 
   else if (memcmp (res_a->key, PSD_LLL_LINKED_LAYER, 4) == 0
@@ -497,6 +507,11 @@ load_layer_resource (PSDlayerres   *res_a,
       load_resource_unknown (res_a, lyr_a, input, error);
     }
 
+  else if (memcmp (res_a->key, PSD_LLL_LINKED_LAYER,     4) == 0 ||
+           memcmp (res_a->key, PSD_LLL_LINKED_LAYER_2,   4) == 0 ||
+           memcmp (res_a->key, PSD_LLL_LINKED_LAYER_3,   4) == 0 ||
+           memcmp (res_a->key, PSD_LLL_LINKED_LAYER_EXT, 4) == 0)
+    load_resource_llnk (res_a, lyr_a, input, error);
   else
     {
       load_resource_unknown (res_a, lyr_a, input, error);
@@ -537,6 +552,187 @@ load_resource_ladj (const PSDlayerres  *res_a,
   /* Load adjustment layer */
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Adjustment layer", res_a->key);
+
+  return 0;
+}
+
+static gint
+load_resource_lpla (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    GInputStream       *input,
+                    GError            **error)
+{
+  /* Load placed layer */
+  static gboolean   msg_flag = FALSE;
+  gchar             type[4];
+  guint32           version;
+  gchar            *uniqueID = NULL;
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: Placed layer", res_a->key);
+
+  if (psd_read (input, &type, 4, error) < 4 ||
+      psd_read (input, &version, 4, error) < 4)
+    {
+      psd_set_error (error);
+      return -1;
+    }
+  //type    = GUINT32_FROM_BE (type);
+  version = GUINT32_FROM_BE (version);
+  /* Expected
+   * for plLd: type: plcL, version: 3,
+   * for SoLd: type: soLD, version: 4 (according to docs, also seen: 13), hmmm seems we are reading this wrong, type: 4, version 13 (probably descriptor version)
+   * for SoLE, type: soLD, version: 4 or 5. */
+  //IFDBG(3) g_debug ("Placed layer type: (skipped reading), version: %u", version);
+  IFDBG(3) g_debug ("Placed layer type: %.4s, version: %u", type, version);
+
+  if (version == 3)
+    {
+      gint32 bread, bwritten;
+      guint32 page_num, total_pages;
+      guint32 anti_alias_policy;
+      guint32 placed_layer_type;
+
+      /* Read pascal string */
+      uniqueID = fread_pascal_string (&bread, &bwritten, 1, input, error);
+      if (! uniqueID)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      g_free (uniqueID);
+
+      if (psd_read (input, &page_num,    4, error) < 4 ||
+          psd_read (input, &total_pages, 4, error) < 4 ||
+          psd_read (input, &anti_alias_policy, 4, error) < 4 ||
+          psd_read (input, &placed_layer_type, 4, error) < 4)
+        {
+          g_free (uniqueID);
+          psd_set_error (error);
+          return -1;
+        }
+      page_num    = GUINT32_FROM_BE (page_num);
+      total_pages = GUINT32_FROM_BE (total_pages);
+      anti_alias_policy = GUINT32_FROM_BE (anti_alias_policy);
+      placed_layer_type = GUINT32_FROM_BE (placed_layer_type);
+      IFDBG(3) g_debug ("Page number: %u, total pages: %u, anti alias policy: %u, placed layer type: %u",
+                        page_num, total_pages, anti_alias_policy, placed_layer_type);
+    }
+  else if (version == 4)
+    {
+      guint32 descriptor_version;
+
+      if (psd_read (input, &descriptor_version, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      descriptor_version = GUINT32_FROM_BE (descriptor_version);
+      IFDBG(3) g_debug ("Descriptor version: %u",
+                        descriptor_version);
+
+      if (load_descriptor (res_a, lyr_a, input, error) < 0)
+        return -1;
+    }
+  else if (version == 5)
+    {
+      if (load_descriptor (res_a, lyr_a, input, error) < 0)
+        return -1;
+    }
+
+  //lyr_a->drop = TRUE;
+  if (! msg_flag && CONVERSION_WARNINGS)
+    {
+      g_message ("Warning:\n"
+                 "The image file contains placed or smart object layers. "
+                 "These are not supported by the GIMP and will "
+                 "be dropped.");
+      msg_flag = TRUE;
+    }
+
+  return 0;
+}
+
+static gint
+load_resource_llnk (const PSDlayerres     *res_a,
+                    PSDlayer              *lyr_a,
+                    GInputStream          *input,
+                    GError               **error)
+{
+  guint64  data_size, data_offset;
+  gchar    lnk_type[4]; /* 'liFD' linked file data, 'liFE' linked file external or 'liFA' linked file alias */
+  guint32  ver;
+  gchar   *uniqueID;
+  gchar   *original_filename;
+  gchar    file_type[4];
+  gchar    file_creator[4];
+  guint64  data_len;
+  gboolean file_open_descriptor;
+  gint32   bread, bwritten;
+
+  gint     lnk_count = 6;
+  gint     li;
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: linked layer data", res_a->key);
+
+  // This really needs a count based on the number of placed layers we found..
+  // For testing we set it here to 6 for our test file...
+
+  for (li = 0; li < lnk_count; li++)
+    {
+      IFDBG(3) g_debug ("Linked data[%d], Offset: %" G_GOFFSET_FORMAT, li, PSD_TELL(input));
+      if (psd_read (input, &data_size, 8, error) < 8 ||
+          psd_read (input, &lnk_type, 4, error) < 4 ||
+          psd_read (input, &ver, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      data_size = GUINT64_FROM_BE (data_size);
+      ver = GUINT32_FROM_BE (ver);
+      IFDBG(3) g_debug ("Data size: %" G_GSIZE_FORMAT ", link type: %.4s, version %u", data_size, lnk_type, ver);
+
+      uniqueID = fread_pascal_string (&bread, &bwritten, 1, input, error);
+      if (! uniqueID)
+        {
+          return -1;
+        }
+      g_free (uniqueID);
+      IFDBG(3) g_debug ("Unique ID: %s", uniqueID);
+
+      original_filename = fread_unicode_string (&bread, &bwritten, 1,
+                                                res_a->ibm_pc_format,
+                                                input, error);
+      if (! original_filename)
+        {
+          return -1;
+        }
+      IFDBG(3) g_debug ("Original filename: %s", original_filename);
+      g_free (original_filename);
+
+      if (psd_read (input, &file_type, 4, error) < 4 ||
+          psd_read (input, &file_creator, 4, error) < 4 ||
+          psd_read (input, &data_len, 8, error) < 8 ||
+          psd_read (input, &file_open_descriptor, 1, error) < 1)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      data_len = GUINT64_FROM_BE (data_len);
+      IFDBG(3) g_debug ("File type: %.4s, creator: %.4s, data length: %" G_GSIZE_FORMAT ", file open: %u",
+                        file_type, file_creator, data_len, (guchar) file_open_descriptor);
+      //data_len = (data_len + 3) / 4 * 4;
+      data_offset = (PSD_TELL(input) + data_len + 3) / 4 * 4;
+
+      IFDBG(3) g_debug ("File data offset: %" G_GOFFSET_FORMAT ", real end offset: %" G_GOFFSET_FORMAT,
+                        PSD_TELL(input), data_offset);
+
+      if (! psd_seek (input, data_offset, G_SEEK_SET, error))
+        {
+          psd_set_error (error);
+          return -1;
+        }
+    }
 
   return 0;
 }
