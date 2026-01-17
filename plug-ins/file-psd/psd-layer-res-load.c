@@ -172,6 +172,11 @@ static gint     load_resource_ltyp    (const PSDlayerres     *res_a,
                                        GInputStream          *input,
                                        GError               **error);
 
+static gint     load_resource_ltxt    (const PSDlayerres     *res_a,
+                                       PSDlayer              *lyr_a,
+                                       GInputStream          *input,
+                                       GError               **error);
+
 static gint     load_resource_luni    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
                                        GInputStream          *input,
@@ -426,6 +431,9 @@ load_layer_resource (PSDlayerres   *res_a,
 
       load_resource_ltyp (res_a, lyr_a, input, error);
     }
+
+  else if (memcmp (res_a->key, PSD_LOTH_TEXT_ENGINE, 4) == 0)
+    load_resource_ltxt (res_a, lyr_a, input, error);
 
   else if (memcmp (res_a->key, PSD_LPRP_UNICODE, 4) == 0)
     {
@@ -897,6 +905,32 @@ load_resource_ltyp (const PSDlayerres  *res_a,
       IFDBG(3) g_debug ("End offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
     }
 
+  return 0;
+}
+
+static gint load_resource_ltxt (const PSDlayerres  *res_a,
+                                PSDlayer           *lyr_a,
+                                GInputStream       *input,
+                                GError            **error)
+{
+  guint32  res_len;
+  gchar   *buf;
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: Type tool layer", res_a->key);
+
+  res_len = res_a->data_len;
+  IFDBG(3) g_debug ("Txt2 resource length: %u at offset %" G_GOFFSET_FORMAT,
+                    res_len, PSD_TELL(input));
+
+  buf = g_malloc (res_len);
+  if (psd_read (input, buf, res_len, error) < res_len)
+    {
+      psd_set_error (error);
+      return -1;
+    }
+
+  parse_text_info (lyr_a, res_len, buf, error);
+  g_free(buf);
   return 0;
 }
 
