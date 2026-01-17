@@ -2515,6 +2515,7 @@ add_layers (GimpImage     *image,
           image_type = get_gimp_image_type (img_a->base_type, TRUE);
           IFDBG(3) g_debug ("Layer type %d", image_type);
 
+#if 1
           if (lyr_a[lidx]->smart_object.smart_object_data &&
               img_a->linked_files.linked_data)
             {
@@ -2528,6 +2529,39 @@ add_layers (GimpImage     *image,
             layer = gimp_layer_new (image, lyr_a[lidx]->name,
                                     l_w, l_h, image_type,
                                     100, GIMP_LAYER_MODE_NORMAL);
+#else
+          g_printerr ("Layer #%d\n ", lidx);
+          if (lyr_a[lidx]->text.info)
+            {
+              GimpTextLayer *textlayer;
+              GimpFont      *font;
+              GimpUnit      *unit;
+
+              /* We have a text layer! */
+              /* For testing purposes, just add the text with a fixed
+                  font and size. */
+              g_printerr ("Text layer text: %s\n", lyr_a[lidx]->text.info);
+              font = gimp_font_get_by_name ("Tahoma");
+              unit = gimp_unit_get_by_id (GIMP_UNIT_POINT);
+              textlayer = gimp_text_layer_new (image, lyr_a[lidx]->text.info,
+                                                font, 30.0, unit);
+              if (! textlayer)
+                {
+                  g_warning ("Failed to create text layer!\n");
+                }
+              else
+                {
+                  /*gimp_image_insert_layer (image, GIMP_LAYER (textlayer), parent_group, 0);*/
+                }
+              layer = GIMP_LAYER (textlayer);
+            }
+          else
+            {
+              layer = gimp_layer_new (image, lyr_a[lidx]->name,
+                                      l_w, l_h, image_type,
+                                      100, GIMP_LAYER_MODE_NORMAL);
+            }
+#endif
 
         }
 
