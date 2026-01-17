@@ -425,9 +425,6 @@ load_layer_resource (PSDlayerres   *res_a,
       load_resource_lfx (res_a, lyr_a, input, error);
     }
 
-  else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)
-    load_resource_lrfx (res_a, lyr_a, input, error);
-
   else if (memcmp (res_a->key, PSD_LTYP_TYPE, 4) == 0
            || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
     {
@@ -780,8 +777,8 @@ load_resource_lfx (const PSDlayerres  *res_a,
 
   if (memcmp (res_a->key, PSD_LFX_FX2, 4) == 0)
     {
-      guint32 oe_version, desc_version;
-      gint32  res;
+      guint32    oe_version, desc_version;
+      gint32     res;
       JsonNode  *root = NULL;
       JsonArray  *arr = NULL;
       JsonObject *obj = NULL;
@@ -798,8 +795,6 @@ load_resource_lfx (const PSDlayerres  *res_a,
       IFDBG(3) g_debug ("Objects based effects layer info: object effects version: %u, descriptor version: %u", oe_version, desc_version);
 
       g_printerr ("create root object\n");
-      // TODO: Probably should add some version number to the root in case we
-      //       need to make changes to how we store this info in the future!
       root = json_node_new (JSON_NODE_OBJECT);
       if (! root)
         {
