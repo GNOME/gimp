@@ -21,6 +21,8 @@
 #ifndef __PSD_H__
 #define __PSD_H__
 
+#include <json-glib/json-glib.h>
+
 
 /* Set to the level of debugging output you want, 0 for none.
  *   Setting higher than 2 will result in a very large amount of debug
@@ -704,6 +706,11 @@ typedef struct
 
 } PSDAdjustmentLayer;
 
+typedef struct
+{
+  JsonNode                  *effects;
+} PSDLayerEffects;
+
 
 /* Partially or Unsupported Features */
 typedef struct
@@ -751,6 +758,7 @@ typedef struct
   guint16               color_tag[4];           /* 4 * 16 bit color components */
   PSDLayerStyles       *layer_styles;           /* Older format of layer styles */
   PSDAdjustmentLayer   *adjustment_layer;       /* Adjustment layer data */
+  PSDLayerEffects      *layer_effects;
 
   PSDSupport           *unsupported_features;
 } PSDlayer;
