@@ -94,16 +94,16 @@ if [ -d "$existing_dmg_mount" ]; then
   hdiutil detach "$existing_dmg_mount" -force
 fi
 DMG_MOUNT=$(hdiutil attach "temp_$ARCH.dmg" | grep "$APPVER" | cut -f3-)
-
-## Minor adjustments
 mv -f "$DMG_MOUNT/$APP" "$DMG_MOUNT/$BUNDLE_NAME.app"
-rm -f "$DMG_MOUNT/$BUNDLE_NAME.app/.gitignore"
 
 ## Set revision (this does the same as '-Drevision' build option)
 gimp_release="$(echo "$DMG_MOUNT/$BUNDLE_NAME.app"/Contents/Resources/gimp/*/gimp-release)"
 before=$(cat "$gimp_release" | grep 'revision')
 after="revision=$REVISION"
 sed -i '' "s|$before|$after|" "$gimp_release"
+
+## Minor adjustments
+rm -f "$DMG_MOUNT/$BUNDLE_NAME.app/.gitignore"
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_files\r\e[0K\n"
 
 
