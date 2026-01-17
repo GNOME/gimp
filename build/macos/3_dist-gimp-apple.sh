@@ -88,6 +88,7 @@ printf "\e[0Ksection_start:`date +%s`:${ARCH}_files[collapsed=true]\r\e[0KPrepar
 ## Create temporary .dmg
 APPVER="GIMP $CUSTOM_GIMP_VERSION install"
 hdiutil create -volname "$APPVER" -srcfolder "$APP" -ov -format UDRW "temp_$ARCH.dmg"
+#(we do not use 'hdiutil attach -mountrandom' because dangling mounts would last if the script fails)
 existing_dmg_mount=$(hdiutil info | grep "$APPVER" | cut -f3-)
 if [ -d "$existing_dmg_mount" ]; then
   hdiutil detach "$existing_dmg_mount" -force
