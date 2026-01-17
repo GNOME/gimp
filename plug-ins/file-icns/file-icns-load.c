@@ -40,7 +40,7 @@
 
 IcnsResource * resource_load     (FILE         *file);
 
-IcnsResource * resource_find     (IcnsResource *list,
+IcnsResource * resource_find     (GList        *resources,
                                   gchar        *type,
                                   gint          max);
 
@@ -118,14 +118,18 @@ resource_load (FILE *file)
 }
 
 IcnsResource *
-resource_find (IcnsResource *list,
+resource_find (GList        *resources,
                gchar        *type,
                gint          max)
 {
-  for (gint i = 0; i < max; i++)
+  GList *list;
+
+  for (list = resources; list; list = g_list_next (list))
     {
-      if (! strncmp (list[i].type, type, 4))
-        return &list[i];
+      IcnsResource *res = list->data;
+
+      if (! strncmp (res->type, type, 4))
+        return res;
     }
   return NULL;
 }
@@ -145,10 +149,14 @@ resource_get_next (IcnsResource *icns,
   res->cursor = sizeof (IcnsResourceHeader);
   res->data   = &(icns->data[icns->cursor]);
 
+  if (! res->size)
+    return FALSE;
+
   icns->cursor += res->size;
   if (icns->cursor > icns->size)
     {
       gchar typestring[5];
+
       fourcc_get_string (icns->type, typestring);
       g_message ("icns resource_get_next: resource too big! type '%s', size %u\n",
                  typestring, icns->size);
@@ -162,18 +170,25 @@ GimpImage *
 icns_load (IcnsResource *icns,
            GFile        *file)
 {
-  IcnsResource *resources;
+  GList        *resources;
+  IcnsResource *resource;
   guint         nResources;
   gfloat        current_resources = 0;
   GimpImage    *image;
 
-  resources = g_new (IcnsResource, 256);
+  resources = NULL;
+  resource  = g_new (IcnsResource, 1);
 
   /* Largest .icns icon is 1024 x 1024 */
   image = gimp_image_new (1024, 1024, GIMP_RGB);
 
   nResources = 0;
-  while (resource_get_next (icns, &resources[nResources++])) {}
+  while (resource_get_next (icns, resource))
+    {
+      resources = g_list_append (resources, resource);
+
+      resource = g_new (IcnsResource, 1);
+    }
 
   for (gint i = 0; iconTypes[i].type; i++)
     {
@@ -192,7 +207,8 @@ icns_load (IcnsResource *icns,
     }
 
   gimp_image_resize_to_layers (image);
-  g_free (resources);
+  g_list_free_full (resources, g_free);
+  g_free (resource);
   return image;
 }
 
@@ -585,7 +601,8 @@ icns_load_thumbnail_image (GFile   *file,
   FILE         *fp;
   GimpImage    *image      = NULL;
   IcnsResource *icns;
-  IcnsResource *resources;
+  GList        *resources;
+  IcnsResource *resource;
   IcnsResource *mask       = NULL;
   guint         i;
   gint          match      = -1;
@@ -610,15 +627,22 @@ icns_load_thumbnail_image (GFile   *file,
   fclose (fp);
 
   if (! icns)
-  {
-    g_message ("Invalid or corrupt icns resource file.");
-    return NULL;
-  }
+    {
+      g_message ("Invalid or corrupt icns resource file.");
+      return NULL;
+    }
 
   image = gimp_image_new (1024, 1024, GIMP_RGB);
 
-  resources = g_new (IcnsResource, 256);
-  while (resource_get_next (icns, &resources[nResources++])) {}
+  resources = NULL;
+  resource  = g_new (IcnsResource, 1);
+
+  while (resource_get_next (icns, resource))
+    {
+      resources = g_list_append (resources, resource);
+
+      resource = g_new (IcnsResource, 1);
+    }
 
   *width  = 0;
   *height = 0;
@@ -671,7 +695,8 @@ icns_load_thumbnail_image (GFile   *file,
       return NULL;
     }
 
-  g_free (resources);
+  g_list_free_full (resources, g_free);
+  g_free (resource);
 
   gimp_progress_update (1.0);
 
