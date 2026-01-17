@@ -1765,11 +1765,9 @@ load_descriptor (const PSDlayerres  *res_a,
   IFDBG(3) g_debug ("Number of items: %u", num_items);
   json_object_set_int_member (obj, "count", num_items);
 
-  g_printerr ("create array\n");
   arr = json_array_new ();
-  // FIXME: Add error checking here and elsewhere!
+  /* FIXME: Add error more checking here and elsewhere! */
 
-  g_printerr ("set array as member of object\n");
   json_object_set_array_member (obj, "descriptor", arr);
 
   for (i = 0; i < num_items; i++)
@@ -1799,14 +1797,12 @@ load_descriptor (const PSDlayerres  *res_a,
       res = load_type (res_a, lyr_a, input, classID_string, key, type, &node, error);
       if (node)
         {
-          g_printerr ("-- Adding descriptor array element\n");
-          //json_array_add_array_element (arr, node);
           json_array_add_element (arr, node);
-          // DEBUG:
-          g_printerr ("Node Json:\n%s\n", json_to_string (node, TRUE));
+          /* For debugging: */
+          /* g_printerr ("Node Json:\n%s\n", json_to_string (node, TRUE)); */
         }
       else
-        g_printerr ("MISSING NODE!\n");
+        g_debug ("WARNING: Missing node for key %s!", key);
       g_free (key);
       if (res < 0)
         return res;
@@ -1815,11 +1811,11 @@ load_descriptor (const PSDlayerres  *res_a,
   if (root)
     {
       /* Print json for debugging... */
-      g_printerr ("Json:\n%s\n", json_to_string (root, TRUE));
+      /* g_printerr ("Json:\n%s\n", json_to_string (root, TRUE)); */
     }
 
   g_free (classID_string);
-  g_printerr ("- return ok from load_descriptor\n");
+
   return 0;
 }
 
