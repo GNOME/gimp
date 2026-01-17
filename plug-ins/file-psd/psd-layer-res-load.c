@@ -1860,6 +1860,212 @@ load_key (GInputStream  *input,
   return key;
 }
 
+static JsonNode*
+add_descriptor_float (const gchar  *key,
+                      const gchar  *type,
+                      const gchar  *float_type,
+                      gfloat        value)
+{
+  JsonNode   *local;
+  JsonObject *obj;
+  gchar      *tmp;
+
+  local = json_node_new (JSON_NODE_OBJECT);
+  obj = json_object_new ();
+  json_node_init_object (local, obj);
+
+  json_object_set_string_member (obj, "key",   key);
+
+  /* These values are not NULL terminated */
+  tmp = g_strdup_printf ("%.4s", type);
+  json_object_set_string_member (obj, "type",  tmp);
+  g_free (tmp);
+  tmp = g_strdup_printf ("%.4s", float_type);
+  json_object_set_string_member (obj, "float_name", tmp);
+  g_free (tmp);
+
+  json_object_set_double_member (obj, "value", value);
+
+  return local;
+}
+
+static JsonNode*
+add_descriptor_double (const gchar  *key,
+                       const gchar  *type,
+                       gdouble       value)
+{
+  JsonNode   *local;
+  JsonObject *obj;
+  gchar      *tmp;
+
+  local = json_node_new (JSON_NODE_OBJECT);
+  obj = json_object_new ();
+  json_node_init_object (local, obj);
+
+  json_object_set_string_member (obj, "key",   key);
+
+  /* These values are not NULL terminated */
+  tmp = g_strdup_printf ("%.4s", type);
+  json_object_set_string_member (obj, "type",  tmp);
+  g_free (tmp);
+
+  json_object_set_double_member (obj, "value", value);
+
+  return local;
+}
+
+static JsonNode*
+add_descriptor_bool (const gchar  *key,
+                     const gchar  *type,
+                     gboolean      value)
+{
+  JsonNode   *local;
+  JsonObject *obj;
+  gchar      *tmp;
+
+  local = json_node_new (JSON_NODE_OBJECT);
+  obj = json_object_new ();
+  json_node_init_object (local, obj);
+
+  json_object_set_string_member (obj, "key",   key);
+
+  tmp = g_strdup_printf ("%.4s", type);
+  json_object_set_string_member (obj, "type",  tmp);
+  g_free (tmp);
+
+  json_object_set_boolean_member (obj, "value", value);
+
+  return local;
+}
+
+static JsonNode*
+add_descriptor_comp (const gchar  *key,
+                     const gchar  *type,
+                     gint64        value)
+{
+  JsonNode   *local;
+  JsonObject *obj;
+  gchar      *tmp;
+
+  local = json_node_new (JSON_NODE_OBJECT);
+  obj = json_object_new ();
+  json_node_init_object (local, obj);
+
+  json_object_set_string_member (obj, "key",   key);
+
+  tmp = g_strdup_printf ("%.4s", type);
+  json_object_set_string_member (obj, "type",  tmp);
+  g_free (tmp);
+
+  json_object_set_int_member (obj, "value", value);
+
+  return local;
+}
+
+static JsonNode*
+add_descriptor_long (const gchar  *key,
+                     const gchar  *type,
+                     gint32        value)
+{
+  return add_descriptor_comp (key, type, value);
+}
+
+static JsonNode*
+add_descriptor_enum (const gchar  *key,
+                     const gchar  *type,
+                     const gchar  *name,
+                     const gchar  *value)
+{
+  JsonNode   *local;
+  JsonObject *obj;
+  gchar      *tmp;
+
+  local = json_node_new (JSON_NODE_OBJECT);
+  obj = json_object_new ();
+  json_node_init_object (local, obj);
+
+  json_object_set_string_member (obj, "key",   key);
+
+  tmp = g_strdup_printf ("%.4s", type);
+  json_object_set_string_member (obj, "type",  tmp);
+  g_free (tmp);
+
+  json_object_set_string_member (obj, "enum_name",   name);
+
+  json_object_set_string_member (obj, "value", value);
+
+  return local;
+}
+
+static JsonNode*
+add_descriptor_text (const gchar  *key,
+                     const gchar  *type,
+                     const gchar  *name,
+                     const gchar  *value)
+{
+  JsonNode   *local;
+  JsonObject *obj;
+  gchar      *tmp;
+
+  local = json_node_new (JSON_NODE_OBJECT);
+  obj = json_object_new ();
+  json_node_init_object (local, obj);
+
+  json_object_set_string_member (obj, "key",   key);
+
+  tmp = g_strdup_printf ("%.4s", type);
+  json_object_set_string_member (obj, "type",  tmp);
+  g_free (tmp);
+
+  json_object_set_string_member (obj, "text_name", name);
+
+  json_object_set_string_member (obj, "value", value);
+
+  return local;
+}
+
+static JsonNode*
+add_descriptor_objc (const gchar  *key,
+                     const gchar  *type)
+{
+  JsonNode   *local;
+  JsonObject *obj;
+  gchar      *tmp;
+
+  local = json_node_new (JSON_NODE_OBJECT);
+  obj = json_object_new ();
+  json_node_init_object (local, obj);
+
+  json_object_set_string_member (obj, "key",   key);
+
+  tmp = g_strdup_printf ("%.4s", type);
+  json_object_set_string_member (obj, "type",  tmp);
+  g_free (tmp);
+
+  return local;
+}
+
+static JsonNode*
+add_descriptor_vlls (const gchar  *key,
+                     const gchar  *type)
+{
+  JsonNode   *local;
+  JsonObject *obj;
+  gchar      *tmp;
+
+  local = json_node_new (JSON_NODE_OBJECT);
+  obj = json_object_new ();
+  json_node_init_object (local, obj);
+
+  json_object_set_string_member (obj, "key",   key);
+
+  tmp = g_strdup_printf ("%.4s", type);
+  json_object_set_string_member (obj, "type",  tmp);
+  g_free (tmp);
+
+  return local;
+}
+
 static gint
 load_type (const PSDlayerres  *res_a,
            PSDlayer           *lyr_a,
@@ -1876,7 +2082,7 @@ load_type (const PSDlayerres  *res_a,
     {
       /* Reference structure*/
       IFDBG(3) g_debug ("ob 'reference structure'");
-      g_message ("FIXME Type: %s", type);
+      g_message ("FIXME Type: %.4s", type);
     }
   else if (memcmp (type, "Objc", 4) == 0)
     {
@@ -1895,11 +2101,9 @@ load_type (const PSDlayerres  *res_a,
   else if (memcmp (type, "VlLs", 4) == 0)
     {
       /* List */
-      gint32      list_items = 0;
-      gint32      li;
-      JsonArray  *arr;
-      JsonNode   *local;
-      JsonObject *obj;
+      gint32       list_items = 0;
+      gint32       li;
+      JsonArray   *arr;
 
       if (psd_read (input, &list_items, 4, error) < 4)
         {
@@ -1909,23 +2113,15 @@ load_type (const PSDlayerres  *res_a,
       list_items = GUINT32_FROM_BE (list_items);
       IFDBG(3) g_debug ("Number of items in list: %i", list_items);
 
-      g_printerr ("create local json object\n");
-      local = json_node_new (JSON_NODE_OBJECT);
-      obj = json_object_new ();
-      json_node_init_object (local, obj);
-      json_object_set_string_member (obj, "key", key);
-      json_object_set_int_member (obj, "count", list_items);
-
-      g_printerr ("create array\n");
+      *node = add_descriptor_vlls (key, type);
       arr = json_array_new ();
-      node = json_node_new (JSON_NODE_ARRAY);
-      json_object_set_array_member (obj, key, arr);
-      g_printerr ("Process items in list\n");
+      json_object_set_array_member (json_node_get_object (*node), "list", arr);
 
       for (li = 0; li < list_items; li++)
         {
           gchar     type[4];
           gint      res;
+          JsonNode *list_node;
 
           if (psd_read (input, &type, 4, error) < 4)
             {
@@ -1934,13 +2130,13 @@ load_type (const PSDlayerres  *res_a,
             }
           IFDBG(3) g_debug ("Item: %d, type: %.4s", li, type);
 
-          node = NULL;
-          res = load_type (res_a, lyr_a, input, class_id, key, node, type, error);
+          list_node = NULL;
+          res = load_type (res_a, lyr_a, input, class_id, key, type, &list_node, error);
           if (res < 0)
             return res;
-          g_printerr ("Add node array element\n");
-          if (node)
-            json_array_add_element (arr, node);
+
+          if (list_node)
+            json_array_add_element (arr, list_node);
           else
             g_printerr ("Failed to add array element!\n");
         }
@@ -1960,15 +2156,14 @@ load_type (const PSDlayerres  *res_a,
       val = (gpointer) &tmp;
 
       IFDBG(3) g_debug ("double value: %f", *val);
-      node = json_node_new (JSON_NODE_VALUE);
-      json_node_set_double (node, *val);
+      *node = add_descriptor_double (key, type, *val);
     }
   else if (memcmp (type, "UntF", 4) == 0)
     {
       /* Unit float */
       gchar    floatkey[4] = "";
-      gdouble  *val;
-      guint64   tmp = 0;
+      gdouble *val;
+      guint64  tmp = 0;
 
       if (psd_read (input, &floatkey, 4, error) < 4)
         {
@@ -1984,16 +2179,16 @@ load_type (const PSDlayerres  *res_a,
       val = (gpointer) &tmp;
 
       IFDBG(3) g_debug ("Float: %.4s, value: %f", floatkey, *val);
-
-      node = json_node_new (JSON_NODE_VALUE);
-      json_node_set_double (node, *val);
+      *node = add_descriptor_float (key, type, floatkey, *val);
     }
   else if (memcmp (type, "UnFl ", 4) == 0)
     {
       /* Undocumented: Unit Floats */
       gchar   floatkey[4] = "";
-      guint32 count;
+      guint32 count       = 0;
       gint    i;
+
+      g_message ("FIXME Type: %.4s - missing json conversion", type);
 
       if (psd_read (input, &floatkey, 4, error) < 4)
         {
@@ -2040,9 +2235,8 @@ load_type (const PSDlayerres  *res_a,
           return -1;
         }
       IFDBG(3) g_debug ("string value: %s (class id: '%s', key: '%s')", str, class_id, key);
+      *node = add_descriptor_text (key, type, class_id, str);
 
-      node = json_node_new (JSON_NODE_VALUE);
-      json_node_set_string (node, str);
       g_free (str);
     }
   else if (memcmp (type, "enum", 4) == 0)
@@ -2052,10 +2246,12 @@ load_type (const PSDlayerres  *res_a,
 
       nameID  = load_key (input, error);
       valueID = load_key (input, error);
+      /* FIXME: Error handling */
+
       IFDBG(3) g_debug ("Enum name: %s, value: %s",
                         nameID, valueID);
-      node = json_node_new (JSON_NODE_VALUE);
-      json_node_set_string (node, valueID);
+      *node = add_descriptor_enum (key, type, nameID, valueID);
+
       g_free (nameID);
       g_free (valueID);
     }
@@ -2071,6 +2267,7 @@ load_type (const PSDlayerres  *res_a,
         }
       psdlong = GUINT32_FROM_BE (psdlong);
       IFDBG(3) g_debug ("long value: %d", psdlong);
+      *node = add_descriptor_long (key, type, psdlong);
     }
   else if (memcmp (type, "comp", 4) == 0)
     {
@@ -2084,6 +2281,7 @@ load_type (const PSDlayerres  *res_a,
         }
       psdlarge = GUINT32_FROM_BE (psdlarge);
       IFDBG(3) g_debug ("large value: %" G_GINT64_FORMAT, psdlarge);
+      *node = add_descriptor_comp (key, type, psdlarge);
     }
   else if (memcmp (type, "bool", 4) == 0)
     {
@@ -2096,33 +2294,55 @@ load_type (const PSDlayerres  *res_a,
           return -1;
         }
       IFDBG(3) g_debug ("Boolean value: %u", (gboolean) val);
-
-      node = json_node_new (JSON_NODE_VALUE);
-      json_node_set_boolean (node, val);
+      *node = add_descriptor_bool (key, type, val);
     }
   else if (memcmp (type, "GlbO", 4) == 0)
     {
       /* GlobalObject same as Descriptor */
       IFDBG(3) g_debug ("GlbO GlobalObject same as Descriptor");
-      g_message ("FIXME Type: %s", type);
+      g_message ("FIXME Type: %.4s", type);
     }
   else if (memcmp (type, "type", 4) == 0)
     {
       /* Class */
       IFDBG(3) g_debug ("type (Class)");
-      g_message ("FIXME Type: %s", type);
+      g_message ("FIXME Type: %.4s", type);
     }
   else if (memcmp (type, "GlbC", 4) == 0)
     {
       /* Class */
       IFDBG(3) g_debug ("GlbC (global? Class)");
-      g_message ("FIXME Type: %s", type);
+      g_message ("FIXME Type: %.4s", type);
     }
   else if (memcmp (type, "alis", 4) == 0)
     {
       /* Alias */
+      guint32  size = 0;
+      goffset  ofs;
+
+      /* Used in placedLayer.psd in 'lnkE' resource */
+      /* According to the specs:
+       * FSSpec data structure for Macintosh, or a handle to a string to the
+       * full path on Windows.
+       * At this time it doesn't look like we will need this data.
+       */
       IFDBG(3) g_debug ("alis (Alias)");
-      g_message ("FIXME Type: %s", type);
+
+      if (psd_read (input, &size, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      size = GUINT32_FROM_BE (size);
+      ofs  = PSD_TELL(input) + size;
+
+      IFDBG(3) g_debug ("Size of alis: %u, ending offset: %" G_GOFFSET_FORMAT, size, ofs);
+
+      if (! psd_seek (input, ofs, G_SEEK_SET, error))
+        {
+          psd_set_error (error);
+          return -1;
+        }
     }
   else if (memcmp (type, "tdta", 4) == 0)
     {
@@ -2130,6 +2350,8 @@ load_type (const PSDlayerres  *res_a,
       guint32  size = 0;
       goffset  ofs;
       gchar   *buf = NULL;
+
+      g_message ("FIXME Type: %.4s - missing json conversion", type);
 
       if (psd_read (input, &size, 4, error) < 4)
         {
@@ -2161,6 +2383,8 @@ load_type (const PSDlayerres  *res_a,
       gint32  res;
       guint32 count = 0;
 
+      g_message ("FIXME Type: %.4s - missing json conversion", type);
+
       if (psd_read (input, &count, 4, error) < 4)
         {
           psd_set_error (error);
@@ -2180,16 +2404,16 @@ load_type (const PSDlayerres  *res_a,
     {
       /* Undocumented: Path */
       IFDBG(3) g_debug ("Pth (Path, undocumented)");
-      g_message ("FIXME Type: %s", type);
+      g_message ("FIXME Type: %.4s", type);
     }
   else
     {
-      // unknown...
+      /* Unknown/undocumented Photoshop descriptor type */
       IFDBG(3) g_debug ("Unknown or undocumented type %s", type);
       g_warning ("Unknown or undocumented type %s", type);
-      g_message ("FIXME Type: %s", type);
+      g_message ("FIXME Type: %.4s", type);
       return -2;
     }
-  g_printerr ("- return ok from load_type\n");
+
   return 0;
 }
