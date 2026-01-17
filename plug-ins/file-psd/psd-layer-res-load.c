@@ -582,7 +582,7 @@ load_resource_lpla (const PSDlayerres  *res_a,
   /* Load placed layer */
   static gboolean   msg_flag = FALSE;
   gchar             type[4];
-  guint32           version;
+  guint32           version  = 0;
   gchar            *uniqueID = NULL;
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Placed layer", res_a->key);
@@ -593,21 +593,21 @@ load_resource_lpla (const PSDlayerres  *res_a,
       psd_set_error (error);
       return -1;
     }
-  //type    = GUINT32_FROM_BE (type);
   version = GUINT32_FROM_BE (version);
   /* Expected
    * for plLd: type: plcL, version: 3,
    * for SoLd: type: soLD, version: 4 (according to docs, also seen: 13), hmmm seems we are reading this wrong, type: 4, version 13 (probably descriptor version)
    * for SoLE, type: soLD, version: 4 or 5. */
-  //IFDBG(3) g_debug ("Placed layer type: (skipped reading), version: %u", version);
-  IFDBG(3) g_debug ("Placed layer type: %.4s, version: %u", type, version);
+
+   IFDBG(3) g_debug ("Placed layer type: %.4s, version: %u", type, version);
 
   if (version == 3)
     {
-      gint32 bread, bwritten;
-      guint32 page_num, total_pages;
-      guint32 anti_alias_policy;
-      guint32 placed_layer_type;
+      gint32  bread, bwritten;
+      guint32 page_num          = 0;
+      guint32 total_pages       = 0;
+      guint32 anti_alias_policy = 0;
+      guint32 placed_layer_type = 0;
 
       /* Read pascal string */
       uniqueID = fread_pascal_string (&bread, &bwritten, 1, input, error);
@@ -636,7 +636,7 @@ load_resource_lpla (const PSDlayerres  *res_a,
     }
   else if (version == 4)
     {
-      guint32 descriptor_version;
+      guint32 descriptor_version = 0;
 
       if (psd_read (input, &descriptor_version, 4, error) < 4)
         {
@@ -683,7 +683,7 @@ load_resource_llnk (const PSDlayerres     *res_a,
   gchar    file_type[4];
   gchar    file_creator[4];
   guint64  data_len;
-  gboolean file_open_descriptor;
+  gboolean file_open_descriptor = 0;
   gint32   bread, bwritten;
 
   gint     lnk_count = 6;
@@ -691,8 +691,9 @@ load_resource_llnk (const PSDlayerres     *res_a,
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: linked layer data", res_a->key);
 
-  // This really needs a count based on the number of placed layers we found..
-  // For testing we set it here to 6 for our test file...
+  /* FIXME This really needs a count based on the number of placed layers we found..
+   *       For testing we set it here to 6 for our test file...
+   */
 
   for (li = 0; li < lnk_count; li++)
     {
@@ -738,7 +739,7 @@ load_resource_llnk (const PSDlayerres     *res_a,
       data_len = GUINT64_FROM_BE (data_len);
       IFDBG(3) g_debug ("File type: %.4s, creator: %.4s, data length: %" G_GSIZE_FORMAT ", file open: %u",
                         file_type, file_creator, data_len, (guchar) file_open_descriptor);
-      //data_len = (data_len + 3) / 4 * 4;
+
       data_offset = (PSD_TELL(input) + data_len + 3) / 4 * 4;
 
       IFDBG(3) g_debug ("File data offset: %" G_GOFFSET_FORMAT ", real end offset: %" G_GOFFSET_FORMAT,
