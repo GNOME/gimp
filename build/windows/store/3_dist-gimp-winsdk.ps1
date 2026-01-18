@@ -54,18 +54,18 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
   {
     #.NET runtime required by msstore-cli (and its PowerShell counterpart)
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    $msstore_tag = (Invoke-WebRequest https://api.github.com/repos/microsoft/msstore-cli/releases/latest | ConvertFrom-Json).tag_name
-    $dotnet_msstore = ([xml](Invoke-WebRequest "https://raw.githubusercontent.com/microsoft/msstore-cli/refs/heads/rel/$msstore_tag/MSStore.API/MSStore.API.csproj").Content).Project.PropertyGroup.TargetFramework
-    $powershell_tag = (Invoke-WebRequest https://api.github.com/repos/PowerShell/PowerShell/releases/latest | ConvertFrom-Json).tag_name
-    $dotnet_powershell = ([xml](Invoke-WebRequest "https://raw.githubusercontent.com/PowerShell/PowerShell/refs/tags/$powershell_tag/PowerShell.Common.props").Content).Project.PropertyGroup.TargetFramework
+    $msstore_tag = (Invoke-RestMethod 'https://api.github.com/repos/microsoft/msstore-cli/releases/latest').tag_name
+    $dotnet_msstore = (Invoke-RestMethod "https://raw.githubusercontent.com/microsoft/msstore-cli/refs/heads/rel/$msstore_tag/MSStore.API/MSStore.API.csproj").Project.PropertyGroup.TargetFramework
+    $powershell_tag = (Invoke-RestMethod 'https://api.github.com/repos/PowerShell/PowerShell/releases/latest').tag_name
+    $dotnet_powershell = (Invoke-RestMethod "https://raw.githubusercontent.com/PowerShell/PowerShell/refs/tags/$powershell_tag/PowerShell.Common.props").Project.PropertyGroup.TargetFramework
     foreach ($dotnet in $dotnet_msstore, $dotnet_powershell)
       {
         $dotnet_major = ($dotnet | Out-String) -replace "`r`n",'' -replace 'net',''
-        $dotnet_tag = ((Invoke-WebRequest https://api.github.com/repos/dotnet/runtime/releases | ConvertFrom-Json).tag_name | Select-String "$dotnet_major" | Select-Object -First 1).ToString() -replace 'v',''
+        $dotnet_tag = ((Invoke-RestMethod https://api.github.com/repos/dotnet/runtime/releases).tag_name | Select-String "$dotnet_major" | Select-Object -First 1).ToString() -replace 'v',''
         if (-not (Test-Path "$Env:ProgramFiles\dotnet\shared\Microsoft.NETCore.App\$dotnet_major*\") -and -not (Test-Path "${PARENT_DIR}dotnet-runtime-${dotnet_major}"))
           {
             Write-Output "(INFO): downloading .NET v$dotnet_tag"
-            Invoke-WebRequest https://aka.ms/dotnet/$dotnet_major/dotnet-runtime-win-$cpu_arch.zip -OutFile ${PARENT_DIR}dotnet-runtime-${dotnet_major}.zip
+            Invoke-WebRequest https://aka.ms/dotnet/$dotnet_major/dotnet-runtime-win-$cpu_arch.zip -UseBasicParsing -OutFile ${PARENT_DIR}dotnet-runtime-${dotnet_major}.zip
             Expand-Archive ${PARENT_DIR}dotnet-runtime-${dotnet_major}.zip ${PARENT_DIR}dotnet-runtime-${dotnet_major} -Force
             $env:PATH = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime-${dotnet_major});" + $env:PATH
             $env:DOTNET_ROOT = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime-${dotnet_major})"
@@ -76,7 +76,7 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
     if (-not (Test-Path Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\App Paths\pwsh.exe') -and $PSVersionTable.PSVersion.Major -lt 6)
       {
         Write-Output "(INFO): downloading PowerShell $powershell_tag"
-        Invoke-WebRequest https://github.com/PowerShell/PowerShell/releases/download/$powershell_tag/PowerShell-$($powershell_tag -replace 'v','')-win-$cpu_arch.zip -OutFile ${PARENT_DIR}PowerShell.zip
+        Invoke-WebRequest https://github.com/PowerShell/PowerShell/releases/download/$powershell_tag/PowerShell-$($powershell_tag -replace 'v','')-win-$cpu_arch.zip -UseBasicParsing -OutFile ${PARENT_DIR}PowerShell.zip
         Expand-Archive ${PARENT_DIR}PowerShell.zip ${PARENT_DIR}PowerShell -Force
         $env:PATH = "$(Resolve-Path $PWD\${PARENT_DIR}PowerShell);" + $env:PATH
       }
@@ -85,7 +85,7 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
     if (-not (Test-Path Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\App Paths\MSStore.exe'))
       {
         Write-Output "(INFO): downloading MSStoreCLI $msstore_tag"
-        Invoke-WebRequest https://github.com/microsoft/msstore-cli/releases/download/$msstore_tag/MSStoreCLI-win-$cpu_arch.zip -OutFile ${PARENT_DIR}MSStoreCLI.zip
+        Invoke-WebRequest https://github.com/microsoft/msstore-cli/releases/download/$msstore_tag/MSStoreCLI-win-$cpu_arch.zip -UseBasicParsing -OutFile ${PARENT_DIR}MSStoreCLI.zip
         Expand-Archive ${PARENT_DIR}MSStoreCLI.zip ${PARENT_DIR}MSStoreCLI -Force
         $env:PATH = "$(Resolve-Path $PWD\${PARENT_DIR}MSStoreCLI);" + $env:PATH
       }
