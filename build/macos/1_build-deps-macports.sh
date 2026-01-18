@@ -19,6 +19,9 @@ if [ -z "$GITLAB_CI" ]; then
   PARENT_DIR='/..'
 fi
 
+xcrun actool
+exit
+
 
 # Install part of the deps
 if [ -z "$OPT_PREFIX" ]; then
