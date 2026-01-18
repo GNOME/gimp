@@ -361,7 +361,7 @@ endif
 # (check that script on gimp repo for more info and issue gimp#14236 too).
 
 if platform_osx and get_option('dmg')
-  ## gimp.icns (macOS) ##
+  ## gimp.icns (macOS 15 and earlier) ##
   gen_gimp_icns_py = configure_file(input : 'gen-gimp-icns.py.in',
                                    output : 'gen-gimp-icns.py',
                                    configuration : gen_conf)
@@ -377,6 +377,23 @@ if platform_osx and get_option('dmg')
                             build_by_default: true,
                             env: gimp_run_env)
 
+  ## gimp.icon (macOS 26+)
+  custom_target('copy-icon-json',
+                input: 'icon.json',
+                output: 'icon.json',
+                command: [
+                  python, '-c', 'import shutil, sys, os; os.makedirs(os.path.dirname(sys.argv[2]), exist_ok=True); shutil.copy2(sys.argv[1], sys.argv[2])',
+                  '@INPUT@', meson.current_build_dir() / 'AppIcon.icon' / 'icon.json'
+                ],
+                build_by_default: true)
+  custom_target('copy-gimp-logo',
+                input: 'gimp-logo.svg',
+                output: 'gimp-logo.svg',
+                command: [
+                  python, '-c', 'import shutil, sys, os; os.makedirs(os.path.dirname(sys.argv[2]), exist_ok=True); shutil.copy2(sys.argv[1], sys.argv[2])',
+                  '@INPUT@', meson.current_build_dir() / 'AppIcon.icon/Assets' / 'gimp-logo.svg'
+                ],
+                build_by_default: true)
 
   ## fileicon*.icns (macOS) ##
   gen_fileicon_icns_conf = configuration_data()
