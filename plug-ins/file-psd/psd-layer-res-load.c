@@ -1747,17 +1747,20 @@ load_descriptor (GInputStream  *input,
   uniqueID = fread_unicode_string (&bread, &bwritten, 1, ibm_pc_format,
                                    input, error);
   /* uniqueID seems to always be empty at the root */
+
   if (! uniqueID)
     {
+      g_warning ("uniqueID is NULL! (or an error occurred)");
       psd_set_error (error);
       return -1;
     }
-  g_free (uniqueID);
 
   IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
   classID_string = load_key (input, error);
   /* root class ID seems to always be 'null' */
-  IFDBG(3) g_debug ("Class ID: %s", classID_string);
+  IFDBG(3) g_debug ("Unique ID: %s, Class ID: %s", uniqueID, classID_string);
+  g_free (uniqueID);
+
   /* Initialize our json objects used to store the collected information. */
   if (base_node == NULL || *base_node == NULL)
     {
