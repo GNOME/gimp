@@ -1002,9 +1002,9 @@ dist-mac-weekly:
     - macos
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
-    - zsh build/macos/3_dist-gimp-apple.sh
+    - zsh build/macos/dmg/3_dist-gimp-apple.sh
   artifacts:
     expose_as: 'macOS dmg'
     paths:
-      - build/macos/_Output/
+      - build/macos/dmg/_Output/
     expire_in: 8 days

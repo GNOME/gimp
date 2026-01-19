@@ -16,10 +16,10 @@ case $(readlink /proc/$$/exe) in
     ;;
 esac
 set -e
-if [ "$0" != 'build/macos/3_dist-gimp-apple.sh' ] && [ $(basename "$PWD") != 'macos' ]; then
+if [ "$0" != 'build/macos/dmg/3_dist-gimp-apple.sh' ] && [ $(basename "$PWD") != 'dmg' ]; then
   printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp git dir\n'
   exit 1
-elif [ $(basename "$PWD") = 'macos' ]; then
+elif [ $(basename "$PWD") = 'dmg' ]; then
   cd ../../..
 fi
 
@@ -133,14 +133,14 @@ conf_plist "%MUTEX_SUFFIX%" "$MUTEX_SUFFIX"
 ### List supported filetypes
 sed -i '' "s|%FILE_TYPES%|$(tr -d '\n' < $BUILD_DIR/plug-ins/file_associations_mac.list)|g" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Info.plist"
 
-## 4.2 FIXME: Create .DS_Store to set .dmg background and icon layout
-printf '(INFO): generating .DS_Store\n'
+## 4.2 Create or copy .DS_Store to set .dmg background and icon layout
+printf '(INFO): handling .DS_Store\n'
+mkdir -p "$DMG_MOUNT/.background"
+cp -r "$BG_PATH" "$DMG_MOUNT/.background/"
 ln -s /Applications "$DMG_MOUNT/Applications"
+sync
+sleep 2 #avoid Finder async issues
 if [ -z "$GITLAB_CI" ]; then
-  mkdir -p "$DMG_MOUNT/.background"
-  cp -r "$BG_PATH" "$DMG_MOUNT/.background/"
-  sync
-  sleep 2 #avoid Finder async issues
   osascript <<EOF
 tell application "Finder"
     tell disk "$APPVER"
@@ -164,7 +164,10 @@ tell application "Finder"
     end tell
 end tell
 EOF
+bsdtar -cf build/macos/dmg/DS_Store.tar.xz --xz --options compression-level=9 -C "$DMG_MOUNT" .DS_Store
+printf "(INFO): Generated .DS_Store file. If it have a new layout, please commit it on 'build/macos/dmg/'.\n"
 fi
+bsdtar -xf build/macos/dmg/DS_Store.tar.xz -C "$DMG_MOUNT" .DS_Store
 hdiutil detach "$DMG_MOUNT"
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K\n"
 
@@ -188,7 +191,7 @@ printf "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K\n"
 
 
 if [ "$GITLAB_CI" ]; then
-  output_dir='build/macos/_Output'
+  output_dir='build/macos/dmg/_Output'
   mkdir -p $output_dir
   mv -f ${DMG_ARTIFACT} $output_dir
 fi
