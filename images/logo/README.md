@@ -80,20 +80,12 @@ Some OSes have specific design guidelines.
 ### macOS
 
 macOS recommends to embed icons in a [rounded-rectangle
-shape](https://developer.apple.com/design/human-interface-guidelines/app-icons#macOS)
-while giving some freedom on designing a bit said shape into familiar
-skeuomorphic shapes.
-
-On this OS, we make our rounded background shape look like a canvas supported on
-an easel and we display Wilber over it.
+shape](https://developer.apple.com/design/human-interface-guidelines/app-icons#macOS).
 
 ![macOS logo](gimp-logo-macos.svg)
 
-This logo doesn't render well on small sizes and in particular, the easel legs
-would not be obvious. So for any icon under 48×48, we use a simplified variant,
-only using the rounded shape, but no easel design:
-
-![macOS logo under 48×48 pixels](gimp-logo-macos-small.svg)
+We also have an .icon version generated at build-time so in the final package
+macOS can render different effects on the icon at runtime.
 
 ### Windows
 

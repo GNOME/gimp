@@ -5,7 +5,6 @@ gi.require_version('Gegl', '0.4')
 from gi.repository import Gegl
 
 big_logo    = '@SRCDIR@/gimp-logo-macos.svg'
-small_logo  = '@SRCDIR@/gimp-logo-macos-small.svg'
 output_path = '@BUILDDIR@/gimp.icns'
 sizes       = [ 16, 18, 24, 32, 36, 48, 64, 128, 256, 512, 1024 ]
 
@@ -17,10 +16,7 @@ for size in sizes:
   procedure   = Gimp.get_pdb().lookup_procedure("file-svg-load")
   config      = procedure.create_config()
 
-  if size < 48:
-    config.set_property("file", Gio.file_new_for_path(small_logo))
-  else:
-    config.set_property("file", Gio.file_new_for_path(big_logo))
+  config.set_property("file", Gio.file_new_for_path(big_logo))
 
   config.set_property("width",  size)
   config.set_property("height", size)
