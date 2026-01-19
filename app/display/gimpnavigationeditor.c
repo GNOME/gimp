@@ -485,9 +485,6 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
       gtk_widget_show (editor->zoom_label);
     }
 
-  gimp_view_renderer_set_background (GIMP_VIEW (editor->view)->renderer,
-                                     GIMP_ICON_TEXTURE);
-
   return GTK_WIDGET (editor);
 }
 
