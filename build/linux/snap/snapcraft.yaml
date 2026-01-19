@@ -137,10 +137,10 @@ parts:
       - -Ddocs=false
     build-packages:
       - libmaxflow-dev
-      - libopenexr-dev #https://github.com/ubuntu/gnome-sdk/issues/321
+      - libopenexr-dev #FIXME: https://github.com/ubuntu/gnome-sdk/issues/321
       - libsuitesparse-dev
     stage-packages:
-      - graphviz #https://github.com/ubuntu/gnome-sdk/issues/324
+      - graphviz #FIXME: https://github.com/ubuntu/gnome-sdk/issues/324
       - libmaxflow0
       - libumfpack6
 
@@ -171,19 +171,19 @@ parts:
     build-packages:
       - bison
       - flex
-      - libaa1-dev #https://github.com/ubuntu/gnome-sdk/issues/322
-      - libarchive-dev #https://github.com/ubuntu/gnome-sdk/issues/318
-      - libcfitsio-dev #https://github.com/ubuntu/gnome-sdk/issues/320
+      - libaa1-dev #FIXME: https://github.com/ubuntu/gnome-sdk/issues/322
+      - libarchive-dev #FIXME: https://github.com/ubuntu/gnome-sdk/issues/318
+      - libcfitsio-dev #FIXME: https://github.com/ubuntu/gnome-sdk/issues/320
       - libexpat1-dev #it is on Gnome SDK Snap but inexplicably the linker can't find it
       - libgexiv2-dev
       - libgs-dev
-      - libjxl-dev #https://github.com/ubuntu/gnome-sdk/issues/317
+      - libjxl-dev #FIXME: https://github.com/ubuntu/gnome-sdk/issues/317
       - libmng-dev
       - libmypaint-dev
       - libqoi-dev
       - libwmf-dev
       - libxmu-dev
-      - libxpm-dev #https://github.com/ubuntu/gnome-sdk/issues/319
+      - libxpm-dev #FIXME: https://github.com/ubuntu/gnome-sdk/issues/319
       - xsltproc
     stage-packages:
       - gir1.2-gexiv2-0.10
