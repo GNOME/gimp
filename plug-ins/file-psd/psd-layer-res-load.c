@@ -2562,6 +2562,16 @@ load_type (GInputStream  *input,
       IFDBG(3) g_debug ("string value: %s (class id: '%s', key: '%s')", str, class_id, key);
       *node = add_descriptor_text (key, type, class_id, str);
 
+/* - disabled so that we can make parsing independent of specific Photoshop
+     plug-in code. Interpreting should eventually be done in the calling
+     function based on the resulting json data.
+      if (strcmp (class_id, "TxLr") == 0 &&
+          strcmp (key, "Txt ") == 0)
+        {
+          lyr_a->text.info = strdup (str);
+          g_printerr ("Saved text to layer record: '%s'\n", lyr_a->text.info);
+        }
+*/
       g_free (str);
     }
   else if (memcmp (type, "enum", 4) == 0)
