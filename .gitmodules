@@ -1,5 +1,5 @@
 [submodule "gimp-data"]
 	path = gimp-data
 	url = https://gitlab.gnome.org/GNOME/gimp-data.git
-	branch = main
+	branch = bruno/no-easel
 	shallow = true
