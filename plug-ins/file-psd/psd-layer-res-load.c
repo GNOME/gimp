@@ -1116,9 +1116,8 @@ load_resource_ltyp (const PSDlayerres  *res_a,
   gint32            warp_version      = 0;
   gint32            warp_desc_version = 0;
   gint32            dimensions[4];
-  gint64            transform[6];
   gdouble           d_transform[6];
-  gint              i, res;
+  gint              res;
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Type tool layer", res_a->key);
 
@@ -1127,13 +1126,13 @@ load_resource_ltyp (const PSDlayerres  *res_a,
     {
       lyr_a->text.info = NULL;
 
-      if (psd_read (input, &version,      2, error) < 2 ||
-          psd_read (input, &transform[0], 8, error) < 8 ||
-          psd_read (input, &transform[1], 8, error) < 8 ||
-          psd_read (input, &transform[2], 8, error) < 8 ||
-          psd_read (input, &transform[3], 8, error) < 8 ||
-          psd_read (input, &transform[4], 8, error) < 8 ||
-          psd_read (input, &transform[5], 8, error) < 8 ||
+      if (psd_read (input, &version,        2, error) < 2 ||
+          ! psd_read_double (input, &d_transform[0], error) ||
+          ! psd_read_double (input, &d_transform[1], error) ||
+          ! psd_read_double (input, &d_transform[2], error) ||
+          ! psd_read_double (input, &d_transform[3], error) ||
+          ! psd_read_double (input, &d_transform[4], error) ||
+          ! psd_read_double (input, &d_transform[5], error) ||
           psd_read (input, &text_desc_vers, 2, error) < 2 ||
           psd_read (input, &desc_version,   4, error) < 4)
         {
@@ -1145,15 +1144,6 @@ load_resource_ltyp (const PSDlayerres  *res_a,
       text_desc_vers = GINT16_FROM_BE (text_desc_vers);
       desc_version = GINT32_FROM_BE (desc_version);
 
-      for (i = 0; i <= 5; i++)
-        {
-          gdouble *val;
-          guint64  tmp;
-
-          tmp = GUINT64_FROM_BE (transform[i]);
-          val = (gpointer) &tmp;
-          d_transform[i] = *val;
-        }
       lyr_a->text.xx = d_transform[0];
       lyr_a->text.xy = d_transform[1];
       lyr_a->text.yx = d_transform[2];
