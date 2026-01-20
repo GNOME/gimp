@@ -21,7 +21,7 @@ Source: "{#BUNDLE}\lib\gimp\*.exe"; DestDir: "{app}\lib\gimp"; Excludes: "{#OPTI
 Source: "{#BUNDLE}\lib\girepository-1.0\Gimp*.typelib"; DestDir: "{app}\lib\girepository-1.0"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
 Source: "{#BUNDLE}\bin\*"; DestDir: "{app}\bin"; Excludes: "libgimp*.dll,gimp*.exe,*.pdb,{#OPTIONAL_DLL},{#OPTIONAL_EXE}"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#BUNDLE}\lib\*"; DestDir: "{app}\lib"; Excludes: "gimp,Gimp*.typelib,*.pdb,*.a,*.pc,lua,gluas.dll,python3.12"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\*"; DestDir: "{app}\lib"; Excludes: "gimp,Gimp*.typelib,*.pdb,*.a,*.pc,lua,gluas.dll,python{#PYTHON_VERSION}"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
 ;Optional arch-specific components (full installation)
 #if defined(DEBUG_SYMBOLS) && COMPONENT != "X86"
@@ -45,5 +45,5 @@ Source: "{#BUNDLE}\lib\gluas.dll"; DestDir: "{app}\lib"; Components: lua{#COMPON
 #ifdef PYTHON
 Source: "{#BUNDLE}\bin\libpython*.dll"; DestDir: "{app}\bin"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS}
 Source: "{#BUNDLE}\bin\python*.exe"; DestDir: "{app}\bin"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#BUNDLE}\lib\python3.12\*"; DestDir: "{app}\lib\python3.12"; Excludes: "*.pdb,*.py"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS} createallsubdirs
+Source: "{#BUNDLE}\lib\python{#PYTHON_VERSION}\*"; DestDir: "{app}\lib\python{#PYTHON_VERSION}"; Excludes: "*.pdb,*.py"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS} createallsubdirs
 #endif
