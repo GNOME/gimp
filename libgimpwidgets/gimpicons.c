@@ -24,11 +24,13 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpbase/gimpversion-private.h"
 
 #include "gimpicons.h"
 
 #include "libgimp/libgimp-intl.h"
 
+GIMP_WARNING_API_BREAK("Remove GIMP_ICON_TEXTURE icon (not used anywhere anymore)")
 
 /**
  * SECTION: gimpicons
