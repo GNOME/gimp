@@ -20,12 +20,21 @@ Core:
     loading will be delayed (this also includes files loaded from
     command line, or from a file browser starting GIMP).
   - Default to 'quartz' IM on macOS for emoji keyboard support.
+  - When dropping a color or pattern on a vector layer, their "fill"
+    property is updated accordingly.
+  - Link layers are now protected against color and pattern drops.
+  - macOS logo was updated to cater to new guidelines since macOS 26
+    (following previous guidelines, the logo was appearing too small on
+    latest macOS).
 
 Graphical User Interface:
 
   - Add conditional mask delete button on Layers dockable, shown when a
     layer mask is selected.
   - Reorder HLS to HSL in Hue Saturation GUI.
+  - The Navigation and Selection dockables are now properly colored
+    according to the theme (in particular, in dark mode, they won't show
+    huge bright areas when no images are opened).
 
 Command Line Interface:
 
@@ -36,7 +45,10 @@ Plug-Ins:
 
   - Fixed vulnerability ZDI-CAN-28232 in PSP import.
   - Fixed vulnerability ZDI-CAN-28599 in ICO import.
+  - Fixed vulnerability ZDI-CAN-28265 in XWD import.
+  - Fixed vulnerability ZDI-CAN-28530 in ICNS import.
   - WebP lossless export made more efficient.
+  - JPEG2000 quality setting on export fixed.
 
 API:
 
@@ -48,6 +60,9 @@ API:
     + New functions:
       * gimp_config_get_xcf_version()
       * gimp_config_set_xcf_version()
+  - libgimpwidgets:
+    + GIMP_ICON_TEXTURE ("gimp-texture") is not used anymore and is
+      planned for deletion in GIMP 4.
 
 Build:
 
@@ -55,6 +70,9 @@ Build:
     APIVER=3.0 right now).
   - Drop Force32bitInstall option in Windows installer.
   - Work has been started to move the macOS CI to our main Gitlab infra.
+    We now have macOS jobs in the CI, and these can be triggered in
+    merge requests with "Package:Macos Dmg" label. More work is needed
+    before it can become the source for our release packages though.
   - The Flatpak package will now contain gimp-console as well.
   - Add a configure test on macOS to ensure that harfbuzz was built with
     libgraphite2 shaper.
