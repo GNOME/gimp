@@ -29,6 +29,29 @@ links.
   references](https://developer.gimp.org/api/3.0/libgimp/) or in the
   `About` dialog for unstable builds.
 
+  On macOS, the logo is shown in a white rounded-corner rectangle since
+  GIMP 3.0.8. Based on the logo by Aryeom, edited by Bruno Lopes without
+  clipping on the brush to work around macOS SVG reader limitations:
+
+  ![GIMP icon for macOS since
+  3.0.8](https://gitlab.gnome.org/GNOME/gimp-data/-/raw/b08f4e9777630c6ba60c2235e734452934f8786f/images/logo/gimp-logo-macos.svg)
+
+  From GIMP 3.0.0 to 3.0.6, we used to have a more special variant of
+  the logo on macOS: Wilber over an easel, designed by Aryeom in 2024,
+  under CC By-SA 4.0:
+
+  ![GIMP icon for macOS (3.0.0 to 3.0.6)](https://gitlab.gnome.org/GNOME/gimp-data/-/raw/71ed1c651ab207c19c8b0a8b5312b03f35d3c5ce/images/logo/gimp-logo-macos.svg)
+
+  The small-size variant (when displayed under 48×48) on macOS was
+  simpler for readability:
+
+  ![GIMP icon (small variant) for macOS (3.0.0 to 3.0.6)](https://gitlab.gnome.org/GNOME/gimp-data/-/raw/71ed1c651ab207c19c8b0a8b5312b03f35d3c5ce/images/logo/gimp-logo-macos-small.svg)
+
+  Apple's former <abbr title="Human Interface Guidelines">HIG</abbr>
+  used to recommend playing with the icon's rounded shape into familiar
+  skeuomorphic shapes. This recommendation ended with macOS 26 Tahoe,
+  where they'd move to different icon design requirements.
+
 * [GIMP 2.6, 2.8 and 2.10](https://gitlab.gnome.org/GNOME/gimp/-/blob/f73c4ed397d797ec1b5175f27b5c0f3538a87714/data/images/gimp-logo.png)
   by Jakub Steiner in 2008 under [Creative Commons by-sa 3.0](https://creativecommons.org/licenses/by-sa/3.0/):
 
