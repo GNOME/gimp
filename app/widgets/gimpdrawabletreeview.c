@@ -238,6 +238,8 @@ gimp_drawable_tree_view_constructed (GObject *object)
   gtk_tree_view_column_set_attributes (column, view->priv->filters_cell,
                                        "active",
                                        view->priv->model_column_filters,
+                                       "visible",
+                                       view->priv->model_column_filters,
                                        NULL);
 
   gimp_container_tree_view_add_toggle_cell (tree_view,
