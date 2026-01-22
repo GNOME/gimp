@@ -657,6 +657,7 @@ gimp-win-eol:
   tags:
     - macos
   variables:
+    ORKA_RUNNER: sequoia-xcode26-1
     #FIXME: Our runner #926 (by MacStadium) do not have cache nor timeout for MacPorts builds
     OPT_PREFIX: /opt/homebrew
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
@@ -688,6 +689,7 @@ deps-macos-inhouse:
       # The full build dir is needed due to its .o for .dSYM creation on next job
       - babl/_build-*
       - gegl/_build-*
+      - ./gimp-arm64.app/Contents/Resources
     expire_in: 2 hours
 
 gimp-macos-inhouse:

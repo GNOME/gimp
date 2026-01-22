@@ -1,5 +1,9 @@
 #!/bin/sh
 
+mkdir -p ./gimp-arm64.app/Contents/Resources
+
+actool --compile . --include-all-app-icons --app-icon AppIcon --platform macosx --minimum-deployment-target 14.0 --output-partial-info-plist partial.plist Icon.icon
+
 # Ensure the script work properly
 case $(readlink /proc/$$/exe) in
   *bash)
@@ -20,6 +24,8 @@ if [ -z "$GITLAB_CI" ]; then
 fi
 
 
+
+
 # Install part of the deps
 if [ -z "$OPT_PREFIX" ]; then
   export OPT_PREFIX=$(which port | sed 's|/bin/port||' || brew --prefix)
@@ -32,6 +38,13 @@ if [ "$OPT_PREFIX" != '/opt/local' ] && [ "$OPT_PREFIX" != '/opt/homebrew' ]; th
   sed -i .bak "s/^#build_arch.*/build_arch $(uname -m)/" "${OPT_PREFIX}/etc/macports/macports.conf" >/dev/null 2>&1 || true
 fi
 export MACOSX_DEPLOYMENT_TARGET=$(awk '/LSMinimumSystemVersion/{found=1} found && /<string>/{gsub(/.*<string>|<\/string>.*/, ""); print; exit}' build/macos/Info.plist) #End of config
+
+
+
+#python3 -c "import subprocess; subprocess.run(['actool','--compile','./gimp-arm64.app/Contents/Resources','--app-icon','AppIcon','--platform','macosx','--minimum-deployment-target','26.0','--output-partial-info-plist','partial.plist','AppIcon.icon'], check=True)"
+
+
+exit 0
 
 printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by $( [ -f "$OPT_PREFIX/bin/port" ] && echo MacPorts || echo Homebrew )\n"
 if [ -f "$OPT_PREFIX/bin/port" ]; then
