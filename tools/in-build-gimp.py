@@ -41,13 +41,13 @@ try:
         if not new_rpath in regex:
           subprocess.run(["install_name_tool", "-add_rpath", new_rpath, binary], check=True)
 
-  #Ensure the same python (sys.executable) from meson.build is used by plugins
-  #This is needed because sys.executable can not coincide with python3 from shebang
-  #(on MacPorts, there is no python3, so we would wrongly use Xcode python without GI)
+  #Ensure the same python from meson.build (GIMP_PYTHON_WITH_GI) is used by plugins
+  #This is needed because GIMP_PYTHON_WITH_GI can not coincide with python3 from shebang
+  #(on MacPorts, there is no python3 symlink, so we would misuse Xcode python3 without GI)
   python_symlink = shutil.which("python3")
   pygobject_found=False
   different_python=False
-  if python_symlink and not os.path.samefile(python_symlink, sys.executable):
+  if python_symlink and not os.path.samefile(python_symlink, os.environ.get("GIMP_PYTHON_WITH_GI")):
     result = subprocess.run([python_symlink,"-c","import sys, gi; version='3.0'; sys.exit(gi.check_version(version))"], check=False)
     pygobject_found = (result.returncode == 0)
   if not python_symlink or (python_symlink and not pygobject_found):
@@ -56,7 +56,7 @@ try:
     os.makedirs(tmp_path, exist_ok=True)
     tmp_symlink = os.path.join(tmp_path, "python3")
     if not os.path.exists(tmp_symlink):
-      os.symlink(sys.executable, tmp_symlink)
+      os.symlink(os.environ.get("GIMP_PYTHON_WITH_GI"), tmp_symlink)
     os.environ["PATH"] = tmp_path + os.pathsep + os.environ.get("PATH", "")
 
   if "GIMP_DEBUG_SELF" in os.environ and shutil.which("gdb"):

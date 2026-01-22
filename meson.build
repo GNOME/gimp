@@ -1961,6 +1961,7 @@ gimp_run_env.set('GIMP_GLOBAL_SOURCE_ROOT', meson.global_source_root())
 if get_option('debug-self-in-build')
  gimp_run_env.set('GIMP_DEBUG_SELF', '1')
 endif
+gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
 
 if meson.can_run_host_binaries() and have_gobject_introspection
   if enable_console_bin
