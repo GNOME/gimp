@@ -6,6 +6,154 @@
 This is the development branch of GIMP.
 
 
+Overview of Changes from GIMP 3.0.6 to GIMP 3.0.8
+=================================================
+
+This releases contains a lot of bugfixes. The below list is not
+exhaustive.
+
+Core:
+
+  - Font handling improvements:
+    * Font loading on start massively sped up.
+    * As an exception, Skia font family (apparently quite common on macOS)
+      is special-cased because it behaves weirdly and was not working with
+      current font handling.
+    * Various other fixes related to font handling.
+    * We now wait for fonts to be fully loaded before loading any file.
+  - Command Line Interface:
+    * Option -i / --no-interface is not shown anymore on `gimp-console`
+      binary (it can still be used — it does nothing there anyway —, which
+      allows to use the same sets of option with the GUI binary, and also
+      so that existing shell scripts don't break).
+    * Option --show-debug-menu is not hidden anymore for discoverability.
+    * The `gimp-3.0` executable can now run with --no-interface even when
+      no display is available (ex: virtual terminal with no window
+      manager/compositor, containers, etc.). This used to only work with
+      `gimp-console-3.0` executable.
+  - Windows:
+    * output CLI messages to the parent console like Linux and macOS.
+    * Ctrl+C signals are now correctly handled in the attached console.
+    * The attached console supports color too.
+    * Interpreters are run conditionally if running in console.
+  - macOS: default to "quartz" Input Method for emoji keyboard support.
+  - Wayland: wait before we get our first surface before listing input
+    devices to work around a Wayland limitation and GTK bug.
+  - Default "Search" feature in GTK3 is now disabled in the component
+    editor in the Channels dockable.
+  - Several fixes related to Quick Mask handling.
+  - Fixed some cases where config migration from GIMP 2 to GIMP 3 was
+    problematic.
+  - Several buggy undo cases were fixed.
+  - Several fixes related to pass-through group layers.
+  - Export will now be properly triggered even if no drawables are
+    selected (this is not a requirement anymore with GIMP 3 API).
+  - Path import and export respectively from and to SVG improved.
+  - Serialize colors in legacy GimpRGB format into a XCF when the XCF
+    version is older than GIMP 3 for backward compatibility.
+
+Tools:
+
+  - Symmetry: fix initial stroke symmetry when using pixmap brushes.
+  - Move tool: fixed weird position jumps in some cases.
+
+Graphical User Interface:
+
+  - Center buttons in overlay dialogs.
+  - Headerbar's (when titlebar and menubar are merged) button colors
+    now match our theme.
+  - Dialogs' header icon and view will now scale based on custom icon
+    size.
+  - Resize dialog: Canvas Size fill combo set to insensitive if layers
+    won't be resized.
+  - Navigation and Selection editor will now properly match the theme
+    (in particular, in dark mode, they won't show large bright area).
+  - Do not show outlines when hovering the absent "Fx" icon anymore,
+    which was confusing people into making it look like you could click
+    and interact with this empty area.
+
+Plug-ins:
+
+  - Fixes on: OpenRaster export, TIFF import, Map Object, PDF export,
+    Gradient Flare, ANI export, Script-Fu, DDS export, Fractal Explorer,
+    PSP import, ICO import, XWD import, PSD import, WebP export, ICNS
+    import, Gimpressionist, JPEG 2000 import, Busy Dialog.
+  - Scale entries have been replaced by spin scale widgets in a bunch of
+    plug-ins.
+  - Fixed vulnerabilities: ZDI-CAN-28376, ZDI-CAN-28311, ZDI-CAN-28273,
+    ZDI-CAN-28158, ZDI-CAN-28232, ZDI-CAN-28265, ZDI-CAN-28530,
+    ZDI-CAN-28248.
+  - Script-Fu improved to not initialize UI code unnecessarily (and
+    therefore make it unusable on systems without a display).
+
+API:
+  - libgimp:
+    * Fixes where made in libgimp metadata object.
+    * Make GExiv2Metadata as parent of GimpMetadata visible to
+      Gobject-Introspection tools (bindings were missing this
+      information).
+    * Fixes made on: gimp_drawable_get_thumbnail(),
+      gimp_drawable_get_sub_thumbnail(), gimp_drawable_filter_new(),
+      gimp_proc_view_new(), gimp_procedure_set_sensitivity_mask(),
+      gimp_procedure_dialog_get_spin_scale().
+    * Remove thumbnail metadata before writing it on export, to make
+      sure we don't cary on metadata written by other software in
+      thumbnails.
+  - libgimpconfig:
+    * Improve error messaging on config deserialization.
+    * Fix gimp_config_serialize_value() when serializing file objects.
+    * New functions: gimp_config_get_xcf_version() and
+      gimp_config_set_xcf_version().
+  - libgimpcolor:
+    * gimp_color_is_perceptually_identical() docs clarified.
+  - libgimpbase:
+    * The host config directory is now shown in MSIX.
+    * The host config directory is now shown in flatpak.
+  - libgimpwidgets:
+    * Fixes made on: GimpLabelEntry, gimp_widget_free_native_handle().
+  - libgimpcolor:
+    * New function: gimp_cairo_surface_get_buffer()
+    * Deprecated function: gimp_cairo_surface_create_buffer() in favor
+      of gimp_cairo_surface_get_buffer().
+      The function implementation was also changed so that it does not
+      necessarily return a linear-memory backed buffer anymore (it
+      might, but developers should not have any expectation about this).
+
+Build:
+
+  - Third-party binary plug-in support in the Snap backported from the
+    original third-party snap.
+  - Snap package for release is now created and submitted on a release
+    pipeline.
+  - Release URLs added to AppStream metadata.
+  - We do not build GEGL with Matting Levin for Windows builds anymore
+    because of crashes.
+  - Flatpak nightly builds will now show a pseudo-release visible with
+    `flatpak list`, showing proper version information.
+  - Windows installer now has a dark mode.
+  - Update changelog on MS Store (MSIX) releases.
+  - AppImage now ships with full MIDI support.
+  - Make it clearer that GExiv2 0.15.0 and over are incompatible
+    (because of API breakage).
+  - Improve build to ensure that the language list (shown in
+    Preferences) is localized during compilation. This also means that a
+    build machine should be set up for localization at build time when
+    optional language selection is enabled.
+  - We now require the generic C++14 standard, and not the GNU variant
+    anymore.
+  - MSVC support added.
+  - Various tweaks which used to be required to make packages work as
+    relocatable builds were dropped since babl and GEGL now have a
+    relocatable option working also on Linux.
+  - The `man` page of GIMP binaries was updated.
+  - The `gimp-console` binary is now shipped in the Flatpak.
+  - macOS pipeline added in our Gitlab CI.
+  - Make sure that harfbuzz is built with libgraphite2 shaper on macOS.
+  - Generate file associations for macOS automatically.
+  - A Bash completion file was added for `gimp` and `gimp-console`
+    binaries.
+
+
 Overview of Changes from GIMP 3.0.4 to GIMP 3.0.6
 =================================================
 
