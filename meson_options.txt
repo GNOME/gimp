@@ -34,6 +34,7 @@ option('win-debugging',     type: 'combo',   value: 'native', description: 'Buil
 # Features
 
 option('enable-default-bin',type: 'feature', value: 'auto', description: 'Install unversioned symlinks pointing to versioned executables (on UNIX) or unversioned duplicates (on Windows)')
+option('bash-completion',   type: 'feature', value: 'auto', description: 'Install a bash completion script')
 option('aa',                type: 'feature', value: 'auto', description: 'AA plugin')
 option('alsa',              type: 'feature', value: 'auto', description: 'Alsa support in midi input controller')
 option('appdata-test',      type: 'feature', value: 'auto', description: 'Validate the appdata file')

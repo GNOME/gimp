@@ -21,20 +21,13 @@ install_data(
 )
 
 # Bash completion
-have_bash = find_program('bash', required : false).found() # For completion scripts
-bash_comp_dep = dependency('bash-completion', version: '>=2.0', required: false)
-if have_bash
-
+bash = find_program('bash', required : get_option('bash-completion'))
+bash_completion = dependency('bash-completion', version: '>=2.0', required: get_option('bash-completion'))
+if bash_completion.found()
   bash_comp_inst_dir = ''
-  if bash_comp_dep.found()
-    bash_comp_dir_override = bash_comp_dep.version().version_compare('>= 2.10') ? ['datadir', get_option('datadir')] : ['prefix', get_option('prefix')]
-    bash_comp_inst_dir = bash_comp_dep.get_variable('completionsdir', pkgconfig_define: bash_comp_dir_override)
-  endif
-
-  if bash_comp_inst_dir == ''
-    message('Found bash-completion but the .pc file did not set \'completionsdir\', fallback to a predefined path')
-    bash_comp_inst_dir = get_option('datadir') / 'bash-completion' / 'completions'
-  endif
+  bash_comp_dir_override = bash_completion.version().version_compare('>= 2.10') ? ['datadir', get_option('datadir')] : ['prefix', get_option('prefix')]
+  bash_comp_inst_dir = bash_completion.get_variable('completionsdir', pkgconfig_define: bash_comp_dir_override,
+                                                    default_value: get_option('datadir') / 'bash-completion' / 'completions')
 
   bash_completion_conf = configuration_data()
   bash_completion_conf.set('GIMP_MAIN_EXE', gimpmain_exe_name)
@@ -50,4 +43,13 @@ if have_bash
                  configuration: bash_completion_conf,
                  install: true,
                  install_dir: bash_comp_inst_dir)
+  have_bash_completion = 'true (@0@)'.format(bash_comp_inst_dir)
+elif get_option('bash-completion').disabled()
+  have_bash_completion = 'disabled'
+else
+  if not bash.found()
+    have_bash_completion = 'false (bash not found)'
+  elif not bash_completion.found()
+    have_bash_completion = 'false (bash-completion not found)'
+  endif
 endif
