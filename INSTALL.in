@@ -290,6 +290,7 @@ help in that regard:
 
      Package Name        Version        Feature
 
+     bash-completion     -              Bash Completion script
      bison               -              Image Map plug-in
      cairo-pdf           @CAIRO_PDF_REQUIRED_VERSION@         PDF export
      cfitsio             -              FITS
