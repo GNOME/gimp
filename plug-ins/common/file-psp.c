@@ -1121,7 +1121,17 @@ read_creator_block (FILE      *f,
         }
       keyword = GUINT16_FROM_LE (keyword);
       length = GUINT32_FROM_LE (length);
-      switch (keyword)
+
+      if ((goffset) ftell (f) + length > (goffset) data_start + total_len)
+        {
+          /* FIXME: After string freeze is over, we should consider changing
+           * this error message to be a bit more descriptive. */
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                        _("Error reading creator keyword data"));
+          return -1;
+        }
+
+        switch (keyword)
         {
         case PSP_CRTR_FLD_TITLE:
         case PSP_CRTR_FLD_ARTIST:
