@@ -178,7 +178,7 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
  *
  * Since: 2.10
  *
- * Deprecated: 3.2: Use gimp_cairo_surface_get_buffer().
+ * Deprecated: 3.0.8: Use gimp_cairo_surface_get_buffer().
  **/
 GeglBuffer *
 gimp_cairo_surface_create_buffer (cairo_surface_t *surface,
@@ -214,7 +214,7 @@ gimp_cairo_surface_create_buffer (cairo_surface_t *surface,
  *
  * Returns: (transfer full): a #GeglBuffer
  *
- * Since: 3.2
+ * Since: 3.0.8
  **/
 GeglBuffer *
 gimp_cairo_surface_get_buffer (cairo_surface_t *surface,
