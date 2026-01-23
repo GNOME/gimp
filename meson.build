@@ -2164,6 +2164,7 @@ final_message = [
 '''  Debug symbols format:          @0@'''.format(debugging_format),
 '''  Binary symlinks:               @0@'''.format(enable_default_bin),
 '''  OpenMP:                        @0@'''.format(have_openmp),
+'''  Bash Completion:               @0@'''.format(have_bash_completion),
 '',
 '''Optional Plug-Ins:''',
 '''  Ascii Art:           @0@'''.format(libaa.found()),
