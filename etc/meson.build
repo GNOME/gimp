@@ -28,7 +28,7 @@ if have_bash
   bash_comp_inst_dir = ''
   if bash_comp_dep.found()
     bash_comp_dir_override = bash_comp_dep.version().version_compare('>= 2.10') ? ['datadir', get_option('datadir')] : ['prefix', get_option('prefix')]
-    bash_comp_inst_dir = bash_comp_dep.get_variable('completionsdir', define_variable: bash_comp_dir_override)
+    bash_comp_inst_dir = bash_comp_dep.get_variable('completionsdir', pkgconfig_define: bash_comp_dir_override)
   endif
 
   if bash_comp_inst_dir == ''
