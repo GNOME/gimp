@@ -91,10 +91,13 @@
           <li>Font loading on start massively sped up</li>
           <li>Images won't start loading anymore before all fonts are loaded</li>
           <li>Several parts of the graphical interface are better matching the theme and settings</li>
-          <li>No outlines in the "Fx" column anymore when hovering</li>
+          <li demo="layer-list,
+                    layer-list:item-effect-header-icon">
+          No outlines in the "Fx" column anymore when hovering
+          </li>
           <li>Three functions added in the public API and one function was deprecated</li>
           <li>Better support of run environments without a display</li>
-          <li>More bugs and usability issues have been fixed</li>
+          <li>Many more bugs and usability issues have been fixed</li>
           <li>Reported instabilities and vulnerabilities were fixed</li>
         </ul>
       </description>
