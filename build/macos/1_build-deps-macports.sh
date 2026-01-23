@@ -35,8 +35,8 @@ export MACOSX_DEPLOYMENT_TARGET=$(awk '/LSMinimumSystemVersion/{found=1} found &
 
 printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by $( [ -f "$OPT_PREFIX/bin/port" ] && echo MacPorts || echo Homebrew )\n"
 if [ -f "$OPT_PREFIX/bin/port" ]; then
-  eval $( [ "$OPT_PREFIX"=/opt/local ] && echo sudo ) port sync && eval $( [ "$OPT_PREFIX"=/opt/local ] && echo sudo ) port upgrade outdated
-  eval $( [ "$OPT_PREFIX"=/opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | xargs)
+  eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync && eval $( [ "$OPT_PREFIX"=/opt/local ] && echo sudo ) port upgrade outdated
+  eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | xargs)
   git apply -v build/macos/patches/0001-meson-Patch-python-version.patch || true
 else
   brew upgrade --quiet
