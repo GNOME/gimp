@@ -204,6 +204,24 @@
       </description>
     </release>
 
+    <release version="3.0.8" date="TODO">
+      <url type="details">https://www.gimp.org/release/3.0.8/</url>
+      <description>
+        <p>
+        This micro release in the 3.0 series fixes many bugs, assorted with various usability improvements.
+        </p>
+        <ul>
+          <li>Font loading on start massively sped up</li>
+          <li>Images won't start loading anymore before all fonts are loaded</li>
+          <li>Several parts of the graphical interface are better matching the theme and settings</li>
+          <li>No outlines in the "Fx" column anymore when hovering</li>
+          <li>Three functions added in the public API and one function was deprecated</li>
+          <li>Better support of run environments without a display</li>
+          <li>More bugs and usability issues have been fixed</li>
+          <li>Reported instabilities and vulnerabilities were fixed</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.0.6" date="2025-10-04">
       <url type="details">https://www.gimp.org/release/3.0.6/</url>
       <description>
