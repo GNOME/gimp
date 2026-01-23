@@ -361,6 +361,23 @@ gimp_directory (void)
                                           NULL);
         }
 
+      const gchar *snap_path = g_getenv ("SNAP");
+      if (snap_path && g_file_test (snap_path, G_FILE_TEST_IS_DIR))
+        {
+          const gchar *snap_real_home = g_getenv ("SNAP_REAL_HOME");
+
+          if (snap_real_home == NULL)
+            gimp_dir =  g_build_filename (g_get_home_dir (),
+                                          ".config",
+                                          GIMPDIR, GIMP_USER_VERSION,
+                                          NULL);
+          else
+            gimp_dir =  g_build_filename (snap_real_home,
+                                          ".config",
+                                          GIMPDIR, GIMP_USER_VERSION,
+                                          NULL);
+        }
+
       if (gimp_dir == NULL)
         {
           /* g_get_user_config_dir () always returns a path as a non-null

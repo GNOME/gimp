@@ -41,6 +41,7 @@ apps:
       - intel-npu
       - npu-libs
       - gimp-plugins
+      - gimp-config
     extensions: [gnome]
 
 layout:
@@ -66,6 +67,10 @@ plugs:
     interface: content
     content: gimp-plugins-3
     target: $SNAP/gimp-plugins
+  gimp-config:
+    interface: personal-files
+    write:
+      - $HOME/.config/GIMP
 
 parts:
   buildenv:
