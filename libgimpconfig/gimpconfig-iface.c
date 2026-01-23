@@ -890,7 +890,7 @@ gimp_config_copy (GimpConfig  *src,
  *
  * Returns: the XCF version associated with the @config.
  *
- * Since: 3.2
+ * Since: 3.0.8
  **/
 guint
 gimp_config_get_xcf_version (GimpConfig *config)
@@ -913,7 +913,7 @@ gimp_config_get_xcf_version (GimpConfig *config)
  * to adjust how properties are serialized depending on the version of the XCF
  * that it is being saved to.
  *
- * Since: 3.2
+ * Since: 3.0.8
  **/
 void
 gimp_config_set_xcf_version (GimpConfig *config,
