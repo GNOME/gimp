@@ -35,6 +35,7 @@ Graphical User Interface:
   - The Navigation and Selection dockables are now properly colored
     according to the theme (in particular, in dark mode, they won't show
     huge bright areas when no images are opened).
+  - No outlines are shown anymore in the "Fx" column of item tree views.
 
 Command Line Interface:
 
@@ -78,6 +79,7 @@ Build:
     libgraphite2 shaper.
   - New -Ddmg boolean configure option to generate files needed for our
     macOS DMGs.
+  - New -Dbash-completion configure option.
 
 
 Overview of Changes from GIMP 3.2.0 RC1 to GIMP 3.2.0 RC2
