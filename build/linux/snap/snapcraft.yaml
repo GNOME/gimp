@@ -1,4 +1,4 @@
-name: gimp-experimental
+name: gimp
 adopt-info: gimp
 grade: stable #see parts:babl_or_gegl:override-pull
 base: core24
@@ -167,7 +167,7 @@ parts:
       - -Dgi-docgen=disabled
       - -Dcheck-update=no
       - -Denable-default-bin=enabled
-      - -Dbuild-id=org.gimp.GIMP.snapcraft.experimental
+      - -Dbuild-id=org.gimp.GIMP.snapcraft.latest
     build-packages:
       - bison
       - flex
