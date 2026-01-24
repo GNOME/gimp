@@ -82,7 +82,7 @@ Plug-ins:
     plug-ins.
   - Fixed vulnerabilities: ZDI-CAN-28376, ZDI-CAN-28311, ZDI-CAN-28273,
     ZDI-CAN-28158, ZDI-CAN-28232, ZDI-CAN-28265, ZDI-CAN-28530,
-    ZDI-CAN-28248.
+    ZDI-CAN-28248, PSP issue 15732.
   - Script-Fu improved to not initialize UI code unnecessarily (and
     therefore make it unusable on systems without a display).
 
