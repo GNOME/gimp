@@ -683,17 +683,24 @@ gimp-win-eol:
 - printf "\e[0Ksection_end:`date +%s`:macos_environ\r\e[0K\n"
 
 deps-macos-inhouse-part1:
+  #This splitted job is needed to rebuild 'vala' in time when it is bumped
   extends: .macos-inhouse
   stage: dependencies
+  cache:
+    - key: $CI_PROJECT_NAMESPACE
+      paths:
+        - macports-cached
+      policy: pull
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
     - zsh build/macos/1_build-deps-macports.sh --part1
   artifacts:
     paths:
-      - macports.tar.gz
+      - macports
     expire_in: 2 hours
 
 deps-macos-inhouse-part2:
+  #This splitted job is needed to rebuild 'rust' in time when it is bumped
   extends: .macos-inhouse
   needs: ["deps-macos-inhouse-part1"]
   stage: dependencies
@@ -702,7 +709,7 @@ deps-macos-inhouse-part2:
     - zsh build/macos/1_build-deps-macports.sh --part2
   artifacts:
     paths:
-      - macports.tar.gz
+      - macports
     expire_in: 2 hours
 
 deps-macos-inhouse:
@@ -712,12 +719,17 @@ deps-macos-inhouse:
       #to allow running the Homebrew builds which use precompiled binaries
       optional: true
   stage: dependencies
+  cache:
+    - key: $CI_PROJECT_NAMESPACE
+      paths:
+        - macports-cached
+      policy: push
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
     - zsh build/macos/1_build-deps-macports.sh
   artifacts:
     paths:
-      - macports.tar.gz
+      - macports
       - _install-*
       # The full build dir is needed due to its .o for .dSYM creation on next job
       - babl/_build-*
