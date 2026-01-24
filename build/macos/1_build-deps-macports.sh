@@ -38,21 +38,28 @@ fi #End of config
 printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by $( [ -f "$OPT_PREFIX/bin/port" ] && echo MacPorts || echo Homebrew )\n"
 if [ -f "$OPT_PREFIX/bin/port" ]; then
   eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync && eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port upgrade outdated
-  if [ -f 'macports.tar.gz' ]; then
-    bsdtar xf macports.tar.gz -C / || true
+  if [ "$CI_JOB_NAME" ] && ls -d macports* 2>/dev/null | grep -q .; then
+    if echo "$CI_JOB_NAME" | grep -q 'part1' && [ -d 'macports-cached' ]; then
+      cp -fa macports-cached/* $OPT_PREFIX/var/macports || true
+    elif [ -d 'macports' ]; then
+      cp -fa macports/* $OPT_PREFIX/var/macports || true
+    fi
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port deactivate -fN installed
   fi
-  if [ "$1" = '--part1' ]; then
+  if echo "$CI_JOB_NAME" | grep -q 'part1'; then
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | awk '{print} /vala/{exit}' | xargs)
-  elif [ "$1" = '--part2' ]; then
+  elif echo "$CI_JOB_NAME" | grep -q 'part2'; then
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | awk '{print} /appstream/{exit}' | xargs)
   else
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | xargs)
   fi
   if echo "$CI_JOB_NAME" | grep -q 'deps'; then
-    bsdtar -cf macports.tar.gz --gzip "$OPT_PREFIX" || true
-  fi
-  if echo "$1" | grep -q 'part'; then
-    exit 0
+    cp -fa $OPT_PREFIX/var/macports . || true
+    if echo "$CI_JOB_NAME" | grep -q 'part'; then
+      exit 0
+    elif [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
+      cp -fa macports macports-cached || true
+    fi
   fi
   git apply -v build/macos/patches/0001-meson-Patch-python-version.patch || true
 else
