@@ -28,6 +28,7 @@ if [ -z "$OPT_PREFIX" ]; then
     exit 1
   fi
 fi
+#FIXME: move MACOSX_DEPLOYMENT_TARGET to inside the condition after ScreenCaptureKit support
 export MACOSX_DEPLOYMENT_TARGET=$(awk '/LSMinimumSystemVersion/{found=1} found && /<string>/{gsub(/.*<string>|<\/string>.*/, ""); print; exit}' build/macos/Info.plist)
 if [ "$OPT_PREFIX" != '/opt/local' ] && [ "$OPT_PREFIX" != '/opt/homebrew' ]; then
   echo "macosx_deployment_target ${MACOSX_DEPLOYMENT_TARGET}" | tee -a ${OPT_PREFIX}/etc/macports/macports.conf >/dev/null 2>&1 || true
