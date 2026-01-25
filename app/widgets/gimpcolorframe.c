@@ -612,23 +612,19 @@ gimp_color_frame_set_color (GimpColorFrame *frame,
   g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
   g_return_if_fail (GEGL_IS_COLOR (color));
 
-  color = gegl_color_duplicate (color);
-  if (frame->sample_valid                                                   &&
-      frame->sample_average                == sample_average                &&
-      frame->x                             == x                             &&
-      frame->y                             == y                             &&
-      gegl_color_get_format (frame->color) == gegl_color_get_format (color) &&
-      gimp_color_is_perceptually_identical (frame->color, color))
+  if (frame->sample_valid                     &&
+      frame->sample_average == sample_average &&
+      frame->x              == x              &&
+      frame->y              == y              &&
+      ! gegl_color_cmp (frame->color, color))
     {
-      g_clear_object (&frame->color);
-      frame->color = color;
       return;
     }
 
   frame->sample_valid   = TRUE;
   frame->sample_average = sample_average;
   g_clear_object (&frame->color);
-  frame->color          = color;
+  frame->color          = gegl_color_duplicate (color);
   frame->x              = x;
   frame->y              = y;
 
