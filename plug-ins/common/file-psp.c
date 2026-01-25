@@ -1127,7 +1127,7 @@ read_creator_block (FILE      *f,
           /* FIXME: After string freeze is over, we should consider changing
            * this error message to be a bit more descriptive. */
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                        _("Error reading creator keyword data"));
+                       _("Error reading creator keyword data"));
           return -1;
         }
 
@@ -2171,7 +2171,7 @@ read_layer_block (FILE      *f,
                   || fread (&channel_type, 2, 1, f) < 1)
                 {
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                              _("Error reading channel information chunk"));
+                               _("Error reading channel information chunk"));
                   return NULL;
                 }
 
@@ -2501,7 +2501,7 @@ read_extended_block (FILE      *f,
                 fread (&unit, 2, 1, f) < 1)
               {
                 g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Error reading extended chunk grid data"));
+                             _("Error reading extended chunk grid data"));
                 return -1;
               }
 
@@ -2529,7 +2529,7 @@ read_extended_block (FILE      *f,
                 fread (&orientation, 2, 1, f) < 1)
               {
                 g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Error reading extended chunk guide data"));
+                             _("Error reading extended chunk guide data"));
                 return -1;
               }
 
