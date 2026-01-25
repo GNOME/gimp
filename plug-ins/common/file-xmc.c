@@ -1477,19 +1477,6 @@ export_image (GFile         *file,
        * All property of this XcursorImage is loaded.
        */
 
-      /* set the layer name of original image with the saved value */
-      g_free (framename);
-      framename = make_framename (imagesp->images[i]->size,
-                                  imagesp->images[i]->delay,
-                                  DISPLAY_DIGIT (imagesp->nimage),
-                                  error);
-      if (! framename)
-        {
-          fclose (fp);
-          return FALSE;
-        }
-
-      gimp_item_set_name (orig_list->data, framename);
       g_free (framename);
 
       g_object_unref (buffer);
