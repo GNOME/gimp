@@ -1226,9 +1226,7 @@ export_image (GFile         *file,
   XcursorComments *commentsp;              /* pointer to comments */
   XcursorImages   *imagesp;                /* pointer to images */
   GList           *layers;                 /* Array of layer */
-  GList           *orig_layers;            /* Array of layer of orig_image */
   GList           *list;
-  GList           *orig_list;
   gchar           *framename;              /* framename of a layer */
   GeglRectangle    save_rgn = { 0 };       /* region to save */
   gint             layer_xoffset, layer_yoffset;
@@ -1275,10 +1273,8 @@ export_image (GFile         *file,
     }
 
   /* get layers, in bottom-to-top order */
-  orig_layers = gimp_image_list_layers (orig_image);
   layers      = gimp_image_list_layers (image);
 
-  orig_layers = g_list_reverse (orig_layers);
   layers      = g_list_reverse (layers);
 
   /* create new XcursorImages. */
@@ -1297,9 +1293,9 @@ export_image (GFile         *file,
   /*
    *  Now we start to convert each layer to a XcurosrImage one by one.
    */
-  for (list = layers, orig_list = orig_layers, i = 0;
-       list && orig_list;
-       list = g_list_next (layers), orig_list = g_list_next (orig_list), i++)
+  for (list = layers, i = 0;
+       list;
+       list = g_list_next (list), i++)
     {
       GimpDrawable *drawable = list->data;
       GeglBuffer   *buffer;
@@ -1485,7 +1481,6 @@ export_image (GFile         *file,
     }
 
   g_list_free (list);
-  g_list_free (orig_list);
 
   gimp_progress_update (1.0);
 
@@ -1977,7 +1972,7 @@ get_cropped_region (GeglRectangle *return_rgn,
 
   DM_XMC ("function:get_cropped_region\n");
 
-  DM_XMC ("getTrim:\tMAX=%i\tpr->w=%i\tpr->h=%i\n", sizeof (buf)/4, pr->w, pr->h);
+  DM_XMC ("getTrim:\tMAX=%li\twidth=%i\theight=%i\n", sizeof (buf)/4, width, height);
 
   /* find left border. */
   for (i = 0; i < width; ++i)
