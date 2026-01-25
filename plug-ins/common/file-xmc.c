@@ -1293,9 +1293,7 @@ export_image (GFile         *file,
   /*
    *  Now we start to convert each layer to a XcurosrImage one by one.
    */
-  for (list = layers, i = 0;
-       list;
-       list = g_list_next (list), i++)
+  for (list = layers, i = 0; list; list = g_list_next (list), i++)
     {
       GimpDrawable *drawable = list->data;
       GeglBuffer   *buffer;
@@ -1972,7 +1970,7 @@ get_cropped_region (GeglRectangle *return_rgn,
 
   DM_XMC ("function:get_cropped_region\n");
 
-  DM_XMC ("getTrim:\tMAX=%li\twidth=%i\theight=%i\n", sizeof (buf)/4, width, height);
+  DM_XMC ("getTrim:\tMAX=%li\twidth=%i\theight=%i\n", sizeof (buf) / 4, width, height);
 
   /* find left border. */
   for (i = 0; i < width; ++i)
