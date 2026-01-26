@@ -107,6 +107,11 @@ static void       gimp_link_layer_translate      (GimpItem              *item,
                                                   gdouble                offset_x,
                                                   gdouble                offset_y,
                                                   gboolean               push_undo);
+static void       gimp_link_layer_flip           (GimpItem            *item,
+                                                  GimpContext         *context,
+                                                  GimpOrientationType  flip_type,
+                                                  gdouble              axis,
+                                                  gboolean             clip_result);
 static void       gimp_link_layer_scale          (GimpItem              *item,
                                                   gint                   new_width,
                                                   gint                   new_height,
@@ -194,6 +199,7 @@ gimp_link_layer_class_init (GimpLinkLayerClass *klass)
   item_class->duplicate             = gimp_link_layer_duplicate;
   item_class->rename                = gimp_rasterizable_rename;
   item_class->translate             = gimp_link_layer_translate;
+  item_class->flip                  = gimp_link_layer_flip;
   item_class->scale                 = gimp_link_layer_scale;
   item_class->transform             = gimp_link_layer_transform;
 
@@ -399,6 +405,22 @@ gimp_link_layer_translate (GimpItem *item,
     gimp_matrix3_translate (&layer->p->matrix, offset_x, offset_y);
 
   GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y, push_undo);
+}
+
+static void
+gimp_link_layer_flip (GimpItem       *item,
+                 GimpContext         *context,
+                 GimpOrientationType  flip_type,
+                 gdouble              axis,
+                 gboolean             clip_result)
+{
+  GimpLayer     *layer      = GIMP_LAYER (item);
+
+  GIMP_LAYER_GET_CLASS (layer)->flip (layer, context, flip_type, axis,
+                                      clip_result);
+  if (layer->mask)
+    gimp_item_flip (GIMP_ITEM (layer->mask), context,
+                    flip_type, axis, clip_result);
 }
 
 static void
