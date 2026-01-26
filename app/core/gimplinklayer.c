@@ -408,19 +408,35 @@ gimp_link_layer_translate (GimpItem *item,
 }
 
 static void
-gimp_link_layer_flip (GimpItem       *item,
-                 GimpContext         *context,
-                 GimpOrientationType  flip_type,
-                 gdouble              axis,
-                 gboolean             clip_result)
+gimp_link_layer_flip (GimpItem            *item,
+                      GimpContext         *context,
+                      GimpOrientationType  flip_type,
+                      gdouble              axis,
+                      gboolean             clip_result)
 {
-  GimpLayer     *layer      = GIMP_LAYER (item);
+  GimpLinkLayer *layer      = GIMP_LINK_LAYER (item);
+  GimpMatrix3   matrix;
+  gint offset_x;
+  gint offset_y;
+  GimpInterpolationType interpolation;
 
-  GIMP_LAYER_GET_CLASS (layer)->flip (layer, context, flip_type, axis,
-                                      clip_result);
-  if (layer->mask)
-    gimp_item_flip (GIMP_ITEM (layer->mask), context,
-                    flip_type, axis, clip_result);
+  // offset_x = layer->p->offset_x;
+  // offset_x = layer->p->offset_x;
+
+  // gimp_matrix3_identity(&matrix);
+  gimp_link_layer_get_transform(layer, &matrix, &offset_x, &offset_y, &interpolation);
+
+  if (flip_type == GIMP_ORIENTATION_HORIZONTAL)
+    {
+      gimp_matrix3_affine(&matrix, -1, 0, 0, 1, 0, 0);
+    }
+  else if (flip_type == GIMP_ORIENTATION_VERTICAL)
+    {
+      gimp_matrix3_affine(&matrix, 1, 0, 0, -1, 0, 0);
+    }
+
+  gimp_link_layer_set_transform (layer, &matrix, GIMP_INTERPOLATION_NONE, TRUE);
+  gimp_item_set_offset (item, offset_x, offset_y);
 }
 
 static void
