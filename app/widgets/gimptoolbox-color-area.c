@@ -206,7 +206,7 @@ color_area_dialog_update (GimpColorDialog      *dialog,
       break;
     }
 
-  if (gimp_context_get_display (context))
+  if (gimp_context_get_display (context) && state != GIMP_COLOR_DIALOG_UPDATE)
     gimp_display_grab_focus (gimp_context_get_display (context));
 }
 
