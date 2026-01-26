@@ -44,6 +44,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "libgimpbase/gimpversion-private.h"
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -322,8 +323,6 @@ static void             p_put_mix_pixel               (t_GDRW              *gdrw
 static void             p_stretch_curves              (BenderDialog        *cd,
                                                        gint32               xmax,
                                                        gint32               ymax);
-static void             p_cd_to_bval                  (BenderDialog        *cd,
-                                                       BenderValues        *bval);
 static void             p_cd_from_bval                (BenderDialog        *cd,
                                                        BenderValues        *bval);
 static void             p_store_values                (GimpProcedureConfig *config,
@@ -507,6 +506,9 @@ bender_create_procedure (GimpPlugIn  *plug_in,
                                              FALSE,
                                              G_PARAM_READWRITE);
 
+      GIMP_WARNING_API_BREAK ("'settings-data' fallback parameter can be "
+                              "removed since it is replaced by individual "
+                              "parameters.");
       gimp_procedure_add_bytes_aux_argument (procedure, "settings-data",
                                              "Settings data",
                                              "TODO: eventually we must implement proper args for every settings",
@@ -879,27 +881,6 @@ p_load_pointfile (BenderDialog *cd,
 }
 
 static void
-p_cd_to_bval (BenderDialog *cd,
-              BenderValues *bval)
-{
-  gint i, j;
-
-  for (i = 0; i < 2; i++)
-    {
-      for (j = 0; j < 256; j++)
-        {
-          bval->curve[i][j] = cd->curve[i][j];
-        }
-
-      for (j = 0; j < 17; j++)
-        {
-          bval->points[i][j][0] = cd->points[i][j][0];  /* x */
-          bval->points[i][j][1] = cd->points[i][j][1];  /* y */
-        }
-    }
-}
-
-static void
 p_cd_from_bval (BenderDialog *cd,
                 BenderValues *bval)
 {
@@ -924,31 +905,151 @@ static void
 p_store_values (GimpProcedureConfig *config,
                 BenderDialog        *cd)
 {
-  BenderValues  bval;
-  GBytes       *settings_bytes;
+  GimpArray  *upper_point_x_array = g_slice_new0 (GimpArray);
+  GimpArray  *upper_point_y_array = g_slice_new0 (GimpArray);
+  GimpArray  *lower_point_x_array = g_slice_new0 (GimpArray);
+  GimpArray  *lower_point_y_array = g_slice_new0 (GimpArray);
+  GBytes     *upper_val_y_array   = NULL;
+  GBytes     *lower_val_y_array   = NULL;
+  gdouble     data_x[17];
+  gdouble     data_y[17];
 
-  p_cd_to_bval (cd, &bval);
+  for (gint i = 0; i < 17; i++)
+    {
+      data_x[i] = cd->points[0][i][0];
+      data_y[i] = cd->points[0][i][1];
+    }
+  gimp_double_array_set_values (upper_point_x_array, data_x, 17, FALSE);
+  gimp_double_array_set_values (upper_point_y_array, data_y, 17, FALSE);
 
-  settings_bytes = g_bytes_new (&bval, sizeof (BenderValues));
-  g_object_set (config, "settings-data", settings_bytes, NULL);
-  g_bytes_unref (settings_bytes);
+  for (gint i = 0; i < 17; i++)
+    {
+      data_x[i] = cd->points[1][i][0];
+      data_y[i] = cd->points[1][i][1];
+    }
+  gimp_double_array_set_values (lower_point_x_array, data_x, 17, FALSE);
+  gimp_double_array_set_values (lower_point_y_array, (const gdouble *) data_y, 17, FALSE);
+
+  upper_val_y_array = g_bytes_new (&cd->curve[0], 256);
+  lower_val_y_array = g_bytes_new (&cd->curve[1], 256);
+
+  g_object_set (config,
+                "upper-point-x", upper_point_x_array,
+                "upper-point-y", upper_point_y_array,
+                "lower-point-x", lower_point_x_array,
+                "lower-point-y", lower_point_y_array,
+                "upper-val-y",   upper_val_y_array,
+                "lower-val-y",   lower_val_y_array,
+                NULL);
+
+  g_free (upper_point_x_array);
+  g_free (upper_point_y_array);
+  g_free (lower_point_x_array);
+  g_free (lower_point_y_array);
+  g_bytes_unref (upper_val_y_array);
+  g_bytes_unref (lower_val_y_array);
 }
 
 static void
 p_retrieve_values (GimpProcedureConfig *config,
                    BenderDialog        *cd)
 {
-  GBytes *settings_bytes;
+  GBytes    *settings_bytes;
+  gboolean   load_settings_data  = TRUE;
+  GimpArray *upper_point_x_array = NULL;
+  GimpArray *upper_point_y_array = NULL;
+  GimpArray *lower_point_x_array = NULL;
+  GimpArray *lower_point_y_array = NULL;
+  GBytes    *upper_val_y_array   = NULL;
+  GBytes    *lower_val_y_array   = NULL;
 
-  g_object_get (config, "settings-data", &settings_bytes, NULL);
-  if (settings_bytes != NULL && g_bytes_get_size (settings_bytes) == sizeof (BenderValues))
+  g_object_get (config,
+                "settings-data", &settings_bytes,
+                "upper-point-x", &upper_point_x_array,
+                "upper-point-y", &upper_point_y_array,
+                "lower-point-x", &lower_point_x_array,
+                "lower-point-y", &lower_point_y_array,
+                "upper-val-y",   &upper_val_y_array,
+                "lower-val-y",   &lower_val_y_array,
+                NULL);
+
+  /* Smooth mode values */
+  if (upper_point_x_array != NULL &&
+      upper_point_y_array != NULL)
+    {
+      gsize          length_x;
+      gsize          length_y;
+      const gdouble *data_x;
+      const gdouble *data_y;
+
+      data_x = gimp_double_array_get_values (upper_point_x_array, &length_x);
+      data_y = gimp_double_array_get_values (upper_point_y_array, &length_y);
+
+      for (gint i = 0; i < 17; i++)
+        {
+          cd->points[0][i][0] = (i < length_x) ? data_x[i] : -1.0f;
+          cd->points[0][i][1] = (i < length_y) ? data_y[i] : -1.0f;
+        }
+      load_settings_data = FALSE;
+    }
+  if (lower_point_x_array != NULL &&
+      lower_point_y_array != NULL)
+    {
+      gsize          length_x;
+      gsize          length_y;
+      const gdouble *data_x;
+      const gdouble *data_y;
+
+      data_x = gimp_double_array_get_values (lower_point_x_array, &length_x);
+      data_y = gimp_double_array_get_values (lower_point_y_array, &length_y);
+
+      for (gint i = 0; i < 17; i++)
+        {
+          cd->points[1][i][0] = (i < length_x) ? data_x[i] : -1.0f;
+          cd->points[1][i][1] = (i < length_y) ? data_y[i] : -1.0f;
+        }
+      load_settings_data = FALSE;
+    }
+
+  /* Free hand values */
+  if (upper_val_y_array != NULL)
+    {
+      gsize         length;
+      const guint8 *data;
+
+      data   = g_bytes_get_data (upper_val_y_array, NULL);
+      length = g_bytes_get_size (upper_val_y_array);
+
+      for (gint i = 0; i < 256; i++)
+        cd->curve[0][i] = (i < length) ? data[i] : 0;
+      load_settings_data = FALSE;
+    }
+  if (lower_val_y_array != NULL)
+    {
+      gsize         length;
+      const guint8 *data;
+
+      data   = g_bytes_get_data (lower_val_y_array, NULL);
+      length = g_bytes_get_size (lower_val_y_array);
+
+      for (gint i = 0; i < 256; i++)
+        cd->curve[1][i] = (i < length) ? data[i] : 0;
+      load_settings_data = FALSE;
+    }
+
+  /* TODO: Remove once we no longer have data-settings parameter */
+  if (load_settings_data     &&
+      settings_bytes != NULL &&
+      g_bytes_get_size (settings_bytes) == sizeof (BenderValues))
     {
       BenderValues bval;
 
       bval = *((BenderValues *) g_bytes_get_data (settings_bytes, NULL));
-      p_cd_from_bval(cd, &bval);
+      p_cd_from_bval (cd, &bval);
     }
   g_bytes_unref (settings_bytes);
+  g_bytes_unref (upper_val_y_array);
+  g_bytes_unref (lower_val_y_array);
 }
 
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
