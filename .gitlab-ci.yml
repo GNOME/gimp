@@ -667,9 +667,16 @@ gimp-win-eol:
   variables:
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
     DMG_OPTION: '-Ddmg=true'
+    ARCH: x86_64
   before_script:
+    - export MACPORTS_VERSION=2.11.5
+    - curl -L -O https://github.com/macports/macports-base/releases/download/v${MACPORTS_VERSION}/MacPorts-${MACPORTS_VERSION}.tar.bz2
+    - tar xf MacPorts-${MACPORTS_VERSION}.tar.bz2
+    - cd MacPorts-${MACPORTS_VERSION}
+    - export ARCHPREFERENCE=x86_64
+    - arch -x86_64 ./configure --prefix=macports-x86_64--with-applications-dir=macports-x86_64/Applications --with-no-root-privileges --without-startupitems --with-install-user=${USER} --with-install-group=staff
     - export GIMP_PREFIX="$PWD/_install-$(uname -m)"
-    - export PATH="$OPT_PREFIX/bin:$PATH"
+    - export PATH="$PWD/macports-x86_64/bin:$PATH"
   timeout: 150m
 
 .macos_environ: &MAC_ENVIRON
@@ -687,16 +694,16 @@ deps-macos-inhouse-part1:
   extends: .macos-inhouse
   stage: dependencies
   cache:
-    - key: $CI_PROJECT_NAMESPACE
+    - key: $CI_PROJECT_NAMESPACE-${ARCH}
       paths:
-        - macports-cached
+        - macports-cached-${ARCH}
       policy: pull
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
     - zsh build/macos/1_build-deps-macports.sh --part1
   artifacts:
     paths:
-      - macports
+      - macports-${ARCH}
     expire_in: 2 hours
 
 deps-macos-inhouse-part2:
@@ -709,7 +716,7 @@ deps-macos-inhouse-part2:
     - zsh build/macos/1_build-deps-macports.sh --part2
   artifacts:
     paths:
-      - macports
+      - macports-${ARCH}
     expire_in: 2 hours
 
 deps-macos-inhouse:
@@ -720,16 +727,16 @@ deps-macos-inhouse:
       optional: true
   stage: dependencies
   cache:
-    - key: $CI_PROJECT_NAMESPACE
+    - key: $CI_PROJECT_NAMESPACE-${ARCH}
       paths:
-        - macports-cached
+        - macports-cached-${ARCH}
       policy: push
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
     - zsh build/macos/1_build-deps-macports.sh
   artifacts:
     paths:
-      - macports
+      - macports-${ARCH}
       - _install-*
       # The full build dir is needed due to its .o for .dSYM creation on next job
       - babl/_build-*

@@ -37,13 +37,13 @@ eval "$(sed -n -e 's/- //' -e '/macos_environ\[/,/macos_environ/p' .gitlab-ci.ym
 
 # Build GIMP only
 printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
-if [ ! -f "_build-$(uname -m)/build.ninja" ]; then
-  meson setup _build-$(uname -m) -Dprefix="$GIMP_PREFIX" $NON_RELOCATABLE_OPTION \
+if [ ! -f "_build-${ARCH-$(uname -m)}/build.ninja" ]; then
+  meson setup _build-${ARCH-$(uname -m)} -Dprefix="$GIMP_PREFIX" $NON_RELOCATABLE_OPTION \
               $PKGCONF_RELOCATABLE_OPTION $DMG_OPTION \
               -Dbuild-id=org.gimp.GIMP_official \
               -Dc_args="-I${OPT_PREFIX}/include" -Dcpp_args="-I${OPT_PREFIX}/include" -Dc_link_args="-L${OPT_PREFIX}/lib" -Dcpp_link_args="-L${OPT_PREFIX}/lib"
 fi
-cd _build-$(uname -m)
+cd _build-${ARCH-$(uname -m)}
 ninja
 printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
 

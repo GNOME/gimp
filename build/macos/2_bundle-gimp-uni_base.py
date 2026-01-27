@@ -42,7 +42,7 @@ GIMP_PREFIX = Path(os.getenv("MESON_INSTALL_DESTDIR_PREFIX"))
 ## Bundle dir: we make a "perfect" bundle separated from GIMP_PREFIX
 #NOTE: The bundling script need to set $OPT_PREFIX to our dist scripts
 #fallback code be able to identify what arch they are distributing
-GIMP_DISTRIB = Path(GIMP_SOURCE) / f"gimp-{platform.machine()}.app" / "Contents"
+GIMP_DISTRIB = Path(GIMP_SOURCE) / f"gimp-{os.getenv('ARCH', platform.machine())}.app" / "Contents"
 
 def bundle(src_root, pattern, option="None", override=None):
   ## Search for targets in search path

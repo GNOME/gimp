@@ -32,17 +32,17 @@ fi
 export MACOSX_DEPLOYMENT_TARGET=$(awk '/LSMinimumSystemVersion/{found=1} found && /<string>/{gsub(/.*<string>|<\/string>.*/, ""); print; exit}' build/macos/Info.plist)
 if [ "$OPT_PREFIX" != '/opt/local' ] && [ "$OPT_PREFIX" != '/opt/homebrew' ]; then
   echo "macosx_deployment_target ${MACOSX_DEPLOYMENT_TARGET}" | tee -a ${OPT_PREFIX}/etc/macports/macports.conf >/dev/null 2>&1 || true
-  sed -i .bak "s/^#build_arch.*/build_arch $(uname -m)/" "${OPT_PREFIX}/etc/macports/macports.conf" >/dev/null 2>&1 || true
+  sed -i .bak "s/^#build_arch.*/build_arch ${ARCH-$(uname -m)}/" "${OPT_PREFIX}/etc/macports/macports.conf" >/dev/null 2>&1 || true
 fi #End of config
 
 printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by $( [ -f "$OPT_PREFIX/bin/port" ] && echo MacPorts || echo Homebrew )\n"
 if [ -f "$OPT_PREFIX/bin/port" ]; then
   eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync && eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port upgrade outdated
-  if [ "$CI_JOB_NAME" ] && ls -d macports* 2>/dev/null | grep -q .; then
+  if [ "$CI_JOB_NAME" ] && ls -d macports*${ARCH-$(uname -m)} 2>/dev/null | grep -q .; then
     if echo "$CI_JOB_NAME" | grep -q 'part1' && [ -d 'macports-cached' ]; then
-      cp -fa macports-cached/* $OPT_PREFIX/var/macports || true
+      cp -fa macports-cached-${ARCH-$(uname -m)}/* $OPT_PREFIX/var/macports || true
     elif [ -d 'macports' ]; then
-      cp -fa macports/* $OPT_PREFIX/var/macports || true
+      cp -fa macports-${ARCH-$(uname -m)}/* $OPT_PREFIX/var/macports || true
     fi
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port deactivate -fN installed
   fi
@@ -58,7 +58,7 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
     if echo "$CI_JOB_NAME" | grep -q 'part'; then
       exit 0
     elif [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
-      cp -fa macports macports-cached || true
+      cp -fa macports-${ARCH-$(uname -m)} macports-cached-${ARCH-$(uname -m)} || true
     fi
   fi
   git apply -v build/macos/patches/0001-meson-Patch-python-version.patch || true
@@ -99,12 +99,12 @@ self_build()
   git pull
 
   # Configure and build
-  if [ ! -f "_build-$(uname -m)/build.ninja" ]; then
-    meson setup _build-$(uname -m) -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION \
+  if [ ! -f "_build-${ARCH-$(uname -m)}/build.ninja" ]; then
+    meson setup _build-${ARCH-$(uname -m)} -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION \
                 -Dbuildtype=debugoptimized \
                 -Dc_args="-I${OPT_PREFIX}/include" -Dcpp_args="-I${OPT_PREFIX}/include" -Dc_link_args="-L${OPT_PREFIX}/lib" -Dcpp_link_args="-L${OPT_PREFIX}/lib"
   fi
-  cd _build-$(uname -m)
+  cd _build-${ARCH-$(uname -m)}
   ninja
   ninja install
   cd ../..
