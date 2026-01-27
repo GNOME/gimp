@@ -235,13 +235,13 @@ clone_invoker (GimpProcedure         *procedure,
           g_object_set (options,
                         "clone-type",    clone_type,
                         "src-drawables", src_drawables,
+                        "src-x",         (gint) floor (src_x),
+                        "src-y",         (gint) floor (src_y),
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
-                                        "src-x",     (gint) floor (src_x),
-                                        "src-y",     (gint) floor (src_y),
                                         NULL);
           g_list_free (src_drawables);
         }
@@ -617,13 +617,13 @@ heal_invoker (GimpProcedure         *procedure,
 
           g_object_set (options,
                         "src-drawables", src_drawables,
+                        "src-x",         (gint) floor (src_x),
+                        "src-y",         (gint) floor (src_y),
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", options->paint_info->blurb,
-                                        "src-x",     (gint) floor (src_x),
-                                        "src-y",     (gint) floor (src_y),
                                         NULL);
           g_list_free (src_drawables);
         }
