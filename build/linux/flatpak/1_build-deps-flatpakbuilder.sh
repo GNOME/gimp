@@ -14,6 +14,18 @@ elif [ $(basename "$PWD") = 'flatpak' ]; then
   cd ../../..
 fi
 
+security create-keychain -p "" signchain
+security set-keychain-settings signchain
+security unlock-keychain -u signchain
+security list-keychains -s "${HOME}/Library/Keychains/signchain-db" "${HOME}/Library/Keychains/login.keychain-db"
+curl 'https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer' > AppleWWDRCAG3.cer
+security import AppleWWDRCAG3.cer -k signchain -T /usr/bin/codesign
+#echo "$osx_crt" | base64 -D > gnome.p12
+#security import gnome.p12  -k signchain -P "$osx_crt_pw" -T /usr/bin/codesign
+
+security set-key-partition-list -S apple-tool:,apple: -k "" signchain
+exit 0
+
 
 # Install part of the deps
 if which flatpak-builder >/dev/null 2>&1; then
