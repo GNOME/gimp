@@ -51,7 +51,7 @@ gboolean gimp_drawable_curves_explicit     (GimpDrawable         *drawable,
                                             const gdouble        *values);
 gboolean gimp_drawable_curves_spline       (GimpDrawable         *drawable,
                                             GimpHistogramChannel  channel,
-                                            gsize                 num_points,
+                                            gsize                 num_coordinates,
                                             const gdouble        *points);
 gboolean gimp_drawable_extract_component   (GimpDrawable         *drawable,
                                             gint                  component,

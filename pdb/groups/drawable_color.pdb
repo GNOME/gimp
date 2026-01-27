@@ -239,11 +239,19 @@ sub drawable_curves_spline {
 
     $help = <<'HELP';
 Modifies the intensity mapping for one channel in the specified
-drawable. The channel can be either an intensity component, or the
-value. The 'points' parameter is an array of doubles which define a
-set of control points which describe a Catmull Rom spline which yields
-the final intensity curve. Use the gimp_drawable_curves_explicit()
-function to explicitly modify intensity levels.
+@drawable. The @channel can be either an intensity component, or the
+value.
+
+
+The @points parameter is an array of doubles in the range `[0, 1]` which
+define a set of control points which describe a Catmull Rom spline which
+yields the final intensity curve. Since every point has 2 coordinates,
+the size of @points (@num_coordinates) must be a multiple of 2, equal or
+bigger than 4 (i.e. a minimum of 2 points).
+
+
+Use [method@Gimp.Drawable.curves_explicit] to explicitly modify intensity
+levels.
 HELP
 
     &std_pdb_misc;
@@ -257,8 +265,8 @@ HELP
 	{ name => 'points', type => 'doublearray',
 	  desc => 'The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y,
 		   ... }',
-	  array => { name => 'num_points', type => '4 <= size <= 2048',
-		     desc => 'The number of values in the control point array' }
+	  array => { name => 'num_coordinates', type => '4 <= size <= 2048',
+		     desc => 'The number of coordinates (2 per points) in the control point array' }
        }
     );
 
@@ -269,7 +277,7 @@ HELP
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      ! (num_points & 1) &&
+      ! (num_coordinates & 1) &&
       (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
       (! gimp_drawable_is_gray (drawable) ||
        channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA) &&
@@ -277,7 +285,7 @@ HELP
     {
       GObject *config = gimp_curves_config_new_spline (channel,
                                                        points,
-                                                       num_points / 2);
+                                                       num_coordinates / 2);
 
       gimp_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Curves"),
@@ -286,7 +294,9 @@ HELP
       g_object_unref (config);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );

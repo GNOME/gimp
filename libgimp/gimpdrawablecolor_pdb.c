@@ -240,17 +240,22 @@ gimp_drawable_curves_explicit (GimpDrawable         *drawable,
  * gimp_drawable_curves_spline:
  * @drawable: The drawable.
  * @channel: The channel to modify.
- * @num_points: The number of values in the control point array.
- * @points: (array length=num_points) (element-type gdouble): The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }.
+ * @num_coordinates: The number of coordinates (2 per points) in the control point array.
+ * @points: (array length=num_coordinates) (element-type gdouble): The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }.
  *
  * Modifies the intensity curve(s) for specified drawable.
  *
  * Modifies the intensity mapping for one channel in the specified
- * drawable. The channel can be either an intensity component, or the
- * value. The 'points' parameter is an array of doubles which define a
- * set of control points which describe a Catmull Rom spline which
- * yields the final intensity curve. Use the
- * gimp_drawable_curves_explicit() function to explicitly modify
+ * @drawable. The @channel can be either an intensity component, or the
+ * value.
+ *
+ * The @points parameter is an array of doubles in the range `[0, 1]`
+ * which define a set of control points which describe a Catmull Rom
+ * spline which yields the final intensity curve. Since every point has
+ * 2 coordinates, the size of @points (@num_coordinates) must be a
+ * multiple of 2, equal or bigger than 4 (i.e. a minimum of 2 points).
+ *
+ * Use [method@Gimp.Drawable.curves_explicit] to explicitly modify
  * intensity levels.
  *
  * Returns: TRUE on success.
@@ -260,22 +265,22 @@ gimp_drawable_curves_explicit (GimpDrawable         *drawable,
 gboolean
 gimp_drawable_curves_spline (GimpDrawable         *drawable,
                              GimpHistogramChannel  channel,
-                             gsize                 num_points,
+                             gsize                 num_coordinates,
                              const gdouble        *points)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  g_return_val_if_fail (num_points >= 4, FALSE);
-  g_return_val_if_fail (num_points <= 2048, FALSE);
+  g_return_val_if_fail (num_coordinates >= 4, FALSE);
+  g_return_val_if_fail (num_coordinates <= 2048, FALSE);
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           GIMP_TYPE_DOUBLE_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_double_array (gimp_value_array_index (args, 2), points, num_points);
+  gimp_value_set_double_array (gimp_value_array_index (args, 2), points, num_coordinates);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-drawable-curves-spline",

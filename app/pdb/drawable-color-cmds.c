@@ -255,19 +255,19 @@ drawable_curves_spline_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint channel;
-  gsize num_points;
+  gsize num_coordinates;
   const gdouble *points;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
-  points = gimp_value_get_double_array (gimp_value_array_index (args, 2), &num_points);
+  points = gimp_value_get_double_array (gimp_value_array_index (args, 2), &num_coordinates);
 
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          ! (num_points & 1) &&
+          ! (num_coordinates & 1) &&
           (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
           (! gimp_drawable_is_gray (drawable) ||
            channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA) &&
@@ -275,7 +275,7 @@ drawable_curves_spline_invoker (GimpProcedure         *procedure,
         {
           GObject *config = gimp_curves_config_new_spline (channel,
                                                            points,
-                                                           num_points / 2);
+                                                           num_coordinates / 2);
 
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  C_("undo-type", "Curves"),
@@ -284,7 +284,9 @@ drawable_curves_spline_invoker (GimpProcedure         *procedure,
           g_object_unref (config);
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1008,7 +1010,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-curves-spline");
   gimp_procedure_set_static_help (procedure,
                                   "Modifies the intensity curve(s) for specified drawable.",
-                                  "Modifies the intensity mapping for one channel in the specified drawable. The channel can be either an intensity component, or the value. The 'points' parameter is an array of doubles which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve. Use the 'gimp-drawable-curves-explicit' function to explicitly modify intensity levels.",
+                                  "Modifies the intensity mapping for one channel in the specified @drawable. The @channel can be either an intensity component, or the value.\n"
+                                  "\n"
+                                  "The @points parameter is an array of doubles in the range `[0, 1]` which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve. Since every point has 2 coordinates, the size of @points (@num_coordinates) must be a multiple of 2, equal or bigger than 4 (i.e. a minimum of 2 points).\n"
+                                  "\n"
+                                  "Use [method@Gimp.Drawable.curves_explicit] to explicitly modify intensity levels.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
