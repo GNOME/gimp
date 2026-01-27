@@ -162,6 +162,8 @@ deps-debian-nonreloc:
     - echo "RUN apt-get update -qq" >> Dockerfile
     ## 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
     - echo "RUN apt-get install -qq -y --no-install-recommends ca-certificates" >> Dockerfile
+    ## 'xvfb' is NOT a gimp dep, but needed for our CI environment tests
+    - echo "RUN apt-get install -qq -y --no-install-recommends xvfb xauth" >> Dockerfile
     ## Build-time only dependencies
     - echo "RUN apt-get install -qq -y --no-install-recommends \\" >> Dockerfile
     - echo "${TOOLCHAIN:-build-essential}
@@ -283,6 +285,7 @@ gimp-debian-nonreloc:
     # Check building
     - printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
     - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
+                                   -Dheadless-tests=enabled
                                    -Dfile-plug-ins-test=true
                                    $MESON_OPTIONS
     - cd _build-${RUNNER}
