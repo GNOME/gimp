@@ -22,7 +22,7 @@
         "--share=network",
         "--socket=fallback-x11",
         "--socket=wayland",
-        "--device=dri",
+        "--device=all",
         "--filesystem=host",
         "--filesystem=xdg-config/GIMP:create",
         "--filesystem=xdg-config/gtk-3.0",
