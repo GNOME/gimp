@@ -323,11 +323,21 @@ for dir in ["MacOS", "Frameworks"]:
         sys.exit(1)
 
 
-## FIXME: DEVELOPMENT FILES (bundle babl, gegl and gimp libs as .framework with Headers/ ?).
-#clean(GIMP_DISTRIB, "lib/*.a")
-#bundle(GIMP_PREFIX, "include/gimp-*")
-#bundle(GIMP_PREFIX, "include/babl-*")
-#bundle(GIMP_PREFIX, "include/gegl-*")
-#bundle(GIMP_PREFIX, "lib/pkgconfig/gimp*")
-#bundle(GIMP_PREFIX, "lib/pkgconfig/babl*")
-#bundle(GIMP_PREFIX, "lib/pkgconfig/gegl*")
+## DEVELOPMENT FILES ON UNIX-STYLE, NO MACOS-STYLE/.FRAMEWORK
+## (to build GEGL filters and GIMP plug-ins).
+clean(GIMP_DISTRIB, "Frameworks/*.a")
+bundle(GIMP_PREFIX, "include/gimp-*", "--dest", "include")
+bundle(GIMP_PREFIX, "include/babl-*", "--dest", "include")
+bundle(GIMP_PREFIX, "include/gegl-*", "--dest", "include")
+bundle(GIMP_PREFIX, "lib/pkgconfig/gimp*")
+bundle(GIMP_PREFIX, "lib/pkgconfig/babl*")
+bundle(GIMP_PREFIX, "lib/pkgconfig/gegl*")
+real_lib_path = Path(f"{GIMP_DISTRIB}/Frameworks")
+link_lib_path = Path(f"{GIMP_DISTRIB}/lib")
+link_lib_path.symlink_to(os.path.relpath(real_lib_path, link_lib_path.parent))
+real_share_path = Path(f"{GIMP_DISTRIB}/Resources")
+link_share_path = Path(f"{GIMP_DISTRIB}/share")
+link_share_path.symlink_to(os.path.relpath(real_share_path, link_share_path.parent))
+real_etc_path = Path(f"{GIMP_DISTRIB}/SharedSupport")
+link_etc_path = Path(f"{GIMP_DISTRIB}/etc")
+link_etc_path.symlink_to(os.path.relpath(real_etc_path, link_etc_path.parent))
