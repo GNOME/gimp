@@ -44,7 +44,7 @@ if [ ! -f "_build-$(uname -m)/build.ninja" ]; then
               -Dc_args="-I${OPT_PREFIX}/include" -Dcpp_args="-I${OPT_PREFIX}/include" -Dc_link_args="-L${OPT_PREFIX}/lib" -Dcpp_link_args="-L${OPT_PREFIX}/lib"
 fi
 cd _build-$(uname -m)
-ninja
+ninja -j1
 printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
 
 
