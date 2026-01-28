@@ -155,10 +155,10 @@ tell application "Finder"
         set current view of container window to icon view
         set arrangement of icon view options of container window to not arranged
         set icon size of icon view options of container window to 110
-        set position of item "$BUNDLE_NAME.app" of container window to {192, 351}
-        set position of item "Applications" of container window to {448, 351}
-        set position of item ".background" of container window to {0, 0}
-        set position of item ".fseventsd" of container window to {450, 0}
+        set position of item "$BUNDLE_NAME.app" of container window to {192, 282}
+        set position of item "Applications" of container window to {448, 282}
+        set position of item ".background" of container window to {545, 0}
+        set position of item ".fseventsd" of container window to {545, 0}
         update without registering applications
         close
     end tell
