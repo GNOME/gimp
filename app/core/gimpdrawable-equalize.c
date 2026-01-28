@@ -48,7 +48,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   image = gimp_item_get_image (GIMP_ITEM (drawable));
   selection = gimp_image_get_mask (image);
 
-  histogram = gimp_histogram_new (FALSE);
+  histogram = gimp_histogram_new (GIMP_TRC_NON_LINEAR);
   gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
 
   equalize = gegl_node_new_child (NULL,
