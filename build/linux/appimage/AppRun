@@ -3,7 +3,7 @@
 set -e
 
 if [ -z "$APPDIR" ]; then
-  export APPDIR="$(dirname "$(readlink -f "${0}")")"
+  export APPDIR="$(dirname -- "$(readlink -f -- "${0}")")"
   echo "Running without type2-runtime. AppDir is $APPDIR"
 fi
 
