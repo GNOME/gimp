@@ -1,6 +1,6 @@
-From 0f68082f0facd1d9b6c7800f11aa61834f123df3 Mon Sep 17 00:00:00 2001
+From cfa7a7e416870225e838293328e178c062602b60 Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Sun, 7 Dec 2025 11:05:00 -0300
+Date: Thu, 29 Jan 2026 19:47:51 -0300
 Subject: [PATCH] Disable some things due to lack of packages
 
 I plan to fix that later
@@ -25,8 +25,8 @@ I plan to fix that later
  docs/meson.build                   |  2 +-
  etc/meson.build                    |  2 +-
  libgimp/meson.build                |  4 +-
- meson.build                        | 47 ++++++-----------
- 21 files changed, 23 insertions(+), 266 deletions(-)
+ meson.build                        | 42 ++++-----------
+ 21 files changed, 17 insertions(+), 267 deletions(-)
 
 diff --git a/app/actions/tools-actions.c b/app/actions/tools-actions.c
 index 9efa957edb..64e7981cfc 100644
@@ -186,10 +186,10 @@ index 7a4d19d081..26a67ce7a5 100644
  tools_fg_select_brush_size_cmd_callback (GimpAction *action,
                                           GVariant   *value,
 diff --git a/app/core/gimp-data-factories.c b/app/core/gimp-data-factories.c
-index 06818f3435..6616363972 100644
+index a6b4d1c6c5..76ca89a878 100644
 --- a/app/core/gimp-data-factories.c
 +++ b/app/core/gimp-data-factories.c
-@@ -122,22 +122,6 @@ gimp_data_factories_init (Gimp *gimp)
+@@ -124,22 +124,6 @@ gimp_data_factories_init (Gimp *gimp)
                                         GIMP_DYNAMICS_FILE_EXTENSION,
                                         TRUE);
  
@@ -213,10 +213,10 @@ index 06818f3435..6616363972 100644
      gimp_data_loader_factory_new (gimp,
                                    GIMP_TYPE_PATTERN,
 diff --git a/app/core/gimp.c b/app/core/gimp.c
-index 039bf2bc1b..26340b6e3e 100644
+index 39ecb8e37a..ec3f84fcaf 100644
 --- a/app/core/gimp.c
 +++ b/app/core/gimp.c
-@@ -316,7 +316,6 @@ gimp_constructed (GObject *object)
+@@ -317,7 +317,6 @@ gimp_constructed (GObject *object)
  
    gimp_paint_init (gimp);
  
@@ -224,7 +224,7 @@ index 039bf2bc1b..26340b6e3e 100644
    gimp->plug_in_manager   = gimp_plug_in_manager_new (gimp);
    gimp->pdb               = gimp_pdb_new (gimp);
  
-@@ -325,11 +324,6 @@ gimp_constructed (GObject *object)
+@@ -326,11 +325,6 @@ gimp_constructed (GObject *object)
  
    /*  create user and default context  */
    gimp_contexts_init (gimp);
@@ -236,7 +236,7 @@ index 039bf2bc1b..26340b6e3e 100644
  }
  
  static void
-@@ -405,8 +399,6 @@ gimp_finalize (GObject *object)
+@@ -406,8 +400,6 @@ gimp_finalize (GObject *object)
                                gimp_brush_get_standard (gimp->user_context));
    standards = g_list_prepend (standards,
                                gimp_dynamics_get_standard (gimp->user_context));
@@ -245,7 +245,7 @@ index 039bf2bc1b..26340b6e3e 100644
    standards = g_list_prepend (standards,
                                gimp_pattern_get_standard (gimp->user_context));
    standards = g_list_prepend (standards,
-@@ -591,7 +583,6 @@ gimp_real_exit (Gimp     *gimp,
+@@ -592,7 +584,6 @@ gimp_real_exit (Gimp     *gimp,
      g_print ("EXIT: %s\n", G_STRFUNC);
  
    gimp_plug_in_manager_exit (gimp->plug_in_manager);
@@ -525,7 +525,7 @@ index 1f8a37f706..bcba9436fe 100644
  
  man_files = [
 diff --git a/etc/meson.build b/etc/meson.build
-index a1a0bd8538..114aef91da 100644
+index 93ec8ce9e2..7b271c746c 100644
 --- a/etc/meson.build
 +++ b/etc/meson.build
 @@ -1,6 +1,6 @@
@@ -552,7 +552,7 @@ index a7d84415b2..b0daf3fff6 100644
    gobject_introspection_warning = '\n      '.join(['',
      'GObject Introspection is disabled while cross-compiling because',
 diff --git a/meson.build b/meson.build
-index 27205ac2bc..1adc102682 100644
+index 5556537fa0..81c0508947 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -288,7 +288,7 @@ warning_cflags_common = [
@@ -602,7 +602,7 @@ index 27205ac2bc..1adc102682 100644
  
  libarchive = dependency('libarchive')
  
-@@ -1008,7 +1003,7 @@ poppler_minver = '0.69.0'
+@@ -1049,7 +1044,7 @@ poppler_minver = '0.69.0'
  poppler_data_minver = '0.4.9'
  poppler = [
    dependency('poppler-glib', version: '>='+poppler_minver),
@@ -611,7 +611,7 @@ index 27205ac2bc..1adc102682 100644
  ]
  
  cairopdf_minver = '1.12.2'
-@@ -1138,9 +1133,6 @@ pygobject_found = run_command(python, '-c',
+@@ -1179,9 +1174,6 @@ pygobject_found = run_command(python, '-c',
                                check: false).returncode() == 0
  message('Found PyGObject: @0@'.format(pygobject_found))
  
@@ -621,7 +621,7 @@ index 27205ac2bc..1adc102682 100644
  
  ## Javascript
  
-@@ -1240,7 +1232,6 @@ appstreamcli = find_program('appstreamcli', version: '>=0.15.3', required: get_o
+@@ -1281,7 +1273,6 @@ appstreamcli = find_program('appstreamcli', version: '>=0.15.3', required: get_o
  
  # Check for .typelib generation tools
  
@@ -629,7 +629,7 @@ index 27205ac2bc..1adc102682 100644
  
  # Check for doc generation tools
  
-@@ -1736,7 +1727,6 @@ install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif_minver)
+@@ -1780,7 +1771,6 @@ install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif_minver)
  install_conf.set('LIBJXL_REQUIRED_VERSION',       jpegxl_minver)
  install_conf.set('LIBLZMA_REQUIRED_VERSION',      liblzma_minver)
  install_conf.set('LIBTIFF_REQUIRED_VERSION',      libtiff_minver)
@@ -637,23 +637,23 @@ index 27205ac2bc..1adc102682 100644
  install_conf.set('LIBPNG_REQUIRED_VERSION',       libpng_minver)
  install_conf.set('OPENEXR_REQUIRED_VERSION',      openexr_minver)
  install_conf.set('OPENJPEG_REQUIRED_VERSION',     openjpeg_minver)
-@@ -1921,7 +1911,14 @@ if get_option('debug-self-in-build')
-  gimp_run_env.set('GIMP_DEBUG_SELF', '1')
+@@ -1966,13 +1956,13 @@ if get_option('debug-self-in-build')
  endif
+ gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
  
 -if meson.can_run_host_binaries() and have_gobject_introspection
-+if enable_console_bin
-+    gimp_real_exe = gimpconsole_exe
-+  else
-+    gimp_real_exe = gimpmain_exe
-+  endif
-+gimp_exe_depends = [gimp_real_exe] + plugin_custom_targets
-+
-+if meson.can_run_host_binaries() and not platform_windows
++if meson.can_run_host_binaries()
    if enable_console_bin
      gimp_real_exe = gimpconsole_exe
    else
-@@ -1990,18 +1987,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
+     gimp_real_exe = gimpmain_exe
+   endif
+-  gimp_exe_depends = [gimp_real_exe, libgimp_gir, libgimpui_gir] + plugin_custom_targets
++  gimp_exe_depends = [gimp_real_exe] + plugin_custom_targets
+   gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
+ 
+   menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
+@@ -2035,18 +2025,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
        gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', plugin_exe)
      endforeach
    endif
@@ -672,7 +672,7 @@ index 27205ac2bc..1adc102682 100644
  endif
  
  gimp_exe = find_program('tools'/'in-build-gimp.py')
-@@ -2188,7 +2173,7 @@ final_message = [
+@@ -2242,7 +2220,7 @@ final_message = [
  '''  Test appdata         @0@'''.format(appstreamcli.found()),
  '',
  '''Documentation:''',
