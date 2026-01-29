@@ -375,14 +375,18 @@ gimp_config_serialize_property (GimpConfig       *config,
                 }
               else
                 {
+                  gchar   buf[4][G_ASCII_DTOSTR_BUF_SIZE];
                   gdouble rgba[4];
 
-                  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgba);
+                  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"),
+                                        rgba);
+
+                  for (gint i = 0; i < 4; i++)
+                    g_ascii_dtostr (buf[i], G_ASCII_DTOSTR_BUF_SIZE, rgba[i]);
 
                   gimp_config_writer_printf (writer,
-                                             "(color-rgba %f %f %f %f)",
-                                             rgba[0], rgba[1], rgba[2],
-                                             rgba[3]);
+                                             "(color-rgba %s %s %s %s)",
+                                             buf[0], buf[1], buf[2], buf[3]);
                 }
             }
           else
