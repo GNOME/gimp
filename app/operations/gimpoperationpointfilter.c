@@ -51,6 +51,7 @@ gimp_operation_point_filter_class_init (GimpOperationPointFilterClass *klass)
 static void
 gimp_operation_point_filter_init (GimpOperationPointFilter *self)
 {
+  self->trc_binding = NULL;
 }
 
 static void
@@ -102,7 +103,14 @@ gimp_operation_point_filter_set_property (GObject      *object,
       break;
 
     case GIMP_OPERATION_POINT_FILTER_PROP_CONFIG:
+      g_clear_object (&self->trc_binding);
       g_set_object (&self->config, g_value_dup_object (value));
+      if (self->config                                                    &&
+          g_object_class_find_property (G_OBJECT_GET_CLASS (self), "trc") &&
+          g_object_class_find_property (G_OBJECT_GET_CLASS (self->config), "trc"))
+        self->trc_binding = g_object_bind_property (self->config, "trc",
+                                                    self,         "trc",
+                                                    G_BINDING_SYNC_CREATE);
       break;
 
    default:

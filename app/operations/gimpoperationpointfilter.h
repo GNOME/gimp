@@ -48,6 +48,8 @@ struct _GimpOperationPointFilter
 
   GimpTRCType               trc;
   GObject                  *config;
+
+  GBinding                 *trc_binding;
 };
 
 struct _GimpOperationPointFilterClass
