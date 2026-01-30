@@ -656,9 +656,11 @@ gimp-win-eol:
       interruptible: true
       variables:
         OPT_PREFIX: /opt/macports
+        DMG_OPTION: '-Ddmg=true'
     - if: '$GIMP_CI_MACOS != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MACOS.*/'
       variables:
         OPT_PREFIX: /opt/macports
+        DMG_OPTION: '-Ddmg=true'
     - if: '($GIMP_CI_MESON_APPLECLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_APPLECLANG.*/) && $CI_JOB_NAME !~ /.*-part.*/ && $CI_JOB_NAME !~ /.*dist-mac-.*/'
       variables:
         OPT_PREFIX: /opt/homebrew
@@ -666,7 +668,6 @@ gimp-win-eol:
     - macos
   variables:
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
-    DMG_OPTION: '-Ddmg=true'
   before_script:
     - export GIMP_PREFIX="$PWD/_install-$(uname -m)"
     - export PATH="$OPT_PREFIX/bin:$PATH"
