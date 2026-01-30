@@ -219,9 +219,8 @@ new_text = text.replace(
   f"~/Library/Application Support/GIMP/{os.getenv('GIMP_APP_VERSION')}"
 )
 fonts_conf.write_text(new_text)
-### FIXME: Needed for 'th' word breaking in Text tool etc (https://github.com/Homebrew/homebrew-core/pull/262960)
-if os.path.exists(OPT_PREFIX / "bin/port"):
-  bundle(OPT_PREFIX, "share/libthai")
+### Needed for 'th' word breaking in Text tool etc
+bundle(OPT_PREFIX, "share/libthai")
 ### Needed for full CJK and Cyrillic support in file-pdf
 bundle(OPT_PREFIX, "share/poppler")
 #### Needed for signature support in file-pdf lib
