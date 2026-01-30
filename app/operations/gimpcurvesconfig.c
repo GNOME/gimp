@@ -107,11 +107,16 @@ gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
                          GIMP_TYPE_TRC_TYPE,
                          GIMP_TRC_NON_LINEAR, 0);
 
-  /* compat */
+  /* "linear" is a compat property initially kept for compatibility
+   * reason, in particular for config parsing. It's not needed anymore
+   * since we have config migration rules now and was rendered bogus to
+   * avoid property mixups when setting from API.
+   * TODO: remove "linear" when we can version GEGL operations.
+   */
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LINEAR,
                             "linear",
                             _("Linear"),
-                            _("Work on linear RGB"),
+                            _("Work on linear RGB (this property is ignored; use \"trc\" instead)"),
                             FALSE, 0);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_CHANNEL,
@@ -222,9 +227,7 @@ gimp_curves_config_set_property (GObject      *object,
       break;
 
     case PROP_LINEAR:
-      self->trc = g_value_get_boolean (value) ?
-                  GIMP_TRC_LINEAR : GIMP_TRC_NON_LINEAR;
-      g_object_notify (object, "trc");
+      /* Ignored */
       break;
 
     case PROP_CHANNEL:
