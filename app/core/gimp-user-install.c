@@ -149,6 +149,7 @@ static gboolean  user_install_dir_copy           (GimpUserInstall    *install,
                                                   const gchar        *base,
                                                   const gchar        *update_pattern,
                                                   GRegexEvalCallback  update_callback,
+                                                  const gchar        *file_pattern,
                                                   GimpCopyPostProcess post_process_callback);
 
 static gboolean  user_install_create_files       (GimpUserInstall    *install);
@@ -1217,6 +1218,37 @@ user_update_tool_presets (const GMatchInfo *matched_value,
   return FALSE;
 }
 
+#define FILTERS_UPDATE_PATTERN \
+  "\\(linear yes\\)" "|" \
+  "\\(linear no\\)"
+
+static gboolean
+user_update_filters (const GMatchInfo *matched_value,
+                     GString          *new_value,
+                     gpointer          data)
+{
+  gchar *match = g_match_info_fetch (matched_value, 0);
+
+  /* The (linear) option was replaced by (trc) since GIMP 3.0. The
+   * property still exists but is now bogus.
+   */
+  if (g_strcmp0 (match, "(linear yes)") == 0)
+    {
+      g_string_append (new_value, "(trc linear)");
+    }
+  else if (g_strcmp0 (match, "(linear no)") == 0)
+    {
+      g_string_append (new_value, "(trc non-linear)");
+    }
+  else
+    {
+      g_string_append (new_value, match);
+    }
+
+  g_free (match);
+  return FALSE;
+}
+
 /* Actually not only for contextrc, but all other files where
  * gimp-blend-tool may appear. Apparently that is also "devicerc", as
  * well as "toolrc" (but this one is skipped anyway).
@@ -1267,6 +1299,7 @@ user_install_dir_copy (GimpUserInstall    *install,
                        const gchar        *base,
                        const gchar        *update_pattern,
                        GRegexEvalCallback  update_callback,
+                       const gchar        *file_pattern,
                        GimpCopyPostProcess post_process_callback)
 {
   GDir        *source_dir = NULL;
@@ -1316,10 +1349,16 @@ user_install_dir_copy (GimpUserInstall    *install,
           g_snprintf (dest, sizeof (dest), "%s%c%s",
                       dirname, G_DIR_SEPARATOR, basename);
 
-          success = user_install_file_copy (install, name, dest,
-                                            update_pattern,
-                                            update_callback,
-                                            post_process_callback);
+          if (file_pattern == NULL ||
+              g_regex_match_simple (file_pattern, basename, 0, 0))
+            success = user_install_file_copy (install, name, dest,
+                                              update_pattern,
+                                              update_callback,
+                                              post_process_callback);
+          else
+            success = user_install_file_copy (install, name, dest,
+                                              NULL, NULL, NULL);
+
           if (! success)
             {
               g_free (name);
@@ -1329,7 +1368,7 @@ user_install_dir_copy (GimpUserInstall    *install,
       else
         {
           user_install_dir_copy (install, level + 1, name, dirname,
-                                 update_pattern, update_callback,
+                                 update_pattern, update_callback, file_pattern,
                                  post_process_callback);
         }
 
@@ -1522,7 +1561,8 @@ user_install_migrate_files (GimpUserInstall *install)
         }
       else if (g_file_test (source, G_FILE_TEST_IS_DIR))
         {
-          const gchar        *update_pattern = NULL;
+          const gchar        *update_pattern  = NULL;
+          const gchar        *file_pattern    = NULL;
           GRegexEvalCallback  update_callback = NULL;
 
           /*  skip these directories for all old versions  */
@@ -1550,8 +1590,15 @@ user_install_migrate_files (GimpUserInstall *install)
               update_pattern  = TOOL_PRESETS_UPDATE_PATTERN;
               update_callback = user_update_tool_presets;
             }
+          else if (strcmp (basename, "filters") == 0)
+            {
+              file_pattern    = "GimpLevelsConfig.settings|GimpCurvesConfig.settings";
+              update_pattern  = FILTERS_UPDATE_PATTERN;
+              update_callback = user_update_filters;
+            }
           user_install_dir_copy (install, 0, source, gimp_directory (),
-                                 update_pattern, update_callback, NULL);
+                                 update_pattern, update_callback, file_pattern,
+                                 NULL);
         }
 
     next_file:
