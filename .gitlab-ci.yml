@@ -15,7 +15,7 @@ spec:
       description: 'Pipelines used only for testing'
       options:
         - GIMP_CI_MESON_CLANG #trigger the Debian Clang build (rare usefulness)
-        - GIMP_CI_MESON_MSVC #trigger the Windows MSVC build (rare usefulness)
+        - GIMP_CI_MESON_MSVC #trigger the Windows Clang-CL/MSVC build (rare usefulness)
         - GIMP_CI_MESON_APPLECLANG #trigger the Apple Clang build with Homebrew packages (rare usefulness)
         - GIMP_CI_RASTER_ICONS #trigger the Debian Clang build without vector icons (rare usefulness)
         - GIMP_CI_CPPCHECK #trigger cppcheck (static code analysis)
