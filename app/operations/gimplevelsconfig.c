@@ -111,7 +111,7 @@ gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
                          _("Tone Reproduction Curve"),
                          _("Work on linear or perceptual RGB, or following the image's TRC"),
                          GIMP_TYPE_TRC_TYPE,
-                         GIMP_TRC_NON_LINEAR, 0);
+                         GIMP_TRC_LINEAR, 0);
 
   /* "linear" is a compat property initially kept for compatibility
    * reason, in particular for config parsing. It's not needed anymore
@@ -123,7 +123,7 @@ gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
                             "linear",
                             _("Linear"),
                             _("Work on linear RGB (this property is ignored; use \"trc\" instead)"),
-                            FALSE, 0);
+                            TRUE, 0);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_CHANNEL,
                          "channel",
