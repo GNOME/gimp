@@ -77,7 +77,8 @@ gimp_operation_curves_class_init (GimpOperationCurvesClass *klass)
                                                       "What TRC to operate on",
                                                       GIMP_TYPE_TRC_TYPE,
                                                       GIMP_TRC_NON_LINEAR,
-                                                      G_PARAM_READWRITE));
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
