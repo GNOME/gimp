@@ -686,14 +686,6 @@ bender_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      cd = g_new (BenderDialog, 1);
-
-      cd->run           = TRUE;
-      cd->show_progress = TRUE;
-      cd->drawable      = active_drawable;
-      cd->config        = config;
-      break;
-
     case GIMP_RUN_WITH_LAST_VALS:
       cd = g_new (BenderDialog, 1);
 
@@ -701,8 +693,7 @@ bender_run (GimpProcedure        *procedure,
       cd->show_progress = TRUE;
       cd->drawable      = active_drawable;
       cd->config        = config;
-
-      p_retrieve_values (config, cd);  /* Possibly retrieve data from a previous run */
+      p_retrieve_values (config, cd);
       break;
     }
 
