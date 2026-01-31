@@ -304,7 +304,7 @@ gimp-debian-nonreloc:
       fi
     - printf "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K\n"
     # Check install
-    - printf "\e[0Ksection_start:`date +%s`:gimp_install[collapsed=true]\r\e[0KChecking GIMP installation\n"
+    - printf "\e[0Ksection_start:`date +%s`:gimp_install[collapsed=true]\r\e[0KChecking non-relocatable GIMP installation\n"
     - ninja install > ninja_install.log 2>&1 || { cat ninja_install.log; exit 1; };
     - printf "\e[0Ksection_end:`date +%s`:gimp_install\r\e[0K\n"
   artifacts:
