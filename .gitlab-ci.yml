@@ -664,6 +664,7 @@ gimp-win-eol:
     - if: '($GIMP_CI_MESON_APPLECLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_APPLECLANG.*/) && $CI_JOB_NAME !~ /.*-part.*/ && $CI_JOB_NAME !~ /.*dist-mac-.*/'
       variables:
         OPT_PREFIX: /opt/homebrew
+        VARIANT: -homebrew
   tags:
     - macos
   variables:
