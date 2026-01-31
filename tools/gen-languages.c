@@ -280,8 +280,8 @@ gimp_language_store_parser_init (GError **error)
       goto cleanup;
     }
 
-  locale = setlocale (LC_ALL, NULL);
-  if (g_strcmp0 (locale, "C") == 0 || g_strcmp0 (locale, "POSIX") == 0)
+  locale = setlocale (LC_ALL, "");
+  if (g_strcmp0 (locale, "C") == 0 || g_strcmp0 (locale, "POSIX") == 0 || g_str_has_prefix (locale, "C."))
     {
       /* Note: we do not care about what we set, except not C or POSIX.
        * It may be any valid locale. This needs to be set so that this
