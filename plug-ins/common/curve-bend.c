@@ -985,12 +985,18 @@ p_retrieve_values (GimpProcedureConfig *config,
       data_x = gimp_double_array_get_values (upper_point_x_array, &length_x);
       data_y = gimp_double_array_get_values (upper_point_y_array, &length_y);
 
-      for (gint i = 0; i < 17; i++)
+      /* Arrays of size 0 will happen from GIMP 3.0 time when all args
+       * were serialized inside "settings-data".
+       */
+      if (length_x != 0 && length_y != 0)
         {
-          cd->points[0][i][0] = (i < length_x) ? data_x[i] : -1.0f;
-          cd->points[0][i][1] = (i < length_y) ? data_y[i] : -1.0f;
+          for (gint i = 0; i < 17; i++)
+            {
+              cd->points[0][i][0] = (i < length_x) ? data_x[i] : -1.0f;
+              cd->points[0][i][1] = (i < length_y) ? data_y[i] : -1.0f;
+            }
+          load_settings_data = FALSE;
         }
-      load_settings_data = FALSE;
     }
   if (lower_point_x_array != NULL &&
       lower_point_y_array != NULL)
@@ -1003,12 +1009,15 @@ p_retrieve_values (GimpProcedureConfig *config,
       data_x = gimp_double_array_get_values (lower_point_x_array, &length_x);
       data_y = gimp_double_array_get_values (lower_point_y_array, &length_y);
 
-      for (gint i = 0; i < 17; i++)
+      if (length_x != 0 && length_y != 0)
         {
-          cd->points[1][i][0] = (i < length_x) ? data_x[i] : -1.0f;
-          cd->points[1][i][1] = (i < length_y) ? data_y[i] : -1.0f;
+          for (gint i = 0; i < 17; i++)
+            {
+              cd->points[1][i][0] = (i < length_x) ? data_x[i] : -1.0f;
+              cd->points[1][i][1] = (i < length_y) ? data_y[i] : -1.0f;
+            }
+          load_settings_data = FALSE;
         }
-      load_settings_data = FALSE;
     }
 
   /* Free hand values */
