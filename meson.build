@@ -571,6 +571,38 @@ if not pango.found()
   pangoft2     = dependency('pangoft2',    version: '>='+pango_minver)
 endif
 
+if cc.run('''
+  #include <pango/pango.h>
+  #include <string.h>
+  #include <stdlib.h>
+
+  int main () {
+    const char *text = "ภาษาไทย";
+    int char_count = 7;
+    int byte_len = strlen(text);
+    int breaks_found = 0;
+
+    PangoLogAttr *attrs = (PangoLogAttr *) calloc(char_count + 1, sizeof(PangoLogAttr));
+
+    pango_get_log_attrs (text, byte_len, -1, pango_language_from_string("th"), attrs, char_count + 1);
+    for (int i = 1; i < char_count; i++) {
+      if (attrs[i].is_line_break)
+        breaks_found++;
+    }
+
+    if (breaks_found > 0)
+      return 0;
+    else
+      return 1;
+  }
+  ''',
+  name: 'pango is built with libthai support',
+  dependencies: [pango]).returncode() != 0
+  thai_warning = 'Pango was not built with libthai support. Line breaking on Text tool may be incorrect on Thai language.'
+  warning(thai_warning)
+  warnings += thai_warning
+endif
+
 rsvg_minver  = '2.40.6'
 rsvg         = dependency('librsvg-2.0', version: '>='+rsvg_minver)
 
