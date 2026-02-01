@@ -67,8 +67,9 @@ $evalcode = <<'CODE';
     };
 
     # Variables to evaluate and insert into the PDB structure
-    my @procvars = qw($name $group $blurb $help $author $copyright $date $since
-		      $deprecated @inargs @outargs %invoke $canonical_name
+    my @procvars = qw($name $group $blurb $help $author $copyright $date
+                      $since $deprecated $deprecated_since
+                      @inargs @outargs %invoke $canonical_name
 		      $lib_private $skip_gi);
 
     # These are attached to the group structure

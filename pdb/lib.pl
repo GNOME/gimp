@@ -550,6 +550,7 @@ CODE
     my $procdesc = '';
 
     if ($proc->{deprecated}) {
+        $deprecated_since = $proc->{deprecated_since};
         if ($proc->{deprecated} eq 'NONE') {
             if ($proc->{blurb}) {
                 $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n";
@@ -557,7 +558,7 @@ CODE
             if ($proc->{help}) {
                 $procdesc .= &desc_wrap($proc->{help}) . "\n *\n";
             }
-            $procdesc .= &desc_wrap("Deprecated: There is no replacement " .
+            $procdesc .= &desc_wrap("Deprecated: $deprecated_since: There is no replacement " .
                                     "for this procedure.");
         }
         else {
@@ -583,7 +584,7 @@ CODE
             if ($proc->{help}) {
                 $procdesc .= &desc_wrap($proc->{help}) . "\n *\n";
             }
-            $procdesc .= &desc_wrap("Deprecated: " .
+            $procdesc .= &desc_wrap("Deprecated: $deprecated_since: " .
                                     "Use $replacement instead.");
         }
     }
