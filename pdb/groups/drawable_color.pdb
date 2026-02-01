@@ -29,6 +29,8 @@ HELP
     $date = '1997';
     $since = '2.10';
 
+    $deprecated = 'gimp:brightness-contrast';
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
@@ -80,6 +82,8 @@ HELP
     &std_pdb_misc;
     $date = '1997';
     $since = '2.10';
+
+    $deprecated = 'gimp:color-balance';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -137,6 +141,8 @@ only valid on RGB color images. It will not operate on grayscale drawables.
 HELP
 
     &neo_pdb_misc('2004', '2.10');
+
+    $deprecated = 'gimp:colorize';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -310,6 +316,8 @@ sub drawable_extract_component {
     $date = '2021';
     $since = '2.10.34';
 
+    $deprecated = 'gegl:component-extract';
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
@@ -366,6 +374,8 @@ HELP
     $author = $copyright = 'Karine Delvare';
     $date = '2005';
     $since = '2.10';
+
+    $deprecated = 'gimp:desaturate';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -563,6 +573,8 @@ HELP
     &std_pdb_misc;
     $since = '2.10';
 
+    $deprecated = 'gimp:hue-saturation';
+
     @inargs = (
         { name => 'drawable', type => 'drawable',
           desc => 'The drawable' },
@@ -623,6 +635,8 @@ HELP
     &std_pdb_misc;
     $since = '2.10';
 
+    $deprecated = 'filters "gegl:invert-linear" or "gegl:invert-gamma"';
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
@@ -669,6 +683,8 @@ HELP
 
     &std_pdb_misc;
     $since = '2.10';
+
+    $deprecated = 'gimp:levels';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -778,6 +794,8 @@ HELP
     $date = '2021';
     $since = '2.10.34';
 
+    $deprecated = 'gegl:shadows-highlights';
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
@@ -840,6 +858,8 @@ HELP
     $date = '1997';
     $since = '2.10';
 
+    $deprecated = 'gimp:posterize';
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
@@ -885,6 +905,8 @@ HELP
     &std_pdb_misc;
     $date = '1997';
     $since = '2.10';
+
+    $deprecated = 'gimp:threshold';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',

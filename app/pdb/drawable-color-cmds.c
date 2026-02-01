@@ -845,12 +845,16 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-brightness-contrast");
   gimp_procedure_set_static_help (procedure,
                                   "Modify brightness/contrast in the specified drawable.",
-                                  "This procedures allows the brightness and contrast of the specified drawable to be modified. Both 'brightness' and 'contrast' parameters are defined between -1.0 and 1.0.",
+                                  "This procedures allows the brightness and contrast of the specified drawable to be modified. Both 'brightness' and 'contrast' parameters are defined between -1.0 and 1.0.\n"
+                                  "\n"
+                                  "Deprecated: Use filter \"gimp:brightness-contrast\" instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gimp:brightness-contrast");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -880,12 +884,16 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-color-balance");
   gimp_procedure_set_static_help (procedure,
                                   "Modify the color balance of the specified drawable.",
-                                  "Modify the color balance of the specified drawable. There are three axis which can be modified: cyan-red, magenta-green, and yellow-blue. Negative values increase the amount of the former, positive values increase the amount of the latter. Color balance can be controlled with the 'transfer_mode' setting, which allows shadows, mid-tones, and highlights in an image to be affected differently. The 'preserve-lum' parameter, if TRUE, ensures that the luminosity of each pixel remains fixed.",
+                                  "Modify the color balance of the specified drawable. There are three axis which can be modified: cyan-red, magenta-green, and yellow-blue. Negative values increase the amount of the former, positive values increase the amount of the latter. Color balance can be controlled with the 'transfer_mode' setting, which allows shadows, mid-tones, and highlights in an image to be affected differently. The 'preserve-lum' parameter, if TRUE, ensures that the luminosity of each pixel remains fixed.\n"
+                                  "\n"
+                                  "Deprecated: Use filter \"gimp:color-balance\" instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gimp:color-balance");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -934,12 +942,16 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-colorize-hsl");
   gimp_procedure_set_static_help (procedure,
                                   "Render the drawable as a grayscale image seen through a colored glass.",
-                                  "Desaturates the drawable, then tints it with the specified color. This tool is only valid on RGB color images. It will not operate on grayscale drawables.",
+                                  "Desaturates the drawable, then tints it with the specified color. This tool is only valid on RGB color images. It will not operate on grayscale drawables.\n"
+                                  "\n"
+                                  "Deprecated: Use filter \"gimp:colorize\" instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Sven Neumann <sven@gimp.org>",
                                          "Sven Neumann",
                                          "2004");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gimp:colorize");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1049,12 +1061,16 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-extract-component");
   gimp_procedure_set_static_help (procedure,
                                   "Extract a color model component.",
-                                  "Extract a color model component.",
+                                  "Extract a color model component.\n"
+                                  "\n"
+                                  "Deprecated: Use filter \"gegl:component-extract\" instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:component-extract' for credits.",
                                          "Compatibility procedure. Please see 'gegl:component-extract' for credits.",
                                          "2021");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gegl:component-extract");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1090,12 +1106,16 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-desaturate");
   gimp_procedure_set_static_help (procedure,
                                   "Desaturate the contents of the specified drawable, with the specified formula.",
-                                  "This procedure desaturates the contents of the specified drawable, with the specified formula. This procedure only works on drawables of type RGB color.",
+                                  "This procedure desaturates the contents of the specified drawable, with the specified formula. This procedure only works on drawables of type RGB color.\n"
+                                  "\n"
+                                  "Deprecated: Use filter \"gimp:desaturate\" instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Karine Delvare",
                                          "Karine Delvare",
                                          "2005");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gimp:desaturate");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1227,12 +1247,16 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-hue-saturation");
   gimp_procedure_set_static_help (procedure,
                                   "Modify hue, lightness, and saturation in the specified drawable.",
-                                  "This procedure allows the hue, lightness, and saturation in the specified drawable to be modified. The 'hue-range' parameter provides the capability to limit range of affected hues. The 'overlap' parameter provides blending into neighboring hue channels when rendering.",
+                                  "This procedure allows the hue, lightness, and saturation in the specified drawable to be modified. The 'hue-range' parameter provides the capability to limit range of affected hues. The 'overlap' parameter provides blending into neighboring hue channels when rendering.\n"
+                                  "\n"
+                                  "Deprecated: Use filter \"gimp:hue-saturation\" instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gimp:hue-saturation");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1281,12 +1305,16 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-invert");
   gimp_procedure_set_static_help (procedure,
                                   "Invert the contents of the specified drawable.",
-                                  "This procedure inverts the contents of the specified drawable. Each intensity channel is inverted independently. The inverted intensity is given as inten' = (255 - inten). If 'linear' is TRUE, the drawable is inverted in linear space.",
+                                  "This procedure inverts the contents of the specified drawable. Each intensity channel is inverted independently. The inverted intensity is given as inten' = (255 - inten). If 'linear' is TRUE, the drawable is inverted in linear space.\n"
+                                  "\n"
+                                  "Deprecated: Use filters \"gegl:invert-linear\" or \"gegl:invert-gamma\" instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
+  gimp_procedure_set_deprecated (procedure,
+                                 "filters \"gegl:invert-linear\" or \"gegl:invert-gamma\"");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1310,12 +1338,16 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-levels");
   gimp_procedure_set_static_help (procedure,
                                   "Modifies intensity levels in the specified drawable.",
-                                  "This tool allows intensity levels in the specified drawable to be remapped according to a set of parameters. The low/high input levels specify an initial mapping from the source intensities. The gamma value determines how intensities between the low and high input intensities are interpolated. A gamma value of 1.0 results in a linear interpolation. Higher gamma values result in more high-level intensities. Lower gamma values result in more low-level intensities. The low/high output levels constrain the final intensity mapping--that is, no final intensity will be lower than the low output level and no final intensity will be higher than the high output level. This tool is only valid on RGB color and grayscale images.",
+                                  "This tool allows intensity levels in the specified drawable to be remapped according to a set of parameters. The low/high input levels specify an initial mapping from the source intensities. The gamma value determines how intensities between the low and high input intensities are interpolated. A gamma value of 1.0 results in a linear interpolation. Higher gamma values result in more high-level intensities. Lower gamma values result in more low-level intensities. The low/high output levels constrain the final intensity mapping--that is, no final intensity will be lower than the low output level and no final intensity will be higher than the high output level. This tool is only valid on RGB color and grayscale images.\n"
+                                  "\n"
+                                  "Deprecated: Use filter \"gimp:levels\" instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gimp:levels");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1405,12 +1437,16 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-shadows-highlights");
   gimp_procedure_set_static_help (procedure,
                                   "Perform shadows and highlights correction.",
-                                  "This filter allows adjusting shadows and highlights in the image separately. The implementation closely follow its counterpart in the Darktable photography software.",
+                                  "This filter allows adjusting shadows and highlights in the image separately. The implementation closely follow its counterpart in the Darktable photography software.\n"
+                                  "\n"
+                                  "Deprecated: Use filter \"gegl:shadows-highlights\" instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:shadows-highlights' for credits.",
                                          "Compatibility procedure. Please see 'gegl:shadows-highlights' for credits.",
                                          "2021");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gegl:shadows-highlights");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1470,12 +1506,16 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-posterize");
   gimp_procedure_set_static_help (procedure,
                                   "Posterize the specified drawable.",
-                                  "This procedures reduces the number of shades allows in each intensity channel to the specified 'levels' parameter.",
+                                  "This procedures reduces the number of shades allows in each intensity channel to the specified 'levels' parameter.\n"
+                                  "\n"
+                                  "Deprecated: Use filter \"gimp:posterize\" instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gimp:posterize");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1499,12 +1539,16 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-threshold");
   gimp_procedure_set_static_help (procedure,
                                   "Threshold the specified drawable.",
-                                  "This procedures generates a threshold map of the specified drawable. All pixels between the values of 'low_threshold' and 'high_threshold', on the scale of 'channel' are replaced with white, and all other pixels with black.",
+                                  "This procedures generates a threshold map of the specified drawable. All pixels between the values of 'low_threshold' and 'high_threshold', on the scale of 'channel' are replaced with white, and all other pixels with black.\n"
+                                  "\n"
+                                  "Deprecated: Use filter \"gimp:threshold\" instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
+  gimp_procedure_set_deprecated (procedure,
+                                 "gimp:threshold");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",

@@ -32,15 +32,18 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+GIMP_DEPRECATED_FOR(gimp:brightness_contrast)
 gboolean gimp_drawable_brightness_contrast (GimpDrawable         *drawable,
                                             gdouble               brightness,
                                             gdouble               contrast);
+GIMP_DEPRECATED_FOR(gimp:color_balance)
 gboolean gimp_drawable_color_balance       (GimpDrawable         *drawable,
                                             GimpTransferMode      transfer_mode,
                                             gboolean              preserve_lum,
                                             gdouble               cyan_red,
                                             gdouble               magenta_green,
                                             gdouble               yellow_blue);
+GIMP_DEPRECATED_FOR(gimp:colorize)
 gboolean gimp_drawable_colorize_hsl        (GimpDrawable         *drawable,
                                             gdouble               hue,
                                             gdouble               saturation,
@@ -53,10 +56,12 @@ gboolean gimp_drawable_curves_spline       (GimpDrawable         *drawable,
                                             GimpHistogramChannel  channel,
                                             gsize                 num_coordinates,
                                             const gdouble        *points);
+GIMP_DEPRECATED_FOR(gegl:component_extract)
 gboolean gimp_drawable_extract_component   (GimpDrawable         *drawable,
                                             gint                  component,
                                             gboolean              invert,
                                             gboolean              linear);
+GIMP_DEPRECATED_FOR(gimp:desaturate)
 gboolean gimp_drawable_desaturate          (GimpDrawable         *drawable,
                                             GimpDesaturateMode    desaturate_mode);
 gboolean gimp_drawable_equalize            (GimpDrawable         *drawable,
@@ -71,14 +76,17 @@ gboolean gimp_drawable_histogram           (GimpDrawable         *drawable,
                                             gdouble              *pixels,
                                             gdouble              *count,
                                             gdouble              *percentile);
+GIMP_DEPRECATED_FOR(gimp:hue_saturation)
 gboolean gimp_drawable_hue_saturation      (GimpDrawable         *drawable,
                                             GimpHueRange          hue_range,
                                             gdouble               hue_offset,
                                             gdouble               lightness,
                                             gdouble               saturation,
                                             gdouble               overlap);
+GIMP_DEPRECATED_FOR(filters "gegl:invert_linear" or "gegl:invert_gamma")
 gboolean gimp_drawable_invert              (GimpDrawable         *drawable,
                                             gboolean              linear);
+GIMP_DEPRECATED_FOR(gimp:levels)
 gboolean gimp_drawable_levels              (GimpDrawable         *drawable,
                                             GimpHistogramChannel  channel,
                                             gdouble               low_input,
@@ -89,6 +97,7 @@ gboolean gimp_drawable_levels              (GimpDrawable         *drawable,
                                             gdouble               high_output,
                                             gboolean              clamp_output);
 gboolean gimp_drawable_levels_stretch      (GimpDrawable         *drawable);
+GIMP_DEPRECATED_FOR(gegl:shadows_highlights)
 gboolean gimp_drawable_shadows_highlights  (GimpDrawable         *drawable,
                                             gdouble               shadows,
                                             gdouble               highlights,
@@ -97,8 +106,10 @@ gboolean gimp_drawable_shadows_highlights  (GimpDrawable         *drawable,
                                             gdouble               compress,
                                             gdouble               shadows_ccorrect,
                                             gdouble               highlights_ccorrect);
+GIMP_DEPRECATED_FOR(gimp:posterize)
 gboolean gimp_drawable_posterize           (GimpDrawable         *drawable,
                                             gint                  levels);
+GIMP_DEPRECATED_FOR(gimp:threshold)
 gboolean gimp_drawable_threshold           (GimpDrawable         *drawable,
                                             GimpHistogramChannel  channel,
                                             gdouble               low_threshold,
