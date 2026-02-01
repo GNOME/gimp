@@ -30,6 +30,7 @@ HELP
     $since = '2.10';
 
     $deprecated = 'gimp:brightness-contrast';
+    $deprecated_since = '3.2';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -84,6 +85,7 @@ HELP
     $since = '2.10';
 
     $deprecated = 'gimp:color-balance';
+    $deprecated_since = '3.2';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -143,6 +145,7 @@ HELP
     &neo_pdb_misc('2004', '2.10');
 
     $deprecated = 'gimp:colorize';
+    $deprecated_since = '3.2';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -317,6 +320,7 @@ sub drawable_extract_component {
     $since = '2.10.34';
 
     $deprecated = 'gegl:component-extract';
+    $deprecated_since = '3.2';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -376,6 +380,7 @@ HELP
     $since = '2.10';
 
     $deprecated = 'gimp:desaturate';
+    $deprecated_since = '3.2';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -574,6 +579,7 @@ HELP
     $since = '2.10';
 
     $deprecated = 'gimp:hue-saturation';
+    $deprecated_since = '3.2';
 
     @inargs = (
         { name => 'drawable', type => 'drawable',
@@ -636,6 +642,7 @@ HELP
     $since = '2.10';
 
     $deprecated = 'filters "gegl:invert-linear" or "gegl:invert-gamma"';
+    $deprecated_since = '3.2';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -685,6 +692,7 @@ HELP
     $since = '2.10';
 
     $deprecated = 'gimp:levels';
+    $deprecated_since = '3.2';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -795,6 +803,7 @@ HELP
     $since = '2.10.34';
 
     $deprecated = 'gegl:shadows-highlights';
+    $deprecated_since = '3.2';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -859,6 +868,7 @@ HELP
     $since = '2.10';
 
     $deprecated = 'gimp:posterize';
+    $deprecated_since = '3.2';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -907,6 +917,7 @@ HELP
     $since = '2.10';
 
     $deprecated = 'gimp:threshold';
+    $deprecated_since = '3.2';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',

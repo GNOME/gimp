@@ -49,7 +49,7 @@
  * drawable to be modified. Both 'brightness' and 'contrast' parameters
  * are defined between -1.0 and 1.0.
  *
- * Deprecated: Use filter "gimp:brightness-contrast" instead.
+ * Deprecated: 3.2: Use filter "gimp:brightness-contrast" instead.
  *
  * Returns: TRUE on success.
  *
@@ -102,7 +102,7 @@ gimp_drawable_brightness_contrast (GimpDrawable *drawable,
  * differently. The 'preserve-lum' parameter, if TRUE, ensures that the
  * luminosity of each pixel remains fixed.
  *
- * Deprecated: Use filter "gimp:color-balance" instead.
+ * Deprecated: 3.2: Use filter "gimp:color-balance" instead.
  *
  * Returns: TRUE on success.
  *
@@ -155,7 +155,7 @@ gimp_drawable_color_balance (GimpDrawable     *drawable,
  * This tool is only valid on RGB color images. It will not operate on
  * grayscale drawables.
  *
- * Deprecated: Use filter "gimp:colorize" instead.
+ * Deprecated: 3.2: Use filter "gimp:colorize" instead.
  *
  * Returns: TRUE on success.
  *
@@ -311,7 +311,7 @@ gimp_drawable_curves_spline (GimpDrawable         *drawable,
  *
  * Extract a color model component.
  *
- * Deprecated: Use filter "gegl:component-extract" instead.
+ * Deprecated: 3.2: Use filter "gegl:component-extract" instead.
  *
  * Returns: TRUE on success.
  *
@@ -358,7 +358,7 @@ gimp_drawable_extract_component (GimpDrawable *drawable,
  * with the specified formula. This procedure only works on drawables
  * of type RGB color.
  *
- * Deprecated: Use filter "gimp:desaturate" instead.
+ * Deprecated: 3.2: Use filter "gimp:desaturate" instead.
  *
  * Returns: TRUE on success.
  *
@@ -538,7 +538,7 @@ gimp_drawable_histogram (GimpDrawable         *drawable,
  * 'overlap' parameter provides blending into neighboring hue channels
  * when rendering.
  *
- * Deprecated: Use filter "gimp:hue-saturation" instead.
+ * Deprecated: 3.2: Use filter "gimp:hue-saturation" instead.
  *
  * Returns: TRUE on success.
  *
@@ -589,8 +589,8 @@ gimp_drawable_hue_saturation (GimpDrawable *drawable,
  * is given as inten' = (255 - inten). If 'linear' is TRUE, the
  * drawable is inverted in linear space.
  *
- * Deprecated: Use filters "gegl:invert-linear" or "gegl:invert-gamma"
- * instead.
+ * Deprecated: 3.2: Use filters "gegl:invert-linear" or
+ * "gegl:invert-gamma" instead.
  *
  * Returns: TRUE on success.
  *
@@ -648,7 +648,7 @@ gimp_drawable_invert (GimpDrawable *drawable,
  * high output level. This tool is only valid on RGB color and
  * grayscale images.
  *
- * Deprecated: Use filter "gimp:levels" instead.
+ * Deprecated: 3.2: Use filter "gimp:levels" instead.
  *
  * Returns: TRUE on success.
  *
@@ -747,7 +747,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable)
  * separately. The implementation closely follow its counterpart in the
  * Darktable photography software.
  *
- * Deprecated: Use filter "gegl:shadows-highlights" instead.
+ * Deprecated: 3.2: Use filter "gegl:shadows-highlights" instead.
  *
  * Returns: TRUE on success.
  *
@@ -800,7 +800,7 @@ gimp_drawable_shadows_highlights (GimpDrawable *drawable,
  * This procedures reduces the number of shades allows in each
  * intensity channel to the specified 'levels' parameter.
  *
- * Deprecated: Use filter "gimp:posterize" instead.
+ * Deprecated: 3.2: Use filter "gimp:posterize" instead.
  *
  * Returns: TRUE on success.
  *
@@ -845,7 +845,7 @@ gimp_drawable_posterize (GimpDrawable *drawable,
  * 'high_threshold', on the scale of 'channel' are replaced with white,
  * and all other pixels with black.
  *
- * Deprecated: Use filter "gimp:threshold" instead.
+ * Deprecated: 3.2: Use filter "gimp:threshold" instead.
  *
  * Returns: TRUE on success.
  *
