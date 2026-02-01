@@ -432,6 +432,19 @@ for exec in $exec_list; do
     patchelf --set-interpreter "./$LD_LINUX" "$exec" >/dev/null 2>&1 || continue
   fi
 done
+### FIXME: resource:// protocol is broken on Debian 13. Remove this when update to Debian 14(?). See: #15552
+for LIB_PATH in $(find "$USR_DIR" \( -name "libgtk-3.so*" -o -name "libgjs*.so*" \) 2>/dev/null); do
+  if gresource list "$LIB_PATH" >/dev/null 2>&1; then
+    gresource list "$LIB_PATH" | while read -r resource_path; do
+      extract_dir="$USR_DIR/share"
+      local_resource_path="${resource_path#/}"
+      mkdir -p "$extract_dir/$(dirname "$local_resource_path")"
+      gresource extract "$LIB_PATH" "$resource_path" > "$extract_dir/$local_resource_path"
+    done
+  fi
+done
+conf_app G_RESOURCE_OVERLAYS "/org/gtk/libgtk=\${APPDIR}/usr/share/org/gtk/libgtk:/org/gnome/gjs=\${APPDIR}/usr/share/org/gnome/gjs" --no-expand
+conf_app GJS_PATH "\${APPDIR}/usr/share/org/gnome/gjs/modules/scripts:\${APPDIR}/usr/share/org/gnome/gjs/modules/core" --no-expand
 ### We can't set LD_LIBRARY_PATH partly to not break patchelf trick so we need 'ln' for Lua
 #cd $APP_DIR
 #lua_cpath_tweaked="$(echo $LUA_CPATH | sed -e 's|$HERE/||' -e 's|/?.so||')/lgi"
