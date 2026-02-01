@@ -44,7 +44,11 @@
  * @initial_drawable: (nullable): The drawable to set as the initial choice.
  * @parent_window: (nullable): An optional parent window handle for the popup to be set transient to.
  *
- * Deprecated: : Use gimp_items_popup() instead.
+ * Invokes the drawable selection dialog.
+ *
+ * Opens a dialog letting a user choose an drawable.
+ *
+ * Deprecated: 3.2: Use gimp_items_popup() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -83,7 +87,11 @@ gimp_drawables_popup (const gchar  *callback,
  * gimp_drawables_close_popup:
  * @callback: The name of the callback registered for this pop-up.
  *
- * Deprecated: : Use gimp_items_close_popup() instead.
+ * Close the drawable selection dialog.
+ *
+ * Closes an open drawable selection dialog.
+ *
+ * Deprecated: 3.2: Use gimp_items_close_popup() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -115,7 +123,11 @@ gimp_drawables_close_popup (const gchar *callback)
  * @callback: The name of the callback registered for this pop-up.
  * @drawable: The drawable to set as selected.
  *
- * Deprecated: : Use gimp_items_set_popup() instead.
+ * Sets the selected drawable in a drawable selection dialog.
+ *
+ * Sets the selected drawable in a drawable selection dialog.
+ *
+ * Deprecated: 3.2: Use gimp_items_set_popup() instead.
  *
  * Returns: TRUE on success.
  **/

@@ -19,7 +19,8 @@ sub drawables_popup {
     $help  = 'Opens a dialog letting a user choose an drawable.';
 
     &jehan_pdb_misc('2023');
-    &std_pdb_deprecated ('gimp-items-popup');
+    $deprecated = 'gimp-items-popup';
+    $deprecated_since = '3.2';
 
     @inargs = (
       { name => 'callback', type => 'string', non_empty => 1,
@@ -55,7 +56,8 @@ sub drawables_close_popup {
     $help  = 'Closes an open drawable selection dialog.';
 
     &jehan_pdb_misc('2023');
-    &std_pdb_deprecated ('gimp-items-close-popup');
+    $deprecated = 'gimp-items-close-popup';
+    $deprecated_since = '3.2';
 
     @inargs = (
       { name => 'callback', type => 'string', non_empty => 1,
@@ -79,7 +81,8 @@ sub drawables_set_popup {
     $help  = $blurb;
 
     &jehan_pdb_misc('2023');
-    &std_pdb_deprecated ('gimp-items-set-popup');
+    $deprecated = 'gimp-items-set-popup';
+    $deprecated_since = '3.2';
 
     @inargs = (
       { name => 'callback', type => 'string', non_empty => 1,
