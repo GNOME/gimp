@@ -935,13 +935,29 @@ sub generate {
 		$help .= "Deprecated: There is no replacement for this procedure.";
 	    }
 	    else {
+                my $replacement = $proc->{deprecated};
+                chomp $replacement;
+                if ($replacement =~ / /) {
+                  # Use the deprecated string as-is.
+                  $replacement =~ s/"/\\"/g;
+                }
+                elsif ($replacement =~ /:/) {
+                  # Replacement is a GEGL operation.
+                  $replacement = "filter \\\"$replacement\\\"";
+                }
+                else {
+                  # Replacement is another function.
+                  $replacement =~ s/-/_/g;
+                  $replacement .= '()';
+                }
+
 		if (!$blurb) {
 		    $blurb = "Deprecated: Use '$proc->{deprecated}' instead.";
 		}
 		if ($help) {
 		    $help .= "\n\n";
 		}
-		$help .= "Deprecated: Use '$proc->{deprecated}' instead.";
+		$help .= "Deprecated: Use $replacement instead.";
 	    }
 	}
 
@@ -980,9 +996,14 @@ sub generate {
 CODE
 
         if ($proc->{deprecated}) {
+            my $replacement = $proc->{deprecated};
+            chomp $replacement;
+            if ($replacement =~ /"/) {
+              $replacement =~ s/"/\\"/g;
+            }
 	    $out->{register} .= <<CODE;
   gimp_procedure_set_deprecated (procedure,
-                                 "$proc->{deprecated}");
+                                 "$replacement");
 CODE
 	}
 

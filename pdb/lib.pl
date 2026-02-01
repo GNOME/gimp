@@ -561,8 +561,21 @@ CODE
                                     "for this procedure.");
         }
         else {
-            my $underscores = $proc->{deprecated};
-            $underscores =~ s/-/_/g;
+            my $replacement = $proc->{deprecated};
+            chomp $replacement;
+            if ($replacement =~ / /) {
+              # Use the deprecated string as-is.
+              #$replacement =~ s/"/\\"/g;
+            }
+            elsif ($replacement =~ /:/) {
+              # Replacement is a GEGL operation.
+              $replacement = "filter \"$replacement\"";
+            }
+            else {
+              # Replacement is another function.
+              $replacement =~ s/-/_/g;
+              $replacement .= '()';
+            }
 
             if ($proc->{blurb}) {
                 $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n";
@@ -571,7 +584,7 @@ CODE
                 $procdesc .= &desc_wrap($proc->{help}) . "\n *\n";
             }
             $procdesc .= &desc_wrap("Deprecated: " .
-                                    "Use $underscores() instead.");
+                                    "Use $replacement instead.");
         }
     }
     else {
