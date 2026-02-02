@@ -80,6 +80,23 @@
   </provides>
 
   <releases>
+    <release version="3.2.0~rc3" date="TODO" type="development">
+      <url type="details">https://www.gimp.org/release/3.2.0-RC3/</url>
+      <description>
+        <p>
+        Here is a third release candidate for upcoming GIMP 3.2. We are still hoping it may be the last as we approach reasonable stability.
+        Improvements include:
+        </p>
+        <ul>
+          <li>Font loading on start massively sped up</li>
+          <li>XCF files won't start loading anymore before all fonts are loaded</li>
+          <li>Dropping a color or pattern on a vector layer updates its fill property</li>
+          <li>Curves and Levels now default to working in linear working space</li>
+          <li>Several libgimp functions deprecated in favor of using the filter API directly</li>
+          <li>Various fixes and usability updates</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.2.0~rc2" date="2025-12-14" type="development">
       <url type="details">https://www.gimp.org/release/3.2.0-RC2/</url>
       <description>
