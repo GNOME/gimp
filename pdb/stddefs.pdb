@@ -181,17 +181,6 @@ sub idriss_pdb_misc {
     contrib_pdb_misc('Idriss Fekir', '', @_);
 }
 
-sub std_pdb_deprecated {
-    if (@_) {
-        $blurb = $help = '';
-        $deprecated = "@_";
-    } else {
-        $blurb = $help = '';
-        $deprecated = "NONE";
-    }
-    $author = $copyright = $date = '';
-}
-
 sub std_pdb_compat {
     $author = $copyright = "Compatibility procedure. Please see '@_' for credits.";
 }
