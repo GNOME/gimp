@@ -27,6 +27,15 @@ Core:
     (following previous guidelines, the logo was appearing too small on
     latest macOS).
 
+Operations:
+
+  - "gimp:curves" and "gimp:levels" now properly default to Linear.
+    Also the "linear" argument for both is now completely ignored in
+    favor of "trc". This doesn't break API compatibility because these
+    filters were broken enough that they were only run as linear until
+    now. As for XCF backward compatibility, the full argument list was
+    stored so existing XCF files will still load and render fine.
+
 Graphical User Interface:
 
   - Add conditional mask delete button on Layers dockable, shown when a
@@ -50,9 +59,37 @@ Plug-Ins:
   - Fixed vulnerability ZDI-CAN-28530 in ICNS import.
   - WebP lossless export made more efficient.
   - JPEG2000 quality setting on export fixed.
+  - XMC export updated not to modify the source image.
+  - Curve Bend PDB procedure API is not bogus anymore.
 
 API:
 
+  - libgimp/PDB:
+    + The following functions were deprecated, now recommending to
+      directly merge or append filters on drawables with the
+      GimpDrawableFilter API:
+      * gimp_drawable_brightness_contrast() in favor of filter
+        "gimp:brightness-contrast".
+      * gimp_drawable_color_balance() in favor of filter
+        "gimp:color-balance".
+      * gimp_drawable_colorize_hsl() in favor of filter
+        "gimp:colorize".
+      * gimp_drawable_extract_component() in favor of filter
+        "gegl:component-extract".
+      * gimp_drawable_desaturate() in favor of filter
+        "gimp:desaturate".
+      * gimp_drawable_hue_saturation() in favor of filter
+        "gimp:hue-saturation".
+      * gimp_drawable_invert() in favor of filters
+        "gegl:invert-linear" and "gegl:invert-gamma".
+      * gimp_drawable_levels() in favor of filter
+        "gimp:levels".
+      * gimp_drawable_shadows_highlights() in favor of filter
+        "gegl:shadows-highlights".
+      * gimp_drawable_posterize() in favor of filter
+        "gimp:posterize".
+      * gimp_drawable_threshold() in favor of filter
+        "gimp:threshold".
   - libgimpconfig:
     + GimpConfig objects can now be given a XCF version to force the
       serialization to use older formats. This is used for serializing
@@ -64,6 +101,7 @@ API:
   - libgimpwidgets:
     + GIMP_ICON_TEXTURE ("gimp-texture") is not used anymore and is
       planned for deletion in GIMP 4.
+    + GimpColorScales and GimpColorSelect made introspectable.
 
 Build:
 
@@ -80,6 +118,9 @@ Build:
   - New -Ddmg boolean configure option to generate files needed for our
     macOS DMGs.
   - New -Dbash-completion configure option.
+  - CI: it is now possible to trigger packages from MR by writing
+    package labels in MR descriptions without having special access role
+    on Gitlab.
 
 
 Overview of Changes from GIMP 3.2.0 RC1 to GIMP 3.2.0 RC2
