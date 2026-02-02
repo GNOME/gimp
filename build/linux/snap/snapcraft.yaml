@@ -44,9 +44,7 @@ apps:
     extensions: [gnome]
 
 layout:
-  #FIXME: needed at runtime because babl, gegl and GIMP are not fully relocatable yet
-  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1:
-    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
+  #FIXME: needed at runtime because GIMP is not fully relocatable yet
   /etc/gimp:
     bind: $SNAP/etc/gimp
 
@@ -89,22 +87,13 @@ parts:
     source: https://gitlab.gnome.org/GNOME/babl.git
     source-depth: 1
     override-pull: |
-      if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" = 'gimp' ]; then
-        printf '\033[31m(ERROR)\033[0m non-tagged source can not be deployed to gimp snap. Please, change grade value to stable\n'
-        exit 1
-      fi
-      if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" != 'gimp' ]; then
-        craftctl default
-      else
-        repo="https://gitlab.gnome.org/GNOME/$CRAFT_PART_NAME.git"
-        tag_branch=$(git ls-remote --exit-code --refs --sort=version:refname "$repo" "refs/tags/$(echo "$CRAFT_PART_NAME" | tr '[:lower:]' '[:upper:]')_[0-9]*_[0-9]*_[0-9]*" | tail -n 1 | sed 's|.*refs/tags/||')
-        git clone --branch "$tag_branch" --depth 1 "$repo" .
-      fi
+      git clone --branch "bruno/babl" --depth 1 "https://gitlab.gnome.org/GNOME/babl" .
     build-environment: *SNAP_ENVIRON
     plugin: meson
     meson-parameters:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - -Drelocatable=enabled
       - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
       - -Dwith-docs=false
