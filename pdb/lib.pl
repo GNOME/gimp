@@ -550,6 +550,9 @@ CODE
     my $procdesc = '';
 
     if ($proc->{deprecated}) {
+        if (! $proc->{deprecated_since}) {
+          die "ERROR: missing 'deprecated_since' variable on $name.\n";
+        }
         $deprecated_since = $proc->{deprecated_since};
         if ($proc->{deprecated} eq 'NONE') {
             if ($proc->{blurb}) {
