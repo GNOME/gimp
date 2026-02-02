@@ -16,7 +16,6 @@ os.chdir(os.path.join(top_srcdir, 'pdb'))
 result = subprocess.run(
   [PERL, 'pdbgen.pl', 'app', 'lib'],
   stdout=subprocess.PIPE,
-  stderr=subprocess.PIPE
 )
 if result.returncode == 0:
   with open(os.path.join(top_builddir, 'pdb', 'stamp-pdbgen.h'), 'w') as f:
