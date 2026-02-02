@@ -796,7 +796,19 @@ read_layer_info (PSDimage      *img_a,
   if (img_a->num_layers < 0)
     {
       img_a->transparency = TRUE;
-      img_a->num_layers = -img_a->num_layers;
+      if (img_a->num_layers == G_MININT16)
+        {
+          /* FIXME After string freeze should be set translatable */
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       "Invalid value for number of layers: %d.",
+                       img_a->num_layers);
+          img_a->num_layers = -1;
+          return NULL;
+        }
+      else
+        {
+          img_a->num_layers = abs (img_a->num_layers);
+        }
     }
 
   if (! img_a->merged_image_only && img_a->num_layers)
