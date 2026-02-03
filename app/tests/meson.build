@@ -35,7 +35,6 @@ apptests_links += libapptestutils
 app_tests = [
   'core',
   'gimpidtable',
-  'save-and-export',
 #'session-2-8-compatibility-multi-window',
 #'session-2-8-compatibility-single-window',
   'single-window-mode',
@@ -72,4 +71,42 @@ foreach test_name : app_tests
 
   prio = prio - 10
 
+endforeach
+
+## Newer Tests using GIMP directly ##
+
+if not meson.can_run_host_binaries()
+  warning('XCF loading unit testing disabled in cross-building or similar environments.')
+  subdir_done()
+endif
+
+tests = [
+  {
+    'name': 'save-and-export',
+  }
+]
+
+test_env=gimp_run_env
+test_env.set('GIMP_TESTING_ABS_TOP_SRCDIR', meson.project_source_root())
+test_env.set('GIMP_TESTING_ABS_TOP_BUILDDIR', meson.project_build_root())
+
+run_python_test = find_program(meson.project_source_root() / 'libgimp/tests/libgimp-run-python-test.py')
+foreach testinfo : tests
+  test_name = testinfo['name']
+  basename = 'test-' + testinfo['name']
+
+  py_test  = meson.current_source_dir() / basename + '.py'
+  if testinfo.has_key('input')
+    test(test_name, run_python_test,
+         args: [ gimp_exe.full_path(), py_test, testinfo['input']],
+         env: test_env,
+         suite: ['app'],
+         timeout: 90)
+  else
+    test(test_name, run_python_test,
+         args: [ gimp_exe.full_path(), py_test ],
+         env: test_env,
+         suite: ['app'],
+         timeout: 90)
+  endif
 endforeach

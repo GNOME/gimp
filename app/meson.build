@@ -128,7 +128,6 @@ libapp_dep = declare_dependency(
 
 # Those subdirs need to link against the first ones
 subdir('config')
-subdir('tests')
 
 console_libapps += [ libappconfig ]
 
