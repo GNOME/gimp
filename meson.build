@@ -2090,6 +2090,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
 subdir('gimp-data/images/')
 
 # Unit testing
+subdir('app/tests')
 subdir('libgimp/tests')
 
 # Docs
