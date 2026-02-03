@@ -49,6 +49,7 @@ GtkWidget * gimp_prop_layer_mode_box_new    (GObject       *config,
 GtkWidget * gimp_prop_color_button_new      (GObject       *config,
                                              const gchar   *property_name,
                                              const gchar   *title,
+                                             gboolean       user_context_aware,
                                              gint           width,
                                              gint           height,
                                              GimpColorAreaType  type);

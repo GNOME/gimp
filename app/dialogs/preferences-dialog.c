@@ -1452,7 +1452,7 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
     button = gimp_prop_color_button_new (color_config, "out-of-gamut-color",
-                                         _("Select Warning Color"),
+                                         _("Select Warning Color"), FALSE,
                                          PREFS_COLOR_BUTTON_WIDTH,
                                          PREFS_COLOR_BUTTON_HEIGHT,
                                          GIMP_COLOR_AREA_FLAT);

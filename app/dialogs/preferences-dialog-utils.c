@@ -241,7 +241,7 @@ prefs_color_button_add (GObject      *config,
   has_alpha = gimp_param_spec_color_has_alpha (pspec);
 
   button = gimp_prop_color_button_new (config, property_name,
-                                       title,
+                                       title, FALSE,
                                        PREFS_COLOR_BUTTON_WIDTH,
                                        PREFS_COLOR_BUTTON_HEIGHT,
                                        has_alpha ?

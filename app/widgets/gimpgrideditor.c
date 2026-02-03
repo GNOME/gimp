@@ -148,6 +148,7 @@ gimp_grid_editor_constructed (GObject *object)
 
   color_button = gimp_prop_color_button_new (G_OBJECT (editor->grid), "fgcolor",
                                              _("Change grid foreground color"),
+                                             FALSE,
                                              GRID_EDITOR_COLOR_BUTTON_WIDTH,
                                              GRID_EDITOR_COLOR_BUTTON_HEIGHT,
                                              GIMP_COLOR_AREA_FLAT);
@@ -162,6 +163,7 @@ gimp_grid_editor_constructed (GObject *object)
 
   color_button = gimp_prop_color_button_new (G_OBJECT (editor->grid), "bgcolor",
                                              _("Change grid background color"),
+                                             FALSE,
                                              GRID_EDITOR_COLOR_BUTTON_WIDTH,
                                              GRID_EDITOR_COLOR_BUTTON_HEIGHT,
                                              GIMP_COLOR_AREA_FLAT);

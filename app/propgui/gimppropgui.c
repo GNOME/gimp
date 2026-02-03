@@ -373,7 +373,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
 
       button = gimp_prop_color_button_new (config, pspec->name,
                                            g_param_spec_get_nick (pspec),
-                                           128, 24,
+                                           FALSE, 128, 24,
                                            has_alpha ?
                                            GIMP_COLOR_AREA_SMALL_CHECKS :
                                            GIMP_COLOR_AREA_FLAT);

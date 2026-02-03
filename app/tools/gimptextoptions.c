@@ -859,7 +859,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_size_group_add_widget (size_group, button);
 
   button = gimp_prop_color_button_new (config, "foreground", _("Text Color"),
-                                       40, 24, GIMP_COLOR_AREA_FLAT);
+                                       TRUE, 40, 24, GIMP_COLOR_AREA_FLAT);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (options));

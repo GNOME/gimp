@@ -347,6 +347,7 @@ static void   gimp_prop_gegl_color_button_notify   (GObject    *config,
  * gimp_prop_color_button_new:
  * @config:        #GimpConfig object to which property is attached.
  * @property_name: Name of #GeglColor property.
+ * @user_context_aware: whether color selection should be context-aware.
  * @title:         Title of the #GimpColorPanel that is to be created
  * @width:         Width of color button.
  * @height:        Height of color button.
@@ -365,6 +366,7 @@ GtkWidget *
 gimp_prop_color_button_new (GObject           *config,
                             const gchar       *property_name,
                             const gchar       *title,
+                            gboolean           user_context_aware,
                             gint               width,
                             gint               height,
                             GimpColorAreaType  type)
@@ -386,6 +388,8 @@ gimp_prop_color_button_new (GObject           *config,
                 NULL);
 
   button = gimp_color_panel_new (title, color, type, width, height);
+  gimp_color_panel_set_user_context_aware (GIMP_COLOR_PANEL (button),
+                                           user_context_aware);
   g_clear_object (&color);
 
   set_param_spec (G_OBJECT (button), button, param_spec);

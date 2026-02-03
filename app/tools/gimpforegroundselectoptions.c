@@ -339,7 +339,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
 
   /*  mask color */
   button = gimp_prop_color_button_new (config, "mask-color",
-                                       NULL,
+                                       NULL, FALSE,
                                        128, 24,
                                        GIMP_COLOR_AREA_SMALL_CHECKS);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
