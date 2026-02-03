@@ -807,6 +807,8 @@ layers_actions_update (GimpActionGroup *group,
   gint           n_selected_layers  = 0;
   gint           n_layers           = 0;
   gint           n_text_layers      = 0;
+  gint           n_link_layers      = 0;
+  gint           n_vector_layers    = 0;
 
   if (image)
     {
@@ -938,6 +940,10 @@ layers_actions_update (GimpActionGroup *group,
 
           if (GIMP_IS_TEXT_LAYER (iter->data))
             n_text_layers++;
+          if (GIMP_IS_LINK_LAYER (iter->data))
+            n_link_layers++;
+          if (GIMP_IS_VECTOR_LAYER (iter->data))
+            n_vector_layers++;
 
           has_rasterizable = has_rasterizable || gimp_item_is_rasterizable (iter->data);
           has_rasterized   = has_rasterized || gimp_item_is_rasterized (iter->data);
@@ -1128,6 +1134,34 @@ layers_actions_update (GimpActionGroup *group,
 #undef SET_SENSITIVE
 #undef SET_ACTIVE
 #undef SET_LABEL
+
+  if (have_masks & (! has_raster || have_groups))
+    {
+      const gchar *disabled_reason;
+      gchar       *tooltip;
+
+      if (n_vector_layers > 0)
+        disabled_reason = _("Disabled because layer masks cannot be applied "
+                            "on vector layers.");
+      else if (n_link_layers > 0)
+        disabled_reason = _("Disabled because layer masks cannot be applied "
+                            "on link layers.");
+      else if (n_text_layers > 0)
+        disabled_reason = _("Disabled because layer masks cannot be applied "
+                            "on text layers.");
+      else
+        disabled_reason = _("Disabled because layer masks cannot be applied "
+                            "on group layers.");
+
+      tooltip = g_strdup_printf ("%s\n%s",
+                                 _("Apply the effect of the layer masks and "
+                                   "remove them."),
+                                 disabled_reason);
+
+      gimp_action_group_set_action_tooltip (group, "layers-mask-apply",
+                                            tooltip);
+      g_free (tooltip);
+    }
 
   items_actions_update (group, "layers", layers);
 }
