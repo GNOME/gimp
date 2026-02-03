@@ -6,14 +6,14 @@
 # redarmy <redarmy@linuxaid.com.cn>, 2004.
 # 神州散人 <kappa8086@gmail.com>, 2008.
 # Aron Xu <aronmalache@163.com>, 2008.
-# lumingzh <lumingzh@qq.com>, 2022-2025.
+# lumingzh <lumingzh@qq.com>, 2022-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-09-22 20:48+0000\n"
-"PO-Revision-Date: 2025-09-23 08:28+0800\n"
+"POT-Creation-Date: 2024-06-11 18:57+0000\n"
+"PO-Revision-Date: 2026-02-03 09:21+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -53,7 +53,7 @@ msgid ""
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"使用 GIMP 的原生文件格式 XCF (文件扩展名 <tt>.xcf</tt>) 保存图像。这将完整保"
+"使用 GIMP 的原生文件格式 XCF（文件扩展名 <tt>.xcf</tt>）保存图像。这将完整保"
 "存图层和您的工作进度，允许之后的再次工作。一旦项目完成，您就可以把它导出为 "
 "JPEG、PNG、GIF 等。"
 
