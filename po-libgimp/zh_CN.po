@@ -7,14 +7,14 @@
 # YunQiang Su <wzssyqa@gmail.com>, 2011
 # kappa8086 <kappa8086@gmail.com>, 2008
 # 驿窗 <classenu@163.com>, 2024
-# lumingzh <lumingzh@qq.com>, 2019-2025.
+# lumingzh <lumingzh@qq.com>, 2019-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-18 20:51+0000\n"
-"PO-Revision-Date: 2025-11-20 10:19+0800\n"
+"POT-Creation-Date: 2026-01-23 20:46+0000\n"
+"PO-Revision-Date: 2026-02-03 09:06+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -248,11 +248,11 @@ msgstr "（编辑）"
 msgid "Export Image as %s"
 msgstr "导出图像为 %s"
 
-#: libgimp/gimpimagemetadata.c:201
+#: libgimp/gimpimagemetadata.c:203
 msgid "Background"
 msgstr "背景"
 
-#: libgimp/gimpimagemetadata-save.c:796 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:851 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -289,87 +289,87 @@ msgstr "调用错误"
 msgid "cancelled"
 msgstr "已取消"
 
-#: libgimp/gimpprocbrowserdialog.c:150
+#: libgimp/gimpprocbrowserdialog.c:152
 msgid "by name"
 msgstr "按名称"
 
-#: libgimp/gimpprocbrowserdialog.c:151
+#: libgimp/gimpprocbrowserdialog.c:153
 msgid "by description"
 msgstr "按描述"
 
-#: libgimp/gimpprocbrowserdialog.c:152
+#: libgimp/gimpprocbrowserdialog.c:154
 msgid "by help"
 msgstr "按帮助"
 
-#: libgimp/gimpprocbrowserdialog.c:153
+#: libgimp/gimpprocbrowserdialog.c:155
 msgid "by authors"
 msgstr "按作者"
 
-#: libgimp/gimpprocbrowserdialog.c:154
+#: libgimp/gimpprocbrowserdialog.c:156
 msgid "by copyright"
 msgstr "按版权"
 
-#: libgimp/gimpprocbrowserdialog.c:155
+#: libgimp/gimpprocbrowserdialog.c:157
 msgid "by date"
 msgstr "按日期"
 
-#: libgimp/gimpprocbrowserdialog.c:156
+#: libgimp/gimpprocbrowserdialog.c:158
 msgid "by type"
 msgstr "按类型"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:351 libgimp/gimpprocbrowserdialog.c:509
-#: libgimpwidgets/gimpbrowser.c:144
+#: libgimp/gimpprocbrowserdialog.c:356 libgimp/gimpprocbrowserdialog.c:514
+#: libgimpwidgets/gimpbrowser.c:165
 msgid "No matches"
 msgstr "无匹配"
 
-#: libgimp/gimpprocbrowserdialog.c:354
+#: libgimp/gimpprocbrowserdialog.c:359
 msgid "Search term invalid or incomplete"
 msgstr "搜索条件无效或不完整"
 
-#: libgimp/gimpprocbrowserdialog.c:363
+#: libgimp/gimpprocbrowserdialog.c:368
 msgid "Searching"
 msgstr "搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:375
+#: libgimp/gimpprocbrowserdialog.c:380
 msgid "Searching by name"
 msgstr "按名称搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:396
+#: libgimp/gimpprocbrowserdialog.c:401
 msgid "Searching by description"
 msgstr "按描述搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:404
+#: libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by help"
 msgstr "按帮助搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:412
+#: libgimp/gimpprocbrowserdialog.c:417
 msgid "Searching by authors"
 msgstr "按作者搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:420
+#: libgimp/gimpprocbrowserdialog.c:425
 msgid "Searching by copyright"
 msgstr "按版权搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:428
+#: libgimp/gimpprocbrowserdialog.c:433
 msgid "Searching by date"
 msgstr "按日期搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:436
+#: libgimp/gimpprocbrowserdialog.c:441
 msgid "Searching by type"
 msgstr "按类型搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:449
+#: libgimp/gimpprocbrowserdialog.c:454
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d 个过程"
 
-#: libgimp/gimpprocbrowserdialog.c:458
+#: libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "您的查询无匹配项"
 
-#: libgimp/gimpprocbrowserdialog.c:462
+#: libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -487,11 +487,11 @@ msgstr "色板选择器"
 msgid "Pattern Chooser"
 msgstr "图案选择器"
 
-#: libgimp/gimpproceduredialog.c:2833
+#: libgimp/gimpproceduredialog.c:2841
 msgid "Reset to _Initial Values"
 msgstr "重置为初始值(_I)"
 
-#: libgimp/gimpproceduredialog.c:2842
+#: libgimp/gimpproceduredialog.c:2850
 msgid "Reset to _Factory Defaults"
 msgstr "重置为出厂默认值(_F)"
 
@@ -1551,7 +1551,7 @@ msgstr "LCh 亮度"
 #: libgimpbase/gimpbaseenums.c:1574
 msgctxt "select-criterion"
 msgid "LCh Chroma"
-msgstr "LCh 浓度"
+msgstr "LCh 彩度"
 
 #: libgimpbase/gimpbaseenums.c:1575
 msgctxt "select-criterion"
@@ -1788,32 +1788,32 @@ msgctxt "unit-plural"
 msgid "percent"
 msgstr "百分比"
 
-#: libgimpbase/gimputils.c:222 libgimpbase/gimputils.c:227
+#: libgimpbase/gimputils.c:223 libgimpbase/gimputils.c:228
 msgid "(invalid UTF-8 string)"
 msgstr "（无效的 UTF-8 字符串）"
 
-#: libgimpbase/gimputils.c:397
+#: libgimpbase/gimputils.c:398
 msgid "File path is NULL"
 msgstr "文件路径为 NULL"
 
-#: libgimpbase/gimputils.c:405
+#: libgimpbase/gimputils.c:406
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "转换 UTF-8 文件名为宽字符出错"
 
-#: libgimpbase/gimputils.c:413
+#: libgimpbase/gimputils.c:414
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() 失败"
 
-#: libgimpbase/gimputils.c:452
+#: libgimpbase/gimputils.c:453
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "无法将“%s”转为有效的 NSURL。"
 
-#: libgimpbase/gimputils.c:480
+#: libgimpbase/gimputils.c:481
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "连接 org.freedesktop.FileManager1 失败："
 
-#: libgimpbase/gimputils.c:504
+#: libgimpbase/gimputils.c:505
 msgid "Calling ShowItems failed: "
 msgstr "调用 ShowItems 失败："
 
@@ -2105,7 +2105,7 @@ msgstr "%2$s 的值 “%1$ld” 无效"
 msgid "while parsing token '%s': %s"
 msgstr "解析 “%s” 时：%s"
 
-#: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
+#: libgimpconfig/gimpconfig-iface.c:708 libgimpconfig/gimpconfig-iface.c:721
 #: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
 #: libgimpwidgets/gimpcolorprofilestore.c:756
 msgid "fatal parse error"
@@ -2484,19 +2484,19 @@ msgstr "点击滴管，然后点击您的屏幕上任何位置的颜色即可选
 msgid "_Preview"
 msgstr "预览(_P)"
 
-#: libgimpwidgets/gimppreviewarea.c:154
+#: libgimpwidgets/gimppreviewarea.c:152
 msgid "Check Size"
 msgstr "方格大小"
 
-#: libgimpwidgets/gimppreviewarea.c:162
+#: libgimpwidgets/gimppreviewarea.c:160
 msgid "Check Style"
 msgstr "方格风格"
 
-#: libgimpwidgets/gimppreviewarea.c:170
+#: libgimpwidgets/gimppreviewarea.c:168
 msgid "Custom Checks Color 1"
 msgstr "自定义方格颜色 1"
 
-#: libgimpwidgets/gimppreviewarea.c:177
+#: libgimpwidgets/gimppreviewarea.c:175
 msgid "Custom Checks Color 2"
 msgstr "自定义方格颜色 2"
 
@@ -2633,7 +2633,7 @@ msgstr "_C"
 
 #: libgimpwidgets/gimpwidgetsenums.c:138
 msgid "LCh Chroma"
-msgstr "LCh 浓度"
+msgstr "LCh 彩度"
 
 #: libgimpwidgets/gimpwidgetsenums.c:139
 msgctxt "color-selector-channel"
