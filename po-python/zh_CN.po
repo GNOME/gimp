@@ -4,14 +4,14 @@
 # 神州散人 <kappa8086@gmail.com>, 2008-2009.
 #    QA by Aron Xu <aronmalache@163.com>, 2008.
 # Mingye Wang (Arthur2e5) <arthur200126@gmail.com>, 2015.
-# lumingzh <lumingzh@qq.com>, 2019-2025.
+# lumingzh <lumingzh@qq.com>, 2019-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-11 03:20+0000\n"
-"PO-Revision-Date: 2025-11-12 08:01+0800\n"
+"POT-Creation-Date: 2025-11-10 12:02+0000\n"
+"PO-Revision-Date: 2026-02-03 09:16+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -104,7 +104,7 @@ msgstr "为该图像添加一个雾图层。"
 
 #: plug-ins/python/foggify.py:122
 msgid "_Fog..."
-msgstr "雾(_F)..."
+msgstr "雾(_F)…"
 
 #: plug-ins/python/foggify.py:128
 msgid "Layer _name"
@@ -284,7 +284,7 @@ msgstr "该调色板将在导入时锁定"
 
 #: plug-ins/python/palette-offset.py:48
 msgid "_Offset Palette..."
-msgstr "偏移调色板(_O)..."
+msgstr "偏移调色板(_O)…"
 
 #: plug-ins/python/palette-offset.py:49
 msgid "Offset the colors in a palette"
@@ -332,7 +332,7 @@ msgstr "蓝色"
 
 #: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:468
 msgid "Luma (Y)"
-msgstr "亮度 (Y, Luma)"
+msgstr "亮度（Y）"
 
 #: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
 msgid "Hue"
@@ -348,11 +348,11 @@ msgstr "明度"
 
 #: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:472
 msgid "Saturation (HSL)"
-msgstr "饱和度 (HSL)"
+msgstr "饱和度（HSL）"
 
 #: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:473
 msgid "Lightness (HSL)"
-msgstr "亮度 (HSL)"
+msgstr "亮度（HSL）"
 
 #: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:474
 msgid "Index"
@@ -396,7 +396,7 @@ msgstr ""
 
 #: plug-ins/python/palette-sort.py:343
 msgid "_Sort Palette..."
-msgstr "排序调色板(_S)..."
+msgstr "排序调色板(_S)…"
 
 #: plug-ins/python/palette-sort.py:345
 msgid "Sort the colors in a palette"
@@ -486,7 +486,7 @@ msgstr "分区量化"
 
 #: plug-ins/python/palette-sort.py:476
 msgid "Lightness (LAB)"
-msgstr "亮度 (LAB)"
+msgstr "亮度（LAB）"
 
 #: plug-ins/python/palette-sort.py:477
 msgid "A-color"
@@ -498,11 +498,11 @@ msgstr "B 色"
 
 #: plug-ins/python/palette-sort.py:479
 msgid "Chroma (LCHab)"
-msgstr "色度 (LCHab)"
+msgstr "彩度（LCHab）"
 
 #: plug-ins/python/palette-sort.py:480
 msgid "Hue (LCHab)"
-msgstr "色相 (LCHab)"
+msgstr "色相（LCHab）"
 
 #: plug-ins/python/palette-to-gradient.py:129
 msgid "Palette to _Gradient"
@@ -548,7 +548,7 @@ msgstr "清空(_E)"
 
 #: plug-ins/python/python-console/python-console.py:83
 msgid "_Browse..."
-msgstr "浏览(_B)..."
+msgstr "浏览(_B)…"
 
 #: plug-ins/python/python-console/python-console.py:84
 #: plug-ins/python/python-console/python-console.py:227
