@@ -8,6 +8,8 @@ GIMP_EXE = sys.argv[1]
 TEST_FILE = sys.argv[2]
 SRC_DIR = os.path.dirname(TEST_FILE)
 SRC_DIR = Path(os.path.realpath(SRC_DIR)).resolve().as_posix()
+PYGIMP_DIR = os.path.dirname(__file__)
+PYGIMP_DIR = Path(os.path.realpath(PYGIMP_DIR)).resolve().as_posix()
 
 if not os.path.isfile(TEST_FILE):
   print(f"ERROR: file '{TEST_FILE}' does not exist!")
@@ -24,7 +26,7 @@ if first_char != '#':
   print(f"ERROR: file '{TEST_FILE}' should start with a shebang: #!/usr/bin/env python3")
   sys.exit(1)
 
-header = f"""import os; import sys; sys.path.insert(0, '{SRC_DIR}'); from pygimp.utils import gimp_assert;
+header = f"""import os; import sys; sys.path.insert(0, '{PYGIMP_DIR}'); from pygimp.utils import gimp_assert;
 import pygimp.utils; pygimp.utils.gimp_test_filename = '{TEST_FILE}'"""
 
 with open(TEST_FILE, 'r') as f:
