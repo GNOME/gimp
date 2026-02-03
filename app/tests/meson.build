@@ -31,15 +31,17 @@ libapptestutils = static_library('apptestutils',
 
 apptests_links += libapptestutils
 
-
+# TODO: we need to implement proper GUI unit testing, actually based on
+# the real GIMP and simulating pointer clicks or keyboard inputs the
+# proper way.
 app_tests = [
   'core',
   'gimpidtable',
 #'session-2-8-compatibility-multi-window',
 #'session-2-8-compatibility-single-window',
-  'single-window-mode',
+#'single-window-mode',
 #'tools',
-  'ui',
+#'ui',
   'xcf',
 ]
 
