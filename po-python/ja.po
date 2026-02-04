@@ -12,342 +12,1199 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2011-12-05 14:15+0000\n"
-"PO-Revision-Date: 2011-10-21 23:48+0900\n"
-"Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
-"Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
+"POT-Creation-Date: 2025-11-29 16:03+0000\n"
+"PO-Revision-Date: 2025-11-30 09:00+0900\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.8\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
-msgid "Missing exception information"
-msgstr "例外情報はありません"
+#: plug-ins/python/colorxhtml.py:78
+msgid "Save as colored HTML text..."
+msgstr "色付き HTML テキストで保存しています..."
 
-#: ../plug-ins/pygimp/gimpfu.py:403
-#, python-format
-msgid "An error occurred running %s"
-msgstr "%s 実行中にエラーが発生しました"
-
-#: ../plug-ins/pygimp/gimpfu.py:414
-msgid "_More Information"
-msgstr "詳細な情報(_M)"
-
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
-msgid "No"
-msgstr "しない"
-
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
-msgid "Yes"
-msgstr "する"
-
-#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
-msgid "Python-Fu File Selection"
-msgstr "Python-Fu ファイル選択"
-
-#: ../plug-ins/pygimp/gimpfu.py:607
-msgid "Python-Fu Folder Selection"
-msgstr "Python-Fu フォルダー選択"
-
-#: ../plug-ins/pygimp/gimpfu.py:696
-#, python-format
-msgid "Invalid input for '%s'"
-msgstr "'%s' に対して無効な入力がありました"
-
-#: ../plug-ins/pygimp/gimpui.py:176
-msgid "Python-Fu Color Selection"
-msgstr "Python-Fu 色選択"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: plug-ins/python/colorxhtml.py:137
 msgid "Saving as colored XHTML"
-msgstr "Colored XHTML で保存しています..."
+msgstr "色付き XHTML で保存しています"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
-msgid "Save as colored XHTML"
-msgstr "Colored XHTML で保存"
+#: plug-ins/python/colorxhtml.py:211
+msgid "Save as colored HTML text"
+msgstr "色付き HTML テキストで保存"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
-msgid "Colored XHTML"
-msgstr "Colored XHTML"
+#: plug-ins/python/colorxhtml.py:214
+msgid "Colored HTML text"
+msgstr "色付き HTML テキスト"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Character _source"
-msgstr "文字ソース(_S)"
+#: plug-ins/python/colorxhtml.py:222
+msgid "Rea_d characters from file"
+msgstr "ファイルから文字を読み込む(_D)"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Source code"
-msgstr "ソースコード"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
-msgid "Text file"
-msgstr "テキストファイル"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
-msgid "Entry box"
-msgstr "直接入力"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
-msgid "_File to read or characters to use"
+#: plug-ins/python/colorxhtml.py:223
+msgid "Read characters from file, if true, or use text entry"
 msgstr ""
-"読み込むファイルまたは\n"
-"使用する文字列(_F)"
+"TRUE: ファイルから文字を読み込む / FALSE: テキスト入力を使用するファイルから"
+"文字を読み込む"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: plug-ins/python/colorxhtml.py:225
+msgid "Charac_ters"
+msgstr "文字ソース(_T)"
+
+#: plug-ins/python/colorxhtml.py:226
+msgid "Characters that will be used as colored pixels."
+msgstr "文字が色づけされたピクセルとして使用されます。"
+
+#: plug-ins/python/colorxhtml.py:228
 msgid "Fo_nt size in pixels"
-msgstr "フォントサイズ(ピクセル) (_N)"
+msgstr "フォントサイズ(ピクセル)(_N)"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: plug-ins/python/colorxhtml.py:229
+msgid "Font size in pixels"
+msgstr "フォントサイズをピクセル単位で指定します"
+
+#: plug-ins/python/colorxhtml.py:231
 msgid "_Write a separate CSS file"
-msgstr "独立した CSS(ファイル)の記述(_W)"
+msgstr "独立した CSS ファイルを記述(_W)"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
-msgid "Gradient to use"
-msgstr "グラデーション名:"
+#: plug-ins/python/colorxhtml.py:232
+msgid "Write a separate CSS file"
+msgstr "独立した CSS ファイルを記述します"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
-msgid "File Name"
-msgstr "ファイル名:"
+#. GUI only, used to create a widget to open a file if source-file is enabled
+#: plug-ins/python/colorxhtml.py:235
+msgid "Choose File"
+msgstr "ファイルを選択"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: plug-ins/python/file-openraster.py:504
+#: plug-ins/python/file-openraster.py:505
+msgid "export an OpenRaster (.ora) file"
+msgstr "OpenRaster (.ora) ファイルをエクスポート"
+
+#: plug-ins/python/file-openraster.py:507
+#: plug-ins/python/file-openraster.py:513
+msgid "OpenRaster"
+msgstr "OpenRaster"
+
+#: plug-ins/python/file-openraster.py:514
+#: plug-ins/python/file-openraster.py:515
+msgid "load an OpenRaster (.ora) file"
+msgstr "OpenRaster (.ora) ファイルを読み込み"
+
+#: plug-ins/python/file-openraster.py:524
+#: plug-ins/python/file-openraster.py:525
+msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgstr "OpenRaster (.ora) ファイルからサムネイルを読み込みます"
+
+#: plug-ins/python/foggify.py:119
 msgid "Add a layer of fog"
 msgstr "霧が描かれたレイヤーを追加します"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: plug-ins/python/foggify.py:120
+msgid "Adds a layer of fog to the image."
+msgstr "霧が描かれたレイヤーを画像に追加します。"
+
+#: plug-ins/python/foggify.py:122
 msgid "_Fog..."
 msgstr "霧(_F)..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
-msgid "_Layer name"
-msgstr "レイヤー名(_L)"
+#: plug-ins/python/foggify.py:128
+msgid "Layer _name"
+msgstr "レイヤー名(_N)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: plug-ins/python/foggify.py:128
+msgid "Layer name"
+msgstr "レイヤー名"
+
+#: plug-ins/python/foggify.py:129
 msgid "Clouds"
 msgstr "霧模様"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+#: plug-ins/python/foggify.py:130
 msgid "_Fog color"
 msgstr "霧の色(_F)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+#: plug-ins/python/foggify.py:130
+msgid "Fog color"
+msgstr "霧の色を指定します"
+
+#: plug-ins/python/foggify.py:132
 msgid "_Turbulence"
-msgstr "霧の深さ(_T)"
+msgstr "乱流(_T)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
-msgid "Op_acity"
-msgstr "不透明度(_A)"
+#: plug-ins/python/foggify.py:132
+msgid "Turbulence"
+msgstr "霧の乱流の程度 (複雑さ) で、値が高いほど変化が複雑になります"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
-msgid "Offset the colors in a palette"
-msgstr "パレット内の色の順番をずらします"
+#: plug-ins/python/foggify.py:134
+msgid "O_pacity"
+msgstr "不透明度(_P)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
+#: plug-ins/python/foggify.py:134
+msgid "Opacity"
+msgstr "霧レイヤーの不透明度を設定します"
+
+#: plug-ins/python/gradients-save-as-css.py:131
+#: plug-ins/python/gradients-save-as-css.py:132
+msgid "Creates a new palette from a given gradient"
+msgstr "与えられたグラーデションから新規パレットを作成"
+
+#: plug-ins/python/gradients-save-as-css.py:134
+msgid "Save Gradient as CSS..."
+msgstr "グラデーションを CSS として保存..."
+
+#: plug-ins/python/gradients-save-as-css.py:140
+#: plug-ins/python/palette-export-as-kpl.py:176
+#: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
+#: plug-ins/python/palette-to-gradient.py:145
+#: plug-ins/python/python-console/python-console.py:323
+msgid "Run mode"
+msgstr "実行モード"
+
+#: plug-ins/python/gradients-save-as-css.py:141
+#: plug-ins/python/palette-export-as-kpl.py:177
+#: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
+#: plug-ins/python/palette-to-gradient.py:146
+#: plug-ins/python/python-console/python-console.py:324
+msgid "The run mode"
+msgstr "実行モード"
+
+#: plug-ins/python/gradients-save-as-css.py:144
+msgid "_Gradient to use"
+msgstr "グラデーション名(_G)"
+
+#: plug-ins/python/gradients-save-as-css.py:148
+msgid "_File"
+msgstr "ファイル(_F)"
+
+#: plug-ins/python/histogram-export.py:153
+msgid "File is either a directory or file name is empty."
+msgstr "ファイルはディレクトリかファイル名が空です。"
+
+#: plug-ins/python/histogram-export.py:156
+msgid "Directory not found."
+msgstr "ディレクトリがありません。"
+
+#: plug-ins/python/histogram-export.py:170
+msgid "Histogram Export..."
+msgstr "ヒストグラムをエクスポート..."
+
+#: plug-ins/python/histogram-export.py:213
+msgid "Exports the image histogram to a text file (CSV)"
+msgstr "画像のヒストグラムを CSV 形式のテキストファイルにエクスポートします"
+
+#: plug-ins/python/histogram-export.py:216
+msgid "_Export Histogram..."
+msgstr "ヒストグラムをエクスポート(_E)..."
+
+#. TODO: GFile props still don't have labels + only load existing files
+#. (here we likely want to create a new file).
+#: plug-ins/python/histogram-export.py:224
+msgid "Histogram file"
+msgstr "ヒストグラムのファイル"
+
+#: plug-ins/python/histogram-export.py:225
+msgid "Histogram export file"
+msgstr "ヒストグラムのエクスポートファイル"
+
+#: plug-ins/python/histogram-export.py:227
+msgid "_Bucket size"
+msgstr "バケットの大きさ(_B)"
+
+#: plug-ins/python/histogram-export.py:227
+msgid "Bucket size"
+msgstr "バケットの大きさ"
+
+#: plug-ins/python/histogram-export.py:229
+msgid "Sample _average"
+msgstr "サンプルの平均(_A)"
+
+#: plug-ins/python/histogram-export.py:229
+msgid "Sample average"
+msgstr "サンプルの平均"
+
+#: plug-ins/python/histogram-export.py:232
+msgid "Pixel count"
+msgstr "ピクセル数"
+
+#: plug-ins/python/histogram-export.py:233
+msgid "Normalized"
+msgstr "正規化"
+
+#: plug-ins/python/histogram-export.py:234
+msgid "Percent"
+msgstr "割合"
+
+#: plug-ins/python/histogram-export.py:235
+msgid "Output _Format"
+msgstr "出力形式(_F)"
+
+#: plug-ins/python/histogram-export.py:235
+msgid "Output format"
+msgstr "出力形式"
+
+#: plug-ins/python/palette-export-as-kpl.py:55
+msgid "Options"
+msgstr "オプション"
+
+#: plug-ins/python/palette-export-as-kpl.py:60
+msgid "_Export"
+msgstr "エクスポート(_E)"
+
+#: plug-ins/python/palette-export-as-kpl.py:167
+#: plug-ins/python/palette-export-as-kpl.py:168
+msgid "Export palette as Krita .kpl"
+msgstr "Krita ファイル (.kpl) としてパレットをエクスポートします"
+
+#: plug-ins/python/palette-export-as-kpl.py:170
+msgid "_Krita palette..."
+msgstr "Krita パレット(_K)..."
+
+#: plug-ins/python/palette-export-as-kpl.py:180
+msgid "_Palette to export"
+msgstr "パレットをエクスポート(_P)"
+
+#: plug-ins/python/palette-export-as-kpl.py:184
+msgid "_File (.kpl)"
+msgstr "ファイル(.kpl)(_F)"
+
+#: plug-ins/python/palette-export-as-kpl.py:187
+msgid "Commen_t"
+msgstr "コメント(_T)"
+
+#: plug-ins/python/palette-export-as-kpl.py:188
+msgid "Optional comment"
+msgstr "任意のコメント"
+
+#: plug-ins/python/palette-export-as-kpl.py:191
+msgid "Re_ad only"
+msgstr "読み込みのみ(_A)"
+
+#: plug-ins/python/palette-export-as-kpl.py:192
+msgid "The palette will be locked on import"
+msgstr "パレットはインポート時に保護されます"
+
+#: plug-ins/python/palette-offset.py:48
 msgid "_Offset Palette..."
 msgstr "色の順番をずらす(_O)..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+#: plug-ins/python/palette-offset.py:49
+msgid "Offset the colors in a palette"
+msgstr "パレット内の色の順番をずらします"
+
+#: plug-ins/python/palette-offset.py:59 plug-ins/python/palette-sort.py:358
+#: plug-ins/python/palette-to-gradient.py:149
+msgid "_Palette"
+msgstr "パレット(_P)"
+
+#: plug-ins/python/palette-offset.py:60 plug-ins/python/palette-sort.py:359
+#: plug-ins/python/palette-sort.py:400 plug-ins/python/palette-sort.py:401
+#: plug-ins/python/palette-to-gradient.py:150
 msgid "Palette"
 msgstr "パレット"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
-msgid "Off_set"
-msgstr "オフセット(_S)"
+#: plug-ins/python/palette-offset.py:63
+msgid "O_ffset"
+msgstr "オフセット(_F)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
-msgid "Sort the colors in a palette"
-msgstr "パレット中の色を並べ替えます"
+#: plug-ins/python/palette-offset.py:63
+msgid "Offset"
+msgstr "オフセット"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
+#: plug-ins/python/palette-offset.py:65
+msgid "The edited palette"
+msgstr "編集されたパレット"
+
+#: plug-ins/python/palette-offset.py:66
+msgid "The newly created palette when read-only, otherwise the input palette"
+msgstr ""
+"読み込み専用の場合は新しく作成されたパレット、そうでない場合は入力パレット"
+
+#. TODO: Re-incorporate LAB and LCHab options with GeglColor
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
+msgid "Red"
+msgstr "赤"
+
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:466
+msgid "Green"
+msgstr "緑"
+
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:467
+msgid "Blue"
+msgstr "青"
+
+#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:468
+msgid "Luma (Y)"
+msgstr "明るさ成分 (Y)"
+
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
+msgid "Hue"
+msgstr "色相"
+
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:470
+msgid "Saturation"
+msgstr "彩度"
+
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:471
+msgid "Value"
+msgstr "明度"
+
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:472
+msgid "Saturation (HSL)"
+msgstr "彩度 (HSL)"
+
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:473
+msgid "Lightness (HSL)"
+msgstr "輝度 (HSL)"
+
+#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:474
+msgid "Index"
+msgstr "インデックス"
+
+#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:475
+msgid "Random"
+msgstr "ランダム"
+
+#: plug-ins/python/palette-sort.py:94
+msgid ""
+"\n"
+"    Format is 'start:nrows,length' . All items are optional.\n"
+"\n"
+"    The empty string selects all items, as does ':'\n"
+"    ':4,' makes a 4-row selection out of all colors (length auto-"
+"determined)\n"
+"    ':4' also.\n"
+"    ':1,4' selects the first 4 colors\n"
+"    ':,4' selects rows of 4 colors (nrows auto-determined)\n"
+"    ':3,4' selects 3 rows of 4 colors\n"
+"    '4:' selects a single row of all colors after 4, inclusive.\n"
+"    '3:,4' selects rows of 4 colors, starting at 3 (nrows auto-determined)\n"
+"    '2:3,4' selects 3 rows of 4 colors (12 colors total), beginning at index "
+"2.\n"
+"    '4' is illegal (ambiguous)\n"
+msgstr ""
+"\n"
+"    書式は 'start:nrows,length' です。項目はすべて省略可能です。\n"
+"\n"
+"    空文字列はすべての項目を選択します。':' も同様です。\n"
+"'    :4,' はすべての色から 4 行分を選択します(長さは自動的に決定されます)。\n"
+"    ':4' も同様です。\n"
+"    ':1,4' は最初の 4 色を選択します。\n"
+"    ':,4' は 4 色ずつの行として選択します(行数は自動的に決定されます)。\n"
+"    ':3,4' は 3 行 4 色の、計 12 色を選択します。\n"
+"    '4:' はインデックス 4 以降のすべての色を 1 行として選択します。\n"
+"    '3:,4' はインデックス 3 から始まる 4 色ずつの行を選択します(行数は自動的"
+"に決定されます)。\n"
+"    '2:3,4' はインデックス 2 から始まる 3 行、4 色(計 12 色)を選択します。\n"
+"    '4' は正しくありません。指定があいまいです。\n"
+
+#: plug-ins/python/palette-sort.py:343
 msgid "_Sort Palette..."
 msgstr "パレットの並べ替え(_S)..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-msgid "Color _model"
-msgstr "色モデル(_M)"
+#: plug-ins/python/palette-sort.py:345
+msgid "Sort the colors in a palette"
+msgstr "パレット中の色を並べ替えます"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "RGB"
-msgstr "RGB"
+#: plug-ins/python/palette-sort.py:364
+msgid "All"
+msgstr "すべて"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
-msgid "HSV"
-msgstr "HSV"
+#: plug-ins/python/palette-sort.py:365
+msgid "Slice / Array"
+msgstr "スライス / 配列"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
-msgid "Channel to _sort"
-msgstr ""
-"並べ替える\n"
-"チャンネル(_S)"
+#: plug-ins/python/palette-sort.py:366
+msgid "Autoslice (fg->bg)"
+msgstr "自動スライス (fg->bg)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Red or Hue"
-msgstr "赤 または 色相"
+#: plug-ins/python/palette-sort.py:367
+msgid "Partitioned"
+msgstr "分割された"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
-msgid "Green or Saturation"
-msgstr "緑 または 彩度"
+#: plug-ins/python/palette-sort.py:368
+msgid "Select_ions"
+msgstr "選択(_I)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-msgid "Blue or Value"
-msgstr "青 または 明度"
+#: plug-ins/python/palette-sort.py:368
+msgid "Selections"
+msgstr "選択"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#. TODO: It would be much simpler to replace the slice expression with three
+#. separate parameters: start-index, number-of-rows, row_length
+#: plug-ins/python/palette-sort.py:372
+msgid "Slice _expression"
+msgstr "スライス式(_E)"
+
+#: plug-ins/python/palette-sort.py:377
+msgid "Channel _to sort"
+msgstr "並べ替えるチャンネル(_T)"
+
+#: plug-ins/python/palette-sort.py:377
+msgid "Channel to sort"
+msgstr "並べ替えるチャンネル"
+
+#: plug-ins/python/palette-sort.py:379
 msgid "_Ascending"
-msgstr "昇順に並べる？ (_A)"
+msgstr "昇順(_A)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
-msgid "Create a repeating gradient using colors from the palette"
-msgstr "パレットの色で色循環型グラデーションを生成します"
+#: plug-ins/python/palette-sort.py:379 plug-ins/python/palette-sort.py:386
+msgid "Ascending"
+msgstr "昇順"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-msgid "Palette to _Repeating Gradient"
-msgstr "パレットを循環型グラデーションに(_R)"
+#: plug-ins/python/palette-sort.py:383
+msgid "Secondary C_hannel to sort"
+msgstr "2 番目に並べ替えるチャンネル(_H)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
-msgid "Create a gradient using colors from the palette"
-msgstr "パレットの色でグラデーションを生成します"
+#: plug-ins/python/palette-sort.py:384
+msgid "Secondary Channel to sort"
+msgstr "2 番目に並べ替えるチャンネル"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: plug-ins/python/palette-sort.py:386
+msgid "Ascen_ding"
+msgstr "昇順(_D)"
+
+#: plug-ins/python/palette-sort.py:388
+msgid "_Quantization"
+msgstr "量子化(_Q)"
+
+#: plug-ins/python/palette-sort.py:389
+msgid "Quantization"
+msgstr "量子化"
+
+#: plug-ins/python/palette-sort.py:393
+msgid "Partitionin_g channel"
+msgstr "分割用チャンネル(_G)"
+
+#: plug-ins/python/palette-sort.py:394
+msgid "Partitioning channel"
+msgstr "分割用チャンネル"
+
+#: plug-ins/python/palette-sort.py:396
+msgid "Partition q_uantization"
+msgstr "分割量子化(_U)"
+
+#: plug-ins/python/palette-sort.py:397
+msgid "Partition quantization"
+msgstr "分割量子化"
+
+#: plug-ins/python/palette-sort.py:476
+msgid "Lightness (LAB)"
+msgstr "輝度 (LAB)"
+
+#: plug-ins/python/palette-sort.py:477
+msgid "A-color"
+msgstr "A 色"
+
+#: plug-ins/python/palette-sort.py:478
+msgid "B-color"
+msgstr "B 色"
+
+#: plug-ins/python/palette-sort.py:479
+msgid "Chroma (LCHab)"
+msgstr "クロマ (LCHab)"
+
+#: plug-ins/python/palette-sort.py:480
+msgid "Hue (LCHab)"
+msgstr "色相 (LCHab)"
+
+#: plug-ins/python/palette-to-gradient.py:129
 msgid "Palette to _Gradient"
 msgstr "パレットをグラデーションに(_G)"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
-msgid "Slice"
-msgstr "画像分割"
+#: plug-ins/python/palette-to-gradient.py:130
+msgid "Create a gradient using colors from the palette"
+msgstr "パレットの色でグラデーションを生成します"
 
-#. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
-msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
-"ガイドに沿って分割された画像のエクスポートと、それらを1つの画像として表示する"
-"ためのHTML ドキュメントの生成をおこないます"
+#: plug-ins/python/palette-to-gradient.py:131
+msgid "Create a new gradient using colors from the palette."
+msgstr "パレットの色で新しいグラデーションを生成します。"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
-msgid "_Slice..."
-msgstr "画像分割(_S)..."
+#: plug-ins/python/palette-to-gradient.py:134
+msgid "Palette to _Repeating Gradient"
+msgstr "パレットを循環型グラデーションに(_R)"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
-msgid "Path for HTML export"
-msgstr "HTML ドキュメントを生成する場所"
+#: plug-ins/python/palette-to-gradient.py:135
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "パレットの色で循環型グラデーションを生成します"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
-msgid "Filename for export"
-msgstr "HTML ドキュメント名"
+#: plug-ins/python/palette-to-gradient.py:136
+msgid "Create a new repeating gradient using colors from the palette."
+msgstr "パレットの色で新しい循環型グラデーションを生成します。"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
-msgid "Image name prefix"
-msgstr "画像ファイル名のプレフィクス"
+#: plug-ins/python/palette-to-gradient.py:153
+#: plug-ins/python/palette-to-gradient.py:154
+msgid "The newly created gradient"
+msgstr "新しく作られたグラデーション"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-msgid "Image format"
-msgstr "エクスポート画像のファイル形式"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
-msgid "Separate image folder"
-msgstr "画像を別フォルダーにエクスポート"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
-msgid "Folder for image export"
-msgstr "エクスポート先のフォルダー名"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
-msgid "Space between table elements"
-msgstr "テーブル要素間の間隔"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
-msgid "Javascript for onmouseover and clicked"
-msgstr ""
-"マウスオーバー時とクリック時の\n"
-"Javascript を記述"
-
-#. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
-msgid "Skip animation for table caps"
-msgstr "周辺部の画像切り替えを省略"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: plug-ins/python/python-console/python-console.py:79
 msgid "Python Console"
 msgstr "Python コンソール"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: plug-ins/python/python-console/python-console.py:81
+#: plug-ins/python/python-console/python-console.py:279
+msgid "_Save"
+msgstr "保存(_S)"
+
+#: plug-ins/python/python-console/python-console.py:82
+msgid "Cl_ear"
+msgstr "消去(_E)"
+
+#: plug-ins/python/python-console/python-console.py:83
 msgid "_Browse..."
 msgstr "参照(_B)..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: plug-ins/python/python-console/python-console.py:84
+#: plug-ins/python/python-console/python-console.py:227
+msgid "_Close"
+msgstr "閉じる(_C)"
+
+#: plug-ins/python/python-console/python-console.py:224
 msgid "Python Procedure Browser"
 msgstr "Python プロシージャーブラウザー"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: plug-ins/python/python-console/python-console.py:226
+msgid "_Apply"
+msgstr "適用(_A)"
+
+#: plug-ins/python/python-console/python-console.py:252
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "ファイル '%s' を書き込み用に開けません: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: plug-ins/python/python-console/python-console.py:267
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "ファイル '%s' に書き込めません: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: plug-ins/python/python-console/python-console.py:276
 msgid "Save Python-Fu Console Output"
 msgstr "Python-Fu コンソール出力の保存"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+#: plug-ins/python/python-console/python-console.py:278
+#: plug-ins/python/spyro-plus.py:1750
+msgid "_Cancel"
+msgstr "キャンセル(_C)"
+
+#: plug-ins/python/python-console/python-console.py:316
+msgid "Python _Console"
+msgstr "Python コンソール(_C)"
+
+#: plug-ins/python/python-console/python-console.py:317
 msgid "Interactive GIMP Python interpreter"
-msgstr "Python インタープリターを起動します "
+msgstr "Python インタープリターを起動します"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
-msgid "_Console"
-msgstr "コンソール(_C)"
+#: plug-ins/python/python-console/python-console.py:318
+msgid "Type in commands and see results"
+msgstr "コマンドを入力して結果を見る"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
-msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "レイヤーにドロップシャドウとベベルを付加します"
+#: plug-ins/python/spyro-plus.py:51
+msgid "Spyro Layer"
+msgstr "スピロレイヤー"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
-msgid "_Drop Shadow and Bevel..."
-msgstr "ドロップシャドウとベベル(_D)..."
+#: plug-ins/python/spyro-plus.py:52
+msgid "Spyro Path"
+msgstr "スピロパス"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "_Shadow blur"
-msgstr "シャドウのぼかし半径(_S)"
+#: plug-ins/python/spyro-plus.py:62
+msgid "As New Layer"
+msgstr "新規レイヤーとして"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "_Bevel"
-msgstr "ベベル(_B)"
+#: plug-ins/python/spyro-plus.py:63
+msgid "Redraw on last active layer"
+msgstr "最後のアクティブなレイヤーに再描画"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "_Drop shadow"
-msgstr "ドロップシャドウ(_D)"
+#: plug-ins/python/spyro-plus.py:64
+msgid "As Path"
+msgstr "パスとして"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow _X displacement"
-msgstr "シャドウの水平方向のオフセット(_X)"
+#: plug-ins/python/spyro-plus.py:112 plug-ins/python/spyro-plus.py:2270
+msgid "Circle"
+msgstr "円形"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
-msgid "Drop shadow _Y displacement"
-msgstr "シャドウの垂直方向のオフセット(_Y)"
+#: plug-ins/python/spyro-plus.py:148 plug-ins/python/spyro-plus.py:2274
+msgid "Polygon-Star"
+msgstr "星型多角形"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
-msgid "Create a new brush with characters from a text sequence"
-msgstr "テキストに使われる文字でブラシを生成します"
+#. Sine wave on a circle ring.
+#: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:1011
+#: plug-ins/python/spyro-plus.py:2265 plug-ins/python/spyro-plus.py:2275
+msgid "Sine"
+msgstr "sin 曲線"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
-msgid "New Brush from _Text..."
-msgstr "テキストからブラシ(_T)..."
+#. Semi-circles, based on a polygon
+#: plug-ins/python/spyro-plus.py:174 plug-ins/python/spyro-plus.py:2276
+msgid "Bumps"
+msgstr "バンプ"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
-msgid "Font"
-msgstr "フォント"
+#: plug-ins/python/spyro-plus.py:279
+msgid "Rack"
+msgstr "ラック"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
-msgid "Pixel Size"
-msgstr "ピクセルサイズ"
+#: plug-ins/python/spyro-plus.py:323
+msgid "Frame"
+msgstr "枠"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
-msgid "Text"
-msgstr "テキスト"
+#: plug-ins/python/spyro-plus.py:436 plug-ins/python/spyro-plus.py:2273
+msgid "Selection"
+msgstr "選択"
+
+#: plug-ins/python/spyro-plus.py:541 plug-ins/python/spyro-plus.py:2310
+msgid "Pencil"
+msgstr "鉛筆"
+
+#: plug-ins/python/spyro-plus.py:557 plug-ins/python/spyro-plus.py:2311
+msgid "AirBrush"
+msgstr "エアブラシ"
+
+#: plug-ins/python/spyro-plus.py:624 plug-ins/python/spyro-plus.py:2308
+msgid "Preview"
+msgstr "プレビュー"
+
+#: plug-ins/python/spyro-plus.py:629 plug-ins/python/spyro-plus.py:2312
+msgid "Stroke"
+msgstr "ストローク"
+
+#: plug-ins/python/spyro-plus.py:676 plug-ins/python/spyro-plus.py:2309
+msgid "PaintBrush"
+msgstr "ペイントブラシ"
+
+#: plug-ins/python/spyro-plus.py:680 plug-ins/python/spyro-plus.py:2313
+msgid "Ink"
+msgstr "インク"
+
+#: plug-ins/python/spyro-plus.py:681 plug-ins/python/spyro-plus.py:2314
+msgid "MyPaintBrush"
+msgstr "MyPaint ブラシ"
+
+#: plug-ins/python/spyro-plus.py:997 plug-ins/python/spyro-plus.py:2263
+msgid "Spyrograph"
+msgstr "スピログラフ"
+
+#: plug-ins/python/spyro-plus.py:1004 plug-ins/python/spyro-plus.py:2264
+msgid "Epitrochoid"
+msgstr "外トロコイド"
+
+#: plug-ins/python/spyro-plus.py:1031 plug-ins/python/spyro-plus.py:2266
+msgid "Lissajous"
+msgstr "リサージュ図形"
+
+#: plug-ins/python/spyro-plus.py:1487
+msgid "Curve type"
+msgstr "曲線の種類"
+
+#: plug-ins/python/spyro-plus.py:1488
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+"外トロコイドパターンとは、動く歯車が固定された歯車の外側にあるときにできる模"
+"様のことです。"
+
+#. TODO: Add Clone option once it's fixed
+#: plug-ins/python/spyro-plus.py:1493 plug-ins/python/spyro-plus.py:2316
+msgid "Tool"
+msgstr "ツール"
+
+#: plug-ins/python/spyro-plus.py:1494
+msgid ""
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
+msgstr ""
+"模様を描くためのツールです。プレビューツールは素早く描画するだけのものです。"
+
+#: plug-ins/python/spyro-plus.py:1499
+msgid "Long Gradient"
+msgstr "長いグラデーション"
+
+#: plug-ins/python/spyro-plus.py:1501
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+"チェックを外すと現在のツール設定が使用されます。チェックを入れると現在のグラ"
+"デーションと繰り返しモードの設定に基づいて、模様の長さに合わせた長いグラデー"
+"ションが使用されます。"
+
+#: plug-ins/python/spyro-plus.py:1521
+msgid "Specify pattern using one of the following tabs:"
+msgstr "次のいずれかのタブを使って模様を指定してください:"
+
+#  Toy Kit や Gears は商品名のようなので原文のままとした。
+#: plug-ins/python/spyro-plus.py:1523
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+"模様はアクティブなタブによってのみ指定されます。Toy Kit は Gears と似ています"
+"が、Toy Kit に含まれる歯車や穴番号を使います。Toy Kit の説明書に従えば同様の"
+"結果が得られるはずです。"
+
+#: plug-ins/python/spyro-plus.py:1547
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr "固定歯車の歯数です。固定歯車の大きさは歯数に比例します。"
+
+#: plug-ins/python/spyro-plus.py:1550 plug-ins/python/spyro-plus.py:1578
+msgid "Fixed gear teeth"
+msgstr "固定歯車の歯数"
+
+#: plug-ins/python/spyro-plus.py:1558
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr "動く歯車の歯数です。動く歯車の大きさは歯数に比例します。"
+
+#: plug-ins/python/spyro-plus.py:1561 plug-ins/python/spyro-plus.py:1583
+msgid "Moving gear teeth"
+msgstr "動く歯車の歯数"
+
+#: plug-ins/python/spyro-plus.py:1566
+msgid "Hole percent"
+msgstr "穴の割合"
+
+#: plug-ins/python/spyro-plus.py:1567
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+"動く歯車の中心から穴までの距離です。100% は穴が歯車の外縁にあることを示しま"
+"す。"
+
+#: plug-ins/python/spyro-plus.py:1588
+msgid "Hole number"
+msgstr "穴番号"
+
+#: plug-ins/python/spyro-plus.py:1589
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+"1 番の穴はは歯車の外縁にあります。番号が最大の穴は歯車の中心付近にあり、その"
+"最大番号は歯車によって異なります。"
+
+#: plug-ins/python/spyro-plus.py:1600
+msgid "Flower petals"
+msgstr "花びら模様"
+
+#: plug-ins/python/spyro-plus.py:1601
+msgid "The number of petals in the pattern."
+msgstr "模様に現れる花びらの数です。"
+
+#: plug-ins/python/spyro-plus.py:1606
+msgid "Petal skip"
+msgstr "飛ばす花びらの数"
+
+#: plug-ins/python/spyro-plus.py:1607
+msgid "The number of petals to advance for drawing the next petal."
+msgstr "次の花びらを描くときに何枚分の花びらを飛ばして描くかを指定します。"
+
+#: plug-ins/python/spyro-plus.py:1612
+msgid "Hole radius(%)"
+msgstr "穴の半径 (%)"
+
+#: plug-ins/python/spyro-plus.py:1613
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr ""
+"何も描画されない模様の中心にある穴の半径です。模様の大きさに対するパーセン"
+"テージで指定します。0 を指定すると穴は開かず、99 を指定すると端に細い線が描か"
+"れます。"
+
+#: plug-ins/python/spyro-plus.py:1634
+msgid "Width(%)"
+msgstr "幅 (%)"
+
+#: plug-ins/python/spyro-plus.py:1635
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr ""
+"模様の大きさに対する幅の割合を指定します。1 を指定すると薄い模様を描き、100 "
+"を指定すると模様全体を塗りつぶします。"
+
+#: plug-ins/python/spyro-plus.py:1646
+msgid "Visual"
+msgstr "外観"
+
+#  Toy Kit や Gears は商品名のようなので原文のままとした。
+#: plug-ins/python/spyro-plus.py:1652
+msgid "Toy Kit"
+msgstr "Toy Kit"
+
+#  Toy Kit や Gears は商品名のようなので原文のままとした。
+#: plug-ins/python/spyro-plus.py:1658
+msgid "Gears"
+msgstr "Gears"
+
+#: plug-ins/python/spyro-plus.py:1671 plug-ins/python/spyro-plus.py:1715
+msgid "Rotation"
+msgstr "回転"
+
+#: plug-ins/python/spyro-plus.py:1672
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr ""
+"模様の回転を度単位で指定します。固定歯車における動く歯車の開始位置です。"
+
+#: plug-ins/python/spyro-plus.py:1695 plug-ins/python/spyro-plus.py:2277
+msgid "Shape"
+msgstr "形状"
+
+#  Toy Kit や Gears は商品名のようなので原文のままとした。
+#: plug-ins/python/spyro-plus.py:1696
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+"現在の選択範囲内で使用する固定歯車の形状です。ラックは Toy Kit に含まれる丸み"
+"を帯びた長い形状です。フレームは、長方形の選択範囲の境界に沿うように配置され"
+"ます。Gear の記法で hole=100 を指定すると境界に接するようになります。セレク"
+"ションは現在の選択範囲の境界に沿うように配置されます。長方形以外の形で試して"
+"みてください。"
+
+#: plug-ins/python/spyro-plus.py:1705
+msgid "Sides"
+msgstr "側面"
+
+#: plug-ins/python/spyro-plus.py:1705
+msgid "Number of sides of the shape."
+msgstr "図形の数です。"
+
+#: plug-ins/python/spyro-plus.py:1710
+msgid "Morph"
+msgstr "変形"
+
+#: plug-ins/python/spyro-plus.py:1710
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr "固定歯車の形を変形させますが、影響するのは一部の形状のみです。"
+
+#: plug-ins/python/spyro-plus.py:1715
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "固定歯車の角度を度単位で"
+
+#: plug-ins/python/spyro-plus.py:1730
+msgid "Margin (px)"
+msgstr "余白 (px)"
+
+#: plug-ins/python/spyro-plus.py:1730
+msgid "Margin from edge of selection."
+msgstr "選択範囲の端からの余白です。"
+
+#: plug-ins/python/spyro-plus.py:1735 plug-ins/python/spyro-plus.py:2298
+#: plug-ins/python/spyro-plus.py:2299
+msgid "Make width and height equal"
+msgstr "幅と高さを同じにする"
+
+#: plug-ins/python/spyro-plus.py:1737
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+"チェックを外すと、模様は画像または選択範囲全体を埋めます。チェックを入れる"
+"と、模様は幅と高さが等しくなり、中央に配置されます。"
+
+#: plug-ins/python/spyro-plus.py:1751
+msgid "_OK"
+msgstr "OK(_O)"
+
+#: plug-ins/python/spyro-plus.py:1752
+msgid "Re_draw"
+msgstr "再描画(_D)"
+
+#: plug-ins/python/spyro-plus.py:1754
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+"ツールの設定を変更したり、色を変えたり、選択範囲を変更したりした場合はこれを"
+"押して模様の見た目をプレビューしてください。"
+
+#: plug-ins/python/spyro-plus.py:1757
+msgid "_Reset"
+msgstr "リセット(_R)"
+
+#: plug-ins/python/spyro-plus.py:1765
+msgid "Save"
+msgstr "保存"
+
+#: plug-ins/python/spyro-plus.py:1766
+msgid ""
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
+msgstr ""
+"新規レイヤーとして保存するか、最後にアクティブだったレイヤーに再描画するか、"
+"パスとして保存するかを選択"
+
+#: plug-ins/python/spyro-plus.py:1780
+msgid "Spyrogimp"
+msgstr "Spyrogimp"
+
+#: plug-ins/python/spyro-plus.py:1789 plug-ins/python/spyro-plus.py:2252
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr "現在のツール設定と選択範囲を使ってスピログラフを描画します。"
+
+#: plug-ins/python/spyro-plus.py:1802
+msgid "Curve Pattern"
+msgstr "曲線の模様"
+
+#: plug-ins/python/spyro-plus.py:1805
+msgid "Fixed Gear"
+msgstr "固定歯車"
+
+#: plug-ins/python/spyro-plus.py:1808
+msgid "Size"
+msgstr "大きさ"
+
+#: plug-ins/python/spyro-plus.py:2164
+msgid "Rendering Pattern"
+msgstr "模様を描画"
+
+#: plug-ins/python/spyro-plus.py:2176
+msgid "Please wait : Rendering Pattern"
+msgstr "お待ちください : 模様を描画中です"
+
+#: plug-ins/python/spyro-plus.py:2253
+msgid ""
+"Uses current tool settings to draw Spyrograph patterns. The size and "
+"location of the pattern is based on the current selection."
+msgstr ""
+"現在のツール設定を使ってスピログラフの模様を描画します。模様の大きさと位置"
+"は、現在の選択範囲に基づいて決まります。"
+
+#: plug-ins/python/spyro-plus.py:2256
+msgid "Spyrogimp..."
+msgstr "Spyrogimp..."
+
+#: plug-ins/python/spyro-plus.py:2267
+msgid "Curve Type"
+msgstr "曲線の種類"
+
+#: plug-ins/python/spyro-plus.py:2271
+msgid "rack"
+msgstr "ラック"
+
+#: plug-ins/python/spyro-plus.py:2272
+msgid "frame"
+msgstr "枠"
+
+#: plug-ins/python/spyro-plus.py:2279
+msgid "Si_des"
+msgstr "側面(_D)"
+
+#: plug-ins/python/spyro-plus.py:2280
+msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
+msgstr "固定歯車の辺の数(3 以上)を指定します。一部の形状でのみ使用されます。"
+
+#: plug-ins/python/spyro-plus.py:2282
+msgid "_Morph"
+msgstr "変形(_M)"
+
+#: plug-ins/python/spyro-plus.py:2283
+msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
+msgstr ""
+"固定歯車の形状を 0 から 1 の間で変形させます。一部の形状でのみ使用されます。"
+
+#: plug-ins/python/spyro-plus.py:2285
+msgid "Fi_xed gear teeth"
+msgstr "固定歯車の歯数(_X)"
+
+#: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
+msgid "Number of teeth for fixed gear."
+msgstr "固定歯車の歯数です。"
+
+#: plug-ins/python/spyro-plus.py:2288
+msgid "Mo_ving gear teeth"
+msgstr "動く歯車の歯数(_V)"
+
+#: plug-ins/python/spyro-plus.py:2291
+msgid "_Hole radius (%)"
+msgstr "穴の半径 (%)(_H)"
+
+#: plug-ins/python/spyro-plus.py:2292
+msgid ""
+"Location of hole in moving gear in percent, where 100 means that the hole is "
+"at the edge of the gear, and 0 means the hole is at the center"
+msgstr ""
+"可動歯車に開けられた穴の位置を半径に対する比率で表します。100% は穴が歯車の外"
+"縁にあり、0% は中心にあることを示します。"
+
+#: plug-ins/python/spyro-plus.py:2295
+msgid "Margin (_px)"
+msgstr "余白(_P)"
+
+#: plug-ins/python/spyro-plus.py:2296
+msgid "Margin from selection, in pixels"
+msgstr "選択範囲からの余白をピクセル単位で"
+
+#: plug-ins/python/spyro-plus.py:2301 plug-ins/python/spyro-plus.py:2304
+msgid "_Rotation"
+msgstr "回転(_R)"
+
+#: plug-ins/python/spyro-plus.py:2302
+msgid "Pattern rotation, in degrees"
+msgstr "模様の回転を度単位で"
+
+#: plug-ins/python/spyro-plus.py:2305
+msgid "Shape rotation of fixed gear, in degrees"
+msgstr "固定歯車の形状の回転角度を度数で"
+
+#: plug-ins/python/spyro-plus.py:2319
+msgid "Long _Gradient"
+msgstr "長いグラデーション(_G)"
+
+#: plug-ins/python/spyro-plus.py:2320
+msgid ""
+"Whether to apply a long gradient to match the length of the pattern. Only "
+"applicable to some of the tools."
+msgstr ""
+"パターンの長さに合わせて長いグラデーションを適用するかどうかを指定します。一"
+"部のツールにのみ適用されます。"
+
+#~ msgid "Missing exception information"
+#~ msgstr "例外情報はありません"
+
+#, python-format
+#~ msgid "An error occurred running %s"
+#~ msgstr "%s 実行中にエラーが発生しました"
+
+#~ msgid "_More Information"
+#~ msgstr "詳細な情報(_M)"
+
+#~ msgid "No"
+#~ msgstr "しない"
+
+#~ msgid "Yes"
+#~ msgstr "する"
+
+#~ msgid "Python-Fu File Selection"
+#~ msgstr "Python-Fu ファイル選択"
+
+#~ msgid "Python-Fu Folder Selection"
+#~ msgstr "Python-Fu フォルダー選択"
+
+#, python-format
+#~ msgid "Invalid input for '%s'"
+#~ msgstr "'%s' に対して無効な入力がありました"
+
+#~ msgid "Python-Fu Color Selection"
+#~ msgstr "Python-Fu 色選択"
+
+#~ msgid "Source code"
+#~ msgstr "ソースコード"
+
+#~ msgid "Text file"
+#~ msgstr "テキストファイル"
+
+#~ msgid "Entry box"
+#~ msgstr "直接入力"
+
+#~ msgid "Off_set"
+#~ msgstr "オフセット(_S)"
+
+#~ msgid "Color _model"
+#~ msgstr "色モデル(_M)"
+
+#~ msgid "RGB"
+#~ msgstr "RGB"
+
+#~ msgid "HSV"
+#~ msgstr "HSV"
+
+#~ msgid "Red or Hue"
+#~ msgstr "赤 または 色相"
+
+#~ msgid "Blue or Value"
+#~ msgstr "青 または 明度"
+
+#~ msgid "Slice"
+#~ msgstr "画像分割"
+
+#~ msgid ""
+#~ "Cuts an image along its guides, creates images and a HTML table snippet"
+#~ msgstr ""
+#~ "ガイドに沿って分割された画像のエクスポートと、それらを1つの画像として表示"
+#~ "するためのHTML ドキュメントの生成をおこないます"
+
+#~ msgid "_Slice..."
+#~ msgstr "画像分割(_S)..."
+
+#~ msgid "Path for HTML export"
+#~ msgstr "HTML ドキュメントを生成する場所"
+
+#~ msgid "Filename for export"
+#~ msgstr "HTML ドキュメント名"
+
+#~ msgid "Image name prefix"
+#~ msgstr "画像ファイル名のプレフィクス"
+
+#~ msgid "Image format"
+#~ msgstr "エクスポート画像のファイル形式"
+
+#~ msgid "Separate image folder"
+#~ msgstr "画像を別フォルダーにエクスポート"
+
+#~ msgid "Folder for image export"
+#~ msgstr "エクスポート先のフォルダー名"
+
+#~ msgid "Space between table elements"
+#~ msgstr "テーブル要素間の間隔"
+
+#~ msgid "Javascript for onmouseover and clicked"
+#~ msgstr ""
+#~ "マウスオーバー時とクリック時の\n"
+#~ "Javascript を記述"
+
+#~ msgid "Skip animation for table caps"
+#~ msgstr "周辺部の画像切り替えを省略"
+
+#~ msgid "_Console"
+#~ msgstr "コンソール(_C)"
+
+#~ msgid "Add a drop shadow to a layer, and optionally bevel it"
+#~ msgstr "レイヤーにドロップシャドウとベベルを付加します"
+
+#~ msgid "_Drop Shadow and Bevel..."
+#~ msgstr "ドロップシャドウとベベル(_D)..."
+
+#~ msgid "_Shadow blur"
+#~ msgstr "シャドウのぼかし半径(_S)"
+
+#~ msgid "_Bevel"
+#~ msgstr "ベベル(_B)"
+
+#~ msgid "_Drop shadow"
+#~ msgstr "ドロップシャドウ(_D)"
+
+#~ msgid "Drop shadow _X displacement"
+#~ msgstr "シャドウの水平方向のオフセット(_X)"
+
+#~ msgid "Drop shadow _Y displacement"
+#~ msgstr "シャドウの垂直方向のオフセット(_Y)"
+
+#~ msgid "Create a new brush with characters from a text sequence"
+#~ msgstr "テキストに使われる文字でブラシを生成します"
+
+#~ msgid "New Brush from _Text..."
+#~ msgstr "テキストからブラシ(_T)..."
+
+#~ msgid "Font"
+#~ msgstr "フォント"
+
+#~ msgid "Pixel Size"
+#~ msgstr "ピクセルサイズ"
+
+#~ msgid "Text"
+#~ msgstr "テキスト"
