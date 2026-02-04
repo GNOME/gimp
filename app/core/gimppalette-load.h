@@ -32,7 +32,8 @@ typedef enum
   GIMP_PALETTE_FILE_FORMAT_ACB,      /* Photoshop ACB color book            */
   GIMP_PALETTE_FILE_FORMAT_ASE,      /* Photoshop ASE color palette         */
   GIMP_PALETTE_FILE_FORMAT_CSS,      /* Cascaded Stylesheet file (CSS)      */
-  GIMP_PALETTE_FILE_FORMAT_SBZ       /* Swatchbooker SBZ file               */
+  GIMP_PALETTE_FILE_FORMAT_SBZ,      /* Swatchbooker SBZ file               */
+  GIMP_PALETTE_FILE_FORMAT_PROCREATE /* Procreate .swatches file            */
 } GimpPaletteFileFormat;
 
 
@@ -69,6 +70,10 @@ GList               * gimp_palette_load_css           (GimpContext   *context,
                                                        GInputStream  *input,
                                                        GError       **error);
 GList               * gimp_palette_load_sbz           (GimpContext   *context,
+                                                       GFile         *file,
+                                                       GInputStream  *input,
+                                                       GError       **error);
+GList               * gimp_palette_load_procreate     (GimpContext   *context,
                                                        GFile         *file,
                                                        GInputStream  *input,
                                                        GError       **error);

@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <json-glib/json-glib.h>
+
 #include <stdlib.h>
 
 #include <archive.h>
@@ -1466,6 +1468,167 @@ gimp_palette_load_sbz (GimpContext   *context,
   return g_list_prepend (NULL, sbz_data.palette);
 }
 
+GList *
+gimp_palette_load_procreate (GimpContext   *context,
+                             GFile         *file,
+                             GInputStream  *input,
+                             GError       **error)
+{
+  GimpPalette          *palette   = NULL;
+  gchar                *json_data = NULL;
+  struct archive       *a;
+  struct archive_entry *entry;
+  size_t                entry_size;
+  int                   r;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if ((a = archive_read_new ()))
+    {
+      const gchar *name = gimp_file_get_utf8_name (file);
+
+      archive_read_support_format_all (a);
+      r = archive_read_open_filename (a, name, 10240);
+      if (r != ARCHIVE_OK)
+        {
+          archive_read_free (a);
+
+          /* TODO: Translate after string freeze */
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       "Unable to read Procreate swatches file");
+          return NULL;
+        }
+
+      while (archive_read_next_header (a, &entry) == ARCHIVE_OK)
+        {
+          const gchar *lower = g_ascii_strdown (archive_entry_pathname (entry), -1);
+
+          if (g_str_has_suffix (lower, ".json"))
+            {
+              entry_size = archive_entry_size (entry);
+              json_data  = (gchar *) g_malloc (entry_size);
+
+              r = archive_read_data (a, json_data, entry_size);
+            }
+        }
+
+      if (json_data)
+        {
+          JsonParser *parser;
+          JsonReader *reader;
+
+          parser = json_parser_new ();
+          if (! json_parser_load_from_data (parser, json_data, entry_size,
+                                            error))
+            {
+              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                           _("Could not read header from palette file '%s': "),
+                           gimp_file_get_utf8_name (file));
+
+              g_free (json_data);
+              g_clear_object (&parser);
+              return NULL;
+            }
+
+          reader = json_reader_new (json_parser_get_root (parser));
+
+          if (json_reader_read_member (reader, "name"))
+            {
+              const gchar *name = json_reader_get_string_value (reader);
+
+              palette = GIMP_PALETTE (gimp_palette_new (context, name));
+              json_reader_end_member (reader);
+            }
+          else
+            {
+              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                           _("Could not read header from palette file '%s': "),
+                           gimp_file_get_utf8_name (file));
+
+              g_free (json_data);
+              g_clear_object (&reader);
+              g_clear_object (&parser);
+              return NULL;
+            }
+
+          /* TODO: Later versions of Procreate swatches support different color
+           * models, spaces, and profiles. More sample files are needed to
+           * import these correctly. */
+          if (json_reader_read_member (reader, "swatches") &&
+              json_reader_is_array (reader))
+            {
+              guint        array_length = json_reader_count_elements (reader);
+              const gchar *labels[3]    = {"hue", "saturation", "brightness"};
+              guint        position     = 0;
+
+              for (gint i = 0; i < array_length; i++)
+                {
+                  gfloat hsva[4] = { 0, 0, 0, 1 };
+                  gint   valid   = 0;
+
+                  json_reader_read_element (reader, i);
+                  for (gint j = 0; j < 3; j++)
+                    {
+                      if (json_reader_read_member (reader, labels[j]))
+                        {
+                          hsva[j] =
+                            (gfloat) json_reader_get_double_value (reader);
+
+                          valid++;
+                        }
+                      json_reader_end_member (reader);
+                    }
+                  if (json_reader_read_member (reader, "alpha"))
+                    hsva[3] = (gfloat) json_reader_get_double_value (reader);
+                  json_reader_end_member (reader);
+
+                  if (valid >= 3)
+                    {
+                      GeglColor *color = gegl_color_new (NULL);
+
+                      gegl_color_set_pixel (color, babl_format ("HSV float"),
+                                            hsva);
+
+                      if (! gimp_palette_find_entry (palette, color, NULL))
+                        gimp_palette_add_entry (palette, position, NULL, color);
+
+                      if (json_reader_read_member (reader, "name"))
+                        {
+                          const gchar *name =
+                            json_reader_get_string_value (reader);
+
+                          gimp_palette_set_entry_name (palette, position, name);
+                        }
+                      json_reader_end_member (reader);
+                      position++;
+
+                      g_object_unref (color);
+                    }
+                  json_reader_end_element (reader);
+                }
+            }
+          json_reader_end_member (reader);
+
+          g_free (json_data);
+          g_clear_object (&reader);
+          g_clear_object (&parser);
+        }
+
+      r = archive_read_free (a);
+    }
+  else
+    {
+      /* TODO: Translate after string freeze */
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   "Unable to read Procreate swatches file");
+      return NULL;
+    }
+
+  return g_list_prepend (NULL, palette);
+}
+
 static void
 swatchbooker_load_start_element (GMarkupParseContext *context,
                                  const gchar         *element_name,
@@ -1752,6 +1915,10 @@ gimp_palette_load_detect_format (GFile        *file,
       else if (g_str_has_suffix (lower, ".sbz"))
         {
           format = GIMP_PALETTE_FILE_FORMAT_SBZ;
+        }
+      else if (g_str_has_suffix (lower, ".swatches"))
+        {
+          format = GIMP_PALETTE_FILE_FORMAT_PROCREATE;
         }
 
       g_free (lower);

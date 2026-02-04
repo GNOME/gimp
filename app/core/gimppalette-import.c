@@ -567,6 +567,10 @@ gimp_palette_import_from_file (GimpContext  *context,
       palette_list = gimp_palette_load_sbz (context, file, input, error);
       break;
 
+    case GIMP_PALETTE_FILE_FORMAT_PROCREATE:
+      palette_list = gimp_palette_load_procreate (context, file, input, error);
+      break;
+
     default:
       g_set_error (error,
                    GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
