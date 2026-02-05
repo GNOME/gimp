@@ -40,11 +40,12 @@
 
 #include "gimp-intl.h"
 
+/* Used by SwatchBooker and Procreate color profiles */
 typedef struct
 {
   GimpColorProfile *profile;
   gchar            *id;
-} SwatchBookerColorProfile;
+} PaletteColorProfile;
 
 typedef struct
 {
@@ -1426,10 +1427,10 @@ gimp_palette_load_sbz (GimpContext   *context,
 
               if (profile)
                 {
-                  SwatchBookerColorProfile sbz_profile;
+                  PaletteColorProfile sbz_profile;
 
                   sbz_profile.profile = profile;
-                  sbz_profile.id = g_strdup (archive_entry_pathname (entry));
+                  sbz_profile.id      = g_strdup (archive_entry_pathname (entry));
 
                   sbz_data.embedded_profiles =
                     g_list_append (sbz_data.embedded_profiles, &sbz_profile);
@@ -1518,6 +1519,7 @@ gimp_palette_load_procreate (GimpContext   *context,
         {
           JsonParser *parser;
           JsonReader *reader;
+          GList      *profiles = NULL;
 
           parser = json_parser_new ();
           if (! json_parser_load_from_data (parser, json_data, entry_size,
@@ -1534,7 +1536,8 @@ gimp_palette_load_procreate (GimpContext   *context,
 
           reader = json_reader_new (json_parser_get_root (parser));
 
-          if (json_reader_read_member (reader, "name"))
+          if (json_reader_read_member (reader, "name") &&
+              json_reader_is_value (reader))
             {
               const gchar *name = json_reader_get_string_value (reader);
 
@@ -1553,9 +1556,69 @@ gimp_palette_load_procreate (GimpContext   *context,
               return NULL;
             }
 
-          /* TODO: Later versions of Procreate swatches support different color
-           * models, spaces, and profiles. More sample files are needed to
-           * import these correctly. */
+          /* Procreate shows columns in rows of 10 */
+          gimp_palette_set_columns (palette, 10);
+
+          if (json_reader_read_member (reader, "colorProfiles") &&
+              json_reader_is_array (reader))
+            {
+              guint array_length = json_reader_count_elements (reader);
+
+              for (gint i = 0; i < array_length; i++)
+                {
+                  PaletteColorProfile *data;
+                  GError              *test = NULL;
+
+                  data          = g_malloc0 (sizeof (PaletteColorProfile));
+                  data->id      = NULL;
+                  data->profile = NULL;
+
+                  json_reader_read_element (reader, i);
+                  if (json_reader_read_member (reader, "hash") &&
+                      json_reader_is_value (reader))
+                    {
+                      const gchar *hash =
+                        json_reader_get_string_value (reader);
+
+                      data->id = g_strdup (hash);
+                    }
+                  json_reader_end_member (reader);
+
+                  if (json_reader_read_member (reader, "iccData") &&
+                      json_reader_is_value (reader))
+                    {
+                      GimpColorProfile *profile  = NULL;
+                      const gchar      *icc_data = NULL;
+                      guchar           *decoded  = NULL;
+                      gsize             icc_size;
+
+                      icc_data = json_reader_get_string_value (reader);
+                      decoded = g_base64_decode (icc_data, &icc_size);
+
+                      if (decoded)
+                        {
+                          profile =
+                            gimp_color_profile_new_from_icc_profile ((const guint8 *) decoded,
+                                                                     icc_size,
+                                                                     &test);
+
+                          g_free (decoded);
+                        }
+
+                      if (profile)
+                        data->profile = profile;
+                    }
+                  json_reader_end_member (reader);
+
+                  if (data->id && data->profile)
+                    profiles = g_list_append (profiles, data);
+
+                  json_reader_end_element (reader);
+                }
+
+            }
+          json_reader_end_member (reader);
+
           if (json_reader_read_member (reader, "swatches") &&
               json_reader_is_array (reader))
             {
@@ -1571,7 +1634,8 @@ gimp_palette_load_procreate (GimpContext   *context,
                   json_reader_read_element (reader, i);
                   for (gint j = 0; j < 3; j++)
                     {
-                      if (json_reader_read_member (reader, labels[j]))
+                      if (json_reader_read_member (reader, labels[j]) &&
+                          json_reader_is_value (reader))
                         {
                           hsva[j] =
                             (gfloat) json_reader_get_double_value (reader);
@@ -1580,21 +1644,49 @@ gimp_palette_load_procreate (GimpContext   *context,
                         }
                       json_reader_end_member (reader);
                     }
-                  if (json_reader_read_member (reader, "alpha"))
+                  if (json_reader_read_member (reader, "alpha") &&
+                      json_reader_is_value (reader))
                     hsva[3] = (gfloat) json_reader_get_double_value (reader);
                   json_reader_end_member (reader);
 
                   if (valid >= 3)
                     {
-                      GeglColor *color = gegl_color_new (NULL);
+                      GeglColor  *color = gegl_color_new (NULL);
+                      const Babl *space = NULL;
 
-                      gegl_color_set_pixel (color, babl_format ("HSV float"),
+                      if (profiles                                         &&
+                          json_reader_read_member (reader, "colorProfile") &&
+                          json_reader_is_value (reader))
+                        {
+                          GList       *profile_list;
+                          const gchar *hash =
+                            json_reader_get_string_value (reader);
+
+                          for (profile_list = profiles; profile_list;
+                               profile_list = g_list_next (profile_list))
+                            {
+                              PaletteColorProfile *icc = profile_list->data;
+
+                              if (! strcmp (icc->id, hash))
+                                {
+                                  space = gimp_color_profile_get_space (icc->profile,
+                                                                        GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                                        NULL);
+                                  break;
+                                }
+                            }
+                        }
+                      json_reader_end_member (reader);
+
+                      gegl_color_set_pixel (color,
+                                            babl_format_with_space ("HSV float", space),
                                             hsva);
 
                       if (! gimp_palette_find_entry (palette, color, NULL))
                         gimp_palette_add_entry (palette, position, NULL, color);
 
-                      if (json_reader_read_member (reader, "name"))
+                      if (json_reader_read_member (reader, "name") &&
+                          json_reader_is_value (reader))
                         {
                           const gchar *name =
                             json_reader_get_string_value (reader);
@@ -1610,6 +1702,9 @@ gimp_palette_load_procreate (GimpContext   *context,
                 }
             }
           json_reader_end_member (reader);
+
+          if (profiles)
+            g_list_free (profiles);
 
           g_free (json_data);
           g_clear_object (&reader);
@@ -1787,7 +1882,7 @@ swatchbooker_load_text (GMarkupParseContext *context,
                    profile_list;
                    profile_list = g_list_next (profile_list))
                 {
-                  SwatchBookerColorProfile *icc = profile_list->data;
+                  PaletteColorProfile *icc = profile_list->data;
 
                   if (! strcmp (sbz_data->color_space, icc->id))
                     {
