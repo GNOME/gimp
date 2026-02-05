@@ -82,9 +82,12 @@ file_raw_get_executable_path (const gchar *main_executable,
                                              &bundle_url);
 #else
           urls = LSCopyApplicationURLsForBundleIdentifier (bundle_id, NULL);
-          if (urls && CFArrayGetCount(urls) > 0)
-            bundle_url = (CFURLRef)CFArrayGetValueAtIndex (urls, 0);
-          CFRelease (urls);
+          if (urls)
+            {
+              if (CFArrayGetCount(urls) > 0)
+                bundle_url = (CFURLRef)CFArrayGetValueAtIndex (urls, 0);
+              CFRelease (urls);
+            }
           if (bundle_url)
             status = 0;
 #endif
