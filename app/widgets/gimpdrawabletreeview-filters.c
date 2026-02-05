@@ -420,7 +420,7 @@ _gimp_drawable_tree_view_filter_editor_destroy (GimpDrawableTreeView *view)
 static void
 gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
 {
-  GimpDrawableTreeViewFiltersEditor *editor= view->editor;
+  GimpDrawableTreeViewFiltersEditor *editor = view->editor;
   gboolean                           editable;
   gint                               n_editable;
   gint                               first_editable;
@@ -444,6 +444,7 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
       GimpContainer *filters;
       gboolean       is_group    = FALSE;
       gboolean       is_editable = FALSE;
+      gboolean       has_visible_filters;
       gint           index;
 
       filters = gimp_drawable_get_filters (editor->drawable);
@@ -454,6 +455,9 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
       /*  do not allow merging down effects on group layers  */
       if (gimp_viewable_get_children (GIMP_VIEWABLE (editor->drawable)))
         is_group = TRUE;
+
+      has_visible_filters =
+        gimp_drawable_has_visible_filters (editor->drawable);
 
       is_editable = (index >= first_editable &&
                      index <= last_editable);
@@ -467,7 +471,8 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
       gtk_widget_set_sensitive (editor->lower_button,
                                 index < last_editable);
       gtk_widget_set_sensitive (editor->merge_button,
-                                ! is_group &&
+                                ! is_group          &&
+                                has_visible_filters &&
                                 (! GIMP_IS_RASTERIZABLE (editor->drawable) ||
                                  gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (editor->drawable))));
       gtk_widget_set_sensitive (editor->remove_button,
@@ -730,6 +735,7 @@ gimp_drawable_filters_editor_merge_clicked (GtkWidget            *widget,
   GimpDrawableTreeViewFiltersEditor *editor = view->editor;
   GimpContext                       *context;
   GimpToolInfo                      *active_tool;
+  GimpContainer                     *filters;
 
   if (! GIMP_IS_DRAWABLE_FILTER (editor->filter))
     return;
@@ -746,7 +752,8 @@ gimp_drawable_filters_editor_merge_clicked (GtkWidget            *widget,
                                    gimp_context_get_display (context));
     }
 
-  if (! gimp_viewable_get_children (GIMP_VIEWABLE (editor->drawable)))
+  if (! gimp_viewable_get_children (GIMP_VIEWABLE (editor->drawable)) &&
+      gimp_drawable_has_visible_filters (editor->drawable))
     {
       GimpImage *image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
 
@@ -761,7 +768,10 @@ gimp_drawable_filters_editor_merge_clicked (GtkWidget            *widget,
 
       gimp_drawable_merge_filters (GIMP_DRAWABLE (editor->drawable));
 
-      _gimp_drawable_tree_view_filter_editor_hide (view);
+      /* If we still have inactive filters, keep pop-up open */
+      filters = gimp_drawable_get_filters (editor->drawable);
+      if (gimp_container_get_n_children (filters) == 0)
+        _gimp_drawable_tree_view_filter_editor_hide (view);
 
       gimp_image_flush (image);
     }

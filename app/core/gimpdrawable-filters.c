@@ -348,7 +348,8 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
 
           list = list->next;
 
-          if (GIMP_IS_DRAWABLE_FILTER (filter) &&
+          if (GIMP_IS_DRAWABLE_FILTER (filter)              &&
+              gimp_filter_get_active (GIMP_FILTER (filter)) &&
               ! gimp_drawable_filter_get_temporary (filter))
 
             {
