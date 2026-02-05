@@ -1538,7 +1538,7 @@ load_resource_2000 (const PSDimageres  *res_a,
   gint16     init_fill = 0;
   gint16     num_rec;
   gint16     path_rec;
-  gint16     cntr;
+  gint       cntr;
   gint       image_width;
   gint       image_height;
   gint       i;
