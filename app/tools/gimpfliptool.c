@@ -62,7 +62,7 @@ static void         gimp_flip_tool_button_press  (GimpTool             *tool,
                                                   GdkModifierType       state,
                                                   GimpButtonPressType   press_type,
                                                   GimpDisplay          *display);
-static gboolean      gimp_flip_tool_key_press    (GimpTool             *tool,
+static gboolean     gimp_flip_tool_key_press     (GimpTool             *tool,
                                                   GdkEventKey          *kevent,
                                                   GimpDisplay          *display);
 static void         gimp_flip_tool_modifier_key  (GimpTool             *tool,
