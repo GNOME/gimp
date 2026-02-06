@@ -62,6 +62,9 @@ static void         gimp_flip_tool_button_press  (GimpTool             *tool,
                                                   GdkModifierType       state,
                                                   GimpButtonPressType   press_type,
                                                   GimpDisplay          *display);
+static gboolean     gimp_flip_tool_key_press     (GimpTool             *tool,
+                                                  GdkEventKey          *kevent,
+                                                  GimpDisplay          *display);
 static void         gimp_flip_tool_modifier_key  (GimpTool             *tool,
                                                   GdkModifierType       key,
                                                   gboolean              press,
@@ -123,6 +126,7 @@ gimp_flip_tool_class_init (GimpFlipToolClass *klass)
   GimpTransformToolClass *tr_class        = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
   tool_class->button_press  = gimp_flip_tool_button_press;
+  tool_class->key_press     = gimp_flip_tool_key_press;
   tool_class->modifier_key  = gimp_flip_tool_modifier_key;
   tool_class->oper_update   = gimp_flip_tool_oper_update;
   tool_class->cursor_update = gimp_flip_tool_cursor_update;
@@ -169,6 +173,40 @@ gimp_flip_tool_button_press (GimpTool            *tool,
   gimp_transform_tool_transform (tr_tool, display);
 
   gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+}
+
+static gboolean
+gimp_flip_tool_key_press (GimpTool    *tool,
+                          GdkEventKey *kevent,
+                          GimpDisplay *display)
+{
+  GimpTransformTool   *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  GimpFlipOptions     *options = GIMP_FLIP_TOOL_GET_OPTIONS (tool);
+  GimpOrientationType  flip_type;
+
+  flip_type = options->flip_type;
+
+  switch (kevent->keyval)
+    {
+    case GDK_KEY_Up:
+    case GDK_KEY_Down:
+      options->flip_type = GIMP_ORIENTATION_VERTICAL;
+      break;
+
+    case GDK_KEY_Right:
+    case GDK_KEY_Left:
+      options->flip_type = GIMP_ORIENTATION_HORIZONTAL;
+      break;
+
+    default:
+      return TRUE;
+    }
+
+  gimp_transform_tool_transform (tr_tool, display);
+
+  g_object_set (options, "flip-type", flip_type, NULL);
+
+  return GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
 }
 
 static void
