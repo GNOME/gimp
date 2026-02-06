@@ -435,7 +435,13 @@ fread_unicode_string (gint32        *bytes_read,
       return NULL;
     }
 
-  utf16_str = g_malloc (len * 2);
+  utf16_str = g_try_malloc (len * 2);
+  if (! utf16_str)
+    {
+      psd_set_error (error);
+      return NULL;
+    }
+
   for (i = 0; i < len; ++i)
     {
       if (psd_read (input, &utf16_str[i], 2, error) < 2)
