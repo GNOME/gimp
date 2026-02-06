@@ -573,6 +573,10 @@ gfig_style_copy (Style       *style1,
                  Style       *style0,
                  const gchar *name)
 {
+  if (style1 == style0)
+    /* Initializing the default style: return without copying */
+    return;
+
   if (name)
     style1->name = g_strdup (name);
   else
