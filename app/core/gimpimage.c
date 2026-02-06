@@ -134,6 +134,7 @@ enum
   COLORMAP_CHANGED,
   UNDO_EVENT,
   ITEM_SETS_CHANGED,
+  DISPLAY_COUNT_CHANGED,
   LAST_SIGNAL
 };
 
@@ -590,6 +591,15 @@ gimp_image_class_init (GimpImageClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_GTYPE);
+
+  gimp_image_signals[DISPLAY_COUNT_CHANGED] =
+    g_signal_new ("display-count-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, display_count_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_INT);
 
   object_class->constructed           = gimp_image_constructed;
   object_class->set_property          = gimp_image_set_property;
@@ -4251,6 +4261,8 @@ gimp_image_inc_display_count (GimpImage *image)
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   GIMP_IMAGE_GET_PRIVATE (image)->disp_count++;
+  g_signal_emit (image, gimp_image_signals[DISPLAY_COUNT_CHANGED], 0,
+                 GIMP_IMAGE_GET_PRIVATE (image)->disp_count);
 }
 
 void
@@ -4259,6 +4271,8 @@ gimp_image_dec_display_count (GimpImage *image)
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   GIMP_IMAGE_GET_PRIVATE (image)->disp_count--;
+  g_signal_emit (image, gimp_image_signals[DISPLAY_COUNT_CHANGED], 0,
+                 GIMP_IMAGE_GET_PRIVATE (image)->disp_count);
 }
 
 gint

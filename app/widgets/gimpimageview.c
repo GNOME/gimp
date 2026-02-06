@@ -42,10 +42,18 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_image_view_select_item   (GimpContainerEditor *editor,
-                                             GimpViewable        *viewable);
-static void   gimp_image_view_activate_item (GimpContainerEditor *editor,
-                                             GimpViewable        *viewable);
+static void   gimp_image_view_finalize              (GObject             *object);
+
+static void   gimp_image_view_image_changed         (GimpContainerView   *container_view,
+                                                     GimpImageView       *view);
+static void   gimp_image_view_display_count_changed (GimpImage           *image,
+                                                     gint                 display_count,
+                                                     GimpImageView       *view);
+
+static void   gimp_image_view_select_item           (GimpContainerEditor *editor,
+                                                     GimpViewable        *viewable);
+static void   gimp_image_view_activate_item         (GimpContainerEditor *editor,
+                                                     GimpViewable        *viewable);
 
 
 G_DEFINE_TYPE (GimpImageView, gimp_image_view, GIMP_TYPE_CONTAINER_EDITOR)
@@ -56,7 +64,10 @@ G_DEFINE_TYPE (GimpImageView, gimp_image_view, GIMP_TYPE_CONTAINER_EDITOR)
 static void
 gimp_image_view_class_init (GimpImageViewClass *klass)
 {
+  GObjectClass             *object_class = G_OBJECT_CLASS (klass);
   GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
+
+  object_class->finalize      = gimp_image_view_finalize;
 
   editor_class->select_item   = gimp_image_view_select_item;
   editor_class->activate_item = gimp_image_view_activate_item;
@@ -68,6 +79,16 @@ gimp_image_view_init (GimpImageView *view)
   view->raise_button  = NULL;
   view->new_button    = NULL;
   view->delete_button = NULL;
+}
+
+static void
+gimp_image_view_finalize (GObject *object)
+{
+  GimpImageView *view = GIMP_IMAGE_VIEW (object);
+
+  g_clear_weak_pointer (&view->image);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GtkWidget *
@@ -137,10 +158,51 @@ gimp_image_view_new (GimpViewType     view_type,
                                   GTK_BUTTON (image_view->delete_button),
                                   GIMP_TYPE_IMAGE);
 
+  /* The selection for this GimpContainerView is known to be an image.
+   * The GimpContainerView class will automatically connect to the
+   * "image-changed" signal from the context, but it doesn't tell us
+   * anything about whether the display count of the selected image
+   * changes. Yet this is important information as some action in the
+   * "Images" action group may be set sensitive depending on this count.
+   */
+  g_signal_connect (editor->view,
+                    "selection-changed",
+                    G_CALLBACK (gimp_image_view_image_changed),
+                    image_view);
+  gimp_image_view_image_changed (editor->view, image_view);
+
   gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)),
                           editor);
 
   return GTK_WIDGET (image_view);
+}
+
+static void
+gimp_image_view_image_changed (GimpContainerView *container_view,
+                               GimpImageView     *view)
+{
+  if (view->image)
+    g_signal_handlers_disconnect_by_func (view->image,
+                                          G_CALLBACK (gimp_image_view_display_count_changed),
+                                          view);
+  g_set_weak_pointer (&view->image,
+                      GIMP_IMAGE (gimp_container_view_get_1_selected (container_view)));
+  if (view->image)
+    g_signal_connect_object (view->image, "display-count-changed",
+                             G_CALLBACK (gimp_image_view_display_count_changed),
+                             view, 0);
+}
+
+static void
+gimp_image_view_display_count_changed (GimpImage     *image,
+                                       gint           display_count,
+                                       GimpImageView *view)
+{
+  GimpContainerEditor *editor;
+
+  editor = GIMP_CONTAINER_EDITOR (view);
+  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)),
+                          editor);
 }
 
 static void

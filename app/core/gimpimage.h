@@ -103,6 +103,8 @@ struct _GimpImageClass
                                          GimpUndo             *undo);
   void (* item_sets_changed)            (GimpImage            *image,
                                          GType                 item_type);
+  void (* display_count_changed)        (GimpImage            *image,
+                                         gint                  display_count);
 };
 
 
