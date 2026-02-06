@@ -274,7 +274,8 @@ fread_pascal_string (gint32        *bytes_read,
       return NULL;
     }
 
-  str = g_malloc (len);
+  str = g_malloc (len + 1);
+  str[len] = '\0';
   if (psd_read (input, str, len, error) < len)
     {
       psd_set_error (error);
