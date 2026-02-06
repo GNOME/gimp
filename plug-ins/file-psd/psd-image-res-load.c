@@ -660,8 +660,6 @@ load_resource_1006 (const PSDimageres  *res_a,
       return 0;
     }
 
-  img_a->alpha_names = g_ptr_array_new ();
-
   block_rem = res_a->data_len;
   while (block_rem > 1)
     {
@@ -671,6 +669,8 @@ load_resource_1006 (const PSDimageres  *res_a,
       IFDBG(3) g_debug ("String: %s, %d, %d", str, read_len, write_len);
       if (write_len >= 0)
         {
+          if (! img_a->alpha_names)
+            img_a->alpha_names = g_ptr_array_new ();
           g_ptr_array_add (img_a->alpha_names, (gpointer) str);
         }
       block_rem -= read_len;
