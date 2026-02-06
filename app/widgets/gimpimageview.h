@@ -42,6 +42,8 @@ struct _GimpImageView
   GtkWidget           *raise_button;
   GtkWidget           *new_button;
   GtkWidget           *delete_button;
+
+  GimpImage           *image;
 };
 
 struct _GimpImageViewClass
