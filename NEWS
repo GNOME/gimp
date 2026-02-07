@@ -26,6 +26,17 @@ Core:
   - macOS logo was updated to cater to new guidelines since macOS 26
     (following previous guidelines, the logo was appearing too small on
     latest macOS).
+  - Not all color buttons should be fully image-contextual, in
+    particular for indexed images. E.g. filter color buttons should
+    usually not be limited to the palette's colors. Nor should the
+    out-of-gamut or grid colors, etc.
+  - When merging all filters on a drawable, the inactive filters are
+    ignored (and therefore are kept as-is, instead of being removed).
+
+Tools:
+
+  - Flip tool: up/down and left/right keys can now be used to flip items
+    respectively vertically or horizontally.
 
 Operations:
 
@@ -121,6 +132,16 @@ Build:
   - CI: it is now possible to trigger packages from MR by writing
     package labels in MR descriptions without having special access role
     on Gitlab.
+  - Some older unit tests updated to run on real GIMP; other tests were
+    disabled because they keep getting bugs (which are not in GIMP and
+    are just wasting our time, because they directly hack through core
+    GIMP code, yet without being a full-fledged GIMP process).
+  - DMG package background now uses the splash image for more consistent
+    and fancier designs at each minor or major release.
+  - Updated scripts to generate both the DMG background and the Windows
+    Installer side images from the splash image, using a metadata file,
+    along with instructions towards artists so that they have the
+    ability to choose the explicit crop positions and dimensions.
 
 
 Overview of Changes from GIMP 3.2.0 RC1 to GIMP 3.2.0 RC2
