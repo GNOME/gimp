@@ -40,46 +40,6 @@ typedef struct
   guint a[6];
 } BC7_colors;
 
-typedef struct
-{
-  gushort m_error;
-  guchar  m_lo;
-  guchar  m_hi;
-} endpoint_err;
-
-typedef struct
-{
-  guint32  m_mode_mask;
-
-  guint32  m_max_partitions;
-
-  guint32  m_weights[4];
-
-  guint32  m_uber_level;
-
-  gboolean m_perceptual;
-
-  gboolean m_try_least_squares;
-  gboolean m_force_alpha;
-
-  gboolean m_mode17_partition_estimation_filterbank;
-
-  gboolean m_force_selectors;
-  guchar   m_selectors[16];
-
-  gboolean m_quant_mode6_endpoints;
-  gboolean m_bias_mode1_pbits;
-
-  gfloat   m_pbit1_weight;
-
-  gfloat   m_mode1_error_weight;
-  gfloat   m_mode5_error_weight;
-  gfloat   m_mode6_error_weight;
-  gfloat   m_mode7_error_weight;
-
-  gfloat m_low_frequency_partition_weight;
-} bc7_params;
-
 static const BC7_mode_info mode_info[8] =
 {
   { 4, 3, 4, 0, 6, 3, 0 },
@@ -97,76 +57,6 @@ static const guchar weight_2[] = { 0, 21, 43, 64 };
 static const guchar weight_3[] = { 0, 9, 18, 27, 37, 46, 55, 64 };
 static const guchar weight_4[] = { 0, 4, 9, 13, 17, 21, 26, 30, 34, 38, 43, 47, 51, 55, 60, 64 };
 
-static const guchar g_bc7_num_subsets[8]            = { 3, 2, 3, 2, 1, 1, 1, 2 };
-static const guchar g_bc7_partition_bits[8]         = { 4, 6, 6, 6, 0, 0, 0, 6 };
-static const guchar g_bc7_mode_has_p_bits[8]        = { 1, 1, 0, 1, 0, 0, 1, 1 };
-static const guchar g_bc7_mode_has_shared_p_bits[8] = { 0, 1, 0, 0, 0, 0, 0, 0 };
-static const guchar g_bc7_alpha_precision_table[8]  = { 0, 0, 0, 0, 6, 8, 7, 5 };
-static const guchar g_bc7_color_precision_table[8]  = { 4, 6, 5, 7, 5, 7, 7, 5 };
-
-static const gfloat g_bc7_weights2x[4 * 4] =
-{
-  0.000000f, 0.000000f, 1.000000f, 0.000000f, 0.107666f, 0.220459f, 0.451416f, 0.328125f,
-  0.451416f, 0.220459f, 0.107666f, 0.671875f, 1.000000f, 0.000000f, 0.000000f, 1.000000f
-};
-
-static const gfloat g_bc7_weights3x[8 * 4] =
-{
-  0.000000f, 0.000000f, 1.000000f, 0.000000f, 0.019775f, 0.120850f, 0.738525f, 0.140625f,
-  0.079102f, 0.202148f, 0.516602f, 0.281250f, 0.177979f, 0.243896f, 0.334229f, 0.421875f,
-  0.334229f, 0.243896f, 0.177979f, 0.578125f, 0.516602f, 0.202148f, 0.079102f, 0.718750f,
-  0.738525f, 0.120850f, 0.019775f, 0.859375f, 1.000000f, 0.000000f, 0.000000f, 1.000000f
-};
-
-static const gfloat g_bc7_weights4x[16 * 4] =
-{
-  0.000000f, 0.000000f, 1.000000f, 0.000000f, 0.003906f, 0.058594f, 0.878906f, 0.062500f,
-  0.019775f, 0.120850f, 0.738525f, 0.140625f, 0.041260f, 0.161865f, 0.635010f, 0.203125f,
-  0.070557f, 0.195068f, 0.539307f, 0.265625f, 0.107666f, 0.220459f, 0.451416f, 0.328125f,
-  0.165039f, 0.241211f, 0.352539f, 0.406250f, 0.219727f, 0.249023f, 0.282227f, 0.468750f,
-  0.282227f, 0.249023f, 0.219727f, 0.531250f, 0.352539f, 0.241211f, 0.165039f, 0.593750f,
-  0.451416f, 0.220459f, 0.107666f, 0.671875f, 0.539307f, 0.195068f, 0.070557f, 0.734375f,
-  0.635010f, 0.161865f, 0.041260f, 0.796875f, 0.738525f, 0.120850f, 0.019775f, 0.859375f,
-  0.878906f, 0.058594f, 0.003906f, 0.937500f, 1.000000f, 0.000000f, 0.000000f, 1.000000f
-};
-
-static const guchar g_bc7_table_anchor_index_third_subset_1[64] =
-{
-  3, 3,15,15, 8, 3,15,15,
-  8, 8, 6, 6, 6, 5, 3, 3,
-  3, 3, 8,15, 3, 3, 6,10,
-  5, 8, 8, 6, 8, 5,15,15,
-  8,15, 3, 5, 6,10, 8,15,
-  15, 3,15, 5,15,15,15,15,
-  3,15, 5, 5, 5, 8, 5,10,
-  5,10, 8,13,15,12, 3, 3
-};
-
-static const guchar g_bc7_table_anchor_index_third_subset_2[64] =
-{
-  15, 8, 8, 3,15,15, 3, 8,
-  15,15,15,15,15,15,15, 8,
-  15, 8,15, 3,15, 8,15, 8,
-  3,15, 6,10,15,15,10, 8,
-  15, 3,15,10,10, 8, 9,10,
-  6,15, 8,15, 3, 6, 6, 8,
-  15, 3,15,15,15,15,15,15,
-  15,15,15,15, 3,15,15, 8
-};
-
-static const guchar g_bc7_table_anchor_index_second_subset[64] =
-{
-  15,15,15,15,15,15,15,15,
-  15,15,15,15,15,15,15,15,
-  15, 2, 8, 2, 2, 8, 8,15,
-  2, 8, 2, 2, 8, 8, 2, 2,
-  15,15, 6, 8, 2, 8,15,15,
-  2, 8, 2, 2, 2,15,15, 6,
-  6, 2, 6, 8,15,15, 2, 2,
-  15,15,15,15,15, 2, 2,15
-};
-
-static const guchar g_bc7_partition1[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 static const guchar partition_table[2][64][16] =
 {
   { /* BC7 Partition Set for 2 Subsets */
@@ -348,15 +238,10 @@ static const guchar anchor_index_table[4][64] =
   }
 };
 
-void bc7_initialize (bc7_params   *params,
-                     gboolean      is_perceptual);
 
-gint bc7_decompress (guchar       *src,
-                     guint         size,
-                     guchar       *block);
+gint bc7_decompress (guchar *src,
+                     guint   size,
+                     guchar *block);
 
-void bc7_compress   (guchar       *dst,
-                     const guchar *src,
-                     bc7_params   *params);
 
 #endif /* __BC7_H__ */

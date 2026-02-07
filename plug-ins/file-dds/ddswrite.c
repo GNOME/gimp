@@ -1578,7 +1578,7 @@ write_image (FILE                *fp,
 
         case DDS_COMPRESS_BC7:
           dxgi_format = DXGI_FORMAT_BC7_UNORM;
-          is_dx10 = TRUE;
+          is_dx10     = TRUE;
         }
 
       if ((compression == DDS_COMPRESS_BC3N) ||

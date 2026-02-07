@@ -45,6 +45,8 @@
 #include "misc.h"
 #include "vec.h"
 
+#include "bc7enc_rdo/bc7enc.h"
+
 #include "dxt_tables.h"
 
 #define SWAP(a, b)  do { typeof(a) t; t = a; a = b; b = t; } while(0)
@@ -980,11 +982,11 @@ compress_BC5 (unsigned char       *dst,
 }
 
 static void
-compress_BC7 (guchar       *dst,
-              const guchar *src,
-              gint          w,
-              gint          h,
-              bc7_params   *params)
+compress_BC7 (guchar                       *dst,
+              const guchar                 *src,
+              gint                          w,
+              gint                          h,
+              bc7enc_compress_block_params *params)
 {
   const guint block_count = BLOCK_COUNT (w, h);
   guchar      block[64]   = { 0 };
@@ -1003,7 +1005,7 @@ compress_BC7 (guchar       *dst,
       p = dst + BLOCK_OFFSET (x, y, w, 16);
 
       extract_block (src, x, y, w, h, block);
-      bc7_compress (p, block, params);
+      bc7enc_compress_block (p, block, params);
     }
 }
 
@@ -1042,12 +1044,15 @@ dxt_compress (unsigned char *dst,
               int            mipmaps,
               int            flags)
 {
-  int i, size, w, h;
-  unsigned int offset;
-  unsigned char *tmp = NULL;
-  int j;
-  unsigned char *s;
-  bc7_params     bc7_params;
+  gint                          i;
+  gint                          size;
+  gint                          w;
+  gint                          h;
+  guint                         offset;
+  guchar                       *tmp = NULL;
+  gint                          j;
+  guchar                       *s;
+  bc7enc_compress_block_params  bc7_params;
 
   if (bpp == 1)
     {
@@ -1107,8 +1112,12 @@ dxt_compress (unsigned char *dst,
   h = height;
   s = tmp ? tmp : src;
 
+  bc7_params.m_perceptual = (flags & DXT_PERCEPTUAL);
   if (format == DDS_COMPRESS_BC7)
-    bc7_initialize (&bc7_params, (flags & DXT_PERCEPTUAL));
+    {
+      bc7enc_compress_block_init ();
+      bc7enc_compress_block_params_init (&bc7_params);
+    }
 
   for (i = 0; i < mipmaps; ++i)
     {
