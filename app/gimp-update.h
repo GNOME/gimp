@@ -22,7 +22,8 @@
 
 
 gboolean gimp_update_auto_check (GimpCoreConfig *config,
-                                 Gimp           *gimp);
+                                 Gimp           *gimp,
+                                 gboolean        files_loaded);
 
 void     gimp_update_check      (GimpCoreConfig *config);
 void     gimp_update_refresh    (GimpCoreConfig *config);

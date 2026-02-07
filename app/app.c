@@ -461,10 +461,15 @@ app_activate_callback (GimpCoreApp *app,
     }
 #endif
 
+  /* Get possible files first, so that we can check if the
+   * welcome dialog should be displayed
+   */
+  filenames = gimp_core_app_get_filenames (app);
+
   /*  check for updates *after* enabling config autosave, so that the timestamp
    *  is saved
    */
-  gimp_update_auto_check (gimp->edit_config, gimp);
+  gimp_update_auto_check (gimp->edit_config, gimp, (filenames != NULL));
 
   /* Setting properties to be used for the next run.  */
   g_object_set (gimp->edit_config,
@@ -475,7 +480,6 @@ app_activate_callback (GimpCoreApp *app,
                 NULL);
 
   /*  Load the images given on the command-line. */
-  filenames = gimp_core_app_get_filenames (app);
   if (filenames != NULL)
     {
       gint i;

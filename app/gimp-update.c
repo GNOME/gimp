@@ -522,7 +522,8 @@ gimp_check_updates_process_idle (gpointer data)
  */
 gboolean
 gimp_update_auto_check (GimpCoreConfig *config,
-                        Gimp           *gimp)
+                        Gimp           *gimp,
+                        gboolean        files_loaded)
 {
   gboolean is_update;
   gint64   prev_update_timestamp;
@@ -539,8 +540,11 @@ gimp_update_auto_check (GimpCoreConfig *config,
        * version is run, display a welcome dialog and do not check for
        * updates right now. Otherwise, if the user has set the welcome
        * dialog to always appear on load, show the Create page on start.
+       * The only exception is if they intentionally opened GIMP with
+       * images on start.
        */
-      if (! gimp->no_interface)
+      if (! gimp->no_interface &&
+          (is_update || ! files_loaded))
         gtk_widget_set_visible (welcome_dialog_create (gimp, is_update),
                                 TRUE);
 
