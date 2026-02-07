@@ -28,8 +28,10 @@
 #include "core/gimp-transform-utils.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 #include "display/gimptoolgui.h"
 #include "display/gimptoolsheargrid.h"
 
@@ -53,7 +55,9 @@ enum
 
 
 /*  local function prototypes  */
-
+static gboolean         gimp_shear_tool_key_press      (GimpTool              *tool,
+                                                        GdkEventKey           *kevent,
+                                                        GimpDisplay           *display);
 static gboolean         gimp_shear_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
                                                         GimpMatrix3           *transform);
 static gchar          * gimp_shear_tool_get_undo_desc  (GimpTransformGridTool *tg_tool);
@@ -95,8 +99,11 @@ gimp_shear_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_shear_tool_class_init (GimpShearToolClass *klass)
 {
-  GimpTransformToolClass     *tr_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
-  GimpTransformGridToolClass *tg_class = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
+  GimpToolClass              *tool_class = GIMP_TOOL_CLASS (klass);
+  GimpTransformToolClass     *tr_class   = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpTransformGridToolClass *tg_class   = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
+
+  tool_class->key_press     = gimp_shear_tool_key_press;
 
   tg_class->info_to_matrix  = gimp_shear_tool_info_to_matrix;
   tg_class->get_undo_desc   = gimp_shear_tool_get_undo_desc;
@@ -118,6 +125,48 @@ gimp_shear_tool_init (GimpShearTool *shear_tool)
   GimpTool *tool = GIMP_TOOL (shear_tool);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_SHEAR);
+}
+
+static gboolean
+gimp_shear_tool_key_press (GimpTool    *tool,
+                           GdkEventKey *kevent,
+                           GimpDisplay *display)
+{
+  GimpShearTool *shear = GIMP_SHEAR_TOOL (tool);
+  gdouble        x     = gtk_adjustment_get_value (shear->x_adj);
+  gdouble        y     = gtk_adjustment_get_value (shear->y_adj);
+  gdouble        step  = gtk_adjustment_get_step_increment (shear->x_adj);
+
+  if (kevent->state == gimp_get_extend_selection_mask ())
+    step = gtk_adjustment_get_page_increment (shear->x_adj);
+
+  /* Adapt to the zoom factor when holding <shift> */
+  step /= gimp_zoom_model_get_factor (gimp_display_get_shell (display)->zoom);
+  step = MAX (1, step);
+
+  switch (kevent->keyval)
+    {
+    case GDK_KEY_Up:
+      gtk_adjustment_set_value (shear->y_adj, (y + step));
+      return TRUE;
+
+    case GDK_KEY_Down:
+      gtk_adjustment_set_value (shear->y_adj, (y - step));
+      return TRUE;
+
+    case GDK_KEY_Right:
+      gtk_adjustment_set_value (shear->x_adj, (x + step));
+      return TRUE;
+
+    case GDK_KEY_Left:
+      gtk_adjustment_set_value (shear->x_adj, (x - step));
+      return TRUE;
+
+    default:
+      break;
+    }
+
+  return GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
 }
 
 static gboolean
