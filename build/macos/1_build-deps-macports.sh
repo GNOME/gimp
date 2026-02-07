@@ -61,7 +61,7 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
       cp -fa macports macports-cached || true
     fi
   fi
-  git apply -v build/macos/patches/0001-meson-Patch-python-version.patch || true
+  #git apply -v build/macos/patches/0001-meson-Patch-python-version.patch || true
 else
   brew upgrade --quiet
   brew install --quiet $(tr '\\' '\n' < build/macos/all-deps-uni.txt | grep -v '#' | sed -n 's/.*|homebrew://p' | awk '{print $1}' | xargs)

@@ -130,7 +130,7 @@ versionconfig.set('GIMP_API_VERSION',   gimp_api_version)
 pkgconfig = import('pkgconfig')
 i18n      = import('i18n')
 gnome     = import('gnome')
-python    = import('python').find_installation()
+python    = import('python').find_installation(modules: 'gi')
 simd      = import('unstable-simd')
 fs        = import('fs')
 
@@ -1201,18 +1201,6 @@ message('Found Python @0@'.format(python.language_version()))
 
 if not python.language_version().version_compare(python3_minver)
   error('Minimum supported Python version: @0@'.format(python3_minver))
-endif
-
-pygobject_found = run_command(python, '-c',
-                              '\n'.join([
-                              '''import sys, gi''',
-                              '''version = '@0@' '''.format('3.0'),
-                              '''sys.exit(gi.check_version(version))''']),
-                              check: false).returncode() == 0
-message('Found PyGObject: @0@'.format(pygobject_found))
-
-if not pygobject_found
-  error('PyGObject is required.')
 endif
 
 ## Javascript
