@@ -6,8 +6,6 @@
 #include <assert.h>
 #include <limits.h>
 
-#include <glib/gstdio.h>
-
 typedef struct
 {
     uint32_t m_mode;
@@ -45,7 +43,7 @@ typedef struct { float m_c[4]; } vec4F;
 
 static inline color_rgba *color_quad_u8_set_clamped(color_rgba *pRes, int32_t r, int32_t g, int32_t b, int32_t a) { pRes->m_c[0] = (uint8_t)clampi(r, 0, 255); pRes->m_c[1] = (uint8_t)clampi(g, 0, 255); pRes->m_c[2] = (uint8_t)clampi(b, 0, 255); pRes->m_c[3] = (uint8_t)clampi(a, 0, 255); return pRes; }
 static inline color_rgba *color_quad_u8_set(color_rgba *pRes, int32_t r, int32_t g, int32_t b, int32_t a) { assert((uint32_t)(r | g | b | a) <= 255); pRes->m_c[0] = (uint8_t)r; pRes->m_c[1] = (uint8_t)g; pRes->m_c[2] = (uint8_t)b; pRes->m_c[3] = (uint8_t)a; return pRes; }
-static inline bool color_quad_u8_notequals(const color_rgba *pLHS, const color_rgba *pRHS) { return (pLHS->m_c[0] != pRHS->m_c[0]) || (pLHS->m_c[1] != pRHS->m_c[1]) || (pLHS->m_c[2] != pRHS->m_c[2]) || (pLHS->m_c[3] != pRHS->m_c[3]); }
+static inline gboolean color_quad_u8_notequals(const color_rgba *pLHS, const color_rgba *pRHS) { return (pLHS->m_c[0] != pRHS->m_c[0]) || (pLHS->m_c[1] != pRHS->m_c[1]) || (pLHS->m_c[2] != pRHS->m_c[2]) || (pLHS->m_c[3] != pRHS->m_c[3]); }
 static inline vec4F *vec4F_set_scalar(vec4F *pV, float x) { pV->m_c[0] = x; pV->m_c[1] = x; pV->m_c[2] = x; pV->m_c[3] = x; return pV; }
 static inline vec4F *vec4F_set(vec4F *pV, float x, float y, float z, float w) { pV->m_c[0] = x; pV->m_c[1] = y; pV->m_c[2] = z; pV->m_c[3] = w; return pV; }
 static inline vec4F *vec4F_saturate_in_place(vec4F *pV) { pV->m_c[0] = saturate(pV->m_c[0]); pV->m_c[1] = saturate(pV->m_c[1]); pV->m_c[2] = saturate(pV->m_c[2]); pV->m_c[3] = saturate(pV->m_c[3]); return pV; }
@@ -116,7 +114,7 @@ static const uint8_t g_bc7_mode_has_p_bits[8] = { 1, 1, 0, 1, 0, 0, 1, 1 };
 static const uint8_t g_bc7_mode_has_shared_p_bits[8] = { 0, 1, 0, 0, 0, 0, 0, 0 };
 static const uint8_t g_bc7_color_precision_table[8] = { 4, 6, 5, 7, 5, 7, 7, 5 };
 static const int8_t g_bc7_alpha_precision_table[8] = { 0, 0, 0, 0, 6, 8, 7, 5 };
-static bool get_bc7_mode_has_seperate_alpha_selectors(int mode) { return (mode == 4) || (mode == 5); }
+static gboolean get_bc7_mode_has_seperate_alpha_selectors(int mode) { return (mode == 4) || (mode == 5); }
 
 typedef struct { uint16_t m_error; uint8_t m_lo; uint8_t m_hi; } endpoint_err;
 
@@ -132,11 +130,11 @@ static float g_mode7_rgba_midpoints[32][2];
 
 static uint8_t g_mode6_reduced_quant[2048][2];
 
-static bool g_initialized;
+static gboolean g_initialized;
 
 /* Initialize the lookup table used for optimal single color compression in
  * mode 1/7. Must be called before encoding. */
-void bc7enc_compress_block_init()
+void bc7enc_compress_block_init (void)
 {
     if (g_initialized)
         return;
@@ -312,7 +310,7 @@ void bc7enc_compress_block_init()
 
     } /* c */
 
-    g_initialized = true;
+    g_initialized = TRUE;
 }
 
 static void compute_least_squares_endpoints_rgba(uint32_t N, const uint8_t *pSelectors, const vec4F *pSelector_weights, vec4F *pXl, vec4F *pXh, const color_rgba *pColors)
@@ -513,10 +511,10 @@ typedef struct
     const vec4F *m_pSelector_weightsx;
     uint32_t m_comp_bits;
     uint32_t m_weights[4];
-    bool m_has_alpha;
-    bool m_has_pbits;
-    bool m_endpoints_share_pbit;
-    bool m_perceptual;
+    gboolean m_has_alpha;
+    gboolean m_has_pbits;
+    gboolean m_endpoints_share_pbit;
+    gboolean m_perceptual;
 } color_cell_compressor_params;
 
 typedef struct
@@ -547,7 +545,7 @@ static inline color_rgba scale_color(const color_rgba *pC, const color_cell_comp
     return results;
 }
 
-static inline uint64_t compute_color_distance_rgb(const color_rgba *pE1, const color_rgba *pE2, bool perceptual, const uint32_t weights[4])
+static inline uint64_t compute_color_distance_rgb(const color_rgba *pE1, const color_rgba *pE2, gboolean perceptual, const uint32_t weights[4])
 {
     int dr, dg, db;
 
@@ -573,7 +571,7 @@ static inline uint64_t compute_color_distance_rgb(const color_rgba *pE1, const c
     return weights[0] * (uint32_t)(dr * dr) + weights[1] * (uint32_t)(dg * dg) + weights[2] * (uint32_t)(db * db);
 }
 
-static inline uint64_t compute_color_distance_rgba(const color_rgba *pE1, const color_rgba *pE2, bool perceptual, const uint32_t weights[4])
+static inline uint64_t compute_color_distance_rgba(const color_rgba *pE1, const color_rgba *pE2, gboolean perceptual, const uint32_t weights[4])
 {
     int da = (int)pE1->m_c[3] - (int)pE2->m_c[3];
     return compute_color_distance_rgb(pE1, pE2, perceptual, weights) + (weights[3] * (uint32_t)(da * da));
@@ -799,8 +797,8 @@ static uint64_t evaluate_solution(const color_rgba *pLow, const color_rgba *pHig
                 int best_sel = (int)((float)((r - lr) * dr + (g - lg) * dg + (b - lb) * db + (a - la) * da) * f + .5f);
                 best_sel = clampi(best_sel, 1, N - 1);
 
-                err0 = compute_color_distance_rgba(&weightedColors[best_sel - 1], pC, false, pParams->m_weights);
-                err1 = compute_color_distance_rgba(&weightedColors[best_sel], pC, false, pParams->m_weights);
+                err0 = compute_color_distance_rgba(&weightedColors[best_sel - 1], pC, FALSE, pParams->m_weights);
+                err1 = compute_color_distance_rgba(&weightedColors[best_sel], pC, FALSE, pParams->m_weights);
 
                 if (err1 > err0)
                 {
@@ -830,8 +828,8 @@ static uint64_t evaluate_solution(const color_rgba *pLow, const color_rgba *pHig
                 int sel = (int)((float)((r - lr) * dr + (g - lg) * dg + (b - lb) * db) * f + .5f);
                 sel = clampi(sel, 1, N - 1);
 
-                err0 = compute_color_distance_rgb(&weightedColors[sel - 1], pC, false, pParams->m_weights);
-                err1 = compute_color_distance_rgb(&weightedColors[sel], pC, false, pParams->m_weights);
+                err0 = compute_color_distance_rgb(&weightedColors[sel - 1], pC, FALSE, pParams->m_weights);
+                err1 = compute_color_distance_rgb(&weightedColors[sel], pC, FALSE, pParams->m_weights);
 
                 best_sel = sel;
                 best_err = err1;
@@ -858,7 +856,7 @@ static uint64_t evaluate_solution(const color_rgba *pLow, const color_rgba *pHig
             {
                 for (uint32_t j = 0; j < N; j++)
                 {
-                    uint64_t err = compute_color_distance_rgba(&weightedColors[j], &pParams->m_pPixels[i], true, pParams->m_weights);
+                    uint64_t err = compute_color_distance_rgba(&weightedColors[j], &pParams->m_pPixels[i], TRUE, pParams->m_weights);
                     if (err < best_err)
                     {
                         best_err = err;
@@ -870,7 +868,7 @@ static uint64_t evaluate_solution(const color_rgba *pLow, const color_rgba *pHig
             {
                 for (uint32_t j = 0; j < N; j++)
                 {
-                    uint64_t err = compute_color_distance_rgb(&weightedColors[j], &pParams->m_pPixels[i], true, pParams->m_weights);
+                    uint64_t err = compute_color_distance_rgb(&weightedColors[j], &pParams->m_pPixels[i], TRUE, pParams->m_weights);
                     if (err < best_err)
                     {
                         best_err = err;
@@ -1222,12 +1220,12 @@ static uint64_t color_cell_compression(uint32_t mode,
     {
         const uint32_t cr = pParams->m_pPixels[0].m_c[0], cg = pParams->m_pPixels[0].m_c[1], cb = pParams->m_pPixels[0].m_c[2];
 
-        bool allSame = true;
+        gboolean allSame = TRUE;
         for (uint32_t i = 1; i < pParams->m_num_pixels; i++)
         {
             if ((cr != pParams->m_pPixels[i].m_c[0]) || (cg != pParams->m_pPixels[i].m_c[1]) || (cb != pParams->m_pPixels[i].m_c[2]))
             {
-                allSame = false;
+                allSame = FALSE;
                 break;
             }
         }
@@ -1239,12 +1237,12 @@ static uint64_t color_cell_compression(uint32_t mode,
     {
         const uint32_t cr = pParams->m_pPixels[0].m_c[0], cg = pParams->m_pPixels[0].m_c[1], cb = pParams->m_pPixels[0].m_c[2], ca = pParams->m_pPixels[0].m_c[3];
 
-        bool allSame = true;
+        gboolean allSame = TRUE;
         for (uint32_t i = 1; i < pParams->m_num_pixels; i++)
         {
             if ((cr != pParams->m_pPixels[i].m_c[0]) || (cg != pParams->m_pPixels[i].m_c[1]) || (cb != pParams->m_pPixels[i].m_c[2]) || (ca != pParams->m_pPixels[i].m_c[3]))
             {
-                allSame = false;
+                allSame = FALSE;
                 break;
             }
         }
@@ -1552,7 +1550,7 @@ static uint64_t color_cell_compression(uint32_t mode,
     return pResults->m_best_overall_err;
 }
 
-static uint64_t color_cell_compression_est_mode1(uint32_t num_pixels, const color_rgba *pPixels, bool perceptual, uint32_t pweights[4], uint64_t best_err_so_far)
+static uint64_t color_cell_compression_est_mode1(uint32_t num_pixels, const color_rgba *pPixels, gboolean perceptual, uint32_t pweights[4], uint64_t best_err_so_far)
 {
     /* Find RGB bounds as an approximation of the block's principle axis */
     uint32_t   lr = 255, lg = 255, lb = 255;
@@ -1708,7 +1706,7 @@ static uint64_t color_cell_compression_est_mode1(uint32_t num_pixels, const colo
     return total_err;
 }
 
-static uint64_t color_cell_compression_est_mode7(uint32_t num_pixels, const color_rgba * pPixels, bool perceptual, uint32_t pweights[4], uint64_t best_err_so_far)
+static uint64_t color_cell_compression_est_mode7(uint32_t num_pixels, const color_rgba * pPixels, gboolean perceptual, uint32_t pweights[4], uint64_t best_err_so_far)
 {
     /* Find RGB bounds as an approximation of the block's principle axis */
     uint32_t   lr = 255, lg = 255, lb = 255, la = 255;
@@ -2196,9 +2194,9 @@ static void handle_alpha_block_mode5(const color_rgba* pPixels,
     pParams->m_num_selector_weights = 4;
 
     pParams->m_comp_bits = 7;
-    pParams->m_has_pbits = false;
-    pParams->m_endpoints_share_pbit = false;
-    pParams->m_has_alpha = false;
+    pParams->m_has_pbits = FALSE;
+    pParams->m_endpoints_share_pbit = FALSE;
+    pParams->m_has_alpha = FALSE;
 
     pParams->m_perceptual = pComp_params->m_perceptual;
 
@@ -2306,9 +2304,9 @@ static void handle_alpha_block(void *pBlock, const color_rgba *pPixels, const bc
     pParams->m_pSelector_weightsx = (const vec4F *)g_bc7_weights4x;
     pParams->m_num_selector_weights = 16;
     pParams->m_comp_bits = 7;
-    pParams->m_has_pbits = true;
-    pParams->m_endpoints_share_pbit = false;
-    pParams->m_has_alpha = true;
+    pParams->m_has_pbits = TRUE;
+    pParams->m_endpoints_share_pbit = FALSE;
+    pParams->m_has_alpha = TRUE;
     pParams->m_perceptual = pComp_params->m_perceptual;
     pParams->m_num_pixels = 16;
     pParams->m_pPixels = pPixels;
@@ -2363,9 +2361,9 @@ static void handle_alpha_block(void *pBlock, const color_rgba *pPixels, const bc
         pParams->m_pSelector_weightsx = (const vec4F*)g_bc7_weights2x;
         pParams->m_num_selector_weights = 4;
         pParams->m_comp_bits = 5;
-        pParams->m_has_pbits = true;
-        pParams->m_endpoints_share_pbit = false;
-        pParams->m_has_alpha = true;
+        pParams->m_has_pbits = TRUE;
+        pParams->m_endpoints_share_pbit = FALSE;
+        pParams->m_has_alpha = TRUE;
 
         for (uint32_t idx = 0; idx < 16; idx++)
         {
@@ -2458,7 +2456,7 @@ static void handle_opaque_block(void *pBlock, const color_rgba *pPixels, const b
     pParams->m_perceptual = pComp_params->m_perceptual;
     pParams->m_num_pixels = 16;
     pParams->m_pPixels = pPixels;
-    pParams->m_has_alpha = false;
+    pParams->m_has_alpha = FALSE;
 
     opt_results.m_partition = 0;
     opt_results.m_index_selector = 0;
@@ -2473,8 +2471,8 @@ static void handle_opaque_block(void *pBlock, const color_rgba *pPixels, const b
         pParams->m_pSelector_weightsx = (const vec4F*)g_bc7_weights4x;
         pParams->m_num_selector_weights = 16;
         pParams->m_comp_bits = 7;
-        pParams->m_has_pbits = true;
-        pParams->m_endpoints_share_pbit = false;
+        pParams->m_has_pbits = TRUE;
+        pParams->m_endpoints_share_pbit = FALSE;
 
         results6.m_pSelectors = opt_results.m_selectors;
         results6.m_pSelectors_temp = selectors_temp;
@@ -2506,8 +2504,8 @@ static void handle_opaque_block(void *pBlock, const color_rgba *pPixels, const b
         pParams->m_pSelector_weightsx = (const vec4F *)g_bc7_weights3x;
         pParams->m_num_selector_weights = 8;
         pParams->m_comp_bits = 6;
-        pParams->m_has_pbits = true;
-        pParams->m_endpoints_share_pbit = true;
+        pParams->m_has_pbits = TRUE;
+        pParams->m_endpoints_share_pbit = TRUE;
 
         for (uint32_t idx = 0; idx < 16; idx++)
         {
@@ -2556,7 +2554,7 @@ static void handle_opaque_block(void *pBlock, const color_rgba *pPixels, const b
     encode_bc7_block(pBlock, &opt_results);
 }
 
-bool bc7enc_compress_block(void *pBlock, const void *pPixelsRGBA, const bc7enc_compress_block_params *pComp_params)
+gboolean bc7enc_compress_block(void *pBlock, const void *pPixelsRGBA, const bc7enc_compress_block_params *pComp_params)
 {
     const color_rgba             *pPixels = (const color_rgba *)(pPixelsRGBA);
     color_cell_compressor_params  params;
@@ -2579,7 +2577,7 @@ bool bc7enc_compress_block(void *pBlock, const void *pPixelsRGBA, const bc7enc_c
     if (pComp_params->m_force_alpha)
     {
         handle_alpha_block(pBlock, pPixels, pComp_params, &params);
-        return true;
+        return TRUE;
     }
 
     for (uint32_t i = 0; i < 16; i++)
@@ -2587,11 +2585,11 @@ bool bc7enc_compress_block(void *pBlock, const void *pPixelsRGBA, const bc7enc_c
         if (pPixels[i].m_c[3] < 255)
         {
             handle_alpha_block(pBlock, pPixels, pComp_params, &params);
-            return true;
+            return TRUE;
         }
     }
     handle_opaque_block(pBlock, pPixels, pComp_params, &params);
-    return false;
+    return FALSE;
 }
 
 /*
