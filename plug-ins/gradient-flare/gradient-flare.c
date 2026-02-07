@@ -71,7 +71,7 @@
 #define GRADIENT_RESOLUTION 360
 
 #define GFLARE_NAME_MAX     256
-#define GFLARE_FILE_HEADER  "GIMP GFlare 0.25\n"
+#define GFLARE_FILE_HEADER  "GIMP GFlare 0.25"
 #define SFLARE_NUM           30
 
 #define DLG_PREVIEW_WIDTH   256
@@ -1366,8 +1366,8 @@ gflare_load (const gchar *filename,
       return NULL;
     }
 
-  if (fgets (header, sizeof(header), fp) == NULL
-      || strcmp (header, GFLARE_FILE_HEADER) != 0)
+  if (fgets (header, sizeof(header), fp) == NULL ||
+      ! g_str_has_prefix (header, GFLARE_FILE_HEADER))
     {
       g_warning (_("'%s' is not a valid GFlare file."),
                   gimp_filename_to_utf8 (filename));
@@ -1588,7 +1588,7 @@ gflare_save (GFlare *gflare)
       return;
     }
 
-  fprintf (fp, "%s", GFLARE_FILE_HEADER);
+  fprintf (fp, "%s\n", GFLARE_FILE_HEADER);
   g_ascii_dtostr (buf[0],
                   G_ASCII_DTOSTR_BUF_SIZE, gflare->glow_opacity);
   fprintf (fp, "%s %s\n", buf[0], gflare_modes[gflare->glow_mode]);
