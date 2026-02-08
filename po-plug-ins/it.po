@@ -1,7 +1,7 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999-2002
-# Marco Ciampa <ciampix@posteo.net>, 2003-2025
+# Marco Ciampa <ciampix@posteo.net>, 2003-2026
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 #
 # Termini ricorrenti:
@@ -9,12 +9,13 @@
 # chunk = spezzone
 # brush pipe = pennelli animati
 # frame = fotogramma
+# hot spot = punto attivo
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-02 17:21+0100\n"
-"PO-Revision-Date: 2025-12-02 17:21+0100\n"
+"PO-Revision-Date: 2026-02-08 23:33+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -6982,27 +6983,27 @@ msgstr "Esporta in formato X10"
 
 #: ../plug-ins/common/file-xbm.c:240
 msgid "Write hot spot _values"
-msgstr "Scrivi _valori punto caldo"
+msgstr "Scrivi _valori punto attivo"
 
 #: ../plug-ins/common/file-xbm.c:241
 msgid "Write hotspot information"
-msgstr "Scrivi info sul punto caldo"
+msgstr "Scrivi info sul punto attivo"
 
 #: ../plug-ins/common/file-xbm.c:246
 msgid "Hot s_pot X"
-msgstr "X _punto caldo"
+msgstr "X _punto attivo"
 
 #: ../plug-ins/common/file-xbm.c:247
 msgid "X coordinate of hotspot"
-msgstr "Coordinate X del punto caldo"
+msgstr "Coordinate X del punto attivo"
 
 #: ../plug-ins/common/file-xbm.c:252 ../plug-ins/common/file-xmc.c:383
 msgid "Hot spot _Y"
-msgstr "_Y punto caldo"
+msgstr "_Y punto attivo"
 
 #: ../plug-ins/common/file-xbm.c:253
 msgid "Y coordinate of hotspot"
-msgstr "Coordinate Y del punto caldo"
+msgstr "Coordinate Y del punto attivo"
 
 #: ../plug-ins/common/file-xbm.c:258
 msgid "I_dentifier prefix"
@@ -7110,19 +7111,15 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:376
 msgid "Hot spot _X"
-msgstr "Punto caldo _X"
+msgstr "_X punto attivo"
 
 #: ../plug-ins/common/file-xmc.c:377
 msgid "X-coordinate of hot spot (use -1, -1 to keep original hot spot)"
-msgstr ""
-"Coordinata X del punto caldo (usare -1, -1 per mantenere il punto caldo "
-"originale)"
+msgstr "Coordinata X del punto attivo (usare -1, -1 per mantenere il punto attivo originale)"
 
 #: ../plug-ins/common/file-xmc.c:384
 msgid "Y-coordinate of hot spot (use -1, -1 to keep original hot spot)"
-msgstr ""
-"Coordinata Y del punto caldo (usare -1, -1 per mantenere il punto caldo "
-"originale)"
+msgstr "Coordinata Y del punto attivo (usare -1, -1 per mantenere il punto attivo originale)"
 
 #: ../plug-ins/common/file-xmc.c:390
 msgid "_Auto Crop all frames"
@@ -7190,7 +7187,7 @@ msgid ""
 "Cannot set the hot spot!\n"
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
-"Impossibile impostare il punto caldo!\n"
+"Impossibile impostare il punto attivo!\n"
 "È necessario regolare i livelli in modo che tutti abbiano un'intersezione."
 
 #: ../plug-ins/common/file-xmc.c:663
@@ -7230,15 +7227,11 @@ msgstr "Si è verificato un errore di lettura."
 
 #: ../plug-ins/common/file-xmc.c:1108
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
-msgstr ""
-"Inserire la coordinata X del punto caldo. L'origine è l'angolo in alto a "
-"sinistra."
+msgstr "Inserire la coordinata X del punto attivo. L'origine è l'angolo in alto a sinistra."
 
 #: ../plug-ins/common/file-xmc.c:1119
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
-msgstr ""
-"Inserire la coordinata Y del punto caldo. L'origine è l'angolo in alto a "
-"sinistra."
+msgstr "Inserire la coordinata Y del punto attivo. L'origine è l'angolo in alto a sinistra."
 
 #: ../plug-ins/common/file-xmc.c:1131
 msgid ""
@@ -7302,9 +7295,9 @@ msgid ""
 "Try to change the hot spot position, layer geometry or export without auto-"
 "crop."
 msgstr ""
-"Impossibile esportare il cursore dato che l'punto caldo non è sul quadro "
+"Impossibile esportare il cursore dato che l'punto attivo non è sul quadro "
 "\"%s\".\n"
-"Provare a cambiare la posizione dell'punto caldo, la geometria del livello o "
+"Provare a cambiare la posizione dell'punto attivo, la geometria del livello o "
 "esportare senza l'autoritaglio."
 
 #: ../plug-ins/common/file-xmc.c:1570
@@ -10543,11 +10536,11 @@ msgstr "Compresso (PNG)"
 
 #: ../plug-ins/file-ico/ico-dialog.c:562
 msgid "Hot spot _X:"
-msgstr "Punto caldo _X:"
+msgstr "Punto attivo _X:"
 
 #: ../plug-ins/file-ico/ico-dialog.c:575
 msgid "Hot spot _Y:"
-msgstr "Punto caldo _Y:"
+msgstr "Punto attivo _Y:"
 
 #: ../plug-ins/file-ico/ico-export.c:217
 #, c-format
@@ -10555,7 +10548,7 @@ msgid ""
 "Called non-interactively with %d and %d hotspot coordinates with an image of "
 "%d icons."
 msgstr ""
-"Chiamata non interattivamente con le coordinate del punto caldo %d e %d con "
+"Chiamata non interattivamente con le coordinate del punto attivo %d e %d con "
 "un'immagine di %d icone."
 
 #: ../plug-ins/file-ico/ico-load.c:224
