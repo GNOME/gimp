@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-02-08 00:43+0000\n"
-"PO-Revision-Date: 2026-02-08 17:08+0000\n"
+"PO-Revision-Date: 2026-02-08 21:37+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -16332,7 +16332,7 @@ msgid "_Scale"
 msgstr "_Kvarða"
 
 #: app/dialogs/image-scale-dialog.c:243
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Scaling the image to the chosen size will make it use more memory than "
 #| "what is configured as \"Maximum Image Size\" in the Preferences dialog "
@@ -16342,8 +16342,8 @@ msgid ""
 "is configured as \"Maximum new image size\" in the Preferences dialog "
 "(currently %s)."
 msgstr ""
-"Kvörðun myndarinnar í þá stærð sem var valin mun nota meira minni en það sem "
-"stillt er fyrir \"Hámarksstærð myndar\" í kjörstillingum (er núna %s)."
+"Kvörðun myndarinnar í þá stærð sem var valin mun nota meira minni en það sem"
+" stillt er fyrir \"Hámarksstærð nýrrar myndar\" í kjörstillingum (er núna %s)."
 
 #: app/dialogs/image-scale-dialog.c:258
 msgid ""
@@ -16387,7 +16387,7 @@ msgid "Configure Keyboard Shortcuts"
 msgstr "Stilla flýtilykla"
 
 #: app/dialogs/keyboard-shortcuts-dialog.c:84
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "To edit a shortcut key, click on the corresponding row and type a new "
 #| "accelerator, or press backspace to clear."
@@ -16395,8 +16395,9 @@ msgid ""
 "To edit a shortcut key, select the corresponding row, click on its \"%s\" "
 "column and type a new accelerator, or press backspace to clear."
 msgstr ""
-"Til þess að breyta flýtilykli, skal smella á röðina sem hann á við og setja "
-"inn nýjan flýtilykil eða ýta á baklykil til að eyða."
+"Til þess að breyta flýtilykli, skaltu velja viðkomandi röð, smella á \"%s\""
+" dálkinn og setja "
+"inn nýjan flýtilykil eða ýta á baklykil til að hreinsa."
 
 #: app/dialogs/keyboard-shortcuts-dialog.c:87 app/widgets/gimpactionview.c:293
 msgid "Shortcut"
