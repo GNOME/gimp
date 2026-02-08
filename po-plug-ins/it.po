@@ -1,14 +1,14 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999-2002
-# Marco Ciampa <ciampix@posteo.net>, 2003-2024
+# Marco Ciampa <ciampix@posteo.net>, 2003-2026
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-16 08:43+0100\n"
-"PO-Revision-Date: 2024-01-16 08:50+0100\n"
+"PO-Revision-Date: 2026-02-08 23:39+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -4356,15 +4356,15 @@ msgstr "Commento:"
 #. hotspot toggle
 #: ../plug-ins/common/file-xbm.c:1305
 msgid "_Write hot spot values"
-msgstr "_Scrivi valori punti caldi"
+msgstr "_Scrivi valori punti attivi"
 
 #: ../plug-ins/common/file-xbm.c:1331 ../plug-ins/common/file-xmc.c:1102
 msgid "Hot spot _X:"
-msgstr "Punto caldo _X:"
+msgstr "Punto attivo _X:"
 
 #: ../plug-ins/common/file-xbm.c:1345
 msgid "Hot spot _Y:"
-msgstr "Punto caldo _Y:"
+msgstr "Punto attivo _Y:"
 
 #. mask file
 #: ../plug-ins/common/file-xbm.c:1353
