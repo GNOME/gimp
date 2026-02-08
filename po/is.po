@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-02-08 00:43+0000\n"
-"PO-Revision-Date: 2026-02-08 11:04+0000\n"
+"PO-Revision-Date: 2026-02-08 17:08+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -37,7 +37,6 @@ msgid "High-end image creation and manipulation"
 msgstr ""
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:19
-#, fuzzy
 #| msgid ""
 #| "GIMP is an acronym for GNU Image Manipulation Program. It is a freely "
 #| "distributed program for such tasks as photo retouching, image composition "
@@ -51,7 +50,6 @@ msgstr ""
 "myndvinnslu, myndasamsetningu og margt fleira."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:23
-#, fuzzy
 #| msgid ""
 #| "It has many capabilities. It can be used as a simple paint program, an "
 #| "expert quality photo retouching program, an online batch processing "
@@ -62,10 +60,10 @@ msgid ""
 "processing system, a mass production image renderer, an image format "
 "converter, etc."
 msgstr ""
-"Það er með marga nytsamlega eiginleika. Hægt er að nota það sem einfalt "
-"málunarforrit, sem myndaviðgerðatól fyrir sérfræðinga, sem magnvinnslukerfi "
-"á neti, sem myndgerðartól í magnvinnslu, sem myndsniðaumbreyti og margt "
-"fleira."
+"Það er með marga nytsamlega eiginleika. Hægt er að nota það sem"
+" málunarforrit, sem myndaviðgerðatól fyrir sérfræðinga, til samsetningar á"
+" myndum, sem magnvinnslukerfi á neti, sem myndgerðartól í magnvinnslu, sem"
+" myndsniðaumbreyti og margt fleira."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:29
 #| msgid ""
@@ -3411,12 +3409,11 @@ msgid "Show image location in the file manager"
 msgstr "Birta staðsetningu myndar í skráarstjóra"
 
 #: app/actions/documents-actions.c:72
-#, fuzzy
 #| msgctxt "documents-action"
 #| msgid "Remove _Entry"
 msgctxt "documents-action"
 msgid "Remove _Entries"
-msgstr "_Fjarlægja færslu"
+msgstr "_Fjarlægja færslur"
 
 #: app/actions/documents-actions.c:73
 #| msgctxt "documents-action"
@@ -6423,12 +6420,11 @@ msgid "_Rasterize"
 msgstr "_Rastagera"
 
 #: app/actions/layers-actions.c:187
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Turn these text layers into normal layers"
 msgctxt "layers-action"
 msgid "Turn selected text, link or vector layers into raster layers"
-msgstr "Breyta þessum textalögum í venjuleg lög"
+msgstr "Breyta völdum texta, tengil eða vigurlögum í rastalög"
 
 #: app/actions/layers-actions.c:192
 #| msgctxt "vector-toolpath-action"
@@ -7943,17 +7939,16 @@ msgstr "Tvítaka ferla"
 
 #: app/actions/paths-commands.c:488
 msgid "Cannot delete paths attached to vector layers"
-msgstr ""
+msgstr "Get ekki eytt ferlum sem tengdir eru vigurlögum"
 
 #: app/actions/paths-commands.c:499
 msgid "Remove Paths"
 msgstr "Fjarlægja ferla"
 
 #: app/actions/paths-commands.c:535
-#, fuzzy
 #| msgid "Cannot merge down to a layer group."
 msgid "Cannot merge paths attached to vector layers"
-msgstr "Get ekki sameinað niður í lagahóp."
+msgstr "Get ekki sameinað ferla sem tengdir eru vigurlögum"
 
 #: app/actions/paths-commands.c:589
 msgid "Paths to selection"
@@ -8546,7 +8541,7 @@ msgstr "_Líma"
 #: app/actions/text-tool-actions.c:65
 msgctxt "text-tool-action"
 msgid "Paste un_formatted text"
-msgstr ""
+msgstr "_Líma ósniðinn texta"
 
 #: app/actions/text-tool-actions.c:71
 #| msgid "Bold"
@@ -8846,12 +8841,11 @@ msgid "Activate _Last Tool"
 msgstr "Vir_kja síðasta verkfæri"
 
 #: app/actions/tools-actions.c:49
-#, fuzzy
 #| msgctxt "windows-action"
 #| msgid "Switch to the next image"
 msgctxt "tools-action"
 msgid "Switch back to the last activated tool"
-msgstr "Skipa yfir í næstu mynd"
+msgstr "Skipa yfir í síðast virkjaða verkfærið"
 
 #: app/actions/tools-actions.c:57
 msgctxt "tools-action"
@@ -19304,13 +19298,13 @@ msgstr "Lag > Rastagera"
 #: app/display/gimpdisplayshell-dnd.c:409 app/tools/gimptool.c:776
 #, c-format
 msgid "Link layers must be rasterized (%s)."
-msgstr ""
+msgstr "Tenglalög verða að vera röstuð (%s)."
 
 #. TRANSLATORS: the string between parentheses will be a menu path.
 #: app/display/gimpdisplayshell-dnd.c:413 app/tools/gimptool.c:770
 #, c-format
 msgid "Text layers must be rasterized (%s)."
-msgstr ""
+msgstr "Textalög verða að vera röstuð (%s)."
 
 #: app/display/gimpdisplayshell-dnd.c:513
 #: app/widgets/gimpdrawabletreeview.c:472
@@ -21699,11 +21693,10 @@ msgid "Discard Vector Information"
 msgstr "Henda vigurupplýsingum"
 
 #: app/path/gimpvectorlayer.c:635
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Change color managed state"
 msgid "Change Vector Layer Path"
-msgstr "Breyta stöðu litstýringar"
+msgstr "Breyta ferli vigurlags"
 
 #: app/path/gimpvectorlayeroptions.c:114
 #| msgid "Fill type"
@@ -22325,12 +22318,12 @@ msgstr "Gagnamerkingin '%s' er ekki formlegt auðkenni"
 #: app/pdb/rasterizable-cmds.c:65
 #, c-format
 msgid "This item has already been rasterized."
-msgstr ""
+msgstr "Þetta atriði hefur nú þegar verið rastað."
 
 #: app/pdb/rasterizable-cmds.c:96
 #, c-format
 msgid "This item has not been rasterized."
-msgstr ""
+msgstr "Þetta atriði hefur ekki verið rastað."
 
 #: app/pdb/resource-cmds.c:468
 #, c-format
@@ -24006,14 +23999,13 @@ msgstr "Óvirkt vegna þess að síur er ekki hægt að sameina við vigurlög."
 #: app/widgets/gimpdrawabletreeview-filters.c:492
 #| msgid "Disabled because this filter depends on another image."
 msgid "Disabled because filters cannot be merged on link layers."
-msgstr "Óvirkt vegna þess að síur er ekki hægt að sameina við tengd lög."
+msgstr "Óvirkt vegna þess að síur er ekki hægt að sameina við tenglalög."
 
 #: app/tools/gimpfiltertool.c:463
 #: app/widgets/gimpdrawabletreeview-filters.c:495
-#, fuzzy
 #| msgid "Disabled because this filter depends on another image."
 msgid "Disabled because filters cannot be merged on text layers."
-msgstr "Ekki er hægt að nota þessa síu vegna þess að hún er háð annarri mynd."
+msgstr "Óvirkt vegna þess að síur er ekki hægt að sameina við textalög."
 
 #: app/tools/gimpfiltertool.c:465
 msgid ""
@@ -25170,16 +25162,14 @@ msgid "Pat_hs"
 msgstr "_Ferlar"
 
 #: app/tools/gimppathtool.c:741
-#, fuzzy
 #| msgid "Selection from Path"
 msgid "Create Vector Layer from Path"
-msgstr "Val út frá ferli"
+msgstr "Búa til vigurlag út frá ferli"
 
 #: app/tools/gimppathtool.c:1067 app/tools/gimppathtool.c:1070
-#, fuzzy
 #| msgid "Confirm Text Editing"
 msgid "Confirm Path Editing"
-msgstr "Staðfesta breytingu á texta"
+msgstr "Staðfesta breytingu á ferli"
 
 #: app/tools/gimppathtool.c:1074 app/tools/gimptexttool.c:1783
 msgid "Create _New Layer"
@@ -25800,7 +25790,7 @@ msgstr ""
 #: app/tools/gimptool.c:782
 #, c-format
 msgid "Vector layers must be rasterized (%s)."
-msgstr ""
+msgstr "Vigurlög verða að vera röstuð (%s)."
 
 #: app/tools/gimptool.c:1294
 msgid "Can't work on an empty image, add a layer first"
@@ -28863,10 +28853,9 @@ msgid "_Use selected font"
 msgstr "Nota _valið letur"
 
 #: app/widgets/gimptextstyleeditor.c:255
-#, fuzzy
 #| msgid "Click-Drag to move the slider"
 msgid "Drag to move the text style editor"
-msgstr "Smelltu-Dragðu til að færa sleðann"
+msgstr "Dragðu til að færa textastílritilinn"
 
 #: app/widgets/gimptextstyleeditor.c:275 app/widgets/gimptextstyleeditor.c:1415
 msgid "Change font of selected text"
