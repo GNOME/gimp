@@ -8,9 +8,20 @@ if [ -z "$APPDIR" ]; then
 fi
 
 
-## Minimum runtime paths. See: #13527 and #13603
+## Minimum runtime paths. See: #13527, #13603 and #15807
 export PATH="${APPDIR}/usr/bin/:$PATH"
 unset LD_PRELOAD
+for lib in "${APPDIR}"/usr/lib*/*.so* "${APPDIR}"/usr/lib/*linux-gnu/*.so*; do
+  case "$lib" in
+    *" "*)
+      #LD does not support spaces in LD_PRELOAD
+      break
+      ;;
+    *libbabl*|*libgegl*|*libgimp*)
+      export LD_PRELOAD="$LD_PRELOAD${LD_PRELOAD:+:}$lib"
+      ;;
+  esac
+done
 unset LD_LIBRARY_PATH
 export XDG_DATA_DIRS="${APPDIR}/usr/share/:$XDG_DATA_DIRS"
 
