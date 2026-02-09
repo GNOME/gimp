@@ -59,6 +59,7 @@ typedef struct _GimpDisplay              GimpDisplay;
 
 typedef struct _GimpResource             GimpResource;
 typedef struct _GimpBrush                GimpBrush;
+typedef struct _GimpCurve                GimpCurve;
 typedef struct _GimpFont                 GimpFont;
 typedef struct _GimpGradient             GimpGradient;
 typedef struct _GimpPattern              GimpPattern;

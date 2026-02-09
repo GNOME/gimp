@@ -64,6 +64,42 @@ typedef enum
 } GimpConvertDitherType;
 
 
+#define GIMP_TYPE_CURVE_POINT_TYPE (gimp_curve_point_type_get_type ())
+
+GType gimp_curve_point_type_get_type (void) G_GNUC_CONST;
+
+/**
+ * GimpCurvePointType:
+ * @GIMP_CURVE_POINT_SMOOTH: GIMP_CURVE_POINT_SMOOTH
+ * @GIMP_CURVE_POINT_CORNER: GIMP_CURVE_POINT_CORNER
+ *
+ * Extracted from app/core/core-enums.h
+ **/
+typedef enum
+{
+  GIMP_CURVE_POINT_SMOOTH,
+  GIMP_CURVE_POINT_CORNER
+} GimpCurvePointType;
+
+
+#define GIMP_TYPE_CURVE_TYPE (gimp_curve_type_get_type ())
+
+GType gimp_curve_type_get_type (void) G_GNUC_CONST;
+
+/**
+ * GimpCurveType:
+ * @GIMP_CURVE_SMOOTH: GIMP_CURVE_SMOOTH
+ * @GIMP_CURVE_FREE: GIMP_CURVE_FREE
+ *
+ * Extracted from app/core/core-enums.h
+ **/
+typedef enum
+{
+  GIMP_CURVE_SMOOTH,
+  GIMP_CURVE_FREE
+} GimpCurveType;
+
+
 #define GIMP_TYPE_HISTOGRAM_CHANNEL (gimp_histogram_channel_get_type ())
 
 GType gimp_histogram_channel_get_type (void) G_GNUC_CONST;

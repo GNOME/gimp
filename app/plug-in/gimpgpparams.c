@@ -33,6 +33,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
+#include "core/gimpcurve.h"
 #include "core/gimpdisplay.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimpgradient.h"

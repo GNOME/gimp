@@ -469,6 +469,20 @@ G_BEGIN_DECLS
   g_value_set_object (gimp_value_array_index (args, n), value)
 
 
+/*  Curve */
+
+#define GIMP_VALUES_GET_CURVE(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_DUP_CURVE(args, n) \
+  g_value_dup_object (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_SET_CURVE(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
+#define GIMP_VALUES_TAKE_CURVE(args, n, value) \
+  g_value_take_object (gimp_value_array_index (args, n), value)
+
 /*  Unit  */
 
 #define GIMP_VALUES_GET_UNIT(args, n) \

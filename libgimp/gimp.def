@@ -182,6 +182,22 @@ EXPORTS
 	gimp_convert_dither_type_get_type
 	gimp_convolve
 	gimp_convolve_default
+	gimp_curve_add_point
+	gimp_curve_clear_points
+	gimp_curve_delete_point
+	gimp_curve_get_n_points
+	gimp_curve_get_n_samples
+	gimp_curve_get_point
+	gimp_curve_get_point_type
+	gimp_curve_get_type
+	gimp_curve_is_identity
+	gimp_curve_new
+	gimp_curve_point_type_get_type
+	gimp_curve_set_curve_type
+	gimp_curve_set_n_samples
+	gimp_curve_set_point
+	gimp_curve_set_point_type
+	gimp_curve_type_get_type
 	gimp_debug_timer_end
 	gimp_debug_timer_start
 	gimp_default_display
@@ -731,6 +747,7 @@ EXPORTS
 	gimp_palettes_set_popup
 	gimp_param_brush_get_type
 	gimp_param_channel_get_type
+	gimp_param_curve_get_type
 	gimp_param_display_get_type
 	gimp_param_drawable_filter_get_type
 	gimp_param_drawable_get_type
@@ -750,6 +767,7 @@ EXPORTS
 	gimp_param_selection_get_type
 	gimp_param_spec_brush
 	gimp_param_spec_channel
+	gimp_param_spec_curve
 	gimp_param_spec_display
 	gimp_param_spec_display_none_allowed
 	gimp_param_spec_drawable

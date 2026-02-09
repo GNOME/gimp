@@ -322,7 +322,8 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
           g_strcmp0 (type_name, "GimpLayerMask")      == 0 ||
           g_strcmp0 (type_name, "GimpSelection")      == 0 ||
           g_strcmp0 (type_name, "GimpPath")           == 0 ||
-          g_strcmp0 (type_name, "GimpDrawableFilter") == 0)
+          g_strcmp0 (type_name, "GimpDrawableFilter") == 0 ||
+          g_strcmp0 (type_name, "GimpCurve")          == 0)
         {
           copy = g_param_spec_object (name, nick, blurb,
                                       value_type,

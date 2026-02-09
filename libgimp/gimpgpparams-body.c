@@ -374,6 +374,12 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
           return pspec;
         }
       break;
+
+    case GP_PARAM_DEF_TYPE_CURVE:
+      if (! strcmp (param_def->type_name, "GimpParamCurve"))
+        return gimp_param_spec_curve (name, nick, blurb,
+                                      param_def->meta.m_id.none_ok,
+                                      flags);
     }
 
   g_warning ("%s: GParamSpec type unsupported '%s'", G_STRFUNC,
@@ -699,6 +705,13 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
   else if (pspec_type == GIMP_TYPE_PARAM_EXPORT_OPTIONS)
     {
       param_def->param_def_type = GP_PARAM_DEF_TYPE_EXPORT_OPTIONS;
+    }
+  else if (GIMP_IS_PARAM_SPEC_CURVE (pspec) ||
+           (pspec_type == G_TYPE_PARAM_OBJECT && value_type == GIMP_TYPE_CURVE))
+    {
+      param_def->param_def_type       = GP_PARAM_DEF_TYPE_CURVE;
+      param_def->type_name            = "GimpParamCurve";
+      param_def->meta.m_curve.none_ok = TRUE;
     }
   else if (pspec_type == G_TYPE_PARAM_OBJECT &&
            value_type != G_TYPE_FILE &&
@@ -1179,13 +1192,42 @@ gimp_gp_param_to_value (gpointer        gimp,
     {
       g_value_set_object (value, get_display_by_id (gimp, param->data.d_int));
     }
-  else if (GIMP_VALUE_HOLDS_RESOURCE (value))
+  else if (GIMP_VALUE_HOLDS_RESOURCE (value) &&
+           ! GIMP_VALUE_HOLDS_CURVE (value))
     {
       g_value_set_object (value, get_resource_by_id (param->data.d_int));
     }
   else if (GIMP_VALUE_HOLDS_UNIT (value))
     {
       g_value_set_object (value, get_unit_by_id (gimp, param->data.d_int));
+    }
+  else if (GIMP_VALUE_HOLDS_CURVE (value))
+    {
+      GimpCurve *curve;
+
+      curve = g_object_new (GIMP_TYPE_CURVE, NULL);
+
+      g_object_set (curve,
+                    "curve-type", param->data.d_curve.curve_type,
+                    NULL);
+
+      for (gint j = 0; j < param->data.d_curve.n_points; j++)
+        {
+          gimp_curve_add_point (curve, param->data.d_curve.points[j * 2],
+                                param->data.d_curve.points[(j * 2) + 1]);
+
+          gimp_curve_set_point_type (curve, j,
+                                     param->data.d_curve.point_types[j]);
+        }
+
+      if (param->data.d_curve.n_samples > 0)
+        g_object_set (curve,
+                      "n-samples", param->data.d_curve.n_samples,
+                      NULL);
+
+      g_value_set_object (value, curve);
+
+      g_object_unref (curve);
     }
   else if (g_type_is_a (G_VALUE_TYPE (value), GIMP_TYPE_EXPORT_OPTIONS))
     {
@@ -1721,7 +1763,8 @@ gimp_value_to_gp_param (const GValue *value,
 
       param->data.d_int = display ? gimp_display_get_id (display) : -1;
     }
-  else if (GIMP_VALUE_HOLDS_RESOURCE (value))
+  else if (GIMP_VALUE_HOLDS_RESOURCE (value) &&
+           ! GIMP_VALUE_HOLDS_CURVE (value))
     {
       GObject *resource = g_value_get_object (value);
 
@@ -1740,6 +1783,37 @@ gimp_value_to_gp_param (const GValue *value,
   else if (g_type_is_a (G_VALUE_TYPE (value), GIMP_TYPE_EXPORT_OPTIONS))
     {
       param->param_type = GP_PARAM_TYPE_EXPORT_OPTIONS;
+    }
+  else if (g_type_is_a (G_VALUE_TYPE (value), GIMP_TYPE_CURVE))
+    {
+      GimpCurve *curve = g_value_get_object (value);
+
+      param->param_type = GP_PARAM_TYPE_CURVE;
+
+      g_object_get (curve,
+                    "curve-type",  &param->data.d_curve.curve_type,
+                    "n-points",    &param->data.d_curve.n_points,
+                    "n-samples",   &param->data.d_curve.n_samples,
+                    NULL);
+
+      param->data.d_curve.points = g_new0 (gdouble,
+                                           2 * param->data.d_curve.n_points);
+
+      param->data.d_curve.point_types = g_new0 (GimpCurvePointType,
+                                                param->data.d_curve.n_points);
+
+      for (gint j = 0; j < param->data.d_curve.n_points; j++)
+        {
+          gdouble x;
+          gdouble y;
+
+          gimp_curve_get_point (curve, j, &x, &y);
+          param->data.d_curve.points[j * 2]       = x;
+          param->data.d_curve.points[(j * 2) + 1] = y;
+
+          param->data.d_curve.point_types[j] =
+            gimp_curve_get_point_type (curve, j);
+        }
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {
@@ -1867,6 +1941,14 @@ _gimp_gp_params_free (GPParam  *params,
           _gimp_gp_params_free (params[i].data.d_value_array.values,
                                 params[i].data.d_value_array.n_values,
                                 full_copy);
+          break;
+
+        case GP_PARAM_TYPE_CURVE:
+          if (full_copy)
+            {
+              g_free (params[i].data.d_curve.points);
+              g_free (params[i].data.d_curve.point_types);
+            }
           break;
         }
     }

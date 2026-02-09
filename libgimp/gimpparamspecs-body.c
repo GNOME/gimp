@@ -2045,3 +2045,93 @@ gimp_param_spec_font (const gchar *name,
                                    none_ok, GIMP_RESOURCE (default_value),
                                    default_to_context, flags);
 }
+
+/*
+ * GIMP_TYPE_PARAM_CURVE
+ */
+
+#define GIMP_PARAM_SPEC_CURVE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_CURVE, GimpParamSpecCurve))
+
+typedef struct _GimpParamSpecCurve GimpParamSpecCurve;
+
+struct _GimpParamSpecCurve
+{
+  GParamSpecObject  parent_instance;
+
+  gboolean          none_ok;
+};
+
+static void   gimp_param_curve_class_init (GParamSpecClass *klass);
+static void   gimp_param_curve_init       (GParamSpec      *pspec);
+
+GType
+gimp_param_curve_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_curve_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecCurve),
+        0,
+        (GInstanceInitFunc) gimp_param_curve_init
+      };
+
+      type = g_type_register_static (G_TYPE_PARAM_OBJECT,
+                                     "GimpParamCurve", &info, 0);
+    }
+
+  return type;
+}
+
+static void
+gimp_param_curve_class_init (GParamSpecClass *klass)
+{
+  klass->value_type = GIMP_TYPE_CURVE;
+}
+
+static void
+gimp_param_curve_init (GParamSpec *pspec)
+{
+}
+
+/**
+ * gimp_param_spec_curve:
+ * @name:    Canonical name of the property specified.
+ * @nick:    Nick name of the property specified.
+ * @blurb:   Description of the property specified.
+ * @none_ok: Whether no is a valid value.
+ * @flags:   Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecCurve specifying a
+ * [type@Curve] property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer floating): The newly created #GimpParamSpecCurve.
+ *
+ * Since: 3.2
+ **/
+GParamSpec *
+gimp_param_spec_curve (const gchar *name,
+                       const gchar *nick,
+                       const gchar *blurb,
+                       gboolean     none_ok,
+                       GParamFlags  flags)
+{
+  GimpParamSpecCurve *cspec;
+
+  cspec = g_param_spec_internal (GIMP_TYPE_PARAM_CURVE,
+                                 name, nick, blurb, flags);
+
+  g_return_val_if_fail (cspec, NULL);
+
+  cspec->none_ok = none_ok ? TRUE : FALSE;
+
+  return G_PARAM_SPEC (cspec);
+}

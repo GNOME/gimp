@@ -869,6 +869,20 @@ package Gimp::CodeGen::enums;
 		       GIMP_CONVERT_DITHER_FS_LOWBLEED => '2',
 		       GIMP_CONVERT_DITHER_FIXED => '3' }
 	},
+    GimpCurvePointType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_CURVE_POINT_SMOOTH GIMP_CURVE_POINT_CORNER) ],
+	  mapping => { GIMP_CURVE_POINT_SMOOTH => '0',
+		       GIMP_CURVE_POINT_CORNER => '1' }
+	},
+    GimpCurveType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_CURVE_SMOOTH GIMP_CURVE_FREE) ],
+	  mapping => { GIMP_CURVE_SMOOTH => '0',
+		       GIMP_CURVE_FREE => '1' }
+	},
     GimpHistogramChannel =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',

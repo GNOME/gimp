@@ -1317,6 +1317,13 @@ _gp_param_def_read (GIOChannel *channel,
                                     user_data))
         return FALSE;
       break;
+
+    case GP_PARAM_DEF_TYPE_CURVE:
+      if (! _gimp_wire_read_int32 (channel,
+                                   (guint32 *) &param_def->meta.m_curve.none_ok, 1,
+                                   user_data))
+        return FALSE;
+      break;
     }
 
   return TRUE;
@@ -1376,6 +1383,9 @@ _gp_param_def_destroy (GPParamDef *param_def)
 
     case GP_PARAM_DEF_TYPE_FILE:
       g_free (param_def->meta.m_file.default_uri);
+      break;
+
+    case GP_PARAM_DEF_TYPE_CURVE:
       break;
     }
 }
@@ -1682,6 +1692,13 @@ _gp_param_def_write (GIOChannel *channel,
       if (! _gimp_wire_write_string (channel,
                                      &param_def->meta.m_file.default_uri, 1,
                                      user_data))
+        return FALSE;
+      break;
+
+    case GP_PARAM_DEF_TYPE_CURVE:
+      if (! _gimp_wire_write_int32 (channel,
+                                    (guint32 *) &param_def->meta.m_curve.none_ok, 1,
+                                    user_data))
         return FALSE;
       break;
     }
@@ -2190,6 +2207,51 @@ _gp_params_read (GIOChannel  *channel,
             (*params)[i].data.d_value_array.n_values = (guint32) n_values;
             break;
           }
+
+        case GP_PARAM_TYPE_CURVE:
+          {
+            if (! _gimp_wire_read_int32 (channel,
+                                         &(*params)[i].data.d_curve.curve_type, 1,
+                                         user_data))
+              goto cleanup;
+
+            if (! _gimp_wire_read_int32 (channel,
+                                         &(*params)[i].data.d_curve.n_points, 1,
+                                         user_data))
+              goto cleanup;
+
+            if (! _gimp_wire_read_int32 (channel,
+                                         &(*params)[i].data.d_curve.n_samples, 1,
+                                         user_data))
+              goto cleanup;
+
+            (*params)[i].data.d_curve.points = g_new0 (gdouble,
+                                                       2 * (*params)[i].data.d_curve.n_points);
+
+            if (! _gimp_wire_read_double (channel,
+                                          (*params)[i].data.d_curve.points,
+                                          2 * (*params)[i].data.d_curve.n_points,
+                                          user_data))
+              {
+                g_free ((*params)[i].data.d_curve.points);
+                (*params)[i].data.d_curve.points = NULL;
+                goto cleanup;
+              }
+
+            (*params)[i].data.d_curve.point_types = g_new0 (guint32,
+                                                            (*params)[i].data.d_curve.n_points);
+
+            if (! _gimp_wire_read_int32 (channel,
+                                         (*params)[i].data.d_curve.point_types,
+                                         (*params)[i].data.d_curve.n_points,
+                                         user_data))
+              {
+                g_free ((*params)[i].data.d_curve.point_types);
+                (*params)[i].data.d_curve.point_types = NULL;
+                goto cleanup;
+              }
+          }
+          break;
         }
     }
 
@@ -2421,6 +2483,34 @@ _gp_params_write (GIOChannel *channel,
                             user_data);
           break;
 
+        case GP_PARAM_TYPE_CURVE:
+          if (! _gimp_wire_write_int32 (channel,
+                                        (const guint32 *) &params[i].data.d_curve.curve_type, 1,
+                                        user_data))
+            return;
+
+          if (! _gimp_wire_write_int32 (channel,
+                                        (const guint32 *) &params[i].data.d_curve.n_points, 1,
+                                        user_data))
+            return;
+
+          if (! _gimp_wire_write_int32 (channel,
+                                        (const guint32 *) &params[i].data.d_curve.n_samples, 1,
+                                        user_data))
+            return;
+
+          if (! _gimp_wire_write_double (channel,
+                                         params[i].data.d_curve.points,
+                                         2 * params[i].data.d_curve.n_points,
+                                         user_data))
+            return;
+
+          if (! _gimp_wire_write_int32 (channel,
+                                        (const guint32 *) params[i].data.d_curve.point_types,
+                                        params[i].data.d_curve.n_points,
+                                        user_data))
+            return;
+          break;
         }
     }
 }
@@ -2498,6 +2588,13 @@ _gp_params_destroy (GPParam *params,
         case GP_PARAM_TYPE_VALUE_ARRAY:
           _gp_params_destroy (params[i].data.d_value_array.values,
                               params[i].data.d_value_array.n_values);
+          break;
+
+        case GP_PARAM_TYPE_CURVE:
+          if (params[i].data.d_curve.points)
+            g_free (params[i].data.d_curve.points);
+          if (params[i].data.d_curve.point_types)
+            g_free (params[i].data.d_curve.point_types);
           break;
         }
     }

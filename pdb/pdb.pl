@@ -674,6 +674,18 @@ package Gimp::CodeGen::pdb;
 		     take_value_func => 'g_value_set_object ($value, $var)',
 		     headers         => [ qw("text/gimpfont.h") ] },
 
+    curve       => { name            => 'CURVE',
+		     gtype           => 'GIMP_TYPE_CURVE',
+		     type            => 'GimpCurve *',
+		     const_type      => 'GimpCurve *',
+		     init_value      => 'NULL',
+		     out_annotate    => '(transfer full)',
+		     get_value_func  => '$var = g_value_get_object ($value)',
+		     dup_value_func  => '$var = GIMP_VALUES_DUP_CURVE ($value)',
+		     set_value_func  => 'g_value_set_object ($value, $var)',
+		     take_value_func => 'g_value_take_object ($value, $var)',
+		     headers         => [ qw("core/gimpcurve.h") ] },
+
     valuearray  => { name            => 'VALUEARRAY',
 		     gtype           => 'GIMP_TYPE_VALUE_ARRAY',
 		     type            => 'GimpValueArray *',

@@ -40,6 +40,7 @@
 #include <libgimp/gimpbatchprocedure.h>
 #include <libgimp/gimpbrush.h>
 #include <libgimp/gimpchannel.h>
+#include <libgimp/gimpcurve.h>
 #include <libgimp/gimpdisplay.h>
 #include <libgimp/gimpdrawable.h>
 #include <libgimp/gimpdrawablefilter.h>

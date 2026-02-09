@@ -29,6 +29,7 @@
 #include "gimp.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
+#include "gimpcurve.h"
 #include "gimpdisplay.h"
 #include "gimpdrawablefilter.h"
 #include "gimpgradient.h"

@@ -448,6 +448,25 @@ GParamSpec * gimp_param_spec_font (const gchar  *name,
                                    GParamFlags   flags);
 
 
+/*
+ * GIMP_TYPE_PARAM_CURVE
+ */
+
+#define GIMP_VALUE_HOLDS_CURVE(value)   (G_TYPE_CHECK_VALUE_TYPE ((value), \
+                                         GIMP_TYPE_CURVE))
+
+#define GIMP_TYPE_PARAM_CURVE           (gimp_param_curve_get_type ())
+#define GIMP_IS_PARAM_SPEC_CURVE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_CURVE))
+
+GType        gimp_param_curve_get_type (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_curve (const gchar  *name,
+                                    const gchar  *nick,
+                                    const gchar  *blurb,
+                                    gboolean      none_ok,
+                                    GParamFlags   flags);
+
+
 G_END_DECLS
 
 #endif  /*  __LIBGIMP_GIMP_PARAM_SPECS_H__  */

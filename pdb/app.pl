@@ -343,6 +343,17 @@ gimp_param_spec_pattern ("$name",
                          $flags)
 CODE
     }
+    elsif ($pdbtype eq 'curve') {
+  $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+  $default = exists $arg->{default} ? $arg->{default} : NULL;
+  $pspec = <<CODE;
+gimp_param_spec_curve ("$name",
+                       "$nick",
+                       "$blurb",
+                       $none_ok,
+                       $flags)
+CODE
+    }
     elsif ($pdbtype eq 'item') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;

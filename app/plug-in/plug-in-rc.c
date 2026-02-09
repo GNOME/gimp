@@ -1048,6 +1048,15 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
           goto error;
         }
       break;
+
+    case GP_PARAM_DEF_TYPE_CURVE:
+      if (! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_curve.none_ok))
+        {
+          token = G_TOKEN_INT;
+          goto error;
+        }
+      break;
     }
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
@@ -1118,6 +1127,9 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 
     case GP_PARAM_DEF_TYPE_FILE:
       g_free (param_def.meta.m_file.default_uri);
+      break;
+
+    case GP_PARAM_DEF_TYPE_CURVE:
       break;
     }
 
@@ -1317,6 +1329,11 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
                                  param_def.meta.m_file.none_ok);
       gimp_config_writer_string (writer,
                                  param_def.meta.m_file.default_uri);
+      break;
+
+    case GP_PARAM_DEF_TYPE_CURVE:
+      gimp_config_writer_printf (writer, "%d",
+                                 param_def.meta.m_curve.none_ok);
       break;
     }
 

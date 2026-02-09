@@ -194,7 +194,7 @@ typedef enum  /*< pdb-skip >*/
 
 GType gimp_curve_point_type_get_type (void) G_GNUC_CONST;
 
-typedef enum  /*< pdb-skip >*/
+typedef enum
 {
   GIMP_CURVE_POINT_SMOOTH,   /*< desc="Smooth" >*/
   GIMP_CURVE_POINT_CORNER    /*< desc="Corner" >*/
@@ -205,7 +205,7 @@ typedef enum  /*< pdb-skip >*/
 
 GType gimp_curve_type_get_type (void) G_GNUC_CONST;
 
-typedef enum  /*< pdb-skip >*/
+typedef enum
 {
   GIMP_CURVE_SMOOTH,   /*< desc="Smooth"   >*/
   GIMP_CURVE_FREE      /*< desc="Freehand" >*/
