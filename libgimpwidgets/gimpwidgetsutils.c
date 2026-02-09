@@ -373,9 +373,7 @@ gimp_label_set_attributes (GtkLabel *label,
 GdkMonitor *
 gimp_widget_get_monitor (GtkWidget *widget)
 {
-  GdkWindow     *window;
-  GtkAllocation  allocation;
-  gint           x, y;
+  GdkWindow *window;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), 0);
 
@@ -384,19 +382,7 @@ gimp_widget_get_monitor (GtkWidget *widget)
   if (! window)
     return gimp_get_monitor_at_pointer ();
 
-  gdk_window_get_origin (window, &x, &y);
-  gtk_widget_get_allocation (widget, &allocation);
-
-  if (! gtk_widget_get_has_window (widget))
-    {
-      x += allocation.x;
-      y += allocation.y;
-    }
-
-  x += allocation.width  / 2;
-  y += allocation.height / 2;
-
-  return gdk_display_get_monitor_at_point (gdk_display_get_default (), x, y);
+  return gdk_display_get_monitor_at_window (gdk_window_get_display (window), window);
 }
 
 /**
