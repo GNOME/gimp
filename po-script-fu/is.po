@@ -3,13 +3,13 @@
 # Copyright (C) 2008, 2015 Free Software Foundation, Inc.
 #
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
-# SPDX-FileCopyrightText: 2015, 2017, 2019, 2024, 2025 Sveinn í Felli <sv1@fellsnet.is>
+# SPDX-FileCopyrightText: 2015, 2017, 2019, 2024, 2025, 2026 Sveinn í Felli <sv1@fellsnet.is>
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-02-14 19:01+0000\n"
-"PO-Revision-Date: 2025-03-18 11:41+0000\n"
+"POT-Creation-Date: 2025-09-17 14:40+0000\n"
+"PO-Revision-Date: 2026-02-09 16:12+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -211,7 +211,7 @@ msgstr "Script-Fu möppuval"
 msgid "Error while executing %s:"
 msgstr "Villa við að keyra %s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:417
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:541
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Villa við lestur %s:"
@@ -422,7 +422,7 @@ msgstr "Áherslulitað"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:307
 msgid "Stencil C_hrome..."
-msgstr ""
+msgstr "_Krómstensill..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:308
 msgid ""
@@ -432,15 +432,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:314
 msgid "Chrome saturation"
-msgstr ""
+msgstr "Litmettun króms"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:315
 msgid "Chrome lightness"
-msgstr ""
+msgstr "Ljósleiki króms"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:316
 msgid "Chrome factor"
-msgstr ""
+msgstr "Krómstuðull"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:317
 msgid "Environment map"
@@ -452,15 +452,15 @@ msgstr "Jafnvægi hátóna"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:321
 msgid "Chrome balance"
-msgstr ""
+msgstr "Jafnvægi króms"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:322
 msgid "Chrome white areas"
-msgstr ""
+msgstr "Hvít svæði króms"
 
 #: plug-ins/script-fu/scripts/circuit.scm:72
 msgid "Effect layer"
-msgstr ""
+msgstr "Sjónhverfingalag"
 
 #: plug-ins/script-fu/scripts/circuit.scm:135
 msgid "_Circuit..."
@@ -473,7 +473,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/circuit.scm:142
 msgid "Oilify mask size"
-msgstr ""
+msgstr "Stærð olíuborins maska"
 
 #: plug-ins/script-fu/scripts/circuit.scm:143
 msgid "Circuit seed"
@@ -546,13 +546,38 @@ msgstr "Einungis dekkja"
 msgid "Gradient to color stains"
 msgstr "Litstigull í litbletti"
 
-#: plug-ins/script-fu/scripts/difference-clouds.scm:76
+#: plug-ins/script-fu/scripts/difference-clouds.scm:82
 msgid "_Difference Clouds"
 msgstr "M_ismunaský"
 
-#: plug-ins/script-fu/scripts/difference-clouds.scm:77
+#: plug-ins/script-fu/scripts/difference-clouds.scm:83
 msgid "Solid noise applied with Difference layer mode"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:89
+msgid "Random Seed"
+msgstr "Slembisáning"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:90
+msgid "Levels"
+msgstr "Litatíðnidreifing"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:91
+#| msgid "Tile"
+msgid "Tileable"
+msgstr "Flísalagt"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:92
+msgid "Turbulent"
+msgstr "Hrært"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:93
+msgid "X"
+msgstr "X"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:94
+msgid "Y"
+msgstr "Y"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm:112
 msgid "_Distort..."
@@ -1020,7 +1045,7 @@ msgstr ""
 #. The user should not need to search for the file.
 #: plug-ins/script-fu/scripts/palette-export.scm:199
 msgid "Exported palette to file: "
-msgstr ""
+msgstr "Flutti litaspjald út í skrá: "
 
 #: plug-ins/script-fu/scripts/palette-export.scm:287
 msgid "Folder for the output file"
@@ -1070,7 +1095,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/palette-export.scm:425
 msgid "J_ava map..."
-msgstr ""
+msgstr "J_ava vörpun..."
 
 #: plug-ins/script-fu/scripts/palette-export.scm:426
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
@@ -1649,6 +1674,4 @@ msgstr "Y hliðrun undirskugga"
 #~ msgid "FG-BG-RGB"
 #~ msgstr "FG-BG-RGB"
 
-#~ msgid "Tile"
-#~ msgstr "Flísalagt"
 
