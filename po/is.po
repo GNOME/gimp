@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-02-08 00:43+0000\n"
-"PO-Revision-Date: 2026-02-08 21:37+0000\n"
+"PO-Revision-Date: 2026-02-09 15:55+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -34,7 +34,7 @@ msgstr "GNU myndvinnsluforritið"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:17
 msgid "High-end image creation and manipulation"
-msgstr ""
+msgstr "Gerð og umsýsla hágæða myndefnis"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:19
 #| msgid ""
@@ -6236,12 +6236,11 @@ msgid "Edit Vector on Canvas"
 msgstr "Breyta vigur á myndfleti"
 
 #: app/actions/layers-actions.c:68
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Activate the default edit action for this type of layer"
 msgctxt "layers-action"
 msgid "Activate the path tool on this vector layer"
-msgstr "Virkja sjálfgefna breytingaaðgerð fyrir þessa gerð af lagi"
+msgstr "Virkja ferlaáhaldið á þessu vigurlagi"
 
 #: app/actions/layers-actions.c:73
 msgctxt "layers-action"
@@ -7109,10 +7108,9 @@ msgid "Duplicate layers"
 msgstr "Tvítaka lög"
 
 #: app/actions/layers-commands.c:1034
-#, fuzzy
 #| msgid "Cannot merge down to a layer group."
 msgid "Cannot merge a pass through layer group."
-msgstr "Get ekki sameinað niður í lagahóp."
+msgstr "Get ekki sameinað gegnumstreymis-lagahóp."
 
 #: app/actions/layers-commands.c:1045
 #, c-format
@@ -8604,7 +8602,7 @@ msgstr "Beygja textann eftir virkum ferli"
 #: app/actions/text-tool-actions.c:116
 msgctxt "text-tool-action"
 msgid "Restore On-Canvas Editor Position"
-msgstr ""
+msgstr "Endurheimta staðsetningu ritils á myndfleti"
 
 #: app/actions/text-tool-actions.c:124
 msgctxt "text-tool-action"
@@ -14498,10 +14496,9 @@ msgid "Cannot merge down a floating selection."
 msgstr "Get ekki sameinað niður fljótandi val"
 
 #: app/core/gimpimage-merge.c:312
-#, fuzzy
 #| msgid "Cannot merge down to a layer group."
 msgid "Cannot merge down a pass through layer group."
-msgstr "Get ekki sameinað niður í lagahóp."
+msgstr "Get ekki sameinað niður gegnumstreymis-lagahóp."
 
 #: app/core/gimpimage-merge.c:323
 msgid "Cannot merge down an invisible layer."
@@ -20734,6 +20731,7 @@ msgstr "Línulegt"
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:125
 msgid "Work on linear RGB (this property is ignored; use \"trc\" instead)"
 msgstr ""
+"Vinna með línulegt RGB (þetta eigindi er hunsað; notaðu frekar \"trc\")"
 
 #: app/operations/gimpcurvesconfig.c:125 app/operations/gimplevelsconfig.c:131
 msgid "The affected channel"
@@ -25186,6 +25184,8 @@ msgid ""
 "The vector layer you picked was rasterized. Editing its path will discard "
 "any modifications."
 msgstr ""
+"Vigurlagið sem þú valdir var rastað. Breytingar á ferli þess mun fórna öllum"
+" breytingum."
 
 #: app/tools/gimppenciltool.c:54
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -25749,6 +25749,8 @@ msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
 msgstr ""
+"Textalagið sem þú valdir var rastað. Breytingar á texta þess mun fórna öllum"
+" breytingum."
 
 #: app/tools/gimptexttool.c:2427
 msgid "Text is required."
@@ -28868,7 +28870,7 @@ msgstr "Breyta stærð valins texta"
 
 #: app/widgets/gimptextstyleeditor.c:299
 msgid "Restore On-Canvas Editor Position"
-msgstr ""
+msgstr "Endurheimta staðsetningu ritils á myndfleti"
 
 #: app/widgets/gimptextstyleeditor.c:321
 msgid "Clear style of selected text"
