@@ -59,10 +59,12 @@
          ; active drawable is not necessarily the active layer
          (pic-layer (vector-ref (car (gimp-image-get-selected-layers image)) 0))
          (type (car (gimp-drawable-type-with-alpha pic-layer)))
+         (background-color (car (gimp-context-get-background)))
         )
 
   (gimp-context-push)
   (gimp-context-set-defaults)
+  (gimp-context-set-background background-color)
 
   (if (= work-on-copy TRUE)
       (gimp-image-undo-disable image)
