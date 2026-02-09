@@ -500,13 +500,19 @@ gimp_image_duplicate_sample_points (GimpImage *image,
        list;
        list = g_list_next (list))
     {
-      GimpSamplePoint *sample_point = list->data;
-      gint             x;
-      gint             y;
+      GimpSamplePoint   *sample_point = list->data;
+      GimpSamplePoint   *new_sample_point;
+      GimpColorPickMode  pick_mode;
+      gint               x;
+      gint               y;
 
       gimp_sample_point_get_position (sample_point, &x, &y);
+      pick_mode = gimp_sample_point_get_pick_mode (sample_point);
 
-      gimp_image_add_sample_point_at_pos (new_image, x, y, FALSE);
+      new_sample_point = gimp_image_add_sample_point_at_pos (new_image, x, y,
+                                                             FALSE);
+      gimp_image_set_sample_point_pick_mode (new_image, new_sample_point,
+                                             pick_mode, FALSE);
     }
 }
 
