@@ -108,7 +108,7 @@ class Foggify (Gimp.PlugIn):
         Gegl.init(None)
 
         _color = Gegl.Color.new("black")
-        _color.set_rgba(0.94, 0.71, 0.27, 1.0)
+        _color.set_rgba(0.871, 0.457, 0.061, 1.0)
 
         procedure = Gimp.ImageProcedure.new(self, name,
                                             Gimp.PDBProcType.PLUGIN,
