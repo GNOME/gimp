@@ -45,9 +45,7 @@ apps:
     extensions: [gnome]
 
 layout:
-  #FIXME: needed at runtime because babl, gegl and GIMP are not fully relocatable yet
-  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1:
-    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
+  #Needed at runtime because etc is usually not on /usr prefix
   /etc/gimp:
     bind: $SNAP/etc/gimp
 
@@ -84,7 +82,7 @@ parts:
       - LD_LIBRARY_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$LD_LIBRARY_PATH
       - GI_TYPELIB_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0:$GI_TYPELIB_PATH
       - LIBHEIF_PLUGIN_PATH: $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libheif/plugins
-      #FIXME: needed to generate splash image because babl and gegl not fully relocatable yet
+      #Needed to generate splash image because babl and gegl are moved by snapcraft a lot
       - BABL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
       - GEGL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4
       #FIXME: GNOME SDK is not setting this runtime var required by glib-networking test on gimp build
@@ -110,6 +108,7 @@ parts:
     meson-parameters:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - -Drelocatable=enabled
       - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
       - -Dwith-docs=false
