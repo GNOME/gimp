@@ -615,8 +615,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.12.1.tar.gz",
-                    "sha256": "794ae22f7e38e2ac9f5cbb673be9dd80cdaff2cdf858f5104e082694f743b0ba",
+                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.12.2.tar.gz",
+                    "sha256": "679412daa5f69af96d6976595c1ac64f252287a56e98cc4a8155d09cc7fd69e8",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 4908,
