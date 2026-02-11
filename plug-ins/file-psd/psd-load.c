@@ -395,106 +395,136 @@ load_image_metadata (GFile        *file,
       PSDlayer  **lyr_a = NULL;
       gchar       sig[4];
       gchar       key[4];
+      guint32     raw_len32;
+      guint32     payload_len;
+      guint32     skip_len;
 
-      if (psd_read (input, &sig, 4, error) < 4)
+      while (data_length >= 12)
         {
-          g_object_unref (input);
-          return image;
-        }
-      if (psd_read (input, &key, 4, error) < 4)
-        {
-          g_object_unref (input);
-          return image;
-        }
-      if (data_length > 8)
-        data_length -= 8;
-      else
-        data_length  = 0;
+          if (psd_read (input, &sig, 4, error) < 4)
+            break;
+          if (psd_read (input, &key, 4, error) < 4)
+            break;
+          if (psd_read (input, &raw_len32, 4, error) < 4)
+            break;
 
-      /* Treat labels/ints as Little Endian */
-      if (memcmp (sig, "MIB8", 4) == 0)
-        img_a.ibm_pc_format = TRUE;
+          data_length -= 12;
 
-      /* Setting up PSDImage structure */
-      if (memcmp (key, "Layr", 4) == 0 ||
-          memcmp (key, "ryaL", 4) == 0)
-        {
-          img_a.bps = 8;
-        }
-      else if (memcmp (key, "Lr16", 4) == 0 ||
-               memcmp (key, "61rL", 4) == 0)
-        {
-          img_a.bps = 16;
-        }
-      else if (memcmp (key, "Lr32", 4) == 0 ||
-               memcmp (key, "23rL", 4) == 0)
-        {
-          img_a.bps = 32;
-        }
-      else
-        {
-          /* Get BPC from existing image */
-          switch (gimp_image_get_precision (image))
+          /* Treat labels/ints as Little Endian (IBM PC format) */
+          if (memcmp (sig, "MIB8", 4) == 0)
             {
-            case GIMP_PRECISION_U8_LINEAR:
-            case GIMP_PRECISION_U8_NON_LINEAR:
-            case GIMP_PRECISION_U8_PERCEPTUAL:
-              img_a.bps = 8;
-              break;
+              img_a.ibm_pc_format = TRUE;
+              payload_len = GUINT32_FROM_LE (raw_len32);
+            }
+          else
+            {
+              img_a.ibm_pc_format = FALSE;
+              payload_len = GUINT32_FROM_BE (raw_len32);
+            }
 
-            case GIMP_PRECISION_U16_LINEAR:
-            case GIMP_PRECISION_U16_NON_LINEAR:
-            case GIMP_PRECISION_U16_PERCEPTUAL:
-            case GIMP_PRECISION_HALF_LINEAR:
-            case GIMP_PRECISION_HALF_NON_LINEAR:
-            case GIMP_PRECISION_HALF_PERCEPTUAL:
-              img_a.bps = 16;
-              break;
+          /* Actual block size is a multiple of 4 */
+          skip_len = (payload_len + 3) & ~3U;
 
-            case GIMP_PRECISION_U32_LINEAR:
-            case GIMP_PRECISION_U32_NON_LINEAR:
-            case GIMP_PRECISION_U32_PERCEPTUAL:
-            case GIMP_PRECISION_FLOAT_LINEAR:
-            case GIMP_PRECISION_FLOAT_NON_LINEAR:
-            case GIMP_PRECISION_FLOAT_PERCEPTUAL:
-              img_a.bps = 32;
-              break;
+          if (! (memcmp (key, "Layr", 4) == 0 || memcmp (key, "ryaL", 4) == 0 ||
+                 memcmp (key, "Lr16", 4) == 0 || memcmp (key, "61rL", 4) == 0 ||
+                 memcmp (key, "Lr32", 4) == 0 || memcmp (key, "23rL", 4) == 0))
+            {
+              if (skip_len > (guint32) data_length)
+                break;
 
-            default:
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Invalid PSD metadata layer format"));
+              if (! psd_seek (input, skip_len, G_SEEK_CUR, error))
+                {
+                  g_object_unref (input);
+                  return image;
+                }
+
+              data_length -= skip_len;
+              continue;
+            }
+
+          /* Setting up PSDImage structure */
+          if (memcmp (key, "Layr", 4) == 0 || memcmp (key, "ryaL", 4) == 0)
+            img_a.bps = 8;
+          else if (memcmp (key, "Lr16", 4) == 0 || memcmp (key, "61rL", 4) == 0)
+            img_a.bps = 16;
+          else if (memcmp (key, "Lr32", 4) == 0 || memcmp (key, "23rL", 4) == 0)
+            img_a.bps = 32;
+          else
+            {
+              /* Get BPC from existing image */
+              switch (gimp_image_get_precision (image))
+                {
+                case GIMP_PRECISION_U8_LINEAR:
+                case GIMP_PRECISION_U8_NON_LINEAR:
+                case GIMP_PRECISION_U8_PERCEPTUAL:
+                  img_a.bps = 8;
+                  break;
+                case GIMP_PRECISION_U16_LINEAR:
+                case GIMP_PRECISION_U16_NON_LINEAR:
+                case GIMP_PRECISION_U16_PERCEPTUAL:
+                case GIMP_PRECISION_HALF_LINEAR:
+                case GIMP_PRECISION_HALF_NON_LINEAR:
+                case GIMP_PRECISION_HALF_PERCEPTUAL:
+                  img_a.bps = 16;
+                  break;
+                case GIMP_PRECISION_U32_LINEAR:
+                case GIMP_PRECISION_U32_NON_LINEAR:
+                case GIMP_PRECISION_U32_PERCEPTUAL:
+                case GIMP_PRECISION_FLOAT_LINEAR:
+                case GIMP_PRECISION_FLOAT_NON_LINEAR:
+                case GIMP_PRECISION_FLOAT_PERCEPTUAL:
+                  img_a.bps = 32;
+                  break;
+                default:
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("Invalid PSD metadata layer format"));
+                  g_object_unref (input);
+                  return image;
+                }
+            }
+
+          switch (gimp_image_get_base_type (image))
+            {
+            case GIMP_RGB:
+              img_a.color_mode = PSD_RGB;
+              break;
+            case GIMP_GRAY:
+              img_a.color_mode = PSD_GRAYSCALE;
+              break;
+            case GIMP_INDEXED:
+              img_a.color_mode = PSD_INDEXED;
+              break;
+            }
+
+          if (is_cmyk)
+            img_a.color_mode = PSD_CMYK;
+
+          if (! psd_seek (input, -4, G_SEEK_CUR, error))
+            {
+              g_object_unref (input);
               return image;
             }
+
+          /* Set layer block size from metadata */
+          img_a.mask_layer_len = 4 + skip_len;
+
+          lyr_a = read_layer_block (&img_a, input, error);
+
+          if (! lyr_a)
+            {
+              g_object_unref (input);
+              return image;
+            }
+
+          add_layers (image, &img_a, lyr_a, input, error);
+          break;
         }
-
-      switch (gimp_image_get_base_type (image))
-        {
-          case GIMP_RGB:
-            img_a.color_mode = PSD_RGB;
-            break;
-
-          case GIMP_GRAY:
-            img_a.color_mode = PSD_GRAYSCALE;
-            break;
-
-          case GIMP_INDEXED:
-            img_a.color_mode = PSD_INDEXED;
-            break;
-        }
-      if (is_cmyk)
-        img_a.color_mode = PSD_CMYK;
-
-      /* Set layer block size from metadata */
-      img_a.mask_layer_len = data_length;
-      lyr_a = read_layer_block (&img_a, input, error);
 
       if (! lyr_a)
         {
           g_object_unref (input);
           return image;
         }
-
-      add_layers (image, &img_a, lyr_a, input, error);
     }
 
   g_object_unref (input);
