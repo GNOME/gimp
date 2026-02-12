@@ -949,6 +949,12 @@ palette_import_file_set_filters (GtkFileChooser *file_chooser)
   gtk_file_chooser_add_filter (file_chooser, filter);
 
   filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, "Procreate (*.swatches)");
+  gtk_file_filter_add_pattern (filter, "*.swatches");
+  gtk_file_filter_add_pattern (filter, "*.SWATCHES");
+  gtk_file_chooser_add_filter (file_chooser, filter);
+
+  filter = gtk_file_filter_new ();
   gtk_file_filter_set_name (filter, _("SwatchBooker (*.sbz)"));
   gtk_file_filter_add_pattern (filter, "*.sbz");
   gtk_file_filter_add_pattern (filter, "*.SBZ");
