@@ -1385,6 +1385,7 @@ gimp_palette_load_sbz (GimpContext   *context,
   sbz_data.in_book_tag       = FALSE;
   sbz_data.copy_name         = FALSE;
   sbz_data.copy_values       = FALSE;
+  sbz_data.palette_name      = NULL;
   sbz_data.embedded_profiles = NULL;
 
   if ((a = archive_read_new ()))
@@ -1427,13 +1428,14 @@ gimp_palette_load_sbz (GimpContext   *context,
 
               if (profile)
                 {
-                  PaletteColorProfile sbz_profile;
+                  PaletteColorProfile *sbz_profile;
 
-                  sbz_profile.profile = profile;
-                  sbz_profile.id      = g_strdup (archive_entry_pathname (entry));
+                  sbz_profile          = g_new0 (PaletteColorProfile, 1);
+                  sbz_profile->profile = profile;
+                  sbz_profile->id      = g_strdup (archive_entry_pathname (entry));
 
                   sbz_data.embedded_profiles =
-                    g_list_append (sbz_data.embedded_profiles, &sbz_profile);
+                    g_list_append (sbz_data.embedded_profiles, sbz_profile);
                 }
             }
         }
@@ -1884,7 +1886,7 @@ swatchbooker_load_text (GMarkupParseContext *context,
                 {
                   PaletteColorProfile *icc = profile_list->data;
 
-                  if (! strcmp (sbz_data->color_space, icc->id))
+                  if (g_str_has_suffix (icc->id, sbz_data->color_space))
                     {
                       space = gimp_color_profile_get_space (icc->profile,
                                                             GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
@@ -1899,37 +1901,21 @@ swatchbooker_load_text (GMarkupParseContext *context,
 
           /* No need for babl conversion for sRGB colors */
           if (! strcmp (sbz_data->color_model, "srgb"))
-            {
-              src_format = babl_format_with_space ("R'G'B' float", NULL);
-            }
+            src_format = babl_format_with_space ("R'G'B' float", NULL);
           else if (! strcmp (sbz_data->color_model, "rgb"))
-            {
-              src_format = babl_format_with_space ("R'G'B' float", space);
-            }
+            src_format = babl_format_with_space ("R'G'B' float", space);
           else if (! strcmp (sbz_data->color_model, "gray"))
-            {
-              src_format = babl_format_with_space ("Y' float", space);
-            }
+            src_format = babl_format_with_space ("Y' float", space);
           else if (! strcmp (sbz_data->color_model, "cmyk"))
-            {
-              src_format = babl_format_with_space ("CMYK float", space);
-            }
+            src_format = babl_format_with_space ("CMYK float", space);
           else if (! strcmp (sbz_data->color_model, "hsl"))
-            {
-              src_format = babl_format_with_space ("HSL float", space);
-            }
+            src_format = babl_format_with_space ("HSL float", space);
           else if (! strcmp (sbz_data->color_model, "hsv"))
-            {
-              src_format = babl_format_with_space ("HSV float", space);
-            }
+            src_format = babl_format_with_space ("HSV float", space);
           else if (! strcmp (sbz_data->color_model, "lab"))
-            {
-              src_format = babl_format_with_space ("CIE Lab float", space);
-            }
+            src_format = babl_format_with_space ("CIE Lab float", space);
           else if (! strcmp (sbz_data->color_model, "xyz"))
-            {
-              src_format = babl_format_with_space ("CIE XYZ float", space);
-            }
+            src_format = babl_format_with_space ("CIE XYZ float", space);
 
           if (src_format != NULL)
             {
