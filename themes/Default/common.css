@@ -57,7 +57,8 @@
 
 .view header button {
   background-color: @bg-color;
-  border: 1px solid @stronger-border-color;
+  border:           1px solid @stronger-border-color;
+  margin-right:     0px;
 }
 
 /* ListBox when used as a view. Selected items. */
@@ -601,12 +602,14 @@ GimpSpinScale button {
   border-color:     @border-color;
   border-radius:    0px 0px 0px 0px;
   box-shadow:       0px 0.5px @stronger-border-color;
+  margin-right:     0px;
 }
 
 /* Round the right-side edge of the end button */
 GimpSpinScale button:nth-child(odd) {
   border-left-width: 0px;
   border-radius:     0px 5px 5px 0px;
+  margin-right:      0px;
 }
 
 /* Checkboxes */
