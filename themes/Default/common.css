@@ -933,3 +933,13 @@ headerbar button.titlebutton, headerbar > menubar {
   padding-top: 0px;
   padding-bottom: 0px;
 }
+
+/* Toggle button for Filter dialogue */
+#merge-filter-toggle {
+  margin-right:              0px;
+  margin-left:              -14px;
+  border-top-left-radius:    0px;
+  border-bottom-left-radius: 0px;
+  padding-left:              4px;
+  padding-right:             4px;
+}

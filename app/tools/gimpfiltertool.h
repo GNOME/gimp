@@ -63,6 +63,10 @@ struct _GimpFilterTool
   GtkWidget          *region_combo;
   GtkWidget          *active_picker;
 
+
+  GtkWidget          *merge_icon;
+  GtkIconSize         icon_size;
+
   /* widget */
   GimpToolWidget     *widget;
   GimpToolWidget     *grab_widget;

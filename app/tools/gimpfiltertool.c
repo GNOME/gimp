@@ -93,6 +93,9 @@
 #include "gimp-intl.h"
 
 
+#define RESPONSE_MERGE 99
+
+
 /*  local function prototypes  */
 
 static void      gimp_filter_tool_finalize       (GObject             *object);
@@ -135,6 +138,9 @@ static void      gimp_filter_tool_cursor_update  (GimpTool            *tool,
 static void      gimp_filter_tool_options_notify (GimpTool            *tool,
                                                   GimpToolOptions     *options,
                                                   const GParamSpec    *pspec);
+static void      gimp_filter_tool_style_updated  (GimpGuiConfig       *config,
+                                                  GParamSpec          *pspec,
+                                                  GimpFilterTool      *filter_tool);
 
 static gboolean  gimp_filter_tool_can_pick_color (GimpColorTool       *color_tool,
                                                   const GimpCoords    *coords,
@@ -290,14 +296,15 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                              GimpDisplay  *display,
                              GError      **error)
 {
-  GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (tool);
-  GimpToolInfo     *tool_info   = tool->tool_info;
-  GimpGuiConfig    *config      = GIMP_GUI_CONFIG (display->gimp->config);
-  GimpImage        *image       = gimp_display_get_image (display);
-  GimpDisplayShell *shell       = gimp_display_get_shell (display);
-  GimpItem         *locked_item = NULL;
-  GList            *drawables   = gimp_image_get_selected_drawables (image);
-  GimpDrawable     *drawable    = NULL;
+  GimpFilterTool    *filter_tool = GIMP_FILTER_TOOL (tool);
+  GimpFilterOptions *options     = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+  GimpToolInfo      *tool_info   = tool->tool_info;
+  GimpGuiConfig     *config      = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpImage         *image       = gimp_display_get_image (display);
+  GimpDisplayShell  *shell       = gimp_display_get_shell (display);
+  GimpItem          *locked_item = NULL;
+  GList             *drawables   = gimp_image_get_selected_drawables (image);
+  GimpDrawable      *drawable    = NULL;
 
   if (filter_tool->existing_filter)
     {
@@ -356,6 +363,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
   if (! filter_tool->gui)
     {
+      GtkWidget *dialog;
       GtkWidget *vbox;
       GtkWidget *hbox;
       GtkWidget *toggle;
@@ -379,12 +387,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                            NULL);
 
       gimp_tool_gui_set_default_response (filter_tool->gui, GTK_RESPONSE_OK);
-
-      gimp_tool_gui_set_alternative_button_order (filter_tool->gui,
-                                                  RESPONSE_RESET,
-                                                  GTK_RESPONSE_OK,
-                                                  GTK_RESPONSE_CANCEL,
-                                                  -1);
+      dialog = gimp_tool_gui_get_dialog (filter_tool->gui);
 
       vbox = gimp_tool_gui_get_vbox (filter_tool->gui);
 
@@ -410,6 +413,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
                                            "preview", NULL);
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 
       /* Only show merge filter option if we're not editing an NDE filter or
        * applying to a layer group or layer mask */
@@ -424,8 +428,6 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                          "operation", &operation_name,
                          NULL);
 
-          gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-
           /* TODO: Once we can serialize GimpDrawable, remove so that filters with
            * aux nodes can be non-destructive */
           if (gegl_node_has_pad (filter_tool->operation, "aux")         ||
@@ -437,6 +439,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
             {
               GParamSpec  *param_spec;
               GObject     *obj = G_OBJECT (tool_info->tool_options);
+              GtkWidget   *icon;
               gchar       *tooltip;
               const gchar *disabled_reason;
               gboolean     show_merge;
@@ -444,8 +447,13 @@ gimp_filter_tool_initialize (GimpTool     *tool,
               param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (obj),
                                                          "merge-filter");
 
-              toggle =
-                gtk_check_button_new_with_mnemonic (g_param_spec_get_nick (param_spec));
+
+              toggle = gtk_toggle_button_new ();
+
+              icon = gtk_image_new_from_icon_name (GIMP_ICON_LAYER_MERGE_DOWN,
+                                                   filter_tool->icon_size);
+              gtk_container_add (GTK_CONTAINER (toggle), icon);
+              gtk_widget_set_visible (icon, TRUE);
 
               show_merge = (! gimp_item_is_vector_layer (GIMP_ITEM (drawable)) &&
                             ! gimp_item_is_text_layer (GIMP_ITEM (drawable))   &&
@@ -473,17 +481,29 @@ gimp_filter_tool_initialize (GimpTool     *tool,
             }
           else
             {
-              toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
-                                                   "merge-filter", NULL);
-            }
+              toggle = gimp_prop_toggle_new (G_OBJECT (tool_info->tool_options),
+                                             "merge-filter", GIMP_ICON_EFFECT,
+                                             NULL, &filter_tool->merge_icon);
 
-          gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+              gtk_image_set_from_icon_name (GTK_IMAGE (filter_tool->merge_icon),
+                                            options->merge_filter        ?
+                                              GIMP_ICON_LAYER_MERGE_DOWN :
+                                              GIMP_ICON_EFFECT,
+                                            filter_tool->icon_size);
+            }
+          gtk_widget_set_halign (toggle, GTK_ALIGN_START);
+          gtk_widget_set_name (toggle, "merge-filter-toggle");
+          gtk_dialog_add_action_widget (GTK_DIALOG (dialog), toggle,
+                                        RESPONSE_MERGE);
+
+          gimp_tool_gui_set_alternative_button_order (filter_tool->gui,
+                                                      RESPONSE_RESET,
+                                                      GTK_RESPONSE_OK,
+                                                      RESPONSE_MERGE,
+                                                      GTK_RESPONSE_CANCEL,
+                                                      -1);
 
           g_free (operation_name);
-        }
-      else
-        {
-          gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
         }
 
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
@@ -525,6 +545,8 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       gimp_tool_gui_set_help_id     (filter_tool->gui,
                                      gimp_tool_get_help_id (tool));
     }
+
+  gimp_filter_tool_style_updated (config, NULL, filter_tool);
 
   gimp_tool_gui_set_shell (filter_tool->gui, shell);
   gimp_tool_gui_set_viewable (filter_tool->gui, GIMP_VIEWABLE (drawable));
@@ -965,6 +987,42 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
       gimp_tool_widget_set_visible (filter_tool->widget,
                                     filter_options->controller);
     }
+}
+
+static void
+gimp_filter_tool_style_updated (GimpGuiConfig  *config,
+                                GParamSpec     *pspec,
+                                GimpFilterTool *filter_tool)
+{
+  GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+
+  filter_tool->icon_size = GTK_ICON_SIZE_MENU;
+
+  if (config->override_icon_size)
+    {
+      switch (config->custom_icon_size)
+        {
+        case GIMP_ICON_SIZE_LARGE:
+          filter_tool->icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
+          break;
+
+        case GIMP_ICON_SIZE_HUGE:
+          filter_tool->icon_size = GTK_ICON_SIZE_DND;
+          break;
+
+        case GIMP_ICON_SIZE_MEDIUM:
+        case GIMP_ICON_SIZE_SMALL:
+        default:
+          filter_tool->icon_size = GTK_ICON_SIZE_MENU;
+        }
+    }
+
+  if (filter_tool->merge_icon)
+    gtk_image_set_from_icon_name (GTK_IMAGE (filter_tool->merge_icon),
+                                  options->merge_filter        ?
+                                    GIMP_ICON_LAYER_MERGE_DOWN :
+                                    GIMP_ICON_EFFECT,
+                                  filter_tool->icon_size);
 }
 
 static gboolean
@@ -1907,7 +1965,9 @@ gimp_filter_tool_response (GimpToolGui    *gui,
                            gint            response_id,
                            GimpFilterTool *filter_tool)
 {
-  GimpTool *tool = GIMP_TOOL (filter_tool);
+  GimpTool          *tool     = GIMP_TOOL (filter_tool);
+  GimpFilterOptions *options  = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+  gboolean           merge;
 
   switch (response_id)
     {
@@ -1917,6 +1977,15 @@ gimp_filter_tool_response (GimpToolGui    *gui,
 
     case GTK_RESPONSE_OK:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
+      break;
+
+    /* Merge Filter toggle */
+    case RESPONSE_MERGE:
+      gtk_image_set_from_icon_name (GTK_IMAGE (filter_tool->merge_icon),
+                                    options->merge_filter        ?
+                                      GIMP_ICON_LAYER_MERGE_DOWN :
+                                      GIMP_ICON_EFFECT,
+                                    filter_tool->icon_size);
       break;
 
     default:
