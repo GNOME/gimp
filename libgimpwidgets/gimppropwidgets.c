@@ -404,8 +404,8 @@ gimp_prop_switch_new (GObject     *config,
  * gimp_prop_toggle_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of boolean property controlled by the toggle button.
- * @label:         Label to give the toggle (including mnemonic).
  * @icon_name:     Icon to display in the toggle.
+ * @label:         Label to give the toggle (including mnemonic).
  * @image_out: (out) (optional) (transfer none): The generated #GtkImage
  *                 if @icon_name was not %NULL.
  *
