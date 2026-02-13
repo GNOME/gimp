@@ -798,10 +798,10 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
                                               view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[LABEL_MEDIAN]), text);
 
-      g_snprintf (text, sizeof (text), "%d", (gint) pixels);
+      g_snprintf (text, sizeof (text), "%" G_GSIZE_FORMAT, (gsize) pixels);
       gtk_label_set_text (GTK_LABEL (editor->labels[LABEL_PIXELS]), text);
 
-      g_snprintf (text, sizeof (text), "%d", (gint) count);
+      g_snprintf (text, sizeof (text), "%" G_GSIZE_FORMAT, (gsize) count);
       gtk_label_set_text (GTK_LABEL (editor->labels[LABEL_COUNT]), text);
 
       g_snprintf (text, sizeof (text), "%.1f", (pixels > 0 ?
