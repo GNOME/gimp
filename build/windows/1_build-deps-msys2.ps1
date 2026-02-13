@@ -169,7 +169,7 @@ if ($env:VCPKG_ROOT)
     exit 0
   }
 self_build https://gitlab.gnome.org/GNOME/babl
-self_build https://gitlab.gnome.org/GNOME/gegl
+self_build https://gitlab.gnome.org/martymichal/gegl "wip/martymichal/opencl-simpler-symbol-loading"
 if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32')
   {
     self_build https://github.com/Exiv2/exiv2 "v0.28.7" @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DCMAKE_DLL_NAME_WITH_SOVERSION=ON', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF', '-DEXIV2_ENABLE_VIDEO=OFF')
