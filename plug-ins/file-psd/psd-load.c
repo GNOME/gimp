@@ -350,6 +350,7 @@ load_image_metadata (GFile        *file,
   img_a.image_res_len       = data_length;
   img_a.image_res_start     = 0;
   img_a.version             = 1;
+  img_a.layer_state         = 0;
   img_a.layer_selection     = NULL;
   img_a.columns             = gimp_image_get_width (image);
   img_a.rows                = gimp_image_get_height (image);
