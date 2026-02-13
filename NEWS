@@ -32,6 +32,9 @@ Core:
     out-of-gamut or grid colors, etc.
   - When merging all filters on a drawable, the inactive filters are
     ignored (and therefore are kept as-is, instead of being removed).
+  - Sample Points mode is carried over on duplicated images (not only
+    their position).
+  - Procreate swatches (.swatches) can now be imported as palettes.
 
 Tools:
 
@@ -56,6 +59,9 @@ Graphical User Interface:
     according to the theme (in particular, in dark mode, they won't show
     huge bright areas when no images are opened).
   - No outlines are shown anymore in the "Fx" column of item tree views.
+  - The Welcome dialog is not shown on start anymore if GIMP was started
+    by loading images.
+  - Histogram Editor pixels and count are now displayed in GSize range.
 
 Command Line Interface:
 
@@ -72,6 +78,8 @@ Plug-Ins:
   - JPEG2000 quality setting on export fixed.
   - XMC export updated not to modify the source image.
   - Curve Bend PDB procedure API is not bogus anymore.
+  - Gradient Flare files now support also Windows line ending.
+  - Background color restored in (script-fu-round-corners).
 
 API:
 
@@ -113,6 +121,7 @@ API:
     + GIMP_ICON_TEXTURE ("gimp-texture") is not used anymore and is
       planned for deletion in GIMP 4.
     + GimpColorScales and GimpColorSelect made introspectable.
+    + gimp_widget_get_monitor() has now a Wayland implementation.
 
 Build:
 
@@ -142,6 +151,12 @@ Build:
     Installer side images from the splash image, using a metadata file,
     along with instructions towards artists so that they have the
     ability to choose the explicit crop positions and dimensions.
+  - Third-party binary plug-ins are now supported in AppImage (if
+    compiled against the same Debian binaries used for building the
+    AppImage).
+  - The Snap package is now able to migrate config folders from non-Snap
+    older GIMP, and will store its own config outside the sandbox too,
+    from now on.
 
 
 Overview of Changes from GIMP 3.2.0 RC1 to GIMP 3.2.0 RC2
