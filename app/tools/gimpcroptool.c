@@ -25,10 +25,12 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitem.h"
+#include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -495,6 +497,18 @@ gimp_crop_tool_commit (GimpCropTool *crop_tool)
 
                   off_x -= x;
                   off_y -= y;
+
+                  /* If we have the crop tool set to allow growing and to fill
+                   * with transparency, and the crop rectangle is larger than
+                   * the layer, then we add transparency if there is none */
+                  if (options->allow_growing                                 &&
+                      (gimp_item_get_width (GIMP_ITEM (iter->data)) < w      ||
+                       gimp_item_get_width (GIMP_ITEM (iter->data)) < h)     &&
+                      options->fill_type == GIMP_FILL_TRANSPARENT            &&
+                      ! gimp_drawable_has_alpha (GIMP_DRAWABLE (iter->data)))
+                    {
+                      gimp_layer_add_alpha (GIMP_LAYER (iter->data));
+                    }
 
                   gimp_item_resize (GIMP_ITEM (iter->data),
                                     GIMP_CONTEXT (options), options->fill_type,
