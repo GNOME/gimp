@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@posteo.net>, 2003-2025
+# Marco Ciampa <ciampix@posteo.net>, 2003-2026
 # Alessandro Falappa <alessandro@falappa.net>, 2007-2008
 #
 # Convenzioni adottate per GIMP (per lo più derivate dal mondo della grafica e della fotografia italiano):
@@ -43,12 +43,15 @@
 # vector layer = livello vettoriale
 # raster = raster (invariato)
 # rasterize = rasterizzare (invariato=trasformare in formato raster, per es. da formato vettoriale)
+# clip = ritaglia
+# clipping = ritaglio
+# XXX clip = ritaglio XXX
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-03 09:35+0100\n"
-"PO-Revision-Date: 2026-02-03 09:39+0100\n"
+"POT-Creation-Date: 2026-02-14 16:58+0100\n"
+"PO-Revision-Date: 2026-02-14 17:00+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -108,12 +111,12 @@ msgstr ""
 "Se così non fosse, vedere https://www.gnu.org/licenses/."
 
 #. TRANSLATORS: title for info message in terminal window
-#: ../app/app.c:541
+#: ../app/app.c:545
 msgid "INFO"
 msgstr "INFO"
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: ../app/app.c:543
+#: ../app/app.c:547
 msgid ""
 "GIMP is now running as a background process. You can quit anytime with Ctrl-"
 "C (SIGINT)."
@@ -122,7 +125,7 @@ msgstr ""
 "Ctrl-C (SIGINT)."
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: ../app/app.c:546
+#: ../app/app.c:550
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Se invece si desidera uscire immediatamente, chiamare GIMP con --quit."
 
@@ -442,7 +445,7 @@ msgstr "Modifica preimpostazioni strumento"
 msgid "Help"
 msgstr "Aiuto"
 
-#: ../app/actions/actions.c:192 ../app/core/gimpimage.c:604
+#: ../app/actions/actions.c:192 ../app/core/gimpimage.c:614
 msgid "Image"
 msgstr "Immagine"
 
@@ -2554,7 +2557,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:115 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2441
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2451
 #: ../app/core/gimppalette.c:582 ../app/core/gimppalette-import.c:223
 #: ../app/dialogs/palette-import-dialog.c:776 ../app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -6035,7 +6038,7 @@ msgid "Set Image Print Resolution"
 msgstr "Imposta risoluzione di stampa immagine"
 
 #: ../app/actions/image-commands.c:825 ../app/pdb/item-transform-cmds.c:214
-#: ../app/tools/gimpfliptool.c:136
+#: ../app/tools/gimpfliptool.c:140
 msgid "Flipping"
 msgstr "Riflessione"
 
@@ -6631,12 +6634,12 @@ msgstr "Modalità composita livello: Unione"
 #: ../app/actions/layers-actions.c:394
 msgctxt "layers-action"
 msgid "Clip to Backdrop"
-msgstr "Ritaglio allo sfondo"
+msgstr "Ritaglia allo sfondo"
 
 #: ../app/actions/layers-actions.c:395
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Backdrop"
-msgstr "Modalità composita livello: Ritaglio allo sfondo"
+msgstr "Modalità composita livello: Ritaglia alla sfondo"
 
 #: ../app/actions/layers-actions.c:400
 msgctxt "layers-action"
@@ -6646,7 +6649,7 @@ msgstr "Ritaglia al livello"
 #: ../app/actions/layers-actions.c:401
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Layer"
-msgstr "Modalità composita livello: Ritaglio al livello"
+msgstr "Modalità composita livello: Ritaglia al livello"
 
 #: ../app/actions/layers-actions.c:406
 msgctxt "layers-action"
@@ -13847,7 +13850,7 @@ msgstr "Riordina filtro"
 msgid "Rasterize filters"
 msgstr "Rasterizza filtri"
 
-#: ../app/core/gimpdrawable-filters.c:356
+#: ../app/core/gimpdrawable-filters.c:357
 msgid "Merge filter"
 msgstr "Fondi filtro"
 
@@ -13871,7 +13874,7 @@ msgstr "Spostamento area disegnabile"
 msgid "Not enough points to stroke"
 msgstr "Non ci sono abbastanza punti da tracciare"
 
-#: ../app/core/gimpdrawable-transform.c:804 ../app/tools/gimpfliptool.c:135
+#: ../app/core/gimpdrawable-transform.c:804 ../app/tools/gimpfliptool.c:139
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Rifletti"
@@ -14141,150 +14144,150 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Trasforma gruppo di livelli"
 
-#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:183
+#: ../app/core/gimpimage.c:701 ../app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "Simmetria"
 
-#: ../app/core/gimpimage.c:2076 ../app/pdb/drawable-filter-cmds.c:713
-#: ../app/widgets/gimpdrawabletreeview-filters.c:784
+#: ../app/core/gimpimage.c:2086 ../app/pdb/drawable-filter-cmds.c:713
+#: ../app/widgets/gimpdrawabletreeview-filters.c:794
 msgid "Remove filter"
 msgstr "Rimuovi filtro"
 
-#: ../app/core/gimpimage.c:2686
+#: ../app/core/gimpimage.c:2696
 msgid " (exported)"
 msgstr " (esportata)"
 
-#: ../app/core/gimpimage.c:2690
+#: ../app/core/gimpimage.c:2700
 msgid " (overwritten)"
 msgstr " (sovrascritta)"
 
-#: ../app/core/gimpimage.c:2699
+#: ../app/core/gimpimage.c:2709
 msgid " (imported)"
 msgstr " (importata)"
 
-#: ../app/core/gimpimage.c:2873 ../app/core/gimpimage.c:2887
-#: ../app/core/gimpimage.c:2930
+#: ../app/core/gimpimage.c:2883 ../app/core/gimpimage.c:2897
+#: ../app/core/gimpimage.c:2940
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Modalità di livello '%s' aggiunta in %s"
 
-#: ../app/core/gimpimage.c:2951
+#: ../app/core/gimpimage.c:2961
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Gruppi livello aggiunti in %s"
 
-#: ../app/core/gimpimage.c:2958
+#: ../app/core/gimpimage.c:2968
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maschere su gruppi livello aggiunte in %s"
 
-#: ../app/core/gimpimage.c:2965
+#: ../app/core/gimpimage.c:2975
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Blocchi posizionali su gruppi livello aggiunti in %s"
 
-#: ../app/core/gimpimage.c:2972
+#: ../app/core/gimpimage.c:2982
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Blocchi canale alfa su gruppi livello aggiunti in %s"
 
-#: ../app/core/gimpimage.c:2980 ../app/core/gimpimage.c:3047
+#: ../app/core/gimpimage.c:2990 ../app/core/gimpimage.c:3057
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Blocchi di visibilità aggiunti in %s"
 
-#: ../app/core/gimpimage.c:2991
+#: ../app/core/gimpimage.c:3001
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Formato informazioni del font nel livello testo cambiate in %s"
 
-#: ../app/core/gimpimage.c:2999
+#: ../app/core/gimpimage.c:3009
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Livelli effetto aggiunti in %s"
 
-#: ../app/core/gimpimage.c:3011
+#: ../app/core/gimpimage.c:3021
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Nuovo spazio di fusione percettivo aggiunto in %s"
 
-#: ../app/core/gimpimage.c:3025
+#: ../app/core/gimpimage.c:3035
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "Livelli vettoriali aggiunti in %s"
 
-#: ../app/core/gimpimage.c:3033
+#: ../app/core/gimpimage.c:3043
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "Gruppi livello aggiunti in %s"
 
-#: ../app/core/gimpimage.c:3056
+#: ../app/core/gimpimage.c:3066
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Selezione di tracciati multipli aggiunta in %s"
 
-#: ../app/core/gimpimage.c:3068
+#: ../app/core/gimpimage.c:3078
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Memorizzazione marcature colore nei tracciati aggiunta in %s"
 
-#: ../app/core/gimpimage.c:3075
+#: ../app/core/gimpimage.c:3085
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Memorizzazione blocchi nei tracciati aggiunta in %s"
 
-#: ../app/core/gimpimage.c:3089
+#: ../app/core/gimpimage.c:3099
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Immagini ad alta profondità di colore aggiunte in %s"
 
-#: ../app/core/gimpimage.c:3097
+#: ../app/core/gimpimage.c:3107
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Codifica immagini ad alta profondità di colore sistemata in %s"
 
-#: ../app/core/gimpimage.c:3105
+#: ../app/core/gimpimage.c:3115
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "La compressione interna zlib è stata aggiunta in %s"
 
-#: ../app/core/gimpimage.c:3122
+#: ../app/core/gimpimage.c:3132
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Supporto per file immagine più grandi di 4GB aggiunto in %s"
 
-#: ../app/core/gimpimage.c:3129
+#: ../app/core/gimpimage.c:3139
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Selezione di livelli multipli aggiunta in %s"
 
-#: ../app/core/gimpimage.c:3146
+#: ../app/core/gimpimage.c:3156
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Guide fuori area di disegno aggiunte in %s"
 
-#: ../app/core/gimpimage.c:3157
+#: ../app/core/gimpimage.c:3167
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "Set elementi e ricerca del modello del nome dell'elemento aggiunti in %s"
 
-#: ../app/core/gimpimage.c:3163
+#: ../app/core/gimpimage.c:3173
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Selezione di canali multipli aggiunta in %s"
 
-#: ../app/core/gimpimage.c:3283
+#: ../app/core/gimpimage.c:3293
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambia risoluzione immagine"
 
-#: ../app/core/gimpimage.c:3335
+#: ../app/core/gimpimage.c:3345
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambia unità immagine"
 
-#: ../app/core/gimpimage.c:4388
+#: ../app/core/gimpimage.c:4402
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14292,47 +14295,47 @@ msgstr ""
 "validazione parassita 'gimp-comment' fallita: il commento contiene UTF-8 non "
 "valido"
 
-#: ../app/core/gimpimage.c:4450
+#: ../app/core/gimpimage.c:4464
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Allega parassita all'immagine"
 
-#: ../app/core/gimpimage.c:4495
+#: ../app/core/gimpimage.c:4509
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Rimuovi parassita dall'immagine"
 
-#: ../app/core/gimpimage.c:5468
+#: ../app/core/gimpimage.c:5482
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Aggiungi livello"
 
-#: ../app/core/gimpimage.c:5523 ../app/core/gimpimage.c:5554
+#: ../app/core/gimpimage.c:5537 ../app/core/gimpimage.c:5568
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Rimuovi livello"
 
-#: ../app/core/gimpimage.c:5548
+#: ../app/core/gimpimage.c:5562
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Rimuovi selezione fluttuante"
 
-#: ../app/core/gimpimage.c:5704
+#: ../app/core/gimpimage.c:5718
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:5734 ../app/core/gimpimage.c:5759
+#: ../app/core/gimpimage.c:5748 ../app/core/gimpimage.c:5773
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:5819
+#: ../app/core/gimpimage.c:5833
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Aggiungi tracciato"
 
-#: ../app/core/gimpimage.c:5854 ../app/core/gimpimage.c:5862
+#: ../app/core/gimpimage.c:5868 ../app/core/gimpimage.c:5876
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Rimuovi tracciato"
@@ -14562,7 +14565,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "Impossibile fondere in un gruppo di livelli."
 
 #: ../app/core/gimpimage-merge.c:362
-#: ../app/widgets/gimpdrawabletreeview-filters.c:758
+#: ../app/widgets/gimpdrawabletreeview-filters.c:765
 msgid "The layer to merge down to is locked."
 msgstr "Il livello da fondere in basso è bloccato."
 
@@ -14687,7 +14690,7 @@ msgstr "Impossibile aprire la miniatura '%s': %s."
 #: ../app/core/gimpitem.c:1858 ../app/core/gimpitem.c:1925
 #: ../app/display/gimpdisplayshell-dnd.c:384
 #: ../app/tools/gimptransformtool.c:730
-#: ../app/widgets/gimpdrawabletreeview-filters.c:630
+#: ../app/widgets/gimpdrawabletreeview-filters.c:635
 msgid "A selected layer's pixels are locked."
 msgstr "I pixel di un livello selezionato sono bloccati."
 
@@ -15011,27 +15014,27 @@ msgstr "Modifica la restrizione formato mappa colori"
 msgid "%s (occurs %u)"
 msgstr "%s (%u ricorrenze)"
 
-#: ../app/core/gimppalette-import.c:573
+#: ../app/core/gimppalette-import.c:577
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Tipo file tavolozza sconosciuto: %s"
 
-#: ../app/core/gimppalette-load.c:116
+#: ../app/core/gimppalette-load.c:119
 #, c-format
 msgid "Missing magic header."
 msgstr "Magic header mancante."
 
-#: ../app/core/gimppalette-load.c:139
+#: ../app/core/gimppalette-load.c:142
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Stringa UTF-8 non valida nel file tavolozza '%s'"
 
-#: ../app/core/gimppalette-load.c:159
+#: ../app/core/gimppalette-load.c:162
 #, c-format
 msgid "Invalid column count."
 msgstr "Conteggio colonne non valido."
 
-#: ../app/core/gimppalette-load.c:166
+#: ../app/core/gimppalette-load.c:169
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -15040,150 +15043,151 @@ msgstr ""
 "Lettura file tavolozza '%s': numero di colonne non valido alla riga %d. Uso "
 "il valore predefinito."
 
-#: ../app/core/gimppalette-load.c:203
+#: ../app/core/gimppalette-load.c:206
 #, c-format
 msgid "Reading palette file '%s': red component out of range in line %d."
 msgstr ""
 "Lettura file tavolozza '%s': componente rossa fuori campo alla riga %d."
 
-#: ../app/core/gimppalette-load.c:211
+#: ../app/core/gimppalette-load.c:214
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Lettura file tavolozza '%s': manca la componente ROSSA alla riga %d."
 
-#: ../app/core/gimppalette-load.c:220
+#: ../app/core/gimppalette-load.c:223
 #, c-format
 msgid "Reading palette file '%s': green component out of range in line %d."
 msgstr "Lettura file tavolozza '%s': valori RGB fuori campo alla riga %d."
 
-#: ../app/core/gimppalette-load.c:228
+#: ../app/core/gimppalette-load.c:231
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "Lettura file tavolozza '%s': manca la componente VERDE alla riga %d."
 
-#: ../app/core/gimppalette-load.c:237
+#: ../app/core/gimppalette-load.c:240
 #, c-format
 msgid "Reading palette file '%s': blue component out of range in line %d."
 msgstr "Lettura file tavolozza '%s': componente blu fuori campo alla riga %d."
 
-#: ../app/core/gimppalette-load.c:245
+#: ../app/core/gimppalette-load.c:248
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Lettura file tavolozza '%s': manca la componente BLU alla riga %d."
 
-#: ../app/core/gimppalette-load.c:267 ../app/core/gimppalette-load.c:523
+#: ../app/core/gimppalette-load.c:270 ../app/core/gimppalette-load.c:526
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr "Lettura file tavolozza '%s': letti %d colori da file troncato: %s."
 
-#: ../app/core/gimppalette-load.c:287
+#: ../app/core/gimppalette-load.c:290
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "Alla riga %d del file tavolozza: "
 
-#: ../app/core/gimppalette-load.c:494 ../app/core/gimppalette-load.c:699
-#: ../app/core/gimppalette-load.c:1046
+#: ../app/core/gimppalette-load.c:497 ../app/core/gimppalette-load.c:702
+#: ../app/core/gimppalette-load.c:1049 ../app/core/gimppalette-load.c:1531
+#: ../app/core/gimppalette-load.c:1552
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Impossibile leggere l'intestazione dal file tavolozza '%s': "
 
-#: ../app/core/gimppalette-load.c:528
+#: ../app/core/gimppalette-load.c:531
 msgid "Premature end of file."
 msgstr "Fine file prematura."
 
-#: ../app/core/gimppalette-load.c:709
+#: ../app/core/gimppalette-load.c:712
 #, c-format
 msgid "Invalid ACB palette version."
 msgstr "Versione tavolozza ACB non valida."
 
-#: ../app/core/gimppalette-load.c:716
+#: ../app/core/gimppalette-load.c:719
 #, c-format
 msgid "GIMP only supports version 1 ACB palettes"
 msgstr "GIMP supporta solo tavolozze ACB versione 1"
 
-#: ../app/core/gimppalette-load.c:724
+#: ../app/core/gimppalette-load.c:727
 #, c-format
 msgid "Invalid ACB palette identifier."
 msgstr "Identificatore tavolozza ACB non valido."
 
-#: ../app/core/gimppalette-load.c:740 ../app/core/gimppalette-load.c:759
-#: ../app/core/gimppalette-load.c:979 ../app/core/gimppalette-load.c:1000
+#: ../app/core/gimppalette-load.c:743 ../app/core/gimppalette-load.c:762
+#: ../app/core/gimppalette-load.c:982 ../app/core/gimppalette-load.c:1003
 #, c-format
 msgid "Invalid ACB palette name."
 msgstr "Nome tavolozza ACB non valido."
 
-#: ../app/core/gimppalette-load.c:775
+#: ../app/core/gimppalette-load.c:778
 #, c-format
 msgid "Invalid ACB palette suffix."
 msgstr "Suffisso tavolozza ACB non valido."
 
-#: ../app/core/gimppalette-load.c:794 ../app/core/gimppalette-load.c:1066
+#: ../app/core/gimppalette-load.c:797 ../app/core/gimppalette-load.c:1069
 #, c-format
 msgid "Invalid number of colors in palette."
 msgstr "Numero di colori nella tavolozza non valido."
 
-#: ../app/core/gimppalette-load.c:801 ../app/core/gimppalette-load.c:1073
+#: ../app/core/gimppalette-load.c:804 ../app/core/gimppalette-load.c:1076
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "Numero di colori non valido: %s."
 
-#: ../app/core/gimppalette-load.c:814 ../app/core/gimppalette-load.c:824
+#: ../app/core/gimppalette-load.c:817 ../app/core/gimppalette-load.c:827
 #, c-format
 msgid "Invalid ACB palette page info."
 msgstr "Informazioni pagina tavolozza ACB non valide."
 
-#: ../app/core/gimppalette-load.c:836 ../app/core/gimppalette-load.c:849
+#: ../app/core/gimppalette-load.c:839 ../app/core/gimppalette-load.c:852
 #, c-format
 msgid "Invalid ACB palette color space."
 msgstr "Spazio colore tavolozza ACB non valido."
 
-#: ../app/core/gimppalette-load.c:989
+#: ../app/core/gimppalette-load.c:992
 #, c-format
 msgid "Invalid ACB name size."
 msgstr "Dimensione nome ACB non valida."
 
-#: ../app/core/gimppalette-load.c:1057
+#: ../app/core/gimppalette-load.c:1060
 #, c-format
 msgid "Invalid ASE header: %s"
 msgstr "Intestazione ASE non valida: %s"
 
-#: ../app/core/gimppalette-load.c:1084
+#: ../app/core/gimppalette-load.c:1087
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "File ASE non valido: %s."
 
-#: ../app/core/gimppalette-load.c:1175
+#: ../app/core/gimppalette-load.c:1178
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "Componenti colore non validi: %s."
 
-#: ../app/core/gimppalette-load.c:1187 ../app/core/gimppalette-load.c:1212
+#: ../app/core/gimppalette-load.c:1190 ../app/core/gimppalette-load.c:1215
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "Voce colore ASE non valida: %s."
 
-#: ../app/core/gimppalette-load.c:1244 ../app/core/gimppalette-load.c:1260
-#: ../app/core/gimppalette-load.c:1279
+#: ../app/core/gimppalette-load.c:1247 ../app/core/gimppalette-load.c:1263
+#: ../app/core/gimppalette-load.c:1282
 #, c-format
 msgid "Invalid ASE palette name."
 msgstr "Nome tavolozza ASE non valido."
 
-#: ../app/core/gimppalette-load.c:1253
+#: ../app/core/gimppalette-load.c:1256
 #, c-format
 msgid "Invalid ASE block size."
 msgstr "Dimensione blocco ASE non valida."
 
-#: ../app/core/gimppalette-load.c:1269
+#: ../app/core/gimppalette-load.c:1272
 #, c-format
 msgid "Invalid ASE name size."
 msgstr "Dimensione nome ASE non valida."
 
-#: ../app/core/gimppalette-load.c:1398
+#: ../app/core/gimppalette-load.c:1402
 #, c-format
 msgid "Unable to read SBZ file"
 msgstr "Impossibile leggere file SBZ"
 
-#: ../app/core/gimppalette-load.c:1462
+#: ../app/core/gimppalette-load.c:1467
 #, c-format
 msgid "Unable to open SBZ file"
 msgstr "Impossibile aprire file SBZ"
@@ -16424,7 +16428,10 @@ msgstr "Configura i tasti scorciatoia"
 msgid ""
 "To edit a shortcut key, select the corresponding row, click on its \"%s\" "
 "column and type a new accelerator, or press backspace to clear."
-msgstr "Per modificare un tasto, selezionare la riga corrispondente, fare clic sulla sua colonna \"%s\" e premere il nuovo tasto acceleratore oppure premere il tasto di cancellazione per azzerare."
+msgstr ""
+"Per modificare un tasto, selezionare la riga corrispondente, fare clic sulla "
+"sua colonna \"%s\" e premere il nuovo tasto acceleratore oppure premere il "
+"tasto di cancellazione per azzerare."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:87
 #: ../app/widgets/gimpactionview.c:293
@@ -16786,7 +16793,7 @@ msgstr "Cascading Style Sheet (*.css)"
 msgid "JASC or RIFF Palette (*.pal)"
 msgstr "Tavolozza RIFF o JASC (*.pal)"
 
-#: ../app/dialogs/palette-import-dialog.c:952
+#: ../app/dialogs/palette-import-dialog.c:958
 msgid "SwatchBooker (*.sbz)"
 msgstr "SwatchBooker (*.sbz)"
 
@@ -17945,17 +17952,17 @@ msgstr "Risoluzione monitor"
 
 #. Pixels
 #: ../app/dialogs/preferences-dialog.c:2846 ../app/display/gimpcursorview.c:224
-#: ../app/widgets/gimpgrideditor.c:205 ../app/widgets/gimpgrideditor.c:240
+#: ../app/widgets/gimpgrideditor.c:207 ../app/widgets/gimpgrideditor.c:242
 msgid "Pixels"
 msgstr "Pixel"
 
-#: ../app/dialogs/preferences-dialog.c:2864 ../app/widgets/gimpgrideditor.c:201
-#: ../app/widgets/gimpgrideditor.c:236
+#: ../app/dialogs/preferences-dialog.c:2864 ../app/widgets/gimpgrideditor.c:203
+#: ../app/widgets/gimpgrideditor.c:238
 msgid "Horizontal"
 msgstr "Orizzontale"
 
-#: ../app/dialogs/preferences-dialog.c:2866 ../app/widgets/gimpgrideditor.c:203
-#: ../app/widgets/gimpgrideditor.c:238
+#: ../app/dialogs/preferences-dialog.c:2866 ../app/widgets/gimpgrideditor.c:205
+#: ../app/widgets/gimpgrideditor.c:240
 msgid "Vertical"
 msgstr "Verticale"
 
@@ -18619,7 +18626,7 @@ msgstr ""
 #: ../app/operations/gimpoperationoffset.c:119
 #: ../app/tools/gimpgradientoptions.c:89 ../app/tools/gimpoffsettool.c:130
 #: ../app/tools/gimpoffsettool.c:472 ../app/tools/gimptransform3dtool.c:342
-#: ../app/widgets/gimpgrideditor.c:214
+#: ../app/widgets/gimpgrideditor.c:216
 msgid "Offset"
 msgstr "Scostamento"
 
@@ -19333,7 +19340,7 @@ msgstr "Impossibile modificare i pixel dei gruppi livelli."
 
 #: ../app/display/gimpdisplayshell-dnd.c:394 ../app/tools/gimpfiltertool.c:340
 #: ../app/tools/gimppainttool.c:355 ../app/tools/gimptransformtool.c:739
-#: ../app/widgets/gimpdrawabletreeview-filters.c:623
+#: ../app/widgets/gimpdrawabletreeview-filters.c:628
 msgid "A selected layer is not visible."
 msgstr "Il livello selezionato non è visibile."
 
@@ -20235,12 +20242,12 @@ msgstr "Unione"
 #: ../app/operations/operations-enums.c:64
 msgctxt "layer-composite-mode"
 msgid "Clip to backdrop"
-msgstr "Ritaglio allo sfondo"
+msgstr "Ritaglia allo sfondo"
 
 #: ../app/operations/operations-enums.c:65
 msgctxt "layer-composite-mode"
 msgid "Clip to layer"
-msgstr "Ritaglio al livello"
+msgstr "Ritaglia al livello"
 
 #: ../app/operations/operations-enums.c:66
 msgctxt "layer-composite-mode"
@@ -20809,7 +20816,8 @@ msgstr "Lineare"
 #: ../app/operations/gimpcurvesconfig.c:119
 #: ../app/operations/gimplevelsconfig.c:125
 msgid "Work on linear RGB (this property is ignored; use \"trc\" instead)"
-msgstr "Lavora su RGB lineare (questa proprietà viene ignorata; usare invece \"trc\")"
+msgstr ""
+"Lavora su RGB lineare (questa proprietà viene ignorata; usare invece \"trc\")"
 
 #: ../app/operations/gimpcurvesconfig.c:125
 #: ../app/operations/gimplevelsconfig.c:131
@@ -21344,7 +21352,7 @@ msgstr "Rapporto proporzioni"
 #: ../app/paint/gimppaintoptions.c:234 ../app/tools/gimpwarpoptions.c:113
 #: ../app/widgets/gimpbrusheditor.c:210
 #: ../app/widgets/gimpbrushfactoryview.c:102
-#: ../app/widgets/gimpgrideditor.c:179
+#: ../app/widgets/gimpgrideditor.c:181
 msgid "Spacing"
 msgstr "Spaziatura"
 
@@ -23844,40 +23852,40 @@ msgstr "Riempi con"
 msgid "How to fill new areas created by 'Allow growing'"
 msgstr "Come riempire le nuove aree create da \"Permetti la crescita\""
 
-#: ../app/tools/gimpcroptool.c:122
+#: ../app/tools/gimpcroptool.c:124
 msgid "Crop"
 msgstr "Ritaglia"
 
-#: ../app/tools/gimpcroptool.c:123
+#: ../app/tools/gimpcroptool.c:125
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr ""
 "Strumento ritaglia: elimina le aree di contorno dall'immagine o dal livello"
 
-#: ../app/tools/gimpcroptool.c:124
+#: ../app/tools/gimpcroptool.c:126
 msgid "_Crop"
 msgstr "Rita_glia"
 
-#: ../app/tools/gimpcroptool.c:162
+#: ../app/tools/gimpcroptool.c:164
 msgid "Click-Drag to draw a crop rectangle"
 msgstr "Fare clic e trascinare per ritagliare un rettangolo"
 
-#: ../app/tools/gimpcroptool.c:287
+#: ../app/tools/gimpcroptool.c:289
 msgid "Click or press Enter to crop"
 msgstr "Fare clic o premere invio per ritagliare"
 
-#: ../app/tools/gimpcroptool.c:399
+#: ../app/tools/gimpcroptool.c:401
 msgid "Crop to: "
 msgstr "Ritaglia a: "
 
-#: ../app/tools/gimpcroptool.c:469
+#: ../app/tools/gimpcroptool.c:471
 msgid "There are no selected layers to crop."
 msgstr "Non ci sono livelli selezionati da tagliare."
 
-#: ../app/tools/gimpcroptool.c:480
+#: ../app/tools/gimpcroptool.c:482
 msgid "All selected layers' pixels are locked."
 msgstr "Tutti pixel dei livelli attivi sono bloccati."
 
-#: ../app/tools/gimpcroptool.c:485
+#: ../app/tools/gimpcroptool.c:487
 #, c-format
 msgid "Resize Layer"
 msgid_plural "Resize %d layers"
@@ -24114,19 +24122,19 @@ msgid "Disabled because this filter depends on another image."
 msgstr "Disabilitato perché questo filtro dipende da un'altra immagine."
 
 #: ../app/tools/gimpfiltertool.c:459
-#: ../app/widgets/gimpdrawabletreeview-filters.c:484
+#: ../app/widgets/gimpdrawabletreeview-filters.c:489
 msgid "Disabled because filters cannot be merged on vector layers."
 msgstr ""
 "Disabilitato perché i filtri non possono essere fusi su livelli vettoriali."
 
 #: ../app/tools/gimpfiltertool.c:461
-#: ../app/widgets/gimpdrawabletreeview-filters.c:487
+#: ../app/widgets/gimpdrawabletreeview-filters.c:492
 msgid "Disabled because filters cannot be merged on link layers."
 msgstr ""
 "Disabilitato perché i filtri non possono essere fusi su livelli collegati."
 
 #: ../app/tools/gimpfiltertool.c:463
-#: ../app/widgets/gimpdrawabletreeview-filters.c:490
+#: ../app/widgets/gimpdrawabletreeview-filters.c:495
 msgid "Disabled because filters cannot be merged on text layers."
 msgstr "Disabilitato perché i filtri non possono essere fusi su livelli testo."
 
@@ -24209,27 +24217,27 @@ msgstr "Direzione della riflessione"
 msgid "Direction  (%s)"
 msgstr "Direzione (%s)"
 
-#: ../app/tools/gimpfliptool.c:109
+#: ../app/tools/gimpfliptool.c:112
 msgid "Flip"
 msgstr "Rifletti"
 
-#: ../app/tools/gimpfliptool.c:110
+#: ../app/tools/gimpfliptool.c:113
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
 "Strumento rifletti: ribalta il livello, la selezione o il tracciato "
 "orizzontalmente o verticalmente"
 
-#: ../app/tools/gimpfliptool.c:112
+#: ../app/tools/gimpfliptool.c:115
 msgid "_Flip"
 msgstr "Ri_fletti"
 
-#: ../app/tools/gimpfliptool.c:310
+#: ../app/tools/gimpfliptool.c:348
 msgctxt "undo-type"
 msgid "Flip horizontally"
 msgstr "Rifletti orizzontalmente"
 
-#: ../app/tools/gimpfliptool.c:313
+#: ../app/tools/gimpfliptool.c:351
 msgctxt "undo-type"
 msgid "Flip vertically"
 msgstr "Rifletti verticalmente"
@@ -28090,8 +28098,8 @@ msgid "Lower filter one step down in the stack."
 msgstr "Abbassa il filtro di una posizione nella pila."
 
 #: ../app/widgets/gimpdrawabletreeview-filters.c:263
-#: ../app/widgets/gimpdrawabletreeview-filters.c:498
-#: ../app/widgets/gimpdrawabletreeview-filters.c:508
+#: ../app/widgets/gimpdrawabletreeview-filters.c:503
+#: ../app/widgets/gimpdrawabletreeview-filters.c:513
 msgid "Merge all active filters down."
 msgstr "Fondi in basso tutti i filtri attivi."
 
@@ -28099,8 +28107,8 @@ msgstr "Fondi in basso tutti i filtri attivi."
 msgid "Remove the selected filter."
 msgstr "Rimuovo il filtro selezionato."
 
-#: ../app/widgets/gimpdrawabletreeview-filters.c:689
-#: ../app/widgets/gimpdrawabletreeview-filters.c:715
+#: ../app/widgets/gimpdrawabletreeview-filters.c:694
+#: ../app/widgets/gimpdrawabletreeview-filters.c:720
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Impossibile riordinare un filtro in fase di modifica."
 
@@ -28308,15 +28316,15 @@ msgstr "_Stile linea:"
 msgid "Change grid foreground color"
 msgstr "Cambia il colore di primo piano della griglia"
 
-#: ../app/widgets/gimpgrideditor.c:160
+#: ../app/widgets/gimpgrideditor.c:161
 msgid "_Foreground color:"
 msgstr "Colore di _primo piano:"
 
-#: ../app/widgets/gimpgrideditor.c:164
+#: ../app/widgets/gimpgrideditor.c:165
 msgid "Change grid background color"
 msgstr "Cambia il colore di sfondo della griglia"
 
-#: ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpgrideditor.c:176
 msgid "_Background color:"
 msgstr "Colore di _sfondo:"
 

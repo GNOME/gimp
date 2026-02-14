@@ -10,12 +10,15 @@
 # brush pipe = pennelli animati
 # frame = fotogramma
 # hot spot = punto attivo
+# clip = ritaglia
+# clipping = ritaglio
+# XXX clip = ritaglio XXX
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-02 17:21+0100\n"
-"PO-Revision-Date: 2026-02-08 23:33+0100\n"
+"PO-Revision-Date: 2026-02-14 16:40+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
