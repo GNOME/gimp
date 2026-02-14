@@ -39,6 +39,7 @@
 #include "core/gimpdrawablefilter.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
+#include "core/gimpprojection.h"
 #include "core/gimp-palettes.h"
 #include "core/gimpimage-pick-item.h"
 #include "core/gimpimage-undo.h"
@@ -441,6 +442,14 @@ gimp_text_tool_button_press (GimpTool            *tool,
 
       text_tool->selecting = FALSE;
 
+      if (text_tool->moving && text_tool->layer)
+        {
+          GimpItem *item = GIMP_ITEM (text_tool->layer);
+
+          text_tool->move_start_x = gimp_item_get_offset_x (item);
+          text_tool->move_start_y = gimp_item_get_offset_y (item);
+        }
+
       if (gimp_tool_rectangle_point_in_rectangle (rectangle,
                                                   coords->x,
                                                   coords->y) &&
@@ -648,8 +657,24 @@ gimp_text_tool_button_release (GimpTool              *tool,
     }
   else if (text_tool->moving)
     {
-      /*  the user has moved the text layer with Alt-drag, fall
-       *  through and let rectangle-change-complete do its job of
+      if (release_type == GIMP_BUTTON_RELEASE_CANCEL &&
+          text_tool->layer)
+        {
+          /*  the user has canceled the move, restore the layer to
+           *  its original position.
+           */
+          GimpItem  *item  = GIMP_ITEM (text_tool->layer);
+          GimpImage *image = gimp_item_get_image (item);
+
+          gimp_item_translate (item,
+                               text_tool->move_start_x - gimp_item_get_offset_x (item),
+                               text_tool->move_start_y - gimp_item_get_offset_y (item),
+                               FALSE);
+
+          gimp_projection_flush (gimp_image_get_projection (image));
+        }
+
+      /*  fall through and let rectangle-change-complete do its job of
        *  setting text layer's new position.
        */
     }
@@ -729,6 +754,25 @@ gimp_text_tool_motion (GimpTool         *tool,
         {
           gimp_tool_widget_motion (text_tool->grab_widget,
                                    coords, time, state);
+        }
+
+      if (text_tool->moving && text_tool->layer)
+        {
+          GimpItem  *item  = GIMP_ITEM (text_tool->layer);
+          GimpImage *image = gimp_item_get_image (item);
+          gdouble    x1, y1;
+
+          g_object_get (text_tool->widget,
+                        "x1", &x1,
+                        "y1", &y1,
+                        NULL);
+
+          gimp_item_translate (item,
+                               (gint) x1 - gimp_item_get_offset_x (item),
+                               (gint) y1 - gimp_item_get_offset_y (item),
+                               FALSE);
+
+          gimp_projection_flush (gimp_image_get_projection (image));
         }
     }
   else
@@ -1222,6 +1266,28 @@ gimp_text_tool_rectangle_change_complete (GimpToolRectangle *rectangle,
 
           if (push_undo)
             gimp_image_undo_group_end (text_tool->image);
+        }
+      else if (text_tool->moving &&
+               ((gint) x1 != text_tool->move_start_x ||
+                (gint) y1 != text_tool->move_start_y))
+        {
+          gimp_text_tool_block_drawing (text_tool);
+
+          gimp_item_translate (item,
+                               text_tool->move_start_x - gimp_item_get_offset_x (item),
+                               text_tool->move_start_y - gimp_item_get_offset_y (item),
+                               FALSE);
+
+          gimp_text_tool_apply (text_tool, TRUE);
+
+          gimp_item_translate (item,
+                               (gint) x1 - gimp_item_get_offset_x (item),
+                               (gint) y1 - gimp_item_get_offset_y (item),
+                               TRUE);
+
+          gimp_text_tool_unblock_drawing (text_tool);
+
+          gimp_image_flush (text_tool->image);
         }
       else if (x1 != gimp_item_get_offset_x (item) ||
                y1 != gimp_item_get_offset_y (item))
