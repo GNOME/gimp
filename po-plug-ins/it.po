@@ -9,12 +9,15 @@
 # chunk = spezzone
 # brush pipe = pennelli animati
 # hot spot = punto attivo
+# clip = ritaglia
+# clipping = ritaglio
+# XXX clip = ritaglio XXX
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-09 00:03+0100\n"
-"PO-Revision-Date: 2026-02-09 00:14+0100\n"
+"PO-Revision-Date: 2026-02-14 16:56+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
