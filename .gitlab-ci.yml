@@ -159,11 +159,9 @@ deps-debian-nonreloc:
     # Install deps
     - echo "FROM debian:${DEB_VERSION}" > Dockerfile
     - echo "WORKDIR $CI_PROJECT_DIR" >> Dockerfile
-    - echo "RUN apt-get update -qq" >> Dockerfile
     ## 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
-    - echo "RUN apt-get install -qq -y --no-install-recommends ca-certificates" >> Dockerfile
+    - echo "RUN apt-get update -qq && apt-get install -qq -y --no-install-recommends ca-certificates \\" >> Dockerfile
     ## Build-time only dependencies
-    - echo "RUN apt-get install -qq -y --no-install-recommends \\" >> Dockerfile
     - echo "${TOOLCHAIN:-build-essential}
             appstream
             bison
@@ -175,9 +173,8 @@ deps-debian-nonreloc:
             libgtk-3-bin
             meson
             valac
-            xsltproc" >> Dockerfile
+            xsltproc \\" >> Dockerfile
     ## Runtime dependencies
-    - echo "RUN apt-get install -qq -y --no-install-recommends \\" >> Dockerfile
     - echo "at-spi2-core
             ffmpeg
             gettext
@@ -228,8 +225,7 @@ deps-debian-nonreloc:
             python3
             python3-gi
             python3-gi-cairo" >> Dockerfile
-    - echo "RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen" >> Dockerfile
-    - echo "RUN locale-gen" >> Dockerfile
+    - echo "RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen" >> Dockerfile
     # Prepare environ
     - echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:environ[collapsed=true]\r\e[0KPreparing build environment\n\"" >> Dockerfile2;
@@ -470,14 +466,10 @@ deps-snap:
     - echo "WORKDIR $CI_PROJECT_DIR" >> Dockerfile
     - echo "ENV GITLAB_CI=1" >> Dockerfile
     - echo "ENV RUNNER=$RUNNER" >> Dockerfile
-    - echo "RUN apt-get update -y" >> Dockerfile
-    - echo "RUN apt-get install -y curl jq squashfs-tools sudo git locales" >> Dockerfile
-    - echo "RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen" >> Dockerfile
-    - echo "RUN locale-gen" >> Dockerfile
-    # https://github.com/canonical/snapcraft-rocks/issues/37
-    - echo "RUN cp -r /usr/lib/python3.*/site-packages/extensions/* /usr/share/snapcraft/extensions/" >> Dockerfile
-    # https://github.com/canonical/snapcraft-rocks/issues/33
-    - echo "RUN ln -s /usr/libexec/snapcraft/craftctl /usr/bin/craftctl" >> Dockerfile
+    - echo "RUN apt-get update -y && apt-get install -y curl jq squashfs-tools sudo git locales" >> Dockerfile
+    - echo "RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen" >> Dockerfile
+    #FIXME: https://github.com/canonical/snapcraft-rocks/issues/37 and https://github.com/canonical/snapcraft-rocks/issues/33
+    - echo "RUN cp -r /usr/lib/python3.*/site-packages/extensions/* /usr/share/snapcraft/extensions/ && ln -s /usr/libexec/snapcraft/craftctl /usr/bin/craftctl" >> Dockerfile
     - echo "RUN sh build/linux/snap/1_build-deps-snapcraft.sh --install-snaps" >> Dockerfile;
     # Build babl and GEGL
     - echo "FROM $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}" > Dockerfile2;
