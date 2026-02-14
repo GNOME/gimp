@@ -46,6 +46,8 @@ struct _GimpTextTool
   guint           idle_id;
 
   gboolean        moving;
+  gint            move_start_x;
+  gint            move_start_y;
 
   GimpTextBuffer *buffer;
 
