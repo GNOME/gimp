@@ -154,9 +154,9 @@ Build:
   - Third-party binary plug-ins are now supported in AppImage (if
     compiled against the same Debian binaries used for building the
     AppImage).
-  - The Snap package is now able to migrate config folders from non-Snap
-    older GIMP, and will store its own config outside the sandbox too,
-    from now on.
+  - From GIMP 3.2, the Snap package will be able to migrate config
+    folders from non-Snap older GIMP, and will store its own config
+    outside the sandbox too, from now on.
 
 
 Overview of Changes from GIMP 3.2.0 RC1 to GIMP 3.2.0 RC2
