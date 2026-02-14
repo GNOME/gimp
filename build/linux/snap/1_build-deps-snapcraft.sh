@@ -41,6 +41,7 @@ if [ -z "$GITLAB_CI" ] || [ "$1" = '--install-snaps' ]; then
       curl --progress-bar -L -o ${snap}.snap $(curl --progress-bar -H 'Snap-Device-Series: 16' https://api.snapcraft.io/v2/snaps/info/$snap | jq -r --arg arch "$(dpkg --print-architecture)" '.["channel-map"][] | select(.channel.architecture == $arch and .channel.track == "latest" and .channel.risk == "stable") | .download.url')
       mkdir -p /snap/$snap/current
       unsquashfs -d /snap/$snap/current ${snap}.snap
+      rm -f ${snap}.snap #avoid saving .snap which blows the Docker image size
     fi
   done
   if [ "$1" = '--install-snaps' ]; then exit 0; fi

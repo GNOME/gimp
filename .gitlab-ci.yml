@@ -478,6 +478,7 @@ deps-snap:
     - echo "RUN cp -r /usr/lib/python3.*/site-packages/extensions/* /usr/share/snapcraft/extensions/" >> Dockerfile
     # https://github.com/canonical/snapcraft-rocks/issues/33
     - echo "RUN ln -s /usr/libexec/snapcraft/craftctl /usr/bin/craftctl" >> Dockerfile
+    - echo "RUN touch cache_brea2" >> Dockerfile
     - echo "RUN sh build/linux/snap/1_build-deps-snapcraft.sh --install-snaps" >> Dockerfile;
     # Build babl and GEGL
     - echo "FROM $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}" > Dockerfile2;
