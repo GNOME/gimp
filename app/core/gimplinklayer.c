@@ -947,7 +947,10 @@ gimp_link_layer_set_xcf_flags (GimpLinkLayer *layer,
                                      (flags & LINK_LAYER_XCF_DONT_AUTO_RENAME) == 0);
 
   if ((flags & LINK_LAYER_XCF_MODIFIED) != 0)
-    gimp_link_freeze (layer->p->link);
+    {
+      gimp_link_freeze (layer->p->link);
+      gimp_rasterizable_set_undo_rasterized (GIMP_RASTERIZABLE (layer), TRUE);
+    }
 }
 
 guint32
