@@ -502,7 +502,7 @@ svg_parser_text (GMarkupParseContext *context,
       handler->name &&
       strcmp (handler->name, "title") == 0)
     {
-      gchar      *title = g_markup_escape_text (text, text_len);
+      gchar      *title = g_uri_unescape_string (text, NULL);
       SvgHandler *prior_handler;
       GList      *paths;
 
