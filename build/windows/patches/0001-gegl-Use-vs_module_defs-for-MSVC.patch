@@ -1,7 +1,7 @@
-From a45ae7cb8b956a48805e158c26ffb4f7a750ea1f Mon Sep 17 00:00:00 2001
+From 8bd636f31f67cdcd822602da4666cbc8306e66e1 Mon Sep 17 00:00:00 2001
 From: Jacob Boerema <jgboerema@gmail.com>
-Date: Fri, 13 Feb 2026 15:07:46 -0500
-Subject: [PATCH] [PATCH] gegl: Use vs_module_defs for MSVC
+Date: Sat, 14 Feb 2026 15:21:39 -0500
+Subject: [PATCH] gegl: Use vs_module_defs for MSVC
 
 ---
  gegl/meson.build     | 1 +
@@ -21,14 +21,14 @@ index 85e89bbd2..48146e68d 100644
    version: so_version,
  )
 diff --git a/libs/npd/meson.build b/libs/npd/meson.build
-index 15d468854..251301b8e 100644
+index 15d468854..e78ee15db 100644
 --- a/libs/npd/meson.build
 +++ b/libs/npd/meson.build
 @@ -33,6 +33,7 @@ gegl_npd_lib = library(meson.project_name() + '-npd-' + api_version,
    link_with: [
      gegl_lib,
    ],
-+  vs_module_defs: gegl_def,
++  vs_module_defs: gegl_npd_def,
    install: true,
  )
 
