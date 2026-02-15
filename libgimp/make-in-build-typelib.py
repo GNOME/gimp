@@ -26,8 +26,16 @@ tmp_gir_dir.mkdir(parents=True, exist_ok=True)
 tmp_gir_path = Path(f"{tmp_gir_dir}/{gir_name}")
 shutil.copy2(Path(f"{builddir}/{gir_name}"), tmp_gir_path)
 
+def get_lib_path(p):
+  name = os.path.basename(p)
+  folder = name.split('-')[0]
+  #Exception: libgimpui is built inside the 'libgimp' directory
+  if folder == "libgimpui":
+    folder = "libgimp"
+  return f"{folder}/{name}"
+
 text = Path(tmp_gir_path).read_text()
-text = re.sub(r'shared-library="([^"]+)"', lambda m: 'shared-library="' + ",".join("libgimp/" + os.path.basename(p) for p in m.group(1).split(",")) + '"', text)
+text = re.sub(r'shared-library="([^"]+)"', lambda m: 'shared-library="' + ",".join(get_lib_path(p) for p in m.group(1).split(",")) + '"', text)
 Path(tmp_gir_path).write_text(text)
 subprocess.run(["g-ir-compiler", f"--includedir={tmp_gir_dir}", f"--includedir={prefix}/share/gir-1.0/", str(tmp_gir_path), "-o", tmp_gir_dir / typelib_name], check=True)
 
