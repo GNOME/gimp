@@ -1,6 +1,7 @@
 plugin_name = 'file-dds'
 
 plugin_sourcecode = [
+  'bc7enc_rdo/bc7enc.c',
   'bc7.c',
   'dds.c',
   'ddsread.c',
