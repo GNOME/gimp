@@ -48,6 +48,7 @@ typedef enum
   DDS_COMPRESS_BC3N,       /* DXT5n */
   DDS_COMPRESS_BC4,        /* ATI1  */
   DDS_COMPRESS_BC5,        /* ATI2  */
+  DDS_COMPRESS_BC6H,
   DDS_COMPRESS_BC7,
   DDS_COMPRESS_RXGB,       /* DXT5  */
   DDS_COMPRESS_AEXP,       /* DXT5  */
