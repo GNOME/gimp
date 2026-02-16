@@ -207,10 +207,6 @@ To fill data for a new entry:
 		inno_code="Languages\\Korean.isl"
 		name="한국어" />
 	<iso_639_entry
-		dl_code="kw"
-		inno_code=""
-		name="Kernewek" />
-	<iso_639_entry
 		dl_code="ky"
 		inno_code=""
 		name="Кыргыз тили" />
