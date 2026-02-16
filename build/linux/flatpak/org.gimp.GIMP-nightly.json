@@ -33,7 +33,8 @@
         "--talk-name=org.gtk.vfs.*",
         "--talk-name=org.freedesktop.FileManager1",
         "--talk-name=org.gnome.Shell.Screenshot",
-        "--talk-name=org.kde.kwin.Screenshot"
+        "--talk-name=org.kde.kwin.Screenshot",
+        "--talk-name=com.canonical.AppMenu.Registrar"
     ],
     "tags": [
         "GTK+3",
