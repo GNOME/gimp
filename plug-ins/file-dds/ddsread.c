@@ -743,6 +743,34 @@ read_dds (GFile                *file,
   if (flip_import)
     gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
 
+  /* Store original format to use as a default for export */
+  if (load_info.comp_format ||
+      load_info.d3d9_format ||
+      load_info.dxgi_format ||
+      load_info.mipmaps)
+    {
+      GimpParasite *parasite = NULL;
+      gchar        *import_settings;
+
+      /* Save parasite version, compression format, pixel format,
+       * DX10 format, flags, and number of mipmaps in the parasite */
+      import_settings = g_strdup_printf ("1 %d %d %d %d %d",
+                                         load_info.comp_format,
+                                         load_info.d3d9_format,
+                                         load_info.dxgi_format,
+                                         load_info.flags,
+                                         load_info.mipmaps);
+
+      parasite = gimp_parasite_new ("dds-import-settings",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (import_settings) + 1,
+                                    (gpointer) import_settings);
+      g_free (import_settings);
+
+      gimp_image_attach_parasite (image, parasite);
+      gimp_parasite_free (parasite);
+    }
+
   *ret_image = image;
 
   return GIMP_PDB_SUCCESS;

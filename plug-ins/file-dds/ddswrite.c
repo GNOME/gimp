@@ -44,15 +44,16 @@
 #include "misc.h"
 
 
-static gboolean   write_image (FILE                *fp,
-                               GimpImage           *image,
-                               GimpDrawable        *drawable,
-                               GimpProcedureConfig *config);
-static gboolean   save_dialog (GimpImage           *image,
-                               GimpDrawable        *drawable,
-                               GimpProcedure       *procedure,
-                               GimpProcedureConfig *config);
+static gboolean      write_image        (FILE                *fp,
+                                         GimpImage           *image,
+                                         GimpDrawable        *drawable,
+                                         GimpProcedureConfig *config);
+static gboolean      save_dialog        (GimpImage           *image,
+                                         GimpDrawable        *drawable,
+                                         GimpProcedure       *procedure,
+                                         GimpProcedureConfig *config);
 
+static const gchar * check_comp_format  (guint32              format);
 
 static const gchar *cubemap_face_names[4][6] =
 {
@@ -497,15 +498,15 @@ write_dds (GFile               *file,
            GimpProcedureConfig *config,
            gboolean             is_duplicate_image)
 {
-  FILE *fp;
-  gint  rc = 0;
-  gint  compression;
-  gint  mipmaps;
-  gint  savetype;
+  FILE         *fp;
+  GimpParasite *parasite = NULL;
+  gint          rc       = 0;
+  gint          compression;
+  gint          mipmaps;
+  gint          savetype;
 
-  savetype    = gimp_procedure_config_get_choice_id (config, "save-type");
-  compression = gimp_procedure_config_get_choice_id (config, "compression-format");
-  mipmaps     = gimp_procedure_config_get_choice_id (config, "mipmaps");
+  savetype = gimp_procedure_config_get_choice_id (config, "save-type");
+  mipmaps  = gimp_procedure_config_get_choice_id (config, "mipmaps");
 
   global_image = image;
 
@@ -514,6 +515,45 @@ write_dds (GFile               *file,
   is_cubemap = check_cubemap (image);
   is_volume  = check_volume  (image);
   is_array   = check_array   (image);
+
+  /* Check for imported DDS original settings */
+  parasite = gimp_image_get_parasite (image, "dds-import-settings");
+  if (parasite)
+    {
+      gchar   *parasite_data;
+      guint32  parasite_size;
+      gint     version     = 0;
+      gint     comp_format = 0;
+      gint     d3d9_format = 0;
+      gint     dxgi_format = 0;
+      guint    flags       = 0;
+      guint    n_mipmaps   = 0;
+      guint    n_params    = 0;
+
+      parasite_data = (gchar *) gimp_parasite_get_data (parasite,
+                                                        &parasite_size);
+      parasite_data = g_strndup (parasite_data, parasite_size);
+
+      n_params = sscanf (parasite_data, "%d %d %d %d %d %d", &version,
+                         &comp_format, &d3d9_format, &dxgi_format, &flags,
+                         &n_mipmaps);
+      if (n_params == 6)
+        {
+          const gchar *config_comp_format;
+
+          config_comp_format = check_comp_format (comp_format);
+          g_object_set (config,
+                        "compression-format", config_comp_format,
+                        NULL);
+        }
+      g_free (parasite_data);
+
+      gimp_image_detach_parasite (image, "dds-import-settings");
+      g_free (parasite);
+    }
+
+  compression = gimp_procedure_config_get_choice_id (config,
+                                                     "compression-format");
 
   if (interactive)
     {
@@ -2013,4 +2053,33 @@ save_dialog (GimpImage           *image,
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+static const gchar *
+check_comp_format (guint32 format)
+{
+  switch (format)
+    {
+    case DDS_COMPRESS_BC1:
+      return "bc1";
+
+    case DDS_COMPRESS_BC2:
+      return "bc2";
+
+    case DDS_COMPRESS_BC3:
+      return "bc3";
+
+    case DDS_COMPRESS_BC4:
+      return "bc4";
+
+    case DDS_COMPRESS_BC5:
+      return "bc5";
+
+    case DDS_COMPRESS_BC6H:
+    case DDS_COMPRESS_BC7:
+      return "bc7";
+
+    default:
+      return "none";
+    }
 }
