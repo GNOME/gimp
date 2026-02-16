@@ -16,13 +16,9 @@
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
 import sys
 
 def N_(message): return message
@@ -62,6 +58,11 @@ def run(procedure, config, data):
     run_mode = config.get_property("run-mode")
 
     if run_mode == Gimp.RunMode.INTERACTIVE:
+        gi.require_version('GimpUi', '3.0')
+        from gi.repository import GimpUi
+        gi.require_version('Gtk', '3.0')
+        from gi.repository import Gtk
+
         GimpUi.init(procedure.get_name())
         dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
 

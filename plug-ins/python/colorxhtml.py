@@ -24,8 +24,6 @@ import sys
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -69,7 +67,8 @@ def export_colorxhtml(procedure, run_mode, image, file, options, metadata, confi
                                            GLib.Error(error))
 
     if run_mode == Gimp.RunMode.INTERACTIVE:
-
+        gi.require_version('GimpUi', '3.0')
+        from gi.repository import GimpUi
         gi.require_version('Gtk', '3.0')
         from gi.repository import Gtk
 
