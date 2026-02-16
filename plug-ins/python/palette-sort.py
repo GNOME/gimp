@@ -29,13 +29,9 @@ gi.require_version('Babl', '0.1')
 from gi.repository import Babl
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
 import sys
 
 def N_(message): return message
@@ -421,6 +417,11 @@ class PaletteSort (Gimp.PlugIn):
                                                GLib.Error(error))
 
         if run_mode == Gimp.RunMode.INTERACTIVE:
+            gi.require_version('GimpUi', '3.0')
+            from gi.repository import GimpUi
+            gi.require_version('Gtk', '3.0')
+            from gi.repository import Gtk
+
             GimpUi.init('python-fu-palette-sort')
             dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
 

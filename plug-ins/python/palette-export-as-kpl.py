@@ -19,13 +19,9 @@
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
 import os, sys, tempfile, zipfile
 import xml.etree.ElementTree as ET
 
@@ -45,6 +41,11 @@ def palette_kpl_export(procedure, config, data):
     runmode = config.get_property("run-mode")
 
     if runmode == Gimp.RunMode.INTERACTIVE:
+        gi.require_version('GimpUi', '3.0')
+        from gi.repository import GimpUi
+        gi.require_version('Gtk', '3.0')
+        from gi.repository import Gtk
+
         GimpUi.init('python-fu-palette-export-as-kpl')
         dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
 

@@ -17,8 +17,6 @@
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
 gi.require_version('Gegl', '0.4')
 from gi.repository import Gegl
 from gi.repository import GObject
@@ -32,6 +30,9 @@ def _(message): return GLib.dgettext(None, message)
 
 def foggify(procedure, run_mode, image, drawables, config, data):
     if run_mode == Gimp.RunMode.INTERACTIVE:
+        gi.require_version('GimpUi', '3.0')
+        from gi.repository import GimpUi
+
         GimpUi.init('python-fu-foggify')
 
         dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)

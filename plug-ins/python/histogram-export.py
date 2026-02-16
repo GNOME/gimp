@@ -42,8 +42,6 @@ import sys
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -165,6 +163,9 @@ def histogram_export(procedure, img, layers, gio_file,
 
 def run(procedure, run_mode, image, layers, config, data):
     if run_mode == Gimp.RunMode.INTERACTIVE:
+        gi.require_version('GimpUi', '3.0')
+        from gi.repository import GimpUi
+
         GimpUi.init("python-fu-histogram-export")
 
         dialog = GimpUi.ProcedureDialog.new(procedure, config, _("Histogram Export..."))
