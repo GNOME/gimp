@@ -745,7 +745,7 @@ gimp-macos-inhouse:
       - _build*/meson-logs/meson-log.txt
       - _build*/done-dylib.list
       # Needed by dist-mac-weekly
-      - _build-*/config.h
+      - _build-*/
       - _build-*/plug-ins/file_associations_mac.list
       - _build-*/gimp-data/images/logo/gimp-dmg.png
       - _build-*/build/macos/.VolumeIcon.icns

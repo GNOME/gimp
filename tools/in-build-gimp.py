@@ -52,7 +52,7 @@ try:
     pygobject_found = (result.returncode == 0)
   if not python_symlink or (python_symlink and not pygobject_found):
     different_python=True
-    tmp_path = os.path.join(GIMP_GLOBAL_BUILD_ROOT, "tmp")
+    tmp_path = os.path.join(GIMP3_DIRECTORY, "tmp_python")
     os.makedirs(tmp_path, exist_ok=True)
     tmp_symlink = os.path.join(tmp_path, "python3")
     if not os.path.exists(tmp_symlink):
@@ -64,6 +64,13 @@ try:
     subprocess.run(["gdb","--return-child-result","--batch","-x",f"{os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py","--args", os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:], stdin=sys.stdin, check=True)
   else:
     print(f"RUNNING: {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}")
+    print(f"PATH is : {os.environ['PATH']}")
+    p = shutil.which("python3")
+    if p:
+      print(f"PYTHON found at: {p}")
+      print(f"PYTHON resolves to: {os.path.realpath(p)}")
+    else:
+      print("PYTHON not found in PATH")
     subprocess.run([os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:],stdin=sys.stdin, check=True)
 
   if different_python:
