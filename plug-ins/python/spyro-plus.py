@@ -18,8 +18,6 @@
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -2359,6 +2357,9 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
             engine.draw_full(layers[0])
 
         elif run_mode == Gimp.RunMode.INTERACTIVE:
+            gi.require_version('GimpUi', '3.0')
+            from gi.repository import GimpUi
+
             Gegl.init (None)
 
             window = SpyroWindow(image, layers[0])
