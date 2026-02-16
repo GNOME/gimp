@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-09 00:03+0100\n"
-"PO-Revision-Date: 2026-02-14 16:56+0100\n"
+"PO-Revision-Date: 2026-02-16 11:37+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -2762,7 +2762,7 @@ msgstr "Nome con prefisso"
 
 #: ../plug-ins/common/file-csource.c:156
 msgid "Comme_nt"
-msgstr "Comme:nto"
+msgstr "Comme_nto"
 
 #: ../plug-ins/common/file-csource.c:157
 msgid "Comment"
