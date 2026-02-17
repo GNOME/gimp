@@ -1097,6 +1097,9 @@ gimp_text_tool_frame_item (GimpTextTool *text_tool)
 {
   g_return_if_fail (GIMP_IS_LAYER (text_tool->layer));
 
+  if (! text_tool->widget)
+    return;
+
   text_tool->handle_rectangle_change_complete = FALSE;
 
   gimp_tool_rectangle_frame_item (GIMP_TOOL_RECTANGLE (text_tool->widget),
@@ -1823,43 +1826,73 @@ static void
 gimp_text_tool_layer_changed (GimpImage    *image,
                               GimpTextTool *text_tool)
 {
-  GList *layers = gimp_image_get_selected_layers (image);
+  GimpTool    *tool;
+  GimpDisplay *display;
+  GList       *layers;
+  guint        n_layers;
 
-  if (g_list_length (layers) != 1 || layers->data != text_tool->layer)
+  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
+
+  tool     = GIMP_TOOL (text_tool);
+  display  = tool->display;
+  layers   = gimp_image_get_selected_layers (image);
+  n_layers = g_list_length (layers);
+
+  if (n_layers == 1 && layers->data == text_tool->layer)
+    return;
+
+  if (display)
     {
-      GimpTool    *tool    = GIMP_TOOL (text_tool);
-      GimpDisplay *display = tool->display;
+      GimpLayer *text_layer = NULL;
+      GList     *iter;
 
-      if (display)
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+
+      for (iter = layers; iter; iter = g_list_next (iter))
         {
-          GimpLayer *layer = NULL;
+          if (gimp_item_is_text_layer (GIMP_ITEM (iter->data)))
+            {
+              if (! text_layer)
+                text_layer = iter->data;
 
-          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+              if (iter->data == (gpointer) text_tool->layer)
+                {
+                  text_layer = iter->data;
+                  break;
+                }
+            }
+        }
 
-          if (g_list_length (layers) == 1)
-            layer = layers->data;
-
-          /* The tool can only be started when a single layer is
-           * selected and this is a text layer.
-           */
-          if (layer &&
-              gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer),
+      if (text_layer && n_layers == 1)
+        {
+          if (gimp_text_tool_set_drawable (text_tool,
+                                           GIMP_DRAWABLE (text_layer),
                                            FALSE) &&
-              GIMP_LAYER (text_tool->layer) == layer)
+              GIMP_LAYER (text_tool->layer) == text_layer)
             {
               GError *error = NULL;
 
-              if (! gimp_text_tool_start (text_tool, display, layer, &error))
+              if (! gimp_text_tool_start (text_tool, display,
+                                          text_layer, &error))
                 {
                   gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
 
-                  gimp_tool_message_literal (tool, display, error->message);
+                  gimp_tool_message_literal (tool, display,
+                                             error->message);
 
                   g_clear_error (&error);
 
                   return;
                 }
             }
+        }
+      else if (text_layer && n_layers > 1)
+        {
+          tool->display = display;
+
+          gimp_text_tool_set_drawable (text_tool,
+                                       GIMP_DRAWABLE (text_layer),
+                                       FALSE);
         }
     }
 }
@@ -2054,7 +2087,10 @@ gimp_text_tool_apply (GimpTextTool *text_tool,
   GimpImage        *image;
   GimpTextLayer    *layer;
   GList            *list;
+  GList            *selected;
+  GList            *iter;
   gboolean          undo_group = FALSE;
+  gboolean          has_secondary = FALSE;
 
   if (text_tool->idle_id)
     {
@@ -2116,13 +2152,26 @@ gimp_text_tool_apply (GimpTextTool *text_tool,
         }
     }
 
+  selected = gimp_image_get_selected_layers (image);
+
+  for (iter = selected; iter && ! has_secondary; iter = g_list_next (iter))
+    {
+      if (iter->data != (gpointer) layer &&
+          gimp_item_is_text_layer (GIMP_ITEM (iter->data)))
+        has_secondary = TRUE;
+    }
+
   if (push_undo)
     {
-      if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
+      if (has_secondary ||
+          gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
         {
           undo_group = TRUE;
           gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
+        }
 
+      if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
+        {
           /*  see comment in gimp_text_layer_set()  */
           gimp_image_undo_push_drawable_mod (image, NULL,
                                              GIMP_DRAWABLE (layer), TRUE);
@@ -2133,12 +2182,71 @@ gimp_text_tool_apply (GimpTextTool *text_tool,
 
   gimp_text_tool_apply_list (text_tool, list);
 
+  if (has_secondary)
+    {
+      for (iter = selected; iter; iter = g_list_next (iter))
+        {
+          GimpTextLayer *other_layer;
+          GimpText      *other_text;
+          GList         *pspec_iter;
+
+          if (iter->data == (gpointer) layer ||
+              ! gimp_item_is_text_layer (GIMP_ITEM (iter->data)))
+            continue;
+
+          other_layer = GIMP_TEXT_LAYER (iter->data);
+          other_text  = gimp_text_layer_get_text (other_layer);
+
+          if (! other_text)
+            continue;
+
+          if (push_undo)
+            {
+              if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (other_layer)))
+                gimp_image_undo_push_drawable_mod (image, NULL,
+                                                   GIMP_DRAWABLE (other_layer),
+                                                   TRUE);
+
+              gimp_image_undo_push_text_layer (image, NULL, other_layer, NULL);
+            }
+
+          g_object_freeze_notify (G_OBJECT (other_text));
+
+          for (pspec_iter = text_tool->pending;
+               pspec_iter;
+               pspec_iter = g_list_next (pspec_iter))
+            {
+              const GParamSpec *ps    = pspec_iter->data;
+              GValue            value = G_VALUE_INIT;
+
+              if (pspec_iter->next &&
+                  pspec_iter->next->data == pspec_iter->data)
+                continue;
+
+
+              g_value_init (&value, ps->value_type);
+              g_object_get_property (G_OBJECT (text_tool->proxy),
+                                     ps->name, &value);
+              g_object_set_property (G_OBJECT (other_text),
+                                     ps->name, &value);
+              g_value_unset (&value);
+            }
+
+          g_object_thaw_notify (G_OBJECT (other_text));
+
+          if (push_undo &&
+              gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (other_layer)))
+            gimp_rasterizable_restore (GIMP_RASTERIZABLE (other_layer));
+        }
+    }
+
   g_list_free (text_tool->pending);
   text_tool->pending = NULL;
 
   if (undo_group)
     {
-      gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
+      if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
+        gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
       gimp_image_undo_group_end (image);
     }
 
