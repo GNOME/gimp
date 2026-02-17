@@ -503,13 +503,10 @@
                 {
                     "type": "shell",
                     "commands": [
+                        "perl -i -pe 'BEGIN{$m=0} $m=1 if s|doc/Makefile\\s*||; $m=1 if s|src/ilbmpack/Makefile\\s*||; $m=1 if s|src/ilbmpp/Makefile\\s*||; $m=1 if s|src/acbm2ilbm/Makefile\\s*||; $m=1 if s|src/ilbm2acbm/Makefile\\s*||; $m=1 if s|tests/Makefile\\s*||; END{ if(!$m){ warn \"Patch failed on $ARGV\\n\"; exit 1 } }' configure.ac",
+                        "perl -i -pe 'BEGIN{$m=0} $m=1 if s|SUBDIRS = doc src tests|SUBDIRS = src|; END{ if(!$m){ warn \"Patch failed on $ARGV\\n\"; exit 1 } }' Makefile.am",
+                        "perl -i -pe 'BEGIN{$m=0} $m=1 if s|SUBDIRS = libilbm ilbmpack ilbmpp acbm2ilbm ilbm2acbm|SUBDIRS = libilbm|; END{ if(!$m){ warn \"Patch failed on $ARGV\\n\"; exit 1 } }' src/Makefile.am",
                         "./bootstrap"
-                    ]
-                },
-                {
-                    "type": "patch",
-                    "paths": [
-                        "patches/libilbm-no-ilbmpack-ilbmpp-acbm2ilbm-ilbm2acbm.patch"
                     ]
                 }
             ],
@@ -529,13 +526,10 @@
                         {
                             "type": "shell",
                             "commands": [
+                                "perl -i -pe 'BEGIN{$m=0} $m=1 if s|doc/Makefile\\s*||; $m=1 if s|src/iffjoin/Makefile\\s*||; $m=1 if s|src/iffpp/Makefile\\s*||; $m=1 if s|tests/Makefile\\s*||; END{ if(!$m){ warn \"Patch failed on $ARGV\\n\"; exit 1 } }' configure.ac",
+                                "perl -i -pe 'BEGIN{$m=0} $m=1 if s|SUBDIRS = doc src tests|SUBDIRS = src|; END{ if(!$m){ warn \"Patch failed on $ARGV\\n\"; exit 1 } }' Makefile.am",
+                                "perl -i -pe 'BEGIN{$m=0} $m=1 if s|SUBDIRS = libiff iffjoin iffpp|SUBDIRS = libiff|; END{ if(!$m){ warn \"Patch failed on $ARGV\\n\"; exit 1 } }' src/Makefile.am",
                                 "./bootstrap"
-                            ]
-                        },
-                        {
-                            "type": "patch",
-                            "paths": [
-                                "patches/libiff-no-iffjoin-and-iffp.patch"
                             ]
                         }
                     ],
