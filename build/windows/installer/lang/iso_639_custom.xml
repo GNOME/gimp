@@ -328,7 +328,7 @@ To fill data for a new entry:
 		name="తెలుగు" />
 	<iso_639_entry
 		dl_code="th"
-		inno_code=""
+		inno_code="Languages\\Thai.isl"
 		name="ภาษาไทย" />
 	<iso_639_entry
 		dl_code="tr"
