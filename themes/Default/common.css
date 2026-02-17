@@ -596,8 +596,9 @@ GimpSpinScale button:nth-child(odd) {
 
 /* Checkboxes */
 checkbutton, checkbutton.text-button, radiobutton, radiobutton.text-button, checkbutton label {
-  color: @fg-color;
+  color:            @fg-color;
   background-color: @bg-color;
+  outline-style:    none;
 }
 
 checkbutton:hover, checkbutton.text-button:hover, checkbutton:hover label, radiobutton:hover, checkbutton label:hover {
@@ -829,6 +830,7 @@ statusbar progressbar progress {
 
 list, list row {
   background-color: @widget-bg-color;
+  outline-style:    none;
 }
 
 list row:selected {
@@ -837,6 +839,16 @@ list row:selected {
 
 list row:hover {
   background-color: @hover-color;
+}
+
+/* NDE Popover */
+popover scrolledwindow list, popover list row {
+  background-color: @extreme-bg-color;
+  color:            @fg-color;
+}
+
+popover list row:selected {
+  background-color: @extreme-selected-color;
 }
 
 /* GtkSwitch buttons */
