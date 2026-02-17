@@ -285,7 +285,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
           gtk_text_view_set_bottom_margin (GTK_TEXT_VIEW (widget), 3);
           gtk_text_view_set_left_margin (GTK_TEXT_VIEW (widget), 3);
           gtk_text_view_set_right_margin (GTK_TEXT_VIEW (widget), 3);
-          gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (widget), GTK_WRAP_WORD);
+          gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (widget), GTK_WRAP_WORD_CHAR);
           g_object_unref (buffer);
 
           tooltip = g_param_spec_get_blurb (pspec);
@@ -296,7 +296,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
           gtk_widget_set_size_request (scrolled_window, -1, 100);
           gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_OUT);
           gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                          GTK_POLICY_NEVER,
+                                          GTK_POLICY_EXTERNAL,
                                           GTK_POLICY_AUTOMATIC);
           gtk_container_add (GTK_CONTAINER (frame2), scrolled_window);
           gtk_widget_show (scrolled_window);
