@@ -60,13 +60,13 @@ if [ "$CI_PIPELINE_SOURCE" = 'schedule' ]; then
     printf "(INFO): All dependencies sources are up to date. Building them...\n"
   fi
 fi
-if [ "$GITLAB_CI" ]; then
-  built_deps_image="quay.io/gnome_infrastructure/gnome-nightly-cache:$(uname -m)-$(echo "org.gimp.GIMP.Nightly" | tr 'A-Z' 'a-z')-master"
-  oras pull $built_deps_image && oras logout quay.io || true
-  tar --zstd --xattrs -xf _build-cached-$RUNNER.tar.zst || true
-fi
+#if [ "$GITLAB_CI" ]; then
+#  built_deps_image="quay.io/gnome_infrastructure/gnome-nightly-cache:$(uname -m)-$(echo "org.gimp.GIMP.Nightly" | tr 'A-Z' 'a-z')-master"
+#  oras pull $built_deps_image && oras logout quay.io || true
+#  tar --zstd --xattrs -xf _build-cached-$RUNNER.tar.zst || true
+#fi
 eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --build-only --stop-at=babl \
-                      "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > flatpak-builder.log 2>&1
+                      "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   tar --zstd --xattrs --exclude=.flatpak-builder/build/ -cf _build-cached-$RUNNER.tar.zst .flatpak-builder/
   cat $NIGHTLY_CACHE_ORAS_TOKEN_FILE | oras login -u "${NIGHTLY_CACHE_ORAS_USER}" --password-stdin quay.io || true

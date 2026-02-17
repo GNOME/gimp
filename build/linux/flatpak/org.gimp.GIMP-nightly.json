@@ -485,9 +485,9 @@
                 },
                 {
                     "//": "https://gitlab.gnome.org/GNOME/gimp/-/issues/14461",
-                    "type": "patch",
-                    "paths": [
-                        "patches/0001-change-surfacemap-inputs.patch"
+                    "type": "shell",
+                    "commands": [
+                        "find brushes/Dieterle -iname '*.myb' ! -name 'arrow#1.myb' ! -name 'Fount-offset#1.myb' ! -name 'Pencil-_Left_Handed.myb' ! -name 'HalfToneCMY#1.myb' ! -name 'Fountain_SF#1.myb' ! -name 'HalfTone#1.myb' ! -name '8B_Pencil#1.myb' -print0 | xargs -0 -n1 perl -i -pe 'BEGIN{$m=0} $m=1 if s/surfacemap_x/gridmap_x/g; $m=1 if s/surfacemap_y/gridmap_y/g; END{ if(!$m){ warn \"Patch failed on $ARGV\\n\"; exit 1 } }'"
                     ]
                 }
             ]
