@@ -431,9 +431,9 @@
                             }
                         },
                         {
-                            "type": "patch",
-                            "paths": [
-                                "patches/0001-Allow-build-with-cmake-4.0.0.patch"
+                            "type": "shell",
+                            "commands": [
+                                "perl -i -pe 'BEGIN{$m=0} $m=1 if s/cmake_minimum_required\\(VERSION 2\\.8\\)/cmake_minimum_required(VERSION 3.9...3.12)/; END{ if(!$m){ warn \"Patch failed on $ARGV\\n\"; exit 1 } }' apps/CMakeLists.txt"
                             ]
                         }
                     ],
