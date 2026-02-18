@@ -410,6 +410,11 @@ scrolledwindow viewport grid, scrolledwindow viewport box {
   background-color: @extreme-bg-color;
 }
 
+/* 9 button toggles on some transformation tools */
+GimpPivotSelector .toggle {
+  margin-right: 0px;
+}
+
 /* Define background on items in Preferences header */
 GimpPrefsBox widget box label,
 GimpPrefsBox widget box image {

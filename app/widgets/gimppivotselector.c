@@ -172,6 +172,8 @@ gimp_pivot_selector_class_init (GimpPivotSelectorClass *klass)
                                                         0.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpPivotSelector");
 }
 
 static void
