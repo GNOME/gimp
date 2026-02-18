@@ -97,6 +97,9 @@ static void       gimp_vector_layer_push_undo       (GimpDrawable           *dra
 static gint64     gimp_vector_layer_get_memsize     (GimpObject             *object,
                                                      gint64                 *gui_size);
 
+static void       gimp_vector_layer_convert         (GimpItem               *item,
+                                                     GimpImage              *dest_image,
+                                                     GType                   old_type);
 static GimpItem * gimp_vector_layer_duplicate       (GimpItem               *item,
                                                      GType                   new_type);
 
@@ -173,6 +176,7 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
   layer_class->translate            = gimp_vector_layer_translate;
 
   item_class->removed               = gimp_vector_layer_removed;
+  item_class->convert               = gimp_vector_layer_convert;
   item_class->duplicate             = gimp_vector_layer_duplicate;
   item_class->rename                = gimp_rasterizable_rename;
   item_class->scale                 = gimp_vector_layer_scale;
@@ -377,6 +381,25 @@ gimp_vector_layer_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
+static void
+gimp_vector_layer_convert (GimpItem  *item,
+                           GimpImage *dest_image,
+                           GType      old_type)
+{
+  GimpPath *path = gimp_vector_layer_get_path (GIMP_VECTOR_LAYER (item));
+
+  if (path)
+    {
+      gimp_item_convert (GIMP_ITEM (path), dest_image, GIMP_TYPE_PATH);
+
+      if (! gimp_item_is_attached (GIMP_ITEM (path)) &&
+          gimp_item_get_image (GIMP_ITEM (path)) == dest_image)
+        gimp_image_add_path (dest_image, path, NULL, -1, FALSE);
+    }
+
+  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image, old_type);
+}
+
 static GimpItem *
 gimp_vector_layer_duplicate (GimpItem *item,
                              GType     new_type)
@@ -394,12 +417,13 @@ gimp_vector_layer_duplicate (GimpItem *item,
 
       if (vector_layer->options)
         {
+          GimpPath               *path;
           GimpVectorLayerOptions *new_options =
             gimp_config_duplicate (GIMP_CONFIG (vector_layer->options));
 
-          if (vector_layer->options->path)
+          path = gimp_vector_layer_get_path (vector_layer);
+          if (path)
             {
-              GimpPath *path = gimp_vector_layer_get_path (vector_layer);
               GimpPath *new_path;
 
               new_path = GIMP_PATH (gimp_item_duplicate (GIMP_ITEM (path),
