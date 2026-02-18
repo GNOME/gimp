@@ -454,6 +454,11 @@
                         {
                             "type": "archive",
                             "url": "https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz",
+                            "mirror-urls": [
+                                "https://sources.suse.com/SUSE:SLE-15-SP7:Update:BCI/000product/ca527df4d03bf96a67854a8ed2f0c64b/INCLUDED/SUSE:SLE-15-SP6:GA::intltool::45f77273c3f2ef792fa697b444183beb/intltool-0.51.0.tar.gz",
+                                "https://mirror-hk.koddos.net/lfs/lfs-packages/12.0/intltool-0.51.0.tar.gz",
+                                "https://gstreamer.freedesktop.org/src/mirror/intltool-0.51.0.tar.gz"
+                            ],
                             "sha256": "67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd",
                             "x-checker-data": {
                                 "type": "anitya",
