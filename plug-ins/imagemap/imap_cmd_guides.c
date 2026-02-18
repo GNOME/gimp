@@ -129,11 +129,12 @@ recalc_bounds(GtkWidget *widget, gpointer data)
 static GuidesDialog_t*
 make_guides_dialog (void)
 {
-   GuidesDialog_t *data = g_new(GuidesDialog_t, 1);
+   GuidesDialog_t  *data = g_new(GuidesDialog_t, 1);
    DefaultDialog_t *dialog;
-   GtkWidget *grid;
-   GtkWidget *label;
-   GtkWidget *hbox;
+   GtkWidget       *grid;
+   GtkWidget       *label;
+   GtkWidget       *hbox;
+   GtkWidget       *scrolled_window;
 
    dialog = data->dialog = make_default_dialog(_("Create Guides"));
    default_dialog_set_ok_cb (dialog, guides_ok_cb, data);
@@ -143,7 +144,16 @@ make_guides_dialog (void)
         "them by their width, height, and spacing from each other. This "
         "allows you to rapidly create the most common image map type - "
         "image collection of \"thumbnails\", suitable for navigation bars."));
-   gtk_box_pack_start (GTK_BOX (dialog->vbox), hbox, FALSE, FALSE, 0);
+
+   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+   gtk_widget_set_size_request (scrolled_window, -1, 100);
+   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                   GTK_POLICY_EXTERNAL, GTK_POLICY_AUTOMATIC);
+   gtk_container_add (GTK_CONTAINER (dialog->vbox), scrolled_window);
+   gtk_widget_show (scrolled_window);
+   gtk_widget_set_hexpand (hbox, TRUE);
+   gtk_widget_set_vexpand (hbox, TRUE);
+   gtk_container_add (GTK_CONTAINER (scrolled_window), hbox);
    gtk_widget_show (hbox);
 
    data->image_dimensions = gtk_label_new ("");
