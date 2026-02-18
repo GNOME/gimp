@@ -115,6 +115,11 @@ spinbutton entry {
     border-radius: 3px;
 }
 
+/* 9 button toggles on some transformation tools */
+GimpPivotSelector .toggle {
+  margin-right: 0px;
+}
+
 GimpSpinScale entry {
     /* Important: prevent overhigh spin scale */
     min-height: 16px;
