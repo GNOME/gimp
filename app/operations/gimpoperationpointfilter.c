@@ -52,6 +52,7 @@ static void
 gimp_operation_point_filter_init (GimpOperationPointFilter *self)
 {
   self->trc_binding = NULL;
+  self->trc         = GIMP_TRC_LINEAR;
 }
 
 static void
