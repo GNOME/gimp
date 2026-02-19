@@ -5503,7 +5503,12 @@ gimp_image_add_layer (GimpImage *image,
       if (path                                         &&
           (! gimp_item_is_attached (GIMP_ITEM (path))) &&
           gimp_item_get_image (GIMP_ITEM (path)) == image)
-        gimp_image_add_path (image, path, NULL, -1, FALSE);
+        {
+          gimp_image_add_path (image, path, NULL, -1, FALSE);
+        }
+
+      if (! gimp_item_is_rasterized (GIMP_ITEM (layer)))
+        gimp_vector_layer_refresh (GIMP_VECTOR_LAYER (layer));
     }
 
   if (old_has_alpha != gimp_image_has_alpha (image))
