@@ -2431,11 +2431,11 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
   grid = prefs_grid_new (GTK_CONTAINER (vbox2));
 
-  prefs_enum_combo_box_add (object, "image-resize-fill-type", 0, 0,
-                            _("Fill with:"),
-                            GTK_GRID (grid), 0, size_group);
   prefs_enum_combo_box_add (object, "image-resize-layer-set", 0, 0,
                             _("Resize layers:"),
+                            GTK_GRID (grid), 0, size_group);
+  prefs_enum_combo_box_add (object, "image-resize-fill-type", 0, 0,
+                            _("Fill with:"),
                             GTK_GRID (grid), 1, size_group);
 
   prefs_check_button_add (object, "image-resize-resize-text-layers",
