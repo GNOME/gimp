@@ -663,7 +663,8 @@ gimp_path_tool_set_path (GimpPathTool    *path_tool,
                          GimpPath        *path)
 {
   GimpTool        *tool;
-  GimpItem        *item = NULL;
+  GimpImage       *current_image = NULL;
+  GimpItem        *item          = NULL;
   GimpPathOptions *options;
 
   g_return_if_fail (GIMP_IS_PATH_TOOL (path_tool));
@@ -674,7 +675,10 @@ gimp_path_tool_set_path (GimpPathTool    *path_tool,
   options = GIMP_PATH_TOOL_GET_OPTIONS (path_tool);
 
   if (layer != NULL)
-    path = gimp_vector_layer_get_path (layer);
+    {
+      path          = gimp_vector_layer_get_path (layer);
+      current_image = gimp_item_get_image (GIMP_ITEM (layer));
+    }
 
   if (path)
     item = GIMP_ITEM (path);
@@ -726,9 +730,13 @@ gimp_path_tool_set_path (GimpPathTool    *path_tool,
         }
     }
 
+  /* If we're looking at a path instead of a vector layer, grab its image */
+  if (! current_image && item)
+    current_image = gimp_item_get_image (item);
+
   if (! path ||
       (tool->display &&
-       gimp_display_get_image (tool->display) != gimp_item_get_image (item)))
+       gimp_display_get_image (tool->display) != current_image))
     {
       gimp_path_tool_halt (path_tool);
     }
@@ -745,7 +753,7 @@ gimp_path_tool_set_path (GimpPathTool    *path_tool,
 
   path_tool->path = g_object_ref (path);
 
-  g_signal_connect_object (gimp_item_get_image (item), "selected-paths-changed",
+  g_signal_connect_object (current_image, "selected-paths-changed",
                            G_CALLBACK (gimp_path_tool_path_changed),
                            path_tool, 0);
   g_signal_connect_object (path, "removed",
@@ -773,19 +781,19 @@ gimp_path_tool_set_path (GimpPathTool    *path_tool,
       GimpDisplay *display = gimp_context_get_display (context);
 
       if (! display ||
-          gimp_display_get_image (display) != gimp_item_get_image (item))
+          gimp_display_get_image (display) != current_image)
         {
           GList *list;
 
           display = NULL;
 
-          for (list = gimp_get_display_iter (gimp_item_get_image (item)->gimp);
+          for (list = gimp_get_display_iter (current_image->gimp);
                list;
                list = g_list_next (list))
             {
               display = list->data;
 
-              if (gimp_display_get_image (display) == gimp_item_get_image (item))
+              if (gimp_display_get_image (display) == current_image)
                 {
                   gimp_context_set_display (context, display);
                   break;
