@@ -96,8 +96,21 @@ gimp_operation_equalize_class_init (GimpOperationEqualizeClass *klass)
 static void
 gimp_operation_equalize_init (GimpOperationEqualize *self)
 {
+  GimpOperationPointFilter *pt = GIMP_OPERATION_POINT_FILTER (self);
+
   self->values = NULL;
   self->n_bins = 0;
+
+  /* Let's have equalize work in non-linear space (see #14486), just
+   * like in GIMP 2.10.
+   * I do wonder if really what matters is that we work in a
+   * kinda-perceptual space, then maybe we actually want to work in
+   * GIMP_TRC_PERCEPTUAL.
+   * And are there cases where we want to equalize across actual light?
+   * In this case, maybe we should add a "trc" property to this
+   * operation would allow people to use it however they want.
+   */
+  pt->trc = GIMP_TRC_NON_LINEAR;
 }
 
 static void
