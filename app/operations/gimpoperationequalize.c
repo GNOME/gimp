@@ -78,7 +78,14 @@ gimp_operation_equalize_class_init (GimpOperationEqualizeClass *klass)
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:equalize",
-                                 "categories",  "color",
+                                 /* Adding to "hidden" category because
+                                  * it cannot be used through the API
+                                  * right now (missing GimpHistogram
+                                  * type in libgimp), and even less as
+                                  * NDE since it won't update the
+                                  * histogram on changes.
+                                  */
+                                 "categories",  "color:hidden",
                                  "description", "GIMP Equalize operation",
                                  NULL);
 
