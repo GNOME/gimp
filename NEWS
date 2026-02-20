@@ -35,11 +35,24 @@ Core:
   - Sample Points mode is carried over on duplicated images (not only
     their position).
   - Procreate swatches (.swatches) can now be imported as palettes.
+  - Flipping link layers don't rasterize them anymore.
 
 Tools:
 
   - Flip tool: up/down and left/right keys can now be used to flip items
     respectively vertically or horizontally.
+  - Crop tool: the tool now adds an alpha channel to a layer under the
+    following conditions:
+    1) "Selected layers only" is checked
+    2) "Allow growing" is checked
+    3) "Fill with" is set to transparency
+    4) The crop rectangle is larger than the width or height of the layer
+    5) The layer does not already have an alpha channel.
+  - Shear tool: arrow keys support to adjust the shear: left/right move
+    the shear on the X axis, up/down move the shear on the Y axis.
+    By default, it moves one pixel at a time. If you hold shift (similar
+    to the move tool), it moves based on the slider's page increment
+    setting (factoring in the current zoom).
 
 Operations:
 
@@ -62,6 +75,15 @@ Graphical User Interface:
   - The Welcome dialog is not shown on start anymore if GIMP was started
     by loading images.
   - Histogram Editor pixels and count are now displayed in GSize range.
+  - New splash image for RC3.
+  - Make styling consistent for the NDE popover.
+  - Better wrapping and scrolling policy for the comment field of the
+    export dialog, preventing issues when other program add extra-long
+    comment to images.
+  - New style defined for GimpPivotSelector, so that it can be styled
+    through CSS.
+  - Canvas Size options in Preferences dialog reordered to match the
+    respective Canvas Size dialog.
 
 Command Line Interface:
 
@@ -80,6 +102,17 @@ Plug-Ins:
   - Curve Bend PDB procedure API is not bogus anymore.
   - Gradient Flare files now support also Windows line ending.
   - Background color restored in (script-fu-round-corners).
+  - DDS:
+    * Initial DDS BC7 export support.
+    * Retains original import settings of a DDS texture (such as
+      compression, number of mipmaps, and flags) through a parasite.
+      On export, we default the compression format to the original to
+      reduce the chance of choosing the wrong format for the game
+      they're creating the texture for.
+      The other data stored is not currently used.
+  - Various Python plug-ins were improved to properly work in headless
+    environments.
+  - Image Map dialog improved so that it doesn't show too wide.
 
 API:
 
@@ -109,6 +142,8 @@ API:
         "gimp:posterize".
       * gimp_drawable_threshold() in favor of filter
         "gimp:threshold".
+    + gimp_image_get_thumbnail() implementation updated to always return
+      sRGB(A) 8-bit data.
   - libgimpconfig:
     + GimpConfig objects can now be given a XCF version to force the
       serialization to use older formats. This is used for serializing
@@ -122,6 +157,12 @@ API:
       planned for deletion in GIMP 4.
     + GimpColorScales and GimpColorSelect made introspectable.
     + gimp_widget_get_monitor() has now a Wayland implementation.
+
+Translations:
+
+  - New Cornish translation of GIMP.
+  - Thai now has official support in InnoSetup (Windows installer's
+    generic strings).
 
 Build:
 
@@ -157,6 +198,8 @@ Build:
   - From GIMP 3.2, the Snap package will be able to migrate config
     folders from non-Snap older GIMP, and will store its own config
     outside the sandbox too, from now on.
+  - Add limited global menu support for Flatpak. This requires setting
+    GIMP_GTK_MENUBAR environment variable.
 
 
 Overview of Changes from GIMP 3.2.0 RC1 to GIMP 3.2.0 RC2
