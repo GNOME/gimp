@@ -991,9 +991,11 @@ gimp_path_tool_set_layer (GimpPathTool    *path_tool,
   if (path_tool->current_vector_layer)
     {
       layer_options = gimp_vector_layer_get_options (path_tool->current_vector_layer);
-      g_signal_handlers_disconnect_by_func (layer_options,
-                                            gimp_path_tool_vector_layer_path_changed,
-                                            path_tool);
+
+      if (layer_options)
+        g_signal_handlers_disconnect_by_func (layer_options,
+                                              gimp_path_tool_vector_layer_path_changed,
+                                              path_tool);
 
       g_signal_handlers_disconnect_by_func (options,
                                             gimp_path_tool_vector_change_notify,
