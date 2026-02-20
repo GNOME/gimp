@@ -62,6 +62,15 @@ Operations:
     filters were broken enough that they were only run as linear until
     now. As for XCF backward compatibility, the full argument list was
     stored so existing XCF files will still load and render fine.
+  - Equalize:
+    * The filter now works again in non-linear space, just like it did
+      in GIMP 2.10.
+    * The "gimp:equalize" operation is now hidden from the API, because
+      it is not usable anyway (lack of GimpHistogram support in
+      libgimp/PDB) but also because the core implementation needs to be
+      changed before being able to behave properly in non-destructive
+      usage (the histogram would currently not re-compute itself with
+      source changes).
 
 Graphical User Interface:
 
