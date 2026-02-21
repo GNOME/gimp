@@ -445,10 +445,16 @@ gimp_toolbox_button_press_event (GtkWidget      *widget,
     }
   else if ((display = gimp_context_get_display (toolbox->p->context)))
     {
-      /* Any button event in empty spaces or the Wilber area gives focus
-       * to the top image.
+      GtkWidget *event_widget = gtk_get_event_widget ((GdkEvent *) event);
+
+      /* Give focus to the top image for clicks on non-editable areas
+       * (Issue #6869), but not when the click is on an editable input
+       * widget like a spin scale — stealing focus from those prevents
+       * text editing (Issue #11998).
        */
-      gimp_display_grab_focus (display);
+      if (! GTK_IS_EDITABLE (event_widget) &&
+          ! gtk_widget_get_ancestor (event_widget, GTK_TYPE_EDITABLE))
+        gimp_display_grab_focus (display);
     }
 
   return stop_event;
