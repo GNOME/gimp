@@ -155,7 +155,7 @@ deps-debian-nonreloc:
   script:
     - export BUILDAH_FORMAT=docker
     - export BUILDAH_ISOLATION=chroot
-    - export STORAGE_DRIVER=vfs
+    - export STORAGE_DRIVER=overlay
     - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     # Install deps
     - echo "FROM debian:${DEB_VERSION}" > Dockerfile
@@ -461,7 +461,7 @@ deps-snap:
   script:
     - export BUILDAH_FORMAT=docker
     - export BUILDAH_ISOLATION=chroot
-    - export STORAGE_DRIVER=vfs
+    - export STORAGE_DRIVER=overlay
     - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     # Install deps
     - echo "FROM ghcr.io/canonical/snapcraft:${SNAPCRAFT_BASE_VERSION}" > Dockerfile
