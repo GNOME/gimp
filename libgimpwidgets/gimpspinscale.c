@@ -844,7 +844,11 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
 
     case TARGET_NUMBER:
       gtk_widget_grab_focus (widget);
-      return TRUE;
+      /* Fall through to the parent handler so that GtkEntry processes
+       * the click event for cursor placement, double-click word
+       * selection, etc.
+       */
+      break;
 
     default:
       break;
