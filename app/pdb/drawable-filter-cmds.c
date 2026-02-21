@@ -56,58 +56,6 @@
 #include "gimp-intl.h"
 
 
-static gboolean
-validate_operation_name (const gchar  *operation_name,
-                         GError      **error)
-{
-  GType               op_type;
-
-  /* Comes from gegl/operation/gegl-operations.h which is not public. */
-  GType gegl_operation_gtype_from_name (const gchar *name);
-
-  op_type = gegl_operation_gtype_from_name (operation_name);
-
-  /* Using the same rules as in xcf_load_effect () for plug-in created
-   * effects.
-   */
-  if (g_type_is_a (op_type, GEGL_TYPE_OPERATION_SINK))
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   "%s: the filter \"%s\" is unsafe.",
-                   G_STRFUNC, operation_name);
-
-      return FALSE;
-    }
-  else if (g_strcmp0 (operation_name, "gegl:gegl") == 0 &&
-           g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL)
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   "%s: the filter \"gegl:gegl\" is unsafe.\n"
-                   "For development purpose, set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.",
-                   G_STRFUNC);
-
-      return FALSE;
-    }
-
-  if (g_strcmp0 (operation_name, "gegl:nop") == 0)
-    {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                           "The filter \"gegl:nop\" is useless and not allowed.");
-      return FALSE;
-    }
-
-  if (! gegl_has_operation (operation_name))
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   "%s: the filter \"%s\" is not installed.",
-                   G_STRFUNC, operation_name);
-
-      return FALSE;
-    }
-
-  return TRUE;
-}
-
 static GimpValueArray *
 drawable_filter_id_is_valid_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
@@ -158,7 +106,7 @@ drawable_filter_new_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (validate_operation_name (operation_name, error))
+      if (gimp_gegl_op_nde_allowed (operation_name, error))
         {
           GeglNode *operation = gegl_node_new ();
 
@@ -745,9 +693,6 @@ drawable_filter_operation_get_available_invoker (GimpProcedure         *procedur
     {
       GeglOperationClass *op_klass = op->data;
 
-      if (!validate_operation_name (op_klass->name, NULL))
-        continue;
-
       g_strv_builder_add (builder, op_klass->name);
     }
 
@@ -780,7 +725,7 @@ drawable_filter_operation_get_details_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-    if (validate_operation_name (operation_name, error))
+      if (gimp_gegl_op_nde_allowed (operation_name, error))
         {
           GStrvBuilder       *names_builder = NULL;
           GeglOperationClass *klass         = NULL;
@@ -858,7 +803,7 @@ drawable_filter_operation_get_pspecs_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (validate_operation_name (operation_name, error))
+      if (gimp_gegl_op_nde_allowed (operation_name, error))
         {
           GParamSpec **specs          = NULL;
           guint        n_specs        = 0;

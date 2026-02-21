@@ -35,6 +35,7 @@
 
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-tile-compat.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
@@ -4151,9 +4152,6 @@ xcf_load_channel (XcfInfo   *info,
   return NULL;
 }
 
-/* Comes from gegl/operation/gegl-operations.h which is not public. */
-GType gegl_operation_gtype_from_name (const gchar *name);
-
 static FilterData *
 xcf_load_effect (XcfInfo      *info,
                  GimpImage    *image,
@@ -4163,7 +4161,7 @@ xcf_load_effect (XcfInfo      *info,
   GimpChannel *effect_mask = NULL;
   goffset      mask_offset = 0;
   gchar       *string;
-  GType        op_type;
+  GError      *error = NULL;
 
   filter = g_new0 (FilterData, 1);
 
@@ -4179,37 +4177,23 @@ xcf_load_effect (XcfInfo      *info,
   xcf_read_string (info, &string, 1);
   filter->operation_name = string;
 
-  op_type = gegl_operation_gtype_from_name (filter->operation_name);
-  if (g_type_is_a (op_type, GEGL_TYPE_OPERATION_SINK))
-    {
-      /* Forbid filters which directly write into files. These should
-       * not be creatable through GIMP UI, but just in case someone
-       * builds one such XCF file (maliciously or by mistake/through a
-       * bug), let's prevent this filter to overwrite random files on
-       * load.
-       */
-      filter->unsupported_operation = TRUE;
-
-      gimp_message (info->gimp, G_OBJECT (info->progress),
-                    GIMP_MESSAGE_WARNING,
-                    /* TODO: localize after string freeze. */
-                    "XCF Warning: the \"%s\" (%s) filter is "
-                    "unsafe. It was discarded.",
-                    filter->name, filter->operation_name);
-
-      return filter;
-    }
-  else if (g_strcmp0 (filter->operation_name, "gegl:gegl") == 0 &&
-           g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL)
+  if (! gimp_gegl_op_nde_allowed (filter->operation_name, &error))
     {
       filter->unsupported_operation = TRUE;
 
-      gimp_message (info->gimp, G_OBJECT (info->progress),
-                    GIMP_MESSAGE_WARNING,
-                    /* TODO: localize after string freeze. */
-                    "XCF Warning: the \"%s\" (%s) filter is unsafe. It was discarded.\n"
-                    "For development purpose, set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.",
-                    filter->name, filter->operation_name);
+      if (filter->name)
+        gimp_message (info->gimp, G_OBJECT (info->progress),
+                      GIMP_MESSAGE_WARNING,
+                      /* TODO: localize after string freeze. */
+                      "XCF Warning: the filter \"%s\" (%s) was discarded. %s",
+                      filter->name, filter->operation_name, error->message);
+      else
+        gimp_message (info->gimp, G_OBJECT (info->progress),
+                      GIMP_MESSAGE_WARNING,
+                      /* TODO: localize after string freeze. */
+                      "XCF Warning: an unnamed filter (%s) was discarded. %s",
+                      filter->operation_name, error->message);
+      g_clear_error (&error);
 
       return filter;
     }
@@ -4218,27 +4202,6 @@ xcf_load_effect (XcfInfo      *info,
     {
       xcf_read_string (info, &string, 1);
       filter->op_version = string;
-    }
-
-  if (! gegl_has_operation (filter->operation_name) ||
-      ! g_strcmp0 (filter->operation_name, "gegl:nop"))
-    {
-      filter->unsupported_operation = TRUE;
-
-      if (! g_strcmp0 (filter->operation_name, "gegl:nop"))
-        gimp_message (info->gimp, G_OBJECT (info->progress),
-                      GIMP_MESSAGE_WARNING,
-                      "XCF Warning: A filter was saved as a "
-                      "gegl:nop. This should not happen. Please "
-                      "report this to the developers.");
-      else
-        gimp_message (info->gimp, G_OBJECT (info->progress),
-                      GIMP_MESSAGE_WARNING,
-                      "XCF Warning: the \"%s\" (%s) filter is "
-                      "not installed. It was discarded.",
-                      filter->name, filter->operation_name);
-
-      return filter;
     }
 
   if (filter->op_version &&

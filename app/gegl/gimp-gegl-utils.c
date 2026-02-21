@@ -31,6 +31,7 @@
 
 #include "gimp-gegl-types.h"
 
+#include "core/gimperror.h"
 #include "core/gimppattern.h"
 #include "core/gimpprogress.h"
 
@@ -43,12 +44,17 @@
 
 static gboolean   gimp_gegl_op_blacklisted    (const gchar        *name,
                                                const gchar        *categories,
-                                               gboolean            block_gimp_ops);
+                                               gboolean            block_gimp_ops,
+                                               GError            **error);
 static GList    * gimp_gegl_get_op_subclasses (GType               type,
                                                GList              *classes,
                                                gboolean            block_gimp_ops);
 static gint       gimp_gegl_compare_op_names  (GeglOperationClass *a,
                                                GeglOperationClass *b);
+
+
+/* Comes from gegl/operation/gegl-operations.h which is not public. */
+GType gegl_operation_gtype_from_name (const gchar *name);
 
 
 /*  public functions  */
@@ -65,6 +71,34 @@ gimp_gegl_get_op_classes (gboolean block_gimp_ops)
                             gimp_gegl_compare_op_names);
 
   return operations;
+}
+
+gboolean
+gimp_gegl_op_nde_allowed (const gchar  *name,
+                          GError      **error)
+{
+  GType               op_type;
+  GeglOperationClass *klass;
+  const gchar        *categories;
+
+  g_return_val_if_fail (error != NULL && *error == NULL, FALSE);
+
+  if (name == NULL || strlen (name) == 0)
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, "the filter has no name.");
+      return FALSE;
+    }
+  else if (! gegl_has_operation (name))
+    {
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED, "the filter \"%s\" is not installed.", name);
+      return FALSE;
+    }
+
+  op_type    = gegl_operation_gtype_from_name (name);
+  klass      = GEGL_OPERATION_CLASS (g_type_class_ref (op_type));
+  categories = gegl_operation_class_get_key (klass, "categories");
+
+  return ! gimp_gegl_op_blacklisted (name, categories, FALSE, error);
 }
 
 GType
@@ -474,9 +508,10 @@ gimp_gegl_buffer_set_extent (GeglBuffer          *buffer,
 /*  private functions  */
 
 static gboolean
-gimp_gegl_op_blacklisted (const gchar *name,
-                          const gchar *categories_str,
-                          gboolean     block_gimp_ops)
+gimp_gegl_op_blacklisted (const gchar  *name,
+                          const gchar  *categories_str,
+                          gboolean      block_gimp_ops,
+                          GError      **error)
 {
   static const gchar * const category_blacklist[] =
   {
@@ -511,6 +546,7 @@ gimp_gegl_op_blacklisted (const gchar *name,
     "gegl:map-relative", /* pointless */
     "gegl:matting-global", /* used in the foreground select tool */
     "gegl:matting-levin", /* used in the foreground select tool */
+    "gegl:nop", /* pointless */
     "gegl:opacity", /* poinless */
     "gegl:pack", /* pointless */
     "gegl:path",
@@ -526,44 +562,90 @@ gimp_gegl_op_blacklisted (const gchar *name,
     "gegl:wavelet-blur", /* we use gimp's op wavelet-decompose */
   };
 
-  gchar **categories;
+  GType   op_type;
   gint    i;
 
   /* Operations with no name are abstract base classes */
   if (! name)
     return TRUE;
 
+  g_return_val_if_fail (error == NULL || *error == NULL, TRUE);
+
   /* use this flag to include all ops for testing */
   if (g_getenv ("GIMP_TESTING_NO_GEGL_BLACKLIST"))
     return FALSE;
 
   if (block_gimp_ops && g_str_has_prefix (name, "gimp"))
-    return TRUE;
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           "Filters in namespace \"gimp:\" are hidden.");
+      return TRUE;
+    }
 
   for (i = 0; i < G_N_ELEMENTS (name_blacklist); i++)
     {
       if (! strcmp (name, name_blacklist[i]))
-        return TRUE;
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               "The filter is hidden.");
+          return TRUE;
+        }
     }
 
-  if (! categories_str)
-    return FALSE;
-
-  categories = g_strsplit (categories_str, ":", 0);
-
-  for (i = 0; i < G_N_ELEMENTS (category_blacklist); i++)
+  if (g_strcmp0 (name, "gegl:gegl") == 0)
     {
-      gint j;
-
-      for (j = 0; categories[j]; j++)
-        if (! strcmp (categories[j], category_blacklist[i]))
-          {
-            g_strfreev (categories);
-            return TRUE;
-          }
+      if (g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL)
+        {
+          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                       "%s\n%s", "The filter is unsafe.",
+                       "For development purpose, set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.");
+          return TRUE;
+        }
+      else
+        {
+          return FALSE;
+        }
     }
 
-  g_strfreev (categories);
+  if (categories_str)
+    {
+      gchar **categories;
+
+      categories = g_strsplit (categories_str, ":", 0);
+
+      for (i = 0; i < G_N_ELEMENTS (category_blacklist); i++)
+        {
+          gint j;
+
+          for (j = 0; categories[j]; j++)
+            if (! strcmp (categories[j], category_blacklist[i]))
+              {
+                g_strfreev (categories);
+                g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                             "Filters from category \"%s\" are hidden.",
+                             category_blacklist[i]);
+                return TRUE;
+              }
+        }
+
+      g_strfreev (categories);
+    }
+
+  op_type = gegl_operation_gtype_from_name (name);
+  /* Forbid filters which directly write into files. These should
+   * not be creatable through GIMP UI, but just in case someone
+   * builds one such XCF file (maliciously or by mistake/through a
+   * bug), let's prevent this filter to overwrite random files on
+   * load.
+   * Most of these sink ops are in group "output", but double-checking
+   * is not a bad thing here.
+   */
+  if (g_type_is_a (op_type, GEGL_TYPE_OPERATION_SINK))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           "The filter is unsafe.");
+      return TRUE;
+    }
 
   return FALSE;
 }
@@ -589,7 +671,7 @@ gimp_gegl_get_op_subclasses (GType     type,
 
   categories = gegl_operation_class_get_key (klass, "categories");
 
-  if (! gimp_gegl_op_blacklisted (klass->name, categories, block_gimp_ops))
+  if (! gimp_gegl_op_blacklisted (klass->name, categories, block_gimp_ops, NULL))
     classes = g_list_prepend (classes, klass);
 
   for (i = 0; i < n_ops; i++)

@@ -22,6 +22,8 @@
 
 
 GList       * gimp_gegl_get_op_classes                (gboolean             block_gimp_ops);
+gboolean      gimp_gegl_op_nde_allowed                (const gchar         *name,
+                                                       GError             **error);
 
 GType         gimp_gegl_get_op_enum_type              (const gchar         *operation,
                                                        const gchar         *property);
