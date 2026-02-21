@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-12-07 18:46+0000\n"
-"PO-Revision-Date: 2025-12-24 12:19+0100\n"
+"PO-Revision-Date: 2026-02-21 18:24+0100\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -1735,7 +1735,7 @@ msgstr "Нормално (напред)"
 #: libgimpbase/gimpbaseenums.c:1900
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
-msgstr "Поправяне (назад)"
+msgstr "Компенсиращо (назад)"
 
 #: libgimpbase/gimpbaseenums.c:1931
 msgctxt "transform-resize"
