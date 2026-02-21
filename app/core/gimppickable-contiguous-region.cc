@@ -133,7 +133,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                                          gint                 x,
                                          gint                 y)
 {
-  GeglBuffer    *src_buffer;
+  GeglBuffer    *src_buffer = NULL;
   GeglBuffer    *mask_buffer;
   const Babl    *format;
   GeglRectangle  extent;
@@ -184,6 +184,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
 
       GIMP_TIMER_END("foo");
     }
+  g_clear_object (&src_buffer);
 
   return mask_buffer;
 }
@@ -202,7 +203,7 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
    *  fuzzy_select.  Modify the pickable's mask to reflect the
    *  additional selection
    */
-  GeglBuffer *src_buffer;
+  GeglBuffer *src_buffer = NULL;
   GeglBuffer *mask_buffer;
   const Babl *format;
   gint        n_components;
@@ -283,6 +284,7 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
             }
         }
     });
+  g_clear_object (&src_buffer);
 
   return mask_buffer;
 }
