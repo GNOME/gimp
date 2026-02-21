@@ -661,11 +661,16 @@ gimp-win-eol:
       variables:
         OPT_PREFIX: /opt/homebrew
         VARIANT: -homebrew
+  parallel:
+    matrix:
+      - ARCH: [arm64, x86_64]
   tags:
     - macos
   variables:
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
+    - softwareupdate --install-rosetta --agree-to-license
+    - arch -${ARCH} /bin/zsh
     - export GIMP_PREFIX="$PWD/_install-$(uname -m)"
     - export PATH="$OPT_PREFIX/bin:$PATH"
   timeout: 150m
@@ -681,53 +686,79 @@ gimp-win-eol:
 - printf "\e[0Ksection_end:`date +%s`:macos_environ\r\e[0K\n"
 
 deps-macos-inhouse-part1:
-  #This splitted job is needed to rebuild 'vala' in time when it is bumped
+  #This splitted job is needed to rebuild 'gettext' in time when it is bumped
   extends: .macos-inhouse
   stage: dependencies
   cache:
-    - key: $CI_PROJECT_NAMESPACE
+    - key: $CI_PROJECT_NAMESPACE-$ARCH
       paths:
-        - macports-cached
+        - macports-cached-$ARCH
       policy: pull
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
-    - zsh build/macos/1_build-deps-macports.sh --part1
+    - arch -${ARCH} /bin/zsh -x build/macos/1_build-deps-macports.sh --part1
   artifacts:
     paths:
-      - macports
+      - macports-$ARCH
     expire_in: 2 hours
 
 deps-macos-inhouse-part2:
-  #This splitted job is needed to rebuild 'rust' in time when it is bumped
+  #This splitted job is needed to rebuild 'gi-docgen' in time when it is bumped
   extends: .macos-inhouse
   needs: ["deps-macos-inhouse-part1"]
   stage: dependencies
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
-    - zsh build/macos/1_build-deps-macports.sh --part2
+    - arch -${ARCH} /bin/zsh -x build/macos/1_build-deps-macports.sh --part2
   artifacts:
     paths:
-      - macports
+      - macports-$ARCH
+    expire_in: 2 hours
+
+deps-macos-inhouse-part3:
+  #This splitted job is needed to rebuild 'vala' in time when it is bumped
+  extends: .macos-inhouse
+  needs: ["deps-macos-inhouse-part2"]
+  stage: dependencies
+  script:
+    # Do not call sh since it is old bash on macOS, not the default zsh
+    - arch -${ARCH} /bin/zsh -x build/macos/1_build-deps-macports.sh --part3
+  artifacts:
+    paths:
+      - macports-$ARCH
+    expire_in: 2 hours
+
+deps-macos-inhouse-part4:
+  #This splitted job is needed to rebuild 'rust' in time when it is bumped
+  extends: .macos-inhouse
+  needs: ["deps-macos-inhouse-part3"]
+  stage: dependencies
+  script:
+    # Do not call sh since it is old bash on macOS, not the default zsh
+    - arch -${ARCH} /bin/zsh -x build/macos/1_build-deps-macports.sh --part4
+  artifacts:
+    paths:
+      - macports-$ARCH
     expire_in: 2 hours
 
 deps-macos-inhouse:
   extends: .macos-inhouse
   needs:
-    - job: deps-macos-inhouse-part2
+    - job: deps-macos-inhouse-part4
       #to allow running the Homebrew builds which use precompiled binaries
       optional: true
   stage: dependencies
   cache:
     - key: $CI_PROJECT_NAMESPACE
       paths:
-        - macports-cached
+        - macports-cached-$ARCH
       policy: push
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
-    - zsh build/macos/1_build-deps-macports.sh
+    - arch -${ARCH} /bin/zsh -x build/macos/1_build-deps-macports.sh
   artifacts:
     paths:
-      - macports
+      - macports-$ARCH
       - _install-*
       # The full build dir is needed due to its .o for .dSYM creation on next job
       - babl/_build-*
@@ -742,7 +773,7 @@ gimp-macos-inhouse:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
-    - zsh build/macos/2_build-gimp-macports.sh
+    - arch -${ARCH} /bin/zsh -x build/macos/2_build-gimp-macports.sh
   artifacts:
     paths:
       - gimp-*.app
