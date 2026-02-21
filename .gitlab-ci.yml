@@ -630,22 +630,25 @@ gimp-win:
       variables:
         OPT_PREFIX: /opt/macports
         DMG_OPTION: '-Ddmg=true'
-    - if: '($GIMP_CI_MESON_APPLECLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_APPLECLANG.*/) && $CI_JOB_NAME !~ /.*-part.*/ && $CI_JOB_NAME !~ /.*dist-mac-.*/'
+    - if: '($GIMP_CI_MESON_APPLECLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_APPLECLANG.*/) && $CI_JOB_NAME !~ /.*-x86_64.*/ && $CI_JOB_NAME !~ /.*dist-mac-.*/'
       variables:
         OPT_PREFIX: /opt/homebrew
         WARN_AS_ERROR_ON_CI: '-Dwerror=true'
         VARIANT: -homebrew
+  parallel:
+    matrix:
+      - ARCH: [arm64, x86_64]
   tags:
     - macos
     - marathon
   variables:
-    ARCH: arm64
     ORKA_RUNNER: tahoe-1
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
-    - export GIMP_PREFIX="$PWD/_install-$(uname -m)"
+    - export GIMP_PREFIX="$PWD/_install-$ARCH"
     - export PATH="$OPT_PREFIX/bin:$PATH"
-  timeout: 4h
+    - if [ "$ARCH" = 'x86_64' ]; then softwareupdate --install-rosetta --agree-to-license; fi
+  timeout: 24h
 
 .macos_environ: &MAC_ENVIRON
 - printf "\e[0Ksection_start:`date +%s`:macos_environ[collapsed=true]\r\e[0KPreparing build environment\n"
@@ -667,7 +670,7 @@ deps-macos-inhouse:
         - macports-cached-$ARCH
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
-    - zsh build/macos/1_build-deps-macports.sh
+    - arch -${ARCH} zsh build/macos/1_build-deps-macports.sh
   artifacts:
     paths:
       - _install-*
@@ -690,7 +693,7 @@ gimp-macos-inhouse:
       policy: pull
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
-    - zsh build/macos/2_build-gimp-macports.sh
+    - arch -${ARCH} zsh build/macos/2_build-gimp-macports.sh
   artifacts:
     paths:
       - gimp-*.app
@@ -998,7 +1001,7 @@ dist-mac-weekly:
     - macos
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
-    - zsh build/macos/dmg/3_dist-gimp-apple.sh
+    - zsh -x build/macos/dmg/3_dist-gimp-apple.sh
   artifacts:
     expose_as: 'macOS dmg'
     paths:
