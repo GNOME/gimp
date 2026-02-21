@@ -2358,6 +2358,7 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
 
         elif run_mode == Gimp.RunMode.INTERACTIVE:
             gi.require_version('GimpUi', '3.0')
+            global GimpUi
             from gi.repository import GimpUi
 
             Gegl.init (None)
