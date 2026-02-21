@@ -649,13 +649,30 @@ gimp-win-eol:
 .macos-inhouse:
   extends: .default
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Macos Dmg.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Macos Dmg.*/'
+    #Developers (on GNOME/gimp namespace) can create arm64 and x64 .dmgs
+    #Non developers (e.g. on MRs), however, can create arm64-only .dmg
+    - if: '$ARCH == "x86_64" && $CI_PROJECT_NAMESPACE != "GNOME"'
+      when: never
+    - if: '($CI_MERGE_REQUEST_LABELS =~ /.*Package:Macos Dmg.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Macos Dmg.*/) && $CI_PROJECT_NAMESPACE == "GNOME" && $CI_JOB_NAME !~ /.*-part.*/'
       interruptible: true
       variables:
+        CACHE_POLICY: 'pull-push'
         OPT_PREFIX: /opt/macports
         DMG_OPTION: '-Ddmg=true'
-    - if: '$GIMP_CI_MACOS != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MACOS.*/'
+    - if: '($GIMP_CI_MACOS != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MACOS.*/) && $CI_PROJECT_NAMESPACE == "GNOME" && $CI_JOB_NAME !~ /.*-part.*/'
       variables:
+        CACHE_POLICY: 'pull-push'
+        OPT_PREFIX: /opt/macports
+        DMG_OPTION: '-Ddmg=true'
+    - if: '($CI_MERGE_REQUEST_LABELS =~ /.*Package:Macos Dmg.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Macos Dmg.*/) && $CI_PROJECT_NAMESPACE != "GNOME"'
+      interruptible: true
+      variables:
+        CACHE_POLICY: 'push'
+        OPT_PREFIX: /opt/macports
+        DMG_OPTION: '-Ddmg=true'
+    - if: '($GIMP_CI_MACOS != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MACOS.*/) && $CI_PROJECT_NAMESPACE != "GNOME"'
+      variables:
+        CACHE_POLICY: 'push'
         OPT_PREFIX: /opt/macports
         DMG_OPTION: '-Ddmg=true'
     - if: '($GIMP_CI_MESON_APPLECLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_APPLECLANG.*/) && $CI_JOB_NAME !~ /.*-part.*/ && $CI_JOB_NAME !~ /.*dist-mac-.*/'
@@ -663,16 +680,19 @@ gimp-win-eol:
         OPT_PREFIX: /opt/homebrew
         WARN_AS_ERROR_ON_CI: '-Dwerror=true'
         VARIANT: -homebrew
+  parallel:
+    matrix:
+      - ARCH: [arm64, x86_64]
   tags:
     - macos
   variables:
-    ARCH: arm64
     ORKA_RUNNER: tahoe-1
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
+    - if [ "$ARCH" = 'x86_64' ]; then softwareupdate --install-rosetta --agree-to-license; arch -${ARCH} /bin/zsh; fi
     - export GIMP_PREFIX="$PWD/_install-$(uname -m)"
     - export PATH="$OPT_PREFIX/bin:$PATH"
-  timeout: 150m
+  timeout: 24h
 
 .macos_environ: &MAC_ENVIRON
 - printf "\e[0Ksection_start:`date +%s`:macos_environ[collapsed=true]\r\e[0KPreparing build environment\n"
@@ -722,15 +742,18 @@ deps-macos-inhouse:
       #to allow running the Homebrew builds which use precompiled binaries
       optional: true
   stage: dependencies
+  tags:
+    - macos
+    - marathon
   cache:
     - key: $CI_PROJECT_NAMESPACE-$ARCH
       unprotect: true
       paths:
         - macports-cached-$ARCH
-      policy: push
+      policy: $CACHE_POLICY
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
-    - zsh build/macos/1_build-deps-macports.sh
+    - arch -${ARCH} zsh build/macos/1_build-deps-macports.sh
   artifacts:
     paths:
       - macports-$ARCH
@@ -748,7 +771,7 @@ gimp-macos-inhouse:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
-    - zsh build/macos/2_build-gimp-macports.sh
+    - arch -${ARCH} zsh build/macos/2_build-gimp-macports.sh
   artifacts:
     paths:
       - gimp-*.app

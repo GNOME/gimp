@@ -50,6 +50,6 @@ printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
 
 # Bundle GIMP
 printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0K$(if ! grep -q "dmg=true" meson-logs/meson-log.txt; then echo "Installing GIMP as non-relocatable on GIMP_PREFIX"; else echo "Creating .app bundle"; fi)\n"
-ninja install > ninja_install.log 2>&1 || { cat ninja_install.log; exit 1; };
+ninja install
 cd ..
 printf "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K\n"
