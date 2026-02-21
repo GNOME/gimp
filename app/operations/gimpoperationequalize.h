@@ -41,6 +41,7 @@ struct _GimpOperationEqualize
   GimpHistogram            *histogram;
   gdouble                  *values;
   gint                      n_bins;
+  GMutex                    mutex;
 };
 
 struct _GimpOperationEqualizeClass
