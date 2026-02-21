@@ -149,7 +149,7 @@ stages:
 deps-debian-nonreloc:
   extends: .debian-nonreloc
   stage: dependencies
-  image: quay.io/buildah/stable
+  image: quay.io/containers/aio:latest
   variables:
     GIT_STRATEGY: none
   script:
@@ -257,7 +257,8 @@ deps-debian-nonreloc:
     - echo "RUN printf \"\e[0Ksection_end:\`date +%s\`:gegl_build\r\e[0K\n\"" >> Dockerfile2;
     #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
     - printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Debian $DEB_VERSION\n"
-    - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile --tag $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h 2>&1 | grep -v STEP && buildah push --log-level error --compression-format zstd --compression-level 3 --force-compression $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} 2>&1 | grep -v STEP
+    - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile --tag $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h --iidfile new_image_id.txt 2>&1 | grep -v STEP
+    - if [ "$(skopeo inspect --config "docker://$CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" 2>/dev/null | sed -n '/"diff_ids"/,/\]/p' | grep -o 'sha256:[a-f0-9]*' | tr '\n' ',' || echo "none")" != "$(buildah inspect --format '{{if .OCIv1.RootFS}}{{range .OCIv1.RootFS.DiffIDs}}{{.}},{{end}}{{else}}{{range .Docker.RootFS.DiffIDs}}{{.}},{{end}}{{end}}' "$(cat new_image_id.txt)")" ]; then buildah push --log-level error --compression-format zstd --compression-level 3 --force-compression $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} 2>&1 | grep -v STEP; fi
     - printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
     - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile2 --no-cache 2>&1 | grep -v STEP
   artifacts:
@@ -456,7 +457,7 @@ gimp-flatpak:
 deps-snap:
   extends: .snap
   stage: dependencies
-  image: quay.io/buildah/stable
+  image: quay.io/containers/aio:latest
   script:
     - export BUILDAH_FORMAT=docker
     - export BUILDAH_ISOLATION=chroot
@@ -480,7 +481,8 @@ deps-snap:
       fi
     - echo "RUN sh build/linux/snap/1_build-deps-snapcraft.sh" >> Dockerfile2;
     #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
-    - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile --tag $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h 2>&1 | grep -v STEP && buildah push --log-level error --compression-format zstd --compression-level 3 --force-compression $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} 2>&1 | grep -v STEP
+    - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile --tag $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h --iidfile new_image_id.txt 2>&1 | grep -v STEP
+    - if [ "$(skopeo inspect --config "docker://$CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}" 2>/dev/null | sed -n '/"diff_ids"/,/\]/p' | grep -o 'sha256:[a-f0-9]*' | tr '\n' ',' || echo "none")" != "$(buildah inspect --format '{{if .OCIv1.RootFS}}{{range .OCIv1.RootFS.DiffIDs}}{{.}},{{end}}{{else}}{{range .Docker.RootFS.DiffIDs}}{{.}},{{end}}{{end}}' "$(cat new_image_id.txt)")" ]; then buildah push --log-level error --compression-format zstd --compression-level 3 --force-compression $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} 2>&1 | grep -v STEP; fi
     - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile2 --no-cache 2>&1 | grep -v STEP
   artifacts:
     paths:
