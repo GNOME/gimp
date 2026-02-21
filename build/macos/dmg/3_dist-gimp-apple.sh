@@ -82,7 +82,7 @@ printf "\e[0Ksection_end:`date +%s`:mac_info\r\e[0K\n"
 
 
 # 3. PREPARE FILES
-for APP in $supported_archs; do
+for APP in $(echo "$supported_archs" | tr ' ' '\n'); do
 export ARCH=$(echo $APP | sed -e 's|gimp-||' -e 's|./||' -e 's|.app||')
 printf "\e[0Ksection_start:`date +%s`:${ARCH}_files[collapsed=true]\r\e[0KPreparing GIMP files in $ARCH .dmg\n"
 ## Create temporary .dmg
