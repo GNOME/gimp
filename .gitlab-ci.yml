@@ -154,6 +154,7 @@ deps-debian-nonreloc:
     GIT_STRATEGY: none
   script:
     - export BUILDAH_FORMAT=docker
+    - export BUILDAH_ISOLATION=chroot
     - export STORAGE_DRIVER=vfs
     - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     # Install deps
@@ -458,6 +459,7 @@ deps-snap:
   image: quay.io/buildah/stable
   script:
     - export BUILDAH_FORMAT=docker
+    - export BUILDAH_ISOLATION=chroot
     - export STORAGE_DRIVER=vfs
     - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     # Install deps
