@@ -1337,7 +1337,7 @@ gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
 {
   g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
 
-  if (rect && filter->crop_enabled)
+  if (rect)
     {
       /* Some filters have built-in width/height properties that limit
        * the buffer size. If they have one in those roles, we can update
@@ -1373,8 +1373,12 @@ gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
       gimp_drawable_filter_set_clip (filter, FALSE);
       gimp_drawable_filter_set_region (filter, GIMP_FILTER_REGION_SELECTION);
       gimp_drawable_filter_set_region (filter, GIMP_FILTER_REGION_DRAWABLE);
-      gimp_drawable_filter_set_crop (filter, NULL, FALSE);
-      gimp_drawable_filter_set_crop (filter, rect, FALSE);
+
+      if (filter->crop_enabled)
+        {
+          gimp_drawable_filter_set_crop (filter, NULL, FALSE);
+          gimp_drawable_filter_set_crop (filter, rect, FALSE);
+        }
     }
 }
 
