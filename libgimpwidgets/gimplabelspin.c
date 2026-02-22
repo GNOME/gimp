@@ -167,7 +167,8 @@ gimp_label_spin_class_init (GimpLabelSpinClass *klass)
                                    g_param_spec_int ("digits", NULL,
                                                      "The number of decimal places to display",
                                                      -1, G_MAXINT, -1,
-                                                     GIMP_PARAM_READWRITE));
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -241,9 +242,9 @@ gimp_label_spin_set_property (GObject      *object,
         }
       break;
     case PROP_DIGITS:
+      priv->digits = g_value_get_int (value);
       if (priv->spinbutton)
         {
-          priv->digits = g_value_get_int (value);
           gimp_label_spin_update_settings (spin);
         }
       break;
@@ -356,7 +357,9 @@ gimp_label_spin_update_settings (GimpLabelSpin *spin)
   if (adjust_step && digits == 0 && step < 1.0)
     {
       step = 1.0;
-      if (page < step)
+      if (step > upper-lower)
+        step = upper-lower;
+      if (page < step || page > upper-lower)
         page = step;
     }
 
