@@ -1,36 +1,27 @@
 <!-- ⚠️ IMPORTANT: READ ME! ⚠️
-This is the default template for bug reports.
-For feature requests, performance issues and security reports, please switch instead to the appropriate template in the "Choose a template" list.
+This is the default template for BUG REPORTS.
+For feature requests, performance issues and security reports, please see:
+https://testing.gimp.org/bugs/report.html#select-the-issue-template -->
 
-No AI-generated reports allowed! Please actually test and verify issues
-and reproduction steps yourself before posting.
-
-It is important that you fill all the fields of the template. -->
+<!-- There are a few issues we get reports about quite frequently. Please see:
+https://gimp.org/bugs/#checking-existing-reports -->
 
 ### Environment/Versions
 
-- GIMP version number:
+- GIMP version number: <!-- Please see: https://testing.gimp.org/bugs/report.html#ensure-to-use-the-latest-gimp -->
 - Package: <!--[Flatpak? Snap? Installer from gimp.org? MS Store package? If another installer, tell us where from] (write it after the > symbol)-->
 - Operating System: <!--[Windows? macOS? Linux? All? Add OS versions too] (write it after the > symbol) -->
 - (if Linux) Display system: <!--[X11? Wayland? Which compositor and version?] (write it after the > symbol) -->
 
-<!-- Note: you are expected to have verified the bug still exists
-either in the last stable version of GIMP or on updated development code
-(master branch).
-
-There are a few issues we get reports about quite frequently. If you want to check if what you have encountered is among these, please see: 
-https://gitlab.gnome.org/GNOME/gimp/-/issues/?sort=updated_desc&state=all&label_name%5B%5D=Duplication%20target&first_page_size=100 -->
-
 ### Description of the bug
 
-<!-- Please describe your issue with details. By "details" we mean:
-- "Be considerate and respectful". This is our main rule.
-  E.g. avoid negative emotional writing which only generates more upsetting
-  interactions.
-- Stay on topic by writing only one bug per report created.
-- Add full (not cropped) screenshots or other files using the clip button on GitLab. -->
+<!-- Please describe your issue here, then fill the rest of the template. Please see:
+https://testing.gimp.org/bugs/report.html#fill-all-the-issue-template -->
 
 ### Reproduction
+
+<!-- Again, it is important that you fill all the fields of the template. Please see:
+https://testing.gimp.org/bugs/report.html#reproduce-the-bug-on-latest-gimp -->
 
 Is the bug reproducible? <!--[Always / Randomly / Happened only once ] (write it after the > symbol)-->
 
@@ -48,4 +39,5 @@ Actual result:
 
 ### Additional information
 
-If you have a backtrace for a crash or a warning, paste it here.
+<!-- If you have a backtrace or an useful file, paste it here. Please see:
+https://testing.gimp.org/bugs/report.html#fill-all-the-issue-template -->
