@@ -1437,7 +1437,7 @@ gimp_display_shell_push_overlay_inside_canvas (GimpDisplayShell *shell,
   gdouble tlx, tly, brx, bry;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GTK_IS_WIDGET (shell));
+  g_return_if_fail (GTK_IS_WIDGET (child));
 
   ulimit = limits[0];
   rlimit = limits[1];
