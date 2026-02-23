@@ -1355,7 +1355,6 @@ gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
                                             "output-extent"))
             {
               gegl_node_set (filter->operation, "width", rect->width, NULL);
-              filter->filter_area.width  = rect->width;
             }
         }
       if (gegl_pspec_height != NULL)
@@ -1365,9 +1364,10 @@ gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
                                             "output-extent"))
             {
               gegl_node_set (filter->operation, "height", rect->height, NULL);
-              filter->filter_area.height = rect->height;
             }
         }
+      filter->filter_area.width  = rect->width;
+      filter->filter_area.height = rect->height;
 
       gimp_drawable_filter_set_clip (filter, TRUE);
       gimp_drawable_filter_set_clip (filter, FALSE);
