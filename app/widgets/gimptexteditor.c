@@ -191,6 +191,8 @@ gimp_text_editor_new (const gchar     *title,
   style_editor = gimp_text_style_editor_new (gimp, text, text_buffer,
                                              gimp_data_factory_get_container (gimp->font_factory),
                                              xres, yres);
+  gtk_widget_set_visible (GIMP_TEXT_STYLE_EDITOR (style_editor)->dnd_handle,
+                          FALSE);
   gtk_box_pack_start (GTK_BOX (content_area), style_editor, FALSE, FALSE, 0);
   gtk_widget_show (style_editor);
 
