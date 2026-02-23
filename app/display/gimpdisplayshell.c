@@ -1304,11 +1304,11 @@ gimp_display_shell_overlay_allocate (GtkWidget               *child,
                                           &tlx, &tly,
                                           &brx, &bry);
 
-  /* If the overlay is entirely outside the canvas, we push it inside the canvas */
-  if (tlx > rlimit ||
-      tly > blimit ||
-      brx < llimit ||
-      bry < ulimit)
+  /* If the overlay is even partially outside the canvas, we push it inside the canvas */
+  if (tlx < llimit ||
+      tly < ulimit ||
+      brx > rlimit ||
+      bry > blimit)
     {
       gimp_display_shell_push_overlay_inside_canvas (overlay->shell,
                                                      child,
@@ -1449,7 +1449,7 @@ gimp_display_shell_push_overlay_inside_canvas (GimpDisplayShell *shell,
   brx = corners[2];
   bry = corners[3];
 
-  if (brx < llimit)
+  if (tlx < llimit)
     {
       gimp_display_shell_move_overlay (shell,
                                        child,
@@ -1457,7 +1457,7 @@ gimp_display_shell_push_overlay_inside_canvas (GimpDisplayShell *shell,
                                        GIMP_HANDLE_ANCHOR_NORTH_WEST,
                                        0, 0);
     }
-  if (bry < ulimit)
+  if (tly < ulimit)
     {
       gimp_display_shell_move_overlay (shell,
                                        child,
@@ -1465,7 +1465,7 @@ gimp_display_shell_push_overlay_inside_canvas (GimpDisplayShell *shell,
                                        GIMP_HANDLE_ANCHOR_NORTH_WEST,
                                        0, 0);
     }
-  if (tlx > rlimit)
+  if (brx > rlimit)
     {
       gimp_display_shell_move_overlay (shell,
                                        child,
@@ -1473,7 +1473,7 @@ gimp_display_shell_push_overlay_inside_canvas (GimpDisplayShell *shell,
                                        GIMP_HANDLE_ANCHOR_SOUTH_EAST,
                                        0, 0);
     }
-  if (tly > blimit)
+  if (bry > blimit)
     {
       gimp_display_shell_move_overlay (shell,
                                        child,
