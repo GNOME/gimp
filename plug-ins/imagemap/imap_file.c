@@ -32,11 +32,11 @@
 
 
 static void
-open_cb (GtkWidget *dialog,
-         gint       response_id,
-         gpointer   data)
+open_cb (GtkNativeDialog *dialog,
+         gint             response_id,
+         gpointer         data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar *filename;
 
@@ -53,7 +53,7 @@ open_cb (GtkWidget *dialog,
       g_free (filename);
     }
 
-  gtk_widget_hide (dialog);
+  gtk_native_dialog_hide (dialog);
 }
 
 void
@@ -61,43 +61,44 @@ do_file_open_dialog (GSimpleAction *action,
                      GVariant      *parameter,
                      gpointer       user_data)
 {
-  static GtkWidget *dialog;
+  static GtkFileChooserNative *dialog;
+  GtkFileFilter               *filter;
 
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Load Image Map"),
+        gtk_file_chooser_native_new (_("Load Image Map"),
                                      NULL,
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
+                                     _("_Open"), _("_Cancel"));
 
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Open"),   GTK_RESPONSE_OK,
+      filter = gtk_file_filter_new ();
+      gtk_file_filter_set_name (filter, _("All Files"));
+      gtk_file_filter_add_pattern (filter, "*");
+      gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
 
-                                     NULL);
+      filter = gtk_file_filter_new ();
+      gtk_file_filter_set_name (filter, _("Map file (*.map)"));
+      gtk_file_filter_add_pattern (filter, "*.map");
+      gtk_file_filter_add_pattern (filter, "*.MAP");
+      gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
 
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
+      gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
 
-      g_signal_connect (dialog, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &dialog);
       g_signal_connect (dialog, "response",
                         G_CALLBACK (open_cb),
                         user_data);
     }
 
-  gtk_window_present (GTK_WINDOW (dialog));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (dialog));
 }
 
 static void
-save_cb (GtkWidget *dialog,
-         gint       response_id,
-         gpointer   data)
+save_cb (GtkNativeDialog *dialog,
+         gint             response_id,
+         gpointer         data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar *filename;
 
@@ -107,7 +108,7 @@ save_cb (GtkWidget *dialog,
       g_free (filename);
     }
 
-  gtk_widget_hide (dialog);
+  gtk_native_dialog_hide (dialog);
 }
 
 void
@@ -115,33 +116,27 @@ do_file_save_as_dialog (GSimpleAction *action,
                         GVariant      *parameter,
                         gpointer       user_data)
 {
-  static GtkWidget *dialog;
+  static GtkFileChooserNative *dialog;
+  GtkFileFilter               *filter;
 
   if (! dialog)
     {
       gchar *filename;
 
-      dialog = gtk_file_chooser_dialog_new (_("Save Image Map"),
+      dialog = gtk_file_chooser_native_new (_("Save Image Map"),
                                             NULL,
                                             GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                            _("_Save"),   GTK_RESPONSE_OK,
-
-                                            NULL);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
+                                            _("_Save"), _("_Cancel"));
 
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                       TRUE);
 
-      g_signal_connect (dialog, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &dialog);
+      filter = gtk_file_filter_new ();
+      gtk_file_filter_set_name (filter, "Map (*.map)");
+      gtk_file_filter_add_pattern (filter, "*.map");
+      gtk_file_filter_add_pattern (filter, "*.MAP");
+      gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+
       g_signal_connect (dialog, "response",
                         G_CALLBACK (save_cb),
                         dialog);
@@ -159,7 +154,7 @@ do_file_save_as_dialog (GSimpleAction *action,
         }
     }
 
-  gtk_window_present (GTK_WINDOW (dialog));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (dialog));
 }
 
 void

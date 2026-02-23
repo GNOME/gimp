@@ -33,14 +33,14 @@ struct _GimpTextEditor
   GimpDialog         parent_instance;
 
   /*<  private  >*/
-  GimpTextDirection  base_dir;
-  gchar             *font_name;
+  GimpTextDirection     base_dir;
+  gchar                *font_name;
 
-  GtkWidget         *view;
-  GtkWidget         *font_toggle;
-  GtkWidget         *file_dialog;
-  GimpUIManager     *ui_manager;
-  GtkCssProvider    *font_css;
+  GtkWidget            *view;
+  GtkWidget            *font_toggle;
+  GtkFileChooserNative *file_dialog;
+  GimpUIManager        *ui_manager;
+  GtkCssProvider       *font_css;
 };
 
 struct _GimpTextEditorClass

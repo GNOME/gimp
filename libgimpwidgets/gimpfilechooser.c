@@ -68,7 +68,7 @@ struct _GimpFileChooser
   GtkWidget             *button;
   GtkWidget             *entry;
 
-  GtkWidget             *dialog;
+  GtkFileChooserNative  *dialog;
 
   gboolean               invalid_file;
 };
@@ -88,7 +88,7 @@ static void             gimp_file_chooser_get_property            (GObject      
 
 static void            gimp_file_chooser_button_selection_changed (GtkFileChooser      *widget,
                                                                    GimpFileChooser     *chooser);
-static void            gimp_file_chooser_dialog_response          (GtkDialog           *dialog,
+static void            gimp_file_chooser_dialog_response          (GtkNativeDialog     *dialog,
                                                                    gint                 response_id,
                                                                    GimpFileChooser     *chooser);
 static void            gimp_file_chooser_button_clicked           (GtkButton           *button,
@@ -382,7 +382,7 @@ gimp_file_chooser_set_action (GimpFileChooser       *chooser,
   if (chooser->entry)
     gtk_widget_destroy (chooser->entry);
   if (chooser->dialog)
-    gtk_widget_destroy (chooser->dialog);
+    gtk_native_dialog_destroy (GTK_NATIVE_DIALOG (chooser->dialog));
   chooser->button = NULL;
   chooser->entry  = NULL;
   chooser->dialog = NULL;
@@ -670,7 +670,7 @@ gimp_file_chooser_button_selection_changed (GtkFileChooser  *widget,
 }
 
 static void
-gimp_file_chooser_dialog_response (GtkDialog       *dialog,
+gimp_file_chooser_dialog_response (GtkNativeDialog *dialog,
                                    gint             response_id,
                                    GimpFileChooser *chooser)
 {
@@ -678,7 +678,7 @@ gimp_file_chooser_dialog_response (GtkDialog       *dialog,
 
   switch (response_id)
     {
-    case GTK_RESPONSE_OK:
+    case GTK_RESPONSE_ACCEPT:
       file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
       gimp_file_chooser_set_file (chooser, file);
       break;
@@ -688,7 +688,7 @@ gimp_file_chooser_dialog_response (GtkDialog       *dialog,
       break;
     }
 
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_native_dialog_destroy (dialog);
   chooser->dialog = NULL;
 
   g_clear_object (&file);
@@ -702,24 +702,22 @@ gimp_file_chooser_button_clicked (GtkButton       *button,
 
   if (chooser->dialog)
     {
-      gtk_window_present (GTK_WINDOW (chooser->dialog));
+      gtk_native_dialog_show (GTK_NATIVE_DIALOG (chooser->dialog));
       return;
     }
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (chooser));
-  chooser->dialog = gtk_file_chooser_dialog_new ((const gchar *) chooser->title,
+  chooser->dialog = gtk_file_chooser_native_new ((const gchar *) chooser->title,
                                                  GTK_WINDOW (toplevel),
                                                  (GtkFileChooserAction) chooser->action,
-                                                 _("_OK"),     GTK_RESPONSE_OK,
-                                                 _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                                 NULL);
+                                                 _("_OK"), _("_Cancel"));
   if (chooser->file)
     gtk_file_chooser_set_file (GTK_FILE_CHOOSER (chooser->dialog), chooser->file, NULL);
 
   g_signal_connect (chooser->dialog, "response",
                     G_CALLBACK (gimp_file_chooser_dialog_response),
                     chooser);
-  gtk_widget_set_visible (chooser->dialog, TRUE);
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (chooser->dialog));
 }
 
 static void

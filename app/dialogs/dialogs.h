@@ -22,24 +22,38 @@ extern GimpDialogFactory *global_dialog_factory;
 extern GimpContainer     *global_recent_docks;
 
 
-void        dialogs_init              (Gimp            *gimp);
-void        dialogs_exit              (Gimp            *gimp);
+void        dialogs_init                    (Gimp            *gimp);
+void        dialogs_exit                    (Gimp            *gimp);
 
-void        dialogs_load_recent_docks (Gimp            *gimp);
-void        dialogs_save_recent_docks (Gimp            *gimp);
+void        dialogs_load_recent_docks       (Gimp            *gimp);
+void        dialogs_save_recent_docks       (Gimp            *gimp);
 
-GtkWidget * dialogs_get_toolbox       (void);
+GtkWidget * dialogs_get_toolbox             (void);
 
 
 /* attaching dialogs to arbitrary objects, and detaching them
  * automatically upon destruction
  */
-GtkWidget * dialogs_get_dialog        (GObject         *attach_object,
-                                       const gchar     *attach_key);
-void        dialogs_attach_dialog     (GObject         *attach_object,
-                                       const gchar     *attach_key,
-                                       GtkWidget       *dialog);
-void        dialogs_detach_dialog     (GObject         *attach_object,
-                                       GtkWidget       *dialog);
-void        dialogs_destroy_dialog    (GObject         *attach_object,
-                                       const gchar     *attach_key);
+GtkWidget * dialogs_get_dialog              (GObject         *attach_object,
+                                             const gchar     *attach_key);
+void        dialogs_attach_dialog           (GObject         *attach_object,
+                                             const gchar     *attach_key,
+                                             GtkWidget       *dialog);
+void        dialogs_detach_dialog           (GObject         *attach_object,
+                                             GtkWidget       *dialog);
+void        dialogs_destroy_dialog          (GObject         *attach_object,
+                                             const gchar     *attach_key);
+
+/* Native dialog version of the above */
+GtkNativeDialog * dialogs_get_native_dialog (GObject         *attach_object,
+                                             const gchar     *attach_key);
+
+void        dialogs_attach_native_dialog    (GObject         *attach_object,
+                                             const gchar     *attach_key,
+                                             GtkNativeDialog *dialog);
+
+void        dialogs_detach_native_dialog    (GObject         *attach_object,
+                                             GtkNativeDialog *dialog);
+
+void        dialogs_destroy_native_dialog   (GObject         *attach_object,
+                                             const gchar     *attach_key);

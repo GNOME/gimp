@@ -276,12 +276,12 @@ GIMP_MAIN (PDF_TYPE)
 DEFINE_STD_SET_I18N
 
 
-static gboolean     dnd_remove = TRUE;
-static PdfMultiPage multi_page;
+static gboolean              dnd_remove = TRUE;
+static PdfMultiPage          multi_page;
 
-static GtkTreeModel *model;
-static GtkWidget    *file_choose;
-static gchar        *file_name;
+static GtkTreeModel         *model;
+static GtkFileChooserNative *file_choose;
+static gchar                *file_name;
 
 
 G_DEFINE_QUARK (gimp-plugin-pdf-export-error-quark, gimp_plugin_pdf_export_error)
@@ -1044,12 +1044,10 @@ gui_multi (GimpProcedure       *procedure,
   if (file_name != NULL)
     gtk_entry_set_text (GTK_ENTRY (file_entry), file_name);
   file_browse = gtk_button_new_with_label (_("Browse..."));
-  file_choose = gtk_file_chooser_dialog_new (_("Multipage PDF export"),
+  file_choose = gtk_file_chooser_native_new (_("Multipage PDF export"),
                                              GTK_WINDOW (window),
                                              GTK_FILE_CHOOSER_ACTION_SAVE,
-                                             _("_Save"),   GTK_RESPONSE_OK,
-                                             _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                             NULL);
+                                             _("_Save"), _("_Cancel"));
 
   gtk_box_pack_start (GTK_BOX (file_hbox), file_label, FALSE, FALSE, 0);
   gtk_widget_set_visible (file_label, TRUE);
@@ -1156,18 +1154,20 @@ choose_file_call (GtkWidget *browse_button,
                   gpointer   file_entry)
 {
   GFile *file = g_file_new_for_path (gtk_entry_get_text (GTK_ENTRY (file_entry)));
+  gint   res;
 
   gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (file_choose),
                             g_file_get_uri (file));
 
-  if (gtk_dialog_run (GTK_DIALOG (file_choose)) == GTK_RESPONSE_OK)
+  res = gtk_native_dialog_run (GTK_NATIVE_DIALOG (file_choose));
+  if (res == GTK_RESPONSE_ACCEPT)
     {
       file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (file_choose));
       gtk_entry_set_text (GTK_ENTRY (file_entry), g_file_peek_path (file));
     }
 
   file_name = g_file_get_path (file);
-  gtk_widget_set_visible (file_choose, FALSE);
+  gtk_native_dialog_hide (GTK_NATIVE_DIALOG (file_choose));
 }
 
 /* A function to create the basic GtkTreeModel for the icon view */
