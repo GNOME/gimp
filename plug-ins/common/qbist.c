@@ -827,30 +827,22 @@ static void
 dialog_load (GtkWidget *widget,
              gpointer   data)
 {
-  GtkWidget *parent;
-  GtkWidget *dialog;
+  GtkWidget            *parent;
+  GtkFileChooserNative *dialog;
+  gint                  res;
 
   parent = gtk_widget_get_toplevel (widget);
 
-  dialog = gtk_file_chooser_dialog_new (_("Load QBE File"),
+  dialog = gtk_file_chooser_native_new (_("Load QBE File"),
                                         GTK_WINDOW (parent),
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
-
-                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                        _("_Open"),   GTK_RESPONSE_OK,
-
-                                        NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                            -1);
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+                                        _("_Open"), _("_Cancel"));
 
   if (qbist_info.path)
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
 
-  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
+  res = gtk_native_dialog_run (GTK_NATIVE_DIALOG (dialog));
+  if (res == GTK_RESPONSE_ACCEPT)
     {
       gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
@@ -862,40 +854,39 @@ dialog_load (GtkWidget *widget,
       dialog_update_previews (NULL, -1);
     }
 
-  gtk_widget_destroy (dialog);
+  g_object_unref (dialog);
 }
 
 static void
 dialog_save (GtkWidget *widget,
              gpointer   data)
 {
-  GtkWidget *parent;
-  GtkWidget *dialog;
+  GtkWidget            *parent;
+  GtkFileChooserNative *dialog;
+  GtkFileFilter        *filter;
+  gint                  res;
 
   parent = gtk_widget_get_toplevel (widget);
 
-  dialog = gtk_file_chooser_dialog_new (_("Save as QBE File"),
+  dialog = gtk_file_chooser_native_new (_("Save as QBE File"),
                                         GTK_WINDOW (parent),
                                         GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                        _("_Save"),   GTK_RESPONSE_OK,
-
-                                        NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                            -1);
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+                                        _("_Save"), _("_Cancel"));
 
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                   TRUE);
 
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, "QBE (*.qbe)");
+  gtk_file_filter_add_pattern (filter, "*.qbe");
+  gtk_file_filter_add_pattern (filter, "*.QBE");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+
   if (qbist_info.path)
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
 
-  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
+  res = gtk_native_dialog_run (GTK_NATIVE_DIALOG (dialog));
+  if (res == GTK_RESPONSE_ACCEPT)
     {
       gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
@@ -904,7 +895,7 @@ dialog_save (GtkWidget *widget,
       save_data (qbist_info.path);
     }
 
-  gtk_widget_destroy (dialog);
+  g_object_unref (dialog);
 }
 
 static gboolean
