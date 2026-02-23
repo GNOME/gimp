@@ -892,7 +892,8 @@ dialog_save (GtkWidget *widget,
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                   TRUE);
 
-  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
+  if (qbist_info.path)
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
