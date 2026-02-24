@@ -43,6 +43,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
   GimpLevelsConfig *config;
   GimpHistogram    *histogram;
   GeglNode         *levels;
+  GimpTRCType       trc = GIMP_TRC_LINEAR;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -51,9 +52,9 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), NULL, NULL, NULL, NULL))
     return;
 
-  config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
+  config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, "trc", trc, NULL);
 
-  histogram = gimp_histogram_new (FALSE);
+  histogram = gimp_histogram_new (trc);
   gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
 
   gimp_levels_config_stretch (config, histogram,
