@@ -71,6 +71,7 @@ if [ "$MODE" != '--bundle-only' ]; then
   static_runtime_version_downloaded=$("./runtime-$HOST_ARCH" --appimage-version 2>&1)
   chmod -x "./runtime-$HOST_ARCH"
   if [ "${static_runtime_version_downloaded#*commit/}" != "$(echo "$static_runtime_version_online" | cut -c1-7)" ]; then
+    #Needed partly due to type2-runtime/appimagetool limitations: https://github.com/AppImage/appimagetool/issues/80
     printf '\033[31m(ERROR)\033[0m: Downloaded runtime version differs from the one released online. Please, run again this script.\n'
     exit 1
   fi
