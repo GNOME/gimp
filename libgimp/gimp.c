@@ -241,7 +241,9 @@ gimp_main (GType  plug_in_type,
   {
     time_t   t;
 #ifdef ENABLE_RELOCATABLE_RESOURCES
-    gchar   *plugin_dir;
+    gchar   *plugin_dir = NULL;
+    WCHAR    plugin_dir_utf16[MAX_PATH];
+    WCHAR   *last_slash;
     size_t   codeview_path_len;
     gchar   *codeview_path;
 #endif
@@ -250,22 +252,33 @@ gimp_main (GType  plug_in_type,
     wchar_t *plug_in_backtrace_path_utf16;
 
 #ifdef ENABLE_RELOCATABLE_RESOURCES
-    /* FIXME: https://github.com/jrfonseca/drmingw/issues/91
-     * FIXME: This needs to take into account the plugin path
-    plugin_dir = ???
-    codeview_path_len = strlen (g_getenv ("_NT_SYMBOL_PATH") ? g_getenv ("_NT_SYMBOL_PATH") : "") + strlen (plugin_dir) + 2;
-    codeview_path = g_try_malloc (codeview_path_len);
-    if (codeview_path == NULL)
+    /* FIXME: https://github.com/jrfonseca/drmingw/issues/91 */
+    if (GetModuleFileNameW (NULL, plugin_dir_utf16, MAX_PATH) != 0)
       {
-        g_warning ("Failed to allocate memory");
+        last_slash = wcsrchr (plugin_dir_utf16, L'\\');
+        if (last_slash)
+          *last_slash = L'\0';
+        plugin_dir = g_utf16_to_utf8 ((const guint16 *)plugin_dir_utf16, -1,
+                                      NULL, NULL, NULL);
+        g_printf ("Plugin directory: %s\n", plugin_dir);
       }
-    if (g_getenv ("_NT_SYMBOL_PATH"))
-      g_snprintf (codeview_path, codeview_path_len, "%s;%s", plugin_dir, g_getenv ("_NT_SYMBOL_PATH"));
-    else
-      g_snprintf (codeview_path, codeview_path_len, "%s", plugin_dir);
-    g_setenv ("_NT_SYMBOL_PATH", codeview_path, TRUE);
-    g_free (codeview_path);
-    g_free (plugin_dir);*/
+    if (plugin_dir && (!g_getenv ("_NT_SYMBOL_PATH") || !strstr(g_getenv ("_NT_SYMBOL_PATH"), plugin_dir)))
+      {
+        codeview_path_len = strlen (g_getenv ("_NT_SYMBOL_PATH") ? g_getenv ("_NT_SYMBOL_PATH") : "") + strlen (plugin_dir) + 2;
+        codeview_path = g_try_malloc (codeview_path_len);
+        if (codeview_path == NULL)
+          {
+            g_warning ("Failed to allocate memory");
+          }
+        if (g_getenv ("_NT_SYMBOL_PATH"))
+          g_snprintf (codeview_path, codeview_path_len, "%s;%s", plugin_dir, g_getenv ("_NT_SYMBOL_PATH"));
+        else
+          g_snprintf (codeview_path, codeview_path_len, "%s", plugin_dir);
+        g_setenv ("_NT_SYMBOL_PATH", codeview_path, TRUE);
+        g_printf ("_NT_SYMBOL_PATH: %s\n", g_getenv ("_NT_SYMBOL_PATH"));
+        g_free (codeview_path);
+      }
+    g_free (plugin_dir);
 #endif
 
     /* This has to be the non-roaming directory (i.e., the local
