@@ -36,6 +36,17 @@ Core:
     their position).
   - Procreate swatches (.swatches) can now be imported as palettes.
   - Flipping link layers don't rasterize them anymore.
+  - Code forbidding some operations from being used non-destructively is
+    now a bit more robust.
+  - Better support for filter's area updates.
+  - In the Input Devices window, we now dropped the list of axis.
+    Changing an axis use has not really worked for years, and this list
+    was mostly confusing. Also it seems like it was not even shown
+    anymore on some platforms in the 3.0 series.
+    On the other hand, we now always show the Pressure Curve for any
+    device of type "Pen". We don't try anymore to be clever and detect
+    if the pen really has a pressure axis. As it turns out, such
+    heuristic was quite fragile and not working in some cases.
 
 Tools:
 
@@ -93,6 +104,8 @@ Graphical User Interface:
     through CSS.
   - Canvas Size options in Preferences dialog reordered to match the
     respective Canvas Size dialog.
+  - Hide move handle in Text Editor window (this is only meant for the
+    on-canvas text editor).
 
 Command Line Interface:
 
