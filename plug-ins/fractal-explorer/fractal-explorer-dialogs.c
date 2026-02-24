@@ -82,10 +82,10 @@ static explorer_vals_t standardvals =
  *********************************************************************/
 
 static void update_previews            (GimpProcedureConfig *config);
-static void load_file_chooser_response (GtkFileChooser      *chooser,
+static void load_file_chooser_response (GtkNativeDialog     *chooser,
                                         gint                 response_id,
                                         gpointer             data);
-static void save_file_chooser_response (GtkFileChooser      *chooser,
+static void save_file_chooser_response (GtkNativeDialog     *chooser,
                                         gint                 response_id,
                                         gpointer             data);
 static void create_load_file_chooser   (GtkWidget           *widget,
@@ -1424,18 +1424,18 @@ save_callback (void)
 }
 
 static void
-save_file_chooser_response (GtkFileChooser *chooser,
-                            gint            response_id,
-                            gpointer        data)
+save_file_chooser_response (GtkNativeDialog *chooser,
+                            gint             response_id,
+                            gpointer         data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
-      filename = gtk_file_chooser_get_filename (chooser);
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
 
       save_callback ();
     }
 
-  gtk_widget_destroy (GTK_WIDGET (chooser));
+  g_object_unref (chooser);
 }
 
 static void
@@ -1461,34 +1461,32 @@ file_chooser_set_default_folder (GtkFileChooser *chooser)
 }
 
 static void
-load_file_chooser_response (GtkFileChooser *chooser,
-                            gint            response_id,
-                            gpointer        data)
+load_file_chooser_response (GtkNativeDialog *chooser,
+                            gint             response_id,
+                            gpointer         data)
 {
   GimpProcedureConfig *config = (GimpProcedureConfig *) data;
 
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
-      filename = gtk_file_chooser_get_filename (chooser);
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
 
       if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-        {
-          explorer_load ();
-        }
+        explorer_load ();
 
       gtk_widget_show (maindlg);
       update_previews (config);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (chooser));
+  g_object_unref (chooser);
 }
 
 static void
 create_load_file_chooser (GtkWidget *widget,
                           GtkWidget *dialog)
 {
-  static GtkWidget    *window = NULL;
-  GimpProcedureConfig *config;
+  static GtkFileChooserNative *window = NULL;
+  GimpProcedureConfig         *config;
 
   g_object_get (GIMP_PROCEDURE_DIALOG (dialog),
                 "config", &config,
@@ -1497,79 +1495,48 @@ create_load_file_chooser (GtkWidget *widget,
   if (!window)
     {
       window =
-        gtk_file_chooser_dialog_new (_("Load Fractal Parameters"),
+        gtk_file_chooser_native_new (_("Load Fractal Parameters"),
                                      GTK_WINDOW (dialog),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Open"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
-
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
+                                     _("_Open"), _("_Cancel"));
 
       file_chooser_set_default_folder (GTK_FILE_CHOOSER (window));
 
-      g_signal_connect (window, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &window);
       g_signal_connect (window, "response",
                         G_CALLBACK (load_file_chooser_response),
                         config);
     }
 
-  gtk_window_present (GTK_WINDOW (window));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (window));
 }
 
 static void
 create_save_file_chooser (GtkWidget *widget,
                           GtkWidget *dialog)
 {
-  static GtkWidget *window = NULL;
+  static GtkFileChooserNative *window = NULL;
 
   if (! window)
     {
       window =
-        gtk_file_chooser_dialog_new (_("Save Fractal Parameters"),
+        gtk_file_chooser_native_new (_("Save Fractal Parameters"),
                                      GTK_WINDOW (dialog),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Save"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-      gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
+                                     _("_Save"), _("_Cancel"));
 
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (window),
                                                       TRUE);
-      g_signal_connect (window, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &window);
       g_signal_connect (window, "response",
                         G_CALLBACK (save_file_chooser_response),
                         window);
     }
 
   if (tpath)
-    {
-      gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (window), tpath);
-    }
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (window), tpath);
   else
-    {
-      file_chooser_set_default_folder (GTK_FILE_CHOOSER (window));
-    }
+    file_chooser_set_default_folder (GTK_FILE_CHOOSER (window));
 
-  gtk_window_present (GTK_WINDOW (window));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (window));
 }
 
 /* Set cache of gradient and samples from it.

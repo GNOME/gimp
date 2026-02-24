@@ -55,12 +55,12 @@ static void     update_preview         (GimpProcedureConfig *config);
 
 static void     save_lighting_preset   (GtkWidget           *widget,
                                         gpointer             data);
-static void     save_preset_response   (GtkFileChooser      *chooser,
+static void     save_preset_response   (GtkNativeDialog     *chooser,
                                         gint                 response_id,
                                         gpointer             data);
 static void     load_lighting_preset   (GtkWidget           *widget,
                                         gpointer             data);
-static void     load_preset_response   (GtkFileChooser      *chooser,
+static void     load_preset_response   (GtkNativeDialog     *chooser,
                                         gint                 response_id,
                                         gpointer             data);
 static void     light_source_changed   (GtkWidget           *widget,
@@ -726,32 +726,19 @@ static void
 save_lighting_preset (GtkWidget *widget,
                       gpointer   data)
 {
-  static GtkWidget *window = NULL;
+  static GtkFileChooserNative *window = NULL;
 
   if (! window)
     {
       window =
-        gtk_file_chooser_dialog_new (_("Save Lighting Preset"),
+        gtk_file_chooser_native_new (_("Save Lighting Preset"),
                                      GTK_WINDOW (appwin),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Save"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
+                                     _("_Save"), _("_Cancel"));
 
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (window),
                                                       TRUE);
 
-      g_signal_connect (window, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &window);
       g_signal_connect (window, "response",
                         G_CALLBACK (save_preset_response),
                         NULL);
@@ -779,14 +766,14 @@ save_lighting_preset (GtkWidget *widget,
                                            g_get_tmp_dir ());
     }
 
-  gtk_window_present (GTK_WINDOW (window));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (window));
 }
 
 
 static void
-save_preset_response (GtkFileChooser *chooser,
-                      gint            response_id,
-                      gpointer        data)
+save_preset_response (GtkNativeDialog *chooser,
+                      gint             response_id,
+                      gpointer         data)
 {
   FILE          *fp;
   gint           num_lights = 0;
@@ -797,9 +784,10 @@ save_preset_response (GtkFileChooser *chooser,
   gchar          buffer3[G_ASCII_DTOSTR_BUF_SIZE];
   gint           blen       = G_ASCII_DTOSTR_BUF_SIZE;
 
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
-      gchar *filename = gtk_file_chooser_get_filename (chooser);
+      gchar *filename =
+        gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
 
       fp = g_fopen (filename, "wb");
 
@@ -863,36 +851,23 @@ save_preset_response (GtkFileChooser *chooser,
       g_free (filename);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (chooser));
+  g_object_unref (chooser);
 }
 
 static void
 load_lighting_preset (GtkWidget *widget,
                       gpointer   data)
 {
-  static GtkWidget *window = NULL;
+  static GtkFileChooserNative *window = NULL;
 
   if (! window)
     {
       window =
-        gtk_file_chooser_dialog_new (_("Load Lighting Preset"),
+        gtk_file_chooser_native_new (_("Load Lighting Preset"),
                                      GTK_WINDOW (appwin),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
+                                     _("_Open"), _("_Cancel"));
 
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Open"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-
-      g_signal_connect (window, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &window);
       g_signal_connect (window, "response",
                         G_CALLBACK (load_preset_response),
                         NULL);
@@ -920,15 +895,14 @@ load_lighting_preset (GtkWidget *widget,
                                            g_get_tmp_dir ());
     }
 
-
-  gtk_window_present (GTK_WINDOW (window));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (window));
 }
 
 
 static void
-load_preset_response (GtkFileChooser *chooser,
-                      gint            response_id,
-                      gpointer        data)
+load_preset_response (GtkNativeDialog *chooser,
+                      gint             response_id,
+                      gpointer         data)
 {
   FILE          *fp;
   gint           num_lights;
@@ -941,9 +915,10 @@ load_preset_response (GtkFileChooser *chooser,
   gchar         *endptr;
   gchar          fmt_str[32];
 
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
-      gchar *filename = gtk_file_chooser_get_filename (chooser);
+      gchar *filename =
+        gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
 
       fp = g_fopen (filename, "rb");
 
@@ -1024,8 +999,8 @@ load_preset_response (GtkFileChooser *chooser,
       g_free (filename);
    }
 
-  gtk_widget_destroy (GTK_WIDGET (chooser));
-  interactive_preview_callback (GTK_WIDGET (chooser));
+  g_object_unref (chooser);
+  interactive_preview_callback (NULL);
 }
 
 static void

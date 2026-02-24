@@ -32,11 +32,11 @@
 
 
 static void
-open_cb (GtkWidget *dialog,
-         gint       response_id,
-         gpointer   data)
+open_cb (GtkNativeDialog *dialog,
+         gint             response_id,
+         gpointer         data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar *filename;
 
@@ -53,7 +53,7 @@ open_cb (GtkWidget *dialog,
       g_free (filename);
     }
 
-  gtk_widget_hide (dialog);
+  gtk_native_dialog_hide (dialog);
 }
 
 void
@@ -61,35 +61,22 @@ do_file_open_dialog (GSimpleAction *action,
                      GVariant      *parameter,
                      gpointer       user_data)
 {
-  static GtkWidget *dialog;
+  static GtkFileChooserNative *dialog;
 
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Load Image Map"),
+        gtk_file_chooser_native_new (_("Load Image Map"),
                                      NULL,
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
+                                     _("_Open"), _("_Cancel"));
 
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Open"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-
-      g_signal_connect (dialog, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &dialog);
       g_signal_connect (dialog, "response",
                         G_CALLBACK (open_cb),
                         user_data);
     }
 
-  gtk_window_present (GTK_WINDOW (dialog));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (dialog));
 }
 
 static void

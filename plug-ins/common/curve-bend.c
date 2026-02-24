@@ -118,29 +118,29 @@ typedef struct _BenderDialog BenderDialog;
 
 struct _BenderDialog
 {
-  GtkWidget           *shell;
-  GtkWidget           *outline_menu;
-  GtkWidget           *pv_widget;
-  GtkWidget           *graph;
-  GtkWidget           *filechooser;
+  GtkWidget            *shell;
+  GtkWidget            *outline_menu;
+  GtkWidget            *pv_widget;
+  GtkWidget            *graph;
+  GtkFileChooserNative *filechooser;
 
-  GdkCursor           *cursor_busy;
+  GdkCursor            *cursor_busy;
 
-  GimpProcedureConfig *config;
+  GimpProcedureConfig  *config;
 
-  GimpDrawable        *drawable;
-  int                  color;
-  int                  outline;
-  gint                 preview;
+  GimpDrawable         *drawable;
+  int                   color;
+  int                   outline;
+  gint                  preview;
 
-  int                  grab_point;
-  int                  last;
-  int                  leftmost;
-  int                  rightmost;
-  int                  curve_type;
-  gdouble              points[2][17][2];    /*  0.0 <= points    <= 1.0 */
-  guchar               curve[2][256];       /*  0   <= curve     <= 255 */
-  gint32              *curve_ptr[2];        /*  0   <= curve_ptr <= src_drawable_width
+  int                   grab_point;
+  int                   last;
+  int                   leftmost;
+  int                   rightmost;
+  int                   curve_type;
+  gdouble               points[2][17][2];    /*  0.0 <= points    <= 1.0 */
+  guchar                curve[2][256];       /*  0   <= curve     <= 255 */
+  gint32               *curve_ptr[2];        /*  0   <= curve_ptr <= src_drawable_width
                                              *  both arrays are allocated dynamic,
                                              *  depending on drawable width
                                              */
@@ -1836,11 +1836,11 @@ bender_preview_update_once (GtkWidget *widget,
 }
 
 static void
-p_points_save_to_file_response (GtkWidget    *dialog,
-                                gint          response_id,
-                                BenderDialog *cd)
+p_points_save_to_file_response (GtkNativeDialog *dialog,
+                                gint             response_id,
+                                BenderDialog    *cd)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar *filename;
 
@@ -1851,15 +1851,16 @@ p_points_save_to_file_response (GtkWidget    *dialog,
       g_free (filename);
     }
 
-  gtk_widget_destroy (dialog);
+  g_object_unref (dialog);
+  cd->filechooser = NULL;
 }
 
 static void
-p_points_load_from_file_response (GtkWidget    *dialog,
-                                  gint          response_id,
-                                  BenderDialog *cd)
+p_points_load_from_file_response (GtkNativeDialog *dialog,
+                                  gint             response_id,
+                                  BenderDialog    *cd)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar *filename;
 
@@ -1871,7 +1872,8 @@ p_points_load_from_file_response (GtkWidget    *dialog,
       g_free (filename);
     }
 
-  gtk_widget_destroy (dialog);
+  g_object_unref (dialog);
+  cd->filechooser = NULL;
 }
 
 static void
@@ -1881,32 +1883,17 @@ bender_load_callback (GtkWidget    *w,
   if (! cd->filechooser)
     {
       cd->filechooser =
-        gtk_file_chooser_dialog_new (_("Load Curve Points from File"),
+        gtk_file_chooser_native_new (_("Load Curve Points from File"),
                                      GTK_WINDOW (gtk_widget_get_toplevel (w)),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Open"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (cd->filechooser),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (cd->filechooser),
-                                       GTK_RESPONSE_OK);
+                                     _("_Open"), _("_Cancel"));
 
       g_signal_connect (cd->filechooser, "response",
                         G_CALLBACK (p_points_load_from_file_response),
                         cd);
-      g_signal_connect (cd->filechooser, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &cd->filechooser);
     }
 
-  gtk_window_present (GTK_WINDOW (cd->filechooser));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (cd->filechooser));
 }
 
 static void
@@ -1915,28 +1902,29 @@ bender_save_callback (GtkWidget    *w,
 {
   if (! cd->filechooser)
     {
+      GtkFileFilter *filter;
+
       cd->filechooser =
-        gtk_file_chooser_dialog_new (_("Save Curve Points to File"),
+        gtk_file_chooser_native_new (_("Save Curve Points to File"),
                                      GTK_WINDOW (gtk_widget_get_toplevel (w)),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Save"),   GTK_RESPONSE_OK,
-
-                                     NULL);
+                                     _("_Save"), _("_Cancel"));
 
       g_signal_connect (cd->filechooser, "response",
                         G_CALLBACK (p_points_save_to_file_response),
                         cd);
-      g_signal_connect (cd->filechooser, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &cd->filechooser);
+
+      filter = gtk_file_filter_new ();
+      gtk_file_filter_set_name (filter, "Points (*.points)");
+      gtk_file_filter_add_pattern (filter, "*.points");
+      gtk_file_filter_add_pattern (filter, "*.POINTS");
+      gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (cd->filechooser), filter);
 
       gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (cd->filechooser),
                                          "curve_bend.points");
     }
 
-  gtk_window_present (GTK_WINDOW (cd->filechooser));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (cd->filechooser));
 }
 
 static gboolean

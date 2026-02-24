@@ -2435,7 +2435,7 @@ ifscompose_message_dialog (GtkMessageType  type,
   GtkWidget *dialog;
 
   dialog = gtk_message_dialog_new (parent, 0, type, GTK_BUTTONS_OK,
-				   "%s", message);
+                                   "%s", message);
 
   if (title)
     gtk_window_set_title (GTK_WINDOW (dialog), title);
@@ -2447,11 +2447,11 @@ ifscompose_message_dialog (GtkMessageType  type,
 
 /* save an ifs file */
 static void
-ifsfile_save_response (GtkWidget *dialog,
-                       gint       response_id,
-                       gpointer   data)
+ifsfile_save_response (GtkNativeDialog *dialog,
+                       gint             response_id,
+                       gpointer         data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar *filename;
       gchar *str;
@@ -2469,7 +2469,7 @@ ifsfile_save_response (GtkWidget *dialog,
                              gimp_filename_to_utf8 (filename),
                              g_strerror (errno));
 
-          ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dialog),
+          ifscompose_message_dialog (GTK_MESSAGE_ERROR, NULL,
                                      _("Save failed"), message);
 
           g_free (message);
@@ -2482,7 +2482,7 @@ ifsfile_save_response (GtkWidget *dialog,
       fclose (fh);
     }
 
-  gtk_widget_destroy (dialog);
+  g_object_unref (dialog);
 }
 
 /* replace ifsvals and elements with specified new values
@@ -2535,11 +2535,11 @@ ifsfile_replace_ifsvals (IfsComposeVals  *new_ifsvals,
 
 /* load an ifs file */
 static void
-ifsfile_load_response (GtkWidget *dialog,
-                       gint       response_id,
-                       gpointer   data)
+ifsfile_load_response (GtkNativeDialog *dialog,
+                       gint             response_id,
+                       gpointer         data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar           *filename;
       gchar           *buffer;
@@ -2552,7 +2552,7 @@ ifsfile_load_response (GtkWidget *dialog,
 
       if (! g_file_get_contents (filename, &buffer, NULL, &error))
         {
-          ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dialog),
+          ifscompose_message_dialog (GTK_MESSAGE_ERROR, NULL,
                                      _("Open failed"), error->message);
           g_error_free (error);
           g_free (filename);
@@ -2565,7 +2565,7 @@ ifsfile_load_response (GtkWidget *dialog,
                                               "an IFS Fractal file."),
                                             gimp_filename_to_utf8 (filename));
 
-          ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dialog),
+          ifscompose_message_dialog (GTK_MESSAGE_ERROR, NULL,
                                      _("Open failed"), message);
           g_free (filename);
           g_free (message);
@@ -2590,79 +2590,52 @@ ifsfile_load_response (GtkWidget *dialog,
       design_area_redraw ();
     }
 
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  g_object_unref (GTK_WIDGET (dialog));
 }
 
 static void
 ifs_compose_save (void)
 {
-  static GtkWidget *dialog = NULL;
+  static GtkFileChooserNative *dialog = NULL;
 
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Save as IFS Fractal file"),
+        gtk_file_chooser_native_new (_("Save as IFS Fractal file"),
                                      NULL,
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Save"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+                                     _("_Save"), _("_Cancel"));
 
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                       TRUE);
 
-      g_signal_connect (dialog, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &dialog);
       g_signal_connect (dialog, "response",
                         G_CALLBACK (ifsfile_save_response),
                         NULL);
     }
 
-  gtk_window_present (GTK_WINDOW (dialog));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (dialog));
 }
 
 static void
 ifs_compose_load (void)
 {
-  static GtkWidget *dialog = NULL;
+  static GtkFileChooserNative *dialog = NULL;
 
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Open IFS Fractal file"),
+        gtk_file_chooser_native_new (_("Open IFS Fractal file"),
                                      NULL,
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
+                                     _("_Open"), _("_Cancel"));
 
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Open"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-
-      g_signal_connect (dialog, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &dialog);
       g_signal_connect (dialog, "response",
                         G_CALLBACK (ifsfile_load_response),
                         NULL);
     }
 
-  gtk_window_present (GTK_WINDOW (dialog));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (dialog));
 }
 
 static void

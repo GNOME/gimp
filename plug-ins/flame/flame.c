@@ -119,17 +119,17 @@ GIMP_MAIN (FLAME_TYPE)
 DEFINE_STD_SET_I18N
 
 
-static gchar      buffer[BUFFER_SIZE];
-static GtkWidget *cmap_preview;
-static GtkWidget *flame_preview;
-static gint       preview_width, preview_height;
-static GtkWidget *dialog;
-static GtkWidget *load_button = NULL;
-static GtkWidget *save_button = NULL;
-static GtkWidget *file_dialog = NULL;
-static gint       load_save;
+static gchar                 buffer[BUFFER_SIZE];
+static GtkWidget            *cmap_preview;
+static GtkWidget            *flame_preview;
+static gint                  preview_width, preview_height;
+static GtkWidget            *dialog;
+static GtkWidget            *load_button = NULL;
+static GtkWidget            *save_button = NULL;
+static GtkFileChooserNative *file_dialog = NULL;
+static gint                  load_save;
 
-static GtkWidget *edit_dialog = NULL;
+static GtkWidget            *edit_dialog = NULL;
 
 static control_point  edit_cp;
 static control_point  mutants[NMUTANTS];
@@ -510,13 +510,14 @@ flame (GimpDrawable *drawable)
 }
 
 static void
-file_response_callback (GtkFileChooser      *chooser,
+file_response_callback (GtkNativeDialog     *chooser,
                         gint                 response_id,
                         GimpProcedureConfig *proc_config)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
-      gchar *filename = gtk_file_chooser_get_filename (chooser);
+      gchar *filename =
+        gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
 
       if (load_save)
         {
@@ -595,7 +596,7 @@ file_response_callback (GtkFileChooser      *chooser,
       g_free (filename);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (chooser));
+  g_object_unref (chooser);
 
   if (! gtk_widget_get_sensitive (load_button))
     gtk_widget_set_sensitive (load_button, TRUE);
@@ -609,23 +610,13 @@ make_file_dialog (const gchar         *title,
                   GtkWidget           *parent,
                   GimpProcedureConfig *proc_config)
 {
-  file_dialog = gtk_file_chooser_dialog_new (title, GTK_WINDOW (parent),
+  file_dialog = gtk_file_chooser_native_new (title, GTK_WINDOW (parent),
                                              load_save ?
                                              GTK_FILE_CHOOSER_ACTION_OPEN :
                                              GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                                              load_save ?
                                              _("_Open") : _("_Save"),
-                                             GTK_RESPONSE_OK,
-
-                                             NULL);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (file_dialog), GTK_RESPONSE_OK);
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (file_dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                             _("_Cancel"));
 
   if (! load_save)
     gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (file_dialog),
@@ -633,11 +624,6 @@ make_file_dialog (const gchar         *title,
 
   g_object_add_weak_pointer (G_OBJECT (file_dialog), (gpointer) &file_dialog);
 
-  gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dialog), TRUE);
-
-  g_signal_connect (file_dialog, "delete-event",
-                    G_CALLBACK (gtk_true),
-                    NULL);
   g_signal_connect (file_dialog, "response",
                     G_CALLBACK (file_response_callback),
                     proc_config);
@@ -985,7 +971,7 @@ load_callback (GtkWidget           *widget,
       gtk_widget_set_sensitive (save_button, FALSE);
     }
 
-  gtk_window_present (GTK_WINDOW (file_dialog));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (file_dialog));
 }
 
 static void
@@ -1000,7 +986,7 @@ save_callback (GtkWidget           *widget,
       gtk_widget_set_sensitive (load_button, FALSE);
     }
 
-  gtk_window_present (GTK_WINDOW (file_dialog));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (file_dialog));
 }
 
 static void

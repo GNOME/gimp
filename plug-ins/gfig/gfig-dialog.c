@@ -174,17 +174,17 @@ static void       gfig_prefs_action          (GSimpleAction *action,
                                               GVariant      *parameter,
                                               gpointer       user_data);
 static void       toggle_show_image          (void);
-static void       gridtype_combo_callback    (GtkWidget *widget,
-                                              gpointer data);
+static void       gridtype_combo_callback    (GtkWidget     *widget,
+                                              gpointer       data);
 
-static void      load_file_chooser_response  (GtkFileChooser *chooser,
-                                              gint            response_id,
-                                              gpointer        data);
-static void      save_file_chooser_response  (GtkFileChooser *chooser,
-                                              gint            response_id,
-                                              GFigObj        *obj);
-static void     paint_combo_callback         (GtkWidget *widget,
-                                              gpointer   data);
+static void      load_file_chooser_response  (GtkNativeDialog *chooser,
+                                              gint             response_id,
+                                              gpointer         data);
+static void      save_file_chooser_response  (GtkNativeDialog *chooser,
+                                              gint             response_id,
+                                              GFigObj         *obj);
+static void     paint_combo_callback         (GtkWidget       *widget,
+                                              gpointer         data);
 
 static void     select_button_clicked        (gint       type);
 static void     select_button_clicked_lt     (GSimpleAction *action,
@@ -759,28 +759,17 @@ gfig_load_action (GSimpleAction *action,
                   GVariant      *parameter,
                   gpointer       user_data)
 {
-  static GtkWidget *dialog = NULL;
+  static GtkFileChooserNative *dialog = NULL;
 
   if (! dialog)
     {
       gchar *dir;
 
       dialog =
-        gtk_file_chooser_dialog_new (_("Load Gfig Object Collection"),
+        gtk_file_chooser_native_new (_("Load Gfig Object Collection"),
                                      NULL,
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Open"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+                                     _("_Open"), _("_Cancel"));
 
       g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
 
@@ -796,11 +785,11 @@ gfig_load_action (GSimpleAction *action,
           g_free (dir);
         }
 
-      gtk_widget_show (dialog);
+      gtk_native_dialog_show (GTK_NATIVE_DIALOG (dialog));
     }
   else
     {
-      gtk_window_present (GTK_WINDOW (dialog));
+      gtk_native_dialog_show (GTK_NATIVE_DIALOG (dialog));
     }
 }
 
@@ -809,27 +798,17 @@ gfig_save_action (GSimpleAction *action,
                   GVariant      *parameter,
                   gpointer       user_data)
 {
-  static GtkWidget *dialog = NULL;
+  static GtkFileChooserNative *dialog = NULL;
 
   if (!dialog)
     {
       gchar *dir;
 
       dialog =
-        gtk_file_chooser_dialog_new (_("Save Gfig Drawing"),
+        gtk_file_chooser_native_new (_("Save Gfig Drawing"),
                                      NULL,
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Save"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+                                     _("_Save"), _("_Cancel"));
 
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                       TRUE);
@@ -850,11 +829,11 @@ gfig_save_action (GSimpleAction *action,
           g_free (dir);
         }
 
-      gtk_widget_show (dialog);
+      gtk_native_dialog_show (GTK_NATIVE_DIALOG (dialog));
     }
   else
     {
-      gtk_window_present (GTK_WINDOW (dialog));
+      gtk_native_dialog_show (GTK_NATIVE_DIALOG (dialog));
     }
 }
 
@@ -1559,15 +1538,15 @@ options_update (GFigObj *old_obj)
 }
 
 static void
-save_file_chooser_response (GtkFileChooser *chooser,
-                            gint            response_id,
-                            GFigObj        *obj)
+save_file_chooser_response (GtkNativeDialog *chooser,
+                            gint             response_id,
+                            GFigObj         *obj)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar   *filename;
 
-      filename = gtk_file_chooser_get_filename (chooser);
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
 
       obj->filename = filename;
 
@@ -1575,7 +1554,7 @@ save_file_chooser_response (GtkFileChooser *chooser,
       gfig_save_callbk ();
     }
 
-  gtk_widget_destroy (GTK_WIDGET (chooser));
+  g_object_unref (chooser);
 }
 
 static GfigObject *
@@ -1816,17 +1795,17 @@ typedef struct _GfigListOptions
 } GfigListOptions;
 
 static void
-load_file_chooser_response (GtkFileChooser *chooser,
-                            gint            response_id,
-                            gpointer        data)
+load_file_chooser_response (GtkNativeDialog *chooser,
+                            gint             response_id,
+                            gpointer         data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar   *filename;
       GFigObj *gfig_obj;
       GFigObj *current_saved;
 
-      filename = gtk_file_chooser_get_filename (chooser);
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
 
       if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
         {
@@ -1852,7 +1831,7 @@ load_file_chooser_response (GtkFileChooser *chooser,
       g_free (filename);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (chooser));
+  g_object_unref (chooser);
   gfig_paint_callback ();
 }
 

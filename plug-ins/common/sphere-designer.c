@@ -2163,11 +2163,11 @@ loadit (const gchar * fn)
 }
 
 static void
-loadpreset_response (GtkWidget *dialog,
-                     gint       response_id,
-                     gpointer   data)
+loadpreset_response (GtkNativeDialog *dialog,
+                     gint             response_id,
+                     gpointer         data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       GtkTreeModel *model = gtk_tree_view_get_model (texturelist);
       gchar        *name;
@@ -2182,7 +2182,7 @@ loadpreset_response (GtkWidget *dialog,
       rebuildlist ();
     }
 
-  gtk_widget_hide (dialog);
+  gtk_native_dialog_hide (dialog);
 }
 
 static void
@@ -2236,11 +2236,11 @@ saveit (const gchar *fn)
 }
 
 static void
-savepreset_response (GtkWidget *dialog,
-                     gint       response_id,
-                     gpointer   data)
+savepreset_response (GtkNativeDialog *dialog,
+                     gint             response_id,
+                     gpointer         data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
@@ -2248,7 +2248,7 @@ savepreset_response (GtkWidget *dialog,
       g_free (name);
     }
 
-  gtk_widget_hide (dialog);
+  gtk_native_dialog_hide (dialog);
 }
 
 static void
@@ -2269,46 +2269,31 @@ static void
 fileselect (GtkFileChooserAction  action,
             GtkWidget            *parent)
 {
-  static GtkWidget *windows[2] = { NULL, NULL };
+  static GtkFileChooserNative *windows[2] = { NULL, NULL };
 
   gchar *titles[]   = { N_("Open File"), N_("Save File") };
   void  *handlers[] = { loadpreset_response,   savepreset_response };
 
   if (! windows[action])
     {
-      GtkWidget *dialog = windows[action] =
-        gtk_file_chooser_dialog_new (gettext (titles[action]),
+      GtkFileChooserNative *dialog = windows[action] =
+        gtk_file_chooser_native_new (gettext (titles[action]),
                                      GTK_WINDOW (parent),
                                      action,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-
                                      action == GTK_FILE_CHOOSER_ACTION_OPEN ?
                                      _("_Open") : _("_Save"),
-                                     GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+                                     _("_Cancel"));
 
       if (action == GTK_FILE_CHOOSER_ACTION_SAVE)
         gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                         TRUE);
 
-      g_signal_connect (dialog, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &windows[action]);
       g_signal_connect (dialog, "response",
                         G_CALLBACK (handlers[action]),
                         NULL);
     }
 
-  gtk_window_present (GTK_WINDOW (windows[action]));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (windows[action]));
 }
 
 static void

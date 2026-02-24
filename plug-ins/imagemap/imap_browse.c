@@ -38,11 +38,11 @@ static const GtkTargetEntry target_table[] =
 
 
 static void
-select_cb (GtkWidget      *dialog,
-           gint            response_id,
-           BrowseWidget_t *browse)
+select_cb (GtkNativeDialog *dialog,
+           gint             response_id,
+           BrowseWidget_t  *browse)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar *p;
       gchar *file;
@@ -60,7 +60,7 @@ select_cb (GtkWidget      *dialog,
       g_free (file);
     }
 
-  gtk_widget_hide (dialog);
+  gtk_native_dialog_hide (dialog);
   gtk_widget_grab_focus (browse->file);
 }
 
@@ -68,35 +68,22 @@ static void
 browse_cb (GtkWidget      *widget,
            BrowseWidget_t *browse)
 {
-  if (!browse->file_chooser)
+  if (! browse->file_chooser)
     {
-      GtkWidget *dialog;
+      GtkFileChooserNative *dialog;
 
       dialog = browse->file_chooser =
-        gtk_file_chooser_dialog_new (browse->name,
+        gtk_file_chooser_native_new (browse->name,
                                      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
+                                     _("_Open"), _("_Cancel"));
 
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Open"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-
-      g_signal_connect (dialog, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &dialog);
       g_signal_connect (dialog, "response",
                         G_CALLBACK (select_cb),
                         browse);
     }
 
-  gtk_window_present (GTK_WINDOW (browse->file_chooser));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (browse->file_chooser));
 }
 
 static void

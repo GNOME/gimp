@@ -5559,20 +5559,20 @@ metadata_editor_write_callback (GtkWidget       *dialog,
 static void
 import_dialog_metadata (metadata_editor *args)
 {
-  GtkWidget *file_dialog;
-  gchar     *filename;
+  GtkFileChooserNative *file_dialog;
+  gchar                *filename;
+  gint                  res;
 
-  file_dialog = gtk_file_chooser_dialog_new (_("Import Metadata File"),
+  file_dialog = gtk_file_chooser_native_new (_("Import Metadata File"),
                                              NULL,
                                              GTK_FILE_CHOOSER_ACTION_OPEN,
-                                             _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                             _("_Import"), GTK_RESPONSE_ACCEPT,
-                                             NULL);
+                                             _("_Import"),_("_Cancel"));
 
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (file_dialog),
                                  args->filename);
 
-  if (gtk_dialog_run (GTK_DIALOG (file_dialog)) == GTK_RESPONSE_ACCEPT)
+  res = gtk_native_dialog_run (GTK_NATIVE_DIALOG (file_dialog));
+  if (res == GTK_RESPONSE_ACCEPT)
     {
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_dialog));
 
@@ -5588,28 +5588,28 @@ import_dialog_metadata (metadata_editor *args)
         }
     }
 
-  gtk_widget_destroy (file_dialog);
+  g_object_unref (file_dialog);
 }
 
 static void
 export_dialog_metadata (metadata_editor *args)
 {
-  GtkWidget *file_dialog;
-  gchar     *filename;
+  GtkFileChooserNative *file_dialog;
+  gchar               *filename;
+  gint                 res;
 
-  file_dialog = gtk_file_chooser_dialog_new (_("Export Metadata File"),
+  file_dialog = gtk_file_chooser_native_new (_("Export Metadata File"),
                                              NULL,
                                              GTK_FILE_CHOOSER_ACTION_SAVE,
-                                             _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                             _("_Export"), GTK_RESPONSE_ACCEPT,
-                                             NULL);
+                                             _("_Export"), _("_Cancel"));
 
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (file_dialog),
                                                   TRUE);
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (file_dialog),
                                  args->filename);
 
-  if (gtk_dialog_run (GTK_DIALOG (file_dialog)) == GTK_RESPONSE_ACCEPT)
+  res = gtk_native_dialog_run (GTK_NATIVE_DIALOG (file_dialog));
+  if (res == GTK_RESPONSE_ACCEPT)
     {
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_dialog));
 
@@ -5625,7 +5625,7 @@ export_dialog_metadata (metadata_editor *args)
         }
     }
 
-  gtk_widget_destroy (file_dialog);
+  g_object_unref (file_dialog);
 }
 
 static void
