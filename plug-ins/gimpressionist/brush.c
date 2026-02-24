@@ -231,11 +231,11 @@ brushlistrefresh (void)
 }
 
 static void
-savebrush_response (GtkWidget *dialog,
-                    gint       response_id,
-                    gpointer   data)
+savebrush_response (GtkNativeDialog *dialog,
+                    gint             response_id,
+                    gpointer         data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
@@ -245,16 +245,16 @@ savebrush_response (GtkWidget *dialog,
       g_free (name);
     }
 
-  gtk_widget_destroy (dialog);
+  g_object_unref (dialog);
 }
 
 static void
 savebrush (GtkWidget *wg,
            gpointer   data)
 {
-  GtkWidget *dialog   = NULL;
-  GList     *thispath = parsepath ();
-  gchar     *path;
+  GtkFileChooserNative *dialog   = NULL;
+  GList                *thispath = parsepath ();
+  gchar                *path;
 
   if (! PPM_IS_INITED (&brushppm))
     {
@@ -263,20 +263,10 @@ savebrush (GtkWidget *wg,
     }
 
   dialog =
-    gtk_file_chooser_dialog_new (_("Save Brush"),
+    gtk_file_chooser_native_new (_("Save Brush"),
                                  GTK_WINDOW (gtk_widget_get_toplevel (wg)),
                                  GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                 _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                 _("_Save"),   GTK_RESPONSE_OK,
-
-                                 NULL);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                 _("_Save"), _("_Cancel"));
 
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                   TRUE);
@@ -287,14 +277,11 @@ savebrush (GtkWidget *wg,
 
   g_free (path);
 
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &dialog);
   g_signal_connect (dialog, "response",
                     G_CALLBACK (savebrush_response),
                     NULL);
 
-  gtk_widget_show (dialog);
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (dialog));
 }
 
 static gboolean

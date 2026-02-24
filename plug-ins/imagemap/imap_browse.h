@@ -27,13 +27,13 @@ typedef gchar* (*BrowseFilter_t) (const gchar *, gpointer data);
 
 typedef struct
 {
-   const gchar    *name;
-   BrowseFilter_t  filter;
-   gpointer        filter_data;
-   GtkWidget      *hbox;
-   GtkWidget      *file;
-   GtkWidget      *button;
-   GtkWidget      *file_chooser;
+   const gchar          *name;
+   BrowseFilter_t        filter;
+   gpointer              filter_data;
+   GtkWidget            *hbox;
+   GtkWidget            *file;
+   GtkWidget            *button;
+   GtkFileChooserNative *file_chooser;
 } BrowseWidget_t;
 
 BrowseWidget_t * browse_widget_new          (const gchar    *name);

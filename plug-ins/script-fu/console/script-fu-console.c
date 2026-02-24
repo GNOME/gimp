@@ -43,12 +43,12 @@
 
 typedef struct
 {
-  GtkWidget     *dialog;
-  GtkTextBuffer *total_history;
-  GtkWidget     *editor;
-  GtkWidget     *history_view;
-  GtkWidget     *proc_browser;
-  GtkWidget     *save_dialog;
+  GtkWidget            *dialog;
+  GtkTextBuffer        *total_history;
+  GtkWidget            *editor;
+  GtkWidget            *history_view;
+  GtkWidget            *proc_browser;
+  GtkFileChooserNative *save_dialog;
 
   CommandHistory history;
 } ConsoleInterface;
@@ -66,7 +66,7 @@ static void      script_fu_console_response      (GtkWidget        *widget,
                                                   gint              response_id,
                                                   ConsoleInterface *console);
 static void      script_fu_console_save_dialog   (ConsoleInterface *console);
-static void      script_fu_console_save_response (GtkWidget        *dialog,
+static void      script_fu_console_save_response (GtkNativeDialog  *dialog,
                                                   gint              response_id,
                                                   ConsoleInterface *console);
 
@@ -204,7 +204,7 @@ script_fu_console_run (GimpProcedure       *procedure,
   gtk_main ();
 
   if (console.save_dialog)
-    gtk_widget_destroy (console.save_dialog);
+    g_object_unref (console.save_dialog);
 
   if (console.dialog)
     gtk_widget_destroy (console.dialog);
@@ -243,21 +243,10 @@ script_fu_console_save_dialog (ConsoleInterface *console)
   if (! console->save_dialog)
     {
       console->save_dialog =
-        gtk_file_chooser_dialog_new (_("Save Script-Fu Console Output"),
+        gtk_file_chooser_native_new (_("Save Script-Fu Console Output"),
                                      GTK_WINDOW (console->dialog),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Save"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (console->save_dialog),
-                                       GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (console->save_dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
+                                     _("_Save"), _("_Cancel"));
 
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (console->save_dialog),
                                                       TRUE);
@@ -270,15 +259,15 @@ script_fu_console_save_dialog (ConsoleInterface *console)
                         console);
     }
 
-  gtk_window_present (GTK_WINDOW (console->save_dialog));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (console->save_dialog));
 }
 
 static void
-script_fu_console_save_response (GtkWidget        *dialog,
+script_fu_console_save_response (GtkNativeDialog  *dialog,
                                  gint              response_id,
                                  ConsoleInterface *console)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar *filename;
       gchar *str;
@@ -306,7 +295,7 @@ script_fu_console_save_response (GtkWidget        *dialog,
       g_free (str);
     }
 
-  gtk_widget_hide (dialog);
+  gtk_native_dialog_hide (dialog);
 }
 
 static void

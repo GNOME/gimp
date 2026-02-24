@@ -399,7 +399,7 @@ static void    CML_initial_value_sensitives_update (void);
 
 static void    CML_save_to_file_callback           (GtkWidget            *widget,
                                                     GimpProcedureConfig  *config);
-static void    CML_save_to_file_response           (GtkWidget            *dialog,
+static void    CML_save_to_file_response           (GtkNativeDialog      *dialog,
                                                     gint                  response_id,
                                                     GimpProcedureConfig  *config);
 
@@ -411,7 +411,7 @@ static gboolean CML_load_parameter_file            (GFile                *file,
                                                     gboolean              interactive_mode,
                                                     GimpProcedureConfig  *config,
                                                     GError              **error);
-static void    CML_load_from_file_response         (GtkWidget            *dialog,
+static void    CML_load_from_file_response         (GtkNativeDialog      *dialog,
                                                     gint                  response_id,
                                                     GimpProcedureConfig  *config);
 static gint    parse_line_to_gint                  (GDataInputStream         *input,
@@ -2131,26 +2131,16 @@ static void
 CML_save_to_file_callback (GtkWidget           *widget,
                            GimpProcedureConfig *config)
 {
-  static GtkWidget *dialog = NULL;
-  GFile            *file   = NULL;
+  static GtkFileChooserNative *dialog = NULL;
+  GFile                       *file   = NULL;
 
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Save CML Explorer Parameters"),
+        gtk_file_chooser_native_new (_("Save CML Explorer Parameters"),
                                      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Save"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+                                     _("_Save"), _("_Cancel"));
 
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                       TRUE);
@@ -2158,9 +2148,6 @@ CML_save_to_file_callback (GtkWidget           *widget,
       g_signal_connect (dialog, "response",
                         G_CALLBACK (CML_save_to_file_response),
                         config);
-      g_signal_connect (dialog, "delete-event",
-                        G_CALLBACK (gtk_true),
-                        NULL);
     }
 
   g_object_get (config, "parameter-file", &file, NULL);
@@ -2176,11 +2163,11 @@ CML_save_to_file_callback (GtkWidget           *widget,
     }
   g_clear_object (&file);
 
-  gtk_window_present (GTK_WINDOW (dialog));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (dialog));
 }
 
 static void
-CML_save_to_file_response (GtkWidget           *dialog,
+CML_save_to_file_response (GtkNativeDialog      *dialog,
                            gint                 response_id,
                            GimpProcedureConfig *config)
 {
@@ -2190,9 +2177,9 @@ CML_save_to_file_response (GtkWidget           *dialog,
   GError            *error = NULL;
   gint               channel_id;
 
-  if (response_id != GTK_RESPONSE_OK)
+  if (response_id != GTK_RESPONSE_ACCEPT)
     {
-      gtk_widget_hide (dialog);
+      gtk_native_dialog_hide (dialog);
       return;
     }
 
@@ -2332,7 +2319,7 @@ CML_save_to_file_response (GtkWidget           *dialog,
 
   g_clear_object (&file);
 
-  gtk_widget_hide (dialog);
+  gtk_native_dialog_hide (dialog);
 }
 
 /*  parameter file loading functions  */
@@ -2341,34 +2328,20 @@ static void
 CML_load_from_file_callback (GtkWidget           *widget,
                              GimpProcedureConfig *config)
 {
-  static GtkWidget *dialog = NULL;
-  GFile            *file   = NULL;
+  static GtkFileChooserNative *dialog = NULL;
+  GFile                       *file   = NULL;
 
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Load CML Explorer Parameters"),
+        gtk_file_chooser_native_new (_("Load CML Explorer Parameters"),
                                      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Open"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+                                     _("_Open"), _("_Cancel"));
 
       g_signal_connect (dialog, "response",
                         G_CALLBACK (CML_load_from_file_response),
                         config);
-      g_signal_connect (dialog, "delete-event",
-                        G_CALLBACK (gtk_true),
-                        NULL);
     }
 
   g_object_get (config, "parameter-file", &file, NULL);
@@ -2384,15 +2357,15 @@ CML_load_from_file_callback (GtkWidget           *widget,
     }
   g_clear_object (&file);
 
-  gtk_window_present (GTK_WINDOW (dialog));
+  gtk_native_dialog_run (GTK_NATIVE_DIALOG (dialog));
 }
 
 static void
-CML_load_from_file_response (GtkWidget           *dialog,
+CML_load_from_file_response (GtkNativeDialog     *dialog,
                              gint                 response_id,
                              GimpProcedureConfig *config)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       GFile    *file = NULL;
       gint      channel_id;
@@ -2436,7 +2409,7 @@ CML_load_from_file_response (GtkWidget           *dialog,
         }
     }
 
-  gtk_widget_hide (GTK_WIDGET (dialog));
+  gtk_native_dialog_hide (dialog);
 }
 
 static gboolean
