@@ -67,7 +67,6 @@ path_export_dialog_new (GimpImage              *image,
 {
   PathExportDialog *private;
   GtkWidget        *dialog;
-  GtkWidget        *combo;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
@@ -128,16 +127,19 @@ path_export_dialog_new (GimpImage              *image,
                     G_CALLBACK (path_export_dialog_response),
                     private);
 
-  combo = gimp_int_combo_box_new (_("Export the selected paths"),           TRUE,
-                                  _("Export all paths from this image"), FALSE,
-                                  NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 private->active_only);
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), combo);
+  /* Add dropdown option for which path(s) to export */
+  if (dialog)
+    {
+      const gchar *options[3] = { "selected", "all", NULL };
+      const gchar *labels[3]  = { _("Export the selected paths"),
+                                  _("Export all paths from this image"),
+                                  NULL };
 
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &private->active_only);
+      gtk_file_chooser_add_choice (GTK_FILE_CHOOSER (dialog), "export-paths",
+                                   NULL, options, labels);
+      gtk_file_chooser_set_choice (GTK_FILE_CHOOSER (dialog), "export-paths",
+                                   private->active_only ? "selected" : "all");
+    }
 
   return dialog;
 }
@@ -147,7 +149,7 @@ path_export_dialog_new (GimpImage              *image,
 
 #ifdef G_OS_WIN32
 static void
-path_export_dialog_realize (GtkWidget           *dialog,
+path_export_dialog_realize (GtkWidget        *dialog,
                             PathExportDialog *data)
 {
   gimp_window_set_title_bar_theme (data->image->gimp, dialog);
@@ -161,16 +163,20 @@ path_export_dialog_free (PathExportDialog *private)
 }
 
 static void
-path_export_dialog_response (GtkWidget           *dialog,
-                             gint                 response_id,
+path_export_dialog_response (GtkWidget        *dialog,
+                             gint              response_id,
                              PathExportDialog *private)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
       GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
       GFile          *file;
+      const gchar    *export_paths;
 
-      file = gtk_file_chooser_get_file (chooser);
+      file         = gtk_file_chooser_get_file (chooser);
+      export_paths = gtk_file_chooser_get_choice (chooser, "export-paths");
+
+      private->active_only = (! g_strcmp0 (export_paths, "selected"));
 
       if (file)
         {
