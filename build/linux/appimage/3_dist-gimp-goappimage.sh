@@ -334,6 +334,7 @@ prep_pkg "ibus-gtk3"
 bund_usr "$UNIX_PREFIX" "lib/gtk-3.0/*.*.*/immodules/*.so" --bundler
 conf_app GTK_IM_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*/immodules.cache"
 conf_app GTK_MODULES "" --no-expand
+conf_app GTK_USE_PORTAL "1" --no-expand
 
 ## Core features
 bund_usr "$GIMP_PREFIX" "lib/libbabl*"
