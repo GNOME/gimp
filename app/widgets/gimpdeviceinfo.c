@@ -1259,16 +1259,6 @@ gimp_device_info_get_n_axes (GimpDeviceInfo *info)
     return info->priv->n_axes;
 }
 
-gboolean
-gimp_device_info_ignore_axis (GimpDeviceInfo *info,
-                              gint            axis)
-{
-  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), TRUE);
-  g_return_val_if_fail (axis >= 0 && axis < info->priv->n_axes, TRUE);
-
-  return (info->priv->axes_names[axis] == NULL);
-}
-
 const gchar *
 gimp_device_info_get_axis_name (GimpDeviceInfo *info,
                                 gint            axis)

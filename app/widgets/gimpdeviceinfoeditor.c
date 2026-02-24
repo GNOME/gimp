@@ -97,25 +97,19 @@ typedef struct _GimpDeviceInfoEditorPrivate GimpDeviceInfoEditorPrivate;
 
 struct _GimpDeviceInfoEditorPrivate
 {
-  GimpDeviceInfo *info;
+  GimpDeviceInfo   *info;
 
-  GtkWidget      *vbox;
+  GtkWidget        *vbox;
 
-  GtkListStore   *input_store;
-
-  GtkListStore   *axis_store;
-
-  GtkListStore   *pad_store;
-  GtkWidget      *pad_action_view;
-  GtkWidget      *pad_grab_button;
-  GtkWidget      *pad_edit_button;
-  GtkWidget      *pad_delete_button;
-  GtkWidget      *pad_edit_dialog;
+  GtkListStore     *pad_store;
+  GtkWidget        *pad_action_view;
+  GtkWidget        *pad_grab_button;
+  GtkWidget        *pad_edit_button;
+  GtkWidget        *pad_delete_button;
+  GtkWidget        *pad_edit_dialog;
 
   GtkTreeSelection *pad_sel;
   GtkTreeSelection *pad_edit_sel;
-
-  GtkWidget      *notebook;
 };
 
 #define GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE(editor) \
@@ -133,22 +127,8 @@ static void   gimp_device_info_editor_get_property  (GObject              *objec
                                                      GValue               *value,
                                                      GParamSpec           *pspec);
 
-static void   gimp_device_info_editor_set_axes      (GimpDeviceInfoEditor *editor);
-
-static void   gimp_device_info_editor_axis_changed  (GtkCellRendererCombo *combo,
-                                                     const gchar          *path_string,
-                                                     GtkTreeIter          *new_iter,
-                                                     GimpDeviceInfoEditor *editor);
-static void   gimp_device_info_editor_axis_selected (GtkTreeSelection     *selection,
-                                                     GimpDeviceInfoEditor *editor);
-
 static void   gimp_device_info_editor_curve_reset   (GtkWidget            *button,
                                                      GimpCurve            *curve);
-
-static gboolean gimp_device_info_editor_foreach     (GtkTreeModel         *model,
-                                                     GtkTreePath          *path,
-                                                     GtkTreeIter          *iter,
-                                                     gpointer              data);
 
 static void gimp_device_info_pad_name_column_func   (GtkTreeViewColumn    *column,
                                                      GtkCellRenderer      *cell,
@@ -222,15 +202,6 @@ gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
   private->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (editor), private->vbox, TRUE, TRUE, 0);
   gtk_widget_show (private->vbox);
-
-  private->axis_store = gtk_list_store_new (AXIS_N_COLUMNS,
-                                            /* Axis index. */
-                                            G_TYPE_INT,
-                                            /* Axis name.  */
-                                            G_TYPE_STRING,
-                                            /* Input name. */
-                                            G_TYPE_STRING);
-
 }
 
 static void
@@ -239,123 +210,17 @@ gimp_device_info_editor_constructed (GObject *object)
   GimpDeviceInfoEditor        *editor  = GIMP_DEVICE_INFO_EDITOR (object);
   GimpDeviceInfoEditorPrivate *private;
   GtkWidget                   *frame;
-  GtkWidget                   *frame2;
   GtkWidget                   *grid;
   GtkWidget                   *label;
   GtkWidget                   *combo;
-  GtkWidget                   *view;
-  GtkTreeSelection            *sel;
   GtkTreeViewColumn           *column;
   GtkCellRenderer             *cell;
-  GtkTreeIter                  axis_iter;
-  gboolean                     has_axes = FALSE;
-
-  gint                         n_axes;
-  gint                         i;
 
   private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_assert (GIMP_IS_DEVICE_INFO (private->info));
-
-  /*  the axes  */
-
-  n_axes = gimp_device_info_get_n_axes (private->info);
-  for (i = 0; i < n_axes; i++)
-    {
-      const gchar *axis_name;
-      GdkAxisUse   use       = i + 1;
-      gboolean     has_curve = FALSE;
-
-      if (gimp_device_info_get_device (private->info, NULL))
-        {
-          if (gimp_device_info_ignore_axis (private->info, i))
-            /* Some axis are apparently returned by the driver, yet
-             * should be ignored. We just pass these.
-             */
-            continue;
-
-          use = gimp_device_info_get_axis_use (private->info, i);
-          has_curve = (gimp_device_info_get_curve (private->info, use) != NULL);
-        }
-
-      axis_name = gimp_device_info_get_axis_name (private->info, i);
-      gtk_list_store_insert_with_values (private->axis_store,
-                                         /* Set the initially selected
-                                          * axis to an axis with curve
-                                          * if available, or the first
-                                          * row otherwise.
-                                          */
-                                         (! has_axes || has_curve) ? &axis_iter : NULL,
-                                         -1,
-                                         AXIS_COLUMN_INDEX, i,
-                                         AXIS_COLUMN_NAME,  gettext (axis_name),
-                                         -1);
-      has_axes = TRUE;
-    }
-
-  if (has_axes)
-    {
-      /* The list of axes of an input device */
-
-      frame = gimp_frame_new (_("Axes"));
-      gtk_box_pack_start (GTK_BOX (private->vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
-      frame2 = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
-      gtk_container_add (GTK_CONTAINER (frame), frame2);
-      gtk_widget_show (frame2);
-
-      view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (private->axis_store));
-      g_object_unref (private->axis_store);
-
-      gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
-
-      gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view),
-                                                   -1, NULL,
-                                                   gtk_cell_renderer_text_new (),
-                                                   "text", AXIS_COLUMN_NAME,
-                                                   NULL);
-
-      private->input_store = gtk_list_store_new (INPUT_N_COLUMNS,
-                                                 /* Axis real index.    */
-                                                 G_TYPE_INT,
-                                                 /* Axis printed index. */
-                                                 G_TYPE_STRING);
-
-      cell = gtk_cell_renderer_combo_new ();
-      g_object_set (cell,
-                    "mode",        GTK_CELL_RENDERER_MODE_EDITABLE,
-                    "editable",    TRUE,
-                    "model",       private->input_store,
-                    "text-column", INPUT_COLUMN_NAME,
-                    "has-entry",   FALSE,
-                    NULL);
-
-      g_object_unref (private->input_store);
-
-      g_signal_connect (cell, "changed",
-                        G_CALLBACK (gimp_device_info_editor_axis_changed),
-                        editor);
-
-      gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view),
-                                                   -1, NULL,
-                                                   cell,
-                                                   "text", AXIS_COLUMN_INPUT_NAME,
-                                                   NULL);
-
-      gtk_container_add (GTK_CONTAINER (frame2), view);
-      gtk_widget_show (view);
-
-      sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
-      gtk_tree_selection_set_mode (sel, GTK_SELECTION_BROWSE);
-    }
-  else
-    {
-      g_clear_object (&private->axis_store);
-    }
 
   /*  general device information  */
 
@@ -406,133 +271,105 @@ gimp_device_info_editor_constructed (GObject *object)
                             _("Tool hardware ID:"), 0.0, 0.5,
                             label, 1);
 
-  if (has_axes)
+  if (gimp_device_info_get_source (private->info) == GDK_SOURCE_PEN)
     {
-      /*  the axes  */
+      /* We used to list the axes in a GtkListStore, displaying their
+       * use and allowing to change it. But first of all, I don't think
+       * this ever worked in the last decade (I often tried and it did
+       * nothing, neither on X or Wayland); and secondly I am quite
+       * unsure about the use case of changing axis use.
+       * The second usage of this list was to show a curve for the
+       * selected axis in the list, when available, which we only
+       * supported for the pressure axis anyway. The problem with this
+       * second usage is that on Wayland (at least), we only got the
+       * correct list of axis once we approached the stylus to proximity
+       * once. Until then, only X and Y are available. Furthermore
+       * gdk_device_list_axes() was returning a list of GDK_NONE for all
+       * axis (again: on Wayland, but not on X), which was how we were
+       * deciding whether an axis should be ignored. So the whole thing
+       * ended up very flimsy on Wayland which was not showing the
+       * pressure curve.
+       *
+       * This simpler code does not show a list of axes anymore, does
+       * not allow to edit axis use, and it always shows the pressure
+       * curve for all pen devices (not verifying if it has actually the
+       * pressure axis, but this would be the odd one out and this would
+       * not break anything in this use case anyway).
+       */
+      GimpCurve *curve;
+      gchar     *title;
+      GtkWidget *vbox;
+      GtkWidget *hbox;
+      GtkWidget *view;
+      GtkWidget *label;
+      GtkWidget *combo;
+      GtkWidget *button;
 
-      for (i = -1; i < n_axes; i++)
-        {
-          gchar name[16];
+      /* TODO: right now this string is split in 2 localized strings,
+       * to avoid breaking string freeze. After GIMP 3.2, we should just
+       * create the "Pressure Curve" string because that's our only
+       * case so far.
+       */
 
-          if (i == -1)
-            g_snprintf (name, sizeof (name), _("none"));
-          else
-            g_snprintf (name, sizeof (name), "%d", i + 1);
+      /* e.g. "Pressure Curve" for mapping input device axes */
+      title = g_strdup_printf (_("%s Curve"),
+                               _("Pressure"));
 
-          gtk_list_store_insert_with_values (private->input_store, NULL, -1,
-                                             INPUT_COLUMN_INDEX, i,
-                                             INPUT_COLUMN_NAME,  name,
-                                             -1);
-        }
+      frame = gimp_frame_new (title);
+      gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
+      gtk_widget_show (frame);
 
-      gimp_device_info_editor_set_axes (editor);
+      g_free (title);
 
-      /*  the curves  */
+      curve = gimp_device_info_get_curve (private->info, GDK_AXIS_PRESSURE);
 
-      private->notebook = gtk_notebook_new ();
-      gtk_notebook_set_show_border (GTK_NOTEBOOK (private->notebook), FALSE);
-      gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
-      gtk_box_pack_start (GTK_BOX (editor), private->notebook, TRUE, TRUE, 0);
-      gtk_widget_show (private->notebook);
+      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+      gtk_box_set_spacing (GTK_BOX (vbox), 6);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
 
-      for (i = GDK_AXIS_X; i < GDK_AXIS_LAST; i++)
-        {
-          GimpCurve *curve;
-          gchar     *title;
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+      gtk_widget_show (frame);
 
-          /* e.g. "Pressure Curve" for mapping input device axes */
-          title = g_strdup_printf (_("%s Curve"),
-                                   gettext (gimp_device_info_get_axis_name (private->info, i - 1)));
+      view = gimp_curve_view_new ();
+      g_object_set (view,
+                    "gimp",         GIMP_TOOL_PRESET (private->info)->gimp,
+                    "border-width", CURVE_BORDER,
+                    NULL);
+      gtk_widget_set_size_request (view,
+                                   CURVE_SIZE + CURVE_BORDER * 2,
+                                   CURVE_SIZE + CURVE_BORDER * 2);
+      gtk_container_add (GTK_CONTAINER (frame), view);
+      gtk_widget_show (view);
 
-          frame = gimp_frame_new (title);
-          gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook), frame, NULL);
-          gtk_widget_show (frame);
+      gimp_curve_view_set_curve (GIMP_CURVE_VIEW (view), curve, NULL);
 
-          g_free (title);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+      gtk_box_set_spacing (GTK_BOX (hbox), 6);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
 
-          curve = gimp_device_info_get_curve (private->info, i);
+      label = gtk_label_new_with_mnemonic (_("Curve _type:"));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
 
-          if (curve)
-            {
-              GtkWidget *vbox;
-              GtkWidget *hbox;
-              GtkWidget *view;
-              GtkWidget *label;
-              GtkWidget *combo;
-              GtkWidget *button;
+      combo = gimp_prop_enum_combo_box_new (G_OBJECT (curve),
+                                            "curve-type", 0, 0);
+      gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
+                                           "gimp-curve");
+      gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
 
-              vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-              gtk_box_set_spacing (GTK_BOX (vbox), 6);
-              gtk_container_add (GTK_CONTAINER (frame), vbox);
-              gtk_widget_show (vbox);
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-              frame = gtk_frame_new (NULL);
-              gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-              gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-              gtk_widget_show (frame);
+      button = gtk_button_new_with_mnemonic (_("_Reset Curve"));
+      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
-              view = gimp_curve_view_new ();
-              g_object_set (view,
-                            "gimp",         GIMP_TOOL_PRESET (private->info)->gimp,
-                            "border-width", CURVE_BORDER,
-                            NULL);
-              gtk_widget_set_size_request (view,
-                                           CURVE_SIZE + CURVE_BORDER * 2,
-                                           CURVE_SIZE + CURVE_BORDER * 2);
-              gtk_container_add (GTK_CONTAINER (frame), view);
-              gtk_widget_show (view);
-
-              gimp_curve_view_set_curve (GIMP_CURVE_VIEW (view), curve, NULL);
-
-              hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-              gtk_box_set_spacing (GTK_BOX (hbox), 6);
-              gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-              gtk_widget_show (hbox);
-
-              label = gtk_label_new_with_mnemonic (_("Curve _type:"));
-              gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-              gtk_widget_show (label);
-
-              combo = gimp_prop_enum_combo_box_new (G_OBJECT (curve),
-                                                    "curve-type", 0, 0);
-              gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
-                                                   "gimp-curve");
-              gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-
-              gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
-
-              button = gtk_button_new_with_mnemonic (_("_Reset Curve"));
-              gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-              gtk_widget_show (button);
-
-              g_signal_connect (button, "clicked",
-                                G_CALLBACK (gimp_device_info_editor_curve_reset),
-                                curve);
-            }
-          else
-            {
-              GtkWidget *label;
-              gchar     *string;
-
-              string = g_strdup_printf (_("The axis '%s' has no curve"),
-                                        gettext (gimp_device_info_get_axis_name (private->info, i - 1)));
-
-              label = gtk_label_new (string);
-              gtk_container_add (GTK_CONTAINER (frame), label);
-              gtk_widget_show (label);
-
-              g_free (string);
-            }
-        }
-
-      /* Callback when selecting an axis. */
-
-      g_signal_connect (sel, "changed",
-                        G_CALLBACK (gimp_device_info_editor_axis_selected),
-                        editor);
-
-      if (has_axes)
-        gtk_tree_selection_select_iter (sel, &axis_iter);
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (gimp_device_info_editor_curve_reset),
+                        curve);
     }
 
   if (gimp_device_info_get_source (private->info) == GDK_SOURCE_TABLET_PAD)
@@ -735,157 +572,10 @@ gimp_device_info_editor_get_property (GObject    *object,
 }
 
 static void
-gimp_device_info_editor_set_axes (GimpDeviceInfoEditor *editor)
-{
-  GimpDeviceInfoEditorPrivate *private;
-
-  private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (editor);
-
-  gtk_tree_model_foreach (GTK_TREE_MODEL (private->axis_store),
-                          gimp_device_info_editor_foreach, private);
-}
-
-static void
-gimp_device_info_editor_axis_changed (GtkCellRendererCombo  *combo,
-                                      const gchar           *path_string,
-                                      GtkTreeIter           *new_iter,
-                                      GimpDeviceInfoEditor  *editor)
-{
-  GimpDeviceInfoEditorPrivate *private;
-  GtkTreePath                 *path;
-  GtkTreeIter                  new_use_iter;
-
-  private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (editor);
-
-  path = gtk_tree_path_new_from_string (path_string);
-
-  if (gtk_tree_model_get_iter (GTK_TREE_MODEL (private->axis_store),
-                               &new_use_iter, path))
-    {
-      gint       axis_index;
-      GdkAxisUse new_use  = GDK_AXIS_IGNORE;
-      GdkAxisUse old_use  = GDK_AXIS_IGNORE;
-      gint       new_axis = -1;
-      gint       old_axis = -1;
-      gint       n_axes;
-      gint       i;
-
-      gtk_tree_model_get (GTK_TREE_MODEL (private->axis_store), &new_use_iter,
-                          AXIS_COLUMN_INDEX, &axis_index,
-                          -1);
-      new_use = axis_index + 1;
-
-      gtk_tree_model_get (GTK_TREE_MODEL (private->input_store), new_iter,
-                          INPUT_COLUMN_INDEX, &new_axis,
-                          -1);
-
-      n_axes = gimp_device_info_get_n_axes (private->info);
-
-      for (i = 0; i < n_axes; i++)
-        if (gimp_device_info_get_axis_use (private->info, i) == new_use)
-          {
-            old_axis = i;
-            break;
-          }
-
-      if (new_axis == old_axis)
-        goto out;
-
-      if (new_axis != -1)
-        old_use = gimp_device_info_get_axis_use (private->info, new_axis);
-
-      /* we must always have an x and a y axis */
-      if ((new_axis == -1 && (new_use == GDK_AXIS_X ||
-                              new_use == GDK_AXIS_Y)) ||
-          (old_axis == -1 && (old_use == GDK_AXIS_X ||
-                              old_use == GDK_AXIS_Y)))
-        {
-          /* do nothing */
-        }
-      else
-        {
-          if (new_axis != -1)
-            gimp_device_info_set_axis_use (private->info, new_axis, new_use);
-
-          if (old_axis != -1)
-            gimp_device_info_set_axis_use (private->info, old_axis, old_use);
-
-          gimp_device_info_editor_set_axes (editor);
-        }
-    }
-
- out:
-  gtk_tree_path_free (path);
-}
-
-static void
-gimp_device_info_editor_axis_selected (GtkTreeSelection     *selection,
-                                       GimpDeviceInfoEditor *editor)
-{
-  GimpDeviceInfoEditorPrivate *private;
-  GtkTreeIter                  iter;
-
-  private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (editor);
-
-  if (gtk_tree_selection_get_selected (selection, NULL, &iter))
-    {
-      gint axis_index;
-
-      gtk_tree_model_get (GTK_TREE_MODEL (private->axis_store), &iter,
-                          AXIS_COLUMN_INDEX, &axis_index,
-                          -1);
-
-      gtk_notebook_set_current_page (GTK_NOTEBOOK (private->notebook),
-                                     axis_index);
-    }
-}
-
-static void
 gimp_device_info_editor_curve_reset (GtkWidget *button,
                                      GimpCurve *curve)
 {
   gimp_curve_reset (curve, TRUE);
-}
-
-static gboolean
-gimp_device_info_editor_foreach (GtkTreeModel *model,
-                                 GtkTreePath *path,
-                                 GtkTreeIter *iter,
-                                 gpointer data)
-{
-  GimpDeviceInfoEditorPrivate *private = data;
-  gchar                        input_name[16];
-  gint                         n_axes;
-  gint                         axe_index;
-  gint                         i;
-
-  n_axes = gimp_device_info_get_n_axes (private->info);
-
-  gtk_tree_model_get (model, iter,
-                      AXIS_COLUMN_INDEX, &axe_index,
-                      -1);
-
-  for (i = 0; i < n_axes; i++)
-    {
-      if (gimp_device_info_get_axis_use (private->info, i) == axe_index + 1)
-        break;
-    }
-
-  if (i == n_axes)
-    i = -1;
-
-  if (i == -1)
-    g_snprintf (input_name, sizeof (input_name), _("none"));
-  else
-    g_snprintf (input_name, sizeof (input_name), "%d", i + 1);
-
-  gtk_list_store_set (private->axis_store,
-                      iter,
-                      AXIS_COLUMN_INPUT_NAME, input_name,
-                      -1);
-
-  /* Continue to walk the tree. */
-  return FALSE;
 }
 
 static gchar *
