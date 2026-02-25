@@ -1460,11 +1460,16 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
                          "y", (gdouble) -filter->filter_area.y,
                          NULL);
 
-          gegl_node_set (filter->crop_before,
-                         "operation", "gegl:crop",
-                         "width",     (gdouble) filter->filter_area.width,
-                         "height",    (gdouble) filter->filter_area.height,
-                         NULL);
+          if (first_filter)
+            gegl_node_set (filter->crop_before,
+                           "operation", "gegl:crop",
+                           "width",     (gdouble) filter->filter_area.width,
+                           "height",    (gdouble) filter->filter_area.height,
+                           NULL);
+          else
+            gegl_node_set (filter->crop_before,
+                           "operation", "gegl:nop",
+                           NULL);
         }
 
       if (filter->filter_clip)
