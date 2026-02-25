@@ -257,6 +257,13 @@ tinyscheme_init (GList    *path,
       g_clear_error (&error);
       return;
     }
+  typelib = g_irepository_require (repo, "GimpUi", NULL, 0, &error);
+  if (!typelib)
+    {
+      g_warning ("%s", error->message);
+      g_clear_error (&error);
+      return;
+    }
 
   /* register in the interpreter the gimp functions and types. */
   ts_init_constants (&sc, repo);
@@ -414,6 +421,7 @@ ts_init_constants (scheme       *sc,
   }
 
   ts_init_enums (sc, repo, "Gimp");
+  ts_init_enums (sc, repo, "GimpUi");
   ts_init_enums (sc, repo, "Gegl");
 
   /* Constants used in the register block of scripts e.g. SF-ADJUSTMENT */
@@ -463,7 +471,8 @@ ts_init_enum (scheme     *sc,
         }
 
       /* Scheme-ify the name */
-      if (g_strcmp0 (namespace, "Gimp") == 0)
+      if (g_strcmp0 (namespace, "Gimp") == 0 ||
+          g_strcmp0 (namespace, "GimpUi") == 0)
         {
           /* Skip the GIMP prefix for GIMP enums */
           if (g_str_has_prefix (c_identifier, "GIMP_"))
