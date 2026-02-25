@@ -2482,7 +2482,7 @@ ifsfile_save_response (GtkNativeDialog *dialog,
       fclose (fh);
     }
 
-  g_object_unref (dialog);
+  gtk_native_dialog_hide (dialog);
 }
 
 /* replace ifsvals and elements with specified new values
@@ -2590,7 +2590,7 @@ ifsfile_load_response (GtkNativeDialog *dialog,
       design_area_redraw ();
     }
 
-  g_object_unref (GTK_WIDGET (dialog));
+  gtk_native_dialog_hide (dialog);
 }
 
 static void

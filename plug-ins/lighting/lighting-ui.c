@@ -851,7 +851,7 @@ save_preset_response (GtkNativeDialog *chooser,
       g_free (filename);
     }
 
-  g_object_unref (chooser);
+  gtk_native_dialog_hide (chooser);
 }
 
 static void
@@ -999,7 +999,7 @@ load_preset_response (GtkNativeDialog *chooser,
       g_free (filename);
    }
 
-  g_object_unref (chooser);
+  gtk_native_dialog_hide (chooser);
   interactive_preview_callback (NULL);
 }
 
