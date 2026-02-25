@@ -1429,8 +1429,12 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
   filters = gimp_drawable_get_filters (filter->drawable);
 
   /* The first test is because the filter might not be added yet. */
-  if (GIMP_LIST (filters)->queue->tail != NULL &&
-      filter == GIMP_LIST (filters)->queue->tail->data)
+  if (GIMP_LIST (filters)->queue->tail == NULL)
+    {
+      first_filter = TRUE;
+    }
+  else if (GIMP_LIST (filters)->queue->tail != NULL &&
+           filter == GIMP_LIST (filters)->queue->tail->data)
     {
       GimpDrawableFilter *next_filter = NULL;
 
