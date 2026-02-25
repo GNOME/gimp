@@ -1,7 +1,7 @@
 ﻿<!-- ⚠️ IMPORTANT: READ ME! ⚠️
 This is the template for TECHNICAL FEATURE REQUESTS.
 For bug reports, performance issues and security reports, please see:
-https://testing.gimp.org/bugs/report.html#select-the-issue-template
+https://gimp.org/bugs/report.html#select-the-issue-template
 
 It is important that you fill all the fields of the template. -->
 
