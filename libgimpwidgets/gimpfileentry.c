@@ -72,17 +72,17 @@ enum
 
 struct _GimpFileEntry
 {
-  GtkBox     parent_instance;
+  GtkBox                parent_instance;
 
-  GtkWidget *file_exists;
-  GtkWidget *entry;
-  GtkWidget *browse_button;
+  GtkWidget            *file_exists;
+  GtkWidget            *entry;
+  GtkWidget            *browse_button;
 
-  GtkWidget *file_dialog;
+  GtkFileChooserNative *file_dialog;
 
-  gchar     *title;
-  gboolean   dir_only;
-  gboolean   check_valid;
+  gchar                *title;
+  gboolean              dir_only;
+  gboolean              check_valid;
 };
 
 
@@ -199,7 +199,7 @@ gimp_file_entry_dispose (GObject *object)
 {
   GimpFileEntry *entry = GIMP_FILE_ENTRY (object);
 
-  g_clear_pointer (&entry->file_dialog, gtk_widget_destroy);
+  g_clear_pointer (&entry->file_dialog, g_object_unref);
 
   g_clear_pointer (&entry->title, g_free);
 
@@ -394,11 +394,11 @@ gimp_file_entry_entry_focus_out (GtkWidget     *widget,
 
 /*  local callback of gimp_file_entry_browse_clicked()  */
 static void
-gimp_file_entry_chooser_response (GtkWidget     *dialog,
-                                  gint           response_id,
-                                  GimpFileEntry *entry)
+gimp_file_entry_chooser_response (GtkNativeDialog *dialog,
+                                  gint             response_id,
+                                  GimpFileEntry   *entry)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       gchar *filename;
 
@@ -407,7 +407,7 @@ gimp_file_entry_chooser_response (GtkWidget     *dialog,
       g_free (filename);
     }
 
-  gtk_widget_hide (dialog);
+  gtk_native_dialog_hide (dialog);
 }
 
 static void
@@ -436,9 +436,8 @@ static void
 gimp_file_entry_browse_clicked (GtkWidget     *widget,
                                 GimpFileEntry *entry)
 {
-  GtkFileChooser *chooser;
-  gchar          *utf8;
-  gchar          *filename;
+  gchar *utf8;
+  gchar *filename;
 
   utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
   filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
@@ -457,49 +456,23 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
         }
 
       entry->file_dialog =
-        gtk_file_chooser_dialog_new (title, NULL,
+        gtk_file_chooser_native_new (title, NULL,
                                      entry->dir_only ?
                                      GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER :
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
+                                     _("_OK"), _("_Cancel"));
 
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_OK"),     GTK_RESPONSE_OK,
-
-                                     NULL);
-
-        gimp_dialog_set_alternative_button_order (GTK_DIALOG (entry->file_dialog),
-                                                  GTK_RESPONSE_OK,
-                                                  GTK_RESPONSE_CANCEL,
-                                                  -1);
-
-      chooser = GTK_FILE_CHOOSER (entry->file_dialog);
-
-      gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
-      gtk_window_set_role (GTK_WINDOW (chooser),
-                           "gimp-file-entry-file-dialog");
-
-      g_signal_connect (chooser, "response",
+      g_signal_connect (entry->file_dialog, "response",
                         G_CALLBACK (gimp_file_entry_chooser_response),
                         entry);
-      g_signal_connect (chooser, "delete-event",
-                        G_CALLBACK (gtk_true),
-                        NULL);
-
-      g_signal_connect_swapped (entry, "unmap",
-                                G_CALLBACK (gtk_widget_hide),
-                                chooser);
-    }
-  else
-    {
-      chooser = GTK_FILE_CHOOSER (entry->file_dialog);
     }
 
-  gtk_file_chooser_set_filename (chooser, filename);
+  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (entry->file_dialog),
+                                 filename);
 
   g_free (filename);
 
-  gtk_window_set_screen (GTK_WINDOW (chooser), gtk_widget_get_screen (widget));
-  gtk_window_present (GTK_WINDOW (chooser));
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (entry->file_dialog));
 }
 
 static void
