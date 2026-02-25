@@ -245,7 +245,7 @@ savebrush_response (GtkNativeDialog *dialog,
       g_free (name);
     }
 
-  g_object_unref (dialog);
+  gtk_native_dialog_hide (dialog);
 }
 
 static void

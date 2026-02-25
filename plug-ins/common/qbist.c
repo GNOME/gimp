@@ -829,6 +829,7 @@ dialog_load (GtkWidget *widget,
 {
   GtkWidget            *parent;
   GtkFileChooserNative *dialog;
+  GtkFileFilter        *filter;
   gint                  res;
 
   parent = gtk_widget_get_toplevel (widget);
@@ -840,6 +841,19 @@ dialog_load (GtkWidget *widget,
 
   if (qbist_info.path)
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("All Files"));
+  gtk_file_filter_add_pattern (filter, "*");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("QBE file (*.qbe)"));
+  gtk_file_filter_add_pattern (filter, "*.qbe");
+  gtk_file_filter_add_pattern (filter, "*.QBE");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
 
   res = gtk_native_dialog_run (GTK_NATIVE_DIALOG (dialog));
   if (res == GTK_RESPONSE_ACCEPT)

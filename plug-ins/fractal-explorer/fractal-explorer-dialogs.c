@@ -1435,7 +1435,7 @@ save_file_chooser_response (GtkNativeDialog *chooser,
       save_callback ();
     }
 
-  g_object_unref (chooser);
+  gtk_native_dialog_hide (chooser);
 }
 
 static void
@@ -1478,7 +1478,7 @@ load_file_chooser_response (GtkNativeDialog *chooser,
       update_previews (config);
     }
 
-  g_object_unref (chooser);
+  gtk_native_dialog_hide (chooser);
 }
 
 static void
