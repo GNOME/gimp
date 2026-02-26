@@ -1,4 +1,4 @@
-name: gimp-experimental
+name: gimp
 adopt-info: gimp
 grade: devel #see parts:babl_or_gegl:override-pull
 base: core24
@@ -92,10 +92,6 @@ parts:
     source: https://gitlab.gnome.org/GNOME/babl.git
     source-depth: 1
     override-pull: |
-      if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" = 'gimp' ]; then
-        printf '\033[31m(ERROR)\033[0m non-tagged source can not be deployed to gimp snap. Please, change grade value to stable\n'
-        exit 1
-      fi
       if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" != 'gimp' ]; then
         craftctl default
       else
@@ -119,10 +115,6 @@ parts:
     source: https://gitlab.gnome.org/GNOME/gegl.git
     source-depth: 1
     override-pull: |
-      if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" = 'gimp' ]; then
-        printf '\033[31m(ERROR)\033[0m non-tagged source can not be deployed to gimp snap. Please, change grade value to stable\n'
-        exit 1
-      fi
       if [ "$SNAPCRAFT_PROJECT_GRADE" != 'stable' ] && [ "$SNAPCRAFT_PROJECT_NAME" != 'gimp' ]; then
         craftctl default
       else
@@ -156,10 +148,6 @@ parts:
     source-type: local
     override-pull: |
       craftctl default
-      if ! git describe --tags --exact-match >/dev/null 2>&1 && [ "$SNAPCRAFT_PROJECT_NAME" = 'gimp' ]; then
-        printf '\033[31m(ERROR)\033[0m non-tagged source can not be deployed to gimp snap. Please, checkout gimp repo to a tagged commit\n'
-        exit 1
-      fi
       craftctl set version="$(awk -F"'" '/version:/ {print $2; exit}' $CRAFT_PART_SRC/meson.build)"
     build-environment: *SNAP_ENVIRON
     plugin: meson
