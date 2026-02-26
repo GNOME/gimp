@@ -152,6 +152,7 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   g_object_unref (private->store);
 
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (private->tree_view), FALSE);
+  gtk_tree_view_set_enable_search (GTK_TREE_VIEW (private->tree_view), FALSE);
 
   column = gtk_tree_view_column_new ();
 
