@@ -1816,9 +1816,9 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
 
       gimp_drawable_update_bounding_box (filter->drawable);
 
-      g_signal_connect (image, "component-active-changed",
-                        G_CALLBACK (gimp_drawable_filter_affect_changed),
-                        filter);
+      g_signal_connect_object (image, "component-active-changed",
+                               G_CALLBACK (gimp_drawable_filter_affect_changed),
+                               filter, 0);
       if (! filter->mask)
         g_signal_connect_object (image, "mask-changed",
                                  G_CALLBACK (gimp_drawable_filter_mask_changed),
