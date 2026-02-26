@@ -124,6 +124,7 @@ static gchar   * user_install_old_style_gimpdir  (void);
 
 #ifdef G_OS_UNIX
 static gchar   * user_install_flatpak_gimpdir    (gint                minor);
+static gchar   * user_install_snap_gimpdir       (gint                minor);
 #endif
 
 static void      user_install_log                (GimpUserInstall    *install,
@@ -379,6 +380,50 @@ user_install_detect_old (GimpUserInstall *install,
                       g_free (flatpak_dir);
                     }
                 }
+
+              if (major == 3 && minor == 0)
+                {
+                  /* This is special-casing for GIMP 3.0 as snap where
+                   * the config folder would be in $HOME/snap/<etc> (see #15547).
+                   * For GIMP 3.2, even the snap will always be in
+                   * $XDG_CONFIG_HOME. But then we want a migration to still
+                   * find the previous config folder.
+                   */
+                  gchar *snap_dir = user_install_snap_gimpdir (minor);
+
+                  if (snap_dir)
+                    /* This first test is for finding a 3.0 snap config
+                     * dir from a non-snap GIMP 3.2+.
+                     */
+                    migrate = g_file_test (snap_dir, G_FILE_TEST_IS_DIR);
+
+                  if (! migrate && g_file_test (g_getenv ("SNAP"), G_FILE_TEST_IS_DIR))
+                    {
+                      /* Now we check $SNAP_USER_DATA/.config/GIMP because this is where
+                       * local ~/snap/ is mounted inside the sandbox.
+                       * So this second test is for finding a 3.0 snap
+                       * config dir from a snap GIMP 3.2+.
+                       */
+                      g_free (snap_dir);
+                      snap_dir = g_build_filename (g_getenv ("SNAP_USER_DATA"), ".config/GIMP/", version, NULL);
+
+                      migrate = g_file_test (snap_dir, G_FILE_TEST_IS_DIR);
+                    }
+
+                  if (migrate)
+                    {
+                      install->old_major = 3;
+                      install->old_minor = minor;
+
+                      g_free (dir);
+                      dir = snap_dir;
+                      break;
+                    }
+                  else
+                    {
+                      g_free (snap_dir);
+                    }
+                }
 #endif
             }
           if (migrate)
@@ -463,6 +508,23 @@ user_install_flatpak_gimpdir (gint minor)
      */
     gimp_dir = g_build_filename (home_dir,
                                  ".var/app/org.gimp.GIMP/config/GIMP/",
+                                 version, NULL);
+
+  g_free (version);
+
+  return gimp_dir;
+}
+
+static gchar *
+user_install_snap_gimpdir (gint minor)
+{
+  const gchar *home_dir = g_get_home_dir ();
+  gchar       *version  = g_strdup_printf ("3.%d", minor);
+  gchar       *gimp_dir = NULL;
+
+  if (home_dir)
+    gimp_dir = g_build_filename (home_dir,
+                                 "snap/gimp/current/.config/GIMP/",
                                  version, NULL);
 
   g_free (version);
