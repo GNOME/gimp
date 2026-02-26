@@ -107,6 +107,9 @@ static void
 gimp_translation_store_constructed (GObject *object)
 {
   GList *sublist = NULL;
+#ifdef HAVE_ISO_CODES
+  gchar *mo_path = NULL;
+#endif
 
   if (GIMP_TRANSLATION_STORE (object)->manual_l18n)
     sublist = gimp_help_get_installed_languages ();
@@ -125,8 +128,16 @@ gimp_translation_store_constructed (GObject *object)
 
       if (! GIMP_TRANSLATION_STORE (object)->manual_l18n ||
           g_list_find_custom (sublist, def.code, (GCompareFunc) g_strcmp0))
-        GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
-                                                     def.name, def.code);
+        {
+          /* there might not be all languages; only show the installed (see #15468) */
+          mo_path = g_strdup_printf ("%s/share/locale/%s/LC_MESSAGES/%s.mo", gimp_installation_directory(), def.code, GETTEXT_PACKAGE);
+          if (g_file_test (mo_path, G_FILE_TEST_EXISTS) || g_strcmp0 (def.code, "en_US") == 0)
+            {
+              GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
+                                                           def.name, def.code);
+            }
+          g_free(mo_path);
+        }
     }
 
   g_return_if_fail (system_lang != NULL);
