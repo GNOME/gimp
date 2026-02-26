@@ -108,10 +108,6 @@ static void    gimp_icon_picker_menu_paste      (GtkWidget      *widget,
 static void    gimp_icon_picker_menu_copy       (GtkWidget      *widget,
                                                  GdkEventButton *event,
                                                  gpointer        data);
-#ifdef G_OS_WIN32
-static void    gimp_icon_picker_dialog_realize  (GtkWidget      *dialog,
-                                                 gpointer       *data);
-#endif
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpIconPicker, gimp_icon_picker, GTK_TYPE_BOX)
@@ -478,30 +474,20 @@ gimp_icon_picker_menu_from_file (GtkWidget      *widget,
                                  GdkEventButton *event,
                                  gpointer        object)
 {
-  GimpIconPicker *picker = GIMP_ICON_PICKER (object);
-  GtkWidget      *dialog;
-  GtkFileFilter  *filter;
+  GimpIconPicker       *picker = GIMP_ICON_PICKER (object);
+  GtkFileChooserNative *dialog;
+  GtkFileFilter        *filter;
 
-  dialog = gtk_file_chooser_dialog_new (_("Load Icon Image"),
+  dialog = gtk_file_chooser_native_new (_("Load Icon Image"),
                                         NULL,
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
-
-                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                        _("_Open"),   GTK_RESPONSE_ACCEPT,
-
-                                        NULL);
+                                        _("_Open"), _("_Cancel"));
 
   filter = gtk_file_filter_new ();
   gtk_file_filter_add_pixbuf_formats (filter);
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
 
-#ifdef G_OS_WIN32
-  g_signal_connect (dialog, "realize",
-                    G_CALLBACK (gimp_icon_picker_dialog_realize),
-                    picker);
-#endif
-
-  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+  if (gtk_native_dialog_run (GTK_NATIVE_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
     {
       gchar     *filename;
       GdkPixbuf *icon_pixbuf = NULL;
@@ -519,7 +505,7 @@ gimp_icon_picker_menu_from_file (GtkWidget      *widget,
       g_free (filename);
     }
 
-  gtk_widget_destroy (dialog);
+  gtk_native_dialog_destroy (GTK_NATIVE_DIALOG (dialog));
 }
 
 static void
@@ -616,15 +602,3 @@ gimp_icon_picker_menu_from_name (GtkWidget      *widget,
 
   gimp_popup_show (GIMP_POPUP (popup), GTK_WIDGET (picker));
 }
-
-#ifdef G_OS_WIN32
-static void
-gimp_icon_picker_dialog_realize (GtkWidget *dialog,
-                                 gpointer  *data)
-{
-  GimpIconPicker        *picker  = GIMP_ICON_PICKER (data);
-  GimpIconPickerPrivate *private = GET_PRIVATE (picker);
-
-  gimp_window_set_title_bar_theme (private->gimp, dialog);
-}
-#endif
