@@ -54,6 +54,7 @@
 #include <ImfInputFile.h>
 #include <ImfChannelList.h>
 #include <ImfRgbaFile.h>
+#include <ImfArray.h>
 #include <ImfRgbaYca.h>
 #include <ImfStandardAttributes.h>
 #pragma GCC diagnostic pop
@@ -65,10 +66,10 @@ using namespace Imf;
 using namespace Imf::RgbaYca;
 using namespace Imath;
 
-static bool XYZ_equal(cmsCIEXYZ *a, cmsCIEXYZ *b)
+static bool XYZ_equal (cmsCIEXYZ *a, cmsCIEXYZ *b)
 {
   static const double epsilon = 0.0001;
-  // Y is encoding the luminance, we normalize that for comparison
+  /* Y is encoding the luminance, we normalize that for comparison */
   return fabs ((a->X / a->Y * b->Y) - b->X) < epsilon &&
          fabs ((a->Y / a->Y * b->Y) - b->Y) < epsilon &&
          fabs ((a->Z / a->Y * b->Y) - b->Z) < epsilon;
@@ -76,18 +77,19 @@ static bool XYZ_equal(cmsCIEXYZ *a, cmsCIEXYZ *b)
 
 struct _EXRLoader
 {
-  _EXRLoader(const char* filename) :
-    refcount_(1),
-    file_(filename),
-    data_window_(file_.header().dataWindow()),
-    channels_(file_.header().channels())
+  _EXRLoader (const char* filename) :
+    refcount_ (1),
+    file_ (filename),
+    rgbaInputFile_ (filename),
+    data_window_ (file_.header ().dataWindow ()),
+    channels_ (file_.header ().channels ())
   {
     std::set<string> layerNames;
     bool             loaded;
 
     channels_.layers (layerNames);
     layers_only_ = false;
-    layer_count_ = layerNames.size();
+    layer_count_ = layerNames.size ();
 
     loaded = initializeImage (false);
 
@@ -98,8 +100,8 @@ struct _EXRLoader
       {
         layers_only_ = true;
 
-        for (std::set<std::string>::const_iterator i = layerNames.begin();
-             i != layerNames.end(); ++i)
+        for (std::set<std::string>::const_iterator i = layerNames.begin ();
+             i != layerNames.end (); ++i)
           {
             loaded = initializeImage (true, *i + ".");
 
@@ -119,45 +121,43 @@ struct _EXRLoader
     /* Capitalization matters - channel "R" and "r" are both red,
      * but unless you use the specific one mentioned in the file,
      * it won't load. */
-    if (channels_.findChannel(prefix + "R") ||
-        channels_.findChannel(prefix + "G") ||
-        channels_.findChannel(prefix + "B") ||
-        channels_.findChannel(prefix + "r") ||
-        channels_.findChannel(prefix + "g") ||
-        channels_.findChannel(prefix + "b"))
+    if (channels_.findChannel (prefix + "R") ||
+        channels_.findChannel (prefix + "G") ||
+        channels_.findChannel (prefix + "B") ||
+        channels_.findChannel (prefix + "r") ||
+        channels_.findChannel (prefix + "g") ||
+        channels_.findChannel (prefix + "b"))
       {
         format_string_ = "RGB";
         image_type_ = IMAGE_TYPE_RGB;
 
-        if ((chan = channels_.findChannel(prefix + "R")) ||
-            (chan = channels_.findChannel(prefix + "r")))
+        if ((chan = channels_.findChannel (prefix + "R")) ||
+            (chan = channels_.findChannel (prefix + "r")))
           pt_ = chan->type;
-        else if ((chan = channels_.findChannel(prefix + "G")) ||
-                 (chan = channels_.findChannel(prefix + "g")))
+        else if ((chan = channels_.findChannel (prefix + "G")) ||
+                 (chan = channels_.findChannel (prefix + "g")))
           pt_ = chan->type;
-        else if ((chan = channels_.findChannel(prefix + "B")) ||
-                 (chan = channels_.findChannel(prefix + "b")))
+        else if ((chan = channels_.findChannel (prefix + "B")) ||
+                 (chan = channels_.findChannel (prefix + "b")))
           pt_ = chan->type;
       }
-    else if (channels_.findChannel(prefix + "Y") &&
-             (channels_.findChannel(prefix + "RY") ||
-              channels_.findChannel(prefix + "BY")))
+    else if (channels_.findChannel (prefix + "Y") &&
+             (channels_.findChannel (prefix + "RY") ||
+              channels_.findChannel (prefix + "BY")))
       {
-        format_string_ = "Y'CbCr";
+        format_string_ = "RGB";
         image_type_ = IMAGE_TYPE_YUV;
 
-        /* TODO: Use RGBA interface to incorporate
-         * RY/BY chroma channels */
-        pt_ = channels_.findChannel(prefix + "Y")->type;
+        pt_ = channels_.findChannel (prefix + "Y")->type;
       }
-    else if (channels_.findChannel(prefix + "Y") ||
-             channels_.findChannel(prefix + "y"))
+    else if (channels_.findChannel (prefix + "Y") ||
+             channels_.findChannel (prefix + "y"))
       {
         format_string_ = "Y";
         image_type_ = IMAGE_TYPE_GRAY;
 
-        if ((chan = channels_.findChannel(prefix + "Y")) ||
-            (chan = channels_.findChannel(prefix + "y")))
+        if ((chan = channels_.findChannel (prefix + "Y")) ||
+            (chan = channels_.findChannel (prefix + "y")))
           pt_ = chan->type;
       }
     else
@@ -165,13 +165,13 @@ struct _EXRLoader
         int         channel_count = 0;
         const char *channel_name  = NULL;
 
-        for (ChannelList::ConstIterator i = channels_.begin();
-             i != channels_.end(); ++i)
+        for (ChannelList::ConstIterator i = channels_.begin ();
+             i != channels_.end (); ++i)
           {
             channel_count++;
 
-            pt_ = i.channel().type;
-            channel_name = i.name();
+            pt_ = i.channel ().type;
+            channel_name = i.name ();
           }
 
        /* Assume single channel images are grayscale,
@@ -194,14 +194,14 @@ struct _EXRLoader
           }
       }
 
-    if (channels_.findChannel(prefix + "A"))
+    if (channels_.findChannel (prefix + "A"))
       {
-        format_string_.append(prefix + "A");
+        format_string_.append (prefix + "A");
         has_alpha_ = true;
       }
-    else if (channels_.findChannel(prefix + "a"))
+    else if (channels_.findChannel (prefix + "a"))
       {
-        format_string_.append(prefix + "a");
+        format_string_.append (prefix + "a");
         has_alpha_ = true;
       }
     else
@@ -212,23 +212,23 @@ struct _EXRLoader
     switch (pt_)
       {
       case UINT:
-        format_string_.append(" u32");
+        format_string_.append (" u32");
         bpc_ = 4;
         break;
       case HALF:
-        format_string_.append(" half");
+        format_string_.append (" half");
         bpc_ = 2;
         break;
       case FLOAT:
       default:
-        format_string_.append(" float");
+        format_string_.append (" float");
         bpc_ = 4;
       }
 
     return can_load_;
   }
 
-  int readPixelRow(char *pixels,
+  int readPixelRow (char *pixels,
                    int   bpp,
                    int   row,
                    int   layer_index)
@@ -237,41 +237,68 @@ struct _EXRLoader
     FrameBuffer      fb;
     std::set<string> layerNames;
     std::string      prefix     = "";
-    // This is necessary because OpenEXR expects the buffer to begin at
-    // (0, 0). Though it probably results in some unmapped address,
-    // hopefully OpenEXR will not make use of it. :/
+    /* This is necessary because OpenEXR expects the buffer to begin at
+     * (0, 0). Though it probably results in some unmapped address,
+     * hopefully OpenEXR will not make use of it. :/ */
     char* base = pixels - (data_window_.min.x * bpp);
 
     if (layer_index > -1)
       {
         channels_.layers (layerNames);
 
-        prefix = *std::next(layerNames.begin(), layer_index) + ".";
+        prefix = *std::next (layerNames.begin (), layer_index) + ".";
       }
 
     switch (image_type_)
       {
       case IMAGE_TYPE_UNKNOWN_1_CHANNEL:
-        fb.insert(unknown_channel_name_, Slice(pt_, base, bpp, 0, 1, 1, 0.5));
+        fb.insert (unknown_channel_name_, Slice (pt_, base, bpp, 0, 1, 1, 0.5));
         break;
 
       case IMAGE_TYPE_YUV:
+        {
+           int width = getWidth();
+           Array<Rgba> row_buffer (width);
+
+           rgbaInputFile_.setFrameBuffer (&row_buffer[0] - data_window_.min.x,
+                                          1,
+                                          0);
+
+          rgbaInputFile_.readPixels (actual_row, actual_row);
+
+          for (int i = 0; i < width; i++)
+            {
+              half *pixel = (half *)(base + (i * bpp));
+              pixel[0] = row_buffer[i].r;
+              pixel[1] = row_buffer[i].g;
+              pixel[2] = row_buffer[i].b;
+              if (hasAlpha ())
+                {
+                  pixel[3] = row_buffer[i].a;
+                }
+            }
+            /* return early to skip the file_.setFrameBuffer() and
+             * file_.readPixels() calls below, which are used by the
+             * RGB and GRAY cases.
+             * YUV reading is handled entirely by rgbaInputFile_ above. */
+            return 0;
+        }
       case IMAGE_TYPE_GRAY:
-        if (channels_.findChannel(prefix + "Y"))
+        if (channels_.findChannel (prefix + "Y"))
           {
-            fb.insert(prefix + "Y", Slice(pt_, base, bpp, 0, 1, 1, 0.5));
-            if (hasAlpha())
+            fb.insert (prefix + "Y", Slice (pt_, base, bpp, 0, 1, 1, 0.5));
+            if (hasAlpha ())
               {
-                fb.insert(prefix + "A", Slice(pt_, base + bpc_, bpp, 0, 1, 1, 1.0));
+                fb.insert (prefix + "A", Slice (pt_, base + bpc_, bpp, 0, 1, 1, 1.0));
               }
           }
         else
           {
             {
-              fb.insert(prefix + "y", Slice(pt_, base, bpp, 0, 1, 1, 0.5));
+              fb.insert (prefix + "y", Slice (pt_, base, bpp, 0, 1, 1, 0.5));
               if (hasAlpha())
                 {
-                  fb.insert(prefix + "a", Slice(pt_, base + bpc_, bpp, 0, 1, 1, 1.0));
+                  fb.insert (prefix + "a", Slice (pt_, base + bpc_, bpp, 0, 1, 1, 1.0));
                 }
             }
           }
@@ -279,43 +306,43 @@ struct _EXRLoader
 
       case IMAGE_TYPE_RGB:
       default:
-        if (channels_.findChannel(prefix + "R"))
+        if (channels_.findChannel (prefix + "R"))
           {
-            fb.insert(prefix + "R", Slice(pt_, base + (bpc_ * 0), bpp, 0, 1, 1, 0.0));
-            fb.insert(prefix + "G", Slice(pt_, base + (bpc_ * 1), bpp, 0, 1, 1, 0.0));
-            fb.insert(prefix + "B", Slice(pt_, base + (bpc_ * 2), bpp, 0, 1, 1, 0.0));
-            if (hasAlpha())
+            fb.insert (prefix + "R", Slice (pt_, base + (bpc_ * 0), bpp, 0, 1, 1, 0.0));
+            fb.insert (prefix + "G", Slice (pt_, base + (bpc_ * 1), bpp, 0, 1, 1, 0.0));
+            fb.insert (prefix + "B", Slice (pt_, base + (bpc_ * 2), bpp, 0, 1, 1, 0.0));
+            if (hasAlpha ())
               {
-                fb.insert(prefix + "A", Slice(pt_, base + (bpc_ * 3), bpp, 0, 1, 1, 1.0));
+                fb.insert (prefix + "A", Slice (pt_, base + (bpc_ * 3), bpp, 0, 1, 1, 1.0));
               }
           }
         else
           {
-            fb.insert(prefix + "r", Slice(pt_, base + (bpc_ * 0), bpp, 0, 1, 1, 0.0));
-            fb.insert(prefix + "g", Slice(pt_, base + (bpc_ * 1), bpp, 0, 1, 1, 0.0));
-            fb.insert(prefix + "b", Slice(pt_, base + (bpc_ * 2), bpp, 0, 1, 1, 0.0));
-            if (hasAlpha())
+            fb.insert (prefix + "r", Slice (pt_, base + (bpc_ * 0), bpp, 0, 1, 1, 0.0));
+            fb.insert (prefix + "g", Slice (pt_, base + (bpc_ * 1), bpp, 0, 1, 1, 0.0));
+            fb.insert (prefix + "b", Slice (pt_, base + (bpc_ * 2), bpp, 0, 1, 1, 0.0));
+            if (hasAlpha ())
               {
-                fb.insert(prefix + "a", Slice(pt_, base + (bpc_ * 3), bpp, 0, 1, 1, 1.0));
+                fb.insert (prefix + "a", Slice (pt_, base + (bpc_ * 3), bpp, 0, 1, 1, 1.0));
               }
           }
       }
 
-    file_.setFrameBuffer(fb);
-    file_.readPixels(actual_row);
+    file_.setFrameBuffer (fb);
+    file_.readPixels (actual_row);
 
     return 0;
   }
 
-  int getWidth() const {
+  int getWidth () const {
     return data_window_.max.x - data_window_.min.x + 1;
   }
 
-  int getHeight() const {
+  int getHeight () const {
     return data_window_.max.y - data_window_.min.y + 1;
   }
 
-  EXRPrecision getPrecision() const {
+  EXRPrecision getPrecision () const {
     EXRPrecision prec;
 
     switch (pt_)
@@ -334,19 +361,19 @@ struct _EXRLoader
     return prec;
   }
 
-  EXRImageType getImageType() const {
+  EXRImageType getImageType () const {
     return image_type_;
   }
 
-  int hasAlpha() const {
+  int hasAlpha () const {
     return has_alpha_ ? 1 : 0;
   }
 
-  int canLoad() const {
+  int canLoad () const {
     return can_load_ ? 1 : 0;
   }
 
-  GimpColorProfile *getProfile() const {
+  GimpColorProfile *getProfile () const {
     Chromaticities chromaticities;
     float whiteLuminance = 1.0;
 
@@ -359,7 +386,7 @@ struct _EXRLoader
     cmsCIEXYZ *gimp_r_XYZ, *gimp_g_XYZ, *gimp_b_XYZ, *gimp_w_XYZ;
     cmsCIEXYZ exr_r_XYZ, exr_g_XYZ, exr_b_XYZ, exr_w_XYZ;
 
-    // get the color information from the EXR
+    /* get the color information from the EXR */
     if (hasChromaticities (file_.header ()))
       chromaticities = Imf::chromaticities (file_.header ());
     else
@@ -398,7 +425,7 @@ struct _EXRLoader
                                           chromaticities.blue.y,
                                           whiteLuminance } };
 
-    // get the primaries + wp from GIMP's internal linear sRGB profile
+    /* get the primaries + wp from GIMP's internal linear sRGB profile */
     linear_srgb_profile = gimp_color_profile_new_rgb_srgb_linear ();
     linear_srgb_lcms = gimp_color_profile_get_lcms_profile (linear_srgb_profile);
 
@@ -407,25 +434,25 @@ struct _EXRLoader
     gimp_b_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigBlueColorantTag);
     gimp_w_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigMediaWhitePointTag);
 
-    cmsxyY2XYZ(&exr_r_XYZ, &CameraPrimaries.Red);
-    cmsxyY2XYZ(&exr_g_XYZ, &CameraPrimaries.Green);
-    cmsxyY2XYZ(&exr_b_XYZ, &CameraPrimaries.Blue);
-    cmsxyY2XYZ(&exr_w_XYZ, &whitePoint);
+    cmsxyY2XYZ (&exr_r_XYZ, &CameraPrimaries.Red);
+    cmsxyY2XYZ (&exr_g_XYZ, &CameraPrimaries.Green);
+    cmsxyY2XYZ (&exr_b_XYZ, &CameraPrimaries.Blue);
+    cmsxyY2XYZ (&exr_w_XYZ, &whitePoint);
 
-    // ... and check if the data stored in the EXR matches GIMP's internal profile
+    /* ... and check if the data stored in the EXR matches GIMP's internal profile */
     bool exr_is_linear_srgb = XYZ_equal (&exr_r_XYZ, gimp_r_XYZ) &&
                               XYZ_equal (&exr_g_XYZ, gimp_g_XYZ) &&
                               XYZ_equal (&exr_b_XYZ, gimp_b_XYZ) &&
                               XYZ_equal (&exr_w_XYZ, gimp_w_XYZ);
 
-    // using GIMP's linear sRGB profile allows to skip the conversion popup
+    /* using GIMP's linear sRGB profile allows to skip the conversion popup */
     if (exr_is_linear_srgb)
       return linear_srgb_profile;
 
-    // nope, it's something else. Clean up and build a new profile
+    /* nope, it's something else. Clean up and build a new profile */
     g_object_unref (linear_srgb_profile);
 
-    // TODO: maybe factor this out into libgimpcolor/gimpcolorprofile.h ?
+    /* TODO: maybe factor this out into libgimpcolor/gimpcolorprofile.h ? */
     double Parameters[2] = { 1.0, 0.0 };
     cmsToneCurve *Gamma[3];
     Gamma[0] = Gamma[1] = Gamma[2] = cmsBuildParametricToneCurve(0,
@@ -435,7 +462,7 @@ struct _EXRLoader
     cmsFreeToneCurve (Gamma[0]);
     if (lcms_profile == NULL) return NULL;
 
-//     cmsSetProfileVersion (lcms_profile, 2.1);
+    /* cmsSetProfileVersion (lcms_profile, 2.1); */
     cmsMLU *mlu0 = cmsMLUalloc (NULL, 1);
     cmsMLUsetASCII (mlu0, "en", "US", "(GIMP internal)");
     cmsMLU *mlu1 = cmsMLUalloc(NULL, 1);
@@ -456,29 +483,29 @@ struct _EXRLoader
     return profile;
   }
 
-  gchar *getComment() const {
+  gchar *getComment () const {
     char *result = NULL;
-    const Imf::StringAttribute *comment = file_.header().findTypedAttribute<Imf::StringAttribute>("comment");
+    const Imf::StringAttribute *comment = file_.header ().findTypedAttribute<Imf::StringAttribute>("comment");
     if (comment)
       result = g_strdup (comment->value().c_str());
     return result;
   }
 
-  guchar *getExif(guint *size) const {
+  guchar *getExif (guint *size) const {
     guchar jpeg_exif[] = "Exif\0\0";
     guchar *exif_data = NULL;
     *size = 0;
 
-    const Imf::BlobAttribute *exif = file_.header().findTypedAttribute<Imf::BlobAttribute>("exif");
+    const Imf::BlobAttribute *exif = file_.header ().findTypedAttribute<Imf::BlobAttribute>("exif");
 
     if (exif)
       {
-        exif_data = (guchar *)(exif->value().data.get());
-        *size = exif->value().size;
+        exif_data = (guchar *)(exif->value ().data.get ());
+        *size = exif->value ().size;
         /* darktable 4.0.0 and earlier appended a jpg-compatible exif00 string,
          * so get rid of that again. We explicitly reduce the size by 1 since
          * the compiler adds an extra \0 to the end of jpeg_exif. */
-        if ( ! memcmp (jpeg_exif, exif_data, sizeof(jpeg_exif)-1))
+        if ( ! memcmp (jpeg_exif, exif_data, sizeof (jpeg_exif)-1))
           {
             *size -= 6;
             exif_data += 6;
@@ -488,19 +515,19 @@ struct _EXRLoader
     return (guchar *)g_memdup2 (exif_data, *size);
   }
 
-  guchar *getXmp(guint *size) const {
+  guchar *getXmp (guint *size) const {
     guchar *result = NULL;
     *size = 0;
-    const Imf::StringAttribute *xmp = file_.header().findTypedAttribute<Imf::StringAttribute>("xmp");
+    const Imf::StringAttribute *xmp = file_.header ().findTypedAttribute<Imf::StringAttribute>("xmp");
     if (xmp)
       {
-        *size = xmp->value().size();
+        *size = xmp->value ().size ();
         result = (guchar *) g_memdup2 (xmp->value().data(), *size);
       }
     return result;
   }
 
-  gchar *getLayerName(int index) const {
+  gchar *getLayerName (int index) const {
     gchar *result = NULL;
 
     if (index > -1 && index < layer_count_)
@@ -510,14 +537,14 @@ struct _EXRLoader
 
         channels_.layers (layerNames);
 
-        name   = *std::next(layerNames.begin(), index);
+        name   = *std::next (layerNames.begin(), index);
         result = (gchar *) g_memdup2 (name.c_str(),
                                       name.size() + 1);
       }
     return result;
   }
 
-  int getLayerInfo(gint *num_layers, int *layers_only) const {
+  int getLayerInfo (gint *num_layers, int *layers_only) const {
     *num_layers  = layer_count_;
     *layers_only = layers_only_;
 
@@ -526,6 +553,7 @@ struct _EXRLoader
 
   size_t refcount_;
   InputFile file_;
+  RgbaInputFile rgbaInputFile_;
   const Box2i data_window_;
   const ChannelList& channels_;
   PixelType pt_;
@@ -544,13 +572,13 @@ exr_loader_new (const char *filename)
 {
   EXRLoader* file;
 
-  // Don't let any exceptions propagate to the C layer.
+  /* Don't let any exceptions propagate to the C layer. */
   try
     {
       Imf::BlobAttribute::registerAttributeType();
-      file = new EXRLoader(filename);
+      file = new EXRLoader (filename);
 
-      if (file && ! file->canLoad())
+      if (file && ! file->canLoad ())
         {
           exr_loader_unref (file);
           file = NULL;
@@ -584,10 +612,10 @@ int
 exr_loader_get_width (EXRLoader *loader)
 {
   int width;
-  // Don't let any exceptions propagate to the C layer.
+  /* Don't let any exceptions propagate to the C layer. */
   try
     {
-      width = loader->getWidth();
+      width = loader->getWidth ();
     }
   catch (...)
     {
@@ -601,10 +629,10 @@ int
 exr_loader_get_height (EXRLoader *loader)
 {
   int height;
-  // Don't let any exceptions propagate to the C layer.
+  /* Don't let any exceptions propagate to the C layer. */
   try
     {
-      height = loader->getHeight();
+      height = loader->getHeight ();
     }
   catch (...)
     {
@@ -617,22 +645,22 @@ exr_loader_get_height (EXRLoader *loader)
 EXRImageType
 exr_loader_get_image_type (EXRLoader *loader)
 {
-  // This does not throw.
-  return loader->getImageType();
+  /* This does not throw. */
+  return loader->getImageType ();
 }
 
 EXRPrecision
 exr_loader_get_precision (EXRLoader *loader)
 {
-  // This does not throw.
-  return loader->getPrecision();
+  /* This does not throw. */
+  return loader->getPrecision ();
 }
 
 int
 exr_loader_has_alpha (EXRLoader *loader)
 {
-  // This does not throw.
-  return loader->hasAlpha();
+  /* This does not throw. */
+  return loader->hasAlpha ();
 }
 
 GimpColorProfile *
@@ -684,10 +712,10 @@ exr_loader_read_pixel_row (EXRLoader *loader,
                            int        layer_index)
 {
   int retval = -1;
-  // Don't let any exceptions propagate to the C layer.
+  /* Don't let any exceptions propagate to the C layer. */
   try
     {
-      retval = loader->readPixelRow(pixels, bpp, row, layer_index);
+      retval = loader->readPixelRow (pixels, bpp, row, layer_index);
     }
   catch (...)
     {

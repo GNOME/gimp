@@ -242,10 +242,10 @@ load_image (GFile                 *file,
   switch (exr_loader_get_image_type (loader))
     {
     case IMAGE_TYPE_RGB:
+    case IMAGE_TYPE_YUV:
       image_type = GIMP_RGB;
       layer_type = has_alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
       break;
-    case IMAGE_TYPE_YUV:
     case IMAGE_TYPE_GRAY:
     case IMAGE_TYPE_UNKNOWN_1_CHANNEL:
       image_type = GIMP_GRAY;
@@ -270,8 +270,7 @@ load_image (GFile                 *file,
     }
 
   if (interactive                                                         &&
-      (exr_loader_get_image_type (loader) == IMAGE_TYPE_UNKNOWN_1_CHANNEL ||
-       exr_loader_get_image_type (loader) == IMAGE_TYPE_YUV))
+      (exr_loader_get_image_type (loader) == IMAGE_TYPE_UNKNOWN_1_CHANNEL))
     load_dialog (exr_loader_get_image_type (loader));
 
   /* try to load an icc profile, it will be generated on the fly if
@@ -470,10 +469,6 @@ load_dialog (EXRImageType image_type)
     label_text = g_strdup_printf ("<b>%s</b>\n%s", _("Unknown Channel Name"),
                                   _("The image contains a single unknown channel.\n"
                                     "It has been converted to grayscale."));
-  else if (image_type == IMAGE_TYPE_YUV)
-    label_text = g_strdup_printf ("<b>%s</b>\n%s", _("Chroma Channels"),
-                                  _("OpenEXR chroma channels are not yet supported.\n"
-                                    "They have been discarded."));
 
   label = gtk_label_new (NULL);
   gtk_label_set_markup (GTK_LABEL (label), label_text);
