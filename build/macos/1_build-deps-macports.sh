@@ -111,7 +111,7 @@ self_build()
   printf "\e[0Ksection_end:`date +%s`:${dep}_build\r\e[0K\n"
 }
 
-self_build https://gitlab.gnome.org/GNOME/babl
-self_build https://gitlab.gnome.org/GNOME/gegl
+self_build https://gitlab.gnome.org/GNOME/babl bruno/ucrt-macro
+self_build https://gitlab.gnome.org/GNOME/gegl bruno/ucrt-macro
 
 cd $GIMP_DIR
