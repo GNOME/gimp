@@ -63,10 +63,22 @@ def bundle(src_root, pattern, option="None", override=None):
       dest_path = GIMP_DISTRIB / "MacOS" / Path(src_path.relative_to(src_root)).name
     elif "lib/" in pattern:
       dest_path = GIMP_DISTRIB / "Frameworks" / src_path.relative_to(src_root / "lib")
+      #Needed by app/main.c
+      link_lib_path = Path(f"{GIMP_DISTRIB}/lib")
+      link_lib_path.unlink(missing_ok=True)
+      link_lib_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/Frameworks"), link_lib_path.parent))
     elif "share/" in pattern:
       dest_path = GIMP_DISTRIB / "Resources" / src_path.relative_to(src_root / "share")
+      #Needed by app/main.c, app/config/gimpcoreconfig.c, app/core/gimpdata.c, libgimpwidgets/gimpwidgets-private.c and plug-ins/common/file-wmf.c
+      link_share_path = Path(f"{GIMP_DISTRIB}/share")
+      link_share_path.unlink(missing_ok=True)
+      link_share_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/Resources"), link_share_path.parent))
     elif "etc/" in pattern:
       dest_path = GIMP_DISTRIB / "SharedSupport" / src_path.relative_to(src_root / "etc")
+      #Needed by app/main.c
+      link_etc_path = Path(f"{GIMP_DISTRIB}/etc")
+      link_etc_path.unlink(missing_ok=True)
+      link_etc_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/SharedSupport"), link_etc_path.parent))
     dest_path.parent.mkdir(parents=True, exist_ok=True)
     print(f"Bundling {src_path} to {dest_path.parent}")
     if src_path.is_dir():
@@ -272,8 +284,9 @@ for d in (pythonpath, pythonpath / "site-packages"):
   elif not sitecustomize.exists():
     sitecustomize.write_text(code)
 #####Needed since we use [[NSBundle mainBundle] bundlePath] on libgimpbase/gimpenv.c
-real_path = Path(f"{GIMP_DISTRIB}/Resources/icons")
-link_path = Path(f"{GIMP_DISTRIB}/Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/Resources/Python.app/Contents/Resources/icons")
+real_path = Path(f"{GIMP_DISTRIB}/share/icons")
+link_path = Path(f"{GIMP_DISTRIB}/Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/Resources/Python.app/Contents/share/icons")
+link_path.parent.mkdir(parents=True, exist_ok=True)
 link_path.symlink_to(os.path.relpath(real_path, link_path.parent))
 #### lua is buggy, and hard to bundle due to LUA_*PATH etc (see AppImage script)
 #if os.path.exists(OPT_PREFIX / "bin/port"):
@@ -331,15 +344,3 @@ bundle(GIMP_PREFIX, "include/gegl-*", "--dest", "include")
 bundle(GIMP_PREFIX, "lib/pkgconfig/gimp*")
 bundle(GIMP_PREFIX, "lib/pkgconfig/babl*")
 bundle(GIMP_PREFIX, "lib/pkgconfig/gegl*")
-real_bin_path = Path(f"{GIMP_DISTRIB}/MacOS")
-link_bin_path = Path(f"{GIMP_DISTRIB}/bin")
-link_bin_path.symlink_to(os.path.relpath(real_bin_path, link_bin_path.parent))
-real_lib_path = Path(f"{GIMP_DISTRIB}/Frameworks")
-link_lib_path = Path(f"{GIMP_DISTRIB}/lib")
-link_lib_path.symlink_to(os.path.relpath(real_lib_path, link_lib_path.parent))
-real_share_path = Path(f"{GIMP_DISTRIB}/Resources")
-link_share_path = Path(f"{GIMP_DISTRIB}/share")
-link_share_path.symlink_to(os.path.relpath(real_share_path, link_share_path.parent))
-real_etc_path = Path(f"{GIMP_DISTRIB}/SharedSupport")
-link_etc_path = Path(f"{GIMP_DISTRIB}/etc")
-link_etc_path.symlink_to(os.path.relpath(real_etc_path, link_etc_path.parent))
