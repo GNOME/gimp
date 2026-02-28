@@ -40,6 +40,7 @@
 #endif /* G_OS_WIN32 */
 
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
+#include <AppKit/AppKit.h>
 #include <libgen.h> /* dirname */
 #include <sys/stat.h>
 #endif /* __APPLE__ */
@@ -332,15 +333,19 @@ gimp_macos_setenv (const char * progname)
    * LSEnvironment on Info.plist, limited to bundle scope, would not be enough.
    * That way, we make sure our python is called instead of system one etc
    */
-  gchar  *resolved_path;
+  NSAutoreleasePool *pool;
+  NSString          *bundle_id;
+  gchar             *resolved_path;
   /* on some OSX installations open file limit is 256 and GIMP needs more */
-  struct  rlimit limit;
+  struct             rlimit limit;
 
   limit.rlim_cur = 10000;
   limit.rlim_max = 10000;
   setrlimit (RLIMIT_NOFILE, &limit);
   resolved_path = g_canonicalize_filename (progname, NULL);
-  if (resolved_path && ! g_getenv ("GIMP_NO_WRAPPER"))
+  pool = [[NSAutoreleasePool alloc] init];
+  bundle_id = [[NSBundle mainBundle] bundleIdentifier];
+  if (resolved_path && ! g_getenv ("GIMP_NO_WRAPPER") && bundle_id)
     {
       static gboolean            show_playground   = TRUE;
 
@@ -352,61 +357,19 @@ gimp_macos_setenv (const char * progname)
       gchar   *etc_dir;
       size_t   path_len;
       struct   stat sb;
-      gboolean need_pythonhome = TRUE;
+      gchar   *homebrew_pythonfrmwrk;
+
+      g_print ("GIMP is started as MacOS application\n");
 
       bin_dir = g_path_get_dirname (resolved_path);
-      tmp = g_strdup_printf ("%s/../Resources/lib", bin_dir);
+      tmp = g_strdup_printf ("%s/lib", gimp_installation_directory());
       lib_dir = g_canonicalize_filename (tmp, NULL);
       g_free (tmp);
-      tmp = g_strdup_printf ("%s/../Resources/share", bin_dir);
+      tmp = g_strdup_printf ("%s/share", gimp_installation_directory());
       share_dir = g_canonicalize_filename (tmp, NULL);
       g_free (tmp);
-      tmp = g_strdup_printf ("%s/../Resources/etc", bin_dir);
+      tmp = g_strdup_printf ("%s/etc", gimp_installation_directory());
       etc_dir = g_canonicalize_filename (tmp, NULL);
-      g_free (tmp);
-
-      /* Detect if we are running from bundle or from prefix */
-      if (share_dir && !stat (share_dir, &sb) && S_ISDIR (sb.st_mode))
-        {
-          g_print ("GIMP is started as MacOS application\n");
-        }
-      else
-        {
-          tmp = g_strdup_printf ("%s/../share", bin_dir);
-          share_dir = g_canonicalize_filename (tmp, NULL);
-          g_free (tmp);
-          if (share_dir && !stat (share_dir, &sb) && S_ISDIR (sb.st_mode))
-            {
-              g_free (share_dir);
-
-              g_print ("GIMP is started in the build directory\n");
-
-              tmp = g_strdup_printf ("%s/..", bin_dir); /* running in build dir */
-              share_dir = g_canonicalize_filename (tmp, NULL);
-              g_free (tmp);
-            }
-          else
-            {
-              g_free (share_dir);
-              return;
-            }
-        }
-
-      /* Detect we were built in homebrew for MacOS (for PYTHONHOME purposes) */
-      tmp = g_strdup_printf ("%s/../Frameworks/Python.framework", share_dir);
-      if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
-        {
-          g_print ("GIMP was built with homebrew\n");
-          need_pythonhome = FALSE;
-        }
-      g_free (tmp);
-      /* Detect we were built in MacPorts for MacOS (for PYTHONHOME purposes) */
-      tmp = g_strdup_printf ("%s/../Library/Frameworks/Python.framework", share_dir);
-      if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
-        {
-          g_print ("GIMP was built with MacPorts\n");
-          need_pythonhome = FALSE;
-        }
       g_free (tmp);
 
       /* Minimum runtime paths */
@@ -474,17 +437,20 @@ gimp_macos_setenv (const char * progname)
       tmp = g_strdup_printf ("%s/girepository-1.0", lib_dir);
       g_setenv ("GI_TYPELIB_PATH", tmp, TRUE);
       g_free (tmp);
-      if (need_pythonhome)
+      homebrew_pythonfrmwrk = g_strdup_printf ("%s/Frameworks/Python.framework", gimp_installation_directory());
+      if (homebrew_pythonfrmwrk && !stat (homebrew_pythonfrmwrk, &sb) && S_ISDIR (sb.st_mode))
         {
-          tmp = g_strdup_printf ("%s/Library/Frameworks/Python.framework/Versions/%s", share_dir, PYTHON_VERSION);
+          tmp = g_strdup_printf ("%s/Versions/%s", homebrew_pythonfrmwrk, PYTHON_VERSION);
           g_setenv ("PYTHONHOME", tmp, TRUE);
           g_free (tmp);
+          g_free (homebrew_pythonfrmwrk);
         }
       g_free (lib_dir);
       g_free (share_dir);
       g_free (etc_dir);
     }
   g_free (resolved_path);
+  [pool drain];
 }
 #endif
 

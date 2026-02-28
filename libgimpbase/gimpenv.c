@@ -433,6 +433,8 @@ gimp_installation_directory (void)
   {
     NSAutoreleasePool *pool;
     NSString          *resource_path;
+    gchar             *bundle_path;
+    gchar             *gimp_test_path;
     gchar             *basename;
     gchar             *basepath;
     gchar             *dirname;
@@ -504,13 +506,23 @@ gimp_installation_directory (void)
     else
       {
         /*  if none of the above match, we assume that we are really in a bundle  */
-
-        toplevel = g_strdup ([resource_path UTF8String]);
+        bundle_path = [[[NSBundle mainBundle] bundlePath] UTF8String];
+        gimp_test_path = g_build_filename(bundle_path, "Contents", "Resources", "lib", GIMP_PACKAGE, NULL);
+        if (g_file_test (gimp_test_path, G_FILE_TEST_IS_DIR))
+          {
+            toplevel = g_strdup ([resource_path UTF8String]);
+          }
+        else
+          {
+            toplevel = g_build_filename (bundle_path, "Contents", NULL);
+          }
       }
 
     g_free (basename);
     g_free (basepath);
     g_free (dirname);
+    g_free (gimp_test_path);
+    g_free (bundle_path);
 
     [pool drain];
   }

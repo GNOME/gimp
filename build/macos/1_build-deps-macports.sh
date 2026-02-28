@@ -67,7 +67,6 @@ else
   brew install --quiet $(tr '\\' '\n' < build/macos/all-deps-uni.txt | grep -v '#' | sed -n 's/.*|homebrew://p' | awk '{print $1}' | xargs)
   git apply -v build/macos/patches/0001-build-macos-Do-not-require-gexiv2-0.14-on-homebrew.patch || true
 fi
-git apply -v build/macos/patches/0001-app-libgimpwidgets-meson-plug-ins-Patch-macOS-bundle.patch || true
 printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
 
 
