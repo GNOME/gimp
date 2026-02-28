@@ -29,6 +29,7 @@
 
 #ifdef G_OS_WIN32
 #include <io.h> /* get_osfhandle */
+#define fileno _fileno
 #include <gio/gwin32outputstream.h>
 #else
 #include <gio/gunixoutputstream.h>

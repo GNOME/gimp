@@ -22,6 +22,10 @@
 
 #include <stdlib.h>
 #include <ctype.h>
+#ifdef _WIN32
+#include <string.h>
+#define strdup _strdup
+#endif
 
 #include <gegl.h>
 #include <gtk/gtk.h>

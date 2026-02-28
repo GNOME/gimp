@@ -80,6 +80,8 @@
 #endif
 #ifdef _WIN32
 #include <io.h>
+#define close _close
+#define fileno _fileno
 #endif
 
 #include <glib/gstdio.h>
