@@ -1041,11 +1041,13 @@ gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
        * This may happen for instance when merging filters which may
        * render in negative coordinates.
        */
-      buffer = g_object_new (GEGL_TYPE_BUFFER,
-                             "source",  buffer,
-                             "shift-x", extent->x,
-                             "shift-y", extent->y,
-                             NULL);
+      GeglBuffer    *buffer2;
+      GeglRectangle  extent2 = { 0, 0, extent->width, extent->height };
+
+      buffer2 = gegl_buffer_new (&extent2, gegl_buffer_get_format (buffer));
+      gimp_gegl_buffer_copy (buffer, extent, GEGL_ABYSS_NONE, buffer2, &extent2);
+
+      buffer      = buffer2;
       free_buffer = TRUE;
     }
 
