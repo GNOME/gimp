@@ -13,6 +13,10 @@
 #if HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#ifdef _WIN32
+#include <io.h>
+#define unlink _unlink
+#endif
 #include <time.h>
 
 #include <glib.h>

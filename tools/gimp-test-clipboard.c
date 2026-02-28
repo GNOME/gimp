@@ -21,6 +21,8 @@
 #include <io.h>
 #define popen  _popen
 #define pclose _pclose
+#define write _write
+#define close _close
 #endif
 
 #include <glib/gstdio.h>

@@ -35,6 +35,8 @@
 #ifndef pipe
 #define pipe(fds) _pipe(fds, 4096, _O_BINARY)
 #endif
+#define read _read
+#define close _close
 #else
 #include <sys/types.h>
 #include <sys/wait.h>
