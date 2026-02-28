@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-02 17:21+0100\n"
-"PO-Revision-Date: 2026-02-28 17:42+0100\n"
+"PO-Revision-Date: 2026-03-01 00:50+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -9717,11 +9717,11 @@ msgstr "YCoCg scalata (DXT5)"
 
 #: ../plug-ins/file-dds/dds.c:214
 msgid "Use percept_ual error metric"
-msgstr "_Usa la metrica di errore percettiva"
+msgstr "_Usa la metrica di errore percettivo"
 
 #: ../plug-ins/file-dds/dds.c:215
 msgid "Use a perceptual error metric during compression"
-msgstr "Usa la metrica di errore percettiva durante la compressione"
+msgstr "Usa la metrica di errore percettivo durante la compressione"
 
 #: ../plug-ins/file-dds/dds.c:221
 msgid "Pixel format"
