@@ -57,7 +57,7 @@ if (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf)
     #Needed for finding perl on CI
     & "$env:VCPKG_ROOT\vcpkg.exe" remove aom; $env:VCPKG_DEFAULT_BINARY_CACHE="$env:VCPKG_ROOT/buildtrees/aom"; & "$env:VCPKG_ROOT\vcpkg.exe" install --recurse aom; Remove-Item env:VCPKG_DEFAULT_BINARY_CACHE
     #FIXME: appstream, libmypaint, poppler-data and pygobject are missing on vcpkg
-    git apply -v 'build\windows\patches\0001-Disable-some-core-featuers-due-to-lack-of-vcpkg-pack.patch'; cd gimp-data; git apply -v '..\build\windows\patches\0001-images-Do-not-build-splash-image-on-MSVC.patch'; cd ..
+    git apply -v 'build\windows\patches\0001-Disable-some-core-featuers-due-to-lack-of-vcpkg-pack.patch'
   }
 else
   {
@@ -76,7 +76,7 @@ if (-not $GIMP_PREFIX)
     $GIMP_PREFIX = "$PWD\_install"
   }
 Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,9) -replace '> ','' -replace '- ','')
-
+pip install meson PyGObject
 
 # Build babl and GEGL
 function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$options)
@@ -164,8 +164,8 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 
 if ($env:VCPKG_ROOT)
   {
-    self_build https://gitlab.gnome.org/GNOME/babl @('-Denable-gir=false')
-    self_build https://gitlab.gnome.org/GNOME/gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch', 'build\windows\patches\0001-gegl-Use-vs_module_defs-for-MSVC.patch') @('-Dintrospection=false')
+    self_build https://gitlab.gnome.org/GNOME/babl
+    self_build https://gitlab.gnome.org/GNOME/gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch', 'build\windows\patches\0001-gegl-Use-vs_module_defs-for-MSVC.patch')
     exit 0
   }
 self_build https://gitlab.gnome.org/GNOME/babl
