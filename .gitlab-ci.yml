@@ -122,6 +122,7 @@ stages:
         CC_LD: lld
         CXX_LD: lld
         TOOLCHAIN: "clang lld"
+        WARN_AS_ERROR_ON_CI: '--fatal-meson-warnings'
         VARIANT: -clang
     - if: '$GIMP_CI_RASTER_ICONS != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_RASTER_ICONS.*/'
       variables:
@@ -244,14 +245,14 @@ deps-debian-nonreloc:
     ## Build babl
     - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:babl_build[collapsed=true]\r\e[0KBuilding babl\n\"" >> Dockerfile2;
     - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/babl.git | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" babl >> Dockerfile2;
-    - echo "RUN meson setup babl/_build-${RUNNER} babl -Dprefix=\"${GIMP_PREFIX}\" $RELOCATABLE_OPTION $PKGCONF_RELOCATABLE_OPTION" >> Dockerfile2;
+    - echo "RUN meson setup babl/_build-${RUNNER} babl -Dprefix=\"${GIMP_PREFIX}\" $RELOCATABLE_OPTION $PKGCONF_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI" >> Dockerfile2;
     - echo "RUN ninja -C babl/_build-${RUNNER}" >> Dockerfile2;
     - echo "RUN ninja -C babl/_build-${RUNNER} install" >> Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_end:\`date +%s\`:babl_build\r\e[0K\n\"" >> Dockerfile2;
     ## Build GEGL
     - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n\"" >> Dockerfile2;
     - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/gegl.git | grep -oi \"GEGL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git" gegl >> Dockerfile2;
-    - echo "RUN meson setup gegl/_build-${RUNNER} gegl -Dprefix=\"${GIMP_PREFIX}\" $RELOCATABLE_OPTION $PKGCONF_RELOCATABLE_OPTION" >> Dockerfile2;
+    - echo "RUN meson setup gegl/_build-${RUNNER} gegl -Dprefix=\"${GIMP_PREFIX}\" $RELOCATABLE_OPTION $PKGCONF_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI" >> Dockerfile2;
     - echo "RUN ninja -C gegl/_build-${RUNNER}" >> Dockerfile2;
     - echo "RUN ninja -C gegl/_build-${RUNNER} install" >> Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_end:\`date +%s\`:gegl_build\r\e[0K\n\"" >> Dockerfile2;
@@ -542,6 +543,7 @@ gimp-snap:
     - if: '($GIMP_CI_MESON_MSVC != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_MSVC.*/) && $CI_JOB_NAME !~ /.*installer.*/ && $CI_JOB_NAME !~ /.*store.*/ && $CI_JOB_NAME !~ /.*eol.*/ && $CI_JOB_NAME !~ /.*aarch64.*/'
       variables:
         VCPKG_ROOT: "$CI_PROJECT_DIR/vcpkg"
+        WARN_AS_ERROR_ON_CI: '--fatal-meson-warnings'
         VARIANT: "-msvc"
     - <<: *CI_RELEASE
       variables:
@@ -660,6 +662,7 @@ gimp-win-eol:
     - if: '($GIMP_CI_MESON_APPLECLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_APPLECLANG.*/) && $CI_JOB_NAME !~ /.*-part.*/ && $CI_JOB_NAME !~ /.*dist-mac-.*/'
       variables:
         OPT_PREFIX: /opt/homebrew
+        WARN_AS_ERROR_ON_CI: '--fatal-meson-warnings'
         VARIANT: -homebrew
   tags:
     - macos
