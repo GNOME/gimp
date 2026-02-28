@@ -25,6 +25,7 @@
 
 #ifdef _WIN32
 #include <io.h>
+#define read _read
 #endif
 
 #include <fcntl.h>

@@ -35,6 +35,9 @@
 
 #ifdef G_OS_WIN32
 #include <io.h>
+#define read _read
+#define close _close
+#define lseek _lseek
 #endif
 
 #ifndef _O_BINARY
