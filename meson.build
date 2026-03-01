@@ -216,7 +216,7 @@ endif
 
 osx_ldflags = []
 if platform_osx
-  add_languages('objc')
+  add_languages('objc', native: true)
   osx_ldflags += ['-Wl,-framework,Foundation', '-Wl,-framework,AppKit', '-ObjC']
   add_project_link_arguments(osx_ldflags, language : ['objc', 'c'])
 endif
