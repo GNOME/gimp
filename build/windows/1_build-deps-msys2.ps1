@@ -66,7 +66,7 @@ else
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):deps_install$([char]13)$([char]27)[0K"
 
-
+powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -R mingw-w64-clang-aarch64-asciidoc }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
 # Prepare env
 $GIMP_DIR = $PWD
 Set-Location ${GIMP_DIR}${PARENT_DIR}
