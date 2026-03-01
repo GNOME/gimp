@@ -342,8 +342,6 @@ gimp_macos_setenv (const char * progname)
   resolved_path = g_canonicalize_filename (progname, NULL);
   if (resolved_path && ! g_getenv ("GIMP_NO_WRAPPER"))
     {
-      static gboolean            show_playground   = TRUE;
-
       gchar   *path;
       gchar   *tmp;
       gchar   *bin_dir;
