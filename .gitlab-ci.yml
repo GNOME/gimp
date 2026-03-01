@@ -550,7 +550,7 @@ gimp-snap:
         STORE_OPTION: '-Dms-store=true'
   parallel:
     matrix:
-      - RUNNER: [windows-aarch64, win32-ps]
+      - RUNNER: [win32-ps]
   tags:
     - $RUNNER
   variables:
@@ -589,7 +589,7 @@ deps-win:
     paths:
       - _install-*/
       - babl/_build-*/meson-logs/meson-log.txt
-      - gegl/_build-*/meson-logs/meson-log.txt
+      - gegl/_build-*
     expire_in: 2 hours
 
 gimp-win:
