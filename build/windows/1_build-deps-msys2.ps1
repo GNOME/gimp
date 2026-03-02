@@ -57,7 +57,7 @@ if (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf)
     #Needed for finding perl on CI
     & "$env:VCPKG_ROOT\vcpkg.exe" remove aom; $env:VCPKG_DEFAULT_BINARY_CACHE="$env:VCPKG_ROOT/buildtrees/aom"; & "$env:VCPKG_ROOT\vcpkg.exe" install --recurse aom; Remove-Item env:VCPKG_DEFAULT_BINARY_CACHE
     #FIXME: appstream, libmypaint, poppler-data and pygobject are missing on vcpkg
-    git apply -v 'build\windows\patches\0001-Disable-some-core-featuers-due-to-lack-of-vcpkg-pack.patch'; cd gimp-data; git apply -v '..\build\windows\patches\0001-images-Do-not-build-splash-image-on-MSVC.patch'; cd ..
+    #git apply -v 'build\windows\patches\0001-Disable-some-core-featuers-due-to-lack-of-vcpkg-pack.patch'; cd gimp-data; git apply -v '..\build\windows\patches\0001-images-Do-not-build-splash-image-on-MSVC.patch'; cd ..
   }
 else
   {
@@ -164,11 +164,11 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 
 if ($env:VCPKG_ROOT)
   {
-    self_build https://gitlab.gnome.org/GNOME/babl @('-Denable-gir=false')
-    self_build https://gitlab.gnome.org/GNOME/gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch', 'build\windows\patches\0001-gegl-Use-vs_module_defs-for-MSVC.patch') @('-Dintrospection=false')
+    self_build https://gitlab.gnome.org/GNOME/babl 'bruno/test-msvc' @('-Denable-gir=false')
+    self_build https://gitlab.gnome.org/GNOME/gegl 'bruno/gegl-better' @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch') @('-Dintrospection=false')
     exit 0
   }
-self_build https://gitlab.gnome.org/GNOME/babl
+self_build https://gitlab.gnome.org/GNOME/babl 'bruno/test-msvc'
 self_build https://gitlab.gnome.org/GNOME/gegl @('-Ddocs=false')
 if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32')
   {
