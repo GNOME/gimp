@@ -119,6 +119,15 @@ gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
                             _("Work on linear RGB (this property is ignored; use \"trc\" instead)"),
                             TRUE, 0);
 
+  /* Only channels GIMP_HISTOGRAM_VALUE to GIMP_HISTOGRAM_ALPHA are
+   * supported right now in this op. Unfortunately this is not visible
+   * through the param specification. The GimpParamSpecEnum would allow
+   * to make it visible, but it does not exist on libgimp side right
+   * now, so plug-in writers would see it listed as allowed.
+   *
+   * TODO: GimpParamSpecEnum should be moved to libgimpbase
+   * (libgimpbase/gimpparamspecs.h) and passed through PDB.
+   */
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_CHANNEL,
                          "channel",
                          _("Channel"),
@@ -231,8 +240,12 @@ gimp_curves_config_set_property (GObject      *object,
       break;
 
     case PROP_CHANNEL:
-      self->channel = g_value_get_enum (value);
-      g_object_notify (object, "curve");
+      if (g_value_get_enum (value) >= GIMP_HISTOGRAM_VALUE &&
+          g_value_get_enum (value) <= GIMP_HISTOGRAM_ALPHA)
+        {
+          self->channel = g_value_get_enum (value);
+          g_object_notify (object, "curve");
+        }
       break;
 
     case PROP_CURVE:
