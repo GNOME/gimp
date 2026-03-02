@@ -796,9 +796,11 @@ gimp_load_config (Gimp  *gimp,
 
   if (! gimp->show_playground)
     {
-      gboolean    use_opencl;
-      gboolean    use_npd_tool;
-      gboolean    use_seamless_clone_tool;
+      gboolean use_opencl;
+      gboolean use_npd_tool;
+      gboolean use_seamless_clone_tool;
+      gboolean use_paint_select_tool;
+      gboolean use_list_box;
 
       /* Playground preferences is shown by default for unstable
        * versions and if the associated CLI option was set. Additionally
@@ -817,8 +819,11 @@ gimp_load_config (Gimp  *gimp,
                     "use-opencl",                     &use_opencl,
                     "playground-npd-tool",            &use_npd_tool,
                     "playground-seamless-clone-tool", &use_seamless_clone_tool,
+                    "playground-paint-select-tool",   &use_paint_select_tool,
+                    "playground-use-list-box",        &use_list_box,
                     NULL);
-      if (use_opencl || use_npd_tool || use_seamless_clone_tool)
+      if (use_opencl || use_npd_tool || use_seamless_clone_tool ||
+          use_paint_select_tool || use_list_box)
         gimp->show_playground = TRUE;
     }
 }
