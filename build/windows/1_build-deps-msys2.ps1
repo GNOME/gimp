@@ -165,7 +165,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 if ($env:VCPKG_ROOT)
   {
     self_build https://gitlab.gnome.org/GNOME/babl @('-Denable-gir=false')
-    self_build https://gitlab.gnome.org/GNOME/gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch', 'build\windows\patches\0001-gegl-Use-vs_module_defs-for-MSVC.patch') @('-Dintrospection=false')
+    self_build https://gitlab.gnome.org/GNOME/gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch') @('-Dintrospection=false')
     exit 0
   }
 self_build https://gitlab.gnome.org/GNOME/babl
