@@ -39,7 +39,7 @@
 
 /*  local function prototypes  */
 
-static void   error_console_save_response (GtkWidget        *dialog,
+static void   error_console_save_response (GtkNativeDialog  *dialog,
                                            gint              response_id,
                                            GimpErrorConsole *console);
 
@@ -92,31 +92,16 @@ error_console_save_cmd_callback (GimpAction *action,
 
   if (! console->file_dialog)
     {
-      GtkWidget *dialog;
+      GtkFileChooserNative *dialog;
 
       dialog = console->file_dialog =
-        gtk_file_chooser_dialog_new (_("Save Error Log to File"), NULL,
+        gtk_file_chooser_native_new (_("Save Error Log to File"), NULL,
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                     _("_Save"),   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                                GTK_RESPONSE_OK,
-                                                GTK_RESPONSE_CANCEL,
-                                                -1);
+                                     _("_Save"), _("_Cancel"));
 
       console->save_selection = selection;
 
       g_set_weak_pointer (&console->file_dialog, dialog);
-
-      gtk_window_set_screen (GTK_WINDOW (dialog),
-                             gtk_widget_get_screen (GTK_WIDGET (console)));
-      gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-      gtk_window_set_role (GTK_WINDOW (dialog), "gimp-save-errors");
 
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                       TRUE);
@@ -124,19 +109,9 @@ error_console_save_cmd_callback (GimpAction *action,
       g_signal_connect (dialog, "response",
                         G_CALLBACK (error_console_save_response),
                         console);
-      g_signal_connect (dialog, "delete-event",
-                        G_CALLBACK (gtk_true),
-                        NULL);
-
-      gimp_help_connect (dialog, NULL, gimp_standard_help_func,
-                         GIMP_HELP_ERRORS_DIALOG, NULL, NULL);
     }
 
-  gtk_window_present (GTK_WINDOW (console->file_dialog));
-
-#ifdef G_OS_WIN32
-  gimp_window_set_title_bar_theme (console->gimp, console->file_dialog);
-#endif
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (console->file_dialog));
 }
 
 void
@@ -176,11 +151,11 @@ error_console_highlight_info_cmd_callback (GimpAction *action,
 /*  private functions  */
 
 static void
-error_console_save_response (GtkWidget        *dialog,
+error_console_save_response (GtkNativeDialog   *dialog,
                              gint              response_id,
                              GimpErrorConsole *console)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       GFile  *file  = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
       GError *error = NULL;
@@ -201,5 +176,5 @@ error_console_save_response (GtkWidget        *dialog,
       g_object_unref (file);
     }
 
-  gtk_widget_destroy (dialog);
+  gtk_native_dialog_destroy (dialog);
 }

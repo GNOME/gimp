@@ -35,20 +35,20 @@ typedef struct _GimpErrorConsoleClass GimpErrorConsoleClass;
 
 struct _GimpErrorConsole
 {
-  GimpEditor     parent_instance;
+  GimpEditor            parent_instance;
 
-  Gimp          *gimp;
+  Gimp                 *gimp;
 
-  GtkTextBuffer *text_buffer;
-  GtkWidget     *text_view;
+  GtkTextBuffer        *text_buffer;
+  GtkWidget            *text_view;
 
-  GtkWidget     *clear_button;
-  GtkWidget     *save_button;
+  GtkWidget            *clear_button;
+  GtkWidget            *save_button;
 
-  GtkWidget     *file_dialog;
-  gboolean       save_selection;
+  GtkFileChooserNative *file_dialog;
+  gboolean              save_selection;
 
-  gboolean       highlight[GIMP_MESSAGE_ERROR + 1];
+  gboolean              highlight[GIMP_MESSAGE_ERROR + 1];
 };
 
 struct _GimpErrorConsoleClass

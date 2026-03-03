@@ -164,7 +164,7 @@ gimp_error_console_dispose (GObject *object)
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (object);
 
   if (console->file_dialog)
-    gtk_widget_destroy (console->file_dialog);
+    gtk_native_dialog_destroy (GTK_NATIVE_DIALOG (console->file_dialog));
 
   console->gimp->message_handler = GIMP_MESSAGE_BOX;
 
@@ -177,7 +177,7 @@ gimp_error_console_unmap (GtkWidget *widget)
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (widget);
 
   if (console->file_dialog)
-    gtk_widget_destroy (console->file_dialog);
+    gtk_native_dialog_destroy (GTK_NATIVE_DIALOG (console->file_dialog));
 
   GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
