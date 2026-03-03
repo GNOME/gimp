@@ -1,16 +1,12 @@
                    ------------------------------
                    GNU Image Manipulation Program
-                       3.2 Release Candidate
+                         3.2 Stable Branch
                    ------------------------------
 
-This is a release candidate for upcoming version 3.2.0 of GIMP.
-This is not considered stable yet, unless testing tells us it is.
-Therefore save your work early and often. If you want a stable
-version, please use GIMP 3.0 instead.
+This is a stable release in the GIMP 3.2 series.
 
 If you think you found a bug in this version, please make sure that it
-hasn't been reported earlier and report it! We are at the verge of
-releasing the next minor version of GIMP, so any report helps.
+hasn't been reported earlier and report it!
 
 If you want to hack on GIMP, please read the file devel-docs/README.md.
 For detailed installation instructions, see the file INSTALL.
@@ -99,3 +95,4 @@ Have fun,
   Dave Neary
   Martin Nordholts
   Jehan
+  Aryeom
