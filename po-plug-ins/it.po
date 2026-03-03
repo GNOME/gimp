@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-02 17:21+0100\n"
-"PO-Revision-Date: 2026-03-03 09:02+0100\n"
+"PO-Revision-Date: 2026-03-03 09:47+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -9925,7 +9925,7 @@ msgstr "Ripeti"
 
 #: ../plug-ins/file-dds/dds.c:305
 msgid "Clamp"
-msgstr "Taglia"
+msgstr "Blocca"
 
 #: ../plug-ins/file-dds/dds.c:311
 msgid "Appl_y gamma correction"
