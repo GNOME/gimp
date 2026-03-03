@@ -296,8 +296,8 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,
-                                        "Saves files in Windows ICO file format",
-                                        "Saves files in Windows ICO file format",
+                                        "Exports files in Windows ICO file format",
+                                        "Exports files in Windows ICO file format",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>",
@@ -331,8 +331,8 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,
-                                        "Saves files in Windows CUR file format",
-                                        "Saves files in Windows CUR file format",
+                                        "Exports files in Windows CUR file format",
+                                        "Exports files in Windows CUR file format",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>, "
@@ -377,8 +377,8 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Saves files in Windows ANI file format"),
-                                        _("Saves files in Windows ANI file format"),
+                                        _("Exports files in Windows ANI file format"),
+                                        _("Exports files in Windows ANI file format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>, "

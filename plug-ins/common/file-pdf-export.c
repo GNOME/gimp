@@ -329,8 +329,8 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("Portable Document Format"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Save files in PDF format"),
-                                        _("Saves files in Adobe's Portable "
+                                        _("Exports files in PDF format"),
+                                        _("Exports files in Adobe's Portable "
                                           "Document Format. PDF is designed to "
                                           "be easily processed by a variety of "
                                           "different platforms, and is a "
@@ -415,8 +415,8 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
 #endif
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Save files in PDF format"),
-                                        _("Saves files in Adobe's Portable "
+                                        _("Exports files in PDF format"),
+                                        _("Exports files in Adobe's Portable "
                                           "Document Format. PDF is designed to "
                                           "be easily processed by a variety of "
                                           "different platforms, and is a "
@@ -468,8 +468,8 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                            G_PARAM_READWRITE);
 
       gimp_procedure_add_string_argument (procedure, "uri",
-                                          _("Save to"),
-                                          _("The URI of the file to save to"),
+                                          _("Export to"),
+                                          _("The URI of the file to export to"),
                                           NULL,
                                           GIMP_PARAM_READWRITE);
     }

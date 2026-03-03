@@ -74,7 +74,7 @@ def export_colorxhtml(procedure, run_mode, image, file, options, metadata, confi
 
         GimpUi.init ("file-colorxhtml-export")
 
-        dialog = GimpUi.ProcedureDialog.new(procedure, config, _("Save as colored HTML text..."))
+        dialog = GimpUi.ProcedureDialog.new(procedure, config, _("Export as colored HTML text..."))
 
         dialog.fill_frame("file-frame", "source-file", False, "aux-file")
         # Set the characters text field as not enabled when the user chooses a file
@@ -207,11 +207,11 @@ class ColorXhtml(Gimp.PlugIn):
                                                  False, export_colorxhtml, None)
             procedure.set_image_types("RGB")
             procedure.set_documentation (
-                _("Save as colored HTML text"),
-                "Saves the image as colored XHTML text (based on Perl version by Marc Lehmann)",
+                _("Exports as colored HTML text"),
+                _("Exports the image as colored XHTML text"),
                 name)
             procedure.set_menu_label(_("Colored HTML text"))
-            procedure.set_attribution("Manish Singh and Carol Spears",
+            procedure.set_attribution("Manish Singh and Carol Spears (based on Perl version by Marc Lehmann)",
                                       "(c) GPL V3.0 or later",
                                       "2003")
 
