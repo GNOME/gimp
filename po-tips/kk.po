@@ -1,0 +1,300 @@
+# Kazakh translation for gimp.
+# Copyright (C) 2026 gimp's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp package.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>,  2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp gimp-3-0\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2024-06-11 18:57+0000\n"
+"PO-Revision-Date: 2026-03-03 22:03+0500\n"
+"Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
+"Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.8\n"
+
+#: data/tips/gimp-tips.xml.in:18
+msgid ""
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
+msgstr ""
+"Кез келген уақытта F1 пернесін басу арқылы GIMP-тың көптеген мүмкіндіктері "
+"үшін контекстке тәуелді көмек ала аласыз. Бұл мәзірлердің ішінде де жұмыс "
+"істейді."
+
+#: data/tips/gimp-tips.xml.in:24
+msgid ""
+"GIMP uses layers to let you organize your image. Think of them as a stack "
+"of slides or filters, such that looking through them you see a composite of "
+"their contents."
+msgstr ""
+"GIMP суретіңізді реттеу үшін қабаттарды пайдаланады. Оларды слайдтар немесе "
+"сүзгілер жиынтығы деп ойлаңыз, сонда олар арқылы қарағанда олардың "
+"мазмұнының композициясын көресіз."
+
+#: data/tips/gimp-tips.xml.in:31
+msgid ""
+"You can perform many layer operations by right-clicking on the text label "
+"of a layer in the Layers dialog."
+msgstr ""
+"«Қабаттар» сұхбат терезесіндегі қабаттың мәтіндік белгісін тышқанның оң жақ "
+"батырмасымен шерту арқылы көптеген қабат операцияларын орындай аласыз."
+
+#: data/tips/gimp-tips.xml.in:37
+msgid ""
+"Saving an image uses XCF, GIMP's native file format (file extension "
+"<tt>.xcf</tt>). This preserves the layers and many aspects of your work-in-"
+"progress, allowing to work on it again later. Once a project is completed, "
+"you can export it as JPEG, PNG, GIF, etc."
+msgstr ""
+"Суретті сақтау кезінде GIMP-тың жергілікті XCF файл пішімі (<tt>.xcf</tt> "
+"файл кеңейтуі) пайдаланылады. Бұл қабаттарды және аяқталмаған жұмысыңыздың "
+"көптеген аспектілерін сақтап, кейінірек онымен қайта жұмыс істеуге "
+"мүмкіндік береді. Жоба аяқталғаннан кейін, оны JPEG, PNG, GIF, т.б. ретінде "
+"экспорттай аласыз."
+
+#: data/tips/gimp-tips.xml.in:45
+msgid ""
+"Most plug-ins work on the current layer of the current image. In some "
+"cases, you will have to merge all layers (Image→Flatten Image) if you want "
+"the plug-in to work on the whole image."
+msgstr ""
+"Көптеген плагиндер ағымдағы суреттің ағымдағы қабатында жұмыс істейді. "
+"Кейбір жағдайларда, егер плагиннің бүкіл суретте жұмыс істегенін қаласаңыз, "
+"барлық қабаттарды біріктіруіңіз керек болады (Сурет→Суретті жаю)."
+
+#: data/tips/gimp-tips.xml.in:52
+msgid ""
+"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
+"layer doesn't have an alpha-channel. You can add an alpha-channel using "
+"Layer→Transparency→Add Alpha Channel."
+msgstr ""
+"Егер «Қабаттар» сұхбат терезесіндегі қабаттың атауы <b>жуан</b> қаріппен "
+"көрсетілсе, бұл қабатта альфа-арна жоқ дегенді білдіреді. Альфа-арнаны "
+"Қабат→Мөлдірлік→Альфа-арна қосу арқылы қоса аласыз."
+
+#: data/tips/gimp-tips.xml.in:59
+msgid ""
+"Not all effects can be applied to all kinds of images. This is indicated by "
+"a grayed-out menu-entry. You may need to change the image mode to RGB "
+"(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
+"Channel) or flatten it (Image→Flatten Image)."
+msgstr ""
+"Барлық эффектілерді суреттердің барлық түрлеріне қолдануға болмайды. Бұл "
+"сұр түсті мәзір тармағымен көрсетіледі. Сізге сурет режимін RGB-ге өзгерту "
+"(Сурет→Режим→RGB), альфа-арна қосу (Қабат→Мөлдірлік→Альфа-арна қосу) немесе "
+"оны жаю (Сурет→Суретті жаю) қажет болуы мүмкін."
+
+#: data/tips/gimp-tips.xml.in:68
+msgid ""
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this "
+"makes the window move, your window manager uses the <tt>Alt</tt> key "
+"already. Most window managers can be configured to ignore the <tt>Alt</tt> "
+"key or to use the <tt>Super</tt> key (or \"Windows logo\") instead."
+msgstr ""
+"Ерекшеленген аймақты <tt>Alt</tt> пернесін басып тұрып сүйреу арқылы реттей "
+"немесе жылжыта аласыз. Егер бұл терезені жылжытса, сіздің терезе "
+"менеджеріңіз <tt>Alt</tt> пернесін қазірдің өзінде пайдаланып жатыр. "
+"Көптеген терезе менеджерлерін <tt>Alt</tt> пернесін елемейтіндей немесе "
+"оның орнына <tt>Super</tt> пернесін (немесе «Windows логотипін») "
+"пайдаланатындай етіп баптауға болады."
+
+#: data/tips/gimp-tips.xml.in:82
+msgid ""
+"You can drag and drop many things in GIMP. For example, dragging a color "
+"from the toolbox or from a color palette and dropping it into an image will "
+"fill the current selection with that color."
+msgstr ""
+"GIMP-та көптеген нәрселерді сүйреп апаруға болады. Мысалы, саймандар "
+"жинағынан немесе түстер палитрасынан түсті сүйреп, оны суретке апарсаңыз, "
+"ағымдағы ерекшеленген аймақ сол түспен боялады."
+
+#: data/tips/gimp-tips.xml.in:89
+msgid ""
+"You can use the middle mouse button to pan around the image (or optionally "
+"hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr ""
+"Суретті айналдыра жылжыту үшін тышқанның ортаңғы батырмасын пайдалана "
+"аласыз (немесе қосымша ретінде тышқанды жылжыту кезінде <tt>Spacebar</tt> "
+"пернесін басып тұруыңызға болады)."
+
+#: data/tips/gimp-tips.xml.in:95
+msgid ""
+"Click and drag on a ruler to place a guide on an image. All dragged "
+"selections will snap to the guides. You can remove guides by dragging them "
+"off the image with the Move tool."
+msgstr ""
+"Суретке бағыттауыш орналастыру үшін сызғышты шертіп, сүйреңіз. Барлық "
+"сүйрелген ерекшелеулер бағыттауыштарға жабысады. Бағыттауыштарды «Жылжыту» "
+"сайманымен суреттен тысқары сүйреу арқылы өшіре аласыз."
+
+#: data/tips/gimp-tips.xml.in:102
+msgid ""
+"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
+"This will create a new image containing only that layer."
+msgstr ""
+"«Қабаттар» сұхбат терезесінен қабатты сүйреп, саймандар жинағына апара "
+"аласыз. Бұл тек сол қабаттан тұратын жаңа сурет жасайды."
+
+#: data/tips/gimp-tips.xml.in:108
+msgid ""
+"A floating selection must be anchored to a new layer or to the last active "
+"layer before doing other operations on the image. Click on the \"New "
+"Layer\" or the \"Anchor Layer\" button in the Layers dialog, or use the "
+"menus to do the same."
+msgstr ""
+"Суретте басқа операцияларды орындамас бұрын, қалқымалы ерекшелеу жаңа "
+"қабатқа немесе соңғы белсенді қабатқа бекітілуі керек. «Қабаттар» сұхбат "
+"терезесіндегі «Жаңа қабат» немесе «Қабатты бекіту» батырмасын шертіңіз "
+"немесе сол әрекетті орындау үшін мәзірлерді пайдаланыңыз."
+
+#: data/tips/gimp-tips.xml.in:116
+msgid ""
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
+"<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
+"will be saved compressed. Of course loading compressed images works too."
+msgstr ""
+"GIMP gzip сығуын лезде қолдайды. Файл атауына <tt>.gz</tt> (немесе егер "
+"bzip2 орнатылған болса, <tt>.bz2</tt>) кеңейтуін қоссаңыз болғаны, "
+"суретіңіз сығылған түрде сақталады. Әрине, сығылған суреттерді жүктеу де "
+"жұмыс істейді."
+
+#: data/tips/gimp-tips.xml.in:124
+msgid ""
+"Pressing and holding the <tt>Shift</tt> key before making a selection "
+"allows you to add to the current selection instead of replacing it. Using "
+"<tt>Ctrl</tt> before making a selection subtracts from the current one."
+msgstr ""
+"Ерекшелеу жасамас бұрын <tt>Shift</tt> пернесін басып тұру оны ауыстырудың "
+"орнына ағымдағы ерекшелеуге қосуға мүмкіндік береді. Ерекшелеу жасамас "
+"бұрын <tt>Ctrl</tt> пернесін пайдалану ағымдағысынан алып тастайды."
+
+#: data/tips/gimp-tips.xml.in:132
+msgid ""
+"You can draw simple squares or circles using Edit→Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be "
+"drawn using the Path tool or with Filters→Render→Gfig."
+msgstr ""
+"Түзету→Ерекшелеуді контурлау арқылы қарапайым шаршылар немесе шеңберлер "
+"сыза аласыз. Бұл сіздің ағымдағы ерекшелеуіңіздің жиегін контурлайды. "
+"Күрделірек пішіндерді «Контур» сайманымен немесе Сүзгілер→Визуализация→Gfig "
+"арқылы сызуға болады."
+
+#: data/tips/gimp-tips.xml.in:139
+msgid ""
+"If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
+"their current settings. You can use the Paintbrush in gradient mode or even "
+"the Eraser or the Smudge tool."
+msgstr ""
+"Егер контурды сызсаңыз (Түзету→Контурды сызу), бояу саймандарын ағымдағы "
+"баптауларымен пайдалануға болады. Қылқаламды градиент режимінде немесе "
+"тіпті Өшіргіш немесе Жайғыш саймандарын да пайдалана аласыз."
+
+#: data/tips/gimp-tips.xml.in:146
+msgid ""
+"You can create and edit complex selections using the Path tool. The Paths "
+"dialog allows you to work on multiple paths and to convert them to "
+"selections."
+msgstr ""
+"«Контур» сайманы арқылы күрделі ерекшелеулерді жасай және түзете аласыз. "
+"«Контурлар» сұхбат терезесі бірнеше контурлармен жұмыс істеуге және оларды "
+"ерекшелеулерге айналдыруға мүмкіндік береді."
+
+#: data/tips/gimp-tips.xml.in:153
+msgid ""
+"You can use the paint tools to change the selection. Click on the \"Quick "
+"Mask\" button at the bottom left of an image window. Change your selection "
+"by painting in the image and click on the button again to convert it back "
+"to a normal selection."
+msgstr ""
+"Ерекшелеуді өзгерту үшін бояу саймандарын пайдалана аласыз. Сурет "
+"терезесінің төменгі сол жақ бұрышындағы «Жылдам маска» батырмасын шертіңіз. "
+"Суретке бояу арқылы ерекшелеуді өзгертіп, оны қайтадан қалыпты ерекшелеуге "
+"айналдыру үшін батырманы қайта шертіңіз."
+
+#: data/tips/gimp-tips.xml.in:161
+msgid ""
+"You can save a selection to a channel (Select→Save to Channel) and then "
+"modify this channel with any paint tools. Using the buttons in the Channels "
+"dialog, you can toggle the visibility of this new channel or convert it to "
+"a selection."
+msgstr ""
+"Ерекшелеуді арнаға сақтай аласыз (Ерекшелеу→Арнаға сақтау), содан кейін бұл "
+"арнаны кез келген бояу сайманымен өзгерте аласыз. «Арналар» сұхбат "
+"терезесіндегі батырмаларды пайдаланып, осы жаңа арнаның көрінуін ауыстыра "
+"аласыз немесе оны ерекшелеуге айналдыра аласыз."
+
+#: data/tips/gimp-tips.xml.in:175
+msgid ""
+"If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
+"window to toggle the visibility of the toolbox and other dialogs."
+msgstr ""
+"Егер экраныңыз тым толып кетсе, саймандар жинағы мен басқа сұхбат "
+"терезелерінің көрінуін ауыстырып қосу үшін сурет терезесінде <tt>Tab</tt> "
+"пернесін баса аласыз."
+
+#: data/tips/gimp-tips.xml.in:182
+msgid ""
+"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all "
+"layers but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr ""
+"«Қабаттар» сұхбат терезесіндегі «көз» таңбашасын <tt>Shift</tt> пернесімен "
+"шерту арқылы сол қабаттан басқа барлық қабаттарды жасыруға болады. Барлық "
+"қабаттарды көрсету үшін <tt>Shift</tt> пернесімен қайта шертіңіз."
+
+#: data/tips/gimp-tips.xml.in:188
+msgid ""
+"<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
+"toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
+"mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr ""
+"«Қабаттар» сұхбат терезесінде қабат маскасының алдын-ала қарауын <tt>Ctrl</"
+"tt> пернесімен шерту оның эффектісін ауыстырады. Ал <tt>Alt</tt> пернесімен "
+"шерту масканы тікелей қарауды ауыстырады."
+
+#: data/tips/gimp-tips.xml.in:195
+msgid ""
+"You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"image (if your window manager doesn't trap those keys...)."
+msgstr ""
+"Суреттегі барлық қабаттарды кезекпен қарап шығу үшін <tt>Ctrl</tt>-<tt>Tab</"
+"tt> пернелер тіркесімін пайдалана аласыз (егер терезе менеджеріңіз бұл "
+"пернелерді ұстап алмаса...)."
+
+#: data/tips/gimp-tips.xml.in:201
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
+"with the eyedropper tool sets the background color instead of the "
+"foreground color."
+msgstr ""
+"«Құю» сайманымен <tt>Ctrl</tt> пернесін басып тұрып шертсеңіз, ол алдыңғы "
+"фон түсінің орнына артқы фон түсін пайдаланады. Сол сияқты, «Тамшуыр» "
+"сайманымен <tt>Ctrl</tt> пернесін басып тұрып шерту алдыңғы фон түсінің "
+"орнына артқы фон түсін орнатады."
+
+#: data/tips/gimp-tips.xml.in:209
+msgid ""
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
+msgstr ""
+"«Бұру» сайманымен <tt>Ctrl</tt> пернесін басып тұрып сүйреу бұруды 15 "
+"градустық бұрыштармен шектейді."
+
+#: data/tips/gimp-tips.xml.in:215
+msgid ""
+"If some of your scanned photos do not look colorful enough, you can easily "
+"improve their tonal range with the \"Auto\" button in the Levels tool "
+"(Colors→Levels). If there are any color casts, you can correct them with "
+"the Curves tool (Colors→Curves)."
+msgstr ""
+"Егер сканерленген фотосуреттеріңіздің кейбірі жеткілікті түрлі-түсті болып "
+"көрінбесе, олардың тондық ауқымын «Деңгейлер» сайманындағы "
+"(Түстер→Деңгейлер) «Авто» батырмасымен оңай жақсарта аласыз. Егер қандай да "
+"бір түс ауытқулары болса, оларды «Қисықтар» сайманымен (Түстер→Қисықтар) "
+"түзей аласыз."
