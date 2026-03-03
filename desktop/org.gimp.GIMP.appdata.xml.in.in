@@ -137,8 +137,7 @@
           <li>PDF format export will export vector layer as paths</li>
           <li>The OpenEXR plug-in can now import Luminance/Chroma OpenEXR images</li>
           <li>TIFF support improved to handle various unofficial features set by third-party software</li>
-          <li>PSD's legacy Drop Shadow and Inner Shadow filters now imported</li>
-          <li>Outer Glow layer style can now be imported from PSD files (converted as drop shadow, replicating the effect)</li>
+          <li>PSD's legacy Drop Shadow, Inner Shadow and Outer Glow layer styles now imported</li>
           <li>Image format import newly supported: APNG, AVCI, JIF, PlayStation TIM, OTA bitmap, PAA textures, Seattle Filmworks photos and HRZ Slow Scan Television Images, hgt.zip</li>
           <li>Image format export newly supported: JPEG 2000, HEJ2, PlayStation TIM, PSB, SVG</li>
           <li>ART is now supported as a RAW loader</li>
