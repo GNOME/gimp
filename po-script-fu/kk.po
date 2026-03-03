@@ -1,0 +1,1526 @@
+# Kazakh translation for gimp.
+# Copyright (C) 2026 gimp's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp package.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>,  2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp gimp-3-0\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2026-02-09 16:48+0000\n"
+"PO-Revision-Date: 2026-03-03 21:39+0500\n"
+"Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
+"Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.8\n"
+
+#: plug-ins/script-fu/script-fu.c:119
+msgid "Script-Fu _Console"
+msgstr "Script-Fu _консолі"
+
+#: plug-ins/script-fu/script-fu.c:124
+msgid "Interactive console for Script-Fu development"
+msgstr "Script-Fu әзірлеуіне арналған интерактивті консоль"
+
+#: plug-ins/script-fu/script-fu.c:317
+msgid "_GIMP Online"
+msgstr "_GIMP Online"
+
+#: plug-ins/script-fu/script-fu.c:318
+msgid "_User Manual"
+msgstr "Пайдаланушы _нұсқаулығы"
+
+#: plug-ins/script-fu/script-fu.c:321
+msgid "_Script-Fu"
+msgstr "_Script-Fu"
+
+#: plug-ins/script-fu/script-fu.c:323
+msgid "_Test"
+msgstr "_Сынақ"
+
+#: plug-ins/script-fu/script-fu.c:326
+msgid "_Buttons"
+msgstr "_Батырмалар"
+
+#: plug-ins/script-fu/script-fu.c:328
+msgid "_Logos"
+msgstr "_Логотиптер"
+
+#: plug-ins/script-fu/script-fu.c:330
+msgid "_Patterns"
+msgstr "Ү_лгілер"
+
+#: plug-ins/script-fu/script-fu.c:333
+msgid "_Web Page Themes"
+msgstr "_Веб-бет темалары"
+
+#: plug-ins/script-fu/script-fu.c:335
+msgid "_Alien Glow"
+msgstr "_Бөтен жарқырау"
+
+#: plug-ins/script-fu/script-fu.c:337
+msgid "_Beveled Pattern"
+msgstr "_Кертілген үлгі"
+
+#: plug-ins/script-fu/script-fu.c:339
+msgid "_Classic.Gimp.Org"
+msgstr "_Classic.Gimp.Org"
+
+#: plug-ins/script-fu/script-fu.c:342
+msgid "Alpha to _Logo"
+msgstr "Альфадан _логотипке"
+
+#: plug-ins/script-fu/script-fu-eval.c:52
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "Script-Fu бағалау режимі тек интерактивті емес шақыруға рұқсат береді"
+
+#: plug-ins/script-fu/console/script-fu-console.c:119
+msgid "Script Console"
+msgstr "Скрипт консолі"
+
+#: plug-ins/script-fu/console/script-fu-console.c:124
+#: plug-ins/script-fu/console/script-fu-console.c:251
+msgid "_Save"
+msgstr "_Сақтау"
+
+#: plug-ins/script-fu/console/script-fu-console.c:125
+msgid "C_lear"
+msgstr "_Тазарту"
+
+#: plug-ins/script-fu/console/script-fu-console.c:126
+#: plug-ins/script-fu/console/script-fu-console.c:324
+msgid "_Close"
+msgstr "_Жабу"
+
+#: plug-ins/script-fu/console/script-fu-console.c:187
+msgid "_Browse..."
+msgstr "_Шолу..."
+
+#: plug-ins/script-fu/console/script-fu-console.c:246
+msgid "Save Script-Fu Console Output"
+msgstr "Script-Fu консолінің шығысын сақтау"
+
+#: plug-ins/script-fu/console/script-fu-console.c:250
+#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
+msgid "_Cancel"
+msgstr "_Бас тарту"
+
+#: plug-ins/script-fu/console/script-fu-console.c:293
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Жазу үшін '%s' файлын ашу мүмкін болмады: %s"
+
+#: plug-ins/script-fu/console/script-fu-console.c:319
+msgid "Script-Fu Procedure Browser"
+msgstr "Script-Fu процедуралар браузері"
+
+#: plug-ins/script-fu/console/script-fu-console.c:323
+msgid "_Apply"
+msgstr "Іске _асыру"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:89
+msgid "Welcome to TinyScheme"
+msgstr "TinyScheme-ге қош келдіңіз"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:93
+msgid "Scripting GIMP in the Scheme language"
+msgstr "GIMP-те Scheme тілінде скрипт жазу"
+
+#: plug-ins/script-fu/server/script-fu-server.c:918
+msgid "Script-Fu Server Options"
+msgstr "Script-Fu серверінің опциялары"
+
+#: plug-ins/script-fu/server/script-fu-server.c:923
+msgid "_Start Server"
+msgstr "Се_рверді іске қосу"
+
+#: plug-ins/script-fu/server/script-fu-server.c:956
+msgid "Listen on IP:"
+msgstr "IP адресінде тыңдау:"
+
+#: plug-ins/script-fu/server/script-fu-server.c:963
+msgid "Server port:"
+msgstr "Сервер порты:"
+
+#: plug-ins/script-fu/server/script-fu-server.c:969
+msgid "Server logfile:"
+msgstr "Сервер журналы:"
+
+#: plug-ins/script-fu/server/script-fu-server.c:982
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr ""
+"127.0.0.1 (әсіресе 0.0.0.0) IP адресінен басқа адресте тыңдау "
+"шабуылдаушыларға осы компьютерде кез келген кодты қашықтан орындауға "
+"мүмкіндік беруі мүмкін."
+
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:91
+msgid "_Start Server..."
+msgstr "Се_рверді іске қосу..."
+
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:96
+msgid "Server for remote Script-Fu operation"
+msgstr "Script-Fu операцияларын қашықтан орындауға арналған сервер"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Script-Fu бір уақытта екі скриптті өңдей алмайды."
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr "Сіз «%s» скриптін іске қосып қойғансыз."
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
+msgid "_Reset"
+msgstr "_Ысыру"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
+msgid "_OK"
+msgstr "_Жарайды"
+
+#. we add a colon after the label;
+#. *  some languages want an extra space here
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
+msgid "Script-Fu Color Selection"
+msgstr "Script-Fu түс таңдау"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:405
+msgid "Script-Fu File Selection"
+msgstr "Script-Fu файл таңдау"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:408
+msgid "Script-Fu Folder Selection"
+msgstr "Script-Fu бума таңдау"
+
+#. Log to stdout.  Later to Gimp.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:817
+#, c-format
+msgid "Error while executing %s:"
+msgstr "%s орындау кезіндегі қате:"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:541
+#, c-format
+msgid "Error while loading %s:"
+msgstr "%s жүктеу кезіндегі қате:"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:72
+msgid "Bumpmap"
+msgstr "Рельеф картасы"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:199
+msgid "Add B_evel..."
+msgstr "Ке_ртік қосу..."
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:200
+msgid "Add a beveled border to an image"
+msgstr "Суретке кертілген жиек қосу"
+
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:206
+msgid "_Thickness"
+msgstr "Қа_лыңдығы"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:207
+msgid "_Work on copy"
+msgstr "_Көшірмесімен жұмыс"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:208
+msgid "_Keep bump layer"
+msgstr "Рельеф қабатын _сақтау"
+
+#: plug-ins/script-fu/scripts/addborder.scm:121
+msgid "Border Layer"
+msgstr "Жиек қабаты"
+
+#: plug-ins/script-fu/scripts/addborder.scm:174
+msgid "Add _Border..."
+msgstr "_Жиек қосу..."
+
+#: plug-ins/script-fu/scripts/addborder.scm:175
+msgid "Add a border around an image"
+msgstr "Суреттің айналасына жиек қосу"
+
+#: plug-ins/script-fu/scripts/addborder.scm:181
+msgid "Border X size"
+msgstr "Жиектің X өлшемі"
+
+#: plug-ins/script-fu/scripts/addborder.scm:182
+msgid "Border Y size"
+msgstr "Жиектің Y өлшемі"
+
+#: plug-ins/script-fu/scripts/addborder.scm:183
+msgid "Border color"
+msgstr "Жиек түсі"
+
+#: plug-ins/script-fu/scripts/addborder.scm:184
+msgid "Delta value on color"
+msgstr "Түстегі дельта мәні"
+
+#: plug-ins/script-fu/scripts/addborder.scm:185
+#: plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:210
+msgid "Allow resizing"
+msgstr "Өлшемін өзгертуге рұқсат ету"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:202
+msgid "Frame"
+msgstr "Кадр"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:218
+msgid "Blend Animation needs at least three source layers"
+msgstr "Араластыру анимациясы үшін кемінде үш бастапқы қабат қажет"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:224
+msgid "_Blend..."
+msgstr "_Араластыру..."
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:225
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+"Анимация ретінде фонның үстінде екі немесе одан да көп қабатты араластыру "
+"үшін аралық қабаттар жасау"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:231
+msgid "Intermediate frames"
+msgstr "Аралық кадрлар"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:232
+msgid "Max. blur radius"
+msgstr "Макс. бұлдырату радиусы"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:233
+msgid "Looped"
+msgstr "Циклді"
+
+#. --- false form of "if-1"
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:218
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+"Күйдіріп енгізу скрипті үшін барлығы екі қабат қажет. Мөлдірлігі бар "
+"алдыңғы қабат және фондық қабат."
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:225
+msgid "B_urn-In..."
+msgstr "Күйдіріп _енгізу..."
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:226
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr ""
+"Екі қабат арасында анимацияланған «күйдіріп енгізу» өткелін жасау үшін "
+"аралық қабаттар жасау"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:232
+msgid "Glow color"
+msgstr "Жарқырау түсі"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:233
+msgid "Fadeout"
+msgstr "Өшу"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:234
+msgid "Fadeout width"
+msgstr "Өшу ені"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:235
+msgid "Corona width"
+msgstr "Тәж ені"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:236
+msgid "After glow"
+msgstr "Кейінгі жарқырау"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:237
+msgid "Add glowing"
+msgstr "Жарқырау қосу"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:238
+msgid "Prepare for GIF"
+msgstr "GIF үшін дайындау"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:239
+msgid "Speed (pixels/frame)"
+msgstr "Жылдамдық (пиксель/кадр)"
+
+#: plug-ins/script-fu/scripts/carve-it.scm:207
+msgid "Carved Surface"
+msgstr "Ойылған бет"
+
+#: plug-ins/script-fu/scripts/carve-it.scm:208
+msgid "Bevel Shadow"
+msgstr "Кертік көлеңкесі"
+
+#: plug-ins/script-fu/scripts/carve-it.scm:209
+msgid "Bevel Highlight"
+msgstr "Кертік жарығы"
+
+#: plug-ins/script-fu/scripts/carve-it.scm:210
+msgid "Cast Shadow"
+msgstr "Түсетін көлеңке"
+
+#: plug-ins/script-fu/scripts/carve-it.scm:211
+msgid "Inset"
+msgstr "Кірістірме"
+
+#: plug-ins/script-fu/scripts/carve-it.scm:223
+msgid "Stencil C_arve..."
+msgstr "Трафаретпен о_ю..."
+
+#: plug-ins/script-fu/scripts/carve-it.scm:224
+msgid ""
+"Use the specified drawable as a stencil to carve from the specified image."
+msgstr ""
+"Көрсетілген суреттен ою үшін көрсетілген сызылатын нысанды трафарет ретінде "
+"пайдалану."
+
+#: plug-ins/script-fu/scripts/carve-it.scm:231
+msgid "Mask drawable"
+msgstr "Маска сызылатын нысаны"
+
+#: plug-ins/script-fu/scripts/carve-it.scm:232
+msgid "Carve white areas"
+msgstr "Ақ аймақтарды ою"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:153
+msgid "Background"
+msgstr "Фон"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:154
+msgid "Layer 1"
+msgstr "1-қабат"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:155
+msgid "Layer 2"
+msgstr "2-қабат"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:156
+msgid "Layer 3"
+msgstr "3-қабат"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:157
+msgid "Drop Shadow"
+msgstr "Түсетін көлеңке"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:286
+msgid "Chrome"
+msgstr "Хром"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:287
+#: plug-ins/script-fu/scripts/xach-effect.scm:69
+msgid "Highlight"
+msgstr "Жарық бөлік"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:307
+msgid "Stencil C_hrome..."
+msgstr "Трафареттік х_ром..."
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:308
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+"Көрсетілген (сұр реңкті) трафаретті пайдаланып, таңдалған аймаққа (немесе "
+"альфаға) хром эффектісін қосу"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:314
+msgid "Chrome saturation"
+msgstr "Хром қанықтылығы"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:315
+msgid "Chrome lightness"
+msgstr "Хром жарықтығы"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:316
+msgid "Chrome factor"
+msgstr "Хром факторы"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:317
+msgid "Environment map"
+msgstr "Орта картасы"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:320
+msgid "Highlight balance"
+msgstr "Жарық бөлік теңгерімі"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:321
+msgid "Chrome balance"
+msgstr "Хром теңгерімі"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:322
+msgid "Chrome white areas"
+msgstr "Ақ аймақтарды хромдау"
+
+#: plug-ins/script-fu/scripts/circuit.scm:72
+msgid "Effect layer"
+msgstr "Эффект қабаты"
+
+#: plug-ins/script-fu/scripts/circuit.scm:135
+msgid "_Circuit..."
+msgstr "_Схема..."
+
+#: plug-ins/script-fu/scripts/circuit.scm:136
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit "
+"board"
+msgstr ""
+"Таңдалған аймақты (немесе альфаны) схемалық платадағы сияқты жолдармен "
+"толтыру"
+
+#: plug-ins/script-fu/scripts/circuit.scm:142
+msgid "Oilify mask size"
+msgstr "Майлы бояу маскасының өлшемі"
+
+#: plug-ins/script-fu/scripts/circuit.scm:143
+msgid "Circuit seed"
+msgstr "Схеманың бастапқы мәні"
+
+#: plug-ins/script-fu/scripts/circuit.scm:144
+msgid "No background (only for separate layer)"
+msgstr "Фонсыз (тек бөлек қабат үшін)"
+
+#: plug-ins/script-fu/scripts/circuit.scm:145
+#: plug-ins/script-fu/scripts/lava.scm:144
+#: plug-ins/script-fu/scripts/xach-effect.scm:139
+msgid "Keep selection"
+msgstr "Таңдауды сақтау"
+
+#: plug-ins/script-fu/scripts/circuit.scm:146
+#: plug-ins/script-fu/scripts/lava.scm:145
+msgid "Separate layer"
+msgstr "Бөлек қабат"
+
+#: plug-ins/script-fu/scripts/clothify.scm:65
+msgid "_Clothify..."
+msgstr "_Мата эффектісі..."
+
+#: plug-ins/script-fu/scripts/clothify.scm:66
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "Таңдалған аймаққа (немесе альфаға) мата тәрізді текстура қосу"
+
+#: plug-ins/script-fu/scripts/clothify.scm:72
+msgid "Blur X"
+msgstr "X бойынша бұлдырату"
+
+#: plug-ins/script-fu/scripts/clothify.scm:73
+msgid "Blur Y"
+msgstr "Y бойынша бұлдырату"
+
+#: plug-ins/script-fu/scripts/clothify.scm:74
+msgid "Azimuth"
+msgstr "Азимут"
+
+#: plug-ins/script-fu/scripts/clothify.scm:75
+msgid "Elevation"
+msgstr "Биіктік"
+
+#: plug-ins/script-fu/scripts/clothify.scm:76
+msgid "Depth"
+msgstr "Тереңдік"
+
+#: plug-ins/script-fu/scripts/coffee.scm:41
+msgid "Stain"
+msgstr "Дақ"
+
+#: plug-ins/script-fu/scripts/coffee.scm:132
+msgid "_Stain..."
+msgstr "_Дақ..."
+
+#: plug-ins/script-fu/scripts/coffee.scm:133
+msgid "Add layers of stain or blotch marks"
+msgstr "Дақ немесе тамшы іздерінің қабаттарын қосу"
+
+#: plug-ins/script-fu/scripts/coffee.scm:139
+msgid "Number of stains to add"
+msgstr "Қосылатын дақтар саны"
+
+#: plug-ins/script-fu/scripts/coffee.scm:140
+msgid "Darken only"
+msgstr "Тек күңгірттеу"
+
+#: plug-ins/script-fu/scripts/coffee.scm:141
+msgid "Gradient to color stains"
+msgstr "Дақтарды бояуға арналған градиент"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:82
+msgid "_Difference Clouds"
+msgstr "_Айырмашылық бұлттары"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:83
+msgid "Solid noise applied with Difference layer mode"
+msgstr "Айырмашылық қабат режимімен қолданылған тұтас шу"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:89
+msgid "Random Seed"
+msgstr "Кездейсоқ бастапқы мән"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:90
+msgid "Levels"
+msgstr "Деңгейлер"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:91
+msgid "Tileable"
+msgstr "Бөлшектерден құралатын"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:92
+msgid "Turbulent"
+msgstr "Турбулентті"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:93
+msgid "X"
+msgstr "X"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:94
+msgid "Y"
+msgstr "Y"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:112
+msgid "_Distort..."
+msgstr "_Бұрмалау..."
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:113
+msgid "Distress the selection"
+msgstr "Таңдауды бұрмалау"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:119
+msgid "_Threshold"
+msgstr "_Табалдырық"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:120
+msgid "_Spread"
+msgstr "_Тарқату"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:121
+msgid "_Granularity (1 is low)"
+msgstr "_Түйіршіктілік (1 - төмен)"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:122
+msgid "S_mooth"
+msgstr "_Тегістеу"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:123
+msgid "Smooth hor_izontally"
+msgstr "_Горизонталь бойынша тегістеу"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:124
+msgid "Smooth _vertically"
+msgstr "_Вертикаль бойынша тегістеу"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:170
+msgid "_Drop Shadow (legacy)..."
+msgstr "_Түсетін көлеңке (ескі)..."
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:171
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "Таңдалған аймаққа (немесе альфаға) түсетін көлеңке қосу"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:177
+msgid "Offset X"
+msgstr "X ығысуы"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:178
+msgid "Offset Y"
+msgstr "Y ығысуы"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:179
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:206
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+msgid "Blur radius"
+msgstr "Бұлдырату радиусы"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:147
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:207
+msgid "Color"
+msgstr "Түс"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:208
+msgid "Opacity"
+msgstr "Мөлдір еместік"
+
+#: plug-ins/script-fu/scripts/font-map.scm:165
+msgid "Render _Font Map..."
+msgstr "Қаріп _картасын көрсету..."
+
+#: plug-ins/script-fu/scripts/font-map.scm:166
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
+msgstr ""
+"Қаріп атауы сүзгісіне сәйкес келетін қаріптердің алдын ала қарауларымен "
+"толтырылған сурет жасау"
+
+#: plug-ins/script-fu/scripts/font-map.scm:169
+msgid "_Text"
+msgstr "_Мәтін"
+
+#: plug-ins/script-fu/scripts/font-map.scm:170
+msgid "Use font _name as text"
+msgstr "Мәтін ретінде қаріп _атауын пайдалану"
+
+#: plug-ins/script-fu/scripts/font-map.scm:171
+msgid "_Labels"
+msgstr "_Белгілер"
+
+#: plug-ins/script-fu/scripts/font-map.scm:172
+msgid "_Filter (regexp)"
+msgstr "_Сүзгі (тұрақты өрнек)"
+
+#: plug-ins/script-fu/scripts/font-map.scm:173
+msgid "Font _size (pixels)"
+msgstr "Қаріп өлше_мі (пиксель)"
+
+#: plug-ins/script-fu/scripts/font-map.scm:174
+msgid "_Border (pixels)"
+msgstr "_Жиек (пиксель)"
+
+#: plug-ins/script-fu/scripts/font-map.scm:175
+msgid "_Color scheme"
+msgstr "_Түс схемасы"
+
+#: plug-ins/script-fu/scripts/font-map.scm:175
+msgid "Black on white"
+msgstr "Ақ фондағы қара"
+
+#: plug-ins/script-fu/scripts/font-map.scm:175
+msgid "Active colors"
+msgstr "Белсенді түстер"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:140
+msgid "_Fuzzy Border..."
+msgstr "_Бұлдыр жиек..."
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:141
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "Суретке тісті, бұлдыр жиек қосу"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:148
+#: plug-ins/script-fu/scripts/old-photo.scm:99
+msgid "Border size"
+msgstr "Жиек өлшемі"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
+msgid "Blur border"
+msgstr "Жиекті бұлдырату"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
+msgid "Granularity (1 is Low)"
+msgstr "Түйіршіктілік (1 - төмен)"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:151
+msgid "Add shadow"
+msgstr "Көлеңке қосу"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:152
+msgid "Shadow weight (%)"
+msgstr "Көлеңке салмағы (%)"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:153
+#: plug-ins/script-fu/scripts/old-photo.scm:105
+#: plug-ins/script-fu/scripts/round-corners.scm:147
+#: plug-ins/script-fu/scripts/slide.scm:268
+#: plug-ins/script-fu/scripts/spinning-globe.scm:127
+msgid "Work on copy"
+msgstr "Көшірмесімен жұмыс"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:154
+msgid "Flatten image"
+msgstr "Суретті біріктіру"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:63
+msgid "_Using Paths"
+msgstr "_Жолдарды пайдалану"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:64
+#: plug-ins/script-fu/scripts/gimp-online.scm:75
+#: plug-ins/script-fu/scripts/gimp-online.scm:86
+#: plug-ins/script-fu/scripts/gimp-online.scm:97
+#: plug-ins/script-fu/scripts/gimp-online.scm:108
+#: plug-ins/script-fu/scripts/gimp-online.scm:119
+#: plug-ins/script-fu/scripts/gimp-online.scm:130
+#: plug-ins/script-fu/scripts/gimp-online.scm:141
+#: plug-ins/script-fu/scripts/gimp-online.scm:151
+msgid "Bookmark to the user manual"
+msgstr "Пайдаланушы нұсқаулығына бетбелгі"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:74
+msgid "_Preparing your Images for the Web"
+msgstr "Суреттерді _вебке дайындау"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:85
+msgid "_Working with Digital Camera Photos"
+msgstr "_Сандық камера фотосуреттерімен жұмыс"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:96
+msgid "Create, Open and Save _Files"
+msgstr "Файлдарды жасау, ашу және _сақтау"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:107
+msgid "_Basic Concepts"
+msgstr "_Негізгі ұғымдар"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:118
+msgid "How to Use _Dialogs"
+msgstr "_Сұхбат терезелерін қалай пайдалану керек"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:129
+msgid "Drawing _Simple Objects"
+msgstr "Қарапайым _нысандарды салу"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:140
+msgid "_Create and Use Selections"
+msgstr "Таңдауларды _жасау және пайдалану"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "_Table of Contents"
+msgstr "_Мазмұны"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:184
+msgid "_Main Web Site"
+msgstr "_Негізгі веб-сайт"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:185
+#: plug-ins/script-fu/scripts/gimp-online.scm:196
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
+msgid "Bookmark to the GIMP web site"
+msgstr "GIMP веб-сайтына бетбелгі"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:195
+msgid "_Developer Web Site"
+msgstr "Әзірлеуші _веб-сайты"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:206
+msgid "_Roadmaps"
+msgstr "_Жол карталары"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:207
+msgid "Bookmark to the roadmaps of GIMP"
+msgstr "GIMP жол карталарына бетбелгі"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:217
+msgid "_Bug Reports and Feature Requests"
+msgstr "Қателер туралы _есептер және мүмкіндіктер сұраныстары"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:218
+msgid "Bookmark to the bug tracker of GIMP"
+msgstr "GIMP қате трекеріне бетбелгі"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:228
+msgid "_User Manual Web Site"
+msgstr "Пайдаланушы нұсқаулығының _веб-сайты"
+
+#: plug-ins/script-fu/scripts/gradient-example.scm:73
+msgid "Custom _Gradient..."
+msgstr "Пайдаланушы _градиенті..."
+
+#: plug-ins/script-fu/scripts/gradient-example.scm:74
+msgid "Create an image filled with an example of the current gradient"
+msgstr "Ағымдағы градиенттің үлгісімен толтырылған сурет жасау"
+
+#: plug-ins/script-fu/scripts/gradient-example.scm:77
+#: plug-ins/script-fu/scripts/mkbrush.scm:69
+#: plug-ins/script-fu/scripts/mkbrush.scm:137
+#: plug-ins/script-fu/scripts/mkbrush.scm:191
+#: plug-ins/script-fu/scripts/mkbrush.scm:258
+msgid "Width"
+msgstr "Ені"
+
+#: plug-ins/script-fu/scripts/gradient-example.scm:78
+#: plug-ins/script-fu/scripts/mkbrush.scm:70
+#: plug-ins/script-fu/scripts/mkbrush.scm:138
+#: plug-ins/script-fu/scripts/mkbrush.scm:192
+#: plug-ins/script-fu/scripts/mkbrush.scm:259
+msgid "Height"
+msgstr "Биіктігі"
+
+#: plug-ins/script-fu/scripts/gradient-example.scm:79
+msgid "Gradient reverse"
+msgstr "Градиентті кері айналдыру"
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:32
+msgid "New Guides from _Selection"
+msgstr "_Таңдаудан жаңа бағыттағыштар"
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
+msgid "Create four guides around the bounding box of the current selection"
+msgstr ""
+"Ағымдағы таңдаудың шектеуші тіктөртбұрышының айналасында төрт бағыттағыш "
+"жасау"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
+msgid "New Guide (by _Percent)..."
+msgstr "Жаңа бағыттағыш (_пайызбен)..."
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
+msgid ""
+"Add a guide at the position specified as a percentage of the image size"
+msgstr "Сурет өлшемінің пайызы ретінде көрсетілген орынға бағыттағыш қосу"
+
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:33
+msgid "_Direction"
+msgstr "_Бағыты"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:33
+msgid "Horizontal"
+msgstr "Горизонталды"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:33
+msgid "Vertical"
+msgstr "Вертикалды"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
+msgid "_Position (in %)"
+msgstr "_Орны (%)"
+
+#: plug-ins/script-fu/scripts/guides-new.scm:26
+msgid "New _Guide..."
+msgstr "Жаңа _бағыттағыш..."
+
+#: plug-ins/script-fu/scripts/guides-new.scm:27
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr "Көрсетілген бағытта және орында (пиксельмен) бағыттағыш қосу"
+
+#: plug-ins/script-fu/scripts/guides-new.scm:34
+msgid "_Position"
+msgstr "_Орны"
+
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:19
+msgid "_Remove all Guides"
+msgstr "Барлық _бағыттағыштарды өшіру"
+
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:20
+msgid "Remove all horizontal and vertical guides"
+msgstr "Барлық горизонталды және вертикалды бағыттағыштарды өшіру"
+
+#. else
+#: plug-ins/script-fu/scripts/lava.scm:127
+msgid "Lava works with exactly one selected layer"
+msgstr "Лава дәл бір таңдалған қабатпен жұмыс істейді"
+
+#: plug-ins/script-fu/scripts/lava.scm:133
+msgid "_Lava..."
+msgstr "_Лава..."
+
+#: plug-ins/script-fu/scripts/lava.scm:134
+msgid "Fill the current selection with lava"
+msgstr "Ағымдағы таңдауды лавамен толтыру"
+
+#: plug-ins/script-fu/scripts/lava.scm:140
+msgid "Seed"
+msgstr "Бастапқы мән"
+
+#: plug-ins/script-fu/scripts/lava.scm:141
+msgid "Size"
+msgstr "Өлшем"
+
+#: plug-ins/script-fu/scripts/lava.scm:142
+msgid "Roughness"
+msgstr "Кедір-бұдырлық"
+
+#: plug-ins/script-fu/scripts/lava.scm:143
+msgid "Gradient"
+msgstr "Градиент"
+
+#: plug-ins/script-fu/scripts/lava.scm:146
+msgid "Use current gradient"
+msgstr "Ағымдағы градиентті пайдалану"
+
+#: plug-ins/script-fu/scripts/line-nova.scm:117
+msgid "Line _Nova..."
+msgstr "Сызықтық _жаңа жұлдыз..."
+
+#: plug-ins/script-fu/scripts/line-nova.scm:118
+msgid ""
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
+msgstr ""
+"Қабатты оның ортасынан алдыңғы қабат түсімен сыртқа қарай таралатын "
+"сәулелермен толтыру"
+
+#: plug-ins/script-fu/scripts/line-nova.scm:124
+msgid "_Number of lines"
+msgstr "Сызықтар _саны"
+
+#: plug-ins/script-fu/scripts/line-nova.scm:125
+msgid "S_harpness (degrees)"
+msgstr "Өткір_лік (градус)"
+
+#: plug-ins/script-fu/scripts/line-nova.scm:126
+msgid "O_ffset radius"
+msgstr "Ығысу _радиусы"
+
+#: plug-ins/script-fu/scripts/line-nova.scm:127
+msgid "Ran_domness"
+msgstr "Кез_дейсоқтық"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:64
+msgid "_Rectangular..."
+msgstr "_Тіктөртбұрышты..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:65
+msgid "Create a rectangular brush"
+msgstr "Тіктөртбұрышты қылқалам жасау"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:68
+#: plug-ins/script-fu/scripts/mkbrush.scm:136
+#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:257
+msgid "Name"
+msgstr "Атауы"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:71
+#: plug-ins/script-fu/scripts/mkbrush.scm:140
+#: plug-ins/script-fu/scripts/mkbrush.scm:193
+#: plug-ins/script-fu/scripts/mkbrush.scm:261
+msgid "Spacing"
+msgstr "Арақашықтық"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:132
+msgid "Re_ctangular, Feathered..."
+msgstr "Ті_ктөртбұрышты, жайылған..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:133
+msgid "Create a rectangular brush with feathered edges"
+msgstr "Жиектері жайылған тіктөртбұрышты қылқалам жасау"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:139
+#: plug-ins/script-fu/scripts/mkbrush.scm:260
+msgid "Feathering"
+msgstr "Жайылу"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:186
+msgid "_Elliptical..."
+msgstr "_Эллипстік..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:187
+msgid "Create an elliptical brush"
+msgstr "Эллипстік қылқалам жасау"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:253
+msgid "Elli_ptical, Feathered..."
+msgstr "Э_ллипстік, жайылған..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:254
+msgid "Create an elliptical brush with feathered edges"
+msgstr "Жиектері жайылған эллипстік қылқалам жасау"
+
+#: plug-ins/script-fu/scripts/old-photo.scm:91
+msgid "_Old Photo..."
+msgstr "_Ескі фото..."
+
+#: plug-ins/script-fu/scripts/old-photo.scm:92
+msgid "Make an image look like an old photo"
+msgstr "Суретті ескі фотосуретке ұқсату"
+
+#: plug-ins/script-fu/scripts/old-photo.scm:98
+msgid "Defocus"
+msgstr "Фокуссыз ету"
+
+#. since this plug-in uses the fuzzy-border plug-in, I used the
+#. values of the latter, with the exception of the initial value
+#. and the 'minimum' value.
+#: plug-ins/script-fu/scripts/old-photo.scm:103
+msgid "Sepia"
+msgstr "Сепия"
+
+#: plug-ins/script-fu/scripts/old-photo.scm:104
+msgid "Mottle"
+msgstr "Дақтар"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:162
+msgid "The filename you entered is not a suitable name for a file."
+msgstr "Сіз енгізген файл атауы файл үшін жарамды атау емес."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:164
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+"Атаудағы барлық таңбалар бос орындар немесе файл атауларында кездеспейтін "
+"таңбалар."
+
+#. Side effect.
+#. Tell the user the mangled path, might be different than user entered.
+#. The user should not need to search for the file.
+#: plug-ins/script-fu/scripts/palette-export.scm:199
+msgid "Exported palette to file: "
+msgstr "Палитра файлға экспортталды: "
+
+#: plug-ins/script-fu/scripts/palette-export.scm:287
+msgid "Folder for the output file"
+msgstr "Шығыс файлына арналған бума"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:288
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Жасалатын файлдың атауы (егер осындай атаумен файл бар болса, ол "
+"ауыстырылады)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:317
+msgid "_CSS stylesheet..."
+msgstr "_CSS стильдер кестесі..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:318
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+"Белсенді палитраны CSS стильдер кестесі ретінде экспорттау, мұнда түс "
+"жазбасының атауы олардың класс атауы, ал түстің өзі түс атрибуты болады"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:338
+msgid "P_HP dictionary..."
+msgstr "_PHP сөздігі..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:339
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "Белсенді палитраны PHP сөздігі ретінде экспорттау (атауы => түсі)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:363
+msgid "_Python dictionary..."
+msgstr "_Python сөздігі..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:364
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "Белсенді палитраны Python сөздігі ретінде экспорттау (атауы: түсі)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:385
+msgid "_Text file..."
+msgstr "_Мәтіндік файл..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:386
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+"Палитрадағы барлық түстерді мәтіндік файлға жазу, әр жолға бір он алтылық "
+"мән (атауларсыз)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:425
+msgid "J_ava map..."
+msgstr "_Java картасы..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:426
+msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
+msgstr ""
+"Белсенді палитраны java.util.Hashtable&lt;String,Color&gt; ретінде "
+"экспорттау"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:45
+msgid "There is no image data in the clipboard to paste."
+msgstr "Алмасу буферінде кірістіруге арналған сурет деректері жоқ."
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+msgid "Paste as New _Brush..."
+msgstr "Жаңа қылқалам ретінде _кірістіру..."
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:66
+msgid "Paste the clipboard contents into a new brush"
+msgstr "Алмасу буферінің мазмұнын жаңа қылқаламға кірістіру"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
+msgid "_Brush name"
+msgstr "Қылқалам _атауы"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
+msgid "My Brush"
+msgstr "Менің қылқаламым"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+msgid "_File name"
+msgstr "_Файл атауы"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+msgid "mybrush"
+msgstr "меніңқылқаламым"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+msgid "_Spacing"
+msgstr "_Арақашықтық"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste as New _Pattern..."
+msgstr "Жаңа үлгі ретінде _кірістіру..."
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "Алмасу буферінің мазмұнын жаңа үлгіге кірістіру"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
+msgid "_Pattern name"
+msgstr "Үлгі _атауы"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
+msgid "My Pattern"
+msgstr "Менің үлгім"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+msgid "mypattern"
+msgstr "меніңүлгім"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:196
+msgid "_Perspective..."
+msgstr "_Перспектива..."
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:197
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr "Таңдалған аймаққа (немесе альфаға) перспективалық көлеңке қосу"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:203
+msgid "Angle"
+msgstr "Бұрыш"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:204
+msgid "Relative distance of horizon"
+msgstr "Көкжиектің салыстырмалы қашықтығы"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:205
+msgid "Relative length of shadow"
+msgstr "Көлеңкенің салыстырмалы ұзындығы"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:209
+msgid "Interpolation"
+msgstr "Интерполяция"
+
+#: plug-ins/script-fu/scripts/reverse-layers.scm:41
+msgid "Reverse Layer _Order"
+msgstr "Қабаттар _ретін кері айналдыру"
+
+#: plug-ins/script-fu/scripts/reverse-layers.scm:42
+msgid "Reverse the order of layers in the image"
+msgstr "Суреттегі қабаттардың ретін кері айналдыру"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:83
+msgid "_Rippling..."
+msgstr "_Толқындау..."
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:84
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current layer"
+msgstr ""
+"Ағымдағы қабатқа толқындау эффектісін қосу арқылы көп қабатты сурет жасау"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:90
+msgid "Ri_ppling strength"
+msgstr "Т_олқындау күші"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:91
+msgid "_Number of frames"
+msgstr "Кадрлар _саны"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
+msgid "Edge _behavior"
+msgstr "Жиек әреке_ті"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
+msgid "Wrap"
+msgstr "Орау"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
+msgid "Smear"
+msgstr "Жағу"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
+msgid "Black"
+msgstr "Қара"
+
+#: plug-ins/script-fu/scripts/round-corners.scm:134
+msgid "_Round Corners..."
+msgstr "_Бұрыштарды дөңгелектеу..."
+
+#: plug-ins/script-fu/scripts/round-corners.scm:135
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and "
+"background"
+msgstr ""
+"Суреттің бұрыштарын дөңгелектеу және қалауыңызша түсетін көлеңке мен фон "
+"қосу"
+
+#: plug-ins/script-fu/scripts/round-corners.scm:141
+msgid "Edge radius"
+msgstr "Жиек радиусы"
+
+#: plug-ins/script-fu/scripts/round-corners.scm:142
+msgid "Add drop-shadow"
+msgstr "Түсетін көлеңке қосу"
+
+#: plug-ins/script-fu/scripts/round-corners.scm:143
+msgid "Shadow X offset"
+msgstr "Көлеңкенің X ығысуы"
+
+#: plug-ins/script-fu/scripts/round-corners.scm:144
+msgid "Shadow Y offset"
+msgstr "Көлеңкенің Y ығысуы"
+
+#: plug-ins/script-fu/scripts/round-corners.scm:146
+msgid "Add background"
+msgstr "Фон қосу"
+
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+msgid "Se_t Colormap..."
+msgstr "Түстер _картасын орнату..."
+
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "Суреттің түстер картасын көрсетілген палитрадағы түстерге өзгерту."
+
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:60
+msgid "Palette"
+msgstr "Палитра"
+
+#: plug-ins/script-fu/scripts/selection-round.scm:143
+msgid "Rounded R_ectangle..."
+msgstr "Дөңгелектелген _тіктөртбұрыш..."
+
+#: plug-ins/script-fu/scripts/selection-round.scm:144
+msgid "Round the corners of the current selection"
+msgstr "Ағымдағы таңдаудың бұрыштарын дөңгелектеу"
+
+#: plug-ins/script-fu/scripts/selection-round.scm:150
+msgid "R_adius (%)"
+msgstr "_Радиус (%)"
+
+#: plug-ins/script-fu/scripts/selection-round.scm:151
+msgid "Co_ncave"
+msgstr "О_йыс"
+
+#: plug-ins/script-fu/scripts/slide.scm:257
+msgid "_Slide..."
+msgstr "_Слайд..."
+
+#: plug-ins/script-fu/scripts/slide.scm:258
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr ""
+"Суретке слайд-пленка тәрізді жақтау, тісті доңғалақ тесіктері мен белгілер "
+"қосу"
+
+#: plug-ins/script-fu/scripts/slide.scm:264
+msgid "Text"
+msgstr "Мәтін"
+
+#: plug-ins/script-fu/scripts/slide.scm:265
+msgid "Number"
+msgstr "Нөмір"
+
+#: plug-ins/script-fu/scripts/slide.scm:266
+msgid "Font"
+msgstr "Қаріп"
+
+#: plug-ins/script-fu/scripts/slide.scm:267
+msgid "Font color"
+msgstr "Қаріп түсі"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm:116
+msgid "_Spinning Globe..."
+msgstr "_Айналатын глобус..."
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm:117
+msgid ""
+"Create an animation by mapping the current image onto a spinning sphere"
+msgstr "Ағымдағы суретті айналатын сфераға орналастыру арқылы анимация жасау"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm:123
+msgid "Frames"
+msgstr "Кадрлар"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm:124
+msgid "Turn from left to right"
+msgstr "Солдан оңға бұру"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm:125
+msgid "Transparent background"
+msgstr "Мөлдір фон"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm:126
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "n түске дейін индекстеу (0 = RGB күйінде қалады)"
+
+#. Translator: this means "in the Scheme programming language" aka ScriptFu.
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:154
+msgid "Plug-In Example in _Scheme"
+msgstr "_Scheme тіліндегі плагин мысалы"
+
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:155
+msgid "Plug-in example in Scheme"
+msgstr "Scheme тіліндегі плагин мысалы"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:77
+msgid "_Tileable Blur..."
+msgstr "_Бөлшектерден құралатын бұлдырату..."
+
+#: plug-ins/script-fu/scripts/tileblur.scm:78
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr ""
+"Суреттің жиектерін бұлдырату, нәтижесінде ол үздіксіз бірігетіндей болады"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:84
+msgid "Ra_dius"
+msgstr "_Радиус"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:85
+msgid "Blur _vertically"
+msgstr "_Вертикаль бойынша бұлдырату"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:86
+msgid "Blur _horizontally"
+msgstr "_Горизонталь бойынша бұлдырату"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:87
+msgid "Blur _type"
+msgstr "Бұлдырату _түрі"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:87
+msgid "IIR"
+msgstr "IIR"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:87
+msgid "RLE"
+msgstr "RLE"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:103
+msgid "Mask size"
+msgstr "Маска өлшемі"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:104
+msgid "Mask opacity"
+msgstr "Масканың мөлдір еместігі"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:116
+msgid "_Waves..."
+msgstr "_Толқындар..."
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:117
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr ""
+"Ағымдағы суретке тас лақтырған сияқты эффектісі бар көп қабатты сурет жасау"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:123
+msgid "Amplitude"
+msgstr "Амплитуда"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:124
+msgid "Wavelength"
+msgstr "Толқын ұзындығы"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:125
+msgid "Number of frames"
+msgstr "Кадрлар саны"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:126
+msgid "Invert direction"
+msgstr "Бағытты кері айналдыру"
+
+#: plug-ins/script-fu/scripts/weave.scm:425
+msgid "_Weave..."
+msgstr "_Тоқыма..."
+
+#: plug-ins/script-fu/scripts/weave.scm:426
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr ""
+"Үстіне жабу немесе рельеф картасы ретінде пайдалану үшін тоқыма "
+"эффектісімен толтырылған жаңа қабат жасау"
+
+#: plug-ins/script-fu/scripts/weave.scm:432
+msgid "Ribbon width"
+msgstr "Таспа ені"
+
+#: plug-ins/script-fu/scripts/weave.scm:433
+msgid "Ribbon spacing"
+msgstr "Таспа арақашықтығы"
+
+#: plug-ins/script-fu/scripts/weave.scm:434
+msgid "Shadow darkness"
+msgstr "Көлеңке қараңғылығы"
+
+#: plug-ins/script-fu/scripts/weave.scm:435
+msgid "Shadow depth"
+msgstr "Көлеңке тереңдігі"
+
+#: plug-ins/script-fu/scripts/weave.scm:436
+msgid "Thread length"
+msgstr "Жіп ұзындығы"
+
+#: plug-ins/script-fu/scripts/weave.scm:437
+msgid "Thread density"
+msgstr "Жіп тығыздығы"
+
+#: plug-ins/script-fu/scripts/weave.scm:438
+msgid "Thread intensity"
+msgstr "Жіп қарқындылығы"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:90
+msgid "Shadow"
+msgstr "Көлеңке"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:123
+msgid "_Xach-Effect..."
+msgstr "_Xach-эффектісі..."
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:124
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr ""
+"Таңдалған аймаққа (немесе альфаға) нәзік жартылай мөлдір 3D эффектісін қосу"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:130
+msgid "Highlight X offset"
+msgstr "Жарық бөліктің X ығысуы"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:131
+msgid "Highlight Y offset"
+msgstr "Жарық бөліктің Y ығысуы"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:132
+msgid "Highlight color"
+msgstr "Жарық бөлік түсі"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:133
+msgid "Highlight opacity"
+msgstr "Жарық бөліктің мөлдір еместігі"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:134
+msgid "Drop shadow color"
+msgstr "Түсетін көлеңкенің түсі"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:135
+msgid "Drop shadow opacity"
+msgstr "Түсетін көлеңкенің мөлдір еместігі"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:136
+msgid "Drop shadow blur radius"
+msgstr "Түсетін көлеңкенің бұлдырату радиусы"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:137
+msgid "Drop shadow X offset"
+msgstr "Түсетін көлеңкенің X ығысуы"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:138
+msgid "Drop shadow Y offset"
+msgstr "Түсетін көлеңкенің Y ығысуы"
