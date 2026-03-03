@@ -10,8 +10,8 @@ are all versioned anyway, it is possible to keep your older GIMP 2.x
 installation in parallel to GIMP @GIMP_APP_VERSION@ on a same prefix.
 
 GIMP @GIMP_APP_VERSION@ is not backward compatible with GIMP 2 and earlier versions.
-Plug-ins and scripts written for GIMP 2.10, 2.8, 2.6 or earlier GIMP 2.x versions
-will not work because the API changed in GIMP 3.0.
+Plug-ins and scripts written for GIMP 2.10, 2.8, 2.6 or earlier
+versions will not work because the API changed in GIMP 3.0.
 
 The most important part is to make sure the requirements for a build
 are fulfilled. We depend on a number of tools and libraries which are
@@ -341,8 +341,8 @@ packages are included below. Here is an illustration of commands that
 might be used to build and install GIMP. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvf gimp-@GIMP_VERSION@.tar.xz   # unpack the sources
-  % cd gimp-@GIMP_VERSION@               # change to the toplevel directory
+  % tar xvf gimp-@GIMP_VERSION@.tar.xz       # unpack the sources
+  % cd gimp-@GIMP_VERSION@                   # change to the toplevel directory
   % meson setup _build              # `configure' step
   % ninja -C _build                 # build GIMP
   % ninja -C _build install         # install GIMP
@@ -465,7 +465,7 @@ will very likely tell you the exact problem.
 A detailed log of the meson output is written to the file meson-logs/meson-log.txt.
 This may help diagnose problems.
 
-The configuration step verify that various tools are installed, such as:
+The configuration step verifies that various tools are installed, such as:
 C and C++ compilers, pkg-config or pkgconf (tools that replaces the old
 foo-config scripts), and more. Make sure these are installed.
 
