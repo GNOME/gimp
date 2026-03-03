@@ -770,11 +770,6 @@ dialogs_attach_native_dialog (GObject         *attach_object,
   g_object_set_data (attach_object, attach_key, dialog);
   g_object_set_data (G_OBJECT (dialog), "gimp-dialogs-attach-key",
                      (gpointer) attach_key);
-
-  g_signal_connect_object (dialog, "destroy",
-                           G_CALLBACK (dialogs_detach_native_dialog),
-                           attach_object,
-                           G_CONNECT_SWAPPED);
 }
 
 void
@@ -784,7 +779,7 @@ dialogs_detach_native_dialog (GObject         *attach_object,
   const gchar *attach_key;
 
   g_return_if_fail (G_IS_OBJECT (attach_object));
-  g_return_if_fail (GTK_IS_WIDGET (dialog));
+  g_return_if_fail (GTK_IS_NATIVE_DIALOG (dialog));
 
   attach_key = g_object_get_data (G_OBJECT (dialog),
                                   "gimp-dialogs-attach-key");

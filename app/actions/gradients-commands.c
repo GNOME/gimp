@@ -90,11 +90,6 @@ gradients_save_as_pov_ray_cmd_callback (GimpAction *action,
                         G_CALLBACK (gradients_save_as_pov_ray_response),
                         gradient);
 
-      g_signal_connect_object (dialog, "destroy",
-                               G_CALLBACK (g_object_unref),
-                               g_object_ref (gradient),
-                               G_CONNECT_SWAPPED);
-
       dialogs_attach_native_dialog (G_OBJECT (gradient),
                                     SAVE_AS_POV_DIALOG_KEY,
                                     GTK_NATIVE_DIALOG (dialog));
@@ -129,5 +124,6 @@ gradients_save_as_pov_ray_response (GtkNativeDialog *dialog,
       g_object_unref (file);
     }
 
+  dialogs_detach_native_dialog (G_OBJECT (gradient), dialog);
   gtk_native_dialog_destroy (dialog);
 }
