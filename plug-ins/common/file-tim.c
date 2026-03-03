@@ -1,7 +1,7 @@
 /*   GIMP - The GNU Image Manipulation Program
  *   Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- *   Sony Playstation TIM graphics plug-in
+ *   Sony PlayStation TIM graphics plug-in
  *
  *   Copyright (C) 2025 Alex S.
  *
@@ -170,11 +170,11 @@ tim_create_procedure (GimpPlugIn  *plug_in,
                                            tim_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure,
-                                     _("Playstation TIM image"));
+                                     _("PlayStation TIM image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Load file in the TIM file format"),
-                                        _("Load file in the Sony Playstation "
+                                        _("Loads file in the TIM file format"),
+                                        _("Loads file in the Sony PlayStation "
                                           "TIM file format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
@@ -193,11 +193,11 @@ tim_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*, INDEXED*");
 
-      gimp_procedure_set_menu_label (procedure, _("Playstation TIM image"));
+      gimp_procedure_set_menu_label (procedure, _("PlayStation TIM image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Saves files in the TIM file format"),
-                                        _("Saves files in the Playstation TIM "
+                                        _("Exports files in the TIM file format"),
+                                        _("Exports files in the PlayStation TIM "
                                           "file format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
@@ -205,9 +205,9 @@ tim_create_procedure (GimpPlugIn  *plug_in,
                                       "Andrew Kieschnick <andrewk@mail.utexas.edu>",
                                       "1998");
 
-      gimp_procedure_set_menu_label (procedure, _("Playstation TIM image"));
+      gimp_procedure_set_menu_label (procedure, _("PlayStation TIM image"));
       gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
-                                           "Playstation TIM image");
+                                           "PlayStation TIM image");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "tim");
 
