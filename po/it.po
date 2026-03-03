@@ -51,7 +51,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-14 16:58+0100\n"
-"PO-Revision-Date: 2026-02-14 17:00+0100\n"
+"PO-Revision-Date: 2026-03-03 09:03+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -27658,7 +27658,7 @@ msgstr "Dimensione fisica della memoria"
 #: ../app/widgets/gimpdashboard.c:704
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
-msgstr "Mipmap"
+msgstr "Mipmappata"
 
 #: ../app/widgets/gimpdashboard.c:705
 msgid "Total size of processed mipmapped data"

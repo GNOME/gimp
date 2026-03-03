@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-02 17:21+0100\n"
-"PO-Revision-Date: 2026-03-01 00:50+0100\n"
+"PO-Revision-Date: 2026-03-03 09:02+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -9645,11 +9645,11 @@ msgstr "Carica file in formato immagine DDS"
 
 #: ../plug-ins/file-dds/dds.c:149
 msgid "Load _mipmaps"
-msgstr "Carica _mipmaps"
+msgstr "Carica _mipmap"
 
 #: ../plug-ins/file-dds/dds.c:150
 msgid "Load mipmaps if present"
-msgstr "Carica mipmaps se presenti"
+msgstr "Carica mipmap se presenti"
 
 #: ../plug-ins/file-dds/dds.c:155
 msgid "Flip image _vertically"
@@ -9845,23 +9845,23 @@ msgstr ""
 
 #: ../plug-ins/file-dds/dds.c:273
 msgid "_Mipmaps"
-msgstr "_Mipmaps"
+msgstr "_Mipmap"
 
 #: ../plug-ins/file-dds/dds.c:274
 msgid "How to handle mipmaps"
-msgstr "Come gestire le mipmaps"
+msgstr "Come gestire le mipmap"
 
 #: ../plug-ins/file-dds/dds.c:275
 msgid "No mipmaps"
-msgstr "No mipmaps"
+msgstr "Nessuna mipmap"
 
 #: ../plug-ins/file-dds/dds.c:276
 msgid "Generate mipmaps"
-msgstr "Genera mipmaps"
+msgstr "Genera mipmap"
 
 #: ../plug-ins/file-dds/dds.c:277
 msgid "Use existing mipmaps"
-msgstr "Usa mipmaps esistenti"
+msgstr "Usa mipmap esistenti"
 
 #: ../plug-ins/file-dds/dds.c:283
 msgid "F_ilter"
@@ -9869,7 +9869,7 @@ msgstr "F_iltro"
 
 #: ../plug-ins/file-dds/dds.c:284
 msgid "Filtering to use when generating mipmaps"
-msgstr "Filtro da usare quando si generano le mipmaps"
+msgstr "Filtro da usare quando si generano le mipmap"
 
 #: ../plug-ins/file-dds/dds.c:286
 msgid "Nearest"
@@ -9913,7 +9913,7 @@ msgstr "_Modalità a capo"
 
 #: ../plug-ins/file-dds/dds.c:301
 msgid "Wrap mode to use when generating mipmaps"
-msgstr "Modalità a capo quando si generano le mipmaps"
+msgstr "Modalità a capo quando si generano le mipmap"
 
 #: ../plug-ins/file-dds/dds.c:303
 msgid "Mirror"
@@ -9933,7 +9933,7 @@ msgstr "Appl_ica correzione gamma"
 
 #: ../plug-ins/file-dds/dds.c:312
 msgid "Use gamma correct mipmap filtering"
-msgstr "Usa il filtro mipmaps correzione gamma"
+msgstr "Usa il filtro mipmap correzione gamma"
 
 #: ../plug-ins/file-dds/dds.c:317
 msgid "Use sRG_B colorspace"
