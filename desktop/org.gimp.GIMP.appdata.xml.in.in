@@ -80,6 +80,93 @@
   </provides>
 
   <releases>
+    <release version="3.2.0" date="TODO">
+      <url type="details">https://www.gimp.org/release/3.2.0/</url>
+      <description>
+        <p>
+        GIMP 3.2.0 brings fancy new layer types, hence carrying on its non-destructive
+        abilities, all the while strengthening the groundwork from the 3.0 series.
+        Some of the highlights of this release:
+        </p>
+        <ul>
+          <li demo="toolbox:path,
+                    tool-options:create-new-vector-layer-button">
+          New type of layers: vector layers.
+          </li>
+          <li>
+          New type of layers: link layers.
+          </li>
+          <li>Text, link or vector layer must now be explicitly rasterized for direct pixel edits</li>
+
+          <li demo="toolbox:pencil,
+                    tool-options:paint-mode">
+          New paint mode "Overwrite"
+          </li>
+          <li demo="toolbox:flip">
+          The Flip tool can now be controlled with arrow keys
+          </li>
+          <li demo="toolbox:shear">
+          The Shear tool can now be adjusted with arrow keys
+          </li>
+          <li demo="toolbox:mypaint-brush,
+                    tool-options:gain">
+          MyPaint brushes version 2 are now supported, with new "Gain" setting
+          </li>
+          <li demo="toolbox:mypaint-brush">
+          The MyPaint Brushes tool now supports stylus barrel rotation on relevant brushes
+          </li>
+          <li demo="toolbox:text,
+                    tool-options:outline=1,
+                    tool-options:outline-direction">
+          Text tool: new "Outline Direction" option
+          </li>
+          <li demo="toolbox:text">
+          New "Paste unformatted text" action in text tool
+          </li>
+
+          <li>Dragging a file to the image tab bar opens the file as a new image</li>
+          <li>New "System" color scheme</li>
+
+          <li>New "Edit mask immediately" checkbox in "Add Layer Mask" dialog</li>
+          <li demo="layer-list,
+                    layer-list:layers-delete">
+          The Delete button in Layers dialog will delete the layer mask if selected
+          </li>
+
+          <li>The DDS plug-in now supports exporting in BC7 format</li>
+          <li>PDF format export will export vector layer as paths</li>
+          <li>The OpenEXR plug-in can now import Luminance/Chroma OpenEXR images</li>
+          <li>TIFF support improved to handle various unofficial features set by third-party software</li>
+          <li>PSD's legacy Drop Shadow and Inner Shadow filters now imported</li>
+          <li>Outer Glow layer style can now be imported from PSD files (converted as drop shadow, replicating the effect)</li>
+          <li>Image format import newly supported: APNG, AVCI, JIF, PlayStation TIM, OTA bitmap, PAA textures, Seattle Filmworks photos and HRZ Slow Scan Television Images, hgt.zip</li>
+          <li>Image format export newly supported: JPEG 2000, HEJ2, PlayStation TIM, PSB, SVG</li>
+          <li>ART is now supported as a RAW loader</li>
+
+          <li demo="toolbox:curves">
+          Photoshop's curves files (.acv) and levels files (.alv) can be loaded from the Curves and Levels tools respectively
+          </li>
+          <li>Photoshop's RGB and grayscale pattern files now supported</li>
+          <li>Palettes can now be exported as Krita's palettes (.kpl)</li>
+          <li>Palette swatches from the Procreate art program can now be imported</li>
+
+          <li>Support for many more image file formats improved</li>
+
+          <li>The Welcome dialog will now recognize your standard shortcuts to create or open files</li>
+          <li demo="histogram-editor,histogram-editor:toggle-compute-unique-colors">
+          New checkbox "Compute unique colors" on Histogram dockable
+          </li>
+          <li demo="color-editor,color-editor:CMYK=1,color-editor:total-ink-coverage">
+          Total Ink Coverage now displayed in the CMYK color selector
+          </li>
+
+          <li>A new GEGL Filter Browser was added</li>
+
+          <li>Many new API for text, vector and link layers for plug-in developers</li>
+          <li>Various fixes and usability updates</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.2.0~rc3" date="2026-03-02" type="development">
       <url type="details">https://www.gimp.org/release/3.2.0-RC3/</url>
       <description>
@@ -105,7 +192,7 @@
           <li>The DDS plug-in now supports exporting in BC7 format</li>
           <li>The OpenEXR plug-in can now import Luminance/Chroma OpenEXR images</li>
           <li>Palette swatches from the Procreate art program can now be imported</li>
-          <li>Swatchbooker paletter support was improved with better color management</li>
+          <li>Swatchbooker palette support was improved with better color management</li>
           <li>Several libgimp functions deprecated in favor of using the filter API directly</li>
           <li>Various fixes and usability updates</li>
         </ul>
@@ -148,7 +235,7 @@
           New "Paste unformatted text" action in text tool
           </li>
           <li>Dragging a file to the image tab bar opens the file as a new image</li>
-          <li>New "Edit mask immediately" checkbox in "Edit Layer Mask" dialog</li>
+          <li>New "Edit mask immediately" checkbox in "Add Layer Mask" dialog</li>
           <li>Filters on a pass-through group layer are no longer limited to its children's bounding box</li>
           <li>Import of hgt.zip format added</li>
           <li>Export of SVG format added</li>
