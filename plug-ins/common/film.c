@@ -386,7 +386,6 @@ film_run (GimpProcedure        *procedure,
           GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
           gimp_image_undo_enable (image);
-          gimp_image_clean_all (image);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_display_new (image);
