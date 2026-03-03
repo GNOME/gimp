@@ -135,9 +135,9 @@ ascii_create_procedure (GimpPlugIn  *plug_in,
                                            _("ASCII art"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Saves grayscale image in various "
+                                        _("Exports grayscale image in various "
                                           "text formats"),
-                                        _("This plug-in uses aalib to save "
+                                        _("This plug-in uses aalib to export "
                                           "grayscale image as ascii art into "
                                           "a variety of text formats"),
                                         name);

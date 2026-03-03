@@ -117,9 +117,9 @@ header_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("C source code header"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Saves files as C unsigned character "
+                                        _("Exports files as C unsigned character "
                                           "array"),
-                                        "FIXME: write help",
+                                        NULL,
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis",

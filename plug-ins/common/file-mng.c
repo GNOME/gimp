@@ -256,8 +256,8 @@ mng_create_procedure (GimpPlugIn  *plug_in,
                                            _("MNG"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Saves images in the MNG file format"),
-                                        _("This plug-in saves images in the "
+                                        _("Exports images in the MNG file format"),
+                                        _("This plug-in exports images in the "
                                           "Multiple-image Network Graphics (MNG) "
                                           "format which can be used as a "
                                           "replacement for animated GIFs, and "

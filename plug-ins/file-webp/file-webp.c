@@ -155,8 +155,8 @@ webp_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("WebP image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Saves files in the WebP image format"),
-                                        _("Saves files in the WebP image format"),
+                                        _("Exports files in the WebP image format"),
+                                        _("Exports files in the WebP image format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Nathan Osman, Ben Touchette",
@@ -246,7 +246,7 @@ webp_create_procedure (GimpPlugIn  *plug_in,
                                            G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "animation",
-                                           _("Save a_nimation"),
+                                           _("Export a_nimation"),
                                            _("Use layers for animation"),
                                            FALSE,
                                            G_PARAM_READWRITE);

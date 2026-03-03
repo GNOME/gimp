@@ -119,13 +119,13 @@ static const FileFormat file_formats[] =
     "0,string,#?",
 
     "file-rgbe-load",
-    "Load files in the RGBE file format",
-    "This procedure loads images in the RGBE format, using gegl:rgbe-load",
+    N_("Loads files in the RGBE file format"),
+    N_("This procedure loads images in the RGBE format, using \"gegl:rgbe-load\""),
     "gegl:rgbe-load",
 
     "file-rgbe-export",
-    "Saves files in the RGBE file format",
-    "This procedure exports images in the RGBE format, using gegl:rgbe-save",
+    N_("Exports files in the RGBE file format"),
+    N_("This procedure exports images in the RGBE format, using \"gegl:rgbe-save\""),
     "gegl:rgbe-save",
   },
   {
@@ -138,8 +138,8 @@ static const FileFormat file_formats[] =
     NULL, NULL, NULL, NULL,
 
     "file-exr-export",
-    "Saves files in the OpenEXR file format",
-    "This procedure saves images in the OpenEXR format, using gegl:exr-save",
+    N_("Exports files in the OpenEXR file format"),
+    N_("This procedure exports images in the OpenEXR format, using \"gegl:exr-save\""),
     "gegl:exr-save"
   }
 };
@@ -201,8 +201,8 @@ goat_create_procedure (GimpPlugIn  *plug_in,
           gimp_procedure_set_menu_label (procedure, _(format->file_type));
 
           gimp_procedure_set_documentation (procedure,
-                                            format->load_blurb,
-                                            format->load_help,
+                                            _(format->load_blurb),
+                                            _(format->load_help),
                                             name);
 
           gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
@@ -224,8 +224,8 @@ goat_create_procedure (GimpPlugIn  *plug_in,
           gimp_procedure_set_menu_label (procedure, _(format->file_type));
 
           gimp_procedure_set_documentation (procedure,
-                                            format->export_blurb,
-                                            format->export_help,
+                                            _(format->export_blurb),
+                                            _(format->export_help),
                                             name);
 
           gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),

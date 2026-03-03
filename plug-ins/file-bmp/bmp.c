@@ -182,8 +182,8 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
                                            _("BMP"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Saves files in Windows BMP file format"),
-                                        _("Saves files in Windows BMP file format"),
+                                        _("Exports files in Windows BMP file format"),
+                                        _("Exports files in Windows BMP file format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Alexander Schulz",

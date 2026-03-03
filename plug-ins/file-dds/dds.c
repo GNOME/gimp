@@ -171,8 +171,8 @@ dds_create_procedure (GimpPlugIn  *plug_in,
 
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Saves files in DDS image format"),
-                                        _("Saves files in DDS image format"),
+                                        _("Exports files in DDS image format"),
+                                        _("Exports files in DDS image format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Shawn Kirst",
@@ -241,7 +241,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_add_choice_argument (procedure, "save-type",
                                           _("Sav_e type"),
-                                          _("How to save the image"),
+                                          _("How to export the image"),
                                           gimp_choice_new_with_values ("layer",  DDS_SAVE_SELECTED_LAYER, _("Selected layer"),     NULL,
                                                                        "canvas", DDS_SAVE_VISIBLE_LAYERS, _("All visible layers"), NULL,
                                                                        "cube",   DDS_SAVE_CUBEMAP,        _("As cube map"),        NULL,

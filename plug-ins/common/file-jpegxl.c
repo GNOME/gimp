@@ -168,8 +168,8 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("JPEG XL image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Saves files in the JPEG XL file format"),
-                                        _("Saves files in the JPEG XL file format"),
+                                        _("Exports files in the JPEG XL file format"),
+                                        _("Exports files in the JPEG XL file format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Daniel Novomesky",

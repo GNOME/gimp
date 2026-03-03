@@ -178,8 +178,8 @@ icns_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,
-                                        "Saves files in Apple Icon Image file format",
-                                        "Saves files in Apple Icon Image file format",
+                                        "Exports files in Apple Icon Image file format",
+                                        "Exports files in Apple Icon Image file format",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Brion Vibber <brion@pobox.com>",
