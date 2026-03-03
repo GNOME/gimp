@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-02-28 13:15+0000\n"
-"PO-Revision-Date: 2026-03-02 22:30+0500\n"
+"POT-Creation-Date: 2026-02-28 13:06+0000\n"
+"PO-Revision-Date: 2026-03-03 21:09+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
@@ -22,7 +22,8 @@ msgstr ""
 msgid "_Browse..."
 msgstr "_Шолу..."
 
-#: libgimp/gimpdrawablechooser.c:238
+#: libgimp/gimpdrawablechooser.c:240 libgimp/gimpimagechooser.c:218
+#: libgimp/gimpitemchooser.c:237
 msgid "Browse..."
 msgstr "Шолу..."
 
@@ -171,60 +172,60 @@ msgstr "Қабаттарды қиып алу"
 msgid "Resize Image to Layers"
 msgstr "Сурет өлшемін қабаттарға дейін өзгерту"
 
-#: libgimp/gimpexportprocedure.c:550
+#: libgimp/gimpexportprocedure.c:553
 msgid "Save _Exif"
 msgstr "_Exif сақтау"
 
-#: libgimp/gimpexportprocedure.c:551
+#: libgimp/gimpexportprocedure.c:554
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Exif (Exchangeable image file format) метадеректерін сақтау"
 
-#: libgimp/gimpexportprocedure.c:559
+#: libgimp/gimpexportprocedure.c:562
 msgid "Save _IPTC"
 msgstr "_IPTC сақтау"
 
-#: libgimp/gimpexportprocedure.c:560
+#: libgimp/gimpexportprocedure.c:563
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
 "IPTC (International Press Telecommunications Council) метадеректерін сақтау"
 
-#: libgimp/gimpexportprocedure.c:568
+#: libgimp/gimpexportprocedure.c:571
 msgid "Save _XMP"
 msgstr "_XMP сақтау"
 
-#: libgimp/gimpexportprocedure.c:569
+#: libgimp/gimpexportprocedure.c:572
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "XMP (Extensible Metadata Platform) метадеректерін сақтау"
 
-#: libgimp/gimpexportprocedure.c:577
+#: libgimp/gimpexportprocedure.c:580
 msgid "Save color _profile"
 msgstr "Түс п_рофилін сақтау"
 
-#: libgimp/gimpexportprocedure.c:578
+#: libgimp/gimpexportprocedure.c:581
 msgid "Save the ICC color profile as metadata"
 msgstr "ICC түс профилін метадерек ретінде сақтау"
 
-#: libgimp/gimpexportprocedure.c:586
+#: libgimp/gimpexportprocedure.c:589
 msgid "Save _thumbnail"
 msgstr "_Нобайды сақтау"
 
-#: libgimp/gimpexportprocedure.c:587
+#: libgimp/gimpexportprocedure.c:590
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Суреттің кішірейтілген көшірмесін метадерек ретінде сақтау"
 
-#: libgimp/gimpexportprocedure.c:595
+#: libgimp/gimpexportprocedure.c:598
 msgid "Save c_omment"
 msgstr "_Пікірді сақтау"
 
-#: libgimp/gimpexportprocedure.c:596
+#: libgimp/gimpexportprocedure.c:599
 msgid "Save a comment as metadata"
 msgstr "Пікірді метадерек ретінде сақтау"
 
-#: libgimp/gimpexportprocedure.c:600
+#: libgimp/gimpexportprocedure.c:603
 msgid "Comment"
 msgstr "Пікір"
 
-#: libgimp/gimpexportprocedure.c:601
+#: libgimp/gimpexportprocedure.c:604
 msgid "Image comment"
 msgstr "Сурет пікірі"
 
@@ -250,11 +251,11 @@ msgstr "Суретті %s ретінде экспорттау"
 msgid "Background"
 msgstr "Фон"
 
-#: libgimp/gimpimagemetadata-save.c:833 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:851 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:449
+#: libgimp/gimploadprocedure.c:276 libgimp/gimpvectorloadprocedure.c:448
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -316,58 +317,58 @@ msgid "by type"
 msgstr "түрі бойынша"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:358 libgimp/gimpprocbrowserdialog.c:516
-#: libgimpwidgets/gimpbrowser.c:161
+#: libgimp/gimpprocbrowserdialog.c:356 libgimp/gimpprocbrowserdialog.c:514
+#: libgimpwidgets/gimpbrowser.c:165
 msgid "No matches"
 msgstr "Сәйкестіктер жоқ"
 
-#: libgimp/gimpprocbrowserdialog.c:361
+#: libgimp/gimpprocbrowserdialog.c:359
 msgid "Search term invalid or incomplete"
 msgstr "Іздеу термині қате немесе толық емес"
 
-#: libgimp/gimpprocbrowserdialog.c:370
+#: libgimp/gimpprocbrowserdialog.c:368
 msgid "Searching"
 msgstr "Ізделуде"
 
-#: libgimp/gimpprocbrowserdialog.c:382
+#: libgimp/gimpprocbrowserdialog.c:380
 msgid "Searching by name"
 msgstr "Аты бойынша ізделуде"
 
-#: libgimp/gimpprocbrowserdialog.c:403
+#: libgimp/gimpprocbrowserdialog.c:401
 msgid "Searching by description"
 msgstr "Сипаттамасы бойынша ізделуде"
 
-#: libgimp/gimpprocbrowserdialog.c:411
+#: libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by help"
 msgstr "Көмек бойынша ізделуде"
 
-#: libgimp/gimpprocbrowserdialog.c:419
+#: libgimp/gimpprocbrowserdialog.c:417
 msgid "Searching by authors"
 msgstr "Авторлар бойынша ізделуде"
 
-#: libgimp/gimpprocbrowserdialog.c:427
+#: libgimp/gimpprocbrowserdialog.c:425
 msgid "Searching by copyright"
 msgstr "Авторлық құқық бойынша ізделуде"
 
-#: libgimp/gimpprocbrowserdialog.c:435
+#: libgimp/gimpprocbrowserdialog.c:433
 msgid "Searching by date"
 msgstr "Күні бойынша ізделуде"
 
-#: libgimp/gimpprocbrowserdialog.c:443
+#: libgimp/gimpprocbrowserdialog.c:441
 msgid "Searching by type"
 msgstr "Түрі бойынша ізделуде"
 
-#: libgimp/gimpprocbrowserdialog.c:456
+#: libgimp/gimpprocbrowserdialog.c:454
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d процедура"
 
-#: libgimp/gimpprocbrowserdialog.c:465
+#: libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "Сұранысыңызға сәйкес ештеңе табылмады"
 
-#: libgimp/gimpprocbrowserdialog.c:469
+#: libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -473,31 +474,31 @@ msgstr "Баптауларды _сақтау"
 msgid "Store current settings for later reuse"
 msgstr "Ағымдағы баптауларды кейін қайта пайдалану үшін сақтау"
 
-#: libgimp/gimpproceduredialog.c:892
+#: libgimp/gimpproceduredialog.c:908
 msgid "Brush Chooser"
 msgstr "Қылқалам таңдаушы"
 
-#: libgimp/gimpproceduredialog.c:896
+#: libgimp/gimpproceduredialog.c:912
 msgid "Font Chooser"
 msgstr "Қаріп таңдаушы"
 
-#: libgimp/gimpproceduredialog.c:900
+#: libgimp/gimpproceduredialog.c:916
 msgid "Gradient Chooser"
 msgstr "Градиент таңдаушы"
 
-#: libgimp/gimpproceduredialog.c:904
+#: libgimp/gimpproceduredialog.c:920
 msgid "Palette Chooser"
 msgstr "Палитра таңдаушы"
 
-#: libgimp/gimpproceduredialog.c:908
+#: libgimp/gimpproceduredialog.c:924
 msgid "Pattern Chooser"
 msgstr "Өрнек таңдаушы"
 
-#: libgimp/gimpproceduredialog.c:2688
+#: libgimp/gimpproceduredialog.c:2841
 msgid "Reset to _Initial Values"
 msgstr "Бас_тапқы мәндерге тастау"
 
-#: libgimp/gimpproceduredialog.c:2697
+#: libgimp/gimpproceduredialog.c:2850
 msgid "Reset to _Factory Defaults"
 msgstr "Зауыттық бап_тауларға тастау"
 
@@ -537,17 +538,32 @@ msgstr "Күні:"
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: libgimp/gimppropwidgets.c:191
+#: libgimp/gimppropwidgets.c:190
+#, c-format
+msgid "Choose image: %s"
+msgstr "Суретті таңдау: %s"
+
+#: libgimp/gimppropwidgets.c:251 libgimp/gimppropwidgets.c:321
 #, c-format
 msgid "Choose layer: %s"
 msgstr "Қабатты таңдау: %s"
 
-#: libgimp/gimppropwidgets.c:193
+#: libgimp/gimppropwidgets.c:253 libgimp/gimppropwidgets.c:323
 #, c-format
 msgid "Choose channel: %s"
 msgstr "Арнаны таңдау: %s"
 
-#: libgimp/gimppropwidgets.c:195
+#: libgimp/gimppropwidgets.c:255
+#, c-format
+msgid "Choose path: %s"
+msgstr "Жолды таңдау: %s"
+
+#: libgimp/gimppropwidgets.c:257
+#, c-format
+msgid "Choose item: %s"
+msgstr "Элементті таңдау: %s"
+
+#: libgimp/gimppropwidgets.c:325
 #, c-format
 msgid "Choose drawable: %s"
 msgstr "Сурет нысанын таңдау: %s"
@@ -561,12 +577,12 @@ msgstr ""
 "көрсету үшін қолданылады"
 
 #: libgimp/gimpresolutionentry-private.c:144
-#: libgimp/gimpvectorloadprocedure.c:125
+#: libgimp/gimpvectorloadprocedure.c:126
 msgid "_Keep aspect ratio"
 msgstr "Жақтар арақатынасын _сақтау"
 
 #: libgimp/gimpresolutionentry-private.c:145
-#: libgimp/gimpvectorloadprocedure.c:126
+#: libgimp/gimpvectorloadprocedure.c:127
 msgid "Force dimensions with aspect ratio"
 msgstr "Өлшемдерді қатынасты сақтай отырып мәжбүрлеу"
 
@@ -576,50 +592,50 @@ msgstr "Өлшемдерді қатынасты сақтай отырып мәж
 msgid "pixels/%a"
 msgstr "пиксель/%a"
 
-#: libgimp/gimpvectorloadprocedure.c:111
+#: libgimp/gimpvectorloadprocedure.c:112
 msgid "_Width (pixels)"
 msgstr "_Ені (пиксель)"
 
-#: libgimp/gimpvectorloadprocedure.c:118
+#: libgimp/gimpvectorloadprocedure.c:119
 msgid "_Height (pixels)"
 msgstr "_Биіктігі (пиксель)"
 
-#: libgimp/gimpvectorloadprocedure.c:130
+#: libgimp/gimpvectorloadprocedure.c:131
 msgid "_Prefer native dimensions"
 msgstr "_Өзіндік өлшемдерді қолдану"
 
-#: libgimp/gimpvectorloadprocedure.c:131
+#: libgimp/gimpvectorloadprocedure.c:132
 msgid "Load and use dimensions from source file"
 msgstr "Өлшемдерді бастапқы файлдан жүктеп алу және қолдану"
 
-#: libgimp/gimpvectorloadprocedure.c:143
+#: libgimp/gimpvectorloadprocedure.c:142
 msgid "Resolu_tion"
 msgstr "Ажыраты_мдылық"
 
-#: libgimp/gimpvectorloadprocedure.c:144
+#: libgimp/gimpvectorloadprocedure.c:143
 msgid "Pixel Density: number of pixels per physical unit"
 msgstr "Пиксель тығыздығы: физикалық юнитке келетін пиксельдер саны"
 
-#: libgimp/gimpvectorloadprocedure.c:149
+#: libgimp/gimpvectorloadprocedure.c:148
 msgid "Unit"
 msgstr "Өлшем бірлігі"
 
-#: libgimp/gimpvectorloadprocedure.c:150
+#: libgimp/gimpvectorloadprocedure.c:149
 msgid "Physical unit"
 msgstr "Физикалық өлшем бірлігі"
 
-#: libgimp/gimpvectorloadprocedure.c:372
+#: libgimp/gimpvectorloadprocedure.c:371
 msgid ""
 "dimensions could neither be extracted nor computed from the vector image's "
 "data."
 msgstr ""
 "векторлық сурет деректерінен өлшемдерді алу немесе есептеу мүмкін болмады."
 
-#: libgimp/gimpvectorloadprocedure.c:377
+#: libgimp/gimpvectorloadprocedure.c:376
 msgid "Vector image loading plug-in failed: "
 msgstr "Векторлық суретті жүктеу плагині сәтсіз аяқталды: "
 
-#: libgimp/gimpvectorloadprocedure.c:401
+#: libgimp/gimpvectorloadprocedure.c:400
 msgid ""
 "Dimensions cannot be 0 and no native dimensions could be extracted from the "
 "vector image."
@@ -1651,76 +1667,106 @@ msgid "Filled"
 msgstr "Толтыру"
 
 #: libgimpbase/gimpbaseenums.c:1804
+msgctxt "text-outline"
+msgid "Filled"
+msgstr "Толтырылған"
+
+#: libgimpbase/gimpbaseenums.c:1805
+msgctxt "text-outline"
+msgid "Outlined"
+msgstr "Жиектелген"
+
+#: libgimpbase/gimpbaseenums.c:1806
+msgctxt "text-outline"
+msgid "Outlined and filled"
+msgstr "Жиектелген және толтырылған"
+
+#: libgimpbase/gimpbaseenums.c:1836
+msgctxt "text-outline-direction"
+msgid "Outer"
+msgstr "Сыртқы"
+
+#: libgimpbase/gimpbaseenums.c:1837
+msgctxt "text-outline-direction"
+msgid "Inner"
+msgstr "Ішкі"
+
+#: libgimpbase/gimpbaseenums.c:1838
+msgctxt "text-outline-direction"
+msgid "Centered"
+msgstr "Ортасы бойынша"
+
+#: libgimpbase/gimpbaseenums.c:1868
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Көлеңкелер"
 
-#: libgimpbase/gimpbaseenums.c:1805
+#: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Орташа түстер"
 
-#: libgimpbase/gimpbaseenums.c:1806
+#: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Ерекшелеу"
 
-#: libgimpbase/gimpbaseenums.c:1835
+#: libgimpbase/gimpbaseenums.c:1899
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Қалыпты (Алға)"
 
-#: libgimpbase/gimpbaseenums.c:1836
+#: libgimpbase/gimpbaseenums.c:1900
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Түзету (Артқа)"
 
-#: libgimpbase/gimpbaseenums.c:1867
+#: libgimpbase/gimpbaseenums.c:1931
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Келтіру"
 
-#: libgimpbase/gimpbaseenums.c:1868
+#: libgimpbase/gimpbaseenums.c:1932
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Қию"
 
-#: libgimpbase/gimpbaseenums.c:1869
+#: libgimpbase/gimpbaseenums.c:1933
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Нәтижеге дейін қию"
 
-#: libgimpbase/gimpbaseenums.c:1870
+#: libgimpbase/gimpbaseenums.c:1934
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Қатынасты сақтай отырып қию"
 
-#: libgimpbase/gimpmetadata.c:1218
+#: libgimpbase/gimpmetadata.c:1223
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Метадеректерді тек жергілікті файлдардан жүктеуге болады"
 
-#: libgimpbase/gimpmetadata.c:1274
+#: libgimpbase/gimpmetadata.c:1279
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Метадеректерді тек жергілікті файлдарға сақтауға болады"
 
-#: libgimpbase/gimpmetadata.c:1323
+#: libgimpbase/gimpmetadata.c:1328
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Exif деректер өлшемі жарамсыз."
 
-#: libgimpbase/gimpmetadata.c:1368
+#: libgimpbase/gimpmetadata.c:1373
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Exif деректерін талдау сәтсіз аяқталды."
 
-#: libgimpbase/gimpmetadata.c:1420
+#: libgimpbase/gimpmetadata.c:1425
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "IPTC деректерін талдау сәтсіз аяқталды."
 
-#: libgimpbase/gimpmetadata.c:1468
+#: libgimpbase/gimpmetadata.c:1473
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "XMP деректерін талдау сәтсіз аяқталды."
@@ -1755,32 +1801,32 @@ msgctxt "unit-plural"
 msgid "percent"
 msgstr "пайыз"
 
-#: libgimpbase/gimputils.c:222 libgimpbase/gimputils.c:227
+#: libgimpbase/gimputils.c:223 libgimpbase/gimputils.c:228
 msgid "(invalid UTF-8 string)"
 msgstr "(жарамсыз UTF-8 жолы)"
 
-#: libgimpbase/gimputils.c:397
+#: libgimpbase/gimputils.c:398
 msgid "File path is NULL"
 msgstr "Файл жолы NULL болып тұр"
 
-#: libgimpbase/gimputils.c:405
+#: libgimpbase/gimputils.c:406
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "UTF-8 файл атын кең таңбаға түрлендіру қатесі"
 
-#: libgimpbase/gimputils.c:413
+#: libgimpbase/gimputils.c:414
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() сәтсіз аяқталды"
 
-#: libgimpbase/gimputils.c:452
+#: libgimpbase/gimputils.c:453
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "«%s» мәнін жарамды NSURL ретінде түрлендіру мүмкін емес."
 
-#: libgimpbase/gimputils.c:480
+#: libgimpbase/gimputils.c:481
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "org.freedesktop.FileManager1 қызметіне қосылу сәтсіз аяқталды: "
 
-#: libgimpbase/gimputils.c:504
+#: libgimpbase/gimputils.c:505
 msgid "Calling ShowItems failed: "
 msgstr "ShowItems шақыруы сәтсіз аяқталды: "
 
@@ -2187,10 +2233,6 @@ msgstr "Нобайда Thumb::URI тегі жоқ"
 msgid "Could not create thumbnail for %s: %s"
 msgstr "%s үшін нобайды жасау мүмкін болмады: %s"
 
-#: libgimpwidgets/gimpbrowser.c:134
-msgid "_Search:"
-msgstr "І_здеу:"
-
 #: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
 msgstr "_Алдыңғы жоспар түсі"
@@ -2283,7 +2325,7 @@ msgid "HSV"
 msgstr "HSV"
 
 #: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
-#: modules/color-selector-cmyk.c:301 modules/color-selector-cmyk.c:385
+#: modules/color-selector-cmyk.c:321 modules/color-selector-cmyk.c:405
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
@@ -2432,10 +2474,15 @@ msgid "One page selected"
 msgstr "Бір бет таңдалды"
 
 #: libgimpwidgets/gimppageselector.c:1026
+#, c-format
+msgid "The page is selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "%d бет таңдалды"
+
 #: libgimpwidgets/gimppageselector.c:1030
 #, c-format
 msgid "%d page selected"
-msgid_plural "All %d pages selected"
+msgid_plural "%d pages selected"
 msgstr[0] "%d бет таңдалды"
 
 #: libgimpwidgets/gimppatheditor.c:199
@@ -2471,19 +2518,19 @@ msgstr ""
 msgid "_Preview"
 msgstr "А_лдын-ала қарау"
 
-#: libgimpwidgets/gimppreviewarea.c:154
+#: libgimpwidgets/gimppreviewarea.c:152
 msgid "Check Size"
 msgstr "Тор өлшемі"
 
-#: libgimpwidgets/gimppreviewarea.c:162
+#: libgimpwidgets/gimppreviewarea.c:160
 msgid "Check Style"
 msgstr "Тор стилі"
 
-#: libgimpwidgets/gimppreviewarea.c:170
+#: libgimpwidgets/gimppreviewarea.c:168
 msgid "Custom Checks Color 1"
 msgstr "Таңдаулы тордың 1-ші түсі"
 
-#: libgimpwidgets/gimppreviewarea.c:177
+#: libgimpwidgets/gimppreviewarea.c:175
 msgid "Custom Checks Color 2"
 msgstr "Таңдаулы тордың 2-ші түсі"
 
@@ -2491,7 +2538,7 @@ msgstr "Таңдаулы тордың 2-ші түсі"
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
-msgstr[0] "Бұл мәтінді енгізу өрісі %d таңбамен шектелген"
+msgstr[0] "Бұл мәтінді енгізу өрісі %d таңбамен шектелген."
 
 #: libgimpwidgets/gimpwidgets.c:260
 msgid ""
@@ -2680,51 +2727,55 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Кішірейту"
 
-#: modules/color-selector-cmyk.c:85
+#: modules/color-selector-cmyk.c:87
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK түс таңдаушысы (түс профилін қолданып)"
 
-#: modules/color-selector-cmyk.c:119
+#: modules/color-selector-cmyk.c:121
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:143
+#: modules/color-selector-cmyk.c:145
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:147
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:147
+#: modules/color-selector-cmyk.c:149
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:151
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:153
+#: modules/color-selector-cmyk.c:155
 msgid "Cyan"
 msgstr "Көгілдір"
 
-#: modules/color-selector-cmyk.c:154
+#: modules/color-selector-cmyk.c:156
 msgid "Magenta"
 msgstr "Күлгін"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:157
 msgid "Yellow"
 msgstr "Сары"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:158
 msgid "Black"
 msgstr "Қара"
 
-#: modules/color-selector-cmyk.c:288 modules/color-selector-cmyk.c:367
+#: modules/color-selector-cmyk.c:265
+msgid "Total Ink Coverage"
+msgstr "Сияның жалпы қамтуы"
+
+#: modules/color-selector-cmyk.c:308 modules/color-selector-cmyk.c:387
 msgid "Profile: (none)"
 msgstr "Профиль: (жоқ)"
 
@@ -3222,6 +3273,9 @@ msgstr "Контраст циклдары"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Контраст"
+
+#~ msgid "_Search:"
+#~ msgstr "І_здеу:"
 
 #~ msgid "Export File"
 #~ msgstr "Файлды экспорттау"
