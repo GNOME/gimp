@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "widgets-types.h"
 
 #include "gimplanguagestore.h"
@@ -80,7 +82,12 @@ gimp_language_store_init (GimpLanguageStore *store)
 static void
 gimp_language_store_constructed (GObject *object)
 {
+  gchar *isocodes_localedir;
+
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  isocodes_localedir = g_build_filename (gimp_installation_directory(), "share", "locales", NULL);
+  gimp_bind_text_domain ("iso_639_3", isocodes_localedir);
 
 #ifdef HAVE_ISO_CODES
   for (gint i = 0; i < GIMP_ALL_LANGS_SIZE; i++)

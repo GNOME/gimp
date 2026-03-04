@@ -352,8 +352,8 @@ for lang in $lang_list; do
     bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk3*.mo
   fi
   # For language list in text tool options
-  if ! echo "$(echo $UNIX_PREFIX/share/locale/$lang/LC_MESSAGES/iso_639*3.mo)" | grep -q '\*'; then
-    bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*3.mo
+  if ! echo "$(echo $UNIX_PREFIX/share/locale/$lang/LC_MESSAGES/iso_639-3.mo)" | grep -q '\*'; then
+    bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639-3.mo --rename "share/locale/$lang/LC_MESSAGES/iso_639_3.mo"
   fi
 done
 bund_usr "$GIMP_PREFIX" "etc/gimp"
