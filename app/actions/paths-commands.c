@@ -74,41 +74,41 @@
 
 /*  local function prototypes  */
 
-static void   paths_new_callback             (GtkWidget    *dialog,
-                                              GimpImage    *image,
-                                              GimpPath     *path,
-                                              GimpContext  *context,
-                                              const gchar  *path_name,
-                                              gboolean      path_visible,
-                                              GimpColorTag  path_color_tag,
-                                              gboolean      path_lock_content,
-                                              gboolean      path_lock_position,
-                                              gboolean      path_lock_visibility,
-                                              gpointer      user_data);
-static void   paths_edit_attributes_callback (GtkWidget    *dialog,
-                                              GimpImage    *image,
-                                              GimpPath     *path,
-                                              GimpContext  *context,
-                                              const gchar  *path_name,
-                                              gboolean      path_visible,
-                                              GimpColorTag  path_color_tag,
-                                              gboolean      path_lock_content,
-                                              gboolean      path_lock_position,
-                                              gboolean      path_lock_visibility,
-                                              gpointer      user_data);
-static void   paths_import_callback          (GtkWidget    *dialog,
-                                              GimpImage    *image,
-                                              GFile        *file,
-                                              GFile        *import_folder,
-                                              gboolean      merge_paths,
-                                              gboolean      scale_paths,
-                                              gpointer      user_data);
-static void   paths_export_callback          (GtkWidget    *dialog,
-                                              GimpImage    *image,
-                                              GFile        *file,
-                                              GFile        *export_folder,
-                                              gboolean      active_only,
-                                              gpointer      user_data);
+static void   paths_new_callback             (GtkWidget       *dialog,
+                                              GimpImage       *image,
+                                              GimpPath        *path,
+                                              GimpContext     *context,
+                                              const gchar     *path_name,
+                                              gboolean         path_visible,
+                                              GimpColorTag     path_color_tag,
+                                              gboolean         path_lock_content,
+                                              gboolean         path_lock_position,
+                                              gboolean         path_lock_visibility,
+                                              gpointer         user_data);
+static void   paths_edit_attributes_callback (GtkWidget       *dialog,
+                                              GimpImage       *image,
+                                              GimpPath        *path,
+                                              GimpContext     *context,
+                                              const gchar     *path_name,
+                                              gboolean         path_visible,
+                                              GimpColorTag     path_color_tag,
+                                              gboolean         path_lock_content,
+                                              gboolean         path_lock_position,
+                                              gboolean         path_lock_visibility,
+                                              gpointer         user_data);
+static void   paths_import_callback          (GtkWidget       *dialog,
+                                              GimpImage       *image,
+                                              GFile           *file,
+                                              GFile           *import_folder,
+                                              gboolean         merge_paths,
+                                              gboolean         scale_paths,
+                                              gpointer         user_data);
+static void   paths_export_callback          (GtkNativeDialog *dialog,
+                                              GimpImage       *image,
+                                              GFile           *file,
+                                              GFile           *export_folder,
+                                              gboolean         active_only,
+                                              gpointer         user_data);
 
 
 /*  public functions  */
@@ -772,16 +772,16 @@ paths_export_cmd_callback (GimpAction *action,
                            GVariant   *value,
                            gpointer    data)
 {
-  GimpImage   *image;
-  GList       *paths;
-  GtkWidget   *widget;
-  GtkWidget   *dialog;
+  GimpImage       *image;
+  GList           *paths;
+  GtkWidget       *widget;
+  GtkNativeDialog *dialog;
   return_if_no_paths (image, paths, data);
   return_if_no_widget (widget, data);
 
 #define EXPORT_DIALOG_KEY "gimp-paths-export-dialog"
 
-  dialog = dialogs_get_dialog (G_OBJECT (image), EXPORT_DIALOG_KEY);
+  dialog = dialogs_get_native_dialog (G_OBJECT (image), EXPORT_DIALOG_KEY);
 
   if (! dialog)
     {
@@ -801,10 +801,11 @@ paths_export_cmd_callback (GimpAction *action,
       if (folder)
         g_object_unref (folder);
 
-      dialogs_attach_dialog (G_OBJECT (image), EXPORT_DIALOG_KEY, dialog);
+      dialogs_attach_native_dialog (G_OBJECT (image), EXPORT_DIALOG_KEY,
+                                    dialog);
     }
 
-  gtk_window_present (GTK_WINDOW (dialog));
+  gtk_native_dialog_show (dialog);
 }
 
 void
@@ -1029,12 +1030,12 @@ paths_import_callback (GtkWidget *dialog,
 }
 
 static void
-paths_export_callback (GtkWidget *dialog,
-                       GimpImage *image,
-                       GFile     *file,
-                       GFile     *export_folder,
-                       gboolean   active_only,
-                       gpointer   user_data)
+paths_export_callback (GtkNativeDialog *dialog,
+                       GimpImage       *image,
+                       GFile           *file,
+                       GFile           *export_folder,
+                       gboolean         active_only,
+                       gpointer         user_data)
 {
   GimpDialogConfig *config  = GIMP_DIALOG_CONFIG (image->gimp->config);
   GList            *paths   = NULL;
@@ -1064,7 +1065,8 @@ paths_export_callback (GtkWidget *dialog,
       return;
     }
 
-  gtk_widget_destroy (dialog);
+  dialogs_detach_native_dialog (G_OBJECT (image), dialog);
+  gtk_native_dialog_destroy (dialog);
 }
 
 void
