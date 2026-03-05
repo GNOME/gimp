@@ -39,7 +39,6 @@ if isocodes.found()
                              dependencies: [ native_gio ],
                              c_args: [
                                '-DSRCDIR="@0@"'.format(meson.project_source_root()),
-                               '-DISOCODES_LOCALEDIR="@0@"'.format(isocodes_localedir),
                              ],
                              native: true,
                              install: false)

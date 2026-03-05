@@ -1197,5 +1197,20 @@ gimp_init_i18n (void)
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 #endif
 
+#ifdef HAVE_ISO_CODES
+  /* This iso-codes domain is the only external text domain our core
+   * code is using. Let's make usre it's properly initialized.
+   */
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+  gimp_bind_text_domain ("iso_639_3", gimp_locale_directory ());
+#else
+  gimp_bind_text_domain ("iso_639_3", ISOCODES_LOCALEDIR);
+#endif
+
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
+  bind_textdomain_codeset ("iso_639_3", "UTF-8");
+#endif
+#endif
+
   textdomain (GETTEXT_PACKAGE);
 }
