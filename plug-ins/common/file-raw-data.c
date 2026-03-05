@@ -3008,6 +3008,14 @@ load_dialog (GFile         *file,
                           G_CALLBACK (load_config_notify),
                           preview);
 
+  /* FIXME: This is a hack to ensure that the offset/width/height sliders are
+   * created with the proper maximum values right after start. Ideally this
+   * would be called outside of load_dialog() but load_config_notify() expects
+   * the preview. */
+  load_config_notify (GIMP_PROCEDURE_CONFIG (config),
+                      gimp_procedure_find_argument (procedure, "pixel-format"),
+                      GIMP_PREVIEW_AREA (preview));
+
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
