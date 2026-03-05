@@ -192,7 +192,7 @@ To fill data for a new entry:
 		name="Taqbaylit" />
 	<iso_639_entry
 		dl_code="kk"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Kazakh.islu"
 		name="Qazaq" />
 	<iso_639_entry
 		dl_code="km"
