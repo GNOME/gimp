@@ -254,7 +254,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
   gtk_tree_view_column_pack_end (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column, renderer, NULL);
 
-  gtk_tree_view_append_column (tree_view->view, column);
+  gtk_tree_view_insert_column (tree_view->view, column, 0);
   gimp_container_tree_view_add_toggle_cell (tree_view, renderer);
 
   g_signal_connect (renderer, "clicked",
