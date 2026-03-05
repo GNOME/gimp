@@ -1156,6 +1156,7 @@ if isocodes.found()
   isocodes_prefix = isocodes.get_variable(pkgconfig: 'prefix')
   isocodes_location = isocodes_prefix / 'share' / 'xml' / 'iso-codes'
   isocodes_localedir= isocodes_prefix / 'share' / 'locale'
+  conf.set_quoted('ISOCODES_LOCALEDIR', isocodes_localedir)
 endif
 conf.set('HAVE_ISO_CODES', isocodes.found())
 
