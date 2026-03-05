@@ -77,6 +77,9 @@ gimp_unit_combo_box_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_unit_combo_box_popup_shown (combo);
+
+  /* Hack to fix issue #2642 and #12491 */
+  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (combo), 1);
 }
 
 static void
