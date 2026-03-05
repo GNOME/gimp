@@ -1983,11 +1983,7 @@ load_image (GFile                *file,
       break;
 
     case RAW_GRAY_1BPP:
-      raw_load_gray (data, width, height, offset, bpp, bitspp);
-      break;
     case RAW_GRAY_2BPP:
-      raw_load_gray (data, width, height, offset, bpp, bitspp);
-      break;
     case RAW_GRAY_4BPP:
       raw_load_gray (data, width, height, offset, bpp, bitspp);
       break;
