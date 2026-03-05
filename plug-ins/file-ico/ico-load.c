@@ -893,7 +893,16 @@ ani_load_image (GFile   *file,
               if (inam)
                 g_free (inam);
 
-              inam = g_new0 (gchar, size + 1);
+              inam = g_try_new0 (gchar, size + 1);
+              if (inam == NULL)
+                {
+                  fclose (fp);
+                  g_set_error (error, G_FILE_ERROR,
+                               g_file_error_from_errno (errno),
+                               _("Invalid ANI metadata"));
+                  return NULL;
+                }
+
               n_read = fread (inam, sizeof (gchar), size, fp);
               inam[size] = '\0';
             }
@@ -924,7 +933,16 @@ ani_load_image (GFile   *file,
               if (iart)
                 g_free (iart);
 
-              iart = g_new0 (gchar, size + 1);
+              iart = g_try_new0 (gchar, size + 1);
+              if (iart == NULL)
+                {
+                  fclose (fp);
+                  g_set_error (error, G_FILE_ERROR,
+                               g_file_error_from_errno (errno),
+                               _("Invalid ANI metadata"));
+                  return NULL;
+                }
+
               n_read = fread (iart, sizeof (gchar), size, fp);
               iart[size] = '\0';
             }
