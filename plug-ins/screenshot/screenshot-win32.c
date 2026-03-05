@@ -466,7 +466,7 @@ primDoWindowCapture (HDC  hdcWindow,
     {
       CURSORINFO pointer = { sizeof (pointer) };
       GetCursorInfo (&pointer);
-      DrawIcon (hdcCompat, pointer.ptScreenPos.x, pointer.ptScreenPos.y, GetCursor());
+      DrawIcon (hdcCompat, pointer.ptScreenPos.x, pointer.ptScreenPos.y, pointer.hCursor);
     }
 
   /* Restore the original object */
