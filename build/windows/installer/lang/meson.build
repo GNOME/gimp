@@ -35,6 +35,7 @@ languages = [
   { 'code': 'ja',    },
   { 'code': 'ka',    },
   { 'code': 'kab',   'langname': 'Taqbaylit' },
+  { 'code': 'kk',    },
   { 'code': 'ko',    },
   { 'code': 'lt',    },
   { 'code': 'lv',    },
