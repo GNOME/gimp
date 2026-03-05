@@ -1017,64 +1017,50 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
     case GTK_MOVEMENT_VISUAL_POSITIONS:
       if (! cancel_selection)
         {
-          PangoLayout *layout;
-          const gchar *text;
-
           if (! gimp_text_tool_ensure_layout (text_tool))
             break;
 
-          layout = gimp_text_layout_get_pango_layout (text_tool->layout);
-          text = pango_layout_get_text (layout);
-
           while (count != 0)
             {
-              const gunichar word_joiner = 8288; /*g_utf8_get_char(WORD_JOINER);*/
-              gint index;
-              gint trailing = 0;
-              gint new_index;
+              gint           index;
+              gint           trailing    = 0;
+              gint           new_index   = -1;
 
               index = gimp_text_buffer_get_iter_index (text_tool->buffer,
                                                        &cursor, TRUE);
 
               if (count > 0)
                 {
-                  if (g_utf8_get_char (text + index) == word_joiner)
-                    pango_layout_move_cursor_visually (layout, TRUE,
-                                                       index, 0, 1,
-                                                       &new_index, &trailing);
-                  else
-                    new_index = index;
-
-                  pango_layout_move_cursor_visually (layout, TRUE,
-                                                     new_index, trailing, 1,
-                                                     &new_index, &trailing);
+                  gtk_text_iter_forward_visible_cursor_positions (&cursor, 1);
+                  index = gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                                           &cursor, TRUE);
+                  new_index = index;
+                  trailing  = 0;
                   count--;
                 }
               else
                 {
-                  pango_layout_move_cursor_visually (layout, TRUE,
-                                                     index, 0, -1,
-                                                     &new_index, &trailing);
+                  gtk_text_iter_backward_visible_cursor_positions (&cursor, 1);
 
-                  if (new_index != -1 && new_index != G_MAXINT &&
-                      g_utf8_get_char (text + new_index) == word_joiner)
-                    {
-                      pango_layout_move_cursor_visually (layout, TRUE,
-                                                         new_index, trailing, -1,
-                                                         &new_index, &trailing);
-                    }
+                  index = gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                                           &cursor, TRUE);
+                  new_index = index;
+                  trailing  = 0;
 
                   count++;
                 }
 
               if (new_index != G_MAXINT && new_index != -1)
-                index = new_index;
+                {
+                  index = new_index;
+                  gimp_text_buffer_get_iter_at_index (text_tool->buffer,
+                                                      &cursor, index, TRUE);
+                  gtk_text_iter_forward_chars (&cursor, trailing);
+                }
               else
-                break;
-
-              gimp_text_buffer_get_iter_at_index (text_tool->buffer,
-                                                  &cursor, index, TRUE);
-              gtk_text_iter_forward_chars (&cursor, trailing);
+                {
+                  break;
+                }
             }
         }
       break;
