@@ -2683,22 +2683,25 @@ load_config_notify (GimpProcedureConfig  *config,
   gboolean width_update        = FALSE;
   gboolean height_update       = FALSE;
   gboolean offset_update       = FALSE;
+  gboolean format_update       = FALSE;
 
   if (g_str_has_prefix (pspec->name, "palette-"))
     preview_cmap_update = TRUE;
 
   if ((width_update  = (g_strcmp0 (pspec->name, "width") == 0))  ||
       (height_update = (g_strcmp0 (pspec->name, "height") == 0)) ||
-      (offset_update = (g_strcmp0 (pspec->name, "offset") == 0)))
+      (offset_update = (g_strcmp0 (pspec->name, "offset") == 0)) ||
+      (format_update = (g_strcmp0 (pspec->name, "pixel-format") == 0)))
     {
-      GFile   *file;
-      goffset  file_size;
-      gint     width;
-      gint     height;
-      gint     offset;
-      gint     bpp    = 1;
-      gint     bitspp = 8;
-      goffset  max_pixels;
+      GtkWidget *dialog = NULL;
+      GFile     *file;
+      goffset    file_size;
+      gint       width, new_width;
+      gint       height, new_height;
+      gint       offset, new_offset;
+      gint       bpp    = 1;
+      gint       bitspp = 8;
+      goffset    max_pixels, max_pixels_full;
 
       get_bpp (config, &bpp, &bitspp);
       g_object_get (config,
@@ -2707,48 +2710,95 @@ load_config_notify (GimpProcedureConfig  *config,
                     "offset", &offset,
                     NULL);
 
-      file = g_object_get_data (G_OBJECT (preview), "procedure-file");
+      dialog = g_object_get_data (G_OBJECT (preview), "procedure-dialog");
+      file   = g_object_get_data (G_OBJECT (preview), "procedure-file");
       file_size = get_file_size (file);
 
-      max_pixels = ((file_size * 8) / (bpp * bitspp)) - offset;
+      max_pixels_full = ((file_size * 8) / (bpp * bitspp));
 
-      if ((goffset) width * height > max_pixels)
+      new_offset = offset;
+      /* This should be possible to happen only when the pixel encoding format
+       * changes. If the current offset is too high, reset to the default value
+       * and compute the adjust maximum from that. */
+      if (max_pixels_full - offset <= 0)
+        new_offset = 0;
+      max_pixels = max_pixels_full - new_offset;
+
+      new_width  = MIN (width, max_pixels);
+      new_height = MIN (height, max_pixels);
+
+      if ((goffset) new_width * new_height > max_pixels)
         {
-          g_signal_handlers_block_by_func (config,
-                                           G_CALLBACK (load_config_notify),
-                                           preview);
-          if (width_update && width >= max_pixels)
+          if (width_update && new_width >= max_pixels)
             {
-              g_object_set (config,
-                            "width",  (gint) max_pixels,
-                            "height", 1,
-                            NULL);
+              new_width  = max_pixels;
+              new_height = 1;
             }
-          else if (height_update && height >= max_pixels)
+          else if (height_update && new_height >= max_pixels)
             {
-              g_object_set (config,
-                            "width",  1,
-                            "height", (gint) max_pixels,
-                            NULL);
+              new_width  = 1;
+              new_height = max_pixels;
             }
           else if (width_update || offset_update)
             {
-              height = MAX (max_pixels / width, 1);
-              g_object_set (config,
-                            "height", height,
-                            NULL);
+              new_height = MAX (max_pixels / new_width, 1);
             }
           else /* height_update */
             {
-              width = MAX (max_pixels / height, 1);
-              g_object_set (config,
-                            "width", width,
-                            NULL);
+              new_width = MAX (max_pixels / new_height, 1);
             }
-          g_signal_handlers_unblock_by_func (config,
-                                             G_CALLBACK (load_config_notify),
-                                             preview);
         }
+
+      g_signal_handlers_block_by_func (config,
+                                       G_CALLBACK (load_config_notify),
+                                       preview);
+
+      if (format_update || offset_update)
+        {
+          gchar *format_props[] = { "offset", "width", "height" };
+
+          for (gint i = 0; i < G_N_ELEMENTS (format_props); i++)
+            {
+              GtkWidget  *entry       = NULL;
+              GParamSpec *spec        = NULL;
+              gchar      *prop        = format_props[i];
+              gint        new_minimum = 1;
+              gint        new_maximum = max_pixels;
+
+              if (g_strcmp0 (prop, "offset") == 0)
+                {
+                  /* The limits of the offset slider are independent of its
+                   * current value. */
+                  if (offset_update)
+                    continue;
+
+                  new_minimum = 0;
+                  new_maximum = max_pixels_full - 1;
+                }
+
+              spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), prop);
+              if (spec != NULL)
+                G_PARAM_SPEC_INT (spec)->maximum = new_maximum;
+
+              entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                             prop, 1.0);
+
+              gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), new_minimum, new_maximum, FALSE);
+            }
+        }
+
+      if (width != new_width || height != new_height || offset != new_offset)
+        {
+          g_object_set (config,
+                        "width",  (gint) new_width,
+                        "height", (gint) new_height,
+                        "offset", (gint) new_offset,
+                        NULL);
+        }
+
+      g_signal_handlers_unblock_by_func (config,
+                                         G_CALLBACK (load_config_notify),
+                                         preview);
     }
   preview_update (preview, preview_cmap_update);
 }
@@ -2819,6 +2869,8 @@ load_dialog (GFile         *file,
 
   g_object_set_data (G_OBJECT (preview), "procedure-config",
                      config);
+  g_object_set_data (G_OBJECT (preview), "procedure-dialog",
+                     dialog);
   g_object_set_data (G_OBJECT (preview), "procedure-file",
                      file);
 
