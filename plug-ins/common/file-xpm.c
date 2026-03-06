@@ -125,7 +125,8 @@ static GimpImage      * load_image           (GFile                 *file,
 static guchar         * parse_colors         (XpmImage               *xpm_image);
 static void             parse_image          (GimpImage              *image,
                                               XpmImage               *xpm_image,
-                                              guchar                 *cmap);
+                                              guchar                 *cmap,
+                                              GError                **error);
 static gboolean         export_image         (GFile                  *file,
                                               GimpImage              *image,
                                               GimpDrawable           *drawable,
@@ -385,12 +386,28 @@ load_image (GFile   *file,
 
   cmap = parse_colors (&xpm_image);
 
+  if (xpm_image.width > GIMP_MAX_IMAGE_SIZE)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Unsupported or invalid image width: %d"),
+                   xpm_image.width);
+      return NULL;
+    }
+
+  if (xpm_image.height > GIMP_MAX_IMAGE_SIZE)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Unsupported or invalid image height: %d"),
+                   xpm_image.height);
+      return NULL;
+    }
+
   image = gimp_image_new (xpm_image.width,
                           xpm_image.height,
                           GIMP_RGB);
 
   /* fill it */
-  parse_image (image, &xpm_image, cmap);
+  parse_image (image, &xpm_image, cmap, error);
 
   g_free (cmap);
 
@@ -472,7 +489,8 @@ parse_colors (XpmImage *xpm_image)
 static void
 parse_image (GimpImage *image,
              XpmImage  *xpm_image,
-             guchar    *cmap)
+             guchar    *cmap,
+             GError   **error)
 {
   GeglBuffer *buffer;
   gint        tile_height;
@@ -498,7 +516,13 @@ parse_image (GimpImage *image,
 
   tile_height = gimp_tile_height ();
 
-  buf  = g_new (guchar, tile_height * xpm_image->width * 4);
+  buf = g_try_new (guchar, tile_height * xpm_image->width * 4);
+  if (buf == NULL)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", _("XPM file invalid"));
+      return;
+    }
 
   src  = xpm_image->data;
   for (i = 0; i < xpm_image->height; i += tile_height)
