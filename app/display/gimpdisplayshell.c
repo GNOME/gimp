@@ -2269,17 +2269,20 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
   gimp_canvas_canvas_boundary_set_image (GIMP_CANVAS_CANVAS_BOUNDARY (shell->canvas_boundary),
                                          gimp_display_get_image (shell->display));
 
-  if (window && gimp_image_window_get_active_shell (window) == shell)
-    {
-      GimpUIManager *manager = menus_get_image_manager_singleton (shell->display->gimp);
-
-      gimp_ui_manager_update (manager, shell->display);
-    }
-
   context = gimp_get_user_context (shell->display->gimp);
 
   if (shell->display == gimp_context_get_display (context))
     {
+      if (window && gimp_image_window_get_active_shell (window) == shell)
+        {
+          /* Only update the main actions for the active shell of the
+           * active image window.
+           */
+          GimpUIManager *manager = menus_get_image_manager_singleton (shell->display->gimp);
+
+          gimp_ui_manager_update (manager, shell->display);
+        }
+
       gimp_ui_manager_update (shell->popup_manager, shell->display);
     }
 }
