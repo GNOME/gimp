@@ -105,7 +105,7 @@ gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
                          _("Tone Reproduction Curve"),
                          _("Work on linear or perceptual RGB, or following the image's TRC"),
                          GIMP_TYPE_TRC_TYPE,
-                         GIMP_TRC_LINEAR, 0);
+                         GIMP_TRC_PERCEPTUAL, 0);
 
   /* "linear" is a compat property initially kept for compatibility
    * reason, in particular for config parsing. It's not needed anymore
