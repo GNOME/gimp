@@ -552,12 +552,13 @@ gimp_channel_select_by_color (GimpChannel         *channel,
                               gdouble              feather_radius_x,
                               gdouble              feather_radius_y)
 {
-  GimpPickable *pickable;
-  GeglBuffer   *add_on;
-  GimpImage    *image;
-  GimpImage    *sel_image = NULL;
-  gint          add_on_x  = 0;
-  gint          add_on_y  = 0;
+  GimpPickable  *pickable;
+  GeglBuffer    *add_on;
+  GimpImage     *image;
+  GimpImage     *sel_image = NULL;
+  gint           add_on_x  = 0;
+  gint           add_on_y  = 0;
+  GeglRectangle  roi       = { 0, 0, 0, 0 };
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
@@ -584,13 +585,19 @@ gimp_channel_select_by_color (GimpChannel         *channel,
           gimp_pickable_flush (pickable);
         }
     }
+  
+    /* if region of interest provided, only scan the intersection */
+    if (op == GIMP_CHANNEL_OP_INTERSECT && ! gimp_channel_is_empty (channel))
+      gimp_item_bounds (GIMP_ITEM (channel), &roi.x , &roi.y, &roi.width,
+                        &roi.height);
 
   add_on = gimp_pickable_contiguous_region_by_color (pickable,
                                                      antialias,
                                                      threshold,
                                                      select_transparent,
                                                      select_criterion,
-                                                     color);
+                                                     color,
+                                                     &roi);
 
   if (! sample_merged && ! sel_image)
     gimp_item_get_offset (GIMP_ITEM (drawables->data), &add_on_x, &add_on_y);

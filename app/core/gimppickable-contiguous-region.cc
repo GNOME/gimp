@@ -204,7 +204,8 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
                                           gfloat               threshold,
                                           gboolean             select_transparent,
                                           GimpSelectCriterion  select_criterion,
-                                          GeglColor           *color)
+                                          GeglColor           *color,
+                                          const GeglRectangle *roi)
 {
   /*  Scan over the pickable's active layer, finding pixels within the
    *  specified threshold from the given R, G, & B values.  If
@@ -212,12 +213,14 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
    *  fuzzy_select.  Modify the pickable's mask to reflect the
    *  additional selection
    */
-  GeglBuffer *src_buffer = NULL;
-  GeglBuffer *mask_buffer;
-  const Babl *format;
-  gint        n_components;
-  gboolean    has_alpha;
-  gfloat      start_col[MAX_CHANNELS];
+  GeglBuffer          *src_buffer = NULL;
+  GeglBuffer          *mask_buffer;
+  const Babl          *format;
+  gint                 n_components;
+  gboolean             has_alpha;
+  gfloat               start_col[MAX_CHANNELS];
+  const GeglRectangle *extent;
+  GeglRectangle        scan_rect;
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
   g_return_val_if_fail (GEGL_IS_COLOR (color), NULL);
@@ -256,11 +259,19 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
       select_transparent = FALSE;
     }
 
-  mask_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
-                                 babl_format ("Y float"));
+  extent = gegl_buffer_get_extent (src_buffer);
 
+  /* if an region of interest provided, only scan the intersection */
+  if (roi && ! gegl_rectangle_is_empty (roi))
+    gegl_rectangle_intersect (&scan_rect, extent, roi);
+  else
+    scan_rect = *extent;
+
+  mask_buffer = gegl_buffer_new (extent, babl_format ("Y float"));
+
+  /* force GEGL to only process the restricted bounding box */
   gegl_parallel_distribute_area (
-    gegl_buffer_get_extent (src_buffer), PIXELS_PER_THREAD,
+    &scan_rect, PIXELS_PER_THREAD,
     [=] (const GeglRectangle *area)
     {
       GeglBufferIterator *iter;

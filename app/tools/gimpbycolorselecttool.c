@@ -34,6 +34,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-new.h"
 #include "core/gimpitem.h"
+#include "core/gimpchannel.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-contiguous-region.h"
 
@@ -108,6 +109,8 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
   GeglBuffer              *mask         = NULL;
   GeglColor               *color;
   gint                     x, y;
+  GeglRectangle            roi          = { 0, 0, 0, 0 };
+  GimpChannel             *selection    = gimp_image_get_mask (image);
 
   x = region_select->x;
   y = region_select->y;
@@ -142,6 +145,11 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
   g_list_free (drawables);
   gimp_pickable_flush (pickable);
 
+  if (sel_options->operation == GIMP_CHANNEL_OP_INTERSECT &&
+      ! gimp_channel_is_empty (selection))
+    gimp_item_bounds (GIMP_ITEM (selection), &roi.x , &roi.y, &roi.width,
+                      &roi.height);
+
   if ((color = gimp_pickable_get_color_at (pickable, x, y)) != NULL)
     {
       mask = gimp_pickable_contiguous_region_by_color (pickable,
@@ -149,7 +157,8 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
                                                        options->threshold / 255.0,
                                                        options->select_transparent,
                                                        options->select_criterion,
-                                                       color);
+                                                       color,
+                                                       &roi);
       g_object_unref (color);
     }
 

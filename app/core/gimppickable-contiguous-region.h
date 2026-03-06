@@ -32,7 +32,8 @@ GeglBuffer * gimp_pickable_contiguous_region_by_color               (GimpPickabl
                                                                      gfloat               threshold,
                                                                      gboolean             select_transparent,
                                                                      GimpSelectCriterion  select_criterion,
-                                                                     GeglColor           *color);
+                                                                     GeglColor           *color,
+                                                                     const GeglRectangle *roi);
 
 GeglBuffer * gimp_pickable_contiguous_region_by_line_art            (GimpPickable        *pickable,
                                                                      GimpLineArt         *line_art,
