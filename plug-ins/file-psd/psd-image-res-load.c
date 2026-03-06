@@ -1770,13 +1770,13 @@ load_resource_2999 (const PSDimageres  *res_a,
 {
   gchar        *path_name;
   gint16        path_flatness_int   = 0;
-  gint16        path_flatness_fixed = 0;
+  guint16       path_flatness_fixed = 0;
   gfloat        path_flatness;
   GimpParasite *parasite;
   gint32        read_len;
   gint32        write_len;
 
-  path_name = fread_pascal_string (&read_len, &write_len, 2, input, error);
+  path_name = fread_pascal_string (&read_len, &write_len, 1, input, error);
   if (*error || ! path_name)
     {
       g_printerr ("psd-load: Unable to read clipping path name.");
@@ -1790,7 +1790,7 @@ load_resource_2999 (const PSDimageres  *res_a,
       psd_set_error (error);
       return -1;
     }
-  path_flatness_fixed = GINT16_FROM_BE (path_flatness_fixed);
+  path_flatness_fixed = GUINT16_FROM_BE (path_flatness_fixed);
   path_flatness_int   = GINT16_FROM_BE (path_flatness_int);
 
   /* Converting from Adobe fixed point value to float */
