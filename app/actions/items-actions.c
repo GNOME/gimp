@@ -76,9 +76,9 @@ items_actions_update (GimpActionGroup *group,
   gchar       action[32];
   gboolean    visible           = FALSE;
   gboolean    has_color_tag     = FALSE;
-  gboolean    lock_content      = TRUE;
+  gboolean    lock_content      = (items != NULL ? TRUE : FALSE);
   gboolean    can_lock_content  = FALSE;
-  gboolean    lock_position     = TRUE;
+  gboolean    lock_position     = (items != NULL ? TRUE : FALSE);
   gboolean    can_lock_position = FALSE;
   GeglColor  *tag_color         = gegl_color_new ("none");
   GList      *iter;
