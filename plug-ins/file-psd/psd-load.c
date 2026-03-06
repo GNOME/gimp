@@ -2813,14 +2813,13 @@ add_merged_image (GimpImage     *image,
   guint16               bps;
   guint32              *rle_pack_len[MAX_CHANNELS];
   guint32               alpha_id;
-  gint32                layer_size;
+  gsize                 layer_size;
   GimpLayer            *layer   = NULL;
   GimpChannel          *channel = NULL;
   gint16                alpha_opacity;
   gint                  cidx;                  /* Channel index */
   gint                  rowi;                  /* Row index */
   gint                  offset;
-  gint                  i;
   gboolean              alpha_visible;
   gboolean              alpha_channel = FALSE;
   GeglBuffer           *buffer;
@@ -2975,11 +2974,11 @@ add_merged_image (GimpImage     *image,
       image_type = get_gimp_image_type (img_a->base_type,
                                         img_a->transparency || alpha_channel);
 
-      layer_size = img_a->columns * img_a->rows;
+      layer_size = (gsize) img_a->columns * img_a->rows;
       pixels = g_malloc (layer_size * base_channels * bps);
       for (cidx = 0; cidx < base_channels; ++cidx)
         {
-          for (i = 0; i < layer_size; ++i)
+          for (gint64 i = 0; i < layer_size; ++i)
             {
               memcpy (&pixels[((i * base_channels) + cidx) * bps],
                       &chn_a[cidx].data[i * bps], bps);
@@ -3051,7 +3050,7 @@ add_merged_image (GimpImage     *image,
             {
               gfloat *data = iter->items[0].data;
 
-              for (i = 0; i < iter->length; i++)
+              for (gint i = 0; i < iter->length; i++)
                 {
                   gint c;
 
@@ -3103,7 +3102,7 @@ add_merged_image (GimpImage     *image,
 
       /* Draw channels */
       IFDBG(2) g_debug ("Number of channels: %d", extra_channels);
-      for (i = 0; i < extra_channels; ++i)
+      for (gint i = 0; i < extra_channels; ++i)
         {
           /* Alpha channel name */
           alpha_name = NULL;
@@ -3144,8 +3143,8 @@ add_merged_image (GimpImage     *image,
             }
 
           cidx = base_channels + i;
-          pixels = g_realloc (pixels, chn_a[cidx].columns * chn_a[cidx].rows * bps);
-          memcpy (pixels, chn_a[cidx].data, chn_a[cidx].columns * chn_a[cidx].rows * bps);
+          pixels = g_realloc (pixels, (gsize) chn_a[cidx].columns * chn_a[cidx].rows * bps);
+          memcpy (pixels, chn_a[cidx].data, (gsize) chn_a[cidx].columns * chn_a[cidx].rows * bps);
           channel = gimp_channel_new (image, alpha_name,
                                       chn_a[cidx].columns, chn_a[cidx].rows,
                                       alpha_opacity, alpha_rgb);
@@ -3332,7 +3331,6 @@ read_channel_data (PSDchannel     *channel,
   gchar    *raw_data = NULL;
   gchar    *src;
   guint32   readline_len;
-  gint      i, j;
 
   if (bps == 1)
     readline_len = ((channel->columns + 7) / 8);
@@ -3364,7 +3362,7 @@ read_channel_data (PSDchannel     *channel,
         break;
 
       case PSD_COMP_RLE:
-        for (i = 0; i < channel->rows; ++i)
+        for (gint i = 0; i < channel->rows; ++i)
           {
             src = gegl_scratch_alloc (rle_pack_len[i]);
 /*      FIXME check for over-run
@@ -3433,12 +3431,11 @@ read_channel_data (PSDchannel     *channel,
     case 32:
       {
         guint32 *data;
-        guint64  pos;
 
         if (compression == PSD_COMP_ZIP_PRED)
           {
             IFDBG(3) g_debug ("Converting 32 bit predictor data");
-            channel->data = (gchar *) g_malloc0 (channel->rows * channel->columns * 4);
+            channel->data = (gchar *) g_malloc0 ((gsize) channel->rows * channel->columns * 4);
             decode_32_bit_predictor (raw_data, channel->data,
                                      channel->rows, channel->columns);
           }
@@ -3450,7 +3447,7 @@ read_channel_data (PSDchannel     *channel,
           }
 
         data = (guint32*) channel->data;
-        for (pos = 0; pos < channel->rows * channel->columns; ++pos)
+        for (gsize pos = 0; pos < (gsize) channel->rows * channel->columns; ++pos)
           data[pos] = GUINT32_FROM_BE (data[pos]);
 
         break;
@@ -3463,14 +3460,14 @@ read_channel_data (PSDchannel     *channel,
         channel->data = raw_data;
         raw_data      = NULL;
 
-        for (i = 0; i < channel->rows * channel->columns; ++i)
+        for (gsize i = 0; i < (gsize) channel->rows * channel->columns; ++i)
           data[i] = GUINT16_FROM_BE (data[i]);
 
         if (compression == PSD_COMP_ZIP_PRED)
           {
             IFDBG(3) g_debug ("Converting 16 bit predictor data");
-            for (i = 0; i < channel->rows; ++i)
-              for (j = 1; j < channel->columns; ++j)
+            for (gsize i = 0; i < channel->rows; ++i)
+              for (gsize j = 1; j < channel->columns; ++j)
                 data[i * channel->columns + j] += data[i * channel->columns + j - 1];
           }
         break;
@@ -3483,14 +3480,14 @@ read_channel_data (PSDchannel     *channel,
         if (compression == PSD_COMP_ZIP_PRED)
           {
             IFDBG(3) g_debug ("Converting 8 bit predictor data");
-            for (i = 0; i < channel->rows; ++i)
-              for (j = 1; j < channel->columns; ++j)
+            for (gsize i = 0; i < channel->rows; ++i)
+              for (gsize j = 1; j < channel->columns; ++j)
                 channel->data[i * channel->columns + j] += channel->data[i * channel->columns + j - 1];
           }
         break;
 
       case 1:
-        channel->data = (gchar *) g_malloc (channel->rows * channel->columns);
+        channel->data = (gchar *) g_malloc ((gsize) channel->rows * channel->columns);
         convert_1_bit (raw_data, channel->data, channel->rows, channel->columns);
         break;
 
@@ -3540,7 +3537,7 @@ decode_32_bit_predictor (gchar   *src,
 
   /* restore byte order */
   dstpos = 0;
-  for (row = 0; row < rows * rowsize; row += rowsize)
+  for (row = 0; row < (gsize) rows * rowsize; row += rowsize)
     {
       guint64 offset;
 
@@ -3567,18 +3564,17 @@ convert_1_bit (const gchar *src,
    Rows are padded out to a byte boundary.
 */
   guint32 row_pos = 0;
-  gint    i, j;
 
   IFDBG(3)  g_debug ("Start 1 bit conversion");
 
-  for (i = 0; i < rows * ((columns + 7) / 8); ++i)
+  for (gsize i = 0; i < (gsize) rows * ((columns + 7) / 8); ++i)
     {
       guchar    mask = 0x80;
-      for (j = 0; j < 8 && row_pos < columns; ++j)
+      for (gint j = 0; j < 8 && row_pos < columns; ++j)
         {
           *dst = (*src & mask) ? 0 : 1;
           IFDBG(4) g_debug ("byte %d, bit %d, offset %d, src %d, dst %d",
-            i , j, row_pos, *src, *dst);
+            (gint) i , j, row_pos, *src, *dst);
           dst++;
           mask >>= 1;
           row_pos++;
