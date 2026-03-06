@@ -1204,7 +1204,7 @@ gimp_init_i18n (void)
 #ifdef ENABLE_RELOCATABLE_RESOURCES
   gimp_bind_text_domain ("iso_639_3", gimp_locale_directory ());
 #else
-  gimp_bind_text_domain ("iso_639_3", ISOCODES_LOCALEDIR);
+  gimp_bind_text_domain ("iso_639_3", ISO_CODES_LOCALEDIR);
 #endif
 
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
