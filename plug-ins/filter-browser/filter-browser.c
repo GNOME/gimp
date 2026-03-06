@@ -299,14 +299,17 @@ create_filter_param_details (GParamSpec   *pspec,
           help  = (help != NULL ? g_markup_escape_text (help, -1) : NULL);
           /* \xe2\x80\xa2 is the UTF-8 for the bullet point. */
           if (help != NULL)
-            g_string_append_printf (desc, "\n\xe2\x80\xa2 <tt>%s</tt>: %s\n\t%s", nick, label, help);
+            g_string_append_printf (desc, "\n\xe2\x80\xa2 <tt>\"%s\"</tt>: %s\n\t%s", nick, label, help);
           else
-            g_string_append_printf (desc, "\n\xe2\x80\xa2 <tt>%s</tt>: %s", nick, label);
+            g_string_append_printf (desc, "\n\xe2\x80\xa2 <tt>\"%s\"</tt>: %s", nick, label);
 
           g_free (nick);
           g_free (label);
           g_free (help);
         }
+
+      g_string_append_printf (blurb, "\n<tt><i>default:</i> \"%s\"</tt>",
+                              gimp_param_spec_choice_get_default (pspec));
 
       g_string_append (blurb, desc->str);
       g_string_free (desc, TRUE);
@@ -314,22 +317,31 @@ create_filter_param_details (GParamSpec   *pspec,
 
   if (g_type_is_a (gtype, G_TYPE_ENUM))
     {
-      GEnumClass   *eclass   = NULL;
-      GType         etype    = 0;
+      const GValue *default_value;
+      GEnumClass   *eclass = NULL;
+      GType         etype  = 0;
+      GString      *desc   = NULL;
 
-      etype =  G_VALUE_TYPE (g_param_spec_get_default_value (pspec));
-      eclass = g_type_class_ref (etype);
+      default_value = g_param_spec_get_default_value (pspec);
+      etype         = G_VALUE_TYPE (default_value);
+      eclass        = g_type_class_ref (etype);
 
-      g_string_append_printf (blurb, "\n<i>%s</i>", _("Allowed values:"));
+      desc          = g_string_new ("\n");
+      g_string_append_printf (desc, "<i>%s</i>", _("Allowed values:"));
 
       for (guint i = 0; i < eclass->n_values; i++ )
         {
           GEnumValue value = eclass->values[i];
 
           /* \xe2\x80\xa2 is the UTF-8 for the bullet point. */
-          g_string_append_printf (blurb, "\n\xe2\x80\xa2 <tt>%s</tt>: %s", value.value_name, value.value_nick);
+          g_string_append_printf (desc, "\n\xe2\x80\xa2 <tt>%s</tt>: %s", value.value_name, value.value_nick);
+          if (value.value == g_value_get_enum (default_value))
+            g_string_append_printf (blurb, "\n<tt><i>default:</i> %s</tt>", value.value_name);
         }
 
+      g_string_append (blurb, desc->str);
+
+      g_string_free (desc, TRUE);
       g_type_class_unref (eclass);
     }
 
