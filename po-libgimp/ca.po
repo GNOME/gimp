@@ -3164,7 +3164,7 @@ msgstr "Color d'avís dels ressaltats"
 
 #: modules/display-filter-clip-warning.c:206
 msgid "Show bogus"
-msgstr "Mostra falsa"
+msgstr "Mostra falsos"
 
 #: modules/display-filter-clip-warning.c:207
 msgid "Show warning for pixels with an infinite or NaN component"

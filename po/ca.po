@@ -10,14 +10,14 @@
 # Quim Perez i Noguer <noguer@gmail.com>, 2008, 2009, 2011.
 # Albert F. <lakonfrariadelavila@gmail.com>, 2012, 2013.
 # Eulàlia Pagès i Morales <eulaliapages@gmail.com>, 2015-2017
-# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2025
+# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2026
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-05-30 16:10+0000\n"
-"PO-Revision-Date: 2025-08-20 13:33+0100\n"
+"PO-Revision-Date: 2026-03-07 13:33+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -20112,7 +20112,7 @@ msgstr "Fusiona el gra (a)"
 #: app/operations/operations-enums.c:241
 msgctxt "layer-mode"
 msgid "Color erase (legacy)"
-msgstr "Color (HSV) (antic)"
+msgstr "Esborra el color (HSV) (antic)"
 
 #. Translators: this is an abbreviated version of "Color erase (legacy)".
 #. Keep it short.
@@ -22054,7 +22054,7 @@ msgstr "Capgira la matriu horitzontalment"
 
 #: app/propgui/gimppropgui-convolution-matrix.c:216
 msgid "Flip matrix vertically"
-msgstr "Capgira la imatge verticalment"
+msgstr "Capgira la matriu verticalment"
 
 #: app/propgui/gimppropgui-diffraction-patterns.c:68
 msgid "Frequencies"
@@ -22581,7 +22581,7 @@ msgstr ""
 
 #: app/tools/gimpalignoptions.c:533
 msgid "Distribute horizontally with even horizontal gaps"
-msgstr "Distribueix horitzontalment amb espais horitzontals parells"
+msgstr "Distribueix horitzontalment amb espais horitzontals uniformes"
 
 #: app/tools/gimpalignoptions.c:542
 msgid "Distribute anchor points of targets evenly in the vertical"
@@ -22769,7 +22769,7 @@ msgstr "Eina de traçat"
 
 #: app/tools/gimpbucketfilloptions.c:261
 msgid "The tool to stroke the fill borders with"
-msgstr "L'eina amb què el traça emplenarà les vores"
+msgstr "L'eina per a traçar les vores del farciment"
 
 #: app/tools/gimpbucketfilloptions.c:266
 msgid "Automatic closure"
@@ -23169,7 +23169,7 @@ msgstr "Només capes seleccionades"
 
 #: app/tools/gimpcropoptions.c:96
 msgid "Crop only currently selected layers"
-msgstr "Escapça només les capes seleccionada"
+msgstr "Escapça només les capes seleccionades"
 
 #: app/tools/gimpcropoptions.c:102
 msgid "Delete cropped pixels"
@@ -23778,7 +23778,7 @@ msgstr "Profunditat màxima"
 
 #: app/tools/gimpgradientoptions.c:136
 msgid "Instant mode"
-msgstr "Mode instant"
+msgstr "Mode instantani"
 
 #: app/tools/gimpgradientoptions.c:137
 msgid "Commit gradient instantly"
@@ -23800,7 +23800,7 @@ msgstr "Edita el degradat actual"
 #: app/tools/gimpgradientoptions.c:342
 #, c-format
 msgid "Instant mode  (%s)"
-msgstr "Mode instant (%s)"
+msgstr "Mode instantani (%s)"
 
 #: app/tools/gimpgradientoptions.c:360
 msgid ""
@@ -25438,7 +25438,7 @@ msgstr "Restringeix l'eix (%s)"
 #: app/tools/gimptransform3doptions.c:206
 #, c-format
 msgid "Z axis (%s)"
-msgstr "Z eix (%s)"
+msgstr "Eix Z (%s)"
 
 #: app/tools/gimptransform3doptions.c:215
 #, c-format
@@ -26964,7 +26964,7 @@ msgstr "Rendiment de lectura"
 #: app/widgets/gimpdashboard.c:596
 msgid "The rate at which data is read from the swap"
 msgstr ""
-"La velocitat amb la qual s'han llegit les dades de la memòria intercanvi"
+"La velocitat amb la qual s'han llegit les dades de la memòria d'intercanvi"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
@@ -26985,7 +26985,7 @@ msgstr "Rendiment d'escriptura"
 #: app/widgets/gimpdashboard.c:619
 msgid "The rate at which data is written to the swap"
 msgstr ""
-"La velocitat amb la qual s'han escrit les dades a la memòria intercanvi"
+"La velocitat amb la qual s'han escrit les dades a la memòria d'intercanvi"
 
 #: app/widgets/gimpdashboard.c:629
 msgid "Swap compression ratio"
@@ -27012,7 +27012,7 @@ msgstr "Si la CPU està activa"
 
 #: app/widgets/gimpdashboard.c:661
 msgid "Total amount of time the CPU has been active"
-msgstr "Temps total que la CPU ha estat actiu"
+msgstr "Temps total que la CPU ha estat activa"
 
 #: app/widgets/gimpdashboard.c:674
 msgctxt "dashboard-variable"
@@ -27074,7 +27074,7 @@ msgstr "Rajola"
 
 #: app/widgets/gimpdashboard.c:741
 msgid "Total size of tile memory"
-msgstr "Mida total de la memòria"
+msgstr "Mida total de la memòria "
 
 #: app/widgets/gimpdashboard.c:750
 msgctxt "dashboard-variable"
