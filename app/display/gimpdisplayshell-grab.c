@@ -96,7 +96,8 @@ gimp_display_shell_pointer_grab (GimpDisplayShell *shell,
   status = gdk_seat_grab (seat,
                           gtk_widget_get_window (shell->canvas),
                           GDK_SEAT_CAPABILITY_ALL_POINTING,
-                          FALSE, NULL,
+                          FALSE,
+                          gdk_window_get_cursor (gtk_widget_get_window (shell->canvas)),
                           event, NULL, NULL);
 
   if (status == GDK_GRAB_SUCCESS)
