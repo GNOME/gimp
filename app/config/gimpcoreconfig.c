@@ -696,7 +696,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_PROP_INT (object_class, PROP_LAST_REVISION,
                         "last-revision",
                         "Last revision of current release",
-                        LAST_RELEASE_TIMESTAMP_BLURB,
+                        LAST_REVISION_BLURB,
                         0, G_MAXINT, 0,
                         GIMP_PARAM_STATIC_STRINGS);
 

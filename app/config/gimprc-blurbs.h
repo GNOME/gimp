@@ -204,9 +204,6 @@ _("How many recent settings to keep around in filter tools.")
 #define FILTER_TOOL_USE_LAST_SETTINGS_BLURB \
 _("Default to the last used settings in filter tools.")
 
-#define FILTER_TOOL_SHOW_COLOR_OPTIONS_BLURB \
-_("Show advanced color options in filter tools.")
-
 #define IMAGE_STATUS_FORMAT_BLURB \
 _("Sets the text to appear in image window status bars.")
 
@@ -489,9 +486,6 @@ _("When enabled, the grid is visible by default. This can also be toggled " \
 _("When enabled, the sample points are visible by default. This can also be " \
   "toggled with the \"View->Show Sample Points\" command.")
 
-#define SHOW_TOOLTIPS_BLURB \
-_("Show a tooltip when the pointer hovers over an item.")
-
 #define SINGLE_WINDOW_MODE_BLURB \
 _("Use GIMP in a single-window mode.")
 
@@ -503,15 +497,6 @@ _("Show the image tabs bar in single window mode.")
 
 #define PLAYGROUND_NPD_TOOL_BLURB \
 _("Enable the N-Point Deformation tool.")
-
-#define PLAYGROUND_HANDLE_TRANSFORM_TOOL_BLURB \
-_("Enable the Handle Transform tool.")
-
-#define PLAYGROUND_SYMMETRY_BLURB \
-_("Enable symmetry on painting.")
-
-#define PLAYGROUND_MYBRUSH_TOOL_BLURB \
-_("Enable the MyPaint Brush tool.")
 
 #define PLAYGROUND_SEAMLESS_CLONE_TOOL_BLURB \
 _("Enable the Seamless Clone tool.")
@@ -806,9 +791,6 @@ _("There's a tradeoff between speed and quality of the zoomed-out display.")
 #define DEFAULT_USE_EVENT_HISTORY_BLURB \
 "Bugs in event history buffer are frequent so in case of cursor " \
 "offset problems turning it off helps."
-
-#define SEARCH_SHOW_UNAVAILABLE_BLURB \
-_("When enabled, a search of actions will also return inactive actions.")
 
 #define ACTION_HISTORY_SIZE_BLURB \
 _("The maximum number of actions saved in history.")
