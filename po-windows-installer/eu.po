@@ -7,9 +7,9 @@
 msgid ""
 msgstr "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-25 21:28+0000\n"
-"PO-Revision-Date: 2024-03-30 01:34+0000\n"
-"Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
+"POT-Creation-Date: 2025-12-28 11:26+0000\n"
+"PO-Revision-Date: 2026-03-07 01:34+0000\n"
+"Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
@@ -22,20 +22,20 @@ msgid "License Agreement"
 msgstr "Lizentzia-kontratua"
 
 #: build/windows/installer/lang/setup.isl.xml.in:10
-msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Windowserako instalatzailearen egilea: Jernej Simonèiè, jernej-gimp@ena.si"
+msgid "Setup built by GIMP team, gimp.org"
+msgstr "GIMP taldeak sortutako konfigurazioa, gimp.org"
 
-#: build/windows/installer/lang/setup.isl.xml.in:13
-#: build/windows/installer/lang/setup.isl.xml.in:16
+#: build/windows/installer/lang/setup.isl.xml.in:17
 msgid ""
-"This version of GIMP requires Windows 10, or a newer version of Windows."
-msgstr "GIMPen bertsio honek Windows 10 edo berriagoa behar du."
+"You are trying to directly downgrade from GIMP %1 to %2.%n%nPlease remove "
+"GIMP yourself before installing this version."
+msgstr "GIMP %1 bertsioa ezabatu eta %2 bertsio zaharra instalatzen saiatzen ari zara.%n%nKendu GIMP bertsio hau instalatu baino lehen."
 
-#: build/windows/installer/lang/setup.isl.xml.in:23
+#: build/windows/installer/lang/setup.isl.xml.in:22
 msgid "Development version"
 msgstr "Garapenerako bertsioa"
 
-#: build/windows/installer/lang/setup.isl.xml.in:28
+#: build/windows/installer/lang/setup.isl.xml.in:27
 msgid ""
 "This is a development version of GIMP where some features may not be "
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
@@ -46,25 +46,20 @@ msgid ""
 "installation anyway?"
 msgstr "Hau GIMP instalatzailearen garapen-bertsio bat da. Ez da instalatzaile egonkorra bezainbeste probatu, eta gerta daiteke GIMPek behar den moduan ez instalatzea.%nMesedez, arazoren bat aurkitzen baduzu, ireki akats-jakinarazpen bat GIMPen gitlab gunean (instalatzailearen atalean): %n_https://gitlab.gnome.org/GNOME/gimp/issues%n%n Dena den, instalazioarekin jarraitu nahi duzu?"
 
-#: build/windows/installer/lang/setup.isl.xml.in:31
-#: build/windows/installer/lang/setup.isl.xml.in:54
+#: build/windows/installer/lang/setup.isl.xml.in:30
+#: build/windows/installer/lang/setup.isl.xml.in:43
 msgid "&Continue"
 msgstr "&Jarraitu"
 
-#: build/windows/installer/lang/setup.isl.xml.in:34
+#: build/windows/installer/lang/setup.isl.xml.in:33
 msgid "Exit"
 msgstr "Irten"
 
-#: build/windows/installer/lang/setup.isl.xml.in:44
-msgid ""
-"This version of GIMP requires a processor that supports SSE instructions."
-msgstr "GIMP bertsio honek SSE instrukzioak onartzen dituen prozesagailu bat behar du."
-
-#: build/windows/installer/lang/setup.isl.xml.in:48
+#: build/windows/installer/lang/setup.isl.xml.in:37
 msgid "Display settings problem"
 msgstr "Arazoa monitore-ezarpenekin"
 
-#: build/windows/installer/lang/setup.isl.xml.in:51
+#: build/windows/installer/lang/setup.isl.xml.in:40
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
 "display mode. This has been known to cause stability problems with GIMP, so "
@@ -72,274 +67,318 @@ msgid ""
 "continuing."
 msgstr "Konfigurazioak antzeman du zure Windows sistema exekutatzen den bistaratze modua ez dela 32 bit pixelekoa. Horrela izanik, GIMPek egonkortasun-arazoak izan ditzake. Bistaratzearen kolore-sakonera 32BPP modura aldatzea gomendatzen dugu, aurrera jarraitu baino lehen."
 
-#: build/windows/installer/lang/setup.isl.xml.in:57
+#: build/windows/installer/lang/setup.isl.xml.in:46
 msgid "E&xit"
 msgstr "I&rten"
 
-#: build/windows/installer/lang/setup.isl.xml.in:61
-msgid ""
-"GIMP is now ready to be installed. Click the Install now button to install "
-"using the default settings, or click the Customize button if you'd like to "
-"have more control over what gets installed."
-msgstr "GIMP instalatzeko prest dago. Sakatu 'Instalatu orain' botoia ezarpen lehenetsiak erabilita instalatzeko, edo sakatu 'Pertsonalizatu' botoia instalazioaren gaineko kontrol gehiago izan nahi baduzu."
+#: build/windows/installer/lang/setup.isl.xml.in:50
+msgid "&Repair"
+msgstr "&Konpondu"
 
-#: build/windows/installer/lang/setup.isl.xml.in:64
+#: build/windows/installer/lang/setup.isl.xml.in:53
 msgid "&Install"
 msgstr "&Instalatu"
 
-#: build/windows/installer/lang/setup.isl.xml.in:67
+#: build/windows/installer/lang/setup.isl.xml.in:56
+msgid "&Reinstall"
+msgstr "&Berrinstalatu"
+
+#: build/windows/installer/lang/setup.isl.xml.in:59
+msgid "&Update"
+msgstr "&Eguneratu"
+
+#: build/windows/installer/lang/setup.isl.xml.in:62
 msgid "&Customize"
 msgstr "&Pertsonalizatu"
 
-#: build/windows/installer/lang/setup.isl.xml.in:72
+#: build/windows/installer/lang/setup.isl.xml.in:67
 msgid "Compact installation"
 msgstr "Instalazio trinkoa"
 
-#: build/windows/installer/lang/setup.isl.xml.in:76
+#: build/windows/installer/lang/setup.isl.xml.in:71
 msgid "Custom installation"
 msgstr "Instalazio pertsonalizatua"
 
-#: build/windows/installer/lang/setup.isl.xml.in:80
+#: build/windows/installer/lang/setup.isl.xml.in:75
 msgid "Full installation"
 msgstr "Instalazio osoa"
 
-#: build/windows/installer/lang/setup.isl.xml.in:85
+#: build/windows/installer/lang/setup.isl.xml.in:80
 msgid "Description"
 msgstr "Azalpena"
 
-#: build/windows/installer/lang/setup.isl.xml.in:89
+#: build/windows/installer/lang/setup.isl.xml.in:84
 msgid "GIMP"
 msgstr "GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:93
+#: build/windows/installer/lang/setup.isl.xml.in:88
 msgid "GIMP and all default plug-ins"
 msgstr "GIMP eta plugin lehenetsi guztiak"
 
-#: build/windows/installer/lang/setup.isl.xml.in:97
+#: build/windows/installer/lang/setup.isl.xml.in:92
 msgid "Run-time libraries"
 msgstr "Exekuzio-garaiko liburutegiak"
 
-#: build/windows/installer/lang/setup.isl.xml.in:101
+#: build/windows/installer/lang/setup.isl.xml.in:96
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr "GIMPek erabiltzen dituen exekuzio-garaiko liburutegiak, GTK exekuzio-garaiko ingurunea barne"
 
-#: build/windows/installer/lang/setup.isl.xml.in:105
+#: build/windows/installer/lang/setup.isl.xml.in:100
 msgid "Debug symbols"
 msgstr "Arazketa-ikurrak"
 
-#: build/windows/installer/lang/setup.isl.xml.in:109
+#: build/windows/installer/lang/setup.isl.xml.in:104
 msgid "Include information to help with debugging GIMP"
 msgstr "Sartu informazioa GIMP arazten laguntzeko"
 
-#: build/windows/installer/lang/setup.isl.xml.in:113
-#: build/windows/installer/lang/setup.isl.xml.in:117
+#: build/windows/installer/lang/setup.isl.xml.in:108
+msgid "Resource development files"
+msgstr "Baliabideen garapen-fitxategiak"
+
+#: build/windows/installer/lang/setup.isl.xml.in:112
+msgid ""
+"Include some files to help with building GEGL filters and GIMP plug-ins in "
+"MSYS2"
+msgstr "Sartu zenbait fitxategi GEGL iragazkiak eta GIMP pluginak MSY2n eraikitzen laguntzeko"
+
+#: build/windows/installer/lang/setup.isl.xml.in:116
+#: build/windows/installer/lang/setup.isl.xml.in:120
 msgid "Translations"
 msgstr "Itzulpenak"
 
-#: build/windows/installer/lang/setup.isl.xml.in:121
+#: build/windows/installer/lang/setup.isl.xml.in:124
 msgid "Python scripting"
 msgstr "Python scriptgintza"
 
-#: build/windows/installer/lang/setup.isl.xml.in:125
+#: build/windows/installer/lang/setup.isl.xml.in:128
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr "Python script-hizkuntzan idatzitako GIMP pluginak erabiltzea ahalbidetzen du."
 
-#: build/windows/installer/lang/setup.isl.xml.in:129
+#: build/windows/installer/lang/setup.isl.xml.in:132
 msgid "Lua scripting"
 msgstr "Lua scriptgintza"
 
-#: build/windows/installer/lang/setup.isl.xml.in:133
+#: build/windows/installer/lang/setup.isl.xml.in:136
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr "Lua script-hizkuntzan idatzitako GIMP pluginak erabiltzea ahalbidetzen du."
 
-#: build/windows/installer/lang/setup.isl.xml.in:137
+#: build/windows/installer/lang/setup.isl.xml.in:140
 msgid "MyPaint brushes"
 msgstr "MyPaint brotxak"
 
-#: build/windows/installer/lang/setup.isl.xml.in:141
+#: build/windows/installer/lang/setup.isl.xml.in:144
 msgid "Install the default set of MyPaint brushes"
 msgstr "Instalatu MyPaint brotxen multzo lehenetsia"
 
-#: build/windows/installer/lang/setup.isl.xml.in:145
+#: build/windows/installer/lang/setup.isl.xml.in:148
 msgid "PostScript support"
 msgstr "PostScript euskarria"
 
-#: build/windows/installer/lang/setup.isl.xml.in:149
+#: build/windows/installer/lang/setup.isl.xml.in:152
 msgid "Allow GIMP to load PostScript files"
 msgstr "Onartu GIMPek PostScript fitxategiak karga ditzan"
 
-#: build/windows/installer/lang/setup.isl.xml.in:153
+#: build/windows/installer/lang/setup.isl.xml.in:156
 msgid "Support for 32-bit plug-ins"
 msgstr "32 biteko pluginetarako euskarria"
 
-#: build/windows/installer/lang/setup.isl.xml.in:157
+#: build/windows/installer/lang/setup.isl.xml.in:160
 msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
 "support."
 msgstr "Sartu 32 biteko pluginak erabiltzeko behar diren fitxategiak.%nDerrigorrezkoa TWAIN euskarria izan nahi bada."
 
-#: build/windows/installer/lang/setup.isl.xml.in:162
+#: build/windows/installer/lang/setup.isl.xml.in:165
 msgid "Additional icons:"
 msgstr "Ikono gehigarriak:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:166
+#: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Create a &desktop icon"
 msgstr "Sortu &mahaigaineko ikonoa"
 
-#: build/windows/installer/lang/setup.isl.xml.in:170
-msgid "Create a &Quick Launch icon"
-msgstr "Sortu a&biatze azkarreko ikonoa"
-
 #: build/windows/installer/lang/setup.isl.xml.in:174
-msgid "Remove previous GIMP version"
-msgstr "Kendu aurreko GIMP bertsioa"
-
-#: build/windows/installer/lang/setup.isl.xml.in:179
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
 msgstr "Arazoa izan da %1(e)ko GIMP ingurunea eguneratzean. Pluginak kargatzean errorerik jasotzen baduzu, saiatu GIMP desinstalatu eta berriro instalatzen."
 
-#: build/windows/installer/lang/setup.isl.xml.in:183
+#: build/windows/installer/lang/setup.isl.xml.in:178
 msgid "Error extracting temporary data."
 msgstr "Errorea behin behineko datuak erauztean."
 
-#: build/windows/installer/lang/setup.isl.xml.in:187
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Error updating Python interpreter info."
 msgstr "Errorea Python interpretatzailearen informazioa eguneratzean."
 
-#: build/windows/installer/lang/setup.isl.xml.in:191
-msgid "Error updating MyPaint brushes info."
-msgstr "Errorea MyPaint brotxen informazioa eguneratzean."
+#: build/windows/installer/lang/setup.isl.xml.in:186
+msgid "Trying to create Restore Point..."
+msgstr "Leheneratze-puntua sortzen saiatzen..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
-msgid "There was an error updating %1."
-msgstr "Errorea izan da %1 eguneratzean."
-
-#: build/windows/installer/lang/setup.isl.xml.in:199
-msgid "There was an error updating GIMP's configuration file %1."
-msgstr "Errorea izan da GIMPen %1 konfigurazio-fitxategia eguneratzean."
-
-#: build/windows/installer/lang/setup.isl.xml.in:204
-msgid "Edit with GIMP"
-msgstr "Editatu GIMPekin"
-
-#: build/windows/installer/lang/setup.isl.xml.in:209
-msgid "Select file associations"
-msgstr "Hautatu fitxategi-elkartzeak"
-
-#: build/windows/installer/lang/setup.isl.xml.in:213
-msgid "Extensions:"
-msgstr "Luzapenak:"
-
-#: build/windows/installer/lang/setup.isl.xml.in:217
-msgid "Select the file types you wish to associate with GIMP"
-msgstr "Hautatu GIMPekin lotu nahi dituzun fitxategi motak"
-
-#: build/windows/installer/lang/setup.isl.xml.in:221
-msgid ""
-"This will make selected files open in GIMP when you double-click them in "
-"Explorer."
-msgstr "Horri esker, hautatutako fitxategiak GIMPen irekiko dira, Windowsen arakatzailean haien gainean klik bikoitza egiten denean."
-
-#: build/windows/installer/lang/setup.isl.xml.in:225
-msgid "Select &All"
-msgstr "Hautatu &dena"
-
-#: build/windows/installer/lang/setup.isl.xml.in:229
-msgid "Unselect &All"
-msgstr "Desautatu &dena"
-
-#: build/windows/installer/lang/setup.isl.xml.in:233
-msgid "Select &Unused"
-msgstr "Hautatu &erabili gabeak"
-
-#: build/windows/installer/lang/setup.isl.xml.in:238
-msgid "File types to associate with GIMP:"
-msgstr "GIMPekin lotuko diren fitxategi motak:"
-
-#: build/windows/installer/lang/setup.isl.xml.in:242
-msgid "Removing previous version of GIMP:"
-msgstr "GIMPen aurreko bertsioa kentzen:"
-
-#: build/windows/installer/lang/setup.isl.xml.in:246
-msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"the automatic uninstall of old version has failed.%n%nPlease remove the "
-"previous version of GIMP yourself before installing this version in %2, or "
-"choose a Custom install, and select a different installation folder.%n%nThe "
-"Setup will now exit."
-msgstr "GIMP %1  ezin da instalatu orain instalatuta duzun GIMP bertsioaren gainean, eta bertsio zaharraren desinstalazio automatikoak huts egin du.%n%nKendu GIMP bertsio zaharra eskuz, bertsio hau %2 karpetan instalatu baino lehen, edo aukeratu 'Instalazio pertsonalizatua', eta hautatu instalaziorako beste karpeta bat.%n%nKonfigurazioa itxi egingo da orain."
-
-#: build/windows/installer/lang/setup.isl.xml.in:250
-msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically."
-"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
-"before installing this version in %2, or choose a Custom install, and select "
-"a different installation folder.%n%nThe Setup will now exit."
-msgstr "GIMP %1  ezin da instalatu orain instalatuta duzun GIMP bertsioaren gainean, eta ezin da zehaztu bertsio zaharra automatikoki nola desinstalatu.%n%nKendu GIMP bertsio zaharra eta beste edozein hedapen eskuz, bertsio hau %2 karpetan instalatu baino lehen, edo aukeratu 'Instalazio pertsonalizatua', eta hautatu instalaziorako beste karpeta bat.%n%nKonfigurazioa itxi egingo da orain."
-
-#: build/windows/installer/lang/setup.isl.xml.in:254
-msgid ""
-"Previous GIMP version was removed successfully, but Windows has to be "
-"restarted before the Setup can continue.%n%nAfter restarting your computer, "
-"Setup will continue next time an administrator logs in."
-msgstr "GIMP bertsio zaharra ongi kendu da, baina Windows berrabiarazi egin behar da konfigurazioarekin aurrera jarraitu baino lehen.%n%nOrdenagailua berrabiarazi ondoren, konfigurazioak aurrera jarraituko du administratzaile batek saioa hasten duen hurrengoan."
-
-#: build/windows/installer/lang/setup.isl.xml.in:259
-msgid "There was an error restarting the Setup. (%1)"
-msgstr "Errorea izan da konfigurazioa berrabiaraztean. (%1)"
-
-#: build/windows/installer/lang/setup.isl.xml.in:263
+#: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Cleaning up old files..."
 msgstr "Fitxategi zaharrak garbitzen..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:268
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Gogoan izan: GIMP software librea da.%n%nIkusi"
 
-#: build/windows/installer/lang/setup.isl.xml.in:272
+#: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "for free updates."
 msgstr "eguneraketa libreak eskuratzeko."
 
-#: build/windows/installer/lang/setup.isl.xml.in:276
-msgid "Setting up file associations..."
-msgstr "Fitxategi-elkartzeak konfiguratzen..."
-
-#: build/windows/installer/lang/setup.isl.xml.in:279
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "GIMP Python hedapenerako ingurunea konfiguratzen..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:282
-msgid "Setting up MyPaint brushes..."
-msgstr "MyPaint brotxak konfiguratzen..."
-
-#: build/windows/installer/lang/setup.isl.xml.in:285
+#: build/windows/installer/lang/setup.isl.xml.in:206
 msgid "Setting up GIMP environment..."
 msgstr "GIMP ingurunea konfiguratzen..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:288
-msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "GIMP 32 biteko pluginak onar ditzan konfiguratzen..."
-
-#: build/windows/installer/lang/setup.isl.xml.in:293
+#: build/windows/installer/lang/setup.isl.xml.in:211
 msgid "Launch GIMP"
 msgstr "Abiarazi GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:298
+#: build/windows/installer/lang/setup.isl.xml.in:216
 msgid "Removing add-on"
 msgstr "Gehigarria kentzen"
 
-#: build/windows/installer/lang/setup.isl.xml.in:302
+#: build/windows/installer/lang/setup.isl.xml.in:221
+msgid ""
+"Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
+"custom brushes)?%n%nA copy will be made on Desktop."
+msgstr "GIMPeko zure fitxategi pertsonalak ezabatu nahi dituzu (adibidez ezarpenak, tresna-aurrezarpenak, brotxa pertsonalizatuak)?%n%n Kopia bat egingo da mahaigainean."
+
+#: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Internal error (%1)."
 msgstr "Barne-errorea (%1)."
 
-#: build/windows/installer/lang/setup.isl.xml.in:307
-msgid ""
-"GIMP does not appear to be installed in the selected directory. Continue "
-"anyway?"
-msgstr "Ez dirudi GIMP hautatutako direktorioan instalatuta dagoenik. Jarraitu hala ere?"
+#~ msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
+#~ msgstr ""
+#~ "Windowserako instalatzailearen egilea: Jernej Simonèiè, jernej-gimp@ena.si"
+
+#~ msgid ""
+#~ "This version of GIMP requires Windows 10, or a newer version of Windows."
+#~ msgstr "GIMPen bertsio honek Windows 10 edo berriagoa behar du."
+
+#~ msgid ""
+#~ "This version of GIMP requires a processor that supports SSE instructions."
+#~ msgstr ""
+#~ "GIMP bertsio honek SSE instrukzioak onartzen dituen prozesagailu bat "
+#~ "behar du."
+
+#~ msgid ""
+#~ "GIMP is now ready to be installed. Click the Install now button to "
+#~ "install using the default settings, or click the Customize button if "
+#~ "you'd like to have more control over what gets installed."
+#~ msgstr ""
+#~ "GIMP instalatzeko prest dago. Sakatu 'Instalatu orain' botoia ezarpen "
+#~ "lehenetsiak erabilita instalatzeko, edo sakatu 'Pertsonalizatu' botoia "
+#~ "instalazioaren gaineko kontrol gehiago izan nahi baduzu."
+
+#~ msgid "Create a &Quick Launch icon"
+#~ msgstr "Sortu a&biatze azkarreko ikonoa"
+
+#~ msgid "Remove previous GIMP version"
+#~ msgstr "Kendu aurreko GIMP bertsioa"
+
+#~ msgid "Error updating MyPaint brushes info."
+#~ msgstr "Errorea MyPaint brotxen informazioa eguneratzean."
+
+#~ msgid "There was an error updating %1."
+#~ msgstr "Errorea izan da %1 eguneratzean."
+
+#~ msgid "There was an error updating GIMP's configuration file %1."
+#~ msgstr "Errorea izan da GIMPen %1 konfigurazio-fitxategia eguneratzean."
+
+#~ msgid "Edit with GIMP"
+#~ msgstr "Editatu GIMPekin"
+
+#~ msgid "Select file associations"
+#~ msgstr "Hautatu fitxategi-elkartzeak"
+
+#~ msgid "Extensions:"
+#~ msgstr "Luzapenak:"
+
+#~ msgid "Select the file types you wish to associate with GIMP"
+#~ msgstr "Hautatu GIMPekin lotu nahi dituzun fitxategi motak"
+
+#~ msgid ""
+#~ "This will make selected files open in GIMP when you double-click them in "
+#~ "Explorer."
+#~ msgstr ""
+#~ "Horri esker, hautatutako fitxategiak GIMPen irekiko dira, Windowsen "
+#~ "arakatzailean haien gainean klik bikoitza egiten denean."
+
+#~ msgid "Select &All"
+#~ msgstr "Hautatu &dena"
+
+#~ msgid "Unselect &All"
+#~ msgstr "Desautatu &dena"
+
+#~ msgid "Select &Unused"
+#~ msgstr "Hautatu &erabili gabeak"
+
+#~ msgid "File types to associate with GIMP:"
+#~ msgstr "GIMPekin lotuko diren fitxategi motak:"
+
+#~ msgid "Removing previous version of GIMP:"
+#~ msgstr "GIMPen aurreko bertsioa kentzen:"
+
+#~ msgid ""
+#~ "GIMP %1 cannot be installed over your currently installed GIMP version, "
+#~ "and the automatic uninstall of old version has failed.%n%nPlease remove "
+#~ "the previous version of GIMP yourself before installing this version in "
+#~ "%2, or choose a Custom install, and select a different installation "
+#~ "folder.%n%nThe Setup will now exit."
+#~ msgstr ""
+#~ "GIMP %1  ezin da instalatu orain instalatuta duzun GIMP bertsioaren "
+#~ "gainean, eta bertsio zaharraren desinstalazio automatikoak huts egin du."
+#~ "%n%nKendu GIMP bertsio zaharra eskuz, bertsio hau %2 karpetan instalatu "
+#~ "baino lehen, edo aukeratu 'Instalazio pertsonalizatua', eta hautatu "
+#~ "instalaziorako beste karpeta bat.%n%nKonfigurazioa itxi egingo da orain."
+
+#~ msgid ""
+#~ "GIMP %1 cannot be installed over your currently installed GIMP version, "
+#~ "and Setup couldn't determine how to remove the old version automatically."
+#~ "%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+#~ "before installing this version in %2, or choose a Custom install, and "
+#~ "select a different installation folder.%n%nThe Setup will now exit."
+#~ msgstr ""
+#~ "GIMP %1  ezin da instalatu orain instalatuta duzun GIMP bertsioaren "
+#~ "gainean, eta ezin da zehaztu bertsio zaharra automatikoki nola "
+#~ "desinstalatu.%n%nKendu GIMP bertsio zaharra eta beste edozein hedapen "
+#~ "eskuz, bertsio hau %2 karpetan instalatu baino lehen, edo aukeratu "
+#~ "'Instalazio pertsonalizatua', eta hautatu instalaziorako beste karpeta "
+#~ "bat.%n%nKonfigurazioa itxi egingo da orain."
+
+#~ msgid ""
+#~ "Previous GIMP version was removed successfully, but Windows has to be "
+#~ "restarted before the Setup can continue.%n%nAfter restarting your "
+#~ "computer, Setup will continue next time an administrator logs in."
+#~ msgstr ""
+#~ "GIMP bertsio zaharra ongi kendu da, baina Windows berrabiarazi egin behar "
+#~ "da konfigurazioarekin aurrera jarraitu baino lehen.%n%nOrdenagailua "
+#~ "berrabiarazi ondoren, konfigurazioak aurrera jarraituko du "
+#~ "administratzaile batek saioa hasten duen hurrengoan."
+
+#~ msgid "There was an error restarting the Setup. (%1)"
+#~ msgstr "Errorea izan da konfigurazioa berrabiaraztean. (%1)"
+
+#~ msgid "Setting up file associations..."
+#~ msgstr "Fitxategi-elkartzeak konfiguratzen..."
+
+#~ msgid "Setting up MyPaint brushes..."
+#~ msgstr "MyPaint brotxak konfiguratzen..."
+
+#~ msgid "Setting up GIMP configuration for 32-bit plug-in support..."
+#~ msgstr "GIMP 32 biteko pluginak onar ditzan konfiguratzen..."
+
+#~ msgid ""
+#~ "GIMP does not appear to be installed in the selected directory. Continue "
+#~ "anyway?"
+#~ msgstr ""
+#~ "Ez dirudi GIMP hautatutako direktorioan instalatuta dagoenik. Jarraitu "
+#~ "hala ere?"
 
 #~ msgid "MS-Windows engine for GTK"
 #~ msgstr "MS-Windows motorra GTK liburutegietarako"
