@@ -688,6 +688,7 @@ deps-macos-inhouse-part1:
   stage: dependencies
   cache:
     - key: $CI_PROJECT_NAMESPACE
+      unprotect: true
       paths:
         - macports-cached
       policy: pull
@@ -721,6 +722,7 @@ deps-macos-inhouse:
   stage: dependencies
   cache:
     - key: $CI_PROJECT_NAMESPACE
+      unprotect: true
       paths:
         - macports-cached
       policy: push
