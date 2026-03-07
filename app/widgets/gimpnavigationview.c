@@ -387,10 +387,21 @@ gimp_navigation_view_motion_notify (GtkWidget      *widget,
       return FALSE;
     }
 
-  gimp_navigation_view_move_to (nav_view,
-                                mevent->x - nav_view->motion_offset_x,
-                                mevent->y - nav_view->motion_offset_y);
+  /* Derive window-local coords from root coords and event_window's screen origin.
+   * This only makes a difference on Wayland, on other platforms the event coords
+   * are not local so this is a noop */
+  {
+    gint     origin_x, origin_y;
+    gdouble  mx, my;
 
+    gdk_window_get_origin (view->event_window, &origin_x, &origin_y);
+    mx = mevent->x_root - origin_x;
+    my = mevent->y_root - origin_y;
+
+    gimp_navigation_view_move_to (nav_view,
+                                  mx - nav_view->motion_offset_x,
+                                  my - nav_view->motion_offset_y);
+  }
   gdk_event_request_motions (mevent);
 
   return TRUE;
