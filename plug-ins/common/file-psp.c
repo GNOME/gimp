@@ -2127,7 +2127,23 @@ read_layer_block (FILE      *f,
 
       if (can_handle_layer)
         {
-          pixel = g_malloc0 (height * width * bytespp);
+          gint line_width = width * bytespp;
+
+          if (ia->depth < 8)
+            {
+              gint min_line_width = (((width * ia->depth + 7) / 8) + (ia->depth - 1)) / 4 * 4;
+
+              /* For small widths, when depth is 1, or 4, the number of bytes
+               * used can be larger than the width * bytespp. Adjust for that. */
+              if (min_line_width > line_width)
+                {
+                  IFDBG(3) g_message ("Adjusting line width from %d to %d\n",
+                                      line_width, min_line_width);
+                  line_width = min_line_width;
+                }
+            }
+
+          pixel = g_malloc0 (height * line_width);
           if (null_layer)
             {
               pixels = NULL;
@@ -2136,7 +2152,7 @@ read_layer_block (FILE      *f,
             {
               pixels = g_new (guchar *, height);
               for (i = 0; i < height; i++)
-                pixels[i] = pixel + width * bytespp * i;
+                pixels[i] = pixel + line_width * i;
             }
 
           buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
