@@ -312,6 +312,8 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   /* Set poup screen */
   gtk_window_set_screen (GTK_WINDOW (shell->nav_popup),
                          gtk_widget_get_screen (widget));
+  gtk_window_set_transient_for (GTK_WINDOW (shell->nav_popup),
+                                GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
   gimp_navigation_view_get_local_marker (view,
                                          &view_marker_center_x,
