@@ -666,6 +666,7 @@ gimp-win-eol:
   tags:
     - macos
   variables:
+    ARCH: arm64
     ORKA_RUNNER: tahoe-1
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
@@ -688,17 +689,17 @@ deps-macos-inhouse-part1:
   extends: .macos-inhouse
   stage: dependencies
   cache:
-    - key: $CI_PROJECT_NAMESPACE
+    - key: $CI_PROJECT_NAMESPACE-$ARCH
       unprotect: true
       paths:
-        - macports-cached
+        - macports-cached-$ARCH
       policy: pull
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
     - zsh build/macos/1_build-deps-macports.sh --part1
   artifacts:
     paths:
-      - macports
+      - macports-$ARCH
     expire_in: 2 hours
 
 deps-macos-inhouse-part2:
@@ -711,7 +712,7 @@ deps-macos-inhouse-part2:
     - zsh build/macos/1_build-deps-macports.sh --part2
   artifacts:
     paths:
-      - macports
+      - macports-$ARCH
     expire_in: 2 hours
 
 deps-macos-inhouse:
@@ -722,17 +723,17 @@ deps-macos-inhouse:
       optional: true
   stage: dependencies
   cache:
-    - key: $CI_PROJECT_NAMESPACE
+    - key: $CI_PROJECT_NAMESPACE-$ARCH
       unprotect: true
       paths:
-        - macports-cached
+        - macports-cached-$ARCH
       policy: push
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
     - zsh build/macos/1_build-deps-macports.sh
   artifacts:
     paths:
-      - macports
+      - macports-$ARCH
       - _install-*
       # The full build dir is needed due to its .o for .dSYM creation on next job
       - babl/_build-*
