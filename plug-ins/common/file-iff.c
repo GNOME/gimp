@@ -86,25 +86,21 @@ static GimpImage      * load_image           (GFile                 *file,
                                               GimpRunMode            run_mode,
                                               GError               **error);
 
-static void             deleave_indexed_row  (IFF_UByte             *bitplanes,
-                                              guchar                *pixel_row,
+static guchar         * deleave_indexed_row  (IFF_UByte             *bitplanes,
                                               gint                   width,
                                               gint                   nPlanes);
 
-static void             deleave_rgb_row      (IFF_UByte             *bitplanes,
-                                              guchar                *pixel_row,
+static guchar         * deleave_rgb_row      (IFF_UByte             *bitplanes,
                                               gint                   width,
                                               gint                   nPlanes,
                                               gint                   pixel_size);
 
-static void             deleave_ham_row      (const guchar          *gimp_cmap,
+static guchar         * deleave_ham_row      (const guchar          *gimp_cmap,
                                               IFF_UByte             *bitplanes,
-                                              guchar                *pixel_row,
                                               gint                   width,
                                               gint                   nPlanes);
 
-static void             pbm_row              (IFF_UByte             *bitplanes,
-                                              guchar                *pixel_row,
+static guchar         * pbm_row              (IFF_UByte             *bitplanes,
                                               gint                   width);
 
 
@@ -457,27 +453,30 @@ load_image (GFile        *file,
       /* Loading rows */
       for (gint j = 0; j < height; j++)
         {
-          guchar *pixel_row;
-
-          pixel_row = g_malloc0 (width * pixel_size);
+          /* Allocate pixel_row per format type */
+          guchar *pixel_row = NULL;
 
           /* PBM uses one byte per pixel index */
           if (ILBM_imageIsPBM (true_image))
-            pbm_row (bitplanes, pixel_row, width);
+            pixel_row = pbm_row (bitplanes, width);
           else if (pixel_size == 1)
-            deleave_indexed_row (bitplanes, pixel_row, width, nPlanes);
+            pixel_row = deleave_indexed_row (bitplanes, width, nPlanes);
           else if (ham_mode)
-            deleave_ham_row (gimp_cmap, bitplanes, pixel_row, width, nPlanes);
+            pixel_row = deleave_ham_row (gimp_cmap, bitplanes, width, nPlanes);
           else
-            deleave_rgb_row (bitplanes, pixel_row, width, nPlanes, pixel_size);
+            pixel_row = deleave_rgb_row (bitplanes, width, nPlanes,
+                                         pixel_size);
 
           bitplanes += (row_length * nPlanes);
 
-          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y_height, width, 1), 0,
-                           NULL, pixel_row, GEGL_AUTO_ROWSTRIDE);
+          if (pixel_row)
+            gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y_height, width, 1), 0,
+                             NULL, pixel_row, GEGL_AUTO_ROWSTRIDE);
 
           y_height++;
-          g_free (pixel_row);
+
+          if (pixel_row)
+            g_free (pixel_row);
         }
 
       if (pixel_size == 1)
@@ -490,18 +489,13 @@ load_image (GFile        *file,
   return image;
 }
 
-static void
+static guchar *
 deleave_indexed_row (IFF_UByte *bitplanes,
-                     guchar    *pixel_row,
                      gint       width,
                      gint       nPlanes)
 {
-  guchar index[width];
-  gint   row_length = ((width + 15) / 16) * 2;
-
-  /* Initialize index array */
-  for (gint i = 0; i < width; i++)
-    index[i] = 0;
+  gint    row_length = ((width + 15) / 16) * 2;
+  guchar *pixel_row  = g_malloc0 (row_length * 8 * nPlanes);
 
   /* Deleave rows */
   for (gint i = 0; i < row_length; i++)
@@ -515,27 +509,25 @@ deleave_indexed_row (IFF_UByte *bitplanes,
               guint8 update = (1 << (k + 1)) - (1 << (k));
 
               if (bitplanes[i + (row_length * k)] & bitmask)
-                index[j + (i * 8)] += update;
+                pixel_row[j + (i * 8)] += update;
             }
         }
     }
 
-  /* Associate palette with pixels */
-  for (gint i = 0; i < width; i++)
-    pixel_row[i] = index[i];
+  return pixel_row;
 }
 
-static void
+static guchar *
 deleave_ham_row (const guchar *gimp_cmap,
                  IFF_UByte    *bitplanes,
-                 guchar       *pixel_row,
                  gint          width,
                  gint          nPlanes)
 {
-  const gint control_index[3] = {2, 0, 1};
-  const gint row_length       = ((width + 15) / 16) * 2;
-  gint       prior_rgb[3]     = {0, 0, 0};
-  gint       current_index    = 0;
+  const gint  control_index[3] = {2, 0, 1};
+  const gint  row_length       = ((width + 15) / 16) * 2;
+  gint        prior_rgb[3]     = {0, 0, 0};
+  gint        current_index    = 0;
+  guchar     *pixel_row        = g_malloc0 (row_length * nPlanes * 4);
 
   /* Deleave rows */
   for (gint i = 0; i < row_length; i++)
@@ -592,28 +584,26 @@ deleave_ham_row (const guchar *gimp_cmap,
                 prior_rgb[modify] = (color << 2) + (prior_rgb[modify] & 3);
             }
 
-          pixel_row[current_index * 3]     = prior_rgb[0];
-          pixel_row[current_index * 3 + 1] = prior_rgb[1];
-          pixel_row[current_index * 3 + 2] = prior_rgb[2];
+          pixel_row[current_index]     = prior_rgb[0];
+          pixel_row[current_index + 1] = prior_rgb[1];
+          pixel_row[current_index + 2] = prior_rgb[2];
 
-          current_index++;
+          current_index += 3;
         }
     }
+
+  return pixel_row;
 }
 
-static void
+static guchar *
 deleave_rgb_row (IFF_UByte *bitplanes,
-                 guchar    *pixel_row,
                  gint       width,
                  gint       nPlanes,
                  gint       pixel_size)
 {
-  gint row_length    = ((width + 15) / 16) * 2;
-  gint current_pixel = 0;
-
-  /* Initialize index array */
-  for (gint i = 0; i < (width * pixel_size); i++)
-    pixel_row[i] = 0;
+  gint    row_length    = ((width + 15) / 16) * 2;
+  gint    current_pixel = 0;
+  guchar *pixel_row     = g_malloc0 (row_length * 8 * pixel_size);
 
   /* Deleave rows */
   for (gint i = 0; i < row_length; i++)
@@ -635,13 +625,18 @@ deleave_rgb_row (IFF_UByte *bitplanes,
             }
         }
     }
+
+  return pixel_row;
 }
 
-static void
+static guchar *
 pbm_row (IFF_UByte *bitplanes,
-         guchar    *pixel_row,
          gint       width)
 {
+  guchar * pixel_row = g_malloc0 (width);
+
   for (gint i = 0; i < width; i++)
     pixel_row[i] = bitplanes[i];
+
+  return pixel_row;
 }
