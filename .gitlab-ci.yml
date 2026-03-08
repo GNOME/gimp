@@ -666,6 +666,7 @@ gimp-win-eol:
   tags:
     - macos
   variables:
+    ORKA_RUNNER: tahoe-1
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
     - export GIMP_PREFIX="$PWD/_install-$(uname -m)"

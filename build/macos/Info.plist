@@ -8,6 +8,8 @@
     <string>gimp%MUTEX_SUFFIX%</string>
     <key>CFBundleIconFile</key>
     <string>AppIcon.icns</string>
+    <key>CFBundleIconName</key>
+    <string>AppIcon</string>
     <key>CFBundleIdentifier</key>
     <string>%BUNDLE_IDENTIFIER%</string>
     <key>CFBundleInfoDictionaryVersion</key>
