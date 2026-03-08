@@ -109,7 +109,7 @@ stack {
 }
 
 /* GtkTextView */
-textview text, textview {
+textview, textview.view, textview text {
   background-color: @extreme-bg-color;
   color: @fg-color;
 }
