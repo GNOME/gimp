@@ -1511,19 +1511,19 @@ options_update (GFigObj *old_obj)
   if (selvals.opts.gridspacing != gfig_context->current_obj->opts.gridspacing)
     {
       if (gfig_opt_widget.gridspacing)
-        gimp_label_spin_set_value (GIMP_LABEL_SPIN (gfig_opt_widget.gridspacing),
+        gtk_spin_button_set_value (GTK_SPIN_BUTTON (gfig_opt_widget.gridspacing),
                                    gfig_context->current_obj->opts.gridspacing);
     }
   if (selvals.opts.grid_sectors_desired != gfig_context->current_obj->opts.grid_sectors_desired)
     {
       if (gfig_opt_widget.grid_sectors_desired)
-        gimp_label_spin_set_value (GIMP_LABEL_SPIN (gfig_opt_widget.grid_sectors_desired),
+        gtk_spin_button_set_value (GTK_SPIN_BUTTON (gfig_opt_widget.grid_sectors_desired),
                                    gfig_context->current_obj->opts.grid_sectors_desired);
     }
   if (selvals.opts.grid_radius_interval != gfig_context->current_obj->opts.grid_radius_interval)
     {
       if (gfig_opt_widget.grid_radius_interval)
-        gimp_label_spin_set_value (GIMP_LABEL_SPIN (gfig_opt_widget.grid_radius_interval),
+        gtk_spin_button_set_value (GTK_SPIN_BUTTON (gfig_opt_widget.grid_radius_interval),
                                    gfig_context->current_obj->opts.grid_radius_interval);
     }
   if (selvals.opts.gridtype != gfig_context->current_obj->opts.gridtype)
