@@ -599,6 +599,7 @@ load_multi (GimpProcedure  *procedure,
             g_message (_("Mixed-mode DCX image not loaded"));
 
           g_free (layers);
+          gimp_image_delete (temp_image);
         }
       else
         {
