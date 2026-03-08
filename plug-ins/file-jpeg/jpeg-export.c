@@ -431,19 +431,16 @@ export_image (GFile                *file,
 
   if (cmyk)
     {
-      if (save_profile)
-        {
-          GError *err = NULL;
+      GError *err = NULL;
 
-          cmyk_profile = gimp_image_get_simulation_profile (image);
-          if (! cmyk_profile && err)
-            g_printerr ("%s: no soft-proof profile: %s\n", G_STRFUNC, err->message);
+      cmyk_profile = gimp_image_get_simulation_profile (image);
+      if (! cmyk_profile && err)
+        g_printerr ("%s: no soft-proof profile: %s\n", G_STRFUNC, err->message);
 
-          if (cmyk_profile && ! gimp_color_profile_is_cmyk (cmyk_profile))
-            g_clear_object (&cmyk_profile);
+      if (cmyk_profile && ! gimp_color_profile_is_cmyk (cmyk_profile))
+        g_clear_object (&cmyk_profile);
 
-          g_clear_error (&err);
-        }
+      g_clear_error (&err);
 
       /* As far as I know, without access to JPEG specifications, we
        * should encode as proper "CMYK" encoding scheme. But every other
@@ -650,14 +647,8 @@ export_image (GFile                *file,
     }
 
   /* Step 4.2: store the color profile */
-  if (save_profile &&
-      /* XXX Only case when we don't save a profile even though the
-       * option was requested is if we store as CMYK without setting a
-       * profile. It would actually be better to generate a profile
-       * corresponding to the "naive" CMYK space we use in such case.
-       * But it doesn't look like babl can do this yet.
-       */
-      (! cmyk || cmyk_profile != NULL))
+  if (save_profile ||
+      (cmyk && cmyk_profile != NULL))
     {
       const guint8 *icc_data;
       gsize         icc_length;
@@ -985,6 +976,10 @@ save_dialog (GimpProcedure       *procedure,
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "option-frame", "option-title", FALSE,
                                     "options");
+
+  /* Enforce setting DCT as a combobox */
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "dct", GTK_TYPE_COMBO_BOX);
 
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                   "advanced-options",
