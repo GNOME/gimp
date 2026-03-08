@@ -632,7 +632,7 @@ load_image (GimpProcedure  *procedure,
             GError        **error)
 {
   GeglBuffer   *buffer;
-  guint16       offset_x, offset_y, bytesperline;
+  guint16       offset_x, offset_y, bytesperline, computed_bytesperline;
   gint32        width, height;
   guint16       resolution_x, resolution_y;
   GimpImage    *image;
@@ -681,13 +681,29 @@ load_image (GimpProcedure  *procedure,
                    height);
       return NULL;
     }
-  if ((bytesperline + 1) < ((width * pcx_header.bpp + 7) / 8) ||
-      bytesperline == 0)
+
+  if (pcx_header.bpp != 1 && pcx_header.bpp != 2 && pcx_header.bpp != 4 &&
+      pcx_header.bpp != 8)
     {
+      /* FIXME: After string freeze this should be changed to a more descriptive error. */
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                   _("Invalid number of bytes per line in PCX header"));
+                   _("Unusual PCX flavour, giving up"));
       return NULL;
     }
+
+  /* Some legacy images have incorrect values for bytesperline, that are
+   * off by 1. To be able to load these, we will allow a difference of 1 here.
+   * However, that means we need to allocate 1 more byte than officially
+   * required to make sure we don't cause a buffer overrun.
+   * For larger differences we will compute the value of bytesperline.
+   */
+  computed_bytesperline = (width * pcx_header.bpp + 7) / 8;
+  if (bytesperline + 1 < computed_bytesperline || bytesperline == 0)
+    {
+      g_message (_("Invalid number of bytes per line in PCX header"));
+      bytesperline = (width * pcx_header.bpp + 7) / 8;
+    }
+
   if ((resolution_x < 1) || (resolution_x > GIMP_MAX_RESOLUTION) ||
       (resolution_y < 1) || (resolution_y > GIMP_MAX_RESOLUTION))
     {
@@ -838,6 +854,7 @@ load_image (GimpProcedure  *procedure,
     }
   else
     {
+      /* FIXME: flavour is British English, should be flavor. */
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
                    _("Unusual PCX flavour, giving up"));
       g_object_unref (buffer);
@@ -889,7 +906,7 @@ load_8 (FILE    *fp,
         guint16  bytes)
 {
   gint    row;
-  guchar *line = g_new (guchar, bytes);
+  guchar *line = g_new0 (guchar, bytes + 1);
 
   for (row = 0; row < height; buf += width, ++row)
     {
@@ -910,7 +927,7 @@ load_24 (FILE    *fp,
          guint8   planes)
 {
   gint    x, y, c;
-  guchar *line = g_new (guchar, bytes);
+  guchar *line = g_new0 (guchar, bytes + 1);
 
   for (y = 0; y < height; buf += width * planes, ++y)
     {
@@ -936,7 +953,7 @@ load_1 (FILE    *fp,
         guint16  bytes)
 {
   gint    x, y;
-  guchar *line = g_new (guchar, bytes);
+  guchar *line = g_new0 (guchar, bytes + 1);
 
   for (y = 0; y < height; buf += width, ++y)
     {
@@ -962,7 +979,7 @@ load_4 (FILE    *fp,
         guint16  bytes)
 {
   gint    x, y, c;
-  guchar *line = g_new (guchar, bytes);
+  guchar *line = g_new0 (guchar, bytes + 1);
 
   for (y = 0; y < height; buf += width, ++y)
     {
@@ -993,7 +1010,7 @@ load_sub_8 (FILE    *fp,
             guint16  bytes)
 {
   gint    x, y, c, b;
-  guchar *line = g_new (guchar, bytes);
+  guchar *line = g_new0 (guchar, bytes + 1);
   gint    real_bpp = bpp - 1;
   gint    current_bit = 0;
 
