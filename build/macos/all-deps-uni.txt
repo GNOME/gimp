@@ -41,7 +41,7 @@ mypaint-brushes|homebrew:mypaint-brushes \
 openexr \
 openjpeg \
 pango +thai +quartz -x11 \
-poppler +pinentry -pinentry_mac |homebrew:poppler \
+poppler +pinentry -pinentry_mac|homebrew:poppler \
 poppler-data \
 python313|homebrew:python \ py313-certifi|homebrew:certifi
 py313-gobject3|homebrew:pygobject3 \
