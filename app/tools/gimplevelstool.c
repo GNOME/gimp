@@ -407,6 +407,13 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
 
   /*  The linear/perceptual radio buttons  */
+  /* XXX: override the default to Perceptual for the time being, until
+   * we are able to change "gimp:levels" default for "trc" directly.
+   * See #15962.
+   */
+  g_object_set (config,
+                "trc", GIMP_TRC_PERCEPTUAL,
+                NULL);
   hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (config), "trc",
                                        "gimp-color-space",
                                        -1, -1);
@@ -667,6 +674,12 @@ gimp_levels_tool_reset (GimpFilterTool *filter_tool)
 
   g_object_set (filter_tool->config,
                 "channel", channel,
+                NULL);
+  /* XXX: the tool defaults to Perceptual, unlike the op.
+   * See #15962.
+   */
+  g_object_set (filter_tool->config,
+                "trc", GIMP_TRC_PERCEPTUAL,
                 NULL);
 }
 

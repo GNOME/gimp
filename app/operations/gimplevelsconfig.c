@@ -106,6 +106,11 @@ gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
 
   viewable_class->default_icon_name = "gimp-tool-levels";
 
+  /* "trc" should default to GIMP_TRC_PERCEPTUAL (cf. #15962).
+   * We cannot change it until we implement GEGL op versioning.
+   * In GIMP 3.0, calling this op from the public API was always run in
+   * linear (#15681).
+   */
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRC,
                          "trc",
                          _("Tone Reproduction Curve"),
