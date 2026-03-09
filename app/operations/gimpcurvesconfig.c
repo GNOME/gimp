@@ -44,7 +44,6 @@ enum
 {
   PROP_0,
   PROP_TRC,
-  PROP_LINEAR,
   PROP_CHANNEL,
   PROP_CURVE
 };
@@ -106,18 +105,6 @@ gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
                          _("Work on linear or perceptual RGB, or following the image's TRC"),
                          GIMP_TYPE_TRC_TYPE,
                          GIMP_TRC_PERCEPTUAL, 0);
-
-  /* "linear" is a compat property initially kept for compatibility
-   * reason, in particular for config parsing. It's not needed anymore
-   * since we have config migration rules now and was rendered bogus to
-   * avoid property mixups when setting from API.
-   * TODO: remove "linear" when we can version GEGL operations.
-   */
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LINEAR,
-                            "linear",
-                            _("Linear"),
-                            _("Work on linear RGB (this property is ignored; use \"trc\" instead)"),
-                            TRUE, 0);
 
   /* Only channels GIMP_HISTOGRAM_VALUE to GIMP_HISTOGRAM_ALPHA are
    * supported right now in this op. Unfortunately this is not visible
@@ -203,10 +190,6 @@ gimp_curves_config_get_property (GObject    *object,
       g_value_set_enum (value, self->trc);
       break;
 
-    case PROP_LINEAR:
-      g_value_set_boolean (value, self->trc == GIMP_TRC_LINEAR ? TRUE : FALSE);
-      break;
-
     case PROP_CHANNEL:
       g_value_set_enum (value, self->channel);
       break;
@@ -233,10 +216,6 @@ gimp_curves_config_set_property (GObject      *object,
     {
     case PROP_TRC:
       self->trc = g_value_get_enum (value);
-      break;
-
-    case PROP_LINEAR:
-      /* Ignored */
       break;
 
     case PROP_CHANNEL:
