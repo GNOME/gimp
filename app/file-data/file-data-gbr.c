@@ -314,8 +314,8 @@ file_gbr_drawable_to_brush (GimpDrawable        *drawable,
                   if (data[1] < 1.0)
                     data[0] = (1.0 - data[1]) + (data[0] * data[1]);
 
-                  x = iter->items[0].roi.x + j % iter->items[0].roi.width;
-                  y = iter->items[0].roi.y + j / iter->items[0].roi.width;
+                  x = j % iter->items[0].roi.width;
+                  y = j / iter->items[0].roi.width;
 
                   dest = y * width + x;
 
