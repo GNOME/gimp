@@ -20,6 +20,12 @@ if (-not $GITLAB_CI)
   }
 
 
+$git_path = (Get-Command git).Source
+Write-Host "Using git from: $git_path"
+Copy-Item "C:\Program Files\Git" . -Recurse
+
+exit 1
+
 # Install the required (pre-built) packages for babl, GEGL and GIMP
 if (-not $env:VCPKG_ROOT -or (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf))
   {
