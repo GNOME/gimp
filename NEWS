@@ -6,6 +6,61 @@
 This is the development branch of GIMP.
 
 
+Overview of Changes from GIMP 3.2.0 RC3 to GIMP 3.2.0
+=====================================================
+
+Core:
+
+  - Operation "gimp:curves" set to Perceptual "trc" by default. The
+    "linear" (unused, and only kept for compatibility) arg has been
+    removed since the op could not have been used during 3.0 series.
+  - Levels dialog now initializes to Perceptual (even though the
+    "gimp:levels" op still defaults to Linear "trc", for
+    backward-compatibility reasons).
+
+Tools:
+
+  - Text tool: make sure the on-canvas UI is always fully visible on
+    canvas.
+  - Selection tools: fix ordering of selection modes in tool options.
+
+Graphical User Interface:
+
+  - Further theme fixes (in particular in the Python console).
+  - Individual per-project save buttons in the Quit dialog are now sized
+    according to the theme.
+
+Plug-Ins:
+
+  - Screenshot: when "Include mouse pointer" is checked on Windows,
+    it used to show a generic cursor rather than the actual currently
+    used one. We now show the correct cursor.
+  - Fixed ZDI-CAN-28813 vulnerability in ANI loading.
+  - Fixed ZDI-CAN-28901 vulnerability in XPM loading.
+  - Fixed ZDI-CAN-28807 vulnerability in PSD loading.
+  - Fixed ZDI-CAN-28874 vulnerability in PSP loading.
+  - Fixed ZDI-CAN-28405 vulnerability in IFF loading.
+  - Filters Browser: now shows default value for enum and GimpChoice
+    arguments of filters.
+  - JPEG:
+    * the color profile is now always stored in JPEG files exported as
+      CMYK.
+    * DCT options are shown again as a combo box (instead of a radio
+      frame), just like they were during the 2.10 series.
+
+Translations:
+
+  - New Kazakh translation of the Windows installer, as well as for
+    Python and Script-Fu plug-ins, tags and tips.
+
+Build:
+
+  - The Snap package will now migrate from ~/snap/ if the 3.0 folder is
+    not found in XDG config home, similarly to what we do for Flatpak.
+  - Our in-house macOS builds now uses macOS 26 to generate Liquid Glass
+    icons.
+
+
 Overview of Changes from GIMP 3.2.0 RC2 to GIMP 3.2.0 RC3
 =========================================================
 
