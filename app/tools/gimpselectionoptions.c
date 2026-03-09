@@ -187,7 +187,9 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   GtkWidget            *mode_box;
 
   /*  the selection operation radio buttons  */
-  mode_box = gimp_selection_options_get_mode_box (tool_options, 0, 0);
+  mode_box = gimp_selection_options_get_mode_box (tool_options,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_CHANNEL_OP_INTERSECT);
   gtk_box_pack_start (GTK_BOX (vbox), mode_box, FALSE, FALSE, 0);
   gtk_widget_show (mode_box);
   options->mode_box = mode_box;
