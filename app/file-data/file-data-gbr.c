@@ -275,6 +275,9 @@ file_gbr_drawable_to_brush (GimpDrawable        *drawable,
   width  = rect->width;
   height = rect->height;
 
+  if (width < 0 || height < 0)
+    return NULL;
+
   brush = g_object_new (GIMP_TYPE_BRUSH,
                         "name",      name,
                         "mime-type", "image/x-gimp-gbr",
@@ -421,7 +424,7 @@ file_gbr_image_to_brush (GimpImage     *image,
                          const gchar   *name,
                          gdouble        spacing)
 {
-  GimpBrush    *brush;
+  GimpBrush    *brush    = NULL;
   GimpImage    *subimage = NULL;
   GimpDrawable *drawable;
   gint          width;
