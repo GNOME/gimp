@@ -28,6 +28,7 @@
 #include "dialogs-types.h"
 
 #include "config/gimpcoreconfig.h"
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
@@ -112,6 +113,10 @@ static gboolean    quit_close_all_dialog_query_tooltip     (GtkWidget         *w
                                                             GtkTooltip        *tooltip,
                                                             QuitDialog        *private);
 static gboolean    quit_close_all_idle                     (QuitDialog        *private);
+
+static void        quit_style_updated                      (GimpGuiConfig     *config,
+                                                            GParamSpec        *pspec,
+                                                            GObject           *button);
 
 
 /*  public functions  */
@@ -251,6 +256,8 @@ quit_close_all_dialog_new (Gimp     *gimp,
   g_object_set (renderer,
                 "icon-name", "document-save",
                 NULL);
+  quit_style_updated (GIMP_GUI_CONFIG (gimp->config), NULL,
+                      G_OBJECT (renderer));
   gtk_tree_view_column_pack_end (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column, renderer, NULL);
 
@@ -639,4 +646,33 @@ quit_close_all_idle (QuitDialog *private)
   gtk_dialog_response (GTK_DIALOG (private->dialog), GTK_RESPONSE_OK);
 
   return FALSE;
+}
+
+static void
+quit_style_updated (GimpGuiConfig *config,
+                    GParamSpec    *pspec,
+                    GObject       *button)
+{
+  GtkIconSize icon_size = GTK_ICON_SIZE_MENU;
+
+  if (config->override_icon_size)
+    {
+      switch (config->custom_icon_size)
+        {
+        case GIMP_ICON_SIZE_LARGE:
+          icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
+          break;
+
+        case GIMP_ICON_SIZE_HUGE:
+          icon_size = GTK_ICON_SIZE_DND;
+          break;
+
+        case GIMP_ICON_SIZE_MEDIUM:
+        case GIMP_ICON_SIZE_SMALL:
+        default:
+          icon_size = GTK_ICON_SIZE_MENU;
+        }
+    }
+
+  g_object_set (button, "stock-size", icon_size, NULL);
 }
