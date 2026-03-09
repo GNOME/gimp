@@ -192,6 +192,14 @@ gimp_int_combo_box_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_int_combo_box_create_cells (GIMP_INT_COMBO_BOX (object));
+
+  /* This is a long-term discussion about combo boxes in GIMP.
+   * See #2642, #12491 and #2828.
+   * It's ugly, doesn't make sense, and mostly emphasizes that there is
+   * a bug in that widget at GTK's. So far, it might be feels the less
+   * broken?
+   */
+  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (object), 1);
 }
 
 static void
