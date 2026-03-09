@@ -346,7 +346,8 @@ file_gih_image_to_pipe (GimpImage   *image,
                                                   gimp_object_get_name (layer),
                                                   spacing);
 
-              brushes = g_list_prepend (brushes, brush);
+              if (brush)
+                brushes = g_list_prepend (brushes, brush);
             }
         }
     }
