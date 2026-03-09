@@ -584,7 +584,7 @@ deps-win:
   extends: .win
   stage: dependencies
   script:
-    - build\windows\1_build-deps-msys2.ps1
+    - build\windows\test.ps1
   artifacts:
     paths:
       - Git
