@@ -27,6 +27,7 @@
 /* headers used in some APPn markers */
 #define JPEG_APP_HEADER_EXIF "Exif\0\0"
 #define JPEG_APP_HEADER_XMP  "http://ns.adobe.com/xap/1.0/"
+#define JPEG_APP_HEADER_PS   "Photoshop 3.0"
 
 typedef struct my_error_mgr
 {

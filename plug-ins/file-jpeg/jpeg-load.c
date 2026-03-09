@@ -78,8 +78,8 @@ load_image (GFile        *file,
   GimpColorProfile  *cmyk_profile   = NULL;
   gint               tile_height;
   gint               i;
-  guchar            *photoshop_data = NULL;
-  guint              photoshop_len  = 0;
+  gchar             *photoshop_data = NULL;
+  gint32             photoshop_len  = 0;
   gboolean           support_12_bit = FALSE;
 
 #if LIBJPEG_TURBO_VERSION_NUMBER >= 3000000
@@ -299,15 +299,22 @@ load_image (GFile        *file,
             }
           else if (marker->marker == JPEG_APP0 + 13)
             {
-              photoshop_data = g_new (guchar, len);
-              photoshop_len  = len;
-              memcpy (photoshop_data, (guchar *) marker->data, len);
+              photoshop_data = g_realloc (photoshop_data,
+                                          (gsize) photoshop_len + len - sizeof (JPEG_APP_HEADER_PS));
 
-              *ps_metadata_loaded = TRUE;
+              memcpy (photoshop_data + photoshop_len,
+                      data + sizeof (JPEG_APP_HEADER_PS),
+                      len - sizeof (JPEG_APP_HEADER_PS));
+
+              photoshop_len += len;
+              photoshop_len -= sizeof (JPEG_APP_HEADER_PS);
+
+              if (ps_metadata_loaded)
+                *ps_metadata_loaded = TRUE;
 
 #ifdef GIMP_UNSTABLE
               g_print ("jpeg-load: found Photoshop block (%d bytes) %s\n",
-                       (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)), data);
+                       (gint) (len - sizeof (JPEG_APP_HEADER_PS)), data);
 #endif
             }
         }
@@ -574,9 +581,7 @@ load_image (GFile        *file,
                      g_strerror (errno));
         }
 
-      fwrite (photoshop_data + (sizeof (JPEG_APP_HEADER_EXIF) * 2),
-              sizeof (guchar), photoshop_len - sizeof (JPEG_APP_HEADER_EXIF),
-              fp);
+      fwrite (photoshop_data, sizeof (guchar), photoshop_len, fp);
       fclose (fp);
 
       g_free (photoshop_data);
