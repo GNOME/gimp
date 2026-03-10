@@ -48,6 +48,7 @@ struct _GimpMybrushOptions
   gdouble           posterize_num;
   gboolean          eraser;
   gboolean          no_erasing;
+  gboolean          pigment_use;
 };
 
 struct _GimpMybrushOptionsClass
