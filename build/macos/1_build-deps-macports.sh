@@ -39,7 +39,7 @@ printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstall
 if [ -f "$OPT_PREFIX/bin/port" ]; then
   eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync && eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port upgrade outdated
   if [ "$CI_JOB_NAME" ] && ls -d macports* 2>/dev/null | grep -q .; then
-    if echo "$CI_JOB_NAME" | grep -q 'part1' && [ -d "macports-cached-$(uname -m)" ]; then
+    if [ -d "macports-cached-$(uname -m)" ]; then
       cp -fa macports-cached-$(uname -m)/* $OPT_PREFIX/var/macports || true
     elif [ -d "macports-$(uname -m)" ]; then
       cp -fa macports-$(uname -m)/* $OPT_PREFIX/var/macports || true
