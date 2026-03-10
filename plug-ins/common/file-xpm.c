@@ -50,11 +50,9 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 
 #include <gdk/gdk.h>          /* For GDK_WINDOWING_WIN32 */
 
-#ifndef GDK_WINDOWING_X11
-#ifndef XPM_NO_X
-#define XPM_NO_X
-#endif
-#else
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+
 #include <X11/Xlib.h>
 #endif
 
@@ -417,20 +415,29 @@ load_image (GFile   *file,
 static guchar *
 parse_colors (XpmImage *xpm_image)
 {
-#ifndef XPM_NO_X
+#ifdef GDK_WINDOWING_X11
   Display  *display;
   Colormap  colormap;
 #endif
   gint      i, j;
   guchar   *cmap;
+  gboolean use_x_api = FALSE;;
 
-#ifndef XPM_NO_X
-  /* open the display and get the default color map */
-  display  = XOpenDisplay (NULL);
-  if (display == NULL)
-    g_printerr ("Could not open display\n");
+#ifdef GDK_WINDOWING_X11
+  use_x_api = (gdk_display_get_default () &&
+               GDK_IS_X11_DISPLAY (gdk_display_get_default ()));
+#endif
 
-  colormap = DefaultColormap (display, DefaultScreen (display));
+#ifdef GDK_WINDOWING_X11
+  if (use_x_api)
+    {
+      /* open the display and get the default color map */
+      display  = XOpenDisplay (NULL);
+      if (display == NULL)
+        g_printerr ("Could not open display\n");
+
+      colormap = DefaultColormap (display, DefaultScreen (display));
+    }
 #endif
 
   /* alloc a buffer to hold the parsed colors */
@@ -439,13 +446,8 @@ parse_colors (XpmImage *xpm_image)
   /* parse each color in the file */
   for (i = 0, j = 0; i < xpm_image->ncolors; i++)
     {
-      gchar     *colorspec = "None";
-      XpmColor  *xpm_color;
-#ifndef XPM_NO_X
-      XColor     xcolor;
-#else
-      GdkRGBA    xcolor;
-#endif
+      gchar    *colorspec = "None";
+      XpmColor *xpm_color;
 
       xpm_color = &(xpm_image->colorTable[i]);
 
@@ -462,17 +464,26 @@ parse_colors (XpmImage *xpm_image)
       /* parse if it's not transparent */
       if (strcmp (colorspec, "None") != 0)
         {
-#ifndef XPM_NO_X
-          XParseColor (display, colormap, colorspec, &xcolor);
-          cmap[j++] = xcolor.red >> 8;
-          cmap[j++] = xcolor.green >> 8;
-          cmap[j++] = xcolor.blue >> 8;
-#else
-          gdk_rgba_parse (&xcolor, colorspec);
-          cmap[j++] = CLAMP (xcolor.red * G_MAXUINT8, 0, G_MAXUINT8);
-          cmap[j++] = CLAMP (xcolor.green * G_MAXUINT8, 0, G_MAXUINT8);
-          cmap[j++] = CLAMP (xcolor.blue * G_MAXUINT8, 0, G_MAXUINT8);
+#ifdef GDK_WINDOWING_X11
+          if (use_x_api)
+            {
+              XColor xcolor;
+
+              XParseColor (display, colormap, colorspec, &xcolor);
+              cmap[j++] = xcolor.red >> 8;
+              cmap[j++] = xcolor.green >> 8;
+              cmap[j++] = xcolor.blue >> 8;
+            }
+          else
 #endif
+            {
+              GdkRGBA xcolor;
+
+              gdk_rgba_parse (&xcolor, colorspec);
+              cmap[j++] = CLAMP (xcolor.red * G_MAXUINT8, 0, G_MAXUINT8);
+              cmap[j++] = CLAMP (xcolor.green * G_MAXUINT8, 0, G_MAXUINT8);
+              cmap[j++] = CLAMP (xcolor.blue * G_MAXUINT8, 0, G_MAXUINT8);
+            }
           cmap[j++] = ~0;
         }
       else
@@ -480,9 +491,12 @@ parse_colors (XpmImage *xpm_image)
           j += 4;
         }
     }
-#ifndef XPM_NO_X
-  XCloseDisplay (display);
+
+#ifdef GDK_WINDOWING_X11
+  if (use_x_api)
+    XCloseDisplay (display);
 #endif
+
   return cmap;
 }
 
