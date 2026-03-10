@@ -50,7 +50,7 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 
 #include <gdk/gdk.h>          /* For GDK_WINDOWING_WIN32 */
 
-#ifndef GDK_WINDOWING_X11
+#if defined(GDK_WINDOWING_WAYLAND) || defined(GDK_WINDOWING_QUARTZ) || !defined(GDK_WINDOWING_X11)
 #ifndef XPM_NO_X
 #define XPM_NO_X
 #endif
