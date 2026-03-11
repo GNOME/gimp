@@ -122,14 +122,14 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'color_profile', type => 'bytes',
+        { name => 'color_profile', type => 'bytes', none_ok => 1,
           desc => 'The new serialized color profile' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  if (color_profile)
+  if (color_profile && g_bytes_get_size (color_profile) > 0)
     {
       GimpColorProfile *profile;
 
@@ -263,14 +263,14 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'color_profile', type => 'bytes',
+        { name => 'color_profile', type => 'bytes', none_ok => 1,
           desc => 'The new serialized simulation color profile'}
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  if (color_profile)
+  if (color_profile && g_bytes_get_size (color_profile) > 0)
     {
       GimpColorProfile *profile;
 

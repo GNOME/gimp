@@ -143,7 +143,7 @@ image_set_color_profile_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (color_profile)
+      if (color_profile && g_bytes_get_size (color_profile) > 0)
         {
           GimpColorProfile *profile;
 
@@ -272,7 +272,7 @@ image_set_simulation_profile_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (color_profile)
+      if (color_profile && g_bytes_get_size (color_profile) > 0)
         {
           GimpColorProfile *profile;
 

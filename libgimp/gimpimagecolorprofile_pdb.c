@@ -116,7 +116,7 @@ _gimp_image_get_effective_color_profile (GimpImage *image)
 /**
  * _gimp_image_set_color_profile:
  * @image: The image.
- * @color_profile: The new serialized color profile.
+ * @color_profile: (nullable): The new serialized color profile.
  *
  * Sets the image's color profile
  *
@@ -238,7 +238,7 @@ _gimp_image_get_simulation_profile (GimpImage *image)
 /**
  * _gimp_image_set_simulation_profile:
  * @image: The image.
- * @color_profile: The new serialized simulation color profile.
+ * @color_profile: (nullable): The new serialized simulation color profile.
  *
  * Sets the image's simulation color profile
  *

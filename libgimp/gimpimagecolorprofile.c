@@ -67,6 +67,9 @@ gimp_image_get_color_profile (GimpImage *image)
  *
  * This procedure sets the image's color profile.
  *
+ * If %NULL is passed as @profile, then the built-in profile for
+ * @image's color model is set.
+ *
  * Returns: %TRUE on success.
  *
  * Since: 2.10
@@ -139,6 +142,8 @@ gimp_image_get_simulation_profile (GimpImage *image)
  * Sets the image's simulation color profile
  *
  * This procedure sets the image's simulation color profile.
+ *
+ * If %NULL is passed as @profile, then the simulation profile is unset.
  *
  * Returns: %TRUE on success.
  *
