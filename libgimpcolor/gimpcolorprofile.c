@@ -298,7 +298,7 @@ gimp_color_profile_new_from_icc_profile (const guint8  *data,
       profile->lcms_profile = lcms_profile;
       profile->data         = g_memdup2 (data, length);
       profile->length       = length;
-   }
+    }
   else
     {
       g_set_error_literal (error, GIMP_COLOR_PROFILE_ERROR, 0,
