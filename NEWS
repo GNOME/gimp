@@ -48,6 +48,14 @@ Plug-Ins:
     * DCT options are shown again as a combo box (instead of a radio
       frame), just like they were during the 2.10 series.
 
+API:
+
+  - libgimp/PDB: gimp_image_convert_color_profile() allows a NULL
+    profile, which will convert the image to a built-in profile, as was
+    already documented (yet not properly implemented).
+  - libgimpwidgets: GimpUnitComboBox better interacting with pointer
+    events.
+
 Translations:
 
   - New Kazakh translation of the Windows installer, as well as for
@@ -59,6 +67,9 @@ Build:
     not found in XDG config home, similarly to what we do for Flatpak.
   - Our in-house macOS builds now uses macOS 26 to generate Liquid Glass
     icons.
+  - The RC2 splash image was chosen as final GIMP 3.2.0 splash.
+  - DMG packages for macOS are now properly built as relocatable.
+  - Building GIMP is now fully reproducible.
 
 
 Overview of Changes from GIMP 3.2.0 RC2 to GIMP 3.2.0 RC3
