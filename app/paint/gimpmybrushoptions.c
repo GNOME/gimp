@@ -133,7 +133,8 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_PIGMENT,
                            "pigment",
-                           NULL, NULL,
+                           _("Pigment"),
+                           NULL,
                            0.0, 1.0, 0.0,
                            GIMP_PARAM_STATIC_STRINGS);
 

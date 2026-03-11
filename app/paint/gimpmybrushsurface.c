@@ -31,6 +31,48 @@
 #include "gimpmybrushoptions.h"
 #include "gimpmybrushsurface.h"
 
+#define WGM_EPSILON 0.001
+
+/*From MyPaint*/
+static const float T_MATRIX_SMALL[3][10] =
+{
+  {
+    0.026595621243689, 0.049779426257903, 0.022449850859496,-0.218453689278271,
+   -0.256894883201278, 0.445881722194840, 0.772365886289756, 0.194498761382537,
+    0.014038157587820, 0.007687264480513
+  },
+  {
+   -0.032601672674412,-0.061021043498478,-0.052490001018404 ,0.206659098273522,
+    0.572496335158169, 0.317837248815438,-0.021216624031211,-0.019387668756117,
+   -0.001521339050858,-0.000835181622534
+  },
+  {
+    0.339475473216284, 0.635401374177222, 0.771520797089589, 0.113222640692379,
+   -0.055251113343776,-0.048222578468680,-0.012966666339586,
+   -0.001523814504223,-0.000094718948810,-0.000051604594741
+  }
+};
+
+static const float spectral_r_small[10] =
+{
+  0.009281362787953, 0.009732627042016, 0.011254252737167, 0.015105578649573,
+  0.024797924177217, 0.083622585502406, 0.977865045723212, 1.000000000000000,
+  0.999961046144372, 0.999999992756822
+};
+
+static const float spectral_g_small[10] =
+{
+  0.002854127435775, 0.003917589679914, 0.012132151699187, 0.748259205918013,
+  1.000000000000000, 0.865695937531795, 0.037477469241101, 0.022816789725717,
+  0.021747419446456, 0.021384940572308
+};
+
+static const float spectral_b_small[10] =
+{
+  0.537052150373386,0.546646402401469,0.575501819073983,0.258778829633924,
+  0.041709923751716,0.012662638828324,0.007485593127390,0.006766900622462,
+  0.006699764779016,0.006676219883241
+};
 
 struct _GimpMybrushSurface
 {
@@ -232,6 +274,69 @@ calculate_dab_roi (float x,
 }
 
 static void
+rgb_to_spectral (float r,
+                 float g,
+                 float b,
+                 float *spectral_)
+{
+  float offset;
+  float spec_r [10] = {0};
+  float spec_g [10] = {0};
+  float spec_b [10] = {0};
+  int   i;
+
+  offset = 1.0f - WGM_EPSILON;
+  r      = r * offset + WGM_EPSILON;
+  g      = g * offset + WGM_EPSILON;
+  b      = b * offset + WGM_EPSILON;
+
+  for (i = 0; i < 10; i++)
+    spec_r[i] = spectral_r_small[i] * r;
+
+  for (i = 0; i < 10; i++)
+    spec_g[i] = spectral_g_small[i] * g;
+
+  for (i = 0; i < 10; i++)
+    spec_b[i] = spectral_b_small[i] * b;
+
+  for (i = 0; i < 10; i++)
+    spectral_[i] += spec_r[i] + spec_g[i] + spec_b[i];
+}
+
+static void
+spectral_to_rgb (float *spectral,
+                 float *rgb_)
+{
+  float offset;
+  float tmp[3] = {0};
+  int   i;
+
+  offset = 1.0f - WGM_EPSILON;
+
+  for (i = 0; i < 10; i++)
+    {
+      tmp[0] += T_MATRIX_SMALL[0][i] * spectral[i];
+      tmp[1] += T_MATRIX_SMALL[1][i] * spectral[i];
+      tmp[2] += T_MATRIX_SMALL[2][i] * spectral[i];
+    }
+
+  for (i = 0; i < 3; i++)
+    rgb_[i] = CLAMP ((tmp[i] - WGM_EPSILON) / offset, 0.0f, 1.0f);
+}
+
+static float
+spectral_blend_factor (float x)
+{
+  const float ver_fac = 1.65f; /* vertical compression factor */
+  const float hor_fac = 8.0f;  /* horizontal compression factor */
+  const float hor_offs = 3.0f; /* horizontal offset */
+  float       b;
+
+  b = x * hor_fac - hor_offs;
+  return 0.5f + b / (1.0f + fabsf (b) * ver_fac);
+}
+
+static void
 gimp_mypaint_surface_get_color_2 (MyPaintSurface2 *base_surface,
                                   gfloat           x,
                                   gfloat           y,
@@ -255,6 +360,7 @@ gimp_mypaint_surface_get_color_2 (MyPaintSurface2 *base_surface,
   *color_b = 0.0f;
   *color_a = 0.0f;
 
+
   if (dabRect.width > 0 || dabRect.height > 0)
   {
     const float one_over_radius2 = 1.0f / (radius * radius);
@@ -263,6 +369,7 @@ gimp_mypaint_surface_get_color_2 (MyPaintSurface2 *base_surface,
     float sum_g = 0.0f;
     float sum_b = 0.0f;
     float sum_a = 0.0f;
+    float avg_spectral[10] = {0};
 
      /* Read in clamp mode to avoid transparency bleeding in at the edges */
     GeglBufferIterator *iter = gegl_buffer_iterator_new (surface->buffer, &dabRect, 0,
@@ -283,7 +390,8 @@ gimp_mypaint_surface_get_color_2 (MyPaintSurface2 *base_surface,
       {
         float *pixel = (float *)iter->items[0].data;
         float *mask;
-        int iy, ix;
+        float  spectral[10] = {0};
+        int    iy, ix, i;
 
         if (surface->paint_mask)
           mask = iter->items[1].data;
@@ -299,20 +407,34 @@ gimp_mypaint_surface_get_color_2 (MyPaintSurface2 *base_surface,
                 float xx = (ix + 0.5f - x);
                 float rr = (yy * yy + xx * xx) * one_over_radius2;
                 float pixel_weight = 0.0f;
+
                 if (rr <= 1.0f)
                   pixel_weight = 1.0f - rr;
+
                 if (mask)
                   pixel_weight *= *mask;
 
-                sum_r += pixel_weight * pixel[RED];
-                sum_g += pixel_weight * pixel[GREEN];
-                sum_b += pixel_weight * pixel[BLUE];
                 sum_a += pixel_weight * pixel[ALPHA];
                 sum_weight += pixel_weight;
 
-                pixel += 4;
-                if (mask)
-                  mask += 1;
+                if (paint > 0.0f && pixel[ALPHA] > 0.0f)
+                  {
+                    float fac_a = pixel_weight * pixel[ALPHA];
+                    float fac_b = sum_a > 0.0f ? 1.0f - (fac_a / sum_a) : 0.0f;
+                    fac_a = sum_a > 0.0f ? fac_a / sum_a : 0.0f;
+
+                    rgb_to_spectral (pixel[RED] / pixel[ALPHA], pixel[GREEN] / pixel[ALPHA], pixel[BLUE] / pixel[ALPHA], spectral);
+
+                    for (i = 0; i < 10; i++)
+                      avg_spectral[i] = powf (spectral[i], fac_a) * powf (avg_spectral[i], fac_b);
+                  }
+
+                if (paint < 1.0f)
+                  {
+                    sum_r += pixel_weight * pixel[RED];
+                    sum_g += pixel_weight * pixel[GREEN];
+                    sum_b += pixel_weight * pixel[BLUE];
+                  }
               }
           }
       }
@@ -324,9 +446,23 @@ gimp_mypaint_surface_get_color_2 (MyPaintSurface2 *base_surface,
         sum_b /= sum_weight;
         sum_a /= sum_weight;
 
-        sum_r /= sum_a;
-        sum_g /= sum_a;
-        sum_b /= sum_a;
+        if (paint > 0.0f)
+          {
+            float rgb[3] = {0};
+            spectral_to_rgb (avg_spectral, rgb);
+
+            sum_r = (sum_r / sum_a) * (1.0f - paint) + rgb[0] * paint;
+            sum_g = (sum_g / sum_a) * (1.0f - paint) + rgb[1] * paint;
+            sum_b = (sum_b / sum_a) * (1.0f - paint) + rgb[2] * paint;
+
+          }
+        else
+          {
+            sum_r /= sum_a;
+            sum_g /= sum_a;
+            sum_b /= sum_a;
+          }
+
 
         /* FIXME: Clamping is wrong because GEGL allows alpha > 1, this should probably re-multipy things */
         *color_r = CLAMP(sum_r, 0.0f, 1.0f);
@@ -433,7 +569,7 @@ gimp_mypaint_surface_draw_dab_2 (MyPaintSurface2 *base_surface,
     {
       float *pixel = (float *)iter->items[0].data;
       float *mask;
-      int iy, ix;
+      int iy, ix, i;
 
       if (surface->paint_mask)
         mask = iter->items[1].data;
@@ -468,9 +604,46 @@ gimp_mypaint_surface_draw_dab_2 (MyPaintSurface2 *base_surface,
                    * instead we only calculate the cheaper term. */
                   float src_term = (alpha * color_a) / a;
                   float dst_term = 1.0f - src_term;
-                  r = color_r * src_term + r * dst_term;
-                  g = color_g * src_term + g * dst_term;
-                  b = color_b * src_term + b * dst_term;
+
+                  if (paint > 0.0f && dst_alpha > 0.0f)
+                    {
+                      /* Spectral additive based on dst alpha *
+                       * at low alpha, additive blending dominates to avoid dark fringe.
+                       * At high alpha, multiplicative blending dominates for realistic pigment mixing */
+                      float spectral_src[10] = {0};
+                      float spectral_dst[10] = {0};
+                      float spectral_res[10] = {0};
+                      float rgb_res[3]       = {0};
+                      float spectral_factor;
+                      float additive_factor;
+                      float add_r, add_g, add_b;
+
+                      spectral_factor = CLAMP (spectral_blend_factor (dst_alpha), 0.0f, 1.0f);
+                      additive_factor = 1.0f - spectral_factor;
+
+                      /* Additive RGB component */
+                      add_r = color_r * src_term + r * dst_term;
+                      add_g = color_g * src_term + g * dst_term;
+                      add_b = color_b * src_term + b * dst_term;
+
+                      rgb_to_spectral (color_r, color_g, color_b, spectral_src);
+                      rgb_to_spectral (r, g, b, spectral_dst);
+                      for (i = 0; i < 10; i++)
+                        spectral_res[i] = powf (spectral_src[i], src_term) *
+                                          powf (spectral_dst[i], dst_term);
+                      spectral_to_rgb (spectral_res, rgb_res);
+
+                      /* Blend the additive and spectral components together */
+                      r = additive_factor * add_r + spectral_factor * rgb_res[0];
+                      g = additive_factor * add_g + spectral_factor * rgb_res[1];
+                      b = additive_factor * add_b + spectral_factor * rgb_res[2];
+                    }
+                  else
+                    {
+                      r = color_r * src_term + r * dst_term;
+                      g = color_g * src_term + g * dst_term;
+                      b = color_b * src_term + b * dst_term;
+                    }
                 }
 
               if (colorize > 0.0f && base_alpha > 0.0f)
@@ -546,6 +719,7 @@ gimp_mypaint_surface_draw_dab_2 (MyPaintSurface2 *base_surface,
                 }
 
               pixel += 4;
+
               if (mask)
                 mask += 1;
             }

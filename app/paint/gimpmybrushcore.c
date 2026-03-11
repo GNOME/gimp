@@ -467,7 +467,7 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
                                     options->gain);
       mypaint_brush_set_base_value (brush,
                                     MYPAINT_BRUSH_SETTING_PAINT_MODE,
-                                    options->pigment);
+                                    options->pigment_use ? options->pigment : 0.0f);
       mypaint_brush_set_base_value (brush,
                                     MYPAINT_BRUSH_SETTING_POSTERIZE,
                                     options->posterize);
