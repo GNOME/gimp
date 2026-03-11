@@ -470,14 +470,14 @@ gimp_image_set_simulation_bpc (GimpImage *image,
 /**
  * _gimp_image_convert_color_profile:
  * @image: The image.
- * @color_profile: The serialized color profile.
+ * @color_profile: (nullable): The serialized color profile.
  * @intent: Rendering intent.
  * @bpc: Black point compensation.
  *
  * Convert the image's layers to a color profile
  *
  * This procedure converts from the image's color profile (or the
- * default RGB or grayscale profile if none is set) to the given color
+ * built-in RGB or grayscale profile if none is set) to the given color
  * profile. Only RGB and grayscale color profiles are accepted,
  * according to the image's type.
  *

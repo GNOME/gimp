@@ -212,14 +212,14 @@ gimp_image_get_effective_color_profile (GimpImage *image)
 /**
  * gimp_image_convert_color_profile:
  * @image:   The image.
- * @profile: The color profile to convert to.
+ * @profile: (nullable): The color profile to convert to.
  * @intent:  Rendering intent.
  * @bpc:     Black point compensation.
  *
- * Convert the image's layers to a color profile
+ * Convert the image's layers to a color profile.
  *
  * This procedure converts from the image's color profile (or the
- * default profile if none is set) to the given color profile.
+ * built-in profile if none is set) to the given color profile.
  *
  * Only RGB and grayscale color profiles are accepted, according to the
  * image's type.

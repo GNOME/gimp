@@ -470,26 +470,31 @@ image_convert_color_profile_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (color_profile)
-        {
-          GimpColorProfile *profile;
+      GimpColorProfile *profile;
 
+      if (color_profile && g_bytes_get_size (color_profile) > 0)
+        {
           profile = gimp_color_profile_new_from_icc_profile (g_bytes_get_data (color_profile, NULL),
                                                              g_bytes_get_size (color_profile),
                                                              error);
-
-          if (profile)
-            {
-              success = gimp_image_convert_color_profile (image, profile,
-                                                          intent, bpc,
-                                                          progress, error);
-              g_object_unref (profile);
-            }
-          else
-            success = FALSE;
         }
       else
-        success = FALSE;
+        {
+          profile = gimp_image_get_builtin_color_profile (image);
+          g_object_ref (profile);
+        }
+
+      if (profile)
+        {
+          success = gimp_image_convert_color_profile (image, profile,
+                                                      intent, bpc,
+                                                      progress, error);
+          g_object_unref (profile);
+        }
+      else
+        {
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -875,7 +880,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                "gimp-image-convert-color-profile");
   gimp_procedure_set_static_help (procedure,
                                   "Convert the image's layers to a color profile",
-                                  "This procedure converts from the image's color profile (or the default RGB or grayscale profile if none is set) to the given color profile. Only RGB and grayscale color profiles are accepted, according to the image's type.",
+                                  "This procedure converts from the image's color profile (or the built-in RGB or grayscale profile if none is set) to the given color profile. Only RGB and grayscale color profiles are accepted, according to the image's type.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",

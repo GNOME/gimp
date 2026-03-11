@@ -453,7 +453,7 @@ sub image_convert_color_profile {
     $blurb = "Convert the image's layers to a color profile";
 
     $help = <<'HELP';
-This procedure converts from the image's color profile (or the default
+This procedure converts from the image's color profile (or the built-in
 RGB or grayscale profile if none is set) to the given color profile. Only
 RGB and grayscale color profiles are accepted, according to the image's
 type.
@@ -466,7 +466,7 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'color_profile', type => 'bytes',
+        { name => 'color_profile', type => 'bytes', none_ok => 1,
           desc => 'The serialized color profile' },
         { name => 'intent', type => 'enum GimpColorRenderingIntent',
           desc => 'Rendering intent' },
@@ -477,26 +477,31 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (color_profile)
-    {
-      GimpColorProfile *profile;
+  GimpColorProfile *profile;
 
+  if (color_profile && g_bytes_get_size (color_profile) > 0)
+    {
       profile = gimp_color_profile_new_from_icc_profile (g_bytes_get_data (color_profile, NULL),
                                                          g_bytes_get_size (color_profile),
                                                          error);
-
-      if (profile)
-        {
-          success = gimp_image_convert_color_profile (image, profile,
-                                                      intent, bpc,
-                                                      progress, error);
-          g_object_unref (profile);
-        }
-      else
-        success = FALSE;
     }
   else
-    success = FALSE;
+    {
+      profile = gimp_image_get_builtin_color_profile (image);
+      g_object_ref (profile);
+    }
+
+  if (profile)
+    {
+      success = gimp_image_convert_color_profile (image, profile,
+                                                  intent, bpc,
+                                                  progress, error);
+      g_object_unref (profile);
+    }
+  else
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
