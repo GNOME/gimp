@@ -110,8 +110,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.7.tar.gz",
-                            "sha256": "5e292b02614dbc0cee40fe1116db2f42f63ef6b2ba430c77b614e17b8d61a638",
+                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.8.tar.gz",
+                            "sha256": "ea51b0609f58a9afa063b60daa1539948b62247721e154f4fff0ad3aec9f9756",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 769,
@@ -135,8 +135,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.5.tar.gz",
-                    "sha256": "b10f21d3f8ff3211eb1687a2e2bf7a79d361aec8dfaca1f9b79f3d70755b4f48",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.6.tar.gz",
+                    "sha256": "f8cfe743a81c8cc1dd3cbaafa7fa76f75ad31456b0fc45a42b086d12530a4e35",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -697,8 +697,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/14.1.2/graphviz-14.1.2.tar.gz",
-                    "sha256": "44fb98203b4545421a2c2cbeb917a8443388838e22460e164526dda3aa28d892",
+                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/14.1.3/graphviz-14.1.3.tar.gz",
+                    "sha256": "b6afb085412a82b34508cfe067ae95f8e565739c5818d4814f5c5a6114f153f5",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1249,
