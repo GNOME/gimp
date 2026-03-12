@@ -4271,7 +4271,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                           COL_LICENSOR_PHONE1,      NULL,
                                           COL_LICENSOR_PHONE_TYPE1, gettext (phone_types[0].display),
                                           COL_LICENSOR_PHONE2,      NULL,
-                                          COL_LICENSOR_PHONE_TYPE1, gettext (phone_types[0].display),
+                                          COL_LICENSOR_PHONE_TYPE2, gettext (phone_types[0].display),
                                           COL_LICENSOR_EMAIL,       NULL,
                                           COL_LICENSOR_WEB,         NULL,
                                           -1);
