@@ -1254,16 +1254,22 @@ load_image (GimpProcedure     *procedure,
       base_type  = GIMP_GRAY;
       image_type = GIMP_GRAY_IMAGE;
 
-      if (num_components == 2)
-        image_type = GIMP_GRAYA_IMAGE;
+      if (num_components >= 2)
+        {
+          image_type     = GIMP_GRAYA_IMAGE;
+          num_components = 2;
+        }
     }
   else if (image->color_space == OPJ_CLRSPC_SRGB)
     {
       base_type  = GIMP_RGB;
       image_type = GIMP_RGB_IMAGE;
 
-      if (num_components == 4)
-        image_type = GIMP_RGBA_IMAGE;
+      if (num_components >= 4)
+        {
+          image_type     = GIMP_RGBA_IMAGE;
+          num_components = 4;
+        }
     }
   else
     {
