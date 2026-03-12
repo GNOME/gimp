@@ -387,12 +387,12 @@ preview_compute (void)
 
   if (GDK_IS_WINDOW (gtk_widget_get_window (previewarea)))
     {
-      cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
+      cursor = gdk_cursor_new_from_name (display, "wait");
       gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
       g_object_unref (cursor);
 
       compute_preview (startx, starty, pw, ph);
-      cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
+      cursor = gdk_cursor_new_from_name (display, "pointer");
       gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
       g_object_unref (cursor);
       gdk_display_flush (display);

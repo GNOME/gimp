@@ -1427,8 +1427,8 @@ gimp_text_style_editor_notify_enter_dnd_handler (GtkWidget       *widget,
 
   if (window)
     {
-      GdkCursor *cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
-                                                      GDK_FLEUR);
+      GdkCursor *cursor =
+        gdk_cursor_new_from_name (gtk_widget_get_display (widget), "move");
 
       gdk_window_set_cursor (window, cursor);
 

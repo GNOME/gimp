@@ -1156,7 +1156,7 @@ bender_new_dialog (GimpProcedure       *procedure,
 
   /*  busy cursor  */
   display = gtk_widget_get_display (cd->shell);
-  cd->cursor_busy = gdk_cursor_new_for_display (display, GDK_WATCH);
+  cd->cursor_busy = gdk_cursor_new_from_name (display, "wait");
 
   /* Left side column */
   /* Config-connected widgets first */

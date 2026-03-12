@@ -591,7 +591,7 @@ gimp_zoom_preview_set_cursor (GimpPreview *preview)
       GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (preview));
       GdkCursor  *cursor;
 
-      cursor = gdk_cursor_new_for_display (display, GDK_HAND1);
+      cursor = gdk_cursor_new_from_name (display, "pointer");
       gdk_window_set_cursor (gtk_widget_get_window (area),
                              cursor);
       g_object_unref (cursor);

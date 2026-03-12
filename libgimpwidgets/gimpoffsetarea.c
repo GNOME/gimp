@@ -348,8 +348,8 @@ gimp_offset_area_realize (GtkWidget *widget)
 
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
-  cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
-                                       GDK_FLEUR);
+  cursor = gdk_cursor_new_from_name (gtk_widget_get_display (widget),
+                                     "move");
   gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
   g_object_unref (cursor);
 }

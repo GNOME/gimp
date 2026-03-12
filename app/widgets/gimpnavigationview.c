@@ -248,7 +248,7 @@ gimp_navigation_view_grab_pointer (GimpNavigationView *nav_view,
   gtk_grab_add (widget);
 
   display = gtk_widget_get_display (widget);
-  cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
+  cursor  = gdk_cursor_new_from_name (display, "move");
 
   window = GIMP_VIEW (nav_view)->event_window;
 
@@ -283,7 +283,7 @@ gimp_navigation_view_button_press (GtkWidget      *widget,
           gimp_navigation_view_move_to (nav_view, tx, ty);
 
           display = gtk_widget_get_display (widget);
-          cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
+          cursor  = gdk_cursor_new_from_name (display, "move");
           gdk_window_set_cursor (GIMP_VIEW (widget)->event_window, cursor);
           g_object_unref (cursor);
         }
@@ -374,11 +374,11 @@ gimp_navigation_view_motion_notify (GtkWidget      *widget,
       else if (gimp_navigation_view_point_in_marker (nav_view,
                                                      mevent->x, mevent->y))
         {
-          cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
+          cursor = gdk_cursor_new_from_name (display, "move");
         }
       else
         {
-          cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
+          cursor = gdk_cursor_new_from_name (display, "pointer");
         }
 
       gdk_window_set_cursor (view->event_window, cursor);

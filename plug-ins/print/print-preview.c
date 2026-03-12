@@ -235,8 +235,8 @@ print_preview_realize (GtkWidget *widget)
 
   GTK_WIDGET_CLASS (print_preview_parent_class)->realize (widget);
 
-  preview->cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
-                                                GDK_HAND1);
+  preview->cursor = gdk_cursor_new_from_name (gtk_widget_get_display (widget),
+                                              "pointer");
 }
 
 static void
@@ -332,8 +332,8 @@ print_preview_button_press_event (GtkWidget      *widget,
       GdkSeat    *seat    = gdk_display_get_default_seat (display);
       GdkCursor  *cursor;
 
-      cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
-                                           GDK_FLEUR);
+      cursor = gdk_cursor_new_from_name (gtk_widget_get_display (widget),
+                                         "move");
 
       if (gdk_seat_grab (seat, gdk_event_get_window ((GdkEvent *) event),
                          GDK_SEAT_CAPABILITY_ALL_POINTING, FALSE,

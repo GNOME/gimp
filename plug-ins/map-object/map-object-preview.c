@@ -305,13 +305,13 @@ compute_preview_image (void)
   pw = PREVIEW_WIDTH * mapvals.zoom;
   ph = PREVIEW_HEIGHT * mapvals.zoom;
 
-  cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
+  cursor = gdk_cursor_new_from_name (display, "wait");
   gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
   g_object_unref (cursor);
 
   compute_preview (0, 0, width - 1, height - 1, pw, ph);
 
-  cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
+  cursor = gdk_cursor_new_from_name (display, "pointer");
   gdk_window_set_cursor(gtk_widget_get_window (previewarea), cursor);
   g_object_unref (cursor);
 }

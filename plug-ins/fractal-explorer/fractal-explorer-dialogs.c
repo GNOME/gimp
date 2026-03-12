@@ -481,8 +481,7 @@ preview_enter_notify_event (GtkWidget      *widget,
     {
       GdkDisplay *display = gtk_widget_get_display (maindlg);
 
-      cursor = gdk_cursor_new_for_display (display, GDK_TCROSS);
-
+      cursor = gdk_cursor_new_from_name (display, "crosshair");
     }
 
   gdk_window_set_cursor (gtk_widget_get_window (maindlg), cursor);

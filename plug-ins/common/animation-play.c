@@ -521,8 +521,8 @@ sda_realize_callback (GtkWidget *widget,
 {
   GdkCursor *cursor;
 
-  cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
-                                       GDK_HAND2);
+  cursor = gdk_cursor_new_from_name (gtk_widget_get_display (widget),
+                                     "pointer");
   gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
   g_object_unref (cursor);
 }

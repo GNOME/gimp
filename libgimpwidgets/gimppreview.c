@@ -385,7 +385,7 @@ gimp_preview_area_realize (GtkWidget   *widget,
 
   g_return_if_fail (priv->cursor_busy == NULL);
 
-  priv->cursor_busy = gdk_cursor_new_for_display (display, GDK_WATCH);
+  priv->cursor_busy = gdk_cursor_new_from_name (display, "wait");
 
 }
 

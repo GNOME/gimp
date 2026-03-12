@@ -2014,8 +2014,8 @@ gimp_text_tool_style_overlay_button_press (GtkWidget      *widget,
 
   if (gtk_widget_get_window (GTK_WIDGET (text_tool->style_overlay)))
     {
-      GdkCursor *cursor = gdk_cursor_new_for_display (gtk_widget_get_display (GTK_WIDGET (text_tool->style_overlay)),
-                                                      GDK_FLEUR);
+      GdkCursor *cursor = gdk_cursor_new_from_name (gtk_widget_get_display (GTK_WIDGET (text_tool->style_overlay)),
+                                                    "move");
       if (cursor)
         {
           gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (text_tool->style_overlay)),

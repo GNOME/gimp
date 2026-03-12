@@ -172,7 +172,7 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   attributes.visual      = gtk_widget_get_visual (child->widget);
   attributes.event_mask  = (gtk_widget_get_events (widget) |
                             GDK_EXPOSURE_MASK);
-  attributes.cursor      = gdk_cursor_new_for_display (display, GDK_LEFT_PTR);
+  attributes.cursor      = gdk_cursor_new_from_name (display, "default");
 
   attributes_mask = (GDK_WA_X        |
                      GDK_WA_Y        |

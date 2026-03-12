@@ -2687,7 +2687,7 @@ static void
 dlg_preview_realize (GtkWidget *widget)
 {
   GdkDisplay *display = gtk_widget_get_display (widget);
-  GdkCursor  *cursor  = gdk_cursor_new_for_display (display, GDK_CROSSHAIR);
+  GdkCursor  *cursor  = gdk_cursor_new_from_name (display, "crosshair");
 
   gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
   g_object_unref (cursor);

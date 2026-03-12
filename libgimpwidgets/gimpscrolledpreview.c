@@ -323,7 +323,7 @@ gimp_scrolled_preview_area_realize (GtkWidget           *widget,
 
   g_return_if_fail (priv->cursor_move == NULL);
 
-  priv->cursor_move = gdk_cursor_new_for_display (display, GDK_HAND1);
+  priv->cursor_move = gdk_cursor_new_from_name (display, "pointer");
 }
 
 static void
@@ -636,8 +636,8 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
 
       gtk_grab_add (area);
 
-      cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
-                                           GDK_FLEUR);
+      cursor = gdk_cursor_new_from_name (gtk_widget_get_display (widget),
+                                         "move");
 
       gdk_seat_grab (gdk_display_get_default_seat (gtk_widget_get_display (widget)),
                      gtk_widget_get_window (area),

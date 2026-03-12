@@ -736,8 +736,8 @@ webview_realize (GtkWidget *webview,
 
   g_return_if_fail (self->busy_cursor == NULL);
 
-  self->busy_cursor = gdk_cursor_new_for_display (gtk_widget_get_display (webview),
-                                                  GDK_WATCH);
+  self->busy_cursor = gdk_cursor_new_from_name (gtk_widget_get_display (webview),
+                                                "wait");
 }
 
 static void

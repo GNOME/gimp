@@ -421,7 +421,7 @@ gimp_context_help_idle_start (gpointer widget)
 
       display = gtk_widget_get_display (invisible);
 
-      cursor = gdk_cursor_new_for_display (display, GDK_QUESTION_ARROW);
+      cursor = gdk_cursor_new_from_name (display, "help");
 
       status = gdk_seat_grab (gdk_display_get_default_seat (display),
                               gtk_widget_get_window (invisible),

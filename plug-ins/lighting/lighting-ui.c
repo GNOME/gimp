@@ -695,8 +695,8 @@ main_dialog (GimpProcedure       *procedure,
   {
     GdkCursor *cursor;
 
-    cursor = gdk_cursor_new_for_display (gtk_widget_get_display (previewarea),
-                                         GDK_HAND2);
+    cursor = gdk_cursor_new_from_name (gtk_widget_get_display (previewarea),
+                                       "pointer");
     gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
     g_object_unref (cursor);
   }
