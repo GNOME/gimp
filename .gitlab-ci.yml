@@ -966,6 +966,7 @@ dist-appimage-weekly:
 include:
   project: GNOME/citemplates
   file: flatpak/flatpak_ci_initiative.yml
+  #flatpak_ci_initiative.yml is extremely pervasive. See: https://gitlab.gnome.org/GNOME/citemplates/-/issues/35
   ref: 42fbc2526a7680b6a4f284a210e63e3973ea6dae
 
 dist-flatpak-weekly:
@@ -976,6 +977,9 @@ dist-flatpak-weekly:
     - !reference [.flatpak, rules]
   needs: ["gimp-flatpak"]
   stage: distribution
+  image:
+    name: "ghcr.io/flathub/flatpak-builder-lint:latest"
+    entrypoint: [""]
   script:
     - sh build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh
   artifacts:
