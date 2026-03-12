@@ -3015,19 +3015,19 @@ load_dialog (GimpProcedure       *procedure,
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "tiff-vbox", NULL);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Show reduced images"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                pages->show_reduced);
-  gtk_widget_set_margin_bottom (toggle, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_widget_set_visible (toggle, TRUE);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (tiff_dialog_show_reduced),
-                    pages);
-
   if (pages->n_pages > 1)
     {
+      toggle = gtk_check_button_new_with_mnemonic (_("_Show reduced images"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                    pages->show_reduced);
+      gtk_widget_set_margin_bottom (toggle, 6);
+      gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+      gtk_widget_set_visible (toggle, TRUE);
+
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (tiff_dialog_show_reduced),
+                        pages);
+
       /* Page Selector */
       pages->selector = gimp_page_selector_new ();
       gtk_widget_set_size_request (pages->selector, 300, 200);
