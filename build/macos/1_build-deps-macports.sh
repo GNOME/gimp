@@ -38,20 +38,15 @@ fi #End of config
 printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by $( [ -f "$OPT_PREFIX/bin/port" ] && echo MacPorts || echo Homebrew )\n"
 if [ -f "$OPT_PREFIX/bin/port" ]; then
   eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync && eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port upgrade outdated
-  if [ "$CI_JOB_NAME" ] && ls -d macports* 2>/dev/null | grep -q .; then
-    if [ -d "macports-cached-$(uname -m)" ]; then
-      cp -fa macports-cached-$(uname -m)/* $OPT_PREFIX/var/macports || true
-    elif [ -d "macports-$(uname -m)" ]; then
-      cp -fa macports-$(uname -m)/* $OPT_PREFIX/var/macports || true
-    fi
+  if [ "$CI_JOB_NAME" ] && [ -d "macports-cached-$(uname -m)" ]; then
+    cp -fa macports-cached-$(uname -m)/* $OPT_PREFIX/var/macports || true
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port deactivate -fN installed
+  elif echo "$CI_JOB_NAME" | grep -q 'deps'; then
+    export first_cache=true
   fi
   eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | xargs)
-  if echo "$CI_JOB_NAME" | grep -q 'deps'; then
-    mkdir -p macports-$(uname -m) && cp -fa $OPT_PREFIX/var/macports/* macports-$(uname -m) || true
-    if [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
-      cp -fa macports-$(uname -m) macports-cached-$(uname -m) || true
-    fi
+  if echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] }; then
+    mkdir -p macports-cached-$(uname -m) && cp -fa $OPT_PREFIX/var/macports/* macports-cached-$(uname -m) || true
   fi
   git apply -v build/macos/patches/0001-meson-Patch-python-version.patch || true
 else
