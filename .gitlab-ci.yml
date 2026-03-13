@@ -699,7 +699,6 @@ deps-macos-inhouse:
     - zsh build/macos/1_build-deps-macports.sh
   artifacts:
     paths:
-      - macports-$ARCH
       - _install-*
       # The full build dir is needed due to its .o for .dSYM creation on next job
       - babl/_build-*
@@ -712,6 +711,12 @@ gimp-macos-inhouse:
   stage: build
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
+  cache:
+    - key: $CI_PROJECT_NAMESPACE-$ARCH
+      unprotect: true
+      paths:
+        - macports-cached-$ARCH
+      policy: pull
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
     - zsh build/macos/2_build-gimp-macports.sh
