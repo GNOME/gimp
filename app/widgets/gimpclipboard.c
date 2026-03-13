@@ -1173,6 +1173,103 @@ gimp_clipboard_wait_for_curve (Gimp *gimp)
   return result;
 }
 
+/* gdk_pixbuf_format_is_save_option_supported() was added in gdk-pixbuf 2.36
+ * This version check as well as the IGNORE_DEPRECATIONS below can be removed
+ * if gdk_pixbuf_minver in meson.build gets bumped
+ */
+#if GDK_PIXBUF_CHECK_VERSION(2, 36, 0)
+static gboolean
+gimp_clipboard_png_saver_supports_dpi (void)
+{
+  GSList   *formats;
+  GSList   *l;
+  gboolean  supported = FALSE;
+
+  formats = gdk_pixbuf_get_formats ();
+  for (l = formats; l; l = l->next)
+    {
+      GdkPixbufFormat *format = l->data;
+
+      if (strcmp (gdk_pixbuf_format_get_name (format), "png") == 0)
+        {
+          G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+          supported = gdk_pixbuf_format_is_save_option_supported (format, "x-dpi") &&
+                      gdk_pixbuf_format_is_save_option_supported (format, "y-dpi");
+          G_GNUC_END_IGNORE_DEPRECATIONS
+          break;
+        }
+    }
+
+  g_slist_free (formats);
+  return supported;
+}
+#endif
+
+static void
+gimp_clipboard_send_pixbuf (GtkSelectionData *data,
+                            GdkPixbuf        *pixbuf,
+                            gdouble           res_x,
+                            gdouble           res_y,
+                            gboolean          verbose)
+{
+  gchar x_dpi_str[16];
+  gchar y_dpi_str[16];
+
+  g_snprintf (x_dpi_str, sizeof (x_dpi_str), "%d", ROUND (res_x));
+  g_snprintf (y_dpi_str, sizeof (y_dpi_str), "%d", ROUND (res_y));
+
+  gdk_pixbuf_set_option (pixbuf, "x-dpi", x_dpi_str);
+  gdk_pixbuf_set_option (pixbuf, "y-dpi", y_dpi_str);
+
+  /* gtk_selection_data_set_pixbuf does not pass DPI information to gdk-pixbuf
+   * or considers DPI options set via gdk_pixbuf_set_option. To support pasting
+   * PNGs to other apps that support reading DPI information from PNG images
+   * we need to rely on lower-level functions that allow setting these props.
+   */
+  if (gtk_selection_data_get_target (data) ==
+      gdk_atom_intern_static_string ("image/png"))
+    {
+      gchar    *buffer      = NULL;
+      gsize     buffer_size = 0;
+      gboolean  saved;
+
+#if GDK_PIXBUF_CHECK_VERSION(2, 36, 0)
+      if (gimp_clipboard_png_saver_supports_dpi ())
+        {
+          if (verbose)
+            g_printerr ("clipboard: setting x-dpi=%s y-dpi=%s on PNG clipboard data\n",
+                        x_dpi_str, y_dpi_str);
+
+          saved = gdk_pixbuf_save_to_buffer (pixbuf, &buffer, &buffer_size,
+                                             "png", NULL,
+                                             "compression", "2",
+                                             "x-dpi", x_dpi_str,
+                                             "y-dpi", y_dpi_str,
+                                             NULL);
+        }
+      else
+#endif
+        {
+          saved = gdk_pixbuf_save_to_buffer (pixbuf, &buffer, &buffer_size,
+                                             "png", NULL,
+                                             "compression", "2",
+                                             NULL);
+        }
+      if (saved)
+        {
+          gtk_selection_data_set (data,
+                                  gdk_atom_intern_static_string ("image/png"),
+                                  8, (guchar *) buffer, buffer_size);
+        }
+
+      g_free (buffer);
+    }
+  else
+    {
+      gtk_selection_data_set_pixbuf (data, pixbuf);
+    }
+}
+
 static void
 gimp_clipboard_send_image (GtkClipboard     *clipboard,
                            GtkSelectionData *data,
@@ -1232,21 +1329,15 @@ gimp_clipboard_send_image (GtkClipboard     *clipboard,
         {
           gdouble res_x;
           gdouble res_y;
-          gchar   str[16];
 
           gimp_image_get_resolution (gimp_clip->image, &res_x, &res_y);
-
-          g_snprintf (str, sizeof (str), "%d", ROUND (res_x));
-          gdk_pixbuf_set_option (pixbuf, "x-dpi", str);
-
-          g_snprintf (str, sizeof (str), "%d", ROUND (res_y));
-          gdk_pixbuf_set_option (pixbuf, "y-dpi", str);
 
           if (gimp->be_verbose)
             g_printerr ("clipboard: sending image data as '%s'\n",
                         gimp_clip->image_target_entries[info].target);
 
-          gtk_selection_data_set_pixbuf (data, pixbuf);
+          gimp_clipboard_send_pixbuf (data, pixbuf, res_x, res_y,
+                                      gimp->be_verbose);
         }
       else
         {
@@ -1281,21 +1372,15 @@ gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
     {
       gdouble res_x;
       gdouble res_y;
-      gchar   str[16];
 
       gimp_buffer_get_resolution (gimp_clip->buffer, &res_x, &res_y);
-
-      g_snprintf (str, sizeof (str), "%d", ROUND (res_x));
-      gdk_pixbuf_set_option (pixbuf, "x-dpi", str);
-
-      g_snprintf (str, sizeof (str), "%d", ROUND (res_y));
-      gdk_pixbuf_set_option (pixbuf, "y-dpi", str);
 
       if (gimp->be_verbose)
         g_printerr ("clipboard: sending pixbuf data as '%s'\n",
                     gimp_clip->buffer_target_entries[info].target);
 
-      gtk_selection_data_set_pixbuf (data, pixbuf);
+      gimp_clipboard_send_pixbuf (data, pixbuf, res_x, res_y,
+                                  gimp->be_verbose);
     }
   else
     {
