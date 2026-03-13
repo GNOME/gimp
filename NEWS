@@ -17,6 +17,7 @@ Core:
   - Levels dialog now initializes to Perceptual (even though the
     "gimp:levels" op still defaults to Linear "trc", for
     backward-compatibility reasons).
+  - Improve clipboard shutdown on Windows (speeds up shutdown).
 
 Tools:
 
