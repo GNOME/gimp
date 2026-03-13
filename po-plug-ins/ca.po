@@ -8,14 +8,14 @@
 # Quim Perez i Noguer <noguer@gmail.com>, 2005-2009.
 # Joaquim Perez Noguer <noguer@gmail.com>, 2009
 # Pau Iranzo <pau.iranzo@softcatala.org>, 2011.
-# Jordi Mas i Hernàndez, <jmas@softcatala.org>, 2018-2024
+# Jordi Mas i Hernàndez, <jmas@softcatala.org>, 2018-2026
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-10 03:43+0000\n"
-"PO-Revision-Date: 2025-08-20 15:42+0200\n"
+"PO-Revision-Date: 2026-03-13 15:42+0200\n"
 "Last-Translator: Jordi Mas i Hernàndez, <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -1628,7 +1628,7 @@ msgstr "Imatge de sortida"
 
 #: plug-ins/common/compose.c:470
 msgid "Compose an image from multiple drawables of gray images"
-msgstr "Redacta una imatge a partir de múltiples dibuixables d'imatges grises"
+msgstr "Compon una imatge a partir de múltiples dibuixables d'imatges grises"
 
 #: plug-ins/common/compose.c:472
 msgid ""
@@ -2324,7 +2324,7 @@ msgstr "Crea canals com a capes en una sola imatge"
 
 #: plug-ins/common/decompose.c:323
 msgid "_Foreground as registration color"
-msgstr "_Realça el color del primer pla"
+msgstr "_Color de primer pla com a color de registre"
 
 #: plug-ins/common/decompose.c:324
 msgid ""
@@ -4170,7 +4170,7 @@ msgstr "_Desa la resolució"
 
 #: plug-ins/common/file-mng.c:356
 msgid "Write pHYs (image resolution) chunk"
-msgstr "Escriu el fragment pHY» (resolució d'imatge)"
+msgstr "Escriu el fragment pHYs (resolució d'imatge)"
 
 #: plug-ins/common/file-mng.c:361 plug-ins/common/file-png.c:276
 msgid "Save creation _time"
@@ -5389,7 +5389,7 @@ msgstr "La capçalera del bloc no és vàlida a %ld"
 #: plug-ins/common/file-psp.c:930
 #, c-format
 msgid "Invalid block header"
-msgstr "La capçalera del bloc no és vàlid"
+msgstr "La capçalera del bloc no és vàlida"
 
 #: plug-ins/common/file-psp.c:962
 #, c-format
@@ -5404,7 +5404,7 @@ msgstr "La mida del bloc d'atributs de la imatge general no és vàlida."
 #: plug-ins/common/file-psp.c:1007
 #, c-format
 msgid "Error reading general image attribute block."
-msgstr "S'ha perdut el bloc d'atributs de la imatge general."
+msgstr "S'ha produït un error en llegir el bloc d'atributs de la imatge general."
 
 #: plug-ins/common/file-psp.c:1022
 #, c-format
@@ -7480,7 +7480,7 @@ msgid ""
 "10/95, page 326). It generates modern art pictures from a random genetic "
 "formula."
 msgstr ""
-"Aquest connector es basa en un article de J.rn Loviscach (aparegut a c't "
+"Aquest connector es basa en un article de Jörn Loviscach (aparegut a c't "
 "10/95, pàgina 326). Genera imatges d'art modern a partir d'una fórmula "
 "genètica aleatòria."
 
