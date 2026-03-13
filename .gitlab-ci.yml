@@ -650,13 +650,26 @@ gimp-win-eol:
 .macos-inhouse:
   extends: .default
   rules:
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Macos Dmg.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Macos Dmg.*/'
+    - if: '($CI_MERGE_REQUEST_LABELS =~ /.*Package:Macos Dmg.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Macos Dmg.*/) && $CI_PROJECT_NAMESPACE == "GNOME" && $CI_JOB_NAME !~ /.*-part.*/'
       interruptible: true
       variables:
+        CACHE_POLICY: 'pull-push'
         OPT_PREFIX: /opt/macports
         DMG_OPTION: '-Ddmg=true'
-    - if: '$GIMP_CI_MACOS != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MACOS.*/'
+    - if: '($GIMP_CI_MACOS != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MACOS.*/) && $CI_PROJECT_NAMESPACE == "GNOME" && $CI_JOB_NAME !~ /.*-part.*/'
       variables:
+        CACHE_POLICY: 'pull-push'
+        OPT_PREFIX: /opt/macports
+        DMG_OPTION: '-Ddmg=true'
+    - if: '($CI_MERGE_REQUEST_LABELS =~ /.*Package:Macos Dmg.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Macos Dmg.*/) && $CI_PROJECT_NAMESPACE != "GNOME"'
+      interruptible: true
+      variables:
+        CACHE_POLICY: 'push'
+        OPT_PREFIX: /opt/macports
+        DMG_OPTION: '-Ddmg=true'
+    - if: '($GIMP_CI_MACOS != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MACOS.*/) && $CI_PROJECT_NAMESPACE != "GNOME"'
+      variables:
+        CACHE_POLICY: 'push'
         OPT_PREFIX: /opt/macports
         DMG_OPTION: '-Ddmg=true'
     - if: '($GIMP_CI_MESON_APPLECLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_APPLECLANG.*/) && $CI_JOB_NAME !~ /.*-part.*/ && $CI_JOB_NAME !~ /.*dist-mac-.*/'
@@ -666,11 +679,15 @@ gimp-win-eol:
         VARIANT: -homebrew
   tags:
     - macos
-    - marathon
   variables:
     ARCH: arm64
     ORKA_RUNNER: tahoe-1
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
+  cache:
+    - key: $CI_PROJECT_NAMESPACE-$ARCH
+      unprotect: true
+      paths:
+        - macports-cached-$ARCH
   before_script:
     - export GIMP_PREFIX="$PWD/_install-$(uname -m)"
     - export PATH="$OPT_PREFIX/bin:$PATH"
@@ -686,7 +703,8 @@ gimp-win-eol:
 - export GI_TYPELIB_PATH="${GIMP_PREFIX}/lib/girepository-1.0:${OPT_PREFIX}/lib/girepository-1.0"
 - printf "\e[0Ksection_end:`date +%s`:macos_environ\r\e[0K\n"
 
-deps-macos-inhouse:
+deps-macos-inhouse-part1:
+  #This splitted job is needed to rebuild 'vala' in time when it is bumped
   extends: .macos-inhouse
   stage: dependencies
   cache:
@@ -694,6 +712,41 @@ deps-macos-inhouse:
       unprotect: true
       paths:
         - macports-cached-$ARCH
+      policy: pull
+  script:
+    # Do not call sh since it is old bash on macOS, not the default zsh
+    - zsh build/macos/1_build-deps-macports.sh --part1
+  artifacts:
+    paths:
+      - macports-$ARCH
+    expire_in: 2 hours
+
+deps-macos-inhouse-part2:
+  #This splitted job is needed to rebuild 'rust' in time when it is bumped
+  extends: .macos-inhouse
+  needs: ["deps-macos-inhouse-part1"]
+  stage: dependencies
+  script:
+    # Do not call sh since it is old bash on macOS, not the default zsh
+    - zsh build/macos/1_build-deps-macports.sh --part2
+  artifacts:
+    paths:
+      - macports-$ARCH
+    expire_in: 2 hours
+
+deps-macos-inhouse:
+  extends: .macos-inhouse
+  needs:
+    - job: deps-macos-inhouse-part2
+      #to allow running the Homebrew builds which use precompiled binaries
+      optional: true
+  stage: dependencies
+  cache:
+    - key: $CI_PROJECT_NAMESPACE-$ARCH
+      unprotect: true
+      paths:
+        - macports-cached-$ARCH
+      policy: $CACHE_POLICY
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
     - zsh build/macos/1_build-deps-macports.sh
@@ -711,15 +764,9 @@ gimp-macos-inhouse:
   stage: build
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
-  cache:
-    - key: $CI_PROJECT_NAMESPACE-$ARCH
-      unprotect: true
-      paths:
-        - macports-cached-$ARCH
-      policy: pull
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
-    - zsh build/macos/2_build-gimp-macports.sh
+    - arch -${ARCH} zsh build/macos/2_build-gimp-macports.sh
   artifacts:
     paths:
       - gimp-*.app
@@ -937,7 +984,6 @@ dist-appimage-weekly:
 include:
   project: GNOME/citemplates
   file: flatpak/flatpak_ci_initiative.yml
-  #flatpak_ci_initiative.yml is extremely pervasive. See: https://gitlab.gnome.org/GNOME/citemplates/-/issues/35
   ref: 42fbc2526a7680b6a4f284a210e63e3973ea6dae
 
 dist-flatpak-weekly:
@@ -948,9 +994,6 @@ dist-flatpak-weekly:
     - !reference [.flatpak, rules]
   needs: ["gimp-flatpak"]
   stage: distribution
-  image:
-    name: "ghcr.io/flathub/flatpak-builder-lint:latest"
-    entrypoint: [""]
   script:
     - sh build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh
   artifacts:

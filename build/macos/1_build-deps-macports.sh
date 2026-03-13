@@ -44,9 +44,18 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
   elif echo "$CI_JOB_NAME" | grep -q 'deps'; then
     export first_cache=true
   fi
-  eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | xargs)
+  if echo "$CI_JOB_NAME" | grep -q 'part1'; then
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | awk '{print} /vala/{exit}' | xargs)
+  elif echo "$CI_JOB_NAME" | grep -q 'part2'; then
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | awk '{print} /appstream/{exit}' | xargs)
+  else
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | xargs)
+  fi
   if echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] }; then
     mkdir -p macports-cached-$(uname -m) && cp -fa $OPT_PREFIX/var/macports/* macports-cached-$(uname -m) || true
+    if echo "$CI_JOB_NAME" | grep -q 'part'; then
+      exit 0
+    fi
   fi
   git apply -v build/macos/patches/0001-meson-Patch-python-version.patch || true
 else
