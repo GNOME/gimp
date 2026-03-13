@@ -40,6 +40,7 @@ Plug-Ins:
   - Fixed ZDI-CAN-28807 vulnerability in PSD loading.
   - Fixed ZDI-CAN-28874 vulnerability in PSP loading.
   - Fixed ZDI-CAN-28405 vulnerability in IFF loading.
+  - Fixed ZDI-CAN-28863 vulnerability in JPEG 2000 loading.
   - Filters Browser: now shows default value for enum and GimpChoice
     arguments of filters.
   - JPEG:
@@ -47,6 +48,10 @@ Plug-Ins:
       CMYK.
     * DCT options are shown again as a combo box (instead of a radio
       frame), just like they were during the 2.10 series.
+    * fix loading of photoshop path split across multiple segments.
+  - TIFF: only show the "Show reduced images" toggle when there are
+    actually several images in the file.
+  - PSD: various fixes on loading code.
 
 API:
 
@@ -70,6 +75,10 @@ Build:
   - The RC2 splash image was chosen as final GIMP 3.2.0 splash.
   - DMG packages for macOS are now properly built as relocatable.
   - Building GIMP is now fully reproducible.
+  - More work done on the in-house macOS pipeline (i.e. in our Gitlab
+    instance, triggered by the main repository, not our more ancient
+    external pipeline), especially regarding x86_64 DMG support (the
+    Silicon builds are already working fine).
 
 
 Overview of Changes from GIMP 3.2.0 RC2 to GIMP 3.2.0 RC3
