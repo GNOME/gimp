@@ -41,6 +41,7 @@ enum
 typedef struct _GimpPopupPrivate
 {
   GtkWidget *parent;
+  gboolean   grabbed;
 } GimpPopupPrivate;
 
 
@@ -174,6 +175,9 @@ gimp_popup_map_event (GtkWidget   *widget,
                      (GdkEvent *) event,
                      NULL, NULL) == GDK_GRAB_SUCCESS)
     {
+      GimpPopupPrivate *priv = gimp_popup_get_instance_private (GIMP_POPUP (widget));
+
+      priv->grabbed = TRUE;
       gtk_grab_add (widget);
 
       g_signal_connect (widget, "grab-notify",
@@ -292,10 +296,18 @@ gimp_popup_key_press (GtkWidget   *widget,
 static void
 gimp_popup_real_cancel (GimpPopup *popup)
 {
-  GtkWidget *widget = GTK_WIDGET (popup);
+  GimpPopupPrivate *priv   = gimp_popup_get_instance_private (popup);
+  GtkWidget        *widget = GTK_WIDGET (popup);
 
   if (gtk_grab_get_current () == widget)
     gtk_grab_remove (widget);
+
+  if (priv->grabbed)
+    {
+      gdk_seat_ungrab (gdk_display_get_default_seat (
+                         gtk_widget_get_display (widget)));
+      priv->grabbed = FALSE;
+    }
 
   gtk_widget_destroy (widget);
 }
@@ -303,10 +315,18 @@ gimp_popup_real_cancel (GimpPopup *popup)
 static void
 gimp_popup_real_confirm (GimpPopup *popup)
 {
-  GtkWidget *widget = GTK_WIDGET (popup);
+  GimpPopupPrivate *priv   = gimp_popup_get_instance_private (popup);
+  GtkWidget        *widget = GTK_WIDGET (popup);
 
   if (gtk_grab_get_current () == widget)
     gtk_grab_remove (widget);
+
+  if (priv->grabbed)
+    {
+      gdk_seat_ungrab (gdk_display_get_default_seat (
+                         gtk_widget_get_display (widget)));
+      priv->grabbed = FALSE;
+    }
 
   gtk_widget_destroy (widget);
 }
