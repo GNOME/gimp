@@ -49,6 +49,7 @@
 #include "core/gimplayer-floating-selection.h"
 #include "core/gimplayer-new.h"
 #include "core/gimplayermask.h"
+#include "core/gimppattern.h"
 #include "core/gimptreehandler.h"
 
 #include "path/gimpvectorlayer.h"
@@ -122,6 +123,10 @@ static gboolean   gimp_layer_tree_view_drop_possible              (GimpContainer
                                                                    GtkTreeViewDropPosition     drop_pos,
                                                                    GtkTreeViewDropPosition    *return_drop_pos,
                                                                    GdkDragAction              *return_drag_action);
+static void       gimp_layer_tree_view_drop_viewables             (GimpContainerTreeView      *view,
+                                                                   GList                      *src_viewables,
+                                                                   GimpViewable               *dest_viewable,
+                                                                   GtkTreeViewDropPosition     drop_pos);
 static void       gimp_layer_tree_view_drop_color                 (GimpContainerTreeView      *view,
                                                                    GeglColor                  *color,
                                                                    GimpViewable               *dest_viewable,
@@ -206,6 +211,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   object_class->finalize              = gimp_layer_tree_view_finalize;
 
   tree_view_class->drop_possible      = gimp_layer_tree_view_drop_possible;
+  tree_view_class->drop_viewables     = gimp_layer_tree_view_drop_viewables;
   tree_view_class->drop_color         = gimp_layer_tree_view_drop_color;
   tree_view_class->drop_uri_list      = gimp_layer_tree_view_drop_uri_list;
   tree_view_class->drop_component     = gimp_layer_tree_view_drop_component;
@@ -732,6 +738,51 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
                                                                        drop_pos,
                                                                        return_drop_pos,
                                                                        return_drag_action);
+}
+
+static void
+gimp_layer_tree_view_drop_viewables (GimpContainerTreeView   *view,
+                                     GList                   *src_viewables,
+                                     GimpViewable            *dest_viewable,
+                                     GtkTreeViewDropPosition  drop_pos)
+{
+  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
+  GList            *iter;
+
+  for (iter = src_viewables; iter; iter = iter->next)
+    {
+      GimpViewable *src_viewable = iter->data;
+
+      if (dest_viewable                                         &&
+          gimp_item_is_vector_layer (GIMP_ITEM (dest_viewable)) &&
+          GIMP_IS_PATTERN (src_viewable))
+        {
+          GimpVectorLayerOptions *vector_options = NULL;
+          GimpFillOptions        *vector_fill    = NULL;
+
+          vector_options =
+            gimp_vector_layer_get_options (GIMP_VECTOR_LAYER (dest_viewable));
+          if (vector_options)
+            vector_fill = vector_options->fill_options;
+
+          if (vector_fill)
+            {
+              gimp_context_set_pattern (GIMP_CONTEXT (vector_fill),
+                                        GIMP_PATTERN (src_viewable));
+              gimp_fill_options_set_custom_style (vector_fill,
+                                                  GIMP_CUSTOM_STYLE_PATTERN);
+
+              gimp_vector_layer_refresh (GIMP_VECTOR_LAYER (dest_viewable));
+              gimp_image_flush (gimp_item_tree_view_get_image (item_view));
+              return;
+            }
+        }
+    }
+
+  GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_viewables (view,
+                                                                 src_viewables,
+                                                                 dest_viewable,
+                                                                 drop_pos);
 }
 
 static void
