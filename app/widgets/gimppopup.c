@@ -207,18 +207,22 @@ gimp_popup_button_press (GtkWidget      *widget,
   if (event_widget == widget)
     {
       GtkAllocation allocation;
+      gint          popup_x;
+      gint          popup_y;
 
       gtk_widget_get_allocation (widget, &allocation);
+      gdk_window_get_origin (gtk_widget_get_window (widget),
+                             &popup_x, &popup_y);
 
       /*  the event was on the popup, which can either be really on the
        *  popup or outside gimp (owner_events == TRUE, see map())
        */
-      if (bevent->x < 0                ||
-          bevent->y < 0                ||
-          bevent->x > allocation.width ||
-          bevent->y > allocation.height)
+      if (bevent->x_root < popup_x                    ||
+          bevent->y_root < popup_y                    ||
+          bevent->x_root > popup_x + allocation.width ||
+          bevent->y_root > popup_y + allocation.height)
         {
-          /*  the event was outsde gimp  */
+          /*  the event was outside the popup  */
 
           cancel = TRUE;
         }
