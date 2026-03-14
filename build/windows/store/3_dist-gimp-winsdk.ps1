@@ -514,7 +514,8 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
           }
         $jsonObject."Listings"."en-us"."BaseListing".'ShortDescription' = ($xmlObject.component.summary).Trim()
         $jsonObject."Listings"."en-us"."BaseListing".'Description' = ($xmlObject.component.description.SelectNodes(".//p") | ForEach-Object { ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' ' } ) -join "`n`n"
-        $jsonObject."Listings"."en-us"."BaseListing".'ReleaseNotes' = ($xmlObject.component.releases.release[0].description.SelectNodes(".//p | .//li") | ForEach-Object { $text = ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' '; if ($_.Name -eq 'li') { "- $text" } else { $text } } ) -join "`n"
+        #NOTE: Submission API does not allow more than 1500 chars on ReleaseNotes so we skip some <p> or <li> when needed
+        $jsonObject."Listings"."en-us"."BaseListing".'ReleaseNotes' = ($xmlObject.component.releases.release[0].description.SelectNodes(".//p | .//li") | ForEach-Object -Begin {$len=0} -Process { $text = ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' '; $formatted = if ($_.Name -eq 'li') { "- $text" } else { $text }; if (($len + $formatted.Length + 1) -lt 1490) { $len += $formatted.Length + 1; $formatted } }) -join "`n"
         ###Send submission info
         msstore submission updateMetadata $env:PRODUCT_ID ($jsonObject | ConvertTo-Json -Depth 100); if ("$LASTEXITCODE" -gt '0') { exit 1 }
       }
