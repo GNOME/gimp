@@ -18,6 +18,10 @@ Core:
     "gimp:levels" op still defaults to Linear "trc", for
     backward-compatibility reasons).
   - Improve clipboard shutdown on Windows (speeds up shutdown).
+  - Dragging a color or pattern on a vector layer in the Layers dock
+    will set its fill instead of rasterizing it (a similar flow had been
+    implemented in RC3, but it was working when dragging on canvas
+    only).
 
 Tools:
 
@@ -96,8 +100,8 @@ Core:
     loading will be delayed (this also includes files loaded from
     command line, or from a file browser starting GIMP).
   - Default to 'quartz' IM on macOS for emoji keyboard support.
-  - When dropping a color or pattern on a vector layer, their "fill"
-    property is updated accordingly.
+  - When dropping a color or pattern on canvas when a vector layer is
+    selected, their "fill" property is updated accordingly.
   - Link layers are now protected against color and pattern drops.
   - macOS logo was updated to cater to new guidelines since macOS 26
     (following previous guidelines, the logo was appearing too small on
