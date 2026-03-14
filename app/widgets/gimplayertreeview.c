@@ -40,6 +40,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpfilloptions.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
@@ -49,6 +50,9 @@
 #include "core/gimplayer-new.h"
 #include "core/gimplayermask.h"
 #include "core/gimptreehandler.h"
+
+#include "path/gimpvectorlayer.h"
+#include "path/gimpvectorlayeroptions.h"
 
 #include "text/gimptextlayer.h"
 
@@ -736,13 +740,36 @@ gimp_layer_tree_view_drop_color (GimpContainerTreeView   *view,
                                  GimpViewable            *dest_viewable,
                                  GtkTreeViewDropPosition  drop_pos)
 {
+  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
+
   if (gimp_item_is_text_layer (GIMP_ITEM (dest_viewable)))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (dest_viewable), NULL,
                            "color", color,
                            NULL);
-      gimp_image_flush (gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view)));
+      gimp_image_flush (gimp_item_tree_view_get_image (item_view));
       return;
+    }
+  else if (gimp_item_is_vector_layer (GIMP_ITEM (dest_viewable)))
+    {
+      GimpVectorLayerOptions *vector_options = NULL;
+      GimpFillOptions        *vector_fill    = NULL;
+
+      vector_options =
+        gimp_vector_layer_get_options (GIMP_VECTOR_LAYER (dest_viewable));
+      if (vector_options)
+        vector_fill = vector_options->fill_options;
+
+      if (vector_fill)
+        {
+          gimp_context_set_foreground (GIMP_CONTEXT (vector_fill), color);
+          gimp_fill_options_set_custom_style (vector_fill,
+                                              GIMP_CUSTOM_STYLE_SOLID_COLOR);
+
+          gimp_vector_layer_refresh (GIMP_VECTOR_LAYER (dest_viewable));
+          gimp_image_flush (gimp_item_tree_view_get_image (item_view));
+          return;
+        }
     }
 
   GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_color (view, color,
