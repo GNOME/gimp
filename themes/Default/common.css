@@ -690,6 +690,7 @@ buttonbox.vertical button.radio
   border-top:   1px solid @edge-border-color;
   border-left:  1px solid @edge-border-color;
   border-right: 1px solid @edge-border-color;
+  margin-right: 0px;
 }
 
 buttonbox.vertical button.radio:last-child
