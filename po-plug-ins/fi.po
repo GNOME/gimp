@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-03-12 19:04+0000\n"
-"PO-Revision-Date: 2026-03-15 21:55+0200\n"
+"PO-Revision-Date: 2026-03-15 22:45+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "Language: fi\n"
@@ -1034,7 +1034,7 @@ msgstr "(Ei mitään)"
 
 #: plug-ins/common/cml-explorer.c:509
 msgid "CML _Explorer..."
-msgstr "CML _selain..."
+msgstr "_CML-selain..."
 
 #: plug-ins/common/cml-explorer.c:514
 msgid "Create abstract Coupled-Map Lattice patterns"
@@ -1049,10 +1049,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/cml-explorer.c:535
-#, fuzzy
-#| msgid "Parameter k:"
 msgid "Parameter File"
-msgstr "Parametri k:"
+msgstr "Parametritiedosto"
 
 #: plug-ins/common/cml-explorer.c:536
 msgid ""
@@ -1062,7 +1060,7 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:909
 msgid "CML Explorer: evoluting"
-msgstr "CML_selain: evoluoidaan"
+msgstr "CML-selain: evoluoidaan"
 
 #: plug-ins/common/cml-explorer.c:1370
 msgid "Coupled-Map-Lattice Explorer"
@@ -2596,16 +2594,12 @@ msgid "Filter box radius"
 msgstr "Sylinterin säde"
 
 #: plug-ins/common/despeckle.c:193
-#, fuzzy
-#| msgid "_Filter length:"
 msgid "_Filter type"
-msgstr "_Suodattimen pituus:"
+msgstr "_Suodattimen tyyppi"
 
 #: plug-ins/common/despeckle.c:194
-#, fuzzy
-#| msgid "Filter"
 msgid "Filter type"
-msgstr "Suodatin"
+msgstr "Suodattimen tyyppi"
 
 #: plug-ins/common/despeckle.c:195
 msgid "Median"
@@ -2629,28 +2623,20 @@ msgid "Recursive-Adaptive"
 msgstr "_Rekursiivinen"
 
 #: plug-ins/common/despeckle.c:204
-#, fuzzy
-#| msgid "_Black level:"
 msgid "_Black level"
-msgstr "_Mustan taso:"
+msgstr "_Mustan taso"
 
 #: plug-ins/common/despeckle.c:205
-#, fuzzy
-#| msgid "_Black level:"
 msgid "Black level"
-msgstr "_Mustan taso:"
+msgstr "Mustan taso"
 
 #: plug-ins/common/despeckle.c:210
-#, fuzzy
-#| msgid "_White level:"
 msgid "_White level"
-msgstr "_Valkoisen taso:"
+msgstr "_Valkoisen taso"
 
 #: plug-ins/common/despeckle.c:211
-#, fuzzy
-#| msgid "_White level:"
 msgid "White level"
-msgstr "_Valkoisen taso:"
+msgstr "Valkoisen taso"
 
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-farbfeld.c:298
 #: plug-ins/common/file-pcx.c:719 plug-ins/file-bmp/bmp-load.c:800
@@ -2741,10 +2727,8 @@ msgid "KISS CEL"
 msgstr "KISS CEL"
 
 #: plug-ins/common/file-cel.c:158 plug-ins/common/file-cel.c:196
-#, fuzzy
-#| msgid "Pal_ette File:"
 msgid "_Palette file"
-msgstr "Palettitiedosto:"
+msgstr "_Palettitiedosto"
 
 #: plug-ins/common/file-cel.c:159
 #, fuzzy
@@ -3047,10 +3031,9 @@ msgid "This procedure exports files in the bzip2 compressed format."
 msgstr ""
 
 #: plug-ins/common/file-compressor.c:264
-#, fuzzy
 #| msgid "gzip archive"
 msgid "xz archive"
-msgstr "gzip paketti"
+msgstr "xz-arkisto"
 
 #: plug-ins/common/file-compressor.c:272
 msgid "Loads files compressed with xz"
@@ -3069,10 +3052,9 @@ msgid "This procedure exports files in the xz compressed format."
 msgstr ""
 
 #: plug-ins/common/file-compressor.c:283
-#, fuzzy
 #| msgid "gzip archive"
 msgid "zip archive"
-msgstr "gzip paketti"
+msgstr "zip-arkisto"
 
 #: plug-ins/common/file-compressor.c:291
 msgid "Loads files compressed with zip"
@@ -3360,16 +3342,14 @@ msgid "I don't care"
 msgstr "Oletus"
 
 #: plug-ins/common/file-gif-export.c:228
-#, fuzzy
 #| msgid "MNG animation"
 msgid "_As animation"
-msgstr "MNG animaatio"
+msgstr "_Animaationa"
 
 #: plug-ins/common/file-gif-export.c:229
-#, fuzzy
 #| msgid "Exports AVIF images"
 msgid "Export GIF as animation?"
-msgstr "Vie AVIF-kuvat"
+msgstr "Viedäänkö GIF animaationa?"
 
 #: plug-ins/common/file-gif-export.c:234
 msgid "_Use delay entered above for all frames"
@@ -3477,10 +3457,8 @@ msgid "milliseconds"
 msgstr "millisekuntia"
 
 #: plug-ins/common/file-gif-export.c:1382
-#, fuzzy
-#| msgid "Animated GIF Options"
 msgid "Animated GIF"
-msgstr "Animaatioasetukset"
+msgstr "Animoitu GIF"
 
 #: plug-ins/common/file-gif-export.c:1389
 msgid ""
@@ -3901,17 +3879,13 @@ msgstr "_Ei pakkausta"
 
 #: plug-ins/common/file-heif.c:301 plug-ins/common/file-heif.c:422
 #: plug-ins/common/file-heif.c:567
-#, fuzzy
-#| msgid "Color fill"
 msgid "Save color prof_ile"
-msgstr "Väritäyttö"
+msgstr "Tallenna _väriprofiili"
 
 #: plug-ins/common/file-heif.c:302 plug-ins/common/file-heif.c:423
 #: plug-ins/common/file-heif.c:568
-#, fuzzy
-#| msgid "Color fill"
 msgid "Save the image's color profile"
-msgstr "Väritäyttö"
+msgstr "Tallenna kuvan väriprofiili"
 
 #: plug-ins/common/file-heif.c:307 plug-ins/common/file-heif.c:428
 #: plug-ins/common/file-heif.c:573 plug-ins/common/file-jpegxl.c:205
@@ -3998,7 +3972,6 @@ msgid "Toggle saving XMP data"
 msgstr "Tallenna _XMP-tiedot"
 
 #: plug-ins/common/file-heif.c:350 plug-ins/common/file-heif.c:382
-#| msgid "HEIF/HEIC"
 msgid "HEIF/AVIF"
 msgstr "HEIF/AVIF"
 
@@ -4367,10 +4340,9 @@ msgid "Quality of exported image"
 msgstr ""
 
 #: plug-ins/common/file-jp2.c:340 plug-ins/common/file-jp2.c:428
-#, fuzzy
 #| msgid "_No compression"
 msgid "IC_T compression"
-msgstr "_Ei pakkausta"
+msgstr "IC_T-pakkaus"
 
 #: plug-ins/common/file-jp2.c:341 plug-ins/common/file-jp2.c:429
 msgid "Use Irreversible Color Transformation compression"
@@ -4638,7 +4610,6 @@ msgid "tortoise (slower)"
 msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:227 plug-ins/file-tiff/file-tiff.c:268
-#| msgid "_Import"
 msgid "Export as CMY_K"
 msgstr "Vie CMY_K-muodossa"
 
@@ -4713,7 +4684,7 @@ msgstr "Lomituksen poisto"
 
 #: plug-ins/common/file-mng.c:291
 msgid "_PNG compression level"
-msgstr "_PNG-pakkaustaso:"
+msgstr "_PNG-pakkaustaso"
 
 #: plug-ins/common/file-mng.c:292
 #, fuzzy
@@ -4724,7 +4695,7 @@ msgstr "Suuri pakkaustaso tarkoittaa pienempiä kuvia"
 
 #: plug-ins/common/file-mng.c:298
 msgid "JPEG compression _quality"
-msgstr "_JPEG-pakkauslaatu:"
+msgstr "_JPEG-pakkauslaatu"
 
 #: plug-ins/common/file-mng.c:299
 #, fuzzy
@@ -4940,10 +4911,8 @@ msgstr ""
 
 #: plug-ins/common/file-pat.c:127 plug-ins/common/qbist.c:953
 #: plug-ins/gfig/gfig-dialog.c:567
-#, fuzzy
-#| msgid "Pattern fill"
 msgid "Pattern"
-msgstr "Kuviotäyttö"
+msgstr "Kuvio"
 
 #: plug-ins/common/file-pat.c:144
 msgid "Short description of the pattern"
@@ -4982,10 +4951,9 @@ msgid "Use black and white palette"
 msgstr ""
 
 #: plug-ins/common/file-pcx.c:245
-#, fuzzy
 #| msgid "Show image"
 msgid "ZSoft DCX image"
-msgstr "Näytä kuva"
+msgstr "ZSoft DCX -kuva"
 
 #: plug-ins/common/file-pcx.c:248
 msgid "Loads files in Zsoft DCX file format"
@@ -5102,10 +5070,8 @@ msgid "Portable Document Format"
 msgstr ""
 
 #: plug-ins/common/file-pdf-export.c:332 plug-ins/common/file-pdf-export.c:418
-#, fuzzy
-#| msgid "Map File Format"
 msgid "Save files in PDF format"
-msgstr "Kuvakartan muoto"
+msgstr "Tallenna tiedostot PDF-muodossa"
 
 #: plug-ins/common/file-pdf-export.c:333 plug-ins/common/file-pdf-export.c:419
 msgid ""
@@ -6457,10 +6423,9 @@ msgid "Exporting not implemented yet."
 msgstr ""
 
 #: plug-ins/common/file-pvr.c:211
-#, fuzzy
 #| msgid "PNM Image"
 msgid "PVR Image"
-msgstr "PNM-kuva"
+msgstr "PVR-kuva"
 
 #: plug-ins/common/file-pvr.c:214
 msgid "Load file in the PVR file format"
@@ -7048,7 +7013,6 @@ msgid "Loads files in SVG file format"
 msgstr ""
 
 #: plug-ins/common/file-svg.c:296
-#| msgid "HSV"
 msgid "SVG"
 msgstr "SVG"
 
@@ -7066,16 +7030,12 @@ msgid ""
 msgstr "Tuo polut GIMPin polkutyökalun käyttöön"
 
 #: plug-ins/common/file-svg.c:307
-#, fuzzy
-#| msgid "Import _paths"
 msgid "Don't import paths"
-msgstr "Tuo _polut"
+msgstr "Älä tuo polkuja"
 
 #: plug-ins/common/file-svg.c:308
-#, fuzzy
-#| msgid "Import _paths"
 msgid "Import paths individually"
-msgstr "Tuo _polut"
+msgstr "Tuo polut yksittäin"
 
 #: plug-ins/common/file-svg.c:309
 msgid "Merge imported paths"
@@ -7891,7 +7851,7 @@ msgstr "XPM"
 
 #: plug-ins/common/file-xpm.c:267
 msgid "_Threshold"
-msgstr "Kynnysarvo:"
+msgstr "_Kynnysarvo"
 
 #: plug-ins/common/file-xpm.c:268
 #, fuzzy
@@ -8349,7 +8309,7 @@ msgstr "Piirtoristikko"
 
 #: plug-ins/common/guillotine.c:111
 msgid "Slice Using G_uides"
-msgstr ""
+msgstr "Viipaloi _apuviivoja käyttäen"
 
 #: plug-ins/common/guillotine.c:115
 msgid "Slice the image into subimages using guides"
@@ -10363,7 +10323,6 @@ msgid "Loads files of Windows BMP file format"
 msgstr ""
 
 #: plug-ins/file-bmp/bmp.c:182
-#| msgid "XMP"
 msgid "BMP"
 msgstr "BMP"
 
@@ -10542,7 +10501,6 @@ msgid "RGB8"
 msgstr "RGB8"
 
 #: plug-ins/file-dds/dds.c:225
-#| msgid "RGBA"
 msgid "RGBA8"
 msgstr "RGBA8"
 
@@ -10559,7 +10517,6 @@ msgid "R5G6B5"
 msgstr "R5G6B5"
 
 #: plug-ins/file-dds/dds.c:229
-#| msgid "RGBA"
 msgid "RGBA4"
 msgstr "RGBA4"
 
@@ -10772,7 +10729,6 @@ msgid "Use gamma correct mipmap filtering"
 msgstr ""
 
 #: plug-ins/file-dds/dds.c:318
-#| msgid "Use subcolors"
 msgid "Use sRG_B colorspace"
 msgstr "Käytä sRG_B-väriavaruutta"
 
@@ -10813,7 +10769,6 @@ msgstr ""
 
 #: plug-ins/file-dds/ddsread.c:179
 #, c-format
-#| msgid "L_eading"
 msgid "Loading: %s"
 msgstr "Ladataan: %s"
 
@@ -10968,7 +10923,7 @@ msgstr "Tiedoston '%s' avaaminen epäonnistui: %s"
 
 #: plug-ins/file-exr/file-exr.c:454
 msgid "Import OpenEXR"
-msgstr ""
+msgstr "Tuo OpenEXR"
 
 #: plug-ins/file-exr/file-exr.c:469
 #, fuzzy
@@ -11062,7 +11017,6 @@ msgid "FITS export cannot handle images with alpha channels"
 msgstr "PostScript ei voi tallentaa kuvia joissa on läpinäkyvyys"
 
 #: plug-ins/file-fits/fits.c:998
-#| msgid "Open File"
 msgid "Open FITS File"
 msgstr "Avaa FITS-tiedosto"
 
@@ -11634,7 +11588,7 @@ msgstr ""
 
 #: plug-ins/file-jpeg/jpeg.c:264
 msgid "_DCT method"
-msgstr "_DCT-menetelmä:"
+msgstr "_DCT-menetelmä"
 
 #: plug-ins/file-jpeg/jpeg.c:265
 #, fuzzy
@@ -11928,7 +11882,7 @@ msgstr "Tiedosto loppui odottamattomasti kesken"
 #: plug-ins/file-psd/psd.c:136 plug-ins/file-psd/psd.c:219
 #: plug-ins/file-psd/psd.c:221
 msgid "Photoshop image"
-msgstr "Photoshop kuva"
+msgstr "Photoshop-kuva"
 
 #: plug-ins/file-psd/psd.c:139 plug-ins/file-psd/psd.c:168
 msgid "Loads images from the Photoshop PSD and PSB file formats"
@@ -12040,12 +11994,10 @@ msgid ""
 msgstr ""
 
 #: plug-ins/file-psd/psd.c:411
-#| msgid "Import from PDF"
 msgid "Import PSD"
 msgstr "Tuo PSD"
 
 #: plug-ins/file-psd/psd.c:562
-#| msgid "Import _paths"
 msgid "Import PSD metadata"
 msgstr "Tuo PSD-metatiedot"
 
@@ -12256,7 +12208,6 @@ msgid "Could not open '%s' for writing."
 msgstr "Ei voi avata \"%s\" kirjoitusta varten."
 
 #: plug-ins/file-tiff/file-tiff.c:141
-#| msgid "_LZW"
 msgid "LZW"
 msgstr "LZW"
 
@@ -12281,7 +12232,6 @@ msgid "CCITT Group 4 fax"
 msgstr ""
 
 #: plug-ins/file-tiff/file-tiff.c:174 plug-ins/file-tiff/file-tiff.c:220
-#| msgid "TIFF image"
 msgid "TIFF or BigTIFF image"
 msgstr "TIFF- tai BigTIFF-kuva"
 
@@ -12342,40 +12292,28 @@ msgid "Create a CMYK TIFF image using the soft-proofing color profile"
 msgstr ""
 
 #: plug-ins/file-tiff/file-tiff.c:274
-#, fuzzy
-#| msgid "Save _gamma"
 msgid "Save La_yers"
-msgstr "Tallenna _gamma"
+msgstr "Tallenna _tasot"
 
 #: plug-ins/file-tiff/file-tiff.c:275
-#, fuzzy
-#| msgid "Save _gamma"
 msgid "Save Layers"
-msgstr "Tallenna _gamma"
+msgstr "Tallenna tasot"
 
 #: plug-ins/file-tiff/file-tiff.c:280
-#, fuzzy
-#| msgid "Curl Layer"
 msgid "Crop L_ayers"
-msgstr "Taitostaso"
+msgstr "Rajaa _tasot"
 
 #: plug-ins/file-tiff/file-tiff.c:281
-#, fuzzy
-#| msgid "Curl Layer"
 msgid "Crop Layers"
-msgstr "Taitostaso"
+msgstr "Rajaa tasot"
 
 #: plug-ins/file-tiff/file-tiff.c:286
-#, fuzzy
-#| msgid "Save _XMP data"
 msgid "Save _GeoTIFF data"
-msgstr "Tallenna _XMP-tiedot"
+msgstr "Tallenna _GeoTIFF-tiedot"
 
 #: plug-ins/file-tiff/file-tiff.c:287
-#, fuzzy
-#| msgid "Save _XMP data"
 msgid "Save GeoTIFF data"
-msgstr "Tallenna _XMP-tiedot"
+msgstr "Tallenna GeoTIFF-tiedot"
 
 #: plug-ins/file-tiff/file-tiff.c:426
 #, c-format
@@ -12648,7 +12586,7 @@ msgstr "WebP-kuva"
 
 #: plug-ins/file-webp/file-webp.c:158 plug-ins/file-webp/file-webp.c:159
 msgid "Saves files in the WebP image format"
-msgstr ""
+msgstr "Tallentaa tiedostot WebP-kuvamuotoon"
 
 #: plug-ins/file-webp/file-webp.c:168
 msgid "WebP"
@@ -12838,7 +12776,7 @@ msgstr ""
 
 #: plug-ins/file-webp/file-webp-export.c:119
 msgid "file is larger than 4GiB"
-msgstr ""
+msgstr "tiedosto on suurempi kuin 4 GiB"
 
 #: plug-ins/file-webp/file-webp-export.c:121
 msgid "user aborted encoding"
@@ -12861,9 +12799,6 @@ msgstr "Ei voi avata %s kirjoittamista varten: %s"
 
 #: plug-ins/file-webp/file-webp-export.c:303
 #, c-format
-#| msgid ""
-#| "Parse error in '%s':\n"
-#| "%s"
 msgid "WebP error: '%s'"
 msgstr "WebP-virhe: '%s'"
 
@@ -12927,7 +12862,6 @@ msgstr "Lisää apulinjoja"
 
 #: plug-ins/filter-browser/filter-browser.c:514
 #, c-format
-#| msgid "_License:"
 msgid "License: %s"
 msgstr "Lisenssi: %s"
 
@@ -12967,7 +12901,6 @@ msgstr[0] "NL suodatin"
 msgstr[1] "NL suodatin"
 
 #: plug-ins/filter-browser/filter-browser.c:734
-#| msgid "GIMP Help Browser"
 msgid "GEGL Filter Browser"
 msgstr "GEGL-suodatinselain"
 
@@ -14650,7 +14583,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/presets.c:1075
 msgid "Deletes the selected Preset"
-msgstr ""
+msgstr "Poistaa valitun esiasetuksen"
 
 #: plug-ins/gimpressionist/presets.c:1081
 msgid "Reread the folder of Presets"
@@ -15409,7 +15342,7 @@ msgstr "Copyright © 1999-2005 by Maurits Rijk"
 
 #: plug-ins/imagemap/imap_about.c:50
 msgid "Released under the GNU General Public License"
-msgstr "  Julkaistu GNU Lisenssillä"
+msgstr "Julkaistu GNU General Public License -lisenssillä"
 
 #: plug-ins/imagemap/imap_circle.c:63
 msgid "C_ircle"
@@ -15783,7 +15716,7 @@ msgstr "Dataa on muutettu!"
 
 #: plug-ins/imagemap/imap_main.c:809
 msgid "Do you really want to discard your changes?"
-msgstr "Haluatko hylätä muutoksesi"
+msgstr "Haluatko varmasti hylätä muutokset?"
 
 #: plug-ins/imagemap/imap_main.c:1046
 #, c-format
@@ -16062,20 +15995,16 @@ msgid "View Source"
 msgstr "Näytä lähdekoodi"
 
 #: plug-ins/imagemap/imap_statusbar.c:55
-#, fuzzy
-#| msgid "Polar Coordinates"
 msgid "Coordinates:"
-msgstr "Napakoordinaatisto"
+msgstr "Koordinaatit:"
 
 #: plug-ins/imagemap/imap_statusbar.c:70
 msgid "Active Area Size:"
 msgstr ""
 
 #: plug-ins/imagemap/imap-menu.ui:16
-#, fuzzy
-#| msgid "Save _gamma"
 msgid "Save As"
-msgstr "Tallenna _gamma"
+msgstr "Tallenna nimellä"
 
 #: plug-ins/imagemap/imap-menu.ui:65
 #, fuzzy
@@ -16658,7 +16587,6 @@ msgstr "Pallo"
 #: plug-ins/map-object/map-object-main.c:149
 #: plug-ins/map-object/map-object-main.c:181
 #: plug-ins/map-object/map-object-main.c:197
-#| msgid "X:"
 msgid "X"
 msgstr "X"
 
@@ -16671,14 +16599,12 @@ msgstr ""
 #: plug-ins/map-object/map-object-main.c:154
 #: plug-ins/map-object/map-object-main.c:186
 #: plug-ins/map-object/map-object-main.c:202
-#| msgid "Y:"
 msgid "Y"
 msgstr "Y"
 
 #: plug-ins/map-object/map-object-main.c:159
 #: plug-ins/map-object/map-object-main.c:191
 #: plug-ins/map-object/map-object-main.c:207
-#| msgid "Z:"
 msgid "Z"
 msgstr "Z"
 
@@ -17131,8 +17057,6 @@ msgid "State / Province"
 msgstr "Kierrä/skaalaa"
 
 #: plug-ins/metadata/metadata-editor.c:511
-#, fuzzy
-#| msgid "Postal Code\t"
 msgid "Postal Code"
 msgstr "Postinumero"
 
@@ -17222,10 +17146,8 @@ msgid "Source"
 msgstr "Lähde 1:"
 
 #: plug-ins/metadata/metadata-editor.c:537
-#, fuzzy
-#| msgid "Image Types"
 msgid "Usage Terms"
-msgstr "Kuvatyypit"
+msgstr "Käyttöehdot"
 
 #: plug-ins/metadata/metadata-editor.c:543
 msgid "Person Shown"
@@ -17521,10 +17443,8 @@ msgid "Equipment Manufacturer"
 msgstr ""
 
 #: plug-ins/metadata/metadata-editor.c:760
-#, fuzzy
-#| msgid "Import _paths"
 msgid "_Edit Metadata"
-msgstr "Tuo _polut"
+msgstr "_Muokkaa metatietoja"
 
 #: plug-ins/metadata/metadata-editor.c:764
 msgid "Edit metadata (IPTC, EXIF, XMP)"
@@ -17545,10 +17465,9 @@ msgid "Metadata Editor: %s"
 msgstr "Metatietojen muokkain: %s"
 
 #: plug-ins/metadata/metadata-editor.c:1190
-#, fuzzy
 #| msgid "Import _paths"
 msgid "_Write Metadata"
-msgstr "Tuo _polut"
+msgstr "_Kirjoita metatiedot"
 
 #. IPTC tab
 #: plug-ins/metadata/metadata-editor.c:1232
@@ -17577,20 +17496,17 @@ msgid "DICOM"
 msgstr "DICOM"
 
 #: plug-ins/metadata/metadata-editor.c:1383
-#, fuzzy
 #| msgid "Import _paths"
 msgid "Import metadata"
-msgstr "Tuo _polut"
+msgstr "Tuo metatiedot"
 
 #: plug-ins/metadata/metadata-editor.c:1385
 msgid "Export metadata"
 msgstr "Vie metatiedot"
 
 #: plug-ins/metadata/metadata-editor.c:1688
-#, fuzzy
-#| msgid "C_hoose here:"
 msgid "Choose Date"
-msgstr "Valitse:"
+msgstr "Valitse päiväys"
 
 #: plug-ins/metadata/metadata-editor.c:1692
 msgid "Set Date"
@@ -18089,22 +18005,16 @@ msgid "The shoot type"
 msgstr ""
 
 #: plug-ins/screenshot/screenshot.c:168
-#, fuzzy
-#| msgid "Take a screenshot of a single _window"
 msgid "Take a screenshot of a single window"
-msgstr "Ota kuvankaappaus _yhdestä ikkunasta"
+msgstr "Ota kuvakaappaus yhdestä ikkunasta"
 
 #: plug-ins/screenshot/screenshot.c:169
-#, fuzzy
-#| msgid "Take a screenshot of the entire _screen"
 msgid "Take a screenshot of the entire screen"
-msgstr "Ota kuvankaappaus _koko ruudusta"
+msgstr "Ota kuvakaappaus koko näytöstä"
 
 #: plug-ins/screenshot/screenshot.c:171
-#, fuzzy
-#| msgid "Select a _region to grab"
 msgid "Select a region to grab"
-msgstr "Valitse kaapattava _alue"
+msgstr "Valitse kaapattava alue"
 
 #: plug-ins/screenshot/screenshot.c:202
 msgid "Include _mouse pointer"
@@ -18123,20 +18033,16 @@ msgid "Title bar, window borders and shadow will be part of the image"
 msgstr ""
 
 #: plug-ins/screenshot/screenshot.c:221
-#, fuzzy
-#| msgid "Se_lection only"
 msgid "Selection d_elay"
-msgstr "Vain _valinta"
+msgstr "Valinnan _viive"
 
 #: plug-ins/screenshot/screenshot.c:222
 msgid "Delay before selection of the window or the region"
 msgstr ""
 
 #: plug-ins/screenshot/screenshot.c:226
-#, fuzzy
-#| msgid "Screenshot"
 msgid "Screenshot dela_y"
-msgstr "Kuvankaappaus"
+msgstr "Kuvankaappauksen v_iive"
 
 #: plug-ins/screenshot/screenshot.c:227
 #, fuzzy
