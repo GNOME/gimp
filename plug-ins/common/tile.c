@@ -358,12 +358,13 @@ tile (GimpImage     *image,
   gint          src_width  = gimp_drawable_get_width (drawable);
   gint          src_height = gimp_drawable_get_height (drawable);
 
-  GimpImageBaseType  image_type   = GIMP_RGB;
+  GimpImageBaseType  image_type = GIMP_RGB;
 
   if (create_new_image)
     {
       /*  create  a new image  */
-      gint32 precision = gimp_image_get_precision (image);
+      GimpColorProfile *profile   = gimp_image_get_color_profile (image);
+      gint32            precision = gimp_image_get_precision (image);
 
       switch (gimp_drawable_type (drawable))
         {
@@ -389,6 +390,7 @@ tile (GimpImage     *image,
                                                   precision);
       gimp_image_undo_disable (*new_image);
 
+      gimp_image_set_color_profile (*new_image, profile);
       /*  copy the colormap, if necessary  */
       if (image_type == GIMP_INDEXED)
         gimp_image_set_palette (*new_image, gimp_image_get_palette (image));
