@@ -54,12 +54,11 @@ $INNO_PATH = Get-ItemProperty (Resolve-Path Registry::'HKEY_CURRENT_USER\Softwar
 Set-Alias iscc "$INNO_PATH\iscc.exe"
 
 ## This script needs a bit of Python to work
-#FIXME: Restore the condition when TWAIN 32-bit support is dropped
-#if (-not (Get-Command "python" -ErrorAction SilentlyContinue) -or "$(Get-Command "python" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source)" -like '*WindowsApps*')
-#  {
+if (-not (Get-Command "python" -ErrorAction SilentlyContinue) -or "$(Get-Command "python" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source)" -like '*WindowsApps*')
+  {
     Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String '-not \$env:MSYS_ROOT' -Context 0,12) -replace '> ','')
     $env:PATH = "$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/bin;$env:PATH"
-#  }
+  }
 Write-Output "(INFO): Installed Inno: $inno_version_downloaded | Installed Python: $((python --version) -replace '[^0-9.]', '')"
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_tlkt$([char]13)$([char]27)[0K"
 
@@ -189,19 +188,6 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):i
 # (Most of the file processing and special-casing is done on *gimp3264.iss [Files] section.
 #  The resulting .exe installer content should be identical to the .msix and vice-versa)
 
-## Get 32-bit TWAIN deps list
-if (Test-Path "$X86_BUNDLE")
-  {
-    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_files[collapsed=true]$([char]13)$([char]27)[0KGenerating 32-bit TWAIN dependencies list"
-    $twain_list_file = 'build\windows\installer\base_twain32on64.list'
-    Copy-Item $twain_list_file "$twain_list_file.bak"
-    $twain_list = (python tools\lib_bundle.py --debug debug-only $(Resolve-Path $X86_BUNDLE/lib/gimp/*/plug-ins/twain/twain.exe) $env:MSYS_ROOT/mingw32/ $X86_BUNDLE/ 32 |
-                  Select-String 'Installed' -CaseSensitive -Context 0,1000) -replace "  `t- ",'bin\'
-    (Get-Content $twain_list_file) | Foreach-Object {$_ -replace "@DEPS_GENLIST@","$twain_list"} | Set-Content $twain_list_file
-    (Get-Content $twain_list_file) | Select-string 'Installed' -notmatch | Set-Content $twain_list_file
-    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_files$([char]13)$([char]27)[0K"
-  }
-
 
 # 5. COMPILE .EXE INSTALLER
 $INSTALLER="gimp-${CUSTOM_GIMP_VERSION}-setup.exe"
@@ -211,12 +197,6 @@ iscc -DREVISION="$revision" -DBUILD_DIR="$BUILD_DIR" $supported_archs -DDEBUG_SY
 Set-Location ..\..\..
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_making$([char]13)$([char]27)[0K"
 
-## Revert change done in TWAIN list
-if ($twain_list_file)
-  {
-    Remove-Item $twain_list_file
-    Move-Item "$twain_list_file.bak" $twain_list_file
-  }
 ## Clean changes in Inno installation
 fix_msg 'Default.isl' revert
 fix_msg $langsArray_Official revert
