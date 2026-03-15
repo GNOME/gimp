@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: tiny-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-02-09 16:33+0000\n"
-"PO-Revision-Date: 2026-03-11 22:34+0200\n"
+"PO-Revision-Date: 2026-03-15 22:26+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: fi\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
@@ -203,20 +203,14 @@ msgstr "Script-Fu-kansiovalinta"
 
 #. Log to stdout.  Later to Gimp.
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:817
-#, fuzzy, c-format
+#, c-format
 msgid "Error while executing %s:"
-msgstr ""
-"Virhe suorittaessa\n"
-" %s\n"
-"%s"
+msgstr "Virhe suorittaessa %s:"
 
 #: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:541
-#, fuzzy, c-format
+#, c-format
 msgid "Error while loading %s:"
-msgstr ""
-"Virhe suorittaessa\n"
-" %s\n"
-"%s"
+msgstr "Virhe ladatessa %s:"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:72
 msgid "Bumpmap"
@@ -769,10 +763,8 @@ msgid "Flatten image"
 msgstr "Yhdistä kuva"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:63
-#, fuzzy
-#| msgid "Using _Paths"
 msgid "_Using Paths"
-msgstr "Polkujen _käyttö"
+msgstr "Polkujen _käyttäminen"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:64
 #: plug-ins/script-fu/scripts/gimp-online.scm:75
@@ -811,8 +803,6 @@ msgid "Drawing _Simple Objects"
 msgstr "Yksinkertaisten _kuvien piirto"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:140
-#, fuzzy
-#| msgid "Create and Use _Selections"
 msgid "_Create and Use Selections"
 msgstr "Luo ja käytä _valintoja"
 
@@ -836,7 +826,7 @@ msgstr "Kehittäjien sivusto"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:206
 msgid "_Roadmaps"
-msgstr ""
+msgstr "_Etenemissuunnitelmat"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:207
 msgid "Bookmark to the roadmaps of GIMP"
@@ -844,7 +834,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:217
 msgid "_Bug Reports and Feature Requests"
-msgstr ""
+msgstr "_Ongelmaraportit ja ominaisuuspyynnöt"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:218
 msgid "Bookmark to the bug tracker of GIMP"
@@ -1100,7 +1090,7 @@ msgstr ""
 #. The user should not need to search for the file.
 #: plug-ins/script-fu/scripts/palette-export.scm:199
 msgid "Exported palette to file: "
-msgstr ""
+msgstr "Viety paletti tiedostoon: "
 
 #: plug-ins/script-fu/scripts/palette-export.scm:287
 msgid "Folder for the output file"
@@ -1162,10 +1152,8 @@ msgid "There is no image data in the clipboard to paste."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:65
-#, fuzzy
-#| msgid "New _Brush..."
 msgid "Paste as New _Brush..."
-msgstr "Uusi _sivellin..."
+msgstr "Liitä uutena _siveltimenä..."
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:66
 msgid "Paste the clipboard contents into a new brush"
@@ -1176,10 +1164,8 @@ msgid "_Brush name"
 msgstr "_Siveltimen nimi"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:69
-#, fuzzy
-#| msgid "Brush"
 msgid "My Brush"
-msgstr "Sivellin"
+msgstr "Oma sivellin"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:70
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
@@ -1187,44 +1173,32 @@ msgid "_File name"
 msgstr "_Tiedostonimi"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#, fuzzy
-#| msgid "Airbrush"
 msgid "mybrush"
-msgstr "Ruisku"
+msgstr "omasivellin"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:71
-#, fuzzy
-#| msgid "Spacing"
 msgid "_Spacing"
-msgstr "Välistys"
+msgstr "_Välistys"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:51
-#, fuzzy
-#| msgid "New _Pattern..."
 msgid "Paste as New _Pattern..."
-msgstr "Uusi _kuvio..."
+msgstr "Liitä uutena _kuviona..."
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "Liitä leikepöydän sisältö uudeksi kuvioksi"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
-#, fuzzy
-#| msgid "Pattern name"
 msgid "_Pattern name"
-msgstr "Kuvion nimi"
+msgstr "_Kuvion nimi"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
-#, fuzzy
-#| msgid "Pattern"
 msgid "My Pattern"
-msgstr "Kuvio"
+msgstr "Oma kuvio"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
-#, fuzzy
-#| msgid "Pattern"
 msgid "mypattern"
-msgstr "Kuvio"
+msgstr "omakuvio"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:196
 msgid "_Perspective..."
@@ -1252,7 +1226,7 @@ msgstr "Interpolaatio"
 
 #: plug-ins/script-fu/scripts/reverse-layers.scm:41
 msgid "Reverse Layer _Order"
-msgstr ""
+msgstr "Käänteinen taso_järjestys"
 
 #: plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse the order of layers in the image"
