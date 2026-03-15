@@ -63,7 +63,7 @@ if get_option('webkit-unmaintained')
   }
 endif
 
-if platform_windows and host_cpu_family == 'x86'
+if platform_windows and host_cpu_family == 'x86' and get_option('twain-unmaintained')
   complex_plugins_list += {
     'name': 'twain',
   }
