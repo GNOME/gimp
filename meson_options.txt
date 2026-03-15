@@ -51,6 +51,7 @@ option('openexr',           type: 'feature', value: 'auto', description: 'Openex
 option('openmp',            type: 'feature', value: 'auto', description: 'OpenMP support')
 option('print',             type: 'boolean', value: true,   description: 'Print support')
 option('webkit-unmaintained',type: 'boolean', value: false,  description: 'Help browser and webpage plugins (unmaintained)')
+option('twain-unmaintained',type: 'boolean', value: false,  description: '32-bit TWAIN plugin for scanning (unmaintained)')
 option('webp',              type: 'feature', value: 'auto', description: 'Webp support')
 option('wmf',               type: 'feature', value: 'auto', description: 'Wmf support')
 option('xcursor',           type: 'feature', value: 'auto', description: 'Xcursor support')
