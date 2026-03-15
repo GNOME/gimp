@@ -384,19 +384,64 @@ Source: "{#MAIN_BUNDLE}\share\locale\*"; DestDir: "{app}\share\locale"; Componen
 #include ASSETS_DIR + "\base_po-files.list"
 Source: "{#MAIN_BUNDLE}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: {#COMMON_FLAGS}
 
-;x86_64
-#ifdef X64_BUNDLE
-#define BUNDLE X64_BUNDLE
-#define COMPONENT "X64"
-#include "base_executables.isi"
+
+#define OPTIONAL_DLL="libgs*.dll,lua*.dll,corelgilua*.dll,gluas.dll,libpython*.dll"
+#define OPTIONAL_EXE="file-ps.exe,lua*.exe,python*.exe"
+
+#define FindHandle
+#define FindResult
+
+#define i
+
+#sub EmitBaseExecutables
+#if i == 1
+  #define private BUNDLE ARM64_BUNDLE
+  #define private COMPONENT "ARM64"
+#elif i == 2
+  #define private BUNDLE X64_BUNDLE
+  #define private COMPONENT "X64"
 #endif
 
-;AArch64
-#ifdef ARM64_BUNDLE
-#define BUNDLE ARM64_BUNDLE
-#define COMPONENT "ARM64"
-#include "base_executables.isi"
+; Required arch-specific components (compact installation)
+Source: "{#BUNDLE}\bin\libgimp*.dll"; DestDir: "{app}\bin"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\bin\gimp*.exe"; DestDir: "{app}\bin"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\gimp\*.dll"; DestDir: "{app}\lib\gimp"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\gimp\*.exe"; DestDir: "{app}\lib\gimp"; Excludes: "{#OPTIONAL_EXE}"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\girepository-1.0\Gimp*.typelib"; DestDir: "{app}\lib\girepository-1.0"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
+
+Source: "{#BUNDLE}\bin\*"; DestDir: "{app}\bin"; Excludes: "libgimp*.dll,gimp*.exe,*.pdb,{#OPTIONAL_DLL},{#OPTIONAL_EXE}"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\*"; DestDir: "{app}\lib"; Excludes: "gimp,Gimp*.typelib,*.pdb,*.a,*.pc,lua,gluas.dll,python{#PYTHON_VERSION}"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
+
+; Optional arch-specific components (full installation)
+#if defined(DEBUG_SYMBOLS) && COMPONENT != "X86"
+Source: "{#BUNDLE}\*.pdb"; DestDir: "{app}"; Components: debug{#COMPONENT}; Flags: {#COMMON_FLAGS}
 #endif
+
+Source: "{#BUNDLE}\include\*.h**"; DestDir: "{app}\include"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\*.a"; DestDir: "{app}\lib"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\pkgconfig\*"; DestDir: "{app}\lib\pkgconfig"; Components: dev{#COMPONENT}; Flags: {#COMMON_FLAGS}
+
+Source: "{#BUNDLE}\bin\libgs*.dll"; DestDir: "{app}\bin"; Components: gs{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\file-ps.exe"; DestDir: "{app}\lib"; Components: gs{#COMPONENT}; Flags: {#COMMON_FLAGS}
+
+#ifdef LUA
+Source: "{#BUNDLE}\bin\lua*.dll"; DestDir: "{app}\bin"; Components: lua{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\bin\lua*.exe"; DestDir: "{app}\bin"; Components: lua{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\corelgilua*.dll"; DestDir: "{app}\lib"; Components: lua{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\gluas.dll"; DestDir: "{app}\lib"; Components: lua{#COMPONENT}; Flags: {#COMMON_FLAGS}
+#endif
+
+#ifdef PYTHON
+Source: "{#BUNDLE}\bin\libpython*.dll"; DestDir: "{app}\bin"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\bin\python*.exe"; DestDir: "{app}\bin"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\python{#PYTHON_VERSION}\*"; DestDir: "{app}\lib\python{#PYTHON_VERSION}"; Excludes: "*.pdb,*.py"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS} createallsubdirs
+#endif
+
+#undef BUNDLE
+#undef COMPONENT
+#endsub
+
+#for {i = 1; i <= 2; i++} EmitBaseExecutables
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
@@ -408,12 +453,10 @@ Source: "{#X64_BUNDLE}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimpX64; Fl
 #endif
 
 ;allow specific config files to be overridden if '/configoverride=' is set at run time
-#define FindHandle
 #sub ProcessConfigFile
   #define FileName FindGetFileName(FindHandle)
 Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\{#ConfigDir}"; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
 #endsub
-#define FindResult
 #sub ProcessConfigDir
   #emit ';; ' + ConfigDir
   #emit ';; ' + BaseDir
@@ -583,9 +626,648 @@ begin
 	MeasureLabel.Free;
 end;
 
-#include "util_general.isi"
 
-#include "util_MessageWithURL.isi"
+procedure DebugMsg(Const pProc,pMsg: String);
+begin
+	Log('[Code] ' + pProc + #9 + pMsg);
+end;
+
+
+function BoolToStr(const b: Boolean): String;
+begin
+	if b then
+		Result := 'True'
+	else
+		Result := 'False';
+end;
+
+
+function RevPos(const SearchStr, Str: string): Integer;
+var i: Integer;
+begin
+
+	if Length(SearchStr) < Length(Str) then
+		for i := (Length(Str) - Length(SearchStr) + 1) downto 1 do
+		begin
+
+			if Copy(Str, i, Length(SearchStr)) = SearchStr then
+			begin
+				Result := i;
+				exit;
+			end;
+
+		end;
+
+	Result := 0;
+end;
+
+
+function Replace(pSearchFor, pReplaceWith, pText: String): String;
+begin
+    StringChangeEx(pText,pSearchFor,pReplaceWith,True);
+
+	Result := pText;
+end;
+
+
+function Count(What, Where: String): Integer;
+begin
+	Result := 0;
+	if Length(What) = 0 then
+		exit;
+
+	while Pos(What,Where)>0 do
+	begin
+		Where := Copy(Where,Pos(What,Where)+Length(What),Length(Where));
+		Result := Result + 1;
+	end;
+end;
+
+
+//split text to array
+procedure Explode(var ADest: TArrayOfString; aText, aSeparator: String);
+var tmp: Integer;
+begin
+	if aSeparator='' then
+		exit;
+
+	SetArrayLength(ADest,Count(aSeparator,aText)+1)
+
+	tmp := 0;
+	repeat
+		if Pos(aSeparator,aText)>0 then
+		begin
+
+			ADest[tmp] := Copy(aText,1,Pos(aSeparator,aText)-1);
+			aText := Copy(aText,Pos(aSeparator,aText)+Length(aSeparator),Length(aText));
+			tmp := tmp + 1;
+
+		end else
+		begin
+
+			 ADest[tmp] := aText;
+			 aText := '';
+
+		end;
+	until Length(aText)=0;
+end;
+
+
+function String2Utf8(const pInput: String): AnsiString;
+var Output: AnsiString;
+	ret, outLen, nulPos: Integer;
+begin
+	outLen := WideCharToMultiByte(CP_UTF8, 0, pInput, -1, Output, 0, 0, 0);
+	Output := StringOfChar(#0,outLen);
+	ret := WideCharToMultiByte(CP_UTF8, 0, pInput, -1, Output, outLen, 0, 0);
+
+	if ret = 0 then
+		RaiseException('WideCharToMultiByte failed: ' + IntToStr(GetLastError));
+
+	nulPos := Pos(#0,Output) - 1;
+	if nulPos = -1 then
+		nulPos := Length(Output);
+
+    Result := Copy(Output,1,nulPos);
+end;
+
+
+function Utf82String(const pInput: AnsiString): String;
+var Output: AnsiString;
+	ret, outLen, nulPos: Integer;
+begin
+	outLen := MultiByteToWideChar(CP_UTF8, 0, pInput, -1, Output, 0);
+	Output := StringOfChar(#0,outLen);
+	ret := MultiByteToWideChar(CP_UTF8, 0, pInput, -1, Output, outLen);
+
+	if ret = 0 then
+		RaiseException('MultiByteToWideChar failed: ' + IntToStr(GetLastError));
+
+	nulPos := Pos(#0,Output) - 1;
+	if nulPos = -1 then
+		nulPos := Length(Output);
+
+    Result := Copy(Output,1,nulPos);
+end;
+
+
+function SaveStringToUTF8File(const pFileName, pS: String; const pAppend: Boolean): Boolean;
+begin
+	Result := SaveStringToFile(pFileName, String2Utf8(pS), pAppend);
+end;
+
+
+function LoadStringFromUTF8File(const pFileName: String; var oS: String): Boolean;
+var Utf8String: AnsiString;
+begin
+	Result := LoadStringFromFile(pFileName, Utf8String);
+	oS := Utf82String(Utf8String);
+end;
+
+
+procedure StatusLabel(const Status1,Status2: string);
+begin
+	WizardForm.StatusLabel.Caption := Status1;
+	WizardForm.FilenameLabel.Caption := Status2;
+	WizardForm.Refresh();
+end;
+
+
+//reverse encoding done by Encode
+function Decode(pText: String): String;
+var p: Integer;
+	tmp: String;
+begin
+	if Pos('%',pText) = 0 then
+		Result := pText
+	else
+	begin
+		Result := '';
+		while Length(pText) > 0 do
+		begin
+			p := Pos('%',pText);
+			if p = 0 then
+			begin
+				Result := Result + pText;
+				break;
+			end;
+			Result := Result + Copy(pText,1,p-1);
+			tmp := '$' + Copy(pText,p+1,2);
+			Result := Result + Chr(StrToIntDef(tmp,32));
+			pText := Copy(pText,p+3,Length(pText));
+		end;
+	end;
+end;
+
+function GetThemedBgColor: TColor;
+begin
+	if HighContrastActive then
+	begin
+		Result := clWindow;
+	end else
+	begin
+		if IsDarkInstallMode then
+			Result := $2b2b2b
+		else
+			Result := $ffffff;
+	end;
+end;
+
+function MessageWithURL(Message: TArrayOfString; const Title: String; ButtonText: TArrayOfString; const Typ: TMsgBoxType;
+                        const DefaultButton, CancelButton: Integer): Integer; forward;
+
+function GetSystemMetrics(nIndex: Integer): Integer; external 'GetSystemMetrics@User32 stdcall';
+function GetDialogBaseUnits(): Integer; external 'GetDialogBaseUnits@User32 stdcall';
+function ExtractIcon(hInstance: Integer; lpszExeFileName: String; nIconIndex: Integer): Integer; external 'ExtractIconW@shell32.dll stdcall';
+function DrawIcon(hdc: HBitmap; x,y: Integer; hIcon: Integer): Integer; external 'DrawIcon@user32 stdcall';
+function DrawIconEx(hdc: HBitmap; xLeft,yTop: Integer; hIcon: Integer; cxWidth, cyWidth: Integer; istepIfAniCur: Cardinal; hbrFlickerFreeDraw: Integer; diFlags: Cardinal): Integer; external 'DrawIconEx@user32 stdcall';
+function DrawFocusRect(hDC: Integer; var lprc: TRect): BOOL; external 'DrawFocusRect@user32 stdcall';
+
+type
+	TArrayOfButton = Array of TNewButton;
+
+const
+	//borders around message
+	MWU_LEFTBORDER = 25;
+	MWU_RIGHTBORDER = MWU_LEFTBORDER;
+	MWU_TOPBORDER = 26;
+	MWU_BOTTOMBORDER = MWU_TOPBORDER;
+    //space between elements (icon-text and between buttons)
+	MWU_HORZSPACING = 8;
+    //space between labels
+	MWU_VERTSPACING = 4;
+    //button sizes
+	MWU_BUTTONHEIGHT = 24;
+	MWU_MINBUTTONWIDTH = 86;
+    //height of area where buttons are placed
+	MWU_BUTTONAREAHEIGHT = 45;
+
+	SM_CXSCREEN = 0;
+	SM_CXICON = 11;
+	SM_CYICON = 12;
+	SM_CXICONSPACING = 38;
+	SM_CYICONSPACING = 39;
+
+	//COLOR_HOTLIGHT = 26;
+
+	LR_DEFAULTSIZE = $00000040;
+	LR_SHARED = $00008000;
+
+	IMAGE_BITMAP = 0;
+	IMAGE_ICON = 1;
+	IMAGE_CURSOR = 2;
+
+	DI_IMAGE = 1;
+	DI_MASK = 2;
+	DI_NORMAL = DI_IMAGE or DI_MASK;
+	DI_DEFAULTSIZE = 8;
+
+var
+	URLList: TArrayOfString;
+	TextLabel: Array of TNewStaticText;
+	URLFocusImg: Array of TBitmapImage;
+	SingleLineHeight: Integer;
+
+
+procedure UrlClick(Sender: TObject);
+var ErrorCode: Integer;
+begin
+	ShellExecAsOriginalUser('open',URLList[TNewStaticText(Sender).Tag],'','',SW_SHOWNORMAL,ewNoWait,ErrorCode);
+end;
+
+
+// calculates maximum width of text labels
+// also counts URLs, and sets the length of URLList accordingly
+function Message_CalcLabelWidth(var Message: TArrayOfString; MessageForm: TSetupForm): Integer;
+var	MeasureLabel: TNewStaticText;
+	i,URLCount,DlgUnit,ScreenWidth: Integer;
+begin
+	MeasureLabel := TNewStaticText.Create(MessageForm);
+	with MeasureLabel do
+	begin
+		Parent := MessageForm;
+		Left := 0;
+		Top := 0;
+		AutoSize := True;
+	end;
+
+	MeasureLabel.Caption := 'X';
+	SingleLineHeight := MeasureLabel.Height;
+
+	Result := 0; //minimum width
+	URLCount := 0;
+	for i := 0 to GetArrayLength(Message) - 1 do
+	begin
+		if Length(Message[i]) < 1 then //simplifies things
+			Message[i] := ' ';
+
+		if Message[i][1] <> '_' then
+			MeasureLabel.Caption := Message[i] //not an URL
+		else
+		begin //URL - check only the displayed text
+			if Pos(' ',Message[i]) > 0 then
+				MeasureLabel.Caption := Copy(Message[i],Pos(' ',Message[i])+1,Length(Message[i]))
+			else
+				MeasureLabel.Caption := Copy(Message[i],2,Length(Message[i]));
+
+			URLCount := URLCount + 1;
+		end;
+
+		if MeasureLabel.Width > Result then
+			Result := MeasureLabel.Width;
+	end;
+	MeasureLabel.Free;
+
+	SetArrayLength(URLList,URLCount); //needed later - no need to do a special loop just for this
+	SetArrayLength(URLFocusImg,URLCount);
+
+	DlgUnit := GetDialogBaseUnits() and $FFFF;  //ensure the dialog isn't too wide
+	ScreenWidth := GetSystemMetrics(SM_CXSCREEN);
+	if Result > ((278 * DlgUnit) div 4) then //278 is from http://blogs.msdn.com/b/oldnewthing/archive/2011/06/24/10178386.aspx
+		Result := ((278 * DlgUnit) div 4);
+	if Result > (ScreenWidth * 3) div 4 then
+		Result := (ScreenWidth * 3) div 4;
+
+end;
+
+
+//find the longest button
+function Message_CalcButtonWidth(const ButtonText: TArrayOfString; MessageForm: TSetupForm): Integer;
+var	MeasureLabel: TNewStaticText;
+	i: Integer;
+begin
+	MeasureLabel := TNewStaticText.Create(MessageForm);
+	with MeasureLabel do
+	begin
+		Parent := MessageForm;
+		Left := 0;
+		Top := 0;
+		AutoSize := True;
+	end;
+
+	Result := ScaleX(MWU_MINBUTTONWIDTH - MWU_HORZSPACING * 2); //minimum width
+	for i := 0 to GetArrayLength(ButtonText) - 1 do
+	begin
+		MeasureLabel.Caption := ButtonText[i]
+
+		if MeasureLabel.Width > Result then
+			Result := MeasureLabel.Width;
+	end;
+	MeasureLabel.Free;
+
+	Result := Result + ScaleX(MWU_HORZSPACING * 2); //account for borders
+end;
+
+
+procedure Message_Icon(const Typ: TMsgBoxType; TypImg: TBitmapImage);
+var	TypRect: TRect;
+	Icon: THandle;
+	TypIcon: Integer;
+begin
+	TypRect.Left := 0;
+	TypRect.Top := 0;
+	TypRect.Right := GetSystemMetrics(SM_CXICON);
+	TypRect.Bottom := GetSystemMetrics(SM_CYICON);
+
+	//Icon index from imageres.dll
+	case Typ of
+	mbInformation:
+		TypIcon := 76;
+	mbConfirmation:
+		TypIcon := 94;
+	mbError:
+		TypIcon := 79;
+	else
+		TypIcon := 93;
+	end;
+
+	//TODO: icon loads with wrong size when using Large Fonts (SM_CXICON/CYICON is 40, but 32x32 icon loads - find out how to get the right size)
+	Icon := ExtractIcon(0,'imageres.dll',TypIcon)
+	//Icon := LoadIcon(0,TypIcon);
+	//Icon := LoadImage(0,TypIcon,IMAGE_ICON,0,0,LR_SHARED or LR_DEFAULTSIZE);
+	with TypImg do
+	begin
+		Left := ScaleX(MWU_LEFTBORDER);
+		Top := ScaleY(MWU_TOPBORDER);
+		Center := False;
+		Stretch := False;
+		AutoSize := True;
+		Bitmap.Width := GetSystemMetrics(SM_CXICON);
+		Bitmap.Height := GetSystemMetrics(SM_CYICON);
+		Bitmap.Canvas.Brush.Color := GetThemedBgColor;
+		Bitmap.Canvas.FillRect(TypRect);
+		DrawIcon(Bitmap.Canvas.Handle,0,0,Icon); //draws icon scaled
+		//DrawIconEx(Bitmap.Canvas.Handle,0,0,Icon,0,0,0,0,DI_NORMAL {or DI_DEFAULTSIZE}); //draws icon without scaling
+	end;
+	//DestroyIcon(Icon); //not needed with LR_SHARED or with LoadIcon
+end;
+
+
+procedure Message_SetUpURLLabel(URLLabel: TNewStaticText; const Msg: String; const URLNum: Integer);
+var Blank: TRect;
+begin
+	with URLLabel do
+	begin
+		if Pos(' ',Msg) > 0 then
+		begin
+			Caption := Copy(Msg,Pos(' ',Msg)+1,Length(Msg));
+			URLList[URLNum] := Copy(Msg, 2, Pos(' ',Msg)-1);
+		end
+		else
+		begin //no text after URL - display just URL
+			URLList[URLNum] := Copy(Msg, 2, Length(Msg));
+			Caption := URLList[URLNum];
+		end;
+
+		Hint := URLList[URLNum];
+		ShowHint := True;
+
+		Font.Color := GetSysColor(COLOR_HOTLIGHT);
+		Font.Style := [fsUnderline];
+		Cursor := crHand;
+		OnClick := @UrlClick;
+
+		Tag := URLNum; //used to find the URL to open and bitmap to draw focus rectangle on
+
+		if Height = SingleLineHeight then //shrink label to actual text width
+			WordWrap := False;
+
+		TabStop := True; //keyboard accessibility
+		TabOrder := URLNum;
+	end;
+
+  	URLFocusImg[URLNum] := TBitmapImage.Create(URLLabel.Parent); //focus rectangle needs a bitmap - prepare it here
+	with URLFocusImg[URLNum] do
+	begin
+		Left := URLLabel.Left - 1;
+		Top := URLLabel.Top - 1;
+		Stretch := False;
+		AutoSize := True;
+		Parent := URLLabel.Parent;
+		Bitmap.Width := URLLabel.Width + 2;
+		Bitmap.Height := URLLabel.Height + 2;
+
+		SendToBack;
+
+		Blank.Left := 0;
+		Blank.Top := 0;
+		Blank.Right := Width;
+		Blank.Bottom := Height;
+		Bitmap.Canvas.Brush.Color := GetThemedBgColor;
+		Bitmap.Canvas.FillRect(Blank);
+	end;
+end;
+
+
+procedure Message_SetUpLabels(Message: TArrayOfString; TypImg: TBitmapImage;
+                              const DialogTextWidth: Integer; MessagePanel: TPanel);
+var	i,URLNum,dy: Integer;
+begin
+	SetArrayLength(TextLabel,GetArrayLength(Message));
+	URLNum := 0;
+	for i := 0 to GetArrayLength(TextLabel) - 1 do
+	begin
+		TextLabel[i] := TNewStaticText.Create(MessagePanel);
+		with TextLabel[i] do
+		begin
+			Parent := MessagePanel;
+			Left := TypImg.Left + TypImg.Width + ScaleX(MWU_HORZSPACING);
+			if i = 0 then
+				Top := TypImg.Top
+			else
+				Top := TextLabel[i-1].Top + TextLabel[i-1].Height + ScaleY(MWU_VERTSPACING);
+
+			WordWrap := True;
+			AutoSize := True;
+			Width := DialogTextWidth;
+
+			if Message[i][1] <> '_' then
+				Caption := Message[i]
+			else
+			begin // apply URL formatting
+				Message_SetUpURLLabel(TextLabel[i], Message[i], URLNum);
+				URLNum := URLNum + 1;
+			end;
+
+		end;
+	end;
+
+	i := GetArrayLength(TextLabel) - 1;
+	if TextLabel[i].Top + TextLabel[i].Height < TypImg.Top + TypImg.Height then //center labels vertically
+	begin
+		dy := (TypImg.Top + TypImg.Height - TextLabel[i].Top - TextLabel[i].Height) div 2;
+		for i := 0 to GetArrayLength(TextLabel) - 1 do
+			TextLabel[i].Top := TextLabel[i].Top + dy;
+	end;
+end;
+
+
+procedure Message_SetUpButtons(var Button: TArrayOfButton; ButtonText: TArrayOfString;
+                              const ButtonWidth, DefaultButton, CancelButton: Integer; MessageForm: TSetupForm);
+var	i: Integer;
+begin
+	SetArrayLength(Button,GetArrayLength(ButtonText));
+	for i := 0 to GetArrayLength(Button) - 1 do
+	begin
+		Button[i] := TNewButton.Create(MessageForm);
+		with Button[i] do
+		begin
+			Parent := MessageForm;
+			Width := ButtonWidth;
+			Height := ScaleY(MWU_BUTTONHEIGHT);
+
+			if i = 0 then
+			begin
+				Left := MessageForm.ClientWidth - (ScaleX(MWU_HORZSPACING) + ButtonWidth) * GetArrayLength(ButtonText);
+				Top := MessageForm.ClientHeight - ScaleY(MWU_BUTTONAREAHEIGHT) +
+				       ScaleY(MWU_BUTTONAREAHEIGHT - MWU_BUTTONHEIGHT) div 2;
+			end else
+			begin
+				Left := Button[i-1].Left + ScaleX(MWU_HORZSPACING) + ButtonWidth;
+				Top := Button[i-1].Top;
+			end;
+
+			Caption := ButtonText[i];
+			ModalResult := i + 1;
+
+			//set the initial focus to the default button
+			TabOrder := ((i - (DefaultButton - 1)) + GetArrayLength(Button)) mod (GetArrayLength(Button));
+
+			if DefaultButton = i + 1 then
+				Default := True;
+
+			if CancelButton = i + 1 then
+				Cancel := True;
+
+		end;
+	end;
+end;
+
+
+//find out if URL label has focus
+//draw focus rectangle around it if so and return index of focused label
+function Message_FocusLabel(): Integer;
+var	i: Integer;
+	FocusRect: TRect;
+begin
+	Result := -1;
+
+	for i := 0 to GetArrayLength(URLFocusImg) - 1 do //clear existing focus rectangle
+	begin
+		FocusRect.Left := 0;
+		FocusRect.Top := 0;
+		FocusRect.Right := URLFocusImg[i].Bitmap.Width;
+		FocusRect.Bottom := URLFocusImg[i].Bitmap.Height;
+		URLFocusImg[i].Bitmap.Canvas.FillRect(FocusRect);
+	end;
+
+	for i := 0 to GetArrayLength(TextLabel) - 1 do
+	begin
+		if TextLabel[i].Focused then
+		begin
+			Result := i;
+
+			FocusRect.Left := 0;
+			FocusRect.Top := 0;
+			FocusRect.Right := URLFocusImg[TextLabel[i].Tag].Bitmap.Width;
+			FocusRect.Bottom := URLFocusImg[TextLabel[i].Tag].Bitmap.Height;
+
+			DrawFocusRect(URLFocusImg[TextLabel[i].Tag].Bitmap.Canvas.Handle, FocusRect);
+		end;
+	end;
+end;
+
+
+//TNewStaticText doesn't have OnFocus - handle that here
+//(not perfect - if you focus label with keyboard, then focus a button with mouse, the label keeps it's underline)
+procedure Message_KeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+var URLIdx: Integer;
+begin
+	case Key of
+	9,37..40: //tab, arrow keys
+		begin
+			Message_FocusLabel();
+		end;
+	13,32: //enter, spacebar
+		begin
+			URLIdx := Message_FocusLabel(); //get focused label
+			if URLIdx > -1 then
+				UrlClick(TextLabel[URLIdx]);
+		end;
+	end;
+end;
+
+
+function MessageWithURL(Message: TArrayOfString; const Title: String; ButtonText: TArrayOfString; const Typ: TMsgBoxType;
+                        const DefaultButton, CancelButton: Integer): Integer;
+var MessageForm: TSetupForm;
+	Button: TArrayOfButton;
+	DialogTextWidth, ButtonWidth: Integer;
+	MessagePanel: TPanel;
+	TypImg: TBitmapImage;
+	i: Integer;
+begin
+	if (not IsUninstaller and WizardSilent) or (IsUninstaller and UninstallSilent) then
+	begin
+		Result := DefaultButton;
+		exit;
+	end;
+
+	MessageForm := CreateCustomForm(ScaleX(256), ScaleY(128), False, True);
+
+	MessageForm.Caption := Title;
+	if (CancelButton = 0) or (CancelButton > GetArrayLength(ButtonText)) then //no cancel button - remove close button
+		MessageForm.BorderIcons := MessageForm.BorderIcons - [biSystemMenu];
+
+	MessagePanel := TPanel.Create(MessageForm); //Vista-style background
+	with MessagePanel do
+	begin
+		Parent := MessageForm;
+		BevelInner := bvNone;
+		BevelOuter := bvNone;
+		BevelWidth := 0;
+		ParentBackground := False;
+		Color := clWindow;
+		Left := 0;
+		Top := 0;
+	end;
+
+	DialogTextWidth := Message_CalcLabelWidth(Message, MessageForm);
+	ButtonWidth := Message_CalcButtonWidth(ButtonText, MessageForm);
+
+	TypImg := TBitmapImage.Create(MessagePanel);
+	TypImg.Parent := MessagePanel;
+	Message_Icon(Typ, TypImg);
+
+	Message_SetUpLabels(Message, TypImg, DialogTextWidth, MessagePanel);
+
+	i := GetArrayLength(TextLabel) - 1;
+	MessagePanel.ClientHeight := TextLabel[i].Top + TextLabel[i].Height + ScaleY(MWU_BOTTOMBORDER);
+
+	MessagePanel.ClientWidth := DialogTextWidth + TypImg.Width + TypImg.Left + ScaleX(MWU_HORZSPACING + MWU_RIGHTBORDER);
+	if MessagePanel.ClientWidth <
+	   (ButtonWidth + ScaleX(MWU_HORZSPACING)) * GetArrayLength(ButtonText) + ScaleX(MWU_HORZSPACING) then //ensure buttons fit
+		MessagePanel.ClientWidth := (ButtonWidth + ScaleX(MWU_HORZSPACING)) * GetArrayLength(ButtonText) + ScaleX(MWU_HORZSPACING);
+
+	MessageForm.ClientWidth := MessagePanel.Width;
+	MessageForm.ClientHeight := MessagePanel.Height + ScaleY(MWU_BUTTONAREAHEIGHT);
+
+	Message_SetUpButtons(Button, ButtonText, ButtonWidth, DefaultButton, CancelButton, MessageForm);
+
+	MessageForm.OnKeyUp := @Message_KeyUp; //needed for keyboard access of URL labels
+	MessageForm.KeyPreView := True;
+
+	Result := MessageForm.ShowModal;
+
+	for i := 0 to GetArrayLength(TextLabel) - 1 do
+		TextLabel[i].Free;
+	SetArrayLength(TextLabel,0);
+	for i := 0 to GetArrayLength(URLFocusImg) - 1 do
+		URLFocusImg[i].Free;
+	SetArrayLength(URLFocusImg,0);
+
+	MessageForm.Release;
+end;
 
 
 //0. PRELIMINARY SETUP CODE
@@ -1583,7 +2265,449 @@ begin
 	SaveStringToUTF8File(sUnInf,pText+#13#10,True);
 end;
 
-#include "util_uninst.isi"
+var
+	asUninstInf: TArrayOfString; //uninst.inf contents (loaded at start of uninstall, executed at the end)
+
+function SplitRegParams(const pInf: String; var oRootKey: Integer; var oKey,oValue: String): Boolean;
+var	sRootKey: String;
+	d: Integer;
+begin
+	Result := False;
+
+	d := Pos('/',pInf);
+	if d = 0 then
+	begin
+		DebugMsg('SplitRegParams','Malformed line (missing /): ' + pInf);
+		exit;
+	end;
+
+	sRootKey := Copy(pInf,1,d - 1);
+	oKey := Copy(pInf,d + 1,Length(pInf));
+
+	if oValue <> 'nil' then
+	begin
+		d := RevPos('\',oKey);
+		if d = 0 then
+		begin
+			DebugMsg('SplitRegParams','Malformed line (missing \): ' + pInf);
+			exit;
+		end;
+
+		oValue := Decode(Copy(oKey,d+1,Length(oKey)));
+		oKey := Copy(oKey,1,d-1);
+	end;
+
+	DebugMsg('SplitRegParams','Root: '+sRootKey+', Key:'+oKey + ', Value:'+oValue);
+
+	case sRootKey of
+	'HKCR': oRootKey := HKCR;
+	'HKLM': oRootKey := HKLM;
+	'HKU': oRootKey := HKU;
+	'HKCU': oRootKey := HKCU;
+	else
+		begin
+			DebugMsg('SplitRegParams','Unrecognised root key: ' + sRootKey);
+			exit;
+		end;
+	end;
+
+	Result := True;
+end;
+
+
+procedure UninstInfRegKey(const pInf: String; const pIfEmpty: Boolean);
+var	sKey,sVal: String;
+	iRootKey: Integer;
+begin
+	sVal := 'nil';
+	if not SplitRegParams(pInf,iRootKey,sKey,sVal) then
+		exit;
+
+	if pIfEmpty then
+	begin
+		if not RegDeleteKeyIfEmpty(iRootKey,sKey) then
+			DebugMsg('UninstInfRegKey','RegDeleteKeyIfEmpty failed');
+	end
+	else
+	begin
+		if not RegDeleteKeyIncludingSubkeys(iRootKey,sKey) then
+			DebugMsg('UninstInfRegKey','RegDeleteKeyIncludingSubkeys failed');
+	end;
+end;
+
+
+procedure UninstInfRegVal(const pInf: String);
+var	sKey,sVal: String;
+	iRootKey: Integer;
+begin
+	if not SplitRegParams(pInf,iRootKey,sKey,sVal) then
+		exit;
+
+	if not RegDeleteValue(iRootKey,sKey,sVal) then
+		DebugMsg('UninstInfREG','RegDeleteKeyIncludingSubkeys failed');
+end;
+
+
+procedure UninstInfFile(const pFile: String);
+begin
+	DebugMsg('UninstInfFile','File: '+pFile);
+
+	if not DeleteFile(pFile) then
+		DebugMsg('UninstInfFile','DeleteFile failed');
+end;
+
+
+procedure UninstInfDir(const pDir: String);
+begin
+	DebugMsg('UninstInfDir','Dir: '+pDir);
+
+	if not RemoveDir(pDir) then
+		DebugMsg('UninstInfDir','RemoveDir failed');
+end;
+
+
+procedure CreateMessageForm(var frmMessage: TForm; const pMessage: String);
+var lblMessage: TNewStaticText;
+begin
+	frmMessage := CreateCustomForm(ScaleX(256), ScaleY(128), False, True);
+	with frmMessage do
+	begin
+		BorderStyle := bsDialog;
+
+		ClientWidth := ScaleX(300);
+		ClientHeight := ScaleY(48);
+
+		Caption := CustomMessage('UninstallingAddOnCaption');
+
+		Position := poScreenCenter;
+
+		BorderIcons := [];
+	end;
+
+	lblMessage := TNewStaticText.Create(frmMessage);
+	with lblMessage do
+	begin
+		Parent := frmMessage;
+		AutoSize := True;
+		Caption := pMessage;
+		Top := (frmMessage.ClientHeight - Height) div 2;
+		Left := (frmMessage.ClientWidth - Width) div 2;
+		Visible := True;
+	end;
+
+	frmMessage.Show();
+
+    frmMessage.Refresh();
+end;
+
+
+procedure UninstInfRun(const pInf: String);
+var Description,Prog,Params: String;
+	Split, ResultCode, Ctr: Integer;
+	frmMessage: TForm;
+begin
+	DebugMsg('UninstInfRun',pInf);
+
+	Split := Pos('/',pInf);
+	if Split <> 0 then
+	begin
+		Description := Copy(pInf, 1, Split - 1);
+		Prog := Copy(pInf, Split + 1, Length(pInf));
+	end else
+	begin
+		Prog := pInf;
+		Description := '';
+	end;
+
+	Split := Pos('/',Prog);
+	if Split <> 0 then
+	begin
+		Params := Copy(Prog, Split + 1, Length(Prog));
+		Prog := Copy(Prog, 1, Split - 1);
+	end else
+	begin
+		Params := '';
+	end;
+
+	if not UninstallSilent then //can't manipulate uninstaller messages, so create a form instead
+		CreateMessageForm(frmMessage,Description);
+
+	DebugMsg('UninstInfRun','Running: ' + Prog + '; Params: ' + Params);
+
+	if Exec(Prog,Params,'',SW_SHOW,ewWaitUntilTerminated,ResultCode) then
+	begin
+		DebugMsg('UninstInfRun','Exec result: ' + IntToStr(ResultCode));
+
+		Ctr := 0;
+		while FileExists(Prog) do //wait a few seconds for the uninstaller to be deleted - since this is done by a program
+		begin                     //running from a temporary directory, the uninstaller we ran above will exit some time before
+			Sleep(UNINSTALL_CHECK_TIME);           //it's removed from disk
+			Inc(Ctr);
+			if Ctr = (UNINSTALL_MAX_WAIT_TIME/UNINSTALL_CHECK_TIME) then //don't wait more than 5 seconds
+				break;
+		end;
+
+	end else
+		DebugMsg('UninstInfRun','Exec failed: ' + IntToStr(ResultCode) + ' (' + SysErrorMessage(ResultCode) + ')');
+
+	if not UninstallSilent then
+		frmMessage.Free();
+end;
+
+(*
+uninst.inf documentation:
+
+- Delete Registry keys (with all subkeys):
+  RegKey:<RootKey>/<SubKey>
+    RootKey = HKCR, HKLM, HKCU, HKU
+    SubKey = subkey to delete (warning: this will delete all keys under subkey, so be very careful with it)
+
+- Delete empty registry keys:
+  RegKeyEmpty:<RootKey>/<SubKey>
+    RootKey = HKCR, HKLM, HKCU, HKU
+    SubKey = subkey to delete if empty
+
+- Delete values from registry:
+  RegVal:<RootKey>/<SubKey>/Value
+    RootKey = HKCR, HKLM, HKCU, HKU
+    SubKey = subkey to delete Value from
+    Value = value to delete; \ and % must be escaped as %5c and %25
+
+- Delete files:
+  File:<Path>
+    Path = full path to file
+
+- Delete empty directories:
+  Dir:<Path>
+
+- Run program with parameters:
+  Run:<description>/<path>/<params>
+
+Directives are parsed from the end of the file backwards as the first step of uninstall.
+
+IMPORTANT: From GIMP 2.10.12 onwards (Inno Setup 6 with support for per-user install), Registry keys referring to HKCR will be
+processed by the installer as the first step of install (and the entries will be removed from uninst.inf), since file associations
+code was rewritten.
+
+*)
+procedure ParseUninstInf();
+var i,d: Integer;
+	sWhat: String;
+begin
+	for i := GetArrayLength(asUninstInf) - 1 downto 0 do
+	begin
+
+		DebugMsg('ParseUninstInf',asUninstInf[i]);
+
+		if (Length(asUninstInf[i]) = 0) or (asUninstInf[i][1] = '#') then //skip comments and empty lines
+			continue;
+
+		d := Pos(':',asUninstInf[i]);
+		if d = 0 then
+		begin
+			DebugMsg('ParseUninstInf','Malformed line: ' + asUninstInf[i]);
+			continue;
+		end;
+
+		sWhat := Copy(asUninstInf[i],d+1,Length(asUninstInf[i]));
+
+		case Copy(asUninstInf[i],1,d) of
+		'RegKey:': UninstInfRegKey(sWhat,False);
+		'RegKeyEmpty:': UninstInfRegKey(sWhat,True);
+		'RegVal:': UninstInfRegVal(sWhat);
+		'File:': UninstInfFile(sWhat);
+		'Dir:': UninstInfDir(sWhat);
+		'Run:': UninstInfRun(sWhat);
+		end;
+
+	end;
+
+end;
+
+procedure RestorePointU();
+var
+  ResultCode: Integer;
+begin
+  UninstallProgressForm.StatusLabel.Caption := CustomMessage('CreatingRestorePoint');
+  if not ShellExec('RunAs', 'powershell', '-Command "$job = Start-Job -ScriptBlock { Checkpoint-Computer -Description "GIMP_' + ExpandConstant('{#CUSTOM_GIMP_VERSION}') + '_uninstall" -RestorePointType APPLICATION_UNINSTALL }; Wait-Job $job -Timeout 24; if ($job.State -eq \"Running\") { Stop-Job $job -Confirm:$false }; Receive-Job $job"',
+                   '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+  begin
+    DebugMsg('RestorePointU','Failed to create restore point. Error code: ' + IntToStr(ResultCode));
+  end;
+end;
+
+#define API_MAJOR=Copy(GIMP_PKGCONFIG_VERSION,1,Pos(".",GIMP_PKGCONFIG_VERSION)-1)
+
+//Taken from https://github.com/GrayWorldFinex/InnoSetupScripts/blob/main/Src%20Code/cdx-gridberd.iss
+Procedure MoveFile(SourceFile, DestFile: {#defined UNICODE ? "Ansi" : ""}String);
+  Begin
+   FileCopy(SourceFile, DestFile, False);
+  End;
+
+Function ProcessFiles(S: {#defined UNICODE ? "Ansi" : ""}String): array of {#defined UNICODE ? "Ansi" : ""}String;
+  var
+   i, k: Integer;
+  Begin
+   repeat
+    i := Pos(',', S);
+    k := GetArrayLength(Result);
+    SetArrayLength(Result, k + 1);
+    If (i > 0) then begin
+     Result[k] := Copy(S, 1, i - 1);
+     Delete(S, 1, i); end
+    else begin
+     Result[k] := S;
+     SetLength(S, 0);
+    end;
+   until (Length(S) = 0);
+  End;
+
+Procedure CopyFiles(SourceDir, DestDir, ExcludeFiles: {#defined UNICODE ? "Ansi" : ""}String);
+  var
+   FSR, DSR: TFindRec;
+   FindResult, Exclude: Boolean;
+   SourceFile, DestFile:{#defined UNICODE ? "Ansi" : ""}String;
+   i, k: Integer;
+   SS: Array of {#defined UNICODE ? "Ansi" : ""}String;
+  Begin
+   SetArrayLength(SS, 0);
+   SS := ProcessFiles(ExcludeFiles);
+   k := GetArrayLength(SS);
+   If not DirExists(DestDir) Then Begin
+    CreateDir(DestDir);
+   End;
+   FindResult := FindFirst(AddBackslash(SourceDir) + '*.*', FSR);
+   Try
+    While FindResult Do Begin
+     If FSR.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 Then Begin
+      Exclude := False;
+      For i := 0 To k - 1 Do Begin
+       If AnsiLowercase(SS[i]) = AnsiLowercase(FSR.Name) Then Begin
+        Exclude := True;
+        Break;
+       End;
+      End;
+      If not Exclude Then Begin
+       SourceFile := AddBackslash(SourceDir) + FSR.Name;
+       DestFile := AddBackslash(DestDir) + FSR.Name;
+       MoveFile(SourceFile, DestFile);
+      End;
+     End;
+     FindResult := FindNext(FSR);
+    End;
+    FindResult := FindFirst(AddBackslash(SourceDir) + '*.*', DSR);
+    While FindResult Do Begin
+     If ((DSR.Attributes and FILE_ATTRIBUTE_DIRECTORY) = FILE_ATTRIBUTE_DIRECTORY) and not ((DSR.Name = '.') or (DSR.Name = '..')) Then Begin
+      CopyFiles(AddBackslash(SourceDir) + DSR.Name, AddBackslash(DestDir) + DSR.Name, ExcludeFiles);
+     End;
+     FindResult := FindNext(DSR);
+    End;
+   Finally
+    FindClose(FSR);
+    FindClose(DSR);
+   End;
+  End;
+
+function Time(ATimerPtr: integer): integer; external '_time32@ucrtbase.dll cdecl';
+
+procedure CurUninstallStepChanged(CurStep: TUninstallStep);
+var
+	gimp_directory: String;
+begin
+	DebugMsg('CurUninstallStepChanged','');
+	case CurStep of
+	usUninstall:
+	begin
+		//Try to make restore point before unninstalling (like before installing, see RestorePoint() on *gimp3264.iss)
+		if IsAdminInstallMode() then begin
+		    RestorePointU();
+			UninstallProgressForm.StatusLabel.Caption := FmtMessage(SetupMessage(msgStatusUninstalling),['GIMP']);
+		end;
+
+		LoadStringsFromFile(ExpandConstant('{app}\uninst\uninst.inf'),asUninstInf);
+		ParseUninstInf();
+	end;
+	usPostUninstall:
+	begin
+		//Offer option to remove %AppData%/GIMP/GIMP_APP_VERSION dir so have a future clean install
+		if not IsAdminInstallMode() then begin
+            gimp_directory := GetEnv('GIMP{#API_MAJOR}_DIRECTORY');
+			if gimp_directory = '' then begin
+				gimp_directory := ExpandConstant('{userappdata}\GIMP\{#GIMP_APP_VERSION}');
+			end;
+			if DirExists(gimp_directory + '\') then begin
+				if SuppressibleMsgBox(CustomMessage('UninstallConfig'), mbError, MB_YESNO or MB_DEFBUTTON2, IDNO) = IDYES then begin
+					CopyFiles(gimp_directory, ExpandConstant('{userdesktop}\gimp_{#GIMP_APP_VERSION}_backup_' + Format('%d', [Time(0)])), '');
+					DelTree(gimp_directory, True, True, True);
+				end;
+			end;
+	    end;
+	end;
+	end;
+end;
+
+
+procedure AssociationsCleanUp();
+var i, d, countNew,countUI: Integer;
+	asTemp, asNew: TArrayOfString;
+	sKey,sVal: String;
+	iRootKey: Integer;
+begin
+	if FileExists(ExpandConstant('{app}\uninst\uninst.inf')) then
+	begin
+		DebugMsg('AssociationsCleanUp','Parsing old uninst.inf');
+		LoadStringsFromFile(ExpandConstant('{app}\uninst\uninst.inf'),asTemp);
+
+		countNew := 0;
+		countUI := 0;
+		SetArrayLength(asNew, GetArrayLength(asTemp));
+		SetArrayLength(asUninstInf, GetArrayLength(asTemp));
+
+		for i := 0 to GetArrayLength(asTemp) - 1 do //extract associations-related entries from uninst.inf
+		begin
+
+			if (Length(asTemp[i]) = 0) or (asTemp[i][1] = '#') then //comment/empty line
+			begin
+				asNew[countNew] := asTemp[i];
+				Inc(countNew);
+				continue;
+			end;
+
+			d := Pos(':',asTemp[i]);
+			if d = 0 then //something wrong, ignore
+				continue;
+
+			if Copy(asTemp[i],1,3) = 'Reg' then
+			begin
+
+				sVal := 'nil';
+				if not SplitRegParams(Copy(asTemp[i], d + 1, Length(asTemp[i])),iRootKey,sKey,sVal) then
+					continue; //malformed line, ignore
+
+				if iRootKey = HKCR then //old association, prepare for cleanup
+				begin
+					DebugMsg('AssociationsCleanUp','Preparing for cleanup: '+asTemp[i]);
+					asUninstInf[countUI] := asTemp[i];
+					Inc(countUI);
+					continue;
+				end;
+
+			end;
+
+			//something else, keep for new uninst.inf
+			asNew[countNew] := asTemp[i];
+			Inc(countNew);
+
+		end;
+
+		SetArrayLength(asNew, countNew);
+		SetArrayLength(asUninstInf, countUI);
+
+		SaveStringsToUTF8File(ExpandConstant('{app}\uninst\uninst.inf'), asNew, False); //replace uninst.inf with a cleaned one
+
+		ParseUninstInf(); //remove old associations
+	end;
+end;
 
 
 //8. DONE/FINAL PAGE (no customizations)
