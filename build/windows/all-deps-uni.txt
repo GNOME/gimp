@@ -6,6 +6,7 @@ ${MINGW_PACKAGE_PREFIX}-gobject-introspection|vcpkg:gobject-introspection
 ${MINGW_PACKAGE_PREFIX}-headers-git
 ${MINGW_PACKAGE_PREFIX}-libxslt|vcpkg:libxslt
 ${MINGW_PACKAGE_PREFIX}-meson
+${MINGW_PACKAGE_PREFIX}-perl
 ${MINGW_PACKAGE_PREFIX}-toolchain|vcpkg:pkgconf
 ${MINGW_PACKAGE_PREFIX}-vala
 
