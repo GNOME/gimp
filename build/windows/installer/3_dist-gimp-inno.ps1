@@ -4,8 +4,7 @@
 param ($revision = "$GIMP_CI_WIN_INSTALLER",
        $BUILD_DIR,
        $ARM64_BUNDLE = "$PWD\gimp-clangarm64",
-       $X64_BUNDLE = "$PWD\gimp-clang64",
-       $X86_BUNDLE = "$PWD\gimp-mingw32")
+       $X64_BUNDLE = "$PWD\gimp-clang64")
 
 # Ensure the script work properly
 $ErrorActionPreference = 'Stop'
@@ -101,25 +100,25 @@ Write-Output "(INFO): GIMP version: $CUSTOM_GIMP_VERSION"
 
 ## Autodetects what arch bundles will be packaged
 # (The .iss script supports creating both an installer per arch or an universal installer with all arches)
-if (-not (Test-Path "$ARM64_BUNDLE") -and -not (Test-Path "$X64_BUNDLE") -and -not (Test-Path "$X86_BUNDLE"))
+if (-not (Test-Path "$ARM64_BUNDLE") -and -not (Test-Path "$X64_BUNDLE"))
   {
     Write-Host "(ERROR): No bundle found. You can tweak 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP with '-Dwindows-installer=true' to make one." -ForegroundColor red
     exit 1
   }
-elseif ((Test-Path "$ARM64_BUNDLE") -and -not (Test-Path "$X64_BUNDLE") -and -not (Test-Path "$X86_BUNDLE"))
+elseif ((Test-Path "$ARM64_BUNDLE") -and -not (Test-Path "$X64_BUNDLE"))
   {
     Write-Output "(INFO): Arch: arm64"
     $supported_archs=@("-DARM64_BUNDLE=$ARM64_BUNDLE")
-  }
-elseif ((Test-Path "$ARM64_BUNDLE") -and (Test-Path "$X64_BUNDLE") -and (Test-Path "$X86_BUNDLE"))
-  {
-    Write-Output "(INFO): Arch: arm64, x64 and x86"
-    $supported_archs=@("-DARM64_BUNDLE=$ARM64_BUNDLE", "-DX64_BUNDLE=$X64_BUNDLE", "-DX86_BUNDLE=$X86_BUNDLE")
   }
 elseif (-not (Test-Path "$ARM64_BUNDLE") -and (Test-Path "$X64_BUNDLE"))
   {
     Write-Output "(INFO): Arch: x64"
     $supported_archs=@("-DX64_BUNDLE=$X64_BUNDLE")
+  }
+elseif ((Test-Path "$ARM64_BUNDLE") -and (Test-Path "$X64_BUNDLE"))
+  {
+    Write-Output "(INFO): Arch: arm64 and x64"
+    $supported_archs=@("-DARM64_BUNDLE=$ARM64_BUNDLE", "-DX64_BUNDLE=$X64_BUNDLE")
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_info$([char]13)$([char]27)[0K"
 
