@@ -704,13 +704,6 @@ appstream = dependency('appstream', version: '>='+appstream_minver)
 libarchive = dependency('libarchive')
 
 ################################################################################
-# Check for 32-bit DLLs (Win32 64-bit)
-
-if platform_windows and host_cpu_family == 'x86_64'
-  conf.set_quoted('WIN32_32BIT_DLL_FOLDER', get_option('win32-32bits-dll-folder'))
-endif
-
-################################################################################
 # Check for detailed backtraces support
 
 ## Check for libbacktrace
@@ -2219,7 +2212,6 @@ final_message = [
 '''  Dr. Mingw (Win32):             @0@'''.format(drmingw.found()),
 '''  Relocatable Bundle:            @0@'''.format(relocatable_bundle),
 '''  Default ICC directory (Linux): @0@'''.format(icc_directory),
-'''  32-bit DLL folder (Win32):     @0@'''.format(get_option('win32-32bits-dll-folder')),
 '''  Dashboard backtraces:          @0@'''.format(dashboard_backtrace),
 '''  Debug symbols format:          @0@'''.format(debugging_format),
 '''  Binary symlinks:               @0@'''.format(enable_default_bin),
