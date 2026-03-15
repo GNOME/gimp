@@ -12,7 +12,7 @@
 
 ;Required arch-specific components (compact installation)
 #define OPTIONAL_DLL="libgs*.dll,lua*.dll,corelgilua*.dll,gluas.dll,libpython*.dll"
-#define OPTIONAL_EXE="file-ps.exe,lua*.exe,python*.exe,twain.exe"
+#define OPTIONAL_EXE="file-ps.exe,lua*.exe,python*.exe"
 
 Source: "{#BUNDLE}\bin\libgimp*.dll"; DestDir: "{app}\bin"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
 Source: "{#BUNDLE}\bin\gimp*.exe"; DestDir: "{app}\bin"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}

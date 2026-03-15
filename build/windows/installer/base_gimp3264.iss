@@ -357,10 +357,6 @@ Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
 #include ASSETS_DIR + "\base_po-cmp.list"
 ;MyPaint Brushes
 Name: mypaint; Description: "{cm:ComponentsMyPaint}"; Types: full custom
-;32-bit TWAIN support
-#ifdef X86_BUNDLE
-Name: gimp32on64; Description: "{cm:ComponentsGimp32}"; Types: full custom; Flags: checkablealone; Check: Check3264('64')
-#endif
 
 [Files]
 ;setup files
@@ -440,12 +436,6 @@ Source: "{#X86_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain.exe"; D
 #include "base_executables.isi"
 #endif
 
-;Optional 32-bit specific bins for TWAIN, since x64 and arm64 twain drivers are rare
-#ifdef X86_BUNDLE
-#include "base_twain32on64.isi"
-Source: "{#X86_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain"; Components: gimp32on64; Flags: {#COMMON_FLAGS}
-#endif
-
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
 #ifdef ARM64_BUNDLE
@@ -463,9 +453,6 @@ Source: "{#X86_BUNDLE}\bin\zlib1.dll"; DestDir: "{sys}"; Components: {#GIMP_ARCH
 #sub ProcessConfigFile
   #define FileName FindGetFileName(FindHandle)
 Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\{#ConfigDir}"; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
-  #if BaseDir != MAIN_BUNDLE
-Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}"; Components: gimp32on64; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
-  #endif
 #endsub
 #define FindResult
 #sub ProcessConfigDir
@@ -484,12 +471,6 @@ Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}
 #expr ProcessConfigDir
 
 #endif //NOFILES
-
-;We need at least an empty folder to avoid GIMP*_LOCALEDIR warnings
-[Dirs]
-#ifdef X86_BUNDLE
-Name: "{app}\32\share\locale"; Components: gimp32on64; Flags: uninsalwaysuninstall
-#endif
 
 ;4.2 SPECIAL-CASE FILES TO BE WIPED
 [InstallDelete]
@@ -1063,7 +1044,7 @@ var i,j: Integer;
 begin
 	DebugMsg('ComponentsListOnClick','');
 
-	Components := ['Gimp','Deps','Debug','Dev','Ghostscript','Lua','Python','Translations','MyPaint','Gimp32'];
+	Components := ['Gimp','Deps','Debug','Dev','Ghostscript','Lua','Python','Translations','MyPaint'];
 	ComponentDesc := '';
 
 	for i := 0 to TNewCheckListBox(pSender).Items.Count - 1 do
@@ -1587,13 +1568,7 @@ begin
 
 	Env := #10'PATH=${gimp_installation_dir}\bin';
 
-	if IsComponentSelected('gimp32on64') then
-	begin
-		Env := Env + ';${gimp_installation_dir}\32\bin' + #10;
-	end else
-	begin
-		Env := Env + #10;
-	end;
+	Env := Env + #10;
 
 	DebugMsg('PrepareGimpEnvironment','Appending ' + Env);
 
