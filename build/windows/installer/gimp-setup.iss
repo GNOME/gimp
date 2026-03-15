@@ -413,7 +413,7 @@ Source: "{#BUNDLE}\bin\*"; DestDir: "{app}\bin"; Excludes: "libgimp*.dll,gimp*.e
 Source: "{#BUNDLE}\lib\*"; DestDir: "{app}\lib"; Excludes: "gimp,Gimp*.typelib,*.pdb,*.a,*.pc,lua,gluas.dll,python{#PYTHON_VERSION}"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
 ; Optional arch-specific components (full installation)
-#if defined(DEBUG_SYMBOLS) && COMPONENT != "X86"
+#if defined(DEBUG_SYMBOLS)
 Source: "{#BUNDLE}\*.pdb"; DestDir: "{app}"; Components: debug{#COMPONENT}; Flags: {#COMMON_FLAGS}
 #endif
 
