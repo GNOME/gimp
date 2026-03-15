@@ -452,7 +452,7 @@ gimp_vector_layer_translate (GimpLayer *layer,
 {
   GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (layer);
 
-  if (vector_layer->options && vector_layer->options->path)
+  if (gimp_item_is_vector_layer (GIMP_ITEM (layer)))
     {
       gimp_item_translate (GIMP_ITEM (vector_layer->options->path),
                            offset_x, offset_y, FALSE);
@@ -474,7 +474,7 @@ gimp_vector_layer_scale (GimpItem              *item,
 {
   GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (item);
 
-  if (vector_layer->options && vector_layer->options->path)
+  if (gimp_item_is_vector_layer (item))
     {
       gimp_item_scale (GIMP_ITEM (vector_layer->options->path),
                        new_width, new_height, new_offset_x, new_offset_y,
@@ -497,7 +497,7 @@ gimp_vector_layer_flip (GimpItem            *item,
 {
   GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (item);
 
-  if (vector_layer->options && vector_layer->options->path)
+  if (gimp_item_is_vector_layer (item))
     {
       gimp_item_flip (GIMP_ITEM (vector_layer->options->path),
                       context, flip_type, axis, clip_result);
@@ -519,7 +519,7 @@ gimp_vector_layer_rotate (GimpItem         *item,
 {
   GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (item);
 
-  if (vector_layer->options && vector_layer->options->path)
+  if (gimp_item_is_vector_layer (item))
     {
       gimp_item_rotate (GIMP_ITEM (vector_layer->options->path),
                         context, rotate_type, center_x, center_y, clip_result);
@@ -543,7 +543,7 @@ gimp_vector_layer_transform (GimpItem               *item,
 {
   GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (item);
 
-  if (vector_layer->options && vector_layer->options->path)
+  if (gimp_item_is_vector_layer (item))
     {
       gimp_item_transform (GIMP_ITEM (vector_layer->options->path),
                            context, matrix, direction, interp_type,
