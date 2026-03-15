@@ -1281,48 +1281,17 @@ gimp_display_shell_overlay_allocate (GtkWidget               *child,
                                      GtkAllocation           *allocation,
                                      GimpDisplayShellOverlay *overlay)
 {
-  gdouble tlx;
-  gdouble tly;
-  gdouble brx;
-  gdouble bry;
-  gdouble llimit;
-  gdouble rlimit;
-  gdouble ulimit;
-  gdouble blimit;
+  GtkRequisition req;
+  gdouble        x, y;
 
-  gimp_display_shell_untransform_xy_f (overlay->shell,
-                                       0.0, 0.0,
-                                       &llimit, &ulimit);
-  gimp_display_shell_untransform_xy_f (overlay->shell,
-                                       (gdouble) overlay->shell->disp_width,
-                                       (gdouble) overlay->shell->disp_height,
-                                       &rlimit, &blimit);
+  gimp_display_shell_transform_overlay (overlay->shell, child, &x, &y);
+  gtk_widget_get_preferred_size (child, &req, NULL);
 
-  gimp_display_shell_get_overlay_corners (overlay->shell,
-                                          child,
-                                          overlay->image_x, overlay->image_y,
-                                          &tlx, &tly,
-                                          &brx, &bry);
+  x = CLAMP (x, 0.0, (gdouble) overlay->shell->disp_width  - req.width);
+  y = CLAMP (y, 0.0, (gdouble) overlay->shell->disp_height - req.height);
 
-  /* If the overlay is even partially outside the canvas, we push it inside the canvas */
-  if (tlx < llimit ||
-      tly < ulimit ||
-      brx > rlimit ||
-      bry > blimit)
-    {
-      gimp_display_shell_push_overlay_inside_canvas (overlay->shell,
-                                                     child,
-                                                     (gdouble[]) {ulimit, rlimit, blimit, llimit},
-                                                     (gdouble[]) {tlx, tly, brx, bry});
-    }
-  else
-    {
-      gdouble x, y;
-
-      gimp_display_shell_transform_overlay (overlay->shell, child, &x, &y);
-      gimp_overlay_box_set_child_position (GIMP_OVERLAY_BOX (overlay->shell->canvas),
-                                           child, x, y);
-    }
+  gimp_overlay_box_set_child_position (GIMP_OVERLAY_BOX (overlay->shell->canvas),
+                                       child, x, y);
 }
 
 static void
@@ -2468,6 +2437,10 @@ gimp_display_shell_get_overlay_corners (GimpDisplayShell *shell,
   GtkRequisition           req;
   gdouble                  tl_disp_x, tl_disp_y;
   gdouble                  br_disp_x, br_disp_y;
+  gdouble                  ix1, iy1;
+  gdouble                  ix2, iy2;
+  gdouble                  ix3, iy3;
+  gdouble                  ix4, iy4;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -2528,8 +2501,19 @@ gimp_display_shell_get_overlay_corners (GimpDisplayShell *shell,
 
   gimp_display_shell_untransform_xy_f (shell,
                                        tl_disp_x, tl_disp_y,
-                                       top_left_x, top_left_y);
+                                       &ix1, &iy1);
+  gimp_display_shell_untransform_xy_f (shell,
+                                       br_disp_x, tl_disp_y,
+                                       &ix2, &iy2);
+  gimp_display_shell_untransform_xy_f (shell,
+                                       tl_disp_x, br_disp_y,
+                                       &ix3, &iy3);
   gimp_display_shell_untransform_xy_f (shell,
                                        br_disp_x, br_disp_y,
-                                       bottom_right_x, bottom_right_y);
+                                       &ix4, &iy4);
+
+  *top_left_x     = MIN (MIN (ix1, ix2), MIN (ix3, ix4));
+  *top_left_y     = MIN (MIN (iy1, iy2), MIN (iy3, iy4));
+  *bottom_right_x = MAX (MAX (ix1, ix2), MAX (ix3, ix4));
+  *bottom_right_y = MAX (MAX (iy1, iy2), MAX (iy3, iy4));
 }
