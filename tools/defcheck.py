@@ -31,7 +31,7 @@ Needs the tool "nm", "objdump" or "dumpbin" to work
 
 import os, sys, subprocess, shutil
 
-from os import path
+from os import getenv, path
 
 def_files = (
    "libgimpbase/gimpbase.def",
@@ -55,7 +55,7 @@ if len(sys.argv) > 1:
       sys.exit (-1)
 
 libextension   = ".so"
-command        = "nm --defined-only --extern-only "
+command        = getenv("NM", default="nm") + " --defined-only --extern-only "
 libprefix      = "lib"
 platform_linux = True
 
