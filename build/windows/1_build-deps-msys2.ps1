@@ -62,7 +62,7 @@ if (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf)
 else
   {
     powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -Suy }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
-    powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -S --needed $(if ($env:MSYSTEM_PREFIX -ne 'mingw32') { "$(if ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })-perl" }) (Get-Content build/windows/all-deps-uni.txt | Select-String 'MINGW_' | ForEach-Object { ($_ -split '\|vcpkg:')[0] -replace '\$\{MINGW_PACKAGE_PREFIX\}', $(if ($env:MINGW_PACKAGE_PREFIX) { $env:MINGW_PACKAGE_PREFIX } elseif ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' }) }) }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+    powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -S --needed (Get-Content build/windows/all-deps-uni.txt | Select-String 'MINGW_' | ForEach-Object { ($_ -split '\|vcpkg:')[0] -replace '\$\{MINGW_PACKAGE_PREFIX\}', $(if ($env:MINGW_PACKAGE_PREFIX) { $env:MINGW_PACKAGE_PREFIX } elseif ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' }) }) }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):deps_install$([char]13)$([char]27)[0K"
 
@@ -130,7 +130,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
         if ((Test-Path meson.build -Type Leaf) -and -not (Test-Path CMakeLists.txt -Type Leaf))
           {
             #babl and GEGL already auto install .pdb but we don't know about other eventual deps
-            if (-not "$env:VCPKG_ROOT" -and "$env:MSYSTEM_PREFIX" -ne 'MINGW32')
+            if (-not "$env:VCPKG_ROOT")
               {
                 if ("$dep" -ne 'babl' -and "$dep" -ne 'gegl')
                   {
@@ -144,7 +144,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
           }
         elseif (Test-Path CMakeLists.txt -Type Leaf)
           {
-            if (-not "$env:VCPKG_ROOT" -and "$env:MSYSTEM_PREFIX" -ne 'MINGW32')
+            if (-not "$env:VCPKG_ROOT")
               {
                 Add-Content CMakeLists.txt "install(CODE `"execute_process(COMMAND `${Python3_EXECUTABLE`} $("$GIMP_DIR".Replace('\','/'))/tools/meson_install_win_debug.py`)`")"
                 $clang_opts_cmake=@('-DCMAKE_C_FLAGS="-gcodeview"', '-DCMAKE_CXX_FLAGS="-gcodeview"', '-DCMAKE_EXE_LINKER_FLAGS="-Wl,--pdb="', '-DCMAKE_SHARED_LINKER_FLAGS="-Wl,--pdb="', '-DCMAKE_MODULE_LINKER_FLAGS="-Wl,--pdb="')
@@ -170,9 +170,6 @@ if ($env:VCPKG_ROOT)
   }
 self_build https://gitlab.gnome.org/GNOME/babl
 self_build https://gitlab.gnome.org/GNOME/gegl @('-Ddocs=false')
-if ("$env:MSYSTEM_PREFIX" -ne 'MINGW32')
-  {
-    self_build https://github.com/Exiv2/exiv2 "v0.28.7" @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DCMAKE_DLL_NAME_WITH_SOVERSION=ON', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF', '-DEXIV2_ENABLE_VIDEO=OFF')
-  }
+self_build https://github.com/Exiv2/exiv2 "v0.28.7" @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DCMAKE_DLL_NAME_WITH_SOVERSION=ON', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF', '-DEXIV2_ENABLE_VIDEO=OFF')
 
 Set-Location $GIMP_DIR
