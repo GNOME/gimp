@@ -111,10 +111,6 @@ static gboolean   gimp_plug_in_write                  (GIOChannel   *channel,
 static gboolean   gimp_plug_in_flush                  (GIOChannel   *channel,
                                                        gpointer      data);
 
-#if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
-static void       gimp_plug_in_set_dll_directory      (const gchar  *path);
-#endif
-
 #ifndef G_OS_WIN32
 static void       gimp_plug_in_close_waitpid          (GPid          pid,
                                                        gint          status,
@@ -360,39 +356,6 @@ gimp_plug_in_flush (GIOChannel *channel,
 
   return TRUE;
 }
-
-#if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
-static void
-gimp_plug_in_set_dll_directory (const gchar *path)
-{
-  LPWSTR       w_path;
-  const gchar *install_dir;
-  gchar       *bin_dir;
-  LPWSTR       w_bin_dir;
-  DWORD        BinaryType;
-
-  w_path = NULL;
-  w_bin_dir = NULL;
-  install_dir = gimp_installation_directory ();
-  if (path &&
-      (w_path = g_utf8_to_utf16 (path, -1, NULL, NULL, NULL)) &&
-      GetBinaryTypeW (w_path, &BinaryType) &&
-      BinaryType == SCS_32BIT_BINARY)
-    bin_dir = g_build_filename (install_dir, WIN32_32BIT_DLL_FOLDER, NULL);
-  else
-    bin_dir = g_build_filename (install_dir, "bin", NULL);
-
-  w_bin_dir = g_utf8_to_utf16 (bin_dir, -1, NULL, NULL, NULL);
-  if (w_bin_dir)
-    {
-      SetDllDirectoryW (w_bin_dir);
-      g_free (w_bin_dir);
-    }
-
-  g_free (bin_dir);
-  g_free (w_path);
-}
-#endif
 
 #ifndef G_OS_WIN32
 static void
@@ -649,9 +612,6 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   /* Fork another process. We'll remember the process id so that we
    * can later use it to kill the filter if necessary.
    */
-#if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
-  gimp_plug_in_set_dll_directory (argv[0]);
-#endif
   if (! gimp_spawn_async (argv, envp, spawn_flags, &plug_in->pid, &error))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
@@ -689,10 +649,6 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   gimp_plug_in_manager_add_open_plug_in (plug_in->manager, plug_in);
 
  cleanup:
-
-#if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
-  gimp_plug_in_set_dll_directory (NULL);
-#endif
 
   if (debug)
     g_free (argv);
