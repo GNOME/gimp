@@ -102,6 +102,7 @@ for df in def_files:
    status, nm = subprocess.getstatusoutput (command + libname)
    if status != 0:
       print("trouble reading {} - has it been compiled?".format(libname))
+      print(nm)
       have_errors = -1
       continue
 
