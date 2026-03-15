@@ -526,7 +526,7 @@ gimp-snap:
       interruptible: true
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '($CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Microsoft Store.*/) && $CI_JOB_NAME !~ /.*eol.*/ && $CI_JOB_NAME !~ /.*installer.*/'
+    - if: '($CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Microsoft Store.*/) && $CI_JOB_NAME !~ /.*installer.*/'
       interruptible: true
       variables:
         STORE_OPTION: '-Dms-store=true'
@@ -537,10 +537,10 @@ gimp-snap:
     - if: '($GIMP_CI_WIN_INSTALLER != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_WIN_INSTALLER.*/) && $CI_JOB_NAME !~ /.*store.*/'
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
-    - if: '($GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/) && $CI_JOB_NAME !~ /.*eol.*/ && $CI_JOB_NAME !~ /.*installer.*/'
+    - if: '($GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/) && $CI_JOB_NAME !~ /.*installer.*/'
       variables:
         STORE_OPTION: '-Dms-store=true'
-    - if: '($GIMP_CI_MESON_MSVC != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_MSVC.*/) && $CI_JOB_NAME !~ /.*installer.*/ && $CI_JOB_NAME !~ /.*store.*/ && $CI_JOB_NAME !~ /.*eol.*/ && $CI_JOB_NAME !~ /.*aarch64.*/'
+    - if: '($GIMP_CI_MESON_MSVC != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_MSVC.*/) && $CI_JOB_NAME !~ /.*installer.*/ && $CI_JOB_NAME !~ /.*store.*/ && $CI_JOB_NAME !~ /.*aarch64.*/'
       variables:
         VCPKG_ROOT: "$CI_PROJECT_DIR/vcpkg"
         WARN_AS_ERROR_ON_CI: '-Dwerror=true'
@@ -615,35 +615,6 @@ gimp-win:
       - _build-*/build/windows/installer/
       - _build-*/build/windows/store/
     expire_in: 2 days
-
-
-## WINDOWS x86 legacy CI (native MSYS2) ##
-.win-eol:
-  extends: .win
-  parallel:
-    matrix:
-      - RUNNER: [win32-ps]
-  variables:
-    MSYSTEM_PREFIX: mingw32
-    MINGW_PACKAGE_PREFIX: mingw-w64-i686
-
-deps-win-eol:
-  extends: .win-eol
-  stage: !reference [deps-win, stage]
-  script:
-    - !reference [deps-win, script]
-  artifacts: !reference [deps-win, artifacts]
-
-gimp-win-eol:
-  extends: .win-eol
-  needs: ["deps-win-eol"]
-  stage: !reference [gimp-win, stage]
-  variables:
-    GIT_SUBMODULE_STRATEGY: recursive
-  script:
-    - $env:PATH = "C:/msys64/usr/bin;" + $env:PATH
-    - !reference [gimp-win, script]
-  artifacts: !reference [gimp-win, artifacts]
 
 
 ## macOS pipelines (MacPorts) ##
@@ -983,7 +954,6 @@ dist-installer-weekly:
     - job: gimp-win
       #to allow running outside 'GNOME/gimp' namespace (on MRs)
       optional: true
-    - job: gimp-win-eol
   stage: distribution
   tags:
     - win32-ps
