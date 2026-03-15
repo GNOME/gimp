@@ -106,21 +106,13 @@
 #define DISPLAY_NAME "GIMP " + CUSTOM_GIMP_VERSION
 
 ;This script supports creating both an installer per arch or an universal installer with all arches
-#if Defined(ARM64_BUNDLE) && !Defined(X64_BUNDLE) && !Defined(X86_BUNDLE)
+#if Defined(ARM64_BUNDLE) && !Defined(X64_BUNDLE)
 #define ARCHS_ALLOWED="arm64"
 #define ARCHS_INSTALLED="arm64"
 #define GIMP_ARCHS="gimpARM64"
 #define DEPS_ARCHS="depsARM64"
 #define PY_ARCHS="pyARM64"
 #define LUA_ARCHS="luaARM64"
-#endif
-#if Defined(ARM64_BUNDLE) && Defined(X64_BUNDLE) && Defined(X86_BUNDLE)
-#define ARCHS_ALLOWED="x86compatible"
-#define ARCHS_INSTALLED="x64os arm64"
-#define GIMP_ARCHS="gimpARM64 or gimpX64 or gimpX86"
-#define DEPS_ARCHS="depsARM64 or depsX64 or depsX86"
-#define PY_ARCHS="pyARM64 or pyX64 or pyX86"
-#define LUA_ARCHS="luaARM64 or luaX64 or luaX86"
 #endif
 #if !Defined(ARM64_BUNDLE) && Defined(X64_BUNDLE)
 #define ARCHS_ALLOWED="x64os"
@@ -129,6 +121,14 @@
 #define DEPS_ARCHS="depsX64"
 #define PY_ARCHS="pyX64"
 #define LUA_ARCHS="luaX64"
+#endif
+#if Defined(ARM64_BUNDLE) && Defined(X64_BUNDLE)
+#define ARCHS_ALLOWED="x64compatible"
+#define ARCHS_INSTALLED="x64os arm64"
+#define GIMP_ARCHS="gimpARM64 or gimpX64"
+#define DEPS_ARCHS="depsARM64 or depsX64"
+#define PY_ARCHS="pyARM64 or pyX64"
+#define LUA_ARCHS="luaARM64 or luaX64"
 #endif
 
 ;Optional Build-time params: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES, DEVEL_WARNING
@@ -277,79 +277,58 @@ Name: custom; Description: "{cm:TypeCustom}"; Flags: iscustom
 ;Required components (minimal install)
 ;GIMP files
 #ifdef ARM64_BUNDLE
-Name: gimpARM64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('arm64')
+Name: gimpARM64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: CheckArch('arm64')
 #endif
 #ifdef X64_BUNDLE
-Name: gimpX64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
-#endif
-#ifdef X86_BUNDLE
-Name: gimpX86; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
+Name: gimpX64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: CheckArch('x64')
 #endif
 ;Deps files
 #ifdef ARM64_BUNDLE
-Name: depsARM64; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('arm64')
+Name: depsARM64; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: CheckArch('arm64')
 #endif
 #ifdef X64_BUNDLE
-Name: depsX64; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
-#endif
-#ifdef X86_BUNDLE
-Name: depsX86; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
+Name: depsX64; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: CheckArch('x64')
 #endif
 
 ;Optional components (complete install)
 #ifdef DEBUG_SYMBOLS
 #ifdef ARM64_BUNDLE
-Name: debugARM64; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('arm64')
+Name: debugARM64; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: CheckArch('arm64')
 #endif
 #ifdef X64_BUNDLE
-Name: debugX64; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('x64')
-#endif
-#ifdef X86_BUNDLE
-Name: debugX86; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('32')
+Name: debugX64; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: CheckArch('x64')
 #endif
 #endif
 ;Development files
 #ifdef ARM64_BUNDLE
-Name: devARM64; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('arm64')
+Name: devARM64; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: CheckArch('arm64')
 #endif
 #ifdef X64_BUNDLE
-Name: devX64; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('x64')
-#endif
-#ifdef X86_BUNDLE
-Name: devX86; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('32')
+Name: devX64; Description: "{cm:ComponentsDev}"; Types: full custom; Flags: disablenouninstallwarning; Check: CheckArch('x64')
 #endif
 ;PostScript support
 #ifdef ARM64_BUNDLE
-Name: gsARM64; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('arm64')
+Name: gsARM64; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: CheckArch('arm64')
 #endif
 #ifdef X64_BUNDLE
-Name: gsX64; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('x64')
-#endif
-#ifdef X86_BUNDLE
-Name: gsX86; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('32')
+Name: gsX64; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: CheckArch('x64')
 #endif
 ;Lua plug-ins support
 #ifdef LUA
 #ifdef ARM64_BUNDLE
-Name: luaARM64; Description: "{cm:ComponentsLua}"; Types: full custom; Check: Check3264('arm64')
+Name: luaARM64; Description: "{cm:ComponentsLua}"; Types: full custom; Check: CheckArch('arm64')
 #endif
 #ifdef X64_BUNDLE
-Name: luaX64; Description: "{cm:ComponentsLua}"; Types: full custom; Check: Check3264('x64')
-#endif
-#ifdef X86_BUNDLE
-Name: luaX86; Description: "{cm:ComponentsLua}"; Types: full custom; Check: Check3264('32')
+Name: luaX64; Description: "{cm:ComponentsLua}"; Types: full custom; Check: CheckArch('x64')
 #endif
 #endif
 ;Python plug-ins support
 #ifdef PYTHON
 #ifdef ARM64_BUNDLE
-Name: pyARM64; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('arm64')
+Name: pyARM64; Description: "{cm:ComponentsPython}"; Types: full custom; Check: CheckArch('arm64')
 #endif
 #ifdef X64_BUNDLE
-Name: pyX64; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('x64')
-#endif
-#ifdef X86_BUNDLE
-Name: pyX86; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('32')
+Name: pyX64; Description: "{cm:ComponentsPython}"; Types: full custom; Check: CheckArch('x64')
 #endif
 #endif
 ;Locales
@@ -370,9 +349,6 @@ Source: "{#ASSETS_DIR}\installsplash_top.scale-250.bmp"; Flags: dontcopy
 Source: "{#ASSETS_DIR}\installsplash_bottom.bmp"; Flags: dontcopy
 
 #ifndef NOFILES
-#ifdef X86_BUNDLE
-#define MAIN_BUNDLE X86_BUNDLE
-#endif
 #ifdef X64_BUNDLE
 #define MAIN_BUNDLE X64_BUNDLE
 #endif
@@ -408,20 +384,6 @@ Source: "{#MAIN_BUNDLE}\share\locale\*"; DestDir: "{app}\share\locale"; Componen
 #include ASSETS_DIR + "\base_po-files.list"
 Source: "{#MAIN_BUNDLE}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: {#COMMON_FLAGS}
 
-;Required and optional arch specific files (binaries), except TWAIN in x64 and amd64
-;i686
-#ifdef X86_BUNDLE
-#define BUNDLE X86_BUNDLE
-#define COMPONENT "X86"
-;Set solid break for 32-bit binaries. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/13801
-#define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion solidbreak"
-#include "base_executables.isi"
-;TWAIN is always installed in the 32-bit version of GIMP
-Source: "{#X86_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins"; Components: gimpX86; Flags: {#COMMON_FLAGS}
-;Restore common flags
-#define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion"
-#endif
-
 ;x86_64
 #ifdef X64_BUNDLE
 #define BUNDLE X64_BUNDLE
@@ -443,9 +405,6 @@ Source: "{#ARM64_BUNDLE}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimpARM64
 #endif
 #ifdef X64_BUNDLE
 Source: "{#X64_BUNDLE}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimpX64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',64)
-#endif
-#ifdef X86_BUNDLE
-Source: "{#X86_BUNDLE}\bin\zlib1.dll"; DestDir: "{sys}"; Components: {#GIMP_ARCHS}; Flags: restartreplace sharedfile 32bit uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',32)
 #endif
 
 ;allow specific config files to be overridden if '/configoverride=' is set at run time
@@ -1247,12 +1206,10 @@ begin
 end;
 
 //Legacy arch check
-function Check3264(const pWhich: String): Boolean;
+function CheckArch(const pWhich: String): Boolean;
 begin
 	if pWhich = '64' then //x64 or arm64
 		Result := Is64BitInstallMode()
-	else if pWhich = '32' then
-		Result := (not Is64BitInstallMode())
 	else if pWhich = 'x64' then
 		Result := Is64BitInstallMode() and IsX64
 	else if pWhich = 'arm64' then
@@ -1276,19 +1233,6 @@ begin
 			DebugMsg('BadSysDLL','64: ' + ExpandConstant('{sys}\' + pFile));
 			Result := FileExists(ExpandConstant('{sys}\' + pFile));
 			EnableFsRedirection(OldRedir);
-		end;
-	end
-	else if pPlatform = 32 then
-	begin
-		if Is64BitInstallMode() then //check 32bit system directory on x64 windows
-		begin
-			DebugMsg('BadSysDLL','32on64: ' + ExpandConstant('{syswow64}\' + pFile));
-			Result := FileExists(ExpandConstant('{syswow64}\' + pFile));
-		end
-		else
-		begin
-			DebugMsg('BadSysDLL','32: ' + ExpandConstant('{sys}\' + pFile));
-			Result := FileExists(ExpandConstant('{sys}\' + pFile));
 		end;
 	end
 	else
@@ -1470,7 +1414,7 @@ procedure PrepareInterp();
 var InterpFile,InterpContent,LuaBin: String;
 begin
 #ifdef PYTHON
-	if IsComponentSelected('py32') or IsComponentSelected('py64') or IsComponentSelected('pyARM64') then
+	if IsComponentSelected('py64') or IsComponentSelected('pyARM64') then
 	begin
 		StatusLabel(CustomMessage('SettingUpPyGimp'),'');
 
@@ -1505,7 +1449,7 @@ begin
 #endif
 
 #ifdef LUA
-	if IsComponentSelected('lua32') or IsComponentSelected('lua64') or IsComponentSelected('luaARM64') then
+	if IsComponentSelected('lua64') or IsComponentSelected('luaARM64') then
 	begin
 		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\lua.interp');
     DebugMsg('PrepareInterp','Writing interpreter file for lua: ' + InterpFile);
