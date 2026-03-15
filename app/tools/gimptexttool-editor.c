@@ -2076,50 +2076,37 @@ gimp_text_tool_style_overlay_button_motion (GtkWidget      *widget,
       GimpTool            *tool  = GIMP_TOOL (text_tool);
       GimpDisplayShell    *shell = gimp_display_get_shell (tool->display);
       GimpTextStyleEditor *style_editor;
-      gdouble              llimit, rlimit, ulimit, blimit;
-      gdouble              tlx, tly, brx, bry;
+      GtkRequisition       req;
+      gdouble              screen_x, screen_y;
       gdouble              x, y;
       gdouble              x_off, y_off;
+      gdouble              sx_off, sy_off;
+      gdouble              tl_sx, tl_sy;
 
       gimp_text_layer_get_style_overlay_offset (text_tool->layer, &x_off, &y_off);
 
+      sx_off = x_off + DEFAULT_DRAG_OFFSET;
+      sy_off = y_off + DEFAULT_DRAG_OFFSET;
+
       gdk_window_get_device_position_double (gtk_widget_get_window (GTK_WIDGET (shell)),
                                              event->device,
-                                             &x, &y, NULL);
+                                             &screen_x, &screen_y, NULL);
 
-      gimp_display_shell_untransform_xy_f (shell,
-                                           x, y,
-                                           &x, &y);
+      gtk_widget_get_preferred_size (text_tool->style_overlay, &req, NULL);
 
-      gimp_display_shell_untransform_xy_f (shell,
-                                           0.0, 0.0,
-                                           &llimit, &ulimit);
-      gimp_display_shell_untransform_xy_f (shell,
-                                           (gdouble) shell->disp_width,
-                                           (gdouble) shell->disp_height,
-                                           &rlimit, &blimit);
+      tl_sx = screen_x - sx_off;
+      tl_sy = screen_y - sy_off;
 
-      gimp_display_shell_get_overlay_corners (shell, text_tool->style_overlay,
-                                              x, y,
-                                              &tlx, &tly,
-                                              &brx, &bry);
-
-      /* If the overlay is being dragged, we need to check if it is still
-       * within the image bounds. If it is not, we adjust the coordinates.
-       * This is to prevent the overlay from being dragged outside the image
-       * bounds, which would cause it to be lost.
-       */
       if (gimp_text_layer_is_style_overlay_positioned (text_tool->layer))
         {
-          if (tlx < llimit)
-            x += (llimit - tlx);
-          if (tly < ulimit)
-            y += (ulimit - tly);
-          if (brx > rlimit)
-            x -= (brx - rlimit);
-          if (bry > blimit)
-            y -= (bry - blimit);
+          tl_sx = CLAMP (tl_sx, 0.0, (gdouble) shell->disp_width  - req.width);
+          tl_sy = CLAMP (tl_sy, 0.0, (gdouble) shell->disp_height - req.height);
         }
+
+      gimp_display_shell_untransform_xy_f (shell,
+                                           tl_sx + sx_off,
+                                           tl_sy + sy_off,
+                                           &x, &y);
 
       gimp_display_shell_move_overlay (shell,
                                        text_tool->style_overlay,
