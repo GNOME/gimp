@@ -654,11 +654,22 @@ gradient_calc_square_factor (gdouble dist,
       rat = r / dist;
 
       if (rat < offset)
-        return 0.0;
+        {
+          return 0.0;
+        }
       else if (offset == 1.0)
-        return (rat >= 1.0) ? 1.0 : 0.0;
+        {
+          if (rat > 1.0)
+            return 2.0;
+          else if (rat == 1.0)
+            return 1.0;
+          else
+            return 0.0;
+        }
       else
-        return (rat - offset) / (1.0 - offset);
+        {
+          return (rat - offset) / (1.0 - offset);
+        }
     }
 }
 
@@ -685,11 +696,22 @@ gradient_calc_radial_factor (gdouble dist,
       rat = r / dist;
 
       if (rat < offset)
-        return 0.0;
+        {
+          return 0.0;
+        }
       else if (offset == 1.0)
-        return (rat >= 1.0) ? 1.0 : 0.0;
+        {
+          if (rat > 1.0)
+            return 2.0;
+          else if (rat == 1.0)
+            return 1.0;
+          else
+            return 0.0;
+        }
       else
-        return (rat - offset) / (1.0 - offset);
+        {
+          return (rat - offset) / (1.0 - offset);
+        }
     }
 }
 
@@ -715,13 +737,28 @@ gradient_calc_linear_factor (gdouble  dist,
       rat = r / dist;
 
       if (rat >= 0.0 && rat < offset)
-        return 0.0;
+        {
+          return 0.0;
+        }
       else if (offset == 1.0)
-        return (rat >= 1.0) ? 1.0 : 0.0;
+        {
+          if (rat > 1.0)
+            return 2.0;
+          else if (rat < 0.0)
+            return -1.0;
+          else if (rat == 1.0)
+            return 1.0;
+          else
+            return 0.0;
+        }
       else if (rat < 0.0)
-        return rat / (1.0 - offset);
+        {
+          return rat / (1.0 - offset);
+        }
       else
-        return (rat - offset) / (1.0 - offset);
+        {
+          return (rat - offset) / (1.0 - offset);
+        }
     }
 }
 
@@ -749,11 +786,22 @@ gradient_calc_bilinear_factor (gdouble  dist,
       rat = r / dist;
 
       if (fabs (rat) < offset)
-        return 0.0;
+        {
+          return 0.0;
+        }
       else if (offset == 1.0)
-        return (rat == 1.0) ? 1.0 : 0.0;
+        {
+          if (fabs (rat) > 1.0)
+            return 2.0;
+          else if (fabs (rat) == 1.0)
+            return 1.0;
+          else
+            return 0.0;
+        }
       else
-        return (fabs (rat) - offset) / (1.0 - offset);
+        {
+          return (fabs (rat) - offset) / (1.0 - offset);
+        }
     }
 }
 
