@@ -576,13 +576,10 @@ gimp_config_serialize_value (const GValue *value,
     {
       const gchar *cstr = g_value_get_string (value);
 
-      if (!cstr)
-        return FALSE;
-
       if (escaped)
-        gimp_config_string_append_escaped (str, cstr);
+        gimp_config_string_append_escaped (str, cstr ? cstr : "");
       else
-        g_string_append (str, cstr);
+        g_string_append (str, cstr ? cstr : "");
 
       return TRUE;
     }

@@ -525,7 +525,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_WELCOME_DIALOG,
                             "show-welcome-dialog",
                             "Show Welcome Dialog each time",
-                            NULL, TRUE,
+                            SHOW_WELCOME_DIALOG_BLURB, TRUE,
                             G_PARAM_READWRITE |
                             G_PARAM_CONSTRUCT |
                             GIMP_PARAM_STATIC_STRINGS);

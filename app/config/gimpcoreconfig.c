@@ -198,8 +198,8 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_PROP_STRING (object_class, PROP_PREV_LANGUAGE,
                            "prev-language",
                            "Language used in previous run",
-                           NULL, NULL,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           PREV_LANGUAGE_BLURB,
+                           NULL, GIMP_PARAM_STATIC_STRINGS);
 
   /* This is the version of the config files, which must map to the
    * version of GIMP. It is used right now only to detect the last run
@@ -682,7 +682,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_PROP_STRING (object_class, PROP_LAST_RELEASE_COMMENT,
                            "last-release-comment",
                            "Comment for last release",
-                           LAST_KNOWN_RELEASE_BLURB,
+                           LAST_RELEASE_COMMENT_BLURB,
                            NULL,
                            GIMP_PARAM_STATIC_STRINGS);
 

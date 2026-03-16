@@ -10,18 +10,23 @@ manconf.set('manpage_gimpdir', '$XDG_CONFIG_HOME/' + gimpdir / gimp_app_version)
 manconf.set('gimpsysconfdir', prefix / gimpsysconfdir)
 manconf.set('mypaint_brushes_dir', mypaint_brushes_dir)
 
+custom_target('gimprc-' + gimp_app_version + '.5',
+              output: 'gimprc-' + gimp_app_version + '.5',
+              depends: [ gimp_exe_depends ],
+              command: [ gimp_exe, '--no-interface',
+                         '--dump-gimprc-manpage' ],
+              capture: true,
+              build_by_default: true,
+              env: gimp_run_env,
+              install: true,
+              install_dir: get_option('mandir') / 'man5')
 
 man_files = [
   configure_file(
     input : 'gimptool.1.in',
     output: 'gimptool-' + gimp_app_version + '.1',
     configuration: manconf,
-  ),
-  configure_file(
-    input : 'gimprc.5.in',
-    output: 'gimprc-' + gimp_app_version + '.5',
-    configuration: manconf,
-  ),
+  )
 ]
 
 if enable_console_bin

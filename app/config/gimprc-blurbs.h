@@ -20,6 +20,15 @@ _("When enabled, an image will become the active image when its image " \
 #define DYNAMICS_PATH_BLURB \
 _("Sets the dynamics search path.")
 
+#define PREV_LANGUAGE_BLURB \
+_("Specifies the language the user interface was previously displayed in.")
+
+#define LAST_RELEASE_COMMENT_BLURB \
+_("The comment for the last known release.")
+
+#define SHOW_WELCOME_DIALOG_BLURB \
+_("Show a welcome dialog when GIMP starts.")
+
 #define DYNAMICS_PATH_WRITABLE_BLURB ""
 
 #define TOOL_PRESET_PATH_BLURB \
