@@ -10,14 +10,14 @@
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005-2025.
 #
 # SPDX-FileCopyrightText: 2025 Alevtina <karashokovaaa@basealt.ru>
-# Alevtina <karashokovaaa@basealt.ru>, 2025.
+# Alevtina <karashokovaaa@basealt.ru>, 2025-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.99\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2025-09-29 23:55+0000\n"
-"PO-Revision-Date: 2025-09-30 16:58+0200\n"
+"PO-Revision-Date: 2026-03-16 13:45+0100\n"
 "Last-Translator: Alevtina <karashokovaaa@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -5742,7 +5742,7 @@ msgstr "Изменить разрешение при печати"
 #: app/actions/image-actions.c:121
 msgctxt "image-action"
 msgid "_Scale Image..."
-msgstr "Масштабировать _изображения..."
+msgstr "Размер _изображения..."
 
 #: app/actions/image-actions.c:122
 msgctxt "image-action"
