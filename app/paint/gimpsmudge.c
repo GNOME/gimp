@@ -246,8 +246,6 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
       dest_pickable_off_y = 0;
     }
 
-  pickable_buffer = gimp_pickable_get_buffer (dest_pickable);
-
   n_strokes = gimp_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
     {
@@ -279,6 +277,11 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                                                        NULL, NULL);
       if (! paint_buffer)
         continue;
+
+      /*  Fetch the buffer _after_ gimp_paint_core_get_paint_buffer() as it
+       *  may have expanded the drawable when "Expand Layers" is enabled.
+       */
+      pickable_buffer = gimp_pickable_get_buffer (dest_pickable);
 
       gimp_smudge_accumulator_coords (paint_core, &coords, 0, &x, &y);
 
