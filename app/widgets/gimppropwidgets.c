@@ -115,6 +115,7 @@ gimp_prop_expanding_frame_new (GObject      *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *frame;
+  GtkWidget  *vbox;
   GtkWidget  *toggle;
 
   param_spec = check_param_spec_w (config, property_name,
@@ -126,24 +127,27 @@ gimp_prop_expanding_frame_new (GObject      *config,
     button_label = g_param_spec_get_nick (param_spec);
 
   frame = gimp_frame_new (NULL);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
   toggle = gimp_prop_check_button_new (config, property_name, button_label);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_set_visible (toggle, TRUE);
 
   gtk_container_add (GTK_CONTAINER (frame), child);
+  gtk_widget_set_visible (child, TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   g_object_bind_property (G_OBJECT (config), property_name,
-                          G_OBJECT (child),  "visible",
+                          G_OBJECT (frame),  "visible",
                           G_BINDING_SYNC_CREATE);
 
   if (button)
     *button = toggle;
 
-  gimp_widget_set_bound_property (frame, config, property_name);
-  gtk_widget_set_visible (frame, TRUE);
+  gimp_widget_set_bound_property (vbox, config, property_name);
+  gtk_widget_set_visible (vbox, TRUE);
 
-  return frame;
+  return vbox;
 }
 
 
