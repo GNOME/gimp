@@ -32,7 +32,9 @@
 #include "path-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpfilloptions.h"
 #include "core/gimpimage.h"
+#include "core/gimppattern.h"
 #include "core/gimpstrokeoptions.h"
 
 #include "gimppath.h"
@@ -51,7 +53,11 @@ enum
   PROP_ENABLE_FILL,
   PROP_FILL_OPTIONS,
   PROP_ENABLE_STROKE,
-  PROP_STROKE_OPTIONS
+  PROP_STROKE_OPTIONS,
+  /* Individual Fill Options */
+  PROP_FILL_STYLE,
+  PROP_FILL_COLOR,
+  PROP_FILL_PATTERN
 };
 
 
@@ -85,6 +91,7 @@ static void
 gimp_vector_layer_options_class_init (GimpVectorLayerOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GeglColor    *black        = gegl_color_new ("black");
 
   object_class->constructor  = gimp_vector_layer_options_constructor;
   object_class->finalize     = gimp_vector_layer_options_finalize;
@@ -132,6 +139,28 @@ gimp_vector_layer_options_class_init (GimpVectorLayerOptionsClass *klass)
                            GIMP_TYPE_STROKE_OPTIONS,
                            G_PARAM_STATIC_STRINGS |
                            GIMP_CONFIG_PARAM_AGGREGATE);
+
+  /* Alias for fill properties */
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_STYLE,
+                         "fill-style",
+                         NULL, NULL,
+                         GIMP_TYPE_CUSTOM_STYLE,
+                         GIMP_CUSTOM_STYLE_SOLID_COLOR,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_FILL_COLOR,
+                          "fill-color",
+                          NULL, NULL,
+                          FALSE, black,
+                          GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_FILL_PATTERN,
+                           "fill-pattern",
+                           NULL, NULL,
+                           GIMP_TYPE_PATTERN,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_unref (black);
 }
 
 static void
@@ -218,6 +247,12 @@ gimp_vector_layer_options_get_property (GObject    *object,
       g_value_set_object (value, options->stroke_options);
       break;
 
+    /* Alias for fill properties */
+    case PROP_FILL_STYLE:
+    case PROP_FILL_COLOR:
+    case PROP_FILL_PATTERN:
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -299,6 +334,24 @@ gimp_vector_layer_options_set_property (GObject      *object,
             g_object_unref (options->stroke_options);
           options->stroke_options = gimp_config_duplicate (g_value_get_object (value));
         }
+      break;
+
+    /* Alias for fill properties */
+    case PROP_FILL_STYLE:
+      if (options->fill_options)
+        g_object_set (GIMP_FILL_OPTIONS (options->fill_options),
+                      "custom-style", g_value_get_enum (value),
+                      NULL);
+      break;
+
+    case PROP_FILL_COLOR:
+      gimp_context_set_foreground (GIMP_CONTEXT (options->fill_options),
+                                   g_value_get_object (value));
+      break;
+
+    case PROP_FILL_PATTERN:
+      gimp_context_set_pattern (GIMP_CONTEXT (options->fill_options),
+                                g_value_get_object (value));
       break;
 
     default:

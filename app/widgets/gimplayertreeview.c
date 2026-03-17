@@ -40,7 +40,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpfilloptions.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
@@ -53,7 +52,6 @@
 #include "core/gimptreehandler.h"
 
 #include "path/gimpvectorlayer.h"
-#include "path/gimpvectorlayeroptions.h"
 
 #include "text/gimptextlayer.h"
 
@@ -757,25 +755,14 @@ gimp_layer_tree_view_drop_viewables (GimpContainerTreeView   *view,
           gimp_item_is_vector_layer (GIMP_ITEM (dest_viewable)) &&
           GIMP_IS_PATTERN (src_viewable))
         {
-          GimpVectorLayerOptions *vector_options = NULL;
-          GimpFillOptions        *vector_fill    = NULL;
+          gimp_vector_layer_set (GIMP_VECTOR_LAYER (dest_viewable), NULL,
+                                 "fill-style", GIMP_CUSTOM_STYLE_PATTERN,
+                                 "fill-pattern", GIMP_PATTERN (src_viewable),
+                                 NULL);
 
-          vector_options =
-            gimp_vector_layer_get_options (GIMP_VECTOR_LAYER (dest_viewable));
-          if (vector_options)
-            vector_fill = vector_options->fill_options;
-
-          if (vector_fill)
-            {
-              gimp_context_set_pattern (GIMP_CONTEXT (vector_fill),
-                                        GIMP_PATTERN (src_viewable));
-              gimp_fill_options_set_custom_style (vector_fill,
-                                                  GIMP_CUSTOM_STYLE_PATTERN);
-
-              gimp_vector_layer_refresh (GIMP_VECTOR_LAYER (dest_viewable));
-              gimp_image_flush (gimp_item_tree_view_get_image (item_view));
-              return;
-            }
+          gimp_vector_layer_refresh (GIMP_VECTOR_LAYER (dest_viewable));
+          gimp_image_flush (gimp_item_tree_view_get_image (item_view));
+          return;
         }
     }
 
@@ -803,24 +790,14 @@ gimp_layer_tree_view_drop_color (GimpContainerTreeView   *view,
     }
   else if (gimp_item_is_vector_layer (GIMP_ITEM (dest_viewable)))
     {
-      GimpVectorLayerOptions *vector_options = NULL;
-      GimpFillOptions        *vector_fill    = NULL;
+      gimp_vector_layer_set (GIMP_VECTOR_LAYER (dest_viewable), NULL,
+                             "fill-style", GIMP_CUSTOM_STYLE_SOLID_COLOR,
+                             "fill-color", color,
+                             NULL);
 
-      vector_options =
-        gimp_vector_layer_get_options (GIMP_VECTOR_LAYER (dest_viewable));
-      if (vector_options)
-        vector_fill = vector_options->fill_options;
-
-      if (vector_fill)
-        {
-          gimp_context_set_foreground (GIMP_CONTEXT (vector_fill), color);
-          gimp_fill_options_set_custom_style (vector_fill,
-                                              GIMP_CUSTOM_STYLE_SOLID_COLOR);
-
-          gimp_vector_layer_refresh (GIMP_VECTOR_LAYER (dest_viewable));
-          gimp_image_flush (gimp_item_tree_view_get_image (item_view));
-          return;
-        }
+      gimp_vector_layer_refresh (GIMP_VECTOR_LAYER (dest_viewable));
+      gimp_image_flush (gimp_item_tree_view_get_image (item_view));
+      return;
     }
 
   GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_color (view, color,

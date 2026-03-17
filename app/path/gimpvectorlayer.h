@@ -62,6 +62,11 @@ GimpPath                * gimp_vector_layer_get_path    (GimpVectorLayer *layer)
 
 GimpVectorLayerOptions  * gimp_vector_layer_get_options (GimpVectorLayer *layer);
 
+void                      gimp_vector_layer_set         (GimpVectorLayer *layer,
+                                                         const gchar     *undo_desc,
+                                                         const gchar     *first_property_name,
+                                                         ...) G_GNUC_NULL_TERMINATED;
+
 void                      gimp_vector_layer_refresh     (GimpVectorLayer *layer);
 
 gboolean                  gimp_item_is_vector_layer     (GimpItem        *item);

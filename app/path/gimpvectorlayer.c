@@ -703,6 +703,49 @@ gimp_vector_layer_get_options (GimpVectorLayer *layer)
 }
 
 void
+gimp_vector_layer_set (GimpVectorLayer *layer,
+                       const gchar     *undo_desc,
+                       const gchar     *first_property_name,
+                       ...)
+{
+  GimpImage              *image;
+  GimpVectorLayerOptions *options;
+  va_list                 var_args;
+
+  g_return_if_fail (gimp_item_is_vector_layer (GIMP_ITEM (layer)));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
+
+  options = layer->options;
+
+  if (! options)
+    return;
+
+  image = gimp_item_get_image (GIMP_ITEM (layer));
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_VECTOR, undo_desc);
+
+  g_object_freeze_notify (G_OBJECT (layer));
+
+  if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
+    gimp_image_undo_push_drawable_mod (image, NULL,
+                                       GIMP_DRAWABLE (layer), TRUE);
+
+  gimp_image_undo_push_vector_layer (image, undo_desc, layer, NULL);
+
+  va_start (var_args, first_property_name);
+  g_object_set_valist (G_OBJECT (options), first_property_name,
+                       var_args);
+  va_end (var_args);
+
+  if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
+    gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
+
+  g_object_thaw_notify (G_OBJECT (layer));
+
+  gimp_image_undo_group_end (image);
+}
+
+void
 gimp_vector_layer_refresh (GimpVectorLayer *layer)
 {
   if (layer->options)

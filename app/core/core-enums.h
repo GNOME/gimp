@@ -571,6 +571,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_EDIT_PASTE,            /*< desc="Paste"                          >*/
   GIMP_UNDO_GROUP_EDIT_CUT,              /*< desc="Cut"                            >*/
   GIMP_UNDO_GROUP_TEXT,                  /*< desc="Text"                           >*/
+  GIMP_UNDO_GROUP_VECTOR,                /*< desc="Vector"                         >*/
   GIMP_UNDO_GROUP_TRANSFORM,             /*< desc="Transform"                      >*/
   GIMP_UNDO_GROUP_PAINT,                 /*< desc="Paint"                          >*/
   GIMP_UNDO_GROUP_PARASITE_ATTACH,       /*< desc="Attach parasite"                >*/
