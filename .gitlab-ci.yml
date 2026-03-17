@@ -342,7 +342,7 @@ deps-debian:
   image: !reference [deps-debian-nonreloc, image]
   variables:
     GIT_STRATEGY: none
-    RELOCATABLE_OPTION: '-Drelocatable=enabled'
+    RELOCATABLE_OPTION: '-Drelocatable-bundle=yes'
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   script:
     - !reference [deps-debian-nonreloc, script]
