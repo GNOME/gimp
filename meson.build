@@ -355,7 +355,7 @@ if buildtype == 'debug' or buildtype == 'debugoptimized'
   elif cc.get_argument_syntax() == 'msvc'
     # CodeView symbols for DIA or DbgHelp debuggers and LLDB on Windows
     debugging_format = 'Native'
-  elif platform_windows and get_option('win-debugging') == 'native' and cc.has_argument('-gcodeview') and cc.has_link_argument('-Wl,--pdb=')
+  elif platform_windows and get_option('win-debugging') == 'native' and cc.has_argument('-gcodeview') and cc.has_link_argument('-Wl,--pdb=') and cc.get_id() == 'clang'
     # CodeView symbols for DIA or DbgHelp debuggers and LLDB on Windows
     debugging_format = 'native'
     compiler_args += '-gcodeview'
