@@ -1658,8 +1658,8 @@ gimp_palette_load_procreate (GimpContext   *context,
                       GeglColor  *color = gegl_color_new (NULL);
                       const Babl *space = NULL;
 
-                      if (profiles                                         &&
-                          json_reader_read_member (reader, "colorProfile") &&
+                      if (json_reader_read_member (reader, "colorProfile") &&
+                          profiles                                         &&
                           json_reader_is_value (reader))
                         {
                           GList       *profile_list;
