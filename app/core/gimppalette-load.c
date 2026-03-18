@@ -1391,6 +1391,7 @@ gimp_palette_load_sbz (GimpContext   *context,
   if ((a = archive_read_new ()))
     {
       const gchar *name = gimp_file_get_utf8_name (file);
+      int          archive_ret;
 
       archive_read_support_format_all (a);
       r = archive_read_open_filename (a, name, 10240);
@@ -1405,16 +1406,36 @@ gimp_palette_load_sbz (GimpContext   *context,
           return NULL;
         }
 
-      while (archive_read_next_header (a, &entry) == ARCHIVE_OK)
+      while ((archive_ret = archive_read_next_header (a, &entry)) != ARCHIVE_EOF)
         {
-          const gchar *lower = g_ascii_strdown (archive_entry_pathname (entry), -1);
+          const char  *pathname;
+          const gchar *lower;
 
+          if (archive_ret == ARCHIVE_RETRY)
+            continue;
+          else if (archive_ret == ARCHIVE_FATAL)
+            break;
+
+          pathname = archive_entry_pathname (entry);
+          lower    = g_ascii_strdown (pathname, -1);
           if (g_str_has_suffix (lower, ".xml"))
             {
-              entry_size = archive_entry_size (entry);
-              xml_data   = (gchar *) g_malloc (entry_size);
+              if (xml_data == NULL)
+                {
+                  entry_size = archive_entry_size (entry);
+                  xml_data   = (gchar *) g_malloc (entry_size);
 
-              r = archive_read_data (a, xml_data, entry_size);
+                  r = archive_read_data (a, xml_data, entry_size);
+                }
+              else
+                {
+                  /* This format only seems to allow for 1 XML in the
+                   * zip, so if there are several, let's ignore it, yet
+                   * not completely silently.
+                   */
+                  g_printerr ("Ignoring second XML file '%s' in SBZ palette: %s",
+                              pathname, gimp_file_get_utf8_name (file));
+                }
             }
           else if (g_str_has_suffix (lower, ".icc") || g_str_has_suffix (lower, ".icm"))
             {
@@ -1442,6 +1463,16 @@ gimp_palette_load_sbz (GimpContext   *context,
             }
         }
 
+      if (archive_ret == ARCHIVE_FATAL)
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Unable to read SBZ file: %s"),
+                       archive_error_string (a));
+
+          archive_read_free (a);
+          return NULL;
+        }
+
       if (xml_data)
         {
           GimpXmlParser *xml_parser;
@@ -1460,6 +1491,15 @@ gimp_palette_load_sbz (GimpContext   *context,
 
           g_free (xml_data);
         }
+      else
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Unable to open SBZ file"));
+
+          archive_read_free (a);
+          return NULL;
+        }
+
 
       r = archive_read_free (a);
     }
