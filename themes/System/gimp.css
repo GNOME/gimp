@@ -47,6 +47,10 @@ GimpDock GimpColorScales spinbutton entry {
     padding-bottom: 2px;
 }
 
+GimpColorSelect button.radio  {
+  margin-right: 0px;
+}
+
 GimpColorSelection ColorselCmyk {
     padding: 2px 2px 2px 2px;
 }
