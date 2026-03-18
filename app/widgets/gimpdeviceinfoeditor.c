@@ -297,7 +297,6 @@ gimp_device_info_editor_constructed (GObject *object)
        * not break anything in this use case anyway).
        */
       GimpCurve *curve;
-      gchar     *title;
       GtkWidget *vbox;
       GtkWidget *hbox;
       GtkWidget *view;
@@ -305,21 +304,9 @@ gimp_device_info_editor_constructed (GObject *object)
       GtkWidget *combo;
       GtkWidget *button;
 
-      /* TODO: right now this string is split in 2 localized strings,
-       * to avoid breaking string freeze. After GIMP 3.2, we should just
-       * create the "Pressure Curve" string because that's our only
-       * case so far.
-       */
-
-      /* e.g. "Pressure Curve" for mapping input device axes */
-      title = g_strdup_printf (_("%s Curve"),
-                               _("Pressure"));
-
-      frame = gimp_frame_new (title);
+      frame = gimp_frame_new (_("Pressure Curve"));
       gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
-
-      g_free (title);
 
       curve = gimp_device_info_get_curve (private->info, GDK_AXIS_PRESSURE);
 
