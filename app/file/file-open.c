@@ -1007,8 +1007,7 @@ file_open_pre_check (Gimp                 *gimp,
               g_clear_error (error);
               if (error && ! *error)
                 g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                             /* TODO: localize after string freeze ends. */
-                             "Cycling link detected with %s.",
+                             _("Circular reference detected with '%s'."),
                              g_file_peek_path (file));
 
               return FALSE;

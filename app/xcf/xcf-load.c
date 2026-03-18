@@ -2613,8 +2613,8 @@ xcf_load_layer_props (XcfInfo    *info,
                 {
                   gimp_message (info->gimp, G_OBJECT (info->progress),
                                 GIMP_MESSAGE_WARNING,
-                                "XCF Warning: invalid link in XCF file. "
-                                "The link layer \"%s\" is downgraded to a raster layer.",
+                                _("XCF Warning: invalid link in XCF file. "
+                                  "The link layer \"%s\" is downgraded to a raster layer."),
                                 gimp_object_get_name (*layer));
                 }
               else
@@ -2633,8 +2633,8 @@ xcf_load_layer_props (XcfInfo    *info,
                         {
                           gimp_message (info->gimp, G_OBJECT (info->progress),
                                         GIMP_MESSAGE_WARNING,
-                                        "XCF Warning: cycling link detected in XCF file. "
-                                        "The link layer \"%s\" is downgraded to a raster layer.",
+                                        _("XCF Warning: circular reference detected in XCF file. "
+                                          "The link layer \"%s\" is downgraded to a raster layer."),
                                         gimp_object_get_name (*layer));
                           ignore = TRUE;
                           break;
