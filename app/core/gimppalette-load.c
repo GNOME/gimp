@@ -1396,10 +1396,12 @@ gimp_palette_load_sbz (GimpContext   *context,
       r = archive_read_open_filename (a, name, 10240);
       if (r != ARCHIVE_OK)
         {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Unable to read SBZ file: %s"),
+                       archive_error_string (a));
+
           archive_read_free (a);
 
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Unable to read SBZ file"));
           return NULL;
         }
 
@@ -1496,11 +1498,11 @@ gimp_palette_load_procreate (GimpContext   *context,
       r = archive_read_open_filename (a, name, 10240);
       if (r != ARCHIVE_OK)
         {
-          archive_read_free (a);
-
-          /* TODO: Translate after string freeze */
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       "Unable to read Procreate swatches file");
+                       _("Unable to read Procreate swatches file: %s"),
+                       archive_error_string (a));
+
+          archive_read_free (a);
           return NULL;
         }
 
@@ -1717,9 +1719,8 @@ gimp_palette_load_procreate (GimpContext   *context,
     }
   else
     {
-      /* TODO: Translate after string freeze */
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   "Unable to read Procreate swatches file");
+                   _("Unable to read Procreate swatches file"));
       return NULL;
     }
 
