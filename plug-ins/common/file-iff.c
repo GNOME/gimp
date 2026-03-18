@@ -152,7 +152,7 @@ iff_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Load file in the IFF file format"),
-                                        _("Load file in the IFF file format"),
+                                        NULL,
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Alex S.",
@@ -175,10 +175,9 @@ iff_create_procedure (GimpPlugIn  *plug_in,
                                                 GIMP_PDB_PROC_TYPE_PLUGIN,
                                                 iff_load_thumb, NULL, NULL);
 
-      /* TODO: localize when string freeze is over. */
       gimp_procedure_set_documentation (procedure,
-                                        "Load IFF file as thumbnail",
-                                        "",
+                                        _("Load IFF file as thumbnail"),
+                                        NULL,
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Alex S.",
