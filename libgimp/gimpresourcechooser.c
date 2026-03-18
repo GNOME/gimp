@@ -354,14 +354,22 @@ void
 _gimp_resource_chooser_set_clickable (GimpResourceChooser *chooser,
                                       GtkWidget           *widget)
 {
+  GimpResourceChooserPrivate *priv;
+
   g_return_if_fail (GIMP_IS_RESOURCE_CHOOSER (chooser));
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
+  priv = gimp_resource_chooser_get_instance_private (chooser);
   /* Require the widget have a signal "clicked", usually a button. */
   g_signal_connect_swapped (widget, "clicked",
                             G_CALLBACK (gimp_resource_chooser_clicked),
                             chooser);
+
+  /* To make this activatable with mnemonics, we need to attach to
+   * a widget that can get focus */
+  if (priv->label_widget != NULL)
+    gtk_label_set_mnemonic_widget (GTK_LABEL (priv->label_widget), widget);
 }
 
 /**
