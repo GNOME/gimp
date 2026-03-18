@@ -25,13 +25,13 @@ void encode_bc7_block (void* pBlock, const bc7_optimization_results* pResults);
 static inline int32_t clampi(int32_t value, int32_t low, int32_t high) { if (value < low) value = low; else if (value > high) value = high; return value; }
 static inline float clampf(float value, float low, float high) { if (value < low) value = low; else if (value > high) value = high; return value; }
 static inline float saturate(float value) { return clampf(value, 0, 1.0f); }
-static inline uint8_t minimumub(uint8_t a, uint8_t b) { return (a < b) ? a : b; }
+/*static inline uint8_t minimumub(uint8_t a, uint8_t b) { return (a < b) ? a : b; }*/
 static inline int32_t minimumi(int32_t a, int32_t b) { return (a < b) ? a : b; }
 static inline uint32_t minimumu(uint32_t a, uint32_t b) { return (a < b) ? a : b; }
 static inline float minimumf(float a, float b) { return (a < b) ? a : b; }
-static inline uint8_t maximumub(uint8_t a, uint8_t b) { return (a > b) ? a : b; }
+/*static inline uint8_t maximumub(uint8_t a, uint8_t b) { return (a > b) ? a : b; }*/
 static inline uint32_t maximumu(uint32_t a, uint32_t b) { return (a > b) ? a : b; }
-static inline int32_t maximumi(int32_t a, int32_t b) { return (a > b) ? a : b; }
+/*static inline int32_t maximumi(int32_t a, int32_t b) { return (a > b) ? a : b; }*/
 static inline float maximumf(float a, float b) { return (a > b) ? a : b; }
 static inline int squarei(int i) { return i * i; }
 static inline float squaref(float i) { return i * i; }
