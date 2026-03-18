@@ -1174,7 +1174,6 @@ warp_one (GimpDrawable        *draw,
   gint        height;
 
   const Babl *src_format;
-  gint        src_bytes;
   const Babl *dest_format;
   gint        dest_bytes;
 
@@ -1246,7 +1245,6 @@ warp_one (GimpDrawable        *draw,
   src_buffer = gimp_drawable_get_buffer (draw);
 
   src_format = get_u8_format (draw);
-  src_bytes  = babl_format_get_bytes_per_pixel (src_format);
 
   iter = gegl_buffer_iterator_new (src_buffer,
                                    GEGL_RECTANGLE (x1, y1, (x2 - x1), (y2 - y1)),
@@ -1308,7 +1306,6 @@ warp_one (GimpDrawable        *draw,
   while (gegl_buffer_iterator_next (iter))
     {
       GeglRectangle  roi     = iter->items[1].roi;
-      guchar        *srcrow  = iter->items[0].data;
       guchar        *destrow = iter->items[1].data;
       guchar        *mxrow   = iter->items[2].data;
       guchar        *myrow   = iter->items[3].data;
@@ -1493,8 +1490,6 @@ warp_one (GimpDrawable        *draw,
                 }
             }
 
-          /*      srcrow += src_rgn.rowstride; */
-          srcrow  += src_bytes   * roi.width;
           destrow += dest_bytes  * roi.width;
           mxrow   += map_x_bytes * roi.width;
           myrow   += map_y_bytes * roi.width;
