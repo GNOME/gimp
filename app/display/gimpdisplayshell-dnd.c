@@ -51,7 +51,6 @@
 #include "path/gimppath.h"
 #include "path/gimppath-import.h"
 #include "path/gimpvectorlayer.h"
-#include "path/gimpvectorlayeroptions.h"
 
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
@@ -438,15 +437,8 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
       if (gimp_item_is_text_layer (iter->data) ||
           gimp_item_is_vector_layer (iter->data))
         {
-          GimpVectorLayerOptions *vector_options = NULL;
-          GimpFillOptions        *vector_fill    = NULL;
-          GimpPattern            *pattern        = NULL;
-          GeglColor              *color          = NULL;
-
-          if (gimp_item_is_vector_layer (iter->data))
-            vector_options = gimp_vector_layer_get_options (iter->data);
-          if (vector_options)
-            vector_fill = vector_options->fill_options;
+          GimpPattern *pattern = NULL;
+          GeglColor   *color   = NULL;
 
           if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_FG_COLOR)
             color = gimp_context_get_foreground (GIMP_CONTEXT (options));
@@ -457,12 +449,13 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
 
           if (color)
             {
-              if (vector_fill)
+              if (gimp_item_is_vector_layer (iter->data))
                 {
-                  gimp_context_set_foreground (GIMP_CONTEXT (vector_fill),
-                                               color);
-                  gimp_fill_options_set_custom_style (vector_fill,
-                                                      GIMP_CUSTOM_STYLE_SOLID_COLOR);
+                  gimp_vector_layer_set (GIMP_VECTOR_LAYER (iter->data), NULL,
+                                         "fill-style",
+                                         GIMP_CUSTOM_STYLE_SOLID_COLOR,
+                                         "fill-color",
+                                         color, NULL);
                   gimp_vector_layer_refresh (iter->data);
                 }
               else
@@ -470,16 +463,14 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
                   gimp_text_layer_set (iter->data, NULL, "color", color, NULL);
                 }
             }
-          else if (pattern)
+          else if (pattern &&
+                   gimp_item_is_vector_layer (iter->data))
             {
-              if (vector_fill)
-                {
-                  gimp_context_set_pattern (GIMP_CONTEXT (vector_fill),
-                                            pattern);
-                  gimp_fill_options_set_custom_style (vector_fill,
-                                                      GIMP_CUSTOM_STYLE_PATTERN);
-                  gimp_vector_layer_refresh (iter->data);
-                }
+              gimp_vector_layer_set (GIMP_VECTOR_LAYER (iter->data), NULL,
+                                     "fill-style",   GIMP_CUSTOM_STYLE_PATTERN,
+                                     "fill-pattern", pattern,
+                                     NULL);
+              gimp_vector_layer_refresh (iter->data);
             }
         }
       else
