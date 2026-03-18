@@ -1493,6 +1493,7 @@ gimp_palette_load_procreate (GimpContext   *context,
   if ((a = archive_read_new ()))
     {
       const gchar *name = gimp_file_get_utf8_name (file);
+      int          archive_ret;
 
       archive_read_support_format_all (a);
       r = archive_read_open_filename (a, name, 10240);
@@ -1506,17 +1507,39 @@ gimp_palette_load_procreate (GimpContext   *context,
           return NULL;
         }
 
-      while (archive_read_next_header (a, &entry) == ARCHIVE_OK)
+      while ((archive_ret = archive_read_next_header (a, &entry)) != ARCHIVE_EOF)
         {
-          const gchar *lower = g_ascii_strdown (archive_entry_pathname (entry), -1);
+          const gchar *lower;
 
+          if (archive_ret == ARCHIVE_RETRY)
+            continue;
+          else if (archive_ret == ARCHIVE_FATAL)
+            break;
+
+          /* Here we returned either with ARCHIVE_OK or ARCHIVE_WARN
+           * which are both successes (we ignore the non-critical error
+           * in the WARN case).
+           */
+
+          lower = g_ascii_strdown (archive_entry_pathname (entry), -1);
           if (g_str_has_suffix (lower, ".json"))
             {
               entry_size = archive_entry_size (entry);
               json_data  = (gchar *) g_malloc (entry_size);
 
               r = archive_read_data (a, json_data, entry_size);
+              break;
             }
+        }
+
+      if (archive_ret == ARCHIVE_FATAL)
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Unable to read Procreate swatches file: %s"),
+                       archive_error_string (a));
+
+          archive_read_free (a);
+          return NULL;
         }
 
       if (json_data)
@@ -1713,6 +1736,14 @@ gimp_palette_load_procreate (GimpContext   *context,
           g_free (json_data);
           g_clear_object (&reader);
           g_clear_object (&parser);
+        }
+      else
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Unable to read Procreate swatches file"));
+
+          archive_read_free (a);
+          return NULL;
         }
 
       r = archive_read_free (a);
