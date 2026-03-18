@@ -1408,8 +1408,8 @@ gimp_palette_load_sbz (GimpContext   *context,
 
       while ((archive_ret = archive_read_next_header (a, &entry)) != ARCHIVE_EOF)
         {
-          const char  *pathname;
-          const gchar *lower;
+          const char *pathname;
+          gchar      *lower;
 
           if (archive_ret == ARCHIVE_RETRY)
             continue;
@@ -1461,6 +1461,8 @@ gimp_palette_load_sbz (GimpContext   *context,
                     g_list_append (sbz_data.embedded_profiles, sbz_profile);
                 }
             }
+
+          g_free (lower);
         }
 
       if (archive_ret == ARCHIVE_FATAL)
@@ -1549,7 +1551,7 @@ gimp_palette_load_procreate (GimpContext   *context,
 
       while ((archive_ret = archive_read_next_header (a, &entry)) != ARCHIVE_EOF)
         {
-          const gchar *lower;
+          gchar *lower;
 
           if (archive_ret == ARCHIVE_RETRY)
             continue;
@@ -1568,8 +1570,10 @@ gimp_palette_load_procreate (GimpContext   *context,
               json_data  = (gchar *) g_malloc (entry_size);
 
               r = archive_read_data (a, json_data, entry_size);
+              g_free (lower);
               break;
             }
+          g_free (lower);
         }
 
       if (archive_ret == ARCHIVE_FATAL)
@@ -1807,66 +1811,74 @@ swatchbooker_load_start_element (GMarkupParseContext *context,
                                  GError             **error)
 {
   SwatchBookerData *sbz_data = user_data;
+  gchar            *lower_elt_name;
 
   sbz_data->copy_values = FALSE;
   sbz_data->color_model = NULL;
   sbz_data->color_space = NULL;
 
-  if (! strcmp (g_ascii_strdown (element_name, -1), "color"))
+  lower_elt_name = g_ascii_strdown (element_name, -1);
+  if (! strcmp (lower_elt_name, "color"))
     {
       sbz_data->in_color_tag = TRUE;
     }
-  else if (! strcmp (g_ascii_strdown (element_name, -1), "dc:identifier"))
+  else if (! strcmp (lower_elt_name, "dc:identifier"))
     {
       if (sbz_data->in_color_tag)
         sbz_data->copy_name = TRUE;
     }
-  else if (! strcmp (g_ascii_strdown (element_name, -1), "values"))
+  else if (! strcmp (lower_elt_name, "values"))
     {
       while (*attribute_names)
         {
-          if (! strcmp (g_ascii_strdown (*attribute_names, -1), "model"))
-            {
-              sbz_data->color_model =
-                g_strdup (g_ascii_strdown (*attribute_values, -1));
-            }
-          else if (! strcmp (g_ascii_strdown (*attribute_names, -1), "space"))
-            {
-              sbz_data->color_space = g_strdup (*attribute_values);
-            }
+          gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
+
+          if (! strcmp (lower_att_name, "model"))
+            sbz_data->color_model = g_ascii_strdown (*attribute_values, -1);
+          else if (! strcmp (lower_att_name, "space"))
+            sbz_data->color_space = g_strdup (*attribute_values);
 
           attribute_names++;
           attribute_values++;
+
+          g_free (lower_att_name);
         }
 
       sbz_data->copy_values = TRUE;
     }
-  else if (! strcmp (g_ascii_strdown (element_name, -1), "book"))
+  else if (! strcmp (lower_elt_name, "book"))
     {
       sbz_data->in_book_tag = TRUE;
 
       while (*attribute_names)
         {
-          if (! strcmp (g_ascii_strdown (*attribute_names, -1), "columns"))
+          gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
+
+          if (! strcmp (lower_att_name, "columns"))
             {
               gint columns = atoi (*attribute_values);
 
               if (columns > 0)
                 gimp_palette_set_columns (sbz_data->palette, columns);
 
+              g_free (lower_att_name);
               break;
             }
 
           attribute_names++;
           attribute_values++;
+
+          g_free (lower_att_name);
         }
     }
-  else if (! strcmp (g_ascii_strdown (element_name, -1), "swatch") &&
+  else if (! strcmp (lower_elt_name, "swatch") &&
            sbz_data->in_book_tag)
     {
       while (*attribute_names)
         {
-          if (! strcmp (g_ascii_strdown (*attribute_names, -1), "material"))
+          gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
+
+          if (! strcmp (lower_att_name, "material"))
             {
               GList *cols;
               gint   original_id = 0;
@@ -1887,13 +1899,19 @@ swatchbooker_load_start_element (GMarkupParseContext *context,
                     }
                   original_id++;
                 }
+
+              g_free (lower_att_name);
               break;
             }
 
           attribute_names++;
           attribute_values++;
+
+          g_free (lower_att_name);
         }
     }
+
+  g_free (lower_elt_name);
 }
 
 static void
@@ -1903,11 +1921,15 @@ swatchbooker_load_end_element (GMarkupParseContext *context,
                                GError             **error)
 {
   SwatchBookerData *sbz_data = user_data;
+  gchar            *lower_elt_name;
 
-  if (! strcmp (g_ascii_strdown (element_name, -1), "color"))
+  lower_elt_name = g_ascii_strdown (element_name, -1);
+  if (! strcmp (lower_elt_name, "color"))
     sbz_data->in_color_tag = FALSE;
-  else if (! strcmp (g_ascii_strdown (element_name, -1), "book"))
+  else if (! strcmp (lower_elt_name, "book"))
     sbz_data->in_book_tag = FALSE;
+
+  g_free (lower_elt_name);
 }
 
 static void
