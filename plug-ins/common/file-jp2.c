@@ -1276,8 +1276,11 @@ export_dialog (GimpProcedure         *procedure,
                GimpImage             *image)
 {
   GtkWidget        *dialog;
+#if ((OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR == 5 && OPJ_VERSION_BUILD >= 3) || \
+     (OPJ_VERSION_MAJOR == 2 && OPJ_VERSION_MINOR > 5) || OPJ_VERSION_MAJOR > 2)
   GtkWidget        *profile_label;
   GimpColorProfile *cmyk_profile = NULL;
+#endif
   gboolean          run;
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
