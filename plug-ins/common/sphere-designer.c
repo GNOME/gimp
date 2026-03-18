@@ -716,6 +716,7 @@ vadd (GimpVector4 *a, GimpVector4 *b)
   a->w += b->w;
 }
 
+/*
 static inline void
 vneg (GimpVector4 *a)
 {
@@ -724,6 +725,7 @@ vneg (GimpVector4 *a)
   a->z = -a->z;
   a->w = -a->w;
 }
+*/
 
 static inline void
 vmul (GimpVector4 *v, gdouble a)
