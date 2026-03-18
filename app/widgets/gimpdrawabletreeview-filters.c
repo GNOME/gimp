@@ -126,7 +126,6 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
   GimpDrawableTreeViewFiltersEditor *editor    = view->editor;
   GimpContainerTreeView             *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GimpContainer                     *filters;
-  GList                             *list;
   gint                               n_editable;
   gboolean                           visible   = FALSE;
 
@@ -285,17 +284,7 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
     }
 
   filters = gimp_drawable_get_filters (drawable);
-
-  for (list = GIMP_LIST (filters)->queue->tail;
-       list;
-       list = g_list_previous (list))
-    {
-      if (GIMP_IS_DRAWABLE_FILTER (list->data))
-        {
-          if (gimp_filter_get_active (list->data))
-            visible = TRUE;
-        }
-    }
+  visible = gimp_drawable_has_visible_filters (drawable);
 
   /* Set the initial value for the effect visibility toggle */
   g_signal_handlers_block_by_func (editor->visible_button,
@@ -462,6 +451,8 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
       is_editable = (index >= first_editable &&
                      index <= last_editable);
 
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (editor->visible_button),
+                                    has_visible_filters);
       gtk_widget_set_sensitive (editor->visible_button,
                                 TRUE);
       gtk_widget_set_sensitive (editor->edit_button,
