@@ -746,11 +746,6 @@ sparkle (GObject      *config,
                                    format,
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
 
-  gegl_buffer_iterator_add (iter, dest_buffer,
-                            GEGL_RECTANGLE (x1, y1, width, height), 0,
-                            format,
-                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-
   while (gegl_buffer_iterator_next (iter))
     {
       GeglRectangle  roi = iter->items[0].roi;
