@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-18 02:48+0000\n"
-"PO-Revision-Date: 2026-03-18 16:30+0800\n"
+"POT-Creation-Date: 2026-03-18 22:36+0000\n"
+"PO-Revision-Date: 2026-03-19 10:53+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 49.0\n"
+"X-Generator: Gtranslator 50.0\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -2500,7 +2500,7 @@ msgstr "240 秒"
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:556
-#: app/widgets/gimpdeviceeditor.c:463 app/widgets/gimpdeviceinfoeditor.c:850
+#: app/widgets/gimpdeviceeditor.c:463 app/widgets/gimpdeviceinfoeditor.c:837
 #: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:337
 #: app/widgets/gimphelp.c:441 app/widgets/gimphelp.c:776
 #: app/widgets/gimpiconpicker.c:489 app/widgets/gimpmodifierseditor.c:688
@@ -10077,7 +10077,7 @@ msgstr "打开显示器"
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:192
 #: app/tools/gimpfiltertool.c:377 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:666
-#: app/widgets/gimpdeviceinfoeditor.c:851 app/widgets/gimperrordialog.c:76
+#: app/widgets/gimpdeviceinfoeditor.c:838 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
@@ -14675,8 +14675,8 @@ msgid "In line %d of palette file: "
 msgstr "色板文件的第 %d 行："
 
 #: app/core/gimppalette-load.c:497 app/core/gimppalette-load.c:702
-#: app/core/gimppalette-load.c:1049 app/core/gimppalette-load.c:1531
-#: app/core/gimppalette-load.c:1552
+#: app/core/gimppalette-load.c:1049 app/core/gimppalette-load.c:1600
+#: app/core/gimppalette-load.c:1621
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "无法从色板文件“%s”中读取文件头："
@@ -14772,15 +14772,25 @@ msgstr "无效的 ASE 块大小。"
 msgid "Invalid ASE name size."
 msgstr "无效的 ASE 名称大小。"
 
-#: app/core/gimppalette-load.c:1402
+#: app/core/gimppalette-load.c:1401 app/core/gimppalette-load.c:1471
 #, c-format
-msgid "Unable to read SBZ file"
-msgstr "无法读取 SBZ 文件"
+msgid "Unable to read SBZ file: %s"
+msgstr "无法读取 SBZ 文件：%s"
 
-#: app/core/gimppalette-load.c:1467
+#: app/core/gimppalette-load.c:1499 app/core/gimppalette-load.c:1511
 #, c-format
 msgid "Unable to open SBZ file"
 msgstr "无法打开 SBZ 文件"
+
+#: app/core/gimppalette-load.c:1545 app/core/gimppalette-load.c:1582
+#, c-format
+msgid "Unable to read Procreate swatches file: %s"
+msgstr "无法读取 Procreate 色板文件：%s"
+
+#: app/core/gimppalette-load.c:1787 app/core/gimppalette-load.c:1798
+#, c-format
+msgid "Unable to read Procreate swatches file"
+msgstr "无法读取 Procreate 色板文件"
 
 #: app/core/gimppalettemru.c:125 app/core/gimppalettemru.c:271
 msgid "History Color"
@@ -19452,6 +19462,11 @@ msgid ""
 "Only platform-native file paths are supported: '%s' cannot be opened as link."
 msgstr "仅支持平台原生的文件路径：“%s”无法作为链接打开。"
 
+#: app/file/file-open.c:1010
+#, c-format
+msgid "Circular reference detected with '%s'."
+msgstr "检测到“%s”存在循环引用。"
+
 #: app/file/file-remote.c:113
 msgid "Mounting remote volume"
 msgstr "正在挂载远程卷"
@@ -20430,7 +20445,7 @@ msgstr "将颜色转换为灰度色调"
 #: app/operations/gimpoperationdesaturate.c:92
 #: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1488
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimptransform3doptions.c:77
-#: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:410
+#: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:397
 #: app/widgets/gimplayertreeview.c:286
 msgid "Mode"
 msgstr "模式"
@@ -23260,7 +23275,7 @@ msgstr "输出(_U)："
 msgid "T_ype:"
 msgstr "类型(_Y)："
 
-#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:354
+#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:341
 msgid "Curve _type:"
 msgstr "曲线类型(_T)"
 
@@ -25899,7 +25914,7 @@ msgid "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpactionview.c:259 app/widgets/gimpcontrollereditor.c:345
-#: app/widgets/gimpdeviceinfoeditor.c:416
+#: app/widgets/gimpdeviceinfoeditor.c:403
 msgid "Action"
 msgstr "动作"
 
@@ -26270,12 +26285,12 @@ msgid "State:"
 msgstr "状态："
 
 #: app/widgets/gimpcontrollereditor.c:339
-#: app/widgets/gimpdeviceinfoeditor.c:404
+#: app/widgets/gimpdeviceinfoeditor.c:391
 msgid "Event"
 msgstr "事件"
 
 #: app/widgets/gimpcontrollereditor.c:364
-#: app/widgets/gimpdeviceinfoeditor.c:461
+#: app/widgets/gimpdeviceinfoeditor.c:448
 msgid "_Grab event"
 msgstr "抓取事件(_G)"
 
@@ -26284,29 +26299,29 @@ msgid "Select the next event arriving from the controller"
 msgstr "选择控制器带来的下个事件"
 
 #: app/widgets/gimpcontrollereditor.c:377
-#: app/widgets/gimpdeviceinfoeditor.c:475
+#: app/widgets/gimpdeviceinfoeditor.c:462
 msgid "_Edit event"
 msgstr "编辑事件(_E)"
 
 #: app/widgets/gimpcontrollereditor.c:385
-#: app/widgets/gimpdeviceinfoeditor.c:485
+#: app/widgets/gimpdeviceinfoeditor.c:472
 msgid "_Clear event"
 msgstr "清空事件(_C)"
 
 #: app/widgets/gimpcontrollereditor.c:524
-#: app/widgets/gimpdeviceinfoeditor.c:661
+#: app/widgets/gimpdeviceinfoeditor.c:648
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "删除指派给“%s”的动作"
 
 #: app/widgets/gimpcontrollereditor.c:529
-#: app/widgets/gimpdeviceinfoeditor.c:665
+#: app/widgets/gimpdeviceinfoeditor.c:652
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "为“%s”指派动作"
 
 #: app/widgets/gimpcontrollereditor.c:651
-#: app/widgets/gimpdeviceinfoeditor.c:832
+#: app/widgets/gimpdeviceinfoeditor.c:819
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "选择事件“%s”的动作"
@@ -27027,8 +27042,7 @@ msgstr ""
 "您正试图删除此设备已存储的设置。\n"
 "下次此设备被插入时，将应用默认设置。"
 
-#: app/widgets/gimpdeviceinfo.c:58 app/widgets/gimpdeviceinfoeditor.c:316
-#: app/widgets/gimpdynamicseditor.c:161
+#: app/widgets/gimpdeviceinfo.c:58 app/widgets/gimpdynamicseditor.c:161
 #: app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "压力"
@@ -27104,50 +27118,43 @@ msgstr "工具序列号："
 msgid "Tool hardware ID:"
 msgstr "工具硬件 ID："
 
-#. TODO: right now this string is split in 2 localized strings,
-#. * to avoid breaking string freeze. After GIMP 3.2, we should just
-#. * create the "Pressure Curve" string because that's our only
-#. * case so far.
-#.
-#. e.g. "Pressure Curve" for mapping input device axes
-#: app/widgets/gimpdeviceinfoeditor.c:315
-#, c-format
-msgid "%s Curve"
-msgstr "%s 曲线"
+#: app/widgets/gimpdeviceinfoeditor.c:307
+msgid "Pressure Curve"
+msgstr "压力曲线"
 
-#: app/widgets/gimpdeviceinfoeditor.c:366
+#: app/widgets/gimpdeviceinfoeditor.c:353
 #: app/widgets/gimpdynamicsoutputeditor.c:206
 msgid "_Reset Curve"
 msgstr "重置曲线(_R)"
 
-#: app/widgets/gimpdeviceinfoeditor.c:383
+#: app/widgets/gimpdeviceinfoeditor.c:370
 msgid "Pad Actions"
 msgstr "绘图板动作"
 
-#: app/widgets/gimpdeviceinfoeditor.c:470
+#: app/widgets/gimpdeviceinfoeditor.c:457
 msgid "Select the next event arriving from the pad"
 msgstr "选择下一个从绘图板到达的事件"
 
-#: app/widgets/gimpdeviceinfoeditor.c:514
+#: app/widgets/gimpdeviceinfoeditor.c:501
 msgid "Pad Actions are not supported on your platform yet"
 msgstr "您的平台尚未支持绘图板动作"
 
-#: app/widgets/gimpdeviceinfoeditor.c:590
+#: app/widgets/gimpdeviceinfoeditor.c:577
 #, c-format
 msgid "Button %d"
 msgstr "按键 %d"
 
-#: app/widgets/gimpdeviceinfoeditor.c:593
+#: app/widgets/gimpdeviceinfoeditor.c:580
 #, c-format
 msgid "Ring %d"
 msgstr "滚环 %d"
 
-#: app/widgets/gimpdeviceinfoeditor.c:596
+#: app/widgets/gimpdeviceinfoeditor.c:583
 #, c-format
 msgid "Strip %d"
 msgstr "条带 %d"
 
-#: app/widgets/gimpdeviceinfoeditor.c:842
+#: app/widgets/gimpdeviceinfoeditor.c:829
 msgid "Select Pad Event Action"
 msgstr "选择绘图板事件动作"
 
@@ -28703,6 +28710,21 @@ msgstr ""
 "未能正确地保存索引颜色表。\n"
 "将使用灰度颜色表取代原颜色表。"
 
+#: app/xcf/xcf-load.c:2616
+#, c-format
+msgid ""
+"XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
+"to a raster layer."
+msgstr "XCF 警告：XCF 文件中有无效链接。链接图层“%s”已降级为栅格化图层。"
+
+#: app/xcf/xcf-load.c:2636
+#, c-format
+msgid ""
+"XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
+"is downgraded to a raster layer."
+msgstr ""
+"XCF 警告：检测到 XCF 文件中有循环引用。链接图层“%s”已降级为栅格化图层。"
+
 #: app/xcf/xcf-load.c:3368
 #, c-format
 msgid ""
@@ -29306,6 +29328,10 @@ msgstr "工具预设菜单"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
+
+#, c-format
+#~ msgid "%s Curve"
+#~ msgstr "%s 曲线"
 
 #~ msgid "Show advanced color options in filter tools."
 #~ msgstr "在滤镜工具中显示高级色彩选项。"
