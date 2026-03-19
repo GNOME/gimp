@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-17 19:32+0000\n"
-"PO-Revision-Date: 2026-03-17 21:02+0100\n"
+"POT-Creation-Date: 2026-03-18 22:36+0000\n"
+"PO-Revision-Date: 2026-03-19 23:15+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1112,7 +1112,7 @@ msgstr[2] "Spusti kanala na dno"
 msgstr[3] "Spusti kanale na dno"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
-#: app/display/gimpdisplayshell-dnd.c:770 app/widgets/gimpchanneltreeview.c:260
+#: app/display/gimpdisplayshell-dnd.c:761 app/widgets/gimpchanneltreeview.c:260
 #: app/widgets/gimplayertreeview.c:899
 #, c-format
 msgid "%s Channel Copy"
@@ -2514,7 +2514,7 @@ msgstr "240 s"
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:556
-#: app/widgets/gimpdeviceeditor.c:463 app/widgets/gimpdeviceinfoeditor.c:850
+#: app/widgets/gimpdeviceeditor.c:463 app/widgets/gimpdeviceinfoeditor.c:837
 #: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:337
 #: app/widgets/gimphelp.c:441 app/widgets/gimphelp.c:776
 #: app/widgets/gimpiconpicker.c:489 app/widgets/gimpmodifierseditor.c:688
@@ -2580,7 +2580,7 @@ msgstr "Vnesite opis oznake"
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:713 app/display/gimpimagewindow.c:2260
+#: app/display/gimpdisplayshell-dnd.c:704 app/display/gimpimagewindow.c:2260
 #: app/widgets/gimplayertreeview.c:857 app/widgets/gimptoolbox.c:849
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -10176,7 +10176,7 @@ msgstr "Odpri zaslon"
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:192
 #: app/tools/gimpfiltertool.c:377 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:666
-#: app/widgets/gimpdeviceinfoeditor.c:851 app/widgets/gimperrordialog.c:76
+#: app/widgets/gimpdeviceinfoeditor.c:838 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
@@ -14048,7 +14048,7 @@ msgid "Symmetry"
 msgstr "Simetrija"
 
 #: app/core/gimpimage.c:2086 app/pdb/drawable-filter-cmds.c:661
-#: app/widgets/gimpdrawabletreeview-filters.c:794
+#: app/widgets/gimpdrawabletreeview-filters.c:785
 msgid "Remove filter"
 msgstr "Odstrani filter"
 
@@ -14463,7 +14463,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "Na skupino plasti ni mogoče spajati."
 
 #: app/core/gimpimage-merge.c:362
-#: app/widgets/gimpdrawabletreeview-filters.c:765
+#: app/widgets/gimpdrawabletreeview-filters.c:756
 msgid "The layer to merge down to is locked."
 msgstr "Plast, na katero želite spajati, je zaklenjena."
 
@@ -14588,8 +14588,8 @@ msgid "Could not open thumbnail '%s': %s"
 msgstr "Sličice za predogled »%s« ni mogoče odpreti: %s"
 
 #: app/core/gimpitem.c:1858 app/core/gimpitem.c:1925
-#: app/display/gimpdisplayshell-dnd.c:384 app/tools/gimptransformtool.c:730
-#: app/widgets/gimpdrawabletreeview-filters.c:635
+#: app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730
+#: app/widgets/gimpdrawabletreeview-filters.c:626
 msgid "A selected layer's pixels are locked."
 msgstr "Slikovne točke izbrane plasti so zaklenjene."
 
@@ -14986,8 +14986,8 @@ msgid "In line %d of palette file: "
 msgstr "V vrstici %d datoteke palete: "
 
 #: app/core/gimppalette-load.c:497 app/core/gimppalette-load.c:702
-#: app/core/gimppalette-load.c:1049 app/core/gimppalette-load.c:1531
-#: app/core/gimppalette-load.c:1552
+#: app/core/gimppalette-load.c:1049 app/core/gimppalette-load.c:1600
+#: app/core/gimppalette-load.c:1621
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Ni mogoče brati glave iz datoteke palete ‘%s’: "
@@ -15083,15 +15083,25 @@ msgstr "Neveljavna velikost bloka ASE."
 msgid "Invalid ASE name size."
 msgstr "Neveljavna velikost imena ASE."
 
-#: app/core/gimppalette-load.c:1402
+#: app/core/gimppalette-load.c:1401 app/core/gimppalette-load.c:1471
 #, c-format
-msgid "Unable to read SBZ file"
-msgstr "Datoteke SBZ ni mogoče prebrati"
+msgid "Unable to read SBZ file: %s"
+msgstr "Datoteke SBZ ni mogoče prebrati: %s"
 
-#: app/core/gimppalette-load.c:1467
+#: app/core/gimppalette-load.c:1499 app/core/gimppalette-load.c:1511
 #, c-format
 msgid "Unable to open SBZ file"
 msgstr "Datoteke SBZ ni mogoče odpreti"
+
+#: app/core/gimppalette-load.c:1545 app/core/gimppalette-load.c:1582
+#, c-format
+msgid "Unable to read Procreate swatches file: %s"
+msgstr "Datoteke palet Procreate ni mogoče prebrati: %s"
+
+#: app/core/gimppalette-load.c:1787 app/core/gimppalette-load.c:1798
+#, c-format
+msgid "Unable to read Procreate swatches file"
+msgstr "Datoteke palet Procreate ni mogoče prebrati"
 
 #: app/core/gimppalettemru.c:125 app/core/gimppalettemru.c:271
 msgid "History Color"
@@ -19177,26 +19187,26 @@ msgstr[3] "Če ne shranite slike, bodo spremembe zadnjih %d minut izgubljene."
 msgid "The image has been exported to '%s'."
 msgstr "Slika izvožena v »%s«."
 
-#: app/display/gimpdisplayshell-dnd.c:258
-#: app/display/gimpdisplayshell-dnd.c:773
-#: app/display/gimpdisplayshell-dnd.c:832
+#: app/display/gimpdisplayshell-dnd.c:257
+#: app/display/gimpdisplayshell-dnd.c:764
+#: app/display/gimpdisplayshell-dnd.c:823
 msgid "Drop New Layer"
 msgstr "Spusti novo plast"
 
-#: app/display/gimpdisplayshell-dnd.c:300
+#: app/display/gimpdisplayshell-dnd.c:299
 msgid "Drop New Path"
 msgstr "Spusti novo pot"
 
-#: app/display/gimpdisplayshell-dnd.c:375 app/tools/gimpbucketfilltool.c:613
+#: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimpbucketfilltool.c:613
 #: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
 #: app/tools/gimpselectiontool.c:568
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Slikovnih točk skupin plasti ni mogoče spremeniti."
 
-#: app/display/gimpdisplayshell-dnd.c:394 app/tools/gimpfiltertool.c:340
+#: app/display/gimpdisplayshell-dnd.c:393 app/tools/gimpfiltertool.c:340
 #: app/tools/gimppainttool.c:355 app/tools/gimptransformtool.c:739
-#: app/widgets/gimpdrawabletreeview-filters.c:628
+#: app/widgets/gimpdrawabletreeview-filters.c:619
 msgid "A selected layer is not visible."
 msgstr "Izbrana plast je nevidna."
 
@@ -19204,43 +19214,43 @@ msgstr "Izbrana plast je nevidna."
 #. * the same translations you used for the "Rasterize"
 #. * action under the "Layer" menu.
 #.
-#: app/display/gimpdisplayshell-dnd.c:405 app/tools/gimptool.c:765
+#: app/display/gimpdisplayshell-dnd.c:404 app/tools/gimptool.c:765
 msgid "Layer > Rasterize"
 msgstr "Plast > Rasteriziraj"
 
 #. TRANSLATORS: the string between parentheses will be a menu path.
-#: app/display/gimpdisplayshell-dnd.c:409 app/tools/gimptool.c:776
+#: app/display/gimpdisplayshell-dnd.c:408 app/tools/gimptool.c:776
 #, c-format
 msgid "Link layers must be rasterized (%s)."
 msgstr "Povezane plasti morajo biti rasterizirane (%s)."
 
 #. TRANSLATORS: the string between parentheses will be a menu path.
-#: app/display/gimpdisplayshell-dnd.c:413 app/tools/gimptool.c:770
+#: app/display/gimpdisplayshell-dnd.c:412 app/tools/gimptool.c:770
 #, c-format
 msgid "Text layers must be rasterized (%s)."
 msgstr "Besedilne plasti morajo biti rasterizirane (%s)."
 
-#: app/display/gimpdisplayshell-dnd.c:513
+#: app/display/gimpdisplayshell-dnd.c:504
 #: app/widgets/gimpdrawabletreeview.c:472
 #: app/widgets/gimpdrawabletreeview.c:678
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Spusti vzorec na plast"
 
-#: app/display/gimpdisplayshell-dnd.c:535
+#: app/display/gimpdisplayshell-dnd.c:526
 #: app/widgets/gimpdrawabletreeview.c:503
 #: app/widgets/gimpdrawabletreeview.c:698
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Spusti barvo na plast"
 
-#: app/display/gimpdisplayshell-dnd.c:663 app/widgets/gimpitemtreeview.c:1592
+#: app/display/gimpdisplayshell-dnd.c:654 app/widgets/gimpitemtreeview.c:1592
 #: app/widgets/gimplayertreeview.c:848
 msgid "Drop layers"
 msgstr "Spusti plasti"
 
-#: app/display/gimpdisplayshell-dnd.c:806
-#: app/display/gimpdisplayshell-dnd.c:823 app/widgets/gimplayertreeview.c:925
+#: app/display/gimpdisplayshell-dnd.c:797
+#: app/display/gimpdisplayshell-dnd.c:814 app/widgets/gimplayertreeview.c:925
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Spuščen medpomnilnik"
@@ -19823,6 +19833,11 @@ msgid ""
 msgstr ""
 "Podprte so samo poti datotek, značilne za platforme: »%s« ni mogoče odpreti "
 "kot povezave."
+
+#: app/file/file-open.c:1010
+#, c-format
+msgid "Circular reference detected with '%s'."
+msgstr "Odkrita je bila krožna odvisnost s/z »%s«."
 
 #: app/file/file-remote.c:113
 msgid "Mounting remote volume"
@@ -20805,7 +20820,7 @@ msgstr "Spremeni barve v sivinske odtenke"
 #: app/operations/gimpoperationdesaturate.c:92
 #: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1488
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimptransform3doptions.c:77
-#: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:410
+#: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:397
 #: app/widgets/gimplayertreeview.c:286
 msgid "Mode"
 msgstr "Način"
@@ -23708,7 +23723,7 @@ msgstr "I_zhod:"
 msgid "T_ype:"
 msgstr "_Vrsta:"
 
-#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:354
+#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:341
 msgid "Curve _type:"
 msgstr "Vrsta _krivulje:"
 
@@ -23877,17 +23892,17 @@ msgid "Disabled because this filter depends on another image."
 msgstr "Onemogočeno, ker je ta filter odvisen od druge slike."
 
 #: app/tools/gimpfiltertool.c:459
-#: app/widgets/gimpdrawabletreeview-filters.c:489
+#: app/widgets/gimpdrawabletreeview-filters.c:480
 msgid "Disabled because filters cannot be merged on vector layers."
 msgstr "Onemogočeno, ker filtrov ni mogoče spojiti na vektorskih plasteh."
 
 #: app/tools/gimpfiltertool.c:461
-#: app/widgets/gimpdrawabletreeview-filters.c:492
+#: app/widgets/gimpdrawabletreeview-filters.c:483
 msgid "Disabled because filters cannot be merged on link layers."
 msgstr "Onemogočeno, ker filtrov ni mogoče spojiti na povezanih plasteh."
 
 #: app/tools/gimpfiltertool.c:463
-#: app/widgets/gimpdrawabletreeview-filters.c:495
+#: app/widgets/gimpdrawabletreeview-filters.c:486
 msgid "Disabled because filters cannot be merged on text layers."
 msgstr "Onemogočeno, ker filtrov ni mogoče spojiti na besedilnih plasteh."
 
@@ -26376,7 +26391,7 @@ msgid "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpactionview.c:259 app/widgets/gimpcontrollereditor.c:345
-#: app/widgets/gimpdeviceinfoeditor.c:416
+#: app/widgets/gimpdeviceinfoeditor.c:403
 msgid "Action"
 msgstr "Dejanje"
 
@@ -26749,12 +26764,12 @@ msgid "State:"
 msgstr "Stanje:"
 
 #: app/widgets/gimpcontrollereditor.c:339
-#: app/widgets/gimpdeviceinfoeditor.c:404
+#: app/widgets/gimpdeviceinfoeditor.c:391
 msgid "Event"
 msgstr "Dogodek"
 
 #: app/widgets/gimpcontrollereditor.c:364
-#: app/widgets/gimpdeviceinfoeditor.c:461
+#: app/widgets/gimpdeviceinfoeditor.c:448
 msgid "_Grab event"
 msgstr "_Zajemi dogodek"
 
@@ -26763,29 +26778,29 @@ msgid "Select the next event arriving from the controller"
 msgstr "Izberite naslednji dogodek, ki izvira iz kontrolnika"
 
 #: app/widgets/gimpcontrollereditor.c:377
-#: app/widgets/gimpdeviceinfoeditor.c:475
+#: app/widgets/gimpdeviceinfoeditor.c:462
 msgid "_Edit event"
 msgstr "_Uredi dogodek"
 
 #: app/widgets/gimpcontrollereditor.c:385
-#: app/widgets/gimpdeviceinfoeditor.c:485
+#: app/widgets/gimpdeviceinfoeditor.c:472
 msgid "_Clear event"
 msgstr "Po_čisti dogodek"
 
 #: app/widgets/gimpcontrollereditor.c:524
-#: app/widgets/gimpdeviceinfoeditor.c:661
+#: app/widgets/gimpdeviceinfoeditor.c:648
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "Odstranite dejanje, dodeljeno k »%s«"
 
 #: app/widgets/gimpcontrollereditor.c:529
-#: app/widgets/gimpdeviceinfoeditor.c:665
+#: app/widgets/gimpdeviceinfoeditor.c:652
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "Dodelite dejanje k »%s«"
 
 #: app/widgets/gimpcontrollereditor.c:651
-#: app/widgets/gimpdeviceinfoeditor.c:832
+#: app/widgets/gimpdeviceinfoeditor.c:819
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "Izberite dejanje za dogodek »%s«"
@@ -27523,8 +27538,7 @@ msgstr ""
 "Ko jo boste naslednjič priključili napravo, bodo uporabljene privzete "
 "nastavitve."
 
-#: app/widgets/gimpdeviceinfo.c:58 app/widgets/gimpdeviceinfoeditor.c:316
-#: app/widgets/gimpdynamicseditor.c:161
+#: app/widgets/gimpdeviceinfo.c:58 app/widgets/gimpdynamicseditor.c:161
 #: app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "Pritisk"
@@ -27600,50 +27614,43 @@ msgstr "Serijska št. orodja:"
 msgid "Tool hardware ID:"
 msgstr "ID strojne opreme orodja:"
 
-#. TODO: right now this string is split in 2 localized strings,
-#. * to avoid breaking string freeze. After GIMP 3.2, we should just
-#. * create the "Pressure Curve" string because that's our only
-#. * case so far.
-#.
-#. e.g. "Pressure Curve" for mapping input device axes
-#: app/widgets/gimpdeviceinfoeditor.c:315
-#, c-format
-msgid "%s Curve"
-msgstr "Krivulja %s"
+#: app/widgets/gimpdeviceinfoeditor.c:307
+msgid "Pressure Curve"
+msgstr "Krivulja pritiska"
 
-#: app/widgets/gimpdeviceinfoeditor.c:366
+#: app/widgets/gimpdeviceinfoeditor.c:353
 #: app/widgets/gimpdynamicsoutputeditor.c:206
 msgid "_Reset Curve"
 msgstr "Po_nastavi krivuljo"
 
-#: app/widgets/gimpdeviceinfoeditor.c:383
+#: app/widgets/gimpdeviceinfoeditor.c:370
 msgid "Pad Actions"
 msgstr "Dejanja sledilne ploščice"
 
-#: app/widgets/gimpdeviceinfoeditor.c:470
+#: app/widgets/gimpdeviceinfoeditor.c:457
 msgid "Select the next event arriving from the pad"
 msgstr "Izberite naslednji dogodek, ki izvira iz sledilne ploščice"
 
-#: app/widgets/gimpdeviceinfoeditor.c:514
+#: app/widgets/gimpdeviceinfoeditor.c:501
 msgid "Pad Actions are not supported on your platform yet"
 msgstr "Dejanja s sledilno ploščico še niso podprta na vaši platformi"
 
-#: app/widgets/gimpdeviceinfoeditor.c:590
+#: app/widgets/gimpdeviceinfoeditor.c:577
 #, c-format
 msgid "Button %d"
 msgstr "Gumb %d"
 
-#: app/widgets/gimpdeviceinfoeditor.c:593
+#: app/widgets/gimpdeviceinfoeditor.c:580
 #, c-format
 msgid "Ring %d"
 msgstr "Obroč %d"
 
-#: app/widgets/gimpdeviceinfoeditor.c:596
+#: app/widgets/gimpdeviceinfoeditor.c:583
 #, c-format
 msgid "Strip %d"
 msgstr "Trak %d"
 
-#: app/widgets/gimpdeviceinfoeditor.c:842
+#: app/widgets/gimpdeviceinfoeditor.c:829
 msgid "Select Pad Event Action"
 msgstr "Izberite dejanja za dogodke sledilne ploščice"
 
@@ -27746,38 +27753,38 @@ msgctxt "singular"
 msgid "New Layer"
 msgstr "Nova plast"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:170
+#: app/widgets/gimpdrawabletreeview-filters.c:169
 msgid "Layer Effects"
 msgstr "Učinki plasti"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:200
+#: app/widgets/gimpdrawabletreeview-filters.c:199
 msgid "Toggle the visibility of all filters."
 msgstr "Preklopite vidljivost vseh filtrov."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:216
+#: app/widgets/gimpdrawabletreeview-filters.c:215
 msgid "Edit the selected filter."
 msgstr "Uredite izbrani filter."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:232
+#: app/widgets/gimpdrawabletreeview-filters.c:231
 msgid "Raise filter one step up in the stack."
 msgstr "Dvigni filter za eno stopnjo na skladu."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:247
+#: app/widgets/gimpdrawabletreeview-filters.c:246
 msgid "Lower filter one step down in the stack."
 msgstr "Spusti filter za eno stopnjo na skladu."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:263
-#: app/widgets/gimpdrawabletreeview-filters.c:503
-#: app/widgets/gimpdrawabletreeview-filters.c:513
+#: app/widgets/gimpdrawabletreeview-filters.c:262
+#: app/widgets/gimpdrawabletreeview-filters.c:494
+#: app/widgets/gimpdrawabletreeview-filters.c:504
 msgid "Merge all active filters down."
 msgstr "Spojite vse dejavne filtre navzdol."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:279
+#: app/widgets/gimpdrawabletreeview-filters.c:278
 msgid "Remove the selected filter."
 msgstr "Odstranite izbrani filter."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:694
-#: app/widgets/gimpdrawabletreeview-filters.c:720
+#: app/widgets/gimpdrawabletreeview-filters.c:685
+#: app/widgets/gimpdrawabletreeview-filters.c:711
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Filtra, ki ga urejate, ni mogoče prerazvrstiti."
 
@@ -29229,6 +29236,24 @@ msgstr ""
 "ni pravilno shranila indeksiranega kataloga barv.\n"
 "Zamenjevanje s sivinskim naborom."
 
+#: app/xcf/xcf-load.c:2616
+#, c-format
+msgid ""
+"XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
+"to a raster layer."
+msgstr ""
+"Opozorilo XCF: neveljavna povezava v datoteki XCF. Povezana plast »%s« je "
+"ponižana v rastrsko plast."
+
+#: app/xcf/xcf-load.c:2636
+#, c-format
+msgid ""
+"XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
+"is downgraded to a raster layer."
+msgstr ""
+"Opozorilo: XCF: krožno sklicevanje zaznano v datoteki XCF. Povezana plast "
+"»%s« je ponižana v rastrsko plast."
+
 #: app/xcf/xcf-load.c:3368
 #, c-format
 msgid ""
@@ -29835,32 +29860,3 @@ msgstr "Meni Prednastavitve orodja"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Meni Zgodovina razveljavitev"
-
-#~ msgid "Show advanced color options in filter tools."
-#~ msgstr "Prikaži napredne barvne možnosti v orodjih za filtriranje."
-
-#~ msgid "Show a tooltip when the pointer hovers over an item."
-#~ msgstr "Pokaži nasvet, ko je kazalec nad določenim elementom."
-
-#~ msgid "Enable the Handle Transform tool."
-#~ msgstr "Omogoči orodje Rokovanje s preoblikovanjem."
-
-#~ msgid "Enable symmetry on painting."
-#~ msgstr "Omogoči simetrijo pri slikanju."
-
-#~ msgid "Enable the MyPaint Brush tool."
-#~ msgstr "Omogoči orodje Čopič MyPaint."
-
-#~ msgid "When enabled, a search of actions will also return inactive actions."
-#~ msgstr "Če je omogočeno, iskanje dejanj vrne tudi nedejavna dejanja."
-
-#~ msgid "Axes"
-#~ msgstr "Osi"
-
-#, c-format
-#~ msgid "none"
-#~ msgstr "brez"
-
-#, c-format
-#~ msgid "The axis '%s' has no curve"
-#~ msgstr "Os »%s« nima krivulje"
