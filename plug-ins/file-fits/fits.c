@@ -474,12 +474,35 @@ load_image (GFile        *file,
                                     NULL);
         }
 
-      /* If RGB FITS image, we need to read in the whole image so we can convert
-       * the planes format to RGB */
+      if (width  <= 0                  ||
+          height <= 0                  ||
+          width  > GIMP_MAX_IMAGE_SIZE ||
+          height > GIMP_MAX_IMAGE_SIZE)
+        {
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                       _("'%s' has a larger image size (%d x %d) "
+                         "than GIMP can handle."),
+                       gimp_file_get_utf8_name (file), width, height);
+          fits_close_file (ifp, &status);
+          return NULL;
+        }
+
+      /* If RGB FITS image, we need to read in the whole image so we can
+       * convert the planes format to RGB */
       if (hdu.naxis == 2)
-        pixels = (gdouble *) malloc (width * sizeof (gdouble) * channels);
+        pixels =
+          (gdouble *) g_try_malloc (width * sizeof (gdouble) * channels);
       else
-        pixels = (gdouble *) malloc (width * height * sizeof (gdouble) * channels);
+        pixels =
+          (gdouble *) g_try_malloc (width * height * sizeof (gdouble) * channels);
+
+      if (pixels == NULL)
+        {
+          g_set_error (error, G_FILE_ERROR, 0,
+                       "Memory could not be allocated.");
+          fits_close_file (ifp, &status);
+          return NULL;
+        }
 
       if (! image)
         {
@@ -551,6 +574,15 @@ load_image (GFile        *file,
               gdouble *temp;
 
               temp = (gdouble *) malloc (width * height * sizeof (gdouble) * channels);
+
+              if (temp == NULL)
+                {
+                  g_set_error (error, G_FILE_ERROR, 0,
+                               "Memory could not be allocated.");
+                  fits_close_file (ifp, &status);
+                  g_object_unref (buffer);
+                  return image;
+                }
 
               if (datamin < datamax)
                 {
