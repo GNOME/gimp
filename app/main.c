@@ -353,24 +353,24 @@ gimp_macos_setenv (const char * progname)
       gboolean need_pythonhome = TRUE;
 
       bin_dir = g_path_get_dirname (resolved_path);
-      tmp = g_strdup_printf ("%s/../Resources/lib", bin_dir);
+      tmp = g_strdup_printf ("%s/lib", gimp_installation_directory());
       lib_dir = g_canonicalize_filename (tmp, NULL);
       g_free (tmp);
-      tmp = g_strdup_printf ("%s/../Resources/share", bin_dir);
+      tmp = g_strdup_printf ("%s/share", gimp_installation_directory());
       share_dir = g_canonicalize_filename (tmp, NULL);
       g_free (tmp);
-      tmp = g_strdup_printf ("%s/../Resources/etc", bin_dir);
+      tmp = g_strdup_printf ("%s/etc", gimp_installation_directory());
       etc_dir = g_canonicalize_filename (tmp, NULL);
       g_free (tmp);
 
       /* Detect if we are running from bundle or from prefix */
-      if (share_dir && !stat (share_dir, &sb) && S_ISDIR (sb.st_mode))
+      if (g_str_has_suffix (bin_dir, "MacOS"))
         {
           g_print ("GIMP is started as MacOS application\n");
         }
       else
         {
-          tmp = g_strdup_printf ("%s/../share", bin_dir);
+          tmp = g_strdup_printf ("%s/share", gimp_installation_directory());
           share_dir = g_canonicalize_filename (tmp, NULL);
           g_free (tmp);
           if (share_dir && !stat (share_dir, &sb) && S_ISDIR (sb.st_mode))
@@ -379,7 +379,7 @@ gimp_macos_setenv (const char * progname)
 
               g_print ("GIMP is started in the build directory\n");
 
-              tmp = g_strdup_printf ("%s/..", bin_dir); /* running in build dir */
+              tmp = g_strdup_printf ("%s", gimp_installation_directory()); /* running in build dir */
               share_dir = g_canonicalize_filename (tmp, NULL);
               g_free (tmp);
             }
@@ -391,7 +391,7 @@ gimp_macos_setenv (const char * progname)
         }
 
       /* Detect we were built in homebrew for MacOS (for PYTHONHOME purposes) */
-      tmp = g_strdup_printf ("%s/../Frameworks/Python.framework", share_dir);
+      tmp = g_strdup_printf ("%s/Frameworks/Python.framework", gimp_installation_directory());
       if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
         {
           g_print ("GIMP was built with homebrew\n");
@@ -399,7 +399,7 @@ gimp_macos_setenv (const char * progname)
         }
       g_free (tmp);
       /* Detect we were built in MacPorts for MacOS (for PYTHONHOME purposes) */
-      tmp = g_strdup_printf ("%s/../Library/Frameworks/Python.framework", share_dir);
+      tmp = g_strdup_printf ("%s/Library/Frameworks/Python.framework", gimp_installation_directory());
       if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
         {
           g_print ("GIMP was built with MacPorts\n");

@@ -1,40 +1,23 @@
-From 5fcd7fb68be30d7acf320f7e360cd15e7307586d Mon Sep 17 00:00:00 2001
+From f7ab93e52d6b736bc9eda287a8c4dfbb3f4b3453 Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Thu, 19 Mar 2026 08:05:43 -0300
+Date: Thu, 19 Mar 2026 15:04:59 -0300
 Subject: [PATCH] app, libgimpwidgets, meson, plug-ins: Patch macOS bundle
 
 ---
- app/main.c            | 25 ++++---------------------
+ app/main.c            | 19 +------------------
  libgimpbase/gimpenv.c | 12 +++++++-----
- 2 files changed, 11 insertions(+), 26 deletions(-)
+ 2 files changed, 8 insertions(+), 23 deletions(-)
 
 diff --git a/app/main.c b/app/main.c
-index 5ae353a200..295d9d5bd3 100644
+index 0a2419e94b..c14e8cb541 100644
 --- a/app/main.c
 +++ b/app/main.c
-@@ -353,13 +353,13 @@ gimp_macos_setenv (const char * progname)
-       gboolean need_pythonhome = TRUE;
- 
-       bin_dir = g_path_get_dirname (resolved_path);
--      tmp = g_strdup_printf ("%s/../Resources/lib", bin_dir);
-+      tmp = g_strdup_printf ("%s/../Frameworks", bin_dir);
-       lib_dir = g_canonicalize_filename (tmp, NULL);
-       g_free (tmp);
--      tmp = g_strdup_printf ("%s/../Resources/share", bin_dir);
-+      tmp = g_strdup_printf ("%s/../Resources", bin_dir);
-       share_dir = g_canonicalize_filename (tmp, NULL);
-       g_free (tmp);
--      tmp = g_strdup_printf ("%s/../Resources/etc", bin_dir);
-+      tmp = g_strdup_printf ("%s/../SharedSupport", bin_dir);
-       etc_dir = g_canonicalize_filename (tmp, NULL);
-       g_free (tmp);
- 
 @@ -390,23 +390,6 @@ gimp_macos_setenv (const char * progname)
              }
          }
  
 -      /* Detect we were built in homebrew for MacOS (for PYTHONHOME purposes) */
--      tmp = g_strdup_printf ("%s/../Frameworks/Python.framework", share_dir);
+-      tmp = g_strdup_printf ("%s/Frameworks/Python.framework", gimp_installation_directory());
 -      if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
 -        {
 -          g_print ("GIMP was built with homebrew\n");
@@ -42,7 +25,7 @@ index 5ae353a200..295d9d5bd3 100644
 -        }
 -      g_free (tmp);
 -      /* Detect we were built in MacPorts for MacOS (for PYTHONHOME purposes) */
--      tmp = g_strdup_printf ("%s/../Library/Frameworks/Python.framework", share_dir);
+-      tmp = g_strdup_printf ("%s/Library/Frameworks/Python.framework", gimp_installation_directory());
 -      if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
 -        {
 -          g_print ("GIMP was built with MacPorts\n");
