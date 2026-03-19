@@ -24,6 +24,7 @@
         (gimp-image-undo-group-end image)
         (gimp-displays-flush)
       )
+      (gimp-message _"No selection to base guides on.\nMake a selection first!")
     )
   )
 )
