@@ -524,7 +524,7 @@ load_image (GFile        *file,
 
             for (gint i = 0; i < height; i++)
               {
-                guchar row[width];
+                guchar row[width * 2];
 
                 fread (&pixels, width, 1, fp);
 
