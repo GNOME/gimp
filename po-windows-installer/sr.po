@@ -1,0 +1,281 @@
+# Serbian translation for gimp.
+# Copyright (C) 2026 gimp's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp package.
+# Марко Костић <marko.m.kostic@gmail.com>,  2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2025-12-28 11:27+0000\n"
+"PO-Revision-Date: 2026-03-19 09:27+0100\n"
+"Last-Translator: Марко М. Костић <marko.m.kostic@gmail.com>\n"
+"Language-Team: Serbian <Serbian>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Poedit 3.9\n"
+
+#: build/windows/installer/lang/setup.isl.xml.in:7
+msgid "License Agreement"
+msgstr "Уговор о коришћењу"
+
+#: build/windows/installer/lang/setup.isl.xml.in:10
+msgid "Setup built by GIMP team, gimp.org"
+msgstr "Инсталацију је припремио Гимпов тим, gimp.org"
+
+#: build/windows/installer/lang/setup.isl.xml.in:17
+msgid ""
+"You are trying to directly downgrade from GIMP %1 to %2.%n%nPlease remove "
+"GIMP yourself before installing this version."
+msgstr ""
+"Покушавате да директно вратите Гимп са издања %1 на %2.%n%nМолимо да сами "
+"уклоните Гимп пре инсталирања овог издања."
+
+#: build/windows/installer/lang/setup.isl.xml.in:22
+msgid "Development version"
+msgstr "Развојно издање"
+
+#: build/windows/installer/lang/setup.isl.xml.in:27
+msgid ""
+"This is a development version of GIMP where some features may not be "
+"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"day-to-day work as it may be unstable, and you could lose your work.%nIf you "
+"encounter any problems, first verify that they haven't already been fixed in "
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
+msgstr ""
+"Ово је развојно издање Гимпа у коме неке функције можда нису завршене или "
+"може бити нестабилно.%nОво издање Гимпа није намењено за свакодневни рад јер "
+"може бити нестабилно и можете изгубити свој рад.%nАко наиђете на било какве "
+"проблеме, прво проверите да ли су већ исправљени у Гиту пре него што "
+"контактирате програмере или то пријавите на Гимповом Гитлабу:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nДа ли ипак желите да наставите са "
+"инсталацијом?"
+
+#: build/windows/installer/lang/setup.isl.xml.in:30
+#: build/windows/installer/lang/setup.isl.xml.in:43
+msgid "&Continue"
+msgstr "&Настави"
+
+#: build/windows/installer/lang/setup.isl.xml.in:33
+msgid "Exit"
+msgstr "Изађи"
+
+#: build/windows/installer/lang/setup.isl.xml.in:37
+msgid "Display settings problem"
+msgstr "Проблем са подешавањима екрана"
+
+#: build/windows/installer/lang/setup.isl.xml.in:40
+msgid ""
+"Setup has detected that your Windows is not running in 32 bits-per-pixel "
+"display mode. This has been known to cause stability problems with GIMP, so "
+"it's recommended to change the display colour depth to 32BPP before "
+"continuing."
+msgstr ""
+"Инсталација је открила да ваш Виндоуз не ради у 32-битном режиму приказа по "
+"пикселу. Познато је да ово узрокује проблеме са стабилношћу Гимпа, па се "
+"препоручује да промените дубину боје екрана на 32БПП пре него што наставите."
+
+#: build/windows/installer/lang/setup.isl.xml.in:46
+msgid "E&xit"
+msgstr "И&зађи"
+
+#: build/windows/installer/lang/setup.isl.xml.in:50
+msgid "&Repair"
+msgstr "Поп&рави"
+
+#: build/windows/installer/lang/setup.isl.xml.in:53
+msgid "&Install"
+msgstr "&Инсталирај"
+
+#: build/windows/installer/lang/setup.isl.xml.in:56
+msgid "&Reinstall"
+msgstr "Поново инстали&рај"
+
+#: build/windows/installer/lang/setup.isl.xml.in:59
+msgid "&Update"
+msgstr "Аж&урирај"
+
+#: build/windows/installer/lang/setup.isl.xml.in:62
+msgid "&Customize"
+msgstr "Прила&годи"
+
+#: build/windows/installer/lang/setup.isl.xml.in:67
+msgid "Compact installation"
+msgstr "Компактна инсталација"
+
+#: build/windows/installer/lang/setup.isl.xml.in:71
+msgid "Custom installation"
+msgstr "Произвољна инсталација"
+
+#: build/windows/installer/lang/setup.isl.xml.in:75
+msgid "Full installation"
+msgstr "Потпуна инсталација"
+
+#: build/windows/installer/lang/setup.isl.xml.in:80
+msgid "Description"
+msgstr "Опис"
+
+#: build/windows/installer/lang/setup.isl.xml.in:84
+msgid "GIMP"
+msgstr "Гимп"
+
+#: build/windows/installer/lang/setup.isl.xml.in:88
+msgid "GIMP and all default plug-ins"
+msgstr "Гимп и сви подразумевани прикључци"
+
+#: build/windows/installer/lang/setup.isl.xml.in:92
+msgid "Run-time libraries"
+msgstr "Библиотеке извршавања"
+
+#: build/windows/installer/lang/setup.isl.xml.in:96
+msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
+msgstr ""
+"Библиотеке извршавања које користи Гимп, укључујући ГТК окружење извршавања"
+
+#: build/windows/installer/lang/setup.isl.xml.in:100
+msgid "Debug symbols"
+msgstr "Симболи за исправљање грешака"
+
+#: build/windows/installer/lang/setup.isl.xml.in:104
+msgid "Include information to help with debugging GIMP"
+msgstr "Укључи податке за помоћ при исправљању грешака у Гимпу"
+
+#: build/windows/installer/lang/setup.isl.xml.in:108
+msgid "Resource development files"
+msgstr "Датотеке за развој ресурса"
+
+#: build/windows/installer/lang/setup.isl.xml.in:112
+msgid ""
+"Include some files to help with building GEGL filters and GIMP plug-ins in "
+"MSYS2"
+msgstr ""
+"Укључи неке датотеке као помоћ при изградњи ГЕГЛ филтера и Гимпових "
+"прикључака у MSYS2-у"
+
+#: build/windows/installer/lang/setup.isl.xml.in:116
+#: build/windows/installer/lang/setup.isl.xml.in:120
+msgid "Translations"
+msgstr "Преводи"
+
+#: build/windows/installer/lang/setup.isl.xml.in:124
+msgid "Python scripting"
+msgstr "Пајтон скриптовање"
+
+#: build/windows/installer/lang/setup.isl.xml.in:128
+msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgstr ""
+"Омогућава вам коришћење Гимпових прикључака написаних у програмском језику "
+"Пајтон."
+
+#: build/windows/installer/lang/setup.isl.xml.in:132
+msgid "Lua scripting"
+msgstr "Луа скриптовање"
+
+#: build/windows/installer/lang/setup.isl.xml.in:136
+msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgstr ""
+"Омогућава вам коришћење Гимпових прикључака написаних у програмском језику "
+"Луа."
+
+#: build/windows/installer/lang/setup.isl.xml.in:140
+msgid "MyPaint brushes"
+msgstr "Мајпеинт четкице"
+
+#: build/windows/installer/lang/setup.isl.xml.in:144
+msgid "Install the default set of MyPaint brushes"
+msgstr "Инсталирај подразумевани скуп Мајпеинт четкица"
+
+#: build/windows/installer/lang/setup.isl.xml.in:148
+msgid "PostScript support"
+msgstr "Подршка за Постскрипт"
+
+#: build/windows/installer/lang/setup.isl.xml.in:152
+msgid "Allow GIMP to load PostScript files"
+msgstr "Омогући Гимпу да учита Постскрипт датотеке"
+
+#: build/windows/installer/lang/setup.isl.xml.in:156
+msgid "Support for 32-bit plug-ins"
+msgstr "Подршка за 32-битне прикључке"
+
+#: build/windows/installer/lang/setup.isl.xml.in:160
+msgid ""
+"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
+"support."
+msgstr ""
+"Укључује датотеке потребне за 32-битне прикључке.%nПотребно за TWAIN подршку."
+
+#: build/windows/installer/lang/setup.isl.xml.in:165
+msgid "Additional icons:"
+msgstr "Додатне иконице:"
+
+#: build/windows/installer/lang/setup.isl.xml.in:169
+msgid "Create a &desktop icon"
+msgstr "Направи иконицу на ра&дној површини"
+
+#: build/windows/installer/lang/setup.isl.xml.in:174
+msgid ""
+"There was a problem updating GIMP's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing GIMP."
+msgstr ""
+"Дошло је до проблема при ажурирању Гимповог окружења у %1. Ако наиђете на "
+"грешке при учитавању прикључака, покушајте да деинсталирате и поново "
+"инсталирате Гимп."
+
+#: build/windows/installer/lang/setup.isl.xml.in:178
+msgid "Error extracting temporary data."
+msgstr "Грешка при извлачењу привремених података."
+
+#: build/windows/installer/lang/setup.isl.xml.in:182
+msgid "Error updating Python interpreter info."
+msgstr "Грешка при ажурирању података о тумачу Пајтона."
+
+#: build/windows/installer/lang/setup.isl.xml.in:186
+msgid "Trying to create Restore Point..."
+msgstr "Покушавам да направим тачку враћања…"
+
+#: build/windows/installer/lang/setup.isl.xml.in:190
+msgid "Cleaning up old files..."
+msgstr "Чистим старе датотеке…"
+
+#: build/windows/installer/lang/setup.isl.xml.in:195
+msgid "Remember: GIMP is Free Software.%n%nPlease visit"
+msgstr "Запамтите: Гимп је слободан софтвер.%n%nПосетите"
+
+#: build/windows/installer/lang/setup.isl.xml.in:199
+msgid "for free updates."
+msgstr "за бесплатна ажурирања."
+
+#: build/windows/installer/lang/setup.isl.xml.in:203
+msgid "Setting up environment for GIMP Python extension..."
+msgstr "Подешавам окружење за Гимпово Пајтон проширење…"
+
+#: build/windows/installer/lang/setup.isl.xml.in:206
+msgid "Setting up GIMP environment..."
+msgstr "Подешавам Гимпово окружење…"
+
+#: build/windows/installer/lang/setup.isl.xml.in:211
+msgid "Launch GIMP"
+msgstr "Покрени Гимп"
+
+#: build/windows/installer/lang/setup.isl.xml.in:216
+msgid "Removing add-on"
+msgstr "Уклањам додатак"
+
+#: build/windows/installer/lang/setup.isl.xml.in:221
+msgid ""
+"Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
+"custom brushes)?%n%nA copy will be made on Desktop."
+msgstr ""
+"Да ли желите да обришете ваше личне Гимпове датотеке (нпр. подешавања, "
+"претподешавања алата, произвољне четкице)?%n%nКопија ће бити направљена на "
+"радној површини."
+
+#: build/windows/installer/lang/setup.isl.xml.in:225
+msgid "Internal error (%1)."
+msgstr "Унутрашња грешка (%1)."
