@@ -1,18 +1,18 @@
-From 976e872640437e2ef9335363b6e6bf9d2a96d5f1 Mon Sep 17 00:00:00 2001
+From 5fcd7fb68be30d7acf320f7e360cd15e7307586d Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Fri, 27 Feb 2026 09:19:22 -0300
+Date: Thu, 19 Mar 2026 08:05:43 -0300
 Subject: [PATCH] app, libgimpwidgets, meson, plug-ins: Patch macOS bundle
 
 ---
- app/main.c            | 39 ++++++++++++++++++---------------------
+ app/main.c            | 25 ++++---------------------
  libgimpbase/gimpenv.c | 12 +++++++-----
- 2 files changed, 25 insertions(+), 26 deletions(-)
+ 2 files changed, 11 insertions(+), 26 deletions(-)
 
 diff --git a/app/main.c b/app/main.c
-index d22bd04725..a5ab759597 100644
+index 5ae353a200..295d9d5bd3 100644
 --- a/app/main.c
 +++ b/app/main.c
-@@ -355,13 +355,13 @@ gimp_macos_setenv (const char * progname)
+@@ -353,13 +353,13 @@ gimp_macos_setenv (const char * progname)
        gboolean need_pythonhome = TRUE;
  
        bin_dir = g_path_get_dirname (resolved_path);
@@ -29,7 +29,7 @@ index d22bd04725..a5ab759597 100644
        etc_dir = g_canonicalize_filename (tmp, NULL);
        g_free (tmp);
  
-@@ -392,23 +392,6 @@ gimp_macos_setenv (const char * progname)
+@@ -390,23 +390,6 @@ gimp_macos_setenv (const char * progname)
              }
          }
  
@@ -53,28 +53,7 @@ index d22bd04725..a5ab759597 100644
        /* Minimum runtime paths */
        path_len = strlen (g_getenv ("PATH") ? g_getenv ("PATH") : "") + strlen (bin_dir) + 2;
        path = g_try_malloc (path_len);
-@@ -458,6 +441,20 @@ gimp_macos_setenv (const char * progname)
-       g_setenv ("GTK_IM_MODULE", tmp, TRUE);
-       g_free (tmp);
- 
-+      /* Packaging-specific paths */
-+      tmp = g_strdup_printf ("%s/%s/%s", lib_dir, GIMP_PACKAGE, GIMP_PLUGIN_VERSION);
-+      g_setenv ("GIMP3_PLUGINDIR", tmp, TRUE);
-+      g_free (tmp);
-+      tmp = g_strdup_printf ("%s/%s/%s", share_dir, GIMP_PACKAGE, GIMP_DATA_VERSION);
-+      g_setenv ("GIMP3_DATADIR", tmp, TRUE);
-+      g_free (tmp);
-+      tmp = g_strdup_printf ("%s/locale", share_dir);
-+      g_setenv ("GIMP3_LOCALEDIR", tmp, TRUE);
-+      g_free (tmp);
-+      tmp = g_strdup_printf ("%s/%s/%s", etc_dir, GIMP_PACKAGE, GIMP_SYSCONF_VERSION);
-+      g_setenv ("GIMP3_SYSCONFDIR", tmp, TRUE);
-+      g_free (tmp);
-+
-       /* Other needed runtime paths (related to features) */
-       tmp = g_strdup_printf ("%s/fonts", etc_dir);
-       g_setenv ("FONTCONFIG_PATH", tmp, TRUE);
-@@ -476,7 +473,7 @@ gimp_macos_setenv (const char * progname)
+@@ -471,7 +454,7 @@ gimp_macos_setenv (const char * progname)
        g_free (tmp);
        if (need_pythonhome)
          {
@@ -84,10 +63,10 @@ index d22bd04725..a5ab759597 100644
            g_free (tmp);
          }
 diff --git a/libgimpbase/gimpenv.c b/libgimpbase/gimpenv.c
-index 3cc12b414a..2b23156de3 100644
+index 8961ad68ba..ba10796164 100644
 --- a/libgimpbase/gimpenv.c
 +++ b/libgimpbase/gimpenv.c
-@@ -432,17 +432,18 @@ gimp_installation_directory (void)
+@@ -434,17 +434,18 @@ gimp_installation_directory (void)
  
    {
      NSAutoreleasePool *pool;
@@ -110,7 +89,7 @@ index 3cc12b414a..2b23156de3 100644
      dirname  = g_path_get_basename (basepath);
  
      if (! strcmp (basename, ".libs"))
-@@ -505,7 +506,8 @@ gimp_installation_directory (void)
+@@ -507,7 +508,8 @@ gimp_installation_directory (void)
        {
          /*  if none of the above match, we assume that we are really in a bundle  */
  
