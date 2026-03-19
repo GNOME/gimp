@@ -1241,19 +1241,31 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
       submodel = gimp_menu_model_new_submenu (model->priv->manager, NULL, submodel_path);
       item     = g_menu_item_new_submenu (new_dir, G_MENU_MODEL (submodel));
 
-      if (model->priv->path == NULL)
-        model->priv->items = g_list_insert (model->priv->items, item,
-                                            g_list_length (model->priv->items) - 2);
+      if (section_name != NULL)
+        {
+          GMenuItem *section_item;
+
+          section_item = g_hash_table_lookup (model->priv->named_sections, section_name);
+          if (section_item)
+            {
+              g_object_unref (mod_model);
+              mod_model = GIMP_MENU_MODEL (g_menu_item_get_link (section_item, G_MENU_LINK_SECTION));
+            }
+        }
+
+      if (mod_model->priv->path == NULL)
+        mod_model->priv->items = g_list_insert (mod_model->priv->items, item,
+                                                g_list_length (mod_model->priv->items) - 2);
       else
-        model->priv->items = g_list_append (model->priv->items, item);
+        mod_model->priv->items = g_list_append (mod_model->priv->items, item);
 
       g_free (canon_label);
       g_object_unref (submodel);
       g_free (submodel_path);
       g_free (new_dir);
 
-      g_menu_model_items_changed (G_MENU_MODEL (model),
-                                  gimp_menu_model_get_position (model, NULL, NULL),
+      g_menu_model_items_changed (G_MENU_MODEL (mod_model),
+                                  gimp_menu_model_get_position (mod_model, NULL, NULL),
                                   1, 0);
     }
 
