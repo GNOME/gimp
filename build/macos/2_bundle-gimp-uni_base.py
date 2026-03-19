@@ -284,8 +284,8 @@ for d in (pythonpath, pythonpath / "site-packages"):
   elif not sitecustomize.exists():
     sitecustomize.write_text(code)
 #####Needed since we use [[NSBundle mainBundle] bundlePath] on libgimpbase/gimpenv.c
-real_path = Path(f"{GIMP_DISTRIB}/share/icons")
-link_path = Path(f"{GIMP_DISTRIB}/Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/Resources/Python.app/Contents/share/icons")
+real_path = Path(f"{GIMP_DISTRIB}/share")
+link_path = Path(f"{GIMP_DISTRIB}/Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/Resources/Python.app/Contents/share")
 link_path.parent.mkdir(parents=True, exist_ok=True)
 link_path.symlink_to(os.path.relpath(real_path, link_path.parent))
 #### lua is buggy, and hard to bundle due to LUA_*PATH etc (see AppImage script)
