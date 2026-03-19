@@ -19,6 +19,17 @@ if [ -z "$GITLAB_CI" ]; then
   PARENT_DIR='/..'
 fi
 
+ARM64_BUNDLE=${3:-gimp-arm64.app}
+X86_64_BUNDLE=${4:-gimp-x86_64.app}
+supported_archs="$ARM64_BUNDLE $X86_64_BUNDLE"
+
+
+# 3. PREPARE FILES
+for APP in $(echo "$supported_archs" | tr ' ' '\n'); do
+export ARCH=$(echo $APP | sed -e 's|gimp-||' -e 's|./||' -e 's|.app||')
+echo "APP is $APP"
+done
+
 
 # Install part of the deps
 if [ -z "$OPT_PREFIX" ]; then
