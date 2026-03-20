@@ -308,7 +308,7 @@ To fill data for a new entry:
 		name="Slovenščina (sl)" />
 	<iso_639_entry
 		dl_code="sr"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\SerbianCyrillic.isl"
 		name="Cрпски језик" />
 	<iso_639_entry
 		dl_code="sr@latin"
