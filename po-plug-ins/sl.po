@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-19 12:39+0000\n"
-"PO-Revision-Date: 2026-03-19 23:12+0100\n"
+"POT-Creation-Date: 2026-03-20 14:10+0000\n"
+"PO-Revision-Date: 2026-03-20 18:22+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2014,8 +2014,8 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
-#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:568
-#: plug-ins/file-icns/file-icns-load.c:621 plug-ins/file-ico/ico-load.c:711
+#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:611
+#: plug-ins/file-icns/file-icns-load.c:664 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
 #: plug-ins/file-psd/psd-export.c:2350 plug-ins/file-psd/psd-load.c:189
@@ -2620,7 +2620,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457
 #: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
-#: plug-ins/file-icns/file-icns-load.c:560 plug-ins/file-ico/ico-load.c:703
+#: plug-ins/file-icns/file-icns-load.c:603 plug-ins/file-ico/ico-load.c:703
 #: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:97
 #: plug-ins/file-psd/psd-load.c:202
 #: plug-ins/file-raw/file-another-rawtherapee.c:346
@@ -4529,13 +4529,18 @@ msgstr "Ni bilo mogoče prebrati slikovnih podatkov iz »%s«"
 msgid "Main surface"
 msgstr "Glavna površina"
 
-#: plug-ins/common/file-paa.c:346
+#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:355
+#, c-format
+msgid "Memory could not be allocated."
+msgstr "Pomnilnika ni bilo možno dodeliti."
+
+#: plug-ins/common/file-paa.c:363
 #, c-format
 msgid "Couldn't decompress image data from '%s'"
 msgstr "Slikovnih podatkov iz »%s« ni mogoče razširiti."
 
-#: plug-ins/common/file-paa.c:421 plug-ins/common/file-paa.c:438
-#: plug-ins/common/file-paa.c:449
+#: plug-ins/common/file-paa.c:439 plug-ins/common/file-paa.c:456
+#: plug-ins/common/file-paa.c:467
 #, c-format
 msgid "Could not read tag"
 msgstr "Značke ni mogoče prebrati"
@@ -10300,13 +10305,13 @@ msgstr ""
 "18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512 in "
 "1024x1024."
 
-#: plug-ins/file-icns/file-icns-load.c:473
+#: plug-ins/file-icns/file-icns-load.c:515
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr "Napaka pri odpiranju začasne datoteke %s »%s« za nalaganje icns: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:613 plug-ins/file-ico/ico-load.c:1068
+#: plug-ins/file-icns/file-icns-load.c:656 plug-ins/file-ico/ico-load.c:1068
 #: plug-ins/file-jpeg/jpeg-load.c:690 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:462
 #: plug-ins/file-raw/file-darktable.c:620
