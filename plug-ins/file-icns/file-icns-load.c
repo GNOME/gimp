@@ -224,7 +224,7 @@ icns_slurp (guchar       *dest,
   guchar bit;
   guint  index;
 
-  max = icontype->width * icontype->height;
+  max          = icontype->width * icontype->height;
   icns->cursor = sizeof (IcnsResourceHeader);
 
   switch (icontype->bits)
@@ -233,7 +233,15 @@ icns_slurp (guchar       *dest,
         for (out = 0; out < max; out++)
           {
             if (out % 8 == 0)
-              bucket = icns->data[icns->cursor++];
+              {
+                if (icns->cursor >= icns->size)
+                  {
+                    g_message ("Invalid or corrupt icns resource file.");
+                    return;
+                  }
+
+                bucket = icns->data[icns->cursor++];
+              }
 
             bit = (bucket & 0x80) ? 0 : 255;
             bucket = bucket << 1;
@@ -244,9 +252,16 @@ icns_slurp (guchar       *dest,
               dest[out * 4 + 3] = 255;
           }
         break;
+
       case 4:
         for (out = 0; out < max; out++)
           {
+            if (icns->cursor >= icns->size)
+              {
+                g_message ("Invalid or corrupt icns resource file.");
+                return;
+              }
+
             if (out % 2 == 0)
               bucket = icns->data[icns->cursor++];
 
@@ -257,9 +272,16 @@ icns_slurp (guchar       *dest,
             dest[out * 4 + 2] = icns_colormap_4[index + 2];
           }
         break;
+
       case 8:
         for (out = 0; out < max; out++)
           {
+            if (icns->cursor >= icns->size)
+              {
+                g_message ("Invalid or corrupt icns resource file.");
+                return;
+              }
+
             index = 3 * icns->data[icns->cursor++];
             dest[out * 4]     = icns_colormap_8[index];
             dest[out * 4 + 1] = icns_colormap_8[index + 1];
@@ -267,14 +289,28 @@ icns_slurp (guchar       *dest,
             dest[out * 4 + 3] = 255;
           }
         break;
+
       case 32:
         for (out = 0; out < max; out++)
           {
+            if (icns->cursor >= (icns->size + 2))
+              {
+                g_message ("Invalid or corrupt icns resource file.");
+                return;
+              }
+
             dest[out * 4]     = icns->data[icns->cursor++];
             dest[out * 4 + 1] = icns->data[icns->cursor++];
             dest[out * 4 + 2] = icns->data[icns->cursor++];
             /* Throw away alpha, use the mask */
             icns->cursor++;
+
+            if (mask && mask->cursor >= (icns->size))
+              {
+                g_message ("Invalid or corrupt icns resource file.");
+                return;
+              }
+
             if (mask)
               dest[out * 4 + 3] = icns->data[mask->cursor++];
             else
@@ -286,11 +322,20 @@ icns_slurp (guchar       *dest,
     /* Now for the mask */
     if (mask && icontype->bits != 32)
       {
-        mask->cursor = sizeof (IcnsResourceHeader) + icontype->width * icontype->height / 8;
+        mask->cursor =
+          sizeof (IcnsResourceHeader) + icontype->width * icontype->height / 8;
+
         for (out = 0; out < max; out++)
           {
             if (out % 8 == 0)
-              bucket = mask->data[mask->cursor++];
+              {
+                if (mask->cursor >= mask->size)
+                  {
+                    g_message ("Invalid or corrupt icns resource file.");
+                    return;
+                  }
+                bucket = mask->data[mask->cursor++];
+              }
 
             bit = (bucket & 0x80) ? 255 : 0;
             bucket = bucket << 1;
@@ -436,9 +481,6 @@ icns_attach_image (GimpImage    *image,
       gchar          *temp_file_type = NULL;
       gchar          *procedure_name = NULL;
 
-      temp_image = gimp_image_new (icontype->width, icontype->height,
-                                   gimp_image_get_base_type (image));
-
       strncpy (image_type, (gchar *) icns->data + 8, 4);
       image_type[4] = '\0';
 
@@ -454,7 +496,7 @@ icns_attach_image (GimpImage    *image,
           temp_file_type = "jp2";
           procedure_name = "file-jp2-load";
         }
-      /* ARGB (compressed */
+      /* ARGB (compressed) */
       else if (! strncmp (image_type, "ARGB", 4))
         {
           icns->cursor += 4;
@@ -488,7 +530,7 @@ icns_attach_image (GimpImage    *image,
                                             NULL);
         }
 
-      if (temp_image && return_vals)
+      if (return_vals)
         {
           temp_image = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
@@ -514,6 +556,7 @@ icns_attach_image (GimpImage    *image,
           g_file_delete (temp_file, NULL, NULL);
           g_object_unref (temp_file);
           g_free (layers);
+          gimp_image_delete (temp_image);
         }
       g_clear_pointer (&return_vals, gimp_value_array_unref);
     }
