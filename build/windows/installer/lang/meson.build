@@ -50,6 +50,7 @@ languages = [
   { 'code': 'ru',    },
   { 'code': 'sk',    },
   { 'code': 'sl',    },
+  { 'code': 'sr',    },
   { 'code': 'sv',    },
   { 'code': 'tr',    },
   { 'code': 'uk',    },
