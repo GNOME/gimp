@@ -130,7 +130,7 @@ versionconfig.set('GIMP_API_VERSION',   gimp_api_version)
 pkgconfig = import('pkgconfig')
 i18n      = import('i18n')
 gnome     = import('gnome')
-python    = import('python').find_installation()
+pythonmod = import('python')
 simd      = import('unstable-simd')
 fs        = import('fs')
 
@@ -1192,23 +1192,54 @@ perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
 python3_minver = '>=3.6'
 
+pygobject_minver = '>=3.0'
+
+#Non-versioned python
+py_candidates = ['python3']
+#Versioned python (e.g. on MacPorts)
+foreach i : range(python3_minver.substring(2).split('.')[-1].to_int(), 40)
+  py_candidates += ['python3.' + i.to_string()]
+endforeach
+
+python = disabler()
+pygobject_found = ''
+pygobject_gexiv2_found = false
+foreach py : py_candidates
+  #Check if PyGobject installation have pycairo (#13105)
+  python_tmp = pythonmod.find_installation(py, modules: ['gi', 'cairo'], required: false)
+  if python_tmp.found() and python_tmp.language_version().version_compare(python3_minver)
+    python = python_tmp
+    #Check if PyGObject installation have minimum version
+    pygobject_found = run_command(python_tmp, '-c',
+                                  '\n'.join([
+                                  '''import gi''',
+                                  '''print(".".join(map(str, gi.version_info)))''']),
+                                  check: false)
+    #Check if PyGObject installation have gexiv2 (#15179)
+    #(This is specially important on MacPorts where gexiv2 have many python variants)
+    pygobject_gexiv2_found = run_command(python_tmp, '-c',
+                                        '\n'.join([
+                                        '''import sys, gi''',
+                                        '''try:''',
+                                        '''    import gi.repository.GExiv2''',
+                                        '''except (ImportError):''',
+                                        '''    sys.exit(1)''']),
+                                        check: false).returncode() == 0
+    if pygobject_found.returncode() == 0 and pygobject_found.stdout().strip().version_compare(pygobject_minver) and pygobject_gexiv2_found
+      break
+    endif
+  endif
+endforeach
+
+if not python.found() or not python.language_version().version_compare(python3_minver)
+  error('No suitable Python installation found. Minimum supported version: @0@'.format(python3_minver))
+endif
 message('Found Python @0@'.format(python.language_version()))
 
-if not python.language_version().version_compare(python3_minver)
-  error('Minimum supported Python version: @0@'.format(python3_minver))
+if pygobject_found.returncode() != 0 or not pygobject_found.stdout().strip().version_compare(pygobject_minver) or not pygobject_gexiv2_found
+  error('No suitable PyGObject (with Pycairo and Gexiv2 modules) found. Minimum supported version: @0@'.format(pygobject_minver))
 endif
-
-pygobject_found = run_command(python, '-c',
-                              '\n'.join([
-                              '''import sys, gi''',
-                              '''version = '@0@' '''.format('3.0'),
-                              '''sys.exit(gi.check_version(version))''']),
-                              check: false).returncode() == 0
-message('Found PyGObject: @0@'.format(pygobject_found))
-
-if not pygobject_found
-  error('PyGObject is required.')
-endif
+message('Found PyGObject: @0@'.format(pygobject_found.stdout().strip()))
 
 ## Javascript
 
@@ -1271,7 +1302,7 @@ if have_lua
       endif
 
       if is_supported_lua
-        have_lua_lgi = run_command(lua, '-e',
+        have_lua_lgi = run_command(luat, '-e',
                                    '''
                                    local lgi = require 'lgi'
                                    ''',
