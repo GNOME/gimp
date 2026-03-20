@@ -332,14 +332,31 @@ load_image (GFile                *file,
           guchar *uncompressed_data;
           gint    estimated_size;
           guint   dims = (guint32) width * height;
-          guchar  pixels[dims * 4];
+          guchar *pixels;
+
+          pixels = g_try_malloc0 (dims * 4);
+          if (pixels == NULL)
+            {
+              g_set_error (error, G_FILE_ERROR, 0,
+                           _("Memory could not be allocated."));
+              g_object_unref (buffer);
+              return NULL;
+            }
 
           if (paa_type != RGBA_8888)
             estimated_size = dims * 2;
           else
             estimated_size = dims * 4;
 
-          uncompressed_data = g_malloc0 (estimated_size);
+          uncompressed_data = g_try_malloc0 (estimated_size);
+          if (uncompressed_data == NULL)
+            {
+              g_set_error (error, G_FILE_ERROR, 0,
+                           _("Memory could not be allocated."));
+              g_object_unref (buffer);
+              return NULL;
+            }
+
           if (! decode_lzss (raw_data, uncompressed_data, estimated_size))
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -395,6 +412,7 @@ load_image (GFile                *file,
                 break;
             }
           g_free (uncompressed_data);
+          g_free (pixels);
 
           num_mipmaps++;
         }
