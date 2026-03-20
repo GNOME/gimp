@@ -48,7 +48,6 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
   if echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] }; then
     mkdir -p macports-cached-$(uname -m) && cp -fa $OPT_PREFIX/var/macports/* macports-cached-$(uname -m) || true
   fi
-  git apply -v build/macos/patches/0001-meson-Patch-python-version.patch || true
 else
   brew upgrade --quiet
   brew install --quiet $(tr '\\' '\n' < build/macos/all-deps-uni.txt | grep -v '#' | sed -n 's/.*|homebrew://p' | awk '{print $1}' | xargs)
