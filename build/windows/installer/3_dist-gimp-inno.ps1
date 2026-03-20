@@ -191,9 +191,7 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):i
 # 5. COMPILE .EXE INSTALLER
 $INSTALLER="gimp-${CUSTOM_GIMP_VERSION}-setup.exe"
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_making[collapsed=true]$([char]13)$([char]27)[0KConstructing $INSTALLER installer"
-Set-Location build\windows\installer
-iscc -DREVISION="$revision" -DBUILD_DIR="$BUILD_DIR" $supported_archs -DDEBUG_SYMBOLS -DPYTHON gimp-setup.iss | Out-Null; if ("$LASTEXITCODE" -gt '0') { exit 1 }
-Set-Location ..\..\..
+iscc -DREVISION="$revision" -DBUILD_DIR="$BUILD_DIR" $supported_archs -DDEBUG_SYMBOLS -DPYTHON build\windows\installer\gimp-setup.iss | Out-Null; if ("$LASTEXITCODE" -gt '0') { exit 1 }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_making$([char]13)$([char]27)[0K"
 
 ## Clean changes in Inno installation
