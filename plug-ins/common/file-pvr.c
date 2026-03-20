@@ -63,6 +63,8 @@
 #define PLUG_IN_ROLE   "gimp-file-pvr"
 
 
+#define MAX_TWIDDLE_SIZE 2048
+
 typedef enum
 {
   MODE_ARGB1555 = 0,
@@ -153,6 +155,7 @@ static gboolean         pvr_decode_twiddle    (GimpLayer             *layer,
                                                gint                   n_components,
                                                gint                   mipmap_offset,
                                                guchar                *data,
+                                               guint32                data_size,
                                                GError               **error);
 
 static gboolean         pvr_decode_compressed (GimpLayer             *layer,
@@ -395,9 +398,10 @@ load_image (GFile        *file,
       gint    mipmap_offset = 1;
       guchar *data;
 
-      data = g_malloc0 (header_file_size);
+      data = g_try_malloc0 (header_file_size);
       /* Read rest of data */
-      if (fread (data, sizeof (guchar),
+      if (data == NULL ||
+          fread (data, sizeof (guchar),
                  header_file_size, fp) != header_file_size)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
@@ -425,6 +429,15 @@ load_image (GFile        *file,
             layer_name = g_strdup_printf ("Mipmap (%dx%d)",
                                           mipmap_width, mipmap_height);
 
+          if (mipmap_width  >= MAX_TWIDDLE_SIZE ||
+              mipmap_height >= MAX_TWIDDLE_SIZE)
+            {
+              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Dimensions exceed maximum twiddled size of "
+                             "%d"), MAX_TWIDDLE_SIZE);
+              return image;
+            }
+
           layer = gimp_layer_new (image, layer_name, mipmap_width, mipmap_height,
                                   (has_alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE),
                                   100,
@@ -434,11 +447,12 @@ load_image (GFile        *file,
 
           if (! pvr_decode_twiddle (layer, pixel_mode, mipmap_width,
                                     mipmap_height, n_components,
-                                    mipmap_offset * 2, data, error))
+                                    mipmap_offset * 2, data, header_file_size,
+                                    error))
             {
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Unable to decode twiddled PVR texture"));
-              return NULL;
+              return image;
             }
 
           mipmap_offset += m * m;
@@ -510,10 +524,19 @@ load_image (GFile        *file,
       data_start = ftell (fp);
       for (gint i = 0; i < 8; i++)
         {
-          guchar  data[header_file_size - mipmap_offset];
+          guchar *data;
           gint    temp_size   = header_file_size;
           gint    mipmap_size = 0x10 << (i * 2);
-          gchar  *layer_name  = NULL;;
+          gchar  *layer_name  = NULL;
+
+          data = g_try_malloc (header_file_size - mipmap_offset);
+          if (data == NULL)
+            {
+              g_set_error (error, G_FILE_ERROR,
+                           g_file_error_from_errno (errno),
+                           _("Unable to decode PVR texture"));
+              return image;
+            }
 
           if (has_mipmaps)
             layer_name = g_strdup_printf ("Mipmap (%dx%d)",
@@ -535,7 +558,18 @@ load_image (GFile        *file,
             {
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Incomplete PVR data."));
-              return NULL;
+              g_free (data);
+              return image;
+            }
+
+          if (mipmap_width  >= MAX_TWIDDLE_SIZE ||
+              mipmap_height >= MAX_TWIDDLE_SIZE)
+            {
+              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Dimensions exceed maximum twiddled size of "
+                             "%d"), MAX_TWIDDLE_SIZE);
+              g_free (data);
+              return image;
             }
 
           if (! pvr_decode_compressed (layer, pixel_mode, width, height,
@@ -544,9 +578,11 @@ load_image (GFile        *file,
             {
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Unable to decode compressed PVR texture"));
-              return NULL;
+              g_free (data);
+              return image;
             }
 
+          g_free (data);
           if (mipmap_width == width || ! has_mipmaps)
             break;
 
@@ -569,7 +605,7 @@ load_image (GFile        *file,
 static void
 pvr_create_twiddle (gint *twiddle)
 {
-  for (gint i = 0; i < 1024; i++)
+  for (gint i = 0; i < MAX_TWIDDLE_SIZE; i++)
     {
       twiddle[i] = i & 1;
 
@@ -652,14 +688,31 @@ pvr_decode_rect (GimpLayer  *layer,
                  FILE       *fp,
                  GError    **error)
 {
-  GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-  gint        count  = width * height * 2;
-  guchar      pixels[width * height * n_components];
-  guchar      data[count];
+  GeglBuffer *buffer;
+  gsize       count;
+  guchar     *pixels;
+  guchar     *data;
 
-  if (fread (data, sizeof (guchar), count, fp) != count)
+  count = width * height * 2;
+  data  = g_try_malloc (count);
+  if (data == NULL)
     return FALSE;
 
+  pixels = g_try_malloc (width * height * n_components);
+  if (pixels == NULL)
+    {
+      g_free (data);
+      return FALSE;
+    }
+
+  if (fread (data, sizeof (guchar), count, fp) != count)
+    {
+      g_free (data);
+      g_free (pixels);
+      return FALSE;
+    }
+
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
   for (gint index = 0; index < count; index += 2)
     {
       guint rgb = data[index] | (data[index + 1] << 8);
@@ -668,6 +721,8 @@ pvr_decode_rect (GimpLayer  *layer,
       if (! pvr_decode_color (pixel_mode, rgb, pixels, i))
         {
           g_object_unref (buffer);
+          g_free (data);
+          g_free (pixels);
           return FALSE;
         }
     }
@@ -675,6 +730,8 @@ pvr_decode_rect (GimpLayer  *layer,
                    NULL, pixels, GEGL_AUTO_ROWSTRIDE);
 
   g_object_unref (buffer);
+  g_free (data);
+  g_free (pixels);
 
   return TRUE;
 }
@@ -687,17 +744,20 @@ pvr_decode_twiddle (GimpLayer  *layer,
                     gint        n_components,
                     gint        mipmap_offset,
                     guchar     *data,
+                    guint32     data_size,
                     GError    **error)
 {
-  gint        twiddle[1024];
-  GeglBuffer *buffer   = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  gint        twiddle[MAX_TWIDDLE_SIZE];
+  GeglBuffer *buffer;
   guint       end      = 0;
   gint        distance = 0;
   gint        stride   = 0;
   gint        offset   = 0;
   guchar     *pixels;
 
-  pixels = g_malloc0 (width * height * n_components);
+  pixels = g_try_malloc0 (width * height * n_components);
+  if (pixels == NULL)
+    return FALSE;
 
   /* Initialize twiddle look up table */
   pvr_create_twiddle (twiddle);
@@ -714,6 +774,7 @@ pvr_decode_twiddle (GimpLayer  *layer,
       distance = width;
     }
 
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
   for (gint index = 0; index < end; index += distance)
     {
       gint base = 2 * index * distance; /* For non-square textures */
@@ -732,6 +793,9 @@ pvr_decode_twiddle (GimpLayer  *layer,
               gsize   offset2       = twiddle_index + base;
 
               offset2 += mipmap_offset;
+
+              if (offset2 + 1 >= data_size)
+                return FALSE;
 
               p = data[offset2] | (data[offset2 + 1] << 8);
               if (! pvr_decode_color (pixel_mode, p, pixels, offset))
@@ -766,9 +830,13 @@ pvr_decode_compressed (GimpLayer  *layer,
 {
   gint        code_data_size = 256 * 2 * 4;
   guchar      codebook[256 * 4 * n_components];
-  gint        twiddle[1024];
+  gint        twiddle[MAX_TWIDDLE_SIZE];
   GeglBuffer *buffer;
-  guchar      pixels[width * height * n_components];
+  guchar     *pixels;
+
+  pixels = g_try_malloc0 (width * height * n_components);
+  if (pixels == NULL)
+    return FALSE;
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
@@ -783,6 +851,7 @@ pvr_decode_compressed (GimpLayer  *layer,
       if (! pvr_decode_color (pixel_mode, rgb, codebook, index))
         {
           g_object_unref (buffer);
+          g_free (pixels);
           return FALSE;
         }
     }
@@ -825,6 +894,7 @@ pvr_decode_compressed (GimpLayer  *layer,
   gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                    NULL, pixels, GEGL_AUTO_ROWSTRIDE);
   g_object_unref (buffer);
+  g_free (pixels);
 
   return TRUE;
 }
