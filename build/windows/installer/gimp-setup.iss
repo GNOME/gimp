@@ -395,13 +395,18 @@ Source: "{#MAIN_BUNDLE}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-dat
 
 #sub EmitBaseExecutables
 #if i == 1
+  #ifdef ARM64_BUNDLE
   #define private BUNDLE ARM64_BUNDLE
   #define private COMPONENT "ARM64"
+	#endif
 #elif i == 2
+  #ifdef X64_BUNDLE
   #define private BUNDLE X64_BUNDLE
   #define private COMPONENT "X64"
+	#endif
 #endif
 
+#ifdef BUNDLE
 ; Required arch-specific components (compact installation)
 Source: "{#BUNDLE}\bin\libgimp*.dll"; DestDir: "{app}\bin"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
 Source: "{#BUNDLE}\bin\gimp*.exe"; DestDir: "{app}\bin"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
@@ -439,6 +444,7 @@ Source: "{#BUNDLE}\lib\python{#PYTHON_VERSION}\*"; DestDir: "{app}\lib\python{#P
 
 #undef BUNDLE
 #undef COMPONENT
+#endif
 #endsub
 
 #for {i = 1; i <= 2; i++} EmitBaseExecutables
