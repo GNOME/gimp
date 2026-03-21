@@ -135,8 +135,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.6.tar.gz",
-                    "sha256": "f8cfe743a81c8cc1dd3cbaafa7fa76f75ad31456b0fc45a42b086d12530a4e35",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.7.tar.gz",
+                    "sha256": "6f57641fb12b019867a766e602252ed4ccb26d7354e3a15688fe9c85a391716e",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -350,8 +350,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10060/ghostscript-10.06.0.tar.gz",
-                    "sha512": "21ba2110693cfb98126f06daff410b0a94ae9b1690b867a383aa82b56a817ffd237044e024c2cf26daa6efe4d5cf8903db8e637c4629f0c8a0eb325a30fdc0cb",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10070/ghostscript-10.07.0.tar.gz",
+                    "sha512": "46a9aa12971491149d2e718c7babbfa71ea8aee5c042c8f7fa7294485e851ce9a70286907daaf31a36982b1857d23e80a149d954e460f1d8020081f0756d4a7f",
                     "x-checker-data": {
                         "//": "Bypass broken url-template with anitya checker - See https://github.com/flathub/flatpak-external-data-checker/issues/360",
                         "type": "json",
