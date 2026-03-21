@@ -287,6 +287,16 @@ load_image (GFile        *file,
 
       while (index < file_size && data[index])
         {
+          if (index          >= (file_size - 0xE0) ||
+              metadata_index >= 2)
+            {
+              g_set_error (error, G_FILE_ERROR,
+                           g_file_error_from_errno (errno),
+                           _("Invalid file."));
+              fclose (fp);
+              return NULL;
+            }
+
           if (data[index] == 0x20)
             metadata_len[metadata_index++] = index;
 
