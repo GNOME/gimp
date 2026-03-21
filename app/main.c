@@ -350,7 +350,6 @@ gimp_macos_setenv (const char * progname)
       gchar   *etc_dir;
       size_t   path_len;
       struct   stat sb;
-      gboolean need_pythonhome = TRUE;
 
       bin_dir = g_path_get_dirname (resolved_path);
       tmp = g_strdup_printf ("%s/lib", gimp_installation_directory());
@@ -389,23 +388,6 @@ gimp_macos_setenv (const char * progname)
               return;
             }
         }
-
-      /* Detect we were built in homebrew for MacOS (for PYTHONHOME purposes) */
-      tmp = g_strdup_printf ("%s/Frameworks/Python.framework", gimp_installation_directory());
-      if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
-        {
-          g_print ("GIMP was built with homebrew\n");
-          need_pythonhome = FALSE;
-        }
-      g_free (tmp);
-      /* Detect we were built in MacPorts for MacOS (for PYTHONHOME purposes) */
-      tmp = g_strdup_printf ("%s/Library/Frameworks/Python.framework", gimp_installation_directory());
-      if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
-        {
-          g_print ("GIMP was built with MacPorts\n");
-          need_pythonhome = FALSE;
-        }
-      g_free (tmp);
 
       /* Minimum runtime paths */
       path_len = strlen (g_getenv ("PATH") ? g_getenv ("PATH") : "") + strlen (bin_dir) + 2;
@@ -469,12 +451,13 @@ gimp_macos_setenv (const char * progname)
       tmp = g_strdup_printf ("%s/girepository-1.0", lib_dir);
       g_setenv ("GI_TYPELIB_PATH", tmp, TRUE);
       g_free (tmp);
-      if (need_pythonhome)
+      tmp = g_strdup_printf ("%s/Frameworks/Python.framework/Versions/%s", gimp_installation_directory(), PYTHON_VERSION);
+      if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
         {
-          tmp = g_strdup_printf ("%s/Library/Frameworks/Python.framework/Versions/%s", share_dir, PYTHON_VERSION);
           g_setenv ("PYTHONHOME", tmp, TRUE);
-          g_free (tmp);
         }
+      g_free (tmp);
+
       g_free (lib_dir);
       g_free (share_dir);
       g_free (etc_dir);
