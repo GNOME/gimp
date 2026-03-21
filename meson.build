@@ -1194,9 +1194,11 @@ python3_minver = '>=3.6'
 
 pygobject_minver = '>=3.0'
 
-#Non-versioned python
-py_candidates = ['python3']
-#Versioned python (e.g. on MacPorts)
+#Non-versioned python (e.g. on Windows)
+py_candidates = ['python']
+#Major versioned python (e.g. on Linux)
+py_candidates += ['python3']
+#Minor versioned python (e.g. on MacPorts)
 foreach i : range(python3_minver.substring(2).split('.')[-1].to_int(), 40)
   py_candidates += ['python3.' + i.to_string()]
 endforeach
