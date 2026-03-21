@@ -1,9 +1,8 @@
-From cfa7a7e416870225e838293328e178c062602b60 Mon Sep 17 00:00:00 2001
+From 0749db4803d9d30e14a5e71f5b07422d540325ec Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Thu, 29 Jan 2026 19:47:51 -0300
+Date: Sat, 21 Mar 2026 13:38:25 -0300
 Subject: [PATCH] Disable some things due to lack of packages
 
-I plan to fix that later
 ---
  app/actions/tools-actions.c        | 36 -------------
  app/actions/tools-commands.c       | 85 ------------------------------
@@ -25,8 +24,8 @@ I plan to fix that later
  docs/meson.build                   |  2 +-
  etc/meson.build                    |  2 +-
  libgimp/meson.build                |  4 +-
- meson.build                        | 42 ++++-----------
- 21 files changed, 17 insertions(+), 267 deletions(-)
+ meson.build                        | 45 ++++------------
+ 21 files changed, 17 insertions(+), 270 deletions(-)
 
 diff --git a/app/actions/tools-actions.c b/app/actions/tools-actions.c
 index 9efa957edb..64e7981cfc 100644
@@ -213,7 +212,7 @@ index a6b4d1c6c5..76ca89a878 100644
      gimp_data_loader_factory_new (gimp,
                                    GIMP_TYPE_PATTERN,
 diff --git a/app/core/gimp.c b/app/core/gimp.c
-index 39ecb8e37a..ec3f84fcaf 100644
+index 9db4718b37..30fa03cfba 100644
 --- a/app/core/gimp.c
 +++ b/app/core/gimp.c
 @@ -317,7 +317,6 @@ gimp_constructed (GObject *object)
@@ -537,10 +536,10 @@ index 93ec8ce9e2..7b271c746c 100644
  
  install_data(
 diff --git a/libgimp/meson.build b/libgimp/meson.build
-index a7d84415b2..b0daf3fff6 100644
+index 8f5d2c4a96..5f763a454a 100644
 --- a/libgimp/meson.build
 +++ b/libgimp/meson.build
-@@ -501,7 +501,9 @@ libgimpui_introspectable_files = [
+@@ -503,7 +503,9 @@ libgimpui_introspectable_files = [
    libgimpwidgets_introspectable,
  ]
  
@@ -552,7 +551,7 @@ index a7d84415b2..b0daf3fff6 100644
    gobject_introspection_warning = '\n      '.join(['',
      'GObject Introspection is disabled while cross-compiling because',
 diff --git a/meson.build b/meson.build
-index 5556537fa0..81c0508947 100644
+index 7cbd230bf5..1da7e0b7a1 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -288,7 +288,7 @@ warning_cflags_common = [
@@ -564,15 +563,7 @@ index 5556537fa0..81c0508947 100644
    '-Winit-self',
    '-Wlogical-op',
    '-Wmissing-declarations',
-@@ -419,6 +419,7 @@ math              = cc.find_library('m', required: false)
- if platform_windows
-   #Needed otherwise compilers get angry with the headers provided by UCRT
-   compiler_args +='-D_USE_MATH_DEFINES'
-+  compiler_args +='/D_CRT_SECURE_NO_WARNINGS'
- endif
- 
- # libdl is only required on Linux. On Windows and some (all?) BSD, it
-@@ -531,17 +532,11 @@ json_glib         = dependency('json-glib-1.0',      version: '>='+json_glib_min
+@@ -531,17 +531,11 @@ json_glib         = dependency('json-glib-1.0',      version: '>='+json_glib_min
  lcms_minver       = '2.8'
  lcms              = dependency('lcms2',              version: '>='+lcms_minver)
  libmypaint_minver = '1.5.0'
@@ -593,7 +584,7 @@ index 5556537fa0..81c0508947 100644
  
  pango_minver = '1.50.0'
  if platform_osx
-@@ -667,7 +662,7 @@ endif
+@@ -699,7 +693,7 @@ endif
  # Check for extension support
  
  appstream_minver = '0.16.1'
@@ -602,7 +593,7 @@ index 5556537fa0..81c0508947 100644
  
  libarchive = dependency('libarchive')
  
-@@ -1049,7 +1044,7 @@ poppler_minver = '0.69.0'
+@@ -1074,7 +1068,7 @@ poppler_minver = '0.69.0'
  poppler_data_minver = '0.4.9'
  poppler = [
    dependency('poppler-glib', version: '>='+poppler_minver),
@@ -611,17 +602,28 @@ index 5556537fa0..81c0508947 100644
  ]
  
  cairopdf_minver = '1.12.2'
-@@ -1179,9 +1174,6 @@ pygobject_found = run_command(python, '-c',
-                               check: false).returncode() == 0
- message('Found PyGObject: @0@'.format(pygobject_found))
+@@ -1208,7 +1202,7 @@ pygobject_found = ''
+ pygobject_gexiv2_found = false
+ foreach py : py_candidates
+   #Check if PyGobject installation have pycairo (#13105)
+-  python_tmp = pythonmod.find_installation(py, modules: ['gi', 'cairo'], required: false)
++  python_tmp = pythonmod.find_installation(py, required: false)
+   if python_tmp.found() and python_tmp.language_version().version_compare(python3_minver)
+     python = python_tmp
+     #Check if PyGObject installation have minimum version
+@@ -1238,11 +1232,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
+ endif
+ message('Found Python @0@'.format(python.language_version()))
  
--if not pygobject_found
--  error('PyGObject is required.')
+-if pygobject_found.returncode() != 0 or not pygobject_found.stdout().strip().version_compare(pygobject_minver) or not pygobject_gexiv2_found
+-  error('No suitable PyGObject (with Pycairo and Gexiv2 modules) found. Minimum supported version: @0@'.format(pygobject_minver))
 -endif
- 
+-message('Found PyGObject: @0@'.format(pygobject_found.stdout().strip()))
+-
  ## Javascript
  
-@@ -1281,7 +1273,6 @@ appstreamcli = find_program('appstreamcli', version: '>=0.15.3', required: get_o
+ gjs = find_program('gjs', required: false)
+@@ -1341,7 +1330,6 @@ appstreamcli = find_program('appstreamcli', version: '>=0.15.3', required: get_o
  
  # Check for .typelib generation tools
  
@@ -629,7 +631,7 @@ index 5556537fa0..81c0508947 100644
  
  # Check for doc generation tools
  
-@@ -1780,7 +1771,6 @@ install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif_minver)
+@@ -1834,7 +1822,6 @@ install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif_minver)
  install_conf.set('LIBJXL_REQUIRED_VERSION',       jpegxl_minver)
  install_conf.set('LIBLZMA_REQUIRED_VERSION',      liblzma_minver)
  install_conf.set('LIBTIFF_REQUIRED_VERSION',      libtiff_minver)
@@ -637,7 +639,7 @@ index 5556537fa0..81c0508947 100644
  install_conf.set('LIBPNG_REQUIRED_VERSION',       libpng_minver)
  install_conf.set('OPENEXR_REQUIRED_VERSION',      openexr_minver)
  install_conf.set('OPENJPEG_REQUIRED_VERSION',     openjpeg_minver)
-@@ -1966,13 +1956,13 @@ if get_option('debug-self-in-build')
+@@ -2020,13 +2007,13 @@ if get_option('debug-self-in-build')
  endif
  gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
  
@@ -653,7 +655,7 @@ index 5556537fa0..81c0508947 100644
    gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
  
    menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
-@@ -2035,18 +2025,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
+@@ -2089,18 +2076,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
        gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', plugin_exe)
      endforeach
    endif
@@ -672,7 +674,7 @@ index 5556537fa0..81c0508947 100644
  endif
  
  gimp_exe = find_program('tools'/'in-build-gimp.py')
-@@ -2242,7 +2220,7 @@ final_message = [
+@@ -2296,7 +2271,7 @@ final_message = [
  '''  Test appdata         @0@'''.format(appstreamcli.found()),
  '',
  '''Documentation:''',
