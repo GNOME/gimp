@@ -1520,6 +1520,7 @@ ReadJeffsImage (FILE       *fd,
   guchar    block[255];
   guchar   *compressed;
   guchar   *indexes;
+  guint     data_size;
   guint     count = 0;
   guint     pos   = 0;
   guint     mask  = 0;
@@ -1533,8 +1534,18 @@ ReadJeffsImage (FILE       *fd,
         mask |= 1 << i;
     }
 
-  compressed = g_malloc (len * height);
-  indexes    = g_malloc (len * height);
+  data_size  = len * height;
+  compressed = g_try_malloc (data_size * 255);
+  indexes    = g_try_malloc (data_size);
+
+  if (compressed == NULL ||
+      indexes    == NULL)
+    {
+      read_error (_("image data"), *image, error);
+      g_free (compressed);
+      g_free (indexes);
+      return FALSE;
+    }
 
   /* Image data is stored as a zlib stream, arbitrarily broken
    * in chunks of 255 bytes or less. We read in the chunk size,
@@ -1561,7 +1572,17 @@ ReadJeffsImage (FILE       *fd,
         }
 
       for (gint i = 0; i < block_size; i++)
-        compressed[i + count] = block[i];
+        {
+          if ((i + count) >= (data_size * 255))
+            {
+              read_error (_("image data"), *image, error);
+              g_free (compressed);
+              g_free (indexes);
+              return FALSE;
+            }
+
+          compressed[i + count] = block[i];
+        }
 
       count += block_size;
     }
