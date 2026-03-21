@@ -109,6 +109,7 @@ parts:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - -Drelocatable-bundle=yes
+      #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
       - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
       - -Dwith-docs=false
@@ -136,6 +137,7 @@ parts:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - -Drelocatable-bundle=yes
+      #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
       - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
       - -Ddocs=false
@@ -167,6 +169,7 @@ parts:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - -Drelocatable-bundle=yes
+      #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
       - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
       - -Dcheck-update=no

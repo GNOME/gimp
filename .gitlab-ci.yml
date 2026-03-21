@@ -343,6 +343,7 @@ deps-debian:
   variables:
     GIT_STRATEGY: none
     RELOCATABLE_OPTION: '-Drelocatable-bundle=yes'
+    #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   script:
     - !reference [deps-debian-nonreloc, script]
@@ -641,6 +642,7 @@ gimp-win:
   variables:
     ARCH: arm64
     ORKA_RUNNER: tahoe-1
+    #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
     - export GIMP_PREFIX="$PWD/_install-$(uname -m)"
