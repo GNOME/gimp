@@ -90,18 +90,18 @@
 ;2) Get FULL_GIMP_VERSION (used by ITs)
 #define ORIGINAL_GIMP_VERSION GIMP_VERSION
 #if Defined(GIMP_RC_VERSION)
-	#define GIMP_VERSION=Copy(GIMP_VERSION,1,Pos("-",GIMP_VERSION)-1)
+  #define GIMP_VERSION=Copy(GIMP_VERSION,1,Pos("-",GIMP_VERSION)-1)
 #endif
 #if !Defined(REVISION) || REVISION=="0"
-	#define FULL_GIMP_VERSION GIMP_VERSION + "." + "0"
+  #define FULL_GIMP_VERSION GIMP_VERSION + "." + "0"
 #else
-	#define FULL_GIMP_VERSION GIMP_VERSION + "." + REVISION
+  #define FULL_GIMP_VERSION GIMP_VERSION + "." + REVISION
 #endif
 ;3) Get CUSTOM_GIMP_VERSION (that the users see)
 #if !Defined(REVISION) || REVISION=="0"
-	#define CUSTOM_GIMP_VERSION ORIGINAL_GIMP_VERSION
+  #define CUSTOM_GIMP_VERSION ORIGINAL_GIMP_VERSION
 #else
-	#define CUSTOM_GIMP_VERSION ORIGINAL_GIMP_VERSION + "-" + REVISION
+  #define CUSTOM_GIMP_VERSION ORIGINAL_GIMP_VERSION + "-" + REVISION
 #endif
 #define DISPLAY_NAME "GIMP " + CUSTOM_GIMP_VERSION
 
@@ -184,10 +184,10 @@ AppPublisherURL=https://www.gimp.org/
 ;ControlPanel 'HelpLink'
 AppSupportURL=https://www.gimp.org/docs/
 #if Defined(GIMP_UNSTABLE)
-	;ControlPanel 'URLUpdateInfo'
-	AppUpdatesURL=https://www.gimp.org/downloads/devel/
+  ;ControlPanel 'URLUpdateInfo'
+  AppUpdatesURL=https://www.gimp.org/downloads/devel/
 #else
-	AppUpdatesURL=https://www.gimp.org/downloads/
+  AppUpdatesURL=https://www.gimp.org/downloads/
 #endif
 
 
@@ -398,12 +398,12 @@ Source: "{#MAIN_BUNDLE}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-dat
   #ifdef ARM64_BUNDLE
   #define private BUNDLE ARM64_BUNDLE
   #define private COMPONENT "ARM64"
-	#endif
+  #endif
 #elif i == 2
   #ifdef X64_BUNDLE
   #define private BUNDLE X64_BUNDLE
   #define private COMPONENT "X64"
-	#endif
+  #endif
 #endif
 
 #ifdef BUNDLE
@@ -498,7 +498,7 @@ Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
 Type: filesandordirs; Name: "{app}\share\metainfo"
 ;This was bunbled in 3.0 RC1 but not needed since the "Debug" menu is hidden in stable releases
 #if !Defined(GIMP_UNSTABLE) && Defined(GIMP_RELEASE)
-	Type: files; Name: "{app}\bin\dot.exe"
+  Type: files; Name: "{app}\bin\dot.exe"
 #endif
 ;No need to all these python binaries shipped in 3.0 RC1
 Type: files; Name: "{app}\bin\python3*.exe"
@@ -542,19 +542,19 @@ Root: HKA; Subkey: "Software\RegisteredApplications"; ValueType: string; ValueNa
 #define Line=0
 #define FileLine
 #sub ProcessAssociation
-	#if !defined(Finished)
-		#if Copy(FileLine,1,1)=="#" || FileLine==""
-			//skip comments and empty lines
-		#else
-			#pragma message "Processing file_associations.list: " + FileLine
+  #if !defined(Finished)
+    #if Copy(FileLine,1,1)=="#" || FileLine==""
+      //skip comments and empty lines
+    #else
+      #pragma message "Processing file_associations.list: " + FileLine
 Root: HKA; Subkey: "Software\Classes\.{#FileLine}\OpenWithProgids"; ValueType: string; ValueName: "GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}"; ValueData: ""; Flags: uninsdeletevalue
 Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}"; ValueType: string; ValueName: ""; ValueData: "{#DISPLAY_NAME} {#UpperCase(FileLine)}"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe,2"
 Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"" ""%1"""
 Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe\SupportedTypes"; ValueType: string; ValueName: ".{#FileLine}"; ValueData: ""
 Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities\FileAssociations"; ValueType: string; ValueName: ".{#FileLine}"; ValueData: "GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}"
-		#endif
-	#endif
+    #endif
+  #endif
 #endsub
 #define FileHandle
 #for {FileHandle = FileOpen(AddBackslash(BUILD_DIR)+"plug-ins\file_associations.list"); \
@@ -583,14 +583,14 @@ Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities\FileAssocia
 [Code]
 //GENERAL VARS AND UTILS
 const
-	CP_ACP = 0;
-	CP_UTF8 = 65001;
+  CP_ACP = 0;
+  CP_UTF8 = 65001;
   COLOR_HOTLIGHT = 26;
-	UNINSTALL_MAX_WAIT_TIME = 10000;
-	UNINSTALL_CHECK_TIME    =   250;
+  UNINSTALL_MAX_WAIT_TIME = 10000;
+  UNINSTALL_CHECK_TIME    =   250;
 
 var
-	//pgSimple: TWizardPage;
+  //pgSimple: TWizardPage;
   InstallType: String;
   InstallMode: (imNone, imSimple, imCustom);
   ConfigOverride: (coUndefined, coOverride, coDontOverride);
@@ -609,42 +609,42 @@ function GetSysColor(nIndex: Integer): DWORD; external 'GetSysColor@user32.dll s
 
 function GetButtonWidth(const Texts: TArrayOfString; const Minimum: Integer): Integer;
 var MeasureLabel: TNewStaticText;
-	i: Integer;
+  i: Integer;
 begin
-	MeasureLabel := TNewStaticText.Create(WizardForm);
-	with MeasureLabel do
-	begin
-		Parent := WizardForm;
-		Left := 0;
-		Top := 0;
-		AutoSize := True;
-	end;
+  MeasureLabel := TNewStaticText.Create(WizardForm);
+  with MeasureLabel do
+  begin
+    Parent := WizardForm;
+    Left := 0;
+    Top := 0;
+    AutoSize := True;
+  end;
 
-	Result := Minimum;
+  Result := Minimum;
 
-	for i := 0 to GetArrayLength(Texts) - 1 do
-	begin
-		MeasureLabel.Caption := Texts[i];
-		if (MeasureLabel.Width + ScaleX(16)) > Result then
-			Result := (MeasureLabel.Width + ScaleX(16));
-	end;
+  for i := 0 to GetArrayLength(Texts) - 1 do
+  begin
+    MeasureLabel.Caption := Texts[i];
+    if (MeasureLabel.Width + ScaleX(16)) > Result then
+      Result := (MeasureLabel.Width + ScaleX(16));
+  end;
 
-	MeasureLabel.Free;
+  MeasureLabel.Free;
 end;
 
 
 procedure DebugMsg(Const pProc,pMsg: String);
 begin
-	Log('[Code] ' + pProc + #9 + pMsg);
+  Log('[Code] ' + pProc + #9 + pMsg);
 end;
 
 
 function BoolToStr(const b: Boolean): String;
 begin
-	if b then
-		Result := 'True'
-	else
-		Result := 'False';
+  if b then
+    Result := 'True'
+  else
+    Result := 'False';
 end;
 
 
@@ -652,19 +652,19 @@ function RevPos(const SearchStr, Str: string): Integer;
 var i: Integer;
 begin
 
-	if Length(SearchStr) < Length(Str) then
-		for i := (Length(Str) - Length(SearchStr) + 1) downto 1 do
-		begin
+  if Length(SearchStr) < Length(Str) then
+    for i := (Length(Str) - Length(SearchStr) + 1) downto 1 do
+    begin
 
-			if Copy(Str, i, Length(SearchStr)) = SearchStr then
-			begin
-				Result := i;
-				exit;
-			end;
+      if Copy(Str, i, Length(SearchStr)) = SearchStr then
+      begin
+        Result := i;
+        exit;
+      end;
 
-		end;
+    end;
 
-	Result := 0;
+  Result := 0;
 end;
 
 
@@ -672,21 +672,21 @@ function Replace(pSearchFor, pReplaceWith, pText: String): String;
 begin
     StringChangeEx(pText,pSearchFor,pReplaceWith,True);
 
-	Result := pText;
+  Result := pText;
 end;
 
 
 function Count(What, Where: String): Integer;
 begin
-	Result := 0;
-	if Length(What) = 0 then
-		exit;
+  Result := 0;
+  if Length(What) = 0 then
+    exit;
 
-	while Pos(What,Where)>0 do
-	begin
-		Where := Copy(Where,Pos(What,Where)+Length(What),Length(Where));
-		Result := Result + 1;
-	end;
+  while Pos(What,Where)>0 do
+  begin
+    Where := Copy(Where,Pos(What,Where)+Length(What),Length(Where));
+    Result := Result + 1;
+  end;
 end;
 
 
@@ -694,45 +694,45 @@ end;
 procedure Explode(var ADest: TArrayOfString; aText, aSeparator: String);
 var tmp: Integer;
 begin
-	if aSeparator='' then
-		exit;
+  if aSeparator='' then
+    exit;
 
-	SetArrayLength(ADest,Count(aSeparator,aText)+1)
+  SetArrayLength(ADest,Count(aSeparator,aText)+1)
 
-	tmp := 0;
-	repeat
-		if Pos(aSeparator,aText)>0 then
-		begin
+  tmp := 0;
+  repeat
+    if Pos(aSeparator,aText)>0 then
+    begin
 
-			ADest[tmp] := Copy(aText,1,Pos(aSeparator,aText)-1);
-			aText := Copy(aText,Pos(aSeparator,aText)+Length(aSeparator),Length(aText));
-			tmp := tmp + 1;
+      ADest[tmp] := Copy(aText,1,Pos(aSeparator,aText)-1);
+      aText := Copy(aText,Pos(aSeparator,aText)+Length(aSeparator),Length(aText));
+      tmp := tmp + 1;
 
-		end else
-		begin
+    end else
+    begin
 
-			 ADest[tmp] := aText;
-			 aText := '';
+       ADest[tmp] := aText;
+       aText := '';
 
-		end;
-	until Length(aText)=0;
+    end;
+  until Length(aText)=0;
 end;
 
 
 function String2Utf8(const pInput: String): AnsiString;
 var Output: AnsiString;
-	ret, outLen, nulPos: Integer;
+  ret, outLen, nulPos: Integer;
 begin
-	outLen := WideCharToMultiByte(CP_UTF8, 0, pInput, -1, Output, 0, 0, 0);
-	Output := StringOfChar(#0,outLen);
-	ret := WideCharToMultiByte(CP_UTF8, 0, pInput, -1, Output, outLen, 0, 0);
+  outLen := WideCharToMultiByte(CP_UTF8, 0, pInput, -1, Output, 0, 0, 0);
+  Output := StringOfChar(#0,outLen);
+  ret := WideCharToMultiByte(CP_UTF8, 0, pInput, -1, Output, outLen, 0, 0);
 
-	if ret = 0 then
-		RaiseException('WideCharToMultiByte failed: ' + IntToStr(GetLastError));
+  if ret = 0 then
+    RaiseException('WideCharToMultiByte failed: ' + IntToStr(GetLastError));
 
-	nulPos := Pos(#0,Output) - 1;
-	if nulPos = -1 then
-		nulPos := Length(Output);
+  nulPos := Pos(#0,Output) - 1;
+  if nulPos = -1 then
+    nulPos := Length(Output);
 
     Result := Copy(Output,1,nulPos);
 end;
@@ -740,18 +740,18 @@ end;
 
 function Utf82String(const pInput: AnsiString): String;
 var Output: AnsiString;
-	ret, outLen, nulPos: Integer;
+  ret, outLen, nulPos: Integer;
 begin
-	outLen := MultiByteToWideChar(CP_UTF8, 0, pInput, -1, Output, 0);
-	Output := StringOfChar(#0,outLen);
-	ret := MultiByteToWideChar(CP_UTF8, 0, pInput, -1, Output, outLen);
+  outLen := MultiByteToWideChar(CP_UTF8, 0, pInput, -1, Output, 0);
+  Output := StringOfChar(#0,outLen);
+  ret := MultiByteToWideChar(CP_UTF8, 0, pInput, -1, Output, outLen);
 
-	if ret = 0 then
-		RaiseException('MultiByteToWideChar failed: ' + IntToStr(GetLastError));
+  if ret = 0 then
+    RaiseException('MultiByteToWideChar failed: ' + IntToStr(GetLastError));
 
-	nulPos := Pos(#0,Output) - 1;
-	if nulPos = -1 then
-		nulPos := Length(Output);
+  nulPos := Pos(#0,Output) - 1;
+  if nulPos = -1 then
+    nulPos := Length(Output);
 
     Result := Copy(Output,1,nulPos);
 end;
@@ -759,64 +759,64 @@ end;
 
 function SaveStringToUTF8File(const pFileName, pS: String; const pAppend: Boolean): Boolean;
 begin
-	Result := SaveStringToFile(pFileName, String2Utf8(pS), pAppend);
+  Result := SaveStringToFile(pFileName, String2Utf8(pS), pAppend);
 end;
 
 
 function LoadStringFromUTF8File(const pFileName: String; var oS: String): Boolean;
 var Utf8String: AnsiString;
 begin
-	Result := LoadStringFromFile(pFileName, Utf8String);
-	oS := Utf82String(Utf8String);
+  Result := LoadStringFromFile(pFileName, Utf8String);
+  oS := Utf82String(Utf8String);
 end;
 
 
 procedure StatusLabel(const Status1,Status2: string);
 begin
-	WizardForm.StatusLabel.Caption := Status1;
-	WizardForm.FilenameLabel.Caption := Status2;
-	WizardForm.Refresh();
+  WizardForm.StatusLabel.Caption := Status1;
+  WizardForm.FilenameLabel.Caption := Status2;
+  WizardForm.Refresh();
 end;
 
 
 //reverse encoding done by Encode
 function Decode(pText: String): String;
 var p: Integer;
-	tmp: String;
+  tmp: String;
 begin
-	if Pos('%',pText) = 0 then
-		Result := pText
-	else
-	begin
-		Result := '';
-		while Length(pText) > 0 do
-		begin
-			p := Pos('%',pText);
-			if p = 0 then
-			begin
-				Result := Result + pText;
-				break;
-			end;
-			Result := Result + Copy(pText,1,p-1);
-			tmp := '$' + Copy(pText,p+1,2);
-			Result := Result + Chr(StrToIntDef(tmp,32));
-			pText := Copy(pText,p+3,Length(pText));
-		end;
-	end;
+  if Pos('%',pText) = 0 then
+    Result := pText
+  else
+  begin
+    Result := '';
+    while Length(pText) > 0 do
+    begin
+      p := Pos('%',pText);
+      if p = 0 then
+      begin
+        Result := Result + pText;
+        break;
+      end;
+      Result := Result + Copy(pText,1,p-1);
+      tmp := '$' + Copy(pText,p+1,2);
+      Result := Result + Chr(StrToIntDef(tmp,32));
+      pText := Copy(pText,p+3,Length(pText));
+    end;
+  end;
 end;
 
 function GetThemedBgColor: TColor;
 begin
-	if HighContrastActive then
-	begin
-		Result := clWindow;
-	end else
-	begin
-		if IsDarkInstallMode then
-			Result := $2b2b2b
-		else
-			Result := $ffffff;
-	end;
+  if HighContrastActive then
+  begin
+    Result := clWindow;
+  end else
+  begin
+    if IsDarkInstallMode then
+      Result := $2b2b2b
+    else
+      Result := $ffffff;
+  end;
 end;
 
 function MessageWithURL(Message: TArrayOfString; const Title: String; ButtonText: TArrayOfString; const Typ: TMsgBoxType;
@@ -830,357 +830,357 @@ function DrawIconEx(hdc: HBitmap; xLeft,yTop: Integer; hIcon: Integer; cxWidth, 
 function DrawFocusRect(hDC: Integer; var lprc: TRect): BOOL; external 'DrawFocusRect@user32 stdcall';
 
 type
-	TArrayOfButton = Array of TNewButton;
+  TArrayOfButton = Array of TNewButton;
 
 const
-	//borders around message
-	MWU_LEFTBORDER = 25;
-	MWU_RIGHTBORDER = MWU_LEFTBORDER;
-	MWU_TOPBORDER = 26;
-	MWU_BOTTOMBORDER = MWU_TOPBORDER;
+  //borders around message
+  MWU_LEFTBORDER = 25;
+  MWU_RIGHTBORDER = MWU_LEFTBORDER;
+  MWU_TOPBORDER = 26;
+  MWU_BOTTOMBORDER = MWU_TOPBORDER;
     //space between elements (icon-text and between buttons)
-	MWU_HORZSPACING = 8;
+  MWU_HORZSPACING = 8;
     //space between labels
-	MWU_VERTSPACING = 4;
+  MWU_VERTSPACING = 4;
     //button sizes
-	MWU_BUTTONHEIGHT = 24;
-	MWU_MINBUTTONWIDTH = 86;
+  MWU_BUTTONHEIGHT = 24;
+  MWU_MINBUTTONWIDTH = 86;
     //height of area where buttons are placed
-	MWU_BUTTONAREAHEIGHT = 45;
+  MWU_BUTTONAREAHEIGHT = 45;
 
-	SM_CXSCREEN = 0;
-	SM_CXICON = 11;
-	SM_CYICON = 12;
-	SM_CXICONSPACING = 38;
-	SM_CYICONSPACING = 39;
+  SM_CXSCREEN = 0;
+  SM_CXICON = 11;
+  SM_CYICON = 12;
+  SM_CXICONSPACING = 38;
+  SM_CYICONSPACING = 39;
 
-	//COLOR_HOTLIGHT = 26;
+  //COLOR_HOTLIGHT = 26;
 
-	LR_DEFAULTSIZE = $00000040;
-	LR_SHARED = $00008000;
+  LR_DEFAULTSIZE = $00000040;
+  LR_SHARED = $00008000;
 
-	IMAGE_BITMAP = 0;
-	IMAGE_ICON = 1;
-	IMAGE_CURSOR = 2;
+  IMAGE_BITMAP = 0;
+  IMAGE_ICON = 1;
+  IMAGE_CURSOR = 2;
 
-	DI_IMAGE = 1;
-	DI_MASK = 2;
-	DI_NORMAL = DI_IMAGE or DI_MASK;
-	DI_DEFAULTSIZE = 8;
+  DI_IMAGE = 1;
+  DI_MASK = 2;
+  DI_NORMAL = DI_IMAGE or DI_MASK;
+  DI_DEFAULTSIZE = 8;
 
 var
-	URLList: TArrayOfString;
-	TextLabel: Array of TNewStaticText;
-	URLFocusImg: Array of TBitmapImage;
-	SingleLineHeight: Integer;
+  URLList: TArrayOfString;
+  TextLabel: Array of TNewStaticText;
+  URLFocusImg: Array of TBitmapImage;
+  SingleLineHeight: Integer;
 
 
 procedure UrlClick(Sender: TObject);
 var ErrorCode: Integer;
 begin
-	ShellExecAsOriginalUser('open',URLList[TNewStaticText(Sender).Tag],'','',SW_SHOWNORMAL,ewNoWait,ErrorCode);
+  ShellExecAsOriginalUser('open',URLList[TNewStaticText(Sender).Tag],'','',SW_SHOWNORMAL,ewNoWait,ErrorCode);
 end;
 
 
 // calculates maximum width of text labels
 // also counts URLs, and sets the length of URLList accordingly
 function Message_CalcLabelWidth(var Message: TArrayOfString; MessageForm: TSetupForm): Integer;
-var	MeasureLabel: TNewStaticText;
-	i,URLCount,DlgUnit,ScreenWidth: Integer;
+var MeasureLabel: TNewStaticText;
+  i,URLCount,DlgUnit,ScreenWidth: Integer;
 begin
-	MeasureLabel := TNewStaticText.Create(MessageForm);
-	with MeasureLabel do
-	begin
-		Parent := MessageForm;
-		Left := 0;
-		Top := 0;
-		AutoSize := True;
-	end;
+  MeasureLabel := TNewStaticText.Create(MessageForm);
+  with MeasureLabel do
+  begin
+    Parent := MessageForm;
+    Left := 0;
+    Top := 0;
+    AutoSize := True;
+  end;
 
-	MeasureLabel.Caption := 'X';
-	SingleLineHeight := MeasureLabel.Height;
+  MeasureLabel.Caption := 'X';
+  SingleLineHeight := MeasureLabel.Height;
 
-	Result := 0; //minimum width
-	URLCount := 0;
-	for i := 0 to GetArrayLength(Message) - 1 do
-	begin
-		if Length(Message[i]) < 1 then //simplifies things
-			Message[i] := ' ';
+  Result := 0; //minimum width
+  URLCount := 0;
+  for i := 0 to GetArrayLength(Message) - 1 do
+  begin
+    if Length(Message[i]) < 1 then //simplifies things
+      Message[i] := ' ';
 
-		if Message[i][1] <> '_' then
-			MeasureLabel.Caption := Message[i] //not an URL
-		else
-		begin //URL - check only the displayed text
-			if Pos(' ',Message[i]) > 0 then
-				MeasureLabel.Caption := Copy(Message[i],Pos(' ',Message[i])+1,Length(Message[i]))
-			else
-				MeasureLabel.Caption := Copy(Message[i],2,Length(Message[i]));
+    if Message[i][1] <> '_' then
+      MeasureLabel.Caption := Message[i] //not an URL
+    else
+    begin //URL - check only the displayed text
+      if Pos(' ',Message[i]) > 0 then
+        MeasureLabel.Caption := Copy(Message[i],Pos(' ',Message[i])+1,Length(Message[i]))
+      else
+        MeasureLabel.Caption := Copy(Message[i],2,Length(Message[i]));
 
-			URLCount := URLCount + 1;
-		end;
+      URLCount := URLCount + 1;
+    end;
 
-		if MeasureLabel.Width > Result then
-			Result := MeasureLabel.Width;
-	end;
-	MeasureLabel.Free;
+    if MeasureLabel.Width > Result then
+      Result := MeasureLabel.Width;
+  end;
+  MeasureLabel.Free;
 
-	SetArrayLength(URLList,URLCount); //needed later - no need to do a special loop just for this
-	SetArrayLength(URLFocusImg,URLCount);
+  SetArrayLength(URLList,URLCount); //needed later - no need to do a special loop just for this
+  SetArrayLength(URLFocusImg,URLCount);
 
-	DlgUnit := GetDialogBaseUnits() and $FFFF;  //ensure the dialog isn't too wide
-	ScreenWidth := GetSystemMetrics(SM_CXSCREEN);
-	if Result > ((278 * DlgUnit) div 4) then //278 is from http://blogs.msdn.com/b/oldnewthing/archive/2011/06/24/10178386.aspx
-		Result := ((278 * DlgUnit) div 4);
-	if Result > (ScreenWidth * 3) div 4 then
-		Result := (ScreenWidth * 3) div 4;
+  DlgUnit := GetDialogBaseUnits() and $FFFF;  //ensure the dialog isn't too wide
+  ScreenWidth := GetSystemMetrics(SM_CXSCREEN);
+  if Result > ((278 * DlgUnit) div 4) then //278 is from http://blogs.msdn.com/b/oldnewthing/archive/2011/06/24/10178386.aspx
+    Result := ((278 * DlgUnit) div 4);
+  if Result > (ScreenWidth * 3) div 4 then
+    Result := (ScreenWidth * 3) div 4;
 
 end;
 
 
 //find the longest button
 function Message_CalcButtonWidth(const ButtonText: TArrayOfString; MessageForm: TSetupForm): Integer;
-var	MeasureLabel: TNewStaticText;
-	i: Integer;
+var MeasureLabel: TNewStaticText;
+  i: Integer;
 begin
-	MeasureLabel := TNewStaticText.Create(MessageForm);
-	with MeasureLabel do
-	begin
-		Parent := MessageForm;
-		Left := 0;
-		Top := 0;
-		AutoSize := True;
-	end;
+  MeasureLabel := TNewStaticText.Create(MessageForm);
+  with MeasureLabel do
+  begin
+    Parent := MessageForm;
+    Left := 0;
+    Top := 0;
+    AutoSize := True;
+  end;
 
-	Result := ScaleX(MWU_MINBUTTONWIDTH - MWU_HORZSPACING * 2); //minimum width
-	for i := 0 to GetArrayLength(ButtonText) - 1 do
-	begin
-		MeasureLabel.Caption := ButtonText[i]
+  Result := ScaleX(MWU_MINBUTTONWIDTH - MWU_HORZSPACING * 2); //minimum width
+  for i := 0 to GetArrayLength(ButtonText) - 1 do
+  begin
+    MeasureLabel.Caption := ButtonText[i]
 
-		if MeasureLabel.Width > Result then
-			Result := MeasureLabel.Width;
-	end;
-	MeasureLabel.Free;
+    if MeasureLabel.Width > Result then
+      Result := MeasureLabel.Width;
+  end;
+  MeasureLabel.Free;
 
-	Result := Result + ScaleX(MWU_HORZSPACING * 2); //account for borders
+  Result := Result + ScaleX(MWU_HORZSPACING * 2); //account for borders
 end;
 
 
 procedure Message_Icon(const Typ: TMsgBoxType; TypImg: TBitmapImage);
-var	TypRect: TRect;
-	Icon: THandle;
-	TypIcon: Integer;
+var TypRect: TRect;
+  Icon: THandle;
+  TypIcon: Integer;
 begin
-	TypRect.Left := 0;
-	TypRect.Top := 0;
-	TypRect.Right := GetSystemMetrics(SM_CXICON);
-	TypRect.Bottom := GetSystemMetrics(SM_CYICON);
+  TypRect.Left := 0;
+  TypRect.Top := 0;
+  TypRect.Right := GetSystemMetrics(SM_CXICON);
+  TypRect.Bottom := GetSystemMetrics(SM_CYICON);
 
-	//Icon index from imageres.dll
-	case Typ of
-	mbInformation:
-		TypIcon := 76;
-	mbConfirmation:
-		TypIcon := 94;
-	mbError:
-		TypIcon := 79;
-	else
-		TypIcon := 93;
-	end;
+  //Icon index from imageres.dll
+  case Typ of
+  mbInformation:
+    TypIcon := 76;
+  mbConfirmation:
+    TypIcon := 94;
+  mbError:
+    TypIcon := 79;
+  else
+    TypIcon := 93;
+  end;
 
-	//TODO: icon loads with wrong size when using Large Fonts (SM_CXICON/CYICON is 40, but 32x32 icon loads - find out how to get the right size)
-	Icon := ExtractIcon(0,'imageres.dll',TypIcon)
-	//Icon := LoadIcon(0,TypIcon);
-	//Icon := LoadImage(0,TypIcon,IMAGE_ICON,0,0,LR_SHARED or LR_DEFAULTSIZE);
-	with TypImg do
-	begin
-		Left := ScaleX(MWU_LEFTBORDER);
-		Top := ScaleY(MWU_TOPBORDER);
-		Center := False;
-		Stretch := False;
-		AutoSize := True;
-		Bitmap.Width := GetSystemMetrics(SM_CXICON);
-		Bitmap.Height := GetSystemMetrics(SM_CYICON);
-		Bitmap.Canvas.Brush.Color := GetThemedBgColor;
-		Bitmap.Canvas.FillRect(TypRect);
-		DrawIcon(Bitmap.Canvas.Handle,0,0,Icon); //draws icon scaled
-		//DrawIconEx(Bitmap.Canvas.Handle,0,0,Icon,0,0,0,0,DI_NORMAL {or DI_DEFAULTSIZE}); //draws icon without scaling
-	end;
-	//DestroyIcon(Icon); //not needed with LR_SHARED or with LoadIcon
+  //TODO: icon loads with wrong size when using Large Fonts (SM_CXICON/CYICON is 40, but 32x32 icon loads - find out how to get the right size)
+  Icon := ExtractIcon(0,'imageres.dll',TypIcon)
+  //Icon := LoadIcon(0,TypIcon);
+  //Icon := LoadImage(0,TypIcon,IMAGE_ICON,0,0,LR_SHARED or LR_DEFAULTSIZE);
+  with TypImg do
+  begin
+    Left := ScaleX(MWU_LEFTBORDER);
+    Top := ScaleY(MWU_TOPBORDER);
+    Center := False;
+    Stretch := False;
+    AutoSize := True;
+    Bitmap.Width := GetSystemMetrics(SM_CXICON);
+    Bitmap.Height := GetSystemMetrics(SM_CYICON);
+    Bitmap.Canvas.Brush.Color := GetThemedBgColor;
+    Bitmap.Canvas.FillRect(TypRect);
+    DrawIcon(Bitmap.Canvas.Handle,0,0,Icon); //draws icon scaled
+    //DrawIconEx(Bitmap.Canvas.Handle,0,0,Icon,0,0,0,0,DI_NORMAL {or DI_DEFAULTSIZE}); //draws icon without scaling
+  end;
+  //DestroyIcon(Icon); //not needed with LR_SHARED or with LoadIcon
 end;
 
 
 procedure Message_SetUpURLLabel(URLLabel: TNewStaticText; const Msg: String; const URLNum: Integer);
 var Blank: TRect;
 begin
-	with URLLabel do
-	begin
-		if Pos(' ',Msg) > 0 then
-		begin
-			Caption := Copy(Msg,Pos(' ',Msg)+1,Length(Msg));
-			URLList[URLNum] := Copy(Msg, 2, Pos(' ',Msg)-1);
-		end
-		else
-		begin //no text after URL - display just URL
-			URLList[URLNum] := Copy(Msg, 2, Length(Msg));
-			Caption := URLList[URLNum];
-		end;
+  with URLLabel do
+  begin
+    if Pos(' ',Msg) > 0 then
+    begin
+      Caption := Copy(Msg,Pos(' ',Msg)+1,Length(Msg));
+      URLList[URLNum] := Copy(Msg, 2, Pos(' ',Msg)-1);
+    end
+    else
+    begin //no text after URL - display just URL
+      URLList[URLNum] := Copy(Msg, 2, Length(Msg));
+      Caption := URLList[URLNum];
+    end;
 
-		Hint := URLList[URLNum];
-		ShowHint := True;
+    Hint := URLList[URLNum];
+    ShowHint := True;
 
-		Font.Color := GetSysColor(COLOR_HOTLIGHT);
-		Font.Style := [fsUnderline];
-		Cursor := crHand;
-		OnClick := @UrlClick;
+    Font.Color := GetSysColor(COLOR_HOTLIGHT);
+    Font.Style := [fsUnderline];
+    Cursor := crHand;
+    OnClick := @UrlClick;
 
-		Tag := URLNum; //used to find the URL to open and bitmap to draw focus rectangle on
+    Tag := URLNum; //used to find the URL to open and bitmap to draw focus rectangle on
 
-		if Height = SingleLineHeight then //shrink label to actual text width
-			WordWrap := False;
+    if Height = SingleLineHeight then //shrink label to actual text width
+      WordWrap := False;
 
-		TabStop := True; //keyboard accessibility
-		TabOrder := URLNum;
-	end;
+    TabStop := True; //keyboard accessibility
+    TabOrder := URLNum;
+  end;
 
-  	URLFocusImg[URLNum] := TBitmapImage.Create(URLLabel.Parent); //focus rectangle needs a bitmap - prepare it here
-	with URLFocusImg[URLNum] do
-	begin
-		Left := URLLabel.Left - 1;
-		Top := URLLabel.Top - 1;
-		Stretch := False;
-		AutoSize := True;
-		Parent := URLLabel.Parent;
-		Bitmap.Width := URLLabel.Width + 2;
-		Bitmap.Height := URLLabel.Height + 2;
+    URLFocusImg[URLNum] := TBitmapImage.Create(URLLabel.Parent); //focus rectangle needs a bitmap - prepare it here
+  with URLFocusImg[URLNum] do
+  begin
+    Left := URLLabel.Left - 1;
+    Top := URLLabel.Top - 1;
+    Stretch := False;
+    AutoSize := True;
+    Parent := URLLabel.Parent;
+    Bitmap.Width := URLLabel.Width + 2;
+    Bitmap.Height := URLLabel.Height + 2;
 
-		SendToBack;
+    SendToBack;
 
-		Blank.Left := 0;
-		Blank.Top := 0;
-		Blank.Right := Width;
-		Blank.Bottom := Height;
-		Bitmap.Canvas.Brush.Color := GetThemedBgColor;
-		Bitmap.Canvas.FillRect(Blank);
-	end;
+    Blank.Left := 0;
+    Blank.Top := 0;
+    Blank.Right := Width;
+    Blank.Bottom := Height;
+    Bitmap.Canvas.Brush.Color := GetThemedBgColor;
+    Bitmap.Canvas.FillRect(Blank);
+  end;
 end;
 
 
 procedure Message_SetUpLabels(Message: TArrayOfString; TypImg: TBitmapImage;
                               const DialogTextWidth: Integer; MessagePanel: TPanel);
-var	i,URLNum,dy: Integer;
+var i,URLNum,dy: Integer;
 begin
-	SetArrayLength(TextLabel,GetArrayLength(Message));
-	URLNum := 0;
-	for i := 0 to GetArrayLength(TextLabel) - 1 do
-	begin
-		TextLabel[i] := TNewStaticText.Create(MessagePanel);
-		with TextLabel[i] do
-		begin
-			Parent := MessagePanel;
-			Left := TypImg.Left + TypImg.Width + ScaleX(MWU_HORZSPACING);
-			if i = 0 then
-				Top := TypImg.Top
-			else
-				Top := TextLabel[i-1].Top + TextLabel[i-1].Height + ScaleY(MWU_VERTSPACING);
+  SetArrayLength(TextLabel,GetArrayLength(Message));
+  URLNum := 0;
+  for i := 0 to GetArrayLength(TextLabel) - 1 do
+  begin
+    TextLabel[i] := TNewStaticText.Create(MessagePanel);
+    with TextLabel[i] do
+    begin
+      Parent := MessagePanel;
+      Left := TypImg.Left + TypImg.Width + ScaleX(MWU_HORZSPACING);
+      if i = 0 then
+        Top := TypImg.Top
+      else
+        Top := TextLabel[i-1].Top + TextLabel[i-1].Height + ScaleY(MWU_VERTSPACING);
 
-			WordWrap := True;
-			AutoSize := True;
-			Width := DialogTextWidth;
+      WordWrap := True;
+      AutoSize := True;
+      Width := DialogTextWidth;
 
-			if Message[i][1] <> '_' then
-				Caption := Message[i]
-			else
-			begin // apply URL formatting
-				Message_SetUpURLLabel(TextLabel[i], Message[i], URLNum);
-				URLNum := URLNum + 1;
-			end;
+      if Message[i][1] <> '_' then
+        Caption := Message[i]
+      else
+      begin // apply URL formatting
+        Message_SetUpURLLabel(TextLabel[i], Message[i], URLNum);
+        URLNum := URLNum + 1;
+      end;
 
-		end;
-	end;
+    end;
+  end;
 
-	i := GetArrayLength(TextLabel) - 1;
-	if TextLabel[i].Top + TextLabel[i].Height < TypImg.Top + TypImg.Height then //center labels vertically
-	begin
-		dy := (TypImg.Top + TypImg.Height - TextLabel[i].Top - TextLabel[i].Height) div 2;
-		for i := 0 to GetArrayLength(TextLabel) - 1 do
-			TextLabel[i].Top := TextLabel[i].Top + dy;
-	end;
+  i := GetArrayLength(TextLabel) - 1;
+  if TextLabel[i].Top + TextLabel[i].Height < TypImg.Top + TypImg.Height then //center labels vertically
+  begin
+    dy := (TypImg.Top + TypImg.Height - TextLabel[i].Top - TextLabel[i].Height) div 2;
+    for i := 0 to GetArrayLength(TextLabel) - 1 do
+      TextLabel[i].Top := TextLabel[i].Top + dy;
+  end;
 end;
 
 
 procedure Message_SetUpButtons(var Button: TArrayOfButton; ButtonText: TArrayOfString;
                               const ButtonWidth, DefaultButton, CancelButton: Integer; MessageForm: TSetupForm);
-var	i: Integer;
+var i: Integer;
 begin
-	SetArrayLength(Button,GetArrayLength(ButtonText));
-	for i := 0 to GetArrayLength(Button) - 1 do
-	begin
-		Button[i] := TNewButton.Create(MessageForm);
-		with Button[i] do
-		begin
-			Parent := MessageForm;
-			Width := ButtonWidth;
-			Height := ScaleY(MWU_BUTTONHEIGHT);
+  SetArrayLength(Button,GetArrayLength(ButtonText));
+  for i := 0 to GetArrayLength(Button) - 1 do
+  begin
+    Button[i] := TNewButton.Create(MessageForm);
+    with Button[i] do
+    begin
+      Parent := MessageForm;
+      Width := ButtonWidth;
+      Height := ScaleY(MWU_BUTTONHEIGHT);
 
-			if i = 0 then
-			begin
-				Left := MessageForm.ClientWidth - (ScaleX(MWU_HORZSPACING) + ButtonWidth) * GetArrayLength(ButtonText);
-				Top := MessageForm.ClientHeight - ScaleY(MWU_BUTTONAREAHEIGHT) +
-				       ScaleY(MWU_BUTTONAREAHEIGHT - MWU_BUTTONHEIGHT) div 2;
-			end else
-			begin
-				Left := Button[i-1].Left + ScaleX(MWU_HORZSPACING) + ButtonWidth;
-				Top := Button[i-1].Top;
-			end;
+      if i = 0 then
+      begin
+        Left := MessageForm.ClientWidth - (ScaleX(MWU_HORZSPACING) + ButtonWidth) * GetArrayLength(ButtonText);
+        Top := MessageForm.ClientHeight - ScaleY(MWU_BUTTONAREAHEIGHT) +
+               ScaleY(MWU_BUTTONAREAHEIGHT - MWU_BUTTONHEIGHT) div 2;
+      end else
+      begin
+        Left := Button[i-1].Left + ScaleX(MWU_HORZSPACING) + ButtonWidth;
+        Top := Button[i-1].Top;
+      end;
 
-			Caption := ButtonText[i];
-			ModalResult := i + 1;
+      Caption := ButtonText[i];
+      ModalResult := i + 1;
 
-			//set the initial focus to the default button
-			TabOrder := ((i - (DefaultButton - 1)) + GetArrayLength(Button)) mod (GetArrayLength(Button));
+      //set the initial focus to the default button
+      TabOrder := ((i - (DefaultButton - 1)) + GetArrayLength(Button)) mod (GetArrayLength(Button));
 
-			if DefaultButton = i + 1 then
-				Default := True;
+      if DefaultButton = i + 1 then
+        Default := True;
 
-			if CancelButton = i + 1 then
-				Cancel := True;
+      if CancelButton = i + 1 then
+        Cancel := True;
 
-		end;
-	end;
+    end;
+  end;
 end;
 
 
 //find out if URL label has focus
 //draw focus rectangle around it if so and return index of focused label
 function Message_FocusLabel(): Integer;
-var	i: Integer;
-	FocusRect: TRect;
+var i: Integer;
+  FocusRect: TRect;
 begin
-	Result := -1;
+  Result := -1;
 
-	for i := 0 to GetArrayLength(URLFocusImg) - 1 do //clear existing focus rectangle
-	begin
-		FocusRect.Left := 0;
-		FocusRect.Top := 0;
-		FocusRect.Right := URLFocusImg[i].Bitmap.Width;
-		FocusRect.Bottom := URLFocusImg[i].Bitmap.Height;
-		URLFocusImg[i].Bitmap.Canvas.FillRect(FocusRect);
-	end;
+  for i := 0 to GetArrayLength(URLFocusImg) - 1 do //clear existing focus rectangle
+  begin
+    FocusRect.Left := 0;
+    FocusRect.Top := 0;
+    FocusRect.Right := URLFocusImg[i].Bitmap.Width;
+    FocusRect.Bottom := URLFocusImg[i].Bitmap.Height;
+    URLFocusImg[i].Bitmap.Canvas.FillRect(FocusRect);
+  end;
 
-	for i := 0 to GetArrayLength(TextLabel) - 1 do
-	begin
-		if TextLabel[i].Focused then
-		begin
-			Result := i;
+  for i := 0 to GetArrayLength(TextLabel) - 1 do
+  begin
+    if TextLabel[i].Focused then
+    begin
+      Result := i;
 
-			FocusRect.Left := 0;
-			FocusRect.Top := 0;
-			FocusRect.Right := URLFocusImg[TextLabel[i].Tag].Bitmap.Width;
-			FocusRect.Bottom := URLFocusImg[TextLabel[i].Tag].Bitmap.Height;
+      FocusRect.Left := 0;
+      FocusRect.Top := 0;
+      FocusRect.Right := URLFocusImg[TextLabel[i].Tag].Bitmap.Width;
+      FocusRect.Bottom := URLFocusImg[TextLabel[i].Tag].Bitmap.Height;
 
-			DrawFocusRect(URLFocusImg[TextLabel[i].Tag].Bitmap.Canvas.Handle, FocusRect);
-		end;
-	end;
+      DrawFocusRect(URLFocusImg[TextLabel[i].Tag].Bitmap.Canvas.Handle, FocusRect);
+    end;
+  end;
 end;
 
 
@@ -1189,90 +1189,90 @@ end;
 procedure Message_KeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
 var URLIdx: Integer;
 begin
-	case Key of
-	9,37..40: //tab, arrow keys
-		begin
-			Message_FocusLabel();
-		end;
-	13,32: //enter, spacebar
-		begin
-			URLIdx := Message_FocusLabel(); //get focused label
-			if URLIdx > -1 then
-				UrlClick(TextLabel[URLIdx]);
-		end;
-	end;
+  case Key of
+  9,37..40: //tab, arrow keys
+    begin
+      Message_FocusLabel();
+    end;
+  13,32: //enter, spacebar
+    begin
+      URLIdx := Message_FocusLabel(); //get focused label
+      if URLIdx > -1 then
+        UrlClick(TextLabel[URLIdx]);
+    end;
+  end;
 end;
 
 
 function MessageWithURL(Message: TArrayOfString; const Title: String; ButtonText: TArrayOfString; const Typ: TMsgBoxType;
                         const DefaultButton, CancelButton: Integer): Integer;
 var MessageForm: TSetupForm;
-	Button: TArrayOfButton;
-	DialogTextWidth, ButtonWidth: Integer;
-	MessagePanel: TPanel;
-	TypImg: TBitmapImage;
-	i: Integer;
+  Button: TArrayOfButton;
+  DialogTextWidth, ButtonWidth: Integer;
+  MessagePanel: TPanel;
+  TypImg: TBitmapImage;
+  i: Integer;
 begin
-	if (not IsUninstaller and WizardSilent) or (IsUninstaller and UninstallSilent) then
-	begin
-		Result := DefaultButton;
-		exit;
-	end;
+  if (not IsUninstaller and WizardSilent) or (IsUninstaller and UninstallSilent) then
+  begin
+    Result := DefaultButton;
+    exit;
+  end;
 
-	MessageForm := CreateCustomForm(ScaleX(256), ScaleY(128), False, True);
+  MessageForm := CreateCustomForm(ScaleX(256), ScaleY(128), False, True);
 
-	MessageForm.Caption := Title;
-	if (CancelButton = 0) or (CancelButton > GetArrayLength(ButtonText)) then //no cancel button - remove close button
-		MessageForm.BorderIcons := MessageForm.BorderIcons - [biSystemMenu];
+  MessageForm.Caption := Title;
+  if (CancelButton = 0) or (CancelButton > GetArrayLength(ButtonText)) then //no cancel button - remove close button
+    MessageForm.BorderIcons := MessageForm.BorderIcons - [biSystemMenu];
 
-	MessagePanel := TPanel.Create(MessageForm); //Vista-style background
-	with MessagePanel do
-	begin
-		Parent := MessageForm;
-		BevelInner := bvNone;
-		BevelOuter := bvNone;
-		BevelWidth := 0;
-		ParentBackground := False;
-		Color := clWindow;
-		Left := 0;
-		Top := 0;
-	end;
+  MessagePanel := TPanel.Create(MessageForm); //Vista-style background
+  with MessagePanel do
+  begin
+    Parent := MessageForm;
+    BevelInner := bvNone;
+    BevelOuter := bvNone;
+    BevelWidth := 0;
+    ParentBackground := False;
+    Color := clWindow;
+    Left := 0;
+    Top := 0;
+  end;
 
-	DialogTextWidth := Message_CalcLabelWidth(Message, MessageForm);
-	ButtonWidth := Message_CalcButtonWidth(ButtonText, MessageForm);
+  DialogTextWidth := Message_CalcLabelWidth(Message, MessageForm);
+  ButtonWidth := Message_CalcButtonWidth(ButtonText, MessageForm);
 
-	TypImg := TBitmapImage.Create(MessagePanel);
-	TypImg.Parent := MessagePanel;
-	Message_Icon(Typ, TypImg);
+  TypImg := TBitmapImage.Create(MessagePanel);
+  TypImg.Parent := MessagePanel;
+  Message_Icon(Typ, TypImg);
 
-	Message_SetUpLabels(Message, TypImg, DialogTextWidth, MessagePanel);
+  Message_SetUpLabels(Message, TypImg, DialogTextWidth, MessagePanel);
 
-	i := GetArrayLength(TextLabel) - 1;
-	MessagePanel.ClientHeight := TextLabel[i].Top + TextLabel[i].Height + ScaleY(MWU_BOTTOMBORDER);
+  i := GetArrayLength(TextLabel) - 1;
+  MessagePanel.ClientHeight := TextLabel[i].Top + TextLabel[i].Height + ScaleY(MWU_BOTTOMBORDER);
 
-	MessagePanel.ClientWidth := DialogTextWidth + TypImg.Width + TypImg.Left + ScaleX(MWU_HORZSPACING + MWU_RIGHTBORDER);
-	if MessagePanel.ClientWidth <
-	   (ButtonWidth + ScaleX(MWU_HORZSPACING)) * GetArrayLength(ButtonText) + ScaleX(MWU_HORZSPACING) then //ensure buttons fit
-		MessagePanel.ClientWidth := (ButtonWidth + ScaleX(MWU_HORZSPACING)) * GetArrayLength(ButtonText) + ScaleX(MWU_HORZSPACING);
+  MessagePanel.ClientWidth := DialogTextWidth + TypImg.Width + TypImg.Left + ScaleX(MWU_HORZSPACING + MWU_RIGHTBORDER);
+  if MessagePanel.ClientWidth <
+     (ButtonWidth + ScaleX(MWU_HORZSPACING)) * GetArrayLength(ButtonText) + ScaleX(MWU_HORZSPACING) then //ensure buttons fit
+    MessagePanel.ClientWidth := (ButtonWidth + ScaleX(MWU_HORZSPACING)) * GetArrayLength(ButtonText) + ScaleX(MWU_HORZSPACING);
 
-	MessageForm.ClientWidth := MessagePanel.Width;
-	MessageForm.ClientHeight := MessagePanel.Height + ScaleY(MWU_BUTTONAREAHEIGHT);
+  MessageForm.ClientWidth := MessagePanel.Width;
+  MessageForm.ClientHeight := MessagePanel.Height + ScaleY(MWU_BUTTONAREAHEIGHT);
 
-	Message_SetUpButtons(Button, ButtonText, ButtonWidth, DefaultButton, CancelButton, MessageForm);
+  Message_SetUpButtons(Button, ButtonText, ButtonWidth, DefaultButton, CancelButton, MessageForm);
 
-	MessageForm.OnKeyUp := @Message_KeyUp; //needed for keyboard access of URL labels
-	MessageForm.KeyPreView := True;
+  MessageForm.OnKeyUp := @Message_KeyUp; //needed for keyboard access of URL labels
+  MessageForm.KeyPreView := True;
 
-	Result := MessageForm.ShowModal;
+  Result := MessageForm.ShowModal;
 
-	for i := 0 to GetArrayLength(TextLabel) - 1 do
-		TextLabel[i].Free;
-	SetArrayLength(TextLabel,0);
-	for i := 0 to GetArrayLength(URLFocusImg) - 1 do
-		URLFocusImg[i].Free;
-	SetArrayLength(URLFocusImg,0);
+  for i := 0 to GetArrayLength(TextLabel) - 1 do
+    TextLabel[i].Free;
+  SetArrayLength(TextLabel,0);
+  for i := 0 to GetArrayLength(URLFocusImg) - 1 do
+    URLFocusImg[i].Free;
+  SetArrayLength(URLFocusImg,0);
 
-	MessageForm.Release;
+  MessageForm.Release;
 end;
 
 
@@ -1284,87 +1284,87 @@ function ReleaseDC(hWnd, hDC: Integer): Integer; external 'ReleaseDC@User32 stdc
 function GetDeviceCaps(hDC, nIndex: Integer): Integer; external 'GetDeviceCaps@GDI32 stdcall';
 
 const
-	BITSPIXEL = 12;
+  BITSPIXEL = 12;
   PLANES = 14;
 function BPPTooLowWarning(): Boolean;
 var hDC, bpp, pl: Integer;
-	Message,Buttons: TArrayOfString;
+  Message,Buttons: TArrayOfString;
 begin
-	hDC := GetDC(0);
-	pl := GetDeviceCaps(hDC, PLANES);
-	bpp := GetDeviceCaps(hDC, BITSPIXEL);
-	ReleaseDC(0,hDC);
+  hDC := GetDC(0);
+  pl := GetDeviceCaps(hDC, PLANES);
+  bpp := GetDeviceCaps(hDC, BITSPIXEL);
+  ReleaseDC(0,hDC);
 
-	bpp := pl * bpp;
+  bpp := pl * bpp;
 
-	if bpp < 32 then
-	begin
-		SetArrayLength(Message,1);
-		SetArrayLength(Buttons,2);
-		Message[0] := CustomMessage('Require32BPP');
-		Buttons[0] := CustomMessage('Require32BPPContinue');
-		Buttons[1] := CustomMessage('Require32BPPExit');
-		if (not WizardSilent) and
-		   (MessageWithURL(Message, CustomMessage('Require32BPPTitle'), Buttons, mbError, 2, 2) = 2) then
-			Result := False
-		else
-			Result := True;
-	end
-	else
-		Result := True;
+  if bpp < 32 then
+  begin
+    SetArrayLength(Message,1);
+    SetArrayLength(Buttons,2);
+    Message[0] := CustomMessage('Require32BPP');
+    Buttons[0] := CustomMessage('Require32BPPContinue');
+    Buttons[1] := CustomMessage('Require32BPPExit');
+    if (not WizardSilent) and
+       (MessageWithURL(Message, CustomMessage('Require32BPPTitle'), Buttons, mbError, 2, 2) = 2) then
+      Result := False
+    else
+      Result := True;
+  end
+  else
+    Result := True;
 end;
 
 //Check what type of installation is being done
 procedure CheckInstallType;
 var
-	isInstalled: String;
-	InstallLocation: String;
-	Installed_AppVersion: String;
-	Installed_AppVersionInt: Int64;
-	Installer_AppVersionInt: Int64;
-	ErrorCode: Integer;
+  isInstalled: String;
+  InstallLocation: String;
+  Installed_AppVersion: String;
+  Installed_AppVersionInt: Int64;
+  Installer_AppVersionInt: Int64;
+  ErrorCode: Integer;
 begin
-	isInstalled := 'notInstalled';
-	if RegQueryStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
+  isInstalled := 'notInstalled';
+  if RegQueryStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
                            'DisplayVersion', Installed_AppVersion) then begin
-	    RegQueryStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
+      RegQueryStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
                            'InstallLocation', InstallLocation);
-		StrToVersion(Installed_AppVersion, Installed_AppVersionInt);
-		isInstalled := 'Installed';
-	end;
-	if RegQueryStringValue(HKLM, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
+    StrToVersion(Installed_AppVersion, Installed_AppVersionInt);
+    isInstalled := 'Installed';
+  end;
+  if RegQueryStringValue(HKLM, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
                            'DisplayVersion', Installed_AppVersion) then begin
-	    RegQueryStringValue(HKLM, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
+      RegQueryStringValue(HKLM, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1',
                            'InstallLocation', InstallLocation);
-	    StrToVersion(Installed_AppVersion, Installed_AppVersionInt);
-		isInstalled := 'Installed';
-	end;
+      StrToVersion(Installed_AppVersion, Installed_AppVersionInt);
+    isInstalled := 'Installed';
+  end;
 
-	StrToVersion('{#FULL_GIMP_VERSION}', Installer_AppVersionInt);
+  StrToVersion('{#FULL_GIMP_VERSION}', Installer_AppVersionInt);
 
-	if (isInstalled = 'Installed') and not DirExists(ExtractFilePath(RemoveBackslashUnlessRoot(InstallLocation))) then begin
+  if (isInstalled = 'Installed') and not DirExists(ExtractFilePath(RemoveBackslashUnlessRoot(InstallLocation))) then begin
         InstallType := 'itRepair';
     end else if isInstalled = 'notInstalled' then begin
-	    InstallType := 'itInstall';
-	end else if ComparePackedVersion(Installer_AppVersionInt, Installed_AppVersionInt) = 0 then begin
-		InstallType := 'itReinstall';
+      InstallType := 'itInstall';
+  end else if ComparePackedVersion(Installer_AppVersionInt, Installed_AppVersionInt) = 0 then begin
+    InstallType := 'itReinstall';
     end else if ComparePackedVersion(Installer_AppVersionInt, Installed_AppVersionInt) > 0 then begin
-	    InstallType := 'itUpdate';
+      InstallType := 'itUpdate';
     end else begin
-	    InstallType := 'itDowngrade';
-	end;
-	DebugMsg('CheckInstallType','Installed GIMP {#GIMP_MUTEX_VERSION} is: ' + Installed_AppVersion + ', installer is: {#FULL_GIMP_VERSION}. So Install type is: ' + InstallType);
+      InstallType := 'itDowngrade';
+  end;
+  DebugMsg('CheckInstallType','Installed GIMP {#GIMP_MUTEX_VERSION} is: ' + Installed_AppVersion + ', installer is: {#FULL_GIMP_VERSION}. So Install type is: ' + InstallType);
 
-	//Inno does not support direct downgrade so let's block it to not break installs
-	if (not WizardSilent) and (InstallType = 'itDowngrade') then begin
-	    if SuppressibleMsgBox(FmtMessage(CustomMessage('DowngradeError'), [Installed_AppVersion, '{#FULL_GIMP_VERSION}']), mbCriticalError, MB_OK, IDOK) = IDOK then begin
-			ShellExecAsOriginalUser('','ms-settings:appsfeatures','','',SW_SHOW,ewNoWait,ErrorCode);
-			Abort;
-		end;
-	end else if (WizardSilent) and (InstallType = 'itDowngrade') then begin
-	    DebugMsg('CheckInstallType',CustomMessage('DowngradeError'));
-		Abort;
-	end;
+  //Inno does not support direct downgrade so let's block it to not break installs
+  if (not WizardSilent) and (InstallType = 'itDowngrade') then begin
+      if SuppressibleMsgBox(FmtMessage(CustomMessage('DowngradeError'), [Installed_AppVersion, '{#FULL_GIMP_VERSION}']), mbCriticalError, MB_OK, IDOK) = IDOK then begin
+      ShellExecAsOriginalUser('','ms-settings:appsfeatures','','',SW_SHOW,ewNoWait,ErrorCode);
+      Abort;
+    end;
+  end else if (WizardSilent) and (InstallType = 'itDowngrade') then begin
+      DebugMsg('CheckInstallType',CustomMessage('DowngradeError'));
+    Abort;
+  end;
 end;
 
 function InitializeSetup(): Boolean;
@@ -1372,41 +1372,41 @@ function InitializeSetup(): Boolean;
 var Message,Buttons: TArrayOfString;
 #endif
 begin
-	CheckInstallType;
+  CheckInstallType;
 
-	ConfigOverride := coUndefined;
+  ConfigOverride := coUndefined;
 
-	Result := BPPTooLowWarning();
+  Result := BPPTooLowWarning();
 
 //Unstable version warning
 #if Defined(GIMP_UNSTABLE) || Defined(GIMP_RC_VERSION) || !Defined(GIMP_RELEASE) || Defined(DEVEL_WARNING)
-	Explode(Message, CustomMessage('DevelopmentWarning'), #13#10);
-	SetArrayLength(Buttons,2);
-	Buttons[0] := CustomMessage('DevelopmentButtonContinue');
-	Buttons[1] := CustomMessage('DevelopmentButtonExit');
-	if (not WizardSilent) and
-	   (MessageWithURL(Message, CustomMessage('DevelopmentWarningTitle'), Buttons, mbError, 2, 2) = 2) then
-	begin
-		Result := False;
-		Exit;
-	end;
+  Explode(Message, CustomMessage('DevelopmentWarning'), #13#10);
+  SetArrayLength(Buttons,2);
+  Buttons[0] := CustomMessage('DevelopmentButtonContinue');
+  Buttons[1] := CustomMessage('DevelopmentButtonExit');
+  if (not WizardSilent) and
+     (MessageWithURL(Message, CustomMessage('DevelopmentWarningTitle'), Buttons, mbError, 2, 2) = 2) then
+  begin
+    Result := False;
+    Exit;
+  end;
 #endif
 
-	try
-		ExtractTemporaryFile('installsplash_top.scale-100.bmp');
-		ExtractTemporaryFile('installsplash_top.scale-125.bmp');
-		ExtractTemporaryFile('installsplash_top.scale-150.bmp');
-		ExtractTemporaryFile('installsplash_top.scale-175.bmp');
-		ExtractTemporaryFile('installsplash_top.scale-200.bmp');
-		ExtractTemporaryFile('installsplash_top.scale-225.bmp');
-		ExtractTemporaryFile('installsplash_top.scale-250.bmp');
-		ExtractTemporaryFile('installsplash_bottom.bmp');
-	except
-		DebugMsg('InitializeSetup','Error extracting temporary file: ' + GetExceptionMessage);
-		MsgBox(CustomMessage('ErrorExtractingTemp') + #13#13 + GetExceptionMessage,mbError,MB_OK);
-		Result := False;
-		exit;
-	end;
+  try
+    ExtractTemporaryFile('installsplash_top.scale-100.bmp');
+    ExtractTemporaryFile('installsplash_top.scale-125.bmp');
+    ExtractTemporaryFile('installsplash_top.scale-150.bmp');
+    ExtractTemporaryFile('installsplash_top.scale-175.bmp');
+    ExtractTemporaryFile('installsplash_top.scale-200.bmp');
+    ExtractTemporaryFile('installsplash_top.scale-225.bmp');
+    ExtractTemporaryFile('installsplash_top.scale-250.bmp');
+    ExtractTemporaryFile('installsplash_bottom.bmp');
+  except
+    DebugMsg('InitializeSetup','Error extracting temporary file: ' + GetExceptionMessage);
+    MsgBox(CustomMessage('ErrorExtractingTemp') + #13#13 + GetExceptionMessage,mbError,MB_OK);
+    Result := False;
+    exit;
+  end;
 end;
 
 
@@ -1420,195 +1420,195 @@ procedure UpdateWizardImages();
 var TopBitmap,BottomBitmap: TFileStream;
 begin
     if not WizardSilent then begin
-		//Automatically scaled splash image
-		WelcomeBitmapTop := TBitmapImage.Create(WizardForm.WelcomePage);
-		with WelcomeBitmapTop do
-		begin
-			Parent := WizardForm.WelcomePage;
-			Width := WizardForm.WelcomePage.ClientWidth
-			Height := {#GIMP_SPLASH_HEIGHT} * Width / {#GIMP_SPLASH_WIDTH}
-			Left := 0;
-			Top := (WizardForm.ClientHeight - Height) / 2;
-			AutoSize := False;
-			Stretch := True;
-			Center := True;
-		end;
-		try
-			if WelcomeBitmapTop.Height <= 314 then begin
-				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-100.bmp'),fmOpenRead);
-			end else if WelcomeBitmapTop.Height <= 386 then begin
-				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-125.bmp'),fmOpenRead);
-			end else if WelcomeBitmapTop.Height <= 459 then begin
-				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-150.bmp'),fmOpenRead);
-			end else if WelcomeBitmapTop.Height <= 556 then begin
-				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-175.bmp'),fmOpenRead);
-			end else if WelcomeBitmapTop.Height <= 604 then begin
-				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-200.bmp'),fmOpenRead);
-			end else if WelcomeBitmapTop.Height <= 700 then begin
-				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-225.bmp'),fmOpenRead);
-			end else begin
-				TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-250.bmp'),fmOpenRead);
-			end;
-			DebugMsg('UpdateWizardImages','Height: ' + IntToStr(WelcomeBitmapTop.Height));
-			WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(TopBitmap);
-			WelcomeBitmapTop.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
-		except
-			DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
-		finally
-			if TopBitmap <> nil then
-				TopBitmap.Free;
-		end;
-		WizardForm.WelcomePage.Color := clNone;
+    //Automatically scaled splash image
+    WelcomeBitmapTop := TBitmapImage.Create(WizardForm.WelcomePage);
+    with WelcomeBitmapTop do
+    begin
+      Parent := WizardForm.WelcomePage;
+      Width := WizardForm.WelcomePage.ClientWidth
+      Height := {#GIMP_SPLASH_HEIGHT} * Width / {#GIMP_SPLASH_WIDTH}
+      Left := 0;
+      Top := (WizardForm.ClientHeight - Height) / 2;
+      AutoSize := False;
+      Stretch := True;
+      Center := True;
+    end;
+    try
+      if WelcomeBitmapTop.Height <= 314 then begin
+        TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-100.bmp'),fmOpenRead);
+      end else if WelcomeBitmapTop.Height <= 386 then begin
+        TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-125.bmp'),fmOpenRead);
+      end else if WelcomeBitmapTop.Height <= 459 then begin
+        TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-150.bmp'),fmOpenRead);
+      end else if WelcomeBitmapTop.Height <= 556 then begin
+        TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-175.bmp'),fmOpenRead);
+      end else if WelcomeBitmapTop.Height <= 604 then begin
+        TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-200.bmp'),fmOpenRead);
+      end else if WelcomeBitmapTop.Height <= 700 then begin
+        TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-225.bmp'),fmOpenRead);
+      end else begin
+        TopBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_top.scale-250.bmp'),fmOpenRead);
+      end;
+      DebugMsg('UpdateWizardImages','Height: ' + IntToStr(WelcomeBitmapTop.Height));
+      WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(TopBitmap);
+      WelcomeBitmapTop.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
+    except
+      DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
+    finally
+      if TopBitmap <> nil then
+        TopBitmap.Free;
+    end;
+    WizardForm.WelcomePage.Color := clNone;
 
-		//Blurred background
-		WelcomeBitmapBottom := TBitmapImage.Create(WizardForm);
-		with WelcomeBitmapBottom do
-		begin
-			Left := 0;
-			Top := 0;
-			Parent := WizardForm;
-			Width := WizardForm.ClientWidth;
-			Height := WizardForm.ClientHeight;
-			Stretch := True;
-		end;
-		try
-			BottomBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_bottom.bmp'),fmOpenRead);
-			WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(BottomBitmap);
-			WelcomeBitmapBottom.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
-		except
-			DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
-		finally
-			if BottomBitmap <> nil then
-				BottomBitmap.Free;
-		end;
-		WizardForm.WizardBitmapImage.Width := WizardForm.ClientWidth;
-		WizardForm.WizardBitmapImage.Height := WizardForm.ClientHeight;
+    //Blurred background
+    WelcomeBitmapBottom := TBitmapImage.Create(WizardForm);
+    with WelcomeBitmapBottom do
+    begin
+      Left := 0;
+      Top := 0;
+      Parent := WizardForm;
+      Width := WizardForm.ClientWidth;
+      Height := WizardForm.ClientHeight;
+      Stretch := True;
+    end;
+    try
+      BottomBitmap := TFileStream.Create(ExpandConstant('{tmp}\installsplash_bottom.bmp'),fmOpenRead);
+      WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(BottomBitmap);
+      WelcomeBitmapBottom.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
+    except
+      DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
+    finally
+      if BottomBitmap <> nil then
+        BottomBitmap.Free;
+    end;
+    WizardForm.WizardBitmapImage.Width := WizardForm.ClientWidth;
+    WizardForm.WizardBitmapImage.Height := WizardForm.ClientHeight;
     end;
 end;
 
 procedure PrepareWelcomePage();
 begin
-	if not WizardSilent then
-	begin
-		//Inno does not support "repairing" a lost install so let's show Customize button to allow to repair installs
-		//Inno does not support changing components at reinstall or update so let's hide Customize to not break installs
-		WizardForm.NextButton.Visible := False;
-		if not (InstallType = 'itRepair') then begin
-		    btnInstall.Visible := True;
-		end;
-		btnInstall.TabOrder := 1;
-		if (InstallType = 'itRepair') or (InstallType = 'itInstall') then begin
-		    btnCustomize.Visible := True;
-		end;
+  if not WizardSilent then
+  begin
+    //Inno does not support "repairing" a lost install so let's show Customize button to allow to repair installs
+    //Inno does not support changing components at reinstall or update so let's hide Customize to not break installs
+    WizardForm.NextButton.Visible := False;
+    if not (InstallType = 'itRepair') then begin
+        btnInstall.Visible := True;
+    end;
+    btnInstall.TabOrder := 1;
+    if (InstallType = 'itRepair') or (InstallType = 'itInstall') then begin
+        btnCustomize.Visible := True;
+    end;
 
-		WizardForm.Bevel.Visible := False;
-		WizardForm.WelcomeLabel1.Visible := False;
-		WizardForm.WelcomeLabel2.Visible := False;
-		WelcomeBitmapBottom.Visible := True;
-	end;
+    WizardForm.Bevel.Visible := False;
+    WizardForm.WelcomeLabel1.Visible := False;
+    WizardForm.WelcomeLabel2.Visible := False;
+    WelcomeBitmapBottom.Visible := True;
+  end;
 end;
 
 procedure CleanUpCustomWelcome();
 begin
-	WizardForm.NextButton.Visible := True;
-	if not (InstallType = 'itRepair') then begin
-	     btnInstall.Visible := False;
-	end;
-	if (InstallType = 'itRepair') or (InstallType = 'itInstall') then begin
-	     btnCustomize.Visible := False;
+  WizardForm.NextButton.Visible := True;
+  if not (InstallType = 'itRepair') then begin
+       btnInstall.Visible := False;
+  end;
+  if (InstallType = 'itRepair') or (InstallType = 'itInstall') then begin
+       btnCustomize.Visible := False;
     end;
 
-	WizardForm.Bevel.Visible := True;
-	WelcomeBitmapBottom.Visible := False;
+  WizardForm.Bevel.Visible := True;
+  WelcomeBitmapBottom.Visible := False;
 end;
 
 procedure InstallOnClick(Sender: TObject);
 begin
-	DebugMsg('Install mode','Simple');
-	InstallMode := imSimple;
+  DebugMsg('Install mode','Simple');
+  InstallMode := imSimple;
 
-	CleanUpCustomWelcome();
+  CleanUpCustomWelcome();
 
-	WizardForm.NextButton.OnClick(TNewButton(Sender).Parent);
+  WizardForm.NextButton.OnClick(TNewButton(Sender).Parent);
 end;
 
 procedure CustomizeOnClick(Sender: TObject);
 begin
-	DebugMsg('Install mode','Custom');
-	InstallMode := imCustom;
+  DebugMsg('Install mode','Custom');
+  InstallMode := imCustom;
 
-	CleanUpCustomWelcome();
+  CleanUpCustomWelcome();
 
-	WizardForm.NextButton.OnClick(TNewButton(Sender).Parent);
+  WizardForm.NextButton.OnClick(TNewButton(Sender).Parent);
 end;
 
 procedure InitCustomPages();
-var	i,ButtonWidth: Integer;
-	ButtonText: TArrayOfString;
-	MeasureLabel: TNewStaticText;
-	//lblInfo: TNewStaticText;
+var i,ButtonWidth: Integer;
+  ButtonText: TArrayOfString;
+  MeasureLabel: TNewStaticText;
+  //lblInfo: TNewStaticText;
 begin
-	DebugMsg('InitCustomPages','wpLicense');
+  DebugMsg('InitCustomPages','wpLicense');
 
-	CheckInstallType;
+  CheckInstallType;
 
   //Install-Reinstall-Update button
-	btnInstall := TNewButton.Create(WizardForm);
-	with btnInstall do
-	begin
-		Parent := WizardForm;
-		Width := WizardForm.NextButton.Width;
-		Height := WizardForm.NextButton.Height;
-		Left := WizardForm.NextButton.Left;
-		Top := WizardForm.NextButton.Top;
-		Default := True;
-		Visible := False;
-		if InstallType = 'itInstall' then begin
-		    Caption := CustomMessage('Install');
-	    end else if InstallType = 'itReinstall' then begin
-		    Caption := CustomMessage('Reinstall');
-	    end else if InstallType = 'itUpdate' then begin
-		    Caption := CustomMessage('Update');
-		end;
+  btnInstall := TNewButton.Create(WizardForm);
+  with btnInstall do
+  begin
+    Parent := WizardForm;
+    Width := WizardForm.NextButton.Width;
+    Height := WizardForm.NextButton.Height;
+    Left := WizardForm.NextButton.Left;
+    Top := WizardForm.NextButton.Top;
+    Default := True;
+    Visible := False;
+    if InstallType = 'itInstall' then begin
+        Caption := CustomMessage('Install');
+      end else if InstallType = 'itReinstall' then begin
+        Caption := CustomMessage('Reinstall');
+      end else if InstallType = 'itUpdate' then begin
+        Caption := CustomMessage('Update');
+    end;
 
-		OnClick := @InstallOnClick;
-	end;
+    OnClick := @InstallOnClick;
+  end;
 
-	//Customize-Repair button
-	MeasureLabel := TNewStaticText.Create(WizardForm);
-	with MeasureLabel do
-	begin
-		Parent := WizardForm;
-		Left := 0;
-		Top := 0;
-		AutoSize := True;
-		if InstallType = 'itRepair' then begin
-		    Caption := CustomMessage('Repair');
-		end else if InstallType = 'itInstall' then begin
-		    Caption := CustomMessage('Customize');
-		end;
-	end;
-	btnCustomize := TNewButton.Create(WizardForm);
-	with btnCustomize do
-	begin
-		Parent := WizardForm;
-		Width := WizardForm.NextButton.Width;
-		if Width < (MeasureLabel.Width + ScaleX(8)) then
-			Width := MeasureLabel.Width + ScaleX(8);
-		Height := WizardForm.NextButton.Height;
-		Left := WizardForm.ClientWidth - (WizardForm.CancelButton.Left + WizardForm.CancelButton.Width);
-		//Left := WizardForm.BackButton.Left;
-		Top := WizardForm.NextButton.Top;
-		Visible := False;
-		if InstallType = 'itRepair' then begin
-		    Caption := CustomMessage('Repair');
-		end else if InstallType = 'itInstall' then begin
-		    Caption := CustomMessage('Customize');
-		end;
+  //Customize-Repair button
+  MeasureLabel := TNewStaticText.Create(WizardForm);
+  with MeasureLabel do
+  begin
+    Parent := WizardForm;
+    Left := 0;
+    Top := 0;
+    AutoSize := True;
+    if InstallType = 'itRepair' then begin
+        Caption := CustomMessage('Repair');
+    end else if InstallType = 'itInstall' then begin
+        Caption := CustomMessage('Customize');
+    end;
+  end;
+  btnCustomize := TNewButton.Create(WizardForm);
+  with btnCustomize do
+  begin
+    Parent := WizardForm;
+    Width := WizardForm.NextButton.Width;
+    if Width < (MeasureLabel.Width + ScaleX(8)) then
+      Width := MeasureLabel.Width + ScaleX(8);
+    Height := WizardForm.NextButton.Height;
+    Left := WizardForm.ClientWidth - (WizardForm.CancelButton.Left + WizardForm.CancelButton.Width);
+    //Left := WizardForm.BackButton.Left;
+    Top := WizardForm.NextButton.Top;
+    Visible := False;
+    if InstallType = 'itRepair' then begin
+        Caption := CustomMessage('Repair');
+    end else if InstallType = 'itInstall' then begin
+        Caption := CustomMessage('Customize');
+    end;
 
-		OnClick := @CustomizeOnClick;
-	end;
-	MeasureLabel.Free;
+    OnClick := @CustomizeOnClick;
+  end;
+  MeasureLabel.Free;
 end;
 
 
@@ -1616,12 +1616,12 @@ end;
 procedure InfoBeforeLikeLicense();
 begin
     if not IsDarkInstallMode then begin
-	    WizardForm.Bevel.Visible := False;
-	end;
+      WizardForm.Bevel.Visible := False;
+  end;
 
-	WizardForm.InfoBeforeClickLabel.Visible := False;
-	WizardForm.InfoBeforeMemo.Height := WizardForm.InfoBeforeMemo.Height + WizardForm.InfoBeforeMemo.Top - WizardForm.InfoBeforeClickLabel.Top;
-	WizardForm.InfoBeforeMemo.Top := WizardForm.InfoBeforeClickLabel.Top;
+  WizardForm.InfoBeforeClickLabel.Visible := False;
+  WizardForm.InfoBeforeMemo.Height := WizardForm.InfoBeforeMemo.Height + WizardForm.InfoBeforeMemo.Top - WizardForm.InfoBeforeClickLabel.Top;
+  WizardForm.InfoBeforeMemo.Top := WizardForm.InfoBeforeClickLabel.Top;
 end;
 
 
@@ -1630,84 +1630,84 @@ end;
 
 //4. COMPONENTS: Add panel with description on click, to the right of the list
 var
-	lblComponentDescription: TNewStaticText;
+  lblComponentDescription: TNewStaticText;
 
 procedure ComponentsListOnClick(pSender: TObject); forward;
 
 procedure SelectComponentsFaceLift();
 var pnlDescription: TPanel;
-	lblDescription: TNewStaticText;
+  lblDescription: TNewStaticText;
 begin
-	DebugMsg('SelectComponentsFaceLift','');
+  DebugMsg('SelectComponentsFaceLift','');
 
-	if WizardForm.ComponentsList.Width = WizardForm.SelectComponentsPage.Width then
-		WizardForm.ComponentsList.Width := Round(WizardForm.ComponentsList.Width * 0.6)
-	else
-		exit;
-	DebugMsg('SelectComponentsFaceLift','2');
+  if WizardForm.ComponentsList.Width = WizardForm.SelectComponentsPage.Width then
+    WizardForm.ComponentsList.Width := Round(WizardForm.ComponentsList.Width * 0.6)
+  else
+    exit;
+  DebugMsg('SelectComponentsFaceLift','2');
 
-	WizardForm.ComponentsList.OnClick := @ComponentsListOnClick;
+  WizardForm.ComponentsList.OnClick := @ComponentsListOnClick;
 
-	lblDescription := TNewStaticText.Create(WizardForm.ComponentsList.Parent)
-	with lblDescription do
-	begin
-		Left := WizardForm.ComponentsList.Left + WizardForm.ComponentsList.Width + ScaleX(16);
-		Top := WizardForm.ComponentsList.Top;
-		AutoSize := True;
-		Caption := CustomMessage('ComponentsDescription');
-	end;
+  lblDescription := TNewStaticText.Create(WizardForm.ComponentsList.Parent)
+  with lblDescription do
+  begin
+    Left := WizardForm.ComponentsList.Left + WizardForm.ComponentsList.Width + ScaleX(16);
+    Top := WizardForm.ComponentsList.Top;
+    AutoSize := True;
+    Caption := CustomMessage('ComponentsDescription');
+  end;
 
-	pnlDescription := TPanel.Create(WizardForm.ComponentsList.Parent);
-	with pnlDescription do
-	begin
-		Parent := WizardForm.ComponentsList.Parent;
-		Left := WizardForm.ComponentsList.Left + WizardForm.ComponentsList.Width + ScaleX(8);
-		Width := WizardForm.TypesCombo.Width - WizardForm.ComponentsList.Width - ScaleX(8);
-		ParentColor := True;
-		BevelOuter := bvLowered;
-		BevelInner := bvRaised;
-		Top := WizardForm.ComponentsList.Top + Round(lblDescription.Height * 0.4);
-		Height := WizardForm.ComponentsList.Height - Round(lblDescription.Height * 0.4);
-	end;
-	lblDescription.Parent := WizardForm.ComponentsList.Parent; //place lblDescription above pnlDescription
+  pnlDescription := TPanel.Create(WizardForm.ComponentsList.Parent);
+  with pnlDescription do
+  begin
+    Parent := WizardForm.ComponentsList.Parent;
+    Left := WizardForm.ComponentsList.Left + WizardForm.ComponentsList.Width + ScaleX(8);
+    Width := WizardForm.TypesCombo.Width - WizardForm.ComponentsList.Width - ScaleX(8);
+    ParentColor := True;
+    BevelOuter := bvLowered;
+    BevelInner := bvRaised;
+    Top := WizardForm.ComponentsList.Top + Round(lblDescription.Height * 0.4);
+    Height := WizardForm.ComponentsList.Height - Round(lblDescription.Height * 0.4);
+  end;
+  lblDescription.Parent := WizardForm.ComponentsList.Parent; //place lblDescription above pnlDescription
 
-	lblComponentDescription := TNewStaticText.Create(pnlDescription);
-	with lblComponentDescription do
-	begin
-		Parent := pnlDescription;
-		Left := ScaleX(8);
-		WordWrap := True;
-		AutoSize := False;
-		Width := Parent.Width - ScaleX(16);
-		Height := Parent.Height - ScaleY(20);
-		Top := ScaleY(12);
-	end;
+  lblComponentDescription := TNewStaticText.Create(pnlDescription);
+  with lblComponentDescription do
+  begin
+    Parent := pnlDescription;
+    Left := ScaleX(8);
+    WordWrap := True;
+    AutoSize := False;
+    Width := Parent.Width - ScaleX(16);
+    Height := Parent.Height - ScaleY(20);
+    Top := ScaleY(12);
+  end;
 end;
 
 procedure ComponentsListOnClick(pSender: TObject);
 var i,j: Integer;
-	Components: TArrayOfString;
-	ComponentDesc: String;
+  Components: TArrayOfString;
+  ComponentDesc: String;
 begin
-	DebugMsg('ComponentsListOnClick','');
+  DebugMsg('ComponentsListOnClick','');
 
-	Components := ['Gimp','Deps','Debug','Dev','Ghostscript','Lua','Python','Translations','MyPaint'];
-	ComponentDesc := '';
+  Components := ['Gimp','Deps','Debug','Dev','Ghostscript','Lua','Python','Translations','MyPaint'];
+  ComponentDesc := '';
 
-	for i := 0 to TNewCheckListBox(pSender).Items.Count - 1 do
-		if TNewCheckListBox(pSender).Selected[i] then
-		begin
-			for j := 0 to Length(Components) - 1 do
-			begin
-				if TNewCheckListBox(pSender).Items.Strings[i] = CustomMessage('Components' + Components[j]) then
-					ComponentDesc := CustomMessage('Components' + Components[j] + 'Description');
-			end;
+  for i := 0 to TNewCheckListBox(pSender).Items.Count - 1 do
+    if TNewCheckListBox(pSender).Selected[i] then
+    begin
+      for j := 0 to Length(Components) - 1 do
+      begin
+        if TNewCheckListBox(pSender).Items.Strings[i] = CustomMessage('Components' + Components[j]) then
+          ComponentDesc := CustomMessage('Components' + Components[j] + 'Description');
+      end;
 
-			if ComponentDesc <> '' then
-				break;
-		end;
+      if ComponentDesc <> '' then
+        break;
+    end;
 
-	lblComponentDescription.Caption := ComponentDesc;
+  lblComponentDescription.Caption := ComponentDesc;
 end;
 
 
@@ -1716,93 +1716,93 @@ end;
 
 //6. READY: Add formatting support to text box on ready page
 var
-	ReadyMemoRichText: String;
+  ReadyMemoRichText: String;
 
 procedure ReadyFaceLift();
 var rtfNewReadyMemo: TRichEditViewer;
 begin
-	DebugMsg('ReadyFaceLift','');
-	WizardForm.ReadyMemo.Visible := False;
+  DebugMsg('ReadyFaceLift','');
+  WizardForm.ReadyMemo.Visible := False;
 
-	rtfNewReadyMemo := TRichEditViewer.Create(WizardForm.ReadyMemo.Parent);
-	with rtfNewReadyMemo do
-	begin
-		Parent := WizardForm.ReadyMemo.Parent;
-		Scrollbars := ssVertical;
-		Color := WizardForm.Color;
-		BevelKind := bkFlat;
-		BorderStyle := bsNone;
-		UseRichEdit := True;
-		RTFText := ReadyMemoRichText;
-		ReadOnly := True;
-		Left := WizardForm.ReadyMemo.Left;
-		Top := WizardForm.ReadyMemo.Top;
-		Width := WizardForm.ReadyMemo.Width;
-		Height := WizardForm.ReadyMemo.Height;
-		Visible := True;
-	end;
+  rtfNewReadyMemo := TRichEditViewer.Create(WizardForm.ReadyMemo.Parent);
+  with rtfNewReadyMemo do
+  begin
+    Parent := WizardForm.ReadyMemo.Parent;
+    Scrollbars := ssVertical;
+    Color := WizardForm.Color;
+    BevelKind := bkFlat;
+    BorderStyle := bsNone;
+    UseRichEdit := True;
+    RTFText := ReadyMemoRichText;
+    ReadOnly := True;
+    Left := WizardForm.ReadyMemo.Left;
+    Top := WizardForm.ReadyMemo.Top;
+    Width := WizardForm.ReadyMemo.Width;
+    Height := WizardForm.ReadyMemo.Height;
+    Visible := True;
+  end;
 end;
 
 function CopyW(const S: String; const Start, Len: Integer): String; //work-around for unicode-related bug in Copy
 begin
-	Result := Copy(S, Start, Len);
+  Result := Copy(S, Start, Len);
 end;
 
 function Unicode2RTF(const pIn: String): String; //convert to RTF-compatible unicode
-var	i: Integer;
-	c: SmallInt;
+var i: Integer;
+  c: SmallInt;
 begin
-	Result := '';
-	for i := 1 to Length(pIn) do
-		if Ord(pIn[i]) <= 127 then
-		begin
-			Result := Result + pIn[i];
-		end else
-		begin
-			c := Ord(pIn[i]); //code points above 7FFF must be expressed as negative numbers
-			Result := Result + '\u' + IntToStr(c) + '?';
-		end;
+  Result := '';
+  for i := 1 to Length(pIn) do
+    if Ord(pIn[i]) <= 127 then
+    begin
+      Result := Result + pIn[i];
+    end else
+    begin
+      c := Ord(pIn[i]); //code points above 7FFF must be expressed as negative numbers
+      Result := Result + '\u' + IntToStr(c) + '?';
+    end;
 end;
 
 const
-  RTFPara	  = '\par ';
+  RTFPara   = '\par ';
 function ParseReadyMemoText(pSpaces,pText: String): String;
 var sTemp: String;
 begin
-	sTemp := CopyW(pText,Pos(#10,pText)+1,Length(pText));
-	sTemp := Replace('{','\{',sTemp);
-	sTemp := Replace('\','\\',sTemp);
-	sTemp := Replace(#13#10,RTFpara,sTemp);
-	sTemp := Replace(pSpaces,'',sTemp);
-	sTemp := '\b ' + CopyW(pText,1,Pos(#13,pText)-1) + '\par\sb0' +
-						'\li284\b0 ' + sTemp + '\par \pard';
+  sTemp := CopyW(pText,Pos(#10,pText)+1,Length(pText));
+  sTemp := Replace('{','\{',sTemp);
+  sTemp := Replace('\','\\',sTemp);
+  sTemp := Replace(#13#10,RTFpara,sTemp);
+  sTemp := Replace(pSpaces,'',sTemp);
+  sTemp := '\b ' + CopyW(pText,1,Pos(#13,pText)-1) + '\par\sb0' +
+            '\li284\b0 ' + sTemp + '\par \pard';
 
-	Result := Unicode2RTF(sTemp);
+  Result := Unicode2RTF(sTemp);
 end;
 
 const
   RTFHeader = '{\rtf1\deff0{\fonttbl{\f0\fswiss\fprq2\fcharset0 Segoe UI;}{\f1\fnil\fcharset2 Segoe UI Symbol;}}\viewkind4\uc1\fs18';
-	//RTFBullet = '{\pntext\f1\''B7\tab}';
+  //RTFBullet = '{\pntext\f1\''B7\tab}';
 function UpdateReadyMemo(pSpace, pNewLine, pMemoUserInfo, pMemoDirInfo, pMemoTypeInfo, pMemoComponentsInfo, pMemoGroupInfo, pMemoTasksInfo: String): String;
 var sText: String;
-	bShowAssoc: Boolean;
-	i,j: Integer;
+  bShowAssoc: Boolean;
+  i,j: Integer;
 begin
-	DebugMsg('UpdateReadyMemo','');
-	(* Prepare the text for new Ready Memo *)
+  DebugMsg('UpdateReadyMemo','');
+  (* Prepare the text for new Ready Memo *)
 
-	sText := RTFHeader;
-	if pMemoDirInfo <> '' then
-		sText := sText + ParseReadyMemoText(pSpace,pMemoDirInfo) + '\sb100';
-	sText := sText + ParseReadyMemoText(pSpace,pMemoTypeInfo);
-	sText := sText + '\sb100' + ParseReadyMemoText(pSpace,pMemoComponentsInfo);
+  sText := RTFHeader;
+  if pMemoDirInfo <> '' then
+    sText := sText + ParseReadyMemoText(pSpace,pMemoDirInfo) + '\sb100';
+  sText := sText + ParseReadyMemoText(pSpace,pMemoTypeInfo);
+  sText := sText + '\sb100' + ParseReadyMemoText(pSpace,pMemoComponentsInfo);
 
-	If pMemoTasksInfo<>'' then
-		sText := sText + '\sb100' + ParseReadyMemoText(pSpace,pMemoTasksInfo);
+  If pMemoTasksInfo<>'' then
+    sText := sText + '\sb100' + ParseReadyMemoText(pSpace,pMemoTasksInfo);
 
-	ReadyMemoRichText := Copy(sText,1,Length(sText)-6) + '}';
+  ReadyMemoRichText := Copy(sText,1,Length(sText)-6) + '}';
 
-	Result := 'If you see this, something went wrong';
+  Result := 'If you see this, something went wrong';
 end;
 
 
@@ -1810,8 +1810,8 @@ end;
 procedure PreparingFaceLift();
 begin
     if not IsDarkInstallMode then begin
-	    WizardForm.Bevel.Visible := False;
-	end;
+      WizardForm.Bevel.Visible := False;
+  end;
 end;
 
 //Create restore point
@@ -1832,56 +1832,56 @@ end;
 procedure RemoveDebugFilesFromDir(pDir: String; var pDirectories: TArrayOfString);
 var FindRec: TFindRec;
 begin
-	DebugMsg('RemoveDebugFilesFromDir', pDir);
-	WizardForm.FilenameLabel.Caption := pDir;
-	if FindFirst(AddBackSlash(pDir) + '*', FindRec) then
-	begin
-		try
-			repeat
-				if FindRec.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 then
-				begin
-					//Up to GIMP 3.0.2 we shipped only DWARF .debug symbols
-					if (Length(FindRec.Name) > 6) and (LowerCase(Copy(FindRec.Name, Length(FindRec.Name) - 5, 6)) = '.debug') then
-					begin
-						DebugMsg('RemoveDebugFilesFromDir', '> ' + FindRec.Name);
-						DeleteFile(AddBackSlash(pDir) + FindRec.Name);
-					end;
+  DebugMsg('RemoveDebugFilesFromDir', pDir);
+  WizardForm.FilenameLabel.Caption := pDir;
+  if FindFirst(AddBackSlash(pDir) + '*', FindRec) then
+  begin
+    try
+      repeat
+        if FindRec.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 then
+        begin
+          //Up to GIMP 3.0.2 we shipped only DWARF .debug symbols
+          if (Length(FindRec.Name) > 6) and (LowerCase(Copy(FindRec.Name, Length(FindRec.Name) - 5, 6)) = '.debug') then
+          begin
+            DebugMsg('RemoveDebugFilesFromDir', '> ' + FindRec.Name);
+            DeleteFile(AddBackSlash(pDir) + FindRec.Name);
+          end;
 
-					//Starting with GIMP 3.0.4 we ship native CodeView .pdb symbols
-					if (Length(FindRec.Name) > 4) and (LowerCase(Copy(FindRec.Name, Length(FindRec.Name) - 3, 4)) = '.pdb') then
-					begin
-						DebugMsg('RemoveDebugFilesFromDir', '> ' + FindRec.Name);
-						DeleteFile(AddBackSlash(pDir) + FindRec.Name);
-					end;
-				end else
-				begin
-					if (FindRec.Name <> '.') and (FindRec.Name <> '..') then
-					begin
-						SetArrayLength(pDirectories, GetArrayLength(pDirectories) + 1);
-						pDirectories[GetArrayLength(pDirectories) - 1] := AddBackSlash(pDir) + FindRec.Name;
-					end;
-				end;
-			until not FindNext(FindRec);
-		finally
-			FindClose(FindRec);
-		end;
-	end;
+          //Starting with GIMP 3.0.4 we ship native CodeView .pdb symbols
+          if (Length(FindRec.Name) > 4) and (LowerCase(Copy(FindRec.Name, Length(FindRec.Name) - 3, 4)) = '.pdb') then
+          begin
+            DebugMsg('RemoveDebugFilesFromDir', '> ' + FindRec.Name);
+            DeleteFile(AddBackSlash(pDir) + FindRec.Name);
+          end;
+        end else
+        begin
+          if (FindRec.Name <> '.') and (FindRec.Name <> '..') then
+          begin
+            SetArrayLength(pDirectories, GetArrayLength(pDirectories) + 1);
+            pDirectories[GetArrayLength(pDirectories) - 1] := AddBackSlash(pDir) + FindRec.Name;
+          end;
+        end;
+      until not FindNext(FindRec);
+    finally
+      FindClose(FindRec);
+    end;
+  end;
 end;
 
 procedure RemoveDebugFiles();
 var Directories: TArrayOfString;
-	Index: Integer;
+  Index: Integer;
 begin
-	SetArrayLength(Directories, 1);
-	Directories[0] := ExpandConstant('{app}');
-	Index := 0;
+  SetArrayLength(Directories, 1);
+  Directories[0] := ExpandConstant('{app}');
+  Index := 0;
 
-	WizardForm.StatusLabel.Caption := CustomMessage('RemovingOldFiles');
+  WizardForm.StatusLabel.Caption := CustomMessage('RemovingOldFiles');
 
-	repeat
-		RemoveDebugFilesFromDir(Directories[Index], Directories);
-		Inc(Index);
-	until Index = GetArrayLength(Directories);
+  repeat
+    RemoveDebugFilesFromDir(Directories[Index], Directories);
+    Inc(Index);
+  until Index = GetArrayLength(Directories);
 end;
 
 procedure AssociationsCleanUp(); forward;
@@ -1889,46 +1889,46 @@ procedure AssociationsCleanUp(); forward;
 //Check if icon exists in registry
 function CheckRegValueExists(const SubKeyName, ValueName: String): Boolean;
 begin
-	Result := RegValueExists(HKEY_AUTO, SubKeyName, ValueName);
-	DebugMsg('CheckRegValueExists',SubKeyName + ', ' + ValueName + ': ' + BoolToStr(Result));
+  Result := RegValueExists(HKEY_AUTO, SubKeyName, ValueName);
+  DebugMsg('CheckRegValueExists',SubKeyName + ', ' + ValueName + ': ' + BoolToStr(Result));
 end;
 
 //Legacy arch check
 function CheckArch(const pWhich: String): Boolean;
 begin
-	if pWhich = '64' then //x64 or arm64
-		Result := Is64BitInstallMode()
-	else if pWhich = 'x64' then
-		Result := Is64BitInstallMode() and IsX64
-	else if pWhich = 'arm64' then
-		Result := Is64BitInstallMode() and IsARM64
-	else
-		RaiseException('Unknown check');
+  if pWhich = '64' then //x64 or arm64
+    Result := Is64BitInstallMode()
+  else if pWhich = 'x64' then
+    Result := Is64BitInstallMode() and IsX64
+  else if pWhich = 'arm64' then
+    Result := Is64BitInstallMode() and IsARM64
+  else
+    RaiseException('Unknown check');
 end;
 
 //some programs improperly install libraries to the System32 directory, which then causes problems with plugins
 //this function checks if such file exists in System32, and lets setup update the file when it exists
 function BadSysDLL(const pFile: String; const pPlatform: Integer): Boolean;
-var	OldRedir: Boolean;
+var OldRedir: Boolean;
 begin
-	Result := False;
+  Result := False;
 
-	if pPlatform = 64 then
-	begin
-		if Is64BitInstallMode() then //only check when installing in 64bit mode
-		begin
-			OldRedir := EnableFsRedirection(False);
-			DebugMsg('BadSysDLL','64: ' + ExpandConstant('{sys}\' + pFile));
-			Result := FileExists(ExpandConstant('{sys}\' + pFile));
-			EnableFsRedirection(OldRedir);
-		end;
-	end
-	else
-	begin
-		RaiseException('Unsupported platform');
-	end;
+  if pPlatform = 64 then
+  begin
+    if Is64BitInstallMode() then //only check when installing in 64bit mode
+    begin
+      OldRedir := EnableFsRedirection(False);
+      DebugMsg('BadSysDLL','64: ' + ExpandConstant('{sys}\' + pFile));
+      Result := FileExists(ExpandConstant('{sys}\' + pFile));
+      EnableFsRedirection(OldRedir);
+    end;
+  end
+  else
+  begin
+    RaiseException('Unsupported platform');
+  end;
 
-	DebugMsg('BadSysDLL','Result: ' + BoolToStr(Result));
+  DebugMsg('BadSysDLL','Result: ' + BoolToStr(Result));
 end;
 
 //Override some 'etc' configs (if requested)
@@ -1938,87 +1938,87 @@ const
 function DoConfigOverride: Boolean;
 var i: Integer;
 begin
-	if ConfigOverride = coUndefined then
-	begin
-		DebugMsg('DoConfigOverride', 'First call');
+  if ConfigOverride = coUndefined then
+  begin
+    DebugMsg('DoConfigOverride', 'First call');
 
-		Result := False;
-		ConfigOverride := coDontOverride;
+    Result := False;
+    ConfigOverride := coDontOverride;
 
-		for i := 0 to ParamCount() do //use ParamCount/ParamStr to allow specifying /configoverride without any parameters
-			if LowerCase(Copy(ParamStr(i),1,15)) = '/' + CONFIG_OVERRIDE_PARAM then
-			begin
-				Result := True;
-				ConfigOverride := coOverride;
-				break;
-			end;
-	end
-	else if ConfigOverride = coOverride then
-		Result := True
+    for i := 0 to ParamCount() do //use ParamCount/ParamStr to allow specifying /configoverride without any parameters
+      if LowerCase(Copy(ParamStr(i),1,15)) = '/' + CONFIG_OVERRIDE_PARAM then
+      begin
+        Result := True;
+        ConfigOverride := coOverride;
+        break;
+      end;
+  end
+  else if ConfigOverride = coOverride then
+    Result := True
   else
-		Result := False;
+    Result := False;
 
-	DebugMsg('DoConfigOverride', BoolToStr(Result));
+  DebugMsg('DoConfigOverride', BoolToStr(Result));
 end;
 
 function GetExternalConfDir(Unused: String): String;
 begin
-	if ExpandConstant('{param:' + CONFIG_OVERRIDE_PARAM + '|<>}') = '<>' then
-		Result := ExpandConstant('{src}\')
-	else
-		Result := ExpandConstant('{param:' + CONFIG_OVERRIDE_PARAM + '|<>}\');
+  if ExpandConstant('{param:' + CONFIG_OVERRIDE_PARAM + '|<>}') = '<>' then
+    Result := ExpandConstant('{src}\')
+  else
+    Result := ExpandConstant('{param:' + CONFIG_OVERRIDE_PARAM + '|<>}\');
 
   DebugMsg('GetExternalConfDir', Result);
 end;
 
 function CheckExternalConf(const pFile: String): Boolean;
 begin
-	if not DoConfigOverride then //no config override
-		Result := False
-	else
-	begin
-		if FileExists(GetExternalConfDir('') + pFile) then //config file override only applies when that file exists
-			Result := True
-		else
-			Result := False;
-	end;
+  if not DoConfigOverride then //no config override
+    Result := False
+  else
+  begin
+    if FileExists(GetExternalConfDir('') + pFile) then //config file override only applies when that file exists
+      Result := True
+    else
+      Result := False;
+  end;
 
-	DebugMsg('CheckExternalConf', pFile + ': ' + BoolToStr(Result));
+  DebugMsg('CheckExternalConf', pFile + ': ' + BoolToStr(Result));
 end;
 
 
 //7.2 INSTALL: show GIMP text (aka billboard) above progress bar
 #if Defined(GIMP_UNSTABLE)
 const
-	GIMP_URL = 'https://gimp.org/downloads/devel/';
+  GIMP_URL = 'https://gimp.org/downloads/devel/';
 #else
 const
-	GIMP_URL = 'https://gimp.org/downloads/';
+  GIMP_URL = 'https://gimp.org/downloads/';
 #endif
 
 procedure lblURL_OnClick(Sender: TObject);
 var ErrorCode: Integer;
 begin
-	ShellExecAsOriginalUser('',GIMP_URL,'','',SW_SHOW,ewNoWait,ErrorCode);
+  ShellExecAsOriginalUser('',GIMP_URL,'','',SW_SHOW,ewNoWait,ErrorCode);
 end;
 
 function MeasureLabel(const pText: String): Integer; //WordWrap + AutoSize works better with TNewStaticText than with TLabel,
 var lblMeasure: TNewStaticText;                      //abuse this
 begin
-	lblMeasure := TNewStaticText.Create(WizardForm.InstallingPage);
+  lblMeasure := TNewStaticText.Create(WizardForm.InstallingPage);
 
   with lblMeasure do
-	begin
-		Parent := WizardForm.InstallingPage;
+  begin
+    Parent := WizardForm.InstallingPage;
 
-		AutoSize := True;
-		WordWrap := True;
-		Width := Parent.ClientWidth;
+    AutoSize := True;
+    WordWrap := True;
+    Width := Parent.ClientWidth;
 
-		Caption := pText;
+    Caption := pText;
 
-		Result := Height;
-	end;
+    Result := Height;
+  end;
 
   lblMeasure.Free;
 end;
@@ -2027,71 +2027,71 @@ procedure InstallingFaceLift();
 var lblMessage1,lblURL,lblMessage2: TLabel; //TNewStaticText doesn't support alignment
 begin
     if not IsDarkInstallMode then begin
-	    WizardForm.Bevel.Visible := False;
-	end;
+      WizardForm.Bevel.Visible := False;
+  end;
 
-	with WizardForm.ProgressGauge do
-	begin
-		Height := ScaleY(21);
-		Top := WizardForm.InstallingPage.ClientHeight - Top - Height;
+  with WizardForm.ProgressGauge do
+  begin
+    Height := ScaleY(21);
+    Top := WizardForm.InstallingPage.ClientHeight - Top - Height;
 
-		WizardForm.StatusLabel.Top := Top - WizardForm.FilenameLabel.Height - ScaleY(4);
-		WizardForm.FilenameLabel.Top := Top + Height + ScaleY(4);
-	end;
+    WizardForm.StatusLabel.Top := Top - WizardForm.FilenameLabel.Height - ScaleY(4);
+    WizardForm.FilenameLabel.Top := Top + Height + ScaleY(4);
+  end;
 
-	lblMessage1 := TLabel.Create(WizardForm.InstallingPage);
-	with lblMessage1 do
-	begin
-		Parent := WizardForm.InstallingPage;
+  lblMessage1 := TLabel.Create(WizardForm.InstallingPage);
+  with lblMessage1 do
+  begin
+    Parent := WizardForm.InstallingPage;
 
-		Alignment := taCenter;
-		WordWrap := True;
-		AutoSize := False;
-		Width := WizardForm.InstallingPage.ClientWidth;
-		Height := MeasureLabel(CustomMessage('Billboard1'));
+    Alignment := taCenter;
+    WordWrap := True;
+    AutoSize := False;
+    Width := WizardForm.InstallingPage.ClientWidth;
+    Height := MeasureLabel(CustomMessage('Billboard1'));
 
-		Caption := CustomMessage('Billboard1');
-	end;
+    Caption := CustomMessage('Billboard1');
+  end;
 
-	lblURL := TLabel.Create(WizardForm.InstallingPage);
-	with lblURL do
-	begin
-		Parent := WizardForm.InstallingPage;
+  lblURL := TLabel.Create(WizardForm.InstallingPage);
+  with lblURL do
+  begin
+    Parent := WizardForm.InstallingPage;
 
-		AutoSize := True;
-		WordWrap := False;
+    AutoSize := True;
+    WordWrap := False;
 
-		Font.Color := GetSysColor(COLOR_HOTLIGHT);
-		Font.Style := [fsUnderline];
-		Font.Size := 12;
+    Font.Color := GetSysColor(COLOR_HOTLIGHT);
+    Font.Style := [fsUnderline];
+    Font.Size := 12;
 
-		Cursor := crHand;
+    Cursor := crHand;
 
-		OnClick := @lblURL_OnClick;
+    OnClick := @lblURL_OnClick;
 
-		Caption := GIMP_URL;
+    Caption := GIMP_URL;
 
-		Left := Integer(WizardForm.InstallingPage.ClientWidth / 2 - Width / 2);
-	end;
+    Left := Integer(WizardForm.InstallingPage.ClientWidth / 2 - Width / 2);
+  end;
 
-	lblMessage2 := TLabel.Create(WizardForm.InstallingPage);
-	with lblMessage2 do
-	begin
-		Parent := WizardForm.InstallingPage;
+  lblMessage2 := TLabel.Create(WizardForm.InstallingPage);
+  with lblMessage2 do
+  begin
+    Parent := WizardForm.InstallingPage;
 
-		Alignment := taCenter;
-		WordWrap := True;
-		AutoSize := False;
-		Width := WizardForm.InstallingPage.ClientWidth;
-		Height := MeasureLabel(CustomMessage('Billboard2'));
+    Alignment := taCenter;
+    WordWrap := True;
+    AutoSize := False;
+    Width := WizardForm.InstallingPage.ClientWidth;
+    Height := MeasureLabel(CustomMessage('Billboard2'));
 
-		Caption := CustomMessage('Billboard2');
-	end;
+    Caption := CustomMessage('Billboard2');
+  end;
 
-	lblMessage1.Top := Integer(WizardForm.StatusLabel.Top / 2 -
-	                           (lblMessage1.Height + ScaleY(4) + lblURL.Height + ScaleY(4) + lblMessage2.Height) / 2);
-	lblURL.Top := lblMessage1.Top + lblMessage1.Height + ScaleY(4);
-	lblMessage2.Top := lblURL.Top + lblURL.Height + ScaleY(4);
+  lblMessage1.Top := Integer(WizardForm.StatusLabel.Top / 2 -
+                             (lblMessage1.Height + ScaleY(4) + lblURL.Height + ScaleY(4) + lblMessage2.Height) / 2);
+  lblURL.Top := lblMessage1.Top + lblMessage1.Height + ScaleY(4);
+  lblMessage2.Top := lblURL.Top + lblURL.Height + ScaleY(4);
 end;
 
 
@@ -2102,89 +2102,89 @@ procedure PrepareInterp();
 var InterpFile,InterpContent,LuaBin: String;
 begin
 #ifdef PYTHON
-	if IsComponentSelected('py64') or IsComponentSelected('pyARM64') then
-	begin
-		StatusLabel(CustomMessage('SettingUpPyGimp'),'');
+  if IsComponentSelected('py64') or IsComponentSelected('pyARM64') then
+  begin
+    StatusLabel(CustomMessage('SettingUpPyGimp'),'');
 
-		//python.exe is needed for plug-ins error output if `gimp*.exe` is run from console
-		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp.interp');
+    //python.exe is needed for plug-ins error output if `gimp*.exe` is run from console
+    InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp.interp');
         DebugMsg('PrepareInterp','Writing interpreter file for gimp-python: ' + InterpFile);
-		InterpContent := 'python=' + ExpandConstant('{app}\bin\python.exe') + #10 +
-		                 'python3=' + ExpandConstant('{app}\bin\python.exe') + #10 +
-		                 '/usr/bin/python=' + ExpandConstant('{app}\bin\python.exe') + #10 +
-		                 '/usr/bin/python3=' + ExpandConstant('{app}\bin\python.exe') + #10 +
-		                 ':Python:E::py::python:'#10;
-		if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
-		begin
-			DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
-			SuppressibleMsgBox(CustomMessage('ErrorUpdatingPython') + ' (2)',mbInformation,mb_ok,IDOK);
-		end;
+    InterpContent := 'python=' + ExpandConstant('{app}\bin\python.exe') + #10 +
+                     'python3=' + ExpandConstant('{app}\bin\python.exe') + #10 +
+                     '/usr/bin/python=' + ExpandConstant('{app}\bin\python.exe') + #10 +
+                     '/usr/bin/python3=' + ExpandConstant('{app}\bin\python.exe') + #10 +
+                     ':Python:E::py::python:'#10;
+    if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
+    begin
+      DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
+      SuppressibleMsgBox(CustomMessage('ErrorUpdatingPython') + ' (2)',mbInformation,mb_ok,IDOK);
+    end;
 
-		//pythonw.exe is needed to run plug-ins silently if `gimp*.exe` is run from shortcut
-		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp_win.interp');
+    //pythonw.exe is needed to run plug-ins silently if `gimp*.exe` is run from shortcut
+    InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp_win.interp');
         DebugMsg('PrepareInterp','Writing interpreter file for gimp-python: ' + InterpFile);
-		InterpContent := 'python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
-		                 'python3=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
-		                 '/usr/bin/python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
-		                 '/usr/bin/python3=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
-		                 ':Python:E::py::python:'#10;
-		if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
-		begin
-			DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
-			SuppressibleMsgBox(CustomMessage('ErrorUpdatingPython') + ' (2)',mbInformation,mb_ok,IDOK);
-		end;
-	end;
+    InterpContent := 'python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
+                     'python3=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
+                     '/usr/bin/python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
+                     '/usr/bin/python3=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
+                     ':Python:E::py::python:'#10;
+    if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
+    begin
+      DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
+      SuppressibleMsgBox(CustomMessage('ErrorUpdatingPython') + ' (2)',mbInformation,mb_ok,IDOK);
+    end;
+  end;
 #endif
 
 #ifdef LUA
-	if IsComponentSelected('lua64') or IsComponentSelected('luaARM64') then
-	begin
-		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\lua.interp');
+  if IsComponentSelected('lua64') or IsComponentSelected('luaARM64') then
+  begin
+    InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\lua.interp');
     DebugMsg('PrepareInterp','Writing interpreter file for lua: ' + InterpFile);
 
-		LuaBin := 'luajit.exe'
+    LuaBin := 'luajit.exe'
 
-		InterpContent := 'lua=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
-		                 'luajit=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
-		                 '/usr/bin/luajit=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
-		                 '/usr/bin/lua=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
-		                 ':Lua:E::lua::' + LuaBin + ':'#10;
+    InterpContent := 'lua=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
+                     'luajit=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
+                     '/usr/bin/luajit=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
+                     '/usr/bin/lua=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
+                     ':Lua:E::lua::' + LuaBin + ':'#10;
 
-		if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
-		begin
-			DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
-			SuppressibleMsgBox(CustomMessage('ErrorUpdatingPython') + ' (2)',mbInformation,mb_ok,IDOK);
-		end;
-	end;
+    if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
+    begin
+      DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
+      SuppressibleMsgBox(CustomMessage('ErrorUpdatingPython') + ' (2)',mbInformation,mb_ok,IDOK);
+    end;
+  end;
 #endif
 
 // !!! use comma for binfmt delimiter and full Windows path in interpreter field of binfmt
 begin
-	InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter.interp');
-	DebugMsg('PrepareInterp','Writing interpreter file for gimp-script-fu-interpreter: ' + InterpFile);
-	InterpContent := 'gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
-						       'gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
-						       '/usr/bin/gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
-						       ',ScriptFu,E,,scm,,' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + ','#10;
+  InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter.interp');
+  DebugMsg('PrepareInterp','Writing interpreter file for gimp-script-fu-interpreter: ' + InterpFile);
+  InterpContent := 'gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
+                   'gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
+                   '/usr/bin/gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
+                   ',ScriptFu,E,,scm,,' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + ','#10;
 
-	if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
-	begin
-		DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
-		SuppressibleMsgBox(CustomMessage('ErrorUpdatingScriptFu') + ' (2)',mbInformation,mb_ok,IDOK);
-	end;
+  if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
+  begin
+    DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
+    SuppressibleMsgBox(CustomMessage('ErrorUpdatingScriptFu') + ' (2)',mbInformation,mb_ok,IDOK);
+  end;
 
-	InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter_win.interp');
-	DebugMsg('PrepareInterp','Writing interpreter file for gimp-script-fu-interpreter: ' + InterpFile);
-	InterpContent := 'gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
-						       'gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
-						       '/usr/bin/gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
-						       ',ScriptFu,E,,scm,,' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + ','#10;
+  InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter_win.interp');
+  DebugMsg('PrepareInterp','Writing interpreter file for gimp-script-fu-interpreter: ' + InterpFile);
+  InterpContent := 'gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
+                   'gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
+                   '/usr/bin/gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + #10 +
+                   ',ScriptFu,E,,scm,,' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_PKGCONFIG_VERSION}.exe') + ','#10;
 
-	if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
-	begin
-		DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
-		SuppressibleMsgBox(CustomMessage('ErrorUpdatingScriptFu') + ' (2)',mbInformation,mb_ok,IDOK);
-	end;
+  if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
+  begin
+    DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
+    SuppressibleMsgBox(CustomMessage('ErrorUpdatingScriptFu') + ' (2)',mbInformation,mb_ok,IDOK);
+  end;
 end;
 end; //PrepareInterp
 
@@ -2192,52 +2192,52 @@ end; //PrepareInterp
 procedure PrepareGimpEnvironment();
 var EnvFile,Env,sTemp: String;
 begin
-	StatusLabel(CustomMessage('SettingUpEnvironment'),'');
+  StatusLabel(CustomMessage('SettingUpEnvironment'),'');
 
-	//set PATH to be used by plug-ins
-	EnvFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\default.env');
-	DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
+  //set PATH to be used by plug-ins
+  EnvFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\default.env');
+  DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
 
-	Env := #10'PATH=${gimp_installation_dir}\bin';
+  Env := #10'PATH=${gimp_installation_dir}\bin';
 
-	Env := Env + #10;
+  Env := Env + #10;
 
-	DebugMsg('PrepareGimpEnvironment','Appending ' + Env);
+  DebugMsg('PrepareGimpEnvironment','Appending ' + Env);
 
-	if not SaveStringToUTF8File(EnvFile,Env,True) then
-	begin
-		DebugMsg('PrepareGimpEnvironment','Problem appending');
-		SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
-	end;
+  if not SaveStringToUTF8File(EnvFile,Env,True) then
+  begin
+    DebugMsg('PrepareGimpEnvironment','Problem appending');
+    SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
+  end;
 
-	// Set revision
-	EnvFile := ExpandConstant('{app}\share\gimp\{#GIMP_PKGCONFIG_VERSION}\gimp-release');
-	DebugMsg('PrepareGimpEnvironment','Setting revision number {#REVISION} in ' + EnvFile);
+  // Set revision
+  EnvFile := ExpandConstant('{app}\share\gimp\{#GIMP_PKGCONFIG_VERSION}\gimp-release');
+  DebugMsg('PrepareGimpEnvironment','Setting revision number {#REVISION} in ' + EnvFile);
 
-	//LoadStringFromUTF8File(EnvFile,Env);
+  //LoadStringFromUTF8File(EnvFile,Env);
   //sTemp := Replace('=0','={#REVISION}',Env);
-	sTemp := '[package]' + #10 + 'revision={#REVISION}' + #10
+  sTemp := '[package]' + #10 + 'revision={#REVISION}' + #10
 
-	if not SaveStringToUTF8File(EnvFile,sTemp,False) then
-	begin
-		DebugMsg('PrepareGimpEnvironment','Problem setting revision');
-		SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
-	end;
+  if not SaveStringToUTF8File(EnvFile,sTemp,False) then
+  begin
+    DebugMsg('PrepareGimpEnvironment','Problem setting revision');
+    SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
+  end;
 
-	// Disable check-update when run with specific option
+  // Disable check-update when run with specific option
   if ExpandConstant('{param:disablecheckupdate|false}') = 'true' then
-	begin
-		EnvFile := ExpandConstant('{app}\share\gimp\{#GIMP_PKGCONFIG_VERSION}\gimp-release');
-		DebugMsg('DisableCheckUpdate','Disabling check-update in ' + EnvFile);
+  begin
+    EnvFile := ExpandConstant('{app}\share\gimp\{#GIMP_PKGCONFIG_VERSION}\gimp-release');
+    DebugMsg('DisableCheckUpdate','Disabling check-update in ' + EnvFile);
 
     Env := 'check-update=false'
 
-		if not SaveStringToUTF8File(EnvFile,Env,True) then
-		begin
-			DebugMsg('PrepareGimpEnvironment','Problem appending');
-			SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
-		end;
-	end;
+    if not SaveStringToUTF8File(EnvFile,Env,True) then
+    begin
+      DebugMsg('PrepareGimpEnvironment','Problem appending');
+      SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
+    end;
+  end;
 end;//PrepareGimpEnvironment
 
 //Unistaller info
@@ -2245,163 +2245,163 @@ procedure SaveToUninstInf(const pText: AnsiString); forward;
 
 procedure SaveToUninstInf(const pText: AnsiString);
 var sUnInf: String;
-	sOldContent: String;
+  sOldContent: String;
 begin
-	sUnInf := ExpandConstant('{app}\uninst\uninst.inf');
+  sUnInf := ExpandConstant('{app}\uninst\uninst.inf');
 
-	if not FileExists(sUnInf) then //save small header
-		SaveStringToUTF8File(sUnInf,#$feff+'#Additional uninstall tasks'#13#10+ //#$feff BOM is required for LoadStringsFromFile
-		                            '#This file uses UTF-8 encoding'#13#10+
-		                            '#'#13#10+
-		                            '#Empty lines and lines beginning with # are ignored'#13#10+
-		                            '#'#13#10+
-		                            '#Add uninstallers for GIMP add-ons that should be removed together with GIMP like this:'#13#10+
-		                            '#Run:<description>/<full path to uninstaller>/<parameters for automatic uninstall>'#13#10+
-		                            '#'#13#10+
-		                            '#The file is parsed in reverse order' + #13#10 +
-		                            '' + #13#10 //needs '' in front, otherwise preprocessor complains
-		                            ,False)
-	else
-	begin
-		LoadStringFromUTF8File(sUnInf,sOldContent);
-		if Pos(#13#10+pText+#13#10,sOldContent) > 0 then //don't write duplicate lines
-			exit;
-	end;
+  if not FileExists(sUnInf) then //save small header
+    SaveStringToUTF8File(sUnInf,#$feff+'#Additional uninstall tasks'#13#10+ //#$feff BOM is required for LoadStringsFromFile
+                                '#This file uses UTF-8 encoding'#13#10+
+                                '#'#13#10+
+                                '#Empty lines and lines beginning with # are ignored'#13#10+
+                                '#'#13#10+
+                                '#Add uninstallers for GIMP add-ons that should be removed together with GIMP like this:'#13#10+
+                                '#Run:<description>/<full path to uninstaller>/<parameters for automatic uninstall>'#13#10+
+                                '#'#13#10+
+                                '#The file is parsed in reverse order' + #13#10 +
+                                '' + #13#10 //needs '' in front, otherwise preprocessor complains
+                                ,False)
+  else
+  begin
+    LoadStringFromUTF8File(sUnInf,sOldContent);
+    if Pos(#13#10+pText+#13#10,sOldContent) > 0 then //don't write duplicate lines
+      exit;
+  end;
 
-	SaveStringToUTF8File(sUnInf,pText+#13#10,True);
+  SaveStringToUTF8File(sUnInf,pText+#13#10,True);
 end;
 
 var
-	asUninstInf: TArrayOfString; //uninst.inf contents (loaded at start of uninstall, executed at the end)
+  asUninstInf: TArrayOfString; //uninst.inf contents (loaded at start of uninstall, executed at the end)
 
 function SplitRegParams(const pInf: String; var oRootKey: Integer; var oKey,oValue: String): Boolean;
-var	sRootKey: String;
-	d: Integer;
+var sRootKey: String;
+  d: Integer;
 begin
-	Result := False;
+  Result := False;
 
-	d := Pos('/',pInf);
-	if d = 0 then
-	begin
-		DebugMsg('SplitRegParams','Malformed line (missing /): ' + pInf);
-		exit;
-	end;
+  d := Pos('/',pInf);
+  if d = 0 then
+  begin
+    DebugMsg('SplitRegParams','Malformed line (missing /): ' + pInf);
+    exit;
+  end;
 
-	sRootKey := Copy(pInf,1,d - 1);
-	oKey := Copy(pInf,d + 1,Length(pInf));
+  sRootKey := Copy(pInf,1,d - 1);
+  oKey := Copy(pInf,d + 1,Length(pInf));
 
-	if oValue <> 'nil' then
-	begin
-		d := RevPos('\',oKey);
-		if d = 0 then
-		begin
-			DebugMsg('SplitRegParams','Malformed line (missing \): ' + pInf);
-			exit;
-		end;
+  if oValue <> 'nil' then
+  begin
+    d := RevPos('\',oKey);
+    if d = 0 then
+    begin
+      DebugMsg('SplitRegParams','Malformed line (missing \): ' + pInf);
+      exit;
+    end;
 
-		oValue := Decode(Copy(oKey,d+1,Length(oKey)));
-		oKey := Copy(oKey,1,d-1);
-	end;
+    oValue := Decode(Copy(oKey,d+1,Length(oKey)));
+    oKey := Copy(oKey,1,d-1);
+  end;
 
-	DebugMsg('SplitRegParams','Root: '+sRootKey+', Key:'+oKey + ', Value:'+oValue);
+  DebugMsg('SplitRegParams','Root: '+sRootKey+', Key:'+oKey + ', Value:'+oValue);
 
-	case sRootKey of
-	'HKCR': oRootKey := HKCR;
-	'HKLM': oRootKey := HKLM;
-	'HKU': oRootKey := HKU;
-	'HKCU': oRootKey := HKCU;
-	else
-		begin
-			DebugMsg('SplitRegParams','Unrecognised root key: ' + sRootKey);
-			exit;
-		end;
-	end;
+  case sRootKey of
+  'HKCR': oRootKey := HKCR;
+  'HKLM': oRootKey := HKLM;
+  'HKU': oRootKey := HKU;
+  'HKCU': oRootKey := HKCU;
+  else
+    begin
+      DebugMsg('SplitRegParams','Unrecognised root key: ' + sRootKey);
+      exit;
+    end;
+  end;
 
-	Result := True;
+  Result := True;
 end;
 
 
 procedure UninstInfRegKey(const pInf: String; const pIfEmpty: Boolean);
-var	sKey,sVal: String;
-	iRootKey: Integer;
+var sKey,sVal: String;
+  iRootKey: Integer;
 begin
-	sVal := 'nil';
-	if not SplitRegParams(pInf,iRootKey,sKey,sVal) then
-		exit;
+  sVal := 'nil';
+  if not SplitRegParams(pInf,iRootKey,sKey,sVal) then
+    exit;
 
-	if pIfEmpty then
-	begin
-		if not RegDeleteKeyIfEmpty(iRootKey,sKey) then
-			DebugMsg('UninstInfRegKey','RegDeleteKeyIfEmpty failed');
-	end
-	else
-	begin
-		if not RegDeleteKeyIncludingSubkeys(iRootKey,sKey) then
-			DebugMsg('UninstInfRegKey','RegDeleteKeyIncludingSubkeys failed');
-	end;
+  if pIfEmpty then
+  begin
+    if not RegDeleteKeyIfEmpty(iRootKey,sKey) then
+      DebugMsg('UninstInfRegKey','RegDeleteKeyIfEmpty failed');
+  end
+  else
+  begin
+    if not RegDeleteKeyIncludingSubkeys(iRootKey,sKey) then
+      DebugMsg('UninstInfRegKey','RegDeleteKeyIncludingSubkeys failed');
+  end;
 end;
 
 
 procedure UninstInfRegVal(const pInf: String);
-var	sKey,sVal: String;
-	iRootKey: Integer;
+var sKey,sVal: String;
+  iRootKey: Integer;
 begin
-	if not SplitRegParams(pInf,iRootKey,sKey,sVal) then
-		exit;
+  if not SplitRegParams(pInf,iRootKey,sKey,sVal) then
+    exit;
 
-	if not RegDeleteValue(iRootKey,sKey,sVal) then
-		DebugMsg('UninstInfREG','RegDeleteKeyIncludingSubkeys failed');
+  if not RegDeleteValue(iRootKey,sKey,sVal) then
+    DebugMsg('UninstInfREG','RegDeleteKeyIncludingSubkeys failed');
 end;
 
 
 procedure UninstInfFile(const pFile: String);
 begin
-	DebugMsg('UninstInfFile','File: '+pFile);
+  DebugMsg('UninstInfFile','File: '+pFile);
 
-	if not DeleteFile(pFile) then
-		DebugMsg('UninstInfFile','DeleteFile failed');
+  if not DeleteFile(pFile) then
+    DebugMsg('UninstInfFile','DeleteFile failed');
 end;
 
 
 procedure UninstInfDir(const pDir: String);
 begin
-	DebugMsg('UninstInfDir','Dir: '+pDir);
+  DebugMsg('UninstInfDir','Dir: '+pDir);
 
-	if not RemoveDir(pDir) then
-		DebugMsg('UninstInfDir','RemoveDir failed');
+  if not RemoveDir(pDir) then
+    DebugMsg('UninstInfDir','RemoveDir failed');
 end;
 
 
 procedure CreateMessageForm(var frmMessage: TForm; const pMessage: String);
 var lblMessage: TNewStaticText;
 begin
-	frmMessage := CreateCustomForm(ScaleX(256), ScaleY(128), False, True);
-	with frmMessage do
-	begin
-		BorderStyle := bsDialog;
+  frmMessage := CreateCustomForm(ScaleX(256), ScaleY(128), False, True);
+  with frmMessage do
+  begin
+    BorderStyle := bsDialog;
 
-		ClientWidth := ScaleX(300);
-		ClientHeight := ScaleY(48);
+    ClientWidth := ScaleX(300);
+    ClientHeight := ScaleY(48);
 
-		Caption := CustomMessage('UninstallingAddOnCaption');
+    Caption := CustomMessage('UninstallingAddOnCaption');
 
-		Position := poScreenCenter;
+    Position := poScreenCenter;
 
-		BorderIcons := [];
-	end;
+    BorderIcons := [];
+  end;
 
-	lblMessage := TNewStaticText.Create(frmMessage);
-	with lblMessage do
-	begin
-		Parent := frmMessage;
-		AutoSize := True;
-		Caption := pMessage;
-		Top := (frmMessage.ClientHeight - Height) div 2;
-		Left := (frmMessage.ClientWidth - Width) div 2;
-		Visible := True;
-	end;
+  lblMessage := TNewStaticText.Create(frmMessage);
+  with lblMessage do
+  begin
+    Parent := frmMessage;
+    AutoSize := True;
+    Caption := pMessage;
+    Top := (frmMessage.ClientHeight - Height) div 2;
+    Left := (frmMessage.ClientWidth - Width) div 2;
+    Visible := True;
+  end;
 
-	frmMessage.Show();
+  frmMessage.Show();
 
     frmMessage.Refresh();
 end;
@@ -2409,55 +2409,55 @@ end;
 
 procedure UninstInfRun(const pInf: String);
 var Description,Prog,Params: String;
-	Split, ResultCode, Ctr: Integer;
-	frmMessage: TForm;
+  Split, ResultCode, Ctr: Integer;
+  frmMessage: TForm;
 begin
-	DebugMsg('UninstInfRun',pInf);
+  DebugMsg('UninstInfRun',pInf);
 
-	Split := Pos('/',pInf);
-	if Split <> 0 then
-	begin
-		Description := Copy(pInf, 1, Split - 1);
-		Prog := Copy(pInf, Split + 1, Length(pInf));
-	end else
-	begin
-		Prog := pInf;
-		Description := '';
-	end;
+  Split := Pos('/',pInf);
+  if Split <> 0 then
+  begin
+    Description := Copy(pInf, 1, Split - 1);
+    Prog := Copy(pInf, Split + 1, Length(pInf));
+  end else
+  begin
+    Prog := pInf;
+    Description := '';
+  end;
 
-	Split := Pos('/',Prog);
-	if Split <> 0 then
-	begin
-		Params := Copy(Prog, Split + 1, Length(Prog));
-		Prog := Copy(Prog, 1, Split - 1);
-	end else
-	begin
-		Params := '';
-	end;
+  Split := Pos('/',Prog);
+  if Split <> 0 then
+  begin
+    Params := Copy(Prog, Split + 1, Length(Prog));
+    Prog := Copy(Prog, 1, Split - 1);
+  end else
+  begin
+    Params := '';
+  end;
 
-	if not UninstallSilent then //can't manipulate uninstaller messages, so create a form instead
-		CreateMessageForm(frmMessage,Description);
+  if not UninstallSilent then //can't manipulate uninstaller messages, so create a form instead
+    CreateMessageForm(frmMessage,Description);
 
-	DebugMsg('UninstInfRun','Running: ' + Prog + '; Params: ' + Params);
+  DebugMsg('UninstInfRun','Running: ' + Prog + '; Params: ' + Params);
 
-	if Exec(Prog,Params,'',SW_SHOW,ewWaitUntilTerminated,ResultCode) then
-	begin
-		DebugMsg('UninstInfRun','Exec result: ' + IntToStr(ResultCode));
+  if Exec(Prog,Params,'',SW_SHOW,ewWaitUntilTerminated,ResultCode) then
+  begin
+    DebugMsg('UninstInfRun','Exec result: ' + IntToStr(ResultCode));
 
-		Ctr := 0;
-		while FileExists(Prog) do //wait a few seconds for the uninstaller to be deleted - since this is done by a program
-		begin                     //running from a temporary directory, the uninstaller we ran above will exit some time before
-			Sleep(UNINSTALL_CHECK_TIME);           //it's removed from disk
-			Inc(Ctr);
-			if Ctr = (UNINSTALL_MAX_WAIT_TIME/UNINSTALL_CHECK_TIME) then //don't wait more than 5 seconds
-				break;
-		end;
+    Ctr := 0;
+    while FileExists(Prog) do //wait a few seconds for the uninstaller to be deleted - since this is done by a program
+    begin                     //running from a temporary directory, the uninstaller we ran above will exit some time before
+      Sleep(UNINSTALL_CHECK_TIME);           //it's removed from disk
+      Inc(Ctr);
+      if Ctr = (UNINSTALL_MAX_WAIT_TIME/UNINSTALL_CHECK_TIME) then //don't wait more than 5 seconds
+        break;
+    end;
 
-	end else
-		DebugMsg('UninstInfRun','Exec failed: ' + IntToStr(ResultCode) + ' (' + SysErrorMessage(ResultCode) + ')');
+  end else
+    DebugMsg('UninstInfRun','Exec failed: ' + IntToStr(ResultCode) + ' (' + SysErrorMessage(ResultCode) + ')');
 
-	if not UninstallSilent then
-		frmMessage.Free();
+  if not UninstallSilent then
+    frmMessage.Free();
 end;
 
 (*
@@ -2498,35 +2498,35 @@ code was rewritten.
 *)
 procedure ParseUninstInf();
 var i,d: Integer;
-	sWhat: String;
+  sWhat: String;
 begin
-	for i := GetArrayLength(asUninstInf) - 1 downto 0 do
-	begin
+  for i := GetArrayLength(asUninstInf) - 1 downto 0 do
+  begin
 
-		DebugMsg('ParseUninstInf',asUninstInf[i]);
+    DebugMsg('ParseUninstInf',asUninstInf[i]);
 
-		if (Length(asUninstInf[i]) = 0) or (asUninstInf[i][1] = '#') then //skip comments and empty lines
-			continue;
+    if (Length(asUninstInf[i]) = 0) or (asUninstInf[i][1] = '#') then //skip comments and empty lines
+      continue;
 
-		d := Pos(':',asUninstInf[i]);
-		if d = 0 then
-		begin
-			DebugMsg('ParseUninstInf','Malformed line: ' + asUninstInf[i]);
-			continue;
-		end;
+    d := Pos(':',asUninstInf[i]);
+    if d = 0 then
+    begin
+      DebugMsg('ParseUninstInf','Malformed line: ' + asUninstInf[i]);
+      continue;
+    end;
 
-		sWhat := Copy(asUninstInf[i],d+1,Length(asUninstInf[i]));
+    sWhat := Copy(asUninstInf[i],d+1,Length(asUninstInf[i]));
 
-		case Copy(asUninstInf[i],1,d) of
-		'RegKey:': UninstInfRegKey(sWhat,False);
-		'RegKeyEmpty:': UninstInfRegKey(sWhat,True);
-		'RegVal:': UninstInfRegVal(sWhat);
-		'File:': UninstInfFile(sWhat);
-		'Dir:': UninstInfDir(sWhat);
-		'Run:': UninstInfRun(sWhat);
-		end;
+    case Copy(asUninstInf[i],1,d) of
+    'RegKey:': UninstInfRegKey(sWhat,False);
+    'RegKeyEmpty:': UninstInfRegKey(sWhat,True);
+    'RegVal:': UninstInfRegVal(sWhat);
+    'File:': UninstInfFile(sWhat);
+    'Dir:': UninstInfDir(sWhat);
+    'Run:': UninstInfRun(sWhat);
+    end;
 
-	end;
+  end;
 
 end;
 
@@ -2618,101 +2618,101 @@ function Time(ATimerPtr: integer): integer; external '_time32@ucrtbase.dll cdecl
 
 procedure CurUninstallStepChanged(CurStep: TUninstallStep);
 var
-	gimp_directory: String;
+  gimp_directory: String;
 begin
-	DebugMsg('CurUninstallStepChanged','');
-	case CurStep of
-	usUninstall:
-	begin
-		//Try to make restore point before unninstalling (like before installing, see RestorePoint() on *gimp3264.iss)
-		if IsAdminInstallMode() then begin
-		    RestorePointU();
-			UninstallProgressForm.StatusLabel.Caption := FmtMessage(SetupMessage(msgStatusUninstalling),['GIMP']);
-		end;
+  DebugMsg('CurUninstallStepChanged','');
+  case CurStep of
+  usUninstall:
+  begin
+    //Try to make restore point before unninstalling (like before installing, see RestorePoint() on *gimp3264.iss)
+    if IsAdminInstallMode() then begin
+        RestorePointU();
+      UninstallProgressForm.StatusLabel.Caption := FmtMessage(SetupMessage(msgStatusUninstalling),['GIMP']);
+    end;
 
-		LoadStringsFromFile(ExpandConstant('{app}\uninst\uninst.inf'),asUninstInf);
-		ParseUninstInf();
-	end;
-	usPostUninstall:
-	begin
-		//Offer option to remove %AppData%/GIMP/GIMP_APP_VERSION dir so have a future clean install
-		if not IsAdminInstallMode() then begin
+    LoadStringsFromFile(ExpandConstant('{app}\uninst\uninst.inf'),asUninstInf);
+    ParseUninstInf();
+  end;
+  usPostUninstall:
+  begin
+    //Offer option to remove %AppData%/GIMP/GIMP_APP_VERSION dir so have a future clean install
+    if not IsAdminInstallMode() then begin
             gimp_directory := GetEnv('GIMP{#API_MAJOR}_DIRECTORY');
-			if gimp_directory = '' then begin
-				gimp_directory := ExpandConstant('{userappdata}\GIMP\{#GIMP_APP_VERSION}');
-			end;
-			if DirExists(gimp_directory + '\') then begin
-				if SuppressibleMsgBox(CustomMessage('UninstallConfig'), mbError, MB_YESNO or MB_DEFBUTTON2, IDNO) = IDYES then begin
-					CopyFiles(gimp_directory, ExpandConstant('{userdesktop}\gimp_{#GIMP_APP_VERSION}_backup_' + Format('%d', [Time(0)])), '');
-					DelTree(gimp_directory, True, True, True);
-				end;
-			end;
-	    end;
-	end;
-	end;
+      if gimp_directory = '' then begin
+        gimp_directory := ExpandConstant('{userappdata}\GIMP\{#GIMP_APP_VERSION}');
+      end;
+      if DirExists(gimp_directory + '\') then begin
+        if SuppressibleMsgBox(CustomMessage('UninstallConfig'), mbError, MB_YESNO or MB_DEFBUTTON2, IDNO) = IDYES then begin
+          CopyFiles(gimp_directory, ExpandConstant('{userdesktop}\gimp_{#GIMP_APP_VERSION}_backup_' + Format('%d', [Time(0)])), '');
+          DelTree(gimp_directory, True, True, True);
+        end;
+      end;
+      end;
+  end;
+  end;
 end;
 
 
 procedure AssociationsCleanUp();
 var i, d, countNew,countUI: Integer;
-	asTemp, asNew: TArrayOfString;
-	sKey,sVal: String;
-	iRootKey: Integer;
+  asTemp, asNew: TArrayOfString;
+  sKey,sVal: String;
+  iRootKey: Integer;
 begin
-	if FileExists(ExpandConstant('{app}\uninst\uninst.inf')) then
-	begin
-		DebugMsg('AssociationsCleanUp','Parsing old uninst.inf');
-		LoadStringsFromFile(ExpandConstant('{app}\uninst\uninst.inf'),asTemp);
+  if FileExists(ExpandConstant('{app}\uninst\uninst.inf')) then
+  begin
+    DebugMsg('AssociationsCleanUp','Parsing old uninst.inf');
+    LoadStringsFromFile(ExpandConstant('{app}\uninst\uninst.inf'),asTemp);
 
-		countNew := 0;
-		countUI := 0;
-		SetArrayLength(asNew, GetArrayLength(asTemp));
-		SetArrayLength(asUninstInf, GetArrayLength(asTemp));
+    countNew := 0;
+    countUI := 0;
+    SetArrayLength(asNew, GetArrayLength(asTemp));
+    SetArrayLength(asUninstInf, GetArrayLength(asTemp));
 
-		for i := 0 to GetArrayLength(asTemp) - 1 do //extract associations-related entries from uninst.inf
-		begin
+    for i := 0 to GetArrayLength(asTemp) - 1 do //extract associations-related entries from uninst.inf
+    begin
 
-			if (Length(asTemp[i]) = 0) or (asTemp[i][1] = '#') then //comment/empty line
-			begin
-				asNew[countNew] := asTemp[i];
-				Inc(countNew);
-				continue;
-			end;
+      if (Length(asTemp[i]) = 0) or (asTemp[i][1] = '#') then //comment/empty line
+      begin
+        asNew[countNew] := asTemp[i];
+        Inc(countNew);
+        continue;
+      end;
 
-			d := Pos(':',asTemp[i]);
-			if d = 0 then //something wrong, ignore
-				continue;
+      d := Pos(':',asTemp[i]);
+      if d = 0 then //something wrong, ignore
+        continue;
 
-			if Copy(asTemp[i],1,3) = 'Reg' then
-			begin
+      if Copy(asTemp[i],1,3) = 'Reg' then
+      begin
 
-				sVal := 'nil';
-				if not SplitRegParams(Copy(asTemp[i], d + 1, Length(asTemp[i])),iRootKey,sKey,sVal) then
-					continue; //malformed line, ignore
+        sVal := 'nil';
+        if not SplitRegParams(Copy(asTemp[i], d + 1, Length(asTemp[i])),iRootKey,sKey,sVal) then
+          continue; //malformed line, ignore
 
-				if iRootKey = HKCR then //old association, prepare for cleanup
-				begin
-					DebugMsg('AssociationsCleanUp','Preparing for cleanup: '+asTemp[i]);
-					asUninstInf[countUI] := asTemp[i];
-					Inc(countUI);
-					continue;
-				end;
+        if iRootKey = HKCR then //old association, prepare for cleanup
+        begin
+          DebugMsg('AssociationsCleanUp','Preparing for cleanup: '+asTemp[i]);
+          asUninstInf[countUI] := asTemp[i];
+          Inc(countUI);
+          continue;
+        end;
 
-			end;
+      end;
 
-			//something else, keep for new uninst.inf
-			asNew[countNew] := asTemp[i];
-			Inc(countNew);
+      //something else, keep for new uninst.inf
+      asNew[countNew] := asTemp[i];
+      Inc(countNew);
 
-		end;
+    end;
 
-		SetArrayLength(asNew, countNew);
-		SetArrayLength(asUninstInf, countUI);
+    SetArrayLength(asNew, countNew);
+    SetArrayLength(asUninstInf, countUI);
 
-		SaveStringsToUTF8File(ExpandConstant('{app}\uninst\uninst.inf'), asNew, False); //replace uninst.inf with a cleaned one
+    SaveStringsToUTF8File(ExpandConstant('{app}\uninst\uninst.inf'), asNew, False); //replace uninst.inf with a cleaned one
 
-		ParseUninstInf(); //remove old associations
-	end;
+    ParseUninstInf(); //remove old associations
+  end;
 end;
 
 
@@ -2722,57 +2722,57 @@ end;
 //INITIALIZE AND ORDER INSTALLER PAGES
 procedure InitializeWizard();
 begin
-	UpdateWizardImages();
-	InitCustomPages();
+  UpdateWizardImages();
+  InitCustomPages();
 end;
 
 function ShouldSkipPage(pPageID: Integer): Boolean;
 begin
-	DebugMsg('ShouldSkipPage','ID: '+IntToStr(pPageID));
+  DebugMsg('ShouldSkipPage','ID: '+IntToStr(pPageID));
 
-	Result := (InstallMode = imSimple) and (pPageID <> wpFinished);
-	if Result then
-		DebugMsg('ShouldSkipPage','Yes')
-	else
-		DebugMsg('ShouldSkipPage','No');
+  Result := (InstallMode = imSimple) and (pPageID <> wpFinished);
+  if Result then
+    DebugMsg('ShouldSkipPage','Yes')
+  else
+    DebugMsg('ShouldSkipPage','No');
 end;
 
 procedure CurPageChanged(pCurPageID: Integer);
 begin
-	DebugMsg('CurPageChanged','ID: '+IntToStr(pCurPageID));
-	case pCurPageID of
-		wpWelcome:
-			PrepareWelcomePage();
-		wpInfoBefore:
-			InfoBeforeLikeLicense();
-		wpSelectComponents:
-			SelectComponentsFaceLift();
-		wpReady:
-			ReadyFaceLift();
-		wpPreparing:
-			PreparingFaceLift();
-		wpInstalling:
-			InstallingFaceLift();
-	end;
+  DebugMsg('CurPageChanged','ID: '+IntToStr(pCurPageID));
+  case pCurPageID of
+    wpWelcome:
+      PrepareWelcomePage();
+    wpInfoBefore:
+      InfoBeforeLikeLicense();
+    wpSelectComponents:
+      SelectComponentsFaceLift();
+    wpReady:
+      ReadyFaceLift();
+    wpPreparing:
+      PreparingFaceLift();
+    wpInstalling:
+      InstallingFaceLift();
+  end;
 end;
 
 procedure CurStepChanged(pCurStep: TSetupStep);
 begin
-	case pCurStep of
-		ssInstall:
-		begin
-			if IsAdminInstallMode() then begin
-				RestorePoint();
-			end;
-			RemoveDebugFiles();
-			AssociationsCleanup();
-		end;
-		ssPostInstall:
-		begin
-			PrepareInterp();
-			PrepareGimpEnvironment();
-		end;
-	end;
+  case pCurStep of
+    ssInstall:
+    begin
+      if IsAdminInstallMode() then begin
+        RestorePoint();
+      end;
+      RemoveDebugFiles();
+      AssociationsCleanup();
+    end;
+    ssPostInstall:
+    begin
+      PrepareInterp();
+      PrepareGimpEnvironment();
+    end;
+  end;
 end;
 
 
