@@ -435,6 +435,8 @@ gimp_installation_directory (void)
   {
     NSAutoreleasePool *pool;
     NSString          *resource_path;
+    gchar             *resource_path_test;
+    NSString          *app_path;
     gchar             *basename;
     gchar             *basepath;
     gchar             *dirname;
@@ -442,9 +444,22 @@ gimp_installation_directory (void)
     pool = [[NSAutoreleasePool alloc] init];
 
     resource_path = [[NSBundle mainBundle] resourcePath];
+    app_path = [[NSBundle mainBundle] bundlePath];
 
-    basename = g_path_get_basename ([resource_path UTF8String]);
-    basepath = g_path_get_dirname ([resource_path UTF8String]);
+    resource_path_test = g_build_filename([resource_path UTF8String], "share",
+                                          GIMP_PACKAGE, GIMP_DATA_VERSION, NULL);
+    if (g_file_test (resource_path_test, G_FILE_TEST_IS_DIR))
+      {
+        /* Legacy CircleCI era relocatable code */
+        basename = g_path_get_basename ([resource_path UTF8String]);
+        basepath = g_path_get_dirname ([resource_path UTF8String]);
+      }
+    else
+      {
+         /* Modern GitLab CI era relocatable code */
+        basename = g_path_get_basename ([app_path UTF8String]);
+        basepath = g_path_get_dirname ([app_path UTF8String]);
+      }
     dirname  = g_path_get_basename (basepath);
 
     if (! strcmp (basename, ".libs"))
@@ -507,12 +522,22 @@ gimp_installation_directory (void)
       {
         /*  if none of the above match, we assume that we are really in a bundle  */
 
-        toplevel = g_strdup ([resource_path UTF8String]);
+        if (g_file_test (resource_path_test, G_FILE_TEST_IS_DIR))
+          {
+            /* Legacy CircleCI era relocatable prefix */
+            toplevel = g_strdup ([resource_path UTF8String]);
+          }
+        else
+          {
+            /* Modern GitLab CI era relocatable prefix */
+            toplevel = g_strconcat ([app_path UTF8String], "/Contents", NULL);
+          }
       }
 
     g_free (basename);
     g_free (basepath);
     g_free (dirname);
+    g_free (resource_path_test);
 
     [pool drain];
   }
