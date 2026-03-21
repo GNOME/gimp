@@ -67,7 +67,7 @@ try:
     print(f"RUNNING: {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}")
     subprocess.run([os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:],stdin=sys.stdin, check=True)
 
-  if different_python:
+  if sys.platform not in ['win32', 'cygwin'] and different_python:
     os.environ["PATH"] = os.pathsep.join([p for p in os.environ["PATH"].split(os.pathsep) if p != tmp_path])
     shutil.rmtree(tmp_path, ignore_errors=True)
 
