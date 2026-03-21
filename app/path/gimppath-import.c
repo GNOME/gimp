@@ -207,7 +207,8 @@ static gboolean   parse_svg_length    (const gchar  *value,
 static gboolean   parse_svg_viewbox   (const gchar  *value,
                                        gdouble      *width,
                                        gdouble      *height,
-                                       GimpMatrix3  *matrix);
+                                       GimpMatrix3  *matrix,
+                                       gboolean      scale);
 static gboolean   parse_svg_transform (const gchar  *value,
                                        GimpMatrix3  *matrix);
 static GList    * parse_path_data     (const gchar  *data);
@@ -636,7 +637,7 @@ svg_handler_svg_start (SvgHandler   *handler,
         gimp_matrix3_translate (matrix, x, y);
     }
 
-  if (viewbox && parse_svg_viewbox (viewbox, &w, &h, &box))
+  if (viewbox && parse_svg_viewbox (viewbox, &w, &h, &box, parser->scale))
     {
       gimp_matrix3_mult (&box, matrix);
     }
@@ -1212,7 +1213,8 @@ static gboolean
 parse_svg_viewbox (const gchar *value,
                    gdouble     *width,
                    gdouble     *height,
-                   GimpMatrix3 *matrix)
+                   GimpMatrix3 *matrix,
+                   gboolean     scale)
 {
   gdouble   x, y, w, h;
   gchar    *tok;
@@ -1252,7 +1254,8 @@ parse_svg_viewbox (const gchar *value,
 
       if (w > 0.0 && h > 0.0)
         {
-          gimp_matrix3_scale (matrix, *width / w, *height / h);
+          if (scale)
+            gimp_matrix3_scale (matrix, *width / w, *height / h);
         }
       else  /* disable rendering of the element */
         {
