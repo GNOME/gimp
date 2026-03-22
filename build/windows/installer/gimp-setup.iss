@@ -2101,7 +2101,7 @@ var InterpFile,InterpContent: String;
 #endif
 begin
 #ifdef PYTHON
-  if IsComponentSelected('py64') or IsComponentSelected('pyARM64') then
+  if WizardIsComponentSelected('py64') or WizardIsComponentSelected('pyARM64') then
   begin
     StatusLabel(CustomMessage('SettingUpPyGimp'),'');
 
@@ -2136,7 +2136,7 @@ begin
 #endif
 
 #ifdef LUA
-  if IsComponentSelected('lua64') or IsComponentSelected('luaARM64') then
+  if WizardIsComponentSelected('lua64') or WizardIsComponentSelected('luaARM64') then
   begin
     InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\lua.interp');
     DebugMsg('PrepareInterp','Writing interpreter file for lua: ' + InterpFile);
