@@ -89,13 +89,13 @@ gimp_drawable_undo_class_init (GimpDrawableUndoClass *klass)
 
   g_object_class_install_property (object_class, PROP_X,
                                    g_param_spec_int ("x", NULL, NULL,
-                                                     0, GIMP_MAX_IMAGE_SIZE, 0,
+                                                     -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_Y,
                                    g_param_spec_int ("y", NULL, NULL,
-                                                     0, GIMP_MAX_IMAGE_SIZE, 0,
+                                                     -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 }
