@@ -480,33 +480,21 @@ Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\{#ConfigDir}"; 
 
 #endif //NOFILES
 
-;4.2 SPECIAL-CASE FILES TO BE WIPED
+;4.2 SPECIAL-CASE VERSIONED DEP FILES TO BE WIPED SINCE INNO IS FEBLE (#16087)
 [InstallDelete]
-Type: files; Name: "{app}\bin\gimp-?.?.exe"
-Type: files; Name: "{app}\bin\gimp-?.??.exe"
-Type: files; Name: "{app}\bin\gimp-console-?.?.exe"
-Type: files; Name: "{app}\bin\gimp-console-?.??.exe"
-;old ghostscript
-Type: filesandordirs; Name: "{app}\share\ghostscript\*"
+Type: files; Name: "{app}\bin\*"
+Type: files; Name: "{app}\lib\babl-0.1\*"
+Type: files; Name: "{app}\lib\gegl-0.4\*"
+Type: files; Name: "{app}\lib\girepository-1.0\*.typelib"
+Type: filesandordirs; Name: "{app}\lib\python{#PYTHON_VERSION}\*"
+#define DotPos Pos(".", PYTHON_VERSION)
+#define PyMajor Copy(PYTHON_VERSION, 1, DotPos - 1)
+#define PyMinor Int(Copy(PYTHON_VERSION, DotPos + 1, Len(PYTHON_VERSION) - DotPos))
+#define PREVIOUS_PYTHON_VERSION PyMajor + "." + Str(PyMinor - 1)
+Type: filesandordirs; Name: "{app}\lib\python{#PREVIOUS_PYTHON_VERSION}\*"
 ;get previous GIMP icon name from uninstall name in Registry
 Type: files; Name: "{autoprograms}\{reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1,DisplayName|GIMP {#GIMP_MUTEX_VERSION}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1','DisplayName')
 Type: files; Name: "{autodesktop}\{reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1,DisplayName|GIMP {#GIMP_MUTEX_VERSION}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1','DisplayName')
-;remove old babl and gegl plugins
-Type: filesandordirs; Name: "{app}\lib\babl-0.1"
-Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
-;Uneeded Linux appdata shipped in 2.99.18
-Type: filesandordirs; Name: "{app}\share\metainfo"
-;This was bunbled in 3.0 RC1 but not needed since the "Debug" menu is hidden in stable releases
-#if !Defined(GIMP_UNSTABLE) && Defined(GIMP_RELEASE)
-  Type: files; Name: "{app}\bin\dot.exe"
-#endif
-;No need to all these python binaries shipped in 3.0 RC1
-Type: files; Name: "{app}\bin\python3*.exe"
-;Uneeded shipped headers in 3.0 RC3 (we now ship only babl, gegl and gimp)
-Type: filesandordirs; Name: "{app}\include\exiv2"
-Type: filesandordirs; Name: "{app}\include\gexiv2"
-;Old uneeded typelibs (not distributed since 3.1.4)
-Type: files; Name: "{app}\lib\girepository-1.0\*.typelib"
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
