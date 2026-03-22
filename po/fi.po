@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-15 01:40+0000\n"
-"PO-Revision-Date: 2026-03-15 21:32+0200\n"
+"POT-Creation-Date: 2026-03-22 11:17+0000\n"
+"PO-Revision-Date: 2026-03-22 17:28+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -44,28 +44,18 @@ msgstr "GIMP-kuvankäsittely"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:17
 msgid "High-end image creation and manipulation"
-msgstr ""
+msgstr "Korkealaatuista kuvien luomista ja käsittelyä"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:19
-#, fuzzy
-#| msgid ""
-#| "GIMP is an acronym for GNU Image Manipulation Program. It is a freely "
-#| "distributed program for such tasks as photo retouching, image composition "
-#| "and image authoring."
 msgid ""
 "GIMP is an acronym for GNU Image Manipulation Program. It is Community-"
 "driven Free Software for high-end image creation and manipulation."
 msgstr ""
 "GIMP on lyhenne englanninkielisistä sanoista GNU Image Manipulation Program, "
-"vapaasti suomennettuna GNU-kuvankäsittelyohjelma. Se on vapaasti jaeltava "
-"ohjelma kuvien käsittelyä ja koostamista varten."
+"vapaasti suomennettuna GNU-kuvankäsittelyohjelma. Se on yhteisölähtöinen, "
+"vapaasti jaeltava ohjelma kuvien käsittelyä ja koostamista varten."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:23
-#, fuzzy
-#| msgid ""
-#| "It has many capabilities. It can be used as a simple paint program, an "
-#| "expert quality photo retouching program, an online batch processing "
-#| "system, a mass production image renderer, an image format converter, etc."
 msgid ""
 "It has many capabilities. It can be used as a paint program, an expert "
 "quality photo retouching program, image composition, an online batch "
@@ -73,17 +63,10 @@ msgid ""
 "converter, etc."
 msgstr ""
 "Se sisältää lukuisia ominaisuuksia. GIMP soveltuu yksinkertaiseksi "
-"piirrosohjelmaksi, ammattilaisen työkaluksi, kuvamuotojen muuntajaksi ja "
-"niin edelleen."
+"piirrosohjelmaksi, ammattilaisen työkaluksi valokuvien käsittelyyn, "
+"kuvamuotojen muuntajaksi ja niin edelleen."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:29
-#, fuzzy
-#| msgid ""
-#| "GIMP is expandable and extensible. It is designed to be augmented with "
-#| "plug-ins and extensions to do just about anything. The advanced scripting "
-#| "interface allows everything from the simplest task to the most complex "
-#| "image manipulation procedures to be easily scripted. GIMP is available "
-#| "for Linux, Microsoft Windows and OS X."
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
@@ -95,29 +78,35 @@ msgstr ""
 "laajennuksilla, jotka voivat tehdä melkeinpä mitä vain. Kehittynyt "
 "skriptausliittymä sallii kaikenlaisen automatisoinnin yksinkertaisista "
 "tehtävistä aina haastaviin kuvankäsittelytoimenpiteisiin. GIMP on saataville "
-"Linuxille, Microsoft Windowsille ja OS X:lle."
+"Linuxille, Microsoft Windowsille ja macOS:lle."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:47
 msgid ""
 "Scene 4 cut 15 of \"ZeMarmot\" being edited in GIMP. Illustration by Aryeom "
 "(CC by-sa 4.0 International)"
 msgstr ""
+"Elokuvan \"ZeMarmot\" kohtaus 4, otos 15, muokattavana GIMPissä. Kuvitus: "
+"Aryeom (lisenssi CC by-sa 4.0 International)"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:51
 msgid ""
 "Gull on beach photograph being edited in GIMP. Photo by Iana (CC by-sa 4.0 "
 "International)"
 msgstr ""
+"Valokuva, jossa lokki on rannalla, muokattavana GIMPissä. Valokuva: Iana "
+"(lisenssi CC by-sa 4.0 International)"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:55
 msgid ""
 "Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 "
 "International)"
 msgstr ""
+"Sofiian muotokuva muokattavana GIMPissä. Valokuva: Sofia (lisenssi CC by-sa "
+"4.0 International)"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:59
 msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
-msgstr ""
+msgstr "Skannattu kaiverrus muokattava GIMPissä. Kuvitus: Liam (lisenssi CC0)"
 
 #: desktop/gimp.desktop.in.in:5
 msgid "Image Editor"
@@ -351,11 +340,11 @@ msgstr "Näytä asetussivu kokeellisilla ominaisuuksilla"
 msgid "Show an image submenu with debug actions"
 msgstr "Näytä kuva-alavalikko virheenjäljitystoiminnoilla"
 
-#: app/main.c:784
+#: app/main.c:767
 msgid "[FILE|URI...]"
 msgstr "[TIEDOSTO|URI...]"
 
-#: app/main.c:814
+#: app/main.c:797
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -363,11 +352,11 @@ msgstr ""
 "GIMP ei voi käynnistää graafista käyttöliittymää.\n"
 "Varmista, että ympäristö on asetettu oikein."
 
-#: app/main.c:880
+#: app/main.c:863
 msgid "Another GIMP instance is already running."
 msgstr "Toinen Gimp-istunto on jo käynnissä."
 
-#: app/main.c:961
+#: app/main.c:944
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Sulje ikkuna kirjoittamalla jotain tähän ikkunaan)\n"
@@ -1135,8 +1124,8 @@ msgstr[0] "Laske kanava alimmaiseksi"
 msgstr[1] "Laske kanavat alimmaisiksi"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
-#: app/display/gimpdisplayshell-dnd.c:770 app/widgets/gimpchanneltreeview.c:260
-#: app/widgets/gimplayertreeview.c:922
+#: app/display/gimpdisplayshell-dnd.c:761 app/widgets/gimpchanneltreeview.c:260
+#: app/widgets/gimplayertreeview.c:899
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s kanavan kopio"
@@ -2536,7 +2525,7 @@ msgstr "240 sekuntia"
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:556
-#: app/widgets/gimpdeviceeditor.c:463 app/widgets/gimpdeviceinfoeditor.c:850
+#: app/widgets/gimpdeviceeditor.c:463 app/widgets/gimpdeviceinfoeditor.c:837
 #: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:337
 #: app/widgets/gimphelp.c:441 app/widgets/gimphelp.c:776
 #: app/widgets/gimpiconpicker.c:489 app/widgets/gimpmodifierseditor.c:688
@@ -2602,8 +2591,8 @@ msgstr "Kirjoita merkin kuvaus"
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:713 app/display/gimpimagewindow.c:2260
-#: app/widgets/gimplayertreeview.c:880 app/widgets/gimptoolbox.c:849
+#: app/display/gimpdisplayshell-dnd.c:704 app/display/gimpimagewindow.c:2260
+#: app/widgets/gimplayertreeview.c:857 app/widgets/gimptoolbox.c:849
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -6483,7 +6472,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "_Ankkuroi kelluva taso tai maski"
 
-#: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1334
+#: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1311
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Ankkuroi kelluva taso tai maski"
@@ -7405,7 +7394,7 @@ msgid "Empty Selection"
 msgstr "Tyhjää valinta"
 
 #: app/actions/layers-commands.c:2022 app/actions/layers-commands.c:2066
-#: app/widgets/gimplayertreeview.c:1175
+#: app/widgets/gimplayertreeview.c:1152
 msgid "Set layers opacity"
 msgstr "Aseta tasojen peittävyys"
 
@@ -7739,12 +7728,9 @@ msgid "Raise Paths to _Top"
 msgstr "Nosta polut _ylimmäksi"
 
 #: app/actions/paths-actions.c:94
-#, fuzzy
-#| msgctxt "paths-action"
-#| msgid "Raise this path to the top"
 msgctxt "paths-action"
 msgid "Raise the selected paths to the top"
-msgstr "Nosta polku ylimmäksi"
+msgstr "Nosta valitut polut ylimmäksi"
 
 #: app/actions/paths-actions.c:99
 msgctxt "paths-action"
@@ -7757,12 +7743,9 @@ msgid "Lower the selected paths"
 msgstr "Laske valitut polut"
 
 #: app/actions/paths-actions.c:105
-#, fuzzy
-#| msgctxt "paths-action"
-#| msgid "Lower Path to _Bottom"
 msgctxt "paths-action"
 msgid "Lower Paths to _Bottom"
-msgstr "Laske polku _alimmaksi"
+msgstr "Laske polut _alimmaksi"
 
 #: app/actions/paths-actions.c:106
 #, fuzzy
@@ -8130,7 +8113,7 @@ msgstr "Kahdenna polut"
 
 #: app/actions/paths-commands.c:488
 msgid "Cannot delete paths attached to vector layers"
-msgstr ""
+msgstr "Vektoritasoihin kiinnitettyjä polkuja ei voi poistaa"
 
 #: app/actions/paths-commands.c:499
 msgid "Remove Paths"
@@ -8736,7 +8719,7 @@ msgstr "L_iitä"
 #: app/actions/text-tool-actions.c:65
 msgctxt "text-tool-action"
 msgid "Paste un_formatted text"
-msgstr ""
+msgstr "Liitä _muotoilematon teksti"
 
 #: app/actions/text-tool-actions.c:71
 msgctxt "text-tool-action"
@@ -10406,7 +10389,7 @@ msgstr "_Avaa näyttö..."
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:192
 #: app/tools/gimpfiltertool.c:377 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:666
-#: app/widgets/gimpdeviceinfoeditor.c:851 app/widgets/gimperrordialog.c:76
+#: app/widgets/gimpdeviceinfoeditor.c:838 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
@@ -12512,78 +12495,78 @@ msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "Havainnollinen"
 
-#: app/core/core-enums.c:1299
+#: app/core/core-enums.c:1300
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<virheellinen>>"
 
-#: app/core/core-enums.c:1300
+#: app/core/core-enums.c:1301
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Skaalaa kuvaa"
 
-#: app/core/core-enums.c:1301
+#: app/core/core-enums.c:1302
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Muuta kuvan kokoa"
 
-#: app/core/core-enums.c:1302
+#: app/core/core-enums.c:1303
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Peilaa kuva"
 
-#: app/core/core-enums.c:1303
+#: app/core/core-enums.c:1304
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Kierrä kuva"
 
-#: app/core/core-enums.c:1304
+#: app/core/core-enums.c:1305
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Muunna kuva"
 
-#: app/core/core-enums.c:1305
+#: app/core/core-enums.c:1306
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Rajaa kuva"
 
-#: app/core/core-enums.c:1306
+#: app/core/core-enums.c:1307
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Muunna kuva"
 
-#: app/core/core-enums.c:1307
+#: app/core/core-enums.c:1308
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Poista kohde"
 
-#: app/core/core-enums.c:1308 app/core/core-enums.c:1362
+#: app/core/core-enums.c:1309 app/core/core-enums.c:1364
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Poista kohde"
 
-#: app/core/core-enums.c:1309
+#: app/core/core-enums.c:1310
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Yhdistä tasot"
 
-#: app/core/core-enums.c:1310
+#: app/core/core-enums.c:1311
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Yhdistä polut"
 
-#: app/core/core-enums.c:1311
+#: app/core/core-enums.c:1312
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Pikamaski"
 
-#: app/core/core-enums.c:1312 app/core/core-enums.c:1352
+#: app/core/core-enums.c:1313 app/core/core-enums.c:1354
 #: app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Ruudukko"
 
-#: app/core/core-enums.c:1313
+#: app/core/core-enums.c:1314
 #, fuzzy
 #| msgctxt "colormap-action"
 #| msgid "Colormap Menu"
@@ -12591,377 +12574,385 @@ msgctxt "undo-type"
 msgid "Colormap remapping"
 msgstr "Värikarttavalikko"
 
-#: app/core/core-enums.c:1314 app/core/core-enums.c:1356
+#: app/core/core-enums.c:1315 app/core/core-enums.c:1358
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Apulinja"
 
-#: app/core/core-enums.c:1315 app/core/core-enums.c:1357
+#: app/core/core-enums.c:1316 app/core/core-enums.c:1359
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Näytepiste"
 
-#: app/core/core-enums.c:1316 app/core/core-enums.c:1358
+#: app/core/core-enums.c:1317 app/core/core-enums.c:1360
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Taso/kanava"
 
-#: app/core/core-enums.c:1317 app/core/core-enums.c:1359
+#: app/core/core-enums.c:1318 app/core/core-enums.c:1361
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Tason/kanavan muunnos"
 
-#: app/core/core-enums.c:1318 app/core/core-enums.c:1361
+#: app/core/core-enums.c:1319 app/core/core-enums.c:1363
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Valintamaski"
 
-#: app/core/core-enums.c:1319 app/core/core-enums.c:1365
+#: app/core/core-enums.c:1320 app/core/core-enums.c:1367
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Kohteen näkyvyys"
 
-#: app/core/core-enums.c:1320
+#: app/core/core-enums.c:1321
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "Lukitse/vapauta sisällöt"
 
-#: app/core/core-enums.c:1321 app/core/core-enums.c:1368
+#: app/core/core-enums.c:1322 app/core/core-enums.c:1370
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Lukitse/vapauta sijainti"
 
-#: app/core/core-enums.c:1322 app/core/core-enums.c:1369
+#: app/core/core-enums.c:1323 app/core/core-enums.c:1371
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "Lukitse/vapauta näkyvyys"
 
-#: app/core/core-enums.c:1323
+#: app/core/core-enums.c:1324
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Kohteen ominaisuudet"
 
-#: app/core/core-enums.c:1324 app/core/core-enums.c:1364
+#: app/core/core-enums.c:1325 app/core/core-enums.c:1366
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Siirrä kohde"
 
-#: app/core/core-enums.c:1325
+#: app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Skaalaa kohde"
 
-#: app/core/core-enums.c:1326
+#: app/core/core-enums.c:1327
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Muuta kohteen kokoa"
 
-#: app/core/core-enums.c:1327
+#: app/core/core-enums.c:1328
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Lisää taso"
 
-#: app/core/core-enums.c:1328
+#: app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "Lisää alfakanava"
 
-#: app/core/core-enums.c:1329 app/core/core-enums.c:1386
+#: app/core/core-enums.c:1330 app/core/core-enums.c:1388
 msgctxt "undo-type"
 msgid "Add layer masks"
 msgstr "Lisää tasomaskit"
 
-#: app/core/core-enums.c:1330 app/core/core-enums.c:1388
+#: app/core/core-enums.c:1331 app/core/core-enums.c:1390
 msgctxt "undo-type"
 msgid "Apply layer masks"
 msgstr "Toteuta tasomaskit"
 
-#: app/core/core-enums.c:1331
+#: app/core/core-enums.c:1332
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "Poista alfakanava"
 
-#: app/core/core-enums.c:1332
+#: app/core/core-enums.c:1333
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "Lukitse/vapauta alfakanavat"
 
-#: app/core/core-enums.c:1333
+#: app/core/core-enums.c:1334
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "Aseta tason peittokyky"
 
-#: app/core/core-enums.c:1334
+#: app/core/core-enums.c:1335
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "Aseta tason tila"
 
-#: app/core/core-enums.c:1335
+#: app/core/core-enums.c:1336
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "Lisää kanavia"
 
-#: app/core/core-enums.c:1336 app/core/core-enums.c:1396
+#: app/core/core-enums.c:1337 app/core/core-enums.c:1398
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Kelluva valinta tasoksi"
 
-#: app/core/core-enums.c:1337
+#: app/core/core-enums.c:1338
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Kelluva valinta"
 
-#: app/core/core-enums.c:1338
+#: app/core/core-enums.c:1339
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Ankkuroi kelluva valinta"
 
-#: app/core/core-enums.c:1339 app/core/gimp-edit.c:884
+#: app/core/core-enums.c:1340 app/core/gimp-edit.c:884
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Liitä"
 
-#: app/core/core-enums.c:1340 app/core/gimp-edit.c:1246
+#: app/core/core-enums.c:1341 app/core/gimp-edit.c:1246
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Leikkaa"
 
-#: app/core/core-enums.c:1341
+#: app/core/core-enums.c:1342
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Teksti"
 
-#: app/core/core-enums.c:1342 app/core/gimpdrawable-transform.c:717
+#: app/core/core-enums.c:1343
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Vector layer"
+msgctxt "undo-type"
+msgid "Vector"
+msgstr "Vektoritaso"
+
+#: app/core/core-enums.c:1344 app/core/gimpdrawable-transform.c:717
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Kääntö"
 
-#: app/core/core-enums.c:1343 app/core/core-enums.c:1398
+#: app/core/core-enums.c:1345 app/core/core-enums.c:1400
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Maalaa"
 
-#: app/core/core-enums.c:1344 app/core/core-enums.c:1401
+#: app/core/core-enums.c:1346 app/core/core-enums.c:1403
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Kiinnitä parasiitti"
 
-#: app/core/core-enums.c:1345 app/core/core-enums.c:1402
+#: app/core/core-enums.c:1347 app/core/core-enums.c:1404
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Poista parasiitti"
 
-#: app/core/core-enums.c:1346
+#: app/core/core-enums.c:1348
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Tuo polkuja"
 
-#: app/core/core-enums.c:1347
+#: app/core/core-enums.c:1349
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Liitännäiset"
 
-#: app/core/core-enums.c:1348
+#: app/core/core-enums.c:1350
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Kuvan tyyppi"
 
-#: app/core/core-enums.c:1349
+#: app/core/core-enums.c:1351
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Kuvan tarkkuus"
 
-#: app/core/core-enums.c:1350
+#: app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Kuvan koko"
 
-#: app/core/core-enums.c:1351
+#: app/core/core-enums.c:1353
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Kuvan tarkkuuden vaihto"
 
-#: app/core/core-enums.c:1353
+#: app/core/core-enums.c:1355
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Muuta metatietoja"
 
-#: app/core/core-enums.c:1354
+#: app/core/core-enums.c:1356
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Muuta indeksoitua palettia"
 
-#: app/core/core-enums.c:1355
+#: app/core/core-enums.c:1357
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "Piilota/näytä väriprofiili"
 
-#: app/core/core-enums.c:1360
+#: app/core/core-enums.c:1362
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "Taso/kanavaformaatti"
 
-#: app/core/core-enums.c:1363
+#: app/core/core-enums.c:1365
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Nimeä kohde uudelleen"
 
-#: app/core/core-enums.c:1366
+#: app/core/core-enums.c:1368
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Kohteen väritagi"
 
-#: app/core/core-enums.c:1367
+#: app/core/core-enums.c:1369
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Lukitse/vapauta sisältö"
 
-#: app/core/core-enums.c:1370
+#: app/core/core-enums.c:1372
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Uusi taso"
 
-#: app/core/core-enums.c:1371
+#: app/core/core-enums.c:1373
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Poista taso"
 
-#: app/core/core-enums.c:1372
+#: app/core/core-enums.c:1374
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Aseta tason tila"
 
-#: app/core/core-enums.c:1373
+#: app/core/core-enums.c:1375
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Aseta tason peittokyky"
 
-#: app/core/core-enums.c:1374
+#: app/core/core-enums.c:1376
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Lukitse/vapauta alfakanava"
 
-#: app/core/core-enums.c:1375
+#: app/core/core-enums.c:1377
 msgctxt "undo-type"
 msgid "Link layer"
 msgstr "Linkkitaso"
 
-#: app/core/core-enums.c:1376
+#: app/core/core-enums.c:1378
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Keskeytä ryhmätason koon muutos"
 
-#: app/core/core-enums.c:1377
+#: app/core/core-enums.c:1379
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Jatka ryhmätason koon muuttamista"
 
-#: app/core/core-enums.c:1378
+#: app/core/core-enums.c:1380
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Keskeytä ryhmätason maski"
 
-#: app/core/core-enums.c:1379
+#: app/core/core-enums.c:1381
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Jatka ryhmän tasomaskia"
 
-#: app/core/core-enums.c:1380
+#: app/core/core-enums.c:1382
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Aloita ryhmätason muuttaminen"
 
-#: app/core/core-enums.c:1381
+#: app/core/core-enums.c:1383
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Lopeta muunnosryhmän taso"
 
-#: app/core/core-enums.c:1382
+#: app/core/core-enums.c:1384
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Muunna tasoryhmä"
 
-#: app/core/core-enums.c:1383
+#: app/core/core-enums.c:1385
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Tekstitaso"
 
-#: app/core/core-enums.c:1384
+#: app/core/core-enums.c:1386
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Muunna tekstitaso"
 
-#: app/core/core-enums.c:1385
+#: app/core/core-enums.c:1387
 msgctxt "undo-type"
 msgid "Vector layer"
 msgstr "Vektoritaso"
 
-#: app/core/core-enums.c:1387
+#: app/core/core-enums.c:1389
 msgctxt "undo-type"
 msgid "Delete layer masks"
 msgstr "Poista tasomaskit"
 
-#: app/core/core-enums.c:1389
+#: app/core/core-enums.c:1391
 msgctxt "undo-type"
 msgid "Show layer masks"
 msgstr "Näytä tasomaskit"
 
-#: app/core/core-enums.c:1390
+#: app/core/core-enums.c:1392
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Uusi kanava"
 
-#: app/core/core-enums.c:1391
+#: app/core/core-enums.c:1393
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Poista kanava"
 
-#: app/core/core-enums.c:1392
+#: app/core/core-enums.c:1394
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Kanavan väri"
 
-#: app/core/core-enums.c:1393
+#: app/core/core-enums.c:1395
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Uusi polku"
 
-#: app/core/core-enums.c:1394
+#: app/core/core-enums.c:1396
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Poista polku"
 
-#: app/core/core-enums.c:1395
+#: app/core/core-enums.c:1397
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Polun muokkaus"
 
-#: app/core/core-enums.c:1397
+#: app/core/core-enums.c:1399
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Muunnosverkko"
 
-#: app/core/core-enums.c:1399
+#: app/core/core-enums.c:1401
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Mustekynä"
 
-#: app/core/core-enums.c:1400
+#: app/core/core-enums.c:1402
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Valitse edusta"
 
-#: app/core/core-enums.c:1403
+#: app/core/core-enums.c:1405
 msgctxt "undo-type"
 msgid "Add effect"
 msgstr "Lisää efekti"
 
-#: app/core/core-enums.c:1404
+#: app/core/core-enums.c:1406
 msgctxt "undo-type"
 msgid "Remove effect"
 msgstr "Poista efekti"
 
-#: app/core/core-enums.c:1405
+#: app/core/core-enums.c:1407
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Reorder item"
@@ -12969,7 +12960,7 @@ msgctxt "undo-type"
 msgid "Reorder effect"
 msgstr "Poista kohde"
 
-#: app/core/core-enums.c:1406
+#: app/core/core-enums.c:1408
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Path modification"
@@ -12977,82 +12968,82 @@ msgctxt "undo-type"
 msgid "Effect modification"
 msgstr "Polun muokkaus"
 
-#: app/core/core-enums.c:1407
+#: app/core/core-enums.c:1409
 msgctxt "undo-type"
 msgid "Text, link or vector layer"
 msgstr "Teksti-, linkki- tai vektoritaso"
 
-#: app/core/core-enums.c:1408
+#: app/core/core-enums.c:1410
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Ei peruttavissa"
 
-#: app/core/core-enums.c:1443
+#: app/core/core-enums.c:1445
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Minimaalinen"
 
-#: app/core/core-enums.c:1444
+#: app/core/core-enums.c:1446
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Hyvin pieni"
 
-#: app/core/core-enums.c:1445
+#: app/core/core-enums.c:1447
 msgctxt "view-size"
 msgid "Small"
 msgstr "Pieni"
 
-#: app/core/core-enums.c:1446
+#: app/core/core-enums.c:1448
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Keskikokoinen"
 
-#: app/core/core-enums.c:1447
+#: app/core/core-enums.c:1449
 msgctxt "view-size"
 msgid "Large"
 msgstr "Suuri"
 
-#: app/core/core-enums.c:1448
+#: app/core/core-enums.c:1450
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Hyvin suuri"
 
-#: app/core/core-enums.c:1449
+#: app/core/core-enums.c:1451
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Valtava"
 
-#: app/core/core-enums.c:1450
+#: app/core/core-enums.c:1452
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Jättikokoinen"
 
-#: app/core/core-enums.c:1451
+#: app/core/core-enums.c:1453
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Giganttinen"
 
-#: app/core/core-enums.c:1479
+#: app/core/core-enums.c:1481
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Näytä luettelona"
 
-#: app/core/core-enums.c:1480
+#: app/core/core-enums.c:1482
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Näytä ruudukkona"
 
-#: app/core/core-enums.c:1509
+#: app/core/core-enums.c:1511
 msgctxt "select-method"
 msgid "Selection by basic text search"
 msgstr "Valinta perustekstihaun avulla"
 
-#: app/core/core-enums.c:1510
+#: app/core/core-enums.c:1512
 msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "Valinta säännöllisen lausekkeen haun avulla"
 
-#: app/core/core-enums.c:1511
+#: app/core/core-enums.c:1513
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "Valinta globaalilla kuvionhaulla"
@@ -13363,17 +13354,17 @@ msgstr ""
 "Näyttää siltä, että te käytätte GIMPiä ensimäistä kertaa.  GIMP luo nyt "
 "kansion nimellä '%s' ja kopioi joitakin tiedostoja siihen."
 
-#: app/core/gimp-user-install.c:602
+#: app/core/gimp-user-install.c:603
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Kopioidaan tiedosto '%s' -> '%s'..."
 
-#: app/core/gimp-user-install.c:619 app/core/gimp-user-install.c:645
+#: app/core/gimp-user-install.c:620 app/core/gimp-user-install.c:646
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Luodaan kansio '%s'..."
 
-#: app/core/gimp-user-install.c:630 app/core/gimp-user-install.c:656
+#: app/core/gimp-user-install.c:631 app/core/gimp-user-install.c:657
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Kansion '%s' luonti epäonnistui: %s"
@@ -13823,7 +13814,7 @@ msgstr "Taustaväri"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
 #: app/operations/gimpoperationsettings.c:99
-#: app/widgets/gimplayertreeview.c:302
+#: app/widgets/gimplayertreeview.c:300
 msgid "Opacity"
 msgstr "Peittokyky"
 
@@ -14324,7 +14315,7 @@ msgid "Symmetry"
 msgstr "Symmetria"
 
 #: app/core/gimpimage.c:2086 app/pdb/drawable-filter-cmds.c:661
-#: app/widgets/gimpdrawabletreeview-filters.c:794
+#: app/widgets/gimpdrawabletreeview-filters.c:785
 msgid "Remove filter"
 msgstr "Poista suodatin"
 
@@ -14747,7 +14738,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "Ei voida yhdistää alaspäin tasoryhmään."
 
 #: app/core/gimpimage-merge.c:362
-#: app/widgets/gimpdrawabletreeview-filters.c:765
+#: app/widgets/gimpdrawabletreeview-filters.c:756
 msgid "The layer to merge down to is locked."
 msgstr "Yhdistettävä taso on lukittu."
 
@@ -14868,8 +14859,8 @@ msgid "Could not open thumbnail '%s': %s"
 msgstr "Esikatselukuvan '%s' avaaminen epäonnistui: %s"
 
 #: app/core/gimpitem.c:1858 app/core/gimpitem.c:1925
-#: app/display/gimpdisplayshell-dnd.c:384 app/tools/gimptransformtool.c:730
-#: app/widgets/gimpdrawabletreeview-filters.c:635
+#: app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730
+#: app/widgets/gimpdrawabletreeview-filters.c:626
 msgid "A selected layer's pixels are locked."
 msgstr "Valitun tason pikselit on lukittu."
 
@@ -15289,8 +15280,8 @@ msgid "In line %d of palette file: "
 msgstr "Palettitiedoston rivillä %d: "
 
 #: app/core/gimppalette-load.c:497 app/core/gimppalette-load.c:702
-#: app/core/gimppalette-load.c:1049 app/core/gimppalette-load.c:1531
-#: app/core/gimppalette-load.c:1552
+#: app/core/gimppalette-load.c:1049 app/core/gimppalette-load.c:1600
+#: app/core/gimppalette-load.c:1621
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Otsikkoa ei voitu lukea palettitiedostosta '%s': "
@@ -15396,15 +15387,28 @@ msgstr ""
 msgid "Invalid ASE name size."
 msgstr ""
 
-#: app/core/gimppalette-load.c:1402
-#, c-format
-msgid "Unable to read SBZ file"
+#: app/core/gimppalette-load.c:1401 app/core/gimppalette-load.c:1471
+#, fuzzy, c-format
+#| msgid "Unable to read SBZ file"
+msgid "Unable to read SBZ file: %s"
 msgstr "SBZ-tiedoston lukeminen ei onnistu"
 
-#: app/core/gimppalette-load.c:1467
+#: app/core/gimppalette-load.c:1499 app/core/gimppalette-load.c:1511
 #, c-format
 msgid "Unable to open SBZ file"
 msgstr "SBZ-tiedoston avaaminen ei onnistu"
+
+#: app/core/gimppalette-load.c:1545 app/core/gimppalette-load.c:1582
+#, fuzzy, c-format
+#| msgid "Unable to read SBZ file"
+msgid "Unable to read Procreate swatches file: %s"
+msgstr "SBZ-tiedoston lukeminen ei onnistu"
+
+#: app/core/gimppalette-load.c:1787 app/core/gimppalette-load.c:1798
+#, fuzzy, c-format
+#| msgid "Unable to read SBZ file"
+msgid "Unable to read Procreate swatches file"
+msgstr "SBZ-tiedoston lukeminen ei onnistu"
 
 #: app/core/gimppalettemru.c:125 app/core/gimppalettemru.c:271
 msgid "History Color"
@@ -16331,8 +16335,6 @@ msgid "FG/BG Color"
 msgstr "Edusta/Tausta-väri"
 
 #: app/dialogs/extensions-dialog.c:76
-#, fuzzy
-#| msgid "Extensions"
 msgctxt "GIMP extensions"
 msgid "Extensions"
 msgstr "Laajennukset"
@@ -16686,7 +16688,7 @@ msgstr "Käänteinen maski"
 
 #: app/dialogs/layer-add-mask-dialog.c:200
 msgid "_Edit mask immediately"
-msgstr ""
+msgstr "_Muokkaa maskia välittömästi"
 
 #: app/dialogs/layer-add-mask-dialog.c:235
 msgid "Please select a channel first"
@@ -16741,16 +16743,12 @@ msgid "Active Filters"
 msgstr "Aktiiviset suodattimet"
 
 #: app/dialogs/layer-options-dialog.c:427
-#, fuzzy
-#| msgid "O_pen Selected Images"
 msgid "Select Linked Image"
-msgstr "_Avaa valitut kuvat"
+msgstr "Valitse linkitetty kuva"
 
 #: app/dialogs/layer-options-dialog.c:437
-#, fuzzy
-#| msgid "Linked Layers"
 msgid "_Linked image:"
-msgstr "Linkitetyt tasot"
+msgstr "_Linkitetty kuva:"
 
 #. Absolute path checkbox.
 #: app/dialogs/layer-options-dialog.c:447
@@ -17941,7 +17939,7 @@ msgstr "Käänteinen maski"
 
 #: app/dialogs/preferences-dialog.c:2480
 msgid "Edit mask immediately"
-msgstr ""
+msgstr "Muokkaa maskia välittömästi"
 
 #. Merge Layers Dialog
 #: app/dialogs/preferences-dialog.c:2484
@@ -19086,10 +19084,8 @@ msgid "Documentation"
 msgstr "Dokumentointi"
 
 #: app/dialogs/welcome-dialog.c:550
-#, fuzzy
-#| msgid "Tutorials"
 msgid "Community Tutorials"
-msgstr "Tutoriaaleja"
+msgstr "Yhteisön oppaat"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
@@ -19522,26 +19518,26 @@ msgstr[1] "Jos et tallenna kuvaa, viimeisten %d minuutin muutokset menetetään.
 msgid "The image has been exported to '%s'."
 msgstr "Kuva viety tiedostoon '%s'."
 
-#: app/display/gimpdisplayshell-dnd.c:258
-#: app/display/gimpdisplayshell-dnd.c:773
-#: app/display/gimpdisplayshell-dnd.c:832
+#: app/display/gimpdisplayshell-dnd.c:257
+#: app/display/gimpdisplayshell-dnd.c:764
+#: app/display/gimpdisplayshell-dnd.c:823
 msgid "Drop New Layer"
 msgstr "Pudota uusi taso"
 
-#: app/display/gimpdisplayshell-dnd.c:300
+#: app/display/gimpdisplayshell-dnd.c:299
 msgid "Drop New Path"
 msgstr "Pudota uusi polku"
 
-#: app/display/gimpdisplayshell-dnd.c:375 app/tools/gimpbucketfilltool.c:613
+#: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimpbucketfilltool.c:613
 #: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
 #: app/tools/gimpselectiontool.c:568
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Tasoryhmien pikseleitä ei voi muokata."
 
-#: app/display/gimpdisplayshell-dnd.c:394 app/tools/gimpfiltertool.c:340
+#: app/display/gimpdisplayshell-dnd.c:393 app/tools/gimpfiltertool.c:340
 #: app/tools/gimppainttool.c:355 app/tools/gimptransformtool.c:739
-#: app/widgets/gimpdrawabletreeview-filters.c:628
+#: app/widgets/gimpdrawabletreeview-filters.c:619
 msgid "A selected layer is not visible."
 msgstr "Valittu taso ei ole näkyvissä."
 
@@ -19549,45 +19545,45 @@ msgstr "Valittu taso ei ole näkyvissä."
 #. * the same translations you used for the "Rasterize"
 #. * action under the "Layer" menu.
 #.
-#: app/display/gimpdisplayshell-dnd.c:405 app/tools/gimptool.c:765
+#: app/display/gimpdisplayshell-dnd.c:404 app/tools/gimptool.c:765
 #, fuzzy
 #| msgid "Layer Size"
 msgid "Layer > Rasterize"
 msgstr "Tason koko"
 
 #. TRANSLATORS: the string between parentheses will be a menu path.
-#: app/display/gimpdisplayshell-dnd.c:409 app/tools/gimptool.c:776
+#: app/display/gimpdisplayshell-dnd.c:408 app/tools/gimptool.c:776
 #, c-format
 msgid "Link layers must be rasterized (%s)."
 msgstr ""
 
 #. TRANSLATORS: the string between parentheses will be a menu path.
-#: app/display/gimpdisplayshell-dnd.c:413 app/tools/gimptool.c:770
+#: app/display/gimpdisplayshell-dnd.c:412 app/tools/gimptool.c:770
 #, c-format
 msgid "Text layers must be rasterized (%s)."
 msgstr ""
 
-#: app/display/gimpdisplayshell-dnd.c:513
+#: app/display/gimpdisplayshell-dnd.c:504
 #: app/widgets/gimpdrawabletreeview.c:472
 #: app/widgets/gimpdrawabletreeview.c:678
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Pudota kuvio tasoon"
 
-#: app/display/gimpdisplayshell-dnd.c:535
+#: app/display/gimpdisplayshell-dnd.c:526
 #: app/widgets/gimpdrawabletreeview.c:503
 #: app/widgets/gimpdrawabletreeview.c:698
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Pudota väri tasolle"
 
-#: app/display/gimpdisplayshell-dnd.c:663 app/widgets/gimpitemtreeview.c:1592
-#: app/widgets/gimplayertreeview.c:871
+#: app/display/gimpdisplayshell-dnd.c:654 app/widgets/gimpitemtreeview.c:1592
+#: app/widgets/gimplayertreeview.c:848
 msgid "Drop layers"
 msgstr "Pudota tasot"
 
-#: app/display/gimpdisplayshell-dnd.c:806
-#: app/display/gimpdisplayshell-dnd.c:823 app/widgets/gimplayertreeview.c:948
+#: app/display/gimpdisplayshell-dnd.c:797
+#: app/display/gimpdisplayshell-dnd.c:814 app/widgets/gimplayertreeview.c:925
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Pudotettu puskuri"
@@ -20173,6 +20169,11 @@ msgstr "Lupa evätty"
 #, c-format
 msgid ""
 "Only platform-native file paths are supported: '%s' cannot be opened as link."
+msgstr ""
+
+#: app/file/file-open.c:1010
+#, c-format
+msgid "Circular reference detected with '%s'."
 msgstr ""
 
 #: app/file/file-remote.c:113
@@ -21160,8 +21161,8 @@ msgstr "Muuta värit harmaan sävyiksi"
 #: app/operations/gimpoperationdesaturate.c:92
 #: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1488
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimptransform3doptions.c:77
-#: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:410
-#: app/widgets/gimplayertreeview.c:288
+#: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:397
+#: app/widgets/gimplayertreeview.c:286
 msgid "Mode"
 msgstr "Tila"
 
@@ -21892,24 +21893,24 @@ msgstr "Käännä polku"
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "SVG-tiedoston '%s' kirjoittaminen epäonnistui: %s"
 
-#: app/path/gimppath-import.c:362
+#: app/path/gimppath-import.c:363
 msgid "Import Paths"
 msgstr "Tuo polkuja"
 
-#: app/path/gimppath-import.c:373
+#: app/path/gimppath-import.c:374
 msgid "Imported Path"
 msgstr "Tuotu polku"
 
-#: app/path/gimppath-import.c:404
+#: app/path/gimppath-import.c:405
 #, c-format
 msgid "No paths found in '%s'"
 msgstr "'%s' ei sisällä polkuja"
 
-#: app/path/gimppath-import.c:408
+#: app/path/gimppath-import.c:409
 msgid "No paths found in the buffer"
 msgstr "Leikkeessä ei ole polkuja"
 
-#: app/path/gimppath-import.c:418
+#: app/path/gimppath-import.c:419
 #, c-format
 msgid "Failed to import paths from '%s': %s"
 msgstr "Polun tuonti tiedostosta %s epäonnistui: %s"
@@ -21960,13 +21961,13 @@ msgstr "Hylkää tekstitieto"
 msgid "Change Vector Layer Path"
 msgstr "Vaihda valitun tekstin väriä"
 
-#: app/path/gimpvectorlayeroptions.c:114
+#: app/path/gimpvectorlayeroptions.c:121
 #, fuzzy
 #| msgid "Fill type"
 msgid "Fill Style"
 msgstr "Täytön tyyppi"
 
-#: app/path/gimpvectorlayeroptions.c:126
+#: app/path/gimpvectorlayeroptions.c:133
 #, fuzzy
 #| msgid "Stroke tool"
 msgid "Stroke Style"
@@ -22670,7 +22671,7 @@ msgstr "Epäkelpo tulkkiviittaus tulkkitiedostossa %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Epäkelpo binaarinen merkkijono tulkkitiedostossa %s"
 
-#: app/plug-in/gimpplugin.c:262
+#: app/plug-in/gimpplugin.c:258
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -24104,7 +24105,7 @@ msgstr "_Ulostulo:"
 msgid "T_ype:"
 msgstr "_Tyyppi:"
 
-#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:354
+#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:341
 msgid "Curve _type:"
 msgstr "Käyrän _tyyppi:"
 
@@ -24277,7 +24278,7 @@ msgstr ""
 "Kohdetta \"%s\" (%d) ei voi käyttää, koska se on liitetty toiseen kuvaan"
 
 #: app/tools/gimpfiltertool.c:459
-#: app/widgets/gimpdrawabletreeview-filters.c:489
+#: app/widgets/gimpdrawabletreeview-filters.c:480
 #, fuzzy
 #| msgid ""
 #| "Item '%s' (%d) cannot be used because it is attached to another image"
@@ -24286,7 +24287,7 @@ msgstr ""
 "Kohdetta \"%s\" (%d) ei voi käyttää, koska se on liitetty toiseen kuvaan"
 
 #: app/tools/gimpfiltertool.c:461
-#: app/widgets/gimpdrawabletreeview-filters.c:492
+#: app/widgets/gimpdrawabletreeview-filters.c:483
 #, fuzzy
 #| msgid ""
 #| "Item '%s' (%d) cannot be used because it is attached to another image"
@@ -24295,7 +24296,7 @@ msgstr ""
 "Kohdetta \"%s\" (%d) ei voi käyttää, koska se on liitetty toiseen kuvaan"
 
 #: app/tools/gimpfiltertool.c:463
-#: app/widgets/gimpdrawabletreeview-filters.c:495
+#: app/widgets/gimpdrawabletreeview-filters.c:486
 #, fuzzy
 #| msgid ""
 #| "Item '%s' (%d) cannot be used because it is attached to another image"
@@ -24333,11 +24334,8 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: vaihda vaaka- ja pystysuora"
 
 #: app/tools/gimpfiltertool.c:1284
-#, fuzzy
-#| msgctxt "palettes-action"
-#| msgid "_Edit Palette..."
 msgid "Edit filter"
-msgstr "_Muokkaa palettia..."
+msgstr "Muokkaa suodatinta"
 
 #. The blending-options expander
 #: app/tools/gimpfiltertool.c:1464
@@ -24355,11 +24353,11 @@ msgid "Export '%s' Settings"
 msgstr "Vie '%s'-asetukset"
 
 #: app/tools/gimpfiltertool.c:2242
-#, fuzzy, c-format
+#, c-format
 #| msgctxt "palettes-action"
 #| msgid "_Edit Palette..."
 msgid "Editing '%s'..."
-msgstr "_Muokkaa palettia..."
+msgstr "Muokataan '%s'..."
 
 #: app/tools/gimpfiltertool-settings.c:100
 msgid "Pre_sets:"
@@ -26788,7 +26786,7 @@ msgid "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpactionview.c:259 app/widgets/gimpcontrollereditor.c:345
-#: app/widgets/gimpdeviceinfoeditor.c:416
+#: app/widgets/gimpdeviceinfoeditor.c:403
 msgid "Action"
 msgstr "Toiminto"
 
@@ -27163,12 +27161,12 @@ msgid "State:"
 msgstr "Tila:"
 
 #: app/widgets/gimpcontrollereditor.c:339
-#: app/widgets/gimpdeviceinfoeditor.c:404
+#: app/widgets/gimpdeviceinfoeditor.c:391
 msgid "Event"
 msgstr "Tapahtuma"
 
 #: app/widgets/gimpcontrollereditor.c:364
-#: app/widgets/gimpdeviceinfoeditor.c:461
+#: app/widgets/gimpdeviceinfoeditor.c:448
 msgid "_Grab event"
 msgstr "Nappaustapahtuma"
 
@@ -27177,29 +27175,29 @@ msgid "Select the next event arriving from the controller"
 msgstr "Valitse seuraava ohjaimelta tuleva tapahtuma"
 
 #: app/widgets/gimpcontrollereditor.c:377
-#: app/widgets/gimpdeviceinfoeditor.c:475
+#: app/widgets/gimpdeviceinfoeditor.c:462
 msgid "_Edit event"
 msgstr "_Muokkaa tapahtumaa"
 
 #: app/widgets/gimpcontrollereditor.c:385
-#: app/widgets/gimpdeviceinfoeditor.c:485
+#: app/widgets/gimpdeviceinfoeditor.c:472
 msgid "_Clear event"
 msgstr "_Tyhjennä tapahtuma"
 
 #: app/widgets/gimpcontrollereditor.c:524
-#: app/widgets/gimpdeviceinfoeditor.c:661
+#: app/widgets/gimpdeviceinfoeditor.c:648
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "Poista toiminto, joka on määritelty '%s'"
 
 #: app/widgets/gimpcontrollereditor.c:529
-#: app/widgets/gimpdeviceinfoeditor.c:665
+#: app/widgets/gimpdeviceinfoeditor.c:652
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "Määritä toiminto '%s'"
 
 #: app/widgets/gimpcontrollereditor.c:651
-#: app/widgets/gimpdeviceinfoeditor.c:832
+#: app/widgets/gimpdeviceinfoeditor.c:819
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "Valitse toiminto tapahtumalle '%s'"
@@ -27935,8 +27933,7 @@ msgstr ""
 "Olet poistamassa tämän laitteen tallennetut asetukset.\n"
 "Käytetään oletusasetuksia, kun laite kytketään seuraavan kerran."
 
-#: app/widgets/gimpdeviceinfo.c:58 app/widgets/gimpdeviceinfoeditor.c:316
-#: app/widgets/gimpdynamicseditor.c:161
+#: app/widgets/gimpdeviceinfo.c:58 app/widgets/gimpdynamicseditor.c:161
 #: app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "Paine"
@@ -28015,55 +28012,50 @@ msgstr "Sarjatyökalu:"
 msgid "Tool hardware ID:"
 msgstr "Työkalulaitteiston ID:"
 
-#. TODO: right now this string is split in 2 localized strings,
-#. * to avoid breaking string freeze. After GIMP 3.2, we should just
-#. * create the "Pressure Curve" string because that's our only
-#. * case so far.
-#.
-#. e.g. "Pressure Curve" for mapping input device axes
-#: app/widgets/gimpdeviceinfoeditor.c:315
-#, c-format
-msgid "%s Curve"
-msgstr "Käyrä %s"
+#: app/widgets/gimpdeviceinfoeditor.c:307
+#, fuzzy
+#| msgid "Pressure curve"
+msgid "Pressure Curve"
+msgstr "Painekäyrä"
 
-#: app/widgets/gimpdeviceinfoeditor.c:366
+#: app/widgets/gimpdeviceinfoeditor.c:353
 #: app/widgets/gimpdynamicsoutputeditor.c:206
 msgid "_Reset Curve"
 msgstr "_Palauta käyrä"
 
-#: app/widgets/gimpdeviceinfoeditor.c:383
+#: app/widgets/gimpdeviceinfoeditor.c:370
 #, fuzzy
 #| msgid "Search Actions"
 msgid "Pad Actions"
 msgstr "Hakutoiminnot"
 
-#: app/widgets/gimpdeviceinfoeditor.c:470
+#: app/widgets/gimpdeviceinfoeditor.c:457
 #, fuzzy
 #| msgid "Select the next event arriving from the controller"
 msgid "Select the next event arriving from the pad"
 msgstr "Valitse seuraava ohjaimelta tuleva tapahtuma"
 
-#: app/widgets/gimpdeviceinfoeditor.c:514
+#: app/widgets/gimpdeviceinfoeditor.c:501
 msgid "Pad Actions are not supported on your platform yet"
 msgstr ""
 
-#: app/widgets/gimpdeviceinfoeditor.c:590
+#: app/widgets/gimpdeviceinfoeditor.c:577
 #, c-format
 msgid "Button %d"
 msgstr "Painike %d"
 
-#: app/widgets/gimpdeviceinfoeditor.c:593
+#: app/widgets/gimpdeviceinfoeditor.c:580
 #, c-format
 msgid "Ring %d"
 msgstr ""
 
-#: app/widgets/gimpdeviceinfoeditor.c:596
+#: app/widgets/gimpdeviceinfoeditor.c:583
 #, fuzzy, c-format
 #| msgid "Stop %d"
 msgid "Strip %d"
 msgstr "Pysäytä %d"
 
-#: app/widgets/gimpdeviceinfoeditor.c:842
+#: app/widgets/gimpdeviceinfoeditor.c:829
 #, fuzzy
 #| msgid "Select Controller Event Action"
 msgid "Select Pad Event Action"
@@ -28167,54 +28159,54 @@ msgstr "Lukitse sijainti ja koko"
 msgid "Cannot select items while a floating selection is active."
 msgstr "Kohteita ei voi valita, kun kelluva valinta on aktiivinen."
 
-#: app/widgets/gimpdrawabletreeview.c:651 app/widgets/gimplayertreeview.c:999
+#: app/widgets/gimpdrawabletreeview.c:651 app/widgets/gimplayertreeview.c:976
 msgctxt "singular"
 msgid "New Layer"
 msgstr "Uusi taso"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:170
+#: app/widgets/gimpdrawabletreeview-filters.c:169
 msgid "Layer Effects"
 msgstr "Tasoefektit"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:200
+#: app/widgets/gimpdrawabletreeview-filters.c:199
 #, fuzzy
 #| msgctxt "paths-action"
 #| msgid "Toggle Path _Visibility"
 msgid "Toggle the visibility of all filters."
 msgstr "Vaihda polun _näkyvyyttä"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:216
+#: app/widgets/gimpdrawabletreeview-filters.c:215
 msgid "Edit the selected filter."
 msgstr "Muokkaa valittua suodatinta."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:232
+#: app/widgets/gimpdrawabletreeview-filters.c:231
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Raise this layer one step in the layer stack"
 msgid "Raise filter one step up in the stack."
 msgstr "Nosta tämä taso askel ylemmäksi tasopinossa"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:247
+#: app/widgets/gimpdrawabletreeview-filters.c:246
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Lower this layer one step in the layer stack"
 msgid "Lower filter one step down in the stack."
 msgstr "Laske tämä taso askel alemmaksi tasopinossa"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:263
-#: app/widgets/gimpdrawabletreeview-filters.c:503
-#: app/widgets/gimpdrawabletreeview-filters.c:513
+#: app/widgets/gimpdrawabletreeview-filters.c:262
+#: app/widgets/gimpdrawabletreeview-filters.c:494
+#: app/widgets/gimpdrawabletreeview-filters.c:504
 #, fuzzy
 #| msgid "Move the selected filter down"
 msgid "Merge all active filters down."
 msgstr "Laske valittua suodatinta alemmas"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:279
+#: app/widgets/gimpdrawabletreeview-filters.c:278
 msgid "Remove the selected filter."
 msgstr "Poista valittu suodatin."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:694
-#: app/widgets/gimpdrawabletreeview-filters.c:720
+#: app/widgets/gimpdrawabletreeview-filters.c:685
+#: app/widgets/gimpdrawabletreeview-filters.c:711
 msgid "Cannot reorder a filter that is being edited."
 msgstr ""
 
@@ -28300,11 +28292,9 @@ msgid "File Type"
 msgstr "Tiedoston tyyppi"
 
 #: app/widgets/gimpfileprocview.c:219
-#, fuzzy
-#| msgid "Extensions"
 msgctxt "File extension"
 msgid "Extensions"
-msgstr "Laajennukset"
+msgstr "Tiedostopäätteet"
 
 #: app/widgets/gimpfilleditor.c:176
 #, fuzzy
@@ -28739,35 +28729,35 @@ msgstr "Virheellinen säännöllinen lauseke: %s\n"
 msgid "Switch to another group of modes"
 msgstr "Siirry toiseen tilaryhmään"
 
-#: app/widgets/gimplayertreeview.c:431 app/widgets/gimplayertreeview.c:434
+#: app/widgets/gimplayertreeview.c:429 app/widgets/gimplayertreeview.c:432
 msgid "Lock alpha channel"
 msgstr "Lukitse alfakanava"
 
-#: app/widgets/gimplayertreeview.c:432
+#: app/widgets/gimplayertreeview.c:430
 msgid "Unlock alpha channel"
 msgstr "Vapauta alfakanava"
 
-#: app/widgets/gimplayertreeview.c:433
+#: app/widgets/gimplayertreeview.c:431
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Aseta kohteen yksinoikeus Alpha-kanavaan lukitus"
 
-#: app/widgets/gimplayertreeview.c:1118
+#: app/widgets/gimplayertreeview.c:1095
 msgid "Set layers mode"
 msgstr "Aseta tasojen tila"
 
-#: app/widgets/gimplayertreeview.c:1326
+#: app/widgets/gimplayertreeview.c:1303
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Ankkuroi kelluva maski"
 
-#: app/widgets/gimplayertreeview.c:1329
+#: app/widgets/gimplayertreeview.c:1306
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Ankkuroi kelluva taso"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1602
+#: app/widgets/gimplayertreeview.c:1579
 msgid "No channels to create a layer mask from."
 msgstr "Kanavia, joista voisi luoda tasomaskin ei ole."
 
@@ -29683,6 +29673,20 @@ msgstr ""
 "ei tallentanut indeksoituja väripaletteja oikein.\n"
 "Korvataan harmaasävykartalla."
 
+#: app/xcf/xcf-load.c:2616
+#, c-format
+msgid ""
+"XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
+"to a raster layer."
+msgstr ""
+
+#: app/xcf/xcf-load.c:2636
+#, c-format
+msgid ""
+"XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
+"is downgraded to a raster layer."
+msgstr ""
+
 #: app/xcf/xcf-load.c:3368
 #, c-format
 msgid ""
@@ -30285,6 +30289,10 @@ msgstr "Työkaluesiasetusten valikko"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Toimintohistorian valikko"
+
+#, c-format
+#~ msgid "%s Curve"
+#~ msgstr "Käyrä %s"
 
 #~ msgid "Painting in GIMP"
 #~ msgstr "GIMPillä maalaaminen"
