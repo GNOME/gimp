@@ -398,6 +398,7 @@ user_install_detect_old (GimpUserInstall *install,
                     migrate = g_file_test (snap_dir, G_FILE_TEST_IS_DIR);
 
                   if (! migrate                                           &&
+                      g_getenv ("SNAP") != NULL                           &&
                       g_file_test (g_getenv ("SNAP"), G_FILE_TEST_IS_DIR) &&
                       g_getenv ("SNAP_USER_DATA") != NULL)
                     {
