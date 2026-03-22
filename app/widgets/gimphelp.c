@@ -729,7 +729,20 @@ gimp_help_get_locales (Gimp *gimp)
 static GFile *
 gimp_help_get_user_manual_basedir (void)
 {
-  return gimp_data_directory_file ("help", NULL);
+  GFile *user_dir;
+  GFile *sys_dir;
+
+  /* 1. Help is on user settings (e.g. for AppImage, macOS .app) */
+  user_dir = gimp_directory_file ("help", NULL);
+  if (g_file_query_exists (user_dir, NULL))
+    {
+      return user_dir;
+    }
+
+  /* 2. Fallback: help is on user installation */
+  g_object_unref (user_dir);
+  sys_dir = gimp_data_directory_file ("help", NULL);
+  return sys_dir;
 }
 
 static void
