@@ -187,6 +187,8 @@ bundle(MSYSTEM_PREFIX, "bin/python.exe")
 bundle(MSYSTEM_PREFIX, "bin/pythonw.exe")
 bundle(MSYSTEM_PREFIX, "lib/python*")
 clean(GIMP_DISTRIB, "lib/python*/*.pyc")
+#####avoid bundling build-time libLLVM*.dll which is giant
+clean(GIMP_DISTRIB, "lib/python*/site-packages/lldb*")
 #####Needed for internet connection on python. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/14722
 bundle(MSYSTEM_PREFIX, "etc/ssl/cert.pem")
 #### FIXME: luajit crashes at startup: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
