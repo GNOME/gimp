@@ -1543,8 +1543,6 @@ begin
 end;
 
 procedure InitCustomPages();
-var i,ButtonWidth: Integer;
-  ButtonText: TArrayOfString;
   MeasureLabel: TNewStaticText;
   //lblInfo: TNewStaticText;
 begin
@@ -1785,8 +1783,6 @@ const
   //RTFBullet = '{\pntext\f1\''B7\tab}';
 function UpdateReadyMemo(pSpace, pNewLine, pMemoUserInfo, pMemoDirInfo, pMemoTypeInfo, pMemoComponentsInfo, pMemoGroupInfo, pMemoTasksInfo: String): String;
 var sText: String;
-  bShowAssoc: Boolean;
-  i,j: Integer;
 begin
   DebugMsg('UpdateReadyMemo','');
   (* Prepare the text for new Ready Memo *)
@@ -2099,7 +2095,10 @@ end;
 
 //Create .interp files
 procedure PrepareInterp();
-var InterpFile,InterpContent,LuaBin: String;
+var InterpFile,InterpContent: String;
+#ifdef LUA
+  LuaBin: String;
+#endif
 begin
 #ifdef PYTHON
   if IsComponentSelected('py64') or IsComponentSelected('pyARM64') then
