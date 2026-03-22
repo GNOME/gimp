@@ -44,10 +44,10 @@ try:
   #Ensure the same python from meson.build (GIMP_PYTHON_WITH_GI) is used by plugins
   #This is needed because GIMP_PYTHON_WITH_GI can not coincide with python3 from shebang
   #(on MacPorts, there is no python3 symlink, so we would misuse Xcode python3 without GI)
-  if sys.platform not in ['win32', 'cygwin']:
+  different_python=False
+  if sys.platform not in ['win32', 'cygwin'] and os.environ.get("GIMP_PYTHON_WITH_GI"):
     python_symlink = shutil.which("python3")
     pygobject_found=False
-    different_python=False
     if python_symlink and not os.path.samefile(python_symlink, os.environ.get("GIMP_PYTHON_WITH_GI")):
       result = subprocess.run([python_symlink,"-c","import sys, gi; version='3.0'; sys.exit(gi.check_version(version))"], check=False)
       pygobject_found = (result.returncode == 0)
