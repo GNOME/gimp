@@ -349,11 +349,11 @@ Source: "{#ASSETS_DIR}\installsplash_top.scale-250.bmp"; Flags: dontcopy
 Source: "{#ASSETS_DIR}\installsplash_bottom.bmp"; Flags: dontcopy
 
 #ifndef NOFILES
-#ifdef X64_BUNDLE
-#define MAIN_BUNDLE X64_BUNDLE
-#endif
 #ifdef ARM64_BUNDLE
 #define MAIN_BUNDLE ARM64_BUNDLE
+#endif
+#ifdef X64_BUNDLE
+#define MAIN_BUNDLE X64_BUNDLE
 #endif
 #define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion"
 
@@ -1894,10 +1894,10 @@ function CheckArch(const pWhich: String): Boolean;
 begin
   if pWhich = '64' then //x64 or arm64
     Result := Is64BitInstallMode()
-  else if pWhich = 'x64' then
-    Result := Is64BitInstallMode() and IsX64
   else if pWhich = 'arm64' then
     Result := Is64BitInstallMode() and IsARM64
+  else if pWhich = 'x64' then
+    Result := Is64BitInstallMode() and IsX64OS
   else
     RaiseException('Unknown check');
 end;
@@ -2101,7 +2101,7 @@ var InterpFile,InterpContent: String;
 #endif
 begin
 #ifdef PYTHON
-  if WizardIsComponentSelected('py64') or WizardIsComponentSelected('pyARM64') then
+  if WizardIsComponentSelected('pyARM64') or WizardIsComponentSelected('py64') then
   begin
     StatusLabel(CustomMessage('SettingUpPyGimp'),'');
 
@@ -2136,7 +2136,7 @@ begin
 #endif
 
 #ifdef LUA
-  if WizardIsComponentSelected('lua64') or WizardIsComponentSelected('luaARM64') then
+  if WizardIsComponentSelected('luaARM64') or WizardIsComponentSelected('lua64') then
   begin
     InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\lua.interp');
     DebugMsg('PrepareInterp','Writing interpreter file for lua: ' + InterpFile);
