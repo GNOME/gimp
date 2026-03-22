@@ -1543,6 +1543,7 @@ begin
 end;
 
 procedure InitCustomPages();
+var
   MeasureLabel: TNewStaticText;
   //lblInfo: TNewStaticText;
 begin
