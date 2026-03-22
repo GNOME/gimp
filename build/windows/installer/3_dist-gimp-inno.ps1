@@ -25,10 +25,12 @@ Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0)
 ## Install or Update Inno (if needed)
 ## (We need to ensure that TLS 1.2 is enabled because of some runners)
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest "https://jrsoftware.org/download.php/is.exe" -UseBasicParsing -OutFile ..\is.exe
+#Inno dropped the old neutral URL: https://groups.google.com/g/innosetup/c/9s36_S3lrOE
+#Invoke-WebRequest "https://jrsoftware.org/download.php/is.exe" -UseBasicParsing -OutFile ..\is.exe
+$is_tag=$((Invoke-RestMethod 'https://api.github.com/repos/jrsoftware/issrc/releases/latest').tag_name -replace 'is-',''); Invoke-WebRequest "https://github.com/jrsoftware/issrc/releases/download/is-${is_tag}/innosetup-$($is_tag -replace '_','.')-x86.exe" -UseBasicParsing -OutFile ..\is.exe
 $inno_version_downloaded = (Get-Item ..\is.exe).VersionInfo.ProductVersion -replace ' ',''
 $broken_inno = Get-ChildItem $env:TMP -Filter *.isl.bak -ErrorAction SilentlyContinue
-$inno_version = (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*" -ErrorAction SilentlyContinue | Sort-Object { [version]($_.DisplayVersion -split '-')[0] } -Descending | Select-Object -First 1).DisplayVersion
+$inno_version = (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*" -ErrorAction SilentlyContinue | Sort-Object { [version]((($_.DisplayVersion -split '-')[0] -split ' ')[0] -replace '[^0-9.]') } -Descending | Select-Object -First 1).DisplayVersion -replace ' ',''
 if ("$broken_inno" -or "$inno_version" -ne "$inno_version_downloaded")
   {
     if ("$broken_inno")
@@ -48,7 +50,7 @@ if ("$broken_inno" -or "$inno_version" -ne "$inno_version_downloaded")
     Wait-Process is
   }
 Remove-Item ..\is.exe
-$INNO_PATH = (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*" | Sort-Object { [version]($_.DisplayVersion -split '-')[0] } -Descending | Select-Object -First 1).InstallLocation
+$INNO_PATH = (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*" | Sort-Object { [version]((($_.DisplayVersion -split '-')[0] -split ' ')[0] -replace '[^0-9.]') } -Descending | Select-Object -First 1).InstallLocation
 #$INNO_PATH = [regex]::Matches((Get-Content ..\innosetup.log | Select-String ISCC.exe), '(?<=filename: ).+?(?=\\ISCC.exe)').Value
 Set-Alias iscc "$INNO_PATH\iscc.exe"
 
