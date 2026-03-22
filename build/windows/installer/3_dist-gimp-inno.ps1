@@ -48,7 +48,7 @@ if ("$broken_inno" -or "$inno_version" -ne "$inno_version_downloaded")
     Wait-Process is
   }
 Remove-Item ..\is.exe
-$INNO_PATH = Get-ItemProperty (Resolve-Path Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*') | Select-Object -ExpandProperty InstallLocation
+$INNO_PATH = (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*" | Sort-Object { [version]($_.DisplayVersion -split '-')[0] } -Descending | Select-Object -First 1).InstallLocation
 #$INNO_PATH = [regex]::Matches((Get-Content ..\innosetup.log | Select-String ISCC.exe), '(?<=filename: ).+?(?=\\ISCC.exe)').Value
 Set-Alias iscc "$INNO_PATH\iscc.exe"
 
