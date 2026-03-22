@@ -2546,7 +2546,7 @@ end;
 //Taken from https://github.com/GrayWorldFinex/InnoSetupScripts/blob/main/Src%20Code/cdx-gridberd.iss
 Procedure MoveFile(SourceFile, DestFile: {#defined UNICODE ? "Ansi" : ""}String);
   Begin
-   FileCopy(SourceFile, DestFile, False);
+   CopyFile(SourceFile, DestFile, False);
   End;
 
 Function ProcessFiles(S: {#defined UNICODE ? "Ansi" : ""}String): array of {#defined UNICODE ? "Ansi" : ""}String;
