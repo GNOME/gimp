@@ -25,7 +25,7 @@ Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0)
 ## Install or Update Inno (if needed)
 ## (We need to ensure that TLS 1.2 is enabled because of some runners)
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest "https://jrsoftware.org/download.php/is.exe" -UseBasicParsing -OutFile ..\is.exe
+Invoke-WebRequest "https://github.com/jrsoftware/issrc/releases/download/is-7_0_0_2/innosetup-7.0.0-preview-3-x64.exe" -UseBasicParsing -OutFile ..\is.exe
 $inno_version_downloaded = (Get-Item ..\is.exe).VersionInfo.ProductVersion -replace ' ',''
 $broken_inno = Get-ChildItem $env:TMP -Filter *.isl.bak -ErrorAction SilentlyContinue
 $inno_version = (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*" -ErrorAction SilentlyContinue | Sort-Object { [version]($_.DisplayVersion -split '-')[0] } -Descending | Select-Object -First 1).DisplayVersion
