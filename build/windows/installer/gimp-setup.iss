@@ -452,10 +452,10 @@ Source: "{#BUNDLE}\lib\python{#PYTHON_VERSION}\*"; DestDir: "{app}\lib\python{#P
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
 #ifdef ARM64_BUNDLE
-Source: "{#ARM64_BUNDLE}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimpARM64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',64)
+Source: "{#ARM64_BUNDLE}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimpARM64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll')
 #endif
 #ifdef X64_BUNDLE
-Source: "{#X64_BUNDLE}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimpX64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',64)
+Source: "{#X64_BUNDLE}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimpX64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll')
 #endif
 
 ;allow specific config files to be overridden if '/configoverride=' is set at run time
@@ -1897,25 +1897,14 @@ end;
 
 //some programs improperly install libraries to the System32 directory, which then causes problems with plugins
 //this function checks if such file exists in System32, and lets setup update the file when it exists
-function BadSysDLL(const pFile: String; const pPlatform: Integer): Boolean;
-var OldRedir: Boolean;
+function BadSysDLL(const pFile: String): Boolean;
+var ResolvedPath: String;
 begin
   Result := False;
 
-  if pPlatform = 64 then
-  begin
-    if Is64BitInstallMode() then //only check when installing in 64bit mode
-    begin
-      OldRedir := EnableFsRedirection(False);
-      DebugMsg('BadSysDLL','64: ' + ExpandConstant('{sys}\' + pFile));
-      Result := FileExists(ExpandConstant('{sys}\' + pFile));
-      EnableFsRedirection(OldRedir);
-    end;
-  end
-  else
-  begin
-    RaiseException('Unsupported platform');
-  end;
+  ResolvedPath := ApplyPathRedirRulesForCurrentProcess(True, ExpandConstant('{sys}\' + pFile));
+  DebugMsg('BadSysDLL', ': ' + ResolvedPath);
+  Result := FileExists(ResolvedPath);
 
   DebugMsg('BadSysDLL','Result: ' + BoolToStr(Result));
 end;
