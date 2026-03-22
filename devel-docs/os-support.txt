@@ -26,7 +26,7 @@ Compatibility with MacOS 11 and over.
 
 (NOTE TO MAINTAINERS:
 If you update this file, so update LSMinimumSystemVersion
-on package/info.plist.tmpl of gimp-macos-build repo and
+on build/macos/Info.plist, package/info.plist.tmpl of gimp-macos-build repo and
 min-support on content/gimp_versions.json of gimp-web repo)
 
 Hardware:
