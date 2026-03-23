@@ -470,6 +470,14 @@ gimp_tool_palette_add_button (GimpToolPalette *palette,
                           tool_button, "visible-vertical",
                           G_BINDING_SYNC_CREATE);
 
+  /* Workaround for a GTK bug (GNOME/gtk!9120). Without it, revealing
+   * (toggling eye icon) a previuosly hidden item does not show it again
+   * This ensures that the group gets gets resized/redrawn.
+   */
+  g_signal_connect_object (tool_item, "shown-changed",
+                           G_CALLBACK (gtk_widget_queue_resize),
+                           private->group, G_CONNECT_SWAPPED);
+
   button = gtk_bin_get_child (GTK_BIN (tool_button));
 
   gtk_widget_style_get (GTK_WIDGET (palette),
