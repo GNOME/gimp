@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-18 21:04+0000\n"
-"PO-Revision-Date: 2026-03-19 10:44+0800\n"
+"POT-Creation-Date: 2026-03-21 17:33+0000\n"
+"PO-Revision-Date: 2026-03-23 08:26+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -616,7 +616,7 @@ msgstr "百叶窗"
 #: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
-#: plug-ins/file-faxg3/faxg3.c:581 plug-ins/file-fits/fits.c:673
+#: plug-ins/file-faxg3/faxg3.c:581 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
 #: plug-ins/file-psd/psd-load.c:3161 plug-ins/file-sgi/sgi.c:456
@@ -1974,7 +1974,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3738
 #: plug-ins/common/file-psp.c:2675 plug-ins/common/file-psp.c:2725
-#: plug-ins/common/file-pvr.c:253 plug-ins/common/file-qoi.c:275
+#: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:799
 #: plug-ins/common/file-raw-data.c:1844
 #: plug-ins/common/file-seattle-filmworks.c:232
@@ -1986,8 +1986,8 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
-#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:568
-#: plug-ins/file-icns/file-icns-load.c:621 plug-ins/file-ico/ico-load.c:711
+#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:611
+#: plug-ins/file-icns/file-icns-load.c:664 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
 #: plug-ins/file-psd/psd-export.c:2350 plug-ins/file-psd/psd-load.c:189
@@ -2587,7 +2587,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457
 #: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
-#: plug-ins/file-icns/file-icns-load.c:560 plug-ins/file-ico/ico-load.c:703
+#: plug-ins/file-icns/file-icns-load.c:603 plug-ins/file-ico/ico-load.c:703
 #: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:97
 #: plug-ins/file-psd/psd-load.c:202
 #: plug-ins/file-raw/file-another-rawtherapee.c:346
@@ -2666,7 +2666,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
 #: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
-#: plug-ins/file-fits/fits.c:646 plug-ins/file-fli/fli-gimp.c:766
+#: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
 #: plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2284
@@ -2923,7 +2923,7 @@ msgstr "在与每像素采样组合中 GIMP 不支持 %s：%d"
 msgid "'%s' has a bpp of %d which GIMP cannot handle."
 msgstr "“%s”为 %d bpp 超出 GIMP 能处理的范围。"
 
-#: plug-ins/common/file-dicom.c:719
+#: plug-ins/common/file-dicom.c:719 plug-ins/file-fits/fits.c:483
 #, c-format
 msgid "'%s' has a larger image size (%d x %d) than GIMP can handle."
 msgstr "“%s”的图像大小（%d x %d）超出 GIMP 能处理的范围。"
@@ -2943,7 +2943,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "无法保存带有透明通道的图像。"
 
 #: plug-ins/common/file-dicom.c:1562 plug-ins/common/file-ps.c:1363
-#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:641
+#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:673
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "无法对未知的图像类型操作。"
@@ -3233,8 +3233,9 @@ msgid "global colormap"
 msgstr "全局颜色表"
 
 #: plug-ins/common/file-gif-load.c:556 plug-ins/common/file-gif-load.c:1191
-#: plug-ins/common/file-gif-load.c:1547 plug-ins/common/file-gif-load.c:1557
-#: plug-ins/common/file-gif-load.c:1579
+#: plug-ins/common/file-gif-load.c:1544 plug-ins/common/file-gif-load.c:1558
+#: plug-ins/common/file-gif-load.c:1568 plug-ins/common/file-gif-load.c:1578
+#: plug-ins/common/file-gif-load.c:1600
 msgid "image data"
 msgstr "图像数据"
 
@@ -3364,7 +3365,7 @@ msgstr ""
 msgid "Too much compressed data, ignoring extra..."
 msgstr "太多压缩的数据，正在忽略额外数据…"
 
-#: plug-ins/common/file-gif-load.c:1587
+#: plug-ins/common/file-gif-load.c:1608
 msgid "inflate failed"
 msgstr "填充失败"
 
@@ -4249,11 +4250,12 @@ msgstr "打开 .lnk 文件且如果其指向图像，将会使 GIMP 打开该链
 #: plug-ins/common/file-raw-data.c:815
 #: plug-ins/common/file-seattle-filmworks.c:244
 #: plug-ins/common/file-seattle-filmworks.c:283
-#: plug-ins/common/file-seattle-filmworks.c:340
-#: plug-ins/common/file-seattle-filmworks.c:359
-#: plug-ins/common/file-seattle-filmworks.c:370
+#: plug-ins/common/file-seattle-filmworks.c:295
+#: plug-ins/common/file-seattle-filmworks.c:350
+#: plug-ins/common/file-seattle-filmworks.c:369
 #: plug-ins/common/file-seattle-filmworks.c:380
-#: plug-ins/common/file-seattle-filmworks.c:513
+#: plug-ins/common/file-seattle-filmworks.c:390
+#: plug-ins/common/file-seattle-filmworks.c:523
 #, c-format
 msgid "Invalid file."
 msgstr "无效文件。"
@@ -4429,8 +4431,8 @@ msgstr "加载波希米亚互动 PAA 格式的文件"
 
 #: plug-ins/common/file-paa.c:232 plug-ins/common/file-paa.c:269
 #: plug-ins/common/file-paa.c:290 plug-ins/common/file-pcx.c:647
-#: plug-ins/common/file-pvr.c:307 plug-ins/common/file-pvr.c:350
-#: plug-ins/common/file-pvr.c:362 plug-ins/common/file-tim.c:364
+#: plug-ins/common/file-pvr.c:310 plug-ins/common/file-pvr.c:353
+#: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:364
 #: plug-ins/common/file-tim.c:390 plug-ins/common/file-tim.c:453
 #: plug-ins/common/file-tim.c:498
 #, c-format
@@ -4451,13 +4453,18 @@ msgstr "无法从“%s”读取图像数据"
 msgid "Main surface"
 msgstr "主表面"
 
-#: plug-ins/common/file-paa.c:346
+#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:355
+#, c-format
+msgid "Memory could not be allocated."
+msgstr "无法分配内存。"
+
+#: plug-ins/common/file-paa.c:363
 #, c-format
 msgid "Couldn't decompress image data from '%s'"
 msgstr "无法解压缩“%s”中的图像数据"
 
-#: plug-ins/common/file-paa.c:421 plug-ins/common/file-paa.c:438
-#: plug-ins/common/file-paa.c:449
+#: plug-ins/common/file-paa.c:439 plug-ins/common/file-paa.c:456
+#: plug-ins/common/file-paa.c:467
 #, c-format
 msgid "Could not read tag"
 msgstr "无法读取标签"
@@ -5807,59 +5814,64 @@ msgstr "缺失通常的图像属性数据块。"
 msgid "Exporting not implemented yet."
 msgstr "尚未实现导出功能。"
 
-#: plug-ins/common/file-pvr.c:211
+#: plug-ins/common/file-pvr.c:214
 msgid "PVR Image"
 msgstr "PVR 图像"
 
-#: plug-ins/common/file-pvr.c:214
+#: plug-ins/common/file-pvr.c:217
 msgid "Load file in the PVR file format"
 msgstr "加载 PVR 格式的文件"
 
-#: plug-ins/common/file-pvr.c:215
+#: plug-ins/common/file-pvr.c:218
 msgid "Load file in the PowerVR texture file format"
 msgstr "加载 PowerVR 纹理贴图格式的文件"
 
-#: plug-ins/common/file-pvr.c:321 plug-ins/common/file-pvr.c:331
+#: plug-ins/common/file-pvr.c:324 plug-ins/common/file-pvr.c:334
 #, c-format
 msgid "Could not read GBIX header from '%s'"
 msgstr "无法从“%s”读取 GBIX 文件头"
 
-#: plug-ins/common/file-pvr.c:340
+#: plug-ins/common/file-pvr.c:343
 #, c-format
 msgid "Unsupported PVR format: %s"
 msgstr "不支持的 PVR 格式：%s"
 
-#: plug-ins/common/file-pvr.c:404
+#: plug-ins/common/file-pvr.c:408
 #, c-format
 msgid "Incomplete PVR header data."
 msgstr "不完整的 PVR 文件头数据。"
 
-#: plug-ins/common/file-pvr.c:440
+#: plug-ins/common/file-pvr.c:436 plug-ins/common/file-pvr.c:569
+#, c-format
+msgid "Dimensions exceed maximum twiddled size of %d"
+msgstr "尺寸超出了 %d 的最大交织大小"
+
+#: plug-ins/common/file-pvr.c:454
 #, c-format
 msgid "Unable to decode twiddled PVR texture"
 msgstr "无法解码交织的 PVR 纹理贴图"
 
-#: plug-ins/common/file-pvr.c:465
+#: plug-ins/common/file-pvr.c:479 plug-ins/common/file-pvr.c:537
 #, c-format
 msgid "Unable to decode PVR texture"
 msgstr "无法解码 PVR 纹理贴图"
 
-#: plug-ins/common/file-pvr.c:496
+#: plug-ins/common/file-pvr.c:510
 #, c-format
 msgid "Incomplete PVR codebook data."
 msgstr "不完整的 PVR 代码本数据。"
 
-#: plug-ins/common/file-pvr.c:537
+#: plug-ins/common/file-pvr.c:560
 #, c-format
 msgid "Incomplete PVR data."
 msgstr "不完整的 PVR 数据。"
 
-#: plug-ins/common/file-pvr.c:546
+#: plug-ins/common/file-pvr.c:580
 #, c-format
 msgid "Unable to decode compressed PVR texture"
 msgstr "无法解码压缩的 PVR 纹理贴图"
 
-#: plug-ins/common/file-pvr.c:562
+#: plug-ins/common/file-pvr.c:598
 #, c-format
 msgid "Unsupported PVR texture format: %d"
 msgstr "不支持的 PVR 纹理贴图格式：%d"
@@ -6211,18 +6223,18 @@ msgstr "西雅图电影厂图像"
 msgid "Load file in the Seattle FilmWorks file format"
 msgstr "加载西雅图电影厂格式的文件"
 
-#: plug-ins/common/file-seattle-filmworks.c:326
+#: plug-ins/common/file-seattle-filmworks.c:336
 #, c-format
 msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "尚未支持未压缩的 SFW94A 格式。"
 
-#: plug-ins/common/file-seattle-filmworks.c:415
-#: plug-ins/common/file-seattle-filmworks.c:528
+#: plug-ins/common/file-seattle-filmworks.c:425
+#: plug-ins/common/file-seattle-filmworks.c:538
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "无法转换 SFW 图像。"
 
-#: plug-ins/common/file-seattle-filmworks.c:487
+#: plug-ins/common/file-seattle-filmworks.c:497
 #, c-format
 msgid "Unsupported SFW format '%s'"
 msgstr "不支持的 SFW 格式“%s”"
@@ -9874,19 +9886,19 @@ msgstr "FITS 导出无法处理带透明通道的图像类型。"
 msgid "Error during opening of FITS file"
 msgstr "打开 FITS 文件时出错"
 
-#: plug-ins/file-fits/fits.c:394 plug-ins/file-fits/fits.c:600
+#: plug-ins/file-fits/fits.c:394 plug-ins/file-fits/fits.c:632
 msgid "FITS file keeps no displayable images"
 msgstr "FITS 文件没有包含可显示图像"
 
-#: plug-ins/file-fits/fits.c:492
+#: plug-ins/file-fits/fits.c:515
 msgid "FITS HDU"
 msgstr "FITS HDU"
 
-#: plug-ins/file-fits/fits.c:630
+#: plug-ins/file-fits/fits.c:662
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS 导出无法处理带透明通道的图像"
 
-#: plug-ins/file-fits/fits.c:998
+#: plug-ins/file-fits/fits.c:1030
 msgid "Open FITS File"
 msgstr "打开 FITS 文件"
 
@@ -10119,13 +10131,13 @@ msgstr ""
 "无效的图层尺寸。有效的图层大小为 16x12、16x16、18x18、24x24、32x32、36x36、"
 "48x48、64x64、128x128、256x256、512x512 或 1024x1024。"
 
-#: plug-ins/file-icns/file-icns-load.c:473
+#: plug-ins/file-icns/file-icns-load.c:515
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr "试图打开临时的 %s 文件“%s”用于加载 icns 时出错：%s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:613 plug-ins/file-ico/ico-load.c:1068
+#: plug-ins/file-icns/file-icns-load.c:656 plug-ins/file-ico/ico-load.c:1068
 #: plug-ins/file-jpeg/jpeg-load.c:690 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:462
 #: plug-ins/file-raw/file-darktable.c:620
