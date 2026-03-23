@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-20 23:33+0000\n"
-"PO-Revision-Date: 2026-03-21 12:54+0100\n"
+"POT-Creation-Date: 2026-03-23 15:07+0000\n"
+"PO-Revision-Date: 2026-03-24 00:31+0100\n"
 "Last-Translator: Марко М. Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <gnome-sr@googlegroups.com>\n"
 "Language: sr\n"
@@ -2054,7 +2054,7 @@ msgstr "Не могу да применим на празним изборима
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3738
-#: plug-ins/common/file-psp.c:2675 plug-ins/common/file-psp.c:2725
+#: plug-ins/common/file-psp.c:2787 plug-ins/common/file-psp.c:2837
 #: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:799
 #: plug-ins/common/file-raw-data.c:1844
@@ -3398,8 +3398,9 @@ msgid "global colormap"
 msgstr "општа мапа боја"
 
 #: plug-ins/common/file-gif-load.c:556 plug-ins/common/file-gif-load.c:1191
-#: plug-ins/common/file-gif-load.c:1547 plug-ins/common/file-gif-load.c:1557
-#: plug-ins/common/file-gif-load.c:1579
+#: plug-ins/common/file-gif-load.c:1544 plug-ins/common/file-gif-load.c:1558
+#: plug-ins/common/file-gif-load.c:1568 plug-ins/common/file-gif-load.c:1578
+#: plug-ins/common/file-gif-load.c:1600
 msgid "image data"
 msgstr "подаци о слици"
 
@@ -3533,7 +3534,7 @@ msgstr ""
 msgid "Too much compressed data, ignoring extra..."
 msgstr "Превише сажетих података, занемарујем вишак..."
 
-#: plug-ins/common/file-gif-load.c:1587
+#: plug-ins/common/file-gif-load.c:1608
 msgid "inflate failed"
 msgstr "надувавање није успело"
 
@@ -4467,11 +4468,12 @@ msgstr ""
 #: plug-ins/common/file-raw-data.c:815
 #: plug-ins/common/file-seattle-filmworks.c:244
 #: plug-ins/common/file-seattle-filmworks.c:283
-#: plug-ins/common/file-seattle-filmworks.c:340
-#: plug-ins/common/file-seattle-filmworks.c:359
-#: plug-ins/common/file-seattle-filmworks.c:370
+#: plug-ins/common/file-seattle-filmworks.c:295
+#: plug-ins/common/file-seattle-filmworks.c:350
+#: plug-ins/common/file-seattle-filmworks.c:369
 #: plug-ins/common/file-seattle-filmworks.c:380
-#: plug-ins/common/file-seattle-filmworks.c:513
+#: plug-ins/common/file-seattle-filmworks.c:390
+#: plug-ins/common/file-seattle-filmworks.c:523
 #, c-format
 msgid "Invalid file."
 msgstr "Неисправна датотека."
@@ -6010,7 +6012,8 @@ msgstr "Грешка при прављењу слоја"
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Неисправан подблок слоја %s, треба да буде КАНАЛ"
 
-#: plug-ins/common/file-psp.c:2190
+#: plug-ins/common/file-psp.c:2190 plug-ins/common/file-psp.c:2518
+#: plug-ins/common/file-psp.c:2538 plug-ins/common/file-psp.c:2556
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Грешка при читању блока података о каналу"
@@ -6025,92 +6028,99 @@ msgstr "Неисправна врста канала %d у блоку подат
 msgid "Error reading tube data chunk"
 msgstr "Грешка при читању дела цеви података"
 
-#: plug-ins/common/file-psp.c:2426 plug-ins/common/file-psp.c:2442
+#: plug-ins/common/file-psp.c:2441 plug-ins/common/file-psp.c:2458
+#: plug-ins/common/file-psp.c:2480 plug-ins/common/file-psp.c:2488
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "Грешка при читању дела избора"
 
-#: plug-ins/common/file-psp.c:2435
+#: plug-ins/common/file-psp.c:2450
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "Неисправна величина дела избора"
 
-#: plug-ins/common/file-psp.c:2459
+#: plug-ins/common/file-psp.c:2472 plug-ins/common/file-psp.c:2496
+#: plug-ins/common/file-psp.c:2530 plug-ins/common/file-psp.c:2572
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Грешка при читању краја дела избора"
 
-#: plug-ins/common/file-psp.c:2484
+#: plug-ins/common/file-psp.c:2505
+#, c-format
+msgid "Invalid selection sub-block %s, should be CHANNEL"
+msgstr "Неисправан подблок избора %s, треба да буде КАНАЛ"
+
+#: plug-ins/common/file-psp.c:2597
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Грешка при читању заглавље проширеног блока"
 
-#: plug-ins/common/file-psp.c:2492
+#: plug-ins/common/file-psp.c:2604
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Неисправно заглавље проширеног блока"
 
-#: plug-ins/common/file-psp.c:2503
+#: plug-ins/common/file-psp.c:2615
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Неисправна величина проширеног блока"
 
-#: plug-ins/common/file-psp.c:2524
+#: plug-ins/common/file-psp.c:2636
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Грешка при читању података мреже проширеног дела"
 
-#: plug-ins/common/file-psp.c:2552
+#: plug-ins/common/file-psp.c:2664
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Грешка при читању података вођица проширеног дела"
 
-#: plug-ins/common/file-psp.c:2570
+#: plug-ins/common/file-psp.c:2682
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Неисправно усмерење вођице"
 
-#: plug-ins/common/file-psp.c:2584
+#: plug-ins/common/file-psp.c:2696
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Грешка при читању парчета проширеног блока"
 
-#: plug-ins/common/file-psp.c:2610 plug-ins/common/file-psp.c:2622
-#: plug-ins/common/file-psp.c:2633
+#: plug-ins/common/file-psp.c:2722 plug-ins/common/file-psp.c:2734
+#: plug-ins/common/file-psp.c:2745
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Грешка при читању парчета профила боја"
 
-#: plug-ins/common/file-psp.c:2686
+#: plug-ins/common/file-psp.c:2798
 #, c-format
 msgid "Error reading file header."
 msgstr "Грешка у читању заглавља датотеке."
 
-#: plug-ins/common/file-psp.c:2693
+#: plug-ins/common/file-psp.c:2805
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Неисправан потпис датотеке."
 
-#: plug-ins/common/file-psp.c:2707
+#: plug-ins/common/file-psp.c:2819
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Неподржана верзија PSP формата датотеке %d.%d."
 
-#: plug-ins/common/file-psp.c:2727
+#: plug-ins/common/file-psp.c:2839
 msgid "invalid block size"
 msgstr "неисправна величина блока"
 
-#: plug-ins/common/file-psp.c:2736
+#: plug-ins/common/file-psp.c:2848
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Дуплирај блок општих особина слике."
 
-#: plug-ins/common/file-psp.c:2764
+#: plug-ins/common/file-psp.c:2876
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Недостаје блок општих особина слике."
 
-#: plug-ins/common/file-psp.c:2889
+#: plug-ins/common/file-psp.c:3001
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Извоз још увек није имплеметиран."
@@ -6537,18 +6547,18 @@ msgstr "Seattle FilmWorks слика"
 msgid "Load file in the Seattle FilmWorks file format"
 msgstr "Учитај датотеку у Seattle FilmWorks формату датотеке"
 
-#: plug-ins/common/file-seattle-filmworks.c:326
+#: plug-ins/common/file-seattle-filmworks.c:336
 #, c-format
 msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "Некомпресовани SFW94A формат још увек није подржан."
 
-#: plug-ins/common/file-seattle-filmworks.c:415
-#: plug-ins/common/file-seattle-filmworks.c:528
+#: plug-ins/common/file-seattle-filmworks.c:425
+#: plug-ins/common/file-seattle-filmworks.c:538
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "Не могу да претворим SFW слику."
 
-#: plug-ins/common/file-seattle-filmworks.c:487
+#: plug-ins/common/file-seattle-filmworks.c:497
 #, c-format
 msgid "Unsupported SFW format '%s'"
 msgstr "Неподржан SFW формат „%s“"
