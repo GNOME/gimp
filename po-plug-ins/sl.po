@@ -10,19 +10,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-20 23:33+0000\n"
-"PO-Revision-Date: 2026-03-21 16:09+0100\n"
+"POT-Creation-Date: 2026-03-23 15:07+0000\n"
+"PO-Revision-Date: 2026-03-24 00:29+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Project-Style: gnome\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.8\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:113
 msgid "Plug-In Example in _C"
@@ -120,8 +120,8 @@ msgstr "_Zaženi"
 #, c-format, python-format, lua-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
-"Check out the last version of the source code online by clicking the \"Source"
-"\" button."
+"Check out the last version of the source code online by clicking the "
+"\"Source\" button."
 msgstr ""
 "Ta vstavek je vaja v »%s« za demonstracijo izdelave vstavkov.\n"
 "Prevzemite zadnjo različico izvorne kode s spleta s klikom gumba »Izvorna "
@@ -2001,7 +2001,7 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3738
-#: plug-ins/common/file-psp.c:2675 plug-ins/common/file-psp.c:2725
+#: plug-ins/common/file-psp.c:2787 plug-ins/common/file-psp.c:2837
 #: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:799
 #: plug-ins/common/file-raw-data.c:1844
@@ -3286,8 +3286,9 @@ msgid "global colormap"
 msgstr "globalni katalog barv"
 
 #: plug-ins/common/file-gif-load.c:556 plug-ins/common/file-gif-load.c:1191
-#: plug-ins/common/file-gif-load.c:1547 plug-ins/common/file-gif-load.c:1557
-#: plug-ins/common/file-gif-load.c:1579
+#: plug-ins/common/file-gif-load.c:1544 plug-ins/common/file-gif-load.c:1558
+#: plug-ins/common/file-gif-load.c:1568 plug-ins/common/file-gif-load.c:1578
+#: plug-ins/common/file-gif-load.c:1600
 msgid "image data"
 msgstr "podatki slike"
 
@@ -3421,7 +3422,7 @@ msgstr ""
 msgid "Too much compressed data, ignoring extra..."
 msgstr "Preveč stisnjenih podatkov, dodatni bodo prezrti …"
 
-#: plug-ins/common/file-gif-load.c:1587
+#: plug-ins/common/file-gif-load.c:1608
 msgid "inflate failed"
 msgstr "Napihovanje ni uspelo"
 
@@ -4322,11 +4323,12 @@ msgstr ""
 #: plug-ins/common/file-raw-data.c:815
 #: plug-ins/common/file-seattle-filmworks.c:244
 #: plug-ins/common/file-seattle-filmworks.c:283
-#: plug-ins/common/file-seattle-filmworks.c:340
-#: plug-ins/common/file-seattle-filmworks.c:359
-#: plug-ins/common/file-seattle-filmworks.c:370
+#: plug-ins/common/file-seattle-filmworks.c:295
+#: plug-ins/common/file-seattle-filmworks.c:350
+#: plug-ins/common/file-seattle-filmworks.c:369
 #: plug-ins/common/file-seattle-filmworks.c:380
-#: plug-ins/common/file-seattle-filmworks.c:513
+#: plug-ins/common/file-seattle-filmworks.c:390
+#: plug-ins/common/file-seattle-filmworks.c:523
 #, c-format
 msgid "Invalid file."
 msgstr "Neveljavna datoteka."
@@ -5812,7 +5814,8 @@ msgstr "Napaka pri ustvarjanju plasti"
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Neveljaven podblok plasti %s, mora biti CHANNEL"
 
-#: plug-ins/common/file-psp.c:2190
+#: plug-ins/common/file-psp.c:2190 plug-ins/common/file-psp.c:2518
+#: plug-ins/common/file-psp.c:2538 plug-ins/common/file-psp.c:2556
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Napaka pri branju kosa podatkov o kanalu"
@@ -5827,92 +5830,99 @@ msgstr "Neveljavna vrsta kanala %d v informacijskem koščku kanala"
 msgid "Error reading tube data chunk"
 msgstr "Napaka pri branju kosa podatkov o cevi"
 
-#: plug-ins/common/file-psp.c:2426 plug-ins/common/file-psp.c:2442
+#: plug-ins/common/file-psp.c:2441 plug-ins/common/file-psp.c:2458
+#: plug-ins/common/file-psp.c:2480 plug-ins/common/file-psp.c:2488
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "Napaka pri branju kosa izbora"
 
-#: plug-ins/common/file-psp.c:2435
+#: plug-ins/common/file-psp.c:2450
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "Neveljavna velikost kosa izbora"
 
-#: plug-ins/common/file-psp.c:2459
+#: plug-ins/common/file-psp.c:2472 plug-ins/common/file-psp.c:2496
+#: plug-ins/common/file-psp.c:2530 plug-ins/common/file-psp.c:2572
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Napaka pri branju konca kosa izbora"
 
-#: plug-ins/common/file-psp.c:2484
+#: plug-ins/common/file-psp.c:2505
+#, c-format
+msgid "Invalid selection sub-block %s, should be CHANNEL"
+msgstr "Neveljaven podblok izbora %s, mora biti CHANNEL"
+
+#: plug-ins/common/file-psp.c:2597
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Napaka pri branju glave kosa razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2492
+#: plug-ins/common/file-psp.c:2604
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Neveljavna glava kosa razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2503
+#: plug-ins/common/file-psp.c:2615
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Neveljavna velikost kosa razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2524
+#: plug-ins/common/file-psp.c:2636
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Napaka pri branju podatkov mreže kosov razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2552
+#: plug-ins/common/file-psp.c:2664
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Napaka pri branju podatkov vodila razširjenega kosa"
 
-#: plug-ins/common/file-psp.c:2570
+#: plug-ins/common/file-psp.c:2682
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Neveljavna usmerjenost vodila"
 
-#: plug-ins/common/file-psp.c:2584
+#: plug-ins/common/file-psp.c:2696
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Napaka pri branju kosa razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2610 plug-ins/common/file-psp.c:2622
-#: plug-ins/common/file-psp.c:2633
+#: plug-ins/common/file-psp.c:2722 plug-ins/common/file-psp.c:2734
+#: plug-ins/common/file-psp.c:2745
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Napaka pri branju kosa podatkov o barvnem profilu"
 
-#: plug-ins/common/file-psp.c:2686
+#: plug-ins/common/file-psp.c:2798
 #, c-format
 msgid "Error reading file header."
 msgstr "Napaka pri branju glave datoteke."
 
-#: plug-ins/common/file-psp.c:2693
+#: plug-ins/common/file-psp.c:2805
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Neveljaven podpis datoteke."
 
-#: plug-ins/common/file-psp.c:2707
+#: plug-ins/common/file-psp.c:2819
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Nepodprta različica datoteke vrste PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2727
+#: plug-ins/common/file-psp.c:2839
 msgid "invalid block size"
 msgstr "neveljavna velikost bloka"
 
-#: plug-ins/common/file-psp.c:2736
+#: plug-ins/common/file-psp.c:2848
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Podvojeni blok splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:2764
+#: plug-ins/common/file-psp.c:2876
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Manjkajoči blok splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:2889
+#: plug-ins/common/file-psp.c:3001
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Izvoz še ni implementiran."
@@ -6334,18 +6344,18 @@ msgstr "Slika Seattle FilmWorks"
 msgid "Load file in the Seattle FilmWorks file format"
 msgstr "Naloži datoteko v zapisu Seattle FilmWorks"
 
-#: plug-ins/common/file-seattle-filmworks.c:326
+#: plug-ins/common/file-seattle-filmworks.c:336
 #, c-format
 msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "Nestisnjeni zapis SFW94A še ni podprt."
 
-#: plug-ins/common/file-seattle-filmworks.c:415
-#: plug-ins/common/file-seattle-filmworks.c:528
+#: plug-ins/common/file-seattle-filmworks.c:425
+#: plug-ins/common/file-seattle-filmworks.c:538
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "Slike SFW ni možno pretvoriti."
 
-#: plug-ins/common/file-seattle-filmworks.c:487
+#: plug-ins/common/file-seattle-filmworks.c:497
 #, c-format
 msgid "Unsupported SFW format '%s'"
 msgstr "Nepodprt zapis SWF »%s«"
@@ -9255,8 +9265,8 @@ msgstr "Navedene poti ni mogoče najti."
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
-"Datoteka .exe ni veljavna (ne-Microsoftova Win32 .exe ali napaka v sliki ."
-"exe)."
+"Datoteka .exe ni veljavna (ne-Microsoftova Win32 .exe ali napaka v "
+"sliki .exe)."
 
 #: plug-ins/common/web-browser.c:190
 msgid "The operating system denied access to the specified file."
