@@ -3153,7 +3153,11 @@ add_merged_image (GimpImage     *image,
               memcpy (&pixels[((i * base_channels) + cidx) * bps],
                       &chn_a[cidx].data[i * bps], bps);
             }
-          g_free (chn_a[cidx].data);
+
+          /* For multichannel images, the first layer is also
+           * the first channel, so we don't want to free it yet */
+          if (img_a->color_mode != PSD_MULTICHANNEL)
+            g_free (chn_a[cidx].data);
         }
 
       /* Add background layer */
@@ -3241,9 +3245,12 @@ add_merged_image (GimpImage     *image,
   else
     {
       /* Free merged image data for layered image */
-      if (extra_channels)
-        for (cidx = 0; cidx < base_channels; ++cidx)
-          g_free (chn_a[cidx].data);
+      if (extra_channels &&
+          img_a->color_mode != PSD_MULTICHANNEL)
+        {
+          for (cidx = 0; cidx < base_channels; ++cidx)
+            g_free (chn_a[cidx].data);
+        }
     }
 
   if (img_a->transparency)
@@ -3255,6 +3262,14 @@ add_merged_image (GimpImage     *image,
           if (alpha_name)
             g_free (alpha_name);
         }
+    }
+
+  /* Multichannel mode uses the first channel as the grayscale layer,
+   * so we need to reset the index to grab it again */
+  if (img_a->color_mode == PSD_MULTICHANNEL)
+    {
+      base_channels  = 0;
+      extra_channels = img_a->alpha_id_count;
     }
 
   /* ----- Draw extra alpha channels ----- */
