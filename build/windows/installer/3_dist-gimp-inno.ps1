@@ -28,7 +28,7 @@ Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0)
 Invoke-WebRequest "https://jrsoftware.org/download.php/is.exe" -UseBasicParsing -OutFile ..\is.exe
 $inno_version_downloaded = (Get-Item ..\is.exe).VersionInfo.ProductVersion -replace ' ',''
 $broken_inno = Get-ChildItem $env:TMP -Filter *.isl.bak -ErrorAction SilentlyContinue
-$inno_version = Get-ItemProperty Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty DisplayVersion
+$inno_version = (Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*" | Sort-Object { [version]($_.DisplayVersion -split '-')[0] } -Descending | Select-Object -First 1).DisplayVersion
 if ("$broken_inno" -or "$inno_version" -ne "$inno_version_downloaded")
   {
     if ("$broken_inno")
