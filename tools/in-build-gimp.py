@@ -60,9 +60,12 @@ try:
         os.symlink(os.environ.get("GIMP_PYTHON_WITH_GI"), tmp_symlink)
       os.environ["PATH"] = tmp_path + os.pathsep + os.environ.get("PATH", "")
 
-  if "GIMP_DEBUG_SELF" in os.environ and shutil.which("gdb"):
+  if "GIMP_DEBUG_SELF_WRAPPER" in os.environ and Path(os.environ.get("GIMP_DEBUG_SELF_WRAPPER")).stem.lower() == 'gdb':
     print(f"RUNNING: gdb --batch -x {os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py --args {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}")
-    subprocess.run(["gdb","--return-child-result","--batch","-x",f"{os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py","--args", os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:], stdin=sys.stdin, check=True)
+    subprocess.run([os.environ['GIMP_DEBUG_SELF_WRAPPER'],"--return-child-result","--batch","-x",f"{os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug_in_build_gimp.py","--args", os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:], stdin=sys.stdin, check=True)
+  elif "GIMP_DEBUG_SELF_WRAPPER" in os.environ and re.match(r"^lldb(\-\d+)?$", Path(os.environ["GIMP_DEBUG_SELF_WRAPPER"]).stem.lower()):
+    print(f"RUNNING: lldb --batch -o command script import {os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py -- {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}")
+    subprocess.run([os.environ['GIMP_DEBUG_SELF_WRAPPER'],"--batch","-o",f"command script import {os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug_in_build_gimp.py","--", os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:], stdin=sys.stdin, check=True)
   else:
     print(f"RUNNING: {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}")
     subprocess.run([os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:],stdin=sys.stdin, check=True)

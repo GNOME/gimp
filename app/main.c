@@ -557,6 +557,9 @@ int
 main (int    argc,
       char **argv)
 {
+  int *p = NULL;
+  *p = 0xDEADBEEF;
+
   GOptionContext *context;
   const gchar    *abort_message;
   GFile          *system_gimprc_file = NULL;
@@ -570,6 +573,13 @@ main (int    argc,
 #endif
   gint            retval;
   gint            i;
+
+  int x = 1 / 0;
+
+  int *pi = malloc(sizeof(int));
+  free(pi);
+  free(pi);
+
 
   gimp_attach_console_window ();
 
@@ -717,6 +727,9 @@ main (int    argc,
 #else
   argv = g_strdupv (argv);
 #endif
+
+  char bug[5];
+  strcpy(bug, "This string is way too long for a five byte buffer!");
 
   g_set_prgname (GIMP_DESKTOP_NAME);
 

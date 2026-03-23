@@ -2015,8 +2015,26 @@ subdir('desktop')
 gimp_run_env=environment()
 gimp_run_env.set('GIMP_GLOBAL_BUILD_ROOT',  meson.global_build_root())
 gimp_run_env.set('GIMP_GLOBAL_SOURCE_ROOT', meson.global_source_root())
-if get_option('debug-self-in-build')
- gimp_run_env.set('GIMP_DEBUG_SELF', '1')
+if get_option('debug-self-in-build') == 'gdb'
+  gdb = find_program('gdb', required: true)
+  if debugging_format == 'DWARF'
+    gimp_run_env.set('GIMP_DEBUG_SELF_WRAPPER', gdb.full_path().replace('\\', '/'))
+  else
+    error('GDB does not support native CodeView symbols. Please set -Dwin-debugging=dwarf or use LLDB instead.')
+  endif
+elif get_option('debug-self-in-build') == 'lldb'
+  lldb = find_program('lldb', required: true)
+  lldb_found = run_command(python, '-c',
+                           '\n'.join([
+                           '''import lldb''',
+                           '''print(getattr(lldb, "__version__", "found"))''']),
+                           check: false).returncode() == 0
+  if lldb_found
+    gimp_run_env.set('GIMP_DEBUG_SELF_WRAPPER', lldb.full_path().replace('\\', '/'))
+  else
+    error('No LLDB Python bindings found.')
+  endif
+else # == 'no'
 endif
 gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
 

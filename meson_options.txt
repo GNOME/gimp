@@ -69,4 +69,5 @@ option('vala',              type: 'feature', value: 'auto', description: 'Build 
 option('javascript',        type: 'feature', value: 'auto', description: 'Install Javascript plug-ins')
 option('lua',               type: 'boolean', value: false,  description: 'Install Lua plug-ins (experimental)')
 
-option('debug-self-in-build', type: 'boolean', value: false, description: 'Run in-build GIMP within gdb for debugging purpose')
+option('debug-self-in-build', type: 'combo', value: 'no', description: 'Run in-build GIMP within gdb or lldb for debugging purpose',
+                              choices: [ 'gdb', 'lldb', 'no' ])
