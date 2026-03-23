@@ -181,8 +181,9 @@ dump_gimprc_system (GimpConfig       *rc,
         }
       else if (! strcmp (prop_spec->name, "mypaint-brush-path"))
         {
-          gchar *path = g_strdup_printf ("@mypaint_brushes_dir@%s"
+          gchar *path = g_strdup_printf ("%s%s"
                                          "~/.mypaint/brushes",
+                                         MYPAINT_BRUSHES_DIR,
                                          G_SEARCHPATH_SEPARATOR_S);
 
           gimp_config_writer_open (writer, "mypaint-brush-path");
@@ -215,7 +216,7 @@ static const gchar man_page_header[] =
 ".B gimprc\n"
 "file is a configuration file read by GIMP when it starts up.  There\n"
 "are two of these: one system-wide one stored in\n"
-"@gimpsysconfdir@/gimprc and a per-user @manpage_gimpdir@/gimprc\n"
+"%s/gimprc and a per-user %s/gimprc\n"
 "which may override system settings.\n"
 "\n"
 "Comments are introduced by a hash sign (#), and continue until the end\n"
@@ -257,22 +258,22 @@ static const gchar *man_page_path =
 ".TP\n"
 ".I gimp_dir\n"
 "The personal gimp directory which is set to the value of the environment\n"
-"variable GIMP3_DIRECTORY or to @manpage_gimpdir@.\n"
+"variable GIMP3_DIRECTORY or to %s.\n"
 ".TP\n"
 ".I gimp_data_dir\n"
 "Base for paths to shareable data, which is set to the value of the\n"
 "environment variable GIMP3_DATADIR or to the compiled-in default value\n"
-"@gimpdatadir@.\n"
+"%s.\n"
 ".TP\n"
 ".I gimp_plug_in_dir\n"
 "Base to paths for architecture-specific plug-ins and modules, which is set\n"
 "to the value of the environment variable GIMP3_PLUGINDIR or to the\n"
-"compiled-in default value @gimpplugindir@.\n"
+"compiled-in default value %s.\n"
 ".TP\n"
 ".I gimp_sysconf_dir\n"
 "Path to configuration files, which is set to the value of the environment\n"
 "variable GIMP3_SYSCONFDIR or to the compiled-in default value \n"
-"@gimpsysconfdir@.\n"
+"%s.\n"
 ".TP\n"
 ".I gimp_cache_dir\n"
 "Path to cached files, which is set to the value of the environment\n"
@@ -286,10 +287,10 @@ static const gchar *man_page_path =
 static const gchar man_page_footer[] =
 ".SH FILES\n"
 ".TP\n"
-".I @gimpsysconfdir@/gimprc\n"
+".I %s/gimprc\n"
 "System-wide configuration file\n"
 ".TP\n"
-".I @manpage_gimpdir@/gimprc\n"
+".I %s/gimprc\n"
 "Per-user configuration file\n"
 "\n"
 ".SH \"SEE ALSO\"\n"
@@ -307,7 +308,9 @@ dump_gimprc_manpage (GimpConfig       *rc,
   guint          i;
 
   g_output_stream_printf (output, NULL, NULL, NULL,
-                          "%s", man_page_header);
+                          man_page_header,
+                          gimp_sysconf_directory (),
+                          gimp_directory ());
 
   klass = G_OBJECT_GET_CLASS (rc);
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
@@ -353,8 +356,9 @@ dump_gimprc_manpage (GimpConfig       *rc,
         }
       else if (! strcmp (prop_spec->name, "mypaint-brush-path"))
         {
-          gchar *path = g_strdup_printf ("@mypaint_brushes_dir@%s"
+          gchar *path = g_strdup_printf ("%s%s"
                                          "~/.mypaint/brushes",
+                                         MYPAINT_BRUSHES_DIR,
                                          G_SEARCHPATH_SEPARATOR_S);
 
           gimp_config_writer_open (writer, "mypaint-brush-path");
@@ -389,9 +393,15 @@ dump_gimprc_manpage (GimpConfig       *rc,
   g_free (property_specs);
 
   g_output_stream_printf (output, NULL, NULL, NULL,
-                          "%s", man_page_path);
+                          man_page_path,
+                          gimp_directory (),
+                          gimp_data_directory (),
+                          gimp_plug_in_directory (),
+                          gimp_sysconf_directory ());
   g_output_stream_printf (output, NULL, NULL, NULL,
-                          "%s", man_page_footer);
+                          man_page_footer,
+                          gimp_sysconf_directory (),
+                          gimp_directory ());
 }
 
 
