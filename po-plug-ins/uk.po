@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-18 16:18+0000\n"
-"PO-Revision-Date: 2026-03-18 20:51+0200\n"
+"POT-Creation-Date: 2026-03-21 17:33+0000\n"
+"PO-Revision-Date: 2026-03-23 14:53+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 23.04.3\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:113
@@ -41,7 +41,7 @@ msgstr "Приклад додатка мовою C"
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
-#: plug-ins/common/sphere-designer.c:3192 plug-ins/common/tile.c:222
+#: plug-ins/common/sphere-designer.c:3194 plug-ins/common/tile.c:222
 #: plug-ins/common/tile-small.c:312 plug-ins/common/van-gogh-lic.c:242
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:179
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
@@ -69,8 +69,8 @@ msgstr "Приклад додатка мовою C"
 #: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2487
 #: plug-ins/common/file-pdf-export.c:1051 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
-#: plug-ins/common/sphere-designer.c:2284
-#: plug-ins/common/sphere-designer.c:2648 plug-ins/common/unit-editor.c:427
+#: plug-ins/common/sphere-designer.c:2286
+#: plug-ins/common/sphere-designer.c:2650 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:823
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1504
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1542
@@ -141,7 +141,7 @@ msgstr "Приклад додатка мовою JavaScript (GJS)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
-#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2649
+#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2651
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
 #: plug-ins/file-psd/psd-load.c:3952 plug-ins/flame/flame.c:824
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
@@ -619,7 +619,7 @@ msgstr "Жалюзі"
 #: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
-#: plug-ins/file-faxg3/faxg3.c:581 plug-ins/file-fits/fits.c:673
+#: plug-ins/file-faxg3/faxg3.c:581 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
 #: plug-ins/file-psd/psd-load.c:3161 plug-ins/file-sgi/sgi.c:456
@@ -1034,8 +1034,8 @@ msgstr "База випадковості"
 #: plug-ins/common/cml-explorer.c:1451 plug-ins/common/cml-explorer.c:2355
 #: plug-ins/common/curve-bend.c:1350 plug-ins/common/curve-bend.c:1889
 #: plug-ins/common/file-cel.c:989 plug-ins/common/qbist.c:840
-#: plug-ins/common/qbist.c:996 plug-ins/common/sphere-designer.c:2287
-#: plug-ins/common/sphere-designer.c:2697 plug-ins/flame/flame.c:619
+#: plug-ins/common/qbist.c:996 plug-ins/common/sphere-designer.c:2289
+#: plug-ins/common/sphere-designer.c:2699 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1235
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1505
@@ -1050,8 +1050,8 @@ msgstr "_Відкрити"
 #: plug-ins/common/cml-explorer.c:1459 plug-ins/common/cml-explorer.c:2145
 #: plug-ins/common/curve-bend.c:1362 plug-ins/common/curve-bend.c:1924
 #: plug-ins/common/file-pdf-export.c:1050 plug-ins/common/qbist.c:882
-#: plug-ins/common/qbist.c:1004 plug-ins/common/sphere-designer.c:2287
-#: plug-ins/common/sphere-designer.c:2705 plug-ins/flame/flame.c:619
+#: plug-ins/common/qbist.c:1004 plug-ins/common/sphere-designer.c:2289
+#: plug-ins/common/sphere-designer.c:2707 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1243
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1543
@@ -1242,7 +1242,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-png.c:1923 plug-ins/common/file-raw-data.c:1512
 #: plug-ins/common/file-raw-data.c:1541 plug-ins/common/file-sunras.c:614
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:630
-#: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2198
+#: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2200
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:444
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1588
@@ -1990,7 +1990,8 @@ msgstr "Перетворений шар"
 
 #: plug-ins/common/curve-bend.c:644
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr ""
+"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:658
 msgid "Cannot operate on layers with masks."
@@ -2009,7 +2010,7 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3738
 #: plug-ins/common/file-psp.c:2675 plug-ins/common/file-psp.c:2725
-#: plug-ins/common/file-pvr.c:253 plug-ins/common/file-qoi.c:275
+#: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:799
 #: plug-ins/common/file-raw-data.c:1844
 #: plug-ins/common/file-seattle-filmworks.c:232
@@ -2018,11 +2019,11 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
 #: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
-#: plug-ins/common/sphere-designer.c:2087 plug-ins/file-bmp/bmp-load.c:276
+#: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
-#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:568
-#: plug-ins/file-icns/file-icns-load.c:621 plug-ins/file-ico/ico-load.c:711
+#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:611
+#: plug-ins/file-icns/file-icns-load.c:664 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
 #: plug-ins/file-psd/psd-export.c:2350 plug-ins/file-psd/psd-load.c:189
@@ -2101,7 +2102,7 @@ msgid "Swap the two curves"
 msgstr "Переставити дві криві"
 
 #. The Reset button
-#: plug-ins/common/curve-bend.c:1333 plug-ins/common/sphere-designer.c:2647
+#: plug-ins/common/curve-bend.c:1333 plug-ins/common/sphere-designer.c:2649
 #: plug-ins/common/tile-small.c:523 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:912
 msgid "_Reset"
@@ -2627,7 +2628,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457
 #: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
-#: plug-ins/file-icns/file-icns-load.c:560 plug-ins/file-ico/ico-load.c:703
+#: plug-ins/file-icns/file-icns-load.c:603 plug-ins/file-ico/ico-load.c:703
 #: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:97
 #: plug-ins/file-psd/psd-load.c:202
 #: plug-ins/file-raw/file-another-rawtherapee.c:346
@@ -2708,7 +2709,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
 #: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
-#: plug-ins/file-fits/fits.c:646 plug-ins/file-fli/fli-gimp.c:766
+#: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
 #: plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2284
@@ -2723,7 +2724,8 @@ msgstr "Програма на C"
 
 #: plug-ins/common/file-csource.c:125 plug-ins/common/file-csource.c:127
 msgid "Dump image data in RGB(A) format for C source"
-msgstr "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+msgstr ""
+"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
 #: plug-ins/common/file-csource.c:136
 msgid "C-Source"
@@ -2972,7 +2974,7 @@ msgstr ""
 "«%s» використовує кількість бітів на піксель %d, з якою не може працювати "
 "GIMP."
 
-#: plug-ins/common/file-dicom.c:719
+#: plug-ins/common/file-dicom.c:719 plug-ins/file-fits/fits.c:483
 #, c-format
 msgid "'%s' has a larger image size (%d x %d) than GIMP can handle."
 msgstr ""
@@ -2997,7 +2999,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "Неможливо зберегти зображення з альфа-каналом."
 
 #: plug-ins/common/file-dicom.c:1562 plug-ins/common/file-ps.c:1363
-#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:641
+#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:673
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "Не вдається виконати дії із зображеннями невідомого типу."
@@ -3305,8 +3307,9 @@ msgid "global colormap"
 msgstr "загальна мапа кольорів"
 
 #: plug-ins/common/file-gif-load.c:556 plug-ins/common/file-gif-load.c:1191
-#: plug-ins/common/file-gif-load.c:1547 plug-ins/common/file-gif-load.c:1557
-#: plug-ins/common/file-gif-load.c:1579
+#: plug-ins/common/file-gif-load.c:1544 plug-ins/common/file-gif-load.c:1558
+#: plug-ins/common/file-gif-load.c:1568 plug-ins/common/file-gif-load.c:1578
+#: plug-ins/common/file-gif-load.c:1600
 msgid "image data"
 msgstr "дані зображення"
 
@@ -3440,7 +3443,7 @@ msgstr ""
 msgid "Too much compressed data, ignoring extra..."
 msgstr "Забагато стиснених даних, ігноруємо зайві..."
 
-#: plug-ins/common/file-gif-load.c:1587
+#: plug-ins/common/file-gif-load.c:1608
 msgid "inflate failed"
 msgstr "не вдалося розпакувати"
 
@@ -3752,7 +3755,8 @@ msgstr "Завантаження зображень AVCI"
 
 #: plug-ins/common/file-heif.c:502
 msgid "Load AVCI image - H.264 image encapsulated in HEIF"
-msgstr "Завантаження зображення AVCI — зображення H.264, яке вбудовано до HEIF"
+msgstr ""
+"Завантаження зображення AVCI — зображення H.264, яке вбудовано до HEIF"
 
 #: plug-ins/common/file-heif.c:534
 msgid "Exports HEJ2 images"
@@ -3969,7 +3973,6 @@ msgid "Load file in the IFF file format"
 msgstr "Завантажити файл у форматі IFF"
 
 #: plug-ins/common/file-iff.c:179
-#| msgid "Save thumbnail"
 msgid "Load IFF file as thumbnail"
 msgstr "Завантажити файл IFF як мініатюру"
 
@@ -4348,11 +4351,12 @@ msgstr ""
 #: plug-ins/common/file-raw-data.c:815
 #: plug-ins/common/file-seattle-filmworks.c:244
 #: plug-ins/common/file-seattle-filmworks.c:283
-#: plug-ins/common/file-seattle-filmworks.c:340
-#: plug-ins/common/file-seattle-filmworks.c:359
-#: plug-ins/common/file-seattle-filmworks.c:370
+#: plug-ins/common/file-seattle-filmworks.c:295
+#: plug-ins/common/file-seattle-filmworks.c:350
+#: plug-ins/common/file-seattle-filmworks.c:369
 #: plug-ins/common/file-seattle-filmworks.c:380
-#: plug-ins/common/file-seattle-filmworks.c:513
+#: plug-ins/common/file-seattle-filmworks.c:390
+#: plug-ins/common/file-seattle-filmworks.c:523
 #, c-format
 msgid "Invalid file."
 msgstr "Неправильний файл."
@@ -4535,8 +4539,8 @@ msgstr "Завантажити файл у форматі Bohemia Interactive PA
 
 #: plug-ins/common/file-paa.c:232 plug-ins/common/file-paa.c:269
 #: plug-ins/common/file-paa.c:290 plug-ins/common/file-pcx.c:647
-#: plug-ins/common/file-pvr.c:307 plug-ins/common/file-pvr.c:350
-#: plug-ins/common/file-pvr.c:362 plug-ins/common/file-tim.c:364
+#: plug-ins/common/file-pvr.c:310 plug-ins/common/file-pvr.c:353
+#: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:364
 #: plug-ins/common/file-tim.c:390 plug-ins/common/file-tim.c:453
 #: plug-ins/common/file-tim.c:498
 #, c-format
@@ -4557,13 +4561,19 @@ msgstr "Не вдалося прочитати зображення з «%s»"
 msgid "Main surface"
 msgstr "Основна поверхня"
 
-#: plug-ins/common/file-paa.c:346
+#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:355
+#, c-format
+#| msgid "Memory could not be allocated to the frame container."
+msgid "Memory could not be allocated."
+msgstr "Не вдалося розподілити пам'ять."
+
+#: plug-ins/common/file-paa.c:363
 #, c-format
 msgid "Couldn't decompress image data from '%s'"
 msgstr "Не вдалося розпакувати дані зображення з «%s»"
 
-#: plug-ins/common/file-paa.c:421 plug-ins/common/file-paa.c:438
-#: plug-ins/common/file-paa.c:449
+#: plug-ins/common/file-paa.c:439 plug-ins/common/file-paa.c:456
+#: plug-ins/common/file-paa.c:467
 #, c-format
 msgid "Could not read tag"
 msgstr "Не вдалося прочитати теґ"
@@ -4995,7 +5005,8 @@ msgstr "Зображення Alias Pix"
 
 #: plug-ins/common/file-pix.c:176 plug-ins/common/file-pix.c:178
 msgid "Loads files of the Alias|Wavefront or Esm Software Pix file format"
-msgstr "Завантажує файли Alias|Wavefront або у форматі файлів Esm Software Pix"
+msgstr ""
+"Завантажує файли Alias|Wavefront або у форматі файлів Esm Software Pix"
 
 #: plug-ins/common/file-pix.c:207 plug-ins/common/file-pix.c:209
 msgid "Export file in the Alias|Wavefront pix/matte file format"
@@ -5207,11 +5218,13 @@ msgstr ""
 #: plug-ins/common/file-png.c:1880
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr ""
+"Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1889
 #, c-format
-msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgid ""
+"Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -5967,59 +5980,64 @@ msgstr "Відсутній блок загальних атрибутів зоб
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
 
-#: plug-ins/common/file-pvr.c:211
+#: plug-ins/common/file-pvr.c:214
 msgid "PVR Image"
 msgstr "Зображення PVR"
 
-#: plug-ins/common/file-pvr.c:214
+#: plug-ins/common/file-pvr.c:217
 msgid "Load file in the PVR file format"
 msgstr "Завантажити файл у форматі PVR"
 
-#: plug-ins/common/file-pvr.c:215
+#: plug-ins/common/file-pvr.c:218
 msgid "Load file in the PowerVR texture file format"
 msgstr "Завантажити файл у форматі текстури PowerVR"
 
-#: plug-ins/common/file-pvr.c:321 plug-ins/common/file-pvr.c:331
+#: plug-ins/common/file-pvr.c:324 plug-ins/common/file-pvr.c:334
 #, c-format
 msgid "Could not read GBIX header from '%s'"
 msgstr "Не вдається прочитати заголовок GBIX з «%s»"
 
-#: plug-ins/common/file-pvr.c:340
+#: plug-ins/common/file-pvr.c:343
 #, c-format
 msgid "Unsupported PVR format: %s"
 msgstr "Непідтримуваний формат PVR: %s"
 
-#: plug-ins/common/file-pvr.c:404
+#: plug-ins/common/file-pvr.c:408
 #, c-format
 msgid "Incomplete PVR header data."
 msgstr "Неповні дані заголовка PVR."
 
-#: plug-ins/common/file-pvr.c:440
+#: plug-ins/common/file-pvr.c:436 plug-ins/common/file-pvr.c:569
+#, c-format
+msgid "Dimensions exceed maximum twiddled size of %d"
+msgstr "Розміри перевищують максимальний розмір зрізу у %d"
+
+#: plug-ins/common/file-pvr.c:454
 #, c-format
 msgid "Unable to decode twiddled PVR texture"
 msgstr "Не вдалося декодувати закручену текстуру PVR"
 
-#: plug-ins/common/file-pvr.c:465
+#: plug-ins/common/file-pvr.c:479 plug-ins/common/file-pvr.c:537
 #, c-format
 msgid "Unable to decode PVR texture"
 msgstr "Не вдалося декодувати текстуру PVR"
 
-#: plug-ins/common/file-pvr.c:496
+#: plug-ins/common/file-pvr.c:510
 #, c-format
 msgid "Incomplete PVR codebook data."
 msgstr "Неповні дані кодової книги PVR."
 
-#: plug-ins/common/file-pvr.c:537
+#: plug-ins/common/file-pvr.c:560
 #, c-format
 msgid "Incomplete PVR data."
 msgstr "Неповні дані PVR."
 
-#: plug-ins/common/file-pvr.c:546
+#: plug-ins/common/file-pvr.c:580
 #, c-format
 msgid "Unable to decode compressed PVR texture"
 msgstr "Не вдалося декодувати стиснуту текстуру PVR"
 
-#: plug-ins/common/file-pvr.c:562
+#: plug-ins/common/file-pvr.c:598
 #, c-format
 msgid "Unsupported PVR texture format: %d"
 msgstr "Непідтримуваний формат текстури PVR: %d"
@@ -6379,18 +6397,18 @@ msgstr "Зображення Seattle FilmWorks"
 msgid "Load file in the Seattle FilmWorks file format"
 msgstr "Завантажити файл у форматі Seattle FilmWorks"
 
-#: plug-ins/common/file-seattle-filmworks.c:326
+#: plug-ins/common/file-seattle-filmworks.c:336
 #, c-format
 msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "Підтримки формату SFW94A без стискання ще не передбачено."
 
-#: plug-ins/common/file-seattle-filmworks.c:415
-#: plug-ins/common/file-seattle-filmworks.c:528
+#: plug-ins/common/file-seattle-filmworks.c:425
+#: plug-ins/common/file-seattle-filmworks.c:538
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "Не вдалося перетворити зображення SFW."
 
-#: plug-ins/common/file-seattle-filmworks.c:487
+#: plug-ins/common/file-seattle-filmworks.c:497
 #, c-format
 msgid "Unsupported SFW format '%s'"
 msgstr "Непідтримуваний формат SFW «%s»"
@@ -6625,7 +6643,8 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:449
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr ""
+"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:456
 msgid "Retry without limits preventing to parse huge data?"
@@ -8591,52 +8610,52 @@ msgstr "_Створення сфери..."
 msgid "Create an image of a textured sphere"
 msgstr "Створити сферу з заданою текстурою"
 
-#: plug-ins/common/sphere-designer.c:1827
-#: plug-ins/common/sphere-designer.c:2791
-#: plug-ins/common/sphere-designer.c:2819
+#: plug-ins/common/sphere-designer.c:1829
+#: plug-ins/common/sphere-designer.c:2793
+#: plug-ins/common/sphere-designer.c:2821
 msgid "Texture"
 msgstr "Текстура"
 
-#: plug-ins/common/sphere-designer.c:1829
+#: plug-ins/common/sphere-designer.c:1831
 msgid "Bumpmap"
 msgstr "Рельєф"
 
-#: plug-ins/common/sphere-designer.c:1831
-#: plug-ins/common/sphere-designer.c:2793
+#: plug-ins/common/sphere-designer.c:1833
+#: plug-ins/common/sphere-designer.c:2795
 msgid "Light"
 msgstr "Світло"
 
-#: plug-ins/common/sphere-designer.c:2094
+#: plug-ins/common/sphere-designer.c:2096
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr "Файл «%s» збережений некоректно."
 
-#: plug-ins/common/sphere-designer.c:2274
+#: plug-ins/common/sphere-designer.c:2276
 msgid "Open File"
 msgstr "Відкривання файлу"
 
-#: plug-ins/common/sphere-designer.c:2274
+#: plug-ins/common/sphere-designer.c:2276
 msgid "Save File"
 msgstr "Збереження файлу"
 
-#: plug-ins/common/sphere-designer.c:2643
+#: plug-ins/common/sphere-designer.c:2645
 msgid "Sphere Designer"
 msgstr "Створення сфери"
 
-#: plug-ins/common/sphere-designer.c:2744
+#: plug-ins/common/sphere-designer.c:2746
 msgid "Layers"
 msgstr "Шари"
 
-#: plug-ins/common/sphere-designer.c:2755
+#: plug-ins/common/sphere-designer.c:2757
 #: plug-ins/gradient-flare/gradient-flare.c:3054
 msgid "_New"
 msgstr "_Новий"
 
-#: plug-ins/common/sphere-designer.c:2761
+#: plug-ins/common/sphere-designer.c:2763
 msgid "D_uplicate"
 msgstr "_Дублювати"
 
-#: plug-ins/common/sphere-designer.c:2767
+#: plug-ins/common/sphere-designer.c:2769
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
 #: plug-ins/gimpressionist/orientmap.c:623
@@ -8646,15 +8665,15 @@ msgstr "_Дублювати"
 msgid "_Delete"
 msgstr "_Видалити"
 
-#: plug-ins/common/sphere-designer.c:2777
+#: plug-ins/common/sphere-designer.c:2779
 msgid "Properties"
 msgstr "Властивості"
 
-#: plug-ins/common/sphere-designer.c:2792
+#: plug-ins/common/sphere-designer.c:2794
 msgid "Bump"
 msgstr "Рельєф"
 
-#: plug-ins/common/sphere-designer.c:2800
+#: plug-ins/common/sphere-designer.c:2802
 #: plug-ins/gimpressionist/orientmap.c:638
 #: plug-ins/lighting/lighting-main.c:211 plug-ins/lighting/lighting-main.c:334
 #: plug-ins/lighting/lighting-main.c:393 plug-ins/lighting/lighting-main.c:452
@@ -8662,83 +8681,83 @@ msgstr "Рельєф"
 msgid "Type"
 msgstr "Тип"
 
-#: plug-ins/common/sphere-designer.c:2824
+#: plug-ins/common/sphere-designer.c:2826
 #: plug-ins/imagemap/imap_preferences.c:463 plug-ins/pagecurl/pagecurl.c:228
 msgid "Colors"
 msgstr "Кольори"
 
-#: plug-ins/common/sphere-designer.c:2827
-#: plug-ins/common/sphere-designer.c:2838
+#: plug-ins/common/sphere-designer.c:2829
+#: plug-ins/common/sphere-designer.c:2840
 msgid "Color Selection Dialog"
 msgstr "Вікно вибору кольору"
 
-#: plug-ins/common/sphere-designer.c:2850
+#: plug-ins/common/sphere-designer.c:2852
 msgid "Scale"
 msgstr "Масштаб"
 
-#: plug-ins/common/sphere-designer.c:2858
+#: plug-ins/common/sphere-designer.c:2860
 msgid "Turbulence"
 msgstr "Турбулентність"
 
-#: plug-ins/common/sphere-designer.c:2866
+#: plug-ins/common/sphere-designer.c:2868
 msgid "Amount"
 msgstr "Величина"
 
-#: plug-ins/common/sphere-designer.c:2874
+#: plug-ins/common/sphere-designer.c:2876
 msgid "Exponent"
 msgstr "Порядок"
 
-#: plug-ins/common/sphere-designer.c:2881
+#: plug-ins/common/sphere-designer.c:2883
 msgid "Transformations"
 msgstr "Перетворення"
 
-#: plug-ins/common/sphere-designer.c:2890
+#: plug-ins/common/sphere-designer.c:2892
 #: plug-ins/map-object/map-object-main.c:391
 msgid "Scale X"
 msgstr "Масштаб за X"
 
-#: plug-ins/common/sphere-designer.c:2898
+#: plug-ins/common/sphere-designer.c:2900
 #: plug-ins/map-object/map-object-main.c:396
 msgid "Scale Y"
 msgstr "Масштаб за Y"
 
-#: plug-ins/common/sphere-designer.c:2906
+#: plug-ins/common/sphere-designer.c:2908
 #: plug-ins/map-object/map-object-main.c:401
 msgid "Scale Z"
 msgstr "Масштаб за Z"
 
-#: plug-ins/common/sphere-designer.c:2915
+#: plug-ins/common/sphere-designer.c:2917
 msgid "Rotate X"
 msgstr "Обертання навколо X"
 
-#: plug-ins/common/sphere-designer.c:2923
+#: plug-ins/common/sphere-designer.c:2925
 msgid "Rotate Y"
 msgstr "Обертання навколо Y"
 
-#: plug-ins/common/sphere-designer.c:2931
+#: plug-ins/common/sphere-designer.c:2933
 msgid "Rotate Z"
 msgstr "Обертання навколо Z"
 
-#: plug-ins/common/sphere-designer.c:2940
+#: plug-ins/common/sphere-designer.c:2942
 #: plug-ins/map-object/map-object-main.c:165
 msgid "Position X"
 msgstr "Позиція за X"
 
-#: plug-ins/common/sphere-designer.c:2948
+#: plug-ins/common/sphere-designer.c:2950
 #: plug-ins/map-object/map-object-main.c:170
 msgid "Position Y"
 msgstr "Позиція за Y"
 
-#: plug-ins/common/sphere-designer.c:2956
+#: plug-ins/common/sphere-designer.c:2958
 #: plug-ins/map-object/map-object-main.c:175
 msgid "Position Z"
 msgstr "Позиція за Z"
 
-#: plug-ins/common/sphere-designer.c:3087
+#: plug-ins/common/sphere-designer.c:3089
 msgid "Rendering sphere"
 msgstr "Візуалізація сфери"
 
-#: plug-ins/common/sphere-designer.c:3206
+#: plug-ins/common/sphere-designer.c:3208
 msgid "Region selected for plug-in is empty"
 msgstr "Ділянка, вибрана для розширення, порожня"
 
@@ -10135,19 +10154,19 @@ msgstr ""
 msgid "Error during opening of FITS file"
 msgstr "Помилка при відкриванні файлу FITS"
 
-#: plug-ins/file-fits/fits.c:394 plug-ins/file-fits/fits.c:600
+#: plug-ins/file-fits/fits.c:394 plug-ins/file-fits/fits.c:632
 msgid "FITS file keeps no displayable images"
 msgstr "Файл FITS не містить зображень, які можна показати"
 
-#: plug-ins/file-fits/fits.c:492
+#: plug-ins/file-fits/fits.c:515
 msgid "FITS HDU"
 msgstr "FITS HDU"
 
-#: plug-ins/file-fits/fits.c:630
+#: plug-ins/file-fits/fits.c:662
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як FITS"
 
-#: plug-ins/file-fits/fits.c:998
+#: plug-ins/file-fits/fits.c:1030
 msgid "Open FITS File"
 msgstr "Відкриття файла FITS"
 
@@ -10385,14 +10404,14 @@ msgstr ""
 "16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, "
 "512x512 і 1024x1024."
 
-#: plug-ins/file-icns/file-icns-load.c:473
+#: plug-ins/file-icns/file-icns-load.c:515
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr ""
 "Помилка при відкриванні тимчасового файла %s «%s» для завантаження icns: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:613 plug-ins/file-ico/ico-load.c:1068
+#: plug-ins/file-icns/file-icns-load.c:656 plug-ins/file-ico/ico-load.c:1068
 #: plug-ins/file-jpeg/jpeg-load.c:690 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:462
 #: plug-ins/file-raw/file-darktable.c:620
@@ -13360,7 +13379,8 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid "Let the direction from the center determine the direction of the stroke"
+msgid ""
+"Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -13465,7 +13485,8 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr ""
+"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -13885,7 +13906,8 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3325
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr ""
+"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3335
 msgid "Delete Gradient Flare"
@@ -16769,7 +16791,8 @@ msgstr "Включаючи _рамку вікна"
 
 #: plug-ins/screenshot/screenshot.c:212
 msgid "Title bar, window borders and shadow will be part of the image"
-msgstr "Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
+msgstr ""
+"Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
 
 #: plug-ins/screenshot/screenshot.c:221
 msgid "Selection d_elay"
@@ -16914,7 +16937,8 @@ msgstr "Альтернативне ото_чення фільтра"
 
 #: plug-ins/selection-to-path/selection-to-path.c:190
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr ""
+"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path.c:196
 msgid "Filter E_psilon"
