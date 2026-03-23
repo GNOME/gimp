@@ -2410,10 +2410,25 @@ read_selection_block (FILE      *f,
                       PSPimage  *ia,
                       GError   **error)
 {
-  gsize   current_location;
-  gsize   file_size;
-  guint32 chunk_size;
-  guint32 rect[4];
+  gsize           current_location;
+  gsize           file_size;
+  guint32         chunk_size;
+  guint32         rect[4];
+  guint32         saved_rect[4];
+  gushort         channel_counts[2];
+  /* Channel information */
+  gint            sub_id;
+  guint32         channel_init_len;
+  guint32         channel_total_len;
+  guint32         compressed_len;
+  guint32         uncompressed_len;
+  guint16         bitmap_type;
+  guint16         channel_type;
+  GimpSelection  *selection;
+  GeglBuffer     *buffer;
+  guchar         *pixels;
+  gint            width;
+  gint            height;
 
   current_location = ftell (f);
   fseek (f, 0, SEEK_END);
@@ -2436,7 +2451,8 @@ read_selection_block (FILE      *f,
       return -1;
     }
 
-  if (fread (&rect, 16, 1, f) < 1)
+  if (fread (&rect, 16, 1, f) < 1 ||
+      fread (&saved_rect, 16, 1, f) < 1)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error reading selection chunk"));
@@ -2444,15 +2460,112 @@ read_selection_block (FILE      *f,
     }
 
   swab_rect (rect);
-  gimp_image_select_rectangle (image, GIMP_CHANNEL_OP_ADD,
-                               rect[0], rect[1],
-                               rect[2] - rect[0],
-                               rect[3] - rect[1]);
+  width  = rect[2] - rect[0];
+  height = rect[3] - rect[1];
 
-  /* The file format specifies multiple selections, but
-   * as of PSP 8 they only allow one. Skipping the remaining
-   * information in the block. */
-  total_len -= sizeof (guint32) + sizeof (rect);
+  total_len  -= sizeof (chunk_size) + sizeof (rect) + sizeof (saved_rect);
+  chunk_size -= sizeof (chunk_size) + sizeof (rect) + sizeof (saved_rect);
+
+  if (try_fseek (f, chunk_size, SEEK_CUR, error) < 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading end of selection chunk"));
+      return -1;
+    }
+
+  /* Per the specifications, selections always have only one channel */
+  if (fread (&chunk_size, 4, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading selection chunk"));
+      return -1;
+    }
+  chunk_size = GUINT32_FROM_LE (chunk_size);
+
+  if (fread (&channel_counts, 4, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading selection chunk"));
+      return -1;
+    }
+  total_len  -= sizeof (chunk_size) + sizeof (channel_counts);
+  chunk_size -= sizeof (chunk_size) + sizeof (channel_counts);
+  if (try_fseek (f, chunk_size, SEEK_CUR, error) < 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading end of selection chunk"));
+      return -1;
+    }
+
+  /* Load PSP_CHANNEL_BLOCK subblock data for selection */
+  sub_id = read_block_header (f, &channel_init_len, &channel_total_len, error);
+  if (sub_id != PSP_CHANNEL_BLOCK)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                  _("Invalid selection sub-block %s, should be CHANNEL"),
+                  block_name (sub_id));
+      return -1;
+    }
+
+  if ((psp_ver_major >= 4 && (fread (&chunk_size, 4, 1, f) < 1 ||
+       ((chunk_size = GUINT32_FROM_LE (chunk_size)) < 16)))    ||
+      fread (&compressed_len, 4, 1, f) < 1                     ||
+      fread (&uncompressed_len, 4, 1, f) < 1                   ||
+      fread (&bitmap_type, 2, 1, f) < 1                        ||
+      fread (&channel_type, 2, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading channel information chunk"));
+      return -1;
+    }
+  total_len  -= sizeof (chunk_size) + sizeof (compressed_len) +
+                sizeof (uncompressed_len) + sizeof (bitmap_type) +
+                sizeof (channel_type);
+  chunk_size -= sizeof (chunk_size) + sizeof (compressed_len) +
+                sizeof (uncompressed_len) + sizeof (bitmap_type) +
+                sizeof (channel_type);
+  if (try_fseek (f, chunk_size, SEEK_CUR, error) < 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading end of selection chunk"));
+      return -1;
+    }
+
+  pixels = g_try_malloc0 (width * height);
+  if (pixels == NULL)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading channel information chunk"));
+      return -1;
+    }
+
+  selection = gimp_image_get_selection (image);
+  buffer    = gimp_drawable_get_buffer (GIMP_DRAWABLE (selection));
+
+  /* Per the specification, this will always be a 1 byte grayscale channel */
+  if (ia->compression == PSP_COMP_NONE)
+    {
+      fread (pixels, width * height, 1, f);
+    }
+  else
+    {
+      if (read_channel_data (f, ia, &pixels, 1, 0, buffer, compressed_len,
+                             error) == -1)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading channel information chunk"));
+          g_free (pixels);
+          return -1;
+        }
+    }
+
+  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                   NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+  g_object_unref (buffer);
+  g_free (pixels);
+
+  gimp_selection_translate (image, rect[0], rect[1]);
+
   if (try_fseek (f, total_len, SEEK_SET, error) < 0)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -2487,7 +2600,6 @@ read_extended_block (FILE      *f,
 
       if (memcmp (header, "~FL\0", 4) != 0)
         {
-          g_print ("Header: %s\n", header);
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Invalid extended block chunk header"));
           return -1;
