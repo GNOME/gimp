@@ -48,6 +48,11 @@ layout:
   #Needed at runtime because etc is usually not on /usr prefix
   /etc/gimp:
     bind: $SNAP/etc/gimp
+  #Needed by 3P plug-ins. See: #16038
+  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1:
+    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
+  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4:
+    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4
 
 slots:
   dbus-gimp:
@@ -108,7 +113,6 @@ parts:
     meson-parameters:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-      - -Drelocatable=enabled
       #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
       - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
@@ -136,7 +140,6 @@ parts:
     meson-parameters:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-      - -Drelocatable-bundle=yes
       #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
       - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
