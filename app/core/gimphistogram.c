@@ -37,8 +37,10 @@
 #include "gimp-atomic.h"
 #include "gimp-parallel.h"
 #include "gimpasync.h"
+#include "gimpchannel.h"
 #include "gimpdrawable.h"
 #include "gimphistogram.h"
+#include "gimpimage.h"
 #include "gimpwaitable.h"
 
 
@@ -1281,19 +1283,29 @@ gimp_histogram_calculate_async_callback (GimpAsync        *async,
 guint
 gimp_histogram_unique_colors (GimpDrawable *drawable)
 {
+  GimpImage          *image;
   const Babl         *format;
   guint               bpp;
   GeglBufferIterator *iter;
   GHashTable         *hash_table;
   guint               uniques = 0;
+  gboolean            selection_empty;
+  GeglRectangle       area;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0);
 
+  image  = gimp_item_get_image (GIMP_ITEM (drawable));
   format = gimp_drawable_get_format (drawable);
   bpp    = babl_format_get_bytes_per_pixel (format);
 
+  selection_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
+  if (! selection_empty)
+    gimp_item_mask_intersect (GIMP_ITEM (drawable), &area.x, &area.y,
+                              &area.width, &area.height);
+
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (drawable),
-                                   NULL, 0, format,
+                                   selection_empty ? NULL : &area,
+                                   0, format,
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
 
 
