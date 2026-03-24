@@ -2016,7 +2016,12 @@ gimp_run_env=environment()
 gimp_run_env.set('GIMP_GLOBAL_BUILD_ROOT',  meson.global_build_root())
 gimp_run_env.set('GIMP_GLOBAL_SOURCE_ROOT', meson.global_source_root())
 if get_option('debug-self-in-build')
- gimp_run_env.set('GIMP_DEBUG_SELF', '1')
+  gdb = find_program('gdb', required: true)
+  if not platform_windows or platform_windows and debugging_format == 'DWARF'
+    gimp_run_env.set('GIMP_DEBUG_SELF_WRAPPER', gdb.full_path())
+  else
+    error('GDB does not support native CodeView symbols. Please set -Dwin-debugging=dwarf')
+  endif
 endif
 gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
 
