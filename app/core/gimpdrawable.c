@@ -48,6 +48,7 @@
 #include "gimpdrawablefilter.h"
 #include "gimpdrawablefiltermask.h"
 #include "gimpfilterstack.h"
+#include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-undo-push.h"
@@ -1033,13 +1034,18 @@ gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
       old_has_alpha = gimp_drawable_has_alpha (drawable);
     }
 
-  if (extent->x != 0 || extent->y != 0)
+  if (! GIMP_IS_GROUP_LAYER (drawable) && (extent->x != 0 || extent->y != 0))
     {
       /* Drawable buffers are always stored with a (0, 0) origin. When
        * setting a buffer with a different origin, we will assume we
        * instead want to update the offset a bit.
        * This may happen for instance when merging filters which may
        * render in negative coordinates.
+       *
+       * The only exception to this is group layers. Group layer's
+       * boundaries will be determined by children layers, but the
+       * render may extend outside the boundaries (if children have
+       * effects).
        */
       buffer = g_object_new (GEGL_TYPE_BUFFER,
                              "source",  buffer,
@@ -1061,7 +1067,10 @@ gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
                    "buffer", gimp_drawable_get_buffer (drawable),
                    NULL);
 
-  gimp_item_set_offset (item, bounds->x + extent->x, bounds->y + extent->y);
+  if (GIMP_IS_GROUP_LAYER (drawable))
+    gimp_item_set_offset (item, bounds->x, bounds->y);
+  else
+    gimp_item_set_offset (item, bounds->x + extent->x, bounds->y + extent->y);
   gimp_item_set_size (item,
                       bounds->width  ? bounds->width :
                                        gegl_buffer_get_width (buffer),
