@@ -269,7 +269,7 @@ deps-debian-nonreloc:
       - babl/_build-${RUNNER}/config.h
       - gegl/_build-${RUNNER}/meson-logs/meson-log.txt
       - gegl/_build-${RUNNER}/config.h
-    expire_in: 2 hours
+    expire_in: 4 hours
 
 gimp-debian-nonreloc:
   extends: .debian-nonreloc
@@ -418,7 +418,7 @@ deps-flatpak:
       - flatpak-builder.log
       - babl-meson-log.txt
       - gegl-meson-log.txt
-    expire_in: 2 hours
+    expire_in: 4 hours
 
 gimp-flatpak:
   extends: .flatpak
@@ -492,7 +492,7 @@ deps-snap:
       - _build-$RUNNER.tar
       - babl-meson-log.tar
       - gegl-meson-log.tar
-    expire_in: 2 hours
+    expire_in: 4 hours
 
 gimp-snap:
   extends: .snap
@@ -592,7 +592,7 @@ deps-win:
       - _install-*/
       - babl/_build-*/meson-logs/meson-log.txt
       - gegl/_build-*/meson-logs/meson-log.txt
-    expire_in: 2 hours
+    expire_in: 4 hours
 
 gimp-win:
   extends: .win
@@ -680,7 +680,7 @@ deps-macos-inhouse:
       # The full build dir is needed due to its .o for .dSYM creation on next job
       - babl/_build-*
       - gegl/_build-*
-    expire_in: 2 hours
+    expire_in: 4 hours
 
 gimp-macos-inhouse:
   extends: .macos-inhouse
