@@ -2752,6 +2752,12 @@ begin
   case pCurStep of
     ssInstall:
     begin
+      //As on usUninstall, do not allow to cancel on itReinstall or itUpdate
+      //since Inno does not undo [InstallDelete] and RemoveDebugFiles()
+      if (InstallType = 'itReinstall') or (InstallType = 'itUpdate') then begin
+        WizardForm.CancelButton.Enabled := False;
+      end;
+
       if IsAdminInstallMode() then begin
         RestorePoint();
       end;
