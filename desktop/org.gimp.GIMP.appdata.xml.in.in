@@ -80,6 +80,21 @@
   </provides>
 
   <releases>
+    <release version="3.2.2" date="TODO">
+      <url type="details">https://www.gimp.org/release/3.2.2/</url>
+      <description>
+        <p>
+        Here we go! The first bugfix release for the GIMP 3.2 series is here.
+        </p>
+        <ul>
+          <li>A bug when group layers became invisible in some conditions when children had effects got fixed</li>
+          <li>More fixes, especially for the new vector and link layer types, as well as non-destructive effects</li>
+          <li>Various file formats support improved</li>
+          <li>Themes fixes and improvements</li>
+          <li>Support for x86 (32-bit) architecture on Windows was dropped</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.2.0" date="2026-03-14">
       <url type="details">https://www.gimp.org/release/3.2.0/</url>
       <description>
