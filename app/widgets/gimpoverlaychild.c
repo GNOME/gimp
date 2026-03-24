@@ -252,7 +252,7 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
 
   gimp_overlay_child_invalidate (box, child);
 
-  gtk_widget_get_preferred_size (child->widget, &child_requisition, NULL);
+  gtk_widget_get_preferred_size (child->widget, NULL, &child_requisition);
 
   child_allocation.x      = 0;
   child_allocation.y      = 0;
