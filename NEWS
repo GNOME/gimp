@@ -14,15 +14,29 @@ Core:
   - We removed support for a separate folder for loading 32-bit binaries
     on 64-bit Windows. This was being used for core plug-ins for the
     TWAIN plug-in only.
+  - Various fixes related to the new non-destructive layer types, or to
+    non-destructive layer effects.
+  - More robust handling of Procreate and SwatchBooker palettes.
+  - Fix scaling paths when importing SVG as paths.
+  - We now support reading the documentation being installed in the user
+    config directory in the `help/` subdirectory.
 
 Graphical User Interface:
 
   - Theme fixes.
+  - Various text fixed for better localization.
 
 Plug-Ins:
 
   - Tile: carry over the source image's profile to the newly created
     image.
+  - Improve support of: FITS, TIM, PAA, ICNS, PVR, SFW, JIF, PSP.
+
+Translations:
+
+  - Serbian Cyrillic now has upstream support in InnoSetup (in their
+    "Unofficial" list still, which means it is less verified). Our
+    installer now has Serbian Cyrillic localization too.
 
 Build:
 
@@ -38,3 +52,6 @@ Build:
       only made sense in 32-bit. The next step will be to replace it by
       a WIA plug-in.
     * Option -Dwin32-32bits-dll-folder removed.
+  - GIMP can now be built fully without patches on macOS. The in-house
+    macOS build is slowly moving to become our main CI for this OS and
+    for making the release DMGs.
