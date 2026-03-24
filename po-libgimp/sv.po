@@ -1,18 +1,18 @@
 # Swedish messages for libgimp.
-# Copyright © 1999-2025 Free Software Foundation, Inc.
+# Copyright © 1999-2026 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se> 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2011, 2012.
 # Sebastian Rasmussen <sebras@gmail.com>, 2016, 2017.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2017, 2018, 2019, 2020, 2022, 2023, 2024, 2025.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2017, 2018, 2019, 2020, 2022, 2023, 2024, 2025, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-18 10:57+0000\n"
-"PO-Revision-Date: 2025-11-22 14:59+0100\n"
+"POT-Creation-Date: 2026-03-11 20:05+0000\n"
+"PO-Revision-Date: 2026-03-22 14:31+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -253,11 +253,11 @@ msgstr "(redigera)"
 msgid "Export Image as %s"
 msgstr "Exportera bild som %s"
 
-#: libgimp/gimpimagemetadata.c:201
+#: libgimp/gimpimagemetadata.c:203
 msgid "Background"
 msgstr "Bakgrund"
 
-#: libgimp/gimpimagemetadata-save.c:796 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:851 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -295,88 +295,88 @@ msgstr "anropsfel"
 msgid "cancelled"
 msgstr "avbruten"
 
-#: libgimp/gimpprocbrowserdialog.c:150
+#: libgimp/gimpprocbrowserdialog.c:152
 msgid "by name"
 msgstr "efter namn"
 
-#: libgimp/gimpprocbrowserdialog.c:151
+#: libgimp/gimpprocbrowserdialog.c:153
 msgid "by description"
 msgstr "efter beskrivning"
 
-#: libgimp/gimpprocbrowserdialog.c:152
+#: libgimp/gimpprocbrowserdialog.c:154
 msgid "by help"
 msgstr "efter hjälp"
 
-#: libgimp/gimpprocbrowserdialog.c:153
+#: libgimp/gimpprocbrowserdialog.c:155
 msgid "by authors"
 msgstr "efter upphovsmän"
 
-#: libgimp/gimpprocbrowserdialog.c:154
+#: libgimp/gimpprocbrowserdialog.c:156
 msgid "by copyright"
 msgstr "efter copyright"
 
-#: libgimp/gimpprocbrowserdialog.c:155
+#: libgimp/gimpprocbrowserdialog.c:157
 msgid "by date"
 msgstr "efter datum"
 
-#: libgimp/gimpprocbrowserdialog.c:156
+#: libgimp/gimpprocbrowserdialog.c:158
 msgid "by type"
 msgstr "efter typ"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:351 libgimp/gimpprocbrowserdialog.c:509
-#: libgimpwidgets/gimpbrowser.c:144
+#: libgimp/gimpprocbrowserdialog.c:356 libgimp/gimpprocbrowserdialog.c:514
+#: libgimpwidgets/gimpbrowser.c:165
 msgid "No matches"
 msgstr "Inga sökträffar"
 
-#: libgimp/gimpprocbrowserdialog.c:354
+#: libgimp/gimpprocbrowserdialog.c:359
 msgid "Search term invalid or incomplete"
 msgstr "Söktermen är ogiltig eller ofullständig"
 
-#: libgimp/gimpprocbrowserdialog.c:363
+#: libgimp/gimpprocbrowserdialog.c:368
 msgid "Searching"
 msgstr "Söker"
 
-#: libgimp/gimpprocbrowserdialog.c:375
+#: libgimp/gimpprocbrowserdialog.c:380
 msgid "Searching by name"
 msgstr "Söker efter namn"
 
-#: libgimp/gimpprocbrowserdialog.c:396
+#: libgimp/gimpprocbrowserdialog.c:401
 msgid "Searching by description"
 msgstr "Söker efter beskrivning"
 
-#: libgimp/gimpprocbrowserdialog.c:404
+#: libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by help"
 msgstr "Söker efter hjälp"
 
-#: libgimp/gimpprocbrowserdialog.c:412
+#: libgimp/gimpprocbrowserdialog.c:417
 msgid "Searching by authors"
 msgstr "Söker efter upphovsmän"
 
-#: libgimp/gimpprocbrowserdialog.c:420
+#: libgimp/gimpprocbrowserdialog.c:425
 msgid "Searching by copyright"
 msgstr "Söker efter copyright"
 
-#: libgimp/gimpprocbrowserdialog.c:428
+#: libgimp/gimpprocbrowserdialog.c:433
 msgid "Searching by date"
 msgstr "Söker efter datum"
 
-#: libgimp/gimpprocbrowserdialog.c:436
+#: libgimp/gimpprocbrowserdialog.c:441
 msgid "Searching by type"
 msgstr "Söker efter typ"
 
-#: libgimp/gimpprocbrowserdialog.c:449
+#: libgimp/gimpprocbrowserdialog.c:454
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d procedur"
 msgstr[1] "%d procedurer"
 
-#: libgimp/gimpprocbrowserdialog.c:458
+#: libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "Inga träffar för din sökning"
 
-#: libgimp/gimpprocbrowserdialog.c:462
+#: libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -441,7 +441,7 @@ msgstr ""
 #: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
-msgstr "_Öppna"
+msgstr "Ö_ppna"
 
 #: libgimp/gimpproceduredialog.c:316 libgimp/gimpproceduredialog.c:615
 msgid "_Export"
@@ -457,7 +457,7 @@ msgstr "_OK"
 
 #: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
-msgstr "_Återställ"
+msgstr "Åte_rställ"
 
 #: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
@@ -504,11 +504,11 @@ msgstr "Palettväljare"
 msgid "Pattern Chooser"
 msgstr "Mönsterväljare"
 
-#: libgimp/gimpproceduredialog.c:2833
+#: libgimp/gimpproceduredialog.c:2841
 msgid "Reset to _Initial Values"
 msgstr "Återställ till _ursprungsvärden"
 
-#: libgimp/gimpproceduredialog.c:2842
+#: libgimp/gimpproceduredialog.c:2850
 msgid "Reset to _Factory Defaults"
 msgstr "Återställ till _fabriksinställningar"
 
@@ -702,7 +702,7 @@ msgstr "Lagrets _alfakanal"
 #: libgimpbase/gimpbaseenums.c:33
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
-msgstr "_Överför lagrets alfakanal"
+msgstr "Över_för lagrets alfakanal"
 
 #: libgimpbase/gimpbaseenums.c:34
 msgctxt "add-mask-type"
@@ -1811,32 +1811,32 @@ msgctxt "unit-plural"
 msgid "percent"
 msgstr "procent"
 
-#: libgimpbase/gimputils.c:222 libgimpbase/gimputils.c:227
+#: libgimpbase/gimputils.c:223 libgimpbase/gimputils.c:228
 msgid "(invalid UTF-8 string)"
 msgstr "(ogiltig UTF-8-sträng)"
 
-#: libgimpbase/gimputils.c:397
+#: libgimpbase/gimputils.c:398
 msgid "File path is NULL"
 msgstr "Filsökväg är NULL"
 
-#: libgimpbase/gimputils.c:405
+#: libgimpbase/gimputils.c:406
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Fel vid konvertering av UTF-8-filnamn till breda tecken"
 
-#: libgimpbase/gimputils.c:413
+#: libgimpbase/gimputils.c:414
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() misslyckades"
 
-#: libgimpbase/gimputils.c:452
+#: libgimpbase/gimputils.c:453
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Kan inte konvertera ”%s” till en giltig NSURL."
 
-#: libgimpbase/gimputils.c:480
+#: libgimpbase/gimputils.c:481
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Misslyckades med att ansluta till org.freedesktop.FileManager1: "
 
-#: libgimpbase/gimputils.c:504
+#: libgimpbase/gimputils.c:505
 msgid "Calling ShowItems failed: "
 msgstr "Misslyckades med att anropa ShowItems: "
 
@@ -2145,7 +2145,7 @@ msgstr "ogiltigt värde ”%ld” för element %s"
 msgid "while parsing token '%s': %s"
 msgstr "vid tolkning av elementet ”%s”: %s"
 
-#: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
+#: libgimpconfig/gimpconfig-iface.c:708 libgimpconfig/gimpconfig-iface.c:721
 #: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
 #: libgimpwidgets/gimpcolorprofilestore.c:756
 msgid "fatal parse error"
@@ -2530,19 +2530,19 @@ msgstr ""
 msgid "_Preview"
 msgstr "_Förhandsvisa"
 
-#: libgimpwidgets/gimppreviewarea.c:154
+#: libgimpwidgets/gimppreviewarea.c:152
 msgid "Check Size"
 msgstr "Rutstorlek"
 
-#: libgimpwidgets/gimppreviewarea.c:162
+#: libgimpwidgets/gimppreviewarea.c:160
 msgid "Check Style"
 msgstr "Rutstil"
 
-#: libgimpwidgets/gimppreviewarea.c:170
+#: libgimpwidgets/gimppreviewarea.c:168
 msgid "Custom Checks Color 1"
 msgstr "Anpassad schackrutefärg 1"
 
-#: libgimpwidgets/gimppreviewarea.c:177
+#: libgimpwidgets/gimppreviewarea.c:175
 msgid "Custom Checks Color 2"
 msgstr "Anpassad schackrutefärg 2"
 
