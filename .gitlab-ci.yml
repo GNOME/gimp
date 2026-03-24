@@ -676,6 +676,7 @@ deps-macos-inhouse:
     - arch -${ARCH} zsh build/macos/1_build-deps-macports.sh
   artifacts:
     paths:
+      - macports-cached-$ARCH/registry
       - _install-*
       # The full build dir is needed due to its .o for .dSYM creation on next job
       - babl/_build-*

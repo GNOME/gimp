@@ -40,13 +40,15 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
   eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync && eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port upgrade outdated
   if [ "$CI_JOB_NAME" ] && [ -d "macports-cached-$(uname -m)" ]; then
     cp -fa macports-cached-$(uname -m)/* $OPT_PREFIX/var/macports || true
-    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port deactivate -fN installed
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) sqlite3 "$OPT_PREFIX/var/macports/registry/registry.db" "'UPDATE ports SET state=\"imaged\"; DELETE FROM files;'" || true
+    #eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port deactivate -fN installed
   elif echo "$CI_JOB_NAME" | grep -q 'deps'; then
     export first_cache=true
   fi
   eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/|homebrew:[^ ]*//g' | tr -d '\' | xargs)
   if echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] }; then
     mkdir -p macports-cached-$(uname -m) && cp -fa $OPT_PREFIX/var/macports/* macports-cached-$(uname -m) || true
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) sqlite3 "macports-cached-$(uname -m)/registry/registry.db" "UPDATE ports SET state='imaged'; DELETE FROM file_map;" || true
   fi
 else
   brew upgrade --quiet
