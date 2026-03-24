@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-21 17:33+0000\n"
-"PO-Revision-Date: 2026-03-23 08:26+0800\n"
+"POT-Creation-Date: 2026-03-23 15:07+0000\n"
+"PO-Revision-Date: 2026-03-24 11:32+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1973,7 +1973,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3738
-#: plug-ins/common/file-psp.c:2675 plug-ins/common/file-psp.c:2725
+#: plug-ins/common/file-psp.c:2787 plug-ins/common/file-psp.c:2837
 #: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:799
 #: plug-ins/common/file-raw-data.c:1844
@@ -5709,7 +5709,8 @@ msgstr "创建图层出错"
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "无效的图层子数据块 %s，应该为通道"
 
-#: plug-ins/common/file-psp.c:2190
+#: plug-ins/common/file-psp.c:2190 plug-ins/common/file-psp.c:2518
+#: plug-ins/common/file-psp.c:2538 plug-ins/common/file-psp.c:2556
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "读取通道信息数据块出错"
@@ -5724,92 +5725,99 @@ msgstr "通道信息数据块中的无效通道类型 %d"
 msgid "Error reading tube data chunk"
 msgstr "读取管道数据块出错"
 
-#: plug-ins/common/file-psp.c:2426 plug-ins/common/file-psp.c:2442
+#: plug-ins/common/file-psp.c:2441 plug-ins/common/file-psp.c:2458
+#: plug-ins/common/file-psp.c:2480 plug-ins/common/file-psp.c:2488
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "读取选区块时出错"
 
-#: plug-ins/common/file-psp.c:2435
+#: plug-ins/common/file-psp.c:2450
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "无效的选区块大小"
 
-#: plug-ins/common/file-psp.c:2459
+#: plug-ins/common/file-psp.c:2472 plug-ins/common/file-psp.c:2496
+#: plug-ins/common/file-psp.c:2530 plug-ins/common/file-psp.c:2572
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "读取选区块末尾时出错"
 
-#: plug-ins/common/file-psp.c:2484
+#: plug-ins/common/file-psp.c:2505
+#, c-format
+msgid "Invalid selection sub-block %s, should be CHANNEL"
+msgstr "无效的选区子数据块 %s，应该为通道"
+
+#: plug-ins/common/file-psp.c:2597
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "读取扩展的数据块头部信息出错"
 
-#: plug-ins/common/file-psp.c:2492
+#: plug-ins/common/file-psp.c:2604
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "无效的扩展数据块头部信息"
 
-#: plug-ins/common/file-psp.c:2503
+#: plug-ins/common/file-psp.c:2615
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "无效的扩展数据块大小"
 
-#: plug-ins/common/file-psp.c:2524
+#: plug-ins/common/file-psp.c:2636
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "读取扩展的数据块网格数据出错"
 
-#: plug-ins/common/file-psp.c:2552
+#: plug-ins/common/file-psp.c:2664
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "读取扩展的数据块参考线数据出错"
 
-#: plug-ins/common/file-psp.c:2570
+#: plug-ins/common/file-psp.c:2682
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "无效的参考线方向"
 
-#: plug-ins/common/file-psp.c:2584
+#: plug-ins/common/file-psp.c:2696
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "读取扩展的数据块出错"
 
-#: plug-ins/common/file-psp.c:2610 plug-ins/common/file-psp.c:2622
-#: plug-ins/common/file-psp.c:2633
+#: plug-ins/common/file-psp.c:2722 plug-ins/common/file-psp.c:2734
+#: plug-ins/common/file-psp.c:2745
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "读取特性文件数据块时出错"
 
-#: plug-ins/common/file-psp.c:2686
+#: plug-ins/common/file-psp.c:2798
 #, c-format
 msgid "Error reading file header."
 msgstr "读取文件头部信息出错。"
 
-#: plug-ins/common/file-psp.c:2693
+#: plug-ins/common/file-psp.c:2805
 #, c-format
 msgid "Incorrect file signature."
 msgstr "错误的文件签名。"
 
-#: plug-ins/common/file-psp.c:2707
+#: plug-ins/common/file-psp.c:2819
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "不支持的 PSP 文件格式版本 %d.%d。"
 
-#: plug-ins/common/file-psp.c:2727
+#: plug-ins/common/file-psp.c:2839
 msgid "invalid block size"
 msgstr "无效的数据块大小"
 
-#: plug-ins/common/file-psp.c:2736
+#: plug-ins/common/file-psp.c:2848
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "重制通常的图像属性数据块。"
 
-#: plug-ins/common/file-psp.c:2764
+#: plug-ins/common/file-psp.c:2876
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "缺失通常的图像属性数据块。"
 
-#: plug-ins/common/file-psp.c:2889
+#: plug-ins/common/file-psp.c:3001
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "尚未实现导出功能。"
