@@ -131,7 +131,7 @@ stages:
     - <<: *CI_RELEASE
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
-  timeout: 30m
+  timeout: 40m
 
 .debian_environ: &ENVIRON
 # See: https://testing.developer.gimp.org/core/setup/build/#preparing-for-building
@@ -404,7 +404,7 @@ gimp-debian:
     MESON_DIST: 0
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install"
-  #30min is enough only if no module was updated/rebuilt, we need more time in case of module bumps
+  #40min is enough only if no module was updated/rebuilt, we need more time in case of module bumps
   timeout: 90m
 
 deps-flatpak:
@@ -454,7 +454,7 @@ gimp-flatpak:
   variables:
     SNAPCRAFT_BASE_VERSION: "8_core24"
     RUNNER: x86_64_v3
-  timeout: 30m
+  timeout: 40m
 
 deps-snap:
   extends: .snap
@@ -566,7 +566,7 @@ gimp-snap:
     - $GIMP_PREFIX = "$PWD\_install-$(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower())"
     - if ("$VARIANT" -eq '-msvc') { if (-not (Test-Path $env:VCPKG_ROOT)) { git clone --depth 1 https://github.com/microsoft/vcpkg; .\vcpkg\bootstrap-vcpkg.bat }; pip install meson }
     - if ("$VARIANT" -eq '-msvc') { $VSINSTALLDIR = $(vswhere -products * -latest -property installationPath); Import-Module "$VSINSTALLDIR\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell -VsInstallPath "$VSINSTALLDIR" -SkipAutomaticLocation -DevCmdArguments "-arch=$(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower())" }
-  #30min is enough only on msys2 or if no vcpkg port was updated/rebuilt, we need more time in case of port bumps
+  #40min is enough only on msys2 or if no vcpkg port was updated/rebuilt, we need more time in case of port bumps
   timeout: 150m
 
 .win_environ: &WIN_ENVIRON
@@ -751,7 +751,6 @@ file-plug-in-tests:
     reports:
       junit: "_log/import-tests.xml"
     expire_in: 2 days
-  timeout: 30m
 
 meson-health:
   extends: .default
