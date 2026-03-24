@@ -405,7 +405,7 @@ gimp-debian:
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install"
   #40min is enough only if no module was updated/rebuilt, we need more time in case of module bumps
-  timeout: 90m
+  timeout: 240m
 
 deps-flatpak:
   extends: .flatpak
@@ -567,7 +567,7 @@ gimp-snap:
     - if ("$VARIANT" -eq '-msvc') { if (-not (Test-Path $env:VCPKG_ROOT)) { git clone --depth 1 https://github.com/microsoft/vcpkg; .\vcpkg\bootstrap-vcpkg.bat }; pip install meson }
     - if ("$VARIANT" -eq '-msvc') { $VSINSTALLDIR = $(vswhere -products * -latest -property installationPath); Import-Module "$VSINSTALLDIR\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell -VsInstallPath "$VSINSTALLDIR" -SkipAutomaticLocation -DevCmdArguments "-arch=$(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower())" }
   #40min is enough only on msys2 or if no vcpkg port was updated/rebuilt, we need more time in case of port bumps
-  timeout: 150m
+  timeout: 240m
 
 .win_environ: &WIN_ENVIRON
 # See: https://testing.developer.gimp.org/core/setup/build/windows/#prepare-for-building
