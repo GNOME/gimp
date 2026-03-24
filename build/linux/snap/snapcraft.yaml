@@ -108,7 +108,7 @@ parts:
     meson-parameters:
       - -Dprefix=/usr
       - -Dlibdir=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-      - -Drelocatable-bundle=yes
+      - -Drelocatable=enabled
       #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
       - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
