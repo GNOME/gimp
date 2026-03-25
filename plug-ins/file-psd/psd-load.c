@@ -414,12 +414,12 @@ load_image_metadata (GFile        *file,
           if (memcmp (sig, "MIB8", 4) == 0)
             {
               img_a.ibm_pc_format = TRUE;
-              payload_len = GUINT32_FROM_LE (raw_len32);
+              payload_len         = GUINT32_FROM_LE (raw_len32);
             }
           else
             {
               img_a.ibm_pc_format = FALSE;
-              payload_len = GUINT32_FROM_BE (raw_len32);
+              payload_len         = GUINT32_FROM_BE (raw_len32);
             }
 
           /* Actual block size is a multiple of 4 */
@@ -443,12 +443,21 @@ load_image_metadata (GFile        *file,
             }
 
           /* Setting up PSDImage structure */
-          if (memcmp (key, "Layr", 4) == 0 || memcmp (key, "ryaL", 4) == 0)
-            img_a.bps = 8;
-          else if (memcmp (key, "Lr16", 4) == 0 || memcmp (key, "61rL", 4) == 0)
-            img_a.bps = 16;
-          else if (memcmp (key, "Lr32", 4) == 0 || memcmp (key, "23rL", 4) == 0)
-            img_a.bps = 32;
+          if (memcmp (key, "Layr", 4) == 0 ||
+              memcmp (key, "ryaL", 4) == 0)
+            {
+              img_a.bps = 8;
+            }
+          else if (memcmp (key, "Lr16", 4) == 0 ||
+                   memcmp (key, "61rL", 4) == 0)
+            {
+              img_a.bps = 16;
+            }
+          else if (memcmp (key, "Lr32", 4) == 0 ||
+                   memcmp (key, "23rL", 4) == 0)
+            {
+              img_a.bps = 32;
+            }
           else
             {
               /* Get BPC from existing image */
