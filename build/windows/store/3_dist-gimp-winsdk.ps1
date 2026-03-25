@@ -448,7 +448,7 @@ if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
     ## Check in advance if the CLIENT_SECRET we will use in the future tagged pipeline is fine
     if ($CI_COMMIT_TAG)
       {
-        $latest_msix_secret = New-Object -TypeName System.DateTime -ArgumentList 2026, 3, 22
+        $latest_msix_secret = New-Object -TypeName System.DateTime -ArgumentList 2026, 9, 20
         Write-Output "(INFO): CLIENT_SECRET expire date is: $latest_msix_secret"
         if ((Get-Date) -ge $latest_msix_secret)
           {
