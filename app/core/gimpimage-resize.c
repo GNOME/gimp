@@ -42,6 +42,8 @@
 
 #include "text/gimptextlayer.h"
 
+#include "path/gimpvectorlayer.h"
+
 #include "gimp-intl.h"
 
 
@@ -114,6 +116,9 @@ gimp_image_resize_with_layers (GimpImage    *image,
        list = g_list_next (list))
     {
       GimpItem *item = list->data;
+
+      if (gimp_item_is_vector_layer (item))
+        continue;
 
       gimp_item_translate (item, offset_x, offset_y, TRUE);
     }
