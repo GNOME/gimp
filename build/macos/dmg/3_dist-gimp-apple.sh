@@ -26,7 +26,7 @@ fi
 
 # 1. GET MACOS TOOLS VERSION
 printf "\e[0Ksection_start:`date +%s`:mac_tlkt\r\e[0KChecking macOS tools\n"
-printf "(INFO): macOS version: $(sw_vers -productVersion)\n"
+printf "(INFO): macOS version: $(sw_vers -productVersion) | Python version: $(python3 --version 2>&1 | sed 's/[^0-9.]//g')\n"
 printf "\e[0Ksection_end:`date +%s`:mac_tlkt\r\e[0K\n"
 
 
@@ -134,40 +134,105 @@ conf_plist "%MUTEX_SUFFIX%" "$MUTEX_SUFFIX"
 sed -i '' "s|%FILE_TYPES%|$(tr -d '\n' < $BUILD_DIR/plug-ins/file_associations_mac.list)|g" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Info.plist"
 
 ## 4.2 Create or copy .DS_Store to set .dmg background and icon layout
-printf '(INFO): handling .DS_Store\n'
-mkdir -p "$DMG_MOUNT/.background"
-cp -r "$BG_PATH" "$DMG_MOUNT/.background/"
+printf '(INFO): generating .DS_Store\n'
+cp -r "$BG_PATH" "$DMG_MOUNT/.background.png"
 ln -s /Applications "$DMG_MOUNT/Applications"
-sync
-sleep 2 #avoid Finder async issues
-if [ -z "$GITLAB_CI" ]; then
-  osascript <<EOF
-tell application "Finder"
-    tell disk "$APPVER"
-        open
-        -- background
-        set bounds of container window to {1, 1, 641, 512}
-        set background picture of icon view options of container window to POSIX file "$DMG_MOUNT/.background/gimp-dmg.png"
-        set toolbar visible of container window to false
-        set pathbar visible of container window to false
-        set statusbar visible of container window to false
-        -- icons
-        set current view of container window to icon view
-        set arrangement of icon view options of container window to not arranged
-        set icon size of icon view options of container window to 110
-        set position of item "$BUNDLE_NAME.app" of container window to {192, 282}
-        set position of item "Applications" of container window to {448, 282}
-        set position of item ".background" of container window to {545, 0}
-        set position of item ".fseventsd" of container window to {545, 0}
-        update without registering applications
-        close
-    end tell
-end tell
+#Ported from https://github.com/salty-salty-studios/first-snow/blob/main/installer/mac/metabuilder.py
+python3 -m venv ds-py3-venv
+source ds-py3-venv/bin/activate
+pip install ds_store biplist mac_alias
+python3 <<-EOF
+from datetime import datetime, timezone
+import ds_store
+import biplist
+import mac_alias
+
+def create_alias(volname, filename):
+  volume = mac_alias.VolumeInfo(
+    volname, datetime.now(timezone.utc),
+    fs_type=mac_alias.ALIAS_HFS_VOLUME_SIGNATURE, disk_type=mac_alias.ALIAS_FIXED_DISK,
+    attribute_flags=0, fs_id=bytes(2),
+  )
+  target = mac_alias.TargetInfo(
+    mac_alias.ALIAS_KIND_FILE, filename,
+    folder_cnid=0, cnid=0, creation_date=datetime.now(timezone.utc),
+    creator_code=bytes(4), type_code=bytes(4),
+    folder_name=volname, carbon_path='{}:{}'.format(volname, filename),
+  )
+  return mac_alias.Alias(volume=volume, target=target)
+
+if __name__ == '__main__':
+  store = ds_store.DSStore.open("$DMG_MOUNT/.DS_Store", 'w+')
+  store['.']['vSrn'] = ('long', 1)
+  store['.']['icvl'] = ('type', 'icnv')
+
+  #background
+  icvp_options = {
+    'backgroundType': 2,
+    'backgroundColorRed': 1.0,
+    'backgroundColorGreen': 1.0,
+    'backgroundColorBlue': 1.0,
+    'backgroundImageAlias': biplist.Data(create_alias("$APPVER", ".background.png").to_bytes()),
+  }
+  bwsp_options = {
+    'WindowBounds': '{{100, 100}, {%s, %s}}' % (640, 512),
+    'ShowToolbar': False,
+    'ShowPathbar': False,
+    'ShowStatusBar': False,
+  }
+
+  #icons
+  icvp_options.update({
+    'viewOptionsVersion': 1,
+    'gridSpacing': 100.0,
+    'gridOffsetX': 0.0,
+    'gridOffsetY': 0.0,
+    'scrollPositionY': 0.0,
+    'arrangeBy': 'none',
+    'labelOnBottom': True,
+    'showItemInfo': False,
+    'showIconPreview': False,
+    'iconSize': 110.0,
+    'textSize': 16.0,
+  })
+  store["$BUNDLE_NAME.app"]['Iloc'] = (192, 282)
+  store["Applications"]['Iloc'] = (448, 282)
+  store['.background.png']['Iloc'] = (524, 0)
+  store['.fseventsd']['Iloc'] = (524, 0)
+
+  store['.']['icvp'] = icvp_options
+  store['.']['bwsp'] = bwsp_options
+  store.close()
 EOF
-bsdtar -cf build/macos/dmg/DS_Store.tar.xz --xz --options compression-level=9 -C "$DMG_MOUNT" .DS_Store
-printf "(INFO): Generated .DS_Store file. If it have a new layout, please commit it on 'build/macos/dmg/'.\n"
-fi
-bsdtar -xf build/macos/dmg/DS_Store.tar.xz -C "$DMG_MOUNT" .DS_Store
+rm -fr ds-py3-venv
+#Works only interactively
+#if [ -z "$GITLAB_CI" ]; then
+#  sync
+#  sleep 2 #avoid Finder async issues
+#  osascript <<EOF
+#tell application "Finder"
+#    tell disk "$APPVER"
+#        open
+#        -- background
+#        set bounds of container window to {1, 1, 641, 512}
+#        set background picture of icon view options of container window to POSIX file "$DMG_MOUNT/.background/gimp-dmg.png"
+#        set toolbar visible of container window to false
+#        set pathbar visible of container window to false
+#        set statusbar visible of container window to false
+#        -- icons
+#        set current view of container window to icon view
+#        set arrangement of icon view options of container window to not arranged
+#        set icon size of icon view options of container window to 110
+#        set text size of icon view options of container window to 16
+#        set position of item "$BUNDLE_NAME.app" of container window to {192, 282}
+#        set position of item "Applications" of container window to {448, 282}
+#        set position of item ".background.png" of container window to {545, 0}
+#        set position of item ".fseventsd" of container window to {545, 0}
+#        update without registering applications
+#        close
+#    end tell
+#end tell
+#EOF
 
 ## 4.3 Set custom .VolumeIcon.icns
 printf '(INFO): copying .VolumeIcon.icns\n'
