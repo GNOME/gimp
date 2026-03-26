@@ -22,6 +22,8 @@
 
 #include "core-types.h"
 
+#include "path/gimpvectorlayer.h"
+
 #include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpguide.h"
@@ -119,6 +121,9 @@ gimp_image_crop (GimpImage    *image,
       GimpItem *item = list->data;
 
       list = g_list_next (list);
+
+      if (gimp_item_is_vector_layer (item))
+        continue;
 
       gimp_item_translate (item, -x, -y, TRUE);
 
