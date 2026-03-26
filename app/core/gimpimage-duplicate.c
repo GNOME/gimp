@@ -336,6 +336,11 @@ gimp_image_duplicate_paths (GimpImage *image,
       GimpPath *path = list->data;
       GimpPath *new_path;
 
+      /* If the path is attached to a vector layer, it will be
+       * duplicated already */
+      if (gimp_path_attached_to_vector_layer (path, image))
+        continue;
+
       new_path = GIMP_PATH (gimp_image_duplicate_item (GIMP_ITEM (path),
                                                        new_image));
 

@@ -398,10 +398,10 @@ gimp_vector_layer_convert (GimpItem  *item,
 
   if (path)
     {
-      gimp_item_convert (GIMP_ITEM (path), dest_image, GIMP_TYPE_PATH);
+      GIMP_ITEM_GET_CLASS (path)->convert (GIMP_ITEM (path), dest_image,
+                                           G_TYPE_FROM_INSTANCE (path));
 
-      if (! gimp_item_is_attached (GIMP_ITEM (path)) &&
-          gimp_item_get_image (GIMP_ITEM (path)) == dest_image)
+      if (! gimp_item_is_attached (GIMP_ITEM (path)))
         gimp_image_add_path (dest_image, path, NULL, -1, FALSE);
     }
 
