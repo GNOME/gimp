@@ -433,6 +433,7 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
       GimpContainer *filters;
       gboolean       is_group    = FALSE;
       gboolean       is_editable = FALSE;
+      gboolean       is_temporary;
       gboolean       has_visible_filters;
       gint           index;
 
@@ -440,6 +441,8 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
 
       index = gimp_container_get_child_index (filters,
                                               GIMP_OBJECT (editor->filter));
+      is_temporary = (gimp_drawable_filter_get_temporary (editor->filter) ||
+                      ! gimp_drawable_filter_get_mask (editor->filter));
 
       /*  do not allow merging down effects on group layers  */
       if (gimp_viewable_get_children (GIMP_VIEWABLE (editor->drawable)))
@@ -456,7 +459,7 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
       gtk_widget_set_sensitive (editor->visible_button,
                                 TRUE);
       gtk_widget_set_sensitive (editor->edit_button,
-                                is_editable);
+                                is_editable && ! is_temporary);
       gtk_widget_set_sensitive (editor->raise_button,
                                 index > first_editable);
       gtk_widget_set_sensitive (editor->lower_button,
@@ -464,10 +467,11 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
       gtk_widget_set_sensitive (editor->merge_button,
                                 ! is_group          &&
                                 has_visible_filters &&
+                                ! is_temporary      &&
                                 (! GIMP_IS_RASTERIZABLE (editor->drawable) ||
                                  gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (editor->drawable))));
       gtk_widget_set_sensitive (editor->remove_button,
-                                is_editable);
+                                is_editable && ! is_temporary);
 
       if (is_group                                 ||
           (GIMP_IS_RASTERIZABLE (editor->drawable) &&
