@@ -632,6 +632,20 @@ gimp_action_get_display_accels (GimpAction *action)
 
   accels = g_strdupv (GET_PRIVATE (action)->accels);
 
+  /* "windows-hide-docks" has no registered accelerator because Tab takes
+   * precedence over standard accessibility usage across the whole software.
+   * Inject a cosmetic display hint so the menu label and shortcut editor
+   * both show "Tab" without registering a real accelerator.
+   */
+  if ((accels == NULL || accels[0] == NULL) &&
+      g_strcmp0 (gimp_action_get_name (action), "windows-hide-docks") == 0)
+    {
+      g_strfreev (accels);
+      accels    = g_new0 (gchar *, 2);
+      accels[0] = gtk_accelerator_get_label (GDK_KEY_Tab, 0);
+      return accels;
+    }
+
   for (i = 0; accels != NULL && accels[i] != NULL; i++)
     {
       guint           accel_key = 0;
