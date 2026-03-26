@@ -309,8 +309,8 @@ dump_gimprc_manpage (GimpConfig       *rc,
 
   g_output_stream_printf (output, NULL, NULL, NULL,
                           man_page_header,
-                          gimp_sysconf_directory (),
-                          gimp_directory ());
+                          GIMPSYSCONFDIR,
+                          "$XDG_CONFIG_HOME" G_DIR_SEPARATOR_S GIMPDIR G_DIR_SEPARATOR_S GIMP_USER_VERSION);
 
   klass = G_OBJECT_GET_CLASS (rc);
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
@@ -394,14 +394,14 @@ dump_gimprc_manpage (GimpConfig       *rc,
 
   g_output_stream_printf (output, NULL, NULL, NULL,
                           man_page_path,
-                          gimp_directory (),
-                          gimp_data_directory (),
-                          gimp_plug_in_directory (),
-                          gimp_sysconf_directory ());
+                          "$XDG_CONFIG_HOME" G_DIR_SEPARATOR_S GIMPDIR G_DIR_SEPARATOR_S GIMP_USER_VERSION,
+                          GIMPDATADIR,
+                          GIMPPLUGINDIR,
+                          GIMPSYSCONFDIR);
   g_output_stream_printf (output, NULL, NULL, NULL,
                           man_page_footer,
-                          gimp_sysconf_directory (),
-                          gimp_directory ());
+                          GIMPSYSCONFDIR,
+                          "$XDG_CONFIG_HOME" G_DIR_SEPARATOR_S GIMPDIR G_DIR_SEPARATOR_S GIMP_USER_VERSION);
 }
 
 
