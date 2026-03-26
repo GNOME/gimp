@@ -20,6 +20,8 @@ Core:
   - Fix scaling paths when importing SVG as paths.
   - We now support reading the documentation being installed in the user
     config directory in the `help/` subdirectory.
+  - Histogram dialog: the unique color count feature now takes into
+    account any selection.
 
 Graphical User Interface:
 
@@ -30,7 +32,7 @@ Plug-Ins:
 
   - Tile: carry over the source image's profile to the newly created
     image.
-  - Improve support of: FITS, TIM, PAA, ICNS, PVR, SFW, JIF, PSP.
+  - Improve support of: FITS, TIM, PAA, ICNS, PVR, SFW, JIF, PSP, PSD
 
 Translations:
 
