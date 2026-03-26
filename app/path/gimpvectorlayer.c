@@ -113,6 +113,13 @@ static void       gimp_vector_layer_scale           (GimpItem               *ite
                                                      gint                    new_offset_y,
                                                      GimpInterpolationType   interp_type,
                                                      GimpProgress           *progress);
+static void       gimp_vector_layer_resize          (GimpItem               *item,
+                                                     GimpContext            *context,
+                                                     GimpFillType            fill_type,
+                                                     gint                    new_width,
+                                                     gint                    new_height,
+                                                     gint                    offset_x,
+                                                     gint                    offset_y);
 static void       gimp_vector_layer_flip            (GimpItem               *item,
                                                      GimpContext            *context,
                                                      GimpOrientationType     flip_type,
@@ -180,6 +187,7 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
   item_class->duplicate             = gimp_vector_layer_duplicate;
   item_class->rename                = gimp_rasterizable_rename;
   item_class->scale                 = gimp_vector_layer_scale;
+  item_class->resize                = gimp_vector_layer_resize;
   item_class->flip                  = gimp_vector_layer_flip;
   item_class->rotate                = gimp_vector_layer_rotate;
   item_class->transform             = gimp_vector_layer_transform;
@@ -476,15 +484,43 @@ gimp_vector_layer_scale (GimpItem              *item,
 
   if (gimp_item_is_vector_layer (item))
     {
-      gimp_item_scale (GIMP_ITEM (vector_layer->options->path),
-                       new_width, new_height, new_offset_x, new_offset_y,
-                       interp_type, progress);
+      gdouble scale_x = new_width  / (gdouble) gimp_item_get_width  (item);
+      gdouble scale_y = new_height / (gdouble) gimp_item_get_height (item);
+
+      gimp_item_scale_by_factors (GIMP_ITEM (vector_layer->options->path),
+                                  scale_x, scale_y,
+                                  interp_type, progress);
     }
   else
     {
       GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                              new_offset_x, new_offset_y,
                                              interp_type, progress);
+    }
+}
+
+static void
+gimp_vector_layer_resize (GimpItem     *item,
+                          GimpContext  *context,
+                          GimpFillType  fill_type,
+                          gint          new_width,
+                          gint          new_height,
+                          gint          offset_x,
+                          gint          offset_y)
+{
+  GimpVectorLayer *vector_layer = GIMP_VECTOR_LAYER (item);
+
+  if (gimp_item_is_vector_layer (item))
+    {
+      gimp_item_resize (GIMP_ITEM (vector_layer->options->path),
+                        context, fill_type, new_width, new_height,
+                        offset_x, offset_y);
+    }
+  else
+    {
+      GIMP_ITEM_CLASS (parent_class)->resize (item, context, fill_type,
+                                              new_width, new_height, offset_x,
+                                              offset_y);
     }
 }
 

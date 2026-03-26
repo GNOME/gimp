@@ -28,6 +28,7 @@
 #include "core-types.h"
 
 #include "path/gimppath.h"
+#include "path/gimpvectorlayer.h"
 
 #include "gimp.h"
 #include "gimp-transform-resize.h"
@@ -283,6 +284,10 @@ gimp_image_transform (GimpImage              *image,
   while ((item = gimp_object_queue_pop (queue)))
     {
       GimpTransformResize clip = GIMP_TRANSFORM_RESIZE_ADJUST;
+
+      /* Non-rasterized vector layers will be transformed when their path is */
+      if (gimp_item_is_vector_layer (item))
+        continue;
 
       if (GIMP_IS_CHANNEL (item))
         clip = clip_result;

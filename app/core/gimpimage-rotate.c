@@ -44,6 +44,7 @@
 #include "gimpsamplepoint.h"
 
 #include "path/gimppath.h"
+#include "path/gimpvectorlayer.h"
 
 
 static void  gimp_image_rotate_item_offset   (GimpImage         *image,
@@ -137,6 +138,10 @@ gimp_image_rotate (GimpImage        *image,
     {
       gint off_x;
       gint off_y;
+
+      /* Non-rasterized vector layers will be rotated when their path is */
+      if (gimp_item_is_vector_layer (item))
+        continue;
 
       gimp_item_get_offset (item, &off_x, &off_y);
 
