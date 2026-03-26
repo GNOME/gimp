@@ -1579,6 +1579,8 @@ load_resource_2000 (const PSDimageres  *res_a,
   gint       cntr;
   gint       image_width;
   gint       image_height;
+  GList     *paths;
+  guint      next_path_position;
   gint       i;
   gboolean   closed;
 
@@ -1613,6 +1615,8 @@ load_resource_2000 (const PSDimageres  *res_a,
 
   image_width = gimp_image_get_width (image);
   image_height = gimp_image_get_height (image);
+  paths = gimp_image_list_paths (image);
+  next_path_position = g_list_length (paths);
 
   /* Create path */
   if (res_a->id == PSD_WORKING_PATH)
@@ -1626,7 +1630,24 @@ load_resource_2000 (const PSDimageres  *res_a,
       path = gimp_path_new (image, res_a->name);
     }
 
-  gimp_image_insert_path (image, path, NULL, -1);
+  if (next_path_position > 0)
+    {
+      GimpPath *last_path_item;
+      gchar    *last_path_item_name;
+
+      last_path_item = g_list_nth_data (paths, next_path_position - 1);
+      last_path_item_name = gimp_item_get_name (GIMP_ITEM (last_path_item));
+
+      if (! strcmp (last_path_item_name, "Working Path"))
+        next_path_position--;
+
+      g_free (last_path_item_name);
+    }
+
+  /* Append path but keep working path at the end */
+  gimp_image_insert_path (image, path, NULL, (gint) next_path_position);
+
+  g_list_free (paths);
 
   while (path_rec > 0)
     {
