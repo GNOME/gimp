@@ -282,6 +282,7 @@ help in that regard:
      mypaint-brushes-2.0
      pangocairo           @PANGO_REQUIRED_VERSION@
      poppler-data         @POPPLER_DATA_REQUIRED_VERSION@
+     Pycairo
      PyGObject
      Python               @PYTHON3_REQUIRED_VERSION@
      zlib
