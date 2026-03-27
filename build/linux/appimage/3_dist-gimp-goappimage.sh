@@ -359,6 +359,7 @@ done
 bund_usr "$GIMP_PREFIX" "etc/gimp"
 
 ## Other features and plug-ins
+bund_usr "$UNIX_PREFIX" "bin/xdg-email"
 ### mypaint brushes
 bund_usr "$UNIX_PREFIX" "share/mypaint-data/2.0"
 ####https://salsa.debian.org/multimedia-team/mypaint-brushes/-/merge_requests/2
