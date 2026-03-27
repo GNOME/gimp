@@ -139,7 +139,7 @@ cp -r "$BG_PATH" "$DMG_MOUNT/.background.png"
 ln -s /Applications "$DMG_MOUNT/Applications"
 #Ported from https://github.com/salty-salty-studios/first-snow/blob/main/installer/mac/metabuilder.py
 python3 -m venv ds-py3-venv
-source ds-py3-venv/bin/activate
+. ds-py3-venv/bin/activate
 pip install ds_store biplist mac_alias
 python3 <<-EOF
 from datetime import datetime, timezone
