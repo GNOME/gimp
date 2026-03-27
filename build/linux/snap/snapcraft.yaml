@@ -38,6 +38,7 @@ apps:
       - home
       - network
       - removable-media
+      - alsa
       - intel-npu
       - npu-libs
       - gimp-plugins
@@ -53,6 +54,9 @@ layout:
     bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
   /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4:
     bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4
+  #Alsa
+  /usr/share/alsa:
+    bind: $SNAP/gnome-platform/usr/share/alsa
 
 slots:
   dbus-gimp:
@@ -184,6 +188,7 @@ parts:
       - flex
       - libaa1-dev #FIXME: https://github.com/ubuntu/gnome-sdk/issues/322
       - libarchive-dev #FIXME: https://github.com/ubuntu/gnome-sdk/issues/318
+      - libasound2-dev
       - libcfitsio-dev #FIXME: https://github.com/ubuntu/gnome-sdk/issues/320
       - libexpat1-dev #it is on Gnome SDK Snap but inexplicably the linker can't find it
       - libgexiv2-dev
