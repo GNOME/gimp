@@ -27,6 +27,8 @@ Graphical User Interface:
 
   - Theme fixes.
   - Various text fixed for better localization.
+  - Display the "Tab" shortcut for the "Hide Docks" action, even though
+    it is not a real global shortcut (it only works on the canvas).
 
 Plug-Ins:
 
@@ -57,3 +59,4 @@ Build:
   - GIMP can now be built fully without patches on macOS. The in-house
     macOS build is slowly moving to become our main CI for this OS and
     for making the release DMGs.
+  - Snap: adding MIDI (Alsa) support.
