@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-import fcntl
+
+try:
+  # fcntl only exists on UNIX-like platforms. On particular, it won't
+  # exist on Windows. But it's fine, because we don't need to
+  # exclusively lock this script on Windows.
+  import fcntl
+except:
+  pass
 import os
 import random
 import re
