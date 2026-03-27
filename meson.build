@@ -1352,7 +1352,7 @@ have_vector_icons = get_option('vector-icons')
 if have_vector_icons
   # shared-mime-info is needed to correctly detect SVG files
   # (except on Windows, apparently).
-  if platform_windows
+  if platform_windows and meson.is_cross_build()
     vec_warning = '''
       You enabled vector icons on Win32. Make sure to run:
       $ gdk-pixbuf-query-loaders.exe --update-cache
