@@ -283,7 +283,7 @@ help in that regard:
      pangocairo           @PANGO_REQUIRED_VERSION@
      poppler-data         @POPPLER_DATA_REQUIRED_VERSION@
      Pycairo
-     PyGObject
+     PyGObject            @PYGOBJECT_REQUIRED_VERSION@
      Python               @PYTHON3_REQUIRED_VERSION@
      zlib
 
