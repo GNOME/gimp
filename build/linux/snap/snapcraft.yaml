@@ -38,7 +38,8 @@ apps:
       - home
       - network
       - removable-media
-      - alsa
+      - audio-playback
+      - audio-record
       - intel-npu
       - npu-libs
       - gimp-plugins
