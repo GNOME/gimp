@@ -99,7 +99,7 @@ MIMEtypes_output = run_command(
   meson.current_source_dir() / 'generate_mime_ext.py',
   '--mime',
   meson.current_build_dir() / 'file_mimetypes.list',
-  all_plugins_sources
+  all_plugins_sources, check: true
 ).stdout().strip()
 MIMEtypes_dep = declare_dependency(variables : {'MIMEtypes': MIMEtypes_output})
 
