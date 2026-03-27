@@ -687,7 +687,10 @@ deps-macos-inhouse:
 
 gimp-macos-inhouse:
   extends: .macos-inhouse
-  needs: ["deps-macos-inhouse"]
+  needs:
+    - job: deps-macos-inhouse
+      #to allow running Homebrew builds
+      optional: true
   stage: build
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
