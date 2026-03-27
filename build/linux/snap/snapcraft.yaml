@@ -90,8 +90,9 @@ parts:
       #Needed to generate splash image because babl and gegl are moved by snapcraft a lot
       - BABL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
       - GEGL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4
-      #FIXME: GNOME SDK is not setting this runtime var required by glib-networking test on gimp build
+      #FIXME: GNOME SDK is not setting these runtime vars required by glib-networking and pango tests on gimp build
       - GIO_MODULE_DIR: ${SNAPCRAFT_GNOME_SDK:-/snap/gnome-46-2404-sdk/current/}usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gio/modules
+      - LIBTHAI_DICTDIR: ${SNAPCRAFT_GNOME_SDK:-/snap/gnome-46-2404-sdk/current/}usr/share/libthai
 
   babl:
     source: https://gitlab.gnome.org/GNOME/babl.git
