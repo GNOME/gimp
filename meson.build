@@ -1161,7 +1161,7 @@ else
   if xdg_email.found()
     xdg_email_path = xdg_email.full_path()
     email_message = '@0@ (@1@)'.format(true, xdg_email_path)
-  elif not xdg_email.found() and not platform_windows
+  elif not xdg_email.found() and not platform_windows and not platform_osx
     mail_warning = 'Xdg-email not found, but required at runtime for email sending.'
     warning(mail_warning)
     warnings += mail_warning
