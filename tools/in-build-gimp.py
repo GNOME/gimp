@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import fcntl
 import os
 import random
 import re
@@ -8,6 +9,16 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+
+# In some case, this script may not be run concurrently, in particular
+# on macOS where we need to set rpath and install_name_tool doesn't like
+# when a RPATH already exists.
+lock = None
+
+def cleanup(lock):
+  if lock is not None:
+    fcntl.flock(lock, fcntl.LOCK_UN)
+    os.close(lock)
 
 try:
   GIMP_GLOBAL_BUILD_ROOT = os.environ.get("GIMP_GLOBAL_BUILD_ROOT", ".")
@@ -33,6 +44,9 @@ try:
                  f"{GIMP_GLOBAL_BUILD_ROOT}/libgimpwidgets"]
 
   if "GIMP_TEMP_UPDATE_RPATH" in os.environ:
+    lock = os.open(__file__, os.O_RDONLY)
+    fcntl.flock(lock, fcntl.LOCK_EX)
+
     for binary in os.environ["GIMP_TEMP_UPDATE_RPATH"].split(":"):
       result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE)
       out = result.stdout.decode('utf-8', errors='replace')
@@ -79,6 +93,7 @@ try:
       for new_rpath in rpath_array:
         if new_rpath in regex:
           subprocess.run(["install_name_tool", "-delete_rpath", new_rpath, binary], check=True)
+    cleanup(lock)
 
   # Clean-up the temporary config directory after each usage, yet making sure we
   # don't get tricked by weird redirections or anything of the sort. In particular
@@ -104,8 +119,10 @@ try:
     sys.exit(1)
 
 except subprocess.CalledProcessError as e:
+  cleanup(lock)
   sys.stderr.write(f"Command failed with exit code {e.returncode}: {e.cmd}")
   sys.exit(e.returncode)
 except Exception as e:
+  cleanup(lock)
   sys.stderr.write(f"Error: {str(e)}")
   sys.exit(1)
