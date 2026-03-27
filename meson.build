@@ -1234,12 +1234,12 @@ foreach py : py_candidates
 endforeach
 
 if not python.found() or not python.language_version().version_compare(python3_minver)
-  error('No suitable Python installation found. Minimum supported version: @0@'.format(python3_minver))
+  error('No suitable Python installation (with cairo and gi modules) found. Minimum supported version: @0@'.format(python3_minver))
 endif
 message('Found Python @0@'.format(python.language_version()))
 
 if pygobject_found.returncode() != 0 or not pygobject_found.stdout().strip().version_compare(pygobject_minver) or not pygobject_gexiv2_found
-  error('No suitable PyGObject (with Pycairo and Gexiv2 modules) found. Minimum supported version: @0@'.format(pygobject_minver))
+  error('No suitable PyGObject (with GExiv2 submodule) found. Minimum supported version: @0@'.format(pygobject_minver))
 endif
 message('Found PyGObject: @0@'.format(pygobject_found.stdout().strip()))
 
