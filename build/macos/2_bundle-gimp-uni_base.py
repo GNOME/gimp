@@ -159,8 +159,6 @@ shutil.copy2(Path(f"{os.getenv('MESON_BUILD_ROOT')}/build/macos/fileicon.icns"),
 
 
 ## BUNDLE BASE (BARE MINIMUM TO RUN GTK APPS).
-### FIXME: Needed for 'Send to Email' support (should be on sendmail.c source)
-bundle(GIMP_SOURCE, "build/macos/patches/xdg-email", "--dest", "MacOS")
 ### Needed for file dialogs (only .compiled file is needed on macOS)
 bundle(OPT_PREFIX, "share/glib-*/schemas/gschemas.compiled")
 ### Mostly bogus since we do use macOS API directly from gimp to open remote files
@@ -256,6 +254,8 @@ if os.path.exists(OPT_PREFIX / "bin/port"):
   bundle(OPT_PREFIX, "share/fonts/libwmf/*", "--dest", "Resources/libwmf/fonts")
 else: #os.path.exists(OPT_PREFIX / "bin/brew"):
   bundle(OPT_PREFIX, "Cellar/libwmf/*/share/libwmf/fonts/*", "--dest", "Resources/libwmf/fonts")
+### FIXME: Needed for 'Send by Email' support (should be on mail.c source)
+bundle(GIMP_SOURCE, "build/macos/patches/xdg-email", "--dest", "MacOS")
 ### Needed for 'Show image graph'.
 #### See: https://gitlab.gnome.org/GNOME/gimp/-/issues/6045
 bundle(OPT_PREFIX, "bin/dot", "--dest", "MacOS")

@@ -380,6 +380,8 @@ conf_app GS_LIB "share/ghostscript/10*/Resource/Init"
 ### file-wmf support
 bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/Nimbus*" --dest "share/libwmf/fonts"
 bund_usr "$UNIX_PREFIX" "share/fonts/type1/urw-base35/StandardSymbols*" --dest "share/libwmf/fonts"
+### "Send by Email" support
+bund_usr "$UNIX_PREFIX" "bin/xdg-email"
 ### Debug menu: if show_debug_menu is true in app/main.c or --show-debug-menu CLI option is set
 #### Image graph support
 bund_usr "$UNIX_PREFIX" "bin/libgvc*" --rename "bin/dot"

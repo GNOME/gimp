@@ -226,7 +226,8 @@ deps-debian-nonreloc:
             poppler-data
             python3
             python3-gi
-            python3-gi-cairo" >> Dockerfile
+            python3-gi-cairo
+            xdg-utils" >> Dockerfile
     - echo "RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen" >> Dockerfile
     # Prepare environ
     - echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
