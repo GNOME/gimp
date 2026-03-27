@@ -107,9 +107,8 @@ import_file_metadata(metadata_editor *args)
 void
 export_file_metadata (metadata_editor *args)
 {
-  FILE    *file;
   GString *xmldata;
-  gint     i, size;
+  gint     i;
 
   if (force_write == TRUE)
     {
@@ -235,18 +234,18 @@ export_file_metadata (metadata_editor *args)
   g_string_append (xmldata, "</gimp-metadata>\n");
 
 
-  size = strlen (xmldata->str);
-  file = g_fopen (args->filename, "w");
-  if (file != NULL)
+  if (args->filename != NULL)
     {
       GError *error = NULL;
 
-      if (! g_file_set_contents (args->filename, xmldata->str, size, &error))
+      /* Write directly without pre-truncating. Pre-truncation can leave 0-byte
+       * files when the final write fails for any reason (permissions, invalid
+       * path, etc.). */
+      if (! g_file_set_contents (args->filename, xmldata->str, xmldata->len, &error))
         {
           g_warning ("Error saving file: %s.", error? error->message: "");
           g_clear_error (&error);
         }
-      fclose (file);
     }
 
   if (xmldata)
