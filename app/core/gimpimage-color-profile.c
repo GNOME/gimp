@@ -993,19 +993,18 @@ gimp_image_convert_profile_colormap (GimpImage                *image,
                                      GimpProgress             *progress)
 {
   GimpImagePrivate        *private = GIMP_IMAGE_GET_PRIVATE (image);
-  GimpColorTransformFlags  flags = 0;
+  /*GimpColorTransformFlags  flags = 0;*/
   GimpPalette             *palette;
   const Babl              *space;
   const Babl              *format;
 
+  /* TODO: current implementation ignores the black point compensation
+   * choice because babl doesn't have BCP support yet.
+   * Previous code was using gimp_color_transform_new() which used
+   * LittleCMS directly instead.
+   * This should be fixed.
   if (bpc)
-    /* TODO: current implementation ignores the black point compensation
-     * choice because babl doesn't have BCP support yet.
-     * Previous code was using gimp_color_transform_new() which used
-     * LittleCMS directly instead.
-     * This should be fixed.
-     */
-    flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
+    flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION; */
 
   palette  = gimp_image_get_colormap_palette (image);
   space    = gimp_image_get_layer_space (image);

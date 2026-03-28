@@ -487,7 +487,7 @@ decode_lzss (guchar *raw_data,
   gint   flag        = 0;
   gint   raw_index   = 0;
   gint   data_index  = 0;
-  guchar pixel       = 0;
+  /*guchar pixel       = 0;*/
 
   if (estimated_size <= 0)
     return FALSE;
@@ -504,7 +504,7 @@ decode_lzss (guchar *raw_data,
         {
           guchar value = raw_data[raw_index++];
 
-          pixel += (gchar) value;
+          /*pixel += (gchar) value;*/
 
           uncompressed_data[data_index++] = value;
           estimated_size--;
@@ -530,7 +530,7 @@ decode_lzss (guchar *raw_data,
             {
               gint value = (gint) char_array[offset & 4095];
 
-              pixel += (gchar) value;
+              /*pixel += (gchar) value;*/
 
               uncompressed_data[data_index++] = (guchar) value;
               estimated_size--;
