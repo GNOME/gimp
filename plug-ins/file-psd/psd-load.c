@@ -395,7 +395,7 @@ load_image_metadata (GFile        *file,
       PSDlayer  **lyr_a = NULL;
       gchar       sig[4];
       gchar       key[4];
-      guint32     raw_len32;
+      guint32     raw_len32 = 0;
       guint32     payload_len;
       guint32     skip_len;
 
