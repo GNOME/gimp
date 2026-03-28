@@ -52,17 +52,17 @@ $env:PATH = "${win_sdk_path}bin\${win_sdk_version}.0\$cpu_arch;${win_sdk_path}Ap
 ## msstore-cli (ONLY FOR RELEASES)
 if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags/',''}))
   {
-    #.NET runtime required by msstore-cli
+    #.NET runtime required by msstore-cli (and its PowerShell counterpart)
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     $msstore_tag = (Invoke-RestMethod 'https://api.github.com/repos/microsoft/msstore-cli/releases/latest').tag_name
-    $dotnet_msstore = ((Invoke-RestMethod "https://raw.githubusercontent.com/microsoft/msstore-cli/refs/heads/rel/$msstore_tag/MSStore.API/MSStore.API.csproj").Project.PropertyGroup.TargetFramework | Out-String).Trim()
+    $dotnet_msstore = (Invoke-RestMethod "https://raw.githubusercontent.com/microsoft/msstore-cli/refs/heads/rel/$msstore_tag/MSStore.API/MSStore.API.csproj").Project.PropertyGroup.TargetFramework
     $powershell_tag = (Invoke-RestMethod 'https://api.github.com/repos/PowerShell/PowerShell/releases/latest').tag_name
-    #$dotnet_powershell = ((Invoke-RestMethod "https://raw.githubusercontent.com/PowerShell/PowerShell/refs/tags/$powershell_tag/PowerShell.Common.props").Project.PropertyGroup.TargetFramework | Out-String).Trim()
-    foreach ($dotnet in $dotnet_msstore)
+    $dotnet_powershell = (Invoke-RestMethod "https://raw.githubusercontent.com/PowerShell/PowerShell/refs/tags/$powershell_tag/PowerShell.Common.props").Project.PropertyGroup.TargetFramework
+    foreach ($dotnet in $dotnet_msstore, $dotnet_powershell)
       {
         $dotnet_major = ($dotnet | Out-String) -replace "`r`n",'' -replace 'net',''
         $dotnet_tag = ((Invoke-RestMethod "https://api.github.com/repos/dotnet/runtime/releases").tag_name | Select-String "$dotnet_major" | Select-Object -First 1).ToString() -replace 'v',''
-        if (-not (Test-Path "$Env:ProgramFiles\dotnet\shared\Microsoft.NETCore.App\$dotnet_major*\"))
+        if (-not (Test-Path "$Env:ProgramFiles\dotnet\shared\Microsoft.NETCore.App\$dotnet_major*\") -and -not (Test-Path "${PARENT_DIR}dotnet-runtime-${dotnet_major}"))
           {
             Write-Output "(INFO): downloading .NET v$dotnet_tag"
             Invoke-WebRequest "https://aka.ms/dotnet/$dotnet_major/dotnet-runtime-win-$cpu_arch.zip" -UseBasicParsing -OutFile ${PARENT_DIR}dotnet-runtime-${dotnet_major}.zip
@@ -72,7 +72,7 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
           }
       }
 
-    #powershell (with bundled .NET runtime) required by msstore-cli. See: https://github.com/microsoft/msstore-cli/issues/70
+    #powershell required by msstore-cli. See: https://github.com/microsoft/msstore-cli/issues/70
     if (-not (Test-Path Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\App Paths\pwsh.exe') -and $PSVersionTable.PSVersion.Major -lt 6)
       {
         Write-Output "(INFO): downloading PowerShell $powershell_tag"
