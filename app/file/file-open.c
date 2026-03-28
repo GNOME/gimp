@@ -627,9 +627,10 @@ file_open_layers (Gimp                *gimp,
 
       if (layers)
         {
-          gchar *basename;
+          gchar *basename = NULL;
 
-          basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+          if (! gimp_plug_in_procedure_is_xcf_load (gimp_image_get_load_proc (new_image)))
+            basename = g_path_get_basename (gimp_file_get_utf8_name (file));
           file_open_convert_items (dest_image, basename, layers);
           g_free (basename);
 
@@ -831,7 +832,7 @@ file_open_convert_items (GimpImage   *dest_image,
 
       item = gimp_item_convert (src, dest_image, G_TYPE_FROM_INSTANCE (src));
 
-      if (g_list_length (items) == 1)
+      if (g_list_length (items) == 1 && basename != NULL)
         {
           gimp_object_set_name (GIMP_OBJECT (item), basename);
         }
