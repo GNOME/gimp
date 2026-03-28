@@ -76,7 +76,7 @@ gradient_editor_left_color_type_cmd_callback (GimpAction *action,
   gimp_gradient_editor_get_selection (editor, &gradient, &left, NULL);
 
   if (gradient        &&
-      color_type >= 0 &&
+      (gint) color_type >= 0 &&
       color_type !=
       gimp_gradient_segment_get_left_color_type (gradient, left))
     {
@@ -197,7 +197,7 @@ gradient_editor_right_color_type_cmd_callback (GimpAction *action,
   gimp_gradient_editor_get_selection (editor, &gradient, NULL, &right);
 
   if (gradient        &&
-      color_type >= 0 &&
+      (gint) color_type >= 0 &&
       color_type !=
       gimp_gradient_segment_get_right_color_type (gradient, right))
     {
