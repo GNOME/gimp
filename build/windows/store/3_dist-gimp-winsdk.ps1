@@ -66,9 +66,9 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
           {
             Write-Output "(INFO): downloading .NET v$dotnet_tag"
             Invoke-WebRequest "https://aka.ms/dotnet/$dotnet_major/dotnet-runtime-win-$cpu_arch.zip" -UseBasicParsing -OutFile ${PARENT_DIR}dotnet-runtime-${dotnet_major}.zip
-            Expand-Archive ${PARENT_DIR}dotnet-runtime-${dotnet_major}.zip ${PARENT_DIR}dotnet-runtime-${dotnet_major} -Force
-            $env:PATH = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime-${dotnet_major});" + $env:PATH
-            $env:DOTNET_ROOT = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime-${dotnet_major})"
+            Expand-Archive ${PARENT_DIR}dotnet-runtime-${dotnet_major}.zip ${PARENT_DIR}dotnet-runtime -Force
+            $env:PATH = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime);" + $env:PATH
+            $env:DOTNET_ROOT = "$(Resolve-Path $PWD\${PARENT_DIR}dotnet-runtime)"
           }
       }
 
