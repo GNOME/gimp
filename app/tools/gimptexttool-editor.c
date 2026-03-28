@@ -538,14 +538,6 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
         }
     }
 
-  if (gtk_im_context_filter_keypress (text_tool->im_context, kevent))
-    {
-      text_tool->needs_im_reset = TRUE;
-      text_tool->x_pos          = -1;
-
-      return TRUE;
-    }
-
   gimp_text_tool_convert_gdkkeyevent (text_tool, kevent);
 
   gimp_text_tool_ensure_proxy (text_tool);
@@ -554,6 +546,14 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
                                    kevent))
     {
       GIMP_LOG (TEXT_EDITING, "binding handled event");
+
+      return TRUE;
+    }
+
+  if (gtk_im_context_filter_keypress (text_tool->im_context, kevent))
+    {
+      text_tool->needs_im_reset = TRUE;
+      text_tool->x_pos          = -1;
 
       return TRUE;
     }
