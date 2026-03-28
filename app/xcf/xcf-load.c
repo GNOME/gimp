@@ -4939,7 +4939,7 @@ xcf_load_tile_rle (XcfInfo       *info,
     {
       guchar *data  = tile_data + i;
       gint    size  = tile_rect->width * tile_rect->height;
-      gint    count = 0;
+      /*gint    count = 0;*/
       guchar  val;
       gint    length;
       gint    j;
@@ -4968,7 +4968,7 @@ xcf_load_tile_rle (XcfInfo       *info,
                   xcfdata += 2;
                 }
 
-              count += length;
+              /*count += length;*/
               size -= length;
 
               if (size < 0)
@@ -5002,7 +5002,7 @@ xcf_load_tile_rle (XcfInfo       *info,
                   xcfdata += 2;
                 }
 
-              count += length;
+              /*count += length;*/
               size -= length;
 
               if (size < 0)

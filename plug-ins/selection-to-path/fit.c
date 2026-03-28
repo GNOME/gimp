@@ -186,7 +186,7 @@ spline_list_array_type
 fitted_splines (pixel_outline_list_type pixel_outline_list)
 {
   unsigned this_list;
-  unsigned total = 0;
+  /*unsigned total = 0;*/
   spline_list_array_type char_splines = new_spline_list_array ();
   curve_list_array_type curve_array = split_at_corners (pixel_outline_list);
 
@@ -204,12 +204,12 @@ fitted_splines (pixel_outline_list_type pixel_outline_list)
 
   free_curve_list_array (&curve_array);
 
-  for (this_list = 0; this_list < SPLINE_LIST_ARRAY_LENGTH (char_splines);
+  /*for (this_list = 0; this_list < SPLINE_LIST_ARRAY_LENGTH (char_splines);
        this_list++)
     total
       += SPLINE_LIST_LENGTH (SPLINE_LIST_ARRAY_ELT (char_splines, this_list));
 
-/*   REPORT1 ("=%u", total); */
+   REPORT1 ("=%u", total); */
 
   return char_splines;
 }
