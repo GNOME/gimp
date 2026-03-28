@@ -599,7 +599,7 @@ gimp_modifiers_editor_notify_accelerator (GtkWidget           *widget,
   GdkModifierType     old_modifiers;
   GdkModifierType     modifiers;
 
-  old_modifiers = (GdkModifierType) g_object_get_data (G_OBJECT (widget), "shortcut-modifiers");
+  old_modifiers = (GdkModifierType) GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "shortcut-modifiers"));
 
   shortcut      = g_object_get_data (G_OBJECT (widget), "shortcut-button");
   combo         = g_object_get_data (G_OBJECT (widget), "shortcut-action");
