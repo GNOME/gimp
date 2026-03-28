@@ -1304,7 +1304,7 @@ if have_lua
       endif
 
       if is_supported_lua
-        have_lua_lgi = run_command(luat, '-e',
+        have_lua_lgi = run_command(lua, '-e',
                                    '''
                                    local lgi = require 'lgi'
                                    ''',
