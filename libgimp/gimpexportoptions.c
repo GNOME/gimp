@@ -860,13 +860,19 @@ gimp_export_options_get_image (GimpExportOptions  *options,
 
   if (retval == GIMP_EXPORT_EXPORT)
     {
-      GSList *list;
-      GList  *drawables_in;
-      GList  *drawables_out;
+      GSList      *list;
+      GList       *drawables_in;
+      GList       *drawables_out;
+      GimpChannel *selection_copy;
 
       *image = gimp_image_duplicate (*image);
       drawables_in  = gimp_image_list_selected_layers (*image);
       drawables_out = drawables_in;
+
+      /* Temporarily remove selection so that any merged filters
+       * aren't affected by it */
+      selection_copy = GIMP_CHANNEL (gimp_selection_save (*image));
+      gimp_selection_none (*image);
 
       gimp_image_undo_disable (*image);
 
@@ -882,6 +888,10 @@ gimp_export_options_get_image (GimpExportOptions  *options,
         }
 
       g_list_free (drawables_out);
+
+      gimp_image_select_item (*image, GIMP_CHANNEL_OP_REPLACE,
+                              GIMP_ITEM (selection_copy));
+      gimp_image_remove_channel (*image, selection_copy);
     }
 
   g_slist_free (actions);
