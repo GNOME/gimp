@@ -77,7 +77,7 @@ static void
 type_toggled_cb (GtkWidget *widget, gpointer data)
 {
   if (gtk_widget_get_state_flags (widget) & GTK_STATE_FLAG_ACTIVE)
-    _map_format = (MapFormat_t) data;
+    _map_format = (MapFormat_t) GPOINTER_TO_INT (data);
 }
 
 static SettingsDialog_t *
@@ -141,7 +141,7 @@ create_settings_dialog (void)
 
   data->ncsa = gtk_radio_button_new_with_mnemonic_from_widget (NULL, "_NCSA");
   g_signal_connect (data->ncsa, "toggled", G_CALLBACK (type_toggled_cb),
-                    (gpointer) NCSA);
+                    GINT_TO_POINTER (NCSA));
   gtk_box_pack_start (GTK_BOX (hbox), data->ncsa, FALSE, FALSE, 0);
   gtk_widget_set_visible (data->ncsa, TRUE);
 
@@ -149,7 +149,7 @@ create_settings_dialog (void)
     gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON (data->ncsa),
                                                     "C_ERN");
   g_signal_connect (data->cern, "toggled", G_CALLBACK (type_toggled_cb),
-                    (gpointer) CERN);
+                    GINT_TO_POINTER (CERN));
   gtk_box_pack_start (GTK_BOX (hbox), data->cern, FALSE, FALSE, 0);
   gtk_widget_set_visible (data->cern, TRUE);
 
@@ -157,7 +157,7 @@ create_settings_dialog (void)
     gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON (data->cern),
                                                     "C_SIM");
   g_signal_connect (data->csim, "toggled", G_CALLBACK (type_toggled_cb),
-                    (gpointer) CSIM);
+                    GINT_TO_POINTER (CSIM));
   gtk_box_pack_start (GTK_BOX (hbox), data->csim, FALSE, FALSE, 0);
   gtk_widget_set_visible (data->csim, TRUE);
 
