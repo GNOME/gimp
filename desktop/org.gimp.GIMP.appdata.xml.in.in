@@ -80,7 +80,7 @@
   </provides>
 
   <releases>
-    <release version="3.2.2" date="TODO">
+    <release version="3.2.2" date="2026-03-28">
       <url type="details">https://www.gimp.org/release/3.2.2/</url>
       <description>
         <p>
