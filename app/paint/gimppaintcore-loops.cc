@@ -591,7 +591,7 @@ struct PaintBuf : Base
   }
 };
 
-static BasicDispatch<PaintBuf, ALGORITHM_PAINT_BUF> dispatch_paint_buf;
+static BasicDispatch<PaintBuf, ALGORITHM_PAINT_BUF> G_GNUC_UNUSED dispatch_paint_buf;
 
 
 /* PaintMask, dispatch_paint_mask():
@@ -691,7 +691,7 @@ struct DispatchStipple
     else
       visitor (identity<Stipple<Algorithm, FALSE>> ());
   }
-} static dispatch_stipple;
+} static G_GNUC_UNUSED dispatch_stipple;
 
 
 /* CompMask, dispatch_comp_mask(), has_comp_mask(), comp_mask_data():
@@ -734,7 +734,7 @@ struct CompMask : Base
   };
 };
 
-static BasicDispatch<CompMask, ALGORITHM_COMP_MASK> dispatch_comp_mask;
+static BasicDispatch<CompMask, ALGORITHM_COMP_MASK> G_GNUC_UNUSED dispatch_comp_mask;
 
 template <class Base>
 static constexpr gboolean
@@ -815,7 +815,7 @@ static BasicDispatch<
   TempCompMask,
   ALGORITHM_TEMP_COMP_MASK,
   decltype (dispatch_comp_mask)
-> dispatch_temp_comp_mask;
+> G_GNUC_UNUSED dispatch_temp_comp_mask;
 
 
 /* CompBuffer, dispatch_comp_buffer(), has_comp_buffer(), comp_buffer_data():
@@ -858,7 +858,7 @@ struct CompBuffer : Base
   };
 };
 
-static BasicDispatch<CompBuffer, ALGORITHM_COMP_BUFFER> dispatch_comp_buffer;
+static BasicDispatch<CompBuffer, ALGORITHM_COMP_BUFFER> G_GNUC_UNUSED dispatch_comp_buffer;
 
 template <class Base>
 static constexpr gboolean
@@ -939,7 +939,7 @@ static BasicDispatch<
   TempCompBuffer,
   ALGORITHM_TEMP_COMP_BUFFER,
   decltype (dispatch_comp_buffer)
-> dispatch_temp_comp_buffer;
+> G_GNUC_UNUSED dispatch_temp_comp_buffer;
 
 
 /* CanvasBufferIterator, DispatchCanvasBufferIterator:
