@@ -1229,7 +1229,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
           gimp_meter_set_history_resolution (GIMP_METER (meter),
                                              interval / 1000.0);
           gimp_meter_set_history_duration (GIMP_METER (meter),
-                                           priv->history_duration / 1000.0);
+                                           (gdouble) priv->history_duration / 1000.0);
           gtk_box_pack_start (GTK_BOX (vbox2), meter, FALSE, FALSE, 0);
           gtk_widget_show (meter);
 
@@ -4970,7 +4970,7 @@ gimp_dashboard_set_history_duration (GimpDashboard                *dashboard,
           if (group_data->meter)
             {
               gimp_meter_set_history_duration (group_data->meter,
-                                               history_duration / 1000.0);
+                                               (gdouble) history_duration / 1000.0);
             }
         }
 
