@@ -286,7 +286,7 @@ gimp-debian-nonreloc:
     - printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
     - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
                                    -Dfile-plug-ins-test=true
-                                   $MESON_OPTIONS
+                                   $MESON_OPTIONS $WARN_AS_ERROR_ON_CI
     - cd _build-${RUNNER}
     - ninja
     - printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
