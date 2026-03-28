@@ -369,7 +369,7 @@ gimp_colormap_editor_color_update (GimpColorDialog      *dialog,
         {
           push_undo = TRUE;
 
-          if (state & gimp_get_toggle_behavior_mask ())
+          if ((guint)state & (guint)gimp_get_toggle_behavior_mask ())
             gimp_context_set_background (image_editor->context, color);
           else
             gimp_context_set_foreground (image_editor->context, color);
