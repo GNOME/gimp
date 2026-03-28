@@ -32,6 +32,9 @@
 #include <Carbon/Carbon.h>  /* For virtual key codes ... */
 #include <ApplicationServices/ApplicationServices.h>
 #endif
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 120300
+#import <ScreenCaptureKit/ScreenCaptureKit.h>
+#endif
 
 @interface GimpPickWindowController : NSObject
 {
@@ -177,10 +180,69 @@
   rect = [self.window convertRectToScreen:rect];
   rect.origin.y = [[[NSScreen screens] objectAtIndex:0] frame].size.height - rect.origin.y;
 
+  root_image_ref = nil;
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 120300
+  /* ScreenCaptureKit is asyncronous */
+  __block CGImageRef   captured_image  = nil;
+  dispatch_semaphore_t semaphore       = dispatch_semaphore_create(0);
+
+  [SCShareableContent getShareableContentWithCompletionHandler:^(SCShareableContent *monitor_content, NSError *monitor_error) {
+    if (monitor_error == nil && monitor_content != nil)
+      {
+        /* find the monitor that contains the rect.origin where the user clicked */
+        SCDisplay *target_monitor = monitor_content.displays.firstObject;
+        for (SCDisplay *monitor in monitor_content.displays)
+          {
+            if (CGRectContainsPoint (monitor.frame, rect.origin))
+              {
+                target_monitor = monitor;
+                break;
+              }
+          }
+
+        /* get the whole monitor, without scaling or anti-aliasing effects */
+        SCContentFilter       *monitor_size   = [[SCContentFilter alloc] initWithDisplay:target_monitor excludingWindows:@[]];
+        SCStreamConfiguration *monitor_config = [[SCStreamConfiguration alloc] init];
+        monitor_config.scalesToFit = NO;
+
+        /* take the actual "screenshot" on the monitor */
+        [SCScreenshotManager captureImageWithFilter:monitor_size configuration:monitor_config
+         completionHandler:^(CGImageRef captured_monitor, NSError *captured_error) {
+          if (captured_error == nil && captured_monitor != NULL)
+            {
+              CGRect captured_crop = CGRectMake (rect.origin.x - target_monitor.frame.origin.x,
+                                                 rect.origin.y - target_monitor.frame.origin.y,
+                                                 rect.size.width, rect.size.height);
+              captured_image = CGImageCreateWithImageInRect (captured_monitor, captured_crop);
+            }
+          dispatch_semaphore_signal (semaphore);
+        }];
+
+        [monitor_size release];
+        [monitor_config release];
+      }
+    else
+      {
+        dispatch_semaphore_signal (semaphore);
+      }
+  }];
+
+  dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC));
+  root_image_ref = captured_image;
+
+#else
   root_image_ref = CGWindowListCreateImage (rect,
                                             kCGWindowListOptionOnScreenOnly,
                                             kCGNullWindowID,
                                             kCGWindowImageDefault);
+#endif
+  if (root_image_ref == NULL)
+    {
+      g_warning ("Failed to capture screen pixels. Permission denied or DRM protected content.");
+      return;
+    }
+
   pixel_data = CGDataProviderCopyData (CGImageGetDataProvider (root_image_ref));
   data = CFDataGetBytePtr (pixel_data);
 
@@ -440,6 +502,16 @@ _gimp_pick_button_quartz_pick (GimpPickButton *button)
   NSAutoreleasePool        *pool;
 
   pool = [[NSAutoreleasePool alloc] init];
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 120300
+  if (!CGPreflightScreenCaptureAccess())
+    {
+      CGRequestScreenCaptureAccess();
+
+      [pool release];
+      return;
+    }
+#endif
 
   controller = [[GimpPickWindowController alloc] initWithButton:button];
 
