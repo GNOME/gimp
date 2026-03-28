@@ -109,11 +109,6 @@ static gboolean                 export_image          (GFile                 *fi
                                                        GimpDrawable          *drawable,
                                                        GError               **error);
 
-static GimpExportCapabilities   export_edit_options   (GimpProcedure        *procedure,
-                                                       GimpProcedureConfig  *config,
-                                                       GimpExportOptions    *options,
-                                                       gpointer              create_data);
-
 static gboolean                 export_dialog         (GimpImage            *image,
                                                        GimpProcedure        *procedure,
                                                        GObject              *config);
@@ -121,7 +116,7 @@ static gboolean                 export_dialog         (GimpImage            *ima
 static void                     convert_from_a1r5g5b5 (gushort               data,
                                                        guint                 index,
                                                        guchar               *pixel);
-static void                    convert_to_a1r5g5b5    (guchar               *pixel,
+static void                     convert_to_a1r5g5b5   (guchar               *pixel,
                                                        guint                 index,
                                                        guchar               *data);
 
@@ -212,7 +207,11 @@ tim_create_procedure (GimpPlugIn  *plug_in,
                                           "tim");
 
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
-                                              0, export_edit_options, NULL, NULL);
+                                              GIMP_EXPORT_CAN_HANDLE_RGB   |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY  |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED,
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_choice_argument (procedure, "type",
                                           _("_Type"),
@@ -603,6 +602,15 @@ export_image (GFile                *file,
                 NULL);
   type = (guchar) gimp_procedure_config_get_choice_id (config, "type");
 
+  if ((type == PSX_4BPP || type == PSX_8BPP) &&
+      gimp_image_get_base_type (image) != GIMP_INDEXED)
+    {
+      gimp_image_convert_indexed (image,
+                                  GIMP_CONVERT_DITHER_FS,
+                                  GIMP_CONVERT_PALETTE_GENERATE,
+                                  256, TRUE, FALSE, "dummy");
+    }
+
   buffer = gimp_drawable_get_buffer (drawable);
   width  = (guint16) gegl_buffer_get_width (buffer);
   height = (guint16) gegl_buffer_get_height (buffer);
@@ -814,28 +822,6 @@ export_image (GFile                *file,
 
   return TRUE;
 }
-
-static GimpExportCapabilities
-export_edit_options (GimpProcedure        *procedure,
-                     GimpProcedureConfig  *config,
-                     GimpExportOptions    *options,
-                     gpointer              create_data)
-{
-  GimpExportCapabilities capabilities;
-  gint                   type;
-
-  g_object_get (G_OBJECT (config),
-                "type", &type,
-                NULL);
-
-  capabilities = (GIMP_EXPORT_CAN_HANDLE_INDEXED);
-
-  if (type == PSX_16BPP || type == PSX_24BPP)
-    capabilities |= GIMP_EXPORT_CAN_HANDLE_RGB;
-
-  return capabilities;
-}
-
 
 static gboolean
 export_dialog (GimpImage     *image,
