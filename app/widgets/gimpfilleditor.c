@@ -190,8 +190,8 @@ gimp_fill_editor_constructed (GObject *object)
                                                "pattern-view-size");
       gimp_enum_radio_box_add (GTK_BOX (box), pattern_box,
                                (editor->use_custom_style ?
-                                GIMP_CUSTOM_STYLE_PATTERN :
-                                GIMP_FILL_STYLE_PATTERN),
+                                (gint) GIMP_CUSTOM_STYLE_PATTERN :
+                                (gint) GIMP_FILL_STYLE_PATTERN),
                                FALSE);
     }
 
