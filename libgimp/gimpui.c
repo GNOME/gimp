@@ -72,7 +72,7 @@ static void        gimp_ensure_modules             (void);
 static gboolean    gimp_osx_focus_window           (gpointer);
 #endif
 
-#ifndef GDK_WINDOWING_WIN32
+#if !defined(GDK_WINDOWING_WIN32) && !defined(GDK_WINDOWING_QUARTZ)
 static GdkWindow * gimp_ui_get_foreign_window      (gpointer           window);
 #endif
 static gboolean    gimp_window_transient_on_mapped (GtkWidget         *window,
@@ -404,7 +404,7 @@ gimp_osx_focus_window (gpointer user_data)
 /* Currently broken on Win32 so avoiding a "defined but not used"
  * warning when building on Windows.
  */
-#ifndef GDK_WINDOWING_WIN32
+#if !defined(GDK_WINDOWING_WIN32) && !defined(GDK_WINDOWING_QUARTZ)
 static GdkWindow *
 gimp_ui_get_foreign_window (gpointer window)
 {

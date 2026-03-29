@@ -12,11 +12,13 @@
 static void
 cpu_accel_print_results (void)
 {
+#if defined(ARCH_X86) || defined(ARCH_PPC)
   GimpCpuAccelFlags  support;
 
   g_printerr ("Testing CPU features...\n");
 
   support = gimp_cpu_accel_get_support ();
+#endif
 
 #ifdef ARCH_X86
   g_printerr ("  mmx     : %s\n",

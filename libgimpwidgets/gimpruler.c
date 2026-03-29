@@ -614,18 +614,20 @@ gimp_ruler_set_position (GimpRuler *ruler,
 
   if (ruler->position != position)
     {
+#ifndef GDK_WINDOWING_QUARTZ
       GdkRectangle rect;
       gint xdiff, ydiff;
+#endif
 
       ruler->position = position;
       g_object_notify_by_pspec (G_OBJECT (ruler), object_props[PROP_POSITION]);
 
+#ifndef GDK_WINDOWING_QUARTZ
       rect = gimp_ruler_get_pos_rect (ruler, ruler->position);
 
       xdiff = rect.x - ruler->last_pos_rect.x;
       ydiff = rect.y - ruler->last_pos_rect.y;
 
-#ifndef GDK_WINDOWING_QUARTZ
       /*
        * If the position has changed far enough, queue a redraw immediately.
        * Otherwise, we only queue a redraw in a low priority idle handler, to

@@ -371,7 +371,9 @@ gimp_image_window_constructed (GObject *object)
   GimpGuiConfig          *config;
   GimpDeviceManager      *device_manager;
   gboolean                use_gtk_menubar = TRUE;
+#ifndef GDK_WINDOWING_QUARTZ
   gboolean                use_app_menu    = TRUE;
+#endif
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 

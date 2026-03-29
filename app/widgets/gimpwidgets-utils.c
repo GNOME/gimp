@@ -923,7 +923,7 @@ gimp_window_set_hint (GtkWindow      *window,
 
 /* similar to what we have in libgimp/gimpui.c */
 /* TODO: Restore when we use it on Windows */
-#ifndef G_OS_WIN32
+#if !defined(G_OS_WIN32) && !defined(PLATFORM_OSX)
 static GdkWindow *
 gimp_get_foreign_window (gpointer window)
 {
@@ -2595,7 +2595,7 @@ gimp_window_set_transient_cb (GtkWidget   *window,
                               GdkEventAny *event G_GNUC_UNUSED,
                               GBytes      *handle)
 {
-#ifndef G_OS_WIN32
+#if !defined(G_OS_WIN32) && !defined(PLATFORM_OSX)
   gboolean transient_set = FALSE;
 #endif
 

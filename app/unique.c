@@ -32,12 +32,12 @@
 
 #include "unique.h"
 
-#ifndef G_OS_WIN32
+#if !defined(G_OS_WIN32) && !defined(PLATFORM_OSX)
 static gboolean  gimp_unique_dbus_open  (const gchar **filenames,
                                          gboolean      as_new);
 static gboolean  gimp_unique_dbus_batch_run (const gchar  *batch_interpreter,
                                              const gchar **batch_commands);
-#else
+#elif defined(G_OS_WIN32)
 static gboolean  gimp_unique_win32_open (const gchar **filenames,
                                          gboolean      as_new);
 #endif
@@ -147,7 +147,7 @@ gimp_unique_win32_open (const gchar **filenames,
   return FALSE;
 }
 
-#else
+#elif !defined(PLATFORM_OSX)
 
 static gboolean
 gimp_unique_dbus_open (const gchar **filenames,
