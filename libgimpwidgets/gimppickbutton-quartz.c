@@ -156,15 +156,22 @@
 
 - (void)pickColor:(NSEvent *)event
 {
-  CGImageRef        root_image_ref;
-  CFDataRef         pixel_data;
-  const guchar     *data;
-  GeglColor        *rgb         = gegl_color_new ("black");
-  guchar            temp_rgb[3];
-  const Babl       *space       = NULL;
-  NSPoint           point;
-  GimpColorProfile *profile     = NULL;
-  CGColorSpaceRef   color_space = NULL;
+  CGImageRef                     root_image_ref;
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 120300
+  __block CGImageRef             captured_image;
+  dispatch_semaphore_t           semaphore;
+  __block SCContentFilter       *monitor_size;
+  __block SCStreamConfiguration *monitor_config;
+#endif
+  CFDataRef                      pixel_data;
+  const guchar                  *data;
+  guchar                         temp_rgb[3];
+  NSPoint                        point;
+  NSRect                         rect;
+  GeglColor                     *rgb          = gegl_color_new ("black");
+  const Babl                    *space        = NULL;
+  GimpColorProfile              *profile      = NULL;
+  CGColorSpaceRef                color_space  = NULL;
 
   /* The event gives us a point in Cocoa window coordinates. The function
    * CGWindowListCreateImage expects a rectangle in screen coordinates
@@ -175,8 +182,8 @@
    * to the coordinate space expected by CGWindowListCreateImage.
    */
   point = event.locationInWindow;
-  NSRect rect = NSMakeRect (point.x, point.y,
-                            1, 1);
+  rect = NSMakeRect (point.x, point.y,
+                     1, 1);
   rect = [self.window convertRectToScreen:rect];
   rect.origin.y = [[[NSScreen screens] objectAtIndex:0] frame].size.height - rect.origin.y;
 
@@ -184,8 +191,8 @@
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 120300
   /* ScreenCaptureKit is asyncronous */
-  __block CGImageRef   captured_image  = nil;
-  dispatch_semaphore_t semaphore       = dispatch_semaphore_create(0);
+  captured_image  = nil;
+  semaphore       = dispatch_semaphore_create(0);
 
   [SCShareableContent getShareableContentWithCompletionHandler:^(SCShareableContent *monitor_content, NSError *monitor_error) {
     if (monitor_error == nil && monitor_content != nil)
@@ -202,8 +209,8 @@
           }
 
         /* get the whole monitor, without scaling or anti-aliasing effects */
-        SCContentFilter       *monitor_size   = [[SCContentFilter alloc] initWithDisplay:target_monitor excludingWindows:@[]];
-        SCStreamConfiguration *monitor_config = [[SCStreamConfiguration alloc] init];
+        monitor_size   = [[SCContentFilter alloc] initWithDisplay:target_monitor excludingWindows:@[]];
+        monitor_config = [[SCStreamConfiguration alloc] init];
         monitor_config.scalesToFit = NO;
 
         /* take the actual "screenshot" on the monitor */

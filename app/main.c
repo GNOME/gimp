@@ -570,12 +570,15 @@ main (int    argc,
 #endif
   gint            retval;
   gint            i;
+#if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
+  gint            newargc;
+#endif
 
   gimp_attach_console_window ();
 
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
   /* remove MacOS session identifier from the command line args */
-  gint newargc = 0;
+  newargc = 0;
   for (gint i = 0; i < argc; i++)
     {
       if (!g_str_has_prefix (argv[i], "-psn_"))
