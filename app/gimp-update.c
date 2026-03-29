@@ -604,15 +604,17 @@ void
 gimp_update_check (GimpCoreConfig *config)
 {
 #ifdef PLATFORM_OSX
-  const gchar *gimp_versions;
+  const gchar         *gimp_versions;
+  NSMutableURLRequest *request;
+  NSURLSession        *session;
 
   gimp_versions = gimp_get_version_url ();
 
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+  request = [[NSMutableURLRequest alloc] init];
   [request setURL:[NSURL URLWithString:@(gimp_versions)]];
   [request setHTTPMethod:@"GET"];
 
-  NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+  session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
   /* completionHandler is called on a background thread */
   [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     NSString             *reply;
