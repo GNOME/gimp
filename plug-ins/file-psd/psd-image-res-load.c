@@ -288,7 +288,7 @@ get_image_resource_header (PSDimageres   *res_a,
   res_a->data_start = g_seekable_tell (G_SEEKABLE (input));
 
   IFDBG(2) g_debug ("Type: %.4s, id: %d, start: %" G_GOFFSET_FORMAT ", len: %" G_GSIZE_FORMAT,
-                    res_a->type, res_a->id, res_a->data_start, res_a->data_len);
+                    res_a->type, res_a->id, res_a->data_start, (gsize) res_a->data_len);
 
   return 0;
 }

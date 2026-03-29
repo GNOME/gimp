@@ -1535,7 +1535,7 @@ save_layer_and_mask (GOutputStream      *output,
               ChanSize = sizeof (gint32) + (layerWidth * layerHeight * bpc);
               write_gint64 (output, ChanSize, "Channel Size");
             }
-          IFDBG(1) g_debug ("\t\t\tLength: %" G_GSIZE_FORMAT, ChanSize);
+          IFDBG(1) g_debug ("\t\t\tLength: %" G_GSIZE_FORMAT, (gsize) ChanSize);
         }
 
       xfwrite (output, "8BIM", 4, "blend mode signature");
@@ -1731,7 +1731,7 @@ save_layer_and_mask (GOutputStream      *output,
       write_gint64 (output, eof_pos - LayerInfoPos - sizeof (gint64),
                     "layers info section length");
       IFDBG(1) g_debug ("\t\tTotal layers info section length: %"
-                        G_GSIZE_FORMAT,
+                        G_GINT64_FORMAT,
                         (gint64) (eof_pos - LayerInfoPos - sizeof (gint64)));
     }
 
@@ -1752,7 +1752,7 @@ save_layer_and_mask (GOutputStream      *output,
       write_gint64 (output, eof_pos - LayerMaskPos - sizeof (gint64),
                     "layers & mask information length");
       IFDBG(1) g_debug ("\t\tTotal layers & mask information length: %"
-                        G_GSIZE_FORMAT,
+                        G_GINT64_FORMAT,
                         (gint64) (eof_pos - LayerMaskPos - sizeof (gint64)));
     }
 
