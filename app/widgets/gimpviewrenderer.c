@@ -76,6 +76,21 @@ struct _GimpViewRendererPrivate
 
   gboolean            needs_render;
   guint               idle_id;
+
+  /* Store signal handler IDs so we can disconnect via g_signal_handler_disconnect
+   * instead of g_signal_handlers_disconnect_by_func which can be expensive
+   * as it scans through all handlers on the object.
+   * This only is relevant for the font list widget where we can have thousands
+   * of renderers/fonts. Each renderer connects to the shared GimpCoreConfig and
+   * GimpColorConfig objects with itself as the data argument. With N renderers
+   * those shared objects accumulate N handlers each.
+   * Disconnecting all of them on teardown via g_signal_handlers_disconnect_by_func
+   * would be O(N^2) while disconnecting via g_signal_handler_disconnect
+   * is just O(N).
+   */
+  gulong              config_follow_theme_handler_id;
+  gulong              config_color_scheme_handler_id;
+  gulong              color_config_handler_id;
 };
 
 
@@ -296,9 +311,12 @@ gimp_view_renderer_set_context (GimpViewRenderer *renderer,
     {
       if (renderer->context)
         {
-          g_signal_handlers_disconnect_by_func (renderer->context->gimp->config,
-                                                G_CALLBACK (gimp_view_renderer_redraw),
-                                                renderer);
+          GimpCoreConfig *config = renderer->context->gimp->config;
+
+          g_signal_handler_disconnect (config,
+                                       renderer->priv->config_follow_theme_handler_id);
+          g_signal_handler_disconnect (config,
+                                       renderer->priv->config_color_scheme_handler_id);
         }
 
       GIMP_VIEW_RENDERER_GET_CLASS (renderer)->set_context (renderer, context);
@@ -308,14 +326,16 @@ gimp_view_renderer_set_context (GimpViewRenderer *renderer,
           GimpViewRendererClass *klass  = GIMP_VIEW_RENDERER_GET_CLASS (renderer);
           GimpCoreConfig        *config = renderer->context->gimp->config;
 
-          g_signal_connect_object (config,
-                                   "notify::viewables-follow-theme",
-                                   G_CALLBACK (gimp_view_renderer_redraw),
-                                   renderer, 0);
-          g_signal_connect_object (config,
-                                   "notify::theme-color-scheme",
-                                   G_CALLBACK (gimp_view_renderer_redraw),
-                                   renderer, 0);
+          renderer->priv->config_follow_theme_handler_id =
+            g_signal_connect_object (config,
+                                     "notify::viewables-follow-theme",
+                                     G_CALLBACK (gimp_view_renderer_redraw),
+                                     renderer, 0);
+          renderer->priv->config_color_scheme_handler_id =
+            g_signal_connect_object (config,
+                                     "notify::theme-color-scheme",
+                                     G_CALLBACK (gimp_view_renderer_redraw),
+                                     renderer, 0);
 
           if (GIMP_GUI_CONFIG (config)->viewables_follow_theme)
             renderer->surface_bg = klass->follow_theme_bg;
@@ -562,16 +582,16 @@ gimp_view_renderer_set_color_config (GimpViewRenderer *renderer,
   if (color_config != renderer->priv->color_config)
     {
       if (renderer->priv->color_config)
-        g_signal_handlers_disconnect_by_func (renderer->priv->color_config,
-                                              gimp_view_renderer_config_notify,
-                                              renderer);
+        g_signal_handler_disconnect (renderer->priv->color_config,
+                                     renderer->priv->color_config_handler_id);
 
       g_set_object (&renderer->priv->color_config, color_config);
 
       if (renderer->priv->color_config)
-        g_signal_connect (renderer->priv->color_config, "notify",
-                          G_CALLBACK (gimp_view_renderer_config_notify),
-                          renderer);
+        renderer->priv->color_config_handler_id =
+          g_signal_connect (renderer->priv->color_config, "notify",
+                            G_CALLBACK (gimp_view_renderer_config_notify),
+                            renderer);
 
       gimp_view_renderer_config_notify (G_OBJECT (renderer->priv->color_config),
                                         NULL, renderer);
