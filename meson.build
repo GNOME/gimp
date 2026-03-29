@@ -1451,21 +1451,6 @@ endif
 
 enable_console_bin = get_option('enable-console-bin')
 
-# Possibly change default gimpdir from $XDG_CONFIG_HOME/GIMP/gimp_user_version
-gimpdir = get_option('gimpdir')
-if gimpdir == ''
-  # Default value
-  gimpdir = meson.project_name().to_upper()
-endif
-
-project_subdir = meson.project_name() / gimp_api_version
-gimpdatadir    = get_option('datadir')    / project_subdir
-gimpplugindir  = get_option('libdir')     / project_subdir
-gimpsysconfdir = get_option('sysconfdir') / project_subdir
-gimpmanpagedir = gimpdir
-localedir      = get_option('datadir') / 'locale'
-
-
 
 # Check for internal tools
 extract_vector_icon = find_program('tools'/'extract-vector-icon.sh')
@@ -1714,6 +1699,21 @@ conf.set_quoted('GIMP_TOOL_VERSION',      gimp_app_version)
 conf.set_quoted('GIMP_PKGCONFIG_VERSION', gimp_api_version)
 
 # Directories
+
+# Possibly change default gimpdir from $XDG_CONFIG_HOME/GIMP/gimp_user_version
+gimpdir = get_option('gimpdir')
+if gimpdir == ''
+  # Default value
+  gimpdir = meson.project_name().to_upper()
+endif
+
+project_subdir = meson.project_name() / gimp_api_version
+gimpdatadir    = get_option('datadir')    / project_subdir
+gimpplugindir  = get_option('libdir')     / project_subdir
+gimpsysconfdir = get_option('sysconfdir') / project_subdir
+gimpmanpagedir = gimpdir
+localedir      = get_option('datadir') / 'locale'
+
 conf.set_quoted('PREFIX',          prefix)
 conf.set_quoted('EXEC_PREFIX',     prefix)
 conf.set_quoted('GIMPDIR',         gimpdir)
