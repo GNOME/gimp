@@ -124,12 +124,14 @@ typedef struct
   gchar             *id_attr_name;
 } LocaleParser;
 
+#ifndef PLATFORM_OSX
 static gboolean  locale_parser_parse       (GMarkupParseContext  *context,
                                             GimpHelpProgress     *progress,
                                             GInputStream         *stream,
                                             goffset               size,
                                             GCancellable         *cancellable,
                                             GError              **error);
+#endif
 static void  locale_parser_start_element   (GMarkupParseContext  *context,
                                             const gchar          *element_name,
                                             const gchar         **attribute_names,
@@ -315,6 +317,7 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
   return success;
 }
 
+#ifndef PLATFORM_OSX
 static gboolean
 locale_parser_parse (GMarkupParseContext  *context,
                      GimpHelpProgress     *progress,
@@ -353,6 +356,7 @@ locale_parser_parse (GMarkupParseContext  *context,
 
   return FALSE;
 }
+#endif
 
 static void
 locale_parser_start_element (GMarkupParseContext *context,
