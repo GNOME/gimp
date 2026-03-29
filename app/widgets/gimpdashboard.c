@@ -2420,6 +2420,7 @@ gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
 {
 #ifdef TASK_VM_INFO_REV0_COUNT
   task_vm_info_data_t         info;
+  mach_msg_type_number_t      infoCount;
 #endif
 
   GimpDashboardPrivate        *priv          = dashboard->priv;
@@ -2437,7 +2438,7 @@ gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
   variable_data->available  = TRUE;
   variable_data->value.size = info.resident_size;
 #else
-  mach_msg_type_number_t      infoCount      = TASK_VM_INFO_COUNT;
+  infoCount = TASK_VM_INFO_COUNT;
 
   if( task_info(mach_task_self (), TASK_VM_INFO,
                              (task_info_t)&info, &infoCount ) != KERN_SUCCESS )
