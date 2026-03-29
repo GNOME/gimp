@@ -8,7 +8,7 @@ gobject-introspection +quartz -x11|homebrew:gobject-introspection \
 libxslt|homebrew:libxslt \
 meson|homebrew:meson \
 pkgconfig|homebrew:pkgconf \
-vala -valadoc \
+vala -valadoc|homebrew:vala \
 
 # RUNTIME DEPS
 aalib -x11 \
