@@ -877,24 +877,27 @@ gimp_text_get_pango_context (GimpText *text,
                              gdouble   xres,
                              gdouble   yres)
 {
+  static PangoFontMap  *fontmap = NULL;
   PangoContext         *context;
-  PangoFontMap         *fontmap;
   cairo_font_options_t *options;
 
-  fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
   if (! fontmap)
-    g_error ("You are using a Pango that has been built against a cairo "
-             "that lacks the Freetype font backend");
+    {
+      fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
+      if (! fontmap)
+        g_error ("You are using a Pango that has been built against a cairo "
+                 "that lacks the Freetype font backend");
+    }
 
   /* In case a font becomes missing mid-session and is chosen (or is already in use)
    * pango substitutes EVERY font for the default font, to avoid this
    * the FcConfig has to be set everytime a pango fontmap is created
+   * Use case: User clicks "Rescan fonts" button
    */
   pango_fc_font_map_set_config (PANGO_FC_FONT_MAP (fontmap), FcConfigGetCurrent ());
   pango_cairo_font_map_set_resolution (PANGO_CAIRO_FONT_MAP (fontmap), yres);
 
   context = pango_font_map_create_context (fontmap);
-  g_object_unref (fontmap);
 
   options = gimp_text_get_font_options (text);
   pango_cairo_context_set_font_options (context, options);
