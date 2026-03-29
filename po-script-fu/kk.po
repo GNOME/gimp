@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-3-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-02-09 16:48+0000\n"
-"PO-Revision-Date: 2026-03-03 21:39+0500\n"
+"POT-Creation-Date: 2026-03-17 22:10+0000\n"
+"PO-Revision-Date: 2026-03-28 09:29+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
@@ -187,6 +187,7 @@ msgstr "_Жарайды"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
+#.
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 #, c-format
 msgid "%s:"
@@ -312,8 +313,8 @@ msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"Күйдіріп енгізу скрипті үшін барлығы екі қабат қажет. Мөлдірлігі бар "
-"алдыңғы қабат және фондық қабат."
+"Күйдіріп енгізу скрипті үшін барлығы екі қабат қажет. Мөлдірлігі бар алдыңғы "
+"қабат және фондық қабат."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:225
 msgid "B_urn-In..."
@@ -389,6 +390,10 @@ msgid ""
 msgstr ""
 "Көрсетілген суреттен ою үшін көрсетілген сызылатын нысанды трафарет ретінде "
 "пайдалану."
+
+#: plug-ins/script-fu/scripts/carve-it.scm:230
+msgid "Mask image"
+msgstr "Суретті маскалау"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:231
 msgid "Mask drawable"
@@ -477,8 +482,7 @@ msgstr "_Схема..."
 
 #: plug-ins/script-fu/scripts/circuit.scm:136
 msgid ""
-"Fill the selected region (or alpha) with traces like those on a circuit "
-"board"
+"Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
 "Таңдалған аймақты (немесе альфаны) схемалық платадағы сияқты жолдармен "
 "толтыру"
@@ -868,8 +872,7 @@ msgid "New Guide (by _Percent)..."
 msgstr "Жаңа бағыттағыш (_пайызбен)..."
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:31
-msgid ""
-"Add a guide at the position specified as a percentage of the image size"
+msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr "Сурет өлшемінің пайызы ретінде көрсетілген орынға бағыттағыш қосу"
 
 #. doesn't matter how many drawables are selected
@@ -1125,8 +1128,7 @@ msgstr "_Java картасы..."
 #: plug-ins/script-fu/scripts/palette-export.scm:426
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
-"Белсенді палитраны java.util.Hashtable&lt;String,Color&gt; ретінде "
-"экспорттау"
+"Белсенді палитраны java.util.Hashtable&lt;String,Color&gt; ретінде экспорттау"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:59
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:45
@@ -1254,11 +1256,9 @@ msgstr "_Бұрыштарды дөңгелектеу..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm:135
 msgid ""
-"Round the corners of an image and optionally add a drop-shadow and "
-"background"
+"Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
-"Суреттің бұрыштарын дөңгелектеу және қалауыңызша түсетін көлеңке мен фон "
-"қосу"
+"Суреттің бұрыштарын дөңгелектеу және қалауыңызша түсетін көлеңке мен фон қосу"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Edge radius"
@@ -1339,8 +1339,7 @@ msgid "_Spinning Globe..."
 msgstr "_Айналатын глобус..."
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm:117
-msgid ""
-"Create an animation by mapping the current image onto a spinning sphere"
+msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr "Ағымдағы суретті айналатын сфераға орналастыру арқылы анимация жасау"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm:123
@@ -1445,8 +1444,8 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"Үстіне жабу немесе рельеф картасы ретінде пайдалану үшін тоқыма "
-"эффектісімен толтырылған жаңа қабат жасау"
+"Үстіне жабу немесе рельеф картасы ретінде пайдалану үшін тоқыма эффектісімен "
+"толтырылған жаңа қабат жасау"
 
 #: plug-ins/script-fu/scripts/weave.scm:432
 msgid "Ribbon width"
