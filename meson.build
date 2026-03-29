@@ -603,11 +603,36 @@ if cc.run('''
   warnings += thai_warning
 endif
 
-rsvg_minver  = '2.40.6'
-rsvg         = dependency('librsvg-2.0', version: '>='+rsvg_minver)
-
 conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('<1.43'))
 
+# Check if Pango is built with a recent fontconfig
+pango_check = cc.links(
+  '''#include <fontconfig/fontconfig.h>
+  int main() {
+    FcObjectSet *os; os = FcObjectSetBuild (FC_FAMILY, FC_WIDTH);
+  }''',
+  dependencies: fontconfig,
+)
+
+if not pango_check
+  pango_warning = '\n  *** '.join([
+  'You have a fontconfig >= fontconfig_required_version installed on your',
+  'system, but your Pango library is using an older version. This old version',
+  'is probably in /usr/X11R6. Look at the above output, and note that the',
+  'result for FONTCONFIG_CFLAGS is not in the result for PANGOCAIRO_CFLAGS,',
+  'and that there is likely an extra -I line, other than the ones for GLIB,',
+  'Freetype, and Pango itself. That\'s where your old fontconfig files are.',
+  'Rebuild pango, and make sure that it uses the newer fontconfig.',
+  'The easiest way be sure of this is to simply get rid of the old',
+  'fontconfig. When you rebuild pango, make sure the result for',
+  'FONTCONFIG_CFLAGS is the same as the result here.',
+  ])
+  warning(pango_warning)
+  warnings += pango_warning
+endif
+
+rsvg_minver  = '2.40.6'
+rsvg         = dependency('librsvg-2.0', version: '>='+rsvg_minver)
 
 ################################################################################
 # Check for GLib Networking
@@ -665,34 +690,6 @@ endif
 
 if not glib_networking_works
   error('Test for glib-networking failed. This is required.')
-endif
-
-################################################################################
-# Check if Pango is built with a recent fontconfig
-
-pango_check = cc.links(
-  '''#include <fontconfig/fontconfig.h>
-  int main() {
-    FcObjectSet *os; os = FcObjectSetBuild (FC_FAMILY, FC_WIDTH);
-  }''',
-  dependencies: fontconfig,
-)
-
-if not pango_check
-  pango_warning = '\n  *** '.join([
-  'You have a fontconfig >= fontconfig_required_version installed on your',
-  'system, but your Pango library is using an older version. This old version',
-  'is probably in /usr/X11R6. Look at the above output, and note that the',
-  'result for FONTCONFIG_CFLAGS is not in the result for PANGOCAIRO_CFLAGS,',
-  'and that there is likely an extra -I line, other than the ones for GLIB,',
-  'Freetype, and Pango itself. That\'s where your old fontconfig files are.',
-  'Rebuild pango, and make sure that it uses the newer fontconfig.',
-  'The easiest way be sure of this is to simply get rid of the old',
-  'fontconfig. When you rebuild pango, make sure the result for',
-  'FONTCONFIG_CFLAGS is the same as the result here.',
-  ])
-  warning(pango_warning)
-  warnings += pango_warning
 endif
 
 ################################################################################
