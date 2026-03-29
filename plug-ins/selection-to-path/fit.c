@@ -1085,7 +1085,7 @@ fit_with_least_squares (curve_type curve)
   spline_type spline, best_spline;
   spline_list_type *spline_list;
   unsigned worst_point;
-  unsigned iteration = 0;
+  /*unsigned iteration = 0;*/
   real previous_error = FLT_MAX;
   real improvement = FLT_MAX;
 
@@ -1148,7 +1148,7 @@ fit_with_least_squares (curve_type curve)
           || error > reparameterize_threshold)
 	break;
 
-      iteration++;
+      /*iteration++;*/
 /*       LOG3 ("Reparameterization #%u (error was %.3f, a %u%% improvement):\n", */
 /*             iteration, error, ((unsigned) (improvement * 100.0))); */
 

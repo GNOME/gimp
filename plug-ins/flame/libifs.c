@@ -42,7 +42,8 @@ iterate (control_point *cp,
          int            fuse,
          point         *points)
 {
-  int    i, j, count_large = 0, count_nan = 0;
+  /*int    i, j, count_large = 0, count_nan = 0;*/
+  int    i, j;
   int    xform_distrib[CHOOSE_XFORM_GRAIN];
   double p[3], t, r, dr;
   p[0] = points[0][0];
@@ -81,9 +82,9 @@ iterate (control_point *cp,
 
       if (p[0] > 100.0 || p[0] < -100.0 ||
         p[1] > 100.0 || p[1] < -100.0)
-      count_large++;
+      /*count_large++;
       if (p[0] != p[0])
-        count_nan++;
+        count_nan++;*/
 
 #define coef   cp->xform[fn].c
 #define vari   cp->xform[fn].var

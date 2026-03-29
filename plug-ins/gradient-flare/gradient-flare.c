@@ -3133,10 +3133,10 @@ dlg_selector_setup_listbox (void)
 {
   GList  *list;
   GFlare *gflare;
-  gint    n;
+  /*gint    n;*/
 
   list = gflares_list;
-  n = 0;
+  /*n = 0;*/
 
   while (list)
     {
@@ -3158,7 +3158,7 @@ dlg_selector_setup_listbox (void)
                                          &iter);
 
       list = list->next;
-      n++;
+      /*n++;*/
     }
 }
 
