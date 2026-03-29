@@ -827,14 +827,10 @@ conf.set('HAVE_X11_XMU_WINUTIL_H',
   x11_target and cc.has_header('X11/Xmu/WinUtil.h'))
 
 
-have_print = get_option('print')
-
-# Features requiring x11
-
-have_doc_shooter= x11_target
-
 ################################################################################
 # Plugins (optional dependencies)
+
+have_print = get_option('print')
 
 libtiff_minver = '4.0.0'
 libtiff = dependency('libtiff-4', version: '>=' + libtiff_minver)
@@ -1047,7 +1043,6 @@ if have_vala
     ]
   )
 
-  # TODO: remove this once we release 3.0
   valac = meson.get_compiler('vala')
   if valac.version().version_compare('>= 0.31.1')
     add_project_arguments('--disable-since-check', language: 'vala')
@@ -1477,8 +1472,6 @@ libgimp_mkenums_dtails = \
 
 conf.set('ENABLE_NLS',   true)
 conf.set('HAVE_GETTEXT', true)
-
-# localedir = get_option('prefix') / get_option('localedir')
 
 
 ################################################################################
