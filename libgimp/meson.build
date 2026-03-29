@@ -384,6 +384,16 @@ else
   gio_specific_vapi = ''
 endif
 
+if glib.version().version_compare('>=2.87.3')
+  if not platform_windows
+    glib_specific_gir = 'GLibUnix-2.0'
+  else
+    glib_specific_gir = 'GLibWin32-2.0'
+  endif
+else
+  glib_specific_gir = ''
+endif
+
 libgimp_deps_table = [
     { 'gir': 'Babl-0.1',          'vapi': 'babl-0.1',        },
     { 'gir': 'cairo-1.0',         'vapi': 'cairo-1.0',       },
@@ -393,6 +403,7 @@ libgimp_deps_table = [
     { 'gir': 'Gio-2.0',           'vapi': 'gio-2.0',         },
     { 'gir': gio_specific_gir,    'vapi': gio_specific_vapi, },
     { 'gir': 'GLib-2.0',          'vapi': 'glib-2.0',        },
+    { 'gir': glib_specific_gir,   'vapi': 'glib-2.0',        },
     { 'gir': 'GObject-2.0',       'vapi': 'gobject-2.0',     },
     { 'gir': 'Pango-1.0',         'vapi': 'gtk+-3.0',        },
   ]
