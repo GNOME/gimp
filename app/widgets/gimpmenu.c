@@ -593,7 +593,7 @@ gimp_menu_section_items_changed (GMenuModel *model,
   GtkWidget *separator;
   gboolean   found = FALSE;
   gint       count = position;
-  gint       real_pos = 0;
+  /*gint       real_pos = 0;*/
 
   separator = g_hash_table_lookup (menu->priv->sections, model);
   g_return_if_fail (separator != NULL);
@@ -601,7 +601,7 @@ gimp_menu_section_items_changed (GMenuModel *model,
   children = gtk_container_get_children (GTK_CONTAINER (menu));
   for (iter = children; iter; iter = iter->next)
     {
-      real_pos++;
+      /*real_pos++;*/
 
       if (! found)
         {

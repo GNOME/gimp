@@ -1881,7 +1881,7 @@ swatchbooker_load_start_element (GMarkupParseContext *context,
           if (! strcmp (lower_att_name, "material"))
             {
               GList *cols;
-              gint   original_id = 0;
+              /*gint   original_id = 0;*/
 
               for (cols = gimp_palette_get_colors (sbz_data->palette);
                    cols;
@@ -1897,7 +1897,7 @@ swatchbooker_load_start_element (GMarkupParseContext *context,
                       sbz_data->sorted_position++;
                       break;
                     }
-                  original_id++;
+                  /*original_id++;*/
                 }
 
               g_free (lower_att_name);

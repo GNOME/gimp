@@ -2707,13 +2707,13 @@ rnd_remap (gint32  lum,
   t_samp_color_elem *col_ptr;
   gint               rnd;
   gint               ct;
-  gint               idx;
+  /*gint               idx;*/
 
   if (g_lum_tab[lum].all_samples > 1)
     {
       rnd = g_random_int_range (0, g_lum_tab[lum].all_samples);
       ct  = 0;
-      idx = 0;
+      /*idx = 0;*/
 
       for (col_ptr = g_lum_tab[lum].col_ptr;
            col_ptr != NULL;
@@ -2729,7 +2729,7 @@ rnd_remap (gint32  lum,
               memcpy (mapped_color, &col_ptr->color[0], 3);
               return;
             }
-          idx++;
+          /*idx++;*/
         }
     }
 
