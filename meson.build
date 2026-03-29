@@ -192,10 +192,6 @@ platform_osx = (
   host_os.contains('darwin')
 )
 
-if platform_osx
-  conf.set('PLATFORM_OSX', 1)
-endif
-
 if platform_windows
   windows = import('windows')
   # AC_CHECK_PROG(ms_librarian, lib.exe, yes, no)
@@ -217,9 +213,12 @@ endif
 
 osx_ldflags = []
 if platform_osx
+  conf.set('PLATFORM_OSX', 1)
   add_languages('objc', native: true)
   osx_ldflags += ['-Wl,-framework,Foundation', '-Wl,-framework,AppKit', '-ObjC']
   add_project_link_arguments(osx_ldflags, language : ['objc', 'c'])
+  # libgimp_cflags += '-xobjective-c'
+  # libgimp_lflags += ['-framework', 'Cocoa']
 endif
 
 if cc.get_id() == 'gcc' and cc.version() == '7.2.0'
@@ -1736,12 +1735,6 @@ conf.set_quoted('LIBEXECDIR',      prefix / get_option('libexecdir'))
 conf.set_quoted('MANDIR',          prefix / get_option('mandir'))
 conf.set_quoted('SBINDIR',         prefix / get_option('sbindir'))
 conf.set_quoted('SYSDATADIR',      prefix / get_option('datadir'))
-
-
-if platform_osx
-  # libgimp_cflags += '-xobjective-c'
-  # libgimp_lflags += ['-framework', 'Cocoa']
-endif
 
 
 ################################################################################
