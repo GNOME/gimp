@@ -1287,10 +1287,10 @@ static const gchar *expand_props[] =
   "expand-mask-fill-type",
 };
 
-static const gint max_n_props = (G_N_ELEMENTS (brush_props) +
-                                 G_N_ELEMENTS (dynamics_props) +
-                                 G_N_ELEMENTS (gradient_props) +
-                                 G_N_ELEMENTS (expand_props));
+#define max_n_props (G_N_ELEMENTS (brush_props)    + \
+                     G_N_ELEMENTS (dynamics_props) + \
+                     G_N_ELEMENTS (gradient_props) + \
+                     G_N_ELEMENTS (expand_props))
 
 gboolean
 gimp_paint_options_is_prop (const gchar         *prop_name,
@@ -1377,3 +1377,5 @@ gimp_paint_options_copy_props (GimpPaintOptions    *src,
         g_value_unset (&values[n_props]);
     }
 }
+
+#undef max_n_props
