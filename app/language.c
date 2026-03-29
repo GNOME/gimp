@@ -33,7 +33,7 @@
 #include <winnls.h>
 #endif
 #ifdef PLATFORM_OSX
-#include <Foundation/NSLocale.h>
+#import <Foundation/Foundation.h>
 #endif
 
 #include "language.h"
