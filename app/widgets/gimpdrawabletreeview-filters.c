@@ -454,8 +454,15 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
       is_editable = (index >= first_editable &&
                      index <= last_editable);
 
+      g_signal_handlers_block_by_func (editor->visible_button,
+                                       gimp_drawable_filters_editor_visible_all_toggled,
+                                       view);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (editor->visible_button),
                                     has_visible_filters);
+      g_signal_handlers_unblock_by_func (editor->visible_button,
+                                         gimp_drawable_filters_editor_visible_all_toggled,
+                                         view);
+
       gtk_widget_set_sensitive (editor->visible_button,
                                 TRUE);
       gtk_widget_set_sensitive (editor->edit_button,
