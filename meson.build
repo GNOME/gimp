@@ -79,6 +79,11 @@ so_version = '@0@.@1@.@2@'.format(lt_current - lt_age, lt_age, lt_revision)
 
 gimp_command  = 'gimp-' + gimp_app_version
 
+exec_ver  = '-' + gimp_app_version
+
+gimpconsole_exe_name = 'gimp-console' + exec_ver
+gimpmain_exe_name    = 'gimp' + exec_ver
+
 # A specific desktop name to fix window icon under Wayland
 gimp_desktop_name = 'gimp'
 
@@ -138,10 +143,6 @@ cc        = meson.get_compiler('c')
 cxx       = meson.get_compiler('cpp')
 prefix    = get_option('prefix').replace('\\', '/')
 buildtype = get_option('buildtype')
-exec_ver  = '-' + gimp_app_version
-
-gimpconsole_exe_name = 'gimp-console' + exec_ver
-gimpmain_exe_name    = 'gimp' + exec_ver
 
 compiler_args = []
 linker_args = []
