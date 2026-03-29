@@ -670,7 +670,7 @@ deps-macos-inhouse:
   extends: .macos-inhouse
   stage: dependencies
   cache:
-    - key: $CI_PROJECT_NAMESPACE-$ARCH
+    - key: $CI_PROJECT_NAMESPACE-$ARCH${VARIANT}
       unprotect: true
       paths:
         - macports-cached-$ARCH
@@ -695,7 +695,7 @@ gimp-macos-inhouse:
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   cache:
-    - key: $CI_PROJECT_NAMESPACE-$ARCH
+    - key: $CI_PROJECT_NAMESPACE-$ARCH${VARIANT}
       unprotect: true
       paths:
         - macports-cached-$ARCH
