@@ -91,10 +91,11 @@ static void       gimp_font_factory_add_directories (GimpFontFactory *factory,
                                                      FcConfig        *config,
                                                      GList           *path,
                                                      GError         **error);
-static void       gimp_font_factory_recursive_add_fontdir
-                                                    (FcConfig        *config,
-                                                     GFile           *file,
-                                                     GError         **error);
+static void       gimp_font_factory_recursive_check_fontdir
+                                                    (GFile           *dir,
+                                                     GHashTable      *loaded_fonts,
+                                                     GString         *error_details);
+
 static int        gimp_font_factory_load_names      (GimpFontFactory *container);
 static void       gimp_font_factory_load_aliases    (GimpContainer   *container,
                                                      PangoContext    *context);
@@ -444,170 +445,206 @@ gimp_font_factory_add_directories (GimpFontFactory *factory,
                                    GList           *path,
                                    GError         **error)
 {
-  GList *list;
+  GString *error_details = g_string_new (NULL);
+  GList   *list;
 
   for (list = path; list; list = list->next)
     {
+      gchar *dirpath;
+
       /* The configured directories must exist or be created. */
       g_file_make_directory_with_parents (list->data, NULL, NULL);
 
-      /* Do not use FcConfigAppFontAddDir(). Instead use
-       * FcConfigAppFontAddFile() with our own recursive loop.
-       * Otherwise, when some fonts fail to load (e.g. permission
-       * issues), we end up in weird situations where the fonts are in
-       * the list, but are unusable and output many errors.
-       * See bug 748553.
-       */
-      gimp_font_factory_recursive_add_fontdir (config, list->data, error);
+      dirpath = g_file_get_path (list->data);
+#ifdef G_OS_WIN32
+      {
+        gchar *tmp = g_win32_locale_filename_from_utf8 (dirpath);
+
+        g_free (dirpath);
+        /* XXX: g_win32_locale_filename_from_utf8() may return
+         * NULL. So we need to check that path is not NULL before
+         * trying to load with fontconfig.
+         */
+        dirpath = tmp;
+      }
+#endif
+
+      if (! dirpath ||
+          FcFalse == FcConfigAppFontAddDir (config, (const FcChar8 *) dirpath))
+        {
+          const gchar *errpath = dirpath ? dirpath : "?";
+
+          g_string_append_printf (error_details, "\n- %s%s",
+                                  errpath, G_DIR_SEPARATOR_S);
+        }
+      else
+        {
+          /* FcConfigAppFontAddDir() does not report individual font file
+           * failures (e.g. permission errors, corrupt files). As we want
+           * to present the user with a list of all font files which weren't
+           * succesfully loaded we build a set of what fontconfig actually
+           * loaded and then scan the directory tree for font files that
+           * are missing. */
+          GHashTable *loaded_fonts;
+          FcFontSet  *font_set;
+
+          /* Keys are canonicalized paths. We need to canonicalize
+           * on both sides (here and in recursive_check_fontdir) to avoid
+           * producing false positive error reports caused by different
+           * ways to represent paths. */
+          loaded_fonts = g_hash_table_new_full (g_str_hash, g_str_equal,
+                                                g_free, NULL);
+          font_set     = FcConfigGetFonts (config, FcSetApplication);
+
+          if (font_set)
+            {
+              for (gint i = 0; i < font_set->nfont; i++)
+                {
+                  FcChar8 *filename = NULL;
+
+                  if (FcPatternGetString (font_set->fonts[i], FC_FILE, 0,
+                                         &filename) == FcResultMatch)
+                    {
+                      g_hash_table_add (loaded_fonts,
+                                        g_canonicalize_filename (
+                                          (const gchar *) filename,
+                                          NULL));
+                    }
+                }
+            }
+
+          gimp_font_factory_recursive_check_fontdir (list->data, loaded_fonts,
+                                                     error_details);
+          g_hash_table_destroy (loaded_fonts);
+        }
+
+      g_free (dirpath);
     }
 
-  if (error && *error)
+  if (error_details->len > 0)
+    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                 _("Some fonts failed to load:%s"), error_details->str);
+
+  g_string_free (error_details, TRUE);
+}
+
+static gboolean
+gimp_font_factory_is_font_file (const gchar *filename)
+{
+  /* Extensions recognized by fontconfig/FreeType
+   * Supported formats gathered from https://freetype.org/freetype2/docs/index.html
+   */
+  static const gchar *font_extensions[] =
     {
-      gchar *font_list = g_strdup ((*error)->message);
+      ".ttf", ".ttc",
+      ".otf", ".otc",
+      ".pfa", ".pfb",
+      ".pcf", ".bdf",
+      ".cff", ".pfr",
+      ".woff", ".woff2",
+      NULL
+    };
+  gsize name_len = strlen (filename);
+  gint  i;
 
-      g_clear_error (error);
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Some fonts failed to load:\n%s"), font_list);
-      g_free (font_list);
+  for (i = 0; font_extensions[i]; i++)
+    {
+      gsize ext_len = strlen (font_extensions[i]);
+
+      if (name_len >= ext_len &&
+          g_ascii_strcasecmp (filename + name_len - ext_len,
+                              font_extensions[i]) == 0)
+        return TRUE;
     }
+
+  return FALSE;
 }
 
 static void
-gimp_font_factory_recursive_add_fontdir (FcConfig  *config,
-                                         GFile     *file,
-                                         GError   **error)
+gimp_font_factory_recursive_check_fontdir (GFile      *dir,
+                                           GHashTable *loaded_fonts,
+                                           GString    *error_details)
 {
   GFileEnumerator *enumerator;
   GError          *file_error = NULL;
 
-  g_return_if_fail (config != NULL);
-
-  enumerator = g_file_enumerate_children (file,
+  enumerator = g_file_enumerate_children (dir,
                                           G_FILE_ATTRIBUTE_STANDARD_NAME ","
                                           G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
                                           G_FILE_ATTRIBUTE_STANDARD_TYPE ","
                                           G_FILE_ATTRIBUTE_TIME_MODIFIED,
                                           G_FILE_QUERY_INFO_NONE,
                                           NULL, &file_error);
-  if (enumerator)
+  if (! enumerator)
+    {
+      /* Ignore missing directories — they may be legitimately absent (e.g.
+       * read-only MSIX install, see #11401). Report everything else. */
+      if (file_error && file_error->code != G_IO_ERROR_NOT_FOUND)
+        {
+          gchar *dirpath = g_file_get_path (dir);
+
+          g_string_append_printf (error_details, "\n- %s%s (%s)",
+                                  dirpath, G_DIR_SEPARATOR_S,
+                                  file_error->message);
+          g_free (dirpath);
+        }
+
+      g_clear_error (&file_error);
+      return;
+    }
+
+  while (TRUE)
     {
       GFileInfo *info;
+      GFileType  file_type;
+      GFile     *child;
 
-      while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
+      info = g_file_enumerator_next_file (enumerator, NULL, NULL);
+      if (! info)
+        break;
+
+      if (g_file_info_get_attribute_boolean (info,
+                                             G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN))
         {
-          GFileType  file_type;
-          GFile     *child;
-
-          if (g_file_info_get_attribute_boolean (info, G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN))
-            {
-              g_object_unref (info);
-              continue;
-            }
-
-          file_type = g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE);
-          child     = g_file_enumerator_get_child (enumerator, info);
-
-          if (file_type == G_FILE_TYPE_DIRECTORY)
-            {
-              gimp_font_factory_recursive_add_fontdir (config, child, error);
-            }
-          else if (file_type == G_FILE_TYPE_REGULAR)
-            {
-              gchar *path = g_file_get_path (child);
-#ifdef G_OS_WIN32
-              gchar *tmp = g_win32_locale_filename_from_utf8 (path);
-
-              g_free (path);
-              /* XXX: g_win32_locale_filename_from_utf8() may return
-               * NULL. So we need to check that path is not NULL before
-               * trying to load with fontconfig.
-               */
-              path = tmp;
-#endif
-
-              if (! path ||
-                  FcFalse == FcConfigAppFontAddFile (config, (const FcChar8 *) path))
-                {
-                  g_printerr ("%s: adding font file '%s' failed.\n",
-                              G_STRFUNC, path);
-                  if (error)
-                    {
-                      if (*error)
-                        {
-                          gchar *current_message = g_strdup ((*error)->message);
-
-                          g_clear_error (error);
-                          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                       "%s\n- %s", current_message, path);
-                          g_free (current_message);
-                        }
-                      else
-                        {
-                          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                       "- %s", path);
-                        }
-                    }
-                }
-
-              g_free (path);
-            }
-
-          g_object_unref (child);
           g_object_unref (info);
+          continue;
         }
 
-      g_object_unref (enumerator);
-    }
-  else
-    {
-      if (error)
+      file_type = g_file_info_get_attribute_uint32 (info,
+                                                    G_FILE_ATTRIBUTE_STANDARD_TYPE);
+      child     = g_file_enumerator_get_child (enumerator, info);
+
+      if (file_type == G_FILE_TYPE_DIRECTORY)
         {
-          gchar *path = g_file_get_path (file);
-
-          /* The font directories are supposed to exist since we create
-           * them in gimp_font_factory_add_directories() when they
-           * aren't already there.
-           * Yet there are cases where empty folders can be deleted and
-           * system paths are read-only. This happens for instance for
-           * MSIX (see #11401).
-           * So as a special exception, we ignore the case where the
-           * folders don't exist, but we still warn for all other types
-           * of errors.
-           */
-          if (! file_error || file_error->code != G_IO_ERROR_NOT_FOUND)
-            {
-              if (*error)
-                {
-                  gchar *current_message = g_strdup ((*error)->message);
-
-                  g_clear_error (error);
-                  if (file_error != NULL)
-                    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                 "%s\n- %s%s (%s)", current_message, path,
-                                 G_DIR_SEPARATOR_S, file_error->message);
-                  else
-                    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                 "%s\n- %s%s", current_message, path,
-                                 G_DIR_SEPARATOR_S);
-                  g_free (current_message);
-                }
-              else
-                {
-                  if (file_error != NULL)
-                    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                 "- %s%s (%s)", path, G_DIR_SEPARATOR_S,
-                                 file_error->message);
-                  else
-                    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                 "- %s%s", path, G_DIR_SEPARATOR_S);
-                }
-            }
-
-          g_free (path);
+          gimp_font_factory_recursive_check_fontdir (child, loaded_fonts,
+                                                     error_details);
         }
+      else if (file_type == G_FILE_TYPE_REGULAR)
+        {
+          const gchar *name = g_file_info_get_name (info);
+
+          if (gimp_font_factory_is_font_file (name))
+            {
+              gchar *filepath  = g_file_get_path (child);
+              gchar *canonical = filepath
+                ? g_canonicalize_filename (filepath, NULL) : NULL;
+
+              if (canonical &&
+                  ! g_hash_table_contains (loaded_fonts, canonical))
+                {
+                  g_string_append_printf (error_details, "\n- %s", filepath);
+                }
+
+              g_free (canonical);
+              g_free (filepath);
+            }
+        }
+
+      g_object_unref (child);
+      g_object_unref (info);
     }
 
-  g_clear_error (&file_error);
+  g_object_unref (enumerator);
 }
 
 static void
