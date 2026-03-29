@@ -49,7 +49,8 @@ enum
   PROP_YRESOLUTION,
   PROP_RESOLUTION_UNIT,
   PROP_KEEP_ASPECT,
-  PROP_EDIT_RESOLUTION
+  PROP_EDIT_RESOLUTION,
+  PROP_ALLOW_NEGATIVE
 };
 
 
@@ -100,14 +101,14 @@ gimp_size_box_class_init (GimpSizeBoxClass *klass)
 
   g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_int ("width", NULL, NULL,
-                                                     GIMP_MIN_IMAGE_SIZE,
+                                                     -GIMP_MAX_IMAGE_SIZE,
                                                      GIMP_MAX_IMAGE_SIZE,
                                                      256,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_HEIGHT,
                                    g_param_spec_int ("height", NULL, NULL,
-                                                     GIMP_MIN_IMAGE_SIZE,
+                                                     -GIMP_MAX_IMAGE_SIZE,
                                                      GIMP_MAX_IMAGE_SIZE,
                                                      256,
                                                      GIMP_PARAM_READWRITE |
@@ -152,6 +153,12 @@ gimp_size_box_class_init (GimpSizeBoxClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_ALLOW_NEGATIVE,
+                                   g_param_spec_boolean ("allow-negative",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -176,8 +183,22 @@ gimp_size_box_constructed (GObject *object)
   GtkWidget          *label;
   GList              *children;
   GList              *list;
+  GParamSpec         *spec;
+  gint32              minimum_value;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  if (! box->allow_negative)
+    minimum_value = GIMP_MIN_IMAGE_SIZE;
+  else
+    minimum_value = -GIMP_MAX_IMAGE_SIZE;
+
+  /* Update minimum value limit based on whether the GimpSizeBox allows
+   * negative values */
+  spec = g_object_class_find_property (G_OBJECT_GET_CLASS (object), "width");
+  G_PARAM_SPEC_INT (spec)->minimum = minimum_value;
+  spec = g_object_class_find_property (G_OBJECT_GET_CLASS (object), "height");
+  G_PARAM_SPEC_INT (spec)->minimum = minimum_value;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
@@ -189,11 +210,11 @@ gimp_size_box_constructed (GObject *object)
                                 TRUE, TRUE,
                                 _("_Width:"),
                                 box->width, box->xresolution,
-                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
+                                minimum_value, GIMP_MAX_IMAGE_SIZE,
                                 0, box->width,
                                 _("H_eight:"),
                                 box->height, box->yresolution,
-                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
+                                minimum_value, GIMP_MAX_IMAGE_SIZE,
                                 0, box->height);
 
   priv->size_entry = GIMP_SIZE_ENTRY (entry);
@@ -363,6 +384,10 @@ gimp_size_box_set_property (GObject      *object,
       box->edit_resolution = g_value_get_boolean (value);
       break;
 
+    case PROP_ALLOW_NEGATIVE:
+      box->allow_negative = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -411,6 +436,10 @@ gimp_size_box_get_property (GObject    *object,
 
     case PROP_EDIT_RESOLUTION:
       g_value_set_boolean (value, box->edit_resolution);
+      break;
+
+    case PROP_ALLOW_NEGATIVE:
+      g_value_set_boolean (value, box->allow_negative);
       break;
 
     default:

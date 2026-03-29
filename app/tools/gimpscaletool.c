@@ -240,12 +240,13 @@ gimp_scale_tool_prepare (GimpTransformGridTool *tg_tool)
    */
   scale->box =
     g_object_new (GIMP_TYPE_SIZE_BOX,
-                  "width",       tr_tool->x2 - tr_tool->x1,
-                  "height",      tr_tool->y2 - tr_tool->y1,
-                  "keep-aspect", options->constrain_scale,
-                  "unit",        gimp_display_get_shell (display)->unit,
-                  "xresolution", xres,
-                  "yresolution", yres,
+                  "width",          tr_tool->x2 - tr_tool->x1,
+                  "height",         tr_tool->y2 - tr_tool->y1,
+                  "keep-aspect",    options->constrain_scale,
+                  "unit",           gimp_display_get_shell (display)->unit,
+                  "xresolution",    xres,
+                  "yresolution",    yres,
+                  "allow-negative", TRUE,
                   NULL);
 
   gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tg_tool->gui)),
@@ -315,13 +316,12 @@ gimp_scale_tool_update_widget (GimpTransformGridTool *tg_tool)
 
   GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->update_widget (tg_tool);
 
-  g_object_set (
-    tg_tool->widget,
-    "x1", (gdouble) tr_tool->x1,
-    "y1", (gdouble) tr_tool->y1,
-    "x2", (gdouble) tr_tool->x2,
-    "y2", (gdouble) tr_tool->y2,
-    NULL);
+  g_object_set (tg_tool->widget,
+                "x1", (gdouble) tr_tool->x1,
+                "y1", (gdouble) tr_tool->y1,
+                "x2", (gdouble) tr_tool->x2,
+                "y2", (gdouble) tr_tool->y2,
+                NULL);
 }
 
 static void
@@ -350,7 +350,7 @@ gimp_scale_tool_widget_changed (GimpTransformGridTool *tg_tool)
   width  = ROUND (x1 - x0);
   height = ROUND (y1 - y0);
 
-  if (width > 0)
+  if (width > 0 || width <= -1)
     {
       tg_tool->trans_info[X0] = x0;
       tg_tool->trans_info[X1] = x1;
@@ -369,7 +369,7 @@ gimp_scale_tool_widget_changed (GimpTransformGridTool *tg_tool)
       tg_tool->trans_info[X1] = (x0 + x1) / 2.0 + 0.5;
     }
 
-  if (height > 0)
+  if (height > 0 || height <= -1)
     {
       tg_tool->trans_info[Y0] = y0;
       tg_tool->trans_info[Y1] = y1;
