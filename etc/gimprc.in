@@ -187,7 +187,7 @@
 # (default-gradient "FG to BG (RGB)")
 
 # Specify a default tool preset.  The tool preset is searched for in the
-# specified tool prests path.  This is a string value.
+# specified tool presets path.  This is a string value.
 # 
 # (default-tool-preset "Current Options")
 
