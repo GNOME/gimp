@@ -533,6 +533,11 @@ else
     endif
   endforeach
 
+  if platform_osx and cc.has_link_argument('-Wl,-no_warn_duplicate_libraries')
+    # Silence noisy "duplicate -rpath ignored" warnings
+    linker_args = '--linker-arg=-Wl,-no_warn_duplicate_libraries'
+  endif
+
   gir_args = [
     '-DGIMP_COMPILATION',
     '-DGIMP_BASE_COMPILATION',
@@ -542,6 +547,7 @@ else
     '-DGIMP_MODULE_COMPILATION',
     '-DGIMP_THUMB_COMPILATION',
     '-DGIMP_WIDGETS_COMPILATION',
+    linker_args,
     '--quiet',
   ]
 

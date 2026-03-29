@@ -338,7 +338,6 @@ if platform_windows and cc.get_id() == 'gcc'
   compiler_args += msvc_compat_args
 endif
 
-
 if platform_windows and cc.get_id() == 'clang'
   # Workaround to get colored output
   # https://github.com/msys2/MINGW-packages/issues/2988
