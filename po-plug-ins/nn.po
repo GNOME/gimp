@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-27 11:57+0000\n"
-"PO-Revision-Date: 2026-03-28 20:41+0100\n"
+"POT-Creation-Date: 2026-03-29 21:31+0000\n"
+"PO-Revision-Date: 2026-03-30 20:44+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -616,7 +616,7 @@ msgstr "Persienne"
 #: plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:823 plug-ins/common/file-raw-data.c:2007
 #: plug-ins/common/file-sunras.c:1059 plug-ins/common/file-tga.c:1103
-#: plug-ins/common/file-tim.c:402 plug-ins/common/file-tim.c:509
+#: plug-ins/common/file-tim.c:401 plug-ins/common/file-tim.c:508
 #: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:475
 #: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
@@ -1241,7 +1241,7 @@ msgstr "Lagra parametrane for CML-utforskaren"
 #: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1923 plug-ins/common/file-raw-data.c:1512
 #: plug-ins/common/file-raw-data.c:1541 plug-ins/common/file-sunras.c:614
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:630
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:638
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2200
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:444
@@ -2010,7 +2010,7 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/common/file-raw-data.c:1844
 #: plug-ins/common/file-seattle-filmworks.c:232
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:756
-#: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
+#: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:277
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
 #: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
@@ -2026,7 +2026,7 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:539
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1763
 #: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:525
-#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
+#: plug-ins/help/gimphelplocale.c:257 plug-ins/help/gimphelplocale.c:273
 #: plug-ins/lighting/lighting-ui.c:952
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -2701,7 +2701,7 @@ msgstr "«%s»: EOF eller feil ved lesing av palettdata"
 #: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:794
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:630
 #: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
@@ -4507,9 +4507,9 @@ msgstr "Last inn fila i Bohemia interaktivt PAA-format"
 #: plug-ins/common/file-paa.c:232 plug-ins/common/file-paa.c:269
 #: plug-ins/common/file-paa.c:290 plug-ins/common/file-pcx.c:647
 #: plug-ins/common/file-pvr.c:310 plug-ins/common/file-pvr.c:353
-#: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:364
-#: plug-ins/common/file-tim.c:390 plug-ins/common/file-tim.c:453
-#: plug-ins/common/file-tim.c:498
+#: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:363
+#: plug-ins/common/file-tim.c:389 plug-ins/common/file-tim.c:452
+#: plug-ins/common/file-tim.c:497
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Kan ikkje lese header i «%s»"
@@ -5847,7 +5847,7 @@ msgstr "Feil ved lesing av slutt på utvalet-delen"
 #: plug-ins/common/file-psp.c:2505
 #, c-format
 msgid "Invalid selection sub-block %s, should be CHANNEL"
-msgstr "Ugyldig underblokk %s, skal vera KANAL"
+msgstr "Ugyldig underblokk for laget %s, burde vera KANAL"
 
 #: plug-ins/common/file-psp.c:2597
 #, c-format
@@ -6661,94 +6661,94 @@ msgstr "Kan ikkje leseutviding frå «%s»"
 msgid "Cannot read header from '%s'"
 msgstr "Kan ikkje lese header frå «%s»"
 
-#: plug-ins/common/file-tim.c:173 plug-ins/common/file-tim.c:196
-#: plug-ins/common/file-tim.c:208
+#: plug-ins/common/file-tim.c:168 plug-ins/common/file-tim.c:191
+#: plug-ins/common/file-tim.c:203
 msgid "Playstation TIM image"
 msgstr "Playstation TIM-bilete"
 
-#: plug-ins/common/file-tim.c:176
+#: plug-ins/common/file-tim.c:171
 msgid "Load file in the TIM file format"
 msgstr "Lastar inn fil i TIM-format"
 
-#: plug-ins/common/file-tim.c:177
+#: plug-ins/common/file-tim.c:172
 msgid "Load file in the Sony Playstation TIM file format"
 msgstr "Lastar inn fil i Sony Playstation TIM-format"
 
-#: plug-ins/common/file-tim.c:199
+#: plug-ins/common/file-tim.c:194
 msgid "Saves files in the TIM file format"
 msgstr "Lagrar filer i TIM-format"
 
-#: plug-ins/common/file-tim.c:200
+#: plug-ins/common/file-tim.c:195
 msgid "Saves files in the Playstation TIM file format"
 msgstr "Lagrar filer i Playstation TIM-filformatet"
 
-#: plug-ins/common/file-tim.c:218
+#: plug-ins/common/file-tim.c:217
 msgid "_Type"
 msgstr "_Type"
 
-#: plug-ins/common/file-tim.c:219
+#: plug-ins/common/file-tim.c:218
 msgid "Type of TIM texture to export"
 msgstr "Type TIM-tekstur som skal eksporterast"
 
-#: plug-ins/common/file-tim.c:220
+#: plug-ins/common/file-tim.c:219
 msgid "4BPP (Indexed)"
 msgstr "4BPP (Indeksert)"
 
-#: plug-ins/common/file-tim.c:221
+#: plug-ins/common/file-tim.c:220
 msgid "8BPP (Indexed)"
 msgstr "8BPP (Indeksert)"
 
-#: plug-ins/common/file-tim.c:222
+#: plug-ins/common/file-tim.c:221
 msgid "16BPP (RGB)"
 msgstr "16BPP (RGB)"
 
-#: plug-ins/common/file-tim.c:223
+#: plug-ins/common/file-tim.c:222
 msgid "24BPP (RGB)"
 msgstr "24BPP (RGB)"
 
-#: plug-ins/common/file-tim.c:229
+#: plug-ins/common/file-tim.c:228
 msgid "Image _X"
 msgstr "Bilete _X"
 
-#: plug-ins/common/file-tim.c:230
+#: plug-ins/common/file-tim.c:229
 msgid "Origin X coordinate"
 msgstr "Opphavleg X-koordinat"
 
-#: plug-ins/common/file-tim.c:235
+#: plug-ins/common/file-tim.c:234
 msgid "Image _Y"
 msgstr "Bilete _Y"
 
-#: plug-ins/common/file-tim.c:236
+#: plug-ins/common/file-tim.c:235
 msgid "Origin Y coordinate"
 msgstr "Opphavleg Y-koordinat"
 
-#: plug-ins/common/file-tim.c:242
+#: plug-ins/common/file-tim.c:241
 msgid "_Palette X"
 msgstr "_Palett X"
 
-#: plug-ins/common/file-tim.c:243
+#: plug-ins/common/file-tim.c:242
 msgid "Palette X coordinate"
 msgstr "Palett X-koordinat"
 
-#: plug-ins/common/file-tim.c:248
+#: plug-ins/common/file-tim.c:247
 msgid "P_alette Y"
 msgstr "P_alett Y"
 
-#: plug-ins/common/file-tim.c:249
+#: plug-ins/common/file-tim.c:248
 msgid "Palette Y coordinate"
 msgstr "Palett Y-koordinat"
 
-#: plug-ins/common/file-tim.c:375
+#: plug-ins/common/file-tim.c:374
 #, c-format
 msgid "Unsupported TIM image type: %d"
 msgstr "Ugyldig eller ustøtta type TIM-bilete: %d"
 
-#: plug-ins/common/file-tim.c:483
+#: plug-ins/common/file-tim.c:482
 #, c-format
 msgid "Could not read palette from '%s'"
 msgstr "Kan ikkje lese paletten frå «%s»"
 
-#: plug-ins/common/file-tim.c:614
+#: plug-ins/common/file-tim.c:622
 #, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
@@ -6757,11 +6757,11 @@ msgstr ""
 "Kan ikkje eksportera «%s». TIM-formatet støttar ikkje bilete som er meir enn "
 "%d pikslar høge eller breie."
 
-#: plug-ins/common/file-tim.c:854
+#: plug-ins/common/file-tim.c:840
 msgid "Image Origin"
 msgstr "Biletopphav"
 
-#: plug-ins/common/file-tim.c:869
+#: plug-ins/common/file-tim.c:855
 msgid "Palette Origin"
 msgstr "Palettopphav"
 
@@ -14038,17 +14038,17 @@ msgstr "Du manglar kan hende GIO oppbackinger og må installera GVFS?"
 msgid "Help ID '%s' unknown"
 msgstr "Hjelp-ID «%s» er ukjend"
 
-#: plug-ins/help/gimphelplocale.c:218
+#: plug-ins/help/gimphelplocale.c:220
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Les indeks frå «%s»"
 
-#: plug-ins/help/gimphelplocale.c:239
+#: plug-ins/help/gimphelplocale.c:241
 #, c-format
 msgid "Could not load data from '%s': %s"
 msgstr "Klarte ikkje lasta inn data frå «%s»: %s"
 
-#: plug-ins/help/gimphelplocale.c:311
+#: plug-ins/help/gimphelplocale.c:313
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
