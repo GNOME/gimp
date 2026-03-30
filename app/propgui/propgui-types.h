@@ -43,12 +43,12 @@ typedef struct
   gdouble        min;             /*  minimal allowable slider value         */
   gdouble        max;             /*  maximal allowable slider value         */
 
-  gboolean       visible    : 1;  /*  slider is visible                      */
-  gboolean       selectable : 1;  /*  slider is selectable                   */
-  gboolean       movable    : 1;  /*  slider movable                         */
-  gboolean       removable  : 1;  /*  slider is removable                    */
+  guint          visible    : 1;  /*  slider is visible                      */
+  guint          selectable : 1;  /*  slider is selectable                   */
+  guint          movable    : 1;  /*  slider movable                         */
+  guint          removable  : 1;  /*  slider is removable                    */
 
-  gboolean       autohide   : 1;  /*  whether to autohide the slider         */
+  guint          autohide   : 1;  /*  whether to autohide the slider         */
   GimpHandleType type;            /*  slider handle type                     */
   gdouble        size;            /*  slider handle size, as a fraction of   *
                                    *  the default size                       */
