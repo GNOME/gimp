@@ -38,6 +38,10 @@
 #include <io.h>
 #endif
 
+#ifdef __APPLE__
+#include <spawn.h>
+#endif
+
 #include "core-types.h"
 
 #include "gimp-spawn.h"
@@ -167,7 +171,7 @@ gimp_spawn_async (gchar       **argv,
   g_return_val_if_fail (argv != NULL, FALSE);
   g_return_val_if_fail (argv[0] != NULL, FALSE);
 
-#ifdef HAVE_VFORK
+#if defined(HAVE_VFORK) && !defined(__APPLE__)
   if (flags == (G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
                 G_SPAWN_DO_NOT_REAP_CHILD      |
                 G_SPAWN_CHILD_INHERITS_STDIN))
@@ -232,7 +236,36 @@ gimp_spawn_async (gchar       **argv,
           return TRUE;
         }
     }
-#endif /* HAVE_VFORK */
+#elif defined(__APPLE__)
+  if (flags == (G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
+                G_SPAWN_DO_NOT_REAP_CHILD      |
+                G_SPAWN_CHILD_INHERITS_STDIN))
+    {
+      pid_t         pid;
+      int           status;
+      extern char **environ;
+      char        **child_env = envp ? envp : environ;
+
+      /* posix_spawn combines fork and exec */
+      status = posix_spawn (&pid, argv[0], NULL, NULL, argv, child_env);
+
+      if (status != 0)
+        {
+          g_set_error (error,
+                       G_SPAWN_ERROR,
+                       exec_err_to_g_error (status),
+                       _("Failed to execute child process “%s” (%s)"),
+                       argv[0],
+                       g_strerror (status));
+
+          return FALSE;
+        }
+
+      if (child_pid) *child_pid = pid;
+
+      return TRUE;
+    }
+#endif
 
   return g_spawn_async (NULL, argv, envp, flags, NULL, NULL, child_pid, error);
 }
