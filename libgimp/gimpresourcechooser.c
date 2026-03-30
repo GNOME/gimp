@@ -627,8 +627,13 @@ gimp_resource_select_drag_data_received (GimpResourceChooser *self,
       gpointer unused;
       gint     name_offset = 0;
 
+#ifndef _UCRT
       if (sscanf (str, "%i:%p:%n", &pid, &unused, &name_offset) >= 2 &&
           pid == gimp_getpid () && name_offset > 0)
+#else
+      if (sscanf_s (str, "%i:%p:%n", &pid, &unused, &name_offset) >= 2 &&
+          pid == gimp_getpid () && name_offset > 0)
+#endif
         {
           gchar        *name = str + name_offset;
           GimpResource *resource;

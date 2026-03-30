@@ -309,7 +309,11 @@ gif_export (GimpProcedure        *procedure,
           parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
           parasite_data = g_strndup (parasite_data, parasite_size);
 
+#ifndef _UCRT
           if (sscanf (parasite_data, "%i", &num_loops) == 1)
+#else
+          if (sscanf_s (parasite_data, "%i", &num_loops) == 1)
+#endif
             {
               gboolean loop = (num_loops == 0);
 

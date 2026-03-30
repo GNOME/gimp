@@ -138,10 +138,17 @@ anotherrawtherapee_init_procedures (GimpPlugIn *plug_in)
       gint rtmajor = 0;
       gint rtminor = 0;
 
+#ifndef _UCRT
       if (sscanf (art_stdout,
                   "ART, version %d.%d",
                   &rtmajor, &rtminor) == 2 &&
           ((rtmajor == 1 && rtminor >= 20) || rtmajor >= 2))
+#else
+      if (sscanf_s (art_stdout,
+                    "ART, version %d.%d",
+                    &rtmajor, &rtminor) == 2 &&
+          ((rtmajor == 1 && rtminor >= 20) || rtmajor >= 2))
+#endif
         {
           have_art = TRUE;
         }

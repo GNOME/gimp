@@ -894,10 +894,18 @@ gimp_page_selector_select_range (GimpPageSelector *selector,
               from = g_strstrip (range);
               to   = g_strstrip (dash + 1);
 
+#ifndef _UCRT
               if (sscanf (from, "%i", &page_from) != 1 && strlen (from) == 0)
+#else
+              if (sscanf_s (from, "%i", &page_from) != 1 && strlen (from) == 0)
+#endif
                 page_from = 1;
 
+#ifndef _UCRT
               if (sscanf (to, "%i", &page_to) != 1 && strlen (to) == 0)
+#else
+              if (sscanf_s (to, "%i", &page_to) != 1 && strlen (to) == 0)
+#endif
                 page_to = selector->n_pages;
 
               if (page_from > 0        &&
@@ -918,9 +926,15 @@ gimp_page_selector_select_range (GimpPageSelector *selector,
             {
               gint page_no;
 
+#ifndef _UCRT
               if (sscanf (range, "%i", &page_no) == 1 &&
                   page_no >= 1                        &&
                   page_no <= selector->n_pages)
+#else
+              if (sscanf_s (range, "%i", &page_no) == 1 &&
+                  page_no >= 1                        &&
+                  page_no <= selector->n_pages)
+#endif
                 {
                   gimp_page_selector_select_page (selector, page_no - 1);
                 }

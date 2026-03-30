@@ -1192,7 +1192,11 @@ load_image (GFile                *file,
         {
           if ((*temp < '0') || (*temp > '9'))
             continue; /* Search next digit */
+#ifndef _UCRT
           sscanf (temp, "%d", &k);
+#else
+          sscanf_s (temp, "%d", &k);
+#endif
           if (k > max_pagenum)
             max_pagenum = k;
           while ((*temp >= '0') && (*temp <= '9'))
@@ -1814,7 +1818,11 @@ get_bbox (GFile *file,
       src += 11;
       while ((*src == ' ') || (*src == '\t') || (*src == ':')) src++;
       if (strncmp (src, "(atend)", 7) == 0) continue;
+#ifndef _UCRT
       if (sscanf (src, "%d%d%d%d", x0, y0, x1, y1) == 4)
+#else
+      if (sscanf_s (src, "%d%d%d%d", x0, y0, x1, y1) == 4)
+#endif
         retval = 0;
       break;
     }
@@ -2162,7 +2170,11 @@ read_pnmraw_type (FILE *ifp,
       if (line[0] != '#')
         break;
     }
+#ifndef _UCRT
   if (sscanf (line, "%d%d", width, height) != 2)
+#else
+  if (sscanf_s (line, "%d%d", width, height) != 2)
+#endif
     return -1;
 
   *maxval = 255;
@@ -2176,7 +2188,11 @@ read_pnmraw_type (FILE *ifp,
           if (line[0] != '#')
             break;
         }
+#ifndef _UCRT
       if (sscanf (line, "%d", maxval) != 1)
+#else
+      if (sscanf_s (line, "%d", maxval) != 1)
+#endif
         return -1;
     }
 
@@ -3745,7 +3761,12 @@ count_ps_pages (GFile *file)
       fgets (buf, sizeof (buf), psfile);
 
       if (strncmp (buf + 2, "Pages:", 6) == 0)
+#ifndef _UCRT
         sscanf (buf + strlen ("%%Pages:"), "%d", &num_pages);
+#else
+        sscanf_s (buf + strlen ("%%Pages:"), "%d", &num_pages);
+#endif
+
       else if (strncmp (buf, "showpage", 8) == 0)
         showpage_count++;
     }

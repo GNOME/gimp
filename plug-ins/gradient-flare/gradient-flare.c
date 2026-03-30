@@ -4789,7 +4789,11 @@ gradient_name_decode (gchar       *dest,
     {
       if (*src == '\\' && *(src+1) && *(src+2) && *(src+3))
         {
+#ifndef _UCRT
           sscanf (src+1, "%3o", &tmp);
+#else
+          sscanf_s (src+1, "%3o", &tmp);
+#endif
           *dest++ = tmp;
           src += 4;
         }

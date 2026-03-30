@@ -538,8 +538,13 @@ gimp_item_combo_box_drag_data_received (GtkWidget        *widget,
       gint pid;
       gint ID;
 
+#ifndef _UCRT
       if (sscanf (str, "%i:%i", &pid, &ID) == 2 &&
           pid == gimp_getpid ())
+#else
+      if (sscanf_s (str, "%i:%i", &pid, &ID) == 2 &&
+          pid == gimp_getpid ())
+#endif
         {
           gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget), ID);
         }

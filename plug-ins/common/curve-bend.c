@@ -829,8 +829,13 @@ p_load_pointfile (BenderDialog *cd,
 
           if (strncmp (buff, KEY_POINTS, len) == 0)
             {
+#ifndef _UCRT
               n = sscanf (&buff[len],
                           "%f %f %f %f", &fux, &fuy, &flx, &fly);
+#else
+              n = sscanf_s (&buff[len],
+                            "%f %f %f %f", &fux, &fuy, &flx, &fly);
+#endif
 
               if ((n == 4) && (pi < 17))
                 {
@@ -850,7 +855,11 @@ p_load_pointfile (BenderDialog *cd,
 
           if (strncmp (buff, KEY_VAL_Y, len) == 0)
             {
+#ifndef _UCRT
               n = sscanf (&buff[len], "%d %d", &iuy, &ily);
+#else
+              n = sscanf_s (&buff[len], "%d %d", &iuy, &ily);
+#endif
 
               if ((n == 2) && (ci < 256))
                 {

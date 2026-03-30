@@ -1888,7 +1888,11 @@ get_filevalues (void)
   if (fp != NULL)
     {
       fgets (buf, 999, fp);
+#ifndef _UCRT
       sscanf (buf, "%f", &g_values.tol_col_err);
+#else
+      sscanf_s (buf, "%f", &g_values.tol_col_err);
+#endif
       fclose (fp);
     }
 

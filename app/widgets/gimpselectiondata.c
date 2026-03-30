@@ -588,8 +588,13 @@ gimp_selection_data_get_image (GtkSelectionData *selection,
       gint pid;
       gint ID;
 
+#ifndef _UCRT
       if (sscanf (str, "%i:%i", &pid, &ID) == 2 &&
           pid == gimp_get_pid ())
+#else
+      if (sscanf_s (str, "%i:%i", &pid, &ID) == 2 &&
+          pid == gimp_get_pid ())
+#endif
         {
           return gimp_image_get_by_id (gimp, ID);
         }
@@ -639,8 +644,13 @@ gimp_selection_data_get_component (GtkSelectionData *selection,
       gint ID;
       gint ch;
 
+#ifndef _UCRT
       if (sscanf (str, "%i:%i:%i", &pid, &ID, &ch) == 3 &&
           pid == gimp_get_pid ())
+#else
+      if (sscanf_s (str, "%i:%i:%i", &pid, &ID, &ch) == 3 &&
+          pid == gimp_get_pid ())
+#endif
         {
           GimpImage *image = gimp_image_get_by_id (gimp, ID);
 
@@ -688,8 +698,13 @@ gimp_selection_data_get_item (GtkSelectionData *selection,
       gint pid;
       gint ID;
 
+#ifndef _UCRT
       if (sscanf (str, "%i:%i", &pid, &ID) == 2 &&
           pid == gimp_get_pid ())
+#else
+      if (sscanf_s (str, "%i:%i", &pid, &ID) == 2 &&
+          pid == gimp_get_pid ())
+#endif
         {
           return gimp_item_get_by_id (gimp, ID);
         }
@@ -961,8 +976,13 @@ gimp_selection_data_get_object (GtkSelectionData *selection,
       gpointer object_addr;
       gint     name_offset = 0;
 
+#ifndef _UCRT
       if (sscanf (str, "%i:%p:%n", &pid, &object_addr, &name_offset) >= 2 &&
           pid == gimp_get_pid () && name_offset > 0)
+#else
+      if (sscanf_s (str, "%i:%p:%n", &pid, &object_addr, &name_offset) >= 2 &&
+          pid == gimp_get_pid () && name_offset > 0)
+#endif
         {
           const gchar *name = str + name_offset;
 

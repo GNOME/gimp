@@ -1338,14 +1338,26 @@ static pointer mk_sharp_const(scheme *sc, char *name) {
           return (sc->F);
      else if (*name == 'o') {/* #o (octal) */
           snprintf(tmp, STRBUFFSIZE, "0%s", name+1);
+#ifndef _UCRT
           sscanf(tmp, "%lo", (long unsigned *)&x);
+#else
+          sscanf_s(tmp, "%lo", (long unsigned *)&x);
+#endif
           return (mk_integer(sc, x));
      } else if (*name == 'd') {    /* #d (decimal) */
+#ifndef _UCRT
           sscanf(name+1, "%ld", (long int *)&x);
+#else
+          sscanf_s(name+1, "%ld", (long int *)&x);
+#endif
           return (mk_integer(sc, x));
      } else if (*name == 'x') {    /* #x (hex) */
           snprintf(tmp, STRBUFFSIZE, "0x%s", name+1);
+#ifndef _UCRT
           sscanf(tmp, "%lx", (long unsigned *)&x);
+#else
+          sscanf_s(tmp, "%lx", (long unsigned *)&x);
+#endif
           return (mk_integer(sc, x));
      } else if (*name == 'b') {    /* #b (binary) */
           x = binary_decode(name+1);
@@ -1371,7 +1383,11 @@ static pointer mk_sharp_const(scheme *sc, char *name) {
             }
             else {
               /* #\x<[0-f]*> Convert hex literal to codepoint. */
+#ifndef _UCRT
               if(sscanf(name+2,"%x",(unsigned int *)&codepoint)!=1) {
+#else
+              if(sscanf_s(name+2,"%x",(unsigned int *)&codepoint)!=1) {
+#endif
                 g_warning ("Hex literal has invalid digits");
                 return sc->NIL;
               }

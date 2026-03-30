@@ -1673,7 +1673,11 @@ on_date_button_clicked (GtkButton *widget,
   date_text = gtk_entry_get_text (GTK_ENTRY (entry_widget));
   if (date_text && date_text[0] != '\0')
     {
+#ifndef _UCRT
       sscanf (date_text, "%u-%u-%u;", &year, &month, &day);
+#else
+      sscanf_s (date_text, "%u-%u-%u;", &year, &month, &day);
+#endif
       month--;
     }
   else

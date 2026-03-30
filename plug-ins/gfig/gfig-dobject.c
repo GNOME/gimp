@@ -120,7 +120,11 @@ d_load_object (gchar *desc,
 
   while (get_line (buf, MAX_LOAD_LINE, fp, 0))
     {
+#ifndef _UCRT
       if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
+#else
+      if (sscanf_s (buf, "%d %d", &xpnt, &ypnt) != 2)
+#endif
         {
           /* Read <EXTRA> block if there is one */
           if (!strcmp ("<EXTRA>", buf))
@@ -133,7 +137,11 @@ d_load_object (gchar *desc,
 
               get_line (buf, MAX_LOAD_LINE, fp, 0);
 
+#ifndef _UCRT
               if (sscanf (buf, "%d", &new_obj->type_data) != 1)
+#else
+              if (sscanf_s (buf, "%d", &new_obj->type_data) != 1)
+#endif
                 {
                   g_message ("Error while loading object (no type data)");
                   g_free (new_obj);

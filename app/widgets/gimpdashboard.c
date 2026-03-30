@@ -2589,7 +2589,11 @@ gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
 
   buffer[size] = '\0';
 
+#ifndef _UCRT
   if (sscanf (buffer, "%*u %llu %llu", &resident, &shared) != 2)
+#else
+  if (sscanf_s (buffer, "%*u %llu %llu", &resident, &shared) != 2)
+#endif
     return;
 
   variable_data->available  = TRUE;

@@ -534,9 +534,15 @@ write_dds (GFile               *file,
                                                         &parasite_size);
       parasite_data = g_strndup (parasite_data, parasite_size);
 
+#ifndef _UCRT
       n_params = sscanf (parasite_data, "%d %d %d %d %d %d", &version,
                          &comp_format, &d3d9_format, &dxgi_format, &flags,
                          &n_mipmaps);
+#else
+      n_params = sscanf_s (parasite_data, "%d %d %d %d %d %d", &version,
+                           &comp_format, &d3d9_format, &dxgi_format, &flags,
+                           &n_mipmaps);
+#endif
       if (n_params == 6)
         {
           const gchar *config_comp_format;

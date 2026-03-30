@@ -800,18 +800,30 @@ gimp_thumbnail_set_info_from_pixbuf (GimpThumbnail *thumbnail,
     g_strdup (gdk_pixbuf_get_option (pixbuf, TAG_THUMB_MIMETYPE));
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_IMAGE_WIDTH);
+#ifndef _UCRT
   if (option && sscanf (option, "%d", &num) == 1)
+#else
+  if (option && sscanf_s (option, "%d", &num) == 1)
+#endif
     thumbnail->image_width = num;
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_IMAGE_HEIGHT);
+#ifndef _UCRT
   if (option && sscanf (option, "%d", &num) == 1)
+#else
+  if (option && sscanf_s (option, "%d", &num) == 1)
+#endif
     thumbnail->image_height = num;
 
   thumbnail->image_type =
     g_strdup (gdk_pixbuf_get_option (pixbuf, TAG_THUMB_GIMP_TYPE));
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_GIMP_LAYERS);
+#ifndef _UCRT
   if (option && sscanf (option, "%d", &num) == 1)
+#else
+  if (option && sscanf_s (option, "%d", &num) == 1)
+#endif
     thumbnail->image_num_layers = num;
 
   g_object_thaw_notify (G_OBJECT (thumbnail));
@@ -1066,11 +1078,19 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
   state = GIMP_THUMB_STATE_OLD;
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_MTIME);
+#ifndef _UCRT
   if (!option || sscanf (option, "%" G_GINT64_FORMAT, &image_mtime) != 1)
+#else
+  if (!option || sscanf_s (option, "%" G_GINT64_FORMAT, &image_mtime) != 1)
+#endif
     goto finish;
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_FILESIZE);
+#ifndef _UCRT
   if (option && sscanf (option, "%" G_GINT64_FORMAT, &image_size) != 1)
+#else
+  if (option && sscanf_s (option, "%" G_GINT64_FORMAT, &image_size) != 1)
+#endif
     goto finish;
 
   /* TAG_THUMB_FILESIZE is optional but must match if present */
@@ -1424,11 +1444,19 @@ gimp_thumbnail_has_failed (GimpThumbnail *thumbnail)
     goto finish;
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_MTIME);
+#ifndef _UCRT
   if (!option || sscanf (option, "%" G_GINT64_FORMAT, &image_mtime) != 1)
+#else
+  if (!option || sscanf_s (option, "%" G_GINT64_FORMAT, &image_mtime) != 1)
+#endif
     goto finish;
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_FILESIZE);
+#ifndef _UCRT
   if (option && sscanf (option, "%" G_GINT64_FORMAT, &image_size) != 1)
+#else
+  if (option && sscanf_s (option, "%" G_GINT64_FORMAT, &image_size) != 1)
+#endif
     goto finish;
 
   /* TAG_THUMB_FILESIZE is optional but must match if present */

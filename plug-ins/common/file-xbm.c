@@ -382,7 +382,11 @@ xbm_export (GimpProcedure        *procedure,
           parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
           parasite_data = g_strndup (parasite_data, parasite_size);
 
+#ifndef _UCRT
           if (sscanf (parasite_data, "%i %i", &x, &y) == 2)
+#else
+          if (sscanf_s (parasite_data, "%i %i", &x, &y) == 2)
+#endif
             {
               g_object_set (config,
                             "use-hot-spot", TRUE,

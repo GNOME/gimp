@@ -654,7 +654,11 @@ load_thumbnail_image (GFile   *file,
                       darktable_file = g_file_new_for_path (response[i + 1]);
                       image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
                                               darktable_file);
+#ifndef _UCRT
                       sscanf (response[i + 2], "%d %d", width, height);
+#else
+                      sscanf_s (response[i + 2], "%d %d", width, height);
+#endif
 
                       g_object_unref (darktable_file);
                       break;
@@ -690,7 +694,11 @@ load_thumbnail_image (GFile   *file,
                                                    -1,
                                                    "[dt4gimp]");
               if (start_of_size)
+#ifndef _UCRT
                 sscanf (start_of_size, "[dt4gimp] %d %d", width, height);
+#else
+                sscanf_s (start_of_size, "[dt4gimp] %d %d", width, height);
+#endif
             }
         }
     }

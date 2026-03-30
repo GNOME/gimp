@@ -386,7 +386,11 @@ gfig_name_decode (gchar       *dest,
     {
       if (*src == '\\' && *(src+1) && *(src+2) && *(src+3))
         {
+#ifndef _UCRT
           sscanf (src+1, "%3o", &tmp);
+#else
+          sscanf_s (src+1, "%3o", &tmp);
+#endif
           *dest++ = tmp;
           src += 4;
         }
@@ -562,7 +566,11 @@ gfig_load (GimpGfig    *gfig,
     gfig_obj->version = g_ascii_strtod (load_buf + 9, NULL);
 
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
+#ifndef _UCRT
   sscanf (load_buf, "ObjCount: %d", &load_count);
+#else
+  sscanf_s (load_buf, "ObjCount: %d", &load_count);
+#endif
 
   if (load_options (gfig_obj, fp))
     {

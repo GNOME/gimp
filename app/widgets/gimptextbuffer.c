@@ -1376,7 +1376,11 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
           guint       r, g, b;
           guchar      rgb[3];
 
+#ifndef _UCRT
           sscanf (value, "#%02x%02x%02x", &r, &g, &b);
+#else
+          sscanf_s (value, "#%02x%02x%02x", &r, &g, &b);
+#endif
           rgb[0] = r;
           rgb[1] = g;
           rgb[2] = b;

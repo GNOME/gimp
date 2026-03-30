@@ -587,8 +587,13 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
               return FALSE;
             }
 
+#ifndef _UCRT
           if (sscanf (x_str, "%d", &index[i][j]) != 1 ||
               sscanf (y_str, "%d", &value[i][j]) != 1)
+#else
+          if (sscanf_s (x_str, "%d", &index[i][j]) != 1 ||
+              sscanf_s (y_str, "%d", &value[i][j]) != 1)
+#endif
             {
               g_set_error_literal (error,
                                    GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,

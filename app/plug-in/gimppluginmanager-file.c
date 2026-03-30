@@ -588,7 +588,11 @@ file_convert_string (const gchar *instr,
               }
 
             *tmpptr = '\0';
+#ifndef _UCRT
             sscanf ((gchar *) tmp, "%o", &k);
+#else
+            sscanf_s ((gchar *) tmp, "%o", &k);
+#endif
             *(uout++) = k;
             break;
 
@@ -626,7 +630,12 @@ file_check_single_magic (const gchar  *offset,
   gchar         num_operator;
 
   /* Check offset */
+#ifndef _UCRT
   if (sscanf (offset, "%ld", &offs) != 1)
+#else
+  if (sscanf_s (offset, "%ld", &offs) != 1)
+#endif
+
     return FILE_MATCH_NONE;
 
   /* Check type of test */
@@ -667,11 +676,23 @@ file_check_single_magic (const gchar  *offset,
       if (g_ascii_isdigit (num_operator_ptr[1]))
         {
           if (num_operator_ptr[1] != '0')      /* decimal */
+#ifndef _UCRT
             sscanf (num_operator_ptr+1, "%lu", &num_operator_val);
+#else
+            sscanf_s (num_operator_ptr+1, "%lu", &num_operator_val);
+#endif
           else if (num_operator_ptr[2] == 'x') /* hexadecimal */
+#ifndef _UCRT
             sscanf (num_operator_ptr+3, "%lx", &num_operator_val);
+#else
+            sscanf_s (num_operator_ptr+3, "%lx", &num_operator_val);
+#endif
           else                                 /* octal */
+#ifndef _UCRT
             sscanf (num_operator_ptr+2, "%lo", &num_operator_val);
+#else
+            sscanf_s (num_operator_ptr+2, "%lo", &num_operator_val);
+#endif
 
           num_operator = *num_operator_ptr;
         }

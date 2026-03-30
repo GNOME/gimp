@@ -138,10 +138,17 @@ rawtherapee_init_procedures (GimpPlugIn *plug_in)
       gint rtmajor = 0;
       gint rtminor = 0;
 
+#ifndef _UCRT
       if (sscanf (rawtherapee_stdout,
                   "RawTherapee, version %d.%d",
                   &rtmajor, &rtminor) == 2 &&
           ((rtmajor == 5 && rtminor >= 2) || rtmajor >= 6))
+#else
+      if (sscanf_s (rawtherapee_stdout,
+                    "RawTherapee, version %d.%d",
+                    &rtmajor, &rtminor) == 2 &&
+          ((rtmajor == 5 && rtminor >= 2) || rtmajor >= 6))
+#endif
         {
           have_rawtherapee = TRUE;
         }

@@ -297,12 +297,20 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
       memcpy (address_string, "0x", 2);
       memcpy (address_string + 2, start_addr, len);
       address_string[2 + len] = '\0';
+#ifndef _UCRT
       sscanf (address_string, "%p", &start_addr_p);
+#else
+      sscanf_s (address_string, "%p", &start_addr_p);
+#endif
 
       memcpy (address_string, "0x", 2);
       memcpy (address_string + 2, end_addr, len);
       address_string[2 + len] = '\0';
+#ifndef _UCRT
       sscanf (address_string, "%p", &end_addr_p);
+#else
+      sscanf_s (address_string, "%p", &end_addr_p);
+#endif
 
       if (symbol >= start_addr_p && symbol < end_addr_p)
         {

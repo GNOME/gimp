@@ -2115,7 +2115,11 @@ loadit (const gchar * fn)
       t = &s.com.texture[i];
       setdefaults (t);
 
+#ifndef _UCRT
       if (sscanf (line, fmt_str, &t->majtype, &t->type, end) != 3)
+#else
+      if (sscanf_s (line, fmt_str, &t->majtype, &t->type, end) != 3)
+#endif
         t->color1.x = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
         t->color1.y = g_ascii_strtod (end, &end);

@@ -345,7 +345,11 @@ ico_save_dialog (GimpImage            *image,
               parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
               parasite_data = g_strndup (parasite_data, parasite_size);
 
+#ifndef _UCRT
               if (sscanf (parasite_data, "%i %i", &x, &y) == 2)
+#else
+              if (sscanf_s (parasite_data, "%i %i", &x, &y) == 2)
+#endif
                 {
                   info->hot_spot_x[i] = x;
                   info->hot_spot_y[i] = y;
@@ -1308,7 +1312,11 @@ ani_export_image (GFile                *file,
       parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
       parasite_data = g_strndup (parasite_data, parasite_size);
 
+#ifndef _UCRT
       if (sscanf (parasite_data, "%i", &jif_rate) == 1)
+#else
+      if (sscanf_s (parasite_data, "%i", &jif_rate) == 1)
+#endif
         {
           header->jif_rate = jif_rate;
         }

@@ -1146,7 +1146,11 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
           maximized = TRUE;
 
       if (width)
+#ifndef _UCRT
         sscanf (aux->value, "%d", width);
+#else
+        sscanf_s (aux->value, "%d", width);
+#endif
 
       /* compat handling for right docks */
       if (! strcmp (aux->name, GIMP_IMAGE_WINDOW_RIGHT_DOCKS_POS))
