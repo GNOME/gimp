@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-03-29 21:31+0000\n"
-"PO-Revision-Date: 2026-03-30 20:44+0200\n"
+"PO-Revision-Date: 2026-03-30 20:49+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -5847,7 +5847,7 @@ msgstr "Feil ved lesing av slutt på utvalet-delen"
 #: plug-ins/common/file-psp.c:2505
 #, c-format
 msgid "Invalid selection sub-block %s, should be CHANNEL"
-msgstr "Ugyldig underblokk for laget %s, burde vera KANAL"
+msgstr "Ugyldig underblokk for laget %s, bør vera KANAL"
 
 #: plug-ins/common/file-psp.c:2597
 #, c-format
