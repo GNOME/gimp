@@ -110,7 +110,7 @@ static const gchar *
 win32_command (const gchar *command)
 {
   static gchar *cmd     = NULL;
-  const gchar  *comspec = getenv ("COMSPEC");
+  const gchar  *comspec = g_getenv ("COMSPEC");
 
   if (comspec == NULL)
     comspec = "cmd.exe";
@@ -292,7 +292,7 @@ find_out_env_flags (void)
 {
   gchar *p;
 
-  if ((p = getenv ("CC")) != NULL && *p != '\0')
+  if ((p = (gchar *) g_getenv ("CC")) != NULL && *p != '\0')
     env_cc = p;
   else if (msvc_syntax)
     env_cc = "cl -MD";
@@ -303,17 +303,17 @@ find_out_env_flags (void)
       g_ascii_strncasecmp (env_cc, "clang", 5) != 0)
     msvc_syntax = TRUE;
 
-  if ((p = getenv ("CFLAGS")) != NULL)
+  if ((p = (gchar *) g_getenv ("CFLAGS")) != NULL)
     env_cflags = p;
   else
     env_cflags = "";
 
-  if ((p = getenv ("LDFLAGS")) != NULL)
+  if ((p = (gchar *) g_getenv ("LDFLAGS")) != NULL)
     env_ldflags = p;
   else
     env_ldflags = "";
 
-  if ((p = getenv ("LIBS")) != NULL && *p != '\0')
+  if ((p = (gchar *) g_getenv ("LIBS")) != NULL && *p != '\0')
     env_libs = p;
   else
     env_libs = "";

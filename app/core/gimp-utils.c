@@ -165,17 +165,17 @@ gimp_get_default_language (const gchar *category)
 
 #ifdef G_OS_WIN32
 
-  p = getenv ("LC_ALL");
+  p = (gchar *) g_getenv ("LC_ALL");
   if (p != NULL)
     lang = g_strdup (p);
   else
     {
-      p = getenv ("LANG");
+      p = (gchar *) g_getenv ("LANG");
       if (p != NULL)
         lang = g_strdup (p);
       else
         {
-          p = getenv (category);
+          p = (gchar *) g_getenv (category);
           if (p != NULL)
             lang = g_strdup (p);
           else
