@@ -86,9 +86,10 @@ static void      gimp_input_device_store_finalize (GObject              *object)
 
 static gboolean  gimp_input_device_store_add      (GimpInputDeviceStore *store,
                                                    const GUID           *guid);
+#if 0
 static gboolean  gimp_input_device_store_remove   (GimpInputDeviceStore *store,
                                                    const gchar          *udi);
-
+#endif
 
 G_DEFINE_DYNAMIC_TYPE (GimpInputDeviceStore, gimp_input_device_store,
                        GTK_TYPE_LIST_STORE)
@@ -396,6 +397,7 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
   return added;
 }
 
+#if 0
 static gboolean
 gimp_input_device_store_remove (GimpInputDeviceStore *store,
                                 const gchar          *guid)
@@ -410,8 +412,6 @@ gimp_input_device_store_remove (GimpInputDeviceStore *store,
 
   return FALSE;
 }
-
-#if 0
 
 static void
 gimp_input_device_store_device_added (LibHalContext *ctx,
