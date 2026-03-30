@@ -24,8 +24,10 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
+#include "core/gimpitem.h"
 #include "core/gimppickable.h"
 
 #include "paint/gimpsourcecore.h"
@@ -157,8 +159,7 @@ gimp_source_tool_control (GimpTool       *tool,
                           GimpToolAction  action,
                           GimpDisplay    *display)
 {
-  GimpSourceTool    *source_tool = GIMP_SOURCE_TOOL (tool);
-  GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
+  GimpSourceTool *source_tool = GIMP_SOURCE_TOOL (tool);
 
   switch (action)
     {
@@ -168,11 +169,6 @@ gimp_source_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_HALT:
       gimp_source_tool_set_src_display (source_tool, NULL);
-      g_object_set (options,
-                    "src-drawables", NULL,
-                    "src-x",         0,
-                    "src-y",         0,
-                    NULL);
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
@@ -366,6 +362,25 @@ gimp_source_tool_oper_update (GimpTool         *tool,
         }
       else
         {
+          if (! source_tool->src_display)
+            {
+              GimpImage *src_image;
+              GList     *list;
+
+              src_image = gimp_item_get_image (GIMP_ITEM (options->src_drawables->data));
+
+              for (list = gimp_get_display_iter (src_image->gimp);
+                   list;
+                   list = g_list_next (list))
+                {
+                  if (gimp_display_get_image (list->data) == src_image)
+                    {
+                      gimp_source_tool_set_src_display (source_tool, list->data);
+                      break;
+                    }
+                }
+            }
+
           gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
           g_object_get (options,
