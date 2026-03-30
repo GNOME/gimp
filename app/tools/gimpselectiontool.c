@@ -612,6 +612,7 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
 {
   GimpTool             *tool;
   GimpSelectionOptions *options;
+  GimpDisplayShell     *shell;
   GError               *error = NULL;
 
   g_return_val_if_fail (GIMP_IS_SELECTION_TOOL (sel_tool), FALSE);
@@ -620,6 +621,7 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
 
   tool    = GIMP_TOOL (sel_tool);
   options = GIMP_SELECTION_TOOL_GET_OPTIONS (sel_tool);
+  shell   = gimp_display_get_shell (display);
 
   g_return_val_if_fail (gimp_tool_control_is_active (tool->control) == FALSE,
                         FALSE);
@@ -657,6 +659,9 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
 
         gimp_edit_selection_tool_start (tool, display, coords,
                                         edit_mode, FALSE);
+
+        /* Turn off selection for performance if moved as floating selection */
+        gimp_display_shell_set_show_selection (shell, FALSE);
 
         return TRUE;
       }
