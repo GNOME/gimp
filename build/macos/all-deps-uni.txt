@@ -36,7 +36,6 @@ librsvg|homebrew:librsvg \
 tiff \
 webp \
 libwmf -x11|homebrew:libwmf \
-maxflow \
 mypaint-brushes|homebrew:mypaint-brushes \
 openexr \
 openjpeg \
