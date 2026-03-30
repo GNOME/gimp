@@ -148,7 +148,7 @@ save_paths (TIFF      *tif,
 
       if (tmpname && err == NULL)
         {
-          g_string_append_c (data, MIN (len, 255));
+          g_string_append_c (data, (gchar) MIN (len, 255));
           g_string_append_len (data, tmpname, MIN (len, 255));
           g_free (tmpname);
         }
