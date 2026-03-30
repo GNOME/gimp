@@ -62,6 +62,7 @@ enum
   PROP_KERNING,
   PROP_LANGUAGE,
   PROP_BASE_DIR,
+  PROP_BASE_DIR_AUTO,
   PROP_COLOR,
   PROP_OUTLINE,
   PROP_JUSTIFICATION,
@@ -233,6 +234,11 @@ gimp_text_class_init (GimpTextClass *klass)
                          GIMP_TYPE_TEXT_DIRECTION,
                          GIMP_TEXT_DIRECTION_LTR,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BASE_DIR_AUTO,
+                            "base-dir-auto",
+                            NULL, NULL,
+                            TRUE, GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_COLOR (object_class, PROP_COLOR,
                           "color",
@@ -473,6 +479,9 @@ gimp_text_get_property (GObject      *object,
     case PROP_BASE_DIR:
       g_value_set_enum (value, text->base_dir);
       break;
+    case PROP_BASE_DIR_AUTO:
+      g_value_set_boolean (value, text->base_dir_auto);
+      break;
     case PROP_LANGUAGE:
       g_value_set_string (value, text->language);
       break;
@@ -627,6 +636,9 @@ gimp_text_set_property (GObject      *object,
       break;
     case PROP_BASE_DIR:
       text->base_dir = g_value_get_enum (value);
+      break;
+    case PROP_BASE_DIR_AUTO:
+      text->base_dir_auto = g_value_get_boolean (value);
       break;
     case PROP_COLOR:
       g_set_object (&text->color, g_value_get_object (value));;

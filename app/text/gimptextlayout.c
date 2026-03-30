@@ -146,6 +146,7 @@ gimp_text_layout_new (GimpText     *text,
   layout->xres   = xres;
   layout->yres   = yres;
 
+  pango_layout_set_auto_dir (layout->layout, text->base_dir_auto);
   pango_layout_set_wrap (layout->layout, PANGO_WRAP_WORD_CHAR);
 
   pango_layout_set_font_description (layout->layout, font_desc);

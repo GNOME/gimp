@@ -64,6 +64,9 @@ struct _GimpTextStyleEditor
   GtkWidget      *kerning_spinbutton;
   GtkAdjustment  *kerning_adjustment;
 
+  GtkWidget      *direction_ltr_button;
+  GtkWidget      *direction_rtl_button;
+
   GList          *toggles;
 
   guint           update_idle_id;

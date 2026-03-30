@@ -47,6 +47,7 @@ struct _GimpText
   gboolean                  kerning;
   gchar                    *language;
   GimpTextDirection         base_dir;
+  gboolean                  base_dir_auto;
   GeglColor                *color;
   GimpCustomStyle           outline_style;
   GimpPattern              *outline_pattern;
