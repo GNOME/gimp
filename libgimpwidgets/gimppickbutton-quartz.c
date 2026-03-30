@@ -521,7 +521,6 @@
 void
 _gimp_pick_button_quartz_pick (GimpPickButton *button)
 {
-  GimpPickWindowController *controller;
   NSAutoreleasePool        *pool;
 
   pool = [[NSAutoreleasePool alloc] init];
@@ -537,7 +536,7 @@ _gimp_pick_button_quartz_pick (GimpPickButton *button)
     }
 #endif
 
-  controller = [[GimpPickWindowController alloc] initWithButton:button];
+  [[GimpPickWindowController alloc] initWithButton:button];
 
   [pool release];
 }
