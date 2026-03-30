@@ -1,6 +1,6 @@
-From 9193a5e805d17cf990928ed77cfbebcd1a172d1c Mon Sep 17 00:00:00 2001
+From d72c56543c5b29ceb5e7a23fbbca51e14037b1ae Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Fri, 27 Mar 2026 20:36:27 -0300
+Date: Mon, 30 Mar 2026 17:49:32 -0300
 Subject: [PATCH] Disable some things due to lack of packages
 
 ---
@@ -511,7 +511,7 @@ index 7dd25ed1ba..234a951148 100644
    subdir('reference')
  endif
 diff --git a/docs/meson.build b/docs/meson.build
-index 454c2a9d75..c0332c9b49 100644
+index 70b57b52ef..fe17c88cc7 100644
 --- a/docs/meson.build
 +++ b/docs/meson.build
 @@ -8,7 +8,7 @@ manconf.set('gimplocaledir',  prefix / localedir)
@@ -521,8 +521,8 @@ index 454c2a9d75..c0332c9b49 100644
 -manconf.set('mypaint_brushes_dir', mypaint_brushes_dir)
 +manconf.set('mypaint_brushes_dir', 'none')
  
- custom_target('gimprc-' + gimp_app_version + '.5',
-               output: 'gimprc-' + gimp_app_version + '.5',
+ gimprc_man = custom_target('gimprc-' + gimp_app_version + '.5',
+                            output: 'gimprc-' + gimp_app_version + '.5',
 diff --git a/etc/meson.build b/etc/meson.build
 index 93ec8ce9e2..7b271c746c 100644
 --- a/etc/meson.build
@@ -536,10 +536,10 @@ index 93ec8ce9e2..7b271c746c 100644
  
  install_data(
 diff --git a/libgimp/meson.build b/libgimp/meson.build
-index 8f5d2c4a96..5f763a454a 100644
+index eb1166c728..6e1635cf77 100644
 --- a/libgimp/meson.build
 +++ b/libgimp/meson.build
-@@ -503,7 +503,9 @@ libgimpui_introspectable_files = [
+@@ -514,7 +514,9 @@ libgimpui_introspectable_files = [
    libgimpwidgets_introspectable,
  ]
  
@@ -551,7 +551,7 @@ index 8f5d2c4a96..5f763a454a 100644
    gobject_introspection_warning = '\n      '.join(['',
      'GObject Introspection is disabled while cross-compiling because',
 diff --git a/meson.build b/meson.build
-index 6b4e8b69a6..82b1424c4f 100644
+index 0450ba4600..3ca6e5300a 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -288,7 +288,7 @@ warning_cflags_common = [
@@ -563,7 +563,7 @@ index 6b4e8b69a6..82b1424c4f 100644
    '-Winit-self',
    '-Wlogical-op',
    '-Wmissing-declarations',
-@@ -531,17 +531,11 @@ json_glib         = dependency('json-glib-1.0',      version: '>='+json_glib_min
+@@ -533,17 +533,11 @@ json_glib         = dependency('json-glib-1.0',      version: '>='+json_glib_min
  lcms_minver       = '2.8'
  lcms              = dependency('lcms2',              version: '>='+lcms_minver)
  libmypaint_minver = '1.5.0'
@@ -584,7 +584,7 @@ index 6b4e8b69a6..82b1424c4f 100644
  
  pango_minver = '1.50.0'
  if platform_osx
-@@ -699,7 +693,7 @@ endif
+@@ -698,7 +692,7 @@ endif
  # Check for extension support
  
  appstream_minver = '0.16.1'
@@ -593,7 +593,7 @@ index 6b4e8b69a6..82b1424c4f 100644
  
  libarchive = dependency('libarchive')
  
-@@ -1074,7 +1068,7 @@ poppler_minver = '0.69.0'
+@@ -1068,7 +1062,7 @@ poppler_minver = '0.69.0'
  poppler_data_minver = '0.4.9'
  poppler = [
    dependency('poppler-glib', version: '>='+poppler_minver),
@@ -602,7 +602,7 @@ index 6b4e8b69a6..82b1424c4f 100644
  ]
  
  cairopdf_minver = '1.12.2'
-@@ -1208,7 +1202,7 @@ pygobject_found = ''
+@@ -1202,7 +1196,7 @@ pygobject_found = ''
  pygobject_gexiv2_found = false
  foreach py : py_candidates
    #Check if PyGobject installation have pycairo (#13105)
@@ -611,7 +611,7 @@ index 6b4e8b69a6..82b1424c4f 100644
    if python_tmp.found() and python_tmp.language_version().version_compare(python3_minver)
      python = python_tmp
      #Check if PyGObject installation have minimum version
-@@ -1227,9 +1221,7 @@ foreach py : py_candidates
+@@ -1221,9 +1215,7 @@ foreach py : py_candidates
                                          '''except (ImportError):''',
                                          '''    sys.exit(1)''']),
                                          check: false).returncode() == 0
@@ -622,7 +622,7 @@ index 6b4e8b69a6..82b1424c4f 100644
    endif
  endforeach
  
-@@ -1238,11 +1230,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
+@@ -1232,11 +1224,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
  endif
  message('Found Python @0@'.format(python.language_version()))
  
@@ -634,7 +634,7 @@ index 6b4e8b69a6..82b1424c4f 100644
  ## Javascript
  
  gjs = find_program('gjs', required: false)
-@@ -1341,7 +1328,6 @@ appstreamcli = find_program('appstreamcli', version: '>=0.15.3', required: get_o
+@@ -1335,7 +1322,6 @@ appstreamcli = find_program('appstreamcli', version: '>=0.15.3', required: get_o
  
  # Check for .typelib generation tools
  
@@ -642,7 +642,7 @@ index 6b4e8b69a6..82b1424c4f 100644
  
  # Check for doc generation tools
  
-@@ -1834,7 +1820,6 @@ install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif_minver)
+@@ -1822,7 +1808,6 @@ install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif_minver)
  install_conf.set('LIBJXL_REQUIRED_VERSION',       jpegxl_minver)
  install_conf.set('LIBLZMA_REQUIRED_VERSION',      liblzma_minver)
  install_conf.set('LIBTIFF_REQUIRED_VERSION',      libtiff_minver)
@@ -650,7 +650,7 @@ index 6b4e8b69a6..82b1424c4f 100644
  install_conf.set('LIBPNG_REQUIRED_VERSION',       libpng_minver)
  install_conf.set('OPENEXR_REQUIRED_VERSION',      openexr_minver)
  install_conf.set('OPENJPEG_REQUIRED_VERSION',     openjpeg_minver)
-@@ -2026,13 +2011,13 @@ if get_option('debug-self-in-build')
+@@ -2014,13 +1999,13 @@ if get_option('debug-self-in-build')
  endif
  gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
  
@@ -666,7 +666,7 @@ index 6b4e8b69a6..82b1424c4f 100644
    gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
  
    menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
-@@ -2095,18 +2080,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
+@@ -2083,18 +2068,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
        gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', plugin_exe)
      endforeach
    endif
@@ -685,7 +685,7 @@ index 6b4e8b69a6..82b1424c4f 100644
  endif
  
  gimp_exe = find_program('tools'/'in-build-gimp.py')
-@@ -2302,7 +2275,7 @@ final_message = [
+@@ -2290,7 +2263,7 @@ final_message = [
  '''  Test appdata         @0@'''.format(appstreamcli.found()),
  '',
  '''Documentation:''',
