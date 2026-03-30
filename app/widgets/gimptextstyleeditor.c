@@ -380,9 +380,29 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 }
 
 static void
+gimp_text_style_editor_direction_toggled (GtkToggleButton *toggle,
+                                          GimpTextStyleEditor *editor)
+{
+  if (gtk_toggle_button_get_active (toggle))
+    {
+      GimpTextDirection dir;
+      dir = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (toggle), "dir"));
+
+      if (editor->text)
+        {
+          /* Setting direction AND permanently flagging it as manually overridden */
+          g_object_set (editor->text, "base-dir-auto", FALSE,
+                        "base-direction", dir, NULL);
+        }
+    }
+}
+
+static void
 gimp_text_style_editor_constructed (GObject *object)
 {
   GimpTextStyleEditor *editor = GIMP_TEXT_STYLE_EDITOR (object);
+  GtkWidget           *dir_box;
+  GtkWidget           *icon;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -434,6 +454,9 @@ gimp_text_style_editor_constructed (GObject *object)
   g_signal_connect_swapped (editor->text, "notify::color",
                             G_CALLBACK (gimp_text_style_editor_update),
                             editor);
+  g_signal_connect_swapped (editor->text, "notify::base-direction",
+                            G_CALLBACK (gimp_text_style_editor_update),
+                            editor);
 
   g_signal_connect_data (editor->buffer, "changed",
                          G_CALLBACK (gimp_text_style_editor_update),
@@ -451,6 +474,52 @@ gimp_text_style_editor_constructed (GObject *object)
                          G_CALLBACK (gimp_text_style_editor_update),
                          editor, 0,
                          G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+
+  /* the new buttons on the popup */
+  dir_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_style_context_add_class (gtk_widget_get_style_context (dir_box),
+                               "linked");
+
+  editor->direction_ltr_button = gtk_radio_button_new (NULL);
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (editor->direction_ltr_button),
+                              FALSE);
+  gtk_widget_set_tooltip_text (editor->direction_ltr_button,
+                               _ ("Left-to-Right"));
+  icon = gtk_image_new_from_icon_name ("format-text-direction-ltr-symbolic",
+                                       GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (editor->direction_ltr_button), icon);
+  gtk_box_pack_start (GTK_BOX (dir_box), editor->direction_ltr_button,
+                      FALSE, FALSE, 0);
+
+  editor->direction_rtl_button = gtk_radio_button_new_from_widget (
+      GTK_RADIO_BUTTON (editor->direction_ltr_button));
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (editor->direction_rtl_button),
+                              FALSE);
+  gtk_widget_set_tooltip_text (editor->direction_rtl_button,
+                               _ ("Right-to-Left"));
+  icon = gtk_image_new_from_icon_name ("format-text-direction-rtl-symbolic",
+                                       GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (editor->direction_rtl_button), icon);
+  gtk_box_pack_start (GTK_BOX (dir_box), editor->direction_rtl_button,
+                      FALSE, FALSE, 0);
+
+  /*glib handles base direction enum */
+  g_object_set_data (G_OBJECT (editor->direction_ltr_button), "dir",
+                     GINT_TO_POINTER (GIMP_TEXT_DIRECTION_LTR));
+  g_object_set_data (G_OBJECT (editor->direction_rtl_button), "dir",
+                     GINT_TO_POINTER (GIMP_TEXT_DIRECTION_RTL));
+
+  g_signal_connect (editor->direction_ltr_button,
+                    "toggled",
+                    G_CALLBACK (gimp_text_style_editor_direction_toggled),
+                    editor);
+  g_signal_connect (editor->direction_rtl_button,
+                    "toggled",
+                    G_CALLBACK (gimp_text_style_editor_direction_toggled),
+                    editor);
+
+  gtk_box_pack_start (GTK_BOX (editor->upper_hbox), dir_box, FALSE, FALSE, 0);
+  gtk_widget_show_all (dir_box);
 
   gimp_text_style_editor_update (editor);
 }
@@ -1415,6 +1484,60 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
                                _("Change font of selected text"), NULL);
     }
 
+    
+  /* using pango to get initial direction, unless overridden by user*/
+  if (editor->text && editor->text->text)
+    {
+      if (editor->text->base_dir_auto)
+        {
+          PangoDirection auto_dir;
+
+          /* bypassing the compiler warning just this once */
+          G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+          auto_dir = pango_find_base_dir (editor->text->text, -1);
+          G_GNUC_END_IGNORE_DEPRECATIONS
+
+          if (auto_dir == PANGO_DIRECTION_RTL && 
+              editor->text->base_dir != GIMP_TEXT_DIRECTION_RTL)
+            {
+              g_object_set (editor->text, "base-direction",
+                            GIMP_TEXT_DIRECTION_RTL,
+                            "justify", GIMP_TEXT_JUSTIFY_RIGHT, NULL);
+            }
+
+          else if (auto_dir == PANGO_DIRECTION_LTR && 
+                   editor->text->base_dir != GIMP_TEXT_DIRECTION_LTR)
+            {
+              g_object_set (editor->text, "base-direction",
+                            GIMP_TEXT_DIRECTION_LTR,
+                            "justify", GIMP_TEXT_JUSTIFY_LEFT, NULL);
+            }
+        }
+    }
+  /* sync canvas ui buttons with GimpText state */
+  if (editor->text)
+    {
+      g_signal_handlers_block_by_func (editor->direction_ltr_button,
+                                       gimp_text_style_editor_direction_toggled,
+                                       editor);
+      g_signal_handlers_block_by_func (editor->direction_rtl_button,
+                                       gimp_text_style_editor_direction_toggled,
+                                       editor);
+
+      if (editor->text->base_dir == GIMP_TEXT_DIRECTION_RTL)
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (
+                                        editor->direction_rtl_button), TRUE);
+      else if (editor->text->base_dir == GIMP_TEXT_DIRECTION_LTR)
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (
+                                        editor->direction_ltr_button), TRUE);
+
+      g_signal_handlers_unblock_by_func (editor->direction_ltr_button,
+                                         gimp_text_style_editor_direction_toggled,
+                                         editor);
+      g_signal_handlers_unblock_by_func (editor->direction_rtl_button,
+                                         gimp_text_style_editor_direction_toggled,
+                                         editor);
+    }
   return FALSE;
 }
 

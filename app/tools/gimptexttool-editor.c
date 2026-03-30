@@ -1017,45 +1017,46 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
     case GTK_MOVEMENT_VISUAL_POSITIONS:
       if (! cancel_selection)
         {
+          gboolean is_rtl;
+
           if (! gimp_text_tool_ensure_layout (text_tool))
             break;
 
+          is_rtl = (gimp_text_tool_get_direction (
+                      text_tool) == GIMP_TEXT_DIRECTION_RTL);
+
           while (count != 0)
             {
-              gint           index;
-              gint           trailing    = 0;
-              gint           new_index   = -1;
-
-              index = gimp_text_buffer_get_iter_index (text_tool->buffer,
-                                                       &cursor, TRUE);
+              gint index;
+              gint new_index = -1;
 
               if (count > 0)
                 {
-                  gtk_text_iter_forward_visible_cursor_positions (&cursor, 1);
-                  index = gimp_text_buffer_get_iter_index (text_tool->buffer,
-                                                           &cursor, TRUE);
-                  new_index = index;
-                  trailing  = 0;
+                  if (is_rtl) /* right arrow. backward in RTL,forward in LTR,*/
+                    gtk_text_iter_backward_visible_cursor_positions (&cursor, 1);
+                  else
+                    gtk_text_iter_forward_visible_cursor_positions (&cursor, 1);
+
                   count--;
                 }
               else
                 {
-                  gtk_text_iter_backward_visible_cursor_positions (&cursor, 1);
-
-                  index = gimp_text_buffer_get_iter_index (text_tool->buffer,
-                                                           &cursor, TRUE);
-                  new_index = index;
-                  trailing  = 0;
+                  if (is_rtl) /* left arrow. forward in RTL. backward in LTR, */
+                    gtk_text_iter_forward_visible_cursor_positions (&cursor, 1);
+                  else
+                    gtk_text_iter_backward_visible_cursor_positions (&cursor, 1);
 
                   count++;
                 }
 
+              index = gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                                       &cursor, TRUE);
+              new_index = index;
+
               if (new_index != G_MAXINT && new_index != -1)
                 {
-                  index = new_index;
                   gimp_text_buffer_get_iter_at_index (text_tool->buffer,
-                                                      &cursor, index, TRUE);
-                  gtk_text_iter_forward_chars (&cursor, trailing);
+                                                      &cursor, new_index, TRUE);
                 }
               else
                 {
