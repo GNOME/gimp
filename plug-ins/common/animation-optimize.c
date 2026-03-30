@@ -1372,7 +1372,11 @@ remove_disposal_tag (gchar *dest,
 
   length = strlen (src);
 
+#ifndef _UCRT
   strcpy (dest, src);
+#else
+  strcpy_s (dest, length + 1, src);
+#endif
 
   while (offset<=length)
     {
@@ -1400,7 +1404,11 @@ remove_ms_tag (gchar *dest,
 
   length = strlen (src);
 
+#ifndef _UCRT
   strcpy (dest, src);
+#else
+  strcpy_s (dest, length + 1, src);
+#endif
 
   while (offset<=length)
     {

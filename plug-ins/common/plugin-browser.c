@@ -474,7 +474,11 @@ browser_search (GimpBrowser   *gimp_browser,
             }
           else
             {
+#ifndef _UCRT
               strcpy (xtimestr, "");
+#else
+              strcpy_s (xtimestr, sizeof (xtimestr), "");
+#endif
             }
 
           pinfo = g_new0 (PInfo, 1);

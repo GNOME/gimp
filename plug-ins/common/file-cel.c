@@ -844,7 +844,11 @@ export_image (GFile         *file,
 
   /* Headers */
   memset (header, 0, 32);
+#ifndef _UCRT
   strcpy ((gchar *) header, "KiSS");
+#else
+  strcpy_s ((gchar *) header, sizeof(header), "KiSS");
+#endif
   header[4]= 0x20;
 
   /* Work out whether to save as 8bit or 4bit */

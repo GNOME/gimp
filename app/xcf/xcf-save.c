@@ -332,7 +332,11 @@ xcf_save_image (XcfInfo    *info,
     }
   else
     {
+#ifndef _UCRT
       strcpy (version_tag, "gimp xcf file");
+#else
+      strcpy_s (version_tag, sizeof (version_tag), "gimp xcf file");
+#endif
     }
 
   xcf_write_int8_check_error (info, (guint8 *) version_tag, 14, ;);

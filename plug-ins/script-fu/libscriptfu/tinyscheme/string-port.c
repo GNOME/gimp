@@ -146,7 +146,11 @@ input_port_struct_from_string (scheme *sc, char *start) {
     }
 
   /* Assert strcpy writes NUL at end of buffer. */
+#ifndef _UCRT
   strcpy (copy, start);
+#else
+  strcpy_s (copy, buffer_size_bytes, start);
+#endif
 
   init_port_struct (port_struct, port_string | port_input, copy, buffer_size_bytes);
 
@@ -296,7 +300,11 @@ output_port_expand_by_at_least (scheme *sc, port *p, size_t byte_count)
       memset (new_buffer, '\0', new_size);
 
       /* This copies the terminating NUL. */
+#ifndef _UCRT
       strcpy (new_buffer, current_contents);
+#else
+      strcpy_s (new_buffer, new_size, current_contents);
+#endif
 
       reset_output_port_struct (p, new_buffer, new_size, new_curr);
 

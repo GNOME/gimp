@@ -106,11 +106,19 @@ gimp_text_font_name_from_xlfd (const gchar *xlfd)
       switch (*fields[i])
         {
         case 'i':
+#ifndef _UCRT
           strcpy (buffers[i], "italic");
+#else
+          strcpy_s (buffers[i], sizeof (buffers[i]), "italic");
+#endif
           i++;
           break;
         case 'o':
+#ifndef _UCRT
           strcpy (buffers[i], "oblique");
+#else
+          strcpy_s (buffers[i], sizeof (buffers[i]), "oblique");
+#endif
           i++;
           break;
         case 'r':

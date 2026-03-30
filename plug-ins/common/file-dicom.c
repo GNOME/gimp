@@ -444,7 +444,11 @@ load_image (GFile   *file,
           element_length_chars[1] = value_rep[1];
 
           /* Unknown value rep. It is not used right now anyhow */
+#ifndef _UCRT
           strcpy (value_rep, "??");
+#else
+          strcpy_s (value_rep, sizeof (value_rep), "??");
+#endif
 
           /* For implicit value_values the length is always four bytes,
              so we need to read another two. */
