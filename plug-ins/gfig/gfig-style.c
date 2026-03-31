@@ -202,8 +202,16 @@ gfig_read_parameter_gimp_rgb (gchar        **text,
           ptr++;
           if (!strcmp (tmpstr, name))
             {
+#ifndef _UCRT
               sscanf (ptr, fmt_str,
                       colorstr_r, colorstr_g, colorstr_b, colorstr_a);
+#else
+              sscanf_s (ptr, fmt_str,
+                        colorstr_r, (unsigned int)sizeof(colorstr_r),
+                        colorstr_g, (unsigned int)sizeof(colorstr_g),
+                        colorstr_b, (unsigned int)sizeof(colorstr_b),
+                        colorstr_a, (unsigned int)sizeof(colorstr_a));
+#endif
               gegl_color_set_rgba_with_space (*style_entry,
                                               g_ascii_strtod (colorstr_r, &endptr),
                                               g_ascii_strtod (colorstr_g, &endptr),
@@ -237,7 +245,11 @@ gfig_load_style (Style *style,
 
   get_line (load_buf2, MAX_LOAD_LINE, fp, 0);
   /* nuke final > and preserve spaces in name */
+#ifndef _UCRT
   if (1 != sscanf (load_buf2, "<Style %99[^>]>", name))
+#else
+  if (1 != sscanf_s (load_buf2, "<Style %99[^>]>", name, (unsigned int)sizeof(name)))
+#endif
     {
       /* no style data, copy default style and fail silently */
       gfig_style_copy (style, &gfig_context->default_style, "default style");

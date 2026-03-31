@@ -620,6 +620,7 @@ compose_run (GimpProcedure        *procedure,
 
           parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
           parasite_data = g_strndup (parasite_data, parasite_size);
+#ifndef _UCRT
           nret = sscanf (parasite_data,
                          "source=%d type=%31s %d %d %d %d",
                          &source,
@@ -628,6 +629,17 @@ compose_run (GimpProcedure        *procedure,
                          input + 1,
                          input + 2,
                          input + 3);
+#else
+          nret = sscanf_s (parasite_data,
+                           "source=%d type=%31s %d %d %d %d",
+                           &source,
+                           composevals.compose_type,
+                           (unsigned int) sizeof (composevals.compose_type),
+                           input,
+                           input + 1,
+                           input + 2,
+                           input + 3);
+#endif
 
           gimp_parasite_free (parasite);
           g_free (parasite_data);

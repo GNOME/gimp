@@ -135,6 +135,7 @@ gimp_gradient_load (GimpContext   *context,
       gint                 right_color_type;
       gdouble              left_rgba[4];
       gdouble              right_rgba[4];
+      gint                 n_matched;
 
       seg = gimp_gradient_segment_new ();
 
@@ -175,9 +176,16 @@ gimp_gradient_load (GimpContext   *context,
       gegl_color_set_pixel (seg->left_color, babl_format ("R'G'B'A double"), left_rgba);
       gegl_color_set_pixel (seg->right_color, babl_format ("R'G'B'A double"), right_rgba);
 
-      switch (sscanf (end, "%d %d %d %d",
-                      &type, &color,
-                      &left_color_type, &right_color_type))
+#ifndef _UCRT
+      n_matched = sscanf (end, "%d %d %d %d",
+                          &type, &color,
+                          &left_color_type, &right_color_type);
+#else
+      n_matched = sscanf_s (end, "%d %d %d %d",
+                            &type, &color,
+                            &left_color_type, &right_color_type);
+#endif
+      switch (n_matched)
         {
         case 4:
           seg->left_color_type  = (GimpGradientColor) left_color_type;
