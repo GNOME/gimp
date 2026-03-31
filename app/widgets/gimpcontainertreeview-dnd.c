@@ -163,7 +163,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
   target_list = gtk_drag_dest_get_target_list (GTK_WIDGET (tree_view->view));
   target_atom = gtk_drag_dest_find_target (GTK_WIDGET (tree_view->view),
                                            context, target_list);
-  if (! gtk_target_list_find (target_list, target_atom, &src_type))
+  if (! gtk_target_list_find (target_list, target_atom, (guint *) &src_type))
     goto drop_impossible;
 
   switch (src_type)

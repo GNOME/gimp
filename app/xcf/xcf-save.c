@@ -1865,7 +1865,7 @@ xcf_save_prop (XcfInfo    *info,
           g_return_val_if_reached (FALSE);
         xcf_write_int32_check_error (info, &item_type, 1, va_end (args));
 
-        if (! gimp_item_list_is_pattern (set, &method))
+        if (! gimp_item_list_is_pattern (set, (GimpSelectMethod *) &method))
           method = G_MAXUINT32;
         xcf_write_int32_check_error (info, &method, 1, va_end (args));
 
