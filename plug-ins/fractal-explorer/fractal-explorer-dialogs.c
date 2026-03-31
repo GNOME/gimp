@@ -1659,7 +1659,11 @@ load_options (fractalexplorerOBJ *xxx,
   while (!feof (fp) && strcmp (load_buf, "<EOF>"))
     {
       /* Get option name */
+#ifndef _UCRT
       sscanf (load_buf, "%255s %255s", str_buf, opt_buf);
+#else
+      sscanf_s (load_buf, "%255s %255s", str_buf, (unsigned)_countof(str_buf), opt_buf, (unsigned)_countof(opt_buf));
+#endif
 
       if (!strcmp (str_buf, "fractaltype:"))
         {

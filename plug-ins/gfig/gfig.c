@@ -545,7 +545,11 @@ gfig_load (GimpGfig    *gfig,
 
   get_line (load_buf, MAX_LOAD_LINE, fp, 1);
 
+#ifndef _UCRT
   sscanf (load_buf, "%10s %10s %lf", magic1, magic2, &version);
+#else
+  sscanf_s (load_buf, "%10s %10s %lf", magic1, (unsigned)_countof(magic1), magic2, (unsigned)_countof(magic2), &version);
+#endif
 
   if (strcmp (magic1, "GFIG") || strcmp (magic2, "Version"))
     {
@@ -557,7 +561,11 @@ gfig_load (GimpGfig    *gfig,
     }
 
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
+#ifndef _UCRT
   sscanf (load_buf, "Name: %100s", str_buf);
+#else
+  sscanf_s (load_buf, "Name: %100s", str_buf, (unsigned)_countof(str_buf));
+#endif
   gfig_name_decode (load_buf, str_buf);
   gfig_obj->draw_name = g_strdup (load_buf);
 
@@ -714,7 +722,11 @@ load_options (GFigObj *gfig,
 
       printf ("option %s val %s\n", str_buf, opt_buf);
 #else
+#ifndef _UCRT
       sscanf (load_buf, "%255s %255s", str_buf, opt_buf);
+#else
+      sscanf_s (load_buf, "%255s %255s", str_buf, (unsigned)_countof(str_buf), opt_buf, (unsigned)_countof(opt_buf));
+#endif
 #endif /* DEBUG */
 
       if (!strcmp (str_buf, "GridSpacing:"))

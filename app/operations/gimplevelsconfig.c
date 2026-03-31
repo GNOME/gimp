@@ -904,12 +904,21 @@ gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
           return FALSE;
         }
 
+#ifndef _UCRT
       fields = sscanf (line, "%d %d %d %d %31s",
                        &low_input[i],
                        &high_input[i],
                        &low_output[i],
                        &high_output[i],
                        float_buf);
+#else
+     fields = sscanf_s (line, "%d %d %d %d %31s",
+                        &low_input[i],
+                        &high_input[i],
+                        &low_output[i],
+                        &high_output[i],
+                        float_buf, (unsigned) sizeof (float_buf));
+#endif
 
       g_free (line);
 
