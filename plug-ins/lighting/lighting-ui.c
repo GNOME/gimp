@@ -954,7 +954,11 @@ load_preset_response (GtkFileChooser *chooser,
         }
       else
         {
+#ifndef _UCRT
           fscanf (fp, "Number of lights: %d", &num_lights);
+#else
+          fscanf_s (fp, "Number of lights: %d", &num_lights);
+#endif
 
           /* initialize lights to off */
           for (k = 0; k < NUM_LIGHTS; k++)
@@ -964,7 +968,11 @@ load_preset_response (GtkFileChooser *chooser,
             {
               source = &mapvals.lightsource[k];
 
+#ifndef _UCRT
               fscanf (fp, " Type: %20s", type_label);
+#else
+              fscanf_s (fp, " Type: %20s", type_label, (unsigned int)sizeof(type_label));
+#endif
 
               if (!strcmp (type_label, "Point"))
                 source->type = POINT_LIGHT;
@@ -984,7 +992,14 @@ load_preset_response (GtkFileChooser *chooser,
                         sizeof (buffer1) - 1,
                         sizeof (buffer2) - 1,
                         sizeof (buffer3) - 1);
+#ifndef _UCRT
               fscanf (fp, fmt_str, buffer1, buffer2, buffer3);
+#else
+              fscanf_s (fp, fmt_str,
+                        buffer1, (unsigned int)sizeof(buffer1),
+                        buffer2, (unsigned int)sizeof(buffer2),
+                        buffer3, (unsigned int)sizeof(buffer3));
+#endif
               source->position.x = g_ascii_strtod (buffer1, &endptr);
               source->position.y = g_ascii_strtod (buffer2, &endptr);
               source->position.z = g_ascii_strtod (buffer3, &endptr);
@@ -994,7 +1009,14 @@ load_preset_response (GtkFileChooser *chooser,
                         sizeof (buffer1) - 1,
                         sizeof (buffer2) - 1,
                         sizeof (buffer3) - 1);
+#ifndef _UCRT
               fscanf (fp, fmt_str, buffer1, buffer2, buffer3);
+#else
+              fscanf_s (fp, fmt_str,
+                        buffer1, (unsigned int)sizeof(buffer1),
+                        buffer2, (unsigned int)sizeof(buffer2),
+                        buffer3, (unsigned int)sizeof(buffer3));
+#endif
               source->direction.x = g_ascii_strtod (buffer1, &endptr);
               source->direction.y = g_ascii_strtod (buffer2, &endptr);
               source->direction.z = g_ascii_strtod (buffer3, &endptr);
@@ -1004,7 +1026,14 @@ load_preset_response (GtkFileChooser *chooser,
                         sizeof (buffer1) - 1,
                         sizeof (buffer2) - 1,
                         sizeof (buffer3) - 1);
+#ifndef _UCRT
               fscanf (fp, fmt_str, buffer1, buffer2, buffer3);
+#else
+              fscanf_s (fp, fmt_str,
+                        buffer1, (unsigned int)sizeof(buffer1),
+                        buffer2, (unsigned int)sizeof(buffer2),
+                        buffer3, (unsigned int)sizeof(buffer3));
+#endif
               source->color[0] = g_ascii_strtod (buffer1, &endptr);
               source->color[1] = g_ascii_strtod (buffer2, &endptr);
               source->color[2] = g_ascii_strtod (buffer3, &endptr);
@@ -1013,7 +1042,11 @@ load_preset_response (GtkFileChooser *chooser,
               snprintf (fmt_str, sizeof (fmt_str),
                         " Intensity: %%%" G_GSIZE_FORMAT "s",
                         sizeof (buffer1) - 1);
+#ifndef _UCRT
               fscanf (fp, fmt_str, buffer1);
+#else
+              fscanf_s (fp, fmt_str, buffer1, (unsigned int)sizeof(buffer1));
+#endif
               source->intensity = g_ascii_strtod (buffer1, &endptr);
 
             }

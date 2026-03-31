@@ -1441,7 +1441,11 @@ gflare_read_int (gint       *intvar,
   if (gf->error)
     return;
 
+#ifndef _UCRT
   if (fscanf (gf->fp, "%d", intvar) != 1)
+#else
+  if (fscanf_s (gf->fp, "%d", intvar) != 1)
+#endif
     gf->error = TRUE;
 }
 
@@ -1454,7 +1458,11 @@ gflare_read_double (gdouble    *dblvar,
   if (gf->error)
     return;
 
+#ifndef _UCRT
   if (fscanf (gf->fp, "%30s", buf) == 1)
+#else
+  if (fscanf_s (gf->fp, "%30s", buf, (unsigned int)sizeof(buf)) == 1)
+#endif
     *dblvar = g_ascii_strtod (buf, NULL);
   else
     gf->error = TRUE;
@@ -1471,7 +1479,11 @@ gflare_read_gradient_name (GradientName  name,
 
   /* FIXME: this is buggy */
 
+#ifndef _UCRT
   if (fscanf (gf->fp, "%1023s", tmp) == 1)
+#else
+  if (fscanf_s (gf->fp, "%1023s", tmp, (unsigned int)sizeof(tmp)) == 1)
+#endif
     {
       /* @GRADIENT_NAME */
       gradient_name_decode (dec, tmp);
@@ -1491,7 +1503,11 @@ gflare_read_shape (GFlareShape *shape,
   if (gf->error)
     return;
 
+#ifndef _UCRT
   if (fscanf (gf->fp, "%1023s", tmp) == 1)
+#else
+  if (fscanf_s (gf->fp, "%1023s", tmp, (unsigned int)sizeof(tmp)) == 1)
+#endif
     {
       for (i = 0; i < GF_NUM_SHAPES; i++)
         if (strcmp (tmp, gflare_shapes[i]) == 0)
@@ -1513,7 +1529,11 @@ gflare_read_mode (GFlareMode *mode,
   if (gf->error)
     return;
 
+#ifndef _UCRT
   if (fscanf (gf->fp, "%1023s", tmp) == 1)
+#else
+  if (fscanf_s (gf->fp, "%1023s", tmp, (unsigned int)sizeof(tmp)) == 1)
+#endif
     {
       for (i = 0; i < GF_NUM_MODES; i++)
         if (strcmp (tmp, gflare_modes[i]) == 0)

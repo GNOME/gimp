@@ -2091,7 +2091,11 @@ loadit (const gchar * fn)
       return;
     }
 
+#ifndef _UCRT
   if (2 != fscanf (f, "%d %d", &majtype, &type) || majtype < 0 || majtype > 2)
+#else
+  if (2 != fscanf_s (f, "%d %d", &majtype, &type) || majtype < 0 || majtype > 2)
+#endif
     {
       g_message (_("File '%s' is not a valid save file."),
                  gimp_filename_to_utf8 (fn));
