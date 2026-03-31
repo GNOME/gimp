@@ -315,6 +315,7 @@ warning_cflags_c = [
   '-Werror=implicit-function-declaration',
 ]
 warning_cflags_cpp = [
+  '-Wno-vla-cxx-extension',
 ]
 
 compiler_args += cc.get_supported_arguments(warning_cflags_common)
