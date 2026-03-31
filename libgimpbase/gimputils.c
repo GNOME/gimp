@@ -407,7 +407,7 @@ gimp_file_show_in_file_manager (GFile   *file,
         goto out;
       }
 
-    pidl = ILCreateFromPathW (w_filename);
+    pidl = (ITEMIDLIST *) ILCreateFromPathW (w_filename);
     if (!pidl)
       {
         g_set_error_literal (error, G_FILE_ERROR, 0,

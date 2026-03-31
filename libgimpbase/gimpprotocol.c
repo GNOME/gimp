@@ -1085,7 +1085,7 @@ _gp_param_def_read (GIOChannel *channel,
                     gpointer    user_data)
 {
   if (! _gimp_wire_read_int32 (channel,
-                               &param_def->param_def_type, 1,
+                               (guint32 *) &param_def->param_def_type, 1,
                                user_data))
     return FALSE;
 
@@ -1470,7 +1470,7 @@ _gp_param_def_write (GIOChannel *channel,
                      gpointer    user_data)
 {
   if (! _gimp_wire_write_int32 (channel,
-                                &param_def->param_def_type, 1,
+                                (const guint32 *) &param_def->param_def_type, 1,
                                 user_data))
     return FALSE;
 
