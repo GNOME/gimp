@@ -1002,7 +1002,9 @@ save_as_ncsa(gpointer param, OutputFunc_t output)
 {
    char *p;
    gchar *description;
+#ifdef _UCRT
    gchar *context = NULL;
+#endif
 
    output(param, "#$-:Image map file created by GIMP Image Map plug-in\n");
    output(param, "#$-:GIMP Image Map plug-in by Maurits Rijk\n");
