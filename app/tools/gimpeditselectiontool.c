@@ -112,6 +112,8 @@ struct _GimpEditSelectionTool
 
   gdouble             last_motion_x;   /*  Previous coords sent to _motion   */
   gdouble             last_motion_y;
+
+  gboolean            saved_show_selection;
 };
 
 struct _GimpEditSelectionToolClass
@@ -177,7 +179,8 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_select)
 {
   GimpTool *tool = GIMP_TOOL (edit_select);
 
-  edit_select->first_move = TRUE;
+  edit_select->first_move           = TRUE;
+  edit_select->saved_show_selection = FALSE;
 
   gimp_tool_control_set_active_modifiers (tool->control,
                                           GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
@@ -228,6 +231,9 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   shell = gimp_display_get_shell (display);
   image = gimp_display_get_image (display);
 
+  edit_select->saved_show_selection =
+    gimp_display_shell_get_show_selection (shell);
+
   /*  Make a check to see if it should be a floating selection translation  */
   if ((edit_mode == GIMP_TRANSLATE_MODE_MASK_TO_LAYER ||
        edit_mode == GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER) &&
@@ -243,6 +249,11 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
       if (layers && gimp_layer_is_floating_sel (layers->data))
         edit_mode = GIMP_TRANSLATE_MODE_FLOATING_SEL;
     }
+
+  /* Turn off "marching ants" when moving selections or floating layers
+   * for better performance. */
+  if (edit_mode == GIMP_TRANSLATE_MODE_FLOATING_SEL)
+    gimp_display_shell_set_show_selection (shell, FALSE);
 
   edit_select->edit_mode = edit_mode;
 
@@ -460,6 +471,9 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
   shell->equidistance_side_vertical   = GIMP_ARRANGE_HFILL;
   shell->snapped_side_horizontal      = GIMP_ARRANGE_HFILL;
   shell->snapped_side_vertical        = GIMP_ARRANGE_HFILL;
+
+  gimp_display_shell_set_show_selection (shell,
+                                         edit_select->saved_show_selection);
 }
 
 static void
