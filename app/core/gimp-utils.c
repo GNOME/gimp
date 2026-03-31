@@ -428,7 +428,11 @@ unescape_gstring (GString *string)
                     {
                       gchar buf[8];
                       char_str (l, buf);
+#ifndef _UCRT
                       strcpy (to, buf);
+#else
+                      strcpy_s (to, 8, buf);
+#endif
                       to += strlen (buf) - 1;
                       from = end;
                     }
