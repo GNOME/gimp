@@ -1117,17 +1117,28 @@ extensions_parse (gchar *extensions)
     {
       gchar *extension;
       gchar *next_token;
+#ifdef _UCRT
+      gchar *context = NULL;
+#endif
 
       /*  work on a copy  */
       extensions = g_strdup (extensions);
 
       next_token = extensions;
+#ifndef _UCRT
       extension = strtok (next_token, " \t,");
+#else
+      extension = strtok_s (next_token, " \t,", &context);
+#endif
 
       while (extension)
         {
           list = g_slist_prepend (list, g_strdup (extension));
+#ifndef _UCRT
           extension = strtok (NULL, " \t,");
+#else
+          extension = strtok_s (NULL, " \t,", &context);
+#endif
         }
 
       g_free (extensions);

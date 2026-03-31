@@ -76,7 +76,12 @@ static void get_button_colors (PreferencesDialog_t *dialog,
 static gint
 parse_map_type(void)
 {
+#ifndef _UCRT
    char *token = strtok(NULL, " )");
+#else
+   gchar *context  = NULL;
+   char  *token = strtok_s(NULL, " )", &context);
+#endif
    if (!strcmp(token, "ncsa"))
       return NCSA;
    else if (!strcmp(token, "cern"))
@@ -87,14 +92,24 @@ parse_map_type(void)
 static gint
 parse_yes_no(void)
 {
+#ifndef _UCRT
    char *token = strtok(NULL, " )");
+#else
+   gchar *context  = NULL;
+   char  *token = strtok_s(NULL, " )", &context);
+#endif
    return (gint) strcmp(token, "no");
 }
 
 static gint
 parse_int(void)
 {
+#ifndef _UCRT
    char *token = strtok(NULL, " )");
+#else
+   gchar *context  = NULL;
+   char  *token    = strtok_s(NULL, " )", &context);
+#endif
    return (gint) atoi(token);
 }
 
@@ -110,18 +125,30 @@ parse_color(GdkRGBA *color)
 static void
 parse_mru_entry(void)
 {
+#ifndef _UCRT
    char *filename = strtok(NULL, " )");
+#else
+   gchar *context  = NULL;
+   char  *filename = strtok_s(NULL, " )", &context);
+#endif
    mru_add(get_mru(), filename);
 }
 
 static void
 parse_line(PreferencesData_t *data, char *line)
 {
-   char *token;
+   char           *token;
    ColorSelData_t *colors = &data->colors;
+#ifdef _UCRT
+   gchar          *context = NULL;
+#endif
 
    line++;                      /* Skip '(' */
+#ifndef _UCRT
    token = strtok(line, " ");
+#else
+   token = strtok_s(line, " ", &context);
+#endif
 
    if (!strcmp(token, "default-map-type")) {
       data->default_map_type = parse_map_type();

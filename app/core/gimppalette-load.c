@@ -198,8 +198,15 @@ gimp_palette_load (GimpContext   *context,
         {
           GeglColor *color  = gegl_color_new ("black");
           guint8     rgb[3] = { 0 };
+#ifdef _UCRT
+          gchar     *context = NULL;
+#endif
 
+#ifndef _UCRT
           tok = strtok (str, " \t");
+#else
+          tok = strtok_s (str, " \t", &context);
+#endif
           if (tok)
             {
               if (atoi (tok) < 0 || atoi (tok) > 255)
@@ -216,7 +223,12 @@ gimp_palette_load (GimpContext   *context,
                          gimp_file_get_utf8_name (file), linenum);
             }
 
+#ifndef _UCRT
           tok = strtok (NULL, " \t");
+#else
+          tok = strtok_s (NULL, " \t", &context);
+#endif
+
           if (tok)
             {
               if (atoi (tok) < 0 || atoi (tok) > 255)
@@ -233,7 +245,11 @@ gimp_palette_load (GimpContext   *context,
                          gimp_file_get_utf8_name (file), linenum);
             }
 
+#ifndef _UCRT
           tok = strtok (NULL, " \t");
+#else
+          tok = strtok_s (NULL, " \t", &context);
+#endif
           if (tok)
             {
               if (atoi (tok) < 0 || atoi (tok) > 255)
@@ -251,7 +267,11 @@ gimp_palette_load (GimpContext   *context,
             }
 
           /* optional name */
+#ifndef _UCRT
           tok = strtok (NULL, "\n");
+#else
+          tok = strtok_s (NULL, "\n", &context);
+#endif
 
           /* Historical .gpl format is sRGB. */
           gegl_color_set_pixel (color, babl_format ("R'G'B' u8"), rgb);

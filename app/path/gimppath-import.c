@@ -1220,22 +1220,41 @@ parse_svg_viewbox (const gchar *value,
   gchar    *tok;
   gchar    *str     = g_strdup (value);
   gboolean  success = FALSE;
+#ifdef _UCRT
+  gchar     *context = NULL;
+#endif
 
   x = y = w = h = 0;
 
+#ifndef _UCRT
   tok = strtok (str, ", \t");
+#else
+  tok = strtok_s (str, ", \t", &context);
+#endif
   if (tok)
     {
       x = g_ascii_strtod (tok, NULL);
+#ifndef _UCRT
       tok = strtok (NULL, ", \t");
+#else
+      tok = strtok_s (NULL, ", \t", &context);
+#endif
       if (tok)
         {
           y = g_ascii_strtod (tok, NULL);
+#ifndef _UCRT
           tok = strtok (NULL, ", \t");
+#else
+          tok = strtok_s (NULL, ", \t", &context);
+#endif
           if (tok != NULL)
             {
               w = g_ascii_strtod (tok, NULL);
+#ifndef _UCRT
               tok = strtok (NULL, ", \t");
+#else
+              tok = strtok_s (NULL, ", \t", &context);
+#endif
               if (tok)
                 {
                   h = g_ascii_strtod (tok, NULL);

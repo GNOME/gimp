@@ -101,6 +101,9 @@ gimp_pixpipe_params_parse (const gchar       *parameters,
   gchar *copy;
   gchar *p, *q, *r;
   gint   i;
+#ifdef _UCRT
+  gchar *context = NULL;
+#endif
 
   g_return_if_fail (parameters != NULL);
   g_return_if_fail (params != NULL);
@@ -108,7 +111,11 @@ gimp_pixpipe_params_parse (const gchar       *parameters,
   copy = g_strdup (parameters);
 
   q = copy;
+#ifndef _UCRT
   while ((p = strtok (q, " \r\n")) != NULL)
+#else
+  while ((p = strtok_s (q, " \r\n", &context)) != NULL)
+#endif
     {
       q = NULL;
       r = strchr (p, ':');
