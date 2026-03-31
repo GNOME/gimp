@@ -291,8 +291,7 @@ void
 gimp_metadata_add_xmp_history (GimpMetadata *metadata,
                                gchar        *state_status)
 {
-  time_t     now;
-  struct tm *now_tm;
+  GDateTime *now_tm;
   gchar     *tmp;
   char       timestr[256];
   char       tzstr[7];
@@ -442,18 +441,17 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
               tags[3], id_count, history_tags[2]);
 
   /* get local time */
-  time (&now);
-  now_tm = localtime (&now);
+  now_tm = g_date_time_new_now_local ();
 
   /* get timezone and fix format */
-  strftime (tzstr, 7, "%z", now_tm);
-  tzstr[6] = '\0';
-  tzstr[5] = tzstr[4];
-  tzstr[4] = tzstr[3];
-  tzstr[3] = ':';
+  tmp = g_date_time_format (now_tm, "%:::z");
+  g_strlcpy (tzstr, tmp, 7);
+  g_free (tmp);
 
   /* get current time and timezone string */
-  strftime (timestr, 256, "%Y-%m-%dT%H:%M:%S", now_tm);
+  tmp = g_date_time_format (now_tm, "%Y-%m-%dT%H:%M:%S");
+  g_strlcpy (timestr, tmp, 256);
+  g_free (tmp);
   tmp = g_strdup_printf ("%s%s", timestr, tzstr);
   gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
                                       tagstr, tmp, &error);
@@ -464,6 +462,7 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
       g_clear_error (&error);
     }
   g_free (tmp);
+  g_date_time_unref (now_tm);
 
   memset (tagstr, 0, sizeof (tagstr));
 

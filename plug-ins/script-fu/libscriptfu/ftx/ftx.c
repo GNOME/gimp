@@ -312,22 +312,22 @@ pointer foreign_getenv(scheme *sc, pointer args)
 
 pointer foreign_time(scheme *sc, pointer args)
 {
-  time_t now;
-  struct tm *now_tm;
-  pointer ret;
+  GDateTime *now_tm;
+  pointer    ret;
 
   if (args != sc->NIL)
     return sc->F;
 
-  time(&now);
-  now_tm = localtime(&now);
+  now_tm = g_date_time_new_now_local();
 
-  ret = sc->vptr->cons(sc, sc->vptr->mk_integer(sc,(long) now_tm->tm_year),
-         sc->vptr->cons(sc, sc->vptr->mk_integer(sc,(long) now_tm->tm_mon),
-          sc->vptr->cons(sc, sc->vptr->mk_integer(sc,(long) now_tm->tm_mday),
-           sc->vptr->cons(sc, sc->vptr->mk_integer(sc,(long) now_tm->tm_hour),
-            sc->vptr->cons(sc, sc->vptr->mk_integer(sc,(long) now_tm->tm_min),
-             sc->vptr->cons(sc, sc->vptr->mk_integer(sc,(long) now_tm->tm_sec),sc->NIL))))));
+  ret = sc->vptr->cons(sc, sc->vptr->mk_integer(sc, (long) g_date_time_get_year(now_tm)),
+         sc->vptr->cons(sc, sc->vptr->mk_integer(sc, (long) g_date_time_get_month(now_tm)),
+          sc->vptr->cons(sc, sc->vptr->mk_integer(sc, (long) g_date_time_get_day_of_month(now_tm)),
+           sc->vptr->cons(sc, sc->vptr->mk_integer(sc, (long) g_date_time_get_hour(now_tm)),
+            sc->vptr->cons(sc, sc->vptr->mk_integer(sc, (long) g_date_time_get_minute(now_tm)),
+             sc->vptr->cons(sc, sc->vptr->mk_integer(sc, (long) g_date_time_get_second(now_tm)), sc->NIL))))));
+
+  g_date_time_unref(now_tm);
 
   return ret;
 }

@@ -1737,8 +1737,7 @@ export_image (GFile        *file,
   guchar           *pixel;            /* Pixel data */
   gdouble           xres, yres;       /* GIMP resolution (dpi) */
   png_time          mod_time;         /* Modification time (ie NOW) */
-  time_t            cutime;           /* Time since epoch */
-  struct tm        *gmt;              /* GMT broken down */
+  GDateTime        *gmt;              /* GMT broken down */
   gint              color_type;       /* PNG color type */
   gint              bit_depth;        /* Default to bit depth 16 */
 
@@ -2206,16 +2205,17 @@ export_image (GFile        *file,
 
   if (save_time)
     {
-      cutime = time (NULL);     /* time right NOW */
-      gmt = gmtime (&cutime);
+      gmt = g_date_time_new_now_utc ();
 
-      mod_time.year = gmt->tm_year + 1900;
-      mod_time.month = gmt->tm_mon + 1;
-      mod_time.day = gmt->tm_mday;
-      mod_time.hour = gmt->tm_hour;
-      mod_time.minute = gmt->tm_min;
-      mod_time.second = gmt->tm_sec;
+      mod_time.year = g_date_time_get_year (gmt);
+      mod_time.month = g_date_time_get_month (gmt);
+      mod_time.day = g_date_time_get_day_of_month (gmt);
+      mod_time.hour = g_date_time_get_hour (gmt);
+      mod_time.minute = g_date_time_get_minute (gmt);
+      mod_time.second = g_date_time_get_second (gmt);
       png_set_tIME (pp, info, &mod_time);
+
+      g_date_time_unref (gmt);
     }
 
 #if defined(PNG_iCCP_SUPPORTED)
