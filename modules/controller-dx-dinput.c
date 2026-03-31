@@ -1042,7 +1042,7 @@ dx_dinput_setup_events (ControllerDXDInput *controller,
 
   controller->pollfd = g_new (GPollFD, 1);
 
-  controller->pollfd->fd = (int) controller->event;
+  controller->pollfd->fd = (int) (intptr_t) controller->event;
   controller->pollfd->events = G_IO_IN;
 
   g_source_add_poll (&source->source, controller->pollfd);

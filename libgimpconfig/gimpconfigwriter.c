@@ -254,7 +254,7 @@ gimp_config_writer_new_from_fd (gint fd)
   writer->ref_count = 1;
 
 #ifdef G_OS_WIN32
-  writer->output = g_win32_output_stream_new ((gpointer) fd, FALSE);
+  writer->output = g_win32_output_stream_new ((gpointer) (intptr_t) fd, FALSE);
 #else
   writer->output = g_unix_output_stream_new (fd, FALSE);
 #endif

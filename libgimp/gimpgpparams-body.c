@@ -1805,8 +1805,8 @@ gimp_value_to_gp_param (const GValue *value,
           param->data.d_curve.n_points    = gimp_curve_get_n_points (curve);
           param->data.d_curve.points      = g_new0 (gdouble,
                                                     2 * param->data.d_curve.n_points);
-          param->data.d_curve.point_types = g_new0 (GimpCurvePointType,
-                                                    param->data.d_curve.n_points);
+          param->data.d_curve.point_types = (guint32 *) g_new0 (GimpCurvePointType,
+                                                                param->data.d_curve.n_points);
 
           for (gint j = 0; j < param->data.d_curve.n_points; j++)
             {

@@ -2005,7 +2005,7 @@ gimp_display_shell_rotate_gesture_maybe_get_state (GtkGestureRotate *gesture,
    * last_event happens to not have it. Thus we store the last valid state
    * and only update it if we get a valid state from last_event.
    */
-  guint           state = 0;
+  GdkModifierType state = 0;
   const GdkEvent *last_event;
 
   last_event = gtk_gesture_get_last_event (GTK_GESTURE (gesture), sequence);
