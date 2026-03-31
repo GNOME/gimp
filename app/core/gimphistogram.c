@@ -44,7 +44,6 @@
 #include "gimpwaitable.h"
 
 
-#define MAX_N_COMPONENTS   4
 #define N_DERIVED_CHANNELS 2
 
 #define PIXELS_PER_THREAD \
@@ -146,7 +145,7 @@ gimp_histogram_class_init (GimpHistogramClass *klass)
 
   g_object_class_install_property (object_class, PROP_N_COMPONENTS,
                                    g_param_spec_int ("n-components", NULL, NULL,
-                                                     0, MAX_N_COMPONENTS, 0,
+                                                     0, MAX_CHANNELS, 0,
                                                      GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_N_BINS,
