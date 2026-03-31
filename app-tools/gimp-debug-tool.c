@@ -65,8 +65,19 @@ main (int    argc,
   if (AttachConsole (ATTACH_PARENT_PROCESS) != 0 && ! g_getenv ("TERM") && ! g_getenv ("SHELL"))
     {
       /* 'r' is needed to prevent interleaving and '+' to support colors */
+#ifndef _UCRT
       freopen ("CONOUT$", "r+", stdout);
       freopen ("CONOUT$", "r+", stderr);
+#else
+      FILE* fileOut;
+      FILE* fileErr;
+
+      errno_t errOut = freopen_s (&fileOut, "CONOUT$", "r+", stdout);
+      errno_t errErr = freopen_s (&fileErr, "CONOUT$", "r+", stderr);
+
+      if (errOut != 0 || errErr != 0)
+        g_warning ("Failed to redirect streams to CONOUT$. stdout: %d, stderr: %d", errOut, errErr);
+#endif
       _flushall ();
 
       {
