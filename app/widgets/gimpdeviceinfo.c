@@ -795,7 +795,11 @@ gimp_device_info_pad_action_map_foreach (GimpPadActions    *pad_actions,
   label = g_strdup (gimp_action_get_label (action));
   accel_pos = g_utf8_strchr (label, -1, '_');
   if (accel_pos)
+#ifndef _UCRT
     strcpy (accel_pos, accel_pos + 1);
+#else
+    strcpy_s (accel_pos, strlen (accel_pos), accel_pos + 1);
+#endif
 
   gtk_pad_controller_set_action (controller,
                                  /* Action type enums are binary compatible */
