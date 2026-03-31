@@ -661,13 +661,25 @@ gettimeofday (struct timeval *tv, struct timezone *tz)
 
   if (NULL != tz)
     {
+#ifdef _UCRT
+      long timezone_val;
+      int  daylight_val;
+#endif
+
       if (! tzflag)
         {
           _tzset ();
           tzflag++;
         }
+#ifndef _UCRT
       tz->tz_minuteswest = _timezone / 60;
       tz->tz_dsttime     = _daylight;
+#else
+      _get_timezone (&timezone_val);
+      tz->tz_minuteswest = timezone_val / 60;
+      _get_daylight (&daylight_val);
+      tz->tz_dsttime     = daylight_val;
+#endif
     }
 
   return 0;
