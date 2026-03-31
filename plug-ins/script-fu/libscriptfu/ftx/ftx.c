@@ -15,7 +15,6 @@
 #endif
 #ifdef _WIN32
 #include <io.h>
-#define unlink _unlink
 #endif
 #include <time.h>
 
@@ -152,7 +151,11 @@ pointer foreign_filedelete(scheme *sc, pointer args)
 
   filename = sc->vptr->string_value(first_arg);
   filename = g_filename_from_utf8 (filename, -1, NULL, NULL, NULL);
+#ifndef _WIN32
   retcode = unlink(filename);
+#else
+  retcode = _unlink(filename);
+#endif
   if (retcode == 0)
     ret = sc->T;
   else
