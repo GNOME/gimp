@@ -454,7 +454,12 @@ gimp_eevl_quantity (GimpEevl *eva)
 
       identifier = g_newa (gchar, consumed_token.value.size + 1);
 
+#ifndef _UCRT
       strncpy (identifier, consumed_token.value.c, consumed_token.value.size);
+#else
+      strncpy_s (identifier, consumed_token.value.size + 1,
+                 consumed_token.value.c, consumed_token.value.size);
+#endif
       identifier[consumed_token.value.size] = '\0';
 
       if (eva->options.unit_resolver_proc (identifier,

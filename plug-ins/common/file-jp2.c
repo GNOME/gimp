@@ -1925,7 +1925,12 @@ export_image (GFile          *file,
   if (save_comment && comment && strlen (comment))
     {
       parameters.cp_comment = g_malloc0 (strlen (comment) + 1);
+#ifndef _UCRT
       strncpy (parameters.cp_comment, comment, strlen (comment));
+#else
+      strncpy_s (parameters.cp_comment, sizeof (parameters.cp_comment),
+                 comment, strlen (comment));
+#endif
     }
 
   if (! cmyk)

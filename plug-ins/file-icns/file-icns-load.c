@@ -83,14 +83,22 @@ resource_load (FILE *file)
           gchar   type[5];
           guint32 size;
 
+#ifndef _UCRT
           strncpy (type, header.type, 4);
+#else
+          strncpy_s (type, 5, header.type, 4);
+#endif
           type[4] = '\0';
           size = GUINT32_FROM_BE (header.size);
 
           if (! strncmp (header.type, "icns", 4) && size > sizeof (IcnsResourceHeader))
             {
               res = (IcnsResource *) g_new (guchar, sizeof (IcnsResource) + size);
+#ifndef _UCRT
               strncpy (res->type, header.type, 4);
+#else
+              strncpy_s (res->type, 5, header.type, 4);
+#endif
               res->type[4] = '\0';
               res->size = size;
               res->cursor = sizeof (IcnsResourceHeader);
@@ -144,7 +152,11 @@ resource_get_next (IcnsResource *icns,
     return FALSE;
 
   header = (IcnsResourceHeader *) &(icns->data[icns->cursor]);
+#ifndef _UCRT
   strncpy (res->type, header->type, 4);
+#else
+  strncpy_s (res->type, 5, header->type, 4);
+#endif
   res->size   = GUINT32_FROM_BE (header->size);
   res->cursor = sizeof (IcnsResourceHeader);
   res->data   = &(icns->data[icns->cursor]);
@@ -455,7 +467,11 @@ icns_attach_image (GimpImage    *image,
   guint           expected_size;
   gboolean        layer_loaded = FALSE;
 
+#ifndef _UCRT
   strncpy (layer_name, icontype->type, 4);
+#else
+  strncpy_s (layer_name, 5, icontype->type, 4);
+#endif
   layer_name[4] = '\0';
 
   row = 4 * icontype->width;
@@ -481,7 +497,11 @@ icns_attach_image (GimpImage    *image,
       gchar          *temp_file_type = NULL;
       gchar          *procedure_name = NULL;
 
+#ifndef _UCRT
       strncpy (image_type, (gchar *) icns->data + 8, 4);
+#else
+      strncpy_s (image_type, 5, (gchar *) icns->data + 8, 4);
+#endif
       image_type[4] = '\0';
 
       /* PNG */

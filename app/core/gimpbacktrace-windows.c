@@ -237,7 +237,7 @@ gimp_backtrace_exception_handler (PEXCEPTION_POINTERS info)
 
   if (info->ExceptionRecord                   != NULL                      &&
       info->ExceptionRecord->ExceptionCode    == EXCEPTION_SET_THREAD_NAME &&
-      info->ExceptionRecord->NumberParameters * 
+      info->ExceptionRecord->NumberParameters *
       sizeof (ULONG_PTR)                      == sizeof (THREADNAME_INFO))
     {
       THREADNAME_INFO name_info;
@@ -644,7 +644,11 @@ utf8_copy_sized (char       *dest,
   if (size == 0)
     return;
 
+#ifndef _UCRT
   strncpy (dest, src, size);
+#else
+  strncpy_s (dest, sizeof (dest), src, size);
+#endif
 
   if (dest[size - 1] != 0)
     {
