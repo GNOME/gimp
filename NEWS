@@ -6,6 +6,24 @@
 This is the stable branch of GIMP.
 
 
+Overview of Changes from GIMP 3.2.2 to GIMP 3.2.4
+=================================================
+
+Tool
+
+  - Text tool: when editing text, prioritize our global actions when a
+    shortcut matches, before sending the hit keys to the IME (Input
+    Method Engine). Otherwise some IME may consume our keys and block
+    custom shortcuts (e.g. Alt+key events are often used to trigger
+    special characters on macOS or Windows and may block core actions).
+
+Build:
+
+  - Many build warnings are being cleaned out.
+  - New rules to generate Markdown versions of our man pages for the
+    website.
+
+
 Overview of Changes from GIMP 3.2.0 to GIMP 3.2.2
 =================================================
 
