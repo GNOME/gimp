@@ -1692,28 +1692,57 @@ yyreduce:
 /* Line 1787 of yacc.c  */
 #line 200 "imap_csim.y"
     {
-		   char *p;
+		   char  *p;
+       gchar *context = NULL;
 		   if (current_type == RECTANGLE) {
 		      Rectangle_t *rectangle;
 
 		      rectangle = ObjectToRectangle(current_object);
+#ifndef _UCRT
 		      p = strtok((yyvsp[(3) - (3)].id), ",");
+#else
+          p = strtok_s((yyvsp[(3) - (3)].id), ",", &context);
+#endif
 		      rectangle->x = atoi(p);
+#ifndef _UCRT
 		      p = strtok(NULL, ",");
+#else
+          p = strtok_s(NULL, ",", &context);
+#endif
 		      rectangle->y = atoi(p);
+#ifndef _UCRT
 		      p = strtok(NULL, ",");
+#else
+          p = strtok_s(NULL, ",", &context);
+#endif
 		      rectangle->width = atoi(p) - rectangle->x;
+#ifndef _UCRT
 		      p = strtok(NULL, ",");
+#else
+          p = strtok_s(NULL, ",", &context);
+#endif
 		      rectangle->height = atoi(p) - rectangle->y;
 		   } else if (current_type == CIRCLE) {
 		      Circle_t *circle;
 
 		      circle = ObjectToCircle(current_object);
+#ifndef _UCRT
 		      p = strtok((yyvsp[(3) - (3)].id), ",");
+#else
+          p = strtok_s((yyvsp[(3) - (3)].id), ",", &context);
+#endif
 		      circle->x = atoi(p);
+#ifndef _UCRT
 		      p = strtok(NULL, ",");
+#else
+          p = strtok_s(NULL, ",", &context);
+#endif
 		      circle->y = atoi(p);
+#ifndef _UCRT
 		      p = strtok(NULL, ",");
+#else
+          p = strtok_s(NULL, ",", &context);
+#endif
 		      circle->r = atoi(p);
 		   } else if (current_type == POLYGON) {
 		      Polygon_t *polygon = ObjectToPolygon(current_object);
@@ -1721,19 +1750,35 @@ yyreduce:
 		      GdkPoint *point, *first;
 		      gint x, y;
 
+#ifndef _UCRT
 		      p = strtok((yyvsp[(3) - (3)].id), ",");
+#else
+          p = strtok_s((yyvsp[(3) - (3)].id), ",", &context);
+#endif
 		      x = atoi(p);
+#ifndef _UCRT
 		      p = strtok(NULL, ",");
+#else
+          p = strtok_s(NULL, ",", &context);
+#endif
 		      y = atoi(p);
 		      point = new_point(x, y);
 		      points = g_list_append(NULL, (gpointer) point);
 
 		      while(1) {
+#ifndef _UCRT
 			 p = strtok(NULL, ",");
+#else
+       p = strtok_s(NULL, ",", &context);
+#endif
 			 if (!p)
 			    break;
 			 x = atoi(p);
+#ifndef _UCRT
 			 p = strtok(NULL, ",");
+#else
+       p = strtok_s(NULL, ",", &context);
+#endif
 			 y = atoi(p);
 			 point = new_point(x, y);
 			 points = g_list_append(points, (gpointer) point);

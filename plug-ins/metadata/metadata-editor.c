@@ -4879,14 +4879,23 @@ set_gps_longitude_latitude (GimpMetadata *metadata,
   gint         degrees, minutes;
   gdouble      seconds;
   gboolean     remove_val = FALSE;
+#ifdef _UCRT
+  gchar       *context = NULL;
+#endif
 
   g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "set_gps_longitude_latitude - Tag %s, Input value: %s", tag, value);
 
   if (s && s[0] != '\0')
     {
+#ifndef _UCRT
       str1 = strtok (s, delimiters_dms);
       str2 = strtok (NULL, delimiters_dms);
       str3 = strtok (NULL, delimiters_dms);
+#else
+      str1 = strtok_s (s, delimiters_dms, &context);
+      str2 = strtok_s (NULL, delimiters_dms, &context);
+      str3 = strtok_s (NULL, delimiters_dms, &context);
+#endif
 
       g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "String split into: %s - %s - %s", str1, str2, str3);
     }

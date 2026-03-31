@@ -923,6 +923,9 @@ save_as_cern(gpointer param, OutputFunc_t output)
    char *p;
    gchar *description;
    gchar *next_token;
+#ifdef _UCRT
+   gchar *context = NULL;
+#endif
 
    write_cern_comment(param, output);
    output(param, "-:Image map file created by GIMP Image Map plug-in\n");
@@ -941,10 +944,15 @@ save_as_cern(gpointer param, OutputFunc_t output)
 
    description = g_strdup(_map_info.description);
    next_token = description;
-   for (p = strtok (next_token, "\n"); p; p = strtok(NULL, "\n")) {
-      write_cern_comment(param, output);
-      output(param, "DESCRIPTION:%s\n", p);
-   }
+#ifndef _UCRT
+   for (p = strtok (next_token, "\n"); p; p = strtok(NULL, "\n"))
+#else
+  for (p = strtok_s (next_token, "\n", &context); p; p = strtok_s(NULL, "\n", &context))
+#endif
+     {
+       write_cern_comment(param, output);
+       output(param, "DESCRIPTION:%s\n", p);
+     }
    g_free(description);
 
    if (*_map_info.default_url)
@@ -957,6 +965,9 @@ save_as_csim(gpointer param, OutputFunc_t output)
 {
    char *p;
    gchar *description;
+#ifdef _UCRT
+   gchar *context = NULL;
+#endif
 
    output(param, "<img src=\"%s\" width=\"%d\" height=\"%d\" border=\"0\" "
           "usemap=\"#%s\" />\n\n", _map_info.image_name,
@@ -971,7 +982,11 @@ save_as_csim(gpointer param, OutputFunc_t output)
    output(param, "<!-- #$AUTHOR:%s -->\n", _map_info.author);
 
    description = g_strdup(_map_info.description);
+#ifndef _UCRT
    for (p = strtok(description, "\n"); p; p = strtok(NULL, "\n"))
+#else
+   for (p = strtok_s(description, "\n", &context); p; p = strtok_s(NULL, "\n", &context))
+#endif
       output(param, "<!-- #$DESCRIPTION:%s -->\n", p);
    g_free(description);
 
@@ -987,6 +1002,7 @@ save_as_ncsa(gpointer param, OutputFunc_t output)
 {
    char *p;
    gchar *description;
+   gchar *context = NULL;
 
    output(param, "#$-:Image map file created by GIMP Image Map plug-in\n");
    output(param, "#$-:GIMP Image Map plug-in by Maurits Rijk\n");
@@ -997,7 +1013,11 @@ save_as_ncsa(gpointer param, OutputFunc_t output)
    output(param, "#$FORMAT:ncsa\n");
 
    description = g_strdup(_map_info.description);
+#ifndef _UCRT
    for (p = strtok(description, "\n"); p; p = strtok(NULL, "\n"))
+#else
+   for (p = strtok_s(description, "\n", &context); p; p = strtok_s(NULL, "\n", &context))
+#endif
       output(param, "#$DESCRIPTION:%s\n", p);
    g_free(description);
 
