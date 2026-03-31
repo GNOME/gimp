@@ -642,6 +642,8 @@ execute_command (SFCommand *cmd)
   gdouble     total_time;
   GTimer     *timer;
   gboolean    is_script_error;
+  GDateTime  *dt;
+  gchar      *dt_str;
 
   server_log ("Processing request #%d\n", cmd->request_no);
 
@@ -656,10 +658,14 @@ execute_command (SFCommand *cmd)
 
   total_time = g_timer_elapsed (timer, NULL);
   time (&clocknow);
+  dt = g_date_time_new_from_unix_local (clocknow);
+  dt_str = g_date_time_format (dt, "%c");
   server_log ("Request #%d processed in %.3f seconds, finishing on %s",
-              cmd->request_no, total_time, ctime (&clocknow));
+              cmd->request_no, total_time, dt_str);
 
   g_timer_destroy (timer);
+  g_free (dt_str);
+  g_date_time_unref (dt);
 
   buffer[MAGIC_BYTE]     = MAGIC;
   buffer[ERROR_BYTE]     = is_script_error ? TRUE : FALSE;
@@ -702,6 +708,8 @@ read_from_client (gint filedes)
   gint       command_len;
   gint       nbytes;
   gint       i;
+  GDateTime *dt;
+  gchar     *dt_str;
 
   for (i = 0; i < COMMAND_HEADER;)
     {
@@ -765,14 +773,18 @@ read_from_client (gint filedes)
   /*  Get the client address from the address/socket table  */
   clientaddr = g_hash_table_lookup (clients, GINT_TO_POINTER (cmd->filedes));
   time (&clock);
-  /* ! ctime has trailing newline so put it last. */
+  dt     = g_date_time_new_from_unix_local (clock);
+  dt_str = g_date_time_format (dt, "%c");
   server_log ("received request #%d from IP address %s: %s,"
               "[queue length: %d] on %s",
               cmd->request_no,
               clientaddr ? clientaddr : "<invalid>",
               cmd->command,
               queue_length,
-              ctime (&clock));
+              dt_str);
+
+  g_free (dt_str);
+  g_date_time_unref (dt);
 
   return 0;
 }
