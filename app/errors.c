@@ -293,9 +293,7 @@ gimp_eek (const gchar *reason,
           gboolean     use_handler)
 {
   GimpCoreConfig  *config        = the_errors_gimp->config;
-#ifndef G_OS_WIN32
   gboolean         eek_handled   = FALSE;
-#endif
   GimpDebugPolicy  debug_policy;
   GList           *iter;
   gint             num_idx;
