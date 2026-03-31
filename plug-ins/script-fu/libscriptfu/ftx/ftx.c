@@ -181,7 +181,7 @@ pointer foreign_diropenstream(scheme *sc, pointer args)
     return sc->F;
 
   /* Stuffing a pointer in a long may not always be portable ~~~~~ */
-  return (sc->vptr->mk_integer(sc, (long) dir));
+  return (sc->vptr->mk_integer(sc, (intptr_t) dir));
 }
 
 pointer foreign_dirreadentry(scheme *sc, pointer args)
@@ -197,7 +197,7 @@ pointer foreign_dirreadentry(scheme *sc, pointer args)
   if (!sc->vptr->is_integer(first_arg))
     return sc->F;
 
-  dir = (GDir *) sc->vptr->ivalue(first_arg);
+  dir = (GDir *)(intptr_t) sc->vptr->ivalue(first_arg);
   if (dir == NULL)
     return sc->F;
 
@@ -221,7 +221,7 @@ pointer foreign_dirrewind(scheme *sc, pointer args)
   if (!sc->vptr->is_integer(first_arg))
     return sc->F;
 
-  dir = (GDir *) sc->vptr->ivalue(first_arg);
+  dir = (GDir *)(intptr_t) sc->vptr->ivalue(first_arg);
   if (dir == NULL)
     return sc->F;
 
@@ -241,7 +241,7 @@ pointer foreign_dirclosestream(scheme *sc, pointer args)
   if (!sc->vptr->is_integer(first_arg))
     return sc->F;
 
-  dir = (GDir *) sc->vptr->ivalue(first_arg);
+  dir = (GDir *)(intptr_t) sc->vptr->ivalue(first_arg);
   if (dir == NULL)
     return sc->F;
 
