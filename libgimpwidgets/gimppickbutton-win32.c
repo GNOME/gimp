@@ -112,7 +112,7 @@ static LRESULT CALLBACK   input_window_procedure           (HWND            hwnd
                                                             WPARAM          wParam,
                                                             LPARAM          lParam);
 static gboolean           ensure_input_window_class        (void);
-static void               remove_input_window_class        (void);
+/*static void               remove_input_window_class        (void);*/
 static HWND               create_input_window              (POINT           origin,
                                                             int             width,
                                                             int             height);
@@ -722,7 +722,7 @@ ensure_input_window_class (void)
   return TRUE;
 }
 
-static void
+/*static void
 remove_input_window_class (void)
 {
   if (input_window_class)
@@ -731,7 +731,7 @@ remove_input_window_class (void)
       UnregisterClassW (name, this_module ());
       input_window_class = 0;
     }
-}
+}*/
 
 /* create_input_window expects logical screen coordinates */
 
