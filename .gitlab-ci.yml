@@ -794,6 +794,7 @@ branches-check:
   extends: .default
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+      interruptible: true
   stage: analysis
   variables:
     GIT_DEPTH: "0"
