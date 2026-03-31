@@ -81,7 +81,6 @@
 #ifdef _WIN32
 #include <io.h>
 #define close _close
-#define fileno _fileno
 #endif
 
 #include <glib/gstdio.h>
@@ -1097,7 +1096,11 @@ zip_load (GFile *infile,
 
       if (archive_read_next_header (a, &entry) == ARCHIVE_OK)
         {
+#ifndef _WIN32
           r = archive_read_data_into_fd (a, fileno (out));
+#else
+          r = archive_read_data_into_fd (a, _fileno (out));
+#endif
 
           if (r != ARCHIVE_OK)
             {
