@@ -64,6 +64,7 @@ struct _GimpFontFactoryPrivate
   gchar        *conf;
   gchar        *sysconf;
   PangoContext *pango_context;
+  gchar        *pending_error;
 };
 
 #define GET_PRIVATE(obj) (((GimpFontFactory *) (obj))->priv)
@@ -83,8 +84,7 @@ static gboolean   gimp_font_factory_data_delete     (GimpDataFactory *factory,
                                                      GError         **error);
 static void       gimp_font_factory_finalize        (GObject         *object);
 
-static void       gimp_font_factory_load            (GimpFontFactory *factory,
-                                                     GError         **error);
+static void       gimp_font_factory_load            (GimpFontFactory *factory);
 static gboolean   gimp_font_factory_load_fonts_conf (FcConfig        *config,
                                                      GFile           *fonts_conf);
 static void       gimp_font_factory_add_directories (GimpFontFactory *factory,
@@ -131,34 +131,14 @@ static void
 gimp_font_factory_data_init (GimpDataFactory *factory,
                              GimpContext     *context)
 {
-  GError *error = NULL;
-
-  gimp_font_factory_load (GIMP_FONT_FACTORY (factory), &error);
-
-  if (error)
-    {
-      gimp_message_literal (gimp_data_factory_get_gimp (factory), NULL,
-                            GIMP_MESSAGE_INFO,
-                            error->message);
-      g_error_free (error);
-    }
+  gimp_font_factory_load (GIMP_FONT_FACTORY (factory));
 }
 
 static void
 gimp_font_factory_data_refresh (GimpDataFactory *factory,
                                 GimpContext     *context)
 {
-  GError *error = NULL;
-
-  gimp_font_factory_load (GIMP_FONT_FACTORY (factory), &error);
-
-  if (error)
-    {
-      gimp_message_literal (gimp_data_factory_get_gimp (factory), NULL,
-                            GIMP_MESSAGE_INFO,
-                            error->message);
-      g_error_free (error);
-    }
+  gimp_font_factory_load (GIMP_FONT_FACTORY (factory));
 }
 
 static void
@@ -217,6 +197,7 @@ gimp_font_factory_finalize (GObject  *object)
   g_slist_free_full (GET_PRIVATE (font_factory)->fonts_renaming_config, (GDestroyNotify) g_free);
   g_free (GET_PRIVATE (font_factory)->sysconf);
   g_free (GET_PRIVATE (font_factory)->conf);
+  g_free (GET_PRIVATE (font_factory)->pending_error);
   g_clear_object (&GET_PRIVATE (font_factory)->pango_context);
   FcConfigDestroy (FcConfigGetCurrent ());
 
@@ -324,11 +305,23 @@ gimp_font_factory_load_async_callback (GimpAsync       *async,
     }
 
   gimp_container_thaw (container);
+
+  /* Show any error from gimp_font_factory_add_directories() that was deferred
+   * to avoid a deadlock. Displaying the GTK dialog while the async font-loading
+   * task is running causes the main thread to freeze indefinitely.
+   */
+  if (GET_PRIVATE (factory)->pending_error)
+    {
+      gimp_message_literal (gimp_data_factory_get_gimp (GIMP_DATA_FACTORY (factory)),
+                            NULL,
+                            GIMP_MESSAGE_INFO,
+                            GET_PRIVATE (factory)->pending_error);
+      g_clear_pointer (&GET_PRIVATE (factory)->pending_error, g_free);
+    }
 }
 
 static void
-gimp_font_factory_load (GimpFontFactory  *factory,
-                        GError          **error)
+gimp_font_factory_load (GimpFontFactory *factory)
 {
   GimpContainer *container;
   Gimp          *gimp;
@@ -337,6 +330,7 @@ gimp_font_factory_load (GimpFontFactory  *factory,
   GFile         *fonts_conf;
   GList         *path;
   GimpAsync     *async;
+  GError        *error = NULL;
 
   async_set = gimp_data_factory_get_async_set (GIMP_DATA_FACTORY (factory));
 
@@ -393,7 +387,19 @@ gimp_font_factory_load (GimpFontFactory  *factory,
   gimp_container_freeze (container);
   gimp_container_clear (container);
 
-  gimp_font_factory_add_directories (factory, config, path, error);
+  gimp_font_factory_add_directories (factory, config, path, &error);
+
+  if (error)
+    {
+      g_free (GET_PRIVATE (factory)->pending_error);
+      GET_PRIVATE (factory)->pending_error = g_strdup (error->message);
+      g_error_free (error);
+    }
+  else
+    {
+      g_clear_pointer (&GET_PRIVATE (factory)->pending_error, g_free);
+    }
+
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   FcConfigSetCurrent (config);
