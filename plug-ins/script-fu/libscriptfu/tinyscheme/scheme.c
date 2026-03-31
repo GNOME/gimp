@@ -160,7 +160,9 @@ static int utf8_stricmp(const char *s1, const char *s2)
   return result;
 }
 
+#ifndef _USE_MATH_DEFINES
 #define min(a, b)  ((a) <= (b) ? (a) : (b))
+#endif
 
 #if USE_STRLWR
 /*
