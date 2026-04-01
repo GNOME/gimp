@@ -461,8 +461,18 @@ browser_search (GimpBrowser   *gimp_browser,
             {
               const gchar *format = "%c";  /* gcc workaround to avoid warning */
               gchar       *utf8;
+#ifdef _UCRT
+              struct tm    tm_struct;
+#endif
 
+#ifndef _UCRT
               x = localtime (&tx);
+#else
+              if (localtime_s (&tm_struct, &tx) == 0)
+                x = &tm_struct;
+              else
+                x = NULL;
+#endif
               ret = strftime (xtimestr, sizeof (xtimestr), format, x);
               xtimestr[ret] = 0;
 
