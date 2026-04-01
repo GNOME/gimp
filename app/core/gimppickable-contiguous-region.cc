@@ -48,6 +48,9 @@ extern "C"
   (/* each thread costs as much as */ 64.0 * 64.0 /* pixels */)
 
 
+static gfloat *mask_row_buf      = NULL;
+static gsize   mask_row_buf_size = 0;
+
 typedef struct
 {
   gint   x;
@@ -188,6 +191,9 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       GIMP_TIMER_END("foo");
     }
   g_clear_object (&src_buffer);
+
+  g_clear_pointer (&mask_row_buf, g_free);
+  mask_row_buf_size = 0;
 
   return mask_buffer;
 }
@@ -694,6 +700,9 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
   if (free_src_buffer)
     g_object_unref (src_buffer);
 
+  g_clear_pointer (&mask_row_buf, g_free);
+  mask_row_buf_size = 0;
+
   return mask_buffer;
 }
 
@@ -990,9 +999,18 @@ find_contiguous_segment (const gfloat        *col,
                          gfloat              *row)
 {
   gfloat *s;
-  gfloat  mask_row_buf[src_extent->width];
-  gfloat *mask_row = mask_row_buf - src_extent->x;
+  gfloat *mask_row;
   gfloat  diff;
+
+  if (mask_row_buf == NULL ||
+      (gsize) src_extent->width > mask_row_buf_size)
+    {
+      mask_row_buf_size = src_extent->width;
+      mask_row_buf = (gfloat *) g_realloc_n ((gpointer) mask_row_buf,
+                                             mask_row_buf_size,
+                                             sizeof (gfloat));
+    }
+  mask_row = mask_row_buf - src_extent->x;
 
 #ifdef FETCH_ROW
   gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, initial_y, width, 1), 1.0,
