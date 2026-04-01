@@ -984,11 +984,16 @@ load_rsvg_pixbuf (RsvgHandle  *handle,
       src += gdk_pixbuf_get_rowstride (pixbuf);
     }
 #else
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
   vals.resolution = resolution;
   vals.width      = width;
   vals.height     = height;
   rsvg_handle_set_size_callback (handle, load_set_size_callback, (gpointer) &vals, NULL);
   pixbuf = rsvg_handle_get_pixbuf (handle);
+
+  #pragma GCC diagnostic pop
 #endif
 
   return pixbuf;
