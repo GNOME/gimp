@@ -279,7 +279,7 @@ create_cursor_from_rgba32_pixbuf (GdkPixbuf *pixbuf,
   height      = gdk_pixbuf_get_height (pixbuf);
   stride      = gdk_pixbuf_get_rowstride (pixbuf);
   size        = MAX (width, height);
-  pixbuf_data = gdk_pixbuf_read_pixels (pixbuf);
+  pixbuf_data = gdk_pixbuf_get_pixels (pixbuf);
 
   memset (&info, 0, sizeof (info));
   info.header.bV5Size        = sizeof (info.header);
