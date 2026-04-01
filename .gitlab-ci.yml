@@ -546,6 +546,7 @@ gimp-snap:
         STORE_OPTION: '-Dms-store=true'
     - if: '($GIMP_CI_MESON_MSVC != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_MSVC.*/) && $CI_JOB_NAME !~ /.*installer.*/ && $CI_JOB_NAME !~ /.*store.*/ && $CI_JOB_NAME !~ /.*aarch64.*/'
       variables:
+        MSYS_ROOT: ""
         VCPKG_ROOT: "$CI_PROJECT_DIR/vcpkg"
         WARN_AS_ERROR_ON_CI: '-Dwerror=true'
         VARIANT: "-msvc"
