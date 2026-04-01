@@ -827,11 +827,11 @@ issue-bot:
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "schedule"
       when: on_failure
   needs:
-    - job: deps-debian-nonreloc
+    - job: gimp-debian-nonreloc
       optional: true
-    - job: deps-win
+    - job: gimp-win
       optional: true
-    - job: deps-macos-inhouse
+    - job: gimp-macos-inhouse
       optional: true
   stage: analysis
   image: registry.gitlab.com/gitlab-org/distribution/issue-bot:latest
