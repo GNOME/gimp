@@ -49,8 +49,6 @@
 /* ignore deprecated warnings from OpenEXR headers */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated"
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-register"
 
 #include <lcms2.h>
 
@@ -62,7 +60,6 @@
 #include <ImfStandardAttributes.h>
 
 #pragma GCC diagnostic pop
-#pragma clang diagnostic pop
 
 #include "exr-attribute-blob.h"
 #include "openexr-wrapper.h"
