@@ -10,224 +10,156 @@
 # JardaK <krejci@zstenis.com>, 2009.
 # Marek Černocký <marek@manet.cz>, 2012, 2016.
 #
+# SPDX-FileCopyrightText: 2026 Jan Papez (honyczek)
 msgid ""
 msgstr ""
 "Project-Id-Version: script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2016-09-19 10:20+0000\n"
-"PO-Revision-Date: 2016-09-21 10:16+0200\n"
-"Last-Translator: Marek Černocký <marek@manet.cz>\n"
-"Language-Team: čeština <gnome-cs-list@gnome.org>\n"
+"POT-Creation-Date: 2026-03-17 22:10+0000\n"
+"PO-Revision-Date: 2026-04-01 22:07+0200\n"
+"Last-Translator: Jan Papez (honyczek) <honyczek@centrum.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Lokalize 26.03.80\n"
 
-#: ../plug-ins/script-fu/script-fu.c:111
+#: plug-ins/script-fu/script-fu.c:119
+msgid "Script-Fu _Console"
+msgstr "_Konzola Script-Fu"
+
+#: plug-ins/script-fu/script-fu.c:124
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktivní konzola pro vývoj Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:117
-msgid "_Console"
-msgstr "_Konzola"
-
-#: ../plug-ins/script-fu/script-fu.c:141
-msgid "Server for remote Script-Fu operation"
-msgstr "Server pro vzdálené vykonávání Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu.c:151
-msgid "_Start Server..."
-msgstr "_Spustit server…"
-
-#: ../plug-ins/script-fu/script-fu.c:306
+#: plug-ins/script-fu/script-fu.c:317
 msgid "_GIMP Online"
 msgstr "_GIMP on-line"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_User Manual"
 msgstr "_Uživatelská příručka"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: plug-ins/script-fu/script-fu.c:321
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: plug-ins/script-fu/script-fu.c:323
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: plug-ins/script-fu/script-fu.c:326
 msgid "_Buttons"
 msgstr "_Tlačítka"
 
-#: ../plug-ins/script-fu/script-fu.c:317
+#: plug-ins/script-fu/script-fu.c:328
 msgid "_Logos"
 msgstr "_Loga"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: plug-ins/script-fu/script-fu.c:330
 msgid "_Patterns"
 msgstr "_Vzorky"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: plug-ins/script-fu/script-fu.c:333
 msgid "_Web Page Themes"
 msgstr "Motivy stránek _WWW"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: plug-ins/script-fu/script-fu.c:335
 msgid "_Alien Glow"
 msgstr "Mimozemská _záře"
 
-#: ../plug-ins/script-fu/script-fu.c:326
+#: plug-ins/script-fu/script-fu.c:337
 msgid "_Beveled Pattern"
 msgstr "_Zkosený vzorek"
 
-#: ../plug-ins/script-fu/script-fu.c:328
+#: plug-ins/script-fu/script-fu.c:339
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:331
+#: plug-ins/script-fu/script-fu.c:342
 msgid "Alpha to _Logo"
 msgstr "Alfa do _loga"
 
-#: ../plug-ins/script-fu/script-fu.c:334
-msgid "Re-read all available Script-Fu scripts"
-msgstr "Načíst znovu všechny dostupné skripty Script-Fu"
+#: plug-ins/script-fu/script-fu-eval.c:52
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "Vyhodnocovací režim Script-fu umožňuje pouze neinteraktivní spuštění"
 
-#: ../plug-ins/script-fu/script-fu.c:339
-msgid "_Refresh Scripts"
-msgstr "Obče_rstvit skripty"
-
-#: ../plug-ins/script-fu/script-fu.c:362
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr ""
-"Nemůžete použít „Občerstvit skripty“, pokud je otevřeno dialogové okno "
-"Script-Fu. Zavřete prosím všechny okna Script-Fu a zkuste to znovu."
-
-#: ../plug-ins/script-fu/script-fu-console.c:127
-#: ../plug-ins/script-fu/script-fu-console.c:194
-msgid "Script-Fu Console"
+#: plug-ins/script-fu/console/script-fu-console.c:119
+msgid "Script Console"
 msgstr "Konzola Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:190
-msgid "Welcome to TinyScheme"
-msgstr "Vítá vás TinyScheme"
+#: plug-ins/script-fu/console/script-fu-console.c:124
+#: plug-ins/script-fu/console/script-fu-console.c:251
+msgid "_Save"
+msgstr "_Uložit"
 
-#: ../plug-ins/script-fu/script-fu-console.c:196
-msgid "Interactive Scheme Development"
-msgstr "Interaktivní vývoj ve Scheme"
+#: plug-ins/script-fu/console/script-fu-console.c:125
+msgid "C_lear"
+msgstr "Vy_mazat"
 
-#: ../plug-ins/script-fu/script-fu-console.c:232
+#: plug-ins/script-fu/console/script-fu-console.c:126
+#: plug-ins/script-fu/console/script-fu-console.c:324
+msgid "_Close"
+msgstr "_Zavřít"
+
+#: plug-ins/script-fu/console/script-fu-console.c:187
 msgid "_Browse..."
 msgstr "_Procházet…"
 
-#: ../plug-ins/script-fu/script-fu-console.c:288
+#: plug-ins/script-fu/console/script-fu-console.c:246
 msgid "Save Script-Fu Console Output"
 msgstr "Uložit výstup konzoly Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:335
+#: plug-ins/script-fu/console/script-fu-console.c:250
+#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
+msgid "_Cancel"
+msgstr "_Zrušit"
+
+#: plug-ins/script-fu/console/script-fu-console.c:293
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nelze otevřít „%s“ pro zápis: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:364
+#: plug-ins/script-fu/console/script-fu-console.c:319
 msgid "Script-Fu Procedure Browser"
 msgstr "Prohlížeč procedur Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:60
-msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr "Vyhodnocovací režim Script-fu umožňuje pouze neinteraktivní spuštění"
+#: plug-ins/script-fu/console/script-fu-console.c:323
+msgid "_Apply"
+msgstr "_Použít"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
-msgid "Script-Fu cannot process two scripts at the same time."
-msgstr "Script-Fu nemůže zpracovávat dva skripty současně."
+#: plug-ins/script-fu/console/script-fu-console-total.c:89
+msgid "Welcome to TinyScheme"
+msgstr "Vítá vás TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
-#, c-format
-msgid "You are already running the \"%s\" script."
-msgstr "Již máte spuštěn skript „%s“."
+#: plug-ins/script-fu/console/script-fu-console-total.c:93
+msgid "Scripting GIMP in the Scheme language"
+msgstr "Tvorba GIMPových skriptů v jazyce Scheme"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:228
-#, c-format
-msgid "Script-Fu: %s"
-msgstr "Script-Fu: %s"
-
-#. we add a colon after the label;
-#. *  some languages want an extra space here
-#.
-#: ../plug-ins/script-fu/script-fu-interface.c:291
-#, c-format
-msgid "%s:"
-msgstr "%s:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:338
-msgid "Script-Fu Color Selection"
-msgstr "Script-Fu výběr barvy"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:448
-msgid "Script-Fu File Selection"
-msgstr "Script-Fu výběr souboru"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:451
-msgid "Script-Fu Folder Selection"
-msgstr "Script-Fu výběr složky"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:464
-msgid "Script-Fu Font Selection"
-msgstr "Script-Fu výběr písma"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:472
-msgid "Script-Fu Palette Selection"
-msgstr "Script-Fu výběr palety"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:481
-msgid "Script-Fu Pattern Selection"
-msgstr "Script-Fu výběr vzorku"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:490
-msgid "Script-Fu Gradient Selection"
-msgstr "Script-Fu výběr přechodu"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:499
-msgid "Script-Fu Brush Selection"
-msgstr "Script-Fu výběr stopy"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:868
-#, c-format
-msgid "Error while executing %s:"
-msgstr "Chyba při spouštění %s:"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:149
-msgid "Too few arguments to 'script-fu-register' call"
-msgstr "Příliš málo argumentů pro volání „script-fu-register“"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:648
-#, c-format
-msgid "Error while loading %s:"
-msgstr "Chyba při načítání %s:"
-
-#: ../plug-ins/script-fu/script-fu-server.c:827
+#: plug-ins/script-fu/server/script-fu-server.c:918
 msgid "Script-Fu Server Options"
 msgstr "Volby serveru Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+#: plug-ins/script-fu/server/script-fu-server.c:923
 msgid "_Start Server"
 msgstr "_Spustit server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:865
+#: plug-ins/script-fu/server/script-fu-server.c:956
 msgid "Listen on IP:"
 msgstr "Naslouchat na adrese:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:872
+#: plug-ins/script-fu/server/script-fu-server.c:963
 msgid "Server port:"
 msgstr "Port serveru:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:878
+#: plug-ins/script-fu/server/script-fu-server.c:969
 msgid "Server logfile:"
 msgstr "Soubor se záznamem serveru:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:891
+#: plug-ins/script-fu/server/script-fu-server.c:982
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -235,97 +167,154 @@ msgstr ""
 "Naslouchání na jiné IP adrese než 127.0.0.1 (hlavně 0.0.0.0) může umožnit "
 "útočníkům vzdáleně spustit libovolný kód na tomto počítači."
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:91
+msgid "_Start Server..."
+msgstr "_Spustit server…"
+
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:96
+msgid "Server for remote Script-Fu operation"
+msgstr "Server pro vzdálené vykonávání Script-Fu"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Script-Fu nemůže zpracovávat dva skripty současně."
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr "Již máte spuštěn skript „%s“."
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
+msgid "_Reset"
+msgstr "_Obnovit"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
+msgid "_OK"
+msgstr "_OK"
+
+#. we add a colon after the label;
+#. *  some languages want an extra space here
+#.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
+msgid "Script-Fu Color Selection"
+msgstr "Script-Fu výběr barvy"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:405
+msgid "Script-Fu File Selection"
+msgstr "Script-Fu výběr souboru"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:408
+msgid "Script-Fu Folder Selection"
+msgstr "Script-Fu výběr složky"
+
+#. Log to stdout.  Later to Gimp.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:817
+#, c-format
+msgid "Error while executing %s:"
+msgstr "Chyba při spouštění %s:"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:541
+#, c-format
+msgid "Error while loading %s:"
+msgstr "Chyba při načítání %s:"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:72
 msgid "Bumpmap"
 msgstr "Mapa vyvíšení"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:185
+#: plug-ins/script-fu/scripts/add-bevel.scm:199
 msgid "Add B_evel..."
 msgstr "Přidat _zkosení…"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:186
+#: plug-ins/script-fu/scripts/add-bevel.scm:200
 msgid "Add a beveled border to an image"
 msgstr "Přidat do obrázku zkosený okraj"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
-msgid "Thickness"
-msgstr "Tloušťka"
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:206
+msgid "_Thickness"
+msgstr "_Tloušťka"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:194
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
-#: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
-#: ../plug-ins/script-fu/scripts/slide.scm:248
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
-msgid "Work on copy"
-msgstr "Pracovat s kopií"
+#: plug-ins/script-fu/scripts/add-bevel.scm:207
+msgid "_Work on copy"
+msgstr "_Pracovat s kopií"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:195
-msgid "Keep bump layer"
-msgstr "Zachovat mapu vyvýšení"
+#: plug-ins/script-fu/scripts/add-bevel.scm:208
+msgid "_Keep bump layer"
+msgstr "_Zachovat mapu vyvýšení"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:108
+#: plug-ins/script-fu/scripts/addborder.scm:121
 msgid "Border Layer"
 msgstr "Vrstva s okrajem"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:160
+#: plug-ins/script-fu/scripts/addborder.scm:174
 msgid "Add _Border..."
 msgstr "Přidat _okraj…"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:161
+#: plug-ins/script-fu/scripts/addborder.scm:175
 msgid "Add a border around an image"
 msgstr "Přidat okolo obrázku okraj"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:168
+#: plug-ins/script-fu/scripts/addborder.scm:181
 msgid "Border X size"
 msgstr "Velikost okraje ve směru X"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:169
+#: plug-ins/script-fu/scripts/addborder.scm:182
 msgid "Border Y size"
 msgstr "Velikost okraje ve směru Y"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:170
+#: plug-ins/script-fu/scripts/addborder.scm:183
 msgid "Border color"
 msgstr "Barva okraje"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:171
+#: plug-ins/script-fu/scripts/addborder.scm:184
 msgid "Delta value on color"
 msgstr "Delta hodnota barvy"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+#: plug-ins/script-fu/scripts/addborder.scm:185
+#: plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:210
+msgid "Allow resizing"
+msgstr "Povolit změnu velikosti"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:202
 msgid "Frame"
 msgstr "Políčko"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+#: plug-ins/script-fu/scripts/blend-anim.scm:218
 msgid "Blend Animation needs at least three source layers"
 msgstr "Animace mísení vyžaduje nejméně tři zdrojové vrstvy"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+#: plug-ins/script-fu/scripts/blend-anim.scm:224
 msgid "_Blend..."
 msgstr "_Mísit…"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+#: plug-ins/script-fu/scripts/blend-anim.scm:225
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
 msgstr ""
 "Vytvořit mezivrstvy pro animaci mísení dvou nebo více vrstev nad pozadím"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+#: plug-ins/script-fu/scripts/blend-anim.scm:231
 msgid "Intermediate frames"
 msgstr "Mezilehlá políčka"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+#: plug-ins/script-fu/scripts/blend-anim.scm:232
 msgid "Max. blur radius"
 msgstr "Nejvyšší poloměr rozostření"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+#: plug-ins/script-fu/scripts/blend-anim.scm:233
 msgid "Looped"
 msgstr "Smyčka"
 
 #. --- false form of "if-1"
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:212
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:218
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
@@ -333,119 +322,123 @@ msgstr ""
 "Vypálení vyžaduje celkem dvě vrstvy. Vrstvu s průhledností v popředí a "
 "vrstvu pozadí."
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:219
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:225
 msgid "B_urn-In..."
 msgstr "_Vypálení…"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:220
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:226
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr "Vytvořit mezivrstvy pro animovaný přechod „vypálení“ mezi vrstvami"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:227
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:232
 msgid "Glow color"
 msgstr "Barva záře"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:228
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:233
 msgid "Fadeout"
 msgstr "Zhasnutí"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:229
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Fadeout width"
 msgstr "Šířka zhasnutí"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:230
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Corona width"
 msgstr "Šířka koróny"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:231
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:236
 msgid "After glow"
 msgstr "Po záři"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:237
 msgid "Add glowing"
 msgstr "Přidat záři"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "Prepare for GIF"
 msgstr "Připravit pro GIF"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:239
 msgid "Speed (pixels/frame)"
 msgstr "Rychlost (pixelů/rámec)"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+#: plug-ins/script-fu/scripts/carve-it.scm:207
 msgid "Carved Surface"
 msgstr "Vyřezávaný povrch"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+#: plug-ins/script-fu/scripts/carve-it.scm:208
 msgid "Bevel Shadow"
 msgstr "Stín zkosení"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+#: plug-ins/script-fu/scripts/carve-it.scm:209
 msgid "Bevel Highlight"
 msgstr "Osvětlení zkosení"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+#: plug-ins/script-fu/scripts/carve-it.scm:210
 msgid "Cast Shadow"
 msgstr "Vržený stín"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+#: plug-ins/script-fu/scripts/carve-it.scm:211
 msgid "Inset"
 msgstr "Vsazení"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+#: plug-ins/script-fu/scripts/carve-it.scm:223
 msgid "Stencil C_arve..."
 msgstr "Řez_ba…"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+#: plug-ins/script-fu/scripts/carve-it.scm:224
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr "Použít zadanou kresbu jako šablonu pro řezbu ze zadaného obrázku."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:190
-msgid "Image to carve"
-msgstr "Obrázek, který se má vyřezat"
+#: plug-ins/script-fu/scripts/carve-it.scm:230
+msgid "Mask image"
+msgstr "Maskovací obrázek"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+#: plug-ins/script-fu/scripts/carve-it.scm:231
+msgid "Mask drawable"
+msgstr "Maskovací objekt"
+
+#: plug-ins/script-fu/scripts/carve-it.scm:232
 msgid "Carve white areas"
 msgstr "Vyřezat bílé oblasti"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
+#: plug-ins/script-fu/scripts/chrome-it.scm:153
 msgid "Background"
 msgstr "Pozadí"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+#: plug-ins/script-fu/scripts/chrome-it.scm:154
 msgid "Layer 1"
 msgstr "Vrstva 1"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+#: plug-ins/script-fu/scripts/chrome-it.scm:155
 msgid "Layer 2"
 msgstr "Vrstva 2"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+#: plug-ins/script-fu/scripts/chrome-it.scm:156
 msgid "Layer 3"
 msgstr "Vrstva 3"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+#: plug-ins/script-fu/scripts/chrome-it.scm:157
 msgid "Drop Shadow"
 msgstr "Vrhnout stín"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:201
+#: plug-ins/script-fu/scripts/chrome-it.scm:286
 msgid "Chrome"
 msgstr "Chrom"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:202
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+#: plug-ins/script-fu/scripts/chrome-it.scm:287
+#: plug-ins/script-fu/scripts/xach-effect.scm:69
 msgid "Highlight"
 msgstr "Zvýraznění"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:214
+#: plug-ins/script-fu/scripts/chrome-it.scm:307
 msgid "Stencil C_hrome..."
 msgstr "_Chrom…"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:215
+#: plug-ins/script-fu/scripts/chrome-it.scm:308
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
@@ -453,638 +446,611 @@ msgstr ""
 "Do vybrané oblasti (nebo alfakanálu) přidat chromový efekt pomocí zadané "
 "šablony ve stupních šedi"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:222
+#: plug-ins/script-fu/scripts/chrome-it.scm:314
 msgid "Chrome saturation"
 msgstr "Sytost chromování"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:223
+#: plug-ins/script-fu/scripts/chrome-it.scm:315
 msgid "Chrome lightness"
 msgstr "Světlost chromování"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:224
+#: plug-ins/script-fu/scripts/chrome-it.scm:316
 msgid "Chrome factor"
 msgstr "Faktor chromování"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:225
+#: plug-ins/script-fu/scripts/chrome-it.scm:317
 msgid "Environment map"
 msgstr "Mapa prostředí"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:228
+#: plug-ins/script-fu/scripts/chrome-it.scm:320
 msgid "Highlight balance"
 msgstr "Vyváženost zvýraznění"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:229
+#: plug-ins/script-fu/scripts/chrome-it.scm:321
 msgid "Chrome balance"
 msgstr "Vyváženost chromování"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+#: plug-ins/script-fu/scripts/chrome-it.scm:322
 msgid "Chrome white areas"
 msgstr "Chromovat bílé oblasti"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:74
+#: plug-ins/script-fu/scripts/circuit.scm:72
 msgid "Effect layer"
 msgstr "Vrstva s efektem"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:127
+#: plug-ins/script-fu/scripts/circuit.scm:135
 msgid "_Circuit..."
 msgstr "Pl_ošné spoje…"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:128
+#: plug-ins/script-fu/scripts/circuit.scm:136
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
 "Vyplnit vybranou oblast (nebo alfakanál) vzorem vypadajícím jako plošné spoje"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:135
+#: plug-ins/script-fu/scripts/circuit.scm:142
 msgid "Oilify mask size"
 msgstr "Velikost masky olejomalby"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:136
+#: plug-ins/script-fu/scripts/circuit.scm:143
 msgid "Circuit seed"
 msgstr "Hnízdo obvodu"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:137
+#: plug-ins/script-fu/scripts/circuit.scm:144
 msgid "No background (only for separate layer)"
 msgstr "Bez pozadí (pouze pro samostatné vrstvy)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:138
-#: ../plug-ins/script-fu/scripts/lava.scm:129
-#: ../plug-ins/script-fu/scripts/predator.scm:132
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+#: plug-ins/script-fu/scripts/circuit.scm:145
+#: plug-ins/script-fu/scripts/lava.scm:144
+#: plug-ins/script-fu/scripts/xach-effect.scm:139
 msgid "Keep selection"
 msgstr "Zachovat výběr"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:139
-#: ../plug-ins/script-fu/scripts/lava.scm:130
-#: ../plug-ins/script-fu/scripts/predator.scm:133
+#: plug-ins/script-fu/scripts/circuit.scm:146
+#: plug-ins/script-fu/scripts/lava.scm:145
 msgid "Separate layer"
 msgstr "Samostatná vrstva"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:51
+#: plug-ins/script-fu/scripts/clothify.scm:65
 msgid "_Clothify..."
 msgstr "_Plátno…"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:52
+#: plug-ins/script-fu/scripts/clothify.scm:66
 msgid "Add a cloth-like texture to the selected region (or alpha)"
 msgstr "Přidat do vybrané oblasti (nebo alfakanálu) texturu podobnou tkanině"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:59
+#: plug-ins/script-fu/scripts/clothify.scm:72
 msgid "Blur X"
 msgstr "Rozostření ve směru X"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:60
+#: plug-ins/script-fu/scripts/clothify.scm:73
 msgid "Blur Y"
 msgstr "Rozostření ve směru Y"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:61
+#: plug-ins/script-fu/scripts/clothify.scm:74
 msgid "Azimuth"
 msgstr "Azimut"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:62
+#: plug-ins/script-fu/scripts/clothify.scm:75
 msgid "Elevation"
 msgstr "Zdvih"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:63
+#: plug-ins/script-fu/scripts/clothify.scm:76
 msgid "Depth"
 msgstr "Hloubka"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:36
+#: plug-ins/script-fu/scripts/coffee.scm:41
 msgid "Stain"
 msgstr "Skvrna"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:81
-msgid "_Coffee Stain..."
-msgstr "_Skvrny od kávy…"
+#: plug-ins/script-fu/scripts/coffee.scm:132
+msgid "_Stain..."
+msgstr "_Skvrna…"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:82
-msgid "Add realistic looking coffee stains to the image"
-msgstr "Přidat do obrázku realistické skvrny od kávy"
+#: plug-ins/script-fu/scripts/coffee.scm:133
+msgid "Add layers of stain or blotch marks"
+msgstr "Přidat vrstvy skvrn nebo fleků"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:89
-msgid "Stains"
-msgstr "Skvrny"
+#: plug-ins/script-fu/scripts/coffee.scm:139
+msgid "Number of stains to add"
+msgstr "Počet skvrn k přidání"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:90
+#: plug-ins/script-fu/scripts/coffee.scm:140
 msgid "Darken only"
 msgstr "Pouze ztmavit"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
-msgid "Difference Clouds..."
-msgstr "Odečíst mraky…"
+#: plug-ins/script-fu/scripts/coffee.scm:141
+msgid "Gradient to color stains"
+msgstr "Přechod barevných skvrn"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
+#: plug-ins/script-fu/scripts/difference-clouds.scm:82
+msgid "_Difference Clouds"
+msgstr "O_dečíst mraky"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:83
 msgid "Solid noise applied with Difference layer mode"
 msgstr "Rovnoměrný šum aplikovaný režimem rozdílu vrstev"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:105
+#: plug-ins/script-fu/scripts/difference-clouds.scm:89
+msgid "Random Seed"
+msgstr "Zrno náhodnosti"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:90
+msgid "Levels"
+msgstr "Úrovně"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:91
+msgid "Tileable"
+msgstr "Dlaždicovatelné"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:92
+msgid "Turbulent"
+msgstr "Vířivé"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:93
+msgid "X"
+msgstr "X"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:94
+msgid "Y"
+msgstr "Y"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:112
 msgid "_Distort..."
 msgstr "_Deformovat…"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:106
+#: plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "Distress the selection"
 msgstr "Deformovat výběr"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-msgid "Threshold (bigger 1<-->254 smaller)"
-msgstr "Práh (větší 1<-->255 menší)"
+#: plug-ins/script-fu/scripts/distress-selection.scm:119
+msgid "_Threshold"
+msgstr "_Práh"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-msgid "Spread"
-msgstr "Rozprostřít"
+#: plug-ins/script-fu/scripts/distress-selection.scm:120
+msgid "_Spread"
+msgstr "_Rozprostřít"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-msgid "Granularity (1 is low)"
-msgstr "Zrnitost (1 je malá)"
+#: plug-ins/script-fu/scripts/distress-selection.scm:121
+msgid "_Granularity (1 is low)"
+msgstr "_Zrnitost (1 je malá)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:116
-msgid "Smooth"
-msgstr "Vyhladit"
+#: plug-ins/script-fu/scripts/distress-selection.scm:122
+msgid "S_mooth"
+msgstr "Vy_hladit"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-msgid "Smooth horizontally"
-msgstr "Vyhladit vodorovně"
+#: plug-ins/script-fu/scripts/distress-selection.scm:123
+msgid "Smooth hor_izontally"
+msgstr "Vyhladit _vodorovně"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:118
-msgid "Smooth vertically"
-msgstr "Vyhladit svisle"
+#: plug-ins/script-fu/scripts/distress-selection.scm:124
+msgid "Smooth _vertically"
+msgstr "Vyhladit _svisle"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
-msgid "_Drop Shadow..."
-msgstr "_Vržený stín…"
+#: plug-ins/script-fu/scripts/drop-shadow.scm:170
+msgid "_Drop Shadow (legacy)..."
+msgstr "_Vržený stín (zastaralé)…"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+#: plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr "Přidat vržený stín do vybrané oblasti (nebo alfakanálu)"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+#: plug-ins/script-fu/scripts/drop-shadow.scm:177
 msgid "Offset X"
 msgstr "Posun ve směru X"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+#: plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset Y"
 msgstr "Posun ve směru Y"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: plug-ins/script-fu/scripts/drop-shadow.scm:179
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:206
+#: plug-ins/script-fu/scripts/round-corners.scm:145
 msgid "Blur radius"
 msgstr "Poloměr rozostření"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+#: plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:147
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:207
 msgid "Color"
 msgstr "Barva"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+#: plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:208
 msgid "Opacity"
 msgstr "Krytí"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
-msgid "Allow resizing"
-msgstr "Povolit změnu velikosti"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:39
-msgid "_Erase Every Other Row..."
-msgstr "_Vymazat každý druhý řádek…"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:40
-msgid "Erase every other row or column"
-msgstr "Vymazat každý druhý řádek nebo sloupec"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
-msgid "Rows/cols"
-msgstr "Řádky/sloupce"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
-msgid "Rows"
-msgstr "Řádky"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
-msgid "Columns"
-msgstr "Sloupce"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
-msgid "Even/odd"
-msgstr "Sudé/liché"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
-msgid "Even"
-msgstr "Sudé"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
-msgid "Odd"
-msgstr "Liché"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
-msgid "Erase/fill"
-msgstr "Smazat/vyplnit"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
-msgid "Erase"
-msgstr "Smazat"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
-msgid "Fill with BG"
-msgstr "Vyplnit pozadím"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm:152
+#: plug-ins/script-fu/scripts/font-map.scm:165
 msgid "Render _Font Map..."
 msgstr "Vykreslit _mapu písem…"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:153
+#: plug-ins/script-fu/scripts/font-map.scm:166
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr "Vytvořit obrázek s náhledy písem odpovídajících filtru názvu písma"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:158
+#: plug-ins/script-fu/scripts/font-map.scm:169
 msgid "_Text"
 msgstr "_Text"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:159
+#: plug-ins/script-fu/scripts/font-map.scm:170
 msgid "Use font _name as text"
 msgstr "Používat _název písma jako text"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:160
+#: plug-ins/script-fu/scripts/font-map.scm:171
 msgid "_Labels"
 msgstr "_Popisky"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:161
+#: plug-ins/script-fu/scripts/font-map.scm:172
 msgid "_Filter (regexp)"
 msgstr "_Filtr (regulární výraz)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:162
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "Font _size (pixels)"
 msgstr "_Velikost písma (v pixelech)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:163
+#: plug-ins/script-fu/scripts/font-map.scm:174
 msgid "_Border (pixels)"
 msgstr "_Okraj (v pixelech)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "_Color scheme"
 msgstr "Schéma _barev"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "Black on white"
 msgstr "Černá na bílé"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "Active colors"
 msgstr "Aktivní barvy"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:146
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:140
 msgid "_Fuzzy Border..."
 msgstr "_Neostrý okraj…"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:147
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:141
 msgid "Add a jagged, fuzzy border to an image"
 msgstr "Přidat obrázku zubatý a neostrý okraj"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:155
-#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:148
+#: plug-ins/script-fu/scripts/old-photo.scm:99
 msgid "Border size"
 msgstr "Velikost okraje"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:156
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
 msgid "Blur border"
 msgstr "Rozostřit okraj"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
 msgid "Granularity (1 is Low)"
 msgstr "Zrnitost (1 je malá)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:151
 msgid "Add shadow"
 msgstr "Přidat stín"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:152
 msgid "Shadow weight (%)"
 msgstr "Míra stínu (%)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:153
+#: plug-ins/script-fu/scripts/old-photo.scm:105
+#: plug-ins/script-fu/scripts/round-corners.scm:147
+#: plug-ins/script-fu/scripts/slide.scm:268
+#: plug-ins/script-fu/scripts/spinning-globe.scm:127
+msgid "Work on copy"
+msgstr "Pracovat s kopií"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:154
 msgid "Flatten image"
 msgstr "Zploštit obrázek"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
-msgid "Using _Paths"
+#: plug-ins/script-fu/scripts/gimp-online.scm:63
+msgid "_Using Paths"
 msgstr "Používání _cest"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:64
+#: plug-ins/script-fu/scripts/gimp-online.scm:75
+#: plug-ins/script-fu/scripts/gimp-online.scm:86
+#: plug-ins/script-fu/scripts/gimp-online.scm:97
+#: plug-ins/script-fu/scripts/gimp-online.scm:108
+#: plug-ins/script-fu/scripts/gimp-online.scm:119
+#: plug-ins/script-fu/scripts/gimp-online.scm:130
+#: plug-ins/script-fu/scripts/gimp-online.scm:141
+#: plug-ins/script-fu/scripts/gimp-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Záložka pro uživatelskou příručku"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/gimp-online.scm:74
 msgid "_Preparing your Images for the Web"
 msgstr "_Příprava vašich obrázků pro web"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Práce s digitálními fotografiemi"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/gimp-online.scm:96
 msgid "Create, Open and Save _Files"
 msgstr "Vytváření, otvírání a ukládání _souborů"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/gimp-online.scm:107
 msgid "_Basic Concepts"
 msgstr "_Základní koncepce"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/gimp-online.scm:118
 msgid "How to Use _Dialogs"
 msgstr "Jak používat _dialogová okna"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:129
 msgid "Drawing _Simple Objects"
 msgstr "Kreslení _jednoduchých objektů"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
-msgid "Create and Use _Selections"
+#: plug-ins/script-fu/scripts/gimp-online.scm:140
+msgid "_Create and Use Selections"
 msgstr "Vytváření a používání _výběrů"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "_Table of Contents"
+msgstr "_Obsah"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:184
 msgid "_Main Web Site"
 msgstr "_Hlavní webové stránky"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
+#: plug-ins/script-fu/scripts/gimp-online.scm:185
+#: plug-ins/script-fu/scripts/gimp-online.scm:196
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "Bookmark to the GIMP web site"
 msgstr "Záložka pro web GIMPu"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: plug-ins/script-fu/scripts/gimp-online.scm:195
 msgid "_Developer Web Site"
 msgstr "Webové stránky _vývojářů"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: plug-ins/script-fu/scripts/gimp-online.scm:206
+msgid "_Roadmaps"
+msgstr "_Plány rozvoje"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:207
+msgid "Bookmark to the roadmaps of GIMP"
+msgstr "Záložka pro web plánu vývoje GIMPu"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:217
+msgid "_Bug Reports and Feature Requests"
+msgstr "_Hlášení chyb a žádosti o nové funkce"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:218
+msgid "Bookmark to the bug tracker of GIMP"
+msgstr "Záložka pro hlášení chyb v GIMPu"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:228
 msgid "_User Manual Web Site"
 msgstr "_Web uživatelské příručky"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Plug-in _Registry"
-msgstr "_Registr zásuvných modulů"
-
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:63
+#: plug-ins/script-fu/scripts/gradient-example.scm:73
 msgid "Custom _Gradient..."
 msgstr "Vlastní _přechod…"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:64
+#: plug-ins/script-fu/scripts/gradient-example.scm:74
 msgid "Create an image filled with an example of the current gradient"
 msgstr "Vytvořit obrázek vyplněný příkladem aktuálního přechodu"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:138
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:194
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:263
+#: plug-ins/script-fu/scripts/gradient-example.scm:77
+#: plug-ins/script-fu/scripts/mkbrush.scm:69
+#: plug-ins/script-fu/scripts/mkbrush.scm:137
+#: plug-ins/script-fu/scripts/mkbrush.scm:191
+#: plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Width"
 msgstr "Šířka"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+#: plug-ins/script-fu/scripts/gradient-example.scm:78
+#: plug-ins/script-fu/scripts/mkbrush.scm:70
+#: plug-ins/script-fu/scripts/mkbrush.scm:138
+#: plug-ins/script-fu/scripts/mkbrush.scm:192
+#: plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Height"
 msgstr "Výška"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:71
+#: plug-ins/script-fu/scripts/gradient-example.scm:79
 msgid "Gradient reverse"
 msgstr "Obrácený přechod"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:84
-msgid "_Grid..."
-msgstr "_Mřížka…"
-
-#: ../plug-ins/script-fu/scripts/grid-system.scm:85
-msgid ""
-"Draw a grid as specified by the lists of X and Y locations using the current "
-"brush"
-msgstr "Vykreslit mřížku aktuální stopou podle seznamu souřadnic X a Y"
-
-#: ../plug-ins/script-fu/scripts/grid-system.scm:92
-msgid "X divisions"
-msgstr "Rozdělení ve směru X"
-
-#: ../plug-ins/script-fu/scripts/grid-system.scm:93
-msgid "Y divisions"
-msgstr "Rozdělení ve směru Y"
-
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
 msgstr "Nová vodítka z _výběru"
 
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "Create four guides around the bounding box of the current selection"
 msgstr ""
 "Vytvořit čtyři vodicí linky podle ohraničujicího obdélníku aktuálního výběru"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
 msgstr "Nové vodítko (podle _procent)…"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr "Přidat vodítko v poloze udané procentem velikosti obrázku"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
-msgid "Direction"
-msgstr "Směr"
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:33
+msgid "_Direction"
+msgstr "_Směr"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Horizontal"
 msgstr "Vodorovný"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Vertical"
 msgstr "Svislý"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-msgid "Position (in %)"
-msgstr "Poloha (v %)"
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
+msgid "_Position (in %)"
+msgstr "_Poloha (v %)"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+#: plug-ins/script-fu/scripts/guides-new.scm:26
 msgid "New _Guide..."
 msgstr "Nové _vodítko…"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+#: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Přidat vodítko se zadanou orientací a polohou (v pixelech)"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:36
-msgid "Position"
-msgstr "Poloha"
+#: plug-ins/script-fu/scripts/guides-new.scm:34
+msgid "_Position"
+msgstr "_Poloha"
 
-#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
 msgstr "Odst_ranit všechna vodítka"
 
-#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
 msgstr "Odstranit všechna vodorovná i svislá vodítka"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:117
+#. else
+#: plug-ins/script-fu/scripts/lava.scm:127
+msgid "Lava works with exactly one selected layer"
+msgstr "Láva pracuje jen s jednou vybranou vrstvou"
+
+#: plug-ins/script-fu/scripts/lava.scm:133
 msgid "_Lava..."
 msgstr "_Láva…"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:118
+#: plug-ins/script-fu/scripts/lava.scm:134
 msgid "Fill the current selection with lava"
 msgstr "Vyplnit aktuální výběr lávou"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:125
+#: plug-ins/script-fu/scripts/lava.scm:140
 msgid "Seed"
 msgstr "Hnízdo"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:126
+#: plug-ins/script-fu/scripts/lava.scm:141
 msgid "Size"
 msgstr "Velikost"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:127
+#: plug-ins/script-fu/scripts/lava.scm:142
 msgid "Roughness"
 msgstr "Drsnost"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:128
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+#: plug-ins/script-fu/scripts/lava.scm:143
 msgid "Gradient"
 msgstr "Přechod"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:131
+#: plug-ins/script-fu/scripts/lava.scm:146
 msgid "Use current gradient"
 msgstr "Použít aktuální přechod"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:108
+#: plug-ins/script-fu/scripts/line-nova.scm:117
 msgid "Line _Nova..."
 msgstr "Čárová _nova…"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:109
+#: plug-ins/script-fu/scripts/line-nova.scm:118
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
 msgstr "Vyplnit vrstvu paprsky v barvě popředí vycházejícími ze středu"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Number of lines"
-msgstr "Počet čar"
+#: plug-ins/script-fu/scripts/line-nova.scm:124
+msgid "_Number of lines"
+msgstr "_Počet čar"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:117
-msgid "Sharpness (degrees)"
-msgstr "Ostrost (ve stupních)"
+#: plug-ins/script-fu/scripts/line-nova.scm:125
+msgid "S_harpness (degrees)"
+msgstr "_Ostrost (ve stupních)"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:118
-msgid "Offset radius"
-msgstr "Poloměr posunu"
+#: plug-ins/script-fu/scripts/line-nova.scm:126
+msgid "O_ffset radius"
+msgstr "Poloměr po_sunu"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:119
-msgid "Randomness"
-msgstr "Náhodnost"
+#: plug-ins/script-fu/scripts/line-nova.scm:127
+msgid "Ran_domness"
+msgstr "Ná_hodnost"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+#: plug-ins/script-fu/scripts/mkbrush.scm:64
 msgid "_Rectangular..."
 msgstr "_Obdélníková…"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+#: plug-ins/script-fu/scripts/mkbrush.scm:65
 msgid "Create a rectangular brush"
 msgstr "Vytvořit obdélníkovou stopu"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:137
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:193
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:262
+#: plug-ins/script-fu/scripts/mkbrush.scm:68
+#: plug-ins/script-fu/scripts/mkbrush.scm:136
+#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:257
 msgid "Name"
 msgstr "Název"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+#: plug-ins/script-fu/scripts/mkbrush.scm:71
+#: plug-ins/script-fu/scripts/mkbrush.scm:140
+#: plug-ins/script-fu/scripts/mkbrush.scm:193
+#: plug-ins/script-fu/scripts/mkbrush.scm:261
 msgid "Spacing"
 msgstr "Rozestup"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:131
+#: plug-ins/script-fu/scripts/mkbrush.scm:132
 msgid "Re_ctangular, Feathered..."
 msgstr "_Obdélníková, prolnutá…"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:132
+#: plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Create a rectangular brush with feathered edges"
 msgstr "Vytvořit obdélníkovou stopu s prolnutými okraji"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+#: plug-ins/script-fu/scripts/mkbrush.scm:139
+#: plug-ins/script-fu/scripts/mkbrush.scm:260
 msgid "Feathering"
 msgstr "Neostrost"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:187
+#: plug-ins/script-fu/scripts/mkbrush.scm:186
 msgid "_Elliptical..."
 msgstr "_Eliptická…"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:188
+#: plug-ins/script-fu/scripts/mkbrush.scm:187
 msgid "Create an elliptical brush"
 msgstr "Vytvořit eliptickou stopu"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:256
+#: plug-ins/script-fu/scripts/mkbrush.scm:253
 msgid "Elli_ptical, Feathered..."
 msgstr "_Eliptická, prolnutá…"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:257
+#: plug-ins/script-fu/scripts/mkbrush.scm:254
 msgid "Create an elliptical brush with feathered edges"
 msgstr "Vytvořit eliptickou stopu s prolnutými okraji"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+#: plug-ins/script-fu/scripts/old-photo.scm:91
 msgid "_Old Photo..."
 msgstr "_Stará fotografie…"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+#: plug-ins/script-fu/scripts/old-photo.scm:92
 msgid "Make an image look like an old photo"
 msgstr "Dodat obrázku vzhled staré fotografie"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+#: plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "Defocus"
 msgstr "Rozostření"
 
 #. since this plug-in uses the fuzzy-border plug-in, I used the
 #. values of the latter, with the exception of the initial value
 #. and the 'minimum' value.
-#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+#: plug-ins/script-fu/scripts/old-photo.scm:103
 msgid "Sepia"
 msgstr "Sépie"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+#: plug-ins/script-fu/scripts/old-photo.scm:104
 msgid "Mottle"
 msgstr "Skvrnka"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:226
-msgid "Folder for the output file"
-msgstr "Složka pro výstupní soubor"
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm:227
-msgid ""
-"The name of the file to create (if a file with this name already exist, it "
-"will be replaced)"
-msgstr ""
-"Název souboru, který se má vytvořit (pokud soubor s tímto názvem již "
-"existuje, bude nahrazen)"
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+#: plug-ins/script-fu/scripts/palette-export.scm:162
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "Název souboru, který jste zadali není název použitelný pro soubor."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:237
+#: plug-ins/script-fu/scripts/palette-export.scm:164
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
@@ -1092,7 +1058,30 @@ msgstr ""
 "Všechny znaky v názvu jsou buď bílé znaky nebo znaky, které se neobjevují v "
 "názvu souboru."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:265
+#. Side effect.
+#. Tell the user the mangled path, might be different than user entered.
+#. The user should not need to search for the file.
+#: plug-ins/script-fu/scripts/palette-export.scm:199
+msgid "Exported palette to file: "
+msgstr "Paleta byla exportována do souboru: "
+
+#: plug-ins/script-fu/scripts/palette-export.scm:287
+msgid "Folder for the output file"
+msgstr "Složka pro výstupní soubor"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:288
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Název souboru, který se má vytvořit (pokud soubor s tímto názvem již "
+"existuje, bude nahrazen)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:317
+msgid "_CSS stylesheet..."
+msgstr "_Šablona stylů CSS..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:318
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1100,15 +1089,27 @@ msgstr ""
 "Exportovat aktivní paletu jako stylopis CSS s názvy barev jako názvy jejich "
 "tříd a barvou jako vlastní hodnotou atributu barvy"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:291
+#: plug-ins/script-fu/scripts/palette-export.scm:338
+msgid "P_HP dictionary..."
+msgstr "Slovník P_HP..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:339
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Exportovat aktivní paletu jako slovník v jazyce PHP (název=>barva)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:323
+#: plug-ins/script-fu/scripts/palette-export.scm:363
+msgid "_Python dictionary..."
+msgstr "Slovník _Pythonu..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:364
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Exportovat aktivní paletu jako slovník v jazyce Python (název: barva)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:352
+#: plug-ins/script-fu/scripts/palette-export.scm:385
+msgid "_Text file..."
+msgstr "_Textový soubor..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:386
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
@@ -1116,459 +1117,320 @@ msgstr ""
 "Zapsat všechny barvy v paletě do textového souboru, co řádek to jedna "
 "šestnáctková hodnota (bez názvů)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:399
-msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-msgstr "Exportovat aktivní paletu jako java.util.Hashtable<Řetězec, Barva>"
+#: plug-ins/script-fu/scripts/palette-export.scm:425
+msgid "J_ava map..."
+msgstr "J_avovská mapa..."
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+#: plug-ins/script-fu/scripts/palette-export.scm:426
+msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
+msgstr ""
+"Exportovat aktivní paletu jako java.util.Hashtable&lt;Řetězec, Barva&gt;"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:45
 msgid "There is no image data in the clipboard to paste."
 msgstr "Ve schránce nejsou obrazová data, která by se dala vložit."
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
-msgid "New _Brush..."
-msgstr "Nová _stopa…"
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+msgid "Paste as New _Brush..."
+msgstr "Vložit jako novou _stopu…"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:66
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Vložit obsah schránky do nové stopy"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-msgid "Brush name"
-msgstr "Název stopy"
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
+msgid "_Brush name"
+msgstr "Název _stopy"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-msgid "File name"
-msgstr "Název souboru"
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
+msgid "My Brush"
+msgstr "Moje stopa"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
-msgid "New _Pattern..."
-msgstr "Nový _vzorek…"
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+msgid "_File name"
+msgstr "Název _souboru"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+msgid "mybrush"
+msgstr "mojestopa"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+msgid "_Spacing"
+msgstr "Roze_stup"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste as New _Pattern..."
+msgstr "Vložit jako nový _vzorek…"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "Vložit obsah schránky do nového vzorku"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-msgid "Pattern name"
-msgstr "Název vzorku"
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
+msgid "_Pattern name"
+msgstr "Název _vzorku"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
+msgid "My Pattern"
+msgstr "Můj vzorek"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+msgid "mypattern"
+msgstr "mujvzorek"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:196
 msgid "_Perspective..."
 msgstr "_Perspektiva…"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:197
 msgid "Add a perspective shadow to the selected region (or alpha)"
 msgstr "Přidat do vybrané oblasti (nebo alfakanálu) perspektivní stín"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:203
 msgid "Angle"
 msgstr "Úhel"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:204
 msgid "Relative distance of horizon"
 msgstr "Poměrná vzdálenost obzoru"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:205
 msgid "Relative length of shadow"
 msgstr "Poměrná délka stínu"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:209
 msgid "Interpolation"
 msgstr "Interpolace"
 
-#: ../plug-ins/script-fu/scripts/predator.scm:121
-msgid "_Predator..."
-msgstr "_Predátor…"
+#: plug-ins/script-fu/scripts/reverse-layers.scm:41
+msgid "Reverse Layer _Order"
+msgstr "_Obrátit pořadí vrstev"
 
-#: ../plug-ins/script-fu/scripts/predator.scm:122
-msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "Přidat do vybrané oblasti (nebo alfakanálu) efekt „Predátor“"
-
-#: ../plug-ins/script-fu/scripts/predator.scm:129
-msgid "Edge amount"
-msgstr "Míra hran"
-
-#: ../plug-ins/script-fu/scripts/predator.scm:130
-msgid "Pixelize"
-msgstr "Pixelizovat"
-
-#: ../plug-ins/script-fu/scripts/predator.scm:131
-msgid "Pixel amount"
-msgstr "Velikost pixelů"
-
-#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
-msgid "Reverse Layer Order"
-msgstr "Obrátit pořadí vrstev"
-
-#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+#: plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse the order of layers in the image"
 msgstr "Obrátit pořadí vrstev v obrázku"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:67
+#: plug-ins/script-fu/scripts/ripply-anim.scm:83
 msgid "_Rippling..."
 msgstr "Č_eření…"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:68
+#: plug-ins/script-fu/scripts/ripply-anim.scm:84
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr "Vytvořit vícevrstvý obrázek přidáním efektu čeření do aktuální vrstvy"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:75
-msgid "Rippling strength"
-msgstr "Síla čeření"
+#: plug-ins/script-fu/scripts/ripply-anim.scm:90
+msgid "Ri_ppling strength"
+msgstr "Síla čeře_ní"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:76
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
-msgid "Number of frames"
-msgstr "Počet políček"
+#: plug-ins/script-fu/scripts/ripply-anim.scm:91
+msgid "_Number of frames"
+msgstr "_Počet políček"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
-msgid "Edge behavior"
-msgstr "Chování hran"
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
+msgid "Edge _behavior"
+msgstr "_Chování hran"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
 msgid "Wrap"
 msgstr "Zborcení"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
 msgid "Smear"
 msgstr "Zašpinění"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
 msgid "Black"
 msgstr "Černá"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#: plug-ins/script-fu/scripts/round-corners.scm:134
 msgid "_Round Corners..."
 msgstr "_Oblé rohy…"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#: plug-ins/script-fu/scripts/round-corners.scm:135
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr "Zaoblit rohy obrázku a volitelně přidat stín a pozadí"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#: plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Edge radius"
 msgstr "Poloměr hran"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#: plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Add drop-shadow"
 msgstr "Přidat vržený stín"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#: plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Shadow X offset"
 msgstr "Posun stínu ve směru X"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#: plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Shadow Y offset"
 msgstr "Posun stínu ve směru Y"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#: plug-ins/script-fu/scripts/round-corners.scm:146
 msgid "Add background"
 msgstr "Přidat pozadí"
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
 msgstr "Nastavi_t mapu barev…"
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr "Změnit barevnou mapu obrázku podle barev vybrané palety."
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:60
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+#: plug-ins/script-fu/scripts/selection-round.scm:143
 msgid "Rounded R_ectangle..."
 msgstr "_Zaoblený obdélník…"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+#: plug-ins/script-fu/scripts/selection-round.scm:144
 msgid "Round the corners of the current selection"
 msgstr "Zaoblit rohy aktuálního výběru"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:147
-msgid "Radius (%)"
-msgstr "Poloměr (%)"
+#: plug-ins/script-fu/scripts/selection-round.scm:150
+msgid "R_adius (%)"
+msgstr "P_oloměr (%)"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:148
-msgid "Concave"
-msgstr "Konkávní"
+#: plug-ins/script-fu/scripts/selection-round.scm:151
+msgid "Co_ncave"
+msgstr "Ko_nkávní"
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
-msgid "To _Brush..."
-msgstr "Na _stopu…"
-
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
-msgid "Convert a selection to a brush"
-msgstr "Převést výběr na stopu"
-
-#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
-msgid "To _Image"
-msgstr "Na _obrázek"
-
-#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
-msgid "Convert a selection to an image"
-msgstr "Převést výběr na obrázek"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
-msgid "To _Pattern..."
-msgstr "Na _vzorek…"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
-msgid "Convert a selection to a pattern"
-msgstr "Převést výběr na vzorek"
-
-#: ../plug-ins/script-fu/scripts/slide.scm:236
+#: plug-ins/script-fu/scripts/slide.scm:257
 msgid "_Slide..."
 msgstr "_Snímek…"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:237
+#: plug-ins/script-fu/scripts/slide.scm:258
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
 msgstr "Přidat rámeček v podobě kinofilmového pásu s dírkováním a popisky"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:244
+#: plug-ins/script-fu/scripts/slide.scm:264
 msgid "Text"
 msgstr "Text"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:245
+#: plug-ins/script-fu/scripts/slide.scm:265
 msgid "Number"
 msgstr "Počet"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:246
+#: plug-ins/script-fu/scripts/slide.scm:266
 msgid "Font"
 msgstr "Písmo"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:247
+#: plug-ins/script-fu/scripts/slide.scm:267
 msgid "Font color"
 msgstr "Barva písma"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+#: plug-ins/script-fu/scripts/spinning-globe.scm:116
 msgid "_Spinning Globe..."
 msgstr "_Rotující glóbus…"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+#: plug-ins/script-fu/scripts/spinning-globe.scm:117
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr "Vytvořit animaci mapováním aktuálního obrázku na rotující kouli"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+#: plug-ins/script-fu/scripts/spinning-globe.scm:123
 msgid "Frames"
 msgstr "Počet políček"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+#: plug-ins/script-fu/scripts/spinning-globe.scm:124
 msgid "Turn from left to right"
 msgstr "Točit zleva doprava"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+#: plug-ins/script-fu/scripts/spinning-globe.scm:125
 msgid "Transparent background"
 msgstr "Průhledné pozadí"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+#: plug-ins/script-fu/scripts/spinning-globe.scm:126
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indexovaný v n barvách (0 = nechat RGB)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
-msgid "Rendering Spyro"
-msgstr "Vykresluje se spyrogimp"
+#. Translator: this means "in the Scheme programming language" aka ScriptFu.
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:154
+msgid "Plug-In Example in _Scheme"
+msgstr "Ukázka zásuvného modulu ve _Scheme"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
-msgstr "_Spyrogimp…"
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:155
+msgid "Plug-in example in Scheme"
+msgstr "Ukázka zásuvného modulu ve Scheme"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr ""
-"Vykresluje spyrografy, hypotrochoidy, epitrochoidy a Lissajousovy křivky v "
-"aktuální vrstvě"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
-msgid "Type"
-msgstr "Typ"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
-msgid "Spyrograph"
-msgstr "Spyrograf"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
-msgid "Epitrochoid"
-msgstr "Epitrochoida"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
-msgid "Lissajous"
-msgstr "Lissajousova křivka"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
-msgid "Shape"
-msgstr "Tvar"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
-msgid "Circle"
-msgstr "Kruh"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
-msgid "Triangle"
-msgstr "Trojúhelník"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
-msgid "Square"
-msgstr "Čtverec"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
-msgid "Pentagon"
-msgstr "Pětiúhelník"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
-msgid "Hexagon"
-msgstr "Šestiúhelník"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
-msgid "Polygon: 7 sides"
-msgstr "Mnohoúhelník: 7 stran"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
-msgid "Polygon: 8 sides"
-msgstr "Mnohoúhelník: 8 stran"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
-msgid "Polygon: 9 sides"
-msgstr "Mnohoúhelník: 9 stran"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
-msgid "Polygon: 10 sides"
-msgstr "Mnohoúhelník: 10 stran"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
-msgid "Outer teeth"
-msgstr "Vnější zuby"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
-msgid "Inner teeth"
-msgstr "Vnitřní zuby"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
-msgid "Margin (pixels)"
-msgstr "Okraj (pixely)"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
-msgid "Hole ratio"
-msgstr "Podíl děr"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
-msgid "Start angle"
-msgstr "Počáteční úhel"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
-msgid "Tool"
-msgstr "Nástroj"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
-msgid "Pencil"
-msgstr "Tužka"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
-msgid "Brush"
-msgstr "Stopa"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
-msgid "Airbrush"
-msgstr "Rozprašovač"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
-msgid "Color method"
-msgstr "Barevná metoda"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
-msgid "Solid Color"
-msgstr "Jednolitá barva"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
-msgid "Gradient: Loop Sawtooth"
-msgstr "Přechod: pilovitá vlna"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
-msgid "Gradient: Loop Triangle"
-msgstr "Přechod: trojúhelníkovitá vlna"
-
-#: ../plug-ins/script-fu/scripts/test-sphere.scm:267
-msgid "_Sphere..."
-msgstr "_Koule…"
-
-#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+#: plug-ins/script-fu/scripts/tileblur.scm:77
 msgid "_Tileable Blur..."
 msgstr "_Dlaždicovatelné rozostření…"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+#: plug-ins/script-fu/scripts/tileblur.scm:78
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr "Rozostřit kraje obrázku pro bezešvé dlaždicování"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:76
-msgid "Radius"
-msgstr "Poloměr"
+#: plug-ins/script-fu/scripts/tileblur.scm:84
+msgid "Ra_dius"
+msgstr "Polomě_r"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:77
-msgid "Blur vertically"
-msgstr "Rozostřit svisle"
+#: plug-ins/script-fu/scripts/tileblur.scm:85
+msgid "Blur _vertically"
+msgstr "Rozostřit _svisle"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:78
-msgid "Blur horizontally"
-msgstr "Rozostřit vodorovně"
+#: plug-ins/script-fu/scripts/tileblur.scm:86
+msgid "Blur _horizontally"
+msgstr "Rozostřit _vodorovně"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
-msgid "Blur type"
-msgstr "Typ rozostření"
+#: plug-ins/script-fu/scripts/tileblur.scm:87
+msgid "Blur _type"
+msgstr "_Typ rozostření"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#: plug-ins/script-fu/scripts/tileblur.scm:87
 msgid "IIR"
 msgstr "IIR"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#: plug-ins/script-fu/scripts/tileblur.scm:87
 msgid "RLE"
 msgstr "RLE"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:103
 msgid "Mask size"
 msgstr "Velikost masky"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:104
 msgid "Mask opacity"
 msgstr "Krytí masky"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+#: plug-ins/script-fu/scripts/waves-anim.scm:116
 msgid "_Waves..."
 msgstr "_Vlny…"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+#: plug-ins/script-fu/scripts/waves-anim.scm:117
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
 msgstr ""
 "Vytvořit vícevrstevný obrázek s efektem kamene hozeného do aktuálního obrázku"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+#: plug-ins/script-fu/scripts/waves-anim.scm:123
 msgid "Amplitude"
 msgstr "Rozkmit"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+#: plug-ins/script-fu/scripts/waves-anim.scm:124
 msgid "Wavelength"
 msgstr "Vlnová délka"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+#: plug-ins/script-fu/scripts/waves-anim.scm:125
+msgid "Number of frames"
+msgstr "Počet políček"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:126
 msgid "Invert direction"
 msgstr "Obrátit směr"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:389
+#: plug-ins/script-fu/scripts/weave.scm:425
 msgid "_Weave..."
 msgstr "_Tkát…"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:390
+#: plug-ins/script-fu/scripts/weave.scm:426
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
@@ -1576,78 +1438,304 @@ msgstr ""
 "Vytvořit novou vrstvu vyplněnou tkaným efektem pro použití jako překryv nebo "
 "mapa vyvýšení"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:397
+#: plug-ins/script-fu/scripts/weave.scm:432
 msgid "Ribbon width"
 msgstr "Šířka pásky"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:398
+#: plug-ins/script-fu/scripts/weave.scm:433
 msgid "Ribbon spacing"
 msgstr "Rozestup pásek"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:399
+#: plug-ins/script-fu/scripts/weave.scm:434
 msgid "Shadow darkness"
 msgstr "Tmavost stínu"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:400
+#: plug-ins/script-fu/scripts/weave.scm:435
 msgid "Shadow depth"
 msgstr "Hloubka stínu"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:401
+#: plug-ins/script-fu/scripts/weave.scm:436
 msgid "Thread length"
 msgstr "Délka vlákna"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:402
+#: plug-ins/script-fu/scripts/weave.scm:437
 msgid "Thread density"
 msgstr "Hustota vlákna"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:403
+#: plug-ins/script-fu/scripts/weave.scm:438
 msgid "Thread intensity"
 msgstr "Intenzita vlákna"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+#: plug-ins/script-fu/scripts/xach-effect.scm:90
 msgid "Shadow"
 msgstr "Stín"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+#: plug-ins/script-fu/scripts/xach-effect.scm:123
 msgid "_Xach-Effect..."
 msgstr "Efekt _Xach…"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+#: plug-ins/script-fu/scripts/xach-effect.scm:124
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr "Přidat jemný průsvitný 3D efekt do vybrané oblasti (či alfakanálu)"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+#: plug-ins/script-fu/scripts/xach-effect.scm:130
 msgid "Highlight X offset"
 msgstr "Posun světel ve směru X"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+#: plug-ins/script-fu/scripts/xach-effect.scm:131
 msgid "Highlight Y offset"
 msgstr "Posun světel ve směru Y"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+#: plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight color"
 msgstr "Barva zvýraznění"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+#: plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Highlight opacity"
 msgstr "Krytí světel"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+#: plug-ins/script-fu/scripts/xach-effect.scm:134
 msgid "Drop shadow color"
 msgstr "Barva vrženého stínu"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+#: plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow opacity"
 msgstr "Krytí vrženého stínu"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+#: plug-ins/script-fu/scripts/xach-effect.scm:136
 msgid "Drop shadow blur radius"
 msgstr "Poloměr rozostření vrženého stínu"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+#: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow X offset"
 msgstr "Posun vrženého stínu ve směru X"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+#: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Drop shadow Y offset"
 msgstr "Posun vrženého stínu ve směru Y"
+
+#~ msgid "_Console"
+#~ msgstr "_Konzola"
+
+#~ msgid "Re-read all available Script-Fu scripts"
+#~ msgstr "Načíst znovu všechny dostupné skripty Script-Fu"
+
+#~ msgid "_Refresh Scripts"
+#~ msgstr "Obče_rstvit skripty"
+
+#~ msgid ""
+#~ "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is "
+#~ "open.  Please close all Script-Fu windows and try again."
+#~ msgstr ""
+#~ "Nemůžete použít „Občerstvit skripty“, pokud je otevřeno dialogové okno "
+#~ "Script-Fu. Zavřete prosím všechny okna Script-Fu a zkuste to znovu."
+
+#~ msgid "Interactive Scheme Development"
+#~ msgstr "Interaktivní vývoj ve Scheme"
+
+#, c-format
+#~ msgid "Script-Fu: %s"
+#~ msgstr "Script-Fu: %s"
+
+#~ msgid "Script-Fu Font Selection"
+#~ msgstr "Script-Fu výběr písma"
+
+#~ msgid "Script-Fu Palette Selection"
+#~ msgstr "Script-Fu výběr palety"
+
+#~ msgid "Script-Fu Pattern Selection"
+#~ msgstr "Script-Fu výběr vzorku"
+
+#~ msgid "Script-Fu Gradient Selection"
+#~ msgstr "Script-Fu výběr přechodu"
+
+#~ msgid "Script-Fu Brush Selection"
+#~ msgstr "Script-Fu výběr stopy"
+
+#~ msgid "Too few arguments to 'script-fu-register' call"
+#~ msgstr "Příliš málo argumentů pro volání „script-fu-register“"
+
+#~ msgid "Image to carve"
+#~ msgstr "Obrázek, který se má vyřezat"
+
+#~ msgid "Add realistic looking coffee stains to the image"
+#~ msgstr "Přidat do obrázku realistické skvrny od kávy"
+
+#~ msgid "Stains"
+#~ msgstr "Skvrny"
+
+#~ msgid "Threshold (bigger 1<-->254 smaller)"
+#~ msgstr "Práh (větší 1<-->255 menší)"
+
+#~ msgid "_Erase Every Other Row..."
+#~ msgstr "_Vymazat každý druhý řádek…"
+
+#~ msgid "Erase every other row or column"
+#~ msgstr "Vymazat každý druhý řádek nebo sloupec"
+
+#~ msgid "Rows/cols"
+#~ msgstr "Řádky/sloupce"
+
+#~ msgid "Rows"
+#~ msgstr "Řádky"
+
+#~ msgid "Columns"
+#~ msgstr "Sloupce"
+
+#~ msgid "Even/odd"
+#~ msgstr "Sudé/liché"
+
+#~ msgid "Even"
+#~ msgstr "Sudé"
+
+#~ msgid "Odd"
+#~ msgstr "Liché"
+
+#~ msgid "Erase/fill"
+#~ msgstr "Smazat/vyplnit"
+
+#~ msgid "Erase"
+#~ msgstr "Smazat"
+
+#~ msgid "Fill with BG"
+#~ msgstr "Vyplnit pozadím"
+
+#~ msgid "Plug-in _Registry"
+#~ msgstr "_Registr zásuvných modulů"
+
+#~ msgid "_Grid..."
+#~ msgstr "_Mřížka…"
+
+#~ msgid ""
+#~ "Draw a grid as specified by the lists of X and Y locations using the "
+#~ "current brush"
+#~ msgstr "Vykreslit mřížku aktuální stopou podle seznamu souřadnic X a Y"
+
+#~ msgid "X divisions"
+#~ msgstr "Rozdělení ve směru X"
+
+#~ msgid "Y divisions"
+#~ msgstr "Rozdělení ve směru Y"
+
+#~ msgid "_Predator..."
+#~ msgstr "_Predátor…"
+
+#~ msgid "Add a 'Predator' effect to the selected region (or alpha)"
+#~ msgstr "Přidat do vybrané oblasti (nebo alfakanálu) efekt „Predátor“"
+
+#~ msgid "Edge amount"
+#~ msgstr "Míra hran"
+
+#~ msgid "Pixelize"
+#~ msgstr "Pixelizovat"
+
+#~ msgid "Pixel amount"
+#~ msgstr "Velikost pixelů"
+
+#~ msgid "To _Brush..."
+#~ msgstr "Na _stopu…"
+
+#~ msgid "Convert a selection to a brush"
+#~ msgstr "Převést výběr na stopu"
+
+#~ msgid "To _Image"
+#~ msgstr "Na _obrázek"
+
+#~ msgid "Convert a selection to an image"
+#~ msgstr "Převést výběr na obrázek"
+
+#~ msgid "To _Pattern..."
+#~ msgstr "Na _vzorek…"
+
+#~ msgid "Convert a selection to a pattern"
+#~ msgstr "Převést výběr na vzorek"
+
+#~ msgid "Rendering Spyro"
+#~ msgstr "Vykresluje se spyrogimp"
+
+#~ msgid "_Spyrogimp..."
+#~ msgstr "_Spyrogimp…"
+
+#~ msgid ""
+#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+#~ msgstr ""
+#~ "Vykresluje spyrografy, hypotrochoidy, epitrochoidy a Lissajousovy křivky "
+#~ "v aktuální vrstvě"
+
+#~ msgid "Type"
+#~ msgstr "Typ"
+
+#~ msgid "Spyrograph"
+#~ msgstr "Spyrograf"
+
+#~ msgid "Epitrochoid"
+#~ msgstr "Epitrochoida"
+
+#~ msgid "Lissajous"
+#~ msgstr "Lissajousova křivka"
+
+#~ msgid "Shape"
+#~ msgstr "Tvar"
+
+#~ msgid "Circle"
+#~ msgstr "Kruh"
+
+#~ msgid "Triangle"
+#~ msgstr "Trojúhelník"
+
+#~ msgid "Square"
+#~ msgstr "Čtverec"
+
+#~ msgid "Pentagon"
+#~ msgstr "Pětiúhelník"
+
+#~ msgid "Hexagon"
+#~ msgstr "Šestiúhelník"
+
+#~ msgid "Polygon: 7 sides"
+#~ msgstr "Mnohoúhelník: 7 stran"
+
+#~ msgid "Polygon: 8 sides"
+#~ msgstr "Mnohoúhelník: 8 stran"
+
+#~ msgid "Polygon: 9 sides"
+#~ msgstr "Mnohoúhelník: 9 stran"
+
+#~ msgid "Polygon: 10 sides"
+#~ msgstr "Mnohoúhelník: 10 stran"
+
+#~ msgid "Outer teeth"
+#~ msgstr "Vnější zuby"
+
+#~ msgid "Inner teeth"
+#~ msgstr "Vnitřní zuby"
+
+#~ msgid "Margin (pixels)"
+#~ msgstr "Okraj (pixely)"
+
+#~ msgid "Hole ratio"
+#~ msgstr "Podíl děr"
+
+#~ msgid "Start angle"
+#~ msgstr "Počáteční úhel"
+
+#~ msgid "Tool"
+#~ msgstr "Nástroj"
+
+#~ msgid "Pencil"
+#~ msgstr "Tužka"
+
+#~ msgid "Color method"
+#~ msgstr "Barevná metoda"
+
+#~ msgid "Solid Color"
+#~ msgstr "Jednolitá barva"
+
+#~ msgid "Gradient: Loop Sawtooth"
+#~ msgstr "Přechod: pilovitá vlna"
+
+#~ msgid "Gradient: Loop Triangle"
+#~ msgstr "Přechod: trojúhelníkovitá vlna"
+
+#~ msgid "_Sphere..."
+#~ msgstr "_Koule…"
