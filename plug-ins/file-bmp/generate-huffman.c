@@ -64,10 +64,22 @@ main (int argc, char *argv[])
         {
           file = stdout;
         }
-      else if (! (file = fopen (argv[1], "w")))
+      else
         {
-          perror (argv[1]);
-          return 1;
+#ifndef _UCRT
+          if (! (file = fopen (argv[1], "w")))
+            {
+              perror (argv[1]);
+              return 1;
+            }
+#else
+          if (fopen_s (&file, argv[1], "w") != 0)
+            {
+              file = NULL;
+              perror (argv[1]);
+              return 1;
+            }
+#endif
         }
     }
   else
