@@ -17,7 +17,6 @@ ${MINGW_PACKAGE_PREFIX}-atk
 ${MINGW_PACKAGE_PREFIX}-cairo|vcpkg:cairo
 ${MINGW_PACKAGE_PREFIX}-cfitsio
 ${MINGW_PACKAGE_PREFIX}-drmingw
-${MINGW_PACKAGE_PREFIX}-gexiv2|vcpkg:gexiv2
 ${MINGW_PACKAGE_PREFIX}-ghostscript
 ${MINGW_PACKAGE_PREFIX}-glib2|vcpkg:glib
 ${MINGW_PACKAGE_PREFIX}-glib-networking|vcpkg:glib-networking

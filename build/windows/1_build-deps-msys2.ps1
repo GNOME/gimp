@@ -46,7 +46,7 @@ if (-not $env:MSYS_ROOT -and -not (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type L
   }
 if (-not $env:MSYSTEM_PREFIX -and $env:MSYS_ROOT)
   {
-    $env:MSYSTEM_PREFIX = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'clangarm64' } else { 'clang64' }
+    $env:MSYSTEM_PREFIX = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'clangarm64' } else { 'mingw64' }
   }
 
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):deps_install[collapsed=true]$([char]13)$([char]27)[0KInstalling dependencies provided by $(if ("$env:VCPKG_ROOT") {'vcpkg'} else {'MSYS2'})"
@@ -62,7 +62,7 @@ if (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf)
 else
   {
     powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -Suy }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
-    powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -S --needed (Get-Content build/windows/all-deps-uni.txt | Select-String 'MINGW_' | ForEach-Object { ($_ -split '\|vcpkg:')[0] -replace '\$\{MINGW_PACKAGE_PREFIX\}', $(if ($env:MINGW_PACKAGE_PREFIX) { $env:MINGW_PACKAGE_PREFIX } elseif ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' }) }) }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+    powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -S --needed (Get-Content build/windows/all-deps-uni.txt | Select-String 'MINGW_' | ForEach-Object { ($_ -split '\|vcpkg:')[0] -replace '\$\{MINGW_PACKAGE_PREFIX\}', $(if ($env:MINGW_PACKAGE_PREFIX) { $env:MINGW_PACKAGE_PREFIX } elseif ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-x86_64' }) }) }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):deps_install$([char]13)$([char]27)[0K"
 
@@ -77,6 +77,8 @@ if (-not $GIMP_PREFIX)
   }
 Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,9) -replace '> ','' -replace '- ','')
 
+
+echo $env:PATH
 
 # Build babl and GEGL
 function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$options)
@@ -129,26 +131,12 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
       {
         if ((Test-Path meson.build -Type Leaf) -and -not (Test-Path CMakeLists.txt -Type Leaf))
           {
-            #babl and GEGL already auto install .pdb but we don't know about other eventual deps
-            if (-not "$env:VCPKG_ROOT")
-              {
-                if ("$dep" -ne 'babl' -and "$dep" -ne 'gegl')
-                  {
-                    Add-Content meson.build "meson.add_install_script(find_program('$("$GIMP_DIR".Replace('\','/'))/tools/meson_install_win_debug.py'))"
-                  }
-                $clang_opts_meson=@('-Dc_args=-"fansi-escape-codes -gcodeview"', '-Dcpp_args=-"fansi-escape-codes -gcodeview"', '-Dc_link_args="-Wl,--pdb="', '-Dcpp_link_args="-Wl,--pdb="')
-              }
             meson setup _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION `
                         -Dbuildtype=debugoptimized $clang_opts_meson `
                         $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
         elseif (Test-Path CMakeLists.txt -Type Leaf)
           {
-            if (-not "$env:VCPKG_ROOT")
-              {
-                Add-Content CMakeLists.txt "install(CODE `"execute_process(COMMAND `${Python3_EXECUTABLE`} $("$GIMP_DIR".Replace('\','/'))/tools/meson_install_win_debug.py`)`")"
-                $clang_opts_cmake=@('-DCMAKE_C_FLAGS="-gcodeview"', '-DCMAKE_CXX_FLAGS="-gcodeview"', '-DCMAKE_EXE_LINKER_FLAGS="-Wl,--pdb="', '-DCMAKE_SHARED_LINKER_FLAGS="-Wl,--pdb="', '-DCMAKE_MODULE_LINKER_FLAGS="-Wl,--pdb="')
-              }
             cmake -G Ninja -B _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -DCMAKE_INSTALL_PREFIX="$GIMP_PREFIX" `
                   -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_COLOR_DIAGNOSTICS=ON $clang_opts_cmake `
                   $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
@@ -169,7 +157,8 @@ if ($env:VCPKG_ROOT)
     exit 0
   }
 self_build https://gitlab.gnome.org/GNOME/babl
+self_build https://github.com/Exiv2/exiv2 "v0.27.7" @('-DCMAKE_DLL_NAME_WITH_SOVERSION=ON', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF', '-DEXIV2_ENABLE_VIDEO=OFF')
+self_build https://gitlab.gnome.org/GNOME/gexiv2 "gexiv2-0.14.6"
 self_build https://gitlab.gnome.org/GNOME/gegl @('-Ddocs=false')
-self_build https://github.com/Exiv2/exiv2 "v0.28.8" @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DCMAKE_DLL_NAME_WITH_SOVERSION=ON', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF', '-DEXIV2_ENABLE_VIDEO=OFF')
 
 Set-Location $GIMP_DIR
