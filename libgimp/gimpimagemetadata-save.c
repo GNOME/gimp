@@ -347,7 +347,11 @@ gimp_fix_xmp_tag (const gchar *tag)
 
   while ((substring = strstr (tag, org)))
     {
+#ifndef _UCRT
       strcpy (substring, new);
+#else
+      strcpy_s (substring, strlen (org) + 1, new);
+#endif
 
       tail = substring + strlen (org);
       substring += strlen (new);
