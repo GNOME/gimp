@@ -148,6 +148,9 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
 
   format = choose_format (src_buffer, select_criterion,
                           &n_components, &has_alpha);
+
+  g_return_val_if_fail (n_components <= MAX_CHANNELS, NULL);
+
   gegl_buffer_sample (src_buffer, x, y, NULL, start_col, format,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
@@ -227,6 +230,8 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
 
   format = choose_format (src_buffer, select_criterion,
                           &n_components, &has_alpha);
+
+  g_return_val_if_fail (n_components <= MAX_CHANNELS, NULL);
 
   gegl_color_get_pixel (color, format, start_col);
 

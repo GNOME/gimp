@@ -30,7 +30,7 @@
 
 /*  former base/ defines  */
 
-#define MAX_CHANNELS  4
+#define MAX_CHANNELS  5
 
 #define RED           0
 #define GREEN         1

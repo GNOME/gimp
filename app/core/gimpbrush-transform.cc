@@ -841,6 +841,9 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
   if (rw <= 0 || rh <= 0)
     return;
 
+  /* Making sure we have enough elements for acc array. */
+  g_return_if_fail (components <= MAX_CHANNELS);
+
   sums = g_new (Sums, width * height * components);
 
   gegl_parallel_distribute_range (
@@ -866,7 +869,7 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
             gint weighted_sum;
             gint leading_sum;
             gint leading_weighted_sum;
-          } acc[components];
+          } acc[MAX_CHANNELS];
 
           memset (acc, 0, sizeof (acc));
 
@@ -946,7 +949,7 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
             gfloat weighted_sum;
             gint   leading_sum;
             gint   trailing_sum;
-          } acc[components];
+          } acc[MAX_CHANNELS];
 
           memset (acc, 0, sizeof (acc));
 

@@ -72,7 +72,7 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
   GeglBuffer      *buffer;
   GeglRectangle    rect;
   ColorsEqualFunc  colors_equal_func;
-  guchar           bgcolor[MAX_CHANNELS] = { 0, 0, 0, 0 };
+  guchar           bgcolor[MAX_CHANNELS] = { 0 };
   guchar          *buf = NULL;
   gint             x1, y1, x2, y2;
   gint             width, height;
