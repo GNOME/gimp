@@ -822,6 +822,29 @@ cppcheck:
       - report/
     expire_in: 8 days
 
+issue-bot:
+  rules:
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "schedule"
+      when: on_failure
+  needs:
+    - job: deps-debian-nonreloc
+      optional: true
+    - job: deps-win
+      optional: true
+    - job: deps-macos-inhouse
+      optional: true
+  stage: analysis
+  image: registry.gitlab.com/gitlab-org/distribution/issue-bot:latest
+  variables:
+    ISSUE_BOT_API_TOKEN: $WILBER_BOT
+  script:
+    - LATEST_API_TOKEN=20270330
+    - printf "(INFO) Token expire date is $(date -d "$LATEST_API_TOKEN" +"%x")\n"
+    - if [ "$(date +%Y%m%d)" -ge "$LATEST_API_TOKEN" ]; then
+        printf '\033[31m(ERROR)\033[0m API token for bot expired. Please ask the maintainer to issue a new one then save its value on WILBER_BOT protected var.\n';
+        exit 1;
+      fi
+    - /issue-bot
 
 ## Ready-to-distribute ##
 
