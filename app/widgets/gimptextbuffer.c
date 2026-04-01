@@ -442,7 +442,8 @@ void
 gimp_text_buffer_change_size (GimpTextBuffer    *buffer,
                               const GtkTextIter *start,
                               const GtkTextIter *end,
-                              gint               count)
+                              gint               count,
+                              gint               default_size)
 {
   GtkTextIter  iter;
   GtkTextIter  span_start;
@@ -479,16 +480,19 @@ gimp_text_buffer_change_size (GimpTextBuffer    *buffer,
       if (iter_size != span_size ||
           gtk_text_iter_compare (&iter, end) >= 0)
         {
+          gint base_size = (span_size == 0) ? default_size : span_size;
+          gint new_size  = base_size + count;
+
           if (span_size != 0)
             {
               gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), span_tag,
                                           &span_start, &span_end);
             }
 
-          if ((span_size + count) > 0)
+          if (new_size > 0)
             {
               span_tag = gimp_text_buffer_get_size_tag (buffer,
-                                                        span_size + count);
+                                                        new_size);
 
               gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), span_tag,
                                          &span_start, &span_end);

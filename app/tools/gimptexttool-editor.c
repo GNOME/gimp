@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -1357,6 +1358,13 @@ gimp_text_tool_change_size (GimpTextTool *text_tool,
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    start;
   GtkTextIter    end;
+  gdouble        default_size;
+  gdouble        x_res, y_res;
+
+  gimp_image_get_resolution (text_tool->image, &x_res, &y_res);
+
+  default_size = gimp_units_to_points (text_tool->text->font_size,
+                                       text_tool->text->unit, y_res);
 
   if (! gtk_text_buffer_get_selection_bounds (buffer, &start, &end))
     {
@@ -1365,7 +1373,7 @@ gimp_text_tool_change_size (GimpTextTool *text_tool,
 
   gtk_text_iter_order (&start, &end);
   gimp_text_buffer_change_size (text_tool->buffer, &start, &end,
-                                amount * PANGO_SCALE);
+                                amount * PANGO_SCALE, default_size * PANGO_SCALE);
 }
 
 static void

@@ -91,7 +91,8 @@ void             gimp_text_buffer_set_size             (GimpTextBuffer     *buff
 void             gimp_text_buffer_change_size          (GimpTextBuffer     *buffer,
                                                         const GtkTextIter  *start,
                                                         const GtkTextIter  *end,
-                                                        gint                amount);
+                                                        gint                amount,
+                                                        gint                default_size);
 
 GtkTextTag     * gimp_text_buffer_get_iter_baseline    (GimpTextBuffer     *buffer,
                                                         const GtkTextIter  *iter,
