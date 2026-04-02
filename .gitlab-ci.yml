@@ -706,7 +706,7 @@ gimp-macos-inhouse:
     - arch -${ARCH} zsh build/macos/2_build-gimp-macports.sh
   artifacts:
     paths:
-      - gimp-*.app
+      - _install-*
       - _build*/meson-logs/meson-log.txt
       - _build*/done-dylib.list
       # Needed by dist-mac-weekly
