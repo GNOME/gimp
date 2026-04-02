@@ -2,19 +2,19 @@
 # KEEP THIS FILE ORDERING SIMILAR to build/windows/all-deps-uni.txt
 
 # BUILD-TIME ONLY DEPS
-gettext \
-gi-docgen \
+gettext|homebrew:gettext \
+gi-docgen|homebrew:gi-docgen \
 gobject-introspection +quartz -x11|homebrew:gobject-introspection \
 libxslt|homebrew:libxslt \
 meson|homebrew:meson \
 perl5 #homebrew uses perl from macOS \
 pkgconfig|homebrew:pkgconf \
-vala -valadoc \
+vala -valadoc|homebrew:vala \
 
 # RUNTIME DEPS
-aalib -x11 \
+aalib -x11|homebrew:aalib \
 appstream -x11|homebrew:appstream \
-atk \
+atk|homebrew:at-spi2-core \
 bzip2 #homebrew uses libbz2 from macOS \
 cairo +quartz -x11|homebrew:cairo \
 #cfitsio not built by Apple Clang
@@ -32,21 +32,21 @@ iso-codes|homebrew:iso-codes \
 json-glib|homebrew:json-glib \
 lcms2|homebrew:lcms2 \
 libarchive|homebrew:libarchive \
-libheif \
+libheif|homebrew:libheif \
 libjpeg-turbo|homebrew:libjpeg-turbo \
-libjxl \
-libmng \
-libmypaint \
+libjxl|homebrew:jpeg-xl \
+libmng|homebrew:libmng \
+libmypaint|homebrew:libmypaint \
 libpng|homebrew:libpng \
 librsvg|homebrew:librsvg \
-tiff \
-webp \
+tiff|homebrew:libtiff \
+webp|homebrew:webp \
 libwmf -x11|homebrew:libwmf \
 maxflow \
 mypaint-brushes|homebrew:mypaint-brushes \
-openexr \
-openjpeg \
-pango +thai +quartz -x11 \
+openexr|homebrew:openexr \
+openjpeg|homebrew:openjpeg \
+pango +thai +quartz -x11|homebrew:pango \
 poppler +pinentry -pinentry_mac|homebrew:poppler \
 poppler-data \
 python313|homebrew:python \ py313-certifi|homebrew:certifi
