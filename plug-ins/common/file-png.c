@@ -1559,7 +1559,9 @@ load_apng_image (GFile      *file,
                 }
               else if (png_id == id_tRNS)
                 {
-                  for (gint i = 0; i < chunk.size; i++)
+                  gint transparent_size = MIN (chunk.size, 256);
+
+                  for (gint i = 0; i < transparent_size; i++)
                     trns[i] = chunk.data[i + 8];
                 }
               else if (png_id == id_IEND)
