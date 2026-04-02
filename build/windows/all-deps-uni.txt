@@ -3,7 +3,6 @@ ${MINGW_PACKAGE_PREFIX}-binutils
 ${MINGW_PACKAGE_PREFIX}-gettext-tools
 ${MINGW_PACKAGE_PREFIX}-gi-docgen
 ${MINGW_PACKAGE_PREFIX}-gobject-introspection|vcpkg:gobject-introspection
-${MINGW_PACKAGE_PREFIX}-headers-git
 ${MINGW_PACKAGE_PREFIX}-libxslt|vcpkg:libxslt
 ${MINGW_PACKAGE_PREFIX}-meson
 ${MINGW_PACKAGE_PREFIX}-perl
