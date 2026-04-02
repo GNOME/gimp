@@ -14,14 +14,19 @@ vala -valadoc \
 aalib -x11 \
 appstream -x11|homebrew:appstream \
 atk \
+bzip2 \ #homebrew uses bzip2 from macOS
 cairo +quartz -x11|homebrew:cairo \
 #cfitsio not built by Apple Clang
+fontconfig|homebrew:fontconfig \
+freetype|homebrew:freetype \
+gdk-pixbuf2 +quartz -x11|homebrew:gdk-pixbuf \
 gexiv2|homebrew:gexiv2 \
 ghostscript -x11|homebrew:ghostscript \
 glib2 +quartz -x11|homebrew:glib \
 glib-networking|homebrew:glib-networking \
 graphviz -x11|homebrew:graphviz \
 gtk3 +quartz -x11|homebrew:gtk+3 \ adwaita-icon-theme +quartz -x11|homebrew:adwaita-icon-theme \ shared-mime-info|homebrew:shared-mime-info \
+harfbuzz +quartz -x11|homebrew:harfbuzz \
 iso-codes|homebrew:iso-codes \
 json-glib|homebrew:json-glib \
 lcms2|homebrew:lcms2 \
@@ -48,3 +53,5 @@ py313-gobject3|homebrew:pygobject3 \
 qoi \
 #suitesparse not built by Apple Clang
 #xpm depends on x11
+xz|homebrew:xz
+zlib #homebrew uses zlib from macOS
