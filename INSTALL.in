@@ -311,7 +311,6 @@ help in that regard:
      openexr             @OPENEXR_REQUIRED_VERSION@         OpenEXR
      OpenJPEG            @OPENJPEG_REQUIRED_VERSION@        JPEG 2000
      qoi                 -                                  QOI
-     webkit              @WEBKITGTK_REQUIRED_VERSION@       Help browser & webpage
      vala                -                                  Vala plug-ins
 
  24. Summary of optional runtime dependencies:
