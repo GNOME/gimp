@@ -7,6 +7,7 @@ gi-docgen \
 gobject-introspection +quartz -x11|homebrew:gobject-introspection \
 libxslt|homebrew:libxslt \
 meson|homebrew:meson \
+perl5 #homebrew uses perl from macOS \
 pkgconfig|homebrew:pkgconf \
 vala -valadoc \
 
