@@ -32,9 +32,9 @@ if (-not $env:VCPKG_ROOT -or (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf))
         exit 1
       }
   }
-if (-not $env:VCPKG_DEFAULT_TRIPLET -and $env:VCPKG_ROOT)
+if (-not $env:VCPKG_DEFAULT_HOST_TRIPLET -and $env:VCPKG_ROOT)
   {
-    $env:VCPKG_DEFAULT_TRIPLET = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'arm64-windows' } else { 'x64-windows' }
+    $env:VCPKG_DEFAULT_HOST_TRIPLET = if ((Get-WmiObject Win32_ComputerSystem).SystemType -like 'ARM64*') { 'arm64-windows' } else { 'x64-windows-release' }
   }
 
 if (-not $env:MSYS_ROOT -and -not (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf))
@@ -127,7 +127,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
       }
 
     ## Configure and/or build
-    if (-not (Test-Path _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1)\build.ninja -Type Leaf))
+    if (-not (Test-Path _build-$(@($env:VCPKG_DEFAULT_HOST_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1)\build.ninja -Type Leaf))
       {
         if ((Test-Path meson.build -Type Leaf) -and -not (Test-Path CMakeLists.txt -Type Leaf))
           {
@@ -140,7 +140,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
                   }
                 $clang_opts_meson=@('-Dc_args=-"fansi-escape-codes -gcodeview"', '-Dcpp_args=-"fansi-escape-codes -gcodeview"', '-Dc_link_args="-Wl,--pdb="', '-Dcpp_link_args="-Wl,--pdb="')
               }
-            meson setup _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION `
+            meson setup _build-$(@($env:VCPKG_DEFAULT_HOST_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION `
                         -Dbuildtype=debugoptimized $clang_opts_meson `
                         $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
@@ -151,13 +151,13 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
                 Add-Content CMakeLists.txt "install(CODE `"execute_process(COMMAND `${Python3_EXECUTABLE`} $("$GIMP_DIR".Replace('\','/'))/tools/meson_install_win_debug.py`)`")"
                 $clang_opts_cmake=@('-DCMAKE_C_FLAGS="-gcodeview"', '-DCMAKE_CXX_FLAGS="-gcodeview"', '-DCMAKE_EXE_LINKER_FLAGS="-Wl,--pdb="', '-DCMAKE_SHARED_LINKER_FLAGS="-Wl,--pdb="', '-DCMAKE_MODULE_LINKER_FLAGS="-Wl,--pdb="')
               }
-            cmake -G Ninja -B _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -DCMAKE_INSTALL_PREFIX="$GIMP_PREFIX" `
+            cmake -G Ninja -B _build-$(@($env:VCPKG_DEFAULT_HOST_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -DCMAKE_INSTALL_PREFIX="$GIMP_PREFIX" `
                   -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_COLOR_DIAGNOSTICS=ON $clang_opts_cmake `
                   $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
         if ("$LASTEXITCODE" -gt '0') { exit 1 }
       }
-    Set-Location _build-$(@($env:VCPKG_DEFAULT_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1)
+    Set-Location _build-$(@($env:VCPKG_DEFAULT_HOST_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1)
     ninja; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     ninja install; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     Set-Location ../..
