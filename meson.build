@@ -1184,7 +1184,7 @@ perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
 ## Python
 
-python3_minver = '>=3.6'
+python3_minver = '>=3.10'
 
 pygobject_minver = '>=3.0'
 
