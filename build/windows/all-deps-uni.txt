@@ -11,7 +11,7 @@ ${MINGW_PACKAGE_PREFIX}-vala
 # NATIVE/MINGW DEPS AT RUNTIME
 ${MINGW_PACKAGE_PREFIX}-aalib
 ${MINGW_PACKAGE_PREFIX}-appstream
-${MINGW_PACKAGE_PREFIX}-atk
+${MINGW_PACKAGE_PREFIX}-atk|vcpkg:atk
 ${MINGW_PACKAGE_PREFIX}-bzip2|vcpkg:bzip2
 ${MINGW_PACKAGE_PREFIX}-cairo|vcpkg:cairo
 ${MINGW_PACKAGE_PREFIX}-cfitsio
@@ -39,14 +39,14 @@ ${MINGW_PACKAGE_PREFIX}-libmng
 ${MINGW_PACKAGE_PREFIX}-libmypaint
 ${MINGW_PACKAGE_PREFIX}-libpng|vcpkg:libpng
 ${MINGW_PACKAGE_PREFIX}-librsvg|vcpkg:librsvg
-${MINGW_PACKAGE_PREFIX}-libtiff
+${MINGW_PACKAGE_PREFIX}-libtiff|vcpkg:tiff
 ${MINGW_PACKAGE_PREFIX}-libwebp
 ${MINGW_PACKAGE_PREFIX}-libwmf
 ${MINGW_PACKAGE_PREFIX}-maxflow
 ${MINGW_PACKAGE_PREFIX}-mypaint-brushes2
 ${MINGW_PACKAGE_PREFIX}-openexr
-${MINGW_PACKAGE_PREFIX}-openjpeg2
-${MINGW_PACKAGE_PREFIX}-pango
+${MINGW_PACKAGE_PREFIX}-openjpeg2|vcpkg:openjpeg
+${MINGW_PACKAGE_PREFIX}-pango|vcpkg:pango
 ${MINGW_PACKAGE_PREFIX}-poppler|vcpkg:poppler[glib]
 ${MINGW_PACKAGE_PREFIX}-poppler-data
 ${MINGW_PACKAGE_PREFIX}-python
