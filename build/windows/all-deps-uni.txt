@@ -1,5 +1,4 @@
 # NATIVE/MINGW DEPS AT BUILD-TIME ONLY
-${MINGW_PACKAGE_PREFIX}-binutils
 ${MINGW_PACKAGE_PREFIX}-gettext-tools
 ${MINGW_PACKAGE_PREFIX}-gi-docgen
 ${MINGW_PACKAGE_PREFIX}-gobject-introspection|vcpkg:gobject-introspection
