@@ -14,9 +14,13 @@ ${MINGW_PACKAGE_PREFIX}-vala
 ${MINGW_PACKAGE_PREFIX}-aalib
 ${MINGW_PACKAGE_PREFIX}-appstream
 ${MINGW_PACKAGE_PREFIX}-atk
+${MINGW_PACKAGE_PREFIX}-bzip2|vcpkg:bzip2
 ${MINGW_PACKAGE_PREFIX}-cairo|vcpkg:cairo
 ${MINGW_PACKAGE_PREFIX}-cfitsio
 ${MINGW_PACKAGE_PREFIX}-drmingw
+${MINGW_PACKAGE_PREFIX}-fontconfig|vcpkg:fontconfig
+${MINGW_PACKAGE_PREFIX}-freetype|vcpkg:freetype
+${MINGW_PACKAGE_PREFIX}-gdk-pixbuf2|vcpkg:gdk-pixbuf
 ${MINGW_PACKAGE_PREFIX}-gexiv2|vcpkg:gexiv2
 ${MINGW_PACKAGE_PREFIX}-ghostscript
 ${MINGW_PACKAGE_PREFIX}-glib2|vcpkg:glib
@@ -24,6 +28,7 @@ ${MINGW_PACKAGE_PREFIX}-glib-networking|vcpkg:glib-networking
 ${MINGW_PACKAGE_PREFIX}-gobject-introspection-runtime|vcpkg:gobject-introspection
 ${MINGW_PACKAGE_PREFIX}-graphviz
 ${MINGW_PACKAGE_PREFIX}-gtk3|vcpkg:gtk3
+${MINGW_PACKAGE_PREFIX}-harfbuzz|vcpkg:harfbuzz
 ${MINGW_PACKAGE_PREFIX}-iso-codes
 ${MINGW_PACKAGE_PREFIX}-json-glib|vcpkg:json-glib
 ${MINGW_PACKAGE_PREFIX}-lcms2|vcpkg:lcms
@@ -51,6 +56,8 @@ ${MINGW_PACKAGE_PREFIX}-python-gobject
 ${MINGW_PACKAGE_PREFIX}-qoi
 #${MI#NGW_PACKAGE_PREFIX}-suitesparse crashes. See #12838
 ${MINGW_PACKAGE_PREFIX}-xpm-nox
+${MINGW_PACKAGE_PREFIX}-xz|vcpkg:liblzma
+${MINGW_PACKAGE_PREFIX}-zlib|vcpkg:zlib
 
 # TEMP DEPENDENCIES TO FIX CRITICAL NEEDS
 ${MINGW_PACKAGE_PREFIX}-cmake
