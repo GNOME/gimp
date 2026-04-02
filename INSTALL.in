@@ -212,7 +212,7 @@ help in that regard:
 
  15. GObject Introspection requires the following dependencies to be
      built and installed with introspection as well: babl, cairo,
-     GdkPixbuf, GEGL, GIO, GLib, GObject and GTK.
+     GdkPixbuf, GEGL, GIO, GLib, GObject, GTK and Gexiv2.
 
  16. Windows builds can now generate backtrace logs upon a crash.
      The logs will be available in: %APPDATA%\GIMP\@GIMP_APP_VERSION@\CrashLog\
