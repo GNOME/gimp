@@ -1494,7 +1494,7 @@ conf.set10('ENABLE_MP', get_option('enable-multiproc'))
 
 # Enable support for OpenMP
 openmp = dependency('openmp', required : get_option('openmp'))
-if openmp.found()
+if openmp.found() and cc.get_id() != 'clang-cl' #libomp140*.dll is flaky
   have_openmp = true
 else
   have_openmp = false
