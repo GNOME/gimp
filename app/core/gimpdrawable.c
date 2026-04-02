@@ -323,7 +323,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->estimate_memsize         = gimp_drawable_real_estimate_memsize;
   klass->update_all               = gimp_drawable_real_update_all;
   klass->invalidate_boundary      = NULL;
-  klass->get_active_components    = NULL;
   klass->get_active_mask          = gimp_drawable_real_get_active_mask;
   klass->supports_alpha           = gimp_drawable_real_supports_alpha;
   klass->convert_type             = gimp_drawable_real_convert_type;
@@ -1362,21 +1361,6 @@ gimp_drawable_invalidate_boundary (GimpDrawable *drawable)
 
   if (drawable_class->invalidate_boundary)
     drawable_class->invalidate_boundary (drawable);
-}
-
-void
-gimp_drawable_get_active_components (GimpDrawable *drawable,
-                                     gboolean     *active)
-{
-  GimpDrawableClass *drawable_class;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (active != NULL);
-
-  drawable_class = GIMP_DRAWABLE_GET_CLASS (drawable);
-
-  if (drawable_class->get_active_components)
-    drawable_class->get_active_components (drawable, active);
 }
 
 GimpComponentMask

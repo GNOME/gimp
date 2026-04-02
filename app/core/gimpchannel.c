@@ -142,8 +142,6 @@ static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
                                               gboolean           push_undo,
                                               GimpProgress      *progress);
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
-static void gimp_channel_get_active_components (GimpDrawable       *drawable,
-                                                gboolean           *active);
 
 static void      gimp_channel_set_buffer     (GimpDrawable        *drawable,
                                               gboolean             push_undo,
@@ -274,7 +272,6 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   drawable_class->convert_type          = gimp_channel_convert_type;
   drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
-  drawable_class->get_active_components = gimp_channel_get_active_components;
   drawable_class->set_buffer            = gimp_channel_set_buffer;
 
   klass->boundary       = gimp_channel_real_boundary;
@@ -941,15 +938,6 @@ gimp_channel_invalidate_boundary (GimpDrawable *drawable)
 
   channel->boundary_known = FALSE;
   channel->bounds_known   = FALSE;
-}
-
-static void
-gimp_channel_get_active_components (GimpDrawable *drawable,
-                                    gboolean     *active)
-{
-  /*  Make sure that the alpha channel is not valid.  */
-  active[GRAY]    = TRUE;
-  active[ALPHA_G] = FALSE;
 }
 
 static void

@@ -60,8 +60,6 @@ struct _GimpDrawableClass
                                              gint                  height);
   void          (* update_all)              (GimpDrawable         *drawable);
   void          (* invalidate_boundary)     (GimpDrawable         *drawable);
-  void          (* get_active_components)   (GimpDrawable         *drawable,
-                                             gboolean             *active);
   GimpComponentMask (* get_active_mask)     (GimpDrawable         *drawable);
   gboolean      (* supports_alpha)          (GimpDrawable         *drawable);
   void          (* convert_type)            (GimpDrawable         *drawable,
@@ -135,8 +133,6 @@ void            gimp_drawable_update_all              (GimpDrawable       *drawa
 void            gimp_drawable_filters_changed         (GimpDrawable       *drawable);
 
 void           gimp_drawable_invalidate_boundary      (GimpDrawable       *drawable);
-void         gimp_drawable_get_active_components      (GimpDrawable       *drawable,
-                                                       gboolean           *active);
 GimpComponentMask gimp_drawable_get_active_mask       (GimpDrawable       *drawable);
 
 gboolean        gimp_drawable_supports_alpha          (GimpDrawable       *drawable);

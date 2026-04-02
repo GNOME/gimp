@@ -194,8 +194,6 @@ static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  gboolean            push_undo,
                                                  GimpProgress       *progress);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
-static void    gimp_layer_get_active_components (GimpDrawable       *drawable,
-                                                 gboolean           *active);
 static GimpComponentMask
                gimp_layer_get_active_mask       (GimpDrawable       *drawable);
 static void    gimp_layer_set_buffer            (GimpDrawable       *drawable,
@@ -448,7 +446,6 @@ gimp_layer_class_init (GimpLayerClass *klass)
   drawable_class->supports_alpha        = gimp_layer_supports_alpha;
   drawable_class->convert_type          = gimp_layer_convert_type;
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
-  drawable_class->get_active_components = gimp_layer_get_active_components;
   drawable_class->get_active_mask       = gimp_layer_get_active_mask;
   drawable_class->set_buffer            = gimp_layer_set_buffer;
   drawable_class->get_bounding_box      = gimp_layer_get_bounding_box;
@@ -1509,22 +1506,6 @@ gimp_layer_invalidate_boundary (GimpDrawable *drawable)
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_invalidate (layer);
-}
-
-static void
-gimp_layer_get_active_components (GimpDrawable *drawable,
-                                  gboolean     *active)
-{
-  GimpLayer  *layer  = GIMP_LAYER (drawable);
-  GimpImage  *image  = gimp_item_get_image (GIMP_ITEM (drawable));
-  const Babl *format = gimp_drawable_get_format (drawable);
-
-  /*  first copy the image active channels  */
-  gimp_image_get_active_array (image, active);
-
-  if (gimp_drawable_has_alpha (drawable) &&
-      gimp_layer_is_alpha_locked (layer, NULL))
-    active[babl_format_get_n_components (format) - 1] = FALSE;
 }
 
 static GimpComponentMask

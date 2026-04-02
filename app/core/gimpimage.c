@@ -3694,22 +3694,6 @@ gimp_image_get_component_active (GimpImage       *image,
   return FALSE;
 }
 
-void
-gimp_image_get_active_array (GimpImage *image,
-                             gboolean  *components)
-{
-  GimpImagePrivate *private;
-  gint              i;
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (components != NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  for (i = 0; i < MAX_CHANNELS; i++)
-    components[i] = private->active[i];
-}
-
 GimpComponentMask
 gimp_image_get_active_mask (GimpImage *image)
 {
@@ -3792,22 +3776,6 @@ gimp_image_get_component_visible (GimpImage       *image,
     return GIMP_IMAGE_GET_PRIVATE (image)->visible[index];
 
   return FALSE;
-}
-
-void
-gimp_image_get_visible_array (GimpImage *image,
-                              gboolean  *components)
-{
-  GimpImagePrivate *private;
-  gint              i;
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (components != NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  for (i = 0; i < MAX_CHANNELS; i++)
-    components[i] = private->visible[i];
 }
 
 GimpComponentMask

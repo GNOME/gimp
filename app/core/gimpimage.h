@@ -237,8 +237,6 @@ void            gimp_image_set_component_active  (GimpImage          *image,
                                                   gboolean            active);
 gboolean        gimp_image_get_component_active  (GimpImage          *image,
                                                   GimpChannelType     type);
-void            gimp_image_get_active_array      (GimpImage          *image,
-                                                  gboolean           *components);
 GimpComponentMask gimp_image_get_active_mask     (GimpImage          *image);
 
 void            gimp_image_set_component_visible (GimpImage          *image,
@@ -246,8 +244,6 @@ void            gimp_image_set_component_visible (GimpImage          *image,
                                                   gboolean            visible);
 gboolean        gimp_image_get_component_visible (GimpImage          *image,
                                                   GimpChannelType     type);
-void            gimp_image_get_visible_array     (GimpImage          *image,
-                                                  gboolean           *components);
 GimpComponentMask gimp_image_get_visible_mask    (GimpImage          *image);
 
 
