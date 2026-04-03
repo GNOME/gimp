@@ -14,6 +14,8 @@ elseif (Test-Path 1_build-deps-msys2.ps1 -Type Leaf)
   }
 if (-not $GITLAB_CI)
   {
+    if (-not (Get-Command "git" -ErrorAction SilentlyContinue)) { Write-Host '(ERROR): git is required for this script. Please, read: https://developer.gimp.org/core/setup/git/#source-from-git' -ForegroundColor Red; exit 1 }
+
     $GIT_DEPTH = '1'
 
     $PARENT_DIR = '\..'

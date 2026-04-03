@@ -14,6 +14,8 @@ elif [ $(basename "$PWD") = 'macos' ]; then
   cd ../../..
 fi
 if [ -z "$GITLAB_CI" ]; then
+  which git >/dev/null 2>&1 || { printf '\033[31m(ERROR)\033[0m: git is required for this script. Please, read: https://developer.gimp.org/core/setup/git/#source-from-git\n'; exit 1; }
+
   GIT_DEPTH='1'
 
   PARENT_DIR='/..'
