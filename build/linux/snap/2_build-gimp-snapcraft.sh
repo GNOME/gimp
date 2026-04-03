@@ -14,7 +14,7 @@ elif [ $(basename "$PWD") = 'snap' ]; then
   cd ../../..
 fi
 if [ -z "$GITLAB_CI" ]; then
-  git submodule update --init
+  git submodule update --init || true #true is for this script work on tarballs too
 fi
 
 

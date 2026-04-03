@@ -14,7 +14,7 @@ elif [ $(basename "$PWD") = 'macos' ]; then
   cd ../../..
 fi
 if [ -z "$GITLAB_CI" ]; then
-  git submodule update --init
+  git submodule update --init || true #true is for this script work on tarballs too
 
   NON_RELOCATABLE_OPTION='-Drelocatable-bundle=no'
 fi
