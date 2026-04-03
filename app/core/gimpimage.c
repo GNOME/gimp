@@ -1388,6 +1388,8 @@ static void
 gimp_image_real_mode_changed (GimpImage *image)
 {
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
+
+  gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
 }
 
 static void
