@@ -166,8 +166,8 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 
 if ($env:VCPKG_ROOT)
   {
-    self_build https://gitlab.gnome.org/GNOME/babl @('-Denable-gir=false', "$WARN_AS_ERROR_ON_CI")
-    self_build https://gitlab.gnome.org/GNOME/gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch') @('-Dintrospection=false', "$WARN_AS_ERROR_ON_CI")
+    self_build https://gitlab.gnome.org/GNOME/babl 'bruno/py-test' @("$WARN_AS_ERROR_ON_CI")
+    self_build https://gitlab.gnome.org/GNOME/gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch') @("$WARN_AS_ERROR_ON_CI")
     exit 0
   }
 self_build https://gitlab.gnome.org/GNOME/babl
