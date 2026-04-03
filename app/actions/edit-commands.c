@@ -37,11 +37,15 @@
 #include "core/gimplayer.h"
 #include "core/gimplayer-new.h"
 #include "core/gimplayermask.h"
+#include "core/gimplinklayer.h"
 #include "core/gimplist.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 
 #include "path/gimppath-import.h"
+#include "path/gimpvectorlayer.h"
+
+#include "text/gimptextlayer.h"
 
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimphelp-ids.h"
@@ -586,7 +590,60 @@ edit_fill_cmd_callback (GimpAction *action,
                                    gimp_fill_options_get_undo_desc (options));
 
       for (iter = drawables; iter; iter = iter->next)
-        gimp_drawable_edit_fill (iter->data, options, NULL);
+        {
+          /* Skip layers that can't be filled, like pixel-locked layers */
+          if (gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL) ||
+              gimp_item_is_link_layer (GIMP_ITEM (iter->data)))
+            continue;
+
+          if (gimp_item_is_text_layer (iter->data) ||
+              gimp_item_is_vector_layer (iter->data))
+            {
+              GimpPattern *pattern = NULL;
+              GeglColor   *color   = NULL;
+
+              if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_FG_COLOR)
+                color = gimp_context_get_foreground (GIMP_CONTEXT (options));
+              else if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_BG_COLOR)
+                color = gimp_context_get_background (GIMP_CONTEXT (options));
+              else
+                pattern = gimp_context_get_pattern (GIMP_CONTEXT (options));
+
+              if (color)
+                {
+                  if (gimp_item_is_vector_layer (iter->data))
+                    {
+                      gimp_vector_layer_set (GIMP_VECTOR_LAYER (iter->data),
+                                             NULL,
+                                             "fill-style",
+                                             GIMP_CUSTOM_STYLE_SOLID_COLOR,
+                                             "fill-color",
+                                             color, NULL);
+                      gimp_vector_layer_refresh (iter->data);
+                    }
+                  else
+                    {
+                      gimp_text_layer_set (iter->data, NULL, "color", color,
+                                           NULL);
+                    }
+                }
+              else if (pattern &&
+                       gimp_item_is_vector_layer (iter->data))
+                {
+                  gimp_vector_layer_set (GIMP_VECTOR_LAYER (iter->data), NULL,
+                                         "fill-style",
+                                         GIMP_CUSTOM_STYLE_PATTERN,
+                                         "fill-pattern",
+                                         pattern,
+                                         NULL);
+                  gimp_vector_layer_refresh (iter->data);
+                }
+            }
+          else
+            {
+              gimp_drawable_edit_fill (iter->data, options, NULL);
+            }
+        }
 
       gimp_image_undo_group_end (image);
       gimp_image_flush (image);
