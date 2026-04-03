@@ -1448,6 +1448,9 @@ load_apng_image (GFile      *file,
         {
           while (! feof (fp))
             {
+              guint region_width;
+              guint region_height;
+
               png_id = read_apng_chunk (fp, &chunk);
               if (! png_id)
                 {
@@ -1508,6 +1511,23 @@ load_apng_image (GFile      *file,
                   apng_frame.offset_y  = png_get_uint_32 (chunk.data + 24);
                   apng_frame.delay_num = png_get_uint_16 (chunk.data + 28);
                   apng_frame.delay_den = png_get_uint_16 (chunk.data + 30);
+
+                  region_width  = apng_frame.offset_x + apng_frame.width;
+                  region_height = apng_frame.offset_y + apng_frame.height;
+
+                  if (region_width > (guint) gimp_image_get_width (image)  ||
+                      region_height > (guint) gimp_image_get_height (image))
+                    {
+                      fclose (fp);
+                      g_free (apng_frame.pixels);
+                      g_free (prior_pixels);
+
+                      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                                   _("Invalid APNG: fcTL frame dimensions "
+                                     "exceed IHDR allocation"));
+
+                      return FALSE;
+                    }
 
                   dispose_op = chunk.data[32];
                   blend_op   = chunk.data[33];
