@@ -8,7 +8,7 @@ case $(readlink /proc/$$/exe) in
 esac
 set -e
 if [ "$0" != 'build/linux/snap/2_build-gimp-snapcraft.sh' ] && [ $(basename "$PWD") != 'snap' ]; then
-  printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp git dir\n'
+  printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp source dir\n'
   exit 1
 elif [ $(basename "$PWD") = 'snap' ]; then
   cd ../../..

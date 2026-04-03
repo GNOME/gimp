@@ -11,7 +11,7 @@ $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $false #to ensure error catching as in pre-7.4 PS
 if (-not (Test-Path build\windows\installer) -and -not (Test-Path 3_dist-gimp-inno.ps1 -Type Leaf) -or $PSScriptRoot -notlike "*build\windows\installer*")
   {
-    Write-Host '(ERROR): Script called from wrong dir. Please, call the script from gimp source.' -ForegroundColor Red
+    Write-Host '(ERROR): Script called from wrong dir. Please, call this script from the root of gimp source dir' -ForegroundColor Red
     exit 1
   }
 elseif (Test-Path 3_dist-gimp-inno.ps1 -Type Leaf)
