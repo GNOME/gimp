@@ -23,7 +23,7 @@
 #include <ciso646>
 #include <inttypes.h>
 
-#if defined(_LIBCPP_VERSION)
+#if defined(_LIBCPP_VERSION) || defined(_MSC_VER)
 #include <memory>
 #else
 #include <tr1/memory>
@@ -69,7 +69,7 @@ public:
   }
 
   uint32_t size;
-#if defined(_LIBCPP_VERSION)
+#if defined(_LIBCPP_VERSION) || defined(_MSC_VER)
   std::shared_ptr<uint8_t> data;
 #else
   std::tr1::shared_ptr<uint8_t> data;
