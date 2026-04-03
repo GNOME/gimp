@@ -21,7 +21,9 @@
 #include <libheif/heif.h>
 #include <lcms2.h>
 #include <gexiv2/gexiv2.h>
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
