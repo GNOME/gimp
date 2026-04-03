@@ -288,6 +288,24 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                     G_CALLBACK (gimp_text_style_editor_size_changed),
                     editor);
 
+  color = gegl_color_new ("black");
+  editor->color_button = gimp_color_panel_new (_("Change color of selected text"),
+                                               color,
+                                               GIMP_COLOR_AREA_FLAT, 20, 20);
+  gimp_widget_set_fully_opaque (editor->color_button, TRUE);
+  g_object_unref (color);
+
+  gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->color_button,
+                      FALSE, FALSE, 0);
+  gtk_widget_set_visible (editor->color_button, TRUE);
+
+  gimp_help_set_help_data (editor->color_button,
+                           _("Change color of selected text"), NULL);
+
+  g_signal_connect (GIMP_COLOR_PANEL (editor->color_button), "response",
+                    G_CALLBACK (gimp_text_style_editor_color_response),
+                    editor);
+
   /* Restore position button */
   editor->restore_position_button = gimp_icon_button_new (GIMP_ICON_RESET, NULL);
   gtk_button_set_relief (GTK_BUTTON (editor->restore_position_button),
@@ -327,24 +345,6 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   image = gtk_image_new_from_icon_name ("edit-clear", GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (editor->clear_button), image);
   gtk_widget_show (image);
-
-  color = gegl_color_new ("black");
-  editor->color_button = gimp_color_panel_new (_("Change color of selected text"),
-                                               color,
-                                               GIMP_COLOR_AREA_FLAT, 20, 20);
-  gimp_widget_set_fully_opaque (editor->color_button, TRUE);
-  g_object_unref (color);
-
-  gtk_box_pack_end (GTK_BOX (editor->lower_hbox), editor->color_button,
-                    FALSE, FALSE, 0);
-  gtk_widget_show (editor->color_button);
-
-  gimp_help_set_help_data (editor->color_button,
-                           _("Change color of selected text"), NULL);
-
-  g_signal_connect (GIMP_COLOR_PANEL (editor->color_button), "response",
-                    G_CALLBACK (gimp_text_style_editor_color_response),
-                    editor);
 
   editor->kerning_adjustment = gtk_adjustment_new (0.0, -1000.0, 1000.0,
                                                    1.0, 10.0, 0.0);
