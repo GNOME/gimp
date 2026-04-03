@@ -1851,7 +1851,7 @@ register_vector_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_unit ("unit",
                                                      "unit",
                                                      "The stroke width unit.",
-                                                     FALSE,
+                                                     TRUE,
                                                      FALSE,
                                                      gimp_unit_inch (),
                                                      GIMP_PARAM_READWRITE));

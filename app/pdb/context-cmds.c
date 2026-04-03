@@ -3735,7 +3735,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_unit ("line-width-unit",
                                                      "line width unit",
                                                      "The line width setting unit",
-                                                     FALSE,
+                                                     TRUE,
                                                      FALSE,
                                                      gimp_unit_inch (),
                                                      GIMP_PARAM_READWRITE));

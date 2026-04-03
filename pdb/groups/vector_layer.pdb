@@ -630,7 +630,7 @@ HELP
     @inargs = (
         { name => 'layer', type => 'vector_layer',
           desc => 'The vector layer.' },
-        { name => 'unit', type => 'unit',
+        { name => 'unit', type => 'unit', allow_pixel => 1,
           desc => 'The stroke width unit.' }
     );
 
