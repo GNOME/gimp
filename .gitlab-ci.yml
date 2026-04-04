@@ -173,7 +173,7 @@ deps-debian-nonreloc:
             gi-docgen
             gobject-introspection
             libgtk-3-bin
-            locale
+            locales
             meson
             valac
             xsltproc \\" >> Dockerfile
