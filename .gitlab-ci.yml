@@ -161,25 +161,25 @@ deps-debian-nonreloc:
     # Install deps
     - echo "FROM debian:${DEB_VERSION}" > Dockerfile
     - echo "WORKDIR $CI_PROJECT_DIR" >> Dockerfile
-    ## 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
-    - echo "RUN apt-get update -qq && apt-get install -qq -y --no-install-recommends ca-certificates \\" >> Dockerfile
+    ## 'ca-certificates' and 'git' are NOT gimp deps, they are installed only to our Docker image work
+    - echo "RUN apt-get update -qq && apt-get install -qq -y --no-install-recommends ca-certificates git \\" >> Dockerfile
     ## Build-time only dependencies
     - echo "${TOOLCHAIN:-build-essential}
             appstream
             bison
             desktop-file-utils
             flex
+            gettext
             gi-docgen
-            git
             gobject-introspection
             libgtk-3-bin
+            locale
             meson
             valac
             xsltproc \\" >> Dockerfile
     ## Runtime dependencies
     - echo "at-spi2-core
             ffmpeg
-            gettext
             gjs
             glib-networking
             graphviz
@@ -214,14 +214,13 @@ deps-debian-nonreloc:
             libqoi-dev
             librsvg2-dev
             libsuitesparse-dev
-            libtiff-dev
             $UMFPACK
+            libtiff-dev
             libunwind-dev
             libwebp-dev
             libwmf-dev
             libxmu-dev
             libxpm-dev
-            locales
             mypaint-brushes
             poppler-data
             python3
