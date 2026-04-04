@@ -694,7 +694,7 @@ file_open_from_command_line (Gimp     *gimp,
                               g_object_ref (file),
                               (GDestroyNotify) g_object_unref);
     }
-  else if (status != GIMP_PDB_SUCCESS && status != GIMP_PDB_CANCEL && display)
+  else if (status != GIMP_PDB_SUCCESS && status != GIMP_PDB_CANCEL)
     {
       gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
                     _("Opening '%s' failed: %s"),
