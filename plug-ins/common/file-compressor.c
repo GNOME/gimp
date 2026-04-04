@@ -108,10 +108,11 @@
  * that metric, I figure this plug-in is worth about $10,000 USD */
 /* But you got it free.   Magic of Gnu. */
 
-typedef gboolean (* LoadFn) (GFile *infile,
-                             GFile *outfile);
-typedef gboolean (* SaveFn) (GFile *infile,
-                             GFile *outfile);
+typedef gboolean (* LoadFn) (GFile   *infile,
+                             GFile   *outfile,
+                             GError **error);
+typedef gboolean (* SaveFn) (GFile   *infile,
+                             GFile   *outfile);
 
 typedef struct _CompressorEntry CompressorEntry;
 
@@ -194,22 +195,26 @@ static const gchar       * find_extension           (const CompressorEntry *comp
                                                      const gchar           *filename);
 
 static gboolean            gzip_load                (GFile                 *infile,
-                                                     GFile                 *outfile);
+                                                     GFile                 *outfile,
+                                                     GError               **error);
 static gboolean            gzip_export              (GFile                 *infile,
                                                      GFile                 *outfile);
 
 static gboolean            bzip2_load               (GFile                 *infile,
-                                                     GFile                 *outfile);
+                                                     GFile                 *outfile,
+                                                     GError               **error);
 static gboolean            bzip2_export             (GFile                 *infile,
                                                      GFile                 *outfile);
 
 static gboolean            xz_load                  (GFile                 *infile,
-                                                     GFile                 *outfile);
+                                                     GFile                 *outfile,
+                                                     GError               **error);
 static gboolean            xz_export                (GFile                 *infile,
                                                      GFile                 *outfile);
 
 static gboolean            zip_load                 (GFile                 *infile,
-                                                     GFile                 *outfile);
+                                                     GFile                 *outfile,
+                                                     GError               **error);
 static goffset             get_file_info            (GFile                 *file);
 
 
@@ -540,7 +545,7 @@ load_image (const CompressorEntry  *compressor,
   /* find a temp name */
   tmp_file = gimp_temp_file (ext + 1);
 
-  if (! compressor->load_fn (file, tmp_file))
+  if (! compressor->load_fn (file, tmp_file, error))
     {
       g_object_unref (tmp_file);
       *status = GIMP_PDB_EXECUTION_ERROR;
@@ -631,8 +636,9 @@ find_extension (const CompressorEntry *compressor,
 }
 
 static gboolean
-gzip_load (GFile *infile,
-           GFile *outfile)
+gzip_load (GFile   *infile,
+           GFile   *outfile,
+           GError **error)
 {
   gboolean  ret;
   int       fd;
@@ -647,7 +653,13 @@ gzip_load (GFile *infile,
 
   fd = g_open (g_file_peek_path (infile), O_RDONLY | _O_BINARY, 0);
   if (fd == -1)
-    goto out;
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Error opening file '%s': %s",
+                   g_file_peek_path (infile),
+                   g_strerror (errno));
+      goto out;
+    }
 
   in = gzdopen (fd, "rb");
   if (! in)
@@ -658,7 +670,13 @@ gzip_load (GFile *infile,
 
   out = g_fopen (g_file_peek_path (outfile), "wb");
   if (! out)
-    goto out;
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Error creating temporary file '%s': %s",
+                   g_file_peek_path (outfile),
+                   g_strerror (errno));
+      goto out;
+    }
 
   while (TRUE)
     {
@@ -753,8 +771,9 @@ gzip_export (GFile *infile,
 }
 
 static gboolean
-bzip2_load (GFile *infile,
-            GFile *outfile)
+bzip2_load (GFile   *infile,
+            GFile   *outfile,
+            GError **error)
 {
   gboolean  ret;
   int       fd;
@@ -769,7 +788,13 @@ bzip2_load (GFile *infile,
 
   fd = g_open (g_file_peek_path (infile), O_RDONLY | _O_BINARY, 0);
   if (fd == -1)
-    goto out;
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Error opening file '%s': %s",
+                   g_file_peek_path (infile),
+                   g_strerror (errno));
+      goto out;
+    }
 
   in = BZ2_bzdopen (fd, "rb");
   if (!in)
@@ -780,7 +805,13 @@ bzip2_load (GFile *infile,
 
   out = g_fopen (g_file_peek_path (outfile), "wb");
   if (!out)
-    goto out;
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Error creating temporary file '%s': %s",
+                   g_file_peek_path (outfile),
+                   g_strerror (errno));
+      goto out;
+    }
 
   while (TRUE)
     {
@@ -875,8 +906,9 @@ bzip2_export (GFile *infile,
 }
 
 static gboolean
-xz_load (GFile *infile,
-         GFile *outfile)
+xz_load (GFile   *infile,
+         GFile   *outfile,
+         GError **error)
 {
   gboolean     ret;
   FILE        *in;
@@ -893,11 +925,23 @@ xz_load (GFile *infile,
 
   in = g_fopen (g_file_peek_path (infile), "rb");
   if (!in)
-    goto out;
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Error opening file '%s': %s",
+                   g_file_peek_path (infile),
+                   g_strerror (errno));
+      goto out;
+    }
 
   out = g_fopen (g_file_peek_path (outfile), "wb");
   if (!out)
-    goto out;
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Error creating temporary file '%s': %s",
+                   g_file_peek_path (outfile),
+                   g_strerror (errno));
+      goto out;
+    }
 
   if (lzma_stream_decoder (&strm, UINT64_MAX, 0) != LZMA_OK)
     goto out;
@@ -1057,8 +1101,9 @@ xz_export (GFile *infile,
 }
 
 static gboolean
-zip_load (GFile *infile,
-          GFile *outfile)
+zip_load (GFile   *infile,
+          GFile   *outfile,
+          GError **error)
 {
   gboolean              ret;
   FILE                 *in;
@@ -1073,11 +1118,23 @@ zip_load (GFile *infile,
 
   in = g_fopen (g_file_peek_path (infile), "rb");
   if (!in)
-    goto out;
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Error opening file '%s': %s",
+                   g_file_peek_path (infile),
+                   g_strerror (errno));
+      goto out;
+    }
 
   out = g_fopen (g_file_peek_path (outfile), "wb");
   if (! out)
-    goto out;
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Error creating temporary file '%s': %s",
+                   g_file_peek_path (outfile),
+                   g_strerror (errno));
+      goto out;
+    }
 
   if ((a = archive_read_new ()))
     {
