@@ -34,7 +34,7 @@ try:
   GIMP3_DIRECTORY = os.path.join(GIMP_GLOBAL_BUILD_ROOT, f".GIMP3-build-config-{suffix}")
   os.makedirs(GIMP3_DIRECTORY, mode=0o700, exist_ok=False)
   os.environ["GIMP3_DIRECTORY"] = GIMP3_DIRECTORY
-  sys.stderr.write(f"INFO: temporary GIMP configuration directory: {GIMP3_DIRECTORY}")
+  sys.stderr.write(f"INFO: temporary GIMP configuration directory: {GIMP3_DIRECTORY}\n")
 
   # Earlier code used to set DYLD_LIBRARY_PATH environment variable instead, but
   # it didn't work on contributor's builds because of System Integrity
@@ -82,10 +82,10 @@ try:
       os.environ["PATH"] = tmp_path + os.pathsep + os.environ.get("PATH", "")
 
   if "GIMP_DEBUG_SELF_WRAPPER" in os.environ and shutil.which("gdb"):
-    sys.stderr.write(f"RUNNING: {os.environ['GIMP_DEBUG_SELF_WRAPPER']} --batch -x {os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py --args {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}")
+    sys.stderr.write(f"RUNNING: {os.environ['GIMP_DEBUG_SELF_WRAPPER']} --batch -x {os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py --args {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}\n")
     subprocess.run([os.environ["GIMP_DEBUG_SELF_WRAPPER"],"--return-child-result","--batch","-x",f"{os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py","--args", os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:], stdin=sys.stdin, check=True)
   else:
-    sys.stderr.write(f"RUNNING: {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}")
+    sys.stderr.write(f"RUNNING: {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}\n")
     subprocess.run([os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:],stdin=sys.stdin, check=True)
 
   if sys.platform not in ['win32', 'cygwin'] and different_python:
@@ -108,28 +108,28 @@ try:
   # that it's inside inside the project build's root.
   if "GIMP3_DIRECTORY" in os.environ and os.path.isdir(GIMP3_DIRECTORY):
     if os.path.islink(GIMP3_DIRECTORY):
-      sys.stderr.write(f"ERROR: $GIMP3_DIRECTORY ({GIMP3_DIRECTORY}) should not be a symlink.")
+      sys.stderr.write(f"ERROR: $GIMP3_DIRECTORY ({GIMP3_DIRECTORY}) should not be a symlink.\n")
       sys.exit(1)
     used_dir_prefix = str(Path(GIMP3_DIRECTORY).resolve().as_posix())[:-6]
     tmpl_dir_prefix = f"{Path(os.environ['GIMP_GLOBAL_BUILD_ROOT']).resolve().as_posix()}/.GIMP3-build-config-"
     if used_dir_prefix != tmpl_dir_prefix:
-      sys.stderr.write(f"ERROR: $GIMP3_DIRECTORY ({GIMP3_DIRECTORY}) should be under the build directory with a specific prefix.")
-      sys.stderr.write(f'       "{used_dir_prefix}" != "{tmpl_dir_prefix}"')
+      sys.stderr.write(f"ERROR: $GIMP3_DIRECTORY ({GIMP3_DIRECTORY}) should be under the build directory with a specific prefix.\n")
+      sys.stderr.write(f'       "{used_dir_prefix}" != "{tmpl_dir_prefix}"\n')
       sys.exit(1)
-    sys.stderr.write(f"INFO: Running: shutil.rmtree({GIMP3_DIRECTORY})")
+    sys.stderr.write(f"INFO: Running: shutil.rmtree({GIMP3_DIRECTORY})\n")
     shutil.rmtree(GIMP3_DIRECTORY)
   elif not os.access(GIMP3_DIRECTORY, os.W_OK):
-    sys.stderr.write(f"ERROR: $GIMP3_DIRECTORY ({GIMP3_DIRECTORY}) does not belong to the user")
+    sys.stderr.write(f"ERROR: $GIMP3_DIRECTORY ({GIMP3_DIRECTORY}) does not belong to the user\n")
     sys.exit(1)
   else:
-    sys.stderr.write(f"ERROR: $GIMP3_DIRECTORY ({GIMP3_DIRECTORY}) is not a directory")
+    sys.stderr.write(f"ERROR: $GIMP3_DIRECTORY ({GIMP3_DIRECTORY}) is not a directory\n")
     sys.exit(1)
 
 except subprocess.CalledProcessError as e:
   cleanup(lock)
-  sys.stderr.write(f"Command failed with exit code {e.returncode}: {e.cmd}")
+  sys.stderr.write(f"Command failed with exit code {e.returncode}: {e.cmd}\n")
   sys.exit(e.returncode)
 except Exception as e:
   cleanup(lock)
-  sys.stderr.write(f"Error: {str(e)}")
+  sys.stderr.write(f"Error: {str(e)}\n")
   sys.exit(1)
