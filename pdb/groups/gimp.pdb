@@ -220,7 +220,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  file = gimp_get_temp_file (gimp, extension);
+  file    = gimp_get_temp_file (gimp, extension, error);
+  success = (file != NULL);
 }
 CODE
     );

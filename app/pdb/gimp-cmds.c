@@ -219,7 +219,8 @@ temp_file_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      file = gimp_get_temp_file (gimp, extension);
+      file    = gimp_get_temp_file (gimp, extension, error);
+      success = (file != NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

@@ -256,7 +256,8 @@ void           gimp_image_opened           (Gimp                *gimp,
                                             GFile               *file);
 
 GFile        * gimp_get_temp_file          (Gimp                *gimp,
-                                            const gchar         *extension);
+                                            const gchar         *extension,
+                                            GError             **error);
 
 GimpDataFactory *
                gimp_get_data_factory       (Gimp                *gimp,

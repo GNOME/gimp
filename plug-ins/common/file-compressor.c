@@ -486,6 +486,12 @@ export_image (const CompressorEntry  *compressor,
   /* get a temp name with the right extension and save into it. */
 
   tmp_file = gimp_temp_file (ext + 1);
+  if (tmp_file == NULL)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", gimp_pdb_get_last_error (gimp_get_pdb ()));
+      return gimp_pdb_get_last_status (gimp_get_pdb ());
+    }
 
   if (! (gimp_file_save (run_mode, image, tmp_file, options) &&
          valid_file (tmp_file)))
@@ -544,6 +550,13 @@ load_image (const CompressorEntry  *compressor,
 
   /* find a temp name */
   tmp_file = gimp_temp_file (ext + 1);
+  if (tmp_file == NULL)
+    {
+      *status = gimp_pdb_get_last_status (gimp_get_pdb ());
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", gimp_pdb_get_last_error (gimp_get_pdb ()));
+      return NULL;
+    }
 
   if (! compressor->load_fn (file, tmp_file, error))
     {

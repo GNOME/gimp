@@ -258,13 +258,13 @@ file_remote_get_temp_file (Gimp  *gimp,
       const gchar *ext = strchr (basename, '.');
 
       if (ext && strlen (ext))
-        temp_file = gimp_get_temp_file (gimp, ext + 1);
+        temp_file = gimp_get_temp_file (gimp, ext + 1, NULL);
 
       g_free (basename);
     }
 
   if (! temp_file)
-    temp_file = gimp_get_temp_file (gimp, "xxx");
+    temp_file = gimp_get_temp_file (gimp, "xxx", NULL);
 
   return temp_file;
 }

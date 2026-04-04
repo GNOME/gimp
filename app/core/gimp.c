@@ -1273,8 +1273,9 @@ gimp_image_opened (Gimp  *gimp,
 }
 
 GFile *
-gimp_get_temp_file (Gimp        *gimp,
-                    const gchar *extension)
+gimp_get_temp_file (Gimp         *gimp,
+                    const gchar  *extension,
+                    GError      **error)
 {
   static gint  id = 0;
   static gint  pid;
@@ -1293,13 +1294,24 @@ gimp_get_temp_file (Gimp        *gimp,
     basename = g_strdup_printf ("gimp-temp-%d%d", pid, id++);
 
   dir = gimp_file_new_for_config_path (GIMP_GEGL_CONFIG (gimp->config)->temp_path,
-                                       NULL);
+                                       error);
+  if (dir == NULL)
+    {
+      g_free (basename);
+      return NULL;
+    }
+
   if (! g_file_query_exists (dir, NULL))
     {
       /* Try to make the temp directory if it doesn't exist.
        * Ignore any error.
        */
-      g_file_make_directory_with_parents (dir, NULL, NULL);
+      if (! g_file_make_directory_with_parents (dir, NULL, error))
+        {
+          g_free (basename);
+          g_object_unref (dir);
+          return NULL;
+        }
     }
   file = g_file_get_child (dir, basename);
   g_free (basename);
