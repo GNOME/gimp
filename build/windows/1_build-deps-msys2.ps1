@@ -171,7 +171,7 @@ if ($env:VCPKG_ROOT)
     exit 0
   }
 self_build https://gitlab.gnome.org/GNOME/babl
-self_build https://gitlab.gnome.org/GNOME/gegl @('-Ddocs=false')
+self_build https://gitlab.gnome.org/GNOME/gegl @('-Dworkshop=true')
 self_build https://github.com/Exiv2/exiv2 "v0.28.8" @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DCMAKE_DLL_NAME_WITH_SOVERSION=ON', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF', '-DEXIV2_ENABLE_VIDEO=OFF')
 
 Set-Location $GIMP_DIR
