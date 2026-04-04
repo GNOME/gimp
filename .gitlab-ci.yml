@@ -245,7 +245,7 @@ deps-debian-nonreloc:
     # Build some dependencies
     ## Build babl
     - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:babl_build[collapsed=true]\r\e[0KBuilding babl\n\"" >> Dockerfile2;
-    - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/babl.git | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" babl >> Dockerfile2;
+    - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/tal.regev/babl | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"TalR/msvc_support\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/tal.regev/babl" babl >> Dockerfile2;
     # TODO: remove this line once we have a babl 0.1.126. Takes care of an option name change.
     - export BABL_RELOCATABLE_OPTION=$(([ $CI_COMMIT_TAG ] && (([ $RELOCATABLE_OPTION ] && echo -Drelocatable=enabled) || true)) || echo $RELOCATABLE_OPTION)
     - echo "RUN meson setup babl/_build-${RUNNER} babl -Dprefix=\"${GIMP_PREFIX}\" $BABL_RELOCATABLE_OPTION $PKGCONF_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI" >> Dockerfile2;

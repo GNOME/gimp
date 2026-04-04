@@ -166,11 +166,11 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 
 if ($env:VCPKG_ROOT)
   {
-    self_build https://gitlab.gnome.org/GNOME/babl @('-Denable-gir=false', "$WARN_AS_ERROR_ON_CI")
+    self_build https://gitlab.gnome.org/tal.regev/babl 'TalR/msvc_support' @('-Denable-gir=false', "$WARN_AS_ERROR_ON_CI")
     self_build https://gitlab.gnome.org/GNOME/gegl @('build\windows\patches\0001-libs-operations-meson-Do-not-build-CTX-which-is-Unix.patch') @('-Dintrospection=false', "$WARN_AS_ERROR_ON_CI")
     exit 0
   }
-self_build https://gitlab.gnome.org/GNOME/babl
+self_build https://gitlab.gnome.org/tal.regev/babl 'TalR/msvc_support'
 self_build https://gitlab.gnome.org/GNOME/gegl @('-Ddocs=false')
 self_build https://github.com/Exiv2/exiv2 "v0.28.8" @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DCMAKE_DLL_NAME_WITH_SOVERSION=ON', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF', '-DEXIV2_ENABLE_VIDEO=OFF')
 

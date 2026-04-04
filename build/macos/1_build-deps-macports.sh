@@ -99,7 +99,7 @@ self_build()
   printf "\e[0Ksection_end:`date +%s`:${dep}_build\r\e[0K\n"
 }
 
-self_build https://gitlab.gnome.org/GNOME/babl
+self_build https://gitlab.gnome.org/tal.regev/babl 'TalR/msvc_support'
 self_build https://gitlab.gnome.org/GNOME/gegl
 
 cd $GIMP_DIR
