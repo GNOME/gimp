@@ -487,8 +487,8 @@ pdf_export (GimpProcedure        *procedure,
             GimpProcedureConfig  *config,
             gpointer              run_data)
 {
-  GError            *error       = NULL;
-  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
+  GError            *error  = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   gegl_init (NULL, NULL);
 
@@ -1454,24 +1454,22 @@ get_cairo_surface (GimpDrawable  *drawable,
   return surface;
 }
 
-/* A function to check if a drawable is single colored This allows to
+/* A function to check if a drawable is single colored. This allows to
  * convert bitmaps to vector where possible
  */
 static GeglColor *
 get_layer_color (GimpLayer *layer,
                  gboolean  *single)
 {
-  GeglColor *col = gegl_color_new (NULL);
-  gdouble red, green, blue, alpha;
-  gdouble dev, devSum;
-  gdouble median, pixels, count, percentile;
+  GeglColor *col     = gegl_color_new (NULL);
+  gdouble    rgba[4] = { 0, 0, 0, 0 };
+  gdouble    dev, devSum;
+  gdouble    median, pixels, count, percentile;
+  gint       bpp;
 
   devSum = 0;
-  red = 0;
-  green = 0;
-  blue = 0;
-  alpha = 0;
-  dev = 0;
+  dev    = 0;
+  bpp    = gimp_drawable_get_bpp (GIMP_DRAWABLE (layer));
 
   if (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)))
     {
@@ -1481,23 +1479,26 @@ get_layer_color (GimpLayer *layer,
       return col;
     }
 
-  if (gimp_drawable_get_bpp (GIMP_DRAWABLE (layer)) >= 3)
+  if (gimp_drawable_is_rgb (GIMP_DRAWABLE (layer)))
     {
       /* Are we in RGB mode? */
 
       gimp_drawable_histogram (GIMP_DRAWABLE (layer),
                                GIMP_HISTOGRAM_RED, 0.0, 1.0,
-                               &red, &dev, &median, &pixels, &count, &percentile);
+                               &rgba[0], &dev, &median, &pixels, &count,
+                               &percentile);
       devSum += dev;
 
       gimp_drawable_histogram (GIMP_DRAWABLE (layer),
                                GIMP_HISTOGRAM_GREEN, 0.0, 1.0,
-                               &green, &dev, &median, &pixels, &count, &percentile);
+                               &rgba[1], &dev, &median, &pixels, &count,
+                               &percentile);
       devSum += dev;
 
       gimp_drawable_histogram (GIMP_DRAWABLE (layer),
                                GIMP_HISTOGRAM_BLUE, 0.0, 1.0,
-                               &blue, &dev, &median, &pixels, &count, &percentile);
+                               &rgba[2], &dev, &median, &pixels, &count,
+                               &percentile);
       devSum += dev;
     }
   else
@@ -1506,23 +1507,50 @@ get_layer_color (GimpLayer *layer,
 
       gimp_drawable_histogram (GIMP_DRAWABLE (layer),
                                GIMP_HISTOGRAM_VALUE, 0.0, 1.0,
-                               &red, &dev, &median, &pixels, &count, &percentile);
+                               &rgba[0], &dev, &median, &pixels, &count,
+                               &percentile);
       devSum += dev;
-      green = red;
-      blue = red;
+      rgba[1] = rgba[0];
+      rgba[2] = rgba[0];
     }
 
   if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     gimp_drawable_histogram (GIMP_DRAWABLE (layer),
                              GIMP_HISTOGRAM_ALPHA, 0.0, 1.0,
-                             &alpha, &dev, &median, &pixels, &count, &percentile);
+                             &rgba[3], &dev, &median, &pixels, &count,
+                             &percentile);
   else
-    alpha = 255;
+    rgba[3] = 255.0f;
 
   devSum += dev;
   *single = devSum == 0;
 
-  gegl_color_set_rgba (col, red, green, blue, alpha);
+  /* If the image is 8-bit, we need to normalize the RGB values that are
+   * returned in the 0...255 range */
+  bpp -= gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)) ? 1 : 0;
+  if ((gimp_drawable_is_rgb (GIMP_DRAWABLE (layer)) && bpp == 3) ||
+       bpp == 1)
+    {
+      for (gint i = 0; i < 4; i++)
+        rgba[i] /= 255.0f;
+    }
+
+  switch (gimp_image_get_precision (gimp_item_get_image (GIMP_ITEM (layer))))
+    {
+      case GIMP_PRECISION_U8_LINEAR:
+      case GIMP_PRECISION_U16_LINEAR:
+      case GIMP_PRECISION_U32_LINEAR:
+      case GIMP_PRECISION_HALF_LINEAR:
+      case GIMP_PRECISION_FLOAT_LINEAR:
+      case GIMP_PRECISION_DOUBLE_LINEAR:
+        gegl_color_set_rgba (col, rgba[0], rgba[1], rgba[2], rgba[3]);
+        break;
+
+      default:
+        gegl_color_set_pixel (col, babl_format ("R'G'B'A double"), rgba);
+        break;
+    }
+
   return col;
 }
 
