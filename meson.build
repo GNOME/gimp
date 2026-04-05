@@ -1125,7 +1125,6 @@ conf.set('HAVE_DX_DINPUT', directx.found())
 
 # Windows Image Acquistion (WIA)
 wia = platform_windows ? cc.find_library('wiaguid') : no_dep
-conf.set('HAVE_WIA', wia.found())
 
 cfitsio_dep = dependency('cfitsio', required: get_option('fits'))
 
