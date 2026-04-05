@@ -195,6 +195,7 @@ wia_main (GimpProcedure *procedure)
         {
           GimpImage      **images      = NULL;
           GimpValueArray  *return_vals = NULL;
+          HWND             window_handle;
           LONG             nFiles      = 0;
           LPWSTR          *rFilePaths  = NULL;
           IWiaItem2       *pItem       = NULL;
@@ -206,7 +207,10 @@ wia_main (GimpProcedure *procedure)
           szFolder = SysAllocString (g_utf8_to_utf16 (temp_path, -1, NULL,
                                                       NULL, NULL));
 
-          hr = pWiaDevMgr2->lpVtbl->GetImageDlg (pWiaDevMgr2, 0, NULL, 0,
+          /* Values taken from app/gui/gui-unique.h */
+          window_handle = FindWindowW (L"GimpWin32UniqueHandler", L"GimpProxy");
+
+          hr = pWiaDevMgr2->lpVtbl->GetImageDlg (pWiaDevMgr2, 0, NULL, window_handle,
                                                  szFolder, szFileName, &nFiles,
                                                  &rFilePaths, &pItem);
 
@@ -237,6 +241,7 @@ wia_main (GimpProcedure *procedure)
                   images[i] = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
                                               g_file_new_for_path (filename));
                   gimp_display_new (images[i]);
+                  gimp_image_undo_enable (images[i]);
 
                   SysFreeString (rFilePaths[i]);
                   g_free (filename);
