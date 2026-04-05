@@ -168,6 +168,7 @@ endif
 
 if platform_windows
   common_plugins_list += { 'name': 'file-lnk', }
+  common_plugins_list += { 'name': 'wia', }
 endif
 
 if platform_linux
