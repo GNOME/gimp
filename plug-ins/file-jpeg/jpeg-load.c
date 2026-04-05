@@ -81,9 +81,13 @@ load_image (GFile        *file,
   gchar             *photoshop_data = NULL;
   gint32             photoshop_len  = 0;
   gboolean           support_12_bit = FALSE;
+  gboolean           support_8_to_12_bit = FALSE;
 
 #if LIBJPEG_TURBO_VERSION_NUMBER >= 3000000
   support_12_bit = TRUE;
+#endif
+#if LIBJPEG_TURBO_VERSION_NUMBER >= 3001090
+  support_8_to_12_bit = TRUE;
 #endif
 
   /* We set up the normal JPEG error routines. */
@@ -157,6 +161,9 @@ load_image (GFile        *file,
   /* Step 3: read file parameters with jpeg_read_header() */
 
   jpeg_read_header (&cinfo, TRUE);
+
+  if (cinfo.data_precision <= 8 && support_8_to_12_bit)
+    cinfo.data_precision = 12;
 
   /* We can ignore the return value from jpeg_read_header since
    *   (a) suspension is not possible with the stdio data source, and
