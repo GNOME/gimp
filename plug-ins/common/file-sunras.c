@@ -460,8 +460,10 @@ load_image (GFile   *file,
 
   if (sunhdr.l_ras_maplength > (256 * 3))
     {
-      g_message ("Map lengths greater than 256 entries are unsupported by GIMP.");
-      gimp_quit ();
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Map lengths greater than 256 entries are unsupported by GIMP.");
+      fclose (ifp);
+      return NULL;
     }
 
   /* Is there a RGB colormap ? */

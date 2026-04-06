@@ -90,9 +90,10 @@ static GimpValueArray * optimize_run              (GimpProcedure        *procedu
                                                    GimpProcedureConfig  *config,
                                                    gpointer              run_data);
 
-static  GimpImage     * do_optimizations          (GimpRunMode  run_mode,
-                                                   GimpImage   *image,
-                                                   gboolean     diff_only);
+static  GimpImage     * do_optimizations          (GimpRunMode           run_mode,
+                                                   GimpImage            *image,
+                                                   gboolean              diff_only,
+                                                   GError              **error);
 
 /* tag util functions*/
 static  gint            parse_ms_tag              (const gchar *str);
@@ -313,6 +314,7 @@ optimize_run (GimpProcedure        *procedure,
   GimpValueArray *return_vals;
   const gchar    *name      = gimp_procedure_get_name (procedure);
   gboolean        diff_only = FALSE;
+  GError         *error     = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -338,10 +340,15 @@ optimize_run (GimpProcedure        *procedure,
       opmode = OPFOREGROUND;
     }
 
-  image = do_optimizations (run_mode, image, diff_only);
+  image = do_optimizations (run_mode, image, diff_only, &error);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
+
+  if (image == NULL)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -481,9 +488,10 @@ compose_row (gint          frame_num,
 
 
 static GimpImage *
-do_optimizations (GimpRunMode  run_mode,
-                  GimpImage   *image,
-                  gboolean     diff_only)
+do_optimizations (GimpRunMode   run_mode,
+                  GimpImage    *image,
+                  gboolean      diff_only,
+                  GError      **error)
 {
   GimpImage         *new_image;
   GimpImageBaseType  imagetype;
@@ -760,7 +768,17 @@ do_optimizations (GimpRunMode  run_mode,
           /* FIXME - How do we tell if a gimp_drawable_get () fails? */
           if (gimp_drawable_get_width (drawable) == 0)
             {
-              gimp_quit ();
+              gimp_image_delete (new_image);
+              g_free (rawframe);
+              g_free (last_frame);
+              g_free (this_frame);
+              g_free (opti_frame);
+              g_free (back_frame);
+
+              g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                           "Drawable has size 0");
+
+              return NULL;
             }
 
           this_delay = get_frame_duration (this_frame_num);

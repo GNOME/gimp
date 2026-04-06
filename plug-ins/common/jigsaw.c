@@ -788,8 +788,8 @@ draw_jigsaw (GObject  *config,
     }
   else
     {
-      g_printerr (_("draw_jigsaw: bad style\n"));
-      gimp_quit ();
+      /* This should never happen. */
+      g_critical (_("draw_jigsaw: bad style\n"));
     }
 
   if (! preview_mode)

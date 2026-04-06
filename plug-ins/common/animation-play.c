@@ -1059,7 +1059,6 @@ init_frames (GimpPlay *play)
     {
       gimp_message (_("Memory could not be allocated to the frame container."));
       gtk_widget_destroy (GTK_WIDGET (window));
-      gimp_quit ();
       return;
     }
 

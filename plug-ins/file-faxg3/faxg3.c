@@ -280,9 +280,11 @@ load_image (GFile   *file,
   rs = read (fd, rbuf, sizeof (rbuf));
   if (rs < 0)
     {
-      perror ("read");
       close (fd);
-      gimp_quit ();
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error while reading '%s': %s"),
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
+      return NULL;
     }
 
   rr += rs;
