@@ -110,10 +110,14 @@ const guint gimp_micro_version = GIMP_MICRO_VERSION;
  * gimp_env_init:
  * @plug_in: must be %TRUE if this function is called from a plug-in
  *
- * You don't need to care about this function. It is being called for
- * you automatically (by means of the [func@Gimp.MAIN] macro that every
- * C plug-in runs or directly with [func@Gimp.main] in binding). Calling
- * it again will cause a fatal error.
+ * You should never call this function directly. While the symbol is
+ * exported, the function is not declared in header and it is therefore
+ * neither considered public nor stable.
+ *
+ * It is being called for you automatically (by means of the
+ * [func@Gimp.MAIN] macro that every C plug-in runs or directly with
+ * [func@Gimp.main] in binding). Calling it again will cause a fatal
+ * error.
  *
  * Since: 2.4
  */
@@ -174,6 +178,20 @@ gimp_env_init (gboolean plug_in)
     }
 }
 
+/**
+ * gimp_env_exit:
+ * @plug_in: must be %TRUE if this function is called from a plug-in
+ *
+ * You should never call this function directly. While the symbol is
+ * exported, the function is not declared in header and it is therefore
+ * neither considered public nor stable.
+ *
+ * It is being called for you automatically (by means of the
+ * [func@Gimp.MAIN] macro that every C plug-in runs or directly with
+ * [func@Gimp.main] in binding).
+ *
+ * Since: 3.2.2
+ */
 void
 gimp_env_exit (gboolean plug_in)
 {
