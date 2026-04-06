@@ -217,7 +217,7 @@ gimp_font_factory_finalize (GObject  *object)
   g_slist_free_full (GET_PRIVATE (font_factory)->fonts_renaming_config, (GDestroyNotify) g_free);
   g_free (GET_PRIVATE (font_factory)->sysconf);
   g_free (GET_PRIVATE (font_factory)->conf);
-  g_object_unref (GET_PRIVATE (font_factory)->pango_context);
+  g_clear_object (&GET_PRIVATE (font_factory)->pango_context);
   FcConfigDestroy (FcConfigGetCurrent ());
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
