@@ -149,8 +149,8 @@ for df in def_files:
    nmsymbols = nmsymbols.split()[2::3]
    nmsymbols = [s for s in nmsymbols if s[0] != '_']
 
-   missing_defs = [s for s in nmsymbols  if s not in defsymbols and s not in exclude_symbols]
-   missing_nms  = [s for s in defsymbols if s not in nmsymbols  and s not in exclude_symbols]
+   missing_defs = [s for s in nmsymbols  if s not in defsymbols]
+   missing_nms  = [s for s in defsymbols if s not in nmsymbols]
 
    if missing_defs or missing_nms or doublesymbols or not sortok:
       print()
