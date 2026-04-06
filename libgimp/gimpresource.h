@@ -49,6 +49,8 @@ struct _GimpResourceClass
   void (*_gimp_reserved9) (void);
 };
 
+gboolean       gimp_resources_loaded     (GType         resource_type);
+
 gint32         gimp_resource_get_id      (GimpResource *resource);
 GimpResource * gimp_resource_get_by_id   (gint32        resource_id);
 GimpResource * gimp_resource_get_by_name (GType         resource_type,

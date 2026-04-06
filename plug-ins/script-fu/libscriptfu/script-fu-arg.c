@@ -311,7 +311,15 @@ script_fu_add_resource_arg (
            * later on, the fonts will likely have been loaded by then.
            */
           if (arg->default_value.sfa_resource.resource_type != GIMP_TYPE_FONT)
-            g_warning ("%s declared resource name is invalid %s", G_STRFUNC, declared_name_of_default);
+            {
+              if (gimp_resources_loaded (arg->default_value.sfa_resource.resource_type))
+                g_warning ("%s declared resource name is invalid %s", G_STRFUNC, declared_name_of_default);
+              else
+                g_printerr ("INFO: argument '%s' (value \"%s\") of procedure '%s' ignored "
+                            "because resources of type %s are not loaded.\n",
+                            name, declared_name_of_default, gimp_procedure_get_name (procedure),
+                            g_type_name (arg->default_value.sfa_resource.resource_type));
+            }
           script_fu_add_resource_arg_default_from_context (procedure, name, nick, blurb, func);
         }
       else

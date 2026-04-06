@@ -37,6 +37,44 @@
 
 
 /**
+ * _gimp_resources_loaded:
+ * @type_name: The name of the resource type e.g. GimpFont.
+ *
+ * Returns whether resource of a given type were loaded.
+ *
+ * Returns whether resources of a given type were loaded.
+ * In particular, it would return FALSE if GIMP was started with
+ * `--no-data` or `--no-fonts` for fonts.
+ *
+ * Returns: Whether resources of @type_name were loaded.
+ *
+ * Since: 3.2.4
+ **/
+gboolean
+_gimp_resources_loaded (const gchar *type_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean loaded = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, type_name,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-resources-loaded",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    loaded = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return loaded;
+}
+
+/**
  * _gimp_resource_get_by_name:
  * @type_name: The name of the resource type e.g. GimpFont.
  * @resource_name: The name of the resource.

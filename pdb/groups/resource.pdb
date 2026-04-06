@@ -16,6 +16,41 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+sub resources_loaded {
+    $blurb = "Returns whether resource of a given type were loaded.";
+    $help  = <<HELP;
+Returns whether resources of a given type were loaded.
+
+In particular, it would return FALSE if GIMP was started with `--no-data`
+or `--no-fonts` for fonts.
+HELP
+
+    &jehan_pdb_misc('2026', '3.2.4');
+
+    $lib_private = 1;
+
+    @inargs = (
+        { name => 'type_name', type => 'string', non_empty => 1,
+          desc => 'The name of the resource type e.g. GimpFont' }
+    );
+
+    @outargs = (
+	{ name => 'loaded', type => 'boolean',
+	  desc => 'Whether resources of @type_name were loaded' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (g_type_from_name (type_name) == GIMP_TYPE_FONT)
+    loaded = ! gimp->no_fonts;
+  else
+    loaded = ! gimp->no_data;
+}
+CODE
+    );
+}
+
 sub resource_get_by_name {
     $blurb = "Returns a resource with the given name.";
     $help  = <<HELP;
@@ -497,7 +532,8 @@ CODE
               "gimppdberror.h"
               "gimp-intl.h");
 
-@procs = qw(resource_get_by_name
+@procs = qw(resources_loaded
+            resource_get_by_name
             resource_get_by_identifiers
             resource_id_is_valid
             resource_id_is_brush

@@ -273,6 +273,31 @@ gimp_resource_deserialize_create (GType     type,
   return GIMP_CONFIG (resource);;
 }
 
+
+/* Public functions */
+
+/**
+ * gimp_resources_loaded:
+ * @resource_type: The #GType of the resource.
+ *
+ * Returns whether the resource with the given @resource_type were
+ * loaded.
+ *
+ * In particular, it would return FALSE if GIMP was started with
+ * `--no-data` (or `--no-fonts` for fonts).
+ *
+ * Returns: Whether resources of @resource_type were loaded.
+ *
+ * Since: 3.2.4
+ **/
+gboolean
+gimp_resources_loaded (GType resource_type)
+{
+  g_return_val_if_fail (g_type_is_a (resource_type, GIMP_TYPE_RESOURCE), FALSE);
+
+  return _gimp_resources_loaded (g_type_name (resource_type));
+}
+
 /**
  * gimp_resource_get_id:
  * @resource: The resource.

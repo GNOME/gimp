@@ -49,6 +49,38 @@
 
 
 static GimpValueArray *
+resources_loaded_invoker (GimpProcedure         *procedure,
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *type_name;
+  gboolean loaded = FALSE;
+
+  type_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      if (g_type_from_name (type_name) == GIMP_TYPE_FONT)
+        loaded = ! gimp->no_fonts;
+      else
+        loaded = ! gimp->no_data;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), loaded);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 resource_get_by_name_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -509,6 +541,37 @@ void
 register_resource_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
+
+  /*
+   * gimp-resources-loaded
+   */
+  procedure = gimp_procedure_new (resources_loaded_invoker, TRUE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-resources-loaded");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns whether resource of a given type were loaded.",
+                                  "Returns whether resources of a given type were loaded.\n"
+                                  "In particular, it would return FALSE if GIMP was started with `--no-data` or `--no-fonts` for fonts.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2026");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("type-name",
+                                                       "type name",
+                                                       "The name of the resource type e.g. GimpFont",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("loaded",
+                                                         "loaded",
+                                                         "Whether resources of @type_name were loaded",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-resource-get-by-name

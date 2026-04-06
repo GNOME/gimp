@@ -32,6 +32,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+G_GNUC_INTERNAL gboolean      _gimp_resources_loaded            (const gchar   *type_name);
 G_GNUC_INTERNAL GimpResource* _gimp_resource_get_by_name        (const gchar   *type_name,
                                                                  const gchar   *resource_name);
 G_GNUC_INTERNAL GimpResource* _gimp_resource_get_by_identifiers (const gchar   *type_name,

@@ -1059,6 +1059,7 @@ EXPORTS
 	gimp_resource_rename
 	gimp_resource_select_new
 	gimp_resource_select_set
+	gimp_resources_loaded
 	gimp_selection_all
 	gimp_selection_border
 	gimp_selection_bounds
