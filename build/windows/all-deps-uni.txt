@@ -27,7 +27,7 @@ ${MINGW_PACKAGE_PREFIX}-gobject-introspection-runtime|vcpkg:gobject-introspectio
 ${MINGW_PACKAGE_PREFIX}-graphviz
 ${MINGW_PACKAGE_PREFIX}-gtk3|vcpkg:gtk3[introspection]
 ${MINGW_PACKAGE_PREFIX}-harfbuzz|vcpkg:harfbuzz[introspection]
-${MINGW_PACKAGE_PREFIX}-iso-codes
+${MINGW_PACKAGE_PREFIX}-iso-codes|vcpkg:iso-codes
 ${MINGW_PACKAGE_PREFIX}-json-glib|vcpkg:json-glib
 ${MINGW_PACKAGE_PREFIX}-lcms2|vcpkg:lcms
 ${MINGW_PACKAGE_PREFIX}-libarchive|vcpkg:libarchive[bzip2]
