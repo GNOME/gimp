@@ -823,7 +823,9 @@ cppcheck:
 
 issue-bot:
   rules:
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "schedule" && ($GIMP_CI_MESON_CLANG != null || $GIMP_CI_MESON_MSVC != null || $GIMP_CI_MESON_APPLECLANG != null)
+      when: on_failure
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "schedule" && ($GIMP_CI_RASTER_ICONS != null || $GIMP_CI_CPPCHECK != null)
       when: on_failure
   needs:
     - job: gimp-debian-nonreloc
