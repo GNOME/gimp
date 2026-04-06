@@ -909,6 +909,8 @@ main (int    argc,
                     pdb_compat_mode,
                     backtrace_file);
 
+  gimp_env_exit (FALSE);
+
   g_free (backtrace_file);
 
   g_clear_object (&system_gimprc_file);

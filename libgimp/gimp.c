@@ -576,6 +576,7 @@ gimp_main (GType  plug_in_type,
       _gimp_plug_in_query (PLUG_IN);
 
       gimp_close ();
+      gimp_env_exit (TRUE);
 
       return EXIT_SUCCESS;
     }
@@ -588,6 +589,7 @@ gimp_main (GType  plug_in_type,
       _gimp_plug_in_init (PLUG_IN);
 
       gimp_close ();
+      gimp_env_exit (TRUE);
 
       return EXIT_SUCCESS;
     }
@@ -604,6 +606,8 @@ gimp_main (GType  plug_in_type,
   g_io_channel_unref (write_channel);
   g_clear_object (&_check_custom_color1);
   g_clear_object (&_check_custom_color2);
+
+  gimp_env_exit (TRUE);
 
   return EXIT_SUCCESS;
 }

@@ -26,7 +26,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-void          gimp_env_init                    (gboolean      plug_in);
+void gimp_env_init (gboolean plug_in);
+void gimp_env_exit (gboolean plug_in);
 
 
 G_END_DECLS

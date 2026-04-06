@@ -98,6 +98,9 @@ static gchar * gimp_env_get_dir   (const gchar *gimp_env_name,
                                    const gchar *relative_subdir);
 
 
+static gchar    *gimp_temp_dir           = NULL;
+static gboolean  gimp_temp_dir_generated = FALSE;
+
 const guint gimp_major_version = GIMP_MAJOR_VERSION;
 const guint gimp_minor_version = GIMP_MINOR_VERSION;
 const guint gimp_micro_version = GIMP_MICRO_VERSION;
@@ -169,6 +172,19 @@ gimp_env_init (gboolean plug_in)
                      data_home, g_strerror (errno));
         }
     }
+}
+
+void
+gimp_env_exit (gboolean plug_in)
+{
+  if (gimp_temp_dir_generated)
+    {
+      if (g_rmdir (gimp_temp_dir) == -1)
+        g_printerr ("%s: failed to delete the temporary folder `%s`: %s\n",
+                    G_STRFUNC, gimp_temp_dir, g_strerror (errno));
+    }
+
+  g_clear_pointer (&gimp_temp_dir, g_free);
 }
 
 #ifdef G_OS_WIN32
@@ -755,9 +771,9 @@ gimp_cache_directory (void)
  * gimp_temp_directory:
  *
  * Returns the default top directory for GIMP temporary files. If the
- * environment variable GIMP3_TEMPDIR exists, that is used.  It
- * should be an absolute pathname.  Otherwise, a subdirectory of the
- * directory returned by g_get_tmp_dir() is used.
+ * environment variable `GIMP3_TEMPDIR` exists, that is used. It
+ * should be an absolute pathname. Otherwise, a subdirectory of the
+ * directory returned by [func@GLib.get_tmp_dir] is used.
  *
  * In config files such as gimprc, the string ${gimp_temp_dir} expands
  * to this directory.
@@ -767,8 +783,10 @@ gimp_cache_directory (void)
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * GLib, which isn't necessarily UTF-8. (On Windows it always is
- * UTF-8.).
+ * GLib, which isn't necessarily UTF-8 (On Windows it always is UTF-8.).
+ *
+ * The returned directory path might already exists, or it might not. It
+ * is your responsibility to make sure it does before using it.
  *
  * Since: 2.10.10
  *
@@ -777,17 +795,24 @@ gimp_cache_directory (void)
 const gchar *
 gimp_temp_directory (void)
 {
-  static gchar *gimp_temp_dir = NULL;
-
   if (! gimp_temp_dir)
     {
-      gchar *tmp = g_build_filename (g_get_tmp_dir (),
-                                     GIMP_PACKAGE,
-                                     GIMP_USER_VERSION,
-                                     NULL);
+      GError *error = NULL;
 
-      gimp_temp_dir = gimp_env_get_dir ("GIMP3_TEMPDIR", NULL, tmp);
-      g_free (tmp);
+      gimp_temp_dir = gimp_env_get_dir ("GIMP3_TEMPDIR", NULL, NULL);
+      if (gimp_temp_dir)
+        return gimp_temp_dir;
+
+      gimp_temp_dir = g_dir_make_tmp (GIMP_PACKAGE "-" GIMP_USER_VERSION "-XXXXXXX", &error);
+      gimp_temp_dir_generated = TRUE;
+      if (gimp_temp_dir == NULL)
+        {
+          g_critical ("%s: failed to create temporary directory: %s\n",
+                      G_STRFUNC, error->message);
+          g_clear_error (&error);
+
+          gimp_temp_dir_generated = FALSE;
+        }
     }
 
   return gimp_temp_dir;
@@ -1286,7 +1311,7 @@ gimp_env_get_dir (const gchar *gimp_env_name,
 
       return retval;
     }
-  else if (! g_path_is_absolute (relative_subdir))
+  else if (relative_subdir && ! g_path_is_absolute (relative_subdir))
     {
       return g_build_filename (gimp_installation_directory (),
                                relative_subdir,

@@ -58,6 +58,7 @@ EXPORTS
 	gimp_enum_value_get_abbrev
 	gimp_enum_value_get_desc
 	gimp_enum_value_get_help
+	gimp_env_exit
 	gimp_env_init
 	gimp_escape_uline
 	gimp_export_capabilities_get_type
