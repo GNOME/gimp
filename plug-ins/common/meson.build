@@ -169,7 +169,9 @@ endif
 if platform_windows
   common_plugins_list += { 'name': 'file-lnk', }
   if wia.found()
-    common_plugins_list += { 'name': 'wia', }
+    common_plugins_list += { 'name': 'wia',
+      'deps': [ wia ],
+    }
   endif
 endif
 
