@@ -28,6 +28,8 @@
 
 #include "core-types.h"
 
+#include "gimpcoreapp.h"
+
 #include "config/gimprc.h"
 
 #include "gegl/gimp-babl.h"
@@ -1368,9 +1370,20 @@ gimp_exit_idle_cleanup_stray_images (Gimp *gimp)
     {
       GimpImage *image = image_iter->data;
 
-      /* TODO: localize after string freeze. */
-      g_printerr ("INFO: a stray image seems to have been left around by a plug-in: \"%s\"",
-                  gimp_image_get_display_name (image));
+      /* Plug-in developers are expected to free the images they
+       * created, unless they add a display (while in GUI mode), in
+       * which case the user gets ownership of the image and it will be
+       * freed as any other image by the GUI.
+       * On the other hand, images created from command lines are very
+       * likely to still exist when the software exits, if it was closed
+       * by the --quit argument, or run without an interface. This is
+       * normal use case.
+       */
+      if (! gimp_image_get_from_command_line (image) ||
+          (! gimp->no_interface && ! gimp_core_app_get_quit (GIMP_CORE_APP (gimp->app))))
+        /* TODO: localize after string freeze. */
+        g_printerr ("INFO: a stray image seems to have been left around by a plug-in: \"%s\"\n",
+                    gimp_image_get_display_name (image));
 
       g_object_unref (image);
     }

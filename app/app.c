@@ -321,14 +321,14 @@ app_run (const gchar         *full_prog_name,
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
+  while (g_main_context_pending (NULL))
+    g_main_context_iteration (NULL, TRUE);
+
   g_clear_object (&app);
 
   gimp_gegl_exit (gimp);
 
   errors_exit ();
-
-  while (g_main_context_pending (NULL))
-    g_main_context_iteration (NULL, TRUE);
 
   g_object_unref (gimp);
 

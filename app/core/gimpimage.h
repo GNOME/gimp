@@ -508,3 +508,7 @@ void            gimp_image_invalidate_previews   (GimpImage          *image);
 void            gimp_image_set_converting        (GimpImage          *image,
                                                   gboolean            converting);
 gboolean        gimp_image_get_converting        (GimpImage          *image);
+
+void            gimp_image_set_from_command_line (GimpImage          *image,
+                                                  gboolean            from_command_line);
+gboolean        gimp_image_get_from_command_line (GimpImage          *image);

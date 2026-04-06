@@ -909,6 +909,8 @@ gimp_image_init (GimpImage *image)
   private->flush_accum.mask_changed               = FALSE;
   private->flush_accum.floating_selection_changed = FALSE;
   private->flush_accum.preview_invalidated        = FALSE;
+
+  private->from_command_line                      = FALSE;
 }
 
 static void
@@ -6407,4 +6409,29 @@ gimp_image_get_converting (GimpImage *image)
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   return private->converting;
+}
+
+void
+gimp_image_set_from_command_line (GimpImage *image,
+                                  gboolean   from_command_line)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  private->from_command_line = from_command_line;
+}
+
+gboolean
+gimp_image_get_from_command_line (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  return private->from_command_line;
 }

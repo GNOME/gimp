@@ -690,6 +690,7 @@ file_open_from_command_line (Gimp     *gimp,
     {
       success = TRUE;
 
+      gimp_image_set_from_command_line (image, TRUE);
       g_object_set_data_full (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_FILE_KEY,
                               g_object_ref (file),
                               (GDestroyNotify) g_object_unref);

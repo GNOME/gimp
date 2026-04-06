@@ -148,6 +148,8 @@ struct _GimpImagePrivate
 
   /*  Signal emission accumulator  */
   GimpImageFlushAccumulator  flush_accum;
+
+  gboolean                   from_command_line;
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) (((GimpImage *) (image))->priv)
