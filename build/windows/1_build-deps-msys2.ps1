@@ -64,7 +64,7 @@ if (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf)
 else
   {
     powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -Suy }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
-    powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -S --needed (Get-Content build/windows/all-deps-uni.txt | Select-String 'MINGW_' | ForEach-Object { ($_ -split '\|vcpkg:')[0] -replace '\$\{MINGW_PACKAGE_PREFIX\}', $(if ($env:MINGW_PACKAGE_PREFIX) { $env:MINGW_PACKAGE_PREFIX } elseif ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' }) }) }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+    powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -S --needed (Get-Content build/windows/all-deps-uni.txt | Where-Object { $_ -match 'MINGW_' -and -not $_.Trim().StartsWith('#') } | ForEach-Object { (($_.Split('#')[0].Trim() -split '\|vcpkg:')[0] -replace '\$\{MINGW_PACKAGE_PREFIX\}', $(if ($env:MINGW_PACKAGE_PREFIX) { $env:MINGW_PACKAGE_PREFIX } elseif ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })) }) }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):deps_install$([char]13)$([char]27)[0K"
 

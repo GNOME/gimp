@@ -42,7 +42,7 @@ librsvg|homebrew:librsvg \
 tiff|homebrew:libtiff \
 webp|homebrew:webp \
 libwmf -x11|homebrew:libwmf \
-maxflow \
+maxflow #homebrew rejected maxflow https://github.com/Homebrew/homebrew-core/pull/276186 \
 mypaint-brushes|homebrew:mypaint-brushes \
 openexr|homebrew:openexr \
 openjpeg|homebrew:openjpeg \
@@ -51,7 +51,7 @@ poppler +pinentry -pinentry_mac|homebrew:poppler \
 poppler-data \
 python313|homebrew:python \ py313-certifi|homebrew:certifi
 py313-gobject3|homebrew:pygobject3 \
-qoi \
+qoi #homebrew rejected qoi https://github.com/Homebrew/homebrew-core/pull/276182 \
 #suitesparse not built by Apple Clang
 #xpm depends on x11
 xz|homebrew:xz
