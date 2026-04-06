@@ -135,8 +135,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.8.tar.gz",
-                    "sha256": "0dd8d50e7f04219f3f925702564e994f9acdc6133ba537ec75eb6208119bec33",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.9.tar.gz",
+                    "sha256": "328c6fcd794b2538d71c65b401264e6745cf65cbc18f404e55ec3c0230d2373c",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -317,8 +317,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/caolanm/libwmf/archive/refs/tags/v0.2.14.tar.gz",
-                    "sha512": "5f2068e89eb3998acd40a7d7272f2bba7d8366b1bf647ba10a4415cca2229ae5d8175140e49ea232c7e16887c64e9129df9f0effd045bf96887f2eada4e10992",
+                    "url": "https://github.com/caolanm/libwmf/archive/refs/tags/v0.2.15.tar.gz",
+                    "sha512": "e95ab312ac06add60f278b9fa8cebb20bd8bd53b98f7159fe1ebc206cbcad1a186ef2ce4dd6c3c271dcad037e9b685493cda1267d4ebf9638906584eedb4f960",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 230209,
