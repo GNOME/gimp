@@ -303,6 +303,7 @@ gimp_language_store_parser_init (GError **error)
   /* Generate the localized language names. */
   g_hash_table_iter_init (&lang_iter, l10n_lang_list);
   gimp_bind_text_domain ("iso_639_3", ISO_CODES_LOCALEDIR);
+  gimp_bind_text_domain ("iso_639-3", ISO_CODES_LOCALEDIR);
   while (g_hash_table_iter_next (&lang_iter, &key, NULL))
     {
       gchar *code           = (gchar*) key;
@@ -332,6 +333,7 @@ gimp_language_store_parser_init (GError **error)
       if (english_name)
         {
           gchar *semicolon;
+          gchar *mo_name = NULL;
 
           /* If possible, we want to localize a language in itself.
            * If it fails, gettext fallbacks to C (en_US) itself.
@@ -341,6 +343,13 @@ gimp_language_store_parser_init (GError **error)
           setlocale (LC_ALL, "");
 
           localized_name = g_strdup (dgettext ("iso_639_3", english_name));
+          mo_name = "iso_639_3";
+          if (g_strcmp0 (english_name, localized_name) == 0)
+            {
+              g_free (localized_name);
+              localized_name = g_strdup (dgettext ("iso_639-3", english_name));
+              mo_name = "iso_639-3";
+            }
 
           /* If original and localized names are the same for other than English,
            * maybe localization failed. Try now in the main dialect. */
@@ -354,7 +363,7 @@ gimp_language_store_parser_init (GError **error)
               g_setenv ("LANG", base_code, TRUE);
               setlocale (LC_ALL, "");
 
-              localized_name = g_strdup (dgettext ("iso_639_3", english_name));
+              localized_name = g_strdup (dgettext (mo_name, english_name));
             }
 
           /*  there might be several language names; use the first one  */
@@ -458,6 +467,12 @@ parse_iso_codes (GHashTable  *base_lang_list,
 
   file = g_file_new_for_path (ISO_CODES_LOCATION G_DIR_SEPARATOR_S
                               "iso_639_3.xml");
+  if (! g_file_query_exists (file, NULL))
+    {
+      g_object_unref (file);
+      file = g_file_new_for_path (ISO_CODES_LOCATION G_DIR_SEPARATOR_S
+                                  "iso_639-3.xml");
+    }
 
   success = gimp_xml_parser_parse_gfile (xml_parser, file, error);
   if (*error)
@@ -494,8 +509,10 @@ iso_codes_parser_init (void)
     return;
 
   gimp_bind_text_domain ("iso_639_3", ISO_CODES_LOCALEDIR);
+  gimp_bind_text_domain ("iso_639-3", ISO_CODES_LOCALEDIR);
 
   bind_textdomain_codeset ("iso_639_3", "UTF-8");
+  bind_textdomain_codeset ("iso_639-3", "UTF-8");
 
   initialized = TRUE;
 }
