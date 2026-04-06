@@ -9,19 +9,61 @@ This is the stable branch of GIMP.
 Overview of Changes from GIMP 3.2.2 to GIMP 3.2.4
 =================================================
 
+Core:
+
+  - The "edit-fill-*" actions will now behave accordingly on specific
+    cases. E.g. it will skip layers which can't be filled (content-lock
+    layers and link layers) and it will fill the expected way
+    non-rasterized text and vector layers.
+  - Images opened through command lines are not considered stray images
+    anymore on exit when run without a GUI (scripts, etc.).
+  - We improved the support of the process temporary folder, so that we
+    can avoid clashes when several users run GIMP on a same computer.
+    Furthermore the temporary folder is now deleted at startup (unless
+    it is not empty, which it should be).
+
 Tool
 
-  - Text tool: when editing text, prioritize our global actions when a
-    shortcut matches, before sending the hit keys to the IME (Input
-    Method Engine). Otherwise some IME may consume our keys and block
-    custom shortcuts (e.g. Alt+key events are often used to trigger
-    special characters on macOS or Windows and may block core actions).
+  - Text tool:
+    * When editing text, prioritize our global actions when a
+      shortcut matches, before sending the hit keys to the IME (Input
+      Method Engine). Otherwise some IME may consume our keys and block
+      custom shortcuts (e.g. Alt+key events are often used to trigger
+      special characters on macOS or Windows and may block core
+      actions).
+    * Prevent font size jumping to 0 when using shortcuts on selected
+      text.
+  - Selection tools: when moving a floating layer or selection,
+    temporarily disable the marching ants outline. Among other reasons,
+    it improves performance.
+
+Plug-Ins:
+
+  - Fixes bugs to: APNG import, PAA import.
+  - Improved PDF export.
+  - file-compressor: improved error messaging.
+
+API:
+
+  - libgimp/PDB:
+    * libgimp/PDB functions gimp_context_set_line_width_unit() and
+      gimp_vector_layer_set_stroke_width_unit() now accept pixel as input unit.
+    * Improved error handling in gimp_temp_file().
+    * New function: gimp_resources_loaded()
+    * A function gimp_env_exit() was added, but same as gimp_env_init(),
+      it is not declared in public headers and should never be used by
+      plug-ins. It is considered private.
 
 Build:
 
   - Many build warnings are being cleaned out.
+  - New jobs are being set up with -Werror progressively as we weed out
+    existing build warnings.
+  - The issue bot will now run and create reports when specific jobs
+    fail.
   - New rules to generate Markdown versions of our man pages for the
     website.
+  - Our Python 3 minimum requirement is now version 3.10.
 
 
 Overview of Changes from GIMP 3.2.0 to GIMP 3.2.2
