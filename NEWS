@@ -50,9 +50,13 @@ API:
       gimp_vector_layer_set_stroke_width_unit() now accept pixel as input unit.
     * Improved error handling in gimp_temp_file().
     * New function: gimp_resources_loaded()
+  - libgimp:
     * A function gimp_env_exit() was added, but same as gimp_env_init(),
       it is not declared in public headers and should never be used by
       plug-ins. It is considered private.
+    * gimp_quit() function is deprecated.
+  - PDB:
+    * (gimp-quit) procedure (without libgimp wrapper) is deprecated.
 
 Build:
 
