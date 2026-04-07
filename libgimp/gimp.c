@@ -652,18 +652,20 @@ gimp_get_pdb (void)
  *
  * Forcefully causes the GIMP library to exit and close down its
  * connection to main gimp application. This function never returns.
+ *
+ * It is highly unadvised to use this function since the plug-in will
+ * not properly return. If you need to return from a plug-in in error,
+ * gracefully return with [method@Procedure.new_return_values] setting
+ * [enum@Gimp.PDBStatusType.EXECUTION_ERROR] as a status and with a well
+ * written [struct@GLib.Error] message to display.
+ *
+ * Deprecated: there are no alternatives. Quit your plug-ins cleanly
+ *             instead.
  **/
 void
 gimp_quit (void)
 {
-  gimp_close ();
-
-#if defined G_OS_WIN32 && defined HAVE_EXCHNDL
-  if (plug_in_backtrace_path)
-    g_free (plug_in_backtrace_path);
-#endif
-
-  exit (EXIT_SUCCESS);
+  _gimp_quit ();
 }
 
 /**
@@ -1036,6 +1038,29 @@ gimp_get_progname (void)
 }
 
 
+/*  Internal functions  */
+
+/* _gimp_quit:
+ *
+ * Forcefully causes the GIMP library to exit and close down its
+ * connection to main gimp application. This function never returns.
+ *
+ * To be used internally by libgimp only.
+ */
+void
+_gimp_quit (void)
+{
+  gimp_close ();
+
+#if defined G_OS_WIN32 && defined HAVE_EXCHNDL
+  if (plug_in_backtrace_path)
+    g_free (plug_in_backtrace_path);
+#endif
+
+  exit (EXIT_SUCCESS);
+}
+
+
 /*  private functions  */
 
 static void
@@ -1147,7 +1172,7 @@ gimp_plugin_sigfatal_handler (gint sig_num)
       break;
     }
 
-  /* Do not end with gimp_quit().
+  /* Do not end with _gimp_quit().
    * We want the plug-in to continue its normal crash course, otherwise
    * we won't get the "Plug-in crashed" error in GIMP.
    */

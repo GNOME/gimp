@@ -423,7 +423,7 @@ gimp_procedure_real_install (GimpProcedure *procedure)
 
   if (! gp_proc_install_write (_gimp_plug_in_get_write_channel (plug_in),
                                &proc_install, plug_in))
-    gimp_quit ();
+    _gimp_quit ();
 
   g_free (proc_install.params);
   g_free (proc_install.return_vals);
@@ -491,7 +491,7 @@ gimp_procedure_real_uninstall (GimpProcedure *procedure)
 
   if (! gp_proc_uninstall_write (_gimp_plug_in_get_write_channel (plug_in),
                                  &proc_uninstall, plug_in))
-    gimp_quit ();
+    _gimp_quit ();
 
   priv->installed = FALSE;
 }
@@ -2229,7 +2229,7 @@ gimp_procedure_persistent_ready (GimpProcedure *procedure)
 
   if (! gp_extension_ack_write (_gimp_plug_in_get_write_channel (plug_in),
                                 plug_in))
-    gimp_quit ();
+    _gimp_quit ();
 }
 
 /**

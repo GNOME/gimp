@@ -826,7 +826,7 @@ gimp_plug_in_persistent_process (GimpPlugIn *plug_in,
       else if (select_val == -1 && errno != EINTR)
         {
           perror ("gimp_plug_in_persistent_process");
-          gimp_quit ();
+          _gimp_quit ();
         }
     }
   while (select_val == -1 && errno == EINTR);
@@ -1006,7 +1006,7 @@ _gimp_plug_in_read_expect_msg (GimpPlugIn      *plug_in,
   while (TRUE)
     {
       if (! gimp_wire_read_msg (priv->read_channel, msg, NULL))
-        gimp_quit ();
+        _gimp_quit ();
 
       if (msg->type == type)
         return; /* up to the caller to call wire_destroy() */
@@ -1358,7 +1358,7 @@ gimp_plug_in_io_error_handler (GIOChannel   *channel,
                                gpointer      data)
 {
   g_printerr ("%s: fatal error: GIMP crashed\n", gimp_get_progname ());
-  gimp_quit ();
+  _gimp_quit ();
 
   /* never reached */
   return TRUE;
@@ -1434,7 +1434,7 @@ gimp_plug_in_single_message (GimpPlugIn *plug_in)
 
   /* Run a temp function */
   if (! gimp_wire_read_msg (priv->read_channel, &msg, NULL))
-    gimp_quit ();
+    _gimp_quit ();
 
   gimp_plug_in_process_message (plug_in, &msg);
 
@@ -1448,7 +1448,7 @@ gimp_plug_in_process_message (GimpPlugIn      *plug_in,
   switch (msg->type)
     {
     case GP_QUIT:
-      gimp_quit ();
+      _gimp_quit ();
       break;
     case GP_CONFIG:
       _gimp_config (msg->data);
@@ -1500,7 +1500,7 @@ gimp_plug_in_main_proc_run (GimpPlugIn *plug_in,
 
   if (! gp_proc_return_write (priv->write_channel,
                               &proc_return, plug_in))
-    gimp_quit ();
+    _gimp_quit ();
 
   _gimp_gp_params_free (proc_return.params, proc_return.n_params, TRUE);
 }
@@ -1525,7 +1525,7 @@ gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
 
   if (! gp_temp_proc_return_write (priv->write_channel,
                                    &proc_return, plug_in))
-    gimp_quit ();
+    _gimp_quit ();
 
   _gimp_gp_params_free (proc_return.params, proc_return.n_params, TRUE);
 }

@@ -349,7 +349,7 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
 
   if (! gp_tile_req_write (_gimp_plug_in_get_write_channel (plug_in),
                            &tile_req, plug_in))
-    gimp_quit ();
+    _gimp_quit ();
 
   _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_DATA);
 
@@ -378,7 +378,7 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
                   priv->bpp);
 #endif
       g_printerr ("received tile info did not match computed tile info");
-      gimp_quit ();
+      _gimp_quit ();
     }
 
   if (tile_data->use_shm)
@@ -394,7 +394,7 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
 
   if (! gp_tile_ack_write (_gimp_plug_in_get_write_channel (plug_in),
                            plug_in))
-    gimp_quit ();
+    _gimp_quit ();
 
   gimp_wire_destroy (&msg);
 }
@@ -416,7 +416,7 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
 
   if (! gp_tile_req_write (_gimp_plug_in_get_write_channel (plug_in),
                            &tile_req, plug_in))
-    gimp_quit ();
+    _gimp_quit ();
 
   _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_DATA);
 
@@ -444,7 +444,7 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
 
   if (! gp_tile_data_write (_gimp_plug_in_get_write_channel (plug_in),
                             &tile_data, plug_in))
-    gimp_quit ();
+    _gimp_quit ();
 
   if (! tile_info->use_shm)
     tile_data.data = NULL;

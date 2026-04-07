@@ -456,7 +456,7 @@ _gimp_pdb_run_procedure_array (GimpPDB              *pdb,
 
   if (! gp_proc_run_write (_gimp_plug_in_get_write_channel (pdb->plug_in),
                            &proc_run, pdb->plug_in))
-    gimp_quit ();
+    _gimp_quit ();
 
   _gimp_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
 

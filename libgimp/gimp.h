@@ -176,9 +176,7 @@ GimpPlugIn        * gimp_get_plug_in          (void);
  */
 GimpPDB           * gimp_get_pdb              (void);
 
-/* Forcefully causes the gimp library to exit and
- * close down its connection to main gimp application.
- */
+GIMP_DEPRECATED
 void                gimp_quit                 (void) G_GNUC_NORETURN;
 
 /* Return various constants given by the GIMP core at plug-in config time.
@@ -207,6 +205,13 @@ const gchar       * gimp_icon_theme_dir       (void) G_GNUC_CONST;
 
 const gchar       * gimp_get_progname         (void) G_GNUC_CONST;
 
+
+/* Forcefully causes the gimp library to exit and
+ * close down its connection to main gimp application.
+ * For internal use only.
+ */
+G_GNUC_INTERNAL
+void               _gimp_quit                 (void) G_GNUC_NORETURN;
 
 G_END_DECLS
 
