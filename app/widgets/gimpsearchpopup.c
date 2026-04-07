@@ -50,6 +50,7 @@ enum
   COLUMN_ACTION,
   COLUMN_SENSITIVE,
   COLUMN_SECTION,
+  COLUMN_SHORTCUT,
   N_COL
 };
 
@@ -282,23 +283,7 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
 
   accels = gimp_action_get_display_accels (action);
   if (accels && accels[0])
-    {
-      gchar *formatted_label;
-      gchar *formatted_value;
-
-      /* TRANSLATORS: a helper label indicating the shortcut for an action,
-       * it will be used within the generic "%s: %s" (also localized) string.
-       * e.g.: "shortcut: Ctrl+Alt+O"
-       */
-      formatted_label = g_markup_printf_escaped ("<u>%s</u>", _("shortcut"));
-      formatted_value = g_markup_escape_text (accels[0], -1);
-
-      /* TRANSLATORS: generic "title: value" label which will be used in various ways. */
-      shortcut_helper = g_strdup_printf (_("%s: %s"), formatted_label, formatted_value);
-
-      g_free (formatted_label);
-      g_free (formatted_value);
-    }
+    shortcut_helper = g_markup_escape_text (accels[0], -1);
   g_strfreev (accels);
 
   if ((menu_path = gimp_action_get_menu_path (action)) != NULL)
@@ -337,15 +322,12 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
     }
 
   markup = g_strdup_printf ("%s"                                           /* Label           */
-                            "<small>%s%s"                                  /* Shortcut        */
+                            "<small>"
                             "%s%s"                                         /* Menu path       */
                             "%s<span weight='light'>%s</span>"             /* Tooltip         */
                             "%s<i><span weight='ultralight'>%s</span></i>" /* Inactive reason */
                             "</small>",
                             escaped_label,
-
-                            shortcut_helper ? " | " : "",
-                            shortcut_helper ? shortcut_helper : "",
 
                             menu_path_helper ? " | " : "",
                             menu_path_helper ? menu_path_helper : "",
@@ -391,6 +373,7 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
                       COLUMN_ACTION,    action,
                       COLUMN_SECTION,   section,
                       COLUMN_SENSITIVE, sensitive,
+                      COLUMN_SHORTCUT,  shortcut_helper,
                       -1);
 
   g_free (markup);
@@ -804,7 +787,8 @@ gimp_search_popup_setup_results (GtkWidget **results_list,
                               G_TYPE_STRING,
                               GIMP_TYPE_ACTION,
                               G_TYPE_BOOLEAN,
-                              G_TYPE_INT);
+                              G_TYPE_INT,
+                              G_TYPE_STRING);
   *results_list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (*results_list), FALSE);
 #ifdef GIMP_UNSTABLE
@@ -827,6 +811,21 @@ gimp_search_popup_setup_results (GtkWidget **results_list,
                                                      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (*results_list), column);
   gtk_tree_view_column_set_max_width (column, wid1);
+  gtk_tree_view_column_set_expand (column, TRUE);
+
+  cell = gtk_cell_renderer_text_new ();
+  g_object_set (cell,
+                "xalign", 1.0,
+                "xpad",   18,
+                NULL);
+
+  column = gtk_tree_view_column_new_with_attributes (NULL, cell,
+                                                     "markup",    COLUMN_SHORTCUT,
+                                                     "sensitive", COLUMN_SENSITIVE,
+                                                     NULL);
+
+  gtk_tree_view_column_set_expand (column, FALSE);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (*results_list), column);
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (*list_view),
                                   GTK_POLICY_NEVER,
