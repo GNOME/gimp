@@ -71,9 +71,18 @@ sub quit {
 If there are unsaved images in an interactive GIMP session, the user
 will be asked for confirmation. If force is TRUE, the application is
 quit without querying the user to save any dirty images.
+
+
+This procedure is deprecated without any replacement. Scripts and
+plug-ins should not request the main process to exit. If you wish to run
+GIMP non-interactively so that it exits immediately when the batch
+script ends, call the executable with option `--quit`.
 HELP
 
     &std_pdb_misc;
+
+    $deprecated = 'NONE';
+    $deprecated_since = '3.2.4';
 
     @inargs = (
 	{ name => 'force', type => 'boolean',

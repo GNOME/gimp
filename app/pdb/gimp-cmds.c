@@ -292,12 +292,18 @@ register_gimp_procs (GimpPDB *pdb)
                                "gimp-quit");
   gimp_procedure_set_static_help (procedure,
                                   "Causes GIMP to exit gracefully.",
-                                  "If there are unsaved images in an interactive GIMP session, the user will be asked for confirmation. If force is TRUE, the application is quit without querying the user to save any dirty images.",
+                                  "If there are unsaved images in an interactive GIMP session, the user will be asked for confirmation. If force is TRUE, the application is quit without querying the user to save any dirty images.\n"
+                                  "\n"
+                                  "This procedure is deprecated without any replacement. Scripts and plug-ins should not request the main process to exit. If you wish to run GIMP non-interactively so that it exits immediately when the batch script ends, call the executable with option `--quit`.\n"
+                                  "\n"
+                                  "Deprecated: There is no replacement for this procedure.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
+  gimp_procedure_set_deprecated (procedure,
+                                 "NONE");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("force",
                                                      "force",
