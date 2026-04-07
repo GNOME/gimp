@@ -215,7 +215,7 @@ rm -fr ds-py3-venv
 #        open
 #        -- background
 #        set bounds of container window to {1, 1, 641, 512}
-#        set background picture of icon view options of container window to POSIX file "$DMG_MOUNT/.background/gimp-dmg.png"
+#        set background picture of icon view options of container window to POSIX file "$DMG_MOUNT/.background.png"
 #        set toolbar visible of container window to false
 #        set pathbar visible of container window to false
 #        set statusbar visible of container window to false
