@@ -19,6 +19,7 @@ spec:
         - GIMP_CI_MESON_APPLECLANG #trigger the Apple Clang build with Homebrew packages (rare usefulness)
         - GIMP_CI_RASTER_ICONS #trigger the Debian Clang build without vector icons (rare usefulness)
         - GIMP_CI_CPPCHECK #trigger cppcheck (static code analysis)
+        - GIMP_CI_TARTAN #trigger the Debian Clang build using Tartan static analysis (rare usefulness)
         - none
       default: 'none'
 ---
@@ -148,6 +149,19 @@ stages:
 
 deps-debian-nonreloc:
   extends: .debian-nonreloc
+  rules:
+    - !reference [.debian-nonreloc, rules]
+    # This rule needs to be here instead of .debian-nonreloc because we do not
+    # want to trigger the full GIMP build for GIMP_CI_TARTAN.
+    - if: '$GIMP_CI_TARTAN != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_TARTAN.*/'
+      variables:
+        CC: clang
+        CXX: clang++
+        CC_LD: lld
+        CXX_LD: lld
+        TOOLCHAIN: "clang lld"
+        WARN_AS_ERROR_ON_CI: '-Dwerror=true'
+        VARIANT: -clang
   stage: dependencies
   image: quay.io/containers/aio:latest
   variables:
@@ -815,6 +829,68 @@ cppcheck:
         -i _build -i babl -i gegl -i _install .
     - mkdir report
     - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
+  artifacts:
+    paths:
+      - report/
+    expire_in: 8 days
+
+tartan-static-analysis:
+  extends: .debian-nonreloc
+  rules:
+    - if: '$GIMP_CI_TARTAN != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_TARTAN.*/'
+  needs: ["deps-debian-nonreloc"]
+  stage: analysis
+  allow_failure: true
+  variables:
+    # FIXME: This is temporary until the image in .default is bumped to Debian Trixie.
+    DEB_VERSION: "trixie"
+    GIT_SUBMODULE_STRATEGY: recursive
+    LLVM_VERSION: 18
+    TARTAN_BUILDDIR: "_build-${RUNNER}"
+    GIMP_BUILDDIR: "_build-tartan-${RUNNER}"
+    CC: "clang-${LLVM_VERSION}"
+    CXX: "clang++-${LLVM_VERSION}"
+  script:
+    - *ENVIRON
+
+    - printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment\n"
+    # Tartan does not support LLVM beyond version 20. See https://gitlab.freedesktop.org/tartan/tartan/-/merge_requests/29.
+    - apt-get update
+    # For building Tartan we need to have available a 'clang' binary but for
+    # the scan-build we need to use a specific version.
+    - apt-get install -y clang
+                         clang-tools
+                         clang-${LLVM_VERSION}
+                         clang-tools-${LLVM_VERSION}
+                         libclang-${LLVM_VERSION}-dev
+                         libgirepository-2.0-dev
+    - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
+
+    # Build Tartan from source
+    - printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KBuild Tartan\n"
+    - git clone https://gitlab.freedesktop.org/tartan/tartan.git tartan
+    - pushd tartan
+    # Tartan seems to need to be installed into the same prefix as the version
+    # of LLVM we want to use it with.
+    - LLVM_CONFIG=/usr/bin/llvm-config-${LLVM_VERSION} meson setup ${TARTAN_BUILDDIR} -Dprefix="$(llvm-config-${LLVM_VERSION} --prefix)"
+                                                                                      -Dlibdir="$(llvm-config-${LLVM_VERSION} --libdir)"
+    - meson compile -C ${TARTAN_BUILDDIR}
+    - meson install -C ${TARTAN_BUILDDIR}
+    - popd
+    - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
+
+    # Run the static analysis
+    - printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KBuild GIMP with Tartan\n"
+    - meson setup ${GIMP_BUILDDIR} -Dprefix="${GIMP_PREFIX}"
+                                   $MESON_OPTIONS $WARN_AS_ERROR_ON_CI
+    - SCANBUILD="$(llvm-config-${LLVM_VERSION} --bindir)/tartan-build" ninja -C ${GIMP_BUILDDIR} scan-build
+    - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
+
+    # Save the analysis report
+    - printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KSaving build report\n"
+    - mkdir report
+    - mv ${GIMP_BUILDDIR}/meson-logs/scanbuild/* ./report/
+    - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
   artifacts:
     paths:
       - report/
