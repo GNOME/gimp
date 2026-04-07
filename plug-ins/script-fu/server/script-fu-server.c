@@ -178,24 +178,28 @@ typedef union
  *  Local Functions
  */
 
-static void      server_start       (const gchar *listen_ip,
-                                     gint         port,
-                                     const gchar *logfile);
-static void      execute_command    (SFCommand   *cmd);
-static gint      read_from_client   (gint         filedes);
-static gint      make_socket        (const struct addrinfo
-                                                 *ai);
-static void      server_log         (const gchar *format,
-                                     ...) G_GNUC_PRINTF (1, 2);
-static void      server_quit        (void);
+static GimpPDBStatusType  server_start            (const gchar            *listen_ip,
+                                                   gint                    port,
+                                                   const gchar            *logfile,
+                                                   GError                **error);
+static gboolean           execute_command         (SFCommand              *cmd,
+                                                   GError                **error);
+static gint               read_from_client        (gint                    filedes);
+static gint               make_socket             (const struct addrinfo  *ai,
+                                                   GError                **error);
+static void               server_log              (const gchar            *format,
+                                                   ...) G_GNUC_PRINTF (1, 2);
+static void               server_quit             (void);
 
-static gboolean  server_interface   (void);
-static void      response_callback  (GtkWidget   *widget,
-                                     gint         response_id,
-                                     gpointer     data);
-static void      print_socket_api_error (const gchar *api_name);
+static gboolean           server_interface        (void);
+static void               response_callback       (GtkWidget              *widget,
+                                                   gint                    response_id,
+                                                   gpointer                data);
+static void               set_socket_api_error    (GError                **error,
+                                                   const gchar            *api_name);
 
-static void      script_fu_server_listen (gint        timeout);
+static gboolean           script_fu_server_listen (gint                    timeout,
+                                                   GError                **error);
 
 /*
  *  Local variables
@@ -244,6 +248,8 @@ script_fu_server_quit (void)
 static void
 script_fu_server_post_command (void)
 {
+  GError *error = NULL;
+
   /*
    * Callback from inner scriptfu after a command is executed.
    * See server_start(), the server is in a loop on the queue.
@@ -257,7 +263,11 @@ script_fu_server_post_command (void)
    * script_fu_server_listen (10) in the loop on the queue?
    */
   server_log ("post command callback\n");
-  script_fu_server_listen (10);
+  if (! script_fu_server_listen (10, &error))
+    {
+      g_printerr ("%s: %s\n", G_STRFUNC, error->message);
+      g_clear_error (&error);
+    }
 }
 
 GimpValueArray *
@@ -269,6 +279,7 @@ script_fu_server_run (GimpProcedure        *procedure,
   gchar             *ip;
   gint               port;
   gchar             *logfile;
+  GError            *error = NULL;
 
   g_object_get (config,
                 "run-mode", &run_mode,
@@ -289,12 +300,12 @@ script_fu_server_run (GimpProcedure        *procedure,
       if (server_interface ())
         {
           /* Blocks, an event loop on IO. */
-          server_start (sint.listen_ip, sint.port, sint.logfile);
+          status = server_start (sint.listen_ip, sint.port, sint.logfile, &error);
         }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      server_start (ip ? ip : "127.0.0.1", port, logfile);
+      status = server_start (ip ? ip : "127.0.0.1", port, logfile, &error);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -308,7 +319,7 @@ script_fu_server_run (GimpProcedure        *procedure,
   g_free (ip);
   g_free (logfile);
 
-  return gimp_procedure_new_return_values (procedure, status, NULL);
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static void
@@ -353,8 +364,9 @@ script_fu_server_read_fd (gpointer key,
   return FALSE;
 }
 
-static void
-script_fu_server_listen (gint timeout)
+static gboolean
+script_fu_server_listen (gint     timeout,
+                         GError **error)
 {
   struct timeval  tv;
   struct timeval *tvp = NULL;
@@ -381,8 +393,8 @@ script_fu_server_listen (gint timeout)
 
   if (select (FD_SETSIZE, &fds, NULL, NULL, tvp) < 0)
     {
-      print_socket_api_error ("select");
-      return;
+      set_socket_api_error (error, "select");
+      return FALSE;
     }
 
   /* Service the server sockets if any has input pending. */
@@ -405,8 +417,8 @@ script_fu_server_listen (gint timeout)
 
       if (new < 0)
         {
-          print_socket_api_error ("accept");
-          return;
+          set_socket_api_error (error, "accept");
+          return FALSE;
         }
 
       /*  Associate the client address with the socket  */
@@ -440,6 +452,8 @@ script_fu_server_listen (gint timeout)
 
   /* Service the client sockets. */
   g_hash_table_foreach_remove (clients, script_fu_server_read_fd, &fds);
+
+  return TRUE;
 }
 
 static void
@@ -493,10 +507,11 @@ server_progress_uninstall (const gchar *progress)
   gimp_progress_uninstall (progress);
 }
 
-static void
-server_start (const gchar *listen_ip,
-              gint         port,
-              const gchar *logfile)
+static GimpPDBStatusType
+server_start (const gchar  *listen_ip,
+              gint          port,
+              const gchar  *logfile,
+              GError      **error)
 {
   struct addrinfo *ai;
   struct addrinfo *ai_curr;
@@ -516,8 +531,9 @@ server_start (const gchar *listen_ip,
 
   if (e != 0)
     {
-      g_printerr ("getaddrinfo: %s\n", gai_strerror (e));
-      return;
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   "getaddrinfo: %s\n", gai_strerror (e));
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
   for (ai_curr = ai, sockno = 0;
@@ -526,13 +542,14 @@ server_start (const gchar *listen_ip,
     {
       /* Create the socket and set it up to accept connections.          */
       /* This may fail if there's a server running on this port already. */
-      server_socks[sockno] = make_socket (ai_curr);
+      if ((server_socks[sockno] = make_socket (ai_curr, error)) == -1)
+        return GIMP_PDB_EXECUTION_ERROR;
 
       if (listen (server_socks[sockno], 5) < 0)
         {
-          print_socket_api_error ("listen");
+          set_socket_api_error (error, "listen");
           freeaddrinfo (ai);
-          return;
+          return GIMP_PDB_EXECUTION_ERROR;
         }
     }
 
@@ -558,13 +575,19 @@ server_start (const gchar *listen_ip,
   /*  Loop until the server is finished  */
   while (! script_fu_done)
     {
-      script_fu_server_listen (0);
+      if (! script_fu_server_listen (0, error))
+        return GIMP_PDB_EXECUTION_ERROR;
 
       while (command_queue)
         {
-          SFCommand *cmd = (SFCommand *) command_queue->data;
+          SFCommand *cmd       = (SFCommand *) command_queue->data;
+          GError    *cmd_error = NULL;
 
-          execute_command (cmd);
+          if (! execute_command (cmd, &cmd_error))
+            {
+              g_printerr ("%s: %s\n", G_STRFUNC, cmd_error->message);
+              g_clear_error (&cmd_error);
+            }
 
           /*  Remove the command from the list  */
           command_queue = g_list_remove (command_queue, cmd);
@@ -580,6 +603,8 @@ server_start (const gchar *listen_ip,
 
   freeaddrinfo (ai);
   server_quit ();
+
+  return GIMP_PDB_SUCCESS;
 }
 
 
@@ -633,8 +658,9 @@ get_interpretation_result (SFCommand *cmd, GString **script_stdout)
  * Does write an error byte to the client indicating error interpreting script.
  * On script error, substitutes an error msg for earlier output from the script.
  */
-static void
-execute_command (SFCommand *cmd)
+static gboolean
+execute_command (SFCommand  *cmd,
+                 GError    **error)
 {
   guchar      buffer[RESPONSE_HEADER];
   GString    *response = NULL;
@@ -652,7 +678,12 @@ execute_command (SFCommand *cmd)
   is_script_error = get_interpretation_result (cmd, &response);
   /* Require interpretation set response to a valid GString. */
   if (response == NULL)
-    return;
+    {
+      /* This should really never happen. */
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   "%s: NULL script response", G_STRFUNC);
+      return FALSE;
+    }
 
   server_log ("%s\n", response->str);
 
@@ -678,9 +709,9 @@ execute_command (SFCommand *cmd)
     {
       /*  Write error  */
       g_debug ("%s error sending header", G_STRFUNC);
-      print_socket_api_error ("send");
+      set_socket_api_error (error, "send");
       g_string_free (response, TRUE);
-      return;
+      return FALSE;
     }
 
   /*  Write the script response to the client, as one message. */
@@ -689,12 +720,14 @@ execute_command (SFCommand *cmd)
     {
       /*  Write error.  A client may have closed before taking all bytes.  */
       g_debug ("%s error sending response", G_STRFUNC);
-      print_socket_api_error ("send");
+      set_socket_api_error (error, "send");
       g_string_free (response, TRUE);
-      return;
+      return FALSE;
     }
 
   g_string_free (response, TRUE);
+
+  return TRUE;
 }
 
 static gint
@@ -790,10 +823,11 @@ read_from_client (gint filedes)
 }
 
 static gint
-make_socket (const struct addrinfo *ai)
+make_socket (const struct addrinfo  *ai,
+             GError                **error)
 {
-  gint                    sock;
-  gint                    v = 1;
+  gint sock = -1;
+  gint v    = 1;
 
   /*  Win32 needs the winsock library initialized.  */
 #ifdef G_OS_WIN32
@@ -810,8 +844,8 @@ make_socket (const struct addrinfo *ai)
         }
       else
         {
-          print_socket_api_error ("WSAStartup");
-          gimp_quit ();
+          set_socket_api_error (error, "WSAStartup");
+          return -1;
         }
     }
 #endif
@@ -820,8 +854,8 @@ make_socket (const struct addrinfo *ai)
   sock = socket (ai->ai_family, ai->ai_socktype, ai->ai_protocol);
   if (sock < 0)
     {
-      print_socket_api_error ("socket");
-      gimp_quit ();
+      set_socket_api_error (error, "socket");
+      return -1;
     }
 
   setsockopt (sock, SOL_SOCKET, SO_REUSEADDR, (const void *) &v, sizeof(v));
@@ -833,16 +867,16 @@ make_socket (const struct addrinfo *ai)
       v = 1;
       if (setsockopt (sock, IPPROTO_IPV6, IPV6_V6ONLY, (const void *) &v, sizeof(v)) < 0)
         {
-          print_socket_api_error ("setsockopt");
-          gimp_quit();
+          set_socket_api_error (error, "setsockopt");
+          return -1;
         }
     }
 #endif
 
   if (bind (sock, ai->ai_addr, ai->ai_addrlen) < 0)
     {
-      print_socket_api_error ("bind");
-      gimp_quit ();
+      set_socket_api_error (error, "bind");
+      return -1;
     }
 
   return sock;
@@ -1029,7 +1063,8 @@ response_callback (GtkWidget *widget,
 }
 
 static void
-print_socket_api_error (const gchar *api_name)
+set_socket_api_error (GError      **error,
+                      const gchar  *api_name)
 {
 #ifdef G_OS_WIN32
   /* Yes, this functionality really belongs to GLib. */
@@ -1201,8 +1236,10 @@ print_socket_api_error (const gchar *api_name)
       break;
     }
 
-  g_printerr ("%s failed: %s\n", api_name, emsg);
+  g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+               "%s failed: %s", api_name, emsg);
 #else
-  perror (api_name);
+  g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+               "%s failed: %s", api_name, strerror (errno));
 #endif
 }
