@@ -418,10 +418,10 @@ parse_colors (XpmImage *xpm_image)
 #ifdef GDK_WINDOWING_X11
   Display  *display;
   Colormap  colormap;
+  gboolean  use_x_api = FALSE;
 #endif
   gint      i, j;
   guchar   *cmap;
-  gboolean use_x_api = FALSE;;
 
 #ifdef GDK_WINDOWING_X11
   use_x_api = (gdk_display_get_default () &&
