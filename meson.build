@@ -1123,6 +1123,9 @@ conf.set('HAVE_LIBGUDEV', gudev.found())
 directx = platform_windows ? cc.find_library('dxguid') : no_dep
 conf.set('HAVE_DX_DINPUT', directx.found())
 
+# Windows Image Acquistion (WIA)
+wia = platform_windows ? cc.find_library('wiaguid') : no_dep
+
 cfitsio_dep = dependency('cfitsio', required: get_option('fits'))
 
 
