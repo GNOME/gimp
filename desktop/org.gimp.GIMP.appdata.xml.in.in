@@ -80,6 +80,23 @@
   </provides>
 
   <releases>
+    <release version="3.2.4" date="TODO">
+      <url type="details">https://www.gimp.org/release/3.2.4/</url>
+      <description>
+        <p>
+        The second bugfix release of the GIMP 3.2 series brings it to quite a stable state again as bugs reports are slowing down.
+        </p>
+        <ul>
+          <li>Bug fixed where GIMP would fail to open some XCF</li>
+          <li>When moving a floating layer or selection with a selection tool, marching ants are now disabled</li>
+          <li>Improved Text tool, especially regarding prioritizing global actions</li>
+          <li>Better temporary folder handling</li>
+          <li>Fill actions now behave accordingly to the target item type</li>
+          <li>Various file formats support improved</li>
+          <li>A new function and a deprecation in the libgimp API for plug-ins</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.2.2" date="2026-03-28">
       <url type="details">https://www.gimp.org/release/3.2.2/</url>
       <description>
