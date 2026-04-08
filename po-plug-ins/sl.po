@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-08 09:47+0000\n"
-"PO-Revision-Date: 2026-04-08 15:27+0200\n"
+"POT-Creation-Date: 2026-04-08 17:20+0000\n"
+"PO-Revision-Date: 2026-04-08 22:37+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -9394,6 +9394,28 @@ msgstr "Prenašanje spletne strani »%s«"
 msgid "Transferring webpage image for '%s'"
 msgstr "Prenašanje slike spletne strani za »%s«"
 
+#: plug-ins/common/wia.c:38
+msgid "Capture an image from a WIA datasource"
+msgstr "Zajemite sliko iz podatkovnega vira WIA"
+
+#: plug-ins/common/wia.c:39
+msgid "This plug-in will capture an image from a WIA datasource"
+msgstr "Ta vstavek bo zajel sliko iz podatkovnega vira WIA"
+
+#: plug-ins/common/wia.c:124 plug-ins/twain/twain.c:206
+msgid "_Scanner/Camera..."
+msgstr "_Skener/Fotoaparat ..."
+
+#: plug-ins/common/wia.c:258
+#, c-format
+msgid "Unable to read scanned images."
+msgstr "Optično branih slik ni mogoče prebrati."
+
+#: plug-ins/common/wia.c:323
+#, c-format
+msgid "WIA driver not found, scanning not available"
+msgstr "Gonilnika WIA ni možno najti, optično branje ni na voljo"
+
 #: plug-ins/file-bmp/bmp-export.c:192 plug-ins/file-bmp/bmp-export.c:225
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr "Indeksirane slike s prosojnostjo ni mogoče shraniti v zapisu BMP."
@@ -17032,10 +17054,6 @@ msgstr "Zajemite sliko iz podatkovnega vira TWAIN"
 #: plug-ins/twain/twain.c:87
 msgid "This plug-in will capture an image from a TWAIN datasource"
 msgstr "Ta vstavek bo zajel sliko iz podatkovnega vira TWAIN"
-
-#: plug-ins/twain/twain.c:206
-msgid "_Scanner/Camera..."
-msgstr "_Skener/Fotoaparat ..."
 
 #: plug-ins/twain/twain.c:412
 #, c-format
