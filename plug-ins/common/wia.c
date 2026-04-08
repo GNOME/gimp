@@ -70,7 +70,8 @@ static GimpValueArray * wia_run                (GimpProcedure        *procedure,
                                                 GimpProcedureConfig  *config,
                                                 gpointer              run_data);
 
-static GimpValueArray * wia_main               (GimpProcedure        *procedure);
+static GimpValueArray * wia_main               (GimpProcedure        *procedure,
+                                                GimpProcedureConfig  *config);
 
 static HRESULT          CreateWiaDeviceManager (IWiaDevMgr2 **ppWiaDevMgr);
 
@@ -132,6 +133,11 @@ wia_create_procedure (GimpPlugIn  *plug_in,
                                       "Alx Sa",
                                       "2026");
 
+      gimp_procedure_add_string_aux_argument (procedure, "scan-directory",
+                                              NULL, NULL,
+                                              NULL,
+                                              GIMP_PARAM_READWRITE);
+
       gimp_procedure_add_core_object_array_return_value (procedure, "images",
                                                          "Array of acquired images",
                                                          "Array of acquired images",
@@ -159,7 +165,7 @@ wia_run (GimpProcedure        *procedure,
     return gimp_procedure_new_return_values (procedure, GIMP_PDB_CALLING_ERROR,
                                              NULL);
 
-  return wia_main (procedure);
+  return wia_main (procedure, config);
 }
 
 /* Windows methods */
@@ -180,7 +186,8 @@ CreateWiaDeviceManager (IWiaDevMgr2 **ppWiaDevMgr)
 }
 
 static GimpValueArray *
-wia_main (GimpProcedure *procedure)
+wia_main (GimpProcedure       *procedure,
+          GimpProcedureConfig *config)
 {
   GError  *error = NULL;
   HRESULT  hr    = CoInitialize (NULL);
@@ -193,19 +200,43 @@ wia_main (GimpProcedure *procedure)
 
       if (SUCCEEDED (hr))
         {
-          GimpImage      **images      = NULL;
-          GimpValueArray  *return_vals = NULL;
+          GimpImage      **images         = NULL;
+          GimpValueArray  *return_vals    = NULL;
           HWND             window_handle;
-          LONG             nFiles      = 0;
-          LPWSTR          *rFilePaths  = NULL;
-          IWiaItem2       *pItem       = NULL;
-          BSTR             szFolder    = NULL;
-          BSTR             szFileName  = SysAllocString (L"GIMP-SCANNED-IMAGE");
+          LONG             nFiles         = 0;
+          LPWSTR          *rFilePaths     = NULL;
+          IWiaItem2       *pItem          = NULL;
+          BSTR             szFolder       = NULL;
+          BSTR             szFileName;
           TCHAR            temp_path[MAX_FOLDER_PATH];
+          gchar           *scan_directory = NULL;
 
-          GetTempPath (MAX_FOLDER_PATH, temp_path);
-          szFolder = SysAllocString (g_utf8_to_utf16 (temp_path, -1, NULL,
-                                                      NULL, NULL));
+          szFileName = SysAllocString (L"GIMP-SCANNED-IMAGE");
+
+          /* Check if we have a saved directory, and if so, if it's still
+           * valid. */
+          g_object_get (config, "scan-directory", &scan_directory, NULL);
+          if (scan_directory != NULL)
+            {
+              GDir *directory = g_dir_open (scan_directory, 0, NULL);
+
+              if (directory)
+                {
+                  szFolder =
+                    SysAllocString (g_utf8_to_utf16 (scan_directory, -1, NULL,
+                                                     NULL, NULL));
+                  g_dir_close (directory);
+                }
+              g_free (scan_directory);
+            }
+
+          /* Otherwise, use Window's temp location */
+          if (szFolder == NULL)
+            {
+              GetTempPath (MAX_FOLDER_PATH, temp_path);
+              szFolder = SysAllocString (g_utf8_to_utf16 (temp_path, -1, NULL,
+                                                          NULL, NULL));
+            }
 
           /* Values taken from app/gui/gui-unique.h */
           window_handle = FindWindowW (L"GimpWin32UniqueHandler", L"GimpProxy");
@@ -213,6 +244,8 @@ wia_main (GimpProcedure *procedure)
           hr = pWiaDevMgr2->lpVtbl->GetImageDlg (pWiaDevMgr2, 0, NULL, window_handle,
                                                  szFolder, szFileName, &nFiles,
                                                  &rFilePaths, &pItem);
+          SysFreeString (szFolder);
+          SysFreeString (szFileName);
 
           if (FAILED (hr))
             {
@@ -235,14 +268,30 @@ wia_main (GimpProcedure *procedure)
 
               for (gint i = 0; i < nFiles; i++)
                 {
+                  GFile *file;
                   gchar *filename = g_utf16_to_utf8 (rFilePaths[i], -1, NULL,
                                                      NULL, NULL);
 
-                  images[i] = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
-                                              g_file_new_for_path (filename));
-                  gimp_display_new (images[i]);
-                  gimp_image_undo_enable (images[i]);
+                  file = g_file_new_for_path (filename);
 
+                  images[i] = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file);
+                  gimp_display_new (images[i]);
+                  if (! gimp_image_undo_is_enabled (images[i]))
+                    gimp_image_undo_enable (images[i]);
+
+                  /* Store first file's directory for later use */
+                  if (i == 0)
+                    {
+                      GFile *parent = g_file_get_parent (file);
+
+                      g_object_set (config,
+                                    "scan-directory",
+                                    g_file_get_parse_name (parent),
+                                    NULL);
+                      g_object_unref (parent);
+                    }
+
+                  g_object_unref (file);
                   SysFreeString (rFilePaths[i]);
                   g_free (filename);
                 }
