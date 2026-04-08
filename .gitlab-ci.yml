@@ -948,6 +948,7 @@ include:
   project: GNOME/citemplates
   file: flatpak/flatpak_ci_initiative.yml
   #flatpak_ci_initiative.yml is extremely pervasive. See: https://gitlab.gnome.org/GNOME/citemplates/-/issues/35
+  #keep 'ref:' synced with submission section of build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh
   ref: 42fbc2526a7680b6a4f284a210e63e3973ea6dae
 
 dist-flatpak-weekly:
