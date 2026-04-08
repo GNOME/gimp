@@ -89,6 +89,22 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
       gboolean      has_markup   = g_str_has_prefix (parasite_data, "(markup ");
       GimpParasite *new_parasite = NULL;
       GString      *new_data;
+      gboolean      edited_data  = FALSE;
+
+      if (! has_markup && strstr (parasite_data, "(markup \"\")") != NULL)
+        {
+          /* A bug in GIMP 3.2.2 may have created files with both a text
+           * and an empty markup. Get rid of the markup which is invalid
+           * anyway, so that it doesn't override the bare text.
+           * See #16169.
+           */
+          new_data = g_string_new (parasite_data);
+          g_string_replace (new_data, "(markup \"\")", "", 1);
+          parasite_data = g_string_free (new_data, FALSE);
+          parasite_data_size = strlen (parasite_data) + 1;
+
+          edited_data = TRUE;
+        }
 
       *before_xcf_v19 = (strstr (parasite_data, "(font \"GimpFont\"") == NULL);
       /* This is for backward compatibility with older xcf files.
@@ -177,6 +193,14 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
 
           g_string_free (new_data, TRUE);
         }
+      else if (edited_data)
+        {
+          new_parasite = gimp_parasite_new (gimp_parasite_get_name  (parasite),
+                                            gimp_parasite_get_flags (parasite),
+                                            parasite_data_size,
+                                            parasite_data);
+          parasite = new_parasite;
+        }
 
       if (error == NULL || *error == NULL)
         gimp_config_deserialize_parasite (GIMP_CONFIG (text),
@@ -185,6 +209,8 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
                                           error);
 
       gimp_parasite_free (new_parasite);
+      if (edited_data)
+        g_free (parasite_data);
     }
   else
     {
