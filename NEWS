@@ -67,7 +67,6 @@ Build:
     fail.
   - New rules to generate Markdown versions of our man pages for the
     website.
-  - Our Python 3 minimum requirement is now version 3.10.
 
 
 Overview of Changes from GIMP 3.2.0 to GIMP 3.2.2
