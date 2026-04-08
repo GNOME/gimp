@@ -264,36 +264,42 @@ wia_main (GimpProcedure       *procedure,
 
           if (nFiles > 0)
             {
-              images = g_new0 (GimpImage *, nFiles + 1);
+              gboolean has_directory = FALSE;
+              images                 = g_new0 (GimpImage *, nFiles + 1);
 
               for (gint i = 0; i < nFiles; i++)
                 {
-                  GFile *file;
                   gchar *filename = g_utf16_to_utf8 (rFilePaths[i], -1, NULL,
                                                      NULL, NULL);
 
-                  file = g_file_new_for_path (filename);
-
-                  images[i] = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file);
-                  gimp_display_new (images[i]);
-                  if (! gimp_image_undo_is_enabled (images[i]))
-                    gimp_image_undo_enable (images[i]);
-
-                  /* Store first file's directory for later use */
-                  if (i == 0)
+                  if (filename)
                     {
-                      GFile *parent = g_file_get_parent (file);
+                      GFile *file = g_file_new_for_path (filename);
 
-                      g_object_set (config,
-                                    "scan-directory",
-                                    g_file_get_parse_name (parent),
-                                    NULL);
-                      g_object_unref (parent);
+                      images[i] = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+                                                  file);
+                      gimp_display_new (images[i]);
+                      if (! gimp_image_undo_is_enabled (images[i]))
+                        gimp_image_undo_enable (images[i]);
+
+                      /* Store first valid directory for later use */
+                      if (! has_directory)
+                        {
+                          GFile *parent = g_file_get_parent (file);
+
+                          g_object_set (config,
+                                        "scan-directory",
+                                        g_file_get_parse_name (parent),
+                                        NULL);
+                          g_object_unref (parent);
+
+                          has_directory = TRUE;
+                        }
+
+                      g_object_unref (file);
+                      g_free (filename);
                     }
-
-                  g_object_unref (file);
                   SysFreeString (rFilePaths[i]);
-                  g_free (filename);
                 }
 
               CoTaskMemFree (rFilePaths);
