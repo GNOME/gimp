@@ -782,7 +782,7 @@ language_init (const gchar  *language,
        */
       g_setenv ("LANG", language, TRUE);
 #endif
-      setlocale (LC_ALL, ".UTF-8");
+      setlocale (LC_ALL, "");
 
       actual_language = g_strdup (language);
     }
