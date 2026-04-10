@@ -229,8 +229,8 @@ read_dds (GFile                *file,
   /* If format search was successful, get info needed to parse the file */
   if (load_info.d3d9_format || load_info.dxgi_format)
     {
-      gint d3d9_bpp = -1;
-      gint dxgi_bpp = -1;
+      gint d3d9_bpp = 0;
+      gint dxgi_bpp = 0;
 
       load_info.read_info = get_format_read_info (load_info.d3d9_format,
                                                   load_info.dxgi_format);
