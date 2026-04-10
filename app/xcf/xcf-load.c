@@ -1297,12 +1297,14 @@ xcf_load_image (Gimp     *gimp,
       if (vdata != NULL)
         {
           GimpLayer              *vlayer;
+          GimpLayer              *parent = NULL;
           GimpVectorLayerOptions *options;
           GimpPath               *path;
           GArray                 *dash_pattern;
           GList                  *selected;
           GList                  *linked;
           gboolean                floating;
+          gint                    position = 0;
 
           selected = g_list_find (info->selected_layers, layer);
           linked   = g_list_find (info->linked_layers, layer);
@@ -1343,14 +1345,18 @@ xcf_load_image (Gimp     *gimp,
                         "miter-limit", vdata->stroke_miter_limit,
                         NULL);
 
-          vlayer = gimp_layer_from_layer (layer, GIMP_TYPE_VECTOR_LAYER,
+          /* Store current layer position so we can add it after the fact */
+          parent   = gimp_layer_get_parent (layer);
+          position = gimp_item_get_index (GIMP_ITEM (layer));
+
+          vlayer = gimp_layer_from_layer (layer, FALSE, GIMP_TYPE_VECTOR_LAYER,
                                           "image",                image,
                                           "vector-layer-options", options,
                                           NULL);
           g_object_unref (options);
 
-          if (vdata->modified)
-            gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (vlayer), FALSE);
+          gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (vlayer), ! vdata->modified);
+          gimp_image_add_layer (image, vlayer, parent, position, FALSE);
 
           if (selected)
             {
@@ -2660,7 +2666,8 @@ xcf_load_layer_props (XcfInfo    *info,
                       link   = gimp_link_new (info->gimp, link_file,
                                               (gint) dimensions[0], (gint) dimensions[1],
                                               FALSE, NULL, NULL);
-                      *layer = gimp_layer_from_layer (*layer, GIMP_TYPE_LINK_LAYER,
+                      *layer = gimp_layer_from_layer (*layer, TRUE,
+                                                      GIMP_TYPE_LINK_LAYER,
                                                       "image", image,
                                                       NULL);
 

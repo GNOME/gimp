@@ -33,7 +33,8 @@
 /**
  * gimp_layer_from_layer:
  * @layer: a #GimpLayer object
- * @options: a #GimpVectorLayerOptions object
+ * @add_new_layer: Whether to automatically add the new layer to the image
+ * @new_layer_type: a #GType for the new layer type
  *
  * Converts a standard #GimpLayer into a more specific type of
  * #GimpLayer. The new layer takes ownership of properties of @layer.
@@ -53,6 +54,7 @@
  **/
 GimpLayer *
 gimp_layer_from_layer (GimpLayer *layer,
+                       gboolean   add_new_layer,
                        GType      new_layer_type,
                        ...)
 {
@@ -104,7 +106,9 @@ gimp_layer_from_layer (GimpLayer *layer,
 
   g_object_unref (layer);
 
-  if (attached)
+  /* Vector layers shouldn't be added until we confirm they don't have
+   * raster edits */
+  if (attached && add_new_layer)
     gimp_image_add_layer (image, new_layer, parent, position, FALSE);
 
   return new_layer;
