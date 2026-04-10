@@ -100,6 +100,6 @@ self_build()
 }
 
 self_build https://gitlab.gnome.org/GNOME/babl
-self_build https://gitlab.gnome.org/GNOME/gegl
+self_build https://gitlab.gnome.org/GNOME/gegl "bruno/gegl-ctx-msvc"
 
 cd $GIMP_DIR
