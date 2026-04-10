@@ -51,7 +51,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-10 09:20+0200\n"
-"PO-Revision-Date: 2026-04-10 09:28+0200\n"
+"PO-Revision-Date: 2026-04-10 11:00+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -2302,7 +2302,7 @@ msgstr "Dinamiche abilitate"
 #: ../app/actions/cursor-info-actions.c:41
 msgctxt "cursor-info-action"
 msgid "_Sample Merged"
-msgstr "Campionamento diffu_so"
+msgstr "Campione fu_so"
 
 #: ../app/actions/cursor-info-actions.c:42
 msgctxt "cursor-info-action"
@@ -8063,7 +8063,7 @@ msgstr "Opacità _maschera:"
 #: ../app/actions/sample-points-actions.c:40
 msgctxt "sample-points-action"
 msgid "_Sample Merged"
-msgstr "Campionamento diffu_so"
+msgstr "Campione fu_so"
 
 #: ../app/actions/sample-points-actions.c:42
 msgctxt "sample-points-action"
@@ -16702,7 +16702,7 @@ msgstr "I_mmagine"
 
 #: ../app/dialogs/palette-import-dialog.c:234
 msgid "Sample _Merged"
-msgstr "Campiona_mento diffuso"
+msgstr "Ca_mpione fuso"
 
 #: ../app/dialogs/palette-import-dialog.c:245
 msgid "_Selected Pixels only"
@@ -19220,7 +19220,7 @@ msgstr "A"
 
 #: ../app/display/gimpcursorview.c:325
 msgid "_Sample Merged"
-msgstr "Campionamento diffu_so"
+msgstr "Campione fu_so"
 
 #: ../app/display/gimpdisplayshell.c:562
 msgid "Access the image menu"
