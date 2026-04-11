@@ -1908,7 +1908,7 @@ read_layer_block (FILE      *f,
 
   while (ftell (f) < block_start + total_len)
     {
-      null_layer = FALSE;
+      null_layer       = FALSE;
       can_handle_layer = FALSE;
 
       /* Read the layer sub-block header */
@@ -1929,6 +1929,8 @@ read_layer_block (FILE      *f,
       /* Read layer information chunk */
       if (psp_ver_major >= 4)
         {
+          name = NULL;
+
           if (fread (&chunk_len, 4, 1, f) < 1
               || fread (&namelen, 2, 1, f) < 1
               /* A zero length layer name is apparently valid. To not get a warning for
@@ -1951,12 +1953,14 @@ read_layer_block (FILE      *f,
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Error reading layer information chunk"));
+
               g_free (name);
               return NULL;
             }
 
           name[namelen] = 0;
-          layer_name = g_convert (name, -1, "utf-8", "iso8859-1", NULL, NULL, NULL);
+          layer_name = g_convert (name, -1, "utf-8", "iso8859-1", NULL, NULL,
+                                  NULL);
           g_free (name);
 
           chunk_len = GUINT32_FROM_LE (chunk_len);
@@ -1986,7 +1990,7 @@ read_layer_block (FILE      *f,
         }
       else
         {
-          name = g_malloc (257);
+          name      = g_malloc (257);
           name[256] = 0;
 
           if (fread (name, 256, 1, f) < 1
@@ -2011,7 +2015,8 @@ read_layer_block (FILE      *f,
               g_free (name);
               return NULL;
             }
-          layer_name = g_convert (name, -1, "utf-8", "iso8859-1", NULL, NULL, NULL);
+          layer_name = g_convert (name, -1, "utf-8", "iso8859-1", NULL, NULL,
+                                  NULL);
           g_free (name);
           if (type == PSP_LAYER_FLOATING_SELECTION)
             g_message ("Floating selection restored as normal layer");
