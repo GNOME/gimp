@@ -1,5 +1,7 @@
 #!/usr/bin/env pwsh
 
+echo $(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*" -ErrorAction SilentlyContinue | Sort-Object { [version]($_.DisplayVersion -split '-')[0] } -Descending | Select-Object -First 1).DisplayVersion
+
 # Ensure the script work properly
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $false #to ensure error catching as in pre-7.4 PS
