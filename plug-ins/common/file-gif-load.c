@@ -1528,6 +1528,12 @@ ReadJeffsImage (FILE       *fd,
 
   /* Indexes are stored as 1, 2, 4, or 8 bits per pixel
    * in the uncompressed image. */
+  if (bpp < 1 || bpp > 8)
+    {
+      read_error (_("image data"), *image, error);
+      return FALSE;
+    }
+
   for (gint i = 7; i > 7 - bpp; i--)
     {
       if (i >= 0)
