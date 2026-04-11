@@ -1843,6 +1843,7 @@ read_RLE_channel (PSDimage      *img_a,
 {
   gint      rle_count_size = (img_a->version == 1 ? 2 : 4);
   gint      rle_row_size   = lyr_chn->rows * rle_count_size;
+  gsize     row_allocation;
   guint32  *rle_pack_len;
   gint      rowi;
 
@@ -1852,7 +1853,17 @@ read_RLE_channel (PSDimage      *img_a,
                     (gsize) channel_data_len - 2,
                     rle_row_size,
                     (gsize) (channel_data_len - 2 - rle_row_size));
-  rle_pack_len = g_malloc (lyr_chn->rows * 4); /* Always 4 since this is the data size in memory. */
+
+  /* Always 4 since this is the data size in memory. */
+  if (! g_size_checked_mul (&row_allocation, lyr_chn->rows, 4) ||
+      row_allocation >= G_MAXUINT32)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Unsupported or invalid channel size"));
+      return FALSE;
+    }
+
+  rle_pack_len = g_malloc ((guint32) row_allocation);
   for (rowi = 0; rowi < lyr_chn->rows; ++rowi)
     {
       if (psd_read (input, &rle_pack_len[rowi], rle_count_size,
