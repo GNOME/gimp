@@ -67,6 +67,7 @@ else
     powershell -Command { $ProgressPreference = 'SilentlyContinue'; $env:PATH="$env:MSYS_ROOT\usr\bin;$env:PATH"; pacman --noconfirm -S --needed (Get-Content build/windows/all-deps-uni.txt | Where-Object { $_ -match 'MINGW_' -and -not $_.Trim().StartsWith('#') } | ForEach-Object { (($_.Split('#')[0].Trim() -split '\|vcpkg:')[0] -replace '\$\{MINGW_PACKAGE_PREFIX\}', $(if ($env:MINGW_PACKAGE_PREFIX) { $env:MINGW_PACKAGE_PREFIX } elseif ($env:MSYSTEM_PREFIX -eq 'clangarm64') { 'mingw-w64-clang-aarch64' } else { 'mingw-w64-clang-x86_64' })) }) }; if ("$LASTEXITCODE" -gt '0') { exit 1 }
   }
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):deps_install$([char]13)$([char]27)[0K"
+& "$env:VCPKG_ROOT\vcpkg.exe" install --recurse libx11
 foreach ($dir in "$env:VCPKG_ROOT/installed/$env:VCPKG_DEFAULT_HOST_TRIPLET/bin", "$env:MSYS_ROOT/$env:MSYSTEM_PREFIX/bin") { if (Test-Path $dir) { if (Get-ChildItem -Path "$dir\*" -Include "X11*.dll","libX11*.dll","msys-*.dll" -ErrorAction SilentlyContinue) { Write-Host -ForegroundColor Yellow "(WARNING): X11 or CYGWIN is installed on Windows. Please remove the culprit from all-deps-uni.txt or report to $(if ("$env:VCPKG_ROOT") {'vcpkg'} else {'MSYS2'})" } } }
 
 
