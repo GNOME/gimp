@@ -2,7 +2,7 @@
 ${MINGW_PACKAGE_PREFIX}-gettext-tools|vcpkg:gettext
 ${MINGW_PACKAGE_PREFIX}-gi-docgen
 ${MINGW_PACKAGE_PREFIX}-gobject-introspection|vcpkg:gobject-introspection
-${MINGW_PACKAGE_PREFIX}-libxslt|vcpkg:libxslt
+${MINGW_PACKAGE_PREFIX}-libxslt|vcpkg:libxslt[tools]
 ${MINGW_PACKAGE_PREFIX}-meson
 ${MINGW_PACKAGE_PREFIX}-perl
 ${MINGW_PACKAGE_PREFIX}-toolchain|vcpkg:pkgconf
