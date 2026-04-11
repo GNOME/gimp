@@ -958,7 +958,7 @@ pnm_load_ascii (PNMScanner *scan,
   gint      x, y, i, b;
   gint      start, end, scanlines;
   gint      np;
-  gchar     buf[BUFLEN];
+  gchar     buf[BUFLEN + 4];
   gboolean  aborted = FALSE;
 
   np = (info->np) ? (info->np) : 1;
