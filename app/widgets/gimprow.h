@@ -71,6 +71,8 @@ void           gimp_row_set_view_size   (GimpRow      *row,
 gint           gimp_row_get_view_size   (GimpRow      *row,
                                          gint         *view_border_width);
 
+GtkWidget    * gimp_row_get_label       (GimpRow      *row);
+
 void           gimp_row_monitor_changed (GimpRow      *row);
 
 

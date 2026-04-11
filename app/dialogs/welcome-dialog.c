@@ -814,6 +814,7 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
     {
       GimpImagefile *imagefile = NULL;
       GtkWidget     *row;
+      GtkWidget     *label;
       GFile         *file;
       const gchar   *name;
       gchar         *basename;
@@ -842,6 +843,10 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
       row = gimp_row_new (gimp_get_user_context (gimp),
                           GIMP_VIEWABLE (imagefile),
                           32, 0);
+
+      label = gimp_row_get_label (GIMP_ROW (row));
+      if (label)
+        gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
 
       action_name = g_strdup_printf ("file-open-recent-%02u", i + 1);
       g_object_set_data_full (G_OBJECT (row), "action_name", action_name,
