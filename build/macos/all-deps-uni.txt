@@ -32,7 +32,7 @@ iso-codes|homebrew:iso-codes \
 json-glib|homebrew:json-glib \
 lcms2|homebrew:lcms2 \
 libarchive|homebrew:libarchive \
-libheif|homebrew:libheif \
+libheif|homebrew:libheif #libheif-plugins is bloated with ffmpeg etc \
 libjpeg-turbo|homebrew:libjpeg-turbo \
 libjxl|homebrew:jpeg-xl \
 libmng|homebrew:libmng \

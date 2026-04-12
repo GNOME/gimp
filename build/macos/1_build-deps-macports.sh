@@ -53,7 +53,7 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
   fi
 else
   brew upgrade --quiet
-  brew install --quiet $(tr '\\' '\n' < build/macos/all-deps-uni.txt | grep -v '#' | sed -n 's/.*|homebrew://p' | awk '{print $1}' | xargs)
+  brew install --quiet $(tr '\\' '\n' < build/macos/all-deps-uni.txt | sed 's/#.*//' | sed -n 's/.*|homebrew://p' | awk '{print $1}' | xargs)
   git apply -v build/macos/patches/0001-build-macos-Do-not-require-gexiv2-0.14-on-homebrew.patch || true
 fi
 printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
