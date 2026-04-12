@@ -650,6 +650,7 @@ gimp-win:
     #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
+    - sw_vers
     - export GIMP_PREFIX="$PWD/_install-$ARCH"
     - export PATH="$OPT_PREFIX/bin:$PATH"
     - if [ "$ARCH" = 'x86_64' ]; then softwareupdate --install-rosetta --agree-to-license; fi
