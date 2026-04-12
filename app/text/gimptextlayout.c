@@ -792,8 +792,25 @@ gimp_text_layout_position (GimpTextLayout *layout)
 
   if (border > 0)
     {
-      layout->extents.x      += border;
-      layout->extents.y      += border;
+      switch (layout->text->base_dir)
+        {
+        case GIMP_TEXT_DIRECTION_TTB_RTL:
+        case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+          layout->extents.x += border;
+          layout->extents.y -= border;
+          break;
+
+        case GIMP_TEXT_DIRECTION_TTB_LTR:
+        case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+          layout->extents.x -= border;
+          layout->extents.y += border;
+          break;
+
+        default:
+          layout->extents.x += border;
+          layout->extents.y += border;
+        }
+
       layout->extents.width  += 2 * border;
       layout->extents.height += 2 * border;
     }
