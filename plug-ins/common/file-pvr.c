@@ -857,7 +857,7 @@ pvr_decode_compressed (GimpLayer  *layer,
     }
 
   /* Twiddled values are indexes */
-  for (gint y = 0; y < (width / 2); y++)
+  for (gint y = 0; y < (height / 2); y++)
     {
       gint offset = ((y * 2) * width * n_components);
 
