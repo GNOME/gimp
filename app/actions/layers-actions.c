@@ -808,6 +808,8 @@ layers_actions_update (GimpActionGroup *group,
   gint           n_layers           = 0;
   gint           n_text_layers      = 0;
 
+  gchar         *reason             = NULL;
+
   if (image)
     {
       fs      = (gimp_image_get_floating_selection (image) != NULL);
@@ -1103,7 +1105,20 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-mask-add-button",      n_selected_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-mask-add-last-values", n_selected_layers > 0 && !fs && !ac && have_no_masks);
 
-  SET_SENSITIVE ("layers-mask-apply",  have_writable && !fs && !ac && have_masks && have_no_groups && has_raster);
+  if (have_masks)
+    {
+      if (has_rasterizable)
+        reason = g_strdup (_("Disabled because layer masks can not be applied "
+                            "on non-rasterized layers."));
+      else if (have_groups)
+        reason = g_strdup (_("Disabled because layer masks can not be applied "
+                            "on group layers."));
+    }
+  gimp_action_group_set_action_sensitive (group, "layers-mask-apply",
+                                          (have_writable && !fs && !ac  &&
+                                           have_masks && have_no_groups &&
+                                           has_raster), reason);
+  g_free (reason);
   SET_SENSITIVE ("layers-mask-delete", n_selected_layers > 0 && !fs && !ac && have_masks);
 
   SET_SENSITIVE ("layers-mask-edit",    n_selected_layers == 1 && !fs && !ac && have_masks);
