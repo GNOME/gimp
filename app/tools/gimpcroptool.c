@@ -31,6 +31,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpitem.h"
 #include "core/gimplayer.h"
+#include "core/gimprasterizable.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -460,10 +461,11 @@ gimp_crop_tool_commit (GimpCropTool *crop_tool)
         {
           if (options->layer_only)
             {
-              GList *layers = gimp_image_get_selected_layers (image);
-              GList *iter;
-              gint   off_x, off_y;
-              gchar *undo_text;
+              GList    *layers = gimp_image_get_selected_layers (image);
+              GList    *iter;
+              gint      off_x, off_y;
+              gchar    *undo_text;
+              gboolean  has_non_raster_layers = FALSE;
 
               if (! layers)
                 {
@@ -493,6 +495,14 @@ gimp_crop_tool_commit (GimpCropTool *crop_tool)
               g_free (undo_text);
               for (iter = layers; iter; iter = iter->next)
                 {
+                  /* Don't crop non-raster layers */
+                  if (GIMP_IS_RASTERIZABLE (iter->data) &&
+                      ! gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (iter->data)))
+                    {
+                      has_non_raster_layers = TRUE;
+                      continue;
+                    }
+
                   gimp_item_get_offset (GIMP_ITEM (iter->data), &off_x, &off_y);
 
                   off_x -= x;
@@ -515,6 +525,19 @@ gimp_crop_tool_commit (GimpCropTool *crop_tool)
                                     w, h, off_x, off_y);
                 }
               gimp_image_undo_group_end (image);
+
+              if (has_non_raster_layers)
+                {
+                  gchar *menu_path = _("Layer > Rasterize");
+                  gchar *message   = NULL;
+
+                  /* TODO: Translate after string freeze */
+                  message = g_strdup_printf ("Non-raster layers must be rasterized (%s).",
+                                             menu_path);
+
+                  gimp_tool_message_literal (tool, tool->display, message);
+                  g_free (message);
+                }
             }
           else
             {

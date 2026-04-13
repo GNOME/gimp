@@ -22,7 +22,7 @@
 
 #include "core-types.h"
 
-#include "path/gimpvectorlayer.h"
+#include "path/gimppath.h"
 
 #include "gimp.h"
 #include "gimpcontext.h"
@@ -34,6 +34,7 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
+#include "gimprasterizable.h"
 #include "gimpsamplepoint.h"
 
 #include "gimp-intl.h"
@@ -104,8 +105,9 @@ gimp_image_crop (GimpImage    *image,
     {
       GimpItem *item = list->data;
 
-      gimp_item_resize (item, context, GIMP_FILL_TRANSPARENT,
-                        width, height, -x, -y);
+      if (! gimp_path_attached_to_vector_layer (GIMP_PATH (item), image))
+        gimp_item_resize (item, context, GIMP_FILL_TRANSPARENT,
+                          width, height, -x, -y);
     }
 
   /*  Don't forget the selection mask!  */
@@ -122,10 +124,11 @@ gimp_image_crop (GimpImage    *image,
 
       list = g_list_next (list);
 
-      if (gimp_item_is_vector_layer (item))
-        continue;
-
       gimp_item_translate (item, -x, -y, TRUE);
+
+      if (GIMP_IS_RASTERIZABLE (item) &&
+          ! gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (item)))
+        continue;
 
       if (crop_layers && ! gimp_item_is_content_locked (item, NULL))
         {
