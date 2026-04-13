@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-08 09:47+0000\n"
-"PO-Revision-Date: 2026-04-11 16:10+0200\n"
+"POT-Creation-Date: 2026-04-13 13:16+0000\n"
+"PO-Revision-Date: 2026-04-13 16:58+0200\n"
 "Last-Translator: Alan Mortensen <over.tackiness223@passinbox.com>\n"
 "Language-Team: Danish <danskgruppen@groups.io>\n"
 "Language: da\n"
@@ -156,7 +156,7 @@ msgstr "Eksempel på udvidelsesmodul i JavaScript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2659
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4006 plug-ins/flame/flame.c:824
+#: plug-ins/file-psd/psd-load.c:4017 plug-ins/flame/flame.c:824
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -631,7 +631,7 @@ msgstr "Persienner"
 #: plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:823 plug-ins/common/file-raw-data.c:2007
 #: plug-ins/common/file-sunras.c:1061 plug-ins/common/file-tga.c:1103
-#: plug-ins/common/file-tim.c:401 plug-ins/common/file-tim.c:508
+#: plug-ins/common/file-tim.c:403 plug-ins/common/file-tim.c:551
 #: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:475
 #: plug-ins/common/file-xbm.c:891 plug-ins/common/film.c:865
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
@@ -639,7 +639,7 @@ msgstr "Persienner"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3204 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3215 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1578
 #: plug-ins/file-tiff/file-tiff-load.c:2402
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1273,7 +1273,7 @@ msgstr "Gem parametre til CML-værktøjet"
 #: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1512
 #: plug-ins/common/file-raw-data.c:1541 plug-ins/common/file-sunras.c:616
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:638
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:722
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:444
@@ -2035,7 +2035,7 @@ msgstr "Kan ikke arbejde med tomme markeringer."
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3754
-#: plug-ins/common/file-psp.c:2787 plug-ins/common/file-psp.c:2837
+#: plug-ins/common/file-psp.c:2792 plug-ins/common/file-psp.c:2842
 #: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:799
 #: plug-ins/common/file-raw-data.c:1844
@@ -2737,7 +2737,7 @@ msgstr "“%s”: EOF eller fejl ved læsning af paletdata"
 #: plug-ins/common/file-png.c:1936 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:794
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:630
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:714
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
@@ -3332,9 +3332,9 @@ msgid "global colormap"
 msgstr "globalt farvekort"
 
 #: plug-ins/common/file-gif-load.c:556 plug-ins/common/file-gif-load.c:1191
-#: plug-ins/common/file-gif-load.c:1544 plug-ins/common/file-gif-load.c:1558
-#: plug-ins/common/file-gif-load.c:1568 plug-ins/common/file-gif-load.c:1578
-#: plug-ins/common/file-gif-load.c:1600
+#: plug-ins/common/file-gif-load.c:1533 plug-ins/common/file-gif-load.c:1550
+#: plug-ins/common/file-gif-load.c:1564 plug-ins/common/file-gif-load.c:1574
+#: plug-ins/common/file-gif-load.c:1584 plug-ins/common/file-gif-load.c:1606
 msgid "image data"
 msgstr "billeddata"
 
@@ -3467,7 +3467,7 @@ msgstr ""
 msgid "Too much compressed data, ignoring extra..."
 msgstr "For meget komprimeret data. Ignorerer ekstra data …"
 
-#: plug-ins/common/file-gif-load.c:1608
+#: plug-ins/common/file-gif-load.c:1614
 msgid "inflate failed"
 msgstr "udpakning mislykkedes"
 
@@ -4565,8 +4565,8 @@ msgstr "Indlæs fil i filformatet Bohemia Interactive PAA"
 #: plug-ins/common/file-paa.c:290 plug-ins/common/file-pcx.c:647
 #: plug-ins/common/file-pvr.c:310 plug-ins/common/file-pvr.c:353
 #: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:363
-#: plug-ins/common/file-tim.c:389 plug-ins/common/file-tim.c:452
-#: plug-ins/common/file-tim.c:497
+#: plug-ins/common/file-tim.c:391 plug-ins/common/file-tim.c:478
+#: plug-ins/common/file-tim.c:538
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Kunne ikke læse header fra “%s”"
@@ -4586,6 +4586,9 @@ msgid "Main surface"
 msgstr "Hovedoverflade"
 
 #: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:355
+#: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
+#: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
+#: plug-ins/common/file-tim.c:612
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "Hukommelse kunne ikke allokeres."
@@ -5868,138 +5871,138 @@ msgstr "Fejl ved læsning af blokinformation"
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Ugyldig lag-underblok %s; skulle være LAYER"
 
-#: plug-ins/common/file-psp.c:1953 plug-ins/common/file-psp.c:2010
+#: plug-ins/common/file-psp.c:1955 plug-ins/common/file-psp.c:2014
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Fejl ved læsning af informationsdel for lag"
 
-#: plug-ins/common/file-psp.c:2052
+#: plug-ins/common/file-psp.c:2057
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Ugyldige lagdimensioner: %d × %d"
 
-#: plug-ins/common/file-psp.c:2113
+#: plug-ins/common/file-psp.c:2118
 #, c-format
 msgid "Error creating layer"
 msgstr "Fejl ved oprettelse af lag"
 
-#: plug-ins/common/file-psp.c:2174
+#: plug-ins/common/file-psp.c:2179
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Ugyldig lag-underblok %s; skulle være CHANNEL"
 
-#: plug-ins/common/file-psp.c:2190 plug-ins/common/file-psp.c:2518
-#: plug-ins/common/file-psp.c:2538 plug-ins/common/file-psp.c:2556
+#: plug-ins/common/file-psp.c:2195 plug-ins/common/file-psp.c:2523
+#: plug-ins/common/file-psp.c:2543 plug-ins/common/file-psp.c:2561
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Fejl ved læsning af informationsdel for kanal"
 
-#: plug-ins/common/file-psp.c:2214
+#: plug-ins/common/file-psp.c:2219
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Ugyldig kanaltype %d i informationsdel for kanal"
 
 # Picture Tube er en funktion i Paint Shop Pro
-#: plug-ins/common/file-psp.c:2320 plug-ins/common/file-psp.c:2337
+#: plug-ins/common/file-psp.c:2325 plug-ins/common/file-psp.c:2342
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Fejl ved læsning af “rørets” datadel"
 
-#: plug-ins/common/file-psp.c:2441 plug-ins/common/file-psp.c:2458
-#: plug-ins/common/file-psp.c:2480 plug-ins/common/file-psp.c:2488
+#: plug-ins/common/file-psp.c:2446 plug-ins/common/file-psp.c:2463
+#: plug-ins/common/file-psp.c:2485 plug-ins/common/file-psp.c:2493
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "Fejl ved læsning af markeringsdel"
 
-#: plug-ins/common/file-psp.c:2450
+#: plug-ins/common/file-psp.c:2455
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "Ugyldig størrelse af markeringsdel"
 
-#: plug-ins/common/file-psp.c:2472 plug-ins/common/file-psp.c:2496
-#: plug-ins/common/file-psp.c:2530 plug-ins/common/file-psp.c:2572
+#: plug-ins/common/file-psp.c:2477 plug-ins/common/file-psp.c:2501
+#: plug-ins/common/file-psp.c:2535 plug-ins/common/file-psp.c:2577
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Der opstod en fejl ved læsning af markeringsdels slutning"
 
-#: plug-ins/common/file-psp.c:2505
+#: plug-ins/common/file-psp.c:2510
 #, c-format
 msgid "Invalid selection sub-block %s, should be CHANNEL"
 msgstr "Ugyldig markeringsunderblok %s; skulle være CHANNEL"
 
-#: plug-ins/common/file-psp.c:2597
+#: plug-ins/common/file-psp.c:2602
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Der opstod en fejl ved læsning af blokdels header"
 
-#: plug-ins/common/file-psp.c:2604
+#: plug-ins/common/file-psp.c:2609
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Den udvidede blokdels header er ugyldig"
 
-#: plug-ins/common/file-psp.c:2615
+#: plug-ins/common/file-psp.c:2620
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Den udvidede blokdels størrelse er ugyldig"
 
-#: plug-ins/common/file-psp.c:2636
+#: plug-ins/common/file-psp.c:2641
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Der opstod en fejl ved læsning af udvidede delgitterdata"
 
 # Picture Tube er en funktion i Paint Shop Pro
-#: plug-ins/common/file-psp.c:2664
+#: plug-ins/common/file-psp.c:2669
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Der opstod en fejl ved læsning af de udvidede delhjælpelinjedata"
 
-#: plug-ins/common/file-psp.c:2682
+#: plug-ins/common/file-psp.c:2687
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Ugyldig orientering af hjælpelinje"
 
 # Picture Tube er en funktion i Paint Shop Pro
-#: plug-ins/common/file-psp.c:2696
+#: plug-ins/common/file-psp.c:2701
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Der opstod en fejl ved læsning af den udvidede blokdel"
 
-#: plug-ins/common/file-psp.c:2722 plug-ins/common/file-psp.c:2734
-#: plug-ins/common/file-psp.c:2745
+#: plug-ins/common/file-psp.c:2727 plug-ins/common/file-psp.c:2739
+#: plug-ins/common/file-psp.c:2750
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Der opstod en fejl ved læsning af farveprofildel"
 
-#: plug-ins/common/file-psp.c:2798
+#: plug-ins/common/file-psp.c:2803
 #, c-format
 msgid "Error reading file header."
 msgstr "Fejl ved læsning af filheader."
 
-#: plug-ins/common/file-psp.c:2805
+#: plug-ins/common/file-psp.c:2810
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Forkert filsignatur."
 
-#: plug-ins/common/file-psp.c:2819
+#: plug-ins/common/file-psp.c:2824
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Ikke-understøttet version af PSP-filformatet %d.%d."
 
-#: plug-ins/common/file-psp.c:2839
+#: plug-ins/common/file-psp.c:2844
 msgid "invalid block size"
 msgstr "ugyldig blokstørrelse"
 
-#: plug-ins/common/file-psp.c:2848
+#: plug-ins/common/file-psp.c:2853
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Duplikeret generel billedattributblok."
 
-#: plug-ins/common/file-psp.c:2876
+#: plug-ins/common/file-psp.c:2881
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Den generelle blok med billedattributer mangler."
 
-#: plug-ins/common/file-psp.c:3001
+#: plug-ins/common/file-psp.c:3006
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Eksport er endnu ikke implementeret."
@@ -6546,8 +6549,8 @@ msgstr "Kan ikke arbejde med ukendt billedtype"
 #: plug-ins/common/file-sunras.c:1171 plug-ins/common/file-sunras.c:1266
 #: plug-ins/common/file-sunras.c:1350 plug-ins/common/file-sunras.c:1450
 #: plug-ins/common/file-xwd.c:1493 plug-ins/common/file-xwd.c:1607
-#: plug-ins/common/file-xwd.c:1797 plug-ins/common/file-xwd.c:2037
-#: plug-ins/common/file-xwd.c:2226 plug-ins/common/file-xwd.c:2527
+#: plug-ins/common/file-xwd.c:1797 plug-ins/common/file-xwd.c:2039
+#: plug-ins/common/file-xwd.c:2228 plug-ins/common/file-xwd.c:2529
 #, c-format
 msgid "EOF encountered on reading"
 msgstr "EOF fundet ved læsning"
@@ -6825,12 +6828,12 @@ msgstr "y-koordinat for palet"
 msgid "Unsupported TIM image type: %d"
 msgstr "TIM-billedtype understøttes ikke: %d"
 
-#: plug-ins/common/file-tim.c:482
+#: plug-ins/common/file-tim.c:519
 #, c-format
 msgid "Could not read palette from '%s'"
 msgstr "Kunne ikke læse palet fra “%s”"
 
-#: plug-ins/common/file-tim.c:622
+#: plug-ins/common/file-tim.c:706
 #, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
@@ -6839,11 +6842,11 @@ msgstr ""
 "Kunne ikke eksportere “%s”. TIM-filformatet understøtter ikke billeder, der "
 "er mere end %d pixels brede eller høje."
 
-#: plug-ins/common/file-tim.c:840
+#: plug-ins/common/file-tim.c:924
 msgid "Image Origin"
 msgstr "Billedbegyndelse"
 
-#: plug-ins/common/file-tim.c:855
+#: plug-ins/common/file-tim.c:939
 msgid "Palette Origin"
 msgstr "Paletbegyndelse"
 
@@ -7477,13 +7480,13 @@ msgstr "Søgefejl"
 msgid "Invalid colormap offset. Possibly corrupt image."
 msgstr "Ugyldigt farvekortforskydning. Billedet er muligvis beskadiget."
 
-#: plug-ins/common/file-xwd.c:1877 plug-ins/common/file-xwd.c:2128
-#: plug-ins/common/file-xwd.c:2324
+#: plug-ins/common/file-xwd.c:1879 plug-ins/common/file-xwd.c:2130
+#: plug-ins/common/file-xwd.c:2326
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "XWD-filen %s er beskadiget."
 
-#: plug-ins/common/file-xwd.c:2076
+#: plug-ins/common/file-xwd.c:2078
 #, c-format
 msgid ""
 "'%s':\n"
@@ -9487,6 +9490,28 @@ msgstr "Downloader websiden “%s”"
 msgid "Transferring webpage image for '%s'"
 msgstr "Overfører websidebillede for “%s”"
 
+#: plug-ins/common/wia.c:38
+msgid "Capture an image from a WIA datasource"
+msgstr "Tag et billede fra en WIA-datakilde"
+
+#: plug-ins/common/wia.c:39
+msgid "This plug-in will capture an image from a WIA datasource"
+msgstr "Dette udvidelsesmodul vil tage et billede fra en WIA-datakilde"
+
+#: plug-ins/common/wia.c:124 plug-ins/twain/twain.c:206
+msgid "_Scanner/Camera..."
+msgstr "_Skanner/kamera …"
+
+#: plug-ins/common/wia.c:258
+#, c-format
+msgid "Unable to read scanned images."
+msgstr "Kan ikke læse skannede billeder."
+
+#: plug-ins/common/wia.c:323
+#, c-format
+msgid "WIA driver not found, scanning not available"
+msgstr "WIA-driver blev ikke fundet; skanning er ikke tilgængelig"
+
 #: plug-ins/file-bmp/bmp-export.c:192 plug-ins/file-bmp/bmp-export.c:225
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
@@ -9964,7 +9989,7 @@ msgstr "Alfatesttærskelværdi for hvilken alfatestdækning skal bevares"
 msgid "Loading: %s"
 msgstr "Indlæser: %s"
 
-#: plug-ins/file-dds/ddsread.c:251
+#: plug-ins/file-dds/ddsread.c:256
 #, c-format
 msgid ""
 "Unsupported DDS pixel format:\n"
@@ -9973,81 +9998,81 @@ msgstr ""
 "DDS-pixelformatet understøttes ikke:\n"
 "bpp: %d, Rmaske: %x, Gmaske: %x, Bmaske: %x, Amaske: %x, flag: %u"
 
-#: plug-ins/file-dds/ddsread.c:400
+#: plug-ins/file-dds/ddsread.c:405
 #, c-format
 msgid "Image size is too big to handle."
 msgstr "Billedstørrelsen er for stor til at kunne håndteres."
 
-#: plug-ins/file-dds/ddsread.c:513
+#: plug-ins/file-dds/ddsread.c:518
 #, c-format
 msgid "Invalid or corrupted DDS header."
 msgstr "Ugyldig eller beskadiget DDS-header."
 
-#: plug-ins/file-dds/ddsread.c:525
+#: plug-ins/file-dds/ddsread.c:530
 #, c-format
 msgid "Could not allocate a new image."
 msgstr "Kunne ikke allokere et nyt billede."
 
-#: plug-ins/file-dds/ddsread.c:541
+#: plug-ins/file-dds/ddsread.c:546
 #, c-format
 msgid "Error reading palette."
 msgstr "Fejl ved læsning af palet."
 
 # https://en.wikipedia.org/wiki/File_format#Magic_number
-#: plug-ins/file-dds/ddsread.c:864
+#: plug-ins/file-dds/ddsread.c:869
 #, c-format
 msgid "Invalid DDS format magic number."
 msgstr "Ugyldigt magisk tal for DDS-formatet."
 
-#: plug-ins/file-dds/ddsread.c:880
+#: plug-ins/file-dds/ddsread.c:885
 msgid ""
 "File lacks expected pixel format flags! Image may not be decoded correctly."
 msgstr ""
 "Filen mangler forventede pixelformatflag! Billedet afkodes muligvis ikke "
 "korrekt."
 
-#: plug-ins/file-dds/ddsread.c:915
+#: plug-ins/file-dds/ddsread.c:920
 #, c-format
 msgid "Invalid pixel format."
 msgstr "Ugyldigt pixelformat."
 
-#: plug-ins/file-dds/ddsread.c:940
+#: plug-ins/file-dds/ddsread.c:945
 #, c-format
 msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
 msgstr "Format ikke understøttet (FourCC: %c%c%c%c, hex: %08x)"
 
-#: plug-ins/file-dds/ddsread.c:962
+#: plug-ins/file-dds/ddsread.c:967
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Ugyldig bpp-værdi for RGB-data: %d"
 
-#: plug-ins/file-dds/ddsread.c:973
+#: plug-ins/file-dds/ddsread.c:978
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Ugyldig bpp-værdi for luminansdata: %d"
 
-#: plug-ins/file-dds/ddsread.c:995
+#: plug-ins/file-dds/ddsread.c:1000
 #, c-format
 msgid "Invalid DX10 header"
 msgstr "Ugyldigt DX10-header"
 
-#: plug-ins/file-dds/ddsread.c:1033
+#: plug-ins/file-dds/ddsread.c:1038
 #, c-format
 msgid "Unsupported DXGI Format: %u"
 msgstr "DXGI-formatet understøttes ikke: %u"
 
-#: plug-ins/file-dds/ddsread.c:1221 plug-ins/file-dds/ddsread.c:1285
-#: plug-ins/file-dds/ddsread.c:1305
+#: plug-ins/file-dds/ddsread.c:1226 plug-ins/file-dds/ddsread.c:1290
+#: plug-ins/file-dds/ddsread.c:1310
 #, c-format
 msgid "Requested data exceeds size of file.\n"
 msgstr "Anmodede data overstiger filstørrelsen.\n"
 
-#: plug-ins/file-dds/ddsread.c:1229 plug-ins/file-dds/ddsread.c:1311
+#: plug-ins/file-dds/ddsread.c:1234 plug-ins/file-dds/ddsread.c:1316
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "Uventet filafslutning (EOF).\n"
 
-#: plug-ins/file-dds/ddsread.c:1641
+#: plug-ins/file-dds/ddsread.c:1646
 msgid "Open DDS"
 msgstr "Åbn DDS"
 
@@ -10839,7 +10864,7 @@ msgstr ""
 "Photoshop understøtter ikke indekserede billeder med mere end ét lag. Lagene "
 "lægges sammen ved eksport."
 
-#: plug-ins/file-psd/psd-export.c:2942 plug-ins/file-psd/psd-load.c:4045
+#: plug-ins/file-psd/psd-export.c:2942 plug-ins/file-psd/psd-load.c:4056
 msgid "Compatibility Notice"
 msgstr "Kompatibilitetsbemærkning"
 
@@ -10942,38 +10967,38 @@ msgstr "Ikke-understøttet eller ugyldig bredde på lagmaske: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Ikke-understøttet eller ugyldig størrelse på lagmaske: %d×%d"
 
-#: plug-ins/file-psd/psd-load.c:2285 plug-ins/file-psd/psd-load.c:3173
-#, c-format
-msgid "Unsupported compression mode: %d"
-msgstr "Ikke-understøttet komprimeringstilstand: %d"
-
-#: plug-ins/file-psd/psd-load.c:2902
-msgid "Inner Shadow"
-msgstr "Indre skygge"
-
-#: plug-ins/file-psd/psd-load.c:2903
-msgid "imported"
-msgstr "importeret"
-
-#: plug-ins/file-psd/psd-load.c:3350
-msgid "Extra"
-msgstr "Ekstra"
-
-#: plug-ins/file-psd/psd-load.c:3572
+#: plug-ins/file-psd/psd-load.c:1862 plug-ins/file-psd/psd-load.c:3583
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ikke-understøttet eller ugyldig størrelse på kanal"
 
-#: plug-ins/file-psd/psd-load.c:3641
+#: plug-ins/file-psd/psd-load.c:2296 plug-ins/file-psd/psd-load.c:3184
+#, c-format
+msgid "Unsupported compression mode: %d"
+msgstr "Ikke-understøttet komprimeringstilstand: %d"
+
+#: plug-ins/file-psd/psd-load.c:2913
+msgid "Inner Shadow"
+msgstr "Indre skygge"
+
+#: plug-ins/file-psd/psd-load.c:2914
+msgid "imported"
+msgstr "importeret"
+
+#: plug-ins/file-psd/psd-load.c:3361
+msgid "Extra"
+msgstr "Ekstra"
+
+#: plug-ins/file-psd/psd-load.c:3652
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Kunne ikke udpakke data"
 
-#: plug-ins/file-psd/psd-load.c:4022
+#: plug-ins/file-psd/psd-load.c:4033
 msgid "Duotone Import"
 msgstr "Duotone-import"
 
-#: plug-ins/file-psd/psd-load.c:4023
+#: plug-ins/file-psd/psd-load.c:4034
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10983,7 +11008,7 @@ msgstr ""
 "Duotone-farverumsdata er blevet gemt\n"
 "og kan anvendes igen ved eksport."
 
-#: plug-ins/file-psd/psd-load.c:4046
+#: plug-ins/file-psd/psd-load.c:4057
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -17178,10 +17203,6 @@ msgstr "Tag et billede fra en TWAIN-datakilde"
 #: plug-ins/twain/twain.c:87
 msgid "This plug-in will capture an image from a TWAIN datasource"
 msgstr "Dette udvidelsesmodul vil tage et billede fra en TWAIN-datakilde"
-
-#: plug-ins/twain/twain.c:206
-msgid "_Scanner/Camera..."
-msgstr "_Skanner/kamera …"
 
 #: plug-ins/twain/twain.c:412
 #, c-format
