@@ -1,0 +1,26 @@
+# Lao translation for gimp.
+# Copyright (C) 2025 gimp's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp package.
+# bone NI <bounkirdni@gmail.com>,  2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2025-09-27 06:12+0000\n"
+"PO-Revision-Date: 2025-09-27 06:12+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Lao <lo@li.org>\n"
+"Language: lo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/tags/gimp-tags-default.xml.in:11 data/tags/gimp-tags-default.xml.in:19
+msgid "round"
+msgstr "ມົນ"
+
+#. fuzzy as in a feathered, blurred, unfocused, soft brush
+#: data/tags/gimp-tags-default.xml.in:18
+msgid "fuzzy"
+msgstr "ຟຸ້ງ"
