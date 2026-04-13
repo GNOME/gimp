@@ -1355,7 +1355,8 @@ xcf_load_image (Gimp     *gimp,
                                           NULL);
           g_object_unref (options);
 
-          gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (vlayer), ! vdata->modified);
+          if (vdata->modified)
+            gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (vlayer), FALSE);
           gimp_image_add_layer (image, vlayer, parent, position, FALSE);
 
           if (selected)
