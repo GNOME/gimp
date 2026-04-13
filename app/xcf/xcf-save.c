@@ -1636,14 +1636,14 @@ xcf_save_prop (XcfInfo    *info,
 
         size =
           2 * 4 +
-          strlen (unit_strings[0]) ? strlen (unit_strings[0]) + 5 : 4 +
-          strlen (unit_strings[1]) ? strlen (unit_strings[1]) + 5 : 4 +
-          strlen (unit_strings[2]) ? strlen (unit_strings[2]) + 5 : 4;
+          (strlen (unit_strings[0]) ? strlen (unit_strings[0]) + 5 : 4) +
+          (strlen (unit_strings[1]) ? strlen (unit_strings[1]) + 5 : 4) +
+          (strlen (unit_strings[2]) ? strlen (unit_strings[2]) + 5 : 4);
 
         if (info->file_version < 21)
           size +=
-            strlen (unit_strings[3]) ? strlen (unit_strings[3]) + 5 : 4 +
-            strlen (unit_strings[4]) ? strlen (unit_strings[4]) + 5 : 4;
+            (strlen (unit_strings[3]) ? strlen (unit_strings[3]) + 5 : 4) +
+            (strlen (unit_strings[4]) ? strlen (unit_strings[4]) + 5 : 4);
 
         xcf_write_prop_type_check_error (info, prop_type, va_end (args));
         xcf_write_int32_check_error (info, &size, 1, va_end (args));
