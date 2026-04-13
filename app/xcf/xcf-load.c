@@ -244,6 +244,8 @@ static gboolean        xcf_load_old_vectors   (XcfInfo       *info,
 static gboolean        xcf_load_old_vector    (XcfInfo       *info,
                                                GimpImage     *image);
 
+static void            xcf_load_user_init     (XcfInfo       *info,
+                                               GimpImage     *image);
 static gboolean        xcf_skip_unknown_prop  (XcfInfo       *info,
                                                gsize          size);
 
@@ -478,7 +480,12 @@ xcf_load_image_header (Gimp           *gimp,
       if (prop_type == PROP_END)
         break;
 
-      if (! xcf_skip_unknown_prop (info, prop_size))
+      if (prop_type == PROP_USER_UNIT)
+        {
+          /* Special-casing because of buggy prop size, cf. #16129. */
+          xcf_load_user_init (info, NULL);
+        }
+      else if (! xcf_skip_unknown_prop (info, prop_size))
         {
           if (error)
             g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -2032,58 +2039,7 @@ xcf_load_image_props (XcfInfo   *info,
           break;
 
         case PROP_USER_UNIT:
-            {
-              gchar     *unit_strings[5] = { 0 };
-              float      factor;
-              guint32    digits;
-              GimpUnit  *unit;
-              GList     *iter;
-              gint       n_fields = 3;
-              gint       i;
-
-              xcf_read_float  (info, &factor,      1);
-              xcf_read_int32  (info, &digits,      1);
-
-              /* Depending on XCF version, read more or less strings. */
-              if (info->file_version < 21)
-                n_fields = 5;
-              xcf_read_string (info, unit_strings, n_fields);
-
-              for (i = 0; i < n_fields; i++)
-                if (unit_strings[i] == NULL)
-                  unit_strings[i] = g_strdup ("");
-
-              for (iter = info->gimp->user_units; iter; iter = iter->next)
-                {
-                  unit = iter->data;
-                  /* if the factor and the name match some unit in unitrc,
-                   * use the unitrc unit
-                   */
-                  if (ABS (gimp_unit_get_factor (unit) - factor) < 1e-5 &&
-                      (strcmp (unit_strings[0], gimp_unit_get_name (unit)) == 0 ||
-                       (info->file_version < 21 &&
-                        strcmp (unit_strings[4], gimp_unit_get_name (unit)) == 0)))
-                    {
-                      break;
-                    }
-                }
-
-              if (iter == NULL)
-                /* No match. Create a temporary unit set with deletion
-                 * flag.
-                 */
-                unit = _gimp_unit_new (info->gimp,
-                                       unit_strings[4] && strlen (unit_strings[4]) > 0 ? unit_strings[4] : unit_strings[0],
-                                       (gdouble) factor,
-                                       digits,
-                                       unit_strings[1],
-                                       unit_strings[2]);
-
-              gimp_image_set_unit (image, unit);
-
-              for (i = 0; i < n_fields; i++)
-                g_free (unit_strings[i]);
-            }
+          xcf_load_user_init (info, image);
           break;
 
         case PROP_VECTORS:
@@ -5548,6 +5504,66 @@ xcf_load_old_vector (XcfInfo   *info,
                        FALSE);
 
   return TRUE;
+}
+
+static void
+xcf_load_user_init (XcfInfo   *info,
+                    GimpImage *image)
+{
+  gchar   *unit_strings[5] = { 0 };
+  gint     n_fields        = 3;
+  float    factor;
+  guint32  digits;
+  gint     i;
+
+  xcf_read_float (info, &factor, 1);
+  xcf_read_int32 (info, &digits, 1);
+
+  /* Depending on XCF version, read more or less strings. */
+  if (info->file_version < 21)
+    n_fields = 5;
+  xcf_read_string (info, unit_strings, n_fields);
+
+  for (i = 0; i < n_fields; i++)
+    if (unit_strings[i] == NULL)
+      unit_strings[i] = g_strdup ("");
+
+  if (image != NULL)
+    {
+      GimpUnit *unit;
+      GList    *iter;
+
+      for (iter = info->gimp->user_units; iter; iter = iter->next)
+        {
+          unit = iter->data;
+          /* if the factor and the name match some unit in unitrc,
+           * use the unitrc unit
+           */
+          if (ABS (gimp_unit_get_factor (unit) - factor) < 1e-5 &&
+              (strcmp (unit_strings[0], gimp_unit_get_name (unit)) == 0 ||
+               (info->file_version < 21 &&
+                strcmp (unit_strings[4], gimp_unit_get_name (unit)) == 0)))
+            {
+              break;
+            }
+        }
+
+      if (iter == NULL)
+        /* No match. Create a temporary unit set with deletion
+         * flag.
+         */
+        unit = _gimp_unit_new (info->gimp,
+                               unit_strings[4] && strlen (unit_strings[4]) > 0 ? unit_strings[4] : unit_strings[0],
+                               (gdouble) factor,
+                               digits,
+                               unit_strings[1],
+                               unit_strings[2]);
+
+      gimp_image_set_unit (image, unit);
+    }
+
+  for (i = 0; i < n_fields; i++)
+    g_free (unit_strings[i]);
 }
 
 static gboolean
