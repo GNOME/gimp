@@ -50,6 +50,8 @@ static void      gimp_tagged_container_src_remove         (GimpFilteredContainer
 static void      gimp_tagged_container_src_freeze         (GimpFilteredContainer *filtered_container);
 static void      gimp_tagged_container_src_thaw           (GimpFilteredContainer *filtered_container);
 
+static void      gimp_tagged_container_disconnect_handlers (GimpTaggedContainer  *tagged_container);
+
 static gboolean  gimp_tagged_container_object_matches     (GimpTaggedContainer   *tagged_container,
                                                            GimpObject            *object);
 
@@ -117,6 +119,25 @@ gimp_tagged_container_init (GimpTaggedContainer *tagged_container)
 }
 
 static void
+gimp_tagged_container_disconnect_handlers (GimpTaggedContainer *tagged_container)
+{
+  GimpFilteredContainer *filtered_container = GIMP_FILTERED_CONTAINER (tagged_container);
+  GList                 *list;
+
+  for (list = GIMP_LIST (filtered_container->src_container)->queue->head;
+       list;
+       list = g_list_next (list))
+    {
+      g_signal_handlers_disconnect_by_func (list->data,
+                                            gimp_tagged_container_tag_added,
+                                            tagged_container);
+      g_signal_handlers_disconnect_by_func (list->data,
+                                            gimp_tagged_container_tag_removed,
+                                            tagged_container);
+    }
+}
+
+static void
 gimp_tagged_container_dispose (GObject *object)
 {
   GimpTaggedContainer *tagged_container = GIMP_TAGGED_CONTAINER (object);
@@ -127,6 +148,8 @@ gimp_tagged_container_dispose (GObject *object)
                         (GDestroyNotify) gimp_tag_or_null_unref);
       tagged_container->filter = NULL;
     }
+
+  gimp_tagged_container_disconnect_handlers (tagged_container);
 
   g_clear_pointer (&tagged_container->tag_ref_counts, g_hash_table_unref);
 
@@ -148,21 +171,9 @@ gimp_tagged_container_get_memsize (GimpObject *object,
 static void
 gimp_tagged_container_clear (GimpContainer *container)
 {
-  GimpFilteredContainer *filtered_container = GIMP_FILTERED_CONTAINER (container);
-  GimpTaggedContainer   *tagged_container   = GIMP_TAGGED_CONTAINER (container);
-  GList                 *list;
+  GimpTaggedContainer *tagged_container = GIMP_TAGGED_CONTAINER (container);
 
-  for (list = GIMP_LIST (filtered_container->src_container)->queue->head;
-       list;
-       list = g_list_next (list))
-    {
-      g_signal_handlers_disconnect_by_func (list->data,
-                                            gimp_tagged_container_tag_added,
-                                            tagged_container);
-      g_signal_handlers_disconnect_by_func (list->data,
-                                            gimp_tagged_container_tag_removed,
-                                            tagged_container);
-    }
+  gimp_tagged_container_disconnect_handlers (tagged_container);
 
   if (tagged_container->tag_ref_counts)
     {
@@ -230,6 +241,10 @@ gimp_tagged_container_src_remove (GimpFilteredContainer *filtered_container,
 static void
 gimp_tagged_container_src_freeze (GimpFilteredContainer *filtered_container)
 {
+  GimpTaggedContainer *tagged_container = GIMP_TAGGED_CONTAINER (filtered_container);
+
+  gimp_tagged_container_disconnect_handlers (tagged_container);
+
   gimp_container_clear (GIMP_CONTAINER (filtered_container));
 }
 
