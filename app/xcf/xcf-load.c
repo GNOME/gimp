@@ -1538,7 +1538,7 @@ hard_error:
       broken_paths = NULL;
     }
 
-  if (*error)
+  if (error && *error)
     g_prefix_error (error,
                     /* TODO: localize after string freeze ends. */
                     "This XCF file is corrupt: ");
