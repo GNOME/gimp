@@ -21,6 +21,8 @@ Core:
     can avoid clashes when several users run GIMP on a same computer.
     Furthermore the temporary folder is now deleted at startup (unless
     it is not empty, which it should be).
+  - XCF opened as layers will now always create new layers named as in
+    the source XCF, even if the source XCF had only a single layer.
 
 Tool
 
@@ -36,12 +38,19 @@ Tool
   - Selection tools: when moving a floating layer or selection,
     temporarily disable the marching ants outline. Among other reasons,
     it improves performance.
+  - Select by Color tool: optimized processing when working in Intersect
+    mode.
+  - Crop tool: non-raster layers are not rasterized anymore.
 
 Plug-Ins:
 
-  - Fixes bugs to: APNG import, PAA import.
+  - Improve import of: APNG, PAA, PNG, DDS, PSP, PNM, PSD, JIF, PVR
+    texture, TIM, XWD.
   - Improved PDF export.
   - file-compressor: improved error messaging.
+  - New Windows WIA scanner plug-in, replacing the now deprecated TWAIN
+    scanner plug-in (which is not shipped in our Windows packages
+    anymore as it depends on dropped 32-bit Windows platform).
 
 API:
 
@@ -57,6 +66,10 @@ API:
     * gimp_quit() function is deprecated.
   - PDB:
     * (gimp-quit) procedure (without libgimp wrapper) is deprecated.
+
+Translations:
+
+  - New Lao translation.
 
 Build:
 
