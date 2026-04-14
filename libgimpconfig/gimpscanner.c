@@ -1058,6 +1058,26 @@ gimp_scanner_parse_deprecated_color (GimpScanner  *scanner,
                 if (! gimp_scanner_parse_double (scanner, &col[i]))
                   goto finish;
 
+                if (trunc (col[i]) == col[i] &&
+                    g_scanner_peek_next_token (scanner) == G_TOKEN_COMMA)
+                  {
+                    /* This ugly block is a workaround to salvage XCF
+                     * files containing broken color serialization using
+                     * a comma as decimal separator, cf. #15774.
+                     * We assemble 2 ints separated by a comma as a
+                     * float.
+                     */
+                    g_scanner_get_next_token (scanner);
+
+                    if (g_scanner_peek_next_token (scanner) != G_TOKEN_INT)
+                      goto finish;
+
+                    g_scanner_get_next_token (scanner);
+
+                    if (scanner->value.v_int > 0)
+                      col[i] += scanner->value.v_int / pow (10, (int) log10 (scanner->value.v_int) + 1);
+                  }
+
                 col_f[i] = (gfloat) col[i];
               }
 
