@@ -36,7 +36,7 @@ ${MINGW_PACKAGE_PREFIX}-libilbm
 ${MINGW_PACKAGE_PREFIX}-libjpeg-turbo|vcpkg:libjpeg-turbo
 ${MINGW_PACKAGE_PREFIX}-libjxl|vcpkg:libjxl
 ${MINGW_PACKAGE_PREFIX}-libmng
-${MINGW_PACKAGE_PREFIX}-libmypaint
+${MINGW_PACKAGE_PREFIX}-libmypaint|vcpkg:libmypaint
 ${MINGW_PACKAGE_PREFIX}-libpng|vcpkg:libpng
 ${MINGW_PACKAGE_PREFIX}-librsvg|vcpkg:librsvg
 ${MINGW_PACKAGE_PREFIX}-libtiff|vcpkg:tiff
