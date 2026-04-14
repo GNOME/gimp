@@ -1311,11 +1311,13 @@ xcf_load_image (Gimp     *gimp,
           GList                  *selected;
           GList                  *linked;
           gboolean                floating;
+          gchar                  *name;
           gint                    position = 0;
 
           selected = g_list_find (info->selected_layers, layer);
           linked   = g_list_find (info->linked_layers, layer);
           floating = (info->floating_sel == layer);
+          name     = g_strdup (gimp_object_get_name (layer));
 
           path = gimp_image_get_path_by_tattoo (image, vdata->path_tattoo);
           if (path == NULL)
@@ -1365,6 +1367,9 @@ xcf_load_image (Gimp     *gimp,
           if (vdata->modified)
             gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (vlayer), FALSE);
           gimp_image_add_layer (image, vlayer, parent, position, FALSE);
+
+          gimp_object_set_name (GIMP_OBJECT (vlayer), name);
+          g_free (name);
 
           if (selected)
             {
