@@ -118,6 +118,9 @@ static void     gimp_path_tool_image_changed      (GimpPathTool          *path_t
                                                    GimpContext           *context);
 static void     gimp_path_tool_image_selected_layers_changed
                                                   (GimpPathTool          *path_tool);
+static void     gimp_path_tool_update_selected_layers
+                                                  (GimpPathTool          *path_tool,
+                                                   gboolean               is_image_switch);
 
 static void     gimp_path_tool_tool_path_changed  (GimpToolWidget        *tool_path,
                                                    GimpPathTool          *path_tool);
@@ -522,7 +525,7 @@ gimp_path_tool_image_changed (GimpPathTool *path_tool,
                                path_tool, G_CONNECT_SWAPPED);
     }
 
-  gimp_path_tool_image_selected_layers_changed (path_tool);
+  gimp_path_tool_update_selected_layers (path_tool, TRUE);
 
   if (options->vector_layer_button)
     gtk_widget_set_sensitive (options->vector_layer_button,
@@ -532,7 +535,15 @@ gimp_path_tool_image_changed (GimpPathTool *path_tool,
 static void
 gimp_path_tool_image_selected_layers_changed (GimpPathTool *path_tool)
 {
-  GList *current_layers = NULL;
+  gimp_path_tool_update_selected_layers (path_tool, FALSE);
+}
+
+static void
+gimp_path_tool_update_selected_layers (GimpPathTool *path_tool,
+                                       gboolean      is_image_switch)
+{
+  GList           *current_layers = NULL;
+  GimpVectorLayer *vector_layer   = NULL;
 
   if (path_tool->current_image)
     current_layers = gimp_image_get_selected_layers (path_tool->current_image);
@@ -542,12 +553,20 @@ gimp_path_tool_image_selected_layers_changed (GimpPathTool *path_tool)
       g_list_length (current_layers) == 1 &&
       GIMP_IS_VECTOR_LAYER (GIMP_ITEM (current_layers->data)))
     {
-      GimpVectorLayer *vector_layer = current_layers->data;
+      vector_layer = current_layers->data;
 
       if (gimp_item_is_vector_layer (GIMP_ITEM (current_layers->data)))
-        gimp_path_tool_set_layer (path_tool, vector_layer);
+        {
+          gimp_path_tool_set_layer (path_tool, vector_layer);
+        }
+      else if (! is_image_switch)
+        {
+          gimp_path_tool_confirm_dialog (path_tool, vector_layer);
+        }
       else
-        gimp_path_tool_confirm_dialog (path_tool, vector_layer);
+        {
+          gimp_path_tool_set_layer (path_tool, NULL);
+        }
     }
   else
     {
