@@ -579,22 +579,34 @@ gimp_plug_in_procedure_set_menu_label (GimpPlugInProcedure  *proc,
                                        const gchar          *menu_label,
                                        GError              **error)
 {
+  gboolean valid_utf8;
+
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), FALSE);
   g_return_val_if_fail (menu_label != NULL && strlen (menu_label), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (menu_label[0] == '<')
+  valid_utf8 = g_utf8_validate (menu_label, -1, NULL);
+
+  if (! valid_utf8 || menu_label[0] == '<')
     {
       gchar *basename = g_path_get_basename (gimp_file_get_utf8_name (proc->file));
 
-      g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
-                   "Plug-in \"%s\"\n(%s)\n\n"
-                   "attempted to install procedure \"%s\" with a full "
-                   "menu path \"%s\" as menu label, this is not supported "
-                   "any longer.",
-                   basename, gimp_file_get_utf8_name (proc->file),
-                   gimp_object_get_name (proc),
-                   menu_label);
+      if (! valid_utf8)
+        g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
+                     "Plug-in \"%s\"\n(%s)\n\n"
+                     "attempted to install procedure \"%s\" with a "
+                     "menu label not encoded as UTF-8.",
+                     basename, gimp_file_get_utf8_name (proc->file),
+                     gimp_object_get_name (proc));
+      else
+        g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
+                     "Plug-in \"%s\"\n(%s)\n\n"
+                     "attempted to install procedure \"%s\" with a full "
+                     "menu path \"%s\" as menu label, this is not supported "
+                     "any longer.",
+                     basename, gimp_file_get_utf8_name (proc->file),
+                     gimp_object_get_name (proc),
+                     menu_label);
 
       g_free (basename);
 
@@ -619,25 +631,35 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
   const gchar   *required = NULL;
   gchar         *p;
   gchar         *mapped_path;
+  gboolean       valid_utf8;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), FALSE);
   g_return_val_if_fail (menu_path != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  procedure = GIMP_PROCEDURE (proc);
+  procedure  = GIMP_PROCEDURE (proc);
+  valid_utf8 = g_utf8_validate (menu_path, -1, NULL);
 
-  if (! proc->menu_label)
+  if (! valid_utf8 || ! proc->menu_label)
     {
       basename = g_path_get_basename (gimp_file_get_utf8_name (proc->file));
 
-      g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
-                   "Plug-in \"%s\"\n(%s)\n"
-                   "attempted to register the procedure \"%s\" "
-                   "in the menu \"%s\", but the procedure has no label. "
-                   "This is not allowed.",
-                   basename, gimp_file_get_utf8_name (proc->file),
-                   gimp_object_get_name (proc),
-                   menu_path);
+      if (! valid_utf8)
+        g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
+                     "Plug-in \"%s\"\n(%s)\n\n"
+                     "attempted to install procedure \"%s\" with a "
+                     "menu path not encoded as UTF-8.",
+                     basename, gimp_file_get_utf8_name (proc->file),
+                     gimp_object_get_name (proc));
+      else
+        g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
+                     "Plug-in \"%s\"\n(%s)\n"
+                     "attempted to register the procedure \"%s\" "
+                     "in the menu \"%s\", but the procedure has no label. "
+                     "This is not allowed.",
+                     basename, gimp_file_get_utf8_name (proc->file),
+                     gimp_object_get_name (proc),
+                     menu_path);
 
       g_free (basename);
 
