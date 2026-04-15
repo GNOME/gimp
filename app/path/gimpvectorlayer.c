@@ -761,6 +761,7 @@ gimp_vector_layer_set (GimpVectorLayer *layer,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_VECTOR, undo_desc);
 
   g_object_freeze_notify (G_OBJECT (layer));
+  g_object_freeze_notify (G_OBJECT (options));
 
   if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
     gimp_image_undo_push_drawable_mod (image, NULL,
@@ -777,6 +778,7 @@ gimp_vector_layer_set (GimpVectorLayer *layer,
     gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
 
   g_object_thaw_notify (G_OBJECT (layer));
+  g_object_thaw_notify (G_OBJECT (options));
 
   gimp_image_undo_group_end (image);
 }

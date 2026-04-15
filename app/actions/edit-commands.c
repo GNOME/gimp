@@ -615,6 +615,8 @@ edit_fill_cmd_callback (GimpAction *action,
                     {
                       gimp_vector_layer_set (GIMP_VECTOR_LAYER (iter->data),
                                              NULL,
+                                             "enable-fill",
+                                             TRUE,
                                              "fill-style",
                                              GIMP_CUSTOM_STYLE_SOLID_COLOR,
                                              "fill-color",
@@ -631,6 +633,8 @@ edit_fill_cmd_callback (GimpAction *action,
                        gimp_item_is_vector_layer (iter->data))
                 {
                   gimp_vector_layer_set (GIMP_VECTOR_LAYER (iter->data), NULL,
+                                         "enable-fill",
+                                         TRUE,
                                          "fill-style",
                                          GIMP_CUSTOM_STYLE_PATTERN,
                                          "fill-pattern",

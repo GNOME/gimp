@@ -917,6 +917,10 @@ gimp_path_tool_vector_change_notify (GObject          *options,
 
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
+  g_signal_handlers_block_by_func (options,
+                                   gimp_path_tool_vector_change_notify,
+                                   layer);
+
   if (GIMP_IS_STROKE_OPTIONS (options))
     {
       GimpStrokeOptions *stroke_options = GIMP_STROKE_OPTIONS (options);
@@ -946,6 +950,10 @@ gimp_path_tool_vector_change_notify (GObject          *options,
 
       needs_update = TRUE;
     }
+
+  g_signal_handlers_unblock_by_func (options,
+                                     gimp_path_tool_vector_change_notify,
+                                     layer);
 
   if (needs_update)
     {

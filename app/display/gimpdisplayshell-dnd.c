@@ -452,6 +452,8 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
               if (gimp_item_is_vector_layer (iter->data))
                 {
                   gimp_vector_layer_set (GIMP_VECTOR_LAYER (iter->data), NULL,
+                                         "enable-fill",
+                                         TRUE,
                                          "fill-style",
                                          GIMP_CUSTOM_STYLE_SOLID_COLOR,
                                          "fill-color",
@@ -467,6 +469,7 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
                    gimp_item_is_vector_layer (iter->data))
             {
               gimp_vector_layer_set (GIMP_VECTOR_LAYER (iter->data), NULL,
+                                     "enable-fill",  TRUE,
                                      "fill-style",   GIMP_CUSTOM_STYLE_PATTERN,
                                      "fill-pattern", pattern,
                                      NULL);
