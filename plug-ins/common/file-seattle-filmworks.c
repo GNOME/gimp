@@ -264,36 +264,42 @@ load_image (GFile        *file,
       GimpValueArray *return_vals     = NULL;
       GFile          *temp_file       = NULL;
       FILE           *temp_fp;
-      guchar          data[file_size - 0xE0];
+      gint            data_size       = file_size - 0xE0;
+      guchar         *data            = NULL;
       gint            jpeg_start;
       gint            jpeg_data;
       guint           index           = 0;
       guint           metadata_index  = 0;
-      guint           metadata_len[2] = { 0, 0 };
-      gchar          *roll_num;
-      gchar          *photo_date;
+      guint           metadata_len[3] = { 0, 0, 0 };
+      gchar          *roll_num        = NULL;
+      gchar          *photo_date      = NULL;
       gint            fixed_marker;
       gboolean        has_huffman_table = FALSE;
 
+      if (data_size > 0)
+        data = g_malloc0 (data_size);
+
       /* Load Camera Roll Number and Date metadata first */
       if (fseek (fp, 0xE0, SEEK_SET) != 0 ||
-          fread (&data, file_size - 0xE0, 1, fp) != 1)
+          fread (data, data_size, 1, fp) != 1)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Invalid file."));
           fclose (fp);
+          g_free (data);
           return NULL;
         }
 
-      while (index < file_size && data[index])
+      while (index < data_size && data[index])
         {
-          if (index          >= (file_size - 0xE0) ||
-              metadata_index >= 2)
+          if (index          >= data_size ||
+              metadata_index > 2)
             {
               g_set_error (error, G_FILE_ERROR,
                            g_file_error_from_errno (errno),
                            _("Invalid file."));
               fclose (fp);
+              g_free (data);
               return NULL;
             }
 
@@ -303,21 +309,25 @@ load_image (GFile        *file,
           index++;
         }
 
-      roll_num   = g_malloc (metadata_len[0] + 1);
-      photo_date = g_malloc (metadata_len[1] + 1);
+      /* Only load metadata if it is valid */
+      if (metadata_len[1])
+        {
+          roll_num   = g_malloc (metadata_len[0] + 1);
+          photo_date = g_malloc (metadata_len[1] + 1);
 
-      fseek (fp, 0xE0, SEEK_SET);
-      fread (roll_num, metadata_len[0], 1, fp);
-      roll_num[metadata_len[0]] = '\0';
+          fseek (fp, 0xE0, SEEK_SET);
+          fread (roll_num, metadata_len[0], 1, fp);
+          roll_num[metadata_len[0]] = '\0';
 
-      fseek (fp, 0xE0 + metadata_len[1] + 1, SEEK_SET);
-      fread (photo_date, index - metadata_len[1], 1, fp);
-      photo_date[metadata_len[1]] = '\0';
+          fseek (fp, 0xE0 + metadata_len[1] + 1, SEEK_SET);
+          fread (photo_date, index - metadata_len[1], 1, fp);
+          photo_date[metadata_len[1]] = '\0';
+        }
 
       fclose (fp);
 
       /* Convert SFW to JPEG format */
-      while (index < file_size - 4)
+      while (index < data_size - 4)
         {
           if (data[index]     == 0xFF &&
               data[index + 1] == 0xC8 &&
@@ -330,10 +340,11 @@ load_image (GFile        *file,
 
       /* Uncompressed SFW94A are convolved BMPs,
        * which aren't yet supported. */
-      if (index >= file_size - 4)
+      if (index >= data_size - 4)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Uncompressed SFW94A format is not yet supported."));
+          g_free (data);
           return NULL;
         }
 
@@ -344,10 +355,11 @@ load_image (GFile        *file,
       data[index + 3] = 0xE0;
 
       index += 6;
-      if (index > file_size - 13)
+      if (index > data_size - 13)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Invalid file."));
+          g_free (data);
           return NULL;
         }
 
@@ -363,21 +375,23 @@ load_image (GFile        *file,
       index = jpeg_start + 4;
       index += skip_to_next_marker (data, jpeg_start + 4);
 
-      if (index > file_size)
+      if (index > data_size)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Invalid file."));
+          g_free (data);
           return NULL;
         }
 
       /* Fix other markers */
       while (TRUE)
         {
-          if (index + 1 > file_size)
+          if (index + 1 > data_size)
             {
               g_set_error (error,
                            G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Invalid file."));
+              g_free (data);
               return NULL;
             }
 
@@ -388,6 +402,7 @@ load_image (GFile        *file,
               g_set_error (error,
                            G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Invalid file."));
+              g_free (data);
               return NULL;
             }
 
@@ -401,7 +416,7 @@ load_image (GFile        *file,
       jpeg_data = index;
 
       /* Search for ending marker */
-      while (index < file_size - 2)
+      while (index < data_size - 2)
         {
           if (data[index]     == 0xFF &&
               data[index + 1] == 0xC9)
@@ -423,6 +438,7 @@ load_image (GFile        *file,
 
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Unable to convert SFW image."));
+          g_free (data);
           return NULL;
         }
 
@@ -434,8 +450,9 @@ load_image (GFile        *file,
         fwrite (huffman_table, 1, 420, temp_fp);
 
       /* Finish writing JPEG */
-      fwrite (data + jpeg_data, sizeof (guchar), file_size - 0xE0 - jpeg_data, temp_fp);
+      fwrite (data + jpeg_data, sizeof (guchar), data_size - jpeg_data, temp_fp);
       fclose (temp_fp);
+      g_free (data);
 
       procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), "file-jpeg-load");
       return_vals = gimp_procedure_run (procedure,
@@ -448,46 +465,47 @@ load_image (GFile        *file,
           image = g_value_get_object (gimp_value_array_index (return_vals, 1));
           g_clear_pointer (&return_vals, gimp_value_array_unref);
         }
-
       g_file_delete (temp_file, NULL, NULL);
       g_object_unref (temp_file);
 
       if (image)
-        gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
-
-      if (roll_num && photo_date)
         {
-          GimpParasite *parasite;
-          gchar        *comment;
-          gchar        *verified_comment;
+          gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
 
-          comment = g_strdup_printf ("%s\n%s", roll_num, photo_date);
-
-          g_free (roll_num);
-          g_free (photo_date);
-
-          verified_comment = g_convert (comment, -1, "utf-8", "iso8859-1",
-                                        NULL, NULL, NULL);
-
-          if (verified_comment)
-            g_free (comment);
-          else
-            verified_comment = comment;
-
-          if (! g_utf8_validate (verified_comment, -1, NULL))
+          if (roll_num && photo_date)
             {
-              g_printerr ("Invalid comment ignored.\n");
-            }
-          else
-            {
-              parasite = gimp_parasite_new ("gimp-comment",
-                                            GIMP_PARASITE_PERSISTENT,
-                                            strlen (verified_comment) + 1,
-                                            verified_comment);
-              gimp_image_attach_parasite (image, parasite);
-              gimp_parasite_free (parasite);
+              GimpParasite *parasite;
+              gchar        *comment;
+              gchar        *verified_comment;
 
-              g_free (verified_comment);
+              comment = g_strdup_printf ("%s\n%s", roll_num, photo_date);
+
+              g_free (roll_num);
+              g_free (photo_date);
+
+              verified_comment = g_convert (comment, -1, "utf-8", "iso8859-1",
+                                            NULL, NULL, NULL);
+
+              if (verified_comment)
+                g_free (comment);
+              else
+                verified_comment = comment;
+
+              if (! g_utf8_validate (verified_comment, -1, NULL))
+                {
+                  g_printerr ("Invalid comment ignored.\n");
+                }
+              else
+                {
+                  parasite = gimp_parasite_new ("gimp-comment",
+                                                GIMP_PARASITE_PERSISTENT,
+                                                strlen (verified_comment) + 1,
+                                                verified_comment);
+                  gimp_image_attach_parasite (image, parasite);
+                  gimp_parasite_free (parasite);
+
+                  g_free (verified_comment);
+                }
             }
         }
     }
