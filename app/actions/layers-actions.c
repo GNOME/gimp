@@ -808,6 +808,7 @@ layers_actions_update (GimpActionGroup *group,
   gint           n_layers           = 0;
   gint           n_text_layers      = 0;
 
+
   if (image)
     {
       fs      = (gimp_image_get_floating_selection (image) != NULL);
@@ -1070,7 +1071,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-to-path",      n_text_layers > 0 && !ac);
   SET_VISIBLE   ("layers-text-along-path",   text_layer && !ac);
 
-  SET_SENSITIVE ("layers-resize",          n_selected_layers == 1 && all_writable && all_movable && !ac);
+  SET_SENSITIVE ("layers-resize",          n_selected_layers == 1 && all_writable && all_movable && !ac && has_raster);
   SET_SENSITIVE ("layers-resize-to-image", all_writable && all_movable && !ac);
   SET_SENSITIVE ("layers-scale",           n_selected_layers == 1 && all_writable && all_movable && !ac);
 
