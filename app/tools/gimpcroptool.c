@@ -67,7 +67,7 @@ static void      gimp_crop_tool_button_release             (GimpTool            
                                                             GdkModifierType       state,
                                                             GimpButtonReleaseType release_type,
                                                             GimpDisplay          *display);
-static void     gimp_crop_tool_motion                      (GimpTool             *tool,
+static void      gimp_crop_tool_motion                     (GimpTool             *tool,
                                                             const GimpCoords     *coords,
                                                             guint32               time,
                                                             GdkModifierType       state,
@@ -144,6 +144,7 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
   tool_class->button_release = gimp_crop_tool_button_release;
   tool_class->motion         = gimp_crop_tool_motion;
   tool_class->options_notify = gimp_crop_tool_options_notify;
+  tool_class->is_destructive = FALSE;
 }
 
 static void
@@ -168,11 +169,10 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
 static void
 gimp_crop_tool_constructed (GObject *object)
 {
-  GimpTool        *tool      = GIMP_TOOL (object);
-  GimpCropTool    *crop_tool = GIMP_CROP_TOOL (tool);
-  GimpCropOptions *options   = GIMP_CROP_TOOL_GET_OPTIONS (crop_tool);
-  GimpContext     *context;
-  GimpToolInfo    *tool_info;
+  GimpTool     *tool      = GIMP_TOOL (object);
+  GimpCropTool *crop_tool = GIMP_CROP_TOOL (tool);
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -191,9 +191,6 @@ gimp_crop_tool_constructed (GObject *object)
   gimp_crop_tool_image_changed (crop_tool,
                                 gimp_context_get_image (context),
                                 context);
-
-  /* The Crop Tool is only destructive when "Delete Pixels" is enabled */
-  GIMP_TOOL_GET_CLASS (tool)->is_destructive = options->delete_pixels;
 }
 
 static void
@@ -310,8 +307,7 @@ gimp_crop_tool_options_notify (GimpTool         *tool,
                                GimpToolOptions  *options,
                                const GParamSpec *pspec)
 {
-  GimpCropTool    *crop_tool    = GIMP_CROP_TOOL (tool);
-  GimpCropOptions *crop_options = GIMP_CROP_TOOL_GET_OPTIONS (crop_tool);
+  GimpCropTool *crop_tool = GIMP_CROP_TOOL (tool);
 
   if (! strcmp (pspec->name, "layer-only") ||
       ! strcmp (pspec->name, "allow-growing"))
@@ -325,10 +321,6 @@ gimp_crop_tool_options_notify (GimpTool         *tool,
         {
           gimp_crop_tool_update_option_defaults (crop_tool, FALSE);
         }
-    }
-  else if (! strcmp (pspec->name, "delete-pixels"))
-    {
-      GIMP_TOOL_GET_CLASS (tool)->is_destructive = crop_options->delete_pixels;
     }
 }
 
