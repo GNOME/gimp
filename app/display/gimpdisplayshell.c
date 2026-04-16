@@ -195,11 +195,6 @@ static void   gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
 static gboolean gimp_display_shell_draw            (GimpDisplayShell *shell,
                                                     cairo_t          *cr,
                                                     gpointer         *data);
-static void     gimp_display_shell_push_overlay_inside_canvas
-                                                   (GimpDisplayShell *shell,
-                                                    GtkWidget        *child,
-                                                    gdouble          *limits,
-                                                    gdouble          *corners);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell,
@@ -1394,62 +1389,6 @@ gimp_display_shell_draw (GimpDisplayShell *shell,
   shell->drawn = TRUE;
 
   return FALSE;
-}
-
-static void
-gimp_display_shell_push_overlay_inside_canvas (GimpDisplayShell *shell,
-                                               GtkWidget        *child,
-                                               gdouble          *limits,
-                                               gdouble          *corners)
-{
-  gdouble ulimit, rlimit, blimit, llimit;
-  gdouble tlx, tly, brx, bry;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GTK_IS_WIDGET (child));
-
-  ulimit = limits[0];
-  rlimit = limits[1];
-  blimit = limits[2];
-  llimit = limits[3];
-
-  tlx = corners[0];
-  tly = corners[1];
-  brx = corners[2];
-  bry = corners[3];
-
-  if (tlx < llimit)
-    {
-      gimp_display_shell_move_overlay (shell,
-                                       child,
-                                       llimit, tly,
-                                       GIMP_HANDLE_ANCHOR_NORTH_WEST,
-                                       0, 0);
-    }
-  if (tly < ulimit)
-    {
-      gimp_display_shell_move_overlay (shell,
-                                       child,
-                                       tlx, ulimit,
-                                       GIMP_HANDLE_ANCHOR_NORTH_WEST,
-                                       0, 0);
-    }
-  if (brx > rlimit)
-    {
-      gimp_display_shell_move_overlay (shell,
-                                       child,
-                                       rlimit, bry,
-                                       GIMP_HANDLE_ANCHOR_SOUTH_EAST,
-                                       0, 0);
-    }
-  if (bry > blimit)
-    {
-      gimp_display_shell_move_overlay (shell,
-                                       child,
-                                       brx, blimit,
-                                       GIMP_HANDLE_ANCHOR_SOUTH_EAST,
-                                       0, 0);
-    }
 }
 
 /*  public functions  */
