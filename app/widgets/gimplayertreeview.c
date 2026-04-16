@@ -756,7 +756,8 @@ gimp_layer_tree_view_drop_viewables (GimpContainerTreeView   *view,
           GIMP_IS_PATTERN (src_viewable))
         {
           gimp_vector_layer_set (GIMP_VECTOR_LAYER (dest_viewable), NULL,
-                                 "fill-style", GIMP_CUSTOM_STYLE_PATTERN,
+                                 "enable-fill",  TRUE,
+                                 "fill-style",   GIMP_CUSTOM_STYLE_PATTERN,
                                  "fill-pattern", GIMP_PATTERN (src_viewable),
                                  NULL);
 
@@ -791,8 +792,9 @@ gimp_layer_tree_view_drop_color (GimpContainerTreeView   *view,
   else if (gimp_item_is_vector_layer (GIMP_ITEM (dest_viewable)))
     {
       gimp_vector_layer_set (GIMP_VECTOR_LAYER (dest_viewable), NULL,
-                             "fill-style", GIMP_CUSTOM_STYLE_SOLID_COLOR,
-                             "fill-color", color,
+                             "enable-fill", TRUE,
+                             "fill-style",  GIMP_CUSTOM_STYLE_SOLID_COLOR,
+                             "fill-color",  color,
                              NULL);
 
       gimp_vector_layer_refresh (GIMP_VECTOR_LAYER (dest_viewable));
