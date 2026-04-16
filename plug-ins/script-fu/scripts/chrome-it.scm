@@ -183,7 +183,7 @@
 
     ; carve-white is 0 or 1, not #f or #t
     (if (= carve-white TRUE)
-        (gimp-drawable-invert mask #f))
+        (gimp-drawable-merge-new-filter mask "gegl:invert-gamma" 0 LAYER-MODE-REPLACE 1.0))
 
     (gimp-context-set-background '(255 255 255))
     (gimp-selection-none img)
@@ -203,7 +203,7 @@
     (gimp-drawable-edit-fill layer3 FILL-BACKGROUND)
     (gimp-selection-none img)
     (set! layer2 (gimp-image-merge-visible-layers img CLIP-TO-IMAGE))
-    (gimp-drawable-invert layer2 #f)
+    (gimp-drawable-merge-new-filter layer2 "gegl:invert-gamma" 0 LAYER-MODE-REPLACE 1.0)
 
     (gimp-image-insert-layer img layer1 0 0)
     (copy-layer-chrome-it img layer1 banding-img banding-layer)
@@ -249,36 +249,49 @@
 
     (gimp-image-convert-rgb img)
 
-    (gimp-drawable-color-balance layer1 TRANSFER-SHADOWS #t
-				 (shadows (rval hc))
-				 (shadows (gval hc))
-				 (shadows (bval hc)))
-    (gimp-drawable-color-balance layer1 TRANSFER-MIDTONES #t
-				 (midtones (rval hc))
-				 (midtones (gval hc))
-				 (midtones (bval hc)))
-    (gimp-drawable-color-balance layer1 TRANSFER-HIGHLIGHTS #t
-				 (highlights (rval hc))
-				 (highlights (gval hc))
-				 (highlights (bval hc)))
+    (gimp-drawable-merge-new-filter layer1 "gimp:color-balance" 0 LAYER-MODE-REPLACE 1.0
+                 "range"               TRANSFER-SHADOWS
+                 "cyan-red"            (/ (shadows (rval hc)) 100.0)
+                 "magenta-green"       (/ (shadows (gval hc)) 100.0)
+                 "yellow-blue"         (/ (shadows (bval hc)) 100.0)
+                 "preserve-luminosity" #t)
+    (gimp-drawable-merge-new-filter layer1 "gimp:color-balance" 0 LAYER-MODE-REPLACE 1.0
+                 "range"               TRANSFER-MIDTONES
+                 "cyan-red"            (/ (midtones (rval hc)) 100.0)
+                 "magenta-green"       (/ (midtones (gval hc)) 100.0)
+                 "yellow-blue"         (/ (midtones (bval hc)) 100.0)
+                 "preserve-luminosity" #t)
+    (gimp-drawable-merge-new-filter layer1 "gimp:color-balance" 0 LAYER-MODE-REPLACE 1.0
+                 "range"               TRANSFER-HIGHLIGHTS
+                 "cyan-red"            (/ (highlights (rval hc)) 100.0)
+                 "magenta-green"       (/ (highlights (gval hc)) 100.0)
+                 "yellow-blue"         (/ (highlights (bval hc)) 100.0)
+                 "preserve-luminosity" #t)
 
-    (gimp-drawable-color-balance layer2 TRANSFER-SHADOWS #t
-				 (shadows (rval cc))
-				 (shadows (gval cc))
-				 (shadows (bval cc)))
-    (gimp-drawable-color-balance layer2 TRANSFER-MIDTONES #t
-				 (midtones (rval cc))
-				 (midtones (gval cc))
-				 (midtones (bval cc)))
-    (gimp-drawable-color-balance layer2 TRANSFER-HIGHLIGHTS #t
-				 (highlights (rval cc))
-				 (highlights (gval cc))
-				 (highlights (bval cc)))
-    (gimp-drawable-hue-saturation layer2 HUE-RANGE-ALL
-				  0.0
-				  chrome-lightness
-				  chrome-saturation
-				  0.0)
+    (gimp-drawable-merge-new-filter layer2 "gimp:color-balance" 0 LAYER-MODE-REPLACE 1.0
+                 "range"               TRANSFER-SHADOWS
+                 "cyan-red"            (/ (shadows (rval cc)) 100.0)
+                 "magenta-green"       (/ (shadows (gval cc)) 100.0)
+                 "yellow-blue"         (/ (shadows (bval cc)) 100.0)
+                 "preserve-luminosity" #t)
+    (gimp-drawable-merge-new-filter layer2 "gimp:color-balance" 0 LAYER-MODE-REPLACE 1.0
+                 "range"               TRANSFER-MIDTONES
+                 "cyan-red"            (/ (midtones (rval cc)) 100.0)
+                 "magenta-green"       (/ (midtones (gval cc)) 100.0)
+                 "yellow-blue"         (/ (midtones (bval cc)) 100.0)
+                 "preserve-luminosity" #t)
+    (gimp-drawable-merge-new-filter layer2 "gimp:color-balance" 0 LAYER-MODE-REPLACE 1.0
+                 "range"               TRANSFER-HIGHLIGHTS
+                 "cyan-red"            (/ (highlights (rval cc)) 100.0)
+                 "magenta-green"       (/ (highlights (gval cc)) 100.0)
+                 "yellow-blue"         (/ (highlights (bval cc)) 100.0)
+                 "preserve-luminosity" #t)
+    (gimp-drawable-merge-new-filter mask "gimp:hue-saturation" 0 LAYER-MODE-REPLACE 1.0
+                 "range"      HUE-RANGE-ALL
+                 "hue"        0.0
+                 "saturation" (/ chrome-saturation 100.0)
+                 "lightness"  (/ chrome-lightness 100.0)
+                 "overlap"    0.0)
 
     (gimp-item-set-visible shadow #t)
     (gimp-item-set-visible bg-layer #t)

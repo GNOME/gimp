@@ -101,7 +101,7 @@
           (gimp-floating-sel-anchor floating-sel)
     )
     (if (= carve-white FALSE)
-        (gimp-drawable-invert mask FALSE))
+        (gimp-drawable-merge-new-filter mask "gegl:invert-gamma" 0 LAYER-MODE-REPLACE 1.0))
 
     (set! mask-fat (car (gimp-channel-copy mask)))
     (gimp-image-insert-channel img mask-fat -1 0)

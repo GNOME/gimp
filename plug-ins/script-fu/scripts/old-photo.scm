@@ -48,9 +48,16 @@
   (set! theLayer (car (gimp-image-flatten theImage)))
 
   (if (= inSepia TRUE)
-      (begin (gimp-drawable-desaturate theLayer DESATURATE-LIGHTNESS)
-             (gimp-drawable-brightness-contrast theLayer -0.078125 -0.15625)
-             (gimp-drawable-color-balance theLayer TRANSFER-SHADOWS TRUE 30 0 -30)
+      (begin (gimp-drawable-merge-new-filter theLayer "gimp:desaturate" 0 LAYER-MODE-REPLACE 1.0 "mode" DESATURATE-LIGHTNESS)
+             (gimp-drawable-merge-new-filter theLayer "gimp:brightness-contrast" 0 LAYER-MODE-REPLACE 1.0
+                 "brightness" -0.078125
+                 "contrast"   -0.15625)
+             (gimp-drawable-merge-new-filter theLayer "gimp:color-balance" 0 LAYER-MODE-REPLACE 1.0
+                 "range"               TRANSFER-SHADOWS
+                 "cyan-red"            0.3
+                 "magenta-green"       0.0
+                 "yellow-blue"         -0.3
+                 "preserve-luminosity" TRUE)
       )
   )
   (set! theWidth (car (gimp-image-get-width theImage)))

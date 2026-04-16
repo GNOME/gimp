@@ -222,8 +222,10 @@
                                     "std-dev-x" (* 0.32 hole-radius)
                                     "std-dev-y" (* 0.32 hole-radius)
                                     "filter" "auto")
-    (gimp-drawable-threshold film-mask HISTOGRAM-VALUE 0.5 1.0)
-
+    (gimp-drawable-merge-new-filter film-mask "gimp:threshold" 0 LAYER-MODE-REPLACE 1.0
+                                    "channel" HISTOGRAM-VALUE
+                                    "low"     0.5
+                                    "high"    1.0)
     (gimp-layer-remove-mask film-layer MASK-APPLY)
   )
 

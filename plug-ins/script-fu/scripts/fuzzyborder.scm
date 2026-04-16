@@ -108,9 +108,11 @@
                                    (car (gimp-layer-copy theLayer)) 0 -1)
           (gimp-layer-scale theLayer
                             (- theWidth inSize) (- theHeight inSize) TRUE)
-          (gimp-drawable-desaturate theLayer DESATURATE-LIGHTNESS)
-          (gimp-drawable-brightness-contrast theLayer 0.5 0.5)
-          (gimp-drawable-invert theLayer FALSE)
+          (gimp-drawable-merge-new-filter theLayer "gimp:desaturate" 0 LAYER-MODE-REPLACE 1.0 "mode" DESATURATE-LIGHTNESS)
+          (gimp-drawable-merge-new-filter theLayer "gimp:brightness-contrast" 0 LAYER-MODE-REPLACE 1.0
+                 "brightness" 0.5
+                 "contrast"   0.5)
+          (gimp-drawable-merge-new-filter theLayer "gegl:invert-gamma" 0 LAYER-MODE-REPLACE 1.0)
           (gimp-layer-resize theLayer
                              theWidth
                              theHeight
