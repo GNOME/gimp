@@ -1341,9 +1341,15 @@ layers_resize_to_image_cmd_callback (GimpAction *action,
                                  _("Layers to Image Size"));
 
   for (iter = layers; iter; iter = iter->next)
-    gimp_layer_resize_to_image (iter->data,
-                                action_data_get_context (data),
-                                GIMP_FILL_TRANSPARENT);
+    {
+      if (GIMP_IS_RASTERIZABLE (iter->data) &&
+          ! gimp_rasterizable_is_rasterized (iter->data))
+        continue;
+
+      gimp_layer_resize_to_image (iter->data,
+                                  action_data_get_context (data),
+                                  GIMP_FILL_TRANSPARENT);
+    }
 
   if (g_list_length (layers) > 1)
     gimp_image_undo_group_end (image);
@@ -1439,6 +1445,10 @@ layers_crop_to_selection_cmd_callback (GimpAction *action,
   for (iter = layers; iter; iter = iter->next)
     {
       gint off_x, off_y;
+
+      if (GIMP_IS_RASTERIZABLE (iter->data) &&
+          ! gimp_rasterizable_is_rasterized (iter->data))
+        continue;
 
       gimp_item_get_offset (GIMP_ITEM (iter->data), &off_x, &off_y);
       off_x -= x;
