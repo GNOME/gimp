@@ -23,6 +23,9 @@ Core:
     it is not empty, which it should be).
   - XCF opened as layers will now always create new layers named as in
     the source XCF, even if the source XCF had only a single layer.
+  - The "layers-resize" now only works on raster layers.
+  - The "Layers to Image Size" and "Resize Layer to Selection" actions
+    will only work on raster layers too.
 
 Tool
 
@@ -41,16 +44,21 @@ Tool
   - Select by Color tool: optimized processing when working in Intersect
     mode.
   - Crop tool: non-raster layers are not rasterized anymore.
+  - Text tool: on-canvas GUI is now properly positioned when rotating
+    the canvas.
 
 Plug-Ins:
 
   - Improve import of: APNG, PAA, PNG, DDS, PSP, PNM, PSD, JIF, PVR
-    texture, TIM, XWD.
+    texture, TIM, XWD, SFW, ORA.
   - Improved PDF export.
   - file-compressor: improved error messaging.
   - New Windows WIA scanner plug-in, replacing the now deprecated TWAIN
     scanner plug-in (which is not shipped in our Windows packages
     anymore as it depends on dropped 32-bit Windows platform).
+  - Script-Fu: several deprecated functions now cleaned out from
+    scripts.
+  - Filmstrip: the created image will now have the dirty flag set.
 
 API:
 
