@@ -23,6 +23,10 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef GDK_WINDOWING_QUARTZ
+#include <gdk/gdkquartz.h>
+#endif
+
 #include "libgimpmath/gimpmath.h"
 
 #include "gimpwidgetstypes.h"
@@ -117,6 +121,27 @@ G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpScrolledPreview, gimp_scrolled_preview,
                                      GIMP_TYPE_PREVIEW)
 
 #define parent_class gimp_scrolled_preview_parent_class
+
+
+static gboolean
+gimp_scroll_event_uses_native_delta (GdkEventScroll *sevent)
+{
+  if (sevent->direction != GDK_SCROLL_SMOOTH)
+    return FALSE;
+
+#ifdef GDK_WINDOWING_QUARTZ
+  if (gdk_event_get_window ((GdkEvent *) sevent))
+    {
+      GdkDisplay *display =
+        gdk_window_get_display (gdk_event_get_window((GdkEvent *) sevent));
+
+      if (display && GDK_IS_QUARTZ_DISPLAY (display))
+        return TRUE;
+    }
+#endif
+
+  return FALSE;
+}
 
 
 static void
@@ -961,12 +986,15 @@ gimp_scroll_adjustment_values (GdkEventScroll *sevent,
   GtkAdjustment *adj_y;
   gdouble        scroll_unit_x;
   gdouble        scroll_unit_y;
+  gboolean       native_delta;
   gdouble        value_x = 0.0;
   gdouble        value_y = 0.0;
 
   g_return_if_fail (sevent != NULL);
   g_return_if_fail (hadj == NULL || GTK_IS_ADJUSTMENT (hadj));
   g_return_if_fail (vadj == NULL || GTK_IS_ADJUSTMENT (vadj));
+
+  native_delta = gimp_scroll_event_uses_native_delta (sevent);
 
   if (sevent->state & GDK_SHIFT_MASK)
     {
@@ -1019,8 +1047,12 @@ gimp_scroll_adjustment_values (GdkEventScroll *sevent,
 
     case GDK_SCROLL_SMOOTH:
       gdk_event_get_scroll_deltas ((GdkEvent *) sevent, &value_x, &value_y);
-      value_x *= scroll_unit_x;
-      value_y *= scroll_unit_y;
+
+      if (! native_delta)
+        {
+          value_x *= scroll_unit_x;
+          value_y *= scroll_unit_y;
+        }
     }
 
   if (adj_x)
