@@ -956,6 +956,14 @@ gimp_histogram_calculate_internal (GimpAsync        *async,
                                  space);
       break;
 
+    case GIMP_CMYK:
+      format = gimp_babl_format (GIMP_CMYK,
+                                 gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                                                      priv->trc),
+                                 babl_format_has_alpha (format),
+                                 space);
+      break;
+
     case GIMP_GRAY:
       format = gimp_babl_format (GIMP_GRAY,
                                  gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
