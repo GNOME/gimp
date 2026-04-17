@@ -1540,7 +1540,9 @@ ReadJeffsImage (FILE       *fd,
         mask |= 1 << i;
     }
 
-  data_size  = len * height;
+  data_size = len * height;
+  if (alpha_frame)
+    data_size *= 2;
   compressed = g_try_malloc (data_size * 255);
   indexes    = g_try_malloc (data_size);
 
@@ -1624,6 +1626,9 @@ ReadJeffsImage (FILE       *fd,
     {
       for (gint j = 0; j < 8; j += bpp)
         {
+          if (pos >= data_size)
+            break;
+
           dest[pos++] = (indexes[i] & (mask >> j)) >> (8 - bpp - j);
 
           if (alpha_frame)
