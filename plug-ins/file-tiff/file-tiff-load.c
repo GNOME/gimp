@@ -2011,8 +2011,19 @@ load_contiguous (TIFF         *tif,
 
   if (tiff_mode != GIMP_TIFF_DEFAULT && bps < 8)
     {
+      gsize tile_area = (gsize) tile_width * tile_height;
+
       needs_upscale = TRUE;
-      bw_buffer = g_malloc (tile_width * tile_height);
+      bw_buffer = g_try_malloc (tile_area);
+
+      if (! bw_buffer)
+        {
+          g_message (_("There was not enough memory to complete the "
+                       "operation."));
+          g_free (buffer);
+          g_free (bw_buffer);
+          return;
+        }
     }
 
   one_row = (gdouble) tile_height / (gdouble) image_height;
@@ -2188,8 +2199,19 @@ load_separate (TIFF         *tif,
 
   if (tiff_mode != GIMP_TIFF_DEFAULT && bps < 8)
     {
+      gsize tile_area = (gsize) tile_width * tile_height;
+
       needs_upscale = TRUE;
-      bw_buffer = g_malloc (tile_width * tile_height);
+      bw_buffer = g_try_malloc (tile_area);
+
+      if (! bw_buffer)
+        {
+          g_message (_("There was not enough memory to complete the "
+                       "operation."));
+          g_free (buffer);
+          g_free (bw_buffer);
+          return;
+        }
     }
 
   one_row = (gdouble) tile_height / (gdouble) image_height;
