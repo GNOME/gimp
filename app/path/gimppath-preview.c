@@ -41,6 +41,7 @@ gimp_path_get_new_preview (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
                            gint          height,
+                           gint          scale_factor,
                            GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpPath    *path;
@@ -52,6 +53,9 @@ gimp_path_get_new_preview (GimpViewable *viewable,
 
   path = GIMP_PATH (viewable);
   item = GIMP_ITEM (viewable);
+
+  width  *= scale_factor;
+  height *= scale_factor;
 
   xscale = ((gdouble) width)  / gimp_image_get_width  (gimp_item_get_image (item));
   yscale = ((gdouble) height) / gimp_image_get_height (gimp_item_get_image (item));

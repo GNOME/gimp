@@ -94,11 +94,13 @@ static GimpTempBuf      * gimp_image_proxy_get_new_preview          (GimpViewabl
                                                                      GimpContext                *context,
                                                                      gint                        width,
                                                                      gint                        height,
+                                                                     gint                        scale_factor,
                                                                      GeglColor                  *fg_color);
 static GdkPixbuf        * gimp_image_proxy_get_new_pixbuf           (GimpViewable               *viewable,
                                                                      GimpContext                *context,
                                                                      gint                        width,
                                                                      gint                        height,
+                                                                     gint                        scale_factor,
                                                                      GeglColor                  *fg_color);
 static gchar            * gimp_image_proxy_get_description          (GimpViewable               *viewable,
                                                                      gchar                     **tooltip);
@@ -376,6 +378,7 @@ gimp_image_proxy_get_new_preview (GimpViewable *viewable,
                                   GimpContext  *context,
                                   gint          width,
                                   gint          height,
+                                  gint          scale_factor,
                                   GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (viewable);
@@ -390,6 +393,9 @@ gimp_image_proxy_get_new_preview (GimpViewable *viewable,
 
   pickable     = gimp_image_proxy_get_pickable     (image_proxy);
   bounding_box = gimp_image_proxy_get_bounding_box (image_proxy);
+
+  width  *= scale_factor;
+  height *= scale_factor;
 
   scale_x = (gdouble) width  / (gdouble) bounding_box.width;
   scale_y = (gdouble) height / (gdouble) bounding_box.height;
@@ -418,6 +424,7 @@ gimp_image_proxy_get_new_pixbuf (GimpViewable *viewable,
                                  GimpContext  *context,
                                  gint          width,
                                  gint          height,
+                                 gint          scale_factor,
                                  GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpImageProxy     *image_proxy = GIMP_IMAGE_PROXY (viewable);
@@ -433,10 +440,13 @@ gimp_image_proxy_get_new_pixbuf (GimpViewable *viewable,
   pickable     = gimp_image_proxy_get_pickable     (image_proxy);
   bounding_box = gimp_image_proxy_get_bounding_box (image_proxy);
 
+  width  *= scale_factor;
+  height *= scale_factor;
+
   scale_x = (gdouble) width  / (gdouble) bounding_box.width;
   scale_y = (gdouble) height / (gdouble) bounding_box.height;
 
-  scale   = MIN (scale_x, scale_y);
+  scale = MIN (scale_x, scale_y);
 
   pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
                            width, height);

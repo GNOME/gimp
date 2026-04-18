@@ -902,7 +902,7 @@ gimp_row_drag_pixbuf (GtkWidget *widget,
     {
       return gimp_viewable_get_new_pixbuf (priv->viewable,
                                            priv->context,
-                                           width, height, NULL);
+                                           width, height, 1, NULL);
     }
 
   g_printerr ("failed\n");

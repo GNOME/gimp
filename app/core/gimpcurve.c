@@ -87,6 +87,7 @@ static GimpTempBuf * gimp_curve_get_new_preview   (GimpViewable     *viewable,
                                                    GimpContext      *context,
                                                    gint              width,
                                                    gint              height,
+                                                   gint              scale_factor,
                                                    GeglColor        *fg_color);
 static gchar       * gimp_curve_get_description   (GimpViewable     *viewable,
                                                    gchar           **tooltip);
@@ -523,6 +524,7 @@ gimp_curve_get_new_preview (GimpViewable *viewable,
                             GimpContext  *context,
                             gint          width,
                             gint          height,
+                            gint          scale_factor,
                             GeglColor    *fg_color G_GNUC_UNUSED)
 {
   return NULL;

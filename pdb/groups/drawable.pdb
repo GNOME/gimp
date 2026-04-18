@@ -983,10 +983,10 @@ HELP
 
   if (image->gimp->config->layer_previews)
     buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable), context,
-                                         width, height, NULL);
+                                         width, height, 1, NULL);
   else
     buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
-                                           width, height,
+                                           width, height, 1,
                                            gimp_drawable_get_preview_format (drawable));
 
   if (buf)
@@ -1092,10 +1092,10 @@ HELP
         buf = gimp_drawable_get_sub_preview (drawable,
                                              src_x, src_y,
                                              src_width, src_height,
-                                             dest_width, dest_height);
+                                             dest_width, dest_height, 1);
       else
         buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
-                                               dest_width, dest_height,
+                                               dest_width, dest_height, 1,
                                                gimp_drawable_get_preview_format (drawable));
 
       if (buf)

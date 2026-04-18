@@ -66,6 +66,7 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
   GimpViewRendererImage *rendererimage = GIMP_VIEW_RENDERER_IMAGE (renderer);
   GimpImage             *image;
   const gchar           *icon_name;
+  gint                   scale_factor;
   gint                   width;
   gint                   height;
 
@@ -82,6 +83,8 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
     {
       g_return_if_reached ();
     }
+
+  scale_factor = gtk_widget_get_scale_factor (widget);
 
   gimp_viewable_get_size (renderer->viewable, &width, &height);
 
@@ -104,8 +107,8 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
       gimp_viewable_calc_preview_size (width,
                                        height,
-                                       renderer->width,
-                                       renderer->height,
+                                       renderer->width  * scale_factor,
+                                       renderer->height * scale_factor,
                                        renderer->dot_for_dot,
                                        xres,
                                        yres,
@@ -119,12 +122,14 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
           temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                                     renderer->context,
-                                                    width, height, NULL);
+                                                    width, height, 1,
+                                                    NULL);
 
           if (temp_buf)
             {
               render_buf = gimp_temp_buf_scale (temp_buf,
-                                                view_width, view_height);
+                                                view_width,
+                                                view_height);
               gimp_temp_buf_unref (temp_buf);
             }
         }
@@ -133,7 +138,9 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
           render_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                                       renderer->context,
                                                       view_width,
-                                                      view_height, NULL);
+                                                      view_height,
+                                                      1,
+                                                      NULL);
         }
 
       if (render_buf)
@@ -143,28 +150,33 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
           gint component_index = -1;
 
           /*  xresolution != yresolution */
-          if (view_width > renderer->width || view_height > renderer->height)
+          if (view_width  > renderer->width  * scale_factor ||
+              view_height > renderer->height * scale_factor)
             {
               GimpTempBuf *temp_buf;
 
               temp_buf = gimp_temp_buf_scale (render_buf,
-                                              renderer->width, renderer->height);
+                                              renderer->width  * scale_factor,
+                                              renderer->height * scale_factor);
               gimp_temp_buf_unref (render_buf);
               render_buf = temp_buf;
             }
 
-          if (view_width  < renderer->width)
-            render_buf_x = (renderer->width  - view_width)  / 2;
+          if (view_width  < renderer->width * scale_factor)
+            render_buf_x = (renderer->width *scale_factor - view_width)  / 2;
 
-          if (view_height < renderer->height)
-            render_buf_y = (renderer->height - view_height) / 2;
+          if (view_height < renderer->height * scale_factor)
+            render_buf_y = (renderer->height * scale_factor - view_height) / 2;
 
           if (rendererimage->channel != -1)
             component_index =
               gimp_image_get_component_index (image, rendererimage->channel);
 
-          gimp_view_renderer_render_temp_buf (renderer, widget, render_buf,
-                                              render_buf_x, render_buf_y,
+          gimp_view_renderer_render_temp_buf (renderer, widget,
+                                              render_buf,
+                                              scale_factor,
+                                              render_buf_x,
+                                              render_buf_y,
                                               component_index,
                                               GIMP_VIEW_BG_CHECKS,
                                               GIMP_VIEW_BG_WHITE);
@@ -189,6 +201,5 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
     }
 
   gimp_view_renderer_render_icon (renderer, widget,
-                                  icon_name,
-                                  gtk_widget_get_scale_factor (widget));
+                                  icon_name, scale_factor);
 }

@@ -75,9 +75,11 @@ struct _GimpViewablePrivate
   gint          depth;
 
   GimpTempBuf  *preview_temp_buf;
+  gint          preview_temp_buf_scale;
   GeglColor    *preview_temp_buf_color;
 
   GdkPixbuf    *preview_pixbuf;
+  gint          preview_pixbuf_scale;
   GeglColor    *preview_pixbuf_color;
 };
 
@@ -107,6 +109,7 @@ static GdkPixbuf * gimp_viewable_real_get_new_pixbuf (GimpViewable  *viewable,
                                                       GimpContext   *context,
                                                       gint           width,
                                                       gint           height,
+                                                      gint           scale_factor,
                                                       GeglColor     *fg_color);
 static void    gimp_viewable_real_get_preview_size   (GimpViewable  *viewable,
                                                       gint           size,
@@ -413,6 +416,7 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
                                    GimpContext  *context,
                                    gint          width,
                                    gint          height,
+                                   gint          scale_factor,
                                    GeglColor    *fg_color)
 {
   GimpViewablePrivate *private = GET_PRIVATE (viewable);
@@ -420,7 +424,9 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
   GimpTempBuf         *temp_buf;
 
   temp_buf = gimp_viewable_get_preview (viewable, context,
-                                        width, height,
+                                        width,
+                                        height,
+                                        scale_factor,
                                         fg_color);
 
   if (temp_buf)
@@ -430,8 +436,8 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
   else if (private->icon_pixbuf)
     {
       pixbuf = gdk_pixbuf_scale_simple (private->icon_pixbuf,
-                                        width,
-                                        height,
+                                        width  * scale_factor,
+                                        height * scale_factor,
                                         GDK_INTERP_BILINEAR);
     }
 
@@ -881,6 +887,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
                            gint          height,
+                           gint          scale_factor,
                            GeglColor    *fg_color)
 {
   GimpViewablePrivate *private = GET_PRIVATE (viewable);
@@ -889,8 +896,9 @@ gimp_viewable_get_preview (GimpViewable *viewable,
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (width  > 0, NULL);
+  g_return_val_if_fail (width > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
+  g_return_val_if_fail (scale_factor > 0, NULL);
 
   if (G_UNLIKELY (context == NULL))
     g_warning ("%s: context is NULL", G_STRFUNC);
@@ -899,7 +907,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
 
   if (viewable_class->get_preview)
     temp_buf = viewable_class->get_preview (viewable, context,
-                                            width, height,
+                                            width, height, scale_factor,
                                             fg_color);
 
   if (temp_buf)
@@ -909,8 +917,8 @@ gimp_viewable_get_preview (GimpViewable *viewable,
       ((fg_color == NULL && private->preview_temp_buf_color == NULL) ||
        (fg_color != NULL && private->preview_temp_buf_color != NULL)))
     {
-      if (gimp_temp_buf_get_width  (private->preview_temp_buf) == width &&
-          gimp_temp_buf_get_height (private->preview_temp_buf) == height)
+      if (gimp_temp_buf_get_width  (private->preview_temp_buf) == width  * scale_factor &&
+          gimp_temp_buf_get_height (private->preview_temp_buf) == height * scale_factor)
         {
           gboolean same_colors = TRUE;
 
@@ -940,10 +948,11 @@ gimp_viewable_get_preview (GimpViewable *viewable,
 
   if (viewable_class->get_new_preview)
     temp_buf = viewable_class->get_new_preview (viewable, context,
-                                                width, height,
+                                                width, height, scale_factor,
                                                 fg_color);
 
   private->preview_temp_buf       = temp_buf;
+  private->preview_temp_buf_scale = scale_factor;
   private->preview_temp_buf_color = fg_color ?
                                     gegl_color_duplicate (fg_color) : NULL;
 
@@ -972,6 +981,7 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
                                GimpContext  *context,
                                gint          width,
                                gint          height,
+                               gint          scale_factor,
                                GeglColor    *fg_color)
 {
   GimpViewableClass *viewable_class;
@@ -981,6 +991,7 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
+  g_return_val_if_fail (scale_factor > 0, NULL);
 
   if (G_UNLIKELY (context == NULL))
     g_warning ("%s: context is NULL", G_STRFUNC);
@@ -990,6 +1001,7 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
   if (viewable_class->get_new_preview)
     temp_buf = viewable_class->get_new_preview (viewable, context,
                                                 width, height,
+                                                scale_factor,
                                                 fg_color);
 
   if (temp_buf)
@@ -998,6 +1010,7 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
   if (viewable_class->get_preview)
     temp_buf = viewable_class->get_preview (viewable, context,
                                             width, height,
+                                            scale_factor,
                                             fg_color);
 
   if (temp_buf)
@@ -1024,6 +1037,7 @@ GimpTempBuf *
 gimp_viewable_get_dummy_preview (GimpViewable *viewable,
                                  gint          width,
                                  gint          height,
+                                 gint          scale_factor,
                                  const Babl   *format)
 {
   GdkPixbuf   *pixbuf;
@@ -1032,9 +1046,11 @@ gimp_viewable_get_dummy_preview (GimpViewable *viewable,
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
+  g_return_val_if_fail (scale_factor > 0, NULL);
   g_return_val_if_fail (format != NULL, NULL);
 
   pixbuf = gimp_viewable_get_dummy_pixbuf (viewable, width, height,
+                                           scale_factor,
                                            babl_format_has_alpha (format));
 
   buf = gimp_temp_buf_new_from_pixbuf (pixbuf, format);
@@ -1046,12 +1062,13 @@ gimp_viewable_get_dummy_preview (GimpViewable *viewable,
 
 /**
  * gimp_viewable_get_pixbuf:
- * @viewable: The viewable object to get a pixbuf preview for.
- * @context:  The context to render the preview for.
- * @width:    desired width for the preview
- * @height:   desired height for the preview
- * @fg_color: desired foreground color for the preview when the type of
- *            @viewable supports recolorization.
+ * @viewable:     The viewable object to get a pixbuf preview for.
+ * @context:      The context to render the preview for.
+ * @width:        desired width for the preview
+ * @height:       desired height for the preview
+ * @scale_factor: scale of target widget
+ * @fg_color:     desired foreground color for the preview when the type of
+ *                @viewable supports recolorization.
  *
  * Gets a preview for a viewable object, by running through a variety
  * of methods until it finds one that works.  First, if an
@@ -1071,6 +1088,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
                           GimpContext  *context,
                           gint          width,
                           gint          height,
+                          gint          scale_factor,
                           GeglColor    *fg_color)
 {
   GimpViewablePrivate *private = GET_PRIVATE (viewable);
@@ -1081,6 +1099,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
+  g_return_val_if_fail (scale_factor > 0, NULL);
 
   if (G_UNLIKELY (context == NULL))
     g_warning ("%s: context is NULL", G_STRFUNC);
@@ -1090,6 +1109,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
   if (viewable_class->get_pixbuf)
     pixbuf = viewable_class->get_pixbuf (viewable, context,
                                          width, height,
+                                         scale_factor,
                                          fg_color);
 
   if (pixbuf)
@@ -1099,8 +1119,8 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
       ((fg_color == NULL && private->preview_pixbuf_color == NULL) ||
        (fg_color != NULL && private->preview_pixbuf_color != NULL)))
     {
-      if (gdk_pixbuf_get_width  (private->preview_pixbuf) == width &&
-          gdk_pixbuf_get_height (private->preview_pixbuf) == height)
+      if (gdk_pixbuf_get_width  (private->preview_pixbuf) == width  * scale_factor &&
+          gdk_pixbuf_get_height (private->preview_pixbuf) == height * scale_factor)
         {
           gboolean same_colors = TRUE;
 
@@ -1127,13 +1147,16 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
 
   g_clear_object (&private->preview_pixbuf);
   g_clear_object (&private->preview_pixbuf_color);
+  private->preview_pixbuf_scale = 1;
 
   if (viewable_class->get_new_pixbuf)
     pixbuf = viewable_class->get_new_pixbuf (viewable, context,
                                              width, height,
+                                             scale_factor,
                                              fg_color);
 
   private->preview_pixbuf       = pixbuf;
+  private->preview_pixbuf_scale = scale_factor;
   private->preview_pixbuf_color = fg_color ?
                                   gegl_color_duplicate (fg_color) : NULL;
 
@@ -1142,12 +1165,13 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
 
 /**
  * gimp_viewable_get_new_pixbuf:
- * @viewable: The viewable object to get a new pixbuf preview for.
- * @context:  The context to render the preview for.
- * @width:    desired width for the pixbuf
- * @height:   desired height for the pixbuf
- * @fg_color: desired foreground color for the preview when the type of
- *            @viewable support recolorization.
+ * @viewable:     The viewable object to get a new pixbuf preview for.
+ * @context:      The context to render the preview for.
+ * @width:        desired width for the pixbuf
+ * @height:       desired height for the pixbuf
+ * @scale_factor: scale of target widget
+ * @fg_color:     desired foreground color for the preview when the type of
+ *                @viewable support recolorization.
  *
  * Gets a new preview for a viewable object.  Similar to
  * gimp_viewable_get_pixbuf(), except that it tries things in a
@@ -1163,6 +1187,7 @@ gimp_viewable_get_new_pixbuf (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
                               gint          height,
+                              gint          scale_factor,
                               GeglColor    *fg_color)
 {
   GimpViewableClass *viewable_class;
@@ -1172,6 +1197,7 @@ gimp_viewable_get_new_pixbuf (GimpViewable *viewable,
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
+  g_return_val_if_fail (scale_factor > 0, NULL);
 
   if (G_UNLIKELY (context == NULL))
     g_warning ("%s: context is NULL", G_STRFUNC);
@@ -1181,6 +1207,7 @@ gimp_viewable_get_new_pixbuf (GimpViewable *viewable,
   if (viewable_class->get_new_pixbuf)
     pixbuf = viewable_class->get_new_pixbuf (viewable, context,
                                              width, height,
+                                             scale_factor,
                                              fg_color);
 
   if (pixbuf)
@@ -1189,6 +1216,7 @@ gimp_viewable_get_new_pixbuf (GimpViewable *viewable,
   if (viewable_class->get_pixbuf)
     pixbuf = viewable_class->get_pixbuf (viewable, context,
                                          width, height,
+                                         scale_factor,
                                          fg_color);
 
   if (pixbuf)
@@ -1218,6 +1246,7 @@ GdkPixbuf *
 gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
                                 gint           width,
                                 gint           height,
+                                gint           scale_factor,
                                 gboolean       with_alpha)
 {
   GdkPixbuf *icon;
@@ -1229,6 +1258,7 @@ gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
+  g_return_val_if_fail (scale_factor > 0, NULL);
 
   icon = gdk_pixbuf_new_from_resource ("/org/gimp/icons/64/dialog-question.png",
                                        &error);
@@ -1238,6 +1268,9 @@ gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
       g_clear_error (&error);
       return NULL;
     }
+
+  width  *= scale_factor;
+  height *= scale_factor;
 
   w = gdk_pixbuf_get_width (icon);
   h = gdk_pixbuf_get_height (icon);

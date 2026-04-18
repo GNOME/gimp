@@ -113,6 +113,7 @@ gimp_drawable_get_new_preview (GimpViewable *viewable,
                                GimpContext  *context,
                                gint          width,
                                gint          height,
+                               gint          scale_factor,
                                GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpItem  *item  = GIMP_ITEM (viewable);
@@ -126,7 +127,8 @@ gimp_drawable_get_new_preview (GimpViewable *viewable,
                                         gimp_item_get_width  (item),
                                         gimp_item_get_height (item),
                                         width,
-                                        height);
+                                        height,
+                                        scale_factor);
 }
 
 GdkPixbuf *
@@ -134,6 +136,7 @@ gimp_drawable_get_new_pixbuf (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
                               gint          height,
+                              gint          scale_factor,
                               GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpItem  *item  = GIMP_ITEM (viewable);
@@ -147,7 +150,8 @@ gimp_drawable_get_new_pixbuf (GimpViewable *viewable,
                                        gimp_item_get_width  (item),
                                        gimp_item_get_height (item),
                                        width,
-                                       height);
+                                       height,
+                                       scale_factor);
 }
 
 const Babl *
@@ -186,7 +190,8 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
                                gint          src_width,
                                gint          src_height,
                                gint          dest_width,
-                               gint          dest_height)
+                               gint          dest_height,
+                               gint          dest_scale_factor)
 {
   GimpItem    *item;
   GimpImage   *image;
@@ -203,6 +208,7 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
   g_return_val_if_fail (src_height > 0, NULL);
   g_return_val_if_fail (dest_width  > 0, NULL);
   g_return_val_if_fail (dest_height > 0, NULL);
+  g_return_val_if_fail (dest_scale_factor > 0, NULL);
 
   item = GIMP_ITEM (drawable);
 
@@ -213,6 +219,9 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
 
   if (! image->gimp->config->layer_previews)
     return NULL;
+
+  dest_width  *= dest_scale_factor;
+  dest_height *= dest_scale_factor;
 
   buffer = gimp_drawable_get_buffer_with_effects (drawable);
 
@@ -243,7 +252,8 @@ gimp_drawable_get_sub_pixbuf (GimpDrawable *drawable,
                               gint          src_width,
                               gint          src_height,
                               gint          dest_width,
-                              gint          dest_height)
+                              gint          dest_height,
+                              gint          dest_scale_factor)
 {
   GimpItem           *item;
   GimpImage          *image;
@@ -261,6 +271,7 @@ gimp_drawable_get_sub_pixbuf (GimpDrawable *drawable,
   g_return_val_if_fail (src_height > 0, NULL);
   g_return_val_if_fail (dest_width  > 0, NULL);
   g_return_val_if_fail (dest_height > 0, NULL);
+  g_return_val_if_fail (dest_scale_factor > 0, NULL);
 
   item = GIMP_ITEM (drawable);
 
@@ -271,6 +282,9 @@ gimp_drawable_get_sub_pixbuf (GimpDrawable *drawable,
 
   if (! image->gimp->config->layer_previews)
     return NULL;
+
+  dest_width  *= dest_scale_factor;
+  dest_height *= dest_scale_factor;
 
   buffer = gimp_drawable_get_buffer_with_effects (drawable);
 
@@ -407,7 +421,8 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
                                      gint          src_width,
                                      gint          src_height,
                                      gint          dest_width,
-                                     gint          dest_height)
+                                     gint          dest_height,
+                                     gint          dest_scale_factor)
 {
   GimpItem       *item;
   GimpImage      *image;
@@ -425,6 +440,7 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
   g_return_val_if_fail (src_height > 0, NULL);
   g_return_val_if_fail (dest_width  > 0, NULL);
   g_return_val_if_fail (dest_height > 0, NULL);
+  g_return_val_if_fail (dest_scale_factor > 0, NULL);
 
   item = GIMP_ITEM (drawable);
 
@@ -435,6 +451,9 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
 
   if (! image->gimp->config->layer_previews)
     return NULL;
+
+  dest_width  *= dest_scale_factor;
+  dest_height *= dest_scale_factor;
 
   buffer = gimp_drawable_get_buffer_with_effects (drawable);
 
@@ -455,7 +474,8 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
                                                              src_width,
                                                              src_height,
                                                              dest_width,
-                                                             dest_height),
+                                                             dest_height,
+                                                             dest_scale_factor),
                               (GDestroyNotify) gimp_temp_buf_unref);
 
       return async;

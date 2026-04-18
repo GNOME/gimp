@@ -50,6 +50,7 @@ static GimpTempBuf * gimp_pattern_get_new_preview   (GimpViewable         *viewa
                                                      GimpContext          *context,
                                                      gint                  width,
                                                      gint                  height,
+                                                     gint                  scale_factor,
                                                      GeglColor            *fg_color);
 static gchar       * gimp_pattern_get_description   (GimpViewable         *viewable,
                                                      gchar               **tooltip);
@@ -144,58 +145,56 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
                               gint          height,
+                              gint          scale_factor,
                               GeglColor    *fg_color G_GNUC_UNUSED)
 {
-  GimpPattern *pattern     = GIMP_PATTERN (viewable);
-  GimpTempBuf *temp_buf;
+  GimpPattern *pattern  = GIMP_PATTERN (viewable);
+  GimpTempBuf *temp_buf = NULL;
   GeglBuffer  *src_buffer;
-  gint         true_width;
-  gint         true_height;
+  gint         mask_width;
+  gint         mask_height;
   gint         copy_width;
   gint         copy_height;
-  gboolean     has_temp_buf = FALSE;
 
-  true_width  = gimp_temp_buf_get_width (pattern->mask);
-  true_height = gimp_temp_buf_get_height (pattern->mask);
-  copy_width  = MIN (width, true_width);
-  copy_height = MIN (height, true_height);
+  width  *= scale_factor;
+  height *= scale_factor;
+
+  mask_width  = gimp_temp_buf_get_width  (pattern->mask);
+  mask_height = gimp_temp_buf_get_height (pattern->mask);
+
+  copy_width  = MIN (width,  mask_width);
+  copy_height = MIN (height, mask_height);
 
   src_buffer = gimp_temp_buf_create_buffer (pattern->mask);
 
-  if (true_width > width || true_height > height)
+  if (mask_width != width || mask_height != height)
     {
-      gdouble ratio_x = (gdouble) width / (gdouble) true_width;
-      gdouble ratio_y = (gdouble) height / (gdouble) true_height;
+      gdouble ratio_x = (gdouble) width  / (gdouble) mask_width;
+      gdouble ratio_y = (gdouble) height / (gdouble) mask_height;
       gdouble scale   = MIN (ratio_x, ratio_y);
-      gdouble aspect  = (gdouble) true_width / (gdouble) true_height;
 
-      /* Adjusting dimensions for non-square patterns */
-      if (true_width > true_height)
-        copy_height = copy_width / aspect;
-      else if (true_width < true_height)
-        copy_width = copy_height * aspect;
+      if (mask_width < width && mask_height < height)
+        {
+          scale = MIN (scale_factor, scale);
+        }
 
-      copy_width  = MAX (1, copy_width);
-      copy_height = MAX (1, copy_height);
+      copy_width  = scale * mask_width;
+      copy_height = scale * mask_height;
 
       temp_buf = gimp_temp_buf_new (copy_width, copy_height,
                                     gimp_temp_buf_get_format (pattern->mask));
 
-      if (temp_buf)
-        {
-          gegl_buffer_get (src_buffer,
-                           GEGL_RECTANGLE (0, 0, copy_width, copy_height),
-                           scale, gimp_temp_buf_get_format (temp_buf),
-                           gimp_temp_buf_get_data (temp_buf),
-                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
-
-          has_temp_buf = TRUE;
-        }
+      gegl_buffer_get (src_buffer,
+                       GEGL_RECTANGLE (0, 0, copy_width, copy_height),
+                       scale, gimp_temp_buf_get_format (temp_buf),
+                       gimp_temp_buf_get_data (temp_buf),
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
     }
 
-  /* If scaled image pattern could not be loaded,
-   * use the default pattern */
-  if (! has_temp_buf)
+  /*  If scaled image pattern could not be loaded, use the default
+   *  pattern
+   */
+  if (! temp_buf)
     {
       GeglBuffer *dest_buffer;
 

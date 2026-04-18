@@ -51,6 +51,7 @@ struct _GimpViewRendererDrawablePrivate
 
   gint       prev_width;
   gint       prev_height;
+  gint       prev_scale_factor;
 };
 
 
@@ -139,6 +140,7 @@ gimp_view_renderer_drawable_render_async_callback (GimpAsync                *asy
         renderer,
         widget,
         render_buf,
+        renderdrawable->priv->prev_scale_factor,
         renderdrawable->priv->render_buf_x,
         renderdrawable->priv->render_buf_y,
         -1,
@@ -162,6 +164,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
   GimpImage                *image;
   const gchar              *icon_name;
   GimpAsync                *async;
+  gint                      scale_factor;
   gint                      image_width;
   gint                      image_height;
   gint                      view_width;
@@ -187,14 +190,15 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
   image     = gimp_item_get_image (item);
   icon_name = gimp_viewable_get_icon_name (renderer->viewable);
 
+  scale_factor = gtk_widget_get_scale_factor (widget);
+
   if (image && ! image->gimp->config->layer_previews)
     {
       renderdrawable->priv->prev_width  = 0;
       renderdrawable->priv->prev_height = 0;
 
       gimp_view_renderer_render_icon (renderer, widget,
-                                      icon_name,
-                                      gtk_widget_get_scale_factor (widget));
+                                      icon_name, scale_factor);
 
       return;
     }
@@ -218,8 +222,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
   gimp_viewable_calc_preview_size (image_width,
                                    image_height,
-                                   renderer->width,
-                                   renderer->height,
+                                   renderer->width  * scale_factor,
+                                   renderer->height * scale_factor,
                                    renderer->dot_for_dot,
                                    xres,
                                    yres,
@@ -270,8 +274,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
     }
   else
     {
-      dst_x      = (renderer->width  - view_width)  / 2;
-      dst_y      = (renderer->height - view_height) / 2;
+      dst_x      = (renderer->width  * scale_factor - view_width)  / 2;
+      dst_y      = (renderer->height * scale_factor - view_height) / 2;
       dst_width  = view_width;
       dst_height = view_height;
     }
@@ -284,7 +288,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
       async = gimp_drawable_get_sub_preview_async (drawable,
                                                    src_x, src_y,
                                                    src_width, src_height,
-                                                   dst_width, dst_height);
+                                                   dst_width, dst_height,
+                                                   scale_factor);
     }
   else
     {
@@ -327,13 +332,13 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
               renderer->height != renderdrawable->priv->prev_height)
             {
               gimp_view_renderer_render_icon (renderer, widget,
-                                              icon_name,
-                                              gtk_widget_get_scale_factor (widget));
+                                              icon_name, scale_factor);
             }
         }
 
-      renderdrawable->priv->prev_width  = renderer->width;
-      renderdrawable->priv->prev_height = renderer->height;
+      renderdrawable->priv->prev_width        = renderer->width ;
+      renderdrawable->priv->prev_height       = renderer->height;
+      renderdrawable->priv->prev_scale_factor = scale_factor;
 
       g_object_unref (async);
     }
@@ -343,8 +348,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
       renderdrawable->priv->prev_height = 0;
 
       gimp_view_renderer_render_icon (renderer, widget,
-                                      icon_name,
-                                      gtk_widget_get_scale_factor (widget));
+                                      icon_name, scale_factor);
     }
 }
 

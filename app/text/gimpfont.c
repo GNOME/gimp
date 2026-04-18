@@ -134,6 +134,7 @@ static GimpTempBuf * gimp_font_get_new_preview    (GimpViewable          *viewab
                                                    GimpContext           *context,
                                                    gint                   width,
                                                    gint                   height,
+                                                   gint                   scale_factor,
                                                    GeglColor             *fg_color);
 
 static void          gimp_font_config_iface_init  (GimpConfigInterface  *iface);
@@ -673,16 +674,13 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   PangoFontDescription *font_desc;
   PangoRectangle        ink;
   PangoRectangle        logical;
-  const gchar          *name;
 
   pango_context = gimp_font_factory_get_pango_context (GIMP_FONT_CLASS (g_type_class_peek (GIMP_TYPE_FONT))->font_factory);
 
   if (! pango_context)
     return FALSE;
 
-  name = font->lookup_name;
-
-  font_desc = pango_font_description_from_string (name);
+  font_desc = pango_font_description_from_string (font->lookup_name);
   g_return_val_if_fail (font_desc != NULL, FALSE);
 
   pango_font_description_set_size (font_desc, GIMP_FONT_POPUP_SIZE);
@@ -713,6 +711,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
                            gint          height,
+                           gint          scale_factor,
                            GeglColor    *fg_color)
 {
   GimpFont        *font = GIMP_FONT (viewable);
@@ -739,17 +738,16 @@ gimp_font_get_new_preview (GimpViewable *viewable,
       font->popup_height != height)
     {
       PangoFontDescription *font_desc;
-      const gchar          *name;
 
-      name = font->lookup_name;
+      DEBUGPRINT (("%s: ", font->lookup_name));
 
-      DEBUGPRINT (("%s: ", name));
-
-      font_desc = pango_font_description_from_string (name);
+      font_desc = pango_font_description_from_string (font->lookup_name);
       g_return_val_if_fail (font_desc != NULL, NULL);
 
       pango_font_description_set_size (font_desc,
-                                       PANGO_SCALE * height * 2.0 / 3.0);
+                                       PANGO_SCALE * height *
+                                       scale_factor *
+                                       2.0 / 3.0);
 
       layout = pango_layout_new (pango_context);
 
@@ -763,8 +761,21 @@ gimp_font_get_new_preview (GimpViewable *viewable,
     }
   else
     {
+      PangoFontDescription *font_desc;
+
       layout = g_object_ref (font->popup_layout);
+
+      font_desc = pango_font_description_from_string (font->lookup_name);
+      g_return_val_if_fail (font_desc != NULL, NULL);
+
+      pango_font_description_set_size (font_desc,
+                                       GIMP_FONT_POPUP_SIZE * scale_factor);
+      pango_layout_set_font_description (font->popup_layout, font_desc);
+      pango_font_description_free (font_desc);
     }
+
+  width  *= scale_factor;
+  height *= scale_factor;
 
   stride = cairo_format_stride_for_width (CAIRO_FORMAT_ARGB32, width);
 
@@ -780,7 +791,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   layout_width  = MAX (ink.width,  logical.width);
   layout_height = MAX (ink.height, logical.height);
 
-  layout_x = (width - layout_width)  / 2;
+  layout_x = (width  - layout_width)  / 2;
   layout_y = (height - layout_height) / 2;
 
   if (ink.x < logical.x)

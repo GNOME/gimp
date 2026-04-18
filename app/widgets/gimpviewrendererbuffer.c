@@ -64,6 +64,7 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
   gint         buffer_height;
   gint         view_width;
   gint         view_height;
+  gint         scale_factor = 1;
   gboolean     scaling_up;
   GimpTempBuf *render_buf = NULL;
 
@@ -85,6 +86,7 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
       temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                                 renderer->context,
                                                 buffer_width, buffer_height,
+                                                scale_factor,
                                                 NULL);
 
       if (temp_buf)
@@ -96,9 +98,12 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
     }
   else
     {
+      scale_factor = gtk_widget_get_scale_factor (widget);
+
       render_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                                   renderer->context,
                                                   view_width, view_height,
+                                                  scale_factor,
                                                   NULL);
     }
 
@@ -106,6 +111,7 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
     {
       gimp_view_renderer_render_temp_buf_simple (renderer, widget,
                                                  render_buf,
+                                                 scale_factor,
                                                  GIMP_VIEW_BG_CHECKS,
                                                  GIMP_VIEW_BG_WHITE);
 

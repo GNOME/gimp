@@ -104,6 +104,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
   gint                   temp_buf_y = 0;
   gint                   temp_buf_width;
   gint                   temp_buf_height;
+  gint                   scale_factor;
 
   if (renderbrush->pipe_timeout_id)
     {
@@ -118,22 +119,30 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
       bg_style = GIMP_VIEW_BG_STYLE;
     }
 
+  scale_factor = gtk_widget_get_scale_factor (widget);
+
   temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                             renderer->context,
-                                            renderer->width, renderer->height,
+                                            renderer->width,
+                                            renderer->height,
+                                            scale_factor,
                                             fg_color);
+  g_clear_object (&fg_color);
 
   temp_buf_width  = gimp_temp_buf_get_width  (temp_buf);
   temp_buf_height = gimp_temp_buf_get_height (temp_buf);
 
-  if (temp_buf_width < renderer->width)
-    temp_buf_x = (renderer->width - temp_buf_width) / 2;
+  if (temp_buf_width < renderer->width * scale_factor)
+    temp_buf_x = (renderer->width * scale_factor - temp_buf_width) / 2;
 
-  if (temp_buf_height < renderer->height)
-    temp_buf_y = (renderer->height - temp_buf_height) / 2;
+  if (temp_buf_height < renderer->height * scale_factor)
+    temp_buf_y = (renderer->height * scale_factor - temp_buf_height) / 2;
 
-  gimp_view_renderer_render_temp_buf (renderer, widget, temp_buf,
-                                      temp_buf_x, temp_buf_y,
+  gimp_view_renderer_render_temp_buf (renderer, widget,
+                                      temp_buf,
+                                      scale_factor,
+                                      temp_buf_x,
+                                      temp_buf_y,
                                       -1,
                                       bg_style,
                                       bg_style);
@@ -165,6 +174,7 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
   gint                   temp_buf_y = 0;
   gint                   temp_buf_width;
   gint                   temp_buf_height;
+  gint                   scale_factor;
 
   if (! renderer->viewable)
     {
@@ -190,27 +200,32 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
   if (renderbrush->pipe_animation_index >= brush_pipe->n_brushes)
     renderbrush->pipe_animation_index = 0;
 
-  brush =
-    GIMP_BRUSH (brush_pipe->brushes[renderbrush->pipe_animation_index]);
+  brush = GIMP_BRUSH (brush_pipe->brushes[renderbrush->pipe_animation_index]);
+
+  scale_factor = gtk_widget_get_scale_factor (renderbrush->widget);
 
   temp_buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (brush),
                                             renderer->context,
                                             renderer->width,
                                             renderer->height,
+                                            scale_factor,
                                             fg_color);
   g_clear_object (&fg_color);
 
   temp_buf_width  = gimp_temp_buf_get_width  (temp_buf);
   temp_buf_height = gimp_temp_buf_get_height (temp_buf);
 
-  if (temp_buf_width < renderer->width)
-    temp_buf_x = (renderer->width - temp_buf_width) / 2;
+  if (temp_buf_width < renderer->width * scale_factor)
+    temp_buf_x = (renderer->width * scale_factor - temp_buf_width) / 2;
 
-  if (temp_buf_height < renderer->height)
-    temp_buf_y = (renderer->height - temp_buf_height) / 2;
+  if (temp_buf_height < renderer->height * scale_factor)
+    temp_buf_y = (renderer->height * scale_factor - temp_buf_height) / 2;
 
-  gimp_view_renderer_render_temp_buf (renderer, renderbrush->widget, temp_buf,
-                                      temp_buf_x, temp_buf_y,
+  gimp_view_renderer_render_temp_buf (renderer, renderbrush->widget,
+                                      temp_buf,
+                                      scale_factor,
+                                      temp_buf_x,
+                                      temp_buf_y,
                                       -1,
                                       bg_style,
                                       bg_style);

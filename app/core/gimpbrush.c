@@ -80,6 +80,7 @@ static GimpTempBuf * gimp_brush_get_new_preview       (GimpViewable         *vie
                                                        GimpContext          *context,
                                                        gint                  width,
                                                        gint                  height,
+                                                       gint                  scale_factor,
                                                        GeglColor            *fg_color);
 static gchar       * gimp_brush_get_description       (GimpViewable         *viewable,
                                                        gchar               **tooltip);
@@ -275,6 +276,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
                             GimpContext  *context,
                             gint          width,
                             gint          height,
+                            gint          scale_factor,
                             GeglColor    *fg_color)
 {
   GimpBrush         *brush       = GIMP_BRUSH (viewable);
@@ -288,17 +290,24 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
   guchar            *buf;
   gint               x, y;
   gboolean           free_mask = FALSE;
-  gdouble            scale     = 1.0;
+  gdouble            ratio_x;
+  gdouble            ratio_y;
+  gdouble            scale;
+
+  width  *= scale_factor;
+  height *= scale_factor;
 
   mask_width  = gimp_temp_buf_get_width  (mask_buf);
   mask_height = gimp_temp_buf_get_height (mask_buf);
 
-  if (mask_width > width || mask_height > height)
-    {
-      gdouble ratio_x = (gdouble) width  / (gdouble) mask_width;
-      gdouble ratio_y = (gdouble) height / (gdouble) mask_height;
+  ratio_x = (gdouble) width  / (gdouble) mask_width;
+  ratio_y = (gdouble) height / (gdouble) mask_height;
 
-      scale = MIN (ratio_x, ratio_y);
+  scale = MIN (ratio_x, ratio_y);
+
+  if (mask_width < width && mask_height < height)
+    {
+      scale = MIN (scale_factor, scale);
     }
 
   if (GIMP_IS_BRUSH_GENERATED (brush) || scale != 1.0)

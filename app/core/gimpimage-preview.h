@@ -41,9 +41,11 @@ GimpTempBuf * gimp_image_get_new_preview    (GimpViewable *viewable,
                                              GimpContext  *context,
                                              gint          width,
                                              gint          height,
+                                             gint          scale_factor,
                                              GeglColor    *fg_color);
 GdkPixbuf   * gimp_image_get_new_pixbuf     (GimpViewable *viewable,
                                              GimpContext  *context,
                                              gint          width,
                                              gint          height,
+                                             gint          scale_factor,
                                              GeglColor    *fg_color);

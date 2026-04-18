@@ -63,6 +63,7 @@ static GimpTempBuf * gimp_gradient_get_new_preview   (GimpViewable        *viewa
                                                       GimpContext         *context,
                                                       gint                 width,
                                                       gint                 height,
+                                                      gint                 scale_factor,
                                                       GeglColor           *fg_color);
 
 static const gchar * gimp_gradient_get_extension     (GimpData            *data);
@@ -218,6 +219,7 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
                                GimpContext  *context,
                                gint          width,
                                gint          height,
+                               gint          scale_factor,
                                GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpGradient        *gradient = GIMP_GRADIENT (viewable);
@@ -228,6 +230,9 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
   guchar              *row;
   gint                 x, y;
   gdouble              dx, cur_x;
+
+  width  *= scale_factor;
+  height *= scale_factor;
 
   dx    = 1.0 / (width - 1);
   cur_x = 0.0;

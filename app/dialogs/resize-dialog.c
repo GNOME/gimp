@@ -431,7 +431,7 @@ resize_dialog_new (GimpViewable       *viewable,
 
   gimp_viewable_get_preview_size (viewable, 200, TRUE, TRUE, &width, &height);
   pixbuf = gimp_viewable_get_pixbuf (viewable, context,
-                                     width, height, NULL);
+                                     width, height, 1, NULL);
 
   if (pixbuf)
     gimp_offset_area_set_pixbuf (GIMP_OFFSET_AREA (private->area), pixbuf);

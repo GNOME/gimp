@@ -25,11 +25,13 @@ GimpTempBuf * gimp_drawable_get_new_preview       (GimpViewable *viewable,
                                                    GimpContext  *context,
                                                    gint          width,
                                                    gint          height,
+                                                   gint          scale_factor,
                                                    GeglColor    *fg_color);
 GdkPixbuf   * gimp_drawable_get_new_pixbuf        (GimpViewable *viewable,
                                                    GimpContext  *context,
                                                    gint          width,
                                                    gint          height,
+                                                   gint          scale_factor,
                                                    GeglColor    *fg_color);
 
 /*
@@ -43,14 +45,16 @@ GimpTempBuf * gimp_drawable_get_sub_preview       (GimpDrawable *drawable,
                                                    gint          src_width,
                                                    gint          src_height,
                                                    gint          dest_width,
-                                                   gint          dest_height);
+                                                   gint          dest_height,
+                                                   gint          dest_scale_factor);
 GdkPixbuf   * gimp_drawable_get_sub_pixbuf        (GimpDrawable *drawable,
                                                    gint          src_x,
                                                    gint          src_y,
                                                    gint          src_width,
                                                    gint          src_height,
                                                    gint          dest_width,
-                                                   gint          dest_height);
+                                                   gint          dest_height,
+                                                   gint          dest_scale_factor);
 
 GimpAsync   * gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
                                                    gint          src_x,
@@ -58,4 +62,5 @@ GimpAsync   * gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
                                                    gint          src_width,
                                                    gint          src_height,
                                                    gint          dest_width,
-                                                   gint          dest_height);
+                                                   gint          dest_height,
+                                                   gint          dest_scale_factor);

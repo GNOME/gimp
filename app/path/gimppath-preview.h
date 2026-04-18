@@ -26,4 +26,5 @@ GimpTempBuf * gimp_path_get_new_preview (GimpViewable *viewable,
                                          GimpContext  *context,
                                          gint          width,
                                          gint          height,
+                                         gint          scale_factor,
                                          GeglColor    *fg_color);

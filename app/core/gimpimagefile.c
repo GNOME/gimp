@@ -95,6 +95,7 @@ static GdkPixbuf * gimp_imagefile_get_new_pixbuf   (GimpViewable   *viewable,
                                                     GimpContext    *context,
                                                     gint            width,
                                                     gint            height,
+                                                    gint            scale_factor,
                                                     GeglColor      *fg_color);
 static gchar     * gimp_imagefile_get_description  (GimpViewable   *viewable,
                                                     gchar         **tooltip);
@@ -109,7 +110,8 @@ static void        gimp_imagefile_icon_callback    (GObject        *source_objec
 
 static GdkPixbuf * gimp_imagefile_load_thumb       (GimpImagefile  *imagefile,
                                                     gint            width,
-                                                    gint            height);
+                                                    gint            height,
+                                                    gint            scale_factor);
 static gboolean    gimp_imagefile_save_thumb       (GimpImagefile  *imagefile,
                                                     GimpImage      *image,
                                                     gint            size,
@@ -259,6 +261,7 @@ gimp_imagefile_get_new_pixbuf (GimpViewable *viewable,
                                GimpContext  *context,
                                gint          width,
                                gint          height,
+                               gint          scale_factor,
                                GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpImagefile *imagefile = GIMP_IMAGEFILE (viewable);
@@ -266,7 +269,7 @@ gimp_imagefile_get_new_pixbuf (GimpViewable *viewable,
   if (! gimp_object_get_name (imagefile))
     return NULL;
 
-  return gimp_imagefile_load_thumb (imagefile, width, height);
+  return gimp_imagefile_load_thumb (imagefile, width, height, scale_factor);
 }
 
 static gchar *
@@ -954,7 +957,8 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
 static GdkPixbuf *
 gimp_imagefile_load_thumb (GimpImagefile *imagefile,
                            gint           width,
-                           gint           height)
+                           gint           height,
+                           gint           scale_factor)
 {
   GimpImagefilePrivate *private   = GET_PRIVATE (imagefile);
   GimpThumbnail        *thumbnail = private->thumbnail;
@@ -974,6 +978,9 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
                 "image-width",  &image_width,
                 "image-height", &image_height,
                 NULL);
+
+  width  *= scale_factor;
+  height *= scale_factor;
 
   /*  use the size remembered below if a pixbuf of the remembered
    *  dimensions is requested
@@ -1110,7 +1117,7 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (image),
                                          /* random context, unused */
                                          gimp_get_user_context (image->gimp),
-                                         width, height, NULL);
+                                         width, height, 1, NULL);
 
   /*  when layer previews are disabled, we won't get a pixbuf  */
   if (! pixbuf)

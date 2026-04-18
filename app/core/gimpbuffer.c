@@ -64,11 +64,13 @@ static GimpTempBuf * gimp_buffer_get_new_preview   (GimpViewable      *viewable,
                                                     GimpContext       *context,
                                                     gint               width,
                                                     gint               height,
+                                                    gint               scale_factor,
                                                     GeglColor         *fg_color);
 static GdkPixbuf   * gimp_buffer_get_new_pixbuf    (GimpViewable      *viewable,
                                                     GimpContext       *context,
                                                     gint               width,
                                                     gint               height,
+                                                    gint               scale_factor,
                                                     GeglColor         *fg_color);
 static gchar       * gimp_buffer_get_description   (GimpViewable      *viewable,
                                                     gchar            **tooltip);
@@ -230,11 +232,15 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
                              GimpContext  *context,
                              gint          width,
                              gint          height,
+                             gint          scale_factor,
                              GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpBuffer  *buffer = GIMP_BUFFER (viewable);
   const Babl  *format = gimp_buffer_get_format (buffer);
   GimpTempBuf *preview;
+
+  width  *= scale_factor;
+  height *= scale_factor;
 
   if (babl_format_is_palette (format))
     format = gimp_babl_format (GIMP_RGB,
@@ -265,11 +271,15 @@ gimp_buffer_get_new_pixbuf (GimpViewable *viewable,
                             GimpContext  *context,
                             gint          width,
                             gint          height,
+                            gint          scale_factor,
                             GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpBuffer *buffer = GIMP_BUFFER (viewable);
   GdkPixbuf  *pixbuf;
   gdouble     scale;
+
+  width  *= scale_factor;
+  height *= scale_factor;
 
   pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
                            width, height);

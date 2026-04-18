@@ -104,6 +104,7 @@ static void      gimp_view_renderer_config_notify     (GObject            *confi
 static void      gimp_view_render_temp_buf_to_surface (GimpViewRenderer   *renderer,
                                                        GtkWidget          *widget,
                                                        GimpTempBuf        *temp_buf,
+                                                       gint                temp_buf_scale,
                                                        gint                temp_buf_x,
                                                        gint                temp_buf_y,
                                                        gint                channel,
@@ -868,8 +869,9 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
 
   pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
                                      renderer->context,
-                                     renderer->width  * scale_factor,
-                                     renderer->height * scale_factor,
+                                     renderer->width,
+                                     renderer->height,
+                                     scale_factor,
                                      fg_color);
   if (pixbuf)
     {
@@ -883,11 +885,12 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                         renderer->context,
                                         renderer->width,
                                         renderer->height,
+                                        scale_factor,
                                         fg_color);
   if (temp_buf)
     {
       gimp_view_renderer_render_temp_buf_simple (renderer, widget,
-                                                 temp_buf,
+                                                 temp_buf, scale_factor,
                                                  inside_bg,
                                                  outside_bg);
       g_clear_object (&fg_color);
@@ -934,11 +937,12 @@ void
 gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
                                            GtkWidget        *widget,
                                            GimpTempBuf      *temp_buf,
+                                           gint              temp_buf_scale,
                                            GimpViewBG        inside_bg,
                                            GimpViewBG        outside_bg)
 {
-  gint temp_buf_x = 0;
-  gint temp_buf_y = 0;
+  gint temp_buf_scaled_x = 0;
+  gint temp_buf_scaled_y = 0;
   gint temp_buf_width;
   gint temp_buf_height;
 
@@ -948,14 +952,19 @@ gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
   temp_buf_width  = gimp_temp_buf_get_width  (temp_buf);
   temp_buf_height = gimp_temp_buf_get_height (temp_buf);
 
-  if (temp_buf_width < renderer->width)
-    temp_buf_x = (renderer->width - temp_buf_width)  / 2;
+  if (temp_buf_width < renderer->width * temp_buf_scale)
+    temp_buf_scaled_x =
+      (renderer->width * temp_buf_scale - temp_buf_width)  / 2;
 
-  if (temp_buf_height < renderer->height)
-    temp_buf_y = (renderer->height - temp_buf_height) / 2;
+  if (temp_buf_height < renderer->height * temp_buf_scale)
+    temp_buf_scaled_y =
+      (renderer->height * temp_buf_scale - temp_buf_height) / 2;
 
-  gimp_view_renderer_render_temp_buf (renderer, widget, temp_buf,
-                                      temp_buf_x, temp_buf_y,
+  gimp_view_renderer_render_temp_buf (renderer, widget,
+                                      temp_buf,
+                                      temp_buf_scale,
+                                      temp_buf_scaled_x,
+                                      temp_buf_scaled_y,
                                       -1,
                                       inside_bg,
                                       outside_bg);
@@ -965,29 +974,36 @@ void
 gimp_view_renderer_render_temp_buf (GimpViewRenderer *renderer,
                                     GtkWidget        *widget,
                                     GimpTempBuf      *temp_buf,
-                                    gint              temp_buf_x,
-                                    gint              temp_buf_y,
+                                    gint              temp_buf_scale,
+                                    gint              temp_buf_scaled_x,
+                                    gint              temp_buf_scaled_y,
                                     gint              channel,
                                     GimpViewBG        inside_bg,
                                     GimpViewBG        outside_bg)
 {
+  gint surface_width  = renderer->width  * temp_buf_scale;
+  gint surface_height = renderer->height * temp_buf_scale;
+
   g_clear_pointer (&renderer->surface, cairo_surface_destroy);
 
   renderer->surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
-                                                  renderer->width,
-                                                  renderer->height);
+                                                  surface_width,
+                                                  surface_height);
+  cairo_surface_set_device_scale (renderer->surface,
+                                  temp_buf_scale, temp_buf_scale);
 
   gimp_view_render_temp_buf_to_surface (renderer,
                                         widget,
                                         temp_buf,
-                                        temp_buf_x,
-                                        temp_buf_y,
+                                        temp_buf_scale,
+                                        temp_buf_scaled_x,
+                                        temp_buf_scaled_y,
                                         channel,
                                         inside_bg,
                                         outside_bg,
                                         renderer->surface,
-                                        renderer->width,
-                                        renderer->height);
+                                        surface_width,
+                                        surface_height);
 }
 
 
@@ -1184,8 +1200,9 @@ static void
 gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
                                       GtkWidget        *widget,
                                       GimpTempBuf      *temp_buf,
-                                      gint              temp_buf_x,
-                                      gint              temp_buf_y,
+                                      gint              temp_buf_scale,
+                                      gint              temp_buf_scaled_x,
+                                      gint              temp_buf_scaled_y,
                                       gint              channel,
                                       GimpViewBG        inside_bg,
                                       GimpViewBG        outside_bg,
@@ -1257,7 +1274,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
 
   if (! gimp_rectangle_intersect (0, 0,
                                   surface_width, surface_height,
-                                  temp_buf_x, temp_buf_y,
+                                  temp_buf_scaled_x, temp_buf_scaled_y,
                                   temp_buf_width, temp_buf_height,
                                   &x, &y,
                                   &width, &height))
@@ -1270,7 +1287,9 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       babl_format_has_alpha (temp_buf_format) &&
       channel == -1)
     {
+      cairo_scale (cr, 1.0 / temp_buf_scale, 1.0 / temp_buf_scale);
       cairo_rectangle (cr, x, y, width, height);
+      cairo_scale (cr, temp_buf_scale, temp_buf_scale);
 
       switch (inside_bg)
         {
@@ -1298,6 +1317,8 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
 
       tmp_surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
                                                 width, height);
+      cairo_surface_set_device_scale (tmp_surface,
+                                      temp_buf_scale, temp_buf_scale);
 
       src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
       dest_buffer = gimp_cairo_surface_get_buffer (tmp_surface, NULL, TRUE);
@@ -1312,8 +1333,8 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
         {
           gimp_color_transform_process_buffer (transform,
                                                src_buffer,
-                                               GEGL_RECTANGLE (x - temp_buf_x,
-                                                               y - temp_buf_y,
+                                               GEGL_RECTANGLE (x - temp_buf_scaled_x,
+                                                               y - temp_buf_scaled_y,
                                                                width, height),
                                                dest_buffer,
                                                GEGL_RECTANGLE (0, 0, 0, 0));
@@ -1321,8 +1342,8 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       else
         {
           gimp_gegl_buffer_copy (src_buffer,
-                                 GEGL_RECTANGLE (x - temp_buf_x,
-                                                 y - temp_buf_y,
+                                 GEGL_RECTANGLE (x - temp_buf_scaled_x,
+                                                 y - temp_buf_scaled_y,
                                                  width, height),
                                  GEGL_ABYSS_NONE,
                                  dest_buffer,
@@ -1335,8 +1356,13 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
 
       cairo_surface_mark_dirty (tmp_surface);
 
+      cairo_scale (cr, 1.0 / temp_buf_scale, 1.0 / temp_buf_scale);
+
       cairo_translate (cr, x, y);
       cairo_rectangle (cr, 0, 0, width, height);
+
+      cairo_scale (cr, temp_buf_scale, temp_buf_scale);
+
       cairo_set_source_surface (cr, tmp_surface, 0, 0);
       cairo_fill (cr);
 
@@ -1357,8 +1383,9 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       bytes     = babl_format_get_bytes_per_pixel (temp_buf_format);
       rowstride = temp_buf_width * bytes;
 
-      src = gimp_temp_buf_get_data (temp_buf) + ((y - temp_buf_y) * rowstride +
-                                                 (x - temp_buf_x) * bytes);
+      src = gimp_temp_buf_get_data (temp_buf)    +
+            ((y - temp_buf_scaled_y) * rowstride +
+             (x - temp_buf_scaled_x) * bytes);
 
       dest        = cairo_image_surface_get_data (surface);
       dest_stride = cairo_image_surface_get_stride (surface);

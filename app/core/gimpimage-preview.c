@@ -122,6 +122,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
                             GimpContext  *context,
                             gint          width,
                             gint          height,
+                            gint          scale_factor,
                             GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpImage   *image = GIMP_IMAGE (viewable);
@@ -129,6 +130,9 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   GimpTempBuf *buf;
   gdouble      scale_x;
   gdouble      scale_y;
+
+  width  *= scale_factor;
+  height *= scale_factor;
 
   scale_x = (gdouble) width  / (gdouble) gimp_image_get_width  (image);
   scale_y = (gdouble) height / (gdouble) gimp_image_get_height (image);
@@ -152,6 +156,7 @@ gimp_image_get_new_pixbuf (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
                            gint          height,
+                           gint          scale_factor,
                            GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpImage          *image = GIMP_IMAGE (viewable);
@@ -159,6 +164,9 @@ gimp_image_get_new_pixbuf (GimpViewable *viewable,
   gdouble             scale_x;
   gdouble             scale_y;
   GimpColorTransform *transform;
+
+  width  *= scale_factor;
+  height *= scale_factor;
 
   scale_x = (gdouble) width  / (gdouble) gimp_image_get_width  (image);
   scale_y = (gdouble) height / (gdouble) gimp_image_get_height (image);

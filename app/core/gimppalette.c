@@ -76,6 +76,7 @@ static GimpTempBuf * gimp_palette_get_new_preview     (GimpViewable         *vie
                                                        GimpContext          *context,
                                                        gint                  width,
                                                        gint                  height,
+                                                       gint                  scale_factor,
                                                        GeglColor            *fg_color);
 static gchar       * gimp_palette_get_description     (GimpViewable         *viewable,
                                                        gchar               **tooltip);
@@ -242,6 +243,7 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
                               gint          height,
+                              gint          scale_factor,
                               GeglColor    *fg_color G_GNUC_UNUSED)
 {
   GimpPalette *palette  = GIMP_PALETTE (viewable);
@@ -253,6 +255,9 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
   gint         rows;
   gint         cell_size;
   gint         x, y;
+
+  width  *= scale_factor;
+  height *= scale_factor;
 
   temp_buf = gimp_temp_buf_new (width, height, babl_format ("R'G'B' u8"));
   memset (gimp_temp_buf_get_data (temp_buf), 255, width * height * 3);
