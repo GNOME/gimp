@@ -2487,6 +2487,7 @@ load_sketchbook_layers (TIFF      *tif,
               gint          alias_blend_mode = 0;
               gint          in_group         = 0;
               guint32      *pixels;
+              gsize         pixels_size;
               guint32       row;
 
               layer_settings = g_strsplit (alias_sublayer_info, ", ", 11);
@@ -2538,6 +2539,22 @@ load_sketchbook_layers (TIFF      *tif,
 
               TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &layer_width);
               TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &layer_height);
+              if (layer_width > GIMP_MAX_IMAGE_SIZE ||
+                  layer_height > GIMP_MAX_IMAGE_SIZE)
+                {
+                  g_message (_("Invalid image dimensions (%u x %u) for "
+                               "Sketchbook layer %i. Image may be corrupt."),
+                             layer_width, layer_height, i + 1);
+                  continue;
+                }
+
+              if (! g_size_checked_mul (&pixels_size, layer_width, layer_height) ||
+                  ! g_size_checked_mul (&pixels_size, pixels_size, 4)            ||
+                  (pixels = g_try_malloc0 (pixels_size)) == NULL)
+                {
+                  g_free (pixels);
+                  continue;
+                }
 
               if (! TIFFGetField (tif, TIFFTAG_XPOSITION, &x_pos))
                 x_pos = 0.0f;
@@ -2593,7 +2610,6 @@ load_sketchbook_layers (TIFF      *tif,
                 selected_layer = g_list_prepend (selected_layer, layer);
 
               /* Loading pixel data */
-              pixels = g_new (uint32_t, layer_width * layer_height);
               if (! TIFFReadRGBAImage (tif, layer_width, layer_height,
                                        pixels, 0))
                 {
