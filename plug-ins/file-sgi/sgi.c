@@ -474,7 +474,7 @@ load_image (GFile   *file,
   pixels[0]   = g_new (guchar, ((gsize) tile_height) * sgip->xsize * sgip->bpp * bytes);
 
   for (i = 1; i < tile_height; i ++)
-    pixels[i] = pixels[0] + sgip->xsize * sgip->bpp * bytes * i;
+    pixels[i] = pixels[0] + (((gsize) sgip->xsize) * sgip->bpp * bytes * i);
 
   rows    = g_new (unsigned short *, sgip->zsize);
   rows[0] = g_new (unsigned short, ((gsize) sgip->xsize) * sgip->zsize);
