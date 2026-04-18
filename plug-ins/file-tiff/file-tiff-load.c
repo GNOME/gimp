@@ -1444,7 +1444,7 @@ load_image (GimpProcedure        *procedure,
       /* Install colormap for INDEXED images only */
       if (image_type == GIMP_INDEXED)
         {
-          guchar   cmap[768];
+          guchar cmap[768];
 
           if (photomet == PHOTOMETRIC_PALETTE)
             {
@@ -1459,6 +1459,15 @@ load_image (GimpProcedure        *procedure,
                   TIFFClose (tif);
                   g_message (_("Could not get colormaps from '%s'"),
                              gimp_file_get_utf8_name (file));
+                  return GIMP_PDB_EXECUTION_ERROR;
+                }
+
+              /* TODO: Remove when we support 16 bit indexed TIFFs */
+              if (bps > 8)
+                {
+                  TIFFClose (tif);
+                  g_message (_("Indexed TIFFs with color maps larger than 256"
+                               "colors are not yet supported"));
                   return GIMP_PDB_EXECUTION_ERROR;
                 }
 
