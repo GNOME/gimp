@@ -85,8 +85,7 @@ workflow:
   # Default Docker image (keep variables: DEB_VERSION: consistent with devel-docs/os-support.txt)
   image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   variables:
-    DEB_VERSION: "bookworm"
-    UMFPACK: libumfpack5
+    DEB_VERSION: "trixie"
     RUNNER: "x86_64_v3"
     # Common cloning procedure
     GIT_DEPTH: "1"
@@ -199,7 +198,12 @@ deps-debian-nonreloc:
             libgtk-3-dev
             libgudev-1.0-dev
             libheif-dev
-            $LIBHEIF_PLUGINS
+            libheif-plugin-dav1d
+            libheif-plugin-aomenc
+            libheif-plugin-libde265
+            libheif-plugin-x265
+            libheif-plugin-j2kdec
+            libheif-plugin-j2kenc
             libjson-glib-dev
             libjxl-dev
             liblcms2-dev
@@ -214,7 +218,7 @@ deps-debian-nonreloc:
             libqoi-dev
             librsvg2-dev
             libsuitesparse-dev
-            $UMFPACK
+            libumfpack6
             libtiff-dev
             libunwind-dev
             libwebp-dev
@@ -330,11 +334,6 @@ gimp-debian-nonreloc:
       - RUNNER: [aarch64, x86_64_v3]
   tags:
     - $RUNNER
-  variables:
-    #FIXME: remove this variables: key and go back to relying on .default DEB_VERSION on GIMP 3.3/3.4
-    DEB_VERSION: "trixie"
-    UMFPACK: libumfpack6
-    LIBHEIF_PLUGINS: "libheif-plugin-dav1d libheif-plugin-aomenc libheif-plugin-libde265 libheif-plugin-x265 libheif-plugin-j2kdec libheif-plugin-j2kenc"
 
 deps-debian:
   extends: .debian
