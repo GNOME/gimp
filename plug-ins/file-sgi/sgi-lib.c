@@ -315,14 +315,20 @@ sgiOpenFile(FILE *file, /* I - File to open */
           }
         }
 
-        sgip->comp  = getc(sgip->file);
-        sgip->bpp   = getc(sgip->file);
-        getshort(sgip);         /* Dimensions */
-        sgip->xsize = getshort(sgip);
-        sgip->ysize = getshort(sgip);
-        sgip->zsize = getshort(sgip);
-        getlong(sgip);          /* Minimum pixel */
-        getlong(sgip);          /* Maximum pixel */
+        sgip->comp = getc (sgip->file);
+        sgip->bpp  = getc (sgip->file);
+        if (sgip->bpp > 2)
+          {
+            free (sgip);
+            return (NULL);
+          }
+
+        getshort (sgip);         /* Dimensions */
+        sgip->xsize = getshort (sgip);
+        sgip->ysize = getshort (sgip);
+        sgip->zsize = getshort (sgip);
+        getlong (sgip);          /* Minimum pixel */
+        getlong (sgip);          /* Maximum pixel */
 
         if (sgip->comp)
         {
