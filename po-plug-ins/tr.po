@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-25 03:29+0000\n"
-"PO-Revision-Date: 2026-03-27 03:14+0300\n"
+"POT-Creation-Date: 2026-04-16 18:12+0000\n"
+"PO-Revision-Date: 2026-04-16 22:53+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -47,7 +47,7 @@ msgstr "Cʼde eklenti örneği"
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
 #: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
 #: plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
-#: plug-ins/common/sphere-designer.c:3194 plug-ins/common/tile.c:222
+#: plug-ins/common/sphere-designer.c:3202 plug-ins/common/tile.c:222
 #: plug-ins/common/tile-small.c:312 plug-ins/common/van-gogh-lic.c:242
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:179
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
@@ -71,12 +71,12 @@ msgstr "Cʼde Eklenti Örneği"
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
 #: plug-ins/common/busy-dialog.c:283 plug-ins/common/cml-explorer.c:1374
 #: plug-ins/common/cml-explorer.c:2144 plug-ins/common/cml-explorer.c:2354
-#: plug-ins/common/curve-bend.c:1888 plug-ins/common/curve-bend.c:1923
-#: plug-ins/common/file-gif-export.c:1209 plug-ins/common/file-heif.c:2487
+#: plug-ins/common/curve-bend.c:1897 plug-ins/common/curve-bend.c:1932
+#: plug-ins/common/file-gif-export.c:1213 plug-ins/common/file-heif.c:2489
 #: plug-ins/common/file-pdf-export.c:1051 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
-#: plug-ins/common/sphere-designer.c:2286
-#: plug-ins/common/sphere-designer.c:2650 plug-ins/common/unit-editor.c:427
+#: plug-ins/common/sphere-designer.c:2294
+#: plug-ins/common/sphere-designer.c:2658 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:823
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1504
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1542
@@ -86,17 +86,17 @@ msgstr "Cʼde Eklenti Örneği"
 #: plug-ins/gfig/gfig-dialog.c:823 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
-#: plug-ins/gradient-flare/gradient-flare.c:3340
-#: plug-ins/gradient-flare/gradient-flare.c:3454
+#: plug-ins/gradient-flare/gradient-flare.c:3360
+#: plug-ins/gradient-flare/gradient-flare.c:3474
 #: plug-ins/ifs-compose/ifs-compose.c:913
 #: plug-ins/ifs-compose/ifs-compose.c:2608
 #: plug-ins/ifs-compose/ifs-compose.c:2645 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
 #: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1189
-#: plug-ins/metadata/metadata-editor.c:1691
-#: plug-ins/metadata/metadata-editor.c:5572
-#: plug-ins/metadata/metadata-editor.c:5607 plug-ins/print/print.c:458
+#: plug-ins/metadata/metadata-editor.c:1695
+#: plug-ins/metadata/metadata-editor.c:5585
+#: plug-ins/metadata/metadata-editor.c:5620 plug-ins/print/print.c:458
 msgid "_Cancel"
 msgstr "İ_ptal"
 
@@ -147,14 +147,14 @@ msgstr "JavaScriptʼte Eklenti Örneği (GJS)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2488
-#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2651
+#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
+#: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2659
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4006 plug-ins/flame/flame.c:824
+#: plug-ins/file-psd/psd-load.c:4017 plug-ins/flame/flame.c:824
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/gradient-flare/gradient-flare.c:3455
+#: plug-ins/gradient-flare/gradient-flare.c:3475
 #: plug-ins/ifs-compose/ifs-compose.c:914
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
@@ -304,7 +304,7 @@ msgid "Left edge"
 msgstr "Sol kenar"
 
 #: plug-ins/common/align-layers.c:206 plug-ins/common/align-layers.c:228
-#: plug-ins/gradient-flare/gradient-flare.c:2928
+#: plug-ins/gradient-flare/gradient-flare.c:2948
 msgid "Center"
 msgstr "Merkez"
 
@@ -342,7 +342,7 @@ msgstr "_Izgara"
 
 #: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:741
 #: plug-ins/gfig/gfig-dialog.c:1352 plug-ins/gfig/gfig-menu.ui:31
-#: plug-ins/imagemap/imap_main.c:1566 plug-ins/imagemap/imap-menu.ui:192
+#: plug-ins/imagemap/imap_main.c:1588 plug-ins/imagemap/imap-menu.ui:192
 #: plug-ins/imagemap/imap-menu.ui:284
 msgid "Grid"
 msgstr "Izgara"
@@ -372,53 +372,53 @@ msgstr "Hizalamak için yeterli katman yok."
 msgid "Align Visible Layers"
 msgstr "Görünür Katmanları Hizala"
 
-#: plug-ins/common/animation-optimize.c:176
+#: plug-ins/common/animation-optimize.c:177
 msgid "Optimize (for _GIF)"
 msgstr "Eniyile (_GIF için)"
 
-#: plug-ins/common/animation-optimize.c:179
+#: plug-ins/common/animation-optimize.c:180
 msgid "Modify image to reduce size when saved as GIF animation"
 msgstr ""
 "Görüntü GIF animasyonu olarak kaydedildiğinde boyutunu azaltacak biçimde "
 "değiştir"
 
-#: plug-ins/common/animation-optimize.c:204
+#: plug-ins/common/animation-optimize.c:205
 msgid "_Optimize (Difference)"
 msgstr "_Eniyile (Farklılık)"
 
-#: plug-ins/common/animation-optimize.c:207
+#: plug-ins/common/animation-optimize.c:208
 msgid "Reduce file size where combining layers is possible"
 msgstr "Mümkünse katmanlar birleştirilirken dosya boyutunu düşür"
 
-#: plug-ins/common/animation-optimize.c:229
+#: plug-ins/common/animation-optimize.c:230
 msgid "_Unoptimize"
 msgstr "_Eniyilemeyi Kaldır"
 
-#: plug-ins/common/animation-optimize.c:232
+#: plug-ins/common/animation-optimize.c:233
 msgid "Remove optimization to make editing easier"
 msgstr "Düzenlemenin daha kolay olması için eniyilemeyi kaldır"
 
-#: plug-ins/common/animation-optimize.c:251
+#: plug-ins/common/animation-optimize.c:252
 msgid "_Remove Backdrop"
 msgstr "Zemini _Kaldır"
 
-#: plug-ins/common/animation-optimize.c:272
+#: plug-ins/common/animation-optimize.c:273
 msgid "_Find Backdrop"
 msgstr "Zemin _Bul"
 
-#: plug-ins/common/animation-optimize.c:519
+#: plug-ins/common/animation-optimize.c:527
 msgid "Unoptimizing animation"
 msgstr "Animasyon iyileştirmesi geri alınıyor"
 
-#: plug-ins/common/animation-optimize.c:522
+#: plug-ins/common/animation-optimize.c:530
 msgid "Removing animation background"
 msgstr "Animasyon arka planı kaldırılıyor"
 
-#: plug-ins/common/animation-optimize.c:525
+#: plug-ins/common/animation-optimize.c:533
 msgid "Finding animation background"
 msgstr "Animasyon arka planı bulunuyor"
 
-#: plug-ins/common/animation-optimize.c:529
+#: plug-ins/common/animation-optimize.c:537
 msgid "Optimizing animation"
 msgstr "Animasyon iyileştiriliyor"
 
@@ -436,7 +436,7 @@ msgid "Procedure '%s' only works in interactive mode."
 msgstr "'%s' yordamı yalnızca etkileşimli kipte çalışır."
 
 #: plug-ins/common/animation-play.c:394 plug-ins/common/animation-play.c:945
-#: plug-ins/common/animation-play.c:1458
+#: plug-ins/common/animation-play.c:1457
 msgid "Start playback"
 msgstr "Oynatmaya başla"
 
@@ -544,11 +544,11 @@ msgstr "_Adım"
 msgid "Memory could not be allocated to the frame container."
 msgstr "Bellek kare kabına paylaştırılamadı."
 
-#: plug-ins/common/animation-play.c:1132
+#: plug-ins/common/animation-play.c:1131
 msgid "Invalid image. Did you close it?"
 msgstr "Geçersiz görüntü. Kapattınız mı?"
 
-#: plug-ins/common/animation-play.c:1458
+#: plug-ins/common/animation-play.c:1457
 msgid "Stop playback"
 msgstr "Oynatmayı durdur"
 
@@ -613,9 +613,9 @@ msgstr "Kesitler"
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1234
+#: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1246
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
-#: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
+#: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:424
 #: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-pcx.c:727
@@ -623,16 +623,16 @@ msgstr "Kesitler"
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
 #: plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:823 plug-ins/common/file-raw-data.c:2007
-#: plug-ins/common/file-sunras.c:1059 plug-ins/common/file-tga.c:1103
-#: plug-ins/common/file-tim.c:402 plug-ins/common/file-tim.c:509
+#: plug-ins/common/file-sunras.c:1061 plug-ins/common/file-tga.c:1103
+#: plug-ins/common/file-tim.c:403 plug-ins/common/file-tim.c:551
 #: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:475
-#: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
+#: plug-ins/common/file-xbm.c:891 plug-ins/common/film.c:864
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
-#: plug-ins/file-faxg3/faxg3.c:581 plug-ins/file-fits/fits.c:705
+#: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3204 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3215 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1578
 #: plug-ins/file-tiff/file-tiff-load.c:2402
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1042,10 +1042,10 @@ msgstr "Rastgele Parçacık"
 
 #. The Load button
 #: plug-ins/common/cml-explorer.c:1451 plug-ins/common/cml-explorer.c:2355
-#: plug-ins/common/curve-bend.c:1350 plug-ins/common/curve-bend.c:1889
-#: plug-ins/common/file-cel.c:989 plug-ins/common/qbist.c:840
-#: plug-ins/common/qbist.c:996 plug-ins/common/sphere-designer.c:2289
-#: plug-ins/common/sphere-designer.c:2699 plug-ins/flame/flame.c:619
+#: plug-ins/common/curve-bend.c:1359 plug-ins/common/curve-bend.c:1898
+#: plug-ins/common/file-cel.c:993 plug-ins/common/qbist.c:840
+#: plug-ins/common/qbist.c:996 plug-ins/common/sphere-designer.c:2297
+#: plug-ins/common/sphere-designer.c:2707 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1235
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1505
@@ -1058,10 +1058,10 @@ msgstr "A_ç"
 
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1459 plug-ins/common/cml-explorer.c:2145
-#: plug-ins/common/curve-bend.c:1362 plug-ins/common/curve-bend.c:1924
+#: plug-ins/common/curve-bend.c:1371 plug-ins/common/curve-bend.c:1933
 #: plug-ins/common/file-pdf-export.c:1050 plug-ins/common/qbist.c:882
-#: plug-ins/common/qbist.c:1004 plug-ins/common/sphere-designer.c:2289
-#: plug-ins/common/sphere-designer.c:2707 plug-ins/flame/flame.c:619
+#: plug-ins/common/qbist.c:1004 plug-ins/common/sphere-designer.c:2297
+#: plug-ins/common/sphere-designer.c:2715 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1243
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1543
@@ -1233,7 +1233,7 @@ msgstr "Başkalaşım mesafesi:"
 msgid "Graph of the Current Settings"
 msgstr "Geçerli Ayarların Çizgesi"
 
-#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:558
+#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:572
 #: plug-ins/common/procedure-browser.c:169
 #: plug-ins/filter-browser/filter-browser.c:740 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1210 plug-ins/gfig/gfig-dialog.c:1355
@@ -1251,21 +1251,21 @@ msgid "Save CML Explorer Parameters"
 msgstr "CML Gezgini Parametrelerini Kaydet"
 
 #: plug-ins/common/cml-explorer.c:2210 plug-ins/common/curve-bend.c:755
-#: plug-ins/common/file-dicom.c:1578 plug-ins/common/file-farbfeld.c:372
+#: plug-ins/common/file-dicom.c:1582 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
 #: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
-#: plug-ins/common/file-png.c:1923 plug-ins/common/file-raw-data.c:1512
-#: plug-ins/common/file-raw-data.c:1541 plug-ins/common/file-sunras.c:614
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:630
-#: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2200
+#: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1512
+#: plug-ins/common/file-raw-data.c:1541 plug-ins/common/file-sunras.c:616
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:722
+#: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:444
-#: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1588
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2345
+#: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
+#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2446
 #: plug-ins/file-tiff/file-tiff-export.c:1087
 #: plug-ins/file-tiff/file-tiff-export.c:1176 plug-ins/flame/flame.c:585
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1406
-#: plug-ins/gfig/gfig.c:895 plug-ins/ifs-compose/ifs-compose.c:2468
+#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2468
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1505,8 +1505,8 @@ msgstr "_Kırmızılık cr709:"
 
 #: plug-ins/common/compose.c:247 plug-ins/common/compose.c:441
 #: plug-ins/common/compose.c:504 plug-ins/common/decompose.c:192
-#: plug-ins/common/decompose.c:299 plug-ins/common/file-heif.c:315
-#: plug-ins/common/file-heif.c:436
+#: plug-ins/common/decompose.c:299 plug-ins/common/file-heif.c:317
+#: plug-ins/common/file-heif.c:438
 msgid "RGB"
 msgstr "RGB"
 
@@ -1699,60 +1699,60 @@ msgstr ""
 "'Yeniden Düzenle'yi yalnızca etkin görüntü özgün olarak 'Ayrıştırma' ile "
 "üretilmişse çalıştırabilirsiniz."
 
-#: plug-ins/common/compose.c:637
+#: plug-ins/common/compose.c:649
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr "'decompose-data' paraziti taranırken hata: çok az katman bulundu"
 
-#: plug-ins/common/compose.c:652
+#: plug-ins/common/compose.c:664
 #, c-format
 msgid "Cannot recompose: Specified source layer ID %d not found"
 msgstr "Yeniden düzenlenemedi: Belirtilen kaynak katman kimliği %d bulunamadı"
 
-#: plug-ins/common/compose.c:672
+#: plug-ins/common/compose.c:684
 #, c-format
 msgid "Cannot recompose: Specified layer #%d ID %d not found"
 msgstr ""
 "Yeniden düzenlenemedi: %2$d kimlikli belirtilen katman #%1$d bulunamadı"
 
-#: plug-ins/common/compose.c:701
+#: plug-ins/common/compose.c:713
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Görüntü %d katmanları alınamadı"
 
-#: plug-ins/common/compose.c:778
+#: plug-ins/common/compose.c:790
 msgid "Composing"
 msgstr "Düzenleme"
 
-#: plug-ins/common/compose.c:1079 plug-ins/common/compose.c:1479
+#: plug-ins/common/compose.c:1091 plug-ins/common/compose.c:1497
 msgid "At least one image is needed to compose"
 msgstr "Düzenleme için en az bir görüntü gerekiyor"
 
-#: plug-ins/common/compose.c:1100
+#: plug-ins/common/compose.c:1112
 msgid "Drawables have different size"
 msgstr "Çizilebilirlerin boyutları farklı"
 
-#: plug-ins/common/compose.c:1128
+#: plug-ins/common/compose.c:1140
 msgid "Images have different size"
 msgstr "Görüntülerin boyutları farklı"
 
-#: plug-ins/common/compose.c:1146
+#: plug-ins/common/compose.c:1158
 msgid "Error in getting layer IDs"
 msgstr "Katman Kimliklerini almada hata"
 
-#: plug-ins/common/compose.c:1279
+#: plug-ins/common/compose.c:1291
 msgid "Compose"
 msgstr "Düzenle"
 
-#: plug-ins/common/compose.c:1294
+#: plug-ins/common/compose.c:1306
 msgid "Compose Channels"
 msgstr "Kanalları Düzenle"
 
 #. Channel representation grid
-#: plug-ins/common/compose.c:1309
+#: plug-ins/common/compose.c:1321
 msgid "Channel Representations"
 msgstr "Kanal Gösterimleri"
 
-#: plug-ins/common/compose.c:1369
+#: plug-ins/common/compose.c:1381
 msgid "Mask value"
 msgstr "Maske değeri"
 
@@ -2021,45 +2021,45 @@ msgstr "Boş seçimler üzerinde işlenemiyor."
 #: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
-#: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3738
-#: plug-ins/common/file-psp.c:2787 plug-ins/common/file-psp.c:2837
+#: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3754
+#: plug-ins/common/file-psp.c:2792 plug-ins/common/file-psp.c:2842
 #: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:799
 #: plug-ins/common/file-raw-data.c:1844
 #: plug-ins/common/file-seattle-filmworks.c:232
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:756
-#: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:278
+#: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:277
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
-#: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
+#: plug-ins/common/file-xbm.c:729 plug-ins/common/file-xmc.c:656
 #: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
-#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:611
-#: plug-ins/file-icns/file-icns-load.c:664 plug-ins/file-ico/ico-load.c:711
+#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:631
+#: plug-ins/file-icns/file-icns-load.c:684 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
-#: plug-ins/file-psd/psd-export.c:2350 plug-ins/file-psd/psd-load.c:189
+#: plug-ins/file-psd/psd-export.c:2452 plug-ins/file-psd/psd-load.c:189
 #: plug-ins/file-psd/psd-load.c:194 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:539
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1763
-#: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:525
-#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1767
+#: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:529
+#: plug-ins/help/gimphelplocale.c:257 plug-ins/help/gimphelplocale.c:273
 #: plug-ins/lighting/lighting-ui.c:952
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "'%s' dosyası okumak için açılamadı: %s"
 
-#: plug-ins/common/curve-bend.c:818
+#: plug-ins/common/curve-bend.c:818 plug-ins/file-faxg3/faxg3.c:285
 #, c-format
 msgid "Error while reading '%s': %s"
 msgstr "'%s' okunurken hata oluştu: %s"
 
-#: plug-ins/common/curve-bend.c:1148 plug-ins/common/curve-bend.c:2782
+#: plug-ins/common/curve-bend.c:1157 plug-ins/common/curve-bend.c:2791
 msgid "Curve Bend"
 msgstr "Eğri Bükümü"
 
-#: plug-ins/common/curve-bend.c:1164 plug-ins/file-jpeg/jpeg-export.c:853
+#: plug-ins/common/curve-bend.c:1173 plug-ins/file-jpeg/jpeg-export.c:853
 #: plug-ins/gfig/gfig-dialog.c:1207
 msgid "Options"
 msgstr "Seçenekler"
@@ -2067,77 +2067,77 @@ msgstr "Seçenekler"
 #. GUI-only widgets
 #. Preview area, top of column
 #. preview
-#: plug-ins/common/curve-bend.c:1196 plug-ins/gimpressionist/orientmap.c:589
+#: plug-ins/common/curve-bend.c:1205 plug-ins/gimpressionist/orientmap.c:589
 #: plug-ins/gimpressionist/sizemap.c:462 plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Ön İzle"
 
 #. The preview button
-#: plug-ins/common/curve-bend.c:1224
+#: plug-ins/common/curve-bend.c:1233
 msgid "_Preview Once"
 msgstr "Hemen Ö_n İzle"
 
 #. The preview toggle
-#: plug-ins/common/curve-bend.c:1233
+#: plug-ins/common/curve-bend.c:1242
 msgid "Automatic pre_view"
 msgstr "Kendiliğinden ön i_zle"
 
-#: plug-ins/common/curve-bend.c:1264
+#: plug-ins/common/curve-bend.c:1273
 msgid "Modify Curves"
 msgstr "Eğrileri Düzenle"
 
 #. The Copy button
-#: plug-ins/common/curve-bend.c:1296
-#: plug-ins/gradient-flare/gradient-flare.c:3056
+#: plug-ins/common/curve-bend.c:1305
+#: plug-ins/gradient-flare/gradient-flare.c:3076
 msgid "_Copy"
 msgstr "_Kopyala"
 
-#: plug-ins/common/curve-bend.c:1301
+#: plug-ins/common/curve-bend.c:1310
 msgid "Copy the active curve to the other border"
 msgstr "Etkin eğriyi diğer kenarlığa kopyala"
 
 #. The CopyInv button
-#: plug-ins/common/curve-bend.c:1308
+#: plug-ins/common/curve-bend.c:1317
 msgid "_Mirror"
 msgstr "_Aynala"
 
-#: plug-ins/common/curve-bend.c:1313
+#: plug-ins/common/curve-bend.c:1322
 msgid "Mirror the active curve to the other border"
 msgstr "Etkin eğriyi diğer kenarlığa aynala"
 
 #. The Swap button
-#: plug-ins/common/curve-bend.c:1321
+#: plug-ins/common/curve-bend.c:1330
 msgid "S_wap"
 msgstr "_Değiştir"
 
-#: plug-ins/common/curve-bend.c:1326
+#: plug-ins/common/curve-bend.c:1335
 msgid "Swap the two curves"
 msgstr "İki eğriyi değiştir"
 
 #. The Reset button
-#: plug-ins/common/curve-bend.c:1333 plug-ins/common/sphere-designer.c:2649
+#: plug-ins/common/curve-bend.c:1342 plug-ins/common/sphere-designer.c:2657
 #: plug-ins/common/tile-small.c:523 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:912
 msgid "_Reset"
 msgstr "_Sıfırla"
 
-#: plug-ins/common/curve-bend.c:1338
+#: plug-ins/common/curve-bend.c:1347
 msgid "Reset the active curve"
 msgstr "Etkin eğriyi sıfırla"
 
-#: plug-ins/common/curve-bend.c:1355
+#: plug-ins/common/curve-bend.c:1364
 msgid "Load the curves from a file"
 msgstr "Eğrileri dosyadan yükle"
 
-#: plug-ins/common/curve-bend.c:1367
+#: plug-ins/common/curve-bend.c:1376
 msgid "Save the curves to a file"
 msgstr "Eğrileri dosyaya kaydet"
 
-#: plug-ins/common/curve-bend.c:1884
+#: plug-ins/common/curve-bend.c:1893
 msgid "Load Curve Points from File"
 msgstr "Eğri Noktalarını Dosyadan Yükle"
 
-#: plug-ins/common/curve-bend.c:1919
+#: plug-ins/common/curve-bend.c:1928
 msgid "Save Curve Points to File"
 msgstr "Eğri Noktalarını Dosyaya Kaydet"
 
@@ -2634,7 +2634,7 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
-#: plug-ins/common/file-heif.c:1049 plug-ins/common/file-jp2.c:1379
+#: plug-ins/common/file-heif.c:1051 plug-ins/common/file-jp2.c:1379
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
@@ -2642,16 +2642,16 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:427
 #: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:242
 #: plug-ins/common/file-wbmp.c:321 plug-ins/common/file-wmf.c:618
-#: plug-ins/common/file-xbm.c:717 plug-ins/common/file-xmc.c:646
+#: plug-ins/common/file-xbm.c:721 plug-ins/common/file-xmc.c:646
 #: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457
 #: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
-#: plug-ins/file-icns/file-icns-load.c:603 plug-ins/file-ico/ico-load.c:703
+#: plug-ins/file-icns/file-icns-load.c:623 plug-ins/file-ico/ico-load.c:703
 #: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:97
 #: plug-ins/file-psd/psd-load.c:202
-#: plug-ins/file-raw/file-another-rawtherapee.c:346
+#: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
-#: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:315
+#: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
 #: plug-ins/file-tiff/file-tiff-load.c:304
 #, c-format
 msgid "Opening '%s'"
@@ -2718,19 +2718,19 @@ msgstr "'%s': EOF (dosya sonu) ya da palet verisi okunurken hata"
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
-#: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:358
+#: plug-ins/common/file-gif-export.c:943 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1822 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1101 plug-ins/common/file-pix.c:636
-#: plug-ins/common/file-png.c:1915 plug-ins/common/file-pnm.c:1632
-#: plug-ins/common/file-ps.c:1368 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:605 plug-ins/common/file-svg.c:794
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:622
-#: plug-ins/common/file-xbm.c:1026 plug-ins/common/file-xpm.c:720
+#: plug-ins/common/file-png.c:1936 plug-ins/common/file-pnm.c:1632
+#: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
+#: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:794
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:714
+#: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
 #: plug-ins/file-icns/file-icns-export.c:824
-#: plug-ins/file-ico/ico-export.c:1358 plug-ins/file-ico/ico-export.c:1572
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2284
+#: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
+#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2384
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
 #, c-format
 msgid "Exporting '%s'"
@@ -2820,88 +2820,88 @@ msgstr "_Matlık"
 msgid "Opacity"
 msgstr "Matlık"
 
-#: plug-ins/common/file-compressor.c:226
+#: plug-ins/common/file-compressor.c:230
 msgid "gzip archive"
 msgstr "gzip arşivi"
 
-#: plug-ins/common/file-compressor.c:234
+#: plug-ins/common/file-compressor.c:238
 msgid "Loads files compressed with gzip"
 msgstr "gzip ile sıkıştırılmış dosyaları yükler"
 
-#: plug-ins/common/file-compressor.c:235
+#: plug-ins/common/file-compressor.c:239
 msgid "This procedure loads files in the gzip compressed format."
 msgstr "Bu yordam dosyaları gzip sıkıştırılmış biçimde yükler."
 
-#: plug-ins/common/file-compressor.c:239
+#: plug-ins/common/file-compressor.c:243
 msgid "Exports files compressed with gzip"
 msgstr "gzip ile sıkıştırılmış dosyaları dışa aktarır"
 
-#: plug-ins/common/file-compressor.c:240
+#: plug-ins/common/file-compressor.c:244
 msgid "This procedure exports files in the gzip compressed format."
 msgstr "Bu yordam dosyaları gzip sıkıştırılmış biçimde dışa aktarır."
 
-#: plug-ins/common/file-compressor.c:245
+#: plug-ins/common/file-compressor.c:249
 msgid "bzip archive"
 msgstr "bzip arşivi"
 
-#: plug-ins/common/file-compressor.c:253
+#: plug-ins/common/file-compressor.c:257
 msgid "Loads files compressed with bzip2"
 msgstr "bzip2 ile sıkıştırılmış dosyaları yükler"
 
-#: plug-ins/common/file-compressor.c:254
+#: plug-ins/common/file-compressor.c:258
 msgid "This procedure loads files in the bzip2 compressed format."
 msgstr "Bu yordam dosyaları bzip2 sıkıştırılmış biçimde yükler."
 
-#: plug-ins/common/file-compressor.c:258
+#: plug-ins/common/file-compressor.c:262
 msgid "Exports files compressed with bzip2"
 msgstr "bzip2 ile sıkıştırılmış dosyaları dışa aktarır"
 
-#: plug-ins/common/file-compressor.c:259
+#: plug-ins/common/file-compressor.c:263
 msgid "This procedure exports files in the bzip2 compressed format."
 msgstr "Bu yordam dosyaları bzip2 sıkıştırılmış biçimde dışa aktarır."
 
-#: plug-ins/common/file-compressor.c:264
+#: plug-ins/common/file-compressor.c:268
 msgid "xz archive"
 msgstr "xz arşivi"
 
-#: plug-ins/common/file-compressor.c:272
+#: plug-ins/common/file-compressor.c:276
 msgid "Loads files compressed with xz"
 msgstr "xz ile sıkıştırılmış dosyaları yükler"
 
-#: plug-ins/common/file-compressor.c:273
+#: plug-ins/common/file-compressor.c:277
 msgid "This procedure loads files in the xz compressed format."
 msgstr "Bu yordam dosyaları xz sıkıştırılmış biçimde yükler."
 
-#: plug-ins/common/file-compressor.c:277
+#: plug-ins/common/file-compressor.c:281
 msgid "Exports files compressed with xz"
 msgstr "xz ile sıkıştırılmış dosyaları dışa aktarır"
 
-#: plug-ins/common/file-compressor.c:278
+#: plug-ins/common/file-compressor.c:282
 msgid "This procedure exports files in the xz compressed format."
 msgstr "Bu yordam dosyaları xz sıkıştırılmış biçimde dışa aktarır."
 
-#: plug-ins/common/file-compressor.c:283
+#: plug-ins/common/file-compressor.c:287
 msgid "zip archive"
 msgstr "zip arşivi"
 
-#: plug-ins/common/file-compressor.c:291
+#: plug-ins/common/file-compressor.c:295
 msgid "Loads files compressed with zip"
 msgstr "zip ile sıkıştırılmış dosyaları yükler"
 
-#: plug-ins/common/file-compressor.c:292
+#: plug-ins/common/file-compressor.c:296
 msgid "This procedure loads files in the zip compressed format."
 msgstr "Bu yordam dosyaları zip sıkıştırılmış biçimde yükler."
 
-#: plug-ins/common/file-compressor.c:478
+#: plug-ins/common/file-compressor.c:482
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Anlaşılmaz dosya uzantısı, sıkıştırılmış XCF olarak kaydet."
 
-#: plug-ins/common/file-compressor.c:498
+#: plug-ins/common/file-compressor.c:508
 #, c-format
 msgid "Compressing '%s'"
 msgstr "Sıkıştırılıyor '%s'"
 
-#: plug-ins/common/file-compressor.c:536
+#: plug-ins/common/file-compressor.c:546
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "Uyumlu dosya uzantısı bulunamadı, File-Magic ile yükleme deneniyor."
 
@@ -2910,7 +2910,7 @@ msgstr "Uyumlu dosya uzantısı bulunamadı, File-Magic ile yükleme deneniyor."
 #. * procedure expects that the archive contains a single
 #. * file.
 #.
-#: plug-ins/common/file-compressor.c:1117
+#: plug-ins/common/file-compressor.c:1190
 msgid "This zip archive contains more than one file."
 msgstr "Bu zip arşivi birden çok dosya içeriyor."
 
@@ -2966,49 +2966,49 @@ msgstr ""
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' DICOM dosyası değil."
 
-#: plug-ins/common/file-dicom.c:509
+#: plug-ins/common/file-dicom.c:513
 #, c-format
 msgid "'%s' has an incorrect value for field size. Possibly corrupt image."
 msgstr ""
 "'%s', alan boyutu için geçersiz değer barındırıyor. Olası bozuk görüntü."
 
-#: plug-ins/common/file-dicom.c:570
+#: plug-ins/common/file-dicom.c:574
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "%s aktarım söz dizimi GIMP tarafından desteklenmiyor."
 
-#: plug-ins/common/file-dicom.c:625
+#: plug-ins/common/file-dicom.c:629
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr ""
 "%s, piksel başına örneklerle birlikte GIMP tarafından desteklenmiyor: %d"
 
-#: plug-ins/common/file-dicom.c:708
+#: plug-ins/common/file-dicom.c:712
 #, c-format
 msgid "'%s' has a bpp of %d which GIMP cannot handle."
 msgstr "'%s', GIMPʼin işleyemeyeceği %d bpp değerindedir."
 
-#: plug-ins/common/file-dicom.c:719 plug-ins/file-fits/fits.c:483
+#: plug-ins/common/file-dicom.c:723 plug-ins/file-fits/fits.c:483
 #, c-format
 msgid "'%s' has a larger image size (%d x %d) than GIMP can handle."
 msgstr ""
 "'%s' görüntü boyutu (%d x %d) GIMPʼin işleyebileceğinden çok daha büyük."
 
-#: plug-ins/common/file-dicom.c:730
+#: plug-ins/common/file-dicom.c:734
 #, c-format
 msgid "'%s' has samples per pixel of %d which GIMP cannot handle."
 msgstr "'%s', GIMPʼin işleyemeyeceği %d piksel başına örnek barındırıyor."
 
-#: plug-ins/common/file-dicom.c:741
+#: plug-ins/common/file-dicom.c:745
 #, c-format
 msgid "'%s' has not enough pixel data. Possibly corrupt image."
 msgstr "'%s' piksel verisi yetersiz. Olası bozuk görüntü."
 
-#: plug-ins/common/file-dicom.c:1543
+#: plug-ins/common/file-dicom.c:1547
 msgid "Cannot save images with alpha channel."
 msgstr "Görüntüler alfa kanalıyla kaydedilemez."
 
-#: plug-ins/common/file-dicom.c:1562 plug-ins/common/file-ps.c:1363
+#: plug-ins/common/file-dicom.c:1566 plug-ins/common/file-ps.c:1367
 #: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:673
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -3195,11 +3195,11 @@ msgstr "_Yorum"
 msgid "Image comment"
 msgstr "Görüntü yorumu"
 
-#: plug-ins/common/file-gif-export.c:545
+#: plug-ins/common/file-gif-export.c:549
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Renkleri daha çok düşürülemiyor. Opak olarak dışa aktarılıyor."
 
-#: plug-ins/common/file-gif-export.c:664
+#: plug-ins/common/file-gif-export.c:668
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -3208,7 +3208,7 @@ msgstr ""
 "'%s' dışa aktarılamadı. GIF dosya biçimi %d pikselden daha geniş ya da uzun "
 "görüntüleri desteklemiyor."
 
-#: plug-ins/common/file-gif-export.c:687
+#: plug-ins/common/file-gif-export.c:691
 #, c-format
 msgid ""
 "Unable to export '%s'.  Please convert your image to 8 bit integer "
@@ -3217,7 +3217,7 @@ msgstr ""
 "'%s' dışa aktarılamadı.  Lütfen görüntünüzü 8 bit tamsayı hassasiyetine "
 "dönüştürün, çünkü GIF dosya biçimi daha yüksek hassasiyetleri desteklemez."
 
-#: plug-ins/common/file-gif-export.c:816
+#: plug-ins/common/file-gif-export.c:820
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3225,18 +3225,18 @@ msgstr ""
 "GIF dosya biçimi yorumları yalnızca 7bit ASCII kodlamasında destekler. "
 "Hiçbir yorum kaydedilmedi."
 
-#: plug-ins/common/file-gif-export.c:912
+#: plug-ins/common/file-gif-export.c:916
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "RGB renkli görüntüler dışarı aktarılamıyor. Önce indeksli renge veya gri "
 "tonlamaya dönüştür."
 
-#: plug-ins/common/file-gif-export.c:1132
+#: plug-ins/common/file-gif-export.c:1136
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Aşırı işlemci yüklemesini önlemek için ekli olanı geciktir."
 
-#: plug-ins/common/file-gif-export.c:1204
+#: plug-ins/common/file-gif-export.c:1208
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -3244,11 +3244,11 @@ msgstr ""
 "GIF olarak dışa aktarmaya çalıştığınız görüntü, görüntünün gerçek "
 "sınırlarını aşan katmanlar içeriyor."
 
-#: plug-ins/common/file-gif-export.c:1210
+#: plug-ins/common/file-gif-export.c:1214
 msgid "Cr_op"
 msgstr "Kır_p"
 
-#: plug-ins/common/file-gif-export.c:1221
+#: plug-ins/common/file-gif-export.c:1225
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -3256,7 +3256,7 @@ msgstr ""
 "GIF dosya biçimi buna izin vermemektedir. Tüm katmanları görüntü sınırlarına "
 "kırpabilir ya da dışa aktarma işlemini iptal edebilirsiniz."
 
-#: plug-ins/common/file-gif-export.c:1279
+#: plug-ins/common/file-gif-export.c:1283
 msgid ""
 "The GIF format only supports 8 bit integer precision.\n"
 "Your image will be converted on export, which may change the pixel values."
@@ -3265,15 +3265,15 @@ msgstr ""
 "Görüntünüz dışa aktarılırken dönüştürülüdüğü için piksel değerlerini "
 "değiştirebilir."
 
-#: plug-ins/common/file-gif-export.c:1347 plug-ins/common/file-mng.c:1645
+#: plug-ins/common/file-gif-export.c:1351 plug-ins/common/file-mng.c:1645
 msgid "milliseconds"
 msgstr "milisaniye"
 
-#: plug-ins/common/file-gif-export.c:1382
+#: plug-ins/common/file-gif-export.c:1386
 msgid "Animated GIF"
 msgstr "Canlandırmalı GIF"
 
-#: plug-ins/common/file-gif-export.c:1389
+#: plug-ins/common/file-gif-export.c:1393
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -3314,9 +3314,9 @@ msgid "global colormap"
 msgstr "küresel renk eşlemi"
 
 #: plug-ins/common/file-gif-load.c:556 plug-ins/common/file-gif-load.c:1191
-#: plug-ins/common/file-gif-load.c:1544 plug-ins/common/file-gif-load.c:1558
-#: plug-ins/common/file-gif-load.c:1568 plug-ins/common/file-gif-load.c:1578
-#: plug-ins/common/file-gif-load.c:1600
+#: plug-ins/common/file-gif-load.c:1533 plug-ins/common/file-gif-load.c:1550
+#: plug-ins/common/file-gif-load.c:1564 plug-ins/common/file-gif-load.c:1574
+#: plug-ins/common/file-gif-load.c:1584 plug-ins/common/file-gif-load.c:1606
 msgid "image data"
 msgstr "görüntü verisi"
 
@@ -3449,7 +3449,7 @@ msgstr ""
 msgid "Too much compressed data, ignoring extra..."
 msgstr "Çok fazla sıkıştırılmış veri, ek yok sayılıyor..."
 
-#: plug-ins/common/file-gif-load.c:1608
+#: plug-ins/common/file-gif-load.c:1614
 msgid "inflate failed"
 msgstr "şişirme başarısız"
 
@@ -3591,15 +3591,15 @@ msgstr "C kaynak kod başlığı"
 msgid "Saves files as C unsigned character array"
 msgstr "Dosyaları C işaretsiz karakter dizisi olarak kaydeder"
 
-#: plug-ins/common/file-heif.c:222 plug-ins/common/file-heif.c:262
+#: plug-ins/common/file-heif.c:224 plug-ins/common/file-heif.c:264
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: plug-ins/common/file-heif.c:225
+#: plug-ins/common/file-heif.c:227
 msgid "Loads HEIF images"
 msgstr "HEIF görüntüleri yükler"
 
-#: plug-ins/common/file-heif.c:226
+#: plug-ins/common/file-heif.c:228
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -3607,221 +3607,221 @@ msgstr ""
 "HEIF biçiminde (Yüksek Verimli Görüntü Dosyası Biçimi) depolanan görüntüyü "
 "yükle. HEIF dosyaları için tipik uzantılar: .heif, .heic."
 
-#: plug-ins/common/file-heif.c:267
+#: plug-ins/common/file-heif.c:269
 msgid "Exports HEIF images"
 msgstr "HEIF görüntülerini dışa aktarır"
 
-#: plug-ins/common/file-heif.c:268
+#: plug-ins/common/file-heif.c:270
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "Görüntüleri HEIF biçiminde (Yüksek Verimli Görüntü Dosyası Biçimi) kaydet."
 
-#: plug-ins/common/file-heif.c:289 plug-ins/common/file-heif.c:410
-#: plug-ins/common/file-heif.c:555 plug-ins/common/file-jp2.c:334
+#: plug-ins/common/file-heif.c:291 plug-ins/common/file-heif.c:412
+#: plug-ins/common/file-heif.c:557 plug-ins/common/file-jp2.c:334
 #: plug-ins/common/file-jp2.c:422 plug-ins/file-jpeg/jpeg.c:210
 msgid "_Quality"
 msgstr "Ka_lite"
 
-#: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:411
-#: plug-ins/common/file-heif.c:556
+#: plug-ins/common/file-heif.c:292 plug-ins/common/file-heif.c:413
+#: plug-ins/common/file-heif.c:558
 msgid "Quality factor (0 = worst, 100 = best)"
 msgstr "Nitelik faktörü (0 = en kötü, 100 = en iyi)"
 
-#: plug-ins/common/file-heif.c:295 plug-ins/common/file-heif.c:416
-#: plug-ins/common/file-heif.c:561 plug-ins/common/file-jpegxl.c:193
+#: plug-ins/common/file-heif.c:297 plug-ins/common/file-heif.c:418
+#: plug-ins/common/file-heif.c:563 plug-ins/common/file-jpegxl.c:193
 #: plug-ins/file-webp/file-webp.c:191
 msgid "L_ossless"
 msgstr "K_ayıpsız"
 
-#: plug-ins/common/file-heif.c:296 plug-ins/common/file-heif.c:417
-#: plug-ins/common/file-heif.c:562 plug-ins/common/file-jpegxl.c:194
+#: plug-ins/common/file-heif.c:298 plug-ins/common/file-heif.c:419
+#: plug-ins/common/file-heif.c:564 plug-ins/common/file-jpegxl.c:194
 msgid "Use lossless compression"
 msgstr "Kayıpsız sıkıştırma kullan"
 
-#: plug-ins/common/file-heif.c:301 plug-ins/common/file-heif.c:422
-#: plug-ins/common/file-heif.c:567
+#: plug-ins/common/file-heif.c:303 plug-ins/common/file-heif.c:424
+#: plug-ins/common/file-heif.c:569
 msgid "Save color prof_ile"
 msgstr "Renk prof_ilini kaydet"
 
-#: plug-ins/common/file-heif.c:302 plug-ins/common/file-heif.c:423
-#: plug-ins/common/file-heif.c:568
+#: plug-ins/common/file-heif.c:304 plug-ins/common/file-heif.c:425
+#: plug-ins/common/file-heif.c:570
 msgid "Save the image's color profile"
 msgstr "Görüntünün renk profilini kaydet"
 
-#: plug-ins/common/file-heif.c:307 plug-ins/common/file-heif.c:428
-#: plug-ins/common/file-heif.c:573 plug-ins/common/file-jpegxl.c:205
+#: plug-ins/common/file-heif.c:309 plug-ins/common/file-heif.c:430
+#: plug-ins/common/file-heif.c:575 plug-ins/common/file-jpegxl.c:205
 msgid "_Bit depth"
 msgstr "_Bit derinliği"
 
-#: plug-ins/common/file-heif.c:308 plug-ins/common/file-heif.c:429
-#: plug-ins/common/file-heif.c:574 plug-ins/common/file-jpegxl.c:206
+#: plug-ins/common/file-heif.c:310 plug-ins/common/file-heif.c:431
+#: plug-ins/common/file-heif.c:576 plug-ins/common/file-jpegxl.c:206
 msgid "Bit depth of exported image"
 msgstr "Dışa aktarılan görüntünün bit derinliği"
 
-#: plug-ins/common/file-heif.c:313 plug-ins/common/file-heif.c:434
-#: plug-ins/common/file-heif.c:579 plug-ins/common/file-png.c:395
+#: plug-ins/common/file-heif.c:315 plug-ins/common/file-heif.c:436
+#: plug-ins/common/file-heif.c:581 plug-ins/common/file-png.c:395
 msgid "_Pixel format"
 msgstr "_Piksel biçimi"
 
-#: plug-ins/common/file-heif.c:314 plug-ins/common/file-heif.c:435
-#: plug-ins/common/file-heif.c:580
+#: plug-ins/common/file-heif.c:316 plug-ins/common/file-heif.c:437
+#: plug-ins/common/file-heif.c:582
 msgid "Format of color sub-sampling"
 msgstr "Renk alt-örnekleme biçimi"
 
-#: plug-ins/common/file-heif.c:316 plug-ins/common/file-heif.c:437
-#: plug-ins/common/file-heif.c:581
+#: plug-ins/common/file-heif.c:318 plug-ins/common/file-heif.c:439
+#: plug-ins/common/file-heif.c:583
 msgid "YUV444"
 msgstr "YUV444"
 
-#: plug-ins/common/file-heif.c:317 plug-ins/common/file-heif.c:438
-#: plug-ins/common/file-heif.c:582
+#: plug-ins/common/file-heif.c:319 plug-ins/common/file-heif.c:440
+#: plug-ins/common/file-heif.c:584
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:323 plug-ins/common/file-heif.c:444
+#: plug-ins/common/file-heif.c:325 plug-ins/common/file-heif.c:446
 msgid "Enco_der speed"
 msgstr "Ko_dlayıcı hızı"
 
-#: plug-ins/common/file-heif.c:324 plug-ins/common/file-heif.c:445
+#: plug-ins/common/file-heif.c:326 plug-ins/common/file-heif.c:447
 msgid "Tradeoff between speed and compression"
 msgstr "Hız ve sıkıştırma arasındaki denge"
 
-#: plug-ins/common/file-heif.c:325 plug-ins/common/file-heif.c:446
+#: plug-ins/common/file-heif.c:327 plug-ins/common/file-heif.c:448
 msgid "Slow"
 msgstr "Yavaş"
 
-#: plug-ins/common/file-heif.c:326 plug-ins/common/file-heif.c:447
+#: plug-ins/common/file-heif.c:328 plug-ins/common/file-heif.c:449
 msgid "Balanced"
 msgstr "Dengeli"
 
-#: plug-ins/common/file-heif.c:327 plug-ins/common/file-heif.c:448
+#: plug-ins/common/file-heif.c:329 plug-ins/common/file-heif.c:450
 msgid "Fast"
 msgstr "Hızlı"
 
-#: plug-ins/common/file-heif.c:333 plug-ins/common/file-heif.c:454
-#: plug-ins/common/file-heif.c:588 plug-ins/common/file-jpegxl.c:233
+#: plug-ins/common/file-heif.c:335 plug-ins/common/file-heif.c:456
+#: plug-ins/common/file-heif.c:590 plug-ins/common/file-jpegxl.c:233
 msgid "Save Exi_f"
 msgstr "Exi_f Kaydet"
 
-#: plug-ins/common/file-heif.c:334 plug-ins/common/file-heif.c:455
-#: plug-ins/common/file-heif.c:589 plug-ins/common/file-jpegxl.c:234
+#: plug-ins/common/file-heif.c:336 plug-ins/common/file-heif.c:457
+#: plug-ins/common/file-heif.c:591 plug-ins/common/file-jpegxl.c:234
 msgid "Toggle saving Exif data"
 msgstr "Exif verisini kaydetmeyi aç/kapat"
 
-#: plug-ins/common/file-heif.c:339 plug-ins/common/file-heif.c:460
-#: plug-ins/common/file-heif.c:594 plug-ins/common/file-jpegxl.c:239
+#: plug-ins/common/file-heif.c:341 plug-ins/common/file-heif.c:462
+#: plug-ins/common/file-heif.c:596 plug-ins/common/file-jpegxl.c:239
 msgid "Save _XMP"
 msgstr "_XMP Kaydet"
 
-#: plug-ins/common/file-heif.c:340 plug-ins/common/file-heif.c:461
-#: plug-ins/common/file-heif.c:595 plug-ins/common/file-jpegxl.c:240
+#: plug-ins/common/file-heif.c:342 plug-ins/common/file-heif.c:463
+#: plug-ins/common/file-heif.c:597 plug-ins/common/file-jpegxl.c:240
 msgid "Toggle saving XMP data"
 msgstr "XMP verisini kaydetmeyi aç/kapat"
 
-#: plug-ins/common/file-heif.c:350 plug-ins/common/file-heif.c:382
+#: plug-ins/common/file-heif.c:352 plug-ins/common/file-heif.c:384
 msgid "HEIF/AVIF"
 msgstr "HEIF/AVIF"
 
-#: plug-ins/common/file-heif.c:353
+#: plug-ins/common/file-heif.c:355
 msgid "Loads AVIF images"
 msgstr "AVIF görüntülerini yükler"
 
-#: plug-ins/common/file-heif.c:354
+#: plug-ins/common/file-heif.c:356
 msgid "Load image stored in AV1 Image File Format (AVIF)"
 msgstr "AV1 Görüntü Dosyası Biçiminde (AVIF) saklanan görüntüyü yükle"
 
-#: plug-ins/common/file-heif.c:387
+#: plug-ins/common/file-heif.c:389
 msgid "Exports AVIF images"
 msgstr "AVIF görüntülerini dışa aktarır"
 
-#: plug-ins/common/file-heif.c:388
+#: plug-ins/common/file-heif.c:390
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Görüntüleri AV1 Görüntü Dosyası Biçiminde (AVIF) kaydet"
 
-#: plug-ins/common/file-heif.c:471
+#: plug-ins/common/file-heif.c:473
 msgid "JPEG 2000 encapsulated in HEIF"
 msgstr "HEIF kapsüllü JPEG 2000"
 
-#: plug-ins/common/file-heif.c:474
+#: plug-ins/common/file-heif.c:476
 msgid "Loads HEJ2 images"
 msgstr "HEJ2 görüntülerini yükler"
 
-#: plug-ins/common/file-heif.c:475
+#: plug-ins/common/file-heif.c:477
 msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "HEIF (HEJ2) kapsüllü JPEG 2000 görüntüsünü yükle"
 
-#: plug-ins/common/file-heif.c:498
+#: plug-ins/common/file-heif.c:500
 msgid "AVC-encoded image encapsulated in HEIF"
 msgstr "HEIF kapsüllü AVC kodlu görüntü"
 
-#: plug-ins/common/file-heif.c:501
+#: plug-ins/common/file-heif.c:503
 msgid "Loads AVCI images"
 msgstr "AVCI görüntülerini yükler"
 
-#: plug-ins/common/file-heif.c:502
+#: plug-ins/common/file-heif.c:504
 msgid "Load AVCI image - H.264 image encapsulated in HEIF"
 msgstr "AVCI görüntüsünü yükle - HEIF kapsüllü H.264 görüntüsü"
 
-#: plug-ins/common/file-heif.c:534
+#: plug-ins/common/file-heif.c:536
 msgid "Exports HEJ2 images"
 msgstr "HEJ2 görüntülerini dışa aktarır"
 
-#: plug-ins/common/file-heif.c:535
+#: plug-ins/common/file-heif.c:537
 msgid "Save JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "JPEG 2000 görüntüsünü HEIF (HEJ2) kapsüllü olarak kaydet"
 
-#: plug-ins/common/file-heif.c:1089 plug-ins/common/file-heif.c:1122
-#: plug-ins/common/file-heif.c:1163 plug-ins/common/file-heif.c:1225
+#: plug-ins/common/file-heif.c:1091 plug-ins/common/file-heif.c:1124
+#: plug-ins/common/file-heif.c:1165 plug-ins/common/file-heif.c:1227
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "HEIF görüntü yükleme işlemi başarısız oldu: %s"
 
-#: plug-ins/common/file-heif.c:1111
+#: plug-ins/common/file-heif.c:1113
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "HEIF görüntü yükleme işlemi başarısız oldu: Girdi dosyası okunabilir görüntü "
 "içermiyor"
 
-#: plug-ins/common/file-heif.c:1347
+#: plug-ins/common/file-heif.c:1349
 msgid "image content"
 msgstr "görüntü içeriği"
 
-#: plug-ins/common/file-heif.c:1687
+#: plug-ins/common/file-heif.c:1689
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "'%s', %s kodlayıcı kullanılarak dışa aktarılıyor"
 
-#: plug-ins/common/file-heif.c:1735 plug-ins/common/file-heif.c:2128
+#: plug-ins/common/file-heif.c:1737 plug-ins/common/file-heif.c:2130
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "HEIF görüntüsü kodlama işlemi başarısız oldu: %s"
 
-#: plug-ins/common/file-heif.c:2249
+#: plug-ins/common/file-heif.c:2251
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "HEIF görüntüsü yazma işlemi başarısız oldu: %s"
 
-#: plug-ins/common/file-heif.c:2338
+#: plug-ins/common/file-heif.c:2340
 msgid "primary"
 msgstr "birincil"
 
-#: plug-ins/common/file-heif.c:2483
+#: plug-ins/common/file-heif.c:2485
 msgid "Load HEIF Image"
 msgstr "HEIF Görüntüsü Yükle"
 
-#: plug-ins/common/file-heif.c:2497
+#: plug-ins/common/file-heif.c:2499
 msgid "Select Image"
 msgstr "Görüntü Seç"
 
-#: plug-ins/common/file-heif.c:2646 plug-ins/common/file-jpegxl.c:2018
+#: plug-ins/common/file-heif.c:2648 plug-ins/common/file-jpegxl.c:2018
 msgid "8 bit/channel"
 msgstr "8 bit/kanal"
 
-#: plug-ins/common/file-heif.c:2647
+#: plug-ins/common/file-heif.c:2649
 msgid "10 bit/channel"
 msgstr "10 bit/kanal"
 
-#: plug-ins/common/file-heif.c:2648
+#: plug-ins/common/file-heif.c:2650
 msgid "12 bit/channel"
 msgstr "12 bit/kanal"
 
@@ -4159,19 +4159,19 @@ msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Desteklenmeyen JPEG 2000%s '%s', %d bileşenleriyle."
 
 #: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:887
-#: plug-ins/file-psd/psd-export.c:2589
+#: plug-ins/file-psd/psd-export.c:2698
 #: plug-ins/file-tiff/file-tiff-export.c:1310
 msgid "No soft-proofing profile"
 msgstr "Ekran provası profili yok"
 
 #: plug-ins/common/file-jp2.c:1309 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2597
+#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2706
 #: plug-ins/file-tiff/file-tiff-export.c:1318
 msgid "Name of the color profile used for CMYK export."
 msgstr "CMYK dışa aktarma için kullanılan renk profilinin adı."
 
 #: plug-ins/common/file-jp2.c:1320 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2608
+#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2717
 #: plug-ins/file-tiff/file-tiff-export.c:1330
 #, c-format
 msgid "Profile: %s"
@@ -4349,13 +4349,13 @@ msgstr ""
 #: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:728
 #: plug-ins/common/file-raw-data.c:815
 #: plug-ins/common/file-seattle-filmworks.c:244
-#: plug-ins/common/file-seattle-filmworks.c:283
-#: plug-ins/common/file-seattle-filmworks.c:295
-#: plug-ins/common/file-seattle-filmworks.c:350
-#: plug-ins/common/file-seattle-filmworks.c:369
-#: plug-ins/common/file-seattle-filmworks.c:380
-#: plug-ins/common/file-seattle-filmworks.c:390
-#: plug-ins/common/file-seattle-filmworks.c:523
+#: plug-ins/common/file-seattle-filmworks.c:287
+#: plug-ins/common/file-seattle-filmworks.c:300
+#: plug-ins/common/file-seattle-filmworks.c:361
+#: plug-ins/common/file-seattle-filmworks.c:381
+#: plug-ins/common/file-seattle-filmworks.c:393
+#: plug-ins/common/file-seattle-filmworks.c:404
+#: plug-ins/common/file-seattle-filmworks.c:541
 #, c-format
 msgid "Invalid file."
 msgstr "Geçersiz dosya."
@@ -4503,7 +4503,7 @@ msgstr "tIME (oluşturulma tarihi) öbeğini yaz"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:723 plug-ins/common/file-png.c:2781
+#: plug-ins/common/file-mng.c:723 plug-ins/common/file-png.c:2803
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Kayıp olmadan saydamlık kaydedilemedi, bunun yerine matlık kaydediliyor."
@@ -4540,9 +4540,9 @@ msgstr "Dosyayı Bohemia Interactive PAA dosya biçiminde yükle"
 #: plug-ins/common/file-paa.c:232 plug-ins/common/file-paa.c:269
 #: plug-ins/common/file-paa.c:290 plug-ins/common/file-pcx.c:647
 #: plug-ins/common/file-pvr.c:310 plug-ins/common/file-pvr.c:353
-#: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:364
-#: plug-ins/common/file-tim.c:390 plug-ins/common/file-tim.c:453
-#: plug-ins/common/file-tim.c:498
+#: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:363
+#: plug-ins/common/file-tim.c:391 plug-ins/common/file-tim.c:478
+#: plug-ins/common/file-tim.c:538
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "'%s' içindeki başlık okunamadı"
@@ -4562,6 +4562,9 @@ msgid "Main surface"
 msgstr "Ana yüzey"
 
 #: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:355
+#: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
+#: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
+#: plug-ins/common/file-tim.c:612
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "Bellek ayrılamadı."
@@ -4872,7 +4875,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "Görüntüyü Çok Sayfalı PDF Olarak Dışa Aktar"
 
 #: plug-ins/common/file-pdf-export.c:1033
-#: plug-ins/metadata/metadata-editor.c:5608
+#: plug-ins/metadata/metadata-editor.c:5621
 msgid "_Export"
 msgstr "_Dışa Aktar"
 
@@ -4898,7 +4901,7 @@ msgstr "Bu görüntüyü ekle"
 
 #: plug-ins/common/file-pdf-export.c:1201
 #: plug-ins/common/file-pdf-export.c:1274
-#: plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2217
+#: plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2233
 #: plug-ins/file-tiff/file-tiff-load.c:1580
 #, c-format
 msgid "Page %d"
@@ -5180,29 +5183,34 @@ msgid "Importing APNG frames from '%s'"
 msgstr "'%s' dosyasından APNG kareleri içe aktarılıyor"
 
 #: plug-ins/common/file-png.c:1399 plug-ins/common/file-png.c:1436
-#: plug-ins/common/file-png.c:1460
+#: plug-ins/common/file-png.c:1463
 #, c-format
 msgid "Could not read APNG frames. They will be discarded."
 msgstr "APNG kareleri okunamadı. Bunlar gözden çıkartılacak."
 
-#: plug-ins/common/file-png.c:1551
+#: plug-ins/common/file-png.c:1526
+#, c-format
+msgid "Invalid APNG: fcTL frame dimensions exceed IHDR allocation"
+msgstr "Geçersiz APNG: fcTL kare boyutları IHDR tahsisini aşıyor"
+
+#: plug-ins/common/file-png.c:1571
 #, c-format
 msgid "Invalid APNG: Image data appeared before actTL chunk."
 msgstr "Geçersiz APNG: Görüntü verileri actTL yığınından önce göründü."
 
-#: plug-ins/common/file-png.c:1637
+#: plug-ins/common/file-png.c:1659
 msgid "Apply PNG Offset"
 msgstr "PNG Konumunu Uygula"
 
-#: plug-ins/common/file-png.c:1641
+#: plug-ins/common/file-png.c:1663
 msgid "Ignore PNG offset"
 msgstr "PNG konumunu yok say"
 
-#: plug-ins/common/file-png.c:1642
+#: plug-ins/common/file-png.c:1664
 msgid "Apply PNG offset to layer"
 msgstr "Katmana PNG konumunu uygula"
 
-#: plug-ins/common/file-png.c:1667
+#: plug-ins/common/file-png.c:1689
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -5211,18 +5219,18 @@ msgstr ""
 "İçe aktardığınız PNG görüntüsü %d, %d biçiminde konum belirtir. Bu konumu "
 "katmana uygulamak ister misiniz?"
 
-#: plug-ins/common/file-png.c:1880
+#: plug-ins/common/file-png.c:1901
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "'%s' dışa aktarırken PNG yazma yapısı oluşturma hatası."
 
-#: plug-ins/common/file-png.c:1889
+#: plug-ins/common/file-png.c:1910
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "'%s' dışa aktarirken hata oluştu. PNG başlık bilgisi yapısı oluşturulamadı."
 
-#: plug-ins/common/file-png.c:1897
+#: plug-ins/common/file-png.c:1918
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "'%s' dışa aktarılırken hata oluştu. Görüntü dışa aktarılamadı."
@@ -5639,33 +5647,33 @@ msgstr "Azami ön izleme boyutu. Ön izleme olmaması için 0 olarak ayarlayın.
 msgid "Could not interpret PostScript file '%s'"
 msgstr "'%s' PostScript dosyası yorumlanamıyor"
 
-#: plug-ins/common/file-ps.c:1251
+#: plug-ins/common/file-ps.c:1255
 msgid "Rendered EPS"
 msgstr "İşlenmiş EPS"
 
-#: plug-ins/common/file-ps.c:1279
+#: plug-ins/common/file-ps.c:1283
 #, c-format
 msgid "%s-pages"
 msgstr "%s-sayfa"
 
-#: plug-ins/common/file-ps.c:1350
+#: plug-ins/common/file-ps.c:1354
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "PostScript dışa aktarma, alfa kanal içeren görüntüleri işleyemez"
 
-#: plug-ins/common/file-ps.c:3821
+#: plug-ins/common/file-ps.c:3842
 msgid "Pages:"
 msgstr "Sayfalar:"
 
-#: plug-ins/common/file-ps.c:3825
+#: plug-ins/common/file-ps.c:3846
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Yüklenecek sayfalar (ör.: 1-4 ya da 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3831
+#: plug-ins/common/file-ps.c:3852
 msgid "Open as"
 msgstr "Farklı aç"
 
-#: plug-ins/common/file-ps.c:3919
+#: plug-ins/common/file-ps.c:3940
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5673,28 +5681,28 @@ msgstr ""
 "Seçildiği zaman, elde edilecek olan görüntü en-boy oranı değişmeden verilen "
 "boyuta ölçeklenecek."
 
-#: plug-ins/common/file-ps.c:3925
+#: plug-ins/common/file-ps.c:3946
 msgid "Image Size"
 msgstr "Görüntü Boyutu"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3942
+#: plug-ins/common/file-ps.c:3963
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3943
+#: plug-ins/common/file-ps.c:3964
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3944
+#: plug-ins/common/file-ps.c:3965
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3945
+#: plug-ins/common/file-ps.c:3966
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3952
+#: plug-ins/common/file-ps.c:3973
 msgid "Output"
 msgstr "Çıktı"
 
@@ -5833,135 +5841,135 @@ msgstr "Blok bilgisi okunamadı"
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Geçersiz katman alt bloğu %s, KATMAN olmalı"
 
-#: plug-ins/common/file-psp.c:1953 plug-ins/common/file-psp.c:2010
+#: plug-ins/common/file-psp.c:1955 plug-ins/common/file-psp.c:2014
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Katman bilgisi öbeği okuma hatası"
 
-#: plug-ins/common/file-psp.c:2052
+#: plug-ins/common/file-psp.c:2057
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Görüntü katman boyutları: %dx%d"
 
-#: plug-ins/common/file-psp.c:2113
+#: plug-ins/common/file-psp.c:2118
 #, c-format
 msgid "Error creating layer"
 msgstr "Katman oluştururken hata"
 
-#: plug-ins/common/file-psp.c:2174
+#: plug-ins/common/file-psp.c:2179
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Geçersiz katman alt bloğu %s, KANAL olmalı"
 
-#: plug-ins/common/file-psp.c:2190 plug-ins/common/file-psp.c:2518
-#: plug-ins/common/file-psp.c:2538 plug-ins/common/file-psp.c:2556
+#: plug-ins/common/file-psp.c:2195 plug-ins/common/file-psp.c:2523
+#: plug-ins/common/file-psp.c:2543 plug-ins/common/file-psp.c:2561
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Kanal bilgisi öbeği okuma hatası"
 
-#: plug-ins/common/file-psp.c:2214
+#: plug-ins/common/file-psp.c:2219
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Kanal bilgisi öbeğinde geçersiz kanal türü %d"
 
-#: plug-ins/common/file-psp.c:2320 plug-ins/common/file-psp.c:2337
+#: plug-ins/common/file-psp.c:2325 plug-ins/common/file-psp.c:2342
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Tüp veri öbeği okuma hatası"
 
-#: plug-ins/common/file-psp.c:2441 plug-ins/common/file-psp.c:2458
-#: plug-ins/common/file-psp.c:2480 plug-ins/common/file-psp.c:2488
+#: plug-ins/common/file-psp.c:2446 plug-ins/common/file-psp.c:2463
+#: plug-ins/common/file-psp.c:2485 plug-ins/common/file-psp.c:2493
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "Seçim öbegi okunamadı"
 
-#: plug-ins/common/file-psp.c:2450
+#: plug-ins/common/file-psp.c:2455
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "Seçim öbek boyutu geçersiz"
 
-#: plug-ins/common/file-psp.c:2472 plug-ins/common/file-psp.c:2496
-#: plug-ins/common/file-psp.c:2530 plug-ins/common/file-psp.c:2572
+#: plug-ins/common/file-psp.c:2477 plug-ins/common/file-psp.c:2501
+#: plug-ins/common/file-psp.c:2535 plug-ins/common/file-psp.c:2577
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Seçim öbeği sonu okuma hatası"
 
-#: plug-ins/common/file-psp.c:2505
+#: plug-ins/common/file-psp.c:2510
 #, c-format
 msgid "Invalid selection sub-block %s, should be CHANNEL"
 msgstr "Geçersiz seçim alt bloğu %s, KANAL olmalı"
 
-#: plug-ins/common/file-psp.c:2597
+#: plug-ins/common/file-psp.c:2602
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Genişletilmiş blok öbek başlığı okuma hatası"
 
-#: plug-ins/common/file-psp.c:2604
+#: plug-ins/common/file-psp.c:2609
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Geçersiz genişletilmiş blok öbeği başlığı"
 
-#: plug-ins/common/file-psp.c:2615
+#: plug-ins/common/file-psp.c:2620
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Geçersiz genişletilmiş blok öbeği boyutu"
 
-#: plug-ins/common/file-psp.c:2636
+#: plug-ins/common/file-psp.c:2641
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Genişletilmiş öbek ızgara verileri okuma hatası"
 
-#: plug-ins/common/file-psp.c:2664
+#: plug-ins/common/file-psp.c:2669
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Genişletilmiş öbek kılavuz verileri okunamadı"
 
-#: plug-ins/common/file-psp.c:2682
+#: plug-ins/common/file-psp.c:2687
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Geçersiz kılavuz yönü"
 
-#: plug-ins/common/file-psp.c:2696
+#: plug-ins/common/file-psp.c:2701
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Genişletilmiş blok öbeği okuma hatası"
 
-#: plug-ins/common/file-psp.c:2722 plug-ins/common/file-psp.c:2734
-#: plug-ins/common/file-psp.c:2745
+#: plug-ins/common/file-psp.c:2727 plug-ins/common/file-psp.c:2739
+#: plug-ins/common/file-psp.c:2750
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Renk profili öbeği okunamadı"
 
-#: plug-ins/common/file-psp.c:2798
+#: plug-ins/common/file-psp.c:2803
 #, c-format
 msgid "Error reading file header."
 msgstr "Dosya başlığı okuma hatası."
 
-#: plug-ins/common/file-psp.c:2805
+#: plug-ins/common/file-psp.c:2810
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Hatalı dosya imzası."
 
-#: plug-ins/common/file-psp.c:2819
+#: plug-ins/common/file-psp.c:2824
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Desteklenmeyen PSP dosya biçim sürümü %d.%d."
 
-#: plug-ins/common/file-psp.c:2839
+#: plug-ins/common/file-psp.c:2844
 msgid "invalid block size"
 msgstr "geçersiz blok boyutu"
 
-#: plug-ins/common/file-psp.c:2848
+#: plug-ins/common/file-psp.c:2853
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Yinelenen Genel Görüntü Öznitelikleri bloğu."
 
-#: plug-ins/common/file-psp.c:2876
+#: plug-ins/common/file-psp.c:2881
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Kayıp Genel Görüntü Öznitelikleri bloğu."
 
-#: plug-ins/common/file-psp.c:3001
+#: plug-ins/common/file-psp.c:3006
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Dışa aktarma henüz gerçeklenmedi."
@@ -6383,18 +6391,18 @@ msgstr "Seattle FilmWorks Görüntüsü"
 msgid "Load file in the Seattle FilmWorks file format"
 msgstr "Dosyayı Seattle FilmWorks dosya biçiminde yükle"
 
-#: plug-ins/common/file-seattle-filmworks.c:336
+#: plug-ins/common/file-seattle-filmworks.c:346
 #, c-format
 msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "Sıkıştırılmamış SFW94A biçimi henüz desteklenmiyor."
 
-#: plug-ins/common/file-seattle-filmworks.c:425
-#: plug-ins/common/file-seattle-filmworks.c:538
+#: plug-ins/common/file-seattle-filmworks.c:440
+#: plug-ins/common/file-seattle-filmworks.c:556
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "SFW görüntüsü dönüştürülemedi."
 
-#: plug-ins/common/file-seattle-filmworks.c:497
+#: plug-ins/common/file-seattle-filmworks.c:515
 #, c-format
 msgid "Unsupported SFW format '%s'"
 msgstr "Desteklenmeyen SFW biçimi '%s'"
@@ -6443,16 +6451,16 @@ msgstr "'%s', SUN-raster-file olarak açılamadı"
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr "Bu SUN-rasterfile türü desteklenmiyor"
 
-#: plug-ins/common/file-sunras.c:485
+#: plug-ins/common/file-sunras.c:487
 #, c-format
 msgid "Could not read color entries from '%s'"
 msgstr "'%s' dosyasından renk girişleri okunamadı"
 
-#: plug-ins/common/file-sunras.c:494
+#: plug-ins/common/file-sunras.c:496
 msgid "Type of colormap not supported"
 msgstr "Renk eşlemi türü destenlenmiyor"
 
-#: plug-ins/common/file-sunras.c:501 plug-ins/common/file-xbm.c:813
+#: plug-ins/common/file-sunras.c:503 plug-ins/common/file-xbm.c:817
 #: plug-ins/common/file-xwd.c:569
 #, c-format
 msgid ""
@@ -6462,7 +6470,7 @@ msgstr ""
 "'%s':\n"
 "Görüntü genişliği belirtilmedi"
 
-#: plug-ins/common/file-sunras.c:509 plug-ins/common/file-xbm.c:821
+#: plug-ins/common/file-sunras.c:511 plug-ins/common/file-xbm.c:825
 #: plug-ins/common/file-xwd.c:578
 #, c-format
 msgid ""
@@ -6472,7 +6480,7 @@ msgstr ""
 "'%s':\n"
 "Görüntü genişliği GIMP'in kaldırabileceğinden daha büyük"
 
-#: plug-ins/common/file-sunras.c:517 plug-ins/common/file-xbm.c:829
+#: plug-ins/common/file-sunras.c:519 plug-ins/common/file-xbm.c:833
 #: plug-ins/common/file-xwd.c:586
 #, c-format
 msgid ""
@@ -6482,7 +6490,7 @@ msgstr ""
 "'%s':\n"
 "Görüntü yüksekliği belirtilmedi"
 
-#: plug-ins/common/file-sunras.c:525 plug-ins/common/file-xbm.c:837
+#: plug-ins/common/file-sunras.c:527 plug-ins/common/file-xbm.c:841
 #: plug-ins/common/file-xwd.c:594
 #, c-format
 msgid ""
@@ -6492,29 +6500,29 @@ msgstr ""
 "'%s':\n"
 "Görüntü yüksekliği GIMP'in kaldırabileceğinden daha büyük"
 
-#: plug-ins/common/file-sunras.c:561
+#: plug-ins/common/file-sunras.c:563
 msgid "This image depth is not supported"
 msgstr "Bu görüntü derinliği desteklenmiyor"
 
-#: plug-ins/common/file-sunras.c:589
+#: plug-ins/common/file-sunras.c:591
 #, c-format
 msgid "SUNRAS export cannot handle images with alpha channels"
 msgstr "SUNRAS dışa aktarma, alfa kanal içeren görüntüleri işleyemez"
 
-#: plug-ins/common/file-sunras.c:600
+#: plug-ins/common/file-sunras.c:602
 msgid "Can't operate on unknown image types"
 msgstr "Bilinmeyen görüntü türleri işlenemiyor"
 
-#: plug-ins/common/file-sunras.c:1169 plug-ins/common/file-sunras.c:1264
-#: plug-ins/common/file-sunras.c:1348 plug-ins/common/file-sunras.c:1448
+#: plug-ins/common/file-sunras.c:1171 plug-ins/common/file-sunras.c:1266
+#: plug-ins/common/file-sunras.c:1350 plug-ins/common/file-sunras.c:1450
 #: plug-ins/common/file-xwd.c:1493 plug-ins/common/file-xwd.c:1607
-#: plug-ins/common/file-xwd.c:1797 plug-ins/common/file-xwd.c:2037
-#: plug-ins/common/file-xwd.c:2226 plug-ins/common/file-xwd.c:2527
+#: plug-ins/common/file-xwd.c:1797 plug-ins/common/file-xwd.c:2039
+#: plug-ins/common/file-xwd.c:2228 plug-ins/common/file-xwd.c:2529
 #, c-format
 msgid "EOF encountered on reading"
 msgstr "Okunurken EOF (dosya sonu) ile karşılaşıldı"
 
-#: plug-ins/common/file-sunras.c:1627 plug-ins/common/file-sunras.c:1748
+#: plug-ins/common/file-sunras.c:1629 plug-ins/common/file-sunras.c:1750
 msgid "Write error occurred"
 msgstr "Yazım hatası oluştu"
 
@@ -6650,7 +6658,7 @@ msgstr "SVG İşleniyor"
 msgid "Rendered SVG"
 msgstr "SVG İşlendi"
 
-#: plug-ins/common/file-svg.c:1125
+#: plug-ins/common/file-svg.c:1130
 msgid ""
 "The SVG format only requires viewers to display image links for SVG, PNG, "
 "and JPEG images.\n"
@@ -6709,94 +6717,94 @@ msgstr "'%s' dosyasından uzantı okunamadı"
 msgid "Cannot read header from '%s'"
 msgstr "'%s' dosyasından sayfa başlığı okunamadı"
 
-#: plug-ins/common/file-tim.c:173 plug-ins/common/file-tim.c:196
-#: plug-ins/common/file-tim.c:208
+#: plug-ins/common/file-tim.c:168 plug-ins/common/file-tim.c:191
+#: plug-ins/common/file-tim.c:203
 msgid "Playstation TIM image"
 msgstr "Playstation TIM görüntüsü"
 
-#: plug-ins/common/file-tim.c:176
+#: plug-ins/common/file-tim.c:171
 msgid "Load file in the TIM file format"
 msgstr "Dosyayı TIM dosya biçiminde yükle"
 
-#: plug-ins/common/file-tim.c:177
+#: plug-ins/common/file-tim.c:172
 msgid "Load file in the Sony Playstation TIM file format"
 msgstr "Dosyayı Sony Playstation TIM dosya biçiminde yükle"
 
-#: plug-ins/common/file-tim.c:199
+#: plug-ins/common/file-tim.c:194
 msgid "Saves files in the TIM file format"
 msgstr "Dosyaları TIM dosya biçiminde kaydeder"
 
-#: plug-ins/common/file-tim.c:200
+#: plug-ins/common/file-tim.c:195
 msgid "Saves files in the Playstation TIM file format"
 msgstr "Dosyaları Playstation TIM dosya biçiminde kaydeder"
 
-#: plug-ins/common/file-tim.c:218
+#: plug-ins/common/file-tim.c:217
 msgid "_Type"
 msgstr "_Tür"
 
-#: plug-ins/common/file-tim.c:219
+#: plug-ins/common/file-tim.c:218
 msgid "Type of TIM texture to export"
 msgstr "Dışa aktarılacak TIM deseninin türü"
 
-#: plug-ins/common/file-tim.c:220
+#: plug-ins/common/file-tim.c:219
 msgid "4BPP (Indexed)"
 msgstr "4BPP (İndeksli)"
 
-#: plug-ins/common/file-tim.c:221
+#: plug-ins/common/file-tim.c:220
 msgid "8BPP (Indexed)"
 msgstr "8BPP (İndeksli)"
 
-#: plug-ins/common/file-tim.c:222
+#: plug-ins/common/file-tim.c:221
 msgid "16BPP (RGB)"
 msgstr "16BPP (RGB)"
 
-#: plug-ins/common/file-tim.c:223
+#: plug-ins/common/file-tim.c:222
 msgid "24BPP (RGB)"
 msgstr "24BPP (RGB)"
 
-#: plug-ins/common/file-tim.c:229
+#: plug-ins/common/file-tim.c:228
 msgid "Image _X"
 msgstr "Görüntü _X"
 
-#: plug-ins/common/file-tim.c:230
+#: plug-ins/common/file-tim.c:229
 msgid "Origin X coordinate"
 msgstr "Köken X koordinatı"
 
-#: plug-ins/common/file-tim.c:235
+#: plug-ins/common/file-tim.c:234
 msgid "Image _Y"
 msgstr "Görüntü _Y"
 
-#: plug-ins/common/file-tim.c:236
+#: plug-ins/common/file-tim.c:235
 msgid "Origin Y coordinate"
 msgstr "Köken Y koordinatı"
 
-#: plug-ins/common/file-tim.c:242
+#: plug-ins/common/file-tim.c:241
 msgid "_Palette X"
 msgstr "_Palet X"
 
-#: plug-ins/common/file-tim.c:243
+#: plug-ins/common/file-tim.c:242
 msgid "Palette X coordinate"
 msgstr "Palet X koordinatı"
 
-#: plug-ins/common/file-tim.c:248
+#: plug-ins/common/file-tim.c:247
 msgid "P_alette Y"
 msgstr "P_alet Y"
 
-#: plug-ins/common/file-tim.c:249
+#: plug-ins/common/file-tim.c:248
 msgid "Palette Y coordinate"
 msgstr "Palet Y koordinatı"
 
-#: plug-ins/common/file-tim.c:375
+#: plug-ins/common/file-tim.c:374
 #, c-format
 msgid "Unsupported TIM image type: %d"
 msgstr "Desteklenmeyen TIM görüntü türü: %d"
 
-#: plug-ins/common/file-tim.c:483
+#: plug-ins/common/file-tim.c:519
 #, c-format
 msgid "Could not read palette from '%s'"
 msgstr "Palet '%s' dosyasından okunamadı"
 
-#: plug-ins/common/file-tim.c:614
+#: plug-ins/common/file-tim.c:706
 #, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
@@ -6805,11 +6813,11 @@ msgstr ""
 "'%s' dışa aktarılamadı. TIM dosya biçimi %d pikselden daha geniş ya da uzun "
 "görüntüleri desteklemiyor."
 
-#: plug-ins/common/file-tim.c:854
+#: plug-ins/common/file-tim.c:924
 msgid "Image Origin"
 msgstr "Görüntü Kökeni"
 
-#: plug-ins/common/file-tim.c:869
+#: plug-ins/common/file-tim.c:939
 msgid "Palette Origin"
 msgstr "Palet Kökeni"
 
@@ -6982,7 +6990,7 @@ msgstr "_Maske dosyası uzantısı"
 msgid "Suffix of the mask file"
 msgstr "Maske dosyasının son eki"
 
-#: plug-ins/common/file-xbm.c:805
+#: plug-ins/common/file-xbm.c:809
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6991,7 +6999,7 @@ msgstr ""
 "'%s':\n"
 "Başlık okunamadı (ftell == %ld)"
 
-#: plug-ins/common/file-xbm.c:845
+#: plug-ins/common/file-xbm.c:849
 #, c-format
 msgid ""
 "'%s':\n"
@@ -7001,7 +7009,7 @@ msgstr ""
 "Görüntü veri türü tanımlanmadı"
 
 #. The image is not black-and-white.
-#: plug-ins/common/file-xbm.c:990
+#: plug-ins/common/file-xbm.c:994
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
@@ -7013,7 +7021,7 @@ msgstr ""
 "Lütfen siyah ve beyaz (1-bit) indeksli görüntüye dönüştürün ve yeniden "
 "deneyin."
 
-#: plug-ins/common/file-xbm.c:1002
+#: plug-ins/common/file-xbm.c:1006
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
@@ -7021,7 +7029,7 @@ msgstr ""
 "Hiçbir alfa kanalı olmayan bir görüntü için\n"
 "imleç maskesi kaydedemezsiniz."
 
-#: plug-ins/common/file-xbm.c:1234
+#: plug-ins/common/file-xbm.c:1238
 msgid ""
 "Writing a comment will make the XBM file unreadable by some applications.\n"
 "The comment will not affect embedding the XBM in C source code."
@@ -7220,8 +7228,8 @@ msgstr ""
 "ve \"gtk-cursor-theme-size\" değerine dayalı süreci kullanılır."
 
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1257 plug-ins/file-webp/file-webp-export.c:199
-#: plug-ins/file-webp/file-webp-export.c:607
+#: plug-ins/common/file-xmc.c:1257 plug-ins/file-webp/file-webp-export.c:203
+#: plug-ins/file-webp/file-webp-export.c:611
 #, c-format
 msgid "Saving '%s'"
 msgstr "'%s' kaydediliyor"
@@ -7442,13 +7450,13 @@ msgstr "Arama hatası"
 msgid "Invalid colormap offset. Possibly corrupt image."
 msgstr "Geçersiz renk eşlemi konumu. Olası bozuk görüntü."
 
-#: plug-ins/common/file-xwd.c:1877 plug-ins/common/file-xwd.c:2128
-#: plug-ins/common/file-xwd.c:2324
+#: plug-ins/common/file-xwd.c:1879 plug-ins/common/file-xwd.c:2130
+#: plug-ins/common/file-xwd.c:2326
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "XWD-file %s bozuk."
 
-#: plug-ins/common/file-xwd.c:2076
+#: plug-ins/common/file-xwd.c:2078
 #, c-format
 msgid ""
 "'%s':\n"
@@ -7589,49 +7597,49 @@ msgstr "En çok yüksekliği koru"
 msgid "Composing images"
 msgstr "Görüntüleri oluşturma"
 
-#: plug-ins/common/film.c:722
+#: plug-ins/common/film.c:721
 msgid "\"Filmstrip\" cannot be run without any input images"
 msgstr "\"Film Şeridi\" girdi görüntüsü olmadan çalıştırılamaz"
 
-#: plug-ins/common/film.c:991
+#: plug-ins/common/film.c:990
 msgid "Available images:"
 msgstr "Kullanılabilir görüntüler:"
 
-#: plug-ins/common/film.c:992
+#: plug-ins/common/film.c:991
 msgid "On film:"
 msgstr "Film üzerinde:"
 
-#: plug-ins/common/film.c:1043 plug-ins/common/unit-editor.c:428
+#: plug-ins/common/film.c:1042 plug-ins/common/unit-editor.c:428
 msgid "_Add"
 msgstr "_Ekle"
 
-#: plug-ins/common/film.c:1043 plug-ins/imagemap/imap_polygon.c:531
+#: plug-ins/common/film.c:1042 plug-ins/imagemap/imap_polygon.c:531
 msgid "_Remove"
 msgstr "_Kaldır"
 
-#: plug-ins/common/film.c:1074 plug-ins/common/film.c:1140
+#: plug-ins/common/film.c:1073 plug-ins/common/film.c:1139
 msgid "Filmstrip"
 msgstr "Film Şeridi"
 
-#: plug-ins/common/film.c:1088
+#: plug-ins/common/film.c:1087
 msgid "Numbering"
 msgstr "Numaralandırma"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1106
+#: plug-ins/common/film.c:1105
 msgid "Image Selection"
 msgstr "Görüntü Seçimi"
 
-#: plug-ins/common/film.c:1156
+#: plug-ins/common/film.c:1155
 msgid "All Values are Fractions of the Strip Height"
 msgstr "Tüm Değerler, Şerit Yüksekliğinin Parçalarıdır"
 
 #. Fill the notebook.
-#: plug-ins/common/film.c:1163
+#: plug-ins/common/film.c:1162
 msgid "Ad_vanced"
 msgstr "_Gelişmiş"
 
-#: plug-ins/common/film.c:1164
+#: plug-ins/common/film.c:1163
 msgid "_Selection"
 msgstr "_Seçim"
 
@@ -7867,8 +7875,8 @@ msgstr "Her parçanın kenarlarındaki vurgu miktarı"
 msgid "Assembling jigsaw"
 msgstr "Yapboz birleştiriliyor"
 
-#: plug-ins/common/jigsaw.c:791
-#, c-format
+#. This should never happen.
+#: plug-ins/common/jigsaw.c:792
 msgid "draw_jigsaw: bad style\n"
 msgstr "draw_jigsaw: kötü biçem\n"
 
@@ -8057,16 +8065,16 @@ msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
 msgstr[0] "Sorgunuzla eşleşen %d eklenti"
 
-#: plug-ins/common/plugin-browser.c:529
+#: plug-ins/common/plugin-browser.c:543
 #: plug-ins/filter-browser/filter-browser.c:691
 msgid "No matches"
 msgstr "Eşleşme yok"
 
-#: plug-ins/common/plugin-browser.c:554
+#: plug-ins/common/plugin-browser.c:568
 msgid "Plug-in Browser"
 msgstr "Eklenti Tarayıcı"
 
-#: plug-ins/common/plugin-browser.c:602 plug-ins/common/unit-editor.c:114
+#: plug-ins/common/plugin-browser.c:616 plug-ins/common/unit-editor.c:114
 #: plug-ins/metadata/metadata-editor.c:613
 #: plug-ins/metadata/metadata-editor.c:649
 #: plug-ins/metadata/metadata-editor.c:656
@@ -8074,23 +8082,23 @@ msgstr "Eklenti Tarayıcı"
 msgid "Name"
 msgstr "Ad"
 
-#: plug-ins/common/plugin-browser.c:610 plug-ins/common/plugin-browser.c:671
+#: plug-ins/common/plugin-browser.c:624 plug-ins/common/plugin-browser.c:685
 msgid "Menu Path"
 msgstr "Menü Yolu"
 
-#: plug-ins/common/plugin-browser.c:618 plug-ins/common/plugin-browser.c:680
+#: plug-ins/common/plugin-browser.c:632 plug-ins/common/plugin-browser.c:694
 msgid "Image Types"
 msgstr "Görüntü Türleri"
 
-#: plug-ins/common/plugin-browser.c:628 plug-ins/common/plugin-browser.c:689
+#: plug-ins/common/plugin-browser.c:642 plug-ins/common/plugin-browser.c:703
 msgid "Installation Date"
 msgstr "Kurulum Tarihi"
 
-#: plug-ins/common/plugin-browser.c:650
+#: plug-ins/common/plugin-browser.c:664
 msgid "List View"
 msgstr "Liste Görünümü"
 
-#: plug-ins/common/plugin-browser.c:711
+#: plug-ins/common/plugin-browser.c:725
 msgid "Tree View"
 msgstr "Ağaç Görünümü"
 
@@ -8318,11 +8326,11 @@ msgstr "Çıktı düzeyleri:"
 msgid "Get _Sample Colors"
 msgstr "Örnek Renkler _Al"
 
-#: plug-ins/common/sample-colorize.c:2586
+#: plug-ins/common/sample-colorize.c:2590
 msgid "Sample analyze"
 msgstr "Basit çözümleme"
 
-#: plug-ins/common/sample-colorize.c:2997
+#: plug-ins/common/sample-colorize.c:3001
 msgid "Remap colorized"
 msgstr "Renklendirilen yeniden eşleme"
 
@@ -8578,8 +8586,8 @@ msgid "Create an image of a textured sphere"
 msgstr "Desenli küre görüntüsü oluştur"
 
 #: plug-ins/common/sphere-designer.c:1829
-#: plug-ins/common/sphere-designer.c:2793
-#: plug-ins/common/sphere-designer.c:2821
+#: plug-ins/common/sphere-designer.c:2801
+#: plug-ins/common/sphere-designer.c:2829
 msgid "Texture"
 msgstr "Desen"
 
@@ -8588,60 +8596,60 @@ msgid "Bumpmap"
 msgstr "Derinlik etkisi eşlemi"
 
 #: plug-ins/common/sphere-designer.c:1833
-#: plug-ins/common/sphere-designer.c:2795
+#: plug-ins/common/sphere-designer.c:2803
 msgid "Light"
 msgstr "Işık"
 
-#: plug-ins/common/sphere-designer.c:2096
+#: plug-ins/common/sphere-designer.c:2100
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr "'%s' dosyası geçerli bir kayıt dosyası değil."
 
-#: plug-ins/common/sphere-designer.c:2276
+#: plug-ins/common/sphere-designer.c:2284
 msgid "Open File"
 msgstr "Dosya Aç"
 
-#: plug-ins/common/sphere-designer.c:2276
+#: plug-ins/common/sphere-designer.c:2284
 msgid "Save File"
 msgstr "Dosyayı Kaydet"
 
-#: plug-ins/common/sphere-designer.c:2645
+#: plug-ins/common/sphere-designer.c:2653
 msgid "Sphere Designer"
 msgstr "Küre Tasarımcısı"
 
-#: plug-ins/common/sphere-designer.c:2746
+#: plug-ins/common/sphere-designer.c:2754
 msgid "Layers"
 msgstr "Katmanlar"
 
-#: plug-ins/common/sphere-designer.c:2757
-#: plug-ins/gradient-flare/gradient-flare.c:3054
+#: plug-ins/common/sphere-designer.c:2765
+#: plug-ins/gradient-flare/gradient-flare.c:3074
 msgid "_New"
 msgstr "Ye_ni"
 
-#: plug-ins/common/sphere-designer.c:2763
+#: plug-ins/common/sphere-designer.c:2771
 msgid "D_uplicate"
 msgstr "_Çoğalt"
 
-#: plug-ins/common/sphere-designer.c:2769
+#: plug-ins/common/sphere-designer.c:2777
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
 #: plug-ins/gimpressionist/orientmap.c:623
 #: plug-ins/gimpressionist/presets.c:1071 plug-ins/gimpressionist/sizemap.c:499
-#: plug-ins/gradient-flare/gradient-flare.c:3057
-#: plug-ins/gradient-flare/gradient-flare.c:3340
+#: plug-ins/gradient-flare/gradient-flare.c:3077
+#: plug-ins/gradient-flare/gradient-flare.c:3360
 msgid "_Delete"
 msgstr "S_il"
 
-#: plug-ins/common/sphere-designer.c:2779
+#: plug-ins/common/sphere-designer.c:2787
 msgid "Properties"
 msgstr "Özellikler"
 
 # Konumu gereği tümce düzeni kullanıldı
-#: plug-ins/common/sphere-designer.c:2794
+#: plug-ins/common/sphere-designer.c:2802
 msgid "Bump"
 msgstr "Derinlik etkisi"
 
-#: plug-ins/common/sphere-designer.c:2802
+#: plug-ins/common/sphere-designer.c:2810
 #: plug-ins/gimpressionist/orientmap.c:638
 #: plug-ins/lighting/lighting-main.c:211 plug-ins/lighting/lighting-main.c:334
 #: plug-ins/lighting/lighting-main.c:393 plug-ins/lighting/lighting-main.c:452
@@ -8649,92 +8657,92 @@ msgstr "Derinlik etkisi"
 msgid "Type"
 msgstr "Tür"
 
-#: plug-ins/common/sphere-designer.c:2826
-#: plug-ins/imagemap/imap_preferences.c:463 plug-ins/pagecurl/pagecurl.c:228
+#: plug-ins/common/sphere-designer.c:2834
+#: plug-ins/imagemap/imap_preferences.c:490 plug-ins/pagecurl/pagecurl.c:228
 msgid "Colors"
 msgstr "Renkler"
 
-#: plug-ins/common/sphere-designer.c:2829
-#: plug-ins/common/sphere-designer.c:2840
+#: plug-ins/common/sphere-designer.c:2837
+#: plug-ins/common/sphere-designer.c:2848
 msgid "Color Selection Dialog"
 msgstr "Renk Seçim iletişim Kutusu"
 
-#: plug-ins/common/sphere-designer.c:2852
+#: plug-ins/common/sphere-designer.c:2860
 msgid "Scale"
 msgstr "Ölçek"
 
-#: plug-ins/common/sphere-designer.c:2860
+#: plug-ins/common/sphere-designer.c:2868
 msgid "Turbulence"
 msgstr "Türbülans"
 
-#: plug-ins/common/sphere-designer.c:2868
+#: plug-ins/common/sphere-designer.c:2876
 msgid "Amount"
 msgstr "Miktar"
 
-#: plug-ins/common/sphere-designer.c:2876
+#: plug-ins/common/sphere-designer.c:2884
 msgid "Exponent"
 msgstr "Katsayı"
 
-#: plug-ins/common/sphere-designer.c:2883
+#: plug-ins/common/sphere-designer.c:2891
 msgid "Transformations"
 msgstr "Dönüşümler"
 
 # Konumu gereği tümce düzeni kullanıldı
-#: plug-ins/common/sphere-designer.c:2892
+#: plug-ins/common/sphere-designer.c:2900
 #: plug-ins/map-object/map-object-main.c:391
 msgid "Scale X"
 msgstr "X ölçeği"
 
 # Konumu gereği tümce düzeni kullanıldı
-#: plug-ins/common/sphere-designer.c:2900
+#: plug-ins/common/sphere-designer.c:2908
 #: plug-ins/map-object/map-object-main.c:396
 msgid "Scale Y"
 msgstr "Y ölçeği"
 
 # Konumu gereği tümce düzeni kullanıldı
-#: plug-ins/common/sphere-designer.c:2908
+#: plug-ins/common/sphere-designer.c:2916
 #: plug-ins/map-object/map-object-main.c:401
 msgid "Scale Z"
 msgstr "Z ölçeği"
 
 # Konumu gereği tümce düzeni kullanıldı
-#: plug-ins/common/sphere-designer.c:2917
+#: plug-ins/common/sphere-designer.c:2925
 msgid "Rotate X"
 msgstr "X dönmesi"
 
 # Konumu gereği tümce düzeni kullanıldı
-#: plug-ins/common/sphere-designer.c:2925
+#: plug-ins/common/sphere-designer.c:2933
 msgid "Rotate Y"
 msgstr "Y dönmesi"
 
 # Konumu gereği tümce düzeni kullanıldı
-#: plug-ins/common/sphere-designer.c:2933
+#: plug-ins/common/sphere-designer.c:2941
 msgid "Rotate Z"
 msgstr "Z dönmesi"
 
 # Konumu gereği tümce düzeni kullanıldı
-#: plug-ins/common/sphere-designer.c:2942
+#: plug-ins/common/sphere-designer.c:2950
 #: plug-ins/map-object/map-object-main.c:165
 msgid "Position X"
 msgstr "X konumu"
 
 # Konumu gereği tümce düzeni kullanıldı
-#: plug-ins/common/sphere-designer.c:2950
+#: plug-ins/common/sphere-designer.c:2958
 #: plug-ins/map-object/map-object-main.c:170
 msgid "Position Y"
 msgstr "Y konumu"
 
 # Konumu gereği tümce düzeni kullanıldı
-#: plug-ins/common/sphere-designer.c:2958
+#: plug-ins/common/sphere-designer.c:2966
 #: plug-ins/map-object/map-object-main.c:175
 msgid "Position Z"
 msgstr "Z konumu"
 
-#: plug-ins/common/sphere-designer.c:3089
+#: plug-ins/common/sphere-designer.c:3097
 msgid "Rendering sphere"
 msgstr "Küre işleniyor"
 
-#: plug-ins/common/sphere-designer.c:3208
+#: plug-ins/common/sphere-designer.c:3216
 msgid "Region selected for plug-in is empty"
 msgstr "Eklenti için seçilen alan boş"
 
@@ -9445,6 +9453,28 @@ msgstr "Web sayfası '%s' indiriliyor"
 msgid "Transferring webpage image for '%s'"
 msgstr "'%s' için web sayfası görüntüsü aktarılıyor"
 
+#: plug-ins/common/wia.c:38
+msgid "Capture an image from a WIA datasource"
+msgstr "WIA veri kaynağından görüntü al"
+
+#: plug-ins/common/wia.c:39
+msgid "This plug-in will capture an image from a WIA datasource"
+msgstr "Bu eklenti WIA veri kaynağından görüntü yakalayacak"
+
+#: plug-ins/common/wia.c:124 plug-ins/twain/twain.c:206
+msgid "_Scanner/Camera..."
+msgstr "_Tarayıcı/Kamera..."
+
+#: plug-ins/common/wia.c:258
+#, c-format
+msgid "Unable to read scanned images."
+msgstr "Taranan görüntü okunamadı."
+
+#: plug-ins/common/wia.c:323
+#, c-format
+msgid "WIA driver not found, scanning not available"
+msgstr "WIA sürücüsü bulunamadı, tarama yapılamıyor"
+
 #: plug-ins/file-bmp/bmp-export.c:192 plug-ins/file-bmp/bmp-export.c:225
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr "Saydamlık indeksli görüntü BMP dosya biçiminde dışa aktarılamaz."
@@ -9672,7 +9702,7 @@ msgstr "Piksel biçimi"
 
 #: plug-ins/file-dds/dds.c:223 plug-ins/file-dds/dds.c:286
 #: plug-ins/file-dds/dds.c:303 plug-ins/file-webp/file-webp.c:180
-#: plug-ins/gradient-flare/gradient-flare.c:2608
+#: plug-ins/gradient-flare/gradient-flare.c:2628
 msgid "Default"
 msgstr "Öntanımlı"
 
@@ -9918,7 +9948,7 @@ msgstr "Alfa testi kapsamının korunması gereken alfa testi eşik değeri"
 msgid "Loading: %s"
 msgstr "Yükleniyor: %s"
 
-#: plug-ins/file-dds/ddsread.c:251
+#: plug-ins/file-dds/ddsread.c:256
 #, c-format
 msgid ""
 "Unsupported DDS pixel format:\n"
@@ -9927,89 +9957,89 @@ msgstr ""
 "Desteklenmeyen DDS piksel biçimi:\n"
 "bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
 
-#: plug-ins/file-dds/ddsread.c:400
+#: plug-ins/file-dds/ddsread.c:405
 #, c-format
 msgid "Image size is too big to handle."
 msgstr "Görüntü boyutu işlenemeyecek kadar büyük."
 
-#: plug-ins/file-dds/ddsread.c:513
+#: plug-ins/file-dds/ddsread.c:518
 #, c-format
 msgid "Invalid or corrupted DDS header."
 msgstr "Geçersiz ya da bozuk DDS başlığı."
 
-#: plug-ins/file-dds/ddsread.c:525
+#: plug-ins/file-dds/ddsread.c:530
 #, c-format
 msgid "Could not allocate a new image."
 msgstr "Yeni görüntü ayrılamadı."
 
-#: plug-ins/file-dds/ddsread.c:541
+#: plug-ins/file-dds/ddsread.c:546
 #, c-format
 msgid "Error reading palette."
 msgstr "Palet okunamadı."
 
-#: plug-ins/file-dds/ddsread.c:864
+#: plug-ins/file-dds/ddsread.c:869
 #, c-format
 msgid "Invalid DDS format magic number."
 msgstr "Geçersiz DDS biçimi büyülü sayısı."
 
-#: plug-ins/file-dds/ddsread.c:880
+#: plug-ins/file-dds/ddsread.c:885
 msgid ""
 "File lacks expected pixel format flags! Image may not be decoded correctly."
 msgstr ""
 "Dosyada beklenen piksel biçimi bayrakları yok! Görüntü kodu doğru biçimde "
 "çözülemeyebilir."
 
-#: plug-ins/file-dds/ddsread.c:915
+#: plug-ins/file-dds/ddsread.c:920
 #, c-format
 msgid "Invalid pixel format."
 msgstr "Geçersiz piksel biçimi."
 
-#: plug-ins/file-dds/ddsread.c:940
+#: plug-ins/file-dds/ddsread.c:945
 #, c-format
 msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
 msgstr "Desteklenmeyen biçim (FourCC: %c%c%c%c, hex: %08x)"
 
-#: plug-ins/file-dds/ddsread.c:962
+#: plug-ins/file-dds/ddsread.c:967
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "RGB verisi için geçersiz bpp değeri: %d"
 
-#: plug-ins/file-dds/ddsread.c:973
+#: plug-ins/file-dds/ddsread.c:978
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Renk parlaklığı verileri için geçersiz bpp değeri: %d"
 
-#: plug-ins/file-dds/ddsread.c:995
+#: plug-ins/file-dds/ddsread.c:1000
 #, c-format
 msgid "Invalid DX10 header"
 msgstr "Geçersiz DX10 başlığı"
 
-#: plug-ins/file-dds/ddsread.c:1033
+#: plug-ins/file-dds/ddsread.c:1038
 #, c-format
 msgid "Unsupported DXGI Format: %u"
 msgstr "Desteklenmeyen DXGI biçimi: %u"
 
-#: plug-ins/file-dds/ddsread.c:1221 plug-ins/file-dds/ddsread.c:1285
-#: plug-ins/file-dds/ddsread.c:1305
+#: plug-ins/file-dds/ddsread.c:1226 plug-ins/file-dds/ddsread.c:1290
+#: plug-ins/file-dds/ddsread.c:1310
 #, c-format
 msgid "Requested data exceeds size of file.\n"
 msgstr "İstenen veri dosya boyutunu aşıyor.\n"
 
-#: plug-ins/file-dds/ddsread.c:1229 plug-ins/file-dds/ddsread.c:1311
+#: plug-ins/file-dds/ddsread.c:1234 plug-ins/file-dds/ddsread.c:1316
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "Beklenmedik EOF.\n"
 
-#: plug-ins/file-dds/ddsread.c:1641
+#: plug-ins/file-dds/ddsread.c:1646
 msgid "Open DDS"
 msgstr "DDS Aç"
 
-#: plug-ins/file-dds/ddswrite.c:607
+#: plug-ins/file-dds/ddswrite.c:613
 #, c-format
 msgid "Saving: %s"
 msgstr "Kaydediliyor: %s"
 
-#: plug-ins/file-dds/ddswrite.c:1985
+#: plug-ins/file-dds/ddswrite.c:1991
 msgid "Mipmap Options"
 msgstr "Mipmap Seçenekleri"
 
@@ -10076,17 +10106,17 @@ msgstr ""
 msgid "G3 fax image"
 msgstr "G3 faks görüntüsü"
 
-#: plug-ins/file-faxg3/faxg3.c:302 plug-ins/file-faxg3/faxg3.c:600
+#: plug-ins/file-faxg3/faxg3.c:304 plug-ins/file-faxg3/faxg3.c:602
 #, c-format
 msgid "Could not create buffer to process image data."
 msgstr "Görüntü verisini işlemek için tampon oluşturulamadı."
 
-#: plug-ins/file-faxg3/faxg3.c:567
+#: plug-ins/file-faxg3/faxg3.c:569
 #, c-format
 msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
 msgstr "Geçersiz görüntü boyutları (%d x %d). Görüntü bozuk olabilir."
 
-#: plug-ins/file-faxg3/faxg3.c:577
+#: plug-ins/file-faxg3/faxg3.c:579
 #, c-format
 msgid "Could not create image."
 msgstr "Görüntü oluşturulamadı."
@@ -10381,18 +10411,18 @@ msgstr ""
 # s1: dosya türü
 # s2: dosya adı
 # s3: hata mesajı
-#: plug-ins/file-icns/file-icns-load.c:515
+#: plug-ins/file-icns/file-icns-load.c:535
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr ""
 "icns yüklemesi için geçici %s dosyası '%s' açılmaya çalışılırken hata: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:656 plug-ins/file-ico/ico-load.c:1068
+#: plug-ins/file-icns/file-icns-load.c:676 plug-ins/file-ico/ico-load.c:1068
 #: plug-ins/file-jpeg/jpeg-load.c:690 plug-ins/file-psd/psd-thumb-load.c:72
-#: plug-ins/file-raw/file-another-rawtherapee.c:462
+#: plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:620
-#: plug-ins/file-raw/file-rawtherapee.c:459
+#: plug-ins/file-raw/file-rawtherapee.c:466
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "'%s' için küçük resim açılıyor"
@@ -10728,11 +10758,11 @@ msgstr ""
 msgid "Use restart mar_kers"
 msgstr "Yeniden başlatma işaretçilerini _kullan"
 
-#: plug-ins/file-psd/psd-export.c:536
+#: plug-ins/file-psd/psd-export.c:571
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Hata: GIMP temel görüntü türü PSD biçimine dönüştürülemiyor"
 
-#: plug-ins/file-psd/psd-export.c:2271
+#: plug-ins/file-psd/psd-export.c:2371
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -10741,7 +10771,7 @@ msgstr ""
 "'%s' dışa aktarılamadı. PSD dosya biçimi 30.000 pikselden daha geniş ya da "
 "uzun görüntüleri desteklemiyor."
 
-#: plug-ins/file-psd/psd-export.c:2277
+#: plug-ins/file-psd/psd-export.c:2377
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images that are "
@@ -10750,7 +10780,7 @@ msgstr ""
 "'%s' dışa aktarılamadı. PSB dosya biçimi 300.000 pikselden daha geniş ya da "
 "uzun görüntüleri desteklemiyor."
 
-#: plug-ins/file-psd/psd-export.c:2319
+#: plug-ins/file-psd/psd-export.c:2419
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -10759,7 +10789,7 @@ msgstr ""
 "'%s' dışa aktarılamadı. PSD dosya biçimi 30,000 pikselden daha geniş ya da "
 "uzun katmanlı görüntüleri desteklemiyor."
 
-#: plug-ins/file-psd/psd-export.c:2325
+#: plug-ins/file-psd/psd-export.c:2425
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images with "
@@ -10768,7 +10798,7 @@ msgstr ""
 "'%s' dışa aktarılamadı. PSB dosya biçimi 30,000 pikselden daha geniş ya da "
 "uzun katmanlı görüntüleri desteklemiyor."
 
-#: plug-ins/file-psd/psd-export.c:2632
+#: plug-ins/file-psd/psd-export.c:2741
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -10776,7 +10806,7 @@ msgstr ""
 "İçe aktarılan özgün görüntüden\n"
 "çift ton renk uzayı bilgisi kullanılacak."
 
-#: plug-ins/file-psd/psd-export.c:2701
+#: plug-ins/file-psd/psd-export.c:2810
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
@@ -10784,11 +10814,11 @@ msgstr ""
 "PSD dosyaları en çok 998 yol saklayabilir.\n"
 "Gerisi gözden çıkartılacak."
 
-#: plug-ins/file-psd/psd-export.c:2811
+#: plug-ins/file-psd/psd-export.c:2920
 msgid "Indexed Image Warning"
 msgstr "İndeksli Görüntü Uyarısı"
 
-#: plug-ins/file-psd/psd-export.c:2812
+#: plug-ins/file-psd/psd-export.c:2921
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
@@ -10796,11 +10826,11 @@ msgstr ""
 "Photoshop birden çok katmanlı indeksli görüntüleri desteklemez. Katmanlar "
 "dışa aktarma sırasında birleştirilecek."
 
-#: plug-ins/file-psd/psd-export.c:2833 plug-ins/file-psd/psd-load.c:4045
+#: plug-ins/file-psd/psd-export.c:2942 plug-ins/file-psd/psd-load.c:4056
 msgid "Compatibility Notice"
 msgstr "Uyumluluk Uyarısı"
 
-#: plug-ins/file-psd/psd-export.c:2834
+#: plug-ins/file-psd/psd-export.c:2943
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -10899,38 +10929,38 @@ msgstr "Desteklenmeyen veya geçersiz katman maskesi genişliği: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Desteklenmeyen ya da geçersiz katman maskesi boyutu: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2285 plug-ins/file-psd/psd-load.c:3173
-#, c-format
-msgid "Unsupported compression mode: %d"
-msgstr "Desteklenmeyen sıkıştırma kipi: %d"
-
-#: plug-ins/file-psd/psd-load.c:2902
-msgid "Inner Shadow"
-msgstr "İç Gölgeyi Göster"
-
-#: plug-ins/file-psd/psd-load.c:2903
-msgid "imported"
-msgstr "içe aktarıldı"
-
-#: plug-ins/file-psd/psd-load.c:3350
-msgid "Extra"
-msgstr "Ek"
-
-#: plug-ins/file-psd/psd-load.c:3572
+#: plug-ins/file-psd/psd-load.c:1862 plug-ins/file-psd/psd-load.c:3583
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Desteklenmeyen veya geçersiz kanal boyutu"
 
-#: plug-ins/file-psd/psd-load.c:3641
+#: plug-ins/file-psd/psd-load.c:2296 plug-ins/file-psd/psd-load.c:3184
+#, c-format
+msgid "Unsupported compression mode: %d"
+msgstr "Desteklenmeyen sıkıştırma kipi: %d"
+
+#: plug-ins/file-psd/psd-load.c:2913
+msgid "Inner Shadow"
+msgstr "İç Gölgeyi Göster"
+
+#: plug-ins/file-psd/psd-load.c:2914
+msgid "imported"
+msgstr "içe aktarıldı"
+
+#: plug-ins/file-psd/psd-load.c:3361
+msgid "Extra"
+msgstr "Ek"
+
+#: plug-ins/file-psd/psd-load.c:3652
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Veri açması başarısız"
 
-#: plug-ins/file-psd/psd-load.c:4022
+#: plug-ins/file-psd/psd-load.c:4033
 msgid "Duotone Import"
 msgstr "Çift Ton İçe Aktarma"
 
-#: plug-ins/file-psd/psd-load.c:4023
+#: plug-ins/file-psd/psd-load.c:4034
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10940,7 +10970,7 @@ msgstr ""
 "Çift ton renk uzayı verileri kaydedildi ve\n"
 "dışa aktarmada yeniden uygulanabilir."
 
-#: plug-ins/file-psd/psd-load.c:4046
+#: plug-ins/file-psd/psd-load.c:4057
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -11825,63 +11855,63 @@ msgstr "(anahtar kare bulunamadı)"
 msgid "(all frames are keyframes)"
 msgstr "(tüm kareler anahtar kare)"
 
-#: plug-ins/file-webp/file-webp-export.c:101
+#: plug-ins/file-webp/file-webp-export.c:105
 msgid "out of memory"
 msgstr "yetersiz bellek"
 
-#: plug-ins/file-webp/file-webp-export.c:103
+#: plug-ins/file-webp/file-webp-export.c:107
 msgid "not enough memory to flush bits"
 msgstr "bitleri temizlemek için yeterli bellek yok"
 
-#: plug-ins/file-webp/file-webp-export.c:105
+#: plug-ins/file-webp/file-webp-export.c:109
 msgid "NULL parameter"
 msgstr "BOŞ/NULL parametre"
 
-#: plug-ins/file-webp/file-webp-export.c:107
+#: plug-ins/file-webp/file-webp-export.c:111
 msgid "invalid configuration"
 msgstr "geçersiz yapılandırma"
 
 #. TRANSLATORS: widthxheight with UTF-8 encoded multiply sign.
-#: plug-ins/file-webp/file-webp-export.c:110
+#: plug-ins/file-webp/file-webp-export.c:114
 #, c-format
 msgid "bad image dimensions (maximum: %d×%d)"
 msgstr "hatalı görüntü boyutları (azami: %d×%d)"
 
-#: plug-ins/file-webp/file-webp-export.c:113
+#: plug-ins/file-webp/file-webp-export.c:117
 msgid "partition is bigger than 512K"
 msgstr "bölümleme 512K'dan büyük"
 
-#: plug-ins/file-webp/file-webp-export.c:115
+#: plug-ins/file-webp/file-webp-export.c:119
 msgid "partition is bigger than 16M"
 msgstr "bölümleme 16M'dan büyük"
 
-#: plug-ins/file-webp/file-webp-export.c:117
+#: plug-ins/file-webp/file-webp-export.c:121
 msgid "unable to flush bytes"
 msgstr "bytlar temizlenemedi"
 
-#: plug-ins/file-webp/file-webp-export.c:119
+#: plug-ins/file-webp/file-webp-export.c:123
 msgid "file is larger than 4GiB"
 msgstr "dosya 4GiB'dan büyük"
 
-#: plug-ins/file-webp/file-webp-export.c:121
+#: plug-ins/file-webp/file-webp-export.c:125
 msgid "user aborted encoding"
 msgstr "kullanıcı kodlamayı iptal etti"
 
-#: plug-ins/file-webp/file-webp-export.c:123
+#: plug-ins/file-webp/file-webp-export.c:127
 msgid "list terminator"
 msgstr "liste sonlandırıcı"
 
-#: plug-ins/file-webp/file-webp-export.c:125
+#: plug-ins/file-webp/file-webp-export.c:129
 msgid "unknown error"
 msgstr "bilinmeyen hata"
 
-#: plug-ins/file-webp/file-webp-export.c:209
-#: plug-ins/file-webp/file-webp-export.c:617
+#: plug-ins/file-webp/file-webp-export.c:213
+#: plug-ins/file-webp/file-webp-export.c:621
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "'%s' dosyası yazma için açılamıyor: %s"
 
-#: plug-ins/file-webp/file-webp-export.c:303
+#: plug-ins/file-webp/file-webp-export.c:307
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "WebP hatası: '%s'"
@@ -11928,10 +11958,10 @@ msgstr "Kategoriler: %s"
 #. *    Scales
 #.
 #: plug-ins/filter-browser/filter-browser.c:476
-#: plug-ins/gradient-flare/gradient-flare.c:2952
-#: plug-ins/gradient-flare/gradient-flare.c:3702
-#: plug-ins/gradient-flare/gradient-flare.c:3804
-#: plug-ins/gradient-flare/gradient-flare.c:3935
+#: plug-ins/gradient-flare/gradient-flare.c:2972
+#: plug-ins/gradient-flare/gradient-flare.c:3722
+#: plug-ins/gradient-flare/gradient-flare.c:3824
+#: plug-ins/gradient-flare/gradient-flare.c:3955
 msgid "Parameters"
 msgstr "Parametreler"
 
@@ -12204,7 +12234,7 @@ msgstr "Alev"
 
 #: plug-ins/flame/flame.c:1227 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
-#: plug-ins/gradient-flare/gradient-flare.c:3055
+#: plug-ins/gradient-flare/gradient-flare.c:3075
 msgid "_Edit"
 msgstr "_Düzenle"
 
@@ -12333,12 +12363,12 @@ msgstr "Fraktal Parametreleri Yükle"
 msgid "Save Fractal Parameters"
 msgstr "Fraktal Parametrelerini Kaydet"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1771
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1775
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "'%s' Fraktal Tarayıcı dosyası değil"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1778
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1782
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "'%s' bozuk. Satır %d Option kısmı hatalı"
@@ -12569,7 +12599,7 @@ msgid "Rendering fractal"
 msgstr "Fraktal işleniyor"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:878
-#: plug-ins/gradient-flare/gradient-flare.c:3331
+#: plug-ins/gradient-flare/gradient-flare.c:3351
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "\"%s\", listeden ve diskinizden silmek istediğinize emin misiniz?"
@@ -12648,7 +12678,7 @@ msgid "Create line"
 msgstr "Çizgi oluştur"
 
 #: plug-ins/gfig/gfig-dialog.c:382 plug-ins/gfig/gfig-dialog.c:1429
-#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1583
+#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1605
 #: plug-ins/imagemap/imap-menu.ui:166 plug-ins/imagemap/imap-menu.ui:254
 msgid "Rectangle"
 msgstr "Dörtgen"
@@ -12658,8 +12688,8 @@ msgid "Create rectangle"
 msgstr "Dörtgen oluştur"
 
 #: plug-ins/gfig/gfig-dialog.c:384 plug-ins/gfig/gfig-menu.ui:54
-#: plug-ins/gradient-flare/gradient-flare.c:3993
-#: plug-ins/imagemap/imap_main.c:1585 plug-ins/imagemap/imap-menu.ui:171
+#: plug-ins/gradient-flare/gradient-flare.c:4013
+#: plug-ins/imagemap/imap_main.c:1607 plug-ins/imagemap/imap-menu.ui:171
 #: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
 msgstr "Daire"
@@ -12685,8 +12715,8 @@ msgid "Create arc"
 msgstr "Yay oluştur"
 
 #: plug-ins/gfig/gfig-dialog.c:390 plug-ins/gfig/gfig-menu.ui:69
-#: plug-ins/gradient-flare/gradient-flare.c:4010
-#: plug-ins/imagemap/imap_main.c:1587 plug-ins/imagemap/imap-menu.ui:176
+#: plug-ins/gradient-flare/gradient-flare.c:4030
+#: plug-ins/imagemap/imap_main.c:1609 plug-ins/imagemap/imap-menu.ui:176
 #: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
 msgstr "Çokgen"
@@ -12734,7 +12764,7 @@ msgstr "Tek noktayı taşı"
 #: plug-ins/gfig/gfig-dialog.c:403 plug-ins/gfig/gfig-dialog.c:1286
 #: plug-ins/gfig/gfig-menu.ui:99 plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1548 plug-ins/imagemap/imap-menu.ui:47
+#: plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui:47
 #: plug-ins/imagemap/imap-menu.ui:325 plug-ins/imagemap/imap-menu.ui:362
 msgid "Copy"
 msgstr "Kopyala"
@@ -12992,15 +13022,15 @@ msgstr "Sol"
 msgid "Orientation:"
 msgstr "Yönelim:"
 
-#: plug-ins/gfig/gfig-dobject.c:581
+#: plug-ins/gfig/gfig-dobject.c:589
 msgid "Hey, where has the object gone?"
 msgstr "Hey, nesne nereye kayboldu?"
 
-#: plug-ins/gfig/gfig-dobject.c:926
+#: plug-ins/gfig/gfig-dobject.c:934
 msgid "Error reading file"
 msgstr "Dosya okunamıyor"
 
-#: plug-ins/gfig/gfig-dobject.c:1024
+#: plug-ins/gfig/gfig-dobject.c:1032
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Salt okunur nesne düzenleniyor - dosyayı kaydedemeyeceksiniz"
 
@@ -13033,14 +13063,14 @@ msgstr "_Gfig..."
 msgid "Create geometric shapes"
 msgstr "Geometrik biçimler oluştur"
 
-#: plug-ins/gfig/gfig.c:831
+#: plug-ins/gfig/gfig.c:851
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Biçimi parazit olarak kaydetmeye çalışırken hata: parazit çizilebilir olarak "
 "eklenemiyor."
 
-#: plug-ins/gfig/gfig.c:861
+#: plug-ins/gfig/gfig.c:881
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
@@ -13050,12 +13080,12 @@ msgstr ""
 msgid "File"
 msgstr "Dosya"
 
-#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1533
+#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1555
 #: plug-ins/imagemap/imap-menu.ui:8
 msgid "Open"
 msgstr "Aç"
 
-#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1535
+#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1557
 #: plug-ins/imagemap/imap-menu.ui:12
 msgid "Save"
 msgstr "Kaydet"
@@ -13070,7 +13100,7 @@ msgid "Edit"
 msgstr "Düzenle"
 
 #: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:961
-#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1541
+#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1563
 #: plug-ins/imagemap/imap-menu.ui:35
 msgid "Undo"
 msgstr "Geri Al"
@@ -13080,7 +13110,7 @@ msgstr "Geri Al"
 msgid "Clear"
 msgstr "Temizle"
 
-#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1538
+#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1560
 #: plug-ins/imagemap/imap-menu.ui:77
 msgid "Preferences"
 msgstr "Tercihler"
@@ -13166,7 +13196,7 @@ msgid "Adds random noise to the color"
 msgstr "Renge rastgele gürültü ekler"
 
 #: plug-ins/gimpressionist/general.c:141
-#: plug-ins/gradient-flare/gradient-flare.c:3649
+#: plug-ins/gradient-flare/gradient-flare.c:3669
 msgid "_General"
 msgstr "_Genel"
 
@@ -13776,7 +13806,7 @@ msgid "Threshold for adaptive supersampling"
 msgstr "Uyarlamalı süperörneklem için eşik"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
-#: plug-ins/gradient-flare/gradient-flare.c:2505
+#: plug-ins/gradient-flare/gradient-flare.c:2525
 msgid "Gradient Flare"
 msgstr "Renk Geçişi Parlaması"
 
@@ -13799,7 +13829,7 @@ msgstr "'%s' geçerli bir Renk Geçişi Parlaması dosyası değil."
 msgid "invalid formatted GFlare file: %s\n"
 msgstr "Geçersiz biçimli Renk Geçişi Parlaması dosyası: %s\n"
 
-#: plug-ins/gradient-flare/gradient-flare.c:1551
+#: plug-ins/gradient-flare/gradient-flare.c:1571
 #, c-format
 msgid ""
 "GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
@@ -13812,188 +13842,188 @@ msgstr ""
 "ve '%s' klasörü oluşturacaksanız kendi Renk Geçişi Parlamanızı o klasöre "
 "kaydedebilirsiniz."
 
-#: plug-ins/gradient-flare/gradient-flare.c:1586
+#: plug-ins/gradient-flare/gradient-flare.c:1606
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "Renk Geçişi Parlaması dosyası '%s' yazılamadı: %s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2549
+#: plug-ins/gradient-flare/gradient-flare.c:2569
 msgid "A_uto update preview"
 msgstr "Ön izlemeyi _kendiliğinden güncelle"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2607
+#: plug-ins/gradient-flare/gradient-flare.c:2627
 msgid "'Default' is created."
 msgstr "'Öntanımlı' oluşturuldu."
 
-#: plug-ins/gradient-flare/gradient-flare.c:2908
+#: plug-ins/gradient-flare/gradient-flare.c:2928
 msgid "_X:"
 msgstr "_X:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2912
+#: plug-ins/gradient-flare/gradient-flare.c:2932
 msgid "_Y:"
 msgstr "_Y:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2986
+#: plug-ins/gradient-flare/gradient-flare.c:3006
 msgid "_Settings"
 msgstr "_Ayarlar"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3124
+#: plug-ins/gradient-flare/gradient-flare.c:3144
 msgid "S_elector"
 msgstr "S_eçici"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3188
+#: plug-ins/gradient-flare/gradient-flare.c:3208
 msgid "New Gradient Flare"
 msgstr "Yeni Renk Geçişi Parlaması"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3191
+#: plug-ins/gradient-flare/gradient-flare.c:3211
 msgid "Enter a name for the new GFlare"
 msgstr "Yeni Renk Geçişi Parlaması için ad girin"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3192
+#: plug-ins/gradient-flare/gradient-flare.c:3212
 msgid "Unnamed"
 msgstr "Adsız"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3212
-#: plug-ins/gradient-flare/gradient-flare.c:3294
+#: plug-ins/gradient-flare/gradient-flare.c:3232
+#: plug-ins/gradient-flare/gradient-flare.c:3314
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "'%s' adı zaten kullanımda!"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3268
+#: plug-ins/gradient-flare/gradient-flare.c:3288
 msgid "Copy Gradient Flare"
 msgstr "Renk Geçişi Parlamasını Kopyala"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3271
+#: plug-ins/gradient-flare/gradient-flare.c:3291
 msgid "Enter a name for the copied GFlare"
 msgstr "Kopyalanan Renk Geçişi Parlaması için ad girin"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3325
+#: plug-ins/gradient-flare/gradient-flare.c:3345
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Silinemiyor! En az bir Renk Geçişi Parlaması olmalı."
 
-#: plug-ins/gradient-flare/gradient-flare.c:3335
+#: plug-ins/gradient-flare/gradient-flare.c:3355
 msgid "Delete Gradient Flare"
 msgstr "Renk Geçişi Parlamasını Sil"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3407
+#: plug-ins/gradient-flare/gradient-flare.c:3427
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "%s gflares_list içinde bulunamadı"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3449
+#: plug-ins/gradient-flare/gradient-flare.c:3469
 msgid "Gradient Flare Editor"
 msgstr "Renk Geçişi Parlaması Düzenleyicisi"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3453
+#: plug-ins/gradient-flare/gradient-flare.c:3473
 msgid "_Rescan Gradients"
 msgstr "_Renk Geçişlerini Yeniden Tara"
 
 #. Glow
-#: plug-ins/gradient-flare/gradient-flare.c:3572
+#: plug-ins/gradient-flare/gradient-flare.c:3592
 msgid "Glow Paint Options"
 msgstr "Parıltı Boyama Seçenekleri"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3582
-#: plug-ins/gradient-flare/gradient-flare.c:3608
-#: plug-ins/gradient-flare/gradient-flare.c:3634
+#: plug-ins/gradient-flare/gradient-flare.c:3602
+#: plug-ins/gradient-flare/gradient-flare.c:3628
+#: plug-ins/gradient-flare/gradient-flare.c:3654
 msgid "Opacity:"
 msgstr "Matlık:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3594
-#: plug-ins/gradient-flare/gradient-flare.c:3620
-#: plug-ins/gradient-flare/gradient-flare.c:3646
+#: plug-ins/gradient-flare/gradient-flare.c:3614
+#: plug-ins/gradient-flare/gradient-flare.c:3640
+#: plug-ins/gradient-flare/gradient-flare.c:3666
 msgid "Paint mode:"
 msgstr "Boyama kipi:"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3598
+#: plug-ins/gradient-flare/gradient-flare.c:3618
 msgid "Rays Paint Options"
 msgstr "Işınların Boyama Seçenekleri"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3624
+#: plug-ins/gradient-flare/gradient-flare.c:3644
 msgid "Second Flares Paint Options"
 msgstr "İkinci Parlama Boyaması Seçenekleri"
 
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3675
-#: plug-ins/gradient-flare/gradient-flare.c:3775
-#: plug-ins/gradient-flare/gradient-flare.c:3908
+#: plug-ins/gradient-flare/gradient-flare.c:3695
+#: plug-ins/gradient-flare/gradient-flare.c:3795
+#: plug-ins/gradient-flare/gradient-flare.c:3928
 msgid "Gradients"
 msgstr "Renk Geçişleri"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3686
-#: plug-ins/gradient-flare/gradient-flare.c:3788
-#: plug-ins/gradient-flare/gradient-flare.c:3919
+#: plug-ins/gradient-flare/gradient-flare.c:3706
+#: plug-ins/gradient-flare/gradient-flare.c:3808
+#: plug-ins/gradient-flare/gradient-flare.c:3939
 msgid "Radial gradient:"
 msgstr "Radyal renk geçişi:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3690
-#: plug-ins/gradient-flare/gradient-flare.c:3792
+#: plug-ins/gradient-flare/gradient-flare.c:3710
+#: plug-ins/gradient-flare/gradient-flare.c:3812
 msgid "Angular gradient:"
 msgstr "Açısal renk geçişi:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3694
-#: plug-ins/gradient-flare/gradient-flare.c:3796
+#: plug-ins/gradient-flare/gradient-flare.c:3714
+#: plug-ins/gradient-flare/gradient-flare.c:3816
 msgid "Angular size gradient:"
 msgstr "Açısal boyut renk geçişi:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3713
-#: plug-ins/gradient-flare/gradient-flare.c:3815
-#: plug-ins/gradient-flare/gradient-flare.c:3946
+#: plug-ins/gradient-flare/gradient-flare.c:3733
+#: plug-ins/gradient-flare/gradient-flare.c:3835
+#: plug-ins/gradient-flare/gradient-flare.c:3966
 msgid "Size (%):"
 msgstr "Boyut (%):"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3724
-#: plug-ins/gradient-flare/gradient-flare.c:3826
-#: plug-ins/gradient-flare/gradient-flare.c:3957
+#: plug-ins/gradient-flare/gradient-flare.c:3744
+#: plug-ins/gradient-flare/gradient-flare.c:3846
+#: plug-ins/gradient-flare/gradient-flare.c:3977
 msgid "Rotation:"
 msgstr "Döndürme:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3735
-#: plug-ins/gradient-flare/gradient-flare.c:3837
-#: plug-ins/gradient-flare/gradient-flare.c:3968
+#: plug-ins/gradient-flare/gradient-flare.c:3755
+#: plug-ins/gradient-flare/gradient-flare.c:3857
+#: plug-ins/gradient-flare/gradient-flare.c:3988
 msgid "Hue rotation:"
 msgstr "Renk tonu döndürme:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3749
+#: plug-ins/gradient-flare/gradient-flare.c:3769
 msgid "G_low"
 msgstr "Pa_rıltı"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3848
+#: plug-ins/gradient-flare/gradient-flare.c:3868
 msgid "# of Spikes:"
 msgstr "# Çivi:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3859
+#: plug-ins/gradient-flare/gradient-flare.c:3879
 msgid "Spike thickness:"
 msgstr "Çivi kalınlığı:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3873
+#: plug-ins/gradient-flare/gradient-flare.c:3893
 msgid "_Rays"
 msgstr "I_şınlar"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3923
+#: plug-ins/gradient-flare/gradient-flare.c:3943
 msgid "Size factor gradient:"
 msgstr "Renk geçişi değişkeni boyutu:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3927
+#: plug-ins/gradient-flare/gradient-flare.c:3947
 msgid "Probability gradient:"
 msgstr "Renk geçişi olasılığı:"
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3985
+#: plug-ins/gradient-flare/gradient-flare.c:4005
 msgid "Shape of Second Flares"
 msgstr "İkinci Parlama Biçimi"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4044
+#: plug-ins/gradient-flare/gradient-flare.c:4064
 msgid "Random seed:"
 msgstr "Rastgele parçacık:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4058
+#: plug-ins/gradient-flare/gradient-flare.c:4078
 msgid "_Second Flares"
 msgstr "İ_kinci Parlamalar"
 
@@ -14117,17 +14147,17 @@ msgstr "GIO arka uçları eksik olabilir ve GVFS kurmanız gerekiyor olabilir mi
 msgid "Help ID '%s' unknown"
 msgstr "'%s' yardım kimliği bilinmiyor"
 
-#: plug-ins/help/gimphelplocale.c:218
+#: plug-ins/help/gimphelplocale.c:220
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "İçerik '%s' adresinden yükleniyor"
 
-#: plug-ins/help/gimphelplocale.c:239
+#: plug-ins/help/gimphelplocale.c:241
 #, c-format
 msgid "Could not load data from '%s': %s"
 msgstr "'%s' dosyasından veri yüklenemedi: %s"
 
-#: plug-ins/help/gimphelplocale.c:311
+#: plug-ins/help/gimphelplocale.c:313
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -14230,7 +14260,7 @@ msgid "New"
 msgstr "Yeni"
 
 #: plug-ins/ifs-compose/ifs-compose.c:963 plug-ins/ifs-compose/ifs-menus.ui:35
-#: plug-ins/imagemap/imap_main.c:1543 plug-ins/imagemap/imap-menu.ui:39
+#: plug-ins/imagemap/imap_main.c:1565 plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "Yinele"
 
@@ -14358,7 +14388,7 @@ msgstr "Oluştur"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:54
 #: plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: plug-ins/imagemap/imap_main.c:1546 plug-ins/imagemap/imap-menu.ui:43
+#: plug-ins/imagemap/imap_main.c:1568 plug-ins/imagemap/imap-menu.ui:43
 #: plug-ins/imagemap/imap-menu.ui:321 plug-ins/imagemap/imap-menu.ui:358
 msgid "Cut"
 msgstr "Kes"
@@ -14506,7 +14536,7 @@ msgstr "Öne Taşı"
 msgid "Move Up"
 msgstr "Yukarı Taşı"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1550
+#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1572
 #: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:296
 msgid "Paste"
 msgstr "Yapıştır"
@@ -14699,81 +14729,81 @@ msgstr "Bazı veriler değişti!"
 msgid "Do you really want to discard your changes?"
 msgstr "Yaptığınız değişiklikleri gözden çıkarmak istiyor musunuz?"
 
-#: plug-ins/imagemap/imap_main.c:1046
+#: plug-ins/imagemap/imap_main.c:1068
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "\"%s\" dosyası kaydedildi."
 
-#: plug-ins/imagemap/imap_main.c:1050
+#: plug-ins/imagemap/imap_main.c:1072
 msgid "Couldn't save file:"
 msgstr "Dosya kaydedilemedi:"
 
-#: plug-ins/imagemap/imap_main.c:1063
+#: plug-ins/imagemap/imap_main.c:1085
 msgid "Image size has changed."
 msgstr "Resmin boyutu değiştirildi."
 
-#: plug-ins/imagemap/imap_main.c:1064
+#: plug-ins/imagemap/imap_main.c:1086
 msgid "Resize area's?"
 msgstr "Alan yeniden boyutlandırılsın mı?"
 
-#: plug-ins/imagemap/imap_main.c:1106
+#: plug-ins/imagemap/imap_main.c:1128
 msgid "Couldn't read file:"
 msgstr "Dosya okunamadı:"
 
-#: plug-ins/imagemap/imap_main.c:1159
+#: plug-ins/imagemap/imap_main.c:1181
 #, c-format
 msgid "URL: %s"
 msgstr "Adres: %s"
 
-#: plug-ins/imagemap/imap_main.c:1553 plug-ins/imagemap/imap-menu.ui:108
+#: plug-ins/imagemap/imap_main.c:1575 plug-ins/imagemap/imap-menu.ui:108
 #: plug-ins/imagemap/imap-menu.ui:274
 msgid "Zoom In"
 msgstr "Yakınlaştır"
 
-#: plug-ins/imagemap/imap_main.c:1555 plug-ins/imagemap/imap-menu.ui:112
+#: plug-ins/imagemap/imap_main.c:1577 plug-ins/imagemap/imap-menu.ui:112
 #: plug-ins/imagemap/imap-menu.ui:278
 msgid "Zoom Out"
 msgstr "Uzaklaştır"
 
-#: plug-ins/imagemap/imap_main.c:1558
+#: plug-ins/imagemap/imap_main.c:1580
 msgid "Edit Map Info"
 msgstr "Eşlem Bilgisini Düzenle"
 
-#: plug-ins/imagemap/imap_main.c:1561
+#: plug-ins/imagemap/imap_main.c:1583
 msgid "Move Area to Front"
 msgstr "Ön Bölgeye Taşı"
 
-#: plug-ins/imagemap/imap_main.c:1563
+#: plug-ins/imagemap/imap_main.c:1585
 msgid "Move Area to Bottom"
 msgstr "En Alt Bölgeye Taşı"
 
-#: plug-ins/imagemap/imap_main.c:1581 plug-ins/imagemap/imap-menu.ui:161
+#: plug-ins/imagemap/imap_main.c:1603 plug-ins/imagemap/imap-menu.ui:161
 #: plug-ins/imagemap/imap-menu.ui:249
 msgid "Arrow"
 msgstr "Ok"
 
-#: plug-ins/imagemap/imap_main.c:1581
+#: plug-ins/imagemap/imap_main.c:1603
 msgid "Select Existing Area"
 msgstr "Var Olan Alanı Seç"
 
-#: plug-ins/imagemap/imap_main.c:1583
+#: plug-ins/imagemap/imap_main.c:1605
 msgid "Define Rectangle area"
 msgstr "Dikdörtgen alanı tanımla"
 
-#: plug-ins/imagemap/imap_main.c:1585
+#: plug-ins/imagemap/imap_main.c:1607
 msgid "Define Circle/Oval area"
 msgstr "Daire/oval alanı tanımla"
 
-#: plug-ins/imagemap/imap_main.c:1587
+#: plug-ins/imagemap/imap_main.c:1609
 msgid "Define Polygon area"
 msgstr "Çokgen alanı tanımla"
 
-#: plug-ins/imagemap/imap_main.c:1590 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1612 plug-ins/imagemap/imap_menu.c:180
 #: plug-ins/imagemap/imap-menu.ui:305 plug-ins/imagemap/imap-menu.ui:342
 msgid "Edit Area Info..."
 msgstr "Alan Bilgisini Düzenle..."
 
-#: plug-ins/imagemap/imap_main.c:1590 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1612 plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "Seçili alan bilgisini düzenle"
 
@@ -14807,83 +14837,83 @@ msgstr "_Ekle"
 msgid "A_ppend"
 msgstr "So_na ekle"
 
-#: plug-ins/imagemap/imap_preferences.c:266
+#: plug-ins/imagemap/imap_preferences.c:293
 msgid "Couldn't save resource file:"
 msgstr "Kaynak dosya kaydedilemedi:"
 
-#: plug-ins/imagemap/imap_preferences.c:390
+#: plug-ins/imagemap/imap_preferences.c:417
 msgid "General"
 msgstr "Genel"
 
-#: plug-ins/imagemap/imap_preferences.c:394
+#: plug-ins/imagemap/imap_preferences.c:421
 msgid "Default Map Type"
 msgstr "Öntanımlı Eşlem Türü"
 
-#: plug-ins/imagemap/imap_preferences.c:413
+#: plug-ins/imagemap/imap_preferences.c:440
 msgid "_Prompt for area info"
 msgstr "_Alan bilgisi için bilgi istemi"
 
-#: plug-ins/imagemap/imap_preferences.c:415
+#: plug-ins/imagemap/imap_preferences.c:442
 msgid "_Require default URL"
 msgstr "Öntanımlı URL ge_rekli"
 
-#: plug-ins/imagemap/imap_preferences.c:417
+#: plug-ins/imagemap/imap_preferences.c:444
 msgid "Show area _handles"
 msgstr "Alan _işleçlerini göster"
 
-#: plug-ins/imagemap/imap_preferences.c:419
+#: plug-ins/imagemap/imap_preferences.c:446
 msgid "_Keep NCSA circles true"
 msgstr "NCSA çemberlerini tam olarak _koru"
 
-#: plug-ins/imagemap/imap_preferences.c:421
+#: plug-ins/imagemap/imap_preferences.c:448
 msgid "Show area URL _tip"
 msgstr "URL ö_nerisi alanını göster"
 
-#: plug-ins/imagemap/imap_preferences.c:424
+#: plug-ins/imagemap/imap_preferences.c:451
 msgid "_Use double-sized grab handles"
 msgstr "İki katı boyutlu tutacakları _kullan"
 
-#: plug-ins/imagemap/imap_preferences.c:431
+#: plug-ins/imagemap/imap_preferences.c:458
 msgid "Menu"
 msgstr "Menü"
 
-#: plug-ins/imagemap/imap_preferences.c:435
+#: plug-ins/imagemap/imap_preferences.c:462
 msgid "Number of _undo levels (1 - 99):"
 msgstr "_Geri alma düzeylerinin sayısı (1-99):"
 
-#: plug-ins/imagemap/imap_preferences.c:440
+#: plug-ins/imagemap/imap_preferences.c:467
 msgid "Number of M_RU entries (1 - 16):"
 msgstr "M_RU girişlerinin sayısı (1 - 16):"
 
-#: plug-ins/imagemap/imap_preferences.c:449
+#: plug-ins/imagemap/imap_preferences.c:476
 msgid "Select Color"
 msgstr "Renk Seç"
 
-#: plug-ins/imagemap/imap_preferences.c:465
+#: plug-ins/imagemap/imap_preferences.c:492
 msgid "Normal:"
 msgstr "Normal:"
 
-#: plug-ins/imagemap/imap_preferences.c:469
+#: plug-ins/imagemap/imap_preferences.c:496
 msgid "Selected:"
 msgstr "Seçili:"
 
-#: plug-ins/imagemap/imap_preferences.c:473
+#: plug-ins/imagemap/imap_preferences.c:500
 msgid "Interaction:"
 msgstr "Etkileşim:"
 
-#: plug-ins/imagemap/imap_preferences.c:482
+#: plug-ins/imagemap/imap_preferences.c:509
 msgid "Co_ntiguous Region"
 msgstr "Bi_tişik Bölge"
 
-#: plug-ins/imagemap/imap_preferences.c:486
+#: plug-ins/imagemap/imap_preferences.c:513
 msgid "_Threshold:"
 msgstr "_Eşik:"
 
-#: plug-ins/imagemap/imap_preferences.c:488
+#: plug-ins/imagemap/imap_preferences.c:515
 msgid "_Automatically convert"
 msgstr "_Kendiliğinden dönüştür"
 
-#: plug-ins/imagemap/imap_preferences.c:499
+#: plug-ins/imagemap/imap_preferences.c:526
 msgid "General Preferences"
 msgstr "Genel Tercihler"
 
@@ -16254,15 +16284,15 @@ msgstr "Üst veriyi içe aktar"
 msgid "Export metadata"
 msgstr "Üst veriyi dışa aktar"
 
-#: plug-ins/metadata/metadata-editor.c:1688
+#: plug-ins/metadata/metadata-editor.c:1692
 msgid "Choose Date"
 msgstr "Tarih Seç"
 
-#: plug-ins/metadata/metadata-editor.c:1692
+#: plug-ins/metadata/metadata-editor.c:1696
 msgid "Set Date"
 msgstr "Tarih Ayarla"
 
-#: plug-ins/metadata/metadata-editor.c:2428
+#: plug-ins/metadata/metadata-editor.c:2432
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -16278,7 +16308,7 @@ msgstr ""
 "15.30 ya da 10.45\n"
 "Geçerli değeri kaldırmak için tüm metni silin."
 
-#: plug-ins/metadata/metadata-editor.c:2434
+#: plug-ins/metadata/metadata-editor.c:2438
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16294,24 +16324,24 @@ msgstr ""
 "girilmelidir.\n"
 "Geçerli değeri kaldırmak için tüm metni silin."
 
-#: plug-ins/metadata/metadata-editor.c:2568
+#: plug-ins/metadata/metadata-editor.c:2572
 msgid "Unrated"
 msgstr "Değerlendirilmemiş"
 
-#: plug-ins/metadata/metadata-editor.c:4678
+#: plug-ins/metadata/metadata-editor.c:4682
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "%s üst veri etiketi ayarlanamadı: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5569
+#: plug-ins/metadata/metadata-editor.c:5582
 msgid "Import Metadata File"
 msgstr "Üst Veri Dosyasını İçe Aktar"
 
-#: plug-ins/metadata/metadata-editor.c:5573
+#: plug-ins/metadata/metadata-editor.c:5586
 msgid "_Import"
 msgstr "İçe _Aktar"
 
-#: plug-ins/metadata/metadata-editor.c:5604
+#: plug-ins/metadata/metadata-editor.c:5617
 msgid "Export Metadata File"
 msgstr "Üst Veri Dosyasını Dışa Aktar"
 
@@ -17107,10 +17137,6 @@ msgstr "TWAIN veri kaynağından bir görüntü al"
 #: plug-ins/twain/twain.c:87
 msgid "This plug-in will capture an image from a TWAIN datasource"
 msgstr "Bu eklenti TWAIN veri kaynağından bir görüntü yakalayacak"
-
-#: plug-ins/twain/twain.c:206
-msgid "_Scanner/Camera..."
-msgstr "_Tarayıcı/Kamera..."
 
 #: plug-ins/twain/twain.c:412
 #, c-format
