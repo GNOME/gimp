@@ -103,8 +103,7 @@ gimp_mybrush_load (GimpContext   *context,
   preview_filename = g_strconcat (basename, "_prev.png", NULL);
   g_free (basename);
 
-  pixbuf = gdk_pixbuf_new_from_file_at_size (preview_filename,
-                                             48, 48, error);
+  pixbuf = gdk_pixbuf_new_from_file (preview_filename, error);
   g_free (preview_filename);
 
   basename = g_path_get_basename (gimp_file_get_utf8_name (file));
