@@ -79,6 +79,7 @@ error_console_save_cmd_callback (GimpAction *action,
 {
   GimpErrorConsole *console   = GIMP_ERROR_CONSOLE (data);
   gboolean          selection = (gboolean) g_variant_get_int32 (value);
+  GtkFileFilter    *filter;
 
   if (selection &&
       ! gtk_text_buffer_get_selection_bounds (console->text_buffer,
@@ -90,26 +91,25 @@ error_console_save_cmd_callback (GimpAction *action,
       return;
     }
 
-  if (! console->file_dialog)
-    {
-      GtkFileChooserNative *dialog;
+  console->file_dialog =
+    gtk_file_chooser_native_new (_("Save Error Log to File"), NULL,
+                                 GTK_FILE_CHOOSER_ACTION_SAVE,
+                                 _("_Save"), _("_Cancel"));
 
-      dialog = console->file_dialog =
-        gtk_file_chooser_native_new (_("Save Error Log to File"), NULL,
-                                     GTK_FILE_CHOOSER_ACTION_SAVE,
-                                     _("_Save"), _("_Cancel"));
+  console->save_selection = selection;
 
-      console->save_selection = selection;
+  gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (console->file_dialog),
+                                                  TRUE);
 
-      g_set_weak_pointer (&console->file_dialog, dialog);
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("Log Files (*.log)"));
+  gtk_file_filter_add_pattern (filter, "*.log");
+  gtk_file_filter_add_pattern (filter, "*.LOG");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (console->file_dialog), filter);
 
-      gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
-                                                      TRUE);
-
-      g_signal_connect (dialog, "response",
-                        G_CALLBACK (error_console_save_response),
-                        console);
-    }
+  g_signal_connect_object (console->file_dialog, "response",
+                           G_CALLBACK (error_console_save_response),
+                           console, 0);
 
   gtk_native_dialog_show (GTK_NATIVE_DIALOG (console->file_dialog));
 }
@@ -176,5 +176,6 @@ error_console_save_response (GtkNativeDialog  *dialog,
       g_object_unref (file);
     }
 
-  gtk_native_dialog_destroy (dialog);
+  gtk_native_dialog_destroy (GTK_NATIVE_DIALOG (console->file_dialog));
+  console->file_dialog = NULL;
 }
