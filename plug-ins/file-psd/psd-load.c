@@ -3563,28 +3563,39 @@ read_channel_data (PSDchannel     *channel,
                    guint32         comp_len,
                    GError        **error)
 {
-  gchar    *raw_data = NULL;
-  gchar    *src;
-  guint32   readline_len;
+  gchar *raw_data = NULL;
+  gchar *src;
+  gsize  readline_len;
+  gsize  allocation;
 
   if (bps == 1)
-    readline_len = ((channel->columns + 7) / 8);
+    readline_len = (gsize) ((channel->columns + 7) / 8);
   else
-    readline_len = (channel->columns * bps / 8);
+    readline_len = (gsize) (channel->columns * bps / 8);
 
-  IFDBG(4) g_debug ("raw data size %d x %d = %d", readline_len,
+  IFDBG(4) g_debug ("raw data size %" G_GSIZE_FORMAT " x %d = %" G_GSIZE_FORMAT,
+                    readline_len,
                     channel->rows, readline_len * channel->rows);
 
   /* sanity check, int overflow check (avoid divisions by zero) */
-  if ((channel->rows == 0) || (channel->columns == 0) ||
-      (channel->rows > G_MAXINT32 / channel->columns / MAX (bps / 8, 1)))
+  if ((channel->rows == 0) || (channel->columns == 0)                    ||
+      (channel->rows >= G_MAXINT32 / channel->columns / MAX (bps / 8, 1)) ||
+      ! g_size_checked_mul (&allocation, readline_len, channel->rows))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Unsupported or invalid channel size"));
       return -1;
     }
 
-  raw_data = g_malloc (readline_len * channel->rows);
+  raw_data = g_try_malloc (allocation);
+  if (raw_data == NULL)
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("There was not enough memory to complete the "
+                     "operation."));
+      return -1;
+    }
+
   switch (compression)
     {
       case PSD_COMP_RAW:
