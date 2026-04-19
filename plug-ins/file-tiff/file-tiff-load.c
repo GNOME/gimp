@@ -2494,7 +2494,7 @@ load_sketchbook_layers (TIFF      *tif,
               gboolean      locked           = FALSE;
               gint          alias_blend_mode = 0;
               gint          in_group         = 0;
-              guint32      *pixels;
+              guint32      *pixels           = NULL;
               gsize         pixels_size;
               guint32       row;
 
