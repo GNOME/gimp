@@ -1345,7 +1345,7 @@ load_apng_image (GFile      *file,
   guint           sequence_num     = 0;
   guint           frame_no;
   guint           playback_no;
-  guint           frame_data_size  = 0;
+  gsize           frame_data_size  = 0;
 
   layers     = gimp_image_get_layers (image);
   image_type = gimp_drawable_type (GIMP_DRAWABLE (layers[0]));
@@ -1408,7 +1408,7 @@ load_apng_image (GFile      *file,
           gdouble image_width  = gimp_image_get_width (image);
           gdouble image_height = gimp_image_get_height (image);
 
-          frame_data_size = image_width * image_height * bpp;
+          frame_data_size = ((gsize) image_width) * image_height * bpp;
 
           apng_frame.bpp         = bpp;
           apng_frame.image_width = image_width;
