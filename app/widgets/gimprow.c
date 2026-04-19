@@ -764,14 +764,6 @@ gimp_row_get_view_size (GimpRow *row,
   return priv->view_size;
 }
 
-GtkWidget *
-gimp_row_get_label (GimpRow *row)
-{
-  g_return_val_if_fail (GIMP_IS_ROW (row), NULL);
-
-  return GET_PRIVATE (row)->label;
-}
-
 void
 gimp_row_monitor_changed (GimpRow *row)
 {
