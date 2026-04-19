@@ -22,39 +22,31 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
-#ifdef GDK_WINDOWING_WAYLAND
-#include <gdk/gdkwayland.h>
-#endif
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
-#include "libgimpthumb/gimpthumb.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs-types.h"
 
-#include "gimp-version.h"
-
 #include "config/gimprc.h"
 
 #include "core/gimp.h"
-#include "core/gimp-utils.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpimagefile.h"
 
 #include "file/file-open.h"
 
+#include "widgets/gimpcontainerlistview.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpprefsbox.h"
-#include "widgets/gimprow.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "menus/menus.h"
 
 #include "gui/icon-themes.h"
-#include "gui/themes.h"
 
 #include "file-open-dialog.h"
 #include "preferences-dialog-utils.h"
@@ -109,11 +101,11 @@ static void   welcome_dialog_new_dialog_response     (GtkWidget      *dialog,
                                                       GtkWidget      *welcome_dialog);
 static void   welcome_dialog_open_dialog_close       (GtkWidget      *dialog,
                                                       GtkWidget      *welcome_dialog);
-static void   welcome_open_activated_callback        (GtkListBox     *listbox,
-                                                      GtkListBoxRow  *row,
+static void   welcome_open_activated_callback        (GimpContainerView *view,
+                                                      GimpViewable   *viewable,
                                                       GtkWidget      *welcome_dialog);
 static void   welcome_open_images_callback           (GtkWidget      *button,
-                                                      GtkListBox     *listbox);
+                                                      GimpContainerView *view);
 static void   welcome_dialog_new_image_accelerator   (GtkAccelGroup  *accel_group,
                                                       GObject        *accelerator_widget,
                                                       guint           keyval,
@@ -762,10 +754,8 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *button;
-  GtkWidget *listbox;
+  GtkWidget *view;
   GtkWidget *toggle;
-  gint       num_images;
-  gint       list_count;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
@@ -797,75 +787,27 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
 
   /* Recent Files */
   vbox = prefs_frame_new (_("Recent Images"), GTK_CONTAINER (main_vbox),
-                          FALSE);
+                          TRUE);
 
-  listbox = gtk_list_box_new ();
-  gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
-                                   GTK_SELECTION_MULTIPLE);
-  gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (listbox),
-                                             FALSE);
-  gtk_container_add (GTK_CONTAINER (vbox), listbox);
-  gtk_widget_set_visible (listbox, TRUE);
+  view = gimp_container_list_view_new (gimp->documents,
+                                       gimp_get_user_context (gimp),
+                                       32, 0);
+  gimp_container_view_set_selection_mode (GIMP_CONTAINER_VIEW (view),
+                                          GTK_SELECTION_MULTIPLE);
+  gtk_box_pack_start (GTK_BOX (vbox), view, TRUE, TRUE, 0);
+  gtk_widget_set_visible (view, TRUE);
 
-  num_images = gimp_container_get_n_children (gimp->documents);
-  list_count = (num_images <= 8) ? num_images : 8;
-
-  for (gint i = 0; i < list_count; i++)
-    {
-      GimpImagefile *imagefile = NULL;
-      GtkWidget     *row;
-      GtkWidget     *label;
-      GFile         *file;
-      const gchar   *name;
-      gchar         *basename;
-      gchar         *action_name;
-
-      imagefile = (GimpImagefile *)
-        gimp_container_get_child_by_index (gimp->documents, i);
-
-      file = gimp_imagefile_get_file (imagefile);
-
-      name     = gimp_file_get_utf8_name (file);
-      basename = g_path_get_basename (name);
-
-      /* If the file is not found, remove it and try to
-       * load another one if possible */
-      if (! g_file_test (name, G_FILE_TEST_IS_REGULAR))
-        {
-          g_free (basename);
-
-          if (list_count < num_images)
-            list_count++;
-
-          continue;
-        }
-
-      row = gimp_row_new (gimp_get_user_context (gimp),
-                          GIMP_VIEWABLE (imagefile),
-                          32, 0);
-
-      label = gimp_row_get_label (GIMP_ROW (row));
-      if (label)
-        gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
-
-      action_name = g_strdup_printf ("file-open-recent-%02u", i + 1);
-      g_object_set_data_full (G_OBJECT (row), "action_name", action_name,
-                              g_free);
-
-      gtk_widget_set_visible (row, TRUE);
-      gtk_list_box_insert (GTK_LIST_BOX (listbox), row, -1);
-    }
-
-  g_signal_connect (listbox, "row-activated",
+  g_signal_connect (view, "item-activated",
                     G_CALLBACK (welcome_open_activated_callback),
                     welcome_dialog);
 
   button = gtk_button_new_with_mnemonic (_("O_pen Selected Images"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
+
   g_signal_connect (button, "clicked",
                     G_CALLBACK (welcome_open_images_callback),
-                    listbox);
+                    view);
 
   /* "Always show welcome dialog" checkbox */
   toggle = prefs_check_button_add (G_OBJECT (config), "show-welcome-dialog",
@@ -873,7 +815,6 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
                                      "(You can show the Welcome dialog again from the \"Help\" menu)"),
                                    GTK_BOX (main_vbox));
   gtk_container_child_set (GTK_CONTAINER (main_vbox), toggle,
-                           "fill",      TRUE,
                            "pack-type", GTK_PACK_END,
                            NULL);
 }
@@ -1257,44 +1198,63 @@ welcome_dialog_open_dialog_close (GtkWidget *dialog,
 }
 
 static void
-welcome_open_activated_callback (GtkListBox    *listbox,
-                                 GtkListBoxRow *row,
-                                 GtkWidget     *welcome_dialog)
+welcome_open_activated_callback (GimpContainerView *view,
+                                 GimpViewable      *viewable,
+                                 GtkWidget         *welcome_dialog)
 {
-  welcome_open_images_callback (NULL, listbox);
+  welcome_open_images_callback (NULL, view);
 }
 
 static void
-welcome_open_images_callback (GtkWidget  *button,
-                              GtkListBox *listbox)
+welcome_open_images_callback (GtkWidget         *button,
+                              GimpContainerView *view)
 {
-  GList         *rows   = NULL;
-  Gimp          *gimp   = NULL;
-  gboolean       opened = FALSE;
-  gchar         *action_name;
-  GimpUIManager *manager;
+  Gimp      *gimp;
+  GList     *images;
+  GtkWidget *widget;
+  gboolean   opened = FALSE;
 
   if (! welcome_dialog)
     return;
 
   gimp = g_object_get_data (G_OBJECT (welcome_dialog), "gimp");
-  manager = menus_get_image_manager_singleton (gimp);
 
-  rows = gtk_list_box_get_selected_rows (listbox);
-  if (rows)
+  widget = GTK_WIDGET (view);
+
+  if (gimp_container_view_get_selected (view, &images) > 0)
     {
+      GList *iter;
+
       gtk_widget_set_sensitive (welcome_dialog, FALSE);
 
-      for (GList *iter = rows; iter; iter = iter->next)
+      for (iter = images; iter; iter = g_list_next (iter))
         {
-          action_name = (gchar *) g_object_get_data (G_OBJECT (iter->data),
-                                                     "action_name");
+          GFile              *file;
+          GimpImage          *image;
+          GimpPDBStatusType   status;
+          GError             *error = NULL;
 
-          if (gimp_ui_manager_activate_action (manager, "file", action_name))
+          file = gimp_imagefile_get_file (iter->data);
+
+          image = file_open_with_display (gimp,
+                                          gimp_get_user_context (gimp),
+                                          NULL, file, FALSE,
+                                          G_OBJECT (gimp_widget_get_monitor (widget)),
+                                          &status, &error);
+
+          if (! image && status != GIMP_PDB_CANCEL)
+            {
+              gimp_message (gimp, G_OBJECT (view), GIMP_MESSAGE_ERROR,
+                            _("Opening '%s' failed:\n\n%s"),
+                            gimp_file_get_utf8_name (file), error->message);
+              g_clear_error (&error);
+            }
+
+          if (image)
             opened = TRUE;
         }
 
-      g_list_free (rows);
+      g_list_free (images);
     }
 
   /* If no images were successfully opened, leave the dialogue up */
