@@ -837,7 +837,7 @@ have_print = get_option('print')
 libtiff_minver = '4.0.0'
 libtiff = dependency('libtiff-4', version: '>=' + libtiff_minver)
 
-libjpeg = dependency('libjpeg')
+libjpeg = dependency(['libjpeg', 'libjpeg-turbo'])
 
 zlib = dependency('zlib')
 
@@ -1082,7 +1082,7 @@ wmf = dependency('libwmf', version: '>='+wmf_minver,
 )
 
 openjpeg_minver = '2.1.0'
-openjpeg = dependency('libopenjp2', version: '>='+openjpeg_minver,
+openjpeg = dependency(['libopenjp2', 'OpenJPEG'], version: '>='+openjpeg_minver,
   required: get_option('jpeg2000')
 )
 
