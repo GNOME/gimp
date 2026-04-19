@@ -33,6 +33,7 @@ common_plugins_list = [
   { 'name': 'file-glob', },
   { 'name': 'file-header', },
   { 'name': 'file-html-table', },
+  { 'name': 'file-macpaint', },
   { 'name': 'file-paa', },
   { 'name': 'file-pat', },
   { 'name': 'file-pcx', },

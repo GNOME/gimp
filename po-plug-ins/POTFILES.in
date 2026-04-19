@@ -45,6 +45,7 @@ plug-ins/common/file-iff.c
 plug-ins/common/file-jp2.c
 plug-ins/common/file-jpegxl.c
 plug-ins/common/file-lnk.c
+plug-ins/common/file-macpaint.c
 plug-ins/common/file-mng.c
 plug-ins/common/file-paa.c
 plug-ins/common/file-pat.c
