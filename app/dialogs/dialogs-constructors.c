@@ -429,7 +429,7 @@ dialogs_dynamics_list_view_new (GimpDialogFactory *factory,
   return gimp_dynamics_factory_view_new (GIMP_VIEW_TYPE_LIST,
                                          context->gimp->dynamics_factory,
                                          context,
-                                         view_size, 1,
+                                         view_size, 0,
                                          menus_get_global_menu_factory (context->gimp));
 }
 
@@ -442,7 +442,7 @@ dialogs_mypaint_brush_list_view_new (GimpDialogFactory *factory,
   return gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
                                      context->gimp->mybrush_factory,
                                      context,
-                                     view_size, 1,
+                                     view_size, 0,
                                      menus_get_global_menu_factory (context->gimp),
                                      "<MyPaintBrushes>",
                                      "/mypaint-brushes-popup",
@@ -529,7 +529,7 @@ dialogs_tool_preset_list_view_new (GimpDialogFactory *factory,
   return gimp_tool_preset_factory_view_new (GIMP_VIEW_TYPE_LIST,
                                             context->gimp->tool_preset_factory,
                                             context,
-                                            view_size, 1,
+                                            view_size, 0,
                                             menus_get_global_menu_factory (context->gimp));
 }
 
