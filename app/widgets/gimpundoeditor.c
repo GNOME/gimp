@@ -21,7 +21,6 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
@@ -207,13 +206,7 @@ gimp_undo_editor_set_context (GimpDocked  *docked,
 {
   GimpUndoEditor *editor = GIMP_UNDO_EDITOR (docked);
 
-  if (editor->context)
-    g_object_unref (editor->context);
-
-  editor->context = context;
-
-  if (editor->context)
-    g_object_ref (editor->context);
+  g_set_object (&editor->context, context);
 
   /* This calls gimp_undo_editor_set_image(), so make sure that it
    * isn't called before editor->context has been initialized.
