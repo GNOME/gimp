@@ -27,6 +27,7 @@
 
 #include "core/gimpcontext.h"
 #include "core/gimpdrawablefilter.h"
+#include "core/gimpimage.h"
 #include "core/gimpsettings.h"
 
 #include "gimpcontainerview.h"
@@ -35,6 +36,7 @@
 #include "gimprow-utils.h"
 #include "gimprowdeviceinfo.h"
 #include "gimprowdrawablefilter.h"
+#include "gimprowimage.h"
 #include "gimprowseparator.h"
 #include "gimprowsettings.h"
 
@@ -64,6 +66,10 @@ gimp_row_type_from_viewable (GimpViewable *viewable)
   else if (GIMP_IS_DEVICE_INFO (viewable))
     {
       row_type = GIMP_TYPE_ROW_DEVICE_INFO;
+    }
+  else if (GIMP_IS_IMAGE (viewable))
+    {
+      row_type = GIMP_TYPE_ROW_IMAGE;
     }
 
 #if 0
