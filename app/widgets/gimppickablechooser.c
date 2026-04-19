@@ -22,10 +22,8 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
@@ -35,7 +33,6 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimppickable.h"
-#include "core/gimpviewable.h"
 
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
