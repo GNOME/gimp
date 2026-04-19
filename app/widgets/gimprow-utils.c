@@ -88,7 +88,7 @@ gimp_row_create_for_context (gpointer item,
   g_return_val_if_fail (GIMP_IS_VIEWABLE (item), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  return gimp_row_new (context, item, GIMP_VIEW_SIZE_MEDIUM, 1);
+  return gimp_row_new (context, item, GIMP_VIEW_SIZE_MEDIUM, 0);
 }
 
 GtkWidget *
