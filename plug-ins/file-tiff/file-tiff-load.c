@@ -1930,13 +1930,21 @@ load_rgba (TIFF        *tif,
   guint32  image_height;
   guint32  row;
   guint32 *buffer;
+  gsize    allocation;
 
   g_debug ("%s", __func__);
 
   TIFFGetField (tif, TIFFTAG_IMAGEWIDTH,  &image_width);
   TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &image_height);
 
-  buffer = g_new (uint32_t, image_width * image_height);
+  if (! g_size_checked_mul (&allocation, image_width, image_height) ||
+      ! g_size_checked_mul (&allocation, allocation, 4)             ||
+      (buffer = g_try_malloc0 (allocation)) == NULL)
+    {
+      g_message (_("There was not enough memory to complete the "
+                   "operation."));
+      return;
+    }
 
   if (! TIFFReadRGBAImage (tif, image_width, image_height, buffer, 0))
     {
