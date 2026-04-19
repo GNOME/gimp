@@ -49,6 +49,7 @@
 #include "gui/icon-themes.h"
 
 #include "file-open-dialog.h"
+#include "gimp-version.h"
 #include "preferences-dialog-utils.h"
 #include "welcome-dialog.h"
 #include "welcome-dialog-data.h"
