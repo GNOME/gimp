@@ -390,7 +390,7 @@
                 "/bin",
                 "/include",
                 "/lib/pkgconfig",
-                "/share"
+                "/share/ghostscript"
             ]
         },
         {
@@ -410,12 +410,12 @@
             ],
             "config-opts": [
                 "--disable-gegl",
-                "--disable-introspection"
+                "--disable-introspection",
+                "--disable-i18n"
             ],
             "cleanup": [
                 "/include",
-                "/lib/pkgconfig",
-                "/share"
+                "/lib/pkgconfig"
             ],
             "modules": [
                 {
@@ -729,7 +729,7 @@
                 "/lib/graphviz/libgvplugin_neato_layout*",
                 "/lib/graphviz/libgvplugin_vt*",
                 "/lib/pkgconfig",
-                "/share"
+                "/share/graphviz"
             ]
         },
         {
