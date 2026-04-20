@@ -1233,6 +1233,15 @@ load_resource_1039 (const PSDimageres  *res_a,
           g_debug ("LAB color profile ignored.");
           g_object_unref (profile);
         }
+      else if (img_a->color_mode == PSD_RGB)
+        {
+          img_a->rgb_space =
+            gimp_color_profile_get_space (profile,
+                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                          error);
+          gimp_image_set_color_profile (image, profile);
+          g_object_unref (profile);
+        }
       else
         {
           gimp_image_set_color_profile (image, profile);

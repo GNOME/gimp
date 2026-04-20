@@ -175,6 +175,7 @@ load_image (GFile        *file,
   img_a.ibm_pc_format  = FALSE;
   img_a.cmyk_transform = img_a.cmyk_transform_alpha = NULL;
   img_a.cmyk_profile = NULL;
+  img_a.rgb_space = NULL;
 
   initialize_unsupported (unsupported_features);
   img_a.unsupported_features = unsupported_features;
@@ -364,6 +365,7 @@ load_image_metadata (GFile        *file,
   img_a.alpha_id_count      = 0;
   img_a.quick_mask_id       = 0;
   img_a.cmyk_profile        = NULL;
+  img_a.rgb_space           = NULL;
 
   initialize_unsupported (unsupported_features);
   img_a.unsupported_features = unsupported_features;
@@ -392,12 +394,13 @@ load_image_metadata (GFile        *file,
     }
   else
     {
-      PSDlayer  **lyr_a = NULL;
-      gchar       sig[4];
-      gchar       key[4];
-      guint32     raw_len32 = 0;
-      guint32     payload_len;
-      guint32     skip_len;
+      PSDlayer         **lyr_a = NULL;
+      gchar              sig[4];
+      gchar              key[4];
+      guint32            raw_len32 = 0;
+      guint32            payload_len;
+      guint32            skip_len;
+      GimpColorProfile  *profile = NULL;
 
       while (data_length >= 12)
         {
@@ -496,6 +499,16 @@ load_image_metadata (GFile        *file,
             {
             case GIMP_RGB:
               img_a.color_mode = PSD_RGB;
+
+              profile = gimp_image_get_color_profile (image);
+
+              if (profile)
+                {
+                  img_a.rgb_space =
+                    gimp_color_profile_get_space (profile,
+                                                  GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                  error);
+                }
               break;
             case GIMP_GRAY:
               img_a.color_mode = PSD_GRAYSCALE;
@@ -3889,18 +3902,24 @@ get_layer_format (PSDimage *img_a,
       switch (img_a->bps)
         {
         case 32:
-          format = babl_format ("R'G'B' float");
+          format = babl_format_with_space ("R'G'B' float", img_a->rgb_space);
           break;
 
         case 16:
-          format = babl_format ((img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB) ?
-                                "R'G'B' float" : "R'G'B' u16");
+          format = babl_format_with_space ((img_a->color_mode == PSD_CMYK ||
+                                            img_a->color_mode == PSD_LAB) ?
+                                             "R'G'B' float" :
+                                             "R'G'B' u16",
+                                           img_a->rgb_space);
           break;
 
         case 8:
         case 1:
-          format = babl_format ((img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB) ?
-                                "R'G'B' float" : "R'G'B' u8");
+          format = babl_format_with_space ((img_a->color_mode == PSD_CMYK ||
+                                            img_a->color_mode == PSD_LAB) ?
+                                             "R'G'B' float" :
+                                             "R'G'B' u8",
+                                           img_a->rgb_space);
           break;
 
         default:
@@ -3913,18 +3932,24 @@ get_layer_format (PSDimage *img_a,
       switch (img_a->bps)
         {
         case 32:
-          format = babl_format ("R'G'B'A float");
+          format = babl_format_with_space ("R'G'B'A float", img_a->rgb_space);
           break;
 
         case 16:
-          format = babl_format ((img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB) ?
-                                "R'G'B'A float" : "R'G'B'A u16");
+          format = babl_format_with_space ((img_a->color_mode == PSD_CMYK ||
+                                            img_a->color_mode == PSD_LAB) ?
+                                             "R'G'B'A float" :
+                                             "R'G'B'A u16",
+                                           img_a->rgb_space);
           break;
 
         case 8:
         case 1:
-          format = babl_format ((img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB) ?
-                                "R'G'B'A float" : "R'G'B'A u8");
+          format = babl_format_with_space ((img_a->color_mode == PSD_CMYK ||
+                                            img_a->color_mode == PSD_LAB) ?
+                                             "R'G'B'A float" :
+                                             "R'G'B'A u8",
+                                           img_a->rgb_space);
           break;
 
         default:
