@@ -374,7 +374,7 @@ load_image (GFile   *file,
                              gimp_file_get_utf8_name (file));
 
   /* Open the file for reading */
-  fp = g_fopen (g_file_peek_path (file), "r");
+  fp = g_fopen (g_file_peek_path (file), "rb");
 
   if (fp == NULL)
     {
