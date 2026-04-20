@@ -1466,7 +1466,7 @@ load_image (GimpProcedure        *procedure,
               if (bps > 8)
                 {
                   TIFFClose (tif);
-                  g_message (_("Indexed TIFFs with color maps larger than 256"
+                  g_message (_("Indexed TIFFs with color maps larger than 256 "
                                "colors are not yet supported"));
                   return GIMP_PDB_EXECUTION_ERROR;
                 }
