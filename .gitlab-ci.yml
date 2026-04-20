@@ -636,6 +636,8 @@ gimp-win:
         OPT_PREFIX: /opt/homebrew
         WARN_AS_ERROR_ON_CI: '-Dwerror=true'
         VARIANT: -homebrew
+        #FIXME: https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/2233
+        ORKA_RUNNER: sequoia-3
   parallel:
     matrix:
       - ARCH: [arm64, x86_64]
@@ -647,6 +649,7 @@ gimp-win:
     #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
+    - sw_vers
     - export GIMP_PREFIX="$PWD/_install-$ARCH"
     - export PATH="$OPT_PREFIX/bin:$PATH"
     - if [ "$ARCH" = 'x86_64' ]; then softwareupdate --install-rosetta --agree-to-license; fi
