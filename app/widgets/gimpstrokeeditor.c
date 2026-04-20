@@ -109,7 +109,6 @@ gimp_stroke_editor_constructed (GObject *object)
   GtkWidget         *scale;
   GtkWidget         *box;
   GtkWidget         *size;
-  GtkWidget         *label;
   GtkWidget         *frame;
   GtkWidget         *grid;
   GtkWidget         *dash_editor;
@@ -123,26 +122,20 @@ gimp_stroke_editor_constructed (GObject *object)
 
   options = GIMP_STROKE_OPTIONS (fill_editor->options);
 
-  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
-
-  label = gtk_label_new (_("Line width:"));
-  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 3);
+  gtk_container_add (GTK_CONTAINER (editor), grid);
+  gtk_widget_show (grid);
 
   size = gimp_prop_size_entry_new (G_OBJECT (options),
                                    "width", FALSE, "unit",
                                    "%a", GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                    editor->resolution);
   gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (size), 1);
-  gtk_box_pack_start (GTK_BOX (box), size, FALSE, FALSE, 0);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 3);
-  gtk_container_add (GTK_CONTAINER (editor), grid);
-  gtk_widget_show (grid);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("Line width:"), 0.0, 0.5,
+                            size, 2);
 
   box = gimp_prop_enum_icon_box_new (G_OBJECT (options), "cap-style",
                                      "gimp-cap", 0, 0);
@@ -158,9 +151,9 @@ gimp_stroke_editor_constructed (GObject *object)
                             _("_Join style:"), 0.0, 0.5,
                             box, 2);
 
-  scale = gimp_prop_scale_entry_new (G_OBJECT (options), "miter-limit",
-                                     NULL, 1.0, FALSE, 0.0, 0.0);
-  gtk_widget_hide (gimp_labeled_get_label (GIMP_LABELED (scale)));
+  scale = gimp_prop_spin_scale_new (G_OBJECT (options), "miter-limit",
+                                    1.0, 10.0, 1);
+  gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), NULL);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Miter limit:"),
                             0.0, 0.5, scale, 2);
