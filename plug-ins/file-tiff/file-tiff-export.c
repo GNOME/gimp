@@ -1110,14 +1110,17 @@ export_image (GFile         *file,
        * any explicitly-set profile in priority, or the default one for
        * the storage format as fallback.
        */
-      out_linear = (gimp_color_profile_is_linear (profile));
+      out_linear = (profile != NULL && gimp_color_profile_is_linear (profile));
 
       if (profile)
-        space = gimp_color_profile_get_space (profile,
-                                              config_cmyk ?
-                                              gimp_image_get_simulation_intent (image) :
-                                              GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                              &error);
+        {
+          space = gimp_color_profile_get_space (profile,
+                                                config_cmyk ?
+                                                gimp_image_get_simulation_intent (image) :
+                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                &error);
+          g_object_unref (profile);
+        }
 
       if (error)
         {
@@ -1126,8 +1129,6 @@ export_image (GFile         *file,
           g_error_free (error);
           space = NULL;
         }
-
-      g_object_unref (profile);
     }
 
   /* calculate the top-left coordinates */
