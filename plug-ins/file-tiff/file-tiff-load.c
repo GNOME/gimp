@@ -2312,7 +2312,7 @@ load_separate (TIFF         *tif,
                   else if (is_signed)
                     {
                       convert_int2uint (buffer, bps, 1, cols, rows,
-                                        tile_width * bytes_per_pixel);
+                                        tile_width * (bps / 8));
                     }
 
                   if (tiff_mode == GIMP_TIFF_GRAY_MINISWHITE && bps == 8)
