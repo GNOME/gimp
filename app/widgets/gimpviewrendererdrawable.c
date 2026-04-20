@@ -222,8 +222,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
   gimp_viewable_calc_preview_size (image_width,
                                    image_height,
-                                   renderer->width  * scale_factor,
-                                   renderer->height * scale_factor,
+                                   renderer->width,
+                                   renderer->height,
                                    renderer->dot_for_dot,
                                    xres,
                                    yres,
@@ -274,8 +274,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
     }
   else
     {
-      dst_x      = (renderer->width  * scale_factor - view_width)  / 2;
-      dst_y      = (renderer->height * scale_factor - view_height) / 2;
+      dst_x      = (renderer->width  - view_width)  / 2;
+      dst_y      = (renderer->height - view_height) / 2;
       dst_width  = view_width;
       dst_height = view_height;
     }
@@ -298,7 +298,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
       async = gimp_async_new ();
 
-      render_buf = gimp_temp_buf_new (dst_width, dst_height, format);
+      render_buf = gimp_temp_buf_new (dst_width  * scale_factor,
+                                      dst_height * scale_factor,
+                                      format);
       gimp_temp_buf_data_clear (render_buf);
 
       gimp_async_finish_full (async,
@@ -310,8 +312,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
     {
       renderdrawable->priv->render_async  = async;
       renderdrawable->priv->render_widget = g_object_ref (widget);
-      renderdrawable->priv->render_buf_x  = dst_x;
-      renderdrawable->priv->render_buf_y  = dst_y;
+      renderdrawable->priv->render_buf_x  = dst_x * scale_factor;
+      renderdrawable->priv->render_buf_y  = dst_y * scale_factor;
       renderdrawable->priv->render_update = FALSE;
 
       gimp_async_add_callback_for_object (
