@@ -452,11 +452,6 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
   if (! image->gimp->config->layer_previews)
     return NULL;
 
-  dest_width  *= dest_scale_factor;
-  dest_height *= dest_scale_factor;
-
-  buffer = gimp_drawable_get_buffer_with_effects (drawable);
-
   if (no_async_drawable_previews < 0)
     {
       no_async_drawable_previews =
@@ -481,17 +476,22 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
       return async;
     }
 
+  dest_width  *= dest_scale_factor;
+  dest_height *= dest_scale_factor;
+
   scale = MIN ((gdouble) dest_width  / (gdouble) src_width,
                (gdouble) dest_height / (gdouble) src_height);
 
   scaled_x = RINT ((gdouble) src_x * scale);
   scaled_y = RINT ((gdouble) src_y * scale);
 
-  data = sub_preview_data_new (
-    gimp_drawable_get_preview_format (drawable),
-    buffer,
-    GEGL_RECTANGLE (scaled_x, scaled_y, dest_width, dest_height),
-    scale);
+  buffer = gimp_drawable_get_buffer_with_effects (drawable);
+
+  data = sub_preview_data_new (gimp_drawable_get_preview_format (drawable),
+                               buffer,
+                               GEGL_RECTANGLE (scaled_x, scaled_y,
+                                               dest_width, dest_height),
+                               scale);
 
   if (gimp_tile_handler_validate_get_assigned (buffer))
     {
