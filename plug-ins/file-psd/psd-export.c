@@ -262,10 +262,12 @@ static gboolean      write_pixel_data     (GOutputStream       *output,
                                            PSDResourceOptions  *options,
                                            GError             **error);
 
-static GimpLayer   * create_merged_image  (GimpImage           *image);
+static GimpLayer   * create_merged_image  (GimpImage           *image,
+                                           GError              **error);
 
 static gint          get_bpc              (GimpImage           *image);
-static const Babl  * get_pixel_format     (GimpDrawable        *drawable);
+static const Babl  * get_pixel_format     (GimpDrawable        *drawable,
+                                           GError              **error);
 static const Babl  * get_channel_format   (GimpDrawable        *drawable);
 static const Babl  * get_mask_format      (GimpLayerMask       *mask);
 
@@ -1899,7 +1901,7 @@ write_pixel_data (GOutputStream       *output,
   if (gimp_item_is_channel (GIMP_ITEM (drawable)))
     format = get_channel_format (drawable);
   else
-    format = get_pixel_format (drawable);
+    format = get_pixel_format (drawable, error);
 
   if (options->cmyk && ! gimp_item_is_channel (GIMP_ITEM (drawable)))
     {
@@ -2235,7 +2237,8 @@ save_data (GOutputStream       *output,
 }
 
 static GimpLayer *
-create_merged_image (GimpImage *image)
+create_merged_image (GimpImage  *image,
+                     GError    **error)
 {
   GimpLayer *projection;
 
@@ -2247,7 +2250,7 @@ create_merged_image (GimpImage *image)
   if (gimp_image_get_base_type (image) != GIMP_INDEXED)
     {
       GeglBuffer         *buffer             = gimp_drawable_get_buffer (GIMP_DRAWABLE (projection));
-      const Babl         *format             = get_pixel_format (GIMP_DRAWABLE (projection));
+      const Babl         *format             = get_pixel_format (GIMP_DRAWABLE (projection), error);
       gboolean            transparency_found = FALSE;
       gint                bpp                = babl_format_get_bytes_per_pixel (format);
       GeglBufferIterator *iter;
@@ -2293,7 +2296,8 @@ create_merged_image (GimpImage *image)
 }
 
 static void
-get_image_data (GimpImage *image)
+get_image_data (GimpImage  *image,
+                GError    **error)
 {
   IFDBG(1) g_debug ("Function: get_image_data");
 
@@ -2308,7 +2312,7 @@ get_image_data (GimpImage *image)
   PSDImageData.baseType = gimp_image_get_base_type (image);
   IFDBG(1) g_debug ("\tGot base type: %d", PSDImageData.baseType);
 
-  PSDImageData.merged_layer = create_merged_image (image);
+  PSDImageData.merged_layer = create_merged_image (image, error);
 
   PSDImageData.lChannels = gimp_image_list_channels (image);
   PSDImageData.nChannels = g_list_length (PSDImageData.lChannels);
@@ -2400,7 +2404,7 @@ export_image (GFile          *file,
       resource_options.duotone = FALSE;
     }
 
-  get_image_data (image);
+  get_image_data (image, error);
 
   /* Need to check each of the layers size individually also */
   for (iter = PSDImageData.lLayers; iter; iter = iter->next)
@@ -2544,12 +2548,36 @@ get_bpc (GimpImage *image)
 }
 
 static const Babl *
-get_pixel_format (GimpDrawable *drawable)
+get_pixel_format (GimpDrawable  *drawable,
+                  GError       **error)
 {
-  GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
-  const gchar *model;
-  gint         bpc;
-  gchar        format[32];
+  GimpImage        *image;
+  const gchar      *model;
+  gint              bpc;
+  gchar             format[32];
+  GimpColorProfile *profile = NULL;
+  const Babl       *space   = NULL;
+
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  if (gimp_image_get_base_type (image) == GIMP_RGB)
+    {
+      profile = gimp_image_get_color_profile (image);
+      if (profile)
+        {
+          space =
+            gimp_color_profile_get_space (profile,
+                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                          error);
+
+          if (! space)
+            {
+              g_printerr ("%s: error getting the profile space: %s",
+                          G_STRFUNC, (*error)->message);
+              g_clear_error (error);
+            }
+        }
+    }
 
   switch (gimp_drawable_type (drawable))
     {
@@ -2581,7 +2609,7 @@ get_pixel_format (GimpDrawable *drawable)
 
   sprintf (format, "%s u%d", model, 8 * bpc);
 
-  return babl_format (format);
+  return babl_format_with_space (format, space);
 }
 
 static const Babl *

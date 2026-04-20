@@ -802,6 +802,8 @@ typedef struct
   gpointer              cmyk_transform;
   gpointer              cmyk_transform_alpha;
 
+  const Babl           *rgb_space;
+
   gboolean              ibm_pc_format;          /* If layers are saved in little endian format */
   PSDSupport           *unsupported_features;
 } PSDimage;
