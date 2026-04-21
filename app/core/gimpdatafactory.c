@@ -58,6 +58,8 @@ enum
 };
 
 
+typedef struct _GimpDataFactoryPrivate GimpDataFactoryPrivate;
+
 struct _GimpDataFactoryPrivate
 {
   Gimp                    *gimp;
@@ -77,15 +79,16 @@ struct _GimpDataFactoryPrivate
   GimpAsyncSet            *async_set;
 };
 
+#define GET_PRIVATE(factory) \
+  ((GimpDataFactoryPrivate *) gimp_data_factory_get_instance_private ((GimpDataFactory *) (factory)))
+
+
 typedef struct
 {
   const gchar *name;
   const gchar *collection;
   gboolean     is_internal;
 } SearchData;
-
-
-#define GET_PRIVATE(obj) (((GimpDataFactory *) (obj))->priv)
 
 
 static void       gimp_data_factory_constructed         (GObject             *object);
@@ -204,9 +207,9 @@ gimp_data_factory_class_init (GimpDataFactoryClass *klass)
 static void
 gimp_data_factory_init (GimpDataFactory *factory)
 {
-  factory->priv = gimp_data_factory_get_instance_private (factory);
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
 
-  factory->priv->async_set = gimp_async_set_new ();
+  priv->async_set = gimp_async_set_new ();
 }
 
 static void
@@ -416,7 +419,7 @@ gimp_data_factory_real_data_save (GimpDataFactory *factory)
       if (! gimp_data_get_file (data))
         gimp_data_create_filename (data, writable_dir);
 
-      if (factory->priv->gimp->be_verbose)
+      if (priv->gimp->be_verbose)
         {
           GFile *file = gimp_data_get_file (data);
 
@@ -591,9 +594,11 @@ gimp_data_factory_data_refresh (GimpDataFactory *factory,
 void
 gimp_data_factory_data_save (GimpDataFactory *factory)
 {
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
-  if (! gimp_container_is_empty (factory->priv->container))
+  if (! gimp_container_is_empty (priv->container))
     GIMP_DATA_FACTORY_GET_CLASS (factory)->data_save (factory);
 }
 
@@ -602,45 +607,49 @@ gimp_data_factory_data_free_foreach (GimpDataFactory *factory,
                                      GimpData        *data,
                                      gpointer         user_data)
 {
-  gimp_container_remove (factory->priv->container, GIMP_OBJECT (data));
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+
+  gimp_container_remove (priv->container, GIMP_OBJECT (data));
 }
 
 void
 gimp_data_factory_data_free (GimpDataFactory *factory)
 {
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
   gimp_data_factory_data_cancel (factory);
 
-  if (! gimp_container_is_empty (factory->priv->container))
+  if (! gimp_container_is_empty (priv->container))
     {
-      gimp_container_freeze (factory->priv->container);
+      gimp_container_freeze (priv->container);
 
       gimp_data_factory_data_foreach (factory, TRUE,
                                       gimp_data_factory_data_free_foreach,
                                       NULL);
 
-      gimp_container_thaw (factory->priv->container);
+      gimp_container_thaw (priv->container);
     }
 }
 
 GimpAsyncSet *
 gimp_data_factory_get_async_set (GimpDataFactory *factory)
 {
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
 
-  return factory->priv->async_set;
+  return priv->async_set;
 }
 
 gboolean
 gimp_data_factory_data_wait (GimpDataFactory *factory)
 {
-  GimpDataFactoryPrivate *priv;
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
   GimpWaitable           *waitable;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
-
-  priv = GET_PRIVATE (factory);
 
   /* don't allow cancellation for now */
   waitable = gimp_uncancelable_waitable_new (GIMP_WAITABLE (priv->async_set));
@@ -667,8 +676,9 @@ gimp_data_factory_get_data (GimpDataFactory *factory,
                             const gchar     *collection,
                             gboolean         is_internal)
 {
-  GimpContainer *container;
-  GimpObject    *data;
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+  GimpContainer          *container;
+  GimpObject             *data;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
 
@@ -697,7 +707,7 @@ gimp_data_factory_get_data (GimpDataFactory *factory,
 
   if (! data && ! strcmp (name, "Standard"))
     data = (GimpObject *) gimp_data_factory_data_get_standard (factory,
-                                                               gimp_get_user_context (factory->priv->gimp));
+                                                               gimp_get_user_context (priv->gimp));
 
   return (GimpData *) data;
 }
@@ -705,9 +715,11 @@ gimp_data_factory_get_data (GimpDataFactory *factory,
 gboolean
 gimp_data_factory_has_data_new_func (GimpDataFactory *factory)
 {
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
 
-  return factory->priv->data_new_func != NULL;
+  return priv->data_new_func != NULL;
 }
 
 GimpData *
@@ -715,14 +727,12 @@ gimp_data_factory_data_new (GimpDataFactory *factory,
                             GimpContext     *context,
                             const gchar     *name)
 {
-  GimpDataFactoryPrivate *priv;
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (*name != '\0', NULL);
-
-  priv = GET_PRIVATE (factory);
 
   if (priv->data_new_func)
     {
@@ -753,11 +763,13 @@ GimpData *
 gimp_data_factory_data_get_standard (GimpDataFactory *factory,
                                      GimpContext     *context)
 {
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  if (factory->priv->data_get_standard_func)
-    return factory->priv->data_get_standard_func (context);
+  if (priv->data_get_standard_func)
+    return priv->data_get_standard_func (context);
 
   return NULL;
 }
@@ -778,14 +790,12 @@ gimp_data_factory_data_delete (GimpDataFactory  *factory,
                                gboolean          delete_from_disk,
                                GError          **error)
 {
-  GimpDataFactoryPrivate *priv;
+  GimpDataFactoryPrivate *priv   = GET_PRIVATE (factory);
   gboolean                retval = TRUE;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  priv = GET_PRIVATE (factory);
 
   if (gimp_container_have (priv->container, GIMP_OBJECT (data)))
     {
@@ -808,6 +818,8 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
                                     GimpData         *data,
                                     GError          **error)
 {
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -840,7 +852,7 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
   if (! gimp_data_is_writable (data))
     return FALSE;
 
-  if (factory->priv->gimp->be_verbose)
+  if (priv->gimp->be_verbose)
     {
       GFile *file = gimp_data_get_file (data);
 
@@ -871,12 +883,13 @@ gimp_data_factory_data_foreach (GimpDataFactory     *factory,
                                 GimpDataForeachFunc  callback,
                                 gpointer             user_data)
 {
-  GList *list;
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+  GList                  *list;
 
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
   g_return_if_fail (callback != NULL);
 
-  list = GIMP_LIST (factory->priv->container)->queue->head;
+  list = GIMP_LIST (priv->container)->queue->head;
 
   while (list)
     {
@@ -892,33 +905,41 @@ gimp_data_factory_data_foreach (GimpDataFactory     *factory,
 Gimp *
 gimp_data_factory_get_gimp (GimpDataFactory *factory)
 {
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
 
-  return factory->priv->gimp;
+  return priv->gimp;
 }
 
 GType
 gimp_data_factory_get_data_type (GimpDataFactory *factory)
 {
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), G_TYPE_NONE);
 
-  return gimp_container_get_child_type (factory->priv->container);
+  return gimp_container_get_child_type (priv->container);
 }
 
 GimpContainer *
 gimp_data_factory_get_container (GimpDataFactory *factory)
 {
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
 
-  return factory->priv->container;
+  return priv->container;
 }
 
 GimpContainer *
 gimp_data_factory_get_container_obsolete (GimpDataFactory *factory)
 {
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
 
-  return factory->priv->container_obsolete;
+  return priv->container_obsolete;
 }
 
 GList *
