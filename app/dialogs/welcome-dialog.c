@@ -67,6 +67,7 @@ static void   welcome_dialog_release_item_activated  (GtkListBox    *listbox,
                                                       GtkListBoxRow *row,
                                                       gpointer       user_data);
 static void   welcome_add_link                       (GtkGrid        *grid,
+                                                      GtkSizeGroup   *size_group,
                                                       gint            column,
                                                       gint           *row,
                                                       const gchar    *emoji,
@@ -453,13 +454,13 @@ welcome_dialog_create_welcome_page (Gimp      *gimp,
                                     GtkWidget *welcome_dialog,
                                     GtkWidget *main_vbox)
 {
-  GtkWidget  *grid;
-  GtkWidget  *image;
-  GtkWidget  *widget;
-
-  gchar      *markup;
-  gchar      *tmp;
-  gint        row;
+  GtkWidget    *grid;
+  GtkSizeGroup *size_group;
+  GtkWidget    *image;
+  GtkWidget    *widget;
+  gchar        *markup;
+  gchar        *tmp;
+  gint          row;
 
   /****************/
   /* Welcome page */
@@ -480,15 +481,14 @@ welcome_dialog_create_welcome_page (Gimp      *gimp,
   /* Welcome title. */
   grid = gtk_grid_new ();
   gtk_grid_set_column_homogeneous (GTK_GRID (grid), TRUE);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 0);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, TRUE, TRUE, 0);
   gtk_widget_set_margin_start (GTK_WIDGET (grid), 12);
   gtk_widget_set_margin_end (GTK_WIDGET (grid), 12);
   gtk_widget_set_visible (grid, TRUE);
 
   /* Translators: the %s string will be the version, e.g. "3.0". */
-  tmp = g_strdup_printf (_("You installed GIMP %s!"), GIMP_VERSION);
+  tmp = g_strdup_printf (_("You installed GIMP %s"), GIMP_VERSION);
   widget = gtk_label_new (NULL);
   /* XXX For GTK4, we may just replace with gtk_widget_add_css_class() AFAICS. */
   gtk_style_context_add_class (gtk_widget_get_style_context (widget), "title-3");
@@ -527,17 +527,19 @@ welcome_dialog_create_welcome_page (Gimp      *gimp,
 
   gtk_widget_set_visible (widget, TRUE);
 
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   row = 2;
-  welcome_add_link (GTK_GRID (grid), 0, &row,
+  welcome_add_link (GTK_GRID (grid), size_group, 0, &row,
                     /* "globe with meridians" emoticone in UTF-8. */
                     "\xf0\x9f\x8c\x90",
                     _("GIMP website"), "https://www.gimp.org/");
-  welcome_add_link (GTK_GRID (grid), 0, &row,
+  welcome_add_link (GTK_GRID (grid), size_group, 0, &row,
                     /* "open book" emoticone in UTF-8. */
                     "\xf0\x9f\x93\x96",
                     _("Documentation"),
                     "https://docs.gimp.org/");
-  welcome_add_link (GTK_GRID (grid), 0, &row,
+  welcome_add_link (GTK_GRID (grid), size_group, 0, &row,
                     /* "graduation cap" emoticone in UTF-8. */
                     "\xf0\x9f\x8e\x93",
                     _("Community Tutorials"),
@@ -570,16 +572,18 @@ welcome_dialog_create_welcome_page (Gimp      *gimp,
   gtk_widget_set_visible (widget, TRUE);
 
   row = 2;
-  welcome_add_link (GTK_GRID (grid), 1, &row,
+  welcome_add_link (GTK_GRID (grid), size_group, 1, &row,
                     /* "keyboard" emoticone in UTF-8. */
                     "\xe2\x8c\xa8",
                     _("Contributing"),
                     "https://www.gimp.org/develop/");
-  welcome_add_link (GTK_GRID (grid), 1, &row,
+  welcome_add_link (GTK_GRID (grid), size_group, 1, &row,
                     /* "love letter" emoticone in UTF-8. */
                     "\xf0\x9f\x92\x8c",
                     _("Donating"),
                     "https://www.gimp.org/donating/");
+
+  g_object_unref (size_group);
 }
 
 static void
@@ -706,7 +710,7 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
   gtk_scale_add_mark (GTK_SCALE (scale), 200.0, GTK_POS_BOTTOM,
                       _("200%"));
   gtk_range_set_value (GTK_RANGE (scale),
-                       (gdouble) GIMP_GUI_CONFIG (object)->font_relative_size * 100.0);
+                       GIMP_GUI_CONFIG (object)->font_relative_size * 100.0);
   g_signal_connect (G_OBJECT (scale), "value-changed",
                     G_CALLBACK (prefs_font_size_value_changed),
                     GIMP_GUI_CONFIG (object));
@@ -829,11 +833,10 @@ welcome_dialog_create_contribute_page (Gimp       *gimp,
   GtkWidget *vbox;
   GtkWidget *button;
   GtkWidget *label;
-
   gchar     *markup;
   gchar     *tmp;
 
-  gtk_box_set_spacing (GTK_BOX (main_vbox), 2);
+  gtk_box_set_spacing (GTK_BOX (main_vbox), 12);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
@@ -850,62 +853,63 @@ welcome_dialog_create_contribute_page (Gimp       *gimp,
 
   vbox = prefs_frame_new (_("Report Bugs"), GTK_CONTAINER (main_vbox), FALSE);
 
-  tmp = g_strdup_printf (_("As any application, GIMP is not bug-free, so "
+  label = gtk_label_new (_("As any application, GIMP is not bug-free, so"
                            "reporting bugs that you encounter is very "
                            "important to the development."));
-  label = gtk_label_new (tmp);
-  g_free (tmp);
   gtk_label_set_max_width_chars (GTK_LABEL (label), 30);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_set_visible (label, TRUE);
-  button = gtk_link_button_new_with_label ("https://www.gimp.org/bugs/", _("Report Bugs"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  button = gtk_link_button_new_with_label ("https://www.gimp.org/bugs/",
+                                           _("Report Bugs"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 
   vbox = prefs_frame_new (_("Write Code"), GTK_CONTAINER (main_vbox), FALSE);
 
-  tmp = g_strdup_printf (_("Our Developer Website is where you want to start "
+  label = gtk_label_new (_("Our Developer Website is where you want to start "
                            "learning about being a code contributor."));
-  label = gtk_label_new (tmp);
-  g_free (tmp);
   gtk_label_set_max_width_chars (GTK_LABEL (label), 30);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_set_visible (label, TRUE);
-  button = gtk_link_button_new_with_label ("https://developer.gimp.org/", _("Write Code"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  button = gtk_link_button_new_with_label ("https://developer.gimp.org/",
+                                           _("Write Code"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 
   vbox = prefs_frame_new (_("Translate"), GTK_CONTAINER (main_vbox), FALSE);
 
-  tmp = g_strdup_printf (_("Contact the respective translation team for your "
+  label = gtk_label_new (_("Contact the respective translation team for your "
                            "language"));
-  label = gtk_label_new (tmp);
-  g_free (tmp);
   gtk_label_set_max_width_chars (GTK_LABEL (label), 30);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_set_visible (label, TRUE);
-  button = gtk_link_button_new_with_label ("https://l10n.gnome.org/teams/", _("Translate"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  button = gtk_link_button_new_with_label ("https://l10n.gnome.org/teams/",
+                                           _("Translate"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 
   vbox = prefs_frame_new (_("Donate"), GTK_CONTAINER (main_vbox), FALSE);
 
-  tmp = g_strdup_printf (_("Donating money is important: it makes GIMP "
+  label = gtk_label_new (_("Donating money is important: it makes GIMP "
                            "sustainable."));
-  label = gtk_label_new (tmp);
-  g_free (tmp);
   gtk_label_set_max_width_chars (GTK_LABEL (label), 30);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_set_visible (label, TRUE);
-  button = gtk_link_button_new_with_label ("https://liberapay.com/GIMP/donate", _("Donate via Liberapay"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  button = gtk_link_button_new_with_label ("https://liberapay.com/GIMP/donate",
+                                           _("Donate via Liberapay"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
-  button = gtk_link_button_new_with_label ("https://www.gimp.org/donating/", _("Other donation options"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  button = gtk_link_button_new_with_label ("https://www.gimp.org/donating/",
+                                           _("Other donation options"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 }
 
@@ -1376,23 +1380,19 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
 }
 
 static void
-welcome_add_link (GtkGrid     *grid,
-                  gint         column,
-                  gint        *row,
-                  const gchar *emoji,
-                  const gchar *title,
-                  const gchar *link)
+welcome_add_link (GtkGrid      *grid,
+                  GtkSizeGroup *size_group,
+                  gint          column,
+                  gint         *row,
+                  const gchar  *emoji,
+                  const gchar  *title,
+                  const gchar  *link)
 {
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *icon;
 
-  /* TODO: Aryeom doesn't like the spacing here. There is too much
-   * spacing between the link lines and between emojis and links. But we
-   * didn't manage to find how to close a bit these 2 spacings in GTK.
-   * :-/
-   */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_grid_attach (grid, hbox, column, *row, 1, 1);
   /* These margin are by design to emphasize a bit the link list by
    * moving them a tiny bit to the right instead of being exactly
@@ -1404,6 +1404,7 @@ welcome_add_link (GtkGrid     *grid,
   ++(*row);
 
   icon = gtk_label_new (emoji);
+  gtk_size_group_add_widget (size_group, icon);
   gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
   gtk_widget_set_visible (icon, TRUE);
 
