@@ -49,7 +49,7 @@ foreach test_name : tests
 
   # Same ugly trick as in plug-ins/common/meson.build to detect plug-ins in a
   # non-installed build directory.
-  custom_target(basename + '.dummy',
+  plugin_custom_targets += custom_target(basename + '.dummy',
                 input: [ c_test_exe ],
                 output: [ basename + '.dummy' ],
                 command: [ python, meson.project_source_root() / 'tools/cp-plug-in-subfolder.py',
