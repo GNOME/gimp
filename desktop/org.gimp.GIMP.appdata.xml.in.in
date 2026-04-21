@@ -59,6 +59,10 @@
       <caption>Scanned engraving being edited in GIMP. Artwork by Liam (CC0)</caption>
     </screenshot>
   </screenshots>
+  <branding>
+    <color type="primary" scheme_preference="light">#f4e4cb</color>
+    <color type="primary" scheme_preference="dark">#293a56</color>
+  </branding>
   <keywords>
     <keyword>GIMP</keyword>
     <keyword>Photoshop</keyword>
