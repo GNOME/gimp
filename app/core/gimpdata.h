@@ -32,23 +32,12 @@ typedef enum
 } GimpDataError;
 
 
-#define GIMP_TYPE_DATA            (gimp_data_get_type ())
-#define GIMP_DATA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DATA, GimpData))
-#define GIMP_DATA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DATA, GimpDataClass))
-#define GIMP_IS_DATA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DATA))
-#define GIMP_IS_DATA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DATA))
-#define GIMP_DATA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DATA, GimpDataClass))
+#define GIMP_TYPE_DATA   (gimp_data_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpData,
+                          gimp_data,
+                          GIMP, DATA,
+                          GimpResource)
 
-
-typedef struct _GimpDataPrivate GimpDataPrivate;
-typedef struct _GimpDataClass   GimpDataClass;
-
-struct _GimpData
-{
-  GimpResource     parent_instance;
-
-  GimpDataPrivate *priv;
-};
 
 struct _GimpDataClass
 {
