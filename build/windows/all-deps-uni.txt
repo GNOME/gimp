@@ -31,7 +31,7 @@ ${MINGW_PACKAGE_PREFIX}-iso-codes|vcpkg:iso-codes
 ${MINGW_PACKAGE_PREFIX}-json-glib|vcpkg:json-glib
 ${MINGW_PACKAGE_PREFIX}-lcms2|vcpkg:lcms
 ${MINGW_PACKAGE_PREFIX}-libarchive|vcpkg:libarchive[bzip2]
-${MINGW_PACKAGE_PREFIX}-libheif|vcpkg:libheif[hevc,openjpeg]
+${MINGW_PACKAGE_PREFIX}-libheif|vcpkg:libheif[aom,hevc,openjpeg]
 ${MINGW_PACKAGE_PREFIX}-libilbm
 ${MINGW_PACKAGE_PREFIX}-libjpeg-turbo|vcpkg:libjpeg-turbo
 ${MINGW_PACKAGE_PREFIX}-libjxl|vcpkg:libjxl
