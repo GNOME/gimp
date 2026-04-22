@@ -326,7 +326,7 @@ file_gbr_drawable_to_brush (GimpDrawable        *drawable,
             }
 
           gegl_buffer_get (mask_buffer, rect, 1.0,
-                           babl_format ("Y u8"), m,
+                           babl_format ("Y' u8"), m,
                            GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
           g_object_unref (mask_buffer);
         }
