@@ -1257,6 +1257,10 @@ read_color_block (FILE      *f,
   guint32  color_palette_entries;
   guchar  *color_palette;
 
+  if (gimp_image_get_base_type (image) != GIMP_INDEXED)
+    /* Skipping, but not an error, can happen for grayscale PSP images */
+    return 0;
+
   block_start = ftell (f);
 
   if (psp_ver_major >= 4)
