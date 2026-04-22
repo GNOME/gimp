@@ -1558,7 +1558,7 @@ upscale_indexed_sub_8 (FILE    *f,
   guchar  *tmpbuf, *buf_start, *src;
 
   /* Scanlines for 1 and 4 bit only end on a 4-byte boundary. */
-  line_width = (((width * bpp + 7) / 8) + bpp_zero_based) / 4 * 4;
+  line_width = (((width * bpp + 7) / 8) + 3) / 4 * 4;
   buf_start = g_malloc0 (width * height);
   tmpbuf = buf_start;
 
@@ -1604,7 +1604,7 @@ read_channel_data (FILE        *f,
   if (ia->depth < 8)
     {
       /* Scanlines for 1 and 4 bit only end on a 4-byte boundary. */
-      line_width = (((width * ia->depth + 7) / 8) + ia->depth - 1) / 4 * 4;
+      line_width = ((width * ia->depth + 7) / 8 + 3) / 4 * 4;
     }
   else
     {
@@ -1627,7 +1627,7 @@ read_channel_data (FILE        *f,
                 {
                   guchar *p, *q;
 
-                  if (fread (buf, 1, width, f) != width)
+                  if (fread (buf, 1, line_width, f) != line_width)
                     {
                       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                    _("Error reading data. Most likely unexpected end of file."));
@@ -1637,7 +1637,7 @@ read_channel_data (FILE        *f,
                      scanlines are not stored on a 4-byte boundary. */
                   p = buf;
                   q = pixels[y] + offset;
-                  for (i = 0; i < width; i++)
+                  for (i = 0; i < line_width; i++)
                     {
                       *q = *p++;
                       q += bytespp;
@@ -2140,7 +2140,7 @@ read_layer_block (FILE      *f,
 
           if (ia->depth < 8)
             {
-              gint min_line_width = (((width * ia->depth + 7) / 8) + (ia->depth - 1)) / 4 * 4;
+              gint min_line_width = (((width * ia->depth + 7) / 8) + 3) / 4 * 4;
 
               /* For small widths, when depth is 1, or 4, the number of bytes
                * used can be larger than the width * bytespp. Adjust for that. */
