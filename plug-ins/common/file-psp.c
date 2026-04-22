@@ -1559,7 +1559,8 @@ upscale_indexed_sub_8 (FILE    *f,
 
   /* Scanlines for 1 and 4 bit only end on a 4-byte boundary. */
   line_width = (((width * bpp + 7) / 8) + 3) / 4 * 4;
-  buf_start = g_malloc0 (width * height);
+  buf_start = g_try_malloc0_n (width, height);
+  g_return_if_fail (buf_start != NULL);
   tmpbuf = buf_start;
 
   for (y = 0; y < height; tmpbuf += width, ++y)
@@ -1576,7 +1577,7 @@ upscale_indexed_sub_8 (FILE    *f,
         }
     }
 
-  memcpy (buf, buf_start, width * height);
+  memcpy (buf, buf_start, (gsize) width * height);
   g_free (buf_start);
 }
 
@@ -1590,14 +1591,14 @@ read_channel_data (FILE        *f,
                    guint32      compressed_len,
                    GError     **error)
 {
-  gint i, y, line_width;
-  gint width = gegl_buffer_get_width (buffer);
-  gint height = gegl_buffer_get_height (buffer);
-  gint npixels = width * height;
-  guchar *buf;
-  guchar *buf2 = NULL;  /* please the compiler */
-  guchar runcount, byte;
-  z_stream zstream;
+  gint      i, y, line_width;
+  gint      width   = gegl_buffer_get_width (buffer);
+  gint      height  = gegl_buffer_get_height (buffer);
+  gsize     npixels = (gsize) width * height;
+  guchar   *buf;
+  guchar   *buf2    = NULL;  /* please the compiler */
+  guchar    runcount, byte;
+  z_stream  zstream;
 
   g_assert (ia->bytes_per_sample <= 2);
 
@@ -1616,7 +1617,7 @@ read_channel_data (FILE        *f,
     case PSP_COMP_NONE:
       if (bytespp == 1)
         {
-          fread (pixels[0], height * line_width, 1, f);
+          fread (pixels[0], (gsize) height * line_width, 1, f);
         }
       else
         {
@@ -1680,7 +1681,7 @@ read_channel_data (FILE        *f,
         if (ia->depth >= 8)
           endq = q + npixels * bytespp;
         else
-          endq = q + line_width * height;
+          endq = q + (gsize) line_width * height;
 
         buf = g_malloc (128);
         while (q < endq)
@@ -2152,7 +2153,14 @@ read_layer_block (FILE      *f,
                 }
             }
 
-          pixel = g_malloc0 (height * line_width);
+          pixel = g_try_malloc0_n (height, line_width);
+          if (pixel == NULL)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading channel information chunk"));
+              return NULL;
+            }
+
           if (null_layer)
             {
               pixels = NULL;
@@ -2161,7 +2169,7 @@ read_layer_block (FILE      *f,
             {
               pixels = g_new (guchar *, height);
               for (i = 0; i < height; i++)
-                pixels[i] = pixel + line_width * i;
+                pixels[i] = pixel + (gsize) line_width * i;
             }
 
           buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
@@ -2540,7 +2548,7 @@ read_selection_block (FILE      *f,
       return -1;
     }
 
-  pixels = g_try_malloc0 (width * height);
+  pixels = g_try_malloc0 ((gsize) width * height);
   if (pixels == NULL)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -2554,7 +2562,7 @@ read_selection_block (FILE      *f,
   /* Per the specification, this will always be a 1 byte grayscale channel */
   if (ia->compression == PSP_COMP_NONE)
     {
-      fread (pixels, width * height, 1, f);
+      fread (pixels, (gsize) width * height, 1, f);
     }
   else
     {
