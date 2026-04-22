@@ -88,7 +88,8 @@ gimp_row_create_for_context (gpointer item,
   g_return_val_if_fail (GIMP_IS_VIEWABLE (item), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  return gimp_row_new (context, item, GIMP_VIEW_SIZE_MEDIUM, 0);
+  return gimp_row_new (gimp_row_type_from_viewable (item),
+                       context, item, GIMP_VIEW_SIZE_MEDIUM, 0);
 }
 
 GtkWidget *
@@ -106,5 +107,6 @@ gimp_row_create_for_container_view (gpointer item,
   view_size = gimp_container_view_get_view_size (container_view,
                                                  &view_border_width);
 
-  return gimp_row_new (context, item, view_size, view_border_width);
+  return gimp_row_new (gimp_row_type_from_viewable (item),
+                       context, item, view_size, view_border_width);
 }

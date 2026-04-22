@@ -52,7 +52,8 @@ struct _GimpRowClass
 };
 
 
-GtkWidget    * gimp_row_new             (GimpContext  *context,
+GtkWidget    * gimp_row_new             (GType         row_type,
+                                         GimpContext  *context,
                                          GimpViewable *viewable,
                                          gint          view_size,
                                          gint          view_border_width);
