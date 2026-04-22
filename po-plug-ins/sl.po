@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-20 17:05+0000\n"
-"PO-Revision-Date: 2026-04-21 00:58+0200\n"
+"POT-Creation-Date: 2026-04-20 23:01+0000\n"
+"PO-Revision-Date: 2026-04-22 07:54+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -610,19 +610,19 @@ msgstr "Rolete"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:424
-#: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-pcx.c:727
-#: plug-ins/common/file-pcx.c:735 plug-ins/common/file-pcx.c:743
-#: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
-#: plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296
-#: plug-ins/common/file-raw-data.c:823 plug-ins/common/file-raw-data.c:2007
-#: plug-ins/common/file-sunras.c:1061 plug-ins/common/file-tga.c:1103
-#: plug-ins/common/file-tim.c:403 plug-ins/common/file-tim.c:551
-#: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:475
-#: plug-ins/common/file-xbm.c:891 plug-ins/common/film.c:864
-#: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
-#: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
-#: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
-#: plug-ins/file-jpeg/jpeg-load.c:252
+#: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-macpaint.c:246
+#: plug-ins/common/file-pcx.c:727 plug-ins/common/file-pcx.c:735
+#: plug-ins/common/file-pcx.c:743 plug-ins/common/file-pix.c:431
+#: plug-ins/common/file-png.c:1082 plug-ins/common/file-pnm.c:848
+#: plug-ins/common/file-qoi.c:296 plug-ins/common/file-raw-data.c:823
+#: plug-ins/common/file-raw-data.c:2007 plug-ins/common/file-sunras.c:1061
+#: plug-ins/common/file-tga.c:1103 plug-ins/common/file-tim.c:403
+#: plug-ins/common/file-tim.c:551 plug-ins/common/file-wbmp.c:398
+#: plug-ins/common/file-wbmp.c:475 plug-ins/common/file-xbm.c:891
+#: plug-ins/common/film.c:864 plug-ins/common/smooth-palette.c:301
+#: plug-ins/common/tile.c:398 plug-ins/file-bmp/bmp-load.c:809
+#: plug-ins/file-exr/file-exr.c:301 plug-ins/file-faxg3/faxg3.c:583
+#: plug-ins/file-fits/fits.c:705 plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
 #: plug-ins/file-psd/psd-load.c:3228 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1587
@@ -1997,14 +1997,14 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
 #: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:481
 #: plug-ins/common/file-iff.c:277 plug-ins/common/file-lnk.c:200
-#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
-#: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
-#: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
-#: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3754
-#: plug-ins/common/file-psp.c:2792 plug-ins/common/file-psp.c:2842
-#: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
-#: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:799
-#: plug-ins/common/file-raw-data.c:1844
+#: plug-ins/common/file-macpaint.c:197 plug-ins/common/file-mng.c:1409
+#: plug-ins/common/file-paa.c:190 plug-ins/common/file-pcx.c:490
+#: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:800
+#: plug-ins/common/file-png.c:1370 plug-ins/common/file-ps.c:1158
+#: plug-ins/common/file-ps.c:3754 plug-ins/common/file-psp.c:2792
+#: plug-ins/common/file-psp.c:2842 plug-ins/common/file-pvr.c:256
+#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
+#: plug-ins/common/file-raw-data.c:799 plug-ins/common/file-raw-data.c:1844
 #: plug-ins/common/file-seattle-filmworks.c:232
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:756
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:277
@@ -2484,8 +2484,8 @@ msgid "Image dimensions too large: width %d x height %d"
 msgstr "Dimenzije slike so prevelike: širina %d x višina %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
-#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3607
-#: plug-ins/file-tiff/file-tiff-load.c:1944
+#: plug-ins/common/file-macpaint.c:259 plug-ins/common/web-browser.c:211
+#: plug-ins/file-psd/psd-load.c:3607 plug-ins/file-tiff/file-tiff-load.c:1944
 #: plug-ins/file-tiff/file-tiff-load.c:2038
 #: plug-ins/file-tiff/file-tiff-load.c:2226
 #, c-format
@@ -4335,6 +4335,14 @@ msgstr ""
 #, c-format
 msgid "Invalid file."
 msgstr "Neveljavna datoteka."
+
+#: plug-ins/common/file-macpaint.c:122
+msgid "MacPaint image"
+msgstr "Slika MacPaint"
+
+#: plug-ins/common/file-macpaint.c:125 plug-ins/common/file-macpaint.c:126
+msgid "Load MacPaint image format"
+msgstr "Naloži slike v zapisu MacPaint"
 
 #: plug-ins/common/file-mng.c:254
 msgid "MNG animation"
@@ -11603,7 +11611,7 @@ msgstr "Barvnih vnosov oz. kataloga barv iz »%s« ni mogoče prebrati"
 
 #: plug-ins/file-tiff/file-tiff-load.c:1469
 msgid ""
-"Indexed TIFFs with color maps larger than 256colors are not yet supported"
+"Indexed TIFFs with color maps larger than 256 colors are not yet supported"
 msgstr ""
 "Indeksirane datoteke TIFF z barvnimi katalogi, ki imajo več kot 256 barv, še "
 "niso podprte"
