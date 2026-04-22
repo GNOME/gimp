@@ -177,7 +177,7 @@ load_image (GFile        *file,
   GimpImage  *image      = NULL;
   GimpLayer  *layer;
   GeglBuffer *buffer;
-  gchar      *pixels     = NULL;
+  guchar     *pixels     = NULL;
   guchar     *data       = NULL;
   FILE       *fp;
   gchar       header[128];
