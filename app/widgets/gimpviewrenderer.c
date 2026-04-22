@@ -37,6 +37,7 @@
 #include "config/gimpcoreconfig.h"
 #include "config/gimpguiconfig.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
 
 #include "core/gimp.h"
@@ -1370,6 +1371,8 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
     }
   else
     {
+      GeglColor    *fg_color;
+      guint8        fg_rgb[3];
       const Babl   *fish;
       const guchar *src;
       guchar       *dest;
@@ -1377,6 +1380,9 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       gint          bytes;
       gint          rowstride;
       gint          i;
+
+      fg_color = gimp_get_style_color (widget, GTK_STYLE_PROPERTY_COLOR);
+      gegl_color_get_pixel (fg_color, babl_format ("R'G'B' u8"), fg_rgb);
 
       cairo_surface_flush (surface);
 
@@ -1393,11 +1399,28 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       dest += y * dest_stride + x * 4;
 
       fish = babl_fish (temp_buf_format,
-                        babl_format ("R~G~B~ u8"));
+                        babl_format ("R~G~B~A u8"));
+
+      /*  adjust ALPHA_x to point to the right component of "R~G~B~A u8"  */
+      switch (gimp_image_get_base_type (GIMP_IMAGE (renderer->viewable)))
+        {
+        case GIMP_RGB:
+          break;
+
+        case GIMP_GRAY:
+          if (channel == ALPHA_G)
+            channel = ALPHA;
+          break;
+
+        case GIMP_INDEXED:
+          if (channel == ALPHA_I)
+            channel = ALPHA;
+          break;
+        }
 
       for (i = 0; i < height; i++)
         {
-          guchar        line[width * 3];
+          guchar        line[width * 4];
           const guchar *s = line;
           guint32      *d = (guint32*) dest;
           gint          j;
@@ -1406,9 +1429,9 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
 
           for (j = 0; j < width; j++)
             {
-              *d = s[channel] | s[channel] << 8 | s[channel] << 16;
+              *d = fg_rgb[0] | fg_rgb[1] << 8 | fg_rgb[2] << 16 | s[channel] << 24;
 
-              s += 3;
+              s += 4;
               d += 1;
             }
 
