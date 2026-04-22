@@ -636,6 +636,8 @@ gimp-win:
         OPT_PREFIX: /opt/homebrew
         WARN_AS_ERROR_ON_CI: '-Dwerror=true'
         VARIANT: -homebrew
+        #See: https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/2233
+        ORKA_RUNNER: sequoia-7
   parallel:
     matrix:
       - ARCH: [arm64, x86_64]
