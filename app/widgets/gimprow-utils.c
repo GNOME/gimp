@@ -32,11 +32,10 @@
 
 #include "gimpcontainerview.h"
 #include "gimpdeviceinfo.h"
-#include "gimprow.h"
 #include "gimprow-utils.h"
 #include "gimprowdeviceinfo.h"
 #include "gimprowdrawablefilter.h"
-#include "gimprowimage.h"
+#include "gimprowimagesave.h"
 #include "gimprowseparator.h"
 #include "gimprowsettings.h"
 
@@ -108,5 +107,24 @@ gimp_row_create_for_container_view (gpointer item,
                                                  &view_border_width);
 
   return gimp_row_new (gimp_row_type_from_viewable (item),
+                       context, item, view_size, view_border_width);
+}
+
+GtkWidget *
+gimp_row_create_for_save_view (gpointer item,
+                               gpointer container_view)
+{
+  GimpContext *context;
+  gint         view_size;
+  gint         view_border_width;
+
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (item), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (container_view), NULL);
+
+  context   = gimp_container_view_get_context (container_view);
+  view_size = gimp_container_view_get_view_size (container_view,
+                                                 &view_border_width);
+
+  return gimp_row_new (GIMP_TYPE_ROW_IMAGE_SAVE,
                        context, item, view_size, view_border_width);
 }

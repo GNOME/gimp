@@ -1,8 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimprow-utils.h
- * Copyright (C) 2025 Michael Natterer <mitch@gimp.org>
+ * gimprowimagesave.h
+ * Copyright (C) 2026 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,15 +20,17 @@
 
 #pragma once
 
+#include "gimprowimage.h"
 
-GType       gimp_row_type_from_viewable        (GimpViewable *viewable);
+
+#define GIMP_TYPE_ROW_IMAGE_SAVE (gimp_row_image_save_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpRowImageSave,
+                          gimp_row_image_save,
+                          GIMP, ROW_IMAGE_SAVE,
+                          GimpRowImage)
 
 
-/*  GtkListBoxCreateWidgetFunc  */
-
-GtkWidget * gimp_row_create_for_context        (gpointer      item,
-                                                gpointer      context);
-GtkWidget * gimp_row_create_for_container_view (gpointer      item,
-                                                gpointer      container_view);
-GtkWidget * gimp_row_create_for_save_view      (gpointer      item,
-                                                gpointer      container_view);
+struct _GimpRowImageSaveClass
+{
+  GimpRowImageClass  parent_class;
+};

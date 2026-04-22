@@ -29,12 +29,15 @@
 
 #include "core/gimpimage.h"
 
+#include "gimpdnd.h"
 #include "gimprowimage.h"
 
 
-static void   gimp_row_image_constructed   (GObject *object);
+static void   gimp_row_image_constructed   (GObject      *object);
 
-static void   gimp_row_image_set_view_size (GimpRow *row);
+static void   gimp_row_image_set_viewable  (GimpRow      *row,
+                                            GimpViewable *viewable);
+static void   gimp_row_image_set_view_size (GimpRow      *row);
 
 
 G_DEFINE_TYPE (GimpRowImage,
@@ -52,6 +55,7 @@ gimp_row_image_class_init (GimpRowImageClass *klass)
 
   object_class->constructed = gimp_row_image_constructed;
 
+  row_class->set_viewable   = gimp_row_image_set_viewable;
   row_class->set_view_size  = gimp_row_image_set_view_size;
 }
 
@@ -74,6 +78,26 @@ gimp_row_image_constructed (GObject *object)
       gint view_size = gimp_row_get_view_size (GIMP_ROW (object), NULL);
 
       gtk_widget_set_size_request (view, view_size, view_size);
+    }
+}
+
+static void
+gimp_row_image_set_viewable (GimpRow      *row,
+                             GimpViewable *viewable)
+{
+  if (gimp_row_get_viewable (row))
+    {
+      gimp_dnd_xds_source_remove (GTK_WIDGET (row));
+    }
+
+  GIMP_ROW_CLASS (parent_class)->set_viewable (row, viewable);
+
+  if (viewable)
+    {
+      gimp_dnd_xds_source_add (GTK_WIDGET (row),
+                               (GimpDndDragViewableFunc)
+                               gimp_dnd_get_drag_viewable,
+                               NULL);
     }
 }
 

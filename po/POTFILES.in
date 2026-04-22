@@ -629,6 +629,7 @@ app/widgets/gimppluginview.c
 app/widgets/gimpprogressdialog.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimprow.c
+app/widgets/gimprowimagesave.c
 app/widgets/gimpsamplepointeditor.c
 app/widgets/gimpsavedialog.c
 app/widgets/gimpsearchpopup.c

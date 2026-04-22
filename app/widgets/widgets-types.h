@@ -93,6 +93,7 @@ typedef struct _GimpContainerTreeStore       GimpContainerTreeStore;
 typedef struct _GimpContainerTreeView        GimpContainerTreeView;
 typedef struct _GimpContainerView            GimpContainerView; /* dummy typedef */
 typedef struct _GimpDrawableTreeView         GimpDrawableTreeView;
+typedef struct _GimpImageSaveView            GimpImageSaveView;
 typedef struct _GimpItemTreeView             GimpItemTreeView;
 typedef struct _GimpLayerTreeView            GimpLayerTreeView;
 typedef struct _GimpPathTreeView             GimpPathTreeView;
