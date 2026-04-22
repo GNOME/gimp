@@ -32,7 +32,9 @@ G_DECLARE_DERIVABLE_TYPE (GimpContainerListView,
 
 struct _GimpContainerListViewClass
 {
-  GimpContainerBoxClass  parent_class;
+  GimpContainerBoxClass       parent_class;
+
+  GtkListBoxCreateWidgetFunc  create_row_func;
 };
 
 

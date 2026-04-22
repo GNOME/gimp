@@ -125,6 +125,8 @@ gimp_container_list_view_class_init (GimpContainerListViewClass *klass)
   object_class->finalize      = gimp_container_list_view_finalize;
 
   widget_class->popup_menu    = gimp_container_list_view_popup_menu;
+
+  klass->create_row_func      = gimp_row_create_for_container_view;
 }
 
 static void
@@ -315,6 +317,9 @@ gimp_container_list_view_set_container (GimpContainerView *view,
 
   if (container)
     {
+      GimpContainerListViewClass *view_class =
+        GIMP_CONTAINER_LIST_VIEW_GET_CLASS (view);
+
       g_signal_connect (container, "reorder",
                         G_CALLBACK (gimp_container_list_view_reorder),
                         view);
@@ -323,7 +328,7 @@ gimp_container_list_view_set_container (GimpContainerView *view,
                         view);
 
       gtk_list_box_bind_model (priv->view, G_LIST_MODEL (container),
-                               gimp_row_create_for_container_view,
+                               view_class->create_row_func,
                                view, NULL);
 
       g_signal_connect (container, "items-changed",
