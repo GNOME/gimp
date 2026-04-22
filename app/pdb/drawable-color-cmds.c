@@ -652,7 +652,7 @@ drawable_levels_invoker (GimpProcedure         *procedure,
           g_object_unref (config);
         }
       else
-        success = TRUE;
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,

@@ -754,7 +754,7 @@ HELP
       g_object_unref (config);
     }
   else
-    success = TRUE;
+    success = FALSE;
 }
 CODE
     );
