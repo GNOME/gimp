@@ -853,7 +853,7 @@ welcome_dialog_create_contribute_page (Gimp       *gimp,
 
   vbox = prefs_frame_new (_("Report Bugs"), GTK_CONTAINER (main_vbox), FALSE);
 
-  label = gtk_label_new (_("As any application, GIMP is not bug-free, so"
+  label = gtk_label_new (_("As any application, GIMP is not bug-free, so "
                            "reporting bugs that you encounter is very "
                            "important to the development."));
   gtk_label_set_max_width_chars (GTK_LABEL (label), 30);
