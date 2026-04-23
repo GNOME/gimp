@@ -57,7 +57,7 @@ struct _GimpContainerPopup
 
 struct _GimpContainerPopupClass
 {
-  GimpPopupClass  parent_instance;
+  GimpPopupClass  parent_class;
 };
 
 

@@ -23,21 +23,12 @@
 #include "gimpcanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_CURSOR            (gimp_canvas_cursor_get_type ())
-#define GIMP_CANVAS_CURSOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_CURSOR, GimpCanvasCursor))
-#define GIMP_CANVAS_CURSOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_CURSOR, GimpCanvasCursorClass))
-#define GIMP_IS_CANVAS_CURSOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_CURSOR))
-#define GIMP_IS_CANVAS_CURSOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_CURSOR))
-#define GIMP_CANVAS_CURSOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_CURSOR, GimpCanvasCursorClass))
+#define GIMP_TYPE_CANVAS_CURSOR (gimp_canvas_cursor_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCanvasCursor,
+                          gimp_canvas_cursor,
+                          GIMP, CANVAS_CURSOR,
+                          GimpCanvasItem)
 
-
-typedef struct _GimpCanvasCursor      GimpCanvasCursor;
-typedef struct _GimpCanvasCursorClass GimpCanvasCursorClass;
-
-struct _GimpCanvasCursor
-{
-  GimpCanvasItem  parent_instance;
-};
 
 struct _GimpCanvasCursorClass
 {
@@ -45,10 +36,8 @@ struct _GimpCanvasCursorClass
 };
 
 
-GType            gimp_canvas_cursor_get_type (void) G_GNUC_CONST;
+GimpCanvasItem * gimp_canvas_cursor_new (GimpDisplayShell *shell);
 
-GimpCanvasItem * gimp_canvas_cursor_new      (GimpDisplayShell *shell);
-
-void             gimp_canvas_cursor_set      (GimpCanvasItem   *cursor,
-                                              gdouble           x,
-                                              gdouble           y);
+void             gimp_canvas_cursor_set (GimpCanvasItem   *cursor,
+                                         gdouble           x,
+                                         gdouble           y);

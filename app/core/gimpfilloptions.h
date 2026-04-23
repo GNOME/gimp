@@ -23,28 +23,18 @@
 #include "gimpcontext.h"
 
 
-#define GIMP_TYPE_FILL_OPTIONS            (gimp_fill_options_get_type ())
-#define GIMP_FILL_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILL_OPTIONS, GimpFillOptions))
-#define GIMP_FILL_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILL_OPTIONS, GimpFillOptionsClass))
-#define GIMP_IS_FILL_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FILL_OPTIONS))
-#define GIMP_IS_FILL_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILL_OPTIONS))
-#define GIMP_FILL_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILL_OPTIONS, GimpFillOptionsClass))
+#define GIMP_TYPE_FILL_OPTIONS (gimp_fill_options_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpFillOptions,
+                          gimp_fill_options,
+                          GIMP, FILL_OPTIONS,
+                          GimpContext)
 
-
-typedef struct _GimpFillOptionsClass GimpFillOptionsClass;
-
-struct _GimpFillOptions
-{
-  GimpContext  parent_instance;
-};
 
 struct _GimpFillOptionsClass
 {
   GimpContextClass  parent_class;
 };
 
-
-GType             gimp_fill_options_get_type         (void) G_GNUC_CONST;
 
 GimpFillOptions * gimp_fill_options_new              (Gimp                *gimp,
                                                       GimpContext         *context,

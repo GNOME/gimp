@@ -23,21 +23,12 @@
 #include "gimpcanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_GUIDE            (gimp_canvas_guide_get_type ())
-#define GIMP_CANVAS_GUIDE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_GUIDE, GimpCanvasGuide))
-#define GIMP_CANVAS_GUIDE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_GUIDE, GimpCanvasGuideClass))
-#define GIMP_IS_CANVAS_GUIDE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_GUIDE))
-#define GIMP_IS_CANVAS_GUIDE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_GUIDE))
-#define GIMP_CANVAS_GUIDE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_GUIDE, GimpCanvasGuideClass))
+#define GIMP_TYPE_CANVAS_GUIDE (gimp_canvas_guide_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCanvasGuide,
+                          gimp_canvas_guide,
+                          GIMP, CANVAS_GUIDE,
+                          GimpCanvasItem)
 
-
-typedef struct _GimpCanvasGuide      GimpCanvasGuide;
-typedef struct _GimpCanvasGuideClass GimpCanvasGuideClass;
-
-struct _GimpCanvasGuide
-{
-  GimpCanvasItem  parent_instance;
-};
 
 struct _GimpCanvasGuideClass
 {
@@ -45,13 +36,11 @@ struct _GimpCanvasGuideClass
 };
 
 
-GType            gimp_canvas_guide_get_type (void) G_GNUC_CONST;
+GimpCanvasItem * gimp_canvas_guide_new (GimpDisplayShell    *shell,
+                                        GimpOrientationType  orientation,
+                                        gint                 position,
+                                        GimpGuideStyle       style);
 
-GimpCanvasItem * gimp_canvas_guide_new      (GimpDisplayShell    *shell,
-                                             GimpOrientationType  orientation,
-                                             gint                 position,
-                                             GimpGuideStyle       style);
-
-void             gimp_canvas_guide_set      (GimpCanvasItem      *guide,
-                                             GimpOrientationType  orientation,
-                                             gint                 position);
+void             gimp_canvas_guide_set (GimpCanvasItem      *guide,
+                                        GimpOrientationType  orientation,
+                                        gint                 position);

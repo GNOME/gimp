@@ -43,28 +43,18 @@
 #endif
 
 
-#define GIMP_TYPE_TEMPLATE            (gimp_template_get_type ())
-#define GIMP_TEMPLATE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEMPLATE, GimpTemplate))
-#define GIMP_TEMPLATE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEMPLATE, GimpTemplateClass))
-#define GIMP_IS_TEMPLATE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TEMPLATE))
-#define GIMP_IS_TEMPLATE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEMPLATE))
-#define GIMP_TEMPLATE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TEMPLATE, GimpTemplateClass))
+#define GIMP_TYPE_TEMPLATE (gimp_template_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpTemplate,
+                          gimp_template,
+                          GIMP, TEMPLATE,
+                          GimpViewable)
 
-
-typedef struct _GimpTemplateClass GimpTemplateClass;
-
-struct _GimpTemplate
-{
-  GimpViewable  parent_instance;
-};
 
 struct _GimpTemplateClass
 {
-  GimpViewableClass  parent_instance;
+  GimpViewableClass  parent_class;
 };
 
-
-GType               gimp_template_get_type            (void) G_GNUC_CONST;
 
 GimpTemplate      * gimp_template_new                 (const gchar  *name);
 

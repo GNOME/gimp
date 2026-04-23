@@ -79,3 +79,5 @@ void            gimp_pdb_dialog_run_callback    (GimpPdbDialog     **dialog,
 
 GimpPdbDialog * gimp_pdb_dialog_get_by_callback (GimpPdbDialogClass *klass,
                                                  const gchar        *callback_name);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpPdbDialog, g_object_unref);

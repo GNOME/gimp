@@ -23,25 +23,14 @@
 #include "gimpviewrenderer.h"
 
 
-#define GIMP_TYPE_VIEW_RENDERER_FONT            (gimp_view_renderer_font_get_type ())
-#define GIMP_VIEW_RENDERER_FONT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_FONT, GimpViewRendererFont))
-#define GIMP_VIEW_RENDERER_FONT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEW_RENDERER_FONT, GimpViewRendererFontClass))
-#define GIMP_IS_VIEW_RENDERER_FONT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_VIEW_RENDERER_FONT))
-#define GIMP_IS_VIEW_RENDERER_FONT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEW_RENDERER_FONT))
-#define GIMP_VIEW_RENDERER_FONT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEW_RENDERER_FONT, GimpViewRendererFontClass))
+#define GIMP_TYPE_VIEW_RENDERER_FONT (gimp_view_renderer_font_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpViewRendererFont,
+                          gimp_view_renderer_font,
+                          GIMP, VIEW_RENDERER_FONT,
+                          GimpViewRenderer)
 
-
-typedef struct _GimpViewRendererFontClass  GimpViewRendererFontClass;
-
-struct _GimpViewRendererFont
-{
-  GimpViewRenderer  parent_instance;
-};
 
 struct _GimpViewRendererFontClass
 {
   GimpViewRendererClass  parent_class;
 };
-
-
-GType   gimp_view_renderer_font_get_type (void) G_GNUC_CONST;

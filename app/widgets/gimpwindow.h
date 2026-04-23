@@ -52,3 +52,5 @@ GType       gimp_window_get_type                 (void) G_GNUC_CONST;
 void        gimp_window_set_primary_focus_widget (GimpWindow *window,
                                                   GtkWidget  *primary_focus);
 GtkWidget * gimp_window_get_primary_focus_widget (GimpWindow *window);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpWindow, g_object_unref);

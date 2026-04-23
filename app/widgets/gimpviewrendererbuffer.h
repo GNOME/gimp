@@ -23,25 +23,14 @@
 #include "gimpviewrenderer.h"
 
 
-#define GIMP_TYPE_VIEW_RENDERER_BUFFER            (gimp_view_renderer_buffer_get_type ())
-#define GIMP_VIEW_RENDERER_BUFFER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_BUFFER, GimpViewRendererBuffer))
-#define GIMP_VIEW_RENDERER_BUFFER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEW_RENDERER_BUFFER, GimpViewRendererBufferClass))
-#define GIMP_IS_VIEW_RENDERER_BUFFER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_VIEW_RENDERER_BUFFER))
-#define GIMP_IS_VIEW_RENDERER_BUFFER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEW_RENDERER_BUFFER))
-#define GIMP_VIEW_RENDERER_BUFFER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEW_RENDERER_BUFFER, GimpViewRendererBufferClass))
+#define GIMP_TYPE_VIEW_RENDERER_BUFFER (gimp_view_renderer_buffer_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpViewRendererBuffer,
+                          gimp_view_renderer_buffer,
+                          GIMP, VIEW_RENDERER_BUFFER,
+                          GimpViewRenderer)
 
-
-typedef struct _GimpViewRendererBufferClass  GimpViewRendererBufferClass;
-
-struct _GimpViewRendererBuffer
-{
-  GimpViewRenderer  parent_instance;
-};
 
 struct _GimpViewRendererBufferClass
 {
   GimpViewRendererClass  parent_class;
 };
-
-
-GType   gimp_view_renderer_buffer_get_type (void) G_GNUC_CONST;

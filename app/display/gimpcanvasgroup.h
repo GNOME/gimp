@@ -61,3 +61,5 @@ void             gimp_canvas_group_set_group_stroking (GimpCanvasGroup  *group,
                                                        gboolean          group_stroking);
 void             gimp_canvas_group_set_group_filling  (GimpCanvasGroup  *group,
                                                        gboolean          group_filling);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpCanvasGroup, g_object_unref);

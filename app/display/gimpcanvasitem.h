@@ -140,3 +140,5 @@ void             _gimp_canvas_item_stroke          (GimpCanvasItem   *item,
                                                     cairo_t          *cr);
 void             _gimp_canvas_item_fill            (GimpCanvasItem   *item,
                                                     cairo_t          *cr);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpCanvasItem, g_object_unref);

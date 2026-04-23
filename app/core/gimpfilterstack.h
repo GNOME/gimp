@@ -49,3 +49,5 @@ GType           gimp_filter_stack_get_type  (void) G_GNUC_CONST;
 GimpContainer * gimp_filter_stack_new       (GType            filter_type);
 
 GeglNode *      gimp_filter_stack_get_graph (GimpFilterStack *stack);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpFilterStack, g_object_unref);

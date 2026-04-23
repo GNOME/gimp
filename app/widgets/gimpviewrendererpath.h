@@ -24,25 +24,14 @@
 #include "gimpviewrenderer.h"
 
 
-#define GIMP_TYPE_VIEW_RENDERER_PATH            (gimp_view_renderer_path_get_type ())
-#define GIMP_VIEW_RENDERER_PATH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_PATH, GimpViewRendererPath))
-#define GIMP_VIEW_RENDERER_PATH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEW_RENDERER_PATH, GimpViewRendererPathClass))
-#define GIMP_IS_VIEW_RENDERER_PATH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_VIEW_RENDERER_PATH))
-#define GIMP_IS_VIEW_RENDERER_PATH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEW_RENDERER_PATH))
-#define GIMP_VIEW_RENDERER_PATH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEW_RENDERER_PATH, GimpViewRendererPathClass))
+#define GIMP_TYPE_VIEW_RENDERER_PATH (gimp_view_renderer_path_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpViewRendererPath,
+                          gimp_view_renderer_path,
+                          GIMP, VIEW_RENDERER_PATH,
+                          GimpViewRenderer)
 
-
-typedef struct _GimpViewRendererPathClass  GimpViewRendererPathClass;
-
-struct _GimpViewRendererPath
-{
-  GimpViewRenderer  parent_instance;
-};
 
 struct _GimpViewRendererPathClass
 {
   GimpViewRendererClass  parent_class;
 };
-
-
-GType   gimp_view_renderer_path_get_type (void) G_GNUC_CONST;

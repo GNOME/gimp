@@ -48,3 +48,5 @@ struct _GimpViewRendererDrawableClass
 
 
 GType   gimp_view_renderer_drawable_get_type (void) G_GNUC_CONST;
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpViewRendererDrawable, g_object_unref);

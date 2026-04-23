@@ -23,19 +23,12 @@
 #include "gimpitemstack.h"
 
 
-#define GIMP_TYPE_DRAWABLE_STACK            (gimp_drawable_stack_get_type ())
-#define GIMP_DRAWABLE_STACK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAWABLE_STACK, GimpDrawableStack))
-#define GIMP_DRAWABLE_STACK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE_STACK, GimpDrawableStackClass))
-#define GIMP_IS_DRAWABLE_STACK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAWABLE_STACK))
-#define GIMP_IS_DRAWABLE_STACK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE_STACK))
+#define GIMP_TYPE_DRAWABLE_STACK (gimp_drawable_stack_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpDrawableStack,
+                          gimp_drawable_stack,
+                          GIMP, DRAWABLE_STACK,
+                          GimpItemStack)
 
-
-typedef struct _GimpDrawableStackClass GimpDrawableStackClass;
-
-struct _GimpDrawableStack
-{
-  GimpItemStack  parent_instance;
-};
 
 struct _GimpDrawableStackClass
 {
@@ -49,14 +42,13 @@ struct _GimpDrawableStackClass
 };
 
 
-GType           gimp_drawable_stack_get_type  (void) G_GNUC_CONST;
-GimpContainer * gimp_drawable_stack_new       (GType              drawable_type);
+GimpContainer * gimp_drawable_stack_new    (GType              drawable_type);
 
 
 /*  protected  */
 
-void            gimp_drawable_stack_update    (GimpDrawableStack *stack,
-                                               gint               x,
-                                               gint               y,
-                                               gint               width,
-                                               gint               height);
+void            gimp_drawable_stack_update (GimpDrawableStack *stack,
+                                            gint               x,
+                                            gint               y,
+                                            gint               width,
+                                            gint               height);

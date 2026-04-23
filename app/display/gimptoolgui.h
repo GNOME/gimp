@@ -23,20 +23,12 @@
 #include "core/gimpobject.h"
 
 
-#define GIMP_TYPE_TOOL_GUI            (gimp_tool_gui_get_type ())
-#define GIMP_TOOL_GUI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_GUI, GimpToolGui))
-#define GIMP_TOOL_GUI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_GUI, GimpToolGuiClass))
-#define GIMP_IS_TOOL_GUI(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_GUI))
-#define GIMP_IS_TOOL_GUI_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_GUI))
-#define GIMP_TOOL_GUI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_GUI, GimpToolGuiClass))
+#define GIMP_TYPE_TOOL_GUI (gimp_tool_gui_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpToolGui,
+                          gimp_tool_gui,
+                          GIMP, TOOL_GUI,
+                          GimpObject)
 
-
-typedef struct _GimpToolGuiClass GimpToolGuiClass;
-
-struct _GimpToolGui
-{
-  GimpObject  parent_instance;
-};
 
 struct _GimpToolGuiClass
 {
@@ -47,8 +39,6 @@ struct _GimpToolGuiClass
 
 };
 
-
-GType         gimp_tool_gui_get_type               (void) G_GNUC_CONST;
 
 GimpToolGui * gimp_tool_gui_new                    (GimpToolInfo     *tool_info,
                                                     const gchar      *title,

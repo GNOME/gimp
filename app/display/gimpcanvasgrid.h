@@ -23,21 +23,12 @@
 #include "gimpcanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_GRID            (gimp_canvas_grid_get_type ())
-#define GIMP_CANVAS_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_GRID, GimpCanvasGrid))
-#define GIMP_CANVAS_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_GRID, GimpCanvasGridClass))
-#define GIMP_IS_CANVAS_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_GRID))
-#define GIMP_IS_CANVAS_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_GRID))
-#define GIMP_CANVAS_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_GRID, GimpCanvasGridClass))
+#define GIMP_TYPE_CANVAS_GRID (gimp_canvas_grid_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCanvasGrid,
+                          gimp_canvas_grid,
+                          GIMP, CANVAS_GRID,
+                          GimpCanvasItem)
 
-
-typedef struct _GimpCanvasGrid      GimpCanvasGrid;
-typedef struct _GimpCanvasGridClass GimpCanvasGridClass;
-
-struct _GimpCanvasGrid
-{
-  GimpCanvasItem  parent_instance;
-};
 
 struct _GimpCanvasGridClass
 {
@@ -45,7 +36,5 @@ struct _GimpCanvasGridClass
 };
 
 
-GType            gimp_canvas_grid_get_type (void) G_GNUC_CONST;
-
-GimpCanvasItem * gimp_canvas_grid_new      (GimpDisplayShell *shell,
-                                            GimpGrid         *grid);
+GimpCanvasItem * gimp_canvas_grid_new (GimpDisplayShell *shell,
+                                       GimpGrid         *grid);

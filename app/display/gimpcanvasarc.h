@@ -23,21 +23,12 @@
 #include "gimpcanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_ARC            (gimp_canvas_arc_get_type ())
-#define GIMP_CANVAS_ARC(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_ARC, GimpCanvasArc))
-#define GIMP_CANVAS_ARC_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_ARC, GimpCanvasArcClass))
-#define GIMP_IS_CANVAS_ARC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_ARC))
-#define GIMP_IS_CANVAS_ARC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_ARC))
-#define GIMP_CANVAS_ARC_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_ARC, GimpCanvasArcClass))
+#define GIMP_TYPE_CANVAS_ARC (gimp_canvas_arc_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCanvasArc,
+                          gimp_canvas_arc,
+                          GIMP, CANVAS_ARC,
+                          GimpCanvasItem)
 
-
-typedef struct _GimpCanvasArc      GimpCanvasArc;
-typedef struct _GimpCanvasArcClass GimpCanvasArcClass;
-
-struct _GimpCanvasArc
-{
-  GimpCanvasItem  parent_instance;
-};
 
 struct _GimpCanvasArcClass
 {
@@ -45,21 +36,19 @@ struct _GimpCanvasArcClass
 };
 
 
-GType            gimp_canvas_arc_get_type (void) G_GNUC_CONST;
+GimpCanvasItem * gimp_canvas_arc_new (GimpDisplayShell *shell,
+                                      gdouble          center_x,
+                                      gdouble          center_y,
+                                      gdouble          radius_x,
+                                      gdouble          radius_y,
+                                      gdouble          start_angle,
+                                      gdouble          slice_angle,
+                                      gboolean         filled);
 
-GimpCanvasItem * gimp_canvas_arc_new      (GimpDisplayShell *shell,
-                                           gdouble          center_x,
-                                           gdouble          center_y,
-                                           gdouble          radius_x,
-                                           gdouble          radius_y,
-                                           gdouble          start_angle,
-                                           gdouble          slice_angle,
-                                           gboolean         filled);
-
-void             gimp_canvas_arc_set      (GimpCanvasItem  *arc,
-                                           gdouble          center_x,
-                                           gdouble          center_y,
-                                           gdouble          radius_x,
-                                           gdouble          radius_y,
-                                           gdouble          start_angle,
-                                           gdouble          slice_angle);
+void             gimp_canvas_arc_set (GimpCanvasItem  *arc,
+                                      gdouble          center_x,
+                                      gdouble          center_y,
+                                      gdouble          radius_x,
+                                      gdouble          radius_y,
+                                      gdouble          start_angle,
+                                      gdouble          slice_angle);

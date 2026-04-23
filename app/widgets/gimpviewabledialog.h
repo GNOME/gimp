@@ -67,3 +67,5 @@ GtkWidget * gimp_viewable_dialog_new      (GList              *viewables,
 void    gimp_viewable_dialog_set_viewables (GimpViewableDialog *dialog,
                                             GList              *viewables,
                                             GimpContext        *context);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpViewableDialog, g_object_unref);

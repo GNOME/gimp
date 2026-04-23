@@ -23,27 +23,17 @@
 #include "core/gimpobject.h"
 
 
-#define GIMP_TYPE_SINGLE_WINDOW_STRATEGY            (gimp_single_window_strategy_get_type ())
-#define GIMP_SINGLE_WINDOW_STRATEGY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SINGLE_WINDOW_STRATEGY, GimpSingleWindowStrategy))
-#define GIMP_SINGLE_WINDOW_STRATEGY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SINGLE_WINDOW_STRATEGY, GimpSingleWindowStrategyClass))
-#define GIMP_IS_SINGLE_WINDOW_STRATEGY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SINGLE_WINDOW_STRATEGY))
-#define GIMP_IS_SINGLE_WINDOW_STRATEGY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SINGLE_WINDOW_STRATEGY))
-#define GIMP_SINGLE_WINDOW_STRATEGY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SINGLE_WINDOW_STRATEGY, GimpSingleWindowStrategyClass))
+#define GIMP_TYPE_SINGLE_WINDOW_STRATEGY (gimp_single_window_strategy_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpSingleWindowStrategy,
+                          gimp_single_window_strategy,
+                          GIMP, SINGLE_WINDOW_STRATEGY,
+                          GimpObject)
 
-
-typedef struct _GimpSingleWindowStrategyClass GimpSingleWindowStrategyClass;
-
-struct _GimpSingleWindowStrategy
-{
-  GimpObject  parent_instance;
-};
 
 struct _GimpSingleWindowStrategyClass
 {
   GimpObjectClass  parent_class;
 };
 
-
-GType        gimp_single_window_strategy_get_type      (void) G_GNUC_CONST;
 
 GimpObject * gimp_single_window_strategy_get_singleton (void);

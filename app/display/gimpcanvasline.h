@@ -23,21 +23,12 @@
 #include "gimpcanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_LINE            (gimp_canvas_line_get_type ())
-#define GIMP_CANVAS_LINE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_LINE, GimpCanvasLine))
-#define GIMP_CANVAS_LINE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_LINE, GimpCanvasLineClass))
-#define GIMP_IS_CANVAS_LINE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_LINE))
-#define GIMP_IS_CANVAS_LINE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_LINE))
-#define GIMP_CANVAS_LINE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_LINE, GimpCanvasLineClass))
+#define GIMP_TYPE_CANVAS_LINE (gimp_canvas_line_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCanvasLine,
+                          gimp_canvas_line,
+                          GIMP, CANVAS_LINE,
+                          GimpCanvasItem)
 
-
-typedef struct _GimpCanvasLine      GimpCanvasLine;
-typedef struct _GimpCanvasLineClass GimpCanvasLineClass;
-
-struct _GimpCanvasLine
-{
-  GimpCanvasItem  parent_instance;
-};
 
 struct _GimpCanvasLineClass
 {
@@ -45,16 +36,14 @@ struct _GimpCanvasLineClass
 };
 
 
-GType            gimp_canvas_line_get_type (void) G_GNUC_CONST;
+GimpCanvasItem * gimp_canvas_line_new (GimpDisplayShell *shell,
+                                       gdouble           x1,
+                                       gdouble           y1,
+                                       gdouble           x2,
+                                       gdouble           y2);
 
-GimpCanvasItem * gimp_canvas_line_new      (GimpDisplayShell *shell,
-                                            gdouble           x1,
-                                            gdouble           y1,
-                                            gdouble           x2,
-                                            gdouble           y2);
-
-void             gimp_canvas_line_set      (GimpCanvasItem   *line,
-                                            gdouble           x1,
-                                            gdouble           y1,
-                                            gdouble           x2,
-                                            gdouble           y2);
+void             gimp_canvas_line_set (GimpCanvasItem   *line,
+                                       gdouble           x1,
+                                       gdouble           y1,
+                                       gdouble           x2,
+                                       gdouble           y2);

@@ -23,21 +23,12 @@
 #include "gimpcanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_TEXT            (gimp_canvas_text_get_type ())
-#define GIMP_CANVAS_TEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_TEXT, GimpCanvasText))
-#define GIMP_CANVAS_TEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_TEXT, GimpCanvasTextClass))
-#define GIMP_IS_CANVAS_TEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((klass), GIMP_TYPE_CANVAS_TEXT))
-#define GIMP_IS_CANVAS_TEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_TEXT))
-#define GIMP_CANVAS_TEXT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_TEXT, GimpCanvasTextClass))
+#define GIMP_TYPE_CANVAS_TEXT (gimp_canvas_text_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCanvasText,
+                          gimp_canvas_text,
+                          GIMP, CANVAS_TEXT,
+                          GimpCanvasItem)
 
-
-typedef struct _GimpCanvasText GimpCanvasText;
-typedef struct _GimpCanvasTextClass GimpCanvasTextClass;
-
-struct _GimpCanvasText
-{
-  GimpCanvasItem  parent_instance;
-};
 
 struct _GimpCanvasTextClass
 {
@@ -45,10 +36,8 @@ struct _GimpCanvasTextClass
 };
 
 
-GType            gimp_canvas_text_get_type (void) G_GNUC_CONST;
-
-GimpCanvasItem * gimp_canvas_text_new      (GimpDisplayShell *shell,
-                                            gdouble           x,
-                                            gdouble           y,
-                                            gdouble           font_size,
-                                            gchar            *text);
+GimpCanvasItem * gimp_canvas_text_new (GimpDisplayShell *shell,
+                                       gdouble           x,
+                                       gdouble           y,
+                                       gdouble           font_size,
+                                       gchar            *text);

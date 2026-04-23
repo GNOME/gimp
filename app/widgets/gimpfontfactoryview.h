@@ -23,20 +23,12 @@
 #include "gimpdatafactoryview.h"
 
 
-#define GIMP_TYPE_FONT_FACTORY_VIEW            (gimp_font_factory_view_get_type ())
-#define GIMP_FONT_FACTORY_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FONT_FACTORY_VIEW, GimpFontFactoryView))
-#define GIMP_FONT_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FONT_FACTORY_VIEW, GimpFontFactoryViewClass))
-#define GIMP_IS_FONT_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FONT_FACTORY_VIEW))
-#define GIMP_IS_FONT_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FONT_FACTORY_VIEW))
-#define GIMP_FONT_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FONT_FACTORY_VIEW, GimpFontFactoryViewClass))
+#define GIMP_TYPE_FONT_FACTORY_VIEW (gimp_font_factory_view_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpFontFactoryView,
+                          gimp_font_factory_view,
+                          GIMP, FONT_FACTORY_VIEW,
+                          GimpDataFactoryView)
 
-
-typedef struct _GimpFontFactoryViewClass GimpFontFactoryViewClass;
-
-struct _GimpFontFactoryView
-{
-  GimpDataFactoryView  parent_instance;
-};
 
 struct _GimpFontFactoryViewClass
 {
@@ -44,11 +36,9 @@ struct _GimpFontFactoryViewClass
 };
 
 
-GType       gimp_font_factory_view_get_type (void) G_GNUC_CONST;
-
-GtkWidget * gimp_font_factory_view_new      (GimpViewType     view_type,
-                                             GimpDataFactory *factory,
-                                             GimpContext     *context,
-                                             gint             view_size,
-                                             gint             view_border_width,
-                                             GimpMenuFactory *menu_factory);
+GtkWidget * gimp_font_factory_view_new (GimpViewType     view_type,
+                                        GimpDataFactory *factory,
+                                        GimpContext     *context,
+                                        gint             view_size,
+                                        gint             view_border_width,
+                                        GimpMenuFactory *menu_factory);

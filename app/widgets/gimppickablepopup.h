@@ -43,7 +43,7 @@ struct _GimpPickablePopup
 
 struct _GimpPickablePopupClass
 {
-  GimpPopupClass  parent_instance;
+  GimpPopupClass  parent_class;
 };
 
 

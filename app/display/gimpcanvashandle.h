@@ -30,29 +30,18 @@
 #define GIMP_CANVAS_HANDLE_SIZE_SMALL     7
 
 
-#define GIMP_TYPE_CANVAS_HANDLE            (gimp_canvas_handle_get_type ())
-#define GIMP_CANVAS_HANDLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_HANDLE, GimpCanvasHandle))
-#define GIMP_CANVAS_HANDLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_HANDLE, GimpCanvasHandleClass))
-#define GIMP_IS_CANVAS_HANDLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_HANDLE))
-#define GIMP_IS_CANVAS_HANDLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_HANDLE))
-#define GIMP_CANVAS_HANDLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_HANDLE, GimpCanvasHandleClass))
+#define GIMP_TYPE_CANVAS_HANDLE (gimp_canvas_handle_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCanvasHandle,
+                          gimp_canvas_handle,
+                          GIMP, CANVAS_HANDLE,
+                          GimpCanvasItem)
 
-
-typedef struct _GimpCanvasHandle      GimpCanvasHandle;
-typedef struct _GimpCanvasHandleClass GimpCanvasHandleClass;
-
-struct _GimpCanvasHandle
-{
-  GimpCanvasItem  parent_instance;
-};
 
 struct _GimpCanvasHandleClass
 {
   GimpCanvasItemClass  parent_class;
 };
 
-
-GType            gimp_canvas_handle_get_type     (void) G_GNUC_CONST;
 
 GimpCanvasItem * gimp_canvas_handle_new          (GimpDisplayShell *shell,
                                                   GimpHandleType    type,

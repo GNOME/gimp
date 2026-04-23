@@ -365,3 +365,5 @@ void             gimp_context_template_changed    (GimpContext     *context);
 GimpLineArt    * gimp_context_take_line_art       (GimpContext     *context);
 void             gimp_context_store_line_art      (GimpContext     *context,
                                                    GimpLineArt     *line_art);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpContext, g_object_unref);

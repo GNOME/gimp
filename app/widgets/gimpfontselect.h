@@ -23,25 +23,14 @@
 #include "gimppdbdialog.h"
 
 
-#define GIMP_TYPE_FONT_SELECT            (gimp_font_select_get_type ())
-#define GIMP_FONT_SELECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FONT_SELECT, GimpFontSelect))
-#define GIMP_FONT_SELECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FONT_SELECT, GimpFontSelectClass))
-#define GIMP_IS_FONT_SELECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FONT_SELECT))
-#define GIMP_IS_FONT_SELECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FONT_SELECT))
-#define GIMP_FONT_SELECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FONT_SELECT, GimpFontSelectClass))
+#define GIMP_TYPE_FONT_SELECT (gimp_font_select_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpFontSelect,
+                          gimp_font_select,
+                          GIMP, FONT_SELECT,
+                          GimpPdbDialog)
 
-
-typedef struct _GimpFontSelectClass  GimpFontSelectClass;
-
-struct _GimpFontSelect
-{
-  GimpPdbDialog  parent_instance;
-};
 
 struct _GimpFontSelectClass
 {
   GimpPdbDialogClass  parent_class;
 };
-
-
-GType  gimp_font_select_get_type (void) G_GNUC_CONST;

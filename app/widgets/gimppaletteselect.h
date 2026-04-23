@@ -23,25 +23,14 @@
 #include "gimppdbdialog.h"
 
 
-#define GIMP_TYPE_PALETTE_SELECT            (gimp_palette_select_get_type ())
-#define GIMP_PALETTE_SELECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PALETTE_SELECT, GimpPaletteSelect))
-#define GIMP_PALETTE_SELECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PALETTE_SELECT, GimpPaletteSelectClass))
-#define GIMP_IS_PALETTE_SELECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PALETTE_SELECT))
-#define GIMP_IS_PALETTE_SELECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PALETTE_SELECT))
-#define GIMP_PALETTE_SELECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PALETTE_SELECT, GimpPaletteSelectClass))
+#define GIMP_TYPE_PALETTE_SELECT (gimp_palette_select_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPaletteSelect,
+                          gimp_palette_select,
+                          GIMP, PALETTE_SELECT,
+                          GimpPdbDialog)
 
-
-typedef struct _GimpPaletteSelectClass  GimpPaletteSelectClass;
-
-struct _GimpPaletteSelect
-{
-  GimpPdbDialog  parent_instance;
-};
 
 struct _GimpPaletteSelectClass
 {
   GimpPdbDialogClass  parent_class;
 };
-
-
-GType  gimp_palette_select_get_type (void) G_GNUC_CONST;

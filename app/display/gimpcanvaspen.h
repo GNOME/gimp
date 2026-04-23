@@ -23,21 +23,12 @@
 #include "gimpcanvaspolygon.h"
 
 
-#define GIMP_TYPE_CANVAS_PEN            (gimp_canvas_pen_get_type ())
-#define GIMP_CANVAS_PEN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_PEN, GimpCanvasPen))
-#define GIMP_CANVAS_PEN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_PEN, GimpCanvasPenClass))
-#define GIMP_IS_CANVAS_PEN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_PEN))
-#define GIMP_IS_CANVAS_PEN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_PEN))
-#define GIMP_CANVAS_PEN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_PEN, GimpCanvasPenClass))
+#define GIMP_TYPE_CANVAS_PEN (gimp_canvas_pen_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCanvasPen,
+                          gimp_canvas_pen,
+                          GIMP, CANVAS_PEN,
+                          GimpCanvasPolygon)
 
-
-typedef struct _GimpCanvasPen      GimpCanvasPen;
-typedef struct _GimpCanvasPenClass GimpCanvasPenClass;
-
-struct _GimpCanvasPen
-{
-  GimpCanvasPolygon  parent_instance;
-};
 
 struct _GimpCanvasPenClass
 {
@@ -45,11 +36,9 @@ struct _GimpCanvasPenClass
 };
 
 
-GType            gimp_canvas_pen_get_type (void) G_GNUC_CONST;
-
-GimpCanvasItem * gimp_canvas_pen_new      (GimpDisplayShell  *shell,
-                                           const GimpVector2 *points,
-                                           gint               n_points,
-                                           GimpContext       *context,
-                                           GimpActiveColor    color,
-                                           gint               width);
+GimpCanvasItem * gimp_canvas_pen_new (GimpDisplayShell  *shell,
+                                      const GimpVector2 *points,
+                                      gint               n_points,
+                                      GimpContext       *context,
+                                      GimpActiveColor    color,
+                                      gint               width);

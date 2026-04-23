@@ -20,28 +20,18 @@
 #include "gimpdata.h"
 
 
-#define GIMP_TYPE_DYNAMICS            (gimp_dynamics_get_type ())
-#define GIMP_DYNAMICS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DYNAMICS, GimpDynamics))
-#define GIMP_DYNAMICS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DYNAMICS, GimpDynamicsClass))
-#define GIMP_IS_DYNAMICS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DYNAMICS))
-#define GIMP_IS_DYNAMICS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DYNAMICS))
-#define GIMP_DYNAMICS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DYNAMICS, GimpDynamicsClass))
+#define GIMP_TYPE_DYNAMICS (gimp_dynamics_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpDynamics,
+                          gimp_dynamics,
+                          GIMP, DYNAMICS,
+                          GimpData)
 
-
-typedef struct _GimpDynamicsClass GimpDynamicsClass;
-
-struct _GimpDynamics
-{
-  GimpData  parent_instance;
-};
 
 struct _GimpDynamicsClass
 {
   GimpDataClass  parent_class;
 };
 
-
-GType                gimp_dynamics_get_type     (void) G_GNUC_CONST;
 
 GimpData           * gimp_dynamics_new          (GimpContext            *context,
                                                  const gchar            *name);

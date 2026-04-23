@@ -172,3 +172,5 @@ GimpColorTransform *
                                                   const Babl       *src_format,
                                                   const Babl       *dest_format);
 void   gimp_view_renderer_free_color_transform   (GimpViewRenderer *renderer);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpViewRenderer, g_object_unref);

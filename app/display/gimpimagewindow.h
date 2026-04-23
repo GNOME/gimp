@@ -20,28 +20,18 @@
 #include "widgets/gimpwindow.h"
 
 
-#define GIMP_TYPE_IMAGE_WINDOW            (gimp_image_window_get_type ())
-#define GIMP_IMAGE_WINDOW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_WINDOW, GimpImageWindow))
-#define GIMP_IMAGE_WINDOW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_WINDOW, GimpImageWindowClass))
-#define GIMP_IS_IMAGE_WINDOW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_WINDOW))
-#define GIMP_IS_IMAGE_WINDOW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_WINDOW))
-#define GIMP_IMAGE_WINDOW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_WINDOW, GimpImageWindowClass))
+#define GIMP_TYPE_IMAGE_WINDOW (gimp_image_window_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpImageWindow,
+                          gimp_image_window,
+                          GIMP, IMAGE_WINDOW,
+                          GimpWindow)
 
-
-typedef struct _GimpImageWindowClass  GimpImageWindowClass;
-
-struct _GimpImageWindow
-{
-  GimpWindow  parent_instance;
-};
 
 struct _GimpImageWindowClass
 {
   GimpWindowClass  parent_class;
 };
 
-
-GType              gimp_image_window_get_type             (void) G_GNUC_CONST;
 
 GimpImageWindow  * gimp_image_window_new                  (Gimp              *gimp,
                                                            GimpImage         *image,

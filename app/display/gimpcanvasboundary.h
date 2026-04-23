@@ -23,21 +23,12 @@
 #include "gimpcanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_BOUNDARY            (gimp_canvas_boundary_get_type ())
-#define GIMP_CANVAS_BOUNDARY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_BOUNDARY, GimpCanvasBoundary))
-#define GIMP_CANVAS_BOUNDARY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_BOUNDARY, GimpCanvasBoundaryClass))
-#define GIMP_IS_CANVAS_BOUNDARY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_BOUNDARY))
-#define GIMP_IS_CANVAS_BOUNDARY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_BOUNDARY))
-#define GIMP_CANVAS_BOUNDARY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_BOUNDARY, GimpCanvasBoundaryClass))
+#define GIMP_TYPE_CANVAS_BOUNDARY (gimp_canvas_boundary_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCanvasBoundary,
+                          gimp_canvas_boundary,
+                          GIMP, CANVAS_BOUNDARY,
+                          GimpCanvasItem)
 
-
-typedef struct _GimpCanvasBoundary      GimpCanvasBoundary;
-typedef struct _GimpCanvasBoundaryClass GimpCanvasBoundaryClass;
-
-struct _GimpCanvasBoundary
-{
-  GimpCanvasItem  parent_instance;
-};
 
 struct _GimpCanvasBoundaryClass
 {
@@ -45,11 +36,9 @@ struct _GimpCanvasBoundaryClass
 };
 
 
-GType            gimp_canvas_boundary_get_type (void) G_GNUC_CONST;
-
-GimpCanvasItem * gimp_canvas_boundary_new      (GimpDisplayShell   *shell,
-                                                const GimpBoundSeg *segs,
-                                                gint                n_segs,
-                                                GimpMatrix3        *transform,
-                                                gdouble             offset_x,
-                                                gdouble             offset_y);
+GimpCanvasItem * gimp_canvas_boundary_new (GimpDisplayShell   *shell,
+                                           const GimpBoundSeg *segs,
+                                           gint                n_segs,
+                                           GimpMatrix3        *transform,
+                                           gdouble             offset_x,
+                                           gdouble             offset_y);

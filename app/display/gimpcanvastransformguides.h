@@ -23,21 +23,12 @@
 #include "gimpcanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_TRANSFORM_GUIDES            (gimp_canvas_transform_guides_get_type ())
-#define GIMP_CANVAS_TRANSFORM_GUIDES(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_TRANSFORM_GUIDES, GimpCanvasTransformGuides))
-#define GIMP_CANVAS_TRANSFORM_GUIDES_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_TRANSFORM_GUIDES, GimpCanvasTransformGuidesClass))
-#define GIMP_IS_CANVAS_TRANSFORM_GUIDES(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_TRANSFORM_GUIDES))
-#define GIMP_IS_CANVAS_TRANSFORM_GUIDES_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_TRANSFORM_GUIDES))
-#define GIMP_CANVAS_TRANSFORM_GUIDES_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_TRANSFORM_GUIDES, GimpCanvasTransformGuidesClass))
+#define GIMP_TYPE_CANVAS_TRANSFORM_GUIDES (gimp_canvas_transform_guides_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCanvasTransformGuides,
+                          gimp_canvas_transform_guides,
+                          GIMP, CANVAS_TRANSFORM_GUIDES,
+                          GimpCanvasItem)
 
-
-typedef struct _GimpCanvasTransformGuides      GimpCanvasTransformGuides;
-typedef struct _GimpCanvasTransformGuidesClass GimpCanvasTransformGuidesClass;
-
-struct _GimpCanvasTransformGuides
-{
-  GimpCanvasItem  parent_instance;
-};
 
 struct _GimpCanvasTransformGuidesClass
 {
@@ -45,24 +36,22 @@ struct _GimpCanvasTransformGuidesClass
 };
 
 
-GType            gimp_canvas_transform_guides_get_type (void) G_GNUC_CONST;
+GimpCanvasItem * gimp_canvas_transform_guides_new (GimpDisplayShell  *shell,
+                                                   const GimpMatrix3 *transform,
+                                                   gdouble            x1,
+                                                   gdouble            y1,
+                                                   gdouble            x2,
+                                                   gdouble            y2,
+                                                   GimpGuidesType     type,
+                                                   gint               n_guides,
+                                                   gboolean           clip);
 
-GimpCanvasItem * gimp_canvas_transform_guides_new      (GimpDisplayShell  *shell,
-                                                        const GimpMatrix3 *transform,
-                                                        gdouble            x1,
-                                                        gdouble            y1,
-                                                        gdouble            x2,
-                                                        gdouble            y2,
-                                                        GimpGuidesType     type,
-                                                        gint               n_guides,
-                                                        gboolean           clip);
-
-void             gimp_canvas_transform_guides_set      (GimpCanvasItem    *guides,
-                                                        const GimpMatrix3 *transform,
-                                                        gdouble            x1,
-                                                        gdouble            y1,
-                                                        gdouble            x2,
-                                                        gdouble            y2,
-                                                        GimpGuidesType     type,
-                                                        gint               n_guides,
-                                                        gboolean           clip);
+void             gimp_canvas_transform_guides_set (GimpCanvasItem    *guides,
+                                                   const GimpMatrix3 *transform,
+                                                   gdouble            x1,
+                                                   gdouble            y1,
+                                                   gdouble            x2,
+                                                   gdouble            y2,
+                                                   GimpGuidesType     type,
+                                                   gint               n_guides,
+                                                   gboolean           clip);

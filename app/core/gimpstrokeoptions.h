@@ -23,20 +23,12 @@
 #include "gimpfilloptions.h"
 
 
-#define GIMP_TYPE_STROKE_OPTIONS            (gimp_stroke_options_get_type ())
-#define GIMP_STROKE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_STROKE_OPTIONS, GimpStrokeOptions))
-#define GIMP_STROKE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_STROKE_OPTIONS, GimpStrokeOptionsClass))
-#define GIMP_IS_STROKE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_STROKE_OPTIONS))
-#define GIMP_IS_STROKE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_STROKE_OPTIONS))
-#define GIMP_STROKE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_STROKE_OPTIONS, GimpStrokeOptionsClass))
+#define GIMP_TYPE_STROKE_OPTIONS (gimp_stroke_options_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpStrokeOptions,
+                          gimp_stroke_options,
+                          GIMP, STROKE_OPTIONS,
+                          GimpFillOptions)
 
-
-typedef struct _GimpStrokeOptionsClass GimpStrokeOptionsClass;
-
-struct _GimpStrokeOptions
-{
-  GimpFillOptions  parent_instance;
-};
 
 struct _GimpStrokeOptionsClass
 {
@@ -46,8 +38,6 @@ struct _GimpStrokeOptionsClass
                               GimpDashPreset     preset);
 };
 
-
-GType               gimp_stroke_options_get_type             (void) G_GNUC_CONST;
 
 GimpStrokeOptions * gimp_stroke_options_new                  (Gimp              *gimp,
                                                               GimpContext       *context,

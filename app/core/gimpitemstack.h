@@ -23,19 +23,12 @@
 #include "gimpfilterstack.h"
 
 
-#define GIMP_TYPE_ITEM_STACK            (gimp_item_stack_get_type ())
-#define GIMP_ITEM_STACK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_STACK, GimpItemStack))
-#define GIMP_ITEM_STACK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM_STACK, GimpItemStackClass))
-#define GIMP_IS_ITEM_STACK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM_STACK))
-#define GIMP_IS_ITEM_STACK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ITEM_STACK))
+#define GIMP_TYPE_ITEM_STACK (gimp_item_stack_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpItemStack,
+                          gimp_item_stack,
+                          GIMP, ITEM_STACK,
+                          GimpFilterStack)
 
-
-typedef struct _GimpItemStackClass GimpItemStackClass;
-
-struct _GimpItemStack
-{
-  GimpFilterStack  parent_instance;
-};
 
 struct _GimpItemStackClass
 {
@@ -43,7 +36,6 @@ struct _GimpItemStackClass
 };
 
 
-GType           gimp_item_stack_get_type            (void) G_GNUC_CONST;
 GimpContainer * gimp_item_stack_new                 (GType          item_type);
 
 gint            gimp_item_stack_get_n_items         (GimpItemStack *stack);

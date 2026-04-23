@@ -70,3 +70,5 @@ GType             gimp_data_factory_view_get_child_type           (GimpDataFacto
 gboolean          gimp_data_factory_view_has_data_new_func        (GimpDataFactoryView *factory_view);
 gboolean          gimp_data_factory_view_have                     (GimpDataFactoryView *factory_view,
                                                                    GimpObject          *object);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpDataFactoryView, g_object_unref);

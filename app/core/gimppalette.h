@@ -125,3 +125,5 @@ void               gimp_palette_set_colormap    (GimpPalette      *palette,
                                                  const guchar     *colormap,
                                                  gint              n_colors,
                                                  gboolean          push_undo_if_image);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpPalette, g_object_unref);

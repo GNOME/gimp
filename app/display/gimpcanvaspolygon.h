@@ -23,29 +23,18 @@
 #include "gimpcanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_POLYGON            (gimp_canvas_polygon_get_type ())
-#define GIMP_CANVAS_POLYGON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_POLYGON, GimpCanvasPolygon))
-#define GIMP_CANVAS_POLYGON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_POLYGON, GimpCanvasPolygonClass))
-#define GIMP_IS_CANVAS_POLYGON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_POLYGON))
-#define GIMP_IS_CANVAS_POLYGON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_POLYGON))
-#define GIMP_CANVAS_POLYGON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_POLYGON, GimpCanvasPolygonClass))
+#define GIMP_TYPE_CANVAS_POLYGON (gimp_canvas_polygon_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCanvasPolygon,
+                          gimp_canvas_polygon,
+                          GIMP, CANVAS_POLYGON,
+                          GimpCanvasItem)
 
-
-typedef struct _GimpCanvasPolygon      GimpCanvasPolygon;
-typedef struct _GimpCanvasPolygonClass GimpCanvasPolygonClass;
-
-struct _GimpCanvasPolygon
-{
-  GimpCanvasItem  parent_instance;
-};
 
 struct _GimpCanvasPolygonClass
 {
   GimpCanvasItemClass  parent_class;
 };
 
-
-GType            gimp_canvas_polygon_get_type        (void) G_GNUC_CONST;
 
 GimpCanvasItem * gimp_canvas_polygon_new             (GimpDisplayShell  *shell,
                                                       const GimpVector2 *points,
