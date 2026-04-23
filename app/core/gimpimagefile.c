@@ -58,6 +58,11 @@ enum
 };
 
 
+struct _GimpImagefile
+{
+  GimpViewable  parent_instance;
+};
+
 typedef struct _GimpImagefilePrivate GimpImagefilePrivate;
 
 struct _GimpImagefilePrivate
