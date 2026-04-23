@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.99\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-27 16:03+0000\n"
+"POT-Creation-Date: 2026-04-23 20:16+0000\n"
 "PO-Revision-Date: 2026-03-28 08:59+0100\n"
 "Last-Translator: Марко М. Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <gnome-sr@googlegroups.com>\n"
@@ -331,11 +331,11 @@ msgstr "Приказује страну са подешавањима експе
 msgid "Show an image submenu with debug actions"
 msgstr "Приказује подмени слике са радњама за тражење грешака у програму"
 
-#: app/main.c:767
+#: app/main.c:770
 msgid "[FILE|URI...]"
 msgstr "[Датотека|Путања…]"
 
-#: app/main.c:797
+#: app/main.c:800
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -343,11 +343,11 @@ msgstr ""
 "Гимп не може да покрене графичко сучеље.\n"
 "Проверите да ли постоји исправно подешавање вашег окружења приказа."
 
-#: app/main.c:863
+#: app/main.c:866
 msgid "Another GIMP instance is already running."
 msgstr "Већ је покренут један примерак Гимпа."
 
-#: app/main.c:944
+#: app/main.c:949
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Укуцајте неки знак да затворите овај прозор)\n"
@@ -397,7 +397,7 @@ msgstr "Међумеморије"
 
 #: app/actions/actions.c:123 app/dialogs/dialogs.c:380
 #: app/propgui/gimppropgui-newsprint.c:160 app/widgets/gimpitemchooser.c:294
-#: app/widgets/gimppickablechooser.c:292
+#: app/widgets/gimppickablechooser.c:289
 msgid "Channels"
 msgstr "Канали"
 
@@ -506,13 +506,13 @@ msgstr "Слика"
 
 #: app/actions/actions.c:195 app/dialogs/dialogs.c:338
 #: app/widgets/gimpimagechooser.c:185 app/widgets/gimpitemchooser.c:213
-#: app/widgets/gimppickablechooser.c:211
+#: app/widgets/gimppickablechooser.c:208
 msgid "Images"
 msgstr "Слике"
 
 #: app/actions/actions.c:198 app/dialogs/dialogs.c:376
 #: app/dialogs/resize-dialog.c:173 app/widgets/gimpitemchooser.c:269
-#: app/widgets/gimppickablechooser.c:267
+#: app/widgets/gimppickablechooser.c:264
 msgid "Layers"
 msgstr "Слојеви"
 
@@ -544,7 +544,7 @@ msgid "Plug-ins"
 msgstr "Прикључци"
 
 #. Quick Mask Color
-#: app/actions/actions.c:216 app/core/gimpchannel.c:363
+#: app/actions/actions.c:216 app/core/gimpchannel.c:360
 #: app/dialogs/preferences-dialog.c:1832
 msgid "Quick Mask"
 msgstr "Брза маска"
@@ -558,7 +558,7 @@ msgid "Select"
 msgstr "Избор"
 
 #. initialize the template list
-#: app/actions/actions.c:225 app/core/gimp.c:873 app/dialogs/dialogs.c:371
+#: app/actions/actions.c:225 app/core/gimp.c:875 app/dialogs/dialogs.c:371
 msgid "Templates"
 msgstr "Шаблони"
 
@@ -1115,8 +1115,8 @@ msgstr[2] "Спусти канале на дно"
 msgstr[3] "Спусти канал на дно"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
-#: app/display/gimpdisplayshell-dnd.c:761 app/widgets/gimpchanneltreeview.c:260
-#: app/widgets/gimplayertreeview.c:899
+#: app/display/gimpdisplayshell-dnd.c:764 app/widgets/gimpchanneltreeview.c:260
+#: app/widgets/gimplayertreeview.c:901
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Копија канала „%s“"
@@ -2480,12 +2480,12 @@ msgid "240 Seconds"
 msgstr "240 секунди"
 
 #: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263
-#: app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
+#: app/actions/edit-commands.c:174 app/actions/error-console-commands.c:97
 #: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187
-#: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
-#: app/actions/text-tool-commands.c:167 app/actions/tool-options-commands.c:210
+#: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:64
+#: app/actions/text-tool-commands.c:168 app/actions/tool-options-commands.c:210
 #: app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136
 #: app/dialogs/color-profile-dialog.c:154
 #: app/dialogs/color-profile-dialog.c:172
@@ -2503,7 +2503,7 @@ msgstr "240 секунди"
 #: app/dialogs/layer-add-mask-dialog.c:122
 #: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:222
 #: app/dialogs/preferences-dialog.c:615 app/dialogs/preferences-dialog.c:1176
-#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:181
+#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:151
 #: app/dialogs/resize-dialog.c:227 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
@@ -2513,14 +2513,14 @@ msgstr "240 секунди"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:376 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1085 app/tools/gimptexttool.c:1784
+#: app/tools/gimppathtool.c:1093 app/tools/gimptexttool.c:1784
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
-#: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:556
+#: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:557
 #: app/widgets/gimpdeviceeditor.c:463 app/widgets/gimpdeviceinfoeditor.c:837
 #: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:337
 #: app/widgets/gimphelp.c:441 app/widgets/gimphelp.c:789
-#: app/widgets/gimpiconpicker.c:489 app/widgets/gimpmodifierseditor.c:688
+#: app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:688
 #: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
 #: app/widgets/gimpsettingsbox.c:706
 msgid "_Cancel"
@@ -2535,6 +2535,7 @@ msgid "All Files"
 msgstr "Све датотеке"
 
 #: app/actions/dashboard-commands.c:149
+#: app/actions/error-console-commands.c:105
 msgid "Log Files (*.log)"
 msgstr "Датотеке са дневником (*.log)"
 
@@ -2583,9 +2584,9 @@ msgstr "Унесите назив за нови обележивач"
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:704 app/display/gimpimagewindow.c:2260
-#: app/widgets/gimplayertreeview.c:857 app/widgets/gimptoolbox.c:849
-#: app/widgets/gimptoolbox-dnd.c:178
+#: app/dialogs/welcome-dialog.c:1253 app/display/gimpdisplayshell-dnd.c:707
+#: app/display/gimpimagewindow.c:2266 app/widgets/gimplayertreeview.c:859
+#: app/widgets/gimptoolbox.c:849 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -2597,8 +2598,8 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2451
-#: app/core/gimppalette.c:582 app/core/gimppalette-import.c:223
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2455
+#: app/core/gimppalette.c:587 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Без наслова"
@@ -3452,7 +3453,7 @@ msgstr "Уклања уносе за које не постоје одговар
 msgid "Clear Document History"
 msgstr "Чисти историјат докумената"
 
-#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:171
+#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:175
 #: app/dialogs/preferences-dialog.c:616
 msgid "Cl_ear"
 msgstr "О_чисти"
@@ -3949,20 +3950,20 @@ msgstr "_Опозови"
 msgid "_Redo"
 msgstr "По_нови"
 
-#: app/actions/edit-commands.c:162
+#: app/actions/edit-commands.c:166
 msgid "Clear Undo History"
 msgstr "Очистите историјат опозива"
 
-#: app/actions/edit-commands.c:189
+#: app/actions/edit-commands.c:193
 msgid "Really clear image's undo history?"
 msgstr "Да очистим историјат опозивања слике?"
 
-#: app/actions/edit-commands.c:202
+#: app/actions/edit-commands.c:206
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Чишћење историјата опозивања у овој слици ће ослободити %s меморије."
 
-#: app/actions/edit-commands.c:246
+#: app/actions/edit-commands.c:250
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
@@ -3971,72 +3972,72 @@ msgstr[1] "Исеци %d слоја у списак исечака."
 msgstr[2] "Исеци %d слојa у списак исечака."
 msgstr[3] "Исеци %d слој у списак исечака."
 
-#: app/actions/edit-commands.c:251
+#: app/actions/edit-commands.c:255
 msgid "Cut pixels to the clipboard."
 msgstr "Исеци пикселе у списак исечака."
 
-#: app/actions/edit-commands.c:294
+#: app/actions/edit-commands.c:298
 msgid "Copied layer to the clipboard."
 msgstr "Копиран слој у списку исечака."
 
-#: app/actions/edit-commands.c:295 app/actions/edit-commands.c:327
+#: app/actions/edit-commands.c:299 app/actions/edit-commands.c:331
 msgid "Copied pixels to the clipboard."
 msgstr "Копирани пиксели у списку исечака."
 
-#: app/actions/edit-commands.c:444 app/actions/edit-commands.c:734
+#: app/actions/edit-commands.c:448 app/actions/edit-commands.c:795
 #: app/tools/gimpseamlessclonetool.c:304
 msgid "There is no image data in the clipboard to paste."
 msgstr "Нема података слике у остави за убацивање."
 
-#: app/actions/edit-commands.c:460
+#: app/actions/edit-commands.c:464
 msgid "Cut Named"
 msgstr "Исеците именовано"
 
-#: app/actions/edit-commands.c:463 app/actions/edit-commands.c:485
-#: app/actions/edit-commands.c:507
+#: app/actions/edit-commands.c:467 app/actions/edit-commands.c:489
+#: app/actions/edit-commands.c:511
 msgid "Enter a name for this buffer"
 msgstr "Унесите назив за ову међумеморију"
 
-#: app/actions/edit-commands.c:482
+#: app/actions/edit-commands.c:486
 msgid "Copy Named"
 msgstr "Копирај именовано"
 
-#: app/actions/edit-commands.c:504
+#: app/actions/edit-commands.c:508
 msgid "Copy Visible Named"
 msgstr "Копирај видљиво именовано"
 
-#: app/actions/edit-commands.c:552
+#: app/actions/edit-commands.c:556
 msgid "Clear"
 msgstr "Очисти"
 
-#: app/actions/edit-commands.c:625
+#: app/actions/edit-commands.c:686
 msgid "A selected layer's alpha channel is locked."
 msgstr "Алфа канал текућег слоја је закључан."
 
-#: app/actions/edit-commands.c:691
+#: app/actions/edit-commands.c:752
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 "Убачено је као нови слој пошто одредиште није један слој или маска слоја."
 
-#: app/actions/edit-commands.c:698
+#: app/actions/edit-commands.c:759
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Убачено је као нови слој пошто је одредиште група слојева."
 
-#: app/actions/edit-commands.c:705
+#: app/actions/edit-commands.c:766
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Убачено је као нови слој пошто су одредишни пиксели закључани."
 
-#: app/actions/edit-commands.c:751
+#: app/actions/edit-commands.c:812
 msgid "There are no selected layers or channels to cut from."
 msgstr "Нема изабраног слоја или канала из којег се може исећи садржај."
 
-#: app/actions/edit-commands.c:756 app/actions/edit-commands.c:789
-#: app/actions/edit-commands.c:814
+#: app/actions/edit-commands.c:817 app/actions/edit-commands.c:850
+#: app/actions/edit-commands.c:875
 msgid "(Unnamed Buffer)"
 msgstr "(Неименована међумеморија)"
 
-#: app/actions/edit-commands.c:784
+#: app/actions/edit-commands.c:845
 msgid "There are no selected layers or channels to copy from."
 msgstr "Нема изабраног слоја или канала из којег се може копирати садржај."
 
@@ -4115,22 +4116,22 @@ msgctxt "error-console-action"
 msgid "Highlight error console on messages"
 msgstr "Истакни конзолу са грешкама за поруке"
 
-#: app/actions/error-console-commands.c:89
+#: app/actions/error-console-commands.c:90
 msgid "Cannot save. Nothing is selected."
 msgstr "Не могу да сачувам. Ништа није изабрано."
 
-#: app/actions/error-console-commands.c:98
+#: app/actions/error-console-commands.c:95
 msgid "Save Error Log to File"
 msgstr "Чување дневника са грешкам у датотеку"
 
-#: app/actions/error-console-commands.c:102 app/actions/gradients-commands.c:81
+#: app/actions/error-console-commands.c:97 app/actions/gradients-commands.c:80
 #: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:88
 #: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
 #: app/widgets/gimpsettingsbox.c:708
 msgid "_Save"
 msgstr "_Сачувај"
 
-#: app/actions/error-console-commands.c:193
+#: app/actions/error-console-commands.c:168
 #, c-format
 msgid ""
 "Error writing file '%s':\n"
@@ -5584,7 +5585,7 @@ msgctxt "gradients-action"
 msgid "Edit this gradient"
 msgstr "Уређује изабрани прелив"
 
-#: app/actions/gradients-commands.c:74
+#: app/actions/gradients-commands.c:75
 #, c-format
 msgid "Save '%s' as POV-Ray"
 msgstr "Сачувај „%s“ као ПОВ-Реј"
@@ -6077,7 +6078,7 @@ msgstr "Извртање"
 msgid "Rotating"
 msgstr "Ротирам"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1427
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1433
 msgid "Cannot crop because the current selection is empty."
 msgstr "Не могу да исечем јер је текући избор празан."
 
@@ -6126,7 +6127,7 @@ msgid "Scale Image"
 msgstr "Промени размеру слике"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2694
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2704
 #: app/dialogs/preferences-dialog.c:1750 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
@@ -6231,7 +6232,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Уређује назив слоја"
 
-#: app/actions/layers-actions.c:79 app/actions/layers-actions.c:1031
+#: app/actions/layers-actions.c:79 app/actions/layers-actions.c:1032
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Нови слој…"
@@ -6241,7 +6242,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Прави нови слој и додаје га у слику"
 
-#: app/actions/layers-actions.c:85 app/actions/layers-actions.c:1032
+#: app/actions/layers-actions.c:85 app/actions/layers-actions.c:1033
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Нови слој"
@@ -6336,7 +6337,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "У_сидри плутајући слој или маску"
 
-#: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1311
+#: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1313
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Усидрава плутајући слој или маску"
@@ -7015,12 +7016,12 @@ msgstr "Пречица: "
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "– Кликните на умањени приказ у прикачивим слојевима"
 
-#: app/actions/layers-actions.c:1026 app/actions/layers-actions.c:1027
+#: app/actions/layers-actions.c:1027 app/actions/layers-actions.c:1028
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "У _нови слој"
 
-#: app/actions/layers-commands.c:343 app/actions/layers-commands.c:2529
+#: app/actions/layers-commands.c:343 app/actions/layers-commands.c:2539
 msgid "Layer Attributes"
 msgstr "Особине слоја"
 
@@ -7045,7 +7046,7 @@ msgstr[1] "Направи %d нова слоја"
 msgstr[2] "Направи %d нова слоја"
 msgstr[3] "Направи %d нови слој"
 
-#: app/actions/layers-commands.c:501 app/actions/layers-commands.c:2411
+#: app/actions/layers-commands.c:501 app/actions/layers-commands.c:2421
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Нови слојеви"
@@ -7137,11 +7138,11 @@ msgstr "Подеси величину границе слоја"
 msgid "Layers to Image Size"
 msgstr "Слојеви на величину слике"
 
-#: app/actions/layers-commands.c:1393
+#: app/actions/layers-commands.c:1399
 msgid "Scale Layer"
 msgstr "Размера слоја"
 
-#: app/actions/layers-commands.c:1432
+#: app/actions/layers-commands.c:1438
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
@@ -7150,7 +7151,7 @@ msgstr[1] "Исеци %d слојева на избор"
 msgstr[2] "Исеци %d слоја на избор"
 msgstr[3] "Исеци %d слој на избор"
 
-#: app/actions/layers-commands.c:1497
+#: app/actions/layers-commands.c:1507
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7158,7 +7159,7 @@ msgstr ""
 "Не могу да исечем пошто ни једног од изабраних слојева нема садржај или су "
 "већ исечени на њихов садржај."
 
-#: app/actions/layers-commands.c:1503
+#: app/actions/layers-commands.c:1513
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
@@ -7167,104 +7168,104 @@ msgstr[1] "Исеци %d слоја на садржај"
 msgstr[2] "Исеци %d слојева на садржај"
 msgstr[3] "Исеци %d слој на садржај"
 
-#: app/actions/layers-commands.c:1642 app/actions/layers-commands.c:2627
+#: app/actions/layers-commands.c:1652 app/actions/layers-commands.c:2637
 msgid "Add Layer Masks"
 msgstr "Додај маске слоја"
 
-#: app/actions/layers-commands.c:1697
+#: app/actions/layers-commands.c:1707
 msgid "Apply Layer Masks"
 msgstr "Примени маске слоја"
 
-#: app/actions/layers-commands.c:1701
+#: app/actions/layers-commands.c:1711
 msgid "Delete Layer Masks"
 msgstr "Обриши маске слоја"
 
-#: app/actions/layers-commands.c:1793
+#: app/actions/layers-commands.c:1803
 msgid "Show Layer Masks"
 msgstr "Прикажи маске слоја"
 
-#: app/actions/layers-commands.c:1844
+#: app/actions/layers-commands.c:1854
 msgid "Disable Layer Masks"
 msgstr "Искључи маске слоја"
 
-#: app/actions/layers-commands.c:1883
+#: app/actions/layers-commands.c:1893
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Маске у избор"
 
-#: app/actions/layers-commands.c:1887
+#: app/actions/layers-commands.c:1897
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Додавање маски у избор"
 
-#: app/actions/layers-commands.c:1891
+#: app/actions/layers-commands.c:1901
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Одузимање маски из избора"
 
-#: app/actions/layers-commands.c:1895
+#: app/actions/layers-commands.c:1905
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Пресек маски и избора"
 
-#: app/actions/layers-commands.c:1918
+#: app/actions/layers-commands.c:1928
 msgid "Add Alpha Channel"
 msgstr "Додавање алфа канала"
 
-#: app/actions/layers-commands.c:1939
+#: app/actions/layers-commands.c:1949
 msgid "Remove Alpha Channel"
 msgstr "Уклањање алфа канала"
 
-#: app/actions/layers-commands.c:1967 app/core/gimpchannel-select.c:433
-#: app/core/gimplayer.c:437
+#: app/actions/layers-commands.c:1977 app/core/gimpchannel-select.c:433
+#: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Претварање алфе у избор"
 
-#: app/actions/layers-commands.c:1971 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1981 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Додавање алфе у избор"
 
-#: app/actions/layers-commands.c:1975 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1985 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Одузимање алфе од избора"
 
-#: app/actions/layers-commands.c:1979 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1989 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Пресецање алфе и избора"
 
-#: app/actions/layers-commands.c:1992
+#: app/actions/layers-commands.c:2002
 msgid "Empty Selection"
 msgstr "Празан избор"
 
 # постављањем непровидности постављамо и провидност
-#: app/actions/layers-commands.c:2022 app/actions/layers-commands.c:2066
-#: app/widgets/gimplayertreeview.c:1152
+#: app/actions/layers-commands.c:2032 app/actions/layers-commands.c:2076
+#: app/widgets/gimplayertreeview.c:1154
 msgid "Set layers opacity"
 msgstr "Подеси непровидност слојева"
 
 # постављањем непровидности постављамо и провидност
-#: app/actions/layers-commands.c:2136
+#: app/actions/layers-commands.c:2146
 msgid "Set layers' blend space"
 msgstr "Постави простор за стапање слојева"
 
 # постављањем непровидности постављамо и провидност
-#: app/actions/layers-commands.c:2190
+#: app/actions/layers-commands.c:2200
 msgid "Set layers' composite space"
 msgstr "Постави простор за спајање слојева"
 
-#: app/actions/layers-commands.c:2244
+#: app/actions/layers-commands.c:2254
 msgid "Set layers' composite mode"
 msgstr "Постави режим за спајање слојева"
 
-#: app/actions/layers-commands.c:2329
+#: app/actions/layers-commands.c:2339
 msgid "Lock alpha channels"
 msgstr "Закључај алфа канале"
 
-#: app/actions/layers-commands.c:2329
+#: app/actions/layers-commands.c:2339
 msgid "Unlock alpha channels"
 msgstr "Откључај алфа канале"
 
@@ -8504,22 +8505,22 @@ msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Усправно, с лева на десно (смер на горе)"
 
-#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:163
+#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:165
 msgid "Open Text File (UTF-8)"
 msgstr "Отворите текстуалну датотеку (УТФ-8)"
 
-#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:168
+#: app/actions/text-editor-commands.c:64 app/actions/text-tool-commands.c:168
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:790
-#: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
+#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:785
+#: app/widgets/gimpiconpicker.c:484 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:708
 msgid "_Open"
 msgstr "_Отвори"
 
-#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:280
+#: app/actions/text-editor-commands.c:123 app/actions/text-tool-commands.c:267
 #: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:297
-#: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1650
+#: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1658
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Не могу да отворим „%s“ за читање: %s"
@@ -8634,7 +8635,7 @@ msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Усправно, с лева на десно (смер на горе)"
 
-#: app/actions/text-tool-commands.c:231
+#: app/actions/text-tool-commands.c:218
 #, c-format
 msgid "Text along path failed: %s"
 msgstr "Није успело постављање рекста уз путању: %s"
@@ -10595,11 +10596,11 @@ msgstr ""
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Шаблон синтаксе за тражење и избор ставки:"
 
-#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:408
+#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:406
 msgid "Layer"
 msgstr "Слој"
 
-#: app/config/gimpdialogconfig.c:426 app/core/gimpchannel.c:240
+#: app/config/gimpdialogconfig.c:426 app/core/gimpchannel.c:238
 #: app/operations/gimpcurvesconfig.c:120 app/operations/gimplevelsconfig.c:135
 #: app/operations/gimpoperationthreshold.c:95
 #: app/widgets/gimpchanneltreeview.c:333
@@ -12844,26 +12845,26 @@ msgid "Selection by glob pattern search"
 msgstr "Избор на основу глоб шеме за претрагу"
 
 #. initialize babl fishes
-#: app/core/gimp.c:555 app/core/gimp.c:581
+#: app/core/gimp.c:557 app/core/gimp.c:583
 msgid "Initialization"
 msgstr "Покретање"
 
 #. register all internal procedures
-#: app/core/gimp.c:561
+#: app/core/gimp.c:563
 msgid "Internal Procedures"
 msgstr "Унутрашњи поступци"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:866
+#: app/core/gimp.c:868
 msgid "Looking for data files"
 msgstr "Тражим датотеке са подацима"
 
-#: app/core/gimp.c:866
+#: app/core/gimp.c:868
 msgid "Parasites"
 msgstr "Паразити"
 
 #. initialize the module list
-#: app/core/gimp.c:877 app/dialogs/preferences-dialog.c:3576
+#: app/core/gimp.c:879 app/dialogs/preferences-dialog.c:3576
 msgid "Modules"
 msgstr "Модули"
 
@@ -13085,22 +13086,22 @@ msgid "Please wait: %s\n"
 msgstr "Сачекајте: %s\n"
 
 #: app/core/gimp-internal-data.c:286 app/core/gimp-internal-data.c:299
-#: app/core/gimpdata.c:652 app/core/gimpdata.c:665
+#: app/core/gimpdata.c:650 app/core/gimpdata.c:663
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Грешка приликом чувања „%s“: "
 
-#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:671
+#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:669
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Грешка прилком покретања „%s“"
 
-#: app/core/gimp-spawn.c:186
+#: app/core/gimp-spawn.c:190
 #, c-format
 msgid "Failed to fork (%s)"
 msgstr "Грешка прилком рачвања (%s)"
 
-#: app/core/gimp-spawn.c:223
+#: app/core/gimp-spawn.c:227 app/core/gimp-spawn.c:257
 #, c-format
 msgid "Failed to execute child process “%s” (%s)"
 msgstr "Не могу да покренем подпроцес „%s“ (%s)"
@@ -13157,11 +13158,11 @@ msgstr "Правим директоријум „%s“…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Не могу да направим фасциклу „%s“: %s"
 
-#: app/core/gimp-utils.c:589 app/core/gimpfilloptions.c:450
+#: app/core/gimp-utils.c:593 app/core/gimpfilloptions.c:450
 msgid "No patterns available for this operation."
 msgstr "Нема доступних шара за ову радњу."
 
-#: app/core/gimp-utils.c:1132
+#: app/core/gimp-utils.c:1136
 #, c-format
 msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
@@ -13169,17 +13170,17 @@ msgstr ""
 "Кобна грешка обраде у датотеци Фотошоп ресурса: РЛЕ сажети подаци су "
 "оштећени."
 
-#: app/core/gimp-utils.c:1789
+#: app/core/gimp-utils.c:1793
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "Овај разчлањивач не подржава преклопљене спискове."
 
-#: app/core/gimp-utils.c:1812
+#: app/core/gimp-utils.c:1816
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> мора бити унутар <ol> или <ul> ознака."
 
-#: app/core/gimp-utils.c:1817
+#: app/core/gimp-utils.c:1821
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Непозната ознака <%s>."
@@ -13294,13 +13295,13 @@ msgstr ""
 "Кобна грешка приликом обраде датотеке са четкицом: не могу да отворим „abr“ "
 "запис у издању %d."
 
-#: app/core/gimpbrush.c:137 app/core/gimpcontext.c:699
+#: app/core/gimpbrush.c:138 app/core/gimpcontext.c:699
 #: app/core/gimpcontext.c:700 app/tools/gimpmybrushoptions-gui.c:64
 #: app/tools/gimppaintoptions-gui.c:156
 msgid "Brush"
 msgstr "Четкица"
 
-#: app/core/gimpbrush.c:159 app/paint/gimppaintoptions.c:235
+#: app/core/gimpbrush.c:160 app/paint/gimppaintoptions.c:235
 msgid "Brush Spacing"
 msgstr "Размак четкице"
 
@@ -13398,7 +13399,7 @@ msgstr ""
 "Кобна грешка приликом обраде датотеке са четкицом „%s“: неуједначени "
 "параметри."
 
-#: app/core/gimpbuffer.c:104
+#: app/core/gimpbuffer.c:106
 msgid "Buffer"
 msgstr "Спремиште"
 
@@ -13428,158 +13429,158 @@ msgctxt "undo-type"
 msgid "Fuzzy Select"
 msgstr "Нејасан избор"
 
-#: app/core/gimpchannel-select.c:598
+#: app/core/gimpchannel-select.c:605
 msgctxt "undo-type"
 msgid "Select by Color"
 msgstr "Избор према боји"
 
-#: app/core/gimpchannel-select.c:641
+#: app/core/gimpchannel-select.c:648
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Избор према индексираној боји"
 
-#: app/core/gimpchannel.c:257
+#: app/core/gimpchannel.c:255
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Промена назива канала"
 
-#: app/core/gimpchannel.c:258
+#: app/core/gimpchannel.c:256
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Премештање канал"
 
-#: app/core/gimpchannel.c:259
+#: app/core/gimpchannel.c:257
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Размера канала"
 
-#: app/core/gimpchannel.c:260
+#: app/core/gimpchannel.c:258
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Промена величине канала"
 
-#: app/core/gimpchannel.c:261
+#: app/core/gimpchannel.c:259
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Извртање канала"
 
-#: app/core/gimpchannel.c:262
+#: app/core/gimpchannel.c:260
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Ротација канала"
 
-#: app/core/gimpchannel.c:263 app/core/gimpdrawable-transform.c:1049
+#: app/core/gimpchannel.c:261 app/core/gimpdrawable-transform.c:1049
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Преображај канала"
 
-#: app/core/gimpchannel.c:264 app/core/gimpchannel.c:296
+#: app/core/gimpchannel.c:262 app/core/gimpchannel.c:293
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Попуна канала"
 
-#: app/core/gimpchannel.c:265
+#: app/core/gimpchannel.c:263
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Исцртавање канала"
 
-#: app/core/gimpchannel.c:266
+#: app/core/gimpchannel.c:264
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Канал у избор"
 
-#: app/core/gimpchannel.c:267
+#: app/core/gimpchannel.c:265
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "Промена редоследа канала"
 
-#: app/core/gimpchannel.c:268
+#: app/core/gimpchannel.c:266
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "Издизање канала"
 
-#: app/core/gimpchannel.c:269
+#: app/core/gimpchannel.c:267
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "Издизање канала на врх"
 
-#: app/core/gimpchannel.c:270
+#: app/core/gimpchannel.c:268
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "Спуштање канала"
 
-#: app/core/gimpchannel.c:271
+#: app/core/gimpchannel.c:269
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "Спуштање канала на дно"
 
-#: app/core/gimpchannel.c:272
+#: app/core/gimpchannel.c:270
 msgid "Channel cannot be raised higher."
 msgstr "Не можете више подићи канал."
 
-#: app/core/gimpchannel.c:273
+#: app/core/gimpchannel.c:271
 msgid "Channel cannot be lowered more."
 msgstr "Не можете више спустити канал."
 
-#: app/core/gimpchannel.c:293
+#: app/core/gimpchannel.c:290
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Умекшавање канала"
 
-#: app/core/gimpchannel.c:294
+#: app/core/gimpchannel.c:291
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Изоштравање канала"
 
-#: app/core/gimpchannel.c:295
+#: app/core/gimpchannel.c:292
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Чишћење канала"
 
-#: app/core/gimpchannel.c:297
+#: app/core/gimpchannel.c:294
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Извртање канала"
 
-#: app/core/gimpchannel.c:298
+#: app/core/gimpchannel.c:295
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Канал границе"
 
-#: app/core/gimpchannel.c:299
+#: app/core/gimpchannel.c:296
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Повећавање канал"
 
-#: app/core/gimpchannel.c:300
+#: app/core/gimpchannel.c:297
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Скаупљање канал"
 
-#: app/core/gimpchannel.c:301
+#: app/core/gimpchannel.c:298
 msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Поплави канала"
 
-#: app/core/gimpchannel.c:788
+#: app/core/gimpchannel.c:785
 msgid "Cannot fill empty channel."
 msgstr "Не могу да попуним празан канал."
 
-#: app/core/gimpchannel.c:824
+#: app/core/gimpchannel.c:821
 msgid "Cannot stroke empty channel."
 msgstr "Не могу да исцртам празан канал."
 
-#: app/core/gimpchannel.c:1676
+#: app/core/gimpchannel.c:1664
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Подешавање боје канала"
 
-#: app/core/gimpchannel.c:1730
+#: app/core/gimpchannel.c:1718
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Подешавање непровидности канала"
 
-#: app/core/gimpchannel.c:1815 app/core/gimpselection.c:162
+#: app/core/gimpchannel.c:1803 app/core/gimpselection.c:162
 msgid "Selection Mask"
 msgstr "Маска избора"
 
@@ -13619,24 +13620,24 @@ msgid "MyPaint Brush"
 msgstr "МојаЧеткица"
 
 #: app/core/gimpcontext.c:720 app/core/gimpcontext.c:721
-#: app/core/gimppattern.c:84
+#: app/core/gimppattern.c:85
 msgid "Pattern"
 msgstr "Шара"
 
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
-#: app/core/gimpgradient.c:124 app/pdb/drawable-edit-cmds.c:255
+#: app/core/gimpgradient.c:125 app/pdb/drawable-edit-cmds.c:255
 #: app/tools/gimpgradientoptions.c:269 app/tools/gimpgradienttool.c:166
 #: app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "Прелив"
 
 #: app/core/gimpcontext.c:734 app/core/gimpcontext.c:735
-#: app/core/gimppalette.c:129 app/widgets/gimpcolorselectorpalette.c:59
+#: app/core/gimppalette.c:130 app/widgets/gimpcolorselectorpalette.c:59
 msgid "Palette"
 msgstr "Палета"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/text/gimpfont.c:603 app/tools/gimptextoptions.c:812
+#: app/text/gimpfont.c:604 app/tools/gimptextoptions.c:812
 msgid "Font"
 msgstr "Фонт"
 
@@ -13644,8 +13645,8 @@ msgstr "Фонт"
 msgid "Tool Preset"
 msgstr "Подешавање алата"
 
-#: app/core/gimpdatafactory.c:399 app/core/gimpdatafactory.c:436
-#: app/core/gimpdatafactory.c:828 app/core/gimpdatafactory.c:859
+#: app/core/gimpdatafactory.c:402 app/core/gimpdatafactory.c:439
+#: app/core/gimpdatafactory.c:840 app/core/gimpdatafactory.c:871
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -13656,22 +13657,22 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdatafactory.c:476 app/core/gimpdatafactory.c:479
+#: app/core/gimpdatafactory.c:479 app/core/gimpdatafactory.c:482
 #: app/core/gimpitem.c:576 app/core/gimpitem.c:579
 msgid "copy"
 msgstr "копија"
 
-#: app/core/gimpdatafactory.c:488 app/core/gimpitem.c:587
+#: app/core/gimpdatafactory.c:491 app/core/gimpitem.c:587
 #, c-format
 msgid "%s copy"
 msgstr "Копија „%s“"
 
-#: app/core/gimpdatafactory.c:649 app/tools/gimptextoptions.c:793
+#: app/core/gimpdatafactory.c:658 app/tools/gimptextoptions.c:793
 #: app/widgets/gimpfontfactoryview.c:98
 msgid "Loading fonts (this may take a while...)"
 msgstr "Учитавам фонтове (ово може да потраје…)"
 
-#: app/core/gimpdatafactory.c:1045
+#: app/core/gimpdatafactory.c:1066
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder could not "
@@ -13685,7 +13686,7 @@ msgstr ""
 "\n"
 "Проверите ваша подешавања „Фасцикле“ из прозорчета за Поставке."
 
-#: app/core/gimpdatafactory.c:1054
+#: app/core/gimpdatafactory.c:1075
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -13695,7 +13696,7 @@ msgstr ""
 "Подесили сте непостојећу фасциклу за упис података (%s). Направите фасциклу "
 "или изаберите неку другу из одељка „Фасцикле“ у поставкама програма."
 
-#: app/core/gimpdatafactory.c:1075
+#: app/core/gimpdatafactory.c:1096
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -13706,7 +13707,7 @@ msgstr ""
 "Вероватно сте ручно изменили „gimprc“ датотеку, зато исправите ово у одељку "
 "„Фасцикле“ у поставкама програма."
 
-#: app/core/gimpdatafactory.c:1085
+#: app/core/gimpdatafactory.c:1106
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "Немате подешену фасциклу за упис података."
@@ -13740,7 +13741,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdrawable.c:658 app/tools/gimpscaletool.c:121
+#: app/core/gimpdrawable.c:657 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Размера"
@@ -13760,7 +13761,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Изјадначавање"
 
-#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:775
+#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:772
 msgid "Floating Selection"
 msgstr "Плутајући избор"
 
@@ -13819,7 +13820,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Ротација"
 
-#: app/core/gimpdrawable-transform.c:1047 app/core/gimplayer.c:436
+#: app/core/gimpdrawable-transform.c:1047 app/core/gimplayer.c:434
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Преобрази слој"
@@ -13857,8 +13858,8 @@ msgstr ""
 msgid "Cannot rename effect masks."
 msgstr "Не могу да преименујем маске ефеката."
 
-#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:735
-#: app/core/gimplayer.c:2051 app/core/gimplayermask.c:294
+#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:732
+#: app/core/gimplayer.c:2032 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "Маска „%s“"
@@ -13947,24 +13948,24 @@ msgstr "Неисправна УТФ-8 ниска у датотеци прели�
 msgid "File is corrupt."
 msgstr "Датотека је оштећена."
 
-#: app/core/gimpgradient-load.c:170 app/core/gimpgradient-load.c:188
-#: app/core/gimpgradient-load.c:198 app/core/gimpgradient-load.c:210
-#: app/core/gimpgradient-load.c:220 app/core/gimpgradient-load.c:228
+#: app/core/gimpgradient-load.c:171 app/core/gimpgradient-load.c:196
+#: app/core/gimpgradient-load.c:206 app/core/gimpgradient-load.c:218
+#: app/core/gimpgradient-load.c:228 app/core/gimpgradient-load.c:236
 #, c-format
 msgid "Corrupt segment %d."
 msgstr "Оштећен је сегмент %d."
 
-#: app/core/gimpgradient-load.c:241 app/core/gimpgradient-load.c:251
+#: app/core/gimpgradient-load.c:249 app/core/gimpgradient-load.c:259
 #, c-format
 msgid "Segments do not span the range 0-1."
 msgstr "Делови нису у опсегу 0-1."
 
-#: app/core/gimpgradient-load.c:266
+#: app/core/gimpgradient-load.c:274
 #, c-format
 msgid "In line %d of gradient file: "
 msgstr "Унутар %d. линије датотеке прелива: "
 
-#: app/core/gimpgradient-load.c:343
+#: app/core/gimpgradient-load.c:351
 #, c-format
 msgid "No linear gradients found."
 msgstr "Нема линијских прелива."
@@ -14075,193 +14076,193 @@ msgstr "Преображај групе слојева"
 msgid "Symmetry"
 msgstr "Симетрија"
 
-#: app/core/gimpimage.c:2086 app/pdb/drawable-filter-cmds.c:661
-#: app/widgets/gimpdrawabletreeview-filters.c:789
+#: app/core/gimpimage.c:2090 app/pdb/drawable-filter-cmds.c:661
+#: app/widgets/gimpdrawabletreeview-filters.c:796
 msgid "Remove filter"
 msgstr "Уклони филтер"
 
-#: app/core/gimpimage.c:2696
+#: app/core/gimpimage.c:2700
 msgid " (exported)"
 msgstr " (извезена)"
 
-#: app/core/gimpimage.c:2700
+#: app/core/gimpimage.c:2704
 msgid " (overwritten)"
 msgstr " (преписана)"
 
-#: app/core/gimpimage.c:2709
+#: app/core/gimpimage.c:2713
 msgid " (imported)"
 msgstr " (увезена)"
 
-#: app/core/gimpimage.c:2883 app/core/gimpimage.c:2897
-#: app/core/gimpimage.c:2940
+#: app/core/gimpimage.c:2887 app/core/gimpimage.c:2901
+#: app/core/gimpimage.c:2944
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Режим слоја „%s“ је додат у %s"
 
-#: app/core/gimpimage.c:2961
+#: app/core/gimpimage.c:2965
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Групе слојева су додате у %s"
 
-#: app/core/gimpimage.c:2968
+#: app/core/gimpimage.c:2972
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Маске над групама слојева су додате у %s"
 
-#: app/core/gimpimage.c:2975
+#: app/core/gimpimage.c:2979
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Закључавање положаја групе слојева је додато на %s"
 
-#: app/core/gimpimage.c:2982
+#: app/core/gimpimage.c:2986
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Закључавање алфа канала слојева је додато на %s"
 
-#: app/core/gimpimage.c:2990 app/core/gimpimage.c:3057
+#: app/core/gimpimage.c:2994 app/core/gimpimage.c:3061
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Закључавање видљивости је додато на %s"
 
-#: app/core/gimpimage.c:3001
+#: app/core/gimpimage.c:3005
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Формат података о фонту у текстуалном слоју је промењен за %s"
 
-#: app/core/gimpimage.c:3009
+#: app/core/gimpimage.c:3013
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Ефекти слоја су додати на %s"
 
-#: app/core/gimpimage.c:3021
+#: app/core/gimpimage.c:3025
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Нови чулни простор за стапање је додат у %s"
 
-#: app/core/gimpimage.c:3035
+#: app/core/gimpimage.c:3039
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "Векторски слојеви су додати у %s"
 
-#: app/core/gimpimage.c:3043
+#: app/core/gimpimage.c:3047
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "Повезани слојеви су додати у %s"
 
-#: app/core/gimpimage.c:3066
+#: app/core/gimpimage.c:3070
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Избор више путања је додат на %s"
 
-#: app/core/gimpimage.c:3078
+#: app/core/gimpimage.c:3082
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Чување ознака у боји унутар путање је додато на %s"
 
-#: app/core/gimpimage.c:3085
+#: app/core/gimpimage.c:3089
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Чување закључавања унутар путање је додато на %s"
 
-#: app/core/gimpimage.c:3099
+#: app/core/gimpimage.c:3103
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Слике са великом дубином битова су додате у %s"
 
-#: app/core/gimpimage.c:3107
+#: app/core/gimpimage.c:3111
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Отварање слика са великом дубином битова је исправљено у %s"
 
-#: app/core/gimpimage.c:3115
+#: app/core/gimpimage.c:3119
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Уграђена злиб компресија је додата у %s"
 
-#: app/core/gimpimage.c:3132
+#: app/core/gimpimage.c:3136
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Подршка за датотеке слика веће од 4GB је додата у %s"
 
-#: app/core/gimpimage.c:3139
+#: app/core/gimpimage.c:3143
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Избор више слојева је додато у %s"
 
-#: app/core/gimpimage.c:3156
+#: app/core/gimpimage.c:3160
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Вођице изван платна су додате у %s"
 
-#: app/core/gimpimage.c:3167
+#: app/core/gimpimage.c:3171
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "Постављање ставке и претрага по шаблону унутар назива ставку је додато на %s"
 
-#: app/core/gimpimage.c:3173
+#: app/core/gimpimage.c:3177
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Избор више канала је додато на %s"
 
-#: app/core/gimpimage.c:3293
+#: app/core/gimpimage.c:3297
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Промена резолуције слике"
 
-#: app/core/gimpimage.c:3345
+#: app/core/gimpimage.c:3349
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Промена јединице слике"
 
-#: app/core/gimpimage.c:4402
+#: app/core/gimpimage.c:4374
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 "„gimp-comment“ није успела провера паразита: коментар садржи неисправни УТФ-8"
 
-#: app/core/gimpimage.c:4464
+#: app/core/gimpimage.c:4436
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Прикачивање паразита на слику"
 
-#: app/core/gimpimage.c:4509
+#: app/core/gimpimage.c:4481
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Уклањање паразита са слике"
 
-#: app/core/gimpimage.c:5482
+#: app/core/gimpimage.c:5454
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додавање слоја"
 
-#: app/core/gimpimage.c:5542 app/core/gimpimage.c:5573
+#: app/core/gimpimage.c:5514 app/core/gimpimage.c:5545
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Уклањање слоја"
 
-#: app/core/gimpimage.c:5567
+#: app/core/gimpimage.c:5539
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Уклањање плутајућег избора"
 
-#: app/core/gimpimage.c:5723
+#: app/core/gimpimage.c:5695
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додавање канала"
 
-#: app/core/gimpimage.c:5753 app/core/gimpimage.c:5778
+#: app/core/gimpimage.c:5725 app/core/gimpimage.c:5750
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Уклањање канала"
 
-#: app/core/gimpimage.c:5838
+#: app/core/gimpimage.c:5810
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додавање путање"
 
-#: app/core/gimpimage.c:5873 app/core/gimpimage.c:5881
+#: app/core/gimpimage.c:5845 app/core/gimpimage.c:5853
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Уклањање путање"
@@ -14343,7 +14344,7 @@ msgstr "Претварање профила боја"
 msgid "Colormap of Image #%d (%s)"
 msgstr "Мапа боје за слику #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:903
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:908
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Подешавање мапе боја"
@@ -14353,7 +14354,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Поништавање мапе боја"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:694
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:699
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Измена уноса мапе боја"
@@ -14410,12 +14411,12 @@ msgctxt "undo-type"
 msgid "Convert Image to Grayscale"
 msgstr "Претварање слике у сиве тонове"
 
-#: app/core/gimpimage-crop.c:74
+#: app/core/gimpimage-crop.c:75
 msgctxt "undo-type"
 msgid "Crop Image"
 msgstr "Исецање слике"
 
-#: app/core/gimpimage-crop.c:77 app/core/gimpimage-resize.c:93
+#: app/core/gimpimage-crop.c:78 app/core/gimpimage-resize.c:93
 msgctxt "undo-type"
 msgid "Resize Image"
 msgstr "Промена величине слике"
@@ -14491,7 +14492,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "Не могу да спојим са групом слојева испод."
 
 #: app/core/gimpimage-merge.c:362
-#: app/widgets/gimpdrawabletreeview-filters.c:760
+#: app/widgets/gimpdrawabletreeview-filters.c:767
 msgid "The layer to merge down to is locked."
 msgstr "Слој стапања доле је закључан."
 
@@ -14559,40 +14560,40 @@ msgstr "Промена размере слике"
 msgid "Can't undo %s"
 msgstr "Не могу да опозовем „%s“"
 
-#: app/core/gimpimagefile.c:834
+#: app/core/gimpimagefile.c:838
 msgid "Folder"
 msgstr "Фасцикла"
 
-#: app/core/gimpimagefile.c:839
+#: app/core/gimpimagefile.c:843
 msgid "Special File"
 msgstr "Нарочита датотека"
 
-#: app/core/gimpimagefile.c:855
+#: app/core/gimpimagefile.c:859
 msgid "Remote File"
 msgstr "Удаљена датотека"
 
-#: app/core/gimpimagefile.c:874
+#: app/core/gimpimagefile.c:878
 msgid "Click to create preview"
 msgstr "Кликните да направите преглед"
 
-#: app/core/gimpimagefile.c:880
+#: app/core/gimpimagefile.c:884
 msgid "Loading preview..."
 msgstr "Учитавам приказ…"
 
-#: app/core/gimpimagefile.c:886
+#: app/core/gimpimagefile.c:890
 msgid "Preview is out of date"
 msgstr "Преглед је застарео"
 
-#: app/core/gimpimagefile.c:892
+#: app/core/gimpimagefile.c:896
 msgid "Cannot create preview"
 msgstr "Не могу да направим преглед"
 
-#: app/core/gimpimagefile.c:902
+#: app/core/gimpimagefile.c:906
 msgid "(Preview may be out of date)"
 msgstr "(Преглед је можда застарео)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:911 app/widgets/gimpimagepropview.c:438
+#: app/core/gimpimagefile.c:915 app/widgets/gimpimagepropview.c:438
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
@@ -14603,7 +14604,7 @@ msgstr[2] "%d x %d пиксела"
 msgstr[3] "%d x %d пиксел"
 
 # bug: plural-forms
-#: app/core/gimpimagefile.c:934 app/display/gimpdisplayshell-title.c:394
+#: app/core/gimpimagefile.c:938 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -14612,14 +14613,14 @@ msgstr[1] "%d слоја"
 msgstr[2] "%d слојева"
 msgstr[3] "%d слој"
 
-#: app/core/gimpimagefile.c:1009
+#: app/core/gimpimagefile.c:1017
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Не могу да отворим умањени приказ „%s“: %s"
 
 #: app/core/gimpitem.c:1858 app/core/gimpitem.c:1925
 #: app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730
-#: app/widgets/gimpdrawabletreeview-filters.c:630
+#: app/widgets/gimpdrawabletreeview-filters.c:637
 msgid "A selected layer's pixels are locked."
 msgstr "Пиксели изабраних слојева су закључани."
 
@@ -14647,7 +14648,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Усидравање плутајућег избор"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1081
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1078
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14660,78 +14661,78 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Претварање плутајућег избора у слој"
 
-#: app/core/gimplayer.c:430
+#: app/core/gimplayer.c:428
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Промена избора слој"
 
-#: app/core/gimplayer.c:431
+#: app/core/gimplayer.c:429
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Премештање слоја"
 
-#: app/core/gimplayer.c:432
+#: app/core/gimplayer.c:430
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Размера слоја"
 
-#: app/core/gimplayer.c:433
+#: app/core/gimplayer.c:431
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Промена величина слоја"
 
-#: app/core/gimplayer.c:434
+#: app/core/gimplayer.c:432
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Извртање слоја"
 
-#: app/core/gimplayer.c:435
+#: app/core/gimplayer.c:433
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Ротирање слоја"
 
-#: app/core/gimplayer.c:438
+#: app/core/gimplayer.c:436
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Промена редоследа слоја"
 
-#: app/core/gimplayer.c:439
+#: app/core/gimplayer.c:437
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Издизање слоја"
 
-#: app/core/gimplayer.c:440
+#: app/core/gimplayer.c:438
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Издизање слоја на врх"
 
-#: app/core/gimplayer.c:441
+#: app/core/gimplayer.c:439
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Спуштање слоја"
 
-#: app/core/gimplayer.c:442
+#: app/core/gimplayer.c:440
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Спуштање слоја на дно"
 
-#: app/core/gimplayer.c:443
+#: app/core/gimplayer.c:441
 msgid "Layer cannot be raised higher."
 msgstr "Не можете више подићи слој."
 
-#: app/core/gimplayer.c:444
+#: app/core/gimplayer.c:442
 msgid "Layer cannot be lowered more."
 msgstr "Не можете више спустити слој."
 
-#: app/core/gimplayer.c:779
+#: app/core/gimplayer.c:776
 msgid "Floating Mask"
 msgstr "Плутајућа маска"
 
-#: app/core/gimplayer.c:781
+#: app/core/gimplayer.c:778
 msgid "Floating Channel"
 msgstr "Лебдећи канал"
 
-#: app/core/gimplayer.c:783
+#: app/core/gimplayer.c:780
 msgid "Floating Layer"
 msgstr "Плутајући слој"
 
@@ -14739,7 +14740,7 @@ msgstr "Плутајући слој"
 #. * either a "Floating Layer" or "Floating Mask" usually. The second will
 #. * be a layer name.
 #.
-#: app/core/gimplayer.c:788
+#: app/core/gimplayer.c:785
 #, c-format
 msgid ""
 "%s\n"
@@ -14748,75 +14749,75 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1942
+#: app/core/gimplayer.c:1923
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Не могу да додам маску јер слој већ има једну."
 
-#: app/core/gimplayer.c:1954
+#: app/core/gimplayer.c:1935
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Не могу да додам маску са различитим димензијама од изабраног слоја."
 
-#: app/core/gimplayer.c:1960
+#: app/core/gimplayer.c:1941
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Додај маске слоја"
 
-#: app/core/gimplayer.c:2090
+#: app/core/gimplayer.c:2071
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Претварање провидности у маску"
 
-#: app/core/gimplayer.c:2254
+#: app/core/gimplayer.c:2235
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Примени маске слоја"
 
-#: app/core/gimplayer.c:2255
+#: app/core/gimplayer.c:2236
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Обриши маске слоја"
 
-#: app/core/gimplayer.c:2362
+#: app/core/gimplayer.c:2343
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Омогући маске слоја"
 
-#: app/core/gimplayer.c:2363
+#: app/core/gimplayer.c:2344
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Онемогући маске слоја"
 
-#: app/core/gimplayer.c:2444
+#: app/core/gimplayer.c:2425
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Прикажи маске слоја"
 
-#: app/core/gimplayer.c:2523
+#: app/core/gimplayer.c:2504
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Додавање канала провидности"
 
-#: app/core/gimplayer.c:2553
+#: app/core/gimplayer.c:2534
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Уклањање канала провидности"
 
-#: app/core/gimplayer.c:2574
+#: app/core/gimplayer.c:2555
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Слој на величину слике"
 
 # постављањем непровидности постављамо и провидност
-#: app/core/gimplayer.c:2757
+#: app/core/gimplayer.c:2738
 msgid "Set layer's blend space"
 msgstr "Постави начин стапања слојева"
 
 # постављањем непровидности постављамо и провидност
-#: app/core/gimplayer.c:2804
+#: app/core/gimplayer.c:2785
 msgid "Set layer's composite space"
 msgstr "Постави окружење за склапање слојева"
 
-#: app/core/gimplayer.c:2851
+#: app/core/gimplayer.c:2832
 msgid "Set layer's composite mode"
 msgstr "Постави режим за склапање слојева"
 
@@ -14929,7 +14930,7 @@ msgstr "Величина датотеке Мајпеинта је непрепо
 msgid "Failed to deserialize MyPaint brush."
 msgstr "Не могу да десеријализујем Мајпаинт четкицу."
 
-#: app/core/gimppalette.c:499
+#: app/core/gimppalette.c:504
 msgctxt "undo-type"
 msgid "Change Colormap format restriction"
 msgstr "Измена ограничења формата мапе боја"
@@ -14970,164 +14971,164 @@ msgstr ""
 "Читам датотеку палете „%s“: неисправан број стубаца у %d. реду. Користим "
 "подразумевану вредност."
 
-#: app/core/gimppalette-load.c:206
+#: app/core/gimppalette-load.c:213
 #, c-format
 msgid "Reading palette file '%s': red component out of range in line %d."
 msgstr ""
 "Читам датотеку палете „%s“: цевана компонента је изван опсега у %d. реду."
 
-#: app/core/gimppalette-load.c:214
+#: app/core/gimppalette-load.c:221
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Читам датотеку палете „%s“: недостаје црвена компонента у %d. реду."
 
-#: app/core/gimppalette-load.c:223
+#: app/core/gimppalette-load.c:235
 #, c-format
 msgid "Reading palette file '%s': green component out of range in line %d."
 msgstr ""
 "Читам датотеку палете „%s“: зелена компонента је изван опсега у %d. реду."
 
-#: app/core/gimppalette-load.c:231
+#: app/core/gimppalette-load.c:243
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "Читам датотеку палете „%s“: недостаје зелена компонента у %d. реду."
 
-#: app/core/gimppalette-load.c:240
+#: app/core/gimppalette-load.c:256
 #, c-format
 msgid "Reading palette file '%s': blue component out of range in line %d."
 msgstr ""
 "Читам датотеку палете „%s“: плава компонента је изван опсега у %d. реду."
 
-#: app/core/gimppalette-load.c:248
+#: app/core/gimppalette-load.c:264
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Читам датотеку палете „%s“: недостаје плава компонента у %d. реду."
 
-#: app/core/gimppalette-load.c:270 app/core/gimppalette-load.c:526
+#: app/core/gimppalette-load.c:290 app/core/gimppalette-load.c:546
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr ""
 "Учитавање датотеке са палетом „%s“: Читам %d боја из скраћене датотеке: %s"
 
-#: app/core/gimppalette-load.c:290
+#: app/core/gimppalette-load.c:310
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "У %d. реду датотеке са шаром: "
 
-#: app/core/gimppalette-load.c:497 app/core/gimppalette-load.c:702
-#: app/core/gimppalette-load.c:1049 app/core/gimppalette-load.c:1600
-#: app/core/gimppalette-load.c:1621
+#: app/core/gimppalette-load.c:517 app/core/gimppalette-load.c:722
+#: app/core/gimppalette-load.c:1069 app/core/gimppalette-load.c:1620
+#: app/core/gimppalette-load.c:1641
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Не могу да прочитам заглавље из датотеке са палетом „%s“: "
 
-#: app/core/gimppalette-load.c:531
+#: app/core/gimppalette-load.c:551
 msgid "Premature end of file."
 msgstr "Превремени крај датотеке."
 
-#: app/core/gimppalette-load.c:712
+#: app/core/gimppalette-load.c:732
 #, c-format
 msgid "Invalid ACB palette version."
 msgstr "Неисправна верзија ACB палете."
 
-#: app/core/gimppalette-load.c:719
+#: app/core/gimppalette-load.c:739
 #, c-format
 msgid "GIMP only supports version 1 ACB palettes"
 msgstr "Гимп подржава само верзију 1 ACB палете верзије"
 
-#: app/core/gimppalette-load.c:727
+#: app/core/gimppalette-load.c:747
 #, c-format
 msgid "Invalid ACB palette identifier."
 msgstr "Неисправна одредница ACB палете."
 
-#: app/core/gimppalette-load.c:743 app/core/gimppalette-load.c:762
-#: app/core/gimppalette-load.c:982 app/core/gimppalette-load.c:1003
+#: app/core/gimppalette-load.c:763 app/core/gimppalette-load.c:782
+#: app/core/gimppalette-load.c:1002 app/core/gimppalette-load.c:1023
 #, c-format
 msgid "Invalid ACB palette name."
 msgstr "Неисправан назив ACB палете."
 
-#: app/core/gimppalette-load.c:778
+#: app/core/gimppalette-load.c:798
 #, c-format
 msgid "Invalid ACB palette suffix."
 msgstr "Неисправан сифукс ACB пелете."
 
-#: app/core/gimppalette-load.c:797 app/core/gimppalette-load.c:1069
+#: app/core/gimppalette-load.c:817 app/core/gimppalette-load.c:1089
 #, c-format
 msgid "Invalid number of colors in palette."
 msgstr "Неисправан број боја у палети."
 
-#: app/core/gimppalette-load.c:804 app/core/gimppalette-load.c:1076
+#: app/core/gimppalette-load.c:824 app/core/gimppalette-load.c:1096
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "Највећи број боја: %s."
 
-#: app/core/gimppalette-load.c:817 app/core/gimppalette-load.c:827
+#: app/core/gimppalette-load.c:837 app/core/gimppalette-load.c:847
 #, c-format
 msgid "Invalid ACB palette page info."
 msgstr "Неисправна страница са подацима за ACB палету."
 
-#: app/core/gimppalette-load.c:839 app/core/gimppalette-load.c:852
+#: app/core/gimppalette-load.c:859 app/core/gimppalette-load.c:872
 #, c-format
 msgid "Invalid ACB palette color space."
 msgstr "Неисправан простор боја за ACB палету."
 
-#: app/core/gimppalette-load.c:992
+#: app/core/gimppalette-load.c:1012
 #, c-format
 msgid "Invalid ACB name size."
 msgstr "Неисправна величина назива ACB палете."
 
-#: app/core/gimppalette-load.c:1060
+#: app/core/gimppalette-load.c:1080
 #, c-format
 msgid "Invalid ASE header: %s"
 msgstr "Неисправно ASE заглавље: %s"
 
-#: app/core/gimppalette-load.c:1087
+#: app/core/gimppalette-load.c:1107
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "Неисправна ASE датотека: %s."
 
-#: app/core/gimppalette-load.c:1178
+#: app/core/gimppalette-load.c:1198
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "Неисправне компоненте боја: %s."
 
-#: app/core/gimppalette-load.c:1190 app/core/gimppalette-load.c:1215
+#: app/core/gimppalette-load.c:1210 app/core/gimppalette-load.c:1235
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "Неисправан унос ASE боје: %s."
 
-#: app/core/gimppalette-load.c:1247 app/core/gimppalette-load.c:1263
-#: app/core/gimppalette-load.c:1282
+#: app/core/gimppalette-load.c:1267 app/core/gimppalette-load.c:1283
+#: app/core/gimppalette-load.c:1302
 #, c-format
 msgid "Invalid ASE palette name."
 msgstr "Наисправан назив ASE палете."
 
-#: app/core/gimppalette-load.c:1256
+#: app/core/gimppalette-load.c:1276
 #, c-format
 msgid "Invalid ASE block size."
 msgstr "Неисправна величина ASE блока."
 
-#: app/core/gimppalette-load.c:1272
+#: app/core/gimppalette-load.c:1292
 #, c-format
 msgid "Invalid ASE name size."
 msgstr "Неисправна величина ASE назива."
 
-#: app/core/gimppalette-load.c:1401 app/core/gimppalette-load.c:1471
+#: app/core/gimppalette-load.c:1421 app/core/gimppalette-load.c:1491
 #, c-format
 msgid "Unable to read SBZ file: %s"
 msgstr "Не могу да прочитам SBZ датотеку: %s"
 
-#: app/core/gimppalette-load.c:1499 app/core/gimppalette-load.c:1511
+#: app/core/gimppalette-load.c:1519 app/core/gimppalette-load.c:1531
 #, c-format
 msgid "Unable to open SBZ file"
 msgstr "Не могу да отворим SBZ датотеку"
 
-#: app/core/gimppalette-load.c:1545 app/core/gimppalette-load.c:1582
+#: app/core/gimppalette-load.c:1565 app/core/gimppalette-load.c:1602
 #, c-format
 msgid "Unable to read Procreate swatches file: %s"
 msgstr "Не могу да прочитам Прокриет (Procreate) датотеку узорака: %s"
 
-#: app/core/gimppalette-load.c:1787 app/core/gimppalette-load.c:1798
+#: app/core/gimppalette-load.c:1807 app/core/gimppalette-load.c:1818
 #, c-format
 msgid "Unable to read Procreate swatches file"
 msgstr "Не могу да прочитам Прокриет (Procreate) датотеку узорака"
@@ -15350,7 +15351,7 @@ msgstr "Опонашај динамику четкице"
 
 #. no undo (or redo) steps available
 #: app/core/gimpsymmetry.c:137 app/display/gimpstatusbar.c:509
-#: app/display/gimpstatusbar.c:2152 app/widgets/gimpimagepropview.c:407
+#: app/display/gimpstatusbar.c:2158 app/widgets/gimpimagepropview.c:407
 #: app/widgets/gimpsymmetryeditor.c:167 app/widgets/gimpsymmetryeditor.c:177
 msgid "None"
 msgstr "Ништа"
@@ -15869,7 +15870,7 @@ msgid "Preferred Profile"
 msgstr "Омиљени профили"
 
 #: app/dialogs/color-profile-import-dialog.c:222
-#: app/dialogs/metadata-rotation-import-dialog.c:227
+#: app/dialogs/metadata-rotation-import-dialog.c:257
 msgid "_Don't ask me again"
 msgstr "_Не питај ме поново"
 
@@ -16232,7 +16233,7 @@ msgstr "Споји само унутар активне _групе"
 msgid "_Discard invisible layers"
 msgstr "Одбаци _невидљиве слојеве"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:775
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:770
 msgid "Create a New Image"
 msgstr "Направи нову слику"
 
@@ -16265,9 +16266,9 @@ msgid "Image Properties"
 msgstr "Својства слике"
 
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
-#: app/dialogs/welcome-dialog.c:213 app/tools/gimpcolorpickertool.c:352
+#: app/dialogs/welcome-dialog.c:207 app/tools/gimpcolorpickertool.c:352
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:741
-#: app/widgets/gimpcontrollerlist.c:635 app/widgets/gimpcriticaldialog.c:220
+#: app/widgets/gimpcontrollerlist.c:636 app/widgets/gimpcriticaldialog.c:220
 #: app/widgets/gimpcriticaldialog.c:242 app/widgets/gimpsettingsbox.c:637
 #: app/widgets/gimptexteditor.c:164
 msgid "_Close"
@@ -16532,37 +16533,37 @@ msgstr ""
 msgid "Killer GEGLs from Outer Space"
 msgstr "Убица Геглова из свемира"
 
-#: app/dialogs/metadata-rotation-import-dialog.c:98
+#: app/dialogs/metadata-rotation-import-dialog.c:102
 msgid "Rotate Image?"
 msgstr "Да окренем слику?"
 
-#: app/dialogs/metadata-rotation-import-dialog.c:101
+#: app/dialogs/metadata-rotation-import-dialog.c:105
 msgid "Apply metadata rotation"
 msgstr "Примењује податке о ротацији слике из метаподатака"
 
-#: app/dialogs/metadata-rotation-import-dialog.c:106
+#: app/dialogs/metadata-rotation-import-dialog.c:110
 msgid "_Keep Original"
 msgstr "_Задржи оригинал"
 
-#: app/dialogs/metadata-rotation-import-dialog.c:107
+#: app/dialogs/metadata-rotation-import-dialog.c:111
 #: app/tools/gimprotatetool.c:105
 msgid "_Rotate"
 msgstr "_Ротација"
 
-#: app/dialogs/metadata-rotation-import-dialog.c:124
+#: app/dialogs/metadata-rotation-import-dialog.c:128
 #, c-format
 msgid "The image '%s' contains Exif orientation metadata"
 msgstr "Слика „%s“ садржи Exif податке о орјентацији"
 
-#: app/dialogs/metadata-rotation-import-dialog.c:182
+#: app/dialogs/metadata-rotation-import-dialog.c:187
 msgid "Original"
 msgstr "Оригинално"
 
-#: app/dialogs/metadata-rotation-import-dialog.c:198
+#: app/dialogs/metadata-rotation-import-dialog.c:216
 msgid "Rotated"
 msgstr "Ротирано"
 
-#: app/dialogs/metadata-rotation-import-dialog.c:215
+#: app/dialogs/metadata-rotation-import-dialog.c:245
 msgid "Would you like to rotate the image?"
 msgstr "Да ли желите да окренете слику?"
 
@@ -16736,7 +16737,7 @@ msgstr "Вратите све поставке"
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "Да ли заиста желите да вратите све поставке на основне вредности?"
 
-#: app/dialogs/preferences-dialog.c:312 app/dialogs/welcome-dialog.c:434
+#: app/dialogs/preferences-dialog.c:312 app/dialogs/welcome-dialog.c:428
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr ""
 "Мораћете поново да покренете ГИМП да би следеће промене ступиле у дејство:"
@@ -17380,7 +17381,7 @@ msgstr "Уклони _све пречице тастатуре"
 
 #. Themes
 #: app/dialogs/preferences-dialog.c:1962 app/dialogs/preferences-dialog.c:1963
-#: app/dialogs/welcome-dialog.c:618
+#: app/dialogs/welcome-dialog.c:615
 msgid "Theme"
 msgstr "Тема"
 
@@ -17392,46 +17393,46 @@ msgstr "Изаберите тему"
 msgid "Color scheme variant (if available)"
 msgstr "Шема боја (уколико је доступна)"
 
-#: app/dialogs/preferences-dialog.c:2055 app/dialogs/welcome-dialog.c:671
+#: app/dialogs/preferences-dialog.c:2055 app/dialogs/welcome-dialog.c:668
 msgid "_Override icon sizes set by the theme"
 msgstr "_Измени величину иконица задату темом"
 
-#: app/dialogs/preferences-dialog.c:2068 app/dialogs/welcome-dialog.c:680
+#: app/dialogs/preferences-dialog.c:2068 app/dialogs/welcome-dialog.c:677
 msgid "Small"
 msgstr "Мале"
 
-#: app/dialogs/preferences-dialog.c:2070 app/dialogs/welcome-dialog.c:682
+#: app/dialogs/preferences-dialog.c:2070 app/dialogs/welcome-dialog.c:679
 msgid "Medium"
 msgstr "Средње"
 
-#: app/dialogs/preferences-dialog.c:2072 app/dialogs/welcome-dialog.c:684
+#: app/dialogs/preferences-dialog.c:2072 app/dialogs/welcome-dialog.c:681
 msgid "Large"
 msgstr "Велике"
 
-#: app/dialogs/preferences-dialog.c:2074 app/dialogs/welcome-dialog.c:686
+#: app/dialogs/preferences-dialog.c:2074 app/dialogs/welcome-dialog.c:683
 msgid "Huge"
 msgstr "Огромне"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:2087 app/dialogs/welcome-dialog.c:702
+#: app/dialogs/preferences-dialog.c:2087 app/dialogs/welcome-dialog.c:699
 msgid "Font Scaling"
 msgstr "Размера фонта"
 
-#: app/dialogs/preferences-dialog.c:2089 app/dialogs/welcome-dialog.c:704
+#: app/dialogs/preferences-dialog.c:2089 app/dialogs/welcome-dialog.c:701
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr ""
 "Промена размене фонта неће радити са темама које користе задату величину "
 "фонта."
 
-#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:710
+#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:707
 msgid "50%"
 msgstr "50%"
 
-#: app/dialogs/preferences-dialog.c:2097 app/dialogs/welcome-dialog.c:712
+#: app/dialogs/preferences-dialog.c:2097 app/dialogs/welcome-dialog.c:709
 msgid "100%"
 msgstr "100%"
 
-#: app/dialogs/preferences-dialog.c:2099 app/dialogs/welcome-dialog.c:714
+#: app/dialogs/preferences-dialog.c:2099 app/dialogs/welcome-dialog.c:711
 msgid "200%"
 msgstr "200%"
 
@@ -17447,7 +17448,7 @@ msgstr "Тема иконица"
 msgid "Select an Icon Theme"
 msgstr "Изаберите тему за иконице"
 
-#: app/dialogs/preferences-dialog.c:2251 app/dialogs/welcome-dialog.c:664
+#: app/dialogs/preferences-dialog.c:2251 app/dialogs/welcome-dialog.c:661
 msgid "Use symbolic icons if available"
 msgstr "Користи симболичке иконице уколико су доступне"
 
@@ -17478,7 +17479,7 @@ msgstr "Прикажи радну _четкицу, шару и прелив"
 msgid "Show active _image"
 msgstr "Прикажи радну _слику"
 
-#: app/dialogs/preferences-dialog.c:2295 app/dialogs/welcome-dialog.c:750
+#: app/dialogs/preferences-dialog.c:2295 app/dialogs/welcome-dialog.c:747
 msgid "Use tool _groups"
 msgstr "Користи _групе алата"
 
@@ -18420,20 +18421,20 @@ msgstr "_Y резолуција:"
 msgid "pixels/%a"
 msgstr "пиксела/%a"
 
-#: app/dialogs/quit-dialog.c:174
+#: app/dialogs/quit-dialog.c:144
 msgid "Quit GIMP"
 msgstr "Затворите Гимп"
 
-#: app/dialogs/quit-dialog.c:174
+#: app/dialogs/quit-dialog.c:144
 msgid "Close All Images"
 msgstr "Затворите све слике"
 
-#: app/dialogs/quit-dialog.c:288
+#: app/dialogs/quit-dialog.c:222
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Ако сада изађете из Гимпа, ове измене ће бити изгубљене."
 
 # bug: plural-forms
-#: app/dialogs/quit-dialog.c:291
+#: app/dialogs/quit-dialog.c:225
 msgid "If you close these images now, changes will be lost."
 msgstr "Ако сада затворите ове слике, измене ће бити изгубљене."
 
@@ -18441,7 +18442,7 @@ msgstr "Ако сада затворите ове слике, измене ће 
 #. TRANSLATORS: unless your language
 #. msgstr[0] applies to 1 only (as
 #. in English), replace "one" with %d.
-#: app/dialogs/quit-dialog.c:378
+#: app/dialogs/quit-dialog.c:312
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
@@ -18450,50 +18451,37 @@ msgstr[1] "%d слике имају несачуване измене:"
 msgstr[2] "%d слика има несачуваних измена:"
 msgstr[3] "%d слика има несачуване измене:"
 
-#: app/dialogs/quit-dialog.c:389
+#: app/dialogs/quit-dialog.c:323
 #, c-format
 msgid "Press %s to quit."
 msgstr "Притисните „%s“ да изађете."
 
-#: app/dialogs/quit-dialog.c:392
+#: app/dialogs/quit-dialog.c:326
 #, c-format
 msgid "Press %s to close all images."
 msgstr "Притисните „%s“ да затворите све слике."
 
-#: app/dialogs/quit-dialog.c:396 app/dialogs/user-install-dialog.c:90
+#: app/dialogs/quit-dialog.c:330 app/dialogs/user-install-dialog.c:90
 msgid "_Quit"
 msgstr "_Изађи"
 
-#: app/dialogs/quit-dialog.c:396
+#: app/dialogs/quit-dialog.c:330
 msgid "Cl_ose"
 msgstr "_Затвори"
 
-#: app/dialogs/quit-dialog.c:420
+#: app/dialogs/quit-dialog.c:354
 #, c-format
 msgid "Press %s to discard all changes and quit."
 msgstr "Притисните „%s“ да одбаците све измене и да изађете."
 
-#: app/dialogs/quit-dialog.c:423
+#: app/dialogs/quit-dialog.c:357
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr "Притисните „%s“ да одбаците све измене и да затворите све слике."
 
-#: app/dialogs/quit-dialog.c:431 app/display/gimpdisplayshell-close.c:182
+#: app/dialogs/quit-dialog.c:365 app/display/gimpdisplayshell-close.c:182
 msgid "_Discard Changes"
 msgstr "Одбаци сл_ику"
-
-#: app/dialogs/quit-dialog.c:523
-#, c-format
-msgid "Exported to %s"
-msgstr "Извезена у „%s“"
-
-#: app/dialogs/quit-dialog.c:624
-msgid "Save this image"
-msgstr "Сачувај ову слику"
-
-#: app/dialogs/quit-dialog.c:626
-msgid "Save as"
-msgstr "Сачувај као"
 
 #: app/dialogs/resize-dialog.c:172
 msgid "Canvas Size"
@@ -18658,7 +18646,7 @@ msgid "_Next Tip"
 msgstr "_Следећи савет"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1147
+#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1098
 msgid "Learn more"
 msgstr "Сазнајте више"
 
@@ -18738,39 +18726,39 @@ msgid "Lock path _visibility"
 msgstr "Промени _видљивост путање"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:206
+#: app/dialogs/welcome-dialog.c:200
 #, c-format
 msgid "Welcome to GIMP %s"
 msgstr "Добро дошли у Гимп %s"
 
-#: app/dialogs/welcome-dialog.c:255 app/dialogs/welcome-dialog.c:256
+#: app/dialogs/welcome-dialog.c:249 app/dialogs/welcome-dialog.c:250
 msgid "Welcome"
 msgstr "Добродошли"
 
-#: app/dialogs/welcome-dialog.c:270 app/dialogs/welcome-dialog.c:271
+#: app/dialogs/welcome-dialog.c:264 app/dialogs/welcome-dialog.c:265
 msgid "Personalize"
 msgstr "Пикселизацуј"
 
-#: app/dialogs/welcome-dialog.c:282 app/dialogs/welcome-dialog.c:283
+#: app/dialogs/welcome-dialog.c:276 app/dialogs/welcome-dialog.c:277
 msgid "Contribute"
 msgstr "Допринеси"
 
-#: app/dialogs/welcome-dialog.c:294 app/dialogs/welcome-dialog.c:295
+#: app/dialogs/welcome-dialog.c:288 app/dialogs/welcome-dialog.c:289
 msgid "Create"
 msgstr "Направи"
 
-#: app/dialogs/welcome-dialog.c:312 app/dialogs/welcome-dialog.c:313
+#: app/dialogs/welcome-dialog.c:306 app/dialogs/welcome-dialog.c:307
 msgid "Release Notes"
 msgstr "Белешка о издању"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:498
+#: app/dialogs/welcome-dialog.c:491
 #, c-format
-msgid "You installed GIMP %s!"
-msgstr "Инсталирали сте Гимп %s!"
+msgid "You installed GIMP %s"
+msgstr "Инсталирали сте Гимп %s"
 
 #. Welcome message: left
-#: app/dialogs/welcome-dialog.c:512
+#: app/dialogs/welcome-dialog.c:505
 msgid ""
 "GIMP is Free Software for image authoring and manipulation.\n"
 "Want to know more?"
@@ -18778,22 +18766,22 @@ msgstr ""
 "Гимп је слободан софтвер за цртање и обраду слика.\n"
 "Желите да сазнате више?"
 
-#: app/dialogs/welcome-dialog.c:541
+#: app/dialogs/welcome-dialog.c:536
 msgid "GIMP website"
 msgstr "Гимпова веб страница"
 
-#: app/dialogs/welcome-dialog.c:545
+#: app/dialogs/welcome-dialog.c:540
 msgid "Documentation"
 msgstr "Документација"
 
-#: app/dialogs/welcome-dialog.c:550
+#: app/dialogs/welcome-dialog.c:545
 msgid "Community Tutorials"
 msgstr "Водичи заједнице"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
 #. Welcome message: right
-#: app/dialogs/welcome-dialog.c:558
+#: app/dialogs/welcome-dialog.c:553
 msgid ""
 "GIMP is Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
@@ -18801,75 +18789,74 @@ msgstr ""
 "Гимп је софтвер заједнице издат под ГНУ-овом општом јавном лиценцом 3.\n"
 "Желите да допринесете?"
 
-#: app/dialogs/welcome-dialog.c:583
+#: app/dialogs/welcome-dialog.c:578
 msgid "Contributing"
 msgstr "Допринеси"
 
-#: app/dialogs/welcome-dialog.c:588
+#: app/dialogs/welcome-dialog.c:583
 msgid "Donating"
 msgstr "Донирај"
 
-#: app/dialogs/welcome-dialog.c:629
+#: app/dialogs/welcome-dialog.c:626
 msgid "Color scheme"
 msgstr "Боја програма"
 
-#: app/dialogs/welcome-dialog.c:655
+#: app/dialogs/welcome-dialog.c:652
 msgid "Icon theme"
 msgstr "Тема иконица"
 
-#: app/dialogs/welcome-dialog.c:668
+#: app/dialogs/welcome-dialog.c:665
 msgid "Icon Scaling"
 msgstr "Величина иконица"
 
-#: app/dialogs/welcome-dialog.c:727
+#: app/dialogs/welcome-dialog.c:724
 msgid "GUI Language (requires restart)"
 msgstr "Језик програма (зах)"
 
-#: app/dialogs/welcome-dialog.c:732
+#: app/dialogs/welcome-dialog.c:729
 msgid "Additional Customizations"
 msgstr "Додатна подешавања"
 
-#: app/dialogs/welcome-dialog.c:736
+#: app/dialogs/welcome-dialog.c:733
 msgid "Merge menu and title bar (requires restart)"
 msgstr "Споји мени и насловну линију (поново покрените)"
 
-#: app/dialogs/welcome-dialog.c:744
+#: app/dialogs/welcome-dialog.c:741
 msgid "Enable check for updates (requires internet)"
 msgstr "Потражи нове верзије (захтева интернет)"
 
-#: app/dialogs/welcome-dialog.c:778
+#: app/dialogs/welcome-dialog.c:773
 msgid "C_reate"
 msgstr "_Направи"
 
-#: app/dialogs/welcome-dialog.c:787
+#: app/dialogs/welcome-dialog.c:782
 msgid "Open an Existing Image"
 msgstr "Отвори постојећу слику"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:799
+#: app/dialogs/welcome-dialog.c:794
 msgid "Recent Images"
 msgstr "Скорашње слике"
 
-#: app/dialogs/welcome-dialog.c:858
+#: app/dialogs/welcome-dialog.c:809
 msgid "O_pen Selected Images"
 msgstr "О_твори изабране слике"
 
-#: app/dialogs/welcome-dialog.c:867
+#: app/dialogs/welcome-dialog.c:819
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr "Прикажи приликом покретања (можете га приказати и из менија „Помоћ“)"
 
-#: app/dialogs/welcome-dialog.c:895
+#: app/dialogs/welcome-dialog.c:845
 #, c-format
 msgid "Ways to contribute"
 msgstr "Начин на који можете да допринесете"
 
-#: app/dialogs/welcome-dialog.c:904 app/dialogs/welcome-dialog.c:915
+#: app/dialogs/welcome-dialog.c:854 app/dialogs/welcome-dialog.c:865
 msgid "Report Bugs"
 msgstr "Пријави грешке"
 
-#: app/dialogs/welcome-dialog.c:906
-#, c-format
+#: app/dialogs/welcome-dialog.c:856
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
 "encounter is very important to the development."
@@ -18877,12 +18864,11 @@ msgstr ""
 "Као и било која друга апликација, Гимп не долази без грешки, па је "
 "програмерима веома важно да их пријавите уколико налетите на неку."
 
-#: app/dialogs/welcome-dialog.c:919 app/dialogs/welcome-dialog.c:929
+#: app/dialogs/welcome-dialog.c:869 app/dialogs/welcome-dialog.c:879
 msgid "Write Code"
 msgstr "Помози у програмирању"
 
-#: app/dialogs/welcome-dialog.c:921
-#, c-format
+#: app/dialogs/welcome-dialog.c:871
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
 "contributor."
@@ -18890,39 +18876,37 @@ msgstr ""
 "На нашој веб страници за програмере ћете наћи начине како можете да "
 "помогнете у писању софтверског кода."
 
-#: app/dialogs/welcome-dialog.c:933 app/dialogs/welcome-dialog.c:943
+#: app/dialogs/welcome-dialog.c:883 app/dialogs/welcome-dialog.c:893
 msgid "Translate"
 msgstr "Преведи"
 
-#: app/dialogs/welcome-dialog.c:935
-#, c-format
+#: app/dialogs/welcome-dialog.c:885
 msgid "Contact the respective translation team for your language"
 msgstr "Контактирајте одговорног програмера из тим за ваш језик"
 
-#: app/dialogs/welcome-dialog.c:947
+#: app/dialogs/welcome-dialog.c:897
 msgid "Donate"
 msgstr "Донирај"
 
-#: app/dialogs/welcome-dialog.c:949
-#, c-format
+#: app/dialogs/welcome-dialog.c:899
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "Донирање пара је важно, пошто омогућава да Гимп буде одржив."
 
-#: app/dialogs/welcome-dialog.c:957
+#: app/dialogs/welcome-dialog.c:907
 msgid "Donate via Liberapay"
 msgstr "Донирај преко Либрепеја"
 
-#: app/dialogs/welcome-dialog.c:960
+#: app/dialogs/welcome-dialog.c:911
 msgid "Other donation options"
 msgstr "Остале опције за донације"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:994
+#: app/dialogs/welcome-dialog.c:945
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "Белешке о издању Гимп %s"
 
-#: app/dialogs/welcome-dialog.c:1107
+#: app/dialogs/welcome-dialog.c:1058
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr ""
@@ -19124,23 +19108,23 @@ msgstr "В"
 msgid "_Sample Merged"
 msgstr "Спојени _узорак"
 
-#: app/display/gimpdisplayshell.c:562
+#: app/display/gimpdisplayshell.c:557
 msgid "Access the image menu"
 msgstr "Приступите изборнику слике"
 
-#: app/display/gimpdisplayshell.c:725
+#: app/display/gimpdisplayshell.c:720
 msgid "Zoom image when window size changes"
 msgstr "Увећајте слику када се промени величина прозора"
 
-#: app/display/gimpdisplayshell.c:754
+#: app/display/gimpdisplayshell.c:749
 msgid "Toggle Quick Mask"
 msgstr "Пребацује на приказ брзе маске"
 
-#: app/display/gimpdisplayshell.c:769
+#: app/display/gimpdisplayshell.c:764
 msgid "Navigate the image display"
 msgstr "Навигација приказа слике"
 
-#: app/display/gimpdisplayshell.c:823 app/display/gimpdisplayshell.c:1700
+#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1608
 #: app/widgets/gimptoolbox.c:273
 msgid "Drop image files here to open them"
 msgstr "Овде превуците датотеке слика да их отворите"
@@ -19235,8 +19219,8 @@ msgid "The image has been exported to '%s'."
 msgstr "Слика је извезена у „%s“."
 
 #: app/display/gimpdisplayshell-dnd.c:257
-#: app/display/gimpdisplayshell-dnd.c:764
-#: app/display/gimpdisplayshell-dnd.c:823
+#: app/display/gimpdisplayshell-dnd.c:767
+#: app/display/gimpdisplayshell-dnd.c:826
 msgid "Drop New Layer"
 msgstr "Одбаците нови слој"
 
@@ -19253,7 +19237,7 @@ msgstr "Не могу да изменим пикселе групи слојев
 
 #: app/display/gimpdisplayshell-dnd.c:393 app/tools/gimpfiltertool.c:340
 #: app/tools/gimppainttool.c:355 app/tools/gimptransformtool.c:739
-#: app/widgets/gimpdrawabletreeview-filters.c:623
+#: app/widgets/gimpdrawabletreeview-filters.c:630
 msgid "A selected layer is not visible."
 msgstr "Изабрани слој није видљив."
 
@@ -19261,7 +19245,8 @@ msgstr "Изабрани слој није видљив."
 #. * the same translations you used for the "Rasterize"
 #. * action under the "Layer" menu.
 #.
-#: app/display/gimpdisplayshell-dnd.c:404 app/tools/gimptool.c:765
+#: app/display/gimpdisplayshell-dnd.c:404 app/tools/gimpcroptool.c:523
+#: app/tools/gimptool.c:765
 msgid "Layer > Rasterize"
 msgstr "Слој > Растеризуј"
 
@@ -19277,27 +19262,27 @@ msgstr "Слојеви везе морају бити растеризовани
 msgid "Text layers must be rasterized (%s)."
 msgstr "Текстуални слојеви морају бити растеризовани (%s)."
 
-#: app/display/gimpdisplayshell-dnd.c:504
+#: app/display/gimpdisplayshell-dnd.c:507
 #: app/widgets/gimpdrawabletreeview.c:472
 #: app/widgets/gimpdrawabletreeview.c:678
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Превлачење шаре у слој"
 
-#: app/display/gimpdisplayshell-dnd.c:526
+#: app/display/gimpdisplayshell-dnd.c:529
 #: app/widgets/gimpdrawabletreeview.c:503
 #: app/widgets/gimpdrawabletreeview.c:698
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Превлачење боје у слој"
 
-#: app/display/gimpdisplayshell-dnd.c:654 app/widgets/gimpitemtreeview.c:1592
-#: app/widgets/gimplayertreeview.c:848
+#: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1592
+#: app/widgets/gimplayertreeview.c:850
 msgid "Drop layers"
 msgstr "Одбаците слојеве"
 
-#: app/display/gimpdisplayshell-dnd.c:797
-#: app/display/gimpdisplayshell-dnd.c:814 app/widgets/gimplayertreeview.c:925
+#: app/display/gimpdisplayshell-dnd.c:800
+#: app/display/gimpdisplayshell-dnd.c:817 app/widgets/gimplayertreeview.c:927
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Одбачена међумеморија"
@@ -19386,7 +19371,7 @@ msgstr "(чист)"
 #: app/display/gimpdisplayshell-title.c:410
 #: app/display/gimpdisplayshell-title.c:419 app/widgets/gimpactiongroup.c:1205
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
-#: app/widgets/gimpdeviceinfo.c:1150 app/widgets/gimpdeviceinfo.c:1175
+#: app/widgets/gimpdeviceinfo.c:1154 app/widgets/gimpdeviceinfo.c:1179
 msgid "(none)"
 msgstr "(ништа)"
 
@@ -19423,7 +19408,7 @@ msgstr ""
 msgid "_Proof Colors"
 msgstr "_Боје за симулацију"
 
-#: app/display/gimpstatusbar.c:508 app/display/gimpstatusbar.c:2159
+#: app/display/gimpstatusbar.c:508 app/display/gimpstatusbar.c:2165
 msgid "Current Soft-Proofing Profile"
 msgstr "Тренутни профил за симулацију штампе"
 
@@ -19857,24 +19842,24 @@ msgstr "Прикључак „%s“ је пријавио УСПЕХ али ни
 msgid "%s plug-in could not open image"
 msgstr "Прикључак %s не може да отвори слику"
 
-#: app/file/file-open.c:642
+#: app/file/file-open.c:643
 msgid "Image doesn't contain any layers"
 msgstr "Слика не садржи слојеве"
 
-#: app/file/file-open.c:700
+#: app/file/file-open.c:702
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Нисам успео да отворим „%s“: %s"
 
-#: app/file/file-open.c:897 app/file/file-save.c:122
+#: app/file/file-open.c:899 app/file/file-save.c:122
 msgid "Not a regular file"
 msgstr "Није обична датотека"
 
-#: app/file/file-open.c:906 app/file/file-save.c:131
+#: app/file/file-open.c:908 app/file/file-save.c:131
 msgid "Permission denied"
 msgstr "Немате овлашћења"
 
-#: app/file/file-open.c:970
+#: app/file/file-open.c:972
 #, c-format
 msgid ""
 "Only platform-native file paths are supported: '%s' cannot be opened as link."
@@ -19882,7 +19867,7 @@ msgstr ""
 "Подржане су само изворне путање датотека платформе: „%s“ се не може отворити "
 "као веза."
 
-#: app/file/file-open.c:1010
+#: app/file/file-open.c:1012
 #, c-format
 msgid "Circular reference detected with '%s'."
 msgstr "Откривено је кружно упућивање са „%s“."
@@ -20009,7 +19994,7 @@ msgstr "Гимпово проширење"
 #: app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195
 #: app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198
 #: app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201
-#: app/plug-in/gimppluginprocedure.c:1023
+#: app/plug-in/gimppluginprocedure.c:1045
 msgid "RGB"
 msgstr "RGB"
 
@@ -20028,7 +20013,7 @@ msgstr "RGB-провидно"
 #: app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233
 #: app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236
 #: app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239
-#: app/plug-in/gimppluginprocedure.c:1041
+#: app/plug-in/gimppluginprocedure.c:1063
 msgid "Grayscale"
 msgstr "Сиво"
 
@@ -20077,7 +20062,7 @@ msgstr "Провидна компонента"
 msgid "Indexed-alpha"
 msgstr "Индексирано-провидна"
 
-#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1059
+#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1081
 msgid "Indexed"
 msgstr "Индексирано"
 
@@ -20709,15 +20694,15 @@ msgstr "Кривуље"
 msgid "not a GIMP Curves file"
 msgstr "није Гимпова датотека са кривуљама"
 
-#: app/operations/gimpcurvesconfig.c:595
+#: app/operations/gimpcurvesconfig.c:600
 msgid "Parse error, didn't find 2 integers"
 msgstr "Грешка у обради, нисам нашао 2 цела броја"
 
-#: app/operations/gimpcurvesconfig.c:701
+#: app/operations/gimpcurvesconfig.c:706
 msgid "Writing curves file failed: "
 msgstr "Није успело чување датотеке са кривом: "
 
-#: app/operations/gimpcurvesconfig.c:800 app/operations/gimpcurvesconfig.c:803
+#: app/operations/gimpcurvesconfig.c:805 app/operations/gimpcurvesconfig.c:808
 #: app/tools/gimpcurvestool.c:766 app/tools/gimpcurvestool.c:769
 #: app/tools/gimplevelstool.c:760 app/tools/gimplevelstool.c:763
 #, c-format
@@ -20789,13 +20774,13 @@ msgstr "Стеже крајње излазне вредности."
 msgid "not a GIMP Levels file"
 msgstr "није Гимпова датотека са новиома"
 
-#: app/operations/gimplevelsconfig.c:959 app/operations/gimplevelsconfig.c:1092
-#: app/operations/gimplevelsconfig.c:1095
+#: app/operations/gimplevelsconfig.c:968 app/operations/gimplevelsconfig.c:1101
+#: app/operations/gimplevelsconfig.c:1104
 #, c-format
 msgid "parse error"
 msgstr "грешка обраде"
 
-#: app/operations/gimplevelsconfig.c:994
+#: app/operations/gimplevelsconfig.c:1003
 msgid "Writing levels file failed: "
 msgstr "Није успело чување датотеке са нивоима: "
 
@@ -22271,7 +22256,7 @@ msgstr "Ова ставка је већ растеризована."
 msgid "This item has not been rasterized."
 msgstr "Ова ставка није растеризована."
 
-#: app/pdb/resource-cmds.c:468
+#: app/pdb/resource-cmds.c:500
 #, c-format
 msgid "Resource '%s' is not renamable"
 msgstr "Не можете да мењате назив ресурса „%s“"
@@ -22422,35 +22407,35 @@ msgstr "Покрећем прикључке"
 msgid "Starting Extensions"
 msgstr "Покрећем проширења"
 
-#: app/plug-in/gimppluginprocedure.c:1027
+#: app/plug-in/gimppluginprocedure.c:1049
 msgid "RGB without alpha"
 msgstr "RGB-провидно"
 
-#: app/plug-in/gimppluginprocedure.c:1031
+#: app/plug-in/gimppluginprocedure.c:1053
 msgid "RGB with alpha"
 msgstr "RGB-провидно"
 
-#: app/plug-in/gimppluginprocedure.c:1045
+#: app/plug-in/gimppluginprocedure.c:1067
 msgid "Grayscale without alpha"
 msgstr "Сиви тонови без алфе"
 
-#: app/plug-in/gimppluginprocedure.c:1049
+#: app/plug-in/gimppluginprocedure.c:1071
 msgid "Grayscale with alpha"
 msgstr "Сиви тонови са алфом"
 
-#: app/plug-in/gimppluginprocedure.c:1063
+#: app/plug-in/gimppluginprocedure.c:1085
 msgid "Indexed without alpha"
 msgstr "Индексирано без алфе"
 
-#: app/plug-in/gimppluginprocedure.c:1067
+#: app/plug-in/gimppluginprocedure.c:1089
 msgid "Indexed with alpha"
 msgstr "Индексирано са алфом"
 
-#: app/plug-in/gimppluginprocedure.c:1078
+#: app/plug-in/gimppluginprocedure.c:1100
 msgid "This plug-in only works on the following layer types:"
 msgstr "Овај прикључак ради само са следећим врстама слојева:"
 
-#: app/plug-in/gimppluginprocedure.c:1432
+#: app/plug-in/gimppluginprocedure.c:1465
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22459,7 +22444,7 @@ msgstr ""
 "Грешка позивања „%s“:\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1444
+#: app/plug-in/gimppluginprocedure.c:1477
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22884,11 +22869,11 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Додај текстуални слој"
 
-#: app/text/gimptext-parasite.c:168
+#: app/text/gimptext-parasite.c:184
 msgid "Invalid markup format in text parasite"
 msgstr "Неисправан маркап формат у текстуалном паразиту"
 
-#: app/text/gimptext-parasite.c:192
+#: app/text/gimptext-parasite.c:218
 msgid "Empty text parasite"
 msgstr "Празан текстуални паразит"
 
@@ -23385,21 +23370,21 @@ msgstr "Кликните на неку слику да изаберете зад
 msgid "Click in any image to pick the foreground color"
 msgstr "Кликните на неку слику да изаберете предњу боју"
 
-#: app/tools/gimpbycolorselecttool.c:70
+#: app/tools/gimpbycolorselecttool.c:71
 msgid "Select by Color"
 msgstr "Изаберите на основу боје"
 
-#: app/tools/gimpbycolorselecttool.c:71
+#: app/tools/gimpbycolorselecttool.c:72
 msgid "Select by Color Tool: Select regions with similar colors"
 msgstr ""
 "Алат за избор на основу боје: омогућава избор подручја са сличним бојама на "
 "читавој слици"
 
-#: app/tools/gimpbycolorselecttool.c:72
+#: app/tools/gimpbycolorselecttool.c:73
 msgid "_By Color Select"
 msgstr "_Избор на основу боје"
 
-#: app/tools/gimpbycolorselecttool.c:85
+#: app/tools/gimpbycolorselecttool.c:86
 msgctxt "command"
 msgid "Select by Color"
 msgstr "Избор на основу боје"
@@ -23685,39 +23670,39 @@ msgstr "Попуни са"
 msgid "How to fill new areas created by 'Allow growing'"
 msgstr "Како да попуним нове области направљене са „Дозволи повећавање“"
 
-#: app/tools/gimpcroptool.c:124
+#: app/tools/gimpcroptool.c:125
 msgid "Crop"
 msgstr "Исеци"
 
-#: app/tools/gimpcroptool.c:125
+#: app/tools/gimpcroptool.c:126
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "Алат за исецање: за уклањање спољних делова са слике или слоја"
 
-#: app/tools/gimpcroptool.c:126
+#: app/tools/gimpcroptool.c:127
 msgid "_Crop"
 msgstr "_Исецање"
 
-#: app/tools/gimpcroptool.c:164
+#: app/tools/gimpcroptool.c:166
 msgid "Click-Drag to draw a crop rectangle"
 msgstr "Кликните и превуците да нацртате правоугаоник за исецање"
 
-#: app/tools/gimpcroptool.c:289
+#: app/tools/gimpcroptool.c:287
 msgid "Click or press Enter to crop"
 msgstr "Кликните или притисните „Унеси“ да исецете"
 
-#: app/tools/gimpcroptool.c:401
+#: app/tools/gimpcroptool.c:394
 msgid "Crop to: "
 msgstr "Исеци на: "
 
-#: app/tools/gimpcroptool.c:471
+#: app/tools/gimpcroptool.c:465
 msgid "There are no selected layers to crop."
 msgstr "Нема изабраних слојева за исецање."
 
-#: app/tools/gimpcroptool.c:482
+#: app/tools/gimpcroptool.c:476
 msgid "All selected layers' pixels are locked."
 msgstr "Сви поксели на изабраним слојевима су закључани."
 
-#: app/tools/gimpcroptool.c:487
+#: app/tools/gimpcroptool.c:481
 #, c-format
 msgid "Resize Layer"
 msgid_plural "Resize %d layers"
@@ -23837,42 +23822,42 @@ msgstr "%s за избељивање"
 msgid "Type  (%s)"
 msgstr "Врста  (%s)"
 
-#: app/tools/gimpeditselectiontool.c:390 app/tools/gimpeditselectiontool.c:583
+#: app/tools/gimpeditselectiontool.c:401 app/tools/gimpeditselectiontool.c:597
 msgid "Move: "
 msgstr "Премести: "
 
-#: app/tools/gimpeditselectiontool.c:1030
-#: app/tools/gimpeditselectiontool.c:1392
+#: app/tools/gimpeditselectiontool.c:1044
+#: app/tools/gimpeditselectiontool.c:1406
 msgid "Move Floating Selection"
 msgstr "Премести плутајући избор"
 
-#: app/tools/gimpeditselectiontool.c:1276 app/tools/gimpmovetool.c:294
+#: app/tools/gimpeditselectiontool.c:1290 app/tools/gimpmovetool.c:294
 msgid "There are no paths to move."
 msgstr "Нема путања за премештање."
 
-#: app/tools/gimpeditselectiontool.c:1284
+#: app/tools/gimpeditselectiontool.c:1298
 msgid "A selected path's position is locked."
 msgstr "Положај изабране путање је закључан."
 
-#: app/tools/gimpeditselectiontool.c:1297 app/tools/gimpmovetool.c:339
+#: app/tools/gimpeditselectiontool.c:1311 app/tools/gimpmovetool.c:339
 msgid "There is no layer to move."
 msgstr "Нема слоја за померање."
 
-#: app/tools/gimpeditselectiontool.c:1306
-#: app/tools/gimpeditselectiontool.c:1333 app/tools/gimpmovetool.c:348
+#: app/tools/gimpeditselectiontool.c:1320
+#: app/tools/gimpeditselectiontool.c:1347 app/tools/gimpmovetool.c:348
 msgid "The selected layer's position is locked."
 msgstr "Положај изабраних слојева је закључан."
 
-#: app/tools/gimpeditselectiontool.c:1311 app/tools/gimpgradienttool.c:283
+#: app/tools/gimpeditselectiontool.c:1325 app/tools/gimpgradienttool.c:283
 #: app/tools/gimpmovetool.c:350
 msgid "The selected layer's pixels are locked."
 msgstr "Изабрани пиксели на слојевима су закључани."
 
-#: app/tools/gimpeditselectiontool.c:1322
+#: app/tools/gimpeditselectiontool.c:1336
 msgid "A selected channel's position is locked."
 msgstr "Положај изабраног канала је закључан."
 
-#: app/tools/gimpeditselectiontool.c:1344 app/tools/gimpmovetool.c:367
+#: app/tools/gimpeditselectiontool.c:1358 app/tools/gimpmovetool.c:367
 msgid "A selected layer's position is locked."
 msgstr "Положај изабраног слоја је закључан."
 
@@ -23955,17 +23940,17 @@ msgid "Disabled because this filter depends on another image."
 msgstr "Онемогућено зато што овај филтер зависи оф друге слике."
 
 #: app/tools/gimpfiltertool.c:459
-#: app/widgets/gimpdrawabletreeview-filters.c:484
+#: app/widgets/gimpdrawabletreeview-filters.c:491
 msgid "Disabled because filters cannot be merged on vector layers."
 msgstr "Онемогућено је јер се филтери не могу стопити на векторским слојевима."
 
 #: app/tools/gimpfiltertool.c:461
-#: app/widgets/gimpdrawabletreeview-filters.c:487
+#: app/widgets/gimpdrawabletreeview-filters.c:494
 msgid "Disabled because filters cannot be merged on link layers."
 msgstr "Онемогућено је јер се филтери не могу стопити на повезаним слојевима."
 
 #: app/tools/gimpfiltertool.c:463
-#: app/widgets/gimpdrawabletreeview-filters.c:490
+#: app/widgets/gimpdrawabletreeview-filters.c:497
 msgid "Disabled because filters cannot be merged on text layers."
 msgstr ""
 "Онемогућено је јер се филтери не могу стопити на текстуалним слојевима."
@@ -25127,7 +25112,7 @@ msgid "Selection from Path"
 msgstr "Изаберите из путање"
 
 #: app/tools/gimppathoptions.c:577 app/tools/gimppathtool.c:746
-#: app/tools/gimppathtool.c:1054
+#: app/tools/gimppathtool.c:1062
 msgid "Create New Vector Layer"
 msgstr "Направи нови векторски слој"
 
@@ -25143,19 +25128,19 @@ msgstr "Пу_тање"
 msgid "Create Vector Layer from Path"
 msgstr "Направи векторски слој из путање"
 
-#: app/tools/gimppathtool.c:1077 app/tools/gimppathtool.c:1080
+#: app/tools/gimppathtool.c:1085 app/tools/gimppathtool.c:1088
 msgid "Confirm Path Editing"
 msgstr "Потврди уређивање путање"
 
-#: app/tools/gimppathtool.c:1084 app/tools/gimptexttool.c:1783
+#: app/tools/gimppathtool.c:1092 app/tools/gimptexttool.c:1783
 msgid "Create _New Layer"
 msgstr "_Направи нови слој"
 
-#: app/tools/gimppathtool.c:1086 app/tools/gimptexttool.c:1785
+#: app/tools/gimppathtool.c:1094 app/tools/gimptexttool.c:1785
 msgid "_Edit Anyway"
 msgstr "_Ипак уреди"
 
-#: app/tools/gimppathtool.c:1108
+#: app/tools/gimppathtool.c:1116
 msgid ""
 "The vector layer you picked was rasterized. Editing its path will discard "
 "any modifications."
@@ -25741,7 +25726,7 @@ msgstr "Нема слоја."
 msgid "Exactly one path must be selected."
 msgstr "Морате изабрати тачно једну путању."
 
-#: app/tools/gimptexttool-editor.c:1468
+#: app/tools/gimptexttool-editor.c:1476
 msgid "GIMP Text Editor"
 msgstr "Гимпов уређивач текста"
 
@@ -26896,60 +26881,60 @@ msgstr "Омогућено"
 msgid "Debug events"
 msgstr "Догађаји за уклањање грешаха"
 
-#: app/widgets/gimpcontrollerkeyboard.c:69
-#: app/widgets/gimpcontrollerkeyboard.c:72
-#: app/widgets/gimpcontrollerkeyboard.c:75
-#: app/widgets/gimpcontrollerkeyboard.c:78
-#: app/widgets/gimpcontrollerkeyboard.c:81
-#: app/widgets/gimpcontrollerkeyboard.c:84
-#: app/widgets/gimpcontrollerkeyboard.c:87
-#: app/widgets/gimpcontrollerkeyboard.c:90
+#: app/widgets/gimpcontrollerkeyboard.c:74
+#: app/widgets/gimpcontrollerkeyboard.c:77
+#: app/widgets/gimpcontrollerkeyboard.c:80
+#: app/widgets/gimpcontrollerkeyboard.c:83
+#: app/widgets/gimpcontrollerkeyboard.c:86
+#: app/widgets/gimpcontrollerkeyboard.c:89
+#: app/widgets/gimpcontrollerkeyboard.c:92
+#: app/widgets/gimpcontrollerkeyboard.c:95
 msgid "Cursor Up"
 msgstr "Курзор горе"
 
-#: app/widgets/gimpcontrollerkeyboard.c:94
-#: app/widgets/gimpcontrollerkeyboard.c:97
-#: app/widgets/gimpcontrollerkeyboard.c:100
-#: app/widgets/gimpcontrollerkeyboard.c:103
-#: app/widgets/gimpcontrollerkeyboard.c:106
-#: app/widgets/gimpcontrollerkeyboard.c:109
-#: app/widgets/gimpcontrollerkeyboard.c:112
-#: app/widgets/gimpcontrollerkeyboard.c:115
+#: app/widgets/gimpcontrollerkeyboard.c:99
+#: app/widgets/gimpcontrollerkeyboard.c:102
+#: app/widgets/gimpcontrollerkeyboard.c:105
+#: app/widgets/gimpcontrollerkeyboard.c:108
+#: app/widgets/gimpcontrollerkeyboard.c:111
+#: app/widgets/gimpcontrollerkeyboard.c:114
+#: app/widgets/gimpcontrollerkeyboard.c:117
+#: app/widgets/gimpcontrollerkeyboard.c:120
 msgid "Cursor Down"
 msgstr "Курзор доле"
 
-#: app/widgets/gimpcontrollerkeyboard.c:119
-#: app/widgets/gimpcontrollerkeyboard.c:122
-#: app/widgets/gimpcontrollerkeyboard.c:125
-#: app/widgets/gimpcontrollerkeyboard.c:128
-#: app/widgets/gimpcontrollerkeyboard.c:131
-#: app/widgets/gimpcontrollerkeyboard.c:134
-#: app/widgets/gimpcontrollerkeyboard.c:137
-#: app/widgets/gimpcontrollerkeyboard.c:140
+#: app/widgets/gimpcontrollerkeyboard.c:124
+#: app/widgets/gimpcontrollerkeyboard.c:127
+#: app/widgets/gimpcontrollerkeyboard.c:130
+#: app/widgets/gimpcontrollerkeyboard.c:133
+#: app/widgets/gimpcontrollerkeyboard.c:136
+#: app/widgets/gimpcontrollerkeyboard.c:139
+#: app/widgets/gimpcontrollerkeyboard.c:142
+#: app/widgets/gimpcontrollerkeyboard.c:145
 msgid "Cursor Left"
 msgstr "Курзор лево"
 
-#: app/widgets/gimpcontrollerkeyboard.c:144
-#: app/widgets/gimpcontrollerkeyboard.c:147
-#: app/widgets/gimpcontrollerkeyboard.c:150
-#: app/widgets/gimpcontrollerkeyboard.c:153
-#: app/widgets/gimpcontrollerkeyboard.c:156
-#: app/widgets/gimpcontrollerkeyboard.c:159
-#: app/widgets/gimpcontrollerkeyboard.c:162
-#: app/widgets/gimpcontrollerkeyboard.c:165
+#: app/widgets/gimpcontrollerkeyboard.c:149
+#: app/widgets/gimpcontrollerkeyboard.c:152
+#: app/widgets/gimpcontrollerkeyboard.c:155
+#: app/widgets/gimpcontrollerkeyboard.c:158
+#: app/widgets/gimpcontrollerkeyboard.c:161
+#: app/widgets/gimpcontrollerkeyboard.c:164
+#: app/widgets/gimpcontrollerkeyboard.c:167
+#: app/widgets/gimpcontrollerkeyboard.c:170
 msgid "Cursor Right"
 msgstr "Курзор десно"
 
-#: app/widgets/gimpcontrollerkeyboard.c:177
+#: app/widgets/gimpcontrollerkeyboard.c:182
 msgid "Keyboard"
 msgstr "Тастатура"
 
-#: app/widgets/gimpcontrollerkeyboard.c:229
+#: app/widgets/gimpcontrollerkeyboard.c:234
 msgid "Keyboard Events"
 msgstr "Догађаји тастатуре"
 
-#: app/widgets/gimpcontrollerkeyboard.c:230
-#: app/widgets/gimpcontrollerwheel.c:229
+#: app/widgets/gimpcontrollerkeyboard.c:235
+#: app/widgets/gimpcontrollerwheel.c:234
 msgid "Ready"
 msgstr "Спремно"
 
@@ -26973,17 +26958,17 @@ msgstr "Премести изабрани управљач навише"
 msgid "Move the selected controller down"
 msgstr "Премести изабрани управљач наниже"
 
-#: app/widgets/gimpcontrollerlist.c:399
+#: app/widgets/gimpcontrollerlist.c:400
 #, c-format
 msgid "Add '%s' to the list of active controllers"
 msgstr "Додај „%s“ у списак радних управљача"
 
-#: app/widgets/gimpcontrollerlist.c:460
+#: app/widgets/gimpcontrollerlist.c:461
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
 msgstr "Уклони „%s“ из списка радних управљача"
 
-#: app/widgets/gimpcontrollerlist.c:505
+#: app/widgets/gimpcontrollerlist.c:506
 msgid ""
 "There can only be one active keyboard controller.\n"
 "\n"
@@ -26993,7 +26978,7 @@ msgstr ""
 "\n"
 "Већ имате управљач тастатуре на списку радних управљача."
 
-#: app/widgets/gimpcontrollerlist.c:516
+#: app/widgets/gimpcontrollerlist.c:517
 msgid ""
 "There can only be one active wheel controller.\n"
 "\n"
@@ -27003,24 +26988,24 @@ msgstr ""
 "\n"
 "Већ имате управљач точкића на списку радних управљача."
 
-#: app/widgets/gimpcontrollerlist.c:550
+#: app/widgets/gimpcontrollerlist.c:551
 msgid "Remove Controller?"
 msgstr "Да уклоним урављач?"
 
-#: app/widgets/gimpcontrollerlist.c:555
+#: app/widgets/gimpcontrollerlist.c:556
 msgid "_Disable Controller"
 msgstr "_Онемогући управљач"
 
-#: app/widgets/gimpcontrollerlist.c:557
+#: app/widgets/gimpcontrollerlist.c:558
 msgid "_Remove Controller"
 msgstr "_Уклони управљач"
 
-#: app/widgets/gimpcontrollerlist.c:570
+#: app/widgets/gimpcontrollerlist.c:571
 #, c-format
 msgid "Remove Controller '%s'?"
 msgstr "Да уклоним управљач „%s“?"
 
-#: app/widgets/gimpcontrollerlist.c:574
+#: app/widgets/gimpcontrollerlist.c:575
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -27033,43 +27018,43 @@ msgstr ""
 "\n"
 "Изаберите „Искључи управљач“ да искључите управљач без његовог уклањања."
 
-#: app/widgets/gimpcontrollerlist.c:628
+#: app/widgets/gimpcontrollerlist.c:629
 msgid "Configure Input Controller"
 msgstr "Подеси управљач улаза"
 
-#: app/widgets/gimpcontrollerwheel.c:68 app/widgets/gimpcontrollerwheel.c:71
-#: app/widgets/gimpcontrollerwheel.c:74 app/widgets/gimpcontrollerwheel.c:77
-#: app/widgets/gimpcontrollerwheel.c:80 app/widgets/gimpcontrollerwheel.c:83
-#: app/widgets/gimpcontrollerwheel.c:86 app/widgets/gimpcontrollerwheel.c:89
+#: app/widgets/gimpcontrollerwheel.c:73 app/widgets/gimpcontrollerwheel.c:76
+#: app/widgets/gimpcontrollerwheel.c:79 app/widgets/gimpcontrollerwheel.c:82
+#: app/widgets/gimpcontrollerwheel.c:85 app/widgets/gimpcontrollerwheel.c:88
+#: app/widgets/gimpcontrollerwheel.c:91 app/widgets/gimpcontrollerwheel.c:94
 msgid "Scroll Up"
 msgstr "Клизај навише"
 
-#: app/widgets/gimpcontrollerwheel.c:93 app/widgets/gimpcontrollerwheel.c:96
-#: app/widgets/gimpcontrollerwheel.c:99 app/widgets/gimpcontrollerwheel.c:102
-#: app/widgets/gimpcontrollerwheel.c:105 app/widgets/gimpcontrollerwheel.c:108
-#: app/widgets/gimpcontrollerwheel.c:111 app/widgets/gimpcontrollerwheel.c:114
+#: app/widgets/gimpcontrollerwheel.c:98 app/widgets/gimpcontrollerwheel.c:101
+#: app/widgets/gimpcontrollerwheel.c:104 app/widgets/gimpcontrollerwheel.c:107
+#: app/widgets/gimpcontrollerwheel.c:110 app/widgets/gimpcontrollerwheel.c:113
+#: app/widgets/gimpcontrollerwheel.c:116 app/widgets/gimpcontrollerwheel.c:119
 msgid "Scroll Down"
 msgstr "Клизај наниже"
 
-#: app/widgets/gimpcontrollerwheel.c:118 app/widgets/gimpcontrollerwheel.c:121
-#: app/widgets/gimpcontrollerwheel.c:124 app/widgets/gimpcontrollerwheel.c:127
-#: app/widgets/gimpcontrollerwheel.c:130 app/widgets/gimpcontrollerwheel.c:133
-#: app/widgets/gimpcontrollerwheel.c:136 app/widgets/gimpcontrollerwheel.c:139
+#: app/widgets/gimpcontrollerwheel.c:123 app/widgets/gimpcontrollerwheel.c:126
+#: app/widgets/gimpcontrollerwheel.c:129 app/widgets/gimpcontrollerwheel.c:132
+#: app/widgets/gimpcontrollerwheel.c:135 app/widgets/gimpcontrollerwheel.c:138
+#: app/widgets/gimpcontrollerwheel.c:141 app/widgets/gimpcontrollerwheel.c:144
 msgid "Scroll Left"
 msgstr "Клизај лево"
 
-#: app/widgets/gimpcontrollerwheel.c:143 app/widgets/gimpcontrollerwheel.c:146
-#: app/widgets/gimpcontrollerwheel.c:149 app/widgets/gimpcontrollerwheel.c:152
-#: app/widgets/gimpcontrollerwheel.c:155 app/widgets/gimpcontrollerwheel.c:158
-#: app/widgets/gimpcontrollerwheel.c:161 app/widgets/gimpcontrollerwheel.c:164
+#: app/widgets/gimpcontrollerwheel.c:148 app/widgets/gimpcontrollerwheel.c:151
+#: app/widgets/gimpcontrollerwheel.c:154 app/widgets/gimpcontrollerwheel.c:157
+#: app/widgets/gimpcontrollerwheel.c:160 app/widgets/gimpcontrollerwheel.c:163
+#: app/widgets/gimpcontrollerwheel.c:166 app/widgets/gimpcontrollerwheel.c:169
 msgid "Scroll Right"
 msgstr "Клизај десно"
 
-#: app/widgets/gimpcontrollerwheel.c:176
+#: app/widgets/gimpcontrollerwheel.c:181
 msgid "Mouse Wheel"
 msgstr "Точкић миша"
 
-#: app/widgets/gimpcontrollerwheel.c:228
+#: app/widgets/gimpcontrollerwheel.c:233
 msgid "Mouse Wheel Events"
 msgstr "Догађаји точкића миша"
 
@@ -27542,17 +27527,17 @@ msgid "Select fields"
 msgstr "Изабери поља"
 
 #. Translators: "N/A" is an abbreviation for "not available"
-#: app/widgets/gimpdashboard.c:3323
+#: app/widgets/gimpdashboard.c:3331
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "нема"
 
-#: app/widgets/gimpdashboard.c:3332 app/widgets/gimpdashboard.c:4340
+#: app/widgets/gimpdashboard.c:3340 app/widgets/gimpdashboard.c:4348
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Да"
 
-#: app/widgets/gimpdashboard.c:3333 app/widgets/gimpdashboard.c:4341
+#: app/widgets/gimpdashboard.c:3341 app/widgets/gimpdashboard.c:4349
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Не"
@@ -27561,7 +27546,7 @@ msgstr "Не"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: app/widgets/gimpdashboard.c:3417
+#: app/widgets/gimpdashboard.c:3425
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -27572,16 +27557,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: app/widgets/gimpdashboard.c:4330
+#: app/widgets/gimpdashboard.c:4338
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: app/widgets/gimpdashboard.c:4408
+#: app/widgets/gimpdashboard.c:4416
 msgid "N/A"
 msgstr "нема"
 
-#: app/widgets/gimpdashboard.c:4786
+#: app/widgets/gimpdashboard.c:4794
 msgid "Resolving symbol information..."
 msgstr "Решавам податке о симболима…"
 
@@ -27655,11 +27640,11 @@ msgstr "Крива притиска"
 msgid "Pad actions"
 msgstr "Радње табле"
 
-#: app/widgets/gimpdeviceinfo.c:1135 app/widgets/gimpdeviceinfo.c:1160
+#: app/widgets/gimpdeviceinfo.c:1139 app/widgets/gimpdeviceinfo.c:1164
 msgid "(Device not present)"
 msgstr "(уређај није присутан)"
 
-#: app/widgets/gimpdeviceinfo.c:1143 app/widgets/gimpdeviceinfo.c:1168
+#: app/widgets/gimpdeviceinfo.c:1147 app/widgets/gimpdeviceinfo.c:1172
 msgid "(Virtual device)"
 msgstr "(виртуелни уређај)"
 
@@ -27820,7 +27805,7 @@ msgstr "Закључај место и величину"
 msgid "Cannot select items while a floating selection is active."
 msgstr "Не могу да изаберем ставке док је активан плутајући избор."
 
-#: app/widgets/gimpdrawabletreeview.c:651 app/widgets/gimplayertreeview.c:976
+#: app/widgets/gimpdrawabletreeview.c:651 app/widgets/gimplayertreeview.c:978
 msgctxt "singular"
 msgid "New Layer"
 msgstr "Нови слој"
@@ -27846,8 +27831,8 @@ msgid "Lower filter one step down in the stack."
 msgstr "Спушта филтер за једно место наниже у шпилу."
 
 #: app/widgets/gimpdrawabletreeview-filters.c:262
-#: app/widgets/gimpdrawabletreeview-filters.c:498
-#: app/widgets/gimpdrawabletreeview-filters.c:508
+#: app/widgets/gimpdrawabletreeview-filters.c:505
+#: app/widgets/gimpdrawabletreeview-filters.c:515
 msgid "Merge all active filters down."
 msgstr "Споји све активне филтере испод."
 
@@ -27855,8 +27840,8 @@ msgstr "Споји све активне филтере испод."
 msgid "Remove the selected filter."
 msgstr "Уклони изабрани филтер."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:689
-#: app/widgets/gimpdrawabletreeview-filters.c:715
+#: app/widgets/gimpdrawabletreeview-filters.c:696
+#: app/widgets/gimpdrawabletreeview-filters.c:722
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Не могу да променим положај филтера који се уређује."
 
@@ -28170,23 +28155,23 @@ msgstr "Канал хистограма"
 msgid "Compute unique colors:"
 msgstr "Израчунај јединствене боје:"
 
-#: app/widgets/gimpiconpicker.c:246
+#: app/widgets/gimpiconpicker.c:242
 msgid "From File..."
 msgstr "Из датотеке…"
 
-#: app/widgets/gimpiconpicker.c:255
+#: app/widgets/gimpiconpicker.c:251
 msgid "From Named Icons..."
 msgstr "Из именованих иконица…"
 
-#: app/widgets/gimpiconpicker.c:264
+#: app/widgets/gimpiconpicker.c:260
 msgid "Copy Icon to Clipboard"
 msgstr "Копирај иконицу међу исечке"
 
-#: app/widgets/gimpiconpicker.c:273
+#: app/widgets/gimpiconpicker.c:269
 msgid "Paste Icon from Clipboard"
 msgstr "Убаци иконицу међу исечке"
 
-#: app/widgets/gimpiconpicker.c:485
+#: app/widgets/gimpiconpicker.c:481
 msgid "Load Icon Image"
 msgstr "Учитај слику са иконицом"
 
@@ -28283,7 +28268,7 @@ msgstr[2] "Индексиране боје (%d боја)"
 msgstr[3] "Индексиране боје (%d боја)"
 
 #: app/widgets/gimpitemchooser.c:243 app/widgets/gimpitemchooser.c:571
-#: app/widgets/gimppickablechooser.c:241 app/widgets/gimppickablechooser.c:524
+#: app/widgets/gimppickablechooser.c:238 app/widgets/gimppickablechooser.c:521
 msgid "Select an image in the left pane"
 msgstr "Изаберите слику из леве површи"
 
@@ -28383,23 +28368,23 @@ msgstr "Откључај алфа канал"
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Постави ексклузивно закључавање алфа канала ставке"
 
-#: app/widgets/gimplayertreeview.c:1095
+#: app/widgets/gimplayertreeview.c:1097
 msgid "Set layers mode"
 msgstr "Постави режим слојева"
 
-#: app/widgets/gimplayertreeview.c:1303
+#: app/widgets/gimplayertreeview.c:1305
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Усидри плутајућу маску"
 
-#: app/widgets/gimplayertreeview.c:1306
+#: app/widgets/gimplayertreeview.c:1308
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Усидри плутајући слој"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1579
+#: app/widgets/gimplayertreeview.c:1581
 msgid "No channels to create a layer mask from."
 msgstr "Нема канала из којим могу да направим маску."
 
@@ -28496,10 +28481,23 @@ msgstr "Прикључак"
 msgid "Progress"
 msgstr "Напредак"
 
-#: app/widgets/gimprow.c:617
+#: app/widgets/gimprow.c:616
 #, c-format
 msgid "Rename %s"
 msgstr "Преименуј %s"
+
+#: app/widgets/gimprowimagesave.c:89
+msgid "Save this image"
+msgstr "Сачувај ову слику"
+
+#: app/widgets/gimprowimagesave.c:91
+msgid "Save as"
+msgstr "Сачувај као"
+
+#: app/widgets/gimprowimagesave.c:161
+#, c-format
+msgid "Exported to %s"
+msgstr "Извезена у „%s“"
 
 #: app/widgets/gimpsamplepointeditor.c:163
 msgid ""
@@ -28662,27 +28660,27 @@ msgstr "%d x %d тпи"
 msgid "%d ppi"
 msgstr "%d тпи"
 
-#: app/widgets/gimpstrokeeditor.c:130
+#: app/widgets/gimpstrokeeditor.c:137
 msgid "Line width:"
 msgstr "Ширина линије:"
 
-#: app/widgets/gimpstrokeeditor.c:151
+#: app/widgets/gimpstrokeeditor.c:144
 msgid "_Cap style:"
 msgstr "_Стил капице:"
 
-#: app/widgets/gimpstrokeeditor.c:158
+#: app/widgets/gimpstrokeeditor.c:151
 msgid "_Join style:"
 msgstr "Стил с_поја:"
 
-#: app/widgets/gimpstrokeeditor.c:165
+#: app/widgets/gimpstrokeeditor.c:158
 msgid "_Miter limit:"
 msgstr "_Угаоно ограничење:"
 
-#: app/widgets/gimpstrokeeditor.c:171
+#: app/widgets/gimpstrokeeditor.c:164
 msgid "Dash pattern:"
 msgstr "Врста цртица:"
 
-#: app/widgets/gimpstrokeeditor.c:238
+#: app/widgets/gimpstrokeeditor.c:231
 msgid "Dash _preset:"
 msgstr "_Подешене цртице:"
 
@@ -28786,17 +28784,17 @@ msgstr "Особина „%s“ није исправна за <%s> елемен
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Крајњи елемент текста мора бити <markup>, а не <%s>"
 
-#: app/widgets/gimptextbuffer.c:1687
+#: app/widgets/gimptextbuffer.c:1695
 #, c-format
 msgid "Input file '%s' appears truncated: %s"
 msgstr "Улазна датотека „%s“ изгледа скраћена: %s"
 
-#: app/widgets/gimptextbuffer.c:1705
+#: app/widgets/gimptextbuffer.c:1713
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Неисправни УТФ-8 подаци у датотеци „%s“."
 
-#: app/widgets/gimptextbuffer.c:1756
+#: app/widgets/gimptextbuffer.c:1764
 #, c-format
 msgid "Writing text file '%s' failed: %s"
 msgstr "Упис у текстуалну датотеку „%s“ није успео: %s"
@@ -28817,17 +28815,17 @@ msgstr "Измените фонт изабраног текста"
 msgid "Change size of selected text"
 msgstr "Измените величину изабраног текста"
 
-#: app/widgets/gimptextstyleeditor.c:299
+#: app/widgets/gimptextstyleeditor.c:292 app/widgets/gimptextstyleeditor.c:303
+msgid "Change color of selected text"
+msgstr "Измените боју изабраног текста"
+
+#: app/widgets/gimptextstyleeditor.c:317
 msgid "Restore On-Canvas Editor Position"
 msgstr "Поврати положај уређивача на платну"
 
-#: app/widgets/gimptextstyleeditor.c:321
+#: app/widgets/gimptextstyleeditor.c:339
 msgid "Clear style of selected text"
 msgstr "Очистите стил изабраног текста"
-
-#: app/widgets/gimptextstyleeditor.c:332 app/widgets/gimptextstyleeditor.c:343
-msgid "Change color of selected text"
-msgstr "Измените боју изабраног текста"
 
 #: app/widgets/gimptextstyleeditor.c:359
 msgid "Change kerning of selected text"
@@ -28995,7 +28993,7 @@ msgstr "Обриши подешавање алата…"
 msgid "%s Preset"
 msgstr "„%s“ подешавање"
 
-#: app/widgets/gimpundoeditor.c:261
+#: app/widgets/gimpundoeditor.c:254
 msgid "[ Base Image ]"
 msgstr "[ Основна слика ]"
 
@@ -29240,11 +29238,11 @@ msgstr "Грешка приликом уписа „%s“: "
 msgid "Error creating '%s': "
 msgstr "Грешка при прављењу „%s“: "
 
-#: app/xcf/xcf-load.c:450
+#: app/xcf/xcf-load.c:452
 msgid "Invalid image mode and precision combination."
 msgstr "Неисправна комбинација режима слике и прецизности."
 
-#: app/xcf/xcf-load.c:884
+#: app/xcf/xcf-load.c:891
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -29253,7 +29251,7 @@ msgstr ""
 "Неисправна структура „exif-data“: пронађен паразит.\n"
 "Не могу да преместим Егзиф податке: %s"
 
-#: app/xcf/xcf-load.c:923
+#: app/xcf/xcf-load.c:930
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -29261,7 +29259,7 @@ msgstr ""
 "Неисправна структура „gimp-metadata“: пронађен паразит.\n"
 "Не могу да преместим ХМП податке."
 
-#: app/xcf/xcf-load.c:947
+#: app/xcf/xcf-load.c:954
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -29274,19 +29272,19 @@ msgstr ""
 "Уколико не знате шта су ХМП подаци, вероватно вам нису ни потребни. "
 "Пријављена грешка: %s."
 
-#: app/xcf/xcf-load.c:1430
+#: app/xcf/xcf-load.c:1449
 msgid "Linked Layers"
 msgstr "Повезани слојеви"
 
-#: app/xcf/xcf-load.c:1440
+#: app/xcf/xcf-load.c:1459
 msgid "Linked Channels"
 msgstr "Повезани канали"
 
-#: app/xcf/xcf-load.c:1465
+#: app/xcf/xcf-load.c:1484
 msgid "Linked Paths"
 msgstr "Повезане путање"
 
-#: app/xcf/xcf-load.c:1513
+#: app/xcf/xcf-load.c:1532
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -29294,7 +29292,7 @@ msgstr ""
 "Ова XCF датотека је оштећена!  Учитао сам што сам могао више, али није "
 "потпуна."
 
-#: app/xcf/xcf-load.c:1540
+#: app/xcf/xcf-load.c:1559
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -29302,7 +29300,7 @@ msgstr ""
 "Ова XCF датотека је оштећена!  Не могу учитати чак ни делимичне податке "
 "слике из ње."
 
-#: app/xcf/xcf-load.c:1734
+#: app/xcf/xcf-load.c:1753
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -29312,7 +29310,7 @@ msgstr ""
 "није исправно сачувао индексиране мапе боја.\n"
 "Замењујем мапу сивих боја."
 
-#: app/xcf/xcf-load.c:2616
+#: app/xcf/xcf-load.c:2584
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
@@ -29321,7 +29319,7 @@ msgstr ""
 "XCF упозорење: неисправна веза у XCF датотеци. Свезани слој „%s“ је враћен "
 "на обичан растерски слој."
 
-#: app/xcf/xcf-load.c:2636
+#: app/xcf/xcf-load.c:2604
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
@@ -29330,7 +29328,7 @@ msgstr ""
 "XCF упозорење: откривено је кружно позивање у XCF датотеци. Свезани слој "
 "„%s“ је враћен на обичан растерски слој."
 
-#: app/xcf/xcf-load.c:3368
+#: app/xcf/xcf-load.c:3337
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -29343,7 +29341,7 @@ msgstr ""
 "Ово не треба да се дешава. Можете пријавити проблем развојном тиму који "
 "одржава филтер."
 
-#: app/xcf/xcf-load.c:4215
+#: app/xcf/xcf-load.c:4184
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
@@ -29380,7 +29378,7 @@ msgstr "Грешка приликом уписа у XCF: не могу да ал
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
 msgstr "Грешка приликом уписа у XCF: неподржан BPC приликом уписа пиксела: %d"
 
-#: app-tools/gimp-debug-tool.c:108
+#: app-tools/gimp-debug-tool.c:119
 msgid "GIMP Crash Debug"
 msgstr "Гимпов алат за уклањање грешака при паду"
 
