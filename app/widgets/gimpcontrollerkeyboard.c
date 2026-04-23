@@ -46,6 +46,11 @@ struct _KeyboardEvent
   const gchar     *blurb;
 };
 
+struct _GimpControllerKeyboard
+{
+  GimpController parent_instance;
+};
+
 
 static void          gimp_controller_keyboard_constructed     (GObject        *object);
 

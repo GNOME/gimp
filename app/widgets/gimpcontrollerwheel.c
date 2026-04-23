@@ -45,6 +45,11 @@ struct _WheelEvent
   const gchar              *blurb;
 };
 
+struct _GimpControllerWheel
+{
+  GimpController parent_instance;
+};
+
 
 static void          gimp_controller_wheel_constructed     (GObject        *object);
 
