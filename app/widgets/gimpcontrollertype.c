@@ -27,62 +27,62 @@
 
 #include "widgets-types.h"
 
-#include "gimpcontrollercategory.h"
+#include "gimpcontrollertype.h"
 
 
 /**
- * GimpControllerCategory:
+ * GimpControllerType:
  *
  * A helper object to list types/categories of controllers
  */
 
-struct _GimpControllerCategory
+struct _GimpControllerType
 {
   GimpViewable parent_instance;
 
   GType        gtype;
 };
 
-G_DEFINE_TYPE (GimpControllerCategory, gimp_controller_category,
+G_DEFINE_TYPE (GimpControllerType, gimp_controller_type,
                GIMP_TYPE_VIEWABLE)
 
 
 static void
-gimp_controller_category_init (GimpControllerCategory *self)
+gimp_controller_type_init (GimpControllerType *self)
 {
 }
 
 static void
-gimp_controller_category_class_init (GimpControllerCategoryClass *klass)
+gimp_controller_type_class_init (GimpControllerTypeClass *klass)
 {
 }
 
-GimpControllerCategory *
-gimp_controller_category_new (GType gtype)
+GimpControllerType *
+gimp_controller_type_new (GType gtype)
 {
-  GimpControllerClass    *controller_class;
-  GimpControllerCategory *category;
+  GimpControllerClass *controller_class;
+  GimpControllerType  *type;
 
   g_return_val_if_fail (g_type_is_a (gtype, GIMP_TYPE_CONTROLLER), NULL);
 
   controller_class = g_type_class_ref (gtype);
 
-  category = g_object_new (GIMP_TYPE_CONTROLLER_CATEGORY,
-                           "name",      controller_class->name,
-                           "icon-name", controller_class->icon_name,
-                           NULL);
+  type = g_object_new (GIMP_TYPE_CONTROLLER_TYPE,
+                       "name",      controller_class->name,
+                       "icon-name", controller_class->icon_name,
+                       NULL);
 
-  category->gtype = gtype;
+  type->gtype = gtype;
 
   g_type_class_unref (controller_class);
 
-  return category;
+  return type;
 }
 
 GType
-gimp_controller_category_get_gtype (GimpControllerCategory *self)
+gimp_controller_type_get_gtype (GimpControllerType *self)
 {
-  g_return_val_if_fail (GIMP_IS_CONTROLLER_CATEGORY (self), G_TYPE_INVALID);
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_TYPE (self), G_TYPE_INVALID);
 
   return self->gtype;
 }

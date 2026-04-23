@@ -20,13 +20,13 @@
 #include "core/gimpviewable.h"
 
 
-#define GIMP_TYPE_CONTROLLER_CATEGORY (gimp_controller_category_get_type ())
-G_DECLARE_FINAL_TYPE (GimpControllerCategory,
-                      gimp_controller_category,
-                      GIMP, CONTROLLER_CATEGORY,
+#define GIMP_TYPE_CONTROLLER_TYPE (gimp_controller_type_get_type ())
+G_DECLARE_FINAL_TYPE (GimpControllerType,
+                      gimp_controller_type,
+                      GIMP, CONTROLLER_TYPE,
                       GimpViewable)
 
 
-GimpControllerCategory * gimp_controller_category_new (GType gtype);
+GimpControllerType * gimp_controller_type_new (GType gtype);
 
-GType   gimp_controller_category_get_gtype (GimpControllerCategory *self);
+GType   gimp_controller_type_get_gtype (GimpControllerType *self);

@@ -38,12 +38,12 @@
 
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
-#include "gimpcontrollercategory.h"
 #include "gimpcontrollereditor.h"
 #include "gimpcontrollerlist.h"
 #include "gimpcontrollerinfo.h"
 #include "gimpcontrollerkeyboard.h"
 #include "gimpcontrollermanager.h"
+#include "gimpcontrollertype.h"
 #include "gimpcontrollerwheel.h"
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
@@ -85,14 +85,14 @@ static void gimp_controller_list_get_property    (GObject            *object,
                                                   GValue             *value,
                                                   GParamSpec         *pspec);
 
-static GimpControllerCategory *
-            gimp_controller_list_get_selected_category
+static GimpControllerType *
+            gimp_controller_list_get_selected_type
                                                  (GimpControllerList  *list);
-static void gimp_controller_list_category_row_selected
+static void gimp_controller_list_type_row_selected
                                                  (GtkListBox          *self,
                                                   GtkListBoxRow       *row,
                                                   gpointer             user_data);
-static void gimp_controller_list_category_row_activated
+static void gimp_controller_list_type_row_activated
                                                  (GtkListBox          *self,
                                                   GtkListBoxRow       *row,
                                                   gpointer             user_data);
@@ -187,10 +187,10 @@ gimp_controller_list_init (GimpControllerList      *list)
   gtk_container_add (GTK_CONTAINER (sw), list->available_controllers);
 
   g_signal_connect_object (list->available_controllers, "row-activated",
-                           G_CALLBACK (gimp_controller_list_category_row_activated),
+                           G_CALLBACK (gimp_controller_list_type_row_activated),
                            G_OBJECT (list), 0);
   g_signal_connect_object (list->available_controllers, "row-selected",
-                           G_CALLBACK (gimp_controller_list_category_row_selected),
+                           G_CALLBACK (gimp_controller_list_type_row_selected),
                            G_OBJECT (list), 0);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
@@ -284,17 +284,17 @@ static void
 gimp_controller_list_constructed (GObject *object)
 {
   GimpControllerList *list = GIMP_CONTROLLER_LIST (object);
-  GListModel         *categories;
+  GListModel         *types;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  categories = gimp_controller_manager_get_categories (list->controller_manager);
+  types = gimp_controller_manager_get_types (list->controller_manager);
   gtk_list_box_bind_model (GTK_LIST_BOX (list->available_controllers),
-                           categories,
+                           types,
                            gimp_row_create_for_context,
                            gimp_get_user_context (gimp_controller_manager_get_gimp (list->controller_manager)),
                            NULL);
-  g_object_unref (categories);
+  g_object_unref (types);
 
   gtk_list_box_bind_model (GTK_LIST_BOX (list->active_controllers),
                            G_LIST_MODEL (list->controller_manager),
@@ -369,8 +369,8 @@ gimp_controller_list_new (GimpControllerManager *controller_manager)
 
 /*  private functions  */
 
-static GimpControllerCategory *
-gimp_controller_list_get_selected_category (GimpControllerList *list)
+static GimpControllerType *
+gimp_controller_list_get_selected_type (GimpControllerList *list)
 {
   GtkListBoxRow *row;
 
@@ -378,27 +378,27 @@ gimp_controller_list_get_selected_category (GimpControllerList *list)
   if (row == NULL)
     return NULL;
 
-  return GIMP_CONTROLLER_CATEGORY (gimp_row_get_viewable (GIMP_ROW (row)));
+  return GIMP_CONTROLLER_TYPE (gimp_row_get_viewable (GIMP_ROW (row)));
 }
 
 static void
-gimp_controller_list_category_row_selected (GtkListBox    *self,
-                                            GtkListBoxRow *row,
-                                            gpointer       user_data)
+gimp_controller_list_type_row_selected (GtkListBox    *self,
+                                        GtkListBoxRow *row,
+                                        gpointer       user_data)
 {
   GimpControllerList *list = GIMP_CONTROLLER_LIST (user_data);
   gchar              *tip = NULL;
 
   if (row != NULL)
     {
-      GimpControllerCategory *category;
+      GimpControllerType *type;
 
-      category = gimp_controller_list_get_selected_category (list);
+      type = gimp_controller_list_get_selected_type (list);
       if (list->add_button)
         {
           tip =
             g_strdup_printf (_("Add '%s' to the list of active controllers"),
-                             gimp_object_get_name (category));
+                             gimp_object_get_name (type));
           gtk_widget_set_sensitive (list->add_button, TRUE);
         }
     }
@@ -416,9 +416,9 @@ gimp_controller_list_category_row_selected (GtkListBox    *self,
 }
 
 static void
-gimp_controller_list_category_row_activated (GtkListBox    *self,
-                                             GtkListBoxRow *row,
-                                             gpointer       user_data)
+gimp_controller_list_type_row_activated (GtkListBox    *self,
+                                         GtkListBoxRow *row,
+                                         gpointer       user_data)
 {
   GimpControllerList *list = GIMP_CONTROLLER_LIST (user_data);
 
@@ -485,19 +485,19 @@ static void
 gimp_controller_list_add_clicked (GtkWidget          *button,
                                   GimpControllerList *list)
 {
-  GimpControllerInfo     *info;
-  Gimp                   *gimp;
-  GimpControllerCategory *category;
-  GType                   gtype;
-  gint                    position;
-  GtkListBoxRow          *row;
+  GimpControllerInfo *info;
+  Gimp               *gimp;
+  GimpControllerType *type;
+  GType               gtype;
+  gint                position;
+  GtkListBoxRow      *row;
 
   gimp = gimp_controller_manager_get_gimp (list->controller_manager);
 
-  category = gimp_controller_list_get_selected_category (list);
-  g_return_if_fail (category != NULL);
+  type = gimp_controller_list_get_selected_type (list);
+  g_return_if_fail (type != NULL);
 
-  gtype = gimp_controller_category_get_gtype (category);
+  gtype = gimp_controller_type_get_gtype (type);
   if (gtype == GIMP_TYPE_CONTROLLER_KEYBOARD &&
       gimp_controller_manager_get_keyboard (list->controller_manager) != NULL)
     {

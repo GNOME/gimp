@@ -40,4 +40,4 @@ Gimp           * gimp_controller_manager_get_gimp       (GimpControllerManager *
 GimpUIManager  * gimp_controller_manager_get_ui_manager (GimpControllerManager *self);
 GimpController * gimp_controller_manager_get_wheel      (GimpControllerManager *self);
 GimpController * gimp_controller_manager_get_keyboard   (GimpControllerManager *self);
-GListModel     * gimp_controller_manager_get_categories (GimpControllerManager *self);
+GListModel     * gimp_controller_manager_get_types      (GimpControllerManager *self);

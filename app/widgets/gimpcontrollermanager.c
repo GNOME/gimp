@@ -34,10 +34,10 @@
 
 #include "gimpaction.h"
 #include "gimpactiongroup.h"
-#include "gimpcontrollercategory.h"
 #include "gimpcontrollerinfo.h"
 #include "gimpcontrollerkeyboard.h"
 #include "gimpcontrollermanager.h"
+#include "gimpcontrollertype.h"
 #include "gimpcontrollerwheel.h"
 #include "gimpenumaction.h"
 #include "gimpuimanager.h"
@@ -299,31 +299,31 @@ gimp_controller_manager_get_keyboard (GimpControllerManager *self)
 }
 
 GListModel *
-gimp_controller_manager_get_categories (GimpControllerManager *self)
+gimp_controller_manager_get_types (GimpControllerManager *self)
 {
-  GListStore *categories;
+  GListStore *types;
   GType      *controller_types;
   guint       n_controller_types;
 
   g_return_val_if_fail (GIMP_IS_CONTROLLER_MANAGER (self), NULL);
 
-  categories = g_list_store_new (GIMP_TYPE_CONTROLLER_CATEGORY);
+  types = g_list_store_new (GIMP_TYPE_CONTROLLER_TYPE);
 
   controller_types = g_type_children (GIMP_TYPE_CONTROLLER,
                                       &n_controller_types);
 
   for (guint i = 0; i < n_controller_types; i++)
     {
-      GimpControllerCategory *category;
+      GimpControllerType *type;
 
-      category = gimp_controller_category_new (controller_types[i]);
-      g_list_store_append (G_LIST_STORE (categories), category);
-      g_object_unref (category);
+      type = gimp_controller_type_new (controller_types[i]);
+      g_list_store_append (G_LIST_STORE (types), type);
+      g_object_unref (type);
     }
 
   g_free (controller_types);
 
-  return G_LIST_MODEL (categories);
+  return G_LIST_MODEL (types);
 }
 
 /*  private functions  */
