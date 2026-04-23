@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-21 14:22+0000\n"
-"PO-Revision-Date: 2026-04-21 21:58+0300\n"
+"POT-Creation-Date: 2026-04-22 22:31+0000\n"
+"PO-Revision-Date: 2026-04-23 13:18+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -18801,7 +18801,6 @@ msgstr "Нотатки щодо випуску"
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:491
 #, c-format
-#| msgid "You installed GIMP %s!"
 msgid "You installed GIMP %s"
 msgstr "Вами встановлено GIMP %s"
 
@@ -18910,10 +18909,10 @@ msgstr "Звітування про вади"
 
 #: app/dialogs/welcome-dialog.c:856
 #| msgid ""
-#| "As any application, GIMP is not bug-free, so reporting bugs that you "
+#| "As any application, GIMP is not bug-free, soreporting bugs that you "
 #| "encounter is very important to the development."
 msgid ""
-"As any application, GIMP is not bug-free, soreporting bugs that you "
+"As any application, GIMP is not bug-free, so reporting bugs that you "
 "encounter is very important to the development."
 msgstr ""
 "Як будь-яка програма, GIMP не позбавлений вад, тому звітування про вади, які "
