@@ -39,8 +39,6 @@ struct _GimpObjectClass
 };
 
 
-GType         gimp_object_get_type        (void) G_GNUC_CONST;
-
 void          gimp_object_set_name        (GimpObject       *object,
                                            const gchar      *name);
 void          gimp_object_set_name_safe   (GimpObject       *object,

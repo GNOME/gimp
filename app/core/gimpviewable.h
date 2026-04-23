@@ -107,8 +107,6 @@ struct _GimpViewableClass
 };
 
 
-GType           gimp_viewable_get_type           (void) G_GNUC_CONST;
-
 void            gimp_viewable_invalidate_preview (GimpViewable  *viewable);
 void            gimp_viewable_size_changed       (GimpViewable  *viewable);
 void            gimp_viewable_expanded_changed   (GimpViewable  *viewable);
