@@ -27,6 +27,8 @@ G_DECLARE_FINAL_TYPE (GimpControllerType,
                       GimpViewable)
 
 
-GimpControllerType * gimp_controller_type_new (GType gtype);
+GimpControllerType * gimp_controller_type_new       (GType               gtype);
 
-GType   gimp_controller_type_get_gtype (GimpControllerType *self);
+GType                gimp_controller_type_get_gtype (GimpControllerType *self);
+
+GListModel         * gimp_controller_type_get_model (void);

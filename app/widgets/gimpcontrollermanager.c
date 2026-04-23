@@ -37,7 +37,6 @@
 #include "gimpcontrollerinfo.h"
 #include "gimpcontrollerkeyboard.h"
 #include "gimpcontrollermanager.h"
-#include "gimpcontrollertype.h"
 #include "gimpcontrollerwheel.h"
 #include "gimpenumaction.h"
 #include "gimpuimanager.h"
@@ -298,33 +297,6 @@ gimp_controller_manager_get_keyboard (GimpControllerManager *self)
   return self->keyboard;
 }
 
-GListModel *
-gimp_controller_manager_get_types (GimpControllerManager *self)
-{
-  GListStore *types;
-  GType      *controller_types;
-  guint       n_controller_types;
-
-  g_return_val_if_fail (GIMP_IS_CONTROLLER_MANAGER (self), NULL);
-
-  types = g_list_store_new (GIMP_TYPE_CONTROLLER_TYPE);
-
-  controller_types = g_type_children (GIMP_TYPE_CONTROLLER,
-                                      &n_controller_types);
-
-  for (guint i = 0; i < n_controller_types; i++)
-    {
-      GimpControllerType *type;
-
-      type = gimp_controller_type_new (controller_types[i]);
-      g_list_store_append (G_LIST_STORE (types), type);
-      g_object_unref (type);
-    }
-
-  g_free (controller_types);
-
-  return G_LIST_MODEL (types);
-}
 
 /*  private functions  */
 

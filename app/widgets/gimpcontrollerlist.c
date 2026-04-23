@@ -288,7 +288,7 @@ gimp_controller_list_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  types = gimp_controller_manager_get_types (list->controller_manager);
+  types = gimp_controller_type_get_model ();
   gtk_list_box_bind_model (GTK_LIST_BOX (list->available_controllers),
                            types,
                            gimp_row_create_for_context,
