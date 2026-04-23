@@ -22,7 +22,10 @@
 
 
 #define GIMP_TYPE_PROGRESS (gimp_progress_get_type ())
-G_DECLARE_INTERFACE (GimpProgress, gimp_progress, GIMP, PROGRESS, GObject)
+G_DECLARE_INTERFACE (GimpProgress,
+                     gimp_progress,
+                     GIMP, PROGRESS,
+                     GObject)
 
 
 struct _GimpProgressInterface

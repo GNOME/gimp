@@ -22,7 +22,10 @@
 
 
 #define GIMP_TYPE_PROJECTABLE (gimp_projectable_get_type ())
-G_DECLARE_INTERFACE (GimpProjectable, gimp_projectable, GIMP, PROJECTABLE, GObject)
+G_DECLARE_INTERFACE (GimpProjectable,
+                     gimp_projectable,
+                     GIMP, PROJECTABLE,
+                     GObject)
 
 
 struct _GimpProjectableInterface

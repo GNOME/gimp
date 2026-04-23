@@ -22,7 +22,10 @@
 
 
 #define GIMP_TYPE_DOCK_CONTAINER (gimp_dock_container_get_type ())
-G_DECLARE_INTERFACE (GimpDockContainer, gimp_dock_container, GIMP, DOCK_CONTAINER, GtkWidget)
+G_DECLARE_INTERFACE (GimpDockContainer,
+                     gimp_dock_container,
+                     GIMP, DOCK_CONTAINER,
+                     GtkWidget)
 
 
 struct _GimpDockContainerInterface

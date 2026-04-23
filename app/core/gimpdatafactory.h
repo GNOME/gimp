@@ -33,10 +33,10 @@ typedef void       (* GimpDataForeachFunc)     (GimpDataFactory *factory,
 
 
 #define GIMP_TYPE_DATA_FACTORY (gimp_data_factory_get_type ())
-G_DECLARE_DERIVABLE_TYPE       (GimpDataFactory,
-                                gimp_data_factory,
-                                GIMP, DATA_FACTORY,
-                                GimpObject)
+G_DECLARE_DERIVABLE_TYPE (GimpDataFactory,
+                          gimp_data_factory,
+                          GIMP, DATA_FACTORY,
+                          GimpObject)
 
 
 struct _GimpDataFactoryClass

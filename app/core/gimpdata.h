@@ -32,7 +32,7 @@ typedef enum
 } GimpDataError;
 
 
-#define GIMP_TYPE_DATA   (gimp_data_get_type ())
+#define GIMP_TYPE_DATA (gimp_data_get_type ())
 G_DECLARE_DERIVABLE_TYPE (GimpData,
                           gimp_data,
                           GIMP, DATA,

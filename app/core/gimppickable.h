@@ -22,7 +22,11 @@
 
 
 #define GIMP_TYPE_PICKABLE (gimp_pickable_get_type ())
-G_DECLARE_INTERFACE (GimpPickable, gimp_pickable, GIMP, PICKABLE, GObject)
+G_DECLARE_INTERFACE (GimpPickable,
+                     gimp_pickable,
+                     GIMP, PICKABLE,
+                     GObject)
+
 
 struct _GimpPickableInterface
 {

@@ -20,12 +20,15 @@
 
 #pragma once
 
-G_BEGIN_DECLS
-
 #include "core/gimpobject.h"
 
+
 #define GIMP_TYPE_ACTION (gimp_action_get_type ())
-G_DECLARE_INTERFACE (GimpAction, gimp_action, GIMP, ACTION, GimpObject)
+G_DECLARE_INTERFACE (GimpAction,
+                     gimp_action,
+                     GIMP, ACTION,
+                     GimpObject)
+
 
 enum
 {
@@ -156,5 +159,3 @@ void              gimp_action_set_default_accels  (GimpAction      *action,
                                                    const gchar    **accels);
 void              gimp_action_set_menu_path       (GimpAction      *action,
                                                    const gchar     *menu_path);
-
-G_END_DECLS

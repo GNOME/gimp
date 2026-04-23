@@ -22,8 +22,12 @@
 
 #include "gimpdrawable.h"
 
+
 #define GIMP_TYPE_RASTERIZABLE (gimp_rasterizable_get_type ())
-G_DECLARE_INTERFACE (GimpRasterizable, gimp_rasterizable, GIMP, RASTERIZABLE, GimpDrawable)
+G_DECLARE_INTERFACE (GimpRasterizable,
+                     gimp_rasterizable,
+                     GIMP, RASTERIZABLE,
+                     GimpDrawable)
 
 
 struct _GimpRasterizableInterface

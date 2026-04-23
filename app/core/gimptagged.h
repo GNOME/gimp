@@ -22,7 +22,10 @@
 
 
 #define GIMP_TYPE_TAGGED (gimp_tagged_get_type ())
-G_DECLARE_INTERFACE (GimpTagged, gimp_tagged, GIMP, TAGGED, GObject)
+G_DECLARE_INTERFACE (GimpTagged,
+                     gimp_tagged,
+                     GIMP, TAGGED,
+                     GObject)
 
 
 struct _GimpTaggedInterface

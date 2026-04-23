@@ -22,5 +22,9 @@
 
 #include "gimpitemundo.h"
 
+
 #define GIMP_TYPE_RASTERIZABLE_UNDO (gimp_rasterizable_undo_get_type ())
-G_DECLARE_FINAL_TYPE (GimpRasterizableUndo, gimp_rasterizable_undo, GIMP, RASTERIZABLE_UNDO, GimpItemUndo)
+G_DECLARE_FINAL_TYPE (GimpRasterizableUndo,
+                      gimp_rasterizable_undo,
+                      GIMP, RASTERIZABLE_UNDO,
+                      GimpItemUndo)

@@ -22,7 +22,10 @@
 
 
 #define GIMP_TYPE_CANCELABLE (gimp_cancelable_get_type ())
-G_DECLARE_INTERFACE (GimpCancelable, gimp_cancelable, GIMP, CANCELABLE, GObject)
+G_DECLARE_INTERFACE (GimpCancelable,
+                     gimp_cancelable,
+                     GIMP, CANCELABLE,
+                     GObject)
 
 
 struct _GimpCancelableInterface

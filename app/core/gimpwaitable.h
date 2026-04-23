@@ -22,7 +22,10 @@
 
 
 #define GIMP_TYPE_WAITABLE (gimp_waitable_get_type ())
-G_DECLARE_INTERFACE (GimpWaitable, gimp_waitable, GIMP, WAITABLE, GObject)
+G_DECLARE_INTERFACE (GimpWaitable,
+                     gimp_waitable,
+                     GIMP, WAITABLE,
+                     GObject)
 
 
 struct _GimpWaitableInterface
