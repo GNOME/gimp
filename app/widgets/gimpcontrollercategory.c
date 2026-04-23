@@ -36,11 +36,10 @@
  * A helper object to list types/categories of controllers
  */
 
-struct _GimpControllerCategory {
-  GObject      parent_instance;
+struct _GimpControllerCategory
+{
+  GimpViewable parent_instance;
 
-  const gchar *name;
-  const gchar *icon_name;
   GType        gtype;
 };
 
