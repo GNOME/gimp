@@ -294,6 +294,7 @@ gimp_controller_list_constructed (GObject *object)
                            gimp_row_create_for_context,
                            gimp_get_user_context (gimp_controller_manager_get_gimp (list->controller_manager)),
                            NULL);
+  g_object_unref (categories);
 
   gtk_list_box_bind_model (GTK_LIST_BOX (list->active_controllers),
                            G_LIST_MODEL (list->controller_manager),
