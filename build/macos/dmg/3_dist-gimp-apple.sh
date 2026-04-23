@@ -245,7 +245,7 @@ printf "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K\n"
 # 5. FINISH .DMG AS COMPRESSED READ-ONLY
 DMG_ARTIFACT="gimp-${CUSTOM_GIMP_VERSION}-${ARCH}.dmg"
 printf "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KCompressing %s\n" ${DMG_ARTIFACT}
-if [ "$GITLAB_CI" && "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
+if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   #Prepare certs to be stored on cert_container
   security create-keychain -p "" cert_container
   security set-keychain-settings cert_container
@@ -330,7 +330,7 @@ fi
 hdiutil detach "$DMG_MOUNT"
 hdiutil convert "temp_$ARCH.dmg" -format ULFO -o "$DMG_ARTIFACT"
 rm "temp_$ARCH.dmg"
-if [ "$GITLAB_CI" && "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
+if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   printf '(INFO): signing .dmg\n'
   codesign -s "${codesign_subject}" "$DMG_ARTIFACT"
 fi
