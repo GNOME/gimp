@@ -262,11 +262,13 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   security set-key-partition-list -S apple-tool:,apple: -k "" cert_container
   rm -rf cert_dir
 
-  printf '(INFO): signing libraries (except Python.framework)\n'
+  printf '(INFO): signing Frameworks/ (except Python.framework)\n'
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks/" \
-    -type f -perm +111 ! -path "*/DWARF/*" ! -path "*/.dSYM/*" ! -path "*/Python.framework/*" | xargs file | grep ' Mach-O ' | awk -F ':' '{print $1}' | xargs \
+    -type f \( -perm -100 -o -perm -010 -o -perm -001 \) ! -path "*/DWARF/*" ! -path "*/.dSYM/*" ! -path "*/Python.framework/*" -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
+    printf "(INFO): signing $bin\n"
     codesign -s "${codesign_subject}" \
       --options runtime --entitlements 'build/macos/dmg/gimp-hardening.entitlements'
+    done
 
   printf '(INFO): signing Python.framework\n'
   if [ "$ARCH" = 'arm64' ]; then
@@ -277,24 +279,25 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   else
     PYTHON_SIGN_FLAGS='--entitlements build/macos/dmg/gimp-hardening.entitlements'
   fi
-  find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks/Python.framework/Versions/${PYTHON_VERSION}/lib" \
-    -type f -perm +111 | xargs file | grep ' Mach-O ' | awk -F ':' '{print $1}' | xargs \
-    codesign -s "${codesign_subject}" \
-      --options runtime --entitlements 'build/macos/dmg/gimp-hardening.entitlements'
-  find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks/Python.framework/Versions/${PYTHON_VERSION}/Resources" \
-    -type f -perm +111 2>/dev/null | xargs file 2>/dev/null | grep 'Mach-O' | awk -F ':' '{print $1}' | while read -r bin; do
+  find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks/Python.framework/Versions/${PYTHON_VERSION}/lib/" \
+    -type f \( -perm -100 -o -perm -010 -o -perm -001 \) -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
+      printf "(INFO): signing $bin\n"
       codesign -s "${codesign_subject}" \
-        --options runtime --timestamp ${PYTHON_SIGN_FLAGS} "$bin"
+        --options runtime --entitlements 'build/macos/dmg/gimp-hardening.entitlements'
     done
-  find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks/Python.framework/Versions/${PYTHON_VERSION}/bin" \
-    -type f -perm +111 2>/dev/null | xargs file 2>/dev/null | grep 'Mach-O' | awk -F ':' '{print $1}' | while read -r bin; do
+  find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks/Python.framework/Versions/${PYTHON_VERSION}/Resources/" \
+       "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks/Python.framework/Versions/${PYTHON_VERSION}/bin/" \
+       "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks/Python.framework/Versions/${PYTHON_VERSION}/Python" \
+    -type f \( -perm -100 -o -perm -010 -o -perm -001 \) -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
+      printf "(INFO): signing $bin\n"
       codesign -s "${codesign_subject}" \
         --options runtime --timestamp ${PYTHON_SIGN_FLAGS} "$bin"
     done
 
-  printf '(INFO): signing python and xdg-email executables\n'
-  for bin in "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks/Python.framework/Versions/${PYTHON_VERSION}/Python" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/python${PYTHON_VERSION}" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/xdg-email"; do
+  printf '(INFO): signing MacOS/ executables called by GIMP\n'
+  find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/python3" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/xdg-email" | while read -r bin; do
     if [ -f "$bin" ]; then
+      printf "(INFO): signing $bin\n"
       codesign -s "${codesign_subject}" \
         --options runtime --timestamp ${PYTHON_SIGN_FLAGS} "$bin"
     fi
@@ -303,21 +306,21 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
     mv -f build/macos/dmg/python.coderequirement.bak build/macos/dmg/python.coderequirement
   fi
 
-  printf '(INFO): signing gimp, gegl and dot executables\n'
-  echo "Signing all gimp and other binaries"
+  printf '(INFO): signing MacOS/ executabled related to gegl\n'
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS" -type f -perm +111 \
-    ! -name "gimp" ! -name "gimp-console*" ! -name "gimp-debug-tool*" ! -name "gimp-test-clipboard*" ! -name "gimptool*" ! -name "gimp-script-fu-interpreter*" ! -name "python*" ! -name "xdg-email" | while read -r bin; do
+    ! -name "gimp*" ! -name "gimp-console*" ! -name "gimp-debug-tool*" ! -name "gimp-test-clipboard*" ! -name "gimptool*" ! -name "gimp-script-fu-interpreter*" ! -name "python*" ! -name "xdg-email" | while read -r bin; do
     if [ ! -L "$bin" ]; then
+      printf "(INFO): signing $bin\n"
       codesign -s "${codesign_subject}" \
         --options runtime --timestamp --entitlements "build/macos/dmg/gimp-hardening.entitlements" "$bin"
     fi
     done
 
   # This is required for launch-constraint-parent to work (checks parent process identifier)
-  printf '(INFO): signing gimp auxiliary executables\n'
-  echo "Signing GIMP auxiliary binaries with $BUNDLE_IDENTIFIER identifier"
+  printf '(INFO): signing MacOS/ executables auxiliary to GIMP\n'
   for bin in "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/gimp-console"* "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/gimp-debug-tool"* "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/gimp-test-clipboard"* "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/gimptool"* "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/gimp-script-fu-interpreter"*; do
     if [ -f "$bin" ] && [ ! -L "$bin" ]; then
+      printf "(INFO): signing $bin\n"
       codesign -s "${codesign_subject}" \
         --options runtime --timestamp --identifier $BUNDLE_IDENTIFIER --entitlements "build/macos/dmg/gimp-hardening.entitlements" "$bin"
     fi
