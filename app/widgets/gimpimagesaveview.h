@@ -36,9 +36,7 @@ struct _GimpImageSaveViewClass
 };
 
 
-GType       gimp_image_save_view_get_type (void) G_GNUC_CONST;
-
-GtkWidget * gimp_image_save_view_new      (GimpContainer *container,
-                                           GimpContext   *context,
-                                           gint           view_size,
-                                           gint           view_border_width);
+GtkWidget * gimp_image_save_view_new (GimpContainer *container,
+                                      GimpContext   *context,
+                                      gint           view_size,
+                                      gint           view_border_width);

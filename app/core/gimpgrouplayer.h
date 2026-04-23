@@ -36,8 +36,6 @@ struct _GimpGroupLayerClass
 };
 
 
-GType            gimp_group_layer_get_type            (void) G_GNUC_CONST;
-
 GimpLayer      * gimp_group_layer_new                 (GimpImage           *image);
 
 GimpProjection * gimp_group_layer_get_projection      (GimpGroupLayer      *group);

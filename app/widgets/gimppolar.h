@@ -40,6 +40,4 @@ struct _GimpPolarClass
 };
 
 
-GType       gimp_polar_get_type (void) G_GNUC_CONST;
-
-GtkWidget * gimp_polar_new      (void);
+GtkWidget * gimp_polar_new (void);

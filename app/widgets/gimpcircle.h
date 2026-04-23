@@ -40,8 +40,6 @@ struct _GimpCircleClass
 };
 
 
-GType       gimp_circle_get_type                (void) G_GNUC_CONST;
-
 GtkWidget * gimp_circle_new                     (void);
 
 gboolean    _gimp_circle_has_grab               (GimpCircle *circle);

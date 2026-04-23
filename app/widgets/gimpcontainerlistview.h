@@ -38,13 +38,11 @@ struct _GimpContainerListViewClass
 };
 
 
-GType       gimp_container_list_view_get_type (void) G_GNUC_CONST;
-
-GtkWidget * gimp_container_list_view_new      (GimpContainer *container,
-                                               GimpContext   *context,
-                                               gint           view_size,
-                                               gint           view_border_width);
+GtkWidget * gimp_container_list_view_new (GimpContainer *container,
+                                          GimpContext   *context,
+                                          gint           view_size,
+                                          gint           view_border_width);
 
 void        gimp_container_list_view_set_search_entry
-                                              (GimpContainerListView *list_view,
-                                               GtkSearchEntry        *entry);
+                                         (GimpContainerListView *list_view,
+                                          GtkSearchEntry        *entry);

@@ -34,8 +34,6 @@ struct _GimpEditorClass
 };
 
 
-GType       gimp_editor_get_type          (void) G_GNUC_CONST;
-
 GtkWidget * gimp_editor_new               (void);
 
 void        gimp_editor_create_menu       (GimpEditor           *editor,

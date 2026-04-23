@@ -60,8 +60,6 @@ struct _GimpDataFactoryClass
 };
 
 
-GType           gimp_data_factory_get_type          (void) G_GNUC_CONST;
-
 void            gimp_data_factory_data_init         (GimpDataFactory  *factory,
                                                      GimpContext      *context,
                                                      gboolean          no_data);

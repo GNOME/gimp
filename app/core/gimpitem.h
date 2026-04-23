@@ -152,8 +152,6 @@ struct _GimpItemClass
 };
 
 
-GType           gimp_item_get_type           (void) G_GNUC_CONST;
-
 GimpItem      * gimp_item_new                (GType               type,
                                               GimpImage          *image,
                                               const gchar        *name,
