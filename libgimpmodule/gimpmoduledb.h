@@ -25,8 +25,11 @@
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_MODULE_DB            (gimp_module_db_get_type ())
-G_DECLARE_FINAL_TYPE (GimpModuleDB, gimp_module_db, GIMP, MODULE_DB, GObject)
+#define GIMP_TYPE_MODULE_DB (gimp_module_db_get_type ())
+G_DECLARE_FINAL_TYPE (GimpModuleDB,
+                      gimp_module_db,
+                      GIMP, MODULE_DB,
+                      GObject)
 
 
 GimpModuleDB * gimp_module_db_new              (gboolean      verbose);

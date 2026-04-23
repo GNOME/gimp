@@ -56,6 +56,8 @@ struct _GimpModuleDB
 
 static void         gimp_module_db_finalize            (GObject      *object);
 
+static void         gimp_module_db_list_model_iface_init (GListModelInterface *iface);
+
 static void         gimp_module_db_load_directory      (GimpModuleDB *db,
                                                         GFile        *directory);
 static void         gimp_module_db_load_module         (GimpModuleDB *db,
@@ -66,8 +68,6 @@ static GimpModule * gimp_module_db_module_find_by_file (GimpModuleDB *db,
 
 static void         gimp_module_db_module_dump_func    (gpointer      data,
                                                         gpointer      user_data);
-
-static void         gimp_module_db_list_model_iface_init (GListModelInterface *iface);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpModuleDB, gimp_module_db, G_TYPE_OBJECT,
@@ -114,6 +114,7 @@ static guint
 gimp_module_db_get_n_items (GListModel *list)
 {
   GimpModuleDB *self = GIMP_MODULE_DB (list);
+
   return self->modules->len;
 }
 
@@ -125,6 +126,7 @@ gimp_module_db_get_item (GListModel *list,
 
   if (index >= self->modules->len)
     return NULL;
+
   return g_object_ref (g_ptr_array_index (self->modules, index));
 }
 
@@ -132,8 +134,8 @@ static void
 gimp_module_db_list_model_iface_init (GListModelInterface *iface)
 {
   iface->get_item_type = gimp_module_db_get_item_type;
-  iface->get_n_items = gimp_module_db_get_n_items;
-  iface->get_item = gimp_module_db_get_item;
+  iface->get_n_items   = gimp_module_db_get_n_items;
+  iface->get_item      = gimp_module_db_get_item;
 }
 
 /**
