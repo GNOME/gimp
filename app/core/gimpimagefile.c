@@ -58,11 +58,6 @@ enum
 };
 
 
-struct _GimpImagefile
-{
-  GimpViewable  parent_instance;
-};
-
 typedef struct _GimpImagefilePrivate GimpImagefilePrivate;
 
 struct _GimpImagefilePrivate
@@ -82,7 +77,8 @@ struct _GimpImagefilePrivate
   gint           popup_height;
 };
 
-#define GET_PRIVATE(imagefile) ((GimpImagefilePrivate *) gimp_imagefile_get_instance_private ((GimpImagefile *) (imagefile)))
+#define GET_PRIVATE(imagefile) \
+  ((GimpImagefilePrivate *) gimp_imagefile_get_instance_private ((GimpImagefile *) (imagefile)))
 
 
 static void        gimp_imagefile_dispose          (GObject        *object);
