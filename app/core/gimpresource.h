@@ -31,6 +31,3 @@ struct _GimpResourceClass
 {
   GimpViewableClass parent_class;
 };
-
-
-GType   gimp_resource_get_type (void) G_GNUC_CONST;

@@ -41,7 +41,6 @@ struct _GimpFilterClass
 };
 
 
-GType            gimp_filter_get_type         (void) G_GNUC_CONST;
 GimpFilter     * gimp_filter_new              (const gchar    *name);
 
 GeglNode       * gimp_filter_get_node         (GimpFilter     *filter);
