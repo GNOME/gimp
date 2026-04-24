@@ -21,31 +21,18 @@
 #pragma once
 
 
-#define GIMP_TYPE_PREFS_BOX            (gimp_prefs_box_get_type ())
-#define GIMP_PREFS_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREFS_BOX, GimpPrefsBox))
-#define GIMP_PREFS_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PREFS_BOX, GimpPrefsBoxClass))
-#define GIMP_IS_PREFS_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PREFS_BOX))
-#define GIMP_IS_PREFS_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PREFS_BOX))
-#define GIMP_PREFS_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PREFS_BOX, GimpPrefsBoxClass))
+#define GIMP_TYPE_PREFS_BOX (gimp_prefs_box_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPrefsBox,
+                          gimp_prefs_box,
+                          GIMP, PREFS_BOX,
+                          GtkBox)
 
-
-typedef struct _GimpPrefsBoxPrivate GimpPrefsBoxPrivate;
-typedef struct _GimpPrefsBoxClass   GimpPrefsBoxClass;
-
-struct _GimpPrefsBox
-{
-  GtkBox               parent_instance;
-
-  GimpPrefsBoxPrivate *priv;
-};
 
 struct _GimpPrefsBoxClass
 {
   GtkBoxClass  parent_class;
 };
 
-
-GType         gimp_prefs_box_get_type              (void) G_GNUC_CONST;
 
 GtkWidget   * gimp_prefs_box_new                   (void);
 

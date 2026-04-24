@@ -45,6 +45,8 @@ enum
 };
 
 
+typedef struct _GimpPrefsBoxPrivate GimpPrefsBoxPrivate;
+
 struct _GimpPrefsBoxPrivate
 {
   GtkTreeStore *store;
@@ -61,7 +63,8 @@ struct _GimpPrefsBoxPrivate
   gchar        *page_help_id;
 };
 
-#define GET_PRIVATE(obj) (((GimpPrefsBox *) (obj))->priv)
+#define GET_PRIVATE(obj) \
+  ((GimpPrefsBoxPrivate *) gimp_prefs_box_get_instance_private ((GimpPrefsBox *) (obj)))
 
 
 static void      gimp_prefs_box_finalize              (GObject      *object);
@@ -104,7 +107,7 @@ gimp_prefs_box_class_init (GimpPrefsBoxClass *klass)
 static void
 gimp_prefs_box_init (GimpPrefsBox *box)
 {
-  GimpPrefsBoxPrivate *private;
+  GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
   GtkTreeViewColumn   *column;
   GtkCellRenderer     *cell;
   GtkTreeSelection    *sel;
@@ -112,10 +115,6 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   GtkWidget           *frame;
   GtkWidget           *hbox;
   GtkWidget           *vbox;
-
-  box->priv = gimp_prefs_box_get_instance_private (box);
-
-  private = box->priv;
 
   gtk_widget_style_get (GTK_WIDGET (box),
                         "tab-icon-size", &tab_icon_size,
@@ -237,10 +236,12 @@ gimp_prefs_box_finalize (GObject *object)
 static void
 gimp_prefs_box_style_updated (GtkWidget *widget)
 {
+  GimpPrefsBoxPrivate *private = GET_PRIVATE (widget);
+
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
-  if (GET_PRIVATE (widget)->store)
-    gtk_tree_model_foreach (GTK_TREE_MODEL (GET_PRIVATE (widget)->store),
+  if (private->store)
+    gtk_tree_model_foreach (GTK_TREE_MODEL (private->store),
                             gimp_prefs_box_style_updated_foreach,
                             widget);
 }
@@ -319,15 +320,13 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
                          GtkTreeIter       *parent,
                          GtkTreeIter       *iter)
 {
-  GimpPrefsBoxPrivate *private;
+  GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
   GtkWidget           *page_vbox;
   GtkWidget           *scrolled_win;
   GtkWidget           *viewport;
   GtkWidget           *vbox;
 
   g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
-
-  private = GET_PRIVATE (box);
 
   page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_stack_add_titled (GTK_STACK (private->stack), page_vbox,
@@ -423,11 +422,9 @@ void
 gimp_prefs_box_set_header_visible (GimpPrefsBox *box,
                                    gboolean      header_visible)
 {
-  GimpPrefsBoxPrivate *private;
+  GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
 
   g_return_if_fail (GIMP_IS_PREFS_BOX (box));
-
-  private = GET_PRIVATE (box);
 
   gtk_widget_set_visible (private->header, header_visible);
 }
@@ -437,15 +434,13 @@ gimp_prefs_box_set_page_scrollable (GimpPrefsBox *box,
                                     GtkWidget    *page,
                                     gboolean      scrollable)
 {
-  GimpPrefsBoxPrivate *private;
+  GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
   GtkWidget           *scrolled_win;
   GtkWidget           *page_vbox;
 
   g_return_if_fail (GIMP_IS_PREFS_BOX (box));
   g_return_if_fail (GTK_IS_BOX (page));
   g_return_if_fail (gtk_widget_is_ancestor (page, GTK_WIDGET (box)));
-
-  private = GET_PRIVATE (box);
 
   scrolled_win = gtk_widget_get_ancestor (page, GTK_TYPE_SCROLLED_WINDOW);
   page_vbox = gtk_widget_get_parent (scrolled_win);
@@ -463,7 +458,7 @@ gimp_prefs_box_set_page_resettable (GimpPrefsBox *box,
                                     GtkWidget    *page,
                                     const gchar  *label)
 {
-  GimpPrefsBoxPrivate *private;
+  GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
   GtkWidget           *scrolled_win;
   GtkWidget           *page_vbox;
   GtkWidget           *hbox;
@@ -472,8 +467,6 @@ gimp_prefs_box_set_page_resettable (GimpPrefsBox *box,
   g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
   g_return_val_if_fail (GTK_IS_BOX (page), NULL);
   g_return_val_if_fail (gtk_widget_is_ancestor (page, GTK_WIDGET (box)), NULL);
-
-  private = GET_PRIVATE (box);
 
   scrolled_win = gtk_widget_get_ancestor (page, GTK_TYPE_SCROLLED_WINDOW);
   page_vbox = gtk_widget_get_parent (scrolled_win);
