@@ -50,6 +50,7 @@ libappwidgets_sources = [
   'gimpcolorbar.c',
   'gimpcolordialog.c',
   'gimpcolordisplayeditor.c',
+  'gimpcolordisplaytype.c',
   'gimpcoloreditor.c',
   'gimpcolorframe.c',
   'gimpcolorhistory.c',
