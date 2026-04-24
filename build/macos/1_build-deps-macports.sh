@@ -22,17 +22,21 @@ if [ -z "$GITLAB_CI" ]; then
 fi
 
 
+security delete-keychain cert_container 2>/dev/null || true
 security create-keychain -p "" cert_container
   security set-keychain-settings cert_container
   security unlock-keychain -u cert_container
   security list-keychains -s "${HOME}/Library/Keychains/cert_container-db" "${HOME}/Library/Keychains/login.keychain-db"
   mkdir cert_dir
   #Apple cert
-  curl 'https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer' > cert_dir/AppleWWDRCAG3.cer
-  security import cert_dir/AppleWWDRCAG3.cer -k cert_container -T /usr/bin/codesign
+  #curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDG2CA.cer' > cert_dir/DeveloperIDG2CA.cer
+  #curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDCA.cer' > cert_dir/DeveloperIDCA.cer
+  #curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG2.cer' > cert_dir/AppleWWDRCAG2.cer
+  curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer' > cert_dir/AppleWWDRCAG3.cer
+  security import cert_dir/AppleWWDRCAG3.cer -k cert_container -T codesign
   #GIMP/GNOME cert
   echo "$osx_crt" | base64 -D > cert_dir/gnome.p12
-  security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T /usr/bin/codesign
+  security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T codesign
   #Finish cert_container preparation
   security set-key-partition-list -S apple-tool:,apple: -k "" cert_container
   rm -rf cert_dir
