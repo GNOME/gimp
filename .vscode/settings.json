@@ -7,5 +7,6 @@
   "editor.renderControlCharacters": true,
   "editor.renderWhitespace": "trailing",
   "files.trimTrailingWhitespace": true,
-  "files.eol": "\n"
+  "files.eol": "\n",
+  "git.addAICoAuthor": "off"
 }
