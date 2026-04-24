@@ -45,6 +45,7 @@ while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
   #GIMP/GNOME cert
   echo "$osx_crt" | base64 -D > cert_dir/gnome.p12
   security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T /usr/bin/codesign
+  openssl pkcs12 -in cert_dir/gnome.p12 -out cert_dir/gnome.pem -nodes
   security add-trusted-cert -p codeSign -k cert_container cert_dir/gnome.p12
   #Finish cert_container preparation
   security set-key-partition-list -S apple-tool:,apple:,codesign: -k "" cert_container
