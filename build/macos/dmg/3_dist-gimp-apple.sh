@@ -265,13 +265,13 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   #Finish cert_container preparation
   security set-key-partition-list -S apple-tool:,apple:,codesign: -k "" cert_container
   identity_output=$(security find-identity cert_container 2>&1)
-  printf "$identity_output"
+  printf "$identity_output\n"
   if echo "$identity_output" | grep -q "CSSMERR_TP_NOT_TRUSTED" || echo "$identity_output" | grep -q "0 valid identities"; then
     exit 1
   fi
   rm -rf cert_dir
 
-  printf '(INFO): signing Frameworks/ (except Python.framework)\n'
+  printf '(INFO): signing lib/ (except Python.framework)\n'
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/lib/" \
     -type f \( -perm -100 -o -perm -010 -o -perm -001 \) ! -path "*/DWARF/*" ! -path "*/.dSYM/*" ! -path "*/Python.framework/*" -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
     printf "(INFO): signing $bin\n"
@@ -351,11 +351,40 @@ fi
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K\n"
 
 
-# 6.A NOTARIZE .APP (TODO)
+# 6.A NOTARIZE .DMG
+if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
+  printf "\e[0Ksection_start:`date +%s`:${ARCH}_notarize[collapsed=true]\r\e[0KNotarizing ${DMG_ARTIFACT}\n"
+  printf "(INFO): submitting to Apple servers\n"
+  NOTARY_OUT="$(xcrun notarytool submit ${DMG_ARTIFACT} --apple-id ${notarization_login} --team-id ${notarization_teamid} --password ${notarization_password} --wait 2>&1)"
+  printf "$NOTARY_OUT\n"
 
+  # Show Request UUID
+  REQUEST_UUID=$(echo "$NOTARY_OUT" | grep -oE "id: [0-9a-f-]+" | head -n 1 | awk '{print $2}')
+  if [ -z "$REQUEST_UUID" ]; then
+    printf "\033[31m(ERROR)\033[0m: Failed finding Request UUID in notarytool output\n"
+    exit 1
+  fi
+  printf "(INFO): Request UUID: $REQUEST_UUID\n"
+
+  # Show log
+  NOTARY_STATUS=$(echo "$NOTARY_OUT" | grep status: | awk -F ": " '{print $NF}')
+  if ! echo "$NOTARY_STATUS" | grep -q 'Accepted'; then
+    printf "\033[31m(ERROR)\033[0m: Notarization failed with status: $NOTARY_STATUS. Showing log\n"
+    xcrun notarytool log --apple-id "${notarization_login}" --team-id "${notarization_teamid}" --password "${notarization_password}" "$REQUEST_UUID"
+    exit 1
+  fi
+
+  printf "(INFO): stapling the notarization ticket to the DMG\n"
+  xcrun stapler staple -v ${DMG_ARTIFACT}
+  if [ ! $? -eq 0 ]; then
+    printf '\033[31m(ERROR)\033[0m: Failed to staple notarization ticket to DMG file\n'
+    exit 1
+  fi
+  printf "\e[0Ksection_end:`date +%s`:${ARCH}_notarize\r\e[0K\n"
+fi
 
 # 6.B GENERATE SHASUMS FOR .DMG
-printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KCode-signing ${DMG_ARTIFACT}\n"
+printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KChecksumming ${DMG_ARTIFACT}\n"
 printf "(INFO): ${DMG_ARTIFACT} SHA-256: $(shasum -a 256 ${DMG_ARTIFACT} | cut -d ' ' -f 1)\n"
 printf "(INFO): ${DMG_ARTIFACT} SHA-512: $(shasum -a 512 ${DMG_ARTIFACT} | cut -d ' ' -f 1)\n"
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K\n"
