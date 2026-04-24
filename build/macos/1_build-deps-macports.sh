@@ -22,31 +22,6 @@ if [ -z "$GITLAB_CI" ]; then
 fi
 
 
-security create-keychain -p "" cert_container
-security set-keychain-settings cert_container
-security unlock-keychain -u cert_container
-security list-keychains -s "${HOME}/Library/Keychains/cert_container-db" "${HOME}/Library/Keychains/login.keychain-db"
-mkdir cert_dir
-#Apple certs. See: https://www.apple.com/certificateauthority/
-curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDG2CA.cer' > cert_dir/DeveloperIDG2CA.cer
-curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG2.cer' > cert_dir/AppleWWDRCAG2.cer
-#curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer' > cert_dir/AppleWWDRCAG3.cer
-security import cert_dir/DeveloperIDG2CA.cer -k cert_container -T /usr/bin/codesign
-security import cert_dir/AppleWWDRCAG2.cer -k cert_container -T /usr/bin/codesign
-#security import cert_dir/AppleWWDRCAG3.cer -k cert_container -T /usr/bin/codesign
-#GIMP/GNOME cert
-echo "$osx_crt" | base64 -D > cert_dir/gnome.p12
-security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T /usr/bin/codesign
-#Finish cert_container preparation
-security set-key-partition-list -S apple-tool:,apple:,codesign: -k "" cert_container
-identity_output=$(security find-identity cert_container 2>&1)
-printf "$identity_output"
-if echo "$identity_output" | grep -q "CSSMERR_TP_NOT_TRUSTED" || echo "$identity_output" | grep -q "0 valid identities"; then
-  exit 1
-fi
-rm -rf cert_dir
-
-
 # Install part of the deps
 if [ -z "$OPT_PREFIX" ]; then
   export OPT_PREFIX=$(which port | sed 's|/bin/port||' || brew --prefix)
