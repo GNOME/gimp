@@ -125,7 +125,8 @@ stack {
 /* GtkTextView */
 textview, textview.view, textview text {
   background-color: @extreme-bg-color;
-  color: @fg-color;
+  caret-color:      @fg-color;
+  color:            @fg-color;
 }
 /* End GtkTextView */
 
@@ -433,7 +434,8 @@ GimpSamplePointEditor box.vertical {
 entry {
   background-color: @extreme-bg-color;
   background-image: none;
-  color: @fg-color;
+  caret-color:      @fg-color;
+  color:            @fg-color;
 }
 
 entry selection {
