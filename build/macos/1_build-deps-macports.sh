@@ -22,8 +22,16 @@ if [ -z "$GITLAB_CI" ]; then
 fi
 
 
-security delete-keychain cert_container 2>/dev/null || true
-security create-keychain -p "" cert_container
+MAX_ATTEMPTS=3
+ATTEMPT=1
+
+while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
+  printf "=== Certificate import attempt $ATTEMPT of $MAX_ATTEMPTS ==="
+  sleep 25
+
+  security delete-keychain cert_container 2>/dev/null || true
+  security create-keychain -p "" cert_container
+  security default-keychain -s cert_container
   security set-keychain-settings cert_container
   security unlock-keychain -u cert_container
   security list-keychains -s "${HOME}/Library/Keychains/cert_container-db" "${HOME}/Library/Keychains/login.keychain-db"
@@ -38,9 +46,21 @@ security create-keychain -p "" cert_container
   echo "$osx_crt" | base64 -D > cert_dir/gnome.p12
   security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T /usr/bin/codesign
   #Finish cert_container preparation
-  security set-key-partition-list -S apple-tool:,apple: -k "" cert_container
+  security set-key-partition-list -S apple-tool:,apple:,codesign: -k "" cert_container
+
+  identity_output=$(security find-identity cert_container 2>&1)
+  printf "Certificate import output:\n%s\n" "$identity_output"
+  if echo "$identity_output" | grep -q "CSSMERR_TP_NOT_TRUSTED" || echo "$identity_output" | grep -q "0 valid identities"; then
+    if [ $ATTEMPT -lt $MAX_ATTEMPTS ]; then
+      printf 'Retrying...\n'
+      ATTEMPT=$((ATTEMPT + 1))
+      continue
+    else
+      printf "All $MAX_ATTEMPTS attempts failed\n"
+      exit 1
+    fi
+  fi
   rm -rf cert_dir
-  printf "$(security find-identity -v cert_container 2>&1)\n"
 
 exit 0
 
