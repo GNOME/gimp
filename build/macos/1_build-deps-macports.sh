@@ -33,10 +33,10 @@ security create-keychain -p "" cert_container
   #curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDCA.cer' > cert_dir/DeveloperIDCA.cer
   #curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG2.cer' > cert_dir/AppleWWDRCAG2.cer
   curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer' > cert_dir/AppleWWDRCAG3.cer
-  security import cert_dir/AppleWWDRCAG3.cer -k cert_container -T codesign
+  security import cert_dir/AppleWWDRCAG3.cer -k cert_container -T /usr/bin/codesign
   #GIMP/GNOME cert
   echo "$osx_crt" | base64 -D > cert_dir/gnome.p12
-  security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T codesign
+  security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T /usr/bin/codesign
   #Finish cert_container preparation
   security set-key-partition-list -S apple-tool:,apple: -k "" cert_container
   rm -rf cert_dir
