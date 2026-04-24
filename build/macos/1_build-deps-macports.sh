@@ -25,7 +25,7 @@ fi
 security create-keychain -p "" cert_container
   security set-keychain-settings cert_container
   security unlock-keychain -u cert_container
-  security list-keychains -s "${HOME}/Library/Keychains/signchain-db" "${HOME}/Library/Keychains/login.keychain-db"
+  security list-keychains -s "${HOME}/Library/Keychains/cert_container-db" "${HOME}/Library/Keychains/login.keychain-db"
   mkdir cert_dir
   #Apple cert
   curl 'https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer' > cert_dir/AppleWWDRCAG3.cer
