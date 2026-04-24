@@ -106,6 +106,8 @@ _gimp_item_tree_view_search_create (GimpItemTreeView *view,
   search->link_list = gtk_list_box_new ();
   gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (search->link_list),
                                              TRUE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (search->link_list)),
+                               "view");
   gtk_grid_attach (GTK_GRID (grid), search->link_list,
                    0, 1, 2, 1);
   gtk_widget_show (search->link_list);

@@ -154,6 +154,8 @@ module_dialog_new (Gimp *gimp)
                            create_widget_for_module,
                            private,
                            NULL);
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (private->listbox)),
+                               "view");
   g_signal_connect (private->listbox, "row-selected",
                     G_CALLBACK (dialog_select_callback),
                     private);

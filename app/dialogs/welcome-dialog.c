@@ -993,6 +993,8 @@ welcome_dialog_create_release_page (Gimp      *gimp,
       gtk_widget_set_visible (scrolled_window, TRUE);
 
       listbox = gtk_list_box_new ();
+      gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (listbox)),
+                                   "view");
 
       for (gint i = 0; i < gimp_welcome_dialog_n_items; i++)
         {

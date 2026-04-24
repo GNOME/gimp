@@ -186,6 +186,8 @@ gimp_controller_list_init (GimpControllerList *list)
   list->available_controllers = gtk_list_box_new ();
   gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (list->available_controllers),
                                              FALSE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (list->available_controllers)),
+                               "view");
   gtk_widget_show (list->available_controllers);
   gtk_container_add (GTK_CONTAINER (sw), list->available_controllers);
 
@@ -243,6 +245,8 @@ gimp_controller_list_init (GimpControllerList *list)
   list->active_controllers = gtk_list_box_new ();
   gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (list->active_controllers),
                                              FALSE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (list->active_controllers)),
+                               "view");
   gtk_box_pack_start (GTK_BOX (vbox), list->active_controllers, TRUE, TRUE, 0);
   gtk_widget_show (list->active_controllers);
 

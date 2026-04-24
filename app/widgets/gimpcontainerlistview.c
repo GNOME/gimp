@@ -155,6 +155,8 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
 
   priv->view = GTK_LIST_BOX (gtk_list_box_new ());
   gtk_list_box_set_activate_on_single_click (priv->view, FALSE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (priv->view)),
+                               "view");
   gtk_container_add (GTK_CONTAINER (box->scrolled_win),
                      GTK_WIDGET (priv->view));
   gtk_widget_show (GTK_WIDGET (priv->view));

@@ -1989,6 +1989,8 @@ prefs_dialog_new (Gimp       *gimp,
     listbox = gtk_list_box_new ();
     gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
                                      GTK_SELECTION_BROWSE);
+    gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (listbox)),
+                                 "view");
     gtk_container_add (GTK_CONTAINER (scrolled_win), listbox);
     gtk_widget_show (listbox);
 
@@ -2156,6 +2158,8 @@ prefs_dialog_new (Gimp       *gimp,
     listbox = gtk_list_box_new ();
     gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
                                      GTK_SELECTION_BROWSE);
+    gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (listbox)),
+                                 "view");
     gtk_container_add (GTK_CONTAINER (scrolled_win), listbox);
     gtk_widget_show (listbox);
 
@@ -3268,6 +3272,8 @@ prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
         listbox = gtk_list_box_new ();
         gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
                                          GTK_SELECTION_BROWSE);
+        gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (listbox)),
+                                     "view");
         gtk_container_add (GTK_CONTAINER (scrolled_win), listbox);
         gtk_widget_show (listbox);
 

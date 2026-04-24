@@ -380,6 +380,8 @@ gimp_modifiers_editor_show_settings (GimpModifiersEditor *editor,
       GList     *iter;
 
       editor->priv->current_settings = gtk_list_box_new ();
+      gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (editor->priv->current_settings)),
+                                   "view");
       gtk_stack_add_named (GTK_STACK (editor->priv->stack), editor->priv->current_settings, text);
 
       modifiers = gimp_modifiers_manager_get_modifiers (editor->priv->manager,

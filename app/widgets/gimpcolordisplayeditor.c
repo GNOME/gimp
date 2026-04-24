@@ -137,6 +137,8 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   editor->src_list = gtk_list_box_new ();
   gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (editor->src_list),
                                              FALSE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (editor->src_list)),
+                               "view");
   gtk_container_add (GTK_CONTAINER (scrolled_win), editor->src_list);
   gtk_widget_show (editor->src_list);
 
@@ -229,6 +231,8 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   editor->dest_list = gtk_list_box_new ();
   gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (editor->dest_list),
                                              FALSE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (editor->dest_list)),
+                               "view");
   gtk_container_add (GTK_CONTAINER (scrolled_win), editor->dest_list);
   gtk_widget_show (editor->dest_list);
 
