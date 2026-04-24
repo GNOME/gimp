@@ -675,7 +675,7 @@ deps-macos-inhouse:
         - macports-cached-$ARCH
   script:
     # Do not call sh since it is old bash on macOS, not the default zsh
-    - arch -${ARCH} zsh build/macos/1_build-deps-macports.sh
+    - arch -${ARCH} zsh -x build/macos/1_build-deps-macports.sh
   artifacts:
     paths:
       - _install-*
