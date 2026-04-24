@@ -37,10 +37,12 @@ while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
   security list-keychains -s "${HOME}/Library/Keychains/cert_container-db" "${HOME}/Library/Keychains/login.keychain-db"
   mkdir cert_dir
   #Apple cert
-  #curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDG2CA.cer' > cert_dir/DeveloperIDG2CA.cer
-  #curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDCA.cer' > cert_dir/DeveloperIDCA.cer
+  curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDG2CA.cer' > cert_dir/DeveloperIDG2CA.cer
+  curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDCA.cer' > cert_dir/DeveloperIDCA.cer
   curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG2.cer' > cert_dir/AppleWWDRCAG2.cer
   curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer' > cert_dir/AppleWWDRCAG3.cer
+  security import cert_dir/DeveloperIDG2CA.cer -k cert_container -T /usr/bin/codesign
+  security import cert_dir/DeveloperIDCA.cer -k cert_container -T /usr/bin/codesign
   security import cert_dir/AppleWWDRCAG2.cer -k cert_container -T /usr/bin/codesign
   security import cert_dir/AppleWWDRCAG3.cer -k cert_container -T /usr/bin/codesign
   #GIMP/GNOME cert
