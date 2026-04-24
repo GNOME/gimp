@@ -63,6 +63,8 @@ struct _GimpColorDisplayStack
 
 static void   gimp_color_display_stack_dispose         (GObject               *object);
 
+static void   gimp_color_display_stack_list_model_iface_init (GListModelInterface *iface);
+
 static void   gimp_color_display_stack_display_changed (GimpColorDisplay      *display,
                                                         GimpColorDisplayStack *stack);
 static void   gimp_color_display_stack_display_enabled (GimpColorDisplay      *display,
@@ -72,7 +74,9 @@ static void   gimp_color_display_stack_disconnect      (GimpColorDisplayStack *s
                                                         GimpColorDisplay      *display);
 
 
-G_DEFINE_TYPE (GimpColorDisplayStack, gimp_color_display_stack, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (GimpColorDisplayStack, gimp_color_display_stack, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (G_TYPE_LIST_MODEL,
+                                                gimp_color_display_stack_list_model_iface_init))
 
 #define parent_class gimp_color_display_stack_parent_class
 
@@ -153,6 +157,43 @@ gimp_color_display_stack_dispose (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static GType
+gimp_color_display_stack_get_item_type (GListModel *list)
+{
+  return GIMP_TYPE_COLOR_DISPLAY;
+}
+
+static guint
+gimp_color_display_stack_get_n_items (GListModel *list)
+{
+  GimpColorDisplayStack *stack = GIMP_COLOR_DISPLAY_STACK (list);
+
+  return g_list_length (stack->filters);
+}
+
+static void *
+gimp_color_display_stack_get_item (GListModel *list,
+                                   guint       index)
+{
+  GimpColorDisplayStack *stack = GIMP_COLOR_DISPLAY_STACK (list);
+  GimpColorDisplay      *filter;
+
+  filter = g_list_nth_data (stack->filters, index);
+
+  if (filter)
+    g_object_ref (filter);
+
+  return filter;
+}
+
+static void
+gimp_color_display_stack_list_model_iface_init (GListModelInterface *iface)
+{
+  iface->get_item_type = gimp_color_display_stack_get_item_type;
+  iface->get_n_items   = gimp_color_display_stack_get_n_items;
+  iface->get_item      = gimp_color_display_stack_get_item;
 }
 
 
@@ -269,6 +310,9 @@ gimp_color_display_stack_add (GimpColorDisplayStack *stack,
                     G_CALLBACK (gimp_color_display_stack_display_enabled),
                     G_OBJECT (stack));
 
+  g_list_model_items_changed (G_LIST_MODEL (stack),
+                              g_list_length (stack->filters) - 1, 0, 1);
+
   g_signal_emit (stack, stack_signals[ADDED], 0,
                  display, g_list_length (stack->filters) - 1);
 
@@ -288,6 +332,8 @@ void
 gimp_color_display_stack_remove (GimpColorDisplayStack *stack,
                                  GimpColorDisplay      *display)
 {
+  gint index;
+
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack));
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
 
@@ -295,7 +341,11 @@ gimp_color_display_stack_remove (GimpColorDisplayStack *stack,
 
   gimp_color_display_stack_disconnect (stack, display);
 
+  index = g_list_index (stack->filters, display);
+
   stack->filters = g_list_remove (stack->filters, display);
+
+  g_list_model_items_changed (G_LIST_MODEL (stack), index, 1, 0);
 
   g_signal_emit (stack, stack_signals[REMOVED], 0, display);
 
@@ -328,8 +378,14 @@ gimp_color_display_stack_reorder_up (GimpColorDisplayStack *stack,
 
   if (list->prev)
     {
+      gint index;
+
       list->data       = list->prev->data;
       list->prev->data = display;
+
+      index = g_list_index (stack->filters, display);
+
+      g_list_model_items_changed (G_LIST_MODEL (stack), index, 2, 2);
 
       g_signal_emit (stack, stack_signals[REORDERED], 0,
                      display, g_list_position (stack->filters, list->prev));
@@ -362,8 +418,14 @@ gimp_color_display_stack_reorder_down (GimpColorDisplayStack *stack,
 
   if (list->next)
     {
+      gint index;
+
+      index = g_list_index (stack->filters, display);
+
       list->data       = list->next->data;
       list->next->data = display;
+
+      g_list_model_items_changed (G_LIST_MODEL (stack), index, 2, 2);
 
       g_signal_emit (stack, stack_signals[REORDERED], 0,
                      display, g_list_position (stack->filters, list->next));

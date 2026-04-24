@@ -32,7 +32,10 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_COLOR_DISPLAY_STACK (gimp_color_display_stack_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorDisplayStack, gimp_color_display_stack, GIMP, COLOR_DISPLAY_STACK, GObject)
+G_DECLARE_FINAL_TYPE (GimpColorDisplayStack,
+                      gimp_color_display_stack,
+                      GIMP, COLOR_DISPLAY_STACK,
+                      GObject)
 
 
 GimpColorDisplayStack * gimp_color_display_stack_new      (void);
