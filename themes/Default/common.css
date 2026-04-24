@@ -68,7 +68,7 @@
 }
 
 .view row:hover {
-  background-color: unset;
+  background-color: @extreme-bg-color;
 }
 
 .view row:selected {
