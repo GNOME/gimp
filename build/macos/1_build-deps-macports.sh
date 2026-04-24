@@ -22,6 +22,25 @@ if [ -z "$GITLAB_CI" ]; then
 fi
 
 
+security create-keychain -p "" cert_container
+  security set-keychain-settings cert_container
+  security unlock-keychain -u cert_container
+  security list-keychains -s "${HOME}/Library/Keychains/signchain-db" "${HOME}/Library/Keychains/login.keychain-db"
+  mkdir cert_dir
+  #Apple cert
+  curl 'https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer' > cert_dir/AppleWWDRCAG3.cer
+  security import cert_dir/AppleWWDRCAG3.cer -k cert_container -T /usr/bin/codesign
+  #GIMP/GNOME cert
+  echo "$osx_crt" | base64 -D > cert_dir/gnome.p12
+  security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T /usr/bin/codesign
+  #Finish cert_container preparation
+  security set-key-partition-list -S apple-tool:,apple: -k "" cert_container
+  rm -rf cert_dir
+  printf "$(security find-identity -v cert_container 2>&1)\n"
+
+exit 0
+
+
 # Install part of the deps
 if [ -z "$OPT_PREFIX" ]; then
   export OPT_PREFIX=$(which port | sed 's|/bin/port||' || brew --prefix)
