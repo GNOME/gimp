@@ -20,21 +20,12 @@
 #include "gimpbrushtool.h"
 
 
-#define GIMP_TYPE_PAINTBRUSH_TOOL            (gimp_paintbrush_tool_get_type ())
-#define GIMP_PAINTBRUSH_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINTBRUSH_TOOL, GimpPaintbrushTool))
-#define GIMP_PAINTBRUSH_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINTBRUSH_TOOL, GimpPaintbrushToolClass))
-#define GIMP_IS_PAINTBRUSH_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PAINTBRUSH_TOOL))
-#define GIMP_IS_PAINTBRUSH_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINTBRUSH_TOOL))
-#define GIMP_PAINTBRUSH_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINTBRUSH_TOOL, GimpPaintbrushToolClass))
+#define GIMP_TYPE_PAINTBRUSH_TOOL (gimp_paintbrush_tool_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPaintbrushTool,
+                          gimp_paintbrush_tool,
+                          GIMP, PAINTBRUSH_TOOL,
+                          GimpBrushTool)
 
-
-typedef struct _GimpPaintbrushTool      GimpPaintbrushTool;
-typedef struct _GimpPaintbrushToolClass GimpPaintbrushToolClass;
-
-struct _GimpPaintbrushTool
-{
-  GimpBrushTool parent_instance;
-};
 
 struct _GimpPaintbrushToolClass
 {
@@ -42,7 +33,5 @@ struct _GimpPaintbrushToolClass
 };
 
 
-void    gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
-                                       gpointer                  data);
-
-GType   gimp_paintbrush_tool_get_type (void) G_GNUC_CONST;
+void   gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
+                                      gpointer                  data);

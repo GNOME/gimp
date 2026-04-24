@@ -59,3 +59,5 @@ struct _GimpRegionSelectToolClass
 
 
 GType   gimp_region_select_tool_get_type (void) G_GNUC_CONST;
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpRegionSelectTool, g_object_unref);

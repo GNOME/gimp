@@ -20,26 +20,14 @@
 #include "core/gimpitemundo.h"
 
 
-#define GIMP_TYPE_PATH_PROP_UNDO            (gimp_path_prop_undo_get_type ())
-#define GIMP_PATH_PROP_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATH_PROP_UNDO, GimpPathPropUndo))
-#define GIMP_PATH_PROP_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATH_PROP_UNDO, GimpPathPropUndoClass))
-#define GIMP_IS_PATH_PROP_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PATH_PROP_UNDO))
-#define GIMP_IS_PATH_PROP_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATH_PROP_UNDO))
-#define GIMP_PATH_PROP_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATH_PROP_UNDO, GimpPathPropUndoClass))
+#define GIMP_TYPE_PATH_PROP_UNDO (gimp_path_prop_undo_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPathPropUndo,
+                          gimp_path_prop_undo,
+                          GIMP, PATH_PROP_UNDO,
+                          GimpItemUndo)
 
-
-typedef struct _GimpPathPropUndo      GimpPathPropUndo;
-typedef struct _GimpPathPropUndoClass GimpPathPropUndoClass;
-
-struct _GimpPathPropUndo
-{
-  GimpItemUndo  parent_instance;
-};
 
 struct _GimpPathPropUndoClass
 {
   GimpItemUndoClass  parent_class;
 };
-
-
-GType   gimp_path_prop_undo_get_type (void) G_GNUC_CONST;

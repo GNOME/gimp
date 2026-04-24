@@ -20,21 +20,12 @@
 #include "gimpsourcetool.h"
 
 
-#define GIMP_TYPE_HEAL_TOOL            (gimp_heal_tool_get_type ())
-#define GIMP_HEAL_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HEAL_TOOL, GimpHealTool))
-#define GIMP_HEAL_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HEAL_TOOL, GimpHealToolClass))
-#define GIMP_IS_HEAL_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HEAL_TOOL))
-#define GIMP_IS_HEAL_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HEAL_TOOL))
-#define GIMP_HEAL_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HEAL_TOOL, GimpHealToolClass))
+#define GIMP_TYPE_HEAL_TOOL (gimp_heal_tool_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpHealTool,
+                          gimp_heal_tool,
+                          GIMP, HEAL_TOOL,
+                          GimpSourceTool)
 
-
-typedef struct _GimpHealTool      GimpHealTool;
-typedef struct _GimpHealToolClass GimpHealToolClass;
-
-struct _GimpHealTool
-{
-  GimpSourceTool  parent_instance;
-};
 
 struct _GimpHealToolClass
 {
@@ -42,7 +33,5 @@ struct _GimpHealToolClass
 };
 
 
-void    gimp_heal_tool_register (GimpToolRegisterCallback  callback,
-                                 gpointer                  data);
-
-GType   gimp_heal_tool_get_type (void) G_GNUC_CONST;
+void   gimp_heal_tool_register (GimpToolRegisterCallback  callback,
+                                gpointer                  data);

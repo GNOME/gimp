@@ -295,3 +295,5 @@ void              gimp_tool_set_cursor          (GimpTool            *tool,
                                                  GimpCursorType       cursor,
                                                  GimpToolCursorType   tool_cursor,
                                                  GimpCursorModifier   modifier);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpTool, g_object_unref);

@@ -47,7 +47,7 @@ struct _GimpFilterOptions
 
 struct _GimpFilterOptionsClass
 {
-  GimpColorOptionsClass  parent_instance;
+  GimpColorOptionsClass  parent_class;
 };
 
 

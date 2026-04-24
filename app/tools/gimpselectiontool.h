@@ -71,3 +71,5 @@ void       gimp_selection_tool_start_change (GimpSelectionTool *sel_tool,
                                              GimpChannelOps     operation);
 void       gimp_selection_tool_end_change   (GimpSelectionTool *sel_tool,
                                              gboolean           cancel);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpSelectionTool, g_object_unref);

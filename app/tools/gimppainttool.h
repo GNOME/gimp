@@ -108,3 +108,5 @@ void    gimp_paint_tool_set_draw_circle     (GimpPaintTool       *tool,
 
 void    gimp_paint_tool_force_draw          (GimpPaintTool       *tool,
                                              gboolean             force);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpPaintTool, g_object_unref);

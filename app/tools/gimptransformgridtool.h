@@ -111,3 +111,5 @@ void       gimp_transform_grid_tool_matrix_to_info     (GimpTransformGridTool *t
 
 void       gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool,
                                                         gboolean               compress);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpTransformGridTool, g_object_unref);

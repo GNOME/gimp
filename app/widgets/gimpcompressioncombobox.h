@@ -21,29 +21,18 @@
 #pragma once
 
 
-#define GIMP_TYPE_COMPRESSION_COMBO_BOX            (gimp_compression_combo_box_get_type ())
-#define GIMP_COMPRESSION_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COMPRESSION_COMBO_BOX, GimpCompressionComboBox))
-#define GIMP_COMPRESSION_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COMPRESSION_COMBO_BOX, GimpCompressionComboBoxClass))
-#define GIMP_IS_COMPRESSION_COMBO_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COMPRESSION_COMBO_BOX))
-#define GIMP_IS_COMPRESSION_COMBO_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COMPRESSION_COMBO_BOX))
-#define GIMP_COMPRESSION_COMBO_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COMPRESSION_COMBO_BOX, GimpCompressionComboBoxClass))
+#define GIMP_TYPE_COMPRESSION_COMBO_BOX (gimp_compression_combo_box_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCompressionComboBox,
+                          gimp_compression_combo_box,
+                          GIMP, COMPRESSION_COMBO_BOX,
+                          GimpStringComboBox)
 
-
-typedef struct _GimpCompressionComboBoxClass  GimpCompressionComboBoxClass;
-
-
-struct _GimpCompressionComboBox
-{
-  GimpStringComboBox  parent_instance;
-};
 
 struct _GimpCompressionComboBoxClass
 {
   GimpStringComboBoxClass  parent_instance;
 };
 
-
-GType       gimp_compression_combo_box_get_type        (void) G_GNUC_CONST;
 
 GtkWidget * gimp_compression_combo_box_new             (void);
 

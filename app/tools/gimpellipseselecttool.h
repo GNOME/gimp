@@ -20,21 +20,12 @@
 #include "gimprectangleselecttool.h"
 
 
-#define GIMP_TYPE_ELLIPSE_SELECT_TOOL            (gimp_ellipse_select_tool_get_type ())
-#define GIMP_ELLIPSE_SELECT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ELLIPSE_SELECT_TOOL, GimpEllipseSelectTool))
-#define GIMP_ELLIPSE_SELECT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ELLIPSE_SELECT_TOOL, GimpEllipseSelectToolClass))
-#define GIMP_IS_ELLIPSE_SELECT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ELLIPSE_SELECT_TOOL))
-#define GIMP_IS_ELLIPSE_SELECT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ELLIPSE_SELECT_TOOL))
-#define GIMP_ELLIPSE_SELECT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ELLIPSE_SELECT_TOOL, GimpEllipseSelectToolClass))
+#define GIMP_TYPE_ELLIPSE_SELECT_TOOL (gimp_ellipse_select_tool_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpEllipseSelectTool,
+                          gimp_ellipse_select_tool,
+                          GIMP, ELLIPSE_SELECT_TOOL,
+                          GimpRectangleSelectTool)
 
-
-typedef struct _GimpEllipseSelectTool      GimpEllipseSelectTool;
-typedef struct _GimpEllipseSelectToolClass GimpEllipseSelectToolClass;
-
-struct _GimpEllipseSelectTool
-{
-  GimpRectangleSelectTool  parent_instance;
-};
 
 struct _GimpEllipseSelectToolClass
 {
@@ -42,7 +33,5 @@ struct _GimpEllipseSelectToolClass
 };
 
 
-void    gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
-                                           gpointer                  data);
-
-GType   gimp_ellipse_select_tool_get_type (void) G_GNUC_CONST;
+void   gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
+                                          gpointer                  data);

@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_RECTANGLE_SELECT_TOOL_H__
-#define  __GIMP_RECTANGLE_SELECT_TOOL_H__
-
+#pragma once
 
 #include "gimpselectiontool.h"
 
@@ -63,5 +61,4 @@ void    gimp_rectangle_select_tool_register (GimpToolRegisterCallback  callback,
 
 GType   gimp_rectangle_select_tool_get_type (void) G_GNUC_CONST;
 
-
-#endif  /*  __GIMP_RECTANGLE_SELECT_TOOL_H__  */
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpRectangleSelectTool, g_object_unref);

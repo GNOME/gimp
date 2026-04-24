@@ -41,7 +41,7 @@ struct _GimpColorOptions
 
 struct _GimpColorOptionsClass
 {
-  GimpToolOptionsClass  parent_instance;
+  GimpToolOptionsClass  parent_class;
 };
 
 

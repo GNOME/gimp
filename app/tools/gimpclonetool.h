@@ -20,21 +20,12 @@
 #include "gimpsourcetool.h"
 
 
-#define GIMP_TYPE_CLONE_TOOL            (gimp_clone_tool_get_type ())
-#define GIMP_CLONE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CLONE_TOOL, GimpCloneTool))
-#define GIMP_CLONE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CLONE_TOOL, GimpCloneToolClass))
-#define GIMP_IS_CLONE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CLONE_TOOL))
-#define GIMP_IS_CLONE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CLONE_TOOL))
-#define GIMP_CLONE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CLONE_TOOL, GimpCloneToolClass))
+#define GIMP_TYPE_CLONE_TOOL (gimp_clone_tool_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpCloneTool,
+                          gimp_clone_tool,
+                          GIMP, CLONE_TOOL,
+                          GimpSourceTool)
 
-
-typedef struct _GimpCloneTool      GimpCloneTool;
-typedef struct _GimpCloneToolClass GimpCloneToolClass;
-
-struct _GimpCloneTool
-{
-  GimpSourceTool parent_instance;
-};
 
 struct _GimpCloneToolClass
 {
@@ -42,7 +33,5 @@ struct _GimpCloneToolClass
 };
 
 
-void    gimp_clone_tool_register (GimpToolRegisterCallback  callback,
-                                  gpointer                  data);
-
-GType   gimp_clone_tool_get_type (void) G_GNUC_CONST;
+void   gimp_clone_tool_register (GimpToolRegisterCallback  callback,
+                                 gpointer                  data);

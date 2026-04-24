@@ -20,21 +20,12 @@
 #include "gimppaintbrushtool.h"
 
 
-#define GIMP_TYPE_PENCIL_TOOL            (gimp_pencil_tool_get_type ())
-#define GIMP_PENCIL_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PENCIL_TOOL, GimpPencilTool))
-#define GIMP_PENCIL_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PENCIL_TOOL, GimpPencilToolClass))
-#define GIMP_IS_PENCIL_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PENCIL_TOOL))
-#define GIMP_IS_PENCIL_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PENCIL_TOOL))
-#define GIMP_PENCIL_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PENCIL_TOOL, GimpPencilToolClass))
+#define GIMP_TYPE_PENCIL_TOOL (gimp_pencil_tool_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPencilTool,
+                          gimp_pencil_tool,
+                          GIMP, PENCIL_TOOL,
+                          GimpPaintbrushTool)
 
-
-typedef struct _GimpPencilTool      GimpPencilTool;
-typedef struct _GimpPencilToolClass GimpPencilToolClass;
-
-struct _GimpPencilTool
-{
-  GimpPaintbrushTool parent_instance;
-};
 
 struct _GimpPencilToolClass
 {
@@ -42,7 +33,5 @@ struct _GimpPencilToolClass
 };
 
 
-void    gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
-                                   gpointer                  data);
-
-GType   gimp_pencil_tool_get_type (void) G_GNUC_CONST;
+void   gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
+                                  gpointer                  data);

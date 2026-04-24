@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_COLOR_TOOL_H__
-#define  __GIMP_COLOR_TOOL_H__
-
+#pragma once
 
 #include "gimpdrawtool.h"
 
@@ -83,5 +81,4 @@ void       gimp_color_tool_enable     (GimpColorTool    *color_tool,
 void       gimp_color_tool_disable    (GimpColorTool    *color_tool);
 gboolean   gimp_color_tool_is_enabled (GimpColorTool    *color_tool);
 
-
-#endif  /*  __GIMP_COLOR_TOOL_H__  */
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpColorTool, g_object_unref);

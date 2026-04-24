@@ -23,20 +23,12 @@
 #include "gimpdatafactoryview.h"
 
 
-#define GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW            (gimp_tool_preset_factory_view_get_type ())
-#define GIMP_TOOL_PRESET_FACTORY_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW, GimpToolPresetFactoryView))
-#define GIMP_TOOL_PRESET_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW, GimpToolPresetFactoryViewClass))
-#define GIMP_IS_TOOL_PRESET_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW))
-#define GIMP_IS_TOOL_PRESET_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW))
-#define GIMP_TOOL_PRESET_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW, GimpToolPresetFactoryViewClass))
+#define GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW (gimp_tool_preset_factory_view_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpToolPresetFactoryView,
+                          gimp_tool_preset_factory_view,
+                          GIMP, TOOL_PRESET_FACTORY_VIEW,
+                          GimpDataFactoryView)
 
-
-typedef struct _GimpToolPresetFactoryViewClass  GimpToolPresetFactoryViewClass;
-
-struct _GimpToolPresetFactoryView
-{
-  GimpDataFactoryView  parent_instance;
-};
 
 struct _GimpToolPresetFactoryViewClass
 {
@@ -44,11 +36,9 @@ struct _GimpToolPresetFactoryViewClass
 };
 
 
-GType       gimp_tool_preset_factory_view_get_type (void) G_GNUC_CONST;
-
-GtkWidget * gimp_tool_preset_factory_view_new     (GimpViewType     view_type,
-                                                   GimpDataFactory *factory,
-                                                   GimpContext     *context,
-                                                   gint             view_size,
-                                                   gint             view_border_width,
-                                                   GimpMenuFactory *menu_factory);
+GtkWidget * gimp_tool_preset_factory_view_new (GimpViewType     view_type,
+                                               GimpDataFactory *factory,
+                                               GimpContext     *context,
+                                               gint             view_size,
+                                               gint             view_border_width,
+                                               GimpMenuFactory *menu_factory);

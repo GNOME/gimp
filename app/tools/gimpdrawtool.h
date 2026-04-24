@@ -205,3 +205,5 @@ gboolean         gimp_draw_tool_on_handle            (GimpDrawTool     *draw_too
                                                       gint              width,
                                                       gint              height,
                                                       GimpHandleAnchor  anchor);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpDrawTool, g_object_unref);

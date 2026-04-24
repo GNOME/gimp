@@ -56,3 +56,5 @@ GimpCanvasItem * gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
                                                  GimpDisplay   *display,
                                                  gdouble        x,
                                                  gdouble        y);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpBrushTool, g_object_unref);

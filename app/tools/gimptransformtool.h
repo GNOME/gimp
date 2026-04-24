@@ -99,3 +99,5 @@ gboolean     gimp_transform_tool_transform           (GimpTransformTool  *tr_too
 
 void         gimp_transform_tool_set_type            (GimpTransformTool  *tr_tool,
                                                       GimpTransformType   type);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpTransformTool, g_object_unref);

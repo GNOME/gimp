@@ -51,3 +51,5 @@ struct _GimpGenericTransformToolClass
 
 
 GType   gimp_generic_transform_tool_get_type (void) G_GNUC_CONST;
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpGenericTransformTool, g_object_unref);
