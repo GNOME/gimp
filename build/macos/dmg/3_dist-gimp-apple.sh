@@ -247,11 +247,12 @@ DMG_ARTIFACT="gimp-${CUSTOM_GIMP_VERSION}-${ARCH}.dmg"
 printf "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KCompressing %s\n" ${DMG_ARTIFACT}
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   #Prepare certs to be stored on cert_container
+  security delete-keychain cert_container 2>/dev/null || true
   security create-keychain -p "" cert_container
   security set-keychain-settings cert_container
   security unlock-keychain -u cert_container
   security list-keychains -s "${HOME}/Library/Keychains/cert_container-db" "${HOME}/Library/Keychains/login.keychain-db"
-  mkdir cert_dir
+  mkdir -p cert_dir
   #Apple certs. See: https://www.apple.com/certificateauthority/
   curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDG2CA.cer' > cert_dir/DeveloperIDG2CA.cer
   curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG2.cer' > cert_dir/AppleWWDRCAG2.cer
@@ -260,6 +261,7 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   #GIMP/GNOME cert
   echo "$osx_crt" | base64 -D > cert_dir/gnome.p12
   security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T /usr/bin/codesign
+  codesign_subject=$(security find-identity -p codesigning -v | grep "Developer ID Application" | sed 's/.*"\(.*\)"[^"]*$/\1/')
   #Finish cert_container preparation
   security set-key-partition-list -S apple-tool:,apple:,codesign: -k "" cert_container
   identity_output=$(security find-identity cert_container 2>&1)
@@ -274,23 +276,25 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
     -type f \( -perm -100 -o -perm -010 -o -perm -001 \) ! -path "*/DWARF/*" ! -path "*/.dSYM/*" ! -path "*/Python.framework/*" -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
     printf "(INFO): signing $bin\n"
     codesign -s "${codesign_subject}" \
-      --options runtime --entitlements 'build/macos/dmg/gimp-hardening.entitlements'
+      --options runtime --entitlements 'build/macos/dmg/gimp-hardening.entitlements' "$bin"
     done
 
   printf '(INFO): signing Python.framework\n'
   if [ "$ARCH" = 'arm64' ]; then
-    PYTHON_SIGN_FLAGS='--launch-constraint-parent build/macos/dmg/python.coderequirement'
+    PYTHON_SIGN_OPT='--launch-constraint-parent'
+    PYTHON_SIGN_VAL='build/macos/dmg/python.coderequirement'
     cp build/macos/dmg/python.coderequirement build/macos/dmg/python.coderequirement.bak
     sed -i '' "s|%BUNDLE_IDENTIFIER%|$BUNDLE_IDENTIFIER|" build/macos/dmg/python.coderequirement
     sed -i '' "s|%notarization_teamid%|$notarization_teamid|" build/macos/dmg/python.coderequirement
   else
-    PYTHON_SIGN_FLAGS='--entitlements build/macos/dmg/gimp-hardening.entitlements'
+    PYTHON_SIGN_OPT='--entitlements'
+    PYTHON_SIGN_VAL='build/macos/dmg/gimp-hardening.entitlements'
   fi
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks/Python.framework/Versions/${PYTHON_VERSION}/lib/" \
     -type f \( -perm -100 -o -perm -010 -o -perm -001 \) -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
       printf "(INFO): signing $bin\n"
       codesign -s "${codesign_subject}" \
-        --options runtime --entitlements 'build/macos/dmg/gimp-hardening.entitlements'
+        --options runtime --entitlements 'build/macos/dmg/gimp-hardening.entitlements' "$bin"
     done
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks/Python.framework/Versions/${PYTHON_VERSION}/Resources/" \
        "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks/Python.framework/Versions/${PYTHON_VERSION}/bin/" \
@@ -298,7 +302,7 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
     -type f \( -perm -100 -o -perm -010 -o -perm -001 \) -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
       printf "(INFO): signing $bin\n"
       codesign -s "${codesign_subject}" \
-        --options runtime --timestamp ${PYTHON_SIGN_FLAGS} "$bin"
+        --options runtime --timestamp ${PYTHON_SIGN_OPT} ${PYTHON_SIGN_VAL} "$bin"
     done
 
   printf '(INFO): signing MacOS/ executables called by GIMP\n'
@@ -306,14 +310,14 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
     if [ -f "$bin" ]; then
       printf "(INFO): signing $bin\n"
       codesign -s "${codesign_subject}" \
-        --options runtime --timestamp ${PYTHON_SIGN_FLAGS} "$bin"
+        --options runtime --timestamp ${PYTHON_SIGN_OPT} ${PYTHON_SIGN_VAL} "$bin"
     fi
   done
   if [ "$ARCH" = 'arm64' ]; then
     mv -f build/macos/dmg/python.coderequirement.bak build/macos/dmg/python.coderequirement
   fi
 
-  printf '(INFO): signing MacOS/ executabled related to gegl\n'
+  printf '(INFO): signing MacOS/ executables related to gegl\n'
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS" -type f -perm +111 \
     ! -name "gimp*" ! -name "gimp-console*" ! -name "gimp-debug-tool*" ! -name "gimp-test-clipboard*" ! -name "gimptool*" ! -name "gimp-script-fu-interpreter*" ! -name "python*" ! -name "xdg-email" | while read -r bin; do
     if [ ! -L "$bin" ]; then
@@ -338,7 +342,7 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
     --options runtime --timestamp --entitlements "build/macos/dmg/gimp-hardening.entitlements" "$DMG_MOUNT/$BUNDLE_NAME.app"
 fi
 hdiutil detach "$DMG_MOUNT"
-hdiutil convert "temp_$ARCH.dmg" -format ULFO -o "$DMG_ARTIFACT"
+hdiutil convert -verbose "temp_$ARCH.dmg" -format ULFO -o "$DMG_ARTIFACT"
 rm "temp_$ARCH.dmg"
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   printf '(INFO): signing .dmg\n'
