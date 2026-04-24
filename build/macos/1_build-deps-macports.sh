@@ -28,19 +28,16 @@ security set-keychain-settings cert_container
 security unlock-keychain -u cert_container
 security list-keychains -s "${HOME}/Library/Keychains/cert_container-db" "${HOME}/Library/Keychains/login.keychain-db"
 mkdir cert_dir
-#Apple cert. See: https://www.apple.com/certificateauthority/
+#Apple certs. See: https://www.apple.com/certificateauthority/
 curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDG2CA.cer' > cert_dir/DeveloperIDG2CA.cer
-#curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDCA.cer' > cert_dir/DeveloperIDCA.cer
 curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG2.cer' > cert_dir/AppleWWDRCAG2.cer
 curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer' > cert_dir/AppleWWDRCAG3.cer
 security import cert_dir/DeveloperIDG2CA.cer -k cert_container -T /usr/bin/codesign
-#security import cert_dir/DeveloperIDCA.cer -k cert_container -T /usr/bin/codesign
 security import cert_dir/AppleWWDRCAG2.cer -k cert_container -T /usr/bin/codesign
 security import cert_dir/AppleWWDRCAG3.cer -k cert_container -T /usr/bin/codesign
 #GIMP/GNOME cert
 echo "$osx_crt" | base64 -D > cert_dir/gnome.p12
 security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T /usr/bin/codesign
-openssl pkcs12 -in cert_dir/gnome.p12 -out cert_dir/gnome.pem -nodes -passin pass:"$osx_crt_pw"
 #Finish cert_container preparation
 security set-key-partition-list -S apple-tool:,apple:,codesign: -k "" cert_container
 identity_output=$(security find-identity cert_container 2>&1)
@@ -49,7 +46,6 @@ if echo "$identity_output" | grep -q "CSSMERR_TP_NOT_TRUSTED" || echo "$identity
   exit 1
 fi
 rm -rf cert_dir
-exit 0
 
 
 # Install part of the deps
