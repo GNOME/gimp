@@ -21,20 +21,12 @@
 #pragma once
 
 
-#define GIMP_TYPE_DEVICE_INFO_EDITOR            (gimp_device_info_editor_get_type ())
-#define GIMP_DEVICE_INFO_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DEVICE_INFO_EDITOR, GimpDeviceInfoEditor))
-#define GIMP_DEVICE_INFO_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DEVICE_INFO_EDITOR, GimpDeviceInfoEditorClass))
-#define GIMP_IS_DEVICE_INFO_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DEVICE_INFO_EDITOR))
-#define GIMP_IS_DEVICE_INFO_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DEVICE_INFO_EDITOR))
-#define GIMP_DEVICE_INFO_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DEVICE_INFO_EDITOR, GimpDeviceInfoEditorClass))
+#define GIMP_TYPE_DEVICE_INFO_EDITOR (gimp_device_info_editor_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpDeviceInfoEditor,
+                          gimp_device_info_editor,
+                          GIMP, DEVICE_INFO_EDITOR,
+                          GtkBox)
 
-
-typedef struct _GimpDeviceInfoEditorClass GimpDeviceInfoEditorClass;
-
-struct _GimpDeviceInfoEditor
-{
-  GtkBox  parent_instance;
-};
 
 struct _GimpDeviceInfoEditorClass
 {
@@ -42,6 +34,4 @@ struct _GimpDeviceInfoEditorClass
 };
 
 
-GType       gimp_device_info_editor_get_type (void) G_GNUC_CONST;
-
-GtkWidget * gimp_device_info_editor_new      (GimpDeviceInfo *info);
+GtkWidget * gimp_device_info_editor_new (GimpDeviceInfo *info);

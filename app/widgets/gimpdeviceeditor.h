@@ -21,20 +21,12 @@
 #pragma once
 
 
-#define GIMP_TYPE_DEVICE_EDITOR            (gimp_device_editor_get_type ())
-#define GIMP_DEVICE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DEVICE_EDITOR, GimpDeviceEditor))
-#define GIMP_DEVICE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DEVICE_EDITOR, GimpDeviceEditorClass))
-#define GIMP_IS_DEVICE_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DEVICE_EDITOR))
-#define GIMP_IS_DEVICE_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DEVICE_EDITOR))
-#define GIMP_DEVICE_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DEVICE_EDITOR, GimpDeviceEditorClass))
+#define GIMP_TYPE_DEVICE_EDITOR (gimp_device_editor_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpDeviceEditor,
+                          gimp_device_editor,
+                          GIMP, DEVICE_EDITOR,
+                          GtkPaned)
 
-
-typedef struct _GimpDeviceEditorClass GimpDeviceEditorClass;
-
-struct _GimpDeviceEditor
-{
-  GtkPaned  parent_instance;
-};
 
 struct _GimpDeviceEditorClass
 {
@@ -42,6 +34,4 @@ struct _GimpDeviceEditorClass
 };
 
 
-GType       gimp_device_editor_get_type (void) G_GNUC_CONST;
-
-GtkWidget * gimp_device_editor_new      (Gimp *gimp);
+GtkWidget * gimp_device_editor_new (Gimp *gimp);
