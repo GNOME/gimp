@@ -43,7 +43,11 @@ security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T /usr/b
 openssl pkcs12 -in cert_dir/gnome.p12 -out cert_dir/gnome.pem -nodes -passin pass:"$osx_crt_pw"
 #Finish cert_container preparation
 security set-key-partition-list -S apple-tool:,apple:,codesign: -k "" cert_container
-printf "$(security find-identity cert_container 2>&1/n)"
+identity_output=$(security find-identity cert_container 2>&1)
+printf "$identity_output"
+if echo "$identity_output" | grep -q "CSSMERR_TP_NOT_TRUSTED" || echo "$identity_output" | grep -q "0 valid identities"; then
+  exit 1
+fi
 rm -rf cert_dir
 exit 0
 
