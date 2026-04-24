@@ -224,7 +224,17 @@ gimp_container_view_set_container (GimpContainerView *view,
 
   if (container != private->container)
     {
+      if (private->context && private->container)
+        {
+          gimp_container_view_disconnect_context (view);
+        }
+
       GIMP_CONTAINER_VIEW_GET_IFACE (view)->set_container (view, container);
+
+      if (private->context && private->container)
+        {
+          gimp_container_view_connect_context (view);
+        }
 
       g_object_notify (G_OBJECT (view), "container");
     }
@@ -255,7 +265,17 @@ gimp_container_view_set_context (GimpContainerView *view,
 
   if (context != private->context)
     {
+      if (private->context && private->container)
+        {
+          gimp_container_view_disconnect_context (view);
+        }
+
       GIMP_CONTAINER_VIEW_GET_IFACE (view)->set_context (view, context);
+
+      if (private->context && private->container)
+        {
+          gimp_container_view_connect_context (view);
+        }
 
       g_object_notify (G_OBJECT (view), "context");
     }
@@ -702,9 +722,6 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
   if (private->container)
     {
-      if (private->context)
-        gimp_container_view_disconnect_context (view);
-
       g_signal_handlers_disconnect_by_func (private->container,
                                             gimp_container_view_container_freeze,
                                             view);
@@ -731,9 +748,6 @@ gimp_container_view_real_set_container (GimpContainerView *view,
                                G_CALLBACK (gimp_container_view_container_thaw),
                                view,
                                G_CONNECT_SWAPPED);
-
-      if (private->context)
-        gimp_container_view_connect_context (view);
     }
 }
 
@@ -743,17 +757,7 @@ gimp_container_view_real_set_context (GimpContainerView *view,
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  if (private->context && private->container)
-    {
-      gimp_container_view_disconnect_context (view);
-    }
-
   g_set_object (&private->context, context);
-
-  if (private->context && private->container)
-    {
-      gimp_container_view_connect_context (view);
-    }
 }
 
 static void
