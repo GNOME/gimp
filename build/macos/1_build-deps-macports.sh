@@ -39,14 +39,14 @@ while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
   #Apple cert
   #curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDG2CA.cer' > cert_dir/DeveloperIDG2CA.cer
   #curl -fsSL 'https://www.apple.com/certificateauthority/DeveloperIDCA.cer' > cert_dir/DeveloperIDCA.cer
-  #curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG2.cer' > cert_dir/AppleWWDRCAG2.cer
+  curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG2.cer' > cert_dir/AppleWWDRCAG2.cer
   curl -fsSL 'https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer' > cert_dir/AppleWWDRCAG3.cer
+  security import cert_dir/AppleWWDRCAG2.cer -k cert_container -T /usr/bin/codesign
   security import cert_dir/AppleWWDRCAG3.cer -k cert_container -T /usr/bin/codesign
   #GIMP/GNOME cert
   echo "$osx_crt" | base64 -D > cert_dir/gnome.p12
   security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T /usr/bin/codesign
   openssl pkcs12 -in cert_dir/gnome.p12 -out cert_dir/gnome.pem -nodes -passin pass:"$osx_crt_pw"
-  security add-trusted-cert -p codeSign -k cert_container cert_dir/gnome.p12
   #Finish cert_container preparation
   security set-key-partition-list -S apple-tool:,apple:,codesign: -k "" cert_container
 
