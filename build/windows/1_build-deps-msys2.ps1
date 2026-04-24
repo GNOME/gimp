@@ -142,7 +142,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
                 $clang_opts_meson=@('-Dc_args=-"fansi-escape-codes -gcodeview"', '-Dcpp_args=-"fansi-escape-codes -gcodeview"', '-Dc_link_args="-Wl,--pdb="', '-Dcpp_link_args="-Wl,--pdb="')
               }
             meson setup _build-$(@($env:VCPKG_DEFAULT_HOST_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION `
-                        -Dbuildtype=debugoptimized $clang_opts_meson `
+                        -Dbuildtype=debugoptimized $clang_opts_meson --cross-file=$CI_PROJECT_DIR/crossfile.txt -Ddefault_library=static `
                         $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
         elseif (Test-Path CMakeLists.txt -Type Leaf)

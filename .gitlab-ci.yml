@@ -138,7 +138,7 @@ stages:
 - gcc -print-multi-os-directory 2>/dev/null | grep -q ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
 - gcc -print-multiarch 2>/dev/null | grep -q . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/') || export LIB_SUBDIR=
 ## Build-time vars
-- export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+- export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
 ## Runtime vars
 - export PATH="${GIMP_PREFIX}/bin:$PATH"
@@ -230,12 +230,12 @@ deps-debian-nonreloc:
             python3
             python3-gi
             python3-gi-cairo
-            xdg-utils" >> Dockerfile
+            xdg-utils emscripten" >> Dockerfile
     - echo "RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen" >> Dockerfile
     # Prepare environ
     - echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:environ[collapsed=true]\r\e[0KPreparing build environment\n\"" >> Dockerfile2;
-    - echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/lib/$([ "$(uname -m)" = 'aarch64' ] && echo "aarch64-linux-gnu/" || echo "x86_64-linux-gnu/")pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
+    - echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
     - echo "ENV XDG_DATA_DIRS=\"${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}\"" >> Dockerfile2;
     - if [ "$VARIANT" = "-clang" ]; then
         echo "ENV CC=\"$CC\"" >> Dockerfile2;
@@ -248,15 +248,15 @@ deps-debian-nonreloc:
     # Build some dependencies
     ## Build babl
     - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:babl_build[collapsed=true]\r\e[0KBuilding babl\n\"" >> Dockerfile2;
-    - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/babl.git | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" babl >> Dockerfile2;
-    - echo "RUN meson setup babl/_build-${RUNNER} babl -Dprefix=\"${GIMP_PREFIX}\" $RELOCATABLE_OPTION $PKGCONF_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI" >> Dockerfile2;
+    - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/babl.git | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"bruno/cross\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" babl >> Dockerfile2;
+    - echo "RUN meson setup babl/_build-${RUNNER} babl -Dprefix=\"${GIMP_PREFIX}\" $RELOCATABLE_OPTION $PKGCONF_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI --cross-file=babl/crossfile.txt -Ddefault_library=static" >> Dockerfile2;
     - echo "RUN ninja -C babl/_build-${RUNNER}" >> Dockerfile2;
     - echo "RUN ninja -C babl/_build-${RUNNER} install" >> Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_end:\`date +%s\`:babl_build\r\e[0K\n\"" >> Dockerfile2;
     ## Build GEGL
     - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:gegl_build[collapsed=true]\r\e[0KBuilding gegl\n\"" >> Dockerfile2;
-    - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/gegl.git | grep -oi \"GEGL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git" gegl >> Dockerfile2;
-    - echo "RUN meson setup gegl/_build-${RUNNER} gegl -Dprefix=\"${GIMP_PREFIX}\" $RELOCATABLE_OPTION $PKGCONF_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI" >> Dockerfile2;
+    - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/gegl.git | grep -oi \"GEGL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"bruno/cross\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git" gegl >> Dockerfile2;
+    - echo "RUN meson setup gegl/_build-${RUNNER} gegl -Dprefix=\"${GIMP_PREFIX}\" $RELOCATABLE_OPTION $PKGCONF_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI --cross-file=gegl/crossfile.txt -Ddefault_library=static" >> Dockerfile2;
     - echo "RUN ninja -C gegl/_build-${RUNNER}" >> Dockerfile2;
     - echo "RUN ninja -C gegl/_build-${RUNNER} install" >> Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_end:\`date +%s\`:gegl_build\r\e[0K\n\"" >> Dockerfile2;
@@ -563,7 +563,7 @@ gimp-snap:
     #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
-    - $GIMP_PREFIX = "$PWD\_install-$(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower())"
+    - $GIMP_PREFIX = "$PWD\_install-$(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim())".ToLower().Replace('\','/')
     - if ("$VARIANT" -eq '-msvc') { if (-not (Test-Path $env:VCPKG_ROOT)) { git clone --depth 1 https://github.com/microsoft/vcpkg; .\vcpkg\bootstrap-vcpkg.bat }; pip install --upgrade meson }
     - if ("$VARIANT" -eq '-msvc') { $VSINSTALLDIR = $(vswhere -products * -latest -property installationPath); Import-Module "$VSINSTALLDIR\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell -VsInstallPath "$VSINSTALLDIR" -SkipAutomaticLocation -DevCmdArguments "-arch=$(((Get-WmiObject Win32_ComputerSystem).SystemType).Split('-')[0].Trim().ToLower())" }
   #40min is enough only on msys2 or if no vcpkg port was updated/rebuilt, we need more time in case of port bumps

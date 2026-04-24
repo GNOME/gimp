@@ -1,0 +1,12 @@
+[binaries]
+c = 'emcc'
+cpp = 'em++'
+ar = 'emar'
+nm = 'emnm'
+ranlib = 'emranlib'
+
+[host_machine]
+system = 'emscripten'
+cpu_family = 'wasm32'
+cpu = 'wasm32'
+endian = 'little'
