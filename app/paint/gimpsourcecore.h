@@ -101,3 +101,5 @@ void     gimp_source_core_motion     (GimpSourceCore    *source_core,
                                       GimpPaintOptions  *paint_options,
                                       gboolean           self_drawable,
                                       GimpSymmetry      *sym);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpSourceCore, g_object_unref);

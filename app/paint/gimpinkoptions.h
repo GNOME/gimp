@@ -48,7 +48,7 @@ struct _GimpInkOptions
 
 struct _GimpInkOptionsClass
 {
-  GimpPaintOptionsClass  parent_instance;
+  GimpPaintOptionsClass  parent_class;
 };
 
 

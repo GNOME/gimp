@@ -224,3 +224,4 @@ void      gimp_paint_core_smooth_coords             (GimpPaintCore    *core,
                                                      GimpPaintOptions *paint_options,
                                                      GimpCoords       *coords);
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpPaintCore, g_object_unref);

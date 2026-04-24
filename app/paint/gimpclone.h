@@ -20,20 +20,12 @@
 #include "gimpsourcecore.h"
 
 
-#define GIMP_TYPE_CLONE            (gimp_clone_get_type ())
-#define GIMP_CLONE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CLONE, GimpClone))
-#define GIMP_CLONE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CLONE, GimpCloneClass))
-#define GIMP_IS_CLONE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CLONE))
-#define GIMP_IS_CLONE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CLONE))
-#define GIMP_CLONE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CLONE, GimpCloneClass))
+#define GIMP_TYPE_CLONE (gimp_clone_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpClone,
+                          gimp_clone,
+                          GIMP, CLONE,
+                          GimpSourceCore)
 
-
-typedef struct _GimpCloneClass GimpCloneClass;
-
-struct _GimpClone
-{
-  GimpSourceCore  parent_instance;
-};
 
 struct _GimpCloneClass
 {
@@ -41,7 +33,5 @@ struct _GimpCloneClass
 };
 
 
-void    gimp_clone_register (Gimp                      *gimp,
-                             GimpPaintRegisterCallback  callback);
-
-GType   gimp_clone_get_type (void) G_GNUC_CONST;
+void   gimp_clone_register (Gimp                      *gimp,
+                            GimpPaintRegisterCallback  callback);

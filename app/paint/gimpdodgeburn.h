@@ -20,19 +20,12 @@
 #include "gimpbrushcore.h"
 
 
-#define GIMP_TYPE_DODGE_BURN            (gimp_dodge_burn_get_type ())
-#define GIMP_DODGE_BURN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DODGE_BURN, GimpDodgeBurn))
-#define GIMP_IS_DODGE_BURN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DODGE_BURN))
-#define GIMP_DODGE_BURN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DODGEBURN, GimpDodgeBurnClass))
-#define GIMP_IS_DODGE_BURN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DODGE_BURN))
+#define GIMP_TYPE_DODGE_BURN (gimp_dodge_burn_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpDodgeBurn,
+                          gimp_dodge_burn,
+                          GIMP, DODGE_BURN,
+                          GimpBrushCore)
 
-
-typedef struct _GimpDodgeBurnClass GimpDodgeBurnClass;
-
-struct _GimpDodgeBurn
-{
-  GimpBrushCore  parent_instance;
-};
 
 struct _GimpDodgeBurnClass
 {
@@ -40,7 +33,5 @@ struct _GimpDodgeBurnClass
 };
 
 
-void    gimp_dodge_burn_register (Gimp                      *gimp,
-                                  GimpPaintRegisterCallback  callback);
-
-GType   gimp_dodge_burn_get_type (void) G_GNUC_CONST;
+void   gimp_dodge_burn_register (Gimp                      *gimp,
+                                 GimpPaintRegisterCallback  callback);

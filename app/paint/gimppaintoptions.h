@@ -127,7 +127,7 @@ struct _GimpPaintOptions
 
 struct _GimpPaintOptionsClass
 {
-  GimpToolOptionsClass  parent_instance;
+  GimpToolOptionsClass  parent_class;
 };
 
 
@@ -178,3 +178,5 @@ gboolean gimp_paint_options_is_prop            (const gchar         *prop_name,
 void     gimp_paint_options_copy_props         (GimpPaintOptions    *src,
                                                 GimpPaintOptions    *dest,
                                                 GimpContextPropMask  prop_mask);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpPaintOptions, g_object_unref);

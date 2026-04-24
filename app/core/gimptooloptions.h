@@ -66,3 +66,5 @@ gboolean   gimp_tool_options_deserialize   (GimpToolOptions   *tool_options,
 gboolean   gimp_tool_options_delete        (GimpToolOptions   *tool_options,
                                             GError           **error);
 void       gimp_tool_options_create_folder (void);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpToolOptions, g_object_unref);

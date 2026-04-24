@@ -20,20 +20,12 @@
 #include "gimpsourcecore.h"
 
 
-#define GIMP_TYPE_HEAL            (gimp_heal_get_type ())
-#define GIMP_HEAL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HEAL, GimpHeal))
-#define GIMP_HEAL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HEAL, GimpHealClass))
-#define GIMP_IS_HEAL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HEAL))
-#define GIMP_IS_HEAL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HEAL))
-#define GIMP_HEAL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HEAL, GimpHealClass))
+#define GIMP_TYPE_HEAL (gimp_heal_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpHeal,
+                          gimp_heal,
+                          GIMP, HEAL,
+                          GimpSourceCore)
 
-
-typedef struct _GimpHealClass GimpHealClass;
-
-struct _GimpHeal
-{
-  GimpSourceCore  parent_instance;
-};
 
 struct _GimpHealClass
 {
@@ -41,7 +33,5 @@ struct _GimpHealClass
 };
 
 
-void    gimp_heal_register (Gimp                      *gimp,
-                            GimpPaintRegisterCallback  callback);
-
-GType   gimp_heal_get_type (void) G_GNUC_CONST;
+void   gimp_heal_register (Gimp                      *gimp,
+                           GimpPaintRegisterCallback  callback);

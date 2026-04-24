@@ -145,3 +145,5 @@ void   gimp_brush_core_eval_transform_symmetry
                                       (GimpBrushCore            *core,
                                        GimpSymmetry             *symmetry,
                                        gint                      stroke);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpBrushCore, g_object_unref);

@@ -20,20 +20,12 @@
 #include "gimppaintbrush.h"
 
 
-#define GIMP_TYPE_PENCIL            (gimp_pencil_get_type ())
-#define GIMP_PENCIL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PENCIL, GimpPencil))
-#define GIMP_PENCIL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PENCIL, GimpPencilClass))
-#define GIMP_IS_PENCIL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PENCIL))
-#define GIMP_IS_PENCIL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PENCIL))
-#define GIMP_PENCIL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PENCIL, GimpPencilClass))
+#define GIMP_TYPE_PENCIL (gimp_pencil_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPencil,
+                          gimp_pencil,
+                          GIMP, PENCIL,
+                          GimpPaintbrush)
 
-
-typedef struct _GimpPencilClass GimpPencilClass;
-
-struct _GimpPencil
-{
-  GimpPaintbrush  parent_instance;
-};
 
 struct _GimpPencilClass
 {
@@ -41,7 +33,5 @@ struct _GimpPencilClass
 };
 
 
-void    gimp_pencil_register (Gimp                      *gimp,
-                              GimpPaintRegisterCallback  callback);
-
-GType   gimp_pencil_get_type (void) G_GNUC_CONST;
+void   gimp_pencil_register (Gimp                      *gimp,
+                             GimpPaintRegisterCallback  callback);

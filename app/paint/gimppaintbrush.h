@@ -73,3 +73,5 @@ void    _gimp_paintbrush_motion  (GimpPaintCore             *paint_core,
                                   GimpPaintOptions          *paint_options,
                                   GimpSymmetry              *sym,
                                   gdouble                    opacity);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpPaintbrush, g_object_unref);
