@@ -40,16 +40,11 @@ struct _GimpColorDisplayEditor
   GimpColorConfig       *config;
   GimpColorManaged      *managed;
 
-  GtkListStore          *src;
-  GtkListStore          *dest;
-
-  GtkTreeSelection      *src_sel;
-  GtkTreeSelection      *dest_sel;
-
+  GtkWidget             *src_list;
+  GtkWidget             *dest_list;
   GimpColorDisplay      *selected;
 
   GtkWidget             *add_button;
-
   GtkWidget             *remove_button;
   GtkWidget             *up_button;
   GtkWidget             *down_button;
