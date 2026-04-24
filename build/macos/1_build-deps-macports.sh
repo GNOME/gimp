@@ -61,7 +61,7 @@ while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
     fi
   fi
   rm -rf cert_dir
-
+done
 exit 0
 
 
