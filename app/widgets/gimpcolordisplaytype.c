@@ -108,5 +108,8 @@ gimp_color_display_type_get_model (void)
 
   g_free (color_display_types);
 
+  g_list_store_sort (types, (GCompareDataFunc) gimp_object_name_collate,
+                     NULL);
+
   return G_LIST_MODEL (types);
 }

@@ -111,5 +111,8 @@ gimp_controller_type_get_model (void)
 
   g_free (controller_types);
 
+  g_list_store_sort (types, (GCompareDataFunc) gimp_object_name_collate,
+                     NULL);
+
   return G_LIST_MODEL (types);
 }
