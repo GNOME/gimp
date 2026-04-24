@@ -21,20 +21,12 @@
 #pragma once
 
 
-#define GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR            (gimp_dynamics_output_editor_get_type ())
-#define GIMP_DYNAMICS_OUTPUT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR, GimpDynamicsOutputEditor))
-#define GIMP_DYNAMICS_OUTPUT_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR, GimpDynamicsOutputEditorClass))
-#define GIMP_IS_DYNAMICS_OUTPUT_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR))
-#define GIMP_IS_DYNAMICS_OUTPUT_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR))
-#define GIMP_DYNAMICS_OUTPUT_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR, GimpDynamicsOutputEditorClass))
+#define GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR (gimp_dynamics_output_editor_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpDynamicsOutputEditor,
+                          gimp_dynamics_output_editor,
+                          GIMP, DYNAMICS_OUTPUT_EDITOR,
+                          GtkBox)
 
-
-typedef struct _GimpDynamicsOutputEditorClass GimpDynamicsOutputEditorClass;
-
-struct _GimpDynamicsOutputEditor
-{
-  GtkBox  parent_instance;
-};
 
 struct _GimpDynamicsOutputEditorClass
 {
@@ -42,6 +34,4 @@ struct _GimpDynamicsOutputEditorClass
 };
 
 
-GType       gimp_dynamics_output_editor_get_type (void) G_GNUC_CONST;
-
-GtkWidget * gimp_dynamics_output_editor_new      (GimpDynamicsOutput *output);
+GtkWidget * gimp_dynamics_output_editor_new (GimpDynamicsOutput *output);
