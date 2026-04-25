@@ -54,7 +54,6 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
 else
   brew upgrade --quiet
   brew install --quiet $(tr '\\' '\n' < build/macos/all-deps-uni.txt | sed 's/#.*//' | sed -n 's/.*|homebrew://p' | awk '{print $1}' | xargs)
-  git apply -v build/macos/patches/0001-build-macos-Do-not-require-gexiv2-0.14-on-homebrew.patch || true
 fi
 printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
 if find "$OPT_PREFIX/lib" -maxdepth 1 -name "libX11*.dylib" | grep -q .; then printf "\033[33m(WARNING)\033[0m: X11 is installed on macOS. Please remove the wrong dependency from all-deps-uni.txt or report to $( [ -f "$OPT_PREFIX/bin/port" ] && echo MacPorts || echo Homebrew )\n"; fi
@@ -89,7 +88,7 @@ self_build()
 
   # Configure and build
   if [ ! -f "_build-$(uname -m)/build.ninja" ]; then
-    meson setup _build-$(uname -m) -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI \
+    meson setup _build-$(uname -m) -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION \
                 -Dbuildtype=debugoptimized \
                 -Dc_args="-I${OPT_PREFIX}/include" -Dcpp_args="-I${OPT_PREFIX}/include" -Dc_link_args="-L${OPT_PREFIX}/lib" -Dcpp_link_args="-L${OPT_PREFIX}/lib"
   fi
