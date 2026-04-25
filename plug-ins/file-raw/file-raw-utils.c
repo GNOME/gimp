@@ -168,3 +168,14 @@ file_raw_get_executable_path (const gchar *main_executable,
 
   return g_strdup (main_executable);
 }
+
+void
+file_raw_sanitize_child_env (gpointer user_data)
+{
+  /* Prevent LD_PRELOAD set by the AppImage launcher from being inherited by
+   * darktable or rawtherapee. This avoids potential incompatabilities in the
+   * libs we need and enforce via LD_PRELOAD and what these 3rd party tools
+   * need.
+   */
+  g_unsetenv ("LD_PRELOAD");
+}
