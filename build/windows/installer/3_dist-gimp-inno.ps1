@@ -221,7 +221,8 @@ if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
     #Set-Content $INSTALLER.SHA512SUMS "$sha512 *$INSTALLER" -Encoding utf8NoBOM -NoNewline
   }
 ## Check in advance if the certificate we will use in the future tagged pipeline is fine
-if ((-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT) -and $CI_COMMIT_TAG)
+## (That is because we do not sign the installer from CI. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/13715)
+if ((-not $GIMP_RELEASE -or $GIMPs_IS_RC_GIT) -and $CI_COMMIT_TAG)
   {
     $latest_installer_cert = New-Object -TypeName System.DateTime -ArgumentList 2027, 2, 28
     Write-Output "(INFO): Certificate expire date is: $latest_installer_cert"
