@@ -314,11 +314,14 @@ void
 gimp_image_chooser_set_image (GimpImageChooser *chooser,
                               GimpImage        *image)
 {
+  g_return_if_fail (GIMP_IS_IMAGE_CHOOSER (chooser));
+  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+
   if (! gtk_widget_in_destruction (GTK_WIDGET (chooser)))
     {
-      g_signal_handlers_disconnect_by_func (chooser->priv->image_view,
-                                            G_CALLBACK (gimp_image_chooser_items_selected),
-                                            chooser);
+      g_signal_handlers_block_by_func (chooser->priv->image_view,
+                                       gimp_image_chooser_items_selected,
+                                       chooser);
 
       if (GIMP_IS_IMAGE (image))
         {
@@ -327,15 +330,14 @@ gimp_image_chooser_set_image (GimpImageChooser *chooser,
                                               GIMP_VIEWABLE (image));
         }
 
-      g_signal_connect_object (chooser->priv->image_view, "selection-changed",
-                               G_CALLBACK (gimp_image_chooser_items_selected),
-                               G_OBJECT (chooser), 0);
+      g_signal_handlers_unblock_by_func (chooser->priv->image_view,
+                                         gimp_image_chooser_items_selected,
+                                         chooser);
     }
 
   if (image != chooser->priv->image)
     {
-      g_clear_object (&chooser->priv->image);
-      chooser->priv->image = (image != NULL ? g_object_ref (image) : NULL);
+      g_set_object (&chooser->priv->image, image);
       g_object_notify (G_OBJECT (chooser), "image");
     }
 }
