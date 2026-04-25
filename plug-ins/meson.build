@@ -10,6 +10,7 @@ endforeach
 
 complex_plugins_list = [
   { 'name': 'file-bmp', },
+  { 'name': 'file-cin', },
   { 'name': 'file-dds', },
   { 'name': 'file-faxg3', },
   { 'name': 'file-fli', },
