@@ -44,14 +44,14 @@ eval $(sed -n 's/^#define  *\([^ ]*\)  *\(.*\) *$/export \1=\2/p' $BUILD_DIR/con
 # Set proper identifier and bundle name
 if [ -z "$GIMP_RELEASE" ] || [ -n "$GIMP_IS_RC_GIT" ]; then
   BUNDLE_IDENTIFIER="org.gimp.gimp.internal"
-  BUNDLE_NAME="$GIMP_DISPLAY_NAME (Nightly)"
+  BUNDLE_NAME="GIMP (Nightly)"
 elif { [ -n "$GIMP_RELEASE" ] && [ -n "$GIMP_UNSTABLE" ]; } || [ -n "$GIMP_RC_VERSION" ]; then
   BUNDLE_IDENTIFIER="org.gimp.gimp.seed"
-  BUNDLE_NAME="$GIMP_DISPLAY_NAME (Beta)"
+  BUNDLE_NAME="GIMP (Beta)"
   MUTEX_SUFFIX="-${GIMP_MUTEX_VERSION}"
 else
   BUNDLE_IDENTIFIER="org.gimp.gimp"
-  BUNDLE_NAME="$GIMP_DISPLAY_NAME"
+  BUNDLE_NAME="GIMP"
   MUTEX_SUFFIX="-${GIMP_MUTEX_VERSION}"
 fi
 
@@ -86,7 +86,7 @@ for APP in $(echo "$supported_archs" | tr ' ' '\n'); do
 export ARCH=$(echo $APP | sed -e 's|gimp-||' -e 's|./||' -e 's|.app||')
 printf "\e[0Ksection_start:`date +%s`:${ARCH}_files[collapsed=true]\r\e[0KPreparing GIMP files in $ARCH .dmg\n"
 ## Create temporary .dmg
-APPVER="$GIMP_DISPLAY_NAME $CUSTOM_GIMP_VERSION install"
+APPVER="GIMP $CUSTOM_GIMP_VERSION install"
 hdiutil create -volname "$APPVER" -srcfolder "$APP" -ov -format UDRW "temp_$ARCH.dmg"
 #(we do not use 'hdiutil attach -mountrandom' because dangling mounts would last if the script fails)
 existing_dmg_mount=$(hdiutil info | grep "$APPVER" | cut -f3-)

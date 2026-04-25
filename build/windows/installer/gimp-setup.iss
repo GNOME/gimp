@@ -103,7 +103,7 @@
 #else
   #define CUSTOM_GIMP_VERSION ORIGINAL_GIMP_VERSION + "-" + REVISION
 #endif
-#define DISPLAY_NAME GIMP_DISPLAY_NAME + " " + CUSTOM_GIMP_VERSION
+#define DISPLAY_NAME "GIMP " + CUSTOM_GIMP_VERSION
 
 ;This script supports creating both an installer per arch or an universal installer with all arches
 #if Defined(ARM64_BUNDLE) && !Defined(X64_BUNDLE)
@@ -496,8 +496,8 @@ Type: filesandordirs; Name: "{app}\lib\python{#PREVIOUS_PYTHON_VERSION}\*"
 Type: filesandordirs; Name: "{app}\32\*"
 Type: filesandordirs; Name: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\plug-ins\twain\*"
 ;get previous GIMP icon name from uninstall name in Registry
-Type: files; Name: "{autoprograms}\{reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1,DisplayName|{#GIMP_DISPLAY_NAME} {#GIMP_MUTEX_VERSION}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1','DisplayName')
-Type: files; Name: "{autodesktop}\{reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1,DisplayName|{#GIMP_DISPLAY_NAME} {#GIMP_MUTEX_VERSION}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1','DisplayName')
+Type: files; Name: "{autoprograms}\{reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1,DisplayName|GIMP {#GIMP_MUTEX_VERSION}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1','DisplayName')
+Type: files; Name: "{autodesktop}\{reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1,DisplayName|GIMP {#GIMP_MUTEX_VERSION}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1','DisplayName')
 ;.pdb files are taken care by RemoveDebugFilesFromDir procedure
 
 [UninstallDelete]

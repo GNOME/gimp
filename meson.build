@@ -1680,7 +1680,6 @@ conf.set_quoted('PACKAGE_NAME',   meson.project_name())
 conf.set_quoted('PACKAGE_STRING', package_string)
 conf.set_quoted('GIMP_COMMAND',   gimp_command)
 conf.set_quoted('GIMP_DESKTOP_NAME', gimp_desktop_name)
-conf.set_quoted('GIMP_DISPLAY_NAME', prettyname)
 
 # Versions
 conf.set_quoted('GIMP_APP_VERSION_STRING',gimp_app_version)

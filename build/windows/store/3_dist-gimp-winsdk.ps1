@@ -238,15 +238,15 @@ foreach ($bundle in $supported_archs)
     ### Set Display Name (the name shown in MS Store, on Start Menu etc)
     if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
       {
-        $display_name="$GIMP_DISPLAY_NAME (Insider)"
+        $display_name='GIMP (Insider)'
       }
     elseif (($GIMP_RELEASE -and $GIMP_UNSTABLE) -or $GIMP_RC_VERSION)
       {
-        $display_name="$GIMP_DISPLAY_NAME (Preview)"
+        $display_name='GIMP (Preview)'
       }
     else
       {
-        $display_name="$GIMP_DISPLAY_NAME"
+        $display_name='GIMP'
       }
     conf_manifest '@DISPLAY_NAME@' "$display_name"
     ### Set custom GIMP version (major.minor.micro+revision.0)
