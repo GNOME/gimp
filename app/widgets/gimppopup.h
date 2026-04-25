@@ -38,7 +38,7 @@ struct _GimpPopup
 
 struct _GimpPopupClass
 {
-  GtkWindowClass  parent_instance;
+  GtkWindowClass  parent_class;
 
   void (* cancel)  (GimpPopup *popup);
   void (* confirm) (GimpPopup *popup);

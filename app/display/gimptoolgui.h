@@ -32,7 +32,7 @@ G_DECLARE_DERIVABLE_TYPE (GimpToolGui,
 
 struct _GimpToolGuiClass
 {
-  GimpObjectClass  parent_instance;
+  GimpObjectClass  parent_class;
 
   void (* response) (GimpToolGui *gui,
                      gint         response_id);

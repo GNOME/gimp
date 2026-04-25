@@ -42,7 +42,7 @@ struct _GimpScaleComboBox
 
 struct _GimpScaleComboBoxClass
 {
-  GtkComboBoxClass  parent_instance;
+  GtkComboBoxClass  parent_class;
 
   void (* entry_activated) (GimpScaleComboBox *combo_box);
 };

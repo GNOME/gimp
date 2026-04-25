@@ -40,12 +40,12 @@ struct _GimpImageChooser
 
 struct _GimpImageChooserClass
 {
-  GtkFrameClass               parent_instance;
+  GtkFrameClass  parent_class;
 
   /* Signals. */
 
-  void     (* activate)      (GimpImageChooser *view,
-                              GimpImage        *image);
+  void (* activate) (GimpImageChooser *view,
+                     GimpImage        *image);
 };
 
 

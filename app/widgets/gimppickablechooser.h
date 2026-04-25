@@ -41,12 +41,12 @@ struct _GimpPickableChooser
 
 struct _GimpPickableChooserClass
 {
-  GtkFrameClass               parent_instance;
+  GtkFrameClass  parent_class;
 
   /* Signals. */
 
-  void     (* activate)      (GimpPickableChooser *view,
-                              GimpPickable        *pickable);
+  void (* activate) (GimpPickableChooser *view,
+                     GimpPickable        *pickable);
 };
 
 

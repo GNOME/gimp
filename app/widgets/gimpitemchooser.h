@@ -40,12 +40,12 @@ struct _GimpItemChooser
 
 struct _GimpItemChooserClass
 {
-  GtkFrameClass               parent_instance;
+  GtkFrameClass  parent_class;
 
   /* Signals. */
 
-  void     (* activate)      (GimpItemChooser *view,
-                              GimpItem        *item);
+  void (* activate) (GimpItemChooser *view,
+                     GimpItem        *item);
 };
 
 

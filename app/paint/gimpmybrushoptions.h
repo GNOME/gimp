@@ -52,7 +52,7 @@ struct _GimpMybrushOptions
 
 struct _GimpMybrushOptionsClass
 {
-  GimpPaintOptionsClass  parent_instance;
+  GimpPaintOptionsClass  parent_class;
 };
 
 

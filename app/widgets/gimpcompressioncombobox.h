@@ -30,7 +30,7 @@ G_DECLARE_DERIVABLE_TYPE (GimpCompressionComboBox,
 
 struct _GimpCompressionComboBoxClass
 {
-  GimpStringComboBoxClass  parent_instance;
+  GimpStringComboBoxClass  parent_class;
 };
 
 
