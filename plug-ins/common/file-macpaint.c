@@ -129,7 +129,8 @@ macpaint_create_procedure (GimpPlugIn  *plug_in,
                                       "Alex S.",
                                       "Alex S.",
                                       "2026");
-
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-macpaint");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "mac,pntg");
     }
