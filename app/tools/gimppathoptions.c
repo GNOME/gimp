@@ -62,9 +62,9 @@ enum
   PROP_STROKE_STYLE,
   PROP_STROKE_FOREGROUND,
   PROP_STROKE_PATTERN,
+  PROP_STROKE_ANTIALIAS,
   PROP_STROKE_WIDTH,
   PROP_STROKE_UNIT,
-  PROP_STROKE_ANTIALIAS,
   PROP_STROKE_CAP_STYLE,
   PROP_STROKE_JOIN_STYLE,
   PROP_STROKE_MITER_LIMIT,
@@ -189,6 +189,12 @@ gimp_path_options_class_init (GimpPathOptionsClass *klass)
                            GIMP_TYPE_PATTERN,
                            GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_STROKE_ANTIALIAS,
+                            "stroke-antialias",
+                            NULL, NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_STROKE_WIDTH,
                            "stroke-width",
                            NULL, NULL,
@@ -200,12 +206,6 @@ gimp_path_options_class_init (GimpPathOptionsClass *klass)
                          NULL, NULL,
                          TRUE, FALSE, gimp_unit_pixel (),
                          GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_STROKE_ANTIALIAS,
-                            "stroke-antialias",
-                            NULL, NULL,
-                            TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_STROKE_CAP_STYLE,
                          "stroke-cap-style",
@@ -298,21 +298,12 @@ gimp_path_options_set_property (GObject      *object,
       g_set_object (&options->fill_foreground, g_value_get_object (value));
       break;
     case PROP_FILL_PATTERN:
-      {
-        GimpPattern *pattern = g_value_get_object (value);
-
-        if (options->fill_pattern != pattern)
-          {
-            if (options->fill_pattern)
-              g_object_unref (options->fill_pattern);
-
-            options->fill_pattern = pattern ? g_object_ref (pattern) : pattern;
-          }
-        break;
-      }
+      g_set_object (&options->fill_pattern, g_value_get_object (value));
+      break;
     case PROP_FILL_ANTIALIAS:
       options->fill_antialias = g_value_get_boolean (value);
       break;
+
     case PROP_STROKE_STYLE:
       options->stroke_style = g_value_get_enum (value);
       break;
@@ -320,27 +311,17 @@ gimp_path_options_set_property (GObject      *object,
       g_set_object (&options->stroke_foreground, g_value_get_object (value));
       break;
     case PROP_STROKE_PATTERN:
-      {
-        GimpPattern *pattern = g_value_get_object (value);
+      g_set_object (&options->stroke_pattern, g_value_get_object (value));
+      break;
+    case PROP_STROKE_ANTIALIAS:
+      options->stroke_antialias = g_value_get_boolean (value);
+      break;
 
-        if (options->stroke_pattern != pattern)
-          {
-            if (options->stroke_pattern)
-              g_object_unref (options->stroke_pattern);
-
-            options->stroke_pattern = pattern ?
-                                      g_object_ref (pattern) : pattern;
-          }
-        break;
-      }
     case PROP_STROKE_WIDTH:
       options->stroke_width = g_value_get_double (value);
       break;
     case PROP_STROKE_UNIT:
       options->stroke_unit = g_value_get_object (value);
-      break;
-    case PROP_STROKE_ANTIALIAS:
-      options->stroke_antialias = g_value_get_boolean (value);
       break;
     case PROP_STROKE_CAP_STYLE:
       options->stroke_cap_style = g_value_get_enum (value);
@@ -397,6 +378,7 @@ gimp_path_options_get_property (GObject    *object,
     case PROP_FILL_ANTIALIAS:
       g_value_set_boolean (value, options->fill_antialias);
       break;
+
     case PROP_STROKE_STYLE:
       g_value_set_enum (value, options->stroke_style);
       break;
@@ -406,14 +388,15 @@ gimp_path_options_get_property (GObject    *object,
     case PROP_STROKE_PATTERN:
       g_value_set_object (value, options->stroke_pattern);
       break;
+    case PROP_STROKE_ANTIALIAS:
+      g_value_set_boolean (value, options->stroke_antialias);
+      break;
+
     case PROP_STROKE_WIDTH:
       g_value_set_double (value, options->stroke_width);
       break;
     case PROP_STROKE_UNIT:
       g_value_set_object (value, options->stroke_unit);
-      break;
-    case PROP_STROKE_ANTIALIAS:
-      g_value_set_boolean (value, options->stroke_antialias);
       break;
     case PROP_STROKE_CAP_STYLE:
       g_value_set_enum (value, options->stroke_cap_style);
