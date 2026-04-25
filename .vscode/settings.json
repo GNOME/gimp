@@ -8,5 +8,5 @@
   "editor.renderWhitespace": "trailing",
   "files.trimTrailingWhitespace": true,
   "files.eol": "\n",
-  "git.addAICoAuthor": "off"
+  "git.addAICoAuthor": "chatAndAgent"
 }
