@@ -369,28 +369,28 @@ gimp_row_button_press_event (GtkWidget      *widget,
                              GdkEventButton *bevent)
 {
   GdkEvent *event = (GdkEvent *) bevent;
-  gboolean  context_menu;
 
   GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
 
-  context_menu = gdk_event_triggers_context_menu (event);
-
-  if (bevent->button == 1 || context_menu)
+  if (gdk_event_triggers_context_menu (event))
     {
       GtkWidget *list_box = gtk_widget_get_parent (widget);
 
       if (GTK_IS_LIST_BOX (list_box))
         {
-          if (context_menu)
-            {
-              GtkWidget *editor = gtk_widget_get_ancestor (widget,
-                                                           GIMP_TYPE_EDITOR);
+          GtkWidget *editor = gtk_widget_get_ancestor (list_box,
+                                                       GIMP_TYPE_EDITOR);
 
-              if (editor)
+          if (editor)
+            {
+              if (! gtk_list_box_row_is_selected (GTK_LIST_BOX_ROW (widget)))
                 {
-                  return gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (editor),
-                                                            event);
-               }
+                  gtk_list_box_select_row (GTK_LIST_BOX (list_box),
+                                           GTK_LIST_BOX_ROW (widget));
+                 }
+
+              return gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (editor),
+                                                        event);
             }
         }
     }
