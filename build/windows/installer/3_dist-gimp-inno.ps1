@@ -222,7 +222,7 @@ if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
   }
 ## Check in advance if the certificate we will use in the future tagged pipeline is fine
 ## (That is because we do not sign the installer from CI. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/13715)
-if ((-not $GIMP_RELEASE -or $GIMPs_IS_RC_GIT) -and $CI_COMMIT_TAG)
+if ((-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT) -and $CI_COMMIT_TAG)
   {
     $latest_installer_cert = New-Object -TypeName System.DateTime -ArgumentList 2027, 2, 28
     Write-Output "(INFO): Certificate expire date is: $latest_installer_cert"
