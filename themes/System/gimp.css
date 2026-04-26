@@ -224,3 +224,20 @@ treeview .toggle-icon:not(.visible):selected {
 .metadata-value-label {
     margin-left: 12px;
 }
+
+/* CSS trick to shift menu items with icons over */
+menu menuitem:dir(ltr) box image {
+  margin-left: -2.1em;
+}
+
+menu menuitem:dir(ltr) box image + label {
+  margin-left: -0.4em;
+}
+
+menu menuitem:dir(rtl) box image {
+  margin-right: -2.1em;
+}
+
+menu menuitem:dir(rtl) box image + label {
+  margin-right: -0.4em;
+}
