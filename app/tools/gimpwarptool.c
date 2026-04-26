@@ -517,13 +517,11 @@ gimp_warp_tool_oper_update (GimpTool         *tool,
     {
       gimp_draw_tool_pause (draw_tool);
 
+      wt->cursor_pos.x = coords->x;
+      wt->cursor_pos.y = coords->y;
+      
       if (! tool->display || display == tool->display)
-        {
-          wt->cursor_pos.x = coords->x;
-          wt->cursor_pos.y = coords->y;
-
-          wt->last_pos = wt->cursor_pos;
-        }
+        wt->last_pos = wt->cursor_pos;
 
       if (! gimp_draw_tool_is_active (draw_tool))
         gimp_draw_tool_start (draw_tool, display);
