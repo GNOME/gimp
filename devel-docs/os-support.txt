@@ -40,7 +40,6 @@ Windows 10.0.18362.0 (aka 1903) and over.
 
 (NOTE TO MAINTAINERS:
 If you update this file, so update MinVersion
-on build/windows/installer/*gimp3264.iss and
 on build/windows/store/AppxManifest.xml of this repo and
 min-support on content/gimp_versions.json of gimp-web repo)
 
