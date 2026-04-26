@@ -128,7 +128,7 @@ rawtherapee_init_procedures (GimpPlugIn *plug_in)
                     NULL,
                     (search_path ? G_SPAWN_SEARCH_PATH : 0) |
                     G_SPAWN_STDERR_TO_DEV_NULL,
-                    file_raw_sanitize_child_env,
+                    FILE_RAW_SANITIZE_CHILD_ENV,
                     NULL,
                     &rawtherapee_stdout,
                     NULL,
@@ -358,7 +358,7 @@ load_image (GFile        *file,
                     /*G_SPAWN_STDOUT_TO_DEV_NULL |*/
                     G_SPAWN_STDERR_TO_DEV_NULL |
                     (search_path ? G_SPAWN_SEARCH_PATH : 0),
-                    file_raw_sanitize_child_env,
+                    FILE_RAW_SANITIZE_CHILD_ENV,
                     NULL,
                     &rawtherapee_stdout,
                     NULL,
@@ -472,7 +472,7 @@ load_thumbnail_image (GFile   *file,
                     NULL,
                     G_SPAWN_STDERR_TO_DEV_NULL |
                     (search_path ? G_SPAWN_SEARCH_PATH : 0),
-                    file_raw_sanitize_child_env,
+                    FILE_RAW_SANITIZE_CHILD_ENV,
                     NULL,
                     &rawtherapee_stdout,
                     NULL,
