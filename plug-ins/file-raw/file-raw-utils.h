@@ -29,7 +29,12 @@ gchar * file_raw_get_executable_path (const gchar *main_executable,
                                       const gchar *win32_registry_key_base,
                                       gboolean    *search_path);
 
+#ifdef __linux__
 void    file_raw_sanitize_child_env  (gpointer     user_data);
+#define FILE_RAW_SANITIZE_CHILD_ENV file_raw_sanitize_child_env
+#else
+#define FILE_RAW_SANITIZE_CHILD_ENV NULL
+#endif
 
 
 #endif /* __FILE_RAW_UTILS_H__ */

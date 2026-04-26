@@ -169,13 +169,18 @@ file_raw_get_executable_path (const gchar *main_executable,
   return g_strdup (main_executable);
 }
 
+#ifdef __linux__
 void
 file_raw_sanitize_child_env (gpointer user_data)
 {
-  /* Prevent LD_PRELOAD set by the AppImage launcher from being inherited by
-   * darktable or rawtherapee. This avoids potential incompatabilities in the
-   * libs we need and enforce via LD_PRELOAD and what these 3rd party tools
-   * need.
+  /* Prevent LD_PRELOAD set by the AppImage launcher build/linux/appimage/AppRun)
+   * from being inherited by darktable or rawtherapee.
+   * This avoids potential incompatabilities in the libs we need and enforce
+   * via LD_PRELOAD and what these 3rd party tools need (#16132).
+   * Uses APPDIR env var to determine if we're running from an AppImage,
+   * see https://docs.appimage.org/packaging-guide/environment-variables.html
    */
-  g_unsetenv ("LD_PRELOAD");
+  if (g_getenv ("APPDIR"))
+    g_unsetenv ("LD_PRELOAD");
 }
+#endif
