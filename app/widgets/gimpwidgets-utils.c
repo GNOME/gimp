@@ -172,6 +172,7 @@ gimp_menu_item_set_image (GtkMenuItem *item,
 
       if (image)
         {
+          gtk_box_set_spacing (GTK_BOX (hbox), 0);
           gtk_container_add (GTK_CONTAINER (hbox), image);
           gtk_box_reorder_child (GTK_BOX (hbox), image, 0);
           g_object_set_data (G_OBJECT (item), "gimp-menu-item-image", image);
