@@ -840,7 +840,6 @@ tartan-static-analysis:
     - if: '$GIMP_CI_TARTAN != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_TARTAN.*/'
   needs: ["deps-debian-nonreloc"]
   stage: analysis
-  allow_failure: true
   variables:
     # FIXME: This is temporary until the image in .default is bumped to Debian Trixie.
     DEB_VERSION: "trixie"
@@ -891,6 +890,7 @@ tartan-static-analysis:
     - mkdir report
     - mv ${GIMP_BUILDDIR}/meson-logs/scanbuild/* ./report/
     - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
+  allow_failure: true
   artifacts:
     paths:
       - report/
