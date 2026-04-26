@@ -4,6 +4,7 @@ modules_deps = [
 ]
 
 color_selector_libs = [
+  libgimpbase,
   libgimpcolor,
   libgimpconfig,
   libgimpmodule,
