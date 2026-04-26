@@ -227,17 +227,17 @@ treeview .toggle-icon:not(.visible):selected {
 
 /* CSS trick to shift menu items with icons over */
 menu menuitem:dir(ltr) box image {
-  margin-left: -2.1em;
+  margin-left: -2.3em;
 }
 
 menu menuitem:dir(ltr) box image + label {
-  margin-left: -0.4em;
+  margin-left: -0.55em;
 }
 
 menu menuitem:dir(rtl) box image {
-  margin-right: -2.1em;
+  margin-right: -2.3em;
 }
 
 menu menuitem:dir(rtl) box image + label {
-  margin-right: -0.4em;
+  margin-right: -0.55em;
 }
