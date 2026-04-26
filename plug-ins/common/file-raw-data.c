@@ -2710,7 +2710,7 @@ load_config_notify (GimpProcedureConfig  *config,
       file = g_object_get_data (G_OBJECT (preview), "procedure-file");
       file_size = get_file_size (file);
 
-      max_pixels = ((file_size - offset) * 8) / (bpp * bitspp);
+      max_pixels = ((file_size * 8) / (bpp * bitspp)) - offset;
 
       if ((goffset) width * height > max_pixels)
         {
