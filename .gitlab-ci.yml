@@ -39,7 +39,7 @@ workflow:
 ## - clang-format (static code analysis)
 ## - Execution tests (dynamic code analysis)
 .pipeline_merge: &CI_MERGE
-  if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_JOB_NAME !~ /.*tartan.*/'
   interruptible: true
   variables: {}
 
@@ -54,7 +54,7 @@ workflow:
 ## - Source tarball
 ## - Developer documentation
 .pipeline_commit: &CI_COMMIT
-  if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_TAG == null'
+  if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_TAG == null && $CI_JOB_NAME !~ /.*tartan.*/'
   interruptible: true
   variables: {}
 
@@ -115,28 +115,19 @@ stages:
     - <<: *CI_MERGE
     - <<: *CI_COMMIT
       variables: {}
-    - if: '$GIMP_CI_MESON_CLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_CLANG.*/'
+    - if: '($GIMP_CI_MESON_CLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_CLANG.*/) ||
+           (($GIMP_CI_TARTAN != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_TARTAN.*/) && $CI_JOB_NAME !~ /.*gimp.*/)'
       variables:
         CC: clang
         CXX: clang++
         CC_LD: lld
         CXX_LD: lld
         TOOLCHAIN: "clang lld"
-        WARN_AS_ERROR_ON_CI: '-Dwerror=true'
         VARIANT: -clang
     - if: '$GIMP_CI_RASTER_ICONS != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_RASTER_ICONS.*/'
       variables:
         MESON_OPTIONS: "-Dvector-icons=false"
         VARIANT: "-raster"
-    - if: '($GIMP_CI_TARTAN != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_TARTAN.*/) && $CI_JOB_NAME !~ /.*gimp.*/'
-      variables:
-        CC: clang
-        CXX: clang++
-        CC_LD: lld
-        CXX_LD: lld
-        TOOLCHAIN: "clang lld"
-        WARN_AS_ERROR_ON_CI: '-Dwerror=true'
-        VARIANT: -clang
     - <<: *CI_RELEASE
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
@@ -832,19 +823,8 @@ cppcheck:
 
 tartan-static-analysis:
   extends: .debian-nonreloc
-  rules:
-    - if: '$GIMP_CI_TARTAN != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_TARTAN.*/'
   needs: ["deps-debian-nonreloc"]
   stage: analysis
-  variables:
-    # FIXME: This is temporary until the image in .default is bumped to Debian Trixie.
-    DEB_VERSION: "trixie"
-    GIT_SUBMODULE_STRATEGY: recursive
-    LLVM_VERSION: 18
-    TARTAN_BUILDDIR: "_build-${RUNNER}"
-    GIMP_BUILDDIR: "_build-tartan-${RUNNER}"
-    CC: "clang-${LLVM_VERSION}"
-    CXX: "clang++-${LLVM_VERSION}"
   script:
     - *ENVIRON
 
@@ -853,43 +833,36 @@ tartan-static-analysis:
     - apt-get update
     # For building Tartan we need to have available a 'clang' binary but for
     # the scan-build we need to use a specific version.
-    - apt-get install -y clang
-                         clang-tools
-                         clang-${LLVM_VERSION}
-                         clang-tools-${LLVM_VERSION}
-                         libclang-${LLVM_VERSION}-dev
+    - apt-get install -y clang-tools
+                         libclang-dev
                          libgirepository-2.0-dev
+                         llvm
     - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
 
     # Build Tartan from source
     - printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KBuild Tartan\n"
     - git clone https://gitlab.freedesktop.org/tartan/tartan.git tartan
-    - pushd tartan
+    - cd tartan
     # Tartan seems to need to be installed into the same prefix as the version
     # of LLVM we want to use it with.
-    - LLVM_CONFIG=/usr/bin/llvm-config-${LLVM_VERSION} meson setup ${TARTAN_BUILDDIR} -Dprefix="$(llvm-config-${LLVM_VERSION} --prefix)"
-                                                                                      -Dlibdir="$(llvm-config-${LLVM_VERSION} --libdir)"
-    - meson compile -C ${TARTAN_BUILDDIR}
-    - meson install -C ${TARTAN_BUILDDIR}
-    - popd
+    - export LLVM_CONFIG='/usr/bin/llvm-config'
+    - meson setup _build-${RUNNER} -Dprefix="$(llvm-config --prefix)"
+                                   -Dlibdir="$(llvm-config --libdir)"
+    - ninja -C _build-${RUNNER}
+    - ninja -C _build-${RUNNER} install
+    - cd ..
     - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
 
     # Run the static analysis
     - printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KBuild GIMP with Tartan\n"
-    - meson setup ${GIMP_BUILDDIR} -Dprefix="${GIMP_PREFIX}"
+    - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
                                    $MESON_OPTIONS $WARN_AS_ERROR_ON_CI
-    - SCANBUILD="$(llvm-config-${LLVM_VERSION} --bindir)/tartan-build" ninja -C ${GIMP_BUILDDIR} scan-build
-    - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
-
-    # Save the analysis report
-    - printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KSaving build report\n"
-    - mkdir report
-    - mv ${GIMP_BUILDDIR}/meson-logs/scanbuild/* ./report/
+    - SCANBUILD="$(llvm-config --bindir)/tartan-build" ninja -C ${GIMP_BUILDDIR} scan-build
     - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
   allow_failure: true
   artifacts:
     paths:
-      - report/
+      - _build-${RUNNER}/meson-logs/scanbuild
     expire_in: 8 days
 
 issue-bot:
