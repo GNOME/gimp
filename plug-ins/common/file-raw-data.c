@@ -2875,7 +2875,8 @@ load_dialog (GFile         *file,
 
       entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
                                                      "offset", 1.0);
-      gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), 0, file_size, FALSE);
+      /* Setting offset needs to leave at least one pixel for reading. */
+      gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), 0, file_size - 1, FALSE);
       entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
                                                      "width", 1.0);
       gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), 1, file_size, FALSE);
