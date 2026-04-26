@@ -1117,14 +1117,22 @@ gimp_action_set_proxy (GimpAction *action,
                */
               G_IS_OBJECT (GIMP_PROCEDURE_ACTION (action)->procedure))
             {
+              gchar *icon_name = NULL;
+
               /* Special-casing procedure actions as plug-ins can create icons with
                * gimp_procedure_set_icon_pixbuf().
                */
               g_object_get (GIMP_PROCEDURE_ACTION (action)->procedure,
+                            "icon-name",   &icon_name,
                             "icon-pixbuf", &pixbuf,
                             NULL);
 
-              if (pixbuf != NULL)
+              if (icon_name != NULL)
+                {
+                  proxy_image = gtk_image_new_from_icon_name (icon_name,
+                                                              GTK_ICON_SIZE_MENU);
+                }
+              else if (pixbuf != NULL)
                 {
                   gint width;
                   gint height;
@@ -1144,6 +1152,15 @@ gimp_action_set_proxy (GimpAction *action,
 
                   proxy_image = gtk_image_new_from_pixbuf (pixbuf);
                 }
+            }
+          else if (! GTK_IS_CHECK_MENU_ITEM (proxy))
+            {
+              const gchar *icon_name;
+
+              icon_name = gimp_action_get_icon_name (action);
+              if (icon_name)
+                proxy_image =
+                  gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
             }
 
           if (proxy_image == NULL)
