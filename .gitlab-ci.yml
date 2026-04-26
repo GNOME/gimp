@@ -129,6 +129,15 @@ stages:
       variables:
         MESON_OPTIONS: "-Dvector-icons=false"
         VARIANT: "-raster"
+    - if: '($GIMP_CI_TARTAN != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_TARTAN.*/) && $CI_JOB_NAME !~ /.*gimp.*/'
+      variables:
+        CC: clang
+        CXX: clang++
+        CC_LD: lld
+        CXX_LD: lld
+        TOOLCHAIN: "clang lld"
+        WARN_AS_ERROR_ON_CI: '-Dwerror=true'
+        VARIANT: -clang
     - <<: *CI_RELEASE
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
@@ -150,19 +159,6 @@ stages:
 
 deps-debian-nonreloc:
   extends: .debian-nonreloc
-  rules:
-    - !reference [.debian-nonreloc, rules]
-    # This rule needs to be here instead of .debian-nonreloc because we do not
-    # want to trigger the full GIMP build for GIMP_CI_TARTAN.
-    - if: '$GIMP_CI_TARTAN != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_TARTAN.*/'
-      variables:
-        CC: clang
-        CXX: clang++
-        CC_LD: lld
-        CXX_LD: lld
-        TOOLCHAIN: "clang lld"
-        WARN_AS_ERROR_ON_CI: '-Dwerror=true'
-        VARIANT: -clang
   stage: dependencies
   image: quay.io/containers/aio:latest
   variables:
