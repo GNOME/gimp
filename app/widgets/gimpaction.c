@@ -1127,7 +1127,7 @@ gimp_action_set_proxy (GimpAction *action,
                             "icon-pixbuf", &pixbuf,
                             NULL);
 
-              if (icon_name != NULL)
+              if (pixbuf == NULL && icon_name != NULL)
                 {
                   proxy_image = gtk_image_new_from_icon_name (icon_name,
                                                               GTK_ICON_SIZE_MENU);
