@@ -39,6 +39,27 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+static gboolean       read_8bpc_line  (GeglBuffer *buffer,
+                                       FILE       *fp,
+                                       guint      *data,
+                                       guint       data_len,
+                                       gint        depth,
+                                       guchar     *pixels,
+                                       guint       num_pixels,
+                                       gushort     packing,
+                                       gboolean    is_network_order,
+                                       GError    **error);
+
+static gboolean       read_10bpc_line (GeglBuffer *buffer,
+                                       guint      *data,
+                                       guint       data_len,
+                                       gint        depth,
+                                       gushort    *pixels,
+                                       guint       num_pixels,
+                                       gushort     packing,
+                                       gboolean    is_network_order,
+                                       GError    **error);
+
 GimpImage *
 cineon_open (GFile   *file,
              GError **error)
@@ -49,15 +70,18 @@ cineon_open (GFile   *file,
   GimpImageBaseType    image_type;
   GimpImageType        layer_type;
   GimpLayer           *layer;
+  GimpPrecision        precision;
   GeglBuffer          *cin_buffer;
   guint                width;
   guint                height;
   gint                 depth;
   gint                 bpp;
   gint                 offset;
+  gint                 packing = 1;
   guint                buffer_length;
   guint               *buffer = NULL;
   gushort             *pixels = NULL;
+  guchar              *pixels_8 = NULL;
 
   fp = g_fopen (g_file_peek_path (file), "rb");
   if (! fp)
@@ -83,27 +107,6 @@ cineon_open (GFile   *file,
   bpp    = header.imageInfo.channel[0].bits_per_pixel;
   offset = g_ntohl (header.fileInfo.image_offset);
 
-  if (bpp != 10)
-    {
-      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                   _("Cineon: %d bits per channel not yet supported."),
-                   bpp);
-      fclose (fp);
-      return NULL;
-    }
-
-  buffer_length = ((width * depth) + 2) / 3;
-  buffer        = g_try_malloc ((gsize) buffer_length * 4);
-  pixels        = g_try_malloc ((gsize) buffer_length * 3 * sizeof (gushort));
-
-  if (! buffer || ! pixels)
-    {
-       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                    _("Memory could not be allocated."));
-      fclose (fp);
-      return NULL;
-    }
-
   switch (depth)
     {
     case 1:
@@ -121,13 +124,48 @@ cineon_open (GFile   *file,
                    _("Cineon: Image with %d channels not yet supported."),
                    depth);
       fclose (fp);
+      return NULL;
+    }
+
+  switch (bpp)
+    {
+    case 8:
+      precision     = GIMP_PRECISION_U8_NON_LINEAR;
+      buffer_length = ceil ((width * depth) / 4.0);
+      break;
+
+    case 10:
+      precision     = GIMP_PRECISION_U16_NON_LINEAR;
+      buffer_length = ((width * depth) + 2) / 3;
+      break;
+
+    default:
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Cineon: Image with %d bpc not yet supported."),
+                   bpp);
+      fclose (fp);
+      return NULL;
+    }
+
+  buffer = g_try_malloc ((gsize) buffer_length * 4);
+  if (bpp > 8)
+    pixels = g_try_malloc ((gsize) buffer_length * 3 * 2);
+  else
+    pixels_8 = g_try_malloc ((gsize) buffer_length * 3 * 2);
+
+  if (! buffer || (! pixels && ! pixels_8))
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Memory could not be allocated."));
+      fclose (fp);
       g_free (buffer);
       g_free (pixels);
+      g_free (pixels_8);
       return NULL;
     }
 
   image = gimp_image_new_with_precision (width, height, image_type,
-                                         GIMP_PRECISION_U16_NON_LINEAR);
+                                         precision);
 
   layer = gimp_layer_new (image, NULL, width, height,
                           layer_type, 100,
@@ -143,15 +181,14 @@ cineon_open (GFile   *file,
       fclose (fp);
       g_free (buffer);
       g_free (pixels);
+      g_free (pixels_8);
       return NULL;
     }
 
   cin_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
   for (gint y = 0; y < height; y++)
     {
-      gint pixel_index = 0;
-      gint long_index  = 0;
-      gint read_index  = 0;
+      gint read_index = 0;
 
       read_index = fread (buffer, 4, buffer_length, fp);
       if (read_index != buffer_length)
@@ -163,35 +200,105 @@ cineon_open (GFile   *file,
           g_object_unref (cin_buffer);
           g_free (buffer);
           g_free (pixels);
+          g_free (pixels_8);
 
           return image;
         }
 
-      for (long_index = 0; long_index < buffer_length; ++long_index)
-        {
-          guint t = g_ntohl (buffer[long_index]);
+      if (bpp == 8)
+        read_8bpc_line (cin_buffer, fp, buffer, buffer_length, depth,
+                        pixels_8, (width * depth), packing, TRUE, error);
+      else if (bpp == 10)
+        read_10bpc_line (cin_buffer, buffer, buffer_length, depth, pixels,
+                         (width * depth), packing, TRUE, error);
 
-          t = t >> 2;
-          pixels[pixel_index + 2] = (gushort) t & 0x3FF;
-          t = t >> 10;
-          pixels[pixel_index + 1] = (gushort) t & 0x3FF;
-          t = t >> 10;
-          pixels[pixel_index] = (gushort) t & 0x3FF;
-          pixel_index += 3;
-        }
-
-      for (pixel_index = 0; pixel_index < (width * depth); ++pixel_index)
-        pixels[pixel_index] <<= 6;
-
-      gegl_buffer_set (cin_buffer, GEGL_RECTANGLE (0, y, width, 1), 0,
-                       NULL, pixels,
-                       GEGL_AUTO_ROWSTRIDE);
+      if (bpp > 8)
+        gegl_buffer_set (cin_buffer, GEGL_RECTANGLE (0, y, width, 1), 0,
+                         NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+      else
+        gegl_buffer_set (cin_buffer, GEGL_RECTANGLE (0, y, width, 1), 0,
+                         NULL, pixels_8, GEGL_AUTO_ROWSTRIDE);
     }
 
   g_object_unref (cin_buffer);
   g_free (buffer);
   g_free (pixels);
+  g_free (pixels_8);
   fclose (fp);
 
   return image;
+}
+
+/* Helper methods */
+
+static gboolean
+read_8bpc_line (GeglBuffer *buffer,
+                FILE       *fp,
+                guint      *data,
+                guint       data_len,
+                gint        depth,
+                guchar     *pixels,
+                guint       num_pixels,
+                gushort     packing,
+                gboolean    is_network_order,
+                GError    **error)
+{
+  gint pixel_index = 0;
+
+  for (gint long_index = 0; long_index < data_len; ++long_index)
+    {
+      guint t;
+
+      if (is_network_order)
+        t = g_ntohl (data[long_index]);
+      else
+        t = data[long_index];
+
+      pixels[pixel_index]     = (guchar) ((t & 0xFF000000) >> 24) & 0xFF;
+      pixels[pixel_index + 1] = (guchar) ((t & 0x00FF0000) >> 16) & 0xFF;
+      pixels[pixel_index + 2] = (guchar) ((t & 0x0000FF00) >> 8) & 0xFF;
+      pixels[pixel_index + 3] = (guchar) (t & 0x000000FF);
+
+      pixel_index += 4;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+read_10bpc_line (GeglBuffer *buffer,
+                 guint      *data,
+                 guint       data_len,
+                 gint        depth,
+                 gushort    *pixels,
+                 guint       num_pixels,
+                 gushort     packing,
+                 gboolean    is_network_order,
+                 GError    **error)
+{
+  gint pixel_index = 0;
+
+  for (gint long_index = 0; long_index < data_len; ++long_index)
+    {
+      guint t;
+
+      if (is_network_order)
+        t = g_ntohl (data[long_index]);
+      else
+        t = data[long_index];
+
+      t = t >> 2;
+      pixels[pixel_index + 2] = (gushort) t & 0x3FF;
+      t = t >> 10;
+      pixels[pixel_index + 1] = (gushort) t & 0x3FF;
+      t = t >> 10;
+      pixels[pixel_index] = (gushort) t & 0x3FF;
+
+      pixel_index += 3;
+    }
+
+  for (pixel_index = 0; pixel_index < num_pixels; ++pixel_index)
+    pixels[pixel_index] <<= 6;
+
+  return TRUE;
 }
