@@ -40,6 +40,40 @@
 
 #define DPX_FILE_MAGIC 0x53445058
 
+static gboolean       read_10bpc_line (GeglBuffer *buffer,
+                                       guint      *data,
+                                       guint       data_len,
+                                       gint        depth,
+                                       gushort    *pixels,
+                                       guint       num_pixels,
+                                       gushort     packing,
+                                       gboolean    is_network_order,
+                                       gint       *left_over,
+                                       GError    **error);
+
+static gboolean       read_12bpc_line (GeglBuffer *buffer,
+                                       FILE       *fp,
+                                       guint      *data,
+                                       guint       data_len,
+                                       gint        depth,
+                                       gushort    *pixels,
+                                       guint       num_pixels,
+                                       gushort     packing,
+                                       gboolean    is_network_order,
+                                       GError    **error);
+
+static gboolean       read_16bpc_line (GeglBuffer *buffer,
+                                       FILE       *fp,
+                                       guint      *data,
+                                       guint       data_len,
+                                       gint        depth,
+                                       gushort    *pixels,
+                                       guint       num_pixels,
+                                       gushort     packing,
+                                       gboolean    is_network_order,
+                                       GError    **error);
+
+
 GimpImage *
 dpx_open (GFile   *file,
           GError **error)
@@ -58,6 +92,7 @@ dpx_open (GFile   *file,
   gint                 depth;
   gint                 bpp;
   gint                 offset;
+  gushort              packing;
   guint                buffer_length = 0;
   guint               *buffer = NULL;
   gushort             *pixels = NULL;
@@ -101,17 +136,19 @@ dpx_open (GFile   *file,
 
   if (is_network_order)
     {
-      width  = g_ntohl (header.imageInfo.pixels_per_line);
-      height = g_ntohl (header.imageInfo.lines_per_image);
-      depth  = g_ntohs (header.imageInfo.channels_per_image);
-      offset = g_ntohl (header.fileInfo.offset);
+      width   = g_ntohl (header.imageInfo.pixels_per_line);
+      height  = g_ntohl (header.imageInfo.lines_per_image);
+      depth   = g_ntohs (header.imageInfo.channels_per_image);
+      offset  = g_ntohl (header.fileInfo.offset);
+      packing = g_ntohs (header.imageInfo.channel[0].packing);
     }
   else
     {
-      width  = header.imageInfo.pixels_per_line;
-      height = header.imageInfo.lines_per_image;
-      depth  = header.imageInfo.channels_per_image;
-      offset = header.fileInfo.offset;
+      width   = header.imageInfo.pixels_per_line;
+      height  = header.imageInfo.lines_per_image;
+      depth   = header.imageInfo.channels_per_image;
+      offset  = header.fileInfo.offset;
+      packing = header.imageInfo.channel[0].packing;
     }
   bpp = header.imageInfo.channel[0].bits_per_pixel;
 
@@ -122,12 +159,12 @@ dpx_open (GFile   *file,
         case 50:
           depth = 3;
           break;
+
         case 51:
-          depth = 4;
-          break;
         case 52:
           depth = 4;
           break;
+
         default:
           break;
         }
@@ -162,18 +199,15 @@ dpx_open (GFile   *file,
 
   switch (bpp)
     {
-      //case 8:
-        //precision = GIMP_PRECISION_U8_NON_LINEAR;
-        //break;
-
     case 10:
-      buffer_length = ((width * depth) + 2) / 3;
       precision     = GIMP_PRECISION_U16_NON_LINEAR;
+      buffer_length = ceil (((width * depth) + 2) / 3.0);
       break;
 
+    case 12:
     case 16:
-      buffer_length = (width * depth) / 2;
       precision     = GIMP_PRECISION_U16_NON_LINEAR;
+      buffer_length = ceil ((width * depth) / 2.0);
       break;
 
     default:
@@ -219,16 +253,11 @@ dpx_open (GFile   *file,
 
   for (gint y = 0; y < height; y++)
     {
-      gint pixel_index = 0;
-      gint long_index  = 0;
       gint read_index  = 0;
       gint read_data   = buffer_length;
 
       if (bpp == 10)
-        {
-          read_data   = (((width * depth) - left_over) + 2) / 3;
-          pixel_index = left_over;
-        }
+        read_data = (((width * depth) - left_over) + 2) / 3;
 
       read_index = fread (buffer, 4, read_data, fp);
       if (read_index != read_data)
@@ -246,105 +275,23 @@ dpx_open (GFile   *file,
 
       if (bpp == 10)
         {
-          for (long_index = 0; long_index < read_data; ++long_index)
-            {
-              guint t;
-
-              if (is_network_order)
-                t = g_ntohl (buffer[long_index]);
-              else
-                t = buffer[long_index];
-
-              if (depth == 1)
-                {
-                  pixels[pixel_index] = (gushort) t & 0x3FF;
-                  t = t >> 10;
-                  pixels[pixel_index + 1] = (gushort) t & 0x3FF;
-                  t = t >> 10;
-                  pixels[pixel_index + 2] = (gushort) t & 0x3FF;
-                }
-              else
-                {
-                  t = t >> 2;
-                  pixels[pixel_index + 2] = (gushort) t & 0x3FF;
-                  t = t >> 10;
-                  pixels[pixel_index + 1] = (gushort) t & 0x3FF;
-                  t = t >> 10;
-                  pixels[pixel_index] = (gushort) t & 0x3FF;
-                }
-              pixel_index += 3;
-            }
-          left_over = pixel_index;
+          read_10bpc_line (dpx_buffer, buffer, read_data, depth, pixels,
+                           (width * depth), packing, is_network_order,
+                           &left_over, error);
+        }
+      else if (bpp == 12)
+        {
+          read_12bpc_line (dpx_buffer, fp, buffer, read_data, depth, pixels,
+                           (width * depth), packing, is_network_order,
+                           error);
         }
       else if (bpp == 16)
         {
           /* TODO: Handle 1-off indexing for odd widths */
-          for (long_index = 0; long_index < read_data; long_index += 2)
-            {
-              guint t[3] = { 0, 0, 0 };
-
-              for (gint i = 0; i < 3; i++)
-                {
-                  if ((long_index + i) >= read_data)
-                    break;
-
-                  t[i] = buffer[long_index + i];
-
-                  if (is_network_order)
-                    t[i] = g_ntohl (t[i]);
-                }
-
-              if (is_network_order)
-                {
-                  pixels[pixel_index]     = (gushort) ((t[0] >> 16) & 0xFFFF);
-                  pixels[pixel_index + 1] = (gushort) (t[0] & 0xFFFF);
-
-                  pixels[pixel_index + 2] = (gushort) ((t[1] >> 16) & 0xFFFF);
-                  pixels[pixel_index + 3] = (gushort) (t[1] & 0xFFFF);
-
-                  if ((long_index + 2) >= read_data)
-                    {
-                      fseek (fp, 4, SEEK_CUR);
-                      break;
-                    }
-
-                  pixels[pixel_index + 4] = (gushort) ((t[2] >> 16) & 0xFFFF);
-                  pixels[pixel_index + 5] = (gushort) (t[2] & 0xFFFF);
-                }
-              else
-                {
-                  pixels[pixel_index + 5] = (gushort) (t[0] & 0xFFFF);
-                  pixels[pixel_index + 4] = (gushort) ((t[0] >> 16) & 0xFFFF);
-
-                  pixels[pixel_index + 3] = (gushort) (t[1] & 0xFFFF);
-                  pixels[pixel_index + 2] = (gushort) ((t[1] >> 16) & 0xFFFF);
-
-                  if ((long_index + 2) >= read_data)
-                    {
-                      fseek (fp, 4, SEEK_CUR);
-                      break;
-                    }
-
-                  pixels[pixel_index + 1] = (gushort) (t[2] & 0xFFFF);
-                  pixels[pixel_index]     = (gushort) ((t[2] >> 16) & 0xFFFF);
-                }
-              pixel_index += 6;
-              long_index++;
-            }
+          read_16bpc_line (dpx_buffer, fp, buffer, read_data, depth, pixels,
+                           (width * depth), packing, is_network_order,
+                           error);
         }
-
-      if (bpp == 10)
-        {
-          for (pixel_index = 0; pixel_index < (width * depth); ++pixel_index)
-            pixels[pixel_index] <<= 6;
-
-          while (pixel_index < left_over)
-            {
-              pixels[pixel_index - (width * depth)] = pixels[pixel_index];
-              ++pixel_index;
-            }
-        }
-      left_over -= (width * depth);
 
       gegl_buffer_set (dpx_buffer, GEGL_RECTANGLE (0, y, width, 1), 0,
                        NULL, pixels,
@@ -357,4 +304,160 @@ dpx_open (GFile   *file,
   fclose (fp);
 
   return image;
+}
+
+static gboolean
+read_10bpc_line (GeglBuffer *buffer,
+                 guint      *data,
+                 guint       data_len,
+                 gint        depth,
+                 gushort    *pixels,
+                 guint       num_pixels,
+                 gushort     packing,
+                 gboolean    is_network_order,
+                 gint       *left_over,
+                 GError    **error)
+{
+  gint pixel_index = *left_over;
+
+  for (gint long_index = 0; long_index < data_len; ++long_index)
+    {
+      guint t;
+
+      if (is_network_order)
+        t = g_ntohl (data[long_index]);
+      else
+        t = data[long_index];
+
+      t = t >> 2;
+      pixels[pixel_index + 2] = (gushort) t & 0x3FF;
+      t = t >> 10;
+      pixels[pixel_index + 1] = (gushort) t & 0x3FF;
+      t = t >> 10;
+      pixels[pixel_index] = (gushort) t & 0x3FF;
+
+      pixel_index += 3;
+    }
+  *left_over = pixel_index;
+
+  for (pixel_index = 0; pixel_index < num_pixels; ++pixel_index)
+    pixels[pixel_index] <<= 6;
+
+  if (packing != 1)
+    {
+      while (pixel_index < *left_over)
+        {
+          pixels[pixel_index - num_pixels] = pixels[pixel_index];
+          ++pixel_index;
+        }
+      *left_over -= num_pixels;
+    }
+  else
+    {
+      *left_over = 0;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+read_12bpc_line (GeglBuffer *buffer,
+                 FILE       *fp,
+                 guint      *data,
+                 guint       data_len,
+                 gint        depth,
+                 gushort    *pixels,
+                 guint       num_pixels,
+                 gushort     packing,
+                 gboolean    is_network_order,
+                 GError    **error)
+{
+  gint pixel_index = 0;
+
+  for (gint long_index = 0; long_index < data_len; long_index += 2)
+    {
+      guint t[3] = { 0, 0, 0 };
+
+      for (gint i = 0; i < 3; i++)
+        {
+          if ((long_index + i) >= data_len)
+            break;
+
+          t[i] = data[long_index + i];
+
+          if (is_network_order)
+            t[i] = g_ntohl (t[i]);
+        }
+
+      if (is_network_order)
+        {
+          pixels[pixel_index]     = (gushort) ((t[0] >> 16) & 0xFFFF);
+          pixels[pixel_index + 1] = (gushort) (t[0] & 0xFFFF);
+
+          pixels[pixel_index + 2] = (gushort) ((t[1] >> 16) & 0xFFFF);
+          pixels[pixel_index + 3] = (gushort) (t[1] & 0xFFFF);
+
+          if ((long_index + 2) >= data_len)
+            {
+              fseek (fp, 4, SEEK_CUR);
+              break;
+            }
+
+          pixels[pixel_index + 4] = (gushort) ((t[2] >> 16) & 0xFFFF);
+          pixels[pixel_index + 5] = (gushort) (t[2] & 0xFFFF);
+        }
+      else
+        {
+          pixels[pixel_index + 5] = (gushort) (t[0] & 0xFFFF);
+          pixels[pixel_index + 4] = (gushort) ((t[0] >> 16) & 0xFFFF);
+
+          pixels[pixel_index + 3] = (gushort) (t[1] & 0xFFFF);
+          pixels[pixel_index + 2] = (gushort) ((t[1] >> 16) & 0xFFFF);
+
+          if ((long_index + 2) >= data_len)
+            {
+              fseek (fp, 4, SEEK_CUR);
+              break;
+            }
+
+          pixels[pixel_index + 1] = (gushort) (t[2] & 0xFFFF);
+          pixels[pixel_index]     = (gushort) ((t[2] >> 16) & 0xFFFF);
+        }
+      pixel_index += 6;
+      long_index++;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+read_16bpc_line (GeglBuffer *buffer,
+                 FILE       *fp,
+                 guint      *data,
+                 guint       data_len,
+                 gint        depth,
+                 gushort    *pixels,
+                 guint       num_pixels,
+                 gushort     packing,
+                 gboolean    is_network_order,
+                 GError    **error)
+{
+  gint pixel_index = 0;
+
+  for (gint long_index = 0; long_index < data_len; ++long_index)
+    {
+      guint t;
+
+      if (is_network_order)
+        t = g_ntohl (data[long_index]);
+      else
+        t = data[long_index];
+
+      pixels[pixel_index]     = (gushort) ((t >> 16) & 0xFFFF);
+      pixels[pixel_index + 1] = (gushort) (t & 0xFFFF);
+
+      pixel_index += 2;
+    }
+
+  return TRUE;
 }
