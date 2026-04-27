@@ -62,12 +62,11 @@ def bundle(src_root, pattern, option="None", override=None):
       symlink_cleanup = False
       dest_path = GIMP_DISTRIB / "MacOS" / Path(src_path.relative_to(src_root)).name
     elif "lib/" in pattern:
-      #we bundle on lib/ to avoid 'bundle format unrecognized, invalid, or unsuitable' on signing
-      dest_path = GIMP_DISTRIB / "lib" / src_path.relative_to(src_root / "lib")
-      #Needed by app/main.c (not anymore since we bundle directly on lib)
-      #link_lib_path = Path(f"{GIMP_DISTRIB}/lib")
-      #link_lib_path.unlink(missing_ok=True)
-      #link_lib_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/Frameworks"), link_lib_path.parent))
+      dest_path = GIMP_DISTRIB / "Frameworks" / src_path.relative_to(src_root / "lib")
+      #Needed by app/main.c
+      link_lib_path = Path(f"{GIMP_DISTRIB}/lib")
+      link_lib_path.unlink(missing_ok=True)
+      link_lib_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/Frameworks"), link_lib_path.parent))
     elif "share/" in pattern:
       dest_path = GIMP_DISTRIB / "Resources" / src_path.relative_to(src_root / "share")
       #Needed by app/main.c, app/config/gimpcoreconfig.c, app/core/gimpdata.c, libgimpwidgets/gimpwidgets-private.c and plug-ins/common/file-wmf.c
@@ -164,7 +163,7 @@ shutil.copy2(Path(f"{os.getenv('MESON_BUILD_ROOT')}/build/macos/fileicon.icns"),
 bundle(OPT_PREFIX, "share/glib-*/schemas/gschemas.compiled")
 ### Mostly bogus since we do use macOS API directly from gimp to open remote files
 if os.path.exists(OPT_PREFIX / "bin/port"):
-  bundle(OPT_PREFIX, "lib/libproxy/libpxbackend*.dylib", "--dest", "lib")
+  bundle(OPT_PREFIX, "lib/libproxy/libpxbackend*.dylib", "--dest", "Frameworks")
 bundle(OPT_PREFIX, "lib/gio")
 ### Needed to not crash UI. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/6165
 bundle(OPT_PREFIX, "share/icons/Adwaita")
@@ -173,7 +172,7 @@ bundle(GIMP_PREFIX, "share/icons/hicolor")
 ### Needed to loading icons in GUI
 bundle(OPT_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader*svg*")
 bundle(OPT_PREFIX, "lib/gdk-pixbuf-*/*/loaders.cache")
-loaders_cache = glob(f"{GIMP_DISTRIB}/lib/gdk-pixbuf-*/*/loaders.cache")
+loaders_cache = glob(f"{GIMP_DISTRIB}/Frameworks/gdk-pixbuf-*/*/loaders.cache")
 text = Path(loaders_cache[0]).read_text()
 new_text = text.replace(f"{OPT_PREFIX}/lib/", "")
 Path(loaders_cache[0]).write_text(new_text)
@@ -182,10 +181,10 @@ bundle(OPT_PREFIX, "lib/gtk-3.0/*.*.*/printbackends/*.so")
 ### Needed for macOS emoji keyboard support (with im-quartz.so)
 bundle(OPT_PREFIX, "lib/gtk-3.0/*.*.*/immodules/*.so")
 if os.path.exists(OPT_PREFIX / "bin/port"):
-  bundle(OPT_PREFIX, "etc/gtk-3.0/gtk.immodules", "--rename", "lib/gtk-3.0/3.0.0/immodules.cache")
+  bundle(OPT_PREFIX, "etc/gtk-3.0/gtk.immodules", "--rename", "Frameworks/gtk-3.0/3.0.0/immodules.cache")
 else: #os.path.exists(OPT_PREFIX / "bin/brew"):
   bundle(OPT_PREFIX, "lib/gtk-3.0/*.*.*/immodules.cache")
-im_cache = glob(f"{GIMP_DISTRIB}/lib/gtk-3.0/*.*.*/immodules.cache")
+im_cache = glob(f"{GIMP_DISTRIB}/Frameworks/gtk-3.0/*.*.*/immodules.cache")
 text = Path(im_cache[0]).read_text()
 new_text = re.sub(r'/.*?(?=gtk-3\.0/)', '', text)
 Path(im_cache[0]).write_text(new_text)
@@ -236,11 +235,11 @@ bundle(OPT_PREFIX, "share/libthai")
 bundle(OPT_PREFIX, "share/poppler")
 #### Needed for signature support in file-pdf lib
 if os.path.exists(OPT_PREFIX / "bin/port"):
-  bundle(OPT_PREFIX, "lib/nss/libssl3.dylib", "--dest", "lib")
-  bundle(OPT_PREFIX, "lib/nss/libsmime3.dylib", "--dest", "lib")
-  bundle(OPT_PREFIX, "lib/nss/libnssutil3.dylib", "--dest", "lib")
-  bundle(OPT_PREFIX, "lib/nss/libnss3.dylib", "--dest", "lib")
-  bundle(OPT_PREFIX, "lib/nspr/*.dylib", "--dest", "lib")
+  bundle(OPT_PREFIX, "lib/nss/libssl3.dylib", "--dest", "Frameworks")
+  bundle(OPT_PREFIX, "lib/nss/libsmime3.dylib", "--dest", "Frameworks")
+  bundle(OPT_PREFIX, "lib/nss/libnssutil3.dylib", "--dest", "Frameworks")
+  bundle(OPT_PREFIX, "lib/nss/libnss3.dylib", "--dest", "Frameworks")
+  bundle(OPT_PREFIX, "lib/nspr/*.dylib", "--dest", "Frameworks")
 ### Needed for file-ps work
 if os.path.exists(OPT_PREFIX / "bin/port"):
   bundle(OPT_PREFIX, "share/ghostscript/1*/iccprofiles/*.icc", "--dest", "Resources/ghostscript/iccprofiles")
@@ -270,13 +269,13 @@ bundle(OPT_PREFIX, "lib/libgirepository-*.dylib")
 #### Python support
 bundle(OPT_PREFIX, f"bin/python{os.getenv('PYTHON_VERSION')}", "--rename", "MacOS/python3")
 if os.path.exists(OPT_PREFIX / "bin/brew") or (os.path.exists(OPT_PREFIX / "bin/port") and os.getenv('GITLAB_CI')):
-  bundle(OPT_PREFIX, f"Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}", "--dest", "lib/Python.framework/Versions")
+  bundle(OPT_PREFIX, f"Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}", "--dest", "Frameworks/Python.framework/Versions")
 elif os.path.exists(OPT_PREFIX / "bin/port"):
-  bundle(OPT_PREFIX, f"Library/Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}", "--dest", "lib/Python.framework/Versions")
-bundle(OPT_PREFIX, f"lib/python{os.getenv('PYTHON_VERSION')}/site-packages/*", "--dest", f"lib/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/lib/python{os.getenv('PYTHON_VERSION')}/site-packages")
-clean(GIMP_DISTRIB, "lib/Python.framework/*.pyc")
+  bundle(OPT_PREFIX, f"Library/Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}", "--dest", "Frameworks/Python.framework/Versions")
+bundle(OPT_PREFIX, f"lib/python{os.getenv('PYTHON_VERSION')}/site-packages/*", "--dest", f"Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/lib/python{os.getenv('PYTHON_VERSION')}/site-packages")
+clean(GIMP_DISTRIB, "Frameworks/Python.framework/*.pyc")
 #####Needed for internet connection on python. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/14722
-pythonpath = Path(f"{GIMP_DISTRIB}/lib/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/lib/python{os.getenv('PYTHON_VERSION')}")
+pythonpath = Path(f"{GIMP_DISTRIB}/Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/lib/python{os.getenv('PYTHON_VERSION')}")
 for d in (pythonpath, pythonpath / "site-packages"):
   sitecustomize = d / "sitecustomize.py"
   code = """\nimport os\nimport certifi\n\n# Only set if not already configured by user\nif not os.environ.get('SSL_CERT_FILE'):\n    os.environ['SSL_CERT_FILE'] = certifi.where()\n"""
@@ -286,7 +285,7 @@ for d in (pythonpath, pythonpath / "site-packages"):
     sitecustomize.write_text(code)
 #####Needed since we use [[NSBundle mainBundle] bundlePath] on libgimpbase/gimpenv.c
 real_path = Path(f"{GIMP_DISTRIB}/share")
-link_path = Path(f"{GIMP_DISTRIB}/lib/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/Resources/Python.app/Contents/share")
+link_path = Path(f"{GIMP_DISTRIB}/Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/Resources/Python.app/Contents/share")
 link_path.parent.mkdir(parents=True, exist_ok=True)
 link_path.symlink_to(os.path.relpath(real_path, link_path.parent))
 #### lua is buggy, and hard to bundle due to LUA_*PATH etc (see AppImage script)
@@ -300,14 +299,14 @@ link_path.symlink_to(os.path.relpath(real_path, link_path.parent))
 ### Minimal (and some additional) executables for the 'MacOS' folder
 bundle(GIMP_PREFIX, "bin/gimp*")
 if os.path.exists(OPT_PREFIX / "bin/brew"):
-  bundle(OPT_PREFIX, "Cellar/libarchive/*/lib/libarchive.*.dylib", "--dest", "lib")
+  bundle(OPT_PREFIX, "Cellar/libarchive/*/lib/libarchive.*.dylib", "--dest", "Frameworks")
 ### Bundled just to promote GEGL. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10580
 bundle(GIMP_PREFIX, "bin/gegl")
-### Deps (DYLIBs) of the binaries in 'MacOS' and 'lib' dirs
+### Deps (DYLIBs) of the binaries in 'MacOS' and 'Frameworks' dirs
 ### We save the list of already copied DLLs to keep a state between 2_bundle-gimp-uni_dep runs.
 done_dylib = Path(f"{os.getenv('MESON_BUILD_ROOT')}/done-dylib.list")
 done_dylib.unlink(missing_ok=True)
-for dir in ["MacOS", "lib"]:
+for dir in ["MacOS", "Frameworks"]:
   search_dir = GIMP_DISTRIB / dir
   print(f"Searching for dependencies of {search_dir} in {GIMP_PREFIX} and {OPT_PREFIX}")
   for dep in search_dir.rglob("*"):
@@ -320,7 +319,7 @@ for dir in ["MacOS", "lib"]:
 
 
 ## .DSYM/DWARF DEBUG SYMBOLS (from babl, gegl and GIMP binaries)
-for dir in ["MacOS", "lib"]:
+for dir in ["MacOS", "Frameworks"]:
   search_dir = GIMP_DISTRIB / dir
   for binary in search_dir.rglob("*"):
     if "Mach-O" in subprocess.run(["file", str(binary)], capture_output=True, text=True).stdout and ".dSYM" not in str(binary) and not binary.is_symlink():
@@ -338,7 +337,7 @@ for dir in ["MacOS", "lib"]:
 
 ## DEVELOPMENT FILES ON UNIX-STYLE, NO MACOS-STYLE/.FRAMEWORK
 ## (to build GEGL filters and GIMP plug-ins).
-clean(GIMP_DISTRIB, "lib/*.a")
+clean(GIMP_DISTRIB, "Frameworks/*.a")
 bundle(GIMP_PREFIX, "include/gimp-*", "--dest", "include")
 bundle(GIMP_PREFIX, "include/babl-*", "--dest", "include")
 bundle(GIMP_PREFIX, "include/gegl-*", "--dest", "include")
