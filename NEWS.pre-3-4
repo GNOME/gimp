@@ -1,0 +1,150 @@
+                   ------------------------------
+                   GNU Image Manipulation Program
+                           Stable Branch
+                   ------------------------------
+
+This is the stable branch of GIMP.
+
+
+Overview of Changes from GIMP 3.2.2 to GIMP 3.2.4
+=================================================
+
+Core:
+
+  - The "edit-fill-*" actions will now behave accordingly on specific
+    cases. E.g. it will skip layers which can't be filled (content-lock
+    layers and link layers) and it will fill the expected way
+    non-rasterized text and vector layers.
+  - Images opened through command lines are not considered stray images
+    anymore on exit when run without a GUI (scripts, etc.).
+  - We improved the support of the process temporary folder, so that we
+    can avoid clashes when several users run GIMP on a same computer.
+    Furthermore the temporary folder is now deleted at startup (unless
+    it is not empty, which it should be).
+  - XCF opened as layers will now always create new layers named as in
+    the source XCF, even if the source XCF had only a single layer.
+  - The "layers-resize" now only works on raster layers.
+  - The "Layers to Image Size" and "Resize Layer to Selection" actions
+    will only work on raster layers too.
+
+Tool
+
+  - Text tool:
+    * When editing text, prioritize our global actions when a
+      shortcut matches, before sending the hit keys to the IME (Input
+      Method Engine). Otherwise some IME may consume our keys and block
+      custom shortcuts (e.g. Alt+key events are often used to trigger
+      special characters on macOS or Windows and may block core
+      actions).
+    * Prevent font size jumping to 0 when using shortcuts on selected
+      text.
+  - Selection tools: when moving a floating layer or selection,
+    temporarily disable the marching ants outline. Among other reasons,
+    it improves performance.
+  - Select by Color tool: optimized processing when working in Intersect
+    mode.
+  - Crop tool: non-raster layers are not rasterized anymore.
+  - Text tool: on-canvas GUI is now properly positioned when rotating
+    the canvas.
+
+Plug-Ins:
+
+  - Improve import of: APNG, PAA, PNG, DDS, PSP, PNM, PSD, JIF, PVR
+    texture, TIM, XWD, SFW, ORA.
+  - Improved PDF export.
+  - file-compressor: improved error messaging.
+  - New Windows WIA scanner plug-in, replacing the now deprecated TWAIN
+    scanner plug-in (which is not shipped in our Windows packages
+    anymore as it depends on dropped 32-bit Windows platform).
+  - Script-Fu: several deprecated functions now cleaned out from
+    scripts.
+  - Filmstrip: the created image will now have the dirty flag set.
+
+API:
+
+  - libgimp/PDB:
+    * libgimp/PDB functions gimp_context_set_line_width_unit() and
+      gimp_vector_layer_set_stroke_width_unit() now accept pixel as input unit.
+    * Improved error handling in gimp_temp_file().
+    * New function: gimp_resources_loaded()
+  - libgimp:
+    * A function gimp_env_exit() was added, but same as gimp_env_init(),
+      it is not declared in public headers and should never be used by
+      plug-ins. It is considered private.
+    * gimp_quit() function is deprecated.
+  - PDB:
+    * (gimp-quit) procedure (without libgimp wrapper) is deprecated.
+
+Translations:
+
+  - New Lao translation.
+
+Build:
+
+  - Many build warnings are being cleaned out.
+  - New jobs are being set up with -Werror progressively as we weed out
+    existing build warnings.
+  - The issue bot will now run and create reports when specific jobs
+    fail.
+  - New rules to generate Markdown versions of our man pages for the
+    website.
+
+
+Overview of Changes from GIMP 3.2.0 to GIMP 3.2.2
+=================================================
+
+Core:
+
+  - We removed support for a separate folder for loading 32-bit binaries
+    on 64-bit Windows. This was being used for core plug-ins for the
+    TWAIN plug-in only.
+  - Various fixes related to the new non-destructive layer types, or to
+    non-destructive layer effects.
+  - More robust handling of Procreate and SwatchBooker palettes.
+  - Fix scaling paths when importing SVG as paths.
+  - We now support reading the documentation being installed in the user
+    config directory in the `help/` subdirectory.
+  - Histogram dialog: the unique color count feature now takes into
+    account any selection.
+
+Graphical User Interface:
+
+  - Theme fixes.
+  - Various text fixed for better localization.
+  - Display the "Tab" shortcut for the "Hide Docks" action, even though
+    it is not a real global shortcut (it only works on the canvas).
+  - Metadata Rotation import dialog: you can now click the preview for
+    Original and Rotated images in the Metadata Rotation Import Dialog,
+    and have it open the image rotated as shown in the preview.
+
+Plug-Ins:
+
+  - Tile: carry over the source image's profile to the newly created
+    image.
+  - Improve support of: FITS, TIM, PAA, ICNS, PVR, SFW, JIF, PSP, PSD
+
+Translations:
+
+  - Serbian Cyrillic now has upstream support in InnoSetup (in their
+    "Unofficial" list still, which means it is less verified). Our
+    installer now has Serbian Cyrillic localization too.
+
+Build:
+
+  - NM environment variable is now used in priority for the `nm` tool
+    used for the build. This check is stored from configure-time
+    environment.
+  - Windows x86 32-bit pipeline has now been decommissioned from our CI.
+    This implies that 32-bit builds won't be available anymore in our
+    Windows installer, just as was already the case on the Windows Store.
+  - Meson build:
+    * New boolean option -Dtwain-unmaintained: this puts our TWAIN
+      plug-in behind a disabled-by-default flag, because this plug-in
+      only made sense in 32-bit. The next step will be to replace it by
+      a WIA plug-in.
+    * Option -Dwin32-32bits-dll-folder removed.
+  - GIMP can now be built fully without patches on macOS. The in-house
+    macOS build is slowly moving to become our main CI for this OS and
+    for making the release DMGs.
+  - Snap: enable MIDI (Alsa) support.
+  - AppImage: enable "Send by email".
