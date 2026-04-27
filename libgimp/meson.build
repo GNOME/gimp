@@ -646,7 +646,7 @@ else
   endif
 endif
 
-if not platform_osx and host_cpu_family != 'x86'
+if not platform_osx and host_machine.system() != 'emscripten'
   nm = find_program('nm', required: false)
 
   # Verify .def files for Windows linking.
