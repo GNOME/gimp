@@ -535,6 +535,14 @@ elif get_option('b_sanitize') != 'none'
   ])
   warning(gobject_introspection_warning)
   warnings += gobject_introspection_warning
+elif get_option('default_library') == 'static'
+  have_gobject_introspection = false
+  gobject_introspection_warning = '\n      '.join(['',
+    'GObject Introspection is not supported with static libraries.',
+    'See: https://gitlab.gnome.org/GNOME/gobject-introspection/-/issues/187'
+  ])
+  warning(gobject_introspection_warning)
+  warnings += gobject_introspection_warning
 else
   have_gobject_introspection = true
   libgimp_gir_includes = []
