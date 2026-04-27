@@ -40,6 +40,17 @@
 
 #define DPX_FILE_MAGIC 0x53445058
 
+static gboolean       read_8bpc_line  (GeglBuffer *buffer,
+                                       FILE       *fp,
+                                       guint      *data,
+                                       guint       data_len,
+                                       gint        depth,
+                                       guchar    *pixels,
+                                       guint       num_pixels,
+                                       gushort     packing,
+                                       gboolean    is_network_order,
+                                       GError    **error);
+
 static gboolean       read_10bpc_line (GeglBuffer *buffer,
                                        guint      *data,
                                        guint       data_len,
@@ -94,8 +105,9 @@ dpx_open (GFile   *file,
   gint                 offset;
   gushort              packing;
   guint                buffer_length = 0;
-  guint               *buffer = NULL;
-  gushort             *pixels = NULL;
+  guint               *buffer   = NULL;
+  gushort             *pixels   = NULL;
+  guchar              *pixels_8 = NULL;
   gint                 left_over = 0;
 
   fp = g_fopen (g_file_peek_path (file), "rb");
@@ -177,6 +189,11 @@ dpx_open (GFile   *file,
       layer_type = GIMP_GRAY_IMAGE;
       break;
 
+    case 2:
+      image_type = GIMP_GRAY;
+      layer_type = GIMP_GRAYA_IMAGE;
+      break;
+
     case 3:
       image_type = GIMP_RGB;
       layer_type = GIMP_RGB_IMAGE;
@@ -192,13 +209,16 @@ dpx_open (GFile   *file,
                    _("DPX: Image with %d channels not yet supported."),
                    depth);
       fclose (fp);
-      g_free (buffer);
-      g_free (pixels);
       return NULL;
     }
 
   switch (bpp)
     {
+    case 8:
+      precision     = GIMP_PRECISION_U8_NON_LINEAR;
+      buffer_length = ceil ((width * depth) / 4.0);
+      break;
+
     case 10:
       precision     = GIMP_PRECISION_U16_NON_LINEAR;
       buffer_length = ceil (((width * depth) + 2) / 3.0);
@@ -221,12 +241,18 @@ dpx_open (GFile   *file,
     }
 
   buffer = g_try_malloc ((gsize) buffer_length * 4);
-  pixels = g_try_malloc ((gsize) buffer_length * 3 * 2);
+  if (bpp > 8)
+    pixels = g_try_malloc ((gsize) buffer_length * 3 * 2);
+  else
+    pixels_8 = g_try_malloc ((gsize) buffer_length * 3 * 2);
 
-  if (! buffer || ! pixels)
+  if (! buffer || (! pixels && ! pixels_8))
     {
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
                    _("Memory could not be allocated."));
+      g_free (buffer);
+      g_free (pixels);
+      g_free (pixels_8);
       fclose (fp);
       return NULL;
     }
@@ -246,6 +272,7 @@ dpx_open (GFile   *file,
       fclose (fp);
       g_free (buffer);
       g_free (pixels);
+      g_free (pixels_8);
       return NULL;
     }
 
@@ -269,11 +296,18 @@ dpx_open (GFile   *file,
           g_object_unref (dpx_buffer);
           g_free (buffer);
           g_free (pixels);
+          g_free (pixels_8);
 
           return image;
         }
 
-      if (bpp == 10)
+      if (bpp == 8)
+        {
+          read_8bpc_line (dpx_buffer, fp, buffer, read_data, depth, pixels_8,
+                          (width * depth), packing, is_network_order,
+                          error);
+        }
+      else if (bpp == 10)
         {
           read_10bpc_line (dpx_buffer, buffer, read_data, depth, pixels,
                            (width * depth), packing, is_network_order,
@@ -293,17 +327,57 @@ dpx_open (GFile   *file,
                            error);
         }
 
-      gegl_buffer_set (dpx_buffer, GEGL_RECTANGLE (0, y, width, 1), 0,
-                       NULL, pixels,
-                       GEGL_AUTO_ROWSTRIDE);
+      if (bpp > 8)
+        gegl_buffer_set (dpx_buffer, GEGL_RECTANGLE (0, y, width, 1), 0,
+                         NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+      else
+        gegl_buffer_set (dpx_buffer, GEGL_RECTANGLE (0, y, width, 1), 0,
+                         NULL, pixels_8, GEGL_AUTO_ROWSTRIDE);
     }
 
   g_object_unref (dpx_buffer);
   g_free (buffer);
   g_free (pixels);
+  g_free (pixels_8);
   fclose (fp);
 
   return image;
+}
+
+/* Helper Methods */
+
+static gboolean
+read_8bpc_line (GeglBuffer *buffer,
+                FILE       *fp,
+                guint      *data,
+                guint       data_len,
+                gint        depth,
+                guchar     *pixels,
+                guint       num_pixels,
+                gushort     packing,
+                gboolean    is_network_order,
+                GError    **error)
+{
+  gint pixel_index = 0;
+
+  for (gint long_index = 0; long_index < data_len; ++long_index)
+    {
+      guint t;
+
+      if (is_network_order)
+        t = g_ntohl (data[long_index]);
+      else
+        t = data[long_index];
+
+      pixels[pixel_index]     = (guchar) ((t & 0xFF000000) >> 24) & 0xFF;
+      pixels[pixel_index + 1] = (guchar) ((t & 0x00FF0000) >> 16) & 0xFF;
+      pixels[pixel_index + 2] = (guchar) ((t & 0x0000FF00) >> 8) & 0xFF;
+      pixels[pixel_index + 3] = (guchar) (t & 0x000000FF);
+
+      pixel_index += 4;
+    }
+
+  return TRUE;
 }
 
 static gboolean
