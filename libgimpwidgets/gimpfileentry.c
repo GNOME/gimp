@@ -467,8 +467,12 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
                         entry);
     }
 
-  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (entry->file_dialog),
-                                 filename);
+  if (entry->dir_only)
+    gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (entry->file_dialog),
+                                         filename);
+  else
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (entry->file_dialog),
+                                   filename);
 
   g_free (filename);
 
