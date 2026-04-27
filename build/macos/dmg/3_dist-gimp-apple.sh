@@ -273,7 +273,7 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
 
   printf '(INFO): signing lib/ (except Python.framework)\n'
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/lib/" \
-    -type f \( -perm -100 -o -perm -010 -o -perm -001 \) ! -path "*/DWARF/*" ! -path "*/.dSYM/*" ! -path "*/Python.framework/*" -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
+    -type f \( \( -perm -100 -o -perm -010 -o -perm -001 \) -o -name "*.dylib" \) ! -path "*/DWARF/*" ! -path "*/.dSYM/*" ! -path "*/Python.framework/*" -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
     printf "(INFO): signing $bin\n"
     codesign -s "${codesign_subject}" \
       --options runtime --entitlements 'build/macos/dmg/gimp-hardening.entitlements' "$bin"
@@ -291,7 +291,7 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
     PYTHON_SIGN_VAL='build/macos/dmg/gimp-hardening.entitlements'
   fi
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/lib/Python.framework/Versions/${PYTHON_VERSION}/lib/" \
-    -type f \( -perm -100 -o -perm -010 -o -perm -001 \) -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
+    -type f \( \( -perm -100 -o -perm -010 -o -perm -001 \) -o -name "*.dylib" \) -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
       printf "(INFO): signing $bin\n"
       codesign -s "${codesign_subject}" \
         --options runtime --entitlements 'build/macos/dmg/gimp-hardening.entitlements' "$bin"
