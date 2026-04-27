@@ -45,7 +45,7 @@ static gboolean       read_8bpc_line  (GeglBuffer *buffer,
                                        guint      *data,
                                        guint       data_len,
                                        gint        depth,
-                                       guchar    *pixels,
+                                       guchar     *pixels,
                                        guint       num_pixels,
                                        gushort     packing,
                                        gboolean    is_network_order,
@@ -104,6 +104,7 @@ dpx_open (GFile   *file,
   gint                 bpp;
   gint                 offset;
   gushort              packing;
+  gushort              orientation;
   guint                buffer_length = 0;
   guint               *buffer   = NULL;
   gushort             *pixels   = NULL;
@@ -148,19 +149,21 @@ dpx_open (GFile   *file,
 
   if (is_network_order)
     {
-      width   = g_ntohl (header.imageInfo.pixels_per_line);
-      height  = g_ntohl (header.imageInfo.lines_per_image);
-      depth   = g_ntohs (header.imageInfo.channels_per_image);
-      offset  = g_ntohl (header.fileInfo.offset);
-      packing = g_ntohs (header.imageInfo.channel[0].packing);
+      width       = g_ntohl (header.imageInfo.pixels_per_line);
+      height      = g_ntohl (header.imageInfo.lines_per_image);
+      depth       = g_ntohs (header.imageInfo.channels_per_image);
+      offset      = g_ntohl (header.fileInfo.offset);
+      packing     = g_ntohs (header.imageInfo.channel[0].packing);
+      orientation = g_ntohs (header.imageInfo.orientation);
     }
   else
     {
-      width   = header.imageInfo.pixels_per_line;
-      height  = header.imageInfo.lines_per_image;
-      depth   = header.imageInfo.channels_per_image;
-      offset  = header.fileInfo.offset;
-      packing = header.imageInfo.channel[0].packing;
+      width       = header.imageInfo.pixels_per_line;
+      height      = header.imageInfo.lines_per_image;
+      depth       = header.imageInfo.channels_per_image;
+      offset      = header.fileInfo.offset;
+      packing     = header.imageInfo.channel[0].packing;
+      orientation = header.imageInfo.orientation;
     }
   bpp = header.imageInfo.channel[0].bits_per_pixel;
 
@@ -304,8 +307,7 @@ dpx_open (GFile   *file,
       if (bpp == 8)
         {
           read_8bpc_line (dpx_buffer, fp, buffer, read_data, depth, pixels_8,
-                          (width * depth), packing, is_network_order,
-                          error);
+                          (width * depth), packing, is_network_order, error);
         }
       else if (bpp == 10)
         {
@@ -344,7 +346,7 @@ dpx_open (GFile   *file,
   return image;
 }
 
-/* Helper Methods */
+/* Helper methods */
 
 static gboolean
 read_8bpc_line (GeglBuffer *buffer,
@@ -365,15 +367,23 @@ read_8bpc_line (GeglBuffer *buffer,
       guint t;
 
       if (is_network_order)
-        t = g_ntohl (data[long_index]);
+        {
+          t = g_ntohl (data[long_index]);
+
+          pixels[pixel_index]     = (guchar) ((t & 0xFF000000) >> 24) & 0xFF;
+          pixels[pixel_index + 1] = (guchar) ((t & 0x00FF0000) >> 16) & 0xFF;
+          pixels[pixel_index + 2] = (guchar) ((t & 0x0000FF00) >> 8) & 0xFF;
+          pixels[pixel_index + 3] = (guchar) (t & 0x000000FF);
+        }
       else
-        t = data[long_index];
+        {
+          t = data[long_index];
 
-      pixels[pixel_index]     = (guchar) ((t & 0xFF000000) >> 24) & 0xFF;
-      pixels[pixel_index + 1] = (guchar) ((t & 0x00FF0000) >> 16) & 0xFF;
-      pixels[pixel_index + 2] = (guchar) ((t & 0x0000FF00) >> 8) & 0xFF;
-      pixels[pixel_index + 3] = (guchar) (t & 0x000000FF);
-
+          pixels[pixel_index + 3] = (guchar) ((t & 0xFF000000) >> 24) & 0xFF;
+          pixels[pixel_index + 2] = (guchar) ((t & 0x00FF0000) >> 16) & 0xFF;
+          pixels[pixel_index + 1] = (guchar) ((t & 0x0000FF00) >> 8) & 0xFF;
+          pixels[pixel_index]     = (guchar) (t & 0x000000FF);
+        }
       pixel_index += 4;
     }
 
@@ -448,58 +458,33 @@ read_12bpc_line (GeglBuffer *buffer,
 {
   gint pixel_index = 0;
 
-  for (gint long_index = 0; long_index < data_len; long_index += 2)
+  for (gint long_index = 0; long_index < data_len; ++long_index)
     {
-      guint t[3] = { 0, 0, 0 };
-
-      for (gint i = 0; i < 3; i++)
-        {
-          if ((long_index + i) >= data_len)
-            break;
-
-          t[i] = data[long_index + i];
-
-          if (is_network_order)
-            t[i] = g_ntohl (t[i]);
-        }
+      guint t;
 
       if (is_network_order)
         {
-          pixels[pixel_index]     = (gushort) ((t[0] >> 16) & 0xFFFF);
-          pixels[pixel_index + 1] = (gushort) (t[0] & 0xFFFF);
+          t = g_ntohl (data[long_index]);
 
-          pixels[pixel_index + 2] = (gushort) ((t[1] >> 16) & 0xFFFF);
-          pixels[pixel_index + 3] = (gushort) (t[1] & 0xFFFF);
-
-          if ((long_index + 2) >= data_len)
-            {
-              fseek (fp, 4, SEEK_CUR);
-              break;
-            }
-
-          pixels[pixel_index + 4] = (gushort) ((t[2] >> 16) & 0xFFFF);
-          pixels[pixel_index + 5] = (gushort) (t[2] & 0xFFFF);
+          t = t >> 4;
+          pixels[pixel_index + 1] = (gushort) t & 0xFFF;
+          t = t >> 16;
+          pixels[pixel_index]     = (gushort) t & 0xFFF;
         }
       else
         {
-          pixels[pixel_index + 5] = (gushort) (t[0] & 0xFFFF);
-          pixels[pixel_index + 4] = (gushort) ((t[0] >> 16) & 0xFFFF);
+          t = data[long_index];
 
-          pixels[pixel_index + 3] = (gushort) (t[1] & 0xFFFF);
-          pixels[pixel_index + 2] = (gushort) ((t[1] >> 16) & 0xFFFF);
-
-          if ((long_index + 2) >= data_len)
-            {
-              fseek (fp, 4, SEEK_CUR);
-              break;
-            }
-
-          pixels[pixel_index + 1] = (gushort) (t[2] & 0xFFFF);
-          pixels[pixel_index]     = (gushort) ((t[2] >> 16) & 0xFFFF);
+          t = t >> 4;
+          pixels[pixel_index]     = (gushort) t & 0xFFF;
+          t = t >> 16;
+          pixels[pixel_index + 1] = (gushort) t & 0xFFF;
         }
-      pixel_index += 6;
-      long_index++;
+      pixel_index += 2;
     }
+
+  for (pixel_index = 0; pixel_index < num_pixels; ++pixel_index)
+    pixels[pixel_index] <<= 4;
 
   return TRUE;
 }
@@ -523,13 +508,19 @@ read_16bpc_line (GeglBuffer *buffer,
       guint t;
 
       if (is_network_order)
-        t = g_ntohl (data[long_index]);
+        {
+          t = g_ntohl (data[long_index]);
+
+          pixels[pixel_index]     = (gushort) ((t >> 16) & 0xFFFF);
+          pixels[pixel_index + 1] = (gushort) (t & 0xFFFF);
+        }
       else
-        t = data[long_index];
+        {
+          t = data[long_index];
 
-      pixels[pixel_index]     = (gushort) ((t >> 16) & 0xFFFF);
-      pixels[pixel_index + 1] = (gushort) (t & 0xFFFF);
-
+          pixels[pixel_index + 1] = (gushort) ((t >> 16) & 0xFFFF);
+          pixels[pixel_index]     = (gushort) (t & 0xFFFF);
+        }
       pixel_index += 2;
     }
 
