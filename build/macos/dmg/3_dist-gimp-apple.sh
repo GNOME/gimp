@@ -336,8 +336,10 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   done
 
   printf '(INFO): signing .app\n'
+  mv "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/temp_lib"
   codesign -s "${codesign_subject}" \
     --options runtime --timestamp --entitlements "build/macos/dmg/gimp-hardening.entitlements" "$DMG_MOUNT/$BUNDLE_NAME.app"
+  mv "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/temp_lib" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Frameworks"
 fi
 hdiutil detach "$DMG_MOUNT"
 hdiutil convert -verbose "temp_$ARCH.dmg" -format ULFO -o "$DMG_ARTIFACT"
