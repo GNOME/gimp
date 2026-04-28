@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-14 05:08+0000\n"
-"PO-Revision-Date: 2026-04-14 20:46+0200\n"
+"POT-Creation-Date: 2026-04-26 13:34+0000\n"
+"PO-Revision-Date: 2026-04-28 23:23+0200\n"
 "Last-Translator: Jose Riha <jose1711@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -117,7 +117,9 @@ msgstr "Vytvárajte a upravujte obrázky alebo fotografie"
 #. name when relevant (it's OK if a localization has more keywords).
 #: desktop/gimp.desktop.in.in:13
 msgid "GIMP;graphic;design;illustration;painting;"
-msgstr "GIMP;grafika;grafický;návrh;dizajn;ilustrácia;kresba;kresliaca plocha;maľovanie;maľba;"
+msgstr ""
+"GIMP;grafika;grafický;návrh;dizajn;ilustrácia;kresba;kresliaca "
+"plocha;maľovanie;maľba;"
 
 #: app/about.h:22
 msgid "GIMP"
@@ -1186,8 +1188,8 @@ msgstr[1] "Presunutie kanálov naspodok"
 msgstr[2] "Presunutie kanálov naspodok"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
-#: app/display/gimpdisplayshell-dnd.c:761 app/widgets/gimpchanneltreeview.c:260
-#: app/widgets/gimplayertreeview.c:899
+#: app/display/gimpdisplayshell-dnd.c:764 app/widgets/gimpchanneltreeview.c:260
+#: app/widgets/gimplayertreeview.c:901
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Kópia kanálu %s"
@@ -2626,7 +2628,7 @@ msgstr "240 sekúnd"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:376 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1085 app/tools/gimptexttool.c:1784
+#: app/tools/gimppathtool.c:1093 app/tools/gimptexttool.c:1784
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:556
@@ -2700,8 +2702,8 @@ msgstr "Zadajte popis značky"
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:704 app/display/gimpimagewindow.c:2266
-#: app/widgets/gimplayertreeview.c:857 app/widgets/gimptoolbox.c:849
+#: app/display/gimpdisplayshell-dnd.c:707 app/display/gimpimagewindow.c:2266
+#: app/widgets/gimplayertreeview.c:859 app/widgets/gimptoolbox.c:849
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -4237,7 +4239,7 @@ msgid "Copied pixels to the clipboard."
 msgstr "Pixely boli skopírované do schránky."
 
 # upozornenie
-#: app/actions/edit-commands.c:448 app/actions/edit-commands.c:791
+#: app/actions/edit-commands.c:448 app/actions/edit-commands.c:795
 #: app/tools/gimpseamlessclonetool.c:304
 msgid "There is no image data in the clipboard to paste."
 msgstr "V schránke nie je žiadny obrázok, ktorý by sa dal vložiť."
@@ -4266,37 +4268,37 @@ msgstr "Kopírovať viditeľné do pomenovanej schránky"
 msgid "Clear"
 msgstr "Vymazať"
 
-#: app/actions/edit-commands.c:682
+#: app/actions/edit-commands.c:686
 msgid "A selected layer's alpha channel is locked."
 msgstr "Alfa kanál vybranej vrstvy je uzamknutý."
 
-#: app/actions/edit-commands.c:748
+#: app/actions/edit-commands.c:752
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 "Vložené ako nová vrstva, pretože cieľ nie je jednoduchá vrstva alebo maska "
 "vrstvy."
 
-#: app/actions/edit-commands.c:755
+#: app/actions/edit-commands.c:759
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Vložené ako nová vrstva, pretože cieľ je skupina vrstiev."
 
-#: app/actions/edit-commands.c:762
+#: app/actions/edit-commands.c:766
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Vložené ako nová vrstva, pretože pixely cieľa sú uzamknuté."
 
 # upozornenie
-#: app/actions/edit-commands.c:808
+#: app/actions/edit-commands.c:812
 msgid "There are no selected layers or channels to cut from."
 msgstr "Nie sú vybrané žiadne vrstvy ani kanály na vystrihnutie."
 
-#: app/actions/edit-commands.c:813 app/actions/edit-commands.c:846
-#: app/actions/edit-commands.c:871
+#: app/actions/edit-commands.c:817 app/actions/edit-commands.c:850
+#: app/actions/edit-commands.c:875
 msgid "(Unnamed Buffer)"
 msgstr "(Schránka bez názvu)"
 
 # upozornenie
-#: app/actions/edit-commands.c:841
+#: app/actions/edit-commands.c:845
 msgid "There are no selected layers or channels to copy from."
 msgstr "Nie sú vybrané žiadne vrstvy ani kanály na kopírovanie."
 
@@ -5171,7 +5173,7 @@ msgstr "Projekcia _panorámy..."
 #: app/actions/filters-actions.c:547
 msgctxt "filters-action"
 msgid "_Photocopy..."
-msgstr "_Forokópia..."
+msgstr "_Fotokópia..."
 
 #: app/actions/filters-actions.c:552
 msgctxt "filters-action"
@@ -6463,7 +6465,7 @@ msgid "Rotating"
 msgstr "Otáča sa"
 
 # upozornenie
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1427
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1433
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nedá sa orezať, pretože aktuálny výber je prázdny."
 
@@ -6518,7 +6520,7 @@ msgstr "Zmeniť mierku"
 
 # indikátor priebehu
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2694
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2704
 #: app/dialogs/preferences-dialog.c:1750 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
@@ -6632,7 +6634,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Úpraví názov vrstvy"
 
-#: app/actions/layers-actions.c:79 app/actions/layers-actions.c:1031
+#: app/actions/layers-actions.c:79 app/actions/layers-actions.c:1032
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Nová vrstva..."
@@ -6643,7 +6645,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Vytvorí novú vrstvu a pridá ju do obrázka"
 
-#: app/actions/layers-actions.c:85 app/actions/layers-actions.c:1032
+#: app/actions/layers-actions.c:85 app/actions/layers-actions.c:1033
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Nová vrstva"
@@ -6747,7 +6749,7 @@ msgid "_Anchor Floating Layer or Mask"
 msgstr "_Ukotviť plávajúcu vrstvu alebo masku"
 
 # tooltip
-#: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1311
+#: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1313
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Ukotví plávajúcu vrstvu alebo masku"
@@ -7465,13 +7467,13 @@ msgstr "Skratka: "
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-Kliknite na miniatúru v doku Vrstvy"
 
-#: app/actions/layers-actions.c:1026 app/actions/layers-actions.c:1027
+#: app/actions/layers-actions.c:1027 app/actions/layers-actions.c:1028
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Do _novej vrstvy"
 
 # titulok dialógového okna
-#: app/actions/layers-commands.c:343 app/actions/layers-commands.c:2529
+#: app/actions/layers-commands.c:343 app/actions/layers-commands.c:2539
 msgid "Layer Attributes"
 msgstr "Atribúty vrstvy"
 
@@ -7496,7 +7498,7 @@ msgstr[1] "Vytvoriť %d nové vrstvy"
 msgstr[2] "Vytvoriť %d nových vrstiev"
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:501 app/actions/layers-commands.c:2411
+#: app/actions/layers-commands.c:501 app/actions/layers-commands.c:2421
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Nová vrstva"
@@ -7594,11 +7596,11 @@ msgid "Layers to Image Size"
 msgstr "Prispôsobiť vrstvy veľkosti obrázka"
 
 # titulok dialógového okna
-#: app/actions/layers-commands.c:1393
+#: app/actions/layers-commands.c:1399
 msgid "Scale Layer"
 msgstr "Zmeniť mierku vrstvy"
 
-#: app/actions/layers-commands.c:1432
+#: app/actions/layers-commands.c:1438
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
@@ -7607,7 +7609,7 @@ msgstr[1] "Orezanie %d vrstiev podľa výberu"
 msgstr[2] "Orezanie %d vrstiev podľa výberu"
 
 # upozornenie
-#: app/actions/layers-commands.c:1497
+#: app/actions/layers-commands.c:1507
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7616,7 +7618,7 @@ msgstr ""
 "orezané podľa svojho obsahu."
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:1503
+#: app/actions/layers-commands.c:1513
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
@@ -7624,116 +7626,116 @@ msgstr[0] "Orezanie %d vrstvy podľa obsahu"
 msgstr[1] "Orezanie %d vrstiev podľa obsahu"
 msgstr[2] "Orezanie %d vrstiev podľa obsahu"
 
-#: app/actions/layers-commands.c:1642 app/actions/layers-commands.c:2627
+#: app/actions/layers-commands.c:1652 app/actions/layers-commands.c:2637
 msgid "Add Layer Masks"
 msgstr "Pridať masky vrstiev"
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:1697
+#: app/actions/layers-commands.c:1707
 msgid "Apply Layer Masks"
 msgstr "Použiť masky vrstiev"
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:1701
+#: app/actions/layers-commands.c:1711
 msgid "Delete Layer Masks"
 msgstr "Odstrániť masky vrstiev"
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:1793
+#: app/actions/layers-commands.c:1803
 msgid "Show Layer Masks"
 msgstr "Zobraziť masky vrstiev"
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:1844
+#: app/actions/layers-commands.c:1854
 msgid "Disable Layer Masks"
 msgstr "Zakázať masky vrstiev"
 
-#: app/actions/layers-commands.c:1883
+#: app/actions/layers-commands.c:1893
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Masky na výber"
 
-#: app/actions/layers-commands.c:1887
+#: app/actions/layers-commands.c:1897
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Pridať masky do výberu"
 
 # PM: rozmýšľam či nie pripočítať a odpočítať
-#: app/actions/layers-commands.c:1891
+#: app/actions/layers-commands.c:1901
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Odobrať masky z výberu"
 
-#: app/actions/layers-commands.c:1895
+#: app/actions/layers-commands.c:1905
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Prienik masiek s výberom"
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:1918
+#: app/actions/layers-commands.c:1928
 msgid "Add Alpha Channel"
 msgstr "Pridať alfa kanál"
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:1939
+#: app/actions/layers-commands.c:1949
 msgid "Remove Alpha Channel"
 msgstr "Odstrániť alfa kanál"
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:1967 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1977 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Pridanie alfa kanála do výberu"
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:1971 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1981 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Pridať alfa kanál do výberu"
 
 # tooltip
-#: app/actions/layers-commands.c:1975 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1985 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Odobrať alfa kanál z výberu"
 
 # tooltip
-#: app/actions/layers-commands.c:1979 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1989 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Prienik alfa kanál s výberom"
 
-#: app/actions/layers-commands.c:1992
+#: app/actions/layers-commands.c:2002
 msgid "Empty Selection"
 msgstr "Prázdny výber"
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:2022 app/actions/layers-commands.c:2066
-#: app/widgets/gimplayertreeview.c:1152
+#: app/actions/layers-commands.c:2032 app/actions/layers-commands.c:2076
+#: app/widgets/gimplayertreeview.c:1154
 msgid "Set layers opacity"
 msgstr "Nastaviť krytie vrstiev"
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:2136
+#: app/actions/layers-commands.c:2146
 msgid "Set layers' blend space"
 msgstr "Nastaviť priestor prelínania vrstiev"
 
 # checkbox
-#: app/actions/layers-commands.c:2190
+#: app/actions/layers-commands.c:2200
 msgid "Set layers' composite space"
 msgstr "Nastaviť priestor kompozície vrstiev"
 
 # názov operácie pre Undo
-#: app/actions/layers-commands.c:2244
+#: app/actions/layers-commands.c:2254
 msgid "Set layers' composite mode"
 msgstr "Nastaviť režim kompozície vrstiev"
 
-#: app/actions/layers-commands.c:2329
+#: app/actions/layers-commands.c:2339
 msgid "Lock alpha channels"
 msgstr "Zamknúť alfa kanály"
 
-#: app/actions/layers-commands.c:2329
+#: app/actions/layers-commands.c:2339
 msgid "Unlock alpha channels"
 msgstr "Odomknúť alfa kanály"
 
@@ -20495,26 +20497,26 @@ msgid "_Sample Merged"
 msgstr "_Zlúčené vzorkovanie"
 
 # tooltip
-#: app/display/gimpdisplayshell.c:562
+#: app/display/gimpdisplayshell.c:557
 msgid "Access the image menu"
 msgstr "Otvorí ponuku obrázka"
 
 # tooltip
-#: app/display/gimpdisplayshell.c:725
+#: app/display/gimpdisplayshell.c:720
 msgid "Zoom image when window size changes"
 msgstr "Zmení mierku obrázka pri zmene veľkosti okna"
 
 # tooltip
-#: app/display/gimpdisplayshell.c:754
+#: app/display/gimpdisplayshell.c:749
 msgid "Toggle Quick Mask"
 msgstr "Prepne rýchlu masku"
 
 # tooltip
-#: app/display/gimpdisplayshell.c:769
+#: app/display/gimpdisplayshell.c:764
 msgid "Navigate the image display"
 msgstr "Umožňuje posúvanie po obrázku"
 
-#: app/display/gimpdisplayshell.c:823 app/display/gimpdisplayshell.c:1700
+#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1608
 #: app/widgets/gimptoolbox.c:273
 msgid "Drop image files here to open them"
 msgstr "Presuňte sem súbor s obrázkom, ktorý chcete otvoriť"
@@ -20599,8 +20601,8 @@ msgstr "Obrázok bol exportovaný do „%s“."
 # PM: myslí sa tým pustenie ťahanej vrstvy (drag & drop)
 # názov operácie pre Undo
 #: app/display/gimpdisplayshell-dnd.c:257
-#: app/display/gimpdisplayshell-dnd.c:764
-#: app/display/gimpdisplayshell-dnd.c:823
+#: app/display/gimpdisplayshell-dnd.c:767
+#: app/display/gimpdisplayshell-dnd.c:826
 msgid "Drop New Layer"
 msgstr "Pustenie novej vrstvy"
 
@@ -20626,7 +20628,7 @@ msgstr "Vybraná vrstva nie je viditeľná."
 #. * the same translations you used for the "Rasterize"
 #. * action under the "Layer" menu.
 #.
-#: app/display/gimpdisplayshell-dnd.c:404 app/tools/gimpcroptool.c:531
+#: app/display/gimpdisplayshell-dnd.c:404 app/tools/gimpcroptool.c:523
 #: app/tools/gimptool.c:765
 msgid "Layer > Rasterize"
 msgstr "Vrstva > Rasterizovať"
@@ -20644,7 +20646,7 @@ msgid "Text layers must be rasterized (%s)."
 msgstr "Textové vrstvy musia byť rasterizované (%s)."
 
 # názov operácie pre Undo
-#: app/display/gimpdisplayshell-dnd.c:504
+#: app/display/gimpdisplayshell-dnd.c:507
 #: app/widgets/gimpdrawabletreeview.c:472
 #: app/widgets/gimpdrawabletreeview.c:678
 msgctxt "undo-type"
@@ -20652,7 +20654,7 @@ msgid "Drop pattern to layer"
 msgstr "Pustenie vzoru na vrstvu"
 
 # názov operácie pre Undo
-#: app/display/gimpdisplayshell-dnd.c:526
+#: app/display/gimpdisplayshell-dnd.c:529
 #: app/widgets/gimpdrawabletreeview.c:503
 #: app/widgets/gimpdrawabletreeview.c:698
 msgctxt "undo-type"
@@ -20660,13 +20662,13 @@ msgid "Drop color to layer"
 msgstr "Pustenie farby na vrstvu"
 
 # názov operácie pre Undo
-#: app/display/gimpdisplayshell-dnd.c:654 app/widgets/gimpitemtreeview.c:1592
-#: app/widgets/gimplayertreeview.c:848
+#: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1592
+#: app/widgets/gimplayertreeview.c:850
 msgid "Drop layers"
 msgstr "Pustenie vrstiev"
 
-#: app/display/gimpdisplayshell-dnd.c:797
-#: app/display/gimpdisplayshell-dnd.c:814 app/widgets/gimplayertreeview.c:925
+#: app/display/gimpdisplayshell-dnd.c:800
+#: app/display/gimpdisplayshell-dnd.c:817 app/widgets/gimplayertreeview.c:927
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Pustená schránka"
@@ -21396,7 +21398,7 @@ msgstr "Rozšírenie GIMP"
 #: app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195
 #: app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198
 #: app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201
-#: app/plug-in/gimppluginprocedure.c:1023
+#: app/plug-in/gimppluginprocedure.c:1045
 msgid "RGB"
 msgstr "RGB"
 
@@ -21415,7 +21417,7 @@ msgstr "RGB-alfa"
 #: app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233
 #: app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236
 #: app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239
-#: app/plug-in/gimppluginprocedure.c:1041
+#: app/plug-in/gimppluginprocedure.c:1063
 msgid "Grayscale"
 msgstr "Odtiene šedej"
 
@@ -21464,7 +21466,7 @@ msgstr "Alfa zložka"
 msgid "Indexed-alpha"
 msgstr "Indexovaný-alfa"
 
-#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1059
+#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1081
 msgid "Indexed"
 msgstr "Indexovaný"
 
@@ -23949,35 +23951,35 @@ msgstr "Inicializácia zásuvných modulov"
 msgid "Starting Extensions"
 msgstr "Spúšťajú sa rozšírenia"
 
-#: app/plug-in/gimppluginprocedure.c:1027
+#: app/plug-in/gimppluginprocedure.c:1049
 msgid "RGB without alpha"
 msgstr "RGB bez alfa kanála"
 
-#: app/plug-in/gimppluginprocedure.c:1031
+#: app/plug-in/gimppluginprocedure.c:1053
 msgid "RGB with alpha"
 msgstr "RGB s alfa kanálom"
 
-#: app/plug-in/gimppluginprocedure.c:1045
+#: app/plug-in/gimppluginprocedure.c:1067
 msgid "Grayscale without alpha"
 msgstr "Odtiene šedej bez alfa kanála"
 
-#: app/plug-in/gimppluginprocedure.c:1049
+#: app/plug-in/gimppluginprocedure.c:1071
 msgid "Grayscale with alpha"
 msgstr "Odtiene šedej s alfa kanálom"
 
-#: app/plug-in/gimppluginprocedure.c:1063
+#: app/plug-in/gimppluginprocedure.c:1085
 msgid "Indexed without alpha"
 msgstr "Indexovaný bez alfa kanála"
 
-#: app/plug-in/gimppluginprocedure.c:1067
+#: app/plug-in/gimppluginprocedure.c:1089
 msgid "Indexed with alpha"
 msgstr "Indexovaný s alfa kanálom"
 
-#: app/plug-in/gimppluginprocedure.c:1078
+#: app/plug-in/gimppluginprocedure.c:1100
 msgid "This plug-in only works on the following layer types:"
 msgstr "Tento zásuvný modul funguje len na nasledujúcich typoch vrstiev:"
 
-#: app/plug-in/gimppluginprocedure.c:1443
+#: app/plug-in/gimppluginprocedure.c:1465
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -23986,7 +23988,7 @@ msgstr ""
 "Chyba volania pre „%s“:\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1455
+#: app/plug-in/gimppluginprocedure.c:1477
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -24389,7 +24391,7 @@ msgstr "Vyberte zo zoznamu bežných farebných teplôt"
 # Titulok dialógového okna
 #: app/propgui/gimppropgui-utils.c:148
 msgid "New Seed"
-msgstr "Nové semeno"
+msgstr "Nová báza náhodnosti"
 
 #: app/propgui/gimppropgui-vignette.c:183
 msgid "Vignette: "
@@ -24787,7 +24789,8 @@ msgid ""
 "Consider pixels of selected layer and filled with the fill color as line art "
 "closure"
 msgstr ""
-"Považovať pixely vybranej vrstvy vyplnené farbou výplne za uzavretie kresliacej plochy"
+"Považovať pixely vybranej vrstvy vyplnené farbou výplne za uzavretie "
+"kresliacej plochy"
 
 #: app/tools/gimpbucketfilloptions.c:250
 msgid "Stroke borders"
@@ -24982,7 +24985,7 @@ msgid "Cannot modify multiple layers. Select only one layer."
 msgstr "Nie je možné upravovať viacero vrstiev. Vyberte len jednu vrstvu."
 
 #: app/tools/gimpcagetool.c:250 app/tools/gimptool.c:788
-#: app/tools/gimpwarptool.c:810
+#: app/tools/gimpwarptool.c:808
 msgid "The selected item's pixels are locked."
 msgstr "Pixely vybranej položky sú uzamknuté."
 
@@ -25260,29 +25263,29 @@ msgstr "Nástroj na orezávanie: Odstraňuje okraje obrázkov alebo vrstiev"
 msgid "_Crop"
 msgstr "_Orezanie"
 
-#: app/tools/gimpcroptool.c:165
+#: app/tools/gimpcroptool.c:166
 msgid "Click-Drag to draw a crop rectangle"
 msgstr "Kliknutím a ťahaním nakreslíte obdĺžnik orezania"
 
 # pomocník v stavovom riadku
-#: app/tools/gimpcroptool.c:290
+#: app/tools/gimpcroptool.c:287
 msgid "Click or press Enter to crop"
 msgstr "Kliknutím alebo klávesom Enter orežete"
 
-#: app/tools/gimpcroptool.c:402
+#: app/tools/gimpcroptool.c:394
 msgid "Crop to: "
 msgstr "Orezať na: "
 
-#: app/tools/gimpcroptool.c:473
+#: app/tools/gimpcroptool.c:465
 msgid "There are no selected layers to crop."
 msgstr "Nie sú vybrané žiadne vrstvy na orezanie."
 
-#: app/tools/gimpcroptool.c:484
+#: app/tools/gimpcroptool.c:476
 msgid "All selected layers' pixels are locked."
 msgstr "Pixely všetkých vybraných vrstiev sú uzamknuté."
 
 # názov operácie pre Undo
-#: app/tools/gimpcroptool.c:489
+#: app/tools/gimpcroptool.c:481
 #, c-format
 msgid "Resize Layer"
 msgid_plural "Resize %d layers"
@@ -25578,7 +25581,7 @@ msgstr "Upraviť filter"
 #. The blending-options expander
 #: app/tools/gimpfiltertool.c:1464
 msgid "Blending Options"
-msgstr "Voľby zmiešania"
+msgstr "Voľby prelínania"
 
 #: app/tools/gimpfiltertool.c:1975 app/tools/gimpfiltertool-settings.c:71
 #, c-format
@@ -25915,11 +25918,11 @@ msgid "Cannot paint on multiple drawables. Select only one."
 msgstr "Nie je možné kresliť na viacero kresieb. Vyberte len jednu."
 
 #: app/tools/gimpgradienttool.c:262 app/tools/gimppaintselecttool.c:412
-#: app/tools/gimpwarptool.c:783
+#: app/tools/gimpwarptool.c:781
 msgid "No active drawables."
 msgstr "Žiadne aktívne kresliace plochy."
 
-#: app/tools/gimpgradienttool.c:293 app/tools/gimpwarptool.c:824
+#: app/tools/gimpgradienttool.c:293 app/tools/gimpwarptool.c:822
 msgid "The selected item is not visible."
 msgstr "Vybraná položka nie je viditeľná."
 
@@ -26730,7 +26733,7 @@ msgid "Selection from Path"
 msgstr "Vytvoriť výber z cesty"
 
 #: app/tools/gimppathoptions.c:577 app/tools/gimppathtool.c:746
-#: app/tools/gimppathtool.c:1054
+#: app/tools/gimppathtool.c:1062
 msgid "Create New Vector Layer"
 msgstr "Vytvoriť novú vektorovú vrstvu"
 
@@ -26746,19 +26749,19 @@ msgstr "_Cesty"
 msgid "Create Vector Layer from Path"
 msgstr "Vytvoriť vektorovú vrstvu z cesty"
 
-#: app/tools/gimppathtool.c:1077 app/tools/gimppathtool.c:1080
+#: app/tools/gimppathtool.c:1085 app/tools/gimppathtool.c:1088
 msgid "Confirm Path Editing"
 msgstr "Potvrdiť úpravu cesty"
 
-#: app/tools/gimppathtool.c:1084 app/tools/gimptexttool.c:1783
+#: app/tools/gimppathtool.c:1092 app/tools/gimptexttool.c:1783
 msgid "Create _New Layer"
 msgstr "Vytvoriť _novú vrstvu"
 
-#: app/tools/gimppathtool.c:1086 app/tools/gimptexttool.c:1785
+#: app/tools/gimppathtool.c:1094 app/tools/gimptexttool.c:1785
 msgid "_Edit Anyway"
 msgstr "_Upraviť napriek tomu"
 
-#: app/tools/gimppathtool.c:1108
+#: app/tools/gimppathtool.c:1116
 msgid ""
 "The vector layer you picked was rasterized. Editing its path will discard "
 "any modifications."
@@ -27915,49 +27918,49 @@ msgstr "Transformácia ohnutím: deformácia rôznymi nástrojmi"
 msgid "_Warp Transform"
 msgstr "_Transformácia ohnutím"
 
-#: app/tools/gimpwarptool.c:606 app/tools/gimpwarptool.c:618
+#: app/tools/gimpwarptool.c:604 app/tools/gimpwarptool.c:616
 msgid "Warp Tool Stroke"
 msgstr "Ťah nástroja ohnutia"
 
-#: app/tools/gimpwarptool.c:780
+#: app/tools/gimpwarptool.c:778
 msgid "Cannot warp multiple layers. Select only one layer."
 msgstr "Nie je možné ohýbať viacero vrstiev. Vyberte len jednu vrstvu."
 
-#: app/tools/gimpwarptool.c:799
+#: app/tools/gimpwarptool.c:797
 msgid "Cannot warp layer groups."
 msgstr "Nie je možné ohýbať skupiny vrstiev."
 
-#: app/tools/gimpwarptool.c:836
+#: app/tools/gimpwarptool.c:834
 msgid "No stroke events selected."
 msgstr "Nie sú vybrané žiadne udalosti ťahov."
 
-#: app/tools/gimpwarptool.c:859
+#: app/tools/gimpwarptool.c:857
 msgid "No warp to erase."
 msgstr "Žiadne ohnutia na vymazanie."
 
-#: app/tools/gimpwarptool.c:863
+#: app/tools/gimpwarptool.c:861
 msgid "No warp to smooth."
 msgstr "Žiadne ohnutia na vyhladenie."
 
-#: app/tools/gimpwarptool.c:1091
+#: app/tools/gimpwarptool.c:1089
 msgid "Warp transform"
 msgstr "Transformácia ohnutím"
 
-#: app/tools/gimpwarptool.c:1447
+#: app/tools/gimpwarptool.c:1445
 msgid "Please add some warp strokes first."
 msgstr "Najprv prosím pridajte niekoľko ťahov ohnutia."
 
-#: app/tools/gimpwarptool.c:1461 app/tools/gimpwarptool.c:1498
+#: app/tools/gimpwarptool.c:1459 app/tools/gimpwarptool.c:1496
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Vykresľuje sa snímka %d"
 
-#: app/tools/gimpwarptool.c:1476 app/tools/gimpwarptool.c:1506
+#: app/tools/gimpwarptool.c:1474 app/tools/gimpwarptool.c:1504
 #, c-format
 msgid "Frame %d"
 msgstr "Snímka %d"
 
-#: app/tools/gimpwarptool.c:1515
+#: app/tools/gimpwarptool.c:1513
 msgid "Frame"
 msgstr "Orámovanie"
 
@@ -29522,7 +29525,7 @@ msgid "Cannot select items while a floating selection is active."
 msgstr "Nie je možné vyberať položky, kým je aktívny plávajúci výber."
 
 # titulok dialógového okna (okrem iného)
-#: app/widgets/gimpdrawabletreeview.c:651 app/widgets/gimplayertreeview.c:976
+#: app/widgets/gimpdrawabletreeview.c:651 app/widgets/gimplayertreeview.c:978
 msgctxt "singular"
 msgid "New Layer"
 msgstr "Nová vrstva"
@@ -30094,25 +30097,25 @@ msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Nastaviť exkluzívny zámok alfa kanála položky"
 
 # názov operácie pre Undo
-#: app/widgets/gimplayertreeview.c:1095
+#: app/widgets/gimplayertreeview.c:1097
 msgid "Set layers mode"
 msgstr "Nastavenie režimu vrstiev"
 
 # tooltip
-#: app/widgets/gimplayertreeview.c:1303
+#: app/widgets/gimplayertreeview.c:1305
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Ukotviť plávajúcu masku"
 
 # tooltip
-#: app/widgets/gimplayertreeview.c:1306
+#: app/widgets/gimplayertreeview.c:1308
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Ukotví plávajúcu vrstvu"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1579
+#: app/widgets/gimplayertreeview.c:1581
 msgid "No channels to create a layer mask from."
 msgstr "Nie sú žiadne kanály na vytvorenie masky vrstvy."
 
