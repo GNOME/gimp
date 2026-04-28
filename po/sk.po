@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-04-26 12:51+0000\n"
-"PO-Revision-Date: 2026-04-28 23:17+0200\n"
+"PO-Revision-Date: 2026-04-28 23:38+0200\n"
 "Last-Translator: Jose Riha <jose1711@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -9990,7 +9990,7 @@ msgstr "Obnoví preklopenie na nepreklopené"
 #: app/actions/view-actions.c:126
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
-msgstr "O-Bnoviť preklopenie a otočenie"
+msgstr "_Obnoviť preklopenie a otočenie"
 
 #: app/actions/view-actions.c:128
 msgctxt "view-action"
@@ -10195,12 +10195,12 @@ msgstr "Pri_tiahnuť k vodidlám"
 #: app/actions/view-actions.c:254
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
-msgstr "Pritiahne nástroj k vodiacej čiare"
+msgstr "Pritiahne nástroj k vodidlám"
 
 #: app/actions/view-actions.c:260
 msgctxt "view-action"
 msgid "Sna_p to Grid"
-msgstr "_Pritiahnuť k mriežke"
+msgstr "_Prichytávať k mriežke"
 
 #: app/actions/view-actions.c:261
 msgctxt "view-action"
@@ -10210,7 +10210,7 @@ msgstr "Pritiahne nástroj k mriežke"
 #: app/actions/view-actions.c:267
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
-msgstr "Pritiahnuť k okrajom _plátna"
+msgstr "Prichytávať k okrajom _plátna"
 
 # tooltip
 #: app/actions/view-actions.c:268
@@ -10221,7 +10221,7 @@ msgstr "Pritiahne nástroj k okrajom plátna"
 #: app/actions/view-actions.c:274
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
-msgstr "Pritiahnuť k aktívnej _ceste"
+msgstr "Prichytávať k aktívnej _ceste"
 
 # tooltip
 #: app/actions/view-actions.c:275
@@ -15255,7 +15255,7 @@ msgstr "Výber viacerých vrstiev bol pridaný do %s"
 #: app/core/gimpimage.c:3160
 #, c-format
 msgid "Off-canvas guides added in %s"
-msgstr "Vodítka mimo plátna boli pridané do %s"
+msgstr "Vodidlá mimo plátna boli pridané do %s"
 
 #: app/core/gimpimage.c:3171
 #, c-format
@@ -20290,7 +20290,7 @@ msgstr "Zvisle"
 #: app/display/display-enums.c:156
 msgctxt "guides-type"
 msgid "No guides"
-msgstr "Bez pomocných čiar"
+msgstr "Bez vodidiel"
 
 #: app/display/display-enums.c:157
 msgctxt "guides-type"
@@ -23435,7 +23435,7 @@ msgstr "Obrázok „%s“ (%d) nesmie mať presnosť „%s“"
 #: app/pdb/gimppdb-utils.c:722 app/pdb/image-guides-cmds.c:177
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
-msgstr "Obrázok „%s“ (%d) neobsahuje vodítko s ID %d"
+msgstr "Obrázok „%s“ (%d) neobsahuje vodidlo s ID %d"
 
 #: app/pdb/gimppdb-utils.c:745 app/pdb/image-sample-points-cmds.c:146
 #, c-format
@@ -24375,7 +24375,7 @@ msgstr "Vyberte zo zoznamu bežných farebných teplôt"
 # Titulok dialógového okna
 #: app/propgui/gimppropgui-utils.c:148
 msgid "New Seed"
-msgstr "Nové semeno"
+msgstr "Nová báza náhodnosti"
 
 #: app/propgui/gimppropgui-vignette.c:183
 msgid "Vignette: "
@@ -24562,7 +24562,7 @@ msgstr "Nastaviť kotviaci bod cieľov"
 #: app/tools/gimpalignoptions.c:428
 #, c-format
 msgid "%s-pick target guides (%s-%s to add more)"
-msgstr "%s – výber cieľových vodídiel (%s-%s na pridanie ďalších)"
+msgstr "%s – výber cieľových vodidiel (%s-%s na pridanie ďalších)"
 
 #. Align frame
 #: app/tools/gimpalignoptions.c:445
@@ -24622,9 +24622,9 @@ msgstr "Rozmiestniť zvisle s rovnakými zvislými medzerami"
 #, c-format
 msgid "1 guide will be aligned or distributed"
 msgid_plural "%d guides will be aligned or distributed"
-msgstr[0] "Jedno vodítko bude zarovnané alebo rozmiestnené"
-msgstr[1] "%d vodítka budú zarovnané alebo rozmiestnené"
-msgstr[2] "%d vodítok bude zarovnaných alebo rozmiestnených"
+msgstr[0] "Jedno vodidlo bude zarovnané alebo rozmiestnené"
+msgstr[1] "%d vodidlá budú zarovnané alebo rozmiestnené"
+msgstr[2] "%d vodidiel bude zarovnaných alebo rozmiestnených"
 
 # názov operácie pre Undo
 #: app/tools/gimpalignoptions.c:822
@@ -24645,7 +24645,7 @@ msgstr "Referenčná cesta: %s"
 
 #: app/tools/gimpalignoptions.c:831
 msgid "Reference guide"
-msgstr "Referenčné vodítko"
+msgstr "Referenčné vodidlo"
 
 #: app/tools/gimpaligntool.c:132
 msgid "Align and Distribute"
@@ -24688,7 +24688,7 @@ msgid ""
 "unselect all guides"
 msgstr ""
 "Kliknite na vodidlo na jeho pridanie k objektom na zarovnanie, kliknite mimo "
-"na zrušenie výberu všetkých vodídiel"
+"na zrušenie výberu všetkých vodidiel"
 
 #: app/tools/gimpaligntool.c:584
 msgid "Click to select this guide for alignment"
