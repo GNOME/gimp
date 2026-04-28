@@ -330,12 +330,12 @@ load_image (GFile                *file,
       if (paa_type <= RGBA_8888)
         {
           guchar *uncompressed_data;
-          gint    estimated_size;
-          guint   dims = (guint32) width * height;
+          gsize   estimated_size;
           guchar *pixels;
 
-          pixels = g_try_malloc0 (dims * 4);
-          if (pixels == NULL)
+          if (! g_size_checked_mul (&estimated_size, (guint32) width, height) ||
+              ! g_size_checked_mul (&estimated_size, estimated_size, 4)       ||
+              (pixels = g_try_malloc0 (estimated_size)) == NULL)
             {
               g_set_error (error, G_FILE_ERROR, 0,
                            _("Memory could not be allocated."));
@@ -344,9 +344,7 @@ load_image (GFile                *file,
             }
 
           if (paa_type != RGBA_8888)
-            estimated_size = dims * 2;
-          else
-            estimated_size = dims * 4;
+            estimated_size /= 2;
 
           uncompressed_data = g_try_malloc0 (estimated_size);
           if (uncompressed_data == NULL)
