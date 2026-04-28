@@ -650,7 +650,7 @@ gimp-win:
         ORKA_RUNNER: sequoia-7
   parallel:
     matrix:
-      - ARCH: [arm64]
+      - ARCH: [arm64, x86_64]
   tags:
     - macos
     - marathon
