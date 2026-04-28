@@ -22,6 +22,7 @@ common_plugins_list = [
   },
   { 'name': 'file-csource', },
   { 'name': 'file-dicom', },
+  { 'name': 'file-drhalo', },
   { 'name': 'file-farbfeld', },
   { 'name': 'file-gbr', },
   { 'name': 'file-gegl', },
