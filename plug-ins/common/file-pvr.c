@@ -833,9 +833,11 @@ pvr_decode_compressed (GimpLayer  *layer,
   gint        twiddle[MAX_TWIDDLE_SIZE];
   GeglBuffer *buffer;
   guchar     *pixels;
+  gsize       pixel_size;
 
-  pixels = g_try_malloc0 (width * height * n_components);
-  if (pixels == NULL)
+  if (! g_size_checked_mul (&pixel_size, (guint32) width, height)  ||
+      ! g_size_checked_mul (&pixel_size, pixel_size, n_components) ||
+      (pixels = g_try_malloc0 (pixel_size)) == NULL)
     return FALSE;
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
