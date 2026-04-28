@@ -168,11 +168,11 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 if ($env:VCPKG_ROOT)
   {
     self_build https://gitlab.gnome.org/GNOME/babl @('-Denable-gir=false', "$WARN_AS_ERROR_ON_CI")
-    self_build https://gitlab.gnome.org/GNOME/gegl @('-Dintrospection=false')
+    self_build https://gitlab.gnome.org/GNOME/gegl "bruno/test-ctx-fix" @('-Dintrospection=false')
     exit 0
   }
 self_build https://gitlab.gnome.org/GNOME/babl
-self_build https://gitlab.gnome.org/GNOME/gegl @('-Ddocs=false')
+self_build https://gitlab.gnome.org/GNOME/gegl "bruno/test-ctx-fix" @('-Ddocs=false')
 self_build https://github.com/Exiv2/exiv2 "v0.28.8" @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DCMAKE_DLL_NAME_WITH_SOVERSION=ON', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF', '-DEXIV2_ENABLE_VIDEO=OFF')
 
 Set-Location $GIMP_DIR
