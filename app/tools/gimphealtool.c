@@ -52,7 +52,7 @@ gimp_heal_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_CONTEXT_PROP_MASK_PATTERN  |
                 GIMP_CONTEXT_PROP_MASK_EXPAND,
                 "gimp-heal-tool",
-                _("Healing"),
+                _("Heal"),
                 _("Healing Tool: Heal image irregularities"),
                 N_("_Heal"),
                 "H",
