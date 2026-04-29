@@ -412,7 +412,7 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
 
     case GTK_POLICY_NEVER:
     case GTK_POLICY_EXTERNAL:
-      gtk_widget_hide (priv->hscr);
+      gtk_widget_set_visible (priv->hscr, FALSE);
       break;
     }
 
@@ -430,7 +430,7 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
 
     case GTK_POLICY_NEVER:
     case GTK_POLICY_EXTERNAL:
-      gtk_widget_hide (priv->vscr);
+      gtk_widget_set_visible (priv->vscr, FALSE);
       break;
     }
 

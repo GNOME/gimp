@@ -525,7 +525,7 @@ gimp_color_button_state_flags_changed (GtkWidget     *widget,
   GimpColorButtonPrivate *priv = GET_PRIVATE (widget);
 
   if (! gtk_widget_is_sensitive (widget) && priv->dialog)
-    gtk_widget_hide (priv->dialog);
+    gtk_widget_set_visible (priv->dialog, FALSE);
 
   if (GTK_WIDGET_CLASS (parent_class)->state_flags_changed)
     GTK_WIDGET_CLASS (parent_class)->state_flags_changed (widget,
@@ -921,7 +921,7 @@ gimp_color_button_dialog_response (GtkWidget       *dialog,
           gimp_color_button_set_color (button, color);
         }
 
-      gtk_widget_hide (dialog);
+      gtk_widget_set_visible (dialog, FALSE);
       break;
 
     default:
@@ -931,7 +931,7 @@ gimp_color_button_dialog_response (GtkWidget       *dialog,
           gimp_color_button_set_color (button, color);
         }
 
-      gtk_widget_hide (dialog);
+      gtk_widget_set_visible (dialog, FALSE);
       break;
     }
 

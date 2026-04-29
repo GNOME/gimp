@@ -550,5 +550,5 @@ gimp_color_profile_combo_dialog_response (GimpColorProfileChooserDialog *dialog,
         }
     }
 
-  gtk_widget_hide (GTK_WIDGET (dialog));
+  gtk_widget_set_visible (GTK_WIDGET (dialog), FALSE);
 }

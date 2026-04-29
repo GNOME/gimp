@@ -825,7 +825,7 @@ gimp_color_select_simulation (GimpColorSelector *selector,
 
       gtk_label_set_markup (GTK_LABEL (select->simulation_label), _("Soft-Proof Profile: <i>unknown</i>"));
       gimp_help_set_help_data (select->simulation_label, NULL, NULL);
-      gtk_widget_hide (select->simulation_label);
+      gtk_widget_set_visible (select->simulation_label, FALSE);
     }
 }
 
