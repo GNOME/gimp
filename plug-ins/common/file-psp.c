@@ -1996,8 +1996,8 @@ read_layer_block (FILE      *f,
 
             case keGLTAdjustment:
               is_adjustment_layer = TRUE;
-              bitmap_count = 0;
-              channel_count = 0;
+              bitmap_count        = 0;
+              channel_count       = 0;
               break;
 
             default:
@@ -2133,7 +2133,7 @@ read_layer_block (FILE      *f,
                                   100.0 * opacity / 255.0,
                                   layer_mode);
         }
-      else if (is_adjustment_layer)
+      else /* Adjustment Layers, Group Layers, etc */
         {
           layer = GIMP_LAYER (gimp_group_layer_new (image, layer_name));
           gimp_layer_set_opacity (layer, (100.0 * opacity) / 255.0);
