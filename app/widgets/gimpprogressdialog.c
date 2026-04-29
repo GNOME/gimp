@@ -81,7 +81,7 @@ gimp_progress_dialog_init (GimpProgressDialog *dialog)
   dialog->box = gimp_progress_box_new ();
   gtk_container_set_border_width (GTK_CONTAINER (dialog->box), 12);
   gtk_box_pack_start (GTK_BOX (content_area), dialog->box, TRUE, TRUE, 0);
-  gtk_widget_show (dialog->box);
+  gtk_widget_set_visible (dialog->box, TRUE);
 
   g_signal_connect (dialog->box, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),

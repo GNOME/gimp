@@ -209,7 +209,7 @@ gimp_container_icon_view_constructed (GObject *object)
 
   gtk_container_add (GTK_CONTAINER (box->scrolled_win),
                      GTK_WIDGET (icon_view->view));
-  gtk_widget_show (GTK_WIDGET (icon_view->view));
+  gtk_widget_set_visible (GTK_WIDGET (icon_view->view), TRUE);
 
   gimp_container_view_set_dnd_widget (view, GTK_WIDGET (icon_view->view));
 

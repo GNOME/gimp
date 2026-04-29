@@ -176,7 +176,7 @@ tool_options_delete_preset_cmd_callback (GimpAction *action,
 
       dialog = data_delete_dialog_new (factory, GIMP_DATA (preset), NULL,
                                        GTK_WIDGET (editor));
-      gtk_widget_show (dialog);
+      gtk_widget_set_visible (dialog, TRUE);
     }
 }
 

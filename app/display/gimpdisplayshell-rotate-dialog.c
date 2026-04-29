@@ -147,11 +147,11 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (shell->rotate_dialog))),
                       hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new (_("Angle:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   data->rotate_adj = gtk_adjustment_new (shell->rotate_angle,
                                          0.0, 360.0, 1, 15, 0);
@@ -160,11 +160,11 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spin), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spin), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
-  gtk_widget_show (spin);
+  gtk_widget_set_visible (spin, TRUE);
 
   label = gtk_label_new (_("degrees"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   dial = gimp_dial_new ();
   g_object_set (dial,
@@ -173,7 +173,7 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
                 "draw-beta",  FALSE,
                 NULL);
   gtk_box_pack_start (GTK_BOX (hbox), dial, FALSE, FALSE, 0);
-  gtk_widget_show (dial);
+  gtk_widget_set_visible (dial, TRUE);
 
   g_object_bind_property_full (data->rotate_adj, "value",
                                dial,             "alpha",
@@ -190,7 +190,7 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
                     G_CALLBACK (display_shell_rotated),
                     data);
 
-  gtk_widget_show (shell->rotate_dialog);
+  gtk_widget_set_visible (shell->rotate_dialog, TRUE);
 }
 
 static void

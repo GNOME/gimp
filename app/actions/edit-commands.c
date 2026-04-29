@@ -469,7 +469,7 @@ edit_named_cut_cmd_callback (GimpAction *action,
                                   G_OBJECT (image), "disconnect",
                                   cut_named_buffer_callback,
                                   image, NULL);
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 void
@@ -491,7 +491,7 @@ edit_named_copy_cmd_callback (GimpAction *action,
                                   G_OBJECT (image), "disconnect",
                                   copy_named_buffer_callback,
                                   image, NULL);
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 void
@@ -513,7 +513,7 @@ edit_named_copy_visible_cmd_callback (GimpAction *action,
                                   G_OBJECT (image), "disconnect",
                                   copy_named_visible_buffer_callback,
                                   image, NULL);
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 void

@@ -126,7 +126,7 @@ grid_dialog_new (GimpImage   *image,
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       editor, TRUE, TRUE, 0);
 
-  gtk_widget_show (editor);
+  gtk_widget_set_visible (editor, TRUE);
 
   return dialog;
 }

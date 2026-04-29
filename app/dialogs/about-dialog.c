@@ -329,7 +329,7 @@ about_dialog_add_animation (GtkWidget       *vbox,
   dialog->anim_area = gtk_drawing_area_new ();
   gtk_box_pack_start (GTK_BOX (vbox), dialog->anim_area, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (vbox), dialog->anim_area, 5);
-  gtk_widget_show (dialog->anim_area);
+  gtk_widget_set_visible (dialog->anim_area, TRUE);
 
   dialog->layout = gtk_widget_create_pango_layout (dialog->anim_area, NULL);
   g_object_weak_ref (G_OBJECT (dialog->anim_area),
@@ -386,20 +386,20 @@ about_dialog_add_update (GimpAboutDialog *dialog,
   /* Button in the frame. */
   button = gtk_button_new ();
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_container_add (GTK_CONTAINER (button), box2);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   button_image = gtk_image_new_from_icon_name (NULL, GTK_ICON_SIZE_DIALOG);
   gtk_box_pack_start (GTK_BOX (box2), button_image, FALSE, FALSE, 0);
-  gtk_widget_show (button_image);
+  gtk_widget_set_visible (button_image, TRUE);
 
   button_label = gtk_label_new (NULL);
   gtk_box_pack_start (GTK_BOX (box2), button_label, FALSE, FALSE, 0);
   gtk_container_child_set (GTK_CONTAINER (box2), button_label, "expand", TRUE, NULL);
-  gtk_widget_show (button_label);
+  gtk_widget_set_visible (button_label, TRUE);
 
   if (config->last_known_release != NULL)
     {
@@ -413,7 +413,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
                               _("Update available!"));
       gtk_label_set_markup (GTK_LABEL (label), text);
       g_free (text);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
       gtk_frame_set_label_widget (GTK_FRAME (frame), label);
       gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
@@ -471,7 +471,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
           g_free (comment);
 
           gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
         }
     }
   else
@@ -495,7 +495,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
   if (config->last_known_release != NULL)
     gtk_widget_set_margin_top (box2, 20);
   gtk_container_add (GTK_CONTAINER (box), box2);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   /* Show a small "Check for updates" button only if the big one has
    * been replaced by a download button.
@@ -507,7 +507,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       gtk_box_pack_start (GTK_BOX (box2), button, FALSE, FALSE, 0);
       g_signal_connect_swapped (button, "clicked",
                                 (GCallback) gimp_update_check, config);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
     }
 
   if (config->check_update_timestamp > 0)
@@ -618,13 +618,13 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
       gtk_box_pack_start (GTK_BOX (box2), label, FALSE, FALSE, 0);
       gtk_container_child_set (GTK_CONTAINER (box2), label, "expand", TRUE, NULL);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
       g_free (text);
       g_free (subtext);
     }
 
-  gtk_widget_show (box);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (box, TRUE);
+  gtk_widget_set_visible (frame, TRUE);
 
   g_set_weak_pointer (&dialog->update_frame, frame);
 
@@ -921,7 +921,7 @@ about_dialog_add_unstable_message (GtkWidget *vbox)
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (vbox), label, 2);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 }
 
 #endif /* ! GIMP_RELEASE */

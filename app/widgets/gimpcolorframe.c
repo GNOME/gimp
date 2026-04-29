@@ -180,7 +180,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
   g_object_unref (store);
 
   gtk_frame_set_label_widget (GTK_FRAME (frame), frame->combo);
-  gtk_widget_show (frame->combo);
+  gtk_widget_set_visible (frame->combo, TRUE);
 
   g_signal_connect (frame->combo, "changed",
                     G_CALLBACK (gimp_color_frame_combo_callback),
@@ -188,7 +188,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame->color_area =
     g_object_new (GIMP_TYPE_COLOR_AREA,
@@ -203,7 +203,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_set_homogeneous (GTK_BOX (vbox2), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   for (i = 0; i < GIMP_COLOR_FRAME_ROWS; i++)
     {
@@ -211,13 +211,13 @@ gimp_color_frame_init (GimpColorFrame *frame)
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       frame->name_labels[i] = gtk_label_new (" ");
       gtk_label_set_xalign (GTK_LABEL (frame->name_labels[i]), 0.0);
       gtk_box_pack_start (GTK_BOX (hbox), frame->name_labels[i],
                           FALSE, FALSE, 0);
-      gtk_widget_show (frame->name_labels[i]);
+      gtk_widget_set_visible (frame->name_labels[i], TRUE);
 
       frame->value_labels[i] = gtk_label_new (" ");
       gtk_label_set_selectable (GTK_LABEL (frame->value_labels[i]), TRUE);
@@ -226,7 +226,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
                                PANGO_ELLIPSIZE_END);
       gtk_box_pack_end (GTK_BOX (hbox), frame->value_labels[i],
                         TRUE, TRUE, 0);
-      gtk_widget_show (frame->value_labels[i]);
+      gtk_widget_set_visible (frame->value_labels[i], TRUE);
     }
 
   frame->coords_box_x = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -235,13 +235,13 @@ gimp_color_frame_init (GimpColorFrame *frame)
   /* TRANSLATORS: X for the X coordinate. */
   label = gtk_label_new (C_("Coordinates", "X:"));
   gtk_box_pack_start (GTK_BOX (frame->coords_box_x), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   frame->coords_label_x = gtk_label_new (" ");
   gtk_label_set_selectable (GTK_LABEL (frame->coords_label_x), TRUE);
   gtk_box_pack_end (GTK_BOX (frame->coords_box_x), frame->coords_label_x,
                     FALSE, FALSE, 0);
-  gtk_widget_show (frame->coords_label_x);
+  gtk_widget_set_visible (frame->coords_label_x, TRUE);
 
   frame->coords_box_y = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), frame->coords_box_y, FALSE, FALSE, 0);
@@ -249,13 +249,13 @@ gimp_color_frame_init (GimpColorFrame *frame)
   /* TRANSLATORS: Y for the Y coordinate. */
   label = gtk_label_new (C_("Coordinates", "Y:"));
   gtk_box_pack_start (GTK_BOX (frame->coords_box_y), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   frame->coords_label_y = gtk_label_new (" ");
   gtk_label_set_selectable (GTK_LABEL (frame->coords_label_y), TRUE);
   gtk_box_pack_end (GTK_BOX (frame->coords_box_y), frame->coords_label_y,
                     FALSE, FALSE, 0);
-  gtk_widget_show (frame->coords_label_y);
+  gtk_widget_set_visible (frame->coords_label_y, TRUE);
 }
 
 static void

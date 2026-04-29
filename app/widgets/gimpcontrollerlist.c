@@ -161,17 +161,17 @@ gimp_controller_list_init (GimpControllerList *list)
 
   list->hbox = hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (list), hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
   gtk_box_pack_start (GTK_BOX (list->hbox), vbox, TRUE, TRUE, 0);
 
   label = gtk_label_new (_("Available Controllers"));
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
   sw = gtk_scrolled_window_new (NULL, NULL);
@@ -181,14 +181,14 @@ gimp_controller_list_init (GimpControllerList *list)
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (vbox), sw, TRUE, TRUE, 0);
-  gtk_widget_show (sw);
+  gtk_widget_set_visible (sw, TRUE);
 
   list->available_controllers = gtk_list_box_new ();
   gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (list->available_controllers),
                                              FALSE);
   gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (list->available_controllers)),
                                "view");
-  gtk_widget_show (list->available_controllers);
+  gtk_widget_set_visible (list->available_controllers, TRUE);
   gtk_container_add (GTK_CONTAINER (sw), list->available_controllers);
 
   g_signal_connect_object (list->available_controllers, "row-activated",
@@ -201,17 +201,17 @@ gimp_controller_list_init (GimpControllerList *list)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_set_homogeneous (GTK_BOX (vbox), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   g_set_weak_pointer (&list->add_button, gtk_button_new ());
   gtk_box_pack_start (GTK_BOX (vbox), list->add_button, TRUE, FALSE, 0);
   gtk_widget_set_sensitive (list->add_button, FALSE);
-  gtk_widget_show (list->add_button);
+  gtk_widget_set_visible (list->add_button, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->add_button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (list->add_button, "clicked",
                     G_CALLBACK (gimp_controller_list_add_clicked),
@@ -220,26 +220,26 @@ gimp_controller_list_init (GimpControllerList *list)
   g_set_weak_pointer (&list->remove_button, gtk_button_new ());
   gtk_box_pack_start (GTK_BOX (vbox), list->remove_button, TRUE, FALSE, 0);
   gtk_widget_set_sensitive (list->remove_button, FALSE);
-  gtk_widget_show (list->remove_button);
+  gtk_widget_set_visible (list->remove_button, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->remove_button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (list->remove_button, "clicked",
                     G_CALLBACK (gimp_controller_list_remove_clicked),
                     list);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
   gtk_box_pack_start (GTK_BOX (list->hbox), vbox, TRUE, TRUE, 0);
 
   label = gtk_label_new (_("Active Controllers"));
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
   list->active_controllers = gtk_list_box_new ();
@@ -248,7 +248,7 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (list->active_controllers)),
                                "view");
   gtk_box_pack_start (GTK_BOX (vbox), list->active_controllers, TRUE, TRUE, 0);
-  gtk_widget_show (list->active_controllers);
+  gtk_widget_set_visible (list->active_controllers, TRUE);
 
   g_signal_connect_object (list->active_controllers, "row-selected",
                            G_CALLBACK (gimp_controller_list_row_selected),
@@ -258,14 +258,14 @@ gimp_controller_list_init (GimpControllerList *list)
                            G_OBJECT (list), 0);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   list->edit_button = gtk_button_new_from_icon_name (GIMP_ICON_DOCUMENT_PROPERTIES,
                                                      GTK_ICON_SIZE_BUTTON);
   gimp_help_set_help_data (list->edit_button,
                            _("Configure the selected controller"), NULL);
-  gtk_widget_show (list->edit_button);
+  gtk_widget_set_visible (list->edit_button, TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), list->edit_button, TRUE, TRUE, 0);
   g_signal_connect_object (list->edit_button, "clicked",
                            G_CALLBACK (gimp_controller_list_edit_clicked),
@@ -275,7 +275,7 @@ gimp_controller_list_init (GimpControllerList *list)
                                                    GTK_ICON_SIZE_BUTTON);
   gimp_help_set_help_data (list->up_button,
                            _("Move the selected controller up"), NULL);
-  gtk_widget_show (list->up_button);
+  gtk_widget_set_visible (list->up_button, TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), list->up_button, TRUE, TRUE, 0);
   g_signal_connect_object (list->up_button, "clicked",
                            G_CALLBACK (gimp_controller_list_up_clicked),
@@ -285,7 +285,7 @@ gimp_controller_list_init (GimpControllerList *list)
                                                      GTK_ICON_SIZE_BUTTON);
   gimp_help_set_help_data (list->down_button,
                            _("Move the selected controller down"), NULL);
-  gtk_widget_show (list->down_button);
+  gtk_widget_set_visible (list->down_button, TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), list->down_button, TRUE, TRUE, 0);
   g_signal_connect_object (list->down_button, "clicked",
                            G_CALLBACK (gimp_controller_list_down_clicked),
@@ -668,7 +668,7 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       editor, TRUE, TRUE, 0);
-  gtk_widget_show (editor);
+  gtk_widget_set_visible (editor, TRUE);
 
   g_object_set_data (G_OBJECT (info), "gimp-controller-editor-dialog",
                      dialog);
@@ -686,7 +686,7 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
                            G_OBJECT (dialog),
                            G_CONNECT_SWAPPED);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 static void

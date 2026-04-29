@@ -107,7 +107,7 @@ gimp_error_console_init (GimpErrorConsole *console)
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (console), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   console->text_view = gtk_text_view_new_with_buffer (console->text_buffer);
   g_object_unref (console->text_buffer);
@@ -116,7 +116,7 @@ gimp_error_console_init (GimpErrorConsole *console)
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (console->text_view),
                                GTK_WRAP_WORD);
   gtk_container_add (GTK_CONTAINER (scrolled_window), console->text_view);
-  gtk_widget_show (console->text_view);
+  gtk_widget_set_visible (console->text_view, TRUE);
 
   g_signal_connect (console->text_view, "button-press-event",
                     G_CALLBACK (gimp_error_console_button_press),
@@ -233,7 +233,7 @@ gimp_error_console_add (GimpErrorConsole    *console,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_text_view_add_child_at_anchor (GTK_TEXT_VIEW (console->text_view),
                                      image, anchor);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_object_unref (anchor);
 

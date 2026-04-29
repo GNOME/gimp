@@ -802,7 +802,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   options_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL,
                               gtk_box_get_spacing (GTK_BOX (main_vbox)));
   gtk_box_pack_start (GTK_BOX (main_vbox), options_vbox, FALSE, FALSE, 0);
-  gtk_widget_show (options_vbox);
+  gtk_widget_set_visible (options_vbox, TRUE);
 
   g_object_bind_property (async_set,    "empty",
                           options_vbox, "sensitive",
@@ -817,7 +817,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_box_pack_start (GTK_BOX (options_vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   entry = gimp_prop_size_entry_new (config,
                                     "font-size", FALSE, "font-size-unit", "%n",
@@ -830,7 +830,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (options_vbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   button = gimp_prop_check_button_new (config, "use-editor", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -845,7 +845,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_box_pack_start (GTK_BOX (options_vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   row = 0;
 
@@ -878,7 +878,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   outline_frame = gimp_frame_new (_("Outline Options"));
   gimp_widget_set_identifier (outline_frame, "text-outline-settings");
   gtk_box_pack_start (GTK_BOX (options_vbox), outline_frame, FALSE, FALSE, 0);
-  gtk_widget_show (outline_frame);
+  gtk_widget_set_visible (outline_frame, TRUE);
 
   g_signal_connect (button, "changed",
                     G_CALLBACK (gimp_text_options_outline_changed),
@@ -889,7 +889,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_grid_set_column_spacing (GTK_GRID (outline_grid), 2);
   gtk_grid_set_row_spacing (GTK_GRID (outline_grid), 2);
   gtk_container_add (GTK_CONTAINER (outline_frame), outline_grid);
-  gtk_widget_show (outline_grid);
+  gtk_widget_set_visible (outline_grid, TRUE);
 
   button = gimp_prop_enum_combo_box_new (config, "outline-direction", -1, -1);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (button), _("Outline Direction:"));
@@ -901,7 +901,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_box_pack_start (GTK_BOX (options_vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   row = 0;
 
@@ -975,15 +975,15 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
     vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
     gtk_box_pack_start (GTK_BOX (options_vbox), vbox, FALSE, FALSE, 0);
-    gtk_widget_show (vbox);
+    gtk_widget_set_visible (vbox, TRUE);
 
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
+    gtk_widget_set_visible (hbox, TRUE);
 
     label = gtk_label_new (_("Language:"));
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-    gtk_widget_show (label);
+    gtk_widget_set_visible (label, TRUE);
 
     entry = gimp_prop_language_entry_new (config, "language");
     gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
@@ -1039,7 +1039,7 @@ gimp_text_options_outline_changed (GtkWidget *combo,
   if (active == GIMP_TEXT_OUTLINE_NONE)
     gtk_widget_set_visible (vbox, FALSE);
   else
-    gtk_widget_show (vbox);
+    gtk_widget_set_visible (vbox, TRUE);
 }
 
 GtkWidget *

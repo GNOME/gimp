@@ -127,14 +127,14 @@ module_dialog_new (Gimp *gimp)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   private->hint = gimp_hint_box_new (_("You will have to restart GIMP "
                                        "for the changes to take effect."));
   gtk_box_pack_start (GTK_BOX (vbox), private->hint, FALSE, FALSE, 0);
 
   if (gimp->write_modulerc)
-    gtk_widget_show (private->hint);
+    gtk_widget_set_visible (private->hint, TRUE);
 
   sw = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw),
@@ -144,7 +144,7 @@ module_dialog_new (Gimp *gimp)
                                   GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (vbox), sw, TRUE, TRUE, 0);
   gtk_widget_set_size_request (sw, 124, 100);
-  gtk_widget_show (sw);
+  gtk_widget_set_visible (sw, TRUE);
 
   private->listbox = gtk_list_box_new ();
   gtk_list_box_set_selection_mode (GTK_LIST_BOX (private->listbox),
@@ -161,12 +161,12 @@ module_dialog_new (Gimp *gimp)
                     private);
 
   gtk_container_add (GTK_CONTAINER (sw), private->listbox);
-  gtk_widget_show (private->listbox);
+  gtk_widget_set_visible (private->listbox, TRUE);
 
   private->grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (private->grid), 6);
   gtk_box_pack_start (GTK_BOX (vbox), private->grid, FALSE, FALSE, 0);
-  gtk_widget_show (private->grid);
+  gtk_widget_set_visible (private->grid, TRUE);
 
   private->error_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), private->error_box, FALSE, FALSE, 0);
@@ -174,13 +174,13 @@ module_dialog_new (Gimp *gimp)
   image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_WARNING,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (private->error_box), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   private->error_label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (private->error_label), 0.0);
   gtk_box_pack_start (GTK_BOX (private->error_box),
                       private->error_label, TRUE, TRUE, 0);
-  gtk_widget_show (private->error_label);
+  gtk_widget_set_visible (private->error_label, TRUE);
 
   dialog_info_init (private, private->grid);
 
@@ -209,13 +209,13 @@ create_widget_for_module (gpointer item,
 
   row = gtk_list_box_row_new ();
   g_object_set_data (G_OBJECT (row), "module", module);
-  gtk_widget_show (row);
+  gtk_widget_set_visible (row, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   g_object_set (grid, "margin", 3, NULL);
   gtk_container_add (GTK_CONTAINER (row), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   checkbox = gtk_check_button_new ();
   g_object_bind_property (module, "auto-load", checkbox, "active",
@@ -223,12 +223,12 @@ create_widget_for_module (gpointer item,
   g_signal_connect (checkbox, "toggled",
                     G_CALLBACK (dialog_enabled_toggled),
                     private);
-  gtk_widget_show (checkbox);
+  gtk_widget_set_visible (checkbox, TRUE);
   gtk_grid_attach (GTK_GRID (grid), checkbox, 0, 0, 1, 1);
 
   label = gtk_label_new (info ? dgettext (GETTEXT_PACKAGE "-libgimp", info->purpose) :
                                 gimp_file_get_utf8_name (file));
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
   gtk_grid_attach (GTK_GRID (grid), label, 1, 0, 1, 1);
 
   return row;
@@ -314,7 +314,7 @@ dialog_enabled_toggled (GtkToggleButton *checkbox,
                         ModuleDialog    *private)
 {
   private->gimp->write_modulerc = TRUE;
-  gtk_widget_show (private->hint);
+  gtk_widget_set_visible (private->hint, TRUE);
 }
 
 static void
@@ -338,13 +338,13 @@ dialog_info_init (ModuleDialog *private,
       label = gtk_label_new (gettext (text[i]));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_grid_attach (GTK_GRID (grid), label, 0, i, 1, 1);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       private->label[i] = gtk_label_new ("");
       gtk_label_set_xalign (GTK_LABEL (private->label[i]), 0.0);
       gtk_label_set_ellipsize (GTK_LABEL (private->label[i]),
                                PANGO_ELLIPSIZE_END);
       gtk_grid_attach (GTK_GRID (grid), private->label[i], 1, i, 1, 1);
-      gtk_widget_show (private->label[i]);
+      gtk_widget_set_visible (private->label[i], TRUE);
     }
 }

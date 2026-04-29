@@ -296,7 +296,7 @@ gimp_brightness_contrast_tool_dialog (GimpFilterTool *filter_tool)
   button = gimp_icon_button_new (GIMP_ICON_TOOL_LEVELS,
                                  _("Edit these Settings as Levels"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (brightness_contrast_to_levels_callback),

@@ -190,13 +190,13 @@ gimp_overlay_dialog_init (GimpOverlayDialog *dialog)
 {
   dialog->header = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_widget_set_parent (dialog->header, GTK_WIDGET (dialog));
-  gtk_widget_show (dialog->header);
+  gtk_widget_set_visible (dialog->header, TRUE);
 
   dialog->action_area = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog->action_area),
                              GTK_BUTTONBOX_CENTER);
   gtk_widget_set_parent (dialog->action_area, GTK_WIDGET (dialog));
-  gtk_widget_show (dialog->action_area);
+  gtk_widget_set_visible (dialog->action_area, TRUE);
 }
 
 static void
@@ -212,25 +212,25 @@ gimp_overlay_dialog_constructed (GObject *object)
   dialog->icon_image = image = gtk_image_new_from_icon_name (dialog->icon_name,
                                                              GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (dialog->header), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   dialog->title_label = label = gtk_label_new (dialog->title);
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (dialog->header), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   dialog->close_button = button = gtk_button_new ();
   gtk_widget_set_can_focus (button, FALSE);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_box_pack_end (GTK_BOX (dialog->header), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_CLOSE, GTK_ICON_SIZE_MENU);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect_object (button, "clicked",
                            G_CALLBACK (gimp_overlay_dialog_close),
@@ -241,7 +241,7 @@ gimp_overlay_dialog_constructed (GObject *object)
   gtk_widget_set_can_focus (button, FALSE);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_box_pack_end (GTK_BOX (dialog->header), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   gimp_help_set_help_data (dialog->detach_button,
                            _("Detach dialog from canvas"), NULL);
@@ -250,7 +250,7 @@ gimp_overlay_dialog_constructed (GObject *object)
                                         GTK_ICON_SIZE_MENU);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect_object (button, "clicked",
                            G_CALLBACK (gimp_overlay_dialog_detach),
@@ -641,7 +641,7 @@ gimp_overlay_dialog_add_button (GimpOverlayDialog *dialog,
 
   button = gtk_button_new_with_mnemonic (button_text);
   gtk_widget_set_can_default (button, TRUE);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   ad = get_response_data (button, TRUE);
 

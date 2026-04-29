@@ -161,7 +161,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   editor->menu = menu = gimp_prop_enum_combo_box_new (G_OBJECT (view),
                                                       "histogram-channel",
@@ -189,7 +189,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
 
   gtk_box_pack_start (GTK_BOX (editor), editor->box, TRUE, TRUE, 0);
-  gtk_widget_show (GTK_WIDGET (editor->box));
+  gtk_widget_set_visible (GTK_WIDGET (editor->box), TRUE);
 
   g_signal_connect_swapped (view, "range-changed",
                             G_CALLBACK (gimp_histogram_editor_info_update),
@@ -205,7 +205,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
   gtk_box_pack_start (GTK_BOX (editor), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   for (i = 0; i <= LABEL_PERCENTILE; i++)
     {
@@ -220,7 +220,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
       gtk_label_set_xalign (GTK_LABEL (label), 1.0);
       gtk_widget_set_hexpand (label, TRUE);
       gtk_grid_attach (GTK_GRID (grid), label, x, y, 1, 1);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       editor->labels[i] =
         label = g_object_new (GTK_TYPE_LABEL,
@@ -232,12 +232,12 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                                  PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                                  -1);
       gtk_grid_attach (GTK_GRID (grid), label, x + 1, y, 1, 1);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
     }
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   editor->toggle = gtk_check_button_new_with_label (_("Compute unique colors:"));
   gimp_widget_set_identifier (editor->toggle, "toggle-compute-unique-colors");
@@ -246,7 +246,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                              -1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (editor->toggle), FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), editor->toggle, FALSE, FALSE, 0);
-  gtk_widget_show (editor->toggle);
+  gtk_widget_set_visible (editor->toggle, TRUE);
 
   g_signal_connect_swapped (editor->toggle, "toggled",
                             G_CALLBACK (gimp_histogram_editor_info_update),
@@ -261,7 +261,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                              PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 }
 
 static void

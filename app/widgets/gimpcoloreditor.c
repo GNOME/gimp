@@ -195,7 +195,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
   editor->hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, button_spacing);
   gtk_box_set_homogeneous (GTK_BOX (editor->hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (editor), editor->hbox, FALSE, FALSE, 0);
-  gtk_widget_show (editor->hbox);
+  gtk_widget_set_visible (editor->hbox, TRUE);
 
   color = gegl_color_new ("black");
   editor->notebook = gimp_color_selector_new (GIMP_TYPE_COLOR_NOTEBOOK, color,
@@ -205,7 +205,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
                                       FALSE);
   gtk_box_pack_start (GTK_BOX (editor), editor->notebook,
                       TRUE, TRUE, content_spacing);
-  gtk_widget_show (editor->notebook);
+  gtk_widget_set_visible (editor->notebook, TRUE);
 
   g_signal_connect (editor->notebook, "color-changed",
                     G_CALLBACK (gimp_color_editor_color_changed),
@@ -237,12 +237,12 @@ gimp_color_editor_init (GimpColorEditor *editor)
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
       gtk_box_pack_start (GTK_BOX (editor->hbox), button, TRUE, TRUE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       image = gtk_image_new_from_icon_name (selector_class->icon_name,
                                             GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
 
       gimp_help_set_help_data (button,
                                selector_class->name, selector_class->help_id);
@@ -259,7 +259,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_set_homogeneous (GTK_BOX (hbox), FALSE);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /*  FG/BG editor  */
   editor->fg_bg = gimp_fg_bg_editor_new (NULL);
@@ -268,7 +268,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
                                (gint) (icon_width * 1.75),
                                (gint) (icon_height * 1.75));
   gtk_box_pack_start (GTK_BOX (hbox), editor->fg_bg, FALSE, FALSE, 0);
-  gtk_widget_show (editor->fg_bg);
+  gtk_widget_set_visible (editor->fg_bg, TRUE);
 
   g_signal_connect (editor->fg_bg, "notify::active-color",
                     G_CALLBACK (gimp_color_editor_fg_bg_notify),
@@ -277,7 +277,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
   /*  The color picker  */
   button = gimp_pick_button_new ();
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "color-picked",
                     G_CALLBACK (gimp_color_editor_color_picked),
@@ -286,7 +286,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
   /*  The hex triplet entry  */
   editor->hex_entry = gimp_color_hex_entry_new ();
   gtk_box_pack_end (GTK_BOX (hbox), editor->hex_entry, TRUE, TRUE, 0);
-  gtk_widget_show (editor->hex_entry);
+  gtk_widget_set_visible (editor->hex_entry, TRUE);
 
   g_signal_connect (editor->hex_entry, "color-changed",
                     G_CALLBACK (gimp_color_editor_entry_changed),
@@ -306,7 +306,7 @@ gimp_color_editor_constructed (GObject *object)
   /* The color history */
   history = gimp_color_history_new (editor->context, 12);
   gtk_box_pack_end (GTK_BOX (editor), history, FALSE, FALSE, 0);
-  gtk_widget_show (history);
+  gtk_widget_set_visible (history, TRUE);
 
   g_signal_connect (history, "color-selected",
                     G_CALLBACK (gimp_color_editor_history_selected),

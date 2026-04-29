@@ -123,7 +123,7 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, FALSE, FALSE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   text = g_strdup_printf (_("The image '%s' contains Exif orientation "
                             "metadata"),
@@ -141,7 +141,7 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   scale_factor = gtk_widget_get_scale_factor (main_vbox);
   width        = gimp_image_get_width  (image);
@@ -178,11 +178,11 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
       gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
       gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
       gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
 
       label = gtk_label_new (_("Original"));
       gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
@@ -190,7 +190,7 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
                                  PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
                                  -1);
       gtk_box_pack_end (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       event_box = gtk_event_box_new ();
       image     = gtk_image_new_from_pixbuf (pixbuf);
@@ -211,14 +211,14 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
       gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
 
       label = gtk_label_new (_("Rotated"));
       gimp_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
                                  -1);
       gtk_box_pack_end (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       rotated = gimp_image_metadata_rotate_pixbuf (pixbuf, orientation);
 
@@ -252,12 +252,12 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Don't ask me again"));
   gtk_box_pack_end (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   response  = gimp_dialog_run (GIMP_DIALOG (dialog));
   *dont_ask = (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)));

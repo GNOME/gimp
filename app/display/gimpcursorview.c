@@ -209,27 +209,27 @@ gimp_cursor_view_init (GimpCursorView *view)
   gtk_box_set_homogeneous (GTK_BOX (view->priv->coord_hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (view), view->priv->coord_hbox,
                       FALSE, FALSE, 0);
-  gtk_widget_show (view->priv->coord_hbox);
+  gtk_widget_set_visible (view->priv->coord_hbox, TRUE);
 
   view->priv->selection_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,
                                             content_spacing);
   gtk_box_set_homogeneous (GTK_BOX (view->priv->selection_hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (view), view->priv->selection_hbox,
                       FALSE, FALSE, 0);
-  gtk_widget_show (view->priv->selection_hbox);
+  gtk_widget_set_visible (view->priv->selection_hbox, TRUE);
 
 
   /* Pixels */
 
   frame = gimp_frame_new (_("Pixels"));
   gtk_box_pack_start (GTK_BOX (view->priv->coord_hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   view->priv->pixel_x_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->pixel_x_label), 1.0);
@@ -248,13 +248,13 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   frame = gimp_frame_new (_("Units"));
   gtk_box_pack_start (GTK_BOX (view->priv->coord_hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   view->priv->unit_x_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->unit_x_label), 1.0);
@@ -273,7 +273,7 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   frame = gimp_frame_new (_("Selection"));
   gtk_box_pack_start (GTK_BOX (view->priv->selection_hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   gimp_help_set_help_data (frame, _("The selection's bounding box"), NULL);
 
@@ -281,7 +281,7 @@ gimp_cursor_view_init (GimpCursorView *view)
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   view->priv->selection_x_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->selection_x_label), 1.0);
@@ -297,13 +297,13 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   frame = gimp_frame_new ("");
   gtk_box_pack_start (GTK_BOX (view->priv->selection_hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   view->priv->selection_width_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->selection_width_label), 1.0);
@@ -354,7 +354,7 @@ gimp_cursor_view_constructed (GObject             *object)
                                         content_spacing);
   gtk_box_set_homogeneous (GTK_BOX (view->priv->color_hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (view), view->priv->color_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (view->priv->color_hbox);
+  gtk_widget_set_visible (view->priv->color_hbox, TRUE);
 
   view->priv->color_frame_1 = gimp_color_frame_new (view->priv->gimp);
   gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->priv->color_frame_1),
@@ -363,14 +363,14 @@ gimp_cursor_view_constructed (GObject             *object)
                                   PANGO_ELLIPSIZE_END);
   gtk_box_pack_start (GTK_BOX (view->priv->color_hbox), view->priv->color_frame_1,
                       TRUE, TRUE, 0);
-  gtk_widget_show (view->priv->color_frame_1);
+  gtk_widget_set_visible (view->priv->color_frame_1, TRUE);
 
   view->priv->color_frame_2 = gimp_color_frame_new (view->priv->gimp);
   gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->priv->color_frame_2),
                              GIMP_COLOR_PICK_MODE_RGB_PERCENT);
   gtk_box_pack_start (GTK_BOX (view->priv->color_hbox), view->priv->color_frame_2,
                       TRUE, TRUE, 0);
-  gtk_widget_show (view->priv->color_frame_2);
+  gtk_widget_set_visible (view->priv->color_frame_2, TRUE);
 
 }
 

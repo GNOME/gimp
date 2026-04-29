@@ -161,12 +161,12 @@ gimp_buffer_view_new (GimpViewType     view_type,
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (editor), frame, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* FIXME: enable preview of a clipboard image, not just buffer */
   buffer_view->clipboard_view =
@@ -177,7 +177,7 @@ gimp_buffer_view_new (GimpViewType     view_type,
                                  FALSE, FALSE, TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), buffer_view->clipboard_view,
                       FALSE, FALSE, 0);
-  gtk_widget_show (buffer_view->clipboard_view);
+  gtk_widget_set_visible (buffer_view->clipboard_view, TRUE);
 
   g_signal_connect_object (editor->view, "notify::view-size",
                            G_CALLBACK (gimp_buffer_view_view_notify),
@@ -189,7 +189,7 @@ gimp_buffer_view_new (GimpViewType     view_type,
   buffer_view->clipboard_label = gtk_label_new (_("(None)"));
   gtk_box_pack_start (GTK_BOX (hbox), buffer_view->clipboard_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (buffer_view->clipboard_label);
+  gtk_widget_set_visible (buffer_view->clipboard_label, TRUE);
 
   g_signal_connect_object (context->gimp, "clipboard-changed",
                            G_CALLBACK (gimp_buffer_view_clipboard_changed),

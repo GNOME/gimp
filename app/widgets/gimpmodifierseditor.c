@@ -187,21 +187,21 @@ gimp_modifiers_editor_init (GimpModifiersEditor *editor)
 
   editor->priv->header = gtk_label_new (NULL);
   gtk_grid_attach (GTK_GRID (grid), editor->priv->header, 0, 0, 2, 1);
-  gtk_widget_show (editor->priv->header);
+  gtk_widget_set_visible (editor->priv->header, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   hint = gtk_label_new (NULL);
   text = g_strdup_printf ("<i>%s</i>", _("Click here to set a button's modifiers"));
   gtk_label_set_markup (GTK_LABEL (hint), text);
   g_free (text);
   gtk_box_pack_start (GTK_BOX (hbox), hint, TRUE, TRUE, 2);
-  gtk_widget_show (hint);
+  gtk_widget_set_visible (hint, TRUE);
 
   image = gtk_image_new_from_icon_name ("gimp-cursor", GTK_ICON_SIZE_LARGE_TOOLBAR);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 2);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   editor->priv->warning = gtk_label_new (NULL);
   text = g_strdup_printf ("<b>%s</b>",
@@ -214,15 +214,15 @@ gimp_modifiers_editor_init (GimpModifiersEditor *editor)
   editor->priv->select_button = gtk_button_new ();
   gtk_container_add (GTK_CONTAINER (editor->priv->select_button), hbox);
   gtk_grid_attach (GTK_GRID (grid), editor->priv->select_button, 0, 1, 1, 1);
-  gtk_widget_show (editor->priv->select_button);
+  gtk_widget_set_visible (editor->priv->select_button, TRUE);
 
   gtk_frame_set_label_widget (GTK_FRAME (editor), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /* Setup the stack. */
   editor->priv->stack = gtk_stack_new ();
   gtk_container_add (GTK_CONTAINER (editor), editor->priv->stack);
-  gtk_widget_show (editor->priv->stack);
+  gtk_widget_set_visible (editor->priv->stack, TRUE);
 }
 
 static void
@@ -400,7 +400,7 @@ gimp_modifiers_editor_show_settings (GimpModifiersEditor *editor,
 
       plus_button = gtk_button_new_from_icon_name ("list-add", GTK_ICON_SIZE_LARGE_TOOLBAR);
       gtk_list_box_insert (GTK_LIST_BOX (editor->priv->current_settings), plus_button, -1);
-      gtk_widget_show (plus_button);
+      gtk_widget_set_visible (plus_button, TRUE);
 
       g_signal_connect (plus_button, "clicked",
                         G_CALLBACK (gimp_modifiers_editor_plus_button_clicked),
@@ -410,7 +410,7 @@ gimp_modifiers_editor_show_settings (GimpModifiersEditor *editor,
       if (g_list_length (modifiers) == 0)
         gimp_modifiers_editor_plus_button_clicked (GTK_BUTTON (plus_button), editor);
 
-      gtk_widget_show (editor->priv->current_settings);
+      gtk_widget_set_visible (editor->priv->current_settings, TRUE);
       g_list_free (modifiers);
     }
 
@@ -430,7 +430,7 @@ gimp_modifiers_editor_button_press_event (GtkWidget      *widget,
   /* Update warning. */
   if (event->button == GDK_BUTTON_PRIMARY)
     {
-      gtk_widget_show (editor->priv->warning);
+      gtk_widget_set_visible (editor->priv->warning, TRUE);
       gimp_widget_blink (editor->priv->warning);
     }
   else
@@ -475,18 +475,18 @@ gimp_modifiers_editor_add_mapping (GimpModifiersEditor *editor,
   gimp_shortcut_button_set_accelerator (GIMP_SHORTCUT_BUTTON (shortcut), NULL, 0, modifiers);
   gtk_box_pack_start (GTK_BOX (box), shortcut, FALSE, FALSE, 0);
   gtk_size_group_add_widget (editor->priv->mod_size_group, shortcut);
-  gtk_widget_show (shortcut);
+  gtk_widget_set_visible (shortcut, TRUE);
 
   combo_action_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
   gtk_box_pack_start (GTK_BOX (box), combo_action_box, FALSE, FALSE, 0);
   gtk_size_group_add_widget (editor->priv->action_action_size_group, combo_action_box);
-  gtk_widget_show (combo_action_box);
+  gtk_widget_set_visible (combo_action_box, TRUE);
 
   combo = gimp_enum_combo_box_new (GIMP_TYPE_MODIFIER_ACTION);
   gtk_box_pack_start (GTK_BOX (combo_action_box), combo, FALSE, FALSE, 0);
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo), mod_action);
   gtk_size_group_add_widget (editor->priv->action_size_group, combo);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   if (action_desc)
     {
@@ -512,7 +512,7 @@ gimp_modifiers_editor_add_mapping (GimpModifiersEditor *editor,
   g_signal_connect (minus_button, "clicked",
                     G_CALLBACK (gimp_modifiers_editor_minus_button_clicked),
                     editor);
-  gtk_widget_show (minus_button);
+  gtk_widget_set_visible (minus_button, TRUE);
 
   g_object_set_data (G_OBJECT (shortcut), "shortcut-modifiers", GINT_TO_POINTER (modifiers));
   g_object_set_data (G_OBJECT (shortcut), "shortcut-button", shortcut);
@@ -547,7 +547,7 @@ gimp_modifiers_editor_add_mapping (GimpModifiersEditor *editor,
       gtk_list_box_insert (GTK_LIST_BOX (editor->priv->current_settings), GTK_WIDGET (plus_button), -1);
     }
 
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 }
 
 static void
@@ -713,7 +713,7 @@ gimp_modifiers_editor_search_clicked (GtkWidget           *button,
       gtk_container_set_border_width (GTK_CONTAINER (view), 12);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (edit_dialog))),
                           view, TRUE, TRUE, 0);
-      gtk_widget_show (view);
+      gtk_widget_set_visible (view, TRUE);
 
       g_signal_connect_object (GIMP_ACTION_EDITOR (view)->view, "row-activated",
                                G_CALLBACK (gimp_controller_modifiers_action_activated),
@@ -722,7 +722,7 @@ gimp_modifiers_editor_search_clicked (GtkWidget           *button,
       g_set_weak_pointer (&editor->priv->action_selection,
                           gtk_tree_view_get_selection (GTK_TREE_VIEW (GIMP_ACTION_EDITOR (view)->view)));
 
-      gtk_widget_show (edit_dialog);
+      gtk_widget_set_visible (edit_dialog, TRUE);
 
       g_free (accel_name);
     }
@@ -788,7 +788,7 @@ gimp_modifiers_editor_search_response (GtkWidget           *dialog,
                                      NULL);
               label = gtk_label_new (gimp_action_get_name (action));
               gtk_container_add (GTK_CONTAINER (action_button), label);
-              gtk_widget_show (label);
+              gtk_widget_set_visible (label, TRUE);
             }
         }
 

@@ -249,13 +249,13 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
   outframe = gtk_frame_new (gimp_extension_get_name (extension));
   gtk_container_add (GTK_CONTAINER (list), outframe);
   g_object_set_data (G_OBJECT (outframe), "extension", extension);
-  gtk_widget_show (outframe);
+  gtk_widget_set_visible (outframe, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_homogeneous (GTK_GRID (grid), FALSE);
   gtk_grid_set_row_homogeneous (GTK_GRID (grid), FALSE);
   gtk_container_add (GTK_CONTAINER (outframe), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /* On/Off switch. */
   onoff = gtk_switch_new ();
@@ -272,7 +272,7 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
   g_signal_connect (onoff, "notify::active",
                     G_CALLBACK (gimp_extension_switch_active), extension);
   gtk_grid_attach (GTK_GRID (grid), onoff, 0, 0, 1, 1);
-  gtk_widget_show (onoff);
+  gtk_widget_set_visible (onoff, TRUE);
 
   /* Short description. */
   if (gimp_extension_get_comment (extension))
@@ -290,7 +290,7 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
       gtk_grid_attach (GTK_GRID (grid), desc, 1, 0, 1, 1);
       gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (desc),
                                    GTK_WRAP_WORD_CHAR);
-      gtk_widget_show (desc);
+      gtk_widget_set_visible (desc, TRUE);
     }
 
   /* Delete button. */
@@ -312,9 +312,9 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
       gtk_widget_set_halign (delbutton, GTK_ALIGN_END);
       gtk_widget_set_valign (delbutton, GTK_ALIGN_START);
       gtk_container_add (GTK_CONTAINER (delbutton), image);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
       gtk_grid_attach (GTK_GRID (grid), delbutton, 2, 0, 1, 1);
-      gtk_widget_show (delbutton);
+      gtk_widget_set_visible (delbutton, TRUE);
     }
 }
 

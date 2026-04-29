@@ -75,11 +75,11 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   editor = gimp_action_editor_new (gimp, NULL, TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), editor, TRUE, TRUE, 0);
-  gtk_widget_show (editor);
+  gtk_widget_set_visible (editor, TRUE);
 
   hint = g_strdup_printf (_("To edit a shortcut key, select the "
                             "corresponding row, click on its \"%s\" "
@@ -89,7 +89,7 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   g_free (hint);
 
   gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   button = gimp_prop_check_button_new (G_OBJECT (gimp->config), "save-accels",
                                        _("S_ave keyboard shortcuts on exit"));

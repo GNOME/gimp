@@ -186,7 +186,7 @@ gimp_colormap_editor_set_context (GimpDocked  *docked,
     {
       editor->selection = gimp_colormap_selection_new (context);
       gtk_box_pack_start (GTK_BOX (editor), editor->selection, TRUE, TRUE, 0);
-      gtk_widget_show (editor->selection);
+      gtk_widget_set_visible (editor->selection, TRUE);
 
       g_signal_connect_swapped (editor->selection, "color-clicked",
                                 G_CALLBACK (gimp_colormap_editor_color_clicked),

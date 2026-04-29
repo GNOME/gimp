@@ -211,7 +211,7 @@ gimp_view_popup_timeout (GimpViewPopup *popup)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
   gtk_container_add (GTK_CONTAINER (window), frame);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   view = gimp_view_new_full (popup->context,
                              popup->viewable,
@@ -221,7 +221,7 @@ gimp_view_popup_timeout (GimpViewPopup *popup)
   gimp_view_renderer_set_dot_for_dot (GIMP_VIEW (view)->renderer,
                                       popup->dot_for_dot);
   gtk_container_add (GTK_CONTAINER (frame), view);
-  gtk_widget_show (view);
+  gtk_widget_set_visible (view, TRUE);
 
   display = gtk_widget_get_display (popup->widget);
 
@@ -237,7 +237,7 @@ gimp_view_popup_timeout (GimpViewPopup *popup)
   y = CLAMP (y, workarea.y, workarea.y + workarea.height - popup->popup_height);
 
   gtk_window_move (GTK_WINDOW (window), x, y);
-  gtk_widget_show (window);
+  gtk_widget_set_visible (window, TRUE);
 
   popup->popup = window;
 

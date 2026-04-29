@@ -159,7 +159,7 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
                                "view");
   gtk_container_add (GTK_CONTAINER (box->scrolled_win),
                      GTK_WIDGET (priv->view));
-  gtk_widget_show (GTK_WIDGET (priv->view));
+  gtk_widget_set_visible (GTK_WIDGET (priv->view), TRUE);
 
   g_signal_connect (priv->view, "selected-rows-changed",
                     G_CALLBACK (gimp_container_list_view_selected_rows_changed),

@@ -108,7 +108,7 @@ gimp_message_dialog_new (const gchar    *title,
 
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       GTK_WIDGET (dialog->box), FALSE, FALSE, 0);
-  gtk_widget_show (GTK_WIDGET (dialog->box));
+  gtk_widget_set_visible (GTK_WIDGET (dialog->box), TRUE);
 
   return GTK_WIDGET (dialog);
 }

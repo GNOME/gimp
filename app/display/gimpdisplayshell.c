@@ -528,7 +528,7 @@ gimp_display_shell_constructed (GObject *object)
   /*  the grid containing everything  */
   grid = gtk_grid_new ();
   gtk_container_add (GTK_CONTAINER (shell), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /*  the horizontal scrollbar  */
   shell->hsbdata = gtk_adjustment_new (0, 0, image_width,
@@ -547,7 +547,7 @@ gimp_display_shell_constructed (GObject *object)
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_MENU_RIGHT,
                                             button_icon_size);
   gtk_container_add (GTK_CONTAINER (shell->origin), gtk_image);
-  gtk_widget_show (gtk_image);
+  gtk_widget_set_visible (gtk_image, TRUE);
 
   g_signal_connect (shell->origin, "button-press-event",
                     G_CALLBACK (gimp_display_shell_origin_button_press),
@@ -710,7 +710,7 @@ gimp_display_shell_constructed (GObject *object)
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_ZOOM_FOLLOW_WINDOW,
                                             button_icon_size);
   gtk_container_add (GTK_CONTAINER (shell->zoom_button), gtk_image);
-  gtk_widget_show (gtk_image);
+  gtk_widget_set_visible (gtk_image, TRUE);
 
   g_signal_connect_swapped (shell->zoom_button, "toggled",
                             G_CALLBACK (gimp_display_shell_zoom_button_callback),
@@ -731,7 +731,7 @@ gimp_display_shell_constructed (GObject *object)
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_QUICK_MASK_OFF,
                                             button_icon_size);
   gtk_container_add (GTK_CONTAINER (shell->quick_mask_button), gtk_image);
-  gtk_widget_show (gtk_image);
+  gtk_widget_set_visible (gtk_image, TRUE);
 
   g_signal_connect (shell->quick_mask_button, "toggled",
                     G_CALLBACK (gimp_display_shell_quick_mask_toggled),
@@ -754,7 +754,7 @@ gimp_display_shell_constructed (GObject *object)
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_NAVIGATION,
                                             button_icon_size);
   gtk_container_add (GTK_CONTAINER (shell->nav_ebox), gtk_image);
-  gtk_widget_show (gtk_image);
+  gtk_widget_set_visible (gtk_image, TRUE);
 
   g_signal_connect (shell->nav_ebox, "button-press-event",
                     G_CALLBACK (gimp_display_shell_navigation_button_press),
@@ -796,7 +796,7 @@ gimp_display_shell_constructed (GObject *object)
   gtk_grid_attach (GTK_GRID (grid), shell->statusbar, 0, 3, 3, 1);
 
   /*  show everything that is always shown */
-  gtk_widget_show (GTK_WIDGET (shell->canvas));
+  gtk_widget_set_visible (GTK_WIDGET (shell->canvas), TRUE);
 
   if (image)
     {

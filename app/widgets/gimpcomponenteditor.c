@@ -119,7 +119,7 @@ gimp_component_editor_init (GimpComponentEditor *editor)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   list = gtk_list_store_new (N_COLUMNS,
                              G_TYPE_INT,
@@ -162,7 +162,7 @@ gimp_component_editor_init (GimpComponentEditor *editor)
                                                NULL);
 
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (editor->view));
-  gtk_widget_show (GTK_WIDGET (editor->view));
+  gtk_widget_set_visible (GTK_WIDGET (editor->view), TRUE);
 
   g_signal_connect (editor->view, "button-press-event",
                     G_CALLBACK (gimp_component_editor_button_press),

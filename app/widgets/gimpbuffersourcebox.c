@@ -150,7 +150,7 @@ gimp_buffer_source_box_constructed (GObject *object)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (box->priv->toggle),
                                 box->priv->enabled);
   gtk_box_pack_start (GTK_BOX (box), box->priv->toggle, FALSE, FALSE, 0);
-  gtk_widget_show (box->priv->toggle);
+  gtk_widget_set_visible (box->priv->toggle, TRUE);
 
   g_signal_connect_object (box->priv->toggle, "toggled",
                            G_CALLBACK (gimp_buffer_source_box_enable_toggled),
@@ -161,13 +161,13 @@ gimp_buffer_source_box_constructed (GObject *object)
   gimp_pickable_button_set_pickable (GIMP_PICKABLE_BUTTON (box->priv->button),
                                      box->priv->pickable);
   gtk_box_pack_start (GTK_BOX (box), box->priv->button, FALSE, FALSE, 0);
-  gtk_widget_show (box->priv->button);
+  gtk_widget_set_visible (box->priv->button, TRUE);
 
   box->priv->label = gtk_label_new (_("(none)"));
   gtk_label_set_xalign (GTK_LABEL (box->priv->label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (box->priv->label), PANGO_ELLIPSIZE_END);
   gtk_box_pack_start (GTK_BOX (box), box->priv->label, TRUE, TRUE, 0);
-  gtk_widget_show (box->priv->label);
+  gtk_widget_set_visible (box->priv->label, TRUE);
 
   g_signal_connect_object (box->priv->button, "notify::pickable",
                            G_CALLBACK (gimp_buffer_source_box_notify_pickable),

@@ -72,5 +72,5 @@ gimp_row_separator_constructed (GObject *object)
 
   sep = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_container_add (GTK_CONTAINER (_gimp_row_get_box (row)), sep);
-  gtk_widget_show (sep);
+  gtk_widget_set_visible (sep, TRUE);
 }

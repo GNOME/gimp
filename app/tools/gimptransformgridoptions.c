@@ -407,7 +407,7 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
       gtk_container_add (GTK_CONTAINER (tr_options->direction_frame), hbox);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
       g_object_unref (vbox2);
@@ -417,7 +417,7 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
       gtk_widget_set_sensitive (button, FALSE);
       gimp_chain_button_set_icon_size (GIMP_CHAIN_BUTTON (button),
                                        GTK_ICON_SIZE_MENU);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       g_object_bind_property (config, "direction-linked",
                               button, "active",
@@ -436,18 +436,18 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_check_button_new (config, "synchronous-preview", NULL);
   gtk_box_pack_start (GTK_BOX (vbox3), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   frame = gimp_prop_expanding_frame_new (config, "composited-preview", NULL,
                                          vbox3, NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   scale = gimp_prop_spin_scale_new (config, "preview-opacity",
                                     0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   g_object_bind_property (config, "composited-preview",
                           scale,  "sensitive",
@@ -461,7 +461,7 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
   /*  the guides frame  */
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /*  the guides type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "grid-type", 0, 0);
@@ -624,11 +624,11 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
             {
               frame = gimp_frame_new (label);
               gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-              gtk_widget_show (frame);
+              gtk_widget_set_visible (frame, TRUE);
 
               grid_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
               gtk_container_add (GTK_CONTAINER (frame), grid_box);
-              gtk_widget_show (grid_box);
+              gtk_widget_set_visible (grid_box, TRUE);
             }
 
           g_free (label);

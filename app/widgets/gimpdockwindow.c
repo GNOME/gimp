@@ -365,7 +365,7 @@ gimp_dock_window_constructed (GObject *object)
     /* Top-level GtkVBox */
     vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add (GTK_CONTAINER (dock_window), vbox);
-    gtk_widget_show (vbox);
+    gtk_widget_set_visible (vbox, TRUE);
 
     /* Image selection menu */
     {
@@ -375,7 +375,7 @@ gimp_dock_window_constructed (GObject *object)
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       if (dock_window->p->show_image_menu)
-        gtk_widget_show (hbox);
+        gtk_widget_set_visible (hbox, TRUE);
 
       /* Image combo */
       dock_window->p->image_combo = gimp_container_combo_box_new (NULL, NULL, 16, 1);
@@ -385,14 +385,14 @@ gimp_dock_window_constructed (GObject *object)
                         &dock_window->p->image_combo);
       gimp_help_set_help_data (dock_window->p->image_combo,
                                NULL, GIMP_HELP_DOCK_IMAGE_MENU);
-      gtk_widget_show (dock_window->p->image_combo);
+      gtk_widget_set_visible (dock_window->p->image_combo, TRUE);
 
       /* Auto button */
       dock_window->p->auto_button = gtk_toggle_button_new_with_label (_("Auto"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dock_window->p->auto_button),
                                     dock_window->p->auto_follow_active);
       gtk_box_pack_start (GTK_BOX (hbox), dock_window->p->auto_button, FALSE, FALSE, 0);
-      gtk_widget_show (dock_window->p->auto_button);
+      gtk_widget_set_visible (dock_window->p->auto_button, TRUE);
 
       g_signal_connect (dock_window->p->auto_button, "clicked",
                         G_CALLBACK (gimp_dock_window_auto_clicked),
@@ -415,7 +415,7 @@ gimp_dock_window_constructed (GObject *object)
                                                 dock_window->p->ui_manager));
     gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (dock_window->p->dock_columns),
                         TRUE, TRUE, 0);
-    gtk_widget_show (GTK_WIDGET (dock_window->p->dock_columns));
+    gtk_widget_set_visible (GTK_WIDGET (dock_window->p->dock_columns), TRUE);
     g_signal_connect_object (dock_window->p->dock_columns, "dock-removed",
                              G_CALLBACK (gimp_dock_window_dock_removed),
                              dock_window,

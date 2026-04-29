@@ -199,16 +199,16 @@ gimp_pickable_chooser_constructed (GObject *object)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (chooser), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   label = gtk_label_new (_("Images"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   chooser->priv->image_view =
     gimp_container_tree_view_new (chooser->priv->context->gimp->images,
@@ -221,7 +221,7 @@ gimp_pickable_chooser_constructed (GObject *object)
                                        4 * (chooser->priv->view_size +
                                             2 * chooser->priv->view_border_width));
   gtk_box_pack_start (GTK_BOX (vbox), chooser->priv->image_view, TRUE, TRUE, 0);
-  gtk_widget_show (chooser->priv->image_view);
+  gtk_widget_set_visible (chooser->priv->image_view, TRUE);
 
   g_signal_connect_object (chooser->priv->image_view, "item-activated",
                            G_CALLBACK (gimp_pickable_chooser_item_activated),
@@ -232,18 +232,18 @@ gimp_pickable_chooser_constructed (GObject *object)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   chooser->priv->layer_label = label =
     gtk_label_new (_("Select an image in the left pane"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
-  gtk_widget_show (notebook);
+  gtk_widget_set_visible (notebook, TRUE);
 
   if (g_type_is_a (GIMP_TYPE_LAYER, chooser->priv->pickable_type))
     {
@@ -262,7 +262,7 @@ gimp_pickable_chooser_constructed (GObject *object)
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                                 chooser->priv->layer_view,
                                 gtk_label_new (_("Layers")));
-      gtk_widget_show (chooser->priv->layer_view);
+      gtk_widget_set_visible (chooser->priv->layer_view, TRUE);
 
       g_signal_connect_object (chooser->priv->layer_view, "item-activated",
                                G_CALLBACK (gimp_pickable_chooser_item_activated),
@@ -287,7 +287,7 @@ gimp_pickable_chooser_constructed (GObject *object)
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                                 chooser->priv->channel_view,
                                 gtk_label_new (_("Channels")));
-      gtk_widget_show (chooser->priv->channel_view);
+      gtk_widget_set_visible (chooser->priv->channel_view, TRUE);
 
       g_signal_connect_object (chooser->priv->channel_view, "item-activated",
                                G_CALLBACK (gimp_pickable_chooser_item_activated),

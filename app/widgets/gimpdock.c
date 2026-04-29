@@ -167,7 +167,7 @@ gimp_dock_init (GimpDock *dock)
 
   dock->p->main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (dock), dock->p->main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (dock->p->main_vbox);
+  gtk_widget_set_visible (dock->p->main_vbox, TRUE);
 
   dock->p->paned_vbox = gimp_paned_box_new (FALSE, 0, GTK_ORIENTATION_VERTICAL);
   gimp_paned_box_set_dropped_cb (GIMP_PANED_BOX (dock->p->paned_vbox),
@@ -175,7 +175,7 @@ gimp_dock_init (GimpDock *dock)
                                  dock);
   gtk_box_pack_start (GTK_BOX (dock->p->main_vbox), dock->p->paned_vbox,
                       TRUE, TRUE, 0);
-  gtk_widget_show (dock->p->paned_vbox);
+  gtk_widget_set_visible (dock->p->paned_vbox, TRUE);
 }
 
 static void
@@ -596,7 +596,7 @@ gimp_dock_add_book (GimpDock     *dock,
   gimp_paned_box_add_widget (GIMP_PANED_BOX (dock->p->paned_vbox),
                              GTK_WIDGET (dockbook),
                              index);
-  gtk_widget_show (GTK_WIDGET (dockbook));
+  gtk_widget_set_visible (GTK_WIDGET (dockbook), TRUE);
 
   gimp_dock_invalidate_description (dock);
 

@@ -84,7 +84,7 @@ gimp_error_dialog_init (GimpErrorDialog *dialog)
   dialog->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       dialog->vbox, TRUE, TRUE, 0);
-  gtk_widget_show (dialog->vbox);
+  gtk_widget_set_visible (dialog->vbox, TRUE);
 
   dialog->messages = NULL;
   dialog->overflow = FALSE;
@@ -205,7 +205,7 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
   gimp_message_box_set_text (GIMP_MESSAGE_BOX (item->box), "%s", message);
 
   gtk_box_pack_start (GTK_BOX (dialog->vbox), item->box, TRUE, TRUE, 0);
-  gtk_widget_show (item->box);
+  gtk_widget_set_visible (item->box, TRUE);
 
   dialog->messages = g_list_prepend (dialog->messages, item);
 }

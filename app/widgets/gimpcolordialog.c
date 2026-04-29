@@ -160,7 +160,7 @@ gimp_color_dialog_init (GimpColorDialog *dialog)
   dialog->stack = gtk_stack_new ();
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       dialog->stack, TRUE, TRUE, 0);
-  gtk_widget_show (dialog->stack);
+  gtk_widget_set_visible (dialog->stack, TRUE);
 }
 
 static void
@@ -185,7 +185,7 @@ gimp_color_dialog_constructed (GObject *object)
   g_signal_connect_swapped (dialog->colormap_selection, "color-activated",
                             G_CALLBACK (gimp_color_dialog_colormap_edit_activate),
                             dialog);
-  gtk_widget_show (dialog->colormap_selection);
+  gtk_widget_set_visible (dialog->colormap_selection, TRUE);
 
   /* Edit color button */
   button = gimp_button_new ();
@@ -193,7 +193,7 @@ gimp_color_dialog_constructed (GObject *object)
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT, GTK_ICON_SIZE_LARGE_TOOLBAR);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   /* XXX: I use the same icon, tooltip and help id as in
    * colormap-actions.c. I wanted to just load these strings from
@@ -206,7 +206,7 @@ gimp_color_dialog_constructed (GObject *object)
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (gimp_color_dialog_colormap_edit_activate),
                             dialog);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   gtk_box_pack_start (GTK_BOX (GIMP_COLORMAP_SELECTION (dialog->colormap_selection)->right_vbox), button,
                       FALSE, FALSE, 0);
 
@@ -216,7 +216,7 @@ gimp_color_dialog_constructed (GObject *object)
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_LIST_ADD, GTK_ICON_SIZE_LARGE_TOOLBAR);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   gimp_help_set_help_data_with_markup (button,
                                        C_("colormap-action", "Add current foreground color"),
@@ -225,7 +225,7 @@ gimp_color_dialog_constructed (GObject *object)
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (gimp_color_dialog_colormap_add_activate),
                             dialog);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   gtk_box_pack_start (GTK_BOX (GIMP_COLORMAP_SELECTION (dialog->colormap_selection)->right_vbox), button,
                       FALSE, FALSE, 0);
 
@@ -233,7 +233,7 @@ gimp_color_dialog_constructed (GObject *object)
   dialog->selection = gimp_color_selection_new ();
   gtk_container_set_border_width (GTK_CONTAINER (dialog->selection), 12);
   gtk_stack_add_named (GTK_STACK (dialog->stack), dialog->selection, "color");
-  gtk_widget_show (dialog->selection);
+  gtk_widget_set_visible (dialog->selection, TRUE);
 
   g_signal_connect (dialog->selection, "color-changed",
                     G_CALLBACK (gimp_color_dialog_color_changed),
@@ -243,7 +243,7 @@ gimp_color_dialog_constructed (GObject *object)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_end (GTK_BOX (gimp_color_selection_get_right_vbox (GIMP_COLOR_SELECTION (dialog->selection))),
                     hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* Button for adding to color history. */
   button = gimp_icon_button_new (GIMP_ICON_LIST_ADD, NULL);
@@ -251,7 +251,7 @@ gimp_color_dialog_constructed (GObject *object)
   gimp_help_set_help_data (button,
                            _("Add the current color to the color history"),
                            NULL);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_color_history_add_clicked),
@@ -260,7 +260,7 @@ gimp_color_dialog_constructed (GObject *object)
   /* Color history table. */
   history = gimp_color_history_new (viewable_dialog->context, 12);
   gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (history), TRUE, TRUE, 0);
-  gtk_widget_show (GTK_WIDGET (history));
+  gtk_widget_set_visible (GTK_WIDGET (history), TRUE);
 
   g_signal_connect_swapped (history, "color-selected",
                             G_CALLBACK (gimp_color_selection_set_color),

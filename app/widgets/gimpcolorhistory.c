@@ -281,7 +281,7 @@ gimp_color_history_set_property (GObject      *object,
             button = gtk_button_new ();
             gtk_widget_set_size_request (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
             gtk_grid_attach (GTK_GRID (history), button, column, row, 1, 1);
-            gtk_widget_show (button);
+            gtk_widget_set_visible (button, TRUE);
 
             color_area = gimp_color_area_new (black, GIMP_COLOR_AREA_SMALL_CHECKS,
                                               GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);

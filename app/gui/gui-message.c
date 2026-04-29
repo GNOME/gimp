@@ -345,7 +345,7 @@ gui_message_error_dialog (Gimp                *gimp,
           text = gui_message_format (severity, domain, message);
           gimp_critical_dialog_add (dialog, text, trace, FALSE, NULL, 0);
 
-          gtk_widget_show (dialog);
+          gtk_widget_set_visible (dialog, TRUE);
 
           g_free (text);
 
@@ -395,7 +395,7 @@ gui_message_error_dialog (Gimp                *gimp,
                         G_CALLBACK (gtk_widget_destroy),
                         NULL);
 
-      gtk_widget_show (dialog);
+      gtk_widget_set_visible (dialog, TRUE);
 
       return TRUE;
     }

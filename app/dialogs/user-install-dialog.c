@@ -62,7 +62,7 @@ user_install_dialog_run (GimpUserInstall *install)
                         G_CALLBACK (gtk_main_quit),
                         NULL);
 
-      gtk_widget_show (dialog);
+      gtk_widget_set_visible (dialog, TRUE);
 
       gtk_main ();
     }
@@ -101,14 +101,14 @@ user_install_dialog_new (GimpUserInstall *install)
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   scrolled = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER (frame), scrolled);
-  gtk_widget_show (scrolled);
+  gtk_widget_set_visible (scrolled, TRUE);
 
   buffer = gtk_text_buffer_new (NULL);
 
@@ -121,7 +121,7 @@ user_install_dialog_new (GimpUserInstall *install)
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (view), GTK_WRAP_WORD);
   gtk_widget_set_size_request (view, -1, 200);
   gtk_container_add (GTK_CONTAINER (scrolled), view);
-  gtk_widget_show (view);
+  gtk_widget_set_visible (view, TRUE);
 
   g_object_unref (buffer);
 

@@ -794,7 +794,7 @@ gimp_paned_box_add_widget (GimpPanedBox *paned_box,
         {
           gtk_box_pack_start (GTK_BOX (parent), paned, TRUE, TRUE, 0);
         }
-      gtk_widget_show (paned);
+      gtk_widget_set_visible (paned, TRUE);
 
       if (index == 0)
         {
@@ -858,7 +858,7 @@ gimp_paned_box_remove_widget (GimpPanedBox *paned_box,
         gtk_container_remove (GTK_CONTAINER (paned_box), widget);
 
       /* The last widget is removed, show the instructions */
-      //gtk_widget_show (paned_box->p->instructions);
+      //gtk_widget_set_visible (paned_box->p->instructions, TRUE);
       drop_hints = g_slist_prepend (drop_hints, paned_box);
     }
   else

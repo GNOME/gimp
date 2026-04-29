@@ -121,21 +121,21 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
   gtk_box_pack_start (GTK_BOX (content_area), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   dialog->icon = gtk_image_new ();
   gtk_widget_set_valign (dialog->icon, GTK_ALIGN_CENTER);
   gtk_box_pack_start (GTK_BOX (hbox), dialog->icon, FALSE, FALSE, 0);
-  gtk_widget_show (dialog->icon);
+  gtk_widget_set_visible (dialog->icon, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   dialog->desc_label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (dialog->desc_label), 0.0);
@@ -144,7 +144,7 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->desc_label, FALSE, FALSE, 0);
-  gtk_widget_show (dialog->desc_label);
+  gtk_widget_set_visible (dialog->desc_label, TRUE);
 
   /* Put the image name in a scrolled window so it does not automatically
    * increase the width of the dialog, but still allows it to be expanded

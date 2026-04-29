@@ -477,18 +477,18 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   /*  The combo box for selecting channels  */
   main_frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), main_frame, TRUE, TRUE, 0);
-  gtk_widget_show (main_frame);
+  gtk_widget_set_visible (main_frame, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_frame_set_label_widget (GTK_FRAME (main_frame), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("Cha_nnel:"));
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   store = gimp_enum_store_new_with_range (GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           GIMP_HISTOGRAM_VALUE,
@@ -504,7 +504,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (tool->channel_menu),
                                       curves_menu_sensitivity, filter_tool, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), tool->channel_menu, FALSE, FALSE, 0);
-  gtk_widget_show (tool->channel_menu);
+  gtk_widget_set_visible (tool->channel_menu, TRUE);
 
   g_signal_connect (tool->channel_menu, "changed",
                     G_CALLBACK (curves_channel_callback),
@@ -514,7 +514,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
 
   button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (curves_channel_reset_callback),
@@ -534,7 +534,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
 
   frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
-  gtk_widget_show (frame_vbox);
+  gtk_widget_set_visible (frame_vbox, TRUE);
 
   /*  The grid for the color bars and the graph  */
   grid = gtk_grid_new ();
@@ -545,17 +545,17 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   /*  The left color bar  */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_grid_attach (GTK_GRID (grid), vbox, 0, 0, 1, 1);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, RADIUS);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   tool->yrange = gimp_color_bar_new (GTK_ORIENTATION_VERTICAL);
   gtk_widget_set_size_request (tool->yrange, BAR_SIZE, -1);
   gtk_container_add (GTK_CONTAINER (frame), tool->yrange);
-  gtk_widget_show (tool->yrange);
+  gtk_widget_set_visible (tool->yrange, TRUE);
 
   /*  The curves graph  */
   frame = gtk_frame_new (NULL);
@@ -563,7 +563,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_widget_set_hexpand (frame, TRUE);
   gtk_widget_set_vexpand (frame, TRUE);
   gtk_grid_attach (GTK_GRID (grid), frame, 1, 0, 1, 1);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   g_set_weak_pointer (&tool->graph, gimp_curve_view_new ());
 
@@ -577,7 +577,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
                 "subdivisions", 1,
                 NULL);
   gtk_container_add (GTK_CONTAINER (frame), tool->graph);
-  gtk_widget_show (tool->graph);
+  gtk_widget_set_visible (tool->graph, TRUE);
 
   g_object_bind_property (G_OBJECT (tool_options), "histogram-scale",
                           G_OBJECT (tool->graph),  "histogram-scale",
@@ -591,41 +591,41 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   /*  The bottom color bar  */
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_grid_attach (GTK_GRID (grid), hbox2, 1, 1, 1, 1);
-  gtk_widget_show (hbox2);
+  gtk_widget_set_visible (hbox2, TRUE);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox2), frame, TRUE, TRUE, RADIUS);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_set_homogeneous (GTK_BOX (vbox), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   tool->xrange = gimp_color_bar_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_widget_set_size_request (tool->xrange, -1, BAR_SIZE / 2);
   gtk_box_pack_start (GTK_BOX (vbox), tool->xrange, TRUE, TRUE, 0);
-  gtk_widget_show (tool->xrange);
+  gtk_widget_set_visible (tool->xrange, TRUE);
 
   bar = gimp_color_bar_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_box_pack_start (GTK_BOX (vbox), bar, TRUE, TRUE, 0);
-  gtk_widget_show (bar);
+  gtk_widget_set_visible (bar, TRUE);
 
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /*  The point properties box  */
   tool->point_box = hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (tool->point_box);
+  gtk_widget_set_visible (tool->point_box, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("_Input:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   tool->point_input = gimp_spin_button_new_with_range (0.0, 0.0, 1.0);
   gtk_box_pack_start (GTK_BOX (hbox), tool->point_input, FALSE, FALSE, 0);
-  gtk_widget_show (tool->point_input);
+  gtk_widget_set_visible (tool->point_input, TRUE);
 
   g_signal_connect (tool->point_input, "value-changed",
                     G_CALLBACK (curves_point_coords_callback),
@@ -635,11 +635,11 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
 
   label = gtk_label_new_with_mnemonic (_("O_utput:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   tool->point_output = gimp_spin_button_new_with_range (0.0, 0.0, 1.0);
   gtk_box_pack_start (GTK_BOX (hbox), tool->point_output, FALSE, FALSE, 0);
-  gtk_widget_show (tool->point_output);
+  gtk_widget_set_visible (tool->point_output, TRUE);
 
   g_signal_connect (tool->point_output, "value-changed",
                     G_CALLBACK (curves_point_coords_callback),
@@ -649,7 +649,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
 
   label = gtk_label_new_with_mnemonic (_("T_ype:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   hbox2 = gimp_enum_icon_box_new (GIMP_TYPE_CURVE_POINT_TYPE,
                                   "gimp-curve-point",
@@ -658,17 +658,17 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
                                   tool, NULL,
                                   &tool->point_type);
   gtk_box_pack_start (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
-  gtk_widget_show (hbox2);
+  gtk_widget_set_visible (hbox2, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), tool->point_type);
 
   label = gtk_label_new_with_mnemonic (_("Curve _type:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   /*  The curve-type combo  */
   tool->curve_type = combo = gimp_enum_combo_box_new (GIMP_TYPE_CURVE_TYPE);
@@ -678,7 +678,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
                               G_CALLBACK (curves_curve_type_callback),
                               tool, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
@@ -851,7 +851,7 @@ gimp_curves_tool_export_setup (GimpSettingsBox      *settings_box,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 tool->export_old_format);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), button);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),

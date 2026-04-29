@@ -156,7 +156,7 @@ gimp_tool_progress_start (GimpProgress *progress,
   tool->progress_display = tool->display;
 
   tool->progress_grab_widget = gtk_invisible_new ();
-  gtk_widget_show (tool->progress_grab_widget);
+  gtk_widget_set_visible (tool->progress_grab_widget, TRUE);
   gtk_grab_add (tool->progress_grab_widget);
 
   g_signal_connect (tool->progress_grab_widget, "button-press-event",

@@ -272,7 +272,7 @@ gimp_container_editor_constructed (GObject *object)
 
   gtk_box_pack_start (GTK_BOX (editor), GTK_WIDGET (editor->view),
                       TRUE, TRUE, 0);
-  gtk_widget_show (GTK_WIDGET (editor->view));
+  gtk_widget_set_visible (GTK_WIDGET (editor->view), TRUE);
 
   editor->priv->busy_box = gimp_busy_box_new (NULL);
   gtk_box_pack_start (GTK_BOX (editor), editor->priv->busy_box, TRUE, TRUE, 0);

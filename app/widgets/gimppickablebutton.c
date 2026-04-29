@@ -164,7 +164,7 @@ gimp_pickable_button_constructed (GObject *object)
                             button->private->view_border_width,
                             FALSE);
   gtk_container_add (GTK_CONTAINER (button), button->private->view);
-  gtk_widget_show (button->private->view);
+  gtk_widget_set_visible (button->private->view, TRUE);
 }
 
 static void

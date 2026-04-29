@@ -256,7 +256,7 @@ data_delete_cmd_callback (GimpAction *action,
 
       dialog = data_delete_dialog_new (factory, data, context,
                                        GTK_WIDGET (view));
-      gtk_widget_show (dialog);
+      gtk_widget_set_visible (dialog, TRUE);
     }
 }
 

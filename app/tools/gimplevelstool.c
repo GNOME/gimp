@@ -359,18 +359,18 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   /*  The combo box for selecting channels  */
   main_frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), main_frame, TRUE, TRUE, 0);
-  gtk_widget_show (main_frame);
+  gtk_widget_set_visible (main_frame, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_frame_set_label_widget (GTK_FRAME (main_frame), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("Cha_nnel:"));
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   store = gimp_enum_store_new_with_range (GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           GIMP_HISTOGRAM_VALUE,
@@ -384,7 +384,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (tool->channel_menu),
                                       levels_menu_sensitivity, filter_tool, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), tool->channel_menu, FALSE, FALSE, 0);
-  gtk_widget_show (tool->channel_menu);
+  gtk_widget_set_visible (tool->channel_menu, TRUE);
 
   g_signal_connect (tool->channel_menu, "changed",
                     G_CALLBACK (levels_channel_callback),
@@ -394,7 +394,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
 
   button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (levels_channel_reset_callback),
@@ -421,31 +421,31 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
 
   frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
-  gtk_widget_show (frame_vbox);
+  gtk_widget_set_visible (frame_vbox, TRUE);
 
   /*  Input levels frame  */
   frame = gimp_frame_new (_("Input Levels"));
   gtk_box_pack_start (GTK_BOX (frame_vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   g_set_weak_pointer (&tool->histogram_view,
                       gimp_histogram_view_new (FALSE));
 
   gtk_box_pack_start (GTK_BOX (vbox2), tool->histogram_view, TRUE, TRUE, 0);
-  gtk_widget_show (GTK_WIDGET (tool->histogram_view));
+  gtk_widget_set_visible (GTK_WIDGET (tool->histogram_view), TRUE);
 
   g_object_bind_property (G_OBJECT (tool_options),         "histogram-scale",
                           G_OBJECT (tool->histogram_view), "histogram-scale",
@@ -457,22 +457,22 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   vbox3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox3), border);
   gtk_box_pack_start (GTK_BOX (vbox2), vbox3, FALSE, FALSE, 0);
-  gtk_widget_show (vbox3);
+  gtk_widget_set_visible (vbox3, TRUE);
 
   tool->input_bar = g_object_new (GIMP_TYPE_COLOR_BAR, NULL);
   gtk_widget_set_size_request (tool->input_bar, -1, GRADIENT_HEIGHT / 2);
   gtk_box_pack_start (GTK_BOX (vbox3), tool->input_bar, FALSE, FALSE, 0);
-  gtk_widget_show (tool->input_bar);
+  gtk_widget_set_visible (tool->input_bar, TRUE);
 
   bar = g_object_new (GIMP_TYPE_COLOR_BAR, NULL);
   gtk_widget_set_size_request (bar, -1, GRADIENT_HEIGHT / 2);
   gtk_box_pack_start (GTK_BOX (vbox3), bar, FALSE, FALSE, 0);
-  gtk_widget_show (bar);
+  gtk_widget_set_visible (bar, TRUE);
 
   handle_bar = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
   gtk_widget_set_size_request (handle_bar, -1, CONTROL_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox3), handle_bar, FALSE, FALSE, 0);
-  gtk_widget_show (handle_bar);
+  gtk_widget_set_visible (handle_bar, TRUE);
 
   gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (handle_bar),
                                   tool->input_bar);
@@ -482,16 +482,16 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   /*  Horizontal box for input levels spinbuttons  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /*  low input spin  */
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
-  gtk_widget_show (hbox2);
+  gtk_widget_set_visible (hbox2, TRUE);
 
   button = gimp_levels_tool_color_picker_new (tool, PICK_LOW_INPUT);
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   tool->low_input_spinbutton = spinbutton =
     gimp_prop_spin_button_new (filter_tool->config, "low-input",
@@ -505,7 +505,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   /*  clamp input toggle  */
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), hbox2, TRUE, FALSE, 0);
-  gtk_widget_show (hbox2);
+  gtk_widget_set_visible (hbox2, TRUE);
 
   button = gimp_prop_check_button_new (filter_tool->config, "clamp-input",
                                        _("Clamp _input"));
@@ -531,11 +531,11 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   /*  high input spin  */
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
-  gtk_widget_show (hbox2);
+  gtk_widget_set_visible (hbox2, TRUE);
 
   button = gimp_levels_tool_color_picker_new (tool, PICK_HIGH_INPUT);
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   spinbutton = gimp_prop_spin_button_new (filter_tool->config, "high-input",
                                           0.01, 0.1, 1);
@@ -549,31 +549,31 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   /*  Output levels frame  */
   frame = gimp_frame_new (_("Output Levels"));
   gtk_box_pack_start (GTK_BOX (frame_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), border);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   tool->output_bar = g_object_new (GIMP_TYPE_COLOR_BAR, NULL);
   gtk_widget_set_size_request (tool->output_bar, -1, GRADIENT_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox2), tool->output_bar, FALSE, FALSE, 0);
-  gtk_widget_show (tool->output_bar);
+  gtk_widget_set_visible (tool->output_bar, TRUE);
 
   handle_bar = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
   gtk_widget_set_size_request (handle_bar, -1, CONTROL_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox2), handle_bar, FALSE, FALSE, 0);
-  gtk_widget_show (handle_bar);
+  gtk_widget_set_visible (handle_bar, TRUE);
 
   gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (handle_bar),
                                   tool->output_bar);
@@ -581,7 +581,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   /*  Horizontal box for levels spin widgets  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /*  low output spin  */
   tool->low_output_spinbutton = spinbutton =
@@ -609,22 +609,22 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   /*  all channels frame  */
   main_frame = gimp_frame_new (_("All Channels"));
   gtk_box_pack_start (GTK_BOX (main_vbox), main_frame, FALSE, FALSE, 0);
-  gtk_widget_show (main_frame);
+  gtk_widget_set_visible (main_frame, TRUE);
 
   frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
-  gtk_widget_show (frame_vbox);
+  gtk_widget_set_visible (frame_vbox, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("_Auto Input Levels"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gimp_help_set_help_data (button,
                            _("Adjust levels for all channels automatically"),
                            NULL);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (levels_stretch_callback),
@@ -634,24 +634,24 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
                                               PICK_HIGH_INPUT |
                                               PICK_ALL_CHANNELS);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   button = gimp_levels_tool_color_picker_new (tool,
                                               PICK_GAMMA |
                                               PICK_ALL_CHANNELS);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   button = gimp_levels_tool_color_picker_new (tool,
                                               PICK_LOW_INPUT |
                                               PICK_ALL_CHANNELS);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   button = gimp_icon_button_new (GIMP_ICON_TOOL_CURVES,
                                  _("Edit these Settings as Curves"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (levels_to_curves_callback),
@@ -882,7 +882,7 @@ gimp_levels_tool_export_setup (GimpSettingsBox      *settings_box,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 tool->export_old_format);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), button);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),

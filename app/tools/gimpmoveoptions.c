@@ -209,7 +209,7 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
       group = g_slist_next (group);
       gtk_button_set_label (GTK_BUTTON (group->data), false_label);
 
-      gtk_widget_show (gtk_bin_get_child (GTK_BIN (frame)));
+      gtk_widget_set_visible (gtk_bin_get_child (GTK_BIN (frame)), TRUE);
     }
 }
 
@@ -229,19 +229,19 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   options->type_box = hbox;
 
   label = gtk_label_new (_("Move:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   box = gimp_prop_enum_icon_box_new (config, "move-type", "gimp",
                                      GIMP_TRANSFORM_TYPE_LAYER,
                                      GIMP_TRANSFORM_TYPE_PATH);
   gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   g_signal_connect_object (gui_config,
                            "notify::override-theme-icon-size",
@@ -268,7 +268,7 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
                            frame, 0);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   g_free (title);
 

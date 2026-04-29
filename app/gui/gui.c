@@ -204,7 +204,7 @@ gui_abort (const gchar *abort_message)
 
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       box, TRUE, TRUE, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   gimp_dialog_run (GIMP_DIALOG (dialog));
 
@@ -338,7 +338,7 @@ gui_recover (gint n_recoveries)
   box = gimp_message_box_new (GIMP_ICON_WILBER_EEK);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       box, TRUE, TRUE, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
                                      _("Eeek! It looks like GIMP recovered from a crash!"));

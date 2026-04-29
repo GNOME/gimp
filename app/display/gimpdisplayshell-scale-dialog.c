@@ -159,7 +159,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (shell->scale_dialog))),
                       grid, TRUE, TRUE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   row = 0;
 
@@ -175,18 +175,18 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spin), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spin), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
-  gtk_widget_show (spin);
+  gtk_widget_set_visible (spin, TRUE);
 
   label = gtk_label_new (":");
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   data->denom_adj = gtk_adjustment_new (denom, 1, 256, 1, 8, 0);
   spin = gimp_spin_button_new (data->denom_adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spin), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spin), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
-  gtk_widget_show (spin);
+  gtk_widget_set_visible (spin, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
@@ -200,11 +200,11 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spin), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spin), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
-  gtk_widget_show (spin);
+  gtk_widget_set_visible (spin, TRUE);
 
   label = gtk_label_new ("%");
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   g_signal_connect (data->scale_adj, "value-changed",
                     G_CALLBACK (update_zoom_values), data);
@@ -213,7 +213,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   g_signal_connect (data->denom_adj, "value-changed",
                     G_CALLBACK (update_zoom_values), data);
 
-  gtk_widget_show (shell->scale_dialog);
+  gtk_widget_set_visible (shell->scale_dialog, TRUE);
 }
 
 static void

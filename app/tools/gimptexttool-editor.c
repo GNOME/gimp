@@ -260,12 +260,12 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
       text_tool->overlay_dragging = FALSE;
 
       if (options->show_on_canvas)
-        gtk_widget_show (text_tool->style_editor);
+        gtk_widget_set_visible (text_tool->style_editor, TRUE);
     }
 
   gimp_text_tool_editor_position (text_tool);
   if (options->show_on_canvas)
-    gtk_widget_show (text_tool->style_overlay);
+    gtk_widget_set_visible (text_tool->style_overlay, TRUE);
 }
 
 void
@@ -847,12 +847,12 @@ gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
       gtk_window_set_screen (GTK_WINDOW (text_tool->offscreen_window),
                              gtk_widget_get_screen (GTK_WIDGET (shell)));
       gtk_window_move (GTK_WINDOW (text_tool->offscreen_window), -200, -200);
-      gtk_widget_show (text_tool->offscreen_window);
+      gtk_widget_set_visible (text_tool->offscreen_window, TRUE);
 
       text_tool->proxy_text_view = gimp_text_proxy_new ();
       gtk_container_add (GTK_CONTAINER (text_tool->offscreen_window),
                          text_tool->proxy_text_view);
-      gtk_widget_show (text_tool->proxy_text_view);
+      gtk_widget_set_visible (text_tool->proxy_text_view, TRUE);
 
       g_signal_connect_swapped (text_tool->proxy_text_view, "move-cursor",
                                 G_CALLBACK (gimp_text_tool_move_cursor),
@@ -1486,7 +1486,7 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
                     G_CALLBACK (gimp_text_tool_editor_destroy),
                     text_tool);
 
-  gtk_widget_show (text_tool->editor_dialog);
+  gtk_widget_set_visible (text_tool->editor_dialog, TRUE);
 }
 
 static void

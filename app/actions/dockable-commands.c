@@ -191,7 +191,7 @@ dockable_toggle_view_cmd_callback (GimpAction *action,
                       gtk_notebook_insert_page (GTK_NOTEBOOK (dockbook),
                                                 new_dockable, NULL,
                                                 page_num);
-                      gtk_widget_show (new_dockable);
+                      gtk_widget_set_visible (new_dockable, TRUE);
 
                       gtk_container_remove (GTK_CONTAINER (dockbook),
                                             GTK_WIDGET (dockable));

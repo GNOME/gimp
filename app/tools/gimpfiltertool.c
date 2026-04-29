@@ -400,13 +400,13 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                               FALSE, FALSE, 0);
 
           if (filter_tool->has_settings)
-            gtk_widget_show (filter_tool->settings_box);
+            gtk_widget_set_visible (filter_tool->settings_box, TRUE);
         }
 
       /*  The preview and split view toggles  */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
       gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
                                            "preview", NULL);
@@ -511,7 +511,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
         GTK_ORIENTATION_VERTICAL, 2);
       gtk_box_pack_start (GTK_BOX (vbox), filter_tool->operation_settings_box,
                           FALSE, FALSE, 0);
-      gtk_widget_show (filter_tool->operation_settings_box);
+      gtk_widget_set_visible (filter_tool->operation_settings_box, TRUE);
 
       gimp_filter_tool_update_dialog_operation_settings (filter_tool);
     }
@@ -1465,7 +1465,7 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
           gtk_box_pack_start (GTK_BOX (vbox), expander,
                               FALSE, FALSE, 0);
           gtk_expander_set_resize_toplevel (GTK_EXPANDER (expander), TRUE);
-          gtk_widget_show (expander);
+          gtk_widget_set_visible (expander, TRUE);
 
           g_object_bind_property (options,  "blending-options-expanded",
                                   expander, "expanded",
@@ -1474,11 +1474,11 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
 
           frame = gimp_frame_new (NULL);
           gtk_container_add (GTK_CONTAINER (expander), frame);
-          gtk_widget_show (frame);
+          gtk_widget_set_visible (frame, TRUE);
 
           vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
           gtk_container_add (GTK_CONTAINER (frame), vbox2);
-          gtk_widget_show (vbox2);
+          gtk_widget_set_visible (vbox2, TRUE);
 
           /*  The mode box  */
           mode_box = gimp_prop_layer_mode_box_new (
@@ -1488,7 +1488,7 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
                                          _("Mode"));
           gtk_box_pack_start (GTK_BOX (vbox2), mode_box,
                               FALSE, FALSE, 0);
-          gtk_widget_show (mode_box);
+          gtk_widget_set_visible (mode_box, TRUE);
 
           /*  The opacity scale  */
           scale = gimp_prop_spin_scale_new (filter_tool->config,
@@ -1497,7 +1497,7 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
           gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
           gtk_box_pack_start (GTK_BOX (vbox2), scale,
                               FALSE, FALSE, 0);
-          gtk_widget_show (scale);
+          gtk_widget_set_visible (scale, TRUE);
         }
     }
 }
@@ -2460,7 +2460,7 @@ gimp_filter_tool_add_color_picker (GimpFilterTool     *filter_tool,
                 "margin-bottom", 2,
                 NULL);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   if (tooltip)
     gimp_help_set_help_data (button, tooltip, NULL);

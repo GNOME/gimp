@@ -314,7 +314,7 @@ gimp_thumb_box_new (GimpContext *context)
 
   ebox = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (box), ebox);
-  gtk_widget_show (ebox);
+  gtk_widget_set_visible (ebox, TRUE);
 
   g_signal_connect (ebox, "button-press-event",
                     G_CALLBACK (gimp_thumb_box_ebox_button_press),
@@ -331,20 +331,20 @@ gimp_thumb_box_new (GimpContext *context)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (ebox), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   vbox2 = g_object_new (GIMP_TYPE_HEADER, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   button = gtk_button_new ();
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("Pr_eview"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_container_add (GTK_CONTAINER (button), label);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   g_signal_connect (button, "button-press-event",
                     G_CALLBACK (gtk_true),
@@ -362,7 +362,7 @@ gimp_thumb_box_new (GimpContext *context)
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 4);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, TRUE, TRUE, 0);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   box->imagefile = gimp_imagefile_new (context->gimp, NULL);
 
@@ -387,7 +387,7 @@ gimp_thumb_box_new (GimpContext *context)
   gtk_style_context_add_class (gtk_widget_get_style_context (box->preview),
                                GTK_STYLE_CLASS_VIEW);
   gtk_box_pack_start (GTK_BOX (vbox2), box->preview, FALSE, FALSE, 0);
-  gtk_widget_show (box->preview);
+  gtk_widget_set_visible (box->preview, TRUE);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), box->preview);
 
@@ -403,7 +403,7 @@ gimp_thumb_box_new (GimpContext *context)
                              PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox2), box->filename, FALSE, FALSE, 0);
-  gtk_widget_show (box->filename);
+  gtk_widget_set_visible (box->filename, TRUE);
 
   box->info = gtk_label_new (" \n \n \n ");
   gtk_label_set_justify (GTK_LABEL (box->info), GTK_JUSTIFY_CENTER);
@@ -412,14 +412,14 @@ gimp_thumb_box_new (GimpContext *context)
                              PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox2), box->info, FALSE, FALSE, 0);
-  gtk_widget_show (box->info);
+  gtk_widget_set_visible (box->info, TRUE);
 
   box->progress = gtk_progress_bar_new ();
   gtk_widget_set_halign (box->progress, GTK_ALIGN_FILL);
   gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (box->progress), TRUE);
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), "Fog");
   gtk_box_pack_end (GTK_BOX (vbox2), box->progress, FALSE, FALSE, 0);
-  /* don't gtk_widget_show (box->progress); */
+  /* don't gtk_widget_set_visible (box->progress, TRUE); */
 
   gtk_widget_set_size_request (GTK_WIDGET (box),
                                MAX ((gint) GIMP_THUMB_SIZE_NORMAL,
@@ -584,7 +584,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
   if (box->files)
     {
       gtk_widget_set_visible (box->info, FALSE);
-      gtk_widget_show (box->progress);
+      gtk_widget_set_visible (box->progress, TRUE);
     }
 
   n_files = g_slist_length (box->files);
@@ -658,7 +658,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
   if (box->files)
     {
       gtk_widget_set_visible (box->progress, FALSE);
-      gtk_widget_show (box->info);
+      gtk_widget_set_visible (box->info, TRUE);
     }
 
   if (dialog)

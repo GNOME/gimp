@@ -144,14 +144,14 @@ gimp_navigation_editor_init (GimpNavigationEditor *editor)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   editor->view = gimp_view_new_by_types (NULL,
                                          GIMP_TYPE_NAVIGATION_VIEW,
                                          GIMP_TYPE_IMAGE_PROXY,
                                          GIMP_VIEW_SIZE_MEDIUM, 0, TRUE);
   gtk_container_add (GTK_CONTAINER (frame), editor->view);
-  gtk_widget_show (editor->view);
+  gtk_widget_set_visible (editor->view, TRUE);
 
   g_signal_connect (editor->view, "marker-changed",
                     G_CALLBACK (gimp_navigation_editor_marker_changed),
@@ -288,13 +288,13 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
       gtk_container_add (GTK_CONTAINER (shell->nav_popup), frame);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       editor =
         GIMP_NAVIGATION_EDITOR (gimp_navigation_editor_new_private (NULL,
                                                                     shell));
       gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (editor));
-      gtk_widget_show (GTK_WIDGET (editor));
+      gtk_widget_set_visible (GTK_WIDGET (editor), TRUE);
 
       g_signal_connect (editor->view, "button-release-event",
                         G_CALLBACK (gimp_navigation_editor_button_release),
@@ -376,7 +376,7 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
     gtk_window_move (GTK_WINDOW (shell->nav_popup), x, y);
   }
 
-  gtk_widget_show (shell->nav_popup);
+  gtk_widget_set_visible (shell->nav_popup, TRUE);
   gdk_display_flush (gtk_widget_get_display (shell->nav_popup));
 
   /* fill in then grab pointer */
@@ -464,7 +464,7 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_end (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       editor->zoom_adjustment = gtk_adjustment_new (0.0, -8.0, 8.0,
                                                     0.5, 1.0, 0.0);
@@ -477,14 +477,14 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
                               editor->zoom_adjustment);
       gtk_scale_set_draw_value (GTK_SCALE (hscale), FALSE);
       gtk_box_pack_start (GTK_BOX (hbox), hscale, TRUE, TRUE, 0);
-      gtk_widget_show (hscale);
+      gtk_widget_set_visible (hscale, TRUE);
 
       /* the zoom label */
 
       editor->zoom_label = gtk_label_new ("100%");
       gtk_label_set_width_chars (GTK_LABEL (editor->zoom_label), 7);
       gtk_box_pack_start (GTK_BOX (hbox), editor->zoom_label, FALSE, FALSE, 0);
-      gtk_widget_show (editor->zoom_label);
+      gtk_widget_set_visible (editor->zoom_label, TRUE);
     }
 
   return GTK_WIDGET (editor);

@@ -161,22 +161,22 @@ tips_dialog_create (Gimp *gimp)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (tips_dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_INFORMATION,
                                         GTK_ICON_SIZE_DIALOG);
   gtk_widget_set_valign (image, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   tip_label = gtk_label_new (NULL);
   gtk_label_set_max_width_chars (GTK_LABEL (tip_label), 70);
@@ -185,16 +185,16 @@ tips_dialog_create (Gimp *gimp)
   gtk_label_set_line_wrap (GTK_LABEL (tip_label), TRUE);
   gtk_label_set_yalign (GTK_LABEL (tip_label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), tip_label, TRUE, TRUE, 0);
-  gtk_widget_show (tip_label);
+  gtk_widget_set_visible (tip_label, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   more_button = gtk_link_button_new_with_label ("https://docs.gimp.org/",
   /*  a link to the related section in the user manual  */
                                                 _("Learn more"));
-  gtk_widget_show (more_button);
+  gtk_widget_set_visible (more_button, TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), more_button, FALSE, FALSE, 0);
 
   g_signal_connect (more_button, "activate-link",

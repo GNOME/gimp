@@ -95,24 +95,24 @@ file_open_location_dialog_new (Gimp *gimp)
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_WEB, GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   label = gtk_label_new (_("Enter location (URI):"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   /* we don't want the context to affect the entry, so create
    * a scratch one instead of using e.g. the user context
@@ -130,7 +130,7 @@ file_open_location_dialog_new (Gimp *gimp)
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
   gtk_widget_set_size_request (entry, 400, -1);
   gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
-  gtk_widget_show (entry);
+  gtk_widget_set_visible (entry, TRUE);
 
   g_object_set_data (G_OBJECT (dialog), "location-entry", entry);
 
@@ -196,7 +196,7 @@ file_open_location_response (GtkDialog *dialog,
 
       if (file)
         {
-          gtk_widget_show (box);
+          gtk_widget_set_visible (box, TRUE);
 
           gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
           gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, FALSE);

@@ -308,7 +308,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* stroke width */
   scale = gimp_prop_spin_scale_new (config, "stroke-width",
@@ -322,7 +322,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
                                 GIMP_ICON_RESET, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_foreground_select_options_reset_stroke_width),
@@ -349,7 +349,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   /* engine */
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   combo = gimp_prop_enum_combo_box_new (config, "engine", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Engine"));
@@ -361,7 +361,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
 
   inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), inner_vbox);
-  gtk_widget_show (inner_vbox);
+  gtk_widget_set_visible (inner_vbox, TRUE);
 
   /*  engine parameters  */
   scale = gimp_prop_spin_scale_new (config, "levels",

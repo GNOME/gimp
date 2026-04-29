@@ -192,14 +192,14 @@ gimp_transform_3d_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_check_button_new (config, "unified", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   label = g_strdup_printf (_("Constrain axis (%s)"),
                            gimp_get_mod_string (extend_mask));
 
   button = gimp_prop_check_button_new (config, "constrain-axis", label);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_free (label);
 
@@ -208,7 +208,7 @@ gimp_transform_3d_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_check_button_new (config, "z-axis", label);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_free (label);
 
@@ -217,7 +217,7 @@ gimp_transform_3d_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_check_button_new (config, "local-frame", label);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_free (label);
 

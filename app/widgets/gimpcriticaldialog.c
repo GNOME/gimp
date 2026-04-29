@@ -135,7 +135,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_container_set_border_width (GTK_CONTAINER (container), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       dialog->main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (dialog->main_vbox);
+  gtk_widget_set_visible (dialog->main_vbox, TRUE);
 
   /* The error label. */
   dialog->top_label = gtk_label_new (NULL);
@@ -151,7 +151,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_label_set_attributes (GTK_LABEL (dialog->top_label), attrs);
   pango_attr_list_unref (attrs);
 
-  gtk_widget_show (dialog->top_label);
+  gtk_widget_set_visible (dialog->top_label, TRUE);
 
   dialog->center_label = gtk_label_new (NULL);
 
@@ -159,7 +159,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_label_set_selectable (GTK_LABEL (dialog->center_label), TRUE);
   gtk_box_pack_start (GTK_BOX (dialog->main_vbox), dialog->center_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (dialog->center_label);
+  gtk_widget_set_visible (dialog->center_label, TRUE);
 
   dialog->bottom_label = gtk_label_new (NULL);
   gtk_widget_set_halign (dialog->bottom_label, GTK_ALIGN_START);
@@ -170,7 +170,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   pango_attr_list_insert (attrs, attr);
   gtk_label_set_attributes (GTK_LABEL (dialog->bottom_label), attrs);
   pango_attr_list_unref (attrs);
-  gtk_widget_show (dialog->bottom_label);
+  gtk_widget_set_visible (dialog->bottom_label, TRUE);
 
   dialog->pid      = 0;
   dialog->program  = NULL;
@@ -199,21 +199,21 @@ gimp_critical_dialog_constructed (GObject *object)
 
       expander = gtk_expander_new (_("See bug details"));
       gtk_box_pack_start (GTK_BOX (dialog->main_vbox), expander, TRUE, TRUE, 0);
-      gtk_widget_show (expander);
+      gtk_widget_set_visible (expander, TRUE);
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
       gtk_container_add (GTK_CONTAINER (expander), vbox);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
 
       gtk_box_pack_start (GTK_BOX (vbox), scrolled, TRUE, TRUE, 0);
-      gtk_widget_show (scrolled);
+      gtk_widget_set_visible (scrolled, TRUE);
 
       button = gtk_button_new_with_label (BUTTON1_TEXT);
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (gimp_critical_dialog_copy_info),
                                 dialog);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 6);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       gtk_dialog_add_buttons (GTK_DIALOG (dialog),
                               _("Go to _Download page"), GIMP_CRITICAL_RESPONSE_DOWNLOAD,
@@ -234,7 +234,7 @@ gimp_critical_dialog_constructed (GObject *object)
     {
       /* Pack directly (and well visible) the bug details. */
       gtk_box_pack_start (GTK_BOX (dialog->main_vbox), scrolled, TRUE, TRUE, 6);
-      gtk_widget_show (scrolled);
+      gtk_widget_set_visible (scrolled, TRUE);
 
       gtk_dialog_add_buttons (GTK_DIALOG (dialog),
                               BUTTON1_TEXT, GIMP_CRITICAL_RESPONSE_CLIPBOARD,
@@ -283,7 +283,7 @@ gimp_critical_dialog_constructed (GObject *object)
   dialog->details = gtk_text_view_new_with_buffer (buffer);
   g_object_unref (buffer);
   gtk_text_view_set_editable (GTK_TEXT_VIEW (dialog->details), FALSE);
-  gtk_widget_show (dialog->details);
+  gtk_widget_set_visible (dialog->details, TRUE);
   gtk_container_add (GTK_CONTAINER (scrolled), dialog->details);
 }
 

@@ -269,7 +269,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
                                  -1);
       gtk_container_add (GTK_CONTAINER (dialog->compression_frame),
                          label);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
       g_free (text);
     }
 
@@ -330,28 +330,28 @@ gimp_save_dialog_add_extra_widgets (GimpSaveDialog *dialog)
 
   dialog->compression_frame = gimp_frame_new (NULL);
   gtk_frame_set_label_widget (GTK_FRAME (dialog->compression_frame), compression_toggle);
-  gtk_widget_show (compression_toggle);
+  gtk_widget_set_visible (compression_toggle, TRUE);
   gimp_file_dialog_add_extra_widget (GIMP_FILE_DIALOG (dialog), dialog->compression_frame,
                                      FALSE, FALSE, 0);
-  gtk_widget_show (dialog->compression_frame);
+  gtk_widget_set_visible (dialog->compression_frame, TRUE);
 
   /* Additional information explaining file compatibility things */
   dialog->compat_info = gtk_expander_new (NULL);
   label = gtk_label_new ("");
   gtk_expander_set_label_widget (GTK_EXPANDER (dialog->compat_info), label);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
 
   reasons = gtk_text_view_new ();
   gtk_text_view_set_editable (GTK_TEXT_VIEW (reasons), FALSE);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (reasons), FALSE);
   gtk_container_add (GTK_CONTAINER (dialog->compat_info), reasons);
-  gtk_widget_show (reasons);
+  gtk_widget_set_visible (reasons, TRUE);
 
   gimp_file_dialog_add_extra_widget (GIMP_FILE_DIALOG (dialog),
                                      dialog->compat_info,
                                      FALSE, FALSE, 0);
-  gtk_widget_show (dialog->compat_info);
+  gtk_widget_set_visible (dialog->compat_info, TRUE);
 
   g_signal_connect (compression_toggle, "toggled",
                     G_CALLBACK (gimp_save_dialog_compression_toggled),
@@ -391,7 +391,7 @@ gimp_save_dialog_compression_toggled (GtkToggleButton *button,
   if (version <= 206)
     gtk_widget_set_visible (dialog->compat_info, FALSE);
   else
-    gtk_widget_show (dialog->compat_info);
+    gtk_widget_set_visible (dialog->compat_info, TRUE);
 
   /* Set the compatibility label. */
   compat_hint =

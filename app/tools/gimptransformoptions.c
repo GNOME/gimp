@@ -261,13 +261,13 @@ gimp_transform_options_gui (GimpToolOptions *tool_options,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   options->type_box = hbox;
 
   label = gtk_label_new (_("Transform:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   box = gimp_prop_enum_icon_box_new (config, "type", "gimp", 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);

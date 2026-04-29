@@ -188,30 +188,30 @@ palette_import_dialog_new (GimpContext *context)
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_hbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_hbox);
+  gtk_widget_set_visible (main_hbox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
 
   /*  The "Source" frame  */
 
   frame = gimp_frame_new (_("Select Source"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   private->gradient_radio =
     gtk_radio_button_new_with_mnemonic (group, _("_Gradient"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (private->gradient_radio));
   gtk_grid_attach (GTK_GRID (grid), private->gradient_radio, 0, 0, 1, 1);
-  gtk_widget_show (private->gradient_radio);
+  gtk_widget_set_visible (private->gradient_radio, TRUE);
 
   g_signal_connect (private->gradient_radio, "toggled",
                     G_CALLBACK (palette_import_grad_callback),
@@ -221,7 +221,7 @@ palette_import_dialog_new (GimpContext *context)
     gtk_radio_button_new_with_mnemonic (group, _("I_mage"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (private->image_radio));
   gtk_grid_attach (GTK_GRID (grid), private->image_radio, 0, 1, 1, 1);
-  gtk_widget_show (private->image_radio);
+  gtk_widget_set_visible (private->image_radio, TRUE);
 
   g_signal_connect (private->image_radio, "toggled",
                     G_CALLBACK (palette_import_image_callback),
@@ -235,7 +235,7 @@ palette_import_dialog_new (GimpContext *context)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (private->sample_merged_toggle),
                                 TRUE);
   gtk_grid_attach (GTK_GRID (grid), private->sample_merged_toggle, 1, 2, 1, 1);
-  gtk_widget_show (private->sample_merged_toggle);
+  gtk_widget_set_visible (private->sample_merged_toggle, TRUE);
 
   g_signal_connect_swapped (private->sample_merged_toggle, "toggled",
                             G_CALLBACK (palette_import_make_palette),
@@ -246,7 +246,7 @@ palette_import_dialog_new (GimpContext *context)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (private->selection_only_toggle),
                                 FALSE);
   gtk_grid_attach (GTK_GRID (grid), private->selection_only_toggle, 1, 3, 1, 1);
-  gtk_widget_show (private->selection_only_toggle);
+  gtk_widget_set_visible (private->selection_only_toggle, TRUE);
 
   g_signal_connect_swapped (private->selection_only_toggle, "toggled",
                             G_CALLBACK (palette_import_make_palette),
@@ -256,7 +256,7 @@ palette_import_dialog_new (GimpContext *context)
     gtk_radio_button_new_with_mnemonic (group, _("Palette _file"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (private->image_radio));
   gtk_grid_attach (GTK_GRID (grid), private->file_radio, 0, 4, 1, 1);
-  gtk_widget_show (private->file_radio);
+  gtk_widget_set_visible (private->file_radio, TRUE);
 
   g_signal_connect (private->file_radio, "toggled",
                     G_CALLBACK (palette_import_file_callback),
@@ -296,13 +296,13 @@ palette_import_dialog_new (GimpContext *context)
 
   frame = gimp_frame_new (_("Import Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /*  The source's name  */
   private->entry = gtk_entry_new ();
@@ -350,11 +350,11 @@ palette_import_dialog_new (GimpContext *context)
   /*  The "Preview" frame  */
   frame = gimp_frame_new (_("Preview"));
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   private->preview = gimp_view_new_full_by_types (private->context,
                                                  GIMP_TYPE_VIEW,
@@ -363,7 +363,7 @@ palette_import_dialog_new (GimpContext *context)
                                                  TRUE, FALSE, FALSE);
   gtk_widget_set_halign (private->preview, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), private->preview, FALSE, FALSE, 0);
-  gtk_widget_show (private->preview);
+  gtk_widget_set_visible (private->preview, TRUE);
 
   private->no_colors_label =
     gtk_label_new (_("The selected source contains no colors."));
@@ -373,7 +373,7 @@ palette_import_dialog_new (GimpContext *context)
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), private->no_colors_label, FALSE, FALSE, 0);
-  gtk_widget_show (private->no_colors_label);
+  gtk_widget_set_visible (private->no_colors_label, TRUE);
 
 
   /*  keep the dialog up-to-date  */

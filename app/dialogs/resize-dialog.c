@@ -248,16 +248,16 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   /* template selector */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("_Template:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   template_selector = g_object_new (GIMP_TYPE_CONTAINER_COMBO_BOX,
                                     "container",         context->gimp->templates,
@@ -269,7 +269,7 @@ resize_dialog_new (GimpViewable       *viewable,
                                     NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), template_selector, TRUE, TRUE, 0);
-  gtk_widget_show (template_selector);
+  gtk_widget_set_visible (template_selector, TRUE);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), template_selector);
 
@@ -284,7 +284,7 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
                                 GIMP_ICON_RESET, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button,
                     "clicked",
@@ -304,12 +304,12 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* actual label text is set inside template_change fn. */
   ppi_image    = gtk_radio_button_new_with_label (NULL, "");
@@ -327,8 +327,8 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_box_pack_start (GTK_BOX (hbox), ppi_image, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), ppi_template, FALSE, FALSE, 0);
 
-  gtk_widget_show (ppi_image);
-  gtk_widget_show (ppi_template);
+  gtk_widget_set_visible (ppi_image, TRUE);
+  gtk_widget_set_visible (ppi_template, TRUE);
 
   g_signal_connect (G_OBJECT (ppi_image),
                     "toggled",
@@ -347,20 +347,20 @@ resize_dialog_new (GimpViewable       *viewable,
    */
   center_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), center_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (center_hbox);
+  gtk_widget_set_visible (center_hbox, TRUE);
 
   center_left_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_box_pack_start (GTK_BOX (center_hbox), center_left_vbox, FALSE, FALSE, 0);
-  gtk_widget_show (center_left_vbox);
+  gtk_widget_set_visible (center_left_vbox, TRUE);
 
   center_right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (center_hbox), center_right_vbox, FALSE, FALSE, 0);
-  gtk_widget_show (center_right_vbox);
+  gtk_widget_set_visible (center_right_vbox, TRUE);
 
   /* size select frame */
   frame = gimp_frame_new (size_title);
   gtk_box_pack_start (GTK_BOX (center_left_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /* size box */
   private->box = g_object_new (GIMP_TYPE_SIZE_BOX,
@@ -373,16 +373,16 @@ resize_dialog_new (GimpViewable       *viewable,
                                "edit-resolution", FALSE,
                                NULL);
   gtk_container_add (GTK_CONTAINER (frame), private->box);
-  gtk_widget_show (private->box);
+  gtk_widget_set_visible (private->box, TRUE);
 
   /* offset frame */
   frame = gimp_frame_new (_("Offset"));
   gtk_box_pack_start (GTK_BOX (center_left_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /*  the offset sizeentry  */
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
@@ -396,13 +396,13 @@ resize_dialog_new (GimpViewable       *viewable,
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_grid_attach (GTK_GRID (entry), spinbutton, 1, 0, 1, 1);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
                                 _("_X:"), 0, 0, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),_("_Y:"), 1, 0, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
-  gtk_widget_show (entry);
+  gtk_widget_set_visible (entry, TRUE);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1, yres, FALSE);
@@ -423,11 +423,11 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_box_pack_start (GTK_BOX (center_right_vbox), frame, FALSE, FALSE, 0);
   gtk_style_context_add_class (gtk_widget_get_style_context (frame),
                                "gimp-offset-area-frame");
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   private->area = gimp_offset_area_new (width, height);
   gtk_container_add (GTK_CONTAINER (frame), private->area);
-  gtk_widget_show (private->area);
+  gtk_widget_set_visible (private->area, TRUE);
 
   gimp_viewable_get_preview_size (viewable, 200, TRUE, TRUE, &width, &height);
   pixbuf = gimp_viewable_get_pixbuf (viewable, context,
@@ -447,7 +447,7 @@ resize_dialog_new (GimpViewable       *viewable,
   /* Button to center the image on canvas just below the preview. */
   button = gtk_button_new_with_mnemonic (_("C_enter"));
   gtk_box_pack_start (GTK_BOX (center_right_vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (offset_center_clicked),
@@ -455,11 +455,11 @@ resize_dialog_new (GimpViewable       *viewable,
 
   frame = gimp_frame_new (layers_title);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   if (GIMP_IS_IMAGE (viewable))
     {
@@ -469,19 +469,19 @@ resize_dialog_new (GimpViewable       *viewable,
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       label = gtk_label_new_with_mnemonic (_("Resize _layers:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       gtk_size_group_add_widget (size_group, label);
 
       private->layer_set_combo = combo =
         gimp_enum_combo_box_new (GIMP_TYPE_ITEM_SET);
       gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-      gtk_widget_show (combo);
+      gtk_widget_set_visible (combo, TRUE);
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
@@ -495,12 +495,12 @@ resize_dialog_new (GimpViewable       *viewable,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   private->fill_type_combo = combo =
     gimp_enum_combo_box_new (GIMP_TYPE_FILL_TYPE);
   gtk_box_pack_end (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               private->fill_type,
@@ -514,7 +514,7 @@ resize_dialog_new (GimpViewable       *viewable,
       label = gtk_label_new_with_mnemonic (_("_Fill with:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
@@ -525,7 +525,7 @@ resize_dialog_new (GimpViewable       *viewable,
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                     private->resize_text_layers);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       g_signal_connect (button, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
@@ -777,7 +777,7 @@ template_changed (GimpContext  *context,
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (private->ppi_image),
                                         TRUE);
 
-          gtk_widget_show (private->ppi_box);
+          gtk_widget_set_visible (private->ppi_box, TRUE);
         }
     }
 

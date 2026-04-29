@@ -178,7 +178,7 @@ gimp_message_box_constructed (GObject *object)
       gtk_widget_set_halign (box->image, GTK_ALIGN_START);
       gtk_widget_set_valign (box->image, GTK_ALIGN_START);
       gtk_widget_set_parent (box->image, GTK_WIDGET (box));
-      gtk_widget_show (box->image);
+      gtk_widget_set_visible (box->image, TRUE);
     }
 }
 
@@ -399,7 +399,7 @@ gimp_message_box_set_label_text (GimpMessageBox *box,
       gchar *utf8 = gimp_any_to_utf8 (text, -1, "Cannot convert text to utf8.");
 
       gtk_label_set_text (GTK_LABEL (label), utf8);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       g_free (utf8);
       g_free (text);
@@ -424,7 +424,7 @@ gimp_message_box_set_label_markup (GimpMessageBox *box,
       gchar *text = g_markup_vprintf_escaped (format, args);
 
       gtk_label_set_markup (GTK_LABEL (label), text);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       g_free (text);
     }
@@ -461,7 +461,7 @@ gimp_message_box_update (gpointer data)
                                  PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
                                  -1);
       gtk_box_pack_end (GTK_BOX (box), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
     }
 
   g_free (message);

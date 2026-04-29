@@ -129,7 +129,7 @@ gimp_layer_mode_box_constructed (GObject *object)
   box->priv->mode_combo = mode_combo =
     gimp_layer_mode_combo_box_new (box->priv->context);
   gtk_box_pack_start (GTK_BOX (box), mode_combo, TRUE, TRUE, 0);
-  gtk_widget_show (mode_combo);
+  gtk_widget_set_visible (mode_combo, TRUE);
 
   g_object_bind_property (object,                "context",
                           G_OBJECT (mode_combo), "context",

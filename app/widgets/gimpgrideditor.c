@@ -132,7 +132,7 @@ gimp_grid_editor_constructed (GObject *object)
 
   frame = gimp_frame_new (_("Appearance"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -176,11 +176,11 @@ gimp_grid_editor_constructed (GObject *object)
                             _("_Background color:"), 0.0, 0.5,
                             color_button, 1);
 
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   frame = gimp_frame_new (_("Spacing"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_widget_set_halign (hbox, GTK_ALIGN_START);
@@ -211,11 +211,11 @@ gimp_grid_editor_constructed (GObject *object)
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
 
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   frame = gimp_frame_new (_("Offset"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_widget_set_halign (hbox, GTK_ALIGN_START);
@@ -246,7 +246,7 @@ gimp_grid_editor_constructed (GObject *object)
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
 
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 }
 
 static void

@@ -161,7 +161,7 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
                              -1);
   gtk_box_pack_start (GTK_BOX (editor), editor->p->title_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (editor->p->title_label);
+  gtk_widget_set_visible (editor->p->title_label, TRUE);
 
   editor->p->scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   scrolled_window = GTK_SCROLLED_WINDOW (editor->p->scrolled_window);
@@ -173,12 +173,12 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 
   gtk_box_pack_start (GTK_BOX (editor), editor->p->scrolled_window,
                       TRUE, TRUE, 0);
-  gtk_widget_show (editor->p->scrolled_window);
+  gtk_widget_set_visible (editor->p->scrolled_window, TRUE);
 
   /*  The vbox containing the tool options  */
   editor->p->options_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (scrolled_window), editor->p->options_vbox);
-  gtk_widget_show (editor->p->options_vbox);
+  gtk_widget_set_visible (editor->p->options_vbox, TRUE);
 }
 
 static void
@@ -488,7 +488,7 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
         gtk_box_pack_start (GTK_BOX (editor->p->options_vbox), options_gui,
                             FALSE, FALSE, 0);
 
-      gtk_widget_show (options_gui);
+      gtk_widget_set_visible (options_gui, TRUE);
 
       editor->p->visible_tool_options = tool_info->tool_options;
 

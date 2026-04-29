@@ -212,7 +212,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
                                        -1,
                                        rows * (view_size + 2));
   gtk_box_pack_start (GTK_BOX (private->box), view, TRUE, TRUE, 0);
-  gtk_widget_show (view);
+  gtk_widget_set_visible (view, TRUE);
 
   g_signal_connect (view, "selection-changed",
                     G_CALLBACK (quit_close_all_dialog_images_selected),
@@ -228,14 +228,14 @@ quit_close_all_dialog_new (Gimp     *gimp,
   gtk_label_set_line_wrap (GTK_LABEL (private->lost_label), TRUE);
   gtk_box_pack_start (GTK_BOX (private->box), private->lost_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (private->lost_label);
+  gtk_widget_set_visible (private->lost_label, TRUE);
 
   private->hint_label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (private->hint_label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (private->hint_label), TRUE);
   gtk_box_pack_start (GTK_BOX (private->box), private->hint_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (private->hint_label);
+  gtk_widget_set_visible (private->hint_label, TRUE);
 
   closure = g_cclosure_new (G_CALLBACK (quit_close_all_dialog_container_changed),
                             private, NULL);
@@ -357,7 +357,7 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
         hint = g_strdup_printf (_("Press %s to discard all changes and close all images."),
                                 accel_string);
 
-      gtk_widget_show (private->lost_label);
+      gtk_widget_set_visible (private->lost_label, TRUE);
 
       icon = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
                                            GTK_ICON_SIZE_BUTTON);

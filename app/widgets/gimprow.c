@@ -231,7 +231,7 @@ gimp_row_init (GimpRow *row)
 
   ebox = gtk_event_box_new ();
   gtk_box_pack_end (GTK_BOX (priv->box), ebox, TRUE, TRUE, 0);
-  gtk_widget_show (ebox);
+  gtk_widget_set_visible (ebox, TRUE);
 
   priv->label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (priv->label), 0.0);
@@ -609,7 +609,7 @@ gimp_row_real_edit_name (GimpRow *row)
 
   box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (priv->rename_popover), box);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   default_name = GIMP_VIEWABLE_GET_CLASS (priv->viewable)->default_name;
 
@@ -617,12 +617,12 @@ gimp_row_real_edit_name (GimpRow *row)
   label = gtk_label_new (title);
   g_free (title);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (entry), gimp_object_get_name (priv->viewable));
   gtk_box_pack_start (GTK_BOX (box), entry, FALSE, FALSE, 0);
-  gtk_widget_show (entry);
+  gtk_widget_set_visible (entry, TRUE);
 
   g_signal_connect (entry, "activate",
                     G_CALLBACK (gimp_row_rename_entry_activate),

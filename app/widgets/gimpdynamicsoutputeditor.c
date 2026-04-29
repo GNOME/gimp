@@ -199,13 +199,13 @@ gimp_dynamics_output_editor_constructed (GObject *object)
                                CURVE_SIZE + CURVE_BORDER * 2,
                                CURVE_SIZE + CURVE_BORDER * 2);
   gtk_box_pack_start (GTK_BOX (editor), private->curve_view, TRUE, TRUE, 0);
-  gtk_widget_show (private->curve_view);
+  gtk_widget_set_visible (private->curve_view, TRUE);
 
   gimp_dynamics_output_editor_activate_input (editor, 0);
 
   button = gtk_button_new_with_mnemonic (_("_Reset Curve"));
   gtk_box_pack_start (GTK_BOX (editor), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_dynamics_output_editor_curve_reset),
@@ -272,7 +272,7 @@ gimp_dynamics_output_editor_constructed (GObject *object)
                                                NULL);
 
   gtk_box_pack_start (GTK_BOX (editor), view, FALSE, FALSE, 0);
-  gtk_widget_show (view);
+  gtk_widget_set_visible (view, TRUE);
 
   private->input_view = view;
 

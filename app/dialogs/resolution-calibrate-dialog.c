@@ -89,7 +89,7 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       grid, TRUE, TRUE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   if (icon_name)
     {
@@ -97,24 +97,24 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
                                                        GTK_ICON_SIZE_DIALOG);
 
       gtk_grid_attach (GTK_GRID (grid), image, 0, 0, 1, 1);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
     }
 
   ruler = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_widget_set_size_request (ruler, ruler_width, 32);
   gimp_ruler_set_range (GIMP_RULER (ruler), 0, ruler_width, ruler_width);
   gtk_grid_attach (GTK_GRID (grid), ruler, 1, 0, 2, 1);
-  gtk_widget_show (ruler);
+  gtk_widget_set_visible (ruler, TRUE);
 
   ruler = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
   gtk_widget_set_size_request (ruler, 32, ruler_height);
   gimp_ruler_set_range (GIMP_RULER (ruler), 0, ruler_height, ruler_height);
   gtk_grid_attach (GTK_GRID (grid), ruler, 0, 1, 1, 2);
-  gtk_widget_show (ruler);
+  gtk_widget_set_visible (ruler, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_grid_attach (GTK_GRID (grid), vbox, 1, 1, 1, 1);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   label =
     gtk_label_new (_("Measure the rulers and enter their lengths:"));
@@ -125,11 +125,11 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   calibrate_xres =
     gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 0);
@@ -158,9 +158,9 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
                     &calibrate_entry);
 
   gtk_box_pack_end (GTK_BOX (hbox), calibrate_entry, FALSE, FALSE, 0);
-  gtk_widget_show (calibrate_entry);
+  gtk_widget_set_visible (calibrate_entry, TRUE);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   switch (gimp_dialog_run (GIMP_DIALOG (dialog)))
     {

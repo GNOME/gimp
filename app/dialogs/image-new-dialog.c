@@ -129,16 +129,16 @@ image_new_dialog_new (GimpContext *context)
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   /*  The template combo  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("_Template:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   private->combo = g_object_new (GIMP_TYPE_CONTAINER_COMBO_BOX,
                                  "container",         context->gimp->templates,
@@ -149,7 +149,7 @@ image_new_dialog_new (GimpContext *context)
                                  "focus-on-click",    FALSE,
                                  NULL);
   gtk_box_pack_start (GTK_BOX (hbox), private->combo, TRUE, TRUE, 0);
-  gtk_widget_show (private->combo);
+  gtk_widget_set_visible (private->combo, TRUE);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), private->combo);
 
@@ -161,7 +161,7 @@ image_new_dialog_new (GimpContext *context)
   private->editor = gimp_template_editor_new (private->template, context->gimp,
                                               FALSE);
   gtk_box_pack_start (GTK_BOX (main_vbox), private->editor, FALSE, FALSE, 0);
-  gtk_widget_show (private->editor);
+  gtk_widget_set_visible (private->editor, TRUE);
 
   entry = GIMP_SIZE_ENTRY (gimp_template_editor_get_size_se (GIMP_TEMPLATE_EDITOR (private->editor)));
   gimp_size_entry_set_activates_default (entry, TRUE);
@@ -354,7 +354,7 @@ image_new_confirm_dialog (ImageNewDialog *private)
 
   gtk_widget_set_sensitive (private->dialog, FALSE);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 static void

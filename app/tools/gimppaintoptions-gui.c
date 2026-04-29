@@ -167,7 +167,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
          1.0, 10.0, 2, 1.0, 1000.0, 1.0, 1.7,
          G_CALLBACK (gimp_paint_options_gui_reset_size), link_group);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       hbox = gimp_paint_options_gui_scale_with_buttons
         (config, "brush-aspect-ratio", "brush-link-aspect-ratio",
@@ -175,7 +175,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
          0.1, 1.0, 2, -20.0, 20.0, 1.0, 1.0,
          G_CALLBACK (gimp_paint_options_gui_reset_aspect_ratio), link_group);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       hbox = gimp_paint_options_gui_scale_with_buttons
         (config, "brush-angle", "brush-link-angle",
@@ -183,7 +183,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
          0.1, 1.0, 2, -180.0, 180.0, 1.0, 1.0,
          G_CALLBACK (gimp_paint_options_gui_reset_angle), link_group);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       hbox = gimp_paint_options_gui_scale_with_buttons
         (config, "brush-spacing", "brush-link-spacing",
@@ -191,7 +191,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
          0.1, 1.0, 1, 1.0, 200.0, 100.0, 1.7,
          G_CALLBACK (gimp_paint_options_gui_reset_spacing), link_group);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       hbox = gimp_paint_options_gui_scale_with_buttons
         (config, "brush-hardness", "brush-link-hardness",
@@ -199,7 +199,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
          0.1, 1.0, 1, 0.0, 100.0, 100.0, 1.0,
          G_CALLBACK (gimp_paint_options_gui_reset_hardness), link_group);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       if (tool_type != GIMP_TYPE_PENCIL_TOOL)
         {
@@ -218,11 +218,11 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       frame = dynamics_options_gui (options, tool_type);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       frame = jitter_options_gui (options, tool_type);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
     }
 
   /*  the "smooth stroke" options  */
@@ -232,7 +232,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       frame = smoothing_options_gui (options, tool_type);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
     }
 
   /*  the "Lock brush to view" toggle  */
@@ -287,7 +287,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       frame = expand_options_gui (options, tool_type);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
     }
 
   return vbox;
@@ -335,16 +335,16 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
 
   inner_frame = gimp_frame_new (_("Fade Options"));
   gtk_box_pack_start (GTK_BOX (vbox), inner_frame, FALSE, FALSE, 0);
-  gtk_widget_show (inner_frame);
+  gtk_widget_set_visible (inner_frame, TRUE);
 
   inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (inner_frame), inner_vbox);
-  gtk_widget_show (inner_vbox);
+  gtk_widget_set_visible (inner_vbox, TRUE);
 
   /*  the fade-out scale & unitmenu  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   scale = gimp_prop_spin_scale_new (config, "fade-length",
                                     1.0, 50.0, 0);
@@ -375,11 +375,11 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
     {
       inner_frame = gimp_frame_new (_("Color Options"));
       gtk_box_pack_start (GTK_BOX (vbox), inner_frame, FALSE, FALSE, 0);
-      gtk_widget_show (inner_frame);
+      gtk_widget_set_visible (inner_frame, TRUE);
 
       inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
       gtk_container_add (GTK_CONTAINER (inner_frame), inner_vbox);
-      gtk_widget_show (inner_vbox);
+      gtk_widget_set_visible (inner_vbox, TRUE);
 
       box = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (config),
                                         _("Gradient"), 2,
@@ -569,14 +569,14 @@ gimp_paint_options_gui_scale_with_buttons (GObject      *config,
                                     scale_min, scale_max);
   gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), gamma);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   button = gimp_icon_button_new (GIMP_ICON_RESET, NULL);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
                                 GIMP_ICON_RESET, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     reset_callback,
@@ -595,7 +595,7 @@ gimp_paint_options_gui_scale_with_buttons (GObject      *config,
       image = gtk_image_new_from_icon_name (GIMP_ICON_LINKED,
                                             GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
 
       g_object_bind_property (config, link_prop_name,
                               button, "active",
@@ -609,7 +609,7 @@ gimp_paint_options_gui_scale_with_buttons (GObject      *config,
   gtk_size_group_add_widget (link_group, button);
 
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   gimp_help_set_help_data (button,
                            _("Link to brush default"), NULL);

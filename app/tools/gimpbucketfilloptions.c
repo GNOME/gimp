@@ -581,7 +581,7 @@ gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
     {
     case GIMP_BUCKET_FILL_LINE_ART:
       gtk_widget_set_visible (options->priv->similar_color_frame, FALSE);
-      gtk_widget_show (options->priv->line_art_settings);
+      gtk_widget_set_visible (options->priv->line_art_settings, TRUE);
       if ((options->fill_mode == GIMP_BUCKET_FILL_FG ||
            options->fill_mode == GIMP_BUCKET_FILL_BG) &&
           (options->line_art_source == GIMP_LINE_ART_SOURCE_LOWER_LAYER ||
@@ -630,7 +630,7 @@ gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
                                    tooltip);
       break;
     case GIMP_BUCKET_FILL_SIMILAR_COLORS:
-      gtk_widget_show (options->priv->similar_color_frame);
+      gtk_widget_set_visible (options->priv->similar_color_frame, TRUE);
       gtk_widget_set_visible (options->priv->line_art_settings, FALSE);
       break;
     default:
@@ -684,11 +684,11 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   frame = gimp_frame_new (_("Finding Similar Colors"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   options->priv->similar_color_frame = frame;
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), box2);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   /*  the fill transparent areas toggle  */
   widget = gimp_prop_check_button_new (config, "fill-transparent", NULL);
@@ -725,12 +725,12 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (options->priv->line_art_settings), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /* Line art: label widget */
   box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 3);
   gtk_frame_set_label_widget (GTK_FRAME (frame), box2);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   widget = gtk_label_new (_("Line Art Detection"));
   gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
@@ -740,7 +740,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gimp_label_set_attributes (GTK_LABEL (widget),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   options->line_art_busy_box = gimp_busy_box_new (_("(computing...)"));
   gtk_box_pack_start (GTK_BOX (box2), options->line_art_busy_box,
@@ -748,7 +748,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 
   box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 3);
   gtk_container_add (GTK_CONTAINER (frame), box2);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   /*  Line Art: stroke threshold */
   scale = gimp_prop_spin_scale_new (config, "line-art-threshold",
@@ -769,16 +769,16 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   /* Line Art Closure frame */
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (options->priv->line_art_settings), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /* Line Art Closure: frame label */
   widget = gtk_label_new (_("Line Art Closure"));
   gtk_frame_set_label_widget (GTK_FRAME (frame), widget);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), box2);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   /*  Line Art Closure: max gap length */
   scale = gimp_prop_spin_scale_new (config, "line-art-max-gap-length",
@@ -800,16 +800,16 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (options->priv->line_art_settings), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /* Line Art Borders: frame label */
   widget = gtk_label_new (_("Fill borders"));
   gtk_frame_set_label_widget (GTK_FRAME (frame), widget);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), box2);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   /*  Line Art Borders: max growing size */
   scale = gimp_prop_spin_scale_new (config, "line-art-max-grow",
@@ -846,7 +846,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_expanding_frame_new (config, "line-art-stroke-border", NULL,
                                          widget, NULL);
   gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   gimp_bucket_fill_options_update_area (options);
 

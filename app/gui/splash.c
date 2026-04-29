@@ -240,15 +240,15 @@ splash_create (Gimp         *gimp,
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
   gtk_container_add (GTK_CONTAINER (splash->window), frame);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   splash->area = gtk_image_new_from_animation (pixbuf);
   gtk_box_pack_start (GTK_BOX (vbox), splash->area, TRUE, TRUE, 0);
-  gtk_widget_show (splash->area);
+  gtk_widget_set_visible (splash->area, TRUE);
 
   gtk_widget_set_size_request (splash->area, splash->width, splash->height);
 
@@ -295,13 +295,13 @@ splash_create (Gimp         *gimp,
   /*  add a progress bar  */
   splash->progress = gtk_progress_bar_new ();
   gtk_box_pack_end (GTK_BOX (vbox), splash->progress, FALSE, FALSE, 0);
-  gtk_widget_show (splash->progress);
+  gtk_widget_set_visible (splash->progress, TRUE);
 
   g_signal_connect (splash->window, "focus",
                     G_CALLBACK (splash_window_focus),
                     gimp);
 
-  gtk_widget_show (splash->window);
+  gtk_widget_set_visible (splash->window, TRUE);
 
 #ifdef G_OS_WIN32
   if (StartupInfo.wShowWindow == SW_SHOWMINIMIZED   ||

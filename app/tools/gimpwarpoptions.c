@@ -349,13 +349,13 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   /*  the stroke frame  */
   frame = gimp_frame_new (_("Stroke"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   options->stroke_frame = frame;
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   button = gimp_prop_check_button_new (config, "stroke-during-motion", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
@@ -371,11 +371,11 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   /*  the animation frame  */
   frame = gimp_frame_new (_("Animate"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   scale = gimp_prop_spin_scale_new (config, "n-animation-frames",
                                     1.0, 10.0, 0);
@@ -387,7 +387,7 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gtk_widget_set_sensitive (options->animate_button, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox2), options->animate_button,
                       FALSE, FALSE, 0);
-  gtk_widget_show (options->animate_button);
+  gtk_widget_set_visible (options->animate_button, TRUE);
 
   return vbox;
 }

@@ -225,7 +225,7 @@ gimp_drawable_tree_view_constructed (GObject *object)
   gimp_widget_set_identifier (view->priv->filters_header_image,
                               "item-effect-header-icon");
   gtk_tree_view_column_set_widget (column, view->priv->filters_header_image);
-  gtk_widget_show (view->priv->filters_header_image);
+  gtk_widget_set_visible (view->priv->filters_header_image, TRUE);
   gtk_tree_view_insert_column (tree_view->view, column, 2);
 
   view->priv->filters_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_EFFECT);

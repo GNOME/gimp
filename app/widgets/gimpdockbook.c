@@ -244,7 +244,7 @@ gimp_dockbook_init (GimpDockbook *dockbook)
   gtk_notebook_set_action_widget (notebook,
                                   dockbook->p->menu_button,
                                   GTK_PACK_END);
-  gtk_widget_show (dockbook->p->menu_button);
+  gtk_widget_set_visible (dockbook->p->menu_button, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
                                         GTK_ICON_SIZE_MENU);
@@ -252,7 +252,7 @@ gimp_dockbook_init (GimpDockbook *dockbook)
   gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_MENU_LEFT,
                                 GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (dockbook->p->menu_button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   gimp_help_set_help_data (dockbook->p->menu_button, _("Configure this tab"),
                            GIMP_HELP_DOCK_TAB_MENU);
@@ -447,8 +447,8 @@ gimp_dockbook_create_window (GtkNotebook *notebook,
 
   gimp_dock_add_book (GIMP_DOCK (new_dock), GIMP_DOCKBOOK (new_dockbook), 0);
 
-  gtk_widget_show (GTK_WIDGET (new_dock_window));
-  gtk_widget_show (new_dock);
+  gtk_widget_set_visible (GTK_WIDGET (new_dock_window), TRUE);
+  gtk_widget_set_visible (new_dock, TRUE);
 
   return GTK_NOTEBOOK (new_dockbook);
 }
@@ -493,7 +493,7 @@ gimp_dockbook_page_added (GtkNotebook *notebook,
                     G_CALLBACK (gimp_dockbook_tab_locked_notify),
                     dockbook);
 
-  gtk_widget_show (child);
+  gtk_widget_set_visible (child, TRUE);
   gtk_notebook_set_current_page (notebook, page_num);
 
   g_signal_emit (dockbook, dockbook_signals[DOCKABLE_ADDED], 0, dockable);
@@ -808,7 +808,7 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
       gtk_event_box_set_visible_window (GTK_EVENT_BOX (event_box), FALSE);
       gtk_event_box_set_above_child (GTK_EVENT_BOX (event_box), TRUE);
       gtk_container_add (GTK_CONTAINER (event_box), tab_widget);
-      gtk_widget_show (tab_widget);
+      gtk_widget_set_visible (tab_widget, TRUE);
 
       tab_widget = event_box;
     }

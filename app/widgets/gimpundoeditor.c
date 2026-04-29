@@ -134,7 +134,7 @@ gimp_undo_editor_constructed (GObject *object)
                                                     1);
 
   gtk_box_pack_start (GTK_BOX (undo_editor), undo_editor->view, TRUE, TRUE, 0);
-  gtk_widget_show (undo_editor->view);
+  gtk_widget_set_visible (undo_editor->view, TRUE);
 
   g_signal_connect (undo_editor->view, "selection-changed",
                     G_CALLBACK (gimp_undo_editor_selection_changed),

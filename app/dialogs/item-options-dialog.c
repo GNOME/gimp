@@ -169,17 +169,17 @@ item_options_dialog_new (GimpImage               *image,
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_hbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_hbox);
+  gtk_widget_set_visible (main_hbox, TRUE);
 
   private->left_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), private->left_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (private->left_vbox);
+  gtk_widget_set_visible (private->left_vbox, TRUE);
 
   private->left_grid = grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (private->left_vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /*  The name label and entry  */
   if (name_label)
@@ -249,7 +249,7 @@ item_options_dialog_new (GimpImage               *image,
           g_object_unref (rgb);
 
           gtk_container_add (GTK_CONTAINER (radio), image);
-          gtk_widget_show (image);
+          gtk_widget_set_visible (image, TRUE);
         }
 
       g_list_free (children);
@@ -260,11 +260,11 @@ item_options_dialog_new (GimpImage               *image,
   private->right_frame = gimp_frame_new (_("Switches"));
   gtk_box_pack_start (GTK_BOX (main_hbox), private->right_frame,
                       FALSE, FALSE, 0);
-  gtk_widget_show (private->right_frame);
+  gtk_widget_set_visible (private->right_frame, TRUE);
 
   private->right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (private->right_frame), private->right_vbox);
-  gtk_widget_show (private->right_vbox);
+  gtk_widget_set_visible (private->right_vbox, TRUE);
 
   button = check_button_with_icon_new (_("_Visible"),
                                        GIMP_ICON_VISIBLE,
@@ -494,11 +494,11 @@ check_button_with_icon_new (const gchar *label,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (vbox, hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   button = gtk_check_button_new_with_mnemonic (label);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);

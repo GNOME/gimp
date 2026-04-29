@@ -136,7 +136,7 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (frame),
                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (box), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   private->store = gtk_tree_store_new (7,
                                        G_TYPE_STRING,
@@ -171,26 +171,26 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   gtk_tree_view_append_column (GTK_TREE_VIEW (private->tree_view), column);
 
   gtk_container_add (GTK_CONTAINER (frame), private->tree_view);
-  gtk_widget_show (private->tree_view);
+  gtk_widget_set_visible (private->tree_view, TRUE);
 
 
   /*  the stack  */
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (box), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   private->header = gtk_event_box_new ();
   gtk_widget_set_state_flags (private->header, GTK_STATE_FLAG_SELECTED, TRUE);
   gtk_style_context_add_class (gtk_widget_get_style_context (private->header),
                                GTK_STYLE_CLASS_VIEW);
   gtk_box_pack_start (GTK_BOX (vbox), private->header, FALSE, TRUE, 0);
-  gtk_widget_show (private->header);
+  gtk_widget_set_visible (private->header, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (private->header), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   private->label = gtk_label_new (NULL);
   gtk_widget_set_state_flags (private->label, GTK_STATE_FLAG_SELECTED, TRUE);
@@ -200,12 +200,12 @@ gimp_prefs_box_init (GimpPrefsBox *box)
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), private->label, FALSE, FALSE, 0);
-  gtk_widget_show (private->label);
+  gtk_widget_set_visible (private->label, TRUE);
 
   private->image = gtk_image_new ();
   gtk_widget_set_state_flags (private->image, GTK_STATE_FLAG_SELECTED, TRUE);
   gtk_box_pack_end (GTK_BOX (hbox), private->image, FALSE, FALSE, 0);
-  gtk_widget_show (private->image);
+  gtk_widget_set_visible (private->image, TRUE);
 
   /* The main preferences stack */
   private->stack = gtk_stack_new ();
@@ -214,7 +214,7 @@ gimp_prefs_box_init (GimpPrefsBox *box)
                                    GTK_STACK_TRANSITION_TYPE_SLIDE_UP_DOWN :
                                    GTK_STACK_TRANSITION_TYPE_NONE);
   gtk_box_pack_start (GTK_BOX (vbox), private->stack, TRUE, TRUE, 0);
-  gtk_widget_show (private->stack);
+  gtk_widget_set_visible (private->stack, TRUE);
 
   sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (private->tree_view));
   g_signal_connect (sel, "changed",
@@ -331,7 +331,7 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
   page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_stack_add_titled (GTK_STACK (private->stack), page_vbox,
                         help_id, page_title);
-  gtk_widget_show (page_vbox);
+  gtk_widget_set_visible (page_vbox, TRUE);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
@@ -339,18 +339,18 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
   gtk_scrolled_window_set_overlay_scrolling (GTK_SCROLLED_WINDOW (scrolled_win),
                                              FALSE);
   gtk_box_pack_start (GTK_BOX (page_vbox), scrolled_win, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_win);
+  gtk_widget_set_visible (scrolled_win, TRUE);
 
   gimp_help_set_help_data (scrolled_win, NULL, help_id);
 
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
   gtk_container_add (GTK_CONTAINER (scrolled_win), viewport);
-  gtk_widget_show (viewport);
+  gtk_widget_set_visible (viewport, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_add (GTK_CONTAINER (viewport), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   gtk_tree_store_append (private->store, iter, parent);
   gtk_tree_store_set (private->store, iter,
@@ -477,11 +477,11 @@ gimp_prefs_box_set_page_resettable (GimpPrefsBox *box,
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (page_vbox), hbox, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (page_vbox), hbox, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   button = gimp_icon_button_new (GIMP_ICON_RESET, label);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   return button;
 }

@@ -400,7 +400,7 @@ gimp_image_window_constructed (GObject *object)
   /* Create the window toplevel container */
   private->main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (window), private->main_vbox);
-  gtk_widget_show (private->main_vbox);
+  gtk_widget_set_visible (private->main_vbox, TRUE);
 
   /* Create the menubar */
   private->menubar_model = gimp_ui_manager_get_model (menubar_manager,
@@ -458,7 +458,7 @@ gimp_image_window_constructed (GObject *object)
 
           gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (headerbar), TRUE);
           gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), private->menubar);
-          gtk_widget_show (headerbar);
+          gtk_widget_set_visible (headerbar, TRUE);
 
           /* XXX There are competing propositions on how the title should be
            * aligned. GTK is trying to center it (relatively to the window) as
@@ -496,14 +496,14 @@ gimp_image_window_constructed (GObject *object)
   private->hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (private->main_vbox), private->hbox,
                       TRUE, TRUE, 0);
-  gtk_widget_show (private->hbox);
+  gtk_widget_set_visible (private->hbox, TRUE);
 
   /* Create the left pane */
   private->left_hpane = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_paned_set_wide_handle (GTK_PANED (private->left_hpane), TRUE);
   gtk_box_pack_start (GTK_BOX (private->hbox), private->left_hpane,
                       TRUE, TRUE, 0);
-  gtk_widget_show (private->left_hpane);
+  gtk_widget_set_visible (private->left_hpane, TRUE);
 
   /* Create the left dock columns widget */
   private->left_docks =
@@ -519,7 +519,7 @@ gimp_image_window_constructed (GObject *object)
   gtk_paned_set_wide_handle (GTK_PANED (private->right_hpane), TRUE);
   gtk_paned_pack2 (GTK_PANED (private->left_hpane), private->right_hpane,
                    TRUE, FALSE);
-  gtk_widget_show (private->right_hpane);
+  gtk_widget_set_visible (private->right_hpane, TRUE);
 
   /* Create notebook that contains images */
   private->notebook = gtk_notebook_new ();
@@ -543,7 +543,7 @@ gimp_image_window_constructed (GObject *object)
   g_signal_connect (private->notebook, "page-reordered",
                     G_CALLBACK (gimp_image_window_page_reordered),
                     window);
-  gtk_widget_show (private->notebook);
+  gtk_widget_set_visible (private->notebook, TRUE);
 
   /* Create the right dock columns widget */
   private->right_docks =
@@ -1346,7 +1346,7 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
   gtk_notebook_set_tab_reorderable (GTK_NOTEBOOK (private->notebook),
                                     GTK_WIDGET (shell), TRUE);
 
-  gtk_widget_show (GTK_WIDGET (shell));
+  gtk_widget_set_visible (GTK_WIDGET (shell), TRUE);
 
   /*  make it fetch the right monitor profile  */
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
@@ -2522,7 +2522,7 @@ gimp_image_window_create_tab_label (GimpImageWindow  *window,
   GtkWidget *gtk_image;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   view = gimp_view_new_by_types (gimp_get_user_context (shell->display->gimp),
                                  GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,
@@ -2531,7 +2531,7 @@ gimp_image_window_create_tab_label (GimpImageWindow  *window,
   gimp_view_renderer_set_color_config (GIMP_VIEW (view)->renderer,
                                        gimp_display_shell_get_color_config (shell));
   gtk_box_pack_start (GTK_BOX (hbox), view, FALSE, FALSE, 0);
-  gtk_widget_show (view);
+  gtk_widget_set_visible (view, TRUE);
 
   image = gimp_display_get_image (shell->display);
   if (image)
@@ -2541,12 +2541,12 @@ gimp_image_window_create_tab_label (GimpImageWindow  *window,
   gtk_widget_set_can_focus (button, FALSE);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_CLOSE,
                                             GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), gtk_image);
-  gtk_widget_show (gtk_image);
+  gtk_widget_set_visible (gtk_image, TRUE);
 
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (gimp_image_window_shell_close_button_callback),
@@ -2580,7 +2580,7 @@ gimp_image_window_update_tab_labels (GimpImageWindow *window)
       if (gimp_context_get_display (gimp_get_user_context (private->gimp)) ==
           GIMP_DISPLAY_SHELL (shell)->display)
         {
-          gtk_widget_show (close_button);
+          gtk_widget_set_visible (close_button, TRUE);
         }
       else
         {

@@ -381,5 +381,5 @@ gimp_popup_show (GimpPopup *popup,
                                 GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
   gtk_window_move (GTK_WINDOW (popup), x, y);
-  gtk_widget_show (GTK_WIDGET (popup));
+  gtk_widget_set_visible (GTK_WIDGET (popup), TRUE);
 }

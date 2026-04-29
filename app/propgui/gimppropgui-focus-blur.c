@@ -174,7 +174,7 @@ _gimp_prop_gui_new_focus_blur (GObject                  *config,
                                      creator,
                                      &label);
       gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
 
       widget = _gimp_prop_gui_new_generic (config,
                                            param_specs,
@@ -184,7 +184,7 @@ _gimp_prop_gui_new_focus_blur (GObject                  *config,
                                            create_controller_func,
                                            creator);
       gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
 
       widget = _gimp_prop_gui_new_generic (config,
                                            param_specs + last_geometry_param,
@@ -194,15 +194,15 @@ _gimp_prop_gui_new_focus_blur (GObject                  *config,
                                            create_controller_func,
                                            creator);
       gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
 
       expander = gtk_expander_new (_("Geometry Options"));
       gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
-      gtk_widget_show (expander);
+      gtk_widget_set_visible (expander, TRUE);
 
       frame = gimp_frame_new (NULL);
       gtk_container_add (GTK_CONTAINER (expander), frame);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       widget = _gimp_prop_gui_new_generic (config,
                                            param_specs + first_geometry_param,
@@ -213,7 +213,7 @@ _gimp_prop_gui_new_focus_blur (GObject                  *config,
                                            create_controller_func,
                                            creator);
       gtk_container_add (GTK_CONTAINER (frame), widget);
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
     }
 
   if (create_controller_func)

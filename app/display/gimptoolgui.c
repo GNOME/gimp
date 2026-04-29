@@ -492,7 +492,7 @@ gimp_tool_gui_show (GimpToolGui *gui)
         {
           gimp_overlay_box_add_child (GIMP_OVERLAY_BOX (private->shell->canvas),
                                       private->dialog, 1.0, 0.0);
-          gtk_widget_show (private->dialog);
+          gtk_widget_set_visible (private->dialog, TRUE);
         }
     }
   else
@@ -500,7 +500,7 @@ gimp_tool_gui_show (GimpToolGui *gui)
       if (gtk_widget_get_visible (private->dialog))
         gdk_window_show (gtk_widget_get_window (private->dialog));
       else
-        gtk_widget_show (private->dialog);
+        gtk_widget_set_visible (private->dialog, TRUE);
     }
 }
 
@@ -802,7 +802,7 @@ gimp_tool_gui_create_dialog (GimpToolGui *gui,
 
       gtk_container_set_border_width (GTK_CONTAINER (private->vbox), 0);
       gtk_container_add (GTK_CONTAINER (private->dialog), private->vbox);
-      gtk_widget_show (private->vbox);
+      gtk_widget_set_visible (private->vbox, TRUE);
     }
   else
     {
@@ -831,7 +831,7 @@ gimp_tool_gui_create_dialog (GimpToolGui *gui,
       gtk_container_set_border_width (GTK_CONTAINER (private->vbox), 6);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (private->dialog))),
                           private->vbox, TRUE, TRUE, 0);
-      gtk_widget_show (private->vbox);
+      gtk_widget_set_visible (private->vbox, TRUE);
     }
 
   gimp_tool_gui_update_buttons (gui);

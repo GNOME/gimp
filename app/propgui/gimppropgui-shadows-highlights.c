@@ -61,11 +61,11 @@ _gimp_prop_gui_new_shadows_highlights (GObject                  *config,
 
   frame = gimp_frame_new (_("Shadows"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   scale = gimp_prop_widget_new (config, "shadows",
                                 area, context, NULL, NULL, NULL, &label);
@@ -77,11 +77,11 @@ _gimp_prop_gui_new_shadows_highlights (GObject                  *config,
 
   frame = gimp_frame_new (_("Highlights"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   scale = gimp_prop_widget_new (config, "highlights",
                                 area, context, NULL, NULL, NULL, &label);
@@ -93,11 +93,11 @@ _gimp_prop_gui_new_shadows_highlights (GObject                  *config,
 
   frame = gimp_frame_new (_("Common"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   scale = gimp_prop_widget_new (config, "whitepoint",
                                 area, context, NULL, NULL, NULL, &label);

@@ -195,7 +195,7 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
 
     vbox_rectangle = gimp_rectangle_options_gui (tool_options);
     gtk_box_pack_start (GTK_BOX (vbox), vbox_rectangle, FALSE, FALSE, 0);
-    gtk_widget_show (vbox_rectangle);
+    gtk_widget_set_visible (vbox_rectangle, TRUE);
   }
 
   return vbox;

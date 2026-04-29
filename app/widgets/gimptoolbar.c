@@ -143,13 +143,13 @@ gimp_toolbar_append (GimpMenuShell *shell,
 
           item = gtk_separator_tool_item_new ();
           gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
-          gtk_widget_show (GTK_WIDGET (item));
+          gtk_widget_set_visible (GTK_WIDGET (item), TRUE);
 
           gimp_toolbar_append (shell, GIMP_MENU_MODEL (subsection));
 
           item = gtk_separator_tool_item_new ();
           gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
-          gtk_widget_show (GTK_WIDGET (item));
+          gtk_widget_set_visible (GTK_WIDGET (item), TRUE);
         }
       else if (submenu == NULL && action_name != NULL)
         {

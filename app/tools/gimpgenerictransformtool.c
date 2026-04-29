@@ -99,11 +99,11 @@ gimp_generic_transform_tool_dialog (GimpTransformGridTool *tg_tool)
   frame = gimp_frame_new (_("Transform Matrix"));
   gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tg_tool->gui)), frame,
                       FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
 
@@ -112,7 +112,7 @@ gimp_generic_transform_tool_dialog (GimpTransformGridTool *tg_tool)
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
   gimp_label_set_attributes (GTK_LABEL (label), PANGO_ATTR_SCALE, PANGO_SCALE_SMALL, -1);
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = generic->invalid_label = gtk_label_new (_("Invalid transform"));
   gimp_label_set_attributes (GTK_LABEL (label),
@@ -137,7 +137,7 @@ gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool)
   if (transform_valid)
     {
       gchar buf[256];
-      gtk_widget_show (generic->matrix_label);
+      gtk_widget_set_visible (generic->matrix_label, TRUE);
       gtk_widget_set_visible (generic->invalid_label, FALSE);
 
       g_snprintf (buf, sizeof (buf), "<tt>% 11.4f\t% 11.4f\t% 11.4f\n% 11.4f\t% 11.4f"
@@ -149,7 +149,7 @@ gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool)
     }
   else
     {
-      gtk_widget_show (generic->invalid_label);
+      gtk_widget_set_visible (generic->invalid_label, TRUE);
       gtk_widget_set_visible (generic->matrix_label, FALSE);
     }
 }

@@ -232,13 +232,13 @@ gimp_shear_tool_dialog (GimpTransformGridTool *tg_tool)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tg_tool->gui)), vbox,
                       FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   shear->x_adj = gtk_adjustment_new (0, -65536, 65536, 1, 10, 0);
   scale = gimp_spin_scale_new (shear->x_adj, _("Shear magnitude _X"), 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), -1000, 1000);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   g_signal_connect (shear->x_adj, "value-changed",
                     G_CALLBACK (shear_x_mag_changed),
@@ -248,7 +248,7 @@ gimp_shear_tool_dialog (GimpTransformGridTool *tg_tool)
   scale = gimp_spin_scale_new (shear->y_adj, _("Shear magnitude _Y"), 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), -1000, 1000);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   g_signal_connect (shear->y_adj, "value-changed",
                     G_CALLBACK (shear_y_mag_changed),

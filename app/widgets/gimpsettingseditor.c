@@ -159,7 +159,7 @@ gimp_settings_editor_constructed (GObject *object)
                                                 GIMP_VIEW_SIZE_SMALL, 0);
   gtk_widget_set_size_request (private->view, 200, 200);
   gtk_box_pack_start (GTK_BOX (editor), private->view, TRUE, TRUE, 0);
-  gtk_widget_show (private->view);
+  gtk_widget_set_visible (private->view, TRUE);
 
   g_signal_connect (private->view, "selection-changed",
                     G_CALLBACK (gimp_settings_editor_selection_changed),

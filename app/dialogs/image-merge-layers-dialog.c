@@ -120,7 +120,7 @@ image_merge_layers_dialog_new (GimpImage               *image,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame =
     gimp_enum_radio_frame_new_with_range (GIMP_TYPE_MERGE_TYPE,
@@ -133,13 +133,13 @@ image_merge_layers_dialog_new (GimpImage               *image,
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
                                    private->merge_type);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   button = gtk_check_button_new_with_mnemonic (_("Merge within active _groups only"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->merge_active_group);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -152,7 +152,7 @@ image_merge_layers_dialog_new (GimpImage               *image,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->discard_invisible);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),

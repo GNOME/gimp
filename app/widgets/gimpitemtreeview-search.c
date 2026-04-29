@@ -89,7 +89,7 @@ _gimp_item_tree_view_search_create (GimpItemTreeView *view,
 
   grid = gtk_grid_new ();
   gtk_container_add (GTK_CONTAINER (search->popover), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   search->search_entry = gtk_entry_new ();
   gtk_entry_set_icon_from_icon_name (GTK_ENTRY (search->search_entry),
@@ -97,7 +97,7 @@ _gimp_item_tree_view_search_create (GimpItemTreeView *view,
                                      "system-search");
   gtk_grid_attach (GTK_GRID (grid), search->search_entry,
                    0, 0, 2, 1);
-  gtk_widget_show (search->search_entry);
+  gtk_widget_set_visible (search->search_entry, TRUE);
 
   g_signal_connect (search->search_entry, "key-release-event",
                     G_CALLBACK (gimp_item_search_key_release),
@@ -110,7 +110,7 @@ _gimp_item_tree_view_search_create (GimpItemTreeView *view,
                                "view");
   gtk_grid_attach (GTK_GRID (grid), search->link_list,
                    0, 1, 2, 1);
-  gtk_widget_show (search->link_list);
+  gtk_widget_set_visible (search->link_list, TRUE);
 
   placeholder = gtk_label_new (_("No layer set stored"));
   attrs = pango_attr_list_new ();
@@ -120,14 +120,14 @@ _gimp_item_tree_view_search_create (GimpItemTreeView *view,
   pango_attr_list_unref (attrs);
   gtk_list_box_set_placeholder (GTK_LIST_BOX (search->link_list),
                                 placeholder);
-  gtk_widget_show (placeholder);
+  gtk_widget_set_visible (placeholder, TRUE);
 
   search->link_entry = gtk_entry_new ();
   gtk_entry_set_placeholder_text (GTK_ENTRY (search->link_entry),
                                   _("New layer set's name"));
   gtk_grid_attach (GTK_GRID (grid), search->link_entry,
                    0, 2, 1, 1);
-  gtk_widget_show (search->link_entry);
+  gtk_widget_set_visible (search->link_entry, TRUE);
 
   g_signal_connect_swapped (search->link_entry, "activate",
                             G_CALLBACK (gimp_item_search_link_entry_activate),
@@ -137,7 +137,7 @@ _gimp_item_tree_view_search_create (GimpItemTreeView *view,
                                                        button_size);
   gtk_grid_attach (GTK_GRID (grid), search->link_button,
                    1, 2, 1, 1);
-  gtk_widget_show (search->link_button);
+  gtk_widget_set_visible (search->link_button, TRUE);
 
   g_signal_connect_swapped (search->link_button, "style-updated",
                             G_CALLBACK (gimp_item_search_style_updated),
@@ -284,7 +284,7 @@ _gimp_item_tree_view_search_update_links (GimpItemTreeView *view,
       gtk_widget_set_halign (GTK_WIDGET (label), GTK_ALIGN_START);
       gtk_size_group_add_widget (label_size, label);
       gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       /* I don't use a GtkButton because the minimum size is 16 which is
        * weird and ugly here. And somehow if I force smaller GtkImage
@@ -296,7 +296,7 @@ _gimp_item_tree_view_search_update_links (GimpItemTreeView *view,
       gtk_widget_add_events (event_box, GDK_BUTTON_RELEASE_MASK);
       g_object_set_data (G_OBJECT (event_box), "link-set", iter->data);
       gtk_grid_attach (GTK_GRID (grid), event_box, 2, 0, 1, 1);
-      gtk_widget_show (event_box);
+      gtk_widget_set_visible (event_box, TRUE);
 
       g_signal_connect (event_box, "button-release-event",
                         G_CALLBACK (gimp_item_search_unlink_clicked),
@@ -306,7 +306,7 @@ _gimp_item_tree_view_search_update_links (GimpItemTreeView *view,
                                            GTK_ICON_SIZE_MENU);
       gtk_image_set_pixel_size (GTK_IMAGE (icon), 10);
       gtk_container_add (GTK_CONTAINER (event_box), icon);
-      gtk_widget_show (icon);
+      gtk_widget_set_visible (icon, TRUE);
 
       /* Now using again an event box on the whole grid, but behind its
        * child (so that the delete button is processed first. I do it
@@ -321,13 +321,13 @@ _gimp_item_tree_view_search_update_links (GimpItemTreeView *view,
       g_object_set_data (G_OBJECT (event_box), "link-set", iter->data);
       gtk_container_add (GTK_CONTAINER (event_box), grid);
       gtk_list_box_prepend (GTK_LIST_BOX (search->link_list), event_box);
-      gtk_widget_show (event_box);
+      gtk_widget_set_visible (event_box, TRUE);
 
       g_signal_connect (event_box, "button-release-event",
                         G_CALLBACK (gimp_item_search_link_clicked),
                         view);
 
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
     }
 
   g_object_unref (label_size);

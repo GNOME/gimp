@@ -250,7 +250,7 @@ gimp_scale_tool_prepare (GimpTransformGridTool *tg_tool)
 
   gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tg_tool->gui)),
                       scale->box, FALSE, FALSE, 0);
-  gtk_widget_show (scale->box);
+  gtk_widget_set_visible (scale->box, TRUE);
 
   g_signal_connect (scale->box, "notify",
                     G_CALLBACK (gimp_scale_tool_size_notify),

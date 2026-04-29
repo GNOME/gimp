@@ -47,14 +47,14 @@ prefs_frame_new (const gchar  *label,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   if (GTK_IS_BOX (parent))
     gtk_box_pack_start (GTK_BOX (parent), frame, expand, expand, 0);
   else
     gtk_container_add (parent, frame);
 
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   return vbox;
 }
@@ -74,7 +74,7 @@ prefs_grid_new (GtkContainer *parent)
   else
     gtk_container_add (parent, grid);
 
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   return grid;
 }
@@ -91,7 +91,7 @@ prefs_hint_box_new (const gchar  *icon_name,
 
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   label = gtk_label_new (text);
   gimp_label_set_attributes (GTK_LABEL (label),
@@ -101,9 +101,9 @@ prefs_hint_box_new (const gchar  *icon_name,
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
 
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   return hbox;
 }
@@ -117,7 +117,7 @@ prefs_button_add (const gchar *icon_name,
 
   button = gimp_icon_button_new (icon_name, label);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   return button;
 }
@@ -181,7 +181,7 @@ prefs_check_button_add_with_icon (GObject      *config,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (vbox, hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
   g_object_set (image,
@@ -191,7 +191,7 @@ prefs_check_button_add_with_icon (GObject      *config,
                 "margin-bottom", 2,
                 NULL);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 

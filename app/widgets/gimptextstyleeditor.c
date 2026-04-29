@@ -218,7 +218,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 
   main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (editor), main_hbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_hbox);
+  gtk_widget_set_visible (main_hbox, TRUE);
 
   /* XXX: In GTK4, GtkEventBox will be deprecated
    * See: https://docs.gtk.org/gtk4/migrating-3to4.html#stop-using-gtkeventbox
@@ -231,7 +231,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   gtk_box_pack_start (GTK_BOX (main_hbox), editor->dnd_handle, FALSE, FALSE, 0);
   gtk_widget_set_margin_start (editor->dnd_handle, 4);
   gtk_widget_set_margin_end (editor->dnd_handle, 4);
-  gtk_widget_show (editor->dnd_handle);
+  gtk_widget_set_visible (editor->dnd_handle, TRUE);
 
   gtk_widget_add_events (editor->dnd_handle,
                          GDK_BUTTON_PRESS_MASK   |
@@ -249,7 +249,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   dnd_icon = gtk_image_new_from_icon_name (GIMP_ICON_TOOL_MOVE,
                                            GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (editor->dnd_handle), dnd_icon);
-  gtk_widget_show (dnd_icon);
+  gtk_widget_set_visible (dnd_icon, TRUE);
 
   gimp_help_set_help_data (editor->dnd_handle,
                            _("Drag to move the text style editor"),
@@ -257,19 +257,19 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 
   content_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_hbox), content_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (content_vbox);
+  gtk_widget_set_visible (content_vbox, TRUE);
 
   /*  upper row  */
 
   editor->upper_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (content_vbox), editor->upper_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (editor->upper_hbox);
+  gtk_widget_set_visible (editor->upper_hbox, TRUE);
 
   editor->font_entry = gimp_container_entry_new (NULL, NULL,
                                                  GIMP_VIEW_SIZE_SMALL, 1);
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->font_entry,
                       FALSE, FALSE, 0);
-  gtk_widget_show (editor->font_entry);
+  gtk_widget_set_visible (editor->font_entry, TRUE);
 
   gimp_help_set_help_data (editor->font_entry,
                            _("Change font of selected text"), NULL);
@@ -279,7 +279,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                          GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->size_entry,
                       FALSE, FALSE, 0);
-  gtk_widget_show (editor->size_entry);
+  gtk_widget_set_visible (editor->size_entry, TRUE);
 
   gimp_help_set_help_data (editor->size_entry,
                            _("Change size of selected text"), NULL);
@@ -327,13 +327,13 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 
   editor->lower_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (content_vbox), editor->lower_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (editor->lower_hbox);
+  gtk_widget_set_visible (editor->lower_hbox, TRUE);
 
   editor->clear_button = gtk_button_new ();
   gtk_widget_set_can_focus (editor->clear_button, FALSE);
   gtk_box_pack_start (GTK_BOX (editor->lower_hbox), editor->clear_button,
                       FALSE, FALSE, 0);
-  gtk_widget_show (editor->clear_button);
+  gtk_widget_set_visible (editor->clear_button, TRUE);
 
   gimp_help_set_help_data (editor->clear_button,
                            _("Clear style of selected text"), NULL);
@@ -344,7 +344,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 
   image = gtk_image_new_from_icon_name ("edit-clear", GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (editor->clear_button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   editor->kerning_adjustment = gtk_adjustment_new (0.0, -1000.0, 1000.0,
                                                    1.0, 10.0, 0.0);
@@ -353,7 +353,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   gtk_entry_set_width_chars (GTK_ENTRY (editor->kerning_spinbutton), 5);
   gtk_box_pack_end (GTK_BOX (editor->lower_hbox), editor->kerning_spinbutton,
                     FALSE, FALSE, 0);
-  gtk_widget_show (editor->kerning_spinbutton);
+  gtk_widget_set_visible (editor->kerning_spinbutton, TRUE);
 
   gimp_help_set_help_data (editor->kerning_spinbutton,
                            _("Change kerning of selected text"), NULL);
@@ -369,7 +369,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   gtk_entry_set_width_chars (GTK_ENTRY (editor->baseline_spinbutton), 5);
   gtk_box_pack_end (GTK_BOX (editor->lower_hbox), editor->baseline_spinbutton,
                     FALSE, FALSE, 0);
-  gtk_widget_show (editor->baseline_spinbutton);
+  gtk_widget_set_visible (editor->baseline_spinbutton, TRUE);
 
   gimp_help_set_help_data (editor->baseline_spinbutton,
                            _("Change baseline of selected text"), NULL);
@@ -706,7 +706,7 @@ gimp_text_style_show_restore_position_button (GimpTextStyleEditor *editor,
                                               gboolean             show)
 {
   if (show)
-    gtk_widget_show (editor->restore_position_button);
+    gtk_widget_set_visible (editor->restore_position_button, TRUE);
   else
     gtk_widget_set_visible (editor->restore_position_button, FALSE);
 }
@@ -726,7 +726,7 @@ gimp_text_style_editor_create_toggle (GimpTextStyleEditor *editor,
   toggle = gtk_toggle_button_new ();
   gtk_widget_set_can_focus (toggle, FALSE);
   gtk_box_pack_start (GTK_BOX (editor->lower_hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   gimp_help_set_help_data (toggle, tooltip, NULL);
 
@@ -739,7 +739,7 @@ gimp_text_style_editor_create_toggle (GimpTextStyleEditor *editor,
 
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (toggle), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   return toggle;
 }

@@ -348,14 +348,14 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
 
   button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   gtk_box_pack_start (GTK_BOX (parent), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   gimp_help_set_help_data (button, tooltip, NULL);
 
@@ -386,15 +386,15 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   /* Selected objects */
   frame = gimp_frame_new (_("Targets"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), section_vbox);
-  gtk_widget_show (section_vbox);
+  gtk_widget_set_visible (section_vbox, TRUE);
 
   items_grid = gtk_grid_new ();
   gtk_container_add (GTK_CONTAINER (section_vbox), items_grid);
-  gtk_widget_show (items_grid);
+  gtk_widget_set_visible (items_grid, TRUE);
 
   widget = gimp_prop_check_button_new (config, "align-contents", NULL);
   widget = gimp_prop_expanding_frame_new (config, "align-layers",
@@ -410,7 +410,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gimp_pivot_selector_set_position (GIMP_PIVOT_SELECTOR (options->priv->pivot_selector),
                                     options->priv->pivot_x, options->priv->pivot_y);
   gtk_grid_attach (GTK_GRID (items_grid), options->priv->pivot_selector, 1, 0, 1, 2);
-  gtk_widget_show (options->priv->pivot_selector);
+  gtk_widget_set_visible (options->priv->pivot_selector, TRUE);
 
   g_signal_connect (options->priv->pivot_selector, "changed",
                     G_CALLBACK (gimp_align_options_pivot_changed),
@@ -418,11 +418,11 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   /* TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd. */
   text = g_strdup_printf (_("%s-pick target guides (%s-%s to add more)"),
@@ -434,21 +434,21 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
   g_free (text);
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   widget = gtk_label_new (NULL);
   gtk_box_pack_start (GTK_BOX (section_vbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
   options->priv->selected_guides_label = widget;
 
   /* Align frame */
   frame = gimp_frame_new (_("Align"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), section_vbox);
-  gtk_widget_show (section_vbox);
+  gtk_widget_set_visible (section_vbox, TRUE);
 
   /* Align frame: reference */
   combo = gimp_prop_enum_combo_box_new (config, "align-reference", 0, 0);
@@ -459,27 +459,27 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
   options->priv->reference_box = hbox;
 
   widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   widget = gtk_label_new (_("Select the reference object"));
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   widget = gtk_label_new (NULL);
   gtk_box_pack_start (GTK_BOX (section_vbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
   options->priv->reference_label = widget;
 
   /* Align frame: buttons */
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   n = 0;
   options->priv->align_ver_button[n++] =
@@ -496,7 +496,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   n = 0;
   options->priv->align_hor_button[n++] =
@@ -514,15 +514,15 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   /* Distribute frame */
   frame = gimp_frame_new (_("Distribute"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), section_vbox);
-  gtk_widget_show (section_vbox);
+  gtk_widget_set_visible (section_vbox, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   n = 0;
   options->priv->distr_ver_button[n++] =
@@ -534,7 +534,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   n = 0;
   options->priv->distr_hor_button[n++] =
@@ -799,7 +799,7 @@ gimp_align_options_update_area (GimpAlignOptions *options)
                                  g_list_length (options->priv->selected_guides));
       text = g_strdup_printf ("<i>%s</i>", tmp_txt);
       g_free (tmp_txt);
-      gtk_widget_show (options->priv->selected_guides_label);
+      gtk_widget_set_visible (options->priv->selected_guides_label, TRUE);
     }
   else
     {
@@ -835,7 +835,7 @@ gimp_align_options_update_area (GimpAlignOptions *options)
           text = g_strdup_printf ("<i>%s</i>", tmp_txt);
           g_free (tmp_txt);
         }
-      gtk_widget_show (options->priv->reference_box);
+      gtk_widget_set_visible (options->priv->reference_box, TRUE);
     }
   else
     {

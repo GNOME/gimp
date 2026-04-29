@@ -1058,7 +1058,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
    */
   box = gtk_event_box_new ();
   gtk_box_pack_start (GTK_BOX (dashboard), box, TRUE, TRUE, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   /* scrolled window */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -1066,7 +1066,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER (box), scrolled_window);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   /* viewport */
   viewport = gtk_viewport_new (
@@ -1074,12 +1074,12 @@ gimp_dashboard_init (GimpDashboard *dashboard)
     gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scrolled_window)));
   gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
   gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
-  gtk_widget_show (viewport);
+  gtk_widget_set_visible (viewport, TRUE);
 
   /* main vbox */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2 * content_spacing);
   gtk_container_add (GTK_CONTAINER (viewport), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* construct the groups */
   for (group = FIRST_GROUP; group < N_GROUPS; group++)
@@ -1121,7 +1121,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
                                g_dgettext (NULL, group_info->description),
                                NULL);
       gtk_expander_set_label_widget (GTK_EXPANDER (expander), hbox);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       /* group expander label */
       label = gtk_label_new (g_dpgettext2 (NULL, "dashboard-group",
@@ -1131,7 +1131,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
                                  PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                                  -1);
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       /* group expander values label */
       label = gtk_label_new (NULL);
@@ -1152,7 +1152,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       gtk_widget_set_can_focus (button, FALSE);
       gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
       gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       image = gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
                                             GTK_ICON_SIZE_MENU);
@@ -1160,7 +1160,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_MENU_LEFT,
                                     GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
 
       /* group menu */
       menu = gtk_menu_new ();
@@ -1202,18 +1202,18 @@ gimp_dashboard_init (GimpDashboard *dashboard)
             }
 
           gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-          gtk_widget_show (item);
+          gtk_widget_set_visible (item, TRUE);
         }
 
       /* group frame */
       frame = gimp_frame_new (NULL);
       gtk_container_add (GTK_CONTAINER (expander), frame);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       /* group vbox */
       vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2 * content_spacing);
       gtk_container_add (GTK_CONTAINER (frame), vbox2);
-      gtk_widget_show (vbox2);
+      gtk_widget_set_visible (vbox2, TRUE);
 
       /* group meter */
       if (group_info->has_meter)
@@ -1231,7 +1231,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
           gimp_meter_set_history_duration (GIMP_METER (meter),
                                            (gdouble) priv->history_duration / 1000.0);
           gtk_box_pack_start (GTK_BOX (vbox2), meter, FALSE, FALSE, 0);
-          gtk_widget_show (meter);
+          gtk_widget_set_visible (meter, TRUE);
 
           for (field = 0; field < group_data->n_fields; field++)
             {
@@ -1268,7 +1268,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       gtk_grid_set_row_spacing (GTK_GRID (grid), content_spacing);
       gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
       gtk_box_pack_start (GTK_BOX (vbox2), grid, FALSE, FALSE, 0);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       gimp_dashboard_group_set_active (dashboard, group,
                                        group_info->default_active);
@@ -1367,7 +1367,7 @@ gimp_dashboard_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (button), box);
   gtk_widget_set_halign (GTK_WIDGET (box), GTK_ALIGN_CENTER);
   gtk_widget_set_valign (GTK_WIDGET (box), GTK_ALIGN_CENTER);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   gtk_box_pack_start (GTK_BOX (box), image, FALSE, FALSE, 0);
   g_object_unref (image);
@@ -1375,7 +1375,7 @@ gimp_dashboard_constructed (GObject *object)
   label = gtk_label_new (NULL);
   priv->log_add_marker_label = GTK_LABEL (label);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   button = gimp_editor_add_action_button (GIMP_EDITOR (dashboard), "dashboard",
                                           "dashboard-reset", NULL);
@@ -2912,7 +2912,7 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
               gtk_widget_set_hexpand (separator, TRUE);
               gtk_grid_attach (group_data->grid, separator,
                                0, n_rows, 3, 1);
-              gtk_widget_show (separator);
+              gtk_widget_set_visible (separator, TRUE);
 
               add_separator = FALSE;
               n_rows++;
@@ -2930,7 +2930,7 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
               gtk_widget_set_valign (color_area, GTK_ALIGN_CENTER);
               gtk_grid_attach (group_data->grid, color_area,
                                0, n_rows, 1, 1);
-              gtk_widget_show (color_area);
+              gtk_widget_set_visible (color_area, TRUE);
 
               g_object_unref (color);
             }
@@ -2947,7 +2947,7 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
           gtk_label_set_xalign (GTK_LABEL (label), 0.0);
           gtk_grid_attach (group_data->grid, label,
                            1, n_rows, 1, 1);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
 
           g_free (str);
 
@@ -2959,7 +2959,7 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
           gtk_widget_set_hexpand (label, TRUE);
           gtk_grid_attach (group_data->grid, label,
                            2, n_rows, 1, 1);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
 
           n_rows++;
         }

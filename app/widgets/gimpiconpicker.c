@@ -219,7 +219,7 @@ gimp_icon_picker_constructed (GObject *object)
   /* Set up preview button */
   button = gtk_button_new ();
   gtk_box_pack_start (GTK_BOX (picker), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "button-press-event",
                     G_CALLBACK (gimp_icon_picker_clicked),
@@ -232,7 +232,7 @@ gimp_icon_picker_constructed (GObject *object)
                                  0,
                                  FALSE);
   gtk_container_add (GTK_CONTAINER (button), GTK_WIDGET (viewable_view));
-  gtk_widget_show (viewable_view);
+  gtk_widget_set_visible (viewable_view, TRUE);
 
   /* Set up button menu */
   private->right_click_menu = gtk_menu_new ();

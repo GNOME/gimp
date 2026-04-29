@@ -153,11 +153,11 @@ gimp_menu_item_set_image (GtkMenuItem *item,
           gtk_container_add (GTK_CONTAINER (hbox), accel_label);
           gtk_widget_set_hexpand (GTK_WIDGET (accel_label), TRUE);
           gtk_label_set_xalign (GTK_LABEL (accel_label), 1.0);
-          gtk_widget_show (accel_label);
+          gtk_widget_set_visible (accel_label, TRUE);
         }
 
       gtk_container_add (GTK_CONTAINER (item), hbox);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
     }
 
   old_image = g_object_get_data (G_OBJECT (item), "gimp-menu-item-image");
@@ -175,7 +175,7 @@ gimp_menu_item_set_image (GtkMenuItem *item,
           gtk_container_add (GTK_CONTAINER (hbox), image);
           gtk_box_reorder_child (GTK_BOX (hbox), image, 0);
           g_object_set_data (G_OBJECT (item), "gimp-menu-item-image", image);
-          gtk_widget_show (image);
+          gtk_widget_set_visible (image, TRUE);
         }
     }
 }
@@ -255,10 +255,10 @@ gimp_grid_attach_icon (GtkGrid     *grid,
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
   gtk_widget_set_halign (image, GTK_ALIGN_END);
   gtk_grid_attach (grid, image, 0, row, 1, 1);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   gtk_grid_attach (grid, widget, 1, row, columns, 1);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 }
 
 void
@@ -318,7 +318,7 @@ gimp_enum_radio_box_add (GtkBox    *box,
                                            border_width,
                                            -1);
               gtk_box_pack_start (GTK_BOX (hbox), spacer, FALSE, FALSE, 0);
-              gtk_widget_show (spacer);
+              gtk_widget_set_visible (spacer, TRUE);
             }
           else
             {
@@ -348,13 +348,13 @@ gimp_enum_radio_box_add (GtkBox    *box,
             }
 
           gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
 
           g_object_bind_property (radio,  "active",
                                   widget, "sensitive",
                                   G_BINDING_SYNC_CREATE);
 
-          gtk_widget_show (hbox);
+          gtk_widget_set_visible (hbox, TRUE);
 
           break;
         }
@@ -1539,8 +1539,8 @@ gimp_widget_blink_timeout (GtkWidget *widget)
               GtkWidget *label   = gtk_label_new (popover_text);
 
               gtk_container_add (GTK_CONTAINER (popover), label);
-              gtk_widget_show (label);
-              gtk_widget_show (popover);
+              gtk_widget_set_visible (label, TRUE);
+              gtk_widget_set_visible (popover, TRUE);
 
               g_timeout_add (1200,
                              (GSourceFunc) gimp_widget_blink_popover_remove,

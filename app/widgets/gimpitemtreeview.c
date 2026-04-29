@@ -443,7 +443,7 @@ gimp_item_tree_view_constructed (GObject *object)
   column = gtk_tree_view_column_new ();
   image = gtk_image_new_from_icon_name (GIMP_ICON_VISIBLE, button_icon_size);
   gtk_tree_view_column_set_widget (column, image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
   gtk_tree_view_insert_column (tree_view->view, column, 0);
   item_view->priv->eye_header_image = image;
 
@@ -474,7 +474,7 @@ gimp_item_tree_view_constructed (GObject *object)
   column = gtk_tree_view_column_new ();
   image = gtk_image_new_from_icon_name (GIMP_ICON_LOCK, button_icon_size);
   gtk_tree_view_column_set_widget (column, image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
   gtk_tree_view_insert_column (tree_view->view, column, 1);
   item_view->priv->lock_header_image = image;
 
@@ -603,7 +603,7 @@ gimp_item_tree_view_constructed (GObject *object)
   gtk_popover_set_modal (GTK_POPOVER (item_view->priv->lock_popover), TRUE);
   gtk_container_add (GTK_CONTAINER (item_view->priv->lock_popover),
                      item_view->priv->lock_box);
-  gtk_widget_show (item_view->priv->lock_box);
+  gtk_widget_set_visible (item_view->priv->lock_box, TRUE);
 
   g_signal_connect (item_view->priv->lock_popover,
                     "button-press-event",
@@ -638,7 +638,7 @@ gimp_item_tree_view_constructed (GObject *object)
    * well
    */
   if (GIMP_IS_LAYER_TREE_VIEW (object))
-    gtk_widget_show (item_view->priv->search_button);
+    gtk_widget_set_visible (item_view->priv->search_button, TRUE);
 
   /* Search label */
 
@@ -649,7 +649,7 @@ gimp_item_tree_view_constructed (GObject *object)
   gtk_box_pack_end (GTK_BOX (items_header),
                     item_view->priv->multi_selection_label,
                     FALSE, FALSE, 4);
-  gtk_widget_show (item_view->priv->multi_selection_label);
+  gtk_widget_set_visible (item_view->priv->multi_selection_label, TRUE);
 
   column = GIMP_CONTAINER_TREE_VIEW (item_view)->main_column;
   gtk_tree_view_column_set_widget (column, items_header);
@@ -673,7 +673,7 @@ gimp_item_tree_view_constructed (GObject *object)
                       "button-press-event",
                       G_CALLBACK (gimp_item_tree_view_search_clicked),
                       item_view);
-  gtk_widget_show (items_header);
+  gtk_widget_set_visible (items_header, TRUE);
 }
 
 static void
@@ -903,7 +903,7 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
       gtk_box_pack_start (GTK_BOX (view), view->priv->options_box,
                           FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (view), view->priv->options_box, 0);
-      gtk_widget_show (view->priv->options_box);
+      gtk_widget_set_visible (view->priv->options_box, TRUE);
 
       if (! view->priv->image ||
           ! gimp_image_get_selected_items (view->priv->image,
@@ -922,7 +922,7 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, button_spacing);
       gtk_box_pack_start (GTK_BOX (view->priv->options_box), hbox,
                           FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       if (! view->priv->options_group)
         {
@@ -934,19 +934,19 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
       gtk_label_set_xalign (GTK_LABEL (label_widget), 0.0);
       gtk_size_group_add_widget (view->priv->options_group, label_widget);
       gtk_box_pack_start (GTK_BOX (hbox), label_widget, FALSE, FALSE, 0);
-      gtk_widget_show (label_widget);
+      gtk_widget_set_visible (label_widget, TRUE);
 
       if (group_created)
         g_object_unref (view->priv->options_group);
 
       gtk_box_pack_start (GTK_BOX (hbox), options, TRUE, TRUE, 0);
-      gtk_widget_show (options);
+      gtk_widget_set_visible (options, TRUE);
     }
   else
     {
       gtk_box_pack_start (GTK_BOX (view->priv->options_box), options,
                           FALSE, FALSE, 0);
-      gtk_widget_show (options);
+      gtk_widget_set_visible (options, TRUE);
     }
 }
 
@@ -992,7 +992,7 @@ gimp_item_tree_view_add_lock (GimpItemTreeView *view,
 
   gtk_box_pack_end (GTK_BOX (view->priv->lock_box), toggle, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (view->priv->lock_box), toggle, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   g_object_set_data (G_OBJECT (toggle), "lock-data", data);
   g_signal_connect (toggle, "toggled",
@@ -1010,7 +1010,7 @@ gimp_item_tree_view_add_lock (GimpItemTreeView *view,
 
   image = gtk_image_new_from_icon_name (icon_name, icon_size);
   gtk_container_add (GTK_CONTAINER (toggle), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 }
 
 void

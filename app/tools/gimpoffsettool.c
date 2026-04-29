@@ -471,11 +471,11 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
   /*  The offset frame  */
   frame = gimp_frame_new (_("Offset"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   adjustment = (GtkAdjustment *)
     gtk_adjustment_new (1, 1, 1, 1, 10, 0);
@@ -490,7 +490,7 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (offset_tool->offset_se),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_grid_attach (GTK_GRID (offset_tool->offset_se), spinbutton, 1, 0, 1, 1);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (offset_tool->offset_se),
                                 _("_X:"), 0, 0, 0.0);
@@ -498,7 +498,7 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
                                 _("_Y:"), 1, 0, 0.0);
 
   gtk_box_pack_start (GTK_BOX (vbox), offset_tool->offset_se, FALSE, FALSE, 0);
-  gtk_widget_show (offset_tool->offset_se);
+  gtk_widget_set_visible (offset_tool->offset_se, TRUE);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (offset_tool->offset_se),
                             gimp_unit_pixel ());
@@ -512,7 +512,7 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
 
   button = gtk_button_new_with_mnemonic (_("By width/_2, height/2"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_offset_tool_half_xy_clicked),
@@ -520,11 +520,11 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("By _width/2"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_offset_tool_half_x_clicked),
@@ -532,7 +532,7 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
 
   button = gtk_button_new_with_mnemonic (_("By _height/2"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_offset_tool_half_y_clicked),
@@ -563,7 +563,7 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
                                     NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /* Color area */
   gegl_node_get (filter_tool->operation,

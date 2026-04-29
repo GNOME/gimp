@@ -177,11 +177,11 @@ gimp_tag_popup_init (GimpTagPopup *popup)
   popup->frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (popup->frame), GTK_SHADOW_OUT);
   gtk_container_add (GTK_CONTAINER (popup), popup->frame);
-  gtk_widget_show (popup->frame);
+  gtk_widget_set_visible (popup->frame, TRUE);
 
   popup->border_area = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (popup->frame), popup->border_area);
-  gtk_widget_show (popup->border_area);
+  gtk_widget_set_visible (popup->border_area, TRUE);
 
   popup->tag_area = gtk_drawing_area_new ();
   gtk_widget_set_halign (popup->border_area, GTK_ALIGN_FILL);
@@ -191,7 +191,7 @@ gimp_tag_popup_init (GimpTagPopup *popup)
                          GDK_BUTTON_RELEASE_MASK |
                          GDK_POINTER_MOTION_MASK);
   gtk_container_add (GTK_CONTAINER (popup->border_area), popup->tag_area);
-  gtk_widget_show (popup->tag_area);
+  gtk_widget_set_visible (popup->tag_area, TRUE);
 
   g_signal_connect (popup->border_area, "draw",
                     G_CALLBACK (gimp_tag_popup_border_draw),
@@ -486,7 +486,7 @@ gimp_tag_popup_show (GimpTagPopup *popup,
 
   widget = GTK_WIDGET (popup);
 
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   gtk_grab_add (widget);
   gtk_widget_grab_focus (widget);

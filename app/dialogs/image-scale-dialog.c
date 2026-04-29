@@ -246,7 +246,7 @@ image_scale_confirm_large (ImageScaleDialog *private,
                                "the Preferences dialog (currently %s)."), size);
   g_free (size);
 
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 }
 
 static void
@@ -261,7 +261,7 @@ image_scale_confirm_small (ImageScaleDialog *private)
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (widget)->box,
                              _("Is this what you want to do?"));
 
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 }
 
 static void

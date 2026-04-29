@@ -1006,11 +1006,11 @@ prefs_display_options_frame_add (Gimp         *gimp,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   checks_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (checks_vbox);
+  gtk_widget_set_visible (checks_vbox, TRUE);
 
   prefs_check_button_add (object, "show-selection",
                           _("Show s_election"),
@@ -1033,7 +1033,7 @@ prefs_display_options_frame_add (Gimp         *gimp,
 
   checks_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (checks_vbox);
+  gtk_widget_set_visible (checks_vbox, TRUE);
 
 #ifndef GDK_WINDOWING_QUARTZ
   prefs_check_button_add (object, "show-menubar",
@@ -1086,11 +1086,11 @@ prefs_behavior_options_frame_add (Gimp         *gimp,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   checks_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (checks_vbox);
+  gtk_widget_set_visible (checks_vbox, TRUE);
 
   prefs_check_button_add (object, "snap-to-guides",
                           _("Snap to _Guides"),
@@ -1104,7 +1104,7 @@ prefs_behavior_options_frame_add (Gimp         *gimp,
 
   checks_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (checks_vbox);
+  gtk_widget_set_visible (checks_vbox, TRUE);
 
   prefs_check_button_add (object, "snap-to-path",
                           _("Snap to _Active Path"),
@@ -1193,7 +1193,7 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_container_set_border_width (GTK_CONTAINER (prefs_box), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       prefs_box, TRUE, TRUE, 0);
-  gtk_widget_show (prefs_box);
+  gtk_widget_set_visible (prefs_box, TRUE);
 
   g_object_set_data (G_OBJECT (dialog), "prefs-box", prefs_box);
 
@@ -1314,7 +1314,7 @@ prefs_dialog_new (Gimp       *gimp,
                                       "bugs."),
                         NULL);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   vbox2 = prefs_frame_new (_("Bug Reporting"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -1444,7 +1444,7 @@ prefs_dialog_new (Gimp       *gimp,
 
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_grid_attach (GTK_GRID (grid), hbox, 1, row, 1, 1);
-    gtk_widget_show (hbox);
+    gtk_widget_set_visible (hbox, TRUE);
     row++;
 
     button = gimp_prop_check_button_new (color_config, "simulation-gamut-check",
@@ -1618,13 +1618,13 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                          GTK_SHADOW_IN);
     gtk_box_pack_start (GTK_BOX (vbox2), scrolled_window, TRUE, TRUE, 0);
-    gtk_widget_show (scrolled_window);
+    gtk_widget_set_visible (scrolled_window, TRUE);
 
     view = gimp_plug_in_view_new (gimp->plug_in_manager->display_raw_load_procs);
     gimp_plug_in_view_set_plug_in (GIMP_PLUG_IN_VIEW (view),
                                    core_config->import_raw_plug_in);
     gtk_container_add (GTK_CONTAINER (scrolled_window), view);
-    gtk_widget_show (view);
+    gtk_widget_set_visible (view, TRUE);
 
     g_signal_connect (view, "changed",
                       G_CALLBACK (prefs_import_raw_procedure_callback),
@@ -1656,7 +1656,7 @@ prefs_dialog_new (Gimp       *gimp,
                                           "patches."),
                            NULL);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       /*  Hardware Acceleration  */
       vbox2 = prefs_frame_new (_("Hardware Acceleration"), GTK_CONTAINER (vbox),
@@ -1826,7 +1826,7 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_widget_set_vexpand (editor, FALSE);
   gimp_template_editor_show_advanced (GIMP_TEMPLATE_EDITOR (editor), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), editor, FALSE, FALSE, 0);
-  gtk_widget_show (editor);
+  gtk_widget_set_visible (editor, TRUE);
 
   /*  Quick Mask Color */
   vbox2 = prefs_frame_new (_("Quick Mask"), GTK_CONTAINER (vbox), FALSE);
@@ -1857,7 +1857,7 @@ prefs_dialog_new (Gimp       *gimp,
                                  gimp_template_get_resolution_x (core_config->default_image),
                                  gimp_template_get_resolution_y (core_config->default_image));
   gtk_box_pack_start (GTK_BOX (vbox), editor, TRUE, TRUE, 0);
-  gtk_widget_show (editor);
+  gtk_widget_set_visible (editor, TRUE);
 
 
   /***************/
@@ -1984,7 +1984,7 @@ prefs_dialog_new (Gimp       *gimp,
                                     GTK_POLICY_AUTOMATIC,
                                     GTK_POLICY_AUTOMATIC);
     gtk_box_pack_start (GTK_BOX (vbox2), scrolled_win, TRUE, TRUE, 0);
-    gtk_widget_show (scrolled_win);
+    gtk_widget_set_visible (scrolled_win, TRUE);
 
     listbox = gtk_list_box_new ();
     gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
@@ -1992,7 +1992,7 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (listbox)),
                                  "view");
     gtk_container_add (GTK_CONTAINER (scrolled_win), listbox);
-    gtk_widget_show (listbox);
+    gtk_widget_set_visible (listbox, TRUE);
 
     themes = themes_list_themes (gimp, &n_themes);
 
@@ -2083,7 +2083,7 @@ prefs_dialog_new (Gimp       *gimp,
                       G_CALLBACK (prefs_gui_config_notify_icon_size),
                       scale);
     gtk_box_pack_start (GTK_BOX (vbox3), scale, FALSE, FALSE, 0);
-    gtk_widget_show (scale);
+    gtk_widget_set_visible (scale, TRUE);
 
     /* Font sizes. */
     vbox3 = prefs_frame_new (_("Font Scaling"), GTK_CONTAINER (vbox2), FALSE);
@@ -2108,12 +2108,12 @@ prefs_dialog_new (Gimp       *gimp,
                       G_CALLBACK (prefs_gui_config_notify_font_size),
                       scale);
     gtk_box_pack_start (GTK_BOX (vbox3), scale, FALSE, FALSE, 0);
-    gtk_widget_show (scale);
+    gtk_widget_set_visible (scale, TRUE);
 
     /* Reload Current Theme button */
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
+    gtk_widget_set_visible (hbox, TRUE);
 
     button = prefs_button_add (GIMP_ICON_VIEW_REFRESH,
                                _("Reload C_urrent Theme"),
@@ -2153,7 +2153,7 @@ prefs_dialog_new (Gimp       *gimp,
                                     GTK_POLICY_AUTOMATIC,
                                     GTK_POLICY_AUTOMATIC);
     gtk_box_pack_start (GTK_BOX (vbox2), scrolled_win, TRUE, TRUE, 0);
-    gtk_widget_show (scrolled_win);
+    gtk_widget_set_visible (scrolled_win, TRUE);
 
     listbox = gtk_list_box_new ();
     gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
@@ -2161,7 +2161,7 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (listbox)),
                                  "view");
     gtk_container_add (GTK_CONTAINER (scrolled_win), listbox);
-    gtk_widget_show (listbox);
+    gtk_widget_set_visible (listbox, TRUE);
 
      /* _("Icon Theme"), */
      /* _("Folder"), */
@@ -2293,7 +2293,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_box_pack_start (GTK_BOX (vbox2), separator, FALSE, FALSE, 0);
-  gtk_widget_show (separator);
+  gtk_widget_set_visible (separator, TRUE);
 
   prefs_check_button_add_with_icon (object, "toolbox-groups",
                                     _("Use tool _groups"),
@@ -2309,7 +2309,7 @@ prefs_dialog_new (Gimp       *gimp,
                                       GIMP_VIEW_SIZE_SMALL, 0);
 
   gtk_box_pack_start (GTK_BOX (vbox2), tool_editor, TRUE, TRUE, 0);
-  gtk_widget_show (tool_editor);
+  gtk_widget_set_visible (tool_editor, TRUE);
 
 
   /*********************************/
@@ -2616,7 +2616,7 @@ prefs_dialog_new (Gimp       *gimp,
   editor = gimp_fill_editor_new (GIMP_DIALOG_CONFIG (object)->fill_options,
                                  FALSE, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox2), editor, FALSE, FALSE, 0);
-  gtk_widget_show (editor);
+  gtk_widget_set_visible (editor, TRUE);
 
   /*  Stroke Options Dialog  */
   vbox2 = prefs_frame_new (_("Stroke Selection & Stroke Path Dialogs"),
@@ -2632,7 +2632,7 @@ prefs_dialog_new (Gimp       *gimp,
                                    gimp_template_get_resolution_y (core_config->default_image),
                                    FALSE, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox2), editor, FALSE, FALSE, 0);
-  gtk_widget_show (editor);
+  gtk_widget_set_visible (editor, TRUE);
 
   g_clear_object (&size_group);
 
@@ -2698,7 +2698,7 @@ prefs_dialog_new (Gimp       *gimp,
                         G_CALLBACK (prefs_help_language_change_callback),
                         gimp);
       gtk_grid_attach (GTK_GRID (grid), entry, 1, 1, 1, 1);
-      gtk_widget_show (entry);
+      gtk_widget_set_visible (entry, TRUE);
     }
 
   if (gimp_help_user_manual_is_installed (gimp))
@@ -2723,7 +2723,7 @@ prefs_dialog_new (Gimp       *gimp,
     }
 
   gtk_grid_attach (GTK_GRID (grid), hbox, 1, 2, 1, 1);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /*  Help Browser  */
 #ifdef HAVE_WEBKIT
@@ -2748,7 +2748,7 @@ prefs_dialog_new (Gimp       *gimp,
                                    "be installed. Using the web browser "
                                    "instead."));
       gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       g_object_set (config,
                     "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
@@ -2897,7 +2897,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_object_set_data (G_OBJECT (button), "monitor_resolution_sizeentry", entry);
 
@@ -2908,17 +2908,17 @@ prefs_dialog_new (Gimp       *gimp,
   button = gtk_radio_button_new_with_mnemonic (group, _("_Enter manually"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   if (! display_config->monitor_res_from_gdk)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   calibrate_button = gtk_button_new_with_mnemonic (_("C_alibrate..."));
   label = gtk_bin_get_child (GTK_BIN (calibrate_button));
@@ -2927,7 +2927,7 @@ prefs_dialog_new (Gimp       *gimp,
                 "margin-end",   4,
                 NULL);
   gtk_box_pack_start (GTK_BOX (hbox), calibrate_button, FALSE, FALSE, 0);
-  gtk_widget_show (calibrate_button);
+  gtk_widget_set_visible (calibrate_button, TRUE);
   gtk_widget_set_sensitive (calibrate_button,
                             ! display_config->monitor_res_from_gdk);
 
@@ -3055,7 +3055,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   vbox2 = gimp_modifiers_editor_new (GIMP_MODIFIERS_MANAGER (display_config->modifiers_manager),
                                      gimp);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
 
   button2 = prefs_button_add (GIMP_ICON_RESET,
@@ -3267,7 +3267,7 @@ prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
                                         GTK_POLICY_AUTOMATIC,
                                         GTK_POLICY_AUTOMATIC);
         gtk_box_pack_start (GTK_BOX (vbox2), scrolled_win, TRUE, TRUE, 0);
-        gtk_widget_show (scrolled_win);
+        gtk_widget_set_visible (scrolled_win, TRUE);
 
         listbox = gtk_list_box_new ();
         gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
@@ -3275,7 +3275,7 @@ prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
         gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (listbox)),
                                      "view");
         gtk_container_add (GTK_CONTAINER (scrolled_win), listbox);
-        gtk_widget_show (listbox);
+        gtk_widget_set_visible (listbox, TRUE);
 
         name_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
         format_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -3340,7 +3340,7 @@ prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 10);
   gtk_widget_set_halign (hbox, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   vbox2 = prefs_frame_new (_("Pointers"),
                            GTK_CONTAINER (hbox), FALSE);
@@ -3448,7 +3448,7 @@ prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
 
   vbox2 = gimp_controller_list_new (gimp_get_controller_manager (gimp));
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, TRUE, TRUE, 0);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
 
   /*************/
