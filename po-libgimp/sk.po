@@ -7,14 +7,15 @@
 # Peter Mráz <etkinator@gmail.com>, 2012.
 # Pavol Klačanský <pavol@klacansky.com>, 2013
 # Dušan Kazik <prescott66@gmail.com>, 2015.
+# Jose Riha <jose1711@gmail.com>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-08-05 13:45+0000\n"
-"PO-Revision-Date: 2020-10-09 12:42+0200\n"
-"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
+"POT-Creation-Date: 2026-04-27 20:27+0000\n"
+"PO-Revision-Date: 2026-04-29 11:22+0200\n"
+"Last-Translator: Jose Riha <jose1711@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
@@ -23,122 +24,117 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#. procedure executed successfully
-#: ../libgimp/gimp.c:1265
-msgid "success"
-msgstr "úspech"
-
-#. procedure execution failed
-#: ../libgimp/gimp.c:1269
-msgid "execution error"
-msgstr "chyba pri vykonávaní"
-
-#. procedure called incorrectly
-#: ../libgimp/gimp.c:1273
-msgid "calling error"
-msgstr "chyba pri volaní"
-
-#. procedure execution cancelled
-#: ../libgimp/gimp.c:1277
-msgid "cancelled"
-msgstr "zrušené"
-
-# window title
-#: ../libgimp/gimpbrushselectbutton.c:179
-msgid "Brush Selection"
-msgstr "Výber štetca"
+# možno bude lepšie prechádzať - necháme na koordinátora
+# PŠ: ani ten si nie je istý :-(
+#: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
+msgid "_Browse..."
+msgstr "_Prehliadať…"
 
 # možno bude lepšie prechádzať - necháme na koordinátora
 # PŠ: ani ten si nie je istý :-(
-#: ../libgimp/gimpbrushselectbutton.c:920
-#: ../libgimp/gimppatternselectbutton.c:718
-msgid "_Browse..."
-msgstr "_Prehliadať..."
+#: libgimp/gimpdrawablechooser.c:240 libgimp/gimpimagechooser.c:218
+#: libgimp/gimpitemchooser.c:237
+#| msgid "_Browse..."
+msgid "Browse..."
+msgstr "Prehliadať…"
 
 # %s je formát obrázka napr GIF
-#: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
+#: libgimp/gimpexportoptions.c:347 libgimp/gimpexportoptions.c:383
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Zásuvný modul pre %s nevie pracovať s vrstvami"
 
 # action
-#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
-#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:332
+#: libgimp/gimpexportoptions.c:348 libgimp/gimpexportoptions.c:357
+#: libgimp/gimpexportoptions.c:366 libgimp/gimpexportoptions.c:384
 msgid "Merge Visible Layers"
 msgstr "Zlúčiť viditeľné vrstvy"
 
-#: ../libgimp/gimpexport.c:304
+#: libgimp/gimpexportoptions.c:356
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "Zásuvný modul pre %s nevie pracovať s posunom, veľkosťou ani krytím vrstiev"
 
-#: ../libgimp/gimpexport.c:313 ../libgimp/gimpexport.c:322
+#: libgimp/gimpexportoptions.c:365 libgimp/gimpexportoptions.c:374
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Zásuvný modul pre %s môže vrstvy spracovať iba ako snímky animácie"
 
 # voľba pri ukladaní
-#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:323
+#: libgimp/gimpexportoptions.c:366 libgimp/gimpexportoptions.c:375
 msgid "Save as Animation"
 msgstr "Uložiť ako animáciu"
 
 # voľba pri ukladaní
 # PM: do jednej vrstvy by bolo inak a zlúčenie merge je iná operácia ako flatten
-#: ../libgimp/gimpexport.c:323 ../libgimp/gimpexport.c:332
-#: ../libgimp/gimpexport.c:341 ../libgimp/gimpexport.c:350
+#: libgimp/gimpexportoptions.c:375 libgimp/gimpexportoptions.c:384
+#: libgimp/gimpexportoptions.c:393 libgimp/gimpexportoptions.c:411
 msgid "Flatten Image"
 msgstr "Obrázok so zažehlenými vrstvami"
 
-#: ../libgimp/gimpexport.c:340
+#: libgimp/gimpexportoptions.c:392
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Zásuvný modul pre %s nevie pracovať s priehľadnosťou"
 
-#: ../libgimp/gimpexport.c:349
+# %s je formát obrázka napr GIF
+#: libgimp/gimpexportoptions.c:401
+#, c-format
+#| msgid "%s plug-in can't handle layers"
+msgid "%s plug-in can't handle layer effects"
+msgstr "Zásuvný modul pre %s nevie pracovať s efektami vrstiev"
+
+# action
+#: libgimp/gimpexportoptions.c:402
+#| msgid "Merge Visible Layers"
+msgid "Merge Layer Effects"
+msgstr "Zlúčiť efekty vrstiev"
+
+#: libgimp/gimpexportoptions.c:410
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "Zásuvný modul pre %s nevie pracovať s priehľadnými vrstvami"
 
-#: ../libgimp/gimpexport.c:358
+#: libgimp/gimpexportoptions.c:419
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Zásuvný modul pre %s nevie pracovať s maskami vrstiev"
 
-#: ../libgimp/gimpexport.c:359
+#: libgimp/gimpexportoptions.c:420
 msgid "Apply Layer Masks"
 msgstr "Použiť masky vrstiev"
 
-#: ../libgimp/gimpexport.c:367
+#: libgimp/gimpexportoptions.c:428
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Zásuvný modul pre %s vie pracovať iba s RGB obrázkami"
 
 # voľba pri ukladaní
-#: ../libgimp/gimpexport.c:368 ../libgimp/gimpexport.c:406
-#: ../libgimp/gimpexport.c:415
+#: libgimp/gimpexportoptions.c:429 libgimp/gimpexportoptions.c:467
+#: libgimp/gimpexportoptions.c:476
 msgid "Convert to RGB"
 msgstr "Konvertovať do RGB"
 
-#: ../libgimp/gimpexport.c:376
+#: libgimp/gimpexportoptions.c:437
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Zásuvný modul pre %s vie pracovať iba s obrázkami v odtieňoch sivej"
 
 # voľba pri ukladaní
-#: ../libgimp/gimpexport.c:377 ../libgimp/gimpexport.c:406
-#: ../libgimp/gimpexport.c:427
+#: libgimp/gimpexportoptions.c:438 libgimp/gimpexportoptions.c:467
+#: libgimp/gimpexportoptions.c:488
 msgid "Convert to Grayscale"
 msgstr "Konvertovať do odtieňov sivej"
 
-#: ../libgimp/gimpexport.c:385
+#: libgimp/gimpexportoptions.c:446
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Zásuvný modul pre %s vie pracovať iba s indexovanými obrázkami"
 
 # voľba pri ukladaní
-#: ../libgimp/gimpexport.c:386 ../libgimp/gimpexport.c:415
-#: ../libgimp/gimpexport.c:425
+#: libgimp/gimpexportoptions.c:447 libgimp/gimpexportoptions.c:476
+#: libgimp/gimpexportoptions.c:486
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -146,7 +142,7 @@ msgstr ""
 "Skonvertovať na indexovaný použitím štandardných nastavení\n"
 "(Ak chcete lepší výsledok, spravte to ručne)"
 
-#: ../libgimp/gimpexport.c:395
+#: libgimp/gimpexportoptions.c:456
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
@@ -154,7 +150,7 @@ msgstr ""
 "obrázky"
 
 # voľba pri ukladaní
-#: ../libgimp/gimpexport.c:396
+#: libgimp/gimpexportoptions.c:457
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -162,279 +158,251 @@ msgstr ""
 "Skonvertovať na indexovaný použitím štandardných nastavení bitmáp\n"
 "(Ak chcete lepší výsledok, spravte to ručne)"
 
-#: ../libgimp/gimpexport.c:405
+#: libgimp/gimpexportoptions.c:466
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr ""
 "Zásuvný modul pre %s vie pracovať iba s obrázkami v odtieňoch sivej a RGB"
 
-#: ../libgimp/gimpexport.c:414
+#: libgimp/gimpexportoptions.c:475
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr ""
 "Zásuvný modul pre %s vie pracovať iba s RGB alebo indexovanými obrázkami"
 
-#: ../libgimp/gimpexport.c:424
+#: libgimp/gimpexportoptions.c:485
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "Zásuvný modul pre %s vie pracovať iba s indexovanými obrázkami alebo v "
 "odtieňoch šedej"
 
-#: ../libgimp/gimpexport.c:435
+#: libgimp/gimpexportoptions.c:496
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Zásuvný modul pre %s potrebuje alfa kanál"
 
 # voľba pri ukladaní
-#: ../libgimp/gimpexport.c:436
+#: libgimp/gimpexportoptions.c:497
 msgid "Add Alpha Channel"
 msgstr "Pridať alfa kanál"
 
-#: ../libgimp/gimpexport.c:444
+#: libgimp/gimpexportoptions.c:505
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "Zásuvný modul %s vyžaduje orezanie vrstiev podľa okrajov obrázka"
 
-#: ../libgimp/gimpexport.c:445
+#: libgimp/gimpexportoptions.c:506
 msgid "Crop Layers"
 msgstr "Orezať vrstvy"
 
-#: ../libgimp/gimpexport.c:445
+#: libgimp/gimpexportoptions.c:506
 msgid "Resize Image to Layers"
 msgstr "Zmeniť veľkosť obrázku podľa vrstiev"
 
+#: libgimp/gimpexportprocedure.c:553
+msgid "Save _Exif"
+msgstr "Uložiť _EXIF"
+
+#: libgimp/gimpexportprocedure.c:554
+msgid "Save Exif (Exchangeable image file format) metadata"
+msgstr "Uložiť metaúdaje EXIF (výmenný formát obrazového súboru)"
+
+#: libgimp/gimpexportprocedure.c:562
+msgid "Save _IPTC"
+msgstr "Uložiť _IPTC"
+
+#: libgimp/gimpexportprocedure.c:563
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
+msgstr "Uložiť metaúdaje IPTC (Medzinárodná rada pre tlačové telekomunikácie)"
+
+#: libgimp/gimpexportprocedure.c:571
+msgid "Save _XMP"
+msgstr "Uložiť _XMP"
+
+#: libgimp/gimpexportprocedure.c:572
+msgid "Save XMP (Extensible Metadata Platform) metadata"
+msgstr "Uložiť metaúdaje XMP (rozšíriteľná platforma metaúdajov)"
+
+#: libgimp/gimpexportprocedure.c:580
+#| msgid "Monitor profile"
+msgid "Save color _profile"
+msgstr "Uložiť farebný _profil"
+
+#: libgimp/gimpexportprocedure.c:581
+msgid "Save the ICC color profile as metadata"
+msgstr "Uložiť profil farieb ICC ako metaúdaje"
+
+#: libgimp/gimpexportprocedure.c:589
+msgid "Save _thumbnail"
+msgstr "Uložiť _miniatúru"
+
+#: libgimp/gimpexportprocedure.c:590
+msgid "Save a smaller representation of the image as metadata"
+msgstr "Uložiť menšie znázornenie obrázka ako metaúdaje"
+
+#: libgimp/gimpexportprocedure.c:598
+msgid "Save c_omment"
+msgstr "Uložiť k_omentár"
+
+#: libgimp/gimpexportprocedure.c:599
+msgid "Save a comment as metadata"
+msgstr "Uložiť komentár ako metaúdaje"
+
+#: libgimp/gimpexportprocedure.c:603
+msgid "Comment"
+msgstr "Komentár"
+
+#: libgimp/gimpexportprocedure.c:604
+#| msgctxt "icon-type"
+#| msgid "Image file"
+msgid "Image comment"
+msgstr "Komentár obrázka"
+
+#: libgimp/gimpexportproceduredialog.c:155
+msgid "Metadata"
+msgstr "Metaúdaje"
+
+#: libgimp/gimpexportproceduredialog.c:164
+msgid "Edit Metadata"
+msgstr "Upraviť metaúdaje"
+
+#: libgimp/gimpexportproceduredialog.c:164
+msgid "(edit)"
+msgstr "(upraviť)"
+
 # titulok dialógového okna
-#: ../libgimp/gimpexport.c:504
-msgid "Confirm Save"
-msgstr "Potvrdenie uloženia"
-
-#: ../libgimp/gimpexport.c:509 ../libgimp/gimpexport.c:591
-#: ../libgimp/gimpexport.c:1125 ../libgimpwidgets/gimpcolorbutton.c:549
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
-#: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
-#: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
-#: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:492
-msgid "_Cancel"
-msgstr "_Zrušiť"
-
-# tlačidlo
-#: ../libgimp/gimpexport.c:510
-msgid "C_onfirm"
-msgstr "_Potvrdiť"
-
-# titulok dialógového okna
-#: ../libgimp/gimpexport.c:586
-msgid "Export File"
-msgstr "Export súboru"
-
-# tlačidlo
-#: ../libgimp/gimpexport.c:590
-msgid "_Ignore"
-msgstr "_Ignorovať"
-
-# tlačidlo
-#: ../libgimp/gimpexport.c:592 ../libgimp/gimpexport.c:1126
-msgid "_Export"
-msgstr "_Exportovať"
-
-#. the headline
-#: ../libgimp/gimpexport.c:622
-#, c-format
-msgid ""
-"Your image should be exported before it can be saved as %s for the following "
-"reasons:"
-msgstr ""
-"Váš obrázok by mal byť z nasledovných dôvodov exportovaný predtým, ako bude "
-"uložený s názvom %s:"
-
-#. the footline
-#: ../libgimp/gimpexport.c:696
-msgid "The export conversion won't modify your original image."
-msgstr "Konverzia pri exporte neovplyvní pôvodný obrázok."
-
-#: ../libgimp/gimpexport.c:800
-#, c-format
-msgid ""
-"You are about to save a layer mask as %s.\n"
-"This will not save the visible layers."
-msgstr ""
-"Chystáte sa uložiť masku vrstvy ako %s.\n"
-"Viditeľné vrstvy nebudú uložené."
-
-#: ../libgimp/gimpexport.c:806
-#, c-format
-msgid ""
-"You are about to save a channel (saved selection) as %s.\n"
-"This will not save the visible layers."
-msgstr ""
-"Chystáte sa uložiť kanál (uložený výber) ako %s.\n"
-"Viditeľné vrstvy nebudú uložené."
-
-# titulok dialógového okna
-#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1119
+#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
+#: libgimp/gimpexportproceduredialog.c:460
 #, c-format
 msgid "Export Image as %s"
 msgstr "Export obrázku do formátu %s"
 
-# titulok dialógového okna
-#: ../libgimp/gimpfontselectbutton.c:139
-msgid "Font Selection"
-msgstr "Výber písma"
-
-# titulok dialógového okna
-#: ../libgimp/gimpgradientselectbutton.c:158
-msgid "Gradient Selection"
-msgstr "Výber prechodu"
-
-# sequencer name
-#: ../libgimp/gimpimagemetadata.c:514
-#| msgid "GIMP"
-msgid "GIMP 2.10"
-msgstr "GIMP 2.10"
-
 # ActionEntry
-#: ../libgimp/gimpimagemetadata.c:703
+#: libgimp/gimpimagemetadata.c:203
 msgid "Background"
 msgstr "Pozadie"
 
-#: ../libgimp/gimpimagemetadata.c:892
+# sequencer name
+#: libgimp/gimpimagemetadata-save.c:867 modules/controller-midi.c:426
+msgid "GIMP"
+msgstr "GIMP"
+
+#: libgimp/gimploadprocedure.c:276 libgimp/gimpvectorloadprocedure.c:448
 #, c-format
-msgid "Rotate %s?"
-msgstr "Otočiť %s?"
+msgid ""
+"This file loading plug-in returned SUCCESS as a status without an image. "
+"This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr ""
+"Tento zásuvný modul pre načítanie súborov vrátil stav ÚSPECH bez obrázka. "
+"Ide o chybu v kóde zásuvného modulu. Kontaktujte vývojára zásuvného modulu."
 
-# DK:otočenie
-#: ../libgimp/gimpimagemetadata.c:898
-msgid "_Keep Original"
-msgstr "_Zachovať pôvodné"
+#: libgimp/gimpparamspecs-desc.c:68
+msgid "Allowed values:"
+msgstr "Povolené hodnoty:"
 
-#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
-msgid "_Rotate"
-msgstr "_Otočiť"
+#. procedure executed successfully
+#: libgimp/gimppdb.c:335
+msgid "success"
+msgstr "úspech"
 
-#: ../libgimp/gimpimagemetadata.c:940
-msgid "Original"
-msgstr "Pôvodné"
+#. procedure execution failed
+#: libgimp/gimppdb.c:339
+msgid "execution error"
+msgstr "chyba pri vykonávaní"
 
-#: ../libgimp/gimpimagemetadata.c:956
-msgid "Rotated"
-msgstr "Otočený"
+#. procedure called incorrectly
+#: libgimp/gimppdb.c:343
+msgid "calling error"
+msgstr "chyba pri volaní"
 
-#: ../libgimp/gimpimagemetadata.c:974
-msgid "This image contains Exif orientation metadata."
-msgstr "Tento obrázok obsahuje Exif metaúdaje o otočení."
-
-#: ../libgimp/gimpimagemetadata.c:992
-msgid "Would you like to rotate the image?"
-msgstr "Chcete otočiť obrázok?"
-
-#: ../libgimp/gimpimagemetadata.c:1004
-msgid "_Don't ask me again"
-msgstr "Nepýtať s_a znovu"
-
-# 1. položka menu
-# 2. zoznam
-# PM: Paľo pozri prosím či to netreba rozdeliť
-# PŠ: môže to byť hocičo, takže tento neutrálny tvar je Ok
-#. This string appears in an empty menu as in
-#. * "nothing selected and nothing to select"
-#.
-#: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:252
-msgid "(Empty)"
-msgstr "(Prázdne)"
-
-# titulok dialógového okna
-#: ../libgimp/gimppaletteselectbutton.c:139
-msgid "Palette Selection"
-msgstr "Výber palety"
-
-# titulok dialógového okna
-#: ../libgimp/gimppatternselectbutton.c:165
-msgid "Pattern Selection"
-msgstr "Výber vzoru"
+#. procedure execution cancelled
+#: libgimp/gimppdb.c:347
+msgid "cancelled"
+msgstr "zrušené"
 
 # typ vyhľadávania
-#: ../libgimp/gimpprocbrowserdialog.c:150
+#: libgimp/gimpprocbrowserdialog.c:152
 msgid "by name"
 msgstr "podľa názvu"
 
 # typ vyhľadávania
-#: ../libgimp/gimpprocbrowserdialog.c:151
+#: libgimp/gimpprocbrowserdialog.c:153
 msgid "by description"
 msgstr "podľa popisu"
 
 # typ vyhľadávania
-#: ../libgimp/gimpprocbrowserdialog.c:152
+#: libgimp/gimpprocbrowserdialog.c:154
 msgid "by help"
 msgstr "podľa pomocníka"
 
 # typ vyhľadávania
-#: ../libgimp/gimpprocbrowserdialog.c:153
-msgid "by author"
-msgstr "podľa autora"
+#: libgimp/gimpprocbrowserdialog.c:155
+#| msgid "by author"
+msgid "by authors"
+msgstr "podľa autorov"
 
 # typ vyhľadávania
-#: ../libgimp/gimpprocbrowserdialog.c:154
+#: libgimp/gimpprocbrowserdialog.c:156
 msgid "by copyright"
 msgstr "podľa autorských práv"
 
 # typ vyhľadávania
-#: ../libgimp/gimpprocbrowserdialog.c:155
+#: libgimp/gimpprocbrowserdialog.c:157
 msgid "by date"
 msgstr "podľa dátumu"
 
 # typ vyhľadávania
-#: ../libgimp/gimpprocbrowserdialog.c:156
+#: libgimp/gimpprocbrowserdialog.c:158
 msgid "by type"
 msgstr "podľa typu"
 
 # správa - výsledok vyhľadávania podľa regulárneho výrazu
 # PM: dal by som Nenašla sa zhoda / Nič sa nenašlo
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:395
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:141
+#: libgimp/gimpprocbrowserdialog.c:356 libgimp/gimpprocbrowserdialog.c:514
+#: libgimpwidgets/gimpbrowser.c:165
 msgid "No matches"
 msgstr "Žiadne zhody"
 
-#: ../libgimp/gimpprocbrowserdialog.c:398
+#: libgimp/gimpprocbrowserdialog.c:359
 msgid "Search term invalid or incomplete"
 msgstr "Neplatný alebo neúplný vyhľadávací pojem"
 
-#: ../libgimp/gimpprocbrowserdialog.c:407
+#: libgimp/gimpprocbrowserdialog.c:368
 msgid "Searching"
 msgstr "Vyhľadáva sa"
 
-#: ../libgimp/gimpprocbrowserdialog.c:418
+#: libgimp/gimpprocbrowserdialog.c:380
 msgid "Searching by name"
 msgstr "Vyhľadávanie podľa názvu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:439
+#: libgimp/gimpprocbrowserdialog.c:401
 msgid "Searching by description"
 msgstr "Vyhľadávanie podľa popisu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:446
+#: libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by help"
 msgstr "Vyhľadávanie podľa pomocníka"
 
-#: ../libgimp/gimpprocbrowserdialog.c:453
-msgid "Searching by author"
-msgstr "Vyhľadávanie podľa autora"
+#: libgimp/gimpprocbrowserdialog.c:417
+#| msgid "Searching by author"
+msgid "Searching by authors"
+msgstr "Vyhľadávanie podľa autorov"
 
-#: ../libgimp/gimpprocbrowserdialog.c:460
+#: libgimp/gimpprocbrowserdialog.c:425
 msgid "Searching by copyright"
 msgstr "Vyhľadávanie podľa autorských práv"
 
-#: ../libgimp/gimpprocbrowserdialog.c:467
+#: libgimp/gimpprocbrowserdialog.c:433
 msgid "Searching by date"
 msgstr "Vyhľadávanie podľa dátumu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:474
+#: libgimp/gimpprocbrowserdialog.c:441
 msgid "Searching by type"
 msgstr "Vyhľadávanie podľa typu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:484
+#: libgimp/gimpprocbrowserdialog.c:454
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -442,11 +410,11 @@ msgstr[0] "%d procedúr"
 msgstr[1] "%d procedúra"
 msgstr[2] "%d procedúry"
 
-#: ../libgimp/gimpprocbrowserdialog.c:493
+#: libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "Podľa vami zadanej požiadavky sa nič nenašlo"
 
-#: ../libgimp/gimpprocbrowserdialog.c:497
+#: libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -454,566 +422,828 @@ msgstr[0] "%d procedúr zodpovedá vami zadanej požiadavke"
 msgstr[1] "%d procedúra zodpovedá vami zadanej požiadavke"
 msgstr[2] "%d procedúry zodpovedajú vami zadanej požiadavke"
 
+#: libgimp/gimpprocedure.c:2187
+#, c-format
+msgid "Procedure '%s' returned no return values"
+msgstr "Procedúra '%s' nevrátila žiadne návratové hodnoty"
+
+#: libgimp/gimpprocedure.c:2393
+#, c-format
+msgid ""
+"Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
+"Expected %s, got %s."
+msgstr ""
+"Procedúra '%s' vrátila nesprávny typ hodnoty pre návratovú hodnotu '%s' (#%d). "
+"Očakávaný typ bol %s, skutočný bol %s."
+
+#: libgimp/gimpprocedure.c:2405
+#, c-format
+msgid ""
+"Procedure '%s' has been called with a wrong value type for argument '%s' "
+"(#%d). Expected %s, got %s."
+msgstr ""
+"Procedúra '%s' bola zavolaná s nesprávnym typom hodnoty pre argument '%s' "
+"(#%d). Očakávaný typ bol %s, skutočný bol %s."
+
+#: libgimp/gimpprocedure.c:2440
+#, c-format
+msgid ""
+"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
+"is out of range."
+msgstr ""
+"Procedúra '%s' vrátila '%s' ako návratovú hodnotu '%s' (#%d, typ %s). "
+"Táto hodnota je mimo rozsahu."
+
+#: libgimp/gimpprocedure.c:2454
+#, c-format
+msgid ""
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
+msgstr ""
+"Procedúra '%s' bola zavolaná s hodnotou '%s' pre argument '%s' (#%d, typ "
+"%s). Táto hodnota je mimo rozsahu."
+
+#: libgimp/gimpprocedure.c:2498
+#, c-format
+msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
+msgstr "Procedúra '%s' vrátila neplatný UTF-8 reťazec pre argument '%s'."
+
+#: libgimp/gimpprocedure.c:2508
+#, c-format
+msgid ""
+"Procedure '%s' has been called with an invalid UTF-8 string for argument "
+"'%s'."
+msgstr ""
+"Procedúra '%s' bola zavolaná s neplatným UTF-8 reťazcom pre argument "
+"'%s'."
+
+#: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
+msgid "_Open"
+msgstr "_Otvoriť"
+
+# tlačidlo
+#: libgimp/gimpproceduredialog.c:316 libgimp/gimpproceduredialog.c:615
+msgid "_Export"
+msgstr "_Exportovať"
+
+#: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
+#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
+#: libgimpwidgets/gimpfileentry.c:463 libgimpwidgets/gimpquerybox.c:276
+#: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
+#: libgimpwidgets/gimpquerybox.c:481
+msgid "_OK"
+msgstr "_OK"
+
+#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
+msgid "_Reset"
+msgstr "O_bnoviť"
+
+#: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
+#: libgimpwidgets/gimpfilechooser.c:713 libgimpwidgets/gimpfileentry.c:463
+#: libgimpwidgets/gimpquerybox.c:276 libgimpwidgets/gimpquerybox.c:339
+#: libgimpwidgets/gimpquerybox.c:405 libgimpwidgets/gimpquerybox.c:481
+msgid "_Cancel"
+msgstr "_Zrušiť"
+
+#: libgimp/gimpproceduredialog.c:379
+msgid "_Load Saved Settings"
+msgstr "_Načítať uložené nastavenia"
+
+#: libgimp/gimpproceduredialog.c:380
+msgid "Load settings saved with \"Save Settings\" button"
+msgstr "Načítať nastavenia uložené tlačidlom „Uložiť nastavenia“"
+
+#: libgimp/gimpproceduredialog.c:392
+msgid "_Save Settings"
+msgstr "_Uložiť nastavenia"
+
+#: libgimp/gimpproceduredialog.c:393
+msgid "Store current settings for later reuse"
+msgstr "Uložiť aktuálne nastavenia na neskoršie použitie"
+
+#: libgimp/gimpproceduredialog.c:908
+msgid "Brush Chooser"
+msgstr "Výber štetca"
+
+#: libgimp/gimpproceduredialog.c:912
+msgid "Font Chooser"
+msgstr "Výber písma"
+
+#: libgimp/gimpproceduredialog.c:916
+msgid "Gradient Chooser"
+msgstr "Výber prechodu"
+
+#: libgimp/gimpproceduredialog.c:920
+msgid "Palette Chooser"
+msgstr "Výber palety"
+
+# typ pečiatky
+#: libgimp/gimpproceduredialog.c:924
+#| msgctxt "clone-type"
+#| msgid "Pattern"
+msgid "Pattern Chooser"
+msgstr "Výber vzoru"
+
+#: libgimp/gimpproceduredialog.c:2841
+msgid "Reset to _Initial Values"
+msgstr "Obnoviť _počiatočné hodnoty"
+
+#: libgimp/gimpproceduredialog.c:2850
+msgid "Reset to _Factory Defaults"
+msgstr "Nastaviť na p_redvolené hodnoty"
+
+#: libgimp/gimpprocview.c:176
+#| msgid "Image profile:"
+msgid "Image types:"
+msgstr "Typy obrázkov:"
+
+#: libgimp/gimpprocview.c:179
+msgid "Menu label:"
+msgstr "Popis ponuky:"
+
+#: libgimp/gimpprocview.c:187
+msgid "Menu path:"
+msgstr "Cesta v ponuke:"
+
 # názov framu
-#: ../libgimp/gimpprocview.c:173
+#: libgimp/gimpprocview.c:202
 msgid "Parameters"
 msgstr "Parametre"
 
 # názov framu
-#: ../libgimp/gimpprocview.c:186
+#: libgimp/gimpprocview.c:216
 msgid "Return Values"
 msgstr "Návratové hodnoty"
 
 # názov framu
-#: ../libgimp/gimpprocview.c:199
+#: libgimp/gimpprocview.c:231
 msgid "Additional Information"
 msgstr "Prídavné informácie"
 
-#: ../libgimp/gimpprocview.c:240
-msgid "Author:"
-msgstr "Autor:"
+#: libgimp/gimpprocview.c:263
+#| msgid "Author:"
+msgid "Authors:"
+msgstr "Autori:"
 
-#: ../libgimp/gimpprocview.c:253
+#: libgimp/gimpprocview.c:266
 msgid "Date:"
 msgstr "Dátum:"
 
-#: ../libgimp/gimpprocview.c:266
+#: libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "Autorské práva:"
 
-# jednotka gimpu
-# PM: Je to v ponuke jednotiek body palce, centimetre... Preto navrhujem "Percentá" - Paľo pozri na to prosím
-# PŠ: veľmi nešťastný reťazec. Je to použité aj v _gimp_unit_cache_get_singular aj v _gimp_unit_cache_get_plural - a oba reťazce sú uvedené ako jednotné číslo. Toto je asi najlepšie riešenie...
-#: ../libgimp/gimpunitcache.c:54
-msgid "percent"
-msgstr "%"
+#: libgimp/gimppropwidgets.c:190
+#, c-format
+msgid "Choose image: %s"
+msgstr "Vybrať obrázok: %s"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: libgimp/gimppropwidgets.c:251 libgimp/gimppropwidgets.c:321
+#, c-format
+msgid "Choose layer: %s"
+msgstr "Vybrať vrstvu: %s"
+
+#: libgimp/gimppropwidgets.c:253 libgimp/gimppropwidgets.c:323
+#, c-format
+#| msgid "Channel:"
+msgid "Choose channel: %s"
+msgstr "Vybrať kanál: %s"
+
+#: libgimp/gimppropwidgets.c:255
+#, c-format
+msgid "Choose path: %s"
+msgstr "Vybrať cestu: %s"
+
+#: libgimp/gimppropwidgets.c:257
+#, c-format
+msgid "Choose item: %s"
+msgstr "Vybrať položku: %s"
+
+#: libgimp/gimppropwidgets.c:325
+#, c-format
+msgid "Choose drawable: %s"
+msgstr "Vybrať kresliacu plochu: %s"
+
+#: libgimp/gimpresolutionentry-private.c:136
+msgid ""
+"This unit is used to select the pixel density and show dimensions in "
+"physical unit"
+msgstr ""
+"Táto jednotka sa používa na výber hustoty pixelov a zobrazenie rozmerov "
+"vo fyzickej jednotke"
+
+#: libgimp/gimpresolutionentry-private.c:144
+#: libgimp/gimpvectorloadprocedure.c:126
+msgid "_Keep aspect ratio"
+msgstr "_Zachovať pomer strán"
+
+#: libgimp/gimpresolutionentry-private.c:145
+#: libgimp/gimpvectorloadprocedure.c:127
+msgid "Force dimensions with aspect ratio"
+msgstr "Vynútiť rozmery so zachovaním pomeru strán"
+
+#: libgimp/gimpresolutionentry-private.c:199
+#: libgimp/gimpresolutionentry-private.c:200
+#, c-format
+#| msgctxt "size-type"
+#| msgid "Pixels"
+msgid "pixels/%a"
+msgstr "pixely/%a"
+
+#: libgimp/gimpvectorloadprocedure.c:112
+msgid "_Width (pixels)"
+msgstr "_Šírka (pixely)"
+
+#: libgimp/gimpvectorloadprocedure.c:119
+msgid "_Height (pixels)"
+msgstr "_Výška (pixely)"
+
+#: libgimp/gimpvectorloadprocedure.c:131
+msgid "_Prefer native dimensions"
+msgstr "_Uprednostniť natívne rozmery"
+
+#: libgimp/gimpvectorloadprocedure.c:132
+msgid "Load and use dimensions from source file"
+msgstr "Načítať a použiť rozmery zo zdrojového súboru"
+
+#: libgimp/gimpvectorloadprocedure.c:142
+msgid "Resolu_tion"
+msgstr "Rozl_íšenie"
+
+#: libgimp/gimpvectorloadprocedure.c:143
+msgid "Pixel Density: number of pixels per physical unit"
+msgstr "Hustota pixelov: počet pixelov na fyzickú jednotku"
+
+# stĺpec tabuľky
+#: libgimp/gimpvectorloadprocedure.c:148
+msgid "Unit"
+msgstr "Jednotka"
+
+#: libgimp/gimpvectorloadprocedure.c:149
+msgid "Physical unit"
+msgstr "Fyzická jednotka"
+
+#: libgimp/gimpvectorloadprocedure.c:371
+msgid ""
+"dimensions could neither be extracted nor computed from the vector image's "
+"data."
+msgstr ""
+"rozmery sa nedali ani extrahovať, ani vypočítať z údajov vektorového obrázka."
+
+#: libgimp/gimpvectorloadprocedure.c:376
+msgid "Vector image loading plug-in failed: "
+msgstr "Zásuvný modul pre načítanie vektorového obrázka zlyhal: "
+
+#: libgimp/gimpvectorloadprocedure.c:400
+msgid ""
+"Dimensions cannot be 0 and no native dimensions could be extracted from the "
+"vector image."
+msgstr ""
+"Rozmery nemôžu byť 0 a z vektorového obrázka sa nedali extrahovať žiadne "
+"natívne rozmery."
+
+#. TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
+#. * followed by 2D dimensions with unit, e.g. "200 inch x 400 inch"
+#.
+#: libgimp/gimpvectorloadproceduredialog.c:131
+#, c-format
+msgid "Source %s file size: %%.%df %s × %%.%df %s"
+msgstr "Veľkosť zdrojového súboru %s: %%.%df %s × %%.%df %s"
+
+#. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
+#: libgimp/gimpvectorloadproceduredialog.c:168
+#, c-format
+msgid "Source %s file's aspect ratio: %%.%df × %%.%df"
+msgstr "Pomer strán zdrojového súboru %s: %%.%df × %%.%df"
+
+#: libgimp/gimpvectorloadproceduredialog.c:176
+#, c-format
+msgid "Approximated source %s file size: %%.%df %s × %%.%df %s"
+msgstr "Odhadovaná veľkosť zdrojového súboru %s: %%.%df %s × %%.%df %s"
+
+#. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
+#: libgimp/gimpvectorloadproceduredialog.c:189
+#, c-format
+msgid "The source %s file does not specify a size!"
+msgstr "Zdrojový súbor %s neudáva veľkosť!"
+
+# voľba pri ukladaní
+# PM: do jednej vrstvy by bolo inak a zlúčenie merge je iná operácia ako flatten
+#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
+#: libgimp/gimpvectorloadproceduredialog.c:330
+#, c-format
+#| msgid "Flatten Image"
+msgid "Load %s Image"
+msgstr "Načítať obrázok %s"
+
+#: libgimpbase/gimpbaseenums.c:30
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "_Biela (úplná nepriehľadnosť)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: libgimpbase/gimpbaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "Č_ierna (úplná priehľadnosť)"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: libgimpbase/gimpbaseenums.c:32
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "_Alfa kanál vrstvy"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: libgimpbase/gimpbaseenums.c:33
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
 msgstr "_Presun alfa kanála vrstvy"
 
-#: ../libgimpbase/gimpbaseenums.c:32
+#: libgimpbase/gimpbaseenums.c:34
 msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "Výb_er"
 
-#: ../libgimpbase/gimpbaseenums.c:33
+#: libgimpbase/gimpbaseenums.c:35
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "Kópia vrstvy v o_dtieňoch sivej"
 
-#: ../libgimpbase/gimpbaseenums.c:34
+#: libgimpbase/gimpbaseenums.c:36
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "_Kanál"
 
-#: ../libgimpbase/gimpbaseenums.c:65
-msgctxt "blend-mode"
-msgid "FG to BG (RGB)"
-msgstr "Popredie do pozadia (RGB)"
-
-#: ../libgimpbase/gimpbaseenums.c:66
-msgctxt "blend-mode"
-msgid "FG to BG (HSV)"
-msgstr "Popredie do pozadia (HSV)"
-
-#: ../libgimpbase/gimpbaseenums.c:67
-msgctxt "blend-mode"
-msgid "FG to transparent"
-msgstr "Popredie na preihľadné"
-
-#: ../libgimpbase/gimpbaseenums.c:68
-msgctxt "blend-mode"
-msgid "Custom gradient"
-msgstr "Vlastný prechod"
-
-#: ../libgimpbase/gimpbaseenums.c:98
+#: libgimpbase/gimpbaseenums.c:66
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "Kruh"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:99
+#: libgimpbase/gimpbaseenums.c:67
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "Štvorcový"
 
-#: ../libgimpbase/gimpbaseenums.c:100
+#: libgimpbase/gimpbaseenums.c:68
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr "Diamant"
 
-#: ../libgimpbase/gimpbaseenums.c:130
-msgctxt "bucket-fill-mode"
-msgid "FG color fill"
-msgstr "Vyplnenie farbou popredia"
-
-#: ../libgimpbase/gimpbaseenums.c:131
-msgctxt "bucket-fill-mode"
-msgid "BG color fill"
-msgstr "Vyplnenie farbou pozadia"
-
-#: ../libgimpbase/gimpbaseenums.c:132
-msgctxt "bucket-fill-mode"
-msgid "Pattern fill"
-msgstr "Vyplnenie vzorom"
-
-#: ../libgimpbase/gimpbaseenums.c:162
+#: libgimpbase/gimpbaseenums.c:98
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Useknutý"
 
-#: ../libgimpbase/gimpbaseenums.c:163
+#: libgimpbase/gimpbaseenums.c:99
 msgctxt "cap-style"
 msgid "Round"
 msgstr "Kruhový"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:164
+#: libgimpbase/gimpbaseenums.c:100
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Štvorcový"
 
-#: ../libgimpbase/gimpbaseenums.c:195
+#: libgimpbase/gimpbaseenums.c:131
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Pridať k aktuálnemu výberu"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: libgimpbase/gimpbaseenums.c:132
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Odobrať z aktuálneho výberu"
 
-#: ../libgimpbase/gimpbaseenums.c:197
+#: libgimpbase/gimpbaseenums.c:133
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Nahradiť aktuálny výber"
 
-#: ../libgimpbase/gimpbaseenums.c:198
+#: libgimpbase/gimpbaseenums.c:134
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Prienik s aktuálnym výberom"
 
-#: ../libgimpbase/gimpbaseenums.c:231
+#: libgimpbase/gimpbaseenums.c:167
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Červený"
 
-#: ../libgimpbase/gimpbaseenums.c:232
+#: libgimpbase/gimpbaseenums.c:168
 msgctxt "channel-type"
 msgid "Green"
 msgstr "Zelený"
 
-#: ../libgimpbase/gimpbaseenums.c:233
+#: libgimpbase/gimpbaseenums.c:169
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Modrý"
 
-#: ../libgimpbase/gimpbaseenums.c:234
+#: libgimpbase/gimpbaseenums.c:170
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Sivý"
 
-#: ../libgimpbase/gimpbaseenums.c:235
+#: libgimpbase/gimpbaseenums.c:171
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Indexovaný"
 
-#: ../libgimpbase/gimpbaseenums.c:236
+#: libgimpbase/gimpbaseenums.c:172
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Alfa"
 
 # Veľkosť štvorcov šachovnice
-#: ../libgimpbase/gimpbaseenums.c:266
+#: libgimpbase/gimpbaseenums.c:202
 msgctxt "check-size"
 msgid "Small"
 msgstr "Malé"
 
 # Veľkosť štvorcov šachovnice
-#: ../libgimpbase/gimpbaseenums.c:267
+#: libgimpbase/gimpbaseenums.c:203
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Stredné"
 
 # Veľkosť štvorcov šachovnice
-#: ../libgimpbase/gimpbaseenums.c:268
+#: libgimpbase/gimpbaseenums.c:204
 msgctxt "check-size"
 msgid "Large"
 msgstr "Veľké"
 
-#: ../libgimpbase/gimpbaseenums.c:301
+#: libgimpbase/gimpbaseenums.c:238
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Svetlá šachovnica"
 
-#: ../libgimpbase/gimpbaseenums.c:302
+#: libgimpbase/gimpbaseenums.c:239
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Stredne tmavá šachovnica"
 
-#: ../libgimpbase/gimpbaseenums.c:303
+#: libgimpbase/gimpbaseenums.c:240
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Tmavá šachovnica"
 
-#: ../libgimpbase/gimpbaseenums.c:304
+#: libgimpbase/gimpbaseenums.c:241
 msgctxt "check-type"
 msgid "White only"
 msgstr "Iba biela"
 
-#: ../libgimpbase/gimpbaseenums.c:305
+#: libgimpbase/gimpbaseenums.c:242
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Iba sivá"
 
-#: ../libgimpbase/gimpbaseenums.c:306
+#: libgimpbase/gimpbaseenums.c:243
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Iba čierna"
 
+#: libgimpbase/gimpbaseenums.c:244
+#| msgctxt "check-type"
+#| msgid "Mid-tone checks"
+msgctxt "check-type"
+msgid "Custom checks"
+msgstr "Vlastná šachovnica"
+
 # typ pečiatky
-#: ../libgimpbase/gimpbaseenums.c:335
+#: libgimpbase/gimpbaseenums.c:273
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Obrázok"
 
 # typ pečiatky
-#: ../libgimpbase/gimpbaseenums.c:336
+#: libgimpbase/gimpbaseenums.c:274
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Vzor"
 
 # profil
-#: ../libgimpbase/gimpbaseenums.c:372
+#: libgimpbase/gimpbaseenums.c:310
 msgctxt "color-tag"
 msgid "None"
 msgstr "Žiadna"
 
 # tooltip
-#: ../libgimpbase/gimpbaseenums.c:373
+#: libgimpbase/gimpbaseenums.c:311
 msgctxt "color-tag"
 msgid "Blue"
 msgstr "Modrá"
 
 # tooltip
-#: ../libgimpbase/gimpbaseenums.c:374
+#: libgimpbase/gimpbaseenums.c:312
 msgctxt "color-tag"
 msgid "Green"
 msgstr "Zelená"
 
-#: ../libgimpbase/gimpbaseenums.c:375
+#: libgimpbase/gimpbaseenums.c:313
 msgctxt "color-tag"
 msgid "Yellow"
 msgstr "Žltá"
 
-#: ../libgimpbase/gimpbaseenums.c:376
+#: libgimpbase/gimpbaseenums.c:314
 msgctxt "color-tag"
 msgid "Orange"
 msgstr "Oranžová"
 
-#: ../libgimpbase/gimpbaseenums.c:377
+#: libgimpbase/gimpbaseenums.c:315
 msgctxt "color-tag"
 msgid "Brown"
 msgstr "Hnedá"
 
 # tooltip
-#: ../libgimpbase/gimpbaseenums.c:378
+#: libgimpbase/gimpbaseenums.c:316
 msgctxt "color-tag"
 msgid "Red"
 msgstr "Červená"
 
-#: ../libgimpbase/gimpbaseenums.c:379
+#: libgimpbase/gimpbaseenums.c:317
 msgctxt "color-tag"
 msgid "Violet"
 msgstr "Fialová"
 
-#: ../libgimpbase/gimpbaseenums.c:380
+#: libgimpbase/gimpbaseenums.c:318
 msgctxt "color-tag"
 msgid "Gray"
 msgstr "Šedá"
 
-#: ../libgimpbase/gimpbaseenums.c:413
+#: libgimpbase/gimpbaseenums.c:351
 msgctxt "component-type"
 msgid "8-bit integer"
 msgstr "8-bitové celé číslo"
 
-#: ../libgimpbase/gimpbaseenums.c:414
+#: libgimpbase/gimpbaseenums.c:352
 msgctxt "component-type"
 msgid "16-bit integer"
 msgstr "16-bitové celé číslo"
 
-#: ../libgimpbase/gimpbaseenums.c:415
+#: libgimpbase/gimpbaseenums.c:353
 msgctxt "component-type"
 msgid "32-bit integer"
 msgstr "32-bitové celé číslo"
 
-#: ../libgimpbase/gimpbaseenums.c:416
+#: libgimpbase/gimpbaseenums.c:354
 msgctxt "component-type"
 msgid "16-bit floating point"
 msgstr "16-bitové číslo s pohyblivou desatinnou čiarkou"
 
-#: ../libgimpbase/gimpbaseenums.c:417
+#: libgimpbase/gimpbaseenums.c:355
 msgctxt "component-type"
 msgid "32-bit floating point"
 msgstr "32-bitové číslo s pohyblivou desatinnou čiarkou"
 
-#: ../libgimpbase/gimpbaseenums.c:418
+#: libgimpbase/gimpbaseenums.c:356
 msgctxt "component-type"
 msgid "64-bit floating point"
 msgstr "64-bitové číslo s pohyblivou desatinnou čiarkou"
 
-#: ../libgimpbase/gimpbaseenums.c:449
+#: libgimpbase/gimpbaseenums.c:387
+#| msgctxt "convert-palette-type"
+#| msgid "Generate optimum palette"
 msgctxt "convert-palette-type"
-msgid "Generate optimum palette"
-msgstr "Generovať optimálnu paletu"
+msgid "_Generate optimum palette"
+msgstr "_Generovať optimálnu paletu"
 
-#: ../libgimpbase/gimpbaseenums.c:450
+#: libgimpbase/gimpbaseenums.c:388
+#| msgctxt "convert-palette-type"
+#| msgid "Use web-optimized palette"
 msgctxt "convert-palette-type"
-msgid "Use web-optimized palette"
-msgstr "Použiť paletu optimalizovanú pre web"
+msgid "Use _web-optimized palette"
+msgstr "Použiť paletu optimalizovanú pre _web"
 
-#: ../libgimpbase/gimpbaseenums.c:451
+#: libgimpbase/gimpbaseenums.c:389
+#| msgctxt "convert-palette-type"
+#| msgid "Use black and white (1-bit) palette"
 msgctxt "convert-palette-type"
-msgid "Use black and white (1-bit) palette"
-msgstr "Použiť čiernobielu (1-bitovú) paletu"
+msgid "Use _black and white (1-bit) palette"
+msgstr "Použiť č_iernobielu (1-bitovú) paletu"
 
-#: ../libgimpbase/gimpbaseenums.c:452
+#: libgimpbase/gimpbaseenums.c:390
+#| msgctxt "convert-palette-type"
+#| msgid "Use custom palette"
 msgctxt "convert-palette-type"
-msgid "Use custom palette"
-msgstr "Použiť vlastnú paletu"
+msgid "Use custom _palette"
+msgstr "Použiť _vlastnú paletu"
 
-#: ../libgimpbase/gimpbaseenums.c:481
+#: libgimpbase/gimpbaseenums.c:419
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr "Rozostrenie"
 
-#: ../libgimpbase/gimpbaseenums.c:482
+#: libgimpbase/gimpbaseenums.c:420
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Zaostrenie"
 
 # Režim desaturácie (odfarbenia)
 # Je to za Choose shade of gray based on:
-#: ../libgimpbase/gimpbaseenums.c:514
+#: libgimpbase/gimpbaseenums.c:452
 msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
 msgstr "Svetlosť (HSL)"
 
-#: ../libgimpbase/gimpbaseenums.c:515
+#: libgimpbase/gimpbaseenums.c:453
 msgctxt "desaturate-mode"
 msgid "Luma"
 msgstr "Luma"
 
-#: ../libgimpbase/gimpbaseenums.c:516
+#: libgimpbase/gimpbaseenums.c:454
 msgctxt "desaturate-mode"
 msgid "Average (HSI Intensity)"
 msgstr "Priemer (intenzita HSI)"
 
-#: ../libgimpbase/gimpbaseenums.c:517
+#: libgimpbase/gimpbaseenums.c:455
 msgctxt "desaturate-mode"
 msgid "Luminance"
 msgstr "Svetlosť"
 
 # tooltip
-#: ../libgimpbase/gimpbaseenums.c:518
+#: libgimpbase/gimpbaseenums.c:456
 msgctxt "desaturate-mode"
 msgid "Value (HSV)"
 msgstr "Hodnota (HSV)"
 
 # Typ zosvetlenia/stmavenia
-#: ../libgimpbase/gimpbaseenums.c:547
+#: libgimpbase/gimpbaseenums.c:485
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Zosvetliť"
 
 # Typ zosvetlenia/stmavenia
-#: ../libgimpbase/gimpbaseenums.c:548
+#: libgimpbase/gimpbaseenums.c:486
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Stmaviť"
 
 # ActionEntry
-#: ../libgimpbase/gimpbaseenums.c:580
+#: libgimpbase/gimpbaseenums.c:519
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Farba popredia"
 
 # ActionEntry
-#: ../libgimpbase/gimpbaseenums.c:581
+#: libgimpbase/gimpbaseenums.c:520
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Farba pozadia"
 
+#: libgimpbase/gimpbaseenums.c:521
+msgctxt "fill-type"
+msgid "Middle Gray (CIELAB)"
+msgstr "Stredná sivá (CIELAB)"
+
 # ActionEntry
-#: ../libgimpbase/gimpbaseenums.c:582
+#: libgimpbase/gimpbaseenums.c:522
 msgctxt "fill-type"
 msgid "White"
 msgstr "Biela"
 
-#: ../libgimpbase/gimpbaseenums.c:583
+#: libgimpbase/gimpbaseenums.c:523
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Priehľadnosť"
 
 # typ pečiatky
-#: ../libgimpbase/gimpbaseenums.c:584
+#: libgimpbase/gimpbaseenums.c:524
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Vzor"
 
 # kvalita renderovania farieb
 # PM: Vnímateľná by bolo asi vhodnejšie
-#: ../libgimpbase/gimpbaseenums.c:644
+#: libgimpbase/gimpbaseenums.c:582
 msgctxt "gradient-blend-color-space"
 msgid "Perceptual RGB"
 msgstr "Perceptuálne RGB"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:645
+#: libgimpbase/gimpbaseenums.c:583
 msgctxt "gradient-blend-color-space"
 msgid "Linear RGB"
 msgstr "Lineárne RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:646
+#: libgimpbase/gimpbaseenums.c:584
 msgctxt "gradient-blend-color-space"
 msgid "CIE Lab"
-msgstr ""
+msgstr "CIE Lab"
 
-#: ../libgimpbase/gimpbaseenums.c:676
-#| msgctxt "image-type"
-#| msgid "RGB"
+#: libgimpbase/gimpbaseenums.c:614
 msgctxt "gradient-segment-color"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:677
+#: libgimpbase/gimpbaseenums.c:615
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
-msgstr ""
+msgstr "HSV (odtieň proti smeru hod. ručičiek)"
 
 # Typ prechodu
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:680
-#, fuzzy
+#: libgimpbase/gimpbaseenums.c:618
 #| msgctxt "gradient-type"
 #| msgid "Spiral (ccw)"
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
-msgstr "Špirála (proti smeru hod. ruč.)"
+msgstr "HSV (proti smeru hod. ruč.)"
 
-#: ../libgimpbase/gimpbaseenums.c:681
+#: libgimpbase/gimpbaseenums.c:619
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
-msgstr ""
+msgstr "HSV (odtieň v smere hod. ručičiek)"
 
 # Typ prechodu
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:684
-#, fuzzy
+#: libgimpbase/gimpbaseenums.c:622
 #| msgctxt "gradient-type"
 #| msgid "Spiral (cw)"
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
-msgstr "Špirála (v smere hod. ruč.)"
+msgstr "HSV (v smere hod. ruč.)"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:717
+#: libgimpbase/gimpbaseenums.c:655
 msgctxt "gradient-segment-type"
 msgid "Linear"
 msgstr "Lineárny"
 
-#: ../libgimpbase/gimpbaseenums.c:718
+#: libgimpbase/gimpbaseenums.c:656
 msgctxt "gradient-segment-type"
 msgid "Curved"
-msgstr ""
+msgstr "Zakrivený"
 
-#: ../libgimpbase/gimpbaseenums.c:719
+#: libgimpbase/gimpbaseenums.c:657
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
-msgstr ""
+msgstr "Sínusoidálny"
 
-#: ../libgimpbase/gimpbaseenums.c:720
+#: libgimpbase/gimpbaseenums.c:658
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
-msgstr ""
+msgstr "Sférický (rastúci)"
 
 # Typ prechodu
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:723
-#, fuzzy
+#: libgimpbase/gimpbaseenums.c:661
 #| msgctxt "gradient-type"
 #| msgid "Spiral (cw)"
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
-msgstr "Špirála (v smere hod. ruč.)"
+msgstr "Sférický (rastúci)"
 
-#: ../libgimpbase/gimpbaseenums.c:724
+#: libgimpbase/gimpbaseenums.c:662
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
-msgstr ""
+msgstr "Sférický (klesajúci)"
 
 # Typ prechodu
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:727
-#, fuzzy
+#: libgimpbase/gimpbaseenums.c:665
 #| msgctxt "gradient-type"
 #| msgid "Spiral (cw)"
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
-msgstr "Špirála (v smere hod. ruč.)"
+msgstr "Sférický (klesajúci)"
 
-#: ../libgimpbase/gimpbaseenums.c:728
+#: libgimpbase/gimpbaseenums.c:666
 msgctxt "gradient-segment-type"
 msgid "Step"
-msgstr ""
+msgstr "Krok"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:766
+#: libgimpbase/gimpbaseenums.c:704
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Lineárny"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:767
+#: libgimpbase/gimpbaseenums.c:705
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Bilineárny"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:768
+#: libgimpbase/gimpbaseenums.c:706
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Radiálny"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:769
+#: libgimpbase/gimpbaseenums.c:707
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Štvorcový"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:770
+#: libgimpbase/gimpbaseenums.c:708
 msgctxt "gradient-type"
 msgid "Conical (symmetric)"
 msgstr "Kužeľový (symetrický)"
@@ -1021,13 +1251,13 @@ msgstr "Kužeľový (symetrický)"
 # Typ prechodu
 #. Translators: this is an abbreviated version of "Conical (symmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:773
+#: libgimpbase/gimpbaseenums.c:711
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Kužeľový (symetrický)"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:774
+#: libgimpbase/gimpbaseenums.c:712
 msgctxt "gradient-type"
 msgid "Conical (asymmetric)"
 msgstr "Kužeľový (nesymetrický)"
@@ -1035,31 +1265,31 @@ msgstr "Kužeľový (nesymetrický)"
 # Typ prechodu
 #. Translators: this is an abbreviated version of "Conical (asymmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:777
+#: libgimpbase/gimpbaseenums.c:715
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Kužeľový (nesymetrický)"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:778
+#: libgimpbase/gimpbaseenums.c:716
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Prenikajúci (uhlový)"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:779
+#: libgimpbase/gimpbaseenums.c:717
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Prenikajúci (sférický)"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:780
+#: libgimpbase/gimpbaseenums.c:718
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Prenikajúci (jamkový)"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:781
+#: libgimpbase/gimpbaseenums.c:719
 msgctxt "gradient-type"
 msgid "Spiral (clockwise)"
 msgstr "Špirála (v smere hod. ruč.)"
@@ -1067,13 +1297,13 @@ msgstr "Špirála (v smere hod. ruč.)"
 # Typ prechodu
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:784
+#: libgimpbase/gimpbaseenums.c:722
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Špirála (v smere hod. ruč.)"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:785
+#: libgimpbase/gimpbaseenums.c:723
 msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
 msgstr "Špirála (proti smeru hod. ruč.)"
@@ -1081,408 +1311,462 @@ msgstr "Špirála (proti smeru hod. ruč.)"
 # Typ prechodu
 #. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:788
+#: libgimpbase/gimpbaseenums.c:726
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Špirála (proti smeru hod. ruč.)"
 
 # Štýl mriežky
-#: ../libgimpbase/gimpbaseenums.c:820
+#: libgimpbase/gimpbaseenums.c:758
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Priesečníky (bodky)"
 
 # Štýl mriežky
 # je to za Line style:
-#: ../libgimpbase/gimpbaseenums.c:821
+#: libgimpbase/gimpbaseenums.c:759
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Priesečníky (krížiky)"
 
 # Štýl mriežky
 # je to za Line style:
-#: ../libgimpbase/gimpbaseenums.c:822
+#: libgimpbase/gimpbaseenums.c:760
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Čiarkovaný"
 
 # Štýl mriežky
 # je to za Line style:
-#: ../libgimpbase/gimpbaseenums.c:823
+#: libgimpbase/gimpbaseenums.c:761
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Dvojito čiarkovaný"
 
 # Štýl mriežky
 # je to za Line style:
-#: ../libgimpbase/gimpbaseenums.c:824
+#: libgimpbase/gimpbaseenums.c:762
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Plný"
 
 # typ vyhľadávania
-#: ../libgimpbase/gimpbaseenums.c:894
+#: libgimpbase/gimpbaseenums.c:832
 msgctxt "icon-type"
 msgid "Icon name"
 msgstr "Názov ikony"
 
-#: ../libgimpbase/gimpbaseenums.c:895
+#: libgimpbase/gimpbaseenums.c:833
 msgctxt "icon-type"
-msgid "Inline pixbuf"
-msgstr "Vložený pixbuf"
+msgid "Pixbuf"
+msgstr "Pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:896
+#: libgimpbase/gimpbaseenums.c:834
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Obrázkový súbor"
 
 # Typ palety
-#: ../libgimpbase/gimpbaseenums.c:926
+#: libgimpbase/gimpbaseenums.c:864
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "RGB farby"
 
 # Typ palety
-#: ../libgimpbase/gimpbaseenums.c:927
+#: libgimpbase/gimpbaseenums.c:865
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Odtiene sivej"
 
 # Typ palety
-#: ../libgimpbase/gimpbaseenums.c:928
+#: libgimpbase/gimpbaseenums.c:866
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Indexované farby"
 
-#: ../libgimpbase/gimpbaseenums.c:961
+#: libgimpbase/gimpbaseenums.c:899
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:962
+#: libgimpbase/gimpbaseenums.c:900
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:963
+#: libgimpbase/gimpbaseenums.c:901
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Odtiene sivej"
 
-#: ../libgimpbase/gimpbaseenums.c:964
+#: libgimpbase/gimpbaseenums.c:902
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Odtiene sivej-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:965
+#: libgimpbase/gimpbaseenums.c:903
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Indexovaný"
 
-#: ../libgimpbase/gimpbaseenums.c:966
+#: libgimpbase/gimpbaseenums.c:904
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Indexovaný-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:996
+#: libgimpbase/gimpbaseenums.c:934
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr "Kruh"
 
 # Typ prechodu
-#: ../libgimpbase/gimpbaseenums.c:997
+#: libgimpbase/gimpbaseenums.c:935
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "Štvorcový"
 
-#: ../libgimpbase/gimpbaseenums.c:998
+#: libgimpbase/gimpbaseenums.c:936
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Diamant"
 
-#: ../libgimpbase/gimpbaseenums.c:1030
+#: libgimpbase/gimpbaseenums.c:968
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Žiadna"
 
-#: ../libgimpbase/gimpbaseenums.c:1031
+#: libgimpbase/gimpbaseenums.c:969
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "Lineárna"
 
-#: ../libgimpbase/gimpbaseenums.c:1032
+#: libgimpbase/gimpbaseenums.c:970
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Kubická"
 
 #  PM: ide o Lanczos3/Sinc neviem či to treba prekladať asi nie
-#: ../libgimpbase/gimpbaseenums.c:1033
+#: libgimpbase/gimpbaseenums.c:971
 msgctxt "interpolation-type"
 msgid "NoHalo"
 msgstr "NoHalo"
 
 #  PM: ide o Lanczos3/Sinc neviem či to treba prekladať asi nie
-#: ../libgimpbase/gimpbaseenums.c:1034
+#: libgimpbase/gimpbaseenums.c:972
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr "LoHalo"
 
-#: ../libgimpbase/gimpbaseenums.c:1064
+#: libgimpbase/gimpbaseenums.c:1002
 msgctxt "join-style"
 msgid "Miter"
 msgstr "Ostrý"
 
-#: ../libgimpbase/gimpbaseenums.c:1065
+#: libgimpbase/gimpbaseenums.c:1003
 msgctxt "join-style"
 msgid "Round"
 msgstr "Kruhový"
 
-#: ../libgimpbase/gimpbaseenums.c:1066
+#: libgimpbase/gimpbaseenums.c:1004
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "Šikmý"
 
-#: ../libgimpbase/gimpbaseenums.c:1127
+#: libgimpbase/gimpbaseenums.c:1065
 msgctxt "merge-type"
 msgid "Expanded as necessary"
-msgstr ""
+msgstr "Rozšírené podľa potreby"
 
-#: ../libgimpbase/gimpbaseenums.c:1128
+#: libgimpbase/gimpbaseenums.c:1066
 msgctxt "merge-type"
 msgid "Clipped to image"
-msgstr ""
+msgstr "Orezané na obrázok"
 
-#: ../libgimpbase/gimpbaseenums.c:1129
+#: libgimpbase/gimpbaseenums.c:1067
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
-msgstr ""
+msgstr "Orezané na spodnú vrstvu"
 
 # typ pečiatky
-#: ../libgimpbase/gimpbaseenums.c:1130
-#, fuzzy
+#: libgimpbase/gimpbaseenums.c:1068
 #| msgctxt "clone-type"
 #| msgid "Pattern"
 msgctxt "merge-type"
 msgid "Flatten"
-msgstr "Vzorka"
+msgstr "Zažehliť"
 
-#: ../libgimpbase/gimpbaseenums.c:1224
+#: libgimpbase/gimpbaseenums.c:1162
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Vodorovné"
 
-#: ../libgimpbase/gimpbaseenums.c:1225
+#: libgimpbase/gimpbaseenums.c:1163
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Zvislé"
 
-#: ../libgimpbase/gimpbaseenums.c:1226
+#: libgimpbase/gimpbaseenums.c:1164
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Neznáme"
 
 # Režim aplikovania maľby
-#: ../libgimpbase/gimpbaseenums.c:1255
+#: libgimpbase/gimpbaseenums.c:1193
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Konštantný"
 
 # Režim aplikovania maľby
-#: ../libgimpbase/gimpbaseenums.c:1256
+#: libgimpbase/gimpbaseenums.c:1194
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Postupný"
 
-#: ../libgimpbase/gimpbaseenums.c:1389
+#: libgimpbase/gimpbaseenums.c:1255
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Vnútorná procedúra GIMPu"
 
-#: ../libgimpbase/gimpbaseenums.c:1390
+#: libgimpbase/gimpbaseenums.c:1256
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "Zásuvný modul GIMPu"
 
-#: ../libgimpbase/gimpbaseenums.c:1391
+#: libgimpbase/gimpbaseenums.c:1257
+#| msgctxt "pdb-proc-type"
+#| msgid "GIMP Plug-In"
 msgctxt "pdb-proc-type"
-msgid "GIMP Extension"
-msgstr "Rozšírenie GIMPu"
+msgid "GIMP Persistent Plug-In"
+msgstr "Trvalý zásuvný modul GIMPu"
 
-#: ../libgimpbase/gimpbaseenums.c:1392
+#: libgimpbase/gimpbaseenums.c:1258
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Dočasná procedúra"
 
-#: ../libgimpbase/gimpbaseenums.c:1467
+#: libgimpbase/gimpbaseenums.c:1339
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "8-bitové lineárne celé číslo"
 
-#: ../libgimpbase/gimpbaseenums.c:1468
+#: libgimpbase/gimpbaseenums.c:1340
+#| msgctxt "precision"
+#| msgid "8-bit linear integer"
 msgctxt "precision"
-msgid "8-bit gamma integer"
-msgstr "8-bitové gama celé číslo"
+msgid "8-bit non-linear integer"
+msgstr "8-bitové nelineárne celé číslo"
 
-#: ../libgimpbase/gimpbaseenums.c:1469
+#: libgimpbase/gimpbaseenums.c:1341
+#| msgctxt "precision"
+#| msgid "8-bit linear integer"
+msgctxt "precision"
+msgid "8-bit perceptual integer"
+msgstr "8-bitové perceptuálne celé číslo"
+
+#: libgimpbase/gimpbaseenums.c:1342
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "16-bitové lineárne celé číslo"
 
-#: ../libgimpbase/gimpbaseenums.c:1470
+#: libgimpbase/gimpbaseenums.c:1343
+#| msgctxt "precision"
+#| msgid "16-bit linear integer"
 msgctxt "precision"
-msgid "16-bit gamma integer"
-msgstr "16-bitové gama celé číslo"
+msgid "16-bit non-linear integer"
+msgstr "16-bitové nelineárne celé číslo"
 
-#: ../libgimpbase/gimpbaseenums.c:1471
+#: libgimpbase/gimpbaseenums.c:1344
+#| msgctxt "precision"
+#| msgid "16-bit linear integer"
+msgctxt "precision"
+msgid "16-bit perceptual integer"
+msgstr "16-bitové perceptuálne celé číslo"
+
+#: libgimpbase/gimpbaseenums.c:1345
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "32-bitové lineárne celé číslo"
 
-#: ../libgimpbase/gimpbaseenums.c:1472
+#: libgimpbase/gimpbaseenums.c:1346
+#| msgctxt "precision"
+#| msgid "32-bit linear integer"
 msgctxt "precision"
-msgid "32-bit gamma integer"
-msgstr "32-bitové gama celé číslo"
+msgid "32-bit non-linear integer"
+msgstr "32-bitové nelineárne celé číslo"
 
-#: ../libgimpbase/gimpbaseenums.c:1473
+#: libgimpbase/gimpbaseenums.c:1347
+#| msgctxt "precision"
+#| msgid "32-bit linear integer"
+msgctxt "precision"
+msgid "32-bit perceptual integer"
+msgstr "32-bitové perceptuálne celé číslo"
+
+#: libgimpbase/gimpbaseenums.c:1348
 msgctxt "precision"
 msgid "16-bit linear floating point"
-msgstr ""
+msgstr "16-bitové lineárne číslo s pohyblivou desatinnou čiarkou"
 
-#: ../libgimpbase/gimpbaseenums.c:1474
+#: libgimpbase/gimpbaseenums.c:1349
+#| msgctxt "component-type"
+#| msgid "16-bit floating point"
 msgctxt "precision"
-msgid "16-bit gamma floating point"
-msgstr ""
+msgid "16-bit non-linear floating point"
+msgstr "16-bitové nelineárne číslo s pohyblivou desatinnou čiarkou"
 
-#: ../libgimpbase/gimpbaseenums.c:1475
+#: libgimpbase/gimpbaseenums.c:1350
+#| msgctxt "component-type"
+#| msgid "16-bit floating point"
+msgctxt "precision"
+msgid "16-bit perceptual floating point"
+msgstr "16-bitové perceptuálne číslo s pohyblivou desatinnou čiarkou"
+
+#: libgimpbase/gimpbaseenums.c:1351
 msgctxt "precision"
 msgid "32-bit linear floating point"
-msgstr ""
+msgstr "32-bitové lineárne číslo s pohyblivou desatinnou čiarkou"
 
-#: ../libgimpbase/gimpbaseenums.c:1476
+#: libgimpbase/gimpbaseenums.c:1352
+#| msgctxt "component-type"
+#| msgid "32-bit floating point"
 msgctxt "precision"
-msgid "32-bit gamma floating point"
-msgstr ""
+msgid "32-bit non-linear floating point"
+msgstr "32-bitové nelineárne číslo s pohyblivou desatinnou čiarkou"
 
-#: ../libgimpbase/gimpbaseenums.c:1477
+#: libgimpbase/gimpbaseenums.c:1353
+#| msgctxt "component-type"
+#| msgid "32-bit floating point"
+msgctxt "precision"
+msgid "32-bit perceptual floating point"
+msgstr "32-bitové perceptuálne číslo s pohyblivou desatinnou čiarkou"
+
+#: libgimpbase/gimpbaseenums.c:1354
 msgctxt "precision"
 msgid "64-bit linear floating point"
-msgstr ""
+msgstr "64-bitové lineárne číslo s pohyblivou desatinnou čiarkou"
 
-#: ../libgimpbase/gimpbaseenums.c:1478
+#: libgimpbase/gimpbaseenums.c:1355
+#| msgctxt "component-type"
+#| msgid "64-bit floating point"
 msgctxt "precision"
-msgid "64-bit gamma floating point"
-msgstr ""
+msgid "64-bit non-linear floating point"
+msgstr "64-bitové nelineárne číslo s pohyblivou desatinnou čiarkou"
 
-#: ../libgimpbase/gimpbaseenums.c:1547
+#: libgimpbase/gimpbaseenums.c:1356
+#| msgctxt "component-type"
+#| msgid "64-bit floating point"
+msgctxt "precision"
+msgid "64-bit perceptual floating point"
+msgstr "64-bitové perceptuálne číslo s pohyblivou desatinnou čiarkou"
+
+#: libgimpbase/gimpbaseenums.c:1461
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Žiadne (rozšírenie)"
 
+#: libgimpbase/gimpbaseenums.c:1462
+#| msgctxt "repeat-mode"
+#| msgid "None (extend)"
+msgctxt "repeat-mode"
+msgid "None (truncate)"
+msgstr "Žiadne (skrátenie)"
+
 # Opakovanie prechodu
-#: ../libgimpbase/gimpbaseenums.c:1548
+#: libgimpbase/gimpbaseenums.c:1463
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Pílovitá vlna"
 
 # Opakovanie prechodu
-#: ../libgimpbase/gimpbaseenums.c:1549
+#: libgimpbase/gimpbaseenums.c:1464
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Trojuholníková vlna"
 
-#: ../libgimpbase/gimpbaseenums.c:1550
-msgctxt "repeat-mode"
-msgid "Truncate"
-msgstr "Skrátenie"
-
-#: ../libgimpbase/gimpbaseenums.c:1612
+#: libgimpbase/gimpbaseenums.c:1526
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Spustiť interaktívne"
 
-#: ../libgimpbase/gimpbaseenums.c:1613
+#: libgimpbase/gimpbaseenums.c:1527
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Spustiť neinteraktívne"
 
-#: ../libgimpbase/gimpbaseenums.c:1614
+#: libgimpbase/gimpbaseenums.c:1528
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Spustiť s naposledy použitými hodnotami"
 
-#: ../libgimpbase/gimpbaseenums.c:1652
+#: libgimpbase/gimpbaseenums.c:1566
 msgctxt "select-criterion"
 msgid "Composite"
-msgstr ""
+msgstr "Kompozitný"
 
 # tooltip
-#: ../libgimpbase/gimpbaseenums.c:1653
+#: libgimpbase/gimpbaseenums.c:1567
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Červená"
 
 # tooltip
-#: ../libgimpbase/gimpbaseenums.c:1654
+#: libgimpbase/gimpbaseenums.c:1568
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Zelená"
 
 # tooltip
-#: ../libgimpbase/gimpbaseenums.c:1655
+#: libgimpbase/gimpbaseenums.c:1569
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Modrá"
 
-#: ../libgimpbase/gimpbaseenums.c:1656
+#: libgimpbase/gimpbaseenums.c:1570
 msgctxt "select-criterion"
 msgid "HSV Hue"
-msgstr ""
+msgstr "Odtieň HSV"
 
 # tooltip
-#: ../libgimpbase/gimpbaseenums.c:1657
-#, fuzzy
+#: libgimpbase/gimpbaseenums.c:1571
 #| msgctxt "select-criterion"
 #| msgid "Saturation"
 msgctxt "select-criterion"
 msgid "HSV Saturation"
-msgstr "Sýtosť"
+msgstr "Sýtosť HSV"
 
 # tooltip
-#: ../libgimpbase/gimpbaseenums.c:1658
-#, fuzzy
+#: libgimpbase/gimpbaseenums.c:1572
 #| msgctxt "select-criterion"
 #| msgid "Value"
 msgctxt "select-criterion"
 msgid "HSV Value"
-msgstr "Hodnota"
-
-# tooltip
-#: ../libgimpbase/gimpbaseenums.c:1659
-msgctxt "select-criterion"
-msgid "Alpha"
-msgstr "Alfa"
+msgstr "Hodnota HSV"
 
 # Režim desaturácie (odfarbenia)
 # Je to za Choose shade of gray based on:
-#: ../libgimpbase/gimpbaseenums.c:1660
-#, fuzzy
+#: libgimpbase/gimpbaseenums.c:1573
 #| msgctxt "desaturate-mode"
 #| msgid "Lightness"
 msgctxt "select-criterion"
 msgid "LCh Lightness"
-msgstr "Svetlosti"
+msgstr "Svetlosť LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1661
+#: libgimpbase/gimpbaseenums.c:1574
 msgctxt "select-criterion"
 msgid "LCh Chroma"
-msgstr ""
+msgstr "Chroma LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1662
+#: libgimpbase/gimpbaseenums.c:1575
 msgctxt "select-criterion"
 msgid "LCh Hue"
-msgstr ""
+msgstr "Odtieň LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1691
+# tooltip
+#: libgimpbase/gimpbaseenums.c:1576
+msgctxt "select-criterion"
+msgid "Alpha"
+msgstr "Alfa"
+
+#: libgimpbase/gimpbaseenums.c:1605
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Pixely"
@@ -1490,288 +1774,358 @@ msgstr "Pixely"
 # PM: nie som si istý či je to dobre preložené, ako potom preložiť skratku jednotky "pt" a odlíšiť od "dot"
 # http://en.wikipedia.org/wiki/Point_%28typography%29
 # RP: Neviem čo s tým...
-#: ../libgimpbase/gimpbaseenums.c:1692
+#: libgimpbase/gimpbaseenums.c:1606
 msgctxt "size-type"
 msgid "Points"
 msgstr "Body"
 
-#: ../libgimpbase/gimpbaseenums.c:1753
+#: libgimpbase/gimpbaseenums.c:1667
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Obťahová čiara"
 
-#: ../libgimpbase/gimpbaseenums.c:1754
+#: libgimpbase/gimpbaseenums.c:1668
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Obtiahnuť kresliacim nástrojom"
 
-#: ../libgimpbase/gimpbaseenums.c:1787
+#: libgimpbase/gimpbaseenums.c:1701
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Zľava doprava"
 
-#: ../libgimpbase/gimpbaseenums.c:1788
+#: libgimpbase/gimpbaseenums.c:1702
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Sprava doľava"
 
-#: ../libgimpbase/gimpbaseenums.c:1789
+#: libgimpbase/gimpbaseenums.c:1703
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "Zvislé, sprava doľava (zmiešaná orientácia)"
 
-#: ../libgimpbase/gimpbaseenums.c:1790
+#: libgimpbase/gimpbaseenums.c:1704
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "Zvislé, sprava doľava (vzpriamená orientácia)"
 
-#: ../libgimpbase/gimpbaseenums.c:1791
+#: libgimpbase/gimpbaseenums.c:1705
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "Zvislé, zľava doprava (zmiešaná orientácia)"
 
-#: ../libgimpbase/gimpbaseenums.c:1792
+#: libgimpbase/gimpbaseenums.c:1706
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "Zvislé, zľava doprava (vzpriamená orientácia)"
 
 # vyhladzovanie písma
-#: ../libgimpbase/gimpbaseenums.c:1823
+#: libgimpbase/gimpbaseenums.c:1737
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Žiadne"
 
 # vyhladzovanie písma
-#: ../libgimpbase/gimpbaseenums.c:1824
+#: libgimpbase/gimpbaseenums.c:1738
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Mierne"
 
 # vyhladzovanie písma
-#: ../libgimpbase/gimpbaseenums.c:1825
+#: libgimpbase/gimpbaseenums.c:1739
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Stredné"
 
 # vyhladzovanie písma
-#: ../libgimpbase/gimpbaseenums.c:1826
+#: libgimpbase/gimpbaseenums.c:1740
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Plné"
 
-#: ../libgimpbase/gimpbaseenums.c:1857
+#: libgimpbase/gimpbaseenums.c:1771
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Zarovnané doľava"
 
-#: ../libgimpbase/gimpbaseenums.c:1858
+#: libgimpbase/gimpbaseenums.c:1772
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Zarovnané doprava"
 
-#: ../libgimpbase/gimpbaseenums.c:1859
+#: libgimpbase/gimpbaseenums.c:1773
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Zarovnané na stred"
 
-#: ../libgimpbase/gimpbaseenums.c:1860
+#: libgimpbase/gimpbaseenums.c:1774
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Zarovnané do bloku"
 
+#: libgimpbase/gimpbaseenums.c:1804
+#| msgctxt "text-justification"
+#| msgid "Filled"
+msgctxt "text-outline"
+msgid "Filled"
+msgstr "Vyplnený"
+
+#: libgimpbase/gimpbaseenums.c:1805
+msgctxt "text-outline"
+msgid "Outlined"
+msgstr "Obrysový"
+
+#: libgimpbase/gimpbaseenums.c:1806
+msgctxt "text-outline"
+msgid "Outlined and filled"
+msgstr "Obrysový aj vyplnený"
+
+#: libgimpbase/gimpbaseenums.c:1836
+msgctxt "text-outline-direction"
+msgid "Outer"
+msgstr "Vonkajší"
+
+#: libgimpbase/gimpbaseenums.c:1837
+msgctxt "text-outline-direction"
+msgid "Inner"
+msgstr "Vnútorný"
+
+#: libgimpbase/gimpbaseenums.c:1838
+#| msgctxt "text-justification"
+#| msgid "Centered"
+msgctxt "text-outline-direction"
+msgid "Centered"
+msgstr "Vycentrovaný"
+
 # Rozsah farebného vyváženia
 # je to za Select Range to Adjust
-#: ../libgimpbase/gimpbaseenums.c:1890
+#: libgimpbase/gimpbaseenums.c:1868
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Tiene"
 
 # Rozsah farebného vyváženia
 # je to za Select Range to Adjust
-#: ../libgimpbase/gimpbaseenums.c:1891
+#: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Stredné tóny"
 
 # Rozsah farebného vyváženia
 # je to za Select Range to Adjust
-#: ../libgimpbase/gimpbaseenums.c:1892
+#: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Zvýraznenia"
 
-#: ../libgimpbase/gimpbaseenums.c:1921
+#: libgimpbase/gimpbaseenums.c:1899
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normálny (Dopredu)"
 
 # PM: Používa sa to napríklad ak chceme dať horizont do vodorovnej polohy
-#: ../libgimpbase/gimpbaseenums.c:1922
+#: libgimpbase/gimpbaseenums.c:1900
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Opravný (Opačne)"
 
 # toto je druh prisposobenia obrazku po transformácii
 # Veľkosť obrázka sa prispôsobí výsledku transformácie
-#: ../libgimpbase/gimpbaseenums.c:1953
+#: libgimpbase/gimpbaseenums.c:1931
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Prispôsobiť"
 
 # toto je druh prisposobenia obrazku po transformácii
 # všetko čo trčí nad aktuálne rozmery obrázka sa odstihne
-#: ../libgimpbase/gimpbaseenums.c:1954
+#: libgimpbase/gimpbaseenums.c:1932
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Zastrihnúť"
 
 # toto je druh prisposobenia obrazku po transformácii
 # obrázok sa oreže tak, aby neobsahoval priehladné časti
-#: ../libgimpbase/gimpbaseenums.c:1955
+#: libgimpbase/gimpbaseenums.c:1933
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Orezať do výsledku"
 
 # toto je druh prisposobenia obrazku po transformácii
 # to isté ako predchádzajúca možnosť len so zachovaním pomeru strán
-#: ../libgimpbase/gimpbaseenums.c:1956
+#: libgimpbase/gimpbaseenums.c:1934
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Orezať so zachovaným pomerom strán"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: libgimpbase/gimpmetadata.c:1222
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Metaúdaje sa dajú načítať iba z miestnych súborov"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
-#, c-format
-msgid "Conversion of the filename to system codepage failed."
-msgstr ""
-
-#: ../libgimpbase/gimpmetadata.c:949
+#: libgimpbase/gimpmetadata.c:1278
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Metaúdaje sa dajú uložiť iba do miestnych súborov"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: libgimpbase/gimpmetadata.c:1327
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Neplatná veľkosť údajov Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: libgimpbase/gimpmetadata.c:1372
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Analýza údajov Exif zlyhala."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: libgimpbase/gimpmetadata.c:1424
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Analýza údajov IPTC zlyhala."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: libgimpbase/gimpmetadata.c:1472
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Analýza údajov XMP zlyhala."
 
-#: ../libgimpbase/gimputils.c:219 ../libgimpbase/gimputils.c:224
+#: libgimpbase/gimpunit.c:82
+#| msgctxt "size-type"
+#| msgid "Pixels"
+msgctxt "unit-plural"
+msgid "pixels"
+msgstr "pixely"
+
+#: libgimpbase/gimpunit.c:89
+msgctxt "unit-plural"
+msgid "inches"
+msgstr "palce"
+
+#: libgimpbase/gimpunit.c:95
+msgctxt "unit-plural"
+msgid "millimeters"
+msgstr "milimetre"
+
+# PM: nie som si istý či je to dobre preložené, ako potom preložiť skratku jednotky "pt" a odlíšiť od "dot"
+# http://en.wikipedia.org/wiki/Point_%28typography%29
+# RP: Neviem čo s tým...
+#: libgimpbase/gimpunit.c:102
+#| msgctxt "size-type"
+#| msgid "Points"
+msgctxt "unit-plural"
+msgid "points"
+msgstr "body"
+
+#: libgimpbase/gimpunit.c:108
+msgctxt "unit-plural"
+msgid "picas"
+msgstr "pica"
+
+# jednotka gimpu
+# PM: Je to v ponuke jednotiek body palce, centimetre... Preto navrhujem "Percentá" - Paľo pozri na to prosím
+# PŠ: veľmi nešťastný reťazec. Je to použité aj v _gimp_unit_cache_get_singular aj v _gimp_unit_cache_get_plural - a oba reťazce sú uvedené ako jednotné číslo. Toto je asi najlepšie riešenie...
+#: libgimpbase/gimpunit.c:118
+#| msgid "percent"
+msgctxt "unit-plural"
+msgid "percent"
+msgstr "percentá"
+
+#: libgimpbase/gimputils.c:223 libgimpbase/gimputils.c:228
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný UTF-8 reťazec)"
 
-#: ../libgimpbase/gimputils.c:394
+#: libgimpbase/gimputils.c:398
 msgid "File path is NULL"
 msgstr "Cesta k súboru je prázdna(NULL)"
 
-#: ../libgimpbase/gimputils.c:403 ../libgimpbase/gimputils.c:414
+#: libgimpbase/gimputils.c:406
 msgid "Error converting UTF-8 filename to wide char"
 msgstr ""
 "Chyba pri konvertovaní názvu súboru v kódovaní UTF-8 do znakov typu wide"
 
-#: ../libgimpbase/gimputils.c:422
+#: libgimpbase/gimputils.c:414
 msgid "ILCreateFromPath() failed"
 msgstr "Funkcia ILCreateFromPath() zlyhala"
 
-#: ../libgimpbase/gimputils.c:459
+#: libgimpbase/gimputils.c:453
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Nedá sa skonvertovať „%s“ do platnej NSURL."
 
-#: ../libgimpbase/gimputils.c:487
+#: libgimpbase/gimputils.c:481
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Pripojenie k org.freedesktop.FileManager1 zlyhalo: "
 
-#: ../libgimpbase/gimputils.c:511
+#: libgimpbase/gimputils.c:505
 msgid "Calling ShowItems failed: "
 msgstr "Volanie funkcie ShowItems zlyhalo: "
 
-#: ../libgimpcolor/gimpcolorprofile.c:258
+#: libgimpcolor/gimpcolorprofile.c:259
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "„%s“ sa nezdá byť profilom farieb ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:304
+#: libgimpcolor/gimpcolorprofile.c:305
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Údaje sa nezdajú byť profilom farieb ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:361
+#: libgimpcolor/gimpcolorprofile.c:362
 msgid "Could not save color profile to memory"
 msgstr "Nepodarilo sa uložiť profil farieb do pamäte"
 
-#: ../libgimpcolor/gimpcolorprofile.c:578
+#: libgimpcolor/gimpcolorprofile.c:579
 msgid "(unnamed profile)"
 msgstr "(profil bez názvu)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:620
+#: libgimpcolor/gimpcolorprofile.c:621 libgimpwidgets/gimpcolorselect.c:2083
 #, c-format
 msgid "Model: %s"
 msgstr "Model: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:629
+#: libgimpcolor/gimpcolorprofile.c:630
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Výrobca: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:638
+#: libgimpcolor/gimpcolorprofile.c:639
 #, c-format
 msgid "Copyright: %s"
 msgstr "Autorské práva: %s"
 
-#: ../libgimpconfig/gimpconfigenums.c:24
+#: libgimpconfig/gimpconfigenums.c:25
 msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "Bez správy farieb"
 
-#: ../libgimpconfig/gimpconfigenums.c:25
+#: libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Color-managed display"
 msgstr "Displej so správou farieb"
 
-#: ../libgimpconfig/gimpconfigenums.c:26
+#: libgimpconfig/gimpconfigenums.c:27
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
-msgstr ""
+msgstr "Náhľad tlačového výstupu"
 
 # kvalita renderovania farieb
 # PM: Vnímateľná by bolo asi vhodnejšie
-#: ../libgimpconfig/gimpconfigenums.c:57
+#: libgimpconfig/gimpconfigenums.c:58
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "Perceptuálna"
 
 # kvalita renderovania farieb
-#: ../libgimpconfig/gimpconfigenums.c:58
+#: libgimpconfig/gimpconfigenums.c:59
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "Relatívna kolorimetria"
 
 # kvalita renderovania farieb
-#: ../libgimpconfig/gimpconfigenums.c:59
+#: libgimpconfig/gimpconfigenums.c:60
 msgctxt "color-rendering-intent"
 msgid "Saturation"
 msgstr "Sýtosť"
 
 # kvalita renderovania farieb
-#: ../libgimpconfig/gimpconfigenums.c:60
+#: libgimpconfig/gimpconfigenums.c:61
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Absolútna kolorimetria"
@@ -1783,17 +2137,17 @@ msgstr "Absolútna kolorimetria"
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: libgimpconfig/gimpcolorconfig.c:52
 msgid "How images are displayed on screen."
-msgstr ""
+msgstr "Ako sa obrázky zobrazujú na obrazovke."
 
 # tooltip
-#: ../libgimpconfig/gimpcolorconfig.c:55
+#: libgimpconfig/gimpcolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "Profil farieb vášho (hlavného) monitora."
 
 # tooltip
-#: ../libgimpconfig/gimpcolorconfig.c:58
+#: libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -1803,7 +2157,7 @@ msgstr ""
 "okien. Nakonfigurovaný profil monitora je potom použitý len v prípade "
 "neúspechu."
 
-#: ../libgimpconfig/gimpcolorconfig.c:63
+#: libgimpconfig/gimpcolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
@@ -1811,7 +2165,7 @@ msgstr ""
 "Preferovaný profil pracovného priestoru RGB. Bude ponúknutý popri vstavanom "
 "profile RGB, pri výbere farebného profilu."
 
-#: ../libgimpconfig/gimpcolorconfig.c:67
+#: libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
@@ -1820,58 +2174,73 @@ msgstr ""
 "vstavanom profile odtieňov šedej, pri výbere farebného profilu."
 
 # tooltip
-#: ../libgimpconfig/gimpcolorconfig.c:71
+#: libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Profil farieb CMYK používaný na konverziu medzi RGB a CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:74
+#: libgimpconfig/gimpcolorconfig.c:74
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
 "some other color space, including soft-proofing to a printer or other output "
-"device profile. "
+"device profile."
 msgstr ""
+"Profil farieb, ktorý sa má použiť v náhľade tlačového výstupu z farebného priestoru "
+"obrázka do iného farebného priestoru, vrátane náhľadu na tlačiareň alebo "
+"iné výstupné zariadenie."
 
-#: ../libgimpconfig/gimpcolorconfig.c:79
+#: libgimpconfig/gimpcolorconfig.c:79
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
 "LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
 "intent really gives you relative colorimetric."
 msgstr ""
+"Ako sa farby konvertujú z farebného priestoru obrázka na displej. Relatívna "
+"kolorimetria je zvyčajne najlepšia voľba. Ak nepoužívate profil monitora "
+"LUT (väčšina profilov monitora je maticová), perceptuálny zámer vám dá "
+"v podstate relatívnu kolorimetriu."
 
-#: ../libgimpconfig/gimpcolorconfig.c:86
+#: libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
+"Použite kompenzáciu čierneho bodu (pokiaľ nemáte dôvod ju nepoužívať)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:90
+#: libgimpconfig/gimpcolorconfig.c:90
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
+"Ak je zakázané, zobrazenie obrázka môže byť lepšej kvality na úkor rýchlosti."
 
-#: ../libgimpconfig/gimpcolorconfig.c:94
+#: libgimpconfig/gimpcolorconfig.c:94
+#| msgid ""
+#| "How colors are converted from your image's color space to the output "
+#| "simulation device (usually your monitor). Try them all and choose what "
+#| "looks the best. "
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
-"the best. "
+"the best."
 msgstr ""
-"Ako sú konvertované farby z farebného priestoru vášho obrázku do výstupného "
+"Akým spôsobom sú konvertované farby z farebného priestoru vášho obrázka do výstupného "
 "simulovaného zariadenia (obvykle vášho monitoru). Skúste všetky a zvoľte, "
 "ktorý vyzerá najlepšie. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:99
+#: libgimpconfig/gimpcolorconfig.c:99
+#| msgid ""
+#| "Try with and without black point compensation and choose what looks best. "
 msgid ""
-"Try with and without black point compensation and choose what looks best. "
+"Try with and without black point compensation and choose what looks best."
 msgstr "Skúste s a bez kompenzácie čierneho bodu a zvoľte, čo vyzerá lepšie. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:103
+#: libgimpconfig/gimpcolorconfig.c:103
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
+"Ak je zakázané, náhľad tlačového výstupu môže byť lepšej kvality na úkor rýchlosti."
 
 # tooltip
-#: ../libgimpconfig/gimpcolorconfig.c:107
-#, fuzzy
+#: libgimpconfig/gimpcolorconfig.c:107
 #| msgid ""
 #| "When enabled, the print simulation will mark colors which can not be "
 #| "represented in the target color space."
@@ -1879,206 +2248,222 @@ msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Keď je povolené, simulácia tlačenia vyznačí farby, ktoré nemôžu byť "
-"reprezentované v určenom priestore farieb."
+"Keď je povolené, náhľad tlačového výstupu vyznačí farby, ktoré nemôžu byť "
+"reprezentované v cieľovom priestore farieb."
 
 # tooltip
-#: ../libgimpconfig/gimpcolorconfig.c:111
+#: libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Farba využívaná na označenie farieb, ktoré sú mimo farebného rozsahu."
 
-#: ../libgimpconfig/gimpcolorconfig.c:198
+#: libgimpconfig/gimpcolorconfig.c:114
+msgid ""
+"When enabled, set the color scales to display 0...255 instead of percentages"
+msgstr ""
+"Ak je povolené, nastaví farebné stupnice na zobrazenie hodnôt 0...255 "
+"namiesto percent"
+
+#: libgimpconfig/gimpcolorconfig.c:118
+msgid ""
+"When enabled, set the color scales to display HSV blend mode instead of LCh"
+msgstr ""
+"Ak je povolené, nastaví farebné stupnice na zobrazenie režimu miešania "
+"HSV namiesto LCh"
+
+#: libgimpconfig/gimpcolorconfig.c:225
 msgid "Mode of operation"
 msgstr "Režim činnosti"
 
-#: ../libgimpconfig/gimpcolorconfig.c:206
+#: libgimpconfig/gimpcolorconfig.c:233
 msgid "Preferred RGB profile"
 msgstr "Uprednostňovaný profil RGB"
 
-#: ../libgimpconfig/gimpcolorconfig.c:213
+#: libgimpconfig/gimpcolorconfig.c:240
 msgid "Preferred grayscale profile"
 msgstr "Uprednostňovaný profil odtieňov šedej"
 
-#: ../libgimpconfig/gimpcolorconfig.c:220
+#: libgimpconfig/gimpcolorconfig.c:247
 msgid "CMYK profile"
 msgstr "Profil CMYK"
 
-#: ../libgimpconfig/gimpcolorconfig.c:227
+#: libgimpconfig/gimpcolorconfig.c:254
 msgid "Monitor profile"
 msgstr "Profil monitora"
 
-#: ../libgimpconfig/gimpcolorconfig.c:234
+#: libgimpconfig/gimpcolorconfig.c:261
 msgid "Use the system monitor profile"
 msgstr "Použiť systémový profil monitora"
 
-#: ../libgimpconfig/gimpcolorconfig.c:242
+#: libgimpconfig/gimpcolorconfig.c:268
 msgid "Simulation profile for soft-proofing"
-msgstr ""
+msgstr "Simulačný profil pre náhľad tlačového výstupu"
 
-#: ../libgimpconfig/gimpcolorconfig.c:249
+#: libgimpconfig/gimpcolorconfig.c:275
 msgid "Display rendering intent"
-msgstr ""
+msgstr "Renderovací zámer displeja"
 
-#: ../libgimpconfig/gimpcolorconfig.c:257
+#: libgimpconfig/gimpcolorconfig.c:283
 msgid "Use black point compensation for the display"
 msgstr "Použiť kompenzáciu čierneho bodu displeja"
 
-#: ../libgimpconfig/gimpcolorconfig.c:264
+#: libgimpconfig/gimpcolorconfig.c:290
 msgid "Optimize display color transformations"
 msgstr "Optimalizovať transformácie farieb displeja"
 
-#: ../libgimpconfig/gimpcolorconfig.c:271
+#: libgimpconfig/gimpcolorconfig.c:297
 msgid "Soft-proofing rendering intent"
-msgstr ""
+msgstr "Renderovací zámer náhľadu tlačového výstupu"
 
-#: ../libgimpconfig/gimpcolorconfig.c:279
+#: libgimpconfig/gimpcolorconfig.c:305
 msgid "Use black point compensation for soft-proofing"
-msgstr ""
+msgstr "Použiť kompenzáciu čierneho bodu v náhľade tlačového výstupu"
 
-#: ../libgimpconfig/gimpcolorconfig.c:286
+#: libgimpconfig/gimpcolorconfig.c:312
 msgid "Optimize soft-proofing color transformations"
-msgstr ""
+msgstr "Optimalizovať farebné transformácie v náhľade tlačového výstupu"
 
-#: ../libgimpconfig/gimpcolorconfig.c:293
+#: libgimpconfig/gimpcolorconfig.c:319
 msgid "Mark out of gamut colors"
-msgstr ""
+msgstr "Označiť farby mimo farebného rozsahu"
 
-#: ../libgimpconfig/gimpcolorconfig.c:300
+#: libgimpconfig/gimpcolorconfig.c:326
 msgid "Out of gamut warning color"
-msgstr ""
+msgstr "Farba upozornenia na farby mimo farebného rozsahu"
 
-#: ../libgimpconfig/gimpcolorconfig.c:657
-#: ../libgimpconfig/gimpcolorconfig.c:841
+#: libgimpconfig/gimpcolorconfig.c:334
+msgid "Show RGB 0..255 scales"
+msgstr "Zobraziť stupnice RGB 0..255"
+
+#: libgimpconfig/gimpcolorconfig.c:341
+msgid "Show HSV instead of LCH"
+msgstr "Zobraziť HSV namiesto LCH"
+
+#: libgimpconfig/gimpcolorconfig.c:706 libgimpconfig/gimpcolorconfig.c:895
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Farebný profil „%s“ nie je farebným priestorom RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:699
-#: ../libgimpconfig/gimpcolorconfig.c:891
+#: libgimpconfig/gimpcolorconfig.c:749 libgimpconfig/gimpcolorconfig.c:945
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Farebný profil „%s“ nie je farebným priestorom odtieňov šedej."
 
-#: ../libgimpconfig/gimpcolorconfig.c:741
-#: ../libgimpconfig/gimpcolorconfig.c:941
+#: libgimpconfig/gimpcolorconfig.c:792 libgimpconfig/gimpcolorconfig.c:995
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Farebný profil „%s“ nie je farebným priestorom CMYK."
 
 # scanner string error
-#: ../libgimpconfig/gimpconfig-deserialize.c:113
+#: libgimpconfig/gimpconfig-deserialize.c:124
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "hodnota pre token %s nie je platným UTF-8 reťazcom"
 
 # scanner string error
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:473
+#: libgimpconfig/gimpconfig-deserialize.c:505
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "pre logický výraz %s sa očakáva symbol „yes“ alebo „no“, prijaté bolo „%s“"
 
 # scanner string error
-#: ../libgimpconfig/gimpconfig-deserialize.c:588
+#: libgimpconfig/gimpconfig-deserialize.c:620
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "neplatná hodnota „%s“ pre token %s"
 
 # scanner string error
-#: ../libgimpconfig/gimpconfig-deserialize.c:603
+#: libgimpconfig/gimpconfig-deserialize.c:635
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "neplatná hodnota „%ld“ pre token %s"
 
 # scanner string error
-#: ../libgimpconfig/gimpconfig-deserialize.c:672
+#: libgimpconfig/gimpconfig-deserialize.c:704
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "počas analyzovania tokenu „%s“: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:682
-#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:756
-#: ../libgimpconfig/gimpscanner.c:838
-#: ../libgimpwidgets/gimpcolorprofilestore.c:710
+#: libgimpconfig/gimpconfig-iface.c:708 libgimpconfig/gimpconfig-iface.c:721
+#: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
+#: libgimpwidgets/gimpcolorprofilestore.c:756
 msgid "fatal parse error"
 msgstr "závažná chyba pri analýze"
 
-#: ../libgimpconfig/gimpconfig-path.c:483
+#: libgimpconfig/gimpconfig-path.c:513
 msgid "File has no path representation"
 msgstr "Súbor neobsahuje reprezentáciu cesty"
 
-#: ../libgimpconfig/gimpconfig-path.c:570
+#: libgimpconfig/gimpconfig-path.c:600
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Nie je možné expandovať ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:88
-#: ../libgimpconfig/gimpconfigwriter.c:673
+#: libgimpconfig/gimpconfigwriter.c:95 libgimpconfig/gimpconfigwriter.c:727
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Chyba pri zapisovaní do „%s“: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:183
+#: libgimpconfig/gimpconfigwriter.c:153
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
 msgstr "Nepodarilo sa vytvoriť adresár „%s“ pre „%s“: "
 
-#: ../libgimpconfig/gimpconfigwriter.c:199
+#: libgimpconfig/gimpconfigwriter.c:169
 #, c-format
 msgid "Could not create temporary file for '%s': "
 msgstr "Nie je možné vytvoriť dočasný súbor pre „%s“: "
 
-#: ../libgimpconfig/gimpconfigwriter.c:783
+#: libgimpconfig/gimpconfigwriter.c:837
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Chyba pri zapisovaní „%s“: %s"
 
-#: ../libgimpconfig/gimpscanner.c:409
-#, c-format
+#: libgimpconfig/gimpscanner.c:424
 msgid "invalid UTF-8 string"
 msgstr "neplatný UTF-8 reťazec"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:631
+#: libgimpconfig/gimpscanner.c:651
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr ""
 "pre logický výraz sa očakáva symbol „yes“ alebo „no“, prijaté bolo „%s“"
 
-#: ../libgimpconfig/gimpscanner.c:865
+#: libgimpconfig/gimpscanner.c:991
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Chyba počas analýzy „%s“ na riadku %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:148 ../libgimpmodule/gimpmodule.c:166
-#: ../libgimpmodule/gimpmodule.c:275 ../libgimpmodule/gimpmodule.c:302
-#: ../libgimpmodule/gimpmodule.c:428
+#: libgimpmodule/gimpmodule.c:223 libgimpmodule/gimpmodule.c:241
+#: libgimpmodule/gimpmodule.c:515 libgimpmodule/gimpmodule.c:538
+#: libgimpmodule/gimpmodule.c:589
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Chyba pri načítavaní modulu „%s“: %s"
 
 # state name
-#: ../libgimpmodule/gimpmodule.c:370
+#: libgimpmodule/gimpmoduledb.c:460
 msgid "Module error"
 msgstr "Chyba modulu"
 
 # state name
-#: ../libgimpmodule/gimpmodule.c:371
+#: libgimpmodule/gimpmoduledb.c:461
 msgid "Loaded"
 msgstr "Načítaný"
 
 # state name
-#: ../libgimpmodule/gimpmodule.c:372
+#: libgimpmodule/gimpmoduledb.c:462
 msgid "Load failed"
 msgstr "Načítavanie zlyhalo"
 
 # state name
-#: ../libgimpmodule/gimpmodule.c:373
+#: libgimpmodule/gimpmoduledb.c:463
 msgid "Not loaded"
 msgstr "Nenačítaný"
 
-#: ../libgimpthumb/gimpthumb-utils.c:153
+#: libgimpthumb/gimpthumb-utils.c:153
 #, c-format
 msgid ""
 "Cannot determine a valid thumbnails directory.\n"
@@ -2087,59 +2472,43 @@ msgstr ""
 "Nedá sa určiť platný adresár s miniatúrami.\n"
 "Miniatúry budú namiesto toho umiestnené v priečinku pre dočasné súbory (%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
+#: libgimpthumb/gimpthumb-utils.c:299 libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Zlyhalo vytvorenie priečinka pre miniatúry „%s“."
 
-#: ../libgimpthumb/gimpthumbnail.c:479
+#: libgimpthumb/gimpthumbnail.c:523
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Miniatúra neobsahuje žiadnu značku Thumb::URI"
 
-#: ../libgimpthumb/gimpthumbnail.c:876
+#: libgimpthumb/gimpthumbnail.c:932
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nepodarilo sa vytvoriť náhľad pre %s: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:114
-msgid "_Search:"
-msgstr "Vy_hľadať:"
-
 # ActionEntry
-#: ../libgimpwidgets/gimpcolorbutton.c:147
+#: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
 msgstr "Farba _popredia"
 
 # ActionEntry
-#: ../libgimpwidgets/gimpcolorbutton.c:151
+#: libgimpwidgets/gimpcolorbutton.c:376
 msgid "_Background Color"
 msgstr "Farba po_zadia"
 
 # ActionEntry
-#: ../libgimpwidgets/gimpcolorbutton.c:155
+#: libgimpwidgets/gimpcolorbutton.c:381
 msgid "Blac_k"
 msgstr "Č_ierna"
 
 # ActionEntry
-#: ../libgimpwidgets/gimpcolorbutton.c:159
+#: libgimpwidgets/gimpcolorbutton.c:382
 msgid "_White"
 msgstr "_Biela"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:548 ../libgimpwidgets/gimpicons.c:68
-msgid "_Reset"
-msgstr "O_bnoviť"
-
-#: ../libgimpwidgets/gimpcolorbutton.c:550
-#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:275
-#: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
-#: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:493
-#| msgid "_K"
-msgid "_OK"
-msgstr "_OK"
-
 # tooltip
-#: ../libgimpwidgets/gimpcolorhexentry.c:118
+#: libgimpwidgets/gimpcolorhexentry.c:125
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -2148,273 +2517,293 @@ msgstr ""
 "názvy farieb."
 
 # file filter name
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:107
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:107
 msgid "All files (*.*)"
 msgstr "Všetky súbory (*.*)"
 
 # file filter name
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:112
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:112
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profil farieb ICC (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 msgid "_Save"
 msgstr "_Uložiť"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
-msgid "_Open"
-msgstr "_Otvoriť"
-
 # treeview column
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:345
-#: ../libgimpwidgets/gimppatheditor.c:270
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:347
+#: libgimpwidgets/gimppatheditor.c:288
 msgid "Folder"
 msgstr "Priečinok"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:350
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:352
 msgid "Not a regular file."
 msgstr "Nie je bežný súbor."
 
 # list store tooltip
-#: ../libgimpwidgets/gimpcolorprofilestore.c:147
+#: libgimpwidgets/gimpcolorprofilestore.c:156
 msgid "Select color profile from disk..."
 msgstr "Vybrať profil farieb z disku…"
 
 # profil farieb
-#: ../libgimpwidgets/gimpcolorprofilestore.c:315
+#: libgimpwidgets/gimpcolorprofilestore.c:284
 msgctxt "profile"
 msgid "None"
 msgstr "Žiadny"
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:168
+#: libgimpwidgets/gimpcolorprofileview.c:168
 msgid "Manufacturer: "
 msgstr "Výrobca: "
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:180
+#: libgimpwidgets/gimpcolorprofileview.c:180
 msgid "Copyright: "
 msgstr "Autorské práva: "
 
 # selector_class name
-#: ../libgimpwidgets/gimpcolorscales.c:205
+#: libgimpwidgets/gimpcolorscales.c:195
 msgid "Scales"
 msgstr "Mierky"
 
-#: ../libgimpwidgets/gimpcolorscales.c:437
+#. TODO: in future, this could be a better thought localized
+#. * string, but for now, I had to preserve string freeze.
+#.
+#: libgimpwidgets/gimpcolorscales.c:359 libgimpwidgets/gimpcolorscales.c:691
+#: libgimpwidgets/gimpcolorselect.c:2094 modules/color-selector-water.c:206
+#: modules/color-selector-water.c:242 modules/color-selector-wheel.c:136
+#: modules/color-selector-wheel.c:175
+#| msgid "Profile: %s"
+msgid "Profile: sRGB"
+msgstr "Profil: sRGB"
+
+#: libgimpwidgets/gimpcolorscales.c:456
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:439
+#: libgimpwidgets/gimpcolorscales.c:458
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:460
+#: libgimpwidgets/gimpcolorscales.c:479
 msgid "LCh"
-msgstr ""
+msgstr "LCh"
 
-#: ../libgimpwidgets/gimpcolorscales.c:462
+#: libgimpwidgets/gimpcolorscales.c:481
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
+
+#: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
+#: modules/color-selector-cmyk.c:326 modules/color-selector-cmyk.c:410
+#: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
+#, c-format
+msgid "Profile: %s"
+msgstr "Profil: %s"
+
+#: libgimpwidgets/gimpcolorscales.c:722 libgimpwidgets/gimpcolorselect.c:2126
+#: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
+#| msgid "Profile: (none)"
+msgid "Profile: <i>unknown</i>"
+msgstr "Profil: <i>neznámy</i>"
+
+#: libgimpwidgets/gimpcolorselect.c:530 libgimpwidgets/gimpcolorselect.c:809
+#: libgimpwidgets/gimpcolorselect.c:826
+msgid "Soft-Proof Profile: <i>unknown</i>"
+msgstr "Profil náhľadu tlačového výstupu: <i>neznámy</i>"
+
+#: libgimpwidgets/gimpcolorselect.c:793
+msgid "Soft-Proof Profile: sRGB"
+msgstr "Profil náhľadu tlačového výstupu: sRGB"
+
+#: libgimpwidgets/gimpcolorselect.c:800
+#, c-format
+#| msgid "Profile: %s"
+msgid "Soft-Proof Profile: %s"
+msgstr "Profil náhľadu tlačového výstupu: %s"
 
 # farba
-#: ../libgimpwidgets/gimpcolorselection.c:222
+#: libgimpwidgets/gimpcolorselection.c:233
 msgid "Current:"
 msgstr "Aktuálna:"
 
 # farba
-#: ../libgimpwidgets/gimpcolorselection.c:231
+#: libgimpwidgets/gimpcolorselection.c:242
 msgid "Old:"
 msgstr "Stará:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:318
+#: libgimpwidgets/gimpcolorselection.c:327
 msgid "HTML _notation:"
 msgstr "HTML _zápis:"
 
-#: ../libgimpwidgets/gimpdialog.c:178
+#: libgimpwidgets/gimpcontroller.c:114
+msgid "The controller's name"
+msgstr "Názov ovládača"
+
+#: libgimpwidgets/gimpcontroller.c:122
+msgid "The controller's state, as human-readable string"
+msgstr "Stav ovládača ako čitateľný reťazec"
+
+#: libgimpwidgets/gimpdialog.c:196
 msgid "_Help"
 msgstr "_Pomocník"
 
-#: ../libgimpwidgets/gimpfileentry.c:152
+#: libgimpwidgets/gimpfileentry.c:166
 msgid "Show file location in the file manager"
 msgstr "Zobraziť umiestnenie súboru v správcovi súborov"
 
 # tooltip
-#: ../libgimpwidgets/gimpfileentry.c:223
+#: libgimpwidgets/gimpfileentry.c:237
 msgid "Open a file selector to browse your folders"
 msgstr "Otvorí okno na výber súborov umožňujúce prehliadanie vašich priečinkov"
 
 # tooltip
-#: ../libgimpwidgets/gimpfileentry.c:224
+#: libgimpwidgets/gimpfileentry.c:238
 msgid "Open a file selector to browse your files"
 msgstr "Otvorí okno na výber súborov umožňujúce prehliadanie vašich súborov"
 
-#: ../libgimpwidgets/gimpfileentry.c:236
+#: libgimpwidgets/gimpfileentry.c:250
 msgid "Indicates whether or not the folder exists"
 msgstr "Indikuje, či priečinok existuje alebo nie"
 
-#: ../libgimpwidgets/gimpfileentry.c:237
+#: libgimpwidgets/gimpfileentry.c:251
 msgid "Indicates whether or not the file exists"
 msgstr "Indikuje, či súbor existuje alebo nie"
 
-#: ../libgimpwidgets/gimpfileentry.c:397
+#: libgimpwidgets/gimpfileentry.c:427
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Nedá sa zobraziť súbor v správcovi súborov: %s"
 
 # titulok dialógového okna
-#: ../libgimpwidgets/gimpfileentry.c:424
+#: libgimpwidgets/gimpfileentry.c:453
 msgid "Select Folder"
 msgstr "Výber priečinka"
 
 # titulok dialógového okna
-#: ../libgimpwidgets/gimpfileentry.c:426
+#: libgimpwidgets/gimpfileentry.c:455
 msgid "Select File"
 msgstr "Výber súboru"
 
 # label
-#: ../libgimpwidgets/gimphelpui.c:433
+#: libgimpwidgets/gimphelpui.c:387
 msgid "Press F1 for more help"
 msgstr "Stlačením F1 získate ďalšiu pomoc"
 
-#: ../libgimpwidgets/gimpicons.c:62
-msgid "Anchor"
-msgstr "Ukotviť"
+# 1. položka menu
+# 2. zoznam
+# PM: Paľo pozri prosím či to netreba rozdeliť
+# PŠ: môže to byť hocičo, takže tento neutrálny tvar je Ok
+#. This string appears in an empty menu as in
+#. * "nothing selected and nothing to select"
+#.
+#: libgimpwidgets/gimpintstore.c:256
+msgid "(Empty)"
+msgstr "(Prázdne)"
 
-#: ../libgimpwidgets/gimpicons.c:63
-msgid "C_enter"
-msgstr "_Centrovať"
-
-#: ../libgimpwidgets/gimpicons.c:64
-msgid "_Duplicate"
-msgstr "_Duplikovať"
-
-#: ../libgimpwidgets/gimpicons.c:65
-msgid "Linked"
-msgstr "Prepojené"
-
-#: ../libgimpwidgets/gimpicons.c:66
-msgid "Paste as New"
-msgstr "Vložiť ako Nový"
-
-#: ../libgimpwidgets/gimpicons.c:67
-msgid "Paste Into"
-msgstr "Vložiť do"
-
-#: ../libgimpwidgets/gimpicons.c:69
-msgid "Visible"
-msgstr "Viditeľné"
-
-#: ../libgimpwidgets/gimpicons.c:105 ../libgimpwidgets/gimpicons.c:109
-msgid "_Stroke"
-msgstr "_Obtiahnuť"
-
-#: ../libgimpwidgets/gimpicons.c:121
-msgid "L_etter Spacing"
-msgstr "Rozostup _písmen"
-
-#: ../libgimpwidgets/gimpicons.c:122
-msgid "L_ine Spacing"
-msgstr "R_iadkovanie"
-
-#: ../libgimpwidgets/gimpicons.c:139
-msgid "Re_size"
-msgstr "Zmeniť v_eľkosť"
-
-#: ../libgimpwidgets/gimpicons.c:140 ../libgimpwidgets/gimpicons.c:272
-msgid "_Scale"
-msgstr "Z_meniť mierku"
-
-#: ../libgimpwidgets/gimpicons.c:247
-msgid "Cr_op"
-msgstr "_Orezať"
-
-#: ../libgimpwidgets/gimpicons.c:255
-msgid "_Select"
-msgstr "Vyb_rať"
-
-#: ../libgimpwidgets/gimpicons.c:267
-msgid "_Transform"
-msgstr "_Transformovať"
-
-#: ../libgimpwidgets/gimpicons.c:273
-msgid "_Shear"
-msgstr "_Skosiť"
-
-#: ../libgimpwidgets/gimpmemsizeentry.c:256
+#: libgimpwidgets/gimpmemsizeentry.c:242
 msgid "Kibibyte"
 msgstr "Kibibajt"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:257
+#: libgimpwidgets/gimpmemsizeentry.c:243
 msgid "Mebibyte"
 msgstr "Mebibajt"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:258
+#: libgimpwidgets/gimpmemsizeentry.c:244
 msgid "Gibibyte"
 msgstr "Gibibajt"
 
+#: libgimpwidgets/gimppageselector.c:182
+#| msgctxt "page-selector-target"
+#| msgid "Images"
+msgid "N Pages"
+msgstr "N strán"
+
+#: libgimpwidgets/gimppageselector.c:183
+msgid "The number of pages to open"
+msgstr "Počet strán na otvorenie"
+
+# Veľkosť štvorcov šachovnice
+#: libgimpwidgets/gimppageselector.c:196
+#| msgctxt "check-size"
+#| msgid "Large"
+msgid "Target"
+msgstr "Cieľ"
+
+#: libgimpwidgets/gimppageselector.c:197
+msgid "the target to open to"
+msgstr "cieľ na otvorenie"
+
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:270
-#: ../libgimpwidgets/gimppageselector.c:1066
+#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1028
 msgid "Nothing selected"
 msgstr "Nič nie je vybrané"
 
-# button
-#: ../libgimpwidgets/gimppageselector.c:288
-msgid "Select _All"
-msgstr "Vybrať _všetko"
-
-# label
-#: ../libgimpwidgets/gimppageselector.c:308
-msgid "Select _range:"
-msgstr "Vyberte _rozsah:"
-
 # label nad combo boxom
-#: ../libgimpwidgets/gimppageselector.c:320
+#: libgimpwidgets/gimppageselector.c:289
 msgid "Open _pages as"
 msgstr "Otvoriť _stránky ako"
 
+# label
+#. Select all button & range entry
+#: libgimpwidgets/gimppageselector.c:301
+msgid "Select _range:"
+msgstr "Vyberte _rozsah:"
+
+# button
+#: libgimpwidgets/gimppageselector.c:323
+msgid "Select _All"
+msgstr "Vybrať _všetko"
+
 # list store column label
-#: ../libgimpwidgets/gimppageselector.c:448
-#: ../libgimpwidgets/gimppageselector.c:646
+#: libgimpwidgets/gimppageselector.c:444 libgimpwidgets/gimppageselector.c:621
 #, c-format
 msgid "Page %d"
 msgstr "Stránka %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1071
+#: libgimpwidgets/gimppageselector.c:1033
 msgid "One page selected"
 msgstr "Jedna stránka vybraná"
 
-#: ../libgimpwidgets/gimppageselector.c:1078
-#: ../libgimpwidgets/gimppageselector.c:1082
+#: libgimpwidgets/gimppageselector.c:1040
 #, c-format
-msgid "%d page selected"
+#| msgid "One page selected"
+msgid "The page is selected"
 msgid_plural "All %d pages selected"
-msgstr[0] "%d stránok vybraných"
-msgstr[1] "%d stránka vybraná"
-msgstr[2] "%d stránky vybrané"
+msgstr[0] "%d strán vybraných"
+msgstr[1] "Jedna strana vybraná"
+msgstr[2] "%d strany vybrané"
 
-#: ../libgimpwidgets/gimppatheditor.c:181
+#: libgimpwidgets/gimppageselector.c:1044
+#, c-format
+#| msgid "%d page selected"
+#| msgid_plural "All %d pages selected"
+msgid "%d page selected"
+msgid_plural "%d pages selected"
+msgstr[0] "%d strán vybraných"
+msgstr[1] "Jedna strana vybraná"
+msgstr[2] "%d strany vybrané"
+
+#: libgimpwidgets/gimppatheditor.c:199
 msgid "Add a new folder"
 msgstr "Pridať nový priečinok"
 
-#: ../libgimpwidgets/gimppatheditor.c:199
+#: libgimpwidgets/gimppatheditor.c:217
 msgid "Move the selected folder up"
 msgstr "Presunie vybraný priečinok nahor"
 
-#: ../libgimpwidgets/gimppatheditor.c:217
+#: libgimpwidgets/gimppatheditor.c:235
 msgid "Move the selected folder down"
 msgstr "Presunie vybraný priečinok nadol"
 
-#: ../libgimpwidgets/gimppatheditor.c:235
+#: libgimpwidgets/gimppatheditor.c:253
 msgid "Remove the selected folder from the list"
 msgstr "Odstráni vybraný priečinok zo zoznamu"
 
 # treeview column
-#: ../libgimpwidgets/gimppatheditor.c:261
+#: libgimpwidgets/gimppatheditor.c:279
 msgid "Writable"
 msgstr "Zapisovateľný"
 
 # tooltip
-#: ../libgimpwidgets/gimppickbutton.c:112
+#: libgimpwidgets/gimppickbutton.c:143
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2423,19 +2812,27 @@ msgstr ""
 "kdekoľvek na obrazovke."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:293
+#: libgimpwidgets/gimppreview.c:284
 msgid "_Preview"
 msgstr "_Náhľad"
 
-#: ../libgimpwidgets/gimppreviewarea.c:125
+#: libgimpwidgets/gimppreviewarea.c:152
 msgid "Check Size"
 msgstr "Veľkosť polí šachovnice"
 
-#: ../libgimpwidgets/gimppreviewarea.c:133
+#: libgimpwidgets/gimppreviewarea.c:160
 msgid "Check Style"
 msgstr "Štýl šachovnice"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2178
+#: libgimpwidgets/gimppreviewarea.c:168
+msgid "Custom Checks Color 1"
+msgstr "Vlastná farba šachovnice 1"
+
+#: libgimpwidgets/gimppreviewarea.c:175
+msgid "Custom Checks Color 2"
+msgstr "Vlastná farba šachovnice 2"
+
+#: libgimpwidgets/gimppropwidgets.c:2552
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2443,27 +2840,7 @@ msgstr[0] "Toto vstupné textové pole je obmedzené na %d znakov."
 msgstr[1] "Toto vstupné textové pole je obmedzené na %d znak."
 msgstr[2] "Toto vstupné textové pole je obmedzené na %d znaky."
 
-# vo výbere jednotiek
-#: ../libgimpwidgets/gimpunitmenu.c:261
-msgid "More..."
-msgstr "Viac…"
-
-# titulok dialógového okna
-#: ../libgimpwidgets/gimpunitmenu.c:487
-msgid "Unit Selection"
-msgstr "Výber jednotiek"
-
-# stĺpec tabuľky
-#: ../libgimpwidgets/gimpunitmenu.c:536
-msgid "Unit"
-msgstr "Jednotka"
-
-# stlpec tabuľky
-#: ../libgimpwidgets/gimpunitmenu.c:540
-msgid "Factor"
-msgstr "Násobok"
-
-#: ../libgimpwidgets/gimpwidgets.c:521
+#: libgimpwidgets/gimpwidgets.c:260
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -2472,581 +2849,572 @@ msgstr ""
 "zopakovať zadanú pseudonáhodnú operáciu."
 
 # tlačidlo
-#: ../libgimpwidgets/gimpwidgets.c:525
+#: libgimpwidgets/gimpwidgets.c:264
 msgid "_New Seed"
 msgstr "_Nová báza"
 
 # tootlip
-#: ../libgimpwidgets/gimpwidgets.c:538
+#: libgimpwidgets/gimpwidgets.c:280
 msgid "Seed random number generator with a generated random number"
 msgstr "Nastaví generátor náhodných čísel generovaným náhodným číslom"
 
-#: ../libgimpwidgets/gimpwidgets.c:542
+#: libgimpwidgets/gimpwidgets.c:284
 msgid "_Randomize"
 msgstr "Ná_hodne"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:50
+#: libgimpwidgets/gimpwidgets-private.c:51
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Zakázaný"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:51
+#: libgimpwidgets/gimpwidgets-private.c:52
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Obrazovka"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:52
+#: libgimpwidgets/gimpwidgets-private.c:53
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Okno"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:24
+#: libgimpwidgets/gimpwidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Square"
 msgstr "Štvorec"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#: libgimpwidgets/gimpwidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "Na výšku"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:26
+#: libgimpwidgets/gimpwidgetsenums.c:27
 msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "Na šírku"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: libgimpwidgets/gimpwidgetsenums.c:130
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: libgimpwidgets/gimpwidgetsenums.c:130
 msgid "HSV Hue"
-msgstr ""
+msgstr "Odtieň HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: libgimpwidgets/gimpwidgetsenums.c:131
 msgctxt "color-selector-channel"
 msgid "_S"
 msgstr "_S"
 
 # tooltip
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: libgimpwidgets/gimpwidgetsenums.c:131
 msgid "HSV Saturation"
 msgstr "Sýtosť HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: libgimpwidgets/gimpwidgetsenums.c:132
 msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "_V"
 
 # tooltip
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: libgimpwidgets/gimpwidgetsenums.c:132
 msgid "HSV Value"
 msgstr "Hodnota HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: libgimpwidgets/gimpwidgetsenums.c:133
 msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_R"
 
 # tooltip
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: libgimpwidgets/gimpwidgetsenums.c:133
 msgid "Red"
 msgstr "Červená"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#: libgimpwidgets/gimpwidgetsenums.c:134
 msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_G"
 
 # tooltip
-#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#: libgimpwidgets/gimpwidgetsenums.c:134
 msgid "Green"
 msgstr "Zelená"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#: libgimpwidgets/gimpwidgetsenums.c:135
 msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_B"
 
 # tooltip
-#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#: libgimpwidgets/gimpwidgetsenums.c:135
 msgid "Blue"
 msgstr "Modrá"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#: libgimpwidgets/gimpwidgetsenums.c:136
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_A"
 
 # tooltip
-#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#: libgimpwidgets/gimpwidgetsenums.c:136
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#: libgimpwidgets/gimpwidgetsenums.c:137
 msgctxt "color-selector-channel"
 msgid "_L"
-msgstr ""
+msgstr "_L"
 
 # Režim desaturácie (odfarbenia)
 # Je to za Choose shade of gray based on:
-#: ../libgimpwidgets/gimpwidgetsenums.c:136
-#, fuzzy
+#: libgimpwidgets/gimpwidgetsenums.c:137
 #| msgctxt "desaturate-mode"
 #| msgid "Lightness"
 msgid "LCh Lightness"
-msgstr "Svetlosti"
+msgstr "Svetlosť LCh"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:137
-#, fuzzy
+#: libgimpwidgets/gimpwidgetsenums.c:138
 #| msgid "_C"
 msgctxt "color-selector-channel"
 msgid "_C"
 msgstr "_C"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:137
+#: libgimpwidgets/gimpwidgetsenums.c:138
 msgid "LCh Chroma"
-msgstr ""
+msgstr "Chroma LCh"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
+#: libgimpwidgets/gimpwidgetsenums.c:139
 msgctxt "color-selector-channel"
 msgid "_h"
-msgstr ""
+msgstr "_h"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
+#: libgimpwidgets/gimpwidgetsenums.c:139
 msgid "LCh Hue"
-msgstr ""
+msgstr "Odtieň LCh"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
-#| msgctxt "image-type"
-#| msgid "RGB"
+#: libgimpwidgets/gimpwidgetsenums.c:169
 msgctxt "color-selector-model"
 msgid "RGB"
 msgstr "RGB"
 
 # Typ palety
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: libgimpwidgets/gimpwidgetsenums.c:169
 msgid "RGB color model"
 msgstr "Model farieb RGB"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:169
+#: libgimpwidgets/gimpwidgetsenums.c:170
 msgctxt "color-selector-model"
 msgid "LCH"
-msgstr ""
+msgstr "LCH"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:169
+#: libgimpwidgets/gimpwidgetsenums.c:170
 msgid "CIE LCh color model"
-msgstr ""
+msgstr "Model farieb CIE LCh"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:170
+#: libgimpwidgets/gimpwidgetsenums.c:171
 msgctxt "color-selector-model"
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:170
+#: libgimpwidgets/gimpwidgetsenums.c:171
 msgid "HSV color model"
 msgstr "Model farieb HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:231
+#: libgimpwidgets/gimpwidgetsenums.c:232
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Vrstvy"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:232
+#: libgimpwidgets/gimpwidgetsenums.c:233
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Obrázky"
 
 # typ zoomu
-#: ../libgimpwidgets/gimpwidgetsenums.c:293
+#: libgimpwidgets/gimpwidgetsenums.c:294
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Zväčšiť"
 
 # typ zoomu
-#: ../libgimpwidgets/gimpwidgetsenums.c:294
+#: libgimpwidgets/gimpwidgetsenums.c:295
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Zmenšiť"
 
-#: ../modules/color-selector-cmyk.c:82
+#: modules/color-selector-cmyk.c:89
 msgid "CMYK color selector (using color profile)"
 msgstr "Okno na výber farieb CMYK (s profilom farieb)"
 
-#: ../modules/color-selector-cmyk.c:116
+#: modules/color-selector-cmyk.c:123
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk.c:138
+#: modules/color-selector-cmyk.c:147
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk.c:140
+#: modules/color-selector-cmyk.c:149
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk.c:142
+#: modules/color-selector-cmyk.c:151
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk.c:144
+#: modules/color-selector-cmyk.c:153
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk.c:148
+#: modules/color-selector-cmyk.c:157
 msgid "Cyan"
 msgstr "Azúrová"
 
-#: ../modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:158
 msgid "Magenta"
 msgstr "Purpurová"
 
-#: ../modules/color-selector-cmyk.c:150
+#: modules/color-selector-cmyk.c:159
 msgid "Yellow"
 msgstr "Žltá"
 
-#: ../modules/color-selector-cmyk.c:151
+#: modules/color-selector-cmyk.c:160
 msgid "Black"
 msgstr "Čierna"
 
-#: ../modules/color-selector-cmyk.c:374
+#: modules/color-selector-cmyk.c:270
+msgid "Total Ink Coverage"
+msgstr "Celková pokrytosť atramentom"
+
+#: modules/color-selector-cmyk.c:313 modules/color-selector-cmyk.c:392
 msgid "Profile: (none)"
 msgstr "Profil: (žiadny)"
 
-#: ../modules/color-selector-cmyk.c:386
-#, c-format
-msgid "Profile: %s"
-msgstr "Profil: %s"
-
-#: ../modules/color-selector-water.c:96
+#: modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
 msgstr "Výber farieb v štýle vodových farieb"
 
-#: ../modules/color-selector-water.c:130
+#: modules/color-selector-water.c:130
 msgid "Watercolor"
 msgstr "Vodové farby"
 
 # scale tooltip
-#: ../modules/color-selector-water.c:200
+#: modules/color-selector-water.c:197
 msgid "Pressure"
 msgstr "Tlak"
 
-#: ../modules/color-selector-wheel.c:72
+#: modules/color-selector-wheel.c:76
 msgid "HSV color wheel"
 msgstr "Farebné koleso HSV"
 
-#: ../modules/color-selector-wheel.c:104
+#: modules/color-selector-wheel.c:108
 msgid "Wheel"
 msgstr "Koleso"
 
-#: ../modules/controller-dx-dinput.c:156
+#: modules/controller-dx-dinput.c:154
 msgid "DirectX DirectInput event controller"
 msgstr "Radič udalostí DirectX DirectInput"
 
-#: ../modules/controller-dx-dinput.c:196
-#: ../modules/controller-linux-input.c:218 ../modules/controller-midi.c:212
+#: modules/controller-dx-dinput.c:194 modules/controller-linux-input.c:218
+#: modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Zariadenie:"
 
-#: ../modules/controller-dx-dinput.c:197
+#: modules/controller-dx-dinput.c:195
 msgid "The device to read DirectInput events from."
 msgstr "Zariadenie, z ktorého sa budú čítať udalosti DirectInput."
 
-#: ../modules/controller-dx-dinput.c:206
+#: modules/controller-dx-dinput.c:204
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: ../modules/controller-dx-dinput.c:419
+#: modules/controller-dx-dinput.c:417
 #, c-format
 msgid "Button %d"
 msgstr "Tlačidlo %d"
 
-#: ../modules/controller-dx-dinput.c:422
+#: modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d Press"
 msgstr "Stlačenie tlačidla %d"
 
-#: ../modules/controller-dx-dinput.c:425
+#: modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Release"
 msgstr "Uvoľnenie tlačidla %d"
 
-#: ../modules/controller-dx-dinput.c:442 ../modules/controller-linux-input.c:90
+#: modules/controller-dx-dinput.c:440 modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "Posun doľava v smere X"
 
-#: ../modules/controller-dx-dinput.c:445 ../modules/controller-linux-input.c:91
+#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "Posun doprava v smere X"
 
-#: ../modules/controller-dx-dinput.c:451
+#: modules/controller-dx-dinput.c:449
 msgid "Y Move Away"
 msgstr "Posun od seba v smere Y"
 
-#: ../modules/controller-dx-dinput.c:454
+#: modules/controller-dx-dinput.c:452
 msgid "Y Move Near"
 msgstr "Posun k sebe v smere Y"
 
-#: ../modules/controller-dx-dinput.c:460 ../modules/controller-linux-input.c:94
+#: modules/controller-dx-dinput.c:458 modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Posun hore v smere Z"
 
-#: ../modules/controller-dx-dinput.c:463 ../modules/controller-linux-input.c:95
+#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Posun dole v smere Z"
 
-#: ../modules/controller-dx-dinput.c:469
+#: modules/controller-dx-dinput.c:467
 msgid "X Axis Tilt Away"
 msgstr "Naklonenie X osi od seba"
 
-#: ../modules/controller-dx-dinput.c:472
+#: modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Near"
 msgstr "Naklonenie X osi smerom k sebe"
 
-#: ../modules/controller-dx-dinput.c:478 ../modules/controller-linux-input.c:99
+#: modules/controller-dx-dinput.c:476 modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Naklonenie Y osi smerom doprava"
 
-#: ../modules/controller-dx-dinput.c:481
-#: ../modules/controller-linux-input.c:100
+#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Naklonenie Y osi smerom doľava"
 
-#: ../modules/controller-dx-dinput.c:487
-#: ../modules/controller-linux-input.c:101
+#: modules/controller-dx-dinput.c:485 modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Otočenie Z osi smerom doľava"
 
-#: ../modules/controller-dx-dinput.c:490
-#: ../modules/controller-linux-input.c:102
+#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Otočenie Z osi smerom doprava"
 
-#: ../modules/controller-dx-dinput.c:501
+#: modules/controller-dx-dinput.c:499
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Nárast posuvníkom %d"
 
-#: ../modules/controller-dx-dinput.c:504
+#: modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Úbytok posuvníkom %d"
 
-#: ../modules/controller-dx-dinput.c:514
+#: modules/controller-dx-dinput.c:512
 #, c-format
 msgid "POV %d X View"
 msgstr "Pohľad v smere X u POV %d"
 
-#: ../modules/controller-dx-dinput.c:517
+#: modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d Y View"
 msgstr "Pohľad v smere Y u POV %d"
 
-#: ../modules/controller-dx-dinput.c:520
+#: modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Return"
 msgstr "Návrat POV %d"
 
-#: ../modules/controller-dx-dinput.c:1081
+#: modules/controller-dx-dinput.c:1079
 msgid "DirectInput Events"
 msgstr "Udalosti DirectInput"
 
-#: ../modules/controller-dx-dinput.c:1092
-#: ../modules/controller-linux-input.c:525 ../modules/controller-midi.c:505
+#: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525
+#: modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Žiadne zariadenie nie je nastavené"
 
-#: ../modules/controller-dx-dinput.c:1117
-#: ../modules/controller-linux-input.c:588
+#: modules/controller-dx-dinput.c:1115 modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "Zariadenie nedostupné"
 
-#: ../modules/controller-linux-input.c:58
+#: modules/controller-linux-input.c:58
 msgid "Button 0"
 msgstr "Tlačidlo 0"
 
-#: ../modules/controller-linux-input.c:59
+#: modules/controller-linux-input.c:59
 msgid "Button 1"
 msgstr "Tlačidlo 1"
 
-#: ../modules/controller-linux-input.c:60
+#: modules/controller-linux-input.c:60
 msgid "Button 2"
 msgstr "Tlačidlo 2"
 
-#: ../modules/controller-linux-input.c:61
+#: modules/controller-linux-input.c:61
 msgid "Button 3"
 msgstr "Tlačidlo 3"
 
-#: ../modules/controller-linux-input.c:62
+#: modules/controller-linux-input.c:62
 msgid "Button 4"
 msgstr "Tlačidlo 4"
 
-#: ../modules/controller-linux-input.c:63
+#: modules/controller-linux-input.c:63
 msgid "Button 5"
 msgstr "Tlačidlo 5"
 
-#: ../modules/controller-linux-input.c:64
+#: modules/controller-linux-input.c:64
 msgid "Button 6"
 msgstr "Tlačidlo 6"
 
-#: ../modules/controller-linux-input.c:65
+#: modules/controller-linux-input.c:65
 msgid "Button 7"
 msgstr "Tlačidlo 7"
 
-#: ../modules/controller-linux-input.c:66
+#: modules/controller-linux-input.c:66
 msgid "Button 8"
 msgstr "Tlačidlo 8"
 
-#: ../modules/controller-linux-input.c:67
+#: modules/controller-linux-input.c:67
 msgid "Button 9"
 msgstr "Tlačidlo 9"
 
-#: ../modules/controller-linux-input.c:68
+#: modules/controller-linux-input.c:68
 msgid "Button Mouse"
 msgstr "Tlačidlo myši"
 
-#: ../modules/controller-linux-input.c:69
+#: modules/controller-linux-input.c:69
 msgid "Button Left"
 msgstr "Ľavé tlačidlo"
 
-#: ../modules/controller-linux-input.c:70
+#: modules/controller-linux-input.c:70
 msgid "Button Right"
 msgstr "Pravé tlačidlo"
 
-#: ../modules/controller-linux-input.c:71
+#: modules/controller-linux-input.c:71
 msgid "Button Middle"
 msgstr "Stredné tlačidlo"
 
-#: ../modules/controller-linux-input.c:72
+#: modules/controller-linux-input.c:72
 msgid "Button Side"
 msgstr "Bočné tlačidlo"
 
-#: ../modules/controller-linux-input.c:73
+#: modules/controller-linux-input.c:73
 msgid "Button Extra"
 msgstr "Extra tlačidlo"
 
-#: ../modules/controller-linux-input.c:74
+#: modules/controller-linux-input.c:74
 msgid "Button Forward"
 msgstr "Tlačidlo dopredu"
 
-#: ../modules/controller-linux-input.c:75
+#: modules/controller-linux-input.c:75
 msgid "Button Back"
 msgstr "Tlačíidlo späť"
 
-#: ../modules/controller-linux-input.c:76
+#: modules/controller-linux-input.c:76
 msgid "Button Task"
 msgstr "Úlohové tlačidlo"
 
-#: ../modules/controller-linux-input.c:78
+#: modules/controller-linux-input.c:78
 msgid "Button Wheel"
 msgstr "Tlačidlo volantu"
 
-#: ../modules/controller-linux-input.c:81
+#: modules/controller-linux-input.c:81
 msgid "Button Gear Down"
 msgstr "Tlačidlo preradenia dole"
 
-#: ../modules/controller-linux-input.c:84
+#: modules/controller-linux-input.c:84
 msgid "Button Gear Up"
 msgstr "Tlačidlo preradenia hore"
 
-#: ../modules/controller-linux-input.c:92
+#: modules/controller-linux-input.c:92
 msgid "Y Move Forward"
 msgstr "Posun dopredu v smere Y"
 
-#: ../modules/controller-linux-input.c:93
+#: modules/controller-linux-input.c:93
 msgid "Y Move Back"
 msgstr "Posun dozadu v smere Y"
 
-#: ../modules/controller-linux-input.c:97
+#: modules/controller-linux-input.c:97
 msgid "X Axis Tilt Forward"
 msgstr "Naklonenie dopredu podľa osi X"
 
-#: ../modules/controller-linux-input.c:98
+#: modules/controller-linux-input.c:98
 msgid "X Axis Tilt Back"
 msgstr "Naklonenie dozadu podľa osi X"
 
-#: ../modules/controller-linux-input.c:104
+#: modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
 msgstr "Otočenie vodorovného kolieska dozadu"
 
-#: ../modules/controller-linux-input.c:105
+#: modules/controller-linux-input.c:105
 msgid "Horiz. Wheel Turn Forward"
 msgstr "Otočenie vodorovného kolieska dopredu"
 
-#: ../modules/controller-linux-input.c:106
+#: modules/controller-linux-input.c:106
 msgid "Dial Turn Left"
 msgstr "Zatočenie číselníka doľava"
 
-#: ../modules/controller-linux-input.c:107
+#: modules/controller-linux-input.c:107
 msgid "Dial Turn Right"
 msgstr "Zatočenie číselníka doprava"
 
-#: ../modules/controller-linux-input.c:108
+#: modules/controller-linux-input.c:108
 msgid "Wheel Turn Left"
 msgstr "Otočenie volantu doľava"
 
-#: ../modules/controller-linux-input.c:109
+#: modules/controller-linux-input.c:109
 msgid "Wheel Turn Right"
 msgstr "Otočenie volantu doprava"
 
-#: ../modules/controller-linux-input.c:178
+#: modules/controller-linux-input.c:178
 msgid "Linux input event controller"
 msgstr "Ovládač udalostí Linuxového vstupu"
 
-#: ../modules/controller-linux-input.c:219
+#: modules/controller-linux-input.c:219
 msgid "The name of the device to read Linux Input events from."
 msgstr "Názov zariadenia, z ktorého sa budú čítať udalosti Linuxového vstupu."
 
-#: ../modules/controller-linux-input.c:230
+#: modules/controller-linux-input.c:230
 msgid "Linux Input"
 msgstr "Linuxový vstup"
 
-#: ../modules/controller-linux-input.c:513
+#: modules/controller-linux-input.c:513
 msgid "Linux Input Events"
 msgstr "Udalosti Linuxového vstupu"
 
 # controller state; %s filename
-#: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
-#: ../modules/controller-midi.c:480
+#: modules/controller-linux-input.c:551 modules/controller-midi.c:454
+#: modules/controller-midi.c:480
 #, c-format
 msgid "Reading from %s"
 msgstr "Čítanie z %s"
 
 # controller state
-#: ../modules/controller-linux-input.c:569
-#: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
-#: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
+#: modules/controller-linux-input.c:569 modules/controller-linux-input.c:623
+#: modules/controller-midi.c:436 modules/controller-midi.c:497
+#: modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
 msgstr "Zariadenie nedostupné: %s"
 
 # controller state
-#: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
+#: modules/controller-linux-input.c:632 modules/controller-midi.c:577
 msgid "End of file"
 msgstr "Koniec súboru"
 
-#: ../modules/controller-midi.c:164
+#: modules/controller-midi.c:164
 msgid "MIDI event controller"
 msgstr "Ovládač udalostí MIDI"
 
-#: ../modules/controller-midi.c:203
+#: modules/controller-midi.c:203
 msgid "The name of the device to read MIDI events from."
 msgstr "Názov zariadenia, z ktorého sa budú čítať udalosti MIDI."
 
-#: ../modules/controller-midi.c:206
+#: modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Zadajte „alsa“ na využitie sekvencéru ALSA."
 
-#: ../modules/controller-midi.c:221
+#: modules/controller-midi.c:221
 msgid "Channel:"
 msgstr "Kanál:"
 
-#: ../modules/controller-midi.c:222
+#: modules/controller-midi.c:222
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -3054,176 +3422,401 @@ msgstr ""
 "MIDI kanál, z ktorého sa budú čítať udalosti. Nastavte na -1 na čítanie zo "
 "všetkých MIDI kanálov."
 
-#: ../modules/controller-midi.c:226
+#: modules/controller-midi.c:226
 msgid "MIDI"
 msgstr "MIDI"
 
 # PM: nota zapnutá a vypnutá sa mi nevidí ide asi o to že je stlačený MIDI kláves
-#: ../modules/controller-midi.c:355
+#: modules/controller-midi.c:355
 #, c-format
 msgid "Note %02x on"
 msgstr "Nota %02x zapnutá"
 
-#: ../modules/controller-midi.c:358
+#: modules/controller-midi.c:358
 #, c-format
 msgid "Note %02x off"
 msgstr "Nota %02x vypnutá"
 
-#: ../modules/controller-midi.c:361
+#: modules/controller-midi.c:361
 #, c-format
 msgid "Controller %03d"
 msgstr "Ovládač %03d"
 
-#: ../modules/controller-midi.c:408
+#: modules/controller-midi.c:408
 msgid "MIDI Events"
 msgstr "Udalosti MIDI"
 
-# sequencer name
-#: ../modules/controller-midi.c:426
-msgid "GIMP"
-msgstr "GIMP"
-
 # GIMP je názov sequencera
-#: ../modules/controller-midi.c:428
+#: modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "Ovládač vstupov MIDI - GIMP"
 
+#: modules/display-filter-aces-rrt.c:84
+msgid ""
+"ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color "
+"display filter, using a luminance-only approximation of the ACES RRT, a pre-"
+"defined filmic look to be used before ODT (display or output space ICC "
+"profile)"
+msgstr ""
+"ACES RRT (RRT = referenčná transformácia renderovania). Filter farebného "
+"zobrazenia pre prevod HDR na SDR, používajúci aproximáciu ACES RRT len "
+"na základe jasu, s vopred definovaným filmickým vzhľadom na použitie "
+"pred ODT (profil ICC zobrazenia alebo výstupného priestoru)"
+
+#: modules/display-filter-aces-rrt.c:121
+msgid "Pre-transform change in stops"
+msgstr "Zmena pred transformáciou v stupňoch"
+
+#: modules/display-filter-aces-rrt.c:126
+msgid "Aces RRT"
+msgstr "Aces RRT"
+
 # ?
-#: ../modules/display-filter-clip-warning.c:120
-#, fuzzy
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: modules/display-filter-clip-warning.c:125
 #| msgid "Gamma color display filter"
 msgid "Clip warning color display filter"
-msgstr "Filter farebného zobrazenia gama"
+msgstr "Filter farebného zobrazenia s upozornením na orezanie"
 
 # Rozsah farebného vyváženia
 # je to za Select Range to Adjust
-#: ../modules/display-filter-clip-warning.c:157
+#: modules/display-filter-clip-warning.c:166
 msgid "Show shadows"
 msgstr "Zobraziť tiene"
 
-#: ../modules/display-filter-clip-warning.c:158
+#: modules/display-filter-clip-warning.c:167
 msgid "Show warning for pixels with a negative component"
-msgstr ""
+msgstr "Zobraziť upozornenie na pixely so zápornou zložkou"
 
 # Rozsah farebného vyváženia
 # je to za Select Range to Adjust
-#: ../modules/display-filter-clip-warning.c:164
+#: modules/display-filter-clip-warning.c:173
 msgid "Shadows color"
 msgstr "Farba tieňov"
 
-#: ../modules/display-filter-clip-warning.c:165
+#: modules/display-filter-clip-warning.c:174
 msgid "Shadows warning color"
-msgstr ""
+msgstr "Farba upozornenia na tiene"
 
 # Rozsah farebného vyváženia
 # je to za Select Range to Adjust
-#: ../modules/display-filter-clip-warning.c:177
+#: modules/display-filter-clip-warning.c:185
 msgid "Show highlights"
 msgstr "Zobraziť zvýraznenia"
 
-#: ../modules/display-filter-clip-warning.c:178
+#: modules/display-filter-clip-warning.c:186
 msgid "Show warning for pixels with a component greater than one"
-msgstr ""
+msgstr "Zobraziť upozornenie na pixely so zložkou väčšou ako jedna"
 
 # Rozsah farebného vyváženia
 # je to za Select Range to Adjust
-#: ../modules/display-filter-clip-warning.c:184
+#: modules/display-filter-clip-warning.c:194
 msgid "Highlights color"
 msgstr "Farba zvýraznení"
 
-#: ../modules/display-filter-clip-warning.c:185
+#: modules/display-filter-clip-warning.c:195
 msgid "Highlights warning color"
-msgstr ""
+msgstr "Farba upozornenia na zvýraznenia"
 
-#: ../modules/display-filter-clip-warning.c:197
+#: modules/display-filter-clip-warning.c:206
 msgid "Show bogus"
-msgstr ""
+msgstr "Zobraziť neplatné"
 
-#: ../modules/display-filter-clip-warning.c:198
+#: modules/display-filter-clip-warning.c:207
 msgid "Show warning for pixels with an infinite or NaN component"
-msgstr ""
+msgstr "Zobraziť upozornenie na pixely s nekonečnou alebo NaN zložkou"
 
 # Typ palety
-#: ../modules/display-filter-clip-warning.c:204
-#, fuzzy
+#: modules/display-filter-clip-warning.c:215
 #| msgctxt "image-base-type"
 #| msgid "RGB color"
 msgid "Bogus color"
-msgstr "RGB farby"
+msgstr "Neplatná farba"
 
-#: ../modules/display-filter-clip-warning.c:205
+#: modules/display-filter-clip-warning.c:216
 msgid "Bogus warning color"
-msgstr ""
+msgstr "Farba upozornenia na neplatné pixely"
 
-#: ../modules/display-filter-clip-warning.c:217
+#: modules/display-filter-clip-warning.c:227
 msgid "Include alpha component"
-msgstr ""
+msgstr "Zahrnúť alfa zložku"
 
-#: ../modules/display-filter-clip-warning.c:218
+#: modules/display-filter-clip-warning.c:228
 msgid "Include alpha component in the warning"
-msgstr ""
+msgstr "Zahrnúť alfa zložku do upozornenia"
 
-#: ../modules/display-filter-clip-warning.c:224
+#: modules/display-filter-clip-warning.c:234
 msgid "Include transparent pixels"
-msgstr ""
+msgstr "Zahrnúť priehľadné pixely"
 
-#: ../modules/display-filter-clip-warning.c:225
+#: modules/display-filter-clip-warning.c:235
 msgid "Include fully transparent pixels in the warning"
-msgstr ""
+msgstr "Zahrnúť úplne priehľadné pixely do upozornenia"
 
-#: ../modules/display-filter-clip-warning.c:229
+#: modules/display-filter-clip-warning.c:239
 msgid "Clip Warning"
-msgstr ""
+msgstr "Upozornenie na orezanie"
 
-#: ../modules/display-filter-color-blind.c:68
+#: modules/display-filter-color-blind.c:68
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (necitlivosť na červenú)"
 
-#: ../modules/display-filter-color-blind.c:70
+#: modules/display-filter-color-blind.c:70
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (necitlivosť na zelenú)"
 
-#: ../modules/display-filter-color-blind.c:72
+#: modules/display-filter-color-blind.c:72
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (necitlivosť na modrú)"
 
-#: ../modules/display-filter-color-blind.c:194
+#: modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Filter simulácie farebnej poruchy (algoritmus Brettel-Vienot-Mollon)"
 
-#: ../modules/display-filter-color-blind.c:253
+#: modules/display-filter-color-blind.c:253
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
-#: ../modules/display-filter-color-blind.c:254
+#: modules/display-filter-color-blind.c:254
 msgid "Color vision deficiency type"
 msgstr "Typ nedokonalosti farebného videnia"
 
-#: ../modules/display-filter-color-blind.c:259
+#: modules/display-filter-color-blind.c:259
 msgid "Color Deficient Vision"
 msgstr "Videnie s farebnou poruchou"
 
 # ?
-#: ../modules/display-filter-gamma.c:86
+#: modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
 msgstr "Filter farebného zobrazenia gama"
 
-#: ../modules/display-filter-gamma.c:123 ../modules/display-filter-gamma.c:128
+#: modules/display-filter-gamma.c:123 modules/display-filter-gamma.c:128
 msgid "Gamma"
 msgstr "Gama"
 
 # ?
-#: ../modules/display-filter-high-contrast.c:86
+#: modules/display-filter-high-contrast.c:86
 msgid "High Contrast color display filter"
 msgstr "Filter farebného zobrazenia vysokého kontrastu"
 
-#: ../modules/display-filter-high-contrast.c:123
+#: modules/display-filter-high-contrast.c:123
 msgid "Contrast cycles"
 msgstr "Cykly kontrastu"
 
-#: ../modules/display-filter-high-contrast.c:128
+#: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrast"
+
+# window title
+#~ msgid "Brush Selection"
+#~ msgstr "Výber štetca"
+
+# titulok dialógového okna
+#~ msgid "Confirm Save"
+#~ msgstr "Potvrdenie uloženia"
+
+# tlačidlo
+#~ msgid "C_onfirm"
+#~ msgstr "_Potvrdiť"
+
+# titulok dialógového okna
+#~ msgid "Export File"
+#~ msgstr "Export súboru"
+
+# tlačidlo
+#~ msgid "_Ignore"
+#~ msgstr "_Ignorovať"
+
+#, c-format
+#~ msgid ""
+#~ "Your image should be exported before it can be saved as %s for the "
+#~ "following reasons:"
+#~ msgstr ""
+#~ "Váš obrázok by mal byť z nasledovných dôvodov exportovaný predtým, ako "
+#~ "bude uložený s názvom %s:"
+
+#~ msgid "The export conversion won't modify your original image."
+#~ msgstr "Konverzia pri exporte neovplyvní pôvodný obrázok."
+
+#, c-format
+#~ msgid ""
+#~ "You are about to save a layer mask as %s.\n"
+#~ "This will not save the visible layers."
+#~ msgstr ""
+#~ "Chystáte sa uložiť masku vrstvy ako %s.\n"
+#~ "Viditeľné vrstvy nebudú uložené."
+
+#, c-format
+#~ msgid ""
+#~ "You are about to save a channel (saved selection) as %s.\n"
+#~ "This will not save the visible layers."
+#~ msgstr ""
+#~ "Chystáte sa uložiť kanál (uložený výber) ako %s.\n"
+#~ "Viditeľné vrstvy nebudú uložené."
+
+# titulok dialógového okna
+#~ msgid "Font Selection"
+#~ msgstr "Výber písma"
+
+# titulok dialógového okna
+#~ msgid "Gradient Selection"
+#~ msgstr "Výber prechodu"
+
+# sequencer name
+#~| msgid "GIMP"
+#~ msgid "GIMP 2.10"
+#~ msgstr "GIMP 2.10"
+
+#, c-format
+#~ msgid "Rotate %s?"
+#~ msgstr "Otočiť %s?"
+
+# DK:otočenie
+#~ msgid "_Keep Original"
+#~ msgstr "_Zachovať pôvodné"
+
+#~ msgid "_Rotate"
+#~ msgstr "_Otočiť"
+
+#~ msgid "Original"
+#~ msgstr "Pôvodné"
+
+#~ msgid "Rotated"
+#~ msgstr "Otočený"
+
+#~ msgid "This image contains Exif orientation metadata."
+#~ msgstr "Tento obrázok obsahuje Exif metaúdaje o otočení."
+
+#~ msgid "Would you like to rotate the image?"
+#~ msgstr "Chcete otočiť obrázok?"
+
+#~ msgid "_Don't ask me again"
+#~ msgstr "Nepýtať s_a znovu"
+
+# titulok dialógového okna
+#~ msgid "Palette Selection"
+#~ msgstr "Výber palety"
+
+# titulok dialógového okna
+#~ msgid "Pattern Selection"
+#~ msgstr "Výber vzoru"
+
+#~ msgctxt "blend-mode"
+#~ msgid "FG to BG (RGB)"
+#~ msgstr "Popredie do pozadia (RGB)"
+
+#~ msgctxt "blend-mode"
+#~ msgid "FG to BG (HSV)"
+#~ msgstr "Popredie do pozadia (HSV)"
+
+#~ msgctxt "blend-mode"
+#~ msgid "FG to transparent"
+#~ msgstr "Popredie na preihľadné"
+
+#~ msgctxt "blend-mode"
+#~ msgid "Custom gradient"
+#~ msgstr "Vlastný prechod"
+
+#~ msgctxt "bucket-fill-mode"
+#~ msgid "FG color fill"
+#~ msgstr "Vyplnenie farbou popredia"
+
+#~ msgctxt "bucket-fill-mode"
+#~ msgid "BG color fill"
+#~ msgstr "Vyplnenie farbou pozadia"
+
+#~ msgctxt "bucket-fill-mode"
+#~ msgid "Pattern fill"
+#~ msgstr "Vyplnenie vzorom"
+
+#~ msgctxt "icon-type"
+#~ msgid "Inline pixbuf"
+#~ msgstr "Vložený pixbuf"
+
+#~ msgctxt "pdb-proc-type"
+#~ msgid "GIMP Extension"
+#~ msgstr "Rozšírenie GIMPu"
+
+#~ msgctxt "precision"
+#~ msgid "8-bit gamma integer"
+#~ msgstr "8-bitové gama celé číslo"
+
+#~ msgctxt "precision"
+#~ msgid "16-bit gamma integer"
+#~ msgstr "16-bitové gama celé číslo"
+
+#~ msgctxt "precision"
+#~ msgid "32-bit gamma integer"
+#~ msgstr "32-bitové gama celé číslo"
+
+#~ msgctxt "repeat-mode"
+#~ msgid "Truncate"
+#~ msgstr "Skrátenie"
+
+#~ msgid "_Search:"
+#~ msgstr "Vy_hľadať:"
+
+#~ msgid "Anchor"
+#~ msgstr "Ukotviť"
+
+#~ msgid "C_enter"
+#~ msgstr "_Centrovať"
+
+#~ msgid "_Duplicate"
+#~ msgstr "_Duplikovať"
+
+#~ msgid "Linked"
+#~ msgstr "Prepojené"
+
+#~ msgid "Paste as New"
+#~ msgstr "Vložiť ako Nový"
+
+#~ msgid "Paste Into"
+#~ msgstr "Vložiť do"
+
+#~ msgid "Visible"
+#~ msgstr "Viditeľné"
+
+#~ msgid "_Stroke"
+#~ msgstr "_Obtiahnuť"
+
+#~ msgid "L_etter Spacing"
+#~ msgstr "Rozostup _písmen"
+
+#~ msgid "L_ine Spacing"
+#~ msgstr "R_iadkovanie"
+
+#~ msgid "Re_size"
+#~ msgstr "Zmeniť v_eľkosť"
+
+#~ msgid "_Scale"
+#~ msgstr "Z_meniť mierku"
+
+#~ msgid "Cr_op"
+#~ msgstr "_Orezať"
+
+#~ msgid "_Select"
+#~ msgstr "Vyb_rať"
+
+#~ msgid "_Transform"
+#~ msgstr "_Transformovať"
+
+#~ msgid "_Shear"
+#~ msgstr "_Skosiť"
+
+# vo výbere jednotiek
+#~ msgid "More..."
+#~ msgstr "Viac…"
+
+# titulok dialógového okna
+#~ msgid "Unit Selection"
+#~ msgstr "Výber jednotiek"
+
+# stlpec tabuľky
+#~ msgid "Factor"
+#~ msgstr "Násobok"
 
 # Režim desaturácie (odfarbenia)
 # Je to za Choose shade of gray based on:
@@ -3267,9 +3860,6 @@ msgstr "Kontrast"
 #~ "Filter prevezme svoju konfiguráciu z oddielu Správy farieb v dialógovom "
 #~ "okne Nastavenia."
 
-#~ msgid "Image profile:"
-#~ msgstr "Profil obrázka:"
-
 #~ msgid "Print simulation profile:"
 #~ msgstr "Profil tlačovej simulácie:"
 
@@ -3303,13 +3893,6 @@ msgstr "Kontrast"
 # tooltip
 #~ msgid "The default RGB working space color profile."
 #~ msgstr "Predvolený profil farieb pracovného priestoru RGB."
-
-# voľba pri ukladaní
-# PM: do jednej vrstvy by bolo inak a zlúčenie merge je iná operácia ako flatten
-#, fuzzy
-#~| msgid "Flatten Image"
-#~ msgid "Rotate Image?"
-#~ msgstr "Obrázok so zažehlenými vrstvami"
 
 #~ msgctxt "icon-type"
 #~ msgid "Stock ID"
