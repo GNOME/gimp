@@ -629,7 +629,7 @@ gimp-win:
 
 
 ## macOS pipelines (MacPorts) ##
-.macos-inhouse:
+.macos:
   extends: .default
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Macos Dmg.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Macos Dmg.*/'
@@ -675,8 +675,8 @@ gimp-win:
 - export GI_TYPELIB_PATH="${GIMP_PREFIX}/lib/girepository-1.0:${OPT_PREFIX}/lib/girepository-1.0"
 - printf "\e[0Ksection_end:`date +%s`:macos_environ\r\e[0K\n"
 
-deps-macos-inhouse:
-  extends: .macos-inhouse
+deps-macos:
+  extends: .macos
   stage: dependencies
   cache:
     - key: $CI_PROJECT_NAMESPACE-$ARCH${VARIANT}
@@ -694,10 +694,10 @@ deps-macos-inhouse:
       - gegl/_build-*
     expire_in: 4 hours
 
-gimp-macos-inhouse:
-  extends: .macos-inhouse
+gimp-macos:
+  extends: .macos
   needs:
-    - job: deps-macos-inhouse
+    - job: deps-macos
       #to allow running Homebrew builds
       optional: true
   stage: build
@@ -903,7 +903,7 @@ issue-bot:
       optional: true
     - job: gimp-win
       optional: true
-    - job: gimp-macos-inhouse
+    - job: gimp-macos
       optional: true
     - job: cppcheck
       optional: true
@@ -1102,8 +1102,8 @@ dist-store-weekly:
 dist-mac-weekly:
   extends: .default
   rules:
-    - !reference [.macos-inhouse, rules]
-  needs: ["gimp-macos-inhouse"]
+    - !reference [.macos, rules]
+  needs: ["gimp-macos"]
   stage: distribution
   tags:
     - macos
