@@ -216,6 +216,7 @@ static void           on_app_activate             (GApplication *gapp,
 static gint           ifs_compose_dialog          (GimpIfs      *ifs,
                                                    GimpDrawable *drawable);
 static void           ifs_options_dialog          (void);
+static void           ifs_options_dialog_hide     (GtkWidget    *dialog);
 static GtkWidget    * ifs_compose_trans_page      (void);
 static GtkWidget    * ifs_compose_color_page      (void);
 static void           design_op_actions_update    (void);
@@ -1215,7 +1216,7 @@ ifs_options_dialog (void)
                          NULL);
 
       g_signal_connect (ifsOptD->dialog, "response",
-                        G_CALLBACK (gtk_widget_hide),
+                        G_CALLBACK (ifs_options_dialog_hide),
                         NULL);
 
       /* Grid of options */
@@ -1298,6 +1299,12 @@ ifs_options_dialog (void)
     {
       gtk_window_present (GTK_WINDOW (ifsOptD->dialog));
     }
+}
+
+static void
+ifs_options_dialog_hide (GtkWidget *dialog)
+{
+  gtk_widget_set_visible (dialog, FALSE);
 }
 
 static void
