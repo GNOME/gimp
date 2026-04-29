@@ -17,7 +17,7 @@ appstream -x11|homebrew:appstream \
 atk|homebrew:at-spi2-core \
 bzip2 #homebrew uses libbz2 from macOS \
 cairo +quartz -x11|homebrew:cairo \
-#cfitsio not built by Apple Clang
+cfitsio|homebrew:cfitsio \
 fontconfig|homebrew:fontconfig \
 freetype|homebrew:freetype \
 gdk-pixbuf2 +quartz -x11|homebrew:gdk-pixbuf \
