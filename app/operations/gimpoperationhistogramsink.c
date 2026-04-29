@@ -93,7 +93,7 @@ gimp_operation_histogram_sink_class_init (GimpOperationHistogramSinkClass *klass
                                                         "Auxiliary image buffer input pad.",
                                                         GEGL_TYPE_BUFFER,
                                                         G_PARAM_READWRITE |
-                                                        GEGL_PARAM_PAD_INPUT));
+                                                       (GParamFlags) GEGL_PARAM_PAD_INPUT));
 
   g_object_class_install_property (object_class, PROP_HISTOGRAM,
                                    g_param_spec_object ("histogram",
