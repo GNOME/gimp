@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-19 16:19+0000\n"
-"PO-Revision-Date: 2026-04-21 00:58+0200\n"
+"POT-Creation-Date: 2026-04-29 14:29+0000\n"
+"PO-Revision-Date: 2026-04-29 16:35+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -146,7 +146,7 @@ msgstr "Primer vstavka v JavaScriptu (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2659
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4028 plug-ins/flame/flame.c:824
+#: plug-ins/file-psd/psd-load.c:4053 plug-ins/flame/flame.c:824
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -609,7 +609,7 @@ msgstr "Rolete"
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:424
+#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:431
 #: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-pcx.c:727
 #: plug-ins/common/file-pcx.c:735 plug-ins/common/file-pcx.c:743
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
@@ -624,7 +624,7 @@ msgstr "Rolete"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3215 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3228 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1587
 #: plug-ins/file-tiff/file-tiff-load.c:2441
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1246,9 +1246,9 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:444
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2446
+#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2450
 #: plug-ins/file-tiff/file-tiff-export.c:1087
-#: plug-ins/file-tiff/file-tiff-export.c:1176 plug-ins/flame/flame.c:585
+#: plug-ins/file-tiff/file-tiff-export.c:1177 plug-ins/flame/flame.c:585
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1406
 #: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2468
 #: plug-ins/lighting/lighting-ui.c:808
@@ -2001,7 +2001,7 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3754
-#: plug-ins/common/file-psp.c:2792 plug-ins/common/file-psp.c:2842
+#: plug-ins/common/file-psp.c:2804 plug-ins/common/file-psp.c:2854
 #: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:799
 #: plug-ins/common/file-raw-data.c:1844
@@ -2018,8 +2018,8 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/file-icns/file-icns-load.c:684 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
-#: plug-ins/file-psd/psd-export.c:2452 plug-ins/file-psd/psd-load.c:189
-#: plug-ins/file-psd/psd-load.c:194 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-export.c:2456 plug-ins/file-psd/psd-load.c:190
+#: plug-ins/file-psd/psd-load.c:195 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:539
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1767
 #: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:529
@@ -2484,7 +2484,7 @@ msgid "Image dimensions too large: width %d x height %d"
 msgstr "Dimenzije slike so prevelike: širina %d x višina %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
-#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3594
+#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3607
 #: plug-ins/file-tiff/file-tiff-load.c:1944
 #: plug-ins/file-tiff/file-tiff-load.c:2038
 #: plug-ins/file-tiff/file-tiff-load.c:2226
@@ -2625,7 +2625,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
 #: plug-ins/file-icns/file-icns-load.c:623 plug-ins/file-ico/ico-load.c:703
 #: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:97
-#: plug-ins/file-psd/psd-load.c:202
+#: plug-ins/file-psd/psd-load.c:203
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
@@ -2707,7 +2707,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
 #: plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2384
+#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2388
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
 #, c-format
 msgid "Exporting '%s'"
@@ -3307,7 +3307,7 @@ msgstr "podatki o sličici"
 msgid "local colormap"
 msgstr "krajevni katalog barv"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:441
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:448
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr ""
@@ -3954,17 +3954,22 @@ msgstr "Naloži datoteko v zapisu IFF"
 msgid "Load IFF file as thumbnail"
 msgstr "Naloži datoteko IFF kot sličico"
 
-#: plug-ins/common/file-iff.c:312
+#: plug-ins/common/file-iff.c:290
+#, c-format
+msgid "This is not an ILBM image"
+msgstr "To ni datoteka slike ILBM"
+
+#: plug-ins/common/file-iff.c:319
 msgid "Invalid or missing ILBM image"
 msgstr "Neveljavna ali manjkajoča slika ILBM"
 
-#: plug-ins/common/file-iff.c:327
+#: plug-ins/common/file-iff.c:334
 #, c-format
 msgid "ILBM contains no image data - likely a palette file"
 msgstr ""
 "ILBM ne vsebuje slikovnih podatkov - najverjetneje je to datoteka palete"
 
-#: plug-ins/common/file-iff.c:358 plug-ins/common/file-iff.c:377
+#: plug-ins/common/file-iff.c:365 plug-ins/common/file-iff.c:384
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "Neveljavna velikost kataloga barv ILBM"
@@ -4135,20 +4140,20 @@ msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Nepodprta JPEG 2000%s »%s« s/z %d komponentami."
 
 #: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:887
-#: plug-ins/file-psd/psd-export.c:2698
-#: plug-ins/file-tiff/file-tiff-export.c:1310
+#: plug-ins/file-psd/psd-export.c:2726
+#: plug-ins/file-tiff/file-tiff-export.c:1311
 msgid "No soft-proofing profile"
 msgstr "Brez profila preverjanja videza"
 
 #: plug-ins/common/file-jp2.c:1309 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2706
-#: plug-ins/file-tiff/file-tiff-export.c:1318
+#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2734
+#: plug-ins/file-tiff/file-tiff-export.c:1319
 msgid "Name of the color profile used for CMYK export."
 msgstr "Ime barvnega profila, uporabljenega za izvoz CMYK."
 
 #: plug-ins/common/file-jp2.c:1320 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2717
-#: plug-ins/file-tiff/file-tiff-export.c:1330
+#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2745
+#: plug-ins/file-tiff/file-tiff-export.c:1331
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
@@ -4534,7 +4539,7 @@ msgstr "Ni bilo mogoče prebrati slikovnih podatkov iz »%s«"
 msgid "Main surface"
 msgstr "Glavna površina"
 
-#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:355
+#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:353
 #: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
 #: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
 #: plug-ins/common/file-tim.c:612
@@ -4542,13 +4547,13 @@ msgstr "Glavna površina"
 msgid "Memory could not be allocated."
 msgstr "Pomnilnika ni bilo možno dodeliti."
 
-#: plug-ins/common/file-paa.c:363
+#: plug-ins/common/file-paa.c:361
 #, c-format
 msgid "Couldn't decompress image data from '%s'"
 msgstr "Slikovnih podatkov iz »%s« ni mogoče razširiti."
 
-#: plug-ins/common/file-paa.c:439 plug-ins/common/file-paa.c:456
-#: plug-ins/common/file-paa.c:467
+#: plug-ins/common/file-paa.c:437 plug-ins/common/file-paa.c:454
+#: plug-ins/common/file-paa.c:465
 #, c-format
 msgid "Could not read tag"
 msgstr "Značke ni mogoče prebrati"
@@ -4655,14 +4660,14 @@ msgstr "»%s« ni datoteka PCX"
 
 #: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:612
+#: plug-ins/file-psd/psd-load.c:625
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Nepodprta ali neveljavna širina slike: %d"
 
 #: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:604
+#: plug-ins/file-psd/psd-load.c:617
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Nepodprta ali neveljavna višina slike: %d"
@@ -5762,178 +5767,179 @@ msgstr "Neveljaven kos podatkov ključnih besed ustvarjalca"
 msgid "Error reading creator keyword data"
 msgstr "Napaka pri branju podatkov ključnih besed ustvarjalca"
 
-#: plug-ins/common/file-psp.c:1268 plug-ins/common/file-psp.c:1277
-#: plug-ins/common/file-psp.c:1286
+#: plug-ins/common/file-psp.c:1272 plug-ins/common/file-psp.c:1281
+#: plug-ins/common/file-psp.c:1290
 #, c-format
 msgid "Error reading color block"
 msgstr "Napaka pri branju barvnega bloka"
 
-#: plug-ins/common/file-psp.c:1297
+#: plug-ins/common/file-psp.c:1301
 #, c-format
 msgid "Error: Unsupported palette size"
 msgstr "Napaka: nepodprta velikost palete"
 
-#: plug-ins/common/file-psp.c:1308
+#: plug-ins/common/file-psp.c:1312
 #, c-format
 msgid "Error reading color palette"
 msgstr "Napaka pri branju barvne palete"
 
-#: plug-ins/common/file-psp.c:1629 plug-ins/common/file-psp.c:1652
+#: plug-ins/common/file-psp.c:1634 plug-ins/common/file-psp.c:1657
 #: plug-ins/file-psd/psd-util.c:176
 #, c-format
 msgid "Error reading data. Most likely unexpected end of file."
 msgstr "Napaka pri branju podatkov. Najverjetneje nepričakovan konec datoteke."
 
-#: plug-ins/common/file-psp.c:1744 plug-ins/common/file-psp.c:1758
+#: plug-ins/common/file-psp.c:1749 plug-ins/common/file-psp.c:1763
 #, c-format
 msgid "zlib error"
 msgstr "Napaka zlib"
 
-#: plug-ins/common/file-psp.c:1821 plug-ins/common/file-psp.c:1855
-#: plug-ins/common/file-psp.c:1865
+#: plug-ins/common/file-psp.c:1826 plug-ins/common/file-psp.c:1860
+#: plug-ins/common/file-psp.c:1870
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "Napaka pri branju podatkov o razšrijenosti plasti."
 
-#: plug-ins/common/file-psp.c:1842
+#: plug-ins/common/file-psp.c:1847
 #, c-format
 msgid "Error reading block information"
 msgstr "Napaka pri branju kosa podatkov."
 
-#: plug-ins/common/file-psp.c:1922
+#: plug-ins/common/file-psp.c:1927
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Neveljaven podblok plasti %s, mora biti LAYER"
 
-#: plug-ins/common/file-psp.c:1955 plug-ins/common/file-psp.c:2014
+#: plug-ins/common/file-psp.c:1960 plug-ins/common/file-psp.c:2019
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Napaka pri branju kosa podatkov o plasti"
 
-#: plug-ins/common/file-psp.c:2057
+#: plug-ins/common/file-psp.c:2062
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Neveljavne dimenzije plasti: %dx%d"
 
-#: plug-ins/common/file-psp.c:2118
+#: plug-ins/common/file-psp.c:2123
 #, c-format
 msgid "Error creating layer"
 msgstr "Napaka pri ustvarjanju plasti"
 
-#: plug-ins/common/file-psp.c:2179
-#, c-format
-msgid "Invalid layer sub-block %s, should be CHANNEL"
-msgstr "Neveljaven podblok plasti %s, mora biti CHANNEL"
-
-#: plug-ins/common/file-psp.c:2195 plug-ins/common/file-psp.c:2523
-#: plug-ins/common/file-psp.c:2543 plug-ins/common/file-psp.c:2561
+#: plug-ins/common/file-psp.c:2160 plug-ins/common/file-psp.c:2207
+#: plug-ins/common/file-psp.c:2535 plug-ins/common/file-psp.c:2555
+#: plug-ins/common/file-psp.c:2573
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Napaka pri branju kosa podatkov o kanalu"
 
-#: plug-ins/common/file-psp.c:2219
+#: plug-ins/common/file-psp.c:2191
+#, c-format
+msgid "Invalid layer sub-block %s, should be CHANNEL"
+msgstr "Neveljaven podblok plasti %s, mora biti CHANNEL"
+
+#: plug-ins/common/file-psp.c:2231
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Neveljavna vrsta kanala %d v informacijskem koščku kanala"
 
-#: plug-ins/common/file-psp.c:2325 plug-ins/common/file-psp.c:2342
+#: plug-ins/common/file-psp.c:2337 plug-ins/common/file-psp.c:2354
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Napaka pri branju kosa podatkov o cevi"
 
-#: plug-ins/common/file-psp.c:2446 plug-ins/common/file-psp.c:2463
-#: plug-ins/common/file-psp.c:2485 plug-ins/common/file-psp.c:2493
+#: plug-ins/common/file-psp.c:2458 plug-ins/common/file-psp.c:2475
+#: plug-ins/common/file-psp.c:2497 plug-ins/common/file-psp.c:2505
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "Napaka pri branju kosa izbora"
 
-#: plug-ins/common/file-psp.c:2455
+#: plug-ins/common/file-psp.c:2467
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "Neveljavna velikost kosa izbora"
 
-#: plug-ins/common/file-psp.c:2477 plug-ins/common/file-psp.c:2501
-#: plug-ins/common/file-psp.c:2535 plug-ins/common/file-psp.c:2577
+#: plug-ins/common/file-psp.c:2489 plug-ins/common/file-psp.c:2513
+#: plug-ins/common/file-psp.c:2547 plug-ins/common/file-psp.c:2589
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Napaka pri branju konca kosa izbora"
 
-#: plug-ins/common/file-psp.c:2510
+#: plug-ins/common/file-psp.c:2522
 #, c-format
 msgid "Invalid selection sub-block %s, should be CHANNEL"
 msgstr "Neveljaven podblok izbora %s, mora biti CHANNEL"
 
-#: plug-ins/common/file-psp.c:2602
+#: plug-ins/common/file-psp.c:2614
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Napaka pri branju glave kosa razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2609
+#: plug-ins/common/file-psp.c:2621
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Neveljavna glava kosa razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2620
+#: plug-ins/common/file-psp.c:2632
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Neveljavna velikost kosa razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2641
+#: plug-ins/common/file-psp.c:2653
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Napaka pri branju podatkov mreže kosov razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2669
+#: plug-ins/common/file-psp.c:2681
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Napaka pri branju podatkov vodila razširjenega kosa"
 
-#: plug-ins/common/file-psp.c:2687
+#: plug-ins/common/file-psp.c:2699
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Neveljavna usmerjenost vodila"
 
-#: plug-ins/common/file-psp.c:2701
+#: plug-ins/common/file-psp.c:2713
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Napaka pri branju kosa razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2727 plug-ins/common/file-psp.c:2739
-#: plug-ins/common/file-psp.c:2750
+#: plug-ins/common/file-psp.c:2739 plug-ins/common/file-psp.c:2751
+#: plug-ins/common/file-psp.c:2762
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Napaka pri branju kosa podatkov o barvnem profilu"
 
-#: plug-ins/common/file-psp.c:2803
+#: plug-ins/common/file-psp.c:2815
 #, c-format
 msgid "Error reading file header."
 msgstr "Napaka pri branju glave datoteke."
 
-#: plug-ins/common/file-psp.c:2810
+#: plug-ins/common/file-psp.c:2822
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Neveljaven podpis datoteke."
 
-#: plug-ins/common/file-psp.c:2824
+#: plug-ins/common/file-psp.c:2836
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Nepodprta različica datoteke vrste PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2844
+#: plug-ins/common/file-psp.c:2856
 msgid "invalid block size"
 msgstr "neveljavna velikost bloka"
 
-#: plug-ins/common/file-psp.c:2853
+#: plug-ins/common/file-psp.c:2865
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Podvojeni blok splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:2881
+#: plug-ins/common/file-psp.c:2893
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Manjkajoči blok splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:3006
+#: plug-ins/common/file-psp.c:3018
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Izvoz še ni implementiran."
@@ -10698,11 +10704,11 @@ msgstr ""
 msgid "Use restart mar_kers"
 msgstr "Uporabi _označevalnike ponovnega začetka"
 
-#: plug-ins/file-psd/psd-export.c:571
+#: plug-ins/file-psd/psd-export.c:573
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Napaka: Osnovne vrste slike GIMP ni mogoče pretvoriti v način PSD"
 
-#: plug-ins/file-psd/psd-export.c:2371
+#: plug-ins/file-psd/psd-export.c:2375
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -10711,7 +10717,7 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSD ne podpira slik, ki so daljše "
 "ali širše od 30.000 slikovnih točk."
 
-#: plug-ins/file-psd/psd-export.c:2377
+#: plug-ins/file-psd/psd-export.c:2381
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images that are "
@@ -10720,7 +10726,7 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSB ne podpira slik, ki so daljše "
 "ali širše od 300.000 slikovnih točk."
 
-#: plug-ins/file-psd/psd-export.c:2419
+#: plug-ins/file-psd/psd-export.c:2423
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -10729,7 +10735,7 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSD ne podpira slik s plastmi, ki so "
 "daljše ali širše od 30.000 slikovnih točk."
 
-#: plug-ins/file-psd/psd-export.c:2425
+#: plug-ins/file-psd/psd-export.c:2429
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images with "
@@ -10738,7 +10744,7 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSB ne podpira slik s plastmi, ki so "
 "daljše ali širše od 300.000 slikovnih točk."
 
-#: plug-ins/file-psd/psd-export.c:2741
+#: plug-ins/file-psd/psd-export.c:2769
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -10746,7 +10752,7 @@ msgstr ""
 "Informacije o barvnem prostoru duotone bodo\n"
 "uporabljene iz izvorno uvožene slike."
 
-#: plug-ins/file-psd/psd-export.c:2810
+#: plug-ins/file-psd/psd-export.c:2838
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
@@ -10754,11 +10760,11 @@ msgstr ""
 "Datoteke PSD lahko shranijo do 998 poti. \n"
 "Ostalo bo zavrženo."
 
-#: plug-ins/file-psd/psd-export.c:2920
+#: plug-ins/file-psd/psd-export.c:2948
 msgid "Indexed Image Warning"
 msgstr "Opozorilo o indeksirani sliki"
 
-#: plug-ins/file-psd/psd-export.c:2921
+#: plug-ins/file-psd/psd-export.c:2949
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
@@ -10766,11 +10772,11 @@ msgstr ""
 "Photoshop ne podpira indeksiranih slik, ki imajo več kot eno plast. Plasti "
 "bodo združene ob izvozu."
 
-#: plug-ins/file-psd/psd-export.c:2942 plug-ins/file-psd/psd-load.c:4067
+#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4092
 msgid "Compatibility Notice"
 msgstr "Obvestilo o združljivosti"
 
-#: plug-ins/file-psd/psd-export.c:2943
+#: plug-ins/file-psd/psd-export.c:2971
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -10782,124 +10788,124 @@ msgstr ""
 "Clipped Layers as Group’. Če naletite na težave s prikazom, preklopite na te "
 "vrste oz. načine plasti."
 
-#: plug-ins/file-psd/psd-load.c:312 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:313 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Napaka pri nalaganju datoteke PSD: %s"
 
-#: plug-ins/file-psd/psd-load.c:489
+#: plug-ins/file-psd/psd-load.c:492
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Neveljavna oblika plasti metapodatkov PSD"
 
-#: plug-ins/file-psd/psd-load.c:583
+#: plug-ins/file-psd/psd-load.c:596
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Ni veljavna datoteka dokumenta Photoshop"
 
-#: plug-ins/file-psd/psd-load.c:590
+#: plug-ins/file-psd/psd-load.c:603
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Nepodprta različica vrste datotek: %d"
 
-#: plug-ins/file-psd/psd-load.c:597
+#: plug-ins/file-psd/psd-load.c:610
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Preveč kanalov v datoteki: %d"
 
-#: plug-ins/file-psd/psd-load.c:621
+#: plug-ins/file-psd/psd-load.c:634
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost slike: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:636 plug-ins/file-psd/psd-load.c:646
+#: plug-ins/file-psd/psd-load.c:649 plug-ins/file-psd/psd-load.c:659
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Nepodprti barvni način: %s"
 
-#: plug-ins/file-psd/psd-load.c:673
+#: plug-ins/file-psd/psd-load.c:686
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Nepodprta bitna globina: %d"
 
-#: plug-ins/file-psd/psd-load.c:707 plug-ins/file-psd/psd-load.c:717
-#: plug-ins/file-psd/psd-load.c:968 plug-ins/file-psd/psd-load.c:1329
+#: plug-ins/file-psd/psd-load.c:720 plug-ins/file-psd/psd-load.c:730
+#: plug-ins/file-psd/psd-load.c:981 plug-ins/file-psd/psd-load.c:1342
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Datoteka je okvarjena!"
 
-#: plug-ins/file-psd/psd-load.c:897
+#: plug-ins/file-psd/psd-load.c:910
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Preveč kanalov v plasti: %d"
 
-#: plug-ins/file-psd/psd-load.c:1004
+#: plug-ins/file-psd/psd-load.c:1017
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Nepodprta ali neveljavna višina plasti: %d"
 
-#: plug-ins/file-psd/psd-load.c:1013
+#: plug-ins/file-psd/psd-load.c:1026
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Nepodprta ali neveljavna širina plasti: %d"
 
-#: plug-ins/file-psd/psd-load.c:1023
+#: plug-ins/file-psd/psd-load.c:1036
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1048
+#: plug-ins/file-psd/psd-load.c:1061
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Nepodprta ali neveljavna velikost podatkov o maski."
 
-#: plug-ins/file-psd/psd-load.c:1231
+#: plug-ins/file-psd/psd-load.c:1244
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Nepodprta ali neveljavna višina plasti maske: %d"
 
-#: plug-ins/file-psd/psd-load.c:1240
+#: plug-ins/file-psd/psd-load.c:1253
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Nepodprta ali neveljavna širina plasti maske: %d"
 
-#: plug-ins/file-psd/psd-load.c:1250
+#: plug-ins/file-psd/psd-load.c:1263
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti maske: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1862 plug-ins/file-psd/psd-load.c:3586
+#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3599
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nepodprta ali neveljavna velikost kanala"
 
-#: plug-ins/file-psd/psd-load.c:2296 plug-ins/file-psd/psd-load.c:3184
+#: plug-ins/file-psd/psd-load.c:2309 plug-ins/file-psd/psd-load.c:3197
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nepodprti način stiskanja: %d"
 
-#: plug-ins/file-psd/psd-load.c:2913
+#: plug-ins/file-psd/psd-load.c:2926
 msgid "Inner Shadow"
 msgstr "Notranja senca"
 
-#: plug-ins/file-psd/psd-load.c:2914
+#: plug-ins/file-psd/psd-load.c:2927
 msgid "imported"
 msgstr "uvoženo"
 
-#: plug-ins/file-psd/psd-load.c:3361
+#: plug-ins/file-psd/psd-load.c:3374
 msgid "Extra"
 msgstr "Dodatno"
 
-#: plug-ins/file-psd/psd-load.c:3663
+#: plug-ins/file-psd/psd-load.c:3676
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Podatkov ni mogoče razpakirati"
 
-#: plug-ins/file-psd/psd-load.c:4044
+#: plug-ins/file-psd/psd-load.c:4069
 msgid "Duotone Import"
 msgstr "Uvoz duotone"
 
-#: plug-ins/file-psd/psd-load.c:4045
+#: plug-ins/file-psd/psd-load.c:4070
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10909,7 +10915,7 @@ msgstr ""
 "Podatki o barvnem prostoru duotone so shranjeni\n"
 "in se lahko ponovno uporabijo pri izvozu."
 
-#: plug-ins/file-psd/psd-load.c:4068
+#: plug-ins/file-psd/psd-load.c:4093
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -11402,12 +11408,12 @@ msgstr ""
 msgid "Failed a scanline write on row %d"
 msgstr "Spodletelo pisanje črte v vrstici %d"
 
-#: plug-ins/file-tiff/file-tiff-export.c:1201
+#: plug-ins/file-tiff/file-tiff-export.c:1202
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Zapisovanje strani z različnimi bitnimi globinami je čudno."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1276
+#: plug-ins/file-tiff/file-tiff-export.c:1277
 msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
@@ -11415,7 +11421,7 @@ msgstr ""
 "Opozorilo: največja velikost datoteke TIFF je presežena. Poskusite znova v "
 "zapisu BigTIFF, z drugim algoritmom stiskanja ali prekličite dejanje."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1335
+#: plug-ins/file-tiff/file-tiff-export.c:1336
 #, c-format
 msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
