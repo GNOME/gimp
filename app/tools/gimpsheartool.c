@@ -182,7 +182,7 @@ gimp_shear_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
       tg_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_UNKNOWN;
     }
 
-  if (tg_tool->trans_info[ORIENTATION] == GIMP_ORIENTATION_HORIZONTAL)
+  if ((GimpOrientationType) tg_tool->trans_info[ORIENTATION] == GIMP_ORIENTATION_HORIZONTAL)
     amount = tg_tool->trans_info[SHEAR_X];
   else
     amount = tg_tool->trans_info[SHEAR_Y];
