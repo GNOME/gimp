@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-20 23:01+0000\n"
-"PO-Revision-Date: 2026-04-21 22:04+0300\n"
+"POT-Creation-Date: 2026-04-29 14:08+0000\n"
+"PO-Revision-Date: 2026-04-29 22:35+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -47,7 +47,7 @@ msgstr "Приклад додатка мовою C"
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
 #: plug-ins/gfig/gfig.c:213 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
-#: plug-ins/ifs-compose/ifs-compose.c:491 plug-ins/imagemap/imap_main.c:264
+#: plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:777
 #: plug-ins/map-object/map-object-main.c:537 plug-ins/pagecurl/pagecurl.c:297
 #, c-format
@@ -82,9 +82,9 @@ msgstr "Приклад додатка мовою C"
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
 #: plug-ins/gradient-flare/gradient-flare.c:3360
 #: plug-ins/gradient-flare/gradient-flare.c:3474
-#: plug-ins/ifs-compose/ifs-compose.c:913
-#: plug-ins/ifs-compose/ifs-compose.c:2607
-#: plug-ins/ifs-compose/ifs-compose.c:2631 plug-ins/imagemap/imap_browse.c:79
+#: plug-ins/ifs-compose/ifs-compose.c:914
+#: plug-ins/ifs-compose/ifs-compose.c:2614
+#: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:79
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
 #: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1189
@@ -148,7 +148,7 @@ msgstr "Приклад додатка мовою JavaScript (GJS)"
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3475
-#: plug-ins/ifs-compose/ifs-compose.c:914
+#: plug-ins/ifs-compose/ifs-compose.c:915
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
 msgstr "_Гаразд"
@@ -607,8 +607,8 @@ msgstr "Жалюзі"
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:424
-#: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-macpaint.c:246
+#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:431
+#: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-macpaint.c:247
 #: plug-ins/common/file-pcx.c:727 plug-ins/common/file-pcx.c:735
 #: plug-ins/common/file-pcx.c:743 plug-ins/common/file-pix.c:431
 #: plug-ins/common/file-png.c:1082 plug-ins/common/file-pnm.c:848
@@ -1039,8 +1039,8 @@ msgstr "База випадковості"
 #: plug-ins/flame/flame.c:1221
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1501
-#: plug-ins/gfig/gfig-dialog.c:772 plug-ins/ifs-compose/ifs-compose.c:910
-#: plug-ins/ifs-compose/ifs-compose.c:2631 plug-ins/imagemap/imap_browse.c:79
+#: plug-ins/gfig/gfig-dialog.c:772 plug-ins/ifs-compose/ifs-compose.c:911
+#: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:79
 #: plug-ins/imagemap/imap_file.c:73 plug-ins/lighting/lighting-ui.c:492
 #: plug-ins/lighting/lighting-ui.c:869
 msgid "_Open"
@@ -1056,8 +1056,8 @@ msgstr "_Відкрити"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1525
 #: plug-ins/gfig/gfig-dialog.c:811 plug-ins/gimpressionist/brush.c:269
-#: plug-ins/ifs-compose/ifs-compose.c:911
-#: plug-ins/ifs-compose/ifs-compose.c:2607 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/ifs-compose/ifs-compose.c:912
+#: plug-ins/ifs-compose/ifs-compose.c:2614 plug-ins/imagemap/imap_file.c:129
 #: plug-ins/lighting/lighting-ui.c:486 plug-ins/lighting/lighting-ui.c:737
 msgid "_Save"
 msgstr "_Зберегти"
@@ -1220,9 +1220,9 @@ msgstr "Графік поточних параметрів"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:572
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:740 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:741 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1189 plug-ins/gfig/gfig-dialog.c:1334
-#: plug-ins/ifs-compose/ifs-compose.c:1213
+#: plug-ins/ifs-compose/ifs-compose.c:1214
 #: plug-ins/metadata/metadata-viewer.c:223
 msgid "_Close"
 msgstr "З_акрити"
@@ -1250,7 +1250,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/file-tiff/file-tiff-export.c:1087
 #: plug-ins/file-tiff/file-tiff-export.c:1177 plug-ins/flame/flame.c:586
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1406
-#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2468
+#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
 #: plug-ins/lighting/lighting-ui.c:796
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -2005,12 +2005,12 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
 #: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:481
 #: plug-ins/common/file-iff.c:277 plug-ins/common/file-lnk.c:200
-#: plug-ins/common/file-macpaint.c:197 plug-ins/common/file-mng.c:1409
+#: plug-ins/common/file-macpaint.c:198 plug-ins/common/file-mng.c:1409
 #: plug-ins/common/file-paa.c:190 plug-ins/common/file-pcx.c:490
 #: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:800
 #: plug-ins/common/file-png.c:1370 plug-ins/common/file-ps.c:1158
-#: plug-ins/common/file-ps.c:3754 plug-ins/common/file-psp.c:2792
-#: plug-ins/common/file-psp.c:2842 plug-ins/common/file-pvr.c:256
+#: plug-ins/common/file-ps.c:3754 plug-ins/common/file-psp.c:2804
+#: plug-ins/common/file-psp.c:2854 plug-ins/common/file-pvr.c:256
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
 #: plug-ins/common/file-raw-data.c:799 plug-ins/common/file-raw-data.c:1844
 #: plug-ins/common/file-seattle-filmworks.c:232
@@ -2104,7 +2104,7 @@ msgstr "Переставити дві криві"
 #. The Reset button
 #: plug-ins/common/curve-bend.c:1342 plug-ins/common/sphere-designer.c:2642
 #: plug-ins/common/tile-small.c:523 plug-ins/gimpressionist/preview.c:182
-#: plug-ins/ifs-compose/ifs-compose.c:912
+#: plug-ins/ifs-compose/ifs-compose.c:913
 msgid "_Reset"
 msgstr "_Скинути"
 
@@ -2492,7 +2492,7 @@ msgid "Image dimensions too large: width %d x height %d"
 msgstr "Розміри зображення великі: ширина %d x висота %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
-#: plug-ins/common/file-macpaint.c:259 plug-ins/common/web-browser.c:211
+#: plug-ins/common/file-macpaint.c:260 plug-ins/common/web-browser.c:211
 #: plug-ins/file-psd/psd-load.c:3607 plug-ins/file-tiff/file-tiff-load.c:1944
 #: plug-ins/file-tiff/file-tiff-load.c:2038
 #: plug-ins/file-tiff/file-tiff-load.c:2226
@@ -3328,7 +3328,7 @@ msgstr "відомості щодо кадру"
 msgid "local colormap"
 msgstr "локальна мапа кольорів"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:441
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:448
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr ""
@@ -3979,16 +3979,22 @@ msgstr "Завантажити файл у форматі IFF"
 msgid "Load IFF file as thumbnail"
 msgstr "Завантажити файл IFF як мініатюру"
 
-#: plug-ins/common/file-iff.c:312
+#: plug-ins/common/file-iff.c:290
+#, c-format
+#| msgid "is not a CEL image file"
+msgid "This is not an ILBM image"
+msgstr "Не є зображенням ILBM"
+
+#: plug-ins/common/file-iff.c:319
 msgid "Invalid or missing ILBM image"
 msgstr "Некоректне або пропущене зображення ILBM"
 
-#: plug-ins/common/file-iff.c:327
+#: plug-ins/common/file-iff.c:334
 #, c-format
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "В ILBM не міститься даних зображення — ймовірно, це файл палітри"
 
-#: plug-ins/common/file-iff.c:358 plug-ins/common/file-iff.c:377
+#: plug-ins/common/file-iff.c:365 plug-ins/common/file-iff.c:384
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "Некоректний розмір карти кольорів ILBM"
@@ -4365,12 +4371,10 @@ msgid "Invalid file."
 msgstr "Неправильний файл."
 
 #: plug-ins/common/file-macpaint.c:122
-#| msgid "Print the image"
 msgid "MacPaint image"
 msgstr "зображення MacPaint"
 
 #: plug-ins/common/file-macpaint.c:125 plug-ins/common/file-macpaint.c:126
-#| msgid "Loads files in DDS image format"
 msgid "Load MacPaint image format"
 msgstr "Завантажує файли у форматі зображень MacPaint"
 
@@ -4574,7 +4578,7 @@ msgstr "Не вдалося прочитати зображення з «%s»"
 msgid "Main surface"
 msgstr "Основна поверхня"
 
-#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:355
+#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:353
 #: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
 #: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
 #: plug-ins/common/file-tim.c:612
@@ -4582,13 +4586,13 @@ msgstr "Основна поверхня"
 msgid "Memory could not be allocated."
 msgstr "Не вдалося розподілити пам'ять."
 
-#: plug-ins/common/file-paa.c:363
+#: plug-ins/common/file-paa.c:361
 #, c-format
 msgid "Couldn't decompress image data from '%s'"
 msgstr "Не вдалося розпакувати дані зображення з «%s»"
 
-#: plug-ins/common/file-paa.c:439 plug-ins/common/file-paa.c:456
-#: plug-ins/common/file-paa.c:467
+#: plug-ins/common/file-paa.c:437 plug-ins/common/file-paa.c:454
+#: plug-ins/common/file-paa.c:465
 #, c-format
 msgid "Could not read tag"
 msgstr "Не вдалося прочитати теґ"
@@ -5832,23 +5836,23 @@ msgstr "Хибний заголовок сегменту ключового сл
 msgid "Error reading creator keyword data"
 msgstr "Помилка зчитування даних ключового слова розробника"
 
-#: plug-ins/common/file-psp.c:1268 plug-ins/common/file-psp.c:1277
-#: plug-ins/common/file-psp.c:1286
+#: plug-ins/common/file-psp.c:1272 plug-ins/common/file-psp.c:1281
+#: plug-ins/common/file-psp.c:1290
 #, c-format
 msgid "Error reading color block"
 msgstr "Помилка під час читання блоку кольорів"
 
-#: plug-ins/common/file-psp.c:1297
+#: plug-ins/common/file-psp.c:1301
 #, c-format
 msgid "Error: Unsupported palette size"
 msgstr "Помилка: непідтримуваний розмір палітри"
 
-#: plug-ins/common/file-psp.c:1308
+#: plug-ins/common/file-psp.c:1312
 #, c-format
 msgid "Error reading color palette"
 msgstr "Помилка під час читання палітри кольорів"
 
-#: plug-ins/common/file-psp.c:1629 plug-ins/common/file-psp.c:1652
+#: plug-ins/common/file-psp.c:1634 plug-ins/common/file-psp.c:1657
 #: plug-ins/file-psd/psd-util.c:176
 #, c-format
 msgid "Error reading data. Most likely unexpected end of file."
@@ -5856,156 +5860,157 @@ msgstr ""
 "Помилка під час спроби читання даних. Найімовірніше, неочікуване завершення "
 "файла."
 
-#: plug-ins/common/file-psp.c:1744 plug-ins/common/file-psp.c:1758
+#: plug-ins/common/file-psp.c:1749 plug-ins/common/file-psp.c:1763
 #, c-format
 msgid "zlib error"
 msgstr "Помилка zlib"
 
-#: plug-ins/common/file-psp.c:1821 plug-ins/common/file-psp.c:1855
-#: plug-ins/common/file-psp.c:1865
+#: plug-ins/common/file-psp.c:1826 plug-ins/common/file-psp.c:1860
+#: plug-ins/common/file-psp.c:1870
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "Помилка зчитування даних щодо розширення шару"
 
-#: plug-ins/common/file-psp.c:1842
+#: plug-ins/common/file-psp.c:1847
 #, c-format
 msgid "Error reading block information"
 msgstr "Помилка зчитування блокових даних"
 
-#: plug-ins/common/file-psp.c:1922
+#: plug-ins/common/file-psp.c:1927
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Хибний підблок шару %s, має бути LAYER"
 
-#: plug-ins/common/file-psp.c:1955 plug-ins/common/file-psp.c:2014
+#: plug-ins/common/file-psp.c:1960 plug-ins/common/file-psp.c:2019
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Помилка зчитування інформаційного сегменту шару"
 
-#: plug-ins/common/file-psp.c:2057
+#: plug-ins/common/file-psp.c:2062
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Хибні розміри шару: %dx%d"
 
-#: plug-ins/common/file-psp.c:2118
+#: plug-ins/common/file-psp.c:2123
 #, c-format
 msgid "Error creating layer"
 msgstr "Помилка при створенні шару"
 
-#: plug-ins/common/file-psp.c:2179
-#, c-format
-msgid "Invalid layer sub-block %s, should be CHANNEL"
-msgstr "Хибний підблок %s шару, має бути CHANNEL"
-
-#: plug-ins/common/file-psp.c:2195 plug-ins/common/file-psp.c:2523
-#: plug-ins/common/file-psp.c:2543 plug-ins/common/file-psp.c:2561
+#: plug-ins/common/file-psp.c:2160 plug-ins/common/file-psp.c:2207
+#: plug-ins/common/file-psp.c:2535 plug-ins/common/file-psp.c:2555
+#: plug-ins/common/file-psp.c:2573
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Помилка читання фрагмента інформації каналу"
 
-#: plug-ins/common/file-psp.c:2219
+#: plug-ins/common/file-psp.c:2191
+#, c-format
+msgid "Invalid layer sub-block %s, should be CHANNEL"
+msgstr "Хибний підблок %s шару, має бути CHANNEL"
+
+#: plug-ins/common/file-psp.c:2231
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Хибний тип каналу %d у фрагменті інформації каналу"
 
-#: plug-ins/common/file-psp.c:2325 plug-ins/common/file-psp.c:2342
+#: plug-ins/common/file-psp.c:2337 plug-ins/common/file-psp.c:2354
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Помилка при читання фрагмента даних тюбика"
 
-#: plug-ins/common/file-psp.c:2446 plug-ins/common/file-psp.c:2463
-#: plug-ins/common/file-psp.c:2485 plug-ins/common/file-psp.c:2493
+#: plug-ins/common/file-psp.c:2458 plug-ins/common/file-psp.c:2475
+#: plug-ins/common/file-psp.c:2497 plug-ins/common/file-psp.c:2505
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "Помилка зчитування фрагмента позначеного"
 
-#: plug-ins/common/file-psp.c:2455
+#: plug-ins/common/file-psp.c:2467
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "Некоректний розмір фрагмента позначеного"
 
-#: plug-ins/common/file-psp.c:2477 plug-ins/common/file-psp.c:2501
-#: plug-ins/common/file-psp.c:2535 plug-ins/common/file-psp.c:2577
+#: plug-ins/common/file-psp.c:2489 plug-ins/common/file-psp.c:2513
+#: plug-ins/common/file-psp.c:2547 plug-ins/common/file-psp.c:2589
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Помилка зчитування кінця фрагмента позначеного"
 
-#: plug-ins/common/file-psp.c:2510
+#: plug-ins/common/file-psp.c:2522
 #, c-format
 msgid "Invalid selection sub-block %s, should be CHANNEL"
 msgstr "Хибний підблок %s позначеного, має бути CHANNEL"
 
-#: plug-ins/common/file-psp.c:2602
+#: plug-ins/common/file-psp.c:2614
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Помилка при читанні заголовка фрагмента розширеного блока"
 
-#: plug-ins/common/file-psp.c:2609
+#: plug-ins/common/file-psp.c:2621
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Некоректний заголовок фрагмента розширеного блоку"
 
-#: plug-ins/common/file-psp.c:2620
+#: plug-ins/common/file-psp.c:2632
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Некоректний розмір фрагмента розширеного блоку"
 
-#: plug-ins/common/file-psp.c:2641
+#: plug-ins/common/file-psp.c:2653
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Помилка зчитування даних ґратки розширеного фрагмента"
 
-#: plug-ins/common/file-psp.c:2669
+#: plug-ins/common/file-psp.c:2681
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Помилка при читанні розширеного фрагмента даних напрямної"
 
-#: plug-ins/common/file-psp.c:2687
+#: plug-ins/common/file-psp.c:2699
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Некоректна орієнтація напрямної"
 
-#: plug-ins/common/file-psp.c:2701
+#: plug-ins/common/file-psp.c:2713
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Помилка зчитування фрагмента розширеного блоку"
 
-#: plug-ins/common/file-psp.c:2727 plug-ins/common/file-psp.c:2739
-#: plug-ins/common/file-psp.c:2750
+#: plug-ins/common/file-psp.c:2739 plug-ins/common/file-psp.c:2751
+#: plug-ins/common/file-psp.c:2762
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Помилка під час читання фрагмента профілю кольорів"
 
-#: plug-ins/common/file-psp.c:2803
+#: plug-ins/common/file-psp.c:2815
 #, c-format
 msgid "Error reading file header."
 msgstr "Помилка при читанні заголовка файлу."
 
-#: plug-ins/common/file-psp.c:2810
+#: plug-ins/common/file-psp.c:2822
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Хибна сигнатура файлу."
 
-#: plug-ins/common/file-psp.c:2824
+#: plug-ins/common/file-psp.c:2836
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Непідтримувана версія формату файлу PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2844
+#: plug-ins/common/file-psp.c:2856
 msgid "invalid block size"
 msgstr "хибний розмір блока"
 
-#: plug-ins/common/file-psp.c:2853
+#: plug-ins/common/file-psp.c:2865
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Повторний блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2881
+#: plug-ins/common/file-psp.c:2893
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Відсутній блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:3006
+#: plug-ins/common/file-psp.c:3018
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
@@ -8096,7 +8101,7 @@ msgstr ""
 "для пошуку місця, куди встановлені додатки додають себе у меню."
 
 #: plug-ins/common/plugin-browser.c:370
-#: plug-ins/filter-browser/filter-browser.c:622
+#: plug-ins/filter-browser/filter-browser.c:623
 msgid "Searching by name"
 msgstr "Триває пошук за назвою"
 
@@ -8109,7 +8114,7 @@ msgstr[1] "%d розширення"
 msgstr[2] "%d розширень"
 
 #: plug-ins/common/plugin-browser.c:395
-#: plug-ins/filter-browser/filter-browser.c:689
+#: plug-ins/filter-browser/filter-browser.c:690
 msgid "No matches for your query"
 msgstr "Відповідностей не знайдено"
 
@@ -8122,7 +8127,7 @@ msgstr[1] "%d модулі відповідає запиту"
 msgstr[2] "%d модулів відповідає запиту"
 
 #: plug-ins/common/plugin-browser.c:543
-#: plug-ins/filter-browser/filter-browser.c:691
+#: plug-ins/filter-browser/filter-browser.c:692
 msgid "No matches"
 msgstr "Немає відповідностей"
 
@@ -8215,7 +8220,6 @@ msgid "Load QBE File"
 msgstr "Завантаження файлу QBE"
 
 #: plug-ins/common/qbist.c:846 plug-ins/imagemap/imap_file.c:76
-#| msgid "A_ll tiles"
 msgid "All Files"
 msgstr "усі файли"
 
@@ -8875,7 +8879,7 @@ msgstr "Дрібна черепиця"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:490 plug-ins/ifs-compose/ifs-compose.c:724
+#: plug-ins/common/tile-small.c:490 plug-ins/ifs-compose/ifs-compose.c:725
 msgid "Flip"
 msgstr "Віддзеркалення"
 
@@ -11725,8 +11729,8 @@ msgstr "Не вдалося отримати мапи кольорів з «%s»
 msgid ""
 "Indexed TIFFs with color maps larger than 256 colors are not yet supported"
 msgstr ""
-"Підтримки індексованих TIFF з картами кольорів, розмір яких перевищує 256"
-" кольорів, ще не передбачено"
+"Підтримки індексованих TIFF з картами кольорів, розмір яких перевищує 256 "
+"кольорів, ще не передбачено"
 
 #. Validate number of channels to the same maximum as we use for
 #. * Photoshop. A higher number most likely means a corrupt image
@@ -11784,15 +11788,12 @@ msgstr ""
 
 #: plug-ins/file-tiff/file-tiff-load.c:2553
 #, c-format
-#| msgid ""
-#| "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgid ""
 "Invalid image dimensions (%u x %u) for Sketchbook layer %i. Image may be "
 "corrupt."
 msgstr ""
-"Некоректні розміри зображення (%u x %u) для шару Sketchbook %i. Можливо,"
-" зображення "
-"пошкоджено."
+"Некоректні розміри зображення (%u x %u) для шару Sketchbook %i. Можливо, "
+"зображення пошкоджено."
 
 #: plug-ins/file-tiff/file-tiff-load.c:3065
 msgid "Import from TIFF"
@@ -12030,17 +12031,17 @@ msgstr "Не вдалось декодувати інформацію анімо
 msgid "Failed to decode animated WebP frame from '%s'"
 msgstr "Не вдалось декодувати кадр анімованого WebP з «%s»"
 
-#: plug-ins/filter-browser/filter-browser.c:288
-#: plug-ins/filter-browser/filter-browser.c:330
+#: plug-ins/filter-browser/filter-browser.c:289
+#: plug-ins/filter-browser/filter-browser.c:331
 msgid "Allowed values:"
 msgstr "Дозволені значення:"
 
-#: plug-ins/filter-browser/filter-browser.c:433
+#: plug-ins/filter-browser/filter-browser.c:434
 #, c-format
 msgid "Operation name: %s"
 msgstr "Назва дії: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:446
+#: plug-ins/filter-browser/filter-browser.c:447
 #, c-format
 msgid "Categories: %s"
 msgstr "Категорії: %s"
@@ -12051,7 +12052,7 @@ msgstr "Категорії: %s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:476
+#: plug-ins/filter-browser/filter-browser.c:477
 #: plug-ins/gradient-flare/gradient-flare.c:2972
 #: plug-ins/gradient-flare/gradient-flare.c:3722
 #: plug-ins/gradient-flare/gradient-flare.c:3824
@@ -12059,28 +12060,28 @@ msgstr "Категорії: %s"
 msgid "Parameters"
 msgstr "Параметри"
 
-#: plug-ins/filter-browser/filter-browser.c:508
+#: plug-ins/filter-browser/filter-browser.c:509
 msgid "Additional Information"
 msgstr "Додаткові відомості"
 
-#: plug-ins/filter-browser/filter-browser.c:514
+#: plug-ins/filter-browser/filter-browser.c:515
 #, c-format
 msgid "License: %s"
 msgstr "Ліцензування: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:625
+#: plug-ins/filter-browser/filter-browser.c:626
 msgid "Searching by title"
 msgstr "Пошук за заголовком"
 
-#: plug-ins/filter-browser/filter-browser.c:628
+#: plug-ins/filter-browser/filter-browser.c:629
 msgid "Searching by description"
 msgstr "Пошук за описом"
 
-#: plug-ins/filter-browser/filter-browser.c:631
+#: plug-ins/filter-browser/filter-browser.c:632
 msgid "Searching by category"
 msgstr "Пошук за категорією"
 
-#: plug-ins/filter-browser/filter-browser.c:696
+#: plug-ins/filter-browser/filter-browser.c:697
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
@@ -12088,7 +12089,7 @@ msgstr[0] "%d фільтр відповідає запиту"
 msgstr[1] "%d фільтри відповідає запиту"
 msgstr[2] "%d фільтрів відповідає запиту"
 
-#: plug-ins/filter-browser/filter-browser.c:702
+#: plug-ins/filter-browser/filter-browser.c:703
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
@@ -12096,31 +12097,31 @@ msgstr[0] "%d фільтр"
 msgstr[1] "%d фільтри"
 msgstr[2] "%d фільтрів"
 
-#: plug-ins/filter-browser/filter-browser.c:734
+#: plug-ins/filter-browser/filter-browser.c:735
 msgid "GEGL Filter Browser"
 msgstr "Навігатор фільтрами GEGL"
 
-#: plug-ins/filter-browser/filter-browser.c:751
+#: plug-ins/filter-browser/filter-browser.c:752
 msgid "by name"
 msgstr "за назвою"
 
-#: plug-ins/filter-browser/filter-browser.c:752
+#: plug-ins/filter-browser/filter-browser.c:753
 msgid "by title"
 msgstr "за заголовком"
 
-#: plug-ins/filter-browser/filter-browser.c:753
+#: plug-ins/filter-browser/filter-browser.c:754
 msgid "by description"
 msgstr "за описом"
 
-#: plug-ins/filter-browser/filter-browser.c:845
+#: plug-ins/filter-browser/filter-browser.c:846
 msgid "_GEGL Filter Browser"
 msgstr "Навігатор фільтрами _GEGL"
 
-#: plug-ins/filter-browser/filter-browser.c:850
+#: plug-ins/filter-browser/filter-browser.c:851
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "Показати дані щодо доступних дій GEGL (тобто фільтрів)."
 
-#: plug-ins/filter-browser/filter-browser.c:852
+#: plug-ins/filter-browser/filter-browser.c:853
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
@@ -12868,7 +12869,7 @@ msgid "Copy an object"
 msgstr "Копіювати об'єкт"
 
 #: plug-ins/gfig/gfig-dialog.c:405 plug-ins/gfig/gfig-menu.ui:104
-#: plug-ins/ifs-compose/ifs-compose.c:959 plug-ins/ifs-compose/ifs-menus.ui:27
+#: plug-ins/ifs-compose/ifs-compose.c:960 plug-ins/ifs-compose/ifs-menus.ui:27
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr "Видалити"
@@ -13192,7 +13193,7 @@ msgstr "Закрити"
 msgid "Edit"
 msgstr "Зміни"
 
-#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:961
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:962
 #: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1563
 #: plug-ins/imagemap/imap-menu.ui:35
 msgid "Undo"
@@ -13625,7 +13626,7 @@ msgid "Applies the paper as it is (without embossing it)"
 msgstr "Використовувати папір як є (без надання йому рельєфу)"
 
 #. Scale
-#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:668
+#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:669
 msgid "Scale:"
 msgstr "Масштаб:"
 
@@ -14255,178 +14256,178 @@ msgstr ""
 "Помилка при аналізі файлу «%s»:\n"
 "%s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:433
+#: plug-ins/ifs-compose/ifs-compose.c:434
 msgid "_IFS Fractal..."
 msgstr "_IFS фрактал..."
 
-#: plug-ins/ifs-compose/ifs-compose.c:439
+#: plug-ins/ifs-compose/ifs-compose.c:440
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Створити фрактал Iterated Function System (IFS)"
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:640
+#: plug-ins/ifs-compose/ifs-compose.c:641
 msgid "X:"
 msgstr "X:"
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:654
+#: plug-ins/ifs-compose/ifs-compose.c:655
 msgid "Y:"
 msgstr "Y:"
 
 #. Angle
-#: plug-ins/ifs-compose/ifs-compose.c:682
+#: plug-ins/ifs-compose/ifs-compose.c:683
 msgid "Angle:"
 msgstr "Кут:"
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:696
+#: plug-ins/ifs-compose/ifs-compose.c:697
 msgid "Asymmetry:"
 msgstr "Асиметрія:"
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:710
+#: plug-ins/ifs-compose/ifs-compose.c:711
 msgid "Shear:"
 msgstr "Нахил:"
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:755
+#: plug-ins/ifs-compose/ifs-compose.c:756
 msgid "Simple"
 msgstr "Просте"
 
-#: plug-ins/ifs-compose/ifs-compose.c:764
+#: plug-ins/ifs-compose/ifs-compose.c:765
 msgid "IFS Fractal: Target"
 msgstr "IFS фрактал: ціль"
 
-#: plug-ins/ifs-compose/ifs-compose.c:770
+#: plug-ins/ifs-compose/ifs-compose.c:771
 msgid "Scale hue by:"
 msgstr "Масштабувати відтінок за:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:785
+#: plug-ins/ifs-compose/ifs-compose.c:786
 msgid "Scale value by:"
 msgstr "Масштабувати яскравість за:"
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:802
+#: plug-ins/ifs-compose/ifs-compose.c:803
 msgid "Full"
 msgstr "Повний"
 
-#: plug-ins/ifs-compose/ifs-compose.c:809
+#: plug-ins/ifs-compose/ifs-compose.c:810
 msgid "IFS Fractal: Red"
 msgstr "IFS фрактал: червоний"
 
-#: plug-ins/ifs-compose/ifs-compose.c:817
+#: plug-ins/ifs-compose/ifs-compose.c:818
 msgid "IFS Fractal: Green"
 msgstr "IFS фрактал: зелений"
 
-#: plug-ins/ifs-compose/ifs-compose.c:825
+#: plug-ins/ifs-compose/ifs-compose.c:826
 msgid "IFS Fractal: Blue"
 msgstr "IFS фрактал: синій"
 
-#: plug-ins/ifs-compose/ifs-compose.c:833
+#: plug-ins/ifs-compose/ifs-compose.c:834
 msgid "IFS Fractal: Black"
 msgstr "IFS фрактал: чорний"
 
-#: plug-ins/ifs-compose/ifs-compose.c:906
+#: plug-ins/ifs-compose/ifs-compose.c:907
 msgid "IFS Fractal"
 msgstr "IFS фрактал"
 
-#: plug-ins/ifs-compose/ifs-compose.c:950 plug-ins/ifs-compose/ifs-menus.ui:6
+#: plug-ins/ifs-compose/ifs-compose.c:951 plug-ins/ifs-compose/ifs-menus.ui:6
 #: plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Перемістити"
 
-#: plug-ins/ifs-compose/ifs-compose.c:952 plug-ins/ifs-compose/ifs-menus.ui:11
+#: plug-ins/ifs-compose/ifs-compose.c:953 plug-ins/ifs-compose/ifs-menus.ui:11
 msgid "Rotate"
 msgstr "Обернути"
 
-#: plug-ins/ifs-compose/ifs-compose.c:954 plug-ins/ifs-compose/ifs-menus.ui:16
+#: plug-ins/ifs-compose/ifs-compose.c:955 plug-ins/ifs-compose/ifs-menus.ui:16
 msgid "Stretch"
 msgstr "Розтягти"
 
-#: plug-ins/ifs-compose/ifs-compose.c:957 plug-ins/ifs-compose/ifs-menus.ui:23
+#: plug-ins/ifs-compose/ifs-compose.c:958 plug-ins/ifs-compose/ifs-menus.ui:23
 msgid "New"
 msgstr "Створити"
 
-#: plug-ins/ifs-compose/ifs-compose.c:963 plug-ins/ifs-compose/ifs-menus.ui:35
+#: plug-ins/ifs-compose/ifs-compose.c:964 plug-ins/ifs-compose/ifs-menus.ui:35
 #: plug-ins/imagemap/imap_main.c:1565 plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "Повернути"
 
-#: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:39
+#: plug-ins/ifs-compose/ifs-compose.c:966 plug-ins/ifs-compose/ifs-menus.ui:39
 #: plug-ins/imagemap/imap_cmd_select_all.c:50 plug-ins/imagemap/imap-menu.ui:61
 msgid "Select All"
 msgstr "Вибрати все"
 
-#: plug-ins/ifs-compose/ifs-compose.c:967 plug-ins/ifs-compose/ifs-menus.ui:43
+#: plug-ins/ifs-compose/ifs-compose.c:968 plug-ins/ifs-compose/ifs-menus.ui:43
 msgid "Recompute Center"
 msgstr "Переобчислити центр"
 
-#: plug-ins/ifs-compose/ifs-compose.c:970 plug-ins/ifs-compose/ifs-menus.ui:49
+#: plug-ins/ifs-compose/ifs-compose.c:971 plug-ins/ifs-compose/ifs-menus.ui:49
 msgid "Render Options"
 msgstr "Параметри візуалізації"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1029
+#: plug-ins/ifs-compose/ifs-compose.c:1030
 msgid "Spatial Transformation"
 msgstr "Просторове перетворення"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1035
+#: plug-ins/ifs-compose/ifs-compose.c:1036
 msgid "Color Transformation"
 msgstr "Перетворення кольорів"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1045
+#: plug-ins/ifs-compose/ifs-compose.c:1046
 msgid "Relative probability:"
 msgstr "Відносна вірогідність:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1209
+#: plug-ins/ifs-compose/ifs-compose.c:1210
 msgid "IFS Fractal Render Options"
 msgstr "Параметри візуалізації"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1231
+#: plug-ins/ifs-compose/ifs-compose.c:1232
 msgid "Max. memory:"
 msgstr "Макс. пам'ять:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1244
+#: plug-ins/ifs-compose/ifs-compose.c:1245
 msgid "Iterations:"
 msgstr "Число повторів:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1259
+#: plug-ins/ifs-compose/ifs-compose.c:1260
 msgid "Subdivide:"
 msgstr "Підрозділяти:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1273
+#: plug-ins/ifs-compose/ifs-compose.c:1274
 msgid "Spot radius:"
 msgstr "Радіус плями:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1347
+#: plug-ins/ifs-compose/ifs-compose.c:1354
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Візуалізація IFS (%d/%d)..."
 
-#: plug-ins/ifs-compose/ifs-compose.c:1510
+#: plug-ins/ifs-compose/ifs-compose.c:1517
 #, c-format
 msgid "Transformation %s"
 msgstr "Перетворення %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2473
+#: plug-ins/ifs-compose/ifs-compose.c:2480
 msgid "Save failed"
 msgstr "Помилка при збереженні"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2556
-#: plug-ins/ifs-compose/ifs-compose.c:2569
+#: plug-ins/ifs-compose/ifs-compose.c:2563
+#: plug-ins/ifs-compose/ifs-compose.c:2576
 msgid "Open failed"
 msgstr "Не вдається відкрити"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2564
+#: plug-ins/ifs-compose/ifs-compose.c:2571
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Файл «%s» не є файлом IFS-фрактала."
 
-#: plug-ins/ifs-compose/ifs-compose.c:2604
+#: plug-ins/ifs-compose/ifs-compose.c:2611
 msgid "Save as IFS Fractal file"
 msgstr "Збереження як файл IFS-фрактала"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2628
+#: plug-ins/ifs-compose/ifs-compose.c:2635
 msgid "Open IFS Fractal file"
 msgstr "Відкривання файлу IFS-фрактала"
 
@@ -14749,7 +14750,6 @@ msgid "Load Image Map"
 msgstr "Завантаження мапи зображення"
 
 #: plug-ins/imagemap/imap_file.c:81
-#| msgid "Map File Format"
 msgid "Map file (*.map)"
 msgstr "файл карти (*.map)"
 
