@@ -612,6 +612,11 @@ static gboolean         save_dialog          (GimpProcedure         *procedure,
                                               GObject               *config,
                                               GimpImage             *image);
 
+static gboolean         create_adjustment    (GimpLayer             *layer,
+                                              FILE                  *f,
+                                              gint64                 layer_extension_start,
+                                              GError               **error);
+
 
 G_DEFINE_TYPE (Psp, psp, GIMP_TYPE_PLUG_IN)
 
@@ -1885,36 +1890,38 @@ read_layer_block (FILE      *f,
                   PSPimage  *ia,
                   GError   **error)
 {
-  gint i;
-  long block_start, sub_block_start, channel_start;
-  long layer_extension_start;
-  gint sub_id;
-  guint32 sub_init_len, sub_total_len;
-  guint32 chunk_len;
-  gchar *name = NULL;
-  gchar *layer_name = NULL;
-  guint16 namelen;
-  guchar type, opacity, blend_mode, visibility, transparency_protected;
-  guchar link_group_id, mask_linked, mask_disabled;
-  guint32 image_rect[4], saved_image_rect[4], mask_rect[4], saved_mask_rect[4];
-  gboolean null_layer, can_handle_layer;
-  guint16 bitmap_count, channel_count;
-  GimpImageType drawable_type;
-  GimpLayer *layer = NULL;
-  GimpLayerMode layer_mode;
-  guint32 channel_init_len, channel_total_len;
-  guint32 compressed_len, uncompressed_len;
-  guint16 bitmap_type, channel_type;
-  gint width, height, bytespp, offset;
-  guchar **pixels, *pixel;
-  GeglBuffer *buffer;
+  gint            i;
+  gint64          block_start, sub_block_start, channel_start;
+  gint64          layer_extension_start;
+  gint            sub_id;
+  guint32         sub_init_len, sub_total_len;
+  guint32         chunk_len;
+  gchar          *name = NULL;
+  gchar          *layer_name = NULL;
+  guint16         namelen;
+  guchar          type, opacity, blend_mode, visibility, transparency_protected;
+  guchar          link_group_id, mask_linked, mask_disabled;
+  guint32         image_rect[4], saved_image_rect[4], mask_rect[4], saved_mask_rect[4];
+  gboolean        null_layer, can_handle_layer;
+  gboolean        is_adjustment_layer;
+  guint16         bitmap_count, channel_count;
+  GimpImageType   drawable_type;
+  GimpLayer      *layer = NULL;
+  GimpLayerMode   layer_mode;
+  guint32         channel_init_len, channel_total_len;
+  guint32         compressed_len, uncompressed_len;
+  guint16         bitmap_type, channel_type;
+  gint            width, height, bytespp, offset;
+  guchar        **pixels, *pixel;
+  GeglBuffer     *buffer;
 
   block_start = ftell (f);
 
   while (ftell (f) < block_start + total_len)
     {
-      null_layer       = FALSE;
-      can_handle_layer = FALSE;
+      null_layer          = FALSE;
+      can_handle_layer    = FALSE;
+      is_adjustment_layer = FALSE;
 
       /* Read the layer sub-block header */
       sub_id = read_block_header (f, &sub_init_len, &sub_total_len, error);
@@ -1986,6 +1993,13 @@ read_layer_block (FILE      *f,
                 }
               can_handle_layer = TRUE;
               break;
+
+            case keGLTAdjustment:
+              is_adjustment_layer = TRUE;
+              bitmap_count = 0;
+              channel_count = 0;
+              break;
+
             default:
               bitmap_count = 0;
               channel_count = 0;
@@ -2111,11 +2125,20 @@ read_layer_block (FILE      *f,
           drawable_type = GIMP_INDEXEDA_IMAGE, bytespp = 2;
       bytespp *= ia->bytes_per_sample;
 
-      layer = gimp_layer_new (image, layer_name,
-                              width, height,
-                              drawable_type,
-                              100.0 * opacity / 255.0,
-                              layer_mode);
+      if (can_handle_layer)
+        {
+          layer = gimp_layer_new (image, layer_name,
+                                  width, height,
+                                  drawable_type,
+                                  100.0 * opacity / 255.0,
+                                  layer_mode);
+        }
+      else if (is_adjustment_layer)
+        {
+          layer = GIMP_LAYER (gimp_group_layer_new (image, layer_name));
+          gimp_layer_set_opacity (layer, (100.0 * opacity) / 255.0);
+          gimp_layer_set_mode (layer, GIMP_LAYER_MODE_PASS_THROUGH);
+        }
       g_free (layer_name);
       if (! layer)
         {
@@ -2124,7 +2147,10 @@ read_layer_block (FILE      *f,
           return NULL;
         }
 
-      gimp_image_insert_layer (image, layer, NULL, -1);
+      if (can_handle_layer)
+        gimp_image_insert_layer (image, layer, NULL, -1);
+      else if (is_adjustment_layer)
+        gimp_image_insert_layer (image, layer, NULL, 0);
 
       if (image_rect[0] != 0 || image_rect[1] != 0 || saved_image_rect[0] != 0 || saved_image_rect[1] != 0)
         gimp_layer_set_offsets (layer,
@@ -2271,6 +2297,19 @@ read_layer_block (FILE      *f,
 
           g_free (pixels);
           g_free (pixel);
+          if (psp_ver_major >= 4)
+            {
+              if (try_fseek (f, sub_block_start + sub_total_len, SEEK_SET, error) < 0)
+                {
+                  return NULL;
+                }
+            }
+        }
+      else if (is_adjustment_layer)
+        {
+          if (! create_adjustment (layer, f, layer_extension_start, error))
+            return NULL;
+
           if (psp_ver_major >= 4)
             {
               if (try_fseek (f, sub_block_start + sub_total_len, SEEK_SET, error) < 0)
@@ -3018,4 +3057,523 @@ export_image (GFile         *file,
                _("Exporting not implemented yet."));
 
   return FALSE;
+}
+
+/* Helper methods */
+static gboolean
+create_adjustment (GimpLayer  *layer,
+                   FILE       *f,
+                   gint64      layer_extension_start,
+                   GError    **error)
+{
+  GimpDrawableFilter       *filter   = NULL;
+  GimpDrawableFilterConfig *config   = NULL;
+  PSPAdjustmentLayerType    adj_type = keAdjNone;
+  guchar                    header[4];
+  gint                      block_id;
+  guint32                   block_len;
+  guint32                   chunk_size;
+
+  if (fseek (f, layer_extension_start, SEEK_SET) < 0 ||
+      fread (header, 4, 1, f) < 1                    ||
+      memcmp (header, "~BK\0", 4) != 0               ||
+      fread (&block_id, 2, 1, f) < 1                 ||
+      fread (&block_len, 4, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading adjustment layer extension information"));
+      return FALSE;
+    }
+  block_id  = GUINT16_FROM_LE (block_id);
+  block_len = GUINT32_FROM_LE (block_len);
+
+  if (block_id != PSP_ADJUSTMENT_EXTENSION_BLOCK)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Invalid layer sub-block %s, should be ADJUSTMENT "
+                         "EXTENSION"),
+                       block_name (block_id));
+      return FALSE;
+    }
+
+  if (fread (&chunk_size, 4, 1, f) < 1 ||
+      fread (&adj_type, 2, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading adjustment layer extension information"));
+      return FALSE;
+    }
+  chunk_size = GUINT32_FROM_LE (chunk_size);
+  adj_type   = GUINT16_FROM_LE (adj_type);
+
+  if (fseek (f, (chunk_size - 6), SEEK_CUR) < 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading adjustment layer extension information"));
+      return FALSE;
+    }
+
+  /* Filter creation */
+  switch (adj_type)
+    {
+      case keAdjLevel:
+        {
+          GimpHistogramChannel channel      = GIMP_HISTOGRAM_RED;
+          gdouble              gamma[4]     = { 0 };
+          guint32              ceil_in[4]   = { 0 };
+          guint32              floor_in[4]  = { 0 };
+          guint32              ceil_out[4]  = { 0 };
+          guint32              floor_out[4] = { 0 };
+
+          if (fread (&chunk_size, 4, 1, f) < 1 ||
+              fread (gamma, 8, 4, f) < 1       ||
+              fread (ceil_in, 4, 4, f) < 1     ||
+              fread (floor_in, 4, 4, f) < 1    ||
+              fread (ceil_out, 4, 4, f) < 1    ||
+              fread (floor_out, 4, 4, f) < 1)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading adjustment layer extension "
+                             "information"));
+              return FALSE;
+            }
+          for (gint i = 0; i < 4; i++)
+            {
+              ceil_in[i]   = GINT32_FROM_LE (ceil_in[i]);
+              ceil_out[i]  = GINT32_FROM_LE (ceil_out[i]);
+              floor_in[i]  = GINT32_FROM_LE (floor_in[i]);
+              floor_out[i] = GINT32_FROM_LE (floor_out[i]);
+            }
+
+          filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                         "gimp:levels",
+                                         NULL,
+                                         GIMP_LAYER_MODE_REPLACE,
+                                         1.0,
+                                         "channel",     GIMP_HISTOGRAM_VALUE,
+                                         "trc",         GIMP_TRC_PERCEPTUAL,
+                                         "low-input",   floor_in[0] / 255.0,
+                                         "high-input",  ceil_in[0] / 255.0,
+                                         "low-output",  floor_out[0] / 255.0,
+                                         "high-output", ceil_out[0] / 255.0,
+                                         "gamma",       gamma[0],
+                                         NULL);
+          config = gimp_drawable_filter_get_config (filter);
+
+          for (gint i = 1; i < 4; i++)
+            {
+              g_object_set (config, "channel", channel, NULL);
+              gimp_drawable_filter_update (filter);
+              channel++;
+
+              g_object_set (config,
+                            "trc",         GIMP_TRC_PERCEPTUAL,
+                            "low-input",   floor_in[i] / 255.0,
+                            "high-input",  ceil_in[i] / 255.0,
+                            "low-output",  floor_out[i] / 255.0,
+                            "high-output", ceil_out[i] / 255.0,
+                            "gamma",       gamma[i],
+                            NULL);
+              gimp_drawable_filter_update (filter);
+            }
+        }
+        break;
+
+      case keAdjCurve:
+        {
+          GimpCurve *curve = NULL;
+          guchar     is_freehand = FALSE;
+          gushort    num_points;
+          guchar     points[18 * 2];
+          guchar     freehand_table[256];
+
+          /* TODO: Read the other curves */
+          if (fread (&chunk_size, 4, 1, f) < 1  ||
+              fread (&is_freehand, 1, 1, f) < 1 ||
+              fread (&num_points, 2, 1, f) < 1  ||
+              fread (points, 1, 36, f) < 1      ||
+              fread (freehand_table, 256, 1, f) < 1)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading adjustment layer extension "
+                             "information"));
+              return FALSE;
+            }
+          num_points = MIN (GUINT16_FROM_LE (num_points), 18);
+
+          curve = gimp_curve_new ();
+          gimp_curve_set_curve_type (curve,
+                                     (is_freehand) ? GIMP_CURVE_FREE :
+                                                     GIMP_CURVE_SMOOTH);
+
+          if (is_freehand)
+            {
+              for (gint i = 0; i < 256; i++)
+                gimp_curve_set_sample (curve, i / 255.0f,
+                                       freehand_table[i] / 255.0f);
+            }
+          else
+            {
+              for (gint i = 0; i < num_points; i++)
+                {
+                  gimp_curve_add_point (curve, points[i * 2] / 255.0f,
+                                        points[(i * 2) + 1] / 255.0f);
+                }
+            }
+
+          filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                               "gimp:curves",
+                               NULL,
+                               GIMP_LAYER_MODE_REPLACE,
+                               1.0,
+                               "trc",     GIMP_TRC_PERCEPTUAL,
+                               "channel", GIMP_HISTOGRAM_VALUE,
+                               "curve",   curve,
+                               NULL);
+        }
+        break;
+
+      case keAdjBrightContrast:
+        {
+          gint32 brightness = 0;
+          gint32 contrast   = 0;
+
+          if (fread (&chunk_size, 4, 1, f) < 1 ||
+              fread (&brightness, 4, 1, f) < 1 ||
+              fread (&contrast, 4, 1, f) < 1)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading adjustment layer extension "
+                             "information"));
+              return FALSE;
+            }
+          brightness = GINT32_FROM_LE (brightness);
+          contrast   = GINT32_FROM_LE (contrast);
+
+          filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                    "gimp:brightness-contrast",
+                                                    NULL,
+                                                    GIMP_LAYER_MODE_REPLACE,
+                                                    1.0,
+                                                    "brightness", (brightness / 127.0f),
+                                                    "contrast",   (contrast / 127.0f),
+                                                    NULL);
+        }
+        break;
+
+      case keAdjColorBal:
+        {
+          guchar preserve_lum  = FALSE;
+          gint32 highlights[3] = { 0 };
+          gint32 midtones[3]   = { 0 };
+          gint32 shadows[3]    = { 0 };
+
+          if (fread (&chunk_size, 4, 1, f) < 1   ||
+              fread (&preserve_lum, 1, 1, f) < 1 ||
+              fread (highlights, 4, 3, f) < 1    ||
+              fread (midtones, 4, 3, f) < 1      ||
+              fread (shadows, 4, 3, f) < 1)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading adjustment layer extension "
+                             "information"));
+              return FALSE;
+            }
+          for (gint i = 0; i < 3; i++)
+            {
+              highlights[i] = GINT32_FROM_LE (highlights[i]);
+              midtones[i]   = GINT32_FROM_LE (midtones[i]);
+              shadows[i]    = GINT32_FROM_LE (shadows[i]);
+            }
+
+          filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                         "gimp:color-balance",
+                                         NULL,
+                                         GIMP_LAYER_MODE_REPLACE,
+                                         1.0,
+                                         "range",               GIMP_TRANSFER_HIGHLIGHTS,
+                                         "cyan-red",            highlights[0] / 100.0f,
+                                         "magenta-green",       highlights[1] / 100.0f,
+                                         "yellow-blue",         highlights[2] / 100.0f,
+                                         "preserve-luminosity", preserve_lum,
+                                         NULL);
+          config = gimp_drawable_filter_get_config (filter);
+
+          g_object_set (config, "range", GIMP_TRANSFER_MIDTONES, NULL);
+          gimp_drawable_filter_update (filter);
+          g_object_set (config,
+                        "cyan-red",      midtones[0] / 100.0f,
+                        "magenta-green", midtones[1] / 100.0f,
+                        "yellow-blue",   midtones[2] / 100.0f,
+                        NULL);
+          gimp_drawable_filter_update (filter);
+
+          g_object_set (config, "range", GIMP_TRANSFER_SHADOWS, NULL);
+          gimp_drawable_filter_update (filter);
+          g_object_set (config,
+                        "cyan-red",      shadows[0] / 100.0f,
+                        "magenta-green", shadows[1] / 100.0f,
+                        "yellow-blue",   shadows[2] / 100.0f,
+                        NULL);
+          gimp_drawable_filter_update (filter);
+        }
+      break;
+
+      case keAdjHSL:
+        {
+          guchar  is_colorize = FALSE;
+          gint32 master[6]   = { 0 };
+          gint32 red[7]      = { 0 };
+          gint32 yellow[7]   = { 0 };
+          gint32 green[7]    = { 0 };
+          gint32 cyan[7]     = { 0 };
+          gint32 blue[7]     = { 0 };
+          gint32 magenta[7]  = { 0 };
+
+          if (fread (&chunk_size, 4, 1, f) < 1  ||
+              fread (&is_colorize, 1, 1, f) < 1 ||
+              fread (master, 4, 6, f) < 1       ||
+              fread (red, 4, 7, f) < 1          ||
+              fread (yellow, 4, 7, f) < 1       ||
+              fread (green, 4, 7, f) < 1        ||
+              fread (cyan, 4, 7, f) < 1         ||
+              fread (blue, 4, 7, f) < 1         ||
+              fread (magenta, 4, 7, f) < 1)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading adjustment layer extension "
+                             "information"));
+              return FALSE;
+            }
+          for (gint i = 0; i < 7; i++)
+            {
+              if (i < 6)
+                master[i]  = GINT32_FROM_LE (master[i]);
+
+              red[i]     = GINT32_FROM_LE (red[i]);
+              yellow[i]  = GINT32_FROM_LE (yellow[i]);
+              green[i]   = GINT32_FROM_LE (green[i]);
+              cyan[i]    = GINT32_FROM_LE (cyan[i]);
+              blue[i]    = GINT32_FROM_LE (blue[i]);
+              magenta[i] = GINT32_FROM_LE (magenta[i]);
+            }
+
+          if (is_colorize)
+            {
+              GeglColor *color = gegl_color_new ("white");
+
+              filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                        "gimp:colorize",
+                                                        NULL,
+                                                        GIMP_LAYER_MODE_REPLACE,
+                                                        1.0,
+                                                        "hue",        master[3] / 180.0,
+                                                        "saturation", master[4] / 100.0,
+                                                        "lightness",  master[5] / 100.0,
+                                                        "color",      color,
+                                                        NULL);
+
+              g_clear_object (&color);
+            }
+          else
+            {
+              GimpHueRange range = GIMP_HUE_RANGE_ALL;
+
+              filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                              "gimp:hue-saturation",
+                                              NULL,
+                                              GIMP_LAYER_MODE_REPLACE,
+                                              1.0,
+                                              "range",      range,
+                                              "hue",        master[0] / 180.0,
+                                              "saturation", master[1] / 100.0,
+                                              "lightness",  master[2] / 100.0,
+                                              NULL);
+              /* TODO: Convert to 2D array for looping */
+              config = gimp_drawable_filter_get_config (filter);
+
+              g_object_set (config, "range", GIMP_HUE_RANGE_RED, NULL);
+              gimp_drawable_filter_update (filter);
+              g_object_set (config,
+                            "hue",        red[0] / 180.0,
+                            "saturation", red[1] / 100.0,
+                            "lightness",  red[2] / 100.0,
+                            NULL);
+              gimp_drawable_filter_update (filter);
+
+              g_object_set (config, "range", GIMP_HUE_RANGE_YELLOW, NULL);
+              gimp_drawable_filter_update (filter);
+              g_object_set (config,
+                            "hue",        yellow[0] / 180.0,
+                            "saturation", yellow[1] / 100.0,
+                            "lightness",  yellow[2] / 100.0,
+                            NULL);
+              gimp_drawable_filter_update (filter);
+
+              g_object_set (config, "range", GIMP_HUE_RANGE_GREEN, NULL);
+              gimp_drawable_filter_update (filter);
+              g_object_set (config,
+                            "hue",        green[0] / 180.0,
+                            "saturation", green[1] / 100.0,
+                            "lightness",  green[2] / 100.0,
+                            NULL);
+              gimp_drawable_filter_update (filter);
+
+              g_object_set (config, "range", GIMP_HUE_RANGE_CYAN, NULL);
+              gimp_drawable_filter_update (filter);
+              g_object_set (config,
+                            "hue",        cyan[0] / 180.0,
+                            "saturation", cyan[1] / 100.0,
+                            "lightness",  cyan[2] / 100.0,
+                            NULL);
+              gimp_drawable_filter_update (filter);
+
+              g_object_set (config, "range", GIMP_HUE_RANGE_BLUE, NULL);
+              gimp_drawable_filter_update (filter);
+              g_object_set (config,
+                            "hue",        blue[0] / 180.0,
+                            "saturation", blue[1] / 100.0,
+                            "lightness",  blue[2] / 100.0,
+                            NULL);
+              gimp_drawable_filter_update (filter);
+
+              g_object_set (config, "range", GIMP_HUE_RANGE_MAGENTA, NULL);
+              gimp_drawable_filter_update (filter);
+              g_object_set (config,
+                            "hue",        magenta[0] / 180.0,
+                            "saturation", magenta[1] / 100.0,
+                            "lightness",  magenta[2] / 100.0,
+                            NULL);
+              gimp_drawable_filter_update (filter);
+            }
+        }
+        break;
+
+      case keAdjChannelMixer:
+        {
+          guchar is_mono  = FALSE;
+          gint32 red[4]   = { 0 };
+          gint32 green[4] = { 0 };
+          gint32 blue[4]  = { 0 };
+
+          if (fread (&chunk_size, 4, 1, f) < 1 ||
+              fread (&is_mono, 1, 1, f) < 1    ||
+              fread (blue, 4, 4, f) < 1        ||
+              fread (green, 4, 4, f) < 1       ||
+              fread (red, 4, 4, f) < 1)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading adjustment layer extension "
+                             "information"));
+              return FALSE;
+            }
+          for (gint i = 0; i < 4; i++)
+            {
+              red[i]   = GINT32_FROM_LE (red[i]);
+              green[i] = GINT32_FROM_LE (green[i]);
+              blue[i]  = GINT32_FROM_LE (blue[i]);
+            }
+
+          if (! is_mono)
+            {
+              filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                        "gegl:channel-mixer",
+                                                        NULL,
+                                                        GIMP_LAYER_MODE_REPLACE,
+                                                        1.0,
+                                                        "rr-gain", red[0] / 100.0f,
+                                                        "rg-gain", red[1] / 100.0f,
+                                                        "rb-gain", red[2] / 100.0f,
+                                                        "gr-gain", green[0] / 100.0f,
+                                                        "gg-gain", green[1] / 100.0f,
+                                                        "gb-gain", green[2] / 100.0f,
+                                                        "br-gain", blue[0] / 100.0f,
+                                                        "bg-gain", blue[1] / 100.0f,
+                                                        "bb-gain", blue[2] / 100.0f,
+                                                        NULL);
+            }
+          else
+            {
+              filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                        "gegl:mono-mixer",
+                                                        NULL,
+                                                        GIMP_LAYER_MODE_REPLACE,
+                                                        1.0,
+                                                        "red",   red[0] / 100.0f,
+                                                        "green", green[0] / 100.0f,
+                                                        "blue",  blue[0] / 100.0f,
+                                                        NULL);
+            }
+        }
+        break;
+
+      case keAdjInvert:
+        filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                "gegl:invert-gamma",
+                                NULL,
+                                GIMP_LAYER_MODE_REPLACE,
+                                1.0,
+                                NULL);
+
+        break;
+
+      case keAdjThreshold:
+        {
+          guint threshold = 0;
+
+          if (fread (&chunk_size, 4, 1, f) < 1 ||
+              fread (&threshold, 4, 1, f) < 1)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading adjustment layer extension "
+                             "information"));
+              return FALSE;
+            }
+          chunk_size = GUINT32_FROM_LE (chunk_size);
+          threshold  = GUINT32_FROM_LE (threshold);
+
+          filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                          "gimp:threshold",
+                                          NULL,
+                                          GIMP_LAYER_MODE_REPLACE,
+                                          1.0,
+                                          "low", threshold,
+                                          NULL);
+        }
+        break;
+
+      case keAdjPoster:
+        {
+          guint posterize = 0;
+
+          if (fread (&chunk_size, 4, 1, f) < 1 ||
+              fread (&posterize, 4, 1, f) < 1)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading adjustment layer extension "
+                             "information"));
+              return FALSE;
+            }
+          chunk_size = GUINT32_FROM_LE (chunk_size);
+          posterize  = GUINT32_FROM_LE (posterize);
+
+          filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                          "gimp:posterize",
+                                          NULL,
+                                          GIMP_LAYER_MODE_REPLACE,
+                                          1.0,
+                                          "levels", posterize,
+                                          NULL);
+        }
+        break;
+
+      default:
+        g_print ("Not yet support!\n");
+        break;
+    }
+
+  if (filter)
+    g_object_unref (filter);
+
+  return TRUE;
 }
