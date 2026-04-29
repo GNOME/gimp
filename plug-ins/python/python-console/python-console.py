@@ -194,7 +194,7 @@ def run(procedure, config, data):
 
         def browse_response(self, dlg, response_id):
             if response_id != Gtk.ResponseType.APPLY:
-                Gtk.Widget.hide(dlg)
+                dlg.set_visible(False)
                 return
 
             proc_name = dlg.get_selected()
@@ -268,7 +268,7 @@ def run(procedure, config, data):
                                  (filename, e.strerror))
                     return
 
-            Gtk.Widget.hide(dlg)
+            dlg.set_visible(False)
 
         def save_dialog(self):
             if not self.save_dlg:
