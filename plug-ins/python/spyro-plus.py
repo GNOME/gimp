@@ -1381,17 +1381,17 @@ class SpyroWindow():
         def add_horizontal_separator(vbox):
             hsep = Gtk.HSeparator()
             vbox.add(hsep)
-            hsep.show()
+            hsep.set_visible(True)
 
         def add_vertical_space(vbox, height):
             hbox = Gtk.HBox()
             hbox.set_border_width(height/2)
             vbox.add(hbox)
-            hbox.show()
+            hbox.set_visible(True)
 
         def add_to_box(box, w):
             box.add(w)
-            w.show()
+            w.set_visible(True)
 
         def create_table(border_width):
             table = Gtk.Grid()
@@ -1409,7 +1409,7 @@ class SpyroWindow():
             if tooltip_text:
                 label.set_tooltip_text(tooltip_text)
             table.attach(label, col, row, 1, 1)
-            label.show()
+            label.set_visible(True)
 
         def spin_in_table(adj, table, row, callback, digits=0, col=0):
             spin = Gtk.SpinButton.new(adj, climb_rate=0.5, digits=digits)
@@ -1418,7 +1418,7 @@ class SpyroWindow():
             spin.set_max_length(5)
             spin.set_width_chars(5)
             table.attach(spin, col, row, 1, 1)
-            spin.show()
+            spin.set_visible(True)
             adj.connect("value_changed", self.on_adj_changed)
             spin.connect("button_release_event", self.on_adj_release, callback)
             spin.connect("activate", self.on_adj_release, None, callback)
@@ -1433,7 +1433,7 @@ class SpyroWindow():
             scale.set_hexpand(True)
             scale.set_halign(Gtk.Align.FILL)
             table.attach(scale, col, row, cols, 1)
-            scale.show()
+            scale.set_visible(True)
 
             spin = Gtk.SpinButton.new(adj, climb_rate=0.5, digits=digits)
             spin.set_numeric(True)
@@ -1441,7 +1441,7 @@ class SpyroWindow():
             spin.set_max_length(5)
             spin.set_width_chars(5)
             table.attach(spin, col + cols, row, 1, 1)
-            spin.show()
+            spin.set_visible(True)
 
             adj.connect("value_changed", self.on_adj_changed)
             scale.connect("button_release_event", self.on_adj_release, callback)
@@ -1470,7 +1470,7 @@ class SpyroWindow():
 
             combo.set_halign(Gtk.Align.FILL)
             table.attach(combo, 1, row, 1, 1)
-            combo.show()
+            combo.set_visible(True)
             combo.connect("changed", callback)
             return combo
 
@@ -1502,7 +1502,7 @@ class SpyroWindow():
             )
             self.long_gradient_checkbox.set_border_width(0)
             table.attach(self.long_gradient_checkbox, 2, row, 1, 1)
-            self.long_gradient_checkbox.show()
+            self.long_gradient_checkbox.set_visible(True)
             self.long_gradient_checkbox.connect("toggled", self.long_gradient_changed)
 
             return table
@@ -1522,13 +1522,13 @@ class SpyroWindow():
                 "but it uses gears and hole numbers which are found in toy kits. "
                 "If you follow the instructions from the toy kit manuals, results should be similar."))
             hbox.pack_start(label, False, False, 0)
-            label.show()
+            label.set_visible(True)
 
             alignment = Gtk.Alignment(xalign=0.0, yalign=0.0, xscale=0.0, yscale=0.0)
             alignment.add(hbox)
-            hbox.show()
+            hbox.set_visible(True)
             vbox.add(alignment)
-            alignment.show()
+            alignment.set_visible(True)
 
             self.pattern_notebook = Gtk.Notebook()
             self.pattern_notebook.set_border_width(10)
@@ -1626,8 +1626,8 @@ class SpyroWindow():
             frame.set_halign(Gtk.Align.FILL)
 
             self.doughnut.connect('values_changed', self.doughnut_changed)
-            frame.show()
-            self.doughnut.show()
+            frame.set_visible(True)
+            self.doughnut.set_visible(True)
 
             label_in_table(_("Width(%)"), visual_table, row,
                            _("The width of the pattern as a percentage of the "
@@ -1644,19 +1644,19 @@ class SpyroWindow():
             self.pattern_notebook.set_tab_label_text(visual_table, _("Visual"))
             self.pattern_notebook.child_set_property(visual_table, 'tab-expand', False)
             self.pattern_notebook.child_set_property(visual_table, 'tab-fill', False)
-            visual_table.show()
+            visual_table.set_visible(True)
 
             pattern_notation_page[TOY_KIT_NOTATION] = self.pattern_notebook.append_page(kit_table)
             self.pattern_notebook.set_tab_label_text(kit_table, _("Toy Kit"))
             self.pattern_notebook.child_set_property(kit_table, 'tab-expand', False)
             self.pattern_notebook.child_set_property(kit_table, 'tab-fill', False)
-            kit_table.show()
+            kit_table.set_visible(True)
 
             pattern_notation_page[GEAR_NOTATION] = self.pattern_notebook.append_page(gear_table)
             self.pattern_notebook.set_tab_label_text(gear_table, _("Gears"))
             self.pattern_notebook.child_set_property(gear_table, 'tab-expand', False)
             self.pattern_notebook.child_set_property(gear_table, 'tab-fill', False)
-            gear_table.show()
+            gear_table.set_visible(True)
 
             add_to_box(vbox, self.pattern_notebook)
 
@@ -1674,10 +1674,10 @@ class SpyroWindow():
             )
 
             hbox.pack_end(pattern_table, expand=True, fill=True, padding=0)
-            pattern_table.show()
+            pattern_table.set_visible(True)
 
             vbox.add(hbox)
-            hbox.show()
+            hbox.set_visible(True)
 
             return vbox
 
@@ -1737,7 +1737,7 @@ class SpyroWindow():
             )
             self.equal_w_h_checkbox.set_border_width(30)
             table.attach(self.equal_w_h_checkbox, 0, row, 3, 1)
-            self.equal_w_h_checkbox.show()
+            self.equal_w_h_checkbox.set_visible(True)
             self.equal_w_h_checkbox.connect("toggled", self.equal_w_h_checkbox_changed)
 
             add_to_box(vbox, table)
@@ -1764,10 +1764,10 @@ class SpyroWindow():
                            _("Choose whether to save as new layer, redraw on last active layer, or save to path"))
             self.save_option_combo = set_combo_in_table(save_options, False, table, row,
                                                         self.save_option_changed)
-            self.save_option_combo.show()
+            self.save_option_combo.set_visible(True)
 
             hbox.add(table)
-            table.show()
+            table.set_visible(True)
 
             return hbox
 
@@ -1782,11 +1782,11 @@ class SpyroWindow():
             vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                            homogeneous=False, spacing=10)
             self.dialog.get_content_area().add(vbox)
-            vbox.show()
+            vbox.set_visible(True)
 
             box = GimpUi.HintBox.new(_("Draw spyrographs using current tool settings and selection."))
             vbox.pack_start(box, False, False, 0)
-            box.show()
+            box.set_visible(True)
 
             add_horizontal_separator(vbox)
 
@@ -1798,16 +1798,16 @@ class SpyroWindow():
 
             pattern_frame = pattern_notation_frame()
             self.main_notebook.append_page(pattern_frame, Gtk.Label.new(_("Curve Pattern")))
-            pattern_frame.show()
+            pattern_frame.set_visible(True)
             fixed_g_page = fixed_gear_page()
             self.main_notebook.append_page(fixed_g_page, Gtk.Label.new(_("Fixed Gear")))
-            fixed_g_page.show()
+            fixed_g_page.set_visible(True)
             size_p = size_page()
             self.main_notebook.append_page(size_p, Gtk.Label.new(_("Size")))
-            size_p.show()
+            size_p.set_visible(True)
 
             vbox.add(self.main_notebook)
-            self.main_notebook.show()
+            self.main_notebook.set_visible(True)
 
             # add_horizontal_separator(vbox)
 
@@ -1816,9 +1816,9 @@ class SpyroWindow():
             self.progress_bar = Gtk.ProgressBar()   # gimpui.ProgressBar() - causes gimppdbprogress error message.
             self.progress_bar.set_show_text(True)
             vbox.add(self.progress_bar)
-            self.progress_bar.show()
+            self.progress_bar.set_visible(True)
 
-            self.dialog.show()
+            self.dialog.set_visible(True)
 
         self.enable_incremental_drawing = False
 
