@@ -911,8 +911,8 @@ gimp_color_area_drag_begin (GtkWidget      *widget,
   gtk_widget_set_size_request (color_area,
                                DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), color_area);
-  gtk_widget_show (color_area);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (color_area, TRUE);
+  gtk_widget_set_visible (frame, TRUE);
 
   g_object_set_data_full (G_OBJECT (widget),
                           "gimp-color-area-drag-window",

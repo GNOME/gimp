@@ -233,7 +233,7 @@ gimp_memsize_entry_new (guint64  value,
 
   gtk_entry_set_width_chars (GTK_ENTRY (entry->spinbutton), 7);
   gtk_box_pack_start (GTK_BOX (entry), entry->spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (entry->spinbutton);
+  gtk_widget_set_visible (entry->spinbutton, TRUE);
 
   g_signal_connect (entry->adjustment, "value-changed",
                     G_CALLBACK (gimp_memsize_entry_adj_callback),
@@ -251,7 +251,7 @@ gimp_memsize_entry_new (guint64  value,
                     entry);
 
   gtk_box_pack_start (GTK_BOX (entry), entry->menu, FALSE, FALSE, 0);
-  gtk_widget_show (entry->menu);
+  gtk_widget_set_visible (entry->menu, TRUE);
 
   return GTK_WIDGET (entry);
 }

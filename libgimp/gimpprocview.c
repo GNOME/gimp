@@ -132,11 +132,11 @@ gimp_proc_view_new (const gchar *procedure_name)
   label = gtk_frame_get_label_widget (GTK_FRAME (frame));
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   if (! gimp_enum_get_value (GIMP_TYPE_PDB_PROC_TYPE, type,
                              NULL, NULL, &type_str, NULL))
@@ -148,7 +148,7 @@ gimp_proc_view_new (const gchar *procedure_name)
                              -1);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   if (blurb)
     {
@@ -157,7 +157,7 @@ gimp_proc_view_new (const gchar *procedure_name)
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
     }
 
   if (type != GIMP_PDB_PROC_TYPE_INTERNAL)
@@ -168,7 +168,7 @@ gimp_proc_view_new (const gchar *procedure_name)
       gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
       gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
       gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       row = 0;
 
@@ -201,10 +201,10 @@ gimp_proc_view_new (const gchar *procedure_name)
     {
       frame = gimp_frame_new (_("Parameters"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       gtk_container_add (GTK_CONTAINER (frame), grid);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
     }
 
   /* out parameters */
@@ -215,10 +215,10 @@ gimp_proc_view_new (const gchar *procedure_name)
     {
       frame = gimp_frame_new (_("Return Values"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       gtk_container_add (GTK_CONTAINER (frame), grid);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
     }
 
   g_object_unref (name_group);
@@ -230,11 +230,11 @@ gimp_proc_view_new (const gchar *procedure_name)
 
   frame = gimp_frame_new (_("Additional Information"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* show the help */
   if (help)
@@ -244,7 +244,7 @@ gimp_proc_view_new (const gchar *procedure_name)
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
     }
 
   /* show the authors & the copyright */
@@ -255,7 +255,7 @@ gimp_proc_view_new (const gchar *procedure_name)
       gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
       gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
       gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       row = 0;
 
@@ -360,7 +360,7 @@ gimp_proc_view_create_args (GimpProcedure *procedure,
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_size_group_add_widget (name_group, label);
       gtk_grid_attach (GTK_GRID (grid), label, 0, i, 1, 1);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       /* type */
       label = gtk_label_new (g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec)));
@@ -372,7 +372,7 @@ gimp_proc_view_create_args (GimpProcedure *procedure,
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_size_group_add_widget (type_group, label);
       gtk_grid_attach (GTK_GRID (grid), label, 1, i, 1, 1);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       /* description */
       label = gtk_label_new (blurb);
@@ -383,7 +383,7 @@ gimp_proc_view_create_args (GimpProcedure *procedure,
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_size_group_add_widget (desc_group, label);
       gtk_grid_attach (GTK_GRID (grid), label, 2, i, 1, 1);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       g_free (blurb);
     }

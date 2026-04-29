@@ -128,7 +128,7 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
 
   profile_view = gimp_color_profile_view_new ();
   gtk_container_add (GTK_CONTAINER (scrolled_window), profile_view);
-  gtk_widget_show (profile_view);
+  gtk_widget_set_visible (profile_view, TRUE);
 
   dialog->profile_view = GIMP_COLOR_PROFILE_VIEW (profile_view);
 

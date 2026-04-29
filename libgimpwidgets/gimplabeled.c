@@ -143,7 +143,7 @@ gimp_labeled_constructed (GObject *object)
                  mnemonic_widget);
 
   gtk_grid_attach (GTK_GRID (labeled), priv->label, x, y, width, height);
-  gtk_widget_show (priv->label);
+  gtk_widget_set_visible (priv->label, TRUE);
 }
 
 static void

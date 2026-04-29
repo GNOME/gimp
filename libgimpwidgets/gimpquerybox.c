@@ -42,7 +42,7 @@
  * string, integer, double, boolean or pixel size value.
  *
  * They return a pointer to a #GtkDialog which has to be shown with
- * gtk_widget_show() by the caller.
+ * gtk_widget_set_visible(, TRUE) by the caller.
  *
  * The dialogs contain an entry widget for the kind of value they ask
  * for and "OK" and "Cancel" buttons. On "Cancel", all query boxes
@@ -187,12 +187,12 @@ create_query_box (const gchar   *title,
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
       gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_DIALOG);
       gtk_widget_set_valign (image, GTK_ALIGN_START);
       gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
     }
 
   query_box->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
@@ -215,7 +215,7 @@ create_query_box (const gchar   *title,
                           TRUE, TRUE, 0);
     }
 
-  gtk_widget_show (query_box->vbox);
+  gtk_widget_set_visible (query_box->vbox, TRUE);
 
   if (message)
     {
@@ -223,7 +223,7 @@ create_query_box (const gchar   *title,
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_box_pack_start (GTK_BOX (query_box->vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
     }
 
   query_box->entry                 = NULL;
@@ -286,7 +286,7 @@ gimp_query_string_box (const gchar             *title,
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), entry, FALSE, FALSE, 0);
   gtk_widget_grab_focus (entry);
-  gtk_widget_show (entry);
+  gtk_widget_set_visible (entry, TRUE);
 
   query_box->entry = entry;
 
@@ -350,7 +350,7 @@ gimp_query_int_box (const gchar          *title,
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_grab_focus (spinbutton);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   query_box->entry = spinbutton;
 
@@ -416,7 +416,7 @@ gimp_query_double_box (const gchar             *title,
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_grab_focus (spinbutton);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   query_box->entry = spinbutton;
 
@@ -502,7 +502,7 @@ gimp_query_size_box (const gchar           *title,
 
   gtk_box_pack_start (GTK_BOX (query_box->vbox), sizeentry, FALSE, FALSE, 0);
   gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (sizeentry));
-  gtk_widget_show (sizeentry);
+  gtk_widget_set_visible (sizeentry, TRUE);
 
   query_box->entry = sizeentry;
 

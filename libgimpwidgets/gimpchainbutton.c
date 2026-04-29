@@ -197,7 +197,7 @@ gimp_chain_button_init (GimpChainButton *button)
 
   gtk_button_set_relief (GTK_BUTTON (button->button), GTK_RELIEF_NONE);
   gtk_container_add (GTK_CONTAINER (button->button), button->image);
-  gtk_widget_show (button->image);
+  gtk_widget_set_visible (button->image, TRUE);
 
   g_signal_connect (button->button, "clicked",
                     G_CALLBACK (gimp_chain_button_clicked_callback),
@@ -235,9 +235,9 @@ gimp_chain_button_constructed (GObject *object)
       gtk_grid_attach (GTK_GRID (button), button->line2,  2, 0, 1, 1);
     }
 
-  gtk_widget_show (button->button);
-  gtk_widget_show (button->line1);
-  gtk_widget_show (button->line2);
+  gtk_widget_set_visible (button->button, TRUE);
+  gtk_widget_set_visible (button->line1, TRUE);
+  gtk_widget_set_visible (button->line2, TRUE);
 }
 
 static void

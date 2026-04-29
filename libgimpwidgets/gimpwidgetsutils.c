@@ -216,7 +216,7 @@ gimp_grid_attach_aligned (GtkGrid     *grid,
       gtk_label_set_yalign (GTK_LABEL (label), label_yalign);
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
       gtk_grid_attach (grid, label, left, top, 1, 1);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       mnemonic_widget = find_mnemonic_widget (widget, 0);
 
@@ -226,7 +226,7 @@ gimp_grid_attach_aligned (GtkGrid     *grid,
 
   gtk_widget_set_hexpand (widget, TRUE);
   gtk_grid_attach (grid, widget, left + 1, top, widget_columns, 1);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   return label;
 }

@@ -389,7 +389,7 @@ _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
       GimpImageType type;
 
       gtk_widget_set_size_request (GTK_WIDGET (area), tn_width, tn_height);
-      gtk_widget_show (GTK_WIDGET (area));
+      gtk_widget_set_visible (GTK_WIDGET (area), TRUE);
       gtk_widget_realize (GTK_WIDGET (area));
 
       switch (bpp)

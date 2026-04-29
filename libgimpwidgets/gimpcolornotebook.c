@@ -151,7 +151,7 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
   notebook->notebook = gtk_notebook_new ();
   gtk_notebook_popup_enable (GTK_NOTEBOOK (notebook->notebook));
   gtk_box_pack_start (GTK_BOX (notebook), notebook->notebook, TRUE, TRUE, 0);
-  gtk_widget_show (notebook->notebook);
+  gtk_widget_set_visible (notebook->notebook, TRUE);
 
   g_signal_connect (notebook->notebook, "switch-page",
                     G_CALLBACK (gimp_color_notebook_switch_page),
@@ -441,11 +441,11 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
   image = gtk_image_new_from_icon_name (selector_class->icon_name,
                                         GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (menu_widget), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   label = gtk_label_new (gettext (selector_class->name));
   gtk_box_pack_start (GTK_BOX (menu_widget), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   image = gtk_image_new_from_icon_name (selector_class->icon_name,
                                         DEFAULT_TAB_ICON_SIZE);
@@ -459,7 +459,7 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
 
   notebook->selectors = g_list_append (notebook->selectors, page);
 
-  gtk_widget_show (page);
+  gtk_widget_set_visible (page, TRUE);
 
   g_signal_connect (page, "color-changed",
                     G_CALLBACK (gimp_color_notebook_color_changed),

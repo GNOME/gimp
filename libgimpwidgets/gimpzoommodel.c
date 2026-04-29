@@ -495,7 +495,7 @@ zoom_button_new (const gchar *icon_name,
 
   button = gtk_button_new ();
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   return button;
 }

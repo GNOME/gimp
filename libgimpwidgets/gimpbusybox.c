@@ -115,7 +115,7 @@ gimp_busy_box_init (GimpBusyBox *box)
   spinner = gtk_spinner_new ();
   gtk_spinner_start (GTK_SPINNER (spinner));
   gtk_box_pack_start (GTK_BOX (box), spinner, FALSE, FALSE, 0);
-  gtk_widget_show (spinner);
+  gtk_widget_set_visible (spinner, TRUE);
 
   /* the label */
   label = gtk_label_new (NULL);
@@ -124,7 +124,7 @@ gimp_busy_box_init (GimpBusyBox *box)
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 }
 
 static void

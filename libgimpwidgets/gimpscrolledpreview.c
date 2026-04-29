@@ -218,7 +218,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
   image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_NAVIGATION,
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (priv->nav_icon), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (priv->nav_icon, "button-press-event",
                     G_CALLBACK (gimp_scrolled_preview_nav_button_press),
@@ -407,7 +407,7 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
       break;
 
     case GTK_POLICY_ALWAYS:
-      gtk_widget_show (priv->hscr);
+      gtk_widget_set_visible (priv->hscr, TRUE);
       break;
 
     case GTK_POLICY_NEVER:
@@ -425,7 +425,7 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
       break;
 
     case GTK_POLICY_ALWAYS:
-      gtk_widget_show (priv->vscr);
+      gtk_widget_set_visible (priv->vscr, TRUE);
       break;
 
     case GTK_POLICY_NEVER:
@@ -569,12 +569,12 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       outer = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (outer), GTK_SHADOW_OUT);
       gtk_container_add (GTK_CONTAINER (priv->nav_popup), outer);
-      gtk_widget_show (outer);
+      gtk_widget_set_visible (outer, TRUE);
 
       inner = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (inner), GTK_SHADOW_IN);
       gtk_container_add (GTK_CONTAINER (outer), inner);
-      gtk_widget_show (inner);
+      gtk_widget_set_visible (inner, TRUE);
 
       g_object_get (gimp_preview_get_area (gimp_preview),
                     "check-type", &check_type,
@@ -602,7 +602,7 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
                                                     GIMP_PREVIEW_AREA (area),
                                                     POPUP_SIZE, POPUP_SIZE);
       gtk_widget_realize (area);
-      gtk_widget_show (area);
+      gtk_widget_set_visible (area, TRUE);
 
       gdk_window_get_origin (gtk_widget_get_window (widget), &x, &y);
 
@@ -632,7 +632,7 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
                        x - (border.left + border.right),
                        y - (border.top + border.bottom));
 
-      gtk_widget_show (priv->nav_popup);
+      gtk_widget_set_visible (priv->nav_popup, TRUE);
 
       gtk_grab_add (area);
 

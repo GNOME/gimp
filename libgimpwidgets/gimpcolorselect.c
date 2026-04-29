@@ -373,13 +373,13 @@ gimp_color_select_init (GimpColorSelect *select)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (select), hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /*  The x/y component preview  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   select->xy_color = gtk_event_box_new ();
   gtk_event_box_set_visible_window (GTK_EVENT_BOX (select->xy_color), FALSE);
@@ -390,7 +390,7 @@ gimp_color_select_init (GimpColorSelect *select)
                                GIMP_COLOR_SELECTOR_SIZE);
   gtk_widget_set_events (select->xy_color, COLOR_AREA_EVENT_MASK);
   gtk_container_add (GTK_CONTAINER (frame), select->xy_color);
-  gtk_widget_show (select->xy_color);
+  gtk_widget_set_visible (select->xy_color, TRUE);
 
   g_signal_connect (select->xy_color, "size-allocate",
                     G_CALLBACK (gimp_color_select_xy_size_allocate),
@@ -411,7 +411,7 @@ gimp_color_select_init (GimpColorSelect *select)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   select->z_color = gtk_event_box_new ();
   gtk_event_box_set_visible_window (GTK_EVENT_BOX (select->z_color), FALSE);
@@ -421,7 +421,7 @@ gimp_color_select_init (GimpColorSelect *select)
                                GIMP_COLOR_SELECTOR_BAR_SIZE, -1);
   gtk_widget_set_events (select->z_color, COLOR_AREA_EVENT_MASK);
   gtk_container_add (GTK_CONTAINER (frame), select->z_color);
-  gtk_widget_show (select->z_color);
+  gtk_widget_set_visible (select->z_color, TRUE);
 
   g_signal_connect (select->z_color, "size-allocate",
                     G_CALLBACK (gimp_color_select_z_size_allocate),
@@ -435,7 +435,7 @@ gimp_color_select_init (GimpColorSelect *select)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   model_class   = g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_MODEL);
   channel_class = g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_CHANNEL);
@@ -451,7 +451,7 @@ gimp_color_select_init (GimpColorSelect *select)
                           FALSE, FALSE, 0);
 
       if (gimp_color_selector_get_model_visible (selector, model))
-        gtk_widget_show (select->toggle_box[model]);
+        gtk_widget_set_visible (select->toggle_box[model], TRUE);
 
       /*  channel toggles  */
       {
@@ -489,7 +489,7 @@ gimp_color_select_init (GimpColorSelect *select)
             gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
             gtk_box_pack_start (GTK_BOX (select->toggle_box[model]), button,
                                 TRUE, TRUE, 0);
-            gtk_widget_show (button);
+            gtk_widget_set_visible (button, TRUE);
 
             g_object_set_data (G_OBJECT (button), "channel",
                                GINT_TO_POINTER (channel));
@@ -519,7 +519,7 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_label_set_ellipsize (GTK_LABEL (select->label), PANGO_ELLIPSIZE_END);
   gtk_label_set_justify (GTK_LABEL (select->label), GTK_JUSTIFY_LEFT);
   gtk_grid_attach (GTK_GRID (grid), select->label, 0, 0, 1, 1);
-  gtk_widget_show (select->label);
+  gtk_widget_set_visible (select->label, TRUE);
   gimp_color_select_set_label (select);
 
   select->simulation_label = gtk_label_new (NULL);
@@ -816,7 +816,7 @@ gimp_color_select_simulation (GimpColorSelector *selector,
       gtk_widget_queue_draw (select->xy_color);
       gtk_widget_queue_draw (select->z_color);
 
-      gtk_widget_show (select->simulation_label);
+      gtk_widget_set_visible (select->simulation_label, TRUE);
     }
   else
     {

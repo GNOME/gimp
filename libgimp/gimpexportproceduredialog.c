@@ -159,7 +159,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
       gtk_label_set_attributes (GTK_LABEL (label), attrs);
       pango_attr_list_unref (attrs);
       gtk_box_pack_start (GTK_BOX (frame_title), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       link = gtk_link_button_new_with_label (_("Edit Metadata"), _("(edit)"));
       gtk_link_button_set_visited (GTK_LINK_BUTTON (link), FALSE);
@@ -167,17 +167,17 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
                         G_CALLBACK (gimp_export_procedure_dialog_activate_edit_metadata),
                         dialog);
       gtk_box_pack_start (GTK_BOX (frame_title), link, FALSE, FALSE, 0);
-      gtk_widget_show (link);
+      gtk_widget_set_visible (link, TRUE);
 
       gtk_frame_set_label_widget (GTK_FRAME (frame), frame_title);
-      gtk_widget_show (frame_title);
+      gtk_widget_set_visible (frame_title, TRUE);
 
       /* Metadata frame contents in a grid.. */
       grid = gtk_grid_new ();
       gtk_grid_set_column_homogeneous (GTK_GRID (grid), TRUE);
       gtk_widget_set_vexpand (grid, TRUE);
       gtk_container_add (GTK_CONTAINER (frame), grid);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       /* Line for 3 metadata formats: Exif, IPTC, XMP. */
       n_metadata = gimp_export_procedure_get_support_exif (export_procedure) +
@@ -195,7 +195,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
                            left, 0, 6 / n_metadata, 1);
           left += 6 / n_metadata;
           top   = 1;
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
         }
       if (gimp_export_procedure_get_support_iptc (export_procedure))
         {
@@ -205,7 +205,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
                            left, 0, 6 / n_metadata, 1);
           left += 6 / n_metadata;
           top   = 1;
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
         }
       if (gimp_export_procedure_get_support_xmp (export_procedure))
         {
@@ -215,7 +215,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
                            left, 0, 6 / n_metadata, 1);
           left += 6 / n_metadata;
           top   = 1;
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
         }
 
       /* Line for specific metadata: profile, thumbnail. */
@@ -228,7 +228,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
           gtk_grid_attach (GTK_GRID (grid), widget,
                            left, top, 6 / n_metadata, 1);
           left += 6 / n_metadata;
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
         }
       if (gimp_export_procedure_get_support_thumbnail (export_procedure))
         {
@@ -237,7 +237,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
           gtk_grid_attach (GTK_GRID (grid), widget,
                            left, top, 6 / n_metadata, 1);
           left += 6 / n_metadata;
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
         }
       if (n_metadata > 0)
         top++;
@@ -255,7 +255,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
               left = 0;
             }
 
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
         }
       top++;
 
@@ -276,7 +276,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
           title  = gimp_prop_check_button_new (G_OBJECT (config),
                                                "include-comment", NULL);
           gtk_frame_set_label_widget (GTK_FRAME (frame2), title);
-          gtk_widget_show (title);
+          gtk_widget_set_visible (title, TRUE);
 
           buffer = gimp_prop_text_buffer_new (G_OBJECT (config),
                                               "gimp-comment", -1);
@@ -299,11 +299,11 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
                                           GTK_POLICY_EXTERNAL,
                                           GTK_POLICY_AUTOMATIC);
           gtk_container_add (GTK_CONTAINER (frame2), scrolled_window);
-          gtk_widget_show (scrolled_window);
+          gtk_widget_set_visible (scrolled_window, TRUE);
           gtk_widget_set_hexpand (widget, TRUE);
           gtk_widget_set_vexpand (widget, TRUE);
           gtk_container_add (GTK_CONTAINER (scrolled_window), widget);
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
 
           /* Comment field should only be editable when "Save Comment" is
            * sensitive. */
@@ -313,11 +313,11 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
           gimp_export_procedure_dialog_notify_comment (config, NULL, widget);
 
           gtk_grid_attach (GTK_GRID (grid), frame2, 0, top, 6, 1);
-          gtk_widget_show (frame2);
+          gtk_widget_set_visible (frame2, TRUE);
         }
 
       gtk_box_pack_start (GTK_BOX (content_area), frame, TRUE, TRUE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
     }
 }
 

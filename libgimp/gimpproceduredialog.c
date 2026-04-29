@@ -326,17 +326,17 @@ gimp_procedure_dialog_constructed (GObject *object)
   widget = gtk_label_new_with_mnemonic (_("_Reset"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (widget), button);
   gtk_box_pack_start (GTK_BOX (box), widget, FALSE, FALSE, 1);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   widget = gtk_image_new_from_icon_name (GIMP_ICON_GO_DOWN, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (box), widget, FALSE, FALSE, 1);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   gtk_container_add (GTK_CONTAINER (button), box);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, RESPONSE_RESET);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "reset");
 
   /* Cancel and OK buttons. */
@@ -374,13 +374,13 @@ gimp_procedure_dialog_constructed (GObject *object)
   gtk_box_pack_end (GTK_BOX (content_area), hbox, FALSE, FALSE, 0);
   gtk_container_child_set (GTK_CONTAINER (content_area), hbox,
                            "padding", 3, NULL);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("_Load Saved Settings"));
   gtk_widget_set_tooltip_text (button, _("Load settings saved with \"Save Settings\" button"));
   gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "load-defaults");
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_procedure_dialog_load_defaults),
@@ -393,7 +393,7 @@ gimp_procedure_dialog_constructed (GObject *object)
   gtk_widget_set_tooltip_text (button, _("Store current settings for later reuse"));
   gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "save-defaults");
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_procedure_dialog_save_defaults),
@@ -546,7 +546,7 @@ gimp_procedure_dialog_real_fill_list (GimpProcedureDialog *dialog,
       if (widget)
         {
           gtk_box_pack_start (GTK_BOX (content_area), widget, TRUE, TRUE, 0);
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
         }
     }
 }
@@ -2197,7 +2197,7 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
         }
 
       gtk_container_add (GTK_CONTAINER (frame), contents);
-      gtk_widget_show (contents);
+      gtk_widget_set_visible (contents, TRUE);
     }
 
   if (title_id)
@@ -2211,7 +2211,7 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
         }
 
       gtk_frame_set_label_widget (GTK_FRAME (frame), title);
-      gtk_widget_show (title);
+      gtk_widget_set_visible (title, TRUE);
 
       if (contents && (GTK_IS_CHECK_BUTTON (title) || GTK_IS_SWITCH (title)))
         {
@@ -2303,7 +2303,7 @@ gimp_procedure_dialog_fill_expander (GimpProcedureDialog *dialog,
         }
 
       gtk_container_add (GTK_CONTAINER (expander), contents);
-      gtk_widget_show (contents);
+      gtk_widget_set_visible (contents, TRUE);
     }
 
   if (title_id)
@@ -2318,7 +2318,7 @@ gimp_procedure_dialog_fill_expander (GimpProcedureDialog *dialog,
 
       gtk_expander_set_label_widget (GTK_EXPANDER (expander), title);
       gtk_expander_set_resize_toplevel (GTK_EXPANDER (expander), TRUE);
-      gtk_widget_show (title);
+      gtk_widget_set_visible (title, TRUE);
       g_object_bind_property (title,    "sensitive",
                               expander, "sensitive",
                               G_BINDING_SYNC_CREATE);
@@ -2526,8 +2526,8 @@ gimp_procedure_dialog_fill_notebook_list (GimpProcedureDialog *dialog,
       if (label != NULL && page != NULL)
         {
           gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
-          gtk_widget_show (label);
-          gtk_widget_show (page);
+          gtk_widget_set_visible (label, TRUE);
+          gtk_widget_set_visible (page, TRUE);
         }
     }
 
@@ -2596,13 +2596,13 @@ gimp_procedure_dialog_fill_paned (GimpProcedureDialog *dialog,
     {
       child1 = gimp_procedure_dialog_get_widget (dialog, child1_id, G_TYPE_NONE);
       gtk_paned_pack1 (GTK_PANED (paned), child1, TRUE, FALSE);
-      gtk_widget_show (child1);
+      gtk_widget_set_visible (child1, TRUE);
     }
   if (child2_id != NULL)
     {
       child2 = gimp_procedure_dialog_get_widget (dialog, child2_id, G_TYPE_NONE);
       gtk_paned_pack2 (GTK_PANED (paned), child2, TRUE, FALSE);
-      gtk_widget_show (child2);
+      gtk_widget_set_visible (child2, TRUE);
     }
 
   g_hash_table_insert (priv->widgets, g_strdup (container_id), paned);
@@ -2836,12 +2836,12 @@ gimp_procedure_dialog_run (GimpProcedureDialog *dialog)
               gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
               gtk_container_add (GTK_CONTAINER (priv->reset_popover),
                                  vbox);
-              gtk_widget_show (vbox);
+              gtk_widget_set_visible (vbox, TRUE);
 
               button = gtk_button_new_with_mnemonic (_("Reset to _Initial "
                                                        "Values"));
               gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-              gtk_widget_show (button);
+              gtk_widget_set_visible (button, TRUE);
 
               g_signal_connect (button, "clicked",
                                 G_CALLBACK (gimp_procedure_dialog_reset_initial),
@@ -2850,7 +2850,7 @@ gimp_procedure_dialog_run (GimpProcedureDialog *dialog)
               button = gtk_button_new_with_mnemonic (_("Reset to _Factory "
                                                        "Defaults"));
               gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-              gtk_widget_show (button);
+              gtk_widget_set_visible (button, TRUE);
 
               g_signal_connect (button, "clicked",
                                 G_CALLBACK (gimp_procedure_dialog_reset_factory),
@@ -3145,7 +3145,7 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
               gtk_size_group_remove_widget (priv->label_group, label);
               gtk_size_group_add_widget (sz_group, label);
             }
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
         }
     }
   g_clear_object (&sz_group);

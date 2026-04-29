@@ -141,17 +141,17 @@ gimp_browser_init (GimpBrowser *browser)
   browser->left_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_widget_set_size_request (GTK_WIDGET (browser->left_vbox), GIMP_BROWSER_LEFT_MIN_WIDTH, GIMP_BROWSER_LEFT_MIN_HEIGHT);
   gtk_paned_pack1 (GTK_PANED (browser), browser->left_vbox, TRUE, FALSE);
-  gtk_widget_show (browser->left_vbox);
+  gtk_widget_set_visible (browser->left_vbox, TRUE);
 
   /* search entry */
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (browser->left_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   browser->search_entry = gtk_search_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), browser->search_entry, TRUE, TRUE, 0);
-  gtk_widget_show (browser->search_entry);
+  gtk_widget_set_visible (browser->search_entry, TRUE);
 
   g_signal_connect (browser->search_entry, "changed",
                     G_CALLBACK (gimp_browser_entry_changed),
@@ -169,7 +169,7 @@ gimp_browser_init (GimpBrowser *browser)
                              -1);
   gtk_box_pack_end (GTK_BOX (browser->left_vbox), browser->count_label,
                     FALSE, FALSE, 0);
-  gtk_widget_show (browser->count_label);
+  gtk_widget_set_visible (browser->count_label, TRUE);
 
   /* scrolled window */
 
@@ -179,16 +179,16 @@ gimp_browser_init (GimpBrowser *browser)
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_paned_pack2 (GTK_PANED (browser), scrolled_window, TRUE, FALSE);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
-  gtk_widget_show (viewport);
+  gtk_widget_set_visible (viewport, TRUE);
 
   browser->right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_border_width (GTK_CONTAINER (browser->right_vbox), 12);
   gtk_container_add (GTK_CONTAINER (viewport), browser->right_vbox);
-  gtk_widget_show (browser->right_vbox);
+  gtk_widget_set_visible (browser->right_vbox, TRUE);
 
   gtk_widget_grab_focus (browser->search_entry);
 }
@@ -264,7 +264,7 @@ gimp_browser_add_search_types (GimpBrowser *browser,
 
       gtk_box_pack_end (GTK_BOX (gtk_widget_get_parent (browser->search_entry)),
                         combo, FALSE, FALSE, 0);
-      gtk_widget_show (combo);
+      gtk_widget_set_visible (combo, TRUE);
 
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   browser->search_type,
@@ -363,7 +363,7 @@ gimp_browser_set_widget (GimpBrowser *browser,
     {
       gtk_box_pack_start (GTK_BOX (browser->right_vbox), widget,
                           FALSE, FALSE, 0);
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
     }
 }
 

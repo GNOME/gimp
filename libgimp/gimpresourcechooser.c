@@ -249,7 +249,7 @@ gimp_resource_chooser_constructed (GObject *object)
   if (priv->label != NULL)
     {
       gtk_label_set_text_with_mnemonic (GTK_LABEL (priv->label_widget), priv->label);
-      gtk_widget_show (GTK_WIDGET (priv->label_widget));
+      gtk_widget_set_visible (GTK_WIDGET (priv->label_widget), TRUE);
     }
 
   G_OBJECT_CLASS (gimp_resource_chooser_parent_class)->constructed (object);

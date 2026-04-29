@@ -354,7 +354,7 @@ gimp_size_entry_new (gint                       number_of_fields,
                         G_CALLBACK (gimp_size_entry_value_callback),
                         gsef);
 
-      gtk_widget_show (gsef->value_spinbutton);
+      gtk_widget_set_visible (gsef->value_spinbutton, TRUE);
 
       if (gse->show_refval)
         {
@@ -380,7 +380,7 @@ gimp_size_entry_new (gint                       number_of_fields,
           gimp_size_entry_attach_eevl (GTK_SPIN_BUTTON (gsef->refval_spinbutton),
                                        gsef);
 
-          gtk_widget_show (gsef->refval_spinbutton);
+          gtk_widget_set_visible (gsef->refval_spinbutton, TRUE);
         }
 
       if (gse->menu_show_pixels && (unit == gimp_unit_pixel ()) &&
@@ -423,7 +423,7 @@ gimp_size_entry_new (gint                       number_of_fields,
   g_signal_connect (gse->unit_combo, "changed",
                     G_CALLBACK (gimp_size_entry_unit_callback),
                     gse);
-  gtk_widget_show (gse->unit_combo);
+  gtk_widget_set_visible (gse->unit_combo, TRUE);
 
   return GTK_WIDGET (gse);
 }
@@ -600,7 +600,7 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
   gtk_label_set_xalign (GTK_LABEL (label), alignment);
 
   gtk_grid_attach (GTK_GRID (gse), label, column, row, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   return label;
 }

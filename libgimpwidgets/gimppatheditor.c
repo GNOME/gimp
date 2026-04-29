@@ -175,21 +175,21 @@ gimp_path_editor_init (GimpPathEditor *editor)
 
   editor->upper_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (editor), editor->upper_hbox, FALSE, TRUE, 0);
-  gtk_widget_show (editor->upper_hbox);
+  gtk_widget_set_visible (editor->upper_hbox, TRUE);
 
   button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_set_homogeneous (GTK_BOX (button_box), TRUE);
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), button_box, FALSE, TRUE, 0);
-  gtk_widget_show (button_box);
+  gtk_widget_set_visible (button_box, TRUE);
 
   editor->new_button = button = gtk_button_new ();
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_DOCUMENT_NEW,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_new_clicked),
@@ -202,12 +202,12 @@ gimp_path_editor_init (GimpPathEditor *editor)
   editor->up_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_GO_UP,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_move_clicked),
@@ -220,12 +220,12 @@ gimp_path_editor_init (GimpPathEditor *editor)
   editor->down_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_GO_DOWN,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_move_clicked),
@@ -238,12 +238,12 @@ gimp_path_editor_init (GimpPathEditor *editor)
   editor->delete_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_delete_clicked),
@@ -260,7 +260,7 @@ gimp_path_editor_init (GimpPathEditor *editor)
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_ALWAYS);
   gtk_box_pack_start (GTK_BOX (editor), scrolled_window, TRUE, TRUE, 2);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   editor->dir_list = gtk_list_store_new (NUM_COLUMNS,
                                          G_TYPE_STRING,
@@ -293,7 +293,7 @@ gimp_path_editor_init (GimpPathEditor *editor)
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), TRUE);
 
   gtk_container_add (GTK_CONTAINER (scrolled_window), tv);
-  gtk_widget_show (tv);
+  gtk_widget_set_visible (tv, TRUE);
 
   editor->sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
   g_signal_connect (editor->sel, "changed",
@@ -327,7 +327,7 @@ gimp_path_editor_new (const gchar *title,
   gtk_widget_set_sensitive (editor->file_entry, FALSE);
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->file_entry,
                       TRUE, TRUE, 0);
-  gtk_widget_show (editor->file_entry);
+  gtk_widget_set_visible (editor->file_entry, TRUE);
 
   g_signal_connect (editor->file_entry, "filename-changed",
                     G_CALLBACK (gimp_path_editor_file_entry_changed),

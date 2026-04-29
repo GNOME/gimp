@@ -133,7 +133,7 @@ gimp_scale_entry_constructed (GObject *object)
   gtk_grid_attach (GTK_GRID (entry), spinbutton, 2, 0, 1, 1);
 
   gtk_grid_attach (GTK_GRID (entry), priv->scale, 1, 0, 1, 1);
-  gtk_widget_show (priv->scale);
+  gtk_widget_set_visible (priv->scale, TRUE);
 
   g_signal_connect_swapped (spin_adjustment, "changed",
                             G_CALLBACK (gimp_scale_entry_configure),

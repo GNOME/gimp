@@ -201,11 +201,11 @@ gimp_preview_init (GimpPreview *preview)
   priv->frame = gtk_aspect_frame_new (NULL, xalign, 0.0, 1.0, TRUE);
   gtk_frame_set_shadow_type (GTK_FRAME (priv->frame), GTK_SHADOW_NONE);
   gtk_box_pack_start (GTK_BOX (preview), priv->frame, TRUE, TRUE, 0);
-  gtk_widget_show (priv->frame);
+  gtk_widget_set_visible (priv->frame, TRUE);
 
   priv->grid = gtk_grid_new ();
   gtk_container_add (GTK_CONTAINER (priv->frame), priv->grid);
-  gtk_widget_show (priv->grid);
+  gtk_widget_set_visible (priv->grid, TRUE);
 
   priv->timeout_id = 0;
 
@@ -225,11 +225,11 @@ gimp_preview_init (GimpPreview *preview)
   gtk_widget_set_hexpand (frame, TRUE);
   gtk_widget_set_vexpand (frame, TRUE);
   gtk_grid_attach (GTK_GRID (priv->grid), frame, 0, 0, 1, 1);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   priv->area = gimp_preview_area_new ();
   gtk_container_add (GTK_CONTAINER (frame), priv->area);
-  gtk_widget_show (priv->area);
+  gtk_widget_set_visible (priv->area, TRUE);
 
   g_signal_connect_swapped (priv->area, "notify::check-size",
                             G_CALLBACK (gimp_preview_notify_checks),
@@ -278,14 +278,14 @@ gimp_preview_init (GimpPreview *preview)
   priv->controls = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_widget_set_margin_top (priv->controls, 3);
   gtk_grid_attach (GTK_GRID (priv->grid), priv->controls, 0, 2, 2, 1);
-  gtk_widget_show (priv->controls);
+  gtk_widget_set_visible (priv->controls, TRUE);
 
   /*  toggle button to (de)activate the instant preview  */
   priv->toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (priv->toggle),
                                 priv->update_preview);
   gtk_box_pack_start (GTK_BOX (priv->controls), priv->toggle, TRUE, TRUE, 0);
-  gtk_widget_show (priv->toggle);
+  gtk_widget_set_visible (priv->toggle, TRUE);
 
   g_signal_connect (priv->toggle, "toggled",
                     G_CALLBACK (gimp_preview_toggle_callback),

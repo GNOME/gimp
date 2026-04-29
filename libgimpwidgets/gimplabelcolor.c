@@ -245,7 +245,7 @@ gimp_label_color_set_property (GObject      *object,
           if (attached)
             {
               gtk_grid_attach (GTK_GRID (lcolor), lcolor->area, 1, 0, 1, 1);
-              gtk_widget_show (lcolor->area);
+              gtk_widget_set_visible (lcolor->area, TRUE);
               g_signal_emit_by_name (object, "mnemonic-widget-changed", lcolor->area);
             }
         }
@@ -301,7 +301,7 @@ gimp_label_color_populate (GimpLabeled *labeled,
   /* Make sure the label and color won't be glued next to each other's. */
   gtk_grid_set_column_spacing (GTK_GRID (color),
                                4 * gtk_widget_get_scale_factor (GTK_WIDGET (color)));
-  gtk_widget_show (color->area);
+  gtk_widget_set_visible (color->area, TRUE);
 
   return color->area;
 }

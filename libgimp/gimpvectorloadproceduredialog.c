@@ -92,11 +92,11 @@ gimp_vector_load_procedure_dialog_fill_start (GimpProcedureDialog *dialog,
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (content_area), main_vbox, FALSE, FALSE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   top_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (main_vbox), top_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (top_hbox);
+  gtk_widget_set_visible (top_hbox, TRUE);
 
   /* Resolution */
   res_entry = gimp_prop_resolution_entry_new (G_OBJECT (config),
@@ -104,7 +104,7 @@ gimp_vector_load_procedure_dialog_fill_start (GimpProcedureDialog *dialog,
                                               "physical-unit");
 
   gtk_box_pack_start (GTK_BOX (top_hbox), res_entry, FALSE, FALSE, 0);
-  gtk_widget_show (res_entry);
+  gtk_widget_set_visible (res_entry, TRUE);
 
   /* Preview */
 
@@ -118,7 +118,7 @@ gimp_vector_load_procedure_dialog_fill_start (GimpProcedureDialog *dialog,
                         dialog);
 
       gtk_box_pack_start (GTK_BOX (top_hbox), image, FALSE, FALSE, 0);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
     }
 
   if (vector_dialog->extracted_data)
@@ -195,7 +195,7 @@ gimp_vector_load_procedure_dialog_fill_start (GimpProcedureDialog *dialog,
   gtk_label_set_markup (GTK_LABEL (label), markup);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
   gtk_box_pack_start (GTK_BOX (main_vbox), label, TRUE, TRUE, 4);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   g_free (text);
   g_free (markup);

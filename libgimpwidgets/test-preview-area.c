@@ -211,11 +211,11 @@ test_preview_area (void)
 
   area = gimp_preview_area_new ();
   gtk_container_add (GTK_CONTAINER (window), area);
-  gtk_widget_show (area);
+  gtk_widget_set_visible (area, TRUE);
 
   test_run (area, FALSE);
 
-  gtk_widget_show (window);
+  gtk_widget_set_visible (window, TRUE);
 
   test_run (area, TRUE);
 }

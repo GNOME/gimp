@@ -216,30 +216,30 @@ gimp_drawable_chooser_constructed (GObject *object)
   chooser->label_widget = gtk_label_new (NULL);
   gtk_box_pack_start (GTK_BOX (chooser), chooser->label_widget, FALSE, FALSE, 0);
   gtk_label_set_text_with_mnemonic (GTK_LABEL (chooser->label_widget), chooser->label);
-  gtk_widget_show (GTK_WIDGET (chooser->label_widget));
+  gtk_widget_set_visible (GTK_WIDGET (chooser->label_widget), TRUE);
 
   button = gtk_button_new ();
   gtk_box_pack_start (GTK_BOX (chooser), button, FALSE, FALSE, 0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (chooser->label_widget), button);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_container_add (GTK_CONTAINER (button), box);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   chooser->preview_frame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1.0, FALSE);
   gtk_frame_set_shadow_type (GTK_FRAME (chooser->preview_frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (box), chooser->preview_frame, FALSE, FALSE, 0);
-  gtk_widget_show (chooser->preview_frame);
+  gtk_widget_set_visible (chooser->preview_frame, TRUE);
 
   chooser->preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (chooser->preview, scale_factor * CELL_SIZE, scale_factor * CELL_SIZE);
   gtk_container_add (GTK_CONTAINER (chooser->preview_frame), chooser->preview);
-  gtk_widget_show (chooser->preview);
+  gtk_widget_set_visible (chooser->preview, TRUE);
 
   chooser->preview_title = gtk_label_new (_("Browse..."));
   gtk_box_pack_start (GTK_BOX (box), chooser->preview_title, FALSE, FALSE, 0);
-  gtk_widget_show (chooser->preview_title);
+  gtk_widget_set_visible (chooser->preview_title, TRUE);
 
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (gimp_drawable_chooser_clicked),

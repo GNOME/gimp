@@ -191,7 +191,7 @@ gimp_resolution_entry_constructed (GObject *object)
                                          entry, NULL);
   g_object_set_data (G_OBJECT (adj), "gimp-prop-adjustment-binding", binding);
   gtk_grid_attach (GTK_GRID (entry), widget, 1, 3, 1, 1);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   widget = gimp_prop_unit_combo_box_new (object, "unit");
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (widget));
@@ -200,11 +200,11 @@ gimp_resolution_entry_constructed (GObject *object)
                 "long-format",  _("pixels/%a"),
                 NULL);
   gtk_grid_attach (GTK_GRID (entry), widget, 3, 3, 1, 1);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   widget = gimp_prop_spin_button_new (object, "width", 1.0, 10.0, 0);
   gtk_grid_attach (GTK_GRID (entry), widget, 1, 1, 1, 1);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "xalign", 0.0,
@@ -217,11 +217,11 @@ gimp_resolution_entry_constructed (GObject *object)
                                       entry->width / entry->ppi);
   entry->phy_width_label = label;
   gtk_grid_attach (GTK_GRID (entry), entry->phy_width_label, 3, 1, 1, 1);
-  gtk_widget_show (entry->phy_width_label);
+  gtk_widget_set_visible (entry->phy_width_label, TRUE);
 
   widget = gimp_prop_spin_button_new (object, "height", 1.0, 10.0, 0);
   gtk_grid_attach (GTK_GRID (entry), widget, 1, 2, 1, 1);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "xalign", 0.0,
@@ -234,7 +234,7 @@ gimp_resolution_entry_constructed (GObject *object)
                                       entry->height / entry->ppi);
   entry->phy_height_label = label;
   gtk_grid_attach (GTK_GRID (entry), entry->phy_height_label, 3, 2, 1, 1);
-  gtk_widget_show (entry->phy_height_label);
+  gtk_widget_set_visible (entry->phy_height_label, TRUE);
 
   g_signal_connect (object, "notify::width",
                     G_CALLBACK (gimp_resolution_entry_update_labels),
@@ -647,7 +647,7 @@ gimp_resolution_entry_attach_label (GimpResolutionEntry *gre,
   gtk_label_set_xalign (GTK_LABEL (label), alignment);
 
   gtk_grid_attach (GTK_GRID (gre), label, column, row, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   return label;
 }

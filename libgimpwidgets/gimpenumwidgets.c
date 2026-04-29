@@ -154,7 +154,7 @@ gimp_enum_radio_box_new_with_range (GType            enum_type,
 
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       g_object_set_data (G_OBJECT (button), "gimp-item-data",
                          GINT_TO_POINTER (value->value));
@@ -207,7 +207,7 @@ gimp_enum_radio_frame_new (GType            enum_type,
   if (label_widget)
     {
       gtk_frame_set_label_widget (GTK_FRAME (frame), label_widget);
-      gtk_widget_show (label_widget);
+      gtk_widget_set_visible (label_widget, TRUE);
     }
 
   radio_box = gimp_enum_radio_box_new (enum_type,
@@ -215,7 +215,7 @@ gimp_enum_radio_frame_new (GType            enum_type,
                                        callback_data_destroy,
                                        first_button);
   gtk_container_add (GTK_CONTAINER (frame), radio_box);
-  gtk_widget_show (radio_box);
+  gtk_widget_set_visible (radio_box, TRUE);
 
   return frame;
 }
@@ -262,7 +262,7 @@ gimp_enum_radio_frame_new_with_range (GType            enum_type,
   if (label_widget)
     {
       gtk_frame_set_label_widget (GTK_FRAME (frame), label_widget);
-      gtk_widget_show (label_widget);
+      gtk_widget_set_visible (label_widget, TRUE);
     }
 
   radio_box = gimp_enum_radio_box_new_with_range (enum_type,
@@ -272,7 +272,7 @@ gimp_enum_radio_frame_new_with_range (GType            enum_type,
                                                   callback_data_destroy,
                                                   first_button);
   gtk_container_add (GTK_CONTAINER (frame), radio_box);
-  gtk_widget_show (radio_box);
+  gtk_widget_set_visible (radio_box, TRUE);
 
   return frame;
 }
@@ -406,7 +406,7 @@ gimp_enum_icon_box_new_with_range (GType            enum_type,
       if (image)
         {
           gtk_container_add (GTK_CONTAINER (button), image);
-          gtk_widget_show (image);
+          gtk_widget_set_visible (image, TRUE);
         }
 
       gimp_help_set_help_data (button,
@@ -415,7 +415,7 @@ gimp_enum_icon_box_new_with_range (GType            enum_type,
 
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       g_object_set_data (G_OBJECT (button), "gimp-item-data",
                          GINT_TO_POINTER (value->value));

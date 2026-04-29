@@ -143,7 +143,7 @@ gimp_int_radio_group_new (gboolean         in_frame,
                         radio_button_callback,
                         radio_button_callback_data);
 
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       label = va_arg (args, const gchar *);
     }
@@ -155,7 +155,7 @@ gimp_int_radio_group_new (gboolean         in_frame,
 
       frame = gimp_frame_new (frame_title);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
 
       return frame;
     }
@@ -250,7 +250,7 @@ gimp_random_seed_new (guint    *seed,
   spinbutton = gimp_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_uint_adjustment_update),
@@ -267,7 +267,7 @@ gimp_random_seed_new (guint    *seed,
                 "margin-end",   2,
                 NULL);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   /* Send spinbutton as data so that we can change the value in
    * gimp_random_seed_update()
@@ -284,7 +284,7 @@ gimp_random_seed_new (guint    *seed,
   toggle = gtk_check_button_new_with_mnemonic (_("_Randomize"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *random_seed);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -503,7 +503,7 @@ gimp_coordinates_new (GimpUnit        *unit,
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_grid_attach (GTK_GRID (sizeentry), spinbutton, 1, 0, 1, 1);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
                             (update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION) ||
@@ -539,7 +539,7 @@ gimp_coordinates_new (GimpUnit        *unit,
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainbutton), TRUE);
 
   gtk_grid_attach (GTK_GRID (sizeentry), chainbutton, 2, 0, 1, 2);
-  gtk_widget_show (chainbutton);
+  gtk_widget_set_visible (chainbutton, TRUE);
 
   data = g_slice_new (GimpCoordinatesData);
 

@@ -330,7 +330,7 @@ gimp_color_button_init (GimpColorButton *button)
                     button);
 
   gtk_container_add (GTK_CONTAINER (button), priv->color_area);
-  gtk_widget_show (priv->color_area);
+  gtk_widget_set_visible (priv->color_area, TRUE);
 }
 
 static void
@@ -577,7 +577,7 @@ gimp_color_button_clicked (GtkButton *button)
                                        priv->config);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                           priv->selection, TRUE, TRUE, 0);
-      gtk_widget_show (priv->selection);
+      gtk_widget_set_visible (priv->selection, TRUE);
 
       g_signal_connect (priv->selection, "color-changed",
                         G_CALLBACK (gimp_color_button_selection_changed),

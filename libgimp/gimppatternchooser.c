@@ -109,14 +109,14 @@ gimp_pattern_chooser_init (GimpPatternChooser *self)
   frame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1.0, FALSE);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (self), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   self->preview = gimp_preview_area_new ();
   gtk_widget_add_events (self->preview,
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
   gtk_widget_set_size_request (self->preview, CELL_SIZE, CELL_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), self->preview);
-  gtk_widget_show (self->preview);
+  gtk_widget_set_visible (self->preview, TRUE);
 
   g_signal_connect_swapped (self->preview, "size-allocate",
                             G_CALLBACK (gimp_pattern_chooser_draw),
@@ -133,7 +133,7 @@ gimp_pattern_chooser_init (GimpPatternChooser *self)
                                          self->preview, &drag_target);
 
   _gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (self), button);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 }
 
 /**
@@ -347,12 +347,12 @@ gimp_pattern_chooser_open_popup (GimpPatternChooser *chooser,
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
   gtk_container_add (GTK_CONTAINER (chooser->popup), frame);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (preview, chooser->width, chooser->height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
-  gtk_widget_show (preview);
+  gtk_widget_set_visible (preview, TRUE);
 
   /* decide where to put the popup: near the preview i.e. at mousedown coords */
   gdk_window_get_origin (gtk_widget_get_window (chooser->preview),
@@ -369,7 +369,7 @@ gimp_pattern_chooser_open_popup (GimpPatternChooser *chooser,
 
   gtk_window_move (GTK_WINDOW (chooser->popup), x, y);
 
-  gtk_widget_show (chooser->popup);
+  gtk_widget_set_visible (chooser->popup, TRUE);
 
   /*  Draw popup now. Usual events do not cause a draw. */
   gimp_pattern_select_preview_fill_draw (chooser, GIMP_PREVIEW_AREA (preview));

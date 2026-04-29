@@ -208,7 +208,7 @@ gimp_label_entry_populate (GimpLabeled *labeled,
   /* Make sure the label and entry won't be glued next to each other's. */
   gtk_grid_set_column_spacing (GTK_GRID (entry),
                                4 * gtk_widget_get_scale_factor (GTK_WIDGET (entry)));
-  gtk_widget_show (entry->entry);
+  gtk_widget_set_visible (entry->entry, TRUE);
 
   return entry->entry;
 }

@@ -137,7 +137,7 @@ gimp_pick_button_init (GimpPickButton *button)
   image = gtk_image_new_from_icon_name (GIMP_ICON_COLOR_PICK_FROM_SCREEN,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   gimp_help_set_help_data (GTK_WIDGET (button),
                            _("Click the eyedropper, then click a color "
@@ -447,7 +447,7 @@ _gimp_pick_button_default_pick (GimpPickButton *button)
                              GDK_BUTTON_RELEASE_MASK |
                              GDK_BUTTON1_MOTION_MASK);
 
-      gtk_widget_show (priv->grab_widget);
+      gtk_widget_set_visible (priv->grab_widget, TRUE);
     }
 
   widget = priv->grab_widget;

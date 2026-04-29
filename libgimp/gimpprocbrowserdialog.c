@@ -160,7 +160,7 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
   gtk_container_set_border_width (GTK_CONTAINER (dialog->browser), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       dialog->browser, TRUE, TRUE, 0);
-  gtk_widget_show (dialog->browser);
+  gtk_widget_set_visible (dialog->browser, TRUE);
 
   g_signal_connect (dialog->browser, "search",
                     G_CALLBACK (browser_search),
@@ -179,7 +179,7 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
                                   GTK_POLICY_ALWAYS);
   gtk_box_pack_start (GTK_BOX (gimp_browser_get_left_vbox (GIMP_BROWSER (dialog->browser))),
                       scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   dialog->tree_view = gtk_tree_view_new ();
 
@@ -200,7 +200,7 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
                     dialog);
 
   gtk_container_add (GTK_CONTAINER (scrolled_window), dialog->tree_view);
-  gtk_widget_show (dialog->tree_view);
+  gtk_widget_set_visible (dialog->tree_view, TRUE);
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->tree_view));
 

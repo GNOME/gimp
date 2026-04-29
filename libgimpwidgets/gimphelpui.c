@@ -380,7 +380,7 @@ gimp_help_menu_item_query_tooltip (GtkWidget  *widget,
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   g_free (text);
 
@@ -391,7 +391,7 @@ gimp_help_menu_item_query_tooltip (GtkWidget  *widget,
                              -1);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   gtk_tooltip_set_custom (tooltip, vbox);
 
@@ -417,7 +417,7 @@ gimp_context_help_idle_start (gpointer widget)
       GdkGrabStatus  status;
 
       invisible = gtk_invisible_new_for_screen (gtk_widget_get_screen (widget));
-      gtk_widget_show (invisible);
+      gtk_widget_set_visible (invisible, TRUE);
 
       display = gtk_widget_get_display (invisible);
 

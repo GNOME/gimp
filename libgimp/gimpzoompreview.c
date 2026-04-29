@@ -729,19 +729,19 @@ gimp_zoom_preview_set_model (GimpZoomPreview *preview,
 
   button_bar = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_end (GTK_BOX (box), button_bar, FALSE, FALSE, 0);
-  gtk_widget_show (button_bar);
+  gtk_widget_set_visible (button_bar, TRUE);
 
   /* zoom out */
   button = gimp_zoom_button_new (preview->model,
                                  GIMP_ZOOM_OUT, GTK_ICON_SIZE_SMALL_TOOLBAR);
   gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   /* zoom in */
   button = gimp_zoom_button_new (preview->model,
                                  GIMP_ZOOM_IN, GTK_ICON_SIZE_SMALL_TOOLBAR);
   gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 }
 
 static void

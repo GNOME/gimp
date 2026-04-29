@@ -213,7 +213,7 @@ gimp_label_int_widget_populate (GimpLabeled *labeled,
   GimpLabelIntWidget *widget = GIMP_LABEL_INT_WIDGET (labeled);
 
   gtk_grid_attach (GTK_GRID (widget), widget->widget, 1, 0, 1, 1);
-  gtk_widget_show (widget->widget);
+  gtk_widget_set_visible (widget->widget, TRUE);
 
   return widget->widget;
 }

@@ -301,7 +301,7 @@ create_group (GimpColorScales           *scales,
       gtk_grid_attach (GTK_GRID (grid), scales->toggles[i], 0, row, 1, 1);
 
       if (gimp_color_selector_get_toggles_visible (selector))
-        gtk_widget_show (scales->toggles[i]);
+        gtk_widget_set_visible (scales->toggles[i], TRUE);
 
       gimp_help_set_help_data (scales->toggles[i],
                                gettext (enum_desc->value_help), NULL);
@@ -320,7 +320,7 @@ create_group (GimpColorScales           *scales,
       gimp_help_set_help_data (scales->scales[i],
                                gettext (enum_desc->value_help),
                                NULL);
-      gtk_widget_show (scales->scales[i]);
+      gtk_widget_set_visible (scales->scales[i], TRUE);
 
       gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scales->scales[i]),
                                    scale_defs[i].scale_min_value,
@@ -392,7 +392,7 @@ gimp_color_scales_init (GimpColorScales *scales)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (scales), hbox, 0, 0, FALSE);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   main_group = NULL;
   u8_group   = NULL;
@@ -463,8 +463,8 @@ gimp_color_scales_init (GimpColorScales *scales)
   gtk_box_pack_start (GTK_BOX (hbox), radio1, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), radio2, FALSE, FALSE, 0);
 
-  gtk_widget_show (radio1);
-  gtk_widget_show (radio2);
+  gtk_widget_set_visible (radio1, TRUE);
+  gtk_widget_set_visible (radio2, TRUE);
 
   if (scales->show_rgb_u8)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio2), TRUE);
@@ -486,8 +486,8 @@ gimp_color_scales_init (GimpColorScales *scales)
   gtk_box_pack_end (GTK_BOX (hbox), radio2, FALSE, FALSE, 0);
   gtk_box_pack_end (GTK_BOX (hbox), radio1, FALSE, FALSE, 0);
 
-  gtk_widget_show (radio1);
-  gtk_widget_show (radio2);
+  gtk_widget_set_visible (radio1, TRUE);
+  gtk_widget_set_visible (radio2, TRUE);
 
   if (gimp_color_selector_get_model_visible (selector,
                                              GIMP_COLOR_SELECTOR_MODEL_HSV))

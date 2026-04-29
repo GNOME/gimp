@@ -146,7 +146,7 @@ gimp_int_radio_frame_init (GimpIntRadioFrame *radio_frame)
 {
   radio_frame->box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (radio_frame), radio_frame->box);
-  gtk_widget_show (GTK_WIDGET (radio_frame->box));
+  gtk_widget_set_visible (GTK_WIDGET (radio_frame->box), TRUE);
 }
 
 static void
@@ -457,7 +457,7 @@ gimp_int_radio_frame_set_title (GimpIntRadioFrame *frame,
 
       label = gtk_label_new_with_mnemonic (title);
       gtk_frame_set_label_widget (GTK_FRAME (frame), label);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), frame->group->data);
     }
@@ -675,7 +675,7 @@ gimp_int_radio_frame_fill (GimpIntRadioFrame *frame)
 
           button = gtk_radio_button_new_with_mnemonic (group, label);
           gtk_box_pack_start (GTK_BOX (frame->box), button, FALSE, FALSE, 0);
-          gtk_widget_show (button);
+          gtk_widget_set_visible (button, TRUE);
 
           g_free (label);
 

@@ -300,7 +300,7 @@ gimp_label_spin_populate (GimpLabeled *labeled,
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (priv->spinbutton), TRUE);
 
   gtk_grid_attach (GTK_GRID (spin), priv->spinbutton, 1, 0, 1, 1);
-  gtk_widget_show (priv->spinbutton);
+  gtk_widget_set_visible (priv->spinbutton, TRUE);
 
   return priv->spinbutton;
 }

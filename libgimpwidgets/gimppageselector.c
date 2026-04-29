@@ -224,14 +224,14 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (selector), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   sw = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw),
                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (vbox), sw, TRUE, TRUE, 0);
-  gtk_widget_show (sw);
+  gtk_widget_set_visible (sw, TRUE);
 
   selector->store = gtk_list_store_new (4,
                                         G_TYPE_INT,
@@ -243,7 +243,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
   gtk_icon_view_set_selection_mode (GTK_ICON_VIEW (selector->view),
                                     GTK_SELECTION_MULTIPLE);
   gtk_container_add (GTK_CONTAINER (sw), selector->view);
-  gtk_widget_show (selector->view);
+  gtk_widget_set_visible (selector->view, TRUE);
 
   renderer = gtk_cell_renderer_pixbuf_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (selector->view), renderer, FALSE);
@@ -278,21 +278,21 @@ gimp_page_selector_init (GimpPageSelector *selector)
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), selector->count_label, FALSE, FALSE, 0);
-  gtk_widget_show (selector->count_label);
+  gtk_widget_set_visible (selector->count_label, TRUE);
 
   /*  Target combo  */
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (selector), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("Open _pages as"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (selector), "target", -1, -1);
   gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
@@ -300,12 +300,12 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   label = gtk_label_new_with_mnemonic (_("Select _range:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   selector->range_entry = gtk_entry_new ();
   gtk_widget_set_size_request (selector->range_entry, 40, -1);
   gtk_box_pack_start (GTK_BOX (hbox), selector->range_entry, TRUE, TRUE, 0);
-  gtk_widget_show (selector->range_entry);
+  gtk_widget_set_visible (selector->range_entry, TRUE);
 
   g_signal_connect (selector->range_entry, "focus-out-event",
                     G_CALLBACK (gimp_page_selector_range_focus_out),
@@ -318,11 +318,11 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   hbbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_box_pack_end (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
+  gtk_widget_set_visible (hbbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("Select _All"));
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (gimp_page_selector_select_all),

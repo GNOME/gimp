@@ -2082,7 +2082,7 @@ gimp_preview_area_menu_new (GimpPreviewArea *area,
       item = gtk_radio_menu_item_new_with_label (group, name);
 
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-      gtk_widget_show (item);
+      gtk_widget_set_visible (item, TRUE);
 
       g_object_set_data (G_OBJECT (item),
                          "gimp-preview-area-prop-name",
@@ -2106,7 +2106,7 @@ gimp_preview_area_menu_new (GimpPreviewArea *area,
 
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 
-  gtk_widget_show (item);
+  gtk_widget_set_visible (item, TRUE);
 
   return item;
 }
