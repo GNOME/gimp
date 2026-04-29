@@ -127,7 +127,7 @@ colorsel_wheel_init (ColorselWheel *wheel)
   g_object_add_weak_pointer (G_OBJECT (wheel->hsv),
                              (gpointer) &wheel->hsv);
   gtk_box_pack_start (GTK_BOX (wheel), wheel->hsv, TRUE, TRUE, 0);
-  gtk_widget_show (wheel->hsv);
+  gtk_widget_set_visible (wheel->hsv, TRUE);
 
   wheel->label = gtk_label_new (NULL);
   gtk_widget_set_halign (wheel->label, GTK_ALIGN_START);
@@ -135,7 +135,7 @@ colorsel_wheel_init (ColorselWheel *wheel)
   gtk_label_set_justify (GTK_LABEL (wheel->label), GTK_JUSTIFY_LEFT);
   gtk_label_set_text (GTK_LABEL (wheel->label), _("Profile: sRGB"));
   gtk_box_pack_start (GTK_BOX (wheel), wheel->label, FALSE, FALSE, 0);
-  gtk_widget_show (wheel->label);
+  gtk_widget_set_visible (wheel->label, TRUE);
 
   g_signal_connect (wheel->hsv, "changed",
                     G_CALLBACK (colorsel_wheel_changed),

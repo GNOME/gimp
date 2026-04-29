@@ -127,7 +127,7 @@ main (int    argc,
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit), NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
   gtk_main ();
 
   exit (EXIT_SUCCESS);

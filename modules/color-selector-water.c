@@ -205,7 +205,7 @@ colorsel_water_init (ColorselWater *water)
   gtk_label_set_justify (GTK_LABEL (water->label), GTK_JUSTIFY_LEFT);
   gtk_label_set_text (GTK_LABEL (water->label), _("Profile: sRGB"));
   gtk_box_pack_start (GTK_BOX (water), water->label, FALSE, FALSE, 0);
-  gtk_widget_show (water->label);
+  gtk_widget_set_visible (water->label, TRUE);
 }
 
 static gdouble
