@@ -284,6 +284,13 @@ load_image (GFile        *file,
   chunk = ILBM_read (g_file_peek_path (file));
   iff_image = ILBM_extractImages (chunk, &imagesLength);
 
+  if (iff_image == NULL)
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("This is not an ILBM image"));
+      return NULL;
+    }
+
   for (gint i = 0; i < imagesLength; i++)
     {
       ILBM_Image        *true_image   = iff_image[i];
