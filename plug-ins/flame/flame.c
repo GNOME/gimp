@@ -643,7 +643,7 @@ edit_response (GtkWidget           *widget,
                gint                 response_id,
                GimpProcedureConfig *proc_config)
 {
-  gtk_widget_hide (widget);
+  gtk_widget_set_visible (widget, FALSE);
 
   if (response_id == GTK_RESPONSE_OK)
     {

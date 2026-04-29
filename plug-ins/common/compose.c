@@ -1573,7 +1573,7 @@ type_combo_callback (GimpProcedureConfig *config)
       else
         {
           gtk_image_clear (GTK_IMAGE (image));
-          gtk_widget_hide (image);
+          gtk_widget_set_visible (image, FALSE);
         }
     }
 

@@ -965,7 +965,7 @@ search_close_clicked (GtkWidget *button,
   WebKitFindController  *find_controller =
     webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (self->webview));
 
-  gtk_widget_hide (self->searchbar);
+  gtk_widget_set_visible (self->searchbar, FALSE);
 
   webkit_find_controller_search_finish (find_controller);
 }
@@ -991,7 +991,7 @@ search_entry_key_press (GtkWidget   *search_entry,
   switch (event->keyval)
     {
     case GDK_KEY_Escape:
-      gtk_widget_hide (self->searchbar);
+      gtk_widget_set_visible (self->searchbar, FALSE);
       webkit_find_controller_search_finish (find_controller);
       return TRUE;
 

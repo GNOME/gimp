@@ -46,13 +46,13 @@ dialog_response (GtkWidget       *widget,
       break;
 
     case GTK_RESPONSE_OK:
-      gtk_widget_hide (dialog->dialog);
+      gtk_widget_set_visible (dialog->dialog, FALSE);
       if (dialog->ok_cb)
         dialog->ok_cb (dialog->ok_cb_data);
       break;
 
     default:
-      gtk_widget_hide (dialog->dialog);
+      gtk_widget_set_visible (dialog->dialog, FALSE);
       if (dialog->cancel_cb)
         dialog->cancel_cb (dialog->cancel_cb_data);
       break;
@@ -139,19 +139,19 @@ default_dialog_show(DefaultDialog_t *dialog)
 void
 default_dialog_hide_cancel_button(DefaultDialog_t *dialog)
 {
-  gtk_widget_hide(dialog->cancel);
+  gtk_widget_set_visible (dialog->cancel, FALSE);
 }
 
 void
 default_dialog_hide_apply_button(DefaultDialog_t *dialog)
 {
-  gtk_widget_hide(dialog->apply);
+  gtk_widget_set_visible (dialog->apply, FALSE);
 }
 
 void
 default_dialog_hide_help_button(DefaultDialog_t *dialog)
 {
-  /* gtk_widget_hide(dialog->help); */
+  /* gtk_widget_set_visible (dialog->help, FALSE); */
 }
 
 void

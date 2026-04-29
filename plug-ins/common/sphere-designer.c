@@ -2610,7 +2610,7 @@ sphere_response (GtkWidget *widget,
       do_run = TRUE;
 
     default:
-      gtk_widget_hide (widget);
+      gtk_widget_set_visible (widget, FALSE);
       gtk_main_quit ();
       break;
     }

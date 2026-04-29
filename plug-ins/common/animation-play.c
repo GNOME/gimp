@@ -1498,7 +1498,7 @@ detach_change_state (GSimpleAction *action,
       gtk_widget_queue_draw (drawing_area);
     }
   else
-    gtk_widget_hide (shape_window);
+    gtk_widget_set_visible (shape_window, FALSE);
 
   render_frame (frame_number);
 }
