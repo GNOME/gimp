@@ -583,7 +583,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
 
   if (box->files)
     {
-      gtk_widget_hide (box->info);
+      gtk_widget_set_visible (box->info, FALSE);
       gtk_widget_show (box->progress);
     }
 
@@ -657,7 +657,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
 
   if (box->files)
     {
-      gtk_widget_hide (box->progress);
+      gtk_widget_set_visible (box->progress, FALSE);
       gtk_widget_show (box->info);
     }
 

@@ -152,7 +152,7 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
                            calibrate_yres,
                            1, GIMP_MAX_IMAGE_SIZE,
                            0, 0);
-  gtk_widget_hide (GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (calibrate_entry)));
+  gtk_widget_set_visible (GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (calibrate_entry)), FALSE);
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &calibrate_entry);

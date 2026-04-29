@@ -519,7 +519,7 @@ gimp_tool_gui_hide (GimpToolGui *gui)
         {
           gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (private->dialog)),
                                 private->dialog);
-          gtk_widget_hide (private->dialog);
+          gtk_widget_set_visible (private->dialog, FALSE);
         }
     }
   else
@@ -530,7 +530,7 @@ gimp_tool_gui_hide (GimpToolGui *gui)
         }
       else
         {
-          gtk_widget_hide (private->dialog);
+          gtk_widget_set_visible (private->dialog, FALSE);
         }
     }
 }

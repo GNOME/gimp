@@ -670,7 +670,7 @@ keyword_entry_key_release_event (GtkWidget       *widget,
           gtk_tree_path_free (path);
         }
 
-      gtk_widget_hide (popup->priv->list_view);
+      gtk_widget_set_visible (popup->priv->list_view, FALSE);
       gtk_window_resize (GTK_WINDOW (popup), width, 1);
     }
 

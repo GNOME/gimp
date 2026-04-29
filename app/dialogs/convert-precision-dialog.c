@@ -194,7 +194,7 @@ convert_precision_dialog_new (GimpImage                    *image,
                                    NULL);
 
   if (private->trc != GIMP_TRC_PERCEPTUAL)
-    gtk_widget_hide (perceptual_radio);
+    gtk_widget_set_visible (perceptual_radio, FALSE);
 
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);

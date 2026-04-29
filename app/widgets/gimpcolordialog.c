@@ -512,7 +512,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
       parent = gtk_widget_get_parent (GIMP_VIEWABLE_DIALOG (dialog)->icon);
       parent = gtk_widget_get_parent (parent);
 
-      gtk_widget_hide (parent);
+      gtk_widget_set_visible (parent, FALSE);
     }
 
   dialog->wants_updates = wants_updates;

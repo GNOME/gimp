@@ -90,7 +90,7 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
                                  "patterns", "patterns-open-as-image",
                                  NULL);
 
-  gtk_widget_hide (gimp_data_factory_view_get_edit_button (GIMP_DATA_FACTORY_VIEW (factory_view)));
+  gtk_widget_set_visible (gimp_data_factory_view_get_edit_button (GIMP_DATA_FACTORY_VIEW (factory_view)), FALSE);
 
   return GTK_WIDGET (factory_view);
 }

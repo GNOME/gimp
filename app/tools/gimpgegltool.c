@@ -293,7 +293,7 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
         }
       else
         {
-          gtk_widget_hide (tool->description_label);
+          gtk_widget_set_visible (tool->description_label, FALSE);
         }
 
       gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (tool),

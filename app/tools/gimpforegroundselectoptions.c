@@ -300,7 +300,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *antialias_toggle;
 
   antialias_toggle = GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle;
-  gtk_widget_hide (antialias_toggle);
+  gtk_widget_set_visible (antialias_toggle, FALSE);
 
   frame = gimp_prop_enum_radio_frame_new (config, "draw-mode", NULL,
                                           0, 0);

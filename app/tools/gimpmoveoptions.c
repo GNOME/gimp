@@ -169,7 +169,7 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
 {
   if (move_options->move_type == GIMP_TRANSFORM_TYPE_SELECTION)
     {
-      gtk_widget_hide (gtk_bin_get_child (GTK_BIN (frame)));
+      gtk_widget_set_visible (gtk_bin_get_child (GTK_BIN (frame)), FALSE);
       gtk_frame_set_label (GTK_FRAME (frame), _("Move selection"));
     }
   else

@@ -804,7 +804,7 @@ gimp_align_options_update_area (GimpAlignOptions *options)
   else
     {
       text = NULL;
-      gtk_widget_hide (options->priv->selected_guides_label);
+      gtk_widget_set_visible (options->priv->selected_guides_label, FALSE);
     }
 
   gtk_label_set_markup (GTK_LABEL (options->priv->selected_guides_label), text);
@@ -839,7 +839,7 @@ gimp_align_options_update_area (GimpAlignOptions *options)
     }
   else
     {
-      gtk_widget_hide (options->priv->reference_box);
+      gtk_widget_set_visible (options->priv->reference_box, FALSE);
     }
   gtk_label_set_markup (GTK_LABEL (options->priv->reference_label), text);
   g_free (text);

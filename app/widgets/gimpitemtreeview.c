@@ -2208,7 +2208,7 @@ gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
   /* If we get to the popover signal handling, it means we didn't click
    * inside popover's buttons, which would have stopped the signal
    * first. So we were going to hide the popover anyway.
-   * Nevertheless I do with with gtk_widget_hide() instead of
+   * Nevertheless I do this by setting visibility FALSE instead of
    * gtk_popover_popdown() because the animation stuff is very buggy
    * (sometimes the popup stays displayed even though it doesn't react,
    * blocking the GUI for a second or so).
@@ -2218,7 +2218,7 @@ gimp_item_tree_view_popover_button_press (GtkWidget        *widget,
    * the actual action (like eye switching or lock on another item or
    * item selection).
    */
-  gtk_widget_hide (widget);
+  gtk_widget_set_visible (widget, FALSE);
 
   if (gtk_tree_view_get_path_at_pos (tree_view->view,
                                      bevent->x, bevent->y,

@@ -1207,7 +1207,7 @@ gimp_dialog_factory_hide_dialog (GtkWidget *dialog)
       return;
     }
 
-  gtk_widget_hide (dialog);
+  gtk_widget_set_visible (dialog, FALSE);
 
   if (factory->p->dialog_state != GIMP_DIALOGS_SHOWN)
     g_object_set_data (G_OBJECT (dialog), GIMP_DIALOG_VISIBILITY_KEY,
@@ -1548,7 +1548,7 @@ gimp_dialog_factory_hide (GimpDialogFactory *factory)
 
           if (gtk_widget_get_visible (widget))
             {
-              gtk_widget_hide (widget);
+              gtk_widget_set_visible (widget, FALSE);
               visibility = GIMP_DIALOG_VISIBILITY_HIDDEN;
 
               GIMP_LOG (WM, "Hiding '%s' [%p]",

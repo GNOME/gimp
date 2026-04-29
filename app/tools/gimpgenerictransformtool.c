@@ -138,7 +138,7 @@ gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool)
     {
       gchar buf[256];
       gtk_widget_show (generic->matrix_label);
-      gtk_widget_hide (generic->invalid_label);
+      gtk_widget_set_visible (generic->invalid_label, FALSE);
 
       g_snprintf (buf, sizeof (buf), "<tt>% 11.4f\t% 11.4f\t% 11.4f\n% 11.4f\t% 11.4f"
                   "\t% 11.4f\n% 11.4f\t% 11.4f\t% 11.4f</tt>",
@@ -150,7 +150,7 @@ gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool)
   else
     {
       gtk_widget_show (generic->invalid_label);
-      gtk_widget_hide (generic->matrix_label);
+      gtk_widget_set_visible (generic->matrix_label, FALSE);
     }
 }
 

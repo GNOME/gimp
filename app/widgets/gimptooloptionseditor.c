@@ -460,7 +460,7 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
       options_gui = gimp_tools_get_tool_options_gui (editor->p->visible_tool_options);
 
       if (options_gui)
-        gtk_widget_hide (options_gui);
+        gtk_widget_set_visible (options_gui, FALSE);
 
       editor->p->visible_tool_options = NULL;
     }

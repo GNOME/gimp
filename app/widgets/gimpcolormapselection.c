@@ -354,7 +354,7 @@ gimp_colormap_selection_unmap (GtkWidget *widget)
   GimpColormapSelection *selection = GIMP_COLORMAP_SELECTION (widget);
 
   if (selection->color_dialog)
-    gtk_widget_hide (selection->color_dialog);
+    gtk_widget_set_visible (selection->color_dialog, FALSE);
 
   GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
@@ -773,7 +773,7 @@ gimp_colormap_selection_image_changed (GimpColormapSelection *selection,
         }
 
       if (selection->color_dialog)
-        gtk_widget_hide (selection->color_dialog);
+        gtk_widget_set_visible (selection->color_dialog, FALSE);
 
       if (! HAVE_COLORMAP (image))
         {

@@ -543,7 +543,7 @@ gimp_file_dialog_progress_end (GimpProgress *progress)
   if (dialog->progress)
     {
       gimp_progress_end (GIMP_PROGRESS (dialog->progress));
-      gtk_widget_hide (dialog->progress);
+      gtk_widget_set_visible (dialog->progress, FALSE);
     }
 }
 

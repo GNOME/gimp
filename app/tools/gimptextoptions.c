@@ -1037,7 +1037,7 @@ gimp_text_options_outline_changed (GtkWidget *combo,
   active = (GimpTextOutline) gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
   if (active == GIMP_TEXT_OUTLINE_NONE)
-    gtk_widget_hide (vbox);
+    gtk_widget_set_visible (vbox, FALSE);
   else
     gtk_widget_show (vbox);
 }

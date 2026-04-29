@@ -1838,17 +1838,17 @@ gimp_gradient_tool_editor_update_gui (GimpGradientTool *gradient_tool)
           if (gimp_gradient_tool_editor_handle_is_endpoint (gradient_tool, selection))
             gimp_gradient_tool_editor_update_endpoint_gui (gradient_tool, selection);
           else
-            gtk_widget_hide (gradient_tool->endpoint_editor);
+            gtk_widget_set_visible (gradient_tool->endpoint_editor, FALSE);
 
           if (gimp_gradient_tool_editor_handle_is_stop (gradient_tool, selection))
             gimp_gradient_tool_editor_update_stop_gui (gradient_tool, selection);
           else
-            gtk_widget_hide (gradient_tool->stop_editor);
+            gtk_widget_set_visible (gradient_tool->stop_editor, FALSE);
 
           if (gimp_gradient_tool_editor_handle_is_midpoint (gradient_tool, selection))
             gimp_gradient_tool_editor_update_midpoint_gui (gradient_tool, selection);
           else
-            gtk_widget_hide (gradient_tool->midpoint_editor);
+            gtk_widget_set_visible (gradient_tool->midpoint_editor, FALSE);
 
           gimp_gradient_tool_editor_unblock_handlers (gradient_tool);
 

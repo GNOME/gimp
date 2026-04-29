@@ -155,7 +155,7 @@ gimp_progress_dialog_progress_end (GimpProgress *progress)
       gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
                                          GTK_RESPONSE_CANCEL, FALSE);
 
-      gtk_widget_hide (GTK_WIDGET (dialog));
+      gtk_widget_set_visible (GTK_WIDGET (dialog), FALSE);
     }
 }
 
