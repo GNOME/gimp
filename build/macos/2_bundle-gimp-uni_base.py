@@ -77,9 +77,9 @@ def bundle(src_root, pattern, option="None", override=None):
     elif "etc/" in pattern:
       dest_path = GIMP_DISTRIB / "etc" / src_path.relative_to(src_root / "etc")
       #Needed by app/main.c
-      link_etc_path = Path(f"{GIMP_DISTRIB}/etc")
-      link_etc_path.unlink(missing_ok=True)
-      link_etc_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/etc"), link_etc_path.parent))
+      #link_etc_path = Path(f"{GIMP_DISTRIB}/etc")
+      #link_etc_path.unlink(missing_ok=True)
+      #link_etc_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/SharedSupport"), link_etc_path.parent))
     dest_path.parent.mkdir(parents=True, exist_ok=True)
     print(f"Bundling {src_path} to {dest_path.parent}")
     if src_path.is_dir():
