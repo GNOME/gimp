@@ -138,11 +138,11 @@ template_options_dialog_new (GimpTemplate *template,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   private->editor = gimp_template_editor_new (template, context->gimp, TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), private->editor, FALSE, FALSE, 0);
-  gtk_widget_show (private->editor);
+  gtk_widget_set_visible (private->editor, TRUE);
 
   g_object_unref (template);
 

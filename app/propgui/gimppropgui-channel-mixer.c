@@ -62,11 +62,11 @@ _gimp_prop_gui_new_channel_mixer (GObject                  *config,
 
   frame = gimp_frame_new (_("Red Channel"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   scale = gimp_prop_widget_new (config, "rr-gain",
                                 area, context, NULL, NULL, NULL, &label);
@@ -83,11 +83,11 @@ _gimp_prop_gui_new_channel_mixer (GObject                  *config,
 
   frame = gimp_frame_new (_("Green Channel"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   scale = gimp_prop_widget_new (config, "gr-gain",
                                 area, context, NULL, NULL, NULL, &label);
@@ -104,11 +104,11 @@ _gimp_prop_gui_new_channel_mixer (GObject                  *config,
 
   frame = gimp_frame_new (_("Blue Channel"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   scale = gimp_prop_widget_new (config, "br-gain",
                                 area, context, NULL, NULL, NULL, &label);

@@ -273,7 +273,7 @@ gimp_rotate_tool_dialog (GimpTransformGridTool *tg_tool)
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tg_tool->gui)), grid,
                       FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   rotate->angle_adj = gtk_adjustment_new (0, -180, 180, 0.1, 15, 0);
   button = gimp_spin_button_new (rotate->angle_adj, 1.0, 2);
@@ -293,7 +293,7 @@ gimp_rotate_tool_dialog (GimpTransformGridTool *tg_tool)
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_widget_set_hexpand (scale, TRUE);
   gtk_grid_attach (GTK_GRID (grid), scale, 1, 1, 2, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   adj = gtk_adjustment_new (0, -1, 1, 1, 10, 0);
   button = gimp_spin_button_new (adj, 1.0, 2);
@@ -319,7 +319,7 @@ gimp_rotate_tool_dialog (GimpTransformGridTool *tg_tool)
 
   rotate->pivot_selector = gimp_pivot_selector_new (0.0, 0.0, 0.0, 0.0);
   gtk_grid_attach (GTK_GRID (grid), rotate->pivot_selector, 2, 2, 1, 2);
-  gtk_widget_show (rotate->pivot_selector);
+  gtk_widget_set_visible (rotate->pivot_selector, TRUE);
 
   g_signal_connect (rotate->pivot_selector, "changed",
                     G_CALLBACK (rotate_pivot_changed),

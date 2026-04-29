@@ -164,7 +164,7 @@ convert_indexed_dialog_new (GimpImage                  *image,
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
 
   /*  palette  */
@@ -183,17 +183,17 @@ convert_indexed_dialog_new (GimpImage                  *image,
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
                                    private->palette_type);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /*  max n_colors  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox,
                              GIMP_CONVERT_PALETTE_GENERATE, TRUE);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("_Maximum number of colors:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   if (private->max_colors == 256 && gimp_image_has_alpha (image))
     private->max_colors = 255;
@@ -203,7 +203,7 @@ convert_indexed_dialog_new (GimpImage                  *image,
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -214,7 +214,7 @@ convert_indexed_dialog_new (GimpImage                  *image,
     {
       gimp_enum_radio_frame_add (GTK_FRAME (frame), palette_box,
                                  GIMP_CONVERT_PALETTE_CUSTOM, TRUE);
-      gtk_widget_show (palette_box);
+      gtk_widget_set_visible (palette_box, TRUE);
     }
 
   vbox = gtk_bin_get_child (GTK_BIN (frame));
@@ -225,7 +225,7 @@ convert_indexed_dialog_new (GimpImage                  *image,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 private->remove_duplicates);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 3);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   if (private->palette_type == GIMP_CONVERT_PALETTE_GENERATE ||
       private->palette_type == GIMP_CONVERT_PALETTE_MONO)
@@ -239,24 +239,24 @@ convert_indexed_dialog_new (GimpImage                  *image,
 
   frame = gimp_frame_new (_("Dithering"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("Color _dithering:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   combo = gimp_enum_combo_box_new (GIMP_TYPE_CONVERT_DITHER_TYPE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               private->dither_type,
@@ -268,7 +268,7 @@ convert_indexed_dialog_new (GimpImage                  *image,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 private->dither_alpha);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -280,7 +280,7 @@ convert_indexed_dialog_new (GimpImage                  *image,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 private->dither_text_layers);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),

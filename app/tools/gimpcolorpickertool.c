@@ -364,7 +364,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool,
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (picker_tool->gui)),
                       hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   picker_tool->color_frame1 = gimp_color_frame_new (gimp);
   gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (picker_tool->color_frame1),
@@ -377,7 +377,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool,
                           G_BINDING_SYNC_CREATE);
   gtk_box_pack_start (GTK_BOX (hbox), picker_tool->color_frame1,
                       FALSE, FALSE, 0);
-  gtk_widget_show (picker_tool->color_frame1);
+  gtk_widget_set_visible (picker_tool->color_frame1, TRUE);
 
   picker_tool->color_frame2 = gimp_color_frame_new (gimp);
   gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (picker_tool->color_frame2),
@@ -388,13 +388,13 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool,
                           G_BINDING_SYNC_CREATE);
   gtk_box_pack_start (GTK_BOX (hbox), picker_tool->color_frame2,
                       FALSE, FALSE, 0);
-  gtk_widget_show (picker_tool->color_frame2);
+  gtk_widget_set_visible (picker_tool->color_frame2, TRUE);
 
   frame = gtk_frame_new (NULL);
   gimp_widget_set_fully_opaque (frame, TRUE);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   color = gegl_color_new ("transparent");
   picker_tool->color_area =
@@ -408,7 +408,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool,
   gtk_widget_set_size_request (picker_tool->color_area, 48, -1);
   gtk_drag_dest_unset (picker_tool->color_area);
   gtk_container_add (GTK_CONTAINER (frame), picker_tool->color_area);
-  gtk_widget_show (picker_tool->color_area);
+  gtk_widget_set_visible (picker_tool->color_area, TRUE);
 
   g_list_free (drawables);
   g_object_unref (color);

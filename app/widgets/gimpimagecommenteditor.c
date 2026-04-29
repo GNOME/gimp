@@ -78,7 +78,7 @@ gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
   /* Vbox */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (editor), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* Scrolled winow */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -88,7 +88,7 @@ gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
                                   GTK_POLICY_AUTOMATIC);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 2);
   gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   /* Text view */
   text_view = gtk_text_view_new ();
@@ -101,7 +101,7 @@ gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
   gtk_text_view_set_right_margin (GTK_TEXT_VIEW (text_view), 6);
 
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
-  gtk_widget_show (text_view);
+  gtk_widget_set_visible (text_view, TRUE);
 
   /* Button */
   button = gtk_button_new_with_mnemonic (_("Use _default comment"));
@@ -111,7 +111,7 @@ gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
                              "Edit→Preferences→Default Image."),
                            NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_image_comment_editor_use_default_comment),

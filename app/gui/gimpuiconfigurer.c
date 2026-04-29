@@ -421,7 +421,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
                                original_size.height);
 
   /* Don't forget to show the window */
-  gtk_widget_show (dock_window);
+  gtk_widget_set_visible (dock_window, TRUE);
 
   g_list_free (docks);
 }
@@ -468,7 +468,7 @@ gimp_ui_configurer_separate_shells (GimpUIConfigurer *ui_configurer,
       gtk_widget_set_size_request (GTK_WIDGET (new_image_window), 640, 480);
 
       /* Show after we have added the shell */
-      gtk_widget_show (GTK_WIDGET (new_image_window));
+      gtk_widget_set_visible (GTK_WIDGET (new_image_window), TRUE);
     }
 
   /* If none of the shells were active, I assume the first one is. */

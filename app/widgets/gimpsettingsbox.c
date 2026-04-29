@@ -297,7 +297,7 @@ gimp_settings_box_constructed (GObject *object)
                                         gimp_settings_box_row_separator_func,
                                         NULL, NULL);
   gtk_box_pack_start (GTK_BOX (box), private->combo, TRUE, TRUE, 0);
-  gtk_widget_show (private->combo);
+  gtk_widget_set_visible (private->combo, TRUE);
 
   gimp_help_set_help_data (private->combo, _("Pick a preset from the list"),
                            NULL);
@@ -309,18 +309,18 @@ gimp_settings_box_constructed (GObject *object)
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_set_homogeneous (GTK_BOX (hbox2), TRUE);
   gtk_box_pack_start (GTK_BOX (box), hbox2, FALSE, FALSE, 0);
-  gtk_widget_show (hbox2);
+  gtk_widget_set_visible (hbox2, TRUE);
 
   button = gtk_button_new ();
   gtk_widget_set_can_focus (button, FALSE);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_LIST_ADD,
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   gimp_help_set_help_data (button,
                            _("Save the current settings as named preset"),
@@ -334,12 +334,12 @@ gimp_settings_box_constructed (GObject *object)
   gtk_widget_set_can_focus (button, FALSE);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   arrow = gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), arrow);
-  gtk_widget_show (arrow);
+  gtk_widget_set_visible (arrow, TRUE);
 
   gimp_help_set_help_data (button, _("Manage presets"), NULL);
 
@@ -519,7 +519,7 @@ gimp_settings_box_menu_item_add (GimpSettingsBox *box,
     }
 
   gtk_menu_shell_append (GTK_MENU_SHELL (private->menu), item);
-  gtk_widget_show (item);
+  gtk_widget_set_visible (item, TRUE);
 
   return item;
 }
@@ -590,7 +590,7 @@ gimp_settings_box_favorite_activate (GtkWidget       *widget,
                                   G_OBJECT (toplevel), "hide",
                                   gimp_settings_box_favorite_callback,
                                   box, NULL);
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 static void
@@ -653,9 +653,9 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (private->editor_dialog));
   gtk_box_pack_start (GTK_BOX (content_area), editor, TRUE, TRUE, 0);
-  gtk_widget_show (editor);
+  gtk_widget_set_visible (editor, TRUE);
 
-  gtk_widget_show (private->editor_dialog);
+  gtk_widget_set_visible (private->editor_dialog, TRUE);
 }
 
 static void
@@ -775,7 +775,7 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
   g_signal_emit (box, settings_box_signals[FILE_DIALOG_SETUP], 0,
                  private->file_dialog, save);
 
-  gtk_widget_show (private->file_dialog);
+  gtk_widget_set_visible (private->file_dialog, TRUE);
 }
 
 static void

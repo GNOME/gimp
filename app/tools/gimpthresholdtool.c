@@ -238,18 +238,18 @@ gimp_threshold_tool_dialog (GimpFilterTool *filter_tool)
 
   main_frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), main_frame, TRUE, TRUE, 0);
-  gtk_widget_show (main_frame);
+  gtk_widget_set_visible (main_frame, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_frame_set_label_widget (GTK_FRAME (main_frame), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("Cha_nnel:"));
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   t_tool->channel_menu = gimp_prop_enum_combo_box_new (filter_tool->config,
                                                        "channel", -1, -1);
@@ -269,11 +269,11 @@ gimp_threshold_tool_dialog (GimpFilterTool *filter_tool)
 
   frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
-  gtk_widget_show (frame_vbox);
+  gtk_widget_set_visible (frame_vbox, TRUE);
 
   box = gimp_histogram_box_new ();
   gtk_box_pack_start (GTK_BOX (frame_vbox), box, TRUE, TRUE, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   t_tool->histogram_box = GIMP_HISTOGRAM_BOX (box);
 
@@ -294,13 +294,13 @@ gimp_threshold_tool_dialog (GimpFilterTool *filter_tool)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("_Auto"));
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gimp_help_set_help_data (button, _("Automatically adjust to optimal "
                                      "binarization threshold"), NULL);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_threshold_tool_auto_clicked),

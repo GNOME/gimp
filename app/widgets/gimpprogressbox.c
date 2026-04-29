@@ -80,7 +80,7 @@ gimp_progress_box_init (GimpProgressBox *box)
   box->progress = gtk_progress_bar_new ();
   gtk_widget_set_size_request (box->progress, 250, 20);
   gtk_box_pack_start (GTK_BOX (box), box->progress, FALSE, FALSE, 0);
-  gtk_widget_show (box->progress);
+  gtk_widget_set_visible (box->progress, TRUE);
 
   box->label = gtk_label_new ("");
   gtk_label_set_ellipsize (GTK_LABEL (box->label), PANGO_ELLIPSIZE_MIDDLE);
@@ -89,7 +89,7 @@ gimp_progress_box_init (GimpProgressBox *box)
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (box), box->label, FALSE, FALSE, 0);
-  gtk_widget_show (box->label);
+  gtk_widget_set_visible (box->label, TRUE);
 }
 
 static void

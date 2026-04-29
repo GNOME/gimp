@@ -112,13 +112,13 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
     gimp_enum_combo_box_new (GIMP_TYPE_DYNAMICS_OUTPUT_TYPE);
   gtk_box_pack_start (GTK_BOX (data_editor), editor->view_selector,
                       FALSE, FALSE, 0);
-  gtk_widget_show (editor->view_selector);
+  gtk_widget_set_visible (editor->view_selector, TRUE);
 
   editor->notebook = gtk_notebook_new ();
   gtk_notebook_set_show_border (GTK_NOTEBOOK (editor->notebook), FALSE);
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (editor->notebook), FALSE);
   gtk_box_pack_start (GTK_BOX (editor), editor->notebook, TRUE, TRUE, 0);
-  gtk_widget_show (editor->notebook);
+  gtk_widget_set_visible (editor->notebook, TRUE);
 }
 
 static void
@@ -139,11 +139,11 @@ gimp_dynamics_editor_constructed (GObject *object)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (editor->notebook),
                             vbox, NULL);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   icon_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), icon_box, FALSE, FALSE, 0);
-  gtk_widget_show (icon_box);
+  gtk_widget_set_visible (icon_box, TRUE);
 
   gimp_dynamics_editor_add_icon_editor (dynamics,
                                         data_editor->context->gimp,
@@ -151,7 +151,7 @@ gimp_dynamics_editor_constructed (GObject *object)
 
   grid = gtk_grid_new ();
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   gimp_dynamics_editor_init_output_editors (dynamics,
                                             editor->view_selector,
@@ -172,7 +172,7 @@ gimp_dynamics_editor_constructed (GObject *object)
       gtk_label_set_yalign (GTK_LABEL (input_labels[i]), 1.0);
 
       gtk_grid_attach (GTK_GRID (grid), input_labels[i], i + 1, 0, 1, 1);
-      gtk_widget_show (input_labels[i]);
+      gtk_widget_set_visible (input_labels[i], TRUE);
     }
 
   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (editor->view_selector),
@@ -308,11 +308,11 @@ gimp_dynamics_editor_add_icon_editor (GimpDynamics *dynamics,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new (_("Icon:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   button = gimp_prop_icon_picker_new (GIMP_VIEWABLE (dynamics), gimp);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -330,7 +330,7 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
   label = gtk_label_new (row_label);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (grid, label, 0, row, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   dynamics_check_button_new (config, "use-pressure",
                              grid, column, row);
@@ -408,7 +408,7 @@ gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
       output_editor = gimp_dynamics_output_editor_new (output);
 
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), output_editor, NULL);
-      gtk_widget_show (output_editor);
+      gtk_widget_set_visible (output_editor, TRUE);
 
       gtk_list_store_set (GTK_LIST_STORE (list), &iter,
                           GIMP_INT_STORE_USER_DATA, output_editor,

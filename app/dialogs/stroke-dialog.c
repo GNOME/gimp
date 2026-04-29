@@ -150,20 +150,20 @@ stroke_dialog_new (GList              *items,
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
 
   /* switcher */
 
   switcher = gtk_stack_switcher_new ();
   gtk_box_pack_start (GTK_BOX (main_vbox), switcher, TRUE, TRUE, 0);
-  gtk_widget_show (switcher);
+  gtk_widget_set_visible (switcher, TRUE);
 
   stack = gtk_stack_new ();
   gtk_stack_switcher_set_stack (GTK_STACK_SWITCHER (switcher),
                                 GTK_STACK (stack));
   gtk_box_pack_start (GTK_BOX (main_vbox), stack, TRUE, TRUE, 0);
-  gtk_widget_show (stack);
+  gtk_widget_set_visible (stack, TRUE);
 
   /*  the stroke frame  */
 
@@ -172,7 +172,7 @@ stroke_dialog_new (GList              *items,
                         frame,
                         "stroke-tool",
                         _("Line"));
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   {
     GtkWidget *stroke_editor;
@@ -184,7 +184,7 @@ stroke_dialog_new (GList              *items,
     stroke_editor = gimp_stroke_editor_new (private->options, yres, FALSE,
                                             FALSE);
     gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
-    gtk_widget_show (stroke_editor);
+    gtk_widget_set_visible (stroke_editor, TRUE);
 
   }
 
@@ -196,7 +196,7 @@ stroke_dialog_new (GList              *items,
                         frame,
                         "paint-tool",
                         _("Paint tool"));
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   {
     GtkWidget *vbox;
@@ -207,21 +207,21 @@ stroke_dialog_new (GList              *items,
 
     vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add (GTK_CONTAINER (frame), vbox);
-    gtk_widget_show (vbox);
+    gtk_widget_set_visible (vbox, TRUE);
 
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
+    gtk_widget_set_visible (hbox, TRUE);
 
     label = gtk_label_new_with_mnemonic (_("P_aint tool:"));
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-    gtk_widget_show (label);
+    gtk_widget_set_visible (label, TRUE);
 
     combo = gimp_container_combo_box_new (image->gimp->paint_info_list,
                                           GIMP_CONTEXT (private->options),
                                           16, 0);
     gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-    gtk_widget_show (combo);
+    gtk_widget_set_visible (combo, TRUE);
 
     switch (gimp_stroke_options_get_method (private->options))
       {

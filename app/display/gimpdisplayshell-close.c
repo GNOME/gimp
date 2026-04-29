@@ -222,7 +222,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_markup (GTK_LABEL (label), markup);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   g_free (markup);
   g_free (hint);
@@ -254,7 +254,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
 
   gimp_display_shell_close_time_changed (box);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 static void

@@ -95,7 +95,7 @@ gimp_container_popup_init (GimpContainerPopup *popup)
   popup->frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (popup->frame), GTK_SHADOW_OUT);
   gtk_container_add (GTK_CONTAINER (popup), popup->frame);
-  gtk_widget_show (popup->frame);
+  gtk_widget_set_visible (popup->frame, TRUE);
 }
 
 static void
@@ -299,7 +299,7 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
                                                      GTK_SEARCH_ENTRY (entry));
         }
 
-      gtk_widget_show (entry);
+      gtk_widget_set_visible (entry, TRUE);
     }
 
   /* lame workaround for bug #761998 */
@@ -324,7 +324,7 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
     gimp_editor_set_show_name (GIMP_EDITOR (popup->editor->view), FALSE);
 
   gtk_container_add (GTK_CONTAINER (popup->frame), GTK_WIDGET (popup->editor));
-  gtk_widget_show (GTK_WIDGET (popup->editor));
+  gtk_widget_set_visible (GTK_WIDGET (popup->editor), TRUE);
 
   editor = GIMP_EDITOR (popup->editor->view);
 

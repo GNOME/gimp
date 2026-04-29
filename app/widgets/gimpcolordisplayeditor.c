@@ -131,11 +131,11 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   paned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
   gtk_paned_set_wide_handle (GTK_PANED (paned), TRUE);
   gtk_box_pack_start (GTK_BOX (editor), paned, TRUE, TRUE, 0);
-  gtk_widget_show (paned);
+  gtk_widget_set_visible (paned, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_paned_pack1 (GTK_PANED (paned), hbox, FALSE, FALSE);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
@@ -144,7 +144,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_NEVER);
   gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_win);
+  gtk_widget_set_visible (scrolled_win, TRUE);
 
   editor->src = gtk_list_store_new (N_SRC_COLUMNS,
                                     G_TYPE_STRING,
@@ -174,7 +174,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
                                        NULL);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), tv);
-  gtk_widget_show (tv);
+  gtk_widget_set_visible (tv, TRUE);
 
   editor->src_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
 
@@ -185,17 +185,17 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_set_homogeneous (GTK_BOX (vbox), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   editor->add_button = gtk_button_new ();
   gtk_box_pack_start (GTK_BOX (vbox), editor->add_button, TRUE, FALSE, 0);
   gtk_widget_set_sensitive (editor->add_button, FALSE);
-  gtk_widget_show (editor->add_button);
+  gtk_widget_set_visible (editor->add_button, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (editor->add_button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (editor->add_button, "clicked",
                     G_CALLBACK (gimp_color_display_editor_add_clicked),
@@ -204,12 +204,12 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   editor->remove_button = gtk_button_new ();
   gtk_box_pack_start (GTK_BOX (vbox), editor->remove_button, TRUE, FALSE, 0);
   gtk_widget_set_sensitive (editor->remove_button, FALSE);
-  gtk_widget_show (editor->remove_button);
+  gtk_widget_set_visible (editor->remove_button, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (editor->remove_button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (editor->remove_button, "clicked",
                     G_CALLBACK (gimp_color_display_editor_remove_clicked),
@@ -217,7 +217,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   ed = gimp_editor_new ();
   gtk_box_pack_start (GTK_BOX (hbox), ed, TRUE, TRUE, 0);
-  gtk_widget_show (ed);
+  gtk_widget_set_visible (ed, TRUE);
 
   editor->up_button =
     gimp_editor_add_button (GIMP_EDITOR (ed),
@@ -247,7 +247,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (ed), scrolled_win, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_win);
+  gtk_widget_set_visible (scrolled_win, TRUE);
 
   editor->dest = gtk_list_store_new (N_DEST_COLUMNS,
                                      G_TYPE_BOOLEAN,
@@ -274,7 +274,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   image = gtk_image_new_from_icon_name (GIMP_ICON_VISIBLE,
                                         GTK_ICON_SIZE_MENU);
   gtk_tree_view_column_set_widget (column, image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   column = gtk_tree_view_column_new ();
   gtk_tree_view_column_set_title (column, _("Active Filters"));
@@ -293,7 +293,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
                                        NULL);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), tv);
-  gtk_widget_show (tv);
+  gtk_widget_set_visible (tv, TRUE);
 
   editor->dest_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
 
@@ -305,27 +305,27 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_paned_pack2 (GTK_PANED (paned), vbox, TRUE, FALSE);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   editor->config_frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), editor->config_frame, TRUE, TRUE, 0);
-  gtk_widget_show (editor->config_frame);
+  gtk_widget_set_visible (editor->config_frame, TRUE);
 
   editor->config_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (editor->config_frame), editor->config_box);
-  gtk_widget_show (editor->config_box);
+  gtk_widget_set_visible (editor->config_box, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_end (GTK_BOX (editor->config_box), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   editor->reset_button = gtk_button_new_with_mnemonic (_("_Reset"));
   gtk_box_pack_end (GTK_BOX (hbox), editor->reset_button, FALSE, FALSE, 0);
-  gtk_widget_show (editor->reset_button);
+  gtk_widget_set_visible (editor->reset_button, TRUE);
 
   gimp_help_set_help_data (editor->reset_button,
                            _("Reset the selected filter to default values"),
@@ -593,7 +593,7 @@ gimp_color_display_editor_dest_changed (GtkTreeSelection       *sel,
     {
       gtk_box_pack_start (GTK_BOX (editor->config_box), editor->config_widget,
                           FALSE, FALSE, 0);
-      gtk_widget_show (editor->config_widget);
+      gtk_widget_set_visible (editor->config_widget, TRUE);
 
       g_object_add_weak_pointer (G_OBJECT (editor->config_widget),
                                  (gpointer) &editor->config_widget);

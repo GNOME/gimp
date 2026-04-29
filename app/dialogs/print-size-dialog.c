@@ -144,12 +144,12 @@ print_size_dialog_new (GimpImage              *image,
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 12);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /*  the print size entry  */
 
@@ -172,30 +172,30 @@ print_size_dialog_new (GimpImage              *image,
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), width);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("H_eight:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), height);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_grid_attach (GTK_GRID (grid), hbox, 1, 0, 1, 2);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_show (entry);
+  gtk_widget_set_visible (entry, TRUE);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
   gtk_grid_attach (GTK_GRID (entry), height, 0, 1, 1, 1);
-  gtk_widget_show (height);
+  gtk_widget_set_visible (height, TRUE);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (width), NULL);
   gtk_grid_attach (GTK_GRID (entry), width, 0, 0, 1, 1);
-  gtk_widget_show (width);
+  gtk_widget_set_visible (width, TRUE);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0,
                                   private->xres, FALSE);
@@ -228,17 +228,17 @@ print_size_dialog_new (GimpImage              *image,
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), width);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("_Y resolution:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), height);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 3, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_grid_attach (GTK_GRID (grid), hbox, 1, 2, 1, 2);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   entry = gimp_size_entry_new (0, gimp_image_get_unit (image), _("pixels/%a"),
                                FALSE, FALSE, FALSE, SB_WIDTH,
@@ -246,17 +246,17 @@ print_size_dialog_new (GimpImage              *image,
   private->resolution_entry = GIMP_SIZE_ENTRY (entry);
 
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_show (entry);
+  gtk_widget_set_visible (entry, TRUE);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
   gtk_grid_attach (GTK_GRID (entry), height, 0, 1, 1, 1);
-  gtk_widget_show (height);
+  gtk_widget_set_visible (height, TRUE);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (width), NULL);
   gtk_grid_attach (GTK_GRID (entry), width, 0, 0, 1, 1);
-  gtk_widget_show (width);
+  gtk_widget_set_visible (width, TRUE);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 0,
                                          GIMP_MIN_RESOLUTION,
@@ -272,7 +272,7 @@ print_size_dialog_new (GimpImage              *image,
   if (ABS (private->xres - private->yres) < GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
   gtk_grid_attach (GTK_GRID (entry), chain, 1, 0, 1, 2);
-  gtk_widget_show (chain);
+  gtk_widget_set_visible (chain, TRUE);
 
   private->chain = GIMP_CHAIN_BUTTON (chain);
 

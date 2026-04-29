@@ -66,15 +66,15 @@ gimp_action_editor_init (GimpActionEditor *editor)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("_Search:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_show (entry);
+  gtk_widget_set_visible (entry, TRUE);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
 
@@ -111,12 +111,12 @@ gimp_action_editor_new (Gimp        *gimp,
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   editor->view = gimp_action_view_new (gimp, select_action, show_shortcuts);
   gtk_widget_set_size_request (editor->view, 300, 400);
   gtk_container_add (GTK_CONTAINER (scrolled_window), editor->view);
-  gtk_widget_show (editor->view);
+  gtk_widget_set_visible (editor->view, TRUE);
 
   return GTK_WIDGET (editor);
 }

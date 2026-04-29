@@ -114,7 +114,7 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
                                          vbox2, NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   return vbox;
 }

@@ -187,20 +187,20 @@ dashboard_log_record_cmd_callback (GimpAction *action,
 
           hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
           gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), hbox);
-          gtk_widget_show (hbox);
+          gtk_widget_set_visible (hbox, TRUE);
 
           hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
           gimp_help_set_help_data (hbox2, _("Log samples per second"), NULL);
           gtk_box_pack_start (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
-          gtk_widget_show (hbox2);
+          gtk_widget_set_visible (hbox2, TRUE);
 
           label = gtk_label_new_with_mnemonic (_("Sample fre_quency:"));
           gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
 
           spinbutton = gimp_spin_button_new_with_range (1, 1000, 1);
           gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
-          gtk_widget_show (spinbutton);
+          gtk_widget_set_visible (spinbutton, TRUE);
 
           gtk_spin_button_set_value (GTK_SPIN_BUTTON (spinbutton),
                                      info->params.sample_frequency);
@@ -217,7 +217,7 @@ dashboard_log_record_cmd_callback (GimpAction *action,
           gimp_help_set_help_data (toggle, _("Include backtraces in log"),
                                    NULL);
           gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-          gtk_widget_show (toggle);
+          gtk_widget_set_visible (toggle, TRUE);
 
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                         info->params.backtrace);
@@ -231,7 +231,7 @@ dashboard_log_record_cmd_callback (GimpAction *action,
                                    _("Include diagnostic messages in log"),
                                    NULL);
           gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-          gtk_widget_show (toggle);
+          gtk_widget_set_visible (toggle, TRUE);
 
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                         info->params.messages);
@@ -246,7 +246,7 @@ dashboard_log_record_cmd_callback (GimpAction *action,
                                      "even if not properly terminated"),
                                    NULL);
           gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-          gtk_widget_show (toggle);
+          gtk_widget_set_visible (toggle, TRUE);
 
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                         info->params.progressive);

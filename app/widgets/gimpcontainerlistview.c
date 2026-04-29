@@ -155,7 +155,7 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
   gtk_list_box_set_activate_on_single_click (priv->view, FALSE);
   gtk_container_add (GTK_CONTAINER (box->scrolled_win),
                      GTK_WIDGET (priv->view));
-  gtk_widget_show (GTK_WIDGET (priv->view));
+  gtk_widget_set_visible (GTK_WIDGET (priv->view), TRUE);
 
   g_signal_connect (priv->view, "selected-rows-changed",
                     G_CALLBACK (gimp_container_list_view_selected_rows_changed),

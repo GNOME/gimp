@@ -113,7 +113,7 @@ gimp_gradient_select_constructed (GObject *object)
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
   gtk_box_pack_start (GTK_BOX (content_area), dialog->view, TRUE, TRUE, 0);
-  gtk_widget_show (dialog->view);
+  gtk_widget_set_visible (dialog->view, TRUE);
 }
 
 static void

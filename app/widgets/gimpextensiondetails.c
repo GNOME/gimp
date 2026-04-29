@@ -96,7 +96,7 @@ gimp_extension_details_set (GimpExtensionDetails *details,
   gtk_grid_set_column_homogeneous (GTK_GRID (grid), FALSE);
   gtk_grid_set_row_homogeneous (GTK_GRID (grid), FALSE);
   gtk_container_add (GTK_CONTAINER (details), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   if (extension)
     {
@@ -134,7 +134,7 @@ gimp_extension_details_set (GimpExtensionDetails *details,
           gtk_text_buffer_insert_markup (buffer, &iter, desc, -1);
           g_free (desc);
         }
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
     }
 }
 
@@ -165,7 +165,7 @@ gimp_extension_details_size_allocate (GimpExtensionDetails *details,
           gtk_widget_set_vexpand (widget, FALSE);
           gtk_widget_set_hexpand (widget, FALSE);
           gtk_grid_attach (grid, widget, 1, 0, 1, 1);
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
 
           g_object_unref (pixbuf);
         }

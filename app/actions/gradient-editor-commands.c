@@ -425,7 +425,7 @@ gradient_editor_replicate_cmd_callback (GimpAction *action,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /*  Instructions  */
   if (left == right)
@@ -436,7 +436,7 @@ gradient_editor_replicate_cmd_callback (GimpAction *action,
                              "to replicate the selection."));
 
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   /*  Scale  */
   scale_data = gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0);
@@ -445,7 +445,7 @@ gradient_editor_replicate_cmd_callback (GimpAction *action,
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, TRUE, 4);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   g_object_set_data (G_OBJECT (dialog), "adjustment", scale_data);
 
@@ -453,7 +453,7 @@ gradient_editor_replicate_cmd_callback (GimpAction *action,
   gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
                           gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 void
@@ -537,7 +537,7 @@ gradient_editor_split_uniformly_cmd_callback (GimpAction *action,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /*  Instructions  */
   if (left == right)
@@ -548,7 +548,7 @@ gradient_editor_split_uniformly_cmd_callback (GimpAction *action,
                              "in which to split the segments in the selection."));
 
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   /*  Scale  */
   scale_data = gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0);
@@ -557,7 +557,7 @@ gradient_editor_split_uniformly_cmd_callback (GimpAction *action,
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 4);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   g_object_set_data (G_OBJECT (dialog), "adjustment", scale_data);
 
@@ -565,7 +565,7 @@ gradient_editor_split_uniformly_cmd_callback (GimpAction *action,
   gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
                           gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 void

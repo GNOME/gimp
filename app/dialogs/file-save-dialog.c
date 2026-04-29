@@ -276,7 +276,7 @@ file_save_dialog_response (GtkWidget *dialog,
                  */
                 gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
                                                           parent_dir, NULL);
-                gtk_widget_show (dialog);
+                gtk_widget_set_visible (dialog, TRUE);
                 g_object_unref (parent_dir);
               }
           }
@@ -704,7 +704,7 @@ file_save_dialog_switch_dialogs (GimpFileDialog *file_dialog,
           gtk_label_set_xalign (GTK_LABEL (label), 0.0);
           gtk_box_pack_start (GTK_BOX (GIMP_MESSAGE_DIALOG (dialog)->box), label,
                               FALSE, FALSE, 0);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
 
           g_signal_connect (label, "activate-link",
                             G_CALLBACK (file_save_other_dialog_activated),

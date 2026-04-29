@@ -130,12 +130,12 @@ gimp_tool_preset_editor_constructed (GObject *object)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (data_editor), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   editor->priv->tool_icon = gtk_image_new ();
   gtk_box_pack_start (GTK_BOX (hbox), editor->priv->tool_icon,
                       FALSE, FALSE, 0);
-  gtk_widget_show (editor->priv->tool_icon);
+  gtk_widget_set_visible (editor->priv->tool_icon, TRUE);
 
   editor->priv->tool_label = gtk_label_new ("");
   gimp_label_set_attributes (GTK_LABEL (editor->priv->tool_label),
@@ -143,15 +143,15 @@ gimp_tool_preset_editor_constructed (GObject *object)
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), editor->priv->tool_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (editor->priv->tool_label);
+  gtk_widget_set_visible (editor->priv->tool_label, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (data_editor), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new (_("Icon:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   button = gimp_prop_icon_picker_new (GIMP_VIEWABLE (preset),
                                       data_editor->context->gimp);

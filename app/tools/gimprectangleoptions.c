@@ -716,19 +716,19 @@ gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *widget,
   switch (private->fixed_rule)
     {
     case GIMP_RECTANGLE_FIXED_ASPECT:
-      gtk_widget_show (private->fixed_aspect_hbox);
+      gtk_widget_set_visible (private->fixed_aspect_hbox, TRUE);
       break;
 
     case GIMP_RECTANGLE_FIXED_WIDTH:
-      gtk_widget_show (private->fixed_width_entry);
+      gtk_widget_set_visible (private->fixed_width_entry, TRUE);
       break;
 
     case GIMP_RECTANGLE_FIXED_HEIGHT:
-      gtk_widget_show (private->fixed_height_entry);
+      gtk_widget_set_visible (private->fixed_height_entry, TRUE);
       break;
 
     case GIMP_RECTANGLE_FIXED_SIZE:
-      gtk_widget_show (private->fixed_size_hbox);
+      gtk_widget_set_visible (private->fixed_size_hbox, TRUE);
       break;
     }
 }
@@ -780,13 +780,13 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   /*  title  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   label = gtk_label_new (table_label);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_size_group_add_widget (label_group, label);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   menu = gimp_prop_unit_combo_box_new (config, unit_property_name);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
@@ -794,14 +794,14 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   /*  content  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   *entry = gimp_size_entry_new (1, unit_value, "%a", TRUE, TRUE, FALSE,
                                 SB_WIDTH, GIMP_SIZE_ENTRY_UPDATE_SIZE);
@@ -810,7 +810,7 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (*entry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_box_pack_start (GTK_BOX (hbox), *entry, FALSE, FALSE, 0);
-  gtk_widget_show (*entry);
+  gtk_widget_set_visible (*entry, TRUE);
 
   gimp_prop_coordinates_connect (config,
                                  x_property_name, y_property_name,
@@ -847,13 +847,13 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
     frame = gimp_frame_new (NULL);
     gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-    gtk_widget_show (frame);
+    gtk_widget_set_visible (frame, TRUE);
 
     /* Setup frame title widgets */
 
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
-    gtk_widget_show (hbox);
+    gtk_widget_set_visible (hbox, TRUE);
 
     button = gimp_prop_check_button_new (config, "fixed-rule-active", NULL);
     gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (button)));
@@ -876,7 +876,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
     vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add (GTK_CONTAINER (frame), vbox2);
-    gtk_widget_show (vbox2);
+    gtk_widget_set_visible (vbox2, TRUE);
 
     size_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
 
@@ -997,7 +997,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                                            label_group,
                                                            &private->position_entry);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /* Width, Height */
   frame = gimp_rectangle_options_prop_dimension_frame_new (config,
@@ -1007,7 +1007,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                                            label_group,
                                                            &private->size_entry);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   g_object_unref (label_group);
 
@@ -1036,7 +1036,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), private->auto_shrink_button,
                       FALSE, FALSE, 0);
   gtk_widget_set_sensitive (private->auto_shrink_button, FALSE);
-  gtk_widget_show (private->auto_shrink_button);
+  gtk_widget_set_visible (private->auto_shrink_button, TRUE);
 
   button = gimp_prop_check_button_new (config, "shrink-merged", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);

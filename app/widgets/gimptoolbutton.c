@@ -431,7 +431,7 @@ gimp_tool_button_query_tooltip_add_tool (GimpToolButton *tool_button,
                    image,
                    0, row,
                    1, 1);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   label = gtk_label_new (label_str);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
@@ -439,7 +439,7 @@ gimp_tool_button_query_tooltip_add_tool (GimpToolButton *tool_button,
                    label,
                    1, row,
                    1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   if (action)
     {
@@ -452,7 +452,7 @@ gimp_tool_button_query_tooltip_add_tool (GimpToolButton *tool_button,
                        accel_label,
                        2, row,
                        1, 1);
-      gtk_widget_show (accel_label);
+      gtk_widget_set_visible (accel_label, TRUE);
     }
 
   return label;
@@ -493,7 +493,7 @@ gimp_tool_button_query_tooltip (GtkWidget  *widget,
 
       grid = gtk_grid_new ();
       gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       tool_button->priv->tooltip_widget = g_object_ref_sink (grid);
 
@@ -519,7 +519,7 @@ gimp_tool_button_query_tooltip (GtkWidget  *widget,
                            label,
                            1, row++,
                            1, 1);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
         }
 
       g_strfreev (tooltip_labels);
@@ -549,7 +549,7 @@ gimp_tool_button_query_tooltip (GtkWidget  *widget,
                                label,
                                0, row++,
                                3, 1);
-              gtk_widget_show (label);
+              gtk_widget_set_visible (label, TRUE);
 
               for (i = 0; i < n_children; i++)
                 {
@@ -977,25 +977,25 @@ gimp_tool_button_add_menu_item (GimpToolButton *tool_button,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_container_add (GTK_CONTAINER (item), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   image = gtk_image_new_from_icon_name (
     gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)),
     icon_size);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   label = gtk_accel_label_new (tool_info->label);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   if (action)
     {
       label = gimp_accel_label_new (action);
       gtk_label_set_xalign (GTK_LABEL (label), 1.0);
       gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       /* TODO: while porting to GAction, this part seems useless, as the toolbox
        * is perfectly working. But maybe I'm missing something. So leaving this

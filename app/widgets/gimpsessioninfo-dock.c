@@ -368,7 +368,7 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
       return NULL;
     }
 
-  gtk_widget_show (dock);
+  gtk_widget_set_visible (dock, TRUE);
 
   return GIMP_DOCK (dock);
 }

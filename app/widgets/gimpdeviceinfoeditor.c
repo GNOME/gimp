@@ -201,7 +201,7 @@ gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
 
   private->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (editor), private->vbox, TRUE, TRUE, 0);
-  gtk_widget_show (private->vbox);
+  gtk_widget_set_visible (private->vbox, TRUE);
 }
 
 static void
@@ -227,13 +227,13 @@ gimp_device_info_editor_constructed (GObject *object)
   frame = gimp_frame_new (_("General"));
   gtk_box_pack_start (GTK_BOX (private->vbox), frame, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (private->vbox), frame, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (private->info), "mode",
                                         0, 0);
@@ -306,19 +306,19 @@ gimp_device_info_editor_constructed (GObject *object)
 
       frame = gimp_frame_new (_("Pressure Curve"));
       gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       curve = gimp_device_info_get_curve (private->info, GDK_AXIS_PRESSURE);
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
       gtk_box_set_spacing (GTK_BOX (vbox), 6);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
 
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
       gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       view = gimp_curve_view_new ();
       g_object_set (view,
@@ -329,18 +329,18 @@ gimp_device_info_editor_constructed (GObject *object)
                                    CURVE_SIZE + CURVE_BORDER * 2,
                                    CURVE_SIZE + CURVE_BORDER * 2);
       gtk_container_add (GTK_CONTAINER (frame), view);
-      gtk_widget_show (view);
+      gtk_widget_set_visible (view, TRUE);
 
       gimp_curve_view_set_curve (GIMP_CURVE_VIEW (view), curve, NULL);
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
       gtk_box_set_spacing (GTK_BOX (hbox), 6);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       label = gtk_label_new_with_mnemonic (_("Curve _type:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       combo = gimp_prop_enum_combo_box_new (G_OBJECT (curve),
                                             "curve-type", 0, 0);
@@ -352,7 +352,7 @@ gimp_device_info_editor_constructed (GObject *object)
 
       button = gtk_button_new_with_mnemonic (_("_Reset Curve"));
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       g_signal_connect (button, "clicked",
                         G_CALLBACK (gimp_device_info_editor_curve_reset),
@@ -369,19 +369,19 @@ gimp_device_info_editor_constructed (GObject *object)
 
       frame = gimp_frame_new (_("Pad Actions"));
       gtk_box_pack_start (GTK_BOX (private->vbox), frame, TRUE, TRUE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
 
       sw = gtk_scrolled_window_new (NULL, NULL);
       gtk_box_pack_start (GTK_BOX (vbox), sw, TRUE, TRUE, 0);
-      gtk_widget_show (sw);
+      gtk_widget_set_visible (sw, TRUE);
 
       private->pad_action_view = gtk_tree_view_new ();
       gtk_container_add (GTK_CONTAINER (sw), private->pad_action_view);
-      gtk_widget_show (private->pad_action_view);
+      gtk_widget_set_visible (private->pad_action_view, TRUE);
 
       g_signal_connect (private->pad_action_view, "row-activated",
                         G_CALLBACK (gimp_device_info_editor_pad_row_edit),
@@ -443,11 +443,11 @@ gimp_device_info_editor_constructed (GObject *object)
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       private->pad_grab_button = gtk_toggle_button_new_with_mnemonic (_("_Grab event"));
       gtk_box_pack_start (GTK_BOX (hbox), private->pad_grab_button, TRUE, TRUE, 0);
-      gtk_widget_show (private->pad_grab_button);
+      gtk_widget_set_visible (private->pad_grab_button, TRUE);
 
       g_signal_connect (private->pad_grab_button, "toggled",
                         G_CALLBACK (gimp_device_info_editor_grab_toggled),
@@ -462,7 +462,7 @@ gimp_device_info_editor_constructed (GObject *object)
         gtk_button_new_with_mnemonic (_("_Edit event"));
       gtk_box_pack_start (GTK_BOX (hbox), private->pad_edit_button,
                           TRUE, TRUE, 0);
-      gtk_widget_show (private->pad_edit_button);
+      gtk_widget_set_visible (private->pad_edit_button, TRUE);
 
       g_signal_connect (private->pad_edit_button, "clicked",
                         G_CALLBACK (gimp_device_info_editor_edit_clicked),
@@ -472,7 +472,7 @@ gimp_device_info_editor_constructed (GObject *object)
         gtk_button_new_with_mnemonic (_("_Clear event"));
       gtk_box_pack_start (GTK_BOX (hbox), private->pad_delete_button,
                           TRUE, TRUE, 0);
-      gtk_widget_show (private->pad_delete_button);
+      gtk_widget_set_visible (private->pad_delete_button, TRUE);
 
       g_signal_connect (private->pad_delete_button, "clicked",
                         G_CALLBACK (gimp_device_info_editor_delete_clicked),
@@ -860,7 +860,7 @@ gimp_device_info_editor_edit_clicked (GtkWidget            *button,
       gtk_container_set_border_width (GTK_CONTAINER (view), 12);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (private->pad_edit_dialog))),
                           view, TRUE, TRUE, 0);
-      gtk_widget_show (view);
+      gtk_widget_set_visible (view, TRUE);
 
       g_signal_connect (GIMP_ACTION_EDITOR (view)->view, "row-activated",
                         G_CALLBACK (gimp_device_info_editor_edit_activated),
@@ -871,7 +871,7 @@ gimp_device_info_editor_edit_clicked (GtkWidget            *button,
          gtk_tree_view_get_selection (GTK_TREE_VIEW (GIMP_ACTION_EDITOR (view)->view)));
 
       gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
-      gtk_widget_show (private->pad_edit_dialog);
+      gtk_widget_set_visible (private->pad_edit_dialog, TRUE);
     }
 }
 

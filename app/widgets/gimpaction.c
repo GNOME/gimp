@@ -1068,7 +1068,7 @@ gimp_action_set_proxy (GimpAction *action,
 
               gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
               gtk_widget_set_size_request (proxy_image, width, height);
-              gtk_widget_show (proxy_image);
+              gtk_widget_set_visible (proxy_image, TRUE);
             }
         }
       else if (priv->viewable)
@@ -1106,7 +1106,7 @@ gimp_action_set_proxy (GimpAction *action,
               proxy_image = gimp_view_new_full (priv->context, priv->viewable,
                                                 width, height, border_width,
                                                 FALSE, FALSE, FALSE);
-              gtk_widget_show (proxy_image);
+              gtk_widget_set_visible (proxy_image, TRUE);
             }
         }
       else

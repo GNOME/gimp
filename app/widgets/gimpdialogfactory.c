@@ -556,7 +556,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                 {
                   gtk_notebook_append_page (GTK_NOTEBOOK (dockbook),
                                             dialog, NULL);
-                  gtk_widget_show (dock);
+                  gtk_widget_set_visible (dock, TRUE);
                 }
               else
                 {
@@ -1332,7 +1332,7 @@ gimp_dialog_factory_constructor (GimpDialogFactory      *factory,
       dockable = gimp_dockable_new (entry->name, entry->blurb,
                                     entry->icon_name, entry->help_id);
       gtk_container_add (GTK_CONTAINER (dockable), widget);
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
 
       /* EEK */
       g_object_set_data (G_OBJECT (dockable), "gimp-dialog-identifier",
@@ -1594,7 +1594,7 @@ gimp_dialog_factory_show (GimpDialogFactory *factory)
               /* Don't use gtk_window_present() here, we don't want the
                * keyboard focus to move.
                */
-              gtk_widget_show (widget);
+              gtk_widget_set_visible (widget, TRUE);
               g_object_set_data (G_OBJECT (widget),
                                  GIMP_DIALOG_VISIBILITY_KEY,
                                  GINT_TO_POINTER (GIMP_DIALOG_VISIBILITY_VISIBLE));

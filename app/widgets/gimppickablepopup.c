@@ -161,7 +161,7 @@ gimp_pickable_popup_constructed (GObject *object)
   g_signal_connect_swapped (popup->priv->chooser, "activate",
                             G_CALLBACK (gimp_pickable_popup_activate),
                             popup);
-  gtk_widget_show (popup->priv->chooser);
+  gtk_widget_set_visible (popup->priv->chooser, TRUE);
 }
 
 static void

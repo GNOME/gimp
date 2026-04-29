@@ -157,7 +157,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
   status->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_border_width (GTK_CONTAINER (status->vbox), 2);
   gtk_box_pack_start (GTK_BOX (status), status->vbox, TRUE, TRUE, 0);
-  gtk_widget_show (status->vbox);
+  gtk_widget_set_visible (status->vbox, TRUE);
 
   status->save_button =
     gimp_editor_add_button (GIMP_EDITOR (status), GIMP_ICON_DOCUMENT_SAVE,
@@ -269,7 +269,7 @@ pack_prop_widget (GtkBox     *hbox,
 
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
   gtk_size_group_add_widget (size_group, widget);
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   *none_widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), *none_widget, FALSE, FALSE, 0);
@@ -320,12 +320,12 @@ gimp_device_status_device_add (GimpContainer    *devices,
   entry->ebox = gtk_event_box_new ();
   gtk_box_pack_start (GTK_BOX (status->vbox), entry->ebox,
                       FALSE, FALSE, 0);
-  gtk_widget_show (entry->ebox);
+  gtk_widget_set_visible (entry->ebox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (entry->ebox), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /*  the device name  */
 
@@ -346,13 +346,13 @@ gimp_device_status_device_add (GimpContainer    *devices,
                              -1);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   /*  the row of properties  */
 
   hbox = entry->options_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /*  the tool  */
 
@@ -576,7 +576,7 @@ gimp_device_status_notify_info (GimpDeviceInfo        *device_info,
     }
   else
     {
-      gtk_widget_show (entry->ebox);
+      gtk_widget_set_visible (entry->ebox, TRUE);
     }
 
   if (! strcmp (pspec->name, "tool-options"))

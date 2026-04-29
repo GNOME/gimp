@@ -185,7 +185,7 @@ gimp_colormap_selection_init (GimpColormapSelection *selection)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (selection), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   selection->view = gimp_view_new_full_by_types (NULL,
                                                  GIMP_TYPE_PALETTE_VIEW,
@@ -194,7 +194,7 @@ gimp_colormap_selection_init (GimpColormapSelection *selection)
                                                  FALSE, TRUE, FALSE);
   gimp_view_set_expand (GIMP_VIEW (selection->view), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), selection->view);
-  gtk_widget_show (selection->view);
+  gtk_widget_set_visible (selection->view, TRUE);
 
   g_signal_connect (selection->view, "draw",
                     G_CALLBACK (gimp_colormap_selection_preview_draw),
@@ -218,14 +218,14 @@ gimp_colormap_selection_init (GimpColormapSelection *selection)
   gtk_box_set_homogeneous (GTK_BOX (selection->right_vbox), TRUE);
   gtk_box_pack_end (GTK_BOX (selection), selection->right_vbox,
                     FALSE, FALSE, 0);
-  gtk_widget_show (selection->right_vbox);
+  gtk_widget_set_visible (selection->right_vbox, TRUE);
 
   /*  Some helpful hints  */
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_box_pack_end (GTK_BOX (selection), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   selection->index_adjustment = (GtkAdjustment *)
     gtk_adjustment_new (0, 0, 0, 1, 10, 0);

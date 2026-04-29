@@ -144,21 +144,21 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_NONE);
   gtk_box_pack_start (GTK_BOX (editor), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
   gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
-  gtk_widget_show (viewport);
+  gtk_widget_set_visible (viewport, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (viewport), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   editor->empty_icon = gtk_image_new_from_icon_name (GIMP_ICON_SAMPLE_POINT,
                                                      GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (vbox), editor->empty_icon, TRUE, TRUE, 0);
-  gtk_widget_show (editor->empty_icon);
+  gtk_widget_set_visible (editor->empty_icon, TRUE);
 
   editor->empty_label = gtk_label_new (_("This image\nhas no\nsample points"));
   gtk_label_set_justify (GTK_LABEL (editor->empty_label), GTK_JUSTIFY_CENTER);
@@ -171,7 +171,7 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
   gtk_grid_set_row_spacing (GTK_GRID (editor->grid), content_spacing);
   gtk_grid_set_column_spacing (GTK_GRID (editor->grid), content_spacing);
   gtk_box_pack_start (GTK_BOX (vbox), editor->grid, FALSE, FALSE, 0);
-  gtk_widget_show (editor->grid);
+  gtk_widget_set_visible (editor->grid, TRUE);
 }
 
 static void

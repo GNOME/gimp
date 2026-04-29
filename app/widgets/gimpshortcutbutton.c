@@ -132,17 +132,17 @@ gimp_shortcut_button_init (GimpShortcutButton *button)
 
   button->priv->stack = gtk_stack_new ();
   gtk_container_add (GTK_CONTAINER (button), button->priv->stack);
-  gtk_widget_show (button->priv->stack);
+  gtk_widget_set_visible (button->priv->stack, TRUE);
 
   label = gtk_shortcut_label_new (NULL);
   gtk_stack_add_named (GTK_STACK (button->priv->stack), label,
                        "shortcut-label");
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = gtk_label_new (_("No shortcut"));
   gtk_stack_add_named (GTK_STACK (button->priv->stack), label,
                        "label");
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 }
 
 static void

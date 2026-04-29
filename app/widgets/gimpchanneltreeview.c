@@ -314,7 +314,7 @@ gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
   GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (item_view, image);
 
   if (gimp_item_tree_view_get_image (item_view))
-    gtk_widget_show (channel_view->priv->component_editor);
+    gtk_widget_set_visible (channel_view->priv->component_editor, TRUE);
 }
 
 static GimpItem *

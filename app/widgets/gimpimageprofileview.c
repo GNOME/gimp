@@ -71,11 +71,11 @@ gimp_image_profile_view_init (GimpImageProfileView *view)
                                   GTK_POLICY_AUTOMATIC);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 2);
   gtk_box_pack_start (GTK_BOX (view), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   profile_view = gimp_color_profile_view_new ();
   gtk_container_add (GTK_CONTAINER (scrolled_window), profile_view);
-  gtk_widget_show (profile_view);
+  gtk_widget_set_visible (profile_view, TRUE);
 
   view->profile_view = GIMP_COLOR_PROFILE_VIEW (profile_view);
 }

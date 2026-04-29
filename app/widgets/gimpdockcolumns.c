@@ -169,7 +169,7 @@ gimp_dock_columns_init (GimpDockColumns *dock_columns)
                                  dock_columns);
   gtk_box_pack_start (GTK_BOX (dock_columns), dock_columns->p->paned_hbox,
                       TRUE, TRUE, 0);
-  gtk_widget_show (dock_columns->p->paned_hbox);
+  gtk_widget_set_visible (dock_columns->p->paned_hbox, TRUE);
 }
 
 static void
@@ -388,7 +388,7 @@ gimp_dock_columns_prepare_dockbook (GimpDockColumns  *dock_columns,
   dockbook = gimp_dockbook_new (menu_factory);
   gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), -1);
 
-  gtk_widget_show (GTK_WIDGET (dock));
+  gtk_widget_set_visible (GTK_WIDGET (dock), TRUE);
 
   if (dockbook_p)
     *dockbook_p = dockbook;

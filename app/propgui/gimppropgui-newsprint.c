@@ -159,11 +159,11 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
 
   frame = gimp_frame_new (_("Channels"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   combo = _gimp_prop_gui_new_generic (config,
                                       param_specs + 0, 1,
@@ -173,11 +173,11 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
                                       create_controller_func,
                                       creator);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   np->notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (vbox), np->notebook, FALSE, FALSE, 0);
-  gtk_widget_show (np->notebook);
+  gtk_widget_set_visible (np->notebook, TRUE);
 
   for (i = 0; i < 4; i++)
     {
@@ -207,7 +207,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
                                                 create_controller_func,
                                                 creator, &unused);
       gtk_box_pack_start (GTK_BOX (pages[i]), widget, FALSE, FALSE, 0);
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
 
       g_object_bind_property (G_OBJECT (widget),   "visible",
                               G_OBJECT (pages[i]), "visible",
@@ -225,17 +225,17 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
                                            create_controller_func,
                                            creator);
       gtk_box_pack_start (GTK_BOX (pages[i]), widget, FALSE, FALSE, 0);
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
     }
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   np->pattern_check = check =
     gtk_check_button_new_with_mnemonic (_("_Lock patterns"));
   gtk_box_pack_start (GTK_BOX (hbox), check, FALSE, FALSE, 0);
-  gtk_widget_show (check);
+  gtk_widget_set_visible (check, TRUE);
 
   g_signal_connect (check, "toggled",
                     G_CALLBACK (newsprint_lock_patterns_toggled),
@@ -244,7 +244,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
   np->period_check = check =
     gtk_check_button_new_with_mnemonic (_("Loc_k periods"));
   gtk_box_pack_start (GTK_BOX (hbox), check, FALSE, FALSE, 0);
-  gtk_widget_show (check);
+  gtk_widget_set_visible (check, TRUE);
 
   g_signal_connect (check, "toggled",
                     G_CALLBACK (newsprint_lock_periods_toggled),
@@ -253,7 +253,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
   np->angle_check = check =
     gtk_check_button_new_with_mnemonic (_("Lock a_ngles"));
   gtk_box_pack_start (GTK_BOX (hbox), check, FALSE, FALSE, 0);
-  gtk_widget_show (check);
+  gtk_widget_set_visible (check, TRUE);
 
   g_signal_connect (check, "toggled",
                     G_CALLBACK (newsprint_lock_angles_toggled),
@@ -261,7 +261,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
 
   frame = gimp_frame_new (_("Quality"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 14, 1,
@@ -271,11 +271,11 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
                                      create_controller_func,
                                      creator);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame = gimp_frame_new (_("Effects"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 15, 3,
@@ -285,7 +285,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
                                      create_controller_func,
                                      creator);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   g_signal_connect (config, "notify",
                     G_CALLBACK (newsprint_model_prop_notify),

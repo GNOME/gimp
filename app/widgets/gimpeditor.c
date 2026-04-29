@@ -577,7 +577,7 @@ gimp_editor_add_button (GimpEditor  *editor,
   button = gimp_button_new ();
   gtk_button_set_relief (GTK_BUTTON (button), button_relief);
   gtk_box_pack_start (GTK_BOX (priv->button_box), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   if (tooltip || help_id)
     gimp_help_set_help_data (button, tooltip, help_id);
@@ -594,7 +594,7 @@ gimp_editor_add_button (GimpEditor  *editor,
 
   image = gtk_image_new_from_icon_name (icon_name, button_icon_size);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   return button;
 }
@@ -749,12 +749,12 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
   image = gtk_image_new_from_icon_name (icon_name, button_icon_size);
   gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   gimp_action_set_proxy (action, button);
   gtk_box_pack_start (GTK_BOX (priv->button_box), button,
                       TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   va_start (args, action_name);
 
@@ -998,7 +998,7 @@ gimp_editor_ensure_button_box (GimpEditor     *editor,
       gtk_box_reorder_child (GTK_BOX (editor), priv->button_box, 0);
 
       if (priv->show_button_bar)
-        gtk_widget_show (priv->button_box);
+        gtk_widget_set_visible (priv->button_box, TRUE);
     }
 
   return button_icon_size;

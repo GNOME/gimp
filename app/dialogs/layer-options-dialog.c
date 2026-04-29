@@ -278,12 +278,12 @@ layer_options_dialog_new (GimpImage                *image,
       label = gtk_label_new (_("Width:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_grid_attach (GTK_GRID (grid), label, 0, row, 1, 1);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       label = gtk_label_new (_("Height:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_grid_attach (GTK_GRID (grid), label, 0, row + 1, 1, 1);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       /*  The size sizeentry  */
       adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
@@ -298,10 +298,10 @@ layer_options_dialog_new (GimpImage                *image,
       gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->size_se),
                                  GTK_SPIN_BUTTON (spinbutton), NULL);
       gtk_grid_attach (GTK_GRID (private->size_se), spinbutton, 1, 0, 1, 1);
-      gtk_widget_show (spinbutton);
+      gtk_widget_set_visible (spinbutton, TRUE);
 
       gtk_grid_attach (GTK_GRID (grid), private->size_se, 1, row, 1, 2);
-      gtk_widget_show (private->size_se);
+      gtk_widget_set_visible (private->size_se, TRUE);
 
       gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->size_se),
                                 gimp_unit_pixel ());
@@ -337,12 +337,12 @@ layer_options_dialog_new (GimpImage                *image,
       label = gtk_label_new (_("Offset X:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_grid_attach (GTK_GRID (grid), label, 0, row, 1, 1);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       label = gtk_label_new (_("Offset Y:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_grid_attach (GTK_GRID (grid), label, 0, row + 1, 1, 1);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       /*  The offset sizeentry  */
       adjustment = gtk_adjustment_new (0, 1, 1, 1, 10, 0);
@@ -357,10 +357,10 @@ layer_options_dialog_new (GimpImage                *image,
       gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->offset_se),
                                  GTK_SPIN_BUTTON (spinbutton), NULL);
       gtk_grid_attach (GTK_GRID (private->offset_se), spinbutton, 1, 0, 1, 1);
-      gtk_widget_show (spinbutton);
+      gtk_widget_set_visible (spinbutton, TRUE);
 
       gtk_grid_attach (GTK_GRID (grid), private->offset_se, 1, row, 1, 2);
-      gtk_widget_show (private->offset_se);
+      gtk_widget_set_visible (private->offset_se, TRUE);
 
       gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset_se),
                                 gimp_unit_pixel ());
@@ -407,14 +407,14 @@ layer_options_dialog_new (GimpImage                *image,
 
       frame = gimp_frame_new (_("Active Filters"));
       gtk_box_pack_start (GTK_BOX (left_vbox), frame, TRUE, TRUE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
 
       view = gimp_container_list_view_new (filters, context,
                                            GIMP_VIEW_SIZE_SMALL, 0);
       gtk_container_add (GTK_CONTAINER (frame), view);
-      gtk_widget_show (view);
+      gtk_widget_set_visible (view, TRUE);
 
       if (gimp_item_is_link_layer (GIMP_ITEM (layer)))
         {
@@ -432,7 +432,7 @@ layer_options_dialog_new (GimpImage                *image,
           gtk_file_chooser_set_file (GTK_FILE_CHOOSER (file_select),
                                      gimp_link_get_file (link, NULL, NULL),
                                      NULL);
-          gtk_widget_show (file_select);
+          gtk_widget_set_visible (file_select, TRUE);
           gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                                     _("_Linked image:"), 0.0, 0.5,
                                     file_select, 1);

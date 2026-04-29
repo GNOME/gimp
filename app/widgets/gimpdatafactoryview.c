@@ -299,7 +299,7 @@ gimp_data_factory_view_constructed (GObject *object)
     gimp_combo_tag_entry_new (GIMP_TAGGED_CONTAINER (priv->tagged_container),
                               GIMP_TAG_ENTRY_MODE_QUERY);
   gtk_box_pack_start (GTK_BOX (hbox), priv->query_tag_entry, TRUE, TRUE, 0);
-  gtk_widget_show (priv->query_tag_entry);
+  gtk_widget_set_visible (priv->query_tag_entry, TRUE);
 
   /* Follow Theme toggle */
   g_object_get (object,
@@ -333,7 +333,7 @@ gimp_data_factory_view_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (editor->view),
                       priv->assign_tag_entry,
                       FALSE, FALSE, 0);
-  gtk_widget_show (priv->assign_tag_entry);
+  gtk_widget_set_visible (priv->assign_tag_entry, TRUE);
 
   if (priv->edit_button)
     gimp_container_view_enable_dnd (editor->view,

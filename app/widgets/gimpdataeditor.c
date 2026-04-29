@@ -178,7 +178,7 @@ gimp_data_editor_init (GimpDataEditor *editor)
 
   editor->name_entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (editor), editor->name_entry, FALSE, FALSE, 0);
-  gtk_widget_show (editor->name_entry);
+  gtk_widget_set_visible (editor->name_entry, TRUE);
 
   gtk_editable_set_editable (GTK_EDITABLE (editor->name_entry), FALSE);
 

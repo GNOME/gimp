@@ -96,17 +96,17 @@ gimp_symmetry_editor_init (GimpSymmetryEditor *editor)
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (editor), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
-  gtk_widget_show (viewport);
+  gtk_widget_set_visible (viewport, TRUE);
 
   editor->p->options_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   g_object_set (editor->p->options_vbox, "valign", GTK_ALIGN_START, NULL);
   gtk_container_set_border_width (GTK_CONTAINER (editor->p->options_vbox), 2);
   gtk_container_add (GTK_CONTAINER (viewport), editor->p->options_vbox);
-  gtk_widget_show (editor->p->options_vbox);
+  gtk_widget_set_visible (editor->p->options_vbox, TRUE);
 
   gimp_symmetry_editor_set_image (GIMP_IMAGE_EDITOR (editor), NULL);
 }
@@ -202,7 +202,7 @@ gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
     {
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (editor->p->menu), 0);
       gtk_widget_set_sensitive (editor->p->menu, FALSE);
-      gtk_widget_show (editor->p->menu);
+      gtk_widget_set_visible (editor->p->menu, TRUE);
     }
 }
 

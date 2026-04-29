@@ -158,7 +158,7 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
       /*  main vbox  */
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, button_spacing);
       gtk_container_add (GTK_CONTAINER (editor->popover), vbox);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
 
       gimp_help_connect (vbox, NULL, gimp_standard_help_func,
                          GIMP_HELP_LAYER_EFFECTS, NULL, NULL);
@@ -170,17 +170,17 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
       gtk_label_set_markup (GTK_LABEL (label), text);
       g_free (text);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       /*  main vbox within  */
       editor->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, button_spacing);
       gtk_box_pack_end (GTK_BOX (vbox), editor->vbox, TRUE, TRUE, 0);
-      gtk_widget_show (editor->vbox);
+      gtk_widget_set_visible (editor->vbox, TRUE);
 
       /*  bottom buttons  */
       editor->options = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, button_spacing);
       gtk_box_pack_end (GTK_BOX (editor->vbox), editor->options, FALSE, FALSE, 0);
-      gtk_widget_show (editor->options);
+      gtk_widget_set_visible (editor->options, TRUE);
 
       /*  "visible" button  */
       editor->visible_button = gtk_toggle_button_new ();
@@ -189,11 +189,11 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
       image = gtk_image_new_from_icon_name (GIMP_ICON_VISIBLE,
                                             GTK_ICON_SIZE_SMALL_TOOLBAR);
       gtk_container_add (GTK_CONTAINER (editor->visible_button), image);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
 
       gtk_box_pack_start (GTK_BOX (editor->options),
                           editor->visible_button, TRUE, TRUE, 0);
-      gtk_widget_show (editor->visible_button);
+      gtk_widget_set_visible (editor->visible_button, TRUE);
 
       gimp_help_set_help_data (editor->visible_button,
                                _("Toggle the visibility of all filters."),
@@ -209,7 +209,7 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
       gtk_box_pack_start (GTK_BOX (editor->options),
                           editor->edit_button, TRUE, TRUE, 0);
-      gtk_widget_show (editor->edit_button);
+      gtk_widget_set_visible (editor->edit_button, TRUE);
 
       gimp_help_set_help_data (editor->edit_button,
                                _("Edit the selected filter."),
@@ -225,7 +225,7 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
       gtk_box_pack_start (GTK_BOX (editor->options),
                           editor->raise_button, TRUE, TRUE, 0);
-      gtk_widget_show (editor->raise_button);
+      gtk_widget_set_visible (editor->raise_button, TRUE);
 
       gimp_help_set_help_data (editor->raise_button,
                                _("Raise filter one step up in the stack."),
@@ -240,7 +240,7 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
       gtk_box_pack_start (GTK_BOX (editor->options),
                           editor->lower_button, TRUE, TRUE, 0);
-      gtk_widget_show (editor->lower_button);
+      gtk_widget_set_visible (editor->lower_button, TRUE);
 
       gimp_help_set_help_data (editor->lower_button,
                                _("Lower filter one step down in the stack."),
@@ -256,7 +256,7 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
       gtk_box_pack_start (GTK_BOX (editor->options),
                           editor->merge_button, TRUE, TRUE, 0);
-      gtk_widget_show (editor->merge_button);
+      gtk_widget_set_visible (editor->merge_button, TRUE);
 
       gimp_help_set_help_data (editor->merge_button,
                                _("Merge all active filters down."),
@@ -272,7 +272,7 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
       gtk_box_pack_start (GTK_BOX (editor->options),
                           editor->remove_button, TRUE, TRUE, 0);
-      gtk_widget_show (editor->remove_button);
+      gtk_widget_set_visible (editor->remove_button, TRUE);
 
       gimp_help_set_help_data (editor->remove_button,
                                _("Remove the selected filter."),
@@ -327,7 +327,7 @@ _gimp_drawable_tree_view_filter_editor_show (GimpDrawableTreeView *view,
 
       gtk_box_pack_start (GTK_BOX (editor->vbox), editor->view,
                           TRUE, TRUE, 0);
-      gtk_widget_show (editor->view);
+      gtk_widget_set_visible (editor->view, TRUE);
 
       scrolled_window = GIMP_CONTAINER_BOX (editor->view)->scrolled_win;
       gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),

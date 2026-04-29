@@ -329,7 +329,7 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
   gtk_tool_item_group_set_label_widget (GTK_TOOL_ITEM_GROUP (private->group),
                                         NULL);
   gtk_container_add (GTK_CONTAINER (palette), private->group);
-  gtk_widget_show (private->group);
+  gtk_widget_set_visible (private->group, TRUE);
 
   for (list = gimp_get_tool_item_ui_iter (context->gimp);
        list;
@@ -461,7 +461,7 @@ gimp_tool_palette_add_button (GimpToolPalette *palette,
   tool_button = gimp_tool_button_new (private->toolbox, tool_item);
   gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (private->group),
                               tool_button, index);
-  gtk_widget_show (GTK_WIDGET (tool_button));
+  gtk_widget_set_visible (GTK_WIDGET (tool_button), TRUE);
 
   g_object_bind_property (tool_item,   "shown",
                           tool_button, "visible-horizontal",

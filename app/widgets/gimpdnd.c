@@ -761,10 +761,10 @@ gimp_dnd_data_drag_begin (GtkWidget      *widget,
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
       gtk_container_add (GTK_CONTAINER (window), frame);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       gtk_container_add (GTK_CONTAINER (frame), icon_widget);
-      gtk_widget_show (icon_widget);
+      gtk_widget_set_visible (icon_widget, TRUE);
 
       g_object_set_data_full (G_OBJECT (widget), "gimp-dnd-data-widget",
                               window, (GDestroyNotify) gtk_widget_destroy);
@@ -1904,7 +1904,7 @@ gimp_dnd_get_viewable_icon (GtkWidget      *widget,
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 3);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 3);
       gtk_box_pack_start (GTK_BOX (hbox), view, FALSE, FALSE, 0);
-      gtk_widget_show (view);
+      gtk_widget_set_visible (view, TRUE);
 
       label = g_object_new (GTK_TYPE_LABEL,
                             "label",           desc,
@@ -1918,7 +1918,7 @@ gimp_dnd_get_viewable_icon (GtkWidget      *widget,
       g_free (desc);
 
       gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       return hbox;
     }
@@ -2247,7 +2247,7 @@ gimp_dnd_get_viewable_list_icon (GtkWidget      *widget,
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 3);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 3);
       gtk_box_pack_start (GTK_BOX (hbox), view, FALSE, FALSE, 0);
-      gtk_widget_show (view);
+      gtk_widget_set_visible (view, TRUE);
 
       label = g_object_new (GTK_TYPE_LABEL,
                             "label",           desc,
@@ -2262,7 +2262,7 @@ gimp_dnd_get_viewable_list_icon (GtkWidget      *widget,
       g_free (desc);
 
       gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       return hbox;
     }

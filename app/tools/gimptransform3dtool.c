@@ -226,7 +226,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_LEFT);
   gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tg_tool->gui)),
                       notebook, FALSE, FALSE, 0);
-  gtk_widget_show (notebook);
+  gtk_widget_set_visible (notebook, TRUE);
 
   t3d->notebook = notebook;
 
@@ -234,20 +234,20 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   label = gtk_image_new_from_icon_name (GIMP_ICON_TRANSFORM_3D_CAMERA,
                                         GTK_ICON_SIZE_MENU);
   gimp_help_set_help_data (label, _("Camera"), NULL);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, label);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* vanishing-point frame */
   frame = gimp_frame_new (_("Vanishing Point"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   /* vanishing-point size entry */
   se = gimp_size_entry_new (1, gimp_unit_pixel (), "%a", TRUE, TRUE, FALSE, 6,
@@ -255,7 +255,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   gtk_grid_set_row_spacing (GTK_GRID (se), 2);
   gtk_grid_set_column_spacing (GTK_GRID (se), 2);
   gtk_box_pack_start (GTK_BOX (vbox2), se, FALSE, FALSE, 0);
-  gtk_widget_show (se);
+  gtk_widget_set_visible (se, TRUE);
 
   t3d->vanishing_point_se = se;
 
@@ -265,7 +265,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (se),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_grid_attach (GTK_GRID (se), spinbutton, 1, 0, 1, 1);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (se), _("_X:"), 0, 0, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (se), _("_Y:"), 1, 0, 0.0);
@@ -280,12 +280,12 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   /* lens frame */
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /* lens-mode combo */
   combo = gimp_enum_combo_box_new (GIMP_TYPE_TRANSFORM_3D_LENS_MODE);
   gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   t3d->lens_mode_combo = combo;
 
@@ -295,7 +295,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   /* focal-length size entry */
   se = gimp_size_entry_new (1, gimp_unit_pixel (), "%a", TRUE, FALSE, FALSE, 6,
@@ -320,7 +320,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   scale = gimp_spin_scale_new (t3d->angle_of_view_adj,
                                _("Angle"), 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   t3d->angle_of_view_scale = scale;
 
@@ -332,20 +332,20 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   label = gtk_image_new_from_icon_name (GIMP_ICON_TRANSFORM_3D_MOVE,
                                         GTK_ICON_SIZE_MENU);
   gimp_help_set_help_data (label, _("Move"), NULL);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, label);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* offset frame */
   frame = gimp_frame_new (_("Offset"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   /* offset size entry */
   se = gimp_size_entry_new (1, gimp_unit_pixel (), "%a", TRUE, TRUE, FALSE, 6,
@@ -353,7 +353,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   gtk_grid_set_row_spacing (GTK_GRID (se), 2);
   gtk_grid_set_column_spacing (GTK_GRID (se), 2);
   gtk_box_pack_start (GTK_BOX (vbox2), se, FALSE, FALSE, 0);
-  gtk_widget_show (se);
+  gtk_widget_set_visible (se, TRUE);
 
   t3d->offset_se = se;
 
@@ -361,7 +361,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
   gtk_grid_attach (GTK_GRID (se), grid, 0, 0, 2, 1);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   spinbutton = gimp_spin_button_new_with_range (0.0, 0.0, 1.0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
@@ -369,7 +369,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (se),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_grid_attach (GTK_GRID (grid), spinbutton, 1, 1, 1, 1);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   spinbutton = gimp_spin_button_new_with_range (0.0, 0.0, 1.0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
@@ -377,22 +377,22 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (se),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_grid_attach (GTK_GRID (grid), spinbutton, 1, 0, 1, 1);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("_X:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("_Y:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("_Z:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (se), label, 0, 1, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (se), 0,
                                          -GIMP_MAX_IMAGE_SIZE,
@@ -416,18 +416,18 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   label = gtk_image_new_from_icon_name (GIMP_ICON_TRANSFORM_3D_ROTATE,
                                         GTK_ICON_SIZE_MENU);
   gimp_help_set_help_data (label, _("Rotate"), NULL);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   /* angle frame */
   frame = gimp_frame_new (_("Angle"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, label);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   for (i = 0; i < 3; i++)
     {
@@ -437,7 +437,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
       button = gtk_button_new ();
       gimp_help_set_help_data (button, _("Rotation axis order"), NULL);
       gtk_grid_attach (GTK_GRID (grid), button, 0, i, 1, 1);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       t3d->rotation_order_buttons[i] = button;
 
@@ -453,7 +453,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
       gtk_widget_set_hexpand (GTK_WIDGET (scale), TRUE);
       gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
       gtk_grid_attach (GTK_GRID (grid), scale, 1, i, 1, 1);
-      gtk_widget_show (scale);
+      gtk_widget_set_visible (scale, TRUE);
 
       g_signal_connect (t3d->angle_adj[i], "value-changed",
                         G_CALLBACK (gimp_transform_3d_tool_dialog_changed),
@@ -463,7 +463,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   /* pivot selector */
   selector = gimp_pivot_selector_new (0.0, 0.0, 0.0, 0.0);
   gtk_grid_attach (GTK_GRID (grid), selector, 2, 0, 1, 3);
-  gtk_widget_show (selector);
+  gtk_widget_set_visible (selector, TRUE);
 
   t3d->pivot_selector = selector;
 

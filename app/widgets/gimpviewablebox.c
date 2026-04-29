@@ -380,7 +380,7 @@ gradient_box_new (GimpContainer *container,
       gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (toggle), FALSE);
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (hbox), toggle, 1);
-      gtk_widget_show (toggle);
+      gtk_widget_set_visible (toggle, TRUE);
 
       gimp_help_set_help_data (toggle, _("Reverse"), NULL);
 
@@ -391,7 +391,7 @@ gradient_box_new (GimpContainer *container,
       gtk_container_remove (GTK_CONTAINER (toggle),
                             gtk_bin_get_child (GTK_BIN (toggle)));
       gtk_container_add (GTK_CONTAINER (toggle), image);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
 
       view = gtk_bin_get_child (GTK_BIN (button));
 
@@ -647,23 +647,23 @@ gimp_viewable_box_new (GimpContainer *container,
   g_object_set_data (G_OBJECT (viewable_box), "viewable-button", button);
 
   gtk_box_pack_start (GTK_BOX (viewable_box), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (viewable_box), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   if (label)
     {
       l = gtk_label_new_with_mnemonic (label);
       gtk_label_set_xalign (GTK_LABEL (l), 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), l, FALSE, FALSE, 0);
-      gtk_widget_show (l);
+      gtk_widget_set_visible (l, TRUE);
     }
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   entry = gimp_container_entry_new (container, context, view_size, 1);
 
@@ -672,7 +672,7 @@ gimp_viewable_box_new (GimpContainer *container,
    */
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 4);
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_show (entry);
+  gtk_widget_set_visible (entry, TRUE);
 
   if (editor_id)
     {
@@ -682,7 +682,7 @@ gimp_viewable_box_new (GimpContainer *container,
       edit_button = gtk_button_new ();
       gtk_button_set_relief (GTK_BUTTON (edit_button), GTK_RELIEF_NONE);
       gtk_box_pack_start (GTK_BOX (hbox), edit_button, FALSE, FALSE, 0);
-      gtk_widget_show (edit_button);
+      gtk_widget_set_visible (edit_button, TRUE);
 
       if (editor_tooltip)
         gimp_help_set_help_data (edit_button, editor_tooltip, NULL);
@@ -692,7 +692,7 @@ gimp_viewable_box_new (GimpContainer *container,
       gtk_widget_set_valign (image, GTK_ALIGN_CENTER);
       gtk_widget_set_halign (image, GTK_ALIGN_CENTER);
       gtk_container_add (GTK_CONTAINER (edit_button), image);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
 
       g_object_set_data_full (G_OBJECT (button),
                               "gimp-viewable-box-editor",
@@ -723,7 +723,7 @@ view_props_connect (GtkWidget   *box,
     gimp_config_connect_full (G_OBJECT (context), G_OBJECT (button),
                               view_size_prop, "popup-view-size");
 
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   return box;
 }

@@ -190,11 +190,11 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (editor), data_editor->view, TRUE, TRUE, 0);
-  gtk_widget_show (data_editor->view);
+  gtk_widget_set_visible (data_editor->view, TRUE);
 
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (data_editor->view), viewport);
-  gtk_widget_show (viewport);
+  gtk_widget_set_visible (viewport, TRUE);
 
   editor->view = gimp_view_new_full_by_types (NULL,
                                               GIMP_TYPE_PALETTE_VIEW,
@@ -206,7 +206,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gimp_view_renderer_palette_set_draw_grid
     (GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (editor->view)->renderer), TRUE);
   gtk_container_add (GTK_CONTAINER (viewport), editor->view);
-  gtk_widget_show (editor->view);
+  gtk_widget_set_visible (editor->view, TRUE);
 
   g_signal_connect (gtk_widget_get_parent (editor->view), "size-allocate",
                     G_CALLBACK (palette_editor_viewport_size_allocate),
@@ -246,14 +246,14 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /*  The color index number  */
   editor->index_label = gtk_label_new ("####");
   gtk_box_pack_start (GTK_BOX (hbox), editor->index_label, FALSE, FALSE, 0);
   gimp_label_set_attributes (GTK_LABEL (editor->index_label),
                              PANGO_ATTR_FAMILY, "Monospace", -1);
-  gtk_widget_show (editor->index_label);
+  gtk_widget_set_visible (editor->index_label, TRUE);
 
   /*  The color name entry  */
   editor->color_name = gtk_entry_new ();
@@ -261,7 +261,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_entry_set_width_chars (GTK_ENTRY (editor->color_name), 1);
   gtk_entry_set_text (GTK_ENTRY (editor->color_name), _("Undefined"));
   gtk_editable_set_editable (GTK_EDITABLE (editor->color_name), FALSE);
-  gtk_widget_show (editor->color_name);
+  gtk_widget_set_visible (editor->color_name, TRUE);
 
   g_signal_connect (editor->color_name, "changed",
                     G_CALLBACK (palette_editor_color_name_changed),
@@ -270,13 +270,13 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   icon = gtk_image_new_from_icon_name (GIMP_ICON_GRID, GTK_ICON_SIZE_MENU);
   gtk_widget_set_margin_start (icon, 2);
   gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
-  gtk_widget_show (icon);
+  gtk_widget_set_visible (icon, TRUE);
 
   editor->columns_adj = gtk_adjustment_new (0, 0, 64, 1, 4, 0);
   spinbutton = gimp_spin_button_new (editor->columns_adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   gimp_help_set_help_data (spinbutton, _("Set the number of columns"), NULL);
 

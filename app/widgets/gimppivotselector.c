@@ -218,7 +218,7 @@ gimp_pivot_selector_init (GimpPivotSelector *selector)
       gtk_widget_set_can_focus (button, FALSE);
       gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
       gtk_grid_attach (grid, button, x, y, 1, 1);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       selector->priv->buttons[i] = button;
 
@@ -229,7 +229,7 @@ gimp_pivot_selector_init (GimpPivotSelector *selector)
       image = gtk_image_new_from_icon_name (icon_names[i], GTK_ICON_SIZE_MENU);
       gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
       gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
     }
 }
 

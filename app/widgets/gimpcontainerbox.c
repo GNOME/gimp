@@ -112,7 +112,7 @@ gimp_container_box_init (GimpContainerBox *box)
 
   box->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_box_pack_start (GTK_BOX (box), box->scrolled_win, TRUE, TRUE, 0);
-  gtk_widget_show (box->scrolled_win);
+  gtk_widget_set_visible (box->scrolled_win, TRUE);
 
   gtk_widget_add_events (box->scrolled_win, GDK_TOUCHPAD_GESTURE_MASK);
 

@@ -83,7 +83,7 @@ input_devices_dialog_new (Gimp *gimp)
   editor = gimp_device_editor_new (gimp);
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
   gtk_box_pack_start (GTK_BOX (content_area), editor, TRUE, TRUE, 0);
-  gtk_widget_show (editor);
+  gtk_widget_set_visible (editor, TRUE);
 
   return dialog;
 }

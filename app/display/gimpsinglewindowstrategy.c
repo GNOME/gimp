@@ -102,7 +102,7 @@ gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
                                                    "gimp-toolbox",
                                                    -1 /*view_size*/,
                                                    FALSE /*present*/);
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
 
           columns = gimp_image_window_get_left_docks (window);
           gimp_dock_columns_add_dock (columns,

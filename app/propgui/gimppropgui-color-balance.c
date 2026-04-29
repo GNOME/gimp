@@ -52,7 +52,7 @@ create_levels_scale (GObject     *config,
   label = gtk_label_new (left);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_grid_attach (GTK_GRID (grid), label, 0, col, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   scale = gimp_prop_spin_scale_new (config, property_name, 0.01, 0.1, 0);
   gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), NULL);
@@ -63,7 +63,7 @@ create_levels_scale (GObject     *config,
   label = gtk_label_new (right);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 2, col, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 }
 
 GtkWidget *
@@ -97,18 +97,18 @@ _gimp_prop_gui_new_color_balance (GObject                  *config,
 
   frame = gimp_frame_new (_("Adjust Color Levels"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /*  The grid containing sliders  */
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   create_levels_scale (config, "cyan-red",
                        _("Cyan"), _("Red"),
@@ -124,11 +124,11 @@ _gimp_prop_gui_new_color_balance (GObject                  *config,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("R_eset Range"));
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (gimp_color_balance_config_reset_range),

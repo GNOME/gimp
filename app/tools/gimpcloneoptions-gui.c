@@ -239,7 +239,7 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (vbox), frame, 2);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /*  the source type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "clone-type", 0, 0);
@@ -249,7 +249,7 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
 
   source_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), source_vbox);
-  gtk_widget_show (source_vbox);
+  gtk_widget_set_visible (source_vbox, TRUE);
 
   button = gimp_prop_check_button_new (config, "sample-merged", NULL);
   g_object_set_data (G_OBJECT (tool_options), "sample-merged-checkbox", button);

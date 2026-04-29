@@ -145,13 +145,13 @@ path_import_dialog_new (GimpImage              *image,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   button = gtk_check_button_new_with_mnemonic (_("_Merge imported paths"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->merge_paths);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -162,7 +162,7 @@ path_import_dialog_new (GimpImage              *image,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->scale_paths);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),

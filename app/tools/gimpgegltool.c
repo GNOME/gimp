@@ -161,7 +161,7 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (main_vbox), hbox, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   store = gtk_list_store_new (N_COLUMNS,
                               G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
@@ -206,7 +206,7 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (store));
   g_object_unref (store);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   cell = gtk_cell_renderer_pixbuf_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, FALSE);
@@ -246,7 +246,7 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   gtk_container_add (GTK_CONTAINER (options_box), options_gui);
   g_object_unref (options_box);
   g_weak_ref_set (&o_tool->options_gui_ref, options_gui);
-  gtk_widget_show (options_gui);
+  gtk_widget_set_visible (options_gui, TRUE);
 }
 
 static void
@@ -289,7 +289,7 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
       if (description)
         {
           gtk_label_set_text (GTK_LABEL (tool->description_label), description);
-          gtk_widget_show (tool->description_label);
+          gtk_widget_set_visible (tool->description_label, TRUE);
         }
       else
         {

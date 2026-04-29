@@ -191,7 +191,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_CHANNEL_OP_INTERSECT);
   gtk_box_pack_start (GTK_BOX (vbox), mode_box, FALSE, FALSE, 0);
-  gtk_widget_show (mode_box);
+  gtk_widget_set_visible (mode_box, TRUE);
   options->mode_box = mode_box;
 
   /*  the antialias toggle button  */
@@ -236,7 +236,7 @@ gimp_selection_options_get_mode_box (GimpToolOptions *tool_options,
 
   label = gtk_label_new (_("Mode:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   box = gimp_prop_enum_icon_box_new (config, "operation", "gimp-selection",
                                      min_op, max_op);

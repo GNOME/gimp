@@ -159,7 +159,7 @@ gimp_menu_bar_append (GimpMenuShell *shell,
           subcontainer = gimp_menu_new (manager);
           gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), subcontainer);
           gimp_menu_shell_append (GIMP_MENU_SHELL (subcontainer), GIMP_MENU_MODEL (submenu));
-          gtk_widget_show (subcontainer);
+          gtk_widget_set_visible (subcontainer, TRUE);
 
           g_tree_insert (bar->priv->menus,
                          gimp_utils_make_canonical_menu_label (label),
@@ -215,7 +215,7 @@ gimp_menu_bar_add_ui (GimpMenuShell  *shell,
 
           menu = gimp_menu_new (manager);
           gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
-          gtk_widget_show (menu);
+          gtk_widget_set_visible (menu, TRUE);
 
           g_tree_insert (bar->priv->menus, g_strdup (paths[0]), menu);
         }

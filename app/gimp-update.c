@@ -461,7 +461,7 @@ gimp_update_about_dialog (GimpCoreConfig   *config,
   if (config->last_known_release != NULL)
     {
 #ifndef GIMP_CONSOLE_COMPILATION
-      gtk_widget_show (about_dialog_create (gimp, config));
+      gtk_widget_set_visible (about_dialog_create (gimp, config), TRUE);
 #else
       g_printerr (_("A new version of GIMP (%s) was released.\n"
                     "It is recommended to update."),

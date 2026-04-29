@@ -123,23 +123,23 @@ _gimp_prop_gui_new_generic (GObject                  *config,
 
           hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
           gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-          gtk_widget_show (hbox);
+          gtk_widget_set_visible (hbox, TRUE);
 
           gimp_prop_gui_bind_container (widget_x, hbox);
 
           vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
           gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-          gtk_widget_show (vbox);
+          gtk_widget_set_visible (vbox, TRUE);
 
           gtk_box_pack_start (GTK_BOX (vbox), widget_x, FALSE, FALSE, 0);
-          gtk_widget_show (widget_x);
+          gtk_widget_set_visible (widget_x, TRUE);
 
           gtk_box_pack_start (GTK_BOX (vbox), widget_y, FALSE, FALSE, 0);
-          gtk_widget_show (widget_y);
+          gtk_widget_set_visible (widget_y, TRUE);
 
           chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
           gtk_box_pack_end (GTK_BOX (hbox), chain, FALSE, FALSE, 0);
-          gtk_widget_show (chain);
+          gtk_widget_set_visible (chain, TRUE);
 
           if (! HAS_KEY (pspec, "unit", "pixel-coordinate")    &&
               ! HAS_KEY (pspec, "unit", "relative-coordinate") &&
@@ -187,7 +187,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
                                            /* pick_abyss = */ TRUE,
                                            NULL, NULL);
               gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-              gtk_widget_show (button);
+              gtk_widget_set_visible (button, TRUE);
 
               g_object_weak_ref (G_OBJECT (button),
                                  (GWeakNotify) g_free, pspec_name);
@@ -222,7 +222,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
             create_controller_func,
             creator,
             &label_str);
-          gtk_widget_show (spin_scale);
+          gtk_widget_set_visible (spin_scale, TRUE);
 
           g_object_set_data_full (G_OBJECT (vbox),
                                   "gimp-underlying-widget",
@@ -244,7 +244,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
           label = gtk_label_new_with_mnemonic (label_str);
           gtk_label_set_xalign (GTK_LABEL (label), 0.0);
           gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
 
           if (! range_label_str)
             {
@@ -255,7 +255,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
 
           frame = gimp_frame_new (NULL);
           gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-          gtk_widget_show (frame);
+          gtk_widget_set_visible (frame, TRUE);
 
           range = gimp_prop_range_new (config,
                                        pspec->name, next_pspec->name,
@@ -266,7 +266,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
                                                   "range-sorted", "false"));
           gimp_prop_range_set_ui_limits (range, ui_lower, ui_upper);
           gtk_container_add (GTK_CONTAINER (frame), range);
-          gtk_widget_show (range);
+          gtk_widget_set_visible (range, TRUE);
 
           gimp_prop_gui_bind_container (spin_scale, vbox);
           gimp_prop_gui_bind_tooltip   (spin_scale, vbox);
@@ -293,7 +293,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
 
               l = gtk_label_new_with_mnemonic (label);
               gtk_label_set_xalign (GTK_LABEL (l), 0.0);
-              gtk_widget_show (l);
+              gtk_widget_set_visible (l, TRUE);
 
               gimp_prop_gui_bind_label (widget, l);
 
@@ -306,10 +306,10 @@ _gimp_prop_gui_new_generic (GObject                  *config,
 
                   frame = gimp_frame_new (NULL);
                   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
-                  gtk_widget_show (frame);
+                  gtk_widget_set_visible (frame, TRUE);
 
                   gtk_container_add (GTK_CONTAINER (frame), widget);
-                  gtk_widget_show (widget);
+                  gtk_widget_set_visible (widget, TRUE);
 
                   gimp_prop_gui_bind_container (widget, frame);
                 }
@@ -320,13 +320,13 @@ _gimp_prop_gui_new_generic (GObject                  *config,
                   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
                   gtk_box_pack_start (GTK_BOX (main_vbox), hbox,
                                       expand, expand, 0);
-                  gtk_widget_show (hbox);
+                  gtk_widget_set_visible (hbox, TRUE);
 
                   gtk_size_group_add_widget (label_group, l);
                   gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 
                   gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
-                  gtk_widget_show (widget);
+                  gtk_widget_set_visible (widget, TRUE);
 
                   gimp_prop_gui_bind_container (widget, hbox);
                 }
@@ -335,7 +335,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
             {
               gtk_box_pack_start (GTK_BOX (main_vbox), widget,
                                   expand, expand, 0);
-              gtk_widget_show (widget);
+              gtk_widget_set_visible (widget, TRUE);
             }
         }
     }
@@ -345,7 +345,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
   g_object_set_data_full (G_OBJECT (main_vbox), "chains", chains,
                           (GDestroyNotify) g_list_free);
 
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   return main_vbox;
 }

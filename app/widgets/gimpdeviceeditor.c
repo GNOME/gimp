@@ -147,7 +147,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
                                                      GIMP_VIEW_SIZE_MEDIUM, 0);
   gtk_widget_set_size_request (private->list_view, 300, -1);
   gtk_paned_pack1 (GTK_PANED (editor), private->list_view, TRUE, FALSE);
-  gtk_widget_show (private->list_view);
+  gtk_widget_set_visible (private->list_view, TRUE);
 
   private->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (private->list_view),
@@ -162,19 +162,19 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_paned_pack2 (GTK_PANED (editor), vbox, TRUE, FALSE);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   ebox = gtk_event_box_new ();
   gtk_widget_set_state_flags (ebox, GTK_STATE_FLAG_SELECTED, TRUE);
   gtk_style_context_add_class (gtk_widget_get_style_context (ebox),
                                GTK_STYLE_CLASS_VIEW);
   gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, FALSE, 0);
-  gtk_widget_show (ebox);
+  gtk_widget_set_visible (ebox, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (ebox), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   private->label = gtk_label_new (NULL);
   gtk_widget_set_state_flags (private->label, GTK_STATE_FLAG_SELECTED, TRUE);
@@ -184,13 +184,13 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), private->label, TRUE, TRUE, 0);
-  gtk_widget_show (private->label);
+  gtk_widget_set_visible (private->label, TRUE);
 
   private->image = gtk_image_new ();
   gtk_widget_set_state_flags (private->image, GTK_STATE_FLAG_SELECTED, TRUE);
   gtk_widget_set_size_request (private->image, -1, 24);
   gtk_box_pack_end (GTK_BOX (hbox), private->image, FALSE, FALSE, 0);
-  gtk_widget_show (private->image);
+  gtk_widget_set_visible (private->image, TRUE);
 
   private->stack = gtk_stack_new ();
   gtk_container_set_border_width (GTK_CONTAINER (private->stack), 12);
@@ -199,7 +199,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
                                  GTK_STACK_TRANSITION_TYPE_CROSSFADE :
                                  GTK_STACK_TRANSITION_TYPE_NONE);
   gtk_box_pack_start (GTK_BOX (vbox), private->stack, TRUE, TRUE, 0);
-  gtk_widget_show (private->stack);
+  gtk_widget_set_visible (private->stack, TRUE);
 }
 
 static gboolean
@@ -369,7 +369,7 @@ gimp_device_editor_add_device (GimpContainer    *container,
   widget = gimp_device_info_editor_new (info);
   gtk_stack_add_named (GTK_STACK (private->stack), widget,
                        gimp_object_get_name (info));
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 }
 
 static void
@@ -485,7 +485,7 @@ gimp_device_editor_delete_clicked (GtkWidget        *button,
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 

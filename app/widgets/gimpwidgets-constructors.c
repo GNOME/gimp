@@ -49,22 +49,22 @@ gimp_icon_button_new (const gchar *icon_name,
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_container_add (GTK_CONTAINER (button), hbox);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
       gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
 
       lab = gtk_label_new_with_mnemonic (label);
       gtk_label_set_mnemonic_widget (GTK_LABEL (lab), button);
       gtk_box_pack_start (GTK_BOX (hbox), lab, TRUE, TRUE, 0);
-      gtk_widget_show (lab);
+      gtk_widget_set_visible (lab, TRUE);
     }
   else
     {
       image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
       gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
     }
 
   return button;
@@ -97,7 +97,7 @@ gimp_color_profile_label_new (GimpColorProfile *profile)
                                        C_("profile", "None"));
 
   gtk_container_add (GTK_CONTAINER (expander), view);
-  gtk_widget_show (view);
+  gtk_widget_set_visible (view, TRUE);
 
   return expander;
 }

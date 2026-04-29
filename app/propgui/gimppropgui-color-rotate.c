@@ -103,7 +103,7 @@ gimp_prop_angle_range_box_new (GObject     *config,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   scale = gimp_prop_spin_scale_new (config, alpha_property_name,
                                     1.0, 15.0, 2);
@@ -118,7 +118,7 @@ gimp_prop_angle_range_box_new (GObject     *config,
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   button = gimp_prop_check_button_new (config, clockwise_property_name,
                                        _("Clockwise"));
@@ -126,11 +126,11 @@ gimp_prop_angle_range_box_new (GObject     *config,
 
   invert_button = gtk_button_new_with_label (_("Invert Range"));
   gtk_box_pack_start (GTK_BOX (hbox), invert_button, TRUE, TRUE, 0);
-  gtk_widget_show (invert_button);
+  gtk_widget_set_visible (invert_button, TRUE);
 
   all_button = gtk_button_new_with_label (_("Select All"));
   gtk_box_pack_start (GTK_BOX (hbox), all_button, TRUE, TRUE, 0);
-  gtk_widget_show (all_button);
+  gtk_widget_set_visible (all_button, TRUE);
 
   dial = gimp_prop_angle_range_dial_new (config,
                                          alpha_property_name,
@@ -146,7 +146,7 @@ gimp_prop_angle_range_box_new (GObject     *config,
                     G_CALLBACK (select_all_clicked),
                     dial);
 
-  gtk_widget_show (main_hbox);
+  gtk_widget_set_visible (main_hbox, TRUE);
 
   return main_hbox;
 }
@@ -165,7 +165,7 @@ gimp_prop_polar_box_new (GObject     *config,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   scale = gimp_prop_spin_scale_new (config, angle_property_name,
                                     1.0, 15.0, 2);
@@ -181,7 +181,7 @@ gimp_prop_polar_box_new (GObject     *config,
                                radius_property_name);
   gtk_box_pack_start (GTK_BOX (main_hbox), polar, FALSE, FALSE, 0);
 
-  gtk_widget_show (main_hbox);
+  gtk_widget_set_visible (main_hbox, TRUE);
 
   return main_hbox;
 }
@@ -210,7 +210,7 @@ _gimp_prop_gui_new_color_rotate (GObject                  *config,
 
   frame = gimp_frame_new (_("Source Range"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   box = gimp_prop_angle_range_box_new (config,
                                        param_specs[1]->name,
@@ -220,7 +220,7 @@ _gimp_prop_gui_new_color_rotate (GObject                  *config,
 
   frame = gimp_frame_new (_("Destination Range"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   box = gimp_prop_angle_range_box_new (config,
                                        param_specs[4]->name,
@@ -230,11 +230,11 @@ _gimp_prop_gui_new_color_rotate (GObject                  *config,
 
   frame = gimp_frame_new (_("Gray Handling"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   box = _gimp_prop_gui_new_generic (config,
                                     param_specs + 6, 2,

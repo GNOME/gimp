@@ -100,7 +100,7 @@ gimp_filter_tool_get_settings_box (GimpFilterTool *filter_tool)
   label = gtk_label_new_with_mnemonic (_("Pre_sets:"));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (box), label, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   combo = gimp_settings_box_get_combo (GIMP_SETTINGS_BOX (box));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);

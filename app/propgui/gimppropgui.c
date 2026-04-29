@@ -213,14 +213,14 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
           hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
           gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
 
           dial = gimp_prop_angle_dial_new (config, pspec->name);
           g_object_set (dial,
                         "clockwise-angles", HAS_KEY (pspec, "direction", "cw"),
                         NULL);
           gtk_box_pack_start (GTK_BOX (hbox), dial, FALSE, FALSE, 0);
-          gtk_widget_show (dial);
+          gtk_widget_set_visible (dial, TRUE);
 
           gimp_help_set_help_data (hbox, g_param_spec_get_blurb (pspec), NULL);
           gimp_prop_gui_bind_label (hbox, widget);
@@ -235,11 +235,11 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
           hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
           gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
 
           button = gimp_prop_kelvin_presets_new (config, pspec->name);
           gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-          gtk_widget_show (button);
+          gtk_widget_set_visible (button, TRUE);
 
           gimp_help_set_help_data (hbox, g_param_spec_get_blurb (pspec), NULL);
           gimp_prop_gui_bind_label (hbox, widget);
@@ -317,7 +317,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
           gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (widget),
                                                GTK_SHADOW_IN);
           gtk_container_add (GTK_CONTAINER (widget), view);
-          gtk_widget_show (view);
+          gtk_widget_set_visible (view, TRUE);
         }
       else if (HAS_KEY (pspec, "error", "true"))
         {
@@ -380,7 +380,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
       gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
       gimp_color_panel_set_context (GIMP_COLOR_PANEL (button), context);
       gtk_box_pack_start (GTK_BOX (widget), button, TRUE, TRUE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       gimp_prop_gui_bind_tooltip (button, widget);
 
@@ -393,7 +393,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
                                        /* pick_abyss = */ FALSE,
                                        NULL, NULL);
           gtk_box_pack_start (GTK_BOX (widget), button, FALSE, FALSE, 0);
-          gtk_widget_show (button);
+          gtk_widget_set_visible (button, TRUE);
         }
 
       *label = g_param_spec_get_nick (pspec);
@@ -422,8 +422,8 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
         {
           /* a bit of a hack: if we have a dynamic "visible" property key,
            * connect to the widget's "show" signal, so that we can intercept
-           * our caller's gtk_widget_show() call, and keep the widget hidden if
-           * necessary.
+           * our caller's gtk_widget_set_visible(widget, TRUE) call, and
+           * keep the widget hidden if necessary.
            */
           g_signal_connect (widget, "show",
                             G_CALLBACK (gimp_prop_widget_show),
@@ -434,7 +434,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
       gimp_prop_config_notify (config, NULL, widget);
     }
 
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
   return widget;
 }
@@ -557,7 +557,7 @@ gimp_prop_gui_new (GObject                  *config,
                     NULL);
     }
 
-  gtk_widget_show (gui);
+  gtk_widget_set_visible (gui, TRUE);
 
   return gui;
 }

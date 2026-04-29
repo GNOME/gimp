@@ -171,7 +171,7 @@ gimp_paint_select_options_gui (GimpToolOptions *tool_options)
                                               GIMP_CHANNEL_OP_ADD,
                                               GIMP_CHANNEL_OP_SUBTRACT);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* stroke width */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);

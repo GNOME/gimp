@@ -148,11 +148,11 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
 
   frame = gimp_frame_new (_("Select Primary Color to Adjust"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /*  The grid containing hue ranges  */
   grid = gtk_grid_new ();
@@ -197,12 +197,12 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
                            hue_range_grid[i].frame_col,
                            hue_range_grid[i].frame_row,
                            1, 1);
-          gtk_widget_show (frame);
+          gtk_widget_set_visible (frame, TRUE);
 
           color_area = gimp_color_area_new (color, GIMP_COLOR_AREA_FLAT, 0);
           gtk_widget_set_size_request (color_area, COLOR_WIDTH, COLOR_HEIGHT);
           gtk_container_add (GTK_CONTAINER (frame), color_area);
-          gtk_widget_show (color_area);
+          gtk_widget_set_visible (color_area, TRUE);
 
           g_object_set_data (G_OBJECT (color_area), "hue-range",
                              GINT_TO_POINTER (i));
@@ -218,10 +218,10 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
                         G_CALLBACK (hue_saturation_range_callback),
                         config);
 
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
     }
 
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /* Create the 'Overlap' option slider */
   scale = gimp_prop_spin_scale_new (config, "overlap", 0.01, 0.1, 0);
@@ -231,11 +231,11 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
 
   frame = gimp_frame_new (_("Adjust Selected Color"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /*  Create the hue scale widget  */
   scale = gimp_prop_spin_scale_new (config, "hue",
@@ -258,11 +258,11 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("R_eset Color"));
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (gimp_hue_saturation_config_reset_range),

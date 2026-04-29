@@ -114,7 +114,7 @@ gimp_selection_editor_init (GimpSelectionEditor *editor)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   editor->view = gimp_view_new_by_types (NULL,
                                          GIMP_TYPE_VIEW,
@@ -125,7 +125,7 @@ gimp_selection_editor_init (GimpSelectionEditor *editor)
                                GIMP_VIEW_SIZE_HUGE, GIMP_VIEW_SIZE_HUGE);
   gimp_view_set_expand (GIMP_VIEW (editor->view), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), editor->view);
-  gtk_widget_show (editor->view);
+  gtk_widget_set_visible (editor->view, TRUE);
 
   g_signal_connect (editor->view, "button-press-event",
                     G_CALLBACK (gimp_selection_view_button_press),

@@ -271,7 +271,7 @@ templates_delete_cmd_callback (GimpAction *action,
                                            "template '%s' from the list and "
                                            "from disk?"),
                                          gimp_object_get_name (template));
-      gtk_widget_show (dialog);
+      gtk_widget_set_visible (dialog, TRUE);
     }
 }
 

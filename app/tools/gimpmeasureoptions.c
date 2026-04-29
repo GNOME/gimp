@@ -151,22 +151,22 @@ gimp_measure_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_enum_radio_frame_new (config, "orientation", str, -1, -1);
   g_free (str);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /*  the use_info_window toggle button  */
   button = gimp_prop_check_button_new (config, "use-info-window", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   /*  the straighten frame  */
   frame = gimp_frame_new (_("Straighten"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /*  the transform options  */
   vbox2 = gimp_transform_options_gui (tool_options, FALSE, TRUE, TRUE);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   /*  the straighten button  */
   button = gtk_button_new_with_label (_("Straighten"));
@@ -176,7 +176,7 @@ gimp_measure_options_gui (GimpToolOptions *tool_options)
                            _("Rotate the active layer, selection or path "
                              "by the measured angle"),
                            NULL);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   options->straighten_button = button;
 

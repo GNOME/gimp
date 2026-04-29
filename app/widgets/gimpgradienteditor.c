@@ -323,11 +323,11 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   data_editor->view = gimp_view_new_full_by_types (NULL,
                                                    GIMP_TYPE_VIEW,
@@ -339,7 +339,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_widget_set_events (data_editor->view, GRAD_VIEW_EVENT_MASK);
   gimp_view_set_expand (GIMP_VIEW (data_editor->view), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), data_editor->view, TRUE, TRUE, 0);
-  gtk_widget_show (data_editor->view);
+  gtk_widget_set_visible (data_editor->view, TRUE);
 
   g_signal_connect (data_editor->view, "event",
                     G_CALLBACK (view_events),
@@ -371,7 +371,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_widget_set_size_request (editor->control, -1, GRAD_CONTROL_HEIGHT);
   gtk_widget_set_events (editor->control, GRAD_CONTROL_EVENT_MASK);
   gtk_box_pack_start (GTK_BOX (vbox), editor->control, FALSE, FALSE, 0);
-  gtk_widget_show (editor->control);
+  gtk_widget_set_visible (editor->control, TRUE);
 
   g_signal_connect (editor->control, "event",
                     G_CALLBACK (control_events),
@@ -403,18 +403,18 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   editor->scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL,
                                          editor->scroll_data);
   gtk_box_pack_start (GTK_BOX (editor), editor->scrollbar, FALSE, FALSE, 0);
-  gtk_widget_show (editor->scrollbar);
+  gtk_widget_set_visible (editor->scrollbar, TRUE);
 
   /* Box for current color and the hint labels */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* Frame showing current active color */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   editor->current_color = gimp_color_area_new (transp,
                                                GIMP_COLOR_AREA_SMALL_CHECKS,
@@ -423,12 +423,12 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_container_add (GTK_CONTAINER (frame), editor->current_color);
   gtk_widget_set_size_request (editor->current_color,
                                GRAD_CURRENT_COLOR_WIDTH, -1);
-  gtk_widget_show (editor->current_color);
+  gtk_widget_set_visible (editor->current_color, TRUE);
 
   /* Hint box */
   hint_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), hint_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (hint_vbox);
+  gtk_widget_set_visible (hint_vbox, TRUE);
 
   editor->hint_label1 = gradient_hint_label_add (GTK_BOX (hint_vbox));
   editor->hint_label2 = gradient_hint_label_add (GTK_BOX (hint_vbox));
@@ -2409,7 +2409,7 @@ gradient_hint_label_add (GtkBox *box)
                                    "single-line-mode", TRUE,
                                    NULL);
   gtk_box_pack_start (box, label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   return label;
 }

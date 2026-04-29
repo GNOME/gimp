@@ -129,7 +129,7 @@ gimp_prop_expanding_frame_new (GObject      *config,
 
   toggle = gimp_prop_check_button_new (config, property_name, button_label);
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   gtk_container_add (GTK_CONTAINER (frame), child);
 
@@ -141,7 +141,7 @@ gimp_prop_expanding_frame_new (GObject      *config,
     *button = toggle;
 
   gimp_widget_set_bound_property (frame, config, property_name);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   return frame;
 }
@@ -192,13 +192,13 @@ gimp_prop_boolean_icon_box_new (GObject     *config,
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   image = gtk_image_new_from_icon_name (true_icon, GTK_ICON_SIZE_MENU);
   if (image)
     {
       gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
     }
 
   gimp_help_set_help_data (button, true_tooltip, NULL);
@@ -217,13 +217,13 @@ gimp_prop_boolean_icon_box_new (GObject     *config,
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   image = gtk_image_new_from_icon_name (false_icon, GTK_ICON_SIZE_MENU);
   if (image)
     {
       gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
     }
 
   gimp_help_set_help_data (button, false_tooltip, NULL);
@@ -244,7 +244,7 @@ gimp_prop_boolean_icon_box_new (GObject     *config,
                   button);
 
   gimp_widget_set_bound_property (box, config, property_name);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   return box;
 }
@@ -327,7 +327,7 @@ gimp_prop_layer_mode_box_new (GObject              *config,
                           G_BINDING_SYNC_CREATE);
 
   gimp_widget_set_bound_property (box, config, property_name);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   return box;
 }
@@ -403,7 +403,7 @@ gimp_prop_color_button_new (GObject           *config,
                   button);
 
   gimp_widget_set_bound_property (button, config, property_name);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   return button;
 }
@@ -570,7 +570,7 @@ gimp_prop_angle_dial_new (GObject     *config,
     }
 
   gimp_widget_set_bound_property (dial, config, property_name);
-  gtk_widget_show (dial);
+  gtk_widget_set_visible (dial, TRUE);
 
   return dial;
 }
@@ -628,7 +628,7 @@ gimp_prop_angle_range_dial_new (GObject     *config,
                           G_BINDING_SYNC_CREATE);
 
   gimp_widget_set_bound_property (dial, config, alpha_property_name);
-  gtk_widget_show (dial);
+  gtk_widget_set_visible (dial, TRUE);
 
   return dial;
 }
@@ -672,7 +672,7 @@ gimp_prop_polar_new (GObject     *config,
                           G_BINDING_SYNC_CREATE);
 
   gimp_widget_set_bound_property (polar, config, angle_property_name);
-  gtk_widget_show (polar);
+  gtk_widget_set_visible (polar, TRUE);
 
   return polar;
 }
@@ -707,12 +707,12 @@ gimp_prop_range_new (GObject     *config,
   color_bar = gimp_color_bar_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_widget_set_size_request (color_bar, -1, RANGE_GRADIENT_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox), color_bar, FALSE, FALSE, 0);
-  gtk_widget_show (color_bar);
+  gtk_widget_set_visible (color_bar, TRUE);
 
   handle_bar = gimp_handle_bar_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_widget_set_size_request (handle_bar, -1, RANGE_CONTROL_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox), handle_bar, FALSE, FALSE, 0);
-  gtk_widget_show (handle_bar);
+  gtk_widget_set_visible (handle_bar, TRUE);
 
   gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (handle_bar), color_bar);
 
@@ -720,7 +720,7 @@ gimp_prop_range_new (GObject     *config,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   spin_button = gimp_prop_spin_button_new (config, lower_property_name,
                                            step_increment, page_increment,
@@ -728,7 +728,7 @@ gimp_prop_range_new (GObject     *config,
   adjustment1 = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin_button));
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spin_button), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spin_button, FALSE, FALSE, 0);
-  gtk_widget_show (spin_button);
+  gtk_widget_set_visible (spin_button, TRUE);
 
   gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 0, adjustment1);
 
@@ -738,7 +738,7 @@ gimp_prop_range_new (GObject     *config,
   adjustment2 = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin_button));
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spin_button), TRUE);
   gtk_box_pack_end (GTK_BOX (hbox), spin_button, FALSE, FALSE, 0);
-  gtk_widget_show (spin_button);
+  gtk_widget_set_visible (spin_button, TRUE);
 
   gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 2, adjustment2);
 
@@ -746,7 +746,7 @@ gimp_prop_range_new (GObject     *config,
     gimp_gtk_adjustment_chain (adjustment1, adjustment2);
 
   gimp_widget_set_bound_property (vbox, config, lower_property_name);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   return vbox;
 }
@@ -848,7 +848,7 @@ gimp_prop_view_new (GObject     *config,
                   view);
 
   gimp_widget_set_bound_property (view, config, property_name);
-  gtk_widget_show (view);
+  gtk_widget_set_visible (view, TRUE);
 
   return view;
 }
@@ -1049,7 +1049,7 @@ gimp_prop_number_pair_entry_new (GObject     *config,
                   number_pair_entry);
 
   gimp_widget_set_bound_property (number_pair_entry, config, left_number_property);
-  gtk_widget_show (number_pair_entry);
+  gtk_widget_set_visible (number_pair_entry, TRUE);
 
   return number_pair_entry;
 }
@@ -1192,7 +1192,7 @@ gimp_prop_language_combo_box_new (GObject     *config,
                   combo);
 
   gimp_widget_set_bound_property (combo, config, property_name);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   return combo;
 }
@@ -1293,7 +1293,7 @@ gimp_prop_language_entry_new (GObject     *config,
                   entry);
 
   gimp_widget_set_bound_property (entry, config, property_name);
-  gtk_widget_show (entry);
+  gtk_widget_set_visible (entry, TRUE);
 
   return entry;
 }
@@ -1448,7 +1448,7 @@ gimp_prop_profile_combo_box_new (GObject      *config,
                   combo);
 
   gimp_widget_set_bound_property (combo, config, property_name);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   return combo;
 }
@@ -1588,7 +1588,7 @@ gimp_prop_compression_combo_box_new (GObject     *config,
                   combo);
 
   gimp_widget_set_bound_property (combo, config, property_name);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   return combo;
 }
@@ -1699,7 +1699,7 @@ gimp_prop_icon_picker_new (GimpViewable *viewable,
   if (pixbuf_value)
     g_object_unref (pixbuf_value);
 
-  gtk_widget_show (picker);
+  gtk_widget_set_visible (picker, TRUE);
 
   return picker;
 }

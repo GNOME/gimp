@@ -345,7 +345,7 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
         gtk_check_button_new_with_mnemonic (_("_Preview mask"));
       gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (fg_select->gui)),
                           fg_select->preview_toggle, FALSE, FALSE, 0);
-      gtk_widget_show (fg_select->preview_toggle);
+      gtk_widget_set_visible (fg_select->preview_toggle, TRUE);
 
       g_signal_connect (fg_select->preview_toggle, "toggled",
                         G_CALLBACK (gimp_foreground_select_tool_preview_toggled),

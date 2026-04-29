@@ -331,10 +331,10 @@ gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
       tab_widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, dnd ? 6 : 2);
 
       gtk_box_pack_start (GTK_BOX (tab_widget), icon, FALSE, FALSE, 0);
-      gtk_widget_show (icon);
+      gtk_widget_set_visible (icon, TRUE);
 
       gtk_box_pack_start (GTK_BOX (tab_widget), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
       break;
     }
 
@@ -567,8 +567,8 @@ gimp_dockable_detach (GimpDockable *dockable)
                             GTK_WIDGET (dockable), NULL);
   g_object_unref (dockable);
 
-  gtk_widget_show (GTK_WIDGET (dock_window));
-  gtk_widget_show (dock);
+  gtk_widget_set_visible (GTK_WIDGET (dock_window), TRUE);
+  gtk_widget_set_visible (dock, TRUE);
 }
 
 

@@ -279,7 +279,7 @@ gimp_image_prop_view_add_label (GtkGrid     *grid,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_grid_attach (grid, desc, 0, row, 1, 1);
-  gtk_widget_show (desc);
+  gtk_widget_set_visible (desc, TRUE);
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "xalign",     0.0,
@@ -289,7 +289,7 @@ gimp_image_prop_view_add_label (GtkGrid     *grid,
 
   gtk_grid_attach (grid, label, 1, row, 1, 1);
 
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   return label;
 }

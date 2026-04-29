@@ -57,7 +57,7 @@ gimp_tool_options_empty_gui (GimpToolOptions *tool_options)
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 6);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   return vbox;
 }

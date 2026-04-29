@@ -818,7 +818,7 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
                         idle_help);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                           lang_combo, TRUE, TRUE, 0);
-      gtk_widget_show (lang_combo);
+      gtk_widget_set_visible (lang_combo, TRUE);
 
       gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                  _("You may either select a manual in another "
@@ -853,7 +853,7 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_help_query_online_response),
                     idle_help);
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 static void

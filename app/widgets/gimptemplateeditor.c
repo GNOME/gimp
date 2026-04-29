@@ -186,13 +186,13 @@ gimp_template_editor_constructed (GObject *object)
   /*  Image size frame  */
   frame = gimp_frame_new (_("Image Size"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   width = gimp_spin_button_new (adjustment, 1.0, 2);
@@ -209,18 +209,18 @@ gimp_template_editor_constructed (GObject *object)
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), width);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("H_eight:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), height);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   /*  create the sizeentry which keeps it all together  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_grid_attach (GTK_GRID (grid), hbox, 1, 0, 1, 2);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   private->size_se = gimp_size_entry_new (0,
                                           gimp_template_get_unit (template),
@@ -229,17 +229,17 @@ gimp_template_editor_constructed (GObject *object)
                                           GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
   gtk_box_pack_start (GTK_BOX (hbox), private->size_se, FALSE, FALSE, 0);
-  gtk_widget_show (private->size_se);
+  gtk_widget_set_visible (private->size_se, TRUE);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->size_se),
                              GTK_SPIN_BUTTON (height), NULL);
   gtk_grid_attach (GTK_GRID (private->size_se), height, 0, 1, 1, 1);
-  gtk_widget_show (height);
+  gtk_widget_set_visible (height, TRUE);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->size_se),
                              GTK_SPIN_BUTTON (width), NULL);
   gtk_grid_attach (GTK_GRID (private->size_se), width, 0, 0, 1, 1);
-  gtk_widget_show (width);
+  gtk_widget_set_visible (width, TRUE);
 
   gimp_prop_coordinates_connect (G_OBJECT (template),
                                  "width", "height", "unit",
@@ -249,11 +249,11 @@ gimp_template_editor_constructed (GObject *object)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_grid_attach (GTK_GRID (grid), hbox, 1, 2, 2, 1);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   aspect_box = gimp_enum_icon_box_new (GIMP_TYPE_ASPECT_TYPE,
                                        "gimp", GTK_ICON_SIZE_MENU,
@@ -263,11 +263,11 @@ gimp_template_editor_constructed (GObject *object)
   gtk_widget_set_visible (private->aspect_button, FALSE); /* hide "square" */
 
   gtk_box_pack_start (GTK_BOX (vbox), aspect_box, FALSE, FALSE, 0);
-  gtk_widget_show (aspect_box);
+  gtk_widget_set_visible (aspect_box, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   private->pixel_label = gtk_label_new (NULL);
   gimp_label_set_attributes (GTK_LABEL (private->pixel_label),
@@ -275,7 +275,7 @@ gimp_template_editor_constructed (GObject *object)
                              -1);
   gtk_label_set_xalign (GTK_LABEL (private->pixel_label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), private->pixel_label, FALSE, FALSE, 0);
-  gtk_widget_show (private->pixel_label);
+  gtk_widget_set_visible (private->pixel_label, TRUE);
 
   private->more_label = gtk_label_new (NULL);
   gimp_label_set_attributes (GTK_LABEL (private->more_label),
@@ -283,7 +283,7 @@ gimp_template_editor_constructed (GObject *object)
                              -1);
   gtk_label_set_xalign (GTK_LABEL (private->more_label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), private->more_label, FALSE, FALSE, 0);
-  gtk_widget_show (private->more_label);
+  gtk_widget_set_visible (private->more_label, TRUE);
 
 #ifdef ENABLE_MEMSIZE_LABEL
   private->memsize_label = gtk_label_new (NULL);
@@ -293,7 +293,7 @@ gimp_template_editor_constructed (GObject *object)
                              -1);
   gtk_label_set_xalign (GTK_LABEL (private->memsize_label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), private->memsize_label, FALSE, FALSE, 0);
-  gtk_widget_show (private->memsize_label);
+  gtk_widget_set_visible (private->memsize_label, TRUE);
 #endif
 
   text = g_strdup_printf ("<b>%s</b>", _("_Advanced Options"));
@@ -305,11 +305,11 @@ gimp_template_editor_constructed (GObject *object)
   g_free (text);
 
   gtk_box_pack_start (GTK_BOX (editor), private->expander, TRUE, TRUE, 0);
-  gtk_widget_show (private->expander);
+  gtk_widget_set_visible (private->expander, TRUE);
 
   frame = gimp_frame_new ("<expander>");
   gtk_container_add (GTK_CONTAINER (private->expander), frame);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_set_size_request (scrolled_window, -1, 300);
@@ -319,14 +319,14 @@ gimp_template_editor_constructed (GObject *object)
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_container_set_border_width (GTK_CONTAINER (grid), 16);
   gtk_container_add (GTK_CONTAINER (scrolled_window), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   xres = gimp_spin_button_new (adjustment, 1.0, 2);
@@ -343,18 +343,18 @@ gimp_template_editor_constructed (GObject *object)
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), xres);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("_Y resolution:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), yres);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   /*  the resolution sizeentry  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_grid_attach (GTK_GRID (grid), hbox, 1, 0, 1, 2);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   private->resolution_se =
     gimp_size_entry_new (0,
@@ -364,17 +364,17 @@ gimp_template_editor_constructed (GObject *object)
                          GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
 
   gtk_box_pack_start (GTK_BOX (hbox), private->resolution_se, FALSE, FALSE, 0);
-  gtk_widget_show (private->resolution_se);
+  gtk_widget_set_visible (private->resolution_se, TRUE);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->resolution_se),
                              GTK_SPIN_BUTTON (yres), NULL);
   gtk_grid_attach (GTK_GRID (private->resolution_se), yres, 0, 1, 1, 1);
-  gtk_widget_show (yres);
+  gtk_widget_set_visible (yres, TRUE);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->resolution_se),
                              GTK_SPIN_BUTTON (xres), NULL);
   gtk_grid_attach (GTK_GRID (private->resolution_se), xres, 0, 0, 1, 1);
-  gtk_widget_show (xres);
+  gtk_widget_set_visible (xres, TRUE);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 0,
                                   gimp_template_get_resolution_x (template),
@@ -386,7 +386,7 @@ gimp_template_editor_constructed (GObject *object)
   /*  the resolution chainbutton  */
   private->chain_button = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
   gtk_grid_attach (GTK_GRID (private->resolution_se), private->chain_button, 1, 0, 1, 2);
-  gtk_widget_show (private->chain_button);
+  gtk_widget_set_visible (private->chain_button, TRUE);
 
   gimp_prop_coordinates_connect (G_OBJECT (template),
                                  "xresolution", "yresolution",
@@ -507,7 +507,7 @@ gimp_template_editor_constructed (GObject *object)
 
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
-  gtk_widget_show (text_view);
+  gtk_widget_set_visible (text_view, TRUE);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), text_view);
 
@@ -606,7 +606,7 @@ gimp_template_editor_new (GimpTemplate *template,
       gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
       gtk_box_pack_start (GTK_BOX (editor), grid, FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (editor), grid, 0);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       entry = gimp_prop_entry_new (G_OBJECT (private->template), "name", 128);
 

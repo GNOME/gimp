@@ -646,7 +646,7 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
   g_free (label);
   g_free (accel_string);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 static void

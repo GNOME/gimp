@@ -210,7 +210,7 @@ gimp_menu_append (GimpMenuShell *shell,
 
           item = gtk_separator_menu_item_new ();
           gtk_container_add (GTK_CONTAINER (shell), item);
-          gtk_widget_show (item);
+          gtk_widget_set_visible (item, TRUE);
 
           /* Don't use gimp_menu_shell_append() here because we don't want to
            * override the main model for this menu.
@@ -220,7 +220,7 @@ gimp_menu_append (GimpMenuShell *shell,
 
           item = gtk_separator_menu_item_new ();
           gtk_container_add (GTK_CONTAINER (shell), item);
-          gtk_widget_show (item);
+          gtk_widget_set_visible (item, TRUE);
         }
       else if (submenu != NULL)
         {
@@ -239,7 +239,7 @@ gimp_menu_append (GimpMenuShell *shell,
           subcontainer = gimp_menu_new (manager);
           gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), subcontainer);
           gimp_menu_shell_append (GIMP_MENU_SHELL (subcontainer), GIMP_MENU_MODEL (submenu));
-          gtk_widget_show (subcontainer);
+          gtk_widget_set_visible (subcontainer, TRUE);
 
           g_tree_insert (menu->priv->submenus,
                          gimp_utils_make_canonical_menu_label (label),
@@ -305,7 +305,7 @@ gimp_menu_add_ui (GimpMenuShell  *shell,
 
       submenu = gimp_menu_new (manager);
       gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), submenu);
-      gtk_widget_show (submenu);
+      gtk_widget_set_visible (submenu, TRUE);
 
       g_tree_insert (menu->priv->submenus, g_strdup (paths[0]), submenu);
     }
@@ -524,7 +524,7 @@ gimp_menu_add_action (GimpMenu          *menu,
             break;
 
           if (G_TYPE_FROM_INSTANCE (menu_item) == GTK_TYPE_MENU_ITEM)
-            gtk_widget_show (menu_item);
+            gtk_widget_set_visible (menu_item, TRUE);
 
           parent = gtk_widget_get_parent (menu_item);
         }
@@ -695,7 +695,7 @@ gimp_menu_submenu_notify_color (GimpMenuModel    *model,
 
       gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
       gtk_widget_set_size_request (image, width, height);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
 
       g_object_unref (color);
     }
@@ -751,7 +751,7 @@ gimp_menu_action_notify_visible (GimpAction       *action,
        * container.
        */
       if (G_TYPE_FROM_INSTANCE (widget) == GTK_TYPE_MENU_ITEM)
-        gtk_widget_show (widget);
+        gtk_widget_set_visible (widget, TRUE);
     }
   else
     {
@@ -866,7 +866,7 @@ gimp_menu_update_visibility (GimpMenu *menu)
             }
           else
             {
-              gtk_widget_show (item);
+              gtk_widget_set_visible (item, TRUE);
               prev_item = item;
             }
         }

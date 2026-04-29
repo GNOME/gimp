@@ -125,18 +125,18 @@ color_profile_import_dialog_run (GimpImage                 *image,
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   text = g_strdup_printf (_("The image '%s' has an embedded color profile"),
                           gimp_image_get_display_name (image));
   frame = gimp_frame_new (text);
   g_free (text);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   label = gimp_color_profile_label_new (src_profile);
   gtk_container_add (GTK_CONTAINER (frame), label);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   switcher = gtk_stack_switcher_new ();
 
@@ -144,16 +144,16 @@ color_profile_import_dialog_run (GimpImage                 *image,
   gtk_stack_switcher_set_stack (GTK_STACK_SWITCHER (switcher), GTK_STACK (stack));
   gtk_box_pack_start (GTK_BOX (main_vbox), stack, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), switcher, FALSE, FALSE, 0);
-  gtk_widget_show (stack);
+  gtk_widget_set_visible (stack, TRUE);
 
   frame = gimp_frame_new (frame_title);
   gtk_stack_add_titled (GTK_STACK (stack), frame, "builtin",
                         _("Built-in Profile"));
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   label = gimp_color_profile_label_new (*dest_profile);
   gtk_container_add (GTK_CONTAINER (frame), label);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   if (pref_profile)
     {
@@ -165,13 +165,13 @@ color_profile_import_dialog_run (GimpImage                 *image,
       frame = gimp_frame_new (frame_title);
       gtk_stack_add_titled (GTK_STACK (stack), frame, "preferred",
                             _("Preferred Profile"));
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       label = gimp_color_profile_label_new (pref_profile);
       gtk_container_add (GTK_CONTAINER (frame), label);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
-      gtk_widget_show (switcher);
+      gtk_widget_set_visible (switcher, TRUE);
       gtk_stack_set_visible_child_name (GTK_STACK (stack), "preferred");
     }
 
@@ -179,7 +179,7 @@ color_profile_import_dialog_run (GimpImage                 *image,
     {
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
       gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
     }
   else
     {
@@ -192,17 +192,17 @@ color_profile_import_dialog_run (GimpImage                 *image,
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       label = gtk_label_new_with_mnemonic (_("_Rendering Intent:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       intent_combo = gimp_enum_combo_box_new (GIMP_TYPE_COLOR_RENDERING_INTENT);
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (intent_combo),
                                      *intent);
       gtk_box_pack_start (GTK_BOX (hbox), intent_combo, TRUE, TRUE, 0);
-      gtk_widget_show (intent_combo);
+      gtk_widget_set_visible (intent_combo, TRUE);
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), intent_combo);
     }
@@ -213,7 +213,7 @@ color_profile_import_dialog_run (GimpImage                 *image,
         gtk_check_button_new_with_mnemonic (_("_Black Point Compensation"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bpc_toggle), *bpc);
       gtk_box_pack_start (GTK_BOX (vbox), bpc_toggle, FALSE, FALSE, 0);
-      gtk_widget_show (bpc_toggle);
+      gtk_widget_set_visible (bpc_toggle, TRUE);
     }
 
   if (dont_ask)
@@ -224,7 +224,7 @@ color_profile_import_dialog_run (GimpImage                 *image,
                                    _("Your choice can later be edited in Preferences > Color Management"));
       gtk_box_pack_end (GTK_BOX (main_vbox), dont_ask_toggle, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dont_ask_toggle), FALSE);
-      gtk_widget_show (dont_ask_toggle);
+      gtk_widget_set_visible (dont_ask_toggle, TRUE);
     }
 
   switch (gtk_dialog_run (GTK_DIALOG (dialog)))

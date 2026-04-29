@@ -108,7 +108,7 @@ gimp_prop_kelvin_presets_new (GObject     *config,
 
       item = gtk_menu_item_new_with_label (gettext (kelvin_presets[i].label));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-      gtk_widget_show (item);
+      gtk_widget_set_visible (item, TRUE);
 
       g_object_set_data_full (G_OBJECT (item), "property-name",
                               g_strdup (property_name),
@@ -143,11 +143,11 @@ gimp_prop_random_seed_new (GObject     *config,
   spin = gimp_prop_spin_button_new (config, property_name,
                                     1.0, 10.0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
-  gtk_widget_show (spin);
+  gtk_widget_set_visible (spin, TRUE);
 
   button = gtk_button_new_with_label (_("New Seed"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin));
 

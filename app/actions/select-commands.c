@@ -177,7 +177,7 @@ select_feather_cmd_callback (GimpAction *action,
                                     config->selection_feather_edge_lock);
       gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
                           FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       dialogs_attach_dialog (G_OBJECT (image), FEATHER_DIALOG_KEY, dialog);
     }
@@ -254,7 +254,7 @@ select_shrink_cmd_callback (GimpAction *action,
                                     config->selection_shrink_edge_lock);
       gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
                           FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       dialogs_attach_dialog (G_OBJECT (image), SHRINK_DIALOG_KEY, dialog);
     }
@@ -371,7 +371,7 @@ select_border_cmd_callback (GimpAction *action,
       g_object_set_data (G_OBJECT (dialog), "border-style-combo", combo);
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                      config->selection_border_style);
-      gtk_widget_show (combo);
+      gtk_widget_set_visible (combo, TRUE);
 
       /* Edge lock button */
       button = gtk_check_button_new_with_mnemonic (_("_Selected areas continue outside the image"));
@@ -384,7 +384,7 @@ select_border_cmd_callback (GimpAction *action,
                                     config->selection_border_edge_lock);
       gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
                           FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       dialogs_attach_dialog (G_OBJECT (image), BORDER_DIALOG_KEY, dialog);
     }

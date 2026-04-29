@@ -97,7 +97,7 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
   gtk_window_set_screen (GTK_WINDOW (layer_select->window),
                          gtk_widget_get_screen (GTK_WIDGET (shell)));
 
-  gtk_widget_show (layer_select->window);
+  gtk_widget_set_visible (layer_select->window, TRUE);
 
   status = gdk_seat_grab (gdk_event_get_seat (event),
                           gtk_widget_get_window (layer_select->window),
@@ -146,17 +146,17 @@ layer_select_new (GimpDisplayShell *shell,
   frame1 = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_OUT);
   gtk_container_add (GTK_CONTAINER (layer_select->window), frame1);
-  gtk_widget_show (frame1);
+  gtk_widget_set_visible (frame1, TRUE);
 
   frame2 = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (frame1), frame2);
-  gtk_widget_show (frame2);
+  gtk_widget_set_visible (frame2, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (frame2), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /*  the view  */
   layer_select->view =
@@ -169,12 +169,12 @@ layer_select_new (GimpDisplayShell *shell,
   gimp_view_set_viewable (GIMP_VIEW (layer_select->view),
                           g_list_length (layers) == 1 ? GIMP_VIEWABLE (layers->data) : NULL);
   gtk_box_pack_start (GTK_BOX (hbox), layer_select->view, FALSE, FALSE, 0);
-  gtk_widget_show (layer_select->view);
+  gtk_widget_set_visible (layer_select->view, TRUE);
 
   /*  the layer name label */
   layer_select->label = gtk_label_new (NULL);
   gtk_box_pack_start (GTK_BOX (hbox), layer_select->label, FALSE, FALSE, 0);
-  gtk_widget_show (layer_select->label);
+  gtk_widget_set_visible (layer_select->label, TRUE);
 
   return layer_select;
 }

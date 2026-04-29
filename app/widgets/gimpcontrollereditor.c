@@ -189,11 +189,11 @@ gimp_controller_editor_constructed (GObject *object)
 
   frame = gimp_frame_new (_("General"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   entry = gimp_prop_entry_new (G_OBJECT (info), "name", -1);
   gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
@@ -208,17 +208,17 @@ gimp_controller_editor_constructed (GObject *object)
 
   frame = gimp_frame_new (controller_class->name);
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   row = 0;
 
@@ -284,10 +284,10 @@ gimp_controller_editor_constructed (GObject *object)
                                        GTK_SHADOW_IN);
   gtk_widget_set_size_request (sw, 400, 300);
   gtk_container_add (GTK_CONTAINER (sw), tv);
-  gtk_widget_show (tv);
+  gtk_widget_set_visible (tv, TRUE);
 
   gtk_box_pack_start (GTK_BOX (vbox), sw, TRUE, TRUE, 0);
-  gtk_widget_show (sw);
+  gtk_widget_set_visible (sw, TRUE);
 
   g_signal_connect (tv, "row-activated",
                     G_CALLBACK (gimp_controller_editor_row_activated),
@@ -359,11 +359,11 @@ gimp_controller_editor_constructed (GObject *object)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   editor->grab_button = gtk_toggle_button_new_with_mnemonic (_("_Grab event"));
   gtk_box_pack_start (GTK_BOX (hbox), editor->grab_button, TRUE, TRUE, 0);
-  gtk_widget_show (editor->grab_button);
+  gtk_widget_set_visible (editor->grab_button, TRUE);
 
   g_signal_connect (editor->grab_button, "toggled",
                     G_CALLBACK (gimp_controller_editor_grab_toggled),
@@ -376,7 +376,7 @@ gimp_controller_editor_constructed (GObject *object)
 
   editor->edit_button = gtk_button_new_with_mnemonic (_("_Edit event"));
   gtk_box_pack_start (GTK_BOX (hbox), editor->edit_button, TRUE, TRUE, 0);
-  gtk_widget_show (editor->edit_button);
+  gtk_widget_set_visible (editor->edit_button, TRUE);
 
   g_signal_connect (editor->edit_button, "clicked",
                     G_CALLBACK (gimp_controller_editor_edit_clicked),
@@ -384,7 +384,7 @@ gimp_controller_editor_constructed (GObject *object)
 
   editor->delete_button = gtk_button_new_with_mnemonic (_("_Clear event"));
   gtk_box_pack_start (GTK_BOX (hbox), editor->delete_button, TRUE, TRUE, 0);
-  gtk_widget_show (editor->delete_button);
+  gtk_widget_set_visible (editor->delete_button, TRUE);
 
   g_signal_connect (editor->delete_button, "clicked",
                     G_CALLBACK (gimp_controller_editor_delete_clicked),

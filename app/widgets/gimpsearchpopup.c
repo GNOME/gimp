@@ -415,7 +415,7 @@ gimp_search_popup_constructed (GObject *object)
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (popup), main_vbox);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   popup->priv->keyword_entry = gtk_entry_new ();
   gtk_entry_set_icon_from_icon_name (GTK_ENTRY (popup->priv->keyword_entry),
@@ -429,7 +429,7 @@ gimp_search_popup_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (main_vbox),
                       popup->priv->keyword_entry,
                       FALSE, FALSE, 0);
-  gtk_widget_show (popup->priv->keyword_entry);
+  gtk_widget_set_visible (popup->priv->keyword_entry, TRUE);
 
   gimp_search_popup_setup_results (&popup->priv->results_list,
                                    &popup->priv->list_view);

@@ -181,7 +181,7 @@ gimp_size_box_constructed (GObject *object)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   entry = gimp_coordinates_new (box->unit, "%n",
                                 TRUE, TRUE, SB_WIDTH,
@@ -217,7 +217,7 @@ gimp_size_box_constructed (GObject *object)
                     box);
 
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_show (entry);
+  gtk_widget_set_visible (entry, TRUE);
 
   children = gtk_container_get_children (GTK_CONTAINER (entry));
   for (list = children; list; list = g_list_next (list))
@@ -227,7 +227,7 @@ gimp_size_box_constructed (GObject *object)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_grid_attach (GTK_GRID (entry), vbox, 1, 2, 2, 1);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   label = gtk_label_new (NULL);
   gimp_label_set_attributes (GTK_LABEL (label),
@@ -235,7 +235,7 @@ gimp_size_box_constructed (GObject *object)
                              -1);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   priv->pixel_label = label;
 
@@ -245,7 +245,7 @@ gimp_size_box_constructed (GObject *object)
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
       gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       chain_active = ABS (box->xresolution -
                           box->yresolution) < GIMP_MIN_RESOLUTION;
@@ -263,7 +263,7 @@ gimp_size_box_constructed (GObject *object)
 
 
       gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-      gtk_widget_show (entry);
+      gtk_widget_set_visible (entry, TRUE);
 
       children = gtk_container_get_children (GTK_CONTAINER (entry));
       for (list = children; list; list = g_list_next (list))
@@ -285,7 +285,7 @@ gimp_size_box_constructed (GObject *object)
                                  -1);
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       priv->res_label = label;
     }

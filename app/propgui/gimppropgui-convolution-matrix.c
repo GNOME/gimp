@@ -158,7 +158,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* matrix */
 
@@ -166,7 +166,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   for (y = 0; y < 5; y++)
     {
@@ -221,7 +221,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
 
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
+    gtk_widget_set_visible (hbox, TRUE);
 
     for (i = 0; i < G_N_ELEMENTS (buttons); i++)
       {
@@ -234,12 +234,12 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
         gtk_widget_set_tooltip_text (button, info->tooltip);
         gtk_widget_set_can_focus (button, FALSE);
         gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-        gtk_widget_show (button);
+        gtk_widget_set_visible (button, TRUE);
 
         image = gtk_image_new_from_icon_name (info->icon_name,
                                               GTK_ICON_SIZE_BUTTON);
         gtk_container_add (GTK_CONTAINER (button), image);
-        gtk_widget_show (image);
+        gtk_widget_set_visible (image, TRUE);
 
         g_object_set_data (G_OBJECT (button),
                            "convolution-matrix-rotate",
@@ -256,14 +256,14 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* divisor / offset spin scales */
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   scale = gimp_prop_widget_new (config, "divisor",
                                 area, context, NULL, NULL, NULL, &label);
@@ -278,7 +278,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   vbox2 = _gimp_prop_gui_new_generic (config,
                                       param_specs + 27, 4,

@@ -255,7 +255,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, HBOX_SPACING);
   gtk_container_add (GTK_CONTAINER (statusbar), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* When changing the text of the cursor_label, it requests a resize
    * bubbling up to containers, up to the display shell. If the resizing
@@ -302,7 +302,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gimp_statusbar_add_size_widget (statusbar, statusbar->cursor_label);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->cursor_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (statusbar->cursor_label);
+  gtk_widget_set_visible (statusbar->cursor_label, TRUE);
 
   store = gimp_unit_store_new (2);
   statusbar->unit_combo = gimp_unit_combo_box_new_with_model (store);
@@ -313,7 +313,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gimp_statusbar_add_size_widget (statusbar, statusbar->unit_combo);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->unit_combo,
                       FALSE, FALSE, 0);
-  gtk_widget_show (statusbar->unit_combo);
+  gtk_widget_set_visible (statusbar->unit_combo, TRUE);
 
   g_signal_connect (statusbar->unit_combo, "changed",
                     G_CALLBACK (gimp_statusbar_unit_changed),
@@ -325,7 +325,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gimp_statusbar_add_size_widget (statusbar, statusbar->scale_combo);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->scale_combo,
                       FALSE, FALSE, 0);
-  gtk_widget_show (statusbar->scale_combo);
+  gtk_widget_set_visible (statusbar->scale_combo, TRUE);
 
   g_signal_connect (statusbar->scale_combo, "changed",
                     G_CALLBACK (gimp_statusbar_scale_changed),
@@ -340,12 +340,12 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gimp_statusbar_add_size_widget (statusbar, statusbar->rotate_widget);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->rotate_widget,
                       FALSE, FALSE, 1);
-  gtk_widget_show (statusbar->rotate_widget);
+  gtk_widget_set_visible (statusbar->rotate_widget, TRUE);
 
   statusbar->rotate_label = gtk_label_new (NULL);
   gtk_container_add (GTK_CONTAINER (statusbar->rotate_widget),
                      statusbar->rotate_label);
-  gtk_widget_show (statusbar->rotate_label);
+  gtk_widget_set_visible (statusbar->rotate_label, TRUE);
 
   g_signal_connect (statusbar->rotate_widget, "button-press-event",
                     G_CALLBACK (gimp_statusbar_rotate_pressed),
@@ -355,12 +355,12 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gimp_statusbar_add_size_widget (statusbar, statusbar->horizontal_flip_icon);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->horizontal_flip_icon,
                       FALSE, FALSE, 1);
-  gtk_widget_show (statusbar->horizontal_flip_icon);
+  gtk_widget_set_visible (statusbar->horizontal_flip_icon, TRUE);
 
   image = gtk_image_new_from_icon_name ("object-flip-horizontal",
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (statusbar->horizontal_flip_icon), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (statusbar->horizontal_flip_icon, "button-press-event",
                     G_CALLBACK (gimp_statusbar_horiz_flip_pressed),
@@ -370,12 +370,12 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gimp_statusbar_add_size_widget (statusbar, statusbar->vertical_flip_icon);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->vertical_flip_icon,
                       FALSE, FALSE, 1);
-  gtk_widget_show (statusbar->vertical_flip_icon);
+  gtk_widget_set_visible (statusbar->vertical_flip_icon, TRUE);
 
   image = gtk_image_new_from_icon_name ("object-flip-vertical",
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (statusbar->vertical_flip_icon), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (statusbar->vertical_flip_icon, "button-press-event",
                     G_CALLBACK (gimp_statusbar_vert_flip_pressed),
@@ -387,7 +387,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_set_halign (statusbar->label, GTK_ALIGN_START);
   gimp_statusbar_add_size_widget (statusbar, statusbar->label);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->label, TRUE, TRUE, 1);
-  gtk_widget_show (statusbar->label);
+  gtk_widget_set_visible (statusbar->label, TRUE);
 
   g_signal_connect_after (statusbar->label, "draw",
                           G_CALLBACK (gimp_statusbar_label_draw),
@@ -418,15 +418,15 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_container_add (GTK_CONTAINER (statusbar->cancel_button), hbox2);
-  gtk_widget_show (hbox2);
+  gtk_widget_set_visible (hbox2, TRUE);
 
   image = gtk_image_new_from_icon_name ("gtk-cancel", GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox2), image, FALSE, FALSE, 2);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   label = gtk_label_new (_("Cancel"));
   gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 2);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   g_signal_connect (statusbar->cancel_button, "clicked",
                     G_CALLBACK (gimp_statusbar_progress_canceled),
@@ -440,9 +440,9 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   image = gtk_image_new_from_icon_name (GIMP_ICON_DISPLAY_FILTER_PROOF,
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (statusbar->soft_proof_button), image);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
-  gtk_widget_show (statusbar->soft_proof_button);
+  gtk_widget_set_visible (statusbar->soft_proof_button, TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (statusbar->soft_proof_button),
                                 FALSE);
 
@@ -459,7 +459,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_box_pack_end (GTK_BOX (hbox), statusbar->soft_proof_container,
                     FALSE, FALSE, 0);
   gimp_statusbar_add_size_widget (statusbar, statusbar->soft_proof_container);
-  gtk_widget_show (statusbar->soft_proof_container);
+  gtk_widget_set_visible (statusbar->soft_proof_container, TRUE);
   gimp_help_set_help_data (statusbar->soft_proof_container,
                            _("Toggle soft-proofing view when "
                              "a soft-proofing profile is set\n"
@@ -489,7 +489,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_grid_attach (GTK_GRID (grid),
                    label,
                    0, row++, 2, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   statusbar->proof_colors_toggle =
     gtk_check_button_new_with_mnemonic (_("_Proof Colors"));
@@ -499,7 +499,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   g_signal_connect (statusbar->proof_colors_toggle, "clicked",
                     G_CALLBACK (gimp_statusbar_soft_proof_button_toggled),
                     statusbar);
-  gtk_widget_show (statusbar->proof_colors_toggle);
+  gtk_widget_set_visible (statusbar->proof_colors_toggle, TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (statusbar->proof_colors_toggle),
                                 FALSE);
 
@@ -512,7 +512,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_grid_attach (GTK_GRID (grid),
                    statusbar->profile_label,
                    0, row++, 2, 1);
-  gtk_widget_show (statusbar->profile_label);
+  gtk_widget_set_visible (statusbar->profile_label, TRUE);
 
   file = gimp_directory_file ("profilerc", NULL);
   combo_store = gimp_color_profile_store_new (file);
@@ -531,7 +531,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                             _("_Soft-proofing Profile: "),
                             0.0, 0.5,
                             statusbar->profile_combo, 1);
-  gtk_widget_show (statusbar->profile_combo);
+  gtk_widget_set_visible (statusbar->profile_combo, TRUE);
   g_signal_connect (statusbar->profile_combo, "changed",
                     G_CALLBACK (gimp_statusbar_soft_proof_profile_changed),
                     statusbar);
@@ -550,7 +550,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                             _("_Rendering Intent: "),
                             0.0, 0.5,
                             statusbar->rendering_intent_combo, 1);
-  gtk_widget_show (statusbar->rendering_intent_combo);
+  gtk_widget_set_visible (statusbar->rendering_intent_combo, TRUE);
   g_signal_connect (statusbar->rendering_intent_combo, "changed",
                     G_CALLBACK (gimp_statusbar_soft_proof_rendering_intent_changed),
                     statusbar);
@@ -560,7 +560,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_grid_attach (GTK_GRID (grid),
                    statusbar->bpc_toggle,
                    0, row++, 1, 1);
-  gtk_widget_show (statusbar->bpc_toggle);
+  gtk_widget_set_visible (statusbar->bpc_toggle, TRUE);
   g_signal_connect (statusbar->bpc_toggle, "clicked",
                     G_CALLBACK (gimp_statusbar_soft_proof_bpc_toggled),
                     statusbar);
@@ -568,7 +568,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_grid_attach (GTK_GRID (grid),separator,
                    0, row++, 1, 1);
-  gtk_widget_show (separator);
+  gtk_widget_set_visible (separator, TRUE);
 
   statusbar->optimize_combo =
     gimp_int_combo_box_new (_("Speed"),  TRUE,
@@ -578,7 +578,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                             _("O_ptimize soft-proofing for: "),
                             0.0, 0.5,
                             statusbar->optimize_combo, 1);
-  gtk_widget_show (statusbar->optimize_combo);
+  gtk_widget_set_visible (statusbar->optimize_combo, TRUE);
   g_signal_connect (statusbar->optimize_combo, "changed",
                     G_CALLBACK (gimp_statusbar_soft_proof_optimize_changed),
                     statusbar);
@@ -588,13 +588,13 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_grid_attach (GTK_GRID (grid),
                    statusbar->out_of_gamut_toggle,
                    0, row++, 1, 1);
-  gtk_widget_show (statusbar->out_of_gamut_toggle);
+  gtk_widget_set_visible (statusbar->out_of_gamut_toggle, TRUE);
   g_signal_connect (statusbar->out_of_gamut_toggle, "clicked",
                     G_CALLBACK (gimp_statusbar_soft_proof_gamut_toggled),
                     statusbar);
 
   gtk_container_add (GTK_CONTAINER (statusbar->soft_proof_popover), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   gimp_statusbar_update_size (statusbar);
 }
@@ -718,15 +718,15 @@ gimp_statusbar_progress_start (GimpProgress *progress,
               g_free (tooltip);
             }
 
-          gtk_widget_show (statusbar->cancel_button);
+          gtk_widget_set_visible (statusbar->cancel_button, TRUE);
         }
 
-      gtk_widget_show (statusbar->progressbar);
+      gtk_widget_set_visible (statusbar->progressbar, TRUE);
       gtk_widget_set_visible (statusbar->label, FALSE);
 
       if (! gtk_widget_get_visible (GTK_WIDGET (statusbar)))
         {
-          gtk_widget_show (GTK_WIDGET (statusbar));
+          gtk_widget_set_visible (GTK_WIDGET (statusbar), TRUE);
           statusbar->progress_shown = TRUE;
         }
 
@@ -759,7 +759,7 @@ gimp_statusbar_progress_end (GimpProgress *progress)
       statusbar->progress_value  = 0.0;
 
       gtk_widget_set_visible (bar, FALSE);
-      gtk_widget_show (statusbar->label);
+      gtk_widget_set_visible (statusbar->label, TRUE);
 
       gimp_statusbar_pop (statusbar, "progress");
 
@@ -1127,7 +1127,7 @@ gimp_statusbar_soft_proof_popover_shown (GtkWidget      *button,
   if (bevent->type == GDK_BUTTON_PRESS)
     {
       if (bevent->button == 3)
-        gtk_widget_show (statusbar->soft_proof_popover);
+        gtk_widget_set_visible (statusbar->soft_proof_popover, TRUE);
 
       if (bevent->button == 1 &&
           gtk_widget_get_sensitive (statusbar->soft_proof_button))
@@ -1365,11 +1365,11 @@ gimp_statusbar_fill (GimpStatusbar *statusbar)
 {
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
 
-  gtk_widget_show (statusbar->cursor_label);
-  gtk_widget_show (statusbar->unit_combo);
-  gtk_widget_show (statusbar->scale_combo);
-  gtk_widget_show (statusbar->rotate_widget);
-  gtk_widget_show (statusbar->soft_proof_button);
+  gtk_widget_set_visible (statusbar->cursor_label, TRUE);
+  gtk_widget_set_visible (statusbar->unit_combo, TRUE);
+  gtk_widget_set_visible (statusbar->scale_combo, TRUE);
+  gtk_widget_set_visible (statusbar->rotate_widget, TRUE);
+  gtk_widget_set_visible (statusbar->soft_proof_button, TRUE);
   gimp_statusbar_shell_rotated (statusbar->shell, statusbar);
 }
 
@@ -1990,7 +1990,7 @@ gimp_statusbar_shell_rotated (GimpDisplayShell *shell,
       gtk_label_set_text (GTK_LABEL (statusbar->rotate_label), text);
       g_free (text);
 
-      gtk_widget_show (statusbar->rotate_widget);
+      gtk_widget_set_visible (statusbar->rotate_widget, TRUE);
     }
   else
     {
@@ -1998,12 +1998,12 @@ gimp_statusbar_shell_rotated (GimpDisplayShell *shell,
     }
 
   if (shell->flip_horizontally)
-    gtk_widget_show (statusbar->horizontal_flip_icon);
+    gtk_widget_set_visible (statusbar->horizontal_flip_icon, TRUE);
   else
     gtk_widget_set_visible (statusbar->horizontal_flip_icon, FALSE);
 
   if (shell->flip_vertically)
-    gtk_widget_show (statusbar->vertical_flip_icon);
+    gtk_widget_set_visible (statusbar->vertical_flip_icon, TRUE);
   else
     gtk_widget_set_visible (statusbar->vertical_flip_icon, FALSE);
 }

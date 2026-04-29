@@ -371,7 +371,7 @@ gimp_file_dialog_constructed (GObject *object)
   dialog->extra_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog),
                                      dialog->extra_vbox);
-  gtk_widget_show (dialog->extra_vbox);
+  gtk_widget_set_visible (dialog->extra_vbox, TRUE);
 
   gimp_file_dialog_add_proc_selection (dialog);
 
@@ -526,7 +526,7 @@ gimp_file_dialog_progress_start (GimpProgress *progress,
     {
       retval = gimp_progress_start (GIMP_PROGRESS (dialog->progress),
                                     cancellable, "%s", message);
-      gtk_widget_show (dialog->progress);
+      gtk_widget_set_visible (dialog->progress, TRUE);
 
       gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
                                          GTK_RESPONSE_CANCEL, cancellable);
@@ -734,7 +734,7 @@ gimp_file_dialog_add_preview (GimpFileDialog *dialog)
   gtk_widget_set_sensitive (GTK_WIDGET (dialog->thumb_box), FALSE);
   gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
                                        dialog->thumb_box);
-  gtk_widget_show (dialog->thumb_box);
+  gtk_widget_set_visible (dialog->thumb_box, TRUE);
 
 #ifdef ENABLE_FILE_SYSTEM_ICONS
   GIMP_VIEW_RENDERER_IMAGEFILE (GIMP_VIEW (GIMP_THUMB_BOX (dialog->thumb_box)->preview)->renderer)->file_system = _gtk_file_chooser_get_file_system (GTK_FILE_CHOOSER (dialog));
@@ -750,13 +750,13 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
 
   box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
   gimp_file_dialog_add_extra_widget (dialog, box, TRUE, TRUE, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   dialog->proc_expander = gtk_expander_new_with_mnemonic (NULL);
   gtk_expander_set_resize_toplevel (GTK_EXPANDER (dialog->proc_expander), FALSE);
   gtk_widget_set_hexpand (GTK_WIDGET (dialog->proc_expander), TRUE);
   gtk_box_pack_end (GTK_BOX (box), dialog->proc_expander, FALSE, FALSE, 1);
-  gtk_widget_show (dialog->proc_expander);
+  gtk_widget_set_visible (dialog->proc_expander, TRUE);
 
   /* The list of file formats. */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -765,7 +765,7 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (dialog->proc_expander), scrolled_window);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   gtk_widget_set_size_request (scrolled_window, -1, 200);
 
@@ -775,7 +775,7 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
                                                dialog->automatic_label,
                                                dialog->automatic_help_id);
   gtk_container_add (GTK_CONTAINER (scrolled_window), dialog->proc_view);
-  gtk_widget_show (dialog->proc_view);
+  gtk_widget_set_visible (dialog->proc_view, TRUE);
 
   g_signal_connect (dialog->proc_view, "changed",
                     G_CALLBACK (gimp_file_dialog_proc_changed),

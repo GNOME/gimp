@@ -125,11 +125,11 @@ gimp_stroke_editor_constructed (GObject *object)
 
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   label = gtk_label_new (_("Line width:"));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   size = gimp_prop_size_entry_new (G_OBJECT (options),
                                    "width", FALSE, "unit",
@@ -173,7 +173,7 @@ gimp_stroke_editor_constructed (GObject *object)
 
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), box);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   dash_editor = gimp_dash_editor_new (options);
 
@@ -181,7 +181,7 @@ gimp_stroke_editor_constructed (GObject *object)
                          "width-request", 14,
                          NULL);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect_object (button, "clicked",
                            G_CALLBACK (gimp_dash_editor_shift_left),
@@ -191,13 +191,13 @@ gimp_stroke_editor_constructed (GObject *object)
                           button);
 
   gtk_box_pack_start (GTK_BOX (box), dash_editor, TRUE, TRUE, 0);
-  gtk_widget_show (dash_editor);
+  gtk_widget_set_visible (dash_editor, TRUE);
 
   button = g_object_new (GTK_TYPE_BUTTON,
                          "width-request", 14,
                          NULL);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect_object (button, "clicked",
                            G_CALLBACK (gimp_dash_editor_shift_right),

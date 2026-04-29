@@ -136,11 +136,11 @@ fill_dialog_new (GList            *items,
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   fill_editor = gimp_fill_editor_new (private->options, FALSE, FALSE);
   gtk_box_pack_start (GTK_BOX (main_vbox), fill_editor, FALSE, FALSE, 0);
-  gtk_widget_show (fill_editor);
+  gtk_widget_set_visible (fill_editor, TRUE);
 
   return dialog;
 }

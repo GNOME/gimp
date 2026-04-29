@@ -185,7 +185,7 @@ gimp_text_editor_new (const gchar     *title,
   if (toolbar)
     {
       gtk_box_pack_start (GTK_BOX (content_area), toolbar, FALSE, FALSE, 0);
-      gtk_widget_show (toolbar);
+      gtk_widget_set_visible (toolbar, TRUE);
     }
 
   style_editor = gimp_text_style_editor_new (gimp, text, text_buffer,
@@ -194,7 +194,7 @@ gimp_text_editor_new (const gchar     *title,
   gtk_widget_set_visible (GIMP_TEXT_STYLE_EDITOR (style_editor)->dnd_handle,
                           FALSE);
   gtk_box_pack_start (GTK_BOX (content_area), style_editor, FALSE, FALSE, 0);
-  gtk_widget_show (style_editor);
+  gtk_widget_set_visible (style_editor, TRUE);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -202,13 +202,13 @@ gimp_text_editor_new (const gchar     *title,
                                   GTK_POLICY_AUTOMATIC);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 2);
   gtk_box_pack_start (GTK_BOX (content_area), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   editor->view = gtk_text_view_new_with_buffer (GTK_TEXT_BUFFER (text_buffer));
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (editor->view),
                                GTK_WRAP_WORD_CHAR);
   gtk_container_add (GTK_CONTAINER (scrolled_window), editor->view);
-  gtk_widget_show (editor->view);
+  gtk_widget_set_visible (editor->view, TRUE);
 
   style_context = gtk_widget_get_style_context (editor->view);
 
@@ -238,7 +238,7 @@ gimp_text_editor_new (const gchar     *title,
     gtk_check_button_new_with_mnemonic (_("_Use selected font"));
   gtk_box_pack_start (GTK_BOX (content_area), editor->font_toggle,
                       FALSE, FALSE, 0);
-  gtk_widget_show (editor->font_toggle);
+  gtk_widget_set_visible (editor->font_toggle, TRUE);
 
   g_signal_connect (editor->font_toggle, "toggled",
                     G_CALLBACK (gimp_text_editor_font_toggled),

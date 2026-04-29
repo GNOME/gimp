@@ -55,11 +55,11 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   /* adjust sliders */
   frame = gimp_frame_new (_("Adjustment"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   /*  size slider  */
   scale = gimp_prop_spin_scale_new (config, "size",
@@ -74,11 +74,11 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   /* sens sliders */
   frame = gimp_frame_new (_("Sensitivity"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
 
   /* size sens slider */
   scale = gimp_prop_spin_scale_new (config, "size-sensitivity",
@@ -98,11 +98,11 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   /* Blob shape widgets */
   frame = gimp_frame_new (_("Shape"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
 
@@ -120,7 +120,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   frame = gtk_aspect_frame_new (NULL, 0.0, 0.5, 1.0, FALSE);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   gtk_size_group_add_widget (size_group, frame);
 
@@ -128,7 +128,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
                                  ink_options->blob_aspect,
                                  ink_options->blob_angle);
   gtk_container_add (GTK_CONTAINER (frame), editor);
-  gtk_widget_show (editor);
+  gtk_widget_set_visible (editor, TRUE);
 
   /* Expand layer options */
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
@@ -150,7 +150,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_expanding_frame_new (config, "expand-use", NULL,
                                          vbox2, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   gimp_config_connect (config, G_OBJECT (editor), "blob-type");
   gimp_config_connect (config, G_OBJECT (editor), "blob-aspect");
