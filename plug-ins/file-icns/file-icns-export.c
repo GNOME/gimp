@@ -98,7 +98,7 @@ icns_dialog_add_icon (GtkWidget    *dialog,
   vbox_item = icns_create_icon_item (preview, layer, layer_num, info,
                                      duplicates);
   gtk_flow_box_insert (GTK_FLOW_BOX (flowbox), vbox_item, -1);
-  gtk_widget_show (vbox_item);
+  gtk_widget_set_visible (vbox_item, TRUE);
 
   /* Let's make the vbox_item accessible through the layer ID */
   g_snprintf (key, sizeof (key), "layer_%i_hbox",
@@ -213,12 +213,12 @@ icns_create_icon_item (GtkWidget    *icon_preview,
 
   frame = gimp_frame_new (frame_header);
   gtk_box_pack_start (GTK_BOX (vbox_item), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
   g_free (frame_header);
 
   g_object_set_data (G_OBJECT (vbox_item), "icon_preview", icon_preview);
   gtk_container_add (GTK_CONTAINER (frame), icon_preview);
-  gtk_widget_show (icon_preview);
+  gtk_widget_set_visible (icon_preview, TRUE);
 
   if (! size)
     size = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
@@ -250,7 +250,7 @@ icns_create_icon_item (GtkWidget    *icon_preview,
       g_free (warning);
 
       gtk_box_pack_start (GTK_BOX (vbox_item), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
       gtk_style_context_add_class (gtk_widget_get_style_context (vbox_item),
                                    "background");
     }

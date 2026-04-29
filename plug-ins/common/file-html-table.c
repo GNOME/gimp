@@ -618,7 +618,7 @@ save_dialog (GimpImage     *image,
       eek = gtk_image_new_from_icon_name (GIMP_ICON_WILBER_EEK,
                                           GTK_ICON_SIZE_DIALOG);
       gtk_box_pack_start (GTK_BOX (hbox), eek, FALSE, FALSE, 0);
-      gtk_widget_show (eek);
+      gtk_widget_set_visible (eek, TRUE);
       gtk_box_reorder_child (GTK_BOX (hbox), eek, 0);
       gtk_widget_set_margin_end (eek, 24);
 
@@ -685,7 +685,7 @@ save_dialog (GimpImage     *image,
                               "page-frame", "creation-frame",
                               "table-frame", NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 

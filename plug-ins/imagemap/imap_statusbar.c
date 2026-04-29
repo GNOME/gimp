@@ -47,7 +47,7 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    statusbar->status_id = gtk_statusbar_get_context_id(
       GTK_STATUSBAR(statusbar->status), "general_status");
    gtk_box_pack_start(GTK_BOX(hbox), statusbar->status, TRUE, TRUE, 0);
-   gtk_widget_show(statusbar->status);
+   gtk_widget_set_visible(statusbar->status, TRUE);
 
    /* (x, y) coordinate */
    iconw = gtk_image_new_from_icon_name (IMAP_COORD,
@@ -55,14 +55,14 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    gtk_widget_set_tooltip_text (iconw, _("Coordinates:"));
 
    gtk_box_pack_start(GTK_BOX(hbox), iconw, FALSE, FALSE, 10);
-   gtk_widget_show(iconw);
+   gtk_widget_set_visible(iconw, TRUE);
 
    statusbar->xy = gtk_entry_new();
    gtk_widget_set_size_request(statusbar->xy, 96, -1);
    gtk_editable_set_editable(GTK_EDITABLE(statusbar->xy), FALSE);
    gtk_widget_set_can_focus (statusbar->xy, FALSE);
    gtk_box_pack_start(GTK_BOX(hbox), statusbar->xy, FALSE, FALSE, 0);
-   gtk_widget_show(statusbar->xy);
+   gtk_widget_set_visible(statusbar->xy, TRUE);
 
    /* Dimension info */
    iconw = gtk_image_new_from_icon_name (IMAP_DIMENSION,
@@ -76,7 +76,7 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    gtk_editable_set_editable(GTK_EDITABLE(statusbar->dimension), FALSE);
    gtk_widget_set_can_focus (statusbar->dimension, FALSE);
    gtk_box_pack_start(GTK_BOX(hbox), statusbar->dimension, FALSE, FALSE, 0);
-   gtk_widget_show(statusbar->dimension);
+   gtk_widget_set_visible(statusbar->dimension, TRUE);
 
    /* Zoom info */
    statusbar->zoom = gtk_statusbar_new();
@@ -84,9 +84,9 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    statusbar->zoom_id = gtk_statusbar_get_context_id(
       GTK_STATUSBAR(statusbar->zoom), "zoom_status");
    gtk_box_pack_start(GTK_BOX(hbox), statusbar->zoom, FALSE, FALSE, 5);
-   gtk_widget_show(statusbar->zoom);
+   gtk_widget_set_visible(statusbar->zoom, TRUE);
 
-   gtk_widget_show(hbox);
+   gtk_widget_set_visible(hbox, TRUE);
 
    return statusbar;
 }

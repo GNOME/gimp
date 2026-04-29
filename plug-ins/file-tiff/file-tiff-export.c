@@ -1381,7 +1381,7 @@ save_dialog (GimpImage     *image,
   if (is_indexed && compression == GIMP_COMPRESSION_JPEG)
     g_object_set (config, "compression", "none", NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 

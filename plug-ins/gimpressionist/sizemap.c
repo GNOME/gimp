@@ -420,16 +420,16 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_container_set_border_width (GTK_CONTAINER (grid1), 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (smwindow))),
                       grid1, TRUE, TRUE, 0);
-  gtk_widget_show (grid1);
+  gtk_widget_set_visible (grid1, TRUE);
 
   tmpw2 = tmpw = gtk_frame_new (_("Vectors"));
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_grid_attach (GTK_GRID (grid1), tmpw, 0, 0, 1, 1);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   tmpw = hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,0);
   gtk_container_add (GTK_CONTAINER (tmpw2), tmpw);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   tmpw = gtk_event_box_new ();
   gimp_help_set_help_data (tmpw,
@@ -443,18 +443,18 @@ create_sizemap_dialog (GtkWidget *parent)
   tmpw = smvectorprev = gimp_preview_area_new ();
   gtk_widget_set_size_request (tmpw, OMWIDTH, OMHEIGHT);
   gtk_container_add (GTK_CONTAINER (tmpw2), tmpw);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   gtk_widget_add_events (tmpw2, GDK_BUTTON_PRESS_MASK);
   g_signal_connect (tmpw2, "button-press-event",
                     G_CALLBACK (smmapclick), NULL);
-  gtk_widget_show (tmpw2);
+  gtk_widget_set_visible (tmpw2, TRUE);
 
   smvectprevbrightadjust =
     gtk_adjustment_new (50.0, 0.0, 100.0, 1.0, 1.0, 1.0);
   tmpw = gtk_scale_new (GTK_ORIENTATION_VERTICAL, smvectprevbrightadjust);
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), tmpw,FALSE,FALSE,0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (smvectprevbrightadjust, "value-changed",
                     G_CALLBACK (updatesmvectorprev), NULL);
   gimp_help_set_help_data (tmpw, _("Adjust the preview's brightness"), NULL);
@@ -462,43 +462,43 @@ create_sizemap_dialog (GtkWidget *parent)
   tmpw2 = tmpw = gtk_frame_new (_("Preview"));
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_grid_attach (GTK_GRID (grid1), tmpw, 1, 0, 1, 1);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   tmpw = smpreviewprev = gimp_preview_area_new ();
   gtk_widget_set_size_request (tmpw, OMWIDTH, OMHEIGHT);
   gtk_container_add (GTK_CONTAINER (tmpw2), tmpw);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
   gtk_grid_attach (GTK_GRID (grid1), hbox, 0, 1, 1, 1);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   prev_button = tmpw = gtk_button_new_with_mnemonic ("_<<");
   gtk_box_pack_start (GTK_BOX (hbox), tmpw, FALSE, TRUE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smprevclick), NULL);
   gimp_help_set_help_data (tmpw, _("Select previous vector"), NULL);
 
   next_button = tmpw = gtk_button_new_with_mnemonic ("_>>");
   gtk_box_pack_start (GTK_BOX (hbox),tmpw,FALSE,TRUE,0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smnextclick), NULL);
   gimp_help_set_help_data (tmpw, _("Select next vector"), NULL);
 
   add_button = tmpw = gtk_button_new_with_mnemonic ( _("A_dd"));
   gtk_box_pack_start (GTK_BOX (hbox),tmpw,FALSE,TRUE,0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smaddclick), NULL);
   gimp_help_set_help_data (tmpw, _("Add new vector"), NULL);
 
   kill_button = tmpw = gtk_button_new_with_mnemonic (_("_Delete"));
   gtk_box_pack_start (GTK_BOX (hbox),tmpw,FALSE,TRUE,0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smdeleteclick), NULL);
   gimp_help_set_help_data (tmpw, _("Delete selected vector"), NULL);
@@ -506,7 +506,7 @@ create_sizemap_dialog (GtkWidget *parent)
   grid2 = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid2), 4);
   gtk_grid_attach (GTK_GRID (grid1), grid2, 0, 2, 2, 1);
-  gtk_widget_show (grid2);
+  gtk_widget_set_visible (grid2, TRUE);
 
   sizadjust =
     gimp_scale_entry_new (_("_Size:"), 50.0, 0.0, 100.0, 1);
@@ -516,7 +516,7 @@ create_sizemap_dialog (GtkWidget *parent)
   g_signal_connect (sizadjust, "value-changed",
                     G_CALLBACK (angsmadjmove), NULL);
   gtk_grid_attach (GTK_GRID (grid2), sizadjust, 0, 0, 3, 1);
-  gtk_widget_show (sizadjust);
+  gtk_widget_set_visible (sizadjust, TRUE);
 
   smstradjust =
     gimp_scale_entry_new (_("S_trength:"), 1.0, 0.1, 5.0, 1);
@@ -527,7 +527,7 @@ create_sizemap_dialog (GtkWidget *parent)
   g_signal_connect (smstradjust, "value-changed",
                     G_CALLBACK (strsmadjmove), NULL);
   gtk_grid_attach (GTK_GRID (grid2), smstradjust, 0, 1, 3, 1);
-  gtk_widget_show (smstradjust);
+  gtk_widget_set_visible (smstradjust, TRUE);
 
   smstrexpadjust =
     gimp_scale_entry_new (_("St_rength exp.:"), 1.0, 0.1, 10.9, 1);
@@ -538,18 +538,18 @@ create_sizemap_dialog (GtkWidget *parent)
   g_signal_connect (smstrexpadjust, "value-changed",
                     G_CALLBACK (smstrexpsmadjmove), NULL);
   gtk_grid_attach (GTK_GRID (grid2), smstrexpadjust, 0, 2, 3, 1);
-  gtk_widget_show (smstrexpadjust);
+  gtk_widget_set_visible (smstrexpadjust, TRUE);
 
   size_voronoi = tmpw = gtk_check_button_new_with_mnemonic ( _("_Voronoi"));
   gtk_grid_attach (GTK_GRID (grid2), tmpw, 3, 0, 1, 1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), pcvals.size_voronoi);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smstrexpsmadjmove), NULL);
   gimp_help_set_help_data (tmpw, _("Voronoi-mode makes only the vector closest to the given point have any influence"), NULL);
 
-  gtk_widget_show (smwindow);
+  gtk_widget_set_visible (smwindow, TRUE);
 
   updatesmvectorprev ();
   updatesmpreviewprev ();

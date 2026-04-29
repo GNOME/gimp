@@ -95,13 +95,13 @@ create_sizepage (GtkNotebook *notebook)
 
   thispage = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
-  gtk_widget_show (thispage);
+  gtk_widget_set_visible (thispage, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (thispage), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   sizenumadjust =
     gimp_scale_entry_new (_("Size variants:"), pcvals.size_num, 1.0, 30.0, 0);
@@ -112,7 +112,7 @@ create_sizepage (GtkNotebook *notebook)
                     G_CALLBACK (gimpressionist_scale_entry_update_int),
                     &pcvals.size_num);
   gtk_grid_attach (GTK_GRID (grid), sizenumadjust, 0, 0, 3, 1);
-  gtk_widget_show (sizenumadjust);
+  gtk_widget_set_visible (sizenumadjust, TRUE);
 
   sizefirstadjust =
     gimp_scale_entry_new (_("Minimum size:"), pcvals.size_first, 0.0, 360.0, 0);
@@ -123,7 +123,7 @@ create_sizepage (GtkNotebook *notebook)
                     G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.size_first);
   gtk_grid_attach (GTK_GRID (grid), sizefirstadjust, 0, 1, 3, 1);
-  gtk_widget_show (sizefirstadjust);
+  gtk_widget_set_visible (sizefirstadjust, TRUE);
 
   sizelastadjust =
     gimp_scale_entry_new (_("Maximum size:"), pcvals.size_last, 0.0, 360.0, 0);
@@ -134,23 +134,23 @@ create_sizepage (GtkNotebook *notebook)
                     G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.size_last);
   gtk_grid_attach (GTK_GRID (grid), sizelastadjust, 0, 2, 3, 1);
-  gtk_widget_show (sizelastadjust);
+  gtk_widget_set_visible (sizelastadjust, TRUE);
 
   box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box2,FALSE,FALSE,0);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (box2), box3, FALSE, FALSE, 0);
-  gtk_widget_show (box3);
+  gtk_widget_set_visible (box3, TRUE);
 
   tmpw = gtk_label_new (_("Size depends on:"));
   gtk_box_pack_start (GTK_BOX (box3), tmpw,FALSE,FALSE,0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX( box2), box3, FALSE, FALSE, 0);
-  gtk_widget_show (box3);
+  gtk_widget_set_visible (box3, TRUE);
 
   create_size_radio_button (box3, SIZE_TYPE_VALUE, _("Value"),
     _("Let the value (brightness) of the region determine the size of the stroke"),
@@ -170,7 +170,7 @@ create_sizepage (GtkNotebook *notebook)
 
   box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (box2), box3,FALSE,FALSE, 0);
-  gtk_widget_show (box3);
+  gtk_widget_set_visible (box3, TRUE);
 
   create_size_radio_button (box3, SIZE_TYPE_FLOWING, _("Flowing"),
     _("The strokes follow a \"flowing\" pattern"),
@@ -187,7 +187,7 @@ create_sizepage (GtkNotebook *notebook)
 
   box4 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (box3), box4, FALSE, FALSE, 0);
-  gtk_widget_show (box4);
+  gtk_widget_set_visible (box4, TRUE);
 
   create_size_radio_button (box4, SIZE_TYPE_MANUAL, _("Manual"),
     _("Manually specify the stroke size"),
@@ -198,7 +198,7 @@ create_sizepage (GtkNotebook *notebook)
 
   tmpw = gtk_button_new_with_mnemonic (_("_Edit"));
   gtk_box_pack_start (GTK_BOX (box4), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (create_sizemap_dialog_helper), NULL);
   gimp_help_set_help_data (tmpw, _("Opens up the Size Map Editor"), NULL);

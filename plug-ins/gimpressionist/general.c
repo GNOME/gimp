@@ -142,15 +142,15 @@ create_generalpage (GtkNotebook *notebook)
 
   thispage = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
-  gtk_widget_show (thispage);
+  gtk_widget_set_visible (thispage, TRUE);
 
   frame = gimp_frame_new (_("Background"));
   gtk_box_pack_start (GTK_BOX (thispage), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), box3);
-  gtk_widget_show (box3);
+  gtk_widget_set_visible (box3, TRUE);
 
   create_general_button (box3,
                          BG_TYPE_KEEP_ORIGINAL,
@@ -166,7 +166,7 @@ create_generalpage (GtkNotebook *notebook)
 
   box4 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (box3), box4, FALSE, FALSE, 0);
-  gtk_widget_show (box4);
+  gtk_widget_set_visible (box4, TRUE);
 
   create_general_button (box4,
                          BG_TYPE_SOLID,
@@ -187,7 +187,7 @@ create_generalpage (GtkNotebook *notebook)
                     G_CALLBACK (color_changed),
                     &pcvals.color);
   gtk_box_pack_start (GTK_BOX (box4), general_color_button, FALSE, FALSE, 0);
-  gtk_widget_show (general_color_button);
+  gtk_widget_set_visible (general_color_button, TRUE);
 
   tmpw = create_general_button (box3,
                                 BG_TYPE_TRANSPARENT,
@@ -203,16 +203,16 @@ create_generalpage (GtkNotebook *notebook)
 
   box1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box1, FALSE, FALSE, 0);
-  gtk_widget_show (box1);
+  gtk_widget_set_visible (box1, TRUE);
 
   box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (box1), box2, FALSE, FALSE, 0);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   tmpw = gtk_check_button_new_with_label ( _("Paint edges"));
   general_paint_edges = tmpw;
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   gimp_help_set_help_data (tmpw,
                            _("Selects if to place strokes all the way out to the edges of the image"),
                            NULL);
@@ -221,7 +221,7 @@ create_generalpage (GtkNotebook *notebook)
 
   general_tileable = tmpw = gtk_check_button_new_with_label ( _("Tileable"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   gimp_help_set_help_data (tmpw,
                            _("Selects if the resulting image should be seamlessly tileable"),
                            NULL);
@@ -231,7 +231,7 @@ create_generalpage (GtkNotebook *notebook)
   tmpw = gtk_check_button_new_with_label ( _("Drop shadow"));
   general_drop_shadow = tmpw;
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   gimp_help_set_help_data (tmpw,
                            _("Adds a shadow effect to each brush stroke"),
                            NULL);
@@ -242,7 +242,7 @@ create_generalpage (GtkNotebook *notebook)
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (box1), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   general_dark_edge_scale =
     gimp_scale_entry_new (_("Edge darken:"), pcvals.general_dark_edge, 0.0, 1.0, 2);
@@ -250,7 +250,7 @@ create_generalpage (GtkNotebook *notebook)
                            _("How much to \"darken\" the edges of each brush stroke"),
                            NULL);
   gtk_grid_attach (GTK_GRID (grid), general_dark_edge_scale, 0, 0, 3, 1);
-  gtk_widget_show (general_dark_edge_scale);
+  gtk_widget_set_visible (general_dark_edge_scale, TRUE);
 
   general_shadow_scale =
     gimp_scale_entry_new (_("Shadow darken:"), pcvals.general_shadow_darkness, 0.0, 99.0, 2);
@@ -259,7 +259,7 @@ create_generalpage (GtkNotebook *notebook)
                            _("How much to \"darken\" the drop shadow"),
                            NULL);
   gtk_grid_attach (GTK_GRID (grid), general_shadow_scale, 0, 1, 3, 1);
-  gtk_widget_show (general_shadow_scale);
+  gtk_widget_set_visible (general_shadow_scale, TRUE);
 
   general_shadow_depth =
     gimp_scale_entry_new (_("Shadow depth:"), pcvals.general_shadow_depth, 0, 99, 0);
@@ -267,7 +267,7 @@ create_generalpage (GtkNotebook *notebook)
                            _("The depth of the drop shadow, i.e. how far apart from the object it should be"),
                            NULL);
   gtk_grid_attach (GTK_GRID (grid), general_shadow_depth, 0, 2, 3, 1);
-  gtk_widget_show (general_shadow_depth);
+  gtk_widget_set_visible (general_shadow_depth, TRUE);
 
   general_shadow_blur =
     gimp_scale_entry_new (_("Shadow blur:"), pcvals.general_shadow_blur, 0, 99, 0);
@@ -275,7 +275,7 @@ create_generalpage (GtkNotebook *notebook)
                            _("How much to blur the drop shadow"),
                            NULL);
   gtk_grid_attach (GTK_GRID (grid), general_shadow_blur, 0, 3, 3, 1);
-  gtk_widget_show (general_shadow_blur);
+  gtk_widget_set_visible (general_shadow_blur, TRUE);
 
   dev_thresh_scale =
     gimp_scale_entry_new (_("Deviation threshold:"), pcvals.devthresh, 0.0, 1.0, 2);
@@ -283,7 +283,7 @@ create_generalpage (GtkNotebook *notebook)
                            _("A bailout-value for adaptive selections"),
                            NULL);
   gtk_grid_attach (GTK_GRID (grid), dev_thresh_scale, 0, 4, 3, 1);
-  gtk_widget_show (dev_thresh_scale);
+  gtk_widget_set_visible (dev_thresh_scale, TRUE);
 
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }

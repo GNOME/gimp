@@ -214,21 +214,21 @@ create_grid_settings_dialog (gpointer user_data)
    g_signal_connect(data->snap, "toggled",
                     G_CALLBACK (snap_toggled_cb), data);
    gtk_grid_attach (GTK_GRID (main_grid), data->snap, 0, 0, 1, 1);
-   gtk_widget_show(data->snap);
+   gtk_widget_set_visible(data->snap, TRUE);
 
    data->type_frame = frame = gimp_frame_new(_("Grid Visibility and Type"));
-   gtk_widget_show(frame);
+   gtk_widget_set_visible(frame, TRUE);
    gtk_grid_attach (GTK_GRID (main_grid), frame, 0, 1, 2, 1);
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
-   gtk_widget_show(hbox);
+   gtk_widget_set_visible(hbox, TRUE);
 
    button = gtk_radio_button_new_with_mnemonic_from_widget(NULL, _("_Hidden"));
    data->hidden = button;
    g_signal_connect(button, "toggled",
                     G_CALLBACK (type_toggled_cb), (gpointer) GRID_HIDDEN);
    gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-   gtk_widget_show(button);
+   gtk_widget_set_visible(button, TRUE);
 
    button = gtk_radio_button_new_with_mnemonic_from_widget(
       GTK_RADIO_BUTTON(button), _("_Lines"));
@@ -237,7 +237,7 @@ create_grid_settings_dialog (gpointer user_data)
                     G_CALLBACK (type_toggled_cb), (gpointer) GRID_LINES);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
    gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-   gtk_widget_show(button);
+   gtk_widget_set_visible(button, TRUE);
 
    button = gtk_radio_button_new_with_mnemonic_from_widget(
       GTK_RADIO_BUTTON(button), _("C_rosses"));
@@ -246,7 +246,7 @@ create_grid_settings_dialog (gpointer user_data)
                     G_CALLBACK (type_toggled_cb),
                     (gpointer) GRID_CROSSES);
    gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-   gtk_widget_show(button);
+   gtk_widget_set_visible(button, TRUE);
 
    data->granularity_frame = frame = gimp_frame_new(_("Grid Granularity"));
    gtk_grid_attach (GTK_GRID (main_grid), frame, 0, 2, 1, 1);
@@ -270,10 +270,10 @@ create_grid_settings_dialog (gpointer user_data)
    chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
    data->chain_width_height = chain_button;
    gtk_grid_attach (GTK_GRID (grid), chain_button, 2, 0, 1, 2);
-   gtk_widget_show(chain_button);
+   gtk_widget_set_visible(chain_button, TRUE);
 
-   gtk_widget_show(grid);
-   gtk_widget_show(frame);
+   gtk_widget_set_visible(grid, TRUE);
+   gtk_widget_set_visible(frame, TRUE);
 
    data->offset_frame = frame = gimp_frame_new(_("Grid Offset"));
    gtk_grid_attach (GTK_GRID (main_grid), frame, 1, 2, 1, 1);
@@ -295,18 +295,18 @@ create_grid_settings_dialog (gpointer user_data)
    chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
    data->chain_left_top = chain_button;
    gtk_grid_attach (GTK_GRID (grid), chain_button, 1, 0, 1, 2);
-   gtk_widget_show(chain_button);
+   gtk_widget_set_visible(chain_button, TRUE);
 
    data->preview = create_check_button_in_grid (main_grid, 3, 0,
                                                 _("_Preview"));
    g_signal_connect(data->preview, "toggled",
                     G_CALLBACK (toggle_preview_cb), (gpointer) data);
-   gtk_widget_show(data->preview);
+   gtk_widget_set_visible(data->preview, TRUE);
 
    snap_toggled_cb (data->snap, data);
 
-   gtk_widget_show(grid);
-   gtk_widget_show(frame);
+   gtk_widget_set_visible(grid, TRUE);
+   gtk_widget_set_visible(frame, TRUE);
 
    return data;
 }

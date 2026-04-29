@@ -397,7 +397,7 @@ tool_options_bezier (GtkWidget *notebook)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, NULL);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   toggle = gtk_check_button_new_with_label (_("Closed"));
   g_signal_connect (toggle, "toggled",
@@ -407,7 +407,7 @@ tool_options_bezier (GtkWidget *notebook)
                         _("Close curve on completion"), NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bezier_closed);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   toggle = gtk_check_button_new_with_label (_("Show Line Frame"));
   g_signal_connect (toggle, "toggled",
@@ -418,6 +418,6 @@ tool_options_bezier (GtkWidget *notebook)
                            "Only during curve creation"), NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bezier_line_frame);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 }
 

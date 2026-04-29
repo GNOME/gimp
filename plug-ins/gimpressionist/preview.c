@@ -155,13 +155,13 @@ create_preview (void)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 5);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (preview, PREVIEWSIZE, PREVIEWSIZE);
 
   gtk_container_add (GTK_CONTAINER (frame), preview);
-  gtk_widget_show (preview);
+  gtk_widget_set_visible (preview, TRUE);
   /* This is so the preview will be displayed when the dialog is invoked. */
   g_signal_connect (preview, "size-allocate",
                     G_CALLBACK (preview_size_allocate), NULL);
@@ -169,13 +169,13 @@ create_preview (void)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   previewbutton = button = gtk_button_new_with_mnemonic (_("_Update"));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (updatepreview), (gpointer) 1);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   gimp_help_set_help_data (button,
                            _("Refresh the Preview window"), NULL);
 
@@ -183,7 +183,7 @@ create_preview (void)
   g_signal_connect (button, "clicked",
                     G_CALLBACK (updatepreview), (gpointer) 2);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   gimp_help_set_help_data (button,
                            _("Revert to the original image"), NULL);
 

@@ -315,7 +315,7 @@ make_preview (GimpDrawable *drawable,
                      // GTK_FILL, GTK_FILL, 0, 0);
    gtk_widget_set_events (button,
                           GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-   gtk_widget_show (button);
+   gtk_widget_set_visible (button, TRUE);
 
    g_signal_connect (button, "button-press-event",
                      G_CALLBACK (arrow_cb),
@@ -324,7 +324,7 @@ make_preview (GimpDrawable *drawable,
    arrow = gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
                                          GTK_ICON_SIZE_BUTTON);
    gtk_container_add (GTK_CONTAINER (button), arrow);
-   gtk_widget_show (arrow);
+   gtk_widget_set_visible (arrow, TRUE);
 
    /* Create horizontal ruler */
    data->hruler = ruler = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
@@ -334,7 +334,7 @@ make_preview (GimpDrawable *drawable,
 
    gtk_widget_set_hexpand (ruler, TRUE);
    gtk_grid_attach (GTK_GRID (grid), ruler, 1, 0, 1, 1);
-   gtk_widget_show (ruler);
+   gtk_widget_set_visible (ruler, TRUE);
 
    /* Create vertical ruler */
    data->vruler = ruler = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
@@ -343,7 +343,7 @@ make_preview (GimpDrawable *drawable,
                             ruler);
    gtk_widget_set_vexpand (ruler, TRUE);
    gtk_grid_attach (GTK_GRID (grid), ruler, 0, 1, 1, 1);
-   gtk_widget_show (ruler);
+   gtk_widget_set_visible (ruler, TRUE);
 
    window = gtk_scrolled_window_new (NULL, NULL);
    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (window),
@@ -352,11 +352,11 @@ make_preview (GimpDrawable *drawable,
    height = (data->height > PREVIEW_HEIGHT) ? PREVIEW_HEIGHT : data->height;
    gtk_widget_set_size_request (window, width, height);
    gtk_grid_attach (GTK_GRID (grid), window, 1, 1, 1, 1);
-   gtk_widget_show (window);
+   gtk_widget_set_visible (window, TRUE);
 
    viewport = gtk_viewport_new (NULL, NULL);
    gtk_container_add (GTK_CONTAINER (window), viewport);
-   gtk_widget_show (viewport);
+   gtk_widget_set_visible (viewport, TRUE);
 
    hadj = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (window));
 
@@ -381,18 +381,18 @@ make_preview (GimpDrawable *drawable,
    scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL, hadj);
    gtk_grid_attach (GTK_GRID (grid), scrollbar, 1, 2, 1, 1);
                     // GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
-   gtk_widget_show (scrollbar);
+   gtk_widget_set_visible (scrollbar, TRUE);
 
    scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL, vadj);
    gtk_grid_attach (GTK_GRID (grid), scrollbar,  2, 1, 1, 1);
                      // GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
-   gtk_widget_show (scrollbar);
+   gtk_widget_set_visible (scrollbar, TRUE);
 
-   gtk_widget_show (preview);
+   gtk_widget_set_visible (preview, TRUE);
 
    render_preview (data, drawable);
 
-   gtk_widget_show (grid);
+   gtk_widget_set_visible (grid, TRUE);
 
    return data;
 }

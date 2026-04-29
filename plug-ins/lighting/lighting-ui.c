@@ -213,7 +213,7 @@ main_dialog (GimpProcedure       *procedure,
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   gtk_widget_realize (appwin);
 
@@ -230,19 +230,19 @@ main_dialog (GimpProcedure       *procedure,
                     G_CALLBACK (preview_draw),
                     previewarea);
   gtk_container_add (GTK_CONTAINER (frame), previewarea);
-  gtk_widget_show (previewarea);
+  gtk_widget_set_visible (previewarea, TRUE);
 
   /* create preview options, frame and vbox */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("_Update"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (preview_callback),
                     NULL);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   gimp_help_set_help_data (button, _("Recompute preview image"), NULL);
 
@@ -257,7 +257,7 @@ main_dialog (GimpProcedure       *procedure,
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
 
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   gimp_help_set_help_data (toggle,
                            _("Enable/disable real time preview of changes"),
@@ -690,7 +690,7 @@ main_dialog (GimpProcedure       *procedure,
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (appwin), "main-hbox", NULL);
 
-  gtk_widget_show (appwin);
+  gtk_widget_set_visible (appwin, TRUE);
 
   {
     GdkCursor *cursor;

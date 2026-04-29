@@ -984,14 +984,14 @@ add_image_list (gboolean   add_box_flag,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   label = gtk_label_new (add_box_flag ?
                          _("Available images:") :
                          _("On film:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
@@ -999,7 +999,7 @@ add_image_list (gboolean   add_box_flag,
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_win);
+  gtk_widget_set_visible (scrolled_win, TRUE);
 
   store = gtk_list_store_new (2, G_TYPE_INT, G_TYPE_STRING);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
@@ -1016,7 +1016,7 @@ add_image_list (gboolean   add_box_flag,
                                                NULL);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), tv);
-  gtk_widget_show (tv);
+  gtk_widget_set_visible (tv, TRUE);
 
   sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
   gtk_tree_selection_set_mode (sel, GTK_SELECTION_MULTIPLE);
@@ -1041,7 +1041,7 @@ add_image_list (gboolean   add_box_flag,
   button = gtk_button_new_with_mnemonic (add_box_flag ?
                                          _("_Add") : _("_Remove"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     add_box_flag ?
@@ -1104,12 +1104,12 @@ create_selection_tab (GimpProcedureDialog *dialog,
   /*** The right frame keeps the image selection ***/
   frame = gimp_frame_new (_("Image Selection"));
   gtk_widget_set_hexpand (frame, TRUE);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* Get a list of all image names */
   image_list = gimp_list_images ();

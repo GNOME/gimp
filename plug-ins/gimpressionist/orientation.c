@@ -88,13 +88,13 @@ create_orientationpage (GtkNotebook *notebook)
 
   thispage = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
-  gtk_widget_show (thispage);
+  gtk_widget_set_visible (thispage, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (thispage), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   orient_num_adjust =
     gimp_scale_entry_new (_("Directions:"), pcvals.orient_num, 1.0, 30.0, 0);
@@ -105,7 +105,7 @@ create_orientationpage (GtkNotebook *notebook)
                     G_CALLBACK (gimpressionist_scale_entry_update_int),
                     &pcvals.orient_num);
   gtk_grid_attach (GTK_GRID (grid), orient_num_adjust, 0, 0, 3, 1);
-  gtk_widget_show (orient_num_adjust);
+  gtk_widget_set_visible (orient_num_adjust, TRUE);
 
   orient_first_adjust =
     gimp_scale_entry_new (_("Start angle:"), pcvals.orient_first, 0.0, 360.0, 0);
@@ -116,7 +116,7 @@ create_orientationpage (GtkNotebook *notebook)
                     G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.orient_first);
   gtk_grid_attach (GTK_GRID (grid), orient_first_adjust, 0, 1, 3, 1);
-  gtk_widget_show (orient_first_adjust);
+  gtk_widget_set_visible (orient_first_adjust, TRUE);
 
   orient_last_adjust =
     gimp_scale_entry_new (_("Angle span:"), pcvals.orient_last, 0.0, 360.0, 0);
@@ -127,23 +127,23 @@ create_orientationpage (GtkNotebook *notebook)
                     G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.orient_last);
   gtk_grid_attach (GTK_GRID (grid), orient_last_adjust, 0, 2, 3, 1);
-  gtk_widget_show (orient_last_adjust);
+  gtk_widget_set_visible (orient_last_adjust, TRUE);
 
   box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box2, FALSE, FALSE, 0);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (box2), box3, FALSE, FALSE, 0);
-  gtk_widget_show (box3);
+  gtk_widget_set_visible (box3, TRUE);
 
   tmpw = gtk_label_new (_("Orientation:"));
   gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (box2), box3, FALSE, FALSE, 0);
-  gtk_widget_show (box3);
+  gtk_widget_set_visible (box3, TRUE);
 
   create_orientradio_button (box3, ORIENTATION_VALUE, _("Value"),
           _("Let the value (brightness) of the region determine the direction of the stroke"),
@@ -163,7 +163,7 @@ create_orientationpage (GtkNotebook *notebook)
 
   box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (box2), box3, FALSE, FALSE, 0);
-  gtk_widget_show (box3);
+  gtk_widget_set_visible (box3, TRUE);
 
   create_orientradio_button (box3, ORIENTATION_FLOWING, _("Flowing"),
           _("The strokes follow a \"flowing\" pattern"),
@@ -179,7 +179,7 @@ create_orientationpage (GtkNotebook *notebook)
 
   box4 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (box3), box4, FALSE, FALSE, 0);
-  gtk_widget_show (box4);
+  gtk_widget_set_visible (box4, TRUE);
 
   create_orientradio_button (box4, ORIENTATION_MANUAL, _("Manual"),
           _("Manually specify the stroke orientation"),
@@ -189,7 +189,7 @@ create_orientationpage (GtkNotebook *notebook)
 
   tmpw = gtk_button_new_with_mnemonic (_("_Edit"));
   gtk_box_pack_start (GTK_BOX (box4), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (create_orientmap_dialog_helper), NULL);
   gimp_help_set_help_data

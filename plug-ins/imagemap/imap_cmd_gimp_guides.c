@@ -148,58 +148,58 @@ make_gimp_guides_dialog(void)
    grid = default_dialog_add_grid (dialog);
 
    frame = gimp_frame_new(_("Create"));
-   gtk_widget_show(frame);
+   gtk_widget_set_visible(frame, TRUE);
    gtk_grid_attach (GTK_GRID (grid), frame, 0, 0, 1, 1);
 
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
-   gtk_widget_show(hbox);
+   gtk_widget_set_visible(hbox, TRUE);
 
    data->alternate =
       gtk_radio_button_new_with_mnemonic_from_widget(NULL, _("Al_ternate"));
    gtk_box_pack_start(GTK_BOX(hbox), data->alternate, FALSE, FALSE, 0);
-   gtk_widget_show(data->alternate);
+   gtk_widget_set_visible(data->alternate, TRUE);
 
    data->all = gtk_radio_button_new_with_mnemonic_from_widget(
       GTK_RADIO_BUTTON(data->alternate), _("A_ll"));
    gtk_box_pack_start(GTK_BOX(hbox), data->all, FALSE, FALSE, 0);
-   gtk_widget_show(data->all);
+   gtk_widget_set_visible(data->all, TRUE);
 
    frame = gimp_frame_new(_("Add Additional Guides"));
-   gtk_widget_show(frame);
+   gtk_widget_set_visible(frame, TRUE);
    gtk_grid_attach (GTK_GRID (grid), frame, 0, 1, 1, 1);
 
    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
    gtk_container_add(GTK_CONTAINER(frame), vbox);
-   gtk_widget_show(vbox);
+   gtk_widget_set_visible(vbox, TRUE);
 
    data->left_border = gtk_check_button_new_with_mnemonic(_("L_eft border"));
    gtk_container_add(GTK_CONTAINER(vbox), data->left_border);
-   gtk_widget_show(data->left_border);
+   gtk_widget_set_visible(data->left_border, TRUE);
 
    data->right_border = gtk_check_button_new_with_mnemonic(_("_Right border"));
    gtk_container_add(GTK_CONTAINER(vbox), data->right_border);
-   gtk_widget_show(data->right_border);
+   gtk_widget_set_visible(data->right_border, TRUE);
 
    data->upper_border = gtk_check_button_new_with_mnemonic(_("_Upper border"));
    gtk_container_add(GTK_CONTAINER(vbox), data->upper_border);
-   gtk_widget_show(data->upper_border);
+   gtk_widget_set_visible(data->upper_border, TRUE);
 
    data->lower_border = gtk_check_button_new_with_mnemonic(_("Lo_wer border"));
    gtk_container_add(GTK_CONTAINER(vbox), data->lower_border);
-   gtk_widget_show(data->lower_border);
+   gtk_widget_set_visible(data->lower_border, TRUE);
 
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
    gtk_grid_attach (GTK_GRID (grid), hbox, 0, 2, 2, 1);
-   gtk_widget_show(hbox);
+   gtk_widget_set_visible(hbox, TRUE);
 
    label = gtk_label_new_with_mnemonic(_("_Base URL:"));
-   gtk_widget_show(label);
+   gtk_widget_set_visible(label, TRUE);
    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
    data->url = gtk_entry_new();
    gtk_container_add(GTK_CONTAINER(hbox), data->url);
-   gtk_widget_show(data->url);
+   gtk_widget_set_visible(data->url, TRUE);
 
    gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->url);
 

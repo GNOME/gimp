@@ -34,7 +34,7 @@ add_widget_to_grid (GtkWidget *grid,
                     GtkWidget *w)
 {
    gtk_grid_attach (GTK_GRID (grid), w, col, row, 1, 1);
-   gtk_widget_show (w);
+   gtk_widget_set_visible (w, TRUE);
    return w;
 }
 

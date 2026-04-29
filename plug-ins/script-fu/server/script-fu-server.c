@@ -986,14 +986,14 @@ server_interface (void)
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
                       main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   /*  The grid to hold port, logfile and listen-to entries  */
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /* The server ip to listen to */
   sint.ip_entry = gtk_entry_new ();
@@ -1018,12 +1018,12 @@ server_interface (void)
   /* Warning */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_WARNING,
                                         GTK_ICON_SIZE_DIALOG);
   gtk_box_pack_start (GTK_BOX (hbox), image, TRUE, TRUE, 0);
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   label = gtk_label_new (_("Listening on an IP address other than "
                            "127.0.0.1 (especially 0.0.0.0) can allow "
@@ -1034,9 +1034,9 @@ server_interface (void)
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
-  gtk_widget_show (dlg);
+  gtk_widget_set_visible (dlg, TRUE);
 
   gtk_main ();
 

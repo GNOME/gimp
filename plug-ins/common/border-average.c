@@ -444,7 +444,7 @@ borderaverage_dialog (GimpProcedure *procedure,
                               "bucket-size-frame",
                               NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 

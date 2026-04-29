@@ -73,7 +73,7 @@ do_source_dialog (GSimpleAction *action,
 
       text = gtk_text_view_new_with_buffer(buffer);
       gtk_text_view_set_editable(GTK_TEXT_VIEW(text), FALSE);
-      gtk_widget_show(text);
+      gtk_widget_set_visible(text, TRUE);
 
       swin = gtk_scrolled_window_new(NULL, NULL);
       gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(swin),
@@ -83,7 +83,7 @@ do_source_dialog (GSimpleAction *action,
       gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin),
                                      GTK_POLICY_AUTOMATIC,
                                      GTK_POLICY_AUTOMATIC);
-      gtk_widget_show(swin);
+      gtk_widget_set_visible(swin, TRUE);
       gtk_container_add(GTK_CONTAINER(swin), text);
    }
    gtk_text_buffer_set_text(buffer, "", -1);

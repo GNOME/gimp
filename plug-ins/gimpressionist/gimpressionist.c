@@ -82,7 +82,7 @@ create_one_column_list (GtkWidget *parent,
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swin),
                                        GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (parent), swin, FALSE, FALSE, 0);
-  gtk_widget_show (swin);
+  gtk_widget_set_visible (swin, TRUE);
   gtk_widget_set_size_request (swin, 150,-1);
 
   store = gtk_list_store_new (1, G_TYPE_STRING);
@@ -90,7 +90,7 @@ create_one_column_list (GtkWidget *parent,
 
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
   g_object_unref (store);
-  gtk_widget_show (view);
+  gtk_widget_set_visible (view, TRUE);
 
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes ("Preset", renderer,
@@ -133,15 +133,15 @@ create_dialog (GimpProcedure       *procedure,
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   preview_box = create_preview ();
   gtk_box_pack_start (GTK_BOX (hbox), preview_box, FALSE, FALSE, 0);
-  gtk_widget_show (preview_box);
+  gtk_widget_set_visible (preview_box, TRUE);
 
   notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (hbox), notebook, TRUE, TRUE, 5);
-  gtk_widget_show (notebook);
+  gtk_widget_set_visible (notebook, TRUE);
 
   create_presetpage (GTK_NOTEBOOK (notebook));
   create_paperpage (GTK_NOTEBOOK (notebook));

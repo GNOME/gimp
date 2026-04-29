@@ -583,7 +583,7 @@ browser_dialog_new (void)
   gtk_container_set_border_width (GTK_CONTAINER (browser->browser), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (browser->dialog))),
                       browser->browser, TRUE, TRUE, 0);
-  gtk_widget_show (browser->browser);
+  gtk_widget_set_visible (browser->browser, TRUE);
 
   g_signal_connect (browser->browser, "search",
                     G_CALLBACK (browser_search),
@@ -664,8 +664,8 @@ browser_dialog_new (void)
   label = gtk_label_new (_("List View"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), scrolled_window, label);
   gtk_container_add (GTK_CONTAINER (scrolled_window), list_view);
-  gtk_widget_show (list_view);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (list_view, TRUE);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   /* notebook->ctree */
   tree_store = gtk_tree_store_new (N_LIST_COLUMNS,
@@ -726,14 +726,14 @@ browser_dialog_new (void)
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), scrolled_window, label);
   gtk_container_add (GTK_CONTAINER (scrolled_window), tree_view);
 
-  gtk_widget_show (tree_view);
-  gtk_widget_show (scrolled_window);
-  gtk_widget_show (notebook);
+  gtk_widget_set_visible (tree_view, TRUE);
+  gtk_widget_set_visible (scrolled_window, TRUE);
+  gtk_widget_set_visible (notebook, TRUE);
 
   /* now build the list */
   browser_search (GIMP_BROWSER (browser->browser), "", 0, browser);
 
-  gtk_widget_show (browser->dialog);
+  gtk_widget_set_visible (browser->dialog, TRUE);
 
   if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter))
     gtk_tree_selection_select_iter (gtk_tree_view_get_selection (GTK_TREE_VIEW (list_view)),

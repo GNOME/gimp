@@ -2532,7 +2532,7 @@ dlg_run (GimpProcedure       *procedure,
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (shell))),
                       hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /*
    *    Preview
@@ -2540,13 +2540,13 @@ dlg_run (GimpProcedure       *procedure,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame = gtk_frame_new (NULL);
   gtk_widget_set_valign (frame, GTK_ALIGN_START);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   src_buffer = gimp_drawable_get_buffer (drawable);
 
@@ -2570,7 +2570,7 @@ dlg_run (GimpProcedure       *procedure,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 dlg->update_preview);
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (dlg_update_preview_callback),
@@ -2582,12 +2582,12 @@ dlg_run (GimpProcedure       *procedure,
 
   notebook = dlg->notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (hbox), notebook, TRUE, TRUE, 0);
-  gtk_widget_show (notebook);
+  gtk_widget_set_visible (notebook, TRUE);
 
   dlg_make_page_settings (dlg, notebook, config);
   dlg_make_page_selector (dlg, notebook, config);
 
-  gtk_widget_show (shell);
+  gtk_widget_set_visible (shell, TRUE);
 
   /*
    *    Initialization done
@@ -2942,7 +2942,7 @@ dlg_make_page_settings (GFlareDialog        *dlg,
                     G_CALLBACK (dlg_position_entry_callback),
                     config);
   gtk_widget_set_visible (chain, FALSE);
-  gtk_widget_show (center);
+  gtk_widget_set_visible (center, TRUE);
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dlg->shell),
                                    "center-title", _("Center"),
@@ -3004,7 +3004,7 @@ dlg_make_page_settings (GFlareDialog        *dlg,
                                               NULL);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), main_vbox,
                             gtk_label_new_with_mnemonic (_("_Settings")));
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 }
 
 static void
@@ -3101,10 +3101,10 @@ dlg_make_page_selector (GFlareDialog        *dlg,
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (listview), FALSE);
 
   gtk_container_add (GTK_CONTAINER (listbox), listview);
-  gtk_widget_show (listbox);
+  gtk_widget_set_visible (listbox, TRUE);
   dlg->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (listview));
   gtk_tree_selection_set_mode (dlg->selection, GTK_SELECTION_BROWSE);
-  gtk_widget_show (listview);
+  gtk_widget_set_visible (listview, TRUE);
   g_signal_connect (dlg->selection, "changed",
                     G_CALLBACK (dlg_selector_list_item_callback),
                     NULL);
@@ -3125,24 +3125,24 @@ dlg_make_page_selector (GFlareDialog        *dlg,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   for (i = 0; i < G_N_ELEMENTS (buttons); i++)
     {
       button = gtk_button_new_with_mnemonic (gettext (buttons[i].label));
       gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       g_signal_connect (button, "clicked",
                         buttons[i].callback,
                         config);
     }
 
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new_with_mnemonic (_("S_elector")));
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 }
 
 /*
@@ -3213,7 +3213,7 @@ dlg_selector_new_callback (GtkWidget *widget,
                                      NULL, NULL,
                                      dlg_selector_new_ok_callback,
                                      dlg, NULL);
-  gtk_widget_show (query_box);
+  gtk_widget_set_visible (query_box, TRUE);
 }
 
 static void
@@ -3295,7 +3295,7 @@ dlg_selector_copy_callback (GtkWidget *widget,
                                      dlg, NULL);
   g_free (name);
 
-  gtk_widget_show (query_box);
+  gtk_widget_set_visible (query_box, TRUE);
 }
 
 static void
@@ -3364,7 +3364,7 @@ dlg_selector_delete_callback (GtkWidget *widget,
 
   g_free (str);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 }
 
 static void
@@ -3591,13 +3591,13 @@ ed_make_page_general (GFlareEditor *ed,
 
   frame = gimp_frame_new (_("Glow Paint Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   scale = gimp_scale_entry_new (_("Opacity:"), gflare->glow_opacity, 0.0, 100.0, 1);
   g_signal_connect (scale, "value-changed",
@@ -3607,7 +3607,7 @@ ed_make_page_general (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   combo = ed_mode_menu_new (&gflare->glow_mode);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
@@ -3617,13 +3617,13 @@ ed_make_page_general (GFlareEditor *ed,
 
   frame = gimp_frame_new (_("Rays Paint Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   scale = gimp_scale_entry_new (_("Opacity:"), gflare->rays_opacity, 0.0, 100.0, 1);
   g_signal_connect (scale, "value-changed",
@@ -3633,7 +3633,7 @@ ed_make_page_general (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   combo = ed_mode_menu_new (&gflare->rays_mode);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
@@ -3643,13 +3643,13 @@ ed_make_page_general (GFlareEditor *ed,
 
   frame = gimp_frame_new (_("Second Flares Paint Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   scale = gimp_scale_entry_new (_("Opacity:"), gflare->sflare_opacity, 0.0, 100.0, 1);
   g_signal_connect (scale, "value-changed",
@@ -3659,7 +3659,7 @@ ed_make_page_general (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   combo = ed_mode_menu_new (&gflare->sflare_mode);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
@@ -3670,7 +3670,7 @@ ed_make_page_general (GFlareEditor *ed,
   g_signal_connect (vbox, "map",
                     G_CALLBACK (ed_page_map_callback),
                     (gpointer) PAGE_GENERAL);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 }
 
 static void
@@ -3694,7 +3694,7 @@ ed_make_page_glow (GFlareEditor *ed,
 
   frame = gimp_frame_new (_("Gradients"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -3713,7 +3713,7 @@ ed_make_page_glow (GFlareEditor *ed,
                           gflare->glow_angular_size, gflare->glow_angular_size);
   ed_put_gradient_menu (grid, 0, 2, _("Angular size gradient:"), gm);
 
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /*
    *  Scales
@@ -3721,7 +3721,7 @@ ed_make_page_glow (GFlareEditor *ed,
 
   frame = gimp_frame_new (_("Parameters"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -3739,7 +3739,7 @@ ed_make_page_glow (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   scale = gimp_scale_entry_new (_("Rotation:"), gflare->glow_rotation, -180.0, 180.0, 1);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
@@ -3750,7 +3750,7 @@ ed_make_page_glow (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   scale = gimp_scale_entry_new (_("Hue rotation:"), gflare->glow_hue, -180.0, 180.0, 1);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
@@ -3761,16 +3761,16 @@ ed_make_page_glow (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new_with_mnemonic (_("G_low")));
   g_signal_connect (vbox, "map",
                     G_CALLBACK (ed_page_map_callback),
                     (gpointer) PAGE_GLOW);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 }
 
 static void
@@ -3794,7 +3794,7 @@ ed_make_page_rays (GFlareEditor *ed,
 
   frame = gimp_frame_new (_("Gradients"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -3815,7 +3815,7 @@ ed_make_page_rays (GFlareEditor *ed,
                           gflare->rays_angular_size, gflare->rays_angular_size);
   ed_put_gradient_menu (grid, 0, row++, _("Angular size gradient:"), gm);
 
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /*
    *    Scales
@@ -3823,7 +3823,7 @@ ed_make_page_rays (GFlareEditor *ed,
 
   frame = gimp_frame_new (_("Parameters"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -3841,7 +3841,7 @@ ed_make_page_rays (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   scale = gimp_scale_entry_new (_("Rotation:"), gflare->rays_rotation, -180.0, 180.0, 1);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
@@ -3852,7 +3852,7 @@ ed_make_page_rays (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   scale = gimp_scale_entry_new (_("Hue rotation:"), gflare->rays_hue, -180.0, 180.0, 1);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
@@ -3863,7 +3863,7 @@ ed_make_page_rays (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   scale = gimp_scale_entry_new (_("# of Spikes:"), gflare->rays_nspikes, 1, G_MAXINT, 0);
   gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 1.0, 300.0, TRUE);
@@ -3874,7 +3874,7 @@ ed_make_page_rays (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   scale = gimp_scale_entry_new (_("Spike thickness:"), gflare->rays_thickness, 1.0, GIMP_MAX_IMAGE_SIZE, 1);
   gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 1.0, 100.0, TRUE);
@@ -3885,16 +3885,16 @@ ed_make_page_rays (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new_with_mnemonic (_("_Rays")));
   g_signal_connect (vbox, "map",
                     G_CALLBACK (ed_page_map_callback),
                     (gpointer) PAGE_RAYS);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 }
 
 static void
@@ -3927,7 +3927,7 @@ ed_make_page_sflare (GFlareEditor *ed,
 
   frame = gimp_frame_new (_("Gradients"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -3946,7 +3946,7 @@ ed_make_page_sflare (GFlareEditor *ed,
                           gflare->sflare_probability, gflare->sflare_probability);
   ed_put_gradient_menu (grid, 0, 2, _("Probability gradient:"), gm);
 
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /*
    *    Scales
@@ -3954,7 +3954,7 @@ ed_make_page_sflare (GFlareEditor *ed,
 
   frame = gimp_frame_new (_("Parameters"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -3972,7 +3972,7 @@ ed_make_page_sflare (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   scale = gimp_scale_entry_new (_("Rotation:"), gflare->sflare_rotation, -180.0, 180.0, 1);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
@@ -3983,7 +3983,7 @@ ed_make_page_sflare (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   scale = gimp_scale_entry_new (_("Hue rotation:"), gflare->sflare_hue, -180.0, 180.0, 1);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
@@ -3994,9 +3994,9 @@ ed_make_page_sflare (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /*
    *    Shape Radio Button Frame
@@ -4004,11 +4004,11 @@ ed_make_page_sflare (GFlareEditor *ed,
 
   frame = gimp_frame_new (_("Shape of Second Flares"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   shape_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), shape_vbox);
-  gtk_widget_show (shape_vbox);
+  gtk_widget_set_visible (shape_vbox, TRUE);
 
   toggle = gtk_radio_button_new_with_label (shape_group, _("Circle"));
   shape_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -4020,11 +4020,11 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 gflare->sflare_shape == GF_CIRCLE);
   gtk_box_pack_start (GTK_BOX (shape_vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   polygon_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (shape_vbox), polygon_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (polygon_hbox);
+  gtk_widget_set_visible (polygon_hbox, TRUE);
 
   toggle = ed->polygon_toggle =
     gtk_radio_button_new_with_label (shape_group, _("Polygon"));
@@ -4037,7 +4037,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 gflare->sflare_shape == GF_POLYGON);
   gtk_box_pack_start (GTK_BOX (polygon_hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   entry = ed->polygon_entry = gtk_entry_new ();
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 4);
@@ -4047,7 +4047,7 @@ ed_make_page_sflare (GFlareEditor *ed,
                     G_CALLBACK (ed_ientry_callback),
                     &gflare->sflare_nverts);
   gtk_box_pack_start (GTK_BOX (polygon_hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_show (entry);
+  gtk_widget_set_visible (entry, TRUE);
 
   g_object_bind_property (toggle, "active",
                           entry,  "sensitive",
@@ -4059,16 +4059,16 @@ ed_make_page_sflare (GFlareEditor *ed,
 
   seed_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), seed_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (seed_hbox);
+  gtk_widget_set_visible (seed_hbox, TRUE);
 
   label = gtk_label_new (_("Random seed:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (seed_hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   seed = gimp_random_seed_new (&gflare->sflare_seed, &gflare->random_seed);
   gtk_box_pack_start (GTK_BOX (seed_hbox), seed, FALSE, TRUE, 0);
-  gtk_widget_show (seed);
+  gtk_widget_set_visible (seed, TRUE);
 
   g_signal_connect (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed), "value-changed",
                     G_CALLBACK (ed_preview_update),
@@ -4079,7 +4079,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   g_signal_connect (vbox, "map",
                     G_CALLBACK (ed_page_map_callback),
                     (gpointer) PAGE_SFLARE);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 }
 
 GtkWidget *
@@ -4110,7 +4110,7 @@ ed_put_gradient_menu (GtkWidget    *grid,
 
   label = gtk_label_new (caption);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   gtk_grid_attach (GTK_GRID (grid), label, x, y, 1, 1);
   gtk_grid_attach (GTK_GRID (grid), gm->preview, x + 1, y, 1, 1);
@@ -4358,7 +4358,7 @@ preview_new (gint                  width,
 
   preview->widget = gimp_preview_area_new ();
   gtk_widget_set_size_request (preview->widget, width, height);
-  gtk_widget_show (preview->widget);
+  gtk_widget_set_visible (preview->widget, TRUE);
 
   preview->width           = width;
   preview->height          = height;
@@ -4586,8 +4586,8 @@ gradient_menu_new (GradientMenuCallback callback,
 
   gm_gradient_combo_fill (gm, default_gradient_name);
 
-  gtk_widget_show (gm->preview);
-  gtk_widget_show (gm->combo);
+  gtk_widget_set_visible (gm->preview, TRUE);
+  gtk_widget_set_visible (gm->combo, TRUE);
 
   g_signal_connect (gm->combo, "destroy",
                     G_CALLBACK (gm_combo_destroy_callback),

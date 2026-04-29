@@ -1320,17 +1320,17 @@ compose_dialog (GimpProcedure       *procedure,
 
   frame = gimp_frame_new (_("Channel Representations"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -1345,18 +1345,18 @@ compose_dialog (GimpProcedure       *procedure,
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_grid_attach (GTK_GRID (grid), hbox, 0, j, 1, 1);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       gtk_size_group_add_widget (size_group, hbox);
 
       composeint.channel_icon[j] = image = gtk_image_new ();
       gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
 
       composeint.channel_label[j] = label = gtk_label_new_with_mnemonic ("");
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       if (compose_idx >= 0 &&
           nlayers >= compose_dsc[compose_idx].num_images &&
@@ -1382,13 +1382,13 @@ compose_dialog (GimpProcedure       *procedure,
                           GIMP_INT_STORE_ICON_NAME, GIMP_ICON_CHANNEL_GRAY,
                           -1);
       gtk_grid_attach (GTK_GRID (grid), combo, 1, j, 1, 1);
-      gtk_widget_show (combo);
+      gtk_widget_set_visible (combo, TRUE);
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
       scale = gimp_color_scale_entry_new (NULL, 255.0, 0.0, 255.0, 0);
       gtk_grid_attach (GTK_GRID (grid), scale, 2, j, 3, 1);
-      gtk_widget_show (scale);
+      gtk_widget_set_visible (scale, TRUE);
       composeint.scales[j] = scale;
 
       gtk_widget_set_sensitive (scale, FALSE);
@@ -1414,7 +1414,7 @@ compose_dialog (GimpProcedure       *procedure,
                     NULL);
   type_combo_callback (config);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
@@ -1568,7 +1568,7 @@ type_combo_callback (GimpProcedureConfig *config)
         {
           gtk_image_set_from_icon_name (GTK_IMAGE (image),
                                         icon, GTK_ICON_SIZE_BUTTON);
-          gtk_widget_show (image);
+          gtk_widget_set_visible (image, TRUE);
         }
       else
         {

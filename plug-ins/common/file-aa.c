@@ -374,7 +374,7 @@ save_dialog (GimpProcedure *procedure,
   g_object_set (combo, "margin", 12, NULL);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 

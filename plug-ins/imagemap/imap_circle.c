@@ -256,7 +256,7 @@ circle_create_info_widget(GtkWidget *frame)
 
    gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
    gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-   gtk_widget_show (grid);
+   gtk_widget_set_visible (grid, TRUE);
 
    label = create_label_in_grid (grid, 0, 0, _("Center _x:"));
    props->x = create_spin_button_in_grid (grid, label, 0, 1, 1, 0,

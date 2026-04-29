@@ -2815,11 +2815,11 @@ load_dialog (GFile         *file,
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_widget_set_size_request (sw, PREVIEW_SIZE, PREVIEW_SIZE);
-  gtk_widget_show (sw);
+  gtk_widget_set_visible (sw, TRUE);
 
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (sw), viewport);
-  gtk_widget_show (viewport);
+  gtk_widget_set_visible (viewport, TRUE);
 
   preview = gimp_preview_area_new ();
   if (is_hgt)
@@ -2830,7 +2830,7 @@ load_dialog (GFile         *file,
     gtk_widget_set_size_request (preview, width, height);
 
   gtk_container_add (GTK_CONTAINER (viewport), preview);
-  gtk_widget_show (preview);
+  gtk_widget_set_visible (preview, TRUE);
 
   g_object_set_data (G_OBJECT (preview), "procedure-config",
                      config);
@@ -3045,7 +3045,7 @@ save_dialog (GimpImage     *image,
                                        gimp_image_get_base_type (image) == GIMP_INDEXED,
                                        NULL, NULL, FALSE);
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 

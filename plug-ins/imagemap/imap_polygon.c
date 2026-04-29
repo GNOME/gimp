@@ -452,7 +452,7 @@ polygon_create_info_widget(GtkWidget *frame)
 
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
-   gtk_widget_show(hbox);
+   gtk_widget_set_visible(hbox, TRUE);
 
    swin = gtk_scrolled_window_new(NULL, NULL);
 
@@ -461,12 +461,12 @@ polygon_create_info_widget(GtkWidget *frame)
    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(swin),
                                         GTK_SHADOW_IN);
    gtk_box_pack_start(GTK_BOX(hbox), swin, FALSE, FALSE, FALSE);
-   gtk_widget_show(swin);
+   gtk_widget_set_visible(swin, TRUE);
 
    props->store = gtk_list_store_new (1, G_TYPE_POINTER);
    view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (props->store));
    g_object_unref (props->store);
-   gtk_widget_show (view);
+   gtk_widget_set_visible (view, TRUE);
 
    renderer = gtk_cell_renderer_text_new ();
    column = gtk_tree_view_column_new_with_attributes (_("x (pixels)"),
@@ -492,7 +492,7 @@ polygon_create_info_widget(GtkWidget *frame)
    gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
    gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
    gtk_box_pack_start (GTK_BOX(hbox), grid, FALSE, FALSE, FALSE);
-   gtk_widget_show (grid);
+   gtk_widget_set_visible (grid, TRUE);
 
    label = create_label_in_grid (grid, 0, 0, "_x:");
    props->x = create_spin_button_in_grid (grid, label, 0, 1, 1, 0,
@@ -514,25 +514,25 @@ polygon_create_info_widget(GtkWidget *frame)
    g_signal_connect(props->update, "clicked",
                     G_CALLBACK(update_button_clicked), props);
    gtk_grid_attach (GTK_GRID (grid), props->update, 1, 2, 1, 1);
-   gtk_widget_show(props->update);
+   gtk_widget_set_visible(props->update, TRUE);
 
    props->insert = gtk_button_new_with_mnemonic(_("_Insert"));
    g_signal_connect(props->insert, "clicked",
                     G_CALLBACK(insert_button_clicked), props);
    gtk_grid_attach (GTK_GRID (grid), props->insert, 1, 3, 1, 1);
-   gtk_widget_show(props->insert);
+   gtk_widget_set_visible(props->insert, TRUE);
 
    props->append = gtk_button_new_with_mnemonic(_("A_ppend"));
    g_signal_connect(props->append, "clicked",
                     G_CALLBACK(append_button_clicked), props);
    gtk_grid_attach (GTK_GRID (grid), props->append, 1, 4, 1, 1);
-   gtk_widget_show(props->append);
+   gtk_widget_set_visible(props->append, TRUE);
 
    props->remove = gtk_button_new_with_mnemonic(_("_Remove"));
    g_signal_connect(props->remove, "clicked",
                     G_CALLBACK(remove_button_clicked), props);
    gtk_grid_attach (GTK_GRID (grid), props->remove, 1, 5, 1, 1);
-   gtk_widget_show(props->remove);
+   gtk_widget_set_visible(props->remove, TRUE);
 
    props->timeout = 0;
 

@@ -269,7 +269,7 @@ gimp_help_browser_dialog_init (GimpHelpBrowserDialog *self)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (window), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* Toolbar */
   toolbar = gtk_toolbar_new ();
@@ -281,24 +281,24 @@ gimp_help_browser_dialog_init (GimpHelpBrowserDialog *self)
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
   gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
   gtk_tool_item_set_expand (item, TRUE);
-  gtk_widget_show (GTK_WIDGET (item));
+  gtk_widget_set_visible (GTK_WIDGET (item, TRUE));
   add_tool_button (toolbar, "win.load-uri('https://docs.gimp.org')", GIMP_ICON_HELP_USER_MANUAL, "docs.gimp.org", _("Visit the GIMP documentation website"));
 
   item = gtk_menu_tool_button_new (gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT, GTK_ICON_SIZE_BUTTON), NULL);
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
-  gtk_widget_show (GTK_WIDGET (item));
+  gtk_widget_set_visible (GTK_WIDGET (item, TRUE));
   gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "win.forward");
   self->button_next = GTK_WIDGET (item);
 
   item = gtk_menu_tool_button_new (gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS, GTK_ICON_SIZE_BUTTON), NULL);
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
-  gtk_widget_show (GTK_WIDGET (item));
+  gtk_widget_set_visible (GTK_WIDGET (item, TRUE));
   gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "win.back");
   self->button_prev = GTK_WIDGET (item);
 
   gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
   gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, FALSE, 0);
-  gtk_widget_show (toolbar);
+  gtk_widget_set_visible (toolbar, TRUE);
 
   /* Context menu */
   builder = gtk_builder_new_from_resource ("/org/gimp/help/help-menu.ui");
@@ -311,7 +311,7 @@ gimp_help_browser_dialog_init (GimpHelpBrowserDialog *self)
   /*  the horizontal paned  */
   self->paned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_box_pack_start (GTK_BOX (vbox), self->paned, TRUE, TRUE, 0);
-  gtk_widget_show (self->paned);
+  gtk_widget_set_visible (self->paned, TRUE);
 
   self->sidebar = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (self->sidebar),
@@ -321,7 +321,7 @@ gimp_help_browser_dialog_init (GimpHelpBrowserDialog *self)
   self->tree_view = gtk_tree_view_new ();
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (self->tree_view), FALSE);
   gtk_container_add (GTK_CONTAINER (self->sidebar), self->tree_view);
-  gtk_widget_show (self->tree_view);
+  gtk_widget_set_visible (self->tree_view, TRUE);
 
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (self->tree_view), -1,
                                                NULL,
@@ -335,7 +335,7 @@ gimp_help_browser_dialog_init (GimpHelpBrowserDialog *self)
 
   /*  HTML webview  */
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
   gtk_paned_pack2 (GTK_PANED (self->paned), main_vbox, TRUE, TRUE);
 
   settings = webkit_settings_new_with_settings ("default-charset", "utf-8",
@@ -344,7 +344,7 @@ gimp_help_browser_dialog_init (GimpHelpBrowserDialog *self)
   g_object_unref (settings);
 
   gtk_widget_set_size_request (self->webview, 300, 200);
-  gtk_widget_show (self->webview);
+  gtk_widget_set_visible (self->webview, TRUE);
 
   gtk_box_pack_start (GTK_BOX (main_vbox), self->webview, TRUE, TRUE, 0);
 
@@ -429,7 +429,7 @@ gimp_help_browser_dialog_new (const gchar         *plug_in_binary,
 
   gtk_paned_set_position (GTK_PANED (window->paned), data.paned_position);
   if (data.show_index)
-    gtk_widget_show (window->sidebar);
+    gtk_widget_set_visible (window->sidebar, TRUE);
   webkit_web_view_set_zoom_level (WEBKIT_WEB_VIEW (window->webview), data.zoom);
 
   return window;
@@ -588,7 +588,7 @@ find_action (GSimpleAction *action,
 {
   GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
 
-  gtk_widget_show (self->searchbar);
+  gtk_widget_set_visible (self->searchbar, TRUE);
   gtk_widget_grab_focus (self->search_entry);
 }
 
@@ -599,7 +599,7 @@ find_again_action (GSimpleAction *action,
 {
   GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
 
-  gtk_widget_show (self->searchbar);
+  gtk_widget_set_visible (self->searchbar, TRUE);
   gtk_widget_grab_focus (self->search_entry);
 
   search (self, gtk_entry_get_text (GTK_ENTRY (self->search_entry)));
@@ -1156,9 +1156,9 @@ add_tool_button (GtkWidget  *toolbar,
   GtkToolItem *tool_button;
 
   tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (GTK_WIDGET (tool_icon));
+  gtk_widget_set_visible (GTK_WIDGET (tool_icon, TRUE));
   tool_button = gtk_tool_button_new (tool_icon, label);
-  gtk_widget_show (GTK_WIDGET (tool_button));
+  gtk_widget_set_visible (GTK_WIDGET (tool_button, TRUE));
   gtk_tool_item_set_tooltip_text (tool_button, tooltip);
   gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (tool_button), action);
 
@@ -1175,11 +1175,11 @@ build_searchbar (GimpHelpBrowserDialog *self)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
   label = gtk_label_new (_("Find:"));
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
   self->search_entry = gtk_entry_new ();
-  gtk_widget_show (self->search_entry);
+  gtk_widget_set_visible (self->search_entry, TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), self->search_entry, TRUE, TRUE, 0);
 
   g_signal_connect (self->search_entry, "changed",
@@ -1197,7 +1197,7 @@ build_searchbar (GimpHelpBrowserDialog *self)
                                                       GTK_ICON_SIZE_BUTTON));
   gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.search-previous");
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   button = gtk_button_new_with_mnemonic (C_("search", "_Next"));
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
@@ -1206,12 +1206,12 @@ build_searchbar (GimpHelpBrowserDialog *self)
                                                       GTK_ICON_SIZE_BUTTON));
   gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.search-next");
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   button = gtk_button_new_with_mnemonic (C_("search", "_Close"));
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (search_close_clicked),

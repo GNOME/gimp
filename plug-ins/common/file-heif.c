@@ -2498,7 +2498,7 @@ load_dialog (struct heif_context *heif,
 
   frame = gimp_frame_new (_("Select Image"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   /* prepare list store with all thumbnails and caption */
 
@@ -2537,11 +2537,11 @@ load_dialog (struct heif_context *heif,
                                2   * MAX_THUMBNAIL_SIZE,
                                1.5 * MAX_THUMBNAIL_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   icon_view = gtk_icon_view_new_with_model (GTK_TREE_MODEL (list_store));
   gtk_container_add (GTK_CONTAINER (scrolled_window), icon_view);
-  gtk_widget_show (icon_view);
+  gtk_widget_set_visible (icon_view, TRUE);
 
   renderer = gtk_cell_renderer_pixbuf_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (icon_view), renderer, FALSE);
@@ -2584,8 +2584,8 @@ load_dialog (struct heif_context *heif,
       gtk_tree_path_free (path);
     }
 
-  gtk_widget_show (main_vbox);
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (main_vbox, TRUE);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 

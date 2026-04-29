@@ -82,7 +82,7 @@ ico_dialog_new (GimpImage           *image,
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   /*Animated Cursor */
   if (ani_header)
@@ -96,13 +96,13 @@ ico_dialog_new (GimpImage           *image,
 
       frame = gimp_frame_new (_("Animated Cursor Settings"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       grid = gtk_grid_new ();
       gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
       gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
       gtk_container_add (GTK_CONTAINER (frame), grid);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       /* Cursor Name */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -115,7 +115,7 @@ ico_dialog_new (GimpImage           *image,
       gtk_entry_set_text (GTK_ENTRY (entry),
                           ani_info->inam ? ani_info->inam : "");
       gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-      gtk_widget_show (entry);
+      gtk_widget_set_visible (entry, TRUE);
 
       g_signal_connect (GTK_ENTRY (entry), "focus-out-event",
                         G_CALLBACK (ico_dialog_ani_update_inam),
@@ -132,7 +132,7 @@ ico_dialog_new (GimpImage           *image,
       gtk_entry_set_text (GTK_ENTRY (entry),
                           ani_info->iart ? ani_info->iart : "");
       gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-      gtk_widget_show (entry);
+      gtk_widget_set_visible (entry, TRUE);
 
       g_signal_connect (GTK_ENTRY (entry), "focus-out-event",
                         G_CALLBACK (ico_dialog_ani_update_iart),
@@ -149,11 +149,11 @@ ico_dialog_new (GimpImage           *image,
                                        1, 10, 0);
       spin = gimp_spin_button_new (adjustment, 1, 0);
       gtk_box_pack_start (GTK_BOX (hbox), spin, FALSE, FALSE, 0);
-      gtk_widget_show (spin);
+      gtk_widget_set_visible (spin, TRUE);
 
       label = gtk_label_new (_(" jiffies (16.66 ms)"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       g_signal_connect (adjustment, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
@@ -163,23 +163,23 @@ ico_dialog_new (GimpImage           *image,
   /* Cursor */
   frame = gimp_frame_new (_("Icon Details"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 4);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
-  gtk_widget_show (viewport);
+  gtk_widget_set_visible (viewport, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   g_object_set_data (G_OBJECT (dialog), "icons_vbox", vbox);
   gtk_container_add (GTK_CONTAINER (viewport), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   warning = g_object_new (GIMP_TYPE_HINT_BOX,
                           "icon-name", GIMP_ICON_DIALOG_WARNING,
@@ -253,7 +253,7 @@ ico_create_icon_hbox (GtkWidget    *icon_preview,
   gtk_widget_set_halign (icon_preview, GTK_ALIGN_END);
   gtk_widget_set_valign (icon_preview, GTK_ALIGN_CENTER);
   gtk_container_add (GTK_CONTAINER (frame), icon_preview);
-  gtk_widget_show (icon_preview);
+  gtk_widget_set_visible (icon_preview, TRUE);
 
   if (! size)
     size = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -262,7 +262,7 @@ ico_create_icon_hbox (GtkWidget    *icon_preview,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   combo = gimp_int_combo_box_new (_("1 bpp, 1-bit alpha, 2-slot palette"),   1,
                                   _("4 bpp, 1-bit alpha, 16-slot palette"),  4,
@@ -281,7 +281,7 @@ ico_create_icon_hbox (GtkWidget    *icon_preview,
   g_object_set_data (G_OBJECT (hbox), "icon_menu", combo);
 
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   checkbox = gtk_check_button_new_with_label (_("Compressed (PNG)"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbox),
@@ -289,7 +289,7 @@ ico_create_icon_hbox (GtkWidget    *icon_preview,
   g_signal_connect (checkbox, "toggled",
                     G_CALLBACK (ico_dialog_toggle_compress), hbox);
   gtk_box_pack_start (GTK_BOX (vbox), checkbox, FALSE, FALSE, 0);
-  gtk_widget_show (checkbox);
+  gtk_widget_set_visible (checkbox, TRUE);
 
   return hbox;
 }
@@ -528,7 +528,7 @@ ico_dialog_add_icon (GtkWidget    *dialog,
   preview = ico_preview_new (layer);
   hbox = ico_create_icon_hbox (preview, layer, layer_num, info);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* Let's make the hbox accessible through the layer ID */
   g_snprintf (key, sizeof (key), "layer_%i_hbox",
@@ -550,7 +550,7 @@ ico_dialog_add_icon (GtkWidget    *dialog,
       gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
       gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
       gtk_box_pack_start (GTK_BOX (hbox), grid, FALSE, FALSE, 0);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       adj = (GtkAdjustment *)
              gtk_adjustment_new (info->hot_spot_x[layer_num], 0,
