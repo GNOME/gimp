@@ -511,12 +511,12 @@ dialog (GimpProcedure       *procedure,
   gtk_container_set_border_width (GTK_CONTAINER (sizeentry), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
                       sizeentry, FALSE, FALSE, 0);
-  gtk_widget_show (sizeentry);
+  gtk_widget_set_visible (sizeentry, TRUE);
 
   /* We don't want to have the "Show Image" option in the GUI */
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dlg), "n-tries", NULL);
 
-  gtk_widget_show (dlg);
+  gtk_widget_set_visible (dlg, TRUE);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 

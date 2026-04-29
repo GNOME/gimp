@@ -55,7 +55,7 @@ insert_item_with_label (GtkWidget   *parent,
    GtkWidget *item = gtk_menu_item_new_with_mnemonic (label);
    gtk_menu_shell_insert (GTK_MENU_SHELL (parent), item, position);
    g_signal_connect (item, "activate", G_CALLBACK (activate), data);
-   gtk_widget_show (item);
+   gtk_widget_set_visible (item, TRUE);
 
    return item;
 }

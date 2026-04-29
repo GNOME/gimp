@@ -309,7 +309,7 @@ retinex_dialog (GimpProcedure *procedure,
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       preview, TRUE, TRUE, 0);
   gtk_widget_set_margin_bottom (preview, 12);
-  gtk_widget_show (preview);
+  gtk_widget_set_visible (preview, TRUE);
 
   combo = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                             "scales-mode", G_TYPE_NONE);
@@ -345,7 +345,7 @@ retinex_dialog (GimpProcedure *procedure,
                               "retinex-vbox",
                               NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 

@@ -762,7 +762,7 @@ gih_save_dialog (GimpImage           *image,
 
   label = gtk_label_new (_("Ranks:"));
   gtk_grid_attach (GTK_GRID (dimgrid), label, 0, 0, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
     {
@@ -776,7 +776,7 @@ gih_save_dialog (GimpImage           *image,
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_grid_attach (GTK_GRID (dimgrid), spinbutton, 1, i, 1, 1);
 
-      gtk_widget_show (spinbutton);
+      gtk_widget_set_visible (spinbutton, TRUE);
 
       if (i >= dimension)
         gtk_widget_set_sensitive (spinbutton, FALSE);
@@ -803,7 +803,7 @@ gih_save_dialog (GimpImage           *image,
 
       gtk_grid_attach (GTK_GRID (dimgrid), cb, 2, i, 1, 1);
 
-      gtk_widget_show (cb);
+      gtk_widget_set_visible (cb, TRUE);
 
       if (i >= dimension)
         gtk_widget_set_sensitive (cb, FALSE);
@@ -817,7 +817,7 @@ gih_save_dialog (GimpImage           *image,
 
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       dimgrid, TRUE, TRUE, 0);
-  gtk_widget_show (dimgrid);
+  gtk_widget_set_visible (dimgrid, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 

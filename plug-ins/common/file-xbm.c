@@ -1272,7 +1272,7 @@ save_dialog (GimpImage     *image,
                               "x10-format", "prefix", "comment-frame",
                               "hot-spot-frame", "mask-frame", NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 

@@ -2847,7 +2847,7 @@ save_dialog (GimpImage     *image,
           gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                                       "path-warning",
                                       NULL);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
         }
 
       /* Fixing labels */
@@ -2878,7 +2878,7 @@ save_dialog (GimpImage     *image,
                                   0,
                                   G_CALLBACK (update_clipping_path),
                                   config, NULL);
-      gtk_widget_show (combo);
+      gtk_widget_set_visible (combo, TRUE);
 
       entry = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog),
                                                     "clippingpathflatness", 1.0);
@@ -2901,7 +2901,7 @@ save_dialog (GimpImage     *image,
           gimp_parasite_free (parasite);
         }
 
-      gtk_widget_show (entry);
+      gtk_widget_set_visible (entry, TRUE);
 
       gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                         "clipping-path-frame", "clippingpath", FALSE,
@@ -2913,7 +2913,7 @@ save_dialog (GimpImage     *image,
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
       gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
 
       gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                                   "clipping-path-frame",
@@ -2987,7 +2987,7 @@ save_dialog (GimpImage     *image,
                               "compat-notice", NULL);
   g_free (text);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 

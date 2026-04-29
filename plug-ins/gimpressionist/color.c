@@ -60,7 +60,7 @@ create_colorpage (GtkNotebook *notebook)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame = gimp_int_radio_group_new (TRUE, _("Color"),
                                     G_CALLBACK (gimp_radio_button_update),
@@ -81,7 +81,7 @@ create_colorpage (GtkNotebook *notebook)
     (colorradio[COLOR_TYPE_CENTER],
      _("Samples the color from the pixel in the center of the brush"), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   colornoiseadjust =
     gimp_scale_entry_new (_("Color _noise:"), pcvals.color_noise, 0.0, 100.0, 0);
@@ -92,7 +92,7 @@ create_colorpage (GtkNotebook *notebook)
                     G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.color_noise);
   gtk_box_pack_start (GTK_BOX (vbox), colornoiseadjust, FALSE, FALSE, 6);
-  gtk_widget_show (colornoiseadjust);
+  gtk_widget_set_visible (colornoiseadjust, TRUE);
 
 
   color_restore ();

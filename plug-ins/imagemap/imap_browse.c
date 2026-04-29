@@ -119,7 +119,7 @@ browse_widget_new (const gchar *name)
    browse->filter = NULL;
 
    browse->hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
-   gtk_widget_show (browse->hbox);
+   gtk_widget_set_visible (browse->hbox, TRUE);
 
    browse->file = gtk_entry_new ();
    gtk_box_pack_start (GTK_BOX(browse->hbox), browse->file, TRUE, TRUE, 0);
@@ -128,18 +128,18 @@ browse_widget_new (const gchar *name)
    g_signal_connect (browse->file, "drag-data-received",
                      G_CALLBACK(handle_drop), NULL);
 
-   gtk_widget_show (browse->file);
+   gtk_widget_set_visible (browse->file, TRUE);
 
    browse->button = button = gtk_button_new ();
    icon = gtk_image_new_from_icon_name (GIMP_ICON_DOCUMENT_OPEN,
                                         GTK_ICON_SIZE_BUTTON);
    gtk_container_add (GTK_CONTAINER (button), icon);
-   gtk_widget_show (icon);
+   gtk_widget_set_visible (icon, TRUE);
 
    gtk_box_pack_end(GTK_BOX (browse->hbox), button, FALSE, FALSE, 0);
    g_signal_connect (button, "clicked",
                      G_CALLBACK(browse_cb), (gpointer) browse);
-   gtk_widget_show (button);
+   gtk_widget_set_visible (button, TRUE);
 
    return browse;
 }

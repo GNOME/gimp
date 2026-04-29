@@ -1071,7 +1071,7 @@ load_dialog (PopplerDocument     *doc,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* Title */
   if (title_text && strlen (g_strstrip (title_text)) > 0)
@@ -1088,7 +1088,7 @@ load_dialog (PopplerDocument     *doc,
   selector = gimp_page_selector_new ();
   gtk_widget_set_size_request (selector, 380, 300);
   gtk_box_pack_start (GTK_BOX (vbox), selector, TRUE, TRUE, 0);
-  gtk_widget_show (selector);
+  gtk_widget_set_visible (selector, TRUE);
 
   if (n_pages <= 0)
     {

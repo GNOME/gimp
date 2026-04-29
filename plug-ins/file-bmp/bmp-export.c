@@ -100,7 +100,7 @@ warning_dialog (const gchar *primary,
                                             "%s", secondary);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   ok = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
@@ -1104,7 +1104,7 @@ save_dialog (GimpProcedure *procedure,
                               "bmp-save-vbox",
                               NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   g_signal_connect (config, "notify::rgb-format",
                     G_CALLBACK (config_notify),

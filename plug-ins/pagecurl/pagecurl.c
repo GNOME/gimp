@@ -461,7 +461,7 @@ dialog (GimpProcedure       *procedure,
 
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       curl_image, FALSE, FALSE, 0);
-  gtk_widget_show (curl_image);
+  gtk_widget_set_visible (curl_image, TRUE);
 
   g_signal_connect (config, "notify",
                     G_CALLBACK (curl_pixbuf_update),

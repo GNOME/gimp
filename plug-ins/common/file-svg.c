@@ -422,7 +422,7 @@ svg_extract (GimpProcedure        *procedure,
           gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
           gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                               main_hbox, TRUE, TRUE, 0);
-          gtk_widget_show (main_hbox);
+          gtk_widget_set_visible (main_hbox, TRUE);
 
           /* Unfortunately the error returned by librsvg is unclear. While
            * libxml explicitly returns a "parser error : internal error:
@@ -442,7 +442,7 @@ svg_extract (GimpProcedure        *procedure,
           gtk_label_set_line_wrap_mode (GTK_LABEL (label), PANGO_WRAP_WORD);
           gtk_label_set_max_width_chars (GTK_LABEL (label), 80);
           gtk_box_pack_start (GTK_BOX (main_hbox), label, FALSE, FALSE, 0);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
 
           label = gtk_label_new (NULL);
           text = g_strdup_printf ("<b>%s</b>",
@@ -451,14 +451,14 @@ svg_extract (GimpProcedure        *procedure,
           g_free (text);
           gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
           gtk_box_pack_start (GTK_BOX (main_hbox), label, FALSE, FALSE, 0);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
 
           label = gtk_label_new (_("Retry without limits preventing to parse huge data?"));
           gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
           gtk_box_pack_start (GTK_BOX (main_hbox), label, FALSE, FALSE, 0);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
 
-          gtk_widget_show (dialog);
+          gtk_widget_set_visible (dialog, TRUE);
 
           retry = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_YES);
           gtk_widget_destroy (dialog);

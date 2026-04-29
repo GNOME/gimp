@@ -510,11 +510,11 @@ create_brushpage (GtkNotebook *notebook)
 
   thispage = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
-  gtk_widget_show (thispage);
+  gtk_widget_set_visible (thispage, TRUE);
 
   box1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box1, TRUE,TRUE,0);
-  gtk_widget_show (box1);
+  gtk_widget_set_visible (box1, TRUE);
 
   view = create_one_column_list (box1, brush_select_file);
   brush_list = view;
@@ -525,28 +525,28 @@ create_brushpage (GtkNotebook *notebook)
 
   box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (box1), box2, FALSE, FALSE, 0);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   brush_preview = tmpw = gimp_preview_area_new ();
   gtk_widget_set_size_request (brush_preview, 100, 100);
   gtk_container_add (GTK_CONTAINER (frame), tmpw);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (brush_preview, "size-allocate",
                     G_CALLBACK (brush_preview_size_allocate), NULL);
 
   box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_end (GTK_BOX (box2), box3, FALSE, FALSE,0);
-  gtk_widget_show (box3);
+  gtk_widget_set_visible (box3, TRUE);
 
   tmpw = gtk_label_new (_("Gamma:"));
   gtk_label_set_xalign (GTK_LABEL (tmpw), 0.0);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE,0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   brush_gamma_adjust = gtk_adjustment_new (pcvals.brushgamma,
                                            0.5, 3.0, 0.1, 0.1, 1.0);
@@ -555,7 +555,7 @@ create_brushpage (GtkNotebook *notebook)
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
   gtk_scale_set_digits (GTK_SCALE (tmpw), 2);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect_swapped (brush_gamma_adjust, "value-changed",
                             G_CALLBACK (update_brush_preview),
                             pcvals.selected_brush);
@@ -565,14 +565,14 @@ create_brushpage (GtkNotebook *notebook)
 
   box3 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (thispage), box3, FALSE, FALSE,0);
-  gtk_widget_show (box3);
+  gtk_widget_set_visible (box3, TRUE);
 
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   tmpw = gtk_label_new (_("Select:"));
   gtk_label_set_xalign (GTK_LABEL (tmpw), 0.0);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   gtk_size_group_add_widget (group, tmpw);
   g_object_unref (group);
@@ -583,18 +583,18 @@ create_brushpage (GtkNotebook *notebook)
                               NULL, NULL);
 
   gtk_box_pack_start (GTK_BOX (box3), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   tmpw = gtk_button_new_with_mnemonic (_("Save _as"));
   gtk_box_pack_start (GTK_BOX (box3),tmpw, FALSE, FALSE, 0);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (savebrush), NULL);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (thispage), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   brush_aspect_scale =
     gimp_scale_entry_new (_("Aspect ratio:"), pcvals.brush_aspect, -1.0, 1.0, 2);
@@ -607,7 +607,7 @@ create_brushpage (GtkNotebook *notebook)
                     G_CALLBACK (brush_aspect_adjust_cb),
                     &pcvals.brush_aspect);
   gtk_grid_attach (GTK_GRID (grid), brush_aspect_scale, 0, 0, 3, 1);
-  gtk_widget_show (brush_aspect_scale);
+  gtk_widget_set_visible (brush_aspect_scale, TRUE);
 
   brush_relief_scale =
     gimp_scale_entry_new (_("Relief:"), pcvals.brush_relief, 0.0, 100.0, 1);
@@ -620,7 +620,7 @@ create_brushpage (GtkNotebook *notebook)
                     G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.brush_relief);
   gtk_grid_attach (GTK_GRID (grid), brush_relief_scale, 0, 1, 3, 1);
-  gtk_widget_show (brush_relief_scale);
+  gtk_widget_set_visible (brush_relief_scale, TRUE);
 
   brush_select (selection, FALSE);
   readdirintolist ("Brushes", view, pcvals.selected_brush);

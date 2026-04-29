@@ -827,13 +827,13 @@ edit_callback (GtkWidget *widget,
 
       frame = gimp_frame_new (_("Directions"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       grid = gtk_grid_new ();
       gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
       gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
       gtk_container_add (GTK_CONTAINER (frame), grid);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       for (i = 0; i < 3; i++)
         for (j = 0; j < 3; j++)
@@ -849,9 +849,9 @@ edit_callback (GtkWidget *widget,
             gtk_widget_set_halign (button, GTK_ALIGN_CENTER);
             gtk_container_add (GTK_CONTAINER(button), edit_previews[mut]);
             gtk_grid_attach (GTK_GRID (grid), button, i, j, 1, 1);
-            gtk_widget_show (edit_previews[mut]);
+            gtk_widget_set_visible (edit_previews[mut], TRUE);
 
-            gtk_widget_show (button);
+            gtk_widget_set_visible (button, TRUE);
 
             g_object_set_data (G_OBJECT (button), "config",  proc_config);
             g_signal_connect (button, "clicked",
@@ -865,11 +865,11 @@ edit_callback (GtkWidget *widget,
 
       frame = gimp_frame_new (_("Controls"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
 
       adj = gtk_adjustment_new (pick_speed, 0.05, 0.5, 0.01, 0.1, 0);
       scale = gimp_spin_scale_new (adj, _("Speed"), 2);
@@ -882,11 +882,11 @@ edit_callback (GtkWidget *widget,
                                 G_CALLBACK (set_edit_preview),
                                 proc_config);
       gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 6);
-      gtk_widget_show (scale);
+      gtk_widget_set_visible (scale, TRUE);
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       button = gtk_button_new_with_mnemonic( _("_Randomize"));
       g_object_set (gtk_bin_get_child (GTK_BIN (button)),
@@ -894,7 +894,7 @@ edit_callback (GtkWidget *widget,
                     "margin-end",   2,
                     NULL);
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (randomize_callback),
@@ -942,14 +942,14 @@ edit_callback (GtkWidget *widget,
                         &config.variation);
 
       gtk_box_pack_end (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-      gtk_widget_show (combo);
+      gtk_widget_set_visible (combo, TRUE);
 
       label = gtk_label_new_with_mnemonic (_("_Variation:"));
       gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
-      gtk_widget_show (main_vbox);
+      gtk_widget_set_visible (main_vbox, TRUE);
 
       init_mutants (proc_config);
     }
@@ -1162,17 +1162,17 @@ flame_dialog (Flame                *flame,
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, FALSE, FALSE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   frame = gtk_frame_new (NULL);
   gtk_widget_set_valign (frame, GTK_ALIGN_START);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (box), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   flame_preview = gimp_preview_area_new ();
     {
@@ -1191,7 +1191,7 @@ flame_dialog (Flame                *flame,
     }
   gtk_widget_set_size_request (flame_preview, preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (frame), flame_preview);
-  gtk_widget_show (flame_preview);
+  gtk_widget_set_visible (flame_preview, TRUE);
   g_signal_connect_swapped (flame_preview, "size-allocate",
                             G_CALLBACK (flame_preview_size_allocate),
                             proc_config);
@@ -1202,17 +1202,17 @@ flame_dialog (Flame                *flame,
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
       gtk_box_pack_start (GTK_BOX (box), vbox, FALSE, FALSE, 0);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
 
       vbbox= gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
       gtk_box_set_homogeneous (GTK_BOX (vbbox), FALSE);
       gtk_box_set_spacing (GTK_BOX (vbbox), 6);
       gtk_box_pack_start (GTK_BOX (vbox), vbbox, FALSE, FALSE, 0);
-      gtk_widget_show (vbbox);
+      gtk_widget_set_visible (vbbox, TRUE);
 
       button = gtk_button_new_with_mnemonic (_("_Edit"));
       gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       g_signal_connect (button, "clicked",
                         G_CALLBACK (edit_callback),
@@ -1220,7 +1220,7 @@ flame_dialog (Flame                *flame,
 
       load_button = button = gtk_button_new_with_mnemonic (_("_Open"));
       gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       g_signal_connect (button, "clicked",
                         G_CALLBACK (load_callback),
@@ -1228,7 +1228,7 @@ flame_dialog (Flame                *flame,
 
       save_button = button = gtk_button_new_with_mnemonic (_("_Save"));
       gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       g_signal_connect (button, "clicked",
                         G_CALLBACK (save_callback),
@@ -1254,11 +1254,11 @@ flame_dialog (Flame                *flame,
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       label = gtk_label_new_with_mnemonic (_("Color_map:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       combo = gimp_drawable_combo_box_new (cmap_constrain, NULL, NULL);
 
@@ -1308,13 +1308,13 @@ flame_dialog (Flame                *flame,
                                   proc_config, NULL);
 
       gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-      gtk_widget_show (combo);
+      gtk_widget_set_visible (combo, TRUE);
 
       cmap_preview = gimp_preview_area_new ();
       gtk_widget_set_size_request (cmap_preview, 32, 32);
 
       gtk_box_pack_end (GTK_BOX (hbox), cmap_preview, FALSE, FALSE, 0);
-      gtk_widget_show (cmap_preview);
+      gtk_widget_set_visible (cmap_preview, TRUE);
 
       set_cmap_preview ();
     }
@@ -1336,7 +1336,7 @@ flame_dialog (Flame                *flame,
                                                   "rendering-label", "rendering-box",
                                                   "camera-label",    "camera-box",
                                                   NULL);
-  gtk_widget_show (notebook);
+  gtk_widget_set_visible (notebook, TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox), notebook, FALSE, FALSE, 0);
 
   notify_handler = g_signal_connect (proc_config, "notify",

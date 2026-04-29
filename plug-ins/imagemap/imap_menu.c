@@ -186,6 +186,6 @@ make_selection_toolbar (GimpImap *imap)
                                   GTK_ORIENTATION_VERTICAL);
   gtk_container_set_border_width (GTK_CONTAINER (toolbar), 0);
 
-  gtk_widget_show (toolbar);
+  gtk_widget_set_visible (toolbar, TRUE);
   return toolbar;
 }

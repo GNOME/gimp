@@ -1429,7 +1429,7 @@ smp_dialog (GimpProcedure       *procedure,
   label = gtk_label_new (_("Destination:"));
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_grid_attach (GTK_GRID (grid), label, 0, ty, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   combo = gimp_layer_combo_box_new (smp_constrain, NULL, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
@@ -1438,13 +1438,13 @@ smp_dialog (GimpProcedure       *procedure,
                               NULL, NULL);
 
   gtk_grid_attach (GTK_GRID (grid), combo, 1, ty, 1, 1);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   /* layer combo_box (Sample) */
   label = gtk_label_new (_("Sample:"));
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_grid_attach (GTK_GRID (grid), label, 3, ty, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   combo = gimp_layer_combo_box_new (smp_constrain, NULL, NULL);
 
@@ -1464,18 +1464,18 @@ smp_dialog (GimpProcedure       *procedure,
                               NULL, NULL);
 
   gtk_grid_attach (GTK_GRID (grid), combo, 4, ty, 1, 1);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   ty++;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_grid_attach (GTK_GRID (grid), hbox, 0, ty, 2, 1);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* check button */
   check_button = gtk_check_button_new_with_mnemonic (_("Sho_w selection"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
-  gtk_widget_show (check_button);
+  gtk_widget_set_visible (check_button, TRUE);
 
   g_signal_connect (check_button, "toggled",
                     G_CALLBACK (smp_toggle_callback),
@@ -1486,7 +1486,7 @@ smp_dialog (GimpProcedure       *procedure,
   /* check button */
   check_button = gtk_check_button_new_with_mnemonic (_("Show co_lor"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
-  gtk_widget_show (check_button);
+  gtk_widget_set_visible (check_button, TRUE);
 
   g_signal_connect (check_button, "toggled",
                     G_CALLBACK (smp_toggle_callback),
@@ -1496,12 +1496,12 @@ smp_dialog (GimpProcedure       *procedure,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_grid_attach (GTK_GRID (grid), hbox, 3, ty, 2, 1);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* check button */
   check_button = gtk_check_button_new_with_mnemonic (_("Show selec_tion"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
-  gtk_widget_show (check_button);
+  gtk_widget_set_visible (check_button, TRUE);
 
   g_signal_connect (check_button, "toggled",
                     G_CALLBACK (smp_toggle_callback),
@@ -1512,7 +1512,7 @@ smp_dialog (GimpProcedure       *procedure,
   /* check button */
   check_button = gtk_check_button_new_with_mnemonic (_("Show c_olor"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
-  gtk_widget_show (check_button);
+  gtk_widget_set_visible (check_button, TRUE);
 
   g_signal_connect (check_button, "toggled",
                     G_CALLBACK (smp_toggle_callback),
@@ -1527,7 +1527,7 @@ smp_dialog (GimpProcedure       *procedure,
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_grid_attach (GTK_GRID (grid), frame, 0, ty, 2, 1);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   g_di.dst_preview = gimp_preview_area_new ();
   gtk_widget_set_halign (g_di.dst_preview, GTK_ALIGN_CENTER);
@@ -1535,14 +1535,14 @@ smp_dialog (GimpProcedure       *procedure,
   gtk_widget_set_size_request (g_di.dst_preview,
                                PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
   gtk_container_add (GTK_CONTAINER (frame), g_di.dst_preview);
-  gtk_widget_show (g_di.dst_preview);
+  gtk_widget_set_visible (g_di.dst_preview, TRUE);
 
   /* Preview (Sample)*/
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_grid_attach (GTK_GRID (grid), frame, 3, ty, 2, 1);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   g_di.sample_preview = gimp_preview_area_new ();
   gtk_widget_set_halign (g_di.sample_preview, GTK_ALIGN_CENTER);
@@ -1550,7 +1550,7 @@ smp_dialog (GimpProcedure       *procedure,
   gtk_widget_set_size_request (g_di.sample_preview,
                                PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
   gtk_container_add (GTK_CONTAINER (frame), g_di.sample_preview);
-  gtk_widget_show (g_di.sample_preview);
+  gtk_widget_set_visible (g_di.sample_preview, TRUE);
 
   ty++;
 
@@ -1568,7 +1568,7 @@ smp_dialog (GimpProcedure       *procedure,
                                DA_WIDTH, GRADIENT_HEIGHT);
   gtk_widget_set_events (g_di.in_lvl_gray_preview, LEVELS_DA_MASK);
   gtk_box_pack_start (GTK_BOX (vbox2), g_di.in_lvl_gray_preview, FALSE, TRUE, 0);
-  gtk_widget_show (g_di.in_lvl_gray_preview);
+  gtk_widget_set_visible (g_di.in_lvl_gray_preview, TRUE);
 
   g_signal_connect (g_di.in_lvl_gray_preview, "event",
                     G_CALLBACK (level_in_events),
@@ -1582,7 +1582,7 @@ smp_dialog (GimpProcedure       *procedure,
                                DA_WIDTH, CONTROL_HEIGHT);
   gtk_widget_set_events (g_di.in_lvl_drawarea, LEVELS_DA_MASK);
   gtk_box_pack_start (GTK_BOX (vbox2), g_di.in_lvl_drawarea, FALSE, TRUE, 0);
-  gtk_widget_show (g_di.in_lvl_drawarea);
+  gtk_widget_set_visible (g_di.in_lvl_drawarea, TRUE);
 
   g_signal_connect (g_di.in_lvl_drawarea, "event",
                     G_CALLBACK (level_in_events),
@@ -1591,8 +1591,8 @@ smp_dialog (GimpProcedure       *procedure,
                     G_CALLBACK (level_in_draw),
                     NULL);
 
-  gtk_widget_show (vbox2);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (vbox2, TRUE);
+  gtk_widget_set_visible (frame, TRUE);
 
   /*  The sample_colortable prevev  */
   frame = gtk_frame_new (NULL);
@@ -1607,7 +1607,7 @@ smp_dialog (GimpProcedure       *procedure,
   gtk_widget_set_size_request (g_di.sample_colortab_preview,
                                DA_WIDTH, GRADIENT_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox2), g_di.sample_colortab_preview, FALSE, TRUE, 0);
-  gtk_widget_show (g_di.sample_colortab_preview);
+  gtk_widget_set_visible (g_di.sample_colortab_preview, TRUE);
 
   /*  The levels drawing area  */
   g_di.sample_drawarea = gtk_drawing_area_new ();
@@ -1617,7 +1617,7 @@ smp_dialog (GimpProcedure       *procedure,
                                DA_WIDTH, CONTROL_HEIGHT);
   gtk_widget_set_events (g_di.sample_drawarea, LEVELS_DA_MASK);
   gtk_box_pack_start (GTK_BOX (vbox2), g_di.sample_drawarea, FALSE, TRUE, 0);
-  gtk_widget_show (g_di.sample_drawarea);
+  gtk_widget_set_visible (g_di.sample_drawarea, TRUE);
 
   g_signal_connect (g_di.sample_drawarea, "event",
                     G_CALLBACK (level_out_events),
@@ -1626,8 +1626,8 @@ smp_dialog (GimpProcedure       *procedure,
                     G_CALLBACK (level_out_draw),
                     NULL);
 
-  gtk_widget_show (vbox2);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (vbox2, TRUE);
+  gtk_widget_set_visible (frame, TRUE);
 
   ty++;
 
@@ -1720,7 +1720,7 @@ smp_dialog (GimpProcedure       *procedure,
                     dialog);
   gtk_widget_set_visible (g_di.sample_button, TRUE);
 
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "slider-row", "low-hbox",
@@ -1741,7 +1741,7 @@ smp_dialog (GimpProcedure       *procedure,
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "option-box", NULL);
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   /* set old_id's different (to force updates of the previews) */
   g_di.enable_preview_update = TRUE;

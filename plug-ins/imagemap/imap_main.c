@@ -1536,7 +1536,7 @@ dialog (GimpImap *imap)
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (imap->dlg), main_vbox);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   init_icons();
 
@@ -1546,7 +1546,7 @@ dialog (GimpImap *imap)
   menubar = gtk_menu_bar_new_from_model (model);
 
   gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, FALSE, 0);
-  gtk_widget_show (menubar);
+  gtk_widget_set_visible (menubar, TRUE);
 
   /* Create toolbar */
   toolbar = gtk_toolbar_new ();
@@ -1590,12 +1590,12 @@ dialog (GimpImap *imap)
 
   gtk_container_set_border_width (GTK_CONTAINER (toolbar), 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), toolbar, FALSE, FALSE, 0);
-  gtk_widget_show (toolbar);
+  gtk_widget_set_visible (toolbar, TRUE);
 
   /*  Dialog area  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* Pointer tools area */
   tools = gtk_toolbar_new ();
@@ -1615,7 +1615,7 @@ dialog (GimpImap *imap)
                                   GTK_ORIENTATION_VERTICAL);
   gtk_toolbar_set_style (GTK_TOOLBAR (tools), GTK_TOOLBAR_ICONS);
   gtk_container_set_border_width (GTK_CONTAINER (tools), 0);
-  gtk_widget_show (tools);
+  gtk_widget_set_visible (tools, TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), tools, FALSE, FALSE, 0);
 
   _preview = make_preview (imap->drawable, imap);
@@ -1646,7 +1646,7 @@ dialog (GimpImap *imap)
   _statusbar = make_statusbar (main_vbox, imap->dlg);
   statusbar_set_zoom (_statusbar, 1);
 
-  gtk_widget_show (imap->dlg);
+  gtk_widget_set_visible (imap->dlg, TRUE);
 
   _mru = mru_create ();
   init_preferences ();
@@ -1707,9 +1707,9 @@ add_tool_button (GtkWidget  *toolbar,
   GtkToolItem *tool_button;
 
   tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (GTK_WIDGET (tool_icon));
+  gtk_widget_set_visible (GTK_WIDGET (tool_icon), TRUE);
   tool_button = gtk_tool_button_new (tool_icon, label);
-  gtk_widget_show (GTK_WIDGET (tool_button));
+  gtk_widget_set_visible (GTK_WIDGET (tool_button), TRUE);
   gtk_tool_item_set_tooltip_text (tool_button, tooltip);
   gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (tool_button), action);
 
@@ -1729,13 +1729,13 @@ add_toggle_button (GtkWidget  *toolbar,
   GtkToolItem *toggle_tool_button;
 
   tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (GTK_WIDGET (tool_icon));
+  gtk_widget_set_visible (GTK_WIDGET (tool_icon), TRUE);
 
   toggle_tool_button = gtk_toggle_tool_button_new ();
   gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (toggle_tool_button),
                                    tool_icon);
   gtk_tool_button_set_label (GTK_TOOL_BUTTON (toggle_tool_button), label);
-  gtk_widget_show (GTK_WIDGET (toggle_tool_button));
+  gtk_widget_set_visible (GTK_WIDGET (toggle_tool_button), TRUE);
   gtk_tool_item_set_tooltip_text (toggle_tool_button, tooltip);
   gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (toggle_tool_button), action);
 
@@ -1754,5 +1754,5 @@ add_tool_separator (GtkWidget *toolbar,
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
   gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
   gtk_tool_item_set_expand (item, expand);
-  gtk_widget_show (GTK_WIDGET (item));
+  gtk_widget_set_visible (GTK_WIDGET (item), TRUE);
 }

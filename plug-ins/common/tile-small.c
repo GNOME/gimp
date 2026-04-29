@@ -451,20 +451,20 @@ tileit_dialog (GimpProcedure       *procedure,
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   tint.preview = gimp_preview_area_new ();
   g_object_set (tint.preview,
@@ -476,7 +476,7 @@ tileit_dialog (GimpProcedure       *procedure,
   gtk_widget_set_size_request (tint.preview, preview_width, preview_height);
   gtk_widget_set_events (GTK_WIDGET (tint.preview), PREVIEW_MASK);
   gtk_container_add (GTK_CONTAINER (frame), tint.preview);
-  gtk_widget_show (tint.preview);
+  gtk_widget_set_visible (tint.preview, TRUE);
 
   g_signal_connect_after (tint.preview, "draw",
                           G_CALLBACK (tileit_preview_draw),
@@ -489,20 +489,20 @@ tileit_dialog (GimpProcedure       *procedure,
 
   frame = gimp_frame_new (_("Flip"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Horizontal"));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (tileit_hvtoggle_update),
@@ -512,7 +512,7 @@ tileit_dialog (GimpProcedure       *procedure,
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Vertical"));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (tileit_hvtoggle_update),
@@ -522,7 +522,7 @@ tileit_dialog (GimpProcedure       *procedure,
 
   button = gtk_button_new_with_mnemonic (_("_Reset"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (tileit_reset),
@@ -533,13 +533,13 @@ tileit_dialog (GimpProcedure       *procedure,
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   toggle = gtk_radio_button_new_with_mnemonic (orientation_group,
                                                _("A_ll tiles"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_grid_attach (GTK_GRID (grid), toggle, 0, 0, 4, 1);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (ALL));
@@ -552,7 +552,7 @@ tileit_dialog (GimpProcedure       *procedure,
                                                _("Al_ternate tiles"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_grid_attach (GTK_GRID (grid), toggle, 0, 1, 4, 1);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (ALT));
@@ -565,12 +565,12 @@ tileit_dialog (GimpProcedure       *procedure,
                                                _("_Explicit tile"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_grid_attach (GTK_GRID (grid), toggle, 0, 2, 1, 2);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   label = gtk_label_new_with_mnemonic (_("Ro_w:"));
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_grid_attach (GTK_GRID (grid), label, 1, 2, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   g_object_bind_property (toggle, "active",
                           label,  "sensitive",
@@ -580,7 +580,7 @@ tileit_dialog (GimpProcedure       *procedure,
   gtk_widget_set_hexpand (spinbutton, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_grid_attach (GTK_GRID (grid), spinbutton, 2, 2, 1, 1);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (tileit_exp_update_f),
@@ -594,7 +594,7 @@ tileit_dialog (GimpProcedure       *procedure,
 
   label = gtk_label_new_with_mnemonic (_("Col_umn:"));
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
   gtk_grid_attach (GTK_GRID (grid), label, 1, 3, 1, 1);
 
   g_object_bind_property (toggle, "active",
@@ -605,7 +605,7 @@ tileit_dialog (GimpProcedure       *procedure,
   gtk_widget_set_hexpand (spinbutton, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_grid_attach (GTK_GRID (grid), spinbutton, 2, 3, 1, 1);
-  gtk_widget_show (spinbutton);
+  gtk_widget_set_visible (spinbutton, TRUE);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (tileit_exp_update_f),
@@ -626,7 +626,7 @@ tileit_dialog (GimpProcedure       *procedure,
 
   button = gtk_button_new_with_mnemonic (_("_Apply"));
   gtk_grid_attach (GTK_GRID (grid), button, 3, 2, 1, 2);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (tileit_exp_update),
@@ -646,7 +646,7 @@ tileit_dialog (GimpProcedure       *procedure,
                     G_CALLBACK (tileit_scale_update),
                     &opacity);
 
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
   gtk_widget_set_sensitive (scale, gimp_drawable_has_alpha (drawable));
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 6);
 
@@ -666,7 +666,7 @@ tileit_dialog (GimpProcedure       *procedure,
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "num-tiles-frame",
                               NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   g_object_get (config,
                 "num-tiles", &itvals.numtiles,

@@ -297,7 +297,7 @@ busy_dialog (gint         read_fd,
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 16);
   gtk_container_add (GTK_CONTAINER (content_area), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* the title label */
   label = gtk_label_new (_("Please wait for the operation to complete"));
@@ -305,13 +305,13 @@ busy_dialog (gint         read_fd,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   /* the busy box */
   box = gimp_busy_box_new (message);
   gtk_container_set_border_width (GTK_CONTAINER (box), 8);
   gtk_box_pack_start (GTK_BOX (vbox), box, TRUE, TRUE, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   gimp_window_set_transient (GTK_WINDOW (window));
   gtk_window_present (GTK_WINDOW (window));

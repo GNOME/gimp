@@ -220,15 +220,15 @@ append_page (GtkWidget *notebook, GtkWidget *page, const gchar *icon_name,
    GtkWidget *hbox, *icon, *label;
 
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
-   gtk_widget_show(hbox);
+   gtk_widget_set_visible(hbox, TRUE);
 
    icon = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
    gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
-   gtk_widget_show (icon);
+   gtk_widget_set_visible (icon, TRUE);
 
    label = gtk_label_new_with_mnemonic (label_name);
    gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-   gtk_widget_show (label);
+   gtk_widget_set_visible (label, TRUE);
 
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, hbox);
 }
@@ -247,15 +247,15 @@ create_link_tab (AreaInfoDialog_t *dialog,
    grid = gtk_grid_new ();
    gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
    gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-   gtk_widget_show (grid);
+   gtk_widget_set_visible (grid, TRUE);
 
    frame = gimp_frame_new (_("Link Type"));
    gtk_grid_attach (GTK_GRID (grid), frame, 0, 0, 2, 1);
-   gtk_widget_show (frame);
+   gtk_widget_set_visible (frame, TRUE);
 
    subgrid = gtk_grid_new ();
    gtk_container_add (GTK_CONTAINER (frame), subgrid);
-   gtk_widget_show (subgrid);
+   gtk_widget_set_visible (subgrid, TRUE);
 
    dialog->web_site = create_radio_button_in_grid (subgrid, NULL, 0, 0,
                                                    _("_Web Site"));
@@ -367,17 +367,17 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 
    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
    gtk_container_set_border_width(GTK_CONTAINER(vbox), 12);
-   gtk_widget_show(vbox);
+   gtk_widget_set_visible(vbox, TRUE);
 
    frame = gimp_frame_new(_("Dimensions"));
    gtk_box_pack_start(GTK_BOX(vbox), frame, FALSE, FALSE, 0);
-   gtk_widget_show(frame);
+   gtk_widget_set_visible(frame, TRUE);
 
    preview = gtk_check_button_new_with_mnemonic(_("Pre_view"));
    g_signal_connect(preview, "toggled",
                     G_CALLBACK (toggle_preview_cb), (gpointer) dialog);
    gtk_box_pack_start(GTK_BOX(vbox), preview, FALSE, FALSE, 0);
-   gtk_widget_show(preview);
+   gtk_widget_set_visible(preview, TRUE);
 
    dialog->infotab = obj->class->create_info_widget(frame);
 
@@ -392,13 +392,13 @@ create_java_script_tab (AreaInfoDialog_t *dialog,
    GtkWidget *vbox, *grid, *label;
 
    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
-   gtk_widget_show(vbox);
+   gtk_widget_set_visible(vbox, TRUE);
 
    grid = gtk_grid_new ();
    gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
    gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
    gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-   gtk_widget_show (grid);
+   gtk_widget_set_visible (grid, TRUE);
 
    label = create_label_in_grid (grid, 0, 0, "o_nMouseover:");
    dialog->mouse_over = create_entry_in_grid (grid, label, 1, 0);
@@ -533,7 +533,7 @@ create_edit_area_info_dialog(Object_t *obj)
    create_link_tab(data, notebook);
    create_info_tab(data, notebook);
    create_java_script_tab(data, notebook);
-   gtk_widget_show(notebook);
+   gtk_widget_set_visible(notebook, TRUE);
 
    return data;
 }

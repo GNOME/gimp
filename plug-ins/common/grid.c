@@ -885,7 +885,7 @@ dialog (GimpImage           *image,
                               "space-hbox", "offset-hbox",
                               "color-hbox", NULL);
 
-  gtk_widget_show (dlg);
+  gtk_widget_set_visible (dlg, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dlg));
 

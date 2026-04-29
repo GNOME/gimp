@@ -192,7 +192,7 @@ script_fu_interface_dialog (SFScript  *script,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /*  The argument table  */
   sf_interface->grid = gtk_grid_new ();
@@ -200,7 +200,7 @@ script_fu_interface_dialog (SFScript  *script,
   gtk_grid_set_row_spacing (GTK_GRID (sf_interface->grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (sf_interface->grid), 6);
   gtk_box_pack_start (GTK_BOX (vbox), sf_interface->grid, FALSE, FALSE, 0);
-  gtk_widget_show (sf_interface->grid);
+  gtk_widget_set_visible (sf_interface->grid, TRUE);
 
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -323,7 +323,7 @@ script_fu_interface_dialog (SFScript  *script,
 
             view = gtk_text_view_new ();
             gtk_container_add (GTK_CONTAINER (widget), view);
-            gtk_widget_show (view);
+            gtk_widget_set_visible (view, TRUE);
 
             buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
             gtk_text_view_set_editable (GTK_TEXT_VIEW (view), TRUE);
@@ -487,7 +487,7 @@ script_fu_interface_dialog (SFScript  *script,
             {
               gtk_grid_attach (GTK_GRID (sf_interface->grid),
                                widget, 0, row, 3, 1);
-              gtk_widget_show (widget);
+              gtk_widget_set_visible (widget, TRUE);
             }
 
           if (left_align)
@@ -504,7 +504,7 @@ script_fu_interface_dialog (SFScript  *script,
       HWND foreground = GetForegroundWindow ();
 #endif
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   gtk_main ();
   /* The script ran, or was canceled, and called gtk_main_quit */

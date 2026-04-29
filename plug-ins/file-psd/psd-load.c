@@ -4059,7 +4059,7 @@ load_dialog (const gchar *title,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* Duotone import notification */
   if (unsupported_features->duotone_mode)
@@ -4078,7 +4078,7 @@ load_dialog (const gchar *title,
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       g_free (label_text);
     }
@@ -4100,7 +4100,7 @@ load_dialog (const gchar *title,
       gtk_label_set_line_wrap (GTK_LABEL (title_label), TRUE);
       gtk_label_set_yalign (GTK_LABEL (title_label), 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), title_label, FALSE, FALSE, 0);
-      gtk_widget_show (title_label);
+      gtk_widget_set_visible (title_label, TRUE);
 
 #define ADD_UNSUPPORTED_MESSAGE(message, text)                                \
         {                                                                     \
@@ -4163,7 +4163,7 @@ load_dialog (const gchar *title,
                                       GTK_POLICY_NEVER,
                                       GTK_POLICY_AUTOMATIC);
       gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
-      gtk_widget_show (scrolled_window);
+      gtk_widget_set_visible (scrolled_window, TRUE);
 
       label = gtk_label_new (NULL);
       gtk_label_set_markup (GTK_LABEL (label), message);
@@ -4172,13 +4172,13 @@ load_dialog (const gchar *title,
       gtk_label_set_selectable (GTK_LABEL (label), TRUE);
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_container_add (GTK_CONTAINER (scrolled_window), label);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       g_free (title);
       g_free (message);
     }
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   /* run the dialog */
   gimp_dialog_run (GIMP_DIALOG (dialog));

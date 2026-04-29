@@ -67,7 +67,7 @@ create_placementpage (GtkNotebook *notebook)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame = gimp_int_radio_group_new (TRUE, _("Placement"),
                                     G_CALLBACK (gimp_radio_button_update),
@@ -93,7 +93,7 @@ create_placementpage (GtkNotebook *notebook)
      NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (placement_radio[pcvals.place_type]), TRUE);
@@ -102,7 +102,7 @@ create_placementpage (GtkNotebook *notebook)
   tmpw = placement_center;
 
   gtk_box_pack_start (GTK_BOX (vbox), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   gimp_help_set_help_data
     (tmpw, _("Focus the brush strokes around the center of the image"), NULL);
 
@@ -118,7 +118,7 @@ create_placementpage (GtkNotebook *notebook)
                     G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.brush_density);
   gtk_box_pack_start (GTK_BOX (vbox), brush_density_adjust, FALSE, FALSE, 6);
-  gtk_widget_show (brush_density_adjust);
+  gtk_widget_set_visible (brush_density_adjust, TRUE);
 
   gtk_notebook_append_page_menu (notebook, vbox, label, NULL);
 }

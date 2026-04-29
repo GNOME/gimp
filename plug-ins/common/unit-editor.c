@@ -244,7 +244,7 @@ on_app_activate (GApplication *gapp, gpointer user_data)
 
   button = gtk_button_new_with_mnemonic (_("_Refresh"));
   gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.refresh");
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), button);
 
   if (gimp_show_help_button ())
@@ -253,7 +253,7 @@ on_app_activate (GApplication *gapp, gpointer user_data)
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (unit_editor_help_clicked),
                                 self->window);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
       gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), button);
     }
 
@@ -261,34 +261,34 @@ on_app_activate (GApplication *gapp, gpointer user_data)
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (gtk_widget_destroy),
                             self->window);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), button);
 
   gtk_window_set_titlebar (self->window, headerbar);
-  gtk_widget_show (headerbar);
+  gtk_widget_set_visible (headerbar, TRUE);
 
   /* Content */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
   gtk_container_add (GTK_CONTAINER (self->window), vbox);
 
   button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_widget_show (button_box);
+  gtk_widget_set_visible (button_box, TRUE);
   gtk_container_add (GTK_CONTAINER (vbox), button_box);
 
   button = gtk_button_new_from_icon_name (GIMP_ICON_DOCUMENT_NEW,
                                           GTK_ICON_SIZE_BUTTON);
   gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.new-unit");
   gtk_widget_set_tooltip_text (button, _("Create a new unit from scratch"));
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   gtk_container_add (GTK_CONTAINER (button_box), button);
 
   button = gtk_button_new_from_icon_name (GIMP_ICON_OBJECT_DUPLICATE,
                                           GTK_ICON_SIZE_BUTTON);
   gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.duplicate-unit");
   gtk_widget_set_tooltip_text (button, _("Create a new unit using the currently selected unit as template"));
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   gtk_container_add (GTK_CONTAINER (button_box), button);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
@@ -299,12 +299,12 @@ on_app_activate (GApplication *gapp, gpointer user_data)
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_ALWAYS);
   gtk_container_add (GTK_CONTAINER (vbox), scrolled_win);
-  gtk_widget_show (scrolled_win);
+  gtk_widget_set_visible (scrolled_win, TRUE);
 
   gtk_widget_set_size_request (self->tv, -1, 220);
   gtk_container_add (GTK_CONTAINER (scrolled_win), self->tv);
   gtk_widget_set_vexpand (self->tv, TRUE);
-  gtk_widget_show (self->tv);
+  gtk_widget_set_visible (self->tv, TRUE);
 
   rend = gtk_cell_renderer_toggle_new ();
   col =
@@ -359,7 +359,7 @@ on_app_activate (GApplication *gapp, gpointer user_data)
                     G_CALLBACK (unit_editor_key_press_event),
                     NULL);
 
-  gtk_widget_show (GTK_WIDGET (self->window));
+  gtk_widget_set_visible (GTK_WIDGET (self->window), TRUE);
 }
 
 static gboolean
@@ -440,7 +440,7 @@ new_unit_dialog (GtkWindow *main_window,
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   entry = name_entry = gtk_entry_new ();
   if (template != gimp_unit_pixel ())
@@ -501,7 +501,7 @@ new_unit_dialog (GtkWindow *main_window,
 
   gimp_help_set_help_data (entry, gettext (columns[ABBREVIATION].help), NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   while (TRUE)
     {

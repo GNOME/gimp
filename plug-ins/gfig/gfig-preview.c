@@ -106,7 +106,7 @@ make_preview (GimpGfig *gfig)
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
                             ruler);
   gtk_grid_attach (GTK_GRID (grid), ruler, 1, 0, 1, 1);
-  gtk_widget_show (ruler);
+  gtk_widget_set_visible (ruler, TRUE);
 
   ruler = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
   gimp_ruler_set_range (GIMP_RULER (ruler), 0, preview_height, PREVIEW_SIZE);
@@ -114,10 +114,10 @@ make_preview (GimpGfig *gfig)
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
                             ruler);
   gtk_grid_attach (GTK_GRID (grid), ruler, 0, 1, 1, 1);
-  gtk_widget_show (ruler);
+  gtk_widget_set_visible (ruler, TRUE);
 
-  gtk_widget_show (frame);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (frame, TRUE);
+  gtk_widget_set_visible (grid, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -127,8 +127,8 @@ make_preview (GimpGfig *gfig)
   frame = make_pos_info ();
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
-  gtk_widget_show (vbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (vbox, TRUE);
+  gtk_widget_set_visible (hbox, TRUE);
 
   return vbox;
 }
@@ -335,8 +335,8 @@ make_pos_info (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 #endif /* 0 */
 
-  gtk_widget_show (hbox);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (hbox, TRUE);
+  gtk_widget_set_visible (frame, TRUE);
 
   return frame;
 }
@@ -367,16 +367,16 @@ gfig_pos_labels (void)
   gchar      buf[256];
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* Position labels */
   label = gtk_label_new (_("XY position:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   pos_label = gtk_label_new ("");
   gtk_box_pack_start (GTK_BOX (hbox), pos_label, FALSE, FALSE, 0);
-  gtk_widget_show (pos_label);
+  gtk_widget_set_visible (pos_label, TRUE);
 
   g_snprintf (buf, sizeof (buf), "%d, %d", 0, 0);
   gtk_label_set_text (GTK_LABEL (pos_label), buf);

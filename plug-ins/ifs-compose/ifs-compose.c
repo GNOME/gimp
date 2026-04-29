@@ -633,7 +633,7 @@ ifs_compose_trans_page (void)
   gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 12);
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /* X */
 
@@ -641,13 +641,13 @@ ifs_compose_trans_page (void)
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
                    // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   ifsD->x_pair = value_pair_create (&ifsD->current_vals.x, 0.0, 1.0, FALSE,
                                     VALUE_PAIR_DOUBLE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->x_pair->spin, 1, 0, 1, 1);
                    // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->x_pair->spin);
+  gtk_widget_set_visible (ifsD->x_pair->spin, TRUE);
 
   /* Y */
 
@@ -655,13 +655,13 @@ ifs_compose_trans_page (void)
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   ifsD->y_pair = value_pair_create (&ifsD->current_vals.y, 0.0, 1.0, FALSE,
                                     VALUE_PAIR_DOUBLE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->y_pair->spin, 1, 1, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->y_pair->spin);
+  gtk_widget_set_visible (ifsD->y_pair->spin, TRUE);
 
   /* Scale */
 
@@ -669,13 +669,13 @@ ifs_compose_trans_page (void)
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   ifsD->scale_pair = value_pair_create (&ifsD->current_vals.scale, 0.0, 1.0,
                                         FALSE, VALUE_PAIR_DOUBLE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->scale_pair->spin, 3, 0, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->scale_pair->spin);
+  gtk_widget_set_visible (ifsD->scale_pair->spin, TRUE);
 
   /* Angle */
 
@@ -683,13 +683,13 @@ ifs_compose_trans_page (void)
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 2, 1, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   ifsD->angle_pair = value_pair_create (&ifsD->current_vals.theta, -180, 180,
                                         FALSE, VALUE_PAIR_DOUBLE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->angle_pair->spin, 3, 1, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->angle_pair->spin);
+  gtk_widget_set_visible (ifsD->angle_pair->spin, TRUE);
 
   /* Asym */
 
@@ -697,13 +697,13 @@ ifs_compose_trans_page (void)
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 4, 0, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   ifsD->asym_pair = value_pair_create (&ifsD->current_vals.asym, 0.10, 10.0,
                                        FALSE, VALUE_PAIR_DOUBLE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->asym_pair->spin, 5, 0, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->asym_pair->spin);
+  gtk_widget_set_visible (ifsD->asym_pair->spin, TRUE);
 
   /* Shear */
 
@@ -711,13 +711,13 @@ ifs_compose_trans_page (void)
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 4, 1, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   ifsD->shear_pair = value_pair_create (&ifsD->current_vals.shear, -10.0, 10.0,
                                         FALSE, VALUE_PAIR_DOUBLE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->shear_pair->spin, 5, 1, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->shear_pair->spin);
+  gtk_widget_set_visible (ifsD->shear_pair->spin, TRUE);
 
   /* Flip */
 
@@ -727,7 +727,7 @@ ifs_compose_trans_page (void)
   g_signal_connect (ifsD->flip_check_button, "toggled",
                     G_CALLBACK (flip_check_button_callback),
                     NULL);
-  gtk_widget_show (ifsD->flip_check_button);
+  gtk_widget_set_visible (ifsD->flip_check_button, TRUE);
 
   return vbox;
 }
@@ -748,7 +748,7 @@ ifs_compose_color_page (void)
   gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   /* Simple color control section */
 
@@ -759,43 +759,43 @@ ifs_compose_color_page (void)
   g_signal_connect (ifsD->simple_button, "toggled",
                     G_CALLBACK (simple_color_toggled),
                     NULL);
-  gtk_widget_show (ifsD->simple_button);
+  gtk_widget_set_visible (ifsD->simple_button, TRUE);
 
   ifsD->target_cmap = color_map_create (_("IFS Fractal: Target"), NULL,
                                         ifsD->current_vals.target_color, TRUE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->target_cmap->hbox, 1, 0, 1, 2);
                     // GTK_FILL, 0, 0, 0);
-  gtk_widget_show (ifsD->target_cmap->hbox);
+  gtk_widget_set_visible (ifsD->target_cmap->hbox, TRUE);
 
   label = gtk_label_new (_("Scale hue by:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   ifsD->hue_scale_pair = value_pair_create (&ifsD->current_vals.hue_scale,
                                             0.0, 1.0, TRUE, VALUE_PAIR_DOUBLE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->hue_scale_pair->scale, 3, 0, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->hue_scale_pair->scale);
+  gtk_widget_set_visible (ifsD->hue_scale_pair->scale, TRUE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->hue_scale_pair->spin, 4, 0, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->hue_scale_pair->spin);
+  gtk_widget_set_visible (ifsD->hue_scale_pair->spin, TRUE);
 
   label = gtk_label_new (_("Scale value by:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 2, 1, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   ifsD->value_scale_pair = value_pair_create (&ifsD->current_vals.value_scale,
                                               0.0, 1.0, TRUE, VALUE_PAIR_DOUBLE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->value_scale_pair->scale, 3, 1, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->value_scale_pair->scale);
+  gtk_widget_set_visible (ifsD->value_scale_pair->scale, TRUE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->value_scale_pair->spin, 4, 1, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->value_scale_pair->spin);
+  gtk_widget_set_visible (ifsD->value_scale_pair->spin, TRUE);
 
   /* Full color control section */
 
@@ -803,14 +803,14 @@ ifs_compose_color_page (void)
   gtk_grid_attach (GTK_GRID (grid), ifsD->full_button, 0, 2, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (ifsD->full_button));
-  gtk_widget_show (ifsD->full_button);
+  gtk_widget_set_visible (ifsD->full_button, TRUE);
 
   color = gegl_color_new ("red");
   ifsD->red_cmap = color_map_create (_("IFS Fractal: Red"), color,
                                      ifsD->current_vals.red_color, FALSE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->red_cmap->hbox, 1, 2, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->red_cmap->hbox);
+  gtk_widget_set_visible (ifsD->red_cmap->hbox, TRUE);
   g_object_unref (color);
 
   color = gegl_color_new ("green");
@@ -818,7 +818,7 @@ ifs_compose_color_page (void)
                                        ifsD->current_vals.green_color, FALSE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->green_cmap->hbox, 2, 2, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->green_cmap->hbox);
+  gtk_widget_set_visible (ifsD->green_cmap->hbox, TRUE);
   g_object_unref (color);
 
   color = gegl_color_new ("blue");
@@ -826,7 +826,7 @@ ifs_compose_color_page (void)
                                       ifsD->current_vals.blue_color, FALSE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->blue_cmap->hbox, 3, 2, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->blue_cmap->hbox);
+  gtk_widget_set_visible (ifsD->blue_cmap->hbox, TRUE);
   g_object_unref (color);
 
   color = gegl_color_new ("black");
@@ -834,7 +834,7 @@ ifs_compose_color_page (void)
                                        ifsD->current_vals.black_color, FALSE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->black_cmap->hbox, 4, 2, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->black_cmap->hbox);
+  gtk_widget_set_visible (ifsD->black_cmap->hbox, TRUE);
   g_object_unref (color);
 
   return vbox;
@@ -969,7 +969,7 @@ ifs_compose_dialog (GimpIfs      *ifs,
   add_tool_button (toolbar, "app.options", GIMP_ICON_PREFERENCES_SYSTEM,
                    NULL, _("Render Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), toolbar, FALSE, FALSE, 0);
-  gtk_widget_show (toolbar);
+  gtk_widget_set_visible (toolbar, TRUE);
 
   design_area_create (ifs, ifs->dialog, design_width, design_height);
 
@@ -984,10 +984,10 @@ ifs_compose_dialog (GimpIfs      *ifs,
                                        0);
   gtk_frame_set_shadow_type (GTK_FRAME (aspect_frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), aspect_frame, TRUE, TRUE, 0);
-  gtk_widget_show (aspect_frame);
+  gtk_widget_set_visible (aspect_frame, TRUE);
 
   gtk_container_add (GTK_CONTAINER (aspect_frame), ifsDesign->area);
-  gtk_widget_show (ifsDesign->area);
+  gtk_widget_set_visible (ifsDesign->area, TRUE);
 
   /*  The Preview  */
 
@@ -1003,11 +1003,11 @@ ifs_compose_dialog (GimpIfs      *ifs,
                                ifsD->preview_width,
                                ifsD->preview_height);
   gtk_container_add (GTK_CONTAINER (aspect_frame), ifsD->preview);
-  gtk_widget_show (ifsD->preview);
+  gtk_widget_set_visible (ifsD->preview, TRUE);
 
-  gtk_widget_show (aspect_frame);
+  gtk_widget_set_visible (aspect_frame, TRUE);
 
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* The current transformation frame */
 
@@ -1023,19 +1023,19 @@ ifs_compose_dialog (GimpIfs      *ifs,
   notebook = gtk_notebook_new ();
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
   gtk_box_pack_start (GTK_BOX (vbox), notebook, FALSE, FALSE, 0);
-  gtk_widget_show (notebook);
+  gtk_widget_set_visible (notebook, TRUE);
 
   page = ifs_compose_trans_page ();
   label = gtk_label_new (_("Spatial Transformation"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.5);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
-  gtk_widget_show (page);
+  gtk_widget_set_visible (page, TRUE);
 
   page = ifs_compose_color_page ();
   label = gtk_label_new (_("Color Transformation"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.5);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
-  gtk_widget_show (page);
+  gtk_widget_set_visible (page, TRUE);
 
   /* The probability entry */
 
@@ -1045,20 +1045,20 @@ ifs_compose_dialog (GimpIfs      *ifs,
   label = gtk_label_new (_("Relative probability:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   ifsD->prob_pair = value_pair_create (&ifsD->current_vals.prob, 0.0, 5.0, TRUE,
                                        VALUE_PAIR_DOUBLE);
   gtk_box_pack_start (GTK_BOX (hbox), ifsD->prob_pair->scale, TRUE, TRUE, 0);
-  gtk_widget_show (ifsD->prob_pair->scale);
+  gtk_widget_set_visible (ifsD->prob_pair->scale, TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), ifsD->prob_pair->spin, FALSE, TRUE, 0);
-  gtk_widget_show (ifsD->prob_pair->spin);
+  gtk_widget_set_visible (ifsD->prob_pair->spin, TRUE);
 
-  gtk_widget_show (hbox);
-  gtk_widget_show (vbox);
-  gtk_widget_show (ifsD->current_frame);
+  gtk_widget_set_visible (hbox, TRUE);
+  gtk_widget_set_visible (vbox, TRUE);
+  gtk_widget_set_visible (ifsD->current_frame, TRUE);
 
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   if (ifsvals.num_elements == 0)
     {
@@ -1129,7 +1129,7 @@ ifs_compose_dialog (GimpIfs      *ifs,
       ifsD->selected_orig = g_new (AffElement, ifsvals.num_elements);
     }
 
-  gtk_widget_show (GTK_WIDGET (ifs->dialog));
+  gtk_widget_set_visible (GTK_WIDGET (ifs->dialog), TRUE);
 
   ifs_compose_preview ();
 
@@ -1226,26 +1226,26 @@ ifs_options_dialog (void)
       gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (ifsOptD->dialog))),
                           grid, FALSE, FALSE, 0);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       label = gtk_label_new (_("Max. memory:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
                         // GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       ifsOptD->memory_pair = value_pair_create (&ifsvals.max_memory,
                                                 1, 1000000, FALSE,
                                                 VALUE_PAIR_INT);
       gtk_grid_attach (GTK_GRID (grid), ifsOptD->memory_pair->spin, 1, 0, 1, 1);
                         // GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (ifsOptD->memory_pair->spin);
+      gtk_widget_set_visible (ifsOptD->memory_pair->spin, TRUE);
 
       label = gtk_label_new (_("Iterations:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
                         // GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       ifsOptD->iterations_pair = value_pair_create (&ifsvals.iterations,
                                                     1, 10000000, FALSE,
@@ -1253,14 +1253,14 @@ ifs_options_dialog (void)
       gtk_grid_attach (GTK_GRID (grid), ifsOptD->iterations_pair->spin,
                        1, 1, 1, 1);
                         // GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (ifsOptD->iterations_pair->spin);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (ifsOptD->iterations_pair->spin, TRUE);
+      gtk_widget_set_visible (label, TRUE);
 
       label = gtk_label_new (_("Subdivide:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
                         // GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       ifsOptD->subdivide_pair = value_pair_create (&ifsvals.subdivide,
                                                    1, 10, FALSE,
@@ -1268,13 +1268,13 @@ ifs_options_dialog (void)
       gtk_grid_attach (GTK_GRID (grid), ifsOptD->subdivide_pair->spin,
                        1, 2, 1, 1);
                         // GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (ifsOptD->subdivide_pair->spin);
+      gtk_widget_set_visible (ifsOptD->subdivide_pair->spin, TRUE);
 
       label = gtk_label_new (_("Spot radius:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_grid_attach (GTK_GRID (grid), label, 0, 3, 1, 1);
                         // GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       ifsOptD->radius_pair = value_pair_create (&ifsvals.radius,
                                                 0, 5, TRUE,
@@ -1282,17 +1282,17 @@ ifs_options_dialog (void)
       gtk_grid_attach (GTK_GRID (grid), ifsOptD->radius_pair->scale,
                        1, 3, 1, 1);
                         // GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (ifsOptD->radius_pair->scale);
+      gtk_widget_set_visible (ifsOptD->radius_pair->scale, TRUE);
       gtk_grid_attach (GTK_GRID (grid), ifsOptD->radius_pair->spin, 2, 3, 1, 1);
                         // GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (ifsOptD->radius_pair->spin);
+      gtk_widget_set_visible (ifsOptD->radius_pair->spin, TRUE);
 
       value_pair_update (ifsOptD->iterations_pair);
       value_pair_update (ifsOptD->subdivide_pair);
       value_pair_update (ifsOptD->memory_pair);
       value_pair_update (ifsOptD->radius_pair);
 
-      gtk_widget_show (ifsOptD->dialog);
+      gtk_widget_set_visible (ifsOptD->dialog, TRUE);
     }
   else
     {
@@ -2059,7 +2059,7 @@ color_map_create (const gchar *name,
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (color_map->hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   color_map->orig_preview = gimp_color_area_new (fixed_point ? color_map->color : orig_color,
                                                  GIMP_COLOR_AREA_FLAT, 0);
@@ -2067,12 +2067,12 @@ color_map_create (const gchar *name,
   gtk_widget_set_size_request (color_map->orig_preview,
                                COLOR_SAMPLE_SIZE, COLOR_SAMPLE_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), color_map->orig_preview);
-  gtk_widget_show (color_map->orig_preview);
+  gtk_widget_set_visible (color_map->orig_preview, TRUE);
 
   arrow = gtk_image_new_from_icon_name ("pan-end-symbolic",
                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
   gtk_box_pack_start (GTK_BOX (color_map->hbox), arrow, FALSE, FALSE, 0);
-  gtk_widget_show (arrow);
+  gtk_widget_set_visible (arrow, TRUE);
 
   color_map->button = gimp_color_button_new (name,
                                              COLOR_SAMPLE_SIZE,
@@ -2081,7 +2081,7 @@ color_map_create (const gchar *name,
                                              GIMP_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (color_map->hbox), color_map->button,
                       FALSE, FALSE, 0);
-  gtk_widget_show (color_map->button);
+  gtk_widget_set_visible (color_map->button, TRUE);
 
   g_signal_connect (color_map->button, "color-changed",
                     G_CALLBACK (color_map_color_changed_cb),
@@ -2904,9 +2904,9 @@ add_tool_button (GtkWidget  *toolbar,
   GtkToolItem *tool_button;
 
   tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (GTK_WIDGET (tool_icon));
+  gtk_widget_set_visible (GTK_WIDGET (tool_icon), TRUE);
   tool_button = gtk_tool_button_new (tool_icon, label);
-  gtk_widget_show (GTK_WIDGET (tool_button));
+  gtk_widget_set_visible (GTK_WIDGET (tool_button), TRUE);
   gtk_tool_item_set_tooltip_text (tool_button, tooltip);
   gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (tool_button), action);
 
@@ -2926,13 +2926,13 @@ add_toggle_button (GtkWidget  *toolbar,
   GtkToolItem *toggle_tool_button;
 
   tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (GTK_WIDGET (tool_icon));
+  gtk_widget_set_visible (GTK_WIDGET (tool_icon), TRUE);
 
   toggle_tool_button = gtk_toggle_tool_button_new ();
   gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (toggle_tool_button),
                                    tool_icon);
   gtk_tool_button_set_label (GTK_TOOL_BUTTON (toggle_tool_button), label);
-  gtk_widget_show (GTK_WIDGET (toggle_tool_button));
+  gtk_widget_set_visible (GTK_WIDGET (toggle_tool_button), TRUE);
   gtk_tool_item_set_tooltip_text (toggle_tool_button, tooltip);
   gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (toggle_tool_button), action);
 
@@ -2951,5 +2951,5 @@ add_tool_separator (GtkWidget *toolbar,
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
   gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
   gtk_tool_item_set_expand (item, expand);
-  gtk_widget_show (GTK_WIDGET (item));
+  gtk_widget_set_visible (GTK_WIDGET (item), TRUE);
 }

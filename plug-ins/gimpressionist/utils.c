@@ -398,7 +398,7 @@ create_radio_button (GtkWidget    *box,
   buttons_array[orient_type] = tmpw =
       gtk_radio_button_new_with_label ((*radio_group), label);
   gtk_box_pack_start (GTK_BOX (box), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (callback), GINT_TO_POINTER (orient_type));

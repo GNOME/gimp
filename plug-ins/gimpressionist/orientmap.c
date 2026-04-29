@@ -515,7 +515,7 @@ create_orientmap_dialog (GtkWidget *parent)
     {
       update_vector_prev ();
       update_orient_map_preview_prev ();
-      gtk_widget_show (orient_map_window);
+      gtk_widget_set_visible (orient_map_window, TRUE);
       return;
     }
 
@@ -547,16 +547,16 @@ create_orientmap_dialog (GtkWidget *parent)
   gtk_container_set_border_width (GTK_CONTAINER (grid1), 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (orient_map_window))),
                       grid1, TRUE, TRUE, 0);
-  gtk_widget_show (grid1);
+  gtk_widget_set_visible (grid1, TRUE);
 
   frame = gtk_frame_new (_("Vectors"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
   gtk_grid_attach (GTK_GRID (grid1), frame, 0, 0, 1, 1);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   ebox = gtk_event_box_new ();
   gimp_help_set_help_data (ebox,
@@ -569,11 +569,11 @@ create_orientmap_dialog (GtkWidget *parent)
   tmpw = vector_preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (tmpw, OMWIDTH, OMHEIGHT);
   gtk_container_add (GTK_CONTAINER (ebox), tmpw);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   gtk_widget_add_events (ebox, GDK_BUTTON_PRESS_MASK);
   g_signal_connect (ebox, "button-press-event",
                    G_CALLBACK (map_click_callback), NULL);
-  gtk_widget_show (ebox);
+  gtk_widget_set_visible (ebox, TRUE);
 
   vector_preview_brightness_adjust =
     gtk_adjustment_new (50.0, 0.0, 100.0, 1.0, 1.0, 1.0);
@@ -581,7 +581,7 @@ create_orientmap_dialog (GtkWidget *parent)
                         vector_preview_brightness_adjust);
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), tmpw, FALSE, FALSE,0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (vector_preview_brightness_adjust, "value-changed",
                     G_CALLBACK (update_vector_prev), NULL);
   gimp_help_set_help_data (tmpw, _("Adjust the preview's brightness"), NULL);
@@ -589,51 +589,51 @@ create_orientmap_dialog (GtkWidget *parent)
   tmpw2 = tmpw = gtk_frame_new (_("Preview"));
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_grid_attach (GTK_GRID (grid1), tmpw, 1, 0, 1, 1);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   tmpw = orient_map_preview_prev = gimp_preview_area_new ();
   gtk_widget_set_size_request (tmpw, OMWIDTH, OMHEIGHT);
   gtk_container_add (GTK_CONTAINER (tmpw2), tmpw);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   hbox = tmpw = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_grid_attach (GTK_GRID (grid1), tmpw, 0, 1, 1, 1);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   prev_button = tmpw = gtk_button_new_with_mnemonic ("_<<");
   gtk_box_pack_start (GTK_BOX (hbox), tmpw, FALSE, TRUE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (prev_click_callback), NULL);
   gimp_help_set_help_data (tmpw, _("Select previous vector"), NULL);
 
   next_button = tmpw = gtk_button_new_with_mnemonic ("_>>");
   gtk_box_pack_start (GTK_BOX (hbox),tmpw,FALSE,TRUE,0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (next_click_callback), NULL);
   gimp_help_set_help_data (tmpw, _("Select next vector"), NULL);
 
   add_button = tmpw = gtk_button_new_with_mnemonic ( _("A_dd"));
   gtk_box_pack_start (GTK_BOX (hbox), tmpw, FALSE, TRUE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (add_click_callback), NULL);
   gimp_help_set_help_data (tmpw, _("Add new vector"), NULL);
 
   kill_button = tmpw = gtk_button_new_with_mnemonic ( _("_Delete"));
   gtk_box_pack_start (GTK_BOX (hbox), tmpw, FALSE, TRUE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (delete_click_callback), NULL);
   gimp_help_set_help_data (tmpw, _("Delete selected vector"), NULL);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_set_spacing (GTK_BOX (hbox), 12);
   gtk_grid_attach (GTK_GRID (grid1), hbox, 0, 2, 2, 1);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame = gimp_int_radio_group_new (TRUE, _("Type"),
                                     G_CALLBACK (vector_type_click_callback),
@@ -646,11 +646,11 @@ create_orientmap_dialog (GtkWidget *parent)
 
                                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   orient_voronoi = tmpw = gtk_check_button_new_with_mnemonic ( _("_Voronoi"));
   gtk_box_pack_start (GTK_BOX (vbox), tmpw, TRUE, TRUE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
                                 pcvals.orient_voronoi);
   g_signal_connect (tmpw, "clicked",
@@ -662,7 +662,7 @@ create_orientmap_dialog (GtkWidget *parent)
   grid2 = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid2), 4);
   gtk_box_pack_start (GTK_BOX (hbox), grid2, TRUE, TRUE, 0);
-  gtk_widget_show (grid2);
+  gtk_widget_set_visible (grid2, TRUE);
 
   angle_adjust =
     gimp_scale_entry_new (_("A_ngle:"), 0.0, 0.0, 360.0, 1);
@@ -672,7 +672,7 @@ create_orientmap_dialog (GtkWidget *parent)
   g_signal_connect (angle_adjust, "value-changed",
                     G_CALLBACK (angle_adjust_move_callback), NULL);
   gtk_grid_attach (GTK_GRID (grid2), angle_adjust, 0, 0, 3, 1);
-  gtk_widget_show (angle_adjust);
+  gtk_widget_set_visible (angle_adjust, TRUE);
 
   angle_offset_adjust =
     gimp_scale_entry_new (_("Ang_le offset:"), 0.0, 0.0, 360.0, 1);
@@ -682,7 +682,7 @@ create_orientmap_dialog (GtkWidget *parent)
   g_signal_connect (angle_offset_adjust, "value-changed",
                     G_CALLBACK (angle_offset_adjust_move_callback), NULL);
   gtk_grid_attach (GTK_GRID (grid2), angle_offset_adjust, 0, 1, 3, 1);
-  gtk_widget_show (angle_offset_adjust);
+  gtk_widget_set_visible (angle_offset_adjust, TRUE);
 
   strength_adjust =
     gimp_scale_entry_new (_("_Strength:"), 1.0, 0.1, 5.0, 1);
@@ -693,7 +693,7 @@ create_orientmap_dialog (GtkWidget *parent)
   g_signal_connect (strength_adjust, "value-changed",
                     G_CALLBACK (strength_adjust_move_callback), NULL);
   gtk_grid_attach (GTK_GRID (grid2), strength_adjust, 0, 2, 3, 1);
-  gtk_widget_show (strength_adjust);
+  gtk_widget_set_visible (strength_adjust, TRUE);
 
   orient_map_str_exp_adjust =
     gimp_scale_entry_new (_("S_trength exp.:"), 1.0, 0.1, 10.9, 1);
@@ -704,9 +704,9 @@ create_orientmap_dialog (GtkWidget *parent)
   g_signal_connect (orient_map_str_exp_adjust, "value-changed",
                     G_CALLBACK (strength_exponent_adjust_move_callback), NULL);
   gtk_grid_attach (GTK_GRID (grid2), orient_map_str_exp_adjust, 0, 3, 3, 1);
-  gtk_widget_show (orient_map_str_exp_adjust);
+  gtk_widget_set_visible (orient_map_str_exp_adjust, TRUE);
 
-  gtk_widget_show (orient_map_window);
+  gtk_widget_set_visible (orient_map_window, TRUE);
 
   update_vector_prev ();
   update_orient_map_preview_prev ();

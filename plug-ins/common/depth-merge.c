@@ -626,7 +626,7 @@ DepthMerge_dialog (Merge               *merge,
                                merge->previewHeight);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       merge->preview, TRUE, TRUE, 0);
-  gtk_widget_show (merge->preview);
+  gtk_widget_set_visible (merge->preview, TRUE);
 
   g_signal_connect (config, "notify",
                     G_CALLBACK (merge_preview_config_notify),
@@ -745,7 +745,7 @@ DepthMerge_updatePreview (Merge               *dm,
                           GIMP_RGBA_IMAGE,
                           resultRGBA,
                           dm->previewWidth * 4);
-  gtk_widget_show (dm->preview);
+  gtk_widget_set_visible (dm->preview, TRUE);
   g_free (resultRGBA);
 }
 

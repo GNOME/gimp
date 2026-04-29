@@ -2661,25 +2661,25 @@ makewindow (void)
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (window))),
                       main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_hbox);
+  gtk_widget_set_visible (main_hbox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   drawarea = gtk_drawing_area_new ();
   gtk_container_add (GTK_CONTAINER (frame), drawarea);
   gtk_widget_set_size_request (drawarea, PREVIEWSIZE, PREVIEWSIZE);
-  gtk_widget_show (drawarea);
+  gtk_widget_set_visible (drawarea, TRUE);
 
   g_signal_connect (drawarea, "draw",
                     G_CALLBACK (draw), NULL);
@@ -2687,11 +2687,11 @@ makewindow (void)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("_Open"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (loadpreset),
@@ -2699,7 +2699,7 @@ makewindow (void)
 
   button = gtk_button_new_with_mnemonic (_("_Save"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (savepreset),
@@ -2707,7 +2707,7 @@ makewindow (void)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_end (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   scrolled = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
@@ -2716,7 +2716,7 @@ makewindow (void)
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (vbox), scrolled, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled);
+  gtk_widget_set_visible (scrolled, TRUE);
 
   store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, G_TYPE_POINTER);
   list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
@@ -2734,7 +2734,7 @@ makewindow (void)
 
   gtk_widget_set_size_request (list, -1, 150);
   gtk_container_add (GTK_CONTAINER (scrolled), list);
-  gtk_widget_show (list);
+  gtk_widget_set_visible (list, TRUE);
 
   col = gtk_tree_view_column_new_with_attributes (_("Layers"),
                                                   gtk_cell_renderer_text_new (),
@@ -2745,43 +2745,43 @@ makewindow (void)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("_New"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (addtexture), NULL);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("D_uplicate"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (duptexture), NULL);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("_Delete"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (deltexture), NULL);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (main_hbox);
+  gtk_widget_set_visible (main_hbox, TRUE);
 
   frame = gimp_frame_new (_("Properties"));
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   typemenu = gimp_int_combo_box_new (_("Texture"), 0,
                                      _("Bump"),    1,
@@ -2823,7 +2823,7 @@ makewindow (void)
                                   COLORBUTTONWIDTH, COLORBUTTONHEIGHT,
                                   color, GIMP_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   drawcolor1 (button);
 
   g_signal_connect (button, "color-changed",
@@ -2834,7 +2834,7 @@ makewindow (void)
                                   COLORBUTTONWIDTH, COLORBUTTONHEIGHT,
                                   color, GIMP_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   drawcolor2 (button);
 
   g_signal_connect (button, "color-changed",
@@ -2847,7 +2847,7 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), scalescale, 0, 3, 3, 1);
-  gtk_widget_show (scalescale);
+  gtk_widget_set_visible (scalescale, TRUE);
 
   adjustment = gtk_adjustment_new (1.0, 0.0, 10.0, 0.1, 1.0, 0.0);
   turbulencescale = gimp_spin_scale_new (adjustment, _("Turbulence"), 1);
@@ -2855,7 +2855,7 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), turbulencescale, 0, 4, 3, 1);
-  gtk_widget_show (turbulencescale);
+  gtk_widget_set_visible (turbulencescale, TRUE);
 
   adjustment = gtk_adjustment_new (1.0, 0.0, 1.0, 0.1, 1.0, 0.0);
   amountscale = gimp_spin_scale_new (adjustment, _("Amount"), 2);
@@ -2863,7 +2863,7 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), amountscale, 0, 5, 3, 1);
-  gtk_widget_show (amountscale);
+  gtk_widget_set_visible (amountscale, TRUE);
 
   adjustment = gtk_adjustment_new (1.0, 0.0, 1.0, 0.1, 1.0, 0.0);
   expscale = gimp_spin_scale_new (adjustment, _("Exponent"), 2);
@@ -2871,15 +2871,15 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_grid_attach (GTK_GRID (grid), expscale, 0, 6, 3, 1);
-  gtk_widget_show (expscale);
+  gtk_widget_set_visible (expscale, TRUE);
 
   frame = gimp_frame_new (_("Transformations"));
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   adjustment = gtk_adjustment_new (1.0, 0.0, 10.0, 0.1, 1.0, 0.0);
   scalexscale = gimp_spin_scale_new (adjustment, _("Scale X"), 2);
@@ -2887,7 +2887,7 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), scalexscale, TRUE, TRUE, 0);
-  gtk_widget_show (scalexscale);
+  gtk_widget_set_visible (scalexscale, TRUE);
 
   adjustment = gtk_adjustment_new (1.0, 0.0, 10.0, 0.1, 1.0, 0.0);
   scaleyscale = gimp_spin_scale_new (adjustment, _("Scale Y"), 2);
@@ -2895,7 +2895,7 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), scaleyscale, TRUE, TRUE, 0);
-  gtk_widget_show (scaleyscale);
+  gtk_widget_set_visible (scaleyscale, TRUE);
 
   adjustment = gtk_adjustment_new (1.0, 0.0, 10.0, 0.1, 1.0, 0.0);
   scalezscale = gimp_spin_scale_new (adjustment, _("Scale Z"), 2);
@@ -2904,7 +2904,7 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), scalezscale, TRUE, TRUE, 0);
-  gtk_widget_show (scalezscale);
+  gtk_widget_set_visible (scalezscale, TRUE);
 
   adjustment = gtk_adjustment_new (0.0, 0.0, 360.0, 0.1, 1.0, 0.0);
   rotxscale = gimp_spin_scale_new (adjustment, _("Rotate X"), 1);
@@ -2912,7 +2912,7 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), rotxscale, TRUE, TRUE, 0);
-  gtk_widget_show (rotxscale);
+  gtk_widget_set_visible (rotxscale, TRUE);
 
   adjustment = gtk_adjustment_new (0.0, 0.0, 360.0, 0.1, 1.0, 0.0);
   rotyscale = gimp_spin_scale_new (adjustment, _("Rotate Y"), 1);
@@ -2920,7 +2920,7 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), rotyscale, TRUE, TRUE, 0);
-  gtk_widget_show (rotyscale);
+  gtk_widget_set_visible (rotyscale, TRUE);
 
   adjustment = gtk_adjustment_new (1.0, 0.0, 360.0, 0.1, 1.0, 0.0);
   rotzscale = gimp_spin_scale_new (adjustment, _("Rotate Z"), 1);
@@ -2929,7 +2929,7 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), rotzscale, TRUE, TRUE, 0);
-  gtk_widget_show (rotzscale);
+  gtk_widget_set_visible (rotzscale, TRUE);
 
   adjustment = gtk_adjustment_new (0.0, -20.0, 20.0, 0.1, 1.0, 0.0);
   posxscale = gimp_spin_scale_new (adjustment, _("Position X"), 1);
@@ -2937,7 +2937,7 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), posxscale, TRUE, TRUE, 0);
-  gtk_widget_show (posxscale);
+  gtk_widget_set_visible (posxscale, TRUE);
 
   adjustment = gtk_adjustment_new (0.0, -20.0, 20.0, 0.1, 1.0, 0.0);
   posyscale = gimp_spin_scale_new (adjustment, _("Position Y"), 1);
@@ -2945,7 +2945,7 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), posyscale, TRUE, TRUE, 0);
-  gtk_widget_show (posyscale);
+  gtk_widget_set_visible (posyscale, TRUE);
 
   adjustment = gtk_adjustment_new (0.0, -20.0, 20.0, 0.1, 1.0, 0.0);
   poszscale = gimp_spin_scale_new (adjustment, _("Position Z"), 1);
@@ -2953,9 +2953,9 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), poszscale, TRUE, TRUE, 0);
-  gtk_widget_show (poszscale);
+  gtk_widget_set_visible (poszscale, TRUE);
 
-  gtk_widget_show (window);
+  gtk_widget_set_visible (window, TRUE);
 
   g_object_unref (color);
 

@@ -379,7 +379,7 @@ rectangle_create_info_widget(GtkWidget *frame)
    gtk_container_add (GTK_CONTAINER (frame), grid);
    gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
    gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-   gtk_widget_show(grid);
+   gtk_widget_set_visible(grid, TRUE);
 
    label = create_label_in_grid (grid, 0, 0, _("Upper left _x:"));
    props->x = create_spin_button_in_grid (grid, label, 0, 1, 1, 0,
@@ -412,7 +412,7 @@ rectangle_create_info_widget(GtkWidget *frame)
    chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
    props->chain_button = chain_button;
    gtk_grid_attach (GTK_GRID (grid), chain_button, 2, 2, 1, 2);
-   gtk_widget_show(chain_button);
+   gtk_widget_set_visible(chain_button, TRUE);
 
    return props;
 }

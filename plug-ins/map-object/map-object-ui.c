@@ -321,14 +321,14 @@ main_dialog (GimpProcedure       *procedure,
   /* Create the Preview */
 
   preview_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_widget_show (preview_box);
+  gtk_widget_set_visible (preview_box, TRUE);
 
   /* Add preview widget and various buttons to the first part */
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (preview_box), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   gtk_widget_realize (appwin);
   previewarea = gtk_drawing_area_new ();
@@ -338,7 +338,7 @@ main_dialog (GimpProcedure       *procedure,
                                        GDK_BUTTON_PRESS_MASK |
                                        GDK_BUTTON_RELEASE_MASK));
   gtk_container_add (GTK_CONTAINER (frame), previewarea);
-  gtk_widget_show (previewarea);
+  gtk_widget_set_visible (previewarea, TRUE);
 
   g_signal_connect (previewarea, "event",
                     G_CALLBACK (preview_events),
@@ -350,7 +350,7 @@ main_dialog (GimpProcedure       *procedure,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (preview_box), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("_Preview!"));
   g_object_set (gtk_bin_get_child (GTK_BIN (button)),
@@ -358,7 +358,7 @@ main_dialog (GimpProcedure       *procedure,
                 "margin-end",   2,
                 NULL);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (preview_callback),
@@ -372,11 +372,11 @@ main_dialog (GimpProcedure       *procedure,
 
   button = gimp_zoom_button_new (model, GIMP_ZOOM_IN, GTK_ICON_SIZE_MENU);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   button = gimp_zoom_button_new (model, GIMP_ZOOM_OUT, GTK_ICON_SIZE_MENU);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (model, "zoomed",
                     G_CALLBACK (zoomed_callback),
@@ -385,7 +385,7 @@ main_dialog (GimpProcedure       *procedure,
   toggle = gtk_check_button_new_with_mnemonic (_("Show _wireframe"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mapvals.showgrid);
   gtk_box_pack_start (GTK_BOX (preview_box), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (toggle_update),
@@ -394,7 +394,7 @@ main_dialog (GimpProcedure       *procedure,
   toggle = gtk_check_button_new_with_mnemonic (_("Update preview _live"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mapvals.livepreview);
   gtk_box_pack_start (GTK_BOX (preview_box), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (toggle_update),
@@ -930,7 +930,7 @@ main_dialog (GimpProcedure       *procedure,
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (appwin), "main-hbox", NULL);
 
-  gtk_widget_show (appwin);
+  gtk_widget_set_visible (appwin, TRUE);
 
   {
     GdkCursor *cursor;

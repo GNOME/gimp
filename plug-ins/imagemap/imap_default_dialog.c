@@ -125,7 +125,7 @@ make_default_dialog (const gchar *title)
   gtk_container_set_border_width (GTK_CONTAINER (data->vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (data->dialog))),
                       data->vbox, TRUE, TRUE, 0);
-  gtk_widget_show (data->vbox);
+  gtk_widget_set_visible (data->vbox, TRUE);
 
   return data;
 }
@@ -133,7 +133,7 @@ make_default_dialog (const gchar *title)
 void
 default_dialog_show(DefaultDialog_t *dialog)
 {
-   gtk_widget_show(dialog->dialog);
+   gtk_widget_set_visible(dialog->dialog, TRUE);
 }
 
 void
@@ -166,7 +166,7 @@ default_dialog_set_label(DefaultDialog_t *dialog, const gchar *text)
    GtkWidget *label = gtk_label_new(text);
 
    gtk_box_pack_start (GTK_BOX (dialog->vbox), label, TRUE, TRUE, 0);
-   gtk_widget_show(label);
+   gtk_widget_set_visible(label, TRUE);
 }
 
 GtkWidget*
@@ -178,7 +178,7 @@ default_dialog_add_grid (DefaultDialog_t *dialog)
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
 
   gtk_box_pack_start (GTK_BOX (dialog->vbox), grid, TRUE, TRUE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   return grid;
 }

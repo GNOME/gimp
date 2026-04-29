@@ -890,7 +890,7 @@ delete_fractal_callback (GtkWidget *widget,
                                               data, NULL);
       g_free (str);
 
-      gtk_widget_show (delete_dialog);
+      gtk_widget_set_visible (delete_dialog, TRUE);
     }
 
   return FALSE;
@@ -1308,7 +1308,7 @@ add_objects_list (void)
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_set_hexpand (scrolled_win, TRUE);
@@ -1318,7 +1318,7 @@ add_objects_list (void)
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
                                        GTK_SHADOW_IN);
   gtk_grid_attach (GTK_GRID (grid), scrolled_win, 0, 0, 3, 1);
-  gtk_widget_show (scrolled_win);
+  gtk_widget_set_visible (scrolled_win, TRUE);
 
   view = gtk_tree_view_new ();
   col = gtk_tree_view_column_new ();
@@ -1335,7 +1335,7 @@ add_objects_list (void)
                     G_CALLBACK (activate_fractal_callback),
                     NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_win), view);
-  gtk_widget_show (view);
+  gtk_widget_set_visible (view, TRUE);
 
   fractalexplorer_list_load_all (fractalexplorer_path);
   list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_POINTER);
@@ -1346,7 +1346,7 @@ add_objects_list (void)
   /* Put buttons in */
   button = gtk_button_new_with_mnemonic (_("_Refresh"));
   gtk_grid_attach (GTK_GRID (grid), button, 0, 1, 1, 1);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   gimp_help_set_help_data (button,
                            _("Select folder and rescan collection"), NULL);
@@ -1357,7 +1357,7 @@ add_objects_list (void)
 
   button = gtk_button_new_with_mnemonic (_("_Apply"));
   gtk_grid_attach (GTK_GRID (grid), button, 1, 1, 1, 1);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   gimp_help_set_help_data (button,
                            _("Apply currently selected fractal"), NULL);
@@ -1368,7 +1368,7 @@ add_objects_list (void)
 
   button = gtk_button_new_with_mnemonic (_("_Delete"));
   gtk_grid_attach (GTK_GRID (grid), button, 2, 1, 1, 1);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   gimp_help_set_help_data (button,
                            _("Delete currently selected fractal"), NULL);
@@ -1418,7 +1418,7 @@ fractalexplorer_rescan_list (GtkWidget *widget,
   gtk_container_set_border_width (GTK_CONTAINER (patheditor), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
                       patheditor, TRUE, TRUE, 0);
-  gtk_widget_show (patheditor);
+  gtk_widget_set_visible (patheditor, TRUE);
 
   if (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK)
     {

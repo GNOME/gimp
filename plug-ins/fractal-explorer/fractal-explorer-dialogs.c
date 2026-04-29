@@ -614,21 +614,21 @@ explorer_dialog (GimpProcedure       *procedure,
   gtk_container_set_border_width (GTK_CONTAINER (top_hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       top_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (top_hbox);
+  gtk_widget_set_visible (top_hbox, TRUE);
 
   left_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_widget_show (left_vbox);
+  gtk_widget_set_visible (left_vbox, TRUE);
 
   /*  Preview  */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (left_vbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame = gtk_frame_new (NULL);
   gtk_widget_set_halign (frame, GTK_ALIGN_START);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   wint.preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (wint.preview, preview_width, preview_height);
@@ -655,7 +655,7 @@ explorer_dialog (GimpProcedure       *procedure,
                                         GDK_POINTER_MOTION_MASK |
                                         GDK_LEAVE_NOTIFY_MASK |
                                         GDK_ENTER_NOTIFY_MASK));
-  gtk_widget_show (wint.preview);
+  gtk_widget_set_visible (wint.preview, TRUE);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Re_altime preview"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -664,7 +664,7 @@ explorer_dialog (GimpProcedure       *procedure,
                     &wvals.alwayspreview);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 wvals.alwayspreview);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
   gimp_help_set_help_data (toggle, _("If enabled the preview will "
                                      "be redrawn automatically"), NULL);
 
@@ -673,25 +673,25 @@ explorer_dialog (GimpProcedure       *procedure,
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_redraw_callback),
                     config);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   /*  Zoom Options  */
   frame = gimp_frame_new (_("Zoom"));
   gtk_box_pack_start (GTK_BOX (left_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_set_homogeneous (GTK_BOX (bbox), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
-  gtk_widget_show (bbox);
+  gtk_widget_set_visible (bbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("Zoom _In"));
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_step_in_callback),
@@ -699,7 +699,7 @@ explorer_dialog (GimpProcedure       *procedure,
 
   button = gtk_button_new_with_mnemonic (_("Zoom _Out"));
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_step_out_callback),
@@ -708,11 +708,11 @@ explorer_dialog (GimpProcedure       *procedure,
   bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_set_homogeneous (GTK_BOX (bbox), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
-  gtk_widget_show (bbox);
+  gtk_widget_set_visible (bbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("_Undo"));
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   gimp_help_set_help_data (button, _("Undo last zoom change"), NULL);
 
@@ -722,7 +722,7 @@ explorer_dialog (GimpProcedure       *procedure,
 
   button = gtk_button_new_with_mnemonic (_("_Redo"));
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   gimp_help_set_help_data (button, _("Redo last zoom change"), NULL);
 
@@ -1026,7 +1026,7 @@ explorer_dialog (GimpProcedure       *procedure,
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "top-hbox", NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
   ready_now = TRUE;
 
   update_previews (config);
@@ -1474,7 +1474,7 @@ load_file_chooser_response (GtkNativeDialog *chooser,
       if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
         explorer_load ();
 
-      gtk_widget_show (maindlg);
+      gtk_widget_set_visible (maindlg, TRUE);
       update_previews (config);
     }
 

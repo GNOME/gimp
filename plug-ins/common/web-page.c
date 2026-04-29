@@ -359,10 +359,10 @@ webpage_capture (GimpProcedureConfig  *config,
     }
 
   window = gtk_offscreen_window_new ();
-  gtk_widget_show (window);
+  gtk_widget_set_visible (window, TRUE);
 
   view = webkit_web_view_new ();
-  gtk_widget_show (view);
+  gtk_widget_set_visible (view, TRUE);
 
   gtk_widget_set_vexpand (view, TRUE);
   gtk_widget_set_size_request (view, width, -1);

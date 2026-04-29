@@ -1136,7 +1136,7 @@ nlfilter_dialog (GimpProcedure *procedure,
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "preview", "nlfilter-vbox", NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 

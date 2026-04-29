@@ -373,7 +373,7 @@ gfig_dialog (GimpGfig *gfig)
 
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (gfig->top_level_dlg))),
                       menubar, FALSE, FALSE, 0);
-  gtk_widget_show (menubar);
+  gtk_widget_set_visible (menubar, TRUE);
 
   toolbar = gtk_toolbar_new ();
   add_toggle_button (toolbar, "app.shape::line", GFIG_ICON_LINE,
@@ -424,7 +424,7 @@ gfig_dialog (GimpGfig *gfig)
 
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (gfig->top_level_dlg))),
                       toolbar, FALSE, FALSE, 0);
-  gtk_widget_show (toolbar);
+  gtk_widget_set_visible (toolbar, TRUE);
 
   action = g_action_map_lookup_action (G_ACTION_MAP (gfig->app), "undo");
   g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
@@ -439,45 +439,45 @@ gfig_dialog (GimpGfig *gfig)
   /* Preview itself */
   gtk_box_pack_start (GTK_BOX (main_hbox), make_preview (gfig), FALSE, FALSE, 0);
 
-  gtk_widget_show (gfig_context->preview);
+  gtk_widget_set_visible (gfig_context->preview, TRUE);
 
   right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_widget_set_hexpand (right_vbox, FALSE);
   gtk_widget_set_halign (right_vbox, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (main_hbox), right_vbox, FALSE, FALSE, 0);
-  gtk_widget_show (right_vbox);
+  gtk_widget_set_visible (right_vbox, TRUE);
 
   /* Tool options notebook */
   frame = gimp_frame_new ( _("Tool Options"));
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   tool_options_notebook = gtk_notebook_new ();
   gtk_container_add (GTK_CONTAINER (frame), tool_options_notebook);
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (tool_options_notebook), FALSE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (tool_options_notebook), FALSE);
-  gtk_widget_show (tool_options_notebook);
+  gtk_widget_set_visible (tool_options_notebook, TRUE);
   create_notebook_pages (tool_options_notebook);
 
   /* Stroke frame on right side */
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   gfig_context->paint_type_toggle =
     toggle = gtk_check_button_new_with_mnemonic (_("_Stroke"));
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), selvals.painttype);
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   gtk_widget_set_sensitive (vbox, selvals.painttype);
   g_signal_connect (toggle, "toggled",
@@ -496,7 +496,7 @@ gfig_dialog (GimpGfig *gfig)
                     gfig_context->fg_color);
   gtk_box_pack_start (GTK_BOX (vbox), gfig_context->fg_color_button,
                       FALSE, FALSE, 0);
-  gtk_widget_show (gfig_context->fg_color_button);
+  gtk_widget_set_visible (gfig_context->fg_color_button, TRUE);
 
   /* brush selector in Stroke frame */
   gfig_context->brush_select
@@ -506,20 +506,20 @@ gfig_dialog (GimpGfig *gfig)
                     G_CALLBACK (gfig_brush_changed_callback), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), gfig_context->brush_select,
                       FALSE, FALSE, 0);
-  gtk_widget_show (gfig_context->brush_select);
+  gtk_widget_set_visible (gfig_context->brush_select, TRUE);
 
   /* Fill frame on right side */
   frame = gimp_frame_new (_("Fill"));
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* fill style combo box in Style frame  */
   gfig_context->fillstyle_combo = combo
@@ -535,17 +535,17 @@ gfig_dialog (GimpGfig *gfig)
                     G_CALLBACK (select_filltype_callback),
                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
+  gtk_widget_set_visible (combo, TRUE);
 
   fill_type_notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (vbox), fill_type_notebook, FALSE, FALSE, 0);
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (fill_type_notebook), FALSE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (fill_type_notebook), FALSE);
-  gtk_widget_show (fill_type_notebook);
+  gtk_widget_set_visible (fill_type_notebook, TRUE);
 
   /* An empty page for "No fill" */
   empty_label = gtk_label_new ("");
-  gtk_widget_show (empty_label);
+  gtk_widget_set_visible (empty_label, TRUE);
   gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
                             empty_label, NULL);
 
@@ -558,7 +558,7 @@ gfig_dialog (GimpGfig *gfig)
   g_signal_connect (gfig_context->bg_color_button, "color-changed",
                     G_CALLBACK (set_background_callback),
                     gfig_context->bg_color);
-  gtk_widget_show (gfig_context->bg_color_button);
+  gtk_widget_set_visible (gfig_context->bg_color_button, TRUE);
   gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
                             gfig_context->bg_color_button, NULL);
 
@@ -568,7 +568,7 @@ gfig_dialog (GimpGfig *gfig)
                                 gfig_context->default_style.pattern);
   g_signal_connect (gfig_context->pattern_select, "resource-set",
                     G_CALLBACK (gfig_pattern_changed_callback), NULL);
-  gtk_widget_show (gfig_context->pattern_select);
+  gtk_widget_set_visible (gfig_context->pattern_select, TRUE);
   gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
                             gfig_context->pattern_select, NULL);
 
@@ -578,14 +578,14 @@ gfig_dialog (GimpGfig *gfig)
                                  gfig_context->default_style.gradient);
   g_signal_connect (gfig_context->gradient_select, "resource-set",
                     G_CALLBACK (gfig_gradient_changed_callback), NULL);
-  gtk_widget_show (gfig_context->gradient_select);
+  gtk_widget_set_visible (gfig_context->gradient_select, TRUE);
   gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
                             gfig_context->gradient_select, NULL);
 
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (right_vbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* "show image" checkbutton at bottom of style frame */
   toggle = gtk_check_button_new_with_label (_("Show image"));
@@ -598,7 +598,7 @@ gfig_dialog (GimpGfig *gfig)
   g_signal_connect_swapped (toggle, "toggled",
                     G_CALLBACK (gtk_widget_queue_draw),
                     gfig_context->preview);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
 
   /* "snap to grid" checkbutton at bottom of style frame */
   toggle = gtk_check_button_new_with_label (C_("checkbutton", "Snap to grid"));
@@ -606,7 +606,7 @@ gfig_dialog (GimpGfig *gfig)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.opts.snap2grid);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
   gfig_opt_widget.snap2grid = toggle;
 
   /* "show grid" checkbutton at bottom of style frame */
@@ -618,7 +618,7 @@ gfig_dialog (GimpGfig *gfig)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (draw_grid_clear),
                     NULL);
-  gtk_widget_show (toggle);
+  gtk_widget_set_visible (toggle, TRUE);
   gfig_opt_widget.drawgrid = toggle;
 
   /* Load saved objects */
@@ -628,9 +628,9 @@ gfig_dialog (GimpGfig *gfig)
   if (gimp_context_get_brush ())
     set_context_bdesc (gimp_context_get_brush ());
 
-  gtk_widget_show (main_hbox);
+  gtk_widget_set_visible (main_hbox, TRUE);
 
-  gtk_widget_show (gfig->top_level_dlg);
+  gtk_widget_set_visible (gfig->top_level_dlg, TRUE);
 
   gfig_obj = gfig_load_from_parasite (gfig);
   if (gfig_obj)
@@ -990,7 +990,7 @@ tool_option_no_option (GtkWidget *notebook)
   GtkWidget *label;
 
   label = gtk_label_new (_("This tool has no options"));
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label, NULL);
 }
 
@@ -1202,7 +1202,7 @@ gfig_prefs_action (GSimpleAction *action,
       gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                           main_vbox, TRUE, TRUE, 0);
-      gtk_widget_show (main_vbox);
+      gtk_widget_set_visible (main_vbox, TRUE);
 
       /* Put buttons in */
       toggle = gtk_check_button_new_with_label (_("Show position"));
@@ -1215,7 +1215,7 @@ gfig_prefs_action (GSimpleAction *action,
       g_signal_connect_after (toggle, "toggled",
                               G_CALLBACK (gfig_pos_enable),
                               NULL);
-      gtk_widget_show (toggle);
+      gtk_widget_set_visible (toggle, TRUE);
 
       toggle = gtk_check_button_new_with_label (_("Show control points"));
       gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
@@ -1227,7 +1227,7 @@ gfig_prefs_action (GSimpleAction *action,
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (toggle_show_image),
                         NULL);
-      gtk_widget_show (toggle);
+      gtk_widget_set_visible (toggle, TRUE);
 
       gfig_opt_widget.showcontrol = toggle;
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.showcontrol),
@@ -1242,13 +1242,13 @@ gfig_prefs_action (GSimpleAction *action,
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gfig_paint_callback),
                         NULL);
-      gtk_widget_show (toggle);
+      gtk_widget_set_visible (toggle, TRUE);
 
       grid = gtk_grid_new ();
       gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
       gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
       gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 6);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       scale_data = gtk_adjustment_new (selvals.maxundo, MIN_UNDO, MAX_UNDO, 1.0, 10.0, 0.0);
       undo_scale = gimp_spin_scale_new (scale_data, _("Max undo"), 1);
@@ -1256,7 +1256,7 @@ gfig_prefs_action (GSimpleAction *action,
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.maxundo);
       gtk_grid_attach (GTK_GRID (grid), undo_scale, 0, 0, 3, 1);
-      gtk_widget_show (undo_scale);
+      gtk_widget_set_visible (undo_scale, TRUE);
 
       page_menu_bg = gimp_int_combo_box_new (_("Transparent"), LAYER_TRANS_BG,
                                              _("Background"),  LAYER_BG_BG,
@@ -1288,7 +1288,7 @@ gfig_prefs_action (GSimpleAction *action,
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gfig_paint_callback),
                         NULL);
-      gtk_widget_show (toggle);
+      gtk_widget_set_visible (toggle, TRUE);
 
       scale_data = gtk_adjustment_new (selopt.feather_radius, 0.0, 100.0, 1.0, 1.0, 0.0);
       scale = gimp_spin_scale_new (scale_data, _("Radius"), 1);
@@ -1300,9 +1300,9 @@ gfig_prefs_action (GSimpleAction *action,
                         G_CALLBACK (gfig_paint_delayed),
                         NULL);
       gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 2, 1);
-      gtk_widget_show (scale);
+      gtk_widget_set_visible (scale, TRUE);
 
-      gtk_widget_show (dialog);
+      gtk_widget_set_visible (dialog, TRUE);
     }
   else
     {
@@ -1347,17 +1347,17 @@ gfig_grid_action (GSimpleAction *action,
       gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                           main_vbox, TRUE, TRUE, 0);
-      gtk_widget_show (main_vbox);
+      gtk_widget_set_visible (main_vbox, TRUE);
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_widget_set_visible (hbox, TRUE);
 
       grid = gtk_grid_new ();
       gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
       gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
       gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       scale_data = gtk_adjustment_new (selvals.opts.gridspacing, MIN_GRID, MAX_GRID, 1.0, 10.0, 0.0);
       grid_scale = gimp_spin_scale_new (scale_data, _("Grid spacing"), 1);
@@ -1368,7 +1368,7 @@ gfig_grid_action (GSimpleAction *action,
                         G_CALLBACK (draw_grid_clear),
                         NULL);
       gtk_grid_attach (GTK_GRID (grid), grid_scale, 0, 0, 3, 1);
-      gtk_widget_show (grid_scale);
+      gtk_widget_set_visible (grid_scale, TRUE);
 
       gfig_opt_widget.gridspacing = grid_scale;
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridspacing),
@@ -1383,7 +1383,7 @@ gfig_grid_action (GSimpleAction *action,
                         G_CALLBACK (draw_grid_clear),
                         NULL);
       gtk_grid_attach (GTK_GRID (grid), sectors_scale, 0, 3, 3, 1);
-      gtk_widget_show (sectors_scale);
+      gtk_widget_set_visible (sectors_scale, TRUE);
 
 
       gfig_opt_widget.grid_sectors_desired = sectors_scale;
@@ -1399,7 +1399,7 @@ gfig_grid_action (GSimpleAction *action,
                         G_CALLBACK (draw_grid_clear),
                         NULL);
       gtk_grid_attach (GTK_GRID (grid), radius_scale, 0, 4, 3, 1);
-      gtk_widget_show (radius_scale);
+      gtk_widget_set_visible (radius_scale, TRUE);
 
       gfig_opt_widget.grid_radius_interval = radius_scale;
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.grid_radius_interval),
@@ -1441,7 +1441,7 @@ gfig_grid_action (GSimpleAction *action,
                                 _("Grid color:"), 0.0, 0.5,
                                 combo, 2);
 
-      gtk_widget_show (dialog);
+      gtk_widget_set_visible (dialog, TRUE);
     }
   else
     {
@@ -1662,7 +1662,7 @@ num_sides_widget (const gchar *d_title,
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   scale_data = gtk_adjustment_new (*num_sides, adj_min, adj_max, 1.0, 10.0, 0.0);
   scale = gimp_spin_scale_new (scale_data, _("Sides"), 1);
@@ -1670,7 +1670,7 @@ num_sides_widget (const gchar *d_title,
                     G_CALLBACK (gimp_int_adjustment_update),
                     num_sides);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
-  gtk_widget_show (scale);
+  gtk_widget_set_visible (scale, TRUE);
 
   if (which_way)
     {
@@ -2156,9 +2156,9 @@ add_tool_button (GtkWidget  *toolbar,
   GtkToolItem *tool_button;
 
   tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (GTK_WIDGET (tool_icon));
+  gtk_widget_set_visible (GTK_WIDGET (tool_icon), TRUE);
   tool_button = gtk_tool_button_new (tool_icon, label);
-  gtk_widget_show (GTK_WIDGET (tool_button));
+  gtk_widget_set_visible (GTK_WIDGET (tool_button), TRUE);
   gtk_tool_item_set_tooltip_text (tool_button, tooltip);
   gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (tool_button), action);
 
@@ -2178,13 +2178,13 @@ add_toggle_button (GtkWidget  *toolbar,
   GtkToolItem *toggle_tool_button;
 
   tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (GTK_WIDGET (tool_icon));
+  gtk_widget_set_visible (GTK_WIDGET (tool_icon), TRUE);
 
   toggle_tool_button = gtk_toggle_tool_button_new ();
   gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (toggle_tool_button),
                                    tool_icon);
   gtk_tool_button_set_label (GTK_TOOL_BUTTON (toggle_tool_button), label);
-  gtk_widget_show (GTK_WIDGET (toggle_tool_button));
+  gtk_widget_set_visible (GTK_WIDGET (toggle_tool_button), TRUE);
   gtk_tool_item_set_tooltip_text (toggle_tool_button, tooltip);
   gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (toggle_tool_button), action);
 
@@ -2203,5 +2203,5 @@ add_tool_separator (GtkWidget *toolbar,
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
   gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
   gtk_tool_item_set_expand (item, expand);
-  gtk_widget_show (GTK_WIDGET (item));
+  gtk_widget_set_visible (GTK_WIDGET (item), TRUE);
 }

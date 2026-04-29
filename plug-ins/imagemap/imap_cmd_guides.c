@@ -150,23 +150,23 @@ make_guides_dialog (void)
    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                    GTK_POLICY_EXTERNAL, GTK_POLICY_AUTOMATIC);
    gtk_container_add (GTK_CONTAINER (dialog->vbox), scrolled_window);
-   gtk_widget_show (scrolled_window);
+   gtk_widget_set_visible (scrolled_window, TRUE);
    gtk_widget_set_hexpand (hbox, TRUE);
    gtk_widget_set_vexpand (hbox, TRUE);
    gtk_container_add (GTK_CONTAINER (scrolled_window), hbox);
-   gtk_widget_show (hbox);
+   gtk_widget_set_visible (hbox, TRUE);
 
    data->image_dimensions = gtk_label_new ("");
    gtk_label_set_xalign (GTK_LABEL (data->image_dimensions), 0.0);
    gtk_box_pack_start (GTK_BOX (dialog->vbox),
                        data->image_dimensions, FALSE, FALSE, 0);
-   gtk_widget_show (data->image_dimensions);
+   gtk_widget_set_visible (data->image_dimensions, TRUE);
 
    data->guide_bounds = gtk_label_new ("");
    gtk_label_set_xalign (GTK_LABEL (data->guide_bounds), 0.0);
    gtk_box_pack_start (GTK_BOX (dialog->vbox),
                        data->guide_bounds, FALSE, FALSE, 0);
-   gtk_widget_show (data->guide_bounds);
+   gtk_widget_set_visible (data->guide_bounds, TRUE);
 
    grid = default_dialog_add_grid (dialog);
 
@@ -215,15 +215,15 @@ make_guides_dialog (void)
 
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
    gtk_box_pack_start (GTK_BOX (dialog->vbox), hbox, TRUE, TRUE, 0);
-   gtk_widget_show(hbox);
+   gtk_widget_set_visible(hbox, TRUE);
 
    label = gtk_label_new_with_mnemonic(_("Base _URL:"));
    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-   gtk_widget_show(label);
+   gtk_widget_set_visible(label, TRUE);
 
    data->base_url = gtk_entry_new ();
    gtk_box_pack_start (GTK_BOX (hbox), data->base_url, TRUE, TRUE, 0);
-   gtk_widget_show(data->base_url);
+   gtk_widget_set_visible(data->base_url, TRUE);
 
    gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->base_url);
 

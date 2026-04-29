@@ -111,7 +111,7 @@ create_filter_param_details (GParamSpec   *pspec,
       label = gtk_label_new ("unknown");
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
-      gtk_widget_show (label);
+      gtk_widget_set_visible (label, TRUE);
 
       return label;
     }
@@ -155,7 +155,7 @@ create_filter_param_details (GParamSpec   *pspec,
   gtk_label_set_yalign (GTK_LABEL (label), 0.0);
   gtk_size_group_add_widget (sg_label, label);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = gtk_label_new (type);
   gimp_label_set_attributes (GTK_LABEL (label), PANGO_ATTR_FAMILY, "monospace",
@@ -164,7 +164,7 @@ create_filter_param_details (GParamSpec   *pspec,
   gtk_label_set_yalign (GTK_LABEL (label), 0.0);
   gtk_size_group_add_widget (sg_type, label);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   if (g_type_is_a (gtype, G_TYPE_DOUBLE))
     {
@@ -364,7 +364,7 @@ create_filter_param_details (GParamSpec   *pspec,
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_size_group_add_widget (sg_blurb, label);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   if (is_unknown)
     {
@@ -475,11 +475,11 @@ create_filter_info_view (GimpGeglFilterInfo *filter_info)
 
       frame = gimp_frame_new (_ ("Parameters"));
       gtk_box_pack_start (GTK_BOX (view), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      gtk_widget_set_visible (frame, TRUE);
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
+      gtk_widget_set_visible (vbox, TRUE);
 
       sg_label = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
       sg_type  = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -755,7 +755,7 @@ filter_browser_run (GimpProcedure       *procedure,
   gtk_container_set_border_width (GTK_CONTAINER (browser->browser), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (browser->dialog))),
                       browser->browser, TRUE, TRUE, 0);
-  gtk_widget_show (browser->browser);
+  gtk_widget_set_visible (browser->browser, TRUE);
 
   g_signal_connect (browser->browser, "search", G_CALLBACK (filter_browser_search), browser);
   g_signal_connect_swapped (browser->browser, "stop-search",
@@ -768,7 +768,7 @@ filter_browser_run (GimpProcedure       *procedure,
                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (gimp_browser_get_left_vbox (GIMP_BROWSER (browser->browser))),
                       scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   /*
    * TODO: Extract the data preparation, so that it can run on idle and not
@@ -814,7 +814,7 @@ filter_browser_run (GimpProcedure       *procedure,
   gtk_list_box_bind_model (GTK_LIST_BOX (browser->filter_list),
                            G_LIST_MODEL (model), create_filter_list_row, NULL, NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_window), GTK_WIDGET (browser->filter_list));
-  gtk_widget_show (GTK_WIDGET (browser->filter_list));
+  gtk_widget_set_visible (GTK_WIDGET (browser->filter_list), TRUE);
 
   g_signal_connect (browser->filter_list, "row-selected",
                     G_CALLBACK (filter_list_row_selected), browser);
@@ -822,7 +822,7 @@ filter_browser_run (GimpProcedure       *procedure,
   gtk_list_box_select_row (browser->filter_list,
                            gtk_list_box_get_row_at_index (browser->filter_list, 0));
 
-  gtk_widget_show (GTK_WIDGET (browser->dialog));
+  gtk_widget_set_visible (GTK_WIDGET (browser->dialog), TRUE);
 
   main_loop = g_main_loop_new (NULL, TRUE);
   g_main_loop_run (main_loop);

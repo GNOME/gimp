@@ -326,11 +326,11 @@ make_selection (ObjectList_t *object_list,
 
   data->container = frame = gtk_frame_new(NULL);
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-  gtk_widget_show(frame);
+  gtk_widget_set_visible(frame, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_add(GTK_CONTAINER(frame), hbox);
-  gtk_widget_show(hbox);
+  gtk_widget_set_visible(hbox, TRUE);
 
   toolbar = make_selection_toolbar (imap);
   gtk_box_pack_start (GTK_BOX (hbox), toolbar, TRUE, TRUE, 0);
@@ -338,7 +338,7 @@ make_selection (ObjectList_t *object_list,
   /* Create selection */
   frame = gimp_frame_new (_("Selection"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   data->store = gtk_list_store_new (1, G_TYPE_POINTER);
   data->list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (data->store));
@@ -399,10 +399,10 @@ make_selection (ObjectList_t *object_list,
   swin = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_set_size_request (swin, 16 + 80 + 2 * 64 + 16, -1);
   gtk_container_add (GTK_CONTAINER(frame), swin);
-  gtk_widget_show (swin);
+  gtk_widget_set_visible (swin, TRUE);
 
   gtk_container_add (GTK_CONTAINER (swin), list);
-  gtk_widget_show (list);
+  gtk_widget_set_visible (list, TRUE);
 
   /* Drop support */
   gtk_drag_dest_set (list, GTK_DEST_DEFAULT_ALL, target_table, 2,

@@ -396,14 +396,14 @@ create_tab (GtkWidget *notebook, const gchar *label)
    GtkWidget *vbox;
 
    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
-   gtk_widget_show (vbox);
+   gtk_widget_set_visible (vbox, TRUE);
 
    grid = gtk_grid_new ();
    gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
    gtk_container_set_border_width (GTK_CONTAINER(grid), 12);
    gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
    gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-   gtk_widget_show (grid);
+   gtk_widget_set_visible (grid, TRUE);
 
    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                              gtk_label_new_with_mnemonic (label));
@@ -419,22 +419,22 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    GtkWidget *hbox;
 
    frame = gimp_frame_new( _("Default Map Type"));
-   gtk_widget_show(frame);
+   gtk_widget_set_visible(frame, TRUE);
    gtk_grid_attach (GTK_GRID (grid), frame, 0, 0, 2, 1);
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
-   gtk_widget_show(hbox);
+   gtk_widget_set_visible(hbox, TRUE);
    data->ncsa = gtk_radio_button_new_with_mnemonic_from_widget(NULL, "_NCSA");
    gtk_box_pack_start(GTK_BOX(hbox), data->ncsa, TRUE, TRUE, 10);
-   gtk_widget_show(data->ncsa);
+   gtk_widget_set_visible(data->ncsa, TRUE);
    data->cern = gtk_radio_button_new_with_mnemonic_from_widget(
       GTK_RADIO_BUTTON(data->ncsa), "C_ERN");
    gtk_box_pack_start(GTK_BOX(hbox), data->cern, TRUE, TRUE, 10);
-   gtk_widget_show(data->cern);
+   gtk_widget_set_visible(data->cern, TRUE);
    data->csim = gtk_radio_button_new_with_mnemonic_from_widget(
       GTK_RADIO_BUTTON(data->cern), "C_SIM");
    gtk_box_pack_start(GTK_BOX(hbox), data->csim, TRUE, TRUE, 10);
-   gtk_widget_show(data->csim);
+   gtk_widget_set_visible(data->csim, TRUE);
 
    data->prompt_for_area_info =
       create_check_button_in_grid (grid, 1, 0, _("_Prompt for area info"));
@@ -449,7 +449,7 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    data->use_doublesized =
       create_check_button_in_grid (grid, 6, 0,
                                    _("_Use double-sized grab handles"));
-   gtk_widget_show(frame);
+   gtk_widget_set_visible(frame, TRUE);
 }
 
 static void
@@ -477,7 +477,7 @@ create_color_field (PreferencesDialog_t *data, GtkWidget *grid, gint row,
                                              GIMP_COLOR_AREA_FLAT);
    gimp_color_button_set_update (GIMP_COLOR_BUTTON (area), TRUE);
    gtk_grid_attach (GTK_GRID (grid), area, col, row, 1, 1);
-   gtk_widget_show (area);
+   gtk_widget_set_visible (area, TRUE);
 
    g_object_unref (color);
 
@@ -534,7 +534,7 @@ create_preferences_dialog(void)
 #ifdef _NOT_READY_YET_
    create_contiguous_regions_tab(data, notebook);
 #endif
-   gtk_widget_show(notebook);
+   gtk_widget_set_visible(notebook, TRUE);
 
    return data;
 }

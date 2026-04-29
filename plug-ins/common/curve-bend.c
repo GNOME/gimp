@@ -1084,7 +1084,7 @@ do_dialog (GimpProcedure       *procedure,
   cd->preview_layer2 = NULL;
 
   if (! gtk_widget_get_visible (cd->shell))
-    gtk_widget_show (cd->shell);
+    gtk_widget_set_visible (cd->shell, TRUE);
 
   bender_update (cd, UP_GRAPH | UP_DRAW | UP_PREVIEW_EXPOSE);
 

@@ -838,14 +838,14 @@ metadata_editor_create_page_grid (GtkWidget   *notebook,
   GtkWidget *grid;
 
   box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 6);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (box), scrolled_win, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_win);
+  gtk_widget_set_visible (scrolled_win, TRUE);
 
   label = gtk_label_new (tab_name);
   gtk_widget_set_margin_start (label, 2);
@@ -853,17 +853,17 @@ metadata_editor_create_page_grid (GtkWidget   *notebook,
   gtk_widget_set_margin_end (label, 2);
   gtk_widget_set_margin_bottom (label, 2);
   gtk_widget_set_can_focus (label, FALSE);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), box, label);
 
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_win), viewport);
-  gtk_widget_show (viewport);
+  gtk_widget_set_visible (viewport, TRUE);
 
   box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (viewport), box);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   grid = gtk_grid_new ();
   gtk_widget_set_margin_bottom (grid, 5);
@@ -871,7 +871,7 @@ metadata_editor_create_page_grid (GtkWidget   *notebook,
   gtk_grid_set_row_spacing (GTK_GRID (grid), 3);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 30);
   gtk_box_pack_start (GTK_BOX (box), grid, FALSE, TRUE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   return grid;
 }
@@ -901,7 +901,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
           gtk_grid_attach (GTK_GRID (grid), label,
                            0, widget_info[i].index,
                            1, 1);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
         }
 
       switch (widget_info[i].widget_type)
@@ -916,7 +916,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_grid_attach (GTK_GRID (grid), entry,
                              1, widget_info[i].index,
                              1, 1);
-            gtk_widget_show (entry);
+            gtk_widget_set_visible (entry, TRUE);
             g_hash_table_insert (meta_info->widgets, widget_info[i].id,
                                  (gpointer) entry);
           }
@@ -934,14 +934,14 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                                  GTK_SHADOW_IN);
             gtk_widget_set_margin_end (scrolled_window, 5);
-            gtk_widget_show (scrolled_window);
+            gtk_widget_set_visible (scrolled_window, TRUE);
 
             textview = gtk_text_view_new();
             gtk_container_add (GTK_CONTAINER (scrolled_window), textview);
             gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (textview), GTK_WRAP_WORD);
             gtk_text_view_set_left_margin (GTK_TEXT_VIEW (textview), 6);
             gtk_text_view_set_right_margin (GTK_TEXT_VIEW (textview), 6);
-            gtk_widget_show (textview);
+            gtk_widget_set_visible (textview, TRUE);
             gtk_grid_attach (GTK_GRID (grid), scrolled_window,
                              1, widget_info[i].index,
                              1, 1);
@@ -961,7 +961,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_grid_attach (GTK_GRID (grid), combo,
                              1, widget_info[i].index,
                              1, 1);
-            gtk_widget_show (combo);
+            gtk_widget_set_visible (combo, TRUE);
             g_hash_table_insert (meta_info->widgets, widget_info[i].id,
                                  (gpointer) combo);
           }
@@ -978,12 +978,12 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_grid_attach (GTK_GRID (grid), date_box,
                              1, widget_info[i].index,
                              1, 1);
-            gtk_widget_show (date_box);
+            gtk_widget_set_visible (date_box, TRUE);
 
             date_entry = gtk_entry_new ();
             gtk_widget_set_hexpand(GTK_WIDGET (date_entry), TRUE);
             gtk_box_pack_start (GTK_BOX (date_box), date_entry, TRUE, TRUE, 0);
-            gtk_widget_show (date_entry);
+            gtk_widget_set_visible (date_entry, TRUE);
             g_hash_table_insert (meta_info->widgets, widget_info[i].id,
                                  (gpointer) date_entry);
 
@@ -994,7 +994,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_widget_set_margin_end (button, 5);
             gtk_widget_set_margin_bottom (button, 1);
             gtk_container_add (GTK_CONTAINER (date_box), button);
-            gtk_widget_show (button);
+            gtk_widget_set_visible (button, TRUE);
             g_hash_table_insert (meta_args.widgets, widget_info[i].extra_id1,
                                  (gpointer) button);
           }
@@ -1014,12 +1014,12 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_grid_attach (GTK_GRID (grid), ec_box,
                              1, widget_info[i].index,
                              1, 1);
-            gtk_widget_show (ec_box);
+            gtk_widget_set_visible (ec_box, TRUE);
 
             ec_entry = gtk_entry_new ();
             gtk_widget_set_hexpand(GTK_WIDGET (ec_entry), TRUE);
             gtk_box_pack_start (GTK_BOX (ec_box), ec_entry, TRUE, TRUE, 0);
-            gtk_widget_show (ec_entry);
+            gtk_widget_set_visible (ec_entry, TRUE);
             g_hash_table_insert (meta_info->widgets, widget_info[i].id,
                                  (gpointer) ec_entry);
 
@@ -1028,7 +1028,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_widget_set_can_focus (ec_combo, FALSE);
             g_object_set (G_OBJECT (ec_combo), "width_request", 100, NULL);
             gtk_box_pack_start (GTK_BOX (ec_box), ec_combo, FALSE, FALSE, 0);
-            gtk_widget_show (ec_combo);
+            gtk_widget_set_visible (ec_combo, TRUE);
             g_hash_table_insert (meta_info->widgets, widget_info[i].extra_id1,
                                  (gpointer) ec_combo);
           }
@@ -1044,7 +1044,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
 
             separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
             g_object_set (G_OBJECT (separator), "margin", 8, NULL);
-            gtk_widget_show (separator);
+            gtk_widget_set_visible (separator, TRUE);
             gtk_grid_attach (GTK_GRID (grid), separator,
                              0, widget_info[i].index,
                              2, 1);
@@ -1077,7 +1077,7 @@ metadata_editor_create_tree_grid (const me_column_info *tree_info,
   tree_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_widget_set_hexpand(GTK_WIDGET (tree_box), TRUE);
   gtk_widget_set_margin_end (tree_box, 5);
-  gtk_widget_show (tree_box);
+  gtk_widget_set_visible (tree_box, TRUE);
   gtk_grid_attach (GTK_GRID (grid), tree_box,
                    1, grid_row,
                    1, 1);
@@ -1086,7 +1086,7 @@ metadata_editor_create_tree_grid (const me_column_info *tree_info,
   gtk_tree_view_set_headers_clickable (GTK_TREE_VIEW (tree), FALSE);
   gtk_tree_view_set_grid_lines (GTK_TREE_VIEW (tree), GTK_TREE_VIEW_GRID_LINES_BOTH);
   gtk_box_pack_start (GTK_BOX (tree_box), tree, TRUE, TRUE, 0);
-  gtk_widget_show (tree);
+  gtk_widget_set_visible (tree, TRUE);
 
   g_hash_table_insert (meta_info->widgets, widget_info[grid_row].id, (gpointer) tree);
 
@@ -1130,20 +1130,20 @@ metadata_editor_create_tree_grid (const me_column_info *tree_info,
   gtk_widget_set_margin_top (button_box, 5);
   gtk_widget_set_margin_bottom (button_box, 5);
   gtk_box_pack_start (GTK_BOX (tree_box), button_box, FALSE, FALSE, 0);
-  gtk_widget_show (button_box);
+  gtk_widget_set_visible (button_box, TRUE);
 
   button = gtk_button_new_from_icon_name ("list-add", GTK_ICON_SIZE_BUTTON);
   gtk_widget_set_size_request (button, 24, 24);
   gtk_widget_set_margin_end (button, 5);
   gtk_container_add (GTK_CONTAINER (button_box), button);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   g_hash_table_insert (meta_args.widgets, widget_info[grid_row].extra_id1, (gpointer) button);
 
   button = gtk_button_new_from_icon_name ("list-remove", GTK_ICON_SIZE_BUTTON);
   gtk_widget_set_size_request (button, 24, 24);
   gtk_widget_set_margin_start (button, 5);
   gtk_container_add (GTK_CONTAINER (button_box), button);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   g_hash_table_insert (meta_args.widgets, widget_info[grid_row].extra_id2, (gpointer) button);
 }
 
@@ -1216,7 +1216,7 @@ metadata_editor_dialog (GimpImage            *image,
 
   gtk_container_set_border_width (GTK_CONTAINER (metadata_vbox), 12);
   gtk_box_set_spacing (GTK_BOX (metadata_vbox), 6);
-  gtk_widget_show (metadata_vbox);
+  gtk_widget_set_visible (metadata_vbox, TRUE);
 
   notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (metadata_vbox), notebook, TRUE, TRUE, 0);
@@ -1364,18 +1364,18 @@ metadata_editor_dialog (GimpImage            *image,
 
   /* Show notebook */
 
-  gtk_widget_show (notebook);
+  gtk_widget_set_visible (notebook, TRUE);
 
   /* Import / Export options box */
 
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (metadata_vbox), box, FALSE, TRUE, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   impex_combo = gtk_combo_box_text_new ();
   g_object_set (G_OBJECT (impex_combo), "width_request", 160, NULL);
   gtk_box_pack_start (GTK_BOX (box), impex_combo, FALSE, FALSE, 6);
-  gtk_widget_show (impex_combo);
+  gtk_widget_set_visible (impex_combo, TRUE);
 
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (impex_combo),
                                   _("Select:"));
@@ -1715,10 +1715,10 @@ on_date_button_clicked (GtkButton *widget,
   gtk_calendar_select_month (GTK_CALENDAR (calendar), month, year);
   gtk_calendar_select_day (GTK_CALENDAR (calendar), day);
   gtk_calendar_mark_day (GTK_CALENDAR (calendar), day);
-  gtk_widget_show (calendar);
+  gtk_widget_set_visible (calendar, TRUE);
 
   gtk_container_add (GTK_CONTAINER (calendar_vbox), calendar);
-  gtk_widget_show (calendar_vbox);
+  gtk_widget_set_visible (calendar_vbox, TRUE);
 
   if (gtk_dialog_run (GTK_DIALOG (calendar_dialog)) == GTK_RESPONSE_OK)
     {

@@ -137,11 +137,11 @@ create_paperpage (GtkNotebook *notebook)
 
   thispage = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
-  gtk_widget_show (thispage);
+  gtk_widget_set_visible (thispage, TRUE);
 
   box1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box1, TRUE, TRUE, 0);
-  gtk_widget_show (box1);
+  gtk_widget_set_visible (box1, TRUE);
 
   paper_list = view = create_one_column_list (box1, paper_select);
   paper_store_list =
@@ -150,22 +150,22 @@ create_paperpage (GtkNotebook *notebook)
 
   box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (box1), box2, FALSE, FALSE, 0);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   paper_preview = tmpw = gimp_preview_area_new ();
   gtk_widget_set_size_request (tmpw, 100, 100);
   gtk_container_add (GTK_CONTAINER (frame), tmpw);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   paper_invert = tmpw = gtk_check_button_new_with_mnemonic ( _("_Invert"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect_swapped (tmpw, "clicked",
                             G_CALLBACK (paper_select), selection);
   gimp_help_set_help_data (tmpw, _("Inverts the Papers texture"), NULL);
@@ -175,7 +175,7 @@ create_paperpage (GtkNotebook *notebook)
   paper_overlay = tmpw = gtk_check_button_new_with_mnemonic ( _("O_verlay"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   gimp_help_set_help_data
     (tmpw, _("Applies the paper as it is (without embossing it)"), NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
@@ -185,7 +185,7 @@ create_paperpage (GtkNotebook *notebook)
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (thispage), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
   paper_scale_adjust =
     gimp_scale_entry_new (_("Scale:"), pcvals.paper_scale, 3.0, 150.0, 1);
@@ -196,7 +196,7 @@ create_paperpage (GtkNotebook *notebook)
                     G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.paper_scale);
   gtk_grid_attach (GTK_GRID (grid), paper_scale_adjust, 0, 0, 3, 1);
-  gtk_widget_show (paper_scale_adjust);
+  gtk_widget_set_visible (paper_scale_adjust, TRUE);
 
   paper_relief_adjust =
     gimp_scale_entry_new (_("Relief:"), pcvals.paper_relief, 0.0, 100.0, 1);
@@ -207,7 +207,7 @@ create_paperpage (GtkNotebook *notebook)
                     G_CALLBACK (gimpressionist_scale_entry_update_double),
                     &pcvals.paper_relief);
   gtk_grid_attach (GTK_GRID (grid), paper_relief_adjust, 0, 1, 3, 1);
-  gtk_widget_show (paper_relief_adjust);
+  gtk_widget_set_visible (paper_relief_adjust, TRUE);
 
 
   if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (paper_store_list), &iter))

@@ -133,7 +133,7 @@ create_settings_dialog (void)
   gtk_container_add (GTK_CONTAINER (swin), view);
 
   frame = gimp_frame_new (_("Map File Format"));
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
   gtk_grid_attach (GTK_GRID (grid), frame, 0, 9, 2, 1);
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);

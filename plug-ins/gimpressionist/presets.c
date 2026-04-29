@@ -664,12 +664,12 @@ create_save_preset (GtkWidget *parent)
   gtk_container_set_border_width (GTK_CONTAINER (box), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (window))),
                       box, TRUE, TRUE, 0);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   label = gtk_label_new (_("Description:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   swin = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swin),
@@ -677,7 +677,7 @@ create_save_preset (GtkWidget *parent)
   gtk_box_pack_start (GTK_BOX (box), swin, TRUE, TRUE, 0);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_widget_show (swin);
+  gtk_widget_set_visible (swin, TRUE);
 
   buffer = gtk_text_buffer_new (NULL);
   g_signal_connect (buffer, "changed",
@@ -687,9 +687,9 @@ create_save_preset (GtkWidget *parent)
   text = gtk_text_view_new_with_buffer (buffer);
   gtk_widget_set_size_request (text, -1, 192);
   gtk_container_add (GTK_CONTAINER (swin), text);
-  gtk_widget_show (text);
+  gtk_widget_set_visible (text, TRUE);
 
-  gtk_widget_show (window);
+  gtk_widget_set_visible (window, TRUE);
 }
 
 static void
@@ -975,7 +975,7 @@ create_presets_list (GtkWidget *parent)
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swin),
                                        GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (parent), swin, FALSE, FALSE, 0);
-  gtk_widget_show (swin);
+  gtk_widget_set_visible (swin, TRUE);
   gtk_widget_set_size_request (swin, 200, -1);
 
   store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
@@ -983,7 +983,7 @@ create_presets_list (GtkWidget *parent)
 
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
   g_object_unref (store);
-  gtk_widget_show (view);
+  gtk_widget_set_visible (view, TRUE);
 
   renderer = gtk_cell_renderer_text_new ();
 
@@ -1019,30 +1019,30 @@ create_presetpage (GtkNotebook *notebook)
 
   thispage = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
-  gtk_widget_show (thispage);
+  gtk_widget_set_visible (thispage, TRUE);
 
   box1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box1, FALSE, FALSE, 0);
-  gtk_widget_show (box1);
+  gtk_widget_set_visible (box1, TRUE);
 
   presetnameentry = tmpw = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 0);
   gtk_widget_set_size_request (tmpw, 200, -1);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   presetsavebutton = tmpw = gtk_button_new_with_label ( _("Save Current..."));
   gtk_button_set_image (GTK_BUTTON (presetsavebutton),
                         gtk_image_new_from_icon_name (GIMP_ICON_DOCUMENT_SAVE,
                                                       GTK_ICON_SIZE_BUTTON));
   gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (create_save_preset), NULL);
   gimp_help_set_help_data
     (tmpw, _("Save the current settings to the specified file"), NULL);
 
   box1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box1, TRUE, TRUE, 0);
-  gtk_widget_show (box1);
+  gtk_widget_set_visible (box1, TRUE);
 
   presetlist = view = create_presets_list (box1);
   store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
@@ -1051,32 +1051,32 @@ create_presetpage (GtkNotebook *notebook)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (box1), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (hbox), box2, FALSE, FALSE, 0);
-  gtk_widget_show (box2);
+  gtk_widget_set_visible (box2, TRUE);
 
   tmpw = gtk_button_new_with_mnemonic (_("_Apply"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (apply_preset), selection);
   gimp_help_set_help_data
     (tmpw, _("Reads the selected Preset into memory"), NULL);
 
   tmpw = delete_button = gtk_button_new_with_mnemonic (_("_Delete"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE,0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (delete_preset), selection);
   gimp_help_set_help_data (tmpw, _("Deletes the selected Preset"), NULL);
 
   tmpw = gtk_button_new_with_mnemonic (_("_Refresh"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE,0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (preset_refresh_presets), NULL);
   gimp_help_set_help_data (tmpw, _("Reread the folder of Presets"), NULL);
 
@@ -1094,7 +1094,7 @@ create_presetpage (GtkNotebook *notebook)
   gtk_label_set_xalign (GTK_LABEL (tmpw), 0.0);
   gtk_label_set_yalign (GTK_LABEL (tmpw), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), tmpw, TRUE, TRUE, 0);
-  gtk_widget_show (tmpw);
+  gtk_widget_set_visible (tmpw, TRUE);
 
   preset_read_dir_into_list ();
 

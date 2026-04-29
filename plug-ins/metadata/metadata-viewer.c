@@ -238,7 +238,7 @@ metadata_viewer_dialog (GimpImage     *image,
   metadata_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (content_area), metadata_vbox);
   gtk_container_set_border_width (GTK_CONTAINER (metadata_vbox), 12);
-  gtk_widget_show (metadata_vbox);
+  gtk_widget_set_visible (metadata_vbox, TRUE);
 
   notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (metadata_vbox), notebook, TRUE, TRUE, 0);
@@ -258,12 +258,12 @@ metadata_viewer_dialog (GimpImage     *image,
   gtk_widget_set_vexpand (list_box, TRUE);
 
   label = gtk_label_new (_("Exif"));
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), scrolled_win, label);
   gtk_container_add (GTK_CONTAINER (scrolled_win), list_box);
-  gtk_widget_show (list_box);
-  gtk_widget_show (scrolled_win);
+  gtk_widget_set_visible (list_box, TRUE);
+  gtk_widget_set_visible (scrolled_win, TRUE);
 
   /* XMP tab */
 
@@ -280,12 +280,12 @@ metadata_viewer_dialog (GimpImage     *image,
   gtk_widget_set_vexpand (list_box, TRUE);
 
   label = gtk_label_new (_("XMP"));
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), scrolled_win, label);
   gtk_container_add (GTK_CONTAINER (scrolled_win), list_box);
-  gtk_widget_show (list_box);
-  gtk_widget_show (scrolled_win);
+  gtk_widget_set_visible (list_box, TRUE);
+  gtk_widget_set_visible (scrolled_win, TRUE);
 
   /* IPTC tab */
 
@@ -302,14 +302,14 @@ metadata_viewer_dialog (GimpImage     *image,
   gtk_widget_set_vexpand (list_box, TRUE);
 
   label = gtk_label_new (_("IPTC"));
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), scrolled_win, label);
   gtk_container_add (GTK_CONTAINER (scrolled_win), list_box);
-  gtk_widget_show (list_box);
-  gtk_widget_show (scrolled_win);
+  gtk_widget_set_visible (list_box, TRUE);
+  gtk_widget_set_visible (scrolled_win, TRUE);
 
-  gtk_widget_show (notebook);
+  gtk_widget_set_visible (notebook, TRUE);
 
   /* Add the metadata to the list models */
 
@@ -370,11 +370,11 @@ create_widget_for_tag_object (gpointer item,
   gtk_list_box_row_set_activatable (GTK_LIST_BOX_ROW (row), FALSE);
   gtk_style_context_add_class (gtk_widget_get_style_context (row),
                                "metadata-tag-row");
-  gtk_widget_show (row);
+  gtk_widget_set_visible (row, TRUE);
 
   box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 3);
   gtk_container_add (GTK_CONTAINER (row), box);
-  gtk_widget_show (box);
+  gtk_widget_set_visible (box, TRUE);
 
   tag_label = gtk_label_new (gimp_metadata_tag_object_get_tag (tag_obj));
   gtk_label_set_xalign (GTK_LABEL (tag_label), 0.0);
@@ -383,7 +383,7 @@ create_widget_for_tag_object (gpointer item,
                                "metadata-tag-label");
   gtk_style_context_add_class (gtk_widget_get_style_context (tag_label),
                                "dim-label");
-  gtk_widget_show (tag_label);
+  gtk_widget_set_visible (tag_label, TRUE);
   gtk_box_pack_start (GTK_BOX (box), tag_label, FALSE, FALSE, 0);
 
   value_label = gtk_label_new (gimp_metadata_tag_object_get_value (tag_obj));
@@ -391,7 +391,7 @@ create_widget_for_tag_object (gpointer item,
                                "metadata-value-label");
   gtk_label_set_xalign (GTK_LABEL (value_label), 0.0);
   gtk_label_set_selectable (GTK_LABEL (value_label), TRUE);
-  gtk_widget_show (value_label);
+  gtk_widget_set_visible (value_label, TRUE);
   gtk_box_pack_start (GTK_BOX (box), value_label, FALSE, FALSE, 0);
 
   return row;

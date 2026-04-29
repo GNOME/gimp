@@ -147,7 +147,7 @@ script_fu_console_run (GimpProcedure       *procedure,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (console.dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /*  A view of the total history.  */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -155,7 +155,7 @@ script_fu_console_run (GimpProcedure       *procedure,
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_ALWAYS);
   gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
+  gtk_widget_set_visible (scrolled_window, TRUE);
 
   console.history_view = gtk_text_view_new_with_buffer (console.total_history);
   /* View keeps reference.  Unref our ref so buffer is destroyed with view. */
@@ -168,17 +168,17 @@ script_fu_console_run (GimpProcedure       *procedure,
   gtk_text_view_set_right_margin (GTK_TEXT_VIEW (console.history_view), 6);
   gtk_widget_set_size_request (console.history_view, TEXT_WIDTH, TEXT_HEIGHT);
   gtk_container_add (GTK_CONTAINER (scrolled_window), console.history_view);
-  gtk_widget_show (console.history_view);
+  gtk_widget_set_visible (console.history_view, TRUE);
 
   /*  An editor of a command to be executed. */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   console.editor = console_editor_new ();
   gtk_box_pack_start (GTK_BOX (hbox), console.editor, TRUE, TRUE, 0);
   gtk_widget_grab_focus (console.editor);
-  gtk_widget_show (console.editor);
+  gtk_widget_set_visible (console.editor, TRUE);
 
   g_signal_connect (console.editor, "key-press-event",
                     G_CALLBACK (script_fu_editor_key_function),
@@ -190,13 +190,13 @@ script_fu_console_run (GimpProcedure       *procedure,
                 "margin-end",   2,
                 NULL);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (script_fu_browse_callback),
                     &console);
 
-  gtk_widget_show (console.dialog);
+  gtk_widget_set_visible (console.dialog, TRUE);
 
   /* The history model may fill the view, scroll. */
   script_fu_console_scroll_end (console.history_view);

@@ -1228,7 +1228,7 @@ bad_bounds_dialog (void)
                                               "layers to the image borders, "
                                               "or cancel this export."));
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   crop = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
@@ -1323,7 +1323,7 @@ save_dialog (GimpImage     *image,
       grid = gtk_grid_new ();
       gtk_grid_set_column_spacing (GTK_GRID (grid), 1);
       gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-      gtk_widget_show (grid);
+      gtk_widget_set_visible (grid, TRUE);
 
       widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                                  "number-of-repeats",
@@ -1396,7 +1396,7 @@ save_dialog (GimpImage     *image,
                                   "has one layer."));
       gtk_box_pack_start (GTK_BOX (vbox), hint, FALSE, FALSE, 0);
       gtk_widget_set_margin_bottom (vbox, 12);
-      gtk_widget_show (hint);
+      gtk_widget_set_visible (hint, TRUE);
       gtk_box_reorder_child (GTK_BOX (vbox), hint, 0);
 
       gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
@@ -1407,7 +1407,7 @@ save_dialog (GimpImage     *image,
                                   "no-ani-frame", NULL);
     }
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
