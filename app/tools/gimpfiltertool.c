@@ -501,7 +501,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       gtk_box_pack_end (GTK_BOX (vbox), filter_tool->controller_toggle,
                         FALSE, FALSE, 0);
       if (! filter_tool->widget)
-        gtk_widget_hide (filter_tool->controller_toggle);
+        gtk_widget_set_visible (filter_tool->controller_toggle, FALSE);
 
       /*  Fill in subclass widgets  */
       gimp_filter_tool_dialog (filter_tool);
@@ -1638,11 +1638,11 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
             ! gimp_gegl_node_is_point_operation (filter_tool->operation)    &&
             babl_format_has_alpha (format));
 
-          gtk_widget_hide (filter_tool->region_combo);
+          gtk_widget_set_visible (filter_tool->region_combo, FALSE);
         }
       else
         {
-          gtk_widget_hide (filter_tool->clip_combo);
+          gtk_widget_set_visible (filter_tool->clip_combo, FALSE);
 
           gtk_widget_set_visible (
             filter_tool->region_combo,

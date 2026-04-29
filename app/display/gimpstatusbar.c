@@ -722,7 +722,7 @@ gimp_statusbar_progress_start (GimpProgress *progress,
         }
 
       gtk_widget_show (statusbar->progressbar);
-      gtk_widget_hide (statusbar->label);
+      gtk_widget_set_visible (statusbar->label, FALSE);
 
       if (! gtk_widget_get_visible (GTK_WIDGET (statusbar)))
         {
@@ -751,21 +751,21 @@ gimp_statusbar_progress_end (GimpProgress *progress)
 
       if (statusbar->progress_shown)
         {
-          gtk_widget_hide (GTK_WIDGET (statusbar));
+          gtk_widget_set_visible (GTK_WIDGET (statusbar), FALSE);
           statusbar->progress_shown = FALSE;
         }
 
       statusbar->progress_active = FALSE;
       statusbar->progress_value  = 0.0;
 
-      gtk_widget_hide (bar);
+      gtk_widget_set_visible (bar, FALSE);
       gtk_widget_show (statusbar->label);
 
       gimp_statusbar_pop (statusbar, "progress");
 
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
       gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
-      gtk_widget_hide (statusbar->cancel_button);
+      gtk_widget_set_visible (statusbar->cancel_button, FALSE);
 
       gimp_statusbar_restore_window_title (statusbar);
     }
@@ -1351,13 +1351,13 @@ gimp_statusbar_empty (GimpStatusbar *statusbar)
 {
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
 
-  gtk_widget_hide (statusbar->cursor_label);
-  gtk_widget_hide (statusbar->unit_combo);
-  gtk_widget_hide (statusbar->scale_combo);
-  gtk_widget_hide (statusbar->rotate_widget);
-  gtk_widget_hide (statusbar->horizontal_flip_icon);
-  gtk_widget_hide (statusbar->vertical_flip_icon);
-  gtk_widget_hide (statusbar->soft_proof_button);
+  gtk_widget_set_visible (statusbar->cursor_label, FALSE);
+  gtk_widget_set_visible (statusbar->unit_combo, FALSE);
+  gtk_widget_set_visible (statusbar->scale_combo, FALSE);
+  gtk_widget_set_visible (statusbar->rotate_widget, FALSE);
+  gtk_widget_set_visible (statusbar->horizontal_flip_icon, FALSE);
+  gtk_widget_set_visible (statusbar->vertical_flip_icon, FALSE);
+  gtk_widget_set_visible (statusbar->soft_proof_button, FALSE);
 }
 
 void
@@ -1994,18 +1994,18 @@ gimp_statusbar_shell_rotated (GimpDisplayShell *shell,
     }
   else
     {
-      gtk_widget_hide (statusbar->rotate_widget);
+      gtk_widget_set_visible (statusbar->rotate_widget, FALSE);
     }
 
   if (shell->flip_horizontally)
     gtk_widget_show (statusbar->horizontal_flip_icon);
   else
-    gtk_widget_hide (statusbar->horizontal_flip_icon);
+    gtk_widget_set_visible (statusbar->horizontal_flip_icon, FALSE);
 
   if (shell->flip_vertically)
     gtk_widget_show (statusbar->vertical_flip_icon);
   else
-    gtk_widget_hide (statusbar->vertical_flip_icon);
+    gtk_widget_set_visible (statusbar->vertical_flip_icon, FALSE);
 }
 
 static void

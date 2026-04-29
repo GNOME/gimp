@@ -389,7 +389,7 @@ gimp_save_dialog_compression_toggled (GtkToggleButton *button,
    * compatibility with older version.
    */
   if (version <= 206)
-    gtk_widget_hide (dialog->compat_info);
+    gtk_widget_set_visible (dialog->compat_info, FALSE);
   else
     gtk_widget_show (dialog->compat_info);
 

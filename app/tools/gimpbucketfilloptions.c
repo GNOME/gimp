@@ -580,7 +580,7 @@ gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
   switch (options->fill_area)
     {
     case GIMP_BUCKET_FILL_LINE_ART:
-      gtk_widget_hide (options->priv->similar_color_frame);
+      gtk_widget_set_visible (options->priv->similar_color_frame, FALSE);
       gtk_widget_show (options->priv->line_art_settings);
       if ((options->fill_mode == GIMP_BUCKET_FILL_FG ||
            options->fill_mode == GIMP_BUCKET_FILL_BG) &&
@@ -631,11 +631,11 @@ gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
       break;
     case GIMP_BUCKET_FILL_SIMILAR_COLORS:
       gtk_widget_show (options->priv->similar_color_frame);
-      gtk_widget_hide (options->priv->line_art_settings);
+      gtk_widget_set_visible (options->priv->line_art_settings, FALSE);
       break;
     default:
-      gtk_widget_hide (options->priv->similar_color_frame);
-      gtk_widget_hide (options->priv->line_art_settings);
+      gtk_widget_set_visible (options->priv->similar_color_frame, FALSE);
+      gtk_widget_set_visible (options->priv->line_art_settings, FALSE);
       break;
     }
 

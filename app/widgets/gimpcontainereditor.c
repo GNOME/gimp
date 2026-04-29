@@ -559,6 +559,6 @@ gimp_container_editor_bind_to_async_set (GimpContainerEditor *editor,
     }
   else
     {
-      gtk_widget_hide (editor->priv->busy_box);
+      gtk_widget_set_visible (editor->priv->busy_box, FALSE);
     }
 }

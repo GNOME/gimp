@@ -979,7 +979,7 @@ gimp_bucket_fill_tool_line_art_computing_end (GimpBucketFillTool *tool)
 {
   GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
 
-  gtk_widget_hide (options->line_art_busy_box);
+  gtk_widget_set_visible (options->line_art_busy_box, FALSE);
 }
 
 static void

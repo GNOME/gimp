@@ -207,7 +207,7 @@ file_save_dialog_response (GtkWidget *dialog,
          */
         if  (GIMP_IS_EXPORT_DIALOG (dialog))
           {
-            gtk_widget_hide (dialog);
+            gtk_widget_set_visible (dialog, FALSE);
             progress = GIMP_PROGRESS (GIMP_EXPORT_DIALOG (dialog)->display);
           }
 

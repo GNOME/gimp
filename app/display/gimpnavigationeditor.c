@@ -596,7 +596,7 @@ gimp_navigation_editor_button_release (GtkWidget        *widget,
 {
   if (bevent->button == 1)
     {
-      gtk_widget_hide (shell->nav_popup);
+      gtk_widget_set_visible (shell->nav_popup, FALSE);
     }
 
   return FALSE;

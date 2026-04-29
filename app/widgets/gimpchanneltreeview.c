@@ -306,7 +306,7 @@ gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
     }
 
   if (! image)
-    gtk_widget_hide (channel_view->priv->component_editor);
+    gtk_widget_set_visible (channel_view->priv->component_editor, FALSE);
 
   gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (channel_view->priv->component_editor),
                                image);

@@ -708,7 +708,7 @@ gimp_text_style_show_restore_position_button (GimpTextStyleEditor *editor,
   if (show)
     gtk_widget_show (editor->restore_position_button);
   else
-    gtk_widget_hide (editor->restore_position_button);
+    gtk_widget_set_visible (editor->restore_position_button, FALSE);
 }
 
 

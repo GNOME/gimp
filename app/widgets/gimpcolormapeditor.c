@@ -164,7 +164,7 @@ gimp_colormap_editor_unmap (GtkWidget *widget)
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (widget);
 
   if (editor->color_dialog)
-    gtk_widget_hide (editor->color_dialog);
+    gtk_widget_set_visible (editor->color_dialog, FALSE);
 
   GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
@@ -377,7 +377,7 @@ gimp_colormap_editor_color_update (GimpColorDialog      *dialog,
       /* Fall through */
 
     case GIMP_COLOR_DIALOG_CANCEL:
-      gtk_widget_hide (editor->color_dialog);
+      gtk_widget_set_visible (editor->color_dialog, FALSE);
       break;
 
     case GIMP_COLOR_DIALOG_UPDATE:

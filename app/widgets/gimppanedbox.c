@@ -745,7 +745,7 @@ gimp_paned_box_add_widget (GimpPanedBox *paned_box,
   if (old_length == 0)
     {
       /* A widget is added, hide the instructions */
-      //gtk_widget_hide (paned_box->p->instructions);
+      //gtk_widget_set_visible (paned_box->p->instructions, FALSE);
       drop_hints = g_slist_remove (drop_hints, paned_box);
 
       gtk_box_pack_start (GTK_BOX (paned_box), widget, TRUE, TRUE, 0);

@@ -775,7 +775,7 @@ gimp_menu_action_notify_visible (GimpAction       *action,
           /* No need to leave empty submenus. */
           widget = gtk_menu_get_attach_widget (GTK_MENU (container));
           if (G_TYPE_FROM_INSTANCE (widget) == GTK_TYPE_MENU_ITEM)
-            gtk_widget_hide (widget);
+            gtk_widget_set_visible (widget, FALSE);
         }
     }
 
@@ -862,7 +862,7 @@ gimp_menu_update_visibility (GimpMenu *menu)
           if (prev_item == NULL ||
               GTK_IS_SEPARATOR_MENU_ITEM (prev_item))
             {
-              gtk_widget_hide (item);
+              gtk_widget_set_visible (item, FALSE);
             }
           else
             {
@@ -883,7 +883,7 @@ gimp_menu_update_visibility (GimpMenu *menu)
     }
 
   if (prev_item != NULL && GTK_IS_SEPARATOR_MENU_ITEM (prev_item))
-    gtk_widget_hide (prev_item);
+    gtk_widget_set_visible (prev_item, FALSE);
 
   g_list_free (children);
 

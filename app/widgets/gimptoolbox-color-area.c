@@ -167,7 +167,7 @@ color_area_dialog_update (GimpColorDialog      *dialog,
   switch (state)
     {
     case GIMP_COLOR_DIALOG_OK:
-      gtk_widget_hide (color_dialog);
+      gtk_widget_set_visible (color_dialog, FALSE);
       color_dialog_active = FALSE;
       /* Fallthrough */
 
@@ -199,7 +199,7 @@ color_area_dialog_update (GimpColorDialog      *dialog,
       break;
 
     case GIMP_COLOR_DIALOG_CANCEL:
-      gtk_widget_hide (color_dialog);
+      gtk_widget_set_visible (color_dialog, FALSE);
       color_dialog_active = FALSE;
       gimp_context_set_foreground (context, revert_fg);
       gimp_context_set_background (context, revert_bg);

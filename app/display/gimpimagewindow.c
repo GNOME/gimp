@@ -2584,7 +2584,7 @@ gimp_image_window_update_tab_labels (GimpImageWindow *window)
         }
       else
         {
-          gtk_widget_hide (close_button);
+          gtk_widget_set_visible (close_button, FALSE);
         }
     }
 

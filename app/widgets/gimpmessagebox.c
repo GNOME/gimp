@@ -406,7 +406,7 @@ gimp_message_box_set_label_text (GimpMessageBox *box,
     }
   else
     {
-      gtk_widget_hide (label);
+      gtk_widget_set_visible (label, FALSE);
       gtk_label_set_text (GTK_LABEL (label), NULL);
     }
 }
@@ -430,7 +430,7 @@ gimp_message_box_set_label_markup (GimpMessageBox *box,
     }
   else
     {
-      gtk_widget_hide (label);
+      gtk_widget_set_visible (label, FALSE);
       gtk_label_set_text (GTK_LABEL (label), NULL);
     }
 }

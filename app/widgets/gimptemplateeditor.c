@@ -260,7 +260,7 @@ gimp_template_editor_constructed (GObject *object)
                                        G_CALLBACK (gimp_template_editor_aspect_callback),
                                        editor, NULL,
                                        &private->aspect_button);
-  gtk_widget_hide (private->aspect_button); /* hide "square" */
+  gtk_widget_set_visible (private->aspect_button, FALSE); /* hide "square" */
 
   gtk_box_pack_start (GTK_BOX (vbox), aspect_box, FALSE, FALSE, 0);
   gtk_widget_show (aspect_box);

@@ -708,10 +708,10 @@ gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *widget,
 
   /* Setup current fixed rule entries */
 
-  gtk_widget_hide (private->fixed_width_entry);
-  gtk_widget_hide (private->fixed_height_entry);
-  gtk_widget_hide (private->fixed_aspect_hbox);
-  gtk_widget_hide (private->fixed_size_hbox);
+  gtk_widget_set_visible (private->fixed_width_entry, FALSE);
+  gtk_widget_set_visible (private->fixed_height_entry, FALSE);
+  gtk_widget_set_visible (private->fixed_aspect_hbox, FALSE);
+  gtk_widget_set_visible (private->fixed_size_hbox, FALSE);
 
   switch (private->fixed_rule)
     {
@@ -922,7 +922,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     /* hide "square" */
     children =
       gtk_container_get_children (GTK_CONTAINER (private->aspect_button_box));
-    gtk_widget_hide (children->data);
+    gtk_widget_set_visible (children->data, FALSE);
     g_list_free (children);
 
     /* Fixed width entry */
@@ -935,7 +935,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_width_entry,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_width_entry);
-    gtk_widget_hide (private->fixed_width_entry);
+    gtk_widget_set_visible (private->fixed_width_entry, FALSE);
 
     /* Fixed height entry */
     g_set_weak_pointer (&private->fixed_height_entry,
@@ -947,7 +947,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_height_entry,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_height_entry);
-    gtk_widget_hide (private->fixed_height_entry);
+    gtk_widget_set_visible (private->fixed_height_entry, FALSE);
 
     /* Fixed size entry */
     g_set_weak_pointer (&private->fixed_size_hbox,
@@ -955,7 +955,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_size_hbox,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_size_hbox);
-    gtk_widget_hide (private->fixed_size_hbox);
+    gtk_widget_set_visible (private->fixed_size_hbox, FALSE);
 
     entry = gimp_prop_number_pair_entry_new (config,
                                              "desired-fixed-size-width",
@@ -983,7 +983,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     /* hide "square" */
     children =
       gtk_container_get_children (GTK_CONTAINER (private->size_button_box));
-    gtk_widget_hide (children->data);
+    gtk_widget_set_visible (children->data, FALSE);
     g_list_free (children);
   }
 

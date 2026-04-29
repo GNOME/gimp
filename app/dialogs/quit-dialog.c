@@ -317,7 +317,7 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
 
   if (num_images == 0)
     {
-      gtk_widget_hide (private->lost_label);
+      gtk_widget_set_visible (private->lost_label, FALSE);
 
       if (private->do_quit)
         hint = g_strdup_printf (_("Press %s to quit."),

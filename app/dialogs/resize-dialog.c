@@ -742,7 +742,7 @@ template_changed (GimpContext  *context,
   private->template = template;
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (private->ppi_image), TRUE);
-  gtk_widget_hide (private->ppi_box);
+  gtk_widget_set_visible (private->ppi_box, FALSE);
 
   if (template != NULL)
     {

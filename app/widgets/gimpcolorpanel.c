@@ -317,7 +317,7 @@ gimp_color_panel_dialog_update (GimpColorDialog      *dialog,
        */
       if (color)
         gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
-      gtk_widget_hide (panel->color_dialog);
+      gtk_widget_set_visible (panel->color_dialog, FALSE);
 
       g_signal_emit (panel, color_panel_signals[RESPONSE], 0,
                      state);

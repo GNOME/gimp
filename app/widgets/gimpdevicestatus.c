@@ -572,7 +572,7 @@ gimp_device_status_notify_info (GimpDeviceInfo        *device_info,
   if (! gimp_device_info_get_device (device_info, NULL) ||
       gimp_device_info_get_mode (device_info) == GDK_MODE_DISABLED)
     {
-      gtk_widget_hide (entry->ebox);
+      gtk_widget_set_visible (entry->ebox, FALSE);
     }
   else
     {

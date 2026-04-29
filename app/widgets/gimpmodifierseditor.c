@@ -209,7 +209,7 @@ gimp_modifiers_editor_init (GimpModifiersEditor *editor)
   gtk_label_set_markup (GTK_LABEL (editor->priv->warning), text);
   g_free (text);
   gtk_grid_attach (GTK_GRID (grid), editor->priv->warning, 0, 2, 2, 1);
-  gtk_widget_hide (editor->priv->warning);
+  gtk_widget_set_visible (editor->priv->warning, FALSE);
 
   editor->priv->select_button = gtk_button_new ();
   gtk_container_add (GTK_CONTAINER (editor->priv->select_button), hbox);
@@ -435,7 +435,7 @@ gimp_modifiers_editor_button_press_event (GtkWidget      *widget,
     }
   else
     {
-      gtk_widget_hide (editor->priv->warning);
+      gtk_widget_set_visible (editor->priv->warning, FALSE);
     }
 
   if (event->button != GDK_BUTTON_PRIMARY &&

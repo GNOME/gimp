@@ -269,7 +269,7 @@ dialog_select_callback (GtkListBox    *listbox,
       for (i = 0; i < N_INFOS; i++)
         gtk_label_set_text (GTK_LABEL (private->label[i]), NULL);
       gtk_label_set_text (GTK_LABEL (private->error_label), NULL);
-      gtk_widget_hide (private->error_box);
+      gtk_widget_set_visible (private->error_box, FALSE);
       return;
     }
 

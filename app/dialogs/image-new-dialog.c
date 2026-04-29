@@ -364,7 +364,7 @@ image_new_create_image (ImageNewDialog *private)
   Gimp         *gimp     = private->context->gimp;
   GimpImage    *image;
 
-  gtk_widget_hide (private->dialog);
+  gtk_widget_set_visible (private->dialog, FALSE);
 
   image = gimp_image_new_from_template (gimp, template,
                                         gimp_get_user_context (gimp));
