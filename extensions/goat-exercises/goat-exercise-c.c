@@ -193,7 +193,7 @@ goat_run (GimpProcedure        *procedure,
       gtk_container_set_border_width (GTK_CONTAINER (box), 12);
       gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                          box);
-      gtk_widget_show (box);
+      gtk_widget_set_visible (box, TRUE);
 
       head_text = g_strdup_printf (_("This plug-in is an exercise in '%s' "
                                      "to demo plug-in creation.\n"
@@ -204,12 +204,12 @@ goat_run (GimpProcedure        *procedure,
       widget = gtk_label_new (head_text);
       g_free (head_text);
       gtk_box_pack_start (GTK_BOX (box), widget, FALSE, FALSE, 1);
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
 
       scrolled = gtk_scrolled_window_new (NULL, NULL);
       gtk_box_pack_start (GTK_BOX (box), scrolled, TRUE, TRUE, 1);
       gtk_widget_set_vexpand (GTK_WIDGET (scrolled), TRUE);
-      gtk_widget_show (scrolled);
+      gtk_widget_set_visible (scrolled, TRUE);
 
       path = g_build_filename (gimp_plug_in_directory (), "extensions",
                                "org.gimp.extension.goat-exercises", PLUG_IN_SOURCE,
@@ -234,7 +234,7 @@ goat_run (GimpProcedure        *procedure,
       g_object_unref (file);
 
       gtk_container_add (GTK_CONTAINER (scrolled), widget);
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
 
       while ((response = gimp_dialog_run (GIMP_DIALOG (dialog))))
         {

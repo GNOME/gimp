@@ -206,7 +206,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
                              PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                              -1);
   gtk_box_pack_start (GTK_BOX (module), module->name_label, FALSE, FALSE, 0);
-  gtk_widget_show (module->name_label);
+  gtk_widget_set_visible (module->name_label, TRUE);
 }
 
 static void
