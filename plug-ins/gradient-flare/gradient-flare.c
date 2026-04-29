@@ -2941,7 +2941,7 @@ dlg_make_page_settings (GFlareDialog        *dlg,
   g_signal_connect (center, "refval-changed",
                     G_CALLBACK (dlg_position_entry_callback),
                     config);
-  gtk_widget_hide (chain);
+  gtk_widget_set_visible (chain, FALSE);
   gtk_widget_show (center);
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dlg->shell),

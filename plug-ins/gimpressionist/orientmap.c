@@ -460,7 +460,7 @@ orient_map_response (GtkWidget *widget,
     };
 
   if (response_id != GTK_RESPONSE_APPLY)
-    gtk_widget_hide (widget);
+    gtk_widget_set_visible (widget, FALSE);
 }
 
 static void

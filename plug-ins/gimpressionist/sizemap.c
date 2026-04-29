@@ -328,7 +328,7 @@ smresponse (GtkWidget *widget,
     }
 
   if (response_id != RESPONSE_APPLY)
-    gtk_widget_hide (widget);
+    gtk_widget_set_visible (widget, FALSE);
 }
 
 static void
