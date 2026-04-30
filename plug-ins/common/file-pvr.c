@@ -572,9 +572,9 @@ load_image (GFile        *file,
               return image;
             }
 
-          if (! pvr_decode_compressed (layer, pixel_mode, width, height,
-                                       n_components, mipmap_offset, code_data,
-                                       data, error))
+          if (! pvr_decode_compressed (layer, pixel_mode, mipmap_width,
+                                       mipmap_height, n_components,
+                                       mipmap_offset, code_data, data, error))
             {
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Unable to decode compressed PVR texture"));
