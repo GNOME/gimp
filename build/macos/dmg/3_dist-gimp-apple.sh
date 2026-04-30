@@ -259,8 +259,8 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   #GIMP/GNOME cert
   echo "$osx_crt" | base64 -D > cert_dir/gnome.p12
   security import cert_dir/gnome.p12  -k cert_container -P "$osx_crt_pw" -T /usr/bin/codesign
-  codesign_subject=$(security find-identity -p codesigning -v | grep "Developer ID Application" | sed 's/.*"\(.*\)"[^"]*$/\1/')
-  notarization_teamid=$(echo "$codesign_subject" | sed 's/.*(\([^)]*\)).*/\1/')
+  export codesign_subject=$(security find-identity -p codesigning -v | grep "Developer ID Application" | sed 's/.*"\(.*\)"[^"]*$/\1/')
+  export notarization_teamid=$(echo "$codesign_subject" | sed 's/.*(\([^)]*\)).*/\1/')
   #Finish cert_container preparation
   security set-key-partition-list -S apple-tool:,apple:,codesign: -k "" cert_container
   identity_output=$(security find-identity cert_container 2>&1)
