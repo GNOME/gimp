@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-22 16:04+0000\n"
-"PO-Revision-Date: 2026-04-23 16:52+0200\n"
+"POT-Creation-Date: 2026-04-30 08:03+0000\n"
+"PO-Revision-Date: 2026-04-30 20:47+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -47,7 +47,7 @@ msgstr "Programtillegg-eksempel i C"
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
 #: plug-ins/gfig/gfig.c:213 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
-#: plug-ins/ifs-compose/ifs-compose.c:491 plug-ins/imagemap/imap_main.c:264
+#: plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:777
 #: plug-ins/map-object/map-object-main.c:537 plug-ins/pagecurl/pagecurl.c:297
 #, c-format
@@ -82,9 +82,9 @@ msgstr "Programtillegg-eksempel i C"
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
 #: plug-ins/gradient-flare/gradient-flare.c:3360
 #: plug-ins/gradient-flare/gradient-flare.c:3474
-#: plug-ins/ifs-compose/ifs-compose.c:913
-#: plug-ins/ifs-compose/ifs-compose.c:2607
-#: plug-ins/ifs-compose/ifs-compose.c:2631 plug-ins/imagemap/imap_browse.c:79
+#: plug-ins/ifs-compose/ifs-compose.c:914
+#: plug-ins/ifs-compose/ifs-compose.c:2614
+#: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:79
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
 #: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1189
@@ -149,7 +149,7 @@ msgstr "Programtillegg-eksempel i JavaScript (GJS)"
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3475
-#: plug-ins/ifs-compose/ifs-compose.c:914
+#: plug-ins/ifs-compose/ifs-compose.c:915
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
 msgstr "_OK"
@@ -609,13 +609,13 @@ msgstr "Persienne"
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:424
-#: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-macpaint.c:246
+#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:431
+#: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-macpaint.c:247
 #: plug-ins/common/file-pcx.c:727 plug-ins/common/file-pcx.c:735
 #: plug-ins/common/file-pcx.c:743 plug-ins/common/file-pix.c:431
 #: plug-ins/common/file-png.c:1082 plug-ins/common/file-pnm.c:848
-#: plug-ins/common/file-qoi.c:296 plug-ins/common/file-raw-data.c:823
-#: plug-ins/common/file-raw-data.c:2007 plug-ins/common/file-sunras.c:1061
+#: plug-ins/common/file-qoi.c:296 plug-ins/common/file-raw-data.c:834
+#: plug-ins/common/file-raw-data.c:1955 plug-ins/common/file-sunras.c:1061
 #: plug-ins/common/file-tga.c:1103 plug-ins/common/file-tim.c:403
 #: plug-ins/common/file-tim.c:551 plug-ins/common/file-wbmp.c:398
 #: plug-ins/common/file-wbmp.c:475 plug-ins/common/file-xbm.c:891
@@ -1039,8 +1039,8 @@ msgstr "Tilfeldig frø"
 #: plug-ins/flame/flame.c:1221
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1501
-#: plug-ins/gfig/gfig-dialog.c:772 plug-ins/ifs-compose/ifs-compose.c:910
-#: plug-ins/ifs-compose/ifs-compose.c:2631 plug-ins/imagemap/imap_browse.c:79
+#: plug-ins/gfig/gfig-dialog.c:772 plug-ins/ifs-compose/ifs-compose.c:911
+#: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:79
 #: plug-ins/imagemap/imap_file.c:73 plug-ins/lighting/lighting-ui.c:492
 #: plug-ins/lighting/lighting-ui.c:869
 msgid "_Open"
@@ -1056,8 +1056,8 @@ msgstr "_Opna"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1525
 #: plug-ins/gfig/gfig-dialog.c:811 plug-ins/gimpressionist/brush.c:269
-#: plug-ins/ifs-compose/ifs-compose.c:911
-#: plug-ins/ifs-compose/ifs-compose.c:2607 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/ifs-compose/ifs-compose.c:912
+#: plug-ins/ifs-compose/ifs-compose.c:2614 plug-ins/imagemap/imap_file.c:129
 #: plug-ins/lighting/lighting-ui.c:486 plug-ins/lighting/lighting-ui.c:737
 msgid "_Save"
 msgstr "_Lagra"
@@ -1220,9 +1220,9 @@ msgstr "Graf for dei gjeldande innstillingane"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:572
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:740 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:741 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1189 plug-ins/gfig/gfig-dialog.c:1334
-#: plug-ins/ifs-compose/ifs-compose.c:1213
+#: plug-ins/ifs-compose/ifs-compose.c:1214
 #: plug-ins/metadata/metadata-viewer.c:223
 msgid "_Close"
 msgstr "_Lukk"
@@ -1239,8 +1239,8 @@ msgstr "Lagra parametrane for CML-utforskaren"
 #: plug-ins/common/file-dicom.c:1582 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
 #: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
-#: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1512
-#: plug-ins/common/file-raw-data.c:1541 plug-ins/common/file-sunras.c:616
+#: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1523
+#: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:722
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
@@ -1250,7 +1250,7 @@ msgstr "Lagra parametrane for CML-utforskaren"
 #: plug-ins/file-tiff/file-tiff-export.c:1087
 #: plug-ins/file-tiff/file-tiff-export.c:1177 plug-ins/flame/flame.c:586
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1406
-#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2468
+#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
 #: plug-ins/lighting/lighting-ui.c:796
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -2000,14 +2000,14 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
 #: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:481
 #: plug-ins/common/file-iff.c:277 plug-ins/common/file-lnk.c:200
-#: plug-ins/common/file-macpaint.c:197 plug-ins/common/file-mng.c:1409
+#: plug-ins/common/file-macpaint.c:198 plug-ins/common/file-mng.c:1409
 #: plug-ins/common/file-paa.c:190 plug-ins/common/file-pcx.c:490
 #: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:800
 #: plug-ins/common/file-png.c:1370 plug-ins/common/file-ps.c:1158
 #: plug-ins/common/file-ps.c:3754 plug-ins/common/file-psp.c:2804
 #: plug-ins/common/file-psp.c:2854 plug-ins/common/file-pvr.c:256
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
-#: plug-ins/common/file-raw-data.c:799 plug-ins/common/file-raw-data.c:1844
+#: plug-ins/common/file-raw-data.c:810 plug-ins/common/file-raw-data.c:1861
 #: plug-ins/common/file-seattle-filmworks.c:232
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:756
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:277
@@ -2099,7 +2099,7 @@ msgstr "Byt dei to kurvene"
 #. The Reset button
 #: plug-ins/common/curve-bend.c:1342 plug-ins/common/sphere-designer.c:2642
 #: plug-ins/common/tile-small.c:523 plug-ins/gimpressionist/preview.c:182
-#: plug-ins/ifs-compose/ifs-compose.c:912
+#: plug-ins/ifs-compose/ifs-compose.c:913
 msgid "_Reset"
 msgstr "_Tilbakestill"
 
@@ -2487,7 +2487,7 @@ msgid "Image dimensions too large: width %d x height %d"
 msgstr "Biletet er for stort: breidd %d x høgd %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
-#: plug-ins/common/file-macpaint.c:259 plug-ins/common/web-browser.c:211
+#: plug-ins/common/file-macpaint.c:260 plug-ins/common/web-browser.c:211
 #: plug-ins/file-psd/psd-load.c:3607 plug-ins/file-tiff/file-tiff-load.c:1944
 #: plug-ins/file-tiff/file-tiff-load.c:2038
 #: plug-ins/file-tiff/file-tiff-load.c:2226
@@ -2618,8 +2618,8 @@ msgstr "EOF (filslutt) eller feil ved lesing av biletheading"
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
-#: plug-ins/common/file-ps.c:1148 plug-ins/common/file-raw-data.c:790
-#: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:427
+#: plug-ins/common/file-ps.c:1148 plug-ins/common/file-raw-data.c:801
+#: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:427
 #: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:242
 #: plug-ins/common/file-wbmp.c:321 plug-ins/common/file-wmf.c:618
 #: plug-ins/common/file-xbm.c:721 plug-ins/common/file-xmc.c:646
@@ -3308,7 +3308,7 @@ msgstr "rammeinfo"
 msgid "local colormap"
 msgstr "lokalt fargekart"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:441
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:448
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr ""
@@ -3952,16 +3952,21 @@ msgstr "Lastar inn fil i IFF-format"
 msgid "Load IFF file as thumbnail"
 msgstr "Lasta inn IFF-fila som ein miniatyr"
 
-#: plug-ins/common/file-iff.c:312
+#: plug-ins/common/file-iff.c:290
+#, c-format
+msgid "This is not an ILBM image"
+msgstr "Dette er ikkje eit ILBM-bilete"
+
+#: plug-ins/common/file-iff.c:319
 msgid "Invalid or missing ILBM image"
 msgstr "Ugyldig eller manglande ILBM-bilete"
 
-#: plug-ins/common/file-iff.c:327
+#: plug-ins/common/file-iff.c:334
 #, c-format
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "ILBM inneheld ingen biletedata ‒ truleg ei palettfil"
 
-#: plug-ins/common/file-iff.c:358 plug-ins/common/file-iff.c:377
+#: plug-ins/common/file-iff.c:365 plug-ins/common/file-iff.c:384
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "Ugyldig storleik på ILBM-fargekartet"
@@ -4322,7 +4327,7 @@ msgstr ""
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
 #: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:728
-#: plug-ins/common/file-raw-data.c:815
+#: plug-ins/common/file-raw-data.c:826
 #: plug-ins/common/file-seattle-filmworks.c:244
 #: plug-ins/common/file-seattle-filmworks.c:287
 #: plug-ins/common/file-seattle-filmworks.c:300
@@ -4539,7 +4544,7 @@ msgstr "Klarte ikkje lesa biletdata frå «%s»"
 msgid "Main surface"
 msgstr "Hovudoverflate"
 
-#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:355
+#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:353
 #: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
 #: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
 #: plug-ins/common/file-tim.c:612
@@ -4547,13 +4552,13 @@ msgstr "Hovudoverflate"
 msgid "Memory could not be allocated."
 msgstr "Klarte ikkje tildela minne."
 
-#: plug-ins/common/file-paa.c:363
+#: plug-ins/common/file-paa.c:361
 #, c-format
 msgid "Couldn't decompress image data from '%s'"
 msgstr "Klarte ikkje dekomprimera biletdataa frå «%s»."
 
-#: plug-ins/common/file-paa.c:439 plug-ins/common/file-paa.c:456
-#: plug-ins/common/file-paa.c:467
+#: plug-ins/common/file-paa.c:437 plug-ins/common/file-paa.c:454
+#: plug-ins/common/file-paa.c:465
 #, c-format
 msgid "Could not read tag"
 msgstr "Greidde ikkje lesa taggen"
@@ -6224,7 +6229,7 @@ msgstr "Pal_ettfil"
 msgid "The file containing palette data"
 msgstr "Fila inneheld palettdata"
 
-#: plug-ins/common/file-raw-data.c:458 plug-ins/common/file-raw-data.c:2918
+#: plug-ins/common/file-raw-data.c:458 plug-ins/common/file-raw-data.c:2976
 msgid "Digital Elevation Model data"
 msgstr "Digital elevasjonsmodelldata"
 
@@ -6279,7 +6284,12 @@ msgstr "Planaroppsett"
 msgid "Raw Data"
 msgstr "Raw data"
 
-#: plug-ins/common/file-raw-data.c:645
+#: plug-ins/common/file-raw-data.c:623 plug-ins/file-psd/psd-util.c:199
+#, c-format
+msgid "Unexpected end of file"
+msgstr "Uventa filslutt"
+
+#: plug-ins/common/file-raw-data.c:656
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
@@ -6287,7 +6297,7 @@ msgstr ""
 "%d er ikkje ein gyldig prøveavstand. Gyldige verdiar er: 0 (automatisk "
 "gjenkjenning), 1 og 3."
 
-#: plug-ins/common/file-raw-data.c:658
+#: plug-ins/common/file-raw-data.c:669
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -6299,12 +6309,12 @@ msgstr ""
 "HGT-filer er: SRTM-1 og SRTM-3. Viss du kjenner varianten, køyr med argument "
 "1 eller 3."
 
-#: plug-ins/common/file-raw-data.c:1720
+#: plug-ins/common/file-raw-data.c:1737
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "Kan ikkje opna «%s» for stadfesting av storleiken: %s"
 
-#: plug-ins/common/file-raw-data.c:2809
+#: plug-ins/common/file-raw-data.c:2855
 msgid "Load Image from Raw Data"
 msgstr "Last biletet frå Raw Data"
 
@@ -6312,43 +6322,43 @@ msgstr "Last biletet frå Raw Data"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: plug-ins/common/file-raw-data.c:2912
+#: plug-ins/common/file-raw-data.c:2970
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Digital elevasjonsmodelldata (1 bogesekund)"
 
-#: plug-ins/common/file-raw-data.c:2915
+#: plug-ins/common/file-raw-data.c:2973
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Digital elevasjonsmodelldata (3 bogesekund)"
 
-#: plug-ins/common/file-raw-data.c:2922
+#: plug-ins/common/file-raw-data.c:2980
 msgid "Image"
 msgstr "Bilete"
 
-#: plug-ins/common/file-raw-data.c:2934
+#: plug-ins/common/file-raw-data.c:2992
 msgid "Palette"
 msgstr "Palett"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:3016
+#: plug-ins/common/file-raw-data.c:3082
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "_Tilstøytande (%s)"
 
-#: plug-ins/common/file-raw-data.c:3018
+#: plug-ins/common/file-raw-data.c:3084
 msgid "_Contiguous"
 msgstr "_Tilstøytande"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:3024
+#: plug-ins/common/file-raw-data.c:3090
 #, c-format
 msgid "_Planar (%s)"
 msgstr "_Planar (%s)"
 
-#: plug-ins/common/file-raw-data.c:3026
+#: plug-ins/common/file-raw-data.c:3092
 msgid "_Planar"
 msgstr "_Planar"
 
@@ -8011,7 +8021,7 @@ msgstr ""
 "menyane."
 
 #: plug-ins/common/plugin-browser.c:370
-#: plug-ins/filter-browser/filter-browser.c:622
+#: plug-ins/filter-browser/filter-browser.c:623
 msgid "Searching by name"
 msgstr "Søkjar på namn"
 
@@ -8023,7 +8033,7 @@ msgstr[0] "%d programtillegg"
 msgstr[1] "%d programtillegg"
 
 #: plug-ins/common/plugin-browser.c:395
-#: plug-ins/filter-browser/filter-browser.c:689
+#: plug-ins/filter-browser/filter-browser.c:690
 msgid "No matches for your query"
 msgstr "Ingen treff på søket"
 
@@ -8035,7 +8045,7 @@ msgstr[0] "Fann %d programtillegg som passa spørringa"
 msgstr[1] "Fann %d programtillegg som passa spørringa"
 
 #: plug-ins/common/plugin-browser.c:543
-#: plug-ins/filter-browser/filter-browser.c:691
+#: plug-ins/filter-browser/filter-browser.c:692
 msgid "No matches"
 msgstr "Ingen treff"
 
@@ -8131,7 +8141,6 @@ msgid "All Files"
 msgstr "Alle filene"
 
 #: plug-ins/common/qbist.c:851
-#| msgid "All files (*.*)"
 msgid "QBE file (*.qbe)"
 msgstr "QBE-fil (*.qbe)"
 
@@ -8789,7 +8798,7 @@ msgstr "Små fliser"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:490 plug-ins/ifs-compose/ifs-compose.c:724
+#: plug-ins/common/tile-small.c:490 plug-ins/ifs-compose/ifs-compose.c:725
 msgid "Flip"
 msgstr "Spegelvend"
 
@@ -10935,11 +10944,6 @@ msgstr ""
 "Denne PSD-fila inneheld funksjonar som\n"
 "ennå ikkje er fullt ut støtta i GIMP:"
 
-#: plug-ins/file-psd/psd-util.c:199
-#, c-format
-msgid "Unexpected end of file"
-msgstr "Uventa filslutt"
-
 #: plug-ins/file-psd/psd.c:136 plug-ins/file-psd/psd.c:219
 #: plug-ins/file-psd/psd.c:221
 msgid "Photoshop image"
@@ -11610,7 +11614,7 @@ msgid ""
 "Indexed TIFFs with color maps larger than 256 colors are not yet supported"
 msgstr ""
 "Det er (førebels) ikkje støtte for indekserte TIFF-fargekart med meir enn "
-"256 fargar."
+"256 fargar"
 
 #. Validate number of channels to the same maximum as we use for
 #. * Photoshop. A higher number most likely means a corrupt image
@@ -11903,17 +11907,17 @@ msgstr "Lukkast ikkje å dekoda animert WebP-informasjon frå «%s»"
 msgid "Failed to decode animated WebP frame from '%s'"
 msgstr "Lukkast ikkje å dekoda animert WebP-ramme frå «%s»"
 
-#: plug-ins/filter-browser/filter-browser.c:288
-#: plug-ins/filter-browser/filter-browser.c:330
+#: plug-ins/filter-browser/filter-browser.c:289
+#: plug-ins/filter-browser/filter-browser.c:331
 msgid "Allowed values:"
 msgstr "Tillatne verdiar:"
 
-#: plug-ins/filter-browser/filter-browser.c:433
+#: plug-ins/filter-browser/filter-browser.c:434
 #, c-format
 msgid "Operation name: %s"
 msgstr "Operasjonsnamn: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:446
+#: plug-ins/filter-browser/filter-browser.c:447
 #, c-format
 msgid "Categories: %s"
 msgstr "Kategoriar: %s"
@@ -11924,7 +11928,7 @@ msgstr "Kategoriar: %s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:476
+#: plug-ins/filter-browser/filter-browser.c:477
 #: plug-ins/gradient-flare/gradient-flare.c:2972
 #: plug-ins/gradient-flare/gradient-flare.c:3722
 #: plug-ins/gradient-flare/gradient-flare.c:3824
@@ -11932,66 +11936,66 @@ msgstr "Kategoriar: %s"
 msgid "Parameters"
 msgstr "Parameter"
 
-#: plug-ins/filter-browser/filter-browser.c:508
+#: plug-ins/filter-browser/filter-browser.c:509
 msgid "Additional Information"
 msgstr "Tilleggsinformasjon"
 
-#: plug-ins/filter-browser/filter-browser.c:514
+#: plug-ins/filter-browser/filter-browser.c:515
 #, c-format
 msgid "License: %s"
 msgstr "Lisens: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:625
+#: plug-ins/filter-browser/filter-browser.c:626
 msgid "Searching by title"
 msgstr "Søkjer på tittel"
 
-#: plug-ins/filter-browser/filter-browser.c:628
+#: plug-ins/filter-browser/filter-browser.c:629
 msgid "Searching by description"
 msgstr "Søkjer på beskriving"
 
-#: plug-ins/filter-browser/filter-browser.c:631
+#: plug-ins/filter-browser/filter-browser.c:632
 msgid "Searching by category"
 msgstr "Søkjer på kategori"
 
-#: plug-ins/filter-browser/filter-browser.c:696
+#: plug-ins/filter-browser/filter-browser.c:697
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
 msgstr[0] "%d filter passar spørjinga"
 msgstr[1] "%d filter passar spørjinga"
 
-#: plug-ins/filter-browser/filter-browser.c:702
+#: plug-ins/filter-browser/filter-browser.c:703
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
 msgstr[0] "%d filter"
 msgstr[1] "%d filter"
 
-#: plug-ins/filter-browser/filter-browser.c:734
+#: plug-ins/filter-browser/filter-browser.c:735
 msgid "GEGL Filter Browser"
 msgstr "GEGL Filter-lesar"
 
-#: plug-ins/filter-browser/filter-browser.c:751
+#: plug-ins/filter-browser/filter-browser.c:752
 msgid "by name"
 msgstr "etter namn"
 
-#: plug-ins/filter-browser/filter-browser.c:752
+#: plug-ins/filter-browser/filter-browser.c:753
 msgid "by title"
 msgstr "etter tittel"
 
-#: plug-ins/filter-browser/filter-browser.c:753
+#: plug-ins/filter-browser/filter-browser.c:754
 msgid "by description"
 msgstr "etter beskriving"
 
-#: plug-ins/filter-browser/filter-browser.c:845
+#: plug-ins/filter-browser/filter-browser.c:846
 msgid "_GEGL Filter Browser"
 msgstr "_GEGL Filter-lesar"
 
-#: plug-ins/filter-browser/filter-browser.c:850
+#: plug-ins/filter-browser/filter-browser.c:851
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "Vis informasjon om tilgjengelege GEGL-operasjonar (dvs. filter)."
 
-#: plug-ins/filter-browser/filter-browser.c:852
+#: plug-ins/filter-browser/filter-browser.c:853
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
@@ -12736,7 +12740,7 @@ msgid "Copy an object"
 msgstr "Kopier eit objekt"
 
 #: plug-ins/gfig/gfig-dialog.c:405 plug-ins/gfig/gfig-menu.ui:104
-#: plug-ins/ifs-compose/ifs-compose.c:959 plug-ins/ifs-compose/ifs-menus.ui:27
+#: plug-ins/ifs-compose/ifs-compose.c:960 plug-ins/ifs-compose/ifs-menus.ui:27
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr "Fjern"
@@ -13063,7 +13067,7 @@ msgstr "Lukk"
 msgid "Edit"
 msgstr "Rediger"
 
-#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:961
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:962
 #: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1563
 #: plug-ins/imagemap/imap-menu.ui:35
 msgid "Undo"
@@ -13495,7 +13499,7 @@ msgid "Applies the paper as it is (without embossing it)"
 msgstr "Bruk papiret som det er, utan bossering (relieffverknad)"
 
 #. Scale
-#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:668
+#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:669
 msgid "Scale:"
 msgstr "Skalering:"
 
@@ -14124,178 +14128,178 @@ msgstr ""
 "Parsefeil i «%s»:\n"
 "%s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:433
+#: plug-ins/ifs-compose/ifs-compose.c:434
 msgid "_IFS Fractal..."
 msgstr "_IFS Fraktal …"
 
-#: plug-ins/ifs-compose/ifs-compose.c:439
+#: plug-ins/ifs-compose/ifs-compose.c:440
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Opprett ein IFS-fraktal (Iterated Function System)"
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:640
+#: plug-ins/ifs-compose/ifs-compose.c:641
 msgid "X:"
 msgstr "X:"
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:654
+#: plug-ins/ifs-compose/ifs-compose.c:655
 msgid "Y:"
 msgstr "Y:"
 
 #. Angle
-#: plug-ins/ifs-compose/ifs-compose.c:682
+#: plug-ins/ifs-compose/ifs-compose.c:683
 msgid "Angle:"
 msgstr "Vinkel:"
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:696
+#: plug-ins/ifs-compose/ifs-compose.c:697
 msgid "Asymmetry:"
 msgstr "Asymmetri:"
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:710
+#: plug-ins/ifs-compose/ifs-compose.c:711
 msgid "Shear:"
 msgstr "Forskyv:"
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:755
+#: plug-ins/ifs-compose/ifs-compose.c:756
 msgid "Simple"
 msgstr "Enkel"
 
-#: plug-ins/ifs-compose/ifs-compose.c:764
+#: plug-ins/ifs-compose/ifs-compose.c:765
 msgid "IFS Fractal: Target"
 msgstr "IFS-fraktal: Mål"
 
-#: plug-ins/ifs-compose/ifs-compose.c:770
+#: plug-ins/ifs-compose/ifs-compose.c:771
 msgid "Scale hue by:"
 msgstr "Skaler kulør med:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:785
+#: plug-ins/ifs-compose/ifs-compose.c:786
 msgid "Scale value by:"
 msgstr "Skaler lysverdi med:"
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:802
+#: plug-ins/ifs-compose/ifs-compose.c:803
 msgid "Full"
 msgstr "Heile"
 
-#: plug-ins/ifs-compose/ifs-compose.c:809
+#: plug-ins/ifs-compose/ifs-compose.c:810
 msgid "IFS Fractal: Red"
 msgstr "IFS-fraktal: Raud"
 
-#: plug-ins/ifs-compose/ifs-compose.c:817
+#: plug-ins/ifs-compose/ifs-compose.c:818
 msgid "IFS Fractal: Green"
 msgstr "IFS-fraktal: Grøn"
 
-#: plug-ins/ifs-compose/ifs-compose.c:825
+#: plug-ins/ifs-compose/ifs-compose.c:826
 msgid "IFS Fractal: Blue"
 msgstr "IFS-fraktal: Blå"
 
-#: plug-ins/ifs-compose/ifs-compose.c:833
+#: plug-ins/ifs-compose/ifs-compose.c:834
 msgid "IFS Fractal: Black"
 msgstr "IFS-fraktal: Svart"
 
-#: plug-ins/ifs-compose/ifs-compose.c:906
+#: plug-ins/ifs-compose/ifs-compose.c:907
 msgid "IFS Fractal"
 msgstr "IFS-fraktal"
 
-#: plug-ins/ifs-compose/ifs-compose.c:950 plug-ins/ifs-compose/ifs-menus.ui:6
+#: plug-ins/ifs-compose/ifs-compose.c:951 plug-ins/ifs-compose/ifs-menus.ui:6
 #: plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Flytt"
 
-#: plug-ins/ifs-compose/ifs-compose.c:952 plug-ins/ifs-compose/ifs-menus.ui:11
+#: plug-ins/ifs-compose/ifs-compose.c:953 plug-ins/ifs-compose/ifs-menus.ui:11
 msgid "Rotate"
 msgstr "Roter"
 
-#: plug-ins/ifs-compose/ifs-compose.c:954 plug-ins/ifs-compose/ifs-menus.ui:16
+#: plug-ins/ifs-compose/ifs-compose.c:955 plug-ins/ifs-compose/ifs-menus.ui:16
 msgid "Stretch"
 msgstr "Strekk"
 
-#: plug-ins/ifs-compose/ifs-compose.c:957 plug-ins/ifs-compose/ifs-menus.ui:23
+#: plug-ins/ifs-compose/ifs-compose.c:958 plug-ins/ifs-compose/ifs-menus.ui:23
 msgid "New"
 msgstr "Ny"
 
-#: plug-ins/ifs-compose/ifs-compose.c:963 plug-ins/ifs-compose/ifs-menus.ui:35
+#: plug-ins/ifs-compose/ifs-compose.c:964 plug-ins/ifs-compose/ifs-menus.ui:35
 #: plug-ins/imagemap/imap_main.c:1565 plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "Gjenopprett"
 
-#: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:39
+#: plug-ins/ifs-compose/ifs-compose.c:966 plug-ins/ifs-compose/ifs-menus.ui:39
 #: plug-ins/imagemap/imap_cmd_select_all.c:50 plug-ins/imagemap/imap-menu.ui:61
 msgid "Select All"
 msgstr "Vel alle"
 
-#: plug-ins/ifs-compose/ifs-compose.c:967 plug-ins/ifs-compose/ifs-menus.ui:43
+#: plug-ins/ifs-compose/ifs-compose.c:968 plug-ins/ifs-compose/ifs-menus.ui:43
 msgid "Recompute Center"
 msgstr "Berekna senter på nytt"
 
-#: plug-ins/ifs-compose/ifs-compose.c:970 plug-ins/ifs-compose/ifs-menus.ui:49
+#: plug-ins/ifs-compose/ifs-compose.c:971 plug-ins/ifs-compose/ifs-menus.ui:49
 msgid "Render Options"
 msgstr "Teikneinnstillingar"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1029
+#: plug-ins/ifs-compose/ifs-compose.c:1030
 msgid "Spatial Transformation"
 msgstr "Romtransformasjon"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1035
+#: plug-ins/ifs-compose/ifs-compose.c:1036
 msgid "Color Transformation"
 msgstr "Fargetransformasjon"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1045
+#: plug-ins/ifs-compose/ifs-compose.c:1046
 msgid "Relative probability:"
 msgstr "Relativ slump:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1209
+#: plug-ins/ifs-compose/ifs-compose.c:1210
 msgid "IFS Fractal Render Options"
 msgstr "Innstillingar for IFS-fraktal"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1231
+#: plug-ins/ifs-compose/ifs-compose.c:1232
 msgid "Max. memory:"
 msgstr "Maks minne:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1244
+#: plug-ins/ifs-compose/ifs-compose.c:1245
 msgid "Iterations:"
 msgstr "Gjentakingar:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1259
+#: plug-ins/ifs-compose/ifs-compose.c:1260
 msgid "Subdivide:"
 msgstr "Vidaredeling:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1273
+#: plug-ins/ifs-compose/ifs-compose.c:1274
 msgid "Spot radius:"
 msgstr "Punktradius:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1347
+#: plug-ins/ifs-compose/ifs-compose.c:1354
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Lager IFS (%d/%d)"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1510
+#: plug-ins/ifs-compose/ifs-compose.c:1517
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformasjon %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2473
+#: plug-ins/ifs-compose/ifs-compose.c:2480
 msgid "Save failed"
 msgstr "Mislukka lagring"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2556
-#: plug-ins/ifs-compose/ifs-compose.c:2569
+#: plug-ins/ifs-compose/ifs-compose.c:2563
+#: plug-ins/ifs-compose/ifs-compose.c:2576
 msgid "Open failed"
 msgstr "Klarte ikkje opna"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2564
+#: plug-ins/ifs-compose/ifs-compose.c:2571
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Fila «%s» ser ikkje ut til å vera ei IFS-fraktal-fil."
 
-#: plug-ins/ifs-compose/ifs-compose.c:2604
+#: plug-ins/ifs-compose/ifs-compose.c:2611
 msgid "Save as IFS Fractal file"
 msgstr "Lagra som IFS-fraktal-fil"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2628
+#: plug-ins/ifs-compose/ifs-compose.c:2635
 msgid "Open IFS Fractal file"
 msgstr "Opna IFS-fraktal-fil"
 
