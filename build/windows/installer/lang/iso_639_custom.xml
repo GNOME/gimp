@@ -215,6 +215,10 @@ To fill data for a new entry:
 		inno_code=""
 		name="Кыргыз тили" />
 	<iso_639_entry
+		dl_code="lo"
+		inno_code=""
+		name="ພາສາລາວ" />
+	<iso_639_entry
 		dl_code="lt"
 		inno_code="Languages\\Unofficial\\Lithuanian.isl"
 		name="Lietuvių kalba" />
