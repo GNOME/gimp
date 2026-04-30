@@ -35,6 +35,9 @@
 
 #include <windows.h>
 #include <dinput.h>
+#ifndef DIDFT_OPTIONAL
+#define DIDFT_OPTIONAL 0x80000000
+#endif
 
 #include <gegl.h>
 #include <gtk/gtk.h>
