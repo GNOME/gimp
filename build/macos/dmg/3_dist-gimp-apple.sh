@@ -352,7 +352,7 @@ printf "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K\n"
 
 # 6.A NOTARIZE .DMG
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
-  printf "\e[0Ksection_start:`date +%s`:${ARCH}_notarize[collapsed=true]\r\e[0KNotarizing ${DMG_ARTIFACT}\n"
+  printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KNotarizing ${DMG_ARTIFACT}\n"
   printf "(INFO): submitting to Apple servers\n"
   NOTARY_OUT="$(xcrun notarytool submit ${DMG_ARTIFACT} --apple-id ${notarization_login} --team-id ${notarization_teamid} --password ${notarization_password} --wait 2>&1)"
   printf "$NOTARY_OUT\n"
@@ -380,10 +380,11 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
     exit 1
   fi
   printf "\e[0Ksection_end:`date +%s`:${ARCH}_notarize\r\e[0K\n"
-fi
+else
 
 # 6.B GENERATE SHASUMS FOR .DMG
 printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KChecksumming ${DMG_ARTIFACT}\n"
+fi
 printf "(INFO): ${DMG_ARTIFACT} SHA-256: $(shasum -a 256 ${DMG_ARTIFACT} | cut -d ' ' -f 1)\n"
 printf "(INFO): ${DMG_ARTIFACT} SHA-512: $(shasum -a 512 ${DMG_ARTIFACT} | cut -d ' ' -f 1)\n"
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K\n"
