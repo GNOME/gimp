@@ -191,6 +191,7 @@ load_image (GFile        *file,
   img_a.linked_files.linked_data = NULL;
   img_a.linked_files.last = NULL;
   img_a.psd_file = file;
+  img_a.global_text_data = NULL;
 
   initialize_unsupported (unsupported_features);
   img_a.unsupported_features = unsupported_features;

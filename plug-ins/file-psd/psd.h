@@ -583,7 +583,10 @@ typedef struct
   gdouble               yy;
   gdouble               tx;
   gdouble               ty;
-  gchar                 *info; /* Text information */
+  gchar                *info; /* Text information */
+
+  JsonNode             *textdata;
+  JsonNode             *warpdata;
 } PSDText;
 
 typedef struct
@@ -870,6 +873,7 @@ typedef struct
   guint16               quick_mask_id;          /* Channel number containing quick mask */
   gint32                global_light_angle;     /* Global Lighting Angle for Effect layers */
   PSDLinkedFiles        linked_files;           /* A list of linked/embedded files */
+  JsonNode             *global_text_data;       /* Global text related data (TXT2) */
 
   GimpColorProfile     *cmyk_profile;
   gpointer              cmyk_transform;
