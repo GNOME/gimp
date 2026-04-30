@@ -336,7 +336,8 @@
             ],
             "config-opts": [
                 "--disable-static",
-                "--disable-dependency-tracking"
+                "--disable-dependency-tracking",
+                "--disable-gd"
             ],
             "cleanup": [
                 "/bin",
