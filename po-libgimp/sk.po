@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-27 20:27+0000\n"
-"PO-Revision-Date: 2026-04-29 11:22+0200\n"
+"POT-Creation-Date: 2026-04-29 12:00+0000\n"
+"PO-Revision-Date: 2026-04-29 16:27+0200\n"
 "Last-Translator: Jose Riha <jose1711@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -34,7 +34,6 @@ msgstr "_Prehliadať…"
 # PŠ: ani ten si nie je istý :-(
 #: libgimp/gimpdrawablechooser.c:240 libgimp/gimpimagechooser.c:218
 #: libgimp/gimpitemchooser.c:237
-#| msgid "_Browse..."
 msgid "Browse..."
 msgstr "Prehliadať…"
 
@@ -81,13 +80,11 @@ msgstr "Zásuvný modul pre %s nevie pracovať s priehľadnosťou"
 # %s je formát obrázka napr GIF
 #: libgimp/gimpexportoptions.c:401
 #, c-format
-#| msgid "%s plug-in can't handle layers"
 msgid "%s plug-in can't handle layer effects"
 msgstr "Zásuvný modul pre %s nevie pracovať s efektami vrstiev"
 
 # action
 #: libgimp/gimpexportoptions.c:402
-#| msgid "Merge Visible Layers"
 msgid "Merge Layer Effects"
 msgstr "Zlúčiť efekty vrstiev"
 
@@ -225,7 +222,6 @@ msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Uložiť metaúdaje XMP (rozšíriteľná platforma metaúdajov)"
 
 #: libgimp/gimpexportprocedure.c:580
-#| msgid "Monitor profile"
 msgid "Save color _profile"
 msgstr "Uložiť farebný _profil"
 
@@ -254,8 +250,6 @@ msgid "Comment"
 msgstr "Komentár"
 
 #: libgimp/gimpexportprocedure.c:604
-#| msgctxt "icon-type"
-#| msgid "Image file"
 msgid "Image comment"
 msgstr "Komentár obrázka"
 
@@ -338,7 +332,6 @@ msgstr "podľa pomocníka"
 
 # typ vyhľadávania
 #: libgimp/gimpprocbrowserdialog.c:155
-#| msgid "by author"
 msgid "by authors"
 msgstr "podľa autorov"
 
@@ -386,7 +379,6 @@ msgid "Searching by help"
 msgstr "Vyhľadávanie podľa pomocníka"
 
 #: libgimp/gimpprocbrowserdialog.c:417
-#| msgid "Searching by author"
 msgid "Searching by authors"
 msgstr "Vyhľadávanie podľa autorov"
 
@@ -433,8 +425,8 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"Procedúra '%s' vrátila nesprávny typ hodnoty pre návratovú hodnotu '%s' (#%d). "
-"Očakávaný typ bol %s, skutočný bol %s."
+"Procedúra '%s' vrátila nesprávny typ hodnoty pre návratovú hodnotu '%s' "
+"(#%d). Očakávaný typ bol %s, skutočný bol %s."
 
 #: libgimp/gimpprocedure.c:2405
 #, c-format
@@ -451,8 +443,8 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"Procedúra '%s' vrátila '%s' ako návratovú hodnotu '%s' (#%d, typ %s). "
-"Táto hodnota je mimo rozsahu."
+"Procedúra '%s' vrátila '%s' ako návratovú hodnotu '%s' (#%d, typ %s). Táto "
+"hodnota je mimo rozsahu."
 
 #: libgimp/gimpprocedure.c:2454
 #, c-format
@@ -474,8 +466,7 @@ msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr ""
-"Procedúra '%s' bola zavolaná s neplatným UTF-8 reťazcom pre argument "
-"'%s'."
+"Procedúra '%s' bola zavolaná s neplatným UTF-8 reťazcom pre argument '%s'."
 
 #: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -542,8 +533,6 @@ msgstr "Výber palety"
 
 # typ pečiatky
 #: libgimp/gimpproceduredialog.c:924
-#| msgctxt "clone-type"
-#| msgid "Pattern"
 msgid "Pattern Chooser"
 msgstr "Výber vzoru"
 
@@ -556,7 +545,6 @@ msgid "Reset to _Factory Defaults"
 msgstr "Nastaviť na p_redvolené hodnoty"
 
 #: libgimp/gimpprocview.c:176
-#| msgid "Image profile:"
 msgid "Image types:"
 msgstr "Typy obrázkov:"
 
@@ -584,7 +572,6 @@ msgid "Additional Information"
 msgstr "Prídavné informácie"
 
 #: libgimp/gimpprocview.c:263
-#| msgid "Author:"
 msgid "Authors:"
 msgstr "Autori:"
 
@@ -608,7 +595,6 @@ msgstr "Vybrať vrstvu: %s"
 
 #: libgimp/gimppropwidgets.c:253 libgimp/gimppropwidgets.c:323
 #, c-format
-#| msgid "Channel:"
 msgid "Choose channel: %s"
 msgstr "Vybrať kanál: %s"
 
@@ -632,8 +618,8 @@ msgid ""
 "This unit is used to select the pixel density and show dimensions in "
 "physical unit"
 msgstr ""
-"Táto jednotka sa používa na výber hustoty pixelov a zobrazenie rozmerov "
-"vo fyzickej jednotke"
+"Táto jednotka sa používa na výber hustoty pixelov a zobrazenie rozmerov vo "
+"fyzickej jednotke"
 
 #: libgimp/gimpresolutionentry-private.c:144
 #: libgimp/gimpvectorloadprocedure.c:126
@@ -648,8 +634,6 @@ msgstr "Vynútiť rozmery so zachovaním pomeru strán"
 #: libgimp/gimpresolutionentry-private.c:199
 #: libgimp/gimpresolutionentry-private.c:200
 #, c-format
-#| msgctxt "size-type"
-#| msgid "Pixels"
 msgid "pixels/%a"
 msgstr "pixely/%a"
 
@@ -735,7 +719,6 @@ msgstr "Zdrojový súbor %s neudáva veľkosť!"
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
 #: libgimp/gimpvectorloadproceduredialog.c:330
 #, c-format
-#| msgid "Flatten Image"
 msgid "Load %s Image"
 msgstr "Načítať obrázok %s"
 
@@ -905,8 +888,6 @@ msgid "Black only"
 msgstr "Iba čierna"
 
 #: libgimpbase/gimpbaseenums.c:244
-#| msgctxt "check-type"
-#| msgid "Mid-tone checks"
 msgctxt "check-type"
 msgid "Custom checks"
 msgstr "Vlastná šachovnica"
@@ -1003,29 +984,21 @@ msgid "64-bit floating point"
 msgstr "64-bitové číslo s pohyblivou desatinnou čiarkou"
 
 #: libgimpbase/gimpbaseenums.c:387
-#| msgctxt "convert-palette-type"
-#| msgid "Generate optimum palette"
 msgctxt "convert-palette-type"
 msgid "_Generate optimum palette"
 msgstr "_Generovať optimálnu paletu"
 
 #: libgimpbase/gimpbaseenums.c:388
-#| msgctxt "convert-palette-type"
-#| msgid "Use web-optimized palette"
 msgctxt "convert-palette-type"
 msgid "Use _web-optimized palette"
 msgstr "Použiť paletu optimalizovanú pre _web"
 
 #: libgimpbase/gimpbaseenums.c:389
-#| msgctxt "convert-palette-type"
-#| msgid "Use black and white (1-bit) palette"
 msgctxt "convert-palette-type"
 msgid "Use _black and white (1-bit) palette"
 msgstr "Použiť č_iernobielu (1-bitovú) paletu"
 
 #: libgimpbase/gimpbaseenums.c:390
-#| msgctxt "convert-palette-type"
-#| msgid "Use custom palette"
 msgctxt "convert-palette-type"
 msgid "Use custom _palette"
 msgstr "Použiť _vlastnú paletu"
@@ -1146,8 +1119,6 @@ msgstr "HSV (odtieň proti smeru hod. ručičiek)"
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:618
-#| msgctxt "gradient-type"
-#| msgid "Spiral (ccw)"
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
 msgstr "HSV (proti smeru hod. ruč.)"
@@ -1161,8 +1132,6 @@ msgstr "HSV (odtieň v smere hod. ručičiek)"
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:622
-#| msgctxt "gradient-type"
-#| msgid "Spiral (cw)"
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
 msgstr "HSV (v smere hod. ruč.)"
@@ -1192,8 +1161,6 @@ msgstr "Sférický (rastúci)"
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:661
-#| msgctxt "gradient-type"
-#| msgid "Spiral (cw)"
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
 msgstr "Sférický (rastúci)"
@@ -1207,8 +1174,6 @@ msgstr "Sférický (klesajúci)"
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:665
-#| msgctxt "gradient-type"
-#| msgid "Spiral (cw)"
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
 msgstr "Sférický (klesajúci)"
@@ -1489,8 +1454,6 @@ msgstr "Orezané na spodnú vrstvu"
 
 # typ pečiatky
 #: libgimpbase/gimpbaseenums.c:1068
-#| msgctxt "clone-type"
-#| msgid "Pattern"
 msgctxt "merge-type"
 msgid "Flatten"
 msgstr "Zažehliť"
@@ -1533,8 +1496,6 @@ msgid "GIMP Plug-In"
 msgstr "Zásuvný modul GIMPu"
 
 #: libgimpbase/gimpbaseenums.c:1257
-#| msgctxt "pdb-proc-type"
-#| msgid "GIMP Plug-In"
 msgctxt "pdb-proc-type"
 msgid "GIMP Persistent Plug-In"
 msgstr "Trvalý zásuvný modul GIMPu"
@@ -1550,15 +1511,11 @@ msgid "8-bit linear integer"
 msgstr "8-bitové lineárne celé číslo"
 
 #: libgimpbase/gimpbaseenums.c:1340
-#| msgctxt "precision"
-#| msgid "8-bit linear integer"
 msgctxt "precision"
 msgid "8-bit non-linear integer"
 msgstr "8-bitové nelineárne celé číslo"
 
 #: libgimpbase/gimpbaseenums.c:1341
-#| msgctxt "precision"
-#| msgid "8-bit linear integer"
 msgctxt "precision"
 msgid "8-bit perceptual integer"
 msgstr "8-bitové perceptuálne celé číslo"
@@ -1569,15 +1526,11 @@ msgid "16-bit linear integer"
 msgstr "16-bitové lineárne celé číslo"
 
 #: libgimpbase/gimpbaseenums.c:1343
-#| msgctxt "precision"
-#| msgid "16-bit linear integer"
 msgctxt "precision"
 msgid "16-bit non-linear integer"
 msgstr "16-bitové nelineárne celé číslo"
 
 #: libgimpbase/gimpbaseenums.c:1344
-#| msgctxt "precision"
-#| msgid "16-bit linear integer"
 msgctxt "precision"
 msgid "16-bit perceptual integer"
 msgstr "16-bitové perceptuálne celé číslo"
@@ -1588,15 +1541,11 @@ msgid "32-bit linear integer"
 msgstr "32-bitové lineárne celé číslo"
 
 #: libgimpbase/gimpbaseenums.c:1346
-#| msgctxt "precision"
-#| msgid "32-bit linear integer"
 msgctxt "precision"
 msgid "32-bit non-linear integer"
 msgstr "32-bitové nelineárne celé číslo"
 
 #: libgimpbase/gimpbaseenums.c:1347
-#| msgctxt "precision"
-#| msgid "32-bit linear integer"
 msgctxt "precision"
 msgid "32-bit perceptual integer"
 msgstr "32-bitové perceptuálne celé číslo"
@@ -1607,15 +1556,11 @@ msgid "16-bit linear floating point"
 msgstr "16-bitové lineárne číslo s pohyblivou desatinnou čiarkou"
 
 #: libgimpbase/gimpbaseenums.c:1349
-#| msgctxt "component-type"
-#| msgid "16-bit floating point"
 msgctxt "precision"
 msgid "16-bit non-linear floating point"
 msgstr "16-bitové nelineárne číslo s pohyblivou desatinnou čiarkou"
 
 #: libgimpbase/gimpbaseenums.c:1350
-#| msgctxt "component-type"
-#| msgid "16-bit floating point"
 msgctxt "precision"
 msgid "16-bit perceptual floating point"
 msgstr "16-bitové perceptuálne číslo s pohyblivou desatinnou čiarkou"
@@ -1626,15 +1571,11 @@ msgid "32-bit linear floating point"
 msgstr "32-bitové lineárne číslo s pohyblivou desatinnou čiarkou"
 
 #: libgimpbase/gimpbaseenums.c:1352
-#| msgctxt "component-type"
-#| msgid "32-bit floating point"
 msgctxt "precision"
 msgid "32-bit non-linear floating point"
 msgstr "32-bitové nelineárne číslo s pohyblivou desatinnou čiarkou"
 
 #: libgimpbase/gimpbaseenums.c:1353
-#| msgctxt "component-type"
-#| msgid "32-bit floating point"
 msgctxt "precision"
 msgid "32-bit perceptual floating point"
 msgstr "32-bitové perceptuálne číslo s pohyblivou desatinnou čiarkou"
@@ -1645,15 +1586,11 @@ msgid "64-bit linear floating point"
 msgstr "64-bitové lineárne číslo s pohyblivou desatinnou čiarkou"
 
 #: libgimpbase/gimpbaseenums.c:1355
-#| msgctxt "component-type"
-#| msgid "64-bit floating point"
 msgctxt "precision"
 msgid "64-bit non-linear floating point"
 msgstr "64-bitové nelineárne číslo s pohyblivou desatinnou čiarkou"
 
 #: libgimpbase/gimpbaseenums.c:1356
-#| msgctxt "component-type"
-#| msgid "64-bit floating point"
 msgctxt "precision"
 msgid "64-bit perceptual floating point"
 msgstr "64-bitové perceptuálne číslo s pohyblivou desatinnou čiarkou"
@@ -1664,8 +1601,6 @@ msgid "None (extend)"
 msgstr "Žiadne (rozšírenie)"
 
 #: libgimpbase/gimpbaseenums.c:1462
-#| msgctxt "repeat-mode"
-#| msgid "None (extend)"
 msgctxt "repeat-mode"
 msgid "None (truncate)"
 msgstr "Žiadne (skrátenie)"
@@ -1727,16 +1662,12 @@ msgstr "Odtieň HSV"
 
 # tooltip
 #: libgimpbase/gimpbaseenums.c:1571
-#| msgctxt "select-criterion"
-#| msgid "Saturation"
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "Sýtosť HSV"
 
 # tooltip
 #: libgimpbase/gimpbaseenums.c:1572
-#| msgctxt "select-criterion"
-#| msgid "Value"
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "Hodnota HSV"
@@ -1744,8 +1675,6 @@ msgstr "Hodnota HSV"
 # Režim desaturácie (odfarbenia)
 # Je to za Choose shade of gray based on:
 #: libgimpbase/gimpbaseenums.c:1573
-#| msgctxt "desaturate-mode"
-#| msgid "Lightness"
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "Svetlosť LCh"
@@ -1864,8 +1793,6 @@ msgid "Filled"
 msgstr "Zarovnané do bloku"
 
 #: libgimpbase/gimpbaseenums.c:1804
-#| msgctxt "text-justification"
-#| msgid "Filled"
 msgctxt "text-outline"
 msgid "Filled"
 msgstr "Vyplnený"
@@ -1891,8 +1818,6 @@ msgid "Inner"
 msgstr "Vnútorný"
 
 #: libgimpbase/gimpbaseenums.c:1838
-#| msgctxt "text-justification"
-#| msgid "Centered"
 msgctxt "text-outline-direction"
 msgid "Centered"
 msgstr "Vycentrovaný"
@@ -1988,8 +1913,6 @@ msgid "Parsing XMP data failed."
 msgstr "Analýza údajov XMP zlyhala."
 
 #: libgimpbase/gimpunit.c:82
-#| msgctxt "size-type"
-#| msgid "Pixels"
 msgctxt "unit-plural"
 msgid "pixels"
 msgstr "pixely"
@@ -2008,8 +1931,6 @@ msgstr "milimetre"
 # http://en.wikipedia.org/wiki/Point_%28typography%29
 # RP: Neviem čo s tým...
 #: libgimpbase/gimpunit.c:102
-#| msgctxt "size-type"
-#| msgid "Points"
 msgctxt "unit-plural"
 msgid "points"
 msgstr "body"
@@ -2023,7 +1944,6 @@ msgstr "pica"
 # PM: Je to v ponuke jednotiek body palce, centimetre... Preto navrhujem "Percentá" - Paľo pozri na to prosím
 # PŠ: veľmi nešťastný reťazec. Je to použité aj v _gimp_unit_cache_get_singular aj v _gimp_unit_cache_get_plural - a oba reťazce sú uvedené ako jednotné číslo. Toto je asi najlepšie riešenie...
 #: libgimpbase/gimpunit.c:118
-#| msgid "percent"
 msgctxt "unit-plural"
 msgid "percent"
 msgstr "percentá"
@@ -2184,9 +2104,9 @@ msgid ""
 "some other color space, including soft-proofing to a printer or other output "
 "device profile."
 msgstr ""
-"Profil farieb, ktorý sa má použiť v náhľade tlačového výstupu z farebného priestoru "
-"obrázka do iného farebného priestoru, vrátane náhľadu na tlačiareň alebo "
-"iné výstupné zariadenie."
+"Profil farieb, ktorý sa má použiť v náhľade tlačového výstupu z farebného "
+"priestoru obrázka do iného farebného priestoru, vrátane náhľadu na tlačiareň "
+"alebo iné výstupné zariadenie."
 
 #: libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -2196,15 +2116,14 @@ msgid ""
 "intent really gives you relative colorimetric."
 msgstr ""
 "Ako sa farby konvertujú z farebného priestoru obrázka na displej. Relatívna "
-"kolorimetria je zvyčajne najlepšia voľba. Ak nepoužívate profil monitora "
-"LUT (väčšina profilov monitora je maticová), perceptuálny zámer vám dá "
-"v podstate relatívnu kolorimetriu."
+"kolorimetria je zvyčajne najlepšia voľba. Ak nepoužívate profil monitora LUT "
+"(väčšina profilov monitora je maticová), perceptuálny zámer vám dá v "
+"podstate relatívnu kolorimetriu."
 
 #: libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
-msgstr ""
-"Použite kompenzáciu čierneho bodu (pokiaľ nemáte dôvod ju nepoužívať)."
+msgstr "Použite kompenzáciu čierneho bodu (pokiaľ nemáte dôvod ju nepoužívať)."
 
 #: libgimpconfig/gimpcolorconfig.c:90
 msgid ""
@@ -2213,22 +2132,16 @@ msgstr ""
 "Ak je zakázané, zobrazenie obrázka môže byť lepšej kvality na úkor rýchlosti."
 
 #: libgimpconfig/gimpcolorconfig.c:94
-#| msgid ""
-#| "How colors are converted from your image's color space to the output "
-#| "simulation device (usually your monitor). Try them all and choose what "
-#| "looks the best. "
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best."
 msgstr ""
-"Akým spôsobom sú konvertované farby z farebného priestoru vášho obrázka do výstupného "
-"simulovaného zariadenia (obvykle vášho monitoru). Skúste všetky a zvoľte, "
-"ktorý vyzerá najlepšie. "
+"Akým spôsobom sú konvertované farby z farebného priestoru vášho obrázka do "
+"výstupného simulovaného zariadenia (obvykle vášho monitoru). Skúste všetky a "
+"zvoľte, ktorý vyzerá najlepšie. "
 
 #: libgimpconfig/gimpcolorconfig.c:99
-#| msgid ""
-#| "Try with and without black point compensation and choose what looks best. "
 msgid ""
 "Try with and without black point compensation and choose what looks best."
 msgstr "Skúste s a bez kompenzácie čierneho bodu a zvoľte, čo vyzerá lepšie. "
@@ -2237,13 +2150,11 @@ msgstr "Skúste s a bez kompenzácie čierneho bodu a zvoľte, čo vyzerá lepš
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
-"Ak je zakázané, náhľad tlačového výstupu môže byť lepšej kvality na úkor rýchlosti."
+"Ak je zakázané, náhľad tlačového výstupu môže byť lepšej kvality na úkor "
+"rýchlosti."
 
 # tooltip
 #: libgimpconfig/gimpcolorconfig.c:107
-#| msgid ""
-#| "When enabled, the print simulation will mark colors which can not be "
-#| "represented in the target color space."
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
@@ -2267,8 +2178,8 @@ msgstr ""
 msgid ""
 "When enabled, set the color scales to display HSV blend mode instead of LCh"
 msgstr ""
-"Ak je povolené, nastaví farebné stupnice na zobrazenie režimu miešania "
-"HSV namiesto LCh"
+"Ak je povolené, nastaví farebné stupnice na zobrazenie režimu miešania HSV "
+"namiesto LCh"
 
 #: libgimpconfig/gimpcolorconfig.c:225
 msgid "Mode of operation"
@@ -2571,7 +2482,6 @@ msgstr "Mierky"
 #: libgimpwidgets/gimpcolorselect.c:2094 modules/color-selector-water.c:206
 #: modules/color-selector-water.c:242 modules/color-selector-wheel.c:136
 #: modules/color-selector-wheel.c:175
-#| msgid "Profile: %s"
 msgid "Profile: sRGB"
 msgstr "Profil: sRGB"
 
@@ -2600,7 +2510,6 @@ msgstr "Profil: %s"
 
 #: libgimpwidgets/gimpcolorscales.c:722 libgimpwidgets/gimpcolorselect.c:2126
 #: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
-#| msgid "Profile: (none)"
 msgid "Profile: <i>unknown</i>"
 msgstr "Profil: <i>neznámy</i>"
 
@@ -2615,7 +2524,6 @@ msgstr "Profil náhľadu tlačového výstupu: sRGB"
 
 #: libgimpwidgets/gimpcolorselect.c:800
 #, c-format
-#| msgid "Profile: %s"
 msgid "Soft-Proof Profile: %s"
 msgstr "Profil náhľadu tlačového výstupu: %s"
 
@@ -2711,8 +2619,6 @@ msgid "Gibibyte"
 msgstr "Gibibajt"
 
 #: libgimpwidgets/gimppageselector.c:182
-#| msgctxt "page-selector-target"
-#| msgid "Images"
 msgid "N Pages"
 msgstr "N strán"
 
@@ -2722,8 +2628,6 @@ msgstr "Počet strán na otvorenie"
 
 # Veľkosť štvorcov šachovnice
 #: libgimpwidgets/gimppageselector.c:196
-#| msgctxt "check-size"
-#| msgid "Large"
 msgid "Target"
 msgstr "Cieľ"
 
@@ -2764,7 +2668,6 @@ msgstr "Jedna stránka vybraná"
 
 #: libgimpwidgets/gimppageselector.c:1040
 #, c-format
-#| msgid "One page selected"
 msgid "The page is selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d strán vybraných"
@@ -2773,8 +2676,6 @@ msgstr[2] "%d strany vybrané"
 
 #: libgimpwidgets/gimppageselector.c:1044
 #, c-format
-#| msgid "%d page selected"
-#| msgid_plural "All %d pages selected"
 msgid "%d page selected"
 msgid_plural "%d pages selected"
 msgstr[0] "%d strán vybraných"
@@ -2856,7 +2757,7 @@ msgstr "_Nová báza"
 # tootlip
 #: libgimpwidgets/gimpwidgets.c:280
 msgid "Seed random number generator with a generated random number"
-msgstr "Nastaví generátor náhodných čísel generovaným náhodným číslom"
+msgstr "Nastaví generátor náhodných čísiel generovaným náhodným číslom"
 
 #: libgimpwidgets/gimpwidgets.c:284
 msgid "_Randomize"
@@ -2969,13 +2870,10 @@ msgstr "_L"
 # Režim desaturácie (odfarbenia)
 # Je to za Choose shade of gray based on:
 #: libgimpwidgets/gimpwidgetsenums.c:137
-#| msgctxt "desaturate-mode"
-#| msgid "Lightness"
 msgid "LCh Lightness"
 msgstr "Svetlosť LCh"
 
 #: libgimpwidgets/gimpwidgetsenums.c:138
-#| msgid "_C"
 msgctxt "color-selector-channel"
 msgid "_C"
 msgstr "_C"
@@ -3459,9 +3357,9 @@ msgid ""
 "profile)"
 msgstr ""
 "ACES RRT (RRT = referenčná transformácia renderovania). Filter farebného "
-"zobrazenia pre prevod HDR na SDR, používajúci aproximáciu ACES RRT len "
-"na základe jasu, s vopred definovaným filmickým vzhľadom na použitie "
-"pred ODT (profil ICC zobrazenia alebo výstupného priestoru)"
+"zobrazenia pre prevod HDR na SDR, používajúci aproximáciu ACES RRT len na "
+"základe jasu, s vopred definovaným filmickým vzhľadom na použitie pred ODT "
+"(profil ICC zobrazenia alebo výstupného priestoru)"
 
 #: modules/display-filter-aces-rrt.c:121
 msgid "Pre-transform change in stops"
@@ -3476,7 +3374,6 @@ msgstr "Aces RRT"
 #. * that highlights pixels outside of the color space range.
 #. * Shown as a label description.
 #: modules/display-filter-clip-warning.c:125
-#| msgid "Gamma color display filter"
 msgid "Clip warning color display filter"
 msgstr "Filter farebného zobrazenia s upozornením na orezanie"
 
@@ -3530,8 +3427,6 @@ msgstr "Zobraziť upozornenie na pixely s nekonečnou alebo NaN zložkou"
 
 # Typ palety
 #: modules/display-filter-clip-warning.c:215
-#| msgctxt "image-base-type"
-#| msgid "RGB color"
 msgid "Bogus color"
 msgstr "Neplatná farba"
 
