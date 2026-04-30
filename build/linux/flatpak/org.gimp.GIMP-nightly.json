@@ -135,8 +135,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.10.tar.gz",
-                    "sha256": "b61ae2d0fa4872c5f5fc45618f107945df37c0eba4853263091b949c513d3319",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.11.tar.gz",
+                    "sha256": "63730442f5fd6c5a79395bdd199040ab3821c229066049f52a57424a984b16ed",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -589,8 +589,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/HEASARC/cfitsio/archive/refs/tags/cfitsio-4.6.3.tar.gz",
-                    "sha256": "e9f1017e942f4a90d2db8984a7677e9d01a5da877a43ed905b9b5108451a68a0",
+                    "url": "https://github.com/HEASARC/cfitsio/archive/refs/tags/cfitsio-4.6.4.tar.gz",
+                    "sha256": "fb09b18638b0a71fa3c2612aac4fafd29cae8642266ba690803eb95f037a5268",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 270,
