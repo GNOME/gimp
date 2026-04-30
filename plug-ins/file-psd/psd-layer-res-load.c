@@ -221,8 +221,14 @@ static gint     load_resource_ltxt    (const PSDlayerres     *res_a,
                                        GError               **error);
 
 /*  Other functions */
+static JsonNode* add_descriptor_text  (const gchar           *key,
+                                       const gchar           *type,
+                                       const gchar           *name,
+                                       const gchar           *value);
+
 static gint     parse_text_info       (guint32                len,
                                        gchar                 *buf,
+                                       JsonNode             **tdta_root,
                                        GError               **error);
 
 static gint     parse_descriptor      (GInputStream          *input,
@@ -245,6 +251,9 @@ static gint     load_type             (GInputStream          *input,
                                        const gchar           *type,
                                        JsonNode	            **node,
                                        GError               **error);
+
+static JsonNode* add_descriptor_objc  (const gchar           *key,
+                                       const gchar           *type);
 
 
 /* Public Functions */
@@ -1230,7 +1239,7 @@ static gint load_resource_ltxt (const PSDlayerres  *res_a,
       return -1;
     }
   IFDBG(3) g_debug ("Parse text info at offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
-  parse_text_info (res_len, buf, error);
+  parse_text_info (res_len, buf, NULL, error);
   g_free(buf);
   return 0;
 }
@@ -1747,43 +1756,83 @@ load_resource_cinf (const PSDlayerres  *res_a,
   return 0;
 }
 
-static gint parse_text_info (guint32    len,
-                             gchar     *buf,
-                             GError   **error)
+static gint parse_tdta (guint32    len,
+                        gchar     *buf,
+                        JsonNode **tdta_root,
+                        GError   **error)
 {
-  gint      lvl    = 0;
-  gint      ar_lvl = 0;
-  guint32   bufpos = 0;
-  guint32   cmdpos = 0;
-  guint32   val_len = 0;
-  guint32   val_pos = 0;
-  guint32   value_start_pos = 0;
-  /*gchar    *value;*/
-  gchar    *last_cmd = NULL;
-  gboolean  reading_command = FALSE;
-  gboolean  reading_value   = FALSE;
-  gboolean  reading_binary  = FALSE;
-  /*gboolean  read_utf16      = FALSE;*/
+  JsonObject *obj             = NULL;
+  JsonArray  *arr             = NULL;
+  JsonNode   *local           = NULL;
+  JsonNode   *root            = NULL;
 
-  IFDBG(3) g_debug ("Parsing text info starts...\n");
-  while (bufpos < len)
+  /* Initialize our json objects used to store the collected information. */
+  if (tdta_root == NULL || *tdta_root == NULL)
+    {
+      local = json_node_new (JSON_NODE_OBJECT);
+      obj = json_object_new ();
+      json_node_init_object (local, obj);
+      if (tdta_root)
+        *tdta_root = local;
+    }
+  else
+    {
+      root = *tdta_root;
+      obj = json_node_get_object (root);
+    }
+  arr = json_array_new ();
+  json_object_set_array_member (obj, "descriptor", arr);
+
+  return parse_text_info (len, buf, &root, error);
+}
+
+static gint parse_level (guint32    len,
+                         gchar     *buf,
+                         JsonNode **node,
+                         GError   **error)
+{
+  //
+  return 0;
+}
+
+typedef  struct {
+    gint        lvl;
+    gint        ar_lvl;
+    guint32     bufpos;
+    guint32     cmdpos;
+    guint32     val_len;
+    guint32     val_pos;
+    guint32     value_start_pos;
+    gchar      *last_cmd;
+    gboolean    reading_command;
+    gboolean    reading_value;
+    gboolean    reading_binary;
+  } ParserData;
+
+static gint parse_text_loop (guint32      len,
+                             gchar       *buf,
+                             JsonNode   **node,
+                             ParserData  *data,
+                             GError     **error)
+{
+  while (data->bufpos < len)
     {
       const gint COMMAND_SIZE = 128; /* No idea what the real Photoshop maximum is. */
       gchar token;
       gchar command[COMMAND_SIZE+1];
       gchar simple_value[COMMAND_SIZE+1];
 
-      token = buf[bufpos];
+      token = buf[data->bufpos];
 
-      if (reading_binary)
+      if (data->reading_binary)
         {
           gchar     nexttoken = ' ';
           gboolean  endbinary = FALSE;
 
           /* reading 16-bit values unless token == ) */
-          if (token == ')' && bufpos < len)
+          if (token == ')' && data->bufpos < len)
             {
-              nexttoken = buf[bufpos+1];
+              nexttoken = buf[data->bufpos+1];
               //g_printerr ("bufpos: %u, token: %.2x\n", bufpos+1-value_start_pos, nexttoken);
               if (nexttoken == ' '  ||
                   nexttoken == 0x09 ||
@@ -1793,7 +1842,7 @@ static gint parse_text_info (guint32    len,
 
           if (! endbinary)
             {
-              bufpos++;
+              data->bufpos++;
               /*if (bufpos < len)
                 bufpos++;*/
               continue;
@@ -1807,29 +1856,30 @@ static gint parse_text_info (guint32    len,
       switch (token)
         {
         case '(': /* start of binary value */
-          reading_binary = TRUE;
-          value_start_pos = bufpos + 1;
+          data->reading_binary = TRUE;
+          data->value_start_pos = data->bufpos + 1;
           IFDBG(4) g_debug ("Binary value start");
           break;
         case ')': /* end of binary value */
-          reading_binary = FALSE;
+          data->reading_binary = FALSE;
           /*read_utf16    = FALSE;*/
-          val_len = bufpos - value_start_pos;
+          data->val_len = data->bufpos - data->value_start_pos;
           /* TODO: Copy value to buffer and then use a separate function
                    to parse that value... */
-          if (strcmp (last_cmd, "Name") == 0 ||
-              strcmp (last_cmd, "InternalName") == 0 ||
-              strcmp (last_cmd, "Text") == 0)
+          if (strcmp (data->last_cmd, "Name") == 0 ||
+              strcmp (data->last_cmd, "InternalName") == 0 ||
+              strcmp (data->last_cmd, "Text") == 0)
             {
               gchar  *name_utf16;
               gchar  *name_utf8;
               GError *error = NULL;
               gsize   bw, br;
+              JsonNode *new_node = NULL;
 
               /* Get the name as UTF-8 from UTF-16 data. */
-              name_utf16 = g_malloc0 (val_len + 2);
-              memcpy (name_utf16, &buf[value_start_pos+2], val_len-2);
-              name_utf8 = g_convert (name_utf16, val_len, "utf-8", "utf-16BE", &br, &bw, &error);
+              name_utf16 = g_malloc0 (data->val_len + 2);
+              memcpy (name_utf16, &buf[data->value_start_pos+2], data->val_len-2);
+              name_utf8 = g_convert (name_utf16, data->val_len, "utf-8", "utf-16BE", &br, &bw, &error);
               //g_printerr ("utf8 length: %d, bytes read: %d, written: %d\n", strlen(name_utf8), br, bw);
               if (error)
                 {
@@ -1837,45 +1887,49 @@ static gint parse_text_info (guint32    len,
                   g_clear_error (&error);
                 }
               IFDBG(2) g_debug ("Text value: '%s'", name_utf8);
+              new_node = add_descriptor_text (data->last_cmd, "utf16string", "name", simple_value);
+              if (node)
+                //  json_array_add_element (arr, new_node);
+                *node = new_node;
               g_free (name_utf16);
               g_free (name_utf8);
             }
-          IFDBG(4) g_debug ("Binary value end, value length: %u bytes", val_len);
+          IFDBG(4) g_debug ("Binary value end, value length: %u bytes", data->val_len);
           break;
         case '/': /* start of command */
-          reading_command = TRUE;
-          cmdpos = 0;
+          data->reading_command = TRUE;
+          data->cmdpos = 0;
           break;
         case 'a'...'z':
         case 'A'...'Z':
         case '0'...'9':
         case '-':
         case '.':
-          if (reading_command)
+          if (data->reading_command)
             {
               if (token == '-' || token == '.')
                 {
                   IFDBG(2) g_debug ("Unexpected token %c in command!", token);
                 }
-              else if (cmdpos < COMMAND_SIZE)
+              else if (data->cmdpos < COMMAND_SIZE)
                 {
-                  command[cmdpos++] = token;
+                  command[data->cmdpos++] = token;
                 }
               else
                 {
                   g_printerr ("Warning: text command token too long!\n");
                 }
             }
-          else if (! reading_binary)
+          else if (! data->reading_binary)
             {
-              if (! reading_value)
+              if (! data->reading_value)
                 {
-                  reading_value = TRUE;
-                  val_pos = 0;
+                  data->reading_value = TRUE;
+                  data->val_pos = 0;
                 }
-              if (val_pos < COMMAND_SIZE)
+              if (data->val_pos < COMMAND_SIZE)
                 {
-                  simple_value[val_pos++] = token;
+                  simple_value[data->val_pos++] = token;
                 }
               else
                 {
@@ -1886,82 +1940,144 @@ static gint parse_text_info (guint32    len,
         case ' ':
         case 0x09: /* TAB character */
         case 0x0a: /* newline character */
-          if (reading_command)
+          if (data->reading_command)
             {
-              command[cmdpos] = '\0';
-              cmdpos = 0;
-              reading_command = FALSE;
-              g_free (last_cmd);
-              last_cmd = g_strdup ((const gchar *) &command);
-              IFDBG(2) g_debug ("Command: %s at level %d", command, lvl);
+              command[data->cmdpos] = '\0';
+              data->cmdpos = 0;
+              data->reading_command = FALSE;
+              g_free (data->last_cmd);
+              data->last_cmd = g_strdup ((const gchar *) &command);
+              IFDBG(2) g_debug ("Command: %s at level %d", command, data->lvl);
             }
-          else if (reading_value)
+          else if (data->reading_value)
             {
-              simple_value[val_pos] = '\0';
-              val_pos = 0;
-              reading_value = FALSE;
+              JsonNode *new_node = NULL;
+
+              simple_value[data->val_pos] = '\0';
+              data->val_pos = 0;
+              data->reading_value = FALSE;
               IFDBG(2) g_debug ("Value: %s", simple_value);
+              new_node = add_descriptor_text (data->last_cmd, "string", "name", simple_value);
+              if (node)
+                //json_array_add_element (arr, new_node);
+                *node = new_node;
             }
           break;
         case '<': /* Increase level */
-          if (buf[bufpos+1] == '<') //TODO: test buffer overrun
+          if (buf[data->bufpos+1] == '<') //TODO: test buffer overrun
             {
-              lvl++;
-              bufpos++;
+              JsonNode *new_level = NULL;
+
+              new_level = add_descriptor_objc (data->last_cmd, "Objc");
+
+              data->lvl++;
+              data->bufpos++;
+
+              data->bufpos++;
+              parse_text_loop (len, buf, &new_level, data, error);
+              *node = new_level;
             }
           break;
         case '>': /* Decrease level */
-          if (buf[bufpos+1] == '>') //TODO: test buffer overrun
+          if (buf[data->bufpos+1] == '>') //TODO: test buffer overrun
             {
-              lvl--;
-              bufpos++;
+              data->lvl--;
+              data->bufpos++;
+              //data->bufpos++;
+              return data->bufpos;
             }
           break;
         case '[': /* begin array */
-          ar_lvl++;
-          IFDBG(2) g_debug ("Array start, level %d", ar_lvl);
+          data->ar_lvl++;
+          IFDBG(2) g_debug ("Array start, level %d", data->ar_lvl);
           break;
         case ']': /* end array */
-          ar_lvl--;
-          IFDBG(2) g_debug ("Array end, level %d", ar_lvl);
+          data->ar_lvl--;
+          IFDBG(2) g_debug ("Array end, level %d", data->ar_lvl);
           break;
         case (gchar) 0xfe: /* feff is UTF-16 BOM */
-          if (reading_command)
+          if (data->reading_command)
             {
-              if (buf[bufpos+1] == (gchar) 0xff) //TODO: test buffer overrun
+              if (buf[data->bufpos+1] == (gchar) 0xff) //TODO: test buffer overrun
                 {
-                  bufpos++;
+                  data->bufpos++;
                   IFDBG(2) g_debug ("Value is using UTF-16");
                 }
             }
           break;
         default:
-          if (reading_command)
+          if (data->reading_command)
             {
-              command[cmdpos] = '\0';
-              cmdpos = 0;
-              g_free (last_cmd);
-              last_cmd = g_strdup ((const gchar *) &command);
-              reading_command = FALSE;
-              IFDBG(2) g_debug ("--> Error: unexpected token! Command: %s at level %d", command, lvl);
+              command[data->cmdpos] = '\0';
+              data->cmdpos = 0;
+              g_free (data->last_cmd);
+              data->last_cmd = g_strdup ((const gchar *) &command);
+              data->reading_command = FALSE;
+              IFDBG(2) g_debug ("--> Error: unexpected token! Command: %s at level %d", command, data->lvl);
               g_warning ("Unexpected token. Command: %s", command);
             }
-          else if (reading_value)
+          else if (data->reading_value)
             {
-              simple_value[val_pos] = '\0';
-              val_pos = 0;
-              reading_value = FALSE;
+              simple_value[data->val_pos] = '\0';
+              data->val_pos = 0;
+              data->reading_value = FALSE;
               IFDBG(2) g_debug ("--> Error: unexpected token! Value: %s", simple_value);
               g_warning ("Unexpected token value.");
             }
           break;
         }
-      bufpos++;
+      data->bufpos++;
     }
-  g_free (last_cmd);
+  return data->bufpos;
+}
+
+
+static gint parse_text_info (guint32    len,
+                             gchar     *buf,
+                             JsonNode **tdta_root,
+                             GError   **error)
+{
+
+  /*gint        lvl    = 0;
+  gint        ar_lvl = 0;
+  guint32     bufpos = 0;
+  guint32     cmdpos = 0;
+  guint32     val_len = 0;
+  guint32     val_pos = 0;
+  guint32     value_start_pos = 0;
+  gchar      *last_cmd        = NULL;
+  gboolean    reading_command = FALSE;
+  gboolean    reading_value   = FALSE;
+  gboolean    reading_binary  = FALSE;*/
+  ParserData  data = {};
+  JsonObject *obj            = NULL;
+  JsonArray  *arr            = NULL;
+  JsonNode   *root           = NULL;
+
+  if (tdta_root == NULL || *tdta_root == NULL)
+    {
+      g_warning ("Invalid root node!");
+      return -1;
+    }
+  root = *tdta_root;
+  obj  = json_node_get_object (root);
+  arr  = json_array_new ();
+  json_object_set_array_member (obj, "descriptor", arr);
+
+  IFDBG(3) g_debug ("Parsing text info starts...\n");
+
+  parse_text_loop (len, buf, &root, &data, error);
+
+  g_free (data.last_cmd);
   IFDBG(3) g_debug ("Parsing text info done.\n");
 
-  return bufpos;
+  if (root)
+    {
+      /* Print json for debugging... */
+      g_printerr ("Json:\n%s\n", json_to_string (root, TRUE));
+    }
+
+  return data.bufpos;
 }
 
 static gint
@@ -2672,11 +2788,13 @@ load_type (GInputStream  *input,
   else if (memcmp (type, "tdta", 4) == 0)
     {
       /* Raw Data */
-      guint32  size = 0;
-      goffset  ofs;
-      gchar   *buf = NULL;
+      guint32   size      = 0;
+      goffset   ofs;
+      gint      res;
+      gchar    *buf       = NULL;
+      JsonNode *tdta_node = NULL;
 
-      g_message ("FIXME Type: %.4s - missing json conversion", type);
+      //g_message ("FIXME Type: %.4s - missing json conversion", type);
 
       if (psd_read (input, &size, 4, error) < 4)
         {
@@ -2694,7 +2812,17 @@ load_type (GInputStream  *input,
           psd_set_error (error);
           return -1;
         }
-      parse_text_info (size, buf, error);
+
+      IFDBG(3) g_debug ("tdta begin");
+      tdta_node = add_descriptor_objc (key, type);
+      //res = load_descriptor (input, ibm_pc_format, &tdta_node, error);
+      //if (res < 0)
+      //  return res;
+
+      parse_tdta (size, buf, &tdta_node, error);
+      *node = tdta_node;
+      IFDBG(3) g_debug ("tdta end");
+
       g_free (buf);
       if (! psd_seek (input, ofs, G_SEEK_SET, error))
         {
