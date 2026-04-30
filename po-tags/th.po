@@ -1,0 +1,27 @@
+# Thai translation for gimp.
+# Copyright (C) 2026 gimp's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp package.
+# Aefgh Threenine <aefgh39622@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp gimp-3-2\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2022-06-25 08:25+0000\n"
+"PO-Revision-Date: 2026-04-30 23:10+0700\n"
+"Last-Translator: \n"
+"Language-Team: Thai <th@li.org>\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+
+#: data/tags/gimp-tags-default.xml.in:11 data/tags/gimp-tags-default.xml.in:19
+msgid "round"
+msgstr "มุมมน"
+
+#. fuzzy as in a feathered, blurred, unfocused, soft brush
+#: data/tags/gimp-tags-default.xml.in:18
+msgid "fuzzy"
+msgstr "ยุ่งเหยิง"
