@@ -214,9 +214,7 @@ gimp_tool_group_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_ACTIVE_TOOL:
-      g_free (tool_group->priv->active_tool);
-
-      tool_group->priv->active_tool = g_value_dup_string (value);
+      g_set_str (&tool_group->priv->active_tool, g_value_get_string (value));
       break;
 
     case PROP_CHILDREN:

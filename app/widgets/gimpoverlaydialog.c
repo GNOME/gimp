@@ -300,15 +300,13 @@ gimp_overlay_dialog_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TITLE:
-      g_free (dialog->title);
-      dialog->title = g_value_dup_string (value);
+      g_set_str (&dialog->title, g_value_get_string (value));
       if (dialog->title_label)
         gtk_label_set_text (GTK_LABEL (dialog->title_label), dialog->title);
       break;
 
     case PROP_ICON_NAME:
-      g_free (dialog->icon_name);
-      dialog->icon_name = g_value_dup_string (value);
+      g_set_str (&dialog->icon_name, g_value_get_string (value));
       if (dialog->icon_image)
         gtk_image_set_from_icon_name (GTK_IMAGE (dialog->icon_image),
                                       dialog->icon_name, GTK_ICON_SIZE_MENU);

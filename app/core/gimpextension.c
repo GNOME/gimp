@@ -162,8 +162,7 @@ gimp_extension_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_PATH:
-      g_free (extension->p->path);
-      extension->p->path = g_value_dup_string (value);
+      g_set_str (&extension->p->path, g_value_get_string (value));
       gimp_object_take_name (GIMP_OBJECT (object),
                              g_path_get_basename (extension->p->path));
       break;

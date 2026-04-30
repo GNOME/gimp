@@ -151,22 +151,14 @@ gimp_rc_set_property (GObject      *object,
       break;
 
     case PROP_SYSTEM_GIMPRC:
-      if (rc->system_gimprc)
-        g_object_unref (rc->system_gimprc);
-
-      if (g_value_get_object (value))
-        rc->system_gimprc = g_value_dup_object (value);
-      else
+      g_set_object (&rc->system_gimprc, g_value_get_object (value));
+      if (! rc->system_gimprc)
         rc->system_gimprc = gimp_sysconf_directory_file ("gimprc", NULL);
       break;
 
     case PROP_USER_GIMPRC:
-      if (rc->user_gimprc)
-        g_object_unref (rc->user_gimprc);
-
-      if (g_value_get_object (value))
-        rc->user_gimprc = g_value_dup_object (value);
-      else
+      g_set_object (&rc->user_gimprc, g_value_get_object (value));
+      if (! rc->user_gimprc)
         rc->user_gimprc = gimp_directory_file ("gimprc", NULL);
       break;
 

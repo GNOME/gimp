@@ -317,8 +317,7 @@ gimp_ui_manager_set_property (GObject      *object,
   switch (prop_id)
     {
     case PROP_NAME:
-      g_free (manager->name);
-      manager->name = g_value_dup_string (value);
+      g_set_str (&manager->name, g_value_get_string (value));
       break;
 
     case PROP_GIMP:

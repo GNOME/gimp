@@ -232,9 +232,7 @@ gimp_pdb_dialog_set_property (GObject      *object,
       break;
 
     case PROP_CALLBACK_NAME:
-      if (dialog->callback_name)
-        g_free (dialog->callback_name);
-      dialog->callback_name = g_value_dup_string (value);
+      g_set_str (&dialog->callback_name, g_value_get_string (value));
       break;
 
     case PROP_MENU_FACTORY:
