@@ -54,9 +54,6 @@ struct _GimpLevelsTool
   GtkAdjustment  *high_input;
 
   GtkWidget      *output_bar;
-
-  /* export dialog */
-  gboolean        export_old_format;
 };
 
 struct _GimpLevelsToolClass

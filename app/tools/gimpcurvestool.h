@@ -47,9 +47,6 @@ struct _GimpCurvesTool
   GtkWidget        *point_output;
   GtkWidget        *point_type;
   GtkWidget        *curve_type;
-
-  /* export dialog */
-  gboolean          export_old_format;
 };
 
 struct _GimpCurvesToolClass
