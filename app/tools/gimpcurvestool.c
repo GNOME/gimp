@@ -47,6 +47,7 @@
 #include "widgets/gimpcurveview.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpsettingsbox.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
@@ -102,10 +103,6 @@ static void        gimp_curves_tool_color_picked    (GimpFilterTool       *filte
                                                      const Babl           *sample_format,
                                                      GeglColor            *color);
 
-static void        gimp_curves_tool_export_setup    (GimpSettingsBox      *settings_box,
-                                                     GtkFileChooserDialog *dialog,
-                                                     gboolean              export,
-                                                     GimpCurvesTool       *tool);
 static void        gimp_curves_tool_update_channel  (GimpCurvesTool       *tool);
 static void        gimp_curves_tool_update_point    (GimpCurvesTool       *tool);
 
@@ -468,11 +465,9 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   GtkWidget        *bar;
   GtkWidget        *combo;
 
-  g_signal_connect (filter_tool->settings_box, "file-dialog-setup",
-                    G_CALLBACK (gimp_curves_tool_export_setup),
-                    filter_tool);
-
   main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
+
+  gimp_settings_box_show_legacy (GIMP_SETTINGS_BOX (filter_tool->settings_box));
 
   /*  The combo box for selecting channels  */
   main_frame = gimp_frame_new (NULL);
@@ -789,10 +784,10 @@ gimp_curves_tool_settings_export (GimpFilterTool  *filter_tool,
                                   GOutputStream   *output,
                                   GError         **error)
 {
-  GimpCurvesTool   *tool   = GIMP_CURVES_TOOL (filter_tool);
-  GimpCurvesConfig *config = GIMP_CURVES_CONFIG (filter_tool->config);
+  GimpCurvesConfig *config   = GIMP_CURVES_CONFIG (filter_tool->config);
+  GimpSettingsBox  *settings = GIMP_SETTINGS_BOX (filter_tool->settings_box);
 
-  if (tool->export_old_format)
+  if (gimp_settings_box_get_legacy (settings))
     return gimp_curves_config_save_cruft (config, output, error);
 
   return GIMP_FILTER_TOOL_CLASS (parent_class)->settings_export (filter_tool,
@@ -834,28 +829,6 @@ gimp_curves_tool_color_picked (GimpFilterTool *filter_tool,
 
   gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
                             tool->picked_color[config->channel]);
-}
-
-static void
-gimp_curves_tool_export_setup (GimpSettingsBox      *settings_box,
-                               GtkFileChooserDialog *dialog,
-                               gboolean              export,
-                               GimpCurvesTool       *tool)
-{
-  GtkWidget *button;
-
-  if (! export)
-    return;
-
-  button = gtk_check_button_new_with_mnemonic (_("Use _old curves file format"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                tool->export_old_format);
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), button);
-  gtk_widget_set_visible (button, TRUE);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &tool->export_old_format);
 }
 
 static void

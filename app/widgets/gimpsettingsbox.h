@@ -41,9 +41,6 @@ struct _GimpSettingsBoxClass
   GtkBoxClass  parent_class;
 
   /*  signals  */
-  void (* file_dialog_setup) (GimpSettingsBox      *box,
-                              GtkFileChooserDialog *dialog,
-                              gboolean              export);
   void (* import)            (GimpSettingsBox      *box,
                               GFile                *file);
   void (* export)            (GimpSettingsBox      *box,
@@ -68,5 +65,8 @@ GtkWidget * gimp_settings_box_get_combo   (GimpSettingsBox *box);
 
 void        gimp_settings_box_add_current (GimpSettingsBox *box,
                                            gint             max_recent);
+
+gboolean    gimp_settings_box_get_legacy  (GimpSettingsBox *box);
+void        gimp_settings_box_show_legacy (GimpSettingsBox *box);
 
 void        gimp_settings_box_unset       (GimpSettingsBox *box);
