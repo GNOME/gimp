@@ -554,14 +554,10 @@ printf "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K\n"
 printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KChecksumming $APPIMAGETOOL_APP_NAME\n"
 sha256=$(sha256sum $APPIMAGETOOL_APP_NAME)
 printf "(INFO): $APPIMAGETOOL_APP_NAME SHA-256: $(echo $sha256 | cut -d ' ' -f 1)\n"
-if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   echo $sha256 > $APPIMAGETOOL_APP_NAME.SHA256SUMS
-fi
 sha512=$(sha512sum $APPIMAGETOOL_APP_NAME)
 printf "(INFO): $APPIMAGETOOL_APP_NAME SHA-512: $(echo $sha512 | cut -d ' ' -f 1)\n"
-if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   echo $sha512 > $APPIMAGETOOL_APP_NAME.SHA512SUMS
-fi
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K\n"
 
 
