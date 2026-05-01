@@ -784,7 +784,7 @@ gimp_curves_tool_settings_export (GimpFilterTool  *filter_tool,
                                   GOutputStream   *output,
                                   GError         **error)
 {
-  GimpCurvesConfig *config = GIMP_CURVES_CONFIG (filter_tool->config);
+  GimpCurvesConfig *config   = GIMP_CURVES_CONFIG (filter_tool->config);
   GimpSettingsBox  *settings = GIMP_SETTINGS_BOX (filter_tool->settings_box);
 
   if (gimp_settings_box_get_legacy (settings))
