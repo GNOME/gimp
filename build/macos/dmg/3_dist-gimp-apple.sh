@@ -82,7 +82,7 @@ printf "\e[0Ksection_end:`date +%s`:mac_info\r\e[0K\n"
 # 3. PREPARE FILES
 for APP in $(echo "$supported_archs" | tr ' ' '\n'); do
 export ARCH=$(echo $APP | sed -e 's|gimp-||' -e 's|./||' -e 's|.app||')
-printf "\e[0Ksection_start:`date +%s`:${ARCH}_files[collapsed=true]\r\e[0KPreparing GIMP files in $ARCH .dmg\n"
+printf "\e[0Ksection_start:`date +%s`:${ARCH}_files[collapsed=true]\r\e[0KPreparing GIMP files in $ARCH DMG\n"
 ## Create temporary .dmg
 APPVER="GIMP $CUSTOM_GIMP_VERSION install"
 hdiutil create -volname "$APPVER" -srcfolder "$APP" -ov -format UDRW "temp_$ARCH.dmg"
@@ -106,7 +106,7 @@ printf "\e[0Ksection_end:`date +%s`:${ARCH}_files\r\e[0K\n"
 
 
 # 4. CREATE ASSETS
-printf "\e[0Ksection_start:`date +%s`:${ARCH}_source[collapsed=true]\r\e[0KMaking .dmg assets for $ARCH .dmg\n"
+printf "\e[0Ksection_start:`date +%s`:${ARCH}_source[collapsed=true]\r\e[0KMaking .dmg assets for $ARCH DMG\n"
 # (We test the existence of the background here (and not on section 4.2.) to avoid configuring Info.plist for nothing)
 BG_PATH="$BUILD_DIR/gimp-data/images/logo/gimp-dmg.png"
 if [ ! -f "$BG_PATH" ]; then
