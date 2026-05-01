@@ -58,7 +58,7 @@ if (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf)
     & "$env:VCPKG_ROOT\vcpkg.exe" install --no-print-usage --recurse (Get-Content build/windows/all-deps-uni.txt | Select-String 'vcpkg:' | ForEach-Object { ($_ -split '\|vcpkg:')[1] }); if ("$LASTEXITCODE" -gt '0') { exit 1 }
     #Needed for finding perl on CI
     & "$env:VCPKG_ROOT\vcpkg.exe" remove --recurse aom; $env:VCPKG_DEFAULT_BINARY_CACHE="$env:VCPKG_ROOT/buildtrees/aom"; & "$env:VCPKG_ROOT\vcpkg.exe" install --no-print-usage --recurse 'libheif[aom,hevc,openjpeg]'; Remove-Item env:VCPKG_DEFAULT_BINARY_CACHE
-    #FIXME: appstream, libmypaint, poppler-data and pygobject are missing on vcpkg
+    #FIXME: appstream and pygobject are missing on vcpkg
     git apply -v 'build\windows\patches\0001-Disable-some-things-due-to-lack-of-packages.patch'; git apply -v 'build/windows/patches/0001-Disable-poppler-which-requires-C-23.patch'; cd gimp-data; git apply -v '..\build\windows\patches\0001-images-Do-not-build-splash-image-on-MSVC.patch'; cd ..
   }
 else
