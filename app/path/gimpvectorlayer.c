@@ -901,10 +901,6 @@ gimp_vector_layer_render_path (GimpVectorLayer *layer)
 
   g_list_free (drawables);
 
-  gimp_rasterizable_auto_rename (GIMP_RASTERIZABLE (layer),
-                                 GIMP_OBJECT (layer->options->path),
-                                 NULL);
-
   gimp_selection_resume (GIMP_SELECTION (selection));
 }
 
