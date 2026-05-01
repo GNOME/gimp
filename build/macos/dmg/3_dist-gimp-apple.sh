@@ -385,8 +385,16 @@ else
 # 6.B GENERATE SHASUMS FOR .DMG
 printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KChecksumming ${DMG_ARTIFACT}\n"
 fi
-printf "(INFO): ${DMG_ARTIFACT} SHA-256: $(shasum -a 256 ${DMG_ARTIFACT} | cut -d ' ' -f 1)\n"
-printf "(INFO): ${DMG_ARTIFACT} SHA-512: $(shasum -a 512 ${DMG_ARTIFACT} | cut -d ' ' -f 1)\n"
+sha256=$(shasum -a 256 ${DMG_ARTIFACT})
+printf "(INFO): ${DMG_ARTIFACT} SHA-256: $(echo $sha256 | cut -d ' ' -f 1)\n"
+if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
+  echo $sha256 > ${DMG_ARTIFACT}.SHA256SUMS
+fi
+sha512=$(shasum -a 512 ${DMG_ARTIFACT})
+printf "(INFO): ${DMG_ARTIFACT} SHA-512: $(echo $sha512 | cut -d ' ' -f 1)\n"
+if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
+  echo $sha512 > ${DMG_ARTIFACT}.SHA512SUMS
+fi
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K\n"
 
 
