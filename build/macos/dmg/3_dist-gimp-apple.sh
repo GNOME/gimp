@@ -401,6 +401,6 @@ printf "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K\n"
 if [ "$GITLAB_CI" ]; then
   output_dir='build/macos/dmg/_Output'
   mkdir -p $output_dir
-  mv -f ${DMG_ARTIFACT} $output_dir
+  mv -f ${DMG_ARTIFACT}* $output_dir
 fi
 done
