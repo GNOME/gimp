@@ -218,6 +218,7 @@ libgimpwidgets = library('gimpwidgets-'+ gimp_api_version,
   vs_module_defs: 'gimpwidgets.def',
   install: true,
   version: so_version,
+  darwin_versions: darwin_versions,
 )
 
 install_headers(

@@ -81,6 +81,7 @@ libgimpconfig = library('gimpconfig-' + gimp_api_version,
   vs_module_defs: 'gimpconfig.def',
   install: true,
   version: so_version,
+  darwin_versions: darwin_versions,
 )
 
 install_headers(

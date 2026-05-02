@@ -75,6 +75,8 @@ lt_age          = gimp_binary_age - gimp_interface_age
 # libtool's -version-info transforms "current:revision:age" into "(current - age).age.revision".
 # Let's compute this ourselves.
 so_version = '@0@.@1@.@2@'.format(lt_current - lt_age, lt_age, lt_revision)
+#Same as darwin_versions of glib meson.build which also follows libtool versioning
+darwin_versions = [lt_current + 1, '@0@.@1@'.format(lt_current + 1, lt_revision)]
 
 
 gimp_command  = 'gimp-' + gimp_app_version

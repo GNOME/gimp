@@ -38,6 +38,7 @@ libgimpmath = library('gimpmath-' + gimp_api_version,
   vs_module_defs: 'gimpmath.def',
   install: true,
   version: so_version,
+  darwin_versions: darwin_versions,
 )
 
 install_headers(

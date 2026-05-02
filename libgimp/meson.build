@@ -435,6 +435,7 @@ libgimp = library('gimp-'+ gimp_api_version,
   vs_module_defs: 'gimp.def',
   install: true,
   version: so_version,
+  darwin_versions: darwin_versions,
 )
 
 # Define an internal dependency for ease of reuse
@@ -473,6 +474,7 @@ libgimpui = library('gimpui-'+ gimp_api_version,
   vs_module_defs: 'gimpui.def',
   install: true,
   version: so_version,
+  darwin_versions: darwin_versions,
 )
 
 # Define an internal dependency for ease of reuse
