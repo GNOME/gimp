@@ -68,5 +68,6 @@ libscriptfu = library('gimp-scriptfu-'+ gimp_api_version,
   ],
   vs_module_defs: 'script-fu.def',
   version: so_version,
+  darwin_versions: darwin_versions,
   install: true,
 )
