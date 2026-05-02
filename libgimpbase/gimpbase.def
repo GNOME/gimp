@@ -19,10 +19,13 @@ EXPORTS
 	gimp_check_type_get_type
 	gimp_checks_get_colors
 	gimp_choice_add
+	gimp_choice_add_deprecated
+	gimp_choice_get_deprecated
 	gimp_choice_get_documentation
 	gimp_choice_get_help
 	gimp_choice_get_id
 	gimp_choice_get_label
+	gimp_choice_get_redirect
 	gimp_choice_get_type
 	gimp_choice_is_valid
 	gimp_choice_list_nicks

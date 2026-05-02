@@ -2724,11 +2724,11 @@ gimp_prop_choice_combo_box_new (GObject     *config,
       const gchar *nick  = iter->data;
       const gchar *label = gimp_choice_get_label (choice, nick);
 
-      gtk_list_store_insert_with_values (store, NULL, -1,
-                                         0, nick,
-                                         1, label,
-                                         -1);
-
+      if (! gimp_choice_get_deprecated (choice, nick))
+        gtk_list_store_insert_with_values (store, NULL, -1,
+                                           0, nick,
+                                           1, label,
+                                           -1);
     }
 
   combo_box = gimp_string_combo_box_new (GTK_TREE_MODEL (store), 0, 1);
@@ -2867,11 +2867,11 @@ gimp_prop_choice_radio_frame_new (GObject     *config,
       const gchar *label = gimp_choice_get_label (choice, nick);
       gint         id    = gimp_choice_get_id (choice, nick);
 
-      gtk_list_store_insert_with_values (GTK_LIST_STORE (store), NULL, -1,
-                                         GIMP_INT_STORE_VALUE, id,
-                                         GIMP_INT_STORE_LABEL, label,
-                                         -1);
-
+      if (! gimp_choice_get_deprecated (choice, nick))
+        gtk_list_store_insert_with_values (GTK_LIST_STORE (store), NULL, -1,
+                                           GIMP_INT_STORE_VALUE, id,
+                                           GIMP_INT_STORE_LABEL, label,
+                                           -1);
     }
 
   frame = gimp_int_radio_frame_new_from_store (NULL, store);

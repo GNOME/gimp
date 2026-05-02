@@ -868,10 +868,12 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 
           for (int i = 0; i < n_choices; i++)
             {
-              gchar *nick  = NULL;
-              gchar *label = NULL;
-              gchar *help  = NULL;
-              gint   id;
+              gchar    *nick     = NULL;
+              gchar    *label    = NULL;
+              gchar    *help     = NULL;
+              gchar    *redirect = NULL;
+              gint      id;
+              gboolean  is_deprecated;
 
               if (! gimp_scanner_parse_string (scanner, &nick))
                 {
@@ -892,10 +894,26 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
                   g_free (help);
                   goto error;
                 }
-              gimp_choice_add (choice, nick, id, label, help);
+              if (! gimp_scanner_parse_int (scanner, &is_deprecated))
+                {
+                  token = G_TOKEN_INT;
+                  goto error;
+                }
+              if (! gimp_scanner_parse_string (scanner, &redirect))
+                {
+                  token = G_TOKEN_STRING;
+                  goto error;
+                }
+
+              if (! is_deprecated)
+                gimp_choice_add (choice, nick, id, label, help);
+              else
+                gimp_choice_add_deprecated (choice, nick, id, redirect);
+
               g_free (nick);
               g_free (label);
               g_free (help);
+              g_free (redirect);
             }
         }
       break;
@@ -1234,15 +1252,26 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
               const gchar *nick = iter->data;
               const gchar *label;
               const gchar *help;
+              const gchar *redirect;
               gint         id;
+              gboolean     is_deprecated;
 
               gimp_choice_get_documentation (param_def.meta.m_choice.choice,
                                              nick, &label, &help);
+              is_deprecated =
+                gimp_choice_get_deprecated (param_def.meta.m_choice.choice,
+                                            nick);
+              redirect =
+                gimp_choice_get_redirect (param_def.meta.m_choice.choice,
+                                          nick);
+
               id = gimp_choice_get_id (param_def.meta.m_choice.choice, nick);
               gimp_config_writer_string (writer, nick);
               gimp_config_writer_printf (writer, "%d", id);
               gimp_config_writer_string (writer, label);
               gimp_config_writer_string (writer, help);
+              gimp_config_writer_printf (writer, "%d", is_deprecated);
+              gimp_config_writer_string (writer, redirect);
             }
         }
       break;

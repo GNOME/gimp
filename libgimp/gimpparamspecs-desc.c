@@ -69,19 +69,28 @@ gimp_param_spec_choice_desc (GParamSpec *pspec)
 
   for (GList *iter = choices; iter; iter = iter->next)
     {
-      gchar *nick  = iter->data;
-      gchar *label = NULL;
-      gchar *help  = NULL;
+      gchar    *nick  = iter->data;
+      gchar    *label = NULL;
+      gchar    *help  = NULL;
 
-      gimp_choice_get_documentation (choice, (const gchar *) nick, (const gchar **) &label, (const gchar **) &help);
-      nick  = g_markup_escape_text (nick, -1);
-      label = g_markup_escape_text (label, -1);
-      help  = (help != NULL ? g_markup_escape_text (help, -1) : NULL);
-      if (help != NULL)
-        /* \xe2\x80\xa2 is the UTF-8 for the bullet point. */
-        g_string_append_printf (desc, "\n\xe2\x80\xa2 <tt>%s</tt>: %s\n\t%s", nick, label, help);
-      else
-        g_string_append_printf (desc, "\n\xe2\x80\xa2 <tt>%s</tt>: %s", nick, label);
+      if (! gimp_choice_get_deprecated (choice, nick))
+        {
+          gimp_choice_get_documentation (choice, (const gchar *) nick,
+                                         (const gchar **) &label,
+                                         (const gchar **) &help);
+          nick  = g_markup_escape_text (nick, -1);
+          label = g_markup_escape_text (label, -1);
+          help  = (help != NULL ? g_markup_escape_text (help, -1) : NULL);
+          if (help != NULL)
+            /* \xe2\x80\xa2 is the UTF-8 for the bullet point. */
+            g_string_append_printf (desc,
+                                    "\n\xe2\x80\xa2 <tt>%s</tt>: %s\n\t%s",
+                                    nick, label, help);
+          else
+            g_string_append_printf (desc,
+                                    "\n\xe2\x80\xa2 <tt>%s</tt>: %s", nick,
+                                    label);
+        }
 
       g_free (nick);
       g_free (label);

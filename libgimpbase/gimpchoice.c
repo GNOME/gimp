@@ -36,6 +36,8 @@ typedef struct _GimpChoiceDesc
   gchar    *help;
   gint      id;
   gboolean  sensitive;
+  gboolean  deprecated;
+  gchar    *redirect_to;
 } GimpChoiceDesc;
 
 enum
@@ -84,8 +86,9 @@ gimp_choice_class_init (GimpChoiceClass *klass)
 static void
 gimp_choice_init (GimpChoice *choice)
 {
-  choice->choices = g_hash_table_new_full (g_str_hash, g_str_equal, g_free,
-                                           (GDestroyNotify) gimp_choice_desc_free);
+  choice->choices =
+    g_hash_table_new_full (g_str_hash, g_str_equal, g_free,
+                           (GDestroyNotify) gimp_choice_desc_free);
 }
 
 static void
@@ -193,12 +196,57 @@ gimp_choice_add (GimpChoice  *choice,
 
   g_return_if_fail (label != NULL);
 
-  desc            = g_new0 (GimpChoiceDesc, 1);
-  desc->id        = id;
-  desc->label     = g_strdup (label);
-  desc->help      = help != NULL ? g_strdup (help) : NULL;
-  desc->sensitive = TRUE;
+  desc              = g_new0 (GimpChoiceDesc, 1);
+  desc->id          = id;
+  desc->label       = g_strdup (label);
+  desc->help        = help != NULL ? g_strdup (help) : NULL;
+  desc->sensitive   = TRUE;
+  desc->deprecated  = FALSE;
+  desc->redirect_to = g_strdup (nick);
   g_hash_table_insert (choice->choices, g_strdup (nick), desc);
+
+  duplicate = g_list_find_custom (choice->keys, nick, (GCompareFunc) g_strcmp0);
+  if (duplicate != NULL)
+    {
+      choice->keys = g_list_remove_link (choice->keys, duplicate);
+      g_free (duplicate->data);
+      g_list_free (duplicate);
+    }
+  choice->keys = g_list_append (choice->keys, g_strdup (nick));
+}
+
+/**
+ * gimp_choice_add_deprecated:
+ * @choice:      the %GimpChoice.
+ * @nick:        the nick of the deprecated @choice.
+ * @id:          optional integer ID for @nick.
+ * @redirect_to: the valid nick to redirect the deprecated one to
+ *
+ * This procedure is used to add a deprecated nick that should be redirected
+ * to a valid nick in @choice.
+ *
+ * Since: 3.4
+ **/
+void
+gimp_choice_add_deprecated (GimpChoice  *choice,
+                            const gchar *nick,
+                            gint         id,
+                            const gchar *redirect_to)
+{
+  GimpChoiceDesc *deprecated_desc;
+  GList          *duplicate;
+
+  g_return_if_fail (nick != NULL);
+
+  deprecated_desc              = g_new0 (GimpChoiceDesc, 1);
+  deprecated_desc->id          = id;
+  deprecated_desc->label       = g_strdup (nick);
+  deprecated_desc->help        = NULL;
+  deprecated_desc->sensitive   = TRUE;
+  deprecated_desc->deprecated  = TRUE;
+  deprecated_desc->redirect_to = g_strdup (redirect_to);
+
+  g_hash_table_insert (choice->choices, g_strdup (nick), deprecated_desc);
 
   duplicate = g_list_find_custom (choice->keys, nick, (GCompareFunc) g_strcmp0);
   if (duplicate != NULL)
@@ -230,6 +278,11 @@ gimp_choice_is_valid (GimpChoice  *choice,
 
   g_return_val_if_fail (GIMP_IS_CHOICE (choice), FALSE);
   g_return_val_if_fail (nick != NULL, FALSE);
+
+  if (gimp_choice_get_deprecated (choice, nick))
+    g_message ("WARNING: file-dds-export: value \"%s\" is deprecated. "
+               "Use \"%s\" instead.", nick,
+               gimp_choice_get_redirect (choice, nick));
 
   desc = g_hash_table_lookup (choice->choices, nick);
   return (desc != NULL && desc->sensitive);
@@ -269,7 +322,14 @@ gimp_choice_get_id (GimpChoice  *choice,
 {
   GimpChoiceDesc *desc;
 
+  g_return_val_if_fail (GIMP_IS_CHOICE (choice), 0);
+  g_return_val_if_fail (nick != NULL, 0);
+
   desc = g_hash_table_lookup (choice->choices, nick);
+  if (desc && ! desc->deprecated)
+    return desc->id;
+
+  desc = g_hash_table_lookup (choice->choices, desc->redirect_to);
   if (desc)
     return desc->id;
   else
@@ -291,8 +351,11 @@ gimp_choice_get_label (GimpChoice  *choice,
 {
   GimpChoiceDesc *desc;
 
+  g_return_val_if_fail (GIMP_IS_CHOICE (choice), NULL);
+  g_return_val_if_fail (nick != NULL, NULL);
+
   desc = g_hash_table_lookup (choice->choices, nick);
-  if (desc)
+  if (desc && ! desc->deprecated)
     return desc->label;
   else
     return NULL;
@@ -355,6 +418,52 @@ gimp_choice_get_documentation (GimpChoice   *choice,
 }
 
 /**
+ * gimp_choice_get_deprecated:
+ * @choice: a %GimpChoice.
+ * @nick:   the nick to lookup.
+ *
+ * Returns: (transfer none): If @nick is deprecated.
+ *
+ * Since: 3.4
+ **/
+gboolean
+gimp_choice_get_deprecated (GimpChoice   *choice,
+                            const gchar  *nick)
+{
+  GimpChoiceDesc *desc;
+
+  desc = g_hash_table_lookup (choice->choices, nick);
+  if (desc)
+    return desc->deprecated;
+
+  return FALSE;
+}
+
+/**
+ * gimp_choice_get_redirect:
+ * @choice: a %GimpChoice.
+ * @nick:   the nick to lookup.
+ *
+ * Returns: (transfer none): The redirected nick for @nick.
+ *
+ * Since: 3.4
+ **/
+const gchar *
+gimp_choice_get_redirect (GimpChoice  *choice,
+                          const gchar *nick)
+{
+  GimpChoiceDesc *desc;
+
+  g_return_val_if_fail (GIMP_IS_CHOICE (choice), NULL);
+  g_return_val_if_fail (nick != NULL, NULL);
+
+  desc = g_hash_table_lookup (choice->choices, nick);
+  g_return_val_if_fail (desc != NULL, NULL);
+
+  return desc->redirect_to;
+}
+
+/**
  * gimp_choice_set_sensitive:
  * @choice: the %GimpChoice.
  * @nick:   the nick to lookup.
@@ -393,6 +502,7 @@ gimp_choice_desc_free (GimpChoiceDesc *desc)
 {
   g_free (desc->label);
   g_free (desc->help);
+  g_free (desc->redirect_to);
   g_free (desc);
 }
 
@@ -420,8 +530,8 @@ static gboolean   gimp_param_choice_validate          (GParamSpec      *pspec,
 static gboolean   gimp_param_choice_value_is_valid    (GParamSpec      *pspec,
                                                        const GValue    *value);
 static gint       gimp_param_choice_values_cmp        (GParamSpec      *pspec,
-                                                      const GValue    *value1,
-                                                      const GValue    *value2);
+                                                       const GValue    *value1,
+                                                       const GValue    *value2);
 
 GType
 gimp_param_choice_get_type (void)

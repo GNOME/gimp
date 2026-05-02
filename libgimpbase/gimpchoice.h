@@ -48,6 +48,10 @@ void            gimp_choice_add               (GimpChoice  *choice,
                                                gint         id,
                                                const gchar *label,
                                                const gchar *help);
+void            gimp_choice_add_deprecated    (GimpChoice  *choice,
+                                               const gchar *nick,
+                                               gint         id,
+                                               const gchar *redirect_to);
 
 gboolean        gimp_choice_is_valid          (GimpChoice   *choice,
                                                const gchar  *nick);
@@ -62,6 +66,10 @@ gboolean        gimp_choice_get_documentation (GimpChoice   *choice,
                                                const gchar  *nick,
                                                const gchar **label,
                                                const gchar **help);
+gboolean        gimp_choice_get_deprecated    (GimpChoice   *choice,
+                                               const gchar  *nick);
+const gchar   * gimp_choice_get_redirect      (GimpChoice   *choice,
+                                               const gchar  *nick);
 
 void            gimp_choice_set_sensitive     (GimpChoice   *choice,
                                                const gchar  *nick,

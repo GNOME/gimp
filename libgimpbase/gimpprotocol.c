@@ -1156,9 +1156,11 @@ _gp_param_def_read (GIOChannel *channel,
 
           for (gint i = 0; i < size; i++)
             {
-              gchar *label;
-              gchar *help;
-              gint   id;
+              gchar    *label;
+              gchar    *help;
+              gchar    *redirect;
+              gint      id;
+              gboolean  is_deprecated;
 
               if (! _gimp_wire_read_string (channel, &nick,
                                            (int) 1, user_data)  ||
@@ -1167,13 +1169,20 @@ _gp_param_def_read (GIOChannel *channel,
                   ! _gimp_wire_read_string (channel, &label,
                                             (int) 1, user_data) ||
                   ! _gimp_wire_read_string (channel, &help,
+                                            (int) 1, user_data) ||
+                  ! _gimp_wire_read_int32 (channel, (guint32 *) &is_deprecated,
+                                           1, user_data)        ||
+                  ! _gimp_wire_read_string (channel, &redirect,
                                             (int) 1, user_data))
                 {
                   g_object_unref (choice);
                   return FALSE;
                 }
 
-              gimp_choice_add (choice, nick, id, label, help);
+              if (! is_deprecated)
+                gimp_choice_add (choice, nick, id, label, help);
+              else
+                gimp_choice_add_deprecated (choice, nick, id, redirect);
             }
           param_def->meta.m_choice.choice = choice;
         }
@@ -1545,10 +1554,19 @@ _gp_param_def_write (GIOChannel *channel,
             {
               const gchar *label;
               const gchar *help;
+              const gchar *redirect;
               gint         id;
+              gboolean     is_deprecated;
 
               gimp_choice_get_documentation (param_def->meta.m_choice.choice,
                                              iter->data, &label, &help);
+              is_deprecated =
+                gimp_choice_get_deprecated (param_def->meta.m_choice.choice,
+                                            iter->data);
+              redirect =
+                gimp_choice_get_redirect (param_def->meta.m_choice.choice,
+                                          iter->data);
+
               id = gimp_choice_get_id (param_def->meta.m_choice.choice,
                                        iter->data);
               if (! _gimp_wire_write_string (channel,
@@ -1562,6 +1580,12 @@ _gp_param_def_write (GIOChannel *channel,
                                              1, user_data)  ||
                   ! _gimp_wire_write_string (channel,
                                              (gchar **) &help,
+                                             1, user_data)  ||
+                  ! _gimp_wire_write_int32 (channel,
+                                            (guint32 *) &is_deprecated, 1,
+                                            user_data)      ||
+                  ! _gimp_wire_write_string (channel,
+                                             (gchar **) &redirect,
                                              1, user_data))
                 return FALSE;
             }
