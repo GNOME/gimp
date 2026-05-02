@@ -43,6 +43,7 @@ libgimpcolor = library('gimpcolor-' + gimp_api_version,
   vs_module_defs: 'gimpcolor.def',
   install: true,
   version: so_version,
+  darwin_versions: darwin_versions,
 )
 
 install_headers(
