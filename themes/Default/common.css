@@ -75,6 +75,11 @@
   background-color: @extreme-selected-color;
 }
 
+/* Highlight row on mouse hover in the search popup results list. */
+.search-results .view:hover {
+  background-color: @hover-color;
+}
+
 /* Define color for drag and drop borders
  * in Layer/Channel/Path dockables */
 GimpDock .view:drop(active) {
