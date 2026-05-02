@@ -841,10 +841,8 @@ tartan-static-analysis:
     DEB_VERSION: "trixie"
     GIT_SUBMODULE_STRATEGY: recursive
     LLVM_VERSION: 18
-    TARTAN_BUILDDIR: "_build-${RUNNER}"
-    GIMP_BUILDDIR: "_build-tartan-${RUNNER}"
-    CC: "clang-${LLVM_VERSION}"
-    CXX: "clang++-${LLVM_VERSION}"
+    CC: "clang"
+    CXX: "clang++"
   script:
     - *ENVIRON
 
@@ -858,38 +856,29 @@ tartan-static-analysis:
                          clang-${LLVM_VERSION}
                          clang-tools-${LLVM_VERSION}
                          libclang-${LLVM_VERSION}-dev
-                         libgirepository-2.0-dev
+                         libgirepository-2.0-dev gir1.2-girepository-2.0-dev
     - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
 
     # Build Tartan from source
     - printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KBuild Tartan\n"
     - git clone https://gitlab.freedesktop.org/tartan/tartan.git tartan
-    - pushd tartan
     # Tartan seems to need to be installed into the same prefix as the version
     # of LLVM we want to use it with.
-    - LLVM_CONFIG=/usr/bin/llvm-config-${LLVM_VERSION} meson setup ${TARTAN_BUILDDIR} -Dprefix="$(llvm-config-${LLVM_VERSION} --prefix)"
-                                                                                      -Dlibdir="$(llvm-config-${LLVM_VERSION} --libdir)"
-    - meson compile -C ${TARTAN_BUILDDIR}
-    - meson install -C ${TARTAN_BUILDDIR}
-    - popd
+    - export LLVM_CONFIG=/usr/bin/llvm-config-${LLVM_VERSION}
+    - meson setup tartan/_build-tartan-${RUNNER} tartan -Dprefix="$(eval $LLVM_CONFIG --prefix)" -Dlibdir="$(eval $LLVM_CONFIG --libdir)"
+    - ninja -C tartan/_build-tartan-${RUNNER}
+    - ninja -C tartan/_build-tartan-${RUNNER} install
     - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
 
     # Run the static analysis
     - printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KBuild GIMP with Tartan\n"
-    - meson setup ${GIMP_BUILDDIR} -Dprefix="${GIMP_PREFIX}"
-                                   $MESON_OPTIONS $WARN_AS_ERROR_ON_CI
-    - SCANBUILD="$(llvm-config-${LLVM_VERSION} --bindir)/tartan-build" ninja -C ${GIMP_BUILDDIR} scan-build
-    - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
-
-    # Save the analysis report
-    - printf "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KSaving build report\n"
-    - mkdir report
-    - mv ${GIMP_BUILDDIR}/meson-logs/scanbuild/* ./report/
+    - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}" $MESON_OPTIONS $WARN_AS_ERROR_ON_CI
+    - SCANBUILD="$(eval $LLVM_CONFIG --bindir)/tartan-build" ninja -C _build-${RUNNER} scan-build
     - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
   allow_failure: true
   artifacts:
     paths:
-      - report/
+      - meson-logs/scanbuild/*
     expire_in: 8 days
 
 issue-bot:
