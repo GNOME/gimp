@@ -790,6 +790,8 @@ gimp_search_popup_setup_results (GtkWidget **results_list,
                               G_TYPE_INT,
                               G_TYPE_STRING);
   *results_list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+  gtk_style_context_add_class (gtk_widget_get_style_context (*results_list),
+                               "search-results");
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (*results_list), FALSE);
 #ifdef GIMP_UNSTABLE
   gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (*results_list),
