@@ -68,7 +68,7 @@ gimp_api_name = 'gimp-' + gimp_api_version
 gimp_interface_age = 1
 
 gimp_binary_age = 100 * gimp_app_version_minor + gimp_app_version_micro
-lt_current      = 100 * gimp_app_version_minor + gimp_app_version_micro - gimp_interface_age
+lt_current      = gimp_binary_age - gimp_interface_age
 lt_revision     = gimp_interface_age
 lt_age          = gimp_binary_age - gimp_interface_age
 
