@@ -159,6 +159,8 @@ dds_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, EXPORT_PROC))
     {
+      GimpChoice *choice;
+
       procedure = gimp_export_procedure_new (plug_in, name,
                                              GIMP_PDB_PROC_TYPE_PLUGIN,
                                              FALSE, dds_export, NULL, NULL);
@@ -192,22 +194,25 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_LAYERS,
                                               NULL, NULL, NULL);
 
+      choice = gimp_choice_new_with_values ("none",   DDS_COMPRESS_NONE,   _("None"),                  NULL,
+                                            "bc1",    DDS_COMPRESS_BC1,    _("BC1 / DXT1"),            NULL,
+                                            "bc2",    DDS_COMPRESS_BC2,    _("BC2 / DXT3"),            NULL,
+                                            "bc3",    DDS_COMPRESS_BC3,    _("BC3 / DXT5"),            NULL,
+                                            "bc3n",   DDS_COMPRESS_BC3N,   _("BC3nm / DXT5nm"),        NULL,
+                                            "bc4",    DDS_COMPRESS_BC4,    _("BC4 / ATI1 (3Dc+)"),     NULL,
+                                            "bc5",    DDS_COMPRESS_BC5,    _("BC5 / ATI2 (3Dc)"),      NULL,
+                                            "bc7",    DDS_COMPRESS_BC7,    "BC7",                      NULL,
+                                            "rxgb",   DDS_COMPRESS_RXGB,   _("RXGB (DXT5)"),           NULL,
+                                            "aexp",   DDS_COMPRESS_AEXP,   _("Alpha Exponent (DXT5)"), NULL,
+                                            "ycocg",  DDS_COMPRESS_YCOCG,  _("YCoCg (DXT5)"),          NULL,
+                                            "ycocgs", DDS_COMPRESS_YCOCGS, _("YCoCg scaled (DXT5)"),   NULL,
+                                            NULL);
+      gimp_choice_add_deprecated (choice, "bc3, ", DDS_COMPRESS_BC3, "bc3");
+
       gimp_procedure_add_choice_argument (procedure, "compression-format",
                                           _("Compressio_n"),
                                           _("Compression format"),
-                                          gimp_choice_new_with_values ("none",   DDS_COMPRESS_NONE,   _("None"),                  NULL,
-                                                                       "bc1",    DDS_COMPRESS_BC1,    _("BC1 / DXT1"),            NULL,
-                                                                       "bc2",    DDS_COMPRESS_BC2,    _("BC2 / DXT3"),            NULL,
-                                                                       "bc3, ",  DDS_COMPRESS_BC3,    _("BC3 / DXT5"),            NULL,
-                                                                       "bc3n",   DDS_COMPRESS_BC3N,   _("BC3nm / DXT5nm"),        NULL,
-                                                                       "bc4",    DDS_COMPRESS_BC4,    _("BC4 / ATI1 (3Dc+)"),     NULL,
-                                                                       "bc5",    DDS_COMPRESS_BC5,    _("BC5 / ATI2 (3Dc)"),      NULL,
-                                                                       "bc7",    DDS_COMPRESS_BC7,    "BC7",                      NULL,
-                                                                       "rxgb",   DDS_COMPRESS_RXGB,   _("RXGB (DXT5)"),           NULL,
-                                                                       "aexp",   DDS_COMPRESS_AEXP,   _("Alpha Exponent (DXT5)"), NULL,
-                                                                       "ycocg",  DDS_COMPRESS_YCOCG,  _("YCoCg (DXT5)"),          NULL,
-                                                                       "ycocgs", DDS_COMPRESS_YCOCGS, _("YCoCg scaled (DXT5)"),   NULL,
-                                                                       NULL),
+                                          choice,
                                           "none",
                                           G_PARAM_READWRITE);
 
@@ -217,25 +222,28 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                                            FALSE,
                                            G_PARAM_READWRITE);
 
+      choice = gimp_choice_new_with_values ("default", DDS_FORMAT_DEFAULT, _("Default"), NULL,
+                                            "rgb8",    DDS_FORMAT_RGB8,    _("RGB8"),    NULL,
+                                            "rgba8",   DDS_FORMAT_RGBA8,   _("RGBA8"),   NULL,
+                                            "bgr8",    DDS_FORMAT_BGR8,    _("BGR8"),    NULL,
+                                            "abgr8",   DDS_FORMAT_ABGR8,   _("ABGR8"),   NULL,
+                                            "r5g6b5",  DDS_FORMAT_R5G6B5,  _("R5G6B5"),  NULL,
+                                            "rgba4",   DDS_FORMAT_RGBA4,   _("RGBA4"),   NULL,
+                                            "rgb5a1",  DDS_FORMAT_RGB5A1,  _("RGB5A1"),  NULL,
+                                            "rgb10a2", DDS_FORMAT_RGB10A2, _("RGB10A2"), NULL,
+                                            "r3g3b2",  DDS_FORMAT_R3G3B2,  _("R3G3B2"),  NULL,
+                                            "a8",      DDS_FORMAT_A8,      _("A8"),      NULL,
+                                            "l8",      DDS_FORMAT_L8,      _("L8"),      NULL,
+                                            "l8a8",    DDS_FORMAT_L8A8,    _("L8A8"),    NULL,
+                                            "aexp",    DDS_FORMAT_AEXP,    _("AEXP"),    NULL,
+                                            "ycocg",   DDS_FORMAT_YCOCG,   _("YCOCG"),   NULL,
+                                            NULL);
+      gimp_choice_add_deprecated (choice, "abgr8, ", DDS_FORMAT_ABGR8, "abgr8");
+
       gimp_procedure_add_choice_argument (procedure, "format",
                                           _("_Format"),
                                           _("Pixel format"),
-                                          gimp_choice_new_with_values ("default", DDS_FORMAT_DEFAULT, _("Default"), NULL,
-                                                                       "rgb8",    DDS_FORMAT_RGB8,    _("RGB8"),    NULL,
-                                                                       "rgba8",   DDS_FORMAT_RGBA8,   _("RGBA8"),   NULL,
-                                                                       "bgr8",    DDS_FORMAT_BGR8,    _("BGR8"),    NULL,
-                                                                       "abgr8, ", DDS_FORMAT_ABGR8,   _("ABGR8"),   NULL,
-                                                                       "r5g6b5",  DDS_FORMAT_R5G6B5,  _("R5G6B5"),  NULL,
-                                                                       "rgba4",   DDS_FORMAT_RGBA4,   _("RGBA4"),   NULL,
-                                                                       "rgb5a1",  DDS_FORMAT_RGB5A1,  _("RGB5A1"),  NULL,
-                                                                      "rgb10a2", DDS_FORMAT_RGB10A2, _("RGB10A2"), NULL,
-                                                                       "r3g3b2",  DDS_FORMAT_R3G3B2,  _("R3G3B2"),  NULL,
-                                                                       "a8",      DDS_FORMAT_A8,      _("A8"),      NULL,
-                                                                       "l8",      DDS_FORMAT_L8,      _("L8"),      NULL,
-                                                                       "l8a8",    DDS_FORMAT_L8A8,    _("L8A8"),    NULL,
-                                                                       "aexp",    DDS_FORMAT_AEXP,    _("AEXP"),    NULL,
-                                                                       "ycocg",   DDS_FORMAT_YCOCG,   _("YCOCG"),   NULL,
-                                                                       NULL),
+                                          choice,
                                           "default",
                                           G_PARAM_READWRITE);
 
@@ -396,7 +404,7 @@ dds_export (GimpProcedure        *procedure,
   if (run_mode == GIMP_RUN_INTERACTIVE)
     gimp_ui_init ("dds");
 
-  export = gimp_export_options_get_image (options, &image);
+  export    = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_get_selected_layers (image);
 
   g_object_get (config,
