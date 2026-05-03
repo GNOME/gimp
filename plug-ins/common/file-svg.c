@@ -371,7 +371,7 @@ svg_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_boolean_argument (procedure, "inkscape-svg",
                                            _("As In_kscape SVG"),
                                            _("Include Inkscape-specific "
-                                             "attributes in exported SVG."
+                                             "attributes in exported SVG. "
                                              "The exported SVG may not be "
                                              "compatible with all viewers."),
                                            FALSE,
