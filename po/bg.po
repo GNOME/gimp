@@ -280,8 +280,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-30 08:56+0000\n"
-"PO-Revision-Date: 2026-05-01 18:15+0200\n"
+"POT-Creation-Date: 2026-05-01 23:44+0000\n"
+"PO-Revision-Date: 2026-05-03 11:17+0200\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -2787,7 +2787,7 @@ msgstr "240 секунди"
 #: app/widgets/gimphelp.c:441 app/widgets/gimphelp.c:789
 #: app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:690
 #: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
-#: app/widgets/gimpsettingsbox.c:706
+#: app/widgets/gimpsettingsbox.c:705
 msgid "_Cancel"
 msgstr "_Отказ"
 
@@ -3839,7 +3839,7 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "Балансът на бялото работи само със слоеве в RGB."
 
 #: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:73
-#: app/operations/gimpoperationlevels.c:63 app/tools/gimplevelstool.c:139
+#: app/operations/gimpoperationlevels.c:63 app/tools/gimplevelstool.c:135
 msgid "Levels"
 msgstr "Нива̀"
 
@@ -4395,7 +4395,7 @@ msgstr "Запазване на журнала на грешките във фа
 #: app/actions/error-console-commands.c:97 app/actions/gradients-commands.c:80
 #: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:88
 #: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
-#: app/widgets/gimpsettingsbox.c:708
+#: app/widgets/gimpsettingsbox.c:704
 msgid "_Save"
 msgstr "_Запазване"
 
@@ -8755,7 +8755,7 @@ msgstr "Отваряне на текстов файл (UTF-8)"
 #: app/dialogs/file-open-location-dialog.c:81
 #: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:785
 #: app/widgets/gimpiconpicker.c:484 app/widgets/gimpopendialog.c:87
-#: app/widgets/gimpsettingsbox.c:708
+#: app/widgets/gimpsettingsbox.c:704
 msgid "_Open"
 msgstr "_Отваряне"
 
@@ -16234,7 +16234,7 @@ msgstr "Кодиращо преобразуване"
 #. gamma
 #: app/dialogs/convert-precision-dialog.c:176
 #: app/operations/gimplevelsconfig.c:160 app/operations/gimplevelsconfig.c:161
-#: app/tools/gimplevelstool.c:518
+#: app/tools/gimplevelstool.c:512
 msgid "Gamma"
 msgstr "Гама"
 
@@ -16573,7 +16573,7 @@ msgstr "Свойства на изображението"
 #: app/dialogs/welcome-dialog.c:207 app/tools/gimpcolorpickertool.c:352
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:741
 #: app/widgets/gimpcontrollerlist.c:652 app/widgets/gimpcriticaldialog.c:220
-#: app/widgets/gimpcriticaldialog.c:242 app/widgets/gimpsettingsbox.c:637
+#: app/widgets/gimpcriticaldialog.c:242 app/widgets/gimpsettingsbox.c:642
 #: app/widgets/gimptexteditor.c:164
 msgid "_Close"
 msgstr "_Затваряне"
@@ -21002,8 +21002,8 @@ msgid "Writing curves file failed: "
 msgstr "Неуспешен запис на файл с криви:"
 
 #: app/operations/gimpcurvesconfig.c:805 app/operations/gimpcurvesconfig.c:808
-#: app/tools/gimpcurvestool.c:766 app/tools/gimpcurvestool.c:769
-#: app/tools/gimplevelstool.c:760 app/tools/gimplevelstool.c:763
+#: app/tools/gimpcurvestool.c:761 app/tools/gimpcurvestool.c:764
+#: app/tools/gimplevelstool.c:754 app/tools/gimplevelstool.c:757
 #, c-format
 msgid "Could not read header: "
 msgstr "Заглавната част не може да се прочете: "
@@ -21136,11 +21136,11 @@ msgstr "Оцветяване на изображението"
 msgid "Color"
 msgstr "Цвят"
 
-#: app/operations/gimpoperationcurves.c:66 app/tools/gimpcurvestool.c:154
+#: app/operations/gimpoperationcurves.c:66 app/tools/gimpcurvestool.c:151
 msgid "Curves"
 msgstr "Криви"
 
-#: app/operations/gimpoperationcurves.c:68 app/tools/gimpcurvestool.c:155
+#: app/operations/gimpoperationcurves.c:68 app/tools/gimpcurvestool.c:152
 msgid "Adjust color curves"
 msgstr "Промяна на кривите на цветовете"
 
@@ -21172,7 +21172,7 @@ msgstr "Нюанс-насищане"
 msgid "Adjust hue, saturation, and lightness"
 msgstr "Промяна на тоновете, насищането и осветеността"
 
-#: app/operations/gimpoperationlevels.c:65 app/tools/gimplevelstool.c:140
+#: app/operations/gimpoperationlevels.c:65 app/tools/gimplevelstool.c:136
 msgid "Adjust color levels"
 msgstr "Промяна на нивата на цвета"
 
@@ -22797,7 +22797,7 @@ msgstr "Син канал"
 msgid "Select Range to Adjust"
 msgstr "Избиране на границите на настройката"
 
-#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:270
+#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:266
 msgid "Adjust Color Levels"
 msgstr "Настройка на цветовите нива"
 
@@ -23656,8 +23656,8 @@ msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Не може да заливате повече от един слой. Изберете само един."
 
 #: app/tools/gimpbucketfilltool.c:601 app/tools/gimpcagetool.c:231
-#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:317
-#: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:211
+#: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:317
+#: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:207
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:300
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
@@ -24008,70 +24008,66 @@ msgid_plural "Resize %d layers"
 msgstr[0] "Преоразмеряване на слой"
 msgstr[1] "Преоразмеряване на %d слоя"
 
-#: app/tools/gimpcurvestool.c:156
+#: app/tools/gimpcurvestool.c:153
 msgid "_Curves..."
 msgstr "_Криви…"
 
-#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:313
-#: app/tools/gimplevelstool.c:209 app/tools/gimpoffsettool.c:189
+#: app/tools/gimpcurvestool.c:215 app/tools/gimpfiltertool.c:313
+#: app/tools/gimplevelstool.c:205 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr "Може да укажете точно един нарисуван обект."
 
-#: app/tools/gimpcurvestool.c:411
+#: app/tools/gimpcurvestool.c:408
 msgid "Click to add a control point"
 msgstr "Натиснете, за да добавите контролна точка."
 
-#: app/tools/gimpcurvestool.c:416
+#: app/tools/gimpcurvestool.c:413
 msgid "Click to add control points to all channels"
 msgstr "Натиснете, за да добавите контролна точка към всички канали"
 
-#: app/tools/gimpcurvestool.c:421
+#: app/tools/gimpcurvestool.c:418
 msgid "Click to locate on curve"
 msgstr "Натиснете за посочване по крива"
 
-#: app/tools/gimpcurvestool.c:423
+#: app/tools/gimpcurvestool.c:420
 #, c-format
 msgid "%s: add control point"
 msgstr "%s: добавяне на контролна точка"
 
-#: app/tools/gimpcurvestool.c:424
+#: app/tools/gimpcurvestool.c:421
 #, c-format
 msgid "%s: add control points to all channels"
 msgstr "%s: добавяне на контролна точка към всички канали"
 
-#: app/tools/gimpcurvestool.c:441
+#: app/tools/gimpcurvestool.c:438
 msgid "Adjust Color Curves"
 msgstr "Настройване на цветовите криви"
 
-#: app/tools/gimpcurvestool.c:486 app/tools/gimplevelstool.c:368
+#: app/tools/gimpcurvestool.c:481 app/tools/gimplevelstool.c:362
 #: app/tools/gimpthresholdtool.c:247
 msgid "Cha_nnel:"
 msgstr "_Канал:"
 
-#: app/tools/gimpcurvestool.c:515 app/tools/gimplevelstool.c:395
+#: app/tools/gimpcurvestool.c:510 app/tools/gimplevelstool.c:389
 msgid "R_eset Channel"
 msgstr "_Връщане на настройките на канала"
 
-#: app/tools/gimpcurvestool.c:622
+#: app/tools/gimpcurvestool.c:617
 msgid "_Input:"
 msgstr "_Вход:"
 
-#: app/tools/gimpcurvestool.c:636
+#: app/tools/gimpcurvestool.c:631
 msgid "O_utput:"
 msgstr "_Изход:"
 
-#: app/tools/gimpcurvestool.c:650
+#: app/tools/gimpcurvestool.c:645
 msgid "T_ype:"
 msgstr "_Вид:"
 
-#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:341
+#: app/tools/gimpcurvestool.c:664 app/widgets/gimpdeviceinfoeditor.c:341
 msgid "Curve _type:"
 msgstr "_Вид крива:"
-
-#: app/tools/gimpcurvestool.c:850
-msgid "Use _old curves file format"
-msgstr "Ползване на _стария формат за файлове с криви"
 
 #: app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn"
@@ -24893,74 +24889,70 @@ msgstr "Натиснете или натиснете с влачене за до
 msgid "Modify Scissors Curve"
 msgstr "Промяна на кривата на ножичките"
 
-#: app/tools/gimplevelstool.c:141
+#: app/tools/gimplevelstool.c:137
 msgid "_Levels..."
 msgstr "_Нива̀…"
 
-#: app/tools/gimplevelstool.c:294
+#: app/tools/gimplevelstool.c:290
 msgid "Pick black point for all channels"
 msgstr "Избор на черна точка за всички канали"
 
-#: app/tools/gimplevelstool.c:296
+#: app/tools/gimplevelstool.c:292
 msgid "Pick black point for the selected channel"
 msgstr "Избор на черна точка за избрания канал"
 
-#: app/tools/gimplevelstool.c:303
+#: app/tools/gimplevelstool.c:299
 msgid "Pick gray point for all channels"
 msgstr "Избор на сива точка за всички канали"
 
-#: app/tools/gimplevelstool.c:305
+#: app/tools/gimplevelstool.c:301
 msgid "Pick gray point for the selected channel"
 msgstr "Избор на сива точка за избрания канал"
 
-#: app/tools/gimplevelstool.c:312
+#: app/tools/gimplevelstool.c:308
 msgid "Pick white point for all channels"
 msgstr "Избор на бяла точка за всички канали"
 
-#: app/tools/gimplevelstool.c:314
+#: app/tools/gimplevelstool.c:310
 msgid "Pick white point for the selected channel"
 msgstr "Избор на бяла точка за избрания канал"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:427
+#: app/tools/gimplevelstool.c:421
 msgid "Input Levels"
 msgstr "Входящи нива"
 
-#: app/tools/gimplevelstool.c:511
+#: app/tools/gimplevelstool.c:505
 msgid "Clamp _input"
 msgstr "Фиксиране на _входа"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:550
+#: app/tools/gimplevelstool.c:544
 msgid "Output Levels"
 msgstr "Изходящи нива"
 
-#: app/tools/gimplevelstool.c:597
+#: app/tools/gimplevelstool.c:591
 msgid "Clamp outpu_t"
 msgstr "Фиксиране на _изхода"
 
 #. all channels frame
-#: app/tools/gimplevelstool.c:610
+#: app/tools/gimplevelstool.c:604
 msgid "All Channels"
 msgstr "Всички канали"
 
-#: app/tools/gimplevelstool.c:622
+#: app/tools/gimplevelstool.c:616
 msgid "_Auto Input Levels"
 msgstr "_Автоматични входящи нива"
 
-#: app/tools/gimplevelstool.c:625
+#: app/tools/gimplevelstool.c:619
 msgid "Adjust levels for all channels automatically"
 msgstr "Автоматични нива за всички канали"
 
-#: app/tools/gimplevelstool.c:652
+#: app/tools/gimplevelstool.c:646
 msgid "Edit these Settings as Curves"
 msgstr "Редактиране на настройките като криви"
 
-#: app/tools/gimplevelstool.c:881
-msgid "Use _old levels file format"
-msgstr "Използване на _стария файлов формат за нива̀"
-
-#: app/tools/gimplevelstool.c:1026 app/tools/gimpthresholdtool.c:429
+#: app/tools/gimplevelstool.c:998 app/tools/gimpthresholdtool.c:429
 msgid "Calculating histogram..."
 msgstr "Изчисляване на хистограма…"
 
@@ -28868,43 +28860,47 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Неправилен UTF-8"
 
-#: app/widgets/gimpsettingsbox.c:302
+#: app/widgets/gimpsettingsbox.c:291
 msgid "Pick a preset from the list"
 msgstr "Избор на запазени настройки от списъка"
 
-#: app/widgets/gimpsettingsbox.c:326
+#: app/widgets/gimpsettingsbox.c:315
 msgid "Save the current settings as named preset"
 msgstr "Запазване на текущите настройки с име"
 
-#: app/widgets/gimpsettingsbox.c:344
+#: app/widgets/gimpsettingsbox.c:333
 msgid "Manage presets"
 msgstr "Управление на запазени настройки"
 
-#: app/widgets/gimpsettingsbox.c:357
+#: app/widgets/gimpsettingsbox.c:346
 msgid "_Import Current Settings from File..."
 msgstr "_Внасяне на текущите настройки от файл…"
 
-#: app/widgets/gimpsettingsbox.c:362
+#: app/widgets/gimpsettingsbox.c:351
 msgid "_Export Current Settings to File..."
 msgstr "_Изнасяне на текущите настройки към файл…"
 
-#: app/widgets/gimpsettingsbox.c:368
+#: app/widgets/gimpsettingsbox.c:357
+msgid "Export Current Settings in _Legacy Format..."
+msgstr "_Изнасяне на текущите настройки в стар формат…"
+
+#: app/widgets/gimpsettingsbox.c:365
 msgid "_Manage Saved Presets..."
 msgstr "_Управление на запазените настройки"
 
-#: app/widgets/gimpsettingsbox.c:585
+#: app/widgets/gimpsettingsbox.c:579
 msgid "Save Settings as Named Preset"
 msgstr "Запазване на настройки с име"
 
-#: app/widgets/gimpsettingsbox.c:588
+#: app/widgets/gimpsettingsbox.c:582
 msgid "Enter a name for the preset"
 msgstr "Въведете име за тези настройки"
 
-#: app/widgets/gimpsettingsbox.c:589
+#: app/widgets/gimpsettingsbox.c:583
 msgid "Saved Settings"
 msgstr "Запазени настройки"
 
-#: app/widgets/gimpsettingsbox.c:632
+#: app/widgets/gimpsettingsbox.c:637
 msgid "Manage Saved Presets"
 msgstr "Управление на запазени настройки"
 
