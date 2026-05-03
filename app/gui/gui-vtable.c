@@ -986,10 +986,13 @@ gui_query_profile_policy (Gimp                      *gimp,
                           gboolean                  *bpc,
                           gboolean                  *dont_ask)
 {
-  return color_profile_import_dialog_run (image, context, NULL,
-                                          dest_profile,
-                                          intent, bpc,
-                                          dont_ask);
+  if (gimp_image_get_base_type (image) != GIMP_CMYK)
+    return color_profile_import_dialog_run (image, context, NULL,
+                                            dest_profile,
+                                            intent, bpc,
+                                            dont_ask);
+  else
+    return GIMP_COLOR_PROFILE_POLICY_KEEP;
 }
 
 static GimpMetadataRotationPolicy
