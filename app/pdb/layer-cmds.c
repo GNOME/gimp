@@ -106,6 +106,16 @@ layer_new_invoker (GimpProcedure         *procedure,
           has_alpha = TRUE;
           break;
 
+        case GIMP_CMYK_IMAGE:
+          base_type = GIMP_CMYK;
+          has_alpha = FALSE;
+          break;
+
+        case GIMP_CMYKA_IMAGE:
+          base_type = GIMP_CMYK;
+          has_alpha = TRUE;
+          break;
+
         case GIMP_GRAY_IMAGE:
           base_type = GIMP_GRAY;
           has_alpha = FALSE;
