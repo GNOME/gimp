@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-29 14:04+0000\n"
-"PO-Revision-Date: 2026-04-29 16:32+0200\n"
+"POT-Creation-Date: 2026-05-01 23:44+0000\n"
+"PO-Revision-Date: 2026-05-03 17:16+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2519,7 +2519,7 @@ msgstr "240 s"
 #: app/widgets/gimphelp.c:441 app/widgets/gimphelp.c:789
 #: app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:690
 #: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
-#: app/widgets/gimpsettingsbox.c:706
+#: app/widgets/gimpsettingsbox.c:705
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
@@ -3570,7 +3570,7 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "Uravnovešanje beline deluje le na barvnih plasteh RGB."
 
 #: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:73
-#: app/operations/gimpoperationlevels.c:63 app/tools/gimplevelstool.c:139
+#: app/operations/gimpoperationlevels.c:63 app/tools/gimplevelstool.c:135
 msgid "Levels"
 msgstr "Ravni"
 
@@ -4124,7 +4124,7 @@ msgstr "Shrani dnevnik napak v datoteko"
 #: app/actions/error-console-commands.c:97 app/actions/gradients-commands.c:80
 #: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:88
 #: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
-#: app/widgets/gimpsettingsbox.c:708
+#: app/widgets/gimpsettingsbox.c:704
 msgid "_Save"
 msgstr "_Shrani"
 
@@ -8500,7 +8500,7 @@ msgstr "Odpri datoteko z besedilom (UTF-8)"
 #: app/dialogs/file-open-location-dialog.c:81
 #: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:785
 #: app/widgets/gimpiconpicker.c:484 app/widgets/gimpopendialog.c:87
-#: app/widgets/gimpsettingsbox.c:708
+#: app/widgets/gimpsettingsbox.c:704
 msgid "_Open"
 msgstr "_Odpri"
 
@@ -12945,7 +12945,7 @@ msgstr "Prilepljena plast"
 msgid "Global Buffer"
 msgstr "Splošni medpomnilnik"
 
-#: app/core/gimpextension.c:284
+#: app/core/gimpextension.c:283
 #, c-format
 msgid ""
 "Invalid AppStream metadata: failed to find default screenshot for extension "
@@ -12954,38 +12954,38 @@ msgstr ""
 "Neveljavni metapodatki AppStream: ni bilo mogoče najti privzetega posnetka "
 "zaslona za razširitev »%s«"
 
-#: app/core/gimpextension.c:310
+#: app/core/gimpextension.c:309
 #, c-format
 msgid "Invalid AppStream metadata: Error loading image: \"%s\""
 msgstr "Neveljavni metapodatki AppStream: napaka pri nalaganju slike: »%s«"
 
-#: app/core/gimpextension.c:437
+#: app/core/gimpextension.c:436
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr ""
 "AppData razširitve mora biti vrste »addon«, namesto tega je najden »%s«."
 
-#: app/core/gimpextension.c:453
+#: app/core/gimpextension.c:452
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
 msgstr "AppData razširitve mora razširiti »org.gimp.GIMP«."
 
-#: app/core/gimpextension.c:467
+#: app/core/gimpextension.c:466
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr "ID AppData razširitve (»%s«) in mapa (»%s«) morata biti enaka."
 
-#: app/core/gimpextension.c:495
+#: app/core/gimpextension.c:494
 #, c-format
 msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr "AppData razširitve mora oglaševati različico v oznaki <release>."
 
-#: app/core/gimpextension.c:521
+#: app/core/gimpextension.c:520
 #, c-format
 msgid "Unsupported <relation> \"%s\" (type %s)."
 msgstr "Nepodprta <relation> »%s« (vrsta %s)."
 
-#: app/core/gimpextension.c:536
+#: app/core/gimpextension.c:535
 #, c-format
 msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
@@ -12994,22 +12994,22 @@ msgstr ""
 "<requires><id>org.gimp.GIMP </id></requires> za primerjavo različic je "
 "obvezna."
 
-#: app/core/gimpextension.c:836
+#: app/core/gimpextension.c:835
 #, c-format
 msgid "'%s' is not a relative path."
 msgstr "»%s« ni relativna pot."
 
-#: app/core/gimpextension.c:870
+#: app/core/gimpextension.c:869
 #, c-format
 msgid "'%s' is not a child of the extension."
 msgstr "»%s« ni veljaven podrejeni predmet razširitve."
 
-#: app/core/gimpextension.c:884
+#: app/core/gimpextension.c:883
 #, c-format
 msgid "'%s' is not a directory."
 msgstr "»%s« ni mapa."
 
-#: app/core/gimpextension.c:898
+#: app/core/gimpextension.c:897
 #, c-format
 msgid "'%s' is not a valid file."
 msgstr "»%s« ni veljavna datoteka."
@@ -15544,7 +15544,7 @@ msgid "Filename"
 msgstr "Ime datoteke"
 
 #. Translators: this is a noun
-#: app/core/gimptoolgroup.c:262
+#: app/core/gimptoolgroup.c:260
 msgctxt "tool-item"
 msgid "Group"
 msgstr "Skupina"
@@ -15905,7 +15905,7 @@ msgstr "Pretvorba kodiranja"
 #. gamma
 #: app/dialogs/convert-precision-dialog.c:176
 #: app/operations/gimplevelsconfig.c:160 app/operations/gimplevelsconfig.c:161
-#: app/tools/gimplevelstool.c:518
+#: app/tools/gimplevelstool.c:512
 msgid "Gamma"
 msgstr "Gama"
 
@@ -16245,7 +16245,7 @@ msgstr "Lastnosti slike"
 #: app/dialogs/welcome-dialog.c:207 app/tools/gimpcolorpickertool.c:352
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:741
 #: app/widgets/gimpcontrollerlist.c:652 app/widgets/gimpcriticaldialog.c:220
-#: app/widgets/gimpcriticaldialog.c:242 app/widgets/gimpsettingsbox.c:637
+#: app/widgets/gimpcriticaldialog.c:242 app/widgets/gimpsettingsbox.c:642
 #: app/widgets/gimptexteditor.c:164
 msgid "_Close"
 msgstr "Z_apri"
@@ -20665,8 +20665,8 @@ msgid "Writing curves file failed: "
 msgstr "Pisanje datoteke krivulj je spodletelo: "
 
 #: app/operations/gimpcurvesconfig.c:805 app/operations/gimpcurvesconfig.c:808
-#: app/tools/gimpcurvestool.c:766 app/tools/gimpcurvestool.c:769
-#: app/tools/gimplevelstool.c:760 app/tools/gimplevelstool.c:763
+#: app/tools/gimpcurvestool.c:761 app/tools/gimpcurvestool.c:764
+#: app/tools/gimplevelstool.c:754 app/tools/gimplevelstool.c:757
 #, c-format
 msgid "Could not read header: "
 msgstr "Ni mogoče brati glave: "
@@ -20798,11 +20798,11 @@ msgstr "Prebarva sliko"
 msgid "Color"
 msgstr "Barva"
 
-#: app/operations/gimpoperationcurves.c:66 app/tools/gimpcurvestool.c:154
+#: app/operations/gimpoperationcurves.c:66 app/tools/gimpcurvestool.c:151
 msgid "Curves"
 msgstr "Krivulje"
 
-#: app/operations/gimpoperationcurves.c:68 app/tools/gimpcurvestool.c:155
+#: app/operations/gimpoperationcurves.c:68 app/tools/gimpcurvestool.c:152
 msgid "Adjust color curves"
 msgstr "Prilagodi krivulje barv"
 
@@ -20834,7 +20834,7 @@ msgstr "Obarvanost-nasičenost"
 msgid "Adjust hue, saturation, and lightness"
 msgstr "Prilagodite obarvanost, nasičenost in svetlost"
 
-#: app/operations/gimpoperationlevels.c:65 app/tools/gimplevelstool.c:140
+#: app/operations/gimpoperationlevels.c:65 app/tools/gimplevelstool.c:136
 msgid "Adjust color levels"
 msgstr "Prilagodi ravni barv"
 
@@ -22451,7 +22451,7 @@ msgstr "Modri kanal"
 msgid "Select Range to Adjust"
 msgstr "Določite obseg za prilagajanje"
 
-#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:270
+#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:266
 msgid "Adjust Color Levels"
 msgstr "Prilagodi ravni barv"
 
@@ -23303,8 +23303,8 @@ msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Več plasti ni mogoče zapolniti naenkrat. Izberite samo eno plast."
 
 #: app/tools/gimpbucketfilltool.c:601 app/tools/gimpcagetool.c:231
-#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:317
-#: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:211
+#: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:317
+#: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:207
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:300
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
@@ -23662,71 +23662,67 @@ msgstr[1] "Spremeni velikost %d plasti"
 msgstr[2] "Spremeni velikost %d plasti"
 msgstr[3] "Spremeni velikost %d plasti"
 
-#: app/tools/gimpcurvestool.c:156
+#: app/tools/gimpcurvestool.c:153
 msgid "_Curves..."
 msgstr "_Krivulje ..."
 
-#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:313
-#: app/tools/gimplevelstool.c:209 app/tools/gimpoffsettool.c:189
+#: app/tools/gimpcurvestool.c:215 app/tools/gimpfiltertool.c:313
+#: app/tools/gimplevelstool.c:205 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr ""
 "Več risanih predmetov ni mogoče spremeniti hkrati. Izberite samo enega."
 
-#: app/tools/gimpcurvestool.c:411
+#: app/tools/gimpcurvestool.c:408
 msgid "Click to add a control point"
 msgstr "Kliknite za dodatek kontrolne točke"
 
-#: app/tools/gimpcurvestool.c:416
+#: app/tools/gimpcurvestool.c:413
 msgid "Click to add control points to all channels"
 msgstr "Kliknite za dodajanje nadzornih točk vsem kanalom"
 
-#: app/tools/gimpcurvestool.c:421
+#: app/tools/gimpcurvestool.c:418
 msgid "Click to locate on curve"
 msgstr "Kliknite za lociranje na krivulji."
 
-#: app/tools/gimpcurvestool.c:423
+#: app/tools/gimpcurvestool.c:420
 #, c-format
 msgid "%s: add control point"
 msgstr "%s: doda nadzorno točko"
 
-#: app/tools/gimpcurvestool.c:424
+#: app/tools/gimpcurvestool.c:421
 #, c-format
 msgid "%s: add control points to all channels"
 msgstr "%s: doda nadzorne točke vsem kanalom"
 
-#: app/tools/gimpcurvestool.c:441
+#: app/tools/gimpcurvestool.c:438
 msgid "Adjust Color Curves"
 msgstr "Prilagodi krivulje barv"
 
-#: app/tools/gimpcurvestool.c:486 app/tools/gimplevelstool.c:368
+#: app/tools/gimpcurvestool.c:481 app/tools/gimplevelstool.c:362
 #: app/tools/gimpthresholdtool.c:247
 msgid "Cha_nnel:"
 msgstr "Ka_nal:"
 
-#: app/tools/gimpcurvestool.c:515 app/tools/gimplevelstool.c:395
+#: app/tools/gimpcurvestool.c:510 app/tools/gimplevelstool.c:389
 msgid "R_eset Channel"
 msgstr "Po_nastavi kanal"
 
-#: app/tools/gimpcurvestool.c:622
+#: app/tools/gimpcurvestool.c:617
 msgid "_Input:"
 msgstr "_Vhod:"
 
-#: app/tools/gimpcurvestool.c:636
+#: app/tools/gimpcurvestool.c:631
 msgid "O_utput:"
 msgstr "I_zhod:"
 
-#: app/tools/gimpcurvestool.c:650
+#: app/tools/gimpcurvestool.c:645
 msgid "T_ype:"
 msgstr "_Vrsta:"
 
-#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:341
+#: app/tools/gimpcurvestool.c:664 app/widgets/gimpdeviceinfoeditor.c:341
 msgid "Curve _type:"
 msgstr "Vrsta _krivulje:"
-
-#: app/tools/gimpcurvestool.c:850
-msgid "Use _old curves file format"
-msgstr "Uporabi _stare datoteke krivulj"
 
 #: app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn"
@@ -24550,74 +24546,70 @@ msgstr "Kliknite ali kliknite-povlecite za dodajanje točke."
 msgid "Modify Scissors Curve"
 msgstr "Spremeni krivuljo škarij"
 
-#: app/tools/gimplevelstool.c:141
+#: app/tools/gimplevelstool.c:137
 msgid "_Levels..."
 msgstr "_Ravni ..."
 
-#: app/tools/gimplevelstool.c:294
+#: app/tools/gimplevelstool.c:290
 msgid "Pick black point for all channels"
 msgstr "Izberi črno točko za vse kanale"
 
-#: app/tools/gimplevelstool.c:296
+#: app/tools/gimplevelstool.c:292
 msgid "Pick black point for the selected channel"
 msgstr "Izberi črno točko za izbrani kanal"
 
-#: app/tools/gimplevelstool.c:303
+#: app/tools/gimplevelstool.c:299
 msgid "Pick gray point for all channels"
 msgstr "Izberi sivo točko za vse kanale"
 
-#: app/tools/gimplevelstool.c:305
+#: app/tools/gimplevelstool.c:301
 msgid "Pick gray point for the selected channel"
 msgstr "Izberi sivo točko za izbrani kanal"
 
-#: app/tools/gimplevelstool.c:312
+#: app/tools/gimplevelstool.c:308
 msgid "Pick white point for all channels"
 msgstr "Izberi belo točko za vse kanale"
 
-#: app/tools/gimplevelstool.c:314
+#: app/tools/gimplevelstool.c:310
 msgid "Pick white point for the selected channel"
 msgstr "Izberi belo točko za izbrani kanal"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:427
+#: app/tools/gimplevelstool.c:421
 msgid "Input Levels"
 msgstr "Vhodne ravni"
 
-#: app/tools/gimplevelstool.c:511
+#: app/tools/gimplevelstool.c:505
 msgid "Clamp _input"
 msgstr "Spni _vhod"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:550
+#: app/tools/gimplevelstool.c:544
 msgid "Output Levels"
 msgstr "Izhodne ravni"
 
-#: app/tools/gimplevelstool.c:597
+#: app/tools/gimplevelstool.c:591
 msgid "Clamp outpu_t"
 msgstr "Spni i_zhod"
 
 #. all channels frame
-#: app/tools/gimplevelstool.c:610
+#: app/tools/gimplevelstool.c:604
 msgid "All Channels"
 msgstr "Vsi kanali"
 
-#: app/tools/gimplevelstool.c:622
+#: app/tools/gimplevelstool.c:616
 msgid "_Auto Input Levels"
 msgstr "_Samodejne vhodne ravni"
 
-#: app/tools/gimplevelstool.c:625
+#: app/tools/gimplevelstool.c:619
 msgid "Adjust levels for all channels automatically"
 msgstr "Samodejno prilagodi ravni za vse kanale"
 
-#: app/tools/gimplevelstool.c:652
+#: app/tools/gimplevelstool.c:646
 msgid "Edit these Settings as Curves"
 msgstr "Te nastavitve urejaj kot krivulje"
 
-#: app/tools/gimplevelstool.c:881
-msgid "Use _old levels file format"
-msgstr "Uporabi _stare datoteke krivulj"
-
-#: app/tools/gimplevelstool.c:1026 app/tools/gimpthresholdtool.c:429
+#: app/tools/gimplevelstool.c:998 app/tools/gimpthresholdtool.c:429
 msgid "Calculating histogram..."
 msgstr "Izračun histograma je v teku …"
 
@@ -28399,11 +28391,11 @@ msgstr "Uredi paletne barve"
 msgid "Edit Color Palette Entry"
 msgstr "Uredi vnos barvne palete"
 
-#: app/widgets/gimppdbdialog.c:319
+#: app/widgets/gimppdbdialog.c:317
 msgid "The corresponding plug-in may have crashed."
 msgstr "Ustrezni vtičnik se je morda sesul."
 
-#: app/widgets/gimppdbdialog.c:323
+#: app/widgets/gimppdbdialog.c:321
 #, c-format
 msgid ""
 "Unable to run %s callback.\n"
@@ -28521,43 +28513,47 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Neveljaven UTF-8"
 
-#: app/widgets/gimpsettingsbox.c:302
+#: app/widgets/gimpsettingsbox.c:291
 msgid "Pick a preset from the list"
 msgstr "Izberite prednastavitev s seznama"
 
-#: app/widgets/gimpsettingsbox.c:326
+#: app/widgets/gimpsettingsbox.c:315
 msgid "Save the current settings as named preset"
 msgstr "Shranite trenutne nastavitve kot imenovane prednastavitve"
 
-#: app/widgets/gimpsettingsbox.c:344
+#: app/widgets/gimpsettingsbox.c:333
 msgid "Manage presets"
 msgstr "Upravljaj shranjene prednastavitve"
 
-#: app/widgets/gimpsettingsbox.c:357
+#: app/widgets/gimpsettingsbox.c:346
 msgid "_Import Current Settings from File..."
 msgstr "_Uvozi trenutne nastavitve iz datoteke ..."
 
-#: app/widgets/gimpsettingsbox.c:362
+#: app/widgets/gimpsettingsbox.c:351
 msgid "_Export Current Settings to File..."
 msgstr "_Izvozi trenutne nastavitve v datoteko ..."
 
-#: app/widgets/gimpsettingsbox.c:368
+#: app/widgets/gimpsettingsbox.c:357
+msgid "Export Current Settings in _Legacy Format..."
+msgstr "Izvozi trenutne nastavitve v sta_rem zapisu ..."
+
+#: app/widgets/gimpsettingsbox.c:365
 msgid "_Manage Saved Presets..."
 msgstr "_Upravljaj shranjene prednastavitve …"
 
-#: app/widgets/gimpsettingsbox.c:585
+#: app/widgets/gimpsettingsbox.c:579
 msgid "Save Settings as Named Preset"
 msgstr "Shrani nastavitve kot poimenovano prednastavitev"
 
-#: app/widgets/gimpsettingsbox.c:588
+#: app/widgets/gimpsettingsbox.c:582
 msgid "Enter a name for the preset"
 msgstr "Vnesite ime za prednastavitev"
 
-#: app/widgets/gimpsettingsbox.c:589
+#: app/widgets/gimpsettingsbox.c:583
 msgid "Saved Settings"
 msgstr "Shranjene nastavitve"
 
-#: app/widgets/gimpsettingsbox.c:632
+#: app/widgets/gimpsettingsbox.c:637
 msgid "Manage Saved Presets"
 msgstr "Upravljaj s shranjenimi prednastavitvami"
 
