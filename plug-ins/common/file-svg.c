@@ -1251,14 +1251,23 @@ svg_export_file (GimpImage            *image,
   GString    *str          = g_string_new (NULL);
   GList      *exported_res = NULL;
   gint        layer_ids[6] = { 0 };
+  gboolean    inkscape_svg = FALSE;
 
-  g_object_get (config, "title", &title, NULL);
+  g_object_get (config,
+                "title",        &title,
+                "inkscape-svg", &inkscape_svg,
+                NULL);
 
   g_string_append_printf (str,
                           "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
                           "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
                           "     xmlns:svg=\"http://www.w3.org/2000/svg\"\n"
                           "     version=\"1.1\"\n");
+
+  if (inkscape_svg)
+    g_string_append_printf (str,
+                            "     xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n"
+                            "     xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n");
 
   g_string_append (str, "     ");
   svg_export_image_size (image, str);
@@ -1747,7 +1756,7 @@ svg_export_path (GimpVectorLayer     *layer,
 
   if (inkscape_svg)
     g_string_append_printf (str,
-                            "%s       inkscape:label=\"%s\"\n",
+                            "%s      inkscape:label=\"%s\"\n",
                             spacing,
                             gimp_item_get_name (GIMP_ITEM (layer)));
 
@@ -1895,7 +1904,7 @@ svg_export_text (GimpTextLayer       *layer,
 
   if (inkscape_svg)
     g_string_append_printf (str,
-                            "%s       inkscape:label=\"%s\"\n",
+                            "%s      inkscape:label=\"%s\"\n",
                             spacing,
                             gimp_item_get_name (GIMP_ITEM (layer)));
 
