@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-17 03:50+0000\n"
-"PO-Revision-Date: 2026-04-19 18:15+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"POT-Creation-Date: 2026-05-04 15:18+0000\n"
+"PO-Revision-Date: 2026-05-04 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -94,9 +94,9 @@ msgstr "Cʼde Eklenti Örneği"
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
 #: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1189
-#: plug-ins/metadata/metadata-editor.c:1695
-#: plug-ins/metadata/metadata-editor.c:5585
-#: plug-ins/metadata/metadata-editor.c:5620 plug-ins/print/print.c:458
+#: plug-ins/metadata/metadata-editor.c:1696
+#: plug-ins/metadata/metadata-editor.c:5587
+#: plug-ins/metadata/metadata-editor.c:5622 plug-ins/print/print.c:458
 msgid "_Cancel"
 msgstr "İ_ptal"
 
@@ -150,7 +150,7 @@ msgstr "JavaScriptʼte Eklenti Örneği (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2659
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4017 plug-ins/flame/flame.c:824
+#: plug-ins/file-psd/psd-load.c:4053 plug-ins/flame/flame.c:824
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -617,7 +617,7 @@ msgstr "Kesitler"
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:424
+#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:431
 #: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-pcx.c:727
 #: plug-ins/common/file-pcx.c:735 plug-ins/common/file-pcx.c:743
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
@@ -632,9 +632,9 @@ msgstr "Kesitler"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3215 plug-ins/file-sgi/sgi.c:456
-#: plug-ins/file-tiff/file-tiff-load.c:1578
-#: plug-ins/file-tiff/file-tiff-load.c:2402
+#: plug-ins/file-psd/psd-load.c:3228 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-tiff/file-tiff-load.c:1587
+#: plug-ins/file-tiff/file-tiff-load.c:2441
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
 #: plug-ins/gfig/gfig-dialog.c:1283 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:241
@@ -1261,9 +1261,9 @@ msgstr "CML Gezgini Parametrelerini Kaydet"
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:444
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2446
+#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2450
 #: plug-ins/file-tiff/file-tiff-export.c:1087
-#: plug-ins/file-tiff/file-tiff-export.c:1176 plug-ins/flame/flame.c:585
+#: plug-ins/file-tiff/file-tiff-export.c:1177 plug-ins/flame/flame.c:585
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1406
 #: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2468
 #: plug-ins/lighting/lighting-ui.c:808
@@ -2022,7 +2022,7 @@ msgstr "Boş seçimler üzerinde işlenemiyor."
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3754
-#: plug-ins/common/file-psp.c:2792 plug-ins/common/file-psp.c:2842
+#: plug-ins/common/file-psp.c:2804 plug-ins/common/file-psp.c:2854
 #: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:799
 #: plug-ins/common/file-raw-data.c:1844
@@ -2039,8 +2039,8 @@ msgstr "Boş seçimler üzerinde işlenemiyor."
 #: plug-ins/file-icns/file-icns-load.c:684 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
-#: plug-ins/file-psd/psd-export.c:2452 plug-ins/file-psd/psd-load.c:189
-#: plug-ins/file-psd/psd-load.c:194 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-export.c:2456 plug-ins/file-psd/psd-load.c:190
+#: plug-ins/file-psd/psd-load.c:195 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:539
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1767
 #: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:529
@@ -2508,7 +2508,10 @@ msgid "Image dimensions too large: width %d x height %d"
 msgstr "Görüntü boyutları çok büyük: genişlik %d x yükseklik %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
-#: plug-ins/common/web-browser.c:211
+#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3607
+#: plug-ins/file-tiff/file-tiff-load.c:1944
+#: plug-ins/file-tiff/file-tiff-load.c:2038
+#: plug-ins/file-tiff/file-tiff-load.c:2226
 #, c-format
 msgid "There was not enough memory to complete the operation."
 msgstr "İşlemi tamamlamak için yeterli bellek yok."
@@ -2648,7 +2651,7 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
 #: plug-ins/file-icns/file-icns-load.c:623 plug-ins/file-ico/ico-load.c:703
 #: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:97
-#: plug-ins/file-psd/psd-load.c:202
+#: plug-ins/file-psd/psd-load.c:203
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
@@ -2730,7 +2733,7 @@ msgstr "'%s': EOF (dosya sonu) ya da palet verisi okunurken hata"
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
 #: plug-ins/file-icns/file-icns-export.c:824
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2384
+#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2388
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
 #, c-format
 msgid "Exporting '%s'"
@@ -3332,7 +3335,7 @@ msgstr "kare bilgisi"
 msgid "local colormap"
 msgstr "yerel renk eşlemi"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:441
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:448
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr ""
@@ -3979,16 +3982,21 @@ msgstr "Dosyayı IFF dosya biçiminde yükle"
 msgid "Load IFF file as thumbnail"
 msgstr "IFF dosyasını küçük resim olarak yükle"
 
-#: plug-ins/common/file-iff.c:312
+#: plug-ins/common/file-iff.c:290
+#, c-format
+msgid "This is not an ILBM image"
+msgstr "Bu bir ILBM görüntüsü değil"
+
+#: plug-ins/common/file-iff.c:319
 msgid "Invalid or missing ILBM image"
 msgstr "Geçersiz ya da eksik ILBM görüntüsü"
 
-#: plug-ins/common/file-iff.c:327
+#: plug-ins/common/file-iff.c:334
 #, c-format
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "ILBM görüntü verisi içermiyor - palet dosyası olabilir"
 
-#: plug-ins/common/file-iff.c:358 plug-ins/common/file-iff.c:377
+#: plug-ins/common/file-iff.c:365 plug-ins/common/file-iff.c:384
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "Geçersiz ILBM renk eşlemi boyutu"
@@ -4159,20 +4167,20 @@ msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Desteklenmeyen JPEG 2000%s '%s', %d bileşenleriyle."
 
 #: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:887
-#: plug-ins/file-psd/psd-export.c:2698
-#: plug-ins/file-tiff/file-tiff-export.c:1310
+#: plug-ins/file-psd/psd-export.c:2726
+#: plug-ins/file-tiff/file-tiff-export.c:1311
 msgid "No soft-proofing profile"
 msgstr "Ekran provası profili yok"
 
 #: plug-ins/common/file-jp2.c:1309 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2706
-#: plug-ins/file-tiff/file-tiff-export.c:1318
+#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2734
+#: plug-ins/file-tiff/file-tiff-export.c:1319
 msgid "Name of the color profile used for CMYK export."
 msgstr "CMYK dışa aktarma için kullanılan renk profilinin adı."
 
 #: plug-ins/common/file-jp2.c:1320 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2717
-#: plug-ins/file-tiff/file-tiff-export.c:1330
+#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2745
+#: plug-ins/file-tiff/file-tiff-export.c:1331
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
@@ -4561,7 +4569,7 @@ msgstr "'%s' dosyasından görüntü verisi okunamadı"
 msgid "Main surface"
 msgstr "Ana yüzey"
 
-#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:355
+#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:353
 #: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
 #: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
 #: plug-ins/common/file-tim.c:612
@@ -4569,13 +4577,13 @@ msgstr "Ana yüzey"
 msgid "Memory could not be allocated."
 msgstr "Bellek ayrılamadı."
 
-#: plug-ins/common/file-paa.c:363
+#: plug-ins/common/file-paa.c:361
 #, c-format
 msgid "Couldn't decompress image data from '%s'"
 msgstr "'%s' dosyasından görüntü verilerinin sıkıştırması açılamadı"
 
-#: plug-ins/common/file-paa.c:439 plug-ins/common/file-paa.c:456
-#: plug-ins/common/file-paa.c:467
+#: plug-ins/common/file-paa.c:437 plug-ins/common/file-paa.c:454
+#: plug-ins/common/file-paa.c:465
 #, c-format
 msgid "Could not read tag"
 msgstr "Etiket okunamadı"
@@ -4683,14 +4691,14 @@ msgstr "'%s' PCX dosyası değil"
 
 #: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:612
+#: plug-ins/file-psd/psd-load.c:625
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Desteklenmeyen veya geçersiz görüntü genişliği: %d"
 
 #: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:604
+#: plug-ins/file-psd/psd-load.c:617
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Desteklenmeyen veya geçersiz görüntü yüksekliği: %d"
@@ -4875,7 +4883,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "Görüntüyü Çok Sayfalı PDF Olarak Dışa Aktar"
 
 #: plug-ins/common/file-pdf-export.c:1033
-#: plug-ins/metadata/metadata-editor.c:5621
+#: plug-ins/metadata/metadata-editor.c:5623
 msgid "_Export"
 msgstr "_Dışa Aktar"
 
@@ -4902,7 +4910,7 @@ msgstr "Bu görüntüyü ekle"
 #: plug-ins/common/file-pdf-export.c:1201
 #: plug-ins/common/file-pdf-export.c:1274
 #: plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2233
-#: plug-ins/file-tiff/file-tiff-load.c:1580
+#: plug-ins/file-tiff/file-tiff-load.c:1589
 #, c-format
 msgid "Page %d"
 msgstr "Sayfa %d"
@@ -5798,178 +5806,179 @@ msgstr "Geçersiz anahtar sözcük öbeği başlığı"
 msgid "Error reading creator keyword data"
 msgstr "Oluşturan anahtar sözcük verisi okunurken hata oluştu"
 
-#: plug-ins/common/file-psp.c:1268 plug-ins/common/file-psp.c:1277
-#: plug-ins/common/file-psp.c:1286
+#: plug-ins/common/file-psp.c:1272 plug-ins/common/file-psp.c:1281
+#: plug-ins/common/file-psp.c:1290
 #, c-format
 msgid "Error reading color block"
 msgstr "Renk bloğu okunamadı"
 
-#: plug-ins/common/file-psp.c:1297
+#: plug-ins/common/file-psp.c:1301
 #, c-format
 msgid "Error: Unsupported palette size"
 msgstr "Hata: Desteklenmeyen palet boyutu"
 
-#: plug-ins/common/file-psp.c:1308
+#: plug-ins/common/file-psp.c:1312
 #, c-format
 msgid "Error reading color palette"
 msgstr "Renk paleti okunamadı"
 
-#: plug-ins/common/file-psp.c:1629 plug-ins/common/file-psp.c:1652
+#: plug-ins/common/file-psp.c:1634 plug-ins/common/file-psp.c:1657
 #: plug-ins/file-psd/psd-util.c:176
 #, c-format
 msgid "Error reading data. Most likely unexpected end of file."
 msgstr "Veri okuma hatası. Büyük olasılıkla beklenmedik dosya sonu."
 
-#: plug-ins/common/file-psp.c:1744 plug-ins/common/file-psp.c:1758
+#: plug-ins/common/file-psp.c:1749 plug-ins/common/file-psp.c:1763
 #, c-format
 msgid "zlib error"
 msgstr "zlib hatası"
 
-#: plug-ins/common/file-psp.c:1821 plug-ins/common/file-psp.c:1855
-#: plug-ins/common/file-psp.c:1865
+#: plug-ins/common/file-psp.c:1826 plug-ins/common/file-psp.c:1860
+#: plug-ins/common/file-psp.c:1870
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "Katman uzantı bilgisi okunamadı"
 
-#: plug-ins/common/file-psp.c:1842
+#: plug-ins/common/file-psp.c:1847
 #, c-format
 msgid "Error reading block information"
 msgstr "Blok bilgisi okunamadı"
 
-#: plug-ins/common/file-psp.c:1922
+#: plug-ins/common/file-psp.c:1927
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Geçersiz katman alt bloğu %s, KATMAN olmalı"
 
-#: plug-ins/common/file-psp.c:1955 plug-ins/common/file-psp.c:2014
+#: plug-ins/common/file-psp.c:1960 plug-ins/common/file-psp.c:2019
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Katman bilgisi öbeği okuma hatası"
 
-#: plug-ins/common/file-psp.c:2057
+#: plug-ins/common/file-psp.c:2062
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Görüntü katman boyutları: %dx%d"
 
-#: plug-ins/common/file-psp.c:2118
+#: plug-ins/common/file-psp.c:2123
 #, c-format
 msgid "Error creating layer"
 msgstr "Katman oluştururken hata"
 
-#: plug-ins/common/file-psp.c:2179
-#, c-format
-msgid "Invalid layer sub-block %s, should be CHANNEL"
-msgstr "Geçersiz katman alt bloğu %s, KANAL olmalı"
-
-#: plug-ins/common/file-psp.c:2195 plug-ins/common/file-psp.c:2523
-#: plug-ins/common/file-psp.c:2543 plug-ins/common/file-psp.c:2561
+#: plug-ins/common/file-psp.c:2160 plug-ins/common/file-psp.c:2207
+#: plug-ins/common/file-psp.c:2535 plug-ins/common/file-psp.c:2555
+#: plug-ins/common/file-psp.c:2573
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Kanal bilgisi öbeği okuma hatası"
 
-#: plug-ins/common/file-psp.c:2219
+#: plug-ins/common/file-psp.c:2191
+#, c-format
+msgid "Invalid layer sub-block %s, should be CHANNEL"
+msgstr "Geçersiz katman alt bloğu %s, KANAL olmalı"
+
+#: plug-ins/common/file-psp.c:2231
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Kanal bilgisi öbeğinde geçersiz kanal türü %d"
 
-#: plug-ins/common/file-psp.c:2325 plug-ins/common/file-psp.c:2342
+#: plug-ins/common/file-psp.c:2337 plug-ins/common/file-psp.c:2354
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Tüp veri öbeği okuma hatası"
 
-#: plug-ins/common/file-psp.c:2446 plug-ins/common/file-psp.c:2463
-#: plug-ins/common/file-psp.c:2485 plug-ins/common/file-psp.c:2493
+#: plug-ins/common/file-psp.c:2458 plug-ins/common/file-psp.c:2475
+#: plug-ins/common/file-psp.c:2497 plug-ins/common/file-psp.c:2505
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "Seçim öbegi okunamadı"
 
-#: plug-ins/common/file-psp.c:2455
+#: plug-ins/common/file-psp.c:2467
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "Seçim öbek boyutu geçersiz"
 
-#: plug-ins/common/file-psp.c:2477 plug-ins/common/file-psp.c:2501
-#: plug-ins/common/file-psp.c:2535 plug-ins/common/file-psp.c:2577
+#: plug-ins/common/file-psp.c:2489 plug-ins/common/file-psp.c:2513
+#: plug-ins/common/file-psp.c:2547 plug-ins/common/file-psp.c:2589
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Seçim öbeği sonu okuma hatası"
 
-#: plug-ins/common/file-psp.c:2510
+#: plug-ins/common/file-psp.c:2522
 #, c-format
 msgid "Invalid selection sub-block %s, should be CHANNEL"
 msgstr "Geçersiz seçim alt bloğu %s, KANAL olmalı"
 
-#: plug-ins/common/file-psp.c:2602
+#: plug-ins/common/file-psp.c:2614
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Genişletilmiş blok öbek başlığı okuma hatası"
 
-#: plug-ins/common/file-psp.c:2609
+#: plug-ins/common/file-psp.c:2621
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Geçersiz genişletilmiş blok öbeği başlığı"
 
-#: plug-ins/common/file-psp.c:2620
+#: plug-ins/common/file-psp.c:2632
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Geçersiz genişletilmiş blok öbeği boyutu"
 
-#: plug-ins/common/file-psp.c:2641
+#: plug-ins/common/file-psp.c:2653
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Genişletilmiş öbek ızgara verileri okuma hatası"
 
-#: plug-ins/common/file-psp.c:2669
+#: plug-ins/common/file-psp.c:2681
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Genişletilmiş öbek kılavuz verileri okunamadı"
 
-#: plug-ins/common/file-psp.c:2687
+#: plug-ins/common/file-psp.c:2699
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Geçersiz kılavuz yönü"
 
-#: plug-ins/common/file-psp.c:2701
+#: plug-ins/common/file-psp.c:2713
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Genişletilmiş blok öbeği okuma hatası"
 
-#: plug-ins/common/file-psp.c:2727 plug-ins/common/file-psp.c:2739
-#: plug-ins/common/file-psp.c:2750
+#: plug-ins/common/file-psp.c:2739 plug-ins/common/file-psp.c:2751
+#: plug-ins/common/file-psp.c:2762
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Renk profili öbeği okunamadı"
 
-#: plug-ins/common/file-psp.c:2803
+#: plug-ins/common/file-psp.c:2815
 #, c-format
 msgid "Error reading file header."
 msgstr "Dosya başlığı okuma hatası."
 
-#: plug-ins/common/file-psp.c:2810
+#: plug-ins/common/file-psp.c:2822
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Hatalı dosya imzası."
 
-#: plug-ins/common/file-psp.c:2824
+#: plug-ins/common/file-psp.c:2836
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Desteklenmeyen PSP dosya biçim sürümü %d.%d."
 
-#: plug-ins/common/file-psp.c:2844
+#: plug-ins/common/file-psp.c:2856
 msgid "invalid block size"
 msgstr "geçersiz blok boyutu"
 
-#: plug-ins/common/file-psp.c:2853
+#: plug-ins/common/file-psp.c:2865
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Yinelenen Genel Görüntü Öznitelikleri bloğu."
 
-#: plug-ins/common/file-psp.c:2881
+#: plug-ins/common/file-psp.c:2893
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Kayıp Genel Görüntü Öznitelikleri bloğu."
 
-#: plug-ins/common/file-psp.c:3006
+#: plug-ins/common/file-psp.c:3018
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Dışa aktarma henüz gerçeklenmedi."
@@ -10758,11 +10767,11 @@ msgstr ""
 msgid "Use restart mar_kers"
 msgstr "Yeniden başlatma işaretçilerini _kullan"
 
-#: plug-ins/file-psd/psd-export.c:571
+#: plug-ins/file-psd/psd-export.c:573
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Hata: GIMP temel görüntü türü PSD biçimine dönüştürülemiyor"
 
-#: plug-ins/file-psd/psd-export.c:2371
+#: plug-ins/file-psd/psd-export.c:2375
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -10771,7 +10780,7 @@ msgstr ""
 "'%s' dışa aktarılamadı. PSD dosya biçimi 30.000 pikselden daha geniş ya da "
 "uzun görüntüleri desteklemiyor."
 
-#: plug-ins/file-psd/psd-export.c:2377
+#: plug-ins/file-psd/psd-export.c:2381
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images that are "
@@ -10780,7 +10789,7 @@ msgstr ""
 "'%s' dışa aktarılamadı. PSB dosya biçimi 300.000 pikselden daha geniş ya da "
 "uzun görüntüleri desteklemiyor."
 
-#: plug-ins/file-psd/psd-export.c:2419
+#: plug-ins/file-psd/psd-export.c:2423
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -10789,7 +10798,7 @@ msgstr ""
 "'%s' dışa aktarılamadı. PSD dosya biçimi 30,000 pikselden daha geniş ya da "
 "uzun katmanlı görüntüleri desteklemiyor."
 
-#: plug-ins/file-psd/psd-export.c:2425
+#: plug-ins/file-psd/psd-export.c:2429
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images with "
@@ -10798,7 +10807,7 @@ msgstr ""
 "'%s' dışa aktarılamadı. PSB dosya biçimi 30,000 pikselden daha geniş ya da "
 "uzun katmanlı görüntüleri desteklemiyor."
 
-#: plug-ins/file-psd/psd-export.c:2741
+#: plug-ins/file-psd/psd-export.c:2769
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -10806,7 +10815,7 @@ msgstr ""
 "İçe aktarılan özgün görüntüden\n"
 "çift ton renk uzayı bilgisi kullanılacak."
 
-#: plug-ins/file-psd/psd-export.c:2810
+#: plug-ins/file-psd/psd-export.c:2838
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
@@ -10814,11 +10823,11 @@ msgstr ""
 "PSD dosyaları en çok 998 yol saklayabilir.\n"
 "Gerisi gözden çıkartılacak."
 
-#: plug-ins/file-psd/psd-export.c:2920
+#: plug-ins/file-psd/psd-export.c:2948
 msgid "Indexed Image Warning"
 msgstr "İndeksli Görüntü Uyarısı"
 
-#: plug-ins/file-psd/psd-export.c:2921
+#: plug-ins/file-psd/psd-export.c:2949
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
@@ -10826,11 +10835,11 @@ msgstr ""
 "Photoshop birden çok katmanlı indeksli görüntüleri desteklemez. Katmanlar "
 "dışa aktarma sırasında birleştirilecek."
 
-#: plug-ins/file-psd/psd-export.c:2942 plug-ins/file-psd/psd-load.c:4056
+#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4092
 msgid "Compatibility Notice"
 msgstr "Uyumluluk Uyarısı"
 
-#: plug-ins/file-psd/psd-export.c:2943
+#: plug-ins/file-psd/psd-export.c:2971
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -10843,124 +10852,124 @@ msgstr ""
 "özelliğini desteklemez. Görüntü sorunlarıyla karşılaşırsanız, bu katman "
 "kiplerine geçmeyi düşünebilirsiniz."
 
-#: plug-ins/file-psd/psd-load.c:312 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:313 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "PSD dosyası yükleme hatası: %s"
 
-#: plug-ins/file-psd/psd-load.c:489
+#: plug-ins/file-psd/psd-load.c:492
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Geçersiz PSD üst veri katmanı biçimi"
 
-#: plug-ins/file-psd/psd-load.c:583
+#: plug-ins/file-psd/psd-load.c:596
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Geçersiz Photoshop belge dosyası"
 
-#: plug-ins/file-psd/psd-load.c:590
+#: plug-ins/file-psd/psd-load.c:603
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Desteklenmeyen dosya biçim sürümü: %d"
 
-#: plug-ins/file-psd/psd-load.c:597
+#: plug-ins/file-psd/psd-load.c:610
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Dosyada çok kanal var: %d"
 
-#: plug-ins/file-psd/psd-load.c:621
+#: plug-ins/file-psd/psd-load.c:634
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Desteklenmeyen yada geçersiz görüntü boyutu: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:636 plug-ins/file-psd/psd-load.c:646
+#: plug-ins/file-psd/psd-load.c:649 plug-ins/file-psd/psd-load.c:659
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Desteklenmeyen renk modu: %s"
 
-#: plug-ins/file-psd/psd-load.c:673
+#: plug-ins/file-psd/psd-load.c:686
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Desteklenmeyen bit derinliği: %d"
 
-#: plug-ins/file-psd/psd-load.c:707 plug-ins/file-psd/psd-load.c:717
-#: plug-ins/file-psd/psd-load.c:968 plug-ins/file-psd/psd-load.c:1329
+#: plug-ins/file-psd/psd-load.c:720 plug-ins/file-psd/psd-load.c:730
+#: plug-ins/file-psd/psd-load.c:981 plug-ins/file-psd/psd-load.c:1342
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Bozuk dosya!"
 
-#: plug-ins/file-psd/psd-load.c:897
+#: plug-ins/file-psd/psd-load.c:910
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "%d katmanında çok kanal var"
 
-#: plug-ins/file-psd/psd-load.c:1004
+#: plug-ins/file-psd/psd-load.c:1017
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Desteklenmeyen veya geçersiz katman yüksekliği: %d"
 
-#: plug-ins/file-psd/psd-load.c:1013
+#: plug-ins/file-psd/psd-load.c:1026
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Desteklenmeyen veya geçersiz katman genişliği: %d"
 
-#: plug-ins/file-psd/psd-load.c:1023
+#: plug-ins/file-psd/psd-load.c:1036
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Desteklenmeyen ya da geçersiz katman boyutu: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1048
+#: plug-ins/file-psd/psd-load.c:1061
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Desteklenmeyen yada geçersiz maske bilgisi boyutu."
 
-#: plug-ins/file-psd/psd-load.c:1231
+#: plug-ins/file-psd/psd-load.c:1244
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Desteklenmeyen veya geçersiz katman maskesi yüksekliği: %d"
 
-#: plug-ins/file-psd/psd-load.c:1240
+#: plug-ins/file-psd/psd-load.c:1253
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Desteklenmeyen veya geçersiz katman maskesi genişliği: %d"
 
-#: plug-ins/file-psd/psd-load.c:1250
+#: plug-ins/file-psd/psd-load.c:1263
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Desteklenmeyen ya da geçersiz katman maskesi boyutu: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1862 plug-ins/file-psd/psd-load.c:3583
+#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3599
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Desteklenmeyen veya geçersiz kanal boyutu"
 
-#: plug-ins/file-psd/psd-load.c:2296 plug-ins/file-psd/psd-load.c:3184
+#: plug-ins/file-psd/psd-load.c:2309 plug-ins/file-psd/psd-load.c:3197
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Desteklenmeyen sıkıştırma kipi: %d"
 
-#: plug-ins/file-psd/psd-load.c:2913
+#: plug-ins/file-psd/psd-load.c:2926
 msgid "Inner Shadow"
 msgstr "İç Gölgeyi Göster"
 
-#: plug-ins/file-psd/psd-load.c:2914
+#: plug-ins/file-psd/psd-load.c:2927
 msgid "imported"
 msgstr "içe aktarıldı"
 
-#: plug-ins/file-psd/psd-load.c:3361
+#: plug-ins/file-psd/psd-load.c:3374
 msgid "Extra"
 msgstr "Ek"
 
-#: plug-ins/file-psd/psd-load.c:3652
+#: plug-ins/file-psd/psd-load.c:3676
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Veri açması başarısız"
 
-#: plug-ins/file-psd/psd-load.c:4033
+#: plug-ins/file-psd/psd-load.c:4069
 msgid "Duotone Import"
 msgstr "Çift Ton İçe Aktarma"
 
-#: plug-ins/file-psd/psd-load.c:4034
+#: plug-ins/file-psd/psd-load.c:4070
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10970,7 +10979,7 @@ msgstr ""
 "Çift ton renk uzayı verileri kaydedildi ve\n"
 "dışa aktarmada yeniden uygulanabilir."
 
-#: plug-ins/file-psd/psd-load.c:4057
+#: plug-ins/file-psd/psd-load.c:4093
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -11466,12 +11475,12 @@ msgstr ""
 msgid "Failed a scanline write on row %d"
 msgstr "%d satırı üzerine bir tarama çizgisi yazılamadı"
 
-#: plug-ins/file-tiff/file-tiff-export.c:1201
+#: plug-ins/file-tiff/file-tiff-export.c:1202
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Sayfaları farklı bit derinliği ile yazmak garip."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1276
+#: plug-ins/file-tiff/file-tiff-export.c:1277
 msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
@@ -11479,7 +11488,7 @@ msgstr ""
 "Uyarı: azami TIFF dosya boyutu aşıldı. BigTIFF olarak yeniden deneyin, başka "
 "sıkıştırma algoritması kullanın ya da iptal edin."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1335
+#: plug-ins/file-tiff/file-tiff-export.c:1336
 #, c-format
 msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
@@ -11649,21 +11658,28 @@ msgstr "Çözünürlük bilgisi geçersiz, öntanımlı kullanılıyor"
 msgid "Could not get colormaps from '%s'"
 msgstr "'%s' dosyasından renk eşlemi okunamadı"
 
+#: plug-ins/file-tiff/file-tiff-load.c:1469
+msgid ""
+"Indexed TIFFs with color maps larger than 256colors are not yet supported"
+msgstr ""
+"256 renkten çok renk eşlemi olan indeksli TIFF dosyaları henüz "
+"desteklenmiyor"
+
 #. Validate number of channels to the same maximum as we use for
 #. * Photoshop. A higher number most likely means a corrupt image
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1550
+#: plug-ins/file-tiff/file-tiff-load.c:1559
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "Ek kanal sayısı süpheli: %d. Büyük olasılıkla görüntü bozuk."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1615
+#: plug-ins/file-tiff/file-tiff-load.c:1624
 msgid "TIFF Channel"
 msgstr "TIFF Kanalı"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1773
+#: plug-ins/file-tiff/file-tiff-load.c:1782
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
@@ -11673,8 +11689,8 @@ msgstr ""
 # s1: dosya türü
 # s2: dosya adı
 # s3: hata mesajı
-#: plug-ins/file-tiff/file-tiff-load.c:1809
-#: plug-ins/file-tiff/file-tiff-load.c:1853
+#: plug-ins/file-tiff/file-tiff-load.c:1818
+#: plug-ins/file-tiff/file-tiff-load.c:1862
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
@@ -11682,45 +11698,54 @@ msgstr ""
 "Tiff üst veri yüklemesi için geçici %s dosyası '%s' açılmaya çalışılırken "
 "hata: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1934
+#: plug-ins/file-tiff/file-tiff-load.c:1951
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: Desteklenmeyen görüntü biçimi, RGBA yükleyici yok"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2049
-#: plug-ins/file-tiff/file-tiff-load.c:2246
+#: plug-ins/file-tiff/file-tiff-load.c:2077
+#: plug-ins/file-tiff/file-tiff-load.c:2285
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "Döşeme okunamadı. Görüntü, %d. satırda bozuk olabilir."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2058
-#: plug-ins/file-tiff/file-tiff-load.c:2255
+#: plug-ins/file-tiff/file-tiff-load.c:2086
+#: plug-ins/file-tiff/file-tiff-load.c:2294
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Tarama çizgisi okunamadı. Görüntü, %d. satırda bozuk olabilir."
 
-#: plug-ins/file-tiff/file-tiff-load.c:3010
+#: plug-ins/file-tiff/file-tiff-load.c:2553
+#, c-format
+msgid ""
+"Invalid image dimensions (%u x %u) for Sketchbook layer %i. Image may be "
+"corrupt."
+msgstr ""
+"Sketchbook katmanı %3$i için görüntü boyutları (%1$u x %2$u) geçersiz. "
+"Görüntü bozuk olabilir."
+
+#: plug-ins/file-tiff/file-tiff-load.c:3065
 msgid "Import from TIFF"
 msgstr "TIFF dosyasından içe aktar"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3020
+#: plug-ins/file-tiff/file-tiff-load.c:3075
 msgid "_Show reduced images"
 msgstr "Azaltılmış _görüntüleri göster"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3063
+#: plug-ins/file-tiff/file-tiff-load.c:3118
 msgid "Process extra channel as:"
 msgstr "Ek kanalı şöyle işle:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3066
+#: plug-ins/file-tiff/file-tiff-load.c:3121
 msgid "_Non-premultiplied alpha"
 msgstr "Önceden çoğaltılmış _olmayan alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3067
+#: plug-ins/file-tiff/file-tiff-load.c:3122
 msgid "Pre_multiplied alpha"
 msgstr "Önceden çoğaltılmış _alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3068
+#: plug-ins/file-tiff/file-tiff-load.c:3123
 msgid "Channe_l"
 msgstr "Kana_l"
 
@@ -16288,11 +16313,11 @@ msgstr "Üst veriyi dışa aktar"
 msgid "Choose Date"
 msgstr "Tarih Seç"
 
-#: plug-ins/metadata/metadata-editor.c:1696
+#: plug-ins/metadata/metadata-editor.c:1697
 msgid "Set Date"
 msgstr "Tarih Ayarla"
 
-#: plug-ins/metadata/metadata-editor.c:2432
+#: plug-ins/metadata/metadata-editor.c:2434
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -16308,7 +16333,7 @@ msgstr ""
 "15.30 ya da 10.45\n"
 "Geçerli değeri kaldırmak için tüm metni silin."
 
-#: plug-ins/metadata/metadata-editor.c:2438
+#: plug-ins/metadata/metadata-editor.c:2440
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16324,24 +16349,24 @@ msgstr ""
 "girilmelidir.\n"
 "Geçerli değeri kaldırmak için tüm metni silin."
 
-#: plug-ins/metadata/metadata-editor.c:2572
+#: plug-ins/metadata/metadata-editor.c:2574
 msgid "Unrated"
 msgstr "Değerlendirilmemiş"
 
-#: plug-ins/metadata/metadata-editor.c:4682
+#: plug-ins/metadata/metadata-editor.c:4684
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "%s üst veri etiketi ayarlanamadı: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5582
+#: plug-ins/metadata/metadata-editor.c:5584
 msgid "Import Metadata File"
 msgstr "Üst Veri Dosyasını İçe Aktar"
 
-#: plug-ins/metadata/metadata-editor.c:5586
+#: plug-ins/metadata/metadata-editor.c:5588
 msgid "_Import"
 msgstr "İçe _Aktar"
 
-#: plug-ins/metadata/metadata-editor.c:5617
+#: plug-ins/metadata/metadata-editor.c:5619
 msgid "Export Metadata File"
 msgstr "Üst Veri Dosyasını Dışa Aktar"
 
