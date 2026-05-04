@@ -52,6 +52,8 @@ struct _ColorselCmyk
   GimpColorRenderingIntent  simulation_intent;
   gboolean                  simulation_bpc;
 
+  const Babl               *format;
+
   GtkWidget                *scales[4];
   GtkWidget                *name_label;
   GtkWidget                *tic_label;
@@ -71,6 +73,8 @@ static void   colorsel_cmyk_dispose        (GObject           *object);
 
 static void   colorsel_cmyk_set_color      (GimpColorSelector *selector,
                                             GeglColor         *color);
+static void   colorsel_cmyk_set_format     (GimpColorSelector *selector,
+                                            const Babl        *format);
 static void   colorsel_cmyk_set_config     (GimpColorSelector *selector,
                                             GimpColorConfig   *config);
 static void   colorsel_cmyk_set_simulation (GimpColorSelector *selector,
@@ -125,6 +129,7 @@ colorsel_cmyk_class_init (ColorselCmykClass *klass)
   selector_class->icon_name              = GIMP_ICON_COLOR_SELECTOR_CMYK;
   selector_class->set_color              = colorsel_cmyk_set_color;
   selector_class->set_config             = colorsel_cmyk_set_config;
+  selector_class->set_format             = colorsel_cmyk_set_format;
   selector_class->set_simulation         = colorsel_cmyk_set_simulation;
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "ColorselCmyk");
@@ -274,6 +279,54 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
 
   if (cmyk_profile && ! module->simulation_profile)
     g_object_unref (cmyk_profile);
+}
+
+static void
+colorsel_cmyk_set_format (GimpColorSelector *selector,
+                          const Babl        *format)
+{
+  ColorselCmyk *module = COLORSEL_CMYK (selector);
+
+  if (module->format != format)
+    {
+      GimpColorProfile *profile;
+      const Babl       *space;
+      const gchar      *icc;
+      gint              icc_len;
+
+      space = babl_format_get_space (format);
+
+      if (babl_space_is_cmyk (space))
+        {
+          gchar *text;
+
+          icc     = babl_space_get_icc (space, &icc_len);
+          profile = gimp_color_profile_new_from_icc_profile ((const guint8 *) icc,
+                                                             icc_len, NULL);
+          g_set_object (&module->simulation_profile, profile);
+
+          text = g_strdup_printf (_("Profile: %s"),
+                                  gimp_color_profile_get_label (profile));
+          gtk_label_set_text (GTK_LABEL (module->name_label), text);
+          g_free (text);
+
+          gimp_help_set_help_data (module->name_label,
+                                  gimp_color_profile_get_summary (profile),
+                                  NULL);
+        }
+      else
+        {
+          format = NULL;
+        }
+
+      if (! module->in_destruction)
+        {
+          GeglColor *color = gimp_color_selector_get_color (selector);
+
+          colorsel_cmyk_set_color (selector, color);
+          g_object_unref (color);
+        }
+    }
 }
 
 static void
