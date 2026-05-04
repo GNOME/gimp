@@ -43,6 +43,7 @@
 #endif
 
 #ifdef PLATFORM_OSX
+#import <AppKit/AppKit.h>
 #include <ApplicationServices/ApplicationServices.h>
 #endif
 
@@ -2665,12 +2666,14 @@ gimp_window_set_transient_cb (GtkWidget   *window,
 #endif
 }
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
 void
 gimp_window_set_title_bar_theme (Gimp      *gimp,
                                  GtkWidget *dialog)
 {
+#ifdef G_OS_WIN32
   HWND           hwnd;
+#endif
   GdkWindow     *window        = NULL;
   gboolean       use_dark_mode = FALSE;
 
@@ -2683,7 +2686,11 @@ gimp_window_set_title_bar_theme (Gimp      *gimp,
 
           config = GIMP_GUI_CONFIG (gimp->config);
           if (config->theme_scheme == GIMP_THEME_SYSTEM)
+#ifdef G_OS_WIN32
             use_dark_mode = gimp_is_win32_system_theme_dark ();
+#elif defined(PLATFORM_OSX)
+            use_dark_mode = themes_macos_is_dark_mode_active ();
+#endif
           else
             use_dark_mode = (config->theme_scheme != GIMP_THEME_LIGHT);
         }
@@ -2709,12 +2716,22 @@ gimp_window_set_title_bar_theme (Gimp      *gimp,
             }
         }
 
+#ifdef G_OS_WIN32
         hwnd = (HWND) gdk_win32_window_get_handle (window);
         DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
                                &use_dark_mode, sizeof (use_dark_mode));
+#elif defined(PLATFORM_OSX)
+        /* Unlike the Windows codepath this is only needed by app/gui/gui.c and app/gui/themes.c*/
+        if (use_dark_mode)
+          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
+        else
+          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+#endif
     }
 }
+#endif
 
+#ifdef G_OS_WIN32
 gboolean
 gimp_is_win32_system_theme_dark (void)
 {
@@ -2731,5 +2748,24 @@ gimp_is_win32_system_theme_dark (void)
                         &val_size);
 
   return status == ERROR_SUCCESS && val == 0;
+}
+#endif
+
+#ifdef PLATFORM_OSX
+gboolean
+themes_macos_is_dark_mode_active (void)
+{
+  gboolean    is_dark = FALSE;
+  CFStringRef style;
+
+  style = CFPreferencesCopyAppValue (CFSTR ("AppleInterfaceStyle"), kCFPreferencesCurrentUser);
+  if (style)
+    {
+      if (CFStringCompare (style, CFSTR ("Dark"), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
+        is_dark = TRUE;
+      CFRelease(style);
+    }
+
+    return is_dark;
 }
 #endif

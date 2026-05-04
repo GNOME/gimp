@@ -81,7 +81,7 @@ static void     gimp_critical_dialog_copy_info    (GimpCriticalDialog *dialog);
 static gboolean browser_open_url                  (GtkWindow    *window,
                                                    const gchar  *url,
                                                    GError      **error);
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
 static void     gimp_critical_dialog_realize      (GtkWidget          *widget,
                                                    GimpCriticalDialog *dialog);
 #endif
@@ -289,40 +289,49 @@ gimp_critical_dialog_constructed (GObject *object)
 
 /* Copied from app/widgets/gimpwidgets-utils.c, to reduce dependency
  * on internal GIMP procedures */
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
 static void
 gimp_critical_dialog_realize (GtkWidget          *widget,
                               GimpCriticalDialog *dialog)
 {
+#ifdef G_OS_WIN32
   HWND             hwnd;
   GdkWindow       *window        = NULL;
+#endif
   GtkStyleContext *style;
   GdkRGBA         *color         = NULL;
   gboolean         use_dark_mode = FALSE;
 
+  /* Workaround if we don't have access to GimpGuiConfig.
+   * If the background color is below the threshold, then we're
+   * likely in dark mode.
+   */
+  style = gtk_widget_get_style_context (widget);
+  gtk_style_context_get (style, gtk_style_context_get_state (style),
+                         GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
+                         NULL);
+  if (color)
+    {
+      if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
+        use_dark_mode = TRUE;
+
+      gdk_rgba_free (color);
+    }
+
+#ifdef G_OS_WIN32
   window = gtk_widget_get_window (GTK_WIDGET (widget));
   if (window)
     {
-      /* Workaround if we don't have access to GimpGuiConfig.
-       * If the background color is below the threshold, then we're
-       * likely in dark mode.
-       */
-      style = gtk_widget_get_style_context (widget);
-      gtk_style_context_get (style, gtk_style_context_get_state (style),
-                             GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
-                             NULL);
-      if (color)
-        {
-          if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
-            use_dark_mode = TRUE;
-
-          gdk_rgba_free (color);
-        }
-
       hwnd = (HWND) gdk_win32_window_get_handle (window);
       DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
                               &use_dark_mode, sizeof (use_dark_mode));
     }
+#elif defined(PLATFORM_OSX)
+  if (use_dark_mode)
+    [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
+  else
+    [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+#endif
 }
 #endif
 
@@ -581,7 +590,7 @@ gimp_critical_dialog_new (const gchar *title,
                          NULL);
   g_free (date);
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
   g_signal_connect_object (dialog, "realize",
                            G_CALLBACK (gimp_critical_dialog_realize),
                            NULL, 0);

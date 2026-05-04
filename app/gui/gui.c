@@ -614,7 +614,7 @@ gui_restore_after_callback (Gimp               *gimp,
 
       shell = gimp_display_get_shell (display);
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
       themes_set_title_bar (gimp);
 #endif
 

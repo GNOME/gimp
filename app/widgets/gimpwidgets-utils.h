@@ -163,10 +163,15 @@ gboolean          gimp_utils_are_menu_path_identical   (const gchar       *path1
                                                         gchar            **canonical_path1,
                                                         gchar            **mnemonic_path1,
                                                         gchar            **path1_section_name);
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
 void              gimp_window_set_title_bar_theme      (Gimp              *gimp,
                                                         GtkWidget         *dialog);
+#endif
+#ifdef G_OS_WIN32
 gboolean          gimp_is_win32_system_theme_dark      (void);
+#endif
+#ifdef PLATFORM_OSX
+gboolean          themes_macos_is_dark_mode_active     (void);
 #endif
 
 #endif /* __APP_GIMP_WIDGETS_UTILS_H__ */

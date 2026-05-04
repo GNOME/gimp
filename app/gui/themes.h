@@ -17,6 +17,10 @@
 
 #pragma once
 
+#ifdef PLATFORM_OSX
+/* Needed for MAC_OS_X_VERSION_MIN_REQUIRED check below */
+#include <AvailabilityMacros.h>
+#endif
 
 void     themes_init                 (Gimp          *gimp);
 void     themes_exit                 (Gimp          *gimp);
@@ -33,6 +37,6 @@ void     themes_theme_change_notify  (GimpGuiConfig *config,
                                       GParamSpec    *pspec,
                                       Gimp          *gimp);
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
 void     themes_set_title_bar        (Gimp          *gimp);
 #endif

@@ -67,9 +67,6 @@ static void   themes_theme_settings_portal_changed (GDBusProxy            *proxy
                                                     GVariant              *parameters,
                                                     Gimp                  *gimp);
 #endif
-#if defined(__APPLE__)
-static gboolean themes_macos_is_dark_mode_active   (void);
-#endif
 
 
 /*  private variables  */
@@ -157,7 +154,7 @@ themes_init (Gimp *gimp)
 
   themes_theme_change_notify (config, NULL, gimp);
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
   themes_set_title_bar (gimp);
 #endif
 }
@@ -311,7 +308,7 @@ themes_theme_change_notify (GimpGuiConfig *config,
 
   gtk_style_context_reset_widgets (gdk_screen_get_default ());
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
   themes_set_title_bar (gimp);
 #endif
 }
@@ -868,26 +865,7 @@ themes_theme_settings_portal_changed (GDBusProxy  *proxy,
 }
 #endif
 
-#ifdef __APPLE__
-static gboolean
-themes_macos_is_dark_mode_active (void)
-{
-  gboolean    is_dark = FALSE;
-  CFStringRef style;
-
-  style = CFPreferencesCopyAppValue (CFSTR ("AppleInterfaceStyle"), kCFPreferencesCurrentUser);
-  if (style)
-    {
-      if (CFStringCompare (style, CFSTR ("Dark"), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
-        is_dark = TRUE;
-      CFRelease(style);
-    }
-
-    return is_dark;
-}
-#endif /* __APPLE__ */
-
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
 void
 themes_set_title_bar (Gimp *gimp)
 {
