@@ -141,7 +141,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
                   }
                 $clang_opts_meson=@('-Dc_args=-"fansi-escape-codes -gcodeview"', '-Dcpp_args=-"fansi-escape-codes -gcodeview"', '-Dc_link_args="-Wl,--pdb="', '-Dcpp_link_args="-Wl,--pdb="')
               }
-            meson setup _build-$(@($env:VCPKG_DEFAULT_HOST_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION `
+            meson setup _build-$(@($env:VCPKG_DEFAULT_HOST_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI `
                         -Dbuildtype=debugoptimized $clang_opts_meson `
                         $(if ($branch -like '-*') { $branch } elseif ($patches -like '-*') { $patches } else { $options });
           }
@@ -167,7 +167,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
 
 if ($env:VCPKG_ROOT)
   {
-    self_build https://gitlab.gnome.org/GNOME/babl @('-Denable-gir=false', "$WARN_AS_ERROR_ON_CI")
+    self_build https://gitlab.gnome.org/GNOME/babl @('-Denable-gir=false')
     self_build https://gitlab.gnome.org/GNOME/gegl @('-Dintrospection=false')
     exit 0
   }
