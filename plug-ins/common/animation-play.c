@@ -498,7 +498,7 @@ da_size_callback (GtkWidget     *widget,
       zoomcombo_text_child = GTK_ENTRY (gtk_bin_get_child (GTK_BIN (zoomcombo)));
       if (zoomcombo_text_child)
         {
-          char* new_entry_text = g_strdup_printf (_("%.1f %%"), scale * 100.0);
+          gchar *new_entry_text = g_strdup_printf (_("%.1f %%"), scale * 100.0);
 
           gtk_entry_set_text (zoomcombo_text_child, new_entry_text);
           g_free (new_entry_text);
@@ -1688,17 +1688,18 @@ static void
 update_frame_label (void)
 {
   gchar *text;
+  gint   frame_number_readable = frame_number + 1;
 
   if (total_frames < 10)
-    text = g_strdup_printf ("%d/%d", frame_number, total_frames - 1);
+    text = g_strdup_printf ("%d/%d", frame_number_readable, total_frames);
   else if (total_frames < 100)
-    text = g_strdup_printf ("%02d/%d", frame_number, total_frames - 1);
+    text = g_strdup_printf ("%02d/%d", frame_number_readable, total_frames);
   else if (total_frames < 1000)
-    text = g_strdup_printf ("%03d/%d", frame_number, total_frames - 1);
+    text = g_strdup_printf ("%03d/%d", frame_number_readable, total_frames);
   else if (total_frames < 10000)
-    text = g_strdup_printf ("%04d/%d", frame_number, total_frames - 1);
+    text = g_strdup_printf ("%04d/%d", frame_number_readable, total_frames);
   else
-    text = g_strdup_printf ("%05d/%d", frame_number, total_frames - 1);
+    text = g_strdup_printf ("%05d/%d", frame_number_readable, total_frames);
 
   gtk_label_set_text (GTK_LABEL (frame_label), text);
   g_free (text);
