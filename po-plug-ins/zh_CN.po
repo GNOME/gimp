@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-29 14:08+0000\n"
-"PO-Revision-Date: 2026-04-30 07:33+0800\n"
+"POT-Creation-Date: 2026-05-04 02:14+0000\n"
+"PO-Revision-Date: 2026-05-04 16:50+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -89,9 +89,9 @@ msgstr "C 语言插件示例"
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
 #: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1189
-#: plug-ins/metadata/metadata-editor.c:1695
-#: plug-ins/metadata/metadata-editor.c:5586
-#: plug-ins/metadata/metadata-editor.c:5621 plug-ins/print/print.c:458
+#: plug-ins/metadata/metadata-editor.c:1696
+#: plug-ins/metadata/metadata-editor.c:5588
+#: plug-ins/metadata/metadata-editor.c:5623 plug-ins/print/print.c:458
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -609,8 +609,8 @@ msgstr "百叶窗"
 #: plug-ins/common/file-pcx.c:727 plug-ins/common/file-pcx.c:735
 #: plug-ins/common/file-pcx.c:743 plug-ins/common/file-pix.c:431
 #: plug-ins/common/file-png.c:1082 plug-ins/common/file-pnm.c:848
-#: plug-ins/common/file-qoi.c:296 plug-ins/common/file-raw-data.c:823
-#: plug-ins/common/file-raw-data.c:2007 plug-ins/common/file-sunras.c:1061
+#: plug-ins/common/file-qoi.c:296 plug-ins/common/file-raw-data.c:834
+#: plug-ins/common/file-raw-data.c:1955 plug-ins/common/file-sunras.c:1061
 #: plug-ins/common/file-tga.c:1103 plug-ins/common/file-tim.c:403
 #: plug-ins/common/file-tim.c:551 plug-ins/common/file-wbmp.c:398
 #: plug-ins/common/file-wbmp.c:475 plug-ins/common/file-xbm.c:891
@@ -1230,8 +1230,8 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/file-dicom.c:1582 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
 #: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
-#: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1512
-#: plug-ins/common/file-raw-data.c:1541 plug-ins/common/file-sunras.c:616
+#: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1523
+#: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:722
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
@@ -1976,9 +1976,9 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-ps.c:3754 plug-ins/common/file-psp.c:2804
 #: plug-ins/common/file-psp.c:2854 plug-ins/common/file-pvr.c:256
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
-#: plug-ins/common/file-raw-data.c:799 plug-ins/common/file-raw-data.c:1844
+#: plug-ins/common/file-raw-data.c:810 plug-ins/common/file-raw-data.c:1861
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:756
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:772
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:277
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
 #: plug-ins/common/file-xbm.c:729 plug-ins/common/file-xmc.c:656
@@ -2582,8 +2582,8 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
-#: plug-ins/common/file-ps.c:1148 plug-ins/common/file-raw-data.c:790
-#: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:427
+#: plug-ins/common/file-ps.c:1148 plug-ins/common/file-raw-data.c:801
+#: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:427
 #: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:242
 #: plug-ins/common/file-wbmp.c:321 plug-ins/common/file-wmf.c:618
 #: plug-ins/common/file-xbm.c:721 plug-ins/common/file-xmc.c:646
@@ -2665,7 +2665,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-pcx.c:1101 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1936 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:794
+#: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:810
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:714
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
@@ -4255,7 +4255,7 @@ msgstr "打开 .lnk 文件且如果其指向图像，将会使 GIMP 打开该链
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
 #: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:728
-#: plug-ins/common/file-raw-data.c:815
+#: plug-ins/common/file-raw-data.c:826
 #: plug-ins/common/file-seattle-filmworks.c:244
 #: plug-ins/common/file-seattle-filmworks.c:287
 #: plug-ins/common/file-seattle-filmworks.c:300
@@ -4641,7 +4641,7 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "下边框超出边界（须 < %d）：%d"
 
 #: plug-ins/common/file-pcx.c:1284 plug-ins/common/file-qoi.c:369
-#: plug-ins/common/file-svg.c:803 plug-ins/common/file-svg.c:819
+#: plug-ins/common/file-svg.c:819 plug-ins/common/file-svg.c:835
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "写入文件“%s”失败：%s"
@@ -4774,7 +4774,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "导出图像为多页面 PDF"
 
 #: plug-ins/common/file-pdf-export.c:1033
-#: plug-ins/metadata/metadata-editor.c:5621
+#: plug-ins/metadata/metadata-editor.c:5623
 msgid "_Export"
 msgstr "导出(_E)"
 
@@ -6126,7 +6126,7 @@ msgstr "色板文件(_P)"
 msgid "The file containing palette data"
 msgstr "该文件包含色板数据"
 
-#: plug-ins/common/file-raw-data.c:458 plug-ins/common/file-raw-data.c:2918
+#: plug-ins/common/file-raw-data.c:458 plug-ins/common/file-raw-data.c:2976
 msgid "Digital Elevation Model data"
 msgstr "数字高程模型数据"
 
@@ -6178,13 +6178,18 @@ msgstr "平面配置"
 msgid "Raw Data"
 msgstr "Raw 数据"
 
-#: plug-ins/common/file-raw-data.c:645
+#: plug-ins/common/file-raw-data.c:623 plug-ins/file-psd/psd-util.c:199
+#, c-format
+msgid "Unexpected end of file"
+msgstr "意料之外的文件尾"
+
+#: plug-ins/common/file-raw-data.c:656
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
 msgstr "%d 不是有效的采样空间。有效数值为：0（自动检测），1 和 3。"
 
-#: plug-ins/common/file-raw-data.c:658
+#: plug-ins/common/file-raw-data.c:669
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -6194,12 +6199,12 @@ msgstr ""
 "自动检测采样空间失败。“%s”不是有效的 HGT 文件或尚未支持它的变体。支持的 HGT "
 "文件为：SRTM-1 和 SRTM-3。如果您知道该变体，用参数 1 或 3 运行。"
 
-#: plug-ins/common/file-raw-data.c:1720
+#: plug-ins/common/file-raw-data.c:1737
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "无法打开“%s”实现大小验证：%s"
 
-#: plug-ins/common/file-raw-data.c:2809
+#: plug-ins/common/file-raw-data.c:2855
 msgid "Load Image from Raw Data"
 msgstr "从 Raw 数据载入图像"
 
@@ -6207,43 +6212,43 @@ msgstr "从 Raw 数据载入图像"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: plug-ins/common/file-raw-data.c:2912
+#: plug-ins/common/file-raw-data.c:2970
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "数字高程模型数据（1 角秒）"
 
-#: plug-ins/common/file-raw-data.c:2915
+#: plug-ins/common/file-raw-data.c:2973
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "数字高程模型数据（3 角秒）"
 
-#: plug-ins/common/file-raw-data.c:2922
+#: plug-ins/common/file-raw-data.c:2980
 msgid "Image"
 msgstr "图像"
 
-#: plug-ins/common/file-raw-data.c:2934
+#: plug-ins/common/file-raw-data.c:2992
 msgid "Palette"
 msgstr "色板"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:3016
+#: plug-ins/common/file-raw-data.c:3082
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "连续（%s）(_C)"
 
-#: plug-ins/common/file-raw-data.c:3018
+#: plug-ins/common/file-raw-data.c:3084
 msgid "_Contiguous"
 msgstr "连续(_C)"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:3024
+#: plug-ins/common/file-raw-data.c:3090
 #, c-format
 msgid "_Planar (%s)"
 msgstr "平面（%s）(_P)"
 
-#: plug-ins/common/file-raw-data.c:3026
+#: plug-ins/common/file-raw-data.c:3092
 msgid "_Planar"
 msgstr "平面(_P)"
 
@@ -6389,89 +6394,101 @@ msgstr "读入时遇到文件结束符"
 msgid "Write error occurred"
 msgstr "出现写错误"
 
-#: plug-ins/common/file-svg.c:278
+#: plug-ins/common/file-svg.c:284
 msgid "SVG image"
 msgstr "SVG 图像"
 
-#: plug-ins/common/file-svg.c:281
+#: plug-ins/common/file-svg.c:287
 msgid "Loads files in SVG file format"
 msgstr "加载 SVG 格式的文件"
 
-#: plug-ins/common/file-svg.c:296
+#: plug-ins/common/file-svg.c:302
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:305
+#: plug-ins/common/file-svg.c:311
 msgid "_Paths"
 msgstr "路径(_P)"
 
-#: plug-ins/common/file-svg.c:306
+#: plug-ins/common/file-svg.c:312
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr "是否以及如何导入路径使其可用于路径工具"
 
-#: plug-ins/common/file-svg.c:307
+#: plug-ins/common/file-svg.c:313
 msgid "Don't import paths"
 msgstr "不要导入路径"
 
-#: plug-ins/common/file-svg.c:308
+#: plug-ins/common/file-svg.c:314
 msgid "Import paths individually"
 msgstr "分别导入路径"
 
-#: plug-ins/common/file-svg.c:309
+#: plug-ins/common/file-svg.c:315
 msgid "Merge imported paths"
 msgstr "合并导入的路径"
 
-#: plug-ins/common/file-svg.c:321
+#: plug-ins/common/file-svg.c:327
 msgid "Scalable Vector Graphic"
 msgstr "可缩放矢量图形"
 
-#: plug-ins/common/file-svg.c:324
+#: plug-ins/common/file-svg.c:330
 msgid "Exports files in SVG file format"
 msgstr "以 SVG 文件格式导出文件"
 
-#: plug-ins/common/file-svg.c:325
+#: plug-ins/common/file-svg.c:331
 msgid "Exports files in SVG file format (Scalable Vector Graphic)"
 msgstr "以 SVG 文件格式导出文件（可缩放矢量图形）"
 
-#: plug-ins/common/file-svg.c:350
+#: plug-ins/common/file-svg.c:356
 msgid "_Title"
 msgstr "标题(_T)"
 
-#: plug-ins/common/file-svg.c:351
+#: plug-ins/common/file-svg.c:357
 msgid "Optional <title> for SVG"
 msgstr "SVG 的可选 <title>"
 
-#: plug-ins/common/file-svg.c:356
+#: plug-ins/common/file-svg.c:362
 msgid "Em_bed raster layers as"
 msgstr "光栅图层内嵌为(_B)"
 
-#: plug-ins/common/file-svg.c:358
+#: plug-ins/common/file-svg.c:364
 msgid "PNG (always)"
 msgstr "PNG（总是）"
 
-#: plug-ins/common/file-svg.c:359
+#: plug-ins/common/file-svg.c:365
 msgid "JPEG (for opaque images, PNG otherwise)"
 msgstr "JPEG（用于不透明图像，否则选 PNG）"
 
-#: plug-ins/common/file-svg.c:360
+#: plug-ins/common/file-svg.c:366
 msgid "Do not export raster layers"
 msgstr "不要导出光栅图层"
+
+#: plug-ins/common/file-svg.c:372
+msgid "As In_kscape SVG"
+msgstr "导出为 In_kscape SVG"
+
+#: plug-ins/common/file-svg.c:373
+msgid ""
+"Include Inkscape-specific attributes in exported SVG. The exported SVG may "
+"not be compatible with all viewers."
+msgstr ""
+"在导出的 SVG 中包含 Inkscape 特定的属性。该导出的 SVG 可能无法与所有查看器兼"
+"容。"
 
 #. We need to ask explicitly before using the "unlimited" size
 #. * option (XML_PARSE_HUGE in libxml) because it is considered
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:407
+#: plug-ins/common/file-svg.c:423
 msgid "Disable safety size limits?"
 msgstr "禁用安全大小限制吗？"
 
-#: plug-ins/common/file-svg.c:412
+#: plug-ins/common/file-svg.c:428
 msgid "_No"
 msgstr "否(_N)"
 
-#: plug-ins/common/file-svg.c:413
+#: plug-ins/common/file-svg.c:429
 msgid "_Yes"
 msgstr "是(_Y)"
 
@@ -6485,7 +6502,7 @@ msgstr "是(_Y)"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:437
+#: plug-ins/common/file-svg.c:453
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6494,28 +6511,28 @@ msgstr ""
 "发生了解析错误。\n"
 "禁用安全限制可能会有帮助。恶意 SVG 文件可能会用此消耗过多内存。"
 
-#: plug-ins/common/file-svg.c:449
+#: plug-ins/common/file-svg.c:465
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "为了安全原因，该选项应仅用于信任的输入！"
 
-#: plug-ins/common/file-svg.c:456
+#: plug-ins/common/file-svg.c:472
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "不带阻止解析巨量数据的限制来重试吗？"
 
-#: plug-ins/common/file-svg.c:758 plug-ins/file-exr/file-exr.c:380
+#: plug-ins/common/file-svg.c:774 plug-ins/file-exr/file-exr.c:380
 #: plug-ins/file-exr/file-exr.c:394
 msgid "Unknown reason"
 msgstr "未知原因"
 
-#: plug-ins/common/file-svg.c:764
+#: plug-ins/common/file-svg.c:780
 msgid "Rendering SVG"
 msgstr "渲染 SVG"
 
-#: plug-ins/common/file-svg.c:774
+#: plug-ins/common/file-svg.c:790
 msgid "Rendered SVG"
 msgstr "已渲染的 SVG"
 
-#: plug-ins/common/file-svg.c:1130
+#: plug-ins/common/file-svg.c:1146
 msgid ""
 "The SVG format only requires viewers to display image links for SVG, PNG, "
 "and JPEG images.\n"
@@ -10734,11 +10751,6 @@ msgid ""
 msgstr ""
 "该 PSD 文件包含 GIMP\n"
 "尚未完全支持的特性："
-
-#: plug-ins/file-psd/psd-util.c:199
-#, c-format
-msgid "Unexpected end of file"
-msgstr "意料之外的文件尾"
 
 #: plug-ins/file-psd/psd.c:136 plug-ins/file-psd/psd.c:219
 #: plug-ins/file-psd/psd.c:221
@@ -15971,11 +15983,11 @@ msgstr "导出元数据"
 msgid "Choose Date"
 msgstr "选择日期"
 
-#: plug-ins/metadata/metadata-editor.c:1696
+#: plug-ins/metadata/metadata-editor.c:1697
 msgid "Set Date"
 msgstr "设置日期"
 
-#: plug-ins/metadata/metadata-editor.c:2432
+#: plug-ins/metadata/metadata-editor.c:2434
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -15990,7 +16002,7 @@ msgstr ""
 "或 10.45\n"
 "删除所有文字可删除当前值。"
 
-#: plug-ins/metadata/metadata-editor.c:2438
+#: plug-ins/metadata/metadata-editor.c:2440
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16005,24 +16017,24 @@ msgstr ""
 "根据选中的度量类型该值应为米（m）或英尺（ft）\n"
 "删除所有文字可删除当前值。"
 
-#: plug-ins/metadata/metadata-editor.c:2572
+#: plug-ins/metadata/metadata-editor.c:2574
 msgid "Unrated"
 msgstr "未评级"
 
-#: plug-ins/metadata/metadata-editor.c:4682
+#: plug-ins/metadata/metadata-editor.c:4684
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "设置元数据标签“%s”失败：%s"
 
-#: plug-ins/metadata/metadata-editor.c:5583
+#: plug-ins/metadata/metadata-editor.c:5585
 msgid "Import Metadata File"
 msgstr "导入元数据文件"
 
-#: plug-ins/metadata/metadata-editor.c:5586
+#: plug-ins/metadata/metadata-editor.c:5588
 msgid "_Import"
 msgstr "导入(_I)"
 
-#: plug-ins/metadata/metadata-editor.c:5618
+#: plug-ins/metadata/metadata-editor.c:5620
 msgid "Export Metadata File"
 msgstr "导出元数据文件"
 
