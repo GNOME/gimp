@@ -806,7 +806,7 @@ gimp_dialog_set_title_bar_theme (GtkWidget *dialog)
   window = gtk_widget_get_window (GTK_WIDGET (dialog));
   if (window)
     {
-      HWND hwnd = (HWND) gdk_win32_window_get_handle (window);
+      hwnd = (HWND) gdk_win32_window_get_handle (window);
       DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
                              &use_dark_mode, sizeof (use_dark_mode));
       UpdateWindow (hwnd);
