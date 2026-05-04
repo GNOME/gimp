@@ -1689,12 +1689,14 @@ on_date_button_clicked (GtkButton *widget,
     }
 
   calendar_dialog =
-    gtk_dialog_new_with_buttons (_("Choose Date"),
-                                 NULL,
-                                 GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-                                 _("_Cancel"),  GTK_RESPONSE_CANCEL,
-                                 _("Set Date"), GTK_RESPONSE_OK,
-                                 NULL);
+    gimp_dialog_new (_("Choose Date"), "metadata-calendar",
+                     NULL, GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+                     gimp_standard_help_func, NULL,
+
+                     _("_Cancel"),  GTK_RESPONSE_CANCEL,
+                     _("Set Date"), GTK_RESPONSE_OK,
+
+                     NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (calendar_dialog),
                                    GTK_RESPONSE_OK);
