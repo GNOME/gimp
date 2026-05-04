@@ -38,7 +38,7 @@ eval "$(sed -n -e 's/- //' -e '/macos_environ\[/,/macos_environ/p' .gitlab-ci.ym
 # Build GIMP only
 printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
 if [ ! -f "_build-$(uname -m)/build.ninja" ]; then
-  meson setup _build-$(uname -m) -Dprefix="$GIMP_PREFIX" $NON_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI \
+  meson setup _build-$(uname -m) -Dprefix="$GIMP_PREFIX" $NON_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI $ASAN_ON_CI \
               $PKGCONF_RELOCATABLE_OPTION $DMG_OPTION \
               -Denable-default-bin=enabled -Dbuild-id=org.gimp.GIMP_official \
               -Dc_args="-I${OPT_PREFIX}/include" -Dcpp_args="-I${OPT_PREFIX}/include" -Dc_link_args="-L${OPT_PREFIX}/lib" -Dcpp_link_args="-L${OPT_PREFIX}/lib"
