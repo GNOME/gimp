@@ -69,10 +69,12 @@
 #include "text/gimptextlayer.h"
 
 #include "widgets/gimpaction.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpopendialog.h"
 #include "widgets/gimpprogressdialog.h"
+#include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -267,11 +269,13 @@ layers_edit_vector_cmd_callback (GimpAction *action,
                                  GVariant   *value,
                                  gpointer    data)
 {
+  Gimp      *gimp;
   GimpImage *image;
   GimpLayer *layer;
   GList     *layers;
   GtkWidget *widget;
   GimpTool  *active_tool;
+  return_if_no_gimp   (gimp, data);
   return_if_no_layers (image, layers, data);
   return_if_no_widget (widget, data);
 
@@ -304,7 +308,16 @@ layers_edit_vector_cmd_callback (GimpAction *action,
     }
 
   if (GIMP_IS_PATH_TOOL (active_tool))
-    gimp_path_tool_set_path (GIMP_PATH_TOOL (active_tool), GIMP_VECTOR_LAYER (layer), NULL);
+    {
+      /* Switch to tool options so we can edit the fill and stroke settings */
+      gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
+                                                 gimp,
+                                                 gimp_dialog_factory_get_singleton (),
+                                                 gimp_widget_get_monitor (widget),
+                                                 "gimp-tool-options");
+
+      gimp_path_tool_set_path (GIMP_PATH_TOOL (active_tool), GIMP_VECTOR_LAYER (layer), NULL);
+    }
 }
 
 void
