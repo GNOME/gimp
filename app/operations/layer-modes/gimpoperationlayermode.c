@@ -306,7 +306,7 @@ gimp_operation_layer_mode_prepare (GeglOperation *operation)
   GimpOperationLayerMode *self = GIMP_OPERATION_LAYER_MODE (operation);
   const GeglRectangle    *input_extent;
   const GeglRectangle    *mask_extent;
-  const Babl             *preferred_format;
+  const Babl             *preferred_format = NULL;
   const Babl             *format;
 
   self->composite_mode = self->prop_composite_mode;
