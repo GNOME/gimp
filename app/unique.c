@@ -113,13 +113,15 @@ gimp_unique_win32_open (const gchar **filenames,
               if (file)
                 {
                   gchar *uri = g_file_get_uri (file);
+                  DWORD_PTR dwResult = 0;
 
                   copydata.lpData = uri;
                   copydata.cbData = strlen (uri) + 1;  /* size in bytes   */
                   copydata.dwData = (long) as_new;
 
-                  SendMessage (window_handle,
-                               WM_COPYDATA, (WPARAM) window_handle, (LPARAM) &copydata);
+                  SendMessageTimeoutW (window_handle,
+                                         WM_COPYDATA, (WPARAM) window_handle, (LPARAM) &copydata,
+                                         SMTO_NORMAL | SMTO_ABORTIFHUNG, 5000, &dwResult);
 
                   g_free (uri);
                   g_object_unref (file);
@@ -135,8 +137,16 @@ gimp_unique_win32_open (const gchar **filenames,
         }
       else
         {
-          SendMessage (window_handle,
-                       WM_COPYDATA, (WPARAM) window_handle, (LPARAM) &copydata);
+          {
+            DWORD_PTR dwResult = 0;
+            SendMessageTimeoutW (window_handle,
+                                 WM_COPYDATA,
+                                 (WPARAM) window_handle,
+                                 (LPARAM) &copydata,
+                                 SMTO_NORMAL | SMTO_ABORTIFHUNG,
+                                 5000,
+                                 &dwResult);
+          }
         }
 
       return TRUE;

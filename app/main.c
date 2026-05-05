@@ -910,21 +910,87 @@ main (int    argc,
     new_instance = TRUE;
 
 #ifndef GIMP_CONSOLE_COMPILATION
-  if (! new_instance && gimp_unique_open (filenames, as_new))
+  if (! new_instance)
     {
-      int success = EXIT_SUCCESS;
+      gboolean is_running = FALSE;
 
-      if (be_verbose)
-        g_print ("%s\n",
-                 _("Another GIMP instance is already running."));
+#ifndef G_OS_WIN32
+      is_running = gimp_unique_open (filenames, as_new);
+#else
+      /* Windoes Explorer spawns separate processes simultaneously when multiple files are selected.
+       * See: https://gitlab.gnome.org/GNOME/gimp/-/work_items/364 */
+      HANDLE   h_startup_mutex = CreateMutexW (NULL, FALSE, L"Local\\GIMP_IPC_Startup_Lock");
+      HANDLE   h_primary_running = NULL;
+      HANDLE   h_primary_flag = NULL;
+      DWORD    primary_flag_error = 0;
 
-      if (batch_commands &&
-          ! gimp_unique_batch_run (batch_interpreter, batch_commands))
-        success = EXIT_FAILURE;
+      if (h_startup_mutex)
+        {
+          WaitForSingleObject (h_startup_mutex, INFINITE);
+          h_primary_flag = CreateMutexW (NULL, FALSE, L"Local\\GIMP_PrimaryInstance_Running");
+          if (h_primary_flag)
+            primary_flag_error = GetLastError ();
+          if (h_primary_flag && primary_flag_error == ERROR_ALREADY_EXISTS)
+            {
+              /* another GIMP instance is checking the primary instance flag */
+              for (gint retry = 0; retry < 20; retry++)
+                {
+                  is_running = gimp_unique_open (filenames, as_new);
+                  if (is_running)
+                    break;
 
-      gdk_notify_startup_complete ();
+                  g_usleep (100000);
+                }
+            }
+          else
+            {
+              /* this instance is the candidate to become the primary GIMP instance */
+              for (gint retry = 0; retry < 20; retry++)
+                {
+                  is_running = gimp_unique_open (filenames, as_new);
+                  if (is_running)
+                    break;
 
-      return success;
+                  h_primary_running = OpenMutexW (MUTEX_ALL_ACCESS, FALSE, L"Local\\GIMP_PrimaryInstance_Running");
+                  if (h_primary_running)
+                    {
+                      /* another GIMP instace is running */
+                      CloseHandle (h_primary_running);
+                      g_usleep (100000);
+                    }
+                  else
+                    {
+                      /* this is the first GIMP instance */
+                      break;
+                    }
+                }
+            }
+
+          ReleaseMutex (h_startup_mutex);
+          CloseHandle (h_startup_mutex);
+        }
+      else
+        {
+          is_running = gimp_unique_open (filenames, as_new);
+        }
+#endif
+
+      if (is_running)
+        {
+          int success = EXIT_SUCCESS;
+
+          if (be_verbose)
+            g_print ("%s\n",
+                     _("Another GIMP instance is already running."));
+
+          if (batch_commands &&
+              ! gimp_unique_batch_run (batch_interpreter, batch_commands))
+            success = EXIT_FAILURE;
+
+          gdk_notify_startup_complete ();
+
+          return success;
+        }
     }
 #endif
 
