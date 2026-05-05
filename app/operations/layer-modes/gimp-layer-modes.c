@@ -1536,6 +1536,10 @@ gimp_layer_mode_get_format (GimpLayerMode           mode,
         }
     }
 
+  if (preferred_format &&
+      babl_space_is_cmyk (babl_format_get_space (preferred_format)))
+    return babl_format_with_space ("CMYKA float", preferred_format);
+
   switch (composite_space)
     {
     case GIMP_LAYER_COLOR_SPACE_AUTO:
