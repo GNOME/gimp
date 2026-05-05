@@ -107,6 +107,16 @@ cineon_open (GFile   *file,
   bpp    = header.imageInfo.channel[0].bits_per_pixel;
   offset = g_ntohl (header.fileInfo.image_offset);
 
+  if (width > GIMP_MAX_IMAGE_SIZE  ||
+      height > GIMP_MAX_IMAGE_SIZE)
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Image dimensions too large: width %d x height %d"),
+                   width, height);
+      fclose (fp);
+      return NULL;
+    }
+
   switch (depth)
     {
     case 1:
@@ -288,17 +298,14 @@ read_10bpc_line (GeglBuffer *buffer,
         t = data[long_index];
 
       t = t >> 2;
-      pixels[pixel_index + 2] = (gushort) t & 0x3FF;
+      pixels[pixel_index + 2] = ((gushort) t & 0x3FF) << 6;
       t = t >> 10;
-      pixels[pixel_index + 1] = (gushort) t & 0x3FF;
+      pixels[pixel_index + 1] = ((gushort) t & 0x3FF) << 6;
       t = t >> 10;
-      pixels[pixel_index] = (gushort) t & 0x3FF;
+      pixels[pixel_index]     = ((gushort) t & 0x3FF) << 6;
 
       pixel_index += 3;
     }
-
-  for (pixel_index = 0; pixel_index < num_pixels; ++pixel_index)
-    pixels[pixel_index] <<= 6;
 
   return TRUE;
 }

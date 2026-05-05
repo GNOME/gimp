@@ -247,7 +247,7 @@ dpx_load (GimpProcedure         *procedure,
   return return_vals;
 }
 
-static GimpImage *    
+static GimpImage *
 load_image (GFile    *file,
             GObject  *config,
             gboolean  is_cineon,
