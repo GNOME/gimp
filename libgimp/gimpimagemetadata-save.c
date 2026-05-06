@@ -345,7 +345,7 @@ gimp_fix_xmp_tag (const gchar *tag)
    * Xmp.iptcExt.ImageRegion[3]/Iptc4xmpExt:RegionBoundary/Iptc4xmpExt:rbVertices[1]/Iptc4xmpExt:rbX
    */
 
-  while ((substring = strstr (tag, org)))
+  while ((substring = (gchar *) strstr (tag, org)))
     {
 #ifndef _UCRT
       strcpy (substring, new);
