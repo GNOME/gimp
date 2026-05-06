@@ -268,9 +268,8 @@ icns_check_compat (GtkWidget    *dialog,
   GtkWidget *warning;
   GList     *iter;
   gboolean   warn = FALSE;
-  gint       i;
 
-  for (iter = info->layers, i = 0; iter; iter = iter->next, i++)
+  for (iter = info->layers; iter; iter = iter->next)
     {
       gint width  = gimp_drawable_get_width (iter->data);
       gint height = gimp_drawable_get_height (iter->data);
@@ -362,7 +361,6 @@ icns_save_dialog (IcnsSaveInfo        *info,
   GtkWidget *dialog;
   GList     *iter;
   gint       i;
-  gint       j;
   gboolean   response;
   gint       duplicates[ICNS_TYPE_NUM];
   gint       ordered[12] =
@@ -378,9 +376,9 @@ icns_save_dialog (IcnsSaveInfo        *info,
   /* Add icons in order, smallest to largest */
   for (i = 0; i < 12; i++)
     {
-      for (iter = info->layers, j = 0;
+      for (iter = info->layers;
            iter;
-           iter = g_list_next (iter), j++)
+           iter = g_list_next (iter))
         {
           /* Put the icons in order in dialog */
           gint width  = gimp_drawable_get_width (iter->data);
@@ -771,13 +769,12 @@ icns_save_image (GFile                *file,
   GList        *iter;
   gboolean      isValidLayers         = FALSE;
   gboolean      include_color_profile = FALSE;
-  gint          i;
 
   info.layers    = gimp_image_list_layers (image);
   info.num_icons = g_list_length (info.layers);
 
   /* Initial check if we have any valid layers to export */
-  for (iter = info.layers, i = 0; iter; iter = iter->next, i++)
+  for (iter = info.layers; iter; iter = iter->next)
     {
       gint width  = gimp_drawable_get_width (iter->data);
       gint height = gimp_drawable_get_height (iter->data);
