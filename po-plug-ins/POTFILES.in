@@ -98,9 +98,9 @@ plug-ins/common/wia.c
 plug-ins/file-bmp/bmp-export.c
 plug-ins/file-bmp/bmp-load.c
 plug-ins/file-bmp/bmp.c
-plug-ins/common/file-cin/file-cin.c
-plug-ins/common/file-cin/cineon-lib.c
-plug-ins/common/file-cin/dpx-lib.c
+plug-ins/file-cin/file-cin.c
+plug-ins/file-cin/cineon-lib.c
+plug-ins/file-cin/dpx-lib.c
 plug-ins/file-dds/dds.c
 plug-ins/file-dds/ddsread.c
 plug-ins/file-dds/ddswrite.c
