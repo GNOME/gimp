@@ -12,10 +12,10 @@
 # value             helderheid ("brightness" is immers een synoniem voor "value": HSV en HSB zijn dezelfde kleurmodellen)
 # luminosity        helderheid
 msgid ""
-msgstr "Project-Id-Version: GIMP 3.0\n"
+msgstr "Project-Id-Version: GIMP 30.82\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-03 07:57+0000\n"
-"PO-Revision-Date: 2026-05-03 12:07+0200\n"
+"POT-Creation-Date: 2026-05-06 13:55+0000\n"
+"PO-Revision-Date: 2026-05-06 17:28+02001\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -92,9 +92,9 @@ msgstr "Plug-In Voorbeeld in C"
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
 #: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1189
-#: plug-ins/metadata/metadata-editor.c:1695
-#: plug-ins/metadata/metadata-editor.c:5586
-#: plug-ins/metadata/metadata-editor.c:5621 plug-ins/print/print.c:458
+#: plug-ins/metadata/metadata-editor.c:1696
+#: plug-ins/metadata/metadata-editor.c:5588
+#: plug-ins/metadata/metadata-editor.c:5623 plug-ins/print/print.c:458
 msgid "_Cancel"
 msgstr "_Annuleren"
 
@@ -256,7 +256,7 @@ msgstr "_Horizontale stijl"
 
 #: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
-#: plug-ins/file-dds/dds.c:198 plug-ins/file-tiff/file-tiff.c:140
+#: plug-ins/file-dds/dds.c:197 plug-ins/file-tiff/file-tiff.c:140
 #: plug-ins/fractal-explorer/fractal-explorer.c:345
 #: plug-ins/fractal-explorer/fractal-explorer.c:355
 #: plug-ins/fractal-explorer/fractal-explorer.c:365
@@ -1992,6 +1992,7 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/common/file-xbm.c:729 plug-ins/common/file-xmc.c:656
 #: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
+#: plug-ins/file-cin/cineon-lib.c:90 plug-ins/file-cin/dpx-lib.c:131
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
 #: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:631
@@ -2461,6 +2462,7 @@ msgstr "Witniveau"
 
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-farbfeld.c:298
 #: plug-ins/common/file-pcx.c:719 plug-ins/file-bmp/bmp-load.c:800
+#: plug-ins/file-cin/cineon-lib.c:114 plug-ins/file-cin/dpx-lib.c:185
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Afbeeldingsafmetingen te groot: breedte %d x hoogte %d"
@@ -2530,7 +2532,7 @@ msgid ""
 "of text formats"
 msgstr "Deze plug-in gebruikt aalib om een afbeelding in grijswaarden op te slaan als ASCII-kunst in verschillende tekstindelingen"
 
-#: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:221
+#: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:244
 msgid "_Format"
 msgstr "_Formaat"
 
@@ -4476,7 +4478,8 @@ msgstr "Hoofdoppervlak"
 #: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:353
 #: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
 #: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
-#: plug-ins/common/file-tim.c:612
+#: plug-ins/common/file-tim.c:612 plug-ins/file-cin/cineon-lib.c:169
+#: plug-ins/file-cin/dpx-lib.c:280
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "Geheugen kon niet worden toegewezen."
@@ -4776,7 +4779,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "Afbeelding exporteren als PDF met meerdere pagina's"
 
 #: plug-ins/common/file-pdf-export.c:1033
-#: plug-ins/metadata/metadata-editor.c:5621
+#: plug-ins/metadata/metadata-editor.c:5623
 msgid "_Export"
 msgstr "_Exporteren"
 
@@ -7969,7 +7972,7 @@ msgstr "Anti-aliasing inschakelen met behulp van een oversampling-algoritme"
 msgid "Any file which will be used as source for pattern generation"
 msgstr "Willekeurig bestand dat wordt gebruikt als bron voor het genereren van patronen"
 
-#: plug-ins/common/qbist.c:363
+#: plug-ins/common/qbist.c:363 plug-ins/common/qbist.c:932
 msgid "Qbist"
 msgstr "Qbist"
 
@@ -7988,10 +7991,6 @@ msgstr "QBE-bestand (*.qbe)"
 #: plug-ins/common/qbist.c:885
 msgid "Save as QBE File"
 msgstr "Als QBE-bestand opslaan"
-
-#: plug-ins/common/qbist.c:932
-msgid "G-Qbist"
-msgstr "G-Qbist"
 
 #: plug-ins/common/qbist.c:993
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:713
@@ -9412,13 +9411,70 @@ msgstr "32-bit (A8 R8 G8 B8)"
 msgid "32 bit (X8 R8 G8 B8)"
 msgstr "32-bit (X8 R8 G8 B8)"
 
-#: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:168
+#: plug-ins/file-cin/file-cin.c:136
+msgid "Kodak Cineon"
+msgstr "Kodak Cineon"
+
+#: plug-ins/file-cin/file-cin.c:139 plug-ins/file-cin/file-cin.c:140
+msgid "Load file of the Kodak Cineon file format"
+msgstr "Laad bestand in de bestandsindeling Kodak Cineon"
+
+#: plug-ins/file-cin/file-cin.c:163
+msgid "DPX"
+msgstr "DPX"
+
+#: plug-ins/file-cin/file-cin.c:166
+msgid "Load file of the DPX file format"
+msgstr "Laad bestand in de bestandsindeling DPX"
+
+#: plug-ins/file-cin/file-cin.c:167
+msgid "Load file of the Digital Picture Exchange file format"
+msgstr "Laad bestand in de bestandsindeling Digital Picture Exchange"
+
+#: plug-ins/file-cin/cineon-lib.c:98
+#, c-format
+msgid "Could not read Cineon header information."
+msgstr "Kon informatie van Cineon-header niet lezen."
+
+#: plug-ins/file-cin/cineon-lib.c:134
+#, c-format
+msgid "Cineon: Image with %d channels not yet supported."
+msgstr "Cineon: Afbeelding met %d kanalen nog niet ondersteund."
+
+#: plug-ins/file-cin/cineon-lib.c:154
+#, c-format
+msgid "Cineon: Image with %d bpc not yet supported."
+msgstr "Cineon: Afbeelding met %d bpc nog niet ondersteund."
+
+#: plug-ins/file-cin/cineon-lib.c:181 plug-ins/file-cin/cineon-lib.c:207
+#: plug-ins/file-cin/dpx-lib.c:292 plug-ins/file-cin/dpx-lib.c:318
+#: plug-ins/file-cin/dpx-lib.c:331 plug-ins/file-cin/dpx-lib.c:351
+#, c-format
+msgid "Could not read image data from '%s'"
+msgstr "Kon geen gegevens voor afbeelding lezen vanaf ‘%s’"
+
+#: plug-ins/file-cin/dpx-lib.c:139 plug-ins/file-cin/dpx-lib.c:157
+#, c-format
+msgid "Could not read DPX header information."
+msgstr "Kon informatie van DPX-header niet lezen."
+
+#: plug-ins/file-cin/dpx-lib.c:233
+#, c-format
+msgid "DPX: Image with %d channels not yet supported."
+msgstr "DPX: Afbeelding met %d kanalen nog niet ondersteund."
+
+#: plug-ins/file-cin/dpx-lib.c:263
+#, c-format
+msgid "DPX: Image with %d bpc not yet supported."
+msgstr "DPX: Afbeelding met %d bpc nog niet ondersteund."
+
+#: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:170
 msgid "DDS image"
 msgstr "DDS-afbeelding"
 
 #: plug-ins/file-dds/dds.c:133 plug-ins/file-dds/dds.c:134
 msgid "Loads files in DDS image format"
-msgstr "Inladen van bestanden in de DDS-bestandsindeling"
+msgstr "Laden van bestanden in de DDS-bestandsindeling"
 
 #: plug-ins/file-dds/dds.c:149
 msgid "Load _mipmaps"
@@ -9436,309 +9492,309 @@ msgstr "Afbeelding _verticaal spiegelen"
 msgid "Flip the image vertically on import"
 msgstr "De afbeelding bij het inlezen verticaal spiegelen"
 
-#: plug-ins/file-dds/dds.c:170
+#: plug-ins/file-dds/dds.c:172
 msgid "DDS"
 msgstr "DDS"
 
-#: plug-ins/file-dds/dds.c:174 plug-ins/file-dds/dds.c:175
+#: plug-ins/file-dds/dds.c:176 plug-ins/file-dds/dds.c:177
 msgid "Saves files in DDS image format"
 msgstr "Opslaan van bestanden in de DDS-indeling"
 
-#: plug-ins/file-dds/dds.c:196
-msgid "Compressio_n"
-msgstr "C_ompressie"
-
-#: plug-ins/file-dds/dds.c:197
-msgid "Compression format"
-msgstr "Compressietype"
-
-#: plug-ins/file-dds/dds.c:199
+#: plug-ins/file-dds/dds.c:198
 msgid "BC1 / DXT1"
 msgstr "BC1 / DXT1"
 
-#: plug-ins/file-dds/dds.c:200
+#: plug-ins/file-dds/dds.c:199
 msgid "BC2 / DXT3"
 msgstr "BC2 / DXT3"
 
-#: plug-ins/file-dds/dds.c:201
+#: plug-ins/file-dds/dds.c:200
 msgid "BC3 / DXT5"
 msgstr "BC3 / DXT5"
 
-#: plug-ins/file-dds/dds.c:202
+#: plug-ins/file-dds/dds.c:201
 msgid "BC3nm / DXT5nm"
 msgstr "BC3nm / DXT5nm"
 
-#: plug-ins/file-dds/dds.c:203
+#: plug-ins/file-dds/dds.c:202
 msgid "BC4 / ATI1 (3Dc+)"
 msgstr "BC4 / ATI1 (3Dc+)"
 
-#: plug-ins/file-dds/dds.c:204
+#: plug-ins/file-dds/dds.c:203
 msgid "BC5 / ATI2 (3Dc)"
 msgstr "BC5 / ATI2 (3Dc)"
 
-#: plug-ins/file-dds/dds.c:206
+#: plug-ins/file-dds/dds.c:205
 msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
-#: plug-ins/file-dds/dds.c:207
+#: plug-ins/file-dds/dds.c:206
 msgid "Alpha Exponent (DXT5)"
 msgstr "Alfa-exponent (DXT5)"
 
-#: plug-ins/file-dds/dds.c:208
+#: plug-ins/file-dds/dds.c:207
 msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:209
+#: plug-ins/file-dds/dds.c:208
 msgid "YCoCg scaled (DXT5)"
 msgstr "YCoCg geschaald (DXT5)"
 
-#: plug-ins/file-dds/dds.c:215
+#: plug-ins/file-dds/dds.c:213
+msgid "Compressio_n"
+msgstr "C_ompressie"
+
+#: plug-ins/file-dds/dds.c:214
+msgid "Compression format"
+msgstr "Compressietype"
+
+#: plug-ins/file-dds/dds.c:220
 msgid "Use percept_ual error metric"
 msgstr "_Perceptuele foutmetriek gebruiken"
 
-#: plug-ins/file-dds/dds.c:216
+#: plug-ins/file-dds/dds.c:221
 msgid "Use a perceptual error metric during compression"
 msgstr "Perceptuele foutmetriek gebruiken tijdens comprimeren"
 
-#: plug-ins/file-dds/dds.c:222
-msgid "Pixel format"
-msgstr "Beeldpunt formaat"
-
-#: plug-ins/file-dds/dds.c:223 plug-ins/file-dds/dds.c:286
-#: plug-ins/file-dds/dds.c:303 plug-ins/file-webp/file-webp.c:180
+#: plug-ins/file-dds/dds.c:225 plug-ins/file-dds/dds.c:294
+#: plug-ins/file-dds/dds.c:311 plug-ins/file-webp/file-webp.c:180
 #: plug-ins/gradient-flare/gradient-flare.c:2628
 msgid "Default"
 msgstr "Standaard"
 
-#: plug-ins/file-dds/dds.c:224
+#: plug-ins/file-dds/dds.c:226
 msgid "RGB8"
 msgstr "RGB8"
 
-#: plug-ins/file-dds/dds.c:225
+#: plug-ins/file-dds/dds.c:227
 msgid "RGBA8"
 msgstr "RGBA8"
 
-#: plug-ins/file-dds/dds.c:226
+#: plug-ins/file-dds/dds.c:228
 msgid "BGR8"
 msgstr "BGR8"
 
-#: plug-ins/file-dds/dds.c:227
+#: plug-ins/file-dds/dds.c:229
 msgid "ABGR8"
 msgstr "ABGR8"
 
-#: plug-ins/file-dds/dds.c:228
+#: plug-ins/file-dds/dds.c:230
 msgid "R5G6B5"
 msgstr "R5G6B5"
 
-#: plug-ins/file-dds/dds.c:229
+#: plug-ins/file-dds/dds.c:231
 msgid "RGBA4"
 msgstr "RGBA4"
 
-#: plug-ins/file-dds/dds.c:230
+#: plug-ins/file-dds/dds.c:232
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
-#: plug-ins/file-dds/dds.c:231
+#: plug-ins/file-dds/dds.c:233
 msgid "RGB10A2"
 msgstr "RGB10A2"
 
-#: plug-ins/file-dds/dds.c:232
+#: plug-ins/file-dds/dds.c:234
 msgid "R3G3B2"
 msgstr "R3G3B2"
 
-#: plug-ins/file-dds/dds.c:233
+#: plug-ins/file-dds/dds.c:235
 msgid "A8"
 msgstr "A8"
 
-#: plug-ins/file-dds/dds.c:234
+#: plug-ins/file-dds/dds.c:236
 msgid "L8"
 msgstr "L8"
 
-#: plug-ins/file-dds/dds.c:235
+#: plug-ins/file-dds/dds.c:237
 msgid "L8A8"
 msgstr "L8A8"
 
-#: plug-ins/file-dds/dds.c:236
+#: plug-ins/file-dds/dds.c:238
 msgid "AEXP"
 msgstr "AEXP"
 
-#: plug-ins/file-dds/dds.c:237
+#: plug-ins/file-dds/dds.c:239
 msgid "YCOCG"
 msgstr "YCOCG"
 
-#: plug-ins/file-dds/dds.c:243
+#: plug-ins/file-dds/dds.c:245
+msgid "Pixel format"
+msgstr "Beeldpunt formaat"
+
+#: plug-ins/file-dds/dds.c:251
 msgid "Sav_e type"
 msgstr "_Wat opslaan"
 
-#: plug-ins/file-dds/dds.c:244
+#: plug-ins/file-dds/dds.c:252
 msgid "How to save the image"
 msgstr "Wat van de afbeelding op te slaan"
 
-#: plug-ins/file-dds/dds.c:245
+#: plug-ins/file-dds/dds.c:253
 msgid "Selected layer"
 msgstr "Geselecteerde laag"
 
-#: plug-ins/file-dds/dds.c:246
+#: plug-ins/file-dds/dds.c:254
 msgid "All visible layers"
 msgstr "Alle zichtbare lagen"
 
-#: plug-ins/file-dds/dds.c:247
+#: plug-ins/file-dds/dds.c:255
 msgid "As cube map"
 msgstr "Als kubuskaart (cube map)"
 
-#: plug-ins/file-dds/dds.c:248
+#: plug-ins/file-dds/dds.c:256
 msgid "As volume map"
 msgstr "Als volumekaart"
 
-#: plug-ins/file-dds/dds.c:249
+#: plug-ins/file-dds/dds.c:257
 msgid "As texture array"
 msgstr "Als textuurarray"
 
-#: plug-ins/file-dds/dds.c:255
+#: plug-ins/file-dds/dds.c:263
 msgid "Flip image _vertically on export"
 msgstr "Afbeelding _verticaal spiegelen bij exporteren"
 
-#: plug-ins/file-dds/dds.c:256
+#: plug-ins/file-dds/dds.c:264
 msgid "Flip the image vertically on export"
 msgstr "Afbeelding verticaal spiegelen bij exporteren"
 
-#: plug-ins/file-dds/dds.c:261
+#: plug-ins/file-dds/dds.c:269
 msgid "Set _transparent color"
 msgstr "Kleur van transparantie instellen"
 
-#: plug-ins/file-dds/dds.c:262
+#: plug-ins/file-dds/dds.c:270
 msgid "Make an indexed color transparent"
 msgstr "Een bepaalde kleur in de kaart aanwijzen als transparant"
 
-#: plug-ins/file-dds/dds.c:267
+#: plug-ins/file-dds/dds.c:275
 msgid "Transparent inde_x"
 msgstr "Transparant volgnummer"
 
-#: plug-ins/file-dds/dds.c:268
+#: plug-ins/file-dds/dds.c:276
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr "Volgnummer op de kleurenkaart van transparant of -1 voor dekkende afbeelding (alleen bij geïndexeerde afbeeldingen)"
 
-#: plug-ins/file-dds/dds.c:274
+#: plug-ins/file-dds/dds.c:282
 msgid "_Mipmaps"
 msgstr "_Mipmaps"
 
-#: plug-ins/file-dds/dds.c:275
+#: plug-ins/file-dds/dds.c:283
 msgid "How to handle mipmaps"
 msgstr "Wat te doen met mipmaps"
 
-#: plug-ins/file-dds/dds.c:276
+#: plug-ins/file-dds/dds.c:284
 msgid "No mipmaps"
 msgstr "Mipmaps _niet inladen"
 
-#: plug-ins/file-dds/dds.c:277
+#: plug-ins/file-dds/dds.c:285
 msgid "Generate mipmaps"
 msgstr "Mipmaps genereren"
 
-#: plug-ins/file-dds/dds.c:278
+#: plug-ins/file-dds/dds.c:286
 msgid "Use existing mipmaps"
 msgstr "Bestaande mipmaps gebruiken"
 
-#: plug-ins/file-dds/dds.c:284
+#: plug-ins/file-dds/dds.c:292
 msgid "F_ilter"
 msgstr "Fi_lter"
 
-#: plug-ins/file-dds/dds.c:285
+#: plug-ins/file-dds/dds.c:293
 msgid "Filtering to use when generating mipmaps"
 msgstr "Soort filter voor het genereren van mipmaps"
 
-#: plug-ins/file-dds/dds.c:287
+#: plug-ins/file-dds/dds.c:295
 msgid "Nearest"
 msgstr "Naaste"
 
-#: plug-ins/file-dds/dds.c:288 plug-ins/map-object/map-object-main.c:142
+#: plug-ins/file-dds/dds.c:296 plug-ins/map-object/map-object-main.c:142
 msgid "Box"
 msgstr "Vak"
 
-#: plug-ins/file-dds/dds.c:289
+#: plug-ins/file-dds/dds.c:297
 msgid "Triangle"
 msgstr "Driehoek"
 
-#: plug-ins/file-dds/dds.c:290
+#: plug-ins/file-dds/dds.c:298
 msgid "Quadratic"
 msgstr "Kwadratisch"
 
-#: plug-ins/file-dds/dds.c:291
+#: plug-ins/file-dds/dds.c:299
 msgid "B-Spline"
 msgstr "B-Spline"
 
-#: plug-ins/file-dds/dds.c:292
+#: plug-ins/file-dds/dds.c:300
 msgid "Mitchell"
 msgstr "Mitchell"
 
-#: plug-ins/file-dds/dds.c:293
+#: plug-ins/file-dds/dds.c:301
 msgid "Catmull-Rom"
 msgstr "Catmull-Rom"
 
-#: plug-ins/file-dds/dds.c:294
+#: plug-ins/file-dds/dds.c:302
 msgid "Lanczos"
 msgstr "Lanczos"
 
-#: plug-ins/file-dds/dds.c:295
+#: plug-ins/file-dds/dds.c:303
 msgid "Kaiser"
 msgstr "Kaiser"
 
-#: plug-ins/file-dds/dds.c:301
+#: plug-ins/file-dds/dds.c:309
 msgid "_Wrap mode"
 msgstr "_Inpakmethode"
 
-#: plug-ins/file-dds/dds.c:302
+#: plug-ins/file-dds/dds.c:310
 msgid "Wrap mode to use when generating mipmaps"
 msgstr "Inpakmethode te gebruiken bij het genereren van mipmaps"
 
-#: plug-ins/file-dds/dds.c:304
+#: plug-ins/file-dds/dds.c:312
 msgid "Mirror"
 msgstr "Spiegel"
 
-#: plug-ins/file-dds/dds.c:305
+#: plug-ins/file-dds/dds.c:313
 msgid "Repeat"
 msgstr "Herhalen"
 
-#: plug-ins/file-dds/dds.c:306
+#: plug-ins/file-dds/dds.c:314
 msgid "Clamp"
 msgstr "Vastzetten"
 
-#: plug-ins/file-dds/dds.c:312
+#: plug-ins/file-dds/dds.c:320
 msgid "Appl_y gamma correction"
 msgstr "Gamma_correctie toepassen"
 
-#: plug-ins/file-dds/dds.c:313
+#: plug-ins/file-dds/dds.c:321
 msgid "Use gamma correct mipmap filtering"
 msgstr "Voor gamma gecorrigeerd filteren voor mipmap"
 
-#: plug-ins/file-dds/dds.c:318
+#: plug-ins/file-dds/dds.c:326
 msgid "Use sRG_B colorspace"
 msgstr "De sRG_B-kleurruimte gebruiken"
 
-#: plug-ins/file-dds/dds.c:319
+#: plug-ins/file-dds/dds.c:327
 msgid "Use sRGB colorspace for gamma correction"
 msgstr "De sRGB-kleurruimte gebruiken voor gammacorrectie"
 
-#: plug-ins/file-dds/dds.c:324 plug-ins/flame/flame.c:204
+#: plug-ins/file-dds/dds.c:332 plug-ins/flame/flame.c:204
 msgid "_Gamma"
 msgstr "_Gamma"
 
-#: plug-ins/file-dds/dds.c:325
+#: plug-ins/file-dds/dds.c:333
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr "Gammawaarde te gebruiken voor gammacorrectie (bijv. 2,2)"
 
-#: plug-ins/file-dds/dds.c:330
+#: plug-ins/file-dds/dds.c:338
 msgid "Preserve al_pha test coverage"
 msgstr "Alfa_test-dekking bewaren"
 
-#: plug-ins/file-dds/dds.c:331
+#: plug-ins/file-dds/dds.c:339
 msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr "Alfa_test-dekking bewaren bij alfakanaal map"
 
-#: plug-ins/file-dds/dds.c:337
+#: plug-ins/file-dds/dds.c:345
 msgid "Alp_ha test threshold"
 msgstr "_Alfatest-drempel"
 
-#: plug-ins/file-dds/dds.c:338
+#: plug-ins/file-dds/dds.c:346
 msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr "Drempelwaarde voor de alfatest waarvoor de dekking van de alfatest behouden moet blijven"
@@ -15988,11 +16044,11 @@ msgstr "Metagegevens exporteren"
 msgid "Choose Date"
 msgstr "Kies datum"
 
-#: plug-ins/metadata/metadata-editor.c:1696
+#: plug-ins/metadata/metadata-editor.c:1697
 msgid "Set Date"
 msgstr "Datum instellen"
 
-#: plug-ins/metadata/metadata-editor.c:2432
+#: plug-ins/metadata/metadata-editor.c:2434
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -16005,7 +16061,7 @@ msgstr "Voer hier GPS-waarde in of bewerk die.\n"
 "10deg 15' 20\", of 10° 15' 20\", of 10:15:20.45, of 10 15 20, of 10 15.30, of 10.45\n"
 "Wis alle tekst om de huidige waarde te verwijderen."
 
-#: plug-ins/metadata/metadata-editor.c:2438
+#: plug-ins/metadata/metadata-editor.c:2440
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16021,24 +16077,24 @@ msgstr "Voer hier GPS-waarde vor de hoogte in of bewerk die.\n"
 
 # Komt achter tekst "Waardering"
 # pm
-#: plug-ins/metadata/metadata-editor.c:2572
+#: plug-ins/metadata/metadata-editor.c:2574
 msgid "Unrated"
 msgstr "Geen"
 
-#: plug-ins/metadata/metadata-editor.c:4682
+#: plug-ins/metadata/metadata-editor.c:4684
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Kon metagegevens-tag niet instellen %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5583
+#: plug-ins/metadata/metadata-editor.c:5585
 msgid "Import Metadata File"
 msgstr "Metagegevens bestand importeren"
 
-#: plug-ins/metadata/metadata-editor.c:5586
+#: plug-ins/metadata/metadata-editor.c:5588
 msgid "_Import"
 msgstr "_Importeren"
 
-#: plug-ins/metadata/metadata-editor.c:5618
+#: plug-ins/metadata/metadata-editor.c:5620
 msgid "Export Metadata File"
 msgstr "Metagegevensbestand exporteren"
 
@@ -16816,6 +16872,9 @@ msgstr "Scannen niet mogelijk omdat er geen TWAIN driver is gevonden"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Gegevens van scanner / camera worden overgebracht"
+
+#~ msgid "G-Qbist"
+#~ msgstr "G-Qbist"
 
 #~ msgid "Mod. rate:"
 #~ msgstr "Gem. snelheid:"
