@@ -18,6 +18,10 @@ Core:
   * Improve list of "Recent Images" in the Welcome dialog, with no
     arbirtrary limitation of 8 rows.
   * More GtkTreeView replaced in preparation of GTK4 port.
+  * Various easy functions replaced in preparation of GTK4 port.
+  * macOS: touchpads are now less sensitive in pan gestures and behave as
+    expected.
+  * MSIX: it is now possible to open multiple images from the OS.
 
 Graphical User Interface:
 
@@ -25,21 +29,31 @@ Graphical User Interface:
   * Welcome dialog: icons and links realigned on Welcome tab; widgets
     realigned in Contribute tab.
   * New "branding" colors added in AppStream metadata.
+  * macOS: title bar follows scheme. This is true for native file
+    dialogs on macOS as well.
 
 Plug-Ins:
 
   * Vulnerabilities fixed: ZDI-CAN-29403, ZDI-CAN-29399, ZDI-CAN-29405,
     ZDI-CAN-29406, ZDI-CAN-29398 (TIFF), ZDI-CAN-29395 (PSD), ZDI-CAN-29396 (SGI),
-    ZDI-CAN-29401 (PNG), PSP
+    ZDI-CAN-29400, ZDI-CAN-29401 (PNG), PSP, PAA, PVR, ILBM.
   * PSD: better apply embedded profile on pixel data for import and
     export.
   * New import support for MacPaint images.
   * GBR: fix exporting grayscale GBRs with alpha channels.
+  * file-raw-data: various code improvements.
+  * SVG: new option to export Inkscape SVG.
+  * Cineon/DPX: initial import support.
 
 API:
 
   * libgimpwidgets:
     - GimpColorDisplayStack now implements GListModel.
+  * libgimpbase:
+    - New functions:
+      + gimp_choice_add_deprecated
+      + gimp_choice_get_deprecated
+      + gimp_choice_get_redirect
 
 Build:
 
