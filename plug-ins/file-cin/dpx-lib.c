@@ -61,6 +61,14 @@ static gboolean       read_10bpc_line   (GeglBuffer *buffer,
                                          gboolean    is_network_order,
                                          GError    **error);
 
+static gboolean       read_10bpc_packed (GeglBuffer *buffer,
+                                         FILE       *fp,
+                                         guint       width,
+                                         guint       height,
+                                         gint        depth,
+                                         gboolean    is_network_order,
+                                         GError    **error);
+
 static gboolean       read_12bpc_line   (GeglBuffer *buffer,
                                          FILE       *fp,
                                          guint      *data,
@@ -304,7 +312,20 @@ dpx_open (GFile   *file,
     {
       if (bpp == 12 &&
           ! read_12bpc_packed (dpx_buffer, fp, width, height, depth,
-                                 is_network_order, error))
+                               is_network_order, error))
+        {
+           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                        _("Could not read image data from '%s'"),
+                        gimp_file_get_utf8_name (file));
+           fclose (fp);
+           g_free (buffer);
+           g_free (pixels);
+           g_free (pixels_8);
+           return NULL;
+        }
+      else if (bpp == 10 &&
+              ! read_10bpc_packed (dpx_buffer, fp, width, height, depth,
+                                   is_network_order, error))
         {
            g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                         _("Could not read image data from '%s'"),
@@ -462,6 +483,119 @@ read_10bpc_line (GeglBuffer *buffer,
 }
 
 static gboolean
+read_10bpc_packed (GeglBuffer *buffer,
+                   FILE       *fp,
+                   guint       width,
+                   guint       height,
+                   gint        depth,
+                   gboolean    is_network_order,
+                   GError    **error)
+{
+  gsize    current;
+  gsize    data_len;
+  gsize    num_pixels;
+  gsize    pixel_len;
+  guint   *data;
+  gushort *pixels;
+  guint    pixel_index = 0;
+  guint    leftover    = 0;
+  gint     shift       = 0;
+  guint    mask        = 0x3FF;
+  guint    odd_offset  = 0;
+
+  current = ftell (fp);
+  fseek (fp, 0, SEEK_END);
+  data_len = ftell (fp);
+  fseek (fp, current, SEEK_SET);
+
+  data_len -= current;
+  data = g_try_malloc0 (data_len);
+  if (data == NULL)
+    return FALSE;
+
+  data_len /= 4;
+  if (fread (data, 4, data_len, fp) == 0                    ||
+      ! g_size_checked_mul (&num_pixels, width, height)     ||
+      ! g_size_checked_mul (&num_pixels, num_pixels, depth) ||
+      ! g_size_checked_mul (&pixel_len, num_pixels, 2)      ||
+      ! g_size_checked_add (&pixel_len, pixel_len, 8))
+   {
+     g_free (data);
+     return FALSE;
+   }
+
+  pixels = g_try_malloc0 (pixel_len);
+  if (pixels == NULL)
+    {
+      g_free (data);
+      return FALSE;
+    }
+
+  for (gint long_index = 0; long_index < data_len; ++long_index)
+    {
+      guint t;
+
+      if (is_network_order)
+        {
+          t = g_ntohl (data[long_index]);
+
+          /* Get remaining bytes from prior run */
+          leftover += ((gushort) t & mask) << shift;
+          pixels[pixel_index++] = (leftover & 0x3FF) << 6;
+          t = t >> (10 - shift);
+
+          /* If the dimensions of the image are odd, the remaining
+           * packed bits are not part of the image and should be
+           * skipped */
+          odd_offset++;
+          if (odd_offset >= (width * depth))
+            {
+              odd_offset = 0;
+              shift      = 0;
+              mask       = 0x3FF;
+              leftover   = 0;
+              continue;
+            }
+
+          /* Read remaining 10 bit pixel values */
+          pixels[pixel_index++]   = ((gushort) t & 0x3FF) << 6;
+          t = t >> 10;
+          pixels[pixel_index++] = ((gushort) t & 0x3FF) << 6;
+          t = t >> 10;
+          leftover = (gushort) t;
+
+          odd_offset  += 2;
+          shift       += 2;
+          mask        /= 4.0f;
+          if (shift > 8)
+            {
+              shift = 0;
+              mask  = 0x3FF;
+
+              /* Copy the last leftover value into the pixel array */
+              pixels[pixel_index++] = ((gushort) t & 0x3FF) << 6;
+              leftover = 0;
+              odd_offset++;
+            }
+
+          if (odd_offset >= (width * depth))
+            {
+              shift      = 0;
+              mask       = 0x3FF;
+              leftover   = 0;
+              odd_offset = 0;
+              pixel_index--;
+            }
+        }
+    }
+
+  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                   NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+
+  return TRUE;
+}
+
+static gboolean
 read_12bpc_line (GeglBuffer *buffer,
                  FILE       *fp,
                  guint      *data,
@@ -520,8 +654,7 @@ read_12bpc_packed (GeglBuffer *buffer,
   gushort *pixels;
   guint    pixel_index = 0;
   guint    leftover    = 0;
-  gint     shift_1     = 12;
-  gint     shift_2     = 0;
+  gint     shift       = 12;
   guint    mask        = 1;
   guint    odd_offset  = 0;
 
@@ -562,45 +695,39 @@ read_12bpc_packed (GeglBuffer *buffer,
           t = g_ntohl (data[long_index]);
 
           /* Get remaining bytes from prior run */
-          if (shift_1 < 12)
+          if (shift < 12)
             {
-              leftover += ((gushort) t & mask) << shift_1;
-              pixels[pixel_index] = (leftover & 0xFFF) << 4;
-              t = t >> shift_2;
-
-              pixel_index++;
-              odd_offset++;
+              leftover += ((gushort) t & mask) << shift;
+              pixels[pixel_index++] = (leftover & 0xFFF) << 4;
+              t = t >> (12 - shift);
 
               /* If the dimensions of the image are odd, the remaining
                * packed bits are not part of the image and should be
                * skipped */
+              odd_offset++;
               if (odd_offset >= (width * depth))
                 {
                   odd_offset = 0;
-                  shift_1    = 12;
-                  shift_2    = 0;
+                  shift      = 12;
                   mask       = 0;
                   continue;
                 }
             }
 
           /* Read remaining 12 bit pixel values */
-          pixels[pixel_index] = ((gushort) t & 0xFFF) << 4;
+          pixels[pixel_index++] = ((gushort) t & 0xFFF) << 4;
           t = t >> 12;
-          pixels[pixel_index + 1] = ((gushort) t & 0xFFF) << 4;
+          pixels[pixel_index++] = ((gushort) t & 0xFFF) << 4;
           t = t >> 12;
           leftover = (gushort) t;
 
-          pixel_index += 2;
-          odd_offset  += 2;
-          shift_1     -= 4;
-          shift_2     += 4;
-          mask        = (mask << 4) + 0xF;
-          if (shift_1 == 0)
+          odd_offset += 2;
+          shift      -= 4;
+          mask       = (mask << 4) + 0xF;
+          if (shift == 0)
             {
-              shift_1 = 12;
-              shift_2 = 0;
-              mask    = 0;
+              shift = 12;
+              mask  = 0;
             }
 
           if (odd_offset >= (width * depth))
