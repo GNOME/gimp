@@ -42,7 +42,7 @@
       </uap:VisualElements>
       <Extensions>
         <uap3:Extension Category="windows.fileTypeAssociation">
-          <uap3:FileTypeAssociation Name="xcf">
+          <uap3:FileTypeAssociation Name="xcf" MultiSelectModel="Player">
             <uap:DisplayName>eXperimental Computing Facility file</uap:DisplayName>
             <uap:Logo>Assets\fileicon-xcf.png</uap:Logo>
             <uap:SupportedFileTypes>
@@ -51,20 +51,20 @@
           </uap3:FileTypeAssociation>
         </uap3:Extension>
         <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="imagetypes">
+          <uap3:FileTypeAssociation Name="imagetypes" MultiSelectModel="Player">
             <uap:Logo>Assets\fileicon.png</uap:Logo>
             <uap:SupportedFileTypes>
               @FILE_TYPES@
             </uap:SupportedFileTypes>
-          </uap:FileTypeAssociation>
+          </uap3:FileTypeAssociation>
         </uap:Extension>
         <!--make association for .ico files but do not set uap:Logo since their content is the uap:Logo-->
         <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="ico">
+          <uap3:FileTypeAssociation Name="ico" MultiSelectModel="Player">
             <uap:SupportedFileTypes>
               <uap:FileType>.ico</uap:FileType>
             </uap:SupportedFileTypes>
-          </uap:FileTypeAssociation>
+          </uap3:FileTypeAssociation>
         </uap:Extension>
         <uap5:Extension Category="windows.appExecutionAlias" EntryPoint="Windows.FullTrustApplication">
             <uap5:AppExecutionAlias>
