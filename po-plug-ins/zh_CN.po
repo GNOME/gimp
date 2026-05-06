@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-04 02:14+0000\n"
-"PO-Revision-Date: 2026-05-04 16:50+0800\n"
+"POT-Creation-Date: 2026-05-06 13:55+0000\n"
+"PO-Revision-Date: 2026-05-07 07:29+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -258,7 +258,7 @@ msgstr "水平样式(_H)"
 
 #: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
-#: plug-ins/file-dds/dds.c:198 plug-ins/file-tiff/file-tiff.c:140
+#: plug-ins/file-dds/dds.c:197 plug-ins/file-tiff/file-tiff.c:140
 #: plug-ins/fractal-explorer/fractal-explorer.c:345
 #: plug-ins/fractal-explorer/fractal-explorer.c:355
 #: plug-ins/fractal-explorer/fractal-explorer.c:365
@@ -1984,6 +1984,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-xbm.c:729 plug-ins/common/file-xmc.c:656
 #: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
+#: plug-ins/file-cin/cineon-lib.c:90 plug-ins/file-cin/dpx-lib.c:131
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
 #: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:631
@@ -2448,6 +2449,7 @@ msgstr "白色级别"
 
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-farbfeld.c:298
 #: plug-ins/common/file-pcx.c:719 plug-ins/file-bmp/bmp-load.c:800
+#: plug-ins/file-cin/cineon-lib.c:114 plug-ins/file-cin/dpx-lib.c:185
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "图像尺寸过大：宽 %d x 高 %d"
@@ -2517,7 +2519,7 @@ msgid ""
 "of text formats"
 msgstr "该插件使用 aalib 将灰度图像作为 ascii 艺术保存为多种文本格式"
 
-#: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:221
+#: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:244
 msgid "_Format"
 msgstr "格式(_F)"
 
@@ -4472,7 +4474,8 @@ msgstr "主表面"
 #: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:353
 #: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
 #: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
-#: plug-ins/common/file-tim.c:612
+#: plug-ins/common/file-tim.c:612 plug-ins/file-cin/cineon-lib.c:169
+#: plug-ins/file-cin/dpx-lib.c:280
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "无法分配内存。"
@@ -7986,7 +7989,7 @@ msgstr "启用使用过采样算法的抗锯齿"
 msgid "Any file which will be used as source for pattern generation"
 msgstr "用来作为图案生成来源的任何文件"
 
-#: plug-ins/common/qbist.c:363
+#: plug-ins/common/qbist.c:363 plug-ins/common/qbist.c:932
 msgid "Qbist"
 msgstr "量子贝叶斯"
 
@@ -8005,10 +8008,6 @@ msgstr "QBE 文件 (*.qbe)"
 #: plug-ins/common/qbist.c:885
 msgid "Save as QBE File"
 msgstr "保存为 QBE 文件"
-
-#: plug-ins/common/qbist.c:932
-msgid "G-Qbist"
-msgstr "量子贝叶斯"
 
 #: plug-ins/common/qbist.c:993
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:713
@@ -9421,7 +9420,64 @@ msgstr "32 位（A8 R8 G8 B8）"
 msgid "32 bit (X8 R8 G8 B8)"
 msgstr "32 位（X8 R8 G8 B8）"
 
-#: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:168
+#: plug-ins/file-cin/file-cin.c:136
+msgid "Kodak Cineon"
+msgstr "柯达 Cineon"
+
+#: plug-ins/file-cin/file-cin.c:139 plug-ins/file-cin/file-cin.c:140
+msgid "Load file of the Kodak Cineon file format"
+msgstr "加载柯达 Cineon 格式的文件"
+
+#: plug-ins/file-cin/file-cin.c:163
+msgid "DPX"
+msgstr "DPX"
+
+#: plug-ins/file-cin/file-cin.c:166
+msgid "Load file of the DPX file format"
+msgstr "加载 DPX 格式的文件"
+
+#: plug-ins/file-cin/file-cin.c:167
+msgid "Load file of the Digital Picture Exchange file format"
+msgstr "加载数字图像交换格式的文件"
+
+#: plug-ins/file-cin/cineon-lib.c:98
+#, c-format
+msgid "Could not read Cineon header information."
+msgstr "无法读取 Cineon 文件头信息。"
+
+#: plug-ins/file-cin/cineon-lib.c:134
+#, c-format
+msgid "Cineon: Image with %d channels not yet supported."
+msgstr "Cineon：尚未支持带 %d 通道的图像。"
+
+#: plug-ins/file-cin/cineon-lib.c:154
+#, c-format
+msgid "Cineon: Image with %d bpc not yet supported."
+msgstr "Cineon：尚未支持 %d bpc 的图像。"
+
+#: plug-ins/file-cin/cineon-lib.c:181 plug-ins/file-cin/cineon-lib.c:207
+#: plug-ins/file-cin/dpx-lib.c:292 plug-ins/file-cin/dpx-lib.c:318
+#: plug-ins/file-cin/dpx-lib.c:331 plug-ins/file-cin/dpx-lib.c:351
+#, c-format
+msgid "Could not read image data from '%s'"
+msgstr "无法从“%s”读取图像数据"
+
+#: plug-ins/file-cin/dpx-lib.c:139 plug-ins/file-cin/dpx-lib.c:157
+#, c-format
+msgid "Could not read DPX header information."
+msgstr "无法读取 DPX 文件头信息。"
+
+#: plug-ins/file-cin/dpx-lib.c:233
+#, c-format
+msgid "DPX: Image with %d channels not yet supported."
+msgstr "DPX：尚未支持带 %d 通道的图像。"
+
+#: plug-ins/file-cin/dpx-lib.c:263
+#, c-format
+msgid "DPX: Image with %d bpc not yet supported."
+msgstr "DPX：尚未支持 %d bpc 的图像。"
+
+#: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:170
 msgid "DDS image"
 msgstr "DDS 图像"
 
@@ -9445,309 +9501,309 @@ msgstr "竖直翻转图像(_V)"
 msgid "Flip the image vertically on import"
 msgstr "导入时竖直翻转图像"
 
-#: plug-ins/file-dds/dds.c:170
+#: plug-ins/file-dds/dds.c:172
 msgid "DDS"
 msgstr "DDS"
 
-#: plug-ins/file-dds/dds.c:174 plug-ins/file-dds/dds.c:175
+#: plug-ins/file-dds/dds.c:176 plug-ins/file-dds/dds.c:177
 msgid "Saves files in DDS image format"
 msgstr "以 DDS 图像格式保存文件"
 
-#: plug-ins/file-dds/dds.c:196
-msgid "Compressio_n"
-msgstr "压缩(_N)"
-
-#: plug-ins/file-dds/dds.c:197
-msgid "Compression format"
-msgstr "压缩格式"
-
-#: plug-ins/file-dds/dds.c:199
+#: plug-ins/file-dds/dds.c:198
 msgid "BC1 / DXT1"
 msgstr "BC1 / DXT1"
 
-#: plug-ins/file-dds/dds.c:200
+#: plug-ins/file-dds/dds.c:199
 msgid "BC2 / DXT3"
 msgstr "BC2 / DXT3"
 
-#: plug-ins/file-dds/dds.c:201
+#: plug-ins/file-dds/dds.c:200
 msgid "BC3 / DXT5"
 msgstr "BC3 / DXT5"
 
-#: plug-ins/file-dds/dds.c:202
+#: plug-ins/file-dds/dds.c:201
 msgid "BC3nm / DXT5nm"
 msgstr "BC3nm / DXT5nm"
 
-#: plug-ins/file-dds/dds.c:203
+#: plug-ins/file-dds/dds.c:202
 msgid "BC4 / ATI1 (3Dc+)"
 msgstr "BC4 / ATI1 (3Dc+)"
 
-#: plug-ins/file-dds/dds.c:204
+#: plug-ins/file-dds/dds.c:203
 msgid "BC5 / ATI2 (3Dc)"
 msgstr "BC5 / ATI2 (3Dc)"
 
-#: plug-ins/file-dds/dds.c:206
+#: plug-ins/file-dds/dds.c:205
 msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
-#: plug-ins/file-dds/dds.c:207
+#: plug-ins/file-dds/dds.c:206
 msgid "Alpha Exponent (DXT5)"
 msgstr "透明指数（DXT5）"
 
-#: plug-ins/file-dds/dds.c:208
+#: plug-ins/file-dds/dds.c:207
 msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:209
+#: plug-ins/file-dds/dds.c:208
 msgid "YCoCg scaled (DXT5)"
 msgstr "YCoCg 已缩放（DXT5）"
 
-#: plug-ins/file-dds/dds.c:215
+#: plug-ins/file-dds/dds.c:213
+msgid "Compressio_n"
+msgstr "压缩(_N)"
+
+#: plug-ins/file-dds/dds.c:214
+msgid "Compression format"
+msgstr "压缩格式"
+
+#: plug-ins/file-dds/dds.c:220
 msgid "Use percept_ual error metric"
 msgstr "使用感知错误度量(_U)"
 
-#: plug-ins/file-dds/dds.c:216
+#: plug-ins/file-dds/dds.c:221
 msgid "Use a perceptual error metric during compression"
 msgstr "在压缩过程中使用感知错误度量"
 
-#: plug-ins/file-dds/dds.c:222
-msgid "Pixel format"
-msgstr "像素格式"
-
-#: plug-ins/file-dds/dds.c:223 plug-ins/file-dds/dds.c:286
-#: plug-ins/file-dds/dds.c:303 plug-ins/file-webp/file-webp.c:180
+#: plug-ins/file-dds/dds.c:225 plug-ins/file-dds/dds.c:294
+#: plug-ins/file-dds/dds.c:311 plug-ins/file-webp/file-webp.c:180
 #: plug-ins/gradient-flare/gradient-flare.c:2628
 msgid "Default"
 msgstr "默认"
 
-#: plug-ins/file-dds/dds.c:224
+#: plug-ins/file-dds/dds.c:226
 msgid "RGB8"
 msgstr "RGB8"
 
-#: plug-ins/file-dds/dds.c:225
+#: plug-ins/file-dds/dds.c:227
 msgid "RGBA8"
 msgstr "RGBA8"
 
-#: plug-ins/file-dds/dds.c:226
+#: plug-ins/file-dds/dds.c:228
 msgid "BGR8"
 msgstr "BGR8"
 
-#: plug-ins/file-dds/dds.c:227
+#: plug-ins/file-dds/dds.c:229
 msgid "ABGR8"
 msgstr "ABGR8"
 
-#: plug-ins/file-dds/dds.c:228
+#: plug-ins/file-dds/dds.c:230
 msgid "R5G6B5"
 msgstr "R5G6B5"
 
-#: plug-ins/file-dds/dds.c:229
+#: plug-ins/file-dds/dds.c:231
 msgid "RGBA4"
 msgstr "RGBA4"
 
-#: plug-ins/file-dds/dds.c:230
+#: plug-ins/file-dds/dds.c:232
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
-#: plug-ins/file-dds/dds.c:231
+#: plug-ins/file-dds/dds.c:233
 msgid "RGB10A2"
 msgstr "RGB10A2"
 
-#: plug-ins/file-dds/dds.c:232
+#: plug-ins/file-dds/dds.c:234
 msgid "R3G3B2"
 msgstr "R3G3B2"
 
-#: plug-ins/file-dds/dds.c:233
+#: plug-ins/file-dds/dds.c:235
 msgid "A8"
 msgstr "A8"
 
-#: plug-ins/file-dds/dds.c:234
+#: plug-ins/file-dds/dds.c:236
 msgid "L8"
 msgstr "L8"
 
-#: plug-ins/file-dds/dds.c:235
+#: plug-ins/file-dds/dds.c:237
 msgid "L8A8"
 msgstr "L8A8"
 
-#: plug-ins/file-dds/dds.c:236
+#: plug-ins/file-dds/dds.c:238
 msgid "AEXP"
 msgstr "AEXP"
 
-#: plug-ins/file-dds/dds.c:237
+#: plug-ins/file-dds/dds.c:239
 msgid "YCOCG"
 msgstr "YCOCG"
 
-#: plug-ins/file-dds/dds.c:243
+#: plug-ins/file-dds/dds.c:245
+msgid "Pixel format"
+msgstr "像素格式"
+
+#: plug-ins/file-dds/dds.c:251
 msgid "Sav_e type"
 msgstr "保存类型(_E)"
 
-#: plug-ins/file-dds/dds.c:244
+#: plug-ins/file-dds/dds.c:252
 msgid "How to save the image"
 msgstr "如何保存该图像"
 
-#: plug-ins/file-dds/dds.c:245
+#: plug-ins/file-dds/dds.c:253
 msgid "Selected layer"
 msgstr "选中图层"
 
-#: plug-ins/file-dds/dds.c:246
+#: plug-ins/file-dds/dds.c:254
 msgid "All visible layers"
 msgstr "全部可见图层"
 
-#: plug-ins/file-dds/dds.c:247
+#: plug-ins/file-dds/dds.c:255
 msgid "As cube map"
 msgstr "立方体映射"
 
-#: plug-ins/file-dds/dds.c:248
+#: plug-ins/file-dds/dds.c:256
 msgid "As volume map"
 msgstr "体积映射"
 
-#: plug-ins/file-dds/dds.c:249
+#: plug-ins/file-dds/dds.c:257
 msgid "As texture array"
 msgstr "纹理阵列"
 
-#: plug-ins/file-dds/dds.c:255
+#: plug-ins/file-dds/dds.c:263
 msgid "Flip image _vertically on export"
 msgstr "导出时竖直翻转图像(_V)"
 
-#: plug-ins/file-dds/dds.c:256
+#: plug-ins/file-dds/dds.c:264
 msgid "Flip the image vertically on export"
 msgstr "导出时竖直翻转图像"
 
-#: plug-ins/file-dds/dds.c:261
+#: plug-ins/file-dds/dds.c:269
 msgid "Set _transparent color"
 msgstr "设置透明颜色(_T)"
 
-#: plug-ins/file-dds/dds.c:262
+#: plug-ins/file-dds/dds.c:270
 msgid "Make an indexed color transparent"
 msgstr "使索引颜色透明"
 
-#: plug-ins/file-dds/dds.c:267
+#: plug-ins/file-dds/dds.c:275
 msgid "Transparent inde_x"
 msgstr "透明索引(_X)"
 
-#: plug-ins/file-dds/dds.c:268
+#: plug-ins/file-dds/dds.c:276
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr "透明颜色的索引或 -1 以禁用（仅适用于索引图像）。"
 
-#: plug-ins/file-dds/dds.c:274
+#: plug-ins/file-dds/dds.c:282
 msgid "_Mipmaps"
 msgstr "多级纹理(_M)"
 
-#: plug-ins/file-dds/dds.c:275
+#: plug-ins/file-dds/dds.c:283
 msgid "How to handle mipmaps"
 msgstr "如何处理多级纹理"
 
-#: plug-ins/file-dds/dds.c:276
+#: plug-ins/file-dds/dds.c:284
 msgid "No mipmaps"
 msgstr "无多级纹理"
 
-#: plug-ins/file-dds/dds.c:277
+#: plug-ins/file-dds/dds.c:285
 msgid "Generate mipmaps"
 msgstr "生成多级纹理"
 
-#: plug-ins/file-dds/dds.c:278
+#: plug-ins/file-dds/dds.c:286
 msgid "Use existing mipmaps"
 msgstr "使用现有多级纹理"
 
-#: plug-ins/file-dds/dds.c:284
+#: plug-ins/file-dds/dds.c:292
 msgid "F_ilter"
 msgstr "滤波器(_I)"
 
-#: plug-ins/file-dds/dds.c:285
+#: plug-ins/file-dds/dds.c:293
 msgid "Filtering to use when generating mipmaps"
 msgstr "生成多级纹理时使用的滤波器"
 
-#: plug-ins/file-dds/dds.c:287
+#: plug-ins/file-dds/dds.c:295
 msgid "Nearest"
 msgstr "最邻近"
 
-#: plug-ins/file-dds/dds.c:288 plug-ins/map-object/map-object-main.c:142
+#: plug-ins/file-dds/dds.c:296 plug-ins/map-object/map-object-main.c:142
 msgid "Box"
 msgstr "方盒"
 
-#: plug-ins/file-dds/dds.c:289
+#: plug-ins/file-dds/dds.c:297
 msgid "Triangle"
 msgstr "三角形"
 
-#: plug-ins/file-dds/dds.c:290
+#: plug-ins/file-dds/dds.c:298
 msgid "Quadratic"
 msgstr "平方"
 
-#: plug-ins/file-dds/dds.c:291
+#: plug-ins/file-dds/dds.c:299
 msgid "B-Spline"
 msgstr "B 样条"
 
-#: plug-ins/file-dds/dds.c:292
+#: plug-ins/file-dds/dds.c:300
 msgid "Mitchell"
 msgstr "米切尔"
 
-#: plug-ins/file-dds/dds.c:293
+#: plug-ins/file-dds/dds.c:301
 msgid "Catmull-Rom"
 msgstr "Catmull-Rom"
 
-#: plug-ins/file-dds/dds.c:294
+#: plug-ins/file-dds/dds.c:302
 msgid "Lanczos"
 msgstr "兰索斯法"
 
-#: plug-ins/file-dds/dds.c:295
+#: plug-ins/file-dds/dds.c:303
 msgid "Kaiser"
 msgstr "凯撒"
 
-#: plug-ins/file-dds/dds.c:301
+#: plug-ins/file-dds/dds.c:309
 msgid "_Wrap mode"
 msgstr "包裹模式(_W)"
 
-#: plug-ins/file-dds/dds.c:302
+#: plug-ins/file-dds/dds.c:310
 msgid "Wrap mode to use when generating mipmaps"
 msgstr "生成多级纹理时使用的包裹模式"
 
-#: plug-ins/file-dds/dds.c:304
+#: plug-ins/file-dds/dds.c:312
 msgid "Mirror"
 msgstr "镜像"
 
-#: plug-ins/file-dds/dds.c:305
+#: plug-ins/file-dds/dds.c:313
 msgid "Repeat"
 msgstr "重复"
 
-#: plug-ins/file-dds/dds.c:306
+#: plug-ins/file-dds/dds.c:314
 msgid "Clamp"
 msgstr "固定"
 
-#: plug-ins/file-dds/dds.c:312
+#: plug-ins/file-dds/dds.c:320
 msgid "Appl_y gamma correction"
 msgstr "应用伽马校正(_Y)"
 
-#: plug-ins/file-dds/dds.c:313
+#: plug-ins/file-dds/dds.c:321
 msgid "Use gamma correct mipmap filtering"
 msgstr "使用伽马校正多级纹理滤波器"
 
-#: plug-ins/file-dds/dds.c:318
+#: plug-ins/file-dds/dds.c:326
 msgid "Use sRG_B colorspace"
 msgstr "使用 sRGB 色彩空间(_B)"
 
-#: plug-ins/file-dds/dds.c:319
+#: plug-ins/file-dds/dds.c:327
 msgid "Use sRGB colorspace for gamma correction"
 msgstr "为伽马校正使用 sRGB 色彩空间"
 
-#: plug-ins/file-dds/dds.c:324 plug-ins/flame/flame.c:204
+#: plug-ins/file-dds/dds.c:332 plug-ins/flame/flame.c:204
 msgid "_Gamma"
 msgstr "伽马(_G)"
 
-#: plug-ins/file-dds/dds.c:325
+#: plug-ins/file-dds/dds.c:333
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr "用于伽马校正的伽马值（如 2.2）"
 
-#: plug-ins/file-dds/dds.c:330
+#: plug-ins/file-dds/dds.c:338
 msgid "Preserve al_pha test coverage"
 msgstr "保持透明测试覆盖(_P)"
 
-#: plug-ins/file-dds/dds.c:331
+#: plug-ins/file-dds/dds.c:339
 msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr "为透明通道映射保持透明测试覆盖"
 
-#: plug-ins/file-dds/dds.c:337
+#: plug-ins/file-dds/dds.c:345
 msgid "Alp_ha test threshold"
 msgstr "透明测试阈值(_H)"
 
-#: plug-ins/file-dds/dds.c:338
+#: plug-ins/file-dds/dds.c:346
 msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr "用于应保持透明测试覆盖的透明测试阈值"
@@ -16811,6 +16867,9 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
 
+#~ msgid "G-Qbist"
+#~ msgstr "量子贝叶斯"
+
 #~ msgid "TIM Image"
 #~ msgstr "TIM 图像"
 
@@ -21043,6 +21102,3 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "Save as XJT"
 #~ msgstr "保存在 XJT"
-
-#~ msgid "Image type currently not supported."
-#~ msgstr "目前不支持此图像类型。"
