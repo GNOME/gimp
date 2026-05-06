@@ -28,7 +28,15 @@
 #include <libintl.h>
 
 
+#if defined(__clang__) && defined(_MSC_VER)
+#define _(String) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Wformat-security\"") \
+  dgettext (GETTEXT_PACKAGE "-libgimp", String) \
+  _Pragma("clang diagnostic pop")
+#else
 #define  _(String) dgettext (GETTEXT_PACKAGE "-libgimp", String)
+#endif
 #define Q_(String) g_dpgettext (GETTEXT_PACKAGE "-libgimp", String, 0)
 #define C_(Context,String) g_dpgettext (GETTEXT_PACKAGE "-libgimp", Context "\004" String, strlen (Context) + 1)
 

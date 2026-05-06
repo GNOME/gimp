@@ -1,6 +1,6 @@
-From fe4b348b7eeb74c923677d7d6b41d8cf98345cc0 Mon Sep 17 00:00:00 2001
+From e690f279b524754619ad4ad6e42baad2cdbe1607 Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Tue, 14 Apr 2026 09:59:42 -0300
+Date: Wed, 6 May 2026 07:51:08 -0300
 Subject: [PATCH] Disable some things due to lack of packages
 
 ---
@@ -14,8 +14,8 @@ Subject: [PATCH] Disable some things due to lack of packages
  app/widgets/meson.build            |  2 --
  devel-docs/meson.build             |  2 +-
  libgimp/meson.build                |  4 ++-
- meson.build                        | 33 ++++---------------
- 11 files changed, 11 insertions(+), 104 deletions(-)
+ meson.build                        | 31 ++++--------------
+ 11 files changed, 10 insertions(+), 103 deletions(-)
 
 diff --git a/app/core/gimp.c b/app/core/gimp.c
 index bba1e86608..be367be104 100644
@@ -64,7 +64,7 @@ index 656d36a9c2..bcd3c84b2f 100644
    'gimpfilter.c',
    'gimpfilteredcontainer.c',
 diff --git a/app/dialogs/dialogs-constructors.c b/app/dialogs/dialogs-constructors.c
-index de9bf98725..650b4085c9 100644
+index dc0b1781ef..b629996158 100644
 --- a/app/dialogs/dialogs-constructors.c
 +++ b/app/dialogs/dialogs-constructors.c
 @@ -148,15 +148,6 @@ dialogs_preferences_get (GimpDialogFactory *factory,
@@ -84,7 +84,7 @@ index de9bf98725..650b4085c9 100644
  dialogs_keyboard_shortcuts_get (GimpDialogFactory *factory,
                                  GimpContext       *context,
 diff --git a/app/dialogs/dialogs.c b/app/dialogs/dialogs.c
-index 7c15ce47ff..add8fa8968 100644
+index 26f9c67963..61a3ace0a8 100644
 --- a/app/dialogs/dialogs.c
 +++ b/app/dialogs/dialogs.c
 @@ -296,8 +296,6 @@ static const GimpDialogFactoryEntry entries[] =
@@ -183,10 +183,10 @@ index 9489eda9fb..5fdf498c9b 100644
    'file-data-pat.c',
    'file-data.c',
 diff --git a/app/widgets/meson.build b/app/widgets/meson.build
-index b038b1a7e2..db63568865 100644
+index d182f7763e..d84dfae3eb 100644
 --- a/app/widgets/meson.build
 +++ b/app/widgets/meson.build
-@@ -119,8 +119,6 @@ libappwidgets_sources = [
+@@ -120,8 +120,6 @@ libappwidgets_sources = [
    'gimperrorconsole.c',
    'gimperrordialog.c',
    'gimpexportdialog.c',
@@ -208,10 +208,10 @@ index 7dd25ed1ba..234a951148 100644
    subdir('reference')
  endif
 diff --git a/libgimp/meson.build b/libgimp/meson.build
-index eb1166c728..6e1635cf77 100644
+index 97393ccd2b..f335eb1b7a 100644
 --- a/libgimp/meson.build
 +++ b/libgimp/meson.build
-@@ -514,7 +514,9 @@ libgimpui_introspectable_files = [
+@@ -516,7 +516,9 @@ libgimpui_introspectable_files = [
    libgimpwidgets_introspectable,
  ]
  
@@ -223,19 +223,10 @@ index eb1166c728..6e1635cf77 100644
    gobject_introspection_warning = '\n      '.join(['',
      'GObject Introspection is disabled while cross-compiling because',
 diff --git a/meson.build b/meson.build
-index 6b19eb89de..d53ab4c5f6 100644
+index e7c3b39d17..ffc1c4a34a 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -288,7 +288,7 @@ warning_cflags_common = [
-   '-fno-common',
- 
-   '-Wformat',
--  '-Wformat-security',
-+  '-Wno-format-security',
-   '-Winit-self',
-   '-Wlogical-op',
-   '-Wmissing-declarations',
-@@ -698,7 +698,7 @@ endif
+@@ -700,7 +700,7 @@ endif
  # Check for extension support
  
  appstream_minver = '0.16.1'
@@ -244,7 +235,7 @@ index 6b19eb89de..d53ab4c5f6 100644
  
  libarchive = dependency('libarchive')
  
-@@ -1205,7 +1205,7 @@ pygobject_found = ''
+@@ -1207,7 +1207,7 @@ pygobject_found = ''
  pygobject_gexiv2_found = false
  foreach py : py_candidates
    #Check if PyGobject installation have pycairo (#13105)
@@ -253,7 +244,7 @@ index 6b19eb89de..d53ab4c5f6 100644
    if python_tmp.found() and python_tmp.language_version().version_compare(python3_minver)
      python = python_tmp
      #Check if PyGObject installation have minimum version
-@@ -1224,9 +1224,7 @@ foreach py : py_candidates
+@@ -1226,9 +1226,7 @@ foreach py : py_candidates
                                          '''except (ImportError):''',
                                          '''    sys.exit(1)''']),
                                          check: false).returncode() == 0
@@ -264,7 +255,7 @@ index 6b19eb89de..d53ab4c5f6 100644
    endif
  endforeach
  
-@@ -1235,11 +1233,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
+@@ -1237,11 +1235,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
  endif
  message('Found Python @0@'.format(python.language_version()))
  
@@ -276,7 +267,7 @@ index 6b19eb89de..d53ab4c5f6 100644
  ## Javascript
  
  gjs = find_program('gjs', required: false)
-@@ -2017,13 +2010,13 @@ if get_option('debug-self-in-build')
+@@ -2019,13 +2012,13 @@ if get_option('debug-self-in-build')
  endif
  gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
  
@@ -292,7 +283,7 @@ index 6b19eb89de..d53ab4c5f6 100644
    gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
  
    menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
-@@ -2086,18 +2079,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
+@@ -2088,18 +2081,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
        gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', plugin_exe)
      endforeach
    endif
@@ -311,7 +302,7 @@ index 6b19eb89de..d53ab4c5f6 100644
  endif
  
  gimp_exe = find_program('tools'/'in-build-gimp.py')
-@@ -2293,7 +2274,7 @@ final_message = [
+@@ -2295,7 +2276,7 @@ final_message = [
  '''  Test appdata         @0@'''.format(appstreamcli.found()),
  '',
  '''Documentation:''',
