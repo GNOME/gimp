@@ -162,19 +162,19 @@ dpx_open (GFile   *file,
 
   if (is_network_order)
     {
-      width       = g_ntohl (header.imageInfo.pixels_per_line);
-      height      = g_ntohl (header.imageInfo.lines_per_image);
-      depth       = g_ntohs (header.imageInfo.channels_per_image);
-      offset      = g_ntohl (header.fileInfo.offset);
-      packing     = g_ntohs (header.imageInfo.channel[0].packing);
+      width   = g_ntohl (header.imageInfo.pixels_per_line);
+      height  = g_ntohl (header.imageInfo.lines_per_image);
+      depth   = g_ntohs (header.imageInfo.channels_per_image);
+      offset  = g_ntohl (header.fileInfo.offset);
+      packing = g_ntohs (header.imageInfo.channel[0].packing);
     }
   else
     {
-      width       = header.imageInfo.pixels_per_line;
-      height      = header.imageInfo.lines_per_image;
-      depth       = header.imageInfo.channels_per_image;
-      offset      = header.fileInfo.offset;
-      packing     = header.imageInfo.channel[0].packing;
+      width   = header.imageInfo.pixels_per_line;
+      height  = header.imageInfo.lines_per_image;
+      depth   = header.imageInfo.channels_per_image;
+      offset  = header.fileInfo.offset;
+      packing = header.imageInfo.channel[0].packing;
     }
   bpp = header.imageInfo.channel[0].bits_per_pixel;
 
@@ -285,12 +285,6 @@ dpx_open (GFile   *file,
       return NULL;
     }
 
-  image = gimp_image_new_with_precision (width, height, image_type, precision);
-  layer = gimp_layer_new (image, NULL, width, height,
-                          layer_type, 100,
-                          gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, layer, NULL, 0);
-
   /* Jump to Image data */
   if (fseek (fp, offset, SEEK_SET) != 0)
     {
@@ -304,15 +298,21 @@ dpx_open (GFile   *file,
       return NULL;
     }
 
+  image = gimp_image_new_with_precision (width, height, image_type, precision);
+  layer = gimp_layer_new (image, NULL, width, height,
+                          layer_type, 100,
+                          gimp_image_get_default_new_layer_mode (image));
+  gimp_image_insert_layer (image, layer, NULL, 0);
+
   dpx_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   if (packing == 0 &&
       (bpp == 10   ||
        bpp == 12))
     {
-      if (bpp == 12 &&
-          ! read_12bpc_packed (dpx_buffer, fp, width, height, depth,
-                               is_network_order, error))
+      if (bpp == 10 &&
+              ! read_10bpc_packed (dpx_buffer, fp, width, height, depth,
+                                   is_network_order, error))
         {
            g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                         _("Could not read image data from '%s'"),
@@ -323,9 +323,9 @@ dpx_open (GFile   *file,
            g_free (pixels_8);
            return NULL;
         }
-      else if (bpp == 10 &&
-              ! read_10bpc_packed (dpx_buffer, fp, width, height, depth,
-                                   is_network_order, error))
+      else if (bpp == 12 &&
+          ! read_12bpc_packed (dpx_buffer, fp, width, height, depth,
+                               is_network_order, error))
         {
            g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                         _("Could not read image data from '%s'"),
@@ -341,11 +341,8 @@ dpx_open (GFile   *file,
     {
       for (gint y = 0; y < height; y++)
         {
-          gint read_index  = 0;
-          gint read_data   = buffer_length;
-
-          if (bpp == 10)
-            read_data = ((width * depth) + 2) / 3;
+          gint read_index = 0;
+          gint read_data  = buffer_length;
 
           read_index = fread (buffer, 4, read_data, fp);
           if (read_index != read_data)

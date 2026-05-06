@@ -174,14 +174,6 @@ cineon_open (GFile   *file,
       return NULL;
     }
 
-  image = gimp_image_new_with_precision (width, height, image_type,
-                                         precision);
-
-  layer = gimp_layer_new (image, NULL, width, height,
-                          layer_type, 100,
-                          gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, layer, NULL, 0);
-
   /* Jump to Image data */
   if (fseek (fp, offset, SEEK_SET) != 0)
     {
@@ -194,6 +186,14 @@ cineon_open (GFile   *file,
       g_free (pixels_8);
       return NULL;
     }
+
+  image = gimp_image_new_with_precision (width, height, image_type,
+                                         precision);
+
+  layer = gimp_layer_new (image, NULL, width, height,
+                          layer_type, 100,
+                          gimp_image_get_default_new_layer_mode (image));
+  gimp_image_insert_layer (image, layer, NULL, 0);
 
   cin_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
   for (gint y = 0; y < height; y++)
