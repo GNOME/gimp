@@ -296,7 +296,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
       _gimp_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
 
-      /* If this is an extension,
+      /* If this is a persistent procedure,
        * wait for an installation-confirmation message
        */
       if (GIMP_PROCEDURE (procedure)->proc_type == GIMP_PDB_PROC_TYPE_PERSISTENT)
