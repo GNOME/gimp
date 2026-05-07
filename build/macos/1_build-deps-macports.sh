@@ -10,7 +10,7 @@ set -e
 if [ "$0" != 'build/macos/1_build-deps-macports.sh' ] && [ $(basename "$PWD") != 'macos' ]; then
   printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/macos/\n'
   exit 1
-elif [ $(basename "$PWD") = 'macos' ]; then
+elif [ "$(basename "$PWD")" = 'macos' ]; then
   cd ../../..
 fi
 if [ -z "$GITLAB_CI" ]; then

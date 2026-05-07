@@ -21,7 +21,7 @@ set -e
 if [ "$0" != 'build/linux/appimage/3_dist-gimp-goappimage.sh' ] && [ $(basename "$PWD") != 'appimage' ]; then
   printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp source dir\n'
   exit 1
-elif [ $(basename "$PWD") = 'appimage' ]; then
+elif [ "$(basename "$PWD")" = 'appimage' ]; then
   cd ../../..
 fi
 if [ -z "$GITLAB_CI" ]; then
@@ -32,7 +32,7 @@ fi
 # 1. INSTALL BUNDLING TOOL AND STANDARD APPIMAGE DISTRIBUTION TOOLS
 printf "\e[0Ksection_start:`date +%s`:apmg_tlkt\r\e[0KInstalling appimage tools\n"
 GIMP_DIR="$PWD/"
-cd ${GIMP_DIR}${PARENT_DIR}
+cd "${GIMP_DIR}${PARENT_DIR}"
 if [ "$GITLAB_CI" ]; then
   apt-get update >/dev/null 2>&1
   apt-get install -y --no-install-recommends ca-certificates wget curl >/dev/null 2>&1
@@ -40,13 +40,13 @@ fi
 export HOST_ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
 
-if [ ! "$(find $GIMP_DIR -maxdepth 1 -iname "AppDir*")" ] || [ "$MODE" = '--bundle-only' ]; then
+if [ ! "$(find "$GIMP_DIR" -maxdepth 1 -iname "AppDir*")" ] || [ "$MODE" = '--bundle-only' ]; then
   ## we use go-appimagetool for part of the bundling
   if [ "$GITLAB_CI" ]; then
     apt-get install -y --no-install-recommends file patchelf >/dev/null 2>&1
   fi
   bundler="$PWD/go-appimagetool.AppImage"
-  wget -c -O $bundler "https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2)" >/dev/null 2>&1
+  wget -c -O "$bundler" "https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2)" >/dev/null 2>&1
   bundler_text="go-appimagetool build: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${HOST_ARCH}.AppImage//")"
   chmod +x "$bundler"
 fi
@@ -77,10 +77,10 @@ if [ "$MODE" != '--bundle-only' ]; then
   fi
   standard_appimagetool_text="appimagetool commit: $standard_appimagetool_version | type2-runtime commit: ${static_runtime_version_downloaded#*commit/}"
 fi
-if [ ! "$(find $GIMP_DIR -maxdepth 1 -iname "AppDir*")" ] && [ "$MODE" != '--bundle-only' ]; then
+if [ ! "$(find "$GIMP_DIR" -maxdepth 1 -iname "AppDir*")" ] && [ "$MODE" != '--bundle-only' ]; then
   separator=' | '
 fi
-cd $GIMP_DIR
+cd "$GIMP_DIR"
 printf "(INFO): ${bundler_text}${separator}${standard_appimagetool_text}\n"
 printf "\e[0Ksection_end:`date +%s`:apmg_tlkt\r\e[0K\n"
 
@@ -88,7 +88,7 @@ printf "\e[0Ksection_end:`date +%s`:apmg_tlkt\r\e[0K\n"
 # 2. GET GLOBAL VARIABLES
 printf "\e[0Ksection_start:`date +%s`:apmg_info\r\e[0KGetting AppImage global info\n"
 if [ "$BUILD_DIR" = '' ]; then
-  export BUILD_DIR=$(find $PWD -maxdepth 1 -iname "_build*$RUNNER" | head -n 1)
+  export BUILD_DIR=$(find "$PWD" -maxdepth 1 -iname "_build*$RUNNER" | head -n 1)
 fi
 if [ ! -f "$BUILD_DIR/config.h" ]; then
   printf "\033[31m(ERROR)\033[0m: config.h file not found. You can configure GIMP with meson to generate it.\n"
@@ -132,7 +132,7 @@ printf "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K\n"
 # 3. GIMP FILES (IN APPDIR)
 if [ "$supported_archs" = '' ] || [ "$MODE" = '--bundle-only' ]; then
 printf "\e[0Ksection_start:`date +%s`:apmg_files[collapsed=true]\r\e[0KPreparing GIMP files in AppDir-$HOST_ARCH/usr\n"
-grep -q 'relocatable-bundle=yes' $BUILD_DIR/meson-logs/meson-log.txt && export RELOCATABLE_BUNDLE_ON=1
+grep -q 'relocatable-bundle=yes' "$BUILD_DIR/meson-logs/meson-log.txt" && export RELOCATABLE_BUNDLE_ON=1
 if [ -z "$RELOCATABLE_BUNDLE_ON" ]; then
   printf "\033[31m(ERROR)\033[0m: No relocatable GIMP build found. You can build GIMP with '-Drelocatable-bundle=yes' to make a build suitable for AppImage.\n"
   exit 1
@@ -163,37 +163,39 @@ prep_pkg ()
 
 bund_usr ()
 {
-  #Prevent unwanted expansion
+  #Prevent unwanted expansion and provide a place for *found_tpath files
   mkdir -p limbo
   cd limbo
 
-  #Paths where to search
+  #Paths where to search (separed by newlines)
   case $2 in
     bin*)
-      search_path="$1/bin $1/sbin $1/libexec"
+      search_path="$1/bin
+$1/sbin
+$1/libexec"
       ;;
     lib*)
-      search_path="$(dirname $(echo $2 | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|g" | sed "s|*|no_scape|g")) \
-                   $(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g"))"
+      search_path="$(dirname "$(echo "$2" | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|g" | sed "s|*|no_scape|g")")
+$(dirname "$(echo "$2" | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g")")"
       ;;
     share*|include*|etc*)
-      search_path="$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g")) \
-                   $(dirname $(echo /$2 | sed "s|*|no_scape|g"))"
+      search_path="$(dirname "$(echo "$2" | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g")")
+$(dirname "$(echo "/$2" | sed "s|*|no_scape|g")")"
       ;;
   esac
-  unset not_found_tpath found_tpath
-  for path in $search_path; do
-    expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
-    if (echo ${2##*/} | grep -q '\*' && echo "$(echo $expanded_path/${2##*/})" | grep -q '\*') || (! echo ${2##*/} | grep -q '\*' && [ ! -e "$expanded_path/${2##*/}" ]); then
-      not_found_tpath=true
+  rm not_found_tpath found_tpath >/dev/null 2>&1 || true
+  echo "$search_path" | while read -r path; do
+    expanded_path=$(echo $(echo "$path" | sed "s|no_scape|*|g"))
+    if (echo ${2##*/} | grep -q '\*' && echo "$(echo "$expanded_path"/${2##*/})" | grep -q '\*') || (! echo ${2##*/} | grep -q '\*' && [ ! -e "$expanded_path/${2##*/}" ]); then
+      touch not_found_tpath
       continue
     else
-      found_tpath=true
+      touch found_tpath
     fi
 
     #Copy found targets from search_path to bundle dir
-    for target_path in $(find -L $expanded_path -maxdepth 1 -name ${2##*/} 2>/dev/null); do
-      dest_path="$(dirname $(echo $target_path | sed -e "s|^$1/|${USR_DIR}/|" -e t -e "s|^/|${USR_DIR}/|"))"
+    find -L "$expanded_path" -maxdepth 1 -name "${2##*/}" 2>/dev/null | while read -r target_path; do
+      dest_path="$(dirname "$(echo "$target_path" | sed -e "s|^$1/|${USR_DIR}/|" -e t -e "s|^/|${USR_DIR}/|" -e "s|//|/|g")")"
       output_dest_path="$dest_path"
       if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
         if [ "$3" = '--dest' ]; then
@@ -205,8 +207,8 @@ bund_usr ()
       fi
       if [ "$3" != '--bundler' ] && [ "$5" != '--bundler' ]; then
         printf "(INFO): bundling $target_path to $output_dest_path\n"
-        mkdir -p $dest_path
-        cp -ru $target_path $dest_path >/dev/null 2>&1 || continue
+        mkdir -p "$dest_path"
+        cp -ru "$target_path" "$dest_path" >/dev/null 2>&1 || continue
 
         #Process .typelib dependencies
         if echo "$target_path" | grep -q '\.typelib$'; then
@@ -229,7 +231,7 @@ bund_usr ()
 
         #Additional parameters for special situations
         if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
-          mv $dest_path/${2##*/} $USR_DIR/$4
+          mv "$dest_path"/${2##*/} "$USR_DIR/$4"
           rm -r "$dest_path"
         fi
 
@@ -244,7 +246,7 @@ bund_usr ()
     done
   done
 
-  if [ "$not_found_tpath" ] && [ -z "$found_tpath" ] && [ "$3" != '--bundler' ] && [ "$5" != '--bundler' ]; then
+  if [ -f "not_found_tpath" ] && [ ! -f "found_tpath" ] && [ "$3" != '--bundler' ] && [ "$5" != '--bundler' ]; then
     printf "\033[31m(ERROR)\033[0m: not found $2 in none of the search paths.\n"
     exit 1
   fi
@@ -287,7 +289,7 @@ conf_app ()
 wipe_usr ()
 {
   unset first_found
-  for target_path in $(find $USR_DIR -iname ${1##*/} 2>/dev/null); do
+  for target_path in $(find "$USR_DIR" -iname ${1##*/} 2>/dev/null); do
     if [ -z "$first_found" ]; then
       printf "(INFO): cleaning $USR_DIR/$1\n"
       first_found=true
@@ -297,8 +299,8 @@ wipe_usr ()
 }
 
 ## Prepare AppDir
-mkdir -p $APP_DIR
-echo '*' > $APP_DIR/.gitignore
+mkdir -p "$APP_DIR"
+echo '*' > "$APP_DIR/.gitignore"
 bund_usr "$UNIX_PREFIX" "lib*/ld-*.so.*" --bundler
 if [ "$HOST_ARCH" = 'aarch64' ]; then
   conf_app LD_LINUX "lib/ld-*.so.*"
@@ -363,8 +365,8 @@ bund_usr "$GIMP_PREFIX" "etc/gimp"
 ### mypaint brushes
 bund_usr "$UNIX_PREFIX" "share/mypaint-data/2.0"
 ####https://salsa.debian.org/multimedia-team/mypaint-brushes/-/merge_requests/2
-for myb in $(find "$USR_DIR/share/mypaint-data/2.0/brushes/Dieterle" -iname "*.myb"); do
-  sed -i -e 's|surfacemap_x|gridmap_x|g' -e 's|surfacemap_y|gridmap_y|g' $myb;
+find "$USR_DIR/share/mypaint-data/2.0/brushes/Dieterle" -iname "*.myb" | while read -r myb; do
+  sed -i -e 's|surfacemap_x|gridmap_x|g' -e 's|surfacemap_y|gridmap_y|g' "$myb";
 done
 ### Needed for 'th' word breaking in Text tool etc
 bund_usr "$UNIX_PREFIX" "share/libthai"

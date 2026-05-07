@@ -193,16 +193,16 @@ diff=$(git diff -U0 --no-color --submodule=diff "${newest_common_ancestor_sha}" 
   ')
 
 ## Check shebang and external call (1)
-echo "$diff" | grep -E '#!\s*/usr/bin/env\s+bash|#!\s*/(usr/bin|bin)/bash(\s|$)' && found_bashism='extrinsic_bashism'
-echo "$diff" | grep -E "bash\s+.*\.sh" && found_bashism='extrinsic_bashism'
+echo "$diff" | grep -E '#!\s*/usr/bin/env\s+bash|#!\s*/(usr/bin|bin)/bash(\s|$)' && echo 'extrinsic_bashism' > found_bashism
+echo "$diff" | grep -E "bash\s+.*\.sh" && echo 'extrinsic_bashism' > found_bashism
 
 ## Check content with shellcheck and checkbashisms (2)
-for sh_script in $(find "$CI_PROJECT_DIR" -type d -name .git -prune -o -type f \( ! -name '*.ps1' ! -name '*.c' -exec grep -lE '^#!\s*/usr/bin/env\s+(sh|bash)|^#!\s*/(usr/bin|bin)/(sh|bash)(\s|$)' {} \; -o -name '*.sh' ! -exec grep -q '^#!' {} \; -print \)); do
-  shellcheck --severity=warning --shell=sh -x "$sh_script" | grep -v 'set option posix is' | grep -vE '.*http.*SC[0-9]+.*POSIX' | grep --color=always -B 2 -E 'SC[0-9]+.*POSIX' && found_bashism='intrinsic_bashism'
-  checkbashisms -f $sh_script || found_bashism='intrinsic_bashism'
+find "$CI_PROJECT_DIR" -type d -name .git -prune -o -type f \( ! -name '*.ps1' ! -name '*.c' -exec grep -lE '^#!\s*/usr/bin/env\s+(sh|bash)|^#!\s*/(usr/bin|bin)/(sh|bash)(\s|$)' {} \; -o -name '*.sh' ! -exec grep -q '^#!' {} \; -print \) | while read -r sh_script; do
+  shellcheck --severity=warning --shell=sh -x "$sh_script" | grep -v 'set option posix is' | grep -vE '.*http.*SC[0-9]+.*POSIX' | grep --color=always -B 2 -E 'SC[0-9]+.*POSIX' && echo 'intrinsic_bashism' > found_bashism
+  checkbashisms -f "$sh_script" || echo 'intrinsic_bashism' > found_bashism
 done
 
-if [ "$found_bashism" ]; then
+if [ -f "found_bashism" ]; then
   printf '\033[33m(WARNING)\033[0m: Seems that you added a Bash-specific code (aka "bashism").\n'
   printf "           It is recommended to make it POSIX-compliant (which is portable).\n"
 else
@@ -211,7 +211,7 @@ fi
 printf "\e[0Ksection_end:`date +%s`:unix_test\r\e[0K\n"
 
 
-if [ "$found_coreutils" ] || [ "$found_ntutils" ] || [ "$found_bashism" ]; then
+if [ "$found_coreutils" ] || [ "$found_ntutils" ] || [ -f "found_bashism" ]; then
   exit 1
 fi
 

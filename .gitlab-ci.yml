@@ -91,6 +91,8 @@ workflow:
     # Common cloning procedure
     GIT_DEPTH: "1"
     GIT_SUBMODULE_STRATEGY: none
+    #Needed to ensure GIMP can be built even if the build dir or prefix have spaces
+    GIT_CLONE_PATH: $CI_BUILDS_DIR/gimp with spaces
     # Enable colorful output when supported (e.g. ninja, cppcheck)
     CLICOLOR_FORCE: "1"
     # Disable timestamps on CI logs
@@ -273,10 +275,10 @@ deps-debian-nonreloc:
     #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
     - printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Debian $DEB_VERSION\n"
     - existing_image_id="$(skopeo inspect --config "docker://$CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" 2>/dev/null | sed -n '/"diff_ids"/,/\]/p' | grep -o 'sha256:[a-f0-9]*' | tr '\n' ',' || echo "none")"
-    - if [ "$existing_image_id" = 'none' ]; then buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile --tag $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h --iidfile new_image_id.txt 2>&1 | grep -v STEP; fi
+    - if [ "$existing_image_id" = 'none' ]; then buildah build --log-level error --volume "$CI_PROJECT_DIR:$CI_PROJECT_DIR:Z" --file "$CI_PROJECT_DIR/Dockerfile" --tag $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h --iidfile new_image_id.txt 2>&1 | grep -v STEP; fi
     - if [ -f 'new_image_id.txt' ] && [ "$existing_image_id" != "$(buildah inspect --format '{{if .OCIv1.RootFS}}{{range .OCIv1.RootFS.DiffIDs}}{{.}},{{end}}{{else}}{{range .Docker.RootFS.DiffIDs}}{{.}},{{end}}{{end}}' "$(cat new_image_id.txt)")" ]; then buildah push --log-level error --compression-format zstd --compression-level 3 --force-compression $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} 2>&1 | grep -v STEP; fi
     - printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
-    - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile2 --no-cache 2>&1 | grep -v STEP
+    - buildah build --log-level error --volume "$CI_PROJECT_DIR:$CI_PROJECT_DIR:Z" --file "$CI_PROJECT_DIR/Dockerfile2" --no-cache 2>&1 | grep -v STEP
   artifacts:
     paths:
       - _install-${RUNNER}/
@@ -342,7 +344,7 @@ gimp-debian-nonreloc:
     - <<: *CI_RELEASE
   parallel:
     matrix:
-      - RUNNER: [aarch64, x86_64_v3]
+      - RUNNER: [x86_64_v3]
   tags:
     - $RUNNER
 
@@ -383,7 +385,7 @@ gimp-debian:
     - printf "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating AppDir bundle\n"
     - ninja install > ninja_install.log 2>&1 || { cat ninja_install.log; exit 1; }
     - cd ..
-    - sh build/linux/appimage/3_dist-gimp-goappimage.sh --bundle-only > goappimage.log 2>&1 || { cat goappimage.log; exit 1; }
+    - sh -x build/linux/appimage/3_dist-gimp-goappimage.sh --bundle-only
     - printf "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K\n"
   artifacts:
     paths:
@@ -421,7 +423,7 @@ deps-flatpak:
   extends: .flatpak
   stage: dependencies
   script:
-    - sh build/linux/flatpak/1_build-deps-flatpakbuilder.sh
+    - sh -x build/linux/flatpak/1_build-deps-flatpakbuilder.sh
   artifacts:
     paths:
       - _build-$RUNNER
@@ -494,9 +496,9 @@ deps-snap:
     - echo "RUN sh build/linux/snap/1_build-deps-snapcraft.sh" >> Dockerfile2;
     #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
     - existing_image_id="$(skopeo inspect --config "docker://$CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}" 2>/dev/null | sed -n '/"diff_ids"/,/\]/p' | grep -o 'sha256:[a-f0-9]*' | tr '\n' ',' || echo "none")"
-    - if [ "$existing_image_id" = 'none' ]; then buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile --tag $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h --iidfile new_image_id.txt 2>&1 | grep -v STEP; fi
+    - if [ "$existing_image_id" = 'none' ]; then buildah build --log-level error --volume "$CI_PROJECT_DIR:$CI_PROJECT_DIR:Z" --file "$CI_PROJECT_DIR/Dockerfile" --tag $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h --iidfile new_image_id.txt 2>&1 | grep -v STEP; fi
     - if [ -f 'new_image_id.txt' ] && [ "$existing_image_id" != "$(buildah inspect --format '{{if .OCIv1.RootFS}}{{range .OCIv1.RootFS.DiffIDs}}{{.}},{{end}}{{else}}{{range .Docker.RootFS.DiffIDs}}{{.}},{{end}}{{end}}' "$(cat new_image_id.txt)")" ]; then buildah push --log-level error --compression-format zstd --compression-level 3 --force-compression $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} 2>&1 | grep -v STEP; fi
-    - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile2 --no-cache 2>&1 | grep -v STEP
+    - buildah build --log-level error --volume "$CI_PROJECT_DIR:$CI_PROJECT_DIR:Z" --file "$CI_PROJECT_DIR/Dockerfile2" --no-cache 2>&1 | grep -v STEP
   artifacts:
     paths:
       - _install-$RUNNER.tar
@@ -657,6 +659,7 @@ gimp-win:
     - macos
     - marathon
   variables:
+    GTK_CLONE_PATH: null
     ORKA_RUNNER: tahoe-1
     #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
@@ -748,14 +751,14 @@ file-plug-in-tests:
     - API_VER=$(grep GIMP_PKGCONFIG_VERSION _build*/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
     - APP_VER=$(grep GIMP_APP_VERSION _build*/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
     - *ENVIRON
-    - pkg-config --variable=gimplibdir gimp-${API_VER} 2>/dev/null | grep . && PLUG_IN_DIR=$(echo $(pkg-config --variable=gimplibdir gimp-${API_VER})'/plug-ins/')
+    - pkg-config --variable=gimplibdir gimp-${API_VER} 2>/dev/null | grep . && PLUG_IN_DIR="$(pkg-config --variable=gimplibdir gimp-${API_VER} | sed 's/\\//g')/plug-ins/"
     - export PYTHONPATH="${PLUG_IN_DIR}test-file-plug-ins"
     - export GIMP_TESTS_CONFIG_FILE="${PLUG_IN_DIR}test-file-plug-ins/tests/batch-config.ini"
     - mkdir _log
     - mkdir _data && cd _data
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/Infrastructure/gimp-test-images.git gimp-test-images
     - cd ..
-    - cat ${PLUG_IN_DIR}test-file-plug-ins/batch-import-tests.py | gimp-console-${APP_VER} -idf --batch-interpreter python-fu-eval -b - --quit
+    - cat "${PLUG_IN_DIR}test-file-plug-ins/batch-import-tests.py" | gimp-console-${APP_VER} -idf --batch-interpreter python-fu-eval -b - --quit
     - if [ $(grep -c "${REGRESSION_STRING}" "${GIMP_TESTS_LOG_FILE}") -ne 1 ]; then
         printf "There are file import regressions. Check the log at ${GIMP_TESTS_LOG_FILE}!\n";
         exit 1;
@@ -959,7 +962,8 @@ dev-docs:
   script:
     - apt-get update
     - apt-get install -y xz-utils
-    - export GIMP_PREFIX=$(echo $PWD/_install*)
+    - ls
+    - export GIMP_PREFIX=$(echo "$PWD"/_install*)
     - BABL_VER=$(grep BABL_VERSION babl/_build*/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')         &&
       BABL_API_VER=$(grep BABL_API_VERSION babl/_build*/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/') &&
       DIR_NAME=babl-api-docs-$BABL_VER                                                                    &&
@@ -1010,7 +1014,7 @@ dist-appimage-weekly:
   needs: ["gimp-debian"]
   stage: distribution
   script:
-    - sh build/linux/appimage/3_dist-gimp-goappimage.sh
+    - sh -x build/linux/appimage/3_dist-gimp-goappimage.sh
   artifacts:
     expose_as: 'Linux appimage'
     paths:

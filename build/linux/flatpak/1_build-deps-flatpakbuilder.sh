@@ -10,7 +10,7 @@ set -e
 if [ "$0" != 'build/linux/flatpak/1_build-deps-flatpakbuilder.sh' ] && [ $(basename "$PWD") != 'flatpak' ]; then
   printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/linux/\n'
   exit 1
-elif [ $(basename "$PWD") = 'flatpak' ]; then
+elif [ "$(basename "$PWD")" = 'flatpak' ]; then
   cd ../../..
 fi
 
@@ -65,7 +65,7 @@ if [ "$GITLAB_CI" ]; then
   oras pull $built_deps_image && oras logout quay.io || true
   tar --zstd --xattrs -xf _build-cached-$RUNNER.tar.zst || true
 fi
-eval $FLATPAK_BUILDER --force-clean --disable-rofiles-fuse --build-only --stop-at=babl \
+eval $FLATPAK_BUILDER --force-clean -v --disable-rofiles-fuse --build-only --stop-at=babl \
                       "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json > flatpak-builder.log 2>&1
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   tar --zstd --xattrs --exclude=.flatpak-builder/build/ -cf _build-cached-$RUNNER.tar.zst .flatpak-builder/
