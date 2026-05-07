@@ -1,10 +1,11 @@
 plugin_name = 'file-cin'
 
-plugin_sources = [
+plugin_sourcecode = [
   'file-cin.c',
   'cineon-lib.c',
   'dpx-lib.c',
 ]
+plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_sources += windows.compile_resources(
