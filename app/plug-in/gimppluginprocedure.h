@@ -38,6 +38,7 @@ struct _GimpPlugInProcedure
 
   /*  common members  */
   GFile               *file;
+  GFile               *root_folder;
   GQuark               help_domain;
   gchar               *menu_label;
   GList               *menu_paths;
@@ -90,12 +91,14 @@ struct _GimpPlugInProcedureClass
 GType           gimp_plug_in_procedure_get_type            (void) G_GNUC_CONST;
 
 GimpProcedure * gimp_plug_in_procedure_new                 (GimpPDBProcType      proc_type,
-                                                            GFile               *file);
+                                                            GFile               *file,
+                                                            GFile               *root_folder);
 
 GimpPlugInProcedure * gimp_plug_in_procedure_find          (GSList              *list,
                                                             const gchar         *proc_name);
 
 GFile       * gimp_plug_in_procedure_get_file              (GimpPlugInProcedure *proc);
+GFile       * gimp_plug_in_procedure_get_root_folder       (GimpPlugInProcedure *proc);
 
 void          gimp_plug_in_procedure_set_help_domain       (GimpPlugInProcedure *proc,
                                                             const gchar         *help_domain);

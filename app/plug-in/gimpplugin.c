@@ -147,6 +147,7 @@ gimp_plug_in_init (GimpPlugIn *plug_in)
 {
   plug_in->manager            = NULL;
   plug_in->file               = NULL;
+  plug_in->root_folder        = NULL;
   plug_in->display            = NULL;
 
   plug_in->call_mode          = GIMP_PLUG_IN_CALL_NONE;
@@ -177,6 +178,7 @@ gimp_plug_in_finalize (GObject *object)
   GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
 
   g_clear_object (&plug_in->file);
+  g_clear_object (&plug_in->root_folder);
   g_clear_weak_pointer (&plug_in->display);
 
   gimp_plug_in_proc_frame_dispose (&plug_in->main_proc_frame, plug_in);
@@ -424,6 +426,7 @@ gimp_plug_in_new (GimpPlugInManager   *manager,
                   GimpProgress        *progress,
                   GimpPlugInProcedure *procedure,
                   GFile               *file,
+                  GFile               *root_folder,
                   GimpDisplay         *display)
 {
   GimpPlugIn *plug_in;
@@ -431,9 +434,9 @@ gimp_plug_in_new (GimpPlugInManager   *manager,
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (procedure == NULL ||
-                        GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (file == NULL || G_IS_FILE (file), NULL);
+  g_return_val_if_fail ((procedure == NULL && G_IS_FILE (file) && G_IS_FILE (root_folder)) ||
+                        (GIMP_IS_PLUG_IN_PROCEDURE (procedure) && file == NULL && root_folder == NULL),
+                        NULL);
   g_return_val_if_fail (display == NULL || GIMP_IS_DISPLAY (display), NULL);
   g_return_val_if_fail ((procedure != NULL || file != NULL) &&
                         ! (procedure != NULL && file != NULL), NULL);
@@ -442,12 +445,15 @@ gimp_plug_in_new (GimpPlugInManager   *manager,
 
   if (! file)
     file = gimp_plug_in_procedure_get_file (procedure);
+  if (! root_folder)
+    root_folder = gimp_plug_in_procedure_get_root_folder (procedure);
 
   gimp_object_take_name (GIMP_OBJECT (plug_in),
                          g_path_get_basename (gimp_file_get_utf8_name (file)));
 
-  plug_in->manager = manager;
-  plug_in->file    = g_object_ref (file);
+  plug_in->manager     = manager;
+  plug_in->file        = g_object_ref (file);
+  plug_in->root_folder = g_object_ref (root_folder);
   g_set_weak_pointer (&plug_in->display, display);
 
   gimp_plug_in_proc_frame_init (&plug_in->main_proc_frame,

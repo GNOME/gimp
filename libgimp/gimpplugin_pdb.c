@@ -28,6 +28,42 @@
 #include "gimpplugin_pdb.h"
 
 /**
+ * _gimp_plug_in_get_root_folder:
+ *
+ * Returns the root directory of the running plug-in.
+ *
+ * This procedure returns the root directory of the plug-in.
+ * Third-party plug-in developers are expected to only reference data
+ * contained in this folder hierarchy.
+ *
+ * Returns: (transfer full): The root folder of the plug-in.
+ *
+ * Since: 3.4
+ **/
+GFile *
+_gimp_plug_in_get_root_folder (void)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GFile *root_folder = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-plug-in-get-root-folder",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    root_folder = GIMP_VALUES_DUP_FILE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return root_folder;
+}
+
+/**
  * _gimp_plug_in_help_register:
  * @domain_name: The XML namespace of the plug-in's help pages.
  * @domain_file: The root URI of the plug-in's help pages.

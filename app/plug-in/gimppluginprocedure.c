@@ -515,17 +515,22 @@ gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
 
 GimpProcedure *
 gimp_plug_in_procedure_new (GimpPDBProcType  proc_type,
-                            GFile           *file)
+                            GFile           *file,
+                            GFile           *root_folder)
 {
   GimpPlugInProcedure *proc;
 
-  g_return_val_if_fail (proc_type == GIMP_PDB_PROC_TYPE_PLUGIN ||
-                        proc_type == GIMP_PDB_PROC_TYPE_PERSISTENT, NULL);
+  g_return_val_if_fail ((proc_type == GIMP_PDB_PROC_TYPE_INTERNAL &&
+                         root_folder == NULL) ||
+                        ((proc_type == GIMP_PDB_PROC_TYPE_PLUGIN ||
+                          proc_type == GIMP_PDB_PROC_TYPE_PERSISTENT) &&
+                         G_IS_FILE (root_folder)), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
 
   proc = g_object_new (GIMP_TYPE_PLUG_IN_PROCEDURE, NULL);
 
-  proc->file = g_object_ref (file);
+  proc->file        = g_object_ref (file);
+  proc->root_folder = root_folder ? g_object_ref (root_folder) : NULL;
 
   GIMP_PROCEDURE (proc)->proc_type = proc_type;
 
@@ -555,6 +560,14 @@ gimp_plug_in_procedure_get_file (GimpPlugInProcedure *proc)
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
   return GIMP_PLUG_IN_PROCEDURE_GET_CLASS (proc)->get_file (proc);
+}
+
+GFile *
+gimp_plug_in_procedure_get_root_folder (GimpPlugInProcedure *proc)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
+
+  return proc->root_folder;
 }
 
 void

@@ -32,6 +32,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpextension.h"
 #include "core/gimp-utils.h"
 
 #include "pdb/gimppdb.h"
@@ -70,6 +71,7 @@ static void    gimp_plug_in_manager_run_extensions    (GimpPlugInManager    *man
                                                        GimpInitStatusFunc    status_callback);
 static void    gimp_plug_in_manager_add_from_file     (GimpPlugInManager    *manager,
                                                        GFile                *file,
+                                                       GFile                *root_folder,
                                                        guint64               mtime);
 static void    gimp_plug_in_manager_add_from_rc       (GimpPlugInManager    *manager,
                                                        GimpPlugInDef        *plug_in_def);
@@ -183,8 +185,9 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
                              GimpInitStatusFunc  status_callback)
 {
   const gchar *path_str;
-  GList       *path;
-  GList       *list;
+  GList       *paths;
+  GList       *extensions;
+  GList       *iter;
 
 #ifdef G_OS_WIN32
   const gchar *pathext = g_getenv ("PATHEXT");
@@ -212,22 +215,36 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
 
   status_callback (_("Loading extension plug-ins"), "", 0.0);
   g_object_get (manager->gimp->extension_manager,
-                "plug-in-paths", &path,
+                "plug-in-extensions", &extensions,
                 NULL);
-  for (list = path; list; list = g_list_next (list))
+  for (iter = extensions; iter; iter = g_list_next (iter))
     {
-      if (gimp_file_is_executable (list->data))
-        {
-          guint64 mtime;
-          GFileInfo *info;
+      GimpExtension *extension = iter->data;
+      GFile         *root_folder;
+      GList         *iter2;
 
-          info = g_file_query_info (list->data, G_FILE_ATTRIBUTE_TIME_MODIFIED,
-                                    G_FILE_QUERY_INFO_NONE, NULL, NULL);
-          mtime = g_file_info_get_attribute_uint64 (info,
-                                                    G_FILE_ATTRIBUTE_TIME_MODIFIED);
-          gimp_plug_in_manager_add_from_file (manager, list->data, mtime);
-          g_object_unref (info);
+      root_folder = g_file_new_for_path (gimp_extension_get_path (extension));
+      paths       = gimp_extension_get_plug_in_paths (extension);
+
+      for (iter2 = paths; iter2; iter2 = iter2->next)
+        {
+          GFile *file = iter2->data;
+
+          if (gimp_file_is_executable (file))
+            {
+              guint64 mtime;
+              GFileInfo *info;
+
+              info = g_file_query_info (file, G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                                        G_FILE_QUERY_INFO_NONE, NULL, NULL);
+              mtime = g_file_info_get_attribute_uint64 (info,
+                                                        G_FILE_ATTRIBUTE_TIME_MODIFIED);
+              gimp_plug_in_manager_add_from_file (manager, file, root_folder, mtime);
+              g_object_unref (info);
+            }
         }
+
+      g_object_unref (root_folder);
     }
 
   status_callback (_("Searching plug-ins"), "", 0.0);
@@ -239,14 +256,14 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
   if (! path_str)
     path_str = manager->gimp->config->plug_in_path;
 
-  path = gimp_config_path_expand_to_files (path_str, NULL);
+  paths = gimp_config_path_expand_to_files (path_str, NULL);
 
-  for (list = path; list; list = g_list_next (list))
+  for (iter = paths; iter; iter = g_list_next (iter))
     {
-      gimp_plug_in_manager_search_directory (manager, list->data);
+      gimp_plug_in_manager_search_directory (manager, iter->data);
     }
 
-  g_list_free_full (path, (GDestroyNotify) g_object_unref);
+  g_list_free_full (paths, (GDestroyNotify) g_object_unref);
 }
 
 static void
@@ -326,7 +343,7 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
                           mtime = g_file_info_get_attribute_uint64 (info2,
                                                                     G_FILE_ATTRIBUTE_TIME_MODIFIED);
 
-                          gimp_plug_in_manager_add_from_file (manager, child2, mtime);
+                          gimp_plug_in_manager_add_from_file (manager, child2, child, mtime);
 
                           g_free (file_name);
                           g_object_unref (child2);
@@ -351,7 +368,7 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
                   mtime = g_file_info_get_attribute_uint64 (info,
                                                             G_FILE_ATTRIBUTE_TIME_MODIFIED);
 
-                  gimp_plug_in_manager_add_from_file (manager, child, mtime);
+                  gimp_plug_in_manager_add_from_file (manager, child, directory, mtime);
                 }
               else
                 {
@@ -650,6 +667,7 @@ gimp_plug_in_manager_ignore_plugin_basename (const gchar *plugin_basename)
 static void
 gimp_plug_in_manager_add_from_file (GimpPlugInManager *manager,
                                     GFile             *file,
+                                    GFile             *root_folder,
                                     guint64            mtime)
 {
   GimpPlugInDef *plug_in_def;
@@ -700,7 +718,7 @@ gimp_plug_in_manager_add_from_file (GimpPlugInManager *manager,
 
   g_free (basename);
 
-  plug_in_def = gimp_plug_in_def_new (file);
+  plug_in_def = gimp_plug_in_def_new (file, root_folder);
 
   gimp_plug_in_def_set_mtime (plug_in_def, mtime);
   gimp_plug_in_def_set_needs_query (plug_in_def, TRUE);

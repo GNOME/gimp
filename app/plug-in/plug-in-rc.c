@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 15
+#define PLUG_IN_RC_FILE_VERSION 16
 
 
 /*
@@ -54,7 +54,7 @@ static GTokenType plug_in_def_deserialize        (Gimp                 *gimp,
                                                   GSList              **plug_in_defs);
 static GTokenType plug_in_procedure_deserialize  (GScanner             *scanner,
                                                   Gimp                 *gimp,
-                                                  GFile                *file,
+                                                  GimpPlugInDef        *plug_in_def,
                                                   GimpPlugInProcedure **proc);
 static GTokenType plug_in_menu_path_deserialize  (GScanner             *scanner,
                                                   GimpPlugInProcedure  *proc);
@@ -277,6 +277,7 @@ plug_in_def_deserialize (Gimp      *gimp,
   GimpPlugInProcedure *proc = NULL;
   gchar               *path;
   GFile               *file;
+  GFile               *root_folder;
   gint64               mtime;
   GTokenType           token;
   GError              *error = NULL;
@@ -302,8 +303,30 @@ plug_in_def_deserialize (Gimp      *gimp,
       return G_TOKEN_ERROR;
     }
 
-  plug_in_def = gimp_plug_in_def_new (file);
+  if (! gimp_scanner_parse_string (scanner, &path))
+    return G_TOKEN_STRING;
+
+  if (! (path && *path))
+    {
+      g_scanner_error (scanner, "plug-in root folder is empty");
+      return G_TOKEN_ERROR;
+    }
+
+  root_folder = gimp_file_new_for_config_path (path, &error);
+  g_free (path);
+
+  if (! root_folder)
+    {
+      g_scanner_error (scanner,
+                       "unable to parse plug-in root folder: %s",
+                       error->message);
+      g_clear_error (&error);
+      return G_TOKEN_ERROR;
+    }
+
+  plug_in_def = gimp_plug_in_def_new (file, root_folder);
   g_object_unref (file);
+  g_object_unref (root_folder);
 
   if (! gimp_scanner_parse_int64 (scanner, &mtime))
     {
@@ -330,7 +353,7 @@ plug_in_def_deserialize (Gimp      *gimp,
             {
             case PROC_DEF:
               token = plug_in_procedure_deserialize (scanner, gimp,
-                                                     plug_in_def->file,
+                                                     plug_in_def,
                                                      &proc);
 
               if (token == G_TOKEN_LEFT_PAREN)
@@ -381,7 +404,7 @@ plug_in_def_deserialize (Gimp      *gimp,
 static GTokenType
 plug_in_procedure_deserialize (GScanner             *scanner,
                                Gimp                 *gimp,
-                               GFile                *file,
+                               GimpPlugInDef        *plug_in_def,
                                GimpPlugInProcedure **proc)
 {
   GimpProcedure   *procedure;
@@ -418,7 +441,7 @@ plug_in_procedure_deserialize (GScanner             *scanner,
       return G_TOKEN_ERROR;
     }
 
-  procedure = gimp_plug_in_procedure_new (proc_type, file);
+  procedure = gimp_plug_in_procedure_new (proc_type, plug_in_def->file, plug_in_def->root_folder);
 
   *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
 
@@ -1408,17 +1431,24 @@ plug_in_rc_write (GSList  *plug_in_defs,
         {
           GSList *list2;
           gchar  *path;
+          gchar  *root_folder;
 
           path = gimp_file_get_config_path (plug_in_def->file, NULL);
           if (! path)
             continue;
 
+          root_folder = gimp_file_get_config_path (plug_in_def->root_folder, NULL);
+          if (! root_folder)
+            continue;
+
           gimp_config_writer_open (writer, "plug-in-def");
           gimp_config_writer_string (writer, path);
+          gimp_config_writer_string (writer, root_folder);
           gimp_config_writer_printf (writer, "%"G_GINT64_FORMAT,
                                      plug_in_def->mtime);
 
           g_free (path);
+          g_free (root_folder);
 
           for (list2 = plug_in_def->procedures; list2; list2 = list2->next)
             {

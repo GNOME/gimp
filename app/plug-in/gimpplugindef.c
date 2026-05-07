@@ -92,7 +92,8 @@ gimp_plug_in_def_get_memsize (GimpObject *object,
 /*  public functions  */
 
 GimpPlugInDef *
-gimp_plug_in_def_new (GFile *file)
+gimp_plug_in_def_new (GFile *file,
+                      GFile *root_folder)
 {
   GimpPlugInDef *plug_in_def;
 
@@ -100,7 +101,8 @@ gimp_plug_in_def_new (GFile *file)
 
   plug_in_def = g_object_new (GIMP_TYPE_PLUG_IN_DEF, NULL);
 
-  plug_in_def->file = g_object_ref (file);
+  plug_in_def->file        = g_object_ref (file);
+  plug_in_def->root_folder = g_object_ref (root_folder);
 
   return plug_in_def;
 }

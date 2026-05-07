@@ -41,6 +41,7 @@ struct _GimpPlugIn
 
   GimpPlugInManager   *manager;
   GFile               *file;            /*  Plug-in's full path name          */
+  GFile               *root_folder;     /*  Plug-in's root full path          */
 
   GimpDisplay         *display;         /*  The display this plug-in was called from. */
   GimpPlugInCallMode   call_mode;       /*  QUERY, INIT or RUN                */
@@ -82,6 +83,7 @@ GimpPlugIn  * gimp_plug_in_new               (GimpPlugInManager      *manager,
                                               GimpProgress           *progress,
                                               GimpPlugInProcedure    *procedure,
                                               GFile                  *file,
+                                              GFile                  *root_folder,
                                               GimpDisplay            *display);
 
 gboolean      gimp_plug_in_open              (GimpPlugIn             *plug_in,

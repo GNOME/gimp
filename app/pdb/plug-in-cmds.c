@@ -85,6 +85,34 @@ plug_ins_query_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_get_root_folder_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GFile *root_folder = NULL;
+
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in)
+    root_folder = g_object_ref (plug_in->root_folder);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_object (gimp_value_array_index (return_vals, 1), root_folder);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 plug_in_help_register_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
@@ -260,6 +288,29 @@ register_plug_in_procs (GimpPDB *pdb)
                                                                 "install times",
                                                                 "Time that the plug-in was installed",
                                                                 GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-get-root-folder
+   */
+  procedure = gimp_procedure_new (plug_in_get_root_folder_invoker, TRUE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-plug-in-get-root-folder");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the root directory of the running plug-in.",
+                                  "This procedure returns the root directory of the plug-in. Third-party plug-in developers are expected to only reference data contained in this folder hierarchy.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2026");
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_object ("root-folder",
+                                                        "root folder",
+                                                        "The root folder of the plug-in.",
+                                                        G_TYPE_FILE,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

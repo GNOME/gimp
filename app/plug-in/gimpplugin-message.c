@@ -787,7 +787,8 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
     case GIMP_PDB_PROC_TYPE_PLUGIN:
     case GIMP_PDB_PROC_TYPE_PERSISTENT:
       procedure = gimp_plug_in_procedure_new (proc_install->type,
-                                              plug_in->file);
+                                              plug_in->file,
+                                              plug_in->root_folder);
       break;
 
     case GIMP_PDB_PROC_TYPE_TEMPORARY:

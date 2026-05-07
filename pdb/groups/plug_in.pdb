@@ -55,6 +55,38 @@ CODE
     );
 }
 
+sub plug_in_get_root_folder {
+    $blurb = "Returns the root directory of the running plug-in.";
+
+    $help = <<HELP;
+This procedure returns the root directory of the plug-in. Third-party
+plug-in developers are expected to only reference data contained in
+this folder hierarchy.
+HELP
+
+    &jehan_pdb_misc('2026', '3.4');
+
+    $lib_private = 1;
+
+    @outargs = (
+	{ name => 'root_folder', type => 'file',
+	  desc => "The root folder of the plug-in." }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in)
+    root_folder = g_object_ref (plug_in->root_folder);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_help_register {
     $blurb = "Register a help path for a plug-in.";
 
@@ -222,12 +254,13 @@ CODE
               "gimppdb-utils.h");
 
 @procs = qw(plug_ins_query
+            plug_in_get_root_folder
             plug_in_help_register
             plug_in_menu_branch_register
             plug_in_set_pdb_error_handler
             plug_in_get_pdb_error_handler);
 
-%exports = (app => [@procs], lib => [@procs[1,2,3,4]]);
+%exports = (app => [@procs], lib => [@procs[1,2,3,4,5]]);
 
 $desc = 'Plug-in';
 

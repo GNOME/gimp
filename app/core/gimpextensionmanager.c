@@ -57,7 +57,7 @@ enum
   PROP_TOOL_PRESET_PATHS,
   PROP_SPLASH_PATHS,
   PROP_THEME_PATHS,
-  PROP_PLUG_IN_PATHS,
+  PROP_PLUG_IN_EXTENSIONS,
 };
 
 enum
@@ -91,7 +91,7 @@ struct _GimpExtensionManagerPrivate
   GList      *tool_preset_paths;
   GList      *splash_paths;
   GList      *theme_paths;
-  GList      *plug_in_paths;
+  GList      *plug_in_extensions;
 };
 
 static void     gimp_extension_manager_config_iface_init   (GimpConfigInterface  *iface);
@@ -188,8 +188,8 @@ gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
                                    g_param_spec_pointer ("theme-paths",
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_PLUG_IN_PATHS,
-                                   g_param_spec_pointer ("plug-in-paths",
+  g_object_class_install_property (object_class, PROP_PLUG_IN_EXTENSIONS,
+                                   g_param_spec_pointer ("plug-in-extensions",
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE));
 
@@ -434,8 +434,8 @@ gimp_extension_manager_finalize (GObject *object)
   manager->p->palette_paths = NULL;
   g_list_free_full (manager->p->tool_preset_paths, g_object_unref);
   manager->p->tool_preset_paths = NULL;
-  g_list_free_full (manager->p->plug_in_paths, g_object_unref);
-  manager->p->plug_in_paths = NULL;
+  g_list_free_full (manager->p->plug_in_extensions, g_object_unref);
+  manager->p->plug_in_extensions = NULL;
   g_list_free_full (manager->p->splash_paths, g_object_unref);
   manager->p->splash_paths = NULL;
   g_list_free_full (manager->p->theme_paths, g_object_unref);
@@ -493,9 +493,9 @@ gimp_extension_manager_set_property (GObject      *object,
       g_list_free_full (manager->p->theme_paths, g_object_unref);
       manager->p->theme_paths = g_value_get_pointer (value);
       break;
-    case PROP_PLUG_IN_PATHS:
-      g_list_free_full (manager->p->plug_in_paths, g_object_unref);
-      manager->p->plug_in_paths = g_value_get_pointer (value);
+    case PROP_PLUG_IN_EXTENSIONS:
+      g_list_free_full (manager->p->plug_in_extensions, g_object_unref);
+      manager->p->plug_in_extensions = g_value_get_pointer (value);
       break;
 
     default:
@@ -544,8 +544,8 @@ gimp_extension_manager_get_property (GObject      *object,
     case PROP_THEME_PATHS:
       g_value_set_pointer (value, manager->p->theme_paths);
       break;
-    case PROP_PLUG_IN_PATHS:
-      g_value_set_pointer (value, manager->p->plug_in_paths);
+    case PROP_PLUG_IN_EXTENSIONS:
+      g_value_set_pointer (value, manager->p->plug_in_extensions);
       break;
 
     default:
@@ -934,7 +934,7 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
   GList         *tool_preset_paths   = NULL;
   GList         *splash_paths        = NULL;
   GList         *theme_paths         = NULL;
-  GList         *plug_in_paths       = NULL;
+  GList         *plug_in_extensions  = NULL;
 
   g_hash_table_iter_init (&iter, manager->p->running_extensions);
   while (g_hash_table_iter_next (&iter, &key, &value))
@@ -978,9 +978,8 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
                                     (GCopyFunc) g_object_ref, NULL);
       theme_paths = g_list_concat (theme_paths, new_paths);
 
-      new_paths = g_list_copy_deep (gimp_extension_get_plug_in_paths (extension),
-                                    (GCopyFunc) g_object_ref, NULL);
-      plug_in_paths = g_list_concat (plug_in_paths, new_paths);
+      if (gimp_extension_get_plug_in_paths (extension))
+        plug_in_extensions = g_list_prepend (plug_in_extensions, g_object_ref (extension));
     }
 
   g_object_set (manager,
@@ -991,7 +990,7 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
                 "gradient-paths",      gradient_paths,
                 "palette-paths",       palette_paths,
                 "tool-preset-paths",   tool_preset_paths,
-                "plug-in-paths",       plug_in_paths,
+                "plug-in-extensions",  plug_in_extensions,
                 "splash-paths",        splash_paths,
                 "theme-paths",         theme_paths,
                 NULL);
