@@ -422,7 +422,7 @@ gimp_choice_get_documentation (GimpChoice   *choice,
  * @choice: a %GimpChoice.
  * @nick:   the nick to lookup.
  *
- * Returns: (transfer none): If @nick is deprecated.
+ * Returns: If @nick is deprecated.
  *
  * Since: 3.4
  **/
