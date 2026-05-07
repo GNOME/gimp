@@ -852,21 +852,23 @@ process_last_node (GeglOperation       *operation,
                    const GeglRectangle *roi,
                    gint                 level)
 {
-  gfloat *out     = out_p;
-  gfloat *layer   = layer_p;
-  gfloat *mask    = mask_p;
-  gfloat  opacity = GIMP_OPERATION_LAYER_MODE (operation)->opacity;
+  gfloat     *out        = out_p;
+  gfloat     *layer      = layer_p;
+  gfloat     *mask       = mask_p;
+  gfloat      opacity    = GIMP_OPERATION_LAYER_MODE (operation)->opacity;
+  const Babl *out_format = gegl_operation_get_format (operation, "output");
+  gint        out_n      = babl_format_get_n_components (out_format);
 
   while (samples--)
     {
-      memcpy (out, layer, 3 * sizeof (gfloat));
+      memcpy (out, layer, (out_n - 1) * sizeof (gfloat));
 
-      out[ALPHA] = layer[ALPHA] * opacity;
+      out[out_n] = layer[out_n] * opacity;
       if (mask)
-        out[ALPHA] *= *mask++;
+        out[out_n] *= *mask++;
 
-      layer += 4;
-      out   += 4;
+      layer += out_n;
+      out   += out_n;
     }
 
   return TRUE;

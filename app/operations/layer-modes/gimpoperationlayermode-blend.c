@@ -86,21 +86,25 @@ gimp_operation_layer_mode_blend_addition (GeglOperation *operation,
                                           gfloat        *comp,
                                           gint           samples)
 {
+  const Babl *format       = gegl_operation_get_format (operation, "input");
+  gint        n_components = babl_format_get_n_components (format);
+  gint        alpha        = n_components - 1;
+
   while (samples--)
     {
-      if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
+      if (in[alpha] != 0.0f && layer[alpha] != 0.0f)
         {
           gint c;
 
-          for (c = 0; c < 3; c++)
+          for (c = 0; c < alpha; c++)
             comp[c] = in[c] + layer[c];
         }
 
-      comp[ALPHA] = layer[ALPHA];
+      comp[alpha] = layer[alpha];
 
-      comp  += 4;
-      layer += 4;
-      in    += 4;
+      comp  += n_components;
+      layer += n_components;
+      in    += n_components;
     }
 }
 
@@ -211,21 +215,25 @@ gimp_operation_layer_mode_blend_dodge (GeglOperation *operation,
                                        gfloat        *comp,
                                        gint           samples)
 {
+  const Babl *format       = gegl_operation_get_format (operation, "input");
+  gint        n_components = babl_format_get_n_components (format);
+  gint        alpha        = n_components - 1;
+
   while (samples--)
     {
-      if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
+      if (in[alpha] != 0.0f && layer[alpha] != 0.0f)
         {
           gint c;
 
-          for (c = 0; c < 3; c++)
+          for (c = 0; c < alpha; c++)
             comp[c] = safe_div (in[c], 1.0f - layer[c]);
         }
 
-      comp[ALPHA] = layer[ALPHA];
+      comp[alpha] = layer[alpha];
 
-      comp  += 4;
-      layer += 4;
-      in    += 4;
+      comp  += n_components;
+      layer += n_components;
+      in    += n_components;
     }
 }
 
@@ -817,7 +825,7 @@ gimp_operation_layer_mode_blend_luma_darken_only (GeglOperation *operation,
 {
   const Babl *space  = gegl_operation_get_source_space (operation, "input");
   double red_luminance, green_luminance, blue_luminance;
-  babl_space_get_rgb_luminance (space, 
+  babl_space_get_rgb_luminance (space,
     &red_luminance, &green_luminance, &blue_luminance);
 
   while (samples--)
@@ -865,7 +873,7 @@ gimp_operation_layer_mode_blend_luma_lighten_only (GeglOperation *operation,
 {
   const Babl *space  = gegl_operation_get_source_space (operation, "input");
   double red_luminance, green_luminance, blue_luminance;
-  babl_space_get_rgb_luminance (space, 
+  babl_space_get_rgb_luminance (space,
     &red_luminance, &green_luminance, &blue_luminance);
 
   while (samples--)
@@ -1077,13 +1085,17 @@ gimp_operation_layer_mode_blend_softlight (GeglOperation *operation,
                                            gfloat        *comp,
                                            gint           samples)
 {
+  const Babl *format       = gegl_operation_get_format (operation, "input");
+  gint        n_components = babl_format_get_n_components (format);
+  gint        alpha        = n_components - 1;
+
   while (samples--)
     {
-      if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
+      if (in[alpha] != 0.0f && layer[alpha] != 0.0f)
         {
           gint c;
 
-          for (c = 0; c < 3; c++)
+          for (c = 0; c < alpha; c++)
             {
               gfloat multiply = in[c] * layer[c];
               gfloat screen   = 1.0f - (1.0f - in[c]) * (1.0f - layer[c]);
@@ -1092,11 +1104,11 @@ gimp_operation_layer_mode_blend_softlight (GeglOperation *operation,
               comp[c] = val;
             }
         }
-      comp[ALPHA] = layer[ALPHA];
+      comp[alpha] = layer[alpha];
 
-      comp  += 4;
-      layer += 4;
-      in    += 4;
+      comp  += n_components;
+      layer += n_components;
+      in    += n_components;
     }
 }
 
