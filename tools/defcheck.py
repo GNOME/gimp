@@ -103,7 +103,7 @@ for df in def_files:
          sortok = False
    sorterrors = sorterrors.split(sep='\n')
 
-   status, nm = subprocess.getstatusoutput (command + libname)
+   status, nm = subprocess.getstatusoutput (command + f'"{libname}"')
    if status != 0:
       print("trouble reading {} - has it been compiled?".format(libname))
       print(nm)
