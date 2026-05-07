@@ -71,7 +71,14 @@ if platform_windows and host_cpu_family == 'x86' and get_option('twain-unmaintai
 endif
 
 foreach plugin : complex_plugins_list
+  plugin_sourcecode = []
   subdir(plugin.get('name'))
+  if plugin.get('name').startswith('file-') and plugin_sourcecode.length() == 0
+    # For all file support plug-ins, we rely on the presence of
+    # the variable plugin_sourcecode being present in the subdir
+    # meson file. Please check other file-* plug-ins as example.
+    error('@0@ misses plugin_sourcecode variable'.format(meson.current_source_dir() / plugin.get('name') / 'meson.build'))
+  endif
   foreach sourcecode : plugin_sourcecode
     if plugin.get('name').startswith('file-')
       #.ico files are handled in a special way by installer and msix scripts
