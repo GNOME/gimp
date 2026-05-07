@@ -1776,18 +1776,9 @@ gimp_image_get_graph (GimpProjectable *projectable)
   GeglNode          *channels_node;
   GeglNode          *output;
   GimpComponentMask  mask;
-  const Babl        *image_format;
-
-  image_format = gimp_image_get_layer_format (image, TRUE);
 
   if (private->graph)
-    {
-      gegl_node_set (private->visible_mask,
-                     "image-format", image_format,
-                     NULL);
-
-      return private->graph;
-    }
+    return private->graph;
 
   private->graph = gegl_node_new ();
 
@@ -1806,7 +1797,6 @@ gimp_image_get_graph (GimpProjectable *projectable)
                          "operation",    "gimp:mask-components",
                          "mask",         mask,
                          "alpha",        1.0,
-                         "image-format", image_format,
                          NULL);
 
   gegl_node_link (layers_node, private->visible_mask);
@@ -3967,9 +3957,14 @@ gimp_image_get_component_format (GimpImage       *image,
                                          BLUE);
 
     case GIMP_CHANNEL_ALPHA:
-      return gimp_babl_component_format (GIMP_RGB,
-                                         gimp_image_get_precision (image),
-                                         ALPHA);
+      if (gimp_image_get_base_type (image) == GIMP_CMYK)
+        return gimp_babl_component_format (GIMP_CMYK,
+                                           gimp_image_get_precision (image),
+                                           ALPHA_C);
+      else
+        return gimp_babl_component_format (GIMP_RGB,
+                                           gimp_image_get_precision (image),
+                                           ALPHA);
 
     case GIMP_CHANNEL_CYAN:
       return gimp_babl_component_format (GIMP_CMYK,
