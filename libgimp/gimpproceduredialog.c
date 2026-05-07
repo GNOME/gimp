@@ -305,6 +305,35 @@ gimp_procedure_dialog_constructed (GObject *object)
                 NULL);
   g_free (role);
 
+  /* Set dialogue icon if developer has set a custom one */
+  switch (gimp_procedure_get_icon_type (procedure))
+    {
+      case GIMP_ICON_TYPE_PIXBUF:
+        {
+          gtk_window_set_icon (GTK_WINDOW (dialog),
+                               gimp_procedure_get_icon_pixbuf (procedure));
+        }
+        break;
+
+      case GIMP_ICON_TYPE_IMAGE_FILE:
+        {
+          GFile *file = gimp_procedure_get_icon_file (procedure);
+
+          gtk_window_set_icon_from_file (GTK_WINDOW (dialog),
+                                         g_file_peek_path (file),
+                                         NULL);
+        }
+        break;
+
+      case GIMP_ICON_TYPE_ICON_NAME:
+        {
+          if (gimp_procedure_get_icon_name (procedure))
+            gtk_window_set_icon_name (GTK_WINDOW (dialog),
+                                      gimp_procedure_get_icon_name (procedure));
+        }
+        break;
+    }
+
   /* Normally, we would call the parents constructed as soon as possible.
    * However, gimp_dialog_constructed needs the help-id to already be set, or
    * else the help button in legacy plug-ins doesn't show up. Since we only
