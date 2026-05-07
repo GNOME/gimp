@@ -2044,13 +2044,16 @@ if meson.can_run_host_binaries() and have_gobject_introspection
   # Makes build errors output way less polluted, making easier to debug
   gimp_run_env.set('GIMP3_LOCALEDIR', meson.global_build_root() / 'po-plug-ins')
 
+  #babl/gegl typelibs
   gimp_run_env.prepend('GI_TYPELIB_PATH', prefix / 'lib/girepository-1.0/')
+  #gimp typelibs
   if platform_osx
     gimp_run_env.prepend('GI_TYPELIB_PATH', meson.global_build_root() / 'libgimp/tmp')
   else
     gimp_run_env.prepend('GI_TYPELIB_PATH', meson.global_build_root() / 'libgimp')
   endif
 
+  #gimp libs
   gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimp')
   gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpbase')
   gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpcolor')
@@ -2059,7 +2062,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
   gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpmodule')
   gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpthumb')
   gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpwidgets')
-
   if platform_windows
     # On Windows, DLL are found through PATH rather than LD_LIBRARY_PATH.
     gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimp')
@@ -2071,10 +2073,9 @@ if meson.can_run_host_binaries() and have_gobject_introspection
     gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpthumb')
     gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpwidgets')
   elif platform_osx
+    #On macOS, DYLIB are found through RPATH (DYLD_LIBRARY_PATH is deprecated)
     gimp_exe_depends += [patched_libgimp_gir, patched_libgimpui_gir]
-
     gimp_run_env.set('GIMP_GI_DIR', gi.get_variable('libdir'))
-
     gimp_run_env.set('GIMP_TEMP_UPDATE_RPATH', gimp_real_exe.full_path())
     gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimp.full_path())
     gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpbase.full_path())
@@ -2088,6 +2089,8 @@ if meson.can_run_host_binaries() and have_gobject_introspection
       gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', plugin_exe)
     endforeach
   endif
+  #babl/gegl libs
+  gimp_run_env.prepend('LD_LIBRARY_PATH', prefix / get_option('libdir'))
 else
   # Cross-builds require an existing native GIMP installed, unless we
   # can run target binaries.
