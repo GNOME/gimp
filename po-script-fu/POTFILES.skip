@@ -17,6 +17,7 @@ menus
 modules
 plug-ins/common
 plug-ins/file-bmp
+plug-ins/file-cin
 plug-ins/file-compressor
 plug-ins/file-dds
 plug-ins/file-exr
