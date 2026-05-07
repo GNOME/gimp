@@ -59,6 +59,7 @@ enum
   PROP_0,
   PROP_HELP_FUNC,
   PROP_HELP_ID,
+  PROP_HELP_FILE,
   PROP_PARENT
 };
 
@@ -67,6 +68,7 @@ typedef struct _GimpDialogPrivate
 {
   GimpHelpFunc  help_func;
   gchar        *help_id;
+  GFile        *help_file;
   GtkWidget    *help_button;
 
   GBytes       *window_handle;
@@ -95,6 +97,9 @@ static void       gimp_dialog_close               (GtkDialog    *dialog);
 
 static void       gimp_dialog_response            (GtkDialog    *dialog,
                                                    gint          response_id);
+
+static void       gimp_dialog_load_uri_callback   (const gchar  *help_id,
+                                                   gpointer      help_data);
 
 #if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
 static void       gimp_dialog_set_title_bar_theme (GtkWidget    *dialog);
@@ -128,6 +133,14 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   /**
    * GimpDialog:help-func:
    *
+   * When one hits F1 key while the dialog is focused, or clicks the
+   * "Help" button, this function will be called, with
+   * [property@GimpUi.Dialog:help-id] as first argument and the
+   * #GimpDialog as second argument.
+   *
+   * This is a competing help system to [property@GimpUi.Dialog:help-file].
+   * Only the latest property set will be enabled.
+   *
    * Since: 2.2
    **/
   g_object_class_install_property (object_class, PROP_HELP_FUNC,
@@ -140,6 +153,14 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   /**
    * GimpDialog:help-id:
    *
+   * When one hits F1 key while the dialog is focused, or clicks the
+   * "Help" button, [property@GimpUi.Dialog:help-func] will be called,
+   * with this ID as first argument and the #GimpDialog as second
+   * argument.
+   *
+   * This is a competing help system to [property@GimpUi.Dialog:help-file].
+   * Only the latest property set will be enabled.
+   *
    * Since: 2.2
    **/
   g_object_class_install_property (object_class, PROP_HELP_ID,
@@ -147,6 +168,31 @@ gimp_dialog_class_init (GimpDialogClass *klass)
                                                         "Help ID",
                                                         "The help ID to pass to help-func",
                                                         NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
+  /**
+   * GimpDialog:help-file:
+   *
+   * When one hits F1 key while the dialog is focused, or clicks the
+   * "Help" button, the URI associated to this file will be loaded,
+   * using your default application registered for this type of URI.
+   *
+   * This is a competing help system to [property@GimpUi.Dialog:help-id]
+   * and [property@GimpUi.Dialog:help-func].
+   * Only the latest property set will be enabled.
+   *
+   * Use this when you just have a simple URI to load for documenting
+   * your dialog, rather than a more complicated system based on a help
+   * function and ID.
+   *
+   * Since: 3.4
+   **/
+  g_object_class_install_property (object_class, PROP_HELP_FILE,
+                                   g_param_spec_object ("help-file",
+                                                        "Help File",
+                                                        "The help to load when F1 or help button are hit",
+                                                        G_TYPE_FILE,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -185,17 +231,22 @@ gimp_dialog_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  if (private->help_func)
+  if (private->help_file)
+    gimp_help_connect (GTK_WIDGET (object), NULL,
+                       (GimpHelpFunc) gimp_dialog_load_uri_callback,
+                       NULL, g_file_get_uri (private->help_file),
+                       g_free);
+  else if (private->help_func)
     gimp_help_connect (GTK_WIDGET (object), NULL,
                        private->help_func, private->help_id,
                        object, NULL);
 
-  if (show_help_button && private->help_func && private->help_id)
-    {
-      private->help_button = gtk_dialog_add_button (GTK_DIALOG (object),
-                                                    _("_Help"),
-                                                    GTK_RESPONSE_HELP);
-    }
+  if (show_help_button &&
+      ((private->help_func && private->help_id) ||
+       private->help_file))
+    private->help_button = gtk_dialog_add_button (GTK_DIALOG (object),
+                                                  _("_Help"),
+                                                  GTK_RESPONSE_HELP);
 
   gimp_widget_set_native_handle (GTK_WIDGET (object), &private->window_handle);
 }
@@ -229,6 +280,7 @@ gimp_dialog_finalize (GObject *object)
   GimpDialogPrivate *private = GET_PRIVATE (object);
 
   g_clear_pointer (&private->help_id, g_free);
+  g_clear_object  (&private->help_file);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -251,6 +303,18 @@ gimp_dialog_set_property (GObject      *object,
       g_free (private->help_id);
       private->help_id = g_value_dup_string (value);
       gimp_help_set_help_data (GTK_WIDGET (object), NULL, private->help_id);
+      if (private->help_id != NULL)
+        g_clear_object (&private->help_file);
+      break;
+
+    case PROP_HELP_FILE:
+      g_clear_object (&private->help_file);
+      private->help_file = g_value_dup_object (value);
+      if (private->help_file != NULL)
+        {
+          gimp_help_set_help_data (GTK_WIDGET (object), NULL, NULL);
+          private->help_func = NULL;
+        }
       break;
 
     case PROP_PARENT:
@@ -308,6 +372,10 @@ gimp_dialog_get_property (GObject    *object,
 
     case PROP_HELP_ID:
       g_value_set_string (value, private->help_id);
+      break;
+
+    case PROP_HELP_FILE:
+      g_value_set_object (value, private->help_file);
       break;
 
     default:
@@ -374,9 +442,27 @@ gimp_dialog_response (GtkDialog *dialog,
     {
       g_signal_stop_emission_by_name (dialog, "response");
 
-      if (private->help_func)
-        private->help_func (private->help_id, dialog);
+      if (private->help_file)
+        {
+          gchar *uri = g_file_get_uri (private->help_file);
+
+          g_app_info_launch_default_for_uri (uri, NULL, NULL);
+          g_free (uri);
+        }
+      else if (private->help_func)
+        {
+          private->help_func (private->help_id, dialog);
+        }
     }
+}
+
+static void
+gimp_dialog_load_uri_callback (const gchar *help_id,
+                               gpointer     help_data)
+{
+  const gchar *help_uri = (const gchar *) help_data;
+
+  g_app_info_launch_default_for_uri (help_uri, NULL, NULL);
 }
 
 
