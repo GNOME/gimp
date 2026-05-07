@@ -1,11 +1,30 @@
 #.env files read by gimp_environ_table_load_env_file in gimpenvirontable.c
 
 
-install_data(
-  'default.env',
-  install_dir: gimpplugindir / 'environ',
-)
+#Minimum runtime paths for non relocatable (aka Unix-style) builds
+#This is needed when custom -Dprefix is set; and no-op if not set
+#See: https://developer.gimp.org/core/setup/build/#preparing-for-building
+if not relocatable_bundle and not meson.is_cross_build()
+  default_config = configuration_data()
+  if platform_windows or platform_osx
+    gimp_debug_tool_dir = prefix / get_option('bindir')
+  else
+    gimp_debug_tool_dir = prefix / get_option('libexecdir')
+  endif
+  default_config.set('SCRIPTFU_DEBUGTOOL_PATH', ': PATH=' + prefix / get_option('bindir') + ':' + gimp_debug_tool_dir)
+  if platform_linux
+    default_config.set('LDLIBRARY_PATH', ': LD_LIBRARY_PATH=' + prefix / get_option('libdir') + ':' + gimp_debug_tool_dir)
+  endif
+  default_config.set('INTROSPECT_PATH', ': GI_TYPELIB_PATH=' + prefix / get_option('libdir') / 'girepository-1.0')
 
+  configure_file(
+    input : 'default.env.in',
+    output: 'default.env',
+    configuration: default_config,
+    install: true,
+    install_dir: gimpplugindir / 'environ',
+  )
+endif
 
 if relocatable_bundle or platform_windows and not meson.is_cross_build()
   pygimp_config = configuration_data()
@@ -14,7 +33,7 @@ if relocatable_bundle or platform_windows and not meson.is_cross_build()
   else
     pygimp_config.set('DONTWRITEBYTECODE_SETTING', '')
   endif
-  if platform_windows 
+  if platform_windows
     pygimp_config.set('HIGHDPI_SETTING', '__COMPAT_LAYER=HIGHDPIAWARE')
   else
     pygimp_config.set('HIGHDPI_SETTING', '')
