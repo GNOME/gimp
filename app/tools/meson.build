@@ -109,6 +109,8 @@ libapptools_sources = [
   'gimpselectionoptions.c',
   'gimpselectiontool.c',
   'gimpsheartool.c',
+  'gimpshapeoptions.c',
+  'gimpshapetool.c',
   'gimpsmudgetool.c',
   'gimpsourcetool.c',
   'gimptextoptions.c',
