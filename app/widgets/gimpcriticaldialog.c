@@ -185,6 +185,8 @@ gimp_critical_dialog_constructed (GObject *object)
   gchar              *version;
   gchar              *text;
 
+  gtk_window_set_icon_name (GTK_WINDOW (dialog), "dialog-error");
+
   /* Bug details for developers. */
   scrolled = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
@@ -314,10 +316,8 @@ gimp_critical_dialog_realize (GtkWidget          *widget,
     {
       if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
         use_dark_mode = TRUE;
-
       gdk_rgba_free (color);
     }
-
 #ifdef G_OS_WIN32
   window = gtk_widget_get_window (GTK_WIDGET (widget));
   if (window)
