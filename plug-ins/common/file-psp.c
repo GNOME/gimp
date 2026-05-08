@@ -3249,7 +3249,7 @@ create_adjustment (GimpLayer  *layer,
                   if (try_fseek (f, remainder, SEEK_CUR, error) < 0)
                     {
                       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                   _("Error reading adjustment layer  "
+                                   _("Error reading adjustment layer "
                                      "extension information"));
                       return FALSE;
                     }
