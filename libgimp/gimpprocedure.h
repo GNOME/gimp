@@ -165,6 +165,9 @@ void             gimp_procedure_set_documentation  (GimpProcedure        *proced
 const gchar    * gimp_procedure_get_blurb          (GimpProcedure        *procedure);
 const gchar    * gimp_procedure_get_help           (GimpProcedure        *procedure);
 const gchar    * gimp_procedure_get_help_id        (GimpProcedure        *procedure);
+void             gimp_procedure_set_help_uri       (GimpProcedure        *procedure,
+                                                    const gchar          *uri_reference);
+GFile          * gimp_procedure_get_help_file      (GimpProcedure        *procedure);
 
 void             gimp_procedure_set_attribution    (GimpProcedure        *procedure,
                                                     const gchar          *authors,

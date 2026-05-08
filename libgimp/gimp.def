@@ -990,6 +990,7 @@ EXPORTS
 	gimp_procedure_get_copyright
 	gimp_procedure_get_date
 	gimp_procedure_get_help
+	gimp_procedure_get_help_file
 	gimp_procedure_get_help_id
 	gimp_procedure_get_icon_file
 	gimp_procedure_get_icon_name
@@ -1014,6 +1015,7 @@ EXPORTS
 	gimp_procedure_set_argument_sync
 	gimp_procedure_set_attribution
 	gimp_procedure_set_documentation
+	gimp_procedure_set_help_uri
 	gimp_procedure_set_icon_file
 	gimp_procedure_set_icon_name
 	gimp_procedure_set_icon_pixbuf

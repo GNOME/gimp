@@ -103,6 +103,8 @@ typedef struct _GimpProcedurePrivate
   GDestroyNotify    run_data_destroy;
 
   gboolean          installed;
+
+  GFile            *help_file;
 } GimpProcedurePrivate;
 
 
@@ -142,6 +144,8 @@ static gboolean              gimp_procedure_validate_args      (GimpProcedure   
 static void                  gimp_procedure_set_icon           (GimpProcedure        *procedure,
                                                                 GimpIconType          icon_type,
                                                                 gconstpointer         icon_data);
+static gboolean              gimp_procedure_file_is_ancestor   (GFile                *ancestor,
+                                                                GFile                *descendant);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedure, gimp_procedure, G_TYPE_OBJECT)
@@ -224,6 +228,7 @@ gimp_procedure_finalize (GObject *object)
     priv->run_data_destroy (priv->run_data);
 
   g_clear_object  (&priv->plug_in);
+  g_clear_object  (&priv->help_file);
 
   g_clear_pointer (&priv->name,        g_free);
   g_clear_pointer (&priv->image_types, g_free);
@@ -1307,6 +1312,140 @@ gimp_procedure_get_help_id (GimpProcedure *procedure)
   priv = gimp_procedure_get_instance_private (procedure);
 
   return priv->help_id;
+}
+
+/**
+ * gimp_procedure_set_help_uri:
+ * @procedure:     A #GimpProcedure.
+ * @uri_reference: The @procedure's help URI Reference.
+ *
+ * Sets a URI Reference (in the meaning of [RFC 3986, section
+ * 4.1](https://datatracker.ietf.org/doc/html/rfc3986#section-4)) where
+ * documentation for this procedure will be available.
+ *
+ * This function only accepts two types of URI references: full URI, but
+ * only with the scheme `https`, or a relative-path reference such as
+ * "docs/index.html" or "docs/manual.pdf". Note how this doesn't have a
+ * scheme part and allows to ship documentation with a plug-in.
+ * These relative paths are made relatively to the plug-in or
+ * extension's root folder.
+ *
+ * GIMP will open @uri_reference using the default application
+ * registered for the file type. We recommend choosing the file type of
+ * your documentation conservatively, with types with default readers on
+ * every platform, such as `html` or `pdf` documentation.
+ *
+ * This method is both complementary and redundant to
+ * [method@Procedure.set_documentation], and in particular replace its
+ * @help_id argument. In common cases, set the @blurb (and optionally
+ * the @help) arguments on `gimp_procedure_set_documentation()` yet keep
+ * @help_id to %NULL. Then set your documentation with this method
+ * instead:
+ *
+ * ```C
+ * gimp_procedure_set_documentation (procedure,
+ *                                   _("What this plug-in does"),
+ *                                   NULL, NULL);
+ * gimp_procedure_set_help_uri (procedure,
+ *                              "https://example.org/my-plug-in-docs");
+ * ```
+ *
+ * Note: these functions might get merged in the v4 API.
+ *
+ * Since: 3.4
+ **/
+void
+gimp_procedure_set_help_uri (GimpProcedure *procedure,
+                             const gchar   *uri_reference)
+{
+  GimpProcedurePrivate *priv;
+  gchar                *scheme;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (uri_reference != NULL);
+
+  priv   = gimp_procedure_get_instance_private (procedure);
+  scheme = g_uri_parse_scheme (uri_reference);
+  if (scheme != NULL)
+    {
+      gchar *tmp;
+
+      tmp    = g_ascii_strdown (scheme, -1);
+      g_free (scheme);
+      scheme = tmp;
+    }
+
+  if (g_strcmp0 (scheme, "https") != 0 && scheme != NULL)
+    {
+      g_critical ("%s: URI Reference must be with scheme 'https' or a relative path: %s",
+                  G_STRFUNC, uri_reference);
+      return;
+    }
+
+  if (scheme == NULL)
+    {
+      GFile *root_folder;
+      GFile *local_file;
+
+      if (g_path_is_absolute (uri_reference))
+        {
+          g_critical ("%s: URI Reference is not a relative path: %s",
+                      G_STRFUNC, uri_reference);
+          return;
+        }
+
+      root_folder = _gimp_plug_in_get_root_folder ();
+      local_file  = g_file_resolve_relative_path (root_folder, uri_reference);
+      /* Don't get tricked by some relative path leaving the plug-in
+       * folder, e.g. "../else/where/".
+       */
+      if (! gimp_procedure_file_is_ancestor (root_folder, local_file))
+        {
+          g_critical ("%s: relative path '%s' is outside the plug-in's folder.",
+                      G_STRFUNC, uri_reference);
+          g_object_unref (local_file);
+          g_object_unref (root_folder);
+          return;
+        }
+      g_object_unref (root_folder);
+
+      if (! g_file_query_exists (local_file, NULL))
+        {
+          g_critical ("%s: relative path '%s' does not exist.", G_STRFUNC, uri_reference);
+          g_object_unref (local_file);
+          return;
+        }
+
+      priv->help_file = local_file;
+    }
+  else
+    {
+      priv->help_file = g_file_new_for_uri (uri_reference);
+    }
+}
+
+/**
+ * gimp_procedure_get_help_file:
+ * @procedure: A #GimpProcedure.
+ *
+ * This function returns the #GFile to load for showing documentation
+ * for @procedure.
+ *
+ * Returns: (transfer none): The procedure's help file constructed from
+ *          the URI given in [method@Procedure.set_help_uri].
+ *
+ * Since: 3.4
+ **/
+GFile *
+gimp_procedure_get_help_file (GimpProcedure *procedure)
+{
+  GimpProcedurePrivate *priv;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->help_file;
 }
 
 /**
@@ -2569,4 +2708,28 @@ gimp_procedure_set_icon (GimpProcedure *procedure,
 
   if (priv->installed)
     gimp_procedure_install_icon (procedure);
+}
+
+static gboolean
+gimp_procedure_file_is_ancestor (GFile *ancestor,
+                                 GFile *descendant)
+{
+  GFile *parent;
+  GFile *child;
+
+  child = g_object_ref (descendant);
+  while ((parent = g_file_get_parent (child)))
+    {
+      if (g_file_equal (parent, ancestor))
+        {
+          g_object_unref (parent);
+          g_object_unref (child);
+          return TRUE;
+        }
+      g_object_unref (child);
+      child = parent;
+    }
+  g_object_unref (child);
+
+  return FALSE;
 }

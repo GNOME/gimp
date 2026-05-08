@@ -293,14 +293,15 @@ gimp_procedure_dialog_constructed (GObject *object)
   role    = g_strdup_printf ("gimp-%s", gimp_procedure_get_name (procedure));
   help_id = gimp_procedure_get_help_id (procedure);
   g_object_set (object,
-                "role",    role,
-                "help-id", help_id,
+                "role",      role,
+                "help-id",   help_id,
+                "help-file", gimp_procedure_get_help_file (procedure),
                 /* This may seem weird, but this is actually because we
                  * are overriding this property and if the title is NULL
                  * in particular, we create one out of the procedure's
                  * menu label. So we force the reset this way.
                  */
-                "title",   gtk_window_get_title (GTK_WINDOW (dialog)),
+                "title",     gtk_window_get_title (GTK_WINDOW (dialog)),
                 NULL);
   g_free (role);
 
