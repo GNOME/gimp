@@ -147,6 +147,9 @@
 (GimpToolInfo "gimp-path-tool"
     (icon-name "gimp-tool-path")
     (visible yes))
+(GimpToolInfo "gimp-shape-tool"
+    (icon-name "gimp-tool-shape")
+    (visible yes))
 (GimpToolInfo "gimp-text-tool"
     (icon-name "gimp-tool-text")
     (visible yes))
