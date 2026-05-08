@@ -1131,7 +1131,6 @@ gimp_procedure_get_icon_name (GimpProcedure *procedure)
 {
   GimpProcedurePrivate *priv;
 
-  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   priv = gimp_procedure_get_instance_private (procedure);
@@ -1186,7 +1185,6 @@ gimp_procedure_get_icon_pixbuf (GimpProcedure *procedure)
 {
   GimpProcedurePrivate *priv;
 
-  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   priv = gimp_procedure_get_instance_private (procedure);
@@ -1228,7 +1226,6 @@ gimp_procedure_set_documentation (GimpProcedure *procedure,
 {
   GimpProcedurePrivate *priv;
 
-  priv = gimp_procedure_get_instance_private (procedure);
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   priv = gimp_procedure_get_instance_private (procedure);
@@ -1262,7 +1259,6 @@ gimp_procedure_get_blurb (GimpProcedure *procedure)
 {
   GimpProcedurePrivate *priv;
 
-  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   priv = gimp_procedure_get_instance_private (procedure);
@@ -1284,7 +1280,6 @@ gimp_procedure_get_help (GimpProcedure *procedure)
 {
   GimpProcedurePrivate *priv;
 
-  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   priv = gimp_procedure_get_instance_private (procedure);
@@ -1306,7 +1301,6 @@ gimp_procedure_get_help_id (GimpProcedure *procedure)
 {
   GimpProcedurePrivate *priv;
 
-  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   priv = gimp_procedure_get_instance_private (procedure);
@@ -1467,7 +1461,6 @@ gimp_procedure_set_attribution (GimpProcedure *procedure,
 {
   GimpProcedurePrivate *priv;
 
-  priv = gimp_procedure_get_instance_private (procedure);
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   priv = gimp_procedure_get_instance_private (procedure);
@@ -1500,7 +1493,6 @@ gimp_procedure_get_authors (GimpProcedure *procedure)
 {
   GimpProcedurePrivate *priv;
 
-  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   priv = gimp_procedure_get_instance_private (procedure);
@@ -1522,7 +1514,6 @@ gimp_procedure_get_copyright (GimpProcedure *procedure)
 {
   GimpProcedurePrivate *priv;
 
-  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   priv = gimp_procedure_get_instance_private (procedure);
@@ -1543,7 +1534,6 @@ gimp_procedure_get_date (GimpProcedure *procedure)
 {
   GimpProcedurePrivate *priv;
 
-  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   priv = gimp_procedure_get_instance_private (procedure);
@@ -1572,7 +1562,6 @@ _gimp_procedure_add_argument (GimpProcedure *procedure,
 {
   GimpProcedurePrivate *priv;
 
-  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (G_IS_PARAM_SPEC (pspec), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (pspec->name), NULL);
@@ -1795,11 +1784,10 @@ gimp_procedure_find_return_value (GimpProcedure *procedure,
   GimpProcedurePrivate *priv;
   gint                  i;
 
-  priv = gimp_procedure_get_instance_private (procedure);
-
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
+  priv = gimp_procedure_get_instance_private (procedure);
   for (i = 0; i < priv->n_values; i++)
     if (! strcmp (name, priv->values[i]->name))
       return priv->values[i];
