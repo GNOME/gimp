@@ -83,8 +83,9 @@
 #include "gimpthresholdtool.h"
 #include "gimprectangleselecttool.h"
 #include "gimprotatetool.h"
-#include "gimpseamlessclonetool.h"
 #include "gimpscaletool.h"
+#include "gimpseamlessclonetool.h"
+#include "gimpshapetool.h"
 #include "gimpsheartool.h"
 #include "gimpsmudgetool.h"
 #include "gimptexttool.h"
@@ -146,6 +147,7 @@ gimp_tools_init (Gimp *gimp)
     /*  path tool */
 
     gimp_path_tool_register,
+    gimp_shape_tool_register,
 
     /*  non-modifying tools  */
 
