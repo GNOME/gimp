@@ -2149,7 +2149,7 @@ read_layer_block (FILE      *f,
 
       if (can_handle_layer)
         gimp_image_insert_layer (image, layer, NULL, -1);
-      else if (is_adjustment_layer)
+      else
         gimp_image_insert_layer (image, layer, NULL, 0);
 
       if (image_rect[0] != 0 || image_rect[1] != 0 || saved_image_rect[0] != 0 || saved_image_rect[1] != 0)
@@ -2308,14 +2308,15 @@ read_layer_block (FILE      *f,
       else if (is_adjustment_layer)
         {
           if (! create_adjustment (layer, f, layer_extension_start, error))
-            return NULL;
+            {
+              try_fseek (f, sub_block_start + sub_total_len, SEEK_SET, error);
+              return NULL;
+            }
 
           if (psp_ver_major >= 4)
             {
               if (try_fseek (f, sub_block_start + sub_total_len, SEEK_SET, error) < 0)
-                {
-                  return NULL;
-                }
+                return NULL;
             }
         }
       else
@@ -3508,7 +3509,8 @@ create_adjustment (GimpLayer  *layer,
                                                     NULL,
                                                     GIMP_LAYER_MODE_REPLACE,
                                                     1.0,
-                                                    "low", threshold / 255.0f,
+                                                    "channel", GIMP_HISTOGRAM_LUMINANCE,
+                                                    "low",     threshold / 255.0f,
                                                     NULL);
         }
         break;
