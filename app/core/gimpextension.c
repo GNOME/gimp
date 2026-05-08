@@ -820,13 +820,9 @@ gimp_extension_validate_paths (GimpExtension  *extension,
     {
       /* Note: appstream is supposed to return everything as UTF-8,
        * so we should not have to bother about this. */
-      gchar    *path;
-      GFile    *file;
-      GFile    *ext_dir;
-      GFile    *parent;
-      GFile    *child;
-      gboolean  is_subpath = FALSE;
-      gint      max_depth  = 10;
+      gchar *path;
+      GFile *file;
+      GFile *ext_dir;
 
       if (g_path_is_absolute (patharray[i]))
         {
@@ -841,36 +837,20 @@ gimp_extension_validate_paths (GimpExtension  *extension,
       g_free (path);
 
       ext_dir = g_file_new_for_path (extension->p->path);
-
       /* Even with relative paths, it is easy to trick the system
        * and leak out of the extension. So check actual kinship.
        */
-      child = g_object_ref (file);
-      while (max_depth > 0 && (parent = g_file_get_parent (child)))
-        {
-          if (g_file_equal (parent, ext_dir))
-            {
-              is_subpath = TRUE;
-              g_object_unref (parent);
-              break;
-            }
-          g_object_unref (child);
-          child = parent;
-          /* Avoid unfinite looping. */
-          max_depth--;
-        }
-      g_object_unref (child);
-      g_object_unref (ext_dir);
-
-      if (! is_subpath)
+      if (! gimp_file_is_ancestor (ext_dir, file))
         {
           *error = g_error_new (GIMP_EXTENSION_ERROR,
                                 GIMP_EXTENSION_BAD_PATH,
                                 _("'%s' is not a child of the extension."),
                                 patharray[i]);
+          g_object_unref (ext_dir);
           g_object_unref (file);
           break;
         }
+      g_object_unref (ext_dir);
 
       if (as_directories)
         {

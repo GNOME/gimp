@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 16
+#define PLUG_IN_RC_FILE_VERSION 17
 
 
 /*
@@ -446,6 +446,7 @@ plug_in_procedure_deserialize (GScanner             *scanner,
   *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
 
   gimp_object_take_name (GIMP_OBJECT (procedure), str);
+  str = NULL;
 
   if (! gimp_scanner_parse_string (scanner, &procedure->blurb))
     return G_TOKEN_STRING;
@@ -459,6 +460,21 @@ plug_in_procedure_deserialize (GScanner             *scanner,
     return G_TOKEN_STRING;
   if (! gimp_scanner_parse_string (scanner, &(*proc)->menu_label))
     return G_TOKEN_STRING;
+  if (! gimp_scanner_parse_string (scanner, &str))
+    return G_TOKEN_STRING;
+  if (str && *str)
+    {
+      GError *error = NULL;
+
+      if (! gimp_plug_in_procedure_set_help_uri (*proc, str, &error))
+        {
+          g_scanner_error (scanner, "procedure URI is invalid: %s", error->message);
+          g_clear_error (&error);
+          g_free (str);
+          return G_TOKEN_ERROR;
+        }
+    }
+  g_free (str);
 
   if (! gimp_scanner_parse_int (scanner, &n_menu_paths))
     return G_TOKEN_INT;
@@ -1477,6 +1493,8 @@ plug_in_rc_write (GSList  *plug_in_defs,
               gimp_config_writer_string (writer, procedure->date);
               gimp_config_writer_linefeed (writer);
               gimp_config_writer_string (writer, proc->menu_label);
+              gimp_config_writer_linefeed (writer);
+              gimp_config_writer_string (writer, proc->help_uri);
               gimp_config_writer_linefeed (writer);
 
               gimp_config_writer_printf (writer, "%d",

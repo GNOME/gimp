@@ -1123,6 +1123,90 @@ pdb_set_file_proc_thumbnail_loader_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+pdb_set_proc_help_uri_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  const gchar *help_uri;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  help_uri = g_value_get_string (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_proc_help_uri (plug_in, procedure_name, help_uri, error);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+pdb_get_proc_help_file_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *procedure_name;
+  GFile *help_file = NULL;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name, error);
+
+          if (proc)
+            {
+              GimpPlugInProcedure *pproc = GIMP_PLUG_IN_PROCEDURE (proc);
+
+              if (pproc->help_file)
+                help_file = g_object_ref (pproc->help_file);
+              else
+                help_file = NULL;
+            }
+          else
+            {
+              success = FALSE;
+            }
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_object (gimp_value_array_index (return_vals, 1), help_file);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 pdb_set_batch_interpreter_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
@@ -2201,6 +2285,67 @@ register_pdb_procs (GimpPDB *pdb)
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-proc-help-uri
+   */
+  procedure = gimp_procedure_new (pdb_set_proc_help_uri_invoker, TRUE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-proc-help-uri");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the documentation URI for a plug-in procedure.",
+                                  "This procedure sets the documentation URI for the given procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2026");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure for which to install the menu path",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("help-uri",
+                                                       "help uri",
+                                                       "URI Reference of the procedure help",
+                                                       FALSE, TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-get-proc-help-file
+   */
+  procedure = gimp_procedure_new (pdb_get_proc_help_file_invoker, TRUE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-get-proc-help-file");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries the procedural database for documentation file of the specified procedure.",
+                                  "This procedure returns the documentation file of the specified procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2026");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_object ("help-file",
+                                                        "help file",
+                                                        "URI file of the procedure help",
+                                                        G_TYPE_FILE,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

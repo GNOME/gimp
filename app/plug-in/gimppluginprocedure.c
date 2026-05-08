@@ -32,6 +32,7 @@
 
 #include "core/gimp.h"
 #include "core/gimp-memsize.h"
+#include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
@@ -585,6 +586,112 @@ gimp_plug_in_procedure_get_help_domain (GimpPlugInProcedure *proc)
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
   return g_quark_to_string (proc->help_domain);
+}
+
+gboolean
+gimp_plug_in_procedure_set_help_uri (GimpPlugInProcedure  *proc,
+                                     const gchar          *help_uri,
+                                     GError              **error)
+{
+  gchar *scheme;
+  gchar *basename;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), FALSE);
+
+  if (help_uri == NULL || strlen (help_uri) == 0)
+    {
+      g_clear_pointer (&proc->help_uri, g_free);
+      g_clear_object (&proc->help_file);
+      return TRUE;
+    }
+
+  scheme = g_uri_parse_scheme (help_uri);
+  if (scheme != NULL)
+    {
+      gchar *tmp;
+
+      tmp    = g_ascii_strdown (scheme, -1);
+      g_free (scheme);
+      scheme = tmp;
+    }
+
+  basename = g_path_get_basename (gimp_file_get_utf8_name (proc->file));
+  if (g_strcmp0 (scheme, "https") != 0 && scheme != NULL)
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
+                   "Plug-in \"%s\"\n(%s)\n\n"
+                   "attempted to install procedure \"%s\" with a "
+                   "documentation URI (%s) which is neither HTTPS "
+                   "nor a relative path.",
+                   basename, gimp_file_get_utf8_name (proc->file),
+                   gimp_object_get_name (proc), help_uri);
+      g_free (basename);
+      g_free (scheme);
+      return FALSE;
+    }
+
+  if (scheme == NULL)
+    {
+      GFile *local_file;
+
+      if (g_path_is_absolute (help_uri))
+        {
+          g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
+                       "Plug-in \"%s\"\n(%s)\n\n"
+                       "attempted to install procedure \"%s\" with a "
+                       "absolute path as documentation URI (%s).",
+                       basename, gimp_file_get_utf8_name (proc->file),
+                       gimp_object_get_name (proc), help_uri);
+          g_free (basename);
+          return FALSE;
+        }
+
+      local_file  = g_file_resolve_relative_path (proc->root_folder, help_uri);
+      /* Don't get tricked by some relative path leaving the plug-in
+       * folder, e.g. "../else/where/".
+       */
+      if (! gimp_file_is_ancestor (proc->root_folder, local_file))
+        {
+          g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
+                       "Plug-in \"%s\"\n(%s)\n\n"
+                       "attempted to install procedure \"%s\" with a "
+                       "documentation path outside its folder (%s).",
+                       basename, gimp_file_get_utf8_name (proc->file),
+                       gimp_object_get_name (proc), help_uri);
+          g_object_unref (local_file);
+          g_free (basename);
+          return FALSE;
+        }
+
+      if (! g_file_query_exists (local_file, NULL))
+        {
+          g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
+                       "Plug-in \"%s\"\n(%s)\n\n"
+                       "attempted to install procedure \"%s\" with a "
+                       "documentation path which does not exist (%s).",
+                       basename, gimp_file_get_utf8_name (proc->file),
+                       gimp_object_get_name (proc), help_uri);
+          g_object_unref (local_file);
+          g_free (basename);
+          return FALSE;
+        }
+
+      g_clear_object (&proc->help_file);
+      proc->help_file = local_file;
+    }
+  else
+    {
+      g_clear_object (&proc->help_file);
+      proc->help_file = g_file_new_for_uri (help_uri);
+      g_free (scheme);
+    }
+
+  g_free (proc->help_uri);
+  proc->help_uri = g_strdup (help_uri);
+
+  g_free (basename);
+
+  return TRUE;
 }
 
 gboolean

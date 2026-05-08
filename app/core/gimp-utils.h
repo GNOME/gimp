@@ -90,6 +90,8 @@ GFile      * gimp_file_with_new_extension          (GFile             *file,
                                                     GFile             *ext_file);
 gboolean     gimp_file_delete_recursive            (GFile             *file,
                                                     GError           **error);
+gboolean     gimp_file_is_ancestor                 (GFile             *ancestor,
+                                                    GFile             *descendant);
 
 gchar      * gimp_data_input_stream_read_line_always
                                                    (GDataInputStream  *stream,

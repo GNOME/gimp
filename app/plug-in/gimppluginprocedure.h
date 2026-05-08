@@ -39,7 +39,11 @@ struct _GimpPlugInProcedure
   /*  common members  */
   GFile               *file;
   GFile               *root_folder;
+
   GQuark               help_domain;
+  gchar               *help_uri;
+  GFile               *help_file;
+
   gchar               *menu_label;
   GList               *menu_paths;
   gchar               *help_id_with_domain;
@@ -103,6 +107,10 @@ GFile       * gimp_plug_in_procedure_get_root_folder       (GimpPlugInProcedure 
 void          gimp_plug_in_procedure_set_help_domain       (GimpPlugInProcedure *proc,
                                                             const gchar         *help_domain);
 const gchar * gimp_plug_in_procedure_get_help_domain       (GimpPlugInProcedure *proc);
+
+gboolean      gimp_plug_in_procedure_set_help_uri          (GimpPlugInProcedure *proc,
+                                                            const gchar         *help_uri,
+                                                            GError             **error);
 
 gboolean      gimp_plug_in_procedure_set_menu_label        (GimpPlugInProcedure *proc,
                                                             const gchar         *menu_label,

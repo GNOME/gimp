@@ -29,6 +29,8 @@
 
 #include "core/gimp.h"
 
+#include "plug-in/gimppluginprocedure.h"
+
 #include "gimpaction.h"
 #include "gimpenumaction.h"
 #include "gimphelp-ids.h"
@@ -786,13 +788,10 @@ static void
 gimp_menu_help_fun (const gchar *bogus_help_id,
                     gpointer     help_data)
 {
-  gchar     *help_id     = NULL;
+  GFile     *help_file = NULL;
   GimpMenu  *menu;
   Gimp      *gimp;
   GtkWidget *item;
-  gchar     *help_domain = NULL;
-  gchar     *help_string = NULL;
-  gchar     *domain_separator;
 
   g_return_if_fail (GIMP_IS_MENU (help_data));
 
@@ -804,32 +803,62 @@ gimp_menu_help_fun (const gchar *bogus_help_id,
   item = gtk_menu_shell_get_selected_item (GTK_MENU_SHELL (menu));
 
   if (item)
-    help_id = g_object_get_qdata (G_OBJECT (item), GIMP_HELP_ID);
-
-  if (help_id == NULL || strlen (help_id) == 0)
-    help_id = (gchar *) bogus_help_id;
-
-  help_id = g_strdup (help_id);
-
-  domain_separator = strchr (help_id, '?');
-
-  if (domain_separator)
     {
-      *domain_separator = '\0';
+      GimpAction *action;
 
-      help_domain = g_strdup (help_id);
-      help_string = g_strdup (domain_separator + 1);
+      action = g_object_get_data (G_OBJECT (item), GIMP_MENU_ACTION_KEY);
+      if (action && GIMP_IS_PROCEDURE_ACTION (action))
+        {
+          GimpProcedureAction *proc_action = GIMP_PROCEDURE_ACTION (action);
+
+          if (GIMP_IS_PLUG_IN_PROCEDURE (proc_action->procedure))
+            help_file = GIMP_PLUG_IN_PROCEDURE (proc_action->procedure)->help_file;
+        }
+    }
+
+  if (help_file)
+    {
+      gchar *uri = g_file_get_uri (help_file);
+
+      g_app_info_launch_default_for_uri (uri, NULL, NULL);
+
+      g_free (uri);
     }
   else
     {
-      help_string = g_strdup (help_id);
+      gchar *help_id     = NULL;
+      gchar *help_domain = NULL;
+      gchar *help_string = NULL;
+      gchar *domain_separator;
+
+      if (item)
+        help_id = g_object_get_qdata (G_OBJECT (item), GIMP_HELP_ID);
+
+      if (help_id == NULL || strlen (help_id) == 0)
+        help_id = (gchar *) bogus_help_id;
+
+      help_id = g_strdup (help_id);
+
+      domain_separator = strchr (help_id, '?');
+
+      if (domain_separator)
+        {
+          *domain_separator = '\0';
+
+          help_domain = g_strdup (help_id);
+          help_string = g_strdup (domain_separator + 1);
+        }
+      else
+        {
+          help_string = g_strdup (help_id);
+        }
+
+      gimp_help (gimp, NULL, help_domain, help_string);
+
+      g_free (help_domain);
+      g_free (help_string);
+      g_free (help_id);
     }
-
-  gimp_help (gimp, NULL, help_domain, help_string);
-
-  g_free (help_domain);
-  g_free (help_string);
-  g_free (help_id);
 }
 
 /* With successive sections, we will end up with double separators (end one then

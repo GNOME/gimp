@@ -105,6 +105,7 @@ typedef struct _GimpProcedurePrivate
   gboolean          installed;
 
   GFile            *help_file;
+  gchar            *help_uri;
 } GimpProcedurePrivate;
 
 
@@ -144,8 +145,6 @@ static gboolean              gimp_procedure_validate_args      (GimpProcedure   
 static void                  gimp_procedure_set_icon           (GimpProcedure        *procedure,
                                                                 GimpIconType          icon_type,
                                                                 gconstpointer         icon_data);
-static gboolean              gimp_procedure_file_is_ancestor   (GFile                *ancestor,
-                                                                GFile                *descendant);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedure, gimp_procedure, G_TYPE_OBJECT)
@@ -239,6 +238,7 @@ gimp_procedure_finalize (GObject *object)
   g_clear_pointer (&priv->authors,     g_free);
   g_clear_pointer (&priv->copyright,   g_free);
   g_clear_pointer (&priv->date,        g_free);
+  g_clear_pointer (&priv->help_uri,    g_free);
 
   g_list_free_full (priv->menu_paths, g_free);
   priv->menu_paths = NULL;
@@ -476,6 +476,13 @@ gimp_procedure_real_install (GimpProcedure *procedure)
                                       priv->authors,
                                       priv->copyright,
                                       priv->date);
+    }
+
+  if (priv->help_uri)
+    {
+      if (! _gimp_pdb_set_proc_help_uri (gimp_procedure_get_name (procedure),
+                                         priv->help_uri))
+        g_clear_pointer (&priv->help_uri, g_free);
     }
 
   priv->installed = TRUE;
@@ -1353,69 +1360,15 @@ gimp_procedure_set_help_uri (GimpProcedure *procedure,
                              const gchar   *uri_reference)
 {
   GimpProcedurePrivate *priv;
-  gchar                *scheme;
 
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (uri_reference != NULL);
 
-  priv   = gimp_procedure_get_instance_private (procedure);
-  scheme = g_uri_parse_scheme (uri_reference);
-  if (scheme != NULL)
-    {
-      gchar *tmp;
+  priv = gimp_procedure_get_instance_private (procedure);
 
-      tmp    = g_ascii_strdown (scheme, -1);
-      g_free (scheme);
-      scheme = tmp;
-    }
-
-  if (g_strcmp0 (scheme, "https") != 0 && scheme != NULL)
-    {
-      g_critical ("%s: URI Reference must be with scheme 'https' or a relative path: %s",
-                  G_STRFUNC, uri_reference);
-      return;
-    }
-
-  if (scheme == NULL)
-    {
-      GFile *root_folder;
-      GFile *local_file;
-
-      if (g_path_is_absolute (uri_reference))
-        {
-          g_critical ("%s: URI Reference is not a relative path: %s",
-                      G_STRFUNC, uri_reference);
-          return;
-        }
-
-      root_folder = _gimp_plug_in_get_root_folder ();
-      local_file  = g_file_resolve_relative_path (root_folder, uri_reference);
-      /* Don't get tricked by some relative path leaving the plug-in
-       * folder, e.g. "../else/where/".
-       */
-      if (! gimp_procedure_file_is_ancestor (root_folder, local_file))
-        {
-          g_critical ("%s: relative path '%s' is outside the plug-in's folder.",
-                      G_STRFUNC, uri_reference);
-          g_object_unref (local_file);
-          g_object_unref (root_folder);
-          return;
-        }
-      g_object_unref (root_folder);
-
-      if (! g_file_query_exists (local_file, NULL))
-        {
-          g_critical ("%s: relative path '%s' does not exist.", G_STRFUNC, uri_reference);
-          g_object_unref (local_file);
-          return;
-        }
-
-      priv->help_file = local_file;
-    }
-  else
-    {
-      priv->help_file = g_file_new_for_uri (uri_reference);
-    }
+  g_clear_pointer (&priv->help_uri, g_free);
+  priv->help_uri = g_strdup (uri_reference);
+  if (priv->installed)
+    _gimp_pdb_set_proc_help_uri (gimp_procedure_get_name (procedure), uri_reference);
 }
 
 /**
@@ -1438,6 +1391,9 @@ gimp_procedure_get_help_file (GimpProcedure *procedure)
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   priv = gimp_procedure_get_instance_private (procedure);
+
+  if (priv->help_uri && ! priv->help_file)
+    priv->help_file = _gimp_pdb_get_proc_help_file (gimp_procedure_get_name (procedure));
 
   return priv->help_file;
 }
@@ -2696,28 +2652,4 @@ gimp_procedure_set_icon (GimpProcedure *procedure,
 
   if (priv->installed)
     gimp_procedure_install_icon (procedure);
-}
-
-static gboolean
-gimp_procedure_file_is_ancestor (GFile *ancestor,
-                                 GFile *descendant)
-{
-  GFile *parent;
-  GFile *child;
-
-  child = g_object_ref (descendant);
-  while ((parent = g_file_get_parent (child)))
-    {
-      if (g_file_equal (parent, ancestor))
-        {
-          g_object_unref (parent);
-          g_object_unref (child);
-          return TRUE;
-        }
-      g_object_unref (child);
-      child = parent;
-    }
-  g_object_unref (child);
-
-  return FALSE;
 }

@@ -1177,6 +1177,82 @@ _gimp_pdb_set_file_proc_thumbnail_loader (const gchar *load_proc,
 }
 
 /**
+ * _gimp_pdb_set_proc_help_uri:
+ * @procedure_name: The procedure for which to install the menu path.
+ * @help_uri: (nullable): URI Reference of the procedure help.
+ *
+ * Set the documentation URI for a plug-in procedure.
+ *
+ * This procedure sets the documentation URI for the given procedure.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.4
+ **/
+gboolean
+_gimp_pdb_set_proc_help_uri (const gchar *procedure_name,
+                             const gchar *help_uri)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_STRING, help_uri,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-pdb-set-proc-help-uri",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_pdb_get_proc_help_file:
+ * @procedure_name: The procedure name.
+ *
+ * Queries the procedural database for documentation file of the
+ * specified procedure.
+ *
+ * This procedure returns the documentation file of the specified
+ * procedure.
+ *
+ * Returns: (nullable) (transfer full): URI file of the procedure help.
+ *
+ * Since: 3.4
+ **/
+GFile *
+_gimp_pdb_get_proc_help_file (const gchar *procedure_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GFile *help_file = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-pdb-get-proc-help-file",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    help_file = GIMP_VALUES_DUP_FILE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return help_file;
+}
+
+/**
  * _gimp_pdb_set_batch_interpreter:
  * @procedure_name: The name of the procedure to be used for running batch commands.
  * @interpreter_name: A public-facing name for the interpreter, such as \"Python 3\".

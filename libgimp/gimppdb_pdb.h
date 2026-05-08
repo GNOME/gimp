@@ -99,6 +99,9 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_handles_raw      (const gcha
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_handles_vector   (const gchar       *procedure_name);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_thumbnail_loader (const gchar       *load_proc,
                                                                       const gchar       *thumb_proc);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_set_proc_help_uri              (const gchar       *procedure_name,
+                                                                      const gchar       *help_uri);
+G_GNUC_INTERNAL GFile*      _gimp_pdb_get_proc_help_file             (const gchar       *procedure_name);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_batch_interpreter          (const gchar       *procedure_name,
                                                                       const gchar       *interpreter_name);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_get_data                       (const gchar       *identifier,

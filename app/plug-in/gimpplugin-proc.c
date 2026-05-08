@@ -740,6 +740,37 @@ gimp_plug_in_set_batch_interpreter (GimpPlugIn   *plug_in,
   return TRUE;
 }
 
+gboolean
+gimp_plug_in_set_proc_help_uri (GimpPlugIn   *plug_in,
+                                const gchar  *proc_name,
+                                const gchar  *uri,
+                                GError      **error)
+{
+  GimpPlugInProcedure *proc;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (proc_name != NULL, FALSE);
+
+  proc = gimp_plug_in_proc_find (plug_in, proc_name);
+
+  if (! proc)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_PROCEDURE_NOT_FOUND,
+                   "Plug-in \"%s\"\n(%s)\n"
+                   "attempted to register the help URI "
+                   "for procedure \"%s\".\n"
+                   "It has however not installed that procedure. "
+                   "This is not allowed.",
+                   gimp_object_get_name (plug_in),
+                   gimp_file_get_utf8_name (plug_in->file),
+                   proc_name);
+
+      return FALSE;
+    }
+
+  return gimp_plug_in_procedure_set_help_uri (proc, uri, error);
+}
+
 
 /*  private functions  */
 

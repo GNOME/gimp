@@ -93,3 +93,7 @@ gboolean   gimp_plug_in_set_batch_interpreter        (GimpPlugIn   *plug_in,
                                                       const gchar  *proc_name,
                                                       const gchar  *interpreter_name,
                                                       GError      **error);
+gboolean   gimp_plug_in_set_proc_help_uri            (GimpPlugIn   *plug_in,
+                                                      const gchar  *proc_name,
+                                                      const gchar  *help_uri,
+                                                      GError      **error);

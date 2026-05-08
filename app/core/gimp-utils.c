@@ -921,6 +921,40 @@ gimp_file_delete_recursive (GFile   *file,
   return success;
 }
 
+/**
+ * gimp_file_is_ancestor:
+ * @ancestor:
+ * @descendant:
+ *
+ * Validate that @descendant is indeed a sub-path of @ancestor in the
+ * file system tree hierarchy.
+ *
+ * Returns: %TRUE if @descendant is indeed inside @ancestor.
+ */
+gboolean
+gimp_file_is_ancestor (GFile *ancestor,
+                       GFile *descendant)
+{
+  GFile *parent;
+  GFile *child;
+
+  child = g_object_ref (descendant);
+  while ((parent = g_file_get_parent (child)))
+    {
+      if (g_file_equal (parent, ancestor))
+        {
+          g_object_unref (parent);
+          g_object_unref (child);
+          return TRUE;
+        }
+      g_object_unref (child);
+      child = parent;
+    }
+  g_object_unref (child);
+
+  return FALSE;
+}
+
 gchar *
 gimp_data_input_stream_read_line_always (GDataInputStream  *stream,
                                          gsize             *length,
