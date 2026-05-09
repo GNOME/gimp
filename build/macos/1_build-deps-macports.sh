@@ -101,6 +101,6 @@ self_build()
 }
 
 self_build https://gitlab.gnome.org/GNOME/babl
-self_build https://gitlab.gnome.org/GNOME/gegl
+self_build https://gitlab.gnome.org/GNOME/gegl bruno/c-std
 
 cd $GIMP_DIR
