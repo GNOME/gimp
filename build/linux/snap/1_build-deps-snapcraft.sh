@@ -10,7 +10,7 @@ set -e
 if [ "$0" != 'build/linux/snap/1_build-deps-snapcraft.sh' ] && [ $(basename "$PWD") != 'snap' ]; then
   printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp source dir\n'
   exit 1
-elif [ $(basename "$PWD") = 'snap' ]; then
+elif [ "$(basename "$PWD")" = 'snap' ]; then
   cd ../../..
 fi
 
