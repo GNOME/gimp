@@ -1145,7 +1145,7 @@ if not [ '', 'false', 'no', ].contains(sendmail_choice)
 
   sendmail = find_program(sendmail_path, required: false)
   if sendmail.found()
-    sendmail_path = sendmail.path()
+    sendmail_path = sendmail.full_path()
   else
     mail_warning = 'Sendmail specified but not found. It should be installed at runtime!'
     warning(mail_warning)
