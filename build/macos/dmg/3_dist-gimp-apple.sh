@@ -19,7 +19,7 @@ set -e
 if [ "$0" != 'build/macos/dmg/3_dist-gimp-apple.sh' ] && [ $(basename "$PWD") != 'dmg' ]; then
   printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp source dir\n'
   exit 1
-elif [ $(basename "$PWD") = 'dmg' ]; then
+elif [ "$(basename "$PWD")" = 'dmg' ]; then
   cd ../../..
 fi
 
