@@ -386,9 +386,9 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (hbox), tool->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (tool->channel_menu);
 
-  g_signal_connect (tool->channel_menu, "changed",
-                    G_CALLBACK (levels_channel_callback),
-                    tool);
+  g_signal_connect_object (tool->channel_menu, "changed",
+                           G_CALLBACK (levels_channel_callback),
+                           tool, 0);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), tool->channel_menu);
 
@@ -396,9 +396,9 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (levels_channel_reset_callback),
-                    tool);
+  g_signal_connect_object (button, "clicked",
+                           G_CALLBACK (levels_channel_reset_callback),
+                           tool, 0);
 
   /*  The histogram scale radio buttons  */
   hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (tool_options),
@@ -520,9 +520,9 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   tool->gamma = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
 
   tool->gamma_linear = gtk_adjustment_new (127, 0, 255, 0.1, 1.0, 0.0);
-  g_signal_connect (tool->gamma_linear, "value-changed",
-                    G_CALLBACK (levels_linear_gamma_changed),
-                    tool);
+  g_signal_connect_object (tool->gamma_linear, "value-changed",
+                           G_CALLBACK (levels_linear_gamma_changed),
+                           tool, 0);
 
   gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 1,
                                   tool->gamma_linear);
@@ -626,9 +626,9 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
                            NULL);
   gtk_widget_show (button);
 
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (levels_stretch_callback),
-                    tool);
+  g_signal_connect_object (button, "clicked",
+                           G_CALLBACK (levels_stretch_callback),
+                           tool, 0);
 
   button = gimp_levels_tool_color_picker_new (tool,
                                               PICK_HIGH_INPUT |
@@ -653,9 +653,9 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (levels_to_curves_callback),
-                    tool);
+  g_signal_connect_object (button, "clicked",
+                           G_CALLBACK (levels_to_curves_callback),
+                           tool, 0);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
                                  config->channel);
