@@ -508,10 +508,7 @@ themes_apply_theme (Gimp          *gimp,
             }
 
           if (file != NULL)
-            {
-              prefer_dark_theme = (file == dark || file == gray);
-              css_files = g_slist_prepend (css_files, file);
-            }
+            css_files = g_slist_prepend (css_files, file);
           else
             {
               gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
