@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp-2006-08\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-04-30 14:38+0000\n"
-"PO-Revision-Date: 2026-05-09 19:00+0700\n"
+"PO-Revision-Date: 2026-05-09 19:09+0700\n"
 "Last-Translator: Sira Nokyoongtong <gumaraa@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -4401,7 +4401,7 @@ msgstr "เคิ_ร์ฟ..."
 #: app/actions/filters-actions.c:247
 msgctxt "filters-action"
 msgid "_Deinterlace..."
-msgstr "_ถอดอินเทอร์เลซ..."
+msgstr "ดี_อินเทอร์เลซ..."
 
 #: app/actions/filters-actions.c:252
 msgctxt "filters-action"
