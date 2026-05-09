@@ -10,7 +10,7 @@ set -e
 if [ "$0" != 'build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh' ] && [ $(basename "$PWD") != 'flatpak' ]; then
   printf '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp source dir\n'
   exit 1
-elif [ $(basename "$PWD") = 'flatpak' ]; then
+elif [ "$(basename "$PWD")" = 'flatpak' ]; then
   cd ../../..
 fi
 
