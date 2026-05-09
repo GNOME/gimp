@@ -631,12 +631,7 @@ gimp_config_path_expand_only (const gchar  *path,
     {
       if (*p == '~' && home)
         {
-          *n = '\0';
-#ifndef _UCRT
-          strcat (n, home);
-#else
-          strcat_s (n, (length + 1) - (n - expanded), home);
-#endif
+          memcpy (n, home, strlen (home));
           n += strlen (home);
           p += 1;
         }
@@ -648,12 +643,7 @@ gimp_config_path_expand_only (const gchar  *path,
                 {
                   s = substs[2*i+1];
 
-                  *n = '\0';
-#ifndef _UCRT
-                  strcat (n, s);
-#else
-                  strcat_s (n, (length + 1) - (n - expanded), s);
-#endif
+                  memcpy (n, s, strlen (s));
                   n += strlen (s);
 
                   break;
