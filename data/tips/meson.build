@@ -21,13 +21,21 @@ fortunes_tips = custom_target('fortunes-tips',
 )
 
 if xmllint.found()
+  #Copy the DTD to the build directory so xmllint can find it without --path
+  #(--path is limited, does not work if the environment have paths with spaces)
+  gimp_tips_dtd = configure_file(
+    input: 'gimp-tips.dtd',
+    output: 'gimp-tips.dtd',
+    copy: true
+  )
+
   custom_target('validate-tips',
     command: [
       xmllint,
       '--output', '@OUTPUT@',
-      '--path', meson.current_source_dir(),
       '--valid', gimp_tips,
   ],
+    depend_files: gimp_tips_dtd,
     output: [ 'validate-tips-output.xml' ],
     build_by_default: true,
     install: false
