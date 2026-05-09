@@ -121,7 +121,6 @@ stages:
         CXX: clang++
         CC_LD: lld
         CXX_LD: lld
-        TOOLCHAIN: "clang lld"
         WARN_AS_ERROR_ON_CI: '-Dwerror=true'
         VARIANT: -clang
     - if: '$GIMP_CI_RASTER_ICONS != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_RASTER_ICONS.*/'
@@ -134,7 +133,6 @@ stages:
         CXX: clang++
         CC_LD: lld
         CXX_LD: lld
-        TOOLCHAIN: "clang lld"
         WARN_AS_ERROR_ON_CI: '-Dwerror=true'
         VARIANT: -clang
     - <<: *CI_RELEASE
@@ -173,7 +171,7 @@ deps-debian-nonreloc:
     ## 'ca-certificates' and 'git' are NOT gimp deps, they are installed only to our Docker image work
     - echo "RUN apt-get update -qq && apt-get install -qq -y --no-install-recommends ca-certificates git \\" >> Dockerfile
     ## Build-time only dependencies
-    - echo "${TOOLCHAIN:-build-essential}
+    - echo "build-essential clang lld
             appstream
             bison
             desktop-file-utils
