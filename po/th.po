@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp-2006-08\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-04-30 14:38+0000\n"
-"PO-Revision-Date: 2026-05-09 19:09+0700\n"
+"PO-Revision-Date: 2026-05-10 00:10+0700\n"
 "Last-Translator: Sira Nokyoongtong <gumaraa@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -20486,10 +20486,8 @@ msgid "Discard Vector Information"
 msgstr "ละทิ้งข้อมูลเวกเตอร์"
 
 #: app/path/gimpvectorlayer.c:695
-#, fuzzy
-#| msgid "Scale Vector Layer"
 msgid "Change Vector Layer Path"
-msgstr "ปรับสัดส่วนเลเยอร์เวกเตอร์"
+msgstr "เปลี่ยนพาธเลเยอร์เวกเตอร์"
 
 #: app/path/gimpvectorlayeroptions.c:121
 msgid "Fill Style"
@@ -20564,7 +20562,7 @@ msgstr "ระดับ"
 #: app/pdb/drawable-color-cmds.c:737
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
-msgstr "เงา-สีเน้น"
+msgstr "เงา-ส่วนสว่าง"
 
 #: app/pdb/drawable-color-cmds.c:777
 msgctxt "undo-type"
@@ -20965,10 +20963,9 @@ msgid "2D Transforming"
 msgstr "การแปลงลักษณะ 2 มิติ"
 
 #: app/pdb/link-layer-cmds.c:68 app/pdb/link-layer-cmds.c:90
-#, fuzzy, c-format
-#| msgid "Failed to create text layer"
+#, c-format
 msgid "Failed to create link layer"
-msgstr "สร้างเลเยอร์ข้อความไม่สำเร็จ"
+msgstr "สร้างเลเยอร์เชื่อมโยงไม่สำเร็จ"
 
 #: app/pdb/path-cmds.c:325
 msgid "Remove path stroke"
@@ -21014,12 +21011,12 @@ msgstr "ป้ายชื่อข้อมูล '%s' ไม่ใช่ตั
 #: app/pdb/rasterizable-cmds.c:65
 #, c-format
 msgid "This item has already been rasterized."
-msgstr ""
+msgstr "รายการนี้ถูกทำให้เป็นแรสเตอร์ไปแล้ว"
 
 #: app/pdb/rasterizable-cmds.c:96
 #, c-format
 msgid "This item has not been rasterized."
-msgstr ""
+msgstr "รายการนี้ยังไม่ถูกทำให้เป็นแรสเตอร์"
 
 #: app/pdb/resource-cmds.c:500
 #, c-format
@@ -21222,20 +21219,14 @@ msgid "invalid value '%ld' for icon type"
 msgstr "ค่า '%ld' ไม่ถูกต้องสำหรับชนิดไอคอน"
 
 #: app/propgui/gimppropgui-channel-mixer.c:63
-#, fuzzy
-#| msgid "Red channel"
 msgid "Red Channel"
 msgstr "แชนเนลสีแดง"
 
 #: app/propgui/gimppropgui-channel-mixer.c:84
-#, fuzzy
-#| msgid "Green channel"
 msgid "Green Channel"
 msgstr "แชนเนลสีเขียว"
 
 #: app/propgui/gimppropgui-channel-mixer.c:105
-#, fuzzy
-#| msgid "Blue channel"
 msgid "Blue Channel"
 msgstr "แชนเนลสีน้ำเงิน"
 
@@ -21477,7 +21468,7 @@ msgstr "เงา"
 
 #: app/propgui/gimppropgui-shadows-highlights.c:78
 msgid "Highlights"
-msgstr "สีเน้น"
+msgstr "ส่วนสว่าง"
 
 #: app/propgui/gimppropgui-shadows-highlights.c:94
 msgid "Common"
@@ -22598,10 +22589,8 @@ msgid "Disabled because filters cannot be merged on link layers."
 msgstr "ปิดใช้งานเพราะฟิลเตอร์ไม่สามารถรวมบนเลเยอร์เชื่อมโยงได้"
 
 #: app/tools/gimpfiltertool.c:463 app/widgets/gimpdrawabletreeview-filters.c:497
-#, fuzzy
-#| msgid "Disabled because filters cannot be merged on vector layers."
 msgid "Disabled because filters cannot be merged on text layers."
-msgstr "ปิดใช้งานเพราะฟิลเตอร์ไม่สามารถรวมบนเลเยอร์เวกเตอร์ได้"
+msgstr "ปิดใช้งานเพราะฟิลเตอร์ไม่สามารถรวมบนเลเยอร์ข้อความได้"
 
 #: app/tools/gimpfiltertool.c:465
 msgid ""
