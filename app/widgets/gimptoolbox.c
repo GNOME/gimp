@@ -282,6 +282,7 @@ gimp_toolbox_constructed (GObject *object)
   toolbox->p->area_box = gtk_flow_box_new ();
   gtk_flow_box_set_selection_mode (GTK_FLOW_BOX (toolbox->p->area_box),
                                    GTK_SELECTION_NONE);
+  gtk_flow_box_set_homogeneous (GTK_FLOW_BOX (toolbox->p->area_box), TRUE);
   gtk_flow_box_set_max_children_per_line (GTK_FLOW_BOX (toolbox->p->area_box),
                                           3);
   gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->area_box,
@@ -756,12 +757,13 @@ toolbox_create_foo_area (GimpToolbox *toolbox,
 
   foo_area = gimp_toolbox_indicator_area_create (toolbox);
   g_object_set (foo_area,
-                "halign",        GTK_ALIGN_CENTER,
-                "valign",        GTK_ALIGN_CENTER,
-                "margin-start",  2,
-                "margin-end",    2,
-                "margin-top",    2,
-                "margin-bottom", 2,
+                "halign",             GTK_ALIGN_CENTER,
+                "valign",             GTK_ALIGN_CENTER,
+                "column-homogeneous", TRUE,
+                "margin-start",       2,
+                "margin-end",         2,
+                "margin-top",         2,
+                "margin-bottom",      2,
                 NULL);
 
   return foo_area;
@@ -793,12 +795,13 @@ toolbox_create_image_area (GimpToolbox *toolbox,
   gtk_widget_set_visible (grid, TRUE);
 
   g_object_set (grid,
-                "halign",        GTK_ALIGN_CENTER,
-                "valign",        GTK_ALIGN_CENTER,
-                "margin-start",  2,
-                "margin-end",    2,
-                "margin-top",    2,
-                "margin-bottom", 2,
+                "halign",             GTK_ALIGN_FILL,
+                "valign",             GTK_ALIGN_FILL,
+                "column-homogeneous", TRUE,
+                "margin-start",       2,
+                "margin-end",         2,
+                "margin-top",         2,
+                "margin-bottom",      2,
                 NULL);
 
   return grid;
@@ -868,13 +871,22 @@ toolbox_area_config_notify (GimpGuiConfig    *config,
                             const GParamSpec *pspec,
                             GtkWidget        *area_box)
 {
-  gint visible_areas = 0;
+  GtkFlowBox *flow_box      = GTK_FLOW_BOX (area_box);
+  gint        visible_areas = 0;
 
   visible_areas  = (gint) config->toolbox_color_area;
   visible_areas += (gint) config->toolbox_foo_area;
   visible_areas += (gint) config->toolbox_image_area;
 
+  /* Since the toolbox widgets are children of the GtkFlowBoxChilds,
+   * we need to make those visible/invisible as well for proper spacing */
+  gtk_widget_set_visible (GTK_WIDGET (gtk_flow_box_get_child_at_index (flow_box, 0)),
+                          config->toolbox_color_area);
+  gtk_widget_set_visible (GTK_WIDGET (gtk_flow_box_get_child_at_index (flow_box, 1)),
+                          config->toolbox_foo_area);
+  gtk_widget_set_visible (GTK_WIDGET (gtk_flow_box_get_child_at_index (flow_box, 2)),
+                          config->toolbox_image_area);
+
   if (visible_areas > 0)
-    gtk_flow_box_set_max_children_per_line (GTK_FLOW_BOX (area_box),
-                                            visible_areas);
+    gtk_flow_box_set_max_children_per_line (flow_box, visible_areas);
 }
