@@ -86,6 +86,11 @@ self_build()
   fi
   cd $dep
   git pull
+  if echo "$2" | grep -q '.patch' || echo "$3" | grep -q '.patch'; then
+    for patch in $(if echo "$2" | grep -q '.patch'; then echo "$2"; else echo "$3"; fi); do
+      git apply -v "$GIMP_DIR/$patch"
+    done
+  fi
 
   # Configure and build
   if [ ! -f "_build-$(uname -m)/build.ninja" ]; then
