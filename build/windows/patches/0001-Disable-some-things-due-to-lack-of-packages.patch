@@ -1,21 +1,22 @@
-From 81a38da38bb90a475cf474b75fe812757e41e02a Mon Sep 17 00:00:00 2001
+From 118c8bca96fdc42d1a875d1a1a5c2783b04c6f89 Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Sat, 9 May 2026 20:54:58 -0300
+Date: Sun, 10 May 2026 08:51:04 -0300
 Subject: [PATCH] Disable some things due to lack of packages
 
 ---
- app/core/gimp.c                    |  7 ----
- app/core/meson.build               |  3 --
- app/dialogs/dialogs-constructors.c |  9 ------
- app/dialogs/dialogs.c              |  2 --
- app/dialogs/meson.build            |  1 -
- app/file-data/file-data.c          | 51 ------------------------------
- app/file-data/meson.build          |  1 -
- app/widgets/meson.build            |  2 --
- devel-docs/meson.build             |  2 +-
- libgimp/meson.build                |  4 ++-
- meson.build                        | 33 ++++---------------
- 11 files changed, 11 insertions(+), 104 deletions(-)
+ app/core/gimp.c                         |  7 ----
+ app/core/meson.build                    |  3 --
+ app/dialogs/dialogs-constructors.c      |  9 -----
+ app/dialogs/dialogs.c                   |  2 -
+ app/dialogs/meson.build                 |  1 -
+ app/file-data/file-data.c               | 51 -------------------------
+ app/file-data/meson.build               |  1 -
+ app/plug-in/gimppluginmanager-restore.c | 34 -----------------
+ app/widgets/meson.build                 |  2 -
+ devel-docs/meson.build                  |  2 +-
+ libgimp/meson.build                     |  4 +-
+ meson.build                             | 33 ++++------------
+ 12 files changed, 11 insertions(+), 138 deletions(-)
 
 diff --git a/app/core/gimp.c b/app/core/gimp.c
 index bba1e86608..be367be104 100644
@@ -182,6 +183,51 @@ index 9489eda9fb..5fdf498c9b 100644
    'file-data-gih.c',
    'file-data-pat.c',
    'file-data.c',
+diff --git a/app/plug-in/gimppluginmanager-restore.c b/app/plug-in/gimppluginmanager-restore.c
+index b817be4e1c..6b427655ed 100644
+--- a/app/plug-in/gimppluginmanager-restore.c
++++ b/app/plug-in/gimppluginmanager-restore.c
+@@ -213,40 +213,6 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
+     }
+ #endif /* G_OS_WIN32 */
+ 
+-  status_callback (_("Loading extension plug-ins"), "", 0.0);
+-  g_object_get (manager->gimp->extension_manager,
+-                "plug-in-extensions", &extensions,
+-                NULL);
+-  for (iter = extensions; iter; iter = g_list_next (iter))
+-    {
+-      GimpExtension *extension = iter->data;
+-      GFile         *root_folder;
+-      GList         *iter2;
+-
+-      root_folder = g_file_new_for_path (gimp_extension_get_path (extension));
+-      paths       = gimp_extension_get_plug_in_paths (extension);
+-
+-      for (iter2 = paths; iter2; iter2 = iter2->next)
+-        {
+-          GFile *file = iter2->data;
+-
+-          if (gimp_file_is_executable (file))
+-            {
+-              guint64 mtime;
+-              GFileInfo *info;
+-
+-              info = g_file_query_info (file, G_FILE_ATTRIBUTE_TIME_MODIFIED,
+-                                        G_FILE_QUERY_INFO_NONE, NULL, NULL);
+-              mtime = g_file_info_get_attribute_uint64 (info,
+-                                                        G_FILE_ATTRIBUTE_TIME_MODIFIED);
+-              gimp_plug_in_manager_add_from_file (manager, file, root_folder, mtime);
+-              g_object_unref (info);
+-            }
+-        }
+-
+-      g_object_unref (root_folder);
+-    }
+-
+   status_callback (_("Searching plug-ins"), "", 0.0);
+ 
+   /* Give automatic tests a chance to use plug-ins from the build
 diff --git a/app/widgets/meson.build b/app/widgets/meson.build
 index d182f7763e..d84dfae3eb 100644
 --- a/app/widgets/meson.build
@@ -223,10 +269,10 @@ index 97393ccd2b..f335eb1b7a 100644
    gobject_introspection_warning = '\n      '.join(['',
      'GObject Introspection is disabled while cross-compiling because',
 diff --git a/meson.build b/meson.build
-index 3cebe8107a..ddd45409a0 100644
+index 96506c1a0a..15f217f7e0 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -290,7 +290,7 @@ warning_cflags_common = [
+@@ -291,7 +291,7 @@ warning_cflags_common = [
    '-fno-common',
  
    '-Wformat',
@@ -235,7 +281,7 @@ index 3cebe8107a..ddd45409a0 100644
    '-Winit-self',
    '-Wlogical-op',
    '-Wmissing-declarations',
-@@ -700,7 +700,7 @@ endif
+@@ -701,7 +701,7 @@ endif
  # Check for extension support
  
  appstream_minver = '0.16.1'
@@ -244,7 +290,7 @@ index 3cebe8107a..ddd45409a0 100644
  
  libarchive = dependency('libarchive')
  
-@@ -1207,7 +1207,7 @@ pygobject_found = ''
+@@ -1208,7 +1208,7 @@ pygobject_found = ''
  pygobject_gexiv2_found = false
  foreach py : py_candidates
    #Check if PyGobject installation have pycairo (#13105)
@@ -253,7 +299,7 @@ index 3cebe8107a..ddd45409a0 100644
    if python_tmp.found() and python_tmp.language_version().version_compare(python3_minver)
      python = python_tmp
      #Check if PyGObject installation have minimum version
-@@ -1226,9 +1226,7 @@ foreach py : py_candidates
+@@ -1227,9 +1227,7 @@ foreach py : py_candidates
                                          '''except (ImportError):''',
                                          '''    sys.exit(1)''']),
                                          check: false).returncode() == 0
@@ -264,7 +310,7 @@ index 3cebe8107a..ddd45409a0 100644
    endif
  endforeach
  
-@@ -1237,11 +1235,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
+@@ -1238,11 +1236,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
  endif
  message('Found Python @0@'.format(python.language_version()))
  
@@ -276,7 +322,7 @@ index 3cebe8107a..ddd45409a0 100644
  ## Javascript
  
  gjs = find_program('gjs', required: false)
-@@ -2019,13 +2012,13 @@ if get_option('debug-self-in-build')
+@@ -2020,13 +2013,13 @@ if get_option('debug-self-in-build')
  endif
  gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
  
@@ -292,7 +338,7 @@ index 3cebe8107a..ddd45409a0 100644
    gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
  
    menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
-@@ -2088,18 +2081,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
+@@ -2089,18 +2082,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
        gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', plugin_exe)
      endforeach
    endif
@@ -311,7 +357,7 @@ index 3cebe8107a..ddd45409a0 100644
  endif
  
  gimp_exe = find_program('tools'/'in-build-gimp.py')
-@@ -2295,7 +2276,7 @@ final_message = [
+@@ -2296,7 +2277,7 @@ final_message = [
  '''  Test appdata         @0@'''.format(appstreamcli.found()),
  '',
  '''Documentation:''',
