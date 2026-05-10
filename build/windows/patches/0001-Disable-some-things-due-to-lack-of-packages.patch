@@ -1,6 +1,6 @@
-From 118c8bca96fdc42d1a875d1a1a5c2783b04c6f89 Mon Sep 17 00:00:00 2001
+From 8de6364f82b451bfef020a3a029b13432e2266b5 Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Sun, 10 May 2026 08:51:04 -0300
+Date: Mon, 11 May 2026 06:29:56 -0300
 Subject: [PATCH] Disable some things due to lack of packages
 
 ---
@@ -11,12 +11,12 @@ Subject: [PATCH] Disable some things due to lack of packages
  app/dialogs/meson.build                 |  1 -
  app/file-data/file-data.c               | 51 -------------------------
  app/file-data/meson.build               |  1 -
- app/plug-in/gimppluginmanager-restore.c | 34 -----------------
+ app/plug-in/gimppluginmanager-restore.c | 35 -----------------
  app/widgets/meson.build                 |  2 -
  devel-docs/meson.build                  |  2 +-
  libgimp/meson.build                     |  4 +-
- meson.build                             | 33 ++++------------
- 12 files changed, 11 insertions(+), 138 deletions(-)
+ meson.build                             | 35 ++++-------------
+ 12 files changed, 12 insertions(+), 140 deletions(-)
 
 diff --git a/app/core/gimp.c b/app/core/gimp.c
 index bba1e86608..be367be104 100644
@@ -184,10 +184,18 @@ index 9489eda9fb..5fdf498c9b 100644
    'file-data-pat.c',
    'file-data.c',
 diff --git a/app/plug-in/gimppluginmanager-restore.c b/app/plug-in/gimppluginmanager-restore.c
-index b817be4e1c..6b427655ed 100644
+index b817be4e1c..dffb7422d6 100644
 --- a/app/plug-in/gimppluginmanager-restore.c
 +++ b/app/plug-in/gimppluginmanager-restore.c
-@@ -213,40 +213,6 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
+@@ -186,7 +186,6 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
+ {
+   const gchar *path_str;
+   GList       *paths;
+-  GList       *extensions;
+   GList       *iter;
+ 
+ #ifdef G_OS_WIN32
+@@ -213,40 +212,6 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
      }
  #endif /* G_OS_WIN32 */
  
@@ -269,7 +277,7 @@ index 97393ccd2b..f335eb1b7a 100644
    gobject_introspection_warning = '\n      '.join(['',
      'GObject Introspection is disabled while cross-compiling because',
 diff --git a/meson.build b/meson.build
-index 96506c1a0a..15f217f7e0 100644
+index 96506c1a0a..07e356d740 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -291,7 +291,7 @@ warning_cflags_common = [
@@ -357,6 +365,15 @@ index 96506c1a0a..15f217f7e0 100644
  endif
  
  gimp_exe = find_program('tools'/'in-build-gimp.py')
+@@ -2109,7 +2090,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
+ # Subdirs: part 2
+ 
+ # gimp-data submodule part 2
+-subdir('gimp-data/images/')
++subdir('gimp-data/images/logo')
+ 
+ # Unit testing
+ subdir('app/tests')
 @@ -2296,7 +2277,7 @@ final_message = [
  '''  Test appdata         @0@'''.format(appstreamcli.found()),
  '',
