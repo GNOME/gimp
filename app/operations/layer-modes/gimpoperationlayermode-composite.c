@@ -117,7 +117,7 @@ gimp_operation_layer_mode_composite_clip_to_backdrop (const gfloat *in,
           gint c;
 
           for (c = 0; c < alpha; c++)
-            out[0] = in[0];
+            out[c] = in[c];
         }
       else
         {
@@ -161,12 +161,12 @@ gimp_operation_layer_mode_composite_clip_to_layer (const gfloat *in,
       if (layer_alpha == 0.0f)
         {
           for (c = 0; c < alpha; c++)
-            out[0] = in[0];
+            out[c] = in[c];
         }
       else if (in[alpha] == 0.0f)
         {
           for (c = 0; c < alpha; c++)
-            out[0] = layer[0];
+            out[c] = layer[c];
         }
       else
         {
@@ -211,12 +211,12 @@ gimp_operation_layer_mode_composite_intersection (const gfloat *in,
       if (new_alpha == 0.0f)
         {
           for (c = 0; c < alpha; c++)
-            out[0] = in[0];
+            out[c] = in[c];
         }
       else
         {
           for (c = 0; c < alpha; c++)
-            out[0] = comp[0];
+            out[c] = comp[c];
         }
 
       out[alpha] = new_alpha;
@@ -266,12 +266,12 @@ gimp_operation_layer_mode_composite_union_sub (const gfloat *in,
       if (layer_alpha == 0.0f || new_alpha == 0.0f)
         {
           for (c = 0; c < alpha; c++)
-            out[0] = in[0];
+            out[c] = in[c];
         }
       else if (in_alpha == 0.0f)
         {
           for (c = 0; c < alpha; c++)
-            out[0] = layer[0];
+            out[c] = layer[c];
         }
       else
         {
@@ -325,7 +325,7 @@ gimp_operation_layer_mode_composite_clip_to_backdrop_sub (const gfloat *in,
           gint c;
 
           for (c = 0; c < alpha; c++)
-            out[0] = in[0];
+            out[c] = in[c];
         }
       else
         {
@@ -380,12 +380,12 @@ gimp_operation_layer_mode_composite_clip_to_layer_sub (const gfloat *in,
       if (layer_alpha == 0.0f)
         {
           for (c = 0; c < alpha; c++)
-            out[0] = in[0];
+            out[c] = in[c];
         }
       else if (in_alpha == 0.0f)
         {
           for (c = 0; c < alpha; c++)
-            out[0] = layer[0];
+            out[c] = layer[c];
         }
       else
         {
@@ -433,12 +433,12 @@ gimp_operation_layer_mode_composite_intersection_sub (const gfloat *in,
       if (new_alpha == 0.0f)
         {
           for (c = 0; c < alpha; c++)
-            out[0] = in[0];
+            out[c] = in[c];
         }
       else
         {
           for (c = 0; c < alpha; c++)
-            out[0] = comp[0];
+            out[c] = comp[c];
         }
 
       out[alpha] = new_alpha;
