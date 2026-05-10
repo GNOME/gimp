@@ -236,26 +236,15 @@ foreach ($bundle in $supported_archs)
     ### Set Identity Name
     conf_manifest '@IDENTITY_NAME@' "$IDENTITY_NAME"
     ### Set Display Name (the name shown in MS Store, on Start Menu etc)
-    if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
-      {
-        $display_name='GIMP (Insider)'
-      }
-    elseif (($GIMP_RELEASE -and $GIMP_UNSTABLE) -or $GIMP_RC_VERSION)
-      {
-        $display_name='GIMP (Preview)'
-      }
-    else
-      {
-        $display_name='GIMP'
-      }
+$display_name='GIMP'
+
     conf_manifest '@DISPLAY_NAME@' "$display_name"
     ### Set custom GIMP version (major.minor.micro+revision.0)
     conf_manifest '@CUSTOM_GIMP_VERSION@' "$CUSTOM_GIMP_VERSION"
     #### Needed to differentiate on PowerShell etc
-    if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
-      {
+
         $mutex_suffix="-$GIMP_MUTEX_VERSION"
-      }
+
     conf_manifest '@MUTEX_SUFFIX@' "$mutex_suffix"
     ### List supported filetypes
     $file_types = Get-Content "$build_dir\plug-ins\file_associations.list" | Foreach-Object {"              <uap:FileType>." + $_} |
@@ -291,10 +280,9 @@ foreach ($bundle in $supported_archs)
         Set-Content "$vfs\share\gimp\*\gimp-release"
       }
     ### Disable Update check (ONLY FOR RELEASES)
-    if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
-      {
+
         Add-Content "$vfs\share\gimp\*\gimp-release" 'check-update=false'
-      }
+
 
     ## Parity adjustments (to make the .msix IDENTICAL TO THE .EXE INSTALLER, except for the adjustments above)
     Get-ChildItem "$vfs" -Recurse -Include (".gitignore", "gimp.cmd") | Remove-Item -Recurse
@@ -305,14 +293,13 @@ foreach ($bundle in $supported_archs)
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_making[collapsed=true]$([char]13)$([char]27)[0KPackaging ${temp_text}$msix_arch MSIX"
     ## Make .appxsym for each msix_arch (ONLY FOR RELEASES)
     $APPXSYM = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.appxsym"
-    if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*' -or $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
-      {
+
         Write-Output "(INFO): making $APPXSYM"
         Get-ChildItem $msix_arch -Filter *.pdb -Recurse | Compress-Archive -DestinationPath "$APPXSYM.zip"
         Rename-Item "$APPXSYM.zip" "$APPXSYM"
         #(To not ship .pdb we need an online symbol server pointed on _NT_SYMBOL_PATH)
         #Get-ChildItem $msix_arch -Include *.pdb -Recurse -Force | Remove-Item -Recurse -Force
-      }
+
 
     ## Make .msix from each msix_arch
     $MSIX_ARTIFACT = $APPXSYM -replace '.appxsym','.msix'
@@ -333,11 +320,10 @@ if (((Test-Path $arm64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem
   {
     $MSIXBUNDLE = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_neutral.msixbundle"
     $MSIX_ARTIFACT = "$MSIXBUNDLE"
-    if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
-      {
+
         $MSIXUPLOAD = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_x64_arm64_bundle.msixupload"
         $MSIX_ARTIFACT = "$MSIXUPLOAD"
-      }
+
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_making[collapsed=true]$([char]13)$([char]27)[0KPackaging $MSIX_ARTIFACT"
 
     ## Make .msixbundle with all archs
@@ -349,14 +335,13 @@ if (((Test-Path $arm64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem
     Remove-Item _TempOutput/ -Recurse
 
     ## Make .msixupload (ONLY FOR RELEASES)
-    if ($GIMP_RELEASE -and -not $GIMP_IS_RC_GIT)
-      {
+
         Write-Output "(INFO): creating $MSIXUPLOAD for submission"
         Compress-Archive -Path "*.appxsym","*.msixbundle" -DestinationPath "$MSIXUPLOAD.zip"
         Rename-Item "$MSIXUPLOAD.zip" "$MSIXUPLOAD"
         Remove-Item *.appxsym -Force
         Remove-Item *.msixbundle -Force
-      }
+
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_making$([char]13)$([char]27)[0K"
   }
 
@@ -415,49 +400,6 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
       }
   }
 
-
-# 6.B. SIGN .MSIX OR .MSIXBUNDLE PACKAGE (NOT THE BINARIES)
-# (Partner Center does the same thing, for free, before publishing)
-if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
-  {
-    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}[collapsed=true]$([char]13)$([char]27)[0KSelf-signing $MSIX_ARTIFACT (for testing purposes)"
-    ## Check if certificate for nightly builds is fine
-    $sign_output = & signtool sign /debug /fd sha256 /a /f $(Resolve-Path build\windows\store\pseudo-gimp*.pfx) /p eek $MSIX_ARTIFACT
-    Write-Output $sign_output
-    if ($sign_output -like "*After expiry filter, 0 certs were left*")
-      {
-        $pseudo_gimp = "pseudo-gimp_$(Get-Date -UFormat %s -Millisecond 0)"
-        New-SelfSignedCertificate -Type Custom -Subject "$(([xml](Get-Content build\windows\store\AppxManifest.xml)).Package.Identity.Publisher)" -KeyUsage DigitalSignature -FriendlyName "$pseudo_gimp" -CertStoreLocation "Cert:\CurrentUser\My" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}") | Out-Null
-        Export-PfxCertificate -Cert "Cert:\CurrentUser\My\$(Get-ChildItem Cert:\CurrentUser\My | Where-Object FriendlyName -EQ "$pseudo_gimp" | Select-Object -ExpandProperty Thumbprint)" -FilePath "${pseudo_gimp}.pfx" -Password (ConvertTo-SecureString -String eek -Force -AsPlainText) | Out-Null
-        Remove-Item "Cert:\CurrentUser\My\$(Get-ChildItem Cert:\CurrentUser\My | Where-Object FriendlyName -EQ "$pseudo_gimp" | Select-Object -ExpandProperty Thumbprint)"
-        Write-Host "(ERROR): Self-signing certificate expired. Please commit the generated '${pseudo_gimp}.pfx' on 'build\windows\store\'." -ForegroundColor red
-        $sha256_pfx = (Get-FileHash "${pseudo_gimp}.pfx" -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
-        Write-Output "(INFO): ${pseudo_gimp}.pfx SHA-256: $sha256_pfx"
-      }
-    else
-      {
-        Copy-Item build\windows\store\pseudo-gimp*.pfx pseudo-gimp.pfx -Recurse
-
-        ## Generate checksums
-        $sha256 = (Get-FileHash $MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
-        Write-Output "(INFO): $MSIX_ARTIFACT SHA-256: $sha256"
-        $sha512 = (Get-FileHash $MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()
-        Write-Output "(INFO): $MSIX_ARTIFACT SHA-512: $sha512"
-      }
-
-    ## Check in advance if the CLIENT_SECRET we will use in the future tagged pipeline is fine
-    if ($CI_COMMIT_TAG)
-      {
-        $latest_msix_secret = New-Object -TypeName System.DateTime -ArgumentList 2026, 9, 20
-        Write-Output "(INFO): CLIENT_SECRET expire date is: $latest_msix_secret"
-        if ((Get-Date) -ge $latest_msix_secret)
-          {
-            $expired_secret = "$latest_msix_secret"
-            Write-Host "(ERROR): Submission secret for releases expired. Please follow https://developer.gimp.org/core/maintainer/accounts/msstore/ then commit its expire date on 'build\windows\store\*.ps1'." -ForegroundColor red
-          }
-      }
-    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}$([char]13)$([char]27)[0K"
-  }
 
 
 if ($GITLAB_CI)
