@@ -106,6 +106,6 @@ self_build()
 }
 
 self_build https://gitlab.gnome.org/GNOME/babl
-self_build https://gitlab.gnome.org/GNOME/gegl
+self_build https://gitlab.gnome.org/GNOME/gegl "build/macos/patches/0001-Do-not-require-gexiv2-0.14-on-homebrew-for-gegl.patch"
 
 cd $GIMP_DIR

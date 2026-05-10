@@ -1,0 +1,38 @@
+From 1937ac5fbdc58a8fe8eda55da3621aa4deb1f2a6 Mon Sep 17 00:00:00 2001
+From: Bruno Lopes <brunvonlope@outlook.com>
+Date: Sun, 10 May 2026 17:38:24 -0300
+Subject: [PATCH] Do not require gexiv2-0.14 on homebrew for gegl
+
+---
+ examples/meson.build | 1 +
+ tools/meson.build    | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/examples/meson.build b/examples/meson.build
+index 9a0e4b2..f04c0dc 100644
+--- a/examples/meson.build
++++ b/examples/meson.build
+@@ -44,6 +44,7 @@ foreach example : examples
+       example_deps,
+     ],
+     link_with: [ gegl_lib, ],
++    c_args: ['-Wno-deprecated-declarations'],
+     install: false,
+   )
+ 
+diff --git a/tools/meson.build b/tools/meson.build
+index 13d43c1..77ebfbd 100644
+--- a/tools/meson.build
++++ b/tools/meson.build
+@@ -76,7 +76,7 @@ if gexiv2.found()
+     include_directories: toolsInclude,
+     dependencies: [ tools_deps, gexiv2, ],
+     link_with: [ gegl_lib, ],
+-    c_args: [ tools_c_args ],
++    cpp_args: tools_c_args + ['-Wno-deprecated-declarations'],
+     install: false,
+   )
+ endif
+-- 
+2.50.1 (Apple Git-155)
+
