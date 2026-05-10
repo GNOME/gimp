@@ -3646,19 +3646,14 @@ prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
   }
 
   {
-    GtkWidget    *tv;
-    GtkTreeModel *model;
-    GtkTreePath  *path;
+    GtkWidget *tv;
 
+    /* Expand all folders in the tree view by default. */
     tv = gimp_prefs_box_get_tree_view (GIMP_PREFS_BOX (prefs_box));
     gtk_tree_view_expand_all (GTK_TREE_VIEW (tv));
 
-    /*  collapse the Folders subtree */
-    model = gtk_tree_view_get_model (GTK_TREE_VIEW (tv));
-    path = gtk_tree_model_get_path (model, &top_iter);
-    gtk_tree_view_collapse_row (GTK_TREE_VIEW (tv), path);
-    gtk_tree_path_free (path);
   }
 
   return dialog;
 }
+    
