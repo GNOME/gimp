@@ -50,6 +50,7 @@ gimp_operation_layer_mode_composite_clip_to_backdrop_sse2 (const gfloat *in,
                                                            const gfloat *comp,
                                                            const gfloat *mask,
                                                            gfloat        opacity,
+                                                           const gint    n_components,
                                                            gfloat       *out,
                                                            gint          samples)
 {
@@ -58,7 +59,8 @@ gimp_operation_layer_mode_composite_clip_to_backdrop_sse2 (const gfloat *in,
        ((uintptr_t)out)   ) & 0x0F)
     {
       gimp_operation_layer_mode_composite_clip_to_backdrop (in, layer, comp,
-                                                            mask, opacity, out,
+                                                            mask, opacity,
+                                                            n_components, out,
                                                             samples);
     }
   else
