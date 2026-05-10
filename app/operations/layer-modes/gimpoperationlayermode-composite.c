@@ -271,7 +271,7 @@ gimp_operation_layer_mode_composite_union_sub (const gfloat *in,
       else if (in_alpha == 0.0f)
         {
           for (c = 0; c < alpha; c++)
-            out[0] = comp[0];
+            out[0] = layer[0];
         }
       else
         {
