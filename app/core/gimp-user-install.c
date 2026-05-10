@@ -43,6 +43,11 @@
 
 #ifdef G_OS_WIN32
 #include <libgimpbase/gimpwin32-io.h>
+#include <windows.h>
+#include "appmodel.h"
+#ifndef PACKAGE_FULL_NAME_MAX_LENGTH
+#define PACKAGE_FULL_NAME_MAX_LENGTH 127
+#endif
 #endif
 
 #include "libgimpbase/gimpbase.h"
@@ -428,6 +433,38 @@ user_install_detect_old (GimpUserInstall *install,
                     }
                 }
 #endif
+#ifdef G_OS_WIN32
+              if (major == 3 && minor == 2)
+                {
+                  /* This is special-casing for GIMP 3.2 as MSIX where
+                   * the config folder would be in %LOCALAPPDATA%/Packages/<etc> (see #16367).
+                   * For GIMP 3.2, even the snap will always be in
+                   * %APPDATA%. But then we want a migration to still
+                   * find the previous config folder.
+                   */
+                  gchar *msix_dir = user_install_msix_gimpdir (minor);
+
+                  if (msix_dir)
+                    /* This first test is for finding a 3.2 MSIX config
+                     * dir from a non-MSIX GIMP 3.2+.
+                     */
+                    migrate = g_file_test (msix_dir, G_FILE_TEST_IS_DIR);
+
+                  if (migrate)
+                    {
+                      install->old_major = 3;
+                      install->old_minor = minor;
+
+                      g_free (dir);
+                      dir = msix_dir;
+                      break;
+                    }
+                  else
+                    {
+                      g_free (msix_dir);
+                    }
+                }
+#endif
             }
           if (migrate)
             break;
@@ -531,6 +568,35 @@ user_install_snap_gimpdir (gint minor)
                                  version, NULL);
 
   g_free (version);
+
+  return gimp_dir;
+}
+#endif
+
+#ifdef G_OS_WIN32
+static gchar *
+user_install_msix_gimpdir (gint minor)
+{
+  gchar   *conf_dir;
+  gchar   *gimp_dir = NULL;
+  WCHAR    w_msix_name[PACKAGE_FULL_NAME_MAX_LENGTH + 1];
+  guint32  length = PACKAGE_FULL_NAME_MAX_LENGTH + 1;
+
+  if (GetCurrentPackageFullName (&length, w_msix_name) == ERROR_SUCCESS)
+    {
+      gchar *msix_name;
+      gchar *version = g_strdup_printf ("3.%d", minor);
+
+      conf_dir = gimp_win32_get_known_folder (&FOLDERID_LocalAppData);
+
+      msix_name = g_utf16_to_utf8 (w_msix_name, -1, NULL, NULL, NULL);
+      gimp_dir = g_build_filename (conf_dir, "Packages", msix_name, "LocalCache",
+                                   "Roaming", "GIMP", version, NULL);
+
+      g_free (msix_name);
+      g_free (conf_dir);
+      g_free (version);
+    }
 
   return gimp_dir;
 }
