@@ -1,6 +1,6 @@
-From c8531126e02107041e1c7f9b66f79297af31a5f1 Mon Sep 17 00:00:00 2001
+From fd8af534aa3af90aa9e6f3674fa780ffc48f7299 Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Sun, 10 May 2026 15:19:41 -0300
+Date: Thu, 2 Apr 2026 14:19:49 -0300
 Subject: [PATCH] build/macos: Do not require gexiv2-0.14 on homebrew
 
 ---
@@ -8,10 +8,11 @@ Subject: [PATCH] build/macos: Do not require gexiv2-0.14 on homebrew
  app/dialogs/meson.build        | 5 ++++-
  libgimp/meson.build            | 4 ++--
  libgimpbase/meson.build        | 1 +
+ meson.build                    | 6 ++----
  plug-ins/common/meson.build    | 2 ++
  plug-ins/file-tiff/meson.build | 1 +
  plug-ins/metadata/meson.build  | 2 ++
- 7 files changed, 16 insertions(+), 4 deletions(-)
+ 8 files changed, 18 insertions(+), 8 deletions(-)
 
 diff --git a/app/core/meson.build b/app/core/meson.build
 index 656d36a9c2..375eafd877 100644
@@ -46,7 +47,7 @@ index 672cd934eb..dc919b8bf0 100644
      appstream,
      gegl,
 diff --git a/libgimp/meson.build b/libgimp/meson.build
-index 97393ccd2b..9e0d54abac 100644
+index eb1166c728..36af7e9e62 100644
 --- a/libgimp/meson.build
 +++ b/libgimp/meson.build
 @@ -399,7 +399,7 @@ libgimp_deps_table = [
@@ -68,7 +69,7 @@ index 97393ccd2b..9e0d54abac 100644
      libgimpbase,
      libgimpcolor,
 diff --git a/libgimpbase/meson.build b/libgimpbase/meson.build
-index fe79db4ffa..a8283987d3 100644
+index 377a806249..c305509856 100644
 --- a/libgimpbase/meson.build
 +++ b/libgimpbase/meson.build
 @@ -125,6 +125,7 @@ libgimpbase = library('gimpbase-' + gimp_api_version,
@@ -79,11 +80,35 @@ index fe79db4ffa..a8283987d3 100644
    ],
    vs_module_defs: 'gimpbase.def',
    install: true,
+diff --git a/meson.build b/meson.build
+index 3e6a324e16..d46d4b0ee5 100644
+--- a/meson.build
++++ b/meson.build
+@@ -464,9 +464,8 @@ gegl_minver       = '0.4.66'
+ gegl              = dependency('gegl-0.4',           version: '>='+gegl_minver)
+ exiv2_minver      = '0.27.4'
+ exiv2             = dependency('exiv2',              version: '>='+exiv2_minver)
+-gexiv2_minver     = '0.14.0'
+-gexiv2_maxver     = '0.15.0'
+-gexiv2            = dependency('gexiv2',             version: ['>='+gexiv2_minver, '<'+gexiv2_maxver])
++gexiv2_minver     = '0.16.0'
++gexiv2            = dependency('gexiv2-0.16',        version: '>='+gexiv2_minver)
+ 
+ gio               = dependency('gio-2.0')
+ gio_specific_name = platform_windows ? 'gio-windows-2.0' : 'gio-unix-2.0'
+@@ -1812,7 +1811,6 @@ install_conf.set('GDK_PIXBUF_REQUIRED_VERSION',   gdk_pixbuf_minver)
+ install_conf.set('GEGL_REQUIRED_VERSION',         gegl_minver)
+ install_conf.set('EXIV2_REQUIRED_VERSION',        exiv2_minver)
+ install_conf.set('GEXIV2_REQUIRED_VERSION',       gexiv2_minver)
+-install_conf.set('GEXIV2_MAX_VERSION',            gexiv2_maxver)
+ install_conf.set('GLIB_REQUIRED_VERSION',         glib_minver)
+ install_conf.set('GTK_REQUIRED_VERSION',          gtk3_minver)
+ install_conf.set('HARFBUZZ_REQUIRED_VERSION',     harfbuzz_minver)
 diff --git a/plug-ins/common/meson.build b/plug-ins/common/meson.build
-index b818a669ec..883ac7ef5e 100644
+index 420e4d1cdd..faf397d64e 100644
 --- a/plug-ins/common/meson.build
 +++ b/plug-ins/common/meson.build
-@@ -93,6 +93,7 @@ endif
+@@ -92,6 +92,7 @@ endif
  if have_heif
    common_plugins_list += { 'name': 'file-heif',
      'deps': [ libheif, lcms, ],
@@ -91,7 +116,7 @@ index b818a669ec..883ac7ef5e 100644
    }
  endif
  
-@@ -106,6 +107,7 @@ if libjxl.found() and libjxl_threads.found()
+@@ -105,6 +106,7 @@ if libjxl.found() and libjxl_threads.found()
    common_plugins_list += {
      'name': 'file-jpegxl',
      'deps': [ libjxl, libjxl_threads, ],
