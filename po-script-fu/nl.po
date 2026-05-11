@@ -12,8 +12,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-03-28 19:22+0000\n"
-"PO-Revision-Date: 2025-03-29 10:21+0200\n"
+"POT-Creation-Date: 2026-04-16 15:15+0000\n"
+"PO-Revision-Date: 2026-05-11 13:36+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -109,7 +109,7 @@ msgid "Save Script-Fu Console Output"
 msgstr "Uitvoer Script-Fu opdrachtregel opslaan"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/server/script-fu-server.c:968
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "_Annuleren"
@@ -117,7 +117,7 @@ msgstr "_Annuleren"
 #: plug-ins/script-fu/console/script-fu-console.c:293
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Kon '%s' niet openen om te schrijven: %s"
+msgstr "Kon ‘%s’ niet openen om te schrijven: %s"
 
 #: plug-ins/script-fu/console/script-fu-console.c:319
 msgid "Script-Fu Procedure Browser"
@@ -135,27 +135,27 @@ msgstr "Welkom bij TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Scripten met GIMP in de taal Scheme"
 
-#: plug-ins/script-fu/server/script-fu-server.c:918
+#: plug-ins/script-fu/server/script-fu-server.c:964
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu serveropties"
 
-#: plug-ins/script-fu/server/script-fu-server.c:923
+#: plug-ins/script-fu/server/script-fu-server.c:969
 msgid "_Start Server"
 msgstr "_Server opstarten"
 
-#: plug-ins/script-fu/server/script-fu-server.c:956
+#: plug-ins/script-fu/server/script-fu-server.c:1002
 msgid "Listen on IP:"
 msgstr "Luister op IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:963
+#: plug-ins/script-fu/server/script-fu-server.c:1009
 msgid "Server port:"
 msgstr "Serverpoort:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:969
+#: plug-ins/script-fu/server/script-fu-server.c:1015
 msgid "Server logfile:"
 msgstr "Serverlogbestand:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:982
+#: plug-ins/script-fu/server/script-fu-server.c:1028
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -212,7 +212,7 @@ msgstr "Script-Fu-mapselectie"
 msgid "Error while executing %s:"
 msgstr "Fout tijdens uitvoeren van %s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:417
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:541
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Fout tijdens laden van %s:"
@@ -311,52 +311,52 @@ msgid "Looped"
 msgstr "Herhalen"
 
 #. --- false form of "if-1"
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:218
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:220
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr "Het script Inbranden heeft in totaal twee lagen nodig. Een voorgrondlaag met transparantie en een achtergrondlaag."
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:225
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:227
 msgid "B_urn-In..."
 msgstr "_Inbranden…"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:226
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:228
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr "Tussenliggende lagen aanmaken om een geanimeerde overgang 'inbranden' te produceren tussen de twee lagen"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:232
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Glow color"
 msgstr "Gloeikleur"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:233
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Fadeout"
 msgstr "Uitvloei"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:234
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:236
 msgid "Fadeout width"
 msgstr "Uitvloeibreedte"
 
 # corona/kroon/krans
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:235
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:237
 msgid "Corona width"
 msgstr "Kransbreedte"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:236
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "After glow"
 msgstr "Nagloeien"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:237
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:239
 msgid "Add glowing"
 msgstr "Gloed toevoegen"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:238
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:240
 msgid "Prepare for GIF"
 msgstr "Voor GIF voorbereiden"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:239
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:241
 msgid "Speed (pixels/frame)"
 msgstr "Snelheid (beeldpunten/frame)"
 
@@ -391,6 +391,10 @@ msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr "Gebruik het opgegeven tekengebied als stencil om de afbeelding te kerven."
 
+#: plug-ins/script-fu/scripts/carve-it.scm:230
+msgid "Mask image"
+msgstr "Maskerafbeelding"
+
 #: plug-ins/script-fu/scripts/carve-it.scm:231
 msgid "Mask drawable"
 msgstr "Tekengebied-masker"
@@ -419,50 +423,50 @@ msgstr "Laag 3"
 msgid "Drop Shadow"
 msgstr "Slagschaduw"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:286
+#: plug-ins/script-fu/scripts/chrome-it.scm:299
 msgid "Chrome"
 msgstr "Chroom"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:287
+#: plug-ins/script-fu/scripts/chrome-it.scm:300
 #: plug-ins/script-fu/scripts/xach-effect.scm:69
 msgid "Highlight"
 msgstr "Oplichten"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:307
+#: plug-ins/script-fu/scripts/chrome-it.scm:320
 msgid "Stencil C_hrome..."
 msgstr "C_hroom…"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:308
+#: plug-ins/script-fu/scripts/chrome-it.scm:321
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr "Een chroomeffect toevoegen aan het geselecteerde gebied (of alfa) met een opgegeven (grijswaarden) stencil"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:314
+#: plug-ins/script-fu/scripts/chrome-it.scm:327
 msgid "Chrome saturation"
 msgstr "Chroomverzadiging"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:315
+#: plug-ins/script-fu/scripts/chrome-it.scm:328
 msgid "Chrome lightness"
 msgstr "Chroomlichtheid"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:316
+#: plug-ins/script-fu/scripts/chrome-it.scm:329
 msgid "Chrome factor"
 msgstr "Chroomfactor"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:317
+#: plug-ins/script-fu/scripts/chrome-it.scm:330
 msgid "Environment map"
 msgstr "Omgevingsprojectie"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:320
+#: plug-ins/script-fu/scripts/chrome-it.scm:333
 msgid "Highlight balance"
 msgstr "Hooglichten balans"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:321
+#: plug-ins/script-fu/scripts/chrome-it.scm:334
 msgid "Chrome balance"
 msgstr "Chroombalans"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:322
+#: plug-ins/script-fu/scripts/chrome-it.scm:335
 msgid "Chrome white areas"
 msgstr "Chroom witte gebieden"
 
@@ -639,12 +643,12 @@ msgstr "Verschuiving Y"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:179
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:206
-#: plug-ins/script-fu/scripts/round-corners.scm:143
+#: plug-ins/script-fu/scripts/round-corners.scm:145
 msgid "Blur radius"
 msgstr "Vervagingsstraal"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:180
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:147
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:207
 msgid "Color"
 msgstr "Kleur"
@@ -700,44 +704,44 @@ msgstr "Zwart op wit"
 msgid "Active colors"
 msgstr "Actieve kleuren"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:140
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:142
 msgid "_Fuzzy Border..."
 msgstr "_Vage rand…"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:141
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:143
 msgid "Add a jagged, fuzzy border to an image"
 msgstr "Een gekartelde, vage rand toevoegen aan een afbeelding"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:148
-#: plug-ins/script-fu/scripts/old-photo.scm:99
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
+#: plug-ins/script-fu/scripts/old-photo.scm:106
 msgid "Border size"
 msgstr "Randgrootte"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:151
 msgid "Blur border"
 msgstr "Vervagingsrand"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:152
 msgid "Granularity (1 is Low)"
 msgstr "Korreligheid (1 is laag)"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:151
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:153
 msgid "Add shadow"
 msgstr "Schaduw toevoegen"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:152
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:154
 msgid "Shadow weight (%)"
 msgstr "Schaduw gewicht (%)"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:153
-#: plug-ins/script-fu/scripts/old-photo.scm:105
-#: plug-ins/script-fu/scripts/round-corners.scm:145
-#: plug-ins/script-fu/scripts/slide.scm:268
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:155
+#: plug-ins/script-fu/scripts/old-photo.scm:112
+#: plug-ins/script-fu/scripts/round-corners.scm:147
+#: plug-ins/script-fu/scripts/slide.scm:270
 #: plug-ins/script-fu/scripts/spinning-globe.scm:127
 msgid "Work on copy"
 msgstr "Op kopie werken"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:154
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:156
 msgid "Flatten image"
 msgstr "Alle lagen samenvoegen"
 
@@ -1020,15 +1024,15 @@ msgstr "_Ovaal, verzacht…"
 msgid "Create an elliptical brush with feathered edges"
 msgstr "Maak een ovaal penseel met verzachte randen"
 
-#: plug-ins/script-fu/scripts/old-photo.scm:91
+#: plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "_Old Photo..."
 msgstr "_Oude foto…"
 
-#: plug-ins/script-fu/scripts/old-photo.scm:92
+#: plug-ins/script-fu/scripts/old-photo.scm:99
 msgid "Make an image look like an old photo"
 msgstr "Een afbeelding op een oude foto doen lijken"
 
-#: plug-ins/script-fu/scripts/old-photo.scm:98
+#: plug-ins/script-fu/scripts/old-photo.scm:105
 msgid "Defocus"
 msgstr "Ontfocus"
 
@@ -1036,11 +1040,11 @@ msgstr "Ontfocus"
 #. since this plug-in uses the fuzzy-border plug-in, I used the
 #. values of the latter, with the exception of the initial value
 #. and the 'minimum' value.
-#: plug-ins/script-fu/scripts/old-photo.scm:103
+#: plug-ins/script-fu/scripts/old-photo.scm:110
 msgid "Sepia"
 msgstr "Sepia"
 
-#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/old-photo.scm:111
 msgid "Mottle"
 msgstr "Bevlekken"
 
@@ -1237,32 +1241,32 @@ msgstr "Smeren"
 msgid "Black"
 msgstr "Zwart"
 
-#: plug-ins/script-fu/scripts/round-corners.scm:132
+#: plug-ins/script-fu/scripts/round-corners.scm:134
 msgid "_Round Corners..."
 msgstr "_Ronde hoeken…"
 
-#: plug-ins/script-fu/scripts/round-corners.scm:133
+#: plug-ins/script-fu/scripts/round-corners.scm:135
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr "De hoeken van een afbeelding afronden en eventueel een slagschaduw en een achtergrond toevoegen"
 
-#: plug-ins/script-fu/scripts/round-corners.scm:139
+#: plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Edge radius"
 msgstr "Straal rand"
 
-#: plug-ins/script-fu/scripts/round-corners.scm:140
+#: plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Add drop-shadow"
 msgstr "Slagschaduw toevoegen"
 
-#: plug-ins/script-fu/scripts/round-corners.scm:141
+#: plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Shadow X offset"
 msgstr "X-verschuiving schaduw"
 
-#: plug-ins/script-fu/scripts/round-corners.scm:142
+#: plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Shadow Y offset"
 msgstr "Y-verschuiving schaduw"
 
-#: plug-ins/script-fu/scripts/round-corners.scm:144
+#: plug-ins/script-fu/scripts/round-corners.scm:146
 msgid "Add background"
 msgstr "Achtergrond toevoegen"
 
@@ -1294,27 +1298,27 @@ msgstr "Str_aal (%)"
 msgid "Co_ncave"
 msgstr "Co_ncaaf"
 
-#: plug-ins/script-fu/scripts/slide.scm:257
+#: plug-ins/script-fu/scripts/slide.scm:259
 msgid "_Slide..."
 msgstr "_Dia…"
 
-#: plug-ins/script-fu/scripts/slide.scm:258
+#: plug-ins/script-fu/scripts/slide.scm:260
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
 msgstr "Een kader, perforaties en labels toevoegen aan een afbeelding zodat die op een filmdia lijkt"
 
-#: plug-ins/script-fu/scripts/slide.scm:264
+#: plug-ins/script-fu/scripts/slide.scm:266
 msgid "Text"
 msgstr "Tekst"
 
-#: plug-ins/script-fu/scripts/slide.scm:265
+#: plug-ins/script-fu/scripts/slide.scm:267
 msgid "Number"
 msgstr "Getal"
 
-#: plug-ins/script-fu/scripts/slide.scm:266
+#: plug-ins/script-fu/scripts/slide.scm:268
 msgid "Font"
 msgstr "Lettertype"
 
-#: plug-ins/script-fu/scripts/slide.scm:267
+#: plug-ins/script-fu/scripts/slide.scm:269
 msgid "Font color"
 msgstr "Lettertypekleur"
 
