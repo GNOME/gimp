@@ -32,9 +32,12 @@
 
 #include "core/gimp.h"
 
+#include "plug-in/gimppluginprocedure.h"
+
 #include "gimpaction.h"
 #include "gimphelp-ids.h"
 #include "gimppopup.h"
+#include "gimpprocedureaction.h"
 #include "gimpsearchpopup.h"
 #include "gimptoggleaction.h"
 #include "gimpwidgets-utils.h"
@@ -840,8 +843,9 @@ static void
 gimp_search_popup_help (GimpSearchPopup *popup)
 {
   GtkTreeView      *tree_view;
-  const gchar      *help_id = NULL;
-  GimpAction       *action  = NULL;
+  GimpAction       *action    = NULL;
+  GFile            *help_file = NULL;
+  const gchar      *help_id   = NULL;
   GtkTreeSelection *selection;
   GtkTreeModel     *model;
   GtkTreeIter       iter;
@@ -852,12 +856,32 @@ gimp_search_popup_help (GimpSearchPopup *popup)
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
       gtk_tree_model_get (model, &iter, COLUMN_ACTION, &action, -1);
-      help_id = gimp_action_get_help_id (action);
+      if (GIMP_IS_PROCEDURE_ACTION (action))
+        {
+          GimpProcedureAction *proc_action = GIMP_PROCEDURE_ACTION (action);
+
+          if (GIMP_IS_PLUG_IN_PROCEDURE (proc_action->procedure))
+            help_file = GIMP_PLUG_IN_PROCEDURE (proc_action->procedure)->help_file;
+        }
+
+      if (help_file == NULL)
+        help_id = gimp_action_get_help_id (action);
     }
 
-  if (help_id == NULL)
-    help_id = GIMP_HELP_ACTION_SEARCH_DIALOG;
+  if (help_file)
+    {
+      gchar *uri = g_file_get_uri (help_file);
 
-  gimp_help (popup->priv->gimp, NULL, NULL, help_id);
+      g_app_info_launch_default_for_uri (uri, NULL, NULL);
+
+      g_free (uri);
+    }
+  else
+    {
+      if (help_id == NULL)
+        help_id = GIMP_HELP_ACTION_SEARCH_DIALOG;
+
+      gimp_help (popup->priv->gimp, NULL, NULL, help_id);
+    }
   g_clear_object (&action);
 }
