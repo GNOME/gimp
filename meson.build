@@ -469,12 +469,7 @@ exiv2_minver      = '0.27.4'
 exiv2             = dependency('exiv2',              version: '>='+exiv2_minver)
 gexiv2_minver     = '0.14.0'
 gexiv2_maxver     = '0.15.0'
-gexiv2            = dependency(['gexiv2', 'gexiv2-0.16'], version: '>='+gexiv2_minver)
-if gexiv2.version().version_compare('>='+gexiv2_maxver)
-  gexiv2_warning = 'gexiv2 0.16.0 API is not supported yet so build at your own risk, patches are welcome'
-  warning(gexiv2_warning)
-  warnings += gexiv2_warning
-endif
+gexiv2            = dependency('gexiv2',             version: ['>='+gexiv2_minver, '<'+gexiv2_maxver])
 
 gio               = dependency('gio-2.0')
 gio_specific_name = platform_windows ? 'gio-windows-2.0' : 'gio-unix-2.0'
