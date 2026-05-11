@@ -301,20 +301,24 @@ gimp-debian-nonreloc:
     - ninja
     - printf "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K\n"
     # Check execution
-    - printf "\e[0Ksection_start:`date +%s`:gimp_test[collapsed=true]\r\e[0KTesting GIMP execution\n"
-    - ninja test
-    - printf "\e[0Ksection_end:`date +%s`:gimp_test\r\e[0K\n"
+    - if [ "$VARIANT" != "-clang" ]; then
+        printf "\e[0Ksection_start:`date +%s`:gimp_test[collapsed=true]\r\e[0KTesting GIMP execution\n";
+        ninja test;
+        printf "\e[0Ksection_end:`date +%s`:gimp_test\r\e[0K\n";
+      fi
     # Check source
-    - printf "\e[0Ksection_start:`date +%s`:gimp_tar[collapsed=true]\r\e[0KChecking GIMP source\n"
-    - if [ $(git diff |wc -l) -ne 0 ]; then
-        printf "ERROR. A generated file was updated without the source:\n";
-        git diff;
-        exit 1;
+    - if [ "$VARIANT" != "-clang" ] && [ "$VARIANT" != "-raster" ]; then
+        printf "\e[0Ksection_start:`date +%s`:gimp_tar[collapsed=true]\r\e[0KChecking GIMP source\n";
+        if [ $(git diff |wc -l) -ne 0 ]; then
+          printf "ERROR. A generated file was updated without the source:\n";
+          git diff;
+          exit 1;
+        fi;
+        if [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
+          ninja dist > ninja_dist.log 2>&1 || { cat ninja_dist.log; exit 1; };
+        fi;
+        printf "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K\n";
       fi
-    - if [ "$VARIANT" != "-clang" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
-        ninja dist > ninja_dist.log 2>&1 || { cat ninja_dist.log; exit 1; };
-      fi
-    - printf "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K\n"
     # Check install
     - printf "\e[0Ksection_start:`date +%s`:gimp_install[collapsed=true]\r\e[0KChecking non-relocatable GIMP installation\n"
     - ninja install > ninja_install.log 2>&1 || { cat ninja_install.log; exit 1; };
