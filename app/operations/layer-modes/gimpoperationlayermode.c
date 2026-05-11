@@ -64,6 +64,7 @@ typedef void (* CompositeFunc) (const gfloat *in,
                                 const gfloat *comp,
                                 const gfloat *mask,
                                 float         opacity,
+                                const gint    n_components,
                                 gfloat       *out,
                                 gint          samples);
 
@@ -620,10 +621,12 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
                                         gint                 level)
 {
   GimpOperationLayerMode *layer_mode              = (gpointer) operation;
+  const Babl             *format                  = gegl_operation_get_format (operation, "output");
   gfloat                 *in                      = in_p;
   gfloat                 *out                     = out_p;
   gfloat                 *layer                   = layer_p;
   gfloat                 *mask                    = mask_p;
+  const gint              n_components            = babl_format_get_n_components (format);
   gfloat                  opacity                 = layer_mode->opacity;
   GimpLayerCompositeMode  composite_mode          = layer_mode->composite_mode;
   GimpLayerModeBlendFunc  blend_function          = layer_mode->blend_function;
@@ -793,22 +796,22 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
         case GIMP_LAYER_COMPOSITE_UNION:
         case GIMP_LAYER_COMPOSITE_AUTO:
           composite_union (in, layer, blend_out, mask, opacity,
-                           out, samples);
+                           n_components, out, samples);
           break;
 
         case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
           composite_clip_to_backdrop (in, layer, blend_out, mask, opacity,
-                                      out, samples);
+                                      n_components, out, samples);
           break;
 
         case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
           composite_clip_to_layer (in, layer, blend_out, mask, opacity,
-                                   out, samples);
+                                   n_components, out, samples);
           break;
 
         case GIMP_LAYER_COMPOSITE_INTERSECTION:
           composite_intersection (in, layer, blend_out, mask, opacity,
-                                  out, samples);
+                                  n_components, out, samples);
           break;
         }
     }
@@ -819,22 +822,22 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
         case GIMP_LAYER_COMPOSITE_UNION:
         case GIMP_LAYER_COMPOSITE_AUTO:
           composite_union_sub (in, layer, blend_out, mask, opacity,
-                               out, samples);
+                               n_components, out, samples);
           break;
 
         case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
           composite_clip_to_backdrop_sub (in, layer, blend_out, mask, opacity,
-                                          out, samples);
+                                          n_components, out, samples);
           break;
 
         case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
           composite_clip_to_layer_sub (in, layer, blend_out, mask, opacity,
-                                       out, samples);
+                                       n_components, out, samples);
           break;
 
         case GIMP_LAYER_COMPOSITE_INTERSECTION:
           composite_intersection_sub (in, layer, blend_out, mask, opacity,
-                                      out, samples);
+                                      n_components, out, samples);
           break;
         }
     }
@@ -852,21 +855,24 @@ process_last_node (GeglOperation       *operation,
                    const GeglRectangle *roi,
                    gint                 level)
 {
-  gfloat *out     = out_p;
-  gfloat *layer   = layer_p;
-  gfloat *mask    = mask_p;
-  gfloat  opacity = GIMP_OPERATION_LAYER_MODE (operation)->opacity;
+  gfloat     *out     = out_p;
+  gfloat     *layer   = layer_p;
+  gfloat     *mask    = mask_p;
+  gfloat      opacity = GIMP_OPERATION_LAYER_MODE (operation)->opacity;
+  const Babl *format  = gegl_operation_get_format (operation, "output");
+  const gint  n       = babl_format_get_n_components (format);
+  const gint  alpha   = n - 1;
 
   while (samples--)
     {
-      memcpy (out, layer, 3 * sizeof (gfloat));
+      memcpy (out, layer, alpha * sizeof (gfloat));
 
-      out[ALPHA] = layer[ALPHA] * opacity;
+      out[alpha] = layer[alpha] * opacity;
       if (mask)
-        out[ALPHA] *= *mask++;
+        out[alpha] *= *mask++;
 
-      layer += 4;
-      out   += 4;
+      layer += n;
+      out   += n;
     }
 
   return TRUE;

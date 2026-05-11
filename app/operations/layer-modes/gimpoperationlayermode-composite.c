@@ -33,7 +33,7 @@
 
 /*  non-subtractive compositing functions.  these functions expect comp[ALPHA]
  *  to be the same as layer[ALPHA].  when in[ALPHA] or layer[ALPHA] are zero,
- *  the value of comp[RED..BLUE] is unconstrained (in particular, it may be
+ *  the value of comp[0..N] is unconstrained (in particular, it may be
  *  NaN).
  */
 
@@ -44,14 +44,18 @@ gimp_operation_layer_mode_composite_union (const gfloat *in,
                                            const gfloat *comp,
                                            const gfloat *mask,
                                            gfloat        opacity,
+                                           const gint    n_components,
                                            gfloat       *out,
                                            gint          samples)
 {
+  const gint alpha = n_components - 1;
+
   while (samples--)
     {
       gfloat new_alpha;
-      gfloat in_alpha    = in[ALPHA];
-      gfloat layer_alpha = layer[ALPHA] * opacity;
+      gfloat in_alpha    = in[alpha];
+      gfloat layer_alpha = layer[alpha] * opacity;
+      gint   c;
 
       if (mask)
         layer_alpha *= *mask;
@@ -60,31 +64,29 @@ gimp_operation_layer_mode_composite_union (const gfloat *in,
 
       if (layer_alpha == 0.0f || new_alpha == 0.0f)
         {
-          out[RED]   = in[RED];
-          out[GREEN] = in[GREEN];
-          out[BLUE]  = in[BLUE];
+          for (c = 0; c < alpha; c++)
+            out[c] = in[c];
         }
       else if (in_alpha == 0.0f)
         {
-          out[RED]   = layer[RED];
-          out[GREEN] = layer[GREEN];
-          out[BLUE]  = layer[BLUE];
+          for (c = 0; c < alpha; c++)
+            out[c] = layer[c];
         }
       else
         {
           gfloat ratio = layer_alpha / new_alpha;
           gint   b;
 
-          for (b = RED; b < ALPHA; b++)
+          for (b = 0; b < alpha; b++)
             out[b] = ratio * (in_alpha * (comp[b] - layer[b]) + layer[b] - in[b]) + in[b];
         }
 
-      out[ALPHA] = new_alpha;
+      out[alpha] = new_alpha;
 
-      in    += 4;
-      layer += 4;
-      comp  += 4;
-      out   += 4;
+      in    += n_components;
+      layer += n_components;
+      comp  += n_components;
+      out   += n_components;
 
       if (mask)
         mask++;
@@ -97,35 +99,39 @@ gimp_operation_layer_mode_composite_clip_to_backdrop (const gfloat *in,
                                                       const gfloat *comp,
                                                       const gfloat *mask,
                                                       gfloat        opacity,
+                                                      const gint    n_components,
                                                       gfloat       *out,
                                                       gint          samples)
 {
+  const gint alpha = n_components - 1;
+
   while (samples--)
     {
-      gfloat layer_alpha = comp[ALPHA] * opacity;
+      gfloat layer_alpha = comp[alpha] * opacity;
 
       if (mask)
         layer_alpha *= *mask;
 
-      if (in[ALPHA] == 0.0f || layer_alpha == 0.0f)
+      if (in[alpha] == 0.0f || layer_alpha == 0.0f)
         {
-          out[RED]   = in[RED];
-          out[GREEN] = in[GREEN];
-          out[BLUE]  = in[BLUE];
+          gint c;
+
+          for (c = 0; c < alpha; c++)
+            out[c] = in[c];
         }
       else
         {
           gint b;
 
-          for (b = RED; b < ALPHA; b++)
+          for (b = 0; b < alpha; b++)
             out[b] = comp[b] * layer_alpha + in[b] * (1.0f - layer_alpha);
         }
 
-      out[ALPHA] = in[ALPHA];
+      out[alpha] = in[alpha];
 
-      in   += 4;
-      comp += 4;
-      out  += 4;
+      in   += n_components;
+      comp += n_components;
+      out  += n_components;
 
       if (mask)
         mask++;
@@ -138,42 +144,44 @@ gimp_operation_layer_mode_composite_clip_to_layer (const gfloat *in,
                                                    const gfloat *comp,
                                                    const gfloat *mask,
                                                    gfloat        opacity,
+                                                   const gint    n_components,
                                                    gfloat       *out,
                                                    gint          samples)
 {
+  const gint alpha = n_components - 1;
+
   while (samples--)
     {
-      gfloat layer_alpha = layer[ALPHA] * opacity;
+      gfloat layer_alpha = layer[alpha] * opacity;
+      gint   c;
 
       if (mask)
         layer_alpha *= *mask;
 
       if (layer_alpha == 0.0f)
         {
-          out[RED]   = in[RED];
-          out[GREEN] = in[GREEN];
-          out[BLUE]  = in[BLUE];
+          for (c = 0; c < alpha; c++)
+            out[c] = in[c];
         }
-      else if (in[ALPHA] == 0.0f)
+      else if (in[alpha] == 0.0f)
         {
-          out[RED]   = layer[RED];
-          out[GREEN] = layer[GREEN];
-          out[BLUE]  = layer[BLUE];
+          for (c = 0; c < alpha; c++)
+            out[c] = layer[c];
         }
       else
         {
           gint b;
 
-          for (b = RED; b < ALPHA; b++)
-            out[b] = comp[b] * in[ALPHA] + layer[b] * (1.0f - in[ALPHA]);
+          for (b = 0; b < alpha; b++)
+            out[b] = comp[b] * in[alpha] + layer[b] * (1.0f - in[alpha]);
         }
 
-      out[ALPHA] = layer_alpha;
+      out[alpha] = layer_alpha;
 
-      in    += 4;
-      layer += 4;
-      comp  += 4;
-      out   += 4;
+      in    += n_components;
+      layer += n_components;
+      comp  += n_components;
+      out   += n_components;
 
       if (mask)
         mask++;
@@ -186,34 +194,36 @@ gimp_operation_layer_mode_composite_intersection (const gfloat *in,
                                                   const gfloat *comp,
                                                   const gfloat *mask,
                                                   gfloat        opacity,
+                                                  const gint    n_components,
                                                   gfloat       *out,
                                                   gint          samples)
 {
+  const gint alpha = n_components - 1;
+
   while (samples--)
     {
-      gfloat new_alpha = in[ALPHA] * comp[ALPHA] * opacity;
+      gfloat new_alpha = in[alpha] * comp[alpha] * opacity;
+      gint   c;
 
       if (mask)
         new_alpha *= *mask;
 
       if (new_alpha == 0.0f)
         {
-          out[RED]   = in[RED];
-          out[GREEN] = in[GREEN];
-          out[BLUE]  = in[BLUE];
+          for (c = 0; c < alpha; c++)
+            out[c] = in[c];
         }
       else
         {
-          out[RED]   = comp[RED];
-          out[GREEN] = comp[GREEN];
-          out[BLUE]  = comp[BLUE];
+          for (c = 0; c < alpha; c++)
+            out[c] = comp[c];
         }
 
-      out[ALPHA] = new_alpha;
+      out[alpha] = new_alpha;
 
-      in   += 4;
-      comp += 4;
-      out  += 4;
+      in   += n_components;
+      comp += n_components;
+      out  += n_components;
 
       if (mask)
         mask++;
@@ -224,7 +234,7 @@ gimp_operation_layer_mode_composite_intersection (const gfloat *in,
  *  specify the modified alpha of the overlapping content, as a fraction of the
  *  original overlapping content (i.e., an alpha of 1.0 specifies that no
  *  content is subtracted.)  when in[ALPHA] or layer[ALPHA] are zero, the value
- *  of comp[RED..BLUE] is unconstrained (in particular, it may be NaN).
+ *  of comp[0..N] is unconstrained (in particular, it may be NaN).
  */
 
 void
@@ -233,15 +243,19 @@ gimp_operation_layer_mode_composite_union_sub (const gfloat *in,
                                                const gfloat *comp,
                                                const gfloat *mask,
                                                gfloat        opacity,
+                                               const gint    n_components,
                                                gfloat       *out,
                                                gint          samples)
 {
+  const gint alpha = n_components - 1;
+
   while (samples--)
     {
-      gfloat in_alpha    = in[ALPHA];
-      gfloat layer_alpha = layer[ALPHA] * opacity;
-      gfloat comp_alpha  = comp[ALPHA];
+      gfloat in_alpha    = in[alpha];
+      gfloat layer_alpha = layer[alpha] * opacity;
+      gfloat comp_alpha  = comp[alpha];
       gfloat new_alpha;
+      gint   c;
 
       if (mask)
         layer_alpha *= *mask;
@@ -251,15 +265,13 @@ gimp_operation_layer_mode_composite_union_sub (const gfloat *in,
 
       if (layer_alpha == 0.0f || new_alpha == 0.0f)
         {
-          out[RED]   = in[RED];
-          out[GREEN] = in[GREEN];
-          out[BLUE]  = in[BLUE];
+          for (c = 0; c < alpha; c++)
+            out[c] = in[c];
         }
       else if (in_alpha == 0.0f)
         {
-          out[RED]   = layer[RED];
-          out[GREEN] = layer[GREEN];
-          out[BLUE]  = layer[BLUE];
+          for (c = 0; c < alpha; c++)
+            out[c] = layer[c];
         }
       else
         {
@@ -267,16 +279,16 @@ gimp_operation_layer_mode_composite_union_sub (const gfloat *in,
           gfloat layer_coeff = 1.0f / in_alpha - 1.0f;
           gint   b;
 
-          for (b = RED; b < ALPHA; b++)
+          for (b = 0; b < alpha; b++)
             out[b] = ratio * (layer_alpha * (comp_alpha * comp[b] + layer_coeff * layer[b] - in[b]) + in[b]);
         }
 
-      out[ALPHA] = new_alpha;
+      out[alpha] = new_alpha;
 
-      in    += 4;
-      layer += 4;
-      comp  += 4;
-      out   += 4;
+      in    += n_components;
+      layer += n_components;
+      comp  += n_components;
+      out   += n_components;
 
       if (mask)
         mask++;
@@ -289,13 +301,16 @@ gimp_operation_layer_mode_composite_clip_to_backdrop_sub (const gfloat *in,
                                                           const gfloat *comp,
                                                           const gfloat *mask,
                                                           gfloat        opacity,
+                                                          const gint    n_components,
                                                           gfloat       *out,
                                                           gint          samples)
 {
+  const gint alpha = n_components - 1;
+
   while (samples--)
     {
-      gfloat layer_alpha = layer[ALPHA] * opacity;
-      gfloat comp_alpha  = comp[ALPHA];
+      gfloat layer_alpha = layer[alpha] * opacity;
+      gfloat comp_alpha  = comp[alpha];
       gfloat new_alpha;
 
       if (mask)
@@ -305,29 +320,30 @@ gimp_operation_layer_mode_composite_clip_to_backdrop_sub (const gfloat *in,
 
       new_alpha = 1.0f - layer_alpha + comp_alpha;
 
-      if (in[ALPHA] == 0.0f || comp_alpha == 0.0f)
+      if (in[alpha] == 0.0f || comp_alpha == 0.0f)
         {
-          out[RED]   = in[RED];
-          out[GREEN] = in[GREEN];
-          out[BLUE]  = in[BLUE];
+          gint c;
+
+          for (c = 0; c < alpha; c++)
+            out[c] = in[c];
         }
       else
         {
           gfloat ratio = comp_alpha / new_alpha;
           gint   b;
 
-          for (b = RED; b < ALPHA; b++)
+          for (b = 0; b < alpha; b++)
             out[b] = comp[b] * ratio + in[b] * (1.0f - ratio);
         }
 
-      new_alpha *= in[ALPHA];
+      new_alpha *= in[alpha];
 
-      out[ALPHA] = new_alpha;
+      out[alpha] = new_alpha;
 
-      in    += 4;
-      layer += 4;
-      comp  += 4;
-      out   += 4;
+      in    += n_components;
+      layer += n_components;
+      comp  += n_components;
+      out   += n_components;
 
       if (mask)
         mask++;
@@ -340,15 +356,19 @@ gimp_operation_layer_mode_composite_clip_to_layer_sub (const gfloat *in,
                                                        const gfloat *comp,
                                                        const gfloat *mask,
                                                        gfloat        opacity,
+                                                       const gint    n_components,
                                                        gfloat       *out,
                                                        gint          samples)
 {
+  const gint alpha = n_components - 1;
+
   while (samples--)
     {
-      gfloat in_alpha    = in[ALPHA];
-      gfloat layer_alpha = layer[ALPHA] * opacity;
-      gfloat comp_alpha  = comp[ALPHA];
+      gfloat in_alpha    = in[alpha];
+      gfloat layer_alpha = layer[alpha] * opacity;
+      gfloat comp_alpha  = comp[alpha];
       gfloat new_alpha;
+      gint   c;
 
       if (mask)
         layer_alpha *= *mask;
@@ -359,33 +379,31 @@ gimp_operation_layer_mode_composite_clip_to_layer_sub (const gfloat *in,
 
       if (layer_alpha == 0.0f)
         {
-          out[RED]   = in[RED];
-          out[GREEN] = in[GREEN];
-          out[BLUE]  = in[BLUE];
+          for (c = 0; c < alpha; c++)
+            out[c] = in[c];
         }
       else if (in_alpha == 0.0f)
         {
-          out[RED]   = layer[RED];
-          out[GREEN] = layer[GREEN];
-          out[BLUE]  = layer[BLUE];
+          for (c = 0; c < alpha; c++)
+            out[c] = layer[c];
         }
       else
         {
           gfloat ratio = comp_alpha / new_alpha;
           gint   b;
 
-          for (b = RED; b < ALPHA; b++)
+          for (b = 0; b < alpha; b++)
             out[b] = comp[b] * ratio + layer[b] * (1.0f - ratio);
         }
 
       new_alpha *= layer_alpha;
 
-      out[ALPHA] = new_alpha;
+      out[alpha] = new_alpha;
 
-      in    += 4;
-      layer += 4;
-      comp  += 4;
-      out   += 4;
+      in    += n_components;
+      layer += n_components;
+      comp  += n_components;
+      out   += n_components;
 
       if (mask)
         mask++;
@@ -398,35 +416,37 @@ gimp_operation_layer_mode_composite_intersection_sub (const gfloat *in,
                                                       const gfloat *comp,
                                                       const gfloat *mask,
                                                       gfloat        opacity,
+                                                      const gint    n_components,
                                                       gfloat       *out,
                                                       gint          samples)
 {
+  const gint alpha = n_components - 1;
+
   while (samples--)
     {
-      gfloat new_alpha = in[ALPHA] * layer[ALPHA] * comp[ALPHA] * opacity;
+      gfloat new_alpha = in[alpha] * layer[alpha] * comp[alpha] * opacity;
+      gint   c;
 
       if (mask)
         new_alpha *= *mask;
 
       if (new_alpha == 0.0f)
         {
-          out[RED]   = in[RED];
-          out[GREEN] = in[GREEN];
-          out[BLUE]  = in[BLUE];
+          for (c = 0; c < alpha; c++)
+            out[c] = in[c];
         }
       else
         {
-          out[RED]   = comp[RED];
-          out[GREEN] = comp[GREEN];
-          out[BLUE]  = comp[BLUE];
+          for (c = 0; c < alpha; c++)
+            out[c] = comp[c];
         }
 
-      out[ALPHA] = new_alpha;
+      out[alpha] = new_alpha;
 
-      in    += 4;
-      layer += 4;
-      comp  += 4;
-      out   += 4;
+      in    += n_components;
+      layer += n_components;
+      comp  += n_components;
+      out   += n_components;
 
       if (mask)
         mask++;
