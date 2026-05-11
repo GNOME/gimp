@@ -71,13 +71,16 @@ gimp_operation_overwrite_process (GeglOperation       *op,
                                   const GeglRectangle *roi,
                                   gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
-  gfloat                 *in         = in_p;
-  gfloat                 *out        = out_p;
-  gfloat                 *layer      = layer_p;
-  gfloat                 *mask       = mask_p;
-  gfloat                  opacity    = layer_mode->opacity;
-  const gboolean          has_mask   = mask != NULL;
+  GimpOperationLayerMode *layer_mode   = (gpointer) op;
+  const Babl             *format       = gegl_operation_get_format (op, "input");
+  gfloat                 *in           = in_p;
+  gfloat                 *out          = out_p;
+  gfloat                 *layer        = layer_p;
+  gfloat                 *mask         = mask_p;
+  gfloat                  opacity      = layer_mode->opacity;
+  const gboolean          has_mask     = mask != NULL;
+  const gint              n_components = babl_format_get_n_components (format);
+  const gint              alpha        = n_components - 1;
   gfloat                  mask_value;
   gfloat                  layer_alpha;
 
@@ -92,7 +95,7 @@ gimp_operation_overwrite_process (GeglOperation       *op,
           else
             mask_value = 1.0;
 
-          layer_alpha = layer[ALPHA] * opacity * mask_value;
+          layer_alpha = layer[alpha] * opacity * mask_value;
 
           if (layer_alpha > 0.0f)
             {
@@ -111,22 +114,22 @@ gimp_operation_overwrite_process (GeglOperation       *op,
                * without this, painting with dynamics changing opacity
                * could not lower the pixel's opacity.
                */
-              out[ALPHA] = in[ALPHA] + mask_value * (layer_alpha - in[ALPHA]);
+              out[alpha] = in[alpha] + mask_value * (layer_alpha - in[alpha]);
 
-              for (b = RED; b < ALPHA; b++)
+              for (b = 0; b < alpha; b++)
                 out[b] = in[b] + mask_value * (layer[b] - in[b]);
             }
           else
             {
               gint b;
 
-              for (b = RED; b <= ALPHA; b++)
+              for (b = 0; b <= alpha; b++)
                 out[b] = in[b];
             }
 
-          in    += 4;
-          layer += 4;
-          out   += 4;
+          in    += n_components;
+          layer += n_components;
+          out   += n_components;
         }
       break;
 

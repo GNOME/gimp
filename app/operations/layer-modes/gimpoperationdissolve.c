@@ -90,14 +90,17 @@ gimp_operation_dissolve_process (GeglOperation       *op,
                                  const GeglRectangle *result,
                                  gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
-  gfloat                 *in         = in_p;
-  gfloat                 *out        = out_p;
-  gfloat                 *layer      = layer_p;
-  gfloat                 *mask       = mask_p;
-  gfloat                  opacity    = layer_mode->opacity;
-  const gboolean          has_mask   = mask != NULL;
+  GimpOperationLayerMode *layer_mode   = (gpointer) op;
+  const Babl             *format       = gegl_operation_get_format (op, "input");
+  gfloat                 *in           = in_p;
+  gfloat                 *out          = out_p;
+  gfloat                 *layer        = layer_p;
+  gfloat                 *mask         = mask_p;
+  gfloat                  opacity      = layer_mode->opacity;
+  const gboolean          has_mask     = mask != NULL;
   gint                    x, y;
+  const gint              n_components = babl_format_get_n_components (format);
+  const gint              alpha        = n_components - 1;
 
   for (y = result->y; y < result->y + result->height; y++)
     {
@@ -116,47 +119,49 @@ gimp_operation_dissolve_process (GeglOperation       *op,
 
       for (x = result->x; x < result->x + result->width; x++)
         {
-          gfloat value = layer[ALPHA] * opacity * 255;
+          gfloat value = layer[alpha] * opacity * 255;
 
           if (has_mask)
             value *= *mask;
 
           if (g_rand_int_range (gr, 0, 255) >= value)
             {
-              out[0] = in[0];
-              out[1] = in[1];
-              out[2] = in[2];
+              gint c;
+
+              for (c = 0; c < alpha; c++)
+                out[c] = in[c];
 
               if (layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_UNION ||
                   layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP)
                 {
-                  out[3] = in[3];
+                  out[alpha] = in[alpha];
                 }
               else
                 {
-                  out[3] = 0.0f;
+                  out[alpha] = 0.0f;
                 }
             }
           else
             {
-              out[0] = layer[0];
-              out[1] = layer[1];
-              out[2] = layer[2];
+              gint c;
+
+              for (c = 0; c < alpha; c++)
+                out[c] = layer[c];
 
               if (layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_UNION ||
                   layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER)
                 {
-                  out[3] = 1.0f;
+                  out[alpha] = 1.0f;
                 }
               else
                 {
-                  out[3] = in[3];
+                  out[alpha] = in[alpha];
                 }
             }
 
-          in    += 4;
-          layer += 4;
-          out   += 4;
+          in    += n_components;
+          layer += n_components;
+          out   += n_components;
 
           if (has_mask)
             mask++;
