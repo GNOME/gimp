@@ -185,12 +185,6 @@ if not platform_windows
   common_plugins_list += { 'name': 'mail', }
 endif
 
-if get_option('webkit-unmaintained')
-  common_plugins_list += { 'name': 'web-page',
-    'deps': [ webkit, ],
-  }
-endif
-
 plugin_custom_targets = []
 foreach plugin : common_plugins_list
   plugin_name = plugin.get('name')

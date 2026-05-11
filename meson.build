@@ -2282,7 +2282,6 @@ final_message = [
 '',
 '''Unmaintained Plug-Ins (discouraged except for developers):''',
 '''  Help Browser:        @0@'''.format(get_option('webkit-unmaintained')),
-'''  Webpage:             @0@'''.format(get_option('webkit-unmaintained')),
 '''  TWAIN (Win32):       @0@'''.format(get_option('twain-unmaintained')),
 '',
 '''Optional Modules:''',
