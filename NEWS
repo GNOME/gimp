@@ -44,16 +44,33 @@ Plug-Ins:
   * file-raw-data: various code improvements.
   * SVG: new option to export Inkscape SVG.
   * Cineon/DPX: initial import support.
+  * PSP: we now have import support for the following adjustment layers
+    as passthrough groups with filters applied:
+    - Levels
+    - Curves
+    - Brightness-Contrast
+    - Color Balance
+    - HSL
+    - Channel Mixer
+    - Invert
+    - Threshold
+    - Posterize
 
 API:
 
   * libgimpwidgets:
     - GimpColorDisplayStack now implements GListModel.
+    - GimpDialog now has a "help-file" property as a competing help
+      system to "help-id" and "help-func".
   * libgimpbase:
     - New functions:
       + gimp_choice_add_deprecated
       + gimp_choice_get_deprecated
       + gimp_choice_get_redirect
+  * libgimp:
+    - New functions:
+      + gimp_procedure_set_help_uri
+      + gimp_procedure_get_help_file
 
 Build:
 
