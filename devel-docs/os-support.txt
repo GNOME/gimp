@@ -36,7 +36,7 @@ Hardware:
 
 ### Windows
 
-Windows 10.0.18362.0 (aka 1903) and over.
+Windows 10.0.19041.0 (aka 2004) and over.
 
 (NOTE TO MAINTAINERS:
 If you update this file, so update MinVersion
