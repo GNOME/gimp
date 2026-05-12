@@ -133,21 +133,25 @@ foreign_re_match (scheme  *sc,
 
       for (i = 0; i < num; i++)
         {
-          gint start, end;
+          gint     start, end;
+          gboolean match_found;
 
-          g_match_info_fetch_pos (match_info, i, &start, &end);
+          match_found = g_match_info_fetch_pos (match_info, i, &start, &end);
 
-          if (is_valid_utf8)
+          if (match_found)
             {
-              start = g_utf8_pointer_to_offset (string, string + start);
-              end   = g_utf8_pointer_to_offset (string, string + end);
-            }
+              if (is_valid_utf8)
+                {
+                  start = g_utf8_pointer_to_offset (string, string + start);
+                  end   = g_utf8_pointer_to_offset (string, string + end);
+                }
 
 #undef cons
-          set_vector_elem (third_arg, i,
-                           sc->vptr->cons(sc,
-                                          sc->vptr->mk_integer(sc, start),
-                                          sc->vptr->mk_integer(sc, end)));
+              set_vector_elem (third_arg, i,
+                               sc->vptr->cons(sc,
+                                              sc->vptr->mk_integer(sc, start),
+                                              sc->vptr->mk_integer(sc, end)));
+            }
         }
 
       g_match_info_free (match_info);
