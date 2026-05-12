@@ -30,10 +30,7 @@
 #include "core/gimp-filter-history.h"
 #include "core/gimpimage.h"
 #include "core/gimpgrouplayer.h"
-#include "core/gimplinklayer.h"
 #include "core/gimplayermask.h"
-
-#include "path/gimpvectorlayer.h"
 
 #include "pdb/gimpprocedure.h"
 
@@ -994,9 +991,9 @@ filters_actions_update (GimpActionGroup *group,
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
             is_group = TRUE;
 
-          if (GIMP_IS_GROUP_LAYER (drawable)                   ||
-              gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
-              gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+          if (GIMP_IS_GROUP_LAYER (drawable)                    ||
+              (gimp_item_is_rasterizable (GIMP_ITEM (drawable)) &&
+               ! gimp_item_is_rasterized (GIMP_ITEM (drawable))))
             force_nde = TRUE;
         }
 
