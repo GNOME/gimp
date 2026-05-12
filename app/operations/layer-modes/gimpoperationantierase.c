@@ -125,8 +125,8 @@ gimp_operation_anti_erase_process (GeglOperation       *op,
               out[b] = in[b];
             }
 
-          in    += n_components;
-          layer += n_components;
+          in  += n_components;
+          out += n_components;
         }
       break;
 
