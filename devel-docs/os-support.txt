@@ -36,7 +36,7 @@ Hardware:
 
 ### Windows
 
-Windows 10.0.18362.0 (aka 1903) and over.
+Windows 10.0.20348.0 and over.
 
 (NOTE TO MAINTAINERS:
 If you update this file, so update MinVersion
@@ -44,5 +44,5 @@ on build/windows/store/AppxManifest.xml of this repo and
 min-support on content/gimp_versions.json of gimp-web repo)
 
 Hardware:
-* x86 32 and 64-bit
+* x86 64-bit
 * ARM 64-bit
