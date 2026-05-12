@@ -1166,7 +1166,7 @@ user_update_sessionrc (const GMatchInfo *matched_value,
 #define GIMPRC_UPDATE_PATTERN \
   "\\(show-tooltips [^)]*\\)"  "|" \
   "\\(theme [^)]*\\)"          "|" \
-  "^ *\\(.*-path \".*\"\\) *$" "|" \
+  "\\(.*-path \"[^\"]*\"\\)"   "|" \
   "\\(style solid\\)"          "|" \
   "\\(precision (.*)-gamma\\)" "|" \
   "\\(filter-tool-show-color-options [^)]*\\)"
@@ -1176,7 +1176,8 @@ user_update_gimprc (const GMatchInfo *matched_value,
                     GString          *new_value,
                     gpointer          data)
 {
-  gchar *match = g_match_info_fetch (matched_value, 0);
+  GimpUserInstall *install = (GimpUserInstall *) data;
+  gchar           *match   = g_match_info_fetch (matched_value, 0);
 
   if (g_strcmp0 (match, "(style solid)") == 0)
     {
@@ -1194,11 +1195,24 @@ user_update_gimprc (const GMatchInfo *matched_value,
 
       g_free (precision_match);
     }
+  else if (g_str_has_prefix (match, "(theme ") &&
+           install->old_major >= 3)
+    {
+      /* Do not migrate themes from GIMP < 3.0 only. They are
+       * incompatible.
+       */
+      g_string_append (new_value, match);
+    }
+  else if (g_regex_match_simple ("\\(.*-path \".*\"\\)", match, 0, 0) &&
+           (install->old_major >= 3 ||
+            (install->old_major == 2 && install->old_minor >= 10)))
+    {
+      /* Do not migrate paths from GIMP < 2.10. See commit 2a9b20d3849. */
+      g_string_append (new_value, match);
+    }
   else
     {
       /* Do not migrate show-tooltips GIMP < 3.0. Cf. #1965. */
-
-      /* Do not migrate paths and themes from GIMP < 3.0. */
 
       /* Do not migrate the advanced color options which was the gamma
        * hack removed for GIMP 3.0. Cf. #12577.
