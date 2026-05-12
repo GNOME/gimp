@@ -109,6 +109,11 @@ gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
 
+  /* Reversing the rotate transform keeping the checkeboard horizontal
+   * significantly improves rasterization performance with Cairo. */
+  if (shell->rotate_transform)
+    cairo_transform (cr, shell->rotate_untransform);
+
   image = gimp_display_get_image (shell->display);
 
   if (G_UNLIKELY (! shell->checkerboard))
@@ -127,8 +132,6 @@ gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
       shell->checkerboard =
         gimp_cairo_checkerboard_create (cr, 1 << (check_size + 2), rgb1, rgb2);
     }
-
-  cairo_translate (cr, - shell->offset_x, - shell->offset_y);
 
   if (gimp_image_get_component_visible (image, GIMP_CHANNEL_ALPHA))
     cairo_set_source (cr, shell->checkerboard);
