@@ -1164,11 +1164,11 @@ user_update_sessionrc (const GMatchInfo *matched_value,
 }
 
 #define GIMPRC_UPDATE_PATTERN \
-  "\\(show-tooltips [^)]*\\)"  "|" \
-  "\\(theme [^)]*\\)"          "|" \
-  "\\(.*-path \"[^\"]*\"\\)"   "|" \
-  "\\(style solid\\)"          "|" \
-  "\\(precision (.*)-gamma\\)" "|" \
+  "\\(show-tooltips [^)]*\\)"            "|" \
+  "\\(theme [^)]*\\)"                    "|" \
+  "\\(.*-path(-writable)? \"[^\"]*\"\\)" "|" \
+  "\\(style solid\\)"                    "|" \
+  "\\(precision (.*)-gamma\\)"           "|" \
   "\\(filter-tool-show-color-options [^)]*\\)"
 
 static gboolean
@@ -1203,7 +1203,16 @@ user_update_gimprc (const GMatchInfo *matched_value,
        */
       g_string_append (new_value, match);
     }
-  else if (g_regex_match_simple ("\\(.*-path \".*\"\\)", match, 0, 0) &&
+  else if ((g_str_has_prefix (match, "(plug-in-path") ||
+            g_str_has_prefix (match, "(script-fu-path")) &&
+           install->old_major != GIMP_MAJOR_VERSION)
+    {
+      /* As a special exception of following migration rule, we do not
+       * migrate the plug-in and script-fu folders from different major
+       * versions (API break is expected).
+       */
+    }
+  else if (g_regex_match_simple ("\\(.*-path(-writable)? \".*\"\\)", match, 0, 0) &&
            (install->old_major >= 3 ||
             (install->old_major == 2 && install->old_minor >= 10)))
     {
@@ -1526,7 +1535,6 @@ user_install_migrate_files (GimpUserInstall *install)
   GDir        *dir;
   const gchar *basename;
   gchar        dest[1024];
-  GimpRc      *gimprc;
   GError      *error = NULL;
 
   dir = g_dir_open (install->old_dir, 0, &error);
@@ -1693,11 +1701,6 @@ user_install_migrate_files (GimpUserInstall *install)
   g_dir_close (dir);
 
   gimp_templates_migrate (install->old_dir);
-
-  gimprc = gimp_rc_new (install->gimp, NULL, NULL, FALSE);
-  gimp_rc_migrate (gimprc);
-  gimp_rc_save (gimprc);
-  g_object_unref (gimprc);
 
   return TRUE;
 }
