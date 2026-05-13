@@ -596,6 +596,15 @@ else
                               meson.current_build_dir(), prefix, g_ir_compiler
                             ],
                             build_by_default: true)
+
+    custom_target('libgimp-macos-final-typelib.stamp',
+                  output: [ 'libgimp-macos-final-typelib.stamp' ],
+                  depends: [ patched_libgimp_gir ],
+                  command: [
+                    'make-in-build-typelib.py', libgimp_gir,
+                    meson.current_build_dir(), prefix, g_ir_compiler, 'nonreloc'
+                  ],
+                  build_by_default: true)
   endif
 
   libgimpui_gir = gnome.generate_gir(
@@ -624,6 +633,15 @@ else
                                             meson.current_build_dir(), prefix, g_ir_compiler
                                           ],
                                           build_by_default: true)
+
+    custom_target('libgimpui-macos-final-typelib.stamp',
+                  output: [ 'libgimpui-macos-final-typelib.stamp' ],
+                  depends: [ patched_libgimpui_gir ],
+                  command: [
+                    'make-in-build-typelib.py', libgimpui_gir,
+                    meson.current_build_dir(), prefix, g_ir_compiler, 'nonreloc'
+                  ],
+                  build_by_default: true)
   endif
 
   if have_vala
