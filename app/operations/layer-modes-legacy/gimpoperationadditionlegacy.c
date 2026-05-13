@@ -71,30 +71,33 @@ gimp_operation_addition_legacy_process (GeglOperation       *op,
                                         const GeglRectangle *roi,
                                         gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
-  gfloat                 *in         = in_p;
-  gfloat                 *out        = out_p;
-  gfloat                 *layer      = layer_p;
-  gfloat                 *mask       = mask_p;
-  gfloat                  opacity    = layer_mode->opacity;
-  const gboolean          has_mask   = mask != NULL;
+  GimpOperationLayerMode *layer_mode   = (gpointer) op;
+  const Babl             *format       = gegl_operation_get_format (op, "input");
+  gfloat                 *in           = in_p;
+  gfloat                 *out          = out_p;
+  gfloat                 *layer        = layer_p;
+  gfloat                 *mask         = mask_p;
+  gfloat                  opacity      = layer_mode->opacity;
+  const gboolean          has_mask     = mask != NULL;
+  const gint              n_components = babl_format_get_n_components (format);
+  const gint              alpha        = n_components - 1;
 
   while (samples--)
     {
       gfloat comp_alpha, new_alpha;
 
-      comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
+      comp_alpha = MIN (in[alpha], layer[alpha]) * opacity;
       if (has_mask)
         comp_alpha *= *mask;
 
-      new_alpha = in[ALPHA] + (1.0f - in[ALPHA]) * comp_alpha;
+      new_alpha = in[alpha] + (1.0f - in[alpha]) * comp_alpha;
 
       if (comp_alpha && new_alpha)
         {
           gfloat ratio = comp_alpha / new_alpha;
           gint   b;
 
-          for (b = RED; b < ALPHA; b++)
+          for (b = 0; b < alpha; b++)
             {
               gfloat comp = in[b] + layer[b];
               comp = CLAMP (comp, 0.0f, 1.0f);
@@ -106,17 +109,17 @@ gimp_operation_addition_legacy_process (GeglOperation       *op,
         {
           gint b;
 
-          for (b = RED; b < ALPHA; b++)
+          for (b = 0; b < alpha; b++)
             {
               out[b] = in[b];
             }
         }
 
-      out[ALPHA] = in[ALPHA];
+      out[alpha] = in[alpha];
 
-      in    += 4;
-      layer += 4;
-      out   += 4;
+      in    += n_components;
+      layer += n_components;
+      out   += n_components;
 
       if (has_mask)
         mask++;
