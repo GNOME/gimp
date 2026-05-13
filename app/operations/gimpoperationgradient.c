@@ -1009,7 +1009,11 @@ gradient_render_pixel (gdouble   x,
     }
   else
     {
-      GeglColor *color = NULL;
+      GeglColor  *color  = NULL;
+      const Babl *format;
+
+      format = (rbd->blend_color_space == GIMP_GRADIENT_BLEND_RGB_LINEAR) ?
+               babl_format ("RGBA double") : babl_format ("R'G'B'A double");
 
       rbd->last_seg = gimp_gradient_get_color_at (rbd->gradient, NULL,
                                                   rbd->last_seg, factor,
@@ -1017,7 +1021,7 @@ gradient_render_pixel (gdouble   x,
                                                   rbd->blend_color_space,
                                                   &color);
       if (color)
-        gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgb);
+        gegl_color_get_pixel (color, format, rgb);
 
       g_clear_object (&color);
     }
@@ -1292,8 +1296,12 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
 
   for (i = 0; i < self->gradient_cache_size; i++)
     {
-      GeglColor *color  = NULL;
-      gdouble    factor = (gdouble) i / (gdouble) (self->gradient_cache_size - 1);
+      GeglColor  *color  = NULL;
+      gdouble     factor = (gdouble) i / (gdouble) (self->gradient_cache_size - 1);
+      const Babl *format;
+
+      format = (self->gradient_blend_color_space == GIMP_GRADIENT_BLEND_RGB_LINEAR) ?
+               babl_format ("RGBA double") : babl_format ("R'G'B'A double");
 
       last_seg = gimp_gradient_get_color_at (self->gradient, NULL, last_seg,
                                              factor,
@@ -1302,7 +1310,8 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
                                              &color);
       if (color)
         {
-          gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), pixel);
+          gegl_color_get_pixel (color, format, pixel);
+
           for (j = 0; j < 4; j++)
             self->gradient_cache[i * 4 + j] = pixel[j];
         }
