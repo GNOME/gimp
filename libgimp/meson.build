@@ -592,7 +592,7 @@ else
                             output: [ 'libgimp-macos-typelib.stamp' ],
                             depends: [ libgimp_gir ],
                             command: [
-                              'make-in-build-typelib.py', libgimp_gir,
+                              make_typelib, libgimp_gir,
                               meson.current_build_dir(), prefix, g_ir_compiler
                             ],
                             build_by_default: true)
@@ -601,7 +601,7 @@ else
                   output: [ 'libgimp-macos-final-typelib.stamp' ],
                   depends: [ patched_libgimp_gir ],
                   command: [
-                    'make-in-build-typelib.py', libgimp_gir,
+                    make_typelib, libgimp_gir,
                     meson.current_build_dir(), prefix, g_ir_compiler, 'nonreloc'
                   ],
                   build_by_default: true)
@@ -629,7 +629,7 @@ else
                                           output: [ 'libgimpui-macos-typelib.stamp' ],
                                           depends: [ libgimp_gir, libgimpui_gir ],
                                           command: [
-                                            'make-in-build-typelib.py', libgimpui_gir,
+                                            make_typelib, libgimpui_gir,
                                             meson.current_build_dir(), prefix, g_ir_compiler
                                           ],
                                           build_by_default: true)
@@ -638,7 +638,7 @@ else
                   output: [ 'libgimpui-macos-final-typelib.stamp' ],
                   depends: [ patched_libgimpui_gir ],
                   command: [
-                    'make-in-build-typelib.py', libgimpui_gir,
+                    make_typelib, libgimpui_gir,
                     meson.current_build_dir(), prefix, g_ir_compiler, 'nonreloc'
                   ],
                   build_by_default: true)

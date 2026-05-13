@@ -1342,6 +1342,9 @@ appstreamcli = find_program('appstreamcli', version: '>=0.15.3', required: get_o
 # Check for .typelib generation tools
 
 g_ir_compiler = find_program('g-ir-compiler')
+if platform_osx
+  make_typelib = find_program('tools'/'make-mac-typelib.py')
+endif
 
 # Check for doc generation tools
 
