@@ -574,8 +574,6 @@ main (int    argc,
   gint            newargc;
 #endif
 
-  gimp_attach_console_window ();
-
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
   /* remove MacOS session identifier from the command line args */
   newargc = 0;
@@ -852,6 +850,9 @@ main (int    argc,
     }
 #endif
 #endif
+
+  if (no_interface || be_verbose || console_messages || batch_commands != NULL)
+    gimp_attach_console_window ();
 
   if (no_interface)
     new_instance = TRUE;
