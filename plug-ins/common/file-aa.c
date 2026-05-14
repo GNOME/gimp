@@ -221,7 +221,7 @@ export_aa (GFile         *file,
 {
   aa_savedata  savedata;
   aa_context  *context;
-  aa_format    format;
+  aa_format    format = { 0 };
   gint         output_type;
 
   g_object_get (config,
