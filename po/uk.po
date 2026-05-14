@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-01 23:44+0000\n"
+"POT-Creation-Date: 2026-05-12 22:25+0000\n"
 "PO-Revision-Date: 2026-05-03 19:41+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -17,8 +17,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : "
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 23.04.3\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
@@ -113,9 +113,7 @@ msgstr "Створення зображень та редагування фот
 #. name when relevant (it's OK if a localization has more keywords).
 #: desktop/gimp.desktop.in.in:13
 msgid "GIMP;graphic;design;illustration;painting;"
-msgstr ""
-"GIMP;graphic;design;illustration;painting;гімп;ґімп;графіка;дизайн;ілюстрації;"
-"малювання;"
+msgstr "GIMP;graphic;design;illustration;painting;гімп;ґімп;графіка;дизайн;ілюстрації;малювання;"
 
 #: app/about.h:22
 msgid "GIMP"
@@ -2586,7 +2584,7 @@ msgstr "Введіть опис позначки"
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1255 app/display/gimpdisplayshell-dnd.c:707
 #: app/display/gimpimagewindow.c:2266 app/widgets/gimplayertreeview.c:859
-#: app/widgets/gimptoolbox.c:849 app/widgets/gimptoolbox-dnd.c:178
+#: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -4411,673 +4409,673 @@ msgstr ""
 "Не вдалось відновитись до «%s».\n"
 "%s"
 
-#: app/actions/filters-actions.c:69
+#: app/actions/filters-actions.c:66
 msgctxt "filters-action"
 msgid "_Antialias"
 msgstr "_Згладжування"
 
-#: app/actions/filters-actions.c:74
+#: app/actions/filters-actions.c:71
 msgctxt "filters-action"
 msgid "_Color Enhance"
 msgstr "_Удосконалити кольори"
 
-#: app/actions/filters-actions.c:79
+#: app/actions/filters-actions.c:76
 msgctxt "filters-action"
 msgid "L_inear Invert"
 msgstr "_Лінійне інвертування"
 
-#: app/actions/filters-actions.c:84
+#: app/actions/filters-actions.c:81
 msgctxt "filters-action"
 msgid "In_vert"
 msgstr "_Інвертування"
 
-#: app/actions/filters-actions.c:89
+#: app/actions/filters-actions.c:86
 msgctxt "filters-action"
 msgid "_Value Invert"
 msgstr "І_нвертування значення V"
 
-#: app/actions/filters-actions.c:94
+#: app/actions/filters-actions.c:91
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
 msgstr "_Розтягнути контрастність HSV"
 
-#: app/actions/filters-actions.c:102
+#: app/actions/filters-actions.c:99
 msgctxt "filters-action"
 msgid "_Dilate"
 msgstr "_Дилатація"
 
-#: app/actions/filters-actions.c:103
+#: app/actions/filters-actions.c:100
 msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Розширити світліші ділянки зображення"
 
-#: app/actions/filters-actions.c:118
+#: app/actions/filters-actions.c:115
 msgctxt "filters-action"
 msgid "_Erode"
 msgstr "Ер_озія"
 
-#: app/actions/filters-actions.c:119
+#: app/actions/filters-actions.c:116
 msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Розширити темніші ділянки зображення"
 
-#: app/actions/filters-actions.c:137
+#: app/actions/filters-actions.c:134
 msgctxt "filters-action"
 msgid "_Alien Map..."
 msgstr "_Чужа мапа…"
 
-#: app/actions/filters-actions.c:142
+#: app/actions/filters-actions.c:139
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
 msgstr "Застосувати _полотно…"
 
-#: app/actions/filters-actions.c:147
+#: app/actions/filters-actions.c:144
 msgctxt "filters-action"
 msgid "Apply _Lens..."
 msgstr "Застосувати _лінзу…"
 
-#: app/actions/filters-actions.c:152
+#: app/actions/filters-actions.c:149
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
 msgstr "_Матриця Баєра…"
 
-#: app/actions/filters-actions.c:157
+#: app/actions/filters-actions.c:154
 msgctxt "filters-action"
 msgid "_Bloom..."
 msgstr "_Флуоресценція…"
 
-#: app/actions/filters-actions.c:162
+#: app/actions/filters-actions.c:159
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
 msgstr "Яс_кравість-контрастність…"
 
-#: app/actions/filters-actions.c:167
+#: app/actions/filters-actions.c:164
 msgctxt "filters-action"
 msgid "_Bump Map..."
 msgstr "_Мапа рельєфу…"
 
-#: app/actions/filters-actions.c:172
+#: app/actions/filters-actions.c:169
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "_Колір у відтінки у сірого…"
 
-#: app/actions/filters-actions.c:177
+#: app/actions/filters-actions.c:174
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
 msgstr "Ескіз…"
 
-#: app/actions/filters-actions.c:182
+#: app/actions/filters-actions.c:179
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "_Змішувач каналів…."
 
-#: app/actions/filters-actions.c:187
+#: app/actions/filters-actions.c:184
 msgctxt "filters-action"
 msgid "_Checkerboard..."
 msgstr "_Шахова дошка…"
 
-#: app/actions/filters-actions.c:192
+#: app/actions/filters-actions.c:189
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "_Баланс кольорів…"
 
-#: app/actions/filters-actions.c:197
+#: app/actions/filters-actions.c:194
 msgctxt "filters-action"
 msgid "_Color Exchange..."
 msgstr "З_амінити колір…"
 
-#: app/actions/filters-actions.c:202
+#: app/actions/filters-actions.c:199
 msgctxt "filters-action"
 msgid "Colori_ze..."
 msgstr "_Тонування…"
 
-#: app/actions/filters-actions.c:207
+#: app/actions/filters-actions.c:204
 msgctxt "filters-action"
 msgid "Dithe_r..."
 msgstr "З_мішати…"
 
-#: app/actions/filters-actions.c:212
+#: app/actions/filters-actions.c:209
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
 msgstr "_Повернути кольори…"
 
-#: app/actions/filters-actions.c:217
+#: app/actions/filters-actions.c:214
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "Колірна тем_пература…"
 
-#: app/actions/filters-actions.c:222
+#: app/actions/filters-actions.c:219
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "Колір у _альфу…"
 
-#: app/actions/filters-actions.c:227
+#: app/actions/filters-actions.c:224
 msgctxt "filters-action"
 msgid "_Extract Component..."
 msgstr "_Видобути компонент..."
 
-#: app/actions/filters-actions.c:232
+#: app/actions/filters-actions.c:229
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
 msgstr "_Матриця згортання…"
 
-#: app/actions/filters-actions.c:237
+#: app/actions/filters-actions.c:234
 msgctxt "filters-action"
 msgid "_Cubism..."
 msgstr "_Кубізм…"
 
-#: app/actions/filters-actions.c:242
+#: app/actions/filters-actions.c:239
 msgctxt "filters-action"
 msgid "_Curves..."
 msgstr "_Криві…"
 
-#: app/actions/filters-actions.c:247
+#: app/actions/filters-actions.c:244
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "_Усунення черезрядковості…"
 
-#: app/actions/filters-actions.c:252
+#: app/actions/filters-actions.c:249
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "_Знебарвити…"
 
-#: app/actions/filters-actions.c:257
+#: app/actions/filters-actions.c:254
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
 msgstr "Різниця _гаусіанів…"
 
-#: app/actions/filters-actions.c:262
+#: app/actions/filters-actions.c:259
 msgctxt "filters-action"
 msgid "D_iffraction Patterns..."
 msgstr "_Дифракційні візерунки…"
 
-#: app/actions/filters-actions.c:267
+#: app/actions/filters-actions.c:264
 msgctxt "filters-action"
 msgid "_Displace..."
 msgstr "З_міщення…"
 
-#: app/actions/filters-actions.c:272
+#: app/actions/filters-actions.c:269
 msgctxt "filters-action"
 msgid "Distance _Map..."
 msgstr "Мапа ві_дстані…"
 
-#: app/actions/filters-actions.c:277
+#: app/actions/filters-actions.c:274
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "_Опустити тінь…"
 
-#: app/actions/filters-actions.c:282
+#: app/actions/filters-actions.c:279
 msgctxt "filters-action"
 msgid "_Edge..."
 msgstr "_Межа…"
 
-#: app/actions/filters-actions.c:287
+#: app/actions/filters-actions.c:284
 msgctxt "filters-action"
 msgid "_Laplace..."
 msgstr "_Лаплас…"
 
-#: app/actions/filters-actions.c:292
+#: app/actions/filters-actions.c:289
 msgctxt "filters-action"
 msgid "_Neon..."
 msgstr "_Неон…"
 
-#: app/actions/filters-actions.c:297
+#: app/actions/filters-actions.c:294
 msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "_Собель…"
 
-#: app/actions/filters-actions.c:302
+#: app/actions/filters-actions.c:299
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "_Карбування…"
 
-#: app/actions/filters-actions.c:307
+#: app/actions/filters-actions.c:304
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "_Гравірування…"
 
-#: app/actions/filters-actions.c:312
+#: app/actions/filters-actions.c:309
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "_Експозиція…"
 
-#: app/actions/filters-actions.c:317
+#: app/actions/filters-actions.c:314
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
 msgstr "_Фаттал та ін. 2002…"
 
-#: app/actions/filters-actions.c:322
+#: app/actions/filters-actions.c:319
 msgctxt "filters-action"
 msgid "_Focus Blur..."
 msgstr "_Фокусне розмиття…"
 
-#: app/actions/filters-actions.c:327
+#: app/actions/filters-actions.c:324
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "_Фрактальний слід…"
 
-#: app/actions/filters-actions.c:332
+#: app/actions/filters-actions.c:329
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "_Розмиття за Гаусом…"
 
-#: app/actions/filters-actions.c:337
+#: app/actions/filters-actions.c:334
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Вибіркове розмиття за Гаусом…"
 
-#: app/actions/filters-actions.c:342
+#: app/actions/filters-actions.c:339
 msgctxt "filters-action"
 msgid "_GEGL Graph..."
 msgstr "_Граф GEGL…"
 
-#: app/actions/filters-actions.c:347
+#: app/actions/filters-actions.c:344
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Сітка…"
 
-#: app/actions/filters-actions.c:352
+#: app/actions/filters-actions.c:349
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "В_исокі частоти…"
 
-#: app/actions/filters-actions.c:357
+#: app/actions/filters-actions.c:354
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "Відтінок та _колірність…"
 
-#: app/actions/filters-actions.c:362
+#: app/actions/filters-actions.c:359
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "Відтінок та _насиченість…"
 
-#: app/actions/filters-actions.c:367
+#: app/actions/filters-actions.c:364
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "_Ілюзія"
 
-#: app/actions/filters-actions.c:372
+#: app/actions/filters-actions.c:369
 msgctxt "filters-action"
 msgid "_Image Gradient..."
 msgstr "Г_радієнт зображення…"
 
-#: app/actions/filters-actions.c:377
+#: app/actions/filters-actions.c:374
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "_Калейдоскоп…"
 
-#: app/actions/filters-actions.c:382
+#: app/actions/filters-actions.c:379
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
 msgstr "Розмиття _об'єктивом…"
 
-#: app/actions/filters-actions.c:387
+#: app/actions/filters-actions.c:384
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
 msgstr "Ви_кривлення об'єктивом…"
 
-#: app/actions/filters-actions.c:392
+#: app/actions/filters-actions.c:389
 msgctxt "filters-action"
 msgid "Lens _Flare..."
 msgstr "Від_блиск об'єктива…"
 
-#: app/actions/filters-actions.c:397
+#: app/actions/filters-actions.c:394
 msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "_Рівні…"
 
-#: app/actions/filters-actions.c:402
+#: app/actions/filters-actions.c:399
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
 msgstr "_Лінійний синусоїдальний…"
 
-#: app/actions/filters-actions.c:407
+#: app/actions/filters-actions.c:404
 msgctxt "filters-action"
 msgid "_Little Planet..."
 msgstr "_Мала планета..."
 
-#: app/actions/filters-actions.c:412
+#: app/actions/filters-actions.c:409
 msgctxt "filters-action"
 msgid "_Long Shadow..."
 msgstr "_Довга тінь…"
 
-#: app/actions/filters-actions.c:417
+#: app/actions/filters-actions.c:414
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Мантюк 2006…"
 
-#: app/actions/filters-actions.c:422
+#: app/actions/filters-actions.c:419
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Лабіринт…"
 
-#: app/actions/filters-actions.c:427
+#: app/actions/filters-actions.c:424
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
 msgstr "Розмиття за медіанною _кривиною…"
 
-#: app/actions/filters-actions.c:432
+#: app/actions/filters-actions.c:429
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "М_едіанне розмиття…"
 
-#: app/actions/filters-actions.c:437
+#: app/actions/filters-actions.c:434
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "Мо_номікшер…"
 
-#: app/actions/filters-actions.c:442
+#: app/actions/filters-actions.c:439
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Мозаїка"
 
-#: app/actions/filters-actions.c:447
+#: app/actions/filters-actions.c:444
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Кругове розмиття рухом…"
 
-#: app/actions/filters-actions.c:452
+#: app/actions/filters-actions.c:449
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Лінійне розмиття рухом…"
 
-#: app/actions/filters-actions.c:457
+#: app/actions/filters-actions.c:454
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Масштабоване розмиття рухом"
 
-#: app/actions/filters-actions.c:462
+#: app/actions/filters-actions.c:459
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Клітинковий шум…"
 
-#: app/actions/filters-actions.c:467
+#: app/actions/filters-actions.c:464
 msgctxt "filters-action"
 msgid "_Newsprint..."
 msgstr "_Газетний папір…"
 
-#: app/actions/filters-actions.c:472
+#: app/actions/filters-actions.c:469
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
 msgstr "Ш_ум CIE lch…"
 
-#: app/actions/filters-actions.c:477
+#: app/actions/filters-actions.c:474
 msgctxt "filters-action"
 msgid "HS_V Noise..."
 msgstr "_Шум HSV…"
 
-#: app/actions/filters-actions.c:482
+#: app/actions/filters-actions.c:479
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Жбурляння…"
 
-#: app/actions/filters-actions.c:487
+#: app/actions/filters-actions.c:484
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
 msgstr "Шу_м Перліна…"
 
-#: app/actions/filters-actions.c:492
+#: app/actions/filters-actions.c:489
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Відібрати…"
 
-#: app/actions/filters-actions.c:497
+#: app/actions/filters-actions.c:494
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "_RGB Шум…"
 
-#: app/actions/filters-actions.c:502
+#: app/actions/filters-actions.c:499
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "Зменшення _шуму…"
 
-#: app/actions/filters-actions.c:507
+#: app/actions/filters-actions.c:504
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Симплексний шум…"
 
-#: app/actions/filters-actions.c:512
+#: app/actions/filters-actions.c:509
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Пляма…"
 
-#: app/actions/filters-actions.c:517
+#: app/actions/filters-actions.c:514
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Суцільний шум…"
 
-#: app/actions/filters-actions.c:522
+#: app/actions/filters-actions.c:519
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "Роз_сіювання…"
 
-#: app/actions/filters-actions.c:527
+#: app/actions/filters-actions.c:524
 msgctxt "filters-action"
 msgid "_Normal Map..."
 msgstr "_Мапа нормалей…"
 
-#: app/actions/filters-actions.c:532
+#: app/actions/filters-actions.c:529
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "З_сув…"
 
-#: app/actions/filters-actions.c:537
+#: app/actions/filters-actions.c:534
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "_Олійна фарба…"
 
-#: app/actions/filters-actions.c:542
+#: app/actions/filters-actions.c:539
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Панорамна проекція…"
 
-#: app/actions/filters-actions.c:547
+#: app/actions/filters-actions.c:544
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Фотокопія…"
 
-#: app/actions/filters-actions.c:552
+#: app/actions/filters-actions.c:549
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Пікселізація…"
 
-#: app/actions/filters-actions.c:557
+#: app/actions/filters-actions.c:554
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Плазма…"
 
-#: app/actions/filters-actions.c:562
+#: app/actions/filters-actions.c:559
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "П_олярні координати…"
 
-#: app/actions/filters-actions.c:567
+#: app/actions/filters-actions.c:564
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "По_стеризація…"
 
-#: app/actions/filters-actions.c:572
+#: app/actions/filters-actions.c:569
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "_Рекурсивне перетворення…"
 
-#: app/actions/filters-actions.c:577
+#: app/actions/filters-actions.c:574
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "_Усунення червоних очей…"
 
-#: app/actions/filters-actions.c:582
+#: app/actions/filters-actions.c:579
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Райнгард 2005…"
 
-#: app/actions/filters-actions.c:587
+#: app/actions/filters-actions.c:584
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "_Обрізання RGB…"
 
-#: app/actions/filters-actions.c:592
+#: app/actions/filters-actions.c:589
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Брижі…"
 
-#: app/actions/filters-actions.c:597
+#: app/actions/filters-actions.c:594
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Насиченість…"
 
-#: app/actions/filters-actions.c:602
+#: app/actions/filters-actions.c:599
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Напівсплющення…"
 
-#: app/actions/filters-actions.c:607
+#: app/actions/filters-actions.c:604
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Сепія..."
 
-#: app/actions/filters-actions.c:612
+#: app/actions/filters-actions.c:609
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "_Тіні-виблиски…"
 
-#: app/actions/filters-actions.c:617
+#: app/actions/filters-actions.c:614
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Зсув..."
 
-#: app/actions/filters-actions.c:622
+#: app/actions/filters-actions.c:619
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Синус…"
 
-#: app/actions/filters-actions.c:627
+#: app/actions/filters-actions.c:624
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_Проста лінійна ітеративна кластеризація…"
 
-#: app/actions/filters-actions.c:632
+#: app/actions/filters-actions.c:629
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Найближча сусідня симетрія…"
 
-#: app/actions/filters-actions.c:637
+#: app/actions/filters-actions.c:634
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_М'яке світло…"
 
-#: app/actions/filters-actions.c:642
+#: app/actions/filters-actions.c:639
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "С_феричність…"
 
-#: app/actions/filters-actions.c:647
+#: app/actions/filters-actions.c:644
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "С_піраль…"
 
-#: app/actions/filters-actions.c:652
+#: app/actions/filters-actions.c:649
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Розтягнути контрастність…"
 
-#: app/actions/filters-actions.c:657
+#: app/actions/filters-actions.c:654
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Напруження…"
 
-#: app/actions/filters-actions.c:662
+#: app/actions/filters-actions.c:659
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "_Наднова..."
 
-#: app/actions/filters-actions.c:667
+#: app/actions/filters-actions.c:664
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Поріг…"
 
-#: app/actions/filters-actions.c:672
+#: app/actions/filters-actions.c:669
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Порогова альфа…"
 
-#: app/actions/filters-actions.c:677
+#: app/actions/filters-actions.c:674
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Скляна плитка…"
 
-#: app/actions/filters-actions.c:682
+#: app/actions/filters-actions.c:679
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Паперова плитка…"
 
-#: app/actions/filters-actions.c:687
+#: app/actions/filters-actions.c:684
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Плитка без швів…"
 
-#: app/actions/filters-actions.c:692
+#: app/actions/filters-actions.c:689
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Чіткість (_нечітка маска)..."
 
-#: app/actions/filters-actions.c:697
+#: app/actions/filters-actions.c:694
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "По_ширення значення…"
 
-#: app/actions/filters-actions.c:702
+#: app/actions/filters-actions.c:699
 msgctxt "filters-action"
 msgid "_Variable Blur..."
 msgstr "З_мінне розмиття…"
 
-#: app/actions/filters-actions.c:707
+#: app/actions/filters-actions.c:704
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Деградація відео…"
 
-#: app/actions/filters-actions.c:712
+#: app/actions/filters-actions.c:709
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Віньєтка…"
 
-#: app/actions/filters-actions.c:717
+#: app/actions/filters-actions.c:714
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "Во_дяні пікселі…"
 
-#: app/actions/filters-actions.c:722
+#: app/actions/filters-actions.c:719
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Хвилі…"
 
-#: app/actions/filters-actions.c:727
+#: app/actions/filters-actions.c:724
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Вихор та щипок..."
 
-#: app/actions/filters-actions.c:732
+#: app/actions/filters-actions.c:729
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "_Вітер…"
 
-#: app/actions/filters-actions.c:740
+#: app/actions/filters-actions.c:737
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "_Повторити останній"
 
-#: app/actions/filters-actions.c:742
+#: app/actions/filters-actions.c:739
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr ""
 "Повторно застосувати останній використаний фільтр із тими самими параметрами"
 
-#: app/actions/filters-actions.c:747
+#: app/actions/filters-actions.c:744
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "П_овторити зі змінами"
 
-#: app/actions/filters-actions.c:748
+#: app/actions/filters-actions.c:745
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Знову відкрити діалог останнього використаного фільтру"
@@ -5086,30 +5084,30 @@ msgstr "Знову відкрити діалог останнього викор
 #. * which we append "..." as the standardized labelling to indicate
 #. * that this action raises a dialog.
 #.
-#: app/actions/filters-actions.c:879
+#: app/actions/filters-actions.c:876
 #, c-format
 msgid "%s..."
 msgstr "%s…"
 
-#: app/actions/filters-actions.c:1216
+#: app/actions/filters-actions.c:1213
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Пов_торити \"%s\""
 
-#: app/actions/filters-actions.c:1217
+#: app/actions/filters-actions.c:1214
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "П_овторити з налаштуванням «%s»"
 
-#: app/actions/filters-actions.c:1255
+#: app/actions/filters-actions.c:1252
 msgid "Repeat Last"
 msgstr "Повторити останній"
 
-#: app/actions/filters-actions.c:1257
+#: app/actions/filters-actions.c:1254
 msgid "Re-Show Last"
 msgstr "Показати останній ще раз"
 
-#: app/actions/filters-actions.c:1260 app/actions/filters-actions.c:1262
+#: app/actions/filters-actions.c:1257 app/actions/filters-actions.c:1259
 msgid "No last used filters"
 msgstr "Немає останніх використаних фільтрів"
 
@@ -10573,7 +10571,7 @@ msgstr "Помилка аналізу '%%s': рядок довший за %s с�
 
 #: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206
 #: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145
-#: app/gui/themes.c:722 app/tools/gimpfiltertool-settings.c:229
+#: app/gui/themes.c:719 app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Помилка записування файла «%s»: %s"
@@ -13028,22 +13026,22 @@ msgstr ""
 "<requires><id>org.gimp.GIMP</id></requires> є обов'язковим для порівняння "
 "версій."
 
-#: app/core/gimpextension.c:835
+#: app/core/gimpextension.c:831
 #, c-format
 msgid "'%s' is not a relative path."
 msgstr "«%s» не є відносним шляхом."
 
-#: app/core/gimpextension.c:869
+#: app/core/gimpextension.c:847
 #, c-format
 msgid "'%s' is not a child of the extension."
 msgstr "«%s» не є нащадком додатка."
 
-#: app/core/gimpextension.c:883
+#: app/core/gimpextension.c:863
 #, c-format
 msgid "'%s' is not a directory."
 msgstr "«%s» не є текою."
 
-#: app/core/gimpextension.c:897
+#: app/core/gimpextension.c:877
 #, c-format
 msgid "'%s' is not a valid file."
 msgstr "«%s» не є правильним файлом."
@@ -13053,12 +13051,12 @@ msgstr "«%s» не є правильним файлом."
 msgid "System extensions cannot be uninstalled."
 msgstr "Загальносистемні розширення не може бути вилучено."
 
-#: app/core/gimpextensionmanager.c:1053
+#: app/core/gimpextensionmanager.c:1052
 #, c-format
 msgid "Skipping extension '%s': %s\n"
 msgstr "Пропуск додатків «%s»: %s\n"
 
-#: app/core/gimpextensionmanager.c:1061
+#: app/core/gimpextensionmanager.c:1060
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr "Пропускаємо невідомий файл «%s» у каталозі додатків.\n"
@@ -13135,7 +13133,7 @@ msgstr "Не вдалося виконати дочірній процес «%s�
 msgid "tags-locale:C"
 msgstr "tags-locale:uk"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:734
+#: app/core/gimp-tags.c:156 app/gui/themes.c:731
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Помилка закривання '%s': %s"
@@ -13181,7 +13179,7 @@ msgstr "Не вдалось створити теку \"%s\": %s"
 msgid "No patterns available for this operation."
 msgstr "Немає доступних текстур для цієї операції."
 
-#: app/core/gimp-utils.c:1136
+#: app/core/gimp-utils.c:1170
 #, c-format
 msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
@@ -13189,17 +13187,17 @@ msgstr ""
 "Критична помилка під час обробки файла ресурсів Photoshop: пошкоджено "
 "стиснені RLE дані."
 
-#: app/core/gimp-utils.c:1793
+#: app/core/gimp-utils.c:1827
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "У цьому засобі обробки не передбачено підтримки упорядкованих списків."
 
-#: app/core/gimp-utils.c:1816
+#: app/core/gimp-utils.c:1850
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> має бути вкладено до теґів <ol> або <ul>."
 
-#: app/core/gimp-utils.c:1821
+#: app/core/gimp-utils.c:1855
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Невідомий програмі теґ <%s>."
@@ -13739,7 +13737,7 @@ msgstr "Помилка завантаження «%s»: "
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:361 app/file-data/file-data-gex.c:511
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:406
+#: app/xcf/xcf.c:404
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Не вдалось відкрити «%s» для зчитування: "
@@ -16284,8 +16282,8 @@ msgstr "Властивості зображення"
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
 #: app/dialogs/welcome-dialog.c:207 app/tools/gimpcolorpickertool.c:352
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:741
-#: app/widgets/gimpcontrollerlist.c:652 app/widgets/gimpcriticaldialog.c:220
-#: app/widgets/gimpcriticaldialog.c:242 app/widgets/gimpsettingsbox.c:642
+#: app/widgets/gimpcontrollerlist.c:652 app/widgets/gimpcriticaldialog.c:222
+#: app/widgets/gimpcriticaldialog.c:244 app/widgets/gimpsettingsbox.c:642
 #: app/widgets/gimptexteditor.c:164
 msgid "_Close"
 msgstr "За_крити"
@@ -16640,7 +16638,7 @@ msgstr "_Градієнт"
 
 #: app/dialogs/palette-import-dialog.c:221
 msgid "I_mage"
-msgstr "_Образ"
+msgstr "_Зображення"
 
 #: app/dialogs/palette-import-dialog.c:234
 msgid "Sample _Merged"
@@ -17464,7 +17462,7 @@ msgid "Use symbolic icons if available"
 msgstr "Використовувати символічні піктограми, якщо доступні"
 
 #: app/dialogs/preferences-dialog.c:2265 app/dialogs/preferences-dialog.c:2266
-#: app/widgets/gimptoolbox.c:546
+#: app/widgets/gimptoolbox.c:547
 msgid "Toolbox"
 msgstr "Панель інструментів"
 
@@ -19991,19 +19989,19 @@ msgstr "Виправлено від'ємний зсув за x, %d, для ша�
 msgid "Negative y offset: %d for layer %s corrected."
 msgstr "Виправлено від'ємний зсув за y, %d, для шару %s."
 
-#: app/file-data/file-data.c:61 app/file-data/file-data.c:118
+#: app/file-data/file-data.c:60 app/file-data/file-data.c:116
 msgid "GIMP brush"
 msgstr "Пензель GIMP"
 
-#: app/file-data/file-data.c:195 app/file-data/file-data.c:249
+#: app/file-data/file-data.c:192 app/file-data/file-data.c:245
 msgid "GIMP brush (animated)"
 msgstr "Пензель GIMP (анімований)"
 
-#: app/file-data/file-data.c:333 app/file-data/file-data.c:386
+#: app/file-data/file-data.c:328 app/file-data/file-data.c:380
 msgid "GIMP pattern"
 msgstr "Текстура GIMP"
 
-#: app/file-data/file-data.c:457
+#: app/file-data/file-data.c:450
 msgid "GIMP extension"
 msgstr "Розширення GIMP"
 
@@ -20013,7 +20011,7 @@ msgstr "Розширення GIMP"
 #: app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195
 #: app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198
 #: app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201
-#: app/plug-in/gimppluginprocedure.c:1045
+#: app/plug-in/gimppluginprocedure.c:1165
 msgid "RGB"
 msgstr "RGB"
 
@@ -20032,7 +20030,7 @@ msgstr "RGB-альфа"
 #: app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233
 #: app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236
 #: app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239
-#: app/plug-in/gimppluginprocedure.c:1063
+#: app/plug-in/gimppluginprocedure.c:1183
 msgid "Grayscale"
 msgstr "Відтінки сірого"
 
@@ -20081,7 +20079,7 @@ msgstr "Складова альфи"
 msgid "Indexed-alpha"
 msgstr "Індексована альфа"
 
-#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1081
+#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1201
 msgid "Indexed"
 msgstr "Індексований"
 
@@ -21030,7 +21028,7 @@ msgstr "Документи"
 msgid "GIMP Startup"
 msgstr "Запуск GIMP"
 
-#: app/gui/themes.c:521
+#: app/gui/themes.c:518
 #, c-format
 msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
@@ -22271,7 +22269,7 @@ msgstr "Додати обведення контуру"
 msgid "Extend path stroke"
 msgstr "Розширити обведення контуру"
 
-#: app/pdb/pdb-cmds.c:1193 app/pdb/pdb-cmds.c:1235
+#: app/pdb/pdb-cmds.c:1277 app/pdb/pdb-cmds.c:1319
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Мітка даних «%s» не є канонічним ідентифікатором"
@@ -22343,7 +22341,7 @@ msgstr "Неправильне посилання на інтерпретато�
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Неправильний двійковий формат рядка у інтерпретованому файлі %s"
 
-#: app/plug-in/gimpplugin.c:258
+#: app/plug-in/gimpplugin.c:260
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -22388,9 +22386,9 @@ msgstr "Інтерпретатори додатків"
 msgid "Plug-in Environment"
 msgstr "Середовище додатків"
 
-#: app/plug-in/gimppluginmanager-call.c:200
-#: app/plug-in/gimppluginmanager-call.c:273
-#: app/plug-in/gimppluginmanager-call.c:373
+#: app/plug-in/gimppluginmanager-call.c:204
+#: app/plug-in/gimppluginmanager-call.c:277
+#: app/plug-in/gimppluginmanager-call.c:377
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr "Не вдалось запустити розширення «%s»"
@@ -22399,15 +22397,15 @@ msgstr "Не вдалось запустити розширення «%s»"
 msgid "Unknown file type"
 msgstr "Невідомий тип файла"
 
-#: app/plug-in/gimppluginmanager-restore.c:213
+#: app/plug-in/gimppluginmanager-restore.c:216
 msgid "Loading extension plug-ins"
 msgstr "Завантаження розширень"
 
-#: app/plug-in/gimppluginmanager-restore.c:233
+#: app/plug-in/gimppluginmanager-restore.c:250
 msgid "Searching plug-ins"
 msgstr "Пошук додатків"
 
-#: app/plug-in/gimppluginmanager-restore.c:358
+#: app/plug-in/gimppluginmanager-restore.c:375
 #, c-format
 msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
@@ -22416,56 +22414,56 @@ msgstr ""
 "Пропущено потенційний додаток «%s»: додатки слід встановлювати до "
 "підкаталогів.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:365
+#: app/plug-in/gimppluginmanager-restore.c:382
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
 msgstr "Пропускаємо невідомий файл «%s» у каталозі додатків.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:412
+#: app/plug-in/gimppluginmanager-restore.c:429
 msgid "Resource configuration"
 msgstr "Налаштовування ресурсів"
 
-#: app/plug-in/gimppluginmanager-restore.c:448
+#: app/plug-in/gimppluginmanager-restore.c:465
 msgid "Querying new Plug-ins"
 msgstr "Опитування нових доповнень"
 
-#: app/plug-in/gimppluginmanager-restore.c:502
+#: app/plug-in/gimppluginmanager-restore.c:519
 msgid "Initializing Plug-ins"
 msgstr "Ініціалізація доповнень"
 
-#: app/plug-in/gimppluginmanager-restore.c:575
+#: app/plug-in/gimppluginmanager-restore.c:592
 msgid "Starting Extensions"
 msgstr "Запуск розширень"
 
-#: app/plug-in/gimppluginprocedure.c:1049
+#: app/plug-in/gimppluginprocedure.c:1169
 msgid "RGB without alpha"
 msgstr "RGB без прозорості"
 
-#: app/plug-in/gimppluginprocedure.c:1053
+#: app/plug-in/gimppluginprocedure.c:1173
 msgid "RGB with alpha"
 msgstr "RGB із прозорістю"
 
-#: app/plug-in/gimppluginprocedure.c:1067
+#: app/plug-in/gimppluginprocedure.c:1187
 msgid "Grayscale without alpha"
 msgstr "Відтінки сірого без прозорості"
 
-#: app/plug-in/gimppluginprocedure.c:1071
+#: app/plug-in/gimppluginprocedure.c:1191
 msgid "Grayscale with alpha"
 msgstr "Відтінки сірого із прозорістю"
 
-#: app/plug-in/gimppluginprocedure.c:1085
+#: app/plug-in/gimppluginprocedure.c:1205
 msgid "Indexed without alpha"
 msgstr "Індексовані без прозорості"
 
-#: app/plug-in/gimppluginprocedure.c:1089
+#: app/plug-in/gimppluginprocedure.c:1209
 msgid "Indexed with alpha"
 msgstr "Індексовані із прозорістю"
 
-#: app/plug-in/gimppluginprocedure.c:1100
+#: app/plug-in/gimppluginprocedure.c:1220
 msgid "This plug-in only works on the following layer types:"
 msgstr "Цей додаток працює лише з такими типами шарів:"
 
-#: app/plug-in/gimppluginprocedure.c:1465
+#: app/plug-in/gimppluginprocedure.c:1585
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22474,7 +22472,7 @@ msgstr ""
 "Помилка виклику «%s»:\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1477
+#: app/plug-in/gimppluginprocedure.c:1597
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22493,12 +22491,12 @@ msgstr "Пропускається \"%s\": неправильна версія �
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "Пропускається \"%s\": неправильна версія файлу формату pluginrc."
 
-#: app/plug-in/plug-in-rc.c:552
+#: app/plug-in/plug-in-rc.c:591
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "неправильне значення «%s» для значка"
 
-#: app/plug-in/plug-in-rc.c:567
+#: app/plug-in/plug-in-rc.c:606
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "неправильне значення '%ld' для значка"
@@ -27080,16 +27078,16 @@ msgstr "Копіювати _дані вади"
 msgid "Open Bug Tracker"
 msgstr "Відкрити систему стеження за вадами"
 
-#: app/widgets/gimpcriticaldialog.c:200
+#: app/widgets/gimpcriticaldialog.c:202
 msgid "See bug details"
 msgstr "Переглянути відомості щодо вади"
 
-#: app/widgets/gimpcriticaldialog.c:219
+#: app/widgets/gimpcriticaldialog.c:221
 msgid "Go to _Download page"
 msgstr "Перейти на сторінку _отримання пакунків"
 
 #. Recommend an update.
-#: app/widgets/gimpcriticaldialog.c:224
+#: app/widgets/gimpcriticaldialog.c:226
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released on %s.\n"
@@ -27098,34 +27096,34 @@ msgstr ""
 "Нову версію GIMP (%s) було випущено %s.\n"
 "Рекомендуємо встановити оновлення."
 
-#: app/widgets/gimpcriticaldialog.c:230
+#: app/widgets/gimpcriticaldialog.c:232
 msgid "You are running an unsupported version!"
 msgstr "Ви працюєте з версією, підтримка якої не здійснюється розробниками!"
 
-#: app/widgets/gimpcriticaldialog.c:253 app/widgets/gimpcriticaldialog.c:655
+#: app/widgets/gimpcriticaldialog.c:255 app/widgets/gimpcriticaldialog.c:664
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
 "Щоб допомогти нам поліпшити GIMP, ви можете створити звіт щодо вади, "
 "виконавши такі кроки:"
 
-#: app/widgets/gimpcriticaldialog.c:255 app/widgets/gimpcriticaldialog.c:657
+#: app/widgets/gimpcriticaldialog.c:257 app/widgets/gimpcriticaldialog.c:666
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Скопіюйте дані вади до буфера обміну натисканням"
 
-#: app/widgets/gimpcriticaldialog.c:257 app/widgets/gimpcriticaldialog.c:659
+#: app/widgets/gimpcriticaldialog.c:259 app/widgets/gimpcriticaldialog.c:668
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Відкрийте сторінку стеження за вадами натисканням"
 
-#: app/widgets/gimpcriticaldialog.c:259 app/widgets/gimpcriticaldialog.c:661
+#: app/widgets/gimpcriticaldialog.c:261 app/widgets/gimpcriticaldialog.c:670
 msgid "Create a login if you don't have one yet."
 msgstr "Створіть обліковий запис, якщо у вас його ще немає."
 
-#: app/widgets/gimpcriticaldialog.c:260 app/widgets/gimpcriticaldialog.c:662
+#: app/widgets/gimpcriticaldialog.c:262 app/widgets/gimpcriticaldialog.c:671
 msgid "Paste the clipboard text in a new bug report."
 msgstr "Вставте вміст буфера обміну до поля звіту щодо вади."
 
-#: app/widgets/gimpcriticaldialog.c:261 app/widgets/gimpcriticaldialog.c:663
+#: app/widgets/gimpcriticaldialog.c:263 app/widgets/gimpcriticaldialog.c:672
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
@@ -27133,7 +27131,7 @@ msgstr ""
 "Додайте відповідну інформацію англійською, пояснивши, що саме ви робили, "
 "коли було виявлено ваду."
 
-#: app/widgets/gimpcriticaldialog.c:263
+#: app/widgets/gimpcriticaldialog.c:265
 msgid ""
 "This error may have left GIMP in an inconsistent state. It is advised to "
 "save your work and restart GIMP."
@@ -27141,7 +27139,7 @@ msgstr ""
 "Ця помилка може призвести до неузгодженості у даних GIMP. Радимо вам "
 "зберегти результати вашої роботи і перезапустити GIMP."
 
-#: app/widgets/gimpcriticaldialog.c:268
+#: app/widgets/gimpcriticaldialog.c:270
 msgid ""
 "You can also close the dialog directly but reporting bugs is the best way to "
 "make your software awesome."
@@ -27149,81 +27147,81 @@ msgstr ""
 "Ви також можете безпосередньо закрити це вікно, але звітування щодо вад є "
 "найкращим способом поліпшення програмного забезпечення."
 
-#: app/widgets/gimpcriticaldialog.c:277
+#: app/widgets/gimpcriticaldialog.c:279
 msgid "Copy-paste this whole debug data to report to developers"
 msgstr "Скопіюйте і вставте усі ці діагностичні дані до звіту розробникам"
 
-#: app/widgets/gimpcriticaldialog.c:416
+#: app/widgets/gimpcriticaldialog.c:425
 msgid "The operating system is out of memory or resources."
 msgstr "У операційної системи не вистачає пам'яті або ресурсів."
 
-#: app/widgets/gimpcriticaldialog.c:419
+#: app/widgets/gimpcriticaldialog.c:428
 msgid "The specified file was not found."
 msgstr "Не було знайдено вказаний файл."
 
-#: app/widgets/gimpcriticaldialog.c:422
+#: app/widgets/gimpcriticaldialog.c:431
 msgid "The specified path was not found."
 msgstr "Не було знайдено вказаний шлях."
 
-#: app/widgets/gimpcriticaldialog.c:425
+#: app/widgets/gimpcriticaldialog.c:434
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 "Файл .exe є некоректним (не-Microsoft Win32 .exe або ж помилка у файлі .exe)."
 
-#: app/widgets/gimpcriticaldialog.c:428
+#: app/widgets/gimpcriticaldialog.c:437
 msgid "The operating system denied access to the specified file."
 msgstr "Операційна система відмовила у доступі до вказаного файла."
 
-#: app/widgets/gimpcriticaldialog.c:431
+#: app/widgets/gimpcriticaldialog.c:440
 msgid "The file name association is incomplete or invalid."
 msgstr "Прив'язка програм до суфіксів назв файлів є неповною або некоректною."
 
-#: app/widgets/gimpcriticaldialog.c:434
+#: app/widgets/gimpcriticaldialog.c:443
 msgid "DDE transaction busy"
 msgstr "Стан зайнятості операції DDE"
 
-#: app/widgets/gimpcriticaldialog.c:437
+#: app/widgets/gimpcriticaldialog.c:446
 msgid "The DDE transaction failed."
 msgstr "Помилка передавання даних DDE."
 
-#: app/widgets/gimpcriticaldialog.c:440
+#: app/widgets/gimpcriticaldialog.c:449
 msgid "The DDE transaction timed out."
 msgstr "Перевищено час очікування на завершення операції DDE."
 
-#: app/widgets/gimpcriticaldialog.c:443
+#: app/widgets/gimpcriticaldialog.c:452
 msgid "The specified DLL was not found."
 msgstr "Не знайдено вказаного файла DLL."
 
-#: app/widgets/gimpcriticaldialog.c:446
+#: app/widgets/gimpcriticaldialog.c:455
 msgid "There is no application associated with the given file name extension."
 msgstr "Із файлами із вказаним суфіксом назви не пов'язано жодної програми."
 
-#: app/widgets/gimpcriticaldialog.c:449
+#: app/widgets/gimpcriticaldialog.c:458
 msgid "There was not enough memory to complete the operation."
 msgstr "Недостатньо місця у пам'яті для завершення операції."
 
-#: app/widgets/gimpcriticaldialog.c:452
+#: app/widgets/gimpcriticaldialog.c:461
 msgid "A sharing violation occurred."
 msgstr "Сталося порушення правил спільного використання даних."
 
-#: app/widgets/gimpcriticaldialog.c:455
+#: app/widgets/gimpcriticaldialog.c:464
 msgid "Unknown Microsoft Windows error."
 msgstr "Невідома помилка Microsoft Windows."
 
-#: app/widgets/gimpcriticaldialog.c:458
+#: app/widgets/gimpcriticaldialog.c:467
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Не вдалося відкрити «%s»: %s"
 
-#: app/widgets/gimpcriticaldialog.c:621
+#: app/widgets/gimpcriticaldialog.c:630
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr ""
 "Програма GIMP аварійно завершила роботу внаслідок критичної помилки: %s"
 
 #. First error. Let's just display it.
-#: app/widgets/gimpcriticaldialog.c:628
+#: app/widgets/gimpcriticaldialog.c:637
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "Сталася помилка у GIMP: %s"
@@ -27231,12 +27229,12 @@ msgstr "Сталася помилка у GIMP: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: app/widgets/gimpcriticaldialog.c:636
+#: app/widgets/gimpcriticaldialog.c:645
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "Сталося декілька критичних помилок у GIMP!"
 
-#: app/widgets/gimpcriticaldialog.c:688
+#: app/widgets/gimpcriticaldialog.c:697
 msgid "_Restart GIMP"
 msgstr "Пе_резапустити GIMP"
 
@@ -28560,12 +28558,12 @@ msgstr "Метадані не будуть видимі у GIMP версій с�
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "shortcut: Ctrl+Alt+O"
 #.
-#: app/widgets/gimpsearchpopup.c:293
+#: app/widgets/gimpsearchpopup.c:296
 msgid "shortcut"
 msgstr "скорочення"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:297 app/widgets/gimpsearchpopup.c:319
+#: app/widgets/gimpsearchpopup.c:300 app/widgets/gimpsearchpopup.c:322
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -28574,7 +28572,7 @@ msgstr "%s: %s"
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:315
+#: app/widgets/gimpsearchpopup.c:318
 msgid "menu"
 msgstr "меню"
 
@@ -28614,7 +28612,6 @@ msgid "_Export Current Settings to File..."
 msgstr "_Експортувати поточні параметри до файла…"
 
 #: app/widgets/gimpsettingsbox.c:357
-#| msgid "_Export Current Settings to File..."
 msgid "Export Current Settings in _Legacy Format..."
 msgstr "Експортувати поточні параметри у з_астарілому форматі…"
 
@@ -29052,22 +29049,22 @@ msgstr "Відкрити діалог вибору палітри"
 msgid "Open the font selection dialog"
 msgstr "Відкрити діалог вибору шрифту"
 
-#: app/widgets/gimpwidgets-utils.c:665
+#: app/widgets/gimpwidgets-utils.c:666
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (спробуйте %s)"
 
-#: app/widgets/gimpwidgets-utils.c:665
+#: app/widgets/gimpwidgets-utils.c:666
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:669
+#: app/widgets/gimpwidgets-utils.c:670
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (спробуйте %s, %s)"
 
-#: app/widgets/gimpwidgets-utils.c:673
+#: app/widgets/gimpwidgets-utils.c:674
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (спробуйте %s, %s, %s)"
@@ -29077,12 +29074,12 @@ msgstr "%s (спробуйте %s, %s, %s)"
 #. * (e.g. a checkbox settings) displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1480
+#: app/widgets/gimpwidgets-utils.c:1481
 #, c-format
 msgid "Switch \"%s\" ON"
 msgstr "Увімкнути «%s»"
 
-#: app/widgets/gimpwidgets-utils.c:1482
+#: app/widgets/gimpwidgets-utils.c:1483
 #, c-format
 msgid "Switch \"%s\" OFF"
 msgstr "Вимкнути «%s»"
@@ -29092,7 +29089,7 @@ msgstr "Вимкнути «%s»"
 #. * multi-choice settings displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1501
+#: app/widgets/gimpwidgets-utils.c:1502
 #, c-format
 msgid "Select \"%s\""
 msgstr "Вибрати «%s»"
@@ -29100,27 +29097,27 @@ msgstr "Вибрати «%s»"
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1532
+#: app/widgets/gimpwidgets-utils.c:1533
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "Активувати інструмент «%s»"
 
-#: app/widgets/gimpwidgets-utils.c:2131
+#: app/widgets/gimpwidgets-utils.c:2132
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Вбудовані відтінки сірого  (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2138
+#: app/widgets/gimpwidgets-utils.c:2139
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Вбудований RGB (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2158
+#: app/widgets/gimpwidgets-utils.c:2159
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Бажаний відтінків сірого (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2167
+#: app/widgets/gimpwidgets-utils.c:2168
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Бажаний RGB (%s)"
@@ -29215,40 +29212,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Стан та опис"
 
-#: app/xcf/xcf.c:127 app/xcf/xcf.c:183
+#: app/xcf/xcf.c:126 app/xcf/xcf.c:181
 msgid "GIMP XCF image"
 msgstr "Файл XCF GIMP"
 
-#: app/xcf/xcf.c:259 app/xcf/xcf.c:317
+#: app/xcf/xcf.c:257 app/xcf/xcf.c:315
 msgid "Memory Stream"
 msgstr "Потік пам'яті"
 
-#: app/xcf/xcf.c:262
+#: app/xcf/xcf.c:260
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається \"%s\""
 
-#: app/xcf/xcf.c:281
+#: app/xcf/xcf.c:279
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Помилка XCF: версія файла XCF %d не підтримується"
 
-#: app/xcf/xcf.c:340
+#: app/xcf/xcf.c:338
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження \"%s\""
 
-#: app/xcf/xcf.c:348
+#: app/xcf/xcf.c:346
 #, c-format
 msgid "Closing '%s'"
 msgstr "Закривається %s"
 
-#: app/xcf/xcf.c:366
+#: app/xcf/xcf.c:364
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Помилка запису файла «%s»: "
 
-#: app/xcf/xcf.c:454
+#: app/xcf/xcf.c:452
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Помилка при створенні «%s»:"
@@ -29578,7 +29575,7 @@ msgstr "Колір _фаски"
 #: menus/image-menu.ui.in.in:309
 msgctxt "image-action"
 msgid "_Image"
-msgstr "_Образ"
+msgstr "_Зображення"
 
 #: menus/image-menu.ui.in.in:316
 msgctxt "image-action"
