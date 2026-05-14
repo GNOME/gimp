@@ -651,8 +651,6 @@ gimp-win:
         OPT_PREFIX: /opt/homebrew
         WARN_AS_ERROR_ON_CI: '-Dwerror=true'
         VARIANT: -homebrew
-        #See: https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/2233
-        ORKA_RUNNER: sequoia-7
   parallel:
     matrix:
       - ARCH: [arm64, x86_64]
@@ -660,7 +658,7 @@ gimp-win:
     - macos
     - marathon
   variables:
-    ORKA_RUNNER: tahoe-1
+    ORKA_RUNNER: tahoe-2
     #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
