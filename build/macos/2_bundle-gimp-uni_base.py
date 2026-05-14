@@ -100,6 +100,7 @@ def bundle(src_root, pattern, option="None", override=None):
         tmp_gir_dir = GIMP_DISTRIB / "tmp"
         tmp_gir_dir.mkdir(parents=True, exist_ok=True)
         def set_typelib_rpath(typelib, prefix):
+          #Same as 'tools/make-mac-typelib.py reloc'
           typelib_path = Path(f"{prefix}/lib/girepository-1.0/{typelib}.typelib")
           target_path = dest_path.parent / typelib_path.name
           if typelib_path.exists() and not target_path.exists():
