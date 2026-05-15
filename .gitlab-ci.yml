@@ -566,7 +566,7 @@ gimp-snap:
         STORE_OPTION: '-Dms-store=true'
   parallel:
     matrix:
-      - RUNNER: [windows-aarch64, win32-ps]
+      - RUNNER: [windows-aarch64]
   tags:
     - $RUNNER
   variables:
