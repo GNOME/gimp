@@ -36,7 +36,7 @@ GIMP_SOURCE = Path(os.getenv("MESON_SOURCE_ROOT")).as_posix()
 with open("meson-logs/meson-log.txt") as f:
   meson_log = f.read()
 match = re.search(r"Main binary: (.*)\\bin\\python\.exe", meson_log)
-MSYSTEM_PREFIX = match.group(1).replace("\\", "/")
+MSYSTEM_PREFIX = Path(match.group(1).replace("\\", "/"))
 ## GIMP prefix: as set at meson configure time
 GIMP_PREFIX = Path(os.getenv("MESON_INSTALL_DESTDIR_PREFIX")).as_posix()
 
@@ -45,7 +45,7 @@ GIMP_PREFIX = Path(os.getenv("MESON_INSTALL_DESTDIR_PREFIX")).as_posix()
 #fallback code be able to identify what arch they are distributing
 GIMP_DISTRIB = Path(GIMP_SOURCE) / f"gimp-{Path(MSYSTEM_PREFIX).name}"
 
-def bundle(src_root, pattern):
+def bundle(src_root, pattern, option="None", override=None):
   ## Search for targets in search path
   src_root = Path(src_root)
   paths_to_bundle = list(src_root.glob(pattern))
@@ -54,7 +54,10 @@ def bundle(src_root, pattern):
     sys.exit(1)
   for src_path in paths_to_bundle:
     ## Copy found targets to bundle path
-    dest_path = GIMP_DISTRIB / src_path.relative_to(src_root)
+    if "--dest" in option:
+      dest_path = GIMP_DISTRIB / Path(override) / src_path.name
+    else:
+      dest_path = GIMP_DISTRIB / src_path.relative_to(src_root)
     dest_path.parent.mkdir(parents=True, exist_ok=True)
     print(f"Bundling {src_path} to {dest_path.parent}")
     if src_path.is_dir():
@@ -251,3 +254,66 @@ bundle(GIMP_PREFIX, "lib/libgegl*.a")
 bundle(GIMP_PREFIX, "lib/pkgconfig/gimp*")
 bundle(GIMP_PREFIX, "lib/pkgconfig/babl*")
 bundle(GIMP_PREFIX, "lib/pkgconfig/gegl*")
+### Files needed by babl, gegl and gimp development libraries (not core gimp app)
+processed_pcs = set()
+pcs_to_process = [f.stem for f in Path(GIMP_DISTRIB / "lib/pkgconfig").glob("*.pc")]
+while pcs_to_process:
+  current_pc = pcs_to_process.pop(0)
+  if current_pc in processed_pcs:
+    continue
+  requires = subprocess.run(["pkg-config", "--print-requires", "--print-requires-private", current_pc], capture_output=True, text=True)
+  if requires.returncode == 0:
+    deps = [line.split()[0] for line in requires.stdout.splitlines() if line.strip()]
+    for dep in deps:
+      if dep not in processed_pcs:
+
+        #1.Bundle the pkgconfig file (.pc)
+        pc_path = f"lib/pkgconfig/{dep}.pc"
+        if (MSYSTEM_PREFIX / pc_path).exists() and not (GIMP_DISTRIB / pc_path).exists():
+          bundle(MSYSTEM_PREFIX, pc_path)
+          # Replace the hardcoded prefix with a relocatable one
+          dest_pc = GIMP_DISTRIB / pc_path
+          pc_content = dest_pc.read_text()
+          new_pc_content = pc_content.replace(f"/{Path(MSYSTEM_PREFIX).name}", "${pcfiledir}/../..")
+          dest_pc.write_text(new_pc_content)
+
+          #2.Bundle the corresponding library (import .a)
+          libs = subprocess.run(["pkg-config", "--libs-only-l", dep], capture_output=True, text=True)
+          if libs.returncode == 0:
+            for arg in libs.stdout.split():
+              if arg.startswith("-l"):
+                lib_name = f"lib/lib{arg[2:]}.dll.a"
+                if os.path.lexists(MSYSTEM_PREFIX / lib_name) and not os.path.lexists(GIMP_DISTRIB / lib_name):
+                  bundle(MSYSTEM_PREFIX, lib_name)
+
+          #3.Bundle the headers (.h)
+          includedir = subprocess.run(["pkg-config", "--cflags-only-I", dep], capture_output=True, text=True)
+          if includedir.returncode == 0:
+            for arg in includedir.stdout.split():
+              if arg.startswith("-I"):
+                include_path = Path(arg[2:])
+                if str(include_path).startswith(str(MSYSTEM_PREFIX)) and include_path.name != "include" and not (GIMP_DISTRIB / include_path.relative_to(MSYSTEM_PREFIX)).exists():
+                  bundle(MSYSTEM_PREFIX, str(include_path.relative_to(MSYSTEM_PREFIX)), "--dest", "include")
+          #Fallback: try dep/
+          h_dir = f"include/{dep}"
+          if (MSYSTEM_PREFIX / h_dir).exists() and not (GIMP_DISTRIB / h_dir).exists():
+            bundle(MSYSTEM_PREFIX, h_dir, "--dest", "include")
+          #Fallback: try dep/ without lib prefix nor -version suffix
+          real_dep = re.sub(r'[-._\d]+$', '', re.sub(r'^lib', '', dep))
+          h_dir = f"include/{real_dep}"
+          if real_dep != dep and (MSYSTEM_PREFIX / h_dir).exists() and not (GIMP_DISTRIB / h_dir).exists():
+            bundle(MSYSTEM_PREFIX, h_dir, "--dest", "include")
+          #Fallback: try dep*.h
+          for h_file in (MSYSTEM_PREFIX / "include").glob(f"{dep}*.h"):
+            if not (GIMP_DISTRIB / f"include/{h_file.name}").exists():
+              bundle(MSYSTEM_PREFIX, f"include/{h_file.name}", "--dest", "include")
+          #Fallback: try dep*.h without lib prefix nor -version suffix
+          for h_file in (MSYSTEM_PREFIX / "include").glob(f"{real_dep}*.h"):
+            if not (GIMP_DISTRIB / f"include/{h_file.name}").exists():
+              bundle(MSYSTEM_PREFIX, f"include/{h_file.name}", "--dest", "include")
+
+          pcs_to_process.append(dep)
+  processed_pcs.add(current_pc)
+### Special-case
+bundle(MSYSTEM_PREFIX, "lib/glib-2.0", "--dest", "lib")
+bundle(MSYSTEM_PREFIX, "include/brotli", "--dest", "include")
