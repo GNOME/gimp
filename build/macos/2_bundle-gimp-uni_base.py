@@ -62,6 +62,8 @@ def bundle(src_root, pattern, option="None", override=None):
       symlink_cleanup = False
       dest_path = GIMP_DISTRIB / "MacOS" / Path(src_path.relative_to(src_root)).name
     elif "lib/" in pattern:
+      if "libbabl" in src_path.name or "libgegl" in src_path.name or "libgimp" in src_path.name:
+        symlink_cleanup = False
       #we bundle on lib/ to avoid 'bundle format unrecognized, invalid, or unsuitable' on signing
       dest_path = GIMP_DISTRIB / "lib" / src_path.relative_to(src_root / "lib")
       #Needed by app/main.c (not anymore since we bundle directly on lib)
