@@ -25,7 +25,7 @@ if (-not $GITLAB_CI)
 # Install the required (pre-built) packages for babl, GEGL and GIMP
 if (-not $env:VCPKG_ROOT -or (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf))
   {
-    $env:VCPKG_ROOT = $(@($(Resolve-Path "${PWD}\..\vcpkg" -ErrorAction SilentlyContinue),$env:VCPKG_ROOT) | ?{$_} | select -First 1)
+    $env:VCPKG_ROOT = $(@($(Resolve-Path "${PWD}${PARENT_DIR}\vcpkg" -ErrorAction SilentlyContinue),$env:VCPKG_ROOT) | ?{$_} | select -First 1)
     if ((Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf) -and -not "$env:VSINSTALLDIR")
       {
         Write-Host '(ERROR): MSVC installation not found. Please, install it then run this script from Developer PowerShell.' -ForegroundColor Red; Remove-Item env:VCPKG_ROOT
@@ -59,7 +59,7 @@ if (Test-Path "$env:VCPKG_ROOT\vcpkg.exe" -Type Leaf)
     #Needed for finding perl on CI
     & "$env:VCPKG_ROOT\vcpkg.exe" remove --recurse aom; $env:VCPKG_DEFAULT_BINARY_CACHE="$env:VCPKG_ROOT/buildtrees/aom"; & "$env:VCPKG_ROOT\vcpkg.exe" install --no-print-usage --recurse 'libheif[aom,hevc,openjpeg]'; Remove-Item env:VCPKG_DEFAULT_BINARY_CACHE
     #FIXME: appstream and pygobject are missing on vcpkg
-    git apply -v 'build\windows\patches\0001-Disable-some-things-due-to-lack-of-packages.patch'; git apply -v 'build/windows/patches/0001-Disable-poppler-which-requires-C-23.patch'
+    git apply -v 'build\windows\patches\0001-Disable-some-things-due-to-lack-of-packages.patch'
   }
 else
   {
