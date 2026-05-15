@@ -53,7 +53,7 @@ def bundle(src_root, pattern, option="None", override=None):
     sys.exit(1)
   for src_path in paths_to_bundle:
     ## Copy found targets to bundle path
-    symlink_cleanup = True
+    symlink_cleanup = "--preserve-symlink" not in option
     if "--dest" in option:
       dest_path = GIMP_DISTRIB / Path(override) / src_path.name
     elif "--rename" in option:
@@ -338,11 +338,81 @@ for dir in ["MacOS", "lib"]:
 
 
 ## DEVELOPMENT FILES ON UNIX-STYLE, NO MACOS-STYLE/.FRAMEWORK
-## (to build GEGL filters and GIMP plug-ins).
+### (to build GEGL filters and GIMP plug-ins).
 clean(GIMP_DISTRIB, "lib/*.a")
 bundle(GIMP_PREFIX, "include/gimp-*", "--dest", "include")
 bundle(GIMP_PREFIX, "include/babl-*", "--dest", "include")
 bundle(GIMP_PREFIX, "include/gegl-*", "--dest", "include")
+bundle(GIMP_PREFIX, "lib/libgimp*-?.?.dylib", "--preserve-symlink")
+bundle(GIMP_PREFIX, "lib/libbabl-?.?.dylib", "--preserve-symlink")
+bundle(GIMP_PREFIX, "lib/libgegl-?.?.dylib", "--preserve-symlink")
 bundle(GIMP_PREFIX, "lib/pkgconfig/gimp*")
 bundle(GIMP_PREFIX, "lib/pkgconfig/babl*")
 bundle(GIMP_PREFIX, "lib/pkgconfig/gegl*")
+### Files needed by babl, gegl and gimp development libraries (not core gimp app)
+processed_pcs = set()
+pcs_to_process = [f.stem for f in Path(GIMP_DISTRIB / "lib/pkgconfig").glob("*.pc")]
+while pcs_to_process:
+  current_pc = pcs_to_process.pop(0)
+  if current_pc in processed_pcs:
+    continue
+  requires = subprocess.run(["pkg-config", "--print-requires", "--print-requires-private", current_pc], capture_output=True, text=True)
+  if requires.returncode == 0:
+    deps = [line.split()[0] for line in requires.stdout.splitlines() if line.strip()]
+    for dep in deps:
+      if dep not in processed_pcs:
+
+        #1.Bundle the pkgconfig file (.pc)
+        pc_path = f"lib/pkgconfig/{dep}.pc"
+        if (OPT_PREFIX / pc_path).exists() and not (GIMP_DISTRIB / pc_path).exists():
+          bundle(OPT_PREFIX, pc_path)
+          # Replace the hardcoded prefix with a relocatable one
+          dest_pc = GIMP_DISTRIB / pc_path
+          pc_content = dest_pc.read_text()
+          new_pc_content = pc_content.replace(str(OPT_PREFIX), "${pcfiledir}/../..")
+          dest_pc.write_text(new_pc_content)
+
+          #2.Bundle the corresponding library (unversioned .dylib)
+          libs = subprocess.run(["pkg-config", "--libs-only-l", dep], capture_output=True, text=True)
+          if libs.returncode == 0:
+            for arg in libs.stdout.split():
+              if arg.startswith("-l"):
+                lib_name = f"lib/lib{arg[2:]}.dylib"
+                if os.path.lexists(OPT_PREFIX / lib_name) and not os.path.lexists(GIMP_DISTRIB / lib_name) and (GIMP_DISTRIB / "lib" / os.path.basename(os.readlink(OPT_PREFIX / lib_name))).exists():
+                  bundle(OPT_PREFIX, lib_name, "--preserve-symlink")
+
+          #3.Bundle the headers (.h)
+          includedir = subprocess.run(["pkg-config", "--cflags-only-I", dep], capture_output=True, text=True)
+          if includedir.returncode == 0:
+            for arg in includedir.stdout.split():
+              if arg.startswith("-I"):
+                include_path = Path(arg[2:])
+                if str(include_path).startswith(str(OPT_PREFIX)) and include_path.name != "include" and not (GIMP_DISTRIB / include_path.relative_to(OPT_PREFIX)).exists():
+                  bundle(OPT_PREFIX, str(include_path.relative_to(OPT_PREFIX)), "--dest", "include")
+          #Fallback: try dep/
+          h_dir = f"include/{dep}"
+          if (OPT_PREFIX / h_dir).exists() and not (GIMP_DISTRIB / h_dir).exists():
+            bundle(OPT_PREFIX, h_dir, "--dest", "include")
+          #Fallback: try dep/ without lib prefix nor -version suffix
+          real_dep = re.sub(r'[-._\d]+$', '', re.sub(r'^lib', '', dep))
+          h_dir = f"include/{real_dep}"
+          if real_dep != dep and (OPT_PREFIX / h_dir).exists() and not (GIMP_DISTRIB / h_dir).exists():
+            bundle(OPT_PREFIX, h_dir, "--dest", "include")
+          #Fallback: try dep*.h
+          for h_file in (OPT_PREFIX / "include").glob(f"{dep}*.h"):
+            if not (GIMP_DISTRIB / f"include/{h_file.name}").exists():
+              bundle(OPT_PREFIX, f"include/{h_file.name}", "--dest", "include")
+          #Fallback: try dep*.h without lib prefix nor -version suffix
+          for h_file in (OPT_PREFIX / "include").glob(f"{real_dep}*.h"):
+            if not (GIMP_DISTRIB / f"include/{h_file.name}").exists():
+              bundle(OPT_PREFIX, f"include/{h_file.name}", "--dest", "include")
+
+          pcs_to_process.append(dep)
+  processed_pcs.add(current_pc)
+### Special-case
+link_path = Path(f"{GIMP_DISTRIB}/lib/libz.dylib")
+link_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/lib/libz.1.dylib"), link_path.parent))
+link_path = Path(f"{GIMP_DISTRIB}/lib/libzstd.dylib")
+link_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/lib/libzstd.1.dylib"), link_path.parent))
+bundle(OPT_PREFIX, "lib/glib-2.0", "--dest", "lib")
+bundle(OPT_PREFIX, "include/brotli", "--dest", "include")
