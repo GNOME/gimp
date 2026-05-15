@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-04 15:37+0000\n"
-"PO-Revision-Date: 2026-05-04 18:51+0200\n"
+"POT-Creation-Date: 2026-05-11 20:22+0000\n"
+"PO-Revision-Date: 2026-05-15 13:58+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -1244,7 +1244,7 @@ msgstr "Lagra parametrane for CML-utforskaren"
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:722
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
-#: plug-ins/file-icns/file-icns-export.c:444
+#: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2450
 #: plug-ins/file-tiff/file-tiff-export.c:1087
@@ -2004,8 +2004,8 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/common/file-paa.c:190 plug-ins/common/file-pcx.c:490
 #: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:800
 #: plug-ins/common/file-png.c:1370 plug-ins/common/file-ps.c:1158
-#: plug-ins/common/file-ps.c:3754 plug-ins/common/file-psp.c:2804
-#: plug-ins/common/file-psp.c:2854 plug-ins/common/file-pvr.c:256
+#: plug-ins/common/file-ps.c:3754 plug-ins/common/file-psp.c:2844
+#: plug-ins/common/file-psp.c:2894 plug-ins/common/file-pvr.c:256
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
 #: plug-ins/common/file-raw-data.c:810 plug-ins/common/file-raw-data.c:1861
 #: plug-ins/common/file-seattle-filmworks.c:232
@@ -2015,6 +2015,7 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/common/file-xbm.c:729 plug-ins/common/file-xmc.c:656
 #: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
+#: plug-ins/file-cin/cineon-lib.c:90 plug-ins/file-cin/dpx-lib.c:131
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
 #: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:631
@@ -2482,6 +2483,7 @@ msgstr "Kvitnivå"
 
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-farbfeld.c:298
 #: plug-ins/common/file-pcx.c:719 plug-ins/file-bmp/bmp-load.c:800
+#: plug-ins/file-cin/cineon-lib.c:114 plug-ins/file-cin/dpx-lib.c:185
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Biletet er for stort: breidd %d x høgd %d"
@@ -2708,7 +2710,7 @@ msgstr "«%s»: EOF eller feil ved lesing av palettdata"
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
-#: plug-ins/file-icns/file-icns-export.c:824
+#: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2388
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
@@ -4547,7 +4549,8 @@ msgstr "Hovudoverflate"
 #: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:353
 #: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
 #: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
-#: plug-ins/common/file-tim.c:612
+#: plug-ins/common/file-tim.c:612 plug-ins/file-cin/cineon-lib.c:169
+#: plug-ins/file-cin/dpx-lib.c:280
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "Klarte ikkje tildela minne."
@@ -5679,15 +5682,15 @@ msgstr "_270"
 msgid "Output"
 msgstr "Utdata"
 
-#: plug-ins/common/file-psp.c:666 plug-ins/common/file-psp.c:696
+#: plug-ins/common/file-psp.c:671 plug-ins/common/file-psp.c:701
 msgid "Paint Shop Pro image"
 msgstr "Paint-Shop-Pro-bilete"
 
-#: plug-ins/common/file-psp.c:669
+#: plug-ins/common/file-psp.c:674
 msgid "Loads images from the Paint Shop Pro PSP file format"
 msgstr "Lastar inn bilete i Paint Shop Pro PSP filformat"
 
-#: plug-ins/common/file-psp.c:671
+#: plug-ins/common/file-psp.c:676
 msgid ""
 "This plug-in loads and exports images in Paint Shop Pro's native PSP format. "
 "Vector layers aren't handled. Exporting isn't yet implemented."
@@ -5696,258 +5699,278 @@ msgstr ""
 "opphavlege PSP-format. Vektorlag vert ikkje handsama. Eksportering er ennå "
 "ikkje implementert."
 
-#: plug-ins/common/file-psp.c:726
+#: plug-ins/common/file-psp.c:731
 msgid "_Data Compression"
 msgstr "_Datakomprimering"
 
-#: plug-ins/common/file-psp.c:727
+#: plug-ins/common/file-psp.c:732
 msgid "Type of compression"
 msgstr "Kompresjonstype"
 
-#: plug-ins/common/file-psp.c:728
+#: plug-ins/common/file-psp.c:733
 msgid "none"
 msgstr "ingen"
 
-#: plug-ins/common/file-psp.c:729
+#: plug-ins/common/file-psp.c:734
 msgid "rle"
 msgstr "rle"
 
-#: plug-ins/common/file-psp.c:730
+#: plug-ins/common/file-psp.c:735
 msgid "lz77"
 msgstr "lz77"
 
-#: plug-ins/common/file-psp.c:920
+#: plug-ins/common/file-psp.c:925
 #, c-format
 msgid "Error reading block header"
 msgstr "Feil ved lesing av blokk-header"
 
-#: plug-ins/common/file-psp.c:927
+#: plug-ins/common/file-psp.c:932
 #, c-format
 msgid "Invalid block header at %ld"
 msgstr "Ugyldig blokkhovud i %ld"
 
-#: plug-ins/common/file-psp.c:930
+#: plug-ins/common/file-psp.c:935
 #, c-format
 msgid "Invalid block header"
 msgstr "Ugyldig blokk-header"
 
-#: plug-ins/common/file-psp.c:962
+#: plug-ins/common/file-psp.c:967
 #, c-format
 msgid "Seek error: %s"
 msgstr "Søkjefeil: %s"
 
-#: plug-ins/common/file-psp.c:985
+#: plug-ins/common/file-psp.c:990
 #, c-format
 msgid "Invalid general image attribute chunk size."
 msgstr "Ugyldig delstorleik for generell biletattributt."
 
-#: plug-ins/common/file-psp.c:1007
+#: plug-ins/common/file-psp.c:1012
 #, c-format
 msgid "Error reading general image attribute block."
 msgstr "Feil ved lesinga av den generelle atributtblokka."
 
-#: plug-ins/common/file-psp.c:1022
+#: plug-ins/common/file-psp.c:1027
 #, c-format
 msgid "Unknown compression type %d"
 msgstr "Ukjend kompressjonstype %d"
 
-#: plug-ins/common/file-psp.c:1058 plug-ins/common/file-psp.c:1065
+#: plug-ins/common/file-psp.c:1063 plug-ins/common/file-psp.c:1070
 #, c-format
 msgid "Unsupported bit depth %d"
 msgstr "Har ikkje støtte for bitdjupna %d"
 
-#: plug-ins/common/file-psp.c:1113
+#: plug-ins/common/file-psp.c:1118
 #, c-format
 msgid "Error reading creator keyword chunk"
 msgstr "Feil ved lesing av nøkkelordelement"
 
-#: plug-ins/common/file-psp.c:1119
+#: plug-ins/common/file-psp.c:1124
 #, c-format
 msgid "Invalid keyword chunk header"
 msgstr "Ugyldig nøkkelordelementtopptekst"
 
-#: plug-ins/common/file-psp.c:1130 plug-ins/common/file-psp.c:1144
-#: plug-ins/common/file-psp.c:1184
+#: plug-ins/common/file-psp.c:1135 plug-ins/common/file-psp.c:1149
+#: plug-ins/common/file-psp.c:1189
 #, c-format
 msgid "Error reading creator keyword data"
 msgstr "Feil ved lesing av nøkkelorddata for opprettaren"
 
-#: plug-ins/common/file-psp.c:1272 plug-ins/common/file-psp.c:1281
-#: plug-ins/common/file-psp.c:1290
+#: plug-ins/common/file-psp.c:1277 plug-ins/common/file-psp.c:1286
+#: plug-ins/common/file-psp.c:1295
 #, c-format
 msgid "Error reading color block"
 msgstr "Feil ved lesing av fargeblokka"
 
-#: plug-ins/common/file-psp.c:1301
+#: plug-ins/common/file-psp.c:1306
 #, c-format
 msgid "Error: Unsupported palette size"
 msgstr "Feil: Ustøtta palettstorleik"
 
-#: plug-ins/common/file-psp.c:1312
+#: plug-ins/common/file-psp.c:1317
 #, c-format
 msgid "Error reading color palette"
 msgstr "Feil ved lesing av fargepaletten"
 
-#: plug-ins/common/file-psp.c:1634 plug-ins/common/file-psp.c:1657
+#: plug-ins/common/file-psp.c:1639 plug-ins/common/file-psp.c:1662
 #: plug-ins/file-psd/psd-util.c:176
 #, c-format
 msgid "Error reading data. Most likely unexpected end of file."
 msgstr "Feil ved lesing av data. Mest sannsynleg uventa filslutt."
 
-#: plug-ins/common/file-psp.c:1749 plug-ins/common/file-psp.c:1763
+#: plug-ins/common/file-psp.c:1754 plug-ins/common/file-psp.c:1768
 #, c-format
 msgid "zlib error"
 msgstr "zlib-feil"
 
-#: plug-ins/common/file-psp.c:1826 plug-ins/common/file-psp.c:1860
-#: plug-ins/common/file-psp.c:1870
+#: plug-ins/common/file-psp.c:1831 plug-ins/common/file-psp.c:1865
+#: plug-ins/common/file-psp.c:1875
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "Feil ved lesinga av informasjonen om lagutvidinga"
 
-#: plug-ins/common/file-psp.c:1847
+#: plug-ins/common/file-psp.c:1852
 #, c-format
 msgid "Error reading block information"
 msgstr "Feil ved lesing av blokkinformasjonen"
 
-#: plug-ins/common/file-psp.c:1927
+#: plug-ins/common/file-psp.c:1934
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Ugyldig underblokk for laget %s, skal vera LAG"
 
-#: plug-ins/common/file-psp.c:1960 plug-ins/common/file-psp.c:2019
+#: plug-ins/common/file-psp.c:1967 plug-ins/common/file-psp.c:2033
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Feil ved lesing av laginformasjonsdelen"
 
-#: plug-ins/common/file-psp.c:2062
+#: plug-ins/common/file-psp.c:2076
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Ugyldig lagstorleik: %dx %d"
 
-#: plug-ins/common/file-psp.c:2123
+#: plug-ins/common/file-psp.c:2146
 #, c-format
 msgid "Error creating layer"
 msgstr "Feil ved oppretting av laget"
 
-#: plug-ins/common/file-psp.c:2160 plug-ins/common/file-psp.c:2207
-#: plug-ins/common/file-psp.c:2535 plug-ins/common/file-psp.c:2555
-#: plug-ins/common/file-psp.c:2573
+#: plug-ins/common/file-psp.c:2186 plug-ins/common/file-psp.c:2233
+#: plug-ins/common/file-psp.c:2575 plug-ins/common/file-psp.c:2595
+#: plug-ins/common/file-psp.c:2613
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Feil ved lesinga av informasjonsdelen av kanalen"
 
-#: plug-ins/common/file-psp.c:2191
+#: plug-ins/common/file-psp.c:2217
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Ugyldig underblokk for laget %s, skal vera KANAL"
 
-#: plug-ins/common/file-psp.c:2231
+#: plug-ins/common/file-psp.c:2257
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Ugyldig kanaltype %d i kanalinformasjonsdelen"
 
-#: plug-ins/common/file-psp.c:2337 plug-ins/common/file-psp.c:2354
+#: plug-ins/common/file-psp.c:2377 plug-ins/common/file-psp.c:2394
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Feil ved lesing av delar av animasjonsdataa"
 
-#: plug-ins/common/file-psp.c:2458 plug-ins/common/file-psp.c:2475
-#: plug-ins/common/file-psp.c:2497 plug-ins/common/file-psp.c:2505
+#: plug-ins/common/file-psp.c:2498 plug-ins/common/file-psp.c:2515
+#: plug-ins/common/file-psp.c:2537 plug-ins/common/file-psp.c:2545
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "Feil ved lesing av utvalsdelen"
 
-#: plug-ins/common/file-psp.c:2467
+#: plug-ins/common/file-psp.c:2507
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "Ugyldig storleik på utvalsdelen"
 
-#: plug-ins/common/file-psp.c:2489 plug-ins/common/file-psp.c:2513
-#: plug-ins/common/file-psp.c:2547 plug-ins/common/file-psp.c:2589
+#: plug-ins/common/file-psp.c:2529 plug-ins/common/file-psp.c:2553
+#: plug-ins/common/file-psp.c:2587 plug-ins/common/file-psp.c:2629
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Feil ved lesing av slutt på utvalet-delen"
 
-#: plug-ins/common/file-psp.c:2522
+#: plug-ins/common/file-psp.c:2562
 #, c-format
 msgid "Invalid selection sub-block %s, should be CHANNEL"
 msgstr "Ugyldig underblokk for laget %s, bør vera KANAL"
 
-#: plug-ins/common/file-psp.c:2614
+#: plug-ins/common/file-psp.c:2654
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Feil ved lesing av den utvida blokkdelen i overskrifta"
 
-#: plug-ins/common/file-psp.c:2621
+#: plug-ins/common/file-psp.c:2661
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Ugyldig utvida blokkdel i overskrifta"
 
-#: plug-ins/common/file-psp.c:2632
+#: plug-ins/common/file-psp.c:2672
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Ugyldig utvida blokkdelstorleik"
 
-#: plug-ins/common/file-psp.c:2653
+#: plug-ins/common/file-psp.c:2693
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Feil ved lesing av den utvida blokkrutenettdatya"
 
-#: plug-ins/common/file-psp.c:2681
+#: plug-ins/common/file-psp.c:2721
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Feil ved lesing av dei utvida blokkhjelpelinjedataa"
 
-#: plug-ins/common/file-psp.c:2699
+#: plug-ins/common/file-psp.c:2739
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Ugyldig hjelpelinjeretning"
 
-#: plug-ins/common/file-psp.c:2713
+#: plug-ins/common/file-psp.c:2753
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Feil ved lesing av den utvida blokkdelen"
 
-#: plug-ins/common/file-psp.c:2739 plug-ins/common/file-psp.c:2751
-#: plug-ins/common/file-psp.c:2762
+#: plug-ins/common/file-psp.c:2779 plug-ins/common/file-psp.c:2791
+#: plug-ins/common/file-psp.c:2802
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Feil ved lesing av fargeprofil-delen"
 
-#: plug-ins/common/file-psp.c:2815
+#: plug-ins/common/file-psp.c:2855
 #, c-format
 msgid "Error reading file header."
 msgstr "Feil ved lesing av fil-header."
 
-#: plug-ins/common/file-psp.c:2822
+#: plug-ins/common/file-psp.c:2862
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Feil filsignatur."
 
-#: plug-ins/common/file-psp.c:2836
+#: plug-ins/common/file-psp.c:2876
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Har ikkje støtte for PSP-filformatversjonen: %d.%d."
 
-#: plug-ins/common/file-psp.c:2856
+#: plug-ins/common/file-psp.c:2896
 msgid "invalid block size"
 msgstr "ugyldig blokkstorleik"
 
-#: plug-ins/common/file-psp.c:2865
+#: plug-ins/common/file-psp.c:2905
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Dupliser den generelle biletattributtblokka."
 
-#: plug-ins/common/file-psp.c:2893
+#: plug-ins/common/file-psp.c:2933
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Manglar den generelle biletattributtblokka."
 
-#: plug-ins/common/file-psp.c:3018
+#: plug-ins/common/file-psp.c:3058
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Eksporten er ikkje implementert ennå."
+
+#: plug-ins/common/file-psp.c:3085 plug-ins/common/file-psp.c:3104
+#: plug-ins/common/file-psp.c:3113 plug-ins/common/file-psp.c:3137
+#: plug-ins/common/file-psp.c:3210 plug-ins/common/file-psp.c:3252
+#: plug-ins/common/file-psp.c:3271 plug-ins/common/file-psp.c:3303
+#: plug-ins/common/file-psp.c:3359 plug-ins/common/file-psp.c:3438
+#: plug-ins/common/file-psp.c:3500 plug-ins/common/file-psp.c:3526
+#, c-format
+msgid "Error reading adjustment layer extension information"
+msgstr "Feil ved lesinga av informasjonen om utvidinga av lagjusteringa"
+
+#: plug-ins/common/file-psp.c:3094
+#, c-format
+msgid "Invalid layer sub-block %s, should be ADJUSTMENT EXTENSION"
+msgstr "Ugyldig underblokk for laget %s, skal vera JUSTERINGSUTVIDING"
+
+#: plug-ins/common/file-psp.c:3545
+#, c-format
+msgid "Unsupported adjustment layer type %d"
+msgstr "Ustøtta justeringslagtype %d"
 
 #: plug-ins/common/file-pvr.c:214
 msgid "PVR Image"
@@ -8140,7 +8163,7 @@ msgstr "Slå på kantutjamning ved hjelp av ein oversamplingsalgoritme"
 msgid "Any file which will be used as source for pattern generation"
 msgstr "Kva fil som helst som vert brukt som kjelde for å laga mønsteret"
 
-#: plug-ins/common/qbist.c:363
+#: plug-ins/common/qbist.c:363 plug-ins/common/qbist.c:932
 msgid "Qbist"
 msgstr "Qbist"
 
@@ -8159,10 +8182,6 @@ msgstr "QBE-fil (*.qbe)"
 #: plug-ins/common/qbist.c:885
 msgid "Save as QBE File"
 msgstr "Lagra som QBE-fil"
-
-#: plug-ins/common/qbist.c:932
-msgid "G-Qbist"
-msgstr "G-Qbist"
 
 #: plug-ins/common/qbist.c:993
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:713
@@ -9596,6 +9615,63 @@ msgstr "32 bitar (A8 R8 G8 B8)"
 msgid "32 bit (X8 R8 G8 B8)"
 msgstr "32 bitar (X8 R8 G8 B8)"
 
+#: plug-ins/file-cin/file-cin.c:136
+msgid "Kodak Cineon"
+msgstr "Kodak Cineon"
+
+#: plug-ins/file-cin/file-cin.c:139 plug-ins/file-cin/file-cin.c:140
+msgid "Load file of the Kodak Cineon file format"
+msgstr "Last inn filer i Kodak Cineon filformat"
+
+#: plug-ins/file-cin/file-cin.c:163
+msgid "DPX"
+msgstr "DPX"
+
+#: plug-ins/file-cin/file-cin.c:166
+msgid "Load file of the DPX file format"
+msgstr "Last inn fil i DPX-filformat"
+
+#: plug-ins/file-cin/file-cin.c:167
+msgid "Load file of the Digital Picture Exchange file format"
+msgstr "Last inn fil i Digital Picture Exchange-filformat"
+
+#: plug-ins/file-cin/cineon-lib.c:98
+#, c-format
+msgid "Could not read Cineon header information."
+msgstr "Kunne ikkje lesa Cineon header-informasjon."
+
+#: plug-ins/file-cin/cineon-lib.c:134
+#, c-format
+msgid "Cineon: Image with %d channels not yet supported."
+msgstr "Cineon: Har førebels ikkje støtte for bilete med %d kanalar."
+
+#: plug-ins/file-cin/cineon-lib.c:154
+#, c-format
+msgid "Cineon: Image with %d bpc not yet supported."
+msgstr "Cineon: Har førebels ikkje støtte for bilete med %d bpc."
+
+#: plug-ins/file-cin/cineon-lib.c:181 plug-ins/file-cin/cineon-lib.c:207
+#: plug-ins/file-cin/dpx-lib.c:292 plug-ins/file-cin/dpx-lib.c:318
+#: plug-ins/file-cin/dpx-lib.c:331 plug-ins/file-cin/dpx-lib.c:351
+#, c-format
+msgid "Could not read image data from '%s'"
+msgstr "Klarte ikkje lesa biletdata frå «%s»"
+
+#: plug-ins/file-cin/dpx-lib.c:139 plug-ins/file-cin/dpx-lib.c:157
+#, c-format
+msgid "Could not read DPX header information."
+msgstr "Klarte ikkje lesa informasjonen om DPX-header."
+
+#: plug-ins/file-cin/dpx-lib.c:233
+#, c-format
+msgid "DPX: Image with %d channels not yet supported."
+msgstr "DPX: Har førebels ikkje støtte for bilete med %d kanalar."
+
+#: plug-ins/file-cin/dpx-lib.c:263
+#, c-format
+msgid "DPX: Image with %d bpc not yet supported."
+msgstr "DPX: Har førebels ikkje støtte for bilete med %d bpc."
+
 #: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:170
 msgid "DDS image"
 msgstr "DDS-bilete"
@@ -10349,7 +10425,7 @@ msgstr ""
 "Duplisert lagstorleik.\n"
 "Det vert ikkje eksportert"
 
-#: plug-ins/file-icns/file-icns-export.c:320
+#: plug-ins/file-icns/file-icns-export.c:319
 msgid ""
 "Valid ICNS icons sizes are:\n"
 " 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
@@ -10362,18 +10438,18 @@ msgstr ""
 "Alle andre lagstorleikar vert ignorerte ved eksport."
 
 #. Don't show warning by default
-#: plug-ins/file-icns/file-icns-export.c:328
+#: plug-ins/file-icns/file-icns-export.c:327
 msgid "Export Icons"
 msgstr "Eksport ikon"
 
-#: plug-ins/file-icns/file-icns-export.c:523
-#: plug-ins/file-icns/file-icns-export.c:541
-#: plug-ins/file-icns/file-icns-export.c:634
+#: plug-ins/file-icns/file-icns-export.c:521
+#: plug-ins/file-icns/file-icns-export.c:539
+#: plug-ins/file-icns/file-icns-export.c:632
 #, c-format
 msgid "Error writing icns: %s"
 msgstr "Feil ved skriving av icns: %s"
 
-#: plug-ins/file-icns/file-icns-export.c:794
+#: plug-ins/file-icns/file-icns-export.c:791
 #, c-format
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -10383,7 +10459,7 @@ msgstr ""
 "18, 24 × 24, 32 × 32, 36 × 36, 48 × 48, 64 × 64, 128 × 128, 256 × 256, 512 × "
 "512 eller 1024 × 1024."
 
-#: plug-ins/file-icns/file-icns-export.c:812
+#: plug-ins/file-icns/file-icns-export.c:809
 #, c-format
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -17106,6 +17182,9 @@ msgstr "Fann ikkje TWAIN-drivaren. Ikkje råd å skanna"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Overfører data frå skannar/kamera"
+
+#~ msgid "G-Qbist"
+#~ msgstr "G-Qbist"
 
 #~ msgid "TIM Image"
 #~ msgstr "TIM-bilete"
