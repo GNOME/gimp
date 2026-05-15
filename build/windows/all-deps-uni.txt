@@ -47,8 +47,8 @@ ${MINGW_PACKAGE_PREFIX}-mypaint-brushes2|vcpkg:mypaint-brushes
 ${MINGW_PACKAGE_PREFIX}-openexr|vcpkg:openexr
 ${MINGW_PACKAGE_PREFIX}-openjpeg2|vcpkg:openjpeg
 ${MINGW_PACKAGE_PREFIX}-pango|vcpkg:pango[introspection]
-${MINGW_PACKAGE_PREFIX}-poppler
-${MINGW_PACKAGE_PREFIX}-poppler-data
+${MINGW_PACKAGE_PREFIX}-poppler|vcpkg:poppler[glib]
+${MINGW_PACKAGE_PREFIX}-poppler-data|vcpkg:poppler-data
 ${MINGW_PACKAGE_PREFIX}-python|vcpkg:python3
 ${MINGW_PACKAGE_PREFIX}-python-gobject
 ${MINGW_PACKAGE_PREFIX}-qoi|vcpkg:qoi
