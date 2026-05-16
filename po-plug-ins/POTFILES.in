@@ -93,7 +93,6 @@ plug-ins/common/van-gogh-lic.c
 plug-ins/common/warp.c
 plug-ins/common/wavelet-decompose.c
 plug-ins/common/web-browser.c
-plug-ins/common/web-page.c
 plug-ins/common/wia.c
 plug-ins/file-bmp/bmp-export.c
 plug-ins/file-bmp/bmp-load.c
