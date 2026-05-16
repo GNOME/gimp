@@ -562,8 +562,10 @@ GimpColorProfile *
 gimp_monitor_get_color_profile (GdkMonitor *monitor)
 {
   GimpColorProfile *profile = NULL;
+  g_printerr ("Initiating gimp_monitor_get_color_profile\n");
 
   g_return_val_if_fail (GDK_IS_MONITOR (monitor), NULL);
+  g_printerr ("Passed g_return_val_if_fail\n");
 
 #if defined GDK_WINDOWING_X11
   {
@@ -647,29 +649,53 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
     info.cbSize       = sizeof (info);
     display_device.cb = sizeof (display_device);
 
+    g_printerr ("[DEBUG] Virtual screen offsets -> X: %d, Y: %d\n", offsetx, offsety);
+
     /* If the first monitor is not set as the main monitor,
      * monitor_number(monitor) may not match the index used in
      * EnumDisplayDevices(devicename, index, displaydevice, flags).
      */
     gdk_monitor_get_geometry (monitor, &monitor_geometry);
     scale_factor = gdk_monitor_get_scale_factor (monitor);
+
+    g_printerr ("[DEBUG] GDK Monitor Geometry -> X: %d, Y: %d, W: %d, H: %d | Scale Factor: %d\n",
+                monitor_geometry.x, monitor_geometry.y, monitor_geometry.width, monitor_geometry.height, scale_factor);
+
     point.x = monitor_geometry.x * scale_factor + offsetx;
     point.y = monitor_geometry.y * scale_factor + offsety;
+
+    g_printerr ("[DEBUG] Calculated Win32 POINT for MonitorFromPoint -> X: %ld, Y: %ld\n", point.x, point.y);
+
     monitor_handle = MonitorFromPoint (point, MONITOR_DEFAULTTONEAREST);
+    g_printerr ("[DEBUG] MonitorFromPoint returned handle: %p\n", (void*)monitor_handle);
 
     if (GetMonitorInfoW (monitor_handle, (LPMONITORINFO)&info))
       {
+        // %ls is used to print the wchar_t (UTF-16) device name string safely
+        g_printerr ("[DEBUG] GetMonitorInfoW succeeded. Device Name: %ls\n", info.szDevice);
+
         if (EnumDisplayDevicesW (info.szDevice, 0, &display_device, 0))
           {
             wchar_t                      *device_key = display_device.DeviceKey;
             wchar_t                      *filename_utf16 = NULL;
+            char                         *filename       = NULL;
+            wchar_t                      *dir_utf16      = NULL;
+            char                         *dir            = NULL;
+            char                         *fullpath       = NULL;
+            GFile                        *file           = NULL;
             DWORD                         len            = 0;
             gboolean                      per_user;
             WCS_PROFILE_MANAGEMENT_SCOPE  scope;
 
+            g_printerr ("[DEBUG] EnumDisplayDevicesW succeeded. DeviceKey: %ls\n", device_key);
+
             WcsGetUsePerUserProfiles (device_key, CLASS_MONITOR, &per_user);
             scope = per_user ? WCS_PROFILE_MANAGEMENT_SCOPE_CURRENT_USER :
                                WCS_PROFILE_MANAGEMENT_SCOPE_SYSTEM_WIDE;
+
+            g_printerr ("[DEBUG] Per-user profiles enabled: %s | Scope: %s\n",
+                        per_user ? "TRUE" : "FALSE",
+                        per_user ? "CURRENT_USER" : "SYSTEM_WIDE");
 
             if (WcsGetDefaultColorProfileSize (scope,
                                                device_key,
@@ -678,25 +704,49 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
                                                0,
                                                &len))
               {
+                g_printerr ("[DEBUG] WcsGetDefaultColorProfileSize succeeded. Profile size length: %lu bytes\n", len);
+
                 filename_utf16 = (wchar_t*) g_malloc0 (len);
 
-                WcsGetDefaultColorProfile (scope,
-                                           device_key,
-                                           CPT_ICC,
-                                           CPST_NONE,
-                                           0,
-                                           len,
-                                           filename_utf16);
+                if (WcsGetDefaultColorProfile (scope,
+                                               device_key,
+                                               CPT_ICC,
+                                               CPST_NONE,
+                                               0,
+                                               len,
+                                               filename_utf16))
+                  {
+                    g_printerr ("[DEBUG] WcsGetDefaultColorProfile succeeded. Profile Path: %ls\n", filename_utf16);
+                  }
+                else
+                  {
+                    g_printerr ("[WARNING] WcsGetDefaultColorProfile failed. GetLastError: %lu\n", GetLastError());
+                  }
               }
             else
               {
+                g_printerr ("[DEBUG] WcsGetDefaultColorProfileSize failed (or no profile). Attempting sRGB fallback. GetLastError: %lu\n", GetLastError());
+
                 /* Due to a bug in Windows, the meanings of LCS_sRGB and
                  * LCS_WINDOWS_COLOR_SPACE are swapped.
                  */
                 if (GetStandardColorSpaceProfileW (NULL, LCS_sRGB, NULL, &len) != 0 && len > 0)
                   {
+                    g_printerr ("[DEBUG] GetStandardColorSpaceProfileW reported fallback size: %lu bytes\n", len);
+
                     filename_utf16 = (wchar_t*) g_malloc0 (len);
-                    GetStandardColorSpaceProfileW (NULL, LCS_sRGB, filename_utf16, &len);
+                    if (GetStandardColorSpaceProfileW (NULL, LCS_sRGB, filename_utf16, &len))
+                      {
+                        g_printerr ("[DEBUG] Fallback GetStandardColorSpaceProfileW succeeded. Profile Path: %ls\n", filename_utf16);
+                      }
+                    else
+                      {
+                        g_printerr ("[WARNING] Fallback GetStandardColorSpaceProfileW failed. GetLastError: %lu\n", GetLastError());
+                      }
+                  }
+                else
+                  {
+                    g_printerr ("[ERROR] Failed to fetch standard color space profile fallback.\n");
                   }
               }
 
@@ -709,33 +759,76 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
                 win_profile.pProfileData = filename_utf16;
                 win_profile.cbDataSize   = (wcslen (filename_utf16) + 1) * sizeof (wchar_t);
 
+                // DEBUG: Log the file we are attempting to open
+                // Note: %ls is used for printing wchar_t* (UTF-16) strings
+                g_printerr ("[DEBUG] Attempting to open color profile: %ls\n", (wchar_t *)win_profile.pProfileData);
+
                 /* OpenColorProfileW implicitly looks in the Windows color directory
-                 * when given a simple file name without a full path. */
+                * when given a simple file name without a full path. */
                 hProfile = OpenColorProfileW (&win_profile, PROFILE_READ,
                                               FILE_SHARE_READ, OPEN_EXISTING);
                 if (hProfile)
                   {
                     DWORD profile_size = 0;
 
+                    g_printerr ("[DEBUG] OpenColorProfileW succeeded. Fetching profile size...\n");
+
                     GetColorProfileFromHandle (hProfile, NULL, &profile_size);
+                    g_printerr ("[DEBUG] Profile size determined: %lu bytes\n", (unsigned long)profile_size);
+
                     if (profile_size > 0)
                       {
                         guint8 *profile_data = g_malloc (profile_size);
+                        g_printerr ("[DEBUG] Allocated %lu bytes for profile data\n", (unsigned long)profile_size);
 
                         if (GetColorProfileFromHandle (hProfile, profile_data, &profile_size))
                           {
+                            g_printerr ("[DEBUG] Successfully retrieved color profile data from handle.\n");
+
                             profile = gimp_color_profile_new_from_icc_profile (profile_data,
-                                                                               profile_size,
-                                                                               NULL);
+                                                                              profile_size,
+                                                                              NULL);
+                            if (profile)
+                              {
+                                g_printerr ("[DEBUG] Successfully created gimp_color_profile.\n");
+                              }
+                            else
+                              {
+                                g_printerr ("[WARNING] gimp_color_profile_new_from_icc_profile failed to parse data.\n");
+                              }
+                          }
+                        else
+                          {
+                            // DEBUG: Windows API failed, log the error code
+                            g_printerr ("[ERROR] GetColorProfileFromHandle failed. Windows Error Code: %lu\n", GetLastError ());
                           }
                         g_free (profile_data);
                       }
+                    else
+                      {
+                        g_printerr ("[WARNING] Profile size is 0 or GetColorProfileFromHandle failed to get size. Windows Error Code: %lu\n", GetLastError ());
+                      }
                     CloseColorProfile (hProfile);
+                  }
+                else
+                  {
+                    // DEBUG: Failed to open the profile (e.g., file not found)
+                    g_printerr ("[ERROR] OpenColorProfileW failed for '%ls'. Windows Error Code: %lu\n",
+                                (wchar_t *)win_profile.pProfileData, GetLastError ());
                   }
 
                 g_free (filename_utf16);
               }
+
           }
+        else
+          {
+            g_printerr ("[ERROR] EnumDisplayDevicesW failed for device %ls. GetLastError: %lu\n", info.szDevice, GetLastError());
+          }
+      }
+    else
+      {
+        g_printerr ("[ERROR] GetMonitorInfoW failed for handle %p. GetLastError: %lu\n", (void*)monitor_handle, GetLastError());
       }
   }
 #endif
