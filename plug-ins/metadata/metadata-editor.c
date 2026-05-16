@@ -142,9 +142,6 @@ static gboolean metadata_editor_dialog           (GimpImage           *image,
 static void metadata_dialog_editor_set_metadata  (GExiv2Metadata      *metadata,
                                                   metadata_editor     *meta_info);
 
-static void impex_combo_callback                (GtkComboBoxText      *combo,
-                                                 gpointer              data);
-
 static void gpsaltsys_combo_callback            (GtkComboBoxText      *combo,
                                                  gpointer              data);
 
@@ -197,6 +194,8 @@ void on_study_date_button_clicked               (GtkButton            *widget,
 void on_series_date_button_clicked              (GtkButton            *widget,
                                                  gpointer              data);
 
+static void import_dialog_metadata              (metadata_editor      *args);
+static void export_dialog_metadata              (metadata_editor      *args);
 
 static void
 property_release_id_remove_callback             (GtkWidget            *widget,
@@ -1157,7 +1156,8 @@ metadata_editor_dialog (GimpImage            *image,
   GtkWidget      *dialog;
   GtkWidget      *content_area;
   GtkWidget      *metadata_vbox;
-  GtkWidget      *impex_combo;
+  GtkWidget      *import_button;
+  GtkWidget      *export_button;
   GtkWidget      *notebook;
   GtkWidget      *box;
   GtkWidget      *grid;
@@ -1372,22 +1372,17 @@ metadata_editor_dialog (GimpImage            *image,
   gtk_box_pack_start (GTK_BOX (metadata_vbox), box, FALSE, TRUE, 0);
   gtk_widget_set_visible (box, TRUE);
 
-  impex_combo = gtk_combo_box_text_new ();
-  g_object_set (G_OBJECT (impex_combo), "width_request", 160, NULL);
-  gtk_box_pack_start (GTK_BOX (box), impex_combo, FALSE, FALSE, 6);
-  gtk_widget_set_visible (impex_combo, TRUE);
+  import_button = gtk_button_new_with_label (_("Import Metadata..."));
+  gtk_box_pack_start (GTK_BOX (box), import_button, FALSE, FALSE, 6);
+  gtk_widget_set_visible (import_button, TRUE);
+  g_signal_connect_swapped (import_button, "clicked",
+                            G_CALLBACK (import_dialog_metadata), &meta_args);
 
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (impex_combo),
-                                  _("Select:"));
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (impex_combo),
-                                  _("Import metadata"));
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (impex_combo),
-                                  _("Export metadata"));
-  gtk_combo_box_set_active (GTK_COMBO_BOX (impex_combo), 0);
-
-  g_signal_connect (G_OBJECT (impex_combo),
-                    "changed", G_CALLBACK (impex_combo_callback), &meta_args);
-
+  export_button = gtk_button_new_with_label (_("Export Metadata..."));
+  gtk_box_pack_start (GTK_BOX (box), export_button, FALSE, FALSE, 6);
+  gtk_widget_set_visible (export_button, TRUE);
+  g_signal_connect_swapped (export_button, "clicked",
+                            G_CALLBACK (export_dialog_metadata), &meta_args);
   /* Add signals, combobox choices, and actual metadata */
 
   metadata_dialog_editor_set_metadata (metadata, &meta_args);
@@ -5646,31 +5641,6 @@ export_dialog_metadata (metadata_editor *args)
 
   g_object_unref (file_dialog);
 }
-
-static void
-impex_combo_callback (GtkComboBoxText *combo,
-                      gpointer         data)
-{
-  metadata_editor *args;
-  gint32           selection;
-
-  args = data;
-  selection = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
-
-  switch (selection)
-    {
-    case 1: /* Import */
-      import_dialog_metadata (args);
-      gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
-      break;
-
-    case 2: /* Export */
-      export_dialog_metadata (args);
-      gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
-      break;
-    }
-}
-
 
 static void
 gpsaltsys_combo_callback (GtkComboBoxText *combo,
