@@ -707,19 +707,54 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
 
             if (filename_utf16 != NULL)
               {
+                // DEBUG: Log the incoming UTF-16 filename before conversion
+                g_printerr ("[OLD PATH] Incoming filename_utf16: %ls\n", (wchar_t *)filename_utf16);
+
                 filename = g_utf16_to_utf8 (filename_utf16, -1, NULL, NULL, NULL);
+                g_printerr ("[OLD PATH] Converted filename (UTF-8): %s\n", filename ? filename : "NULL");
 
                 GetColorDirectoryW (NULL, NULL, &len);
+                g_printerr ("[OLD PATH] GetColorDirectoryW required length: %lu\n", (unsigned long)len);
+
                 dir_utf16 = g_malloc0 (len);
-                GetColorDirectoryW (NULL, dir_utf16, &len);
+                if (GetColorDirectoryW (NULL, dir_utf16, &len))
+                  {
+                    g_printerr ("[OLD PATH] Windows Color Directory (UTF-16): %ls\n", (wchar_t *)dir_utf16);
+                  }
+                else
+                  {
+                    g_printerr ("[OLD PATH] [ERROR] GetColorDirectoryW failed. Windows Error Code: %lu\n", GetLastError ());
+                  }
 
                 dir = g_utf16_to_utf8 (dir_utf16, -1, NULL, NULL, NULL);
+                g_printerr ("[OLD PATH] Converted Color Directory (UTF-8): %s\n", dir ? dir : "NULL");
 
                 fullpath = g_build_filename (dir, filename, NULL);
-                file = g_file_new_for_path (fullpath);
+                g_printerr ("[OLD PATH] Built full path: %s\n", fullpath ? fullpath : "NULL");
 
-                profile = gimp_color_profile_new_from_file (file, NULL);
-                g_object_unref (file);
+                file = g_file_new_for_path (fullpath);
+                if (file)
+                  {
+                    g_printerr ("[OLD PATH] GFile object created successfully.\n");
+
+                    // Attempt to load the profile using GIMP's file-based loader
+                    profile = gimp_color_profile_new_from_file (file, NULL);
+
+                    if (profile)
+                      {
+                        g_printerr ("[OLD PATH] Successfully created gimp_color_profile from file.\n");
+                      }
+                    else
+                      {
+                        g_printerr ("[OLD PATH] [WARNING] gimp_color_profile_new_from_file failed to load/parse the file.\n");
+                      }
+
+                    g_object_unref (file);
+                  }
+                else
+                  {
+                    g_printerr ("[OLD PATH] [ERROR] Failed to create GFile object for path.\n");
+                  }
 
                 g_free (fullpath);
                 g_free (dir);

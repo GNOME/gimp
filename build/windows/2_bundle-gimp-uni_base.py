@@ -172,7 +172,7 @@ bundle(MSYSTEM_PREFIX, "share/libwmf")
 ### Needed for 'Show image graph'
 ### if show_debug_menu is true in app/main.c or --show-debug-menu CLI option is set
 #### See: https://gitlab.gnome.org/GNOME/gimp/-/issues/6045
-bundle(MSYSTEM_PREFIX, "bin/dot.exe")
+#bundle(MSYSTEM_PREFIX, "bin/dot.exe")
 #### See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12119
 bundle(MSYSTEM_PREFIX, "bin/libgvplugin_dot*.dll")
 bundle(MSYSTEM_PREFIX, "bin/libgvplugin_pango*.dll")
