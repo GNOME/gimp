@@ -87,7 +87,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
     $dep = ($repo -split "/")[-1] -replace '.git',''
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build[collapsed=true]$([char]13)$([char]27)[0KBuilding $dep"
     ## Make sure that the deps repos are fine
-    if (($GIMP_CI_WIN_INSTALLER -match '[1-9]' -or $GIMP_CI_MS_STORE -match '[1-9]') -and -not $CI_COMMIT_TAG)
+    if (($GIMP_CI_WIN_INSTALLER -match '[1-9]' -or $GIMP_CI_MS_STORE -match '[1-9]') -and -not $CI_COMMIT_TAG -and $CI_PIPELINE_SOURCE -ne 'schedule')
       {
         #needed to avoid broken GIMP revisions with untagged babl/gegl
         Write-Host "(ERROR): revision is set but no GIMP tag found. Please, tag the revision." -ForegroundColor red
