@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-23 07:56+0000\n"
+"POT-Creation-Date: 2026-05-11 22:31+0000\n"
 "PO-Revision-Date: 2026-04-10 17:40+0200\n"
 "Last-Translator: Марко М. Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <gnome-sr@googlegroups.com>\n"
@@ -92,9 +92,9 @@ msgstr "Пример прикључка у Це језику"
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
 #: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1189
-#: plug-ins/metadata/metadata-editor.c:1695
-#: plug-ins/metadata/metadata-editor.c:5585
-#: plug-ins/metadata/metadata-editor.c:5620 plug-ins/print/print.c:458
+#: plug-ins/metadata/metadata-editor.c:1696
+#: plug-ins/metadata/metadata-editor.c:5587
+#: plug-ins/metadata/metadata-editor.c:5622 plug-ins/print/print.c:458
 msgid "_Cancel"
 msgstr "_Откажи"
 
@@ -617,7 +617,7 @@ msgstr "Застори"
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:424
+#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:431
 #: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-pcx.c:727
 #: plug-ins/common/file-pcx.c:735 plug-ins/common/file-pcx.c:743
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
@@ -1280,7 +1280,7 @@ msgstr "Сачувај параметре CML истраживача"
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:722
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
-#: plug-ins/file-icns/file-icns-export.c:444
+#: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2450
 #: plug-ins/file-tiff/file-tiff-export.c:1087
@@ -2799,7 +2799,7 @@ msgstr "„%s“: Грешка при крају датотеке прилико
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
-#: plug-ins/file-icns/file-icns-export.c:824
+#: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2388
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
@@ -3420,7 +3420,7 @@ msgstr "подаци о кадру"
 msgid "local colormap"
 msgstr "локална мапа боја"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:441
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:448
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr ""
@@ -4085,16 +4085,22 @@ msgstr "Учитај датотеку у ИФФ формату"
 msgid "Load IFF file as thumbnail"
 msgstr "Учитај ИФФ датотеку као сличицу"
 
-#: plug-ins/common/file-iff.c:312
+#: plug-ins/common/file-iff.c:290
+#, c-format
+#| msgid "is not a CEL image file"
+msgid "This is not an ILBM image"
+msgstr "Ово није ILBM слика"
+
+#: plug-ins/common/file-iff.c:319
 msgid "Invalid or missing ILBM image"
 msgstr "Неисправна или недостајућа ILBM слика"
 
-#: plug-ins/common/file-iff.c:327
+#: plug-ins/common/file-iff.c:334
 #, c-format
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "ILBM не садржи податке о слици — вероватно је датотека палете"
 
-#: plug-ins/common/file-iff.c:358 plug-ins/common/file-iff.c:377
+#: plug-ins/common/file-iff.c:365 plug-ins/common/file-iff.c:384
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "Неисправна величина ILBM мапе боја"
@@ -4693,7 +4699,7 @@ msgstr "Не могу да прочитам податке слике из „%s
 msgid "Main surface"
 msgstr "Главна површина"
 
-#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:355
+#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:353
 #: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
 #: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
 #: plug-ins/common/file-tim.c:612
@@ -4701,13 +4707,13 @@ msgstr "Главна површина"
 msgid "Memory could not be allocated."
 msgstr "Не могу да доделим меморију."
 
-#: plug-ins/common/file-paa.c:363
+#: plug-ins/common/file-paa.c:361
 #, c-format
 msgid "Couldn't decompress image data from '%s'"
 msgstr "Не могу да распакујем податке слике из „%s“"
 
-#: plug-ins/common/file-paa.c:439 plug-ins/common/file-paa.c:456
-#: plug-ins/common/file-paa.c:467
+#: plug-ins/common/file-paa.c:437 plug-ins/common/file-paa.c:454
+#: plug-ins/common/file-paa.c:465
 #, c-format
 msgid "Could not read tag"
 msgstr "Не могу да прочитам ознаку"
@@ -5013,7 +5019,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "Извези слику као вишестрани ПДФ"
 
 #: plug-ins/common/file-pdf-export.c:1033
-#: plug-ins/metadata/metadata-editor.c:5621
+#: plug-ins/metadata/metadata-editor.c:5623
 msgid "_Export"
 msgstr "_Извези"
 
@@ -10676,7 +10682,7 @@ msgstr ""
 "Дуплирана величина слоја. \n"
 "Неће бити извезена"
 
-#: plug-ins/file-icns/file-icns-export.c:320
+#: plug-ins/file-icns/file-icns-export.c:319
 msgid ""
 "Valid ICNS icons sizes are:\n"
 " 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
@@ -10689,18 +10695,18 @@ msgstr ""
 "Сви слојеви других величина ће бити занемарени при извозу."
 
 #. Don't show warning by default
-#: plug-ins/file-icns/file-icns-export.c:328
+#: plug-ins/file-icns/file-icns-export.c:327
 msgid "Export Icons"
 msgstr "Извези иконице"
 
-#: plug-ins/file-icns/file-icns-export.c:523
-#: plug-ins/file-icns/file-icns-export.c:541
-#: plug-ins/file-icns/file-icns-export.c:634
+#: plug-ins/file-icns/file-icns-export.c:521
+#: plug-ins/file-icns/file-icns-export.c:539
+#: plug-ins/file-icns/file-icns-export.c:632
 #, c-format
 msgid "Error writing icns: %s"
 msgstr "Грешка при записивању icns-а: %s"
 
-#: plug-ins/file-icns/file-icns-export.c:794
+#: plug-ins/file-icns/file-icns-export.c:791
 #, c-format
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -10710,7 +10716,7 @@ msgstr ""
 "16x16, 18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, "
 "или 1024x1024."
 
-#: plug-ins/file-icns/file-icns-export.c:812
+#: plug-ins/file-icns/file-icns-export.c:809
 #, c-format
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -11984,7 +11990,8 @@ msgstr "Не могу да добавим мапе боја из „%s“"
 #: plug-ins/file-tiff/file-tiff-load.c:1469
 msgid ""
 "Indexed TIFFs with color maps larger than 256colors are not yet supported"
-msgstr "Индексирани TIFF-ови са мапама боја већим од 256 боја још увек нису подржани"
+msgstr ""
+"Индексирани TIFF-ови са мапама боја већим од 256 боја још увек нису подржани"
 
 #. Validate number of channels to the same maximum as we use for
 #. * Photoshop. A higher number most likely means a corrupt image
@@ -12040,7 +12047,9 @@ msgstr ""
 msgid ""
 "Invalid image dimensions (%u x %u) for Sketchbook layer %i. Image may be "
 "corrupt."
-msgstr "Неисправне димензије слике (%u x %u) за Скечбук слој %i. Слика је можда оштећена."
+msgstr ""
+"Неисправне димензије слике (%u x %u) за Скечбук слој %i. Слика је можда "
+"оштећена."
 
 #: plug-ins/file-tiff/file-tiff-load.c:3065
 msgid "Import from TIFF"
@@ -16794,11 +16803,11 @@ msgstr "Извези метаподатке"
 msgid "Choose Date"
 msgstr "Изаберите датум"
 
-#: plug-ins/metadata/metadata-editor.c:1696
+#: plug-ins/metadata/metadata-editor.c:1697
 msgid "Set Date"
 msgstr "Постави датум"
 
-#: plug-ins/metadata/metadata-editor.c:2432
+#: plug-ins/metadata/metadata-editor.c:2434
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -16814,7 +16823,7 @@ msgstr ""
 "15,30, или 10,45\n"
 "Обришите сав текст да уклоните тренутну вредност."
 
-#: plug-ins/metadata/metadata-editor.c:2438
+#: plug-ins/metadata/metadata-editor.c:2440
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16830,24 +16839,24 @@ msgstr ""
 "или стопама (ft)\n"
 "Обришите сав текст да уклоните тренутну вредност."
 
-#: plug-ins/metadata/metadata-editor.c:2572
+#: plug-ins/metadata/metadata-editor.c:2574
 msgid "Unrated"
 msgstr "Неоцењено"
 
-#: plug-ins/metadata/metadata-editor.c:4682
+#: plug-ins/metadata/metadata-editor.c:4684
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Нисам успео да поставим ознаку метаподатака %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5582
+#: plug-ins/metadata/metadata-editor.c:5584
 msgid "Import Metadata File"
 msgstr "Увези датотеку са метаподацима"
 
-#: plug-ins/metadata/metadata-editor.c:5586
+#: plug-ins/metadata/metadata-editor.c:5588
 msgid "_Import"
 msgstr "_Увези"
 
-#: plug-ins/metadata/metadata-editor.c:5617
+#: plug-ins/metadata/metadata-editor.c:5619
 msgid "Export Metadata File"
 msgstr "Извези датотеку са метаподацима"
 
