@@ -663,11 +663,6 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
           {
             wchar_t                      *device_key = display_device.DeviceKey;
             wchar_t                      *filename_utf16 = NULL;
-            char                         *filename       = NULL;
-            wchar_t                      *dir_utf16      = NULL;
-            char                         *dir            = NULL;
-            char                         *fullpath       = NULL;
-            GFile                        *file           = NULL;
             DWORD                         len            = 0;
             gboolean                      per_user;
             WCS_PROFILE_MANAGEMENT_SCOPE  scope;
@@ -707,24 +702,37 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
 
             if (filename_utf16 != NULL)
               {
-                filename = g_utf16_to_utf8 (filename_utf16, -1, NULL, NULL, NULL);
+                PROFILE  win_profile;
+                HPROFILE hProfile;
 
-                GetColorDirectoryW (NULL, NULL, &len);
-                dir_utf16 = g_malloc0 (len);
-                GetColorDirectoryW (NULL, dir_utf16, &len);
+                win_profile.dwType       = PROFILE_FILENAME;
+                win_profile.pProfileData = filename_utf16;
+                win_profile.cbDataSize   = (wcslen (filename_utf16) + 1) * sizeof (wchar_t);
 
-                dir = g_utf16_to_utf8 (dir_utf16, -1, NULL, NULL, NULL);
+                /* OpenColorProfileW implicitly looks in the Windows color directory
+                 * when given a simple file name without a full path. */
+                hProfile = OpenColorProfileW (&win_profile, PROFILE_READ,
+                                              FILE_SHARE_READ, OPEN_EXISTING);
+                if (hProfile)
+                  {
+                    DWORD profile_size = 0;
 
-                fullpath = g_build_filename (dir, filename, NULL);
-                file = g_file_new_for_path (fullpath);
+                    GetColorProfileFromHandle (hProfile, NULL, &profile_size);
+                    if (profile_size > 0)
+                      {
+                        guint8 *profile_data = g_malloc (profile_size);
 
-                profile = gimp_color_profile_new_from_file (file, NULL);
-                g_object_unref (file);
+                        if (GetColorProfileFromHandle (hProfile, profile_data, &profile_size))
+                          {
+                            profile = gimp_color_profile_new_from_icc_profile (profile_data,
+                                                                               profile_size,
+                                                                               NULL);
+                          }
+                        g_free (profile_data);
+                      }
+                    CloseColorProfile (hProfile);
+                  }
 
-                g_free (fullpath);
-                g_free (dir);
-                g_free (dir_utf16);
-                g_free (filename);
                 g_free (filename_utf16);
               }
           }
