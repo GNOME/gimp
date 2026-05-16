@@ -254,6 +254,11 @@ deps-debian-nonreloc:
     - echo "ENV CLICOLOR_FORCE=\"1\"" >> Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_end:\`date +%s\`:environ\r\e[0K\n\"" >> Dockerfile2;
     # Build some dependencies
+    #needed to avoid broken GIMP revisions with untagged babl/gegl
+    - if echo "$GIMP_CI_APPIMAGE" | grep -q '[1-9]' && [ -z "$CI_COMMIT_TAG" ] && [ "$CI_PIPELINE_SOURCE" != 'schedule' ]; then
+        printf '\033[31m(ERROR)\033[0m revision is set but no GIMP tag found. Please, tag the revision.\n';
+        exit 1;
+      fi
     ## Build babl
     - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:babl_build[collapsed=true]\r\e[0KBuilding babl\n\"" >> Dockerfile2;
     - echo "RUN git clone --branch \"\$([ \"$CI_COMMIT_TAG\" ] && echo \"\$(git ls-remote --tags --exit-code --refs https://gitlab.gnome.org/GNOME/babl.git | grep -oi \"BABL_[0-9]*_[0-9]*_[0-9]*\" | sort --version-sort | tail -1)\" || echo \"master\")\" --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git" babl >> Dockerfile2;
