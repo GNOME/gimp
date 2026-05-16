@@ -75,6 +75,11 @@ self_build()
 {
   dep=$(basename "$1" .git)
   printf "\e[0Ksection_start:`date +%s`:${dep}_build[collapsed=true]\r\e[0KBuilding $dep\n"
+  if echo "$GIMP_CI_MACOS" | grep -q '[1-9]' && [ -z "$CI_COMMIT_TAG" ] && [ "$CI_PIPELINE_SOURCE" != 'schedule' ]; then
+    #needed to avoid broken GIMP revisions with untagged babl/gegl
+    printf '\033[31m(ERROR)\033[0m revision is set but no GIMP tag found. Please, tag the revision.\n'
+    exit 1
+  fi
   if [ ! -d "$dep" ]; then
     if ( echo $1 | grep -q 'babl' || echo $1 | grep -q 'gegl' ) && [ "$CI_COMMIT_TAG" ]; then
       tag_branch=$(git ls-remote --tags --exit-code --refs $1 | grep -oi "$(echo "$dep" | tr '[:lower:]' '[:upper:]')_[0-9]*_[0-9]*_[0-9]*" | sort --version-sort | tail -1)
