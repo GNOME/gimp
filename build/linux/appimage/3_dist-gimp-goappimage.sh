@@ -173,12 +173,16 @@ bund_usr ()
       search_path="$1/bin $1/sbin $1/libexec"
       ;;
     lib*)
-      search_path="$(dirname $(echo $2 | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|g" | sed "s|*|no_scape|g")) \
-                   $(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g"))"
+      search_path="$(dirname $(echo $2 | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|" | sed "s|*|no_scape|g")) \
+                   $(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|" | sed "s|*|no_scape|g"))"
       ;;
-    share*|include*|etc*)
-      search_path="$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g")) \
-                   $(dirname $(echo /$2 | sed "s|*|no_scape|g"))"
+    share*|etc*)
+      search_path="$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|" | sed "s|*|no_scape|g")) \
+                   $(dirname $(echo /$2 | sed "s|*|no_scape|"))"
+      ;;
+    include*)
+      search_path="$(dirname $(echo $2 | sed "s|include/|$1/include/|" | sed "s|*|no_scape|g")) \
+                   $(dirname $(echo $2 | sed "s|include/|/usr/include/${LIB_SUBDIR}|" | sed "s|*|no_scape|g"))"
       ;;
   esac
   unset not_found_tpath found_tpath
@@ -195,6 +199,7 @@ bund_usr ()
     for target_path in $(find -L $expanded_path -maxdepth 1 -name ${2##*/} 2>/dev/null); do
       dest_path="$(dirname $(echo $target_path | sed -e "s|^$1/|${USR_DIR}/|" -e t -e "s|^/|${USR_DIR}/|"))"
       output_dest_path="$dest_path"
+      symlink_cleanup=$(if [ "$3" = '--no-preserve-symlink' ]; then echo 'L'; fi)
       if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
         if [ "$3" = '--dest' ]; then
           output_dest_path="${USR_DIR}/$4"
@@ -206,7 +211,7 @@ bund_usr ()
       if [ "$3" != '--bundler' ] && [ "$5" != '--bundler' ]; then
         printf "(INFO): bundling $target_path to $output_dest_path\n"
         mkdir -p $dest_path
-        cp -ru $target_path $dest_path >/dev/null 2>&1 || continue
+        cp -ru${symlink_cleanup} $target_path $dest_path >/dev/null 2>&1 || continue
 
         #Process .typelib dependencies
         if echo "$target_path" | grep -q '\.typelib$'; then
@@ -478,13 +483,93 @@ echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
 #  fi
 #done
 
-## headers and .pc files for help building filters and plug-ins
+## headers and .pc files for help building filters and plug-ins (see https://developer.gimp.org/resource/sdk/)
 bund_usr "$GIMP_PREFIX" "include/gimp-*"
 bund_usr "$GIMP_PREFIX" "include/babl-*"
 bund_usr "$GIMP_PREFIX" "include/gegl-*"
 bund_usr "$GIMP_PREFIX" "lib/pkgconfig/gimp*"
 bund_usr "$GIMP_PREFIX" "lib/pkgconfig/babl*"
 bund_usr "$GIMP_PREFIX" "lib/pkgconfig/gegl*"
+### Files needed by babl, gegl and gimp development libraries (not core gimp app)
+processed_pcs=" "
+pcs_to_process=" $(find "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}pkgconfig" -name "*.pc" -exec basename {} .pc \; | tr '\n' ' ') "
+while [ -n "$(echo "$pcs_to_process" | sed 's/[[:space:]]//g')" ]; do
+  current_pc=$(echo "$pcs_to_process" | awk '{print $1}')
+  pcs_to_process=" ${pcs_to_process#* $current_pc } "
+  case "$processed_pcs" in
+    *" $current_pc "*) continue ;;
+  esac
+  if requires=$(pkg-config --print-requires --print-requires-private "$current_pc" 2>/dev/null); then
+    deps=$(echo "$requires" | awk '{print $1}' | tr '\n' ' ')
+    for dep in $deps; do
+      case "$processed_pcs" in
+        *" $dep "*) continue ;;
+      esac
+
+      #1.Bundle the pkgconfig file (.pc)
+      pc_path=$(if [ -f "$UNIX_PREFIX/share/pkgconfig/${dep}.pc" ]; then echo "share/pkgconfig/${dep}.pc"; else echo "${LIB_DIR}/${LIB_SUBDIR}pkgconfig/${dep}.pc"; fi)
+      if [ -f "$UNIX_PREFIX/$pc_path" ] && [ ! -f "$USR_DIR/$pc_path" ]; then
+        bund_usr "$UNIX_PREFIX" "$(echo "$pc_path" | sed "s|${LIB_SUBDIR}||")" --no-preserve-symlink
+        # Replace the hardcoded prefix with a relocatable one
+        sed -i "s|$UNIX_PREFIX|$(if echo "$pc_path" 2>/dev/null | grep -q '/share/'; then echo "\${pcfiledir}/../.."; else echo "\${pcfiledir}/../../.."; fi)|" "$USR_DIR/$pc_path"
+
+        #2.Bundle the corresponding library (unversioned .so)
+        if libs=$(pkg-config --libs-only-l "$dep" 2>/dev/null); then
+          for arg in $libs; do
+            if echo "$arg" | grep -q "^-l"; then
+              lib_name="lib${arg#-l}.so"
+              if [ -h "$UNIX_PREFIX/${LIB_DIR}/${LIB_SUBDIR}$lib_name" ] && [ ! -h "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}$lib_name" ]; then
+                bund_usr "$UNIX_PREFIX" "lib/${lib_name}*"
+              fi
+            fi
+          done
+        fi
+
+        #3.Bundle the headers (.h)
+        if includedir=$(pkg-config --cflags-only-I "$dep" 2>/dev/null); then
+          for arg in $includedir; do
+            if echo "$arg" | grep -q "^-I"; then
+              include_path="$(echo ${arg#-I} | sed "s|$(echo $LIB_SUBDIR | sed 's|/||')||")"
+              if echo "$include_path" | grep -q "^$UNIX_PREFIX" && [ "$(basename "$include_path")" != "include" ] && [ ! -d "$USR_DIR/$(echo "$include_path" | sed "s|^$UNIX_PREFIX/||")" ]; then
+                bund_usr "$UNIX_PREFIX" "$(echo "$include_path" | sed "s|^$UNIX_PREFIX/||")/*"
+              fi
+            fi
+          done
+        fi
+        #Fallback: try dep/
+        h_dir="include/$dep"
+        if [ -d "$UNIX_PREFIX/$h_dir" ] && [ ! -d "$USR_DIR/$h_dir" ]; then
+          bund_usr "$UNIX_PREFIX" "$h_dir/*"
+        fi
+        #Fallback: try dep/ without lib prefix nor -version suffix
+        real_dep=$(echo "$dep" | sed -e 's/^lib//' -e 's/[-._][0-9][0-9]*\([.-][0-9][0-9]*\)*$//')
+        h_dir="include/$real_dep"
+        if [ "$real_dep" != "$dep" ] && [ -d "$UNIX_PREFIX/$h_dir" ] && [ ! -d "$USR_DIR/$h_dir" ]; then
+          bund_usr "$UNIX_PREFIX" "$h_dir/*"
+        fi
+        #Fallback: try dep*.h
+        find "$UNIX_PREFIX/include" "$UNIX_PREFIX/include/$LIB_SUBDIR" -maxdepth 1 -name "${dep}*.h" 2>/dev/null | while read -r h_file; do
+          if [ ! -f "$USR_DIR/include/$(basename "$h_file")" ]; then
+            bund_usr "$UNIX_PREFIX" "include/$(basename "$h_file")"
+          fi
+        done
+        #Fallback: try dep*.h without lib prefix nor -version suffix
+        find "$UNIX_PREFIX/include" "$UNIX_PREFIX/include/$LIB_SUBDIR" -maxdepth 1 -name "${real_dep}*.h" 2>/dev/null | while read -r h_file; do
+          if [ "$real_dep" != "$dep" ] && [ ! -f "$USR_DIR/include/$(basename "$h_file")" ]; then
+            bund_usr "$UNIX_PREFIX" "include/$(basename "$h_file")"
+          fi
+        done
+
+        pcs_to_process="$pcs_to_process $dep "
+      fi
+    done
+  fi
+  processed_pcs="$processed_pcs$current_pc "
+done
+### Special-case
+bund_usr "$UNIX_PREFIX" "lib/glib-2.0"
+bund_usr "$UNIX_PREFIX" "include/brotli"
+wipe_usr include/glob.h
 
 ## Revision (this does the same as '-Drevision' build option)
 before=$(cat "$(echo $USR_DIR/share/gimp/*/gimp-release)" | grep 'revision')
