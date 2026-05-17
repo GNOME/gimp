@@ -678,7 +678,7 @@ gimp-win:
 - export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig:${OPT_PREFIX}/lib/pkgconfig:${OPT_PREFIX}/opt/libarchive/lib/pkgconfig"
 - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:${OPT_PREFIX}/share"
 ## Runtime vars
-- export PATH="${GIMP_PREFIX}/bin:${OPT_PREFIX}/bin:$PATH"
+- export PATH="${GIMP_PREFIX}/bin:${GIMP_PREFIX}/MacOS:${OPT_PREFIX}/bin:$PATH"
 - export GI_TYPELIB_PATH="${GIMP_PREFIX}/lib/girepository-1.0:${OPT_PREFIX}/lib/girepository-1.0"
 - printf "\e[0Ksection_end:`date +%s`:macos_environ\r\e[0K\n"
 
