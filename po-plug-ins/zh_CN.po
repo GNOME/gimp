@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-08 21:41+0000\n"
-"PO-Revision-Date: 2026-05-09 07:28+0800\n"
+"POT-Creation-Date: 2026-05-16 21:50+0000\n"
+"PO-Revision-Date: 2026-05-17 12:43+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -89,9 +89,9 @@ msgstr "C 语言插件示例"
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
 #: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1189
-#: plug-ins/metadata/metadata-editor.c:1696
-#: plug-ins/metadata/metadata-editor.c:5588
-#: plug-ins/metadata/metadata-editor.c:5623 plug-ins/print/print.c:458
+#: plug-ins/metadata/metadata-editor.c:1691
+#: plug-ins/metadata/metadata-editor.c:5583
+#: plug-ins/metadata/metadata-editor.c:5618 plug-ins/print/print.c:458
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -4777,7 +4777,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "导出图像为多页面 PDF"
 
 #: plug-ins/common/file-pdf-export.c:1033
-#: plug-ins/metadata/metadata-editor.c:5623
+#: plug-ins/metadata/metadata-editor.c:5618
 msgid "_Export"
 msgstr "导出(_E)"
 
@@ -7936,10 +7936,10 @@ msgid "Plug-in Browser"
 msgstr "插件浏览器"
 
 #: plug-ins/common/plugin-browser.c:616 plug-ins/common/unit-editor.c:114
-#: plug-ins/metadata/metadata-editor.c:613
-#: plug-ins/metadata/metadata-editor.c:649
-#: plug-ins/metadata/metadata-editor.c:656
-#: plug-ins/metadata/metadata-editor.c:663
+#: plug-ins/metadata/metadata-editor.c:612
+#: plug-ins/metadata/metadata-editor.c:648
+#: plug-ins/metadata/metadata-editor.c:655
+#: plug-ins/metadata/metadata-editor.c:662
 msgid "Name"
 msgstr "名称"
 
@@ -9208,86 +9208,6 @@ msgstr "未知的微软 Windows 错误。"
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "无法打开“%s”：%s"
-
-#: plug-ins/common/web-page.c:118
-msgid "From _Webpage..."
-msgstr "从网页(_W)…"
-
-#: plug-ins/common/web-page.c:122
-msgid "Create an image of a webpage"
-msgstr "创建网页图像"
-
-#: plug-ins/common/web-page.c:139
-msgid "Enter location (_URI)"
-msgstr "输入位置（_URI）"
-
-#: plug-ins/common/web-page.c:140
-msgid "URL of the webpage to screenshot"
-msgstr "要截图的网页地址"
-
-#: plug-ins/common/web-page.c:145
-msgid "_Width (pixels)"
-msgstr "宽度（像素）(_W)"
-
-#: plug-ins/common/web-page.c:146
-msgid "The width of the screenshot (in pixels)"
-msgstr "截图的宽度（像素）"
-
-#: plug-ins/common/web-page.c:151
-msgid "_Font size"
-msgstr "字体大小(_F)"
-
-#: plug-ins/common/web-page.c:152
-msgid "The font size to use in the page (in pt)"
-msgstr "页面中使用的字体大小（点）"
-
-#: plug-ins/common/web-page.c:214
-msgid "Create from webpage"
-msgstr "从网页创建"
-
-#: plug-ins/common/web-page.c:216
-msgid "Cre_ate"
-msgstr "创建(_A)"
-
-#: plug-ins/common/web-page.c:217
-msgid "Huge"
-msgstr "巨大"
-
-#: plug-ins/common/web-page.c:218
-msgid "Large"
-msgstr "很大"
-
-#: plug-ins/common/web-page.c:219
-msgctxt "web-page"
-msgid "Default"
-msgstr "默认"
-
-#: plug-ins/common/web-page.c:220
-msgid "Small"
-msgstr "很小"
-
-#: plug-ins/common/web-page.c:221
-msgid "Tiny"
-msgstr "微小"
-
-#: plug-ins/common/web-page.c:291
-msgid "Webpage"
-msgstr "网页"
-
-#: plug-ins/common/web-page.c:334
-#, c-format
-msgid "No URL was specified"
-msgstr "没有指定 URL"
-
-#: plug-ins/common/web-page.c:392
-#, c-format
-msgid "Downloading webpage '%s'"
-msgstr "正在下载网页“%s”"
-
-#: plug-ins/common/web-page.c:401
-#, c-format
-msgid "Transferring webpage image for '%s'"
-msgstr "为“%s”传递网页图像"
 
 #: plug-ins/common/wia.c:38
 msgid "Capture an image from a WIA datasource"
@@ -12939,7 +12859,7 @@ msgstr "伽马："
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "改变所选笔刷的伽马（明亮度）"
 
-#: plug-ins/gimpressionist/brush.c:572 plug-ins/metadata/metadata-editor.c:1381
+#: plug-ins/gimpressionist/brush.c:572
 msgid "Select:"
 msgstr "选择："
 
@@ -15603,411 +15523,411 @@ msgstr "将图像映射到方盒表面"
 msgid "Images for the Cap Faces"
 msgstr "上下底面的图像"
 
-#: plug-ins/metadata/metadata-editor.c:492
+#: plug-ins/metadata/metadata-editor.c:491
 msgid "Document Title"
 msgstr "文档标题"
 
-#: plug-ins/metadata/metadata-editor.c:493
+#: plug-ins/metadata/metadata-editor.c:492
 msgid "Author"
 msgstr "作者"
 
-#: plug-ins/metadata/metadata-editor.c:494
+#: plug-ins/metadata/metadata-editor.c:493
 msgid "Author Title"
 msgstr "作者头衔"
 
 #. Description tab
-#: plug-ins/metadata/metadata-editor.c:495
+#: plug-ins/metadata/metadata-editor.c:494
 #: plug-ins/metadata/metadata-editor.c:1226
 msgid "Description"
 msgstr "描述"
 
-#: plug-ins/metadata/metadata-editor.c:496
+#: plug-ins/metadata/metadata-editor.c:495
 msgid "Description Writer"
 msgstr "描述的作者"
 
-#: plug-ins/metadata/metadata-editor.c:497
+#: plug-ins/metadata/metadata-editor.c:496
 msgid "Rating"
 msgstr "评级"
 
-#: plug-ins/metadata/metadata-editor.c:498
+#: plug-ins/metadata/metadata-editor.c:497
 msgid "Keywords"
 msgstr "关键词"
 
-#: plug-ins/metadata/metadata-editor.c:500
+#: plug-ins/metadata/metadata-editor.c:499
 msgid "Copyright Status"
 msgstr "版权状态"
 
-#: plug-ins/metadata/metadata-editor.c:501
-#: plug-ins/metadata/metadata-editor.c:630
+#: plug-ins/metadata/metadata-editor.c:500
+#: plug-ins/metadata/metadata-editor.c:629
 msgid "Copyright Notice"
 msgstr "版权公告"
 
-#: plug-ins/metadata/metadata-editor.c:502
+#: plug-ins/metadata/metadata-editor.c:501
 msgid "Copyright URL"
 msgstr "版权网址"
 
-#: plug-ins/metadata/metadata-editor.c:508
+#: plug-ins/metadata/metadata-editor.c:507
 msgid "Address"
 msgstr "地址"
+
+#: plug-ins/metadata/metadata-editor.c:508
+#: plug-ins/metadata/metadata-editor.c:523
+#: plug-ins/metadata/metadata-editor.c:544
+#: plug-ins/metadata/metadata-editor.c:602
+msgid "City"
+msgstr "城市"
 
 #: plug-ins/metadata/metadata-editor.c:509
 #: plug-ins/metadata/metadata-editor.c:524
 #: plug-ins/metadata/metadata-editor.c:545
-#: plug-ins/metadata/metadata-editor.c:603
-msgid "City"
-msgstr "城市"
-
-#: plug-ins/metadata/metadata-editor.c:510
-#: plug-ins/metadata/metadata-editor.c:525
-#: plug-ins/metadata/metadata-editor.c:546
 msgid "State / Province"
 msgstr "州/省"
 
-#: plug-ins/metadata/metadata-editor.c:511
+#: plug-ins/metadata/metadata-editor.c:510
 msgid "Postal Code"
 msgstr "邮政编码"
 
-#: plug-ins/metadata/metadata-editor.c:512
-#: plug-ins/metadata/metadata-editor.c:526
-#: plug-ins/metadata/metadata-editor.c:547
-#: plug-ins/metadata/metadata-editor.c:605
+#: plug-ins/metadata/metadata-editor.c:511
+#: plug-ins/metadata/metadata-editor.c:525
+#: plug-ins/metadata/metadata-editor.c:546
+#: plug-ins/metadata/metadata-editor.c:604
 msgid "Country"
 msgstr "国家"
 
-#: plug-ins/metadata/metadata-editor.c:514
+#: plug-ins/metadata/metadata-editor.c:513
 msgid "Phone(s)"
 msgstr "电话"
 
-#: plug-ins/metadata/metadata-editor.c:515
+#: plug-ins/metadata/metadata-editor.c:514
 msgid "E-mail(s)"
 msgstr "电子邮箱"
 
-#: plug-ins/metadata/metadata-editor.c:516
+#: plug-ins/metadata/metadata-editor.c:515
 msgid "Website(s)"
 msgstr "网站"
 
-#: plug-ins/metadata/metadata-editor.c:518
+#: plug-ins/metadata/metadata-editor.c:517
 msgid "Creation Date"
 msgstr "创建日期"
 
-#: plug-ins/metadata/metadata-editor.c:520
+#: plug-ins/metadata/metadata-editor.c:519
 msgid "Intellectual Genre"
 msgstr "新闻类别"
 
-#: plug-ins/metadata/metadata-editor.c:521
+#: plug-ins/metadata/metadata-editor.c:520
 msgid "IPTC Scene Code"
 msgstr "IPTC 场景代码"
 
-#: plug-ins/metadata/metadata-editor.c:523
-#: plug-ins/metadata/metadata-editor.c:544
-#: plug-ins/metadata/metadata-editor.c:602
+#: plug-ins/metadata/metadata-editor.c:522
+#: plug-ins/metadata/metadata-editor.c:543
+#: plug-ins/metadata/metadata-editor.c:601
 msgid "Sublocation"
 msgstr "子位置"
 
-#: plug-ins/metadata/metadata-editor.c:527
-#: plug-ins/metadata/metadata-editor.c:548
+#: plug-ins/metadata/metadata-editor.c:526
+#: plug-ins/metadata/metadata-editor.c:547
 msgid "Country ISO-Code"
 msgstr "国家 ISO 代码"
 
-#: plug-ins/metadata/metadata-editor.c:529
+#: plug-ins/metadata/metadata-editor.c:528
 msgid "Urgency"
 msgstr "紧急"
 
-#: plug-ins/metadata/metadata-editor.c:530
+#: plug-ins/metadata/metadata-editor.c:529
 msgid "Headline"
 msgstr "标题"
 
-#: plug-ins/metadata/metadata-editor.c:531
+#: plug-ins/metadata/metadata-editor.c:530
 msgid "IPTC Subject Code"
 msgstr "IPTC 主题代码"
 
-#: plug-ins/metadata/metadata-editor.c:533
+#: plug-ins/metadata/metadata-editor.c:532
 msgid "Job Identifier"
 msgstr "工作标识"
 
-#: plug-ins/metadata/metadata-editor.c:534
+#: plug-ins/metadata/metadata-editor.c:533
 msgid "Instructions"
 msgstr "说明"
 
-#: plug-ins/metadata/metadata-editor.c:535
+#: plug-ins/metadata/metadata-editor.c:534
 msgid "Credit Line"
 msgstr "新闻来源"
 
-#: plug-ins/metadata/metadata-editor.c:536
-#: plug-ins/metadata/metadata-editor.c:628
+#: plug-ins/metadata/metadata-editor.c:535
+#: plug-ins/metadata/metadata-editor.c:627
 msgid "Source"
 msgstr "来源"
 
-#: plug-ins/metadata/metadata-editor.c:537
+#: plug-ins/metadata/metadata-editor.c:536
 msgid "Usage Terms"
 msgstr "使用条款"
 
-#: plug-ins/metadata/metadata-editor.c:543
+#: plug-ins/metadata/metadata-editor.c:542
 msgid "Person Shown"
 msgstr "人物显示"
 
-#: plug-ins/metadata/metadata-editor.c:549
-#: plug-ins/metadata/metadata-editor.c:607
+#: plug-ins/metadata/metadata-editor.c:548
+#: plug-ins/metadata/metadata-editor.c:606
 msgid "World Region"
 msgstr "世界区域"
 
-#: plug-ins/metadata/metadata-editor.c:550
+#: plug-ins/metadata/metadata-editor.c:549
 msgid "Location Shown"
 msgstr "位置显示"
 
-#: plug-ins/metadata/metadata-editor.c:552
+#: plug-ins/metadata/metadata-editor.c:551
 msgid "Featured Organization"
 msgstr "专题机构"
 
-#: plug-ins/metadata/metadata-editor.c:554
+#: plug-ins/metadata/metadata-editor.c:553
 msgid "Organization Code"
 msgstr "机构代码"
 
-#: plug-ins/metadata/metadata-editor.c:556
+#: plug-ins/metadata/metadata-editor.c:555
 msgid "Event"
 msgstr "事件"
 
-#: plug-ins/metadata/metadata-editor.c:557
+#: plug-ins/metadata/metadata-editor.c:556
 msgid "Artwork or Object"
 msgstr "艺术作品或对象"
 
-#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:559
 msgid "Additional Model Info"
 msgstr "附加模特信息"
 
-#: plug-ins/metadata/metadata-editor.c:561
+#: plug-ins/metadata/metadata-editor.c:560
 msgid "Model Age"
 msgstr "模特年龄"
 
-#: plug-ins/metadata/metadata-editor.c:562
+#: plug-ins/metadata/metadata-editor.c:561
 msgid "Minor Model Age Disclosure"
 msgstr "未成年模特公开年龄"
 
-#: plug-ins/metadata/metadata-editor.c:563
+#: plug-ins/metadata/metadata-editor.c:562
 msgid "Model Release Status"
 msgstr "模特发布状态"
 
-#: plug-ins/metadata/metadata-editor.c:564
-#: plug-ins/metadata/metadata-editor.c:636
+#: plug-ins/metadata/metadata-editor.c:563
+#: plug-ins/metadata/metadata-editor.c:635
 msgid "Model Release Identifier"
 msgstr "模特发布标识"
 
-#: plug-ins/metadata/metadata-editor.c:567
+#: plug-ins/metadata/metadata-editor.c:566
 msgid "Image Supplier Name"
 msgstr "图像供应商名称"
 
-#: plug-ins/metadata/metadata-editor.c:568
+#: plug-ins/metadata/metadata-editor.c:567
 msgid "Image Supplier ID"
 msgstr "图像供应商标识"
 
-#: plug-ins/metadata/metadata-editor.c:569
+#: plug-ins/metadata/metadata-editor.c:568
 msgid "Supplier's Image ID"
 msgstr "供应商的图像标识"
 
-#: plug-ins/metadata/metadata-editor.c:570
+#: plug-ins/metadata/metadata-editor.c:569
 msgid "Registry Entry"
 msgstr "注册登记"
 
-#: plug-ins/metadata/metadata-editor.c:572
+#: plug-ins/metadata/metadata-editor.c:571
 msgid "Max. Available Width"
 msgstr "最大可用宽度"
 
-#: plug-ins/metadata/metadata-editor.c:573
+#: plug-ins/metadata/metadata-editor.c:572
 msgid "Max. Available Height"
 msgstr "最大可用高度"
 
-#: plug-ins/metadata/metadata-editor.c:574
+#: plug-ins/metadata/metadata-editor.c:573
 msgid "Digital Source Type"
 msgstr "数码源类型"
 
-#: plug-ins/metadata/metadata-editor.c:576
+#: plug-ins/metadata/metadata-editor.c:575
 msgid "Image Creator"
 msgstr "图像创建者"
 
-#: plug-ins/metadata/metadata-editor.c:578
+#: plug-ins/metadata/metadata-editor.c:577
 msgid "Copyright Owner"
 msgstr "版权所有者"
 
-#: plug-ins/metadata/metadata-editor.c:580
+#: plug-ins/metadata/metadata-editor.c:579
 msgid "Licensor"
 msgstr "许可证颁发者"
 
-#: plug-ins/metadata/metadata-editor.c:582
+#: plug-ins/metadata/metadata-editor.c:581
 msgid "Property Release Status"
 msgstr "所有权发布状态"
 
-#: plug-ins/metadata/metadata-editor.c:583
+#: plug-ins/metadata/metadata-editor.c:582
 msgid "Property Release Identifier"
 msgstr "所有权发布标识"
 
-#: plug-ins/metadata/metadata-editor.c:604
+#: plug-ins/metadata/metadata-editor.c:603
 msgid "Province / State"
 msgstr "省/州"
 
-#: plug-ins/metadata/metadata-editor.c:606
+#: plug-ins/metadata/metadata-editor.c:605
 msgid "Country ISO Code"
 msgstr "国家 ISO 代码"
 
-#: plug-ins/metadata/metadata-editor.c:619
+#: plug-ins/metadata/metadata-editor.c:618
 msgid "Code"
 msgstr "代码"
 
-#: plug-ins/metadata/metadata-editor.c:625
+#: plug-ins/metadata/metadata-editor.c:624
 msgid "Title"
 msgstr "标题"
 
-#: plug-ins/metadata/metadata-editor.c:626
+#: plug-ins/metadata/metadata-editor.c:625
 msgid "Date Created"
 msgstr "创建日期"
 
-#: plug-ins/metadata/metadata-editor.c:627
+#: plug-ins/metadata/metadata-editor.c:626
 msgid "Creator"
 msgstr "创建者"
 
-#: plug-ins/metadata/metadata-editor.c:629
+#: plug-ins/metadata/metadata-editor.c:628
 msgid "Source Inventory ID"
 msgstr "源库存标识"
 
-#: plug-ins/metadata/metadata-editor.c:642
+#: plug-ins/metadata/metadata-editor.c:641
 msgid "Organization Identifier"
 msgstr "机构标识"
 
-#: plug-ins/metadata/metadata-editor.c:643
+#: plug-ins/metadata/metadata-editor.c:642
 msgid "Item Identifier"
 msgstr "项目标识"
 
-#: plug-ins/metadata/metadata-editor.c:650
-#: plug-ins/metadata/metadata-editor.c:657
-#: plug-ins/metadata/metadata-editor.c:664
-#: plug-ins/metadata/metadata-editor.c:676
+#: plug-ins/metadata/metadata-editor.c:649
+#: plug-ins/metadata/metadata-editor.c:656
+#: plug-ins/metadata/metadata-editor.c:663
+#: plug-ins/metadata/metadata-editor.c:675
 msgid "Identifier"
 msgstr "标识"
 
-#: plug-ins/metadata/metadata-editor.c:665
+#: plug-ins/metadata/metadata-editor.c:664
 msgid "Phone Number 1"
 msgstr "电话号码 1"
 
-#: plug-ins/metadata/metadata-editor.c:666
+#: plug-ins/metadata/metadata-editor.c:665
 msgid "Phone Type 1"
 msgstr "电话类型 1"
 
-#: plug-ins/metadata/metadata-editor.c:667
+#: plug-ins/metadata/metadata-editor.c:666
 msgid "Phone Number 2"
 msgstr "电话号码 2"
 
-#: plug-ins/metadata/metadata-editor.c:668
+#: plug-ins/metadata/metadata-editor.c:667
 msgid "Phone Type 2"
 msgstr "电话类型 2"
 
-#: plug-ins/metadata/metadata-editor.c:669
+#: plug-ins/metadata/metadata-editor.c:668
 msgid "Email Address"
 msgstr "电子邮箱地址"
 
-#: plug-ins/metadata/metadata-editor.c:670
+#: plug-ins/metadata/metadata-editor.c:669
 msgid "Web Address"
 msgstr "网址"
 
-#: plug-ins/metadata/metadata-editor.c:683
+#: plug-ins/metadata/metadata-editor.c:682
 msgid "Category"
 msgstr "类别"
 
-#: plug-ins/metadata/metadata-editor.c:684
+#: plug-ins/metadata/metadata-editor.c:683
 msgid "Supplemental Category"
 msgstr "补充类别"
 
-#: plug-ins/metadata/metadata-editor.c:690
+#: plug-ins/metadata/metadata-editor.c:689
 msgid "Longitude"
 msgstr "经度"
 
-#: plug-ins/metadata/metadata-editor.c:691
+#: plug-ins/metadata/metadata-editor.c:690
 msgid "Longitude Reference"
 msgstr "经度参考"
 
-#: plug-ins/metadata/metadata-editor.c:692
+#: plug-ins/metadata/metadata-editor.c:691
 msgid "Latitude"
 msgstr "纬度"
 
-#: plug-ins/metadata/metadata-editor.c:693
+#: plug-ins/metadata/metadata-editor.c:692
 msgid "Latitude Reference"
 msgstr "纬度参考"
 
-#: plug-ins/metadata/metadata-editor.c:694
+#: plug-ins/metadata/metadata-editor.c:693
 msgid "Altitude"
 msgstr "海拔"
 
-#: plug-ins/metadata/metadata-editor.c:696
+#: plug-ins/metadata/metadata-editor.c:695
 msgid "Altitude Reference"
 msgstr "海拔参考"
 
-#: plug-ins/metadata/metadata-editor.c:702
+#: plug-ins/metadata/metadata-editor.c:701
 msgid "Patient"
 msgstr "患者"
 
-#: plug-ins/metadata/metadata-editor.c:703
+#: plug-ins/metadata/metadata-editor.c:702
 msgid "Patient ID"
 msgstr "患者标识"
 
-#: plug-ins/metadata/metadata-editor.c:704
+#: plug-ins/metadata/metadata-editor.c:703
 msgid "Date of Birth"
 msgstr "出生日期"
 
-#: plug-ins/metadata/metadata-editor.c:706
+#: plug-ins/metadata/metadata-editor.c:705
 msgid "Patient Sex"
 msgstr "患者性别"
 
-#: plug-ins/metadata/metadata-editor.c:708
+#: plug-ins/metadata/metadata-editor.c:707
 msgid "Study ID"
 msgstr "研究标识"
 
-#: plug-ins/metadata/metadata-editor.c:709
+#: plug-ins/metadata/metadata-editor.c:708
 msgid "Referring Physician"
 msgstr "参考医师"
 
-#: plug-ins/metadata/metadata-editor.c:710
+#: plug-ins/metadata/metadata-editor.c:709
 msgid "Study Date"
 msgstr "研究日期"
 
-#: plug-ins/metadata/metadata-editor.c:712
+#: plug-ins/metadata/metadata-editor.c:711
 msgid "Study Description"
 msgstr "研究描述"
 
-#: plug-ins/metadata/metadata-editor.c:713
+#: plug-ins/metadata/metadata-editor.c:712
 msgid "Series Number"
 msgstr "序列号"
 
-#: plug-ins/metadata/metadata-editor.c:714
+#: plug-ins/metadata/metadata-editor.c:713
 msgid "Modality"
 msgstr "特征"
 
-#: plug-ins/metadata/metadata-editor.c:715
+#: plug-ins/metadata/metadata-editor.c:714
 msgid "Series Date"
 msgstr "序列日期"
 
-#: plug-ins/metadata/metadata-editor.c:717
+#: plug-ins/metadata/metadata-editor.c:716
 msgid "Series Description"
 msgstr "系列描述"
 
-#: plug-ins/metadata/metadata-editor.c:719
+#: plug-ins/metadata/metadata-editor.c:718
 msgid "Equipment Institution"
 msgstr "设备机构"
 
-#: plug-ins/metadata/metadata-editor.c:720
+#: plug-ins/metadata/metadata-editor.c:719
 msgid "Equipment Manufacturer"
 msgstr "设备制造商"
 
-#: plug-ins/metadata/metadata-editor.c:760
+#: plug-ins/metadata/metadata-editor.c:759
 msgid "_Edit Metadata"
 msgstr "编辑元数据(_E)"
 
-#: plug-ins/metadata/metadata-editor.c:764
+#: plug-ins/metadata/metadata-editor.c:763
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "编辑元数据（IPTC，EXIF，XMP）"
 
-#: plug-ins/metadata/metadata-editor.c:777
+#: plug-ins/metadata/metadata-editor.c:776
 msgid "Parent's window handle"
 msgstr "上级窗口处理"
 
-#: plug-ins/metadata/metadata-editor.c:778
+#: plug-ins/metadata/metadata-editor.c:777
 msgid ""
 "The opaque handle of the window to set this plug-in's dialog transient to"
 msgstr "设定该插件对话框短暂停留窗口的不透明处理"
@@ -16047,23 +15967,23 @@ msgstr "GPS"
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1383
-msgid "Import metadata"
-msgstr "导入元数据"
+#: plug-ins/metadata/metadata-editor.c:1375
+msgid "Import Metadata..."
+msgstr "导入元数据…"
 
-#: plug-ins/metadata/metadata-editor.c:1385
-msgid "Export metadata"
-msgstr "导出元数据"
+#: plug-ins/metadata/metadata-editor.c:1381
+msgid "Export Metadata..."
+msgstr "导出元数据…"
 
-#: plug-ins/metadata/metadata-editor.c:1692
+#: plug-ins/metadata/metadata-editor.c:1687
 msgid "Choose Date"
 msgstr "选择日期"
 
-#: plug-ins/metadata/metadata-editor.c:1697
+#: plug-ins/metadata/metadata-editor.c:1692
 msgid "Set Date"
 msgstr "设置日期"
 
-#: plug-ins/metadata/metadata-editor.c:2434
+#: plug-ins/metadata/metadata-editor.c:2429
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -16078,7 +15998,7 @@ msgstr ""
 "或 10.45\n"
 "删除所有文字可删除当前值。"
 
-#: plug-ins/metadata/metadata-editor.c:2440
+#: plug-ins/metadata/metadata-editor.c:2435
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16093,24 +16013,24 @@ msgstr ""
 "根据选中的度量类型该值应为米（m）或英尺（ft）\n"
 "删除所有文字可删除当前值。"
 
-#: plug-ins/metadata/metadata-editor.c:2574
+#: plug-ins/metadata/metadata-editor.c:2569
 msgid "Unrated"
 msgstr "未评级"
 
-#: plug-ins/metadata/metadata-editor.c:4684
+#: plug-ins/metadata/metadata-editor.c:4679
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "设置元数据标签“%s”失败：%s"
 
-#: plug-ins/metadata/metadata-editor.c:5585
+#: plug-ins/metadata/metadata-editor.c:5580
 msgid "Import Metadata File"
 msgstr "导入元数据文件"
 
-#: plug-ins/metadata/metadata-editor.c:5588
+#: plug-ins/metadata/metadata-editor.c:5583
 msgid "_Import"
 msgstr "导入(_I)"
 
-#: plug-ins/metadata/metadata-editor.c:5620
+#: plug-ins/metadata/metadata-editor.c:5615
 msgid "Export Metadata File"
 msgstr "导出元数据文件"
 
@@ -16886,6 +16806,67 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid "From _Webpage..."
+#~ msgstr "从网页(_W)…"
+
+#~ msgid "Create an image of a webpage"
+#~ msgstr "创建网页图像"
+
+#~ msgid "Enter location (_URI)"
+#~ msgstr "输入位置（_URI）"
+
+#~ msgid "URL of the webpage to screenshot"
+#~ msgstr "要截图的网页地址"
+
+#~ msgid "_Width (pixels)"
+#~ msgstr "宽度（像素）(_W)"
+
+#~ msgid "The width of the screenshot (in pixels)"
+#~ msgstr "截图的宽度（像素）"
+
+#~ msgid "_Font size"
+#~ msgstr "字体大小(_F)"
+
+#~ msgid "The font size to use in the page (in pt)"
+#~ msgstr "页面中使用的字体大小（点）"
+
+#~ msgid "Create from webpage"
+#~ msgstr "从网页创建"
+
+#~ msgid "Cre_ate"
+#~ msgstr "创建(_A)"
+
+#~ msgid "Huge"
+#~ msgstr "巨大"
+
+#~ msgid "Large"
+#~ msgstr "很大"
+
+#~ msgctxt "web-page"
+#~ msgid "Default"
+#~ msgstr "默认"
+
+#~ msgid "Small"
+#~ msgstr "很小"
+
+#~ msgid "Tiny"
+#~ msgstr "微小"
+
+#~ msgid "Webpage"
+#~ msgstr "网页"
+
+#, c-format
+#~ msgid "No URL was specified"
+#~ msgstr "没有指定 URL"
+
+#, c-format
+#~ msgid "Downloading webpage '%s'"
+#~ msgstr "正在下载网页“%s”"
+
+#, c-format
+#~ msgid "Transferring webpage image for '%s'"
+#~ msgstr "为“%s”传递网页图像"
 
 #~ msgid "G-Qbist"
 #~ msgstr "量子贝叶斯"
