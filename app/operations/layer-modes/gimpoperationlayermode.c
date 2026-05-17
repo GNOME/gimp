@@ -627,6 +627,7 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
   gfloat                 *layer                   = layer_p;
   gfloat                 *mask                    = mask_p;
   const gint              n_components            = babl_format_get_n_components (format);
+  const gint              alpha                   = n_components - 1;
   gfloat                  opacity                 = layer_mode->opacity;
   GimpLayerCompositeMode  composite_mode          = layer_mode->composite_mode;
   GimpLayerModeBlendFunc  blend_function          = layer_mode->blend_function;
@@ -649,11 +650,11 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
                                               GIMP_COMPOSITE_BLEND_MAX_SAMPLES,
                                               roi, level);
 
-      in      += 4 * GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
-      layer   += 4 * GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
+      in      += n_components * GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
+      layer   += n_components * GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
       if (mask)
-        mask  +=     GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
-      out     += 4 * GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
+        mask  +=                GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
+      out     += n_components * GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
 
       samples -= GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
     }
@@ -686,9 +687,9 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
           /* don't convert input in-place if we're not doing in-place output,
            * or if we're going to need the original input for compositing.
            */
-          blend_in = g_alloca (sizeof (gfloat) * 4 * samples);
+          blend_in = g_alloca (sizeof (gfloat) * n_components * samples);
         }
-      blend_layer  = g_alloca (sizeof (gfloat) * 4 * samples);
+      blend_layer  = g_alloca (sizeof (gfloat) * n_components * samples);
 
       if (in == out) /* in-place detected, avoid clobbering since we need to
                         read 'in' for the compositing stage  */
@@ -696,7 +697,7 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
           if (blend_layer != layer)
             blend_out = blend_layer;
           else
-            blend_out = g_alloca (sizeof (gfloat) * 4 * samples);
+            blend_out = g_alloca (sizeof (gfloat) * n_components * samples);
         }
 
       /* samples whose the source or destination alpha is zero are not blended,
@@ -707,8 +708,8 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
        * them to avoid the conversion.
        */
 
-      i   = ALPHA;
-      end = 4 * samples + ALPHA;
+      i   = alpha;
+      end = n_components * samples + alpha;
 
       while (TRUE)
         {
@@ -724,7 +725,7 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
           while (i < end && (in[i] == 0.0f || layer[i] == 0.0f))
             {
               blend_out[i] = 0.0f;
-              i += 4;
+              i += n_components;
             }
 
           /* stop if there are no more samples */
@@ -737,24 +738,25 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
            */
 
           first  = i;
-          i     += 4;
+          i     += n_components;
           last   = i;
 
-          while (i < end && i - last < 4 * GIMP_COMPOSITE_BLEND_SPLIT_THRESHOLD)
+          while (i < end &&
+                 i - last < n_components * GIMP_COMPOSITE_BLEND_SPLIT_THRESHOLD)
             {
               gboolean blended;
 
               blended = (in[i] != 0.0f && layer[i] != 0.0f);
 
-              i += 4;
+              i += n_components;
               if (blended)
                 last = i;
             }
 
           /* convert and blend the samples in the range [first, last) */
 
-          count  = (last - first) / 4;
-          first -= ALPHA;
+          count  = (last - first) / n_components;
+          first -= alpha;
 
           babl_process (composite_to_blend_fish,
                         in + first, blend_in + first, count);
@@ -770,7 +772,7 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
           /* make sure the alpha values of `blend_out` are valid for the
            * trailing unblended samples.
            */
-          for (; last < i; last += 4)
+          for (; last < i; last += n_components)
             blend_out[last] = 0.0f;
         }
     }
@@ -783,7 +785,7 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
       if (in == out) /* in-place detected, avoid clobbering since we need to
                         read 'in' for the compositing stage  */
         {
-          blend_out = g_alloca (sizeof (gfloat) * 4 * samples);
+          blend_out = g_alloca (sizeof (gfloat) * n_components * samples);
         }
 
       blend_function (operation, blend_in, blend_layer, blend_out, samples);

@@ -71,21 +71,24 @@ gimp_operation_split_process (GeglOperation       *op,
                               const GeglRectangle *roi,
                               gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
-  gfloat                 *in         = in_p;
-  gfloat                 *out        = out_p;
-  gfloat                 *layer      = layer_p;
-  gfloat                 *mask       = mask_p;
-  gfloat                  opacity    = layer_mode->opacity;
-  const gboolean          has_mask   = mask != NULL;
+  GimpOperationLayerMode *layer_mode   = (gpointer) op;
+  const Babl             *format       = gegl_operation_get_format (op, "input");
+  gfloat                 *in           = in_p;
+  gfloat                 *out          = out_p;
+  gfloat                 *layer        = layer_p;
+  gfloat                 *mask         = mask_p;
+  gfloat                  opacity      = layer_mode->opacity;
+  const gboolean          has_mask     = mask != NULL;
+  const gint              n_components = babl_format_get_n_components (format);
+  const gint              alpha        = n_components - 1;
 
   switch (layer_mode->composite_mode)
     {
     case GIMP_LAYER_COMPOSITE_UNION:
       while (samples--)
         {
-          gfloat in_alpha    = in[ALPHA];
-          gfloat layer_alpha = layer[ALPHA] * opacity;
+          gfloat in_alpha    = in[alpha];
+          gfloat layer_alpha = layer[alpha] * opacity;
           gfloat new_alpha;
           gint   b;
 
@@ -96,7 +99,7 @@ gimp_operation_split_process (GeglOperation       *op,
             {
               new_alpha = in_alpha - layer_alpha;
 
-              for (b = RED; b < ALPHA; b++)
+              for (b = 0; b < alpha; b++)
                 {
                   out[b] = in[b];
                 }
@@ -105,17 +108,17 @@ gimp_operation_split_process (GeglOperation       *op,
             {
               new_alpha = layer_alpha - in_alpha;
 
-              for (b = RED; b < ALPHA; b++)
+              for (b = 0; b < alpha; b++)
                 {
                   out[b] = layer[b];
                 }
             }
 
-          out[ALPHA] = new_alpha;
+          out[alpha] = new_alpha;
 
-          in    += 4;
-          layer += 4;
-          out   += 4;
+          in    += n_components;
+          layer += n_components;
+          out   += n_components;
 
           if (has_mask)
             mask++;
@@ -126,8 +129,8 @@ gimp_operation_split_process (GeglOperation       *op,
     case GIMP_LAYER_COMPOSITE_AUTO:
       while (samples--)
         {
-          gfloat in_alpha    = in[ALPHA];
-          gfloat layer_alpha = layer[ALPHA] * opacity;
+          gfloat in_alpha    = in[alpha];
+          gfloat layer_alpha = layer[alpha] * opacity;
           gfloat new_alpha;
           gint   b;
 
@@ -136,16 +139,16 @@ gimp_operation_split_process (GeglOperation       *op,
 
           new_alpha = MAX (in_alpha - layer_alpha, 0.0f);
 
-          for (b = RED; b < ALPHA; b++)
+          for (b = 0; b < alpha; b++)
             {
               out[b] = in[b];
             }
 
-          out[ALPHA] = new_alpha;
+          out[alpha] = new_alpha;
 
-          in    += 4;
-          layer += 4;
-          out   += 4;
+          in    += n_components;
+          layer += n_components;
+          out   += n_components;
 
           if (has_mask)
             mask++;
@@ -155,8 +158,8 @@ gimp_operation_split_process (GeglOperation       *op,
     case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
       while (samples--)
         {
-          gfloat in_alpha    = in[ALPHA];
-          gfloat layer_alpha = layer[ALPHA] * opacity;
+          gfloat in_alpha    = in[alpha];
+          gfloat layer_alpha = layer[alpha] * opacity;
           gfloat new_alpha;
           gint   b;
 
@@ -167,24 +170,24 @@ gimp_operation_split_process (GeglOperation       *op,
 
           if (new_alpha != 0.0f)
             {
-              for (b = RED; b < ALPHA; b++)
+              for (b = 0; b < alpha; b++)
                 {
                   out[b] = layer[b];
                 }
             }
           else
             {
-              for (b = RED; b < ALPHA; b++)
+              for (b = 0; b < alpha; b++)
                 {
                   out[b] = in[b];
                 }
             }
 
-          out[ALPHA] = new_alpha;
+          out[alpha] = new_alpha;
 
-          in    += 4;
-          layer += 4;
-          out   += 4;
+          in    += n_components;
+          layer += n_components;
+          out   += n_components;
 
           if (has_mask)
             mask++;
@@ -194,17 +197,17 @@ gimp_operation_split_process (GeglOperation       *op,
     case GIMP_LAYER_COMPOSITE_INTERSECTION:
       while (samples--)
         {
-          gint   b;
+          gint b;
 
-          for (b = RED; b < ALPHA; b++)
+          for (b = 0; b < alpha; b++)
             {
               out[b] = in[b];
             }
 
-          out[ALPHA] = 0.0f;
+          out[alpha] = 0.0f;
 
-          in    += 4;
-          out   += 4;
+          in    += n_components;
+          out   += n_components;
         }
       break;
     }

@@ -71,13 +71,16 @@ gimp_operation_erase_process (GeglOperation       *op,
                               const GeglRectangle *roi,
                               gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
-  gfloat                 *in         = in_p;
-  gfloat                 *out        = out_p;
-  gfloat                 *layer      = layer_p;
-  gfloat                 *mask       = mask_p;
-  gfloat                  opacity    = layer_mode->opacity;
-  const gboolean          has_mask   = mask != NULL;
+  GimpOperationLayerMode *layer_mode   = (gpointer) op;
+  const Babl             *format       = gegl_operation_get_format (op, "input");
+  gfloat                 *in           = in_p;
+  gfloat                 *out          = out_p;
+  gfloat                 *layer        = layer_p;
+  gfloat                 *mask         = mask_p;
+  gfloat                  opacity      = layer_mode->opacity;
+  const gboolean          has_mask     = mask != NULL;
+  const gint              n_components = babl_format_get_n_components (format);
+  const gint              alpha        = n_components - 1;
 
   switch (layer_mode->composite_mode)
     {
@@ -88,40 +91,40 @@ gimp_operation_erase_process (GeglOperation       *op,
           gfloat new_alpha;
           gint   b;
 
-          layer_alpha = layer[ALPHA] * opacity;
+          layer_alpha = layer[alpha] * opacity;
 
           if (has_mask)
             layer_alpha *= (*mask);
 
-          new_alpha = in[ALPHA] + layer_alpha - 2.0f * in[ALPHA] * layer_alpha;
+          new_alpha = in[alpha] + layer_alpha - 2.0f * in[alpha] * layer_alpha;
 
           if (new_alpha != 0.0f)
             {
               gfloat ratio;
 
-              ratio = (1.0f - in[ALPHA]) * layer_alpha / new_alpha;
+              ratio = (1.0f - in[alpha]) * layer_alpha / new_alpha;
 
-              for (b = RED; b < ALPHA; b++)
+              for (b = 0; b < alpha; b++)
                 {
                   out[b] = ratio * layer[b] + (1.0f - ratio) * in[b];
                 }
             }
           else
             {
-              for (b = RED; b < ALPHA; b++)
+              for (b = 0; b < alpha; b++)
                 {
                   out[b] = in[b];
                 }
             }
 
-          out[ALPHA] = new_alpha;
+          out[alpha] = new_alpha;
 
-          in    += 4;
-          layer += 4;
-          out   += 4;
+          in    += n_components;
+          layer += n_components;
+          out   += n_components;
 
           if (has_mask)
-            mask ++;
+            mask++;
         }
       break;
 
@@ -133,26 +136,26 @@ gimp_operation_erase_process (GeglOperation       *op,
           gfloat new_alpha;
           gint   b;
 
-          layer_alpha = layer[ALPHA] * opacity;
+          layer_alpha = layer[alpha] * opacity;
 
           if (has_mask)
             layer_alpha *= (*mask);
 
-          new_alpha = (1.0f - layer_alpha) * in[ALPHA];
+          new_alpha = (1.0f - layer_alpha) * in[alpha];
 
-          for (b = RED; b < ALPHA; b++)
+          for (b = 0; b < alpha; b++)
             {
               out[b] = in[b];
             }
 
-          out[ALPHA] = new_alpha;
+          out[alpha] = new_alpha;
 
-          in    += 4;
-          layer += 4;
-          out   += 4;
+          in    += n_components;
+          layer += n_components;
+          out   += n_components;
 
           if (has_mask)
-            mask ++;
+            mask++;
         }
       break;
 
@@ -164,31 +167,31 @@ gimp_operation_erase_process (GeglOperation       *op,
           const gfloat *src;
           gint          b;
 
-          layer_alpha = layer[ALPHA] * opacity;
+          layer_alpha = layer[alpha] * opacity;
 
           if (has_mask)
             layer_alpha *= (*mask);
 
-          new_alpha = (1.0f - in[ALPHA]) * layer_alpha;
+          new_alpha = (1.0f - in[alpha]) * layer_alpha;
 
           src = layer;
 
           if (new_alpha == 0.0f)
             src = in;
 
-          for (b = RED; b < ALPHA; b++)
+          for (b = 0; b < alpha; b++)
             {
               out[b] = src[b];
             }
 
-          out[ALPHA] = new_alpha;
+          out[alpha] = new_alpha;
 
-          in    += 4;
-          layer += 4;
-          out   += 4;
+          in    += n_components;
+          layer += n_components;
+          out   += n_components;
 
           if (has_mask)
-            mask ++;
+            mask++;
         }
       break;
 
@@ -197,15 +200,15 @@ gimp_operation_erase_process (GeglOperation       *op,
         {
           gint b;
 
-          for (b = RED; b < ALPHA; b++)
+          for (b = 0; b < alpha; b++)
             {
               out[b] = in[b];
             }
 
-          out[ALPHA] = 0.0f;
+          out[alpha] = 0.0f;
 
-          in    += 4;
-          out   += 4;
+          in  += n_components;
+          out += n_components;
         }
       break;
     }
