@@ -104,15 +104,16 @@ typedef enum
 
 typedef enum
 {
-  FILTER_PROP_UNKNOWN = 0,
-  FILTER_PROP_INT     = 1,
-  FILTER_PROP_BOOL    = 2,
-  FILTER_PROP_FLOAT   = 3,
-  FILTER_PROP_STRING  = 4,
-  FILTER_PROP_ENUM    = 5,
-  FILTER_PROP_CONFIG  = 6,
-  FILTER_PROP_UINT    = 7,
-  FILTER_PROP_COLOR   = 8,
+  FILTER_PROP_UNKNOWN  = 0,
+  FILTER_PROP_INT      = 1,
+  FILTER_PROP_BOOL     = 2,
+  FILTER_PROP_FLOAT    = 3,
+  FILTER_PROP_STRING   = 4,
+  FILTER_PROP_ENUM     = 5,
+  FILTER_PROP_CONFIG   = 6,
+  FILTER_PROP_UINT     = 7,
+  FILTER_PROP_COLOR    = 8,
+  FILTER_PROP_GRADIENT = 9,
 } FilterPropType;
 
 typedef struct _XcfInfo  XcfInfo;

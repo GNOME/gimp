@@ -46,6 +46,7 @@
 #include "core/gimpdrawablefilter.h"
 #include "core/gimpfilloptions.h"
 #include "core/gimpfilterstack.h"
+#include "core/gimpgradient.h"
 #include "core/gimpgrid.h"
 #include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
@@ -211,6 +212,10 @@ static GeglColor     * xcf_load_color         (XcfInfo       *info,
                                                GError       **error);
 static GimpData      * xcf_load_data          (XcfInfo       *info,
                                                GType          data_type,
+                                               GError       **error);
+static GimpGradient  * xcf_load_gradient      (XcfInfo       *info,
+                                               goffset        next_prop,
+                                               gboolean      *valid_prop_value,
                                                GError       **error);
 static GimpPath      * xcf_load_path          (XcfInfo       *info,
                                                GimpImage     *image);
@@ -3485,6 +3490,47 @@ xcf_load_effect_props (XcfInfo      *info,
                   }
                   break;
 
+                case FILTER_PROP_GRADIENT:
+                  {
+                    GimpGradient *gradient;
+                    GError       *error = NULL;
+
+                    g_value_init (&filter_prop_value, GIMP_TYPE_GRADIENT);
+
+                    gradient = xcf_load_gradient (info, next_prop,
+                                                  &valid_prop_value, &error);
+
+                    if (valid_prop_value)
+                      {
+                        g_value_set_object (&filter_prop_value, gradient);
+
+                        if (gradient == NULL)
+                          {
+                            gimp_message (info->gimp, G_OBJECT (info->progress),
+                                          GIMP_MESSAGE_WARNING,
+                                          "XCF Warning: NULL value for gradient "
+                                          "property '%s' of filter '%s' is "
+                                          "invalid.",
+                                          filter->operation_name,
+                                          filter_prop_name);
+                            valid_prop_value = FALSE;
+                          }
+                      }
+                    else if (error != NULL)
+                      {
+                        gimp_message (info->gimp, G_OBJECT (info->progress),
+                                      GIMP_MESSAGE_WARNING,
+                                      "XCF Warning: invalid value for gradient "
+                                      "property '%s' of filter '%s': %s",
+                                      filter->operation_name,
+                                      filter_prop_name, error->message);
+                      }
+
+                    g_clear_object (&gradient);
+                    g_clear_error (&error);
+                  }
+                break;
+
                 default:
                   gimp_message (info->gimp, G_OBJECT (info->progress),
                                 GIMP_MESSAGE_WARNING,
@@ -4369,6 +4415,113 @@ xcf_load_data (XcfInfo  *info,
     }
 
   return data;
+}
+
+static GimpGradient *
+xcf_load_gradient (XcfInfo   *info,
+                   goffset    next_prop,
+                   gboolean  *valid_prop_value,
+                   GError   **error)
+{
+  GimpGradient        *gradient = NULL;
+  GimpGradientSegment *prev     = NULL;
+  guint32              version  = 1;
+  gchar               *name     = NULL;
+  guint32              num_segments;
+
+  *valid_prop_value = TRUE;
+
+  gradient = g_object_new (GIMP_TYPE_GRADIENT,
+                           "mime-type", "application/x-gimp-gradient",
+                           NULL);
+
+  xcf_read_int32 (info, &version, 1);
+  xcf_read_string (info, &name, 1);
+  xcf_read_int32 (info, &num_segments, 1);
+
+  gimp_object_set_name_safe (GIMP_OBJECT (gradient), name);
+  g_free (name);
+
+  for (gint i = 0; i < num_segments; i++)
+    {
+      GimpGradientSegment *seg;
+      gfloat               left;
+      gfloat               right;
+      gfloat               middle;
+      guint32              color;
+      guint32              type;
+      guint32              left_color_type;
+      guint32              right_color_type;
+      GeglColor           *left_color  = NULL;
+      GeglColor           *right_color = NULL;
+      gboolean             valid_color = FALSE;
+
+      seg = gimp_gradient_segment_new ();
+
+      seg->prev = prev;
+
+      if (prev)
+        prev->next = seg;
+      else
+        gradient->segments = seg;
+
+      xcf_read_float (info, &left, 1);
+      xcf_read_float (info, &middle, 1);
+      xcf_read_float (info, &right, 1);
+
+      left_color  = xcf_load_color (info, next_prop, &valid_color, error);
+      if (! valid_color || left_color == NULL)
+        {
+          *valid_prop_value = FALSE;
+          return gradient;
+        }
+      right_color = xcf_load_color (info, next_prop, &valid_color, error);
+      if (! valid_color || right_color == NULL)
+        {
+          *valid_prop_value = FALSE;
+          g_clear_object (&left_color);
+          return gradient;
+        }
+
+      xcf_read_int32 (info, &type, 1);
+      xcf_read_int32 (info, &color, 1);
+      xcf_read_int32 (info, &left_color_type, 1);
+      xcf_read_int32 (info, &right_color_type, 1);
+
+      /* Ensuring all enum are within range */
+      if (left_color_type > GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT  ||
+          right_color_type > GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT ||
+          type > GIMP_GRADIENT_SEGMENT_STEP                             ||
+          color > GIMP_GRADIENT_SEGMENT_HSV_CW)
+        {
+          *valid_prop_value = FALSE;
+          g_clear_object (&left_color);
+          g_clear_object (&right_color);
+          return gradient;
+        }
+
+      gimp_gradient_segment_set_left_pos (gradient, seg, left);
+      gimp_gradient_segment_set_middle_pos (gradient, seg, middle);
+      gimp_gradient_segment_set_right_pos (gradient, seg, right);
+
+      gimp_gradient_segment_set_left_color (gradient, seg, left_color);
+      gimp_gradient_segment_set_right_color (gradient, seg, right_color);
+
+      gimp_gradient_segment_set_left_color_type (gradient, seg,
+                                                 (GimpGradientColor) left_color_type);
+      gimp_gradient_segment_set_right_color_type (gradient, seg,
+                                                  (GimpGradientColor) right_color_type);
+
+      seg->type  = (GimpGradientSegmentType) type;
+      seg->color = (GimpGradientSegmentColor) color;
+
+      g_clear_object (&left_color);
+      g_clear_object (&right_color);
+
+      prev = seg;
+    }
+
+  return gradient;
 }
 
 /* The new path structure since XCF 18. */
