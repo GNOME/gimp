@@ -29,6 +29,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpprojection.h"
+#include "core/gimpsensormanager.h"
 
 #include "paint/gimppaintcore.h"
 #include "paint/gimppaintoptions.h"
@@ -76,6 +77,8 @@ static gboolean   gimp_paint_tool_paint_timeout     (GimpPaintTool   *paint_tool
 
 static void       gimp_paint_tool_paint_interpolate (GimpPaintTool   *paint_tool,
                                                      InterpolateData *data);
+
+static gboolean   gimp_paint_tool_drip_source       (GimpPaintTool   *paint_tool);
 
 
 /*  static variables  */
@@ -242,6 +245,43 @@ gimp_paint_tool_paint_interpolate (GimpPaintTool   *paint_tool,
   g_slice_free (InterpolateData, data);
 }
 
+static gboolean
+gimp_paint_tool_drip_source (GimpPaintTool *paint_tool)
+{
+  GimpPaintCore    *core = paint_tool->core;
+  GimpImage        *image;
+  GList            *drawables;
+  GimpPaintOptions *paint_options;
+  GimpCoords        coords = core->last_coords;
+  gint64            time_span = g_get_monotonic_time () - paint_tool->drip_start;
+  gdouble           x, y, z;
+  gdouble           dist;
+
+  drawables     = paint_tool->drip_drawables;
+  paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
+
+  if (time_span > 4 * G_TIME_SPAN_SECOND)
+    {
+      gimp_paint_tool_stop_dripping (paint_tool, TRUE);
+      return G_SOURCE_REMOVE;
+    }
+
+  sensors_get_accel_coords (GIMP_CONTEXT (paint_options)->gimp, &x, &y, &z);
+  dist = sqrt (x*x + y*y + z*z);
+  x /= dist;
+  y /= dist;
+  z /= dist;
+  coords.x = core->last_coords.x + x * 6.0;
+  coords.y = core->last_coords.y - y * 6.0;
+  /*coords.pressure = 1.0;*/
+  gimp_paint_core_interpolate (core, drawables, paint_options, &coords, 0);
+
+  image = gimp_item_get_image (GIMP_ITEM (drawables->data));
+  gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
+
+  return G_SOURCE_CONTINUE;
+}
+
 
 /*  public functions  */
 
@@ -268,6 +308,8 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
   g_return_val_if_fail (coords != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
   g_return_val_if_fail (paint_tool->display == NULL, FALSE);
+
+  gimp_paint_tool_stop_dripping (paint_tool, FALSE);
 
   tool          = GIMP_TOOL (paint_tool);
   paint_tool    = GIMP_PAINT_TOOL (paint_tool);
@@ -445,9 +487,16 @@ gimp_paint_tool_paint_end (GimpPaintTool *paint_tool,
                          GIMP_PAINT_STATE_FINISH, time);
 
   if (cancel)
-    gimp_paint_core_cancel (core, drawables);
+    {
+      gimp_paint_core_cancel (core, drawables);
+    }
   else
-    gimp_paint_core_finish (core, drawables, TRUE);
+    {
+      gimp_paint_tool_stop_dripping (paint_tool, FALSE);
+
+      paint_tool->drip_drawables = g_list_copy (drawables);
+      gimp_paint_core_finish (core, drawables, TRUE);
+    }
 
   /*  Notify subclasses  */
   if (gimp_paint_tool_paint_use_thread (paint_tool) &&
@@ -463,6 +512,65 @@ gimp_paint_tool_paint_end (GimpPaintTool *paint_tool,
 
   paint_tool->display = NULL;
   g_clear_pointer (&paint_tool->drawables, g_list_free);
+
+  if (! cancel)
+    {
+      GimpCoords  cur_coords = core->cur_coords;
+      GError     *error = NULL;
+
+      cur_coords.x = core->last_paint.x;
+      cur_coords.y = core->last_paint.y;
+
+      if (gimp_paint_core_start (core, paint_tool->drip_drawables, paint_options, &cur_coords, &error))
+        {
+          sensors_watch_accelerometer (GIMP_CONTEXT (paint_options)->gimp, NULL, NULL, NULL, NULL);
+          paint_tool->drip_start = g_get_monotonic_time ();
+          core->last_coords = cur_coords;
+
+          gimp_paint_core_paint (core, paint_tool->drip_drawables, paint_options,
+                                 GIMP_PAINT_STATE_INIT, 0);
+
+          gimp_paint_core_paint (core, paint_tool->drip_drawables, paint_options,
+                                 GIMP_PAINT_STATE_MOTION, 0);
+
+          paint_tool->drip_timeout = g_timeout_add_full (G_PRIORITY_HIGH, 100,
+                                                         (GSourceFunc) gimp_paint_tool_drip_source,
+                                                         paint_tool, NULL);
+        }
+      else
+        {
+          g_printerr ("%s: ERROR: %s\n", G_STRFUNC, error->message);
+        }
+    }
+}
+
+void
+gimp_paint_tool_stop_dripping (GimpPaintTool *paint_tool,
+                               gboolean       in_timeout_source)
+{
+  if (paint_tool->drip_timeout || in_timeout_source)
+    {
+      GimpPaintCore    *core = paint_tool->core;
+      GimpPaintOptions *paint_options;
+      GList            *drawables;
+
+      if (! in_timeout_source)
+        g_source_remove (paint_tool->drip_timeout);
+
+      paint_tool->drip_timeout = 0;
+
+      paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
+      drawables     = paint_tool->drip_drawables;
+
+      sensors_unwatch_accelerometer (GIMP_CONTEXT (paint_options)->gimp);
+      gimp_paint_core_paint (core, drawables, paint_options,
+                             GIMP_PAINT_STATE_FINISH, 0);
+
+      gimp_paint_core_finish (core, drawables, TRUE);
+
+      gimp_paint_core_cleanup (core);
+      g_clear_pointer (&paint_tool->drip_drawables, g_list_free);
+    }
 }
 
 gboolean

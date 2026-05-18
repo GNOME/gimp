@@ -234,6 +234,8 @@ gimp_paint_tool_finalize (GObject *object)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (object);
 
+  gimp_paint_tool_stop_dripping (paint_tool, FALSE);
+
   if (paint_tool->core)
     {
       g_object_unref (paint_tool->core);
