@@ -252,6 +252,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                              &coords,
                                              paint_options,
                                              fade_point);
+  /*opacity = 1.0;*/
   if (opacity == 0.0)
     return;
 

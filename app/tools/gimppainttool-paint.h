@@ -33,6 +33,9 @@ void       gimp_paint_tool_paint_end       (GimpPaintTool           *tool,
                                             guint32                  time,
                                             gboolean                 cancel);
 
+void       gimp_paint_tool_stop_dripping   (GimpPaintTool           *paint_tool,
+                                            gboolean                 in_timeout_source);
+
 gboolean   gimp_paint_tool_paint_is_active (GimpPaintTool           *tool);
 
 void       gimp_paint_tool_paint_push      (GimpPaintTool           *tool,

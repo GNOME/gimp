@@ -66,6 +66,10 @@ struct _GimpPaintTool
 
   gdouble        paint_x;
   gdouble        paint_y;
+
+  GList         *drip_drawables;
+  guint          drip_timeout;
+  gint64         drip_start;
 };
 
 struct _GimpPaintToolClass
