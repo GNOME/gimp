@@ -72,6 +72,7 @@
 #define HISTOGRAM_WIDTH    256
 #define GRADIENT_HEIGHT     18
 #define CONTROL_HEIGHT      16
+#define MAX_CONTROL_HEIGHT  24
 
 
 /*  local function prototypes  */
@@ -471,7 +472,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_widget_set_visible (bar, TRUE);
 
   tool->input_handle_bar = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
-  gtk_widget_set_size_request (tool->input_handle_bar, -1, CONTROL_HEIGHT);
+  gtk_widget_set_size_request (tool->input_handle_bar, -1, MAX_CONTROL_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox3), tool->input_handle_bar, FALSE, FALSE,
                       0);
   gtk_widget_set_visible (tool->input_handle_bar, TRUE);
@@ -573,7 +574,8 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_widget_set_visible (tool->output_bar, TRUE);
 
   tool->output_handle_bar = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
-  gtk_widget_set_size_request (tool->output_handle_bar, -1, CONTROL_HEIGHT);
+  gtk_widget_set_size_request (tool->output_handle_bar, -1,
+                               MAX_CONTROL_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox2), tool->output_handle_bar, FALSE, FALSE,
                       0);
   gtk_widget_set_visible (tool->output_handle_bar, TRUE);
@@ -774,7 +776,7 @@ gimp_levels_tool_style_updated (GimpGuiConfig  *config,
           break;
 
         case GIMP_ICON_SIZE_HUGE:
-          handle_bar_size += 8;
+          handle_bar_size = MAX_CONTROL_HEIGHT;
           break;
 
         case GIMP_ICON_SIZE_MEDIUM:

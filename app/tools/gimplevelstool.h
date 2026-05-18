@@ -44,6 +44,7 @@ struct _GimpLevelsTool
   GtkWidget      *histogram_view;
 
   GtkWidget      *input_bar;
+  GtkWidget      *input_handle_bar;
   GtkWidget      *low_input_spinbutton;
   GtkWidget      *high_input_spinbutton;
   GtkWidget      *low_output_spinbutton;
@@ -54,6 +55,7 @@ struct _GimpLevelsTool
   GtkAdjustment  *high_input;
 
   GtkWidget      *output_bar;
+  GtkWidget      *output_handle_bar;
 };
 
 struct _GimpLevelsToolClass
