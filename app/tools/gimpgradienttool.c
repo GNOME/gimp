@@ -639,7 +639,7 @@ gimp_gradient_tool_options_notify (GimpTool         *tool,
       filters = gimp_drawable_get_filters (tool->drawables->data);
       count   = gimp_container_get_n_children (filters);
 
-      if (GIMP_GRADIENT_OPTIONS (options)->create_as_live_filter)
+      if (GIMP_GRADIENT_OPTIONS (options)->editable_gradient)
         gimp_container_reorder (filters, GIMP_OBJECT (gradient_tool->filter),
                                 0);
       else
@@ -732,7 +732,7 @@ gimp_gradient_tool_start (GimpGradientTool *gradient_tool,
 
   /* If destructive, move this operation below any non-destructive filters that
    * may be active, so that it's directly affect the raw pixels. */
-  if (! options->create_as_live_filter)
+  if (! options->editable_gradient)
     {
       filters =
         gimp_drawable_get_filters (gimp_drawable_filter_get_drawable (gradient_tool->filter));
@@ -845,9 +845,9 @@ gimp_gradient_tool_commit (GimpGradientTool *gradient_tool)
 
           gradient_tool->existing_filter = NULL;
           gtk_widget_set_sensitive (options->instant_toggle, TRUE);
-          gtk_widget_set_sensitive (options->nde_filter_toggle, TRUE);
+          gtk_widget_set_sensitive (options->editable_gradient_toggle, TRUE);
         }
-      else if (options->create_as_live_filter)
+      else if (options->editable_gradient)
         {
           GimpDrawableFilter *filter = NULL;
 
@@ -865,7 +865,7 @@ gimp_gradient_tool_commit (GimpGradientTool *gradient_tool)
           g_object_unref (filter);
         }
 
-      if (! options->create_as_live_filter &&
+      if (! options->editable_gradient &&
           gradient_tool->existing_filter == NULL)
         gimp_drawable_filter_commit (gradient_tool->filter, FALSE,
                                      GIMP_PROGRESS (tool), FALSE);
@@ -1376,7 +1376,7 @@ gimp_gradient_tool_set_existing_filter (GimpGradientTool   *gradient_tool,
   /* Temporary turn off instant mode since it would defeat the purpose of
    * editing a filter */
   gtk_widget_set_sensitive (options->instant_toggle, FALSE);
-  gtk_widget_set_sensitive (options->nde_filter_toggle, FALSE);
+  gtk_widget_set_sensitive (options->editable_gradient_toggle, FALSE);
 }
 
 
