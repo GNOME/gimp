@@ -32,6 +32,9 @@
 #include "operations/gimplevelsconfig.h"
 #include "operations/gimpoperationlevels.h"
 
+#include "config/gimpguiconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimp-gui.h"
 #include "core/gimpasync.h"
 #include "core/gimpcancelable.h"
@@ -67,8 +70,8 @@
 #define PICK_ALL_CHANNELS (1 << 8)
 
 #define HISTOGRAM_WIDTH    256
-#define GRADIENT_HEIGHT     12
-#define CONTROL_HEIGHT      10
+#define GRADIENT_HEIGHT     18
+#define CONTROL_HEIGHT      16
 
 
 /*  local function prototypes  */
@@ -86,6 +89,9 @@ static void       gimp_levels_tool_reset          (GimpFilterTool   *filter_tool
 static void       gimp_levels_tool_config_notify  (GimpFilterTool   *filter_tool,
                                                    GimpConfig       *config,
                                                    const GParamSpec *pspec);
+static void       gimp_levels_tool_style_updated  (GimpGuiConfig    *config,
+                                                   GParamSpec       *pspec,
+                                                   GimpLevelsTool   *tool);
 static gboolean   gimp_levels_tool_settings_import(GimpFilterTool   *filter_tool,
                                                    GInputStream     *input,
                                                    GError          **error);
@@ -327,7 +333,9 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
 {
   GimpLevelsTool   *tool         = GIMP_LEVELS_TOOL (filter_tool);
   GimpToolOptions  *tool_options = GIMP_TOOL_GET_OPTIONS (filter_tool);
+  GimpContext      *context      = GIMP_CONTEXT (tool_options);
   GimpLevelsConfig *config       = GIMP_LEVELS_CONFIG (filter_tool->config);
+  GimpGuiConfig    *gui_config   = GIMP_GUI_CONFIG (context->gimp->config);
   GtkListStore     *store;
   GtkWidget        *main_vbox;
   GtkWidget        *frame_vbox;
@@ -343,7 +351,6 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   GtkWidget        *spinbutton;
   GtkAdjustment    *adjustment;
   GtkWidget        *bar;
-  GtkWidget        *handle_bar;
   gint              border;
 
   main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
@@ -463,14 +470,15 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (vbox3), bar, FALSE, FALSE, 0);
   gtk_widget_set_visible (bar, TRUE);
 
-  handle_bar = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
-  gtk_widget_set_size_request (handle_bar, -1, CONTROL_HEIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox3), handle_bar, FALSE, FALSE, 0);
-  gtk_widget_set_visible (handle_bar, TRUE);
+  tool->input_handle_bar = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
+  gtk_widget_set_size_request (tool->input_handle_bar, -1, CONTROL_HEIGHT);
+  gtk_box_pack_start (GTK_BOX (vbox3), tool->input_handle_bar, FALSE, FALSE,
+                      0);
+  gtk_widget_set_visible (tool->input_handle_bar, TRUE);
 
-  gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (handle_bar),
+  gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (tool->input_handle_bar),
                                   tool->input_bar);
-  gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (handle_bar),
+  gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (tool->input_handle_bar),
                                   bar);
 
   /*  Horizontal box for input levels spinbuttons  */
@@ -493,7 +501,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
 
   tool->low_input = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
-  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 0,
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->input_handle_bar), 0,
                                   tool->low_input);
 
   /*  clamp input toggle  */
@@ -518,7 +526,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
                            G_CALLBACK (levels_linear_gamma_changed),
                            tool, 0);
 
-  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 1,
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->input_handle_bar), 1,
                                   tool->gamma_linear);
   g_object_unref (tool->gamma_linear);
 
@@ -537,7 +545,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   tool->high_input_spinbutton = spinbutton;
 
   tool->high_input = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
-  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 2,
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->input_handle_bar), 2,
                                   tool->high_input);
 
   /*  Output levels frame  */
@@ -564,12 +572,13 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (vbox2), tool->output_bar, FALSE, FALSE, 0);
   gtk_widget_set_visible (tool->output_bar, TRUE);
 
-  handle_bar = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
-  gtk_widget_set_size_request (handle_bar, -1, CONTROL_HEIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox2), handle_bar, FALSE, FALSE, 0);
-  gtk_widget_set_visible (handle_bar, TRUE);
+  tool->output_handle_bar = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
+  gtk_widget_set_size_request (tool->output_handle_bar, -1, CONTROL_HEIGHT);
+  gtk_box_pack_start (GTK_BOX (vbox2), tool->output_handle_bar, FALSE, FALSE,
+                      0);
+  gtk_widget_set_visible (tool->output_handle_bar, TRUE);
 
-  gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (handle_bar),
+  gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (tool->output_handle_bar),
                                   tool->output_bar);
 
   /*  Horizontal box for levels spin widgets  */
@@ -584,7 +593,8 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
   adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
-  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 0, adjustment);
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->output_handle_bar), 0,
+                                  adjustment);
 
   /*  clamp output toggle  */
   button = gimp_prop_check_button_new (filter_tool->config, "clamp-output",
@@ -598,7 +608,8 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
   adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
-  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 2, adjustment);
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->output_handle_bar), 2,
+                                  adjustment);
 
   /*  all channels frame  */
   main_frame = gimp_frame_new (_("All Channels"));
@@ -650,6 +661,16 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   g_signal_connect_object (button, "clicked",
                            G_CALLBACK (levels_to_curves_callback),
                            tool, 0);
+
+  g_signal_connect_object (gui_config,
+                           "notify::override-theme-icon-size",
+                           G_CALLBACK (gimp_levels_tool_style_updated),
+                           tool, G_CONNECT_AFTER);
+  g_signal_connect_object (gui_config,
+                           "notify::custom-icon-size",
+                           G_CALLBACK (gimp_levels_tool_style_updated),
+                           tool, G_CONNECT_AFTER);
+  gimp_levels_tool_style_updated (gui_config, NULL, tool);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
                                  config->channel);
@@ -735,6 +756,36 @@ gimp_levels_tool_config_notify (GimpFilterTool   *filter_tool,
 
       gtk_adjustment_set_value (levels_tool->gamma_linear, value);
     }
+}
+
+static void
+gimp_levels_tool_style_updated (GimpGuiConfig  *config,
+                                GParamSpec     *pspec,
+                                GimpLevelsTool *tool)
+{
+  gint handle_bar_size = CONTROL_HEIGHT;
+
+  if (config->override_icon_size)
+    {
+      switch (config->custom_icon_size)
+        {
+        case GIMP_ICON_SIZE_LARGE:
+          handle_bar_size += 4;
+          break;
+
+        case GIMP_ICON_SIZE_HUGE:
+          handle_bar_size += 8;
+          break;
+
+        case GIMP_ICON_SIZE_MEDIUM:
+        case GIMP_ICON_SIZE_SMALL:
+        default:
+          handle_bar_size = CONTROL_HEIGHT;
+        }
+    }
+
+  gtk_widget_set_size_request (tool->input_handle_bar, -1, handle_bar_size);
+  gtk_widget_set_size_request (tool->output_handle_bar, -1, handle_bar_size);
 }
 
 static gboolean
