@@ -237,6 +237,11 @@ notebook header tabs arrow:disabled {
   background-color: @widget-bg-color;
 }
 
+notebook header tabs arrow:disabled:backdrop {
+  background-image: none;
+  border-color:     @border-color;
+}
+
 /* Add margin to image tabs so the close button fits */
 notebook header tabs tab > box > button
 {
