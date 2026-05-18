@@ -212,6 +212,7 @@ typedef struct _GimpObjectQueue                 GimpObjectQueue;
 typedef struct _GimpParasiteList                GimpParasiteList;
 typedef struct _GimpPdbProgress                 GimpPdbProgress;
 typedef struct _GimpProjection                  GimpProjection;
+typedef struct _GimpSensorManager               GimpSensorManager;
 typedef struct _GimpSettings                    GimpSettings;
 typedef struct _GimpSubProgress                 GimpSubProgress;
 typedef struct _GimpTag                         GimpTag;
