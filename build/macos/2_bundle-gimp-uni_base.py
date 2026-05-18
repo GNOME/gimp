@@ -337,7 +337,7 @@ for dir in ["MacOS", "lib"]:
         sys.exit(1)
 
 
-## DEVELOPMENT FILES ON UNIX-STYLE, NO MACOS-STYLE/.FRAMEWORK
+## DEVELOPMENT FILES ON UNIX-STYLE, NO MACOS-STYLE/.FRAMEWORK (see https://developer.gimp.org/resource/sdk/)
 ### (to build GEGL filters and GIMP plug-ins).
 clean(GIMP_DISTRIB, "lib/*.a")
 bundle(GIMP_PREFIX, "include/gimp-*", "--dest", "include")
