@@ -243,7 +243,7 @@ for bin_path in GIMP_DISTRIB.rglob("*"):
           continue
 
 
-## DEVELOPMENT FILES (to build GEGL filters and GIMP plug-ins).
+## DEVELOPMENT FILES (to build GEGL filters and GIMP plug-ins). (see https://developer.gimp.org/resource/sdk/)
 clean(GIMP_DISTRIB, "lib/*.a")
 bundle(GIMP_PREFIX, "include/gimp-*")
 bundle(GIMP_PREFIX, "include/babl-*")
