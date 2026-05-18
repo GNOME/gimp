@@ -136,6 +136,9 @@ struct _Gimp
 
   /*  GUI focus occured. See gtk#7534.  */
   gboolean                focused_once;
+
+  /*  Sensors manager (accelerometer)   */
+  GimpSensorManager      *sensor_manager;
 };
 
 struct _GimpClass

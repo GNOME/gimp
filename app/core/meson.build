@@ -231,6 +231,7 @@ libappcore_sources = [
   'gimpsamplepointundo.c',
   'gimpscanconvert.c',
   'gimpselection.c',
+  'gimpsensormanager.c',
   'gimpsettings.c',
   'gimpstrokeoptions.c',
   'gimpsubprogress.c',

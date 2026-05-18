@@ -74,6 +74,7 @@
 #include "gimppalette.h"
 #include "gimpparasitelist.h"
 #include "gimppattern.h"
+#include "gimpsensormanager.h"
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
 #include "gimptoolpreset.h"
@@ -321,6 +322,7 @@ gimp_constructed (GObject *object)
 
   gimp->extension_manager = gimp_extension_manager_new (gimp);
   gimp->plug_in_manager   = gimp_plug_in_manager_new (gimp);
+  gimp->sensor_manager    = gimp_sensor_manager_new ();
   gimp->pdb               = gimp_pdb_new (gimp);
 
   xcf_init (gimp);
@@ -448,6 +450,7 @@ gimp_finalize (GObject *object)
   g_clear_object (&gimp->image_table);
   g_clear_object (&gimp->images);
   g_clear_object (&gimp->plug_in_manager);
+  g_clear_object (&gimp->sensor_manager);
   g_clear_object (&gimp->extension_manager);
 
   if (gimp->module_db)
