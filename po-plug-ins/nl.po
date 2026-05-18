@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-08 21:41+0000\n"
-"PO-Revision-Date: 2026-05-11 10:05+0200\n"
+"POT-Creation-Date: 2026-05-16 21:50+0000\n"
+"PO-Revision-Date: 2026-05-18 17:25+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -92,9 +92,9 @@ msgstr "Plug-In Voorbeeld in C"
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
 #: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1189
-#: plug-ins/metadata/metadata-editor.c:1696
-#: plug-ins/metadata/metadata-editor.c:5588
-#: plug-ins/metadata/metadata-editor.c:5623 plug-ins/print/print.c:458
+#: plug-ins/metadata/metadata-editor.c:1691
+#: plug-ins/metadata/metadata-editor.c:5583
+#: plug-ins/metadata/metadata-editor.c:5618 plug-ins/print/print.c:458
 msgid "_Cancel"
 msgstr "_Annuleren"
 
@@ -505,7 +505,7 @@ msgstr "Afspeelsnelheid"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:679
 #: plug-ins/imagemap/imap-menu.ui:271
 msgid "Zoom"
-msgstr "Vergrootglas"
+msgstr "Zoomen"
 
 #: plug-ins/common/animation-play.c:888
 msgid "Reload"
@@ -4779,7 +4779,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "Afbeelding exporteren als PDF met meerdere pagina's"
 
 #: plug-ins/common/file-pdf-export.c:1033
-#: plug-ins/metadata/metadata-editor.c:5623
+#: plug-ins/metadata/metadata-editor.c:5618
 msgid "_Export"
 msgstr "_Exporteren"
 
@@ -7922,10 +7922,10 @@ msgid "Plug-in Browser"
 msgstr "Plug-inverkenner"
 
 #: plug-ins/common/plugin-browser.c:616 plug-ins/common/unit-editor.c:114
-#: plug-ins/metadata/metadata-editor.c:613
-#: plug-ins/metadata/metadata-editor.c:649
-#: plug-ins/metadata/metadata-editor.c:656
-#: plug-ins/metadata/metadata-editor.c:663
+#: plug-ins/metadata/metadata-editor.c:612
+#: plug-ins/metadata/metadata-editor.c:648
+#: plug-ins/metadata/metadata-editor.c:655
+#: plug-ins/metadata/metadata-editor.c:662
 msgid "Name"
 msgstr "Naam"
 
@@ -9199,86 +9199,6 @@ msgstr "Onbekende Microsoft Windows-fout."
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Kon ‘%s’: %s niet openen"
-
-#: plug-ins/common/web-page.c:118
-msgid "From _Webpage..."
-msgstr "Van _webpagina…"
-
-#: plug-ins/common/web-page.c:122
-msgid "Create an image of a webpage"
-msgstr "Afbeelding van webpagina maken"
-
-#: plug-ins/common/web-page.c:139
-msgid "Enter location (_URI)"
-msgstr "Geef locatie op (URI)"
-
-#: plug-ins/common/web-page.c:140
-msgid "URL of the webpage to screenshot"
-msgstr "URL van de af te beelden pagina"
-
-#: plug-ins/common/web-page.c:145
-msgid "_Width (pixels)"
-msgstr "_Breedte (beeldpunten)"
-
-#: plug-ins/common/web-page.c:146
-msgid "The width of the screenshot (in pixels)"
-msgstr "De breedte van de schermafdruk (in beeldpunten)"
-
-#: plug-ins/common/web-page.c:151
-msgid "_Font size"
-msgstr "_Lettergrootte"
-
-#: plug-ins/common/web-page.c:152
-msgid "The font size to use in the page (in pt)"
-msgstr "De grootte van de letters van de schermafdruk (in pt)"
-
-#: plug-ins/common/web-page.c:214
-msgid "Create from webpage"
-msgstr "Maken van webpagina"
-
-#: plug-ins/common/web-page.c:216
-msgid "Cre_ate"
-msgstr "M_aken"
-
-#: plug-ins/common/web-page.c:217
-msgid "Huge"
-msgstr "Reusachtig"
-
-#: plug-ins/common/web-page.c:218
-msgid "Large"
-msgstr "Groot"
-
-#: plug-ins/common/web-page.c:219
-msgctxt "web-page"
-msgid "Default"
-msgstr "Standaard"
-
-#: plug-ins/common/web-page.c:220
-msgid "Small"
-msgstr "Klein"
-
-#: plug-ins/common/web-page.c:221
-msgid "Tiny"
-msgstr "Minuscuul"
-
-#: plug-ins/common/web-page.c:291
-msgid "Webpage"
-msgstr "Webpagina"
-
-#: plug-ins/common/web-page.c:334
-#, c-format
-msgid "No URL was specified"
-msgstr "Geen URL opgegeven"
-
-#: plug-ins/common/web-page.c:392
-#, c-format
-msgid "Downloading webpage '%s'"
-msgstr "Downloaden van webpagina ‘%s’"
-
-#: plug-ins/common/web-page.c:401
-#, c-format
-msgid "Transferring webpage image for '%s'"
-msgstr "Downloaden webpagina-afbeelding voor ‘%s’"
 
 # 29/03/08: capture=opnemen/vastleggen?
 #: plug-ins/common/wia.c:38
@@ -12910,7 +12830,7 @@ msgstr "Gamma:"
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Verandert de gamma (helderheid) van het geselecteerde penseel"
 
-#: plug-ins/gimpressionist/brush.c:572 plug-ins/metadata/metadata-editor.c:1381
+#: plug-ins/gimpressionist/brush.c:572
 msgid "Select:"
 msgstr "Selecteren:"
 
@@ -15578,230 +15498,230 @@ msgstr "Afbeeldingen op vlakken van blok projecteren"
 msgid "Images for the Cap Faces"
 msgstr "Afbeeldingen voor de vlakken onder en boven"
 
-#: plug-ins/metadata/metadata-editor.c:492
+#: plug-ins/metadata/metadata-editor.c:491
 msgid "Document Title"
 msgstr "Documenttitel"
 
-#: plug-ins/metadata/metadata-editor.c:493
+#: plug-ins/metadata/metadata-editor.c:492
 msgid "Author"
 msgstr "Auteur"
 
-#: plug-ins/metadata/metadata-editor.c:494
+#: plug-ins/metadata/metadata-editor.c:493
 msgid "Author Title"
 msgstr "Maker van de titel"
 
 #. Description tab
-#: plug-ins/metadata/metadata-editor.c:495
+#: plug-ins/metadata/metadata-editor.c:494
 #: plug-ins/metadata/metadata-editor.c:1226
 msgid "Description"
 msgstr "Omschrijving"
 
-#: plug-ins/metadata/metadata-editor.c:496
+#: plug-ins/metadata/metadata-editor.c:495
 msgid "Description Writer"
 msgstr "Auteur van de omschrijving"
 
-#: plug-ins/metadata/metadata-editor.c:497
+#: plug-ins/metadata/metadata-editor.c:496
 msgid "Rating"
 msgstr "Waardering"
 
-#: plug-ins/metadata/metadata-editor.c:498
+#: plug-ins/metadata/metadata-editor.c:497
 msgid "Keywords"
 msgstr "Sleutelwoorden"
 
-#: plug-ins/metadata/metadata-editor.c:500
+#: plug-ins/metadata/metadata-editor.c:499
 msgid "Copyright Status"
 msgstr "Status auteursrecht"
 
-#: plug-ins/metadata/metadata-editor.c:501
-#: plug-ins/metadata/metadata-editor.c:630
+#: plug-ins/metadata/metadata-editor.c:500
+#: plug-ins/metadata/metadata-editor.c:629
 msgid "Copyright Notice"
 msgstr "Auteursrecht"
 
-#: plug-ins/metadata/metadata-editor.c:502
+#: plug-ins/metadata/metadata-editor.c:501
 msgid "Copyright URL"
 msgstr "URL auteursrecht"
 
-#: plug-ins/metadata/metadata-editor.c:508
+#: plug-ins/metadata/metadata-editor.c:507
 msgid "Address"
 msgstr "Adres"
+
+#: plug-ins/metadata/metadata-editor.c:508
+#: plug-ins/metadata/metadata-editor.c:523
+#: plug-ins/metadata/metadata-editor.c:544
+#: plug-ins/metadata/metadata-editor.c:602
+msgid "City"
+msgstr "Plaats"
 
 #: plug-ins/metadata/metadata-editor.c:509
 #: plug-ins/metadata/metadata-editor.c:524
 #: plug-ins/metadata/metadata-editor.c:545
-#: plug-ins/metadata/metadata-editor.c:603
-msgid "City"
-msgstr "Plaats"
-
-#: plug-ins/metadata/metadata-editor.c:510
-#: plug-ins/metadata/metadata-editor.c:525
-#: plug-ins/metadata/metadata-editor.c:546
 msgid "State / Province"
 msgstr "(Deel)staat / Provincie"
 
-#: plug-ins/metadata/metadata-editor.c:511
+#: plug-ins/metadata/metadata-editor.c:510
 msgid "Postal Code"
 msgstr "Postcode"
 
-#: plug-ins/metadata/metadata-editor.c:512
-#: plug-ins/metadata/metadata-editor.c:526
-#: plug-ins/metadata/metadata-editor.c:547
-#: plug-ins/metadata/metadata-editor.c:605
+#: plug-ins/metadata/metadata-editor.c:511
+#: plug-ins/metadata/metadata-editor.c:525
+#: plug-ins/metadata/metadata-editor.c:546
+#: plug-ins/metadata/metadata-editor.c:604
 msgid "Country"
 msgstr "Land"
 
-#: plug-ins/metadata/metadata-editor.c:514
+#: plug-ins/metadata/metadata-editor.c:513
 msgid "Phone(s)"
 msgstr "Telefoonnummer(s)"
 
 # Of is het nog steeds e-mail?
 # pm
-#: plug-ins/metadata/metadata-editor.c:515
+#: plug-ins/metadata/metadata-editor.c:514
 msgid "E-mail(s)"
 msgstr "Email(s)"
 
-#: plug-ins/metadata/metadata-editor.c:516
+#: plug-ins/metadata/metadata-editor.c:515
 msgid "Website(s)"
 msgstr "Website(s)"
 
-#: plug-ins/metadata/metadata-editor.c:518
+#: plug-ins/metadata/metadata-editor.c:517
 msgid "Creation Date"
 msgstr "Creatiedatum"
 
-#: plug-ins/metadata/metadata-editor.c:520
+#: plug-ins/metadata/metadata-editor.c:519
 msgid "Intellectual Genre"
 msgstr "Intellectueel genre"
 
-#: plug-ins/metadata/metadata-editor.c:521
+#: plug-ins/metadata/metadata-editor.c:520
 msgid "IPTC Scene Code"
 msgstr "IPTC Scènecode"
 
-#: plug-ins/metadata/metadata-editor.c:523
-#: plug-ins/metadata/metadata-editor.c:544
-#: plug-ins/metadata/metadata-editor.c:602
+#: plug-ins/metadata/metadata-editor.c:522
+#: plug-ins/metadata/metadata-editor.c:543
+#: plug-ins/metadata/metadata-editor.c:601
 msgid "Sublocation"
 msgstr "Locatie"
 
-#: plug-ins/metadata/metadata-editor.c:527
-#: plug-ins/metadata/metadata-editor.c:548
+#: plug-ins/metadata/metadata-editor.c:526
+#: plug-ins/metadata/metadata-editor.c:547
 msgid "Country ISO-Code"
 msgstr "ISO Landcode"
 
 # Belang?
 # pm
-#: plug-ins/metadata/metadata-editor.c:529
+#: plug-ins/metadata/metadata-editor.c:528
 msgid "Urgency"
 msgstr "Urgentie"
 
 # iptc.org:
 # The Title field should not be confused with the Headline field which is a short descriptive field about the content of an image.
 # pm
-#: plug-ins/metadata/metadata-editor.c:530
+#: plug-ins/metadata/metadata-editor.c:529
 msgid "Headline"
 msgstr "Beschrijving foto"
 
-#: plug-ins/metadata/metadata-editor.c:531
+#: plug-ins/metadata/metadata-editor.c:530
 msgid "IPTC Subject Code"
 msgstr "IPTC subjectcode"
 
-#: plug-ins/metadata/metadata-editor.c:533
+#: plug-ins/metadata/metadata-editor.c:532
 msgid "Job Identifier"
 msgstr "Taakomschrijving"
 
-#: plug-ins/metadata/metadata-editor.c:534
+#: plug-ins/metadata/metadata-editor.c:533
 msgid "Instructions"
 msgstr "Instructies"
 
 # Beter dan credits?
 # pm
-#: plug-ins/metadata/metadata-editor.c:535
+#: plug-ins/metadata/metadata-editor.c:534
 msgid "Credit Line"
 msgstr "Toeschrijving"
 
-#: plug-ins/metadata/metadata-editor.c:536
-#: plug-ins/metadata/metadata-editor.c:628
+#: plug-ins/metadata/metadata-editor.c:535
+#: plug-ins/metadata/metadata-editor.c:627
 msgid "Source"
 msgstr "Bron"
 
-#: plug-ins/metadata/metadata-editor.c:537
+#: plug-ins/metadata/metadata-editor.c:536
 msgid "Usage Terms"
 msgstr "Gebruiksvoorwaarden"
 
-#: plug-ins/metadata/metadata-editor.c:543
+#: plug-ins/metadata/metadata-editor.c:542
 msgid "Person Shown"
 msgstr "Afgebeeld persoon"
 
 # Continent?
 # pm
-#: plug-ins/metadata/metadata-editor.c:549
-#: plug-ins/metadata/metadata-editor.c:607
+#: plug-ins/metadata/metadata-editor.c:548
+#: plug-ins/metadata/metadata-editor.c:606
 msgid "World Region"
 msgstr "Regio"
 
-#: plug-ins/metadata/metadata-editor.c:550
+#: plug-ins/metadata/metadata-editor.c:549
 msgid "Location Shown"
 msgstr "Getoonde locatie"
 
-#: plug-ins/metadata/metadata-editor.c:552
+#: plug-ins/metadata/metadata-editor.c:551
 msgid "Featured Organization"
 msgstr "Organisatie"
 
-#: plug-ins/metadata/metadata-editor.c:554
+#: plug-ins/metadata/metadata-editor.c:553
 msgid "Organization Code"
 msgstr "Organisatie code"
 
-#: plug-ins/metadata/metadata-editor.c:556
+#: plug-ins/metadata/metadata-editor.c:555
 msgid "Event"
 msgstr "Actie"
 
-#: plug-ins/metadata/metadata-editor.c:557
+#: plug-ins/metadata/metadata-editor.c:556
 msgid "Artwork or Object"
 msgstr "Kunstwerk of object"
 
-#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:559
 msgid "Additional Model Info"
 msgstr "Extra modelinformatie"
 
-#: plug-ins/metadata/metadata-editor.c:561
+#: plug-ins/metadata/metadata-editor.c:560
 msgid "Model Age"
 msgstr "Leeftijd model"
 
-#: plug-ins/metadata/metadata-editor.c:562
+#: plug-ins/metadata/metadata-editor.c:561
 msgid "Minor Model Age Disclosure"
 msgstr "Leeftijd jongste model op foto"
 
 # A Model Release is a document granting the right to use an image of a person depicted.
 # pm
-#: plug-ins/metadata/metadata-editor.c:563
+#: plug-ins/metadata/metadata-editor.c:562
 msgid "Model Release Status"
 msgstr "Status publicatierecht afgebeeld persoon"
 
-#: plug-ins/metadata/metadata-editor.c:564
-#: plug-ins/metadata/metadata-editor.c:636
+#: plug-ins/metadata/metadata-editor.c:563
+#: plug-ins/metadata/metadata-editor.c:635
 msgid "Model Release Identifier"
 msgstr "Code afgebeeld persoon"
 
-#: plug-ins/metadata/metadata-editor.c:567
+#: plug-ins/metadata/metadata-editor.c:566
 msgid "Image Supplier Name"
 msgstr "Naam beeldleverancier"
 
-#: plug-ins/metadata/metadata-editor.c:568
+#: plug-ins/metadata/metadata-editor.c:567
 msgid "Image Supplier ID"
 msgstr "Code beeldleverancier"
 
 # ? - pm
-#: plug-ins/metadata/metadata-editor.c:569
+#: plug-ins/metadata/metadata-editor.c:568
 msgid "Supplier's Image ID"
 msgstr "Beeldcode aanbieder"
 
-#: plug-ins/metadata/metadata-editor.c:570
+#: plug-ins/metadata/metadata-editor.c:569
 msgid "Registry Entry"
 msgstr "Registernummer"
 
-#: plug-ins/metadata/metadata-editor.c:572
+#: plug-ins/metadata/metadata-editor.c:571
 msgid "Max. Available Width"
 msgstr "Max. beschikbare breedte"
 
-#: plug-ins/metadata/metadata-editor.c:573
+#: plug-ins/metadata/metadata-editor.c:572
 msgid "Max. Available Height"
 msgstr "Max. beschikbare hoogte"
 
@@ -15812,53 +15732,53 @@ msgstr "Max. beschikbare hoogte"
 # -    Digitised from a negative on film – from bw or colour negatives
 # -    etc.
 # pm
-#: plug-ins/metadata/metadata-editor.c:574
+#: plug-ins/metadata/metadata-editor.c:573
 msgid "Digital Source Type"
 msgstr "Oorsprong digitale afbeelding"
 
-#: plug-ins/metadata/metadata-editor.c:576
+#: plug-ins/metadata/metadata-editor.c:575
 msgid "Image Creator"
 msgstr "Beeldproducent"
 
-#: plug-ins/metadata/metadata-editor.c:578
+#: plug-ins/metadata/metadata-editor.c:577
 msgid "Copyright Owner"
 msgstr "Auteursrechthebbende"
 
-#: plug-ins/metadata/metadata-editor.c:580
+#: plug-ins/metadata/metadata-editor.c:579
 msgid "Licensor"
 msgstr "Licentieverlener"
 
-#: plug-ins/metadata/metadata-editor.c:582
+#: plug-ins/metadata/metadata-editor.c:581
 msgid "Property Release Status"
 msgstr "Status publicatierecht"
 
-#: plug-ins/metadata/metadata-editor.c:583
+#: plug-ins/metadata/metadata-editor.c:582
 msgid "Property Release Identifier"
 msgstr "Nummer publicatierecht"
 
 # Niet 'Staat', in NL betekent dat een land, in de VS een staat, in Duitsland een deelstaat, in Fr. een département
 # pm
-#: plug-ins/metadata/metadata-editor.c:604
+#: plug-ins/metadata/metadata-editor.c:603
 msgid "Province / State"
 msgstr "Provincie / Deelstaat"
 
-#: plug-ins/metadata/metadata-editor.c:606
+#: plug-ins/metadata/metadata-editor.c:605
 msgid "Country ISO Code"
 msgstr "ISO Landcode"
 
-#: plug-ins/metadata/metadata-editor.c:619
+#: plug-ins/metadata/metadata-editor.c:618
 msgid "Code"
 msgstr "Code"
 
-#: plug-ins/metadata/metadata-editor.c:625
+#: plug-ins/metadata/metadata-editor.c:624
 msgid "Title"
 msgstr "Titel"
 
-#: plug-ins/metadata/metadata-editor.c:626
+#: plug-ins/metadata/metadata-editor.c:625
 msgid "Date Created"
 msgstr "Creatiedatum"
 
-#: plug-ins/metadata/metadata-editor.c:627
+#: plug-ins/metadata/metadata-editor.c:626
 msgid "Creator"
 msgstr "Maker"
 
@@ -15867,152 +15787,152 @@ msgstr "Maker"
 # Inventory number issued by the Source, for example an accession number.
 # Catalogusnummer?
 # pm
-#: plug-ins/metadata/metadata-editor.c:629
+#: plug-ins/metadata/metadata-editor.c:628
 msgid "Source Inventory ID"
 msgstr "Catalogusnummer"
 
-#: plug-ins/metadata/metadata-editor.c:642
+#: plug-ins/metadata/metadata-editor.c:641
 msgid "Organization Identifier"
 msgstr "Organisatienummer"
 
-#: plug-ins/metadata/metadata-editor.c:643
+#: plug-ins/metadata/metadata-editor.c:642
 msgid "Item Identifier"
 msgstr "Objectnummer"
 
-#: plug-ins/metadata/metadata-editor.c:650
-#: plug-ins/metadata/metadata-editor.c:657
-#: plug-ins/metadata/metadata-editor.c:664
-#: plug-ins/metadata/metadata-editor.c:676
+#: plug-ins/metadata/metadata-editor.c:649
+#: plug-ins/metadata/metadata-editor.c:656
+#: plug-ins/metadata/metadata-editor.c:663
+#: plug-ins/metadata/metadata-editor.c:675
 msgid "Identifier"
 msgstr "Nummer"
 
-#: plug-ins/metadata/metadata-editor.c:665
+#: plug-ins/metadata/metadata-editor.c:664
 msgid "Phone Number 1"
 msgstr "Tel.nr 1"
 
-#: plug-ins/metadata/metadata-editor.c:666
+#: plug-ins/metadata/metadata-editor.c:665
 msgid "Phone Type 1"
 msgstr "Soort tel. 1"
 
-#: plug-ins/metadata/metadata-editor.c:667
+#: plug-ins/metadata/metadata-editor.c:666
 msgid "Phone Number 2"
 msgstr "Tel.nr 2"
 
-#: plug-ins/metadata/metadata-editor.c:668
+#: plug-ins/metadata/metadata-editor.c:667
 msgid "Phone Type 2"
 msgstr "Soort tel. 2"
 
-#: plug-ins/metadata/metadata-editor.c:669
+#: plug-ins/metadata/metadata-editor.c:668
 msgid "Email Address"
 msgstr "Emailadres"
 
-#: plug-ins/metadata/metadata-editor.c:670
+#: plug-ins/metadata/metadata-editor.c:669
 msgid "Web Address"
 msgstr "Webadres"
 
-#: plug-ins/metadata/metadata-editor.c:683
+#: plug-ins/metadata/metadata-editor.c:682
 msgid "Category"
 msgstr "Categorie"
 
-#: plug-ins/metadata/metadata-editor.c:684
+#: plug-ins/metadata/metadata-editor.c:683
 msgid "Supplemental Category"
 msgstr "Extra categorie"
 
-#: plug-ins/metadata/metadata-editor.c:690
+#: plug-ins/metadata/metadata-editor.c:689
 msgid "Longitude"
 msgstr "Lengtegraad"
 
-#: plug-ins/metadata/metadata-editor.c:691
+#: plug-ins/metadata/metadata-editor.c:690
 msgid "Longitude Reference"
 msgstr "Referentie lengtegraad"
 
-#: plug-ins/metadata/metadata-editor.c:692
+#: plug-ins/metadata/metadata-editor.c:691
 msgid "Latitude"
 msgstr "Breedtegraad"
 
-#: plug-ins/metadata/metadata-editor.c:693
+#: plug-ins/metadata/metadata-editor.c:692
 msgid "Latitude Reference"
 msgstr "Referentie breedtegraad"
 
-#: plug-ins/metadata/metadata-editor.c:694
+#: plug-ins/metadata/metadata-editor.c:693
 msgid "Altitude"
 msgstr "Hoogte"
 
-#: plug-ins/metadata/metadata-editor.c:696
+#: plug-ins/metadata/metadata-editor.c:695
 msgid "Altitude Reference"
 msgstr "Referentiehoogte"
 
-#: plug-ins/metadata/metadata-editor.c:702
+#: plug-ins/metadata/metadata-editor.c:701
 msgid "Patient"
 msgstr "Patiënt"
 
-#: plug-ins/metadata/metadata-editor.c:703
+#: plug-ins/metadata/metadata-editor.c:702
 msgid "Patient ID"
 msgstr "Patiëntnummer"
 
-#: plug-ins/metadata/metadata-editor.c:704
+#: plug-ins/metadata/metadata-editor.c:703
 msgid "Date of Birth"
 msgstr "Geboortedatum"
 
-#: plug-ins/metadata/metadata-editor.c:706
+#: plug-ins/metadata/metadata-editor.c:705
 msgid "Patient Sex"
 msgstr "Geslacht patiënt"
 
-#: plug-ins/metadata/metadata-editor.c:708
+#: plug-ins/metadata/metadata-editor.c:707
 msgid "Study ID"
 msgstr "Studienummer"
 
-#: plug-ins/metadata/metadata-editor.c:709
+#: plug-ins/metadata/metadata-editor.c:708
 msgid "Referring Physician"
 msgstr "Behandelend arts"
 
-#: plug-ins/metadata/metadata-editor.c:710
+#: plug-ins/metadata/metadata-editor.c:709
 msgid "Study Date"
 msgstr "Studiedatum"
 
-#: plug-ins/metadata/metadata-editor.c:712
+#: plug-ins/metadata/metadata-editor.c:711
 msgid "Study Description"
 msgstr "Studiebeschrijving"
 
-#: plug-ins/metadata/metadata-editor.c:713
+#: plug-ins/metadata/metadata-editor.c:712
 msgid "Series Number"
 msgstr "Serienummer"
 
-#: plug-ins/metadata/metadata-editor.c:714
+#: plug-ins/metadata/metadata-editor.c:713
 msgid "Modality"
 msgstr "Modaliteit"
 
-#: plug-ins/metadata/metadata-editor.c:715
+#: plug-ins/metadata/metadata-editor.c:714
 msgid "Series Date"
 msgstr "Seriedatum"
 
-#: plug-ins/metadata/metadata-editor.c:717
+#: plug-ins/metadata/metadata-editor.c:716
 msgid "Series Description"
 msgstr "Seriebeschrijving"
 
 # Geen idee
 # pm
-#: plug-ins/metadata/metadata-editor.c:719
+#: plug-ins/metadata/metadata-editor.c:718
 msgid "Equipment Institution"
 msgstr "Fabrikant"
 
-#: plug-ins/metadata/metadata-editor.c:720
+#: plug-ins/metadata/metadata-editor.c:719
 msgid "Equipment Manufacturer"
 msgstr "Fabrikant"
 
-#: plug-ins/metadata/metadata-editor.c:760
+#: plug-ins/metadata/metadata-editor.c:759
 msgid "_Edit Metadata"
 msgstr "_Metagegevens bewerken"
 
-#: plug-ins/metadata/metadata-editor.c:764
+#: plug-ins/metadata/metadata-editor.c:763
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Metagegevens bewerken (IPTC, Exif, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:777
+#: plug-ins/metadata/metadata-editor.c:776
 msgid "Parent's window handle"
 msgstr "Handvat van omvattende venster"
 
-#: plug-ins/metadata/metadata-editor.c:778
+#: plug-ins/metadata/metadata-editor.c:777
 msgid ""
 "The opaque handle of the window to set this plug-in's dialog transient to"
 msgstr "Het dialoogvenster van deze plug-in instellen op de dekkende handgreep van dit venster"
@@ -16053,23 +15973,23 @@ msgstr "GPS"
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1383
-msgid "Import metadata"
-msgstr "Metagegevens importeren"
+#: plug-ins/metadata/metadata-editor.c:1375
+msgid "Import Metadata..."
+msgstr "Metagegevens importeren…"
 
-#: plug-ins/metadata/metadata-editor.c:1385
-msgid "Export metadata"
-msgstr "Metagegevens exporteren"
+#: plug-ins/metadata/metadata-editor.c:1381
+msgid "Export Metadata..."
+msgstr "Metagegevens exporteren…"
 
-#: plug-ins/metadata/metadata-editor.c:1692
+#: plug-ins/metadata/metadata-editor.c:1687
 msgid "Choose Date"
 msgstr "Kies datum"
 
-#: plug-ins/metadata/metadata-editor.c:1697
+#: plug-ins/metadata/metadata-editor.c:1692
 msgid "Set Date"
 msgstr "Datum instellen"
 
-#: plug-ins/metadata/metadata-editor.c:2434
+#: plug-ins/metadata/metadata-editor.c:2429
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -16082,7 +16002,7 @@ msgstr "Voer hier GPS-waarde in of bewerk die.\n"
 "10deg 15' 20\", of 10° 15' 20\", of 10:15:20.45, of 10 15 20, of 10 15.30, of 10.45\n"
 "Wis alle tekst om de huidige waarde te verwijderen."
 
-#: plug-ins/metadata/metadata-editor.c:2440
+#: plug-ins/metadata/metadata-editor.c:2435
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16098,24 +16018,24 @@ msgstr "Voer hier GPS-waarde vor de hoogte in of bewerk die.\n"
 
 # Komt achter tekst "Waardering"
 # pm
-#: plug-ins/metadata/metadata-editor.c:2574
+#: plug-ins/metadata/metadata-editor.c:2569
 msgid "Unrated"
 msgstr "Geen"
 
-#: plug-ins/metadata/metadata-editor.c:4684
+#: plug-ins/metadata/metadata-editor.c:4679
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Kon metagegevens-tag niet instellen %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5585
+#: plug-ins/metadata/metadata-editor.c:5580
 msgid "Import Metadata File"
 msgstr "Metagegevens bestand importeren"
 
-#: plug-ins/metadata/metadata-editor.c:5588
+#: plug-ins/metadata/metadata-editor.c:5583
 msgid "_Import"
 msgstr "_Importeren"
 
-#: plug-ins/metadata/metadata-editor.c:5620
+#: plug-ins/metadata/metadata-editor.c:5615
 msgid "Export Metadata File"
 msgstr "Metagegevensbestand exporteren"
 
@@ -16893,6 +16813,67 @@ msgstr "Scannen niet mogelijk omdat er geen TWAIN driver is gevonden"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Gegevens van scanner / camera worden overgebracht"
+
+#~ msgid "From _Webpage..."
+#~ msgstr "Van _webpagina…"
+
+#~ msgid "Create an image of a webpage"
+#~ msgstr "Afbeelding van webpagina maken"
+
+#~ msgid "Enter location (_URI)"
+#~ msgstr "Geef locatie op (URI)"
+
+#~ msgid "URL of the webpage to screenshot"
+#~ msgstr "URL van de af te beelden pagina"
+
+#~ msgid "_Width (pixels)"
+#~ msgstr "_Breedte (beeldpunten)"
+
+#~ msgid "The width of the screenshot (in pixels)"
+#~ msgstr "De breedte van de schermafdruk (in beeldpunten)"
+
+#~ msgid "_Font size"
+#~ msgstr "_Lettergrootte"
+
+#~ msgid "The font size to use in the page (in pt)"
+#~ msgstr "De grootte van de letters van de schermafdruk (in pt)"
+
+#~ msgid "Create from webpage"
+#~ msgstr "Maken van webpagina"
+
+#~ msgid "Cre_ate"
+#~ msgstr "M_aken"
+
+#~ msgid "Huge"
+#~ msgstr "Reusachtig"
+
+#~ msgid "Large"
+#~ msgstr "Groot"
+
+#~ msgctxt "web-page"
+#~ msgid "Default"
+#~ msgstr "Standaard"
+
+#~ msgid "Small"
+#~ msgstr "Klein"
+
+#~ msgid "Tiny"
+#~ msgstr "Minuscuul"
+
+#~ msgid "Webpage"
+#~ msgstr "Webpagina"
+
+#, c-format
+#~ msgid "No URL was specified"
+#~ msgstr "Geen URL opgegeven"
+
+#, c-format
+#~ msgid "Downloading webpage '%s'"
+#~ msgstr "Downloaden van webpagina ‘%s’"
+
+#, c-format
+#~ msgid "Transferring webpage image for '%s'"
+#~ msgstr "Downloaden webpagina-afbeelding voor ‘%s’"
 
 #~ msgid "G-Qbist"
 #~ msgstr "G-Qbist"
