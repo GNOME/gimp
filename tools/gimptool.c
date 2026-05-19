@@ -51,6 +51,7 @@ static const gchar *cli_prefix;
 static const gchar *cli_exec_prefix;
 
 static gboolean     msvc_syntax = FALSE;
+static gboolean     is_gegl_op  = FALSE;
 static const gchar *env_cc;
 static const gchar *env_cflags;
 static const gchar *env_ldflags;
@@ -333,9 +334,9 @@ General options:\n\
                           don't actually run any commands; just print them\n\
 Developer options:\n\
   --cflags                print the compiler flags that are necessary to\n\
-                          compile a plug-in\n\
+                          compile a plug-in or filter\n\
   --libs                  print the linker flags that are necessary to link a\n\
-                          plug-in\n\
+                          plug-in or filter\n\
   --prefix=PREFIX         use PREFIX instead of the installation prefix that\n\
                           GIMP was built when computing the output for --cflags\n\
                           and --libs\n\
@@ -350,10 +351,10 @@ Installation directory options:\n\
   --gimpplugindir --gimpdatadir\n\
 \n\
 The --cflags and --libs options can be appended with -noui to get appropriate\n\
-settings for plug-ins which do not use GTK+.\n\
+settings for plug-ins which do not use GTK+. For GEGL filters, append -geglop.\n\
 \n\
 User options:\n\
-  --build plug-in.c               build a plug-in from a source file\n\
+  --build plug-in-or-filter.c     build a plug-in or filter from a source file\n\
   --install plug-in.c             same as --build, but installs the built\n\
                                   plug-in as well\n\
   --install-bin plug-in           install a compiled plug-in\n\
@@ -369,7 +370,7 @@ user directory.\n\
 \n\
 For plug-ins which do not use GTK+, the --build and --install options can be\n\
 appended with -noui for appropriate settings. For plug-ins that use GTK+ but\n\
-not libgimpui, append -nogimpui.\n");
+not libgimpui, append -nogimpui. For building GEGL filters, append -geglop.\n");
   exit (exit_status);
 }
 
@@ -434,6 +435,24 @@ do_cflags_nogimpui (void)
 }
 
 static gchar *
+get_cflags_geglop (void)
+{
+  gchar *pkg_flags = pkg_config ("--cflags gegl-0.4");
+  gchar *cflags = g_strconcat (pkg_flags, " -I.", NULL);
+  g_free (pkg_flags);
+  return cflags;
+}
+
+static void
+do_cflags_geglop (void)
+{
+  gchar *cflags = get_cflags_geglop ();
+
+  g_print ("%s\n", cflags);
+  g_free (cflags);
+}
+
+static gchar *
 get_libs (void)
 {
   return pkg_config ("--libs gimpui-" GIMP_PKGCONFIG_VERSION);
@@ -473,6 +492,21 @@ static void
 do_libs_nogimpui (void)
 {
   gchar *libs = get_libs_nogimpui ();
+
+  g_print ("%s\n", libs);
+  g_free (libs);
+}
+
+static gchar *
+get_libs_geglop (void)
+{
+  return pkg_config ("--libs gegl-0.4");
+}
+
+static void
+do_libs_geglop (void)
+{
+  gchar *libs = get_libs_geglop ();
 
   g_print ("%s\n", libs);
   g_free (libs);
@@ -594,7 +628,16 @@ do_build_2 (const gchar *cflags,
                             S_IROTH | S_IXOTH);
     }
 
-  tmp = g_strconcat (dest_dir, q, NULL);
+  if (! is_gegl_op)
+    tmp = g_strconcat (dest_dir, q, NULL);
+  else
+#if defined(__APPLE__)
+    tmp = g_strconcat (dest_dir, q, ".dylib", NULL);
+#elif defined(G_OS_WIN32)
+    tmp = g_strconcat (dest_dir, q, ".dll", NULL);
+#else
+    tmp = g_strconcat (dest_dir, q, ".so", NULL);
+#endif
   g_free (dest_dir);
 
   dest_exe = g_shell_quote (tmp);
@@ -604,14 +647,23 @@ do_build_2 (const gchar *cflags,
     {
       output_flag = "-Fe";
       here_comes_linker_flags = " -link";
-      windows_subsystem_flag = " -subsystem:windows";
+      if (! is_gegl_op)
+        windows_subsystem_flag = " -subsystem:windows";
+      else
+        windows_subsystem_flag = " -dll";
     }
   else
     {
       output_flag = "-o ";
-#ifdef G_OS_WIN32
-      windows_subsystem_flag = " -mwindows";
+#ifndef G_OS_WIN32
+      if (is_gegl_op)
+        here_comes_linker_flags = " -fpic";
+#else
+      if (! is_gegl_op)
+        windows_subsystem_flag = " -mwindows";
+      else
 #endif
+        windows_subsystem_flag = " -shared";
     }
 
   cmd = g_strdup_printf ("%s %s%s %s %s%s %s%s %s%s %s %s",
@@ -662,6 +714,19 @@ static void
 do_build_nogimpui (const gchar *what)
 {
   do_build (what);
+}
+
+static void
+do_build_geglop (const gchar *what)
+{
+  gchar *cflags = get_cflags_geglop ();
+  gchar *libs   = get_libs_geglop ();
+
+  is_gegl_op = TRUE;
+  do_build_2 (cflags, libs, NULL, what);
+
+  g_free (cflags);
+  g_free (libs);
 }
 
 static gchar *
@@ -1097,12 +1162,16 @@ main (int    argc,
         do_cflags_noui ();
       else if (strcmp (argv[argi], "--cflags-nogimpui") == 0)
         do_cflags_nogimpui ();
+      else if (strcmp (argv[argi], "--cflags-geglop") == 0)
+        do_cflags_geglop ();
       else if (strcmp (argv[argi], "--libs") == 0)
         do_libs ();
       else if (strcmp (argv[argi], "--libs-noui") == 0)
         do_libs_noui ();
       else if (strcmp (argv[argi], "--libs-nogimpui") == 0)
         do_libs_nogimpui ();
+      else if (strcmp (argv[argi], "--libs-geglop") == 0)
+        do_libs_geglop ();
       else if (g_str_has_prefix (argv[argi], "--prefix="))
         ;
       else if (g_str_has_prefix (argv[argi], "--exec-prefix="))
@@ -1115,6 +1184,8 @@ main (int    argc,
         do_build_noui (argv[++argi]);
       else if (strcmp (argv[argi], "--build-nogimpui") == 0)
         do_build_nogimpui (argv[++argi]);
+      else if (strcmp (argv[argi], "--build-geglop") == 0)
+        do_build_geglop (argv[++argi]);
       else if (strcmp (argv[argi], "--install") == 0)
         do_install (argv[++argi]);
       else if (strcmp (argv[argi], "--install-noui") == 0)
