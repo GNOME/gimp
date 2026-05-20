@@ -299,7 +299,7 @@ gimp-debian-nonreloc:
     - *ENVIRON
     # Check building
     - printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
-    - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
+    - meson setup -Db_lto=true -Dbuildtype=debug _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
                                    -Dfile-plug-ins-test=true
                                    $MESON_OPTIONS $WARN_AS_ERROR_ON_CI
     - cd _build-${RUNNER}
