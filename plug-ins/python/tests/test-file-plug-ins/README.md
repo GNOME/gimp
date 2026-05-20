@@ -165,29 +165,14 @@ You should grep for `Total number of regressions: 0`.
 
 ### File import plug-ins being tested
 
-At this moment the following file import plug-ins have
-tests available:
-- file-bmp
-- file-dcx
-- file-dds
-- file-fits
-- file-gif
-- file-jpeg
-- file-pcx
-- file-png
-- file-pnm
-- file-psb
-- file-psd
-- file-psd-load-merged
-- file-psp
-- file-sgi
-- file-tga
-- file-tiff
+Most, but not all, file import plug-ins have tests available, but not all
+formats have full coverage.
 
 
 ## Future enhancements
 
-- Add tests for all our image loading plug-ins.
+- Add tests for all our image loading plug-ins and improve test coverage for
+  other formats.
 - Test if loaded images are loaded correctly, i.e.
   do they look like they should.
 - Fuzzing of images before loading to test our handling of corrupt images.
