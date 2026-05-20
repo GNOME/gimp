@@ -44,6 +44,7 @@
 #include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimpfilloptions.h"
+#include "core/gimpgradient.h"
 #include "core/gimpgrid.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
@@ -154,6 +155,9 @@ static gboolean xcf_save_effect        (XcfInfo           *info,
                                         GError           **error);
 static gboolean xcf_save_color         (XcfInfo           *info,
                                         GeglColor         *color,
+                                        GError           **error);
+static gboolean xcf_save_gradient      (XcfInfo           *info,
+                                        GimpGradient      *gradient,
                                         GError           **error);
 static gboolean xcf_save_fill_options  (XcfInfo           *info,
                                         GimpFillOptions   *fill_options,
@@ -935,7 +939,15 @@ xcf_save_effect_props (XcfInfo      *info,
             break;
 
           default:
-            if (g_type_is_a (G_VALUE_TYPE (&value), GIMP_TYPE_CONFIG))
+            if (g_type_is_a (G_VALUE_TYPE (&value), GIMP_TYPE_CONTEXT))
+              {
+                /* No need to save the context - we'll set it on load */
+              }
+            else if (g_type_is_a (G_VALUE_TYPE (&value), GIMP_TYPE_GRADIENT))
+              {
+                filter_type = FILTER_PROP_GRADIENT;
+              }
+            else if (g_type_is_a (G_VALUE_TYPE (&value), GIMP_TYPE_CONFIG))
               {
                 filter_type = FILTER_PROP_CONFIG;
               }
@@ -1975,6 +1987,15 @@ xcf_save_prop (XcfInfo    *info,
               }
               break;
 
+            case FILTER_PROP_GRADIENT:
+              {
+                GimpGradient *gradient = g_value_get_object (&filter_value);
+
+                xcf_check_error (xcf_save_gradient (info, gradient, error),
+                                 va_end (args));
+              }
+              break;
+
             case FILTER_PROP_CONFIG:
               {
                 GimpConfig *config = g_value_get_object (&filter_value);
@@ -2349,6 +2370,63 @@ xcf_save_color (XcfInfo    *info,
       guint32 uint_val = 0;
 
       xcf_write_int32_check_error (info, &uint_val, 1, ;);
+    }
+
+  return TRUE;
+}
+
+static gboolean
+xcf_save_gradient (XcfInfo       *info,
+                   GimpGradient  *gradient,
+                   GError       **error)
+{
+  GError *tmp_error = NULL;
+
+  if (gradient)
+    {
+      guint32              version  = 1;
+      const gchar         *name;
+      GimpGradientSegment *seg;
+      guint32              num_segments;
+
+      name         = gimp_object_get_name (GIMP_OBJECT (gradient));
+      num_segments = 0;
+      seg          = gradient->segments;
+
+      while (seg)
+        {
+          num_segments++;
+          seg = seg->next;
+        }
+
+      xcf_write_int32_check_error (info, &version, 1, ;);
+      xcf_write_string_check_error (info, (gchar **) &name, 1, ;);
+      xcf_write_int32_check_error (info, &num_segments, 1, ;);
+
+      for (seg = gradient->segments; seg; seg = seg->next)
+        {
+          gfloat  left             = seg->left;
+          gfloat  middle           = seg->middle;
+          gfloat  right            = seg->right;
+          guint32 type             = seg->type;
+          guint32 color            = seg->color;
+          guint32 left_color_type  = seg->left_color_type;
+          guint32 right_color_type = seg->right_color_type;
+
+          xcf_write_float_check_error (info, &left, 1, ;);
+          xcf_write_float_check_error (info, &middle, 1, ;);
+          xcf_write_float_check_error (info, &right, 1, ;);
+
+          xcf_check_error (xcf_save_color (info, seg->left_color, error), ;);
+
+          xcf_check_error (xcf_save_color (info, seg->right_color, error), ;);
+
+          xcf_write_int32_check_error (info, &type, 1, ;);
+          xcf_write_int32_check_error (info, &color, 1, ;);
+
+          xcf_write_int32_check_error (info, &left_color_type, 1, ;);
+          xcf_write_int32_check_error (info, &right_color_type, 1, ;);
+        }
     }
 
   return TRUE;

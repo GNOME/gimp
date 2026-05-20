@@ -31,6 +31,7 @@
 
 #include "operations-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpgradient.h"
 
 #include "gimpoperationgradient.h"
@@ -208,7 +209,7 @@ gimp_operation_gradient_class_init (GimpOperationGradientClass *klass)
                                    g_param_spec_object ("context",
                                                         "Context",
                                                         "A GimpContext",
-                                                        GIMP_TYPE_OBJECT,
+                                                        GIMP_TYPE_CONTEXT,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -216,7 +217,7 @@ gimp_operation_gradient_class_init (GimpOperationGradientClass *klass)
                                    g_param_spec_object ("gradient",
                                                         "Gradient",
                                                         "A GimpGradient to render",
-                                                        GIMP_TYPE_OBJECT,
+                                                        GIMP_TYPE_GRADIENT,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 

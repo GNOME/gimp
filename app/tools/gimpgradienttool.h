@@ -60,6 +60,8 @@ struct _GimpGradientTool
   GeglBuffer         *dist_buffer;
   GimpDrawableFilter *filter;
 
+  GimpDrawableFilter *existing_filter;
+
   /*  editor  */
 
   gint                block_handlers_count;
@@ -101,6 +103,10 @@ void    gimp_gradient_tool_register               (GimpToolRegisterCallback  cal
 
 GType   gimp_gradient_tool_get_type               (void) G_GNUC_CONST;
 
+void    gimp_gradient_tool_set_existing_filter    (GimpGradientTool         *gradient_tool,
+                                                   GimpDisplay              *display,
+                                                   gint                      drawable_id,
+                                                   gint                      filter_index);
 
 /*  protected functions  */
 

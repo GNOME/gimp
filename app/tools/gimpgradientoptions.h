@@ -50,8 +50,11 @@ struct _GimpGradientOptions
   gboolean           instant;
   gboolean           modify_active;
 
+  gboolean           editable_gradient;
+
   /*  options gui  */
   GtkWidget         *instant_toggle;
+  GtkWidget         *editable_gradient_toggle;
   GtkWidget         *modify_active_frame;
   GtkWidget         *modify_active_hint;
 };

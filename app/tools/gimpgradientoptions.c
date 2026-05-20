@@ -51,7 +51,8 @@ enum
   PROP_SUPERSAMPLE_THRESHOLD,
   PROP_DITHER,
   PROP_INSTANT,
-  PROP_MODIFY_ACTIVE
+  PROP_MODIFY_ACTIVE,
+  PROP_EDITABLE_GRADIENT
 };
 
 
@@ -144,6 +145,14 @@ gimp_gradient_options_class_init (GimpGradientOptionsClass *klass)
                             _("Modify the active gradient in-place"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EDITABLE_GRADIENT,
+                            "editable-gradient",
+                            _("Editable gradient"),
+                            _("Adds the gradient to the filters on the "
+                              "active layer"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -192,6 +201,10 @@ gimp_gradient_options_set_property (GObject      *object,
       options->modify_active = g_value_get_boolean (value);
       break;
 
+    case PROP_EDITABLE_GRADIENT:
+      options->editable_gradient = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -237,6 +250,10 @@ gimp_gradient_options_get_property (GObject    *object,
       break;
     case PROP_MODIFY_ACTIVE:
       g_value_set_boolean (value, options->modify_active);
+      break;
+
+    case PROP_EDITABLE_GRADIENT:
+      g_value_set_boolean (value, options->editable_gradient);
       break;
 
     default:
@@ -337,6 +354,11 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "supersample-threshold",
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+
+  /* NDE filter toggle */
+  button = gimp_prop_check_button_new (config, "editable-gradient", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  options->editable_gradient_toggle = button;
 
   /* the instant toggle */
   str = g_strdup_printf (_("Instant mode  (%s)"),
