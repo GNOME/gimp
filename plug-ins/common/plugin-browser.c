@@ -274,7 +274,7 @@ find_existing_mpath (GtkTreeModel *model,
 
 static void
 get_parent (PluginBrowser *browser,
-            const gchar   *mpath,
+            gchar         *mpath,
             GtkTreeIter   *parent)
 {
   GtkTreeIter   last_parent;
@@ -331,7 +331,7 @@ insert_into_tree_view (PluginBrowser *browser,
                        const gchar   *name,
                        gint64         xtime,
                        const gchar   *xtimestr,
-                       const gchar   *menu_path,
+                       gchar         *menu_path,
                        const gchar   *types_str,
                        PInfo         *pinfo)
 {
@@ -432,7 +432,7 @@ browser_search (GimpBrowser   *gimp_browser,
           gchar         *menu_label;
           gchar         *tmp;
           GList         *menu_paths;
-          const gchar   *menu_path;
+          gchar         *menu_path;
           gchar          xtimestr[50];
           struct tm     *x;
           time_t         tx;
@@ -445,7 +445,7 @@ browser_search (GimpBrowser   *gimp_browser,
           menu_label = g_strdup (gimp_procedure_get_menu_label (procedure));
           menu_paths = gimp_procedure_get_menu_paths (procedure);
 
-          menu_path = menu_paths->data;
+          menu_path = g_strdup (menu_paths->data);
 
           /* Strip off trailing ellipsis */
           tmp = strstr (menu_label, "...");
@@ -519,6 +519,7 @@ browser_search (GimpBrowser   *gimp_browser,
                                  pinfo);
 
           g_free (menu_label);
+          g_free (menu_path);
         }
 
       gtk_tree_view_columns_autosize (GTK_TREE_VIEW (browser->list_view));

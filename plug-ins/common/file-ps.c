@@ -3727,24 +3727,26 @@ print (GOutputStream  *output,
 static gint32
 count_ps_pages (GFile *file)
 {
-  FILE   *psfile;
-  gchar  *extension;
-  gchar   buf[1024];
-  gint32  num_pages      = 0;
-  gint32  showpage_count = 0;
+  FILE        *psfile;
+  const gchar *extension;
+  gchar        buf[1024];
+  gint32       num_pages      = 0;
+  gint32       showpage_count = 0;
 
   extension = strrchr (g_file_peek_path (file), '.');
   if (extension)
     {
-      extension = g_ascii_strdown (extension + 1, -1);
+      gchar *ext_lower;
 
-      if (strcmp (extension, "eps") == 0)
+      ext_lower = g_ascii_strdown (extension + 1, -1);
+
+      if (strcmp (ext_lower, "eps") == 0)
         {
-          g_free (extension);
+          g_free (ext_lower);
           return 1;
         }
 
-      g_free (extension);
+      g_free (ext_lower);
     }
 
   psfile = g_fopen (g_file_peek_path (file), "r");

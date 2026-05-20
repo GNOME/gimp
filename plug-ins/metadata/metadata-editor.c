@@ -145,7 +145,7 @@ static void metadata_dialog_editor_set_metadata  (GExiv2Metadata      *metadata,
 static void gpsaltsys_combo_callback            (GtkComboBoxText      *combo,
                                                  gpointer              data);
 
-static void remove_substring                    (const gchar          *string,
+static void remove_substring                    (gchar                *string,
                                                  const gchar          *substring);
 
 static gchar * clean_xmp_string                 (const gchar          *value);
@@ -1404,7 +1404,7 @@ metadata_editor_dialog (GimpImage            *image,
  * ============================================================================
  */
 static void
-remove_substring (const gchar *string,
+remove_substring (gchar       *string,
                   const gchar *substring)
 {
   if (string != NULL && substring != NULL && substring[0] != '\0')
