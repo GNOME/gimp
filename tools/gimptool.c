@@ -351,7 +351,7 @@ Installation directory options:\n\
   --gimpplugindir --gimpdatadir\n\
 \n\
 The --cflags and --libs options can be appended with -noui to get appropriate\n\
-settings for plug-ins which do not use GTK+. For GEGL filters, append -geglop.\n\
+settings for plug-ins which do not use GTK. For GEGL filters, append -geglop.\n\
 \n\
 User options:\n\
   --build plug-in-or-filter.c     build a plug-in or filter from a source file\n\
@@ -368,8 +368,8 @@ prefix --install-admin instead of --install) that can be used instead to\n\
 install/uninstall a plug-in or script in the machine directory instead of a\n\
 user directory.\n\
 \n\
-For plug-ins which do not use GTK+, the --build and --install options can be\n\
-appended with -noui for appropriate settings. For plug-ins that use GTK+ but\n\
+For plug-ins which do not use GTK, the --build and --install options can be\n\
+appended with -noui for appropriate settings. For plug-ins that use GTK but\n\
 not libgimpui, append -nogimpui. For building GEGL filters, append -geglop.\n");
   exit (exit_status);
 }
