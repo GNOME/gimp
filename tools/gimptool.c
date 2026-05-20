@@ -661,8 +661,8 @@ do_build_2 (const gchar *cflags,
 #else
       if (! is_gegl_op)
         windows_subsystem_flag = " -mwindows";
-      else
 #endif
+      if (is_gegl_op)
         windows_subsystem_flag = " -shared";
     }
 
