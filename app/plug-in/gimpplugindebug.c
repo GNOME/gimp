@@ -50,7 +50,7 @@ gimp_plug_in_debug_new (void)
 {
   GimpPlugInDebug  *debug;
   const gchar      *wrap, *wrapper;
-  gchar            *debug_string;
+  const gchar      *debug_string;
   gchar           **args;
   GError           *error = NULL;
 

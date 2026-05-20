@@ -671,8 +671,8 @@ gimp_ui_manager_find_action (GimpUIManager *manager,
     }
   else
     {
-      GList *list;
-      gchar *dot;
+      GList       *list;
+      const gchar *dot;
 
       dot = strstr (action_name, ".");
 

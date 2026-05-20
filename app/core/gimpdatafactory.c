@@ -469,7 +469,7 @@ gimp_data_factory_real_data_duplicate (GimpDataFactory *factory,
   if (new_data)
     {
       const gchar *name = gimp_object_get_name (data);
-      gchar       *ext;
+      const gchar *ext;
       gint         copy_len;
       gint         number;
       gchar       *new_name;

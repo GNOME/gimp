@@ -555,8 +555,8 @@ gimp_text_layout_split_markup (const gchar  *markup,
                                gchar       **content,
                                gchar       **close_tag)
 {
-  gchar *p_open;
-  gchar *p_close;
+  const gchar *p_open;
+  gchar       *p_close;
 
   p_open = strstr (markup, "<markup>");
   if (! p_open)

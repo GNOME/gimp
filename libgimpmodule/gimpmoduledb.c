@@ -200,7 +200,7 @@ is_in_inhibit_list (GFile       *file,
                     const gchar *inhibit_list)
 {
   gchar       *filename;
-  gchar       *p;
+  const gchar *p;
   gint         pathlen;
   const gchar *start;
   const gchar *end;

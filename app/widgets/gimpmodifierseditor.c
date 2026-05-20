@@ -490,7 +490,7 @@ gimp_modifiers_editor_add_mapping (GimpModifiersEditor *editor,
 
   if (action_desc)
     {
-      gchar *action_name = strchr (action_desc, '/');
+      const gchar *action_name = strchr (action_desc, '/');
 
       if (action_name)
         action_name++;

@@ -749,7 +749,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
   GimpProcedure *procedure;
   gchar         *basename = NULL;
   const gchar   *required = NULL;
-  gchar         *p;
+  const gchar   *p;
   gchar         *mapped_path;
   gboolean       valid_utf8;
 
@@ -919,9 +919,10 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
   if (required)
     {
       gchar *prefix = g_strdup (menu_path);
+      gchar *c;
 
-      p = strchr (prefix, '>') + 1;
-      *p = '\0';
+      c = strchr (prefix, '>') + 1;
+      *c = '\0';
 
       basename = g_path_get_basename (gimp_file_get_utf8_name (proc->file));
 

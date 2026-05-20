@@ -1288,7 +1288,7 @@ gimp_menu_model_ui_removed (GimpUIManager *manager,
                                               G_MENU_ATTRIBUTE_ACTION,
                                               "&s", &cur_action_name))
             {
-              gchar *dot = strstr (cur_action_name, ".");
+              const gchar *dot = strstr (cur_action_name, ".");
 
               g_return_val_if_fail (dot, FALSE);
 
