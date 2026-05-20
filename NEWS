@@ -31,6 +31,7 @@ Graphical User Interface:
   * New "branding" colors added in AppStream metadata.
   * macOS: title bar follows scheme. This is true for native file
     dialogs on macOS as well.
+  * Levels tool now listens to the icon size setting.
 
 Plug-Ins:
 
@@ -55,6 +56,10 @@ Plug-Ins:
     - Invert
     - Threshold
     - Posterize
+  * Web-Page plug-in removed (after 1-year soft-removal through
+    deprecation in the 3.0 series and no complains so far).
+  * Metadata Editor: replace metadata import/export dropdown with
+    buttons.
 
 API:
 
@@ -71,10 +76,22 @@ API:
     - New functions:
       + gimp_procedure_set_help_uri
       + gimp_procedure_get_help_file
+  * libgimpui:
+    - GimpProcedureDialog will now use the icon set on the associated
+      GimpProcedure (likely only visible on platforms showing window
+      icons).
+
+Utilities:
+
+  * gimptool can now compile GEGL operations.
 
 Build:
 
   * Our baseline for dependencies is now Debian Trixie.
   * New analysis job running Tartan, a static analysis tool developed
     specifically for GLib-based projects
-  * macOS notarization now works from our Gitlab CI!
+  * macOS:
+    - notarization now works from our Gitlab CI!
+    - go back to macOS Tahoe on Homebrew builds
+  * Minimum Windows version for MSIX is now 10.0.20348.0 to comply with
+    a requirement from MS about fileSystemWriteVirtualization.
