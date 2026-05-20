@@ -2288,8 +2288,8 @@ _gimp_procedure_run_array (GimpProcedure  *procedure,
  * This function _must_ be called from every procedure's [callback@RunFunc]
  * that was created as [enum@Gimp.PDBProcType.PERSISTENT].
  *
- * Subsequently, extensions can process temporary procedure run
- * requests using either [method@PlugIn.persistent_enable] or
+ * Subsequently, persistent procedures can process temporary procedure
+ * run requests using either [method@PlugIn.persistent_enable] or
  * [method@PlugIn.persistent_process].
  *
  * See also: [ctor@Procedure.new].
@@ -2310,8 +2310,8 @@ gimp_procedure_persistent_ready (GimpProcedure *procedure)
 
   plug_in = gimp_procedure_get_plug_in (procedure);
 
-  if (! gp_extension_ack_write (_gimp_plug_in_get_write_channel (plug_in),
-                                plug_in))
+  if (! gp_persistent_ack_write (_gimp_plug_in_get_write_channel (plug_in),
+                                 plug_in))
     _gimp_quit ();
 }
 

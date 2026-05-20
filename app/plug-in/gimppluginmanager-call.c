@@ -309,7 +309,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
           g_main_loop_run (plug_in->ext_main_loop);
 
-          /*  main_loop is quit in gimp_plug_in_handle_extension_ack()  */
+          /*  main_loop is quit in gimp_plug_in_handle_persistent_ack()  */
 
           g_clear_pointer (&plug_in->ext_main_loop, g_main_loop_unref);
         }

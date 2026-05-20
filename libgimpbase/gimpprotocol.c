@@ -28,6 +28,7 @@
 #include "gimpparamspecs.h"
 #include "gimpparasite.h"
 #include "gimpprotocol.h"
+#include "gimpversion-private.h"
 #include "gimpwire.h"
 
 
@@ -119,13 +120,13 @@ static void _gp_proc_uninstall_write     (GIOChannel       *channel,
                                           gpointer          user_data);
 static void _gp_proc_uninstall_destroy   (GimpWireMessage  *msg);
 
-static void _gp_extension_ack_read       (GIOChannel       *channel,
+static void _gp_persistent_ack_read      (GIOChannel       *channel,
                                           GimpWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_extension_ack_write      (GIOChannel       *channel,
+static void _gp_persistent_ack_write     (GIOChannel       *channel,
                                           GimpWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_extension_ack_destroy    (GimpWireMessage  *msg);
+static void _gp_persistent_ack_destroy   (GimpWireMessage  *msg);
 
 static void _gp_params_read              (GIOChannel       *channel,
                                           GPParam         **params,
@@ -196,10 +197,10 @@ gp_init (void)
                       _gp_proc_uninstall_read,
                       _gp_proc_uninstall_write,
                       _gp_proc_uninstall_destroy);
-  gimp_wire_register (GP_EXTENSION_ACK,
-                      _gp_extension_ack_read,
-                      _gp_extension_ack_write,
-                      _gp_extension_ack_destroy);
+  gimp_wire_register (GP_PERSISTENT_ACK,
+                      _gp_persistent_ack_read,
+                      _gp_persistent_ack_write,
+                      _gp_persistent_ack_destroy);
   gimp_wire_register (GP_HAS_INIT,
                       _gp_has_init_read,
                       _gp_has_init_write,
@@ -419,9 +420,16 @@ gboolean
 gp_extension_ack_write (GIOChannel *channel,
                         gpointer    user_data)
 {
+  return gp_persistent_ack_write (channel, user_data);
+}
+
+gboolean
+gp_persistent_ack_write (GIOChannel *channel,
+                         gpointer    user_data)
+{
   GimpWireMessage msg;
 
-  msg.type = GP_EXTENSION_ACK;
+  msg.type = GP_PERSISTENT_ACK;
   msg.data = NULL;
 
   if (! gimp_wire_write_msg (channel, &msg, user_data))
@@ -1834,24 +1842,33 @@ _gp_proc_uninstall_destroy (GimpWireMessage *msg)
     }
 }
 
-/*  extension_ack  */
+/*  persistent_ack  */
+
+/* What used to be called extensions are now called persistent plug-ins
+ * and we will use the wording "extensions" to name the new packaging
+ * format able to contain plug-ins (including persistent ones), but also
+ * other types of resources.
+ * TODO: API using the old (confusing) wording will have to be deleted
+ * for GIMP 4.
+ */
+GIMP_WARNING_API_BREAK("Delete deprecated GP_EXTENSION_ACK")
 
 static void
-_gp_extension_ack_read (GIOChannel      *channel,
-                        GimpWireMessage *msg,
-                        gpointer         user_data)
-{
-}
-
-static void
-_gp_extension_ack_write (GIOChannel      *channel,
+_gp_persistent_ack_read (GIOChannel      *channel,
                          GimpWireMessage *msg,
                          gpointer         user_data)
 {
 }
 
 static void
-_gp_extension_ack_destroy (GimpWireMessage *msg)
+_gp_persistent_ack_write (GIOChannel      *channel,
+                          GimpWireMessage *msg,
+                          gpointer         user_data)
+{
+}
+
+static void
+_gp_persistent_ack_destroy (GimpWireMessage *msg)
 {
 }
 

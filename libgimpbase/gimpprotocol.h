@@ -43,6 +43,7 @@ enum
   GP_PROC_INSTALL,
   GP_PROC_UNINSTALL,
   GP_EXTENSION_ACK,
+  GP_PERSISTENT_ACK = GP_EXTENSION_ACK,
   GP_HAS_INIT
 };
 
@@ -436,7 +437,10 @@ gboolean  gp_proc_install_write     (GIOChannel      *channel,
 gboolean  gp_proc_uninstall_write   (GIOChannel      *channel,
                                      GPProcUninstall *proc_uninstall,
                                      gpointer         user_data);
+GIMP_DEPRECATED_FOR(gp_persistent_ack_write)
 gboolean  gp_extension_ack_write    (GIOChannel      *channel,
+                                     gpointer         user_data);
+gboolean  gp_persistent_ack_write    (GIOChannel      *channel,
                                      gpointer         user_data);
 gboolean  gp_has_init_write         (GIOChannel      *channel,
                                      gpointer         user_data);

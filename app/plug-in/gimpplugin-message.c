@@ -73,7 +73,7 @@ static void gimp_plug_in_handle_proc_install     (GimpPlugIn      *plug_in,
                                                   GPProcInstall   *proc_install);
 static void gimp_plug_in_handle_proc_uninstall   (GimpPlugIn      *plug_in,
                                                   GPProcUninstall *proc_uninstall);
-static void gimp_plug_in_handle_extension_ack    (GimpPlugIn      *plug_in);
+static void gimp_plug_in_handle_persistent_ack   (GimpPlugIn      *plug_in);
 static void gimp_plug_in_handle_has_init         (GimpPlugIn      *plug_in);
 
 
@@ -153,8 +153,8 @@ gimp_plug_in_handle_message (GimpPlugIn      *plug_in,
       gimp_plug_in_handle_proc_uninstall (plug_in, msg->data);
       break;
 
-    case GP_EXTENSION_ACK:
-      gimp_plug_in_handle_extension_ack (plug_in);
+    case GP_PERSISTENT_ACK:
+      gimp_plug_in_handle_persistent_ack (plug_in);
       break;
 
     case GP_HAS_INIT:
@@ -867,7 +867,7 @@ gimp_plug_in_handle_proc_uninstall (GimpPlugIn      *plug_in,
 }
 
 static void
-gimp_plug_in_handle_extension_ack (GimpPlugIn *plug_in)
+gimp_plug_in_handle_persistent_ack (GimpPlugIn *plug_in)
 {
   if (plug_in->ext_main_loop)
     {
@@ -877,8 +877,8 @@ gimp_plug_in_handle_extension_ack (GimpPlugIn *plug_in)
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-in \"%s\"\n(%s)\n\n"
-                    "sent an EXTENSION_ACK message while not being started "
-                    "as an extension.  This should not happen.",
+                    "sent a PERSISTENT_ACK message while not being started "
+                    "as a persistent plug-in.  This should not happen.",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file));
       gimp_plug_in_close (plug_in, TRUE);
