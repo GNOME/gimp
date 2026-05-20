@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-04 00:45+0000\n"
-"PO-Revision-Date: 2026-05-04 16:52+0800\n"
+"POT-Creation-Date: 2026-05-20 02:51+0000\n"
+"PO-Revision-Date: 2026-05-20 13:42+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -2569,7 +2569,7 @@ msgstr "为该标记添加描述"
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1255 app/display/gimpdisplayshell-dnd.c:707
 #: app/display/gimpimagewindow.c:2266 app/widgets/gimplayertreeview.c:859
-#: app/widgets/gimptoolbox.c:849 app/widgets/gimptoolbox-dnd.c:178
+#: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3554,7 +3554,7 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "仅对使用 RGB 颜色的图层进行白平衡操作。"
 
 #: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:73
-#: app/operations/gimpoperationlevels.c:63 app/tools/gimplevelstool.c:135
+#: app/operations/gimpoperationlevels.c:63 app/tools/gimplevelstool.c:141
 msgid "Levels"
 msgstr "色阶"
 
@@ -4382,672 +4382,672 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/filters-actions.c:69
+#: app/actions/filters-actions.c:66
 msgctxt "filters-action"
 msgid "_Antialias"
 msgstr "抗锯齿(_A)"
 
-#: app/actions/filters-actions.c:74
+#: app/actions/filters-actions.c:71
 msgctxt "filters-action"
 msgid "_Color Enhance"
 msgstr "色彩增强(_C)"
 
-#: app/actions/filters-actions.c:79
+#: app/actions/filters-actions.c:76
 msgctxt "filters-action"
 msgid "L_inear Invert"
 msgstr "线性反转(_I)"
 
-#: app/actions/filters-actions.c:84
+#: app/actions/filters-actions.c:81
 msgctxt "filters-action"
 msgid "In_vert"
 msgstr "反相(_V)"
 
-#: app/actions/filters-actions.c:89
+#: app/actions/filters-actions.c:86
 msgctxt "filters-action"
 msgid "_Value Invert"
 msgstr "明度反转(_V)"
 
-#: app/actions/filters-actions.c:94
+#: app/actions/filters-actions.c:91
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
 msgstr "拉伸对比度 HSV (_S)"
 
-#: app/actions/filters-actions.c:102
+#: app/actions/filters-actions.c:99
 msgctxt "filters-action"
 msgid "_Dilate"
 msgstr "膨胀(_D)"
 
-#: app/actions/filters-actions.c:103
+#: app/actions/filters-actions.c:100
 msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "增长图像的较亮区域"
 
-#: app/actions/filters-actions.c:118
+#: app/actions/filters-actions.c:115
 msgctxt "filters-action"
 msgid "_Erode"
 msgstr "腐蚀(_E)"
 
-#: app/actions/filters-actions.c:119
+#: app/actions/filters-actions.c:116
 msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "增长图像的较暗区域"
 
-#: app/actions/filters-actions.c:137
+#: app/actions/filters-actions.c:134
 msgctxt "filters-action"
 msgid "_Alien Map..."
 msgstr "奇异映射(_A)…"
 
-#: app/actions/filters-actions.c:142
+#: app/actions/filters-actions.c:139
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
 msgstr "应用画布(_A)…"
 
-#: app/actions/filters-actions.c:147
+#: app/actions/filters-actions.c:144
 msgctxt "filters-action"
 msgid "Apply _Lens..."
 msgstr "应用镜头(_L)…"
 
-#: app/actions/filters-actions.c:152
+#: app/actions/filters-actions.c:149
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
 msgstr "拜耳矩阵(_B)…"
 
-#: app/actions/filters-actions.c:157
+#: app/actions/filters-actions.c:154
 msgctxt "filters-action"
 msgid "_Bloom..."
 msgstr "光晕(_B)…"
 
-#: app/actions/filters-actions.c:162
+#: app/actions/filters-actions.c:159
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
 msgstr "亮度-对比度(_R)…"
 
-#: app/actions/filters-actions.c:167
+#: app/actions/filters-actions.c:164
 msgctxt "filters-action"
 msgid "_Bump Map..."
 msgstr "凹凸映射(_B)…"
 
-#: app/actions/filters-actions.c:172
+#: app/actions/filters-actions.c:169
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "彩色到灰度(_C)…"
 
-#: app/actions/filters-actions.c:177
+#: app/actions/filters-actions.c:174
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
 msgstr "卡通(_R)…"
 
-#: app/actions/filters-actions.c:182
+#: app/actions/filters-actions.c:179
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "通道混合器(_C)…"
 
-#: app/actions/filters-actions.c:187
+#: app/actions/filters-actions.c:184
 msgctxt "filters-action"
 msgid "_Checkerboard..."
 msgstr "棋盘(_C)…"
 
-#: app/actions/filters-actions.c:192
+#: app/actions/filters-actions.c:189
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "色彩平衡(_B)…"
 
-#: app/actions/filters-actions.c:197
+#: app/actions/filters-actions.c:194
 msgctxt "filters-action"
 msgid "_Color Exchange..."
 msgstr "颜色交换(_C)…"
 
-#: app/actions/filters-actions.c:202
+#: app/actions/filters-actions.c:199
 msgctxt "filters-action"
 msgid "Colori_ze..."
 msgstr "单色化(_Z)…"
 
-#: app/actions/filters-actions.c:207
+#: app/actions/filters-actions.c:204
 msgctxt "filters-action"
 msgid "Dithe_r..."
 msgstr "抖动(_R)…"
 
-#: app/actions/filters-actions.c:212
+#: app/actions/filters-actions.c:209
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
 msgstr "旋转颜色(_R)…"
 
-#: app/actions/filters-actions.c:217
+#: app/actions/filters-actions.c:214
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "色温(_E)…"
 
-#: app/actions/filters-actions.c:222
+#: app/actions/filters-actions.c:219
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "颜色到透明(_A)…"
 
-#: app/actions/filters-actions.c:227
+#: app/actions/filters-actions.c:224
 msgctxt "filters-action"
 msgid "_Extract Component..."
 msgstr "提取分量(_E)…"
 
-#: app/actions/filters-actions.c:232
+#: app/actions/filters-actions.c:229
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
 msgstr "卷积矩阵(_C)…"
 
-#: app/actions/filters-actions.c:237
+#: app/actions/filters-actions.c:234
 msgctxt "filters-action"
 msgid "_Cubism..."
 msgstr "立体主义(_C)…"
 
-#: app/actions/filters-actions.c:242
+#: app/actions/filters-actions.c:239
 msgctxt "filters-action"
 msgid "_Curves..."
 msgstr "曲线(_C)…"
 
-#: app/actions/filters-actions.c:247
+#: app/actions/filters-actions.c:244
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "反交错(_D)…"
 
-#: app/actions/filters-actions.c:252
+#: app/actions/filters-actions.c:249
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "去色(_D)…"
 
-#: app/actions/filters-actions.c:257
+#: app/actions/filters-actions.c:254
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
 msgstr "高斯差分(_G)…"
 
-#: app/actions/filters-actions.c:262
+#: app/actions/filters-actions.c:259
 msgctxt "filters-action"
 msgid "D_iffraction Patterns..."
 msgstr "衍射图案(_I)…"
 
-#: app/actions/filters-actions.c:267
+#: app/actions/filters-actions.c:264
 msgctxt "filters-action"
 msgid "_Displace..."
 msgstr "置换(_D)…"
 
-#: app/actions/filters-actions.c:272
+#: app/actions/filters-actions.c:269
 msgctxt "filters-action"
 msgid "Distance _Map..."
 msgstr "距离映射(_M)…"
 
-#: app/actions/filters-actions.c:277
+#: app/actions/filters-actions.c:274
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "投影(_D)…"
 
-#: app/actions/filters-actions.c:282
+#: app/actions/filters-actions.c:279
 msgctxt "filters-action"
 msgid "_Edge..."
 msgstr "边缘(_E)…"
 
-#: app/actions/filters-actions.c:287
+#: app/actions/filters-actions.c:284
 msgctxt "filters-action"
 msgid "_Laplace..."
 msgstr "拉普拉斯(_L)…"
 
-#: app/actions/filters-actions.c:292
+#: app/actions/filters-actions.c:289
 msgctxt "filters-action"
 msgid "_Neon..."
 msgstr "霓虹(_N)…"
 
-#: app/actions/filters-actions.c:297
+#: app/actions/filters-actions.c:294
 msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "索贝尔(_S)…"
 
-#: app/actions/filters-actions.c:302
+#: app/actions/filters-actions.c:299
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "浮雕(_E)…"
 
-#: app/actions/filters-actions.c:307
+#: app/actions/filters-actions.c:304
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "雕刻(_G)…"
 
-#: app/actions/filters-actions.c:312
+#: app/actions/filters-actions.c:309
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "曝光(_X)…"
 
-#: app/actions/filters-actions.c:317
+#: app/actions/filters-actions.c:314
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
 msgstr "_Fattal et al. 2002..."
 
-#: app/actions/filters-actions.c:322
+#: app/actions/filters-actions.c:319
 msgctxt "filters-action"
 msgid "_Focus Blur..."
 msgstr "对焦模糊(_F)…"
 
-#: app/actions/filters-actions.c:327
+#: app/actions/filters-actions.c:324
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "分形追踪(_F)…"
 
-#: app/actions/filters-actions.c:332
+#: app/actions/filters-actions.c:329
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "高斯模糊(_G)…"
 
-#: app/actions/filters-actions.c:337
+#: app/actions/filters-actions.c:334
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "选择性高斯模糊(_S)…"
 
-#: app/actions/filters-actions.c:342
+#: app/actions/filters-actions.c:339
 msgctxt "filters-action"
 msgid "_GEGL Graph..."
 msgstr "_GEGL 图表…"
 
-#: app/actions/filters-actions.c:347
+#: app/actions/filters-actions.c:344
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "网格(_G)…"
 
-#: app/actions/filters-actions.c:352
+#: app/actions/filters-actions.c:349
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "高通滤波(_H)…"
 
-#: app/actions/filters-actions.c:357
+#: app/actions/filters-actions.c:354
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "色相-彩度(_C)…"
 
-#: app/actions/filters-actions.c:362
+#: app/actions/filters-actions.c:359
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "色相-饱和度(_S)…"
 
-#: app/actions/filters-actions.c:367
+#: app/actions/filters-actions.c:364
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "幻象(_I)…"
 
-#: app/actions/filters-actions.c:372
+#: app/actions/filters-actions.c:369
 msgctxt "filters-action"
 msgid "_Image Gradient..."
 msgstr "图像渐变(_I)…"
 
-#: app/actions/filters-actions.c:377
+#: app/actions/filters-actions.c:374
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "万花筒(_K)…"
 
-#: app/actions/filters-actions.c:382
+#: app/actions/filters-actions.c:379
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
 msgstr "镜头模糊(_N)…"
 
-#: app/actions/filters-actions.c:387
+#: app/actions/filters-actions.c:384
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
 msgstr "镜头畸变(_N)…"
 
-#: app/actions/filters-actions.c:392
+#: app/actions/filters-actions.c:389
 msgctxt "filters-action"
 msgid "Lens _Flare..."
 msgstr "镜头光晕(_F)…"
 
-#: app/actions/filters-actions.c:397
+#: app/actions/filters-actions.c:394
 msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "色阶(_L)…"
 
-#: app/actions/filters-actions.c:402
+#: app/actions/filters-actions.c:399
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
 msgstr "线性正弦曲线(_L)…"
 
-#: app/actions/filters-actions.c:407
+#: app/actions/filters-actions.c:404
 msgctxt "filters-action"
 msgid "_Little Planet..."
 msgstr "小行星(_L)…"
 
-#: app/actions/filters-actions.c:412
+#: app/actions/filters-actions.c:409
 msgctxt "filters-action"
 msgid "_Long Shadow..."
 msgstr "长阴影(_L)…"
 
-#: app/actions/filters-actions.c:417
+#: app/actions/filters-actions.c:414
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006..."
 
-#: app/actions/filters-actions.c:422
+#: app/actions/filters-actions.c:419
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "迷宫(_M)…"
 
-#: app/actions/filters-actions.c:427
+#: app/actions/filters-actions.c:424
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
 msgstr "均值曲率模糊(_U)…"
 
-#: app/actions/filters-actions.c:432
+#: app/actions/filters-actions.c:429
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "中值模糊(_M)…"
 
-#: app/actions/filters-actions.c:437
+#: app/actions/filters-actions.c:434
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "单色混合器(_M)…"
 
-#: app/actions/filters-actions.c:442
+#: app/actions/filters-actions.c:439
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "马赛克(_M)…"
 
-#: app/actions/filters-actions.c:447
+#: app/actions/filters-actions.c:444
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "圆周运动模糊(_C)…"
 
-#: app/actions/filters-actions.c:452
+#: app/actions/filters-actions.c:449
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "线性运动模糊(_L)…"
 
-#: app/actions/filters-actions.c:457
+#: app/actions/filters-actions.c:454
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "缩放运动模糊(_Z)…"
 
-#: app/actions/filters-actions.c:462
+#: app/actions/filters-actions.c:459
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "单元噪点(_C)…"
 
-#: app/actions/filters-actions.c:467
+#: app/actions/filters-actions.c:464
 msgctxt "filters-action"
 msgid "_Newsprint..."
 msgstr "报纸(_N)…"
 
-#: app/actions/filters-actions.c:472
+#: app/actions/filters-actions.c:469
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
 msgstr "CIE lch 噪点(_C)…"
 
-#: app/actions/filters-actions.c:477
+#: app/actions/filters-actions.c:474
 msgctxt "filters-action"
 msgid "HS_V Noise..."
 msgstr "HSV 噪点(_V)…"
 
-#: app/actions/filters-actions.c:482
+#: app/actions/filters-actions.c:479
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "投掷(_H)…"
 
-#: app/actions/filters-actions.c:487
+#: app/actions/filters-actions.c:484
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
 msgstr "柏林噪点(_N)…"
 
-#: app/actions/filters-actions.c:492
+#: app/actions/filters-actions.c:489
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "拾取(_P)…"
 
-#: app/actions/filters-actions.c:497
+#: app/actions/filters-actions.c:494
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "_RGB 噪点…"
 
-#: app/actions/filters-actions.c:502
+#: app/actions/filters-actions.c:499
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "降噪(_E)…"
 
-#: app/actions/filters-actions.c:507
+#: app/actions/filters-actions.c:504
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "单一噪点(_S)…"
 
-#: app/actions/filters-actions.c:512
+#: app/actions/filters-actions.c:509
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "模糊(_S)…"
 
-#: app/actions/filters-actions.c:517
+#: app/actions/filters-actions.c:514
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "固态噪点(_S)…"
 
-#: app/actions/filters-actions.c:522
+#: app/actions/filters-actions.c:519
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "散布(_R)…"
 
-#: app/actions/filters-actions.c:527
+#: app/actions/filters-actions.c:524
 msgctxt "filters-action"
 msgid "_Normal Map..."
 msgstr "法线映射(_N)…"
 
-#: app/actions/filters-actions.c:532
+#: app/actions/filters-actions.c:529
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "偏移(_O)…"
 
-#: app/actions/filters-actions.c:537
+#: app/actions/filters-actions.c:534
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "油画(_F)…"
 
-#: app/actions/filters-actions.c:542
+#: app/actions/filters-actions.c:539
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "全景投影(_P)…"
 
-#: app/actions/filters-actions.c:547
+#: app/actions/filters-actions.c:544
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "影印(_P)…"
 
-#: app/actions/filters-actions.c:552
+#: app/actions/filters-actions.c:549
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "像素化(_P)…"
 
-#: app/actions/filters-actions.c:557
+#: app/actions/filters-actions.c:554
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "等离子(_P)…"
 
-#: app/actions/filters-actions.c:562
+#: app/actions/filters-actions.c:559
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "极坐标(_O)…"
 
-#: app/actions/filters-actions.c:567
+#: app/actions/filters-actions.c:564
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "色相分离(_P)…"
 
-#: app/actions/filters-actions.c:572
+#: app/actions/filters-actions.c:569
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "递归变换(_R)…"
 
-#: app/actions/filters-actions.c:577
+#: app/actions/filters-actions.c:574
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "去除红眼(_R)…"
 
-#: app/actions/filters-actions.c:582
+#: app/actions/filters-actions.c:579
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005..."
 
-#: app/actions/filters-actions.c:587
+#: app/actions/filters-actions.c:584
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "RGB 片段(_C)…"
 
-#: app/actions/filters-actions.c:592
+#: app/actions/filters-actions.c:589
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "波纹(_R)…"
 
-#: app/actions/filters-actions.c:597
+#: app/actions/filters-actions.c:594
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "饱和度(_U)…"
 
-#: app/actions/filters-actions.c:602
+#: app/actions/filters-actions.c:599
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "半平整(_S)…"
 
-#: app/actions/filters-actions.c:607
+#: app/actions/filters-actions.c:604
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "深褐色(_S)…"
 
-#: app/actions/filters-actions.c:612
+#: app/actions/filters-actions.c:609
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "阴影-高光(_H)…"
 
-#: app/actions/filters-actions.c:617
+#: app/actions/filters-actions.c:614
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "偏移(_S)…"
 
-#: app/actions/filters-actions.c:622
+#: app/actions/filters-actions.c:619
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "弯曲(_S)…"
 
-#: app/actions/filters-actions.c:627
+#: app/actions/filters-actions.c:624
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "简单线性迭代聚类(_S)…"
 
-#: app/actions/filters-actions.c:632
+#: app/actions/filters-actions.c:629
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "对称的最近相邻(_S)…"
 
-#: app/actions/filters-actions.c:637
+#: app/actions/filters-actions.c:634
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "柔光(_S)…"
 
-#: app/actions/filters-actions.c:642
+#: app/actions/filters-actions.c:639
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "球面化(_Z)…"
 
-#: app/actions/filters-actions.c:647
+#: app/actions/filters-actions.c:644
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "螺旋(_P)…"
 
-#: app/actions/filters-actions.c:652
+#: app/actions/filters-actions.c:649
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "拉伸对比度(_S)…"
 
-#: app/actions/filters-actions.c:657
+#: app/actions/filters-actions.c:654
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "Stress(_S)…"
 
-#: app/actions/filters-actions.c:662
+#: app/actions/filters-actions.c:659
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "超新星(_N)…"
 
-#: app/actions/filters-actions.c:667
+#: app/actions/filters-actions.c:664
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "阈值(_T)…"
 
-#: app/actions/filters-actions.c:672
+#: app/actions/filters-actions.c:669
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "临界透明(_T)…"
 
-#: app/actions/filters-actions.c:677
+#: app/actions/filters-actions.c:674
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "玻璃平铺(_G)…"
 
-#: app/actions/filters-actions.c:682
+#: app/actions/filters-actions.c:679
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "纸片平铺(_P)…"
 
-#: app/actions/filters-actions.c:687
+#: app/actions/filters-actions.c:684
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "无缝平铺(_T)…"
 
-#: app/actions/filters-actions.c:692
+#: app/actions/filters-actions.c:689
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "锐化(虚光蒙板)(_U)…"
 
-#: app/actions/filters-actions.c:697
+#: app/actions/filters-actions.c:694
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "明度增殖(_V)…"
 
-#: app/actions/filters-actions.c:702
+#: app/actions/filters-actions.c:699
 msgctxt "filters-action"
 msgid "_Variable Blur..."
 msgstr "变量模糊(_V)…"
 
-#: app/actions/filters-actions.c:707
+#: app/actions/filters-actions.c:704
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "视频劣化(_D)…"
 
-#: app/actions/filters-actions.c:712
+#: app/actions/filters-actions.c:709
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "晕影(_V)…"
 
-#: app/actions/filters-actions.c:717
+#: app/actions/filters-actions.c:714
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "水像素(_W)…"
 
-#: app/actions/filters-actions.c:722
+#: app/actions/filters-actions.c:719
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "水波(_W)…"
 
-#: app/actions/filters-actions.c:727
+#: app/actions/filters-actions.c:724
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "旋转和挤压(_H)…"
 
-#: app/actions/filters-actions.c:732
+#: app/actions/filters-actions.c:729
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "风(_I)…"
 
-#: app/actions/filters-actions.c:740
+#: app/actions/filters-actions.c:737
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "重复上次操作(_P)"
 
-#: app/actions/filters-actions.c:742
+#: app/actions/filters-actions.c:739
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "用同样的设置重新运行上次使用的滤镜"
 
-#: app/actions/filters-actions.c:747
+#: app/actions/filters-actions.c:744
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "显示上次操作(_E)"
 
-#: app/actions/filters-actions.c:748
+#: app/actions/filters-actions.c:745
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "再次显示上次使用的滤镜对话框"
@@ -5056,30 +5056,30 @@ msgstr "再次显示上次使用的滤镜对话框"
 #. * which we append "..." as the standardized labelling to indicate
 #. * that this action raises a dialog.
 #.
-#: app/actions/filters-actions.c:879
+#: app/actions/filters-actions.c:876
 #, c-format
 msgid "%s..."
 msgstr "%s…"
 
-#: app/actions/filters-actions.c:1216
+#: app/actions/filters-actions.c:1213
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "重复“%s”(_P)"
 
-#: app/actions/filters-actions.c:1217
+#: app/actions/filters-actions.c:1214
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "重新显示“%s”(_E)"
 
-#: app/actions/filters-actions.c:1255
+#: app/actions/filters-actions.c:1252
 msgid "Repeat Last"
 msgstr "重复上次操作"
 
-#: app/actions/filters-actions.c:1257
+#: app/actions/filters-actions.c:1254
 msgid "Re-Show Last"
 msgstr "显示上次操作"
 
-#: app/actions/filters-actions.c:1260 app/actions/filters-actions.c:1262
+#: app/actions/filters-actions.c:1257 app/actions/filters-actions.c:1259
 msgid "No last used filters"
 msgstr "无上次使用滤镜"
 
@@ -12735,22 +12735,22 @@ msgid ""
 "mandatory."
 msgstr "<requires><id>org.gimp.GIMP</id></requires> 为了版本对比是强制性的。"
 
-#: app/core/gimpextension.c:835
+#: app/core/gimpextension.c:831
 #, c-format
 msgid "'%s' is not a relative path."
 msgstr "“%s”不是一个相关路径。"
 
-#: app/core/gimpextension.c:869
+#: app/core/gimpextension.c:847
 #, c-format
 msgid "'%s' is not a child of the extension."
 msgstr "“%s”不是该扩展的子项。"
 
-#: app/core/gimpextension.c:883
+#: app/core/gimpextension.c:863
 #, c-format
 msgid "'%s' is not a directory."
 msgstr "“%s”不是目录。"
 
-#: app/core/gimpextension.c:897
+#: app/core/gimpextension.c:877
 #, c-format
 msgid "'%s' is not a valid file."
 msgstr "“%s”不是有效文件。"
@@ -12760,12 +12760,12 @@ msgstr "“%s”不是有效文件。"
 msgid "System extensions cannot be uninstalled."
 msgstr "系统扩展不能被卸载。"
 
-#: app/core/gimpextensionmanager.c:1053
+#: app/core/gimpextensionmanager.c:1052
 #, c-format
 msgid "Skipping extension '%s': %s\n"
 msgstr "跳过扩展“%s”：%s\n"
 
-#: app/core/gimpextensionmanager.c:1061
+#: app/core/gimpextensionmanager.c:1060
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr "跳过扩展目录中的未知文件“%s”。\n"
@@ -12882,23 +12882,23 @@ msgstr "无法创建“%s”文件夹：%s"
 msgid "No patterns available for this operation."
 msgstr "没有可供此操作使用的图案。"
 
-#: app/core/gimp-utils.c:1136
+#: app/core/gimp-utils.c:1170
 #, c-format
 msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
 msgstr "Photoshop 资源文件中出现致命解析错误：RLE 压缩数据损坏。"
 
-#: app/core/gimp-utils.c:1793
+#: app/core/gimp-utils.c:1827
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "该解析器不支持瓦状层叠式列表。"
 
-#: app/core/gimp-utils.c:1816
+#: app/core/gimp-utils.c:1850
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> 必须内置 <ol> 或 <ul> 标签。"
 
-#: app/core/gimp-utils.c:1821
+#: app/core/gimp-utils.c:1855
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "未知标签 <%s>。"
@@ -13426,7 +13426,7 @@ msgstr "载入“%s”时出错"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:361 app/file-data/file-data-gex.c:511
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:406
+#: app/xcf/xcf.c:404
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "无法打开“%s”以读取："
@@ -15603,7 +15603,7 @@ msgstr "编码转换"
 #. gamma
 #: app/dialogs/convert-precision-dialog.c:176
 #: app/operations/gimplevelsconfig.c:160 app/operations/gimplevelsconfig.c:161
-#: app/tools/gimplevelstool.c:512
+#: app/tools/gimplevelstool.c:520
 msgid "Gamma"
 msgstr "伽马值"
 
@@ -15939,8 +15939,8 @@ msgstr "图像属性"
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
 #: app/dialogs/welcome-dialog.c:207 app/tools/gimpcolorpickertool.c:352
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:741
-#: app/widgets/gimpcontrollerlist.c:652 app/widgets/gimpcriticaldialog.c:220
-#: app/widgets/gimpcriticaldialog.c:242 app/widgets/gimpsettingsbox.c:642
+#: app/widgets/gimpcontrollerlist.c:652 app/widgets/gimpcriticaldialog.c:222
+#: app/widgets/gimpcriticaldialog.c:244 app/widgets/gimpsettingsbox.c:642
 #: app/widgets/gimptexteditor.c:164
 msgid "_Close"
 msgstr "关闭(_C)"
@@ -17090,7 +17090,7 @@ msgid "Use symbolic icons if available"
 msgstr "如果可用则使用符号图标"
 
 #: app/dialogs/preferences-dialog.c:2265 app/dialogs/preferences-dialog.c:2266
-#: app/widgets/gimptoolbox.c:546
+#: app/widgets/gimptoolbox.c:547
 msgid "Toolbox"
 msgstr "工具箱"
 
@@ -19562,19 +19562,19 @@ msgstr "负 X 偏移：为图层 %2$s 校正 %1$d。"
 msgid "Negative y offset: %d for layer %s corrected."
 msgstr "负 Y 偏移：为图层 %2$s 校正 %1$d。"
 
-#: app/file-data/file-data.c:61 app/file-data/file-data.c:118
+#: app/file-data/file-data.c:60 app/file-data/file-data.c:116
 msgid "GIMP brush"
 msgstr "GIMP 笔刷"
 
-#: app/file-data/file-data.c:195 app/file-data/file-data.c:249
+#: app/file-data/file-data.c:192 app/file-data/file-data.c:245
 msgid "GIMP brush (animated)"
 msgstr "GIMP 笔刷（动画化）"
 
-#: app/file-data/file-data.c:333 app/file-data/file-data.c:386
+#: app/file-data/file-data.c:328 app/file-data/file-data.c:380
 msgid "GIMP pattern"
 msgstr "GIMP 图案"
 
-#: app/file-data/file-data.c:457
+#: app/file-data/file-data.c:450
 msgid "GIMP extension"
 msgstr "GIMP 扩展"
 
@@ -19584,7 +19584,7 @@ msgstr "GIMP 扩展"
 #: app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195
 #: app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198
 #: app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201
-#: app/plug-in/gimppluginprocedure.c:1045
+#: app/plug-in/gimppluginprocedure.c:1165
 msgid "RGB"
 msgstr "RGB"
 
@@ -19603,7 +19603,7 @@ msgstr "RGB-透明"
 #: app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233
 #: app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236
 #: app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239
-#: app/plug-in/gimppluginprocedure.c:1063
+#: app/plug-in/gimppluginprocedure.c:1183
 msgid "Grayscale"
 msgstr "灰度"
 
@@ -19652,7 +19652,7 @@ msgstr "透明度分量"
 msgid "Indexed-alpha"
 msgstr "索引色-透明"
 
-#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1081
+#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1201
 msgid "Indexed"
 msgstr "索引"
 
@@ -20294,7 +20294,7 @@ msgstr "写入曲线文件失败："
 
 #: app/operations/gimpcurvesconfig.c:805 app/operations/gimpcurvesconfig.c:808
 #: app/tools/gimpcurvestool.c:761 app/tools/gimpcurvestool.c:764
-#: app/tools/gimplevelstool.c:754 app/tools/gimplevelstool.c:757
+#: app/tools/gimplevelstool.c:805 app/tools/gimplevelstool.c:808
 #, c-format
 msgid "Could not read header: "
 msgstr "无法读取文件头："
@@ -20459,7 +20459,7 @@ msgstr "色相-饱和度"
 msgid "Adjust hue, saturation, and lightness"
 msgstr "调整色相、饱和度以及亮度"
 
-#: app/operations/gimpoperationlevels.c:65 app/tools/gimplevelstool.c:136
+#: app/operations/gimpoperationlevels.c:65 app/tools/gimplevelstool.c:142
 msgid "Adjust color levels"
 msgstr "调整颜色色阶"
 
@@ -21796,7 +21796,7 @@ msgstr "添加路径笔触"
 msgid "Extend path stroke"
 msgstr "扩展路径笔触"
 
-#: app/pdb/pdb-cmds.c:1193 app/pdb/pdb-cmds.c:1235
+#: app/pdb/pdb-cmds.c:1277 app/pdb/pdb-cmds.c:1319
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "数据标签“%s”不是典型的标识符"
@@ -21868,7 +21868,7 @@ msgstr "解释器文件 %s 中引用的错误的解释器：%s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "解释器文件 %s 中的错误的二进制格式串"
 
-#: app/plug-in/gimpplugin.c:258
+#: app/plug-in/gimpplugin.c:260
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -21913,9 +21913,9 @@ msgstr "插件解释器"
 msgid "Plug-in Environment"
 msgstr "插件环境"
 
-#: app/plug-in/gimppluginmanager-call.c:200
-#: app/plug-in/gimppluginmanager-call.c:273
-#: app/plug-in/gimppluginmanager-call.c:373
+#: app/plug-in/gimppluginmanager-call.c:204
+#: app/plug-in/gimppluginmanager-call.c:277
+#: app/plug-in/gimppluginmanager-call.c:377
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr "“%s”插件启用失败"
@@ -21924,71 +21924,71 @@ msgstr "“%s”插件启用失败"
 msgid "Unknown file type"
 msgstr "未知文件类型"
 
-#: app/plug-in/gimppluginmanager-restore.c:213
+#: app/plug-in/gimppluginmanager-restore.c:216
 msgid "Loading extension plug-ins"
 msgstr "正在加载扩展插件"
 
-#: app/plug-in/gimppluginmanager-restore.c:233
+#: app/plug-in/gimppluginmanager-restore.c:250
 msgid "Searching plug-ins"
 msgstr "正在搜索插件"
 
-#: app/plug-in/gimppluginmanager-restore.c:358
+#: app/plug-in/gimppluginmanager-restore.c:375
 #, c-format
 msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
 "subdirectories.\n"
 msgstr "跳过潜在的插件“%s”：插件必须安装在子文件夹中。\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:365
+#: app/plug-in/gimppluginmanager-restore.c:382
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
 msgstr "跳过插件文件夹中的未知文件“%s”。\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:412
+#: app/plug-in/gimppluginmanager-restore.c:429
 msgid "Resource configuration"
 msgstr "资源配置"
 
-#: app/plug-in/gimppluginmanager-restore.c:448
+#: app/plug-in/gimppluginmanager-restore.c:465
 msgid "Querying new Plug-ins"
 msgstr "正在查询新的插件"
 
-#: app/plug-in/gimppluginmanager-restore.c:502
+#: app/plug-in/gimppluginmanager-restore.c:519
 msgid "Initializing Plug-ins"
 msgstr "正在初始化插件"
 
-#: app/plug-in/gimppluginmanager-restore.c:575
+#: app/plug-in/gimppluginmanager-restore.c:592
 msgid "Starting Extensions"
 msgstr "正在启动扩展"
 
-#: app/plug-in/gimppluginprocedure.c:1049
+#: app/plug-in/gimppluginprocedure.c:1169
 msgid "RGB without alpha"
 msgstr "RGB 无透明"
 
-#: app/plug-in/gimppluginprocedure.c:1053
+#: app/plug-in/gimppluginprocedure.c:1173
 msgid "RGB with alpha"
 msgstr "RGB 带透明"
 
-#: app/plug-in/gimppluginprocedure.c:1067
+#: app/plug-in/gimppluginprocedure.c:1187
 msgid "Grayscale without alpha"
 msgstr "灰度无透明"
 
-#: app/plug-in/gimppluginprocedure.c:1071
+#: app/plug-in/gimppluginprocedure.c:1191
 msgid "Grayscale with alpha"
 msgstr "灰度带透明"
 
-#: app/plug-in/gimppluginprocedure.c:1085
+#: app/plug-in/gimppluginprocedure.c:1205
 msgid "Indexed without alpha"
 msgstr "索引色无透明"
 
-#: app/plug-in/gimppluginprocedure.c:1089
+#: app/plug-in/gimppluginprocedure.c:1209
 msgid "Indexed with alpha"
 msgstr "索引色带透明"
 
-#: app/plug-in/gimppluginprocedure.c:1100
+#: app/plug-in/gimppluginprocedure.c:1220
 msgid "This plug-in only works on the following layer types:"
 msgstr "该插件仅适用于以下图层类型："
 
-#: app/plug-in/gimppluginprocedure.c:1465
+#: app/plug-in/gimppluginprocedure.c:1585
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -21997,7 +21997,7 @@ msgstr ""
 "“%s”调用错误：\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1477
+#: app/plug-in/gimppluginprocedure.c:1597
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22016,12 +22016,12 @@ msgstr "跳过“%s”：错误的 GIMP 协议版本。"
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "跳过“%s”：pluginrc 文件格式版本错误。"
 
-#: app/plug-in/plug-in-rc.c:552
+#: app/plug-in/plug-in-rc.c:591
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "图标类型“%s”无效"
 
-#: app/plug-in/plug-in-rc.c:567
+#: app/plug-in/plug-in-rc.c:606
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "图标类型“%ld”无效"
@@ -22042,7 +22042,7 @@ msgstr "蓝色通道"
 msgid "Select Range to Adjust"
 msgstr "选择要调整的范围"
 
-#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:266
+#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:272
 msgid "Adjust Color Levels"
 msgstr "调整颜色色阶"
 
@@ -22875,7 +22875,7 @@ msgstr "无法填充多个图层。仅选择一个图层。"
 
 #: app/tools/gimpbucketfilltool.c:601 app/tools/gimpcagetool.c:231
 #: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:317
-#: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:207
+#: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:213
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:300
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
@@ -23220,7 +23220,7 @@ msgid "_Curves..."
 msgstr "曲线(_C)…"
 
 #: app/tools/gimpcurvestool.c:215 app/tools/gimpfiltertool.c:313
-#: app/tools/gimplevelstool.c:205 app/tools/gimpoffsettool.c:189
+#: app/tools/gimplevelstool.c:211 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr "无法修改多个可绘区。仅选择一个。"
@@ -23251,12 +23251,12 @@ msgstr "%s：在全部通道中添加控制点"
 msgid "Adjust Color Curves"
 msgstr "调整颜色曲线"
 
-#: app/tools/gimpcurvestool.c:481 app/tools/gimplevelstool.c:362
+#: app/tools/gimpcurvestool.c:481 app/tools/gimplevelstool.c:369
 #: app/tools/gimpthresholdtool.c:247
 msgid "Cha_nnel:"
 msgstr "通道(_N)："
 
-#: app/tools/gimpcurvestool.c:510 app/tools/gimplevelstool.c:389
+#: app/tools/gimpcurvestool.c:510 app/tools/gimplevelstool.c:396
 msgid "R_eset Channel"
 msgstr "重置通道(_E)"
 
@@ -23600,7 +23600,7 @@ msgstr "级别"
 
 #: app/tools/gimpforegroundselectoptions.c:133
 msgid "Number of downsampled levels to use"
-msgstr "降采样的的级别数"
+msgstr "要使用的降采样级别数"
 
 #: app/tools/gimpforegroundselectoptions.c:139
 msgid "Active levels"
@@ -24085,70 +24085,70 @@ msgstr "单击或单击拖动以添加点"
 msgid "Modify Scissors Curve"
 msgstr "修改剪刀曲线"
 
-#: app/tools/gimplevelstool.c:137
+#: app/tools/gimplevelstool.c:143
 msgid "_Levels..."
 msgstr "色阶(_L)…"
 
-#: app/tools/gimplevelstool.c:290
+#: app/tools/gimplevelstool.c:296
 msgid "Pick black point for all channels"
 msgstr "为所有通道拾取黑点"
 
-#: app/tools/gimplevelstool.c:292
+#: app/tools/gimplevelstool.c:298
 msgid "Pick black point for the selected channel"
 msgstr "为选中通道拾取黑点"
 
-#: app/tools/gimplevelstool.c:299
+#: app/tools/gimplevelstool.c:305
 msgid "Pick gray point for all channels"
 msgstr "为所有通道拾取灰点"
 
-#: app/tools/gimplevelstool.c:301
+#: app/tools/gimplevelstool.c:307
 msgid "Pick gray point for the selected channel"
 msgstr "为选中通道拾取灰点"
 
-#: app/tools/gimplevelstool.c:308
+#: app/tools/gimplevelstool.c:314
 msgid "Pick white point for all channels"
 msgstr "为所有通道拾取白点"
 
-#: app/tools/gimplevelstool.c:310
+#: app/tools/gimplevelstool.c:316
 msgid "Pick white point for the selected channel"
 msgstr "为选中通道拾取白点"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:421
+#: app/tools/gimplevelstool.c:428
 msgid "Input Levels"
 msgstr "输入色阶"
 
-#: app/tools/gimplevelstool.c:505
+#: app/tools/gimplevelstool.c:513
 msgid "Clamp _input"
 msgstr "固定输入(_I)"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:544
+#: app/tools/gimplevelstool.c:552
 msgid "Output Levels"
 msgstr "输出色阶"
 
-#: app/tools/gimplevelstool.c:591
+#: app/tools/gimplevelstool.c:601
 msgid "Clamp outpu_t"
 msgstr "固定输出(_T)"
 
 #. all channels frame
-#: app/tools/gimplevelstool.c:604
+#: app/tools/gimplevelstool.c:615
 msgid "All Channels"
 msgstr "所有通道"
 
-#: app/tools/gimplevelstool.c:616
+#: app/tools/gimplevelstool.c:627
 msgid "_Auto Input Levels"
 msgstr "自动输入色阶(_A)"
 
-#: app/tools/gimplevelstool.c:619
+#: app/tools/gimplevelstool.c:630
 msgid "Adjust levels for all channels automatically"
 msgstr "自动为所有通道调整色阶"
 
-#: app/tools/gimplevelstool.c:646
+#: app/tools/gimplevelstool.c:657
 msgid "Edit these Settings as Curves"
 msgstr "将此设置作为曲线编辑"
 
-#: app/tools/gimplevelstool.c:998 app/tools/gimpthresholdtool.c:429
+#: app/tools/gimplevelstool.c:1049 app/tools/gimpthresholdtool.c:429
 msgid "Calculating histogram..."
 msgstr "正在计算直方图…"
 
@@ -26515,16 +26515,16 @@ msgstr "复制缺陷信息"
 msgid "Open Bug Tracker"
 msgstr "打开缺陷追踪器"
 
-#: app/widgets/gimpcriticaldialog.c:200
+#: app/widgets/gimpcriticaldialog.c:202
 msgid "See bug details"
 msgstr "查看缺陷详情"
 
-#: app/widgets/gimpcriticaldialog.c:219
+#: app/widgets/gimpcriticaldialog.c:221
 msgid "Go to _Download page"
 msgstr "转到下载页面(_D)"
 
 #. Recommend an update.
-#: app/widgets/gimpcriticaldialog.c:224
+#: app/widgets/gimpcriticaldialog.c:226
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released on %s.\n"
@@ -26533,50 +26533,50 @@ msgstr ""
 "一个新版本的 GIMP（%s）已于 %s 发布。\n"
 "推荐进行更新。"
 
-#: app/widgets/gimpcriticaldialog.c:230
+#: app/widgets/gimpcriticaldialog.c:232
 msgid "You are running an unsupported version!"
 msgstr "您正在运行一个不受支持的版本！"
 
-#: app/widgets/gimpcriticaldialog.c:253 app/widgets/gimpcriticaldialog.c:664
+#: app/widgets/gimpcriticaldialog.c:255 app/widgets/gimpcriticaldialog.c:664
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr "为了帮助我们改进 GIMP，您可以通过这些简单步骤报告缺陷："
 
-#: app/widgets/gimpcriticaldialog.c:255 app/widgets/gimpcriticaldialog.c:666
+#: app/widgets/gimpcriticaldialog.c:257 app/widgets/gimpcriticaldialog.c:666
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "通过点击将缺陷信息复制到剪贴板："
 
-#: app/widgets/gimpcriticaldialog.c:257 app/widgets/gimpcriticaldialog.c:668
+#: app/widgets/gimpcriticaldialog.c:259 app/widgets/gimpcriticaldialog.c:668
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "通过点击在浏览器中打开我们的缺陷追踪器："
 
-#: app/widgets/gimpcriticaldialog.c:259 app/widgets/gimpcriticaldialog.c:670
+#: app/widgets/gimpcriticaldialog.c:261 app/widgets/gimpcriticaldialog.c:670
 msgid "Create a login if you don't have one yet."
 msgstr "如果您还没有的话创建一个帐号。"
 
-#: app/widgets/gimpcriticaldialog.c:260 app/widgets/gimpcriticaldialog.c:671
+#: app/widgets/gimpcriticaldialog.c:262 app/widgets/gimpcriticaldialog.c:671
 msgid "Paste the clipboard text in a new bug report."
 msgstr "在一个新缺陷报告中粘贴剪贴板文字。"
 
-#: app/widgets/gimpcriticaldialog.c:261 app/widgets/gimpcriticaldialog.c:672
+#: app/widgets/gimpcriticaldialog.c:263 app/widgets/gimpcriticaldialog.c:672
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
 msgstr "在缺陷报告中用英语添加相关信息解释当错误发生时您在做什么。"
 
-#: app/widgets/gimpcriticaldialog.c:263
+#: app/widgets/gimpcriticaldialog.c:265
 msgid ""
 "This error may have left GIMP in an inconsistent state. It is advised to "
 "save your work and restart GIMP."
 msgstr "该错误可能会使 GIMP 处于一种不一致状态。建议保存您的工作并重启 GIMP。"
 
-#: app/widgets/gimpcriticaldialog.c:268
+#: app/widgets/gimpcriticaldialog.c:270
 msgid ""
 "You can also close the dialog directly but reporting bugs is the best way to "
 "make your software awesome."
 msgstr "您也可以直接关闭该对话框但报告缺陷是使您的软件更棒的最好方式。"
 
-#: app/widgets/gimpcriticaldialog.c:277
+#: app/widgets/gimpcriticaldialog.c:279
 msgid "Copy-paste this whole debug data to report to developers"
 msgstr "复制粘贴这整个调试数据以报告给开发者们"
 
@@ -27960,12 +27960,12 @@ msgstr "元数据在早于 2.10 版本的 GIMP 中不可见。"
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "shortcut: Ctrl+Alt+O"
 #.
-#: app/widgets/gimpsearchpopup.c:293
+#: app/widgets/gimpsearchpopup.c:296
 msgid "shortcut"
 msgstr "快捷键"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:297 app/widgets/gimpsearchpopup.c:319
+#: app/widgets/gimpsearchpopup.c:300 app/widgets/gimpsearchpopup.c:322
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -27974,7 +27974,7 @@ msgstr "%s: %s"
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:315
+#: app/widgets/gimpsearchpopup.c:318
 msgid "menu"
 msgstr "菜单"
 
@@ -28612,40 +28612,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "状态和描述"
 
-#: app/xcf/xcf.c:127 app/xcf/xcf.c:183
+#: app/xcf/xcf.c:126 app/xcf/xcf.c:181
 msgid "GIMP XCF image"
 msgstr "GIMP XCF 图像"
 
-#: app/xcf/xcf.c:259 app/xcf/xcf.c:317
+#: app/xcf/xcf.c:257 app/xcf/xcf.c:315
 msgid "Memory Stream"
 msgstr "内存流"
 
-#: app/xcf/xcf.c:262
+#: app/xcf/xcf.c:260
 #, c-format
 msgid "Opening '%s'"
 msgstr "正在打开“%s”"
 
-#: app/xcf/xcf.c:281
+#: app/xcf/xcf.c:279
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF 错误：不支持的 XCF 文件版本 %d"
 
-#: app/xcf/xcf.c:340
+#: app/xcf/xcf.c:338
 #, c-format
 msgid "Saving '%s'"
 msgstr "正在保存“%s”"
 
-#: app/xcf/xcf.c:348
+#: app/xcf/xcf.c:346
 #, c-format
 msgid "Closing '%s'"
 msgstr "正在关闭“%s”"
 
-#: app/xcf/xcf.c:366
+#: app/xcf/xcf.c:364
 #, c-format
 msgid "Error writing '%s': "
 msgstr "写入“%s”时出错："
 
-#: app/xcf/xcf.c:454
+#: app/xcf/xcf.c:452
 #, c-format
 msgid "Error creating '%s': "
 msgstr "创建“%s”时出错："
