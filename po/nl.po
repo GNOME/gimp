@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-01 23:44+0000\n"
-"PO-Revision-Date: 2026-05-03 12:05+0200\n"
+"POT-Creation-Date: 2026-05-20 20:51+0000\n"
+"PO-Revision-Date: 2026-05-21 16:55+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -41,7 +41,7 @@ msgstr "Project-Id-Version: GIMP 3.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: OmegaT 6.1.0\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -2581,7 +2581,7 @@ msgstr "Geef een beschrijving van het markeerpunt"
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1255 app/display/gimpdisplayshell-dnd.c:707
 #: app/display/gimpimagewindow.c:2266 app/widgets/gimplayertreeview.c:859
-#: app/widgets/gimptoolbox.c:849 app/widgets/gimptoolbox-dnd.c:178
+#: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3576,7 +3576,7 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "Witbalans werkt alleen op RGB-kleurlagen."
 
 #: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:73
-#: app/operations/gimpoperationlevels.c:63 app/tools/gimplevelstool.c:135
+#: app/operations/gimpoperationlevels.c:63 app/tools/gimplevelstool.c:141
 msgid "Levels"
 msgstr "Kleurniveaus"
 
@@ -4309,7 +4309,7 @@ msgstr "E_xporteren als..."
 #: app/actions/file-actions.c:176
 msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
-msgstr "Afbeelding naar andere formaten zoals PNG of JPG exporteren"
+msgstr "Afbeelding naar andere indelingen, zoals PNG of JPG, exporteren"
 
 #: app/actions/file-actions.c:311
 msgctxt "file-action"
@@ -4408,674 +4408,674 @@ msgstr "Teruggaan naar ‘%s’ is mislukt:\n"
 "\n"
 "%s"
 
-#: app/actions/filters-actions.c:69
+#: app/actions/filters-actions.c:66
 msgctxt "filters-action"
 msgid "_Antialias"
 msgstr "Randen _glad maken"
 
-#: app/actions/filters-actions.c:74
+#: app/actions/filters-actions.c:71
 msgctxt "filters-action"
 msgid "_Color Enhance"
 msgstr "Kle_urverbetering"
 
-#: app/actions/filters-actions.c:79
+#: app/actions/filters-actions.c:76
 msgctxt "filters-action"
 msgid "L_inear Invert"
 msgstr "L_ineair omkeren"
 
-#: app/actions/filters-actions.c:84
+#: app/actions/filters-actions.c:81
 msgctxt "filters-action"
 msgid "In_vert"
 msgstr "_Omkeren"
 
-#: app/actions/filters-actions.c:89
+#: app/actions/filters-actions.c:86
 msgctxt "filters-action"
 msgid "_Value Invert"
 msgstr "Omkeren op _waarde"
 
-#: app/actions/filters-actions.c:94
+#: app/actions/filters-actions.c:91
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
 msgstr "Contra_st uitrekken HSV"
 
-#: app/actions/filters-actions.c:102
+#: app/actions/filters-actions.c:99
 msgctxt "filters-action"
 msgid "_Dilate"
 msgstr "Lichtere _delen lichter maken"
 
-#: app/actions/filters-actions.c:103
+#: app/actions/filters-actions.c:100
 msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Lichtere delen van het beeld groter maken"
 
-#: app/actions/filters-actions.c:118
+#: app/actions/filters-actions.c:115
 msgctxt "filters-action"
 msgid "_Erode"
 msgstr "Donkere delen donkerder _maken"
 
-#: app/actions/filters-actions.c:119
+#: app/actions/filters-actions.c:116
 msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Donkere delen van het beeld groter maken"
 
-#: app/actions/filters-actions.c:137
+#: app/actions/filters-actions.c:134
 msgctxt "filters-action"
 msgid "_Alien Map..."
 msgstr "Kleurversc_huivingen..."
 
-#: app/actions/filters-actions.c:142
+#: app/actions/filters-actions.c:139
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
 msgstr "C_anvas toepassen..."
 
-#: app/actions/filters-actions.c:147
+#: app/actions/filters-actions.c:144
 msgctxt "filters-action"
 msgid "Apply _Lens..."
 msgstr "_Objectief toepassen..."
 
-#: app/actions/filters-actions.c:152
+#: app/actions/filters-actions.c:149
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
 msgstr "_Bayermatrix..."
 
-#: app/actions/filters-actions.c:157
+#: app/actions/filters-actions.c:154
 msgctxt "filters-action"
 msgid "_Bloom..."
 msgstr "_Bloeien..."
 
-#: app/actions/filters-actions.c:162
+#: app/actions/filters-actions.c:159
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
 msgstr "_Helderheid/contrast..."
 
-#: app/actions/filters-actions.c:167
+#: app/actions/filters-actions.c:164
 msgctxt "filters-action"
 msgid "_Bump Map..."
 msgstr "O_neffenheden aanbrengen..."
 
-#: app/actions/filters-actions.c:172
+#: app/actions/filters-actions.c:169
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "Kleur naar _grijs..."
 
-#: app/actions/filters-actions.c:177
+#: app/actions/filters-actions.c:174
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
 msgstr "Ca_rtoon..."
 
-#: app/actions/filters-actions.c:182
+#: app/actions/filters-actions.c:179
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "Kanalen_mixer..."
 
-#: app/actions/filters-actions.c:187
+#: app/actions/filters-actions.c:184
 msgctxt "filters-action"
 msgid "_Checkerboard..."
 msgstr "S_chaakbord..."
 
-#: app/actions/filters-actions.c:192
+#: app/actions/filters-actions.c:189
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "_Kleurbalans..."
 
-#: app/actions/filters-actions.c:197
+#: app/actions/filters-actions.c:194
 msgctxt "filters-action"
 msgid "_Color Exchange..."
 msgstr "Kleuruit_wisseling..."
 
-#: app/actions/filters-actions.c:202
+#: app/actions/filters-actions.c:199
 msgctxt "filters-action"
 msgid "Colori_ze..."
 msgstr "_Verkleuren..."
 
-#: app/actions/filters-actions.c:207
+#: app/actions/filters-actions.c:204
 msgctxt "filters-action"
 msgid "Dithe_r..."
 msgstr "_Rasteren..."
 
-#: app/actions/filters-actions.c:212
+#: app/actions/filters-actions.c:209
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
 msgstr "Kleuren r_oteren..."
 
-#: app/actions/filters-actions.c:217
+#: app/actions/filters-actions.c:214
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "Kleurt_emperatuur..."
 
-#: app/actions/filters-actions.c:222
+#: app/actions/filters-actions.c:219
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "Kleur naar _alfa..."
 
-#: app/actions/filters-actions.c:227
+#: app/actions/filters-actions.c:224
 msgctxt "filters-action"
 msgid "_Extract Component..."
 msgstr "Extr_aheer component..."
 
-#: app/actions/filters-actions.c:232
+#: app/actions/filters-actions.c:229
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
 msgstr "Convolutiematri_x..."
 
-#: app/actions/filters-actions.c:237
+#: app/actions/filters-actions.c:234
 msgctxt "filters-action"
 msgid "_Cubism..."
 msgstr "_Kubisme..."
 
-#: app/actions/filters-actions.c:242
+#: app/actions/filters-actions.c:239
 msgctxt "filters-action"
 msgid "_Curves..."
 msgstr "_Curves…"
 
-#: app/actions/filters-actions.c:247
+#: app/actions/filters-actions.c:244
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "O_ntvlechten..."
 
-#: app/actions/filters-actions.c:252
+#: app/actions/filters-actions.c:249
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "Naar _grijswaarden..."
 
-#: app/actions/filters-actions.c:257
+#: app/actions/filters-actions.c:254
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
 msgstr "Ga_ussiaanse verschillen..."
 
-#: app/actions/filters-actions.c:262
+#: app/actions/filters-actions.c:259
 msgctxt "filters-action"
 msgid "D_iffraction Patterns..."
 msgstr "D_iffractiepatronen..."
 
-#: app/actions/filters-actions.c:267
+#: app/actions/filters-actions.c:264
 msgctxt "filters-action"
 msgid "_Displace..."
 msgstr "Ver_plaatsen..."
 
-#: app/actions/filters-actions.c:272
+#: app/actions/filters-actions.c:269
 msgctxt "filters-action"
 msgid "Distance _Map..."
 msgstr "Afstands_kaart..."
 
-#: app/actions/filters-actions.c:277
+#: app/actions/filters-actions.c:274
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "_Slagschaduw..."
 
-#: app/actions/filters-actions.c:282
+#: app/actions/filters-actions.c:279
 msgctxt "filters-action"
 msgid "_Edge..."
 msgstr "_Rand..."
 
-#: app/actions/filters-actions.c:287
+#: app/actions/filters-actions.c:284
 msgctxt "filters-action"
 msgid "_Laplace..."
 msgstr "_Laplace..."
 
-#: app/actions/filters-actions.c:292
+#: app/actions/filters-actions.c:289
 msgctxt "filters-action"
 msgid "_Neon..."
 msgstr "_Neon..."
 
-#: app/actions/filters-actions.c:297
+#: app/actions/filters-actions.c:294
 msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "_Sobel..."
 
-#: app/actions/filters-actions.c:302
+#: app/actions/filters-actions.c:299
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "Di_epte..."
 
-#: app/actions/filters-actions.c:307
+#: app/actions/filters-actions.c:304
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "_Graveren..."
 
-#: app/actions/filters-actions.c:312
+#: app/actions/filters-actions.c:309
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "_Belichting..."
 
-#: app/actions/filters-actions.c:317
+#: app/actions/filters-actions.c:314
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
 msgstr "_Fattal et al. 2002…"
 
-#: app/actions/filters-actions.c:322
+#: app/actions/filters-actions.c:319
 msgctxt "filters-action"
 msgid "_Focus Blur..."
 msgstr "_Focus vervaging…"
 
-#: app/actions/filters-actions.c:327
+#: app/actions/filters-actions.c:324
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "F_ractalsporen…"
 
-#: app/actions/filters-actions.c:332
+#: app/actions/filters-actions.c:329
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "_Gaussiaanse vervaging..."
 
-#: app/actions/filters-actions.c:337
+#: app/actions/filters-actions.c:334
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Selectieve Gaussiaanse vervaging..."
 
-#: app/actions/filters-actions.c:342
+#: app/actions/filters-actions.c:339
 msgctxt "filters-action"
 msgid "_GEGL Graph..."
 msgstr "_GEGL-Grafiek..."
 
-#: app/actions/filters-actions.c:347
+#: app/actions/filters-actions.c:344
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Raster..."
 
-#: app/actions/filters-actions.c:352
+#: app/actions/filters-actions.c:349
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "Hoog_doorlaatfilter..."
 
-#: app/actions/filters-actions.c:357
+#: app/actions/filters-actions.c:354
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "Tint/_Chroma..."
 
-#: app/actions/filters-actions.c:362
+#: app/actions/filters-actions.c:359
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "Tint/Ver_zadiging..."
 
-#: app/actions/filters-actions.c:367
+#: app/actions/filters-actions.c:364
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "_Illusie..."
 
-#: app/actions/filters-actions.c:372
+#: app/actions/filters-actions.c:369
 msgctxt "filters-action"
 msgid "_Image Gradient..."
 msgstr "Beeld_verloop..."
 
-#: app/actions/filters-actions.c:377
+#: app/actions/filters-actions.c:374
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "_Caleidoscoop..."
 
-#: app/actions/filters-actions.c:382
+#: app/actions/filters-actions.c:379
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
 msgstr "Le_ns Vervaging..."
 
-#: app/actions/filters-actions.c:387
+#: app/actions/filters-actions.c:384
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
 msgstr "Le_nsvervorming..."
 
-#: app/actions/filters-actions.c:392
+#: app/actions/filters-actions.c:389
 msgctxt "filters-action"
 msgid "Lens _Flare..."
 msgstr "Lens_schittering..."
 
-#: app/actions/filters-actions.c:397
+#: app/actions/filters-actions.c:394
 msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "_Niveaus..."
 
-#: app/actions/filters-actions.c:402
+#: app/actions/filters-actions.c:399
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
 msgstr "_Lineaire sinusoïde..."
 
-#: app/actions/filters-actions.c:407
+#: app/actions/filters-actions.c:404
 msgctxt "filters-action"
 msgid "_Little Planet..."
 msgstr "K_leine Planeet..."
 
-#: app/actions/filters-actions.c:412
+#: app/actions/filters-actions.c:409
 msgctxt "filters-action"
 msgid "_Long Shadow..."
 msgstr "_Lange schaduw..."
 
-#: app/actions/filters-actions.c:417
+#: app/actions/filters-actions.c:414
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006..."
 
-#: app/actions/filters-actions.c:422
+#: app/actions/filters-actions.c:419
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Doolhof..."
 
-#: app/actions/filters-actions.c:427
+#: app/actions/filters-actions.c:424
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
 msgstr "_Mediaanvervaging..."
 
-#: app/actions/filters-actions.c:432
+#: app/actions/filters-actions.c:429
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "Me_diaanvervaging..."
 
-#: app/actions/filters-actions.c:437
+#: app/actions/filters-actions.c:434
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Monochrome mixer..."
 
-#: app/actions/filters-actions.c:442
+#: app/actions/filters-actions.c:439
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "Mo_zaïek..."
 
-#: app/actions/filters-actions.c:447
+#: app/actions/filters-actions.c:444
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Circulaire bewegingsvervaging..."
 
-#: app/actions/filters-actions.c:452
+#: app/actions/filters-actions.c:449
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Lineaire bewegingsvervaging..."
 
-#: app/actions/filters-actions.c:457
+#: app/actions/filters-actions.c:454
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Zoomvervaging..."
 
-#: app/actions/filters-actions.c:462
+#: app/actions/filters-actions.c:459
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Celruis..."
 
-#: app/actions/filters-actions.c:467
+#: app/actions/filters-actions.c:464
 msgctxt "filters-action"
 msgid "_Newsprint..."
 msgstr "Kra_ntendruk..."
 
-#: app/actions/filters-actions.c:472
+#: app/actions/filters-actions.c:469
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
 msgstr "_CIE lch-ruis..."
 
-#: app/actions/filters-actions.c:477
+#: app/actions/filters-actions.c:474
 msgctxt "filters-action"
 msgid "HS_V Noise..."
 msgstr "HS_V-ruis..."
 
-#: app/actions/filters-actions.c:482
+#: app/actions/filters-actions.c:479
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "Goo_ien..."
 
-#: app/actions/filters-actions.c:487
+#: app/actions/filters-actions.c:484
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
 msgstr "Perli_nruis..."
 
 # Waar zit die Pick...?
 # pm
-#: app/actions/filters-actions.c:492
+#: app/actions/filters-actions.c:489
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Pik..."
 
-#: app/actions/filters-actions.c:497
+#: app/actions/filters-actions.c:494
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "_RGB-ruis..."
 
-#: app/actions/filters-actions.c:502
+#: app/actions/filters-actions.c:499
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "Ruisv_ermindering..."
 
-#: app/actions/filters-actions.c:507
+#: app/actions/filters-actions.c:504
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "Simple_x ruis..."
 
-#: app/actions/filters-actions.c:512
+#: app/actions/filters-actions.c:509
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "Bedoe_zelen..."
 
-#: app/actions/filters-actions.c:517
+#: app/actions/filters-actions.c:514
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Solide ruis..."
 
-#: app/actions/filters-actions.c:522
+#: app/actions/filters-actions.c:519
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "Ve_rspreiden..."
 
-#: app/actions/filters-actions.c:527
+#: app/actions/filters-actions.c:524
 msgctxt "filters-action"
 msgid "_Normal Map..."
 msgstr "_Normaal Afbeelden..."
 
-#: app/actions/filters-actions.c:532
+#: app/actions/filters-actions.c:529
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "Ver_schuiving..."
 
-#: app/actions/filters-actions.c:537
+#: app/actions/filters-actions.c:534
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "Olie_verven..."
 
-#: app/actions/filters-actions.c:542
+#: app/actions/filters-actions.c:539
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Panoramaprojectie..."
 
-#: app/actions/filters-actions.c:547
+#: app/actions/filters-actions.c:544
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopie..."
 
-#: app/actions/filters-actions.c:552
+#: app/actions/filters-actions.c:549
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "Verpi_xelen..."
 
-#: app/actions/filters-actions.c:557
+#: app/actions/filters-actions.c:554
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plasma..."
 
-#: app/actions/filters-actions.c:562
+#: app/actions/filters-actions.c:559
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "P_oolcoördinaten..."
 
-#: app/actions/filters-actions.c:567
+#: app/actions/filters-actions.c:564
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posterkleuren..."
 
-#: app/actions/filters-actions.c:572
+#: app/actions/filters-actions.c:569
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "Omgekee_rde transformatie..."
 
-#: app/actions/filters-actions.c:577
+#: app/actions/filters-actions.c:574
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "_Rode ogen verwijderen..."
 
-#: app/actions/filters-actions.c:582
+#: app/actions/filters-actions.c:579
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005..."
 
-#: app/actions/filters-actions.c:587
+#: app/actions/filters-actions.c:584
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "RGB _knippen..."
 
-#: app/actions/filters-actions.c:592
+#: app/actions/filters-actions.c:589
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Rimpeling..."
 
-#: app/actions/filters-actions.c:597
+#: app/actions/filters-actions.c:594
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Verzadiging..."
 
-#: app/actions/filters-actions.c:602
+#: app/actions/filters-actions.c:599
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Semi-vlak maken..."
 
-#: app/actions/filters-actions.c:607
+#: app/actions/filters-actions.c:604
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia..."
 
-#: app/actions/filters-actions.c:612
+#: app/actions/filters-actions.c:609
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "Sc_haduwen/hoge lichten..."
 
-#: app/actions/filters-actions.c:617
+#: app/actions/filters-actions.c:614
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "Versc_huiving..."
 
-#: app/actions/filters-actions.c:622
+#: app/actions/filters-actions.c:619
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "Sinus_oïde..."
 
-#: app/actions/filters-actions.c:627
+#: app/actions/filters-actions.c:624
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "Lineair _clusteren..."
 
-#: app/actions/filters-actions.c:632
+#: app/actions/filters-actions.c:629
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Symmetrisch naaste buur..."
 
-#: app/actions/filters-actions.c:637
+#: app/actions/filters-actions.c:634
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Zachte gloed..."
 
-#: app/actions/filters-actions.c:642
+#: app/actions/filters-actions.c:639
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "_Bolprojectie..."
 
-#: app/actions/filters-actions.c:647
+#: app/actions/filters-actions.c:644
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "S_piraal..."
 
-#: app/actions/filters-actions.c:652
+#: app/actions/filters-actions.c:649
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "Contrast _uitrekken..."
 
-#: app/actions/filters-actions.c:657
+#: app/actions/filters-actions.c:654
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Stress..."
 
-#: app/actions/filters-actions.c:662
+#: app/actions/filters-actions.c:659
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nova..."
 
-#: app/actions/filters-actions.c:667
+#: app/actions/filters-actions.c:664
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Drempelwaarde..."
 
-#: app/actions/filters-actions.c:672
+#: app/actions/filters-actions.c:669
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "Alfa_drempel..."
 
-#: app/actions/filters-actions.c:677
+#: app/actions/filters-actions.c:674
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Glazen tegel..."
 
-#: app/actions/filters-actions.c:682
+#: app/actions/filters-actions.c:679
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Papieren tegel..."
 
-#: app/actions/filters-actions.c:687
+#: app/actions/filters-actions.c:684
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Naadloos tegelen..."
 
-#: app/actions/filters-actions.c:692
+#: app/actions/filters-actions.c:689
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Verscherpen (_Onscherp masker)..."
 
-#: app/actions/filters-actions.c:697
+#: app/actions/filters-actions.c:694
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Waarde_doorgifte..."
 
-#: app/actions/filters-actions.c:702
+#: app/actions/filters-actions.c:699
 msgctxt "filters-action"
 msgid "_Variable Blur..."
 msgstr "_Variabele vervaging..."
 
-#: app/actions/filters-actions.c:707
+#: app/actions/filters-actions.c:704
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "V_ideodegradatie..."
 
-#: app/actions/filters-actions.c:712
+#: app/actions/filters-actions.c:709
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Vignettering..."
 
-#: app/actions/filters-actions.c:717
+#: app/actions/filters-actions.c:714
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Waterpixels..."
 
-#: app/actions/filters-actions.c:722
+#: app/actions/filters-actions.c:719
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Golven..."
 
-#: app/actions/filters-actions.c:727
+#: app/actions/filters-actions.c:724
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "Golven en _indrukken..."
 
-#: app/actions/filters-actions.c:732
+#: app/actions/filters-actions.c:729
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "W_ind..."
 
-#: app/actions/filters-actions.c:740
+#: app/actions/filters-actions.c:737
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "Laatste _herhalen"
 
-#: app/actions/filters-actions.c:742
+#: app/actions/filters-actions.c:739
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "De laatst gebruikte plug-in opnieuw uitvoeren met dezelfde instellingen"
 
-#: app/actions/filters-actions.c:747
+#: app/actions/filters-actions.c:744
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "Laatste _opnieuw tonen"
 
-#: app/actions/filters-actions.c:748
+#: app/actions/filters-actions.c:745
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Het dialoogvenster van de laatst gebruikte plug-in opnieuw tonen"
@@ -5084,30 +5084,30 @@ msgstr "Het dialoogvenster van de laatst gebruikte plug-in opnieuw tonen"
 #. * which we append "..." as the standardized labelling to indicate
 #. * that this action raises a dialog.
 #.
-#: app/actions/filters-actions.c:879
+#: app/actions/filters-actions.c:876
 #, c-format
 msgid "%s..."
 msgstr "%s..."
 
-#: app/actions/filters-actions.c:1216
+#: app/actions/filters-actions.c:1213
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "\"%s\" herhalen"
 
-#: app/actions/filters-actions.c:1217
+#: app/actions/filters-actions.c:1214
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Opni_euw tonen \"%s\""
 
-#: app/actions/filters-actions.c:1255
+#: app/actions/filters-actions.c:1252
 msgid "Repeat Last"
 msgstr "Laatste herhalen"
 
-#: app/actions/filters-actions.c:1257
+#: app/actions/filters-actions.c:1254
 msgid "Re-Show Last"
 msgstr "Laatste opnieuw tonen"
 
-#: app/actions/filters-actions.c:1260 app/actions/filters-actions.c:1262
+#: app/actions/filters-actions.c:1257 app/actions/filters-actions.c:1259
 msgid "No last used filters"
 msgstr "Geen laatst gebruikte filters"
 
@@ -10591,7 +10591,7 @@ msgstr "Fout tijdens verwerken '%%s': regel langer dan %s karakters."
 
 #: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206
 #: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145
-#: app/gui/themes.c:722 app/tools/gimpfiltertool-settings.c:229
+#: app/gui/themes.c:719 app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Fout bij schrijven naar ‘%s’: %s"
@@ -12847,22 +12847,22 @@ msgid ""
 "mandatory."
 msgstr "<requires><id>org.gimp.GIMP</id></requires> voor versievergelijking is vereist."
 
-#: app/core/gimpextension.c:835
+#: app/core/gimpextension.c:831
 #, c-format
 msgid "'%s' is not a relative path."
 msgstr "‘%s’ is geen relatief pad."
 
-#: app/core/gimpextension.c:869
+#: app/core/gimpextension.c:847
 #, c-format
 msgid "'%s' is not a child of the extension."
 msgstr "‘%s’ is geen afstammeling van de extensie."
 
-#: app/core/gimpextension.c:883
+#: app/core/gimpextension.c:863
 #, c-format
 msgid "'%s' is not a directory."
 msgstr "‘%s’ is geen map."
 
-#: app/core/gimpextension.c:897
+#: app/core/gimpextension.c:877
 #, c-format
 msgid "'%s' is not a valid file."
 msgstr "‘%s’ is geen geldig bestand."
@@ -12872,12 +12872,12 @@ msgstr "‘%s’ is geen geldig bestand."
 msgid "System extensions cannot be uninstalled."
 msgstr "Systeemuitbreidingen kunnen niet worden gedeïnstalleerd."
 
-#: app/core/gimpextensionmanager.c:1053
+#: app/core/gimpextensionmanager.c:1052
 #, c-format
 msgid "Skipping extension '%s': %s\n"
 msgstr "Extensie overgeslagen ‘%s’: %s\n"
 
-#: app/core/gimpextensionmanager.c:1061
+#: app/core/gimpextensionmanager.c:1060
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr "Onbekend bestand ‘%s’ in uitbreidingsmap overgeslagen.\n"
@@ -12950,7 +12950,7 @@ msgstr "Kon dochterproces \"%s\" (%s) niet uitvoeren"
 msgid "tags-locale:C"
 msgstr "tags-locale:nl"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:734
+#: app/core/gimp-tags.c:156 app/gui/themes.c:731
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Fout bij het sluiten van ‘%s’: %s"
@@ -12992,23 +12992,23 @@ msgstr "Kan map ‘%s’ niet aanmaken: %s"
 msgid "No patterns available for this operation."
 msgstr "Geen patronen beschikbaar voor deze bewerking."
 
-#: app/core/gimp-utils.c:1136
+#: app/core/gimp-utils.c:1170
 #, c-format
 msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
 msgstr "Fatale fout bij parsen in Photoshop bronbestand: RLE gecomprimeerde gegevens zijn corrupt."
 
-#: app/core/gimp-utils.c:1793
+#: app/core/gimp-utils.c:1827
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "Deze parser ondersteunt geen overlappende lijsten."
 
-#: app/core/gimp-utils.c:1816
+#: app/core/gimp-utils.c:1850
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> moet tussen <ol> of <ul> labels."
 
-#: app/core/gimp-utils.c:1821
+#: app/core/gimp-utils.c:1855
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Onbekend label <%s>."
@@ -13441,8 +13441,8 @@ msgstr "Patroon"
 
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
 #: app/core/gimpgradient.c:125 app/pdb/drawable-edit-cmds.c:255
-#: app/tools/gimpgradientoptions.c:269 app/tools/gimpgradienttool.c:166
-#: app/tools/gimppaintoptions-gui.c:385
+#: app/tools/gimpgradientoptions.c:286 app/tools/gimpgradienttool.c:174
+#: app/tools/gimpgradienttool.c:862 app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "Kleurverlopen"
 
@@ -13532,7 +13532,7 @@ msgstr "Fout bij het laden van ‘%s’"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:361 app/file-data/file-data-gex.c:511
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:406
+#: app/xcf/xcf.c:404
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Kon ‘%s’ niet openen om te lezen: "
@@ -13598,7 +13598,7 @@ msgid "Merge filter"
 msgstr "Filter samenvoegen"
 
 #: app/core/gimpdrawable-gradient.c:125 app/core/gimpdrawable-gradient.c:137
-#: app/tools/gimpgradienttool.c:1105
+#: app/tools/gimpgradienttool.c:1185 app/tools/gimpgradienttool.c:1232
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "Kleurverloop"
@@ -13882,7 +13882,7 @@ msgid "Symmetry"
 msgstr "Symmetrie"
 
 #: app/core/gimpimage.c:2090 app/pdb/drawable-filter-cmds.c:661
-#: app/widgets/gimpdrawabletreeview-filters.c:796
+#: app/widgets/gimpdrawabletreeview-filters.c:838
 msgid "Remove filter"
 msgstr "Filter verwijderen"
 
@@ -14195,7 +14195,7 @@ msgstr "Afbeelding converteren naar %s"
 #: app/core/gimpimage-convert-precision.c:219
 #: app/dialogs/convert-indexed-dialog.c:240
 #: app/dialogs/convert-precision-dialog.c:212
-#: app/tools/gimpgradientoptions.c:129
+#: app/tools/gimpgradientoptions.c:130
 msgid "Dithering"
 msgstr "Rasteren"
 
@@ -14290,7 +14290,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "Kan niet naar een laaggroep samenvoegen."
 
 #: app/core/gimpimage-merge.c:362
-#: app/widgets/gimpdrawabletreeview-filters.c:767
+#: app/widgets/gimpdrawabletreeview-filters.c:809
 msgid "The layer to merge down to is locked."
 msgstr "De samen te voegen laag is vergrendeld."
 
@@ -14416,7 +14416,7 @@ msgstr "Kon miniatuurbestand ‘%s’ niet openen: %s"
 
 #: app/core/gimpitem.c:1858 app/core/gimpitem.c:1925
 #: app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730
-#: app/widgets/gimpdrawabletreeview-filters.c:637
+#: app/widgets/gimpdrawabletreeview-filters.c:639
 msgid "A selected layer's pixels are locked."
 msgstr "De pixels van een geselecteerde laag zijn vergrendeld."
 
@@ -15738,7 +15738,7 @@ msgstr "Codering conversie"
 #. gamma
 #: app/dialogs/convert-precision-dialog.c:176
 #: app/operations/gimplevelsconfig.c:160 app/operations/gimplevelsconfig.c:161
-#: app/tools/gimplevelstool.c:512
+#: app/tools/gimplevelstool.c:520
 msgid "Gamma"
 msgstr "Gamma"
 
@@ -16065,8 +16065,8 @@ msgstr "Afbeeldingsinfo"
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
 #: app/dialogs/welcome-dialog.c:207 app/tools/gimpcolorpickertool.c:352
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:741
-#: app/widgets/gimpcontrollerlist.c:652 app/widgets/gimpcriticaldialog.c:220
-#: app/widgets/gimpcriticaldialog.c:242 app/widgets/gimpsettingsbox.c:642
+#: app/widgets/gimpcontrollerlist.c:652 app/widgets/gimpcriticaldialog.c:222
+#: app/widgets/gimpcriticaldialog.c:244 app/widgets/gimpsettingsbox.c:642
 #: app/widgets/gimptexteditor.c:164
 msgid "_Close"
 msgstr "_Sluiten"
@@ -17242,7 +17242,7 @@ msgid "Use symbolic icons if available"
 msgstr "Symbolische pictogrammen gebruiken indien beschikbaar"
 
 #: app/dialogs/preferences-dialog.c:2265 app/dialogs/preferences-dialog.c:2266
-#: app/widgets/gimptoolbox.c:546
+#: app/widgets/gimptoolbox.c:547
 msgid "Toolbox"
 msgstr "Gereedschapskist"
 
@@ -17759,7 +17759,7 @@ msgstr "_Bij indrukken van spatiebalk:"
 #. Zoom by drag Behavior
 #: app/dialogs/preferences-dialog.c:3028 app/tools/gimpmagnifytool.c:93
 msgid "Zoom"
-msgstr "Vergrootglas"
+msgstr "Zoomen"
 
 #: app/dialogs/preferences-dialog.c:3034
 msgid "Dra_g-to-zoom behavior:"
@@ -18328,7 +18328,7 @@ msgstr "Sjabloon en afdrukresolutie van de afbeelding komen niet overeen.\n"
 #. The offset frame
 #. offset frame
 #: app/dialogs/resize-dialog.c:379 app/operations/gimpoperationoffset.c:119
-#: app/tools/gimpgradientoptions.c:89 app/tools/gimpoffsettool.c:130
+#: app/tools/gimpgradientoptions.c:90 app/tools/gimpoffsettool.c:130
 #: app/tools/gimpoffsettool.c:472 app/tools/gimptransform3dtool.c:342
 #: app/widgets/gimpgrideditor.c:216
 msgid "Offset"
@@ -18835,7 +18835,7 @@ msgstr "Verplaatsen"
 #: app/display/display-enums.c:618
 msgctxt "modifier-action"
 msgid "Zoom"
-msgstr "Vergrootglas"
+msgstr "Zoomen"
 
 #: app/display/display-enums.c:619
 msgctxt "modifier-action"
@@ -19016,7 +19016,7 @@ msgid "Drop New Path"
 msgstr "Nieuw pad neerzetten"
 
 #: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimpbucketfilltool.c:613
-#: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
+#: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:287
 #: app/tools/gimpselectiontool.c:568
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
@@ -19024,7 +19024,7 @@ msgstr "Kan de beeldpunten van laaggroepen niet wijzigen."
 
 #: app/display/gimpdisplayshell-dnd.c:393 app/tools/gimpfiltertool.c:340
 #: app/tools/gimppainttool.c:355 app/tools/gimptransformtool.c:739
-#: app/widgets/gimpdrawabletreeview-filters.c:630
+#: app/widgets/gimpdrawabletreeview-filters.c:632
 msgid "A selected layer is not visible."
 msgstr "Een geselecteerde laag is niet zichtbaar."
 
@@ -19765,19 +19765,19 @@ msgstr "Negatieve X-verplaatsing: %d van laag %s gecorrigeerd."
 msgid "Negative y offset: %d for layer %s corrected."
 msgstr "Negatieve Y-verplaatsing: %d van laag %s gecorrigeerd."
 
-#: app/file-data/file-data.c:61 app/file-data/file-data.c:118
+#: app/file-data/file-data.c:60 app/file-data/file-data.c:116
 msgid "GIMP brush"
 msgstr "GIMP-penseel"
 
-#: app/file-data/file-data.c:195 app/file-data/file-data.c:249
+#: app/file-data/file-data.c:192 app/file-data/file-data.c:245
 msgid "GIMP brush (animated)"
 msgstr "GIMP-penseel (bewegend)"
 
-#: app/file-data/file-data.c:333 app/file-data/file-data.c:386
+#: app/file-data/file-data.c:328 app/file-data/file-data.c:380
 msgid "GIMP pattern"
 msgstr "GIMP patroon"
 
-#: app/file-data/file-data.c:457
+#: app/file-data/file-data.c:450
 msgid "GIMP extension"
 msgstr "GIMP-uitbreiding"
 
@@ -19787,7 +19787,7 @@ msgstr "GIMP-uitbreiding"
 #: app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195
 #: app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198
 #: app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201
-#: app/plug-in/gimppluginprocedure.c:1045
+#: app/plug-in/gimppluginprocedure.c:1166
 msgid "RGB"
 msgstr "RGB"
 
@@ -19806,7 +19806,7 @@ msgstr "RGB-alfa"
 #: app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233
 #: app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236
 #: app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239
-#: app/plug-in/gimppluginprocedure.c:1063
+#: app/plug-in/gimppluginprocedure.c:1184
 msgid "Grayscale"
 msgstr "Grijswaarden"
 
@@ -19859,7 +19859,7 @@ msgstr "Alfacomponent"
 msgid "Indexed-alpha"
 msgstr "Geïndexeerd-alfa"
 
-#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1081
+#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1202
 msgid "Indexed"
 msgstr "Geïndexeerd"
 
@@ -20512,7 +20512,7 @@ msgstr "Wegschrijven curvebestand is mislukt: "
 
 #: app/operations/gimpcurvesconfig.c:805 app/operations/gimpcurvesconfig.c:808
 #: app/tools/gimpcurvestool.c:761 app/tools/gimpcurvestool.c:764
-#: app/tools/gimplevelstool.c:754 app/tools/gimplevelstool.c:757
+#: app/tools/gimplevelstool.c:805 app/tools/gimplevelstool.c:808
 #, c-format
 msgid "Could not read header: "
 msgstr "Kon header niet lezen: "
@@ -20679,7 +20679,7 @@ msgstr "Tint/verzadiging"
 msgid "Adjust hue, saturation, and lightness"
 msgstr "Tint, verzadiging en lichtheid aanpassen"
 
-#: app/operations/gimpoperationlevels.c:65 app/tools/gimplevelstool.c:136
+#: app/operations/gimpoperationlevels.c:65 app/tools/gimplevelstool.c:142
 msgid "Adjust color levels"
 msgstr "Kleurniveaus aanpassen"
 
@@ -20730,7 +20730,7 @@ msgstr "Hoe snijden"
 
 #: app/operations/gimpoperationthreshold.c:88
 #: app/tools/gimpbucketfilloptions.c:207 app/tools/gimpbucketfilloptions.c:229
-#: app/tools/gimpgradientoptions.c:122 app/tools/gimpregionselectoptions.c:113
+#: app/tools/gimpgradientoptions.c:123 app/tools/gimpregionselectoptions.c:113
 #: app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Drempelwaarde"
@@ -20807,7 +20807,7 @@ msgstr "Documenten"
 msgid "GIMP Startup"
 msgstr "Opstarten van GIMP"
 
-#: app/gui/themes.c:521
+#: app/gui/themes.c:518
 #, c-format
 msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
@@ -20926,8 +20926,8 @@ msgid "Tilt"
 msgstr "Helling"
 
 #. Blob shape widgets
-#: app/paint/gimpinkoptions.c:107 app/tools/gimpgradientoptions.c:95
-#: app/tools/gimpgradientoptions.c:288 app/tools/gimpinkoptions-gui.c:99
+#: app/paint/gimpinkoptions.c:107 app/tools/gimpgradientoptions.c:96
+#: app/tools/gimpgradientoptions.c:305 app/tools/gimpinkoptions-gui.c:99
 msgid "Shape"
 msgstr "Vorm"
 
@@ -21154,7 +21154,7 @@ msgstr "In omgekeerde richting uitvloeien"
 
 # herhalen
 #: app/paint/gimppaintoptions.c:380 app/paint/gimppaintoptions.c:400
-#: app/tools/gimpgradientoptions.c:307 app/tools/gimppaintoptions-gui.c:365
+#: app/tools/gimpgradientoptions.c:324 app/tools/gimppaintoptions-gui.c:365
 msgid "Repeat"
 msgstr "Herhalen"
 
@@ -21162,7 +21162,7 @@ msgstr "Herhalen"
 msgid "How fade is repeated as you paint"
 msgstr "Manier waarop uitvloeien wordt herhaald tijdens het schilderen"
 
-#: app/paint/gimppaintoptions.c:393 app/tools/gimpgradientoptions.c:282
+#: app/paint/gimppaintoptions.c:393 app/tools/gimpgradientoptions.c:299
 #: app/tools/gimppaintoptions-gui.c:398
 msgid "Blend Color Space"
 msgstr "Kleurruimte mengen"
@@ -22009,7 +22009,7 @@ msgstr "Padlijn toevoegen"
 msgid "Extend path stroke"
 msgstr "Padlijn uitbreiden"
 
-#: app/pdb/pdb-cmds.c:1193 app/pdb/pdb-cmds.c:1235
+#: app/pdb/pdb-cmds.c:1277 app/pdb/pdb-cmds.c:1319
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Gegevenslabel ‘%s’ is geen bekende naam"
@@ -22081,7 +22081,7 @@ msgstr "Verwijzing naar foutieve interpreter in interpreter-bestand %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Foutieve binaire opmaaktekenreeks in interpreter-bestand %s"
 
-#: app/plug-in/gimpplugin.c:258
+#: app/plug-in/gimpplugin.c:260
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -22123,9 +22123,9 @@ msgstr "Plug-in-interpreters"
 msgid "Plug-in Environment"
 msgstr "Plug-in-omgeving"
 
-#: app/plug-in/gimppluginmanager-call.c:200
-#: app/plug-in/gimppluginmanager-call.c:273
-#: app/plug-in/gimppluginmanager-call.c:373
+#: app/plug-in/gimppluginmanager-call.c:204
+#: app/plug-in/gimppluginmanager-call.c:277
+#: app/plug-in/gimppluginmanager-call.c:377
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr "Plug-in ‘%s’ kon niet worden uitgevoerd"
@@ -22134,71 +22134,71 @@ msgstr "Plug-in ‘%s’ kon niet worden uitgevoerd"
 msgid "Unknown file type"
 msgstr "Onbekend bestandstype"
 
-#: app/plug-in/gimppluginmanager-restore.c:213
+#: app/plug-in/gimppluginmanager-restore.c:216
 msgid "Loading extension plug-ins"
 msgstr "Laden van uitbreidingen-plug-ins"
 
-#: app/plug-in/gimppluginmanager-restore.c:233
+#: app/plug-in/gimppluginmanager-restore.c:250
 msgid "Searching plug-ins"
 msgstr "Opzoeken plug-ins"
 
-#: app/plug-in/gimppluginmanager-restore.c:358
+#: app/plug-in/gimppluginmanager-restore.c:375
 #, c-format
 msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
 "subdirectories.\n"
 msgstr "Potentiële plug-in ‘%s’ overgeslagen: plug-ins moeten geïnstalleerd zijn in submappen.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:365
+#: app/plug-in/gimppluginmanager-restore.c:382
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
 msgstr "Onbekend bestand ‘%s’ in plug-in map overgeslagen.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:412
+#: app/plug-in/gimppluginmanager-restore.c:429
 msgid "Resource configuration"
 msgstr "Bronconfiguratie"
 
-#: app/plug-in/gimppluginmanager-restore.c:448
+#: app/plug-in/gimppluginmanager-restore.c:465
 msgid "Querying new Plug-ins"
 msgstr "Nieuwe plug-ins worden opgevraagd"
 
-#: app/plug-in/gimppluginmanager-restore.c:502
+#: app/plug-in/gimppluginmanager-restore.c:519
 msgid "Initializing Plug-ins"
 msgstr "Plug-ins worden geïnitialiseerd"
 
-#: app/plug-in/gimppluginmanager-restore.c:575
+#: app/plug-in/gimppluginmanager-restore.c:592
 msgid "Starting Extensions"
 msgstr "Uitbreidingen starten"
 
-#: app/plug-in/gimppluginprocedure.c:1049
+#: app/plug-in/gimppluginprocedure.c:1170
 msgid "RGB without alpha"
 msgstr "RGB zonder alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1053
+#: app/plug-in/gimppluginprocedure.c:1174
 msgid "RGB with alpha"
 msgstr "RGB met alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1067
+#: app/plug-in/gimppluginprocedure.c:1188
 msgid "Grayscale without alpha"
 msgstr "Grijswaarden zonder alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1071
+#: app/plug-in/gimppluginprocedure.c:1192
 msgid "Grayscale with alpha"
 msgstr "Grijswaarden met alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1085
+#: app/plug-in/gimppluginprocedure.c:1206
 msgid "Indexed without alpha"
 msgstr "Geïndexeerd zonder alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1089
+#: app/plug-in/gimppluginprocedure.c:1210
 msgid "Indexed with alpha"
 msgstr "Geïndexeerd met alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1100
+#: app/plug-in/gimppluginprocedure.c:1221
 msgid "This plug-in only works on the following layer types:"
 msgstr "Deze plug-in werkt alleen op de volgende laagsoorten:"
 
-#: app/plug-in/gimppluginprocedure.c:1465
+#: app/plug-in/gimppluginprocedure.c:1586
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22206,7 +22206,7 @@ msgid ""
 msgstr "Aanroepfout voor ‘%s’:\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1477
+#: app/plug-in/gimppluginprocedure.c:1598
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22224,12 +22224,12 @@ msgstr "‘%s’ wordt overgeslagen: verkeerde GIMP-protocolversie."
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "‘%s’ wordt overgeslagen: verkeerd pluginrc bestandsformaat."
 
-#: app/plug-in/plug-in-rc.c:552
+#: app/plug-in/plug-in-rc.c:591
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "ongeldige waarde ‘%s’ voor pictogramtype"
 
-#: app/plug-in/plug-in-rc.c:567
+#: app/plug-in/plug-in-rc.c:606
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "ongeldige waarde '%ld' voor pictogramtype"
@@ -22250,7 +22250,7 @@ msgstr "Kanaal Blauw"
 msgid "Select Range to Adjust"
 msgstr "Bereik selecteren om aan te passen"
 
-#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:266
+#: app/propgui/gimppropgui-color-balance.c:98 app/tools/gimplevelstool.c:272
 msgid "Adjust Color Levels"
 msgstr "Kleurniveaus aanpassen"
 
@@ -22417,7 +22417,7 @@ msgstr "Primaire kleur selecteren om aan te passen"
 # Overheen leggen/overlapping
 #: app/propgui/gimppropgui-hue-saturation.c:229
 msgid "_Overlap"
-msgstr "_Overlapping"
+msgstr "_Overlappen"
 
 #: app/propgui/gimppropgui-hue-saturation.c:232
 msgid "Adjust Selected Color"
@@ -23086,7 +23086,7 @@ msgstr "Kan meerdere lagen niet vullen. Selecteer slechts een laag."
 
 #: app/tools/gimpbucketfilltool.c:601 app/tools/gimpcagetool.c:231
 #: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:317
-#: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:207
+#: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:213
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:300
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
@@ -23436,7 +23436,7 @@ msgid "_Curves..."
 msgstr "_Curves…"
 
 #: app/tools/gimpcurvestool.c:215 app/tools/gimpfiltertool.c:313
-#: app/tools/gimplevelstool.c:205 app/tools/gimpoffsettool.c:189
+#: app/tools/gimplevelstool.c:211 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr "Kan meerdere tekenbare objecten niet aanpassen. Selecteer er slechts een."
@@ -23467,13 +23467,13 @@ msgstr "%s: voeg controlepunten toe aan alle kanalen"
 msgid "Adjust Color Curves"
 msgstr "Kleurcurves aanpassen"
 
-#: app/tools/gimpcurvestool.c:481 app/tools/gimplevelstool.c:362
+#: app/tools/gimpcurvestool.c:481 app/tools/gimplevelstool.c:369
 #: app/tools/gimpthresholdtool.c:247
 msgid "Cha_nnel:"
 msgstr "_Kanaal:"
 
 # opnieuw instellen/herstellen
-#: app/tools/gimpcurvestool.c:510 app/tools/gimplevelstool.c:389
+#: app/tools/gimpcurvestool.c:510 app/tools/gimplevelstool.c:396
 msgid "R_eset Channel"
 msgstr "Kanaal _terugzetten"
 
@@ -23563,7 +23563,7 @@ msgstr "Er is geen laag om te verplaatsen."
 msgid "The selected layer's position is locked."
 msgstr "De positie van een geselecteerde laag is vergrendeld."
 
-#: app/tools/gimpeditselectiontool.c:1325 app/tools/gimpgradienttool.c:283
+#: app/tools/gimpeditselectiontool.c:1325 app/tools/gimpgradienttool.c:294
 #: app/tools/gimpmovetool.c:350
 msgid "The selected layer's pixels are locked."
 msgstr "De beeldpunten van de actieve lagen zijn vergrendeld."
@@ -23653,17 +23653,17 @@ msgid "Disabled because this filter depends on another image."
 msgstr "Uitgeschakeld, omdat deze afbeelding afhankelijk is van een andere afbeelding."
 
 #: app/tools/gimpfiltertool.c:459
-#: app/widgets/gimpdrawabletreeview-filters.c:491
+#: app/widgets/gimpdrawabletreeview-filters.c:493
 msgid "Disabled because filters cannot be merged on vector layers."
 msgstr "Uitgeschakeld, omdat filters niet kunnen worden samengevoegd op vectorlagen."
 
 #: app/tools/gimpfiltertool.c:461
-#: app/widgets/gimpdrawabletreeview-filters.c:494
+#: app/widgets/gimpdrawabletreeview-filters.c:496
 msgid "Disabled because filters cannot be merged on link layers."
 msgstr "Uitgeschakeld, omdat filters niet kunnen worden samengevoegd op koppelingslagen."
 
 #: app/tools/gimpfiltertool.c:463
-#: app/widgets/gimpdrawabletreeview-filters.c:497
+#: app/widgets/gimpdrawabletreeview-filters.c:499
 msgid "Disabled because filters cannot be merged on text layers."
 msgstr "Uitgeschakeld, omdat filters op tekstlagen niet kunnen worden samengevoegd."
 
@@ -23697,7 +23697,7 @@ msgstr "%s: wisselen origineel en gefilterde"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: wisselen horizontaal en verticaal"
 
-#: app/tools/gimpfiltertool.c:1284
+#: app/tools/gimpfiltertool.c:1284 app/tools/gimpgradienttool.c:835
 msgid "Edit filter"
 msgstr "Filter bewerken"
 
@@ -23716,7 +23716,7 @@ msgstr "Importeren ‘%s’-instellingen"
 msgid "Export '%s' Settings"
 msgstr "Exporteren ‘%s’-instellingen"
 
-#: app/tools/gimpfiltertool.c:2242
+#: app/tools/gimpfiltertool.c:2242 app/tools/gimpgradienttool.c:1362
 #, c-format
 msgid "Editing '%s'..."
 msgstr "Bewerken ‘%s’…"
@@ -23961,84 +23961,92 @@ msgstr "Transformatiematrix"
 msgid "Invalid transform"
 msgstr "Ongeldige transformatie"
 
-#: app/tools/gimpgradientoptions.c:102 app/tools/gimpgradientoptions.c:296
+#: app/tools/gimpgradientoptions.c:103 app/tools/gimpgradientoptions.c:313
 msgid "Metric"
 msgstr "Eenheid"
 
-#: app/tools/gimpgradientoptions.c:103
+#: app/tools/gimpgradientoptions.c:104
 msgid "Metric to use for the distance calculation"
 msgstr "Eenheid om afstand in uit te drukken"
 
-#: app/tools/gimpgradientoptions.c:110
+#: app/tools/gimpgradientoptions.c:111
 msgid "Adaptive Supersampling"
 msgstr "Adaptieve overbemonstering"
 
-#: app/tools/gimpgradientoptions.c:116
+#: app/tools/gimpgradientoptions.c:117
 msgid "Max depth"
 msgstr "Maximumdiepte"
 
-#: app/tools/gimpgradientoptions.c:136
+#: app/tools/gimpgradientoptions.c:137
 msgid "Instant mode"
 msgstr "Instantmodus"
 
-#: app/tools/gimpgradientoptions.c:137
+#: app/tools/gimpgradientoptions.c:138
 msgid "Commit gradient instantly"
 msgstr "Kleurverloop direct toepassen"
 
-#: app/tools/gimpgradientoptions.c:143
+#: app/tools/gimpgradientoptions.c:144
 msgid "Modify active gradient"
 msgstr "Wijzigen actief kleurverloop"
 
-#: app/tools/gimpgradientoptions.c:144
+#: app/tools/gimpgradientoptions.c:145
 msgid "Modify the active gradient in-place"
 msgstr "Wijzigen actief kleurverloop ter plekke"
 
-#: app/tools/gimpgradientoptions.c:275 app/tools/gimppaintoptions-gui.c:391
+#: app/tools/gimpgradientoptions.c:151
+msgid "Editable gradient"
+msgstr "Te bewerken kleurverloop"
+
+#: app/tools/gimpgradientoptions.c:152
+msgid "Adds the gradient to the filters on the active layer"
+msgstr "Voegt het kleurverloop toe aan de filters voor de actieve laag"
+
+#: app/tools/gimpgradientoptions.c:292 app/tools/gimppaintoptions-gui.c:391
 msgid "Edit this gradient"
 msgstr "Dit kleurverloop bewerken"
 
 #. the instant toggle
-#: app/tools/gimpgradientoptions.c:342
+#: app/tools/gimpgradientoptions.c:364
 #, c-format
 msgid "Instant mode  (%s)"
 msgstr "Instantmodus (%s)"
 
-#: app/tools/gimpgradientoptions.c:360
+#: app/tools/gimpgradientoptions.c:382
 msgid ""
 "The active gradient is non-writable and cannot be edited directly. Uncheck "
 "this option to edit a copy of it."
 msgstr "Het actieve kleurverloop is niet te beschrijven en kan niet direct worden bewerkt. Deselecteer deze optie om een kopie ervan te bewerken."
 
-#: app/tools/gimpgradienttool.c:167
+#: app/tools/gimpgradienttool.c:175
 msgid "Gradient Tool: Fill selected area with a color gradient"
 msgstr "Kleurverloop: geselecteerd gebied met een kleurverloop vullen"
 
-#: app/tools/gimpgradienttool.c:168
+#: app/tools/gimpgradienttool.c:176
 msgid "Gra_dient"
 msgstr "Kleurverloop"
 
-#: app/tools/gimpgradienttool.c:225
+#: app/tools/gimpgradienttool.c:235
 msgid "Click-Drag to draw a gradient"
 msgstr "Klik en sleep om een kleurverloop te maken"
 
-#: app/tools/gimpgradienttool.c:260
+#: app/tools/gimpgradienttool.c:271
 msgid "Cannot paint on multiple drawables. Select only one."
 msgstr "Kan niet tekenen op meerdere tekenbare objecten. Selecteer er slechts een."
 
-#: app/tools/gimpgradienttool.c:262 app/tools/gimppaintselecttool.c:412
+#: app/tools/gimpgradienttool.c:273 app/tools/gimppaintselecttool.c:412
 #: app/tools/gimpwarptool.c:781
 msgid "No active drawables."
 msgstr "Geen actief tekengebied."
 
-#: app/tools/gimpgradienttool.c:293 app/tools/gimpwarptool.c:822
+#: app/tools/gimpgradienttool.c:304 app/tools/gimpwarptool.c:822
 msgid "The selected item is not visible."
 msgstr "Het geselecteerde object is niet zichtbaar."
 
-#: app/tools/gimpgradienttool.c:300
+#: app/tools/gimpgradienttool.c:311
 msgid "No gradient available for use with this tool."
 msgstr "Er zijn geen verlopen beschikbaar voor dit gereedschap."
 
-#: app/tools/gimpgradienttool.c:660
+#: app/tools/gimpgradienttool.c:690
 msgid "Gradient: "
 msgstr "Kleurverloop: "
 
@@ -24306,70 +24314,70 @@ msgstr "Klik of klik en sleep om een punt toe te voegen"
 msgid "Modify Scissors Curve"
 msgstr "Schaarcurve wijzigen"
 
-#: app/tools/gimplevelstool.c:137
+#: app/tools/gimplevelstool.c:143
 msgid "_Levels..."
 msgstr "_Niveaus..."
 
-#: app/tools/gimplevelstool.c:290
+#: app/tools/gimplevelstool.c:296
 msgid "Pick black point for all channels"
 msgstr "Kies zwartpunt voor alle kanalen"
 
-#: app/tools/gimplevelstool.c:292
+#: app/tools/gimplevelstool.c:298
 msgid "Pick black point for the selected channel"
 msgstr "Kies zwartpunt voor het geselecteerde kanaal"
 
-#: app/tools/gimplevelstool.c:299
+#: app/tools/gimplevelstool.c:305
 msgid "Pick gray point for all channels"
 msgstr "Kies grijspunt voor alle kanalen"
 
-#: app/tools/gimplevelstool.c:301
+#: app/tools/gimplevelstool.c:307
 msgid "Pick gray point for the selected channel"
 msgstr "Kies grijspunt voor het geselecteerde kanaal"
 
-#: app/tools/gimplevelstool.c:308
+#: app/tools/gimplevelstool.c:314
 msgid "Pick white point for all channels"
 msgstr "Kies witpunt voor alle kanalen"
 
-#: app/tools/gimplevelstool.c:310
+#: app/tools/gimplevelstool.c:316
 msgid "Pick white point for the selected channel"
 msgstr "Kies witpunt voor het geselecteerde kanaal"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:421
+#: app/tools/gimplevelstool.c:428
 msgid "Input Levels"
 msgstr "Invoerniveaus"
 
-#: app/tools/gimplevelstool.c:505
+#: app/tools/gimplevelstool.c:513
 msgid "Clamp _input"
 msgstr "_Invoer vastzetten"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:544
+#: app/tools/gimplevelstool.c:552
 msgid "Output Levels"
 msgstr "Uitvoerniveaus"
 
-#: app/tools/gimplevelstool.c:591
+#: app/tools/gimplevelstool.c:601
 msgid "Clamp outpu_t"
 msgstr "Ui_tvoer vastzetten"
 
 #. all channels frame
-#: app/tools/gimplevelstool.c:604
+#: app/tools/gimplevelstool.c:615
 msgid "All Channels"
 msgstr "Alle kanalen"
 
-#: app/tools/gimplevelstool.c:616
+#: app/tools/gimplevelstool.c:627
 msgid "_Auto Input Levels"
 msgstr "_Automatische niveaus"
 
-#: app/tools/gimplevelstool.c:619
+#: app/tools/gimplevelstool.c:630
 msgid "Adjust levels for all channels automatically"
 msgstr "Niveaus automatisch aanpassen"
 
-#: app/tools/gimplevelstool.c:646
+#: app/tools/gimplevelstool.c:657
 msgid "Edit these Settings as Curves"
 msgstr "Deze instellingen als curves bewerken"
 
-#: app/tools/gimplevelstool.c:998 app/tools/gimpthresholdtool.c:429
+#: app/tools/gimplevelstool.c:1049 app/tools/gimpthresholdtool.c:429
 msgid "Calculating histogram..."
 msgstr "Histogram berekenen..."
 
@@ -24393,7 +24401,7 @@ msgstr "De richting waarin wordt gezoomd"
 
 #: app/tools/gimpmagnifytool.c:94
 msgid "Zoom Tool: Adjust the zoom level"
-msgstr "Vergrootglas: het zoomniveau aanpassen"
+msgstr "Gereedschap Zoomen: het zoomniveau aanpassen"
 
 #: app/tools/gimpmagnifytool.c:95
 msgid "_Zoom"
@@ -26765,16 +26773,16 @@ msgstr "De fout-informatie kopiëren"
 msgid "Open Bug Tracker"
 msgstr "Open de bug-melder"
 
-#: app/widgets/gimpcriticaldialog.c:200
+#: app/widgets/gimpcriticaldialog.c:202
 msgid "See bug details"
 msgstr "Fout-details bekijken"
 
-#: app/widgets/gimpcriticaldialog.c:219
+#: app/widgets/gimpcriticaldialog.c:221
 msgid "Go to _Download page"
 msgstr "Ga naar _downloadpagina"
 
 #. Recommend an update.
-#: app/widgets/gimpcriticaldialog.c:224
+#: app/widgets/gimpcriticaldialog.c:226
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released on %s.\n"
@@ -26782,122 +26790,122 @@ msgid ""
 msgstr "Een nieuwe versie van GIMP (%s) werd uitgegeven op %s.\n"
 "Aanbevolen wordt om bij te werken."
 
-#: app/widgets/gimpcriticaldialog.c:230
+#: app/widgets/gimpcriticaldialog.c:232
 msgid "You are running an unsupported version!"
 msgstr "U gebruikt een niet-ondersteunde versie!"
 
-#: app/widgets/gimpcriticaldialog.c:253 app/widgets/gimpcriticaldialog.c:655
+#: app/widgets/gimpcriticaldialog.c:255 app/widgets/gimpcriticaldialog.c:664
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr "Om ons te helpen GIMP te verbeteren, kunt u de fout rapporteren met deze eenvoudige stappen:"
 
-#: app/widgets/gimpcriticaldialog.c:255 app/widgets/gimpcriticaldialog.c:657
+#: app/widgets/gimpcriticaldialog.c:257 app/widgets/gimpcriticaldialog.c:666
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "De fout-informatie naar het klembord kopiëren door hier te klikken: "
 
-#: app/widgets/gimpcriticaldialog.c:257 app/widgets/gimpcriticaldialog.c:659
+#: app/widgets/gimpcriticaldialog.c:259 app/widgets/gimpcriticaldialog.c:668
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Open onze bug-melder in de browser door hier te klikken: "
 
-#: app/widgets/gimpcriticaldialog.c:259 app/widgets/gimpcriticaldialog.c:661
+#: app/widgets/gimpcriticaldialog.c:261 app/widgets/gimpcriticaldialog.c:670
 msgid "Create a login if you don't have one yet."
 msgstr "Creëer een login als u er nog geen heeft."
 
-#: app/widgets/gimpcriticaldialog.c:260 app/widgets/gimpcriticaldialog.c:662
+#: app/widgets/gimpcriticaldialog.c:262 app/widgets/gimpcriticaldialog.c:671
 msgid "Paste the clipboard text in a new bug report."
 msgstr "De inhoud van het klembord in een nieuw fout-rapport plakken."
 
-#: app/widgets/gimpcriticaldialog.c:261 app/widgets/gimpcriticaldialog.c:663
+#: app/widgets/gimpcriticaldialog.c:263 app/widgets/gimpcriticaldialog.c:672
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
 msgstr "Geef relevante informatie (in het Engels) in het bug-rapport wat u aan het doen was toen deze fout optrad."
 
-#: app/widgets/gimpcriticaldialog.c:263
+#: app/widgets/gimpcriticaldialog.c:265
 msgid ""
 "This error may have left GIMP in an inconsistent state. It is advised to "
 "save your work and restart GIMP."
 msgstr "Dee fout zou GIMP in een inconsistente staat hebben kunnen achtergelaten. Geadviseerd wordt om uw werk op te slaan en GIMP opnieuw te starten."
 
-#: app/widgets/gimpcriticaldialog.c:268
+#: app/widgets/gimpcriticaldialog.c:270
 msgid ""
 "You can also close the dialog directly but reporting bugs is the best way to "
 "make your software awesome."
 msgstr "U kunt het dialoogvenster direct sluiten, maar door bugs te rapporteren helpt u mee deze software te verbeteren."
 
-#: app/widgets/gimpcriticaldialog.c:277
+#: app/widgets/gimpcriticaldialog.c:279
 msgid "Copy-paste this whole debug data to report to developers"
 msgstr "Deze volledige gegevens voor foutopsporing kopiëren en plakken om ze aan de ontwikkelaars te rapporteren"
 
-#: app/widgets/gimpcriticaldialog.c:416
+#: app/widgets/gimpcriticaldialog.c:425
 msgid "The operating system is out of memory or resources."
 msgstr "Het besturingssysteem heeft onvoldoende geheugen of bronnen."
 
-#: app/widgets/gimpcriticaldialog.c:419
+#: app/widgets/gimpcriticaldialog.c:428
 msgid "The specified file was not found."
 msgstr "Het opgegeven bestand is niet gevonden."
 
-#: app/widgets/gimpcriticaldialog.c:422
+#: app/widgets/gimpcriticaldialog.c:431
 msgid "The specified path was not found."
 msgstr "Het opgegeven pad werd niet gevonden."
 
-#: app/widgets/gimpcriticaldialog.c:425
+#: app/widgets/gimpcriticaldialog.c:434
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr "Het .exe-bestand is ongeldig (non-Microsoft Win32 .exe of fout in .exe-bestand)."
 
-#: app/widgets/gimpcriticaldialog.c:428
+#: app/widgets/gimpcriticaldialog.c:437
 msgid "The operating system denied access to the specified file."
 msgstr "Het besturingssysteem weigerde toegang tot gevraagd bestand."
 
-#: app/widgets/gimpcriticaldialog.c:431
+#: app/widgets/gimpcriticaldialog.c:440
 msgid "The file name association is incomplete or invalid."
 msgstr "Associatie van bestandsnaam is onvolledig of ongeldig."
 
-#: app/widgets/gimpcriticaldialog.c:434
+#: app/widgets/gimpcriticaldialog.c:443
 msgid "DDE transaction busy"
 msgstr "DDE-transactie bezig"
 
-#: app/widgets/gimpcriticaldialog.c:437
+#: app/widgets/gimpcriticaldialog.c:446
 msgid "The DDE transaction failed."
 msgstr "DDE-transactie mislukt."
 
-#: app/widgets/gimpcriticaldialog.c:440
+#: app/widgets/gimpcriticaldialog.c:449
 msgid "The DDE transaction timed out."
 msgstr "Time-out DDE-transactie."
 
-#: app/widgets/gimpcriticaldialog.c:443
+#: app/widgets/gimpcriticaldialog.c:452
 msgid "The specified DLL was not found."
 msgstr "De opgegeven DDL is niet gevonden."
 
-#: app/widgets/gimpcriticaldialog.c:446
+#: app/widgets/gimpcriticaldialog.c:455
 msgid "There is no application associated with the given file name extension."
 msgstr "Er is geen applicatie aan deze bestandsextensie gekoppeld."
 
-#: app/widgets/gimpcriticaldialog.c:449
+#: app/widgets/gimpcriticaldialog.c:458
 msgid "There was not enough memory to complete the operation."
 msgstr "Onvoldoende geheugen om de bewerking te voltooien."
 
-#: app/widgets/gimpcriticaldialog.c:452
+#: app/widgets/gimpcriticaldialog.c:461
 msgid "A sharing violation occurred."
 msgstr "Fout tijdens het delen."
 
-#: app/widgets/gimpcriticaldialog.c:455
+#: app/widgets/gimpcriticaldialog.c:464
 msgid "Unknown Microsoft Windows error."
 msgstr "Onbekende Microsoft Windows-fout."
 
-#: app/widgets/gimpcriticaldialog.c:458
+#: app/widgets/gimpcriticaldialog.c:467
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Kon ‘%s’: %s niet openen"
 
-#: app/widgets/gimpcriticaldialog.c:621
+#: app/widgets/gimpcriticaldialog.c:630
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr "GIMP crashte met een fatale fout: %s"
 
 #. First error. Let's just display it.
-#: app/widgets/gimpcriticaldialog.c:628
+#: app/widgets/gimpcriticaldialog.c:637
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "GIMP ondervond een fout: %s"
@@ -26905,12 +26913,12 @@ msgstr "GIMP ondervond een fout: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: app/widgets/gimpcriticaldialog.c:636
+#: app/widgets/gimpcriticaldialog.c:645
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "GIMP ondervond meerdere kritieke fouten!"
 
-#: app/widgets/gimpcriticaldialog.c:688
+#: app/widgets/gimpcriticaldialog.c:697
 msgid "_Restart GIMP"
 msgstr "He_rstart GIMP"
 
@@ -27502,38 +27510,38 @@ msgctxt "singular"
 msgid "New Layer"
 msgstr "Nieuwe laag"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:169
+#: app/widgets/gimpdrawabletreeview-filters.c:171
 msgid "Layer Effects"
 msgstr "Laageffecten"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:199
+#: app/widgets/gimpdrawabletreeview-filters.c:201
 msgid "Toggle the visibility of all filters."
 msgstr "_Zichtbaarheid van alle filters in- en uitschakelen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:215
+#: app/widgets/gimpdrawabletreeview-filters.c:217
 msgid "Edit the selected filter."
 msgstr "Het geselecteerde filter bewerken."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:231
+#: app/widgets/gimpdrawabletreeview-filters.c:233
 msgid "Raise filter one step up in the stack."
 msgstr "Dit filter één plaats hoger zetten in de stapel."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:246
+#: app/widgets/gimpdrawabletreeview-filters.c:248
 msgid "Lower filter one step down in the stack."
 msgstr "Dit filter één plaats lager zetten in de stapel."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:262
-#: app/widgets/gimpdrawabletreeview-filters.c:505
-#: app/widgets/gimpdrawabletreeview-filters.c:515
+#: app/widgets/gimpdrawabletreeview-filters.c:264
+#: app/widgets/gimpdrawabletreeview-filters.c:507
+#: app/widgets/gimpdrawabletreeview-filters.c:517
 msgid "Merge all active filters down."
 msgstr "Alle actieve filters omlaag plaatsen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:278
+#: app/widgets/gimpdrawabletreeview-filters.c:280
 msgid "Remove the selected filter."
 msgstr "Geselecteerd filter verwijderen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:696
-#: app/widgets/gimpdrawabletreeview-filters.c:722
+#: app/widgets/gimpdrawabletreeview-filters.c:738
+#: app/widgets/gimpdrawabletreeview-filters.c:764
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Kan een filter die bewerkt wordt niet herschikken."
 
@@ -28221,12 +28229,12 @@ msgstr "Metadata zijn niet zichtbaar in GIMP-versies ouder dan 2.10."
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "shortcut: Ctrl+Alt+O"
 #.
-#: app/widgets/gimpsearchpopup.c:293
+#: app/widgets/gimpsearchpopup.c:296
 msgid "shortcut"
 msgstr "sneltoets"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:297 app/widgets/gimpsearchpopup.c:319
+#: app/widgets/gimpsearchpopup.c:300 app/widgets/gimpsearchpopup.c:322
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -28235,7 +28243,7 @@ msgstr "%s: %s"
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:315
+#: app/widgets/gimpsearchpopup.c:318
 msgid "menu"
 msgstr "menu"
 
@@ -28711,22 +28719,22 @@ msgstr "Paletten selecteren"
 msgid "Open the font selection dialog"
 msgstr "Lettertypen selecteren"
 
-#: app/widgets/gimpwidgets-utils.c:665
+#: app/widgets/gimpwidgets-utils.c:666
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (probeer %s)"
 
-#: app/widgets/gimpwidgets-utils.c:665
+#: app/widgets/gimpwidgets-utils.c:666
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:669
+#: app/widgets/gimpwidgets-utils.c:670
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (probeer %s, %s)"
 
-#: app/widgets/gimpwidgets-utils.c:673
+#: app/widgets/gimpwidgets-utils.c:674
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (probeer %s, %s, %s)"
@@ -28736,12 +28744,12 @@ msgstr "%s (probeer %s, %s, %s)"
 #. * (e.g. a checkbox settings) displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1480
+#: app/widgets/gimpwidgets-utils.c:1481
 #, c-format
 msgid "Switch \"%s\" ON"
 msgstr "Schakel ‘%s’ IN"
 
-#: app/widgets/gimpwidgets-utils.c:1482
+#: app/widgets/gimpwidgets-utils.c:1483
 #, c-format
 msgid "Switch \"%s\" OFF"
 msgstr "Schakel ‘%s’ UIT"
@@ -28751,7 +28759,7 @@ msgstr "Schakel ‘%s’ UIT"
 #. * multi-choice settings displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1501
+#: app/widgets/gimpwidgets-utils.c:1502
 #, c-format
 msgid "Select \"%s\""
 msgstr "‘%s’ selecteren"
@@ -28759,27 +28767,27 @@ msgstr "‘%s’ selecteren"
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1532
+#: app/widgets/gimpwidgets-utils.c:1533
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "Activeer het gereedschap ‘%s’"
 
-#: app/widgets/gimpwidgets-utils.c:2131
+#: app/widgets/gimpwidgets-utils.c:2132
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Ingebouwde grijswaarden (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2138
+#: app/widgets/gimpwidgets-utils.c:2139
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Ingebouwd RGB (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2158
+#: app/widgets/gimpwidgets-utils.c:2159
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Preferente grijswaarden (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2167
+#: app/widgets/gimpwidgets-utils.c:2168
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Preferent RGB (%s)"
@@ -28874,49 +28882,49 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Status & omschrijving"
 
-#: app/xcf/xcf.c:127 app/xcf/xcf.c:183
+#: app/xcf/xcf.c:126 app/xcf/xcf.c:181
 msgid "GIMP XCF image"
 msgstr "GIMP XCF-afbeelding"
 
-#: app/xcf/xcf.c:259 app/xcf/xcf.c:317
+#: app/xcf/xcf.c:257 app/xcf/xcf.c:315
 msgid "Memory Stream"
 msgstr "Geheugenstroom"
 
-#: app/xcf/xcf.c:262
+#: app/xcf/xcf.c:260
 #, c-format
 msgid "Opening '%s'"
 msgstr "Openen van ‘%s’"
 
-#: app/xcf/xcf.c:281
+#: app/xcf/xcf.c:279
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF-fout: niet ondersteunde XCF-bestandsversie %d tegengekomen"
 
-#: app/xcf/xcf.c:340
+#: app/xcf/xcf.c:338
 #, c-format
 msgid "Saving '%s'"
 msgstr "Opslaan van ‘%s’"
 
-#: app/xcf/xcf.c:348
+#: app/xcf/xcf.c:346
 #, c-format
 msgid "Closing '%s'"
 msgstr "Sluiten ‘%s’"
 
-#: app/xcf/xcf.c:366
+#: app/xcf/xcf.c:364
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Fout bij schrijven naar ‘%s’: "
 
-#: app/xcf/xcf.c:454
+#: app/xcf/xcf.c:452
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Fout tijdens aanmaken ‘%s’: "
 
-#: app/xcf/xcf-load.c:452
+#: app/xcf/xcf-load.c:457
 msgid "Invalid image mode and precision combination."
 msgstr "Ongeldige combinatie afbeeldingsmodus en bitdiepte."
 
-#: app/xcf/xcf-load.c:891
+#: app/xcf/xcf-load.c:896
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28924,14 +28932,14 @@ msgid ""
 msgstr "Corrupt eparasiet ‘exif-data’ ontdekt.\n"
 "Exif-gegevens konden niet worden gemigreerd: %s"
 
-#: app/xcf/xcf-load.c:930
+#: app/xcf/xcf-load.c:935
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
 msgstr "Corrupt eparasiet ‘gimp-metadata’ ontdekt.\n"
 "XMP-gegevens konden niet worden gemigreerd."
 
-#: app/xcf/xcf-load.c:954
+#: app/xcf/xcf-load.c:959
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28941,31 +28949,31 @@ msgid ""
 msgstr "Corrupte XMP-metadata, opgeslagen door een oudere versie van GIMP, kon niet worden omgezet en zal worden genegeerd.\n"
 "Als u niet weet wat XMP is, heeft u het heel waarschijnlijk niet nodig. Gerapporteerde fout: %s."
 
-#: app/xcf/xcf-load.c:1449
+#: app/xcf/xcf-load.c:1454
 msgid "Linked Layers"
 msgstr "Gekoppelde lagen"
 
-#: app/xcf/xcf-load.c:1459
+#: app/xcf/xcf-load.c:1464
 msgid "Linked Channels"
 msgstr "Gekoppelde kanalen"
 
-#: app/xcf/xcf-load.c:1484
+#: app/xcf/xcf-load.c:1489
 msgid "Linked Paths"
 msgstr "Gekoppelde paden"
 
-#: app/xcf/xcf-load.c:1532
+#: app/xcf/xcf-load.c:1537
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "Dit XCF-bestand is corrupt!  Ik heb er zoveel mogelijk van geladen, maar het is niet compleet."
 
-#: app/xcf/xcf-load.c:1559
+#: app/xcf/xcf-load.c:1564
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "Dit XCF-bestand is corrupt!  Ik kon er zelfs geen gedeeltelijke afbeeldingsgegevens van redden."
 
-#: app/xcf/xcf-load.c:1753
+#: app/xcf/xcf-load.c:1758
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28974,21 +28982,21 @@ msgstr "XCF waarschuwing: versie 0 van de XCF-bestandsindeling\n"
 "sloeg geïndexeerde kleurkaarten niet correct op.\n"
 "Vervangen van de kaart met grijswaarden."
 
-#: app/xcf/xcf-load.c:2584
+#: app/xcf/xcf-load.c:2589
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
 "to a raster layer."
 msgstr "XCF waarschuwing: ongeldige link in XCF-bestand. De gekoppelde laag ‘%s’ is gedowngraded naar een rasterlaag."
 
-#: app/xcf/xcf-load.c:2604
+#: app/xcf/xcf-load.c:2609
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
 "is downgraded to a raster layer."
 msgstr "XCF waarschuwing: cirkelverwijzing gedetecteerd in XCF-bestand. De gekoppelde laag ‘%s’ is gedowngraded naar een rasterlaag."
 
-#: app/xcf/xcf-load.c:3337
+#: app/xcf/xcf-load.c:3342
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28998,7 +29006,7 @@ msgid ""
 msgstr "XCF waarschuwing: versie %s van filter ‘%s’ heeft geen eigenschap %s. De eigenschap werd genegeerd en het filter zou niet juist kunnen renderen.\n"
 "Dit zou niet voor moeten komen. U zou het probleem moeten rapporteren bij de ontwikkelaars van het filter."
 
-#: app/xcf/xcf-load.c:4184
+#: app/xcf/xcf-load.c:4230
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
