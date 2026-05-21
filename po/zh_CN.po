@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-20 02:51+0000\n"
-"PO-Revision-Date: 2026-05-20 13:42+0800\n"
+"POT-Creation-Date: 2026-05-20 20:51+0000\n"
+"PO-Revision-Date: 2026-05-21 12:31+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -13329,8 +13329,8 @@ msgstr "图案"
 
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
 #: app/core/gimpgradient.c:125 app/pdb/drawable-edit-cmds.c:255
-#: app/tools/gimpgradientoptions.c:269 app/tools/gimpgradienttool.c:166
-#: app/tools/gimppaintoptions-gui.c:385
+#: app/tools/gimpgradientoptions.c:286 app/tools/gimpgradienttool.c:174
+#: app/tools/gimpgradienttool.c:862 app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "渐变"
 
@@ -13492,7 +13492,7 @@ msgid "Merge filter"
 msgstr "合并滤镜"
 
 #: app/core/gimpdrawable-gradient.c:125 app/core/gimpdrawable-gradient.c:137
-#: app/tools/gimpgradienttool.c:1105
+#: app/tools/gimpgradienttool.c:1185 app/tools/gimpgradienttool.c:1232
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "渐变"
@@ -13775,7 +13775,7 @@ msgid "Symmetry"
 msgstr "对称"
 
 #: app/core/gimpimage.c:2090 app/pdb/drawable-filter-cmds.c:661
-#: app/widgets/gimpdrawabletreeview-filters.c:796
+#: app/widgets/gimpdrawabletreeview-filters.c:838
 msgid "Remove filter"
 msgstr "移除滤镜"
 
@@ -14087,7 +14087,7 @@ msgstr "将图像转换为 %s"
 #: app/core/gimpimage-convert-precision.c:219
 #: app/dialogs/convert-indexed-dialog.c:240
 #: app/dialogs/convert-precision-dialog.c:212
-#: app/tools/gimpgradientoptions.c:129
+#: app/tools/gimpgradientoptions.c:130
 msgid "Dithering"
 msgstr "抖动"
 
@@ -14182,7 +14182,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "无法向下合并到图层组。"
 
 #: app/core/gimpimage-merge.c:362
-#: app/widgets/gimpdrawabletreeview-filters.c:767
+#: app/widgets/gimpdrawabletreeview-filters.c:809
 msgid "The layer to merge down to is locked."
 msgstr "要向下合并的目标图层已被锁定。"
 
@@ -14302,7 +14302,7 @@ msgstr "无法打开缩略图“%s”：%s"
 
 #: app/core/gimpitem.c:1858 app/core/gimpitem.c:1925
 #: app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730
-#: app/widgets/gimpdrawabletreeview-filters.c:637
+#: app/widgets/gimpdrawabletreeview-filters.c:639
 msgid "A selected layer's pixels are locked."
 msgstr "一个选中图层的像素已被锁定。"
 
@@ -18149,7 +18149,7 @@ msgstr ""
 #. The offset frame
 #. offset frame
 #: app/dialogs/resize-dialog.c:379 app/operations/gimpoperationoffset.c:119
-#: app/tools/gimpgradientoptions.c:89 app/tools/gimpoffsettool.c:130
+#: app/tools/gimpgradientoptions.c:90 app/tools/gimpoffsettool.c:130
 #: app/tools/gimpoffsettool.c:472 app/tools/gimptransform3dtool.c:342
 #: app/widgets/gimpgrideditor.c:216
 msgid "Offset"
@@ -18829,7 +18829,7 @@ msgid "Drop New Path"
 msgstr "拖放新路径"
 
 #: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimpbucketfilltool.c:613
-#: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
+#: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:287
 #: app/tools/gimpselectiontool.c:568
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
@@ -18837,7 +18837,7 @@ msgstr "不能修改图层组的像素。"
 
 #: app/display/gimpdisplayshell-dnd.c:393 app/tools/gimpfiltertool.c:340
 #: app/tools/gimppainttool.c:355 app/tools/gimptransformtool.c:739
-#: app/widgets/gimpdrawabletreeview-filters.c:630
+#: app/widgets/gimpdrawabletreeview-filters.c:632
 msgid "A selected layer is not visible."
 msgstr "一个选中图层不可见。"
 
@@ -19584,7 +19584,7 @@ msgstr "GIMP 扩展"
 #: app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195
 #: app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198
 #: app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201
-#: app/plug-in/gimppluginprocedure.c:1165
+#: app/plug-in/gimppluginprocedure.c:1166
 msgid "RGB"
 msgstr "RGB"
 
@@ -19603,7 +19603,7 @@ msgstr "RGB-透明"
 #: app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233
 #: app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236
 #: app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239
-#: app/plug-in/gimppluginprocedure.c:1183
+#: app/plug-in/gimppluginprocedure.c:1184
 msgid "Grayscale"
 msgstr "灰度"
 
@@ -19652,7 +19652,7 @@ msgstr "透明度分量"
 msgid "Indexed-alpha"
 msgstr "索引色-透明"
 
-#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1201
+#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1202
 msgid "Indexed"
 msgstr "索引"
 
@@ -20510,7 +20510,7 @@ msgstr "剪裁方式"
 
 #: app/operations/gimpoperationthreshold.c:88
 #: app/tools/gimpbucketfilloptions.c:207 app/tools/gimpbucketfilloptions.c:229
-#: app/tools/gimpgradientoptions.c:122 app/tools/gimpregionselectoptions.c:113
+#: app/tools/gimpgradientoptions.c:123 app/tools/gimpregionselectoptions.c:113
 #: app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "阈值"
@@ -20709,8 +20709,8 @@ msgid "Tilt"
 msgstr "倾斜"
 
 #. Blob shape widgets
-#: app/paint/gimpinkoptions.c:107 app/tools/gimpgradientoptions.c:95
-#: app/tools/gimpgradientoptions.c:288 app/tools/gimpinkoptions-gui.c:99
+#: app/paint/gimpinkoptions.c:107 app/tools/gimpgradientoptions.c:96
+#: app/tools/gimpgradientoptions.c:305 app/tools/gimpinkoptions-gui.c:99
 msgid "Shape"
 msgstr "形状"
 
@@ -20930,7 +20930,7 @@ msgid "Reverse direction of fading"
 msgstr "颠倒淡出的方向"
 
 #: app/paint/gimppaintoptions.c:380 app/paint/gimppaintoptions.c:400
-#: app/tools/gimpgradientoptions.c:307 app/tools/gimppaintoptions-gui.c:365
+#: app/tools/gimpgradientoptions.c:324 app/tools/gimppaintoptions-gui.c:365
 msgid "Repeat"
 msgstr "重复"
 
@@ -20938,7 +20938,7 @@ msgstr "重复"
 msgid "How fade is repeated as you paint"
 msgstr "绘画淡出的重复方式"
 
-#: app/paint/gimppaintoptions.c:393 app/tools/gimpgradientoptions.c:282
+#: app/paint/gimppaintoptions.c:393 app/tools/gimpgradientoptions.c:299
 #: app/tools/gimppaintoptions-gui.c:398
 msgid "Blend Color Space"
 msgstr "混合色彩空间"
@@ -21960,35 +21960,35 @@ msgstr "正在初始化插件"
 msgid "Starting Extensions"
 msgstr "正在启动扩展"
 
-#: app/plug-in/gimppluginprocedure.c:1169
+#: app/plug-in/gimppluginprocedure.c:1170
 msgid "RGB without alpha"
 msgstr "RGB 无透明"
 
-#: app/plug-in/gimppluginprocedure.c:1173
+#: app/plug-in/gimppluginprocedure.c:1174
 msgid "RGB with alpha"
 msgstr "RGB 带透明"
 
-#: app/plug-in/gimppluginprocedure.c:1187
+#: app/plug-in/gimppluginprocedure.c:1188
 msgid "Grayscale without alpha"
 msgstr "灰度无透明"
 
-#: app/plug-in/gimppluginprocedure.c:1191
+#: app/plug-in/gimppluginprocedure.c:1192
 msgid "Grayscale with alpha"
 msgstr "灰度带透明"
 
-#: app/plug-in/gimppluginprocedure.c:1205
+#: app/plug-in/gimppluginprocedure.c:1206
 msgid "Indexed without alpha"
 msgstr "索引色无透明"
 
-#: app/plug-in/gimppluginprocedure.c:1209
+#: app/plug-in/gimppluginprocedure.c:1210
 msgid "Indexed with alpha"
 msgstr "索引色带透明"
 
-#: app/plug-in/gimppluginprocedure.c:1220
+#: app/plug-in/gimppluginprocedure.c:1221
 msgid "This plug-in only works on the following layer types:"
 msgstr "该插件仅适用于以下图层类型："
 
-#: app/plug-in/gimppluginprocedure.c:1585
+#: app/plug-in/gimppluginprocedure.c:1586
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -21997,7 +21997,7 @@ msgstr ""
 "“%s”调用错误：\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1597
+#: app/plug-in/gimppluginprocedure.c:1598
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -23346,7 +23346,7 @@ msgstr "没有图层可移动。"
 msgid "The selected layer's position is locked."
 msgstr "选中图层的位置已被锁定。"
 
-#: app/tools/gimpeditselectiontool.c:1325 app/tools/gimpgradienttool.c:283
+#: app/tools/gimpeditselectiontool.c:1325 app/tools/gimpgradienttool.c:294
 #: app/tools/gimpmovetool.c:350
 msgid "The selected layer's pixels are locked."
 msgstr "选中图层的像素已被锁定。"
@@ -23436,17 +23436,17 @@ msgid "Disabled because this filter depends on another image."
 msgstr "已禁用，因为该滤镜依赖于另一幅图像。"
 
 #: app/tools/gimpfiltertool.c:459
-#: app/widgets/gimpdrawabletreeview-filters.c:491
+#: app/widgets/gimpdrawabletreeview-filters.c:493
 msgid "Disabled because filters cannot be merged on vector layers."
 msgstr "已禁用，因为滤镜无法合并到矢量图层上。"
 
 #: app/tools/gimpfiltertool.c:461
-#: app/widgets/gimpdrawabletreeview-filters.c:494
+#: app/widgets/gimpdrawabletreeview-filters.c:496
 msgid "Disabled because filters cannot be merged on link layers."
 msgstr "已禁用，因为滤镜无法合并到链接图层上。"
 
 #: app/tools/gimpfiltertool.c:463
-#: app/widgets/gimpdrawabletreeview-filters.c:497
+#: app/widgets/gimpdrawabletreeview-filters.c:499
 msgid "Disabled because filters cannot be merged on text layers."
 msgstr "已禁用，因为滤镜无法合并到文字图层上。"
 
@@ -23481,7 +23481,7 @@ msgstr "%s：切换原始图片和应用滤镜图片"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s：切换水平视图和竖直视图"
 
-#: app/tools/gimpfiltertool.c:1284
+#: app/tools/gimpfiltertool.c:1284 app/tools/gimpgradienttool.c:835
 msgid "Edit filter"
 msgstr "编辑滤镜"
 
@@ -23500,7 +23500,7 @@ msgstr "导入“%s”设置"
 msgid "Export '%s' Settings"
 msgstr "导出“%s”设置"
 
-#: app/tools/gimpfiltertool.c:2242
+#: app/tools/gimpfiltertool.c:2242 app/tools/gimpgradienttool.c:1362
 #, c-format
 msgid "Editing '%s'..."
 msgstr "正在编辑“%s”…"
@@ -23741,84 +23741,92 @@ msgstr "变换矩阵"
 msgid "Invalid transform"
 msgstr "无效变换"
 
-#: app/tools/gimpgradientoptions.c:102 app/tools/gimpgradientoptions.c:296
+#: app/tools/gimpgradientoptions.c:103 app/tools/gimpgradientoptions.c:313
 msgid "Metric"
 msgstr "单位"
 
-#: app/tools/gimpgradientoptions.c:103
+#: app/tools/gimpgradientoptions.c:104
 msgid "Metric to use for the distance calculation"
 msgstr "用于距离计算的度量标准"
 
-#: app/tools/gimpgradientoptions.c:110
+#: app/tools/gimpgradientoptions.c:111
 msgid "Adaptive Supersampling"
 msgstr "自适应超级采样"
 
-#: app/tools/gimpgradientoptions.c:116
+#: app/tools/gimpgradientoptions.c:117
 msgid "Max depth"
 msgstr "最大深度"
 
-#: app/tools/gimpgradientoptions.c:136
+#: app/tools/gimpgradientoptions.c:137
 msgid "Instant mode"
 msgstr "即时模式"
 
-#: app/tools/gimpgradientoptions.c:137
+#: app/tools/gimpgradientoptions.c:138
 msgid "Commit gradient instantly"
 msgstr "立即使渐变生效"
 
-#: app/tools/gimpgradientoptions.c:143
+#: app/tools/gimpgradientoptions.c:144
 msgid "Modify active gradient"
 msgstr "修改活动渐变"
 
-#: app/tools/gimpgradientoptions.c:144
+#: app/tools/gimpgradientoptions.c:145
 msgid "Modify the active gradient in-place"
 msgstr "就地修改激活渐变"
 
-#: app/tools/gimpgradientoptions.c:275 app/tools/gimppaintoptions-gui.c:391
+#: app/tools/gimpgradientoptions.c:151
+msgid "Editable gradient"
+msgstr "可编辑渐变"
+
+#: app/tools/gimpgradientoptions.c:152
+msgid "Adds the gradient to the filters on the active layer"
+msgstr "将渐变添加到活动图层上的滤镜"
+
+#: app/tools/gimpgradientoptions.c:292 app/tools/gimppaintoptions-gui.c:391
 msgid "Edit this gradient"
 msgstr "编辑该渐变"
 
 #. the instant toggle
-#: app/tools/gimpgradientoptions.c:342
+#: app/tools/gimpgradientoptions.c:364
 #, c-format
 msgid "Instant mode  (%s)"
 msgstr "即时模式 (%s)"
 
-#: app/tools/gimpgradientoptions.c:360
+#: app/tools/gimpgradientoptions.c:382
 msgid ""
 "The active gradient is non-writable and cannot be edited directly. Uncheck "
 "this option to edit a copy of it."
 msgstr "激活渐变不可写入和直接编辑。取消该选项以编辑它的副本。"
 
-#: app/tools/gimpgradienttool.c:167
+#: app/tools/gimpgradienttool.c:175
 msgid "Gradient Tool: Fill selected area with a color gradient"
 msgstr "渐变工具：用颜色渐变填充选中的区域"
 
-#: app/tools/gimpgradienttool.c:168
+#: app/tools/gimpgradienttool.c:176
 msgid "Gra_dient"
 msgstr "渐变(_D)"
 
-#: app/tools/gimpgradienttool.c:225
+#: app/tools/gimpgradienttool.c:235
 msgid "Click-Drag to draw a gradient"
 msgstr "单击并拖动以绘制一个渐变"
 
-#: app/tools/gimpgradienttool.c:260
+#: app/tools/gimpgradienttool.c:271
 msgid "Cannot paint on multiple drawables. Select only one."
 msgstr "无法在多个可绘区上绘制。仅选择一个。"
 
-#: app/tools/gimpgradienttool.c:262 app/tools/gimppaintselecttool.c:412
+#: app/tools/gimpgradienttool.c:273 app/tools/gimppaintselecttool.c:412
 #: app/tools/gimpwarptool.c:781
 msgid "No active drawables."
 msgstr "无激活可绘区。"
 
-#: app/tools/gimpgradienttool.c:293 app/tools/gimpwarptool.c:822
+#: app/tools/gimpgradienttool.c:304 app/tools/gimpwarptool.c:822
 msgid "The selected item is not visible."
 msgstr "一个选中项目不可见。"
 
-#: app/tools/gimpgradienttool.c:300
+#: app/tools/gimpgradienttool.c:311
 msgid "No gradient available for use with this tool."
 msgstr "没有可供该工具使用的渐变。"
 
-#: app/tools/gimpgradienttool.c:660
+#: app/tools/gimpgradienttool.c:690
 msgid "Gradient: "
 msgstr "渐变："
 
@@ -27245,38 +27253,38 @@ msgctxt "singular"
 msgid "New Layer"
 msgstr "新建图层"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:169
+#: app/widgets/gimpdrawabletreeview-filters.c:171
 msgid "Layer Effects"
 msgstr "图层特效"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:199
+#: app/widgets/gimpdrawabletreeview-filters.c:201
 msgid "Toggle the visibility of all filters."
 msgstr "切换所有滤镜的可见性。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:215
+#: app/widgets/gimpdrawabletreeview-filters.c:217
 msgid "Edit the selected filter."
 msgstr "编辑选中滤镜。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:231
+#: app/widgets/gimpdrawabletreeview-filters.c:233
 msgid "Raise filter one step up in the stack."
 msgstr "在堆叠中将滤镜升高一步。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:246
+#: app/widgets/gimpdrawabletreeview-filters.c:248
 msgid "Lower filter one step down in the stack."
 msgstr "在堆叠中将滤镜降低一步。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:262
-#: app/widgets/gimpdrawabletreeview-filters.c:505
-#: app/widgets/gimpdrawabletreeview-filters.c:515
+#: app/widgets/gimpdrawabletreeview-filters.c:264
+#: app/widgets/gimpdrawabletreeview-filters.c:507
+#: app/widgets/gimpdrawabletreeview-filters.c:517
 msgid "Merge all active filters down."
 msgstr "向下合并所有活动滤镜。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:278
+#: app/widgets/gimpdrawabletreeview-filters.c:280
 msgid "Remove the selected filter."
 msgstr "移除选中滤镜。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:696
-#: app/widgets/gimpdrawabletreeview-filters.c:722
+#: app/widgets/gimpdrawabletreeview-filters.c:738
+#: app/widgets/gimpdrawabletreeview-filters.c:764
 msgid "Cannot reorder a filter that is being edited."
 msgstr "无法重新排列正在编辑的滤镜。"
 
@@ -28650,11 +28658,11 @@ msgstr "写入“%s”时出错："
 msgid "Error creating '%s': "
 msgstr "创建“%s”时出错："
 
-#: app/xcf/xcf-load.c:452
+#: app/xcf/xcf-load.c:457
 msgid "Invalid image mode and precision combination."
 msgstr "无效的图像模式和精度组合。"
 
-#: app/xcf/xcf-load.c:891
+#: app/xcf/xcf-load.c:896
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28663,7 +28671,7 @@ msgstr ""
 "发现内嵌“exif-数据”已损坏。\n"
 "Exif 数据无法被迁移：%s"
 
-#: app/xcf/xcf-load.c:930
+#: app/xcf/xcf-load.c:935
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28671,7 +28679,7 @@ msgstr ""
 "发现内嵌“gimp-元数据”已损坏。\n"
 "XMP 数据无法被迁移。"
 
-#: app/xcf/xcf-load.c:954
+#: app/xcf/xcf-load.c:959
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28682,31 +28690,31 @@ msgstr ""
 "通过旧版本 GIMP 保存的损坏 XMP 元数据无法转换且会被忽略。\n"
 "如果您不知道 XMP 是什么，很可能您并不需要它。报告的错误：%s。"
 
-#: app/xcf/xcf-load.c:1449
+#: app/xcf/xcf-load.c:1454
 msgid "Linked Layers"
 msgstr "链接的图层"
 
-#: app/xcf/xcf-load.c:1459
+#: app/xcf/xcf-load.c:1464
 msgid "Linked Channels"
 msgstr "链接的通道"
 
-#: app/xcf/xcf-load.c:1484
+#: app/xcf/xcf-load.c:1489
 msgid "Linked Paths"
 msgstr "链接的路径"
 
-#: app/xcf/xcf-load.c:1532
+#: app/xcf/xcf-load.c:1537
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "此 XCF 文件已损坏！已尽可能抢救图像数据，但抢救得到的部分不完整。"
 
-#: app/xcf/xcf-load.c:1559
+#: app/xcf/xcf-load.c:1564
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "此 XCF 文件已损坏！未能抢救任何图像数据。"
 
-#: app/xcf/xcf-load.c:1753
+#: app/xcf/xcf-load.c:1758
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28716,14 +28724,14 @@ msgstr ""
 "未能正确地保存索引颜色表。\n"
 "将使用灰度颜色表取代原颜色表。"
 
-#: app/xcf/xcf-load.c:2584
+#: app/xcf/xcf-load.c:2589
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
 "to a raster layer."
 msgstr "XCF 警告：XCF 文件中有无效链接。链接图层“%s”已降级为栅格化图层。"
 
-#: app/xcf/xcf-load.c:2604
+#: app/xcf/xcf-load.c:2609
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
@@ -28731,7 +28739,7 @@ msgid ""
 msgstr ""
 "XCF 警告：检测到 XCF 文件中有循环引用。链接图层“%s”已降级为栅格化图层。"
 
-#: app/xcf/xcf-load.c:3337
+#: app/xcf/xcf-load.c:3342
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28743,7 +28751,7 @@ msgstr ""
 "染。\n"
 "这种情况不应发生。您应将该问题报告给滤镜的开发者。"
 
-#: app/xcf/xcf-load.c:4184
+#: app/xcf/xcf-load.c:4230
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
