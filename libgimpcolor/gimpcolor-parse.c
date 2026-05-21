@@ -420,9 +420,9 @@ gimp_color_parse_name_internal (const gchar *name)
    * whereas here we have SVG 1.0 name support. Moreover we support a lot more
    * colors.
    */
-  ColorEntry *entry = bsearch (name, named_colors,
-                               G_N_ELEMENTS (named_colors), sizeof (ColorEntry),
-                               gimp_color_entry_compare);
+  const ColorEntry *entry = bsearch (name, named_colors,
+                                     G_N_ELEMENTS (named_colors), sizeof (ColorEntry),
+                                     gimp_color_entry_compare);
 
   if (entry)
     {
