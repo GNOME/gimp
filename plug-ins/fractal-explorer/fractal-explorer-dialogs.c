@@ -766,6 +766,8 @@ explorer_dialog (GimpProcedure       *procedure,
                                     "parameter-input-label", FALSE,
                                     "parameter-input-box");
 
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "fractal-type", GIMP_TYPE_INT_RADIO_FRAME);
   vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "parameter-box",
                                          "parameter-input-frame",
