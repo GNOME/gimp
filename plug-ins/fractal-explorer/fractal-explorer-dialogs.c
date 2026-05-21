@@ -766,19 +766,10 @@ explorer_dialog (GimpProcedure       *procedure,
                                     "parameter-input-label", FALSE,
                                     "parameter-input-box");
 
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                  "parameter-type-box",
-                                  "fractal-type",
-                                  NULL);
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "parameter-type-frame",
-                                    NULL, FALSE,
-                                    "parameter-type-box");
-
   vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "parameter-box",
                                          "parameter-input-frame",
-                                         "parameter-type-frame",
+                                         "fractal-type",
                                          NULL);
 
   bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
