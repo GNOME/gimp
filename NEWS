@@ -23,6 +23,11 @@ Core:
     expected.
   * MSIX: it is now possible to open multiple images from the OS.
 
+Tools:
+
+  * Gradient tool: new option "Editable gradient" to apply the gradient
+    non-destructively.
+
 Graphical User Interface:
 
   * Small reorganization in GimpStrokeEditor.
@@ -67,11 +72,16 @@ API:
     - GimpColorDisplayStack now implements GListModel.
     - GimpDialog now has a "help-file" property as a competing help
       system to "help-id" and "help-func".
+    - GimpIntRadioFrame now organize radio buttons internally as a flow
+      box and implements the GtkOrientable interface.
   * libgimpbase:
     - New functions:
       + gimp_choice_add_deprecated
       + gimp_choice_get_deprecated
       + gimp_choice_get_redirect
+    - Deprecated:
+      + GP_EXTENSION_ACK in favor of GP_PERSISTENT_ACK
+      + gp_extension_ack_write in favor of gp_persistent_ack_write
   * libgimp:
     - New functions:
       + gimp_procedure_set_help_uri
