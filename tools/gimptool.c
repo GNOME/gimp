@@ -525,6 +525,25 @@ maybe_run (gchar *cmd)
     ;
 }
 
+#ifdef __APPLE__
+static void
+install_name_tool (const gchar *quoted_binary_path)
+{
+  gchar *prefix;
+  gchar *cmd;
+
+  prefix = get_runtime_prefix ('/');
+  cmd = g_strdup_printf ("install_name_tool -add_rpath \"%s/lib\" %s",
+                         prefix,
+                         quoted_binary_path);
+
+  maybe_run (cmd);
+
+  g_free (prefix);
+  g_free (cmd);
+}
+#endif
+
 static void
 do_build_2 (const gchar *cflags,
             const gchar *libs,
@@ -656,8 +675,12 @@ do_build_2 (const gchar *cflags,
     {
       output_flag = "-o ";
 #ifndef G_OS_WIN32
+#ifdef __APPLE__
+      /* Needed by install_name_tool() below for plug-ins and filters */
+      here_comes_linker_flags = " -Wl,-headerpad_max_install_names";
+#endif
       if (is_gegl_op)
-        here_comes_linker_flags = " -fpic";
+        here_comes_linker_flags = g_strconcat (here_comes_linker_flags, " -fpic", NULL);
 #else
       if (! is_gegl_op)
         windows_subsystem_flag = " -mwindows";
@@ -681,6 +704,10 @@ do_build_2 (const gchar *cflags,
                          env_libs);
 
   maybe_run (cmd);
+
+#ifdef __APPLE__
+  install_name_tool (dest_exe);
+#endif
 
   g_free (dest_exe);
   g_free (source);
