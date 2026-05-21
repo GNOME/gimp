@@ -49,6 +49,7 @@ enum
   PROP_0,
   PROP_VALUE,
   PROP_STORE,
+  PROP_ORIENTATION,
 };
 
 
@@ -69,31 +70,32 @@ struct _GimpIntRadioFrame
 };
 
 
-static void  gimp_int_radio_frame_constructed        (GObject           *object);
-static void  gimp_int_radio_frame_finalize           (GObject           *object);
-static void  gimp_int_radio_frame_set_property       (GObject           *object,
-                                                      guint              property_id,
-                                                      const GValue      *value,
-                                                      GParamSpec        *pspec);
-static void  gimp_int_radio_frame_get_property       (GObject           *object,
-                                                      guint              property_id,
-                                                      GValue            *value,
-                                                      GParamSpec        *pspec);
+static void     gimp_int_radio_frame_constructed        (GObject            *object);
+static void     gimp_int_radio_frame_finalize           (GObject            *object);
+static void     gimp_int_radio_frame_set_property       (GObject            *object,
+                                                         guint               property_id,
+                                                         const GValue       *value,
+                                                         GParamSpec         *pspec);
+static void     gimp_int_radio_frame_get_property       (GObject            *object,
+                                                         guint               property_id,
+                                                         GValue             *value,
+                                                         GParamSpec         *pspec);
 
-static gboolean gimp_int_radio_frame_draw            (GtkWidget         *widget,
-                                                      cairo_t           *cr,
-                                                      gpointer           user_data);
+static gboolean gimp_int_radio_frame_draw               (GtkWidget          *widget,
+                                                         cairo_t            *cr,
+                                                         gpointer            user_data);
 
-static void  gimp_int_radio_frame_fill               (GimpIntRadioFrame *frame);
-static void  gimp_int_radio_frame_set_store          (GimpIntRadioFrame *frame,
-                                                      GimpIntStore      *store);
-static void  gimp_int_radio_frame_update_sensitivity (GimpIntRadioFrame *frame);
+static void     gimp_int_radio_frame_fill               (GimpIntRadioFrame  *frame);
+static void     gimp_int_radio_frame_set_store          (GimpIntRadioFrame  *frame,
+                                                         GimpIntStore       *store);
+static void     gimp_int_radio_frame_update_sensitivity (GimpIntRadioFrame  *frame);
 
-static void  gimp_int_radio_frame_button_toggled     (GtkToggleButton   *button,
-                                                     GimpIntRadioFrame *frame);
+static void     gimp_int_radio_frame_button_toggled     (GtkToggleButton    *button,
+                                                               GimpIntRadioFrame *frame);
 
 
-G_DEFINE_TYPE (GimpIntRadioFrame, gimp_int_radio_frame, GIMP_TYPE_FRAME)
+G_DEFINE_TYPE_WITH_CODE (GimpIntRadioFrame, gimp_int_radio_frame, GIMP_TYPE_FRAME,
+                         G_IMPLEMENT_INTERFACE (GTK_TYPE_ORIENTABLE, NULL))
 
 #define parent_class gimp_int_radio_frame_parent_class
 
@@ -139,12 +141,14 @@ gimp_int_radio_frame_class_init (GimpIntRadioFrameClass *klass)
                                                         GIMP_TYPE_INT_STORE,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_EXPLICIT_NOTIFY));
+
+  g_object_class_override_property (object_class, PROP_ORIENTATION, "orientation");
 }
 
 static void
 gimp_int_radio_frame_init (GimpIntRadioFrame *radio_frame)
 {
-  radio_frame->box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  radio_frame->box = gtk_flow_box_new ();
   gtk_container_add (GTK_CONTAINER (radio_frame), radio_frame->box);
   gtk_widget_set_visible (GTK_WIDGET (radio_frame->box), TRUE);
 }
@@ -185,6 +189,8 @@ gimp_int_radio_frame_set_property (GObject      *object,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
+  GimpIntRadioFrame *frame = GIMP_INT_RADIO_FRAME (object);
+
   switch (property_id)
     {
     case PROP_VALUE:
@@ -195,7 +201,10 @@ gimp_int_radio_frame_set_property (GObject      *object,
       gimp_int_radio_frame_set_store (GIMP_INT_RADIO_FRAME (object),
                                       g_value_get_object (value));
       break;
-
+    case PROP_ORIENTATION:
+      gtk_orientable_set_orientation (GTK_ORIENTABLE (frame->box),
+                                      g_value_get_enum (value));
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -215,11 +224,14 @@ gimp_int_radio_frame_get_property (GObject    *object,
     {
     case PROP_VALUE:
       g_value_set_int (value, frame->value);
-    break;
-      case PROP_STORE:
-        g_value_set_object (value, frame->store);
-        break;
-
+      break;
+    case PROP_STORE:
+      g_value_set_object (value, frame->store);
+      break;
+    case PROP_ORIENTATION:
+      g_value_set_enum (value,
+                        gtk_orientable_get_orientation (GTK_ORIENTABLE (frame->box)));
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -674,7 +686,7 @@ gimp_int_radio_frame_fill (GimpIntRadioFrame *frame)
                               -1);
 
           button = gtk_radio_button_new_with_mnemonic (group, label);
-          gtk_box_pack_start (GTK_BOX (frame->box), button, FALSE, FALSE, 0);
+          gtk_container_add (GTK_CONTAINER (frame->box), button);
           gtk_widget_set_visible (button, TRUE);
 
           g_free (label);
