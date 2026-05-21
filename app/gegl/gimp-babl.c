@@ -712,22 +712,22 @@ gimp_babl_format_get_trc (const Babl *format)
 
   if (! strcmp (name, "Y")         ||
       ! strcmp (name, "YA")        ||
-      ! strcmp (name, "CMYK")      ||
-      ! strcmp (name, "cmyk")      ||
-      ! strcmp (name, "CMYKA")     ||
-      ! strcmp (name, "cmykA")     ||
-      ! strcmp (name, "CaMaYaKaA") ||
-      ! strcmp (name, "camayakaA") ||
       ! strcmp (name, "RGB")       ||
       ! strcmp (name, "RGBA")      ||
       ! strcmp (name, "RaGaBaA"))
     {
       return GIMP_TRC_LINEAR;
     }
-  else if (! strcmp (name, "Y'")      ||
-           ! strcmp (name, "Y'A")     ||
-           ! strcmp (name, "R'G'B'")  ||
-           ! strcmp (name, "R'G'B'A") ||
+  else if (! strcmp (name, "Y'")        ||
+           ! strcmp (name, "Y'A")       ||
+           ! strcmp (name, "CMYK")      ||
+           ! strcmp (name, "cmyk")      ||
+           ! strcmp (name, "CMYKA")     ||
+           ! strcmp (name, "cmykA")     ||
+           ! strcmp (name, "CaMaYaKaA") ||
+           ! strcmp (name, "camayakaA") ||
+           ! strcmp (name, "R'G'B'")    ||
+           ! strcmp (name, "R'G'B'A")   ||
            ! strcmp (name, "R'aG'aB'aA"))
     {
       return GIMP_TRC_NON_LINEAR;

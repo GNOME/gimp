@@ -1143,22 +1143,31 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
     case GIMP_COLOR_PICK_MODE_CMYK:
       {
-        const Babl *space = NULL;
-
         /* Try to load CMYK profile in the following order:
-         * 1) Soft-Proof Profile set in the View Menu
-         * 2) Preferred CMYK Profile set in Preferences
-         * 3) No CMYK Profile (Default Values)
+         * 1) Color profile if image is CMYK
+         * 2) Soft-Proof Profile set in the View Menu
+         * 3) Preferred CMYK Profile set in Preferences
+         * 4) No CMYK Profile (Default Values)
          */
-        color_profile = frame->view_profile ? g_object_ref (frame->view_profile) : NULL;
+        if (babl_space_is_cmyk (space))
+          {
+            color_profile = gimp_babl_format_get_color_profile (format);
+          }
+        else
+          {
+            space = NULL;
 
-        if (! color_profile && frame->config)
-          color_profile = gimp_color_config_get_cmyk_color_profile (frame->config,
-                                                                    NULL);
-        if (color_profile)
-          space = gimp_color_profile_get_space (color_profile,
-                                                frame->simulation_intent,
-                                                NULL);
+            color_profile = frame->view_profile ?
+                            g_object_ref (frame->view_profile) : NULL;
+
+            if (! color_profile && frame->config)
+              color_profile =
+                gimp_color_config_get_cmyk_color_profile (frame->config, NULL);
+            if (color_profile)
+              space = gimp_color_profile_get_space (color_profile,
+                                                    frame->simulation_intent,
+                                                    NULL);
+          }
 
         /* TRANSLATORS: C for Cyan (CMYK) */
         names[0] = C_("CMYK", "C:");
@@ -1178,10 +1187,12 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
         if (frame->sample_valid)
           {
-            gfloat       cmyk[5];
+            gfloat cmyk[5];
 
             /* User may swap CMYK color profiles at runtime */
-            gegl_color_get_pixel (frame->color, babl_format_with_space ("CMYKA float", space), cmyk);
+            gegl_color_get_pixel (frame->color,
+                                  babl_format_with_space ("CMYKA float", space),
+                                  cmyk);
 
             values = g_new0 (gchar *, 7);
 
