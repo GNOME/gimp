@@ -586,7 +586,10 @@ struct PaintBuf : Base
   PaintBuf (const GimpPaintCoreLoopsParams *params) :
     Base (params)
   {
-    paint_stride = gimp_temp_buf_get_width (params->paint_buf) * 4;
+    const Babl *format       = gimp_temp_buf_get_format (params->paint_buf);
+    const gint  n_components = babl_format_get_n_components (format);
+
+    paint_stride = gimp_temp_buf_get_width (params->paint_buf) * n_components;
     paint_data   = (paint_type *) gimp_temp_buf_get_data (params->paint_buf);
   }
 };
@@ -920,7 +923,11 @@ struct TempCompBuffer : Base
   {
     Base::init_step (params, state, iter, roi, area, rect);
 
-    state->comp_buffer_data = gegl_scratch_new (gfloat, 4 * rect->width);
+    const Babl *format       = gegl_buffer_get_format (params->src_buffer);
+    const gint  n_components = babl_format_get_n_components (format);
+
+    state->comp_buffer_data = gegl_scratch_new (gfloat,
+                                                n_components * rect->width);
   }
 
 
@@ -1197,11 +1204,14 @@ struct CombinePaintMaskToCanvasBufferToPaintBufAlpha : Base
   {
     Base::process_row (params, state, iter, roi, area, rect, y);
 
+    const Babl      *format       = gimp_temp_buf_get_format (params->paint_buf);
+    const gint       n_components = babl_format_get_n_components (format);
+    const gint       alpha        = n_components - 1;
     gint             mask_offset  = (y       - roi->y) * this->mask_stride +
                                     (rect->x - roi->x);
     const mask_type *mask_pixel   = &this->mask_data[mask_offset];
     gint             paint_offset = (y       - roi->y) * this->paint_stride +
-                                    (rect->x - roi->x) * 4;
+                                    (rect->x - roi->x) * n_components;
     gfloat          *paint_pixel  = &this->paint_data[paint_offset];
     gint             x;
 
@@ -1223,11 +1233,11 @@ struct CombinePaintMaskToCanvasBufferToPaintBufAlpha : Base
               }
           }
 
-        paint_pixel[3] *= state->canvas_pixel[0];
+        paint_pixel[alpha] *= state->canvas_pixel[0];
 
         mask_pixel          += 1;
         state->canvas_pixel += 1;
-        paint_pixel         += 4;
+        paint_pixel         += n_components;
       }
   }
 };
@@ -1389,18 +1399,20 @@ struct CanvasBufferToPaintBufAlpha : Base
     Base::process_row (params, state, iter, roi, area, rect, y);
 
     /* Copy the canvas buffer in rect to the paint buffer's alpha channel */
-
-    gint    paint_offset = (y       - roi->y) * this->paint_stride +
-                           (rect->x - roi->x) * 4;
-    gfloat *paint_pixel  = &this->paint_data[paint_offset];
-    gint    x;
+    const Babl *format       = gimp_temp_buf_get_format (params->paint_buf);
+    const gint  n_components = babl_format_get_n_components (format);
+    const gint  alpha        = n_components - 1;
+    gint        paint_offset = (y       - roi->y) * this->paint_stride +
+                               (rect->x - roi->x) * n_components;
+    gfloat     *paint_pixel  = &this->paint_data[paint_offset];
+    gint        x;
 
     for (x = 0; x < rect->width; x++)
       {
-        paint_pixel[3] *= *state->canvas_pixel;
+        paint_pixel[alpha] *= *state->canvas_pixel;
 
         state->canvas_pixel += 1;
-        paint_pixel         += 4;
+        paint_pixel         += n_components;
       }
   }
 };
@@ -1459,8 +1471,11 @@ struct PaintMaskToPaintBufAlpha : Base
   {
     Base::process_row (params, state, iter, roi, area, rect, y);
 
+    const Babl      *format       = gimp_temp_buf_get_format (params->paint_buf);
+    const gint       n_components = babl_format_get_n_components (format);
+    const gint       alpha        = n_components - 1;
     gint             paint_offset = (y       - roi->y) * this->paint_stride +
-                                    (rect->x - roi->x) * 4;
+                                    (rect->x - roi->x) * n_components;
     gfloat          *paint_pixel  = &this->paint_data[paint_offset];
     gint             mask_offset  = (y       - roi->y) * this->mask_stride +
                                     (rect->x - roi->x);
@@ -1469,10 +1484,10 @@ struct PaintMaskToPaintBufAlpha : Base
 
     for (x = 0; x < rect->width; x++)
       {
-        paint_pixel[3] *= value_to_float (*mask_pixel) * params->paint_opacity;
+        paint_pixel[alpha] *= value_to_float (*mask_pixel) * params->paint_opacity;
 
         mask_pixel  += 1;
-        paint_pixel += 4;
+        paint_pixel += n_components;
       }
   }
 };
@@ -1946,11 +1961,14 @@ struct DoLayerBlend : Base
   {
     Base::init_step (params, state, iter, roi, area, rect);
 
+    const Babl *format       = gimp_temp_buf_get_format (params->paint_buf);
+    const gint  n_components = babl_format_get_n_components (format);
+
     state->in_pixel = (gfloat *) iter->items[state->iterator_base + 0].data;
 
     state->paint_pixel = this->paint_data                        +
                          (rect->y - roi->y) * this->paint_stride +
-                         (rect->x - roi->x) * 4;
+                         (rect->x - roi->x) * n_components;
 
     if (! has_comp_mask (this) && has_mask_buffer_iterator (this))
       {
@@ -1978,8 +1996,10 @@ struct DoLayerBlend : Base
   {
     Base::process_row (params, state, iter, roi, area, rect, y);
 
-    gfloat *mask_pixel;
-    gfloat *out_pixel;
+    const Babl *format       = gimp_temp_buf_get_format (params->paint_buf);
+    const gint  n_components = babl_format_get_n_components (format);
+    gfloat     *mask_pixel;
+    gfloat     *out_pixel;
 
     if (has_comp_mask (this))
       mask_pixel = comp_mask_data (this, state);
@@ -2010,12 +2030,12 @@ struct DoLayerBlend : Base
                           &state->process_roi,
                           0);
 
-    state->in_pixel     += rect->width * 4;
+    state->in_pixel     += rect->width * n_components;
     state->paint_pixel  += this->paint_stride;
     if (! has_comp_mask (this) && has_mask_buffer_iterator (this))
       state->mask_pixel += rect->width;
     if (! has_comp_buffer ((const Derived *) this))
-      state->out_pixel  += rect->width * 4;
+      state->out_pixel  += rect->width * n_components;
   }
 };
 
