@@ -774,13 +774,13 @@ explorer_dialog (GimpProcedure       *procedure,
 
   bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_widget_set_margin_top (bbox, 12);
-  gtk_box_set_homogeneous (GTK_BOX (bbox), TRUE);
-  gtk_box_pack_start (GTK_BOX (vbox), bbox, TRUE, TRUE, 2);
+  gtk_box_set_homogeneous (GTK_BOX (bbox), FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 2);
   gtk_box_reorder_child (GTK_BOX (vbox), bbox, 1);
   gtk_widget_set_visible (bbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("_Open"));
-  gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, FALSE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (create_load_file_chooser),
                     dialog);
@@ -788,7 +788,7 @@ explorer_dialog (GimpProcedure       *procedure,
   gimp_help_set_help_data (button, _("Load a fractal from file"), NULL);
 
   button = gtk_button_new_with_mnemonic (_("_Save"));
-  gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, FALSE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (create_save_file_chooser),
                     dialog);
