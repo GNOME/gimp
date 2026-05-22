@@ -31,10 +31,15 @@
 #include "operations/gimp-operation-config.h"
 #include "operations/gimpoperationsettings.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimp-filter-history.h"
 #include "core/gimpimage.h"
+#include "core/gimpitem.h"
 #include "core/gimpprogress.h"
+
+#include "display/gimpdisplay.h"
 
 #include "widgets/gimpaction.h"
 
@@ -42,6 +47,8 @@
 #include "filters-commands.h"
 #include "gimpgeglprocedure.h"
 #include "procedure-commands.h"
+
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */
@@ -253,6 +260,31 @@ filters_run_procedure (Gimp          *gimp,
         run_mode = GIMP_RUN_NONINTERACTIVE;
 
       settings = gegl_procedure->default_settings;
+    }
+
+  /* Prevent non-interactive or repeated filters from running on invisible
+   * layers unless the user has allowed this option */
+  if (run_mode == GIMP_RUN_NONINTERACTIVE)
+    {
+      GimpImage     *image  = gimp_display_get_image (display);
+      GimpGuiConfig *config = GIMP_GUI_CONFIG (display->gimp->config);
+      GList         *drawables;
+      GList         *iter;
+
+      drawables = gimp_image_get_selected_drawables (image);
+      for (iter = drawables; iter; iter = iter->next)
+        {
+          if (! gimp_item_is_visible (GIMP_ITEM (iter->data)) &&
+              ! config->edit_non_visible)
+            {
+              gimp_message_literal (display->gimp, G_OBJECT (display),
+                                    GIMP_MESSAGE_ERROR,
+                                    _("A selected layer is not visible."));
+              g_list_free (drawables);
+              return;
+            }
+        }
+      g_list_free (drawables);
     }
 
   args = procedure_commands_get_display_args (procedure, display, settings);
