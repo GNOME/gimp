@@ -241,14 +241,6 @@ prefs_response (GtkWidget *widget,
 
             gimp_config_reset (config_copy);
             gimp_rc_load_system (GIMP_RC (config_copy));
-
-            /* don't use the default value if there is no help browser */
-            if (! gimp_help_browser_is_installed (gimp))
-              {
-                g_object_set (config_copy,
-                              "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
-                              NULL);
-              }
           }
 
         gtk_widget_destroy (confirm);
@@ -2725,41 +2717,6 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_grid_attach (GTK_GRID (grid), hbox, 1, 2, 1, 1);
   gtk_widget_set_visible (hbox, TRUE);
 
-  /*  Help Browser  */
-#ifdef HAVE_WEBKIT
-  /*  If there is no webkit available, assume we are on a platform
-   *  that doesn't use the help browser, so don't bother showing
-   *  the combo.
-   */
-  vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox), FALSE);
-
-  if (gimp_help_browser_is_installed (gimp))
-    {
-      grid = prefs_grid_new (GTK_CONTAINER (vbox2));
-
-      button = prefs_enum_combo_box_add (object, "help-browser", 0, 0,
-                                         _("H_elp browser to use:"),
-                                         GTK_GRID (grid), 0, size_group);
-    }
-  else
-    {
-      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
-                                 _("The GIMP help browser doesn't seem to "
-                                   "be installed. Using the web browser "
-                                   "instead."));
-      gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-      gtk_widget_set_visible (hbox, TRUE);
-
-      g_object_set (config,
-                    "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
-                    NULL);
-    }
-#else
-  g_object_set (config,
-                "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
-                NULL);
-#endif /* HAVE_WEBKIT */
-
   /* Action Search */
   vbox2 = prefs_frame_new (_("Action Search"), GTK_CONTAINER (vbox), FALSE);
   grid = prefs_grid_new (GTK_CONTAINER (vbox2));
@@ -3656,4 +3613,3 @@ prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
 
   return dialog;
 }
-    
