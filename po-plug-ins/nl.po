@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-16 21:50+0000\n"
-"PO-Revision-Date: 2026-05-18 17:25+0200\n"
+"POT-Creation-Date: 2026-05-22 13:54+0000\n"
+"PO-Revision-Date: 2026-05-22 16:42+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -76,8 +76,8 @@ msgstr "Plug-In Voorbeeld in C"
 #: plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2643 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:619 plug-ins/flame/flame.c:809
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1501
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1525
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1491
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1515
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1402
 #: plug-ins/gfig/gfig-dialog.c:349 plug-ins/gfig/gfig-dialog.c:772
@@ -601,21 +601,22 @@ msgstr "Rolgordijnen"
 #: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1246
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
-#: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:431
-#: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-macpaint.c:247
-#: plug-ins/common/file-pcx.c:727 plug-ins/common/file-pcx.c:735
-#: plug-ins/common/file-pcx.c:743 plug-ins/common/file-pix.c:431
-#: plug-ins/common/file-png.c:1082 plug-ins/common/file-pnm.c:848
-#: plug-ins/common/file-qoi.c:296 plug-ins/common/file-raw-data.c:834
-#: plug-ins/common/file-raw-data.c:1955 plug-ins/common/file-sunras.c:1061
-#: plug-ins/common/file-tga.c:1103 plug-ins/common/file-tim.c:403
-#: plug-ins/common/file-tim.c:551 plug-ins/common/file-wbmp.c:398
-#: plug-ins/common/file-wbmp.c:475 plug-ins/common/file-xbm.c:891
-#: plug-ins/common/film.c:864 plug-ins/common/smooth-palette.c:301
-#: plug-ins/common/tile.c:398 plug-ins/file-bmp/bmp-load.c:809
-#: plug-ins/file-exr/file-exr.c:301 plug-ins/file-faxg3/faxg3.c:583
-#: plug-ins/file-fits/fits.c:705 plug-ins/file-jpeg/jpeg-load.c:252
+#: plug-ins/common/file-drhalo.c:242 plug-ins/common/file-farbfeld.c:307
+#: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1229
+#: plug-ins/common/file-iff.c:431 plug-ins/common/file-jp2.c:1629
+#: plug-ins/common/file-macpaint.c:247 plug-ins/common/file-pcx.c:727
+#: plug-ins/common/file-pcx.c:735 plug-ins/common/file-pcx.c:743
+#: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
+#: plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296
+#: plug-ins/common/file-raw-data.c:834 plug-ins/common/file-raw-data.c:1955
+#: plug-ins/common/file-sunras.c:1061 plug-ins/common/file-tga.c:1103
+#: plug-ins/common/file-tim.c:403 plug-ins/common/file-tim.c:551
+#: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:475
+#: plug-ins/common/file-xbm.c:891 plug-ins/common/film.c:864
+#: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
+#: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
+#: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
+#: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
 #: plug-ins/file-psd/psd-load.c:3228 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1587
@@ -708,7 +709,7 @@ msgid "Border Size"
 msgstr "Randgrootte"
 
 #: plug-ins/common/border-average.c:435
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:841
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:831
 msgid "Number of Colors"
 msgstr "Aantal kleuren"
 
@@ -1033,8 +1034,8 @@ msgstr "Willekeurige waarde"
 #: plug-ins/common/qbist.c:1001 plug-ins/common/sphere-designer.c:2294
 #: plug-ins/common/sphere-designer.c:2692 plug-ins/flame/flame.c:618
 #: plug-ins/flame/flame.c:1221
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1501
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:784
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1491
 #: plug-ins/gfig/gfig-dialog.c:772 plug-ins/ifs-compose/ifs-compose.c:911
 #: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:79
 #: plug-ins/imagemap/imap_file.c:73 plug-ins/lighting/lighting-ui.c:492
@@ -1049,8 +1050,8 @@ msgstr "_Openen"
 #: plug-ins/common/qbist.c:1009 plug-ins/common/sphere-designer.c:2294
 #: plug-ins/common/sphere-designer.c:2700 plug-ins/flame/flame.c:618
 #: plug-ins/flame/flame.c:1229
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1525
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:792
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1515
 #: plug-ins/gfig/gfig-dialog.c:811 plug-ins/gimpressionist/brush.c:269
 #: plug-ins/ifs-compose/ifs-compose.c:912
 #: plug-ins/ifs-compose/ifs-compose.c:2614 plug-ins/imagemap/imap_file.c:129
@@ -1218,7 +1219,7 @@ msgstr "Mutatie-afstand:"
 msgid "Graph of the Current Settings"
 msgstr "Grafiek van de huidige instellingen"
 
-#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:572
+#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:573
 #: plug-ins/common/procedure-browser.c:169
 #: plug-ins/filter-browser/filter-browser.c:741 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1189 plug-ins/gfig/gfig-dialog.c:1334
@@ -1249,7 +1250,7 @@ msgstr "CML-verkennerparameters opslaan"
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2450
 #: plug-ins/file-tiff/file-tiff-export.c:1087
 #: plug-ins/file-tiff/file-tiff-export.c:1177 plug-ins/flame/flame.c:586
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1406
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1396
 #: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
 #: plug-ins/lighting/lighting-ui.c:796
 #, c-format
@@ -1975,16 +1976,17 @@ msgstr "Kan niet op lege selecties werken."
 #  Do not rely on librsvg setting GError on failure!
 #: plug-ins/common/curve-bend.c:808 plug-ins/common/file-cel.c:330
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
-#: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:481
-#: plug-ins/common/file-iff.c:277 plug-ins/common/file-lnk.c:200
-#: plug-ins/common/file-macpaint.c:198 plug-ins/common/file-mng.c:1409
-#: plug-ins/common/file-paa.c:190 plug-ins/common/file-pcx.c:490
-#: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:800
-#: plug-ins/common/file-png.c:1370 plug-ins/common/file-ps.c:1158
-#: plug-ins/common/file-ps.c:3754 plug-ins/common/file-psp.c:2844
-#: plug-ins/common/file-psp.c:2894 plug-ins/common/file-pvr.c:256
-#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
-#: plug-ins/common/file-raw-data.c:810 plug-ins/common/file-raw-data.c:1861
+#: plug-ins/common/file-drhalo.c:202 plug-ins/common/file-farbfeld.c:273
+#: plug-ins/common/file-gif-load.c:481 plug-ins/common/file-iff.c:277
+#: plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:198
+#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
+#: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
+#: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
+#: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3756
+#: plug-ins/common/file-psp.c:2844 plug-ins/common/file-psp.c:2894
+#: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
+#: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:810
+#: plug-ins/common/file-raw-data.c:1861
 #: plug-ins/common/file-seattle-filmworks.c:232
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:772
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:277
@@ -2002,7 +2004,7 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/file-psd/psd-export.c:2456 plug-ins/file-psd/psd-load.c:190
 #: plug-ins/file-psd/psd-load.c:195 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:540
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1734
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
 #: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:529
 #: plug-ins/help/gimphelplocale.c:257 plug-ins/help/gimphelplocale.c:273
 #: plug-ins/lighting/lighting-ui.c:927
@@ -2467,9 +2469,10 @@ msgstr "Witniveau"
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Afbeeldingsafmetingen te groot: breedte %d x hoogte %d"
 
-#: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
-#: plug-ins/common/file-macpaint.c:260 plug-ins/common/web-browser.c:211
-#: plug-ins/file-psd/psd-load.c:3607 plug-ins/file-tiff/file-tiff-load.c:1944
+#: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:258
+#: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
+#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3607
+#: plug-ins/file-tiff/file-tiff-load.c:1944
 #: plug-ins/file-tiff/file-tiff-load.c:2038
 #: plug-ins/file-tiff/file-tiff-load.c:2226
 #, c-format
@@ -2960,6 +2963,35 @@ msgstr "Kan afbeeldingen met alfakanaal niet opslaan."
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "Kan niet werken met onbekende afbeeldingstypen."
+
+#: plug-ins/common/file-drhalo.c:128
+msgid "Dr. Halo CUT image"
+msgstr "Dr. Halo CUT-afbeelding"
+
+#: plug-ins/common/file-drhalo.c:131 plug-ins/common/file-drhalo.c:132
+msgid "Load Dr. Halo CUT image format"
+msgstr "Laad Dr. Halo CUT afbeeldingsindeling"
+
+#  Do not rely on librsvg setting GError on failure!
+#: plug-ins/common/file-drhalo.c:214
+#, c-format
+msgid "Cannot open file for reading: %s\n"
+msgstr "Kan bestand niet openen om te lezen: %s\n"
+
+#: plug-ins/common/file-drhalo.c:227
+#, c-format
+msgid "Invalid dimensions: %d x %d"
+msgstr "Ongeldige afmetingen: %d x %d"
+
+#: plug-ins/common/file-drhalo.c:282 plug-ins/common/file-drhalo.c:288
+#: plug-ins/common/file-drhalo.c:303 plug-ins/common/file-drhalo.c:309
+#, c-format
+msgid "Error reading data. Image may be corrupt."
+msgstr "Fout bij het lezen van gegevens. Afbeelding kan beschadigd zijn."
+
+#: plug-ins/common/file-drhalo.c:324 plug-ins/common/file-drhalo.c:346
+msgid "Invalid data: image may be corrupt."
+msgstr "Ongeldige gegevens: afbeelding zou corrupt kunnen zijn."
 
 #: plug-ins/common/file-farbfeld.c:137 plug-ins/common/file-farbfeld.c:163
 msgid "Farbfeld"
@@ -5552,47 +5584,47 @@ msgstr "%s-pagina's"
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Exporteren naar PostScript kan geen afbeeldingen afhandelen die alfakanalen bevatten"
 
-#: plug-ins/common/file-ps.c:3842
+#: plug-ins/common/file-ps.c:3844
 msgid "Pages:"
 msgstr "Pagina‘s:"
 
-#: plug-ins/common/file-ps.c:3846
+#: plug-ins/common/file-ps.c:3848
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Te laden pagina‘s (bijv. 1-4 of 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3852
+#: plug-ins/common/file-ps.c:3854
 msgid "Open as"
 msgstr "Openen als"
 
 # What is the Dutch translation of 'aspect ratio'?
-#: plug-ins/common/file-ps.c:3940
+#: plug-ins/common/file-ps.c:3942
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr "Indien geselecteerd zal de resulterende afbeelding geschaald worden om in de opgegeven grootte te passen zonder de verhoudingen te veranderen."
 
-#: plug-ins/common/file-ps.c:3946
+#: plug-ins/common/file-ps.c:3948
 msgid "Image Size"
 msgstr "Afbeeldingsgrootte"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3963
+#: plug-ins/common/file-ps.c:3965
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3964
+#: plug-ins/common/file-ps.c:3966
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3965
+#: plug-ins/common/file-ps.c:3967
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3966
+#: plug-ins/common/file-ps.c:3968
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3973
+#: plug-ins/common/file-ps.c:3975
 msgid "Output"
 msgstr "Uitvoer"
 
@@ -7912,16 +7944,16 @@ msgid_plural "%d plug-ins match your query"
 msgstr[0] "%d plug-in komt overeen met uw verzoek"
 msgstr[1] "%d plug-ins komen overeen met uw verzoek"
 
-#: plug-ins/common/plugin-browser.c:543
+#: plug-ins/common/plugin-browser.c:544
 #: plug-ins/filter-browser/filter-browser.c:692
 msgid "No matches"
 msgstr "Geen overeenkomsten"
 
-#: plug-ins/common/plugin-browser.c:568
+#: plug-ins/common/plugin-browser.c:569
 msgid "Plug-in Browser"
 msgstr "Plug-inverkenner"
 
-#: plug-ins/common/plugin-browser.c:616 plug-ins/common/unit-editor.c:114
+#: plug-ins/common/plugin-browser.c:617 plug-ins/common/unit-editor.c:114
 #: plug-ins/metadata/metadata-editor.c:612
 #: plug-ins/metadata/metadata-editor.c:648
 #: plug-ins/metadata/metadata-editor.c:655
@@ -7929,23 +7961,23 @@ msgstr "Plug-inverkenner"
 msgid "Name"
 msgstr "Naam"
 
-#: plug-ins/common/plugin-browser.c:624 plug-ins/common/plugin-browser.c:685
+#: plug-ins/common/plugin-browser.c:625 plug-ins/common/plugin-browser.c:686
 msgid "Menu Path"
 msgstr "Menupad"
 
-#: plug-ins/common/plugin-browser.c:632 plug-ins/common/plugin-browser.c:694
+#: plug-ins/common/plugin-browser.c:633 plug-ins/common/plugin-browser.c:695
 msgid "Image Types"
 msgstr "Afbeeldingstypen"
 
-#: plug-ins/common/plugin-browser.c:642 plug-ins/common/plugin-browser.c:703
+#: plug-ins/common/plugin-browser.c:643 plug-ins/common/plugin-browser.c:704
 msgid "Installation Date"
 msgstr "Installatiedatum"
 
-#: plug-ins/common/plugin-browser.c:664
+#: plug-ins/common/plugin-browser.c:665
 msgid "List View"
 msgstr "Lijstweergave"
 
-#: plug-ins/common/plugin-browser.c:725
+#: plug-ins/common/plugin-browser.c:726
 msgid "Tree View"
 msgstr "Boomweergave"
 
@@ -12018,55 +12050,51 @@ msgstr "_Fractals"
 msgid "Fractal Parameters"
 msgstr "Fractalparameters"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:770
-msgid "Fractal Type"
-msgstr "Fractaltype"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:800
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:790
 msgid "Load a fractal from file"
 msgstr "Een fractal uit een bestand inladen"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:808
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:798
 msgid "Save active fractal to file"
 msgstr "Actieve fractal opslaan in bestand"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:860
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:850
 msgid "Color Density"
 msgstr "Kleurdichtheid"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:874
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:864
 msgid "Color Function"
 msgstr "Kleurfunctie"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:937
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:927
 msgid "FractalExplorer Gradient"
 msgstr "FractalExplorer-kleurverloop"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:998
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:988
 msgid "Presets"
 msgstr "Voorinste_llingen"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1420
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1410
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Schrijven ‘%s’ misluikte: %s"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1498
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1488
 msgid "Load Fractal Parameters"
 msgstr "Fractalparameters inladen"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1522
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1512
 msgid "Save Fractal Parameters"
 msgstr "Fractalparameters opslaan"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1742
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1732
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "‘%s’ is geen FractalExplorer-bestand"
 
 # What is the Dutch translation of 'corrupt' here?
 # Beschadigd -pm
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1749
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1739
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "‘%s’ is beschadigd. Regel %d Optie-deel onjuist"
@@ -16813,6 +16841,9 @@ msgstr "Scannen niet mogelijk omdat er geen TWAIN driver is gevonden"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Gegevens van scanner / camera worden overgebracht"
+
+#~ msgid "Fractal Type"
+#~ msgstr "Fractaltype"
 
 #~ msgid "From _Webpage..."
 #~ msgstr "Van _webpagina…"
