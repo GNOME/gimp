@@ -76,6 +76,7 @@ void   register_pattern_procs             (GimpPDB *pdb);
 void   register_patterns_procs            (GimpPDB *pdb);
 void   register_pdb_procs                 (GimpPDB *pdb);
 void   register_plug_in_procs             (GimpPDB *pdb);
+void   register_plug_in_compat_procs      (GimpPDB *pdb);
 void   register_progress_procs            (GimpPDB *pdb);
 void   register_rasterizable_procs        (GimpPDB *pdb);
 void   register_resource_procs            (GimpPDB *pdb);

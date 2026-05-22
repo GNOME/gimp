@@ -61,6 +61,7 @@ libappinternalprocs_sources = [
   'patterns-cmds.c',
   'pdb-cmds.c',
   'plug-in-cmds.c',
+  'plug-in-compat-cmds.c',
   'progress-cmds.c',
   'rasterizable-cmds.c',
   'resource-cmds.c',

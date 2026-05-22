@@ -81,7 +81,6 @@ common_plugins_list = [
   { 'name': 'van-gogh-lic', },
   { 'name': 'warp', },
   { 'name': 'wavelet-decompose', },
-  { 'name': 'web-browser', },
 ]
 
 if libaa.found()

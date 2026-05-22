@@ -54,6 +54,7 @@ pdb_names = [
   'patterns',
   'pdb',
   'plug_in',
+  'plug_in_compat',
   'progress',
   'rasterizable',
   'resource',
