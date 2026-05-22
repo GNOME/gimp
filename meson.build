@@ -1054,19 +1054,6 @@ if have_vala
   endif
 endif
 
-# We disable WebkitGTK as default for now and discourage its use because
-# it is just a horror to build, is not available on Windows anymore
-# (AFAIK), and features brought are not worth the pain. We still leave
-# the code because mitch wants us to be able to look at it later, maybe
-# reinstate it through some shape or another. Yet for now, it is to be
-# considered non-existing feature for packager point of view. It is only
-# there in the hope developers get it back in shape.
-webkit_minver = '2.20.3'
-if get_option('webkit-unmaintained')
-  webkit = dependency('webkit2gtk-4.0', version: '>=' + webkit_minver)
-endif
-conf.set('HAVE_WEBKIT', get_option('webkit-unmaintained'))
-
 poppler_minver = '0.69.0'
 poppler_data_minver = '0.4.9'
 poppler = [
@@ -1841,7 +1828,6 @@ install_conf.set('POPPLER_REQUIRED_VERSION',      poppler_minver)
 install_conf.set('PYGOBJECT_REQUIRED_VERSION',    pygobject_minver)
 install_conf.set('PYTHON3_REQUIRED_VERSION',      python3_minver)
 install_conf.set('RSVG_REQUIRED_VERSION',         rsvg_minver)
-install_conf.set('WEBKITGTK_REQUIRED_VERSION',    webkit_minver)
 install_conf.set('WEBP_REQUIRED_VERSION',         webp_minver)
 install_conf.set('WMF_REQUIRED_VERSION',          wmf_minver)
 install_conf.set('XGETTEXT_REQUIRED_VERSION',     '0.19')
@@ -2284,7 +2270,6 @@ final_message = [
 '''  Lua plug-ins:        @0@'''.format(have_lua_output),
 '',
 '''Unmaintained Plug-Ins (discouraged except for developers):''',
-'''  Help Browser:        @0@'''.format(get_option('webkit-unmaintained')),
 '''  TWAIN (Win32):       @0@'''.format(get_option('twain-unmaintained')),
 '',
 '''Optional Modules:''',

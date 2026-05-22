@@ -58,12 +58,6 @@ if webp_found
   }
 endif
 
-if get_option('webkit-unmaintained')
-  complex_plugins_list += {
-    'name': 'help-browser',
-  }
-endif
-
 if platform_windows and host_cpu_family == 'x86' and get_option('twain-unmaintained')
   complex_plugins_list += {
     'name': 'twain',
