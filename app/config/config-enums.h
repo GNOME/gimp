@@ -83,17 +83,6 @@ typedef enum
 } GimpHandedness;
 
 
-#define GIMP_TYPE_HELP_BROWSER_TYPE (gimp_help_browser_type_get_type ())
-
-GType gimp_help_browser_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_HELP_BROWSER_GIMP,        /*< desc="GIMP help browser" >*/
-  GIMP_HELP_BROWSER_WEB_BROWSER  /*< desc="Web browser"       >*/
-} GimpHelpBrowserType;
-
-
 #define GIMP_TYPE_ICON_SIZE (gimp_icon_size_get_type ())
 
 GType gimp_icon_size_get_type (void) G_GNUC_CONST;

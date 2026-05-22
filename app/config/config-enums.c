@@ -173,35 +173,6 @@ gimp_handedness_get_type (void)
 }
 
 GType
-gimp_help_browser_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_HELP_BROWSER_GIMP, "GIMP_HELP_BROWSER_GIMP", "gimp" },
-    { GIMP_HELP_BROWSER_WEB_BROWSER, "GIMP_HELP_BROWSER_WEB_BROWSER", "web-browser" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_HELP_BROWSER_GIMP, NC_("help-browser-type", "GIMP help browser"), NULL },
-    { GIMP_HELP_BROWSER_WEB_BROWSER, NC_("help-browser-type", "Web browser"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpHelpBrowserType", values);
-      gimp_type_set_translation_context (type, "help-browser-type");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_icon_size_get_type (void)
 {
   static const GEnumValue values[] =

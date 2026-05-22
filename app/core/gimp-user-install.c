@@ -1164,12 +1164,13 @@ user_update_sessionrc (const GMatchInfo *matched_value,
 }
 
 #define GIMPRC_UPDATE_PATTERN \
-  "\\(show-tooltips [^)]*\\)"            "|" \
-  "\\(theme [^)]*\\)"                    "|" \
-  "\\(.*-path(-writable)? \"[^\"]*\"\\)" "|" \
-  "\\(style solid\\)"                    "|" \
-  "\\(precision (.*)-gamma\\)"           "|" \
-  "\\(filter-tool-show-color-options [^)]*\\)"
+  "\\(show-tooltips [^)]*\\)"                  "|" \
+  "\\(theme [^)]*\\)"                          "|" \
+  "\\(.*-path(-writable)? \"[^\"]*\"\\)"       "|" \
+  "\\(style solid\\)"                          "|" \
+  "\\(precision (.*)-gamma\\)"                 "|" \
+  "\\(filter-tool-show-color-options [^)]*\\)" "|" \
+  "\\(help-browser [^)]*\\)"
 
 static gboolean
 user_update_gimprc (const GMatchInfo *matched_value,
@@ -1226,6 +1227,8 @@ user_update_gimprc (const GMatchInfo *matched_value,
       /* Do not migrate the advanced color options which was the gamma
        * hack removed for GIMP 3.0. Cf. #12577.
        */
+
+      /* Property help-browser removed in GIMP 3.2. */
     }
 
   g_free (match);

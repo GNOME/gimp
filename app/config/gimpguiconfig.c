@@ -34,8 +34,6 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_HELP_BROWSER GIMP_HELP_BROWSER_WEB_BROWSER
-
 #define DEFAULT_USER_MANUAL_ONLINE_URI \
   "https://docs.gimp.org/" GIMP_APP_VERSION_STRING
 
@@ -77,7 +75,6 @@ enum
   PROP_USE_HELP,
   PROP_SHOW_HELP_BUTTON,
   PROP_HELP_LOCALES,
-  PROP_HELP_BROWSER,
   PROP_ACTION_HISTORY_SIZE,
   PROP_USER_MANUAL_ONLINE,
   PROP_USER_MANUAL_ONLINE_URI,
@@ -386,14 +383,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                            HELP_LOCALES_BLURB,
                            "",
                            GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_HELP_BROWSER,
-                         "help-browser",
-                         "Help browser",
-                         HELP_BROWSER_BLURB,
-                         GIMP_TYPE_HELP_BROWSER_TYPE,
-                         DEFAULT_HELP_BROWSER,
-                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USER_MANUAL_ONLINE,
                             "user-manual-online",
@@ -727,9 +716,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_HELP_LOCALES:
       g_set_str (&gui_config->help_locales, g_value_get_string (value));
       break;
-    case PROP_HELP_BROWSER:
-      gui_config->help_browser = g_value_get_enum (value);
-      break;
     case PROP_USER_MANUAL_ONLINE:
       gui_config->user_manual_online = g_value_get_boolean (value);
       break;
@@ -910,9 +896,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_HELP_LOCALES:
       g_value_set_string (value, gui_config->help_locales);
-      break;
-    case PROP_HELP_BROWSER:
-      g_value_set_enum (value, gui_config->help_browser);
       break;
     case PROP_USER_MANUAL_ONLINE:
       g_value_set_boolean (value, gui_config->user_manual_online);

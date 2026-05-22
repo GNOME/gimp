@@ -73,7 +73,6 @@ struct _GimpGuiConfig
   gboolean             use_help;
   gboolean             show_help_button;
   gchar               *help_locales;
-  GimpHelpBrowserType  help_browser;
   gboolean             user_manual_online;
   gchar               *user_manual_online_uri;
   gint                 action_history_size;
