@@ -1170,7 +1170,16 @@ user_update_sessionrc (const GMatchInfo *matched_value,
   "\\(style solid\\)"                          "|" \
   "\\(precision (.*)-gamma\\)"                 "|" \
   "\\(filter-tool-show-color-options [^)]*\\)" "|" \
-  "\\(help-browser [^)]*\\)"
+  "\\(help-browser [^)]*\\)"                   "|" \
+                                                   \
+  "\\(cursor-format [^)]*\\)"                  "|" \
+  "\\(info-window-per-display [^)]*\\)"        "|" \
+  "\\(menu-mnemonics [^)]*\\)"                 "|" \
+  "\\(show-tool-tips [^)]*\\)"                 "|" \
+  "\\(show-tips [^)]*\\)"                      "|" \
+  "\\(toolbox-window-hint [^)]*\\)"            "|" \
+  "\\(transient-docks [^)]*\\)"                "|" \
+  "\\(web-browser [^)]*\\)"
 
 static gboolean
 user_update_gimprc (const GMatchInfo *matched_value,
@@ -1229,6 +1238,12 @@ user_update_gimprc (const GMatchInfo *matched_value,
        */
 
       /* Property help-browser removed in GIMP 3.2. */
+
+      /* The following properties were also removed in 3.2, though they
+       * were technically already ignored: cursor-format,
+       * info-window-per-display, menu-mnemonics, show-tool-tips,
+       * show-tips, toolbox-window-hint, transient-docks, web-browser.
+       */
     }
 
   g_free (match);

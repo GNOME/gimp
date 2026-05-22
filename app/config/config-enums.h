@@ -32,17 +32,6 @@ typedef enum
 } GimpCanvasPaddingMode;
 
 
-#define GIMP_TYPE_CURSOR_FORMAT (gimp_cursor_format_get_type ())
-
-GType gimp_cursor_format_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_CURSOR_FORMAT_BITMAP, /*< desc="Black & white" >*/
-  GIMP_CURSOR_FORMAT_PIXBUF  /*< desc="Fancy"         >*/
-} GimpCursorFormat;
-
-
 #define GIMP_TYPE_CURSOR_MODE (gimp_cursor_mode_get_type ())
 
 GType gimp_cursor_mode_get_type (void) G_GNUC_CONST;

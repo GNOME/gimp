@@ -95,15 +95,7 @@ enum
   PROP_SHOW_WELCOME_DIALOG,
 
   /* ignored, only for backward compatibility: */
-  PROP_CURSOR_FORMAT,
   PROP_IMAGE_MAP_TOOL_MAX_RECENT,
-  PROP_INFO_WINDOW_PER_DISPLAY,
-  PROP_MENU_MNEMONICS,
-  PROP_SHOW_TOOL_TIPS,
-  PROP_SHOW_TIPS,
-  PROP_TOOLBOX_WINDOW_HINT,
-  PROP_TRANSIENT_DOCKS,
-  PROP_WEB_BROWSER
 };
 
 
@@ -516,71 +508,12 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             GIMP_PARAM_STATIC_STRINGS);
 
   /*  only for backward compatibility:  */
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_FORMAT,
-                         "cursor-format",
-                         NULL, NULL,
-                         GIMP_TYPE_CURSOR_FORMAT,
-                         GIMP_CURSOR_FORMAT_PIXBUF,
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_IGNORE);
-
   GIMP_CONFIG_PROP_INT (object_class, PROP_IMAGE_MAP_TOOL_MAX_RECENT,
                         "image-map-tool-max-recent",
                         NULL, NULL,
                         0, 255, 10,
                         GIMP_PARAM_STATIC_STRINGS |
                         GIMP_CONFIG_PARAM_IGNORE);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
-                            "info-window-per-display",
-                            NULL, NULL,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MENU_MNEMONICS,
-                            "menu-mnemonics",
-                            NULL, NULL,
-                            TRUE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_TOOL_TIPS,
-                            "show-tool-tips",
-                            NULL, NULL,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
-                            "show-tips",
-                            NULL, NULL,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
-
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TOOLBOX_WINDOW_HINT,
-                         "toolbox-window-hint",
-                         NULL, NULL,
-                         GIMP_TYPE_WINDOW_HINT,
-                         GIMP_WINDOW_HINT_UTILITY,
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_IGNORE);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_TRANSIENT_DOCKS,
-                            "transient-docks",
-                            NULL, NULL,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
-
-  GIMP_CONFIG_PROP_PATH (object_class, PROP_WEB_BROWSER,
-                         "web-browser",
-                         NULL, NULL,
-                         GIMP_CONFIG_PATH_FILE,
-                         "not used any longer",
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
@@ -767,17 +700,6 @@ gimp_gui_config_set_property (GObject      *object,
       gui_config->show_welcome_dialog = g_value_get_boolean (value);
       break;
 
-    case PROP_CURSOR_FORMAT:
-    case PROP_INFO_WINDOW_PER_DISPLAY:
-    case PROP_MENU_MNEMONICS:
-    case PROP_SHOW_TOOL_TIPS:
-    case PROP_SHOW_TIPS:
-    case PROP_TOOLBOX_WINDOW_HINT:
-    case PROP_TRANSIENT_DOCKS:
-    case PROP_WEB_BROWSER:
-      /* ignored */
-      break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -946,17 +868,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_SHOW_WELCOME_DIALOG:
       g_value_set_boolean (value, gui_config->show_welcome_dialog);
-      break;
-
-    case PROP_CURSOR_FORMAT:
-    case PROP_INFO_WINDOW_PER_DISPLAY:
-    case PROP_MENU_MNEMONICS:
-    case PROP_SHOW_TOOL_TIPS:
-    case PROP_SHOW_TIPS:
-    case PROP_TOOLBOX_WINDOW_HINT:
-    case PROP_TRANSIENT_DOCKS:
-    case PROP_WEB_BROWSER:
-      /* ignored */
       break;
 
     default:

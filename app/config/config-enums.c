@@ -43,35 +43,6 @@ gimp_canvas_padding_mode_get_type (void)
 }
 
 GType
-gimp_cursor_format_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_CURSOR_FORMAT_BITMAP, "GIMP_CURSOR_FORMAT_BITMAP", "bitmap" },
-    { GIMP_CURSOR_FORMAT_PIXBUF, "GIMP_CURSOR_FORMAT_PIXBUF", "pixbuf" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_CURSOR_FORMAT_BITMAP, NC_("cursor-format", "Black & white"), NULL },
-    { GIMP_CURSOR_FORMAT_PIXBUF, NC_("cursor-format", "Fancy"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpCursorFormat", values);
-      gimp_type_set_translation_context (type, "cursor-format");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_cursor_mode_get_type (void)
 {
   static const GEnumValue values[] =
