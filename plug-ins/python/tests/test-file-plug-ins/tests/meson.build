@@ -5,7 +5,6 @@ install_data([
     'config.ini',       # not yet updated!
     'batch-config.ini',
     # file format specific config files for import testing
-    'apng-tests.ini',
     'avif-tests.ini',
     'bmp-tests.ini',
     'dcx-tests.ini',
@@ -27,7 +26,6 @@ install_data([
     'pnm-tests.ini',
     'psb-tests.ini',
     'psd-tests.ini',
-    'psd-merged-tests.ini',
     'psp-tests.ini',
     'qoi-tests.ini',
     'sgi-tests.ini',
