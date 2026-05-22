@@ -229,10 +229,10 @@ help_temp_proc_install (GimpPlugIn *plug_in)
                                       G_PARAM_READWRITE);
 
   gimp_procedure_add_string_argument (procedure, "help-id",
-                        "Help ID to open",
-                        "Help ID to open",
-                        NULL,
-                        G_PARAM_READWRITE);
+                                      "Help ID to open",
+                                      "Help ID to open",
+                                      NULL,
+                                      G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);
