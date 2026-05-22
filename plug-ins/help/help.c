@@ -54,7 +54,6 @@ struct _HelpClass
 
 typedef struct
 {
-  gchar *procedure;
   gchar *help_domain;
   gchar *help_locales;
   gchar *help_id;
@@ -80,8 +79,7 @@ static GimpValueArray * help_temp_run          (GimpProcedure        *procedure,
                                                 gpointer              run_data);
 
 static void             help_temp_proc_install (GimpPlugIn           *plug_in);
-static void             help_load              (const gchar          *procedure,
-                                                const gchar          *help_domain,
+static void             help_load              (const gchar          *help_domain,
                                                 const gchar          *help_locales,
                                                 const gchar          *help_id);
 static gboolean         help_load_idle         (gpointer              data);
@@ -212,7 +210,8 @@ help_temp_proc_install (GimpPlugIn *plug_in)
 
   gimp_procedure_add_string_argument (procedure, "help-proc",
                                       "The procedure of the browser to use",
-                                      "The procedure of the browser to use",
+                                      "The procedure of the browser to use. "
+                                      "This argument is now ignored and considered deprecated.",
                                       NULL,
                                       G_PARAM_READWRITE);
 
@@ -244,13 +243,11 @@ help_temp_run (GimpProcedure        *procedure,
                gpointer              run_data)
 {
   GimpPDBStatusType  status       = GIMP_PDB_SUCCESS;
-  gchar             *help_proc    = NULL;
   gchar             *help_domain  = NULL;
   gchar             *help_locales = NULL;
   gchar             *help_id      = NULL;
 
   g_object_get (config,
-                "help-proc",    &help_proc,
                 "help-domain",  &help_domain,
                 "help-locales", &help_locales,
                 "help-id",      &help_id,
@@ -262,13 +259,9 @@ help_temp_run (GimpProcedure        *procedure,
   if (help_id == NULL)
     help_id = g_strdup (GIMP_HELP_DEFAULT_ID);
 
-  if (! help_proc)
-    status = GIMP_PDB_CALLING_ERROR;
-
   if (status == GIMP_PDB_SUCCESS)
-    help_load (help_proc, help_domain, help_locales, help_id);
+    help_load (help_domain, help_locales, help_id);
 
-  g_free (help_proc);
   g_free (help_domain);
   g_free (help_locales);
   g_free (help_id);
@@ -277,14 +270,12 @@ help_temp_run (GimpProcedure        *procedure,
 }
 
 static void
-help_load (const gchar *procedure,
-           const gchar *help_domain,
+help_load (const gchar *help_domain,
            const gchar *help_locales,
            const gchar *help_id)
 {
   IdleHelp *idle_help = g_slice_new (IdleHelp);
 
-  idle_help->procedure    = g_strdup (procedure);
   idle_help->help_domain  = g_strdup (help_domain);
   idle_help->help_locales = g_strdup (help_locales);
   idle_help->help_id      = g_strdup (help_id);
@@ -322,19 +313,7 @@ help_load_idle (gpointer data)
 
       if (uri)
         {
-          GimpProcedure  *procedure;
-          GimpValueArray *return_vals;
-
-#ifdef GIMP_HELP_DEBUG
-          g_printerr ("help: calling '%s' for '%s'\n",
-                      idle_help->procedure, uri);
-#endif
-
-          procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
-                                                   idle_help->procedure);
-          return_vals = gimp_procedure_run (procedure, "url", uri, NULL);
-          gimp_value_array_unref (return_vals);
-
+          g_app_info_launch_default_for_uri (uri, NULL, NULL);
           g_free (uri);
         }
       else if (fatal_error)
@@ -343,7 +322,6 @@ help_load_idle (gpointer data)
         }
     }
 
-  g_free (idle_help->procedure);
   g_free (idle_help->help_domain);
   g_free (idle_help->help_locales);
   g_free (idle_help->help_id);
