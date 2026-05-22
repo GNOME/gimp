@@ -1683,7 +1683,14 @@ script_fu_marshal_procedure_call (scheme   *sc,
     }
 
   /*  Marshall the supplied arguments  */
-  if (gimp_procedure_is_internal (procedure) ||
+  if ((gimp_procedure_is_internal (procedure) &&
+       /* Internal procedures not starting with "gimp-" are compat
+        * procedures (former Plug-in procedures which got moved to core
+        * PDB) and therefore scripts in the wild may use the named
+        * argument syntax. As an exception, we won't forbid these to run
+        * and simply output a deprecation warning.
+        */
+       g_str_has_prefix (proc_name, "gimp-")) ||
       ! sc->vptr->is_arg_name (sc->vptr->pair_car (a)))
     {
       GString *deprecation_warning = NULL;
@@ -1769,6 +1776,17 @@ script_fu_marshal_procedure_call (scheme   *sc,
     }
   else
     {
+      if (gimp_procedure_is_internal (procedure))
+        /* This is a compat procedure, i.e. a former official plug-in
+         * which we transformed into a core PDB procedure. As an
+         * exception, we don't forbid calling it with the named argument
+         * syntax, but we still output a warning for people to fix their
+         * scripts.
+         */
+        g_warning ("Procedure \"%s\" is now an Internal PDB procedure.\n"
+                   "Only use the named arguments syntax for Plug-In PDB procedures.",
+                   proc_name);
+
       for (i = 0; i < actual_arg_count; i++)
         {
           GParamSpec *arg_spec;
