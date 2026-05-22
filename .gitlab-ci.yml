@@ -900,6 +900,35 @@ tartan-static-analysis:
       - report/
     expire_in: 8 days
 
+abidiff:
+  extends: .debian-nonreloc
+  needs: ["gimp-debian-nonreloc"]
+  stage: analysis
+  script:
+    - apt-get update
+    - apt-get install -y abigail-tools libgimp-3.0
+    - gcc -print-multi-os-directory 2>/dev/null | grep -q ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
+    - gcc -print-multiarch 2>/dev/null | grep -q . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/') || export LIB_SUBDIR=
+    - export OLD_LIB_DIR="/usr/${LIB_DIR}/${LIB_SUBDIR}/"
+    - export LIB_DIR="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}"
+    # We ignore added symbols. Technically these could still be API
+    # breaks if it comes with expected behavior changes (e.g. if you are
+    # expected to call a new function for proper running).
+    # But let's just assume devs thought these through.
+    # For other types of changes:
+    # * If abidiff returns 4, a manual verification is required.
+    # * If abidiff returns 12 (0b1100), this is a definitive API or ABI break.
+    # See also: https://developers.redhat.com/articles/2025/02/04/how-analyze-changes-enum-types-using-abidiff
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimp-3.0.so" "${LIB_DIR}/libgimp-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpbase-3.0.so" "${LIB_DIR}/libgimpbase-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpcolor-3.0.so" "${LIB_DIR}/libgimpcolor-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpconfig-3.0.so" "${LIB_DIR}/libgimpconfig-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpmath-3.0.so" "${LIB_DIR}/libgimpmath-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpmodule-3.0.so" "${LIB_DIR}/libgimpmodule-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpthumb-3.0.so" "${LIB_DIR}/libgimpthumb-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpwidgets-3.0.so" "${LIB_DIR}/libgimpwidgets-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpui-3.0.so" "${LIB_DIR}/libgimpui-3.0.so"
+
 issue-bot:
   rules:
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "schedule" && ($GIMP_CI_MESON_CLANG != null || $GIMP_CI_MESON_MSVC != null || $GIMP_CI_MESON_APPLECLANG != null)
