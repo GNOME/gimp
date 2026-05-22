@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-12-20 00:27+0000\n"
-"PO-Revision-Date: 2024-12-20 22:37+0200\n"
-"Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
+"POT-Creation-Date: 2026-03-17 12:56+0000\n"
+"PO-Revision-Date: 2026-05-22 23:05+0300\n"
+"Last-Translator: Aurimas Černius <aurimas.cernius@mailo.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
@@ -18,27 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
 msgstr "Licencijos sutartis"
 
 #: build/windows/installer/lang/setup.isl.xml.in:10
-msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Diegtuvę sukūrtė Jernej Simonèiè, jernej-gimp@ena.si"
+msgid "Setup built by GIMP team, gimp.org"
+msgstr "GIMP komandos, gimp.org, sukurta sąranka"
 
-#: build/windows/installer/lang/setup.isl.xml.in:13
-#: build/windows/installer/lang/setup.isl.xml.in:16
+#: build/windows/installer/lang/setup.isl.xml.in:17
 msgid ""
-"This version of GIMP requires Windows 10, or a newer version of Windows."
-msgstr "Ši GIMP versija reikalauja Windows 10 ar naujesnės Windows versijos."
+"You are trying to directly downgrade from GIMP %1 to %2.%n%nPlease remove "
+"GIMP yourself before installing this version."
+msgstr ""
+"Bandote tiesiogiai pažeminti iš GIMP %1 į %2.%n%nPašalinkite GIMP prieš "
+"įdiegdami šią versiją."
 
-#: build/windows/installer/lang/setup.isl.xml.in:23
+#: build/windows/installer/lang/setup.isl.xml.in:22
 msgid "Development version"
 msgstr "Kuriama versija"
 
-#: build/windows/installer/lang/setup.isl.xml.in:28
+#: build/windows/installer/lang/setup.isl.xml.in:27
 msgid ""
 "This is a development version of GIMP where some features may not be "
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
@@ -52,28 +54,23 @@ msgstr ""
 "nestabilios.%nŠi GIMP versija nėra skirta kasdieniam darbui, kadangi ji gali "
 "būti nestabili ir Jūs galite prarasti savo darbą.%nJei susidursite su bet "
 "kokiomis problemomis, pirma patikrinkite, ar jos jau nepataisytos GIT prieš "
-"susisiekiant su kūrėjais ar pranešant apie tai GIMP gitlab:%n_https://gitlab."
-"gnome.org/GNOME/gimp/issues%n%nAr vis tiek norite tęsti įdiegimą?"
+"susisiekiant su kūrėjais ar pranešant apie tai GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nAr vis tiek norite tęsti įdiegimą?"
 
-#: build/windows/installer/lang/setup.isl.xml.in:31
-#: build/windows/installer/lang/setup.isl.xml.in:54
+#: build/windows/installer/lang/setup.isl.xml.in:30
+#: build/windows/installer/lang/setup.isl.xml.in:43
 msgid "&Continue"
 msgstr "&Tęsti"
 
-#: build/windows/installer/lang/setup.isl.xml.in:34
+#: build/windows/installer/lang/setup.isl.xml.in:33
 msgid "Exit"
 msgstr "Išeiti"
 
-#: build/windows/installer/lang/setup.isl.xml.in:44
-msgid ""
-"This version of GIMP requires a processor that supports SSE instructions."
-msgstr "Ši GIMP versija reikalauja procesoriaus, palaikančio SSE instrukcijas."
-
-#: build/windows/installer/lang/setup.isl.xml.in:48
+#: build/windows/installer/lang/setup.isl.xml.in:37
 msgid "Display settings problem"
 msgstr "Ekrano nuostatų problema"
 
-#: build/windows/installer/lang/setup.isl.xml.in:51
+#: build/windows/installer/lang/setup.isl.xml.in:40
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
 "display mode. This has been known to cause stability problems with GIMP, so "
@@ -85,136 +82,129 @@ msgstr ""
 "problemų GIMP. Todėl rekomenduojama pakeisti ekrano spalvų gylį į 32BPP "
 "prieš tęsiant."
 
-#: build/windows/installer/lang/setup.isl.xml.in:57
+#: build/windows/installer/lang/setup.isl.xml.in:46
 msgid "E&xit"
 msgstr "&Išeiti"
 
-#: build/windows/installer/lang/setup.isl.xml.in:61
-msgid ""
-"GIMP is now ready to be installed. Click the Install now button to install "
-"using the default settings, or click the Customize button if you'd like to "
-"have more control over what gets installed."
-msgstr ""
-"GIMP jau paruošta diegti. Spustelėkite mygtuką Diegti dabar, kad įdiegtumėte "
-"naudodami numatytuosius parametrus, arba spustelėkite mygtuką Tinkinti, jei "
-"norite geriau valdyti, kas bus įdiegta."
+#: build/windows/installer/lang/setup.isl.xml.in:50
+msgid "&Repair"
+msgstr "&Taisyti"
 
-#: build/windows/installer/lang/setup.isl.xml.in:64
+#: build/windows/installer/lang/setup.isl.xml.in:53
 msgid "&Install"
 msgstr "&Diegti"
 
-#: build/windows/installer/lang/setup.isl.xml.in:67
+#: build/windows/installer/lang/setup.isl.xml.in:56
+msgid "&Reinstall"
+msgstr "Pe&rdiegti"
+
+#: build/windows/installer/lang/setup.isl.xml.in:59
+msgid "&Update"
+msgstr "Atna&ujinti"
+
+#: build/windows/installer/lang/setup.isl.xml.in:62
 msgid "&Customize"
 msgstr "&Tinkinti"
 
-#: build/windows/installer/lang/setup.isl.xml.in:72
+#: build/windows/installer/lang/setup.isl.xml.in:67
 msgid "Compact installation"
 msgstr "Kompaktiškas diegimas"
 
-#: build/windows/installer/lang/setup.isl.xml.in:76
+#: build/windows/installer/lang/setup.isl.xml.in:71
 msgid "Custom installation"
 msgstr "Pasirinktinis diegimas"
 
-#: build/windows/installer/lang/setup.isl.xml.in:80
+#: build/windows/installer/lang/setup.isl.xml.in:75
 msgid "Full installation"
 msgstr "Pilnas diegimas"
 
-#: build/windows/installer/lang/setup.isl.xml.in:85
+#: build/windows/installer/lang/setup.isl.xml.in:80
 msgid "Description"
 msgstr "Aprašymas"
 
-#: build/windows/installer/lang/setup.isl.xml.in:89
+#: build/windows/installer/lang/setup.isl.xml.in:84
 msgid "GIMP"
 msgstr "GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:93
+#: build/windows/installer/lang/setup.isl.xml.in:88
 msgid "GIMP and all default plug-ins"
 msgstr "GIMP ir visi numatytieji įskiepiai"
 
-#: build/windows/installer/lang/setup.isl.xml.in:97
+#: build/windows/installer/lang/setup.isl.xml.in:92
 msgid "Run-time libraries"
 msgstr "Programos vykdymo bibliotekos"
 
-#: build/windows/installer/lang/setup.isl.xml.in:101
+#: build/windows/installer/lang/setup.isl.xml.in:96
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
 "Programos vykdymo bibliotekos naudojamos GIMP, įskaitant GTK programų "
 "vykdymo aplinką"
 
-#: build/windows/installer/lang/setup.isl.xml.in:105
+#: build/windows/installer/lang/setup.isl.xml.in:100
 msgid "Debug symbols"
 msgstr "Derinimo simboliai"
 
-#: build/windows/installer/lang/setup.isl.xml.in:109
+#: build/windows/installer/lang/setup.isl.xml.in:104
 msgid "Include information to help with debugging GIMP"
 msgstr "Įtraukti informaciją padedančią surasti GIMP klaidas"
 
-#: build/windows/installer/lang/setup.isl.xml.in:113
-#: build/windows/installer/lang/setup.isl.xml.in:117
+#: build/windows/installer/lang/setup.isl.xml.in:108
+msgid "Resource development files"
+msgstr "Išteklių kūrimo failai"
+
+#: build/windows/installer/lang/setup.isl.xml.in:112
+msgid ""
+"Include some files to help with building GEGL filters and GIMP plug-ins in "
+"MSYS2"
+msgstr ""
+"Įtraukti kai kuriuos failus GEGL filtrų bei GIMP įskiepių kūrimui su MSYS2"
+
+#: build/windows/installer/lang/setup.isl.xml.in:116
+#: build/windows/installer/lang/setup.isl.xml.in:120
 msgid "Translations"
 msgstr "Vertimai"
 
-#: build/windows/installer/lang/setup.isl.xml.in:121
+#: build/windows/installer/lang/setup.isl.xml.in:124
 msgid "Python scripting"
 msgstr "Python scenarijai"
 
-#: build/windows/installer/lang/setup.isl.xml.in:125
+#: build/windows/installer/lang/setup.isl.xml.in:128
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr "Leidžia GIMP naudoti įskiepius parašytus, Python skriptų kalba."
 
-#: build/windows/installer/lang/setup.isl.xml.in:129
+#: build/windows/installer/lang/setup.isl.xml.in:132
 msgid "Lua scripting"
 msgstr "Lua scenarijai"
 
-#: build/windows/installer/lang/setup.isl.xml.in:133
+#: build/windows/installer/lang/setup.isl.xml.in:136
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr "Leidžia GIMP naudoti įskiepius, parašytus Lua skriptų kalba."
 
-#: build/windows/installer/lang/setup.isl.xml.in:137
+#: build/windows/installer/lang/setup.isl.xml.in:140
 msgid "MyPaint brushes"
 msgstr "MyPaint teptukai"
 
-#: build/windows/installer/lang/setup.isl.xml.in:141
+#: build/windows/installer/lang/setup.isl.xml.in:144
 msgid "Install the default set of MyPaint brushes"
 msgstr "Įdiegti numatytą MyPaint teptukų rinkinį"
 
-#: build/windows/installer/lang/setup.isl.xml.in:145
+#: build/windows/installer/lang/setup.isl.xml.in:148
 msgid "PostScript support"
 msgstr "PostSricpt palaikymas"
 
-#: build/windows/installer/lang/setup.isl.xml.in:149
+#: build/windows/installer/lang/setup.isl.xml.in:152
 msgid "Allow GIMP to load PostScript files"
 msgstr "Leisti GIMP įkelti PostScript failus"
 
-#: build/windows/installer/lang/setup.isl.xml.in:153
-msgid "Support for 32-bit plug-ins"
-msgstr "32-bitų įskiepių palaikymas"
-
 #: build/windows/installer/lang/setup.isl.xml.in:157
-msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
-"support."
-msgstr ""
-"Įtraukti būtinus failus 32-bitų įskiepių naudojimui.%nBūtinas TWAIN "
-"palaikymui."
-
-#: build/windows/installer/lang/setup.isl.xml.in:162
 msgid "Additional icons:"
 msgstr "Papildomos piktogramos:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:166
+#: build/windows/installer/lang/setup.isl.xml.in:161
 msgid "Create a &desktop icon"
 msgstr "Sukurti &darbalaukio piktogramą"
 
-#: build/windows/installer/lang/setup.isl.xml.in:170
-msgid "Create a &Quick Launch icon"
-msgstr "Sukurti &Greito paleidimo piktogramą"
-
-#: build/windows/installer/lang/setup.isl.xml.in:174
-msgid "Remove previous GIMP version"
-msgstr "Pašalinti ankstesnę GIMP versiją"
-
-#: build/windows/installer/lang/setup.isl.xml.in:179
+#: build/windows/installer/lang/setup.isl.xml.in:166
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -222,160 +212,193 @@ msgstr ""
 "Iškilo problema atnaujinant GIMP aplinką - %1. Jei iškils klaidos įkeliant "
 "įskiepius, bandykite išdiegti ir iš naujo įdiegti GIMP."
 
-#: build/windows/installer/lang/setup.isl.xml.in:183
+#: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Error extracting temporary data."
 msgstr "Klaida išskleidžiant laikinus duomenis."
 
-#: build/windows/installer/lang/setup.isl.xml.in:187
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid "Error updating Python interpreter info."
 msgstr "Klaida atnaujinant Python interpretatoriaus informaciją."
 
-#: build/windows/installer/lang/setup.isl.xml.in:191
-msgid "Error updating MyPaint brushes info."
-msgstr "Klaida atnaujinant MyPaint teptukų informaciją."
+#: build/windows/installer/lang/setup.isl.xml.in:178
+msgid "Trying to create Restore Point..."
+msgstr "Bandoma sukurti atstatymo tašką..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
-msgid "There was an error updating %1."
-msgstr "Atnaujinant kilo klaida %1."
-
-#: build/windows/installer/lang/setup.isl.xml.in:199
-msgid "There was an error updating GIMP's configuration file %1."
-msgstr "Kilo klaida atnaujinant GIMP konfigūracijos failą %1."
-
-#: build/windows/installer/lang/setup.isl.xml.in:204
-msgid "Edit with GIMP"
-msgstr "Redaguoti su GIMP"
-
-#: build/windows/installer/lang/setup.isl.xml.in:209
-msgid "Select file associations"
-msgstr "Pasirinkti failų susiejimus"
-
-#: build/windows/installer/lang/setup.isl.xml.in:213
-msgid "Extensions:"
-msgstr "Plėtiniai:"
-
-#: build/windows/installer/lang/setup.isl.xml.in:217
-msgid "Select the file types you wish to associate with GIMP"
-msgstr "Pasirinkite, kuriuos failų tipus norite susieti su GIMP"
-
-#: build/windows/installer/lang/setup.isl.xml.in:221
-msgid ""
-"This will make selected files open in GIMP when you double-click them in "
-"Explorer."
-msgstr ""
-"Tai leis atidaryti pasirinktus failus su GIMP, kai ant jų paspausite dukart."
-
-#: build/windows/installer/lang/setup.isl.xml.in:225
-msgid "Select &All"
-msgstr "Pažymėti &visus"
-
-#: build/windows/installer/lang/setup.isl.xml.in:229
-msgid "Unselect &All"
-msgstr "&Nežymėti nieko"
-
-#: build/windows/installer/lang/setup.isl.xml.in:233
-msgid "Select &Unused"
-msgstr "Pažymėti nenau&dojamus"
-
-#: build/windows/installer/lang/setup.isl.xml.in:238
-msgid "File types to associate with GIMP:"
-msgstr "Su GIMP susiejamų failų tipai:"
-
-#: build/windows/installer/lang/setup.isl.xml.in:242
-msgid "Removing previous version of GIMP:"
-msgstr "Šalinama ankstesnė GIMP versija:"
-
-#: build/windows/installer/lang/setup.isl.xml.in:246
-msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"the automatic uninstall of old version has failed.%n%nPlease remove the "
-"previous version of GIMP yourself before installing this version in %2, or "
-"choose a Custom install, and select a different installation folder.%n%nThe "
-"Setup will now exit."
-msgstr ""
-"GIMP %1 negali būti įdiegta vietoj šiuo metu įdiegtos GIMP versijos ir "
-"automatinis senos versijos išdiegimas nepavyko.%n%nPrašome pašalinti "
-"ankstesnę GIMP versiją patiems prieš įdiegiant šią versiją į %2 arba "
-"pasirinkite „Pasirinktinis diegimas“ ir parinkite kitą diegimo aplanką."
-"%n%nDiegtuvė dabar baigs darbą."
-
-#: build/windows/installer/lang/setup.isl.xml.in:250
-msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically."
-"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
-"before installing this version in %2, or choose a Custom install, and select "
-"a different installation folder.%n%nThe Setup will now exit."
-msgstr ""
-"GIMP %1 negali būti įdiegta vietoj šiuo metu įdiegtos GIMP versijos ir "
-"diegtuvei nepavyko nustatyti, kaip automatiškai išdiegti seną versiją."
-"%n%nPrašome pašalinti ankstesnę GIMP versiją ir bet kokius papildinius "
-"patiems prieš įdiegiant šią versiją į %2 arba pasirinkite „Pasirinktinis "
-"diegimas“ ir parinkite kitą diegimo aplanką.%n%nDiegtuvė dabar baigs darbą."
-
-#: build/windows/installer/lang/setup.isl.xml.in:254
-msgid ""
-"Previous GIMP version was removed successfully, but Windows has to be "
-"restarted before the Setup can continue.%n%nAfter restarting your computer, "
-"Setup will continue next time an administrator logs in."
-msgstr ""
-"Ankstesnė GIMP versija sėkmingai pašalinta, tačiau Windows turi būti "
-"paleista iš naujo prieš diegtuvei tęsiant darbą.%n%nPo kompiuterio paleidimo "
-"iš naujo diegimas bus pratęstas, kai kitą kartą prisijungs administratorius."
-
-#: build/windows/installer/lang/setup.isl.xml.in:259
-msgid "There was an error restarting the Setup. (%1)"
-msgstr "Įvyko klaida paleidžiant diegtuvę iš naujo. (%1)"
-
-#: build/windows/installer/lang/setup.isl.xml.in:263
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Cleaning up old files..."
 msgstr "Valomi seni failai..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:268
+#: build/windows/installer/lang/setup.isl.xml.in:187
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Atsiminkite: GIMP yra laisva programinė įranga.%n%nPrašome aplankyti"
 
-#: build/windows/installer/lang/setup.isl.xml.in:272
+#: build/windows/installer/lang/setup.isl.xml.in:191
 msgid "for free updates."
 msgstr "ieškant nemokamų atnaujinimų."
 
-#: build/windows/installer/lang/setup.isl.xml.in:276
-msgid "Setting up file associations..."
-msgstr "Nustatomi failų susiejimai..."
-
-#: build/windows/installer/lang/setup.isl.xml.in:279
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Nustatoma GIMP Python plėtinio aplinka..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:282
-msgid "Setting up MyPaint brushes..."
-msgstr "Nustatomi MyPaint teptukai..."
-
-#: build/windows/installer/lang/setup.isl.xml.in:285
+#: build/windows/installer/lang/setup.isl.xml.in:198
 msgid "Setting up GIMP environment..."
 msgstr "Nustatoma GIMP aplinka..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:288
-msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "Nustatoma GIMP sąranka 32-bitų įskiepių palaikymui..."
-
-#: build/windows/installer/lang/setup.isl.xml.in:293
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Launch GIMP"
 msgstr "Paleidžiama GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:298
+#: build/windows/installer/lang/setup.isl.xml.in:208
 msgid "Removing add-on"
 msgstr "Šalinami papildiniai"
 
-#: build/windows/installer/lang/setup.isl.xml.in:302
+#: build/windows/installer/lang/setup.isl.xml.in:213
+msgid ""
+"Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
+"custom brushes)?%n%nA copy will be made on Desktop."
+msgstr ""
+"Ar norite ištrinti savo asmeninius GIMP failus (pvz. nuostatas, įrankių "
+"pradines vertes, pasirinktinius teptukus)?%n%nBus sukurta kopija "
+"darbastalyje."
+
+#: build/windows/installer/lang/setup.isl.xml.in:217
 msgid "Internal error (%1)."
 msgstr "Vidinė klaida (%1)"
 
-#: build/windows/installer/lang/setup.isl.xml.in:307
-msgid ""
-"GIMP does not appear to be installed in the selected directory. Continue "
-"anyway?"
-msgstr "Panašu, kad GIMP nėra įdiegta į pasirinktą aplanką. Vis tiek tęsti?"
+#~ msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
+#~ msgstr "Diegtuvę sukūrtė Jernej Simonèiè, jernej-gimp@ena.si"
+
+#~ msgid ""
+#~ "This version of GIMP requires Windows 10, or a newer version of Windows."
+#~ msgstr ""
+#~ "Ši GIMP versija reikalauja Windows 10 ar naujesnės Windows versijos."
+
+#~ msgid ""
+#~ "This version of GIMP requires a processor that supports SSE instructions."
+#~ msgstr ""
+#~ "Ši GIMP versija reikalauja procesoriaus, palaikančio SSE instrukcijas."
+
+#~ msgid ""
+#~ "GIMP is now ready to be installed. Click the Install now button to "
+#~ "install using the default settings, or click the Customize button if "
+#~ "you'd like to have more control over what gets installed."
+#~ msgstr ""
+#~ "GIMP jau paruošta diegti. Spustelėkite mygtuką Diegti dabar, kad "
+#~ "įdiegtumėte naudodami numatytuosius parametrus, arba spustelėkite mygtuką "
+#~ "Tinkinti, jei norite geriau valdyti, kas bus įdiegta."
+
+#~ msgid "Support for 32-bit plug-ins"
+#~ msgstr "32-bitų įskiepių palaikymas"
+
+#~ msgid ""
+#~ "Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
+#~ "support."
+#~ msgstr ""
+#~ "Įtraukti būtinus failus 32-bitų įskiepių naudojimui.%nBūtinas TWAIN "
+#~ "palaikymui."
+
+#~ msgid "Create a &Quick Launch icon"
+#~ msgstr "Sukurti &Greito paleidimo piktogramą"
+
+#~ msgid "Remove previous GIMP version"
+#~ msgstr "Pašalinti ankstesnę GIMP versiją"
+
+#~ msgid "Error updating MyPaint brushes info."
+#~ msgstr "Klaida atnaujinant MyPaint teptukų informaciją."
+
+#~ msgid "There was an error updating %1."
+#~ msgstr "Atnaujinant kilo klaida %1."
+
+#~ msgid "There was an error updating GIMP's configuration file %1."
+#~ msgstr "Kilo klaida atnaujinant GIMP konfigūracijos failą %1."
+
+#~ msgid "Edit with GIMP"
+#~ msgstr "Redaguoti su GIMP"
+
+#~ msgid "Select file associations"
+#~ msgstr "Pasirinkti failų susiejimus"
+
+#~ msgid "Extensions:"
+#~ msgstr "Plėtiniai:"
+
+#~ msgid "Select the file types you wish to associate with GIMP"
+#~ msgstr "Pasirinkite, kuriuos failų tipus norite susieti su GIMP"
+
+#~ msgid ""
+#~ "This will make selected files open in GIMP when you double-click them in "
+#~ "Explorer."
+#~ msgstr ""
+#~ "Tai leis atidaryti pasirinktus failus su GIMP, kai ant jų paspausite "
+#~ "dukart."
+
+#~ msgid "Select &All"
+#~ msgstr "Pažymėti &visus"
+
+#~ msgid "Unselect &All"
+#~ msgstr "&Nežymėti nieko"
+
+#~ msgid "Select &Unused"
+#~ msgstr "Pažymėti nenau&dojamus"
+
+#~ msgid "File types to associate with GIMP:"
+#~ msgstr "Su GIMP susiejamų failų tipai:"
+
+#~ msgid "Removing previous version of GIMP:"
+#~ msgstr "Šalinama ankstesnė GIMP versija:"
+
+#~ msgid ""
+#~ "GIMP %1 cannot be installed over your currently installed GIMP version, "
+#~ "and the automatic uninstall of old version has failed.%n%nPlease remove "
+#~ "the previous version of GIMP yourself before installing this version in "
+#~ "%2, or choose a Custom install, and select a different installation "
+#~ "folder.%n%nThe Setup will now exit."
+#~ msgstr ""
+#~ "GIMP %1 negali būti įdiegta vietoj šiuo metu įdiegtos GIMP versijos ir "
+#~ "automatinis senos versijos išdiegimas nepavyko.%n%nPrašome pašalinti "
+#~ "ankstesnę GIMP versiją patiems prieš įdiegiant šią versiją į %2 arba "
+#~ "pasirinkite „Pasirinktinis diegimas“ ir parinkite kitą diegimo aplanką."
+#~ "%n%nDiegtuvė dabar baigs darbą."
+
+#~ msgid ""
+#~ "GIMP %1 cannot be installed over your currently installed GIMP version, "
+#~ "and Setup couldn't determine how to remove the old version automatically."
+#~ "%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+#~ "before installing this version in %2, or choose a Custom install, and "
+#~ "select a different installation folder.%n%nThe Setup will now exit."
+#~ msgstr ""
+#~ "GIMP %1 negali būti įdiegta vietoj šiuo metu įdiegtos GIMP versijos ir "
+#~ "diegtuvei nepavyko nustatyti, kaip automatiškai išdiegti seną versiją."
+#~ "%n%nPrašome pašalinti ankstesnę GIMP versiją ir bet kokius papildinius "
+#~ "patiems prieš įdiegiant šią versiją į %2 arba pasirinkite „Pasirinktinis "
+#~ "diegimas“ ir parinkite kitą diegimo aplanką.%n%nDiegtuvė dabar baigs "
+#~ "darbą."
+
+#~ msgid ""
+#~ "Previous GIMP version was removed successfully, but Windows has to be "
+#~ "restarted before the Setup can continue.%n%nAfter restarting your "
+#~ "computer, Setup will continue next time an administrator logs in."
+#~ msgstr ""
+#~ "Ankstesnė GIMP versija sėkmingai pašalinta, tačiau Windows turi būti "
+#~ "paleista iš naujo prieš diegtuvei tęsiant darbą.%n%nPo kompiuterio "
+#~ "paleidimo iš naujo diegimas bus pratęstas, kai kitą kartą prisijungs "
+#~ "administratorius."
+
+#~ msgid "There was an error restarting the Setup. (%1)"
+#~ msgstr "Įvyko klaida paleidžiant diegtuvę iš naujo. (%1)"
+
+#~ msgid "Setting up file associations..."
+#~ msgstr "Nustatomi failų susiejimai..."
+
+#~ msgid "Setting up MyPaint brushes..."
+#~ msgstr "Nustatomi MyPaint teptukai..."
+
+#~ msgid "Setting up GIMP configuration for 32-bit plug-in support..."
+#~ msgstr "Nustatoma GIMP sąranka 32-bitų įskiepių palaikymui..."
+
+#~ msgid ""
+#~ "GIMP does not appear to be installed in the selected directory. Continue "
+#~ "anyway?"
+#~ msgstr "Panašu, kad GIMP nėra įdiegta į pasirinktą aplanką. Vis tiek tęsti?"
 
 #~ msgid "MS-Windows engine for GTK"
 #~ msgstr "MS-Windows GTK variklis"
