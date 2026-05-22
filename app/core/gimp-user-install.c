@@ -1166,12 +1166,14 @@ user_update_sessionrc (const GMatchInfo *matched_value,
 #define GIMPRC_UPDATE_PATTERN \
   "\\(show-tooltips [^)]*\\)"                  "|" \
   "\\(theme [^)]*\\)"                          "|" \
+  /* First matching group */                       \
   "\\(.*-path(-writable)? \"[^\"]*\"\\)"       "|" \
   "\\(style solid\\)"                          "|" \
+  /* Second matching group */                      \
   "\\(precision (.*)-gamma\\)"                 "|" \
   "\\(filter-tool-show-color-options [^)]*\\)" "|" \
   "\\(help-browser [^)]*\\)"                   "|" \
-                                                   \
+  \
   "\\(cursor-format [^)]*\\)"                  "|" \
   "\\(info-window-per-display [^)]*\\)"        "|" \
   "\\(menu-mnemonics [^)]*\\)"                 "|" \
@@ -1179,7 +1181,10 @@ user_update_sessionrc (const GMatchInfo *matched_value,
   "\\(show-tips [^)]*\\)"                      "|" \
   "\\(toolbox-window-hint [^)]*\\)"            "|" \
   "\\(transient-docks [^)]*\\)"                "|" \
-  "\\(web-browser [^)]*\\)"
+  "\\(web-browser [^)]*\\)"                    "|" \
+  \
+  /* Third matching group */                       \
+  "\\(image-map-tool-max-recent ([^)]*)\\)"
 
 static gboolean
 user_update_gimprc (const GMatchInfo *matched_value,
@@ -1198,7 +1203,7 @@ user_update_gimprc (const GMatchInfo *matched_value,
     }
   else if (g_str_has_prefix (match, "(precision "))
     {
-      gchar *precision_match = g_match_info_fetch (matched_value, 1);
+      gchar *precision_match = g_match_info_fetch (matched_value, 2);
 
       /* GIMP_PRECISION_*_GAMMA removed in GIMP 3.0.0 (commit 2559138931). */
       g_string_append_printf (new_value, "(precision %s-non-linear)", precision_match);
@@ -1228,6 +1233,18 @@ user_update_gimprc (const GMatchInfo *matched_value,
     {
       /* Do not migrate paths from GIMP < 2.10. See commit 2a9b20d3849. */
       g_string_append (new_value, match);
+    }
+  else if (g_str_has_prefix (match, "(image-map-tool-max-recent ") &&
+           (install->old_major < 2 ||
+            (install->old_major == 2 && install->old_minor < 10)))
+    {
+      /* Value renamed in GIMP 2.10.0 (cf. commit 3bd783283ea), but the
+       * prop was kept as duplicate until 3.2. So we migrate, but only
+       * from < 2.10.
+       */
+      gchar *prop_value = g_match_info_fetch (matched_value, 3);
+
+      g_string_append_printf (new_value, "(filter-tool-max-recent %s)", prop_value);
     }
   else
     {

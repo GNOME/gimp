@@ -93,9 +93,6 @@ enum
   PROP_TABS_POSITION,
   PROP_LAST_TIP_SHOWN,
   PROP_SHOW_WELCOME_DIALOG,
-
-  /* ignored, only for backward compatibility: */
-  PROP_IMAGE_MAP_TOOL_MAX_RECENT,
 };
 
 
@@ -506,14 +503,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             G_PARAM_READWRITE |
                             G_PARAM_CONSTRUCT |
                             GIMP_PARAM_STATIC_STRINGS);
-
-  /*  only for backward compatibility:  */
-  GIMP_CONFIG_PROP_INT (object_class, PROP_IMAGE_MAP_TOOL_MAX_RECENT,
-                        "image-map-tool-max-recent",
-                        NULL, NULL,
-                        0, 255, 10,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
@@ -553,7 +542,6 @@ gimp_gui_config_set_property (GObject      *object,
       gui_config->move_tool_changes_active = g_value_get_boolean (value);
       break;
     case PROP_FILTER_TOOL_MAX_RECENT:
-    case PROP_IMAGE_MAP_TOOL_MAX_RECENT:
       gui_config->filter_tool_max_recent = g_value_get_int (value);
       break;
     case PROP_FILTER_TOOL_USE_LAST_SETTINGS:
@@ -723,7 +711,6 @@ gimp_gui_config_get_property (GObject    *object,
       g_value_set_boolean (value, gui_config->move_tool_changes_active);
       break;
     case PROP_FILTER_TOOL_MAX_RECENT:
-    case PROP_IMAGE_MAP_TOOL_MAX_RECENT:
       g_value_set_int (value, gui_config->filter_tool_max_recent);
       break;
     case PROP_FILTER_TOOL_USE_LAST_SETTINGS:
