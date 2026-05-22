@@ -887,14 +887,13 @@ gimp_tool_gui_update_buttons (GimpToolGui *gui)
   gint               *ids;
   gint                n_ids;
   gint                n_alternatives = 0;
-  gint                i;
 
   n_ids = g_list_length (private->response_entries);
   ids   = g_new0 (gint, n_ids);
 
-  for (list = private->response_entries, i = 0;
+  for (list = private->response_entries;
        list;
-       list = g_list_next (list), i++)
+       list = g_list_next (list))
     {
       ResponseEntry *entry = list->data;
 
