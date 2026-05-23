@@ -1723,6 +1723,7 @@ conf.set_quoted('LIBEXECDIR',      prefix / get_option('libexecdir'))
 conf.set_quoted('MANDIR',          prefix / get_option('mandir'))
 conf.set_quoted('SBINDIR',         prefix / get_option('sbindir'))
 conf.set_quoted('SYSDATADIR',      prefix / get_option('datadir'))
+conf.set_quoted('RELOC_LIBDIR',    get_option('libdir'))
 
 
 ################################################################################
