@@ -971,10 +971,12 @@ gimp_operation_layer_mode_blend_luminance (GeglOperation *operation,
   gfloat     *scratch;
   gfloat     *in_Y;
   gfloat     *layer_Y;
-  const Babl *space = gegl_operation_get_source_space (operation, "input");
+  const Babl *format       = gegl_operation_get_format (operation, "input");
+  const Babl *space        = gegl_operation_get_source_space (operation, "input");
+  const gint  n_components = babl_format_get_n_components (format);
+  const gint  alpha        = n_components - 1;
 
-  fish = babl_fish (babl_format_with_space ("RGBA float", space),
-                    babl_format_with_space ("Y float",    space));
+  fish = babl_fish (format, babl_format_with_space ("Y float", space));
 
   scratch = gegl_scratch_new (gfloat, 2 * samples);
 
@@ -986,20 +988,20 @@ gimp_operation_layer_mode_blend_luminance (GeglOperation *operation,
 
   while (samples--)
     {
-      if (layer[ALPHA] != 0.0f && in[ALPHA] != 0.0f)
+      if (layer[alpha] != 0.0f && in[alpha] != 0.0f)
         {
           gfloat ratio = safe_div (layer_Y[0], in_Y[0]);
           gint   c;
 
-          for (c = 0; c < 3; c ++)
+          for (c = 0; c < alpha; c ++)
             comp[c] = in[c] * ratio;
         }
 
-      comp[ALPHA] = layer[ALPHA];
+      comp[alpha] = layer[alpha];
 
-      comp    += 4;
-      in      += 4;
-      layer   += 4;
+      comp    += n_components;
+      in      += n_components;
+      layer   += n_components;
       in_Y    ++;
       layer_Y ++;
     }
@@ -1224,7 +1226,7 @@ gimp_operation_layer_mode_blend_vivid_light (GeglOperation *operation,
         {
           gint c;
 
-          for (c = 0; c < 3; c++)
+          for (c = 0; c < alpha; c++)
             {
               gfloat val;
 

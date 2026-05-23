@@ -43,8 +43,14 @@ gimp_operation_normal_process_sse4 (GeglOperation       *op,
                                     const GeglRectangle *roi,
                                     gint                 level)
 {
-  /* check alignment */
-  if ((((uintptr_t)in_p) | ((uintptr_t)layer_p) | ((uintptr_t)out_p)) & 0x0F)
+  const Babl *format       = gegl_operation_get_format (op, "input");
+  const gint  n_components = babl_format_get_n_components (format);
+
+  if (
+      (((uintptr_t) in_p)    | /* alignment check */
+       ((uintptr_t) layer_p) |
+       ((uintptr_t) out_p)   ) & 0x0F ||
+      n_components != 4)
     {
       return gimp_operation_normal_process (op,
                                             in_p, layer_p, mask_p, out_p,
