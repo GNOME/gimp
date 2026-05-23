@@ -2244,6 +2244,16 @@ add_layers (GimpImage     *image,
                             lyr_chn[cidx]->columns,
                             lyr_chn[cidx]->rows);
 
+          if (lyr_chn[cidx]->columns > GIMP_MAX_IMAGE_SIZE ||
+              lyr_chn[cidx]->rows > GIMP_MAX_IMAGE_SIZE)
+            {
+              g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                           _("Invalid channel dimensions %u x %u"),
+                           lyr_chn[cidx]->columns, lyr_chn[cidx]->rows);
+              free_lyr_chn (lyr_chn, lyr_a[lidx]->num_channels);
+              return -1;
+            }
+
           /* Only read channel data if there is any channel
            * data. Note that the channel data can contain a
            * compression method but no actual data.
