@@ -340,6 +340,30 @@ find_out_env_flags (void)
     env_libs = p;
   else
     env_libs = "";
+
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+  if ((p = (gchar *) g_getenv ("PKG_CONFIG_PATH")) == NULL || *p == '\0')
+    {
+      const gchar *prefix = gimp_installation_directory ();
+      gchar       *path1;
+      gchar       *path2;
+      gchar       *reloc_pkg_config_path;
+
+      path1 = g_build_filename (prefix, RELOC_LIBDIR, "pkgconfig", NULL);
+      path2 = g_build_filename (prefix, "share", "pkgconfig", NULL);
+
+#ifndef G_OS_WIN32
+      reloc_pkg_config_path = g_strconcat (path1, ":", path2, NULL);
+#else
+      reloc_pkg_config_path = g_strconcat (path1, ";", path2, NULL);
+#endif
+      g_setenv ("PKG_CONFIG_PATH", reloc_pkg_config_path, TRUE);
+
+      g_free (path1);
+      g_free (path2);
+      g_free (reloc_pkg_config_path);
+    }
+#endif
 }
 
 static void
