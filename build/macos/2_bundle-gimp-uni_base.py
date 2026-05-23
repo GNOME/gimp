@@ -372,7 +372,7 @@ while pcs_to_process:
           new_pc_content = pc_content.replace(str(OPT_PREFIX), "${pcfiledir}/../..")
           dest_pc.write_text(new_pc_content)
 
-          #2.Bundle the corresponding library (unversioned .dylib)
+          #2.Bundle the corresponding library (unversioned .dylib only, since static .a not available on all MacPorts)
           libs = subprocess.run(["pkg-config", "--libs-only-l", dep], capture_output=True, text=True)
           if libs.returncode == 0:
             for arg in libs.stdout.split():

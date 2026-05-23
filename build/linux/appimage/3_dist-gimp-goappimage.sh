@@ -513,7 +513,7 @@ while [ -n "$(echo "$pcs_to_process" | sed 's/[[:space:]]//g')" ]; do
         # Replace the hardcoded prefix with a relocatable one
         sed -i "s|$UNIX_PREFIX|$(if echo "$pc_path" 2>/dev/null | grep -q '/share/'; then echo "\${pcfiledir}/../.."; else echo "\${pcfiledir}/../../.."; fi)|" "$USR_DIR/$pc_path"
 
-        #2.Bundle the corresponding library (unversioned .so)
+        #2.Bundle the corresponding library (unversioned .so only, since static .a not available on all .deb)
         if libs=$(pkg-config --libs-only-l "$dep" 2>/dev/null); then
           for arg in $libs; do
             if echo "$arg" | grep -q "^-l"; then
