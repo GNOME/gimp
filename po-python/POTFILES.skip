@@ -15,11 +15,9 @@ libgimpthumb
 libgimpwidgets
 menus
 modules
-plug-ins/color-rotate
 plug-ins/common
 plug-ins/file-bmp
 plug-ins/file-cin
-plug-ins/file-compressor
 plug-ins/file-dds
 plug-ins/file-exr
 plug-ins/file-faxg3
@@ -32,9 +30,7 @@ plug-ins/file-psd
 plug-ins/file-raw
 plug-ins/file-sgi
 plug-ins/file-tiff
-plug-ins/file-uri
 plug-ins/file-webp
-plug-ins/file-xjt
 plug-ins/filter-browser
 plug-ins/flame
 plug-ins/fractal-explorer
@@ -42,12 +38,10 @@ plug-ins/gfig
 plug-ins/gimpressionist
 plug-ins/gradient-flare
 plug-ins/help
-plug-ins/help-browser
 plug-ins/ifs-compose
 plug-ins/imagemap
 plug-ins/lighting
 plug-ins/map-object
-plug-ins/maze
 plug-ins/metadata
 plug-ins/pagecurl
 plug-ins/print
@@ -56,6 +50,4 @@ plug-ins/screenshot
 plug-ins/script-fu
 plug-ins/selection-to-path
 plug-ins/twain
-plug-ins/ui
-plug-ins/win-snap
 tools
