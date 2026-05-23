@@ -521,6 +521,10 @@ while [ -n "$(echo "$pcs_to_process" | sed 's/[[:space:]]//g')" ]; do
               if [ -h "$UNIX_PREFIX/${LIB_DIR}/${LIB_SUBDIR}$lib_name" ] && [ ! -h "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}$lib_name" ]; then
                 bund_usr "$UNIX_PREFIX" "lib/${lib_name}*"
               fi
+              lib_name="lib${arg#-l}.a"
+              if [ -f "$UNIX_PREFIX/${LIB_DIR}/${LIB_SUBDIR}$lib_name" ] && [ ! -f "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}$lib_name" ]; then
+                bund_usr "$UNIX_PREFIX" "lib/${lib_name}*"
+              fi
             fi
           done
         fi
