@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-16 21:50+0000\n"
-"PO-Revision-Date: 2026-05-17 18:33+0300\n"
+"POT-Creation-Date: 2026-05-23 15:11+0000\n"
+"PO-Revision-Date: 2026-05-23 20:12+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -72,8 +72,8 @@ msgstr "Приклад додатка мовою C"
 #: plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2643 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:619 plug-ins/flame/flame.c:809
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1501
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1525
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1491
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1515
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1402
 #: plug-ins/gfig/gfig-dialog.c:349 plug-ins/gfig/gfig-dialog.c:772
@@ -143,7 +143,7 @@ msgstr "Приклад додатка мовою JavaScript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4053 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:4063 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -606,23 +606,24 @@ msgstr "Жалюзі"
 #: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1246
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
-#: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:431
-#: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-macpaint.c:247
-#: plug-ins/common/file-pcx.c:727 plug-ins/common/file-pcx.c:735
-#: plug-ins/common/file-pcx.c:743 plug-ins/common/file-pix.c:431
-#: plug-ins/common/file-png.c:1082 plug-ins/common/file-pnm.c:848
-#: plug-ins/common/file-qoi.c:296 plug-ins/common/file-raw-data.c:834
-#: plug-ins/common/file-raw-data.c:1955 plug-ins/common/file-sunras.c:1061
-#: plug-ins/common/file-tga.c:1103 plug-ins/common/file-tim.c:403
-#: plug-ins/common/file-tim.c:551 plug-ins/common/file-wbmp.c:398
-#: plug-ins/common/file-wbmp.c:475 plug-ins/common/file-xbm.c:891
-#: plug-ins/common/film.c:864 plug-ins/common/smooth-palette.c:301
-#: plug-ins/common/tile.c:398 plug-ins/file-bmp/bmp-load.c:809
-#: plug-ins/file-exr/file-exr.c:301 plug-ins/file-faxg3/faxg3.c:583
-#: plug-ins/file-fits/fits.c:705 plug-ins/file-jpeg/jpeg-load.c:252
+#: plug-ins/common/file-drhalo.c:238 plug-ins/common/file-farbfeld.c:307
+#: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1229
+#: plug-ins/common/file-iff.c:431 plug-ins/common/file-jp2.c:1629
+#: plug-ins/common/file-macpaint.c:247 plug-ins/common/file-pcx.c:727
+#: plug-ins/common/file-pcx.c:735 plug-ins/common/file-pcx.c:743
+#: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
+#: plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296
+#: plug-ins/common/file-raw-data.c:834 plug-ins/common/file-raw-data.c:1955
+#: plug-ins/common/file-sunras.c:1061 plug-ins/common/file-tga.c:1103
+#: plug-ins/common/file-tim.c:403 plug-ins/common/file-tim.c:551
+#: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:475
+#: plug-ins/common/file-xbm.c:891 plug-ins/common/film.c:864
+#: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
+#: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
+#: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
+#: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3228 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3238 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1587
 #: plug-ins/file-tiff/file-tiff-load.c:2441
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -715,7 +716,7 @@ msgid "Border Size"
 msgstr "Розмір рамки"
 
 #: plug-ins/common/border-average.c:435
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:841
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:831
 msgid "Number of Colors"
 msgstr "Кількість кольорів"
 
@@ -1037,8 +1038,8 @@ msgstr "База випадковості"
 #: plug-ins/common/qbist.c:1001 plug-ins/common/sphere-designer.c:2294
 #: plug-ins/common/sphere-designer.c:2692 plug-ins/flame/flame.c:618
 #: plug-ins/flame/flame.c:1221
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1501
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:784
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1491
 #: plug-ins/gfig/gfig-dialog.c:772 plug-ins/ifs-compose/ifs-compose.c:911
 #: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:79
 #: plug-ins/imagemap/imap_file.c:73 plug-ins/lighting/lighting-ui.c:492
@@ -1053,8 +1054,8 @@ msgstr "_Відкрити"
 #: plug-ins/common/qbist.c:1009 plug-ins/common/sphere-designer.c:2294
 #: plug-ins/common/sphere-designer.c:2700 plug-ins/flame/flame.c:618
 #: plug-ins/flame/flame.c:1229
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1525
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:792
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1515
 #: plug-ins/gfig/gfig-dialog.c:811 plug-ins/gimpressionist/brush.c:269
 #: plug-ins/ifs-compose/ifs-compose.c:912
 #: plug-ins/ifs-compose/ifs-compose.c:2614 plug-ins/imagemap/imap_file.c:129
@@ -1218,7 +1219,7 @@ msgstr "Відстань мутацій:"
 msgid "Graph of the Current Settings"
 msgstr "Графік поточних параметрів"
 
-#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:572
+#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:573
 #: plug-ins/common/procedure-browser.c:169
 #: plug-ins/filter-browser/filter-browser.c:741 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1189 plug-ins/gfig/gfig-dialog.c:1334
@@ -1249,7 +1250,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2450
 #: plug-ins/file-tiff/file-tiff-export.c:1087
 #: plug-ins/file-tiff/file-tiff-export.c:1177 plug-ins/flame/flame.c:586
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1406
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1396
 #: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
 #: plug-ins/lighting/lighting-ui.c:796
 #, c-format
@@ -2003,16 +2004,17 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 
 #: plug-ins/common/curve-bend.c:808 plug-ins/common/file-cel.c:330
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
-#: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:481
-#: plug-ins/common/file-iff.c:277 plug-ins/common/file-lnk.c:200
-#: plug-ins/common/file-macpaint.c:198 plug-ins/common/file-mng.c:1409
-#: plug-ins/common/file-paa.c:190 plug-ins/common/file-pcx.c:490
-#: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:800
-#: plug-ins/common/file-png.c:1370 plug-ins/common/file-ps.c:1158
-#: plug-ins/common/file-ps.c:3754 plug-ins/common/file-psp.c:2844
-#: plug-ins/common/file-psp.c:2894 plug-ins/common/file-pvr.c:256
-#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
-#: plug-ins/common/file-raw-data.c:810 plug-ins/common/file-raw-data.c:1861
+#: plug-ins/common/file-drhalo.c:201 plug-ins/common/file-farbfeld.c:273
+#: plug-ins/common/file-gif-load.c:481 plug-ins/common/file-iff.c:277
+#: plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:198
+#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
+#: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
+#: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
+#: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3756
+#: plug-ins/common/file-psp.c:2844 plug-ins/common/file-psp.c:2894
+#: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
+#: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:810
+#: plug-ins/common/file-raw-data.c:1861
 #: plug-ins/common/file-seattle-filmworks.c:232
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:772
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:277
@@ -2030,7 +2032,7 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/file-psd/psd-export.c:2456 plug-ins/file-psd/psd-load.c:190
 #: plug-ins/file-psd/psd-load.c:195 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:540
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1734
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
 #: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:529
 #: plug-ins/help/gimphelplocale.c:257 plug-ins/help/gimphelplocale.c:273
 #: plug-ins/lighting/lighting-ui.c:927
@@ -2493,9 +2495,9 @@ msgstr "Рівень білого"
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Розміри зображення великі: ширина %d x висота %d"
 
-#: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
-#: plug-ins/common/file-macpaint.c:260 plug-ins/common/web-browser.c:211
-#: plug-ins/file-psd/psd-load.c:3607 plug-ins/file-tiff/file-tiff-load.c:1944
+#: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
+#: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
+#: plug-ins/file-psd/psd-load.c:3617 plug-ins/file-tiff/file-tiff-load.c:1944
 #: plug-ins/file-tiff/file-tiff-load.c:2038
 #: plug-ins/file-tiff/file-tiff-load.c:2226
 #, c-format
@@ -3008,6 +3010,39 @@ msgstr "Неможливо зберегти зображення з альфа-�
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "Не вдається виконати дії із зображеннями невідомого типу."
+
+#: plug-ins/common/file-drhalo.c:128
+msgid "Dr. Halo CUT image"
+msgstr "Зображення CUT Dr. Halo"
+
+#: plug-ins/common/file-drhalo.c:131 plug-ins/common/file-drhalo.c:132
+#| msgid "Load MacPaint image format"
+msgid "Load Dr. Halo CUT image format"
+msgstr "Завантажує файли у форматі зображень CUT Dr. Halo"
+
+#: plug-ins/common/file-drhalo.c:211
+#, c-format
+#| msgid "Could not open '%s' for reading: %s"
+msgid "Cannot open file for reading: %s\n"
+msgstr "Не вдалося відкрити файл для читання: %s\n"
+
+#: plug-ins/common/file-drhalo.c:223
+#, c-format
+#| msgid "Invalid layer dimensions: %dx%d"
+msgid "Invalid dimensions: %d x %d"
+msgstr "Некоректні розмірності: %d x %d"
+
+#: plug-ins/common/file-drhalo.c:278 plug-ins/common/file-drhalo.c:284
+#: plug-ins/common/file-drhalo.c:299 plug-ins/common/file-drhalo.c:305
+#, c-format
+#| msgid "Reading tile failed. Image may be corrupt at line %d."
+msgid "Error reading data. Image may be corrupt."
+msgstr "Не вдалося прочитати дані. Зображення може бути пошкоджено."
+
+#: plug-ins/common/file-drhalo.c:320 plug-ins/common/file-drhalo.c:342
+#| msgid "Image may be corrupt!"
+msgid "Invalid data: image may be corrupt."
+msgstr "Некоректні дані: зображення може бути пошкоджено."
 
 #: plug-ins/common/file-farbfeld.c:137 plug-ins/common/file-farbfeld.c:163
 msgid "Farbfeld"
@@ -5700,19 +5735,19 @@ msgstr "%s-сторінок"
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як PostScript"
 
-#: plug-ins/common/file-ps.c:3842
+#: plug-ins/common/file-ps.c:3844
 msgid "Pages:"
 msgstr "Сторінки:"
 
-#: plug-ins/common/file-ps.c:3846
+#: plug-ins/common/file-ps.c:3848
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Сторінок для завантаження(наприклад: 1-4 чи 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3852
+#: plug-ins/common/file-ps.c:3854
 msgid "Open as"
 msgstr "Відкрити як"
 
-#: plug-ins/common/file-ps.c:3940
+#: plug-ins/common/file-ps.c:3942
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5720,28 +5755,28 @@ msgstr ""
 "Якщо вибрано, вихідне зображення буде масштабуватись до заповнення вказаного "
 "розміру без зміни пропорцій."
 
-#: plug-ins/common/file-ps.c:3946
+#: plug-ins/common/file-ps.c:3948
 msgid "Image Size"
 msgstr "Розмір зображення"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3963
+#: plug-ins/common/file-ps.c:3965
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3964
+#: plug-ins/common/file-ps.c:3966
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3965
+#: plug-ins/common/file-ps.c:3967
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3966
+#: plug-ins/common/file-ps.c:3968
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3973
+#: plug-ins/common/file-ps.c:3975
 msgid "Output"
 msgstr "Вивід"
 
@@ -7847,7 +7882,7 @@ msgstr "Розрізати зображення на частини, вказа�
 msgid "Guillotine"
 msgstr "Гільйотина"
 
-#: plug-ins/common/guillotine.c:257 plug-ins/help-browser/dialog.c:830
+#: plug-ins/common/guillotine.c:257
 msgid "Untitled"
 msgstr "Без назви"
 
@@ -8165,16 +8200,16 @@ msgstr[0] "%d модуль відповідає запиту"
 msgstr[1] "%d модулі відповідає запиту"
 msgstr[2] "%d модулів відповідає запиту"
 
-#: plug-ins/common/plugin-browser.c:543
+#: plug-ins/common/plugin-browser.c:544
 #: plug-ins/filter-browser/filter-browser.c:692
 msgid "No matches"
 msgstr "Немає відповідностей"
 
-#: plug-ins/common/plugin-browser.c:568
+#: plug-ins/common/plugin-browser.c:569
 msgid "Plug-in Browser"
 msgstr "Огляд доповнень"
 
-#: plug-ins/common/plugin-browser.c:616 plug-ins/common/unit-editor.c:114
+#: plug-ins/common/plugin-browser.c:617 plug-ins/common/unit-editor.c:114
 #: plug-ins/metadata/metadata-editor.c:612
 #: plug-ins/metadata/metadata-editor.c:648
 #: plug-ins/metadata/metadata-editor.c:655
@@ -8182,23 +8217,23 @@ msgstr "Огляд доповнень"
 msgid "Name"
 msgstr "Назва"
 
-#: plug-ins/common/plugin-browser.c:624 plug-ins/common/plugin-browser.c:685
+#: plug-ins/common/plugin-browser.c:625 plug-ins/common/plugin-browser.c:686
 msgid "Menu Path"
 msgstr "Шлях у меню"
 
-#: plug-ins/common/plugin-browser.c:632 plug-ins/common/plugin-browser.c:694
+#: plug-ins/common/plugin-browser.c:633 plug-ins/common/plugin-browser.c:695
 msgid "Image Types"
 msgstr "Типи зображень"
 
-#: plug-ins/common/plugin-browser.c:642 plug-ins/common/plugin-browser.c:703
+#: plug-ins/common/plugin-browser.c:643 plug-ins/common/plugin-browser.c:704
 msgid "Installation Date"
 msgstr "Дата встановлення"
 
-#: plug-ins/common/plugin-browser.c:664
+#: plug-ins/common/plugin-browser.c:665
 msgid "List View"
 msgstr "У вигляді списку"
 
-#: plug-ins/common/plugin-browser.c:725
+#: plug-ins/common/plugin-browser.c:726
 msgid "Tree View"
 msgstr "У вигляді дерева"
 
@@ -9406,65 +9441,6 @@ msgstr "Масштаб %d"
 #: plug-ins/common/wavelet-decompose.c:302
 msgid "Residual"
 msgstr "Залишок"
-
-#: plug-ins/common/web-browser.c:178
-msgid "The operating system is out of memory or resources."
-msgstr "Операційній системі бракує пам'яті чи ресурсів.'"
-
-#: plug-ins/common/web-browser.c:181
-msgid "The specified file was not found."
-msgstr "Файл не знайденою"
-
-#: plug-ins/common/web-browser.c:184
-msgid "The specified path was not found."
-msgstr "Вказаний файл не знайдено."
-
-#: plug-ins/common/web-browser.c:187
-msgid ""
-"The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
-msgstr ""
-"Файл .exe є некоректним (не-Microsoft Win32 .exe або ж помилка у файлі .exe)."
-
-#: plug-ins/common/web-browser.c:190
-msgid "The operating system denied access to the specified file."
-msgstr "Операційна система відмовила у доступі до вказаного файлу."
-
-#: plug-ins/common/web-browser.c:193
-msgid "The file name association is incomplete or invalid."
-msgstr "Назва файлу є неповною або некоректною."
-
-#: plug-ins/common/web-browser.c:196
-msgid "DDE transaction busy"
-msgstr "Транзакція DDE зайнята"
-
-#: plug-ins/common/web-browser.c:199
-msgid "The DDE transaction failed."
-msgstr "Помилка у транзакції DDE."
-
-#: plug-ins/common/web-browser.c:202
-msgid "The DDE transaction timed out."
-msgstr "Перевищено час очікування на транзакцію DDE."
-
-#: plug-ins/common/web-browser.c:205
-msgid "The specified DLL was not found."
-msgstr "Вказану бібліотеку DLL не знайдено."
-
-#: plug-ins/common/web-browser.c:208
-msgid "There is no application associated with the given file name extension."
-msgstr "З вказаним розширенням файлу не пов'язано жодної програми."
-
-#: plug-ins/common/web-browser.c:214
-msgid "A sharing violation occurred."
-msgstr "Помилка при спільному доступі."
-
-#: plug-ins/common/web-browser.c:217
-msgid "Unknown Microsoft Windows error."
-msgstr "Невідома помилка Microsoft Windows."
-
-#: plug-ins/common/web-browser.c:220
-#, c-format
-msgid "Failed to open '%s': %s"
-msgstr "Не вдається відкрити «%s»: %s"
 
 #: plug-ins/common/wia.c:38
 msgid "Capture an image from a WIA datasource"
@@ -10896,7 +10872,7 @@ msgstr ""
 "У Photoshop не передбачено підтримки індексованих зображень, у яких понад "
 "один шар. При експортуванні шари буде об'єднано."
 
-#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4092
+#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4102
 msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
@@ -10998,38 +10974,44 @@ msgstr "Непідтримувана чи хибна ширина маски: %d
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3599
+#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3609
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
 
-#: plug-ins/file-psd/psd-load.c:2309 plug-ins/file-psd/psd-load.c:3197
+#: plug-ins/file-psd/psd-load.c:2251
+#, c-format
+#| msgid "'%s': Invalid dimensions %u x %u"
+msgid "Invalid channel dimensions %u x %u"
+msgstr "Некоректні розмірності каналу: %u x %u"
+
+#: plug-ins/file-psd/psd-load.c:2319 plug-ins/file-psd/psd-load.c:3207
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: plug-ins/file-psd/psd-load.c:2926
+#: plug-ins/file-psd/psd-load.c:2936
 msgid "Inner Shadow"
 msgstr "Внутрішня тінь"
 
-#: plug-ins/file-psd/psd-load.c:2927
+#: plug-ins/file-psd/psd-load.c:2937
 msgid "imported"
 msgstr "імпортовано"
 
-#: plug-ins/file-psd/psd-load.c:3374
+#: plug-ins/file-psd/psd-load.c:3384
 msgid "Extra"
 msgstr "Додатково"
 
-#: plug-ins/file-psd/psd-load.c:3676
+#: plug-ins/file-psd/psd-load.c:3686
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
 
-#: plug-ins/file-psd/psd-load.c:4069
+#: plug-ins/file-psd/psd-load.c:4079
 msgid "Duotone Import"
 msgstr "Двотонове імпортування"
 
-#: plug-ins/file-psd/psd-load.c:4070
+#: plug-ins/file-psd/psd-load.c:4080
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -11039,7 +11021,7 @@ msgstr ""
 "Дані двотонового простору кольорів було збережено,\n"
 "їх можна повторно застосувати при експортуванні."
 
-#: plug-ins/file-psd/psd-load.c:4093
+#: plug-ins/file-psd/psd-load.c:4103
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -12426,53 +12408,49 @@ msgstr "_Фрактали"
 msgid "Fractal Parameters"
 msgstr "Параметри фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:770
-msgid "Fractal Type"
-msgstr "Тип фрактала"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:800
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:790
 msgid "Load a fractal from file"
 msgstr "Завантажити фрактал з файлу"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:808
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:798
 msgid "Save active fractal to file"
 msgstr "Зберегти активний фрактал у файл"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:860
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:850
 msgid "Color Density"
 msgstr "Щільність кольору"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:874
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:864
 msgid "Color Function"
 msgstr "Функція кольору"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:937
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:927
 msgid "FractalExplorer Gradient"
 msgstr "Градієнт дослідника фракталів"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:998
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:988
 msgid "Presets"
 msgstr "Шаблони"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1420
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1410
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Не вдається записати у файл «%s»: %s"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1498
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1488
 msgid "Load Fractal Parameters"
 msgstr "Завантаження параметрів фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1522
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1512
 msgid "Save Fractal Parameters"
 msgstr "Збереження параметрів фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1742
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1732
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "«%s» не є файлом дослідника фракталів"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1749
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1739
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "Файл «%s» пошкоджений. Рядок %d розділу параметрів неправильний"
@@ -13191,8 +13169,7 @@ msgstr "Відкрити"
 msgid "Save"
 msgstr "Зберегти"
 
-#: plug-ins/gfig/gfig-menu.ui:16 plug-ins/help-browser/help-menu.ui:58
-#: plug-ins/imagemap/imap-menu.ui:22
+#: plug-ins/gfig/gfig-menu.ui:16 plug-ins/imagemap/imap-menu.ui:22
 msgid "Close"
 msgstr "Закрити"
 
@@ -14123,94 +14100,6 @@ msgstr "База випадковості:"
 #: plug-ins/gradient-flare/gradient-flare.c:4078
 msgid "_Second Flares"
 msgstr "_Другорядні спалахи"
-
-#. the dialog window
-#: plug-ins/help-browser/dialog.c:263 plug-ins/help-browser/dialog.c:831
-msgid "GIMP Help Browser"
-msgstr "Перегляд довідки GIMP"
-
-#: plug-ins/help-browser/dialog.c:277 plug-ins/help-browser/help-menu.ui:14
-msgid "_Reload"
-msgstr "О_новити"
-
-#: plug-ins/help-browser/dialog.c:277
-msgid "Reload current page"
-msgstr "Повторно завантажити цю сторінку"
-
-#: plug-ins/help-browser/dialog.c:278 plug-ins/help-browser/help-menu.ui:18
-msgid "_Stop"
-msgstr "З_упинити"
-
-#: plug-ins/help-browser/dialog.c:278
-msgid "Stop loading this page"
-msgstr "Зупинити завантаження цієї сторінки"
-
-#: plug-ins/help-browser/dialog.c:279
-msgid "Go to the index page"
-msgstr "До змісту"
-
-#: plug-ins/help-browser/dialog.c:285
-msgid "Visit the GIMP documentation website"
-msgstr "Відвідайте сайт документації GIMP"
-
-#: plug-ins/help-browser/dialog.c:1177
-msgid "Find:"
-msgstr "Шукати:"
-
-#: plug-ins/help-browser/dialog.c:1193
-msgctxt "search"
-msgid "_Previous"
-msgstr "_Попереднє"
-
-#: plug-ins/help-browser/dialog.c:1202
-msgctxt "search"
-msgid "_Next"
-msgstr "_Наступне"
-
-#: plug-ins/help-browser/dialog.c:1211
-msgctxt "search"
-msgid "_Close"
-msgstr "З_акрити"
-
-#: plug-ins/help-browser/help-menu.ui:6
-msgid "_Back"
-msgstr "_Назад"
-
-#: plug-ins/help-browser/help-menu.ui:10
-msgid "_Previous"
-msgstr "_Попереднє"
-
-#: plug-ins/help-browser/help-menu.ui:24
-msgid "_Home"
-msgstr "_Домівка"
-
-#: plug-ins/help-browser/help-menu.ui:28
-msgid "C_opy location"
-msgstr "_Копіювати розташування"
-
-#: plug-ins/help-browser/help-menu.ui:32
-msgid "S_how index"
-msgstr "_Показати зміст"
-
-#: plug-ins/help-browser/help-menu.ui:38
-msgid "Find"
-msgstr "Знайти"
-
-#: plug-ins/help-browser/help-menu.ui:42
-msgid "Find _Again"
-msgstr "Шукати _далі"
-
-#: plug-ins/help-browser/help-menu.ui:48
-msgid "Zoom in"
-msgstr "Збільшити"
-
-#: plug-ins/help-browser/help-menu.ui:52
-msgid "Zoom out"
-msgstr "Зменшити"
-
-#: plug-ins/help-browser/help-menu.ui:66
-msgid "Copy selection"
-msgstr "Копіювати позначене"
 
 #: plug-ins/help/gimphelpdomain.c:180
 #, c-format
@@ -16364,12 +16253,10 @@ msgid "DICOM"
 msgstr "DICOM"
 
 #: plug-ins/metadata/metadata-editor.c:1375
-#| msgid "Import metadata"
 msgid "Import Metadata..."
 msgstr "Імпортувати метадані…"
 
 #: plug-ins/metadata/metadata-editor.c:1381
-#| msgid "Export metadata"
 msgid "Export Metadata..."
 msgstr "Експортувати метадані…"
 
@@ -17233,6 +17120,123 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "The operating system is out of memory or resources."
+#~ msgstr "Операційній системі бракує пам'яті чи ресурсів.'"
+
+#~ msgid "The specified file was not found."
+#~ msgstr "Файл не знайденою"
+
+#~ msgid "The specified path was not found."
+#~ msgstr "Вказаний файл не знайдено."
+
+#~ msgid ""
+#~ "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe "
+#~ "image)."
+#~ msgstr ""
+#~ "Файл .exe є некоректним (не-Microsoft Win32 .exe або ж помилка у "
+#~ "файлі .exe)."
+
+#~ msgid "The operating system denied access to the specified file."
+#~ msgstr "Операційна система відмовила у доступі до вказаного файлу."
+
+#~ msgid "The file name association is incomplete or invalid."
+#~ msgstr "Назва файлу є неповною або некоректною."
+
+#~ msgid "DDE transaction busy"
+#~ msgstr "Транзакція DDE зайнята"
+
+#~ msgid "The DDE transaction failed."
+#~ msgstr "Помилка у транзакції DDE."
+
+#~ msgid "The DDE transaction timed out."
+#~ msgstr "Перевищено час очікування на транзакцію DDE."
+
+#~ msgid "The specified DLL was not found."
+#~ msgstr "Вказану бібліотеку DLL не знайдено."
+
+#~ msgid ""
+#~ "There is no application associated with the given file name extension."
+#~ msgstr "З вказаним розширенням файлу не пов'язано жодної програми."
+
+#~ msgid "A sharing violation occurred."
+#~ msgstr "Помилка при спільному доступі."
+
+#~ msgid "Unknown Microsoft Windows error."
+#~ msgstr "Невідома помилка Microsoft Windows."
+
+#, c-format
+#~ msgid "Failed to open '%s': %s"
+#~ msgstr "Не вдається відкрити «%s»: %s"
+
+#~ msgid "Fractal Type"
+#~ msgstr "Тип фрактала"
+
+#~ msgid "GIMP Help Browser"
+#~ msgstr "Перегляд довідки GIMP"
+
+#~ msgid "_Reload"
+#~ msgstr "О_новити"
+
+#~ msgid "Reload current page"
+#~ msgstr "Повторно завантажити цю сторінку"
+
+#~ msgid "_Stop"
+#~ msgstr "З_упинити"
+
+#~ msgid "Stop loading this page"
+#~ msgstr "Зупинити завантаження цієї сторінки"
+
+#~ msgid "Go to the index page"
+#~ msgstr "До змісту"
+
+#~ msgid "Visit the GIMP documentation website"
+#~ msgstr "Відвідайте сайт документації GIMP"
+
+#~ msgid "Find:"
+#~ msgstr "Шукати:"
+
+#~ msgctxt "search"
+#~ msgid "_Previous"
+#~ msgstr "_Попереднє"
+
+#~ msgctxt "search"
+#~ msgid "_Next"
+#~ msgstr "_Наступне"
+
+#~ msgctxt "search"
+#~ msgid "_Close"
+#~ msgstr "З_акрити"
+
+#~ msgid "_Back"
+#~ msgstr "_Назад"
+
+#~ msgid "_Previous"
+#~ msgstr "_Попереднє"
+
+#~ msgid "_Home"
+#~ msgstr "_Домівка"
+
+#~ msgid "C_opy location"
+#~ msgstr "_Копіювати розташування"
+
+#~ msgid "S_how index"
+#~ msgstr "_Показати зміст"
+
+#~ msgid "Find"
+#~ msgstr "Знайти"
+
+#~ msgid "Find _Again"
+#~ msgstr "Шукати _далі"
+
+#~ msgid "Zoom in"
+#~ msgstr "Збільшити"
+
+#~ msgid "Zoom out"
+#~ msgstr "Зменшити"
+
+#~ msgid "Copy selection"
+#~ msgstr "Копіювати позначене"
 
 #~ msgid "From _Webpage..."
 #~ msgstr "З _веб-сторінки…"
