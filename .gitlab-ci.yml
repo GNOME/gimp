@@ -901,6 +901,15 @@ tartan-static-analysis:
 
 abidiff:
   extends: .debian-nonreloc
+  rules:
+    - if: ($CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null) || $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        paths:
+          - libgimp*/*
+        compare_to: 'refs/heads/master'
+    - if: '$CI_COMMIT_TAG != null'
+      interruptible: false
+    - when: never
   needs: ["gimp-debian-nonreloc"]
   stage: analysis
   script:
