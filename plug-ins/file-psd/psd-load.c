@@ -2244,8 +2244,9 @@ add_layers (GimpImage     *image,
                             lyr_chn[cidx]->columns,
                             lyr_chn[cidx]->rows);
 
+          /* Vector masks can have a high value for rows, but then columns will be 0. */
           if (lyr_chn[cidx]->columns > GIMP_MAX_IMAGE_SIZE ||
-              lyr_chn[cidx]->rows > GIMP_MAX_IMAGE_SIZE)
+              (lyr_chn[cidx]->rows > GIMP_MAX_IMAGE_SIZE && lyr_chn[cidx]->columns != 0))
             {
               g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
                            _("Invalid channel dimensions %u x %u"),
