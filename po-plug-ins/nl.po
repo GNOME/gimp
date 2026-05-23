@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-22 13:54+0000\n"
-"PO-Revision-Date: 2026-05-22 16:42+0200\n"
+"POT-Creation-Date: 2026-05-23 14:35+0000\n"
+"PO-Revision-Date: 2026-05-23 16:46+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -145,7 +145,7 @@ msgstr "Plug-in voorbeeld in Javascript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4053 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:4063 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -618,7 +618,7 @@ msgstr "Rolgordijnen"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3228 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3238 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1587
 #: plug-ins/file-tiff/file-tiff-load.c:2441
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -2471,8 +2471,7 @@ msgstr "Afbeeldingsafmetingen te groot: breedte %d x hoogte %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:258
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3607
-#: plug-ins/file-tiff/file-tiff-load.c:1944
+#: plug-ins/file-psd/psd-load.c:3617 plug-ins/file-tiff/file-tiff-load.c:1944
 #: plug-ins/file-tiff/file-tiff-load.c:2038
 #: plug-ins/file-tiff/file-tiff-load.c:2226
 #, c-format
@@ -7637,7 +7636,7 @@ msgstr "De afbeelding opdelen in verschillende afbeelding met gebruik van hulpli
 msgid "Guillotine"
 msgstr "Guillotine"
 
-#: plug-ins/common/guillotine.c:257 plug-ins/help-browser/dialog.c:830
+#: plug-ins/common/guillotine.c:257
 msgid "Untitled"
 msgstr "Naamloos"
 
@@ -9174,64 +9173,6 @@ msgstr "Schalen %d"
 msgid "Residual"
 msgstr "Resterend"
 
-#: plug-ins/common/web-browser.c:178
-msgid "The operating system is out of memory or resources."
-msgstr "Het besturingssysteem heeft onvoldoende geheugen of bronnen."
-
-#: plug-ins/common/web-browser.c:181
-msgid "The specified file was not found."
-msgstr "Het opgegeven bestand is niet gevonden."
-
-#: plug-ins/common/web-browser.c:184
-msgid "The specified path was not found."
-msgstr "Het opgegeven pad werd niet gevonden."
-
-#: plug-ins/common/web-browser.c:187
-msgid ""
-"The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
-msgstr "Het .exe-bestand is ongeldig (non-Microsoft Win32 .exe of fout in .exe-bestand)."
-
-#: plug-ins/common/web-browser.c:190
-msgid "The operating system denied access to the specified file."
-msgstr "Het besturingssysteem weigerde toegang tot gevraagd bestand."
-
-#: plug-ins/common/web-browser.c:193
-msgid "The file name association is incomplete or invalid."
-msgstr "Associatie van bestandsnaam is onvolledig of ongeldig."
-
-#: plug-ins/common/web-browser.c:196
-msgid "DDE transaction busy"
-msgstr "DDE-transactie bezig"
-
-#: plug-ins/common/web-browser.c:199
-msgid "The DDE transaction failed."
-msgstr "DDE-transactie mislukt."
-
-#: plug-ins/common/web-browser.c:202
-msgid "The DDE transaction timed out."
-msgstr "Time-out DDE-transactie."
-
-#: plug-ins/common/web-browser.c:205
-msgid "The specified DLL was not found."
-msgstr "De opgegeven DDL is niet gevonden."
-
-#: plug-ins/common/web-browser.c:208
-msgid "There is no application associated with the given file name extension."
-msgstr "Er is geen applicatie aan deze bestandsextensie gekoppeld."
-
-#: plug-ins/common/web-browser.c:214
-msgid "A sharing violation occurred."
-msgstr "Fout tijdens het delen."
-
-#: plug-ins/common/web-browser.c:217
-msgid "Unknown Microsoft Windows error."
-msgstr "Onbekende Microsoft Windows-fout."
-
-#: plug-ins/common/web-browser.c:220
-#, c-format
-msgid "Failed to open '%s': %s"
-msgstr "Kon ‘%s’: %s niet openen"
-
 # 29/03/08: capture=opnemen/vastleggen?
 #: plug-ins/common/wia.c:38
 msgid "Capture an image from a WIA datasource"
@@ -10621,7 +10562,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr "Photoshop ondersteunt geen geïndexeerde afbeeldingen die meer dan een laag hebben. Lagen zullen bij exporteren worden samengevoegd."
 
-#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4092
+#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4102
 msgid "Compatibility Notice"
 msgstr "Melding compatibiliteit"
 
@@ -10719,38 +10660,43 @@ msgstr "Niet-ondersteunde of ongeldige breedte laagmasker: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige grootte laagmasker: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3599
+#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3609
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ongeldige of niet-ondersteunde kanaalgrootte"
 
-#: plug-ins/file-psd/psd-load.c:2309 plug-ins/file-psd/psd-load.c:3197
+#: plug-ins/file-psd/psd-load.c:2251
+#, c-format
+msgid "Invalid channel dimensions %u x %u"
+msgstr "Ongeldige dimensies kanaal %u x %u"
+
+#: plug-ins/file-psd/psd-load.c:2319 plug-ins/file-psd/psd-load.c:3207
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Niet-ondersteunde compressiemethode: %d"
 
-#: plug-ins/file-psd/psd-load.c:2926
+#: plug-ins/file-psd/psd-load.c:2936
 msgid "Inner Shadow"
 msgstr "Binnenste schaduw"
 
-#: plug-ins/file-psd/psd-load.c:2927
+#: plug-ins/file-psd/psd-load.c:2937
 msgid "imported"
 msgstr "geïmporteerd"
 
-#: plug-ins/file-psd/psd-load.c:3374
+#: plug-ins/file-psd/psd-load.c:3384
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:3676
+#: plug-ins/file-psd/psd-load.c:3686
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Kon gegevens niet decomprimeren"
 
-#: plug-ins/file-psd/psd-load.c:4069
+#: plug-ins/file-psd/psd-load.c:4079
 msgid "Duotone Import"
 msgstr "Duotone Import"
 
-#: plug-ins/file-psd/psd-load.c:4070
+#: plug-ins/file-psd/psd-load.c:4080
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10758,7 +10704,7 @@ msgid ""
 msgstr "Afbeelding zal worden geïmporteerd als Grijswaarden.\n"
 "Duotoon kleurruimte informatie is opgeslagen en kan bij exporteren opnieuw worden gebruikt."
 
-#: plug-ins/file-psd/psd-load.c:4093
+#: plug-ins/file-psd/psd-load.c:4103
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -12805,8 +12751,7 @@ msgstr "Openen"
 msgid "Save"
 msgstr "Opslaan"
 
-#: plug-ins/gfig/gfig-menu.ui:16 plug-ins/help-browser/help-menu.ui:58
-#: plug-ins/imagemap/imap-menu.ui:22
+#: plug-ins/gfig/gfig-menu.ui:16 plug-ins/imagemap/imap-menu.ui:22
 msgid "Close"
 msgstr "Sluiten"
 
@@ -13737,94 +13682,6 @@ msgstr "Willekeurige beginwaarde:"
 #: plug-ins/gradient-flare/gradient-flare.c:4078
 msgid "_Second Flares"
 msgstr "_Tweede overstraling"
-
-#. the dialog window
-#: plug-ins/help-browser/dialog.c:263 plug-ins/help-browser/dialog.c:831
-msgid "GIMP Help Browser"
-msgstr "GIMP helpbrowser"
-
-#: plug-ins/help-browser/dialog.c:277 plug-ins/help-browser/help-menu.ui:14
-msgid "_Reload"
-msgstr "He_rladen"
-
-#: plug-ins/help-browser/dialog.c:277
-msgid "Reload current page"
-msgstr "Deze pagina herladen"
-
-#: plug-ins/help-browser/dialog.c:278 plug-ins/help-browser/help-menu.ui:18
-msgid "_Stop"
-msgstr "_Stoppen"
-
-#: plug-ins/help-browser/dialog.c:278
-msgid "Stop loading this page"
-msgstr "Stoppen met laden van deze pagina"
-
-#: plug-ins/help-browser/dialog.c:279
-msgid "Go to the index page"
-msgstr "Naar de indexpagina gaan"
-
-#: plug-ins/help-browser/dialog.c:285
-msgid "Visit the GIMP documentation website"
-msgstr "De documentatie op de website van GIMP bekijken"
-
-#: plug-ins/help-browser/dialog.c:1177
-msgid "Find:"
-msgstr "Zoeken:"
-
-#: plug-ins/help-browser/dialog.c:1193
-msgctxt "search"
-msgid "_Previous"
-msgstr "_Vorig"
-
-#: plug-ins/help-browser/dialog.c:1202
-msgctxt "search"
-msgid "_Next"
-msgstr "_Volgend"
-
-#: plug-ins/help-browser/dialog.c:1211
-msgctxt "search"
-msgid "_Close"
-msgstr "_Sluiten"
-
-#: plug-ins/help-browser/help-menu.ui:6
-msgid "_Back"
-msgstr "_Terug"
-
-#: plug-ins/help-browser/help-menu.ui:10
-msgid "_Previous"
-msgstr "_Vorig"
-
-#: plug-ins/help-browser/help-menu.ui:24
-msgid "_Home"
-msgstr "T_huis"
-
-#: plug-ins/help-browser/help-menu.ui:28
-msgid "C_opy location"
-msgstr "_Locatie kopiëren"
-
-#: plug-ins/help-browser/help-menu.ui:32
-msgid "S_how index"
-msgstr "_Inhoudsopgave tonen"
-
-#: plug-ins/help-browser/help-menu.ui:38
-msgid "Find"
-msgstr "Zoeken"
-
-#: plug-ins/help-browser/help-menu.ui:42
-msgid "Find _Again"
-msgstr "_Opnieuw zoeken"
-
-#: plug-ins/help-browser/help-menu.ui:48
-msgid "Zoom in"
-msgstr "Inzoomen"
-
-#: plug-ins/help-browser/help-menu.ui:52
-msgid "Zoom out"
-msgstr "Uitzoomen"
-
-#: plug-ins/help-browser/help-menu.ui:66
-msgid "Copy selection"
-msgstr "Locatie kopiëren"
 
 #: plug-ins/help/gimphelpdomain.c:180
 #, c-format
@@ -16841,6 +16698,120 @@ msgstr "Scannen niet mogelijk omdat er geen TWAIN driver is gevonden"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Gegevens van scanner / camera worden overgebracht"
+
+#~ msgid "The operating system is out of memory or resources."
+#~ msgstr "Het besturingssysteem heeft onvoldoende geheugen of bronnen."
+
+#~ msgid "The specified file was not found."
+#~ msgstr "Het opgegeven bestand is niet gevonden."
+
+#~ msgid "The specified path was not found."
+#~ msgstr "Het opgegeven pad werd niet gevonden."
+
+#~ msgid ""
+#~ "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe "
+#~ "image)."
+#~ msgstr ""
+#~ "Het .exe-bestand is ongeldig (non-Microsoft Win32 .exe of fout in .exe-"
+#~ "bestand)."
+
+#~ msgid "The operating system denied access to the specified file."
+#~ msgstr "Het besturingssysteem weigerde toegang tot gevraagd bestand."
+
+#~ msgid "The file name association is incomplete or invalid."
+#~ msgstr "Associatie van bestandsnaam is onvolledig of ongeldig."
+
+#~ msgid "DDE transaction busy"
+#~ msgstr "DDE-transactie bezig"
+
+#~ msgid "The DDE transaction failed."
+#~ msgstr "DDE-transactie mislukt."
+
+#~ msgid "The DDE transaction timed out."
+#~ msgstr "Time-out DDE-transactie."
+
+#~ msgid "The specified DLL was not found."
+#~ msgstr "De opgegeven DDL is niet gevonden."
+
+#~ msgid ""
+#~ "There is no application associated with the given file name extension."
+#~ msgstr "Er is geen applicatie aan deze bestandsextensie gekoppeld."
+
+#~ msgid "A sharing violation occurred."
+#~ msgstr "Fout tijdens het delen."
+
+#~ msgid "Unknown Microsoft Windows error."
+#~ msgstr "Onbekende Microsoft Windows-fout."
+
+#, c-format
+#~ msgid "Failed to open '%s': %s"
+#~ msgstr "Kon ‘%s’: %s niet openen"
+
+#~ msgid "GIMP Help Browser"
+#~ msgstr "GIMP helpbrowser"
+
+#~ msgid "_Reload"
+#~ msgstr "He_rladen"
+
+#~ msgid "Reload current page"
+#~ msgstr "Deze pagina herladen"
+
+#~ msgid "_Stop"
+#~ msgstr "_Stoppen"
+
+#~ msgid "Stop loading this page"
+#~ msgstr "Stoppen met laden van deze pagina"
+
+#~ msgid "Go to the index page"
+#~ msgstr "Naar de indexpagina gaan"
+
+#~ msgid "Visit the GIMP documentation website"
+#~ msgstr "De documentatie op de website van GIMP bekijken"
+
+#~ msgid "Find:"
+#~ msgstr "Zoeken:"
+
+#~ msgctxt "search"
+#~ msgid "_Previous"
+#~ msgstr "_Vorig"
+
+#~ msgctxt "search"
+#~ msgid "_Next"
+#~ msgstr "_Volgend"
+
+#~ msgctxt "search"
+#~ msgid "_Close"
+#~ msgstr "_Sluiten"
+
+#~ msgid "_Back"
+#~ msgstr "_Terug"
+
+#~ msgid "_Previous"
+#~ msgstr "_Vorig"
+
+#~ msgid "_Home"
+#~ msgstr "T_huis"
+
+#~ msgid "C_opy location"
+#~ msgstr "_Locatie kopiëren"
+
+#~ msgid "S_how index"
+#~ msgstr "_Inhoudsopgave tonen"
+
+#~ msgid "Find"
+#~ msgstr "Zoeken"
+
+#~ msgid "Find _Again"
+#~ msgstr "_Opnieuw zoeken"
+
+#~ msgid "Zoom in"
+#~ msgstr "Inzoomen"
+
+#~ msgid "Zoom out"
+#~ msgstr "Uitzoomen"
+
+#~ msgid "Copy selection"
+#~ msgstr "Locatie kopiëren"
 
 #~ msgid "Fractal Type"
 #~ msgstr "Fractaltype"
