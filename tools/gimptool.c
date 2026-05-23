@@ -44,6 +44,11 @@
 #endif
 #endif
 
+#ifdef __APPLE__
+#import <Foundation/Foundation.h>
+#import <stdio.h>
+#endif
+
 
 static gboolean     silent  = FALSE;
 static gboolean     dry_run = FALSE;
@@ -526,6 +531,21 @@ maybe_run (gchar *cmd)
 }
 
 #ifdef __APPLE__
+const gchar *
+get_min_macos (void)
+{
+  @autoreleasepool
+    {
+      NSDictionary *Plist = [[NSBundle mainBundle] infoDictionary];
+
+      NSString *LSMinimumSystemVersion = [Plist objectForKey:@"LSMinimumSystemVersion"];
+      if (LSMinimumSystemVersion)
+        return [LSMinimumSystemVersion UTF8String];
+    }
+
+  return NULL;
+}
+
 static void
 install_name_tool (const gchar *quoted_binary_path)
 {
@@ -554,6 +574,7 @@ do_build_2 (const gchar *cflags,
   const gchar *output_flag;
   const gchar *here_comes_linker_flags = "";
   const gchar *windows_subsystem_flag = "";
+  const gchar *macosx_deployment_target = get_min_macos ();
   gchar       *cmd;
   gchar       *dest_dir;
   gchar       *dest_exe;
@@ -676,8 +697,10 @@ do_build_2 (const gchar *cflags,
       output_flag = "-o ";
 #ifndef G_OS_WIN32
 #ifdef __APPLE__
+      if (macosx_deployment_target)
+        here_comes_linker_flags = g_strdup_printf (" -mmacos-version-min=%s", macosx_deployment_target);
       /* Needed by install_name_tool() below for plug-ins and filters */
-      here_comes_linker_flags = " -Wl,-headerpad_max_install_names";
+      here_comes_linker_flags = g_strconcat (here_comes_linker_flags," -Wl,-headerpad_max_install_names", NULL);
 #endif
       if (is_gegl_op)
         here_comes_linker_flags = g_strconcat (here_comes_linker_flags, " -fpic", NULL);
