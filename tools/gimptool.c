@@ -574,7 +574,9 @@ do_build_2 (const gchar *cflags,
   const gchar *output_flag;
   const gchar *here_comes_linker_flags = "";
   const gchar *windows_subsystem_flag = "";
+#ifdef __APPLE__
   const gchar *macosx_deployment_target = get_min_macos ();
+#endif
   gchar       *cmd;
   gchar       *dest_dir;
   gchar       *dest_exe;
