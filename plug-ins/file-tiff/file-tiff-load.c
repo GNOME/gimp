@@ -2644,7 +2644,7 @@ load_sketchbook_layers (TIFF      *tif,
                                        GEGL_RECTANGLE (0, layer_height - row - 1,
                                                        layer_width, 1),
                                        0, format,
-                                       ((guchar *) pixels) + row * layer_width * 4,
+                                       ((guchar *) pixels) + (gsize) row * layer_width * 4,
                                        GEGL_AUTO_ROWSTRIDE);
                     }
                   g_object_unref (buffer);
@@ -2653,9 +2653,9 @@ load_sketchbook_layers (TIFF      *tif,
 
               if (! GIMP_IS_GROUP_LAYER (layer))
                 {
-                  x_pos += (layer_width -
+                  x_pos += ((gfloat) layer_width -
                             gimp_drawable_get_width (GIMP_DRAWABLE (layer)));
-                  y_pos = image_height -
+                  y_pos = (gfloat) image_height -
                           gimp_drawable_get_height (GIMP_DRAWABLE (layer)) - y_pos;
 
                   gimp_layer_set_offsets (layer, ROUND (x_pos), ROUND (y_pos));
