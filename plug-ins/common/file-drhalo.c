@@ -188,7 +188,6 @@ load_image (GFile        *file,
   guchar     *line_data  = NULL;
   FILE       *fp;
   HaloHeader  header;
-  /*gsize       file_size;*/
   gint        pixel;
   gint        max_pixels;
   gint        y;
@@ -205,7 +204,6 @@ load_image (GFile        *file,
     }
 
   fseek (fp, 0, SEEK_END);
-  /*file_size = ftell (fp);*/
   fseek (fp, 0, SEEK_SET);
 
   if (fread (&header, sizeof (HaloHeader), 1, fp) == 0)
@@ -216,7 +214,6 @@ load_image (GFile        *file,
       fclose (fp);
       return NULL;
     }
-  /*file_size -= sizeof (HaloHeader);*/
 
   header.Width  = GUINT16_FROM_LE (header.Width);
   header.Height = GUINT16_FROM_LE (header.Height);
