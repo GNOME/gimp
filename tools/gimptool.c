@@ -57,6 +57,9 @@ static const gchar *cli_exec_prefix;
 
 static gboolean     msvc_syntax = FALSE;
 static gboolean     is_gegl_op  = FALSE;
+#ifdef __APPLE__
+static const gchar *macosx_deployment_target = NULL;
+#endif
 static const gchar *env_cc;
 static const gchar *env_cflags;
 static const gchar *env_ldflags;
@@ -298,6 +301,20 @@ find_out_env_flags (void)
 {
   gchar *p;
 
+#ifdef __APPLE__
+  if ((p = (gchar *) g_getenv ("MACOSX_DEPLOYMENT_TARGET")) == NULL || *p == '\0')
+    {
+      @autoreleasepool
+        {
+          NSDictionary *Plist = [[NSBundle mainBundle] infoDictionary];
+
+          NSString *LSMinimumSystemVersion = [Plist objectForKey:@"LSMinimumSystemVersion"];
+          if (LSMinimumSystemVersion)
+            macosx_deployment_target = [LSMinimumSystemVersion UTF8String];
+        }
+    }
+#endif
+
   if ((p = (gchar *) g_getenv ("CC")) != NULL && *p != '\0')
     env_cc = p;
   else if (msvc_syntax)
@@ -531,21 +548,6 @@ maybe_run (gchar *cmd)
 }
 
 #ifdef __APPLE__
-const gchar *
-get_min_macos (void)
-{
-  @autoreleasepool
-    {
-      NSDictionary *Plist = [[NSBundle mainBundle] infoDictionary];
-
-      NSString *LSMinimumSystemVersion = [Plist objectForKey:@"LSMinimumSystemVersion"];
-      if (LSMinimumSystemVersion)
-        return [LSMinimumSystemVersion UTF8String];
-    }
-
-  return NULL;
-}
-
 static void
 install_name_tool (const gchar *quoted_binary_path)
 {
@@ -574,9 +576,6 @@ do_build_2 (const gchar *cflags,
   const gchar *output_flag;
   const gchar *here_comes_linker_flags = "";
   const gchar *windows_subsystem_flag = "";
-#ifdef __APPLE__
-  const gchar *macosx_deployment_target = get_min_macos ();
-#endif
   gchar       *cmd;
   gchar       *dest_dir;
   gchar       *dest_exe;
