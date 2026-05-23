@@ -203,7 +203,6 @@ load_image (GFile        *file,
       return NULL;
     }
 
-  fseek (fp, 0, SEEK_END);
   fseek (fp, 0, SEEK_SET);
 
   if (fread (&header, sizeof (HaloHeader), 1, fp) == 0)
