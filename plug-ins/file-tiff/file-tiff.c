@@ -67,6 +67,7 @@ struct _Tiff
 {
   GimpPlugIn      parent_instance;
 
+  GimpChoice     *format_choice;
   GimpChoice     *compression_choice;
 };
 
@@ -114,8 +115,14 @@ static GimpExportCapabilities   export_edit_options   (GimpProcedure         *pr
                                                        GimpExportOptions     *options,
                                                        gpointer               create_data);
 
-static gboolean                 image_is_monochrome  (GimpImage            *image);
-static gboolean                 image_is_multi_layer (GimpImage            *image);
+static gboolean                 image_is_monochrome   (GimpImage             *image);
+static gboolean                 item_is_psd_composite_layer
+                                                      (GimpItem              *item);
+static void                     image_get_all_layers  (GimpImage             *image,
+                                                       GList                **normal_layers,
+                                                       GList                **psd_composite_layers);
+static void                     image_remove_psd_composite_layers
+                                                      (GimpImage             *image);
 
 
 G_DEFINE_TYPE (Tiff, tiff, GIMP_TYPE_PLUG_IN)
@@ -137,14 +144,20 @@ tiff_class_init (TiffClass *klass)
 static void
 tiff_init (Tiff *tiff)
 {
-  tiff->compression_choice = gimp_choice_new_with_values ("none",          GIMP_COMPRESSION_NONE,          _("None"),              NULL,
-                                                          "lzw",           GIMP_COMPRESSION_LZW,           _("LZW"),               NULL,
-                                                          "packbits",      GIMP_COMPRESSION_PACKBITS,      _("Pack Bits"),         NULL,
-                                                          "adobe_deflate", GIMP_COMPRESSION_ADOBE_DEFLATE, _("Deflate"),           NULL,
-                                                          "jpeg",          GIMP_COMPRESSION_JPEG,          _("JPEG"),              NULL,
-                                                          "ccittfax3",     GIMP_COMPRESSION_CCITTFAX3,     _("CCITT Group 3 fax"), NULL,
-                                                          "ccittfax4",     GIMP_COMPRESSION_CCITTFAX4,     _("CCITT Group 4 fax"), NULL,
-                                                          NULL);
+  tiff->format_choice = gimp_choice_new_with_values (
+    "multi-page-tiff", GIMP_TIFF_FORMAT_MULTI_PAGE_TIFF, _("Standard (multi-page)"),       _("Store layers in TIFF directories (IFDs)"),
+    "photoshop-tiff",  GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF,  _("Photoshop (embedded layers)"), _("Store layers in TIFF tags (ImageSourceData/Photoshop)"),
+    NULL);
+
+  tiff->compression_choice = gimp_choice_new_with_values (
+    "none",          GIMP_COMPRESSION_NONE,          _("None"),              NULL,
+    "lzw",           GIMP_COMPRESSION_LZW,           _("LZW"),               NULL,
+    "packbits",      GIMP_COMPRESSION_PACKBITS,      _("Pack Bits"),         NULL,
+    "adobe_deflate", GIMP_COMPRESSION_ADOBE_DEFLATE, _("Deflate"),           NULL,
+    "jpeg",          GIMP_COMPRESSION_JPEG,          _("JPEG"),              NULL,
+    "ccittfax3",     GIMP_COMPRESSION_CCITTFAX3,     _("CCITT Group 3 fax"), NULL,
+    "ccittfax4",     GIMP_COMPRESSION_CCITTFAX4,     _("CCITT Group 4 fax"), NULL,
+    NULL);
 }
 
 static GList *
@@ -191,6 +204,12 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                           "tif,tiff");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,II*\\0,0,string,MM\\0*");
+
+      gimp_procedure_add_boolean_argument (procedure, "keep-composite-image",
+                                           _("Keep composite image"),
+                                           _("Keep the composite image of Sketchbook or "
+                                             "Photoshop TIFF files as additional layer"),
+                                           TRUE, GIMP_PARAM_READWRITE);
 
       /* TODO: the 2 below AUX arguments should likely be real arguments, but I
        * just wanted to get rid of gimp_get_data/gimp_set_data() usage at first
@@ -270,6 +289,14 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                            FALSE,
                                            G_PARAM_READWRITE);
 
+      gimp_procedure_add_choice_argument (procedure, "format",
+                                          _("Format"),
+                                          _("How layers are stored: as TIFF directories (IFDs) "
+                                            "or as TIFF tags (Photoshop/ImageSourceData)"),
+                                          tiff->format_choice,
+                                          "multi-page-tiff",
+                                          G_PARAM_READWRITE);
+
      gimp_procedure_add_boolean_aux_argument (procedure, "save-layers",
                                                _("Save La_yers"),
                                                _("Save Layers"),
@@ -285,6 +312,13 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
      gimp_procedure_add_boolean_aux_argument (procedure, "save-geotiff",
                                                _("Save _GeoTIFF data"),
                                                _("Save GeoTIFF data"),
+                                               TRUE,
+                                               G_PARAM_READWRITE);
+
+      gimp_procedure_add_boolean_aux_argument (procedure, "save-resources",
+                                               _("Save Photoshop metadata"),
+                                               _("Store Photoshop image resources (paths, alpha "
+                                                 "channel names, ...) in TIFF tag (Photoshop)"),
                                                TRUE,
                                                G_PARAM_READWRITE);
 
@@ -315,7 +349,6 @@ tiff_load (GimpProcedure         *procedure,
   GimpImage         *image              = NULL;
   gboolean           resolution_loaded  = FALSE;
   gboolean           profile_loaded     = FALSE;
-  gboolean           ps_metadata_loaded = FALSE;
   GError            *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -327,7 +360,6 @@ tiff_load (GimpProcedure         *procedure,
                        file, run_mode, &image,
                        &resolution_loaded,
                        &profile_loaded,
-                       &ps_metadata_loaded,
                        config, &error);
 
   if (!image)
@@ -390,33 +422,131 @@ tiff_export_rec (GimpProcedure        *procedure,
                  gboolean              retried,
                  GError              **error)
 {
-  GimpImage         *image       = orig_image;
-  GList             *drawables   = gimp_image_list_layers (image);
-  gint               n_drawables = g_list_length (drawables);
-  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export      = GIMP_EXPORT_IGNORE;
-  gboolean           bigtiff     = FALSE;
+  GimpImage         *image              = orig_image;
+  GList             *normal_layers      = NULL;
+  guint              n_normal_layers    = 0;
+  GList             *composite_layers   = NULL;
+  guint              n_composite_layers = 0;
+  GimpPDBStatusType  status             = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export             = GIMP_EXPORT_IGNORE;
+  gboolean           bigtiff            = FALSE;
+  GimpFormat         format             = GIMP_TIFF_FORMAT_MULTI_PAGE_TIFF;
+  GimpImage         *tif_image          = NULL; /* will be flattened */
+  GimpImage         *psd_image          = NULL; /* layered base for PSD metadata */
+  gboolean           delete_tif_image   = FALSE;
+  gboolean           delete_psd_image   = FALSE;
+  gboolean           has_composite      = FALSE;
 
+  /* Determine whether there is a composite layer */
+  image_get_all_layers (orig_image, &normal_layers, &composite_layers);
+
+  n_normal_layers    = g_list_length (normal_layers);
+  n_composite_layers = g_list_length (composite_layers);
+  has_composite      = n_composite_layers > 0;
+
+  if (n_normal_layers == 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "No layer to export.");
+      g_list_free (normal_layers);
+      g_list_free (composite_layers);
+      return GIMP_PDB_EXECUTION_ERROR;
+    }
+
+  /* Run export dialog */
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       if (! save_dialog (orig_image, procedure, G_OBJECT (config),
-                         n_drawables == 1 ? gimp_drawable_has_alpha (drawables->data) : TRUE,
+                         n_normal_layers == 1 ?
+                           gimp_drawable_has_alpha (GIMP_DRAWABLE (normal_layers->data)) :
+                           TRUE,
                          image_is_monochrome (orig_image),
                          gimp_image_get_base_type (orig_image) == GIMP_INDEXED,
-                         image_is_multi_layer (orig_image),
+                         n_normal_layers > 1,
                          retried))
         {
+          g_list_free (normal_layers);
+          g_list_free (composite_layers);
           return GIMP_PDB_CANCEL;
         }
     }
 
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      g_object_get (config, "bigtiff", &bigtiff, NULL);
+  g_list_free (normal_layers);
+  g_list_free (composite_layers);
 
-      export = gimp_export_options_get_image (options, &image);
+  /* Image becomes either orig_image (IGNORE) or a duplicate (EXPORT) */
+  export = gimp_export_options_get_image (options, &image);
+
+  /* Obtain export settings */
+  g_object_get (config, "bigtiff", &bigtiff, NULL);
+  format = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                "format");
+
+  /* Prepare tif_image */
+  if (format == GIMP_TIFF_FORMAT_MULTI_PAGE_TIFF)
+    {
+      /*
+       * Multi-Page TIFF: no flatten needed.
+       * Only duplicate when we must mutate to remove composite and we don't
+       * already have an owned duplicate from the export pipeline.
+       */
+      if (export == GIMP_EXPORT_EXPORT)
+        {
+          tif_image = image;
+          delete_tif_image = TRUE;
+        }
+      else if (has_composite)
+        {
+          tif_image = gimp_image_duplicate (orig_image);
+          delete_tif_image = TRUE;
+        }
+      else
+        {
+          tif_image = image;
+          delete_tif_image = FALSE;
+        }
     }
-  drawables = gimp_image_list_layers (image);
+  else
+    {
+      /*
+       * Photoshop TIFF: flatten is needed.
+       * Always ensure flatten is not performed on orig_image.
+       */
+      if (export == GIMP_EXPORT_EXPORT)
+        {
+          tif_image = image;
+          delete_tif_image = TRUE;
+        }
+      else
+        {
+          tif_image = gimp_image_duplicate (orig_image);
+          delete_tif_image = TRUE;
+        }
+    }
+
+  /* Remove composite from tif_image if needed (both formats) */
+  if (has_composite && tif_image)
+    image_remove_psd_composite_layers (tif_image);
+
+  /* Prepare psd_image (only meaningful for Photoshop TIFF) */
+  if (format == GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF && has_composite)
+    {
+      /*
+       * PSD metadata export must use an unflattened, cleaned image.
+       * Duplicate from orig_image (NOT from tif_image) because the export
+       * pipeline may modify tif_image (e.g. apply masks), which would lose
+       * information needed for PSD metadata/layer data.
+       */
+      psd_image = gimp_image_duplicate (orig_image);
+      delete_psd_image = TRUE;
+
+      image_remove_psd_composite_layers (psd_image);
+    }
+  else
+    {
+      psd_image = orig_image;
+      delete_psd_image = FALSE;
+    }
 
 #if 0
   /* FIXME */
@@ -431,20 +561,28 @@ tiff_export_rec (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! export_image (file, image, orig_image, G_OBJECT (config),
-                          metadata, error))
+      if (! export_image (file,
+                          tif_image, /* flattened internally */
+                          psd_image, /* layered base for PSD metadata export */
+                          G_OBJECT (config), metadata, error))
         status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+  /* Cleanup */
+  if (delete_psd_image && psd_image)
+    gimp_image_delete (psd_image);
+
+  if (delete_tif_image && tif_image)
+    gimp_image_delete (tif_image);
 
   if (status == GIMP_PDB_EXECUTION_ERROR &&
       run_mode == GIMP_RUN_INTERACTIVE   &&
       ! retried && ! bigtiff && tiff_got_file_size_error ())
     {
-      /* Retrying but just once, when the save failed because we exceeded
-       * TIFF max size, to propose BigTIFF instead. */
+      /*
+       * Retrying but just once, when the save failed because we exceeded
+       * TIFF max size, to propose BigTIFF instead.
+       */
       tiff_reset_file_size_error ();
       g_clear_error (error);
 
@@ -536,16 +674,90 @@ image_is_monochrome (GimpImage *image)
 }
 
 static gboolean
-image_is_multi_layer (GimpImage *image)
+item_is_psd_composite_layer (GimpItem *item)
 {
-  GimpLayer **layers;
-  gint32      n_layers;
+  GimpParasite *psd_composite_parasite;
 
-  layers   = gimp_image_get_layers (image);
-  n_layers = gimp_core_object_array_get_length ((GObject **) layers);
-  g_free (layers);
+  psd_composite_parasite = gimp_item_get_parasite (item,
+                                                   TIFF_PSD_COMPOSITE_PARASITE);
+  if (psd_composite_parasite)
+    {
+      gimp_parasite_free (psd_composite_parasite);
+      return TRUE;
+    }
 
-  return (n_layers > 1);
+  return FALSE;
+}
+
+static void
+image_get_all_layers (GimpImage  *image,
+                      GList     **normal_layers,
+                      GList     **psd_composite_layers)
+{
+  GList *top;
+  GList *normal    = NULL;
+  GList *composite = NULL;
+  GList *stack     = NULL;
+
+  top = gimp_image_list_layers (image);
+
+  for (GList *iter = top; iter; iter = iter->next)
+    {
+      GimpItem *item = iter->data;
+
+      if (item_is_psd_composite_layer (item))
+        {
+          composite = g_list_append (composite, item);
+          continue;
+        }
+
+      if (gimp_item_is_group (item))
+        stack = g_list_prepend (stack, item);
+      else
+        normal = g_list_append (normal, item);
+    }
+
+  g_list_free (top);
+
+  while (stack)
+    {
+      GimpItem *group;
+      GList    *children;
+
+      group = stack->data;
+      stack = g_list_delete_link (stack, stack);
+      children = gimp_item_list_children (group);
+
+      for (GList *iter = children; iter; iter = iter->next)
+        {
+          GimpItem *child = iter->data;
+
+          if (gimp_item_is_group (child))
+            stack = g_list_prepend (stack, child);
+          else
+            normal = g_list_append (normal, child);
+        }
+
+      g_list_free (children);
+    }
+
+  *normal_layers = normal;
+  *psd_composite_layers = composite;
+}
+
+static void
+image_remove_psd_composite_layers (GimpImage *image)
+{
+  GList        *layers;
+  GList        *layers_iter;
+
+  layers = gimp_image_list_layers (image);
+
+  for (layers_iter = layers; layers_iter; layers_iter = layers_iter->next)
+    if (item_is_psd_composite_layer (layers_iter->data))
+      gimp_image_remove_layer (image, GIMP_LAYER (layers_iter->data));
+
+  g_list_free (layers);
 }
 
 gint

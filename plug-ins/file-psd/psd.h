@@ -37,6 +37,7 @@
 #define EXPORT_PROC                     "file-psd-export"
 #define EXPORT_PSB_PROC                 "file-psb-export"
 #define LOAD_METADATA_PROC              "file-psd-load-metadata"
+#define EXPORT_METADATA_PROC            "file-psd-export-metadata"
 #define PLUG_IN_BINARY                  "file-psd"
 #define PLUG_IN_ROLE                    "gimp-file-psd"
 

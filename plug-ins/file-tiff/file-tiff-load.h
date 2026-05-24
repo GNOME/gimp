@@ -40,6 +40,7 @@ typedef struct
   gint                    n_reducedimage_pages;
   GtkWidget              *selector;
   GimpPageSelectorTarget  target;
+  gboolean                keep_composite_image;
   gboolean                keep_empty_space;
   gboolean                show_reduced;
 } TiffSelectedPages;
@@ -51,7 +52,6 @@ GimpPDBStatusType load_image  (GimpProcedure        *procedure,
                                GimpImage           **image,
                                gboolean             *resolution_loaded,
                                gboolean             *profile_loaded,
-                               gboolean             *ps_metadata_loaded,
                                GimpProcedureConfig  *config,
                                GError              **error);
 

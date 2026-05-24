@@ -63,188 +63,29 @@
 #define PLUG_IN_ROLE "gimp-file-tiff-export"
 
 
-static gboolean  save_paths             (TIFF          *tif,
-                                         GimpImage     *image,
-                                         gdouble        width,
-                                         gdouble        height,
-                                         gint           offset_x,
-                                         gint           offset_y);
+static void         update_format_options    (GtkWidget    *dialog,
+                                              GObject      *config,
+                                              gboolean      transparent_pixels_available,
+                                              gboolean      save_layers_available,
+                                              gboolean      leaving_photoshop_mode,
+                                              gboolean      entering_photoshop_mode);
 
-static void      byte2bit               (const guchar  *byteline,
-                                         gint           width,
-                                         guchar        *bitline,
-                                         gboolean       invert);
+static void         evaluate_format_options  (GObject      *config,
+                                              GParamSpec   *pspec,
+                                              gpointer      user_data);
 
+static void         byte2bit                 (const guchar *byteline,
+                                              gint          width,
+                                              guchar       *bitline,
+                                              gboolean      invert);
 
-static void
-double_to_psd_fixed (gdouble  value,
-                     gchar   *target)
-{
-  gdouble in, frac;
-  gint    i, f;
+static const char * get_layer_key            (gshort        bitspersample);
 
-  frac = modf (value, &in);
-  if (frac < 0)
-    {
-      in -= 1;
-      frac += 1;
-    }
+static const Babl * get_extra_format         (gshort        bitspersample,
+                                              gshort        sampleformat);
 
-  i = (gint) CLAMP (in, -16, 15);
-  f = CLAMP ((gint) (frac * 0xFFFFFF), 0, 0xFFFFFF);
+static gboolean     should_export_layer_info (GimpImage    *orig_image);
 
-  target[0] = i & 0xFF;
-  target[1] = (f >> 16) & 0xFF;
-  target[2] = (f >>  8) & 0xFF;
-  target[3] = f & 0xFF;
-}
-
-static gboolean
-save_paths (TIFF      *tif,
-            GimpImage *image,
-            gdouble    width,
-            gdouble    height,
-            gint       offset_x,
-            gint       offset_y)
-{
-  gint     id = 2000; /* Photoshop paths have IDs >= 2000 */
-  GList   *path;
-  GList   *iter;
-  gint     v;
-  gsize    num_strokes;
-  gint    *strokes, s;
-  GString *ps_tag;
-
-  path = gimp_image_list_paths (image);
-
-  if (! path)
-    return FALSE;
-
-  ps_tag = g_string_new ("");
-
-  /* Only up to 1000 paths supported */
-  for (iter = path, v = 0;
-       iter && v < 1000;
-       iter = g_list_next (iter), v++)
-    {
-      GString *data;
-      gchar   *name, *nameend;
-      gsize    len;
-      gint     lenpos;
-      gchar    pointrecord[26] = { 0, };
-      gchar   *tmpname;
-      GError  *err = NULL;
-
-      data = g_string_new ("8BIM");
-      g_string_append_c (data, id / 256);
-      g_string_append_c (data, id % 256);
-
-      /*
-       * - use iso8859-1 if possible
-       * - otherwise use UTF-8, prepended with \xef\xbb\xbf (Byte-Order-Mark)
-       */
-      name = gimp_item_get_name (iter->data);
-      tmpname = g_convert (name, -1, "iso8859-1", "utf-8", NULL, &len, &err);
-
-      if (tmpname && err == NULL)
-        {
-          g_string_append_c (data, (gchar) MIN (len, 255));
-          g_string_append_len (data, tmpname, MIN (len, 255));
-          g_free (tmpname);
-        }
-      else
-        {
-          /* conversion failed, we fall back to UTF-8 */
-          len = g_utf8_strlen (name, 255 - 3);  /* need three marker-bytes */
-
-          nameend = g_utf8_offset_to_pointer (name, len);
-          len = nameend - name; /* in bytes */
-          g_assert (len + 3 <= 255);
-
-          g_string_append_c (data, len + 3);
-          g_string_append_len (data, "\xEF\xBB\xBF", 3); /* Unicode 0xfeff */
-          g_string_append_len (data, name, len);
-
-          if (tmpname)
-            g_free (tmpname);
-        }
-
-      if (data->len % 2)  /* padding to even size */
-        g_string_append_c (data, 0);
-      g_free (name);
-
-      lenpos = data->len;
-      g_string_append_len (data, "\0\0\0\0", 4); /* will be filled in later */
-      len = data->len; /* to calculate the data size later */
-
-      pointrecord[1] = 6;  /* fill rule record */
-      g_string_append_len (data, pointrecord, 26);
-
-      strokes = gimp_path_get_strokes (iter->data, &num_strokes);
-
-      for (s = 0; s < num_strokes; s++)
-        {
-          GimpPathStrokeType  type;
-          gdouble            *points;
-          gsize               num_points;
-          gboolean            closed;
-          gint                p = 0;
-
-          type = gimp_path_stroke_get_points (iter->data, strokes[s],
-                                              &num_points, &points, &closed);
-
-          if (type != GIMP_PATH_STROKE_TYPE_BEZIER ||
-              num_points > 65535                   ||
-              num_points % 6)
-            {
-              g_printerr ("tiff-export: unsupported stroke type: "
-                          "%d (%" G_GSIZE_FORMAT " points)\n", type, num_points);
-              continue;
-            }
-
-          memset (pointrecord, 0, 26);
-          pointrecord[1] = closed ? 0 : 3;
-          pointrecord[2] = (num_points / 6) / 256;
-          pointrecord[3] = (num_points / 6) % 256;
-          g_string_append_len (data, pointrecord, 26);
-
-          for (p = 0; p < num_points; p += 6)
-            {
-              pointrecord[1] = closed ? 2 : 5;
-
-              double_to_psd_fixed ((points[p+1] - offset_y) / height, pointrecord + 2);
-              double_to_psd_fixed ((points[p+0] - offset_x) / width,  pointrecord + 6);
-              double_to_psd_fixed ((points[p+3] - offset_y) / height, pointrecord + 10);
-              double_to_psd_fixed ((points[p+2] - offset_x) / width,  pointrecord + 14);
-              double_to_psd_fixed ((points[p+5] - offset_y) / height, pointrecord + 18);
-              double_to_psd_fixed ((points[p+4] - offset_x) / width,  pointrecord + 22);
-
-              g_string_append_len (data, pointrecord, 26);
-            }
-        }
-
-      g_free (strokes);
-
-      /* fix up the length */
-
-      len = data->len - len;
-      data->str[lenpos + 0] = (len & 0xFF000000) >> 24;
-      data->str[lenpos + 1] = (len & 0x00FF0000) >> 16;
-      data->str[lenpos + 2] = (len & 0x0000FF00) >>  8;
-      data->str[lenpos + 3] = (len & 0x000000FF) >>  0;
-
-      g_string_append_len (ps_tag, data->str, data->len);
-      g_string_free (data, TRUE);
-      id ++;
-    }
-
-  TIFFSetField (tif, TIFFTAG_PHOTOSHOP, ps_tag->len, ps_tag->str);
-  g_string_free (ps_tag, TRUE);
-
-  g_list_free (path);
-
-  return TRUE;
-}
 
 /*
  * pnmtotiff.c - converts a portable anymap to a Tagged Image File
@@ -283,19 +124,19 @@ save_layer (TIFF        *tif,
   gushort           red[256];
   gushort           grn[256];
   gushort           blu[256];
-  gint              cols, rows, row, i;
+  gint              cols, col, rows, row, i;
   glong             rowsperstrip;
   gushort           compression;
-  gushort           extra_samples[1];
+  gushort          *extra_samples = NULL;
   gboolean          alpha;
   gshort            predictor;
   gshort            photometric;
   const Babl       *format;
+  const Babl       *mask_format;
   const Babl       *type;
   gshort            samplesperpixel;
   gshort            bitspersample;
   gshort            sampleformat;
-  gint              bytesperrow;
   guchar           *src = NULL;
   guchar           *data = NULL;
   GimpPalette      *palette;
@@ -322,20 +163,31 @@ save_layer (TIFF        *tif,
   gboolean          config_save_comment;
   gboolean          config_save_transp_pixels;
   gboolean          config_save_geotiff_tags;
+  gboolean          config_save_resources;
   gboolean          config_save_profile;
   gboolean          config_cmyk;
+  GimpFormat        config_format;
+  GList            *channels;
+  gushort           extra;
+  GeglBuffer      **channel_buffers = NULL;
+  int               base_channels;
+  int               bytes_per_sample;
+  int               base_bytesperrow;
+  int               final_bytesperrow;
 
   g_object_get (config,
                 "gimp-comment",            &config_comment,
                 "include-comment",         &config_save_comment,
                 "save-transparent-pixels", &config_save_transp_pixels,
                 "save-geotiff",            &config_save_geotiff_tags,
+                "save-resources",          &config_save_resources,
                 "include-color-profile",   &config_save_profile,
                 "cmyk",                    &config_cmyk,
                 NULL);
 
   config_compression = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "compression");
   compression = gimp_compression_to_tiff_compression (config_compression);
+  config_format = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "format");
 
   layer_name = gimp_item_get_name (GIMP_ITEM (layer));
 
@@ -419,11 +271,26 @@ save_layer (TIFF        *tif,
   cols = gegl_buffer_get_width (buffer);
   rows = gegl_buffer_get_height (buffer);
 
+  channels = gimp_image_list_channels (orig_image);
+  extra = g_list_length (channels);
+
+  if (extra > 0)
+    {
+      channel_buffers = g_new (GeglBuffer *, extra);
+      for (int j = 0; j < extra; j++)
+        {
+          channel_buffers[j] = gimp_drawable_get_buffer (
+              GIMP_DRAWABLE (g_list_nth_data (channels, j)));
+        }
+    }
+
+  g_list_free (channels);
+
   switch (drawable_type)
     {
     case GIMP_RGB_IMAGE:
       predictor       = 2;
-      samplesperpixel = 3;
+      samplesperpixel = 3 + extra;
       photometric     = PHOTOMETRIC_RGB;
       alpha           = FALSE;
       if (out_linear)
@@ -447,7 +314,7 @@ save_layer (TIFF        *tif,
       break;
 
     case GIMP_GRAY_IMAGE:
-      samplesperpixel = 1;
+      samplesperpixel = 1 + extra;
       photometric     = PHOTOMETRIC_MINISBLACK;
       alpha           = FALSE;
       if (out_linear)
@@ -468,7 +335,7 @@ save_layer (TIFF        *tif,
 
     case GIMP_RGBA_IMAGE:
       predictor       = 2;
-      samplesperpixel = 4;
+      samplesperpixel = 3 + 1 + extra;
       photometric     = PHOTOMETRIC_RGB;
       alpha           = TRUE;
       if (config_save_transp_pixels)
@@ -520,7 +387,7 @@ save_layer (TIFF        *tif,
       break;
 
     case GIMP_GRAYA_IMAGE:
-      samplesperpixel = 2;
+      samplesperpixel = 1 + 1 + extra;
       photometric     = PHOTOMETRIC_MINISBLACK;
       alpha           = TRUE;
       if (config_save_transp_pixels)
@@ -600,8 +467,7 @@ save_layer (TIFF        *tif,
             }
         }
 
-      samplesperpixel = (drawable_type == GIMP_INDEXEDA_IMAGE) ? 2 : 1;
-      bytesperrow     = cols;
+      samplesperpixel = 1 + (drawable_type == GIMP_INDEXEDA_IMAGE ? 1 : 0) + extra;
       alpha           = (drawable_type == GIMP_INDEXEDA_IMAGE);
 
       g_free (cmap);
@@ -640,8 +506,6 @@ save_layer (TIFF        *tif,
       format = babl_format_with_space (babl_format_get_encoding (format),
                                        space ? space : gegl_buffer_get_format (buffer));
     }
-
-  bytesperrow = cols * babl_format_get_bytes_per_pixel (format);
 
   if (compression == COMPRESSION_CCITTFAX3 ||
       compression == COMPRESSION_CCITTFAX4)
@@ -705,7 +569,7 @@ save_layer (TIFF        *tif,
     {
       photometric = PHOTOMETRIC_SEPARATED;
       /* If there's transparency, save as CMYKA format */
-      samplesperpixel = alpha ? 5 : 4;
+      samplesperpixel = 4 + (alpha ? 1 : 0) + extra;
       TIFFSetField (tif, TIFFTAG_INKSET, INKSET_CMYK);
       TIFFSetField (tif, TIFFTAG_NUMBEROFINKS, 4);
     }
@@ -742,6 +606,10 @@ save_layer (TIFF        *tif,
   TIFFSetField (tif, TIFFTAG_PAGENAME, layer_name);
   TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, cols);
   TIFFSetField (tif, TIFFTAG_IMAGELENGTH, rows);
+  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, photometric);
+  TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, samplesperpixel);
+  TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, rowsperstrip);
+  TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
   TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, bitspersample);
   TIFFSetField (tif, TIFFTAG_SAMPLEFORMAT, sampleformat);
   TIFFSetField (tif, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
@@ -754,28 +622,29 @@ save_layer (TIFF        *tif,
       TIFFSetField (tif, TIFFTAG_PREDICTOR, predictor);
     }
 
-  if (alpha)
+  if (alpha || extra > 0)
     {
-      if (config_save_transp_pixels ||
-          /* Associated alpha, hence premultiplied components is
-           * meaningless for palette images with transparency in TIFF
-           * format, since alpha is set per pixel, not per color (so a
-           * given color could be set to different alpha on different
-           * pixels, hence it cannot be premultiplied).
-           */
-          drawable_type == GIMP_INDEXEDA_IMAGE)
-        extra_samples [0] = EXTRASAMPLE_UNASSALPHA;
-      else
-        extra_samples [0] = EXTRASAMPLE_ASSOCALPHA;
-
-      TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, 1, extra_samples);
+      extra_samples = g_new (gushort, (alpha ? 1 : 0) + extra);
+      if (alpha)
+        {
+          if (config_save_transp_pixels ||
+              /* Associated alpha, hence premultiplied components is
+               * meaningless for palette images with transparency in TIFF
+               * format, since alpha is set per pixel, not per color (so a
+               * given color could be set to different alpha on different
+               * pixels, hence it cannot be premultiplied).
+               */
+              drawable_type == GIMP_INDEXEDA_IMAGE)
+            extra_samples [0] = EXTRASAMPLE_UNASSALPHA;
+          else
+            extra_samples [0] = EXTRASAMPLE_ASSOCALPHA;
+        }
+      for (gushort j = 0; j < extra; j++)
+        {
+          extra_samples[(alpha ? 1 : 0) + j] = EXTRASAMPLE_UNSPECIFIED;
+        }
+      TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, (alpha ? 1 : 0) + extra, extra_samples);
     }
-
-  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, photometric);
-  TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, samplesperpixel);
-  TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, rowsperstrip);
-  /* TIFFSetField( tif, TIFFTAG_STRIPBYTECOUNTS, rows / rowsperstrip ); */
-  TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
 
   /* resolution fields */
   gimp_image_get_resolution (orig_image, &xresolution, &yresolution);
@@ -809,14 +678,117 @@ save_layer (TIFF        *tif,
       (drawable_type == GIMP_INDEXED_IMAGE || drawable_type == GIMP_INDEXEDA_IMAGE))
     TIFFSetField (tif, TIFFTAG_COLORMAP, red, grn, blu);
 
-  /* save path data. we need layer information for that,
-    * so we have to do this in here. :-( */
-  if (page == 0)
-    save_paths (tif, orig_image, cols, rows, offset_x, offset_y);
+  /* save Photoshop image resources (paths, channel names, ...) to TIFFTAG_PHOTOSHOP */
+  if (config_save_resources &&
+      ((config_format == GIMP_TIFF_FORMAT_MULTI_PAGE_TIFF && page == 0) ||
+        config_format == GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF))
+    {
+      GFile             *temp_file     = NULL;
+      GimpProcedure     *procedure;
+      GimpValueArray    *return_vals   = NULL;
+      GimpPDBStatusType  export_status;
+      guchar            *data_buffer   = NULL;
+      gsize              data_length   = 0;
+
+      temp_file = gimp_temp_file ("tmp");
+
+      procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                               "file-psd-export-metadata");
+      return_vals = gimp_procedure_run (procedure,
+                                        "file",          temp_file,
+                                        "image",         orig_image,
+                                        "metadata-type", FALSE,
+                                        "cmyk",          config_cmyk,
+                                        NULL);
+
+      export_status = GIMP_VALUES_GET_ENUM (return_vals, 0);
+
+      if (export_status == GIMP_PDB_SUCCESS)
+        {
+          if (g_file_get_contents (g_file_peek_path (temp_file),
+                                   (gchar **) &data_buffer,
+                                   &data_length, NULL) && data_length > 0)
+            {
+              TIFFSetField (tif, TIFFTAG_PHOTOSHOP, (uint32_t) data_length,
+                            data_buffer);
+            }
+        }
+
+      g_free (data_buffer);
+      g_file_delete (temp_file, NULL, NULL);
+      g_object_unref (temp_file);
+      gimp_value_array_unref (return_vals);
+    }
+
+  /* save Photoshop layer data to TIFFTAG_IMAGESOURCEDATA */
+  if (config_format == GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF &&
+      should_export_layer_info (orig_image))
+    {
+      GFile             *temp_file     = NULL;
+      GimpProcedure     *procedure;
+      GimpValueArray    *return_vals   = NULL;
+      GimpPDBStatusType  export_status;
+      guchar            *data_buffer   = NULL;
+      gsize              data_length   = 0;
+      guchar            *tag_buffer    = NULL;
+      gsize              tag_length    = 0;
+
+      temp_file = gimp_temp_file ("tmp");
+
+      procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                               "file-psd-export-metadata");
+      return_vals = gimp_procedure_run (procedure,
+                                        "file",          temp_file,
+                                        "image",         orig_image,
+                                        "metadata-type", TRUE,
+                                        "cmyk",          config_cmyk,
+                                        NULL);
+
+      export_status = GIMP_VALUES_GET_ENUM (return_vals, 0);
+
+      if (export_status == GIMP_PDB_SUCCESS)
+        {
+          if (g_file_get_contents (g_file_peek_path (temp_file),
+                                   (gchar **) &data_buffer,
+                                   &data_length, NULL) && data_length > 0)
+            {
+              static const char hdr[] = "Adobe Photoshop Document Data Block";
+              static const char sig[] = "8BIM";
+
+              const gsize hdr_len = sizeof (hdr);
+              const gsize pad = (4 - data_length % 4) % 4;
+              const char *key = get_layer_key (bitspersample);
+
+              tag_length = hdr_len + sizeof(sig) + sizeof(key) + data_length +
+                           pad;
+              tag_buffer = g_malloc0 (tag_length);
+
+              memcpy (tag_buffer, hdr, hdr_len);
+              memcpy (tag_buffer + hdr_len, sig, 4);
+              memcpy (tag_buffer + hdr_len + 4, key, 4);
+              memcpy (tag_buffer + hdr_len + 8, data_buffer, data_length);
+
+              TIFFSetField (tif, TIFFTAG_IMAGESOURCEDATA, (uint32_t) tag_length,
+                            tag_buffer);
+            }
+        }
+
+      g_free (tag_buffer);
+      g_free (data_buffer);
+      g_file_delete (temp_file, NULL, NULL);
+      g_object_unref (temp_file);
+      gimp_value_array_unref (return_vals);
+    }
 
   /* array to rearrange data */
-  src  = g_new (guchar, bytesperrow * tile_height);
-  data = g_new (guchar, bytesperrow);
+  base_channels = babl_format_get_n_components (format);
+  bytes_per_sample = bitspersample / 8;
+
+  base_bytesperrow  = cols * base_channels  * bytes_per_sample;
+  final_bytesperrow = cols * samplesperpixel * bytes_per_sample;
+
+  src  = g_new (guchar, base_bytesperrow * tile_height);
+  data = g_new (guchar, final_bytesperrow);
 
   /* Now write the TIFF data. */
   for (y = 0; y < rows; y = yend)
@@ -831,7 +803,7 @@ save_layer (TIFF        *tif,
 
       for (row = y; row < yend; row++)
         {
-          guchar *t = src + bytesperrow * (row - y);
+          guchar *src_row_base = src + base_bytesperrow * (row - y);
 
           switch (drawable_type)
             {
@@ -839,12 +811,12 @@ save_layer (TIFF        *tif,
             case GIMP_INDEXEDA_IMAGE:
               if (is_bw)
                 {
-                  byte2bit (t, bytesperrow, data, invert);
+                  byte2bit (src_row_base, base_bytesperrow, data, invert);
                   success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
                 }
               else
                 {
-                  success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
+                  success = (TIFFWriteScanline (tif, src_row_base, row, 0) >= 0);
                 }
               break;
 
@@ -852,7 +824,39 @@ save_layer (TIFF        *tif,
             case GIMP_GRAYA_IMAGE:
             case GIMP_RGB_IMAGE:
             case GIMP_RGBA_IMAGE:
-              success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
+              {
+                mask_format = get_extra_format (bitspersample, sampleformat);
+
+                for (col = 0; col < cols; col++)
+                  {
+                    int src_off = col * base_channels * bytes_per_sample;
+                    int dst_off = col * samplesperpixel * bytes_per_sample;
+
+                    // Copy base channels (e.g. RGB or RGBA or GRAY)
+                    memcpy (data + dst_off,
+                            src_row_base + src_off,
+                            base_channels * bytes_per_sample);
+
+                    // Append extra channels
+                    for (int c = 0; channel_buffers && c < extra; c++)
+                      {
+                        guint8 sample[8];
+
+                        gegl_buffer_get (channel_buffers[c],
+                                         GEGL_RECTANGLE (col, row, 1, 1),
+                                         1.0,
+                                         mask_format,
+                                         sample,
+                                         GEGL_AUTO_ROWSTRIDE,
+                                         GEGL_ABYSS_NONE);
+
+                        memcpy (data + dst_off + (base_channels + c) * bytes_per_sample,
+                                sample, bytes_per_sample);
+                      }
+                  }
+
+                success = TIFFWriteScanline (tif, data, row, 0) >= 0;
+              }
               break;
 
             default:
@@ -860,7 +864,7 @@ save_layer (TIFF        *tif,
               break;
             }
 
-          if (!success)
+          if (! success)
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Failed a scanline write on row %d"), row);
@@ -958,6 +962,18 @@ out:
   if (buffer)
     g_object_unref (buffer);
 
+  if (channel_buffers != NULL)
+    {
+      for (int j = 0; j < extra; j++)
+        {
+          g_object_unref (channel_buffers[j]);
+        }
+      g_free (channel_buffers);
+    }
+
+  if (extra_samples)
+    g_free (extra_samples);
+
   g_free (data);
   g_free (src);
   g_free (layer_name);
@@ -1047,21 +1063,22 @@ export_image (GFile         *file,
               GimpMetadata  *metadata,
               GError       **error)
 {
-  TIFF             *tif                 = NULL;
-  const Babl       *space               = NULL;
-  gboolean          status              = FALSE;
-  gboolean          out_linear          = FALSE;
-  gint32            num_layers;
-  gint32            current_layer       = 0;
-  GList            *layers;
-  GList            *iter;
-  gint              origin_x            = 0;
-  gint              origin_y            = 0;
-  gint              saved_bpp;
-  gboolean          bigtiff;
-  gboolean          config_save_profile;
-  gboolean          config_save_thumbnail;
-  gboolean          config_cmyk;
+  TIFF       *tif                   = NULL;
+  const Babl *space                 = NULL;
+  gboolean    status                = FALSE;
+  gboolean    out_linear            = FALSE;
+  guint32     num_layers;
+  gint32      current_layer         = 0;
+  GList      *layers;
+  GList      *iter;
+  gint        origin_x              = 0;
+  gint        origin_y              = 0;
+  gint        saved_bpp;
+  gboolean    bigtiff;
+  gboolean    config_save_profile;
+  gboolean    config_save_thumbnail;
+  gboolean    config_cmyk;
+  GimpFormat  config_format;
 
   g_object_get (config,
                 "bigtiff",               &bigtiff,
@@ -1069,6 +1086,8 @@ export_image (GFile         *file,
                 "include-thumbnail",     &config_save_thumbnail,
                 "cmyk",                  &config_cmyk,
                 NULL);
+
+  config_format = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG(config), "format");
 
   layers = gimp_image_list_layers (image);
   layers = g_list_reverse (layers);
@@ -1078,7 +1097,7 @@ export_image (GFile         *file,
                              gimp_file_get_utf8_name (file));
 
   /* Open file and write some global data */
-  tif = tiff_open (file, (bigtiff ? "w8" : "w"), error);
+  tif = tiff_open (file, (bigtiff ? "wb8" : "wb"), error);
 
   if (! tif)
     {
@@ -1142,6 +1161,36 @@ export_image (GFile         *file,
       origin_x = MIN (origin_x, offset_x);
       origin_y = MIN (origin_y, offset_y);
     }
+
+  /* === Photoshop-TIFF MODE === */
+  if (config_format == GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF)
+    {
+      /* flatten for composite image (merges layer & removes alpha) */
+      gimp_image_flatten (image);
+
+      g_list_free (layers);
+
+      layers     = gimp_image_list_layers (image);
+      num_layers = g_list_length (layers);
+
+      /* write composite image */
+      if (! save_layer (tif, config, space, image,
+                        g_list_nth_data(layers, 0),
+                        0, num_layers,
+                        orig_image,
+                        origin_x, origin_y,
+                        &saved_bpp, out_linear, error))
+        goto out;
+
+      TIFFFlushData (tif);
+      TIFFClose (tif);
+      tif = NULL;
+
+      status = TRUE;
+      goto out;
+    }
+
+  /* === Standard TIFF (non-Photoshop) === */
 
   /* write last layer as first page. */
   if (! save_layer (tif,  config, space, image,
@@ -1235,22 +1284,30 @@ save_dialog (GimpImage     *image,
              gboolean       is_multi_layer,
              gboolean       classic_tiff_failed)
 {
-  GtkWidget        *dialog;
-  GtkWidget        *profile_label;
-  gchar           **parasites;
-  GimpCompression   compression;
-  gboolean          run;
-  gboolean          has_geotiff  = FALSE;
-  gint              i;
-  GimpColorProfile *cmyk_profile = NULL;
-  GParamSpec       *cspec;
-  GimpChoice       *choice;
+  GtkWidget         *dialog;
+  GtkWidget         *profile_label;
+  gchar            **parasites;
+  GimpCompression    compression;
+  gboolean           run;
+  gboolean           has_geotiff  = FALSE;
+  gint               i;
+  GimpColorProfile  *cmyk_profile = NULL;
+  GParamSpec        *compression_spec;
+  GimpChoice        *compression_choice;
+  GimpFormat         format;
+  gboolean           save_transparent_pixels;
+  gboolean           transparent_pixels_available;
+  gboolean           save_layers;
+  gboolean           save_layers_available;
+  gboolean           save_resources;
 
-  cspec  = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "compression");
-  choice = gimp_param_spec_choice_get_choice (cspec);
-  gimp_choice_set_sensitive (choice, "ccittfax3", is_monochrome);
-  gimp_choice_set_sensitive (choice, "ccittfax4", is_monochrome);
-  gimp_choice_set_sensitive (choice, "jpeg",      ! is_indexed);
+  compression_spec   = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                                     "compression");
+  compression_choice = gimp_param_spec_choice_get_choice (compression_spec);
+
+  gimp_choice_set_sensitive (compression_choice, "ccittfax3", is_monochrome);
+  gimp_choice_set_sensitive (compression_choice, "ccittfax4", is_monochrome);
+  gimp_choice_set_sensitive (compression_choice, "jpeg",      ! is_indexed);
 
   parasites = gimp_image_get_parasite_list (image);
   for (i = 0; i < g_strv_length (parasites); i++)
@@ -1267,6 +1324,46 @@ save_dialog (GimpImage     *image,
                                              GIMP_PROCEDURE_CONFIG (config),
                                              image);
 
+  /* Save initial values (from config) and availability flags (from image/export state).
+   *
+   * IMPORTANT: the "last-save-*" fields are treated as the user's last
+   * Standard-TIFF choices. They are updated when switching from Standard -> Photoshop
+   * (right before we force/lock Photoshop-mode values), and re-applied when switching
+   * back (Photoshop -> Standard).
+   */
+  transparent_pixels_available = has_alpha && ! is_indexed;
+  save_layers_available        = is_multi_layer;
+
+  format = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                "format");
+
+  g_object_get (config,
+                "save-layers",             &save_layers,
+                "save-resources",          &save_resources,
+                "save-transparent-pixels", &save_transparent_pixels,
+                NULL);
+
+  g_object_set_data (G_OBJECT (dialog),
+                     "tiff-prev-format",
+                     GINT_TO_POINTER ((gint) format));
+
+  g_object_set_data (G_OBJECT (dialog),
+                     "transparent-pixels-available",
+                     GINT_TO_POINTER (transparent_pixels_available));
+  g_object_set_data (G_OBJECT (dialog),
+                     "save-layers-available",
+                     GINT_TO_POINTER (save_layers_available));
+
+  g_object_set_data (G_OBJECT (dialog),
+                     "last-save-transparent-pixels",
+                     GINT_TO_POINTER (save_transparent_pixels));
+  g_object_set_data (G_OBJECT (dialog),
+                     "last-save-layers",
+                     GINT_TO_POINTER (save_layers));
+  g_object_set_data (G_OBJECT (dialog),
+                     "last-save-resources",
+                     GINT_TO_POINTER (save_resources));
+
   if (classic_tiff_failed)
     {
       GtkWidget *label;
@@ -1281,45 +1378,43 @@ save_dialog (GimpImage     *image,
                                                "big-tif-warning", text,
                                                FALSE, FALSE);
       g_free (text);
+
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_label_set_line_wrap_mode (GTK_LABEL (label), PANGO_WRAP_WORD);
       gtk_label_set_max_width_chars (GTK_LABEL (label), 60);
     }
 
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "layers-frame", "save-layers", FALSE,
-                                    "crop-layers");
-  /* TODO: if single-layer TIFF, set the toggle insensitive and show it
-   * as unchecked though I don't actually change the config value to
-   * keep storing previously chosen value.
-   * This used to be so before. We probably need to add some logics in
-   * the GimpProcedureDialog generation for such case.
-   */
-  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "layers-frame", is_multi_layer,
-                                       NULL, NULL, FALSE);
-  /* TODO: same for "save-transparent-pixels", we probably want to show
-   * it unchecked even though it doesn't matter for processing.
-   */
-  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "save-transparent-pixels",
-                                       has_alpha && ! is_indexed,
-                                       NULL, NULL, FALSE);
+  gimp_export_procedure_dialog_add_metadata (GIMP_EXPORT_PROCEDURE_DIALOG (dialog),
+                                             "save-geotiff");
+  gimp_export_procedure_dialog_add_metadata (GIMP_EXPORT_PROCEDURE_DIALOG (dialog),
+                                             "save-resources");
 
   /* Profile label. */
   profile_label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                                   "profile-label", _("No soft-proofing profile"),
+                                                   "profile-label",
+                                                   _("No soft-proofing profile"),
                                                    FALSE, FALSE);
+  gtk_widget_set_margin_bottom (profile_label, 6);
   gtk_label_set_xalign (GTK_LABEL (profile_label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (profile_label), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (profile_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gimp_help_set_help_data (profile_label,
-                           _("Name of the color profile used for CMYK export."), NULL);
+                           _("Name of the color profile used for CMYK export."),
+                           NULL);
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "cmyk-box",
+                                  "profile-label",
+                                  NULL);
+
+  /* ...and make that box the content of a frame controlled by the "cmyk" toggle. */
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "cmyk-frame", "cmyk", FALSE,
-                                    "profile-label");
+                                    "cmyk-frame",
+                                    "cmyk",
+                                    FALSE,
+                                    "cmyk-box");
 
   cmyk_profile = gimp_image_get_simulation_profile (image);
   if (cmyk_profile)
@@ -1346,30 +1441,44 @@ save_dialog (GimpImage     *image,
       g_object_unref (cmyk_profile);
     }
 
-  gimp_export_procedure_dialog_add_metadata (GIMP_EXPORT_PROCEDURE_DIALOG (dialog), "save-geotiff");
-  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "save-geotiff",
-                                       has_geotiff, NULL, NULL, FALSE);
-
   if (classic_tiff_failed)
     gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                                 "big-tif-warning",
                                 "compression",
                                 "bigtiff",
-                                "layers-frame",
-                                "save-transparent-pixels",
                                 "cmyk-frame",
+                                "format",
+                                "save-layers",
+                                "save-transparent-pixels",
+                                "crop-layers",
                                 NULL);
   else
     gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                                 "compression",
                                 "bigtiff",
-                                "layers-frame",
-                                "save-transparent-pixels",
                                 "cmyk-frame",
+                                "format",
+                                "save-layers",
+                                "save-transparent-pixels",
+                                "crop-layers",
                                 NULL);
 
-  compression = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "compression");
+  /* GeoTIFF option only makes sense when GeoTIFF parasites exist. */
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "save-geotiff",
+                                       has_geotiff,
+                                       NULL, NULL, FALSE);
+
+  /* Keep options consistent with the selected format. */
+  g_signal_connect (config, "notify::format",
+                    G_CALLBACK (evaluate_format_options),
+                    dialog);
+
+  /* Run once to bring UI/config into a consistent initial state */
+  evaluate_format_options (config, NULL, dialog);
+
+  compression = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                     "compression");
 
   if (! is_monochrome)
     {
@@ -1388,6 +1497,193 @@ save_dialog (GimpImage     *image,
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+static void
+update_format_options (GtkWidget *dialog,
+                       GObject   *config,
+                       gboolean   transparent_pixels_available,
+                       gboolean   save_layers_available,
+                       gboolean   leaving_photoshop_mode,
+                       gboolean   entering_photoshop_mode)
+{
+  /* This function owns the edge-triggered snapshot/restore logic.
+   * - On Standard -> Photoshop: snapshot current UI values into dialog data
+   *   ("last-save-*") BEFORE we force Photoshop-recommended values.
+   * - On Photoshop -> Standard: restore from dialog data.
+   */
+  GimpFormat format;
+  gboolean   save_layers             = FALSE;
+  gboolean   save_resources          = FALSE;
+  gboolean   save_transparent_pixels = FALSE;
+
+  gboolean   last_save_layers             = FALSE;
+  gboolean   last_save_resources          = FALSE;
+  gboolean   last_save_transparent_pixels = FALSE;
+
+  format = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                               "format");
+
+  /* Current config state. */
+  g_object_get (config,
+                "save-layers",             &save_layers,
+                "save-resources",          &save_resources,
+                "save-transparent-pixels", &save_transparent_pixels,
+                NULL);
+
+  /* Read previous snapshot from dialog data (defaults to current if missing). */
+  last_save_layers =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog),
+                                        "last-save-layers"));
+  last_save_resources =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog),
+                                        "last-save-resources"));
+  last_save_transparent_pixels =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog),
+                                        "last-save-transparent-pixels"));
+
+  /* Edge: Standard -> Photoshop.
+   * Snapshot current values BEFORE we force/lock Photoshop-mode values.
+   */
+  if (entering_photoshop_mode)
+    {
+      g_object_set_data (G_OBJECT (dialog),
+                         "last-save-layers",
+                         GINT_TO_POINTER (save_layers));
+      g_object_set_data (G_OBJECT (dialog),
+                         "last-save-resources",
+                         GINT_TO_POINTER (save_resources));
+      g_object_set_data (G_OBJECT (dialog),
+                         "last-save-transparent-pixels",
+                         GINT_TO_POINTER (save_transparent_pixels));
+    }
+
+  if (format == GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF)
+    {
+      /* Photoshop TIFF => force a consistent "recommended" set. */
+      if (! save_resources)
+        g_object_set (config, "save-resources", TRUE, NULL);
+
+      if (! save_layers)
+        g_object_set (config, "save-layers", TRUE, NULL);
+
+      if (save_transparent_pixels)
+        g_object_set (config, "save-transparent-pixels", FALSE, NULL);
+
+      /* Lock options in Photoshop mode */
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "save-resources",
+                                           FALSE,
+                                           NULL, NULL, FALSE);
+
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "save-layers",
+                                           FALSE,
+                                           NULL, NULL, FALSE);
+
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "save-transparent-pixels",
+                                           FALSE,
+                                           NULL, NULL, FALSE);
+    }
+  else
+    {
+      /* Standard TIFF: unlock controls first (actual availability below). */
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "save-resources",
+                                           TRUE,
+                                           NULL, NULL, FALSE);
+
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "save-layers",
+                                           TRUE,
+                                           NULL, NULL, FALSE);
+
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "save-transparent-pixels",
+                                           TRUE,
+                                           NULL, NULL, FALSE);
+
+      /* Edge: Photoshop -> Standard. */
+      if (leaving_photoshop_mode)
+        {
+          if (save_layers != last_save_layers)
+            g_object_set (config, "save-layers", last_save_layers, NULL);
+
+          if (save_transparent_pixels != last_save_transparent_pixels)
+            g_object_set (config, "save-transparent-pixels", last_save_transparent_pixels, NULL);
+
+          if (save_resources != last_save_resources)
+            g_object_set (config, "save-resources", last_save_resources, NULL);
+        }
+
+      /* Apply availability-derived sensitivity (layers + transparent pixels only). */
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "save-layers",
+                                           save_layers_available,
+                                           NULL, NULL, FALSE);
+
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "save-transparent-pixels",
+                                           transparent_pixels_available,
+                                           NULL, NULL, FALSE);
+
+      if (! save_layers_available && save_layers)
+        g_object_set (config, "save-layers", FALSE, NULL);
+
+      if (! transparent_pixels_available && save_transparent_pixels)
+        g_object_set (config, "save-transparent-pixels", FALSE, NULL);
+    }
+}
+
+static void
+evaluate_format_options (GObject    *config,
+                         GParamSpec *pspec,
+                         gpointer    user_data)
+{
+  GtkWidget  *dialog = GTK_WIDGET (user_data);
+  gboolean    transparent_pixels_available;
+  gboolean    save_layers_available;
+  GimpFormat  format;
+  gpointer    prev_p;
+  GimpFormat  prev_format;
+  gboolean    entering_photoshop;
+  gboolean    leaving_photoshop_mode;
+
+  /* Read availability from dialog data (derived from image/export state). */
+  transparent_pixels_available =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog),
+                                        "transparent-pixels-available"));
+  save_layers_available =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog),
+                                        "save-layers-available"));
+
+  /* Detect format transitions. */
+  format =
+    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "format");
+
+  prev_p = g_object_get_data (G_OBJECT (dialog), "tiff-prev-format");
+  prev_format = (GimpFormat) GPOINTER_TO_INT (prev_p);
+
+  leaving_photoshop_mode =
+    (prev_format == GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF &&
+     format      != GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF);
+
+  entering_photoshop =
+    (prev_format != GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF &&
+     format      == GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF);
+
+  /* Store current as previous for next time. */
+  g_object_set_data (G_OBJECT (dialog),
+                     "tiff-prev-format",
+                     GINT_TO_POINTER ((gint) format));
+
+  update_format_options (dialog, config,
+                         transparent_pixels_available,
+                         save_layers_available,
+                         leaving_photoshop_mode,
+                         entering_photoshop);
+
 }
 
 /* Convert n bytes of 0/1 to a line of bits */
@@ -1430,4 +1726,97 @@ byte2bit (const guchar *byteline,
       if (*(byteline++)) bitval |= 0x02;
       *bitline = invert ? ~bitval & (0xff << (8 - width)) : bitval;
     }
+}
+
+static const char *
+get_layer_key (gshort bitspersample)
+{
+  switch (bitspersample)
+    {
+    case 8:  return "Layr";
+    case 16: return "Lr16";
+    case 32: return "Lr32";
+    default: return "Layr";
+    }
+}
+
+static const Babl *
+get_extra_format (gshort bitspersample, gshort sampleformat)
+{
+  if (sampleformat == SAMPLEFORMAT_UINT)
+    {
+      switch (bitspersample)
+        {
+        case 8:  return babl_format ("Y u8");
+        case 16: return babl_format ("Y u16");
+        case 32: return babl_format ("Y u32");
+        default: return babl_format ("Y u8");
+        }
+    }
+  else if (sampleformat == SAMPLEFORMAT_IEEEFP)
+    {
+      switch (bitspersample)
+        {
+        case 16: return babl_format ("Y half");
+        case 32: return babl_format ("Y float");
+        case 64: return babl_format ("Y double");
+        default: return babl_format ("Y u8");
+        }
+    }
+  return babl_format ("Y u8");
+}
+
+static gboolean
+should_export_layer_info (GimpImage *orig_image)
+{
+  gint       image_width;
+  gint       image_height;
+  GList     *layers;
+  GimpLayer *layer;
+  gint       layer_width;
+  gint       layer_height;
+  gint       layer_offset_x;
+  gint       layer_offset_y;
+
+  image_width = gimp_image_get_width (orig_image);
+  image_height = gimp_image_get_height (orig_image);
+  layers = gimp_image_list_layers (orig_image);
+
+  if (layers && layers->data)
+    {
+      layer = layers->data;
+
+      if (layers->next)
+        goto export_true;
+
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+        goto export_true;
+
+      if (gimp_layer_get_mask (layer))
+        goto export_true;
+
+      if (gimp_layer_get_opacity (layer) < 100.0)
+        goto export_true;
+
+      if (gimp_layer_get_mode (layer) != GIMP_LAYER_MODE_NORMAL)
+        goto export_true;
+
+      layer_width  = gimp_drawable_get_width (GIMP_DRAWABLE (layer));
+      layer_height = gimp_drawable_get_height (GIMP_DRAWABLE (layer));
+
+      if (layer_width != image_width || layer_height != image_height)
+        goto export_true;
+
+      gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &layer_offset_x, &layer_offset_y);
+
+      if (layer_offset_x != 0 || layer_offset_y != 0)
+        goto export_true;
+    }
+
+  g_list_free (layers);
+  return FALSE;
+
+export_true:
+  g_list_free (layers);
+  return TRUE;
 }

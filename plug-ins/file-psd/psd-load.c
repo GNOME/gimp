@@ -372,7 +372,10 @@ load_image_metadata (GFile        *file,
 
   if (! for_layers)
     {
-      PSDimageres res_a;
+      PSDimageres     res_a;
+      gchar          *alpha_name;
+      PSDchanneldata *channel_data;
+      GimpChannel    *channel;
 
       while (PSD_TELL (input) < img_a.image_res_start + img_a.image_res_len)
         {
@@ -390,6 +393,21 @@ load_image_metadata (GFile        *file,
                                    &resolution_loaded, &profile_loaded,
                                    error) < 0)
             break;
+        }
+
+      for (int i = 0; i < img_a.alpha_display_count; i++)
+        {
+          alpha_name = g_ptr_array_index (img_a.alpha_names, i);
+          channel_data = img_a.alpha_display_info[i];
+
+          channel = gimp_channel_new (image, alpha_name,
+                                      (gint) img_a.columns,
+                                      (gint) img_a.rows,
+                                      channel_data->opacity,
+                                      channel_data->gimp_color);
+
+          gimp_image_insert_channel (image, channel, NULL, i);
+          gimp_item_set_visible (GIMP_ITEM (channel), FALSE);
         }
     }
   else
@@ -2556,7 +2574,7 @@ add_layers (GimpImage     *image,
                 }
             }
 
-          image_type = get_gimp_image_type (img_a->base_type, TRUE);
+          image_type = get_gimp_image_type (img_a->base_type, alpha);
           IFDBG(3) g_debug ("Layer type %d", image_type);
 
           layer = gimp_layer_new (image, lyr_a[lidx]->name,

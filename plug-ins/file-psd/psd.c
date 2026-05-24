@@ -83,6 +83,9 @@ static GimpValueArray * psd_load_metadata    (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
+static GimpValueArray * psd_export_metadata  (GimpProcedure         *procedure,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
 
 G_DEFINE_TYPE (Psd, psd, GIMP_TYPE_PLUG_IN)
@@ -117,6 +120,7 @@ psd_query_procedures (GimpPlugIn *plug_in)
   list = g_list_append (list, g_strdup (EXPORT_PROC));
   list = g_list_append (list, g_strdup (EXPORT_PSB_PROC));
   list = g_list_append (list, g_strdup (LOAD_METADATA_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_METADATA_PROC));
 
   return list;
 }
@@ -353,6 +357,45 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                            FALSE,
                                            G_PARAM_READWRITE);
     }
+  else if (! strcmp (name, EXPORT_METADATA_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+                                      psd_export_metadata, NULL, NULL);
+      gimp_procedure_set_documentation (procedure,
+                                        "Exports Photoshop-format metadata "
+                                        "from other file formats.",
+                                        "Exports Photoshop-format metadata "
+                                        "from other file formats.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Frank Teklote",
+                                      "Frank Teklote",
+                                      "2026");
+      gimp_procedure_add_file_argument (procedure, "file",
+                                        "File",
+                                        "Output file for exported metadata",
+                                        GIMP_FILE_CHOOSER_ACTION_SAVE,
+                                        FALSE, NULL,
+                                        G_PARAM_READWRITE);
+      gimp_procedure_add_image_argument (procedure, "image",
+                                         "image",
+                                         "The image",
+                                         FALSE,
+                                         G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "metadata-type",
+                                           "Metadata type",
+                                           "Whether the metadata contains "
+                                           "image or layer PSD resources.",
+                                           FALSE,
+                                           G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "cmyk",
+                                           "Export as _CMYK",
+                                           "Export a CMYK PSD image using the "
+                                           "soft-proofing color profile",
+                                           FALSE,
+                                           G_PARAM_READWRITE);
+    }
 
   return procedure;
 }
@@ -584,4 +627,45 @@ psd_load_metadata (GimpProcedure         *procedure,
   g_object_unref (image);
 
   return return_vals;
+}
+
+static GimpValueArray *
+psd_export_metadata (GimpProcedure       *procedure,
+                     GimpProcedureConfig *config,
+                     gpointer             run_data)
+{
+  GFile             *file     = NULL;
+  GimpImage         *image    = NULL;
+  gboolean           is_layer = FALSE;
+  gboolean           cmyk     = FALSE;
+  GimpPDBStatusType  status   = GIMP_PDB_EXECUTION_ERROR;
+  GError            *error    = NULL;
+
+  gegl_init (NULL, NULL);
+
+  g_object_get (config,
+                "file",          &file,
+                "image",         &image,
+                "metadata-type", &is_layer,
+                "cmyk",          &cmyk,
+                NULL);
+
+  if (! file || ! image)
+    {
+      g_set_error (&error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Missing required arguments.");
+      goto out;
+    }
+
+  if (export_image_metadata (file, image, is_layer, cmyk, &error))
+    status = GIMP_PDB_SUCCESS;
+
+out:
+  if (file)
+    g_object_unref (file);
+
+  if (image)
+    g_object_unref (image);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
 }

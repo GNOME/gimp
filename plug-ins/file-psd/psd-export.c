@@ -129,6 +129,7 @@ typedef struct PsdResourceOptions
   gboolean  clipping_path;
   gchar    *clipping_path_name;
   gdouble   clipping_path_flatness;
+  gboolean  tif; /* indicates tif compatibility during write */
 } PSDResourceOptions;
 
 static PSD_Image_Data PSDImageData;
@@ -168,115 +169,127 @@ static PSD_Image_Data PSDImageData;
 /* Declare some local functions.
  */
 
-static const gchar * psd_lmode_layer      (GimpLayer           *layer,
-                                           gboolean             section_divider);
+static const gchar * psd_lmode_layer            (GimpLayer      *layer,
+                                                 gboolean        section_divider);
 
-static void          reshuffle_cmap_write (guchar              *mapGimp);
+static void          reshuffle_cmap_write       (guchar         *mapGimp);
 
-static gboolean      save_header          (GOutputStream       *output,
-                                           GimpImage           *image,
-                                           PSDResourceOptions  *options,
-                                           GError             **error);
+static gboolean      save_header                (GOutputStream  *output,
+                                                 GimpImage      *image,
+                                                 PSDResourceOptions
+                                                                *options,
+                                                 GError        **error);
 
-static gboolean      save_color_mode_data (GOutputStream       *output,
-                                           GimpImage           *image,
-                                           gboolean             export_duotone,
-                                           GError             **error);
+static gboolean      save_color_mode_data       (GOutputStream  *output,
+                                                 GimpImage      *image,
+                                                 gboolean        export_duotone,
+                                                 GError        **error);
 
-static gboolean      save_resources       (GOutputStream       *output,
-                                           GimpImage           *image,
-                                           PSDResourceOptions  *options,
-                                           GError             **error);
+static gboolean      save_resources             (GOutputStream  *output,
+                                                 GimpImage      *image,
+                                                 PSDResourceOptions
+                                                                *options,
+                                                 GError        **error);
 
-static gboolean      save_paths           (GOutputStream       *output,
-                                           GimpImage           *image,
-                                           GError             **error);
-static gboolean      save_clipping_path   (GOutputStream       *output,
-                                           GimpImage           *image,
-                                           const gchar         *path_name,
-                                           gfloat               path_flatness,
-                                           GError             **error);
+static gboolean      save_paths                 (GOutputStream  *output,
+                                                 GimpImage      *image,
+                                                 GError        **error);
 
-static gboolean     save_layer_and_mask   (GOutputStream       *output,
-                                           GimpImage           *image,
-                                           PSDResourceOptions  *options,
-                                           GError             **error);
+static gboolean      save_clipping_path         (GOutputStream  *output,
+                                                 GimpImage      *image,
+                                                 const gchar    *path_name,
+                                                 gfloat          path_flatness,
+                                                 GError        **error);
 
-static gboolean      save_data            (GOutputStream       *output,
-                                           GimpImage           *image,
-                                           PSDResourceOptions  *options,
-                                           GError             **error);
+static gboolean      save_layer_and_mask        (GOutputStream  *output,
+                                                 GimpImage      *image,
+                                                 PSDResourceOptions
+                                                                *options,
+                                                 GError        **error);
 
-static void          double_to_psd_fixed  (gdouble               value,
-                                           gchar                *target);
+static gboolean      save_data                  (GOutputStream  *output,
+                                                 GimpImage      *image,
+                                                 PSDResourceOptions
+                                                                *options,
+                                                 GError        **error);
 
-static void          xfwrite              (GOutputStream        *output,
-                                           gconstpointer         buf,
-                                           gsize                 len,
-                                           const gchar          *why,
-                                           GError              **error);
+static void          double_to_psd_fixed_8_24   (gdouble         value,
+                                                 gchar          *target);
 
-static gboolean      write_pascalstring   (GOutputStream        *output,
-                                           const gchar          *val,
-                                           gint                  padding,
-                                           const gchar          *why,
-                                           GError              **error);
+static void          double_to_psd_fixed_16_16  (gdouble         value,
+                                                 gchar          *target);
 
-static gboolean      write_string         (GOutputStream        *output,
-                                           const gchar          *val,
-                                           const gchar          *why,
-                                           GError              **error);
+static void          xfwrite                    (GOutputStream  *output,
+                                                 gconstpointer   buf,
+                                                 gsize           len,
+                                                 const gchar    *why,
+                                                 GError        **error);
 
-static void          write_gchar          (GOutputStream        *output,
-                                           guchar                val,
-                                           const gchar          *why,
-                                           GError              **error);
+static gboolean      write_pascalstring         (GOutputStream  *output,
+                                                 const gchar    *val,
+                                                 gint            padding,
+                                                 const gchar    *why,
+                                                 GError        **error);
 
-static void          write_gint16         (GOutputStream        *output,
-                                           gint16                val,
-                                           const gchar          *why,
-                                           GError              **error);
+static gboolean      write_string               (GOutputStream  *output,
+                                                 const gchar    *val,
+                                                 const gchar    *why,
+                                                 GError        **error);
 
-static void          write_gint32         (GOutputStream        *output,
-                                           gint32                val,
-                                           const gchar          *why,
-                                           GError              **error);
+static void          write_gchar                (GOutputStream  *output,
+                                                 guchar          val,
+                                                 const gchar    *why,
+                                                 GError        **error);
 
-static void          write_gint64         (GOutputStream        *output,
-                                           gint64                val,
-                                           const gchar          *why,
-                                           GError              **error);
+static void          write_gint16               (GOutputStream  *output,
+                                                 gint16          val,
+                                                 const gchar    *why,
+                                                 GError        **error);
 
-static gboolean      write_datablock_luni (GOutputStream        *output,
-                                           const gchar          *val,
-                                           const gchar          *why,
-                                           GError              **error);
+static void          write_gint32               (GOutputStream  *output,
+                                                 gint32          val,
+                                                 const gchar    *why,
+                                                 GError        **error);
 
+static void          write_gint64               (GOutputStream  *output,
+                                                 gint64          val,
+                                                 const gchar    *why,
+                                                 GError        **error);
 
-static gboolean      write_pixel_data     (GOutputStream       *output,
-                                           GimpImage           *image,
-                                           GimpDrawable        *drawable,
-                                           goffset             *ChanLenPosition,
-                                           goffset              rowlenOffset,
-                                           gboolean             write_mask,
-                                           PSDResourceOptions  *options,
-                                           GError             **error);
+static gboolean      write_datablock_luni       (GOutputStream  *output,
+                                                 const gchar    *val,
+                                                 const gchar    *why,
+                                                 GError        **error);
 
-static GimpLayer   * create_merged_image  (GimpImage           *image,
-                                           GError              **error);
+static gboolean      write_pixel_data           (GOutputStream  *output,
+                                                 GimpImage      *image,
+                                                 GimpDrawable   *drawable,
+                                                 goffset        *ChanLenPosition,
+                                                 goffset         rowlenOffset,
+                                                 gboolean        write_mask,
+                                                 PSDResourceOptions
+                                                                *options,
+                                                 GError        **error);
 
-static gint          get_bpc              (GimpImage           *image);
-static const Babl  * get_pixel_format     (GimpDrawable        *drawable,
-                                           GError              **error);
-static const Babl  * get_channel_format   (GimpDrawable        *drawable);
-static const Babl  * get_mask_format      (GimpLayerMask       *mask);
+static GimpLayer   * create_merged_image        (GimpImage      *image,
+                                                 PSDResourceOptions
+                                                                *options,
+                                                 GError        **error);
 
-static GList       * image_get_all_layers (GimpImage           *image,
-                                           gint                *n_layers);
+static gint          get_bpc                    (GimpImage      *image);
+static const Babl  * get_pixel_format           (GimpDrawable   *drawable,
+                                                 gboolean        cmyk,
+                                                 GError        **error);
 
-static void          update_clipping_path (GimpIntComboBox     *combo,
-                                           gpointer             data);
+static const Babl  * get_channel_format         (GimpDrawable   *drawable);
+static const Babl  * get_mask_format            (GimpLayerMask  *mask);
 
+static GList       * image_get_all_layers       (GimpImage      *image,
+                                                 gint           *n_layers);
+
+static void          update_clipping_path       (GimpIntComboBox
+                                                                *combo,
+                                                 gpointer        data);
 
 static const gchar *
 psd_lmode_layer (GimpLayer *layer,
@@ -766,11 +779,18 @@ save_resources (GOutputStream       *output,
 {
   GList   *iter;
   gint     i;
-  GList   *SelLayers;           /* The selected layers */
+  GList   *SelLayers;            /* The selected layers */
 
-  goffset  eof_pos;             /* Position for End of file */
-  goffset  rsc_pos;             /* Position for Lengths of Resources section */
-  goffset  name_sec;            /* Position for Lengths of Channel Names */
+  goffset  eof_pos;              /* Position for End of file */
+  goffset  rsc_pos = 0;          /* Position for Lengths of Resources section */
+  goffset  name_sec;             /* Position for Lengths of Channel Names */
+
+  gboolean
+    write_transparency_resource; /* Only export the transparency channel
+                                  * resource for PSD exports (not for TIFF
+                                  * compatibility mode), and only if the merged
+                                  * layer has alpha.
+                                  */
 
   /* Only relevant resources in GIMP are: 0x03EE, 0x03F0 & 0x0400 */
   /* For Adobe Photoshop version 4.0 these can also be considered:
@@ -780,14 +800,20 @@ save_resources (GOutputStream       *output,
 
   /* Here's where actual writing starts */
 
-  rsc_pos = g_seekable_tell (G_SEEKABLE (output));
-  WRITE_RETURN (gint32, output, 0, "image resources length", ;);
+  write_transparency_resource =
+    ! options->tif &&
+    gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer));
+
+  if (! options->tif)
+    {
+      rsc_pos = g_seekable_tell (G_SEEKABLE (output));
+      WRITE_RETURN (gint32, output, 0, "image resources length", ;);
+    }
 
   /* --------------- Write Channel names --------------- */
   if (! options->cmyk)
     {
-      if (PSDImageData.nChannels > 0 ||
-          gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+      if (PSDImageData.nChannels > 0 || write_transparency_resource)
         {
           XFWRITE_RETURN (output, "8BIM", 4, "imageresources signature", ;);
           WRITE_RETURN (gint16, output, 0x03EE, "0x03EE Id", ;); /* 1006 */
@@ -802,7 +828,7 @@ save_resources (GOutputStream       *output,
           /* Write all strings */
 
           /* if the merged_image contains transparency, write a name for it first */
-          if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+          if (write_transparency_resource)
             WRITE_RETURN (string, output, "Transparency", "channel name", ;);
 
           for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
@@ -811,6 +837,7 @@ save_resources (GOutputStream       *output,
               WRITE_RETURN (string, output, chName, "channel name", g_free (chName));
               g_free (chName);
             }
+
           /* Calculate and write actual resource's length */
 
           eof_pos = g_seekable_tell (G_SEEKABLE (output));
@@ -835,8 +862,7 @@ save_resources (GOutputStream       *output,
 
       /* --------------- Write Channel properties --------------- */
 
-      if (PSDImageData.nChannels > 0 ||
-          gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+      if (PSDImageData.nChannels > 0 || write_transparency_resource)
         {
           XFWRITE_RETURN (output, "8BIM", 4, "imageresources signature", ;);
           WRITE_RETURN (gint16, output, 0x0435, "0x0435 Id", ;); /* 1077 */
@@ -844,7 +870,7 @@ save_resources (GOutputStream       *output,
           WRITE_RETURN (gint16, output, 0, "Id name", ;); /* Set to null string (two zeros) */
           WRITE_RETURN (gint32, output,
                         4  +
-                        13 * (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)) +
+                        13 * (write_transparency_resource +
                               PSDImageData.nChannels),
                         "0x0435 resource size", ;);
 
@@ -859,7 +885,7 @@ save_resources (GOutputStream       *output,
           #define DOUBLE_TO_INT16(x) ROUND (SAFE_CLAMP (x, 0.0, 1.0) * 0xffff)
 
           /* if the merged_image contains transparency, write its properties first */
-          if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+          if (write_transparency_resource)
             {
               WRITE_RETURN (gint16, output, PSD_CS_RGB, "channel color space", ;);
               WRITE_RETURN (gint16, output, (gint16) DOUBLE_TO_INT16 (1.0), "channel color r", ;);
@@ -908,6 +934,7 @@ save_resources (GOutputStream       *output,
             WRITE_RETURN (gchar, output, 0, "pad byte", ;);
         }
     }
+
   /* --------------- Write Guides --------------- */
   if (gimp_image_find_next_guide (image, 0))
     {
@@ -915,7 +942,7 @@ save_resources (GOutputStream       *output,
       gint guide_id = 0;
 
       /* Count the guides */
-      while ((guide_id = gimp_image_find_next_guide(image, guide_id)))
+      while ((guide_id = gimp_image_find_next_guide (image, guide_id)))
         n_guides++;
 
       XFWRITE_RETURN (output, "8BIM", 4, "imageresources signature", ;);
@@ -945,7 +972,7 @@ save_resources (GOutputStream       *output,
       if ((g_seekable_tell (G_SEEKABLE (output)) & 1))
         WRITE_RETURN (gchar, output, 0, "pad byte", ;);
       if (n_guides != 0)
-        g_warning("Screwed up guide resource:: wrong number of guides\n");
+        g_warning ("Screwed up guide resource:: wrong number of guides\n");
       IFDBG(1) g_debug ("\tTotal length of 0x0400 resource: %d",
                         (int) sizeof (gint16));
     }
@@ -1122,19 +1149,24 @@ save_resources (GOutputStream       *output,
 
   /* --------------- Write Total Section Length --------------- */
 
-  eof_pos = g_seekable_tell (G_SEEKABLE (output));
+  if (! options->tif)
+    {
+      eof_pos = g_seekable_tell (G_SEEKABLE (output));
 
-  if (! g_seekable_seek (G_SEEKABLE (output), rsc_pos, G_SEEK_SET, NULL, error))
-    return FALSE;
+      if (! g_seekable_seek (G_SEEKABLE (output), rsc_pos, G_SEEK_SET, NULL, error))
+        return FALSE;
 
-  WRITE_RETURN (gint32, output, eof_pos - rsc_pos - sizeof (gint32),
-                "image resources length", ;);
-  IFDBG(1) g_debug ("\tResource section total length: %d",
-                    (int) (eof_pos - rsc_pos - sizeof (gint32)));
+      WRITE_RETURN (gint32, output, eof_pos - rsc_pos - sizeof (gint32),
+                    "image resources length", ;);
+      IFDBG(1) g_debug ("\tResource section total length: %d",
+                        (int) (eof_pos - rsc_pos - sizeof (gint32)));
 
-  /* Return to EOF to continue writing */
+      /* Return to EOF to continue writing */
 
-  return g_seekable_seek (G_SEEKABLE (output), eof_pos, G_SEEK_SET, NULL, error);
+      return g_seekable_seek (G_SEEKABLE (output), eof_pos, G_SEEK_SET, NULL, error);
+    }
+
+  return TRUE;
 }
 
 static int
@@ -1226,8 +1258,8 @@ get_compress_channel_data (guchar  *channel_data,
 
 /* Ported /from plug-ins/file-tiff/file-tiff-export.c */
 static void
-double_to_psd_fixed (gdouble  value,
-                     gchar   *target)
+double_to_psd_fixed_8_24 (gdouble  value,
+                          gchar   *target)
 {
   gdouble in, frac;
   gint    i, f;
@@ -1248,13 +1280,37 @@ double_to_psd_fixed (gdouble  value,
   target[3] = f & 0xFF;
 }
 
+static void
+double_to_psd_fixed_16_16 (gdouble value,
+                           gchar   *target)
+{
+  gdouble in, frac;
+  gint32  i, f;
+
+  frac = modf (value, &in);
+  if (frac < 0)
+    {
+      in -= 1;
+      frac += 1;
+    }
+
+  i = CLAMP (in, -32768.0, 32767.0);
+  f = CLAMP (floor (frac * 65536.0 + 0.5), 0.0, 65535.0);
+
+  target[0] = (i >> 8) & 0xFF;
+  target[1] =  i       & 0xFF;
+  target[2] = (f >> 8) & 0xFF;
+  target[3] =  f       & 0xFF;
+}
+
 /* Ported from /plug-ins/file-tiff/file-tiff-export.c */
 static gboolean
 save_paths (GOutputStream  *output,
             GimpImage      *image,
             GError        **error)
 {
-  gshort  id     = 0x07D0; /* Photoshop paths have IDs >= 2000 */
+  gshort  id     = 0x07D0; /* Photoshop paths have IDs >= 2000,
+                              Working path has ID = 1025 */
   gdouble width  = gimp_image_get_width (image);
   gdouble height = gimp_image_get_height (image);
   GList  *paths;
@@ -1274,17 +1330,14 @@ save_paths (GOutputStream  *output,
        iter && v <= 997;
        iter = g_list_next (iter), v++)
     {
-      GString *data;
-      gchar   *name;
-      gsize    len;
-      gint     lenpos;
-      gchar    pointrecord[26] = { 0, };
-      gchar   *tmpname;
-      GError  *err = NULL;
-
-      data = g_string_new ("8BIM");
-      g_string_append_c (data, id / 256);
-      g_string_append_c (data, id % 256);
+      GString  *data;
+      gchar    *name;
+      gsize     len;
+      gint      lenpos;
+      gchar     pointrecord[26] = { 0, };
+      gchar    *tmpname;
+      GError   *err = NULL;
+      gboolean  is_working_path = FALSE;
 
       /*
        * - use iso8859-1 if possible
@@ -1293,25 +1346,37 @@ save_paths (GOutputStream  *output,
       name = gimp_item_get_name (iter->data);
       tmpname = g_convert (name, -1, "ISO-8859-1", "UTF-8", NULL, &len, &err);
 
-      if (tmpname && err == NULL)
+      is_working_path = ! strcmp (name, "Working Path");
+
+      data = g_string_new ("8BIM");
+      g_string_append_c (data, (is_working_path ? 0x0401 : id) / 256);
+      g_string_append_c (data, (is_working_path ? 0x0401 : id) % 256);
+
+      if (is_working_path)
         {
-          g_string_append_c (data, (gchar) MIN (len, 255));
-          g_string_append_len (data, tmpname, MIN (len, 255));
-          g_free (tmpname);
+          g_string_append_c (data, 0);
         }
       else
         {
-          /* conversion failed, we fall back to ASCII */
-          gchar *ascii_name = g_str_to_ascii (name, NULL);
+          if (tmpname && err == NULL)
+            {
+              g_string_append_c (data, (gchar) MIN (len, 255));
+              g_string_append_len (data, tmpname, MIN (len, 255));
+              g_free (tmpname);
+            }
+          else
+            {
+              /* conversion failed, we fall back to ASCII */
+              gchar *ascii_name = g_str_to_ascii (name, NULL);
 
-          len = g_utf8_strlen (ascii_name, 255);
+              len = g_utf8_strlen (ascii_name, 255);
 
-          g_string_append_c (data, (gchar) MIN (len, 255));
-          g_string_append_len (data, ascii_name, MIN (len, 255));
+              g_string_append_c (data, (gchar) MIN (len, 255));
+              g_string_append_len (data, ascii_name, MIN (len, 255));
 
-          g_free (ascii_name);
-          if (tmpname)
-            g_free (tmpname);
+              g_free (ascii_name);
+              g_free (tmpname);
+            }
         }
 
       if (data->len % 2)  /* padding to even size */
@@ -1357,12 +1422,12 @@ save_paths (GOutputStream  *output,
             {
               pointrecord[1] = closed ? 2 : 5;
 
-              double_to_psd_fixed (points[p+1] / height, pointrecord + 2);
-              double_to_psd_fixed (points[p+0] / width,  pointrecord + 6);
-              double_to_psd_fixed (points[p+3] / height, pointrecord + 10);
-              double_to_psd_fixed (points[p+2] / width,  pointrecord + 14);
-              double_to_psd_fixed (points[p+5] / height, pointrecord + 18);
-              double_to_psd_fixed (points[p+4] / width,  pointrecord + 22);
+              double_to_psd_fixed_8_24 (points[p+1] / height, pointrecord + 2);
+              double_to_psd_fixed_8_24 (points[p+0] / width,  pointrecord + 6);
+              double_to_psd_fixed_8_24 (points[p+3] / height, pointrecord + 10);
+              double_to_psd_fixed_8_24 (points[p+2] / width,  pointrecord + 14);
+              double_to_psd_fixed_8_24 (points[p+5] / height, pointrecord + 18);
+              double_to_psd_fixed_8_24 (points[p+4] / width,  pointrecord + 22);
 
               g_string_append_len (data, pointrecord, 26);
             }
@@ -1380,7 +1445,9 @@ save_paths (GOutputStream  *output,
 
       xfwrite (output, data->str, data->len, "path resources data", error);
       g_string_free (data, TRUE);
-      id += 0x01;
+
+      if (! is_working_path)
+        id += 0x01;
     }
 
   g_list_free (paths);
@@ -1436,7 +1503,7 @@ save_clipping_path (GOutputStream  *output,
   if (data->len % 2)  /* padding to even size */
     g_string_append_c (data, 0);
 
-  double_to_psd_fixed (path_flatness, flatness);
+  double_to_psd_fixed_16_16 (path_flatness, flatness);
   g_string_append_len (data, flatness, 4);
 
   /* Adobe specifications state they ignore the fill rule,
@@ -1475,7 +1542,7 @@ save_layer_and_mask (GOutputStream       *output,
   goffset        eof_pos;                /* Position: End of file */
   goffset        ExtraDataPos;           /* Position: Extra data length */
   goffset        LayerMaskPos;           /* Position: Layer & Mask section length */
-  goffset        LayerInfoPos;           /* Position: Layer info section length*/
+  goffset        LayerInfoPos = 0;       /* Position: Layer info section length*/
   goffset      **ChannelLengthPos;       /* Position: Channel length */
   GList         *iter;
 
@@ -1495,15 +1562,18 @@ save_layer_and_mask (GOutputStream       *output,
 
   /* Layer info section */
 
-  LayerInfoPos = g_seekable_tell (G_SEEKABLE (output));
-  if (! options->psb)
-    WRITE_RETURN (gint32, output, 0, "layers info section length", ;);
-  else
-    WRITE_RETURN (gint64, output, 0, "layers info section length", ;);
+  if (! options->tif)
+    {
+      LayerInfoPos = g_seekable_tell (G_SEEKABLE (output));
+      if (! options->psb)
+        WRITE_RETURN (gint32, output, 0, "layers info section length", ;);
+      else
+        WRITE_RETURN (gint64, output, 0, "layers info section length", ;);
+    }
 
   /* Layer structure section */
 
-  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+  if (! options->tif && gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
     WRITE_RETURN (gint16, output, -PSDImageData.nLayers, "Layer structure count", ;);
   else
     WRITE_RETURN (gint16, output, PSDImageData.nLayers, "Layer structure count", ;);
@@ -1693,6 +1763,7 @@ save_layer_and_mask (GOutputStream       *output,
         layerName = gimp_item_get_name (GIMP_ITEM (psd_layer->layer));
       else
         layerName = g_strdup ("</Layer group>");
+
       if (! write_pascalstring (output, layerName, 4, "layer name", error))
         return FALSE;
 
@@ -1806,23 +1877,26 @@ save_layer_and_mask (GOutputStream       *output,
 
   /* Write actual size of Layer info section */
 
-  if (! g_seekable_seek (G_SEEKABLE (output), LayerInfoPos, G_SEEK_SET, NULL, error))
-    return FALSE;
+  if (! options->tif)
+    {
+      if (! g_seekable_seek (G_SEEKABLE (output), LayerInfoPos, G_SEEK_SET, NULL, error))
+        return FALSE;
 
-  if (! options->psb)
-    {
-      WRITE_RETURN (gint32, output, eof_pos - LayerInfoPos - sizeof (gint32),
-                    "layers info section length", ;);
-      IFDBG(1) g_debug ("\t\tTotal layers info section length: %d",
-                        (gint) (eof_pos - LayerInfoPos - sizeof (gint32)));
-    }
-  else
-    {
-      WRITE_RETURN (gint64, output, eof_pos - LayerInfoPos - sizeof (gint64),
-                    "layers info section length", ;);
-      IFDBG(1) g_debug ("\t\tTotal layers info section length: %"
-                        G_GINT64_FORMAT,
-                        (gint64) (eof_pos - LayerInfoPos - sizeof (gint64)));
+      if (! options->psb)
+        {
+          WRITE_RETURN (gint32, output, eof_pos - LayerInfoPos - sizeof (gint32),
+                        "layers info section length", ;);
+          IFDBG(1) g_debug ("\t\tTotal layers info section length: %d",
+                            (gint) (eof_pos - LayerInfoPos - sizeof (gint32)));
+        }
+      else
+        {
+          WRITE_RETURN (gint64, output, eof_pos - LayerInfoPos - sizeof (gint64),
+                        "layers info section length", ;);
+          IFDBG(1) g_debug ("\t\tTotal layers info section length: %"
+                            G_GINT64_FORMAT,
+                            (gint64) (eof_pos - LayerInfoPos - sizeof (gint64)));
+        }
     }
 
   /* Write actual size of Layer and mask information section */
@@ -1901,7 +1975,7 @@ write_pixel_data (GOutputStream       *output,
   if (gimp_item_is_channel (GIMP_ITEM (drawable)))
     format = get_channel_format (drawable);
   else
-    format = get_pixel_format (drawable, error);
+    format = get_pixel_format (drawable, options->cmyk, error);
 
   if (options->cmyk && ! gimp_item_is_channel (GIMP_ITEM (drawable)))
     {
@@ -2237,8 +2311,10 @@ save_data (GOutputStream       *output,
 }
 
 static GimpLayer *
-create_merged_image (GimpImage  *image,
-                     GError    **error)
+create_merged_image (GimpImage           *image,
+                     PSDResourceOptions  *options,
+                     GError             **error)
+
 {
   GimpLayer *projection;
 
@@ -2250,7 +2326,9 @@ create_merged_image (GimpImage  *image,
   if (gimp_image_get_base_type (image) != GIMP_INDEXED)
     {
       GeglBuffer         *buffer             = gimp_drawable_get_buffer (GIMP_DRAWABLE (projection));
-      const Babl         *format             = get_pixel_format (GIMP_DRAWABLE (projection), error);
+      const Babl         *format             = get_pixel_format (GIMP_DRAWABLE (projection),
+                                                                 options->cmyk,
+                                                                 error);
       gboolean            transparency_found = FALSE;
       gint                bpp                = babl_format_get_bytes_per_pixel (format);
       GeglBufferIterator *iter;
@@ -2296,8 +2374,10 @@ create_merged_image (GimpImage  *image,
 }
 
 static void
-get_image_data (GimpImage  *image,
-                GError    **error)
+get_image_data (GimpImage           *image,
+                PSDResourceOptions  *options,
+                GError             **error)
+
 {
   IFDBG(1) g_debug ("Function: get_image_data");
 
@@ -2312,7 +2392,7 @@ get_image_data (GimpImage  *image,
   PSDImageData.baseType = gimp_image_get_base_type (image);
   IFDBG(1) g_debug ("\tGot base type: %d", PSDImageData.baseType);
 
-  PSDImageData.merged_layer = create_merged_image (image, error);
+  PSDImageData.merged_layer = create_merged_image (image, options, error);
 
   PSDImageData.lChannels = gimp_image_list_channels (image);
   PSDImageData.nChannels = g_list_length (PSDImageData.lChannels);
@@ -2350,6 +2430,7 @@ export_image (GFile          *file,
   PSDResourceOptions  resource_options;
   gsize               max_dim;
 
+  resource_options.tif = FALSE;
   resource_options.psb =
     (! strcmp (gimp_procedure_get_name (procedure), EXPORT_PSB_PROC));
   g_object_get (config,
@@ -2404,7 +2485,7 @@ export_image (GFile          *file,
       resource_options.duotone = FALSE;
     }
 
-  get_image_data (image, error);
+  get_image_data (image, &resource_options, error);
 
   /* Need to check each of the layers size individually also */
   for (iter = PSDImageData.lLayers; iter; iter = iter->next)
@@ -2509,6 +2590,172 @@ clean:
   return (*error == NULL);
 }
 
+/* Saving metadata for external file formats */
+gboolean
+export_image_metadata (GFile      *file,
+                       GimpImage  *image,
+                       gboolean    for_layers,
+                       gboolean    cmyk,
+                       GError    **error)
+{
+  GOutputStream      *output;
+  GeglBuffer         *buffer;
+  GList              *iter;
+  GError             *local_error            = NULL;
+  GimpParasite       *clipping_path_parasite = NULL;
+  GimpParasite       *path_flatness_parasite = NULL;
+  PSDResourceOptions  resource_options;
+  gsize               max_dim = 300000;
+
+  resource_options.psb = gimp_image_get_width (image) > 30000 ||
+                         gimp_image_get_height (image) > 30000;
+  resource_options.cmyk = cmyk;
+  resource_options.duotone = FALSE;
+  resource_options.clipping_path = FALSE;
+  resource_options.clipping_path_name = NULL;
+  resource_options.clipping_path_flatness = 0;
+  resource_options.tif = TRUE;
+
+  IFDBG(1) g_debug ("Function: export_image_metadata");
+
+  max_dim = (! resource_options.psb) ? 30000 : 300000;
+
+  if (gimp_image_get_width (image) > max_dim ||
+      gimp_image_get_height (image) > max_dim)
+    {
+      if (! resource_options.psb)
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Unable to export '%s'.  The PSD file format does not "
+                       "support images that are more than 30,000 pixels wide "
+                       "or tall."),
+                     gimp_file_get_utf8_name (file));
+      else
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Unable to export '%s'.  The PSB file format does not "
+                       "support images that are more than 300,000 pixels wide "
+                       "or tall."),
+                     gimp_file_get_utf8_name (file));
+      return FALSE;
+    }
+
+  clipping_path_parasite = gimp_image_get_parasite (image, PSD_PARASITE_CLIPPING_PATH);
+  if (clipping_path_parasite)
+    {
+      resource_options.clipping_path = TRUE;
+      resource_options.clipping_path_name = g_strdup ((gchar *) gimp_parasite_get_data (clipping_path_parasite, NULL));
+      gimp_parasite_free (clipping_path_parasite);
+    }
+
+  path_flatness_parasite = gimp_image_get_parasite (image, PSD_PARASITE_PATH_FLATNESS);
+  if (path_flatness_parasite)
+    {
+      resource_options.clipping_path_flatness = *(gfloat *) gimp_parasite_get_data (path_flatness_parasite, NULL);
+      gimp_parasite_free (path_flatness_parasite);
+    }
+
+  get_image_data (image, &resource_options, error);
+
+  /* Need to check each of the layers size individually also */
+  for (iter = PSDImageData.lLayers; iter; iter = iter->next)
+    {
+      PSD_Layer *layer = iter->data;
+
+      if (layer->type == PSD_LAYER_TYPE_LAYER)
+        {
+          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer->layer));
+
+          if (gegl_buffer_get_width (buffer)  > max_dim ||
+              gegl_buffer_get_height (buffer) > max_dim)
+            {
+              if (! resource_options.psb)
+                g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             _("Unable to export '%s'.  The PSD file format "
+                               "does not support images with layers that are "
+                               "more than 30,000 pixels wide or tall."),
+                             gimp_file_get_utf8_name (file));
+              else
+                g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             _("Unable to export '%s'.  The PSB file format "
+                               "does not support images with layers that are "
+                               "more than 300,000 pixels wide or tall."),
+                             gimp_file_get_utf8_name (file));
+              clear_image_data ();
+              return FALSE;
+            }
+
+          g_object_unref (buffer);
+        }
+    }
+
+  output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE,
+                                            G_FILE_CREATE_NONE, NULL,
+                                            &local_error));
+
+  if (! output)
+    {
+      if (! local_error)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not open '%s' for writing: %s"),
+                       gimp_file_get_utf8_name (file), g_strerror (errno));
+        }
+      else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Could not open '%s' for reading: %s"),
+                       gimp_file_get_utf8_name (file), local_error->message);
+          g_error_free (local_error);
+        }
+      clear_image_data ();
+
+      return FALSE;
+    }
+
+  IFDBG(1) g_debug ("\tFile '%s' has been opened",
+                    gimp_file_get_utf8_name (file));
+
+  if (for_layers)
+    {
+      if (PSDImageData.baseType == GIMP_INDEXED)
+        {
+          if (! resource_options.psb)
+            WRITE_GOTO (gint32, output, 0, "layers info section length");
+          else
+            WRITE_GOTO (gint64, output, 0, "layers info section length");
+        }
+      else
+        {
+          if (! save_layer_and_mask (output, image, &resource_options, error))
+            {
+              goto clean;
+            }
+        }
+    }
+  else
+    {
+      if (! save_resources (output, image, &resource_options, error))
+        {
+          goto clean;
+        }
+    }
+
+  /* Delete merged image now */
+
+clean:
+
+  if (GIMP_ITEM (PSDImageData.merged_layer))
+    gimp_item_delete (GIMP_ITEM (PSDImageData.merged_layer));
+
+  clear_image_data ();
+
+  IFDBG(1) g_debug ("----- Closing TMP file, done -----\n");
+
+  g_object_unref (output);
+  g_free (resource_options.clipping_path_name);
+
+  return (*error == NULL);
+}
+
 static gint
 get_bpc (GimpImage *image)
 {
@@ -2533,28 +2780,19 @@ get_bpc (GimpImage *image)
     case GIMP_PRECISION_FLOAT_LINEAR:
     case GIMP_PRECISION_FLOAT_NON_LINEAR:
     case GIMP_PRECISION_FLOAT_PERCEPTUAL:
+      return 4;
+
     default:
-      /* FIXME: we *should* encode the image as u32 in this case, but simply
-       * using the same code as for the other cases produces invalid psd files
-       * (they're rejected by photoshop, although they can be read by the
-       * corresponding psd-load.c code, which in turn can't actually read
-       * photoshop-generated u32 files.)
-       *
-       * simply encode the image as u16 for now.
-       */
-      /* return 4; */
-      return 2;
+      return 1;
     }
 }
 
 static const Babl *
 get_pixel_format (GimpDrawable  *drawable,
+                  gboolean       cmyk,
                   GError       **error)
 {
   GimpImage        *image;
-  const gchar      *model;
-  gint              bpc;
-  gchar             format[32];
   GimpColorProfile *profile = NULL;
   const Babl       *space   = NULL;
 
@@ -2576,73 +2814,136 @@ get_pixel_format (GimpDrawable  *drawable,
                           G_STRFUNC, (*error)->message);
               g_clear_error (error);
             }
+
         }
     }
 
   switch (gimp_drawable_type (drawable))
     {
     case GIMP_GRAY_IMAGE:
-      model = "Y'";
-      break;
+      switch (get_bpc (image))
+        {
+        case 4:
+          return babl_format ("Y' float");
+
+        case 2:
+          return babl_format ("Y' u16");
+
+        case 1:
+          return babl_format ("Y' u8");
+
+        default:
+          return NULL;
+        }
 
     case GIMP_GRAYA_IMAGE:
-      model = "Y'A";
-      break;
+      switch (get_bpc (image))
+        {
+        case 4:
+          return babl_format ("Y'A float");
+
+        case 2:
+          return babl_format ("Y'A u16");
+
+        case 1:
+          return babl_format ("Y'A u8");
+
+        default:
+          return NULL;
+        }
 
     case GIMP_RGB_IMAGE:
-      model = "R'G'B'";
-      break;
+      switch (get_bpc (image))
+        {
+        case 4:
+          return babl_format_with_space ("R'G'B' float", space);
+
+        case 2:
+          return babl_format_with_space (cmyk ? "R'G'B' float" : "R'G'B' u16",
+                                         space);
+
+        case 1:
+          return babl_format_with_space (cmyk ? "R'G'B' float" : "R'G'B' u8",
+                                         space);
+
+        default:
+          return NULL;
+        }
 
     case GIMP_RGBA_IMAGE:
-      model = "R'G'B'A";
-      break;
+      switch (get_bpc (image))
+        {
+        case 4:
+          return babl_format_with_space ("R'G'B'A float", space);
+
+        case 2:
+          return babl_format_with_space (cmyk ? "R'G'B'A float" : "R'G'B'A u16",
+                                         space);
+
+        case 1:
+          return babl_format_with_space (cmyk ? "R'G'B'A float" : "R'G'B'A u8",
+                                         space);
+
+        default:
+          return NULL;
+        }
 
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
       return gimp_drawable_get_format (drawable);
 
     default:
-      g_return_val_if_reached (NULL);
+      return NULL;
     }
-
-  bpc = get_bpc (image);
-
-  sprintf (format, "%s u%d", model, 8 * bpc);
-
-  return babl_format_with_space (format, space);
 }
+
 
 static const Babl *
 get_channel_format (GimpDrawable *drawable)
 {
   GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-  gint       bpc;
-  gchar      format[32];
 
-  /* see gimp_image_get_channel_format() */
-  if (gimp_image_get_precision (image) == GIMP_PRECISION_U8_NON_LINEAR)
-    return babl_format ("Y' u8");
+  switch (get_bpc (image))
+    {
+    case 4:
+      return babl_format ("Y float");
 
-  bpc = get_bpc (image);
+    case 2:
+      return babl_format ("Y u16");
 
-  sprintf (format, "Y u%d", 8 * bpc);
+    case 1:
+      return babl_format ("Y' u8");
 
-  return babl_format (format);
+    default:
+      return NULL;
+    }
 }
+
 
 static const Babl *
 get_mask_format (GimpLayerMask *mask)
 {
   GimpImage *image = gimp_item_get_image (GIMP_ITEM (mask));
-  gint       bpc;
-  gchar      format[32];
 
-  bpc = get_bpc (image);
+  switch (get_bpc (image))
+    {
+    case 4:
+      return babl_format ("Y float");
+      break;
 
-  sprintf (format, "Y u%d", 8 * bpc);
+    case 2:
+      return babl_format ("Y u16");
+      break;
 
-  return babl_format (format);
+    case 1:
+      return babl_format ("Y u8");
+      break;
+
+    default:
+      return NULL;
+    }
 }
+
 
 static GList *
 append_layers (GList *layers)

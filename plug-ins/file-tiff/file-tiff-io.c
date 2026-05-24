@@ -108,7 +108,7 @@ tiff_open (GFile        *file,
 
       tiff_io.stream = G_OBJECT (tiff_io.input);
     }
-  else if(! strcmp (mode, "w") || ! strcmp (mode, "w8"))
+  else if (! strcmp (mode, "wb") || ! strcmp (mode, "wb8"))
     {
       tiff_io.output = G_OUTPUT_STREAM (g_file_replace (file,
                                                         NULL, FALSE,
@@ -119,7 +119,7 @@ tiff_open (GFile        *file,
 
       tiff_io.stream = G_OBJECT (tiff_io.output);
     }
-  else if(! strcmp (mode, "a"))
+  else if (! strcmp (mode, "a"))
     {
       GIOStream *iostream = G_IO_STREAM (g_file_open_readwrite (file, NULL,
                                                                 error));

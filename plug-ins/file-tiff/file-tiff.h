@@ -8,6 +8,8 @@
 #define LOAD_PROC   "file-tiff-load"
 #define EXPORT_PROC "file-tiff-export"
 
+#define TIFF_PSD_COMPOSITE_PARASITE "file-tiff-psd-composite"
+
 typedef enum
 {
  GIMP_COMPRESSION_NONE,
@@ -19,6 +21,12 @@ typedef enum
  GIMP_COMPRESSION_CCITTFAX4
 } GimpCompression;
 
+
+typedef enum
+{
+  GIMP_TIFF_FORMAT_MULTI_PAGE_TIFF,
+  GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF,
+} GimpFormat;
 
 gint              gimp_compression_to_tiff_compression (GimpCompression  compression);
 GimpCompression   tiff_compression_to_gimp_compression (gint             compression);
