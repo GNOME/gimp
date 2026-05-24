@@ -262,14 +262,19 @@ while pcs_to_process:
   if current_pc in processed_pcs:
     continue
   requires = subprocess.run(["pkg-config", "--print-requires", "--print-requires-private", current_pc], capture_output=True, text=True)
+  print(f"Processing dependencies of {current_pc} (requires: {requires.stdout.strip()})")
   if requires.returncode == 0:
-    deps = [line.split()[0] for line in requires.stdout.splitlines() if line.strip()]
+    deps = [line.split()[0] for line in requires.stdout.replace(',', '\n').splitlines() if line.strip()]
+    print(f"Dependencies of {current_pc}: {deps}")
     for dep in deps:
+      print(f"Processing dependency {dep} of {current_pc}")
       if dep not in processed_pcs:
 
         #1.Bundle the pkgconfig file (.pc)
         pc_path = f"lib/pkgconfig/{dep}.pc"
         if (MSYSTEM_PREFIX / pc_path).exists() and not (GIMP_DISTRIB / pc_path).exists():
+          with open(MSYSTEM_PREFIX / pc_path, 'r', encoding='utf-8') as f:
+            print(f.read())
           bundle(MSYSTEM_PREFIX, pc_path)
           # Replace the hardcoded prefix with a relocatable one
           dest_pc = GIMP_DISTRIB / pc_path
@@ -313,6 +318,8 @@ while pcs_to_process:
               bundle(MSYSTEM_PREFIX, f"include/{h_file.name}", "--dest", "include")
 
           pcs_to_process.append(dep)
+        else:
+          print(f"\033[33m(WARNING)\033[0m: dependency {dep} of {current_pc} not found in {MSYSTEM_PREFIX}")
   processed_pcs.add(current_pc)
 ### Special-case
 bundle(MSYSTEM_PREFIX, "lib/glib-2.0", "--dest", "lib")
