@@ -2851,7 +2851,7 @@ static GimpLayerMode
 convert_alias_blend (gint     alias_blend_mode,
                      gboolean is_group_layer)
 {
-  GimpLayerMode blend_mode;
+  GimpLayerMode blend_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
 
   switch (alias_blend_mode)
     {
@@ -2910,10 +2910,18 @@ convert_alias_blend (gint     alias_blend_mode,
       blend_mode = GIMP_LAYER_MODE_PIN_LIGHT;
       break;
 
-    default:
+    case 35: /* Inverse Alpha Mask */
+      blend_mode = GIMP_LAYER_MODE_ERASE;
+      break;
+
+    case 65535:
       if (is_group_layer)
-        blend_mode = GIMP_LAYER_MODE_PASS_THROUGH;
-      else
+        {
+          blend_mode = GIMP_LAYER_MODE_PASS_THROUGH;
+          break;
+        }
+
+    default:
         blend_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
     }
 
