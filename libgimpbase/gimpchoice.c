@@ -279,11 +279,6 @@ gimp_choice_is_valid (GimpChoice  *choice,
   g_return_val_if_fail (GIMP_IS_CHOICE (choice), FALSE);
   g_return_val_if_fail (nick != NULL, FALSE);
 
-  if (gimp_choice_get_deprecated (choice, nick))
-    g_message ("WARNING: file-dds-export: value \"%s\" is deprecated. "
-               "Use \"%s\" instead.", nick,
-               gimp_choice_get_redirect (choice, nick));
-
   desc = g_hash_table_lookup (choice->choices, nick);
   return (desc != NULL && desc->sensitive);
 }
@@ -630,6 +625,19 @@ gimp_param_choice_value_is_valid (GParamSpec   *pspec,
   GimpParamSpecChoice *cspec  = GIMP_PARAM_SPEC_CHOICE (pspec);
   const gchar         *strval = g_value_get_string (value);
   GimpChoice          *choice = cspec->choice;
+
+  if (gimp_choice_get_deprecated (choice, strval) &&
+      /* Typically when calling a PDB procedure, we will first set
+       * properties to a GimpProcedureConfig, which will later be copied
+       * to a second one prefixed with "GimpProcedureConfigRun-".
+       * Plug-in developers don't have much say to this second config
+       * object, so let's avoid 2 WARNINGs for a single object set.
+       */
+      ! g_str_has_prefix (g_type_name (pspec->owner_type), "GimpProcedureConfigRun-"))
+    g_critical ("Value \"%s\" is deprecated for property \"%s\" of %s. "
+                "Use \"%s\" instead.", strval,
+                pspec->name, g_type_name (pspec->owner_type),
+                gimp_choice_get_redirect (choice, strval));
 
   return gimp_choice_is_valid (choice, strval);
 }
