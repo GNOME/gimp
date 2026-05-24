@@ -249,6 +249,9 @@ gimp_message_log_func (const gchar    *log_domain,
 
   switch (flags & G_LOG_LEVEL_MASK)
     {
+    case G_LOG_LEVEL_MESSAGE:
+      severity = GIMP_MESSAGE_INFO;
+      break;
     case G_LOG_LEVEL_WARNING:
       severity = GIMP_MESSAGE_BUG_WARNING;
       if (debug_policy > GIMP_DEBUG_POLICY_WARNING)
