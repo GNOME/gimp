@@ -23,7 +23,19 @@ Open a URI in the user specified software.
 
 
 For instance, a HTTP URI should open your default web browser.
+
+
+This PDB procedure is deprecated without any replacement because you
+should not need a PDB procedure to open a given URI in your browser.
+
+Instead use the GLib function `g_app_info_launch_default_for_uri()`, or
+again the GTK function `gtk_show_uri_on_window()`.
+
+In Script-Fu, you may use `(gimp-show-uri)`.
 HELP
+
+    $deprecated = 'NONE';
+    $deprecated_since = '3.2';
 
     &std_pdb_misc;
     $date = '2003-09-16';

@@ -73,6 +73,9 @@ static pointer  script_fu_marshal_arg_to_value                    (scheme       
                                                                    GValue              *value,
                                                                    gchar              **strvalue);
 
+static pointer  script_fu_gimp_show_uri                           (scheme              *sc,
+                                                                   pointer              a);
+
 static pointer  script_fu_marshal_procedure_call                  (scheme              *sc,
                                                                    pointer              a,
                                                                    gboolean             permissive,
@@ -578,6 +581,8 @@ ts_define_procedure (sc, "load-extension", scm_load_ext);
   ts_define_procedure (sc, "script-fu-use-v3",    script_fu_use_v3_call);
   ts_define_procedure (sc, "script-fu-use-v2",    script_fu_use_v2_call);
   ts_define_procedure (sc, "script-fu-quit",      script_fu_quit_call);
+
+  ts_define_procedure (sc, "gimp-show-uri", script_fu_gimp_show_uri);
 
   /* Define wrapper functions, not used in scripts.
    * FUTURE: eliminate all but one, deprecated and permissive is obsolete.
@@ -1592,6 +1597,51 @@ script_fu_marshal_arg_to_value (scheme       *sc,
     }
 
   return sc->NIL;
+}
+
+static pointer
+script_fu_gimp_show_uri (scheme  *sc,
+                         pointer  a)
+{
+  const gchar *proc_name = "gimp-show-uri";
+  const gchar *uri;
+  GError      *error     = NULL;
+  gchar        error_str[1024];
+
+  if (a == sc->NIL)
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "(%s) was called with no arguments. "
+                  "A URI must be specified.",
+                  proc_name);
+
+      return implementation_error (sc, error_str, 0);
+    }
+
+  if (sc->vptr->list_length (sc, a) != 1)
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "(%s) was called with %d arguments. "
+                  "Only a URI must be specified.",
+                  proc_name, sc->vptr->list_length (sc, a));
+
+      return implementation_error (sc, error_str, 0);
+    }
+
+  if (! sc->vptr->is_string (sc->vptr->pair_car (a)))
+    return script_type_error (sc, "string", 1, proc_name);
+
+  uri = sc->vptr->string_value (sc->vptr->pair_car (a));
+  if (! g_app_info_launch_default_for_uri (uri, NULL, &error))
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "(%s): %s",
+                  proc_name, error->message);
+      g_clear_error (&error);
+      return implementation_error (sc, error_str, 0);
+    }
+
+  return sc->T;
 }
 
 /* Called by the Scheme interpreter on calls to GIMP PDB procedures */

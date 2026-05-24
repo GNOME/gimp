@@ -158,12 +158,20 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                   "Open a URI",
                                   "Open a URI in the user specified software.\n"
                                   "\n"
-                                  "For instance, a HTTP URI should open your default web browser.",
+                                  "For instance, a HTTP URI should open your default web browser.\n"
+                                  "\n"
+                                  "This PDB procedure is deprecated without any replacement because you should not need a PDB procedure to open a given URI in your browser.\n"
+                                  "Instead use the GLib function `g_app_info_launch_default_for_uri()`, or again the GTK function `gtk_show_uri_on_window()`.\n"
+                                  "In Script-Fu, you may use `(gimp-show-uri)`.\n"
+                                  "\n"
+                                  "Deprecated: There is no replacement for this procedure.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "2003-09-16");
+  gimp_procedure_set_deprecated (procedure,
+                                 "NONE");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("url",
                                                        "url",
