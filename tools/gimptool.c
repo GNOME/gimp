@@ -344,10 +344,19 @@ find_out_env_flags (void)
 #ifdef ENABLE_RELOCATABLE_RESOURCES
   if ((p = (gchar *) g_getenv ("PKG_CONFIG_PATH")) == NULL || *p == '\0')
     {
-      const gchar *prefix = gimp_installation_directory ();
+      const gchar *prefix = NULL;
       gchar       *path1;
       gchar       *path2;
       gchar       *reloc_pkg_config_path;
+
+#if !defined(G_OS_WIN32) && !defined(__APPLE__)
+      /* gimp_installation_directory() does not like gimptool on AppImage */
+      const gchar *appdir = g_getenv ("APPDIR");
+      if (appdir != NULL && *appdir != '\0')
+        prefix = g_build_filename (appdir, "usr", NULL);
+#endif
+      if (prefix == NULL)
+        prefix = g_strdup (gimp_installation_directory ());
 
       path1 = g_build_filename (prefix, RELOC_LIBDIR, "pkgconfig", NULL);
       path2 = g_build_filename (prefix, "share", "pkgconfig", NULL);
@@ -359,6 +368,7 @@ find_out_env_flags (void)
 #endif
       g_setenv ("PKG_CONFIG_PATH", reloc_pkg_config_path, TRUE);
 
+      g_free (prefix);
       g_free (path1);
       g_free (path2);
       g_free (reloc_pkg_config_path);
