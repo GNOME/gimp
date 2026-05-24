@@ -17,7 +17,7 @@ for lib in "${APPDIR}"/usr/lib*/*.so* "${APPDIR}"/usr/lib/*linux-gnu/*.so*; do
       #LD does not support spaces in LD_PRELOAD
       break
       ;;
-    *libbabl*|*libgegl*|*libgimp*)
+    *)
       export LD_PRELOAD="$LD_PRELOAD${LD_PRELOAD:+:}$lib"
       ;;
   esac
