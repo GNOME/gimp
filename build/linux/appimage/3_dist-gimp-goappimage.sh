@@ -570,6 +570,7 @@ done
 bund_usr "$UNIX_PREFIX" "lib/glib-2.0"
 bund_usr "$UNIX_PREFIX" "include/brotli"
 wipe_usr include/glob.h
+printf "\nif [ \"\$1\" = '--gimptool' ]; then\n  shift\n  exec \"\$APPDIR\"/usr/bin/gimptool-$GIMP_APP_VERSION \"\$@\"\nfi" >> "$APP_DIR/AppRun"
 
 ## Revision (this does the same as '-Drevision' build option)
 before=$(cat "$(echo $USR_DIR/share/gimp/*/gimp-release)" | grep 'revision')
