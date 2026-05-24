@@ -24,3 +24,6 @@ void   help_help_cmd_callback         (GimpAction *action,
 void   help_context_help_cmd_callback (GimpAction *action,
                                        GVariant   *value,
                                        gpointer    data);
+void   help_online_cmd_callback       (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data);

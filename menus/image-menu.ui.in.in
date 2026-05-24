@@ -918,6 +918,10 @@
       <section>
         <submenu>
           <attribute name="label" translatable="yes" context="help-action">_GIMP Online</attribute>
+          <item><attribute name="action">app.help-online-main-web-site</attribute></item>
+          <item><attribute name="action">app.help-online-docs-web-site</attribute></item>
+          <item><attribute name="action">app.help-online-bug-tracker</attribute></item>
+          <item><attribute name="action">app.help-online-developer-web-site</attribute></item>
         </submenu>
         <item><attribute name="action">app.dialogs-about</attribute></item>
       </section>

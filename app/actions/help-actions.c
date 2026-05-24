@@ -48,6 +48,32 @@ static const GimpActionEntry help_actions[] =
     GIMP_HELP_HELP_CONTEXT }
 };
 
+static const GimpStringActionEntry help_online_actions[] =
+{
+  { "help-online-main-web-site", GIMP_ICON_WEB,
+    NC_("help-action", "_Main Web Site"), NULL, { NULL },
+    NC_("help-action", "Bookmark to the GIMP web site"),
+    "https://www.gimp.org/",
+    GIMP_HELP_HELP },
+
+  { "help-online-docs-web-site", GIMP_ICON_WEB,
+    NC_("help-action", "_User Manual Web Site"), NULL, { NULL },
+    NC_("help-action", "Bookmark to the Documentation web site"),
+    "https://docs.gimp.org/",
+    GIMP_HELP_HELP },
+
+  { "help-online-bug-tracker", GIMP_ICON_WEB,
+    NC_("help-action", "_Bug Reports"), NULL, { NULL },
+    NC_("help-action", "Bookmark to the bug tracker of GIMP"),
+    "https://gitlab.gnome.org/GNOME/gimp/issues",
+    GIMP_HELP_HELP },
+
+  { "help-online-developer-web-site", GIMP_ICON_WEB,
+    NC_("help-action", "_Developer Web Site"), NULL, { NULL },
+    NC_("help-action", "Bookmark to the Developer web site"),
+    "https://developer.gimp.org/",
+    GIMP_HELP_HELP }
+};
 
 void
 help_actions_setup (GimpActionGroup *group)
@@ -55,6 +81,10 @@ help_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group, "help-action",
                                  help_actions,
                                  G_N_ELEMENTS (help_actions));
+  gimp_action_group_add_string_actions (group, "help-action",
+                                        help_online_actions,
+                                        G_N_ELEMENTS (help_online_actions),
+                                        help_online_cmd_callback);
 }
 
 void

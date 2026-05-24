@@ -41,8 +41,143 @@ CODE
     );
 }
 
+sub gimp_online_main_web_site {
+    $blurb = 'Main Web Site';
 
-@procs = qw(plug_in_web_browser);
+    $help = <<'HELP';
+Bookmark to the GIMP web site
+HELP
+
+    &std_pdb_misc;
+    $date = '2003';
+
+    $deprecated = 'plug-in-web-browser';
+    $deprecated_since = '3.2';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' }
+    );
+    %invoke = (
+	code => <<'CODE'
+{
+  success = g_app_info_launch_default_for_uri ("https://www.gimp.org/", NULL, error);
+}
+CODE
+    );
+}
+
+sub gimp_online_docs_web_site {
+    $blurb = 'User Manual Web Site';
+
+    $help = <<'HELP';
+Bookmark to the GIMP Documentation web site
+HELP
+
+    &std_pdb_misc;
+    $date = '2006';
+
+    $deprecated = 'plug-in-web-browser';
+    $deprecated_since = '3.2';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' }
+    );
+    %invoke = (
+	code => <<'CODE'
+{
+  success = g_app_info_launch_default_for_uri ("https://docs.gimp.org/", NULL, error);
+}
+CODE
+    );
+}
+
+sub gimp_online_bugs_features {
+    $blurb = 'Bug Tracker';
+
+    $help = <<'HELP';
+Bookmark to the bug tracker of GIMP
+HELP
+
+    &std_pdb_misc;
+    $date = '2018';
+
+    $deprecated = 'plug-in-web-browser';
+    $deprecated_since = '3.2';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' }
+    );
+    %invoke = (
+	code => <<'CODE'
+{
+  success = g_app_info_launch_default_for_uri ("https://gitlab.gnome.org/GNOME/gimp/issues", NULL, error);
+}
+CODE
+    );
+}
+
+sub gimp_online_developer_web_site {
+    $blurb = 'Bug Tracker';
+
+    $help = <<'HELP';
+Bookmark to the bug tracker of GIMP
+HELP
+
+    &std_pdb_misc;
+    $date = '2003';
+
+    $deprecated = 'plug-in-web-browser';
+    $deprecated_since = '3.2';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' }
+    );
+    %invoke = (
+	code => <<'CODE'
+{
+  success = g_app_info_launch_default_for_uri ("https://developer.gimp.org/", NULL, error);
+}
+CODE
+    );
+}
+
+sub gimp_online_roadmap {
+    $blurb = 'Roadmaps';
+
+    $help = <<'HELP';
+Bookmark to the roadmaps of GIMP
+HELP
+
+    &std_pdb_misc;
+    $date = '2018';
+
+    $deprecated = 'plug-in-web-browser';
+    $deprecated_since = '3.2';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' }
+    );
+    %invoke = (
+	code => <<'CODE'
+{
+  success = g_app_info_launch_default_for_uri ("https://developer.gimp.org/core/roadmap/", NULL, error);
+}
+CODE
+    );
+}
+
+
+@procs = qw(plug_in_web_browser
+            gimp_online_main_web_site
+            gimp_online_docs_web_site
+            gimp_online_bugs_features
+            gimp_online_developer_web_site
+            gimp_online_roadmap);
 
 %exports = (app => [@procs], lib => []);
 

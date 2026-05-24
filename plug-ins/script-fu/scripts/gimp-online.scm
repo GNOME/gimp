@@ -17,10 +17,6 @@
 ; You should have received a copy of the GNU General Public License
 ; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-(define (gimp-online-docs-web-site)
-  (plug-in-web-browser "https://docs.gimp.org/")
-)
-
 (define (gimp-help-main)
   (gimp-help "" "gimp-main")
 )
@@ -155,92 +151,3 @@
 
 (script-fu-menu-register "gimp-help-main"
 			 "<Image>/Help/User Manual/[Table of Contents]")
-
-
-;; Links to GIMP related web sites
-
-(define (gimp-online-main-web-site)
-  (plug-in-web-browser "https://www.gimp.org/")
-)
-
-(define (gimp-online-developer-web-site)
-  (plug-in-web-browser "https://developer.gimp.org/")
-)
-
-(define (gimp-online-roadmap)
-  (plug-in-web-browser "https://developer.gimp.org/core/roadmap/")
-)
-
-(define (gimp-online-bugs-features)
-  (plug-in-web-browser "https://gitlab.gnome.org/GNOME/gimp/issues")
-)
-
-; (define (gimp-online-plug-in-web-site)
-;   (plug-in-web-browser "https://registry.gimp.org/")
-; )
-
-
-(script-fu-register-procedure "gimp-online-main-web-site"
-   _"_Main Web Site"
-   _"Bookmark to the GIMP web site"
-    "Henrik Brix Andersen <brix@gimp.org>"
-    "2003"
-)
-
-(script-fu-menu-register "gimp-online-main-web-site"
-                         "<Image>/Help/GIMP Online")
-
-
-(script-fu-register-procedure "gimp-online-developer-web-site"
-   _"_Developer Web Site"
-   _"Bookmark to the GIMP web site"
-    "Henrik Brix Andersen <brix@gimp.org>"
-    "2003"
-)
-
-(script-fu-menu-register "gimp-online-developer-web-site"
-                         "<Image>/Help/GIMP Online")
-
-
-(script-fu-register-procedure "gimp-online-roadmap"
-   _"_Roadmaps"
-   _"Bookmark to the roadmaps of GIMP"
-    "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
-    "2018"
-)
-
-(script-fu-menu-register "gimp-online-roadmap"
-                         "<Image>/Help/GIMP Online")
-
-
-(script-fu-register-procedure "gimp-online-bugs-features"
-   _"_Bug Reports and Feature Requests"
-   _"Bookmark to the bug tracker of GIMP"
-    "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
-    "2018"
-)
-
-(script-fu-menu-register "gimp-online-bugs-features"
-                         "<Image>/Help/GIMP Online")
-
-
-(script-fu-register-procedure "gimp-online-docs-web-site"
-   _"_User Manual Web Site"
-   _"Bookmark to the GIMP web site"
-    "Roman Joost <romanofski@gimp.org>"
-    "2006"
-)
-
-(script-fu-menu-register "gimp-online-docs-web-site"
-                         "<Image>/Help/GIMP Online")
-
-
-; (script-fu-register-procedure "gimp-online-plug-in-web-site"
-;    _"Plug-in _Registry"
-;    _"Bookmark to the GIMP web site"
-;     "Henrik Brix Andersen <brix@gimp.org>"
-;     "2003"
-; )
-
-; (script-fu-menu-register "gimp-online-plug-in-web-site"
-;                          "<Image>/Help/GIMP Online")

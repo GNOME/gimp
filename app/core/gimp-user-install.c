@@ -806,6 +806,11 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
       /* Generalized in GIMP 3.2 (works on text, link and vector layers). */
       else if (g_strcmp0 (action_match, "layers-text-discard") == 0)
         new_action_name = g_strdup ("layers-rasterize");
+      /* Renamed in GIMP 3.2. */
+      else if (g_strcmp0 (action_match, "gimp-online-bugs-features") == 0)
+        new_action_name = g_strdup ("help-online-bug-tracker");
+      else if (g_str_has_prefix (action_match, "gimp-online-"))
+        new_action_name = g_strdup_printf ("help-online-%s", action_match + 12);
 
       if (new_action_name == NULL)
         new_action_name = g_strdup (action_match);
@@ -918,7 +923,8 @@ user_update_post_process_menurc_over20 (gpointer user_data)
   "dialogs-vectors"           "|" \
   "layers-text-.*-vectors"    "|" \
   "view-snap-to-vectors"      "|" \
-  "layers-text-discard"           \
+  "layers-text-discard"       "|" \
+  "gimp-online-[^\"]*"        "|" \
   ")\""
 
 static gboolean
@@ -957,6 +963,21 @@ user_update_shortcutsrc (const GMatchInfo *matched_value,
     {
       /* Generalized in GIMP 3.2 (works on text, link and vector layers). */
       g_string_append (new_value, "\"layers-rasterize\"");
+    }
+  else if (g_strcmp0 (match, "\"gimp-online-bugs-features\"") == 0)
+    {
+      /* Renamed in GIMP 3.2. */
+      g_string_append (new_value, "\"help-online-bug-tracker\"");
+    }
+  else if (g_str_has_prefix (match, "\"gimp-online-"))
+    {
+      /* Other "gimp-online-*" actions renamed in GIMP 3.2.
+       * The specific "gimp-online-roadmap" was removed, but we don't
+       * special-case (we copy it and since it won't exist, it will be
+       * dropped).
+       */
+      g_string_append_printf (new_value, "\"help-online-%s",
+                              match + 13);
     }
 
   g_free (match);

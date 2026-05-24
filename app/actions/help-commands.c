@@ -55,3 +55,12 @@ help_context_help_cmd_callback (GimpAction *action,
 
   gimp_context_help (widget);
 }
+
+void
+help_online_cmd_callback (GimpAction *action,
+                          GVariant   *value,
+                          gpointer    data)
+{
+  g_app_info_launch_default_for_uri (g_variant_get_string (value, NULL),
+                                     NULL, NULL);
+}
