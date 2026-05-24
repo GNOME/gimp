@@ -15,12 +15,12 @@ gimptool - script to perform various GIMPy functions
 [\-\-gimpdatadir] [\-\-libs] [\-\-libs-noui] [\-\-cflags] [\-\-cflags-noi]
 [\-\-build \fIplug\-in.c\fP]
 [\-\-build\-strip \fIplug\-in.c\fP] [\-\-install \fIplug\-in.c\fP]
-[\-\-install-strip \fIplug\-in.c\fP] [\-\-install-admin \fIplug-in.c\fP] 
+[\-\-install-strip \fIplug\-in.c\fP] [\-\-install-admin \fIplug-in.c\fP]
 [\-\-install\-bin \fIplug\-in\fP]
 [\-\-install\-admin\-strip \fIplug-in.c\fP]
 [\-\-install\-bin\-strip \fIplug\-in\fP]
 [\-\-\install\-admin\-bin \fIplug\-in\fP]
-[\-\-install\-script \fIscript.scm\fP] 
+[\-\-install\-script \fIscript.scm\fP]
 [\-\-\install\-admin\-script \fIscript.scm\fP]
 [\-\-uninstall\-bin \fIplug\-in\fP] [\-\-uninstall\-admin\-bin \fIplug\-in\fP]
 [\-\-uninstall\-script \fIscript.scm\fP]
@@ -177,12 +177,18 @@ Print the linker flags that are necessary to link a \fIGIMP\fP plug-in.
 Print the linker flags that are necessary to link a \fIGIMP\fP plug-in, for
 plug-ins that do not require the GTK libraries.
 .TP 8
+.B \-\-libs\-geglop
+Print the linker flags that are necessary to link a \fIGEGL\fP filter.
+.TP 8
 .B  \-\-cflags
 Print the compiler flags that are necessary to compile a \fIGIMP\fP plug-in.
 .TP 8
 .B \-\-clags-noui
 Print the compiler flags that are necessary to compile a \fIGIMP\fP plug-in
 for plug-ins that do not require the GTK libraries.
+.TP 8
+.B \-\-clags\-geglop
+Print the compiler flags that are necessary to compile a \fIGEGL\fP filter.
 .TP 8
 .B  \-\-prefix=PREFIX
 If specified, use PREFIX instead of the installation prefix that \fIGIMP\fP
@@ -220,7 +226,7 @@ details about your glib, pango, gtk and gimp installation.
 
 
 .SH SEE ALSO
-.BR gimp (1), 
+.BR gimp (1),
 .BR gimprc (5),
 .BR pkg\-config (1)
 
