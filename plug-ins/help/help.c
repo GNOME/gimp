@@ -52,13 +52,6 @@ struct _HelpClass
   GimpPlugInClass parent_class;
 };
 
-typedef struct
-{
-  gchar *help_domain;
-  gchar *help_locales;
-  gchar *help_id;
-} IdleHelp;
-
 
 /*  forward declarations  */
 
@@ -82,7 +75,6 @@ static void             help_temp_proc_install (GimpPlugIn           *plug_in);
 static void             help_load              (const gchar          *help_domain,
                                                 const gchar          *help_locales,
                                                 const gchar          *help_id);
-static gboolean         help_load_idle         (gpointer              data);
 
 static GimpHelpProgress * help_load_progress_new (void);
 
@@ -274,23 +266,9 @@ help_load (const gchar *help_domain,
            const gchar *help_locales,
            const gchar *help_id)
 {
-  IdleHelp *idle_help = g_slice_new (IdleHelp);
-
-  idle_help->help_domain  = g_strdup (help_domain);
-  idle_help->help_locales = g_strdup (help_locales);
-  idle_help->help_id      = g_strdup (help_id);
-
-  g_idle_add (help_load_idle, idle_help);
-}
-
-static gboolean
-help_load_idle (gpointer data)
-{
-  IdleHelp       *idle_help = data;
   GimpHelpDomain *domain;
 
-  domain = gimp_help_lookup_domain (idle_help->help_domain);
-
+  domain = gimp_help_lookup_domain (help_domain);
   if (domain)
     {
       GimpHelpProgress *progress = NULL;
@@ -298,12 +276,12 @@ help_load_idle (gpointer data)
       gchar            *uri;
       gboolean          fatal_error;
 
-      locales = gimp_help_parse_locales (idle_help->help_locales);
+      locales = gimp_help_parse_locales (help_locales);
 
       if (! g_str_has_prefix (domain->help_uri, "file:"))
         progress = help_load_progress_new ();
 
-      uri = gimp_help_domain_map (domain, locales, idle_help->help_id,
+      uri = gimp_help_domain_map (domain, locales, help_id,
                                   progress, NULL, &fatal_error);
 
       if (progress)
@@ -321,14 +299,6 @@ help_load_idle (gpointer data)
           g_main_loop_quit (main_loop);
         }
     }
-
-  g_free (idle_help->help_domain);
-  g_free (idle_help->help_locales);
-  g_free (idle_help->help_id);
-
-  g_slice_free (IdleHelp, idle_help);
-
-  return FALSE;
 }
 
 static void
