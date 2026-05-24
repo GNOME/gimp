@@ -342,12 +342,15 @@ if ((p = (gchar *) g_getenv ("MACOSX_DEPLOYMENT_TARGET")) == NULL || *p == '\0')
     env_libs = "";
 
 #ifdef ENABLE_RELOCATABLE_RESOURCES
+  g_printerr ("DEBUG: ENABLE_RELOCATABLE_RESOURCES is DEFINED.\n");
   if ((p = (gchar *) g_getenv ("PKG_CONFIG_PATH")) == NULL || *p == '\0')
     {
       const gchar *prefix = gimp_installation_directory ();
       gchar       *path1;
       gchar       *path2;
       gchar       *reloc_pkg_config_path;
+
+      g_printerr ("DEBUG: Detected GIMP prefix: %s\n", prefix);
 
       path1 = g_build_filename (prefix, RELOC_LIBDIR, "pkgconfig", NULL);
       path2 = g_build_filename (prefix, "share", "pkgconfig", NULL);
@@ -357,12 +360,20 @@ if ((p = (gchar *) g_getenv ("MACOSX_DEPLOYMENT_TARGET")) == NULL || *p == '\0')
 #else
       reloc_pkg_config_path = g_strconcat (path1, ";", path2, NULL);
 #endif
+      g_printerr ("DEBUG: Setting PKG_CONFIG_PATH to: %s\n", reloc_pkg_config_path);
+
       g_setenv ("PKG_CONFIG_PATH", reloc_pkg_config_path, TRUE);
 
       g_free (path1);
       g_free (path2);
       g_free (reloc_pkg_config_path);
     }
+  else
+    {
+      g_printerr ("DEBUG: PKG_CONFIG_PATH was already set to: %s\n", p);
+    }
+#else
+  g_printerr ("DEBUG: ENABLE_RELOCATABLE_RESOURCES is NOT defined.\n");
 #endif
 }
 

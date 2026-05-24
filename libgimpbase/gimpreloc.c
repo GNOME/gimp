@@ -38,6 +38,7 @@ static char *
 _br_find_exe (GimpBinrelocInitError *error)
 {
 #if ! defined(ENABLE_RELOCATABLE_RESOURCES) || defined(G_OS_WIN32) || defined(__APPLE__)
+  g_debug ("%s: Binary relocation disabled or unsupported platform.", G_STRFUNC);
   if (error)
     *error = GIMP_RELOC_INIT_ERROR_DISABLED;
   return NULL;
@@ -50,6 +51,7 @@ _br_find_exe (GimpBinrelocInitError *error)
   gchar            *sym_path;
   gchar            *maps_line;
 
+  g_debug ("%s: Attempting to resolve executable path via /proc/self/exe...", G_STRFUNC);
   sym_path = g_strdup ("/proc/self/exe");
 
   while (1)
@@ -78,29 +80,33 @@ _br_find_exe (GimpBinrelocInitError *error)
           break;
         }
 
+      g_debug ("%s: Resolved symlink to path: %s", G_STRFUNC, path);
+
       /* Check whether the symlink's target is also a symlink.
        * We want to get the final target. */
       i = stat (path, &stat_buf);
       if (i == -1)
         {
-          /* Error. */
+          g_message ("%s: stat() failed for path: %s", G_STRFUNC, path);
           break;
         }
 
       /* stat() success. */
       if (! S_ISLNK (stat_buf.st_mode))
         {
-          /* path is not a symlink. Done. */
+          g_debug ("%s: Successfully located canonical executable: %s", G_STRFUNC, path);
           return path;
         }
 
       /* path is a symlink. Continue loop and resolve this. */
+      g_debug ("%s: Path is another symlink. Iterating again.", G_STRFUNC);
       sym_path = path;
     }
 
   /* readlink() or stat() failed; this can happen when the program is
    * running in Valgrind 2.2. Read from /proc/self/maps as fallback. */
 
+  g_debug ("%s: Reading /proc/self/maps for fallback resolution.", G_STRFUNC);
   file = g_file_new_for_path ("/proc/self/maps");
   input = G_INPUT_STREAM (g_file_read (file, NULL, &gerror));
   g_object_unref (file);
@@ -143,6 +149,7 @@ _br_find_exe (GimpBinrelocInitError *error)
       if (path && strstr (maps_line, " r-xp "))
         {
           /* We found the executable name. */
+          g_debug ("%s: Found r-xp mapping line: %s", G_STRFUNC, maps_line);
           path = g_strdup (path);
           break;
         }
@@ -152,8 +159,16 @@ _br_find_exe (GimpBinrelocInitError *error)
       path = NULL;
     }
 
-  if (path == NULL && error)
-    *error = GIMP_RELOC_INIT_ERROR_INVALID_MAPS;
+  if (path == NULL)
+    {
+      g_message ("%s: Failed to find valid executable path in /proc/self/maps", G_STRFUNC);
+      if (error)
+        *error = GIMP_RELOC_INIT_ERROR_INVALID_MAPS;
+    }
+  else
+    {
+      g_debug ("%s: Resolved executable via maps: %s", G_STRFUNC, path);
+    }
 
   g_object_unref (data_input);
   g_free (maps_line);
@@ -171,6 +186,7 @@ static char *
 _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
 {
 #if ! defined(ENABLE_RELOCATABLE_RESOURCES) || defined(G_OS_WIN32) || defined(__APPLE__)
+  g_debug ("%s: Library relocation disabled or unsupported platform.", G_STRFUNC);
   if (error)
     *error = GIMP_RELOC_INIT_ERROR_DISABLED;
   return (char *) NULL;
@@ -184,8 +200,13 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
   char             *address_string;
   size_t            address_string_len;
 
+  g_debug ("%s: Looking for library owning symbol pointer: %p", G_STRFUNC, symbol);
+
   if (symbol == NULL)
-    return (char *) NULL;
+    {
+      g_message ("%s: Provided symbol pointer is NULL.", G_STRFUNC);
+      return (char *) NULL;
+    }
 
   file = g_file_new_for_path ("/proc/self/maps");
   input = G_INPUT_STREAM (g_file_read (file, NULL, &gerror));
@@ -314,6 +335,8 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
 
       if (symbol >= start_addr_p && symbol < end_addr_p)
         {
+          g_debug ("%s: Match found! Symbol %p is inside range [%p - %p] mapped to %s",
+                   G_STRFUNC, symbol, start_addr_p, end_addr_p, path);
           found = g_strdup (path);
           g_free (maps_line);
           break;
@@ -321,6 +344,9 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
 
       g_free (maps_line);
     }
+
+  if (!found)
+    g_message ("%s: Symbol pointer %p could not be tied to any mapped library.", G_STRFUNC, symbol);
 
   g_free (address_string);
   g_object_unref (data_input);
@@ -357,17 +383,18 @@ _gimp_reloc_init (GError **error)
 {
   GimpBinrelocInitError errcode;
 
-  /* Shut up compiler warning about uninitialized variable. */
+  g_info ("%s: Initializing BinReloc for Application...", G_STRFUNC);
   errcode = GIMP_RELOC_INIT_ERROR_NOMEM;
 
-  /* Locate the application's filename. */
   exe = _br_find_exe (&errcode);
   if (exe != NULL)
-    /* Success! */
-    return TRUE;
+    {
+      g_info ("%s: Successfully initialized. Executable path set to: %s", G_STRFUNC, exe);
+      return TRUE;
+    }
   else
     {
-      /* Failed :-( */
+      g_warning ("%s: Initialization failed.", G_STRFUNC);
       set_gerror (error, errcode);
       return FALSE;
     }
@@ -391,18 +418,18 @@ _gimp_reloc_init_lib (GError **error)
 {
   GimpBinrelocInitError errcode;
 
-  /* Shut up compiler warning about uninitialized variable. */
+  g_info ("%s: Initializing BinReloc for Library...", G_STRFUNC);
   errcode = GIMP_RELOC_INIT_ERROR_NOMEM;
 
   exe = _br_find_exe_for_symbol ((const void *) "", &errcode);
   if (exe != NULL)
     {
-      /* Success! */
+      g_info ("%s: Successfully initialized library path to: %s", G_STRFUNC, exe);
       return TRUE;
     }
   else
     {
-      /* Failed :-( */
+      g_warning ("%s: Library initialization failed.", G_STRFUNC);
       set_gerror (error, errcode);
       return exe != NULL;
     }
@@ -462,27 +489,46 @@ _gimp_reloc_find_prefix (const gchar *default_prefix)
   gchar *dir1, *dir2;
   gchar *exe_dir;
 
+  g_printerr ("[DEBUG] _gimp_reloc_find_prefix called. default_prefix: '%s', exe: '%s'\n",
+              default_prefix ? default_prefix : "NULL",
+              exe ? exe : "NULL");
+
   if (exe == NULL)
     {
       /* BinReloc not initialized. */
       if (default_prefix != NULL)
-        return g_strdup (default_prefix);
+        {
+          g_printerr ("[DEBUG] exe is NULL. Returning duplicated default_prefix.\n");
+          return g_strdup (default_prefix);
+        }
       else
-        return NULL;
+        {
+          g_printerr ("[DEBUG] exe is NULL and default_prefix is NULL. Returning NULL.\n");
+          return NULL;
+        }
     }
 
   dir1 = g_path_get_dirname (exe);
   dir2 = g_path_get_dirname (dir1);
+  g_printerr ("[DEBUG] Initial paths computed. dir1 (exe parent): '%s', dir2 (prefix candidate): '%s'\n", dir1, dir2);
 
   exe_dir = g_path_get_basename (dir1);
+  g_printerr ("[DEBUG] Checking exe_dir: '%s'\n", exe_dir);
+
   if (g_strcmp0 (exe_dir, "bin") != 0 && ! g_str_has_prefix (exe_dir, "lib"))
     {
+      g_printerr ("[DEBUG] exe_dir is neither 'bin' nor starts with 'lib'. Checking parent structure...\n");
       g_free (exe_dir);
+
       exe_dir = g_path_get_basename (dir2);
+      g_printerr ("[DEBUG] New exe_dir from dir2: '%s'\n", exe_dir);
+
       if (g_str_has_prefix (exe_dir, "lib"))
         {
           /* Supporting multiarch folders, such as lib/x86_64-linux-gnu/ */
           gchar *dir3 = g_path_get_dirname (dir2);
+          g_printerr ("[DEBUG] Multiarch folder detected (starts with 'lib'). Shifting prefix up.\n");
+          g_printerr ("[DEBUG] Old dir2: '%s', New dir2 (dir3): '%s'\n", dir2, dir3);
 
           g_free (dir2);
           dir2 = dir3;
@@ -492,5 +538,6 @@ _gimp_reloc_find_prefix (const gchar *default_prefix)
   g_free (dir1);
   g_free (exe_dir);
 
+  g_printerr ("[DEBUG] _gimp_reloc_find_prefix final returned prefix: '%s'\n", dir2 ? dir2 : "NULL");
   return dir2;
 }

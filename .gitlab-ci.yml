@@ -349,7 +349,7 @@ gimp-debian-nonreloc:
     - <<: *CI_RELEASE
   parallel:
     matrix:
-      - RUNNER: [aarch64, x86_64_v3]
+      - RUNNER: [aarch64]
   tags:
     - $RUNNER
 
@@ -657,7 +657,7 @@ gimp-win:
         VARIANT: -homebrew
   parallel:
     matrix:
-      - ARCH: [arm64, x86_64]
+      - ARCH: [arm64]
   tags:
     - macos
     - marathon
@@ -1053,7 +1053,7 @@ dist-appimage-weekly:
   needs: ["gimp-debian"]
   stage: distribution
   script:
-    - sh build/linux/appimage/3_dist-gimp-goappimage.sh
+    - sh -x build/linux/appimage/3_dist-gimp-goappimage.sh
   artifacts:
     expose_as: 'Linux appimage'
     paths:
