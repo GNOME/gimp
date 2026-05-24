@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-29 14:29+0000\n"
-"PO-Revision-Date: 2026-04-29 16:35+0200\n"
+"POT-Creation-Date: 2026-05-24 19:43+0000\n"
+"PO-Revision-Date: 2026-05-24 23:25+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -91,9 +91,9 @@ msgstr "Primer vstavka v C"
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
 #: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1189
-#: plug-ins/metadata/metadata-editor.c:1695
-#: plug-ins/metadata/metadata-editor.c:5585
-#: plug-ins/metadata/metadata-editor.c:5620 plug-ins/print/print.c:458
+#: plug-ins/metadata/metadata-editor.c:1696
+#: plug-ins/metadata/metadata-editor.c:5587
+#: plug-ins/metadata/metadata-editor.c:5622 plug-ins/print/print.c:458
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
@@ -146,7 +146,7 @@ msgstr "Primer vstavka v JavaScriptu (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2659
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4053 plug-ins/flame/flame.c:824
+#: plug-ins/file-psd/psd-load.c:4064 plug-ins/flame/flame.c:824
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -624,7 +624,7 @@ msgstr "Rolete"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3228 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3239 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1587
 #: plug-ins/file-tiff/file-tiff-load.c:2441
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1244,7 +1244,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:722
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
-#: plug-ins/file-icns/file-icns-export.c:444
+#: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2450
 #: plug-ins/file-tiff/file-tiff-export.c:1087
@@ -2484,7 +2484,7 @@ msgid "Image dimensions too large: width %d x height %d"
 msgstr "Dimenzije slike so prevelike: širina %d x višina %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
-#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3607
+#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3618
 #: plug-ins/file-tiff/file-tiff-load.c:1944
 #: plug-ins/file-tiff/file-tiff-load.c:2038
 #: plug-ins/file-tiff/file-tiff-load.c:2226
@@ -2705,7 +2705,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
-#: plug-ins/file-icns/file-icns-export.c:824
+#: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2388
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
@@ -4851,7 +4851,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "Izvozi sliko kot večstranski PDF"
 
 #: plug-ins/common/file-pdf-export.c:1033
-#: plug-ins/metadata/metadata-editor.c:5621
+#: plug-ins/metadata/metadata-editor.c:5623
 msgid "_Export"
 msgstr "I_zvozi"
 
@@ -10315,7 +10315,7 @@ msgstr ""
 "Podvojena velikost plasti. \n"
 "Ne bo izvožena"
 
-#: plug-ins/file-icns/file-icns-export.c:320
+#: plug-ins/file-icns/file-icns-export.c:319
 msgid ""
 "Valid ICNS icons sizes are:\n"
 " 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
@@ -10328,18 +10328,18 @@ msgstr ""
 "Pri izvozu plasti drugih velikosti ne bodo upoštevane."
 
 #. Don't show warning by default
-#: plug-ins/file-icns/file-icns-export.c:328
+#: plug-ins/file-icns/file-icns-export.c:327
 msgid "Export Icons"
 msgstr "Izvozi ikone"
 
-#: plug-ins/file-icns/file-icns-export.c:523
-#: plug-ins/file-icns/file-icns-export.c:541
-#: plug-ins/file-icns/file-icns-export.c:634
+#: plug-ins/file-icns/file-icns-export.c:521
+#: plug-ins/file-icns/file-icns-export.c:539
+#: plug-ins/file-icns/file-icns-export.c:632
 #, c-format
 msgid "Error writing icns: %s"
 msgstr "Napaka pri zapisovanju icns: %s"
 
-#: plug-ins/file-icns/file-icns-export.c:794
+#: plug-ins/file-icns/file-icns-export.c:791
 #, c-format
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -10349,7 +10349,7 @@ msgstr ""
 "18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512 in "
 "1024x1024."
 
-#: plug-ins/file-icns/file-icns-export.c:812
+#: plug-ins/file-icns/file-icns-export.c:809
 #, c-format
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -10772,7 +10772,7 @@ msgstr ""
 "Photoshop ne podpira indeksiranih slik, ki imajo več kot eno plast. Plasti "
 "bodo združene ob izvozu."
 
-#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4092
+#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4103
 msgid "Compatibility Notice"
 msgstr "Obvestilo o združljivosti"
 
@@ -10874,38 +10874,43 @@ msgstr "Nepodprta ali neveljavna širina plasti maske: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti maske: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3599
+#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3610
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nepodprta ali neveljavna velikost kanala"
 
-#: plug-ins/file-psd/psd-load.c:2309 plug-ins/file-psd/psd-load.c:3197
+#: plug-ins/file-psd/psd-load.c:2252
+#, c-format
+msgid "Invalid channel dimensions %u x %u"
+msgstr "Neveljavne mere kanala %u x %u"
+
+#: plug-ins/file-psd/psd-load.c:2320 plug-ins/file-psd/psd-load.c:3208
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nepodprti način stiskanja: %d"
 
-#: plug-ins/file-psd/psd-load.c:2926
+#: plug-ins/file-psd/psd-load.c:2937
 msgid "Inner Shadow"
 msgstr "Notranja senca"
 
-#: plug-ins/file-psd/psd-load.c:2927
+#: plug-ins/file-psd/psd-load.c:2938
 msgid "imported"
 msgstr "uvoženo"
 
-#: plug-ins/file-psd/psd-load.c:3374
+#: plug-ins/file-psd/psd-load.c:3385
 msgid "Extra"
 msgstr "Dodatno"
 
-#: plug-ins/file-psd/psd-load.c:3676
+#: plug-ins/file-psd/psd-load.c:3687
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Podatkov ni mogoče razpakirati"
 
-#: plug-ins/file-psd/psd-load.c:4069
+#: plug-ins/file-psd/psd-load.c:4080
 msgid "Duotone Import"
 msgstr "Uvoz duotone"
 
-#: plug-ins/file-psd/psd-load.c:4070
+#: plug-ins/file-psd/psd-load.c:4081
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10915,7 +10920,7 @@ msgstr ""
 "Podatki o barvnem prostoru duotone so shranjeni\n"
 "in se lahko ponovno uporabijo pri izvozu."
 
-#: plug-ins/file-psd/psd-load.c:4093
+#: plug-ins/file-psd/psd-load.c:4104
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -16236,11 +16241,11 @@ msgstr "Izvozi metapodatke"
 msgid "Choose Date"
 msgstr "Izberite datum"
 
-#: plug-ins/metadata/metadata-editor.c:1696
+#: plug-ins/metadata/metadata-editor.c:1697
 msgid "Set Date"
 msgstr "Določi datum"
 
-#: plug-ins/metadata/metadata-editor.c:2432
+#: plug-ins/metadata/metadata-editor.c:2434
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -16256,7 +16261,7 @@ msgstr ""
 "ali 10.45\n"
 "Izbrišite celotno besedilo, da odstranite trenutno vrednost."
 
-#: plug-ins/metadata/metadata-editor.c:2438
+#: plug-ins/metadata/metadata-editor.c:2440
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16272,24 +16277,24 @@ msgstr ""
 "(ft).\n"
 "Izbrišite celotno besedilo, da odstranite trenutno vrednost."
 
-#: plug-ins/metadata/metadata-editor.c:2572
+#: plug-ins/metadata/metadata-editor.c:2574
 msgid "Unrated"
 msgstr "Neocenjeno"
 
-#: plug-ins/metadata/metadata-editor.c:4682
+#: plug-ins/metadata/metadata-editor.c:4684
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Značke metapodatkov %s ni mogoče določiti: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5582
+#: plug-ins/metadata/metadata-editor.c:5584
 msgid "Import Metadata File"
 msgstr "Uvoz datoteko metapodatkov"
 
-#: plug-ins/metadata/metadata-editor.c:5586
+#: plug-ins/metadata/metadata-editor.c:5588
 msgid "_Import"
 msgstr "_Uvozi"
 
-#: plug-ins/metadata/metadata-editor.c:5617
+#: plug-ins/metadata/metadata-editor.c:5619
 msgid "Export Metadata File"
 msgstr "Izvozi datoteko metapodatkov"
 
