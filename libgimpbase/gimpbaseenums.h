@@ -928,6 +928,7 @@ typedef enum
  * @GIMP_PROCEDURE_SENSITIVE_DRAWABLES:    Handles image with several selected drawables.
  * @GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES: Handles image with no selected drawables.
  * @GIMP_PROCEDURE_SENSITIVE_NO_IMAGE:     Handles no image.
+ * @GIMP_PROCEDURE_SENSITIVE_ALWAYS:       The procedure is always sensitive.
  *
  * The cases when a #GimpProcedure should be shown as sensitive.
  **/
