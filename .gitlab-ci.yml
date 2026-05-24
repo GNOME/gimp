@@ -146,7 +146,7 @@ stages:
 - gcc -print-multi-os-directory 2>/dev/null | grep -q ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
 - gcc -print-multiarch 2>/dev/null | grep -q . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/') || export LIB_SUBDIR=
 ## Build-time vars
-- export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+- export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig:${GIMP_PREFIX}/share/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
 ## Runtime vars
 - export PATH="${GIMP_PREFIX}/bin:$PATH"
