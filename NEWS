@@ -22,6 +22,8 @@ Core:
   * macOS: touchpads are now less sensitive in pan gestures and behave as
     expected.
   * MSIX: it is now possible to open multiple images from the OS.
+  * Stop noninteractive filters on invisible layers unless the relevant
+    option is enabled in Preferences.
 
 Tools:
 
@@ -37,6 +39,7 @@ Graphical User Interface:
   * macOS: title bar follows scheme. This is true for native file
     dialogs on macOS as well.
   * Levels tool now listens to the icon size setting.
+  * Roadmap menu item removed from Help > GIMP Online menu.
 
 Plug-Ins:
 
@@ -65,6 +68,16 @@ Plug-Ins:
     deprecation in the 3.0 series and no complains so far).
   * Metadata Editor: replace metadata import/export dropdown with
     buttons.
+  * New import support for DrHalo CUT format.
+  * Web Browser plug-in removed. It has been replaced by an internal PDB
+    procedure "plug-in-web-browser", which is itself made deprecated
+    (yet needed for backward-compatibility of scripts). Instead people
+    should use the GLib function g_app_info_launch_default_for_uri(), or
+    in Script-Fu, the new procedure (gimp-show-uri).
+  * Help plug-in: the "help-proc" argument is now ignored and deprecated
+    (all calls will just use the default browser on your machine).
+  * Help Browser plug-in removed (after 1-year soft-removal through
+    deprecation in the 3.0 series and no complaints).
 
 API:
 
@@ -90,6 +103,14 @@ API:
     - GimpProcedureDialog will now use the icon set on the associated
       GimpProcedure (likely only visible on platforms showing window
       icons).
+  * Script-Fu:
+    - (gimp-online-*) Script-Fu procedures are now moved to deprecated
+      internal PDB procedures. Actions are created too (except for
+      "gimp-online-roadmap") in order to keep these available in the
+      main menu.
+    - New procedure (gimp-show-uri) to load any URI in your default
+      software set for this type of file. This should be used instead of
+      the now deprecated (plug-in-web-browser).
 
 Utilities:
 
@@ -105,3 +126,6 @@ Build:
     - go back to macOS Tahoe on Homebrew builds
   * Minimum Windows version for MSIX is now 10.0.20348.0 to comply with
     a requirement from MS about fileSystemWriteVirtualization.
+  * More file loading tests added relevant to recent security issues.
+  * New analysis job "abidiff" to verify that our libgimp* libraries
+    don't break their API or ABI.
