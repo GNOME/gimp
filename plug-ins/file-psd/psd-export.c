@@ -278,7 +278,6 @@ static GimpLayer   * create_merged_image        (GimpImage      *image,
 
 static gint          get_bpc                    (GimpImage      *image);
 static const Babl  * get_pixel_format           (GimpDrawable   *drawable,
-                                                 gboolean        cmyk,
                                                  GError        **error);
 
 static const Babl  * get_channel_format         (GimpDrawable   *drawable);
@@ -779,18 +778,17 @@ save_resources (GOutputStream       *output,
 {
   GList   *iter;
   gint     i;
-  GList   *SelLayers;            /* The selected layers */
+  GList   *SelLayers;                   /* The selected layers */
 
-  goffset  eof_pos;              /* Position for End of file */
-  goffset  rsc_pos = 0;          /* Position for Lengths of Resources section */
-  goffset  name_sec;             /* Position for Lengths of Channel Names */
+  goffset  eof_pos;                     /* Position for End of file */
+  goffset  rsc_pos = 0;                 /* Position for Lengths of Resources section */
+  goffset  name_sec;                    /* Position for Lengths of Channel Names */
 
-  gboolean
-    write_transparency_resource; /* Only export the transparency channel
-                                  * resource for PSD exports (not for TIFF
-                                  * compatibility mode), and only if the merged
-                                  * layer has alpha.
-                                  */
+  gboolean write_transparency_resource; /* Only export the transparency channel
+                                         * resource for PSD exports (not for TIFF
+                                         * compatibility mode), and only if the merged
+                                         * layer has alpha.
+                                         */
 
   /* Only relevant resources in GIMP are: 0x03EE, 0x03F0 & 0x0400 */
   /* For Adobe Photoshop version 4.0 these can also be considered:
@@ -801,8 +799,8 @@ save_resources (GOutputStream       *output,
   /* Here's where actual writing starts */
 
   write_transparency_resource =
-    ! options->tif &&
-    gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer));
+    (! options->tif &&
+     gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)));
 
   if (! options->tif)
     {
@@ -833,7 +831,8 @@ save_resources (GOutputStream       *output,
 
           for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
             {
-              char *chName = gimp_item_get_name (iter->data);
+              gchar *chName = gimp_item_get_name (iter->data);
+
               WRITE_RETURN (string, output, chName, "channel name", g_free (chName));
               g_free (chName);
             }
@@ -847,7 +846,7 @@ save_resources (GOutputStream       *output,
 
           WRITE_RETURN (gint32, output, eof_pos - name_sec - sizeof (gint32), "0x03EE resource size", ;);
           IFDBG(1) g_debug ("\tTotal length of 0x03EE resource: %d",
-                            (int) (eof_pos - name_sec - sizeof (gint32)));
+                            (gint) (eof_pos - name_sec - sizeof (gint32)));
 
           /* Return to EOF to continue writing */
 
@@ -974,7 +973,7 @@ save_resources (GOutputStream       *output,
       if (n_guides != 0)
         g_warning ("Screwed up guide resource:: wrong number of guides\n");
       IFDBG(1) g_debug ("\tTotal length of 0x0400 resource: %d",
-                        (int) sizeof (gint16));
+                        (gint) sizeof (gint16));
     }
 
   /* --------------- Write paths ------------------- */
@@ -1080,7 +1079,7 @@ save_resources (GOutputStream       *output,
                                 g_list_free (SelLayers));
 
                   IFDBG(1) g_debug ("\tTotal length of 0x0400 resource: %d",
-                                    (int) sizeof (gint16));
+                                    (gint) sizeof (gint16));
                   break;
                 }
             }
@@ -1159,7 +1158,7 @@ save_resources (GOutputStream       *output,
       WRITE_RETURN (gint32, output, eof_pos - rsc_pos - sizeof (gint32),
                     "image resources length", ;);
       IFDBG(1) g_debug ("\tResource section total length: %d",
-                        (int) (eof_pos - rsc_pos - sizeof (gint32)));
+                        (gint) (eof_pos - rsc_pos - sizeof (gint32)));
 
       /* Return to EOF to continue writing */
 
@@ -1332,18 +1331,18 @@ save_paths (GOutputStream  *output,
     {
       GString  *data;
       gchar    *name;
+      gchar    *tmpname;
       gsize     len;
       gint      lenpos;
       gchar     pointrecord[26] = { 0, };
-      gchar    *tmpname;
-      GError   *err = NULL;
+      GError   *err             = NULL;
       gboolean  is_working_path = FALSE;
 
       /*
        * - use iso8859-1 if possible
        * - otherwise use ASCII
        */
-      name = gimp_item_get_name (iter->data);
+      name    = gimp_item_get_name (iter->data);
       tmpname = g_convert (name, -1, "ISO-8859-1", "UTF-8", NULL, &len, &err);
 
       is_working_path = ! strcmp (name, "Working Path");
@@ -1841,7 +1840,7 @@ save_layer_and_mask (GOutputStream       *output,
 
       WRITE_RETURN (gint32, output, eof_pos - ExtraDataPos - sizeof (gint32), "Extra data size", ;);
       IFDBG(1) g_debug ("\t\tExtraData size: %d",
-                        (int) (eof_pos - ExtraDataPos - sizeof (gint32)));
+                        (gint) (eof_pos - ExtraDataPos - sizeof (gint32)));
 
       /* Return to EOF to continue writing */
 
@@ -1975,7 +1974,7 @@ write_pixel_data (GOutputStream       *output,
   if (gimp_item_is_channel (GIMP_ITEM (drawable)))
     format = get_channel_format (drawable);
   else
-    format = get_pixel_format (drawable, options->cmyk, error);
+    format = get_pixel_format (drawable, error);
 
   if (options->cmyk && ! gimp_item_is_channel (GIMP_ITEM (drawable)))
     {
@@ -2325,13 +2324,15 @@ create_merged_image (GimpImage           *image,
 
   if (gimp_image_get_base_type (image) != GIMP_INDEXED)
     {
-      GeglBuffer         *buffer             = gimp_drawable_get_buffer (GIMP_DRAWABLE (projection));
-      const Babl         *format             = get_pixel_format (GIMP_DRAWABLE (projection),
-                                                                 options->cmyk,
-                                                                 error);
+      GeglBuffer         *buffer;
+      const Babl         *format;
       gboolean            transparency_found = FALSE;
-      gint                bpp                = babl_format_get_bytes_per_pixel (format);
+      gint                bpp;
       GeglBufferIterator *iter;
+
+      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (projection));
+      format = get_pixel_format (GIMP_DRAWABLE (projection), error);
+      bpp    = babl_format_get_bytes_per_pixel (format);
 
       iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
                                        GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
@@ -2567,14 +2568,11 @@ export_image (GFile          *file,
     }
 
   /* If this is an indexed image, write now channel and layer info */
-
   if (! save_data (output, image, &resource_options, error))
     goto clean;
 
   /* Delete merged image now */
-
 clean:
-
   if (GIMP_ITEM (PSDImageData.merged_layer))
     gimp_item_delete (GIMP_ITEM (PSDImageData.merged_layer));
 
@@ -2598,23 +2596,24 @@ export_image_metadata (GFile      *file,
                        gboolean    cmyk,
                        GError    **error)
 {
+  PSDResourceOptions  resource_options;
   GOutputStream      *output;
   GeglBuffer         *buffer;
   GList              *iter;
   GError             *local_error            = NULL;
   GimpParasite       *clipping_path_parasite = NULL;
   GimpParasite       *path_flatness_parasite = NULL;
-  PSDResourceOptions  resource_options;
-  gsize               max_dim = 300000;
+  gsize               max_dim                = 300000;
 
-  resource_options.psb = gimp_image_get_width (image) > 30000 ||
-                         gimp_image_get_height (image) > 30000;
-  resource_options.cmyk = cmyk;
-  resource_options.duotone = FALSE;
-  resource_options.clipping_path = FALSE;
-  resource_options.clipping_path_name = NULL;
+  resource_options.psb = (gimp_image_get_width (image) > 30000 ||
+                         gimp_image_get_height (image) > 30000);
+
+  resource_options.cmyk                   = cmyk;
+  resource_options.duotone                = FALSE;
+  resource_options.clipping_path          = FALSE;
+  resource_options.clipping_path_name     = NULL;
   resource_options.clipping_path_flatness = 0;
-  resource_options.tif = TRUE;
+  resource_options.tif                    = TRUE;
 
   IFDBG(1) g_debug ("Function: export_image_metadata");
 
@@ -2641,15 +2640,17 @@ export_image_metadata (GFile      *file,
   clipping_path_parasite = gimp_image_get_parasite (image, PSD_PARASITE_CLIPPING_PATH);
   if (clipping_path_parasite)
     {
-      resource_options.clipping_path = TRUE;
-      resource_options.clipping_path_name = g_strdup ((gchar *) gimp_parasite_get_data (clipping_path_parasite, NULL));
+      resource_options.clipping_path      = TRUE;
+      resource_options.clipping_path_name =
+        g_strdup ((gchar *) gimp_parasite_get_data (clipping_path_parasite, NULL));
       gimp_parasite_free (clipping_path_parasite);
     }
 
   path_flatness_parasite = gimp_image_get_parasite (image, PSD_PARASITE_PATH_FLATNESS);
   if (path_flatness_parasite)
     {
-      resource_options.clipping_path_flatness = *(gfloat *) gimp_parasite_get_data (path_flatness_parasite, NULL);
+      resource_options.clipping_path_flatness =
+        *(gfloat *) gimp_parasite_get_data (path_flatness_parasite, NULL);
       gimp_parasite_free (path_flatness_parasite);
     }
 
@@ -2726,17 +2727,13 @@ export_image_metadata (GFile      *file,
       else
         {
           if (! save_layer_and_mask (output, image, &resource_options, error))
-            {
-              goto clean;
-            }
+            goto clean;
         }
     }
   else
     {
       if (! save_resources (output, image, &resource_options, error))
-        {
-          goto clean;
-        }
+        goto clean;
     }
 
   /* Delete merged image now */
@@ -2780,19 +2777,28 @@ get_bpc (GimpImage *image)
     case GIMP_PRECISION_FLOAT_LINEAR:
     case GIMP_PRECISION_FLOAT_NON_LINEAR:
     case GIMP_PRECISION_FLOAT_PERCEPTUAL:
-      return 4;
-
     default:
-      return 1;
+      /* FIXME: we *should* encode the image as u32 in this case, but simply
+       * using the same code as for the other cases produces invalid psd files
+       * (they're rejected by photoshop, although they can be read by the
+       * corresponding psd-load.c code, which in turn can't actually read
+       * photoshop-generated u32 files.)
+       *
+       * simply encode the image as u16 for now.
+       */
+      /* return 4; */
+      return 2;
     }
 }
 
 static const Babl *
 get_pixel_format (GimpDrawable  *drawable,
-                  gboolean       cmyk,
                   GError       **error)
 {
   GimpImage        *image;
+  const gchar      *model;
+  gint              bpc;
+  gchar             format[32];
   GimpColorProfile *profile = NULL;
   const Babl       *space   = NULL;
 
@@ -2814,136 +2820,73 @@ get_pixel_format (GimpDrawable  *drawable,
                           G_STRFUNC, (*error)->message);
               g_clear_error (error);
             }
-
         }
     }
 
   switch (gimp_drawable_type (drawable))
     {
     case GIMP_GRAY_IMAGE:
-      switch (get_bpc (image))
-        {
-        case 4:
-          return babl_format ("Y' float");
-
-        case 2:
-          return babl_format ("Y' u16");
-
-        case 1:
-          return babl_format ("Y' u8");
-
-        default:
-          return NULL;
-        }
+      model = "Y'";
+      break;
 
     case GIMP_GRAYA_IMAGE:
-      switch (get_bpc (image))
-        {
-        case 4:
-          return babl_format ("Y'A float");
-
-        case 2:
-          return babl_format ("Y'A u16");
-
-        case 1:
-          return babl_format ("Y'A u8");
-
-        default:
-          return NULL;
-        }
+      model = "Y'A";
+      break;
 
     case GIMP_RGB_IMAGE:
-      switch (get_bpc (image))
-        {
-        case 4:
-          return babl_format_with_space ("R'G'B' float", space);
-
-        case 2:
-          return babl_format_with_space (cmyk ? "R'G'B' float" : "R'G'B' u16",
-                                         space);
-
-        case 1:
-          return babl_format_with_space (cmyk ? "R'G'B' float" : "R'G'B' u8",
-                                         space);
-
-        default:
-          return NULL;
-        }
+      model = "R'G'B'";
+      break;
 
     case GIMP_RGBA_IMAGE:
-      switch (get_bpc (image))
-        {
-        case 4:
-          return babl_format_with_space ("R'G'B'A float", space);
-
-        case 2:
-          return babl_format_with_space (cmyk ? "R'G'B'A float" : "R'G'B'A u16",
-                                         space);
-
-        case 1:
-          return babl_format_with_space (cmyk ? "R'G'B'A float" : "R'G'B'A u8",
-                                         space);
-
-        default:
-          return NULL;
-        }
+      model = "R'G'B'A";
+      break;
 
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
       return gimp_drawable_get_format (drawable);
 
     default:
-      return NULL;
+      g_return_val_if_reached (NULL);
     }
-}
 
+  bpc = get_bpc (image);
+
+  sprintf (format, "%s u%d", model, 8 * bpc);
+
+  return babl_format_with_space (format, space);
+}
 
 static const Babl *
 get_channel_format (GimpDrawable *drawable)
 {
   GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  gint       bpc;
+  gchar      format[32];
 
-  switch (get_bpc (image))
-    {
-    case 4:
-      return babl_format ("Y float");
+  /* see gimp_image_get_channel_format() */
+  if (gimp_image_get_precision (image) == GIMP_PRECISION_U8_NON_LINEAR)
+    return babl_format ("Y' u8");
 
-    case 2:
-      return babl_format ("Y u16");
+  bpc = get_bpc (image);
 
-    case 1:
-      return babl_format ("Y' u8");
+  sprintf (format, "Y u%d", 8 * bpc);
 
-    default:
-      return NULL;
-    }
+  return babl_format (format);
 }
-
 
 static const Babl *
 get_mask_format (GimpLayerMask *mask)
 {
   GimpImage *image = gimp_item_get_image (GIMP_ITEM (mask));
+  gint       bpc;
+  gchar      format[32];
 
-  switch (get_bpc (image))
-    {
-    case 4:
-      return babl_format ("Y float");
-      break;
+  bpc = get_bpc (image);
 
-    case 2:
-      return babl_format ("Y u16");
-      break;
+  sprintf (format, "Y u%d", 8 * bpc);
 
-    case 1:
-      return babl_format ("Y u8");
-      break;
-
-    default:
-      return NULL;
-    }
+  return babl_format (format);
 }
-
 
 static GList *
 append_layers (GList *layers)

@@ -5,8 +5,8 @@
 #ifndef __FILE_TIFF_H__
 #define __FILE_TIFF_H__
 
-#define LOAD_PROC   "file-tiff-load"
-#define EXPORT_PROC "file-tiff-export"
+#define LOAD_PROC                   "file-tiff-load"
+#define EXPORT_PROC                 "file-tiff-export"
 
 #define TIFF_PSD_COMPOSITE_PARASITE "file-tiff-psd-composite"
 
@@ -24,7 +24,7 @@ typedef enum
 
 typedef enum
 {
-  GIMP_TIFF_FORMAT_MULTI_PAGE_TIFF,
+  GIMP_TIFF_FORMAT_STANDARD_TIFF,
   GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF,
 } GimpFormat;
 

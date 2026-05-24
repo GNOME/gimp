@@ -145,19 +145,18 @@ static void
 tiff_init (Tiff *tiff)
 {
   tiff->format_choice = gimp_choice_new_with_values (
-    "multi-page-tiff", GIMP_TIFF_FORMAT_MULTI_PAGE_TIFF, _("Standard (multi-page)"),       _("Store layers in TIFF directories (IFDs)"),
-    "photoshop-tiff",  GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF,  _("Photoshop (embedded layers)"), _("Store layers in TIFF tags (ImageSourceData/Photoshop)"),
+    "multi-page-tiff", GIMP_TIFF_FORMAT_STANDARD_TIFF,  _("Standard (pages)"),            _("Store layers in TIFF directories (IFDs)"),
+    "photoshop-tiff",  GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF, _("Photoshop (embedded layers)"), _("Store layers in TIFF tags (ImageSourceData/Photoshop)"),
     NULL);
 
-  tiff->compression_choice = gimp_choice_new_with_values (
-    "none",          GIMP_COMPRESSION_NONE,          _("None"),              NULL,
-    "lzw",           GIMP_COMPRESSION_LZW,           _("LZW"),               NULL,
-    "packbits",      GIMP_COMPRESSION_PACKBITS,      _("Pack Bits"),         NULL,
-    "adobe_deflate", GIMP_COMPRESSION_ADOBE_DEFLATE, _("Deflate"),           NULL,
-    "jpeg",          GIMP_COMPRESSION_JPEG,          _("JPEG"),              NULL,
-    "ccittfax3",     GIMP_COMPRESSION_CCITTFAX3,     _("CCITT Group 3 fax"), NULL,
-    "ccittfax4",     GIMP_COMPRESSION_CCITTFAX4,     _("CCITT Group 4 fax"), NULL,
-    NULL);
+  tiff->compression_choice = gimp_choice_new_with_values ("none",          GIMP_COMPRESSION_NONE,          _("None"),              NULL,
+                                                          "lzw",           GIMP_COMPRESSION_LZW,           _("LZW"),               NULL,
+                                                          "packbits",      GIMP_COMPRESSION_PACKBITS,      _("Pack Bits"),         NULL,
+                                                          "adobe_deflate", GIMP_COMPRESSION_ADOBE_DEFLATE, _("Deflate"),           NULL,
+                                                          "jpeg",          GIMP_COMPRESSION_JPEG,          _("JPEG"),              NULL,
+                                                          "ccittfax3",     GIMP_COMPRESSION_CCITTFAX3,     _("CCITT Group 3 fax"), NULL,
+                                                          "ccittfax4",     GIMP_COMPRESSION_CCITTFAX4,     _("CCITT Group 4 fax"), NULL,
+                                                          NULL);
 }
 
 static GList *
@@ -430,12 +429,13 @@ tiff_export_rec (GimpProcedure        *procedure,
   GimpPDBStatusType  status             = GIMP_PDB_SUCCESS;
   GimpExportReturn   export             = GIMP_EXPORT_IGNORE;
   gboolean           bigtiff            = FALSE;
-  GimpFormat         format             = GIMP_TIFF_FORMAT_MULTI_PAGE_TIFF;
+  GimpFormat         format             = GIMP_TIFF_FORMAT_STANDARD_TIFF;
   GimpImage         *tif_image          = NULL; /* will be flattened */
   GimpImage         *psd_image          = NULL; /* layered base for PSD metadata */
   gboolean           delete_tif_image   = FALSE;
   gboolean           delete_psd_image   = FALSE;
   gboolean           has_composite      = FALSE;
+  gboolean           has_alpha          = TRUE;
 
   /* Determine whether there is a composite layer */
   image_get_all_layers (orig_image, &normal_layers, &composite_layers);
@@ -444,26 +444,18 @@ tiff_export_rec (GimpProcedure        *procedure,
   n_composite_layers = g_list_length (composite_layers);
   has_composite      = n_composite_layers > 0;
 
-  if (n_normal_layers == 0)
-    {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   "No layer to export.");
-      g_list_free (normal_layers);
-      g_list_free (composite_layers);
-      return GIMP_PDB_EXECUTION_ERROR;
-    }
+  if (n_normal_layers == 1)
+    has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (normal_layers->data));
 
   /* Run export dialog */
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! save_dialog (orig_image, procedure, G_OBJECT (config),
-                         n_normal_layers == 1 ?
-                           gimp_drawable_has_alpha (GIMP_DRAWABLE (normal_layers->data)) :
-                           TRUE,
-                         image_is_monochrome (orig_image),
-                         gimp_image_get_base_type (orig_image) == GIMP_INDEXED,
-                         n_normal_layers > 1,
-                         retried))
+      if (! export_dialog (orig_image, procedure, G_OBJECT (config),
+                           has_alpha,
+                           image_is_monochrome (orig_image),
+                           (gimp_image_get_base_type (orig_image) == GIMP_INDEXED),
+                           n_normal_layers > 1,
+                           retried))
         {
           g_list_free (normal_layers);
           g_list_free (composite_layers);
@@ -483,7 +475,7 @@ tiff_export_rec (GimpProcedure        *procedure,
                                                 "format");
 
   /* Prepare tif_image */
-  if (format == GIMP_TIFF_FORMAT_MULTI_PAGE_TIFF)
+  if (format == GIMP_TIFF_FORMAT_STANDARD_TIFF)
     {
       /*
        * Multi-Page TIFF: no flatten needed.
@@ -492,17 +484,17 @@ tiff_export_rec (GimpProcedure        *procedure,
        */
       if (export == GIMP_EXPORT_EXPORT)
         {
-          tif_image = image;
+          tif_image        = image;
           delete_tif_image = TRUE;
         }
       else if (has_composite)
         {
-          tif_image = gimp_image_duplicate (orig_image);
+          tif_image        = gimp_image_duplicate (orig_image);
           delete_tif_image = TRUE;
         }
       else
         {
-          tif_image = image;
+          tif_image        = image;
           delete_tif_image = FALSE;
         }
     }
@@ -514,12 +506,12 @@ tiff_export_rec (GimpProcedure        *procedure,
        */
       if (export == GIMP_EXPORT_EXPORT)
         {
-          tif_image = image;
+          tif_image        = image;
           delete_tif_image = TRUE;
         }
       else
         {
-          tif_image = gimp_image_duplicate (orig_image);
+          tif_image        = gimp_image_duplicate (orig_image);
           delete_tif_image = TRUE;
         }
     }
@@ -724,8 +716,8 @@ image_get_all_layers (GimpImage  *image,
       GimpItem *group;
       GList    *children;
 
-      group = stack->data;
-      stack = g_list_delete_link (stack, stack);
+      group    = stack->data;
+      stack    = g_list_delete_link (stack, stack);
       children = gimp_item_list_children (group);
 
       for (GList *iter = children; iter; iter = iter->next)
@@ -741,7 +733,7 @@ image_get_all_layers (GimpImage  *image,
       g_list_free (children);
     }
 
-  *normal_layers = normal;
+  *normal_layers        = normal;
   *psd_composite_layers = composite;
 }
 

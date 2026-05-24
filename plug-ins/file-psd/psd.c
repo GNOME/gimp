@@ -364,9 +364,9 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                       psd_export_metadata, NULL, NULL);
       gimp_procedure_set_documentation (procedure,
                                         "Exports Photoshop-format metadata "
-                                        "from other file formats.",
+                                        "to other file formats.",
                                         "Exports Photoshop-format metadata "
-                                        "from other file formats.",
+                                        "to other file formats.",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Frank Teklote",
@@ -390,8 +390,8 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                            FALSE,
                                            G_PARAM_READWRITE);
       gimp_procedure_add_boolean_argument (procedure, "cmyk",
-                                           "Export as _CMYK",
-                                           "Export a CMYK PSD image using the "
+                                           "Export as CMYK",
+                                           "Export a CMYK PSD metadata using the "
                                            "soft-proofing color profile",
                                            FALSE,
                                            G_PARAM_READWRITE);
@@ -650,17 +650,9 @@ psd_export_metadata (GimpProcedure       *procedure,
                 "cmyk",          &cmyk,
                 NULL);
 
-  if (! file || ! image)
-    {
-      g_set_error (&error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   "Missing required arguments.");
-      goto out;
-    }
-
   if (export_image_metadata (file, image, is_layer, cmyk, &error))
     status = GIMP_PDB_SUCCESS;
 
-out:
   if (file)
     g_object_unref (file);
 

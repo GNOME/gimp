@@ -115,7 +115,8 @@ static void               load_separate    (TIFF                *tif,
                                             gint                 extra);
 
 static void       load_sketchbook_layers   (TIFF                *tif,
-                                            GimpImage           *image);
+                                            GimpImage           *image,
+                                            gint                 current_page);
 static void       load_photoshop_metadata  (TIFF                *tif,
                                             GimpImage           *image);
 static void       load_photoshop_layers    (TIFF                *tif,
@@ -251,7 +252,9 @@ is_non_conformant_tiff (gushort photomet, gushort spp)
  * alpha and color channels
  */
 static gushort
-get_extra_channels_count (gushort photomet, gushort spp, gboolean alpha)
+get_extra_channels_count (gushort  photomet,
+                          gushort  spp,
+                          gboolean alpha)
 {
   switch (photomet)
     {
@@ -262,15 +265,15 @@ get_extra_channels_count (gushort photomet, gushort spp, gboolean alpha)
     case PHOTOMETRIC_ITULAB:
     case PHOTOMETRIC_LOGLUV:
       if (spp >= 3)
-        return spp - 3 - (alpha? 1 : 0);
+        return spp - 3 - (alpha ? 1 : 0);
       else
-        return spp - 1 - (alpha? 1 : 0);
+        return spp - 1 - (alpha ? 1 : 0);
       break;
     case PHOTOMETRIC_SEPARATED:
-      return spp - 4 - (alpha? 1 : 0);
+      return spp - 4 - (alpha ? 1 : 0);
       break;
     default:
-      return spp - 1 - (alpha? 1 : 0);
+      return spp - 1 - (alpha ? 1 : 0);
       break;
     }
 }
@@ -328,7 +331,8 @@ load_image (GimpProcedure        *procedure,
 
   g_object_get (config, "target", &pages.target, NULL);
   g_object_get (config, "keep-empty-space", &pages.keep_empty_space, NULL);
-  g_object_get (config, "keep-composite-image", &pages.keep_composite_image, NULL);
+  g_object_get (config, "keep-composite-image", &pages.keep_composite_image,
+                NULL);
 
   pages.n_pages = pages.o_pages = TIFFNumberOfDirectories (tif);
   if (pages.n_pages == 0)
@@ -527,7 +531,8 @@ load_image (GimpProcedure        *procedure,
     default_extra = GIMP_TIFF_LOAD_CHANNEL;
 
   /* In interactive mode, silently keep composite for Sketchbook/Photoshop TIFFs */
-  if (run_mode == GIMP_RUN_INTERACTIVE && (sketchbook_layers || photoshop_layers))
+  if (run_mode == GIMP_RUN_INTERACTIVE &&
+      (sketchbook_layers || photoshop_layers))
     pages.keep_composite_image = TRUE;
 
   pages.show_reduced = FALSE;
@@ -540,7 +545,7 @@ load_image (GimpProcedure        *procedure,
   needs_page_selector  = ! sketchbook_layers && ! photoshop_layers && pages.n_pages > 1;
   needs_extra_options  = ! photoshop_metadata && extra_message;
 
-  if (run_mode == GIMP_RUN_INTERACTIVE &&
+  if (run_mode == GIMP_RUN_INTERACTIVE                                     &&
       (needs_space_handling || needs_page_selector || needs_extra_options) &&
       ! load_dialog (procedure, config, &pages, extra_message, &default_extra,
                      needs_space_handling, needs_page_selector,
@@ -553,13 +558,13 @@ load_image (GimpProcedure        *procedure,
     }
 
   if ((sketchbook_layers || photoshop_layers) &&
-      pages.n_pages > 1 &&
+      pages.n_pages > 1                       &&
       pages.pages == NULL)
     {
-      pages.n_pages = 1;
-      pages.pages = g_new0 (gint, 1);
+      pages.n_pages  = 1;
+      pages.pages    = g_new0 (gint, 1);
       pages.pages[0] = 0;
-      pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
+      pages.target   = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
     }
 
   selectable_pages = pages.n_filtered_pages;
@@ -590,7 +595,8 @@ load_image (GimpProcedure        *procedure,
 
   g_object_set (config, "target", pages.target, NULL);
   g_object_set (config, "keep-empty-space", pages.keep_empty_space, NULL);
-  g_object_set (config, "keep-composite-image", pages.keep_composite_image, NULL);
+  g_object_set (config, "keep-composite-image", pages.keep_composite_image,
+                NULL);
 
   /* We will loop through the all pages in case of multipage TIFF
    * and load every page as a separate layer.
@@ -1615,11 +1621,11 @@ load_image (GimpProcedure        *procedure,
         {
           /* If this TIF was created in Alias/AutoDesk Sketchbook,
            * it may have layers. */
-          load_sketchbook_layers (tif, *image);
+          load_sketchbook_layers (tif, *image, pages.pages[li]);
 
           if (pages.keep_composite_image)
             {
-              layer_name = g_strdup (_("Composite"));
+              layer_name         = g_strdup (_("Composite"));
               is_composite_layer = TRUE;
             }
         }
@@ -1627,6 +1633,12 @@ load_image (GimpProcedure        *procedure,
       /* Allocate ChannelData for all channels, even the
        * background/composite layer */
       channel = g_new0 (ChannelData, extra + 1);
+      for (i = 1; i <= extra; i++)
+        {
+          channel[i].drawable = NULL;
+          channel[i].buffer   = NULL;
+          channel[i].format   = NULL;
+        }
 
       /* This TIF may contain information like extra channels or paths,
        * read them just once. */
@@ -1640,11 +1652,11 @@ load_image (GimpProcedure        *procedure,
 
           if (pages.keep_composite_image)
             {
-              layer_name = g_strdup (_("Composite"));
+              layer_name         = g_strdup (_("Composite"));
               is_composite_layer = TRUE;
             }
         }
-      else
+      else if (! sketchbook_layers)
         {
           const gchar *page_name = tiff_get_page_name (tif);
 
@@ -1660,7 +1672,6 @@ load_image (GimpProcedure        *procedure,
         {
           layer = gimp_layer_new (*image, layer_name, cols, rows, layer_type, 100,
                                   gimp_image_get_default_new_layer_mode (*image));
-
           g_free (layer_name);
 
           if (! base_format && image_type == GIMP_INDEXED)
@@ -1688,32 +1699,20 @@ load_image (GimpProcedure        *procedure,
           channel[0].format   = base_format;
         }
 
-      if (is_composite_layer)
+      if (extra > 0 && li == 0 && ! worst_case)
         {
-          GimpParasite *psd_composite_parasite;
+          GList *extra_channels = gimp_image_list_channels (*image);
 
-          psd_composite_parasite = gimp_parasite_new (TIFF_PSD_COMPOSITE_PARASITE,
-                                                      GIMP_PARASITE_PERSISTENT,
-                                                      0, NULL);
-
-          gimp_item_attach_parasite (GIMP_ITEM (layer), psd_composite_parasite);
-
-          gimp_parasite_free (psd_composite_parasite);
-        }
-
-      if (extra > 0 && ! worst_case)
-        {
           /* Add extra channels as appropriate */
           for (i = 1; i <= extra; i++)
             {
-              if (photoshop_metadata && li == 0)
+              GimpDrawable *temp_channel =
+                g_list_nth_data (extra_channels, i - 1);
+
+              if (temp_channel)
                 {
-                  GList *extra_channels = gimp_image_list_channels (*image);
-
-                  channel[i].drawable = GIMP_DRAWABLE (g_list_nth_data (extra_channels, i - 1));
-                  channel[i].buffer = gimp_drawable_get_buffer (channel[i].drawable);
-
-                  g_list_free (extra_channels);
+                  channel[i].drawable = temp_channel;
+                  channel[i].buffer   = gimp_drawable_get_buffer (channel[i].drawable);
                 }
               else
                 {
@@ -1746,14 +1745,17 @@ load_image (GimpProcedure        *procedure,
                                                      babl_component ("Y"),
                                                      NULL);
             }
+          g_list_free (extra_channels);
         }
 
       if (worst_case)
         load_rgba (tif, channel);
       else if (planar == PLANARCONFIG_CONTIG)
-        load_contiguous (tif, channel, type, bps, spp, tiff_mode, is_signed, extra);
+        load_contiguous (tif, channel, type, bps, spp, tiff_mode, is_signed,
+                         extra);
       else
-        load_separate (tif, channel, type, bps, spp, tiff_mode, is_signed, extra);
+        load_separate (tif, channel, type, bps, spp, tiff_mode, is_signed,
+                       extra);
 
       for (i = 0; i <= extra; i++)
         {
@@ -1766,6 +1768,19 @@ load_image (GimpProcedure        *procedure,
 
       if (layer)
         {
+          if (sketchbook_layers || photoshop_layers)
+            {
+              GList *layers = gimp_image_list_layers (*image);
+
+              gimp_image_insert_layer (*image, layer, NULL,
+                                       (gint) g_list_length (layers));
+              g_list_free (layers);
+            }
+          else
+            {
+              gimp_image_insert_layer (*image, layer, NULL, -1);
+            }
+
           if (TIFFGetField (tif, TIFFTAG_ORIENTATION, &orientation))
             {
               gboolean flip_horizontal = FALSE;
@@ -1830,29 +1845,37 @@ load_image (GimpProcedure        *procedure,
                 }
             }
 
-          if (sketchbook_layers || photoshop_layers)
-            {
-              GList *layers = gimp_image_list_layers (*image);
-              gimp_image_insert_layer (*image, layer, NULL,
-                                       (gint) g_list_length (layers));
-              g_list_free (layers);
-            }
-          else
-            {
-              gimp_image_insert_layer (*image, layer, NULL, -1);
-            }
-
           if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
             {
               gimp_image_undo_enable (*image);
               gimp_image_clean_all (*image);
             }
 
-          /* Prevent edits/moves on the composite preview layer */
           if (is_composite_layer)
             {
-              gimp_item_set_lock_content  (GIMP_ITEM (layer), TRUE);
-              gimp_item_set_lock_position (GIMP_ITEM (layer), TRUE);
+              GimpParasite *psd_composite_parasite;
+              GList        *layers   = gimp_image_list_layers (*image);
+              guint         n_layers = g_list_length (layers);
+
+              /* We only consider an imported TIFF as having a composite layer
+               * if there was at least one metadata layer imported as well */
+              if (n_layers > 1)
+                {
+                  psd_composite_parasite =
+                    gimp_parasite_new (TIFF_PSD_COMPOSITE_PARASITE,
+                                       GIMP_PARASITE_PERSISTENT,
+                                       0, NULL);
+
+                  gimp_item_attach_parasite (GIMP_ITEM (layer),
+                                             psd_composite_parasite);
+
+                  gimp_parasite_free (psd_composite_parasite);
+
+                  /* Prevent edits/moves on the composite preview layer */
+                  gimp_item_set_lock_content  (GIMP_ITEM (layer), TRUE);
+                  gimp_item_set_lock_position (GIMP_ITEM (layer), TRUE);
+                }
+              g_list_free (layers);
             }
         }
 
@@ -2070,7 +2093,10 @@ load_contiguous (TIFF         *tif,
   /* consistency check */
   bytes_per_pixel = 0;
   for (i = 0; i <= extra; i++)
-    bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
+    {
+      if (channel[i].format)
+        bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
+    }
 
   g_debug ("bytes_per_pixel: %d, format: %d",
            bytes_per_pixel,
@@ -2145,6 +2171,9 @@ load_contiguous (TIFF         *tif,
               GeglBufferIterator *iter;
               gint                src_bpp;
               gint                dest_bpp;
+
+              if (! channel[i].format)
+                break;
 
               src_bpp  = babl_format_get_bytes_per_pixel (src_format);
               dest_bpp = babl_format_get_bytes_per_pixel (channel[i].format);
@@ -2261,7 +2290,10 @@ load_separate (TIFF         *tif,
   /* consistency check */
   bytes_per_pixel = 0;
   for (i = 0; i <= extra; i++)
-    bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
+    {
+      if (channel[i].format)
+        bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
+    }
 
   g_debug ("bytes_per_pixel: %d, format: %d",
            bytes_per_pixel,
@@ -2276,6 +2308,9 @@ load_separate (TIFF         *tif,
       gint dest_bpp;
       gint offset;
       gint j;
+
+      if (! channel[i].format)
+        break;
 
       n_comps  = babl_format_get_n_components (channel[i].format);
       src_bpp  = babl_format_get_bytes_per_pixel (src_format);
@@ -2397,7 +2432,8 @@ load_separate (TIFF         *tif,
 /* Loads layers stored by the Alias/AutoDesk Sketchbook program */
 static void
 load_sketchbook_layers (TIFF      *tif,
-                        GimpImage *image)
+                        GimpImage *image,
+                        gint       current_page)
 {
   gchar          *alias_layer_info   = NULL;
   gint            alias_data_len;
@@ -2702,6 +2738,9 @@ load_sketchbook_layers (TIFF      *tif,
       if (selected_layer)
         gimp_image_take_selected_layers (image, selected_layer);
     }
+
+  /* Reset back to initial position in TIF to load composite layer */
+  TIFFSetDirectory (tif, current_page);
 }
 
 /* Loads metadata stored by the Photoshop program */

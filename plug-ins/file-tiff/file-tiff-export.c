@@ -272,15 +272,16 @@ save_layer (TIFF        *tif,
   rows = gegl_buffer_get_height (buffer);
 
   channels = gimp_image_list_channels (orig_image);
-  extra = g_list_length (channels);
+  extra    = g_list_length (channels);
 
   if (extra > 0)
     {
       channel_buffers = g_new (GeglBuffer *, extra);
-      for (int j = 0; j < extra; j++)
+      for (gint j = 0; j < extra; j++)
         {
-          channel_buffers[j] = gimp_drawable_get_buffer (
-              GIMP_DRAWABLE (g_list_nth_data (channels, j)));
+          GimpDrawable *temp_channel = g_list_nth_data (channels, j);
+
+          channel_buffers[j] = gimp_drawable_get_buffer (temp_channel);
         }
     }
 
@@ -569,7 +570,7 @@ save_layer (TIFF        *tif,
     {
       photometric = PHOTOMETRIC_SEPARATED;
       /* If there's transparency, save as CMYKA format */
-      samplesperpixel = 4 + (alpha ? 1 : 0) + extra;
+      samplesperpixel = 4 + alpha + extra;
       TIFFSetField (tif, TIFFTAG_INKSET, INKSET_CMYK);
       TIFFSetField (tif, TIFFTAG_NUMBEROFINKS, 4);
     }
@@ -624,7 +625,7 @@ save_layer (TIFF        *tif,
 
   if (alpha || extra > 0)
     {
-      extra_samples = g_new (gushort, (alpha ? 1 : 0) + extra);
+      extra_samples = g_new (gushort, alpha + extra);
       if (alpha)
         {
           if (config_save_transp_pixels ||
@@ -639,11 +640,11 @@ save_layer (TIFF        *tif,
           else
             extra_samples [0] = EXTRASAMPLE_ASSOCALPHA;
         }
+
       for (gushort j = 0; j < extra; j++)
-        {
-          extra_samples[(alpha ? 1 : 0) + j] = EXTRASAMPLE_UNSPECIFIED;
-        }
-      TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, (alpha ? 1 : 0) + extra, extra_samples);
+        extra_samples[alpha + j] = EXTRASAMPLE_UNSPECIFIED;
+
+      TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, alpha + extra, extra_samples);
     }
 
   /* resolution fields */
@@ -678,9 +679,9 @@ save_layer (TIFF        *tif,
       (drawable_type == GIMP_INDEXED_IMAGE || drawable_type == GIMP_INDEXEDA_IMAGE))
     TIFFSetField (tif, TIFFTAG_COLORMAP, red, grn, blu);
 
-  /* save Photoshop image resources (paths, channel names, ...) to TIFFTAG_PHOTOSHOP */
+  /* Save Photoshop image resources (paths, channel names, ...) to TIFFTAG_PHOTOSHOP */
   if (config_save_resources &&
-      ((config_format == GIMP_TIFF_FORMAT_MULTI_PAGE_TIFF && page == 0) ||
+      ((config_format == GIMP_TIFF_FORMAT_STANDARD_TIFF && page == 0) ||
         config_format == GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF))
     {
       GFile             *temp_file     = NULL;
@@ -690,8 +691,7 @@ save_layer (TIFF        *tif,
       guchar            *data_buffer   = NULL;
       gsize              data_length   = 0;
 
-      temp_file = gimp_temp_file ("tmp");
-
+      temp_file   = gimp_temp_file ("tmp");
       procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
                                                "file-psd-export-metadata");
       return_vals = gimp_procedure_run (procedure,
@@ -702,7 +702,6 @@ save_layer (TIFF        *tif,
                                         NULL);
 
       export_status = GIMP_VALUES_GET_ENUM (return_vals, 0);
-
       if (export_status == GIMP_PDB_SUCCESS)
         {
           if (g_file_get_contents (g_file_peek_path (temp_file),
@@ -720,7 +719,7 @@ save_layer (TIFF        *tif,
       gimp_value_array_unref (return_vals);
     }
 
-  /* save Photoshop layer data to TIFFTAG_IMAGESOURCEDATA */
+  /* Save Photoshop layer data to TIFFTAG_IMAGESOURCEDATA */
   if (config_format == GIMP_TIFF_FORMAT_PHOTOSHOP_TIFF &&
       should_export_layer_info (orig_image))
     {
@@ -733,8 +732,7 @@ save_layer (TIFF        *tif,
       guchar            *tag_buffer    = NULL;
       gsize              tag_length    = 0;
 
-      temp_file = gimp_temp_file ("tmp");
-
+      temp_file   = gimp_temp_file ("tmp");
       procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
                                                "file-psd-export-metadata");
       return_vals = gimp_procedure_run (procedure,
@@ -745,22 +743,20 @@ save_layer (TIFF        *tif,
                                         NULL);
 
       export_status = GIMP_VALUES_GET_ENUM (return_vals, 0);
-
       if (export_status == GIMP_PDB_SUCCESS)
         {
           if (g_file_get_contents (g_file_peek_path (temp_file),
                                    (gchar **) &data_buffer,
                                    &data_length, NULL) && data_length > 0)
             {
-              static const char hdr[] = "Adobe Photoshop Document Data Block";
-              static const char sig[] = "8BIM";
+              const gchar  hdr[]   = "Adobe Photoshop Document Data Block";
+              const gchar  sig[]   = "8BIM";
+              const gsize  hdr_len = sizeof (hdr);
+              const gsize  pad     = (4 - data_length % 4) % 4;
+              const gchar *key     = get_layer_key (bitspersample);
 
-              const gsize hdr_len = sizeof (hdr);
-              const gsize pad = (4 - data_length % 4) % 4;
-              const char *key = get_layer_key (bitspersample);
-
-              tag_length = hdr_len + sizeof(sig) + sizeof(key) + data_length +
-                           pad;
+              tag_length = hdr_len + sizeof (sig) + sizeof (key) +
+                           data_length + pad;
               tag_buffer = g_malloc0 (tag_length);
 
               memcpy (tag_buffer, hdr, hdr_len);
@@ -781,7 +777,7 @@ save_layer (TIFF        *tif,
     }
 
   /* array to rearrange data */
-  base_channels = babl_format_get_n_components (format);
+  base_channels    = babl_format_get_n_components (format);
   bytes_per_sample = bitspersample / 8;
 
   base_bytesperrow  = cols * base_channels  * bytes_per_sample;
@@ -829,16 +825,16 @@ save_layer (TIFF        *tif,
 
                 for (col = 0; col < cols; col++)
                   {
-                    int src_off = col * base_channels * bytes_per_sample;
-                    int dst_off = col * samplesperpixel * bytes_per_sample;
+                    gint src_off = col * base_channels * bytes_per_sample;
+                    gint dst_off = col * samplesperpixel * bytes_per_sample;
 
-                    // Copy base channels (e.g. RGB or RGBA or GRAY)
+                    /* Copy base channels (e.g. RGB or RGBA or GRAY) */
                     memcpy (data + dst_off,
                             src_row_base + src_off,
                             base_channels * bytes_per_sample);
 
-                    // Append extra channels
-                    for (int c = 0; channel_buffers && c < extra; c++)
+                    /* Append extra channels */
+                    for (gint c = 0; channel_buffers && c < extra; c++)
                       {
                         guint8 sample[8];
 
@@ -964,10 +960,9 @@ out:
 
   if (channel_buffers != NULL)
     {
-      for (int j = 0; j < extra; j++)
-        {
-          g_object_unref (channel_buffers[j]);
-        }
+      for (gint j = 0; j < extra; j++)
+        g_object_unref (channel_buffers[j]);
+
       g_free (channel_buffers);
     }
 
@@ -1063,16 +1058,16 @@ export_image (GFile         *file,
               GimpMetadata  *metadata,
               GError       **error)
 {
-  TIFF       *tif                   = NULL;
-  const Babl *space                 = NULL;
-  gboolean    status                = FALSE;
-  gboolean    out_linear            = FALSE;
+  TIFF       *tif           = NULL;
+  const Babl *space         = NULL;
+  gboolean    status        = FALSE;
+  gboolean    out_linear    = FALSE;
   guint32     num_layers;
-  gint32      current_layer         = 0;
+  gint32      current_layer = 0;
   GList      *layers;
   GList      *iter;
-  gint        origin_x              = 0;
-  gint        origin_y              = 0;
+  gint        origin_x      = 0;
+  gint        origin_y      = 0;
   gint        saved_bpp;
   gboolean    bigtiff;
   gboolean    config_save_profile;
@@ -1175,7 +1170,7 @@ export_image (GFile         *file,
 
       /* write composite image */
       if (! save_layer (tif, config, space, image,
-                        g_list_nth_data(layers, 0),
+                        g_list_nth_data (layers, 0),
                         0, num_layers,
                         orig_image,
                         origin_x, origin_y,
@@ -1275,14 +1270,14 @@ out:
 }
 
 gboolean
-save_dialog (GimpImage     *image,
-             GimpProcedure *procedure,
-             GObject       *config,
-             gboolean       has_alpha,
-             gboolean       is_monochrome,
-             gboolean       is_indexed,
-             gboolean       is_multi_layer,
-             gboolean       classic_tiff_failed)
+export_dialog (GimpImage     *image,
+               GimpProcedure *procedure,
+               GObject       *config,
+               gboolean       has_alpha,
+               gboolean       is_monochrome,
+               gboolean       is_indexed,
+               gboolean       is_multi_layer,
+               gboolean       classic_tiff_failed)
 {
   GtkWidget         *dialog;
   GtkWidget         *profile_label;
@@ -1447,8 +1442,8 @@ save_dialog (GimpImage     *image,
                                 "compression",
                                 "bigtiff",
                                 "cmyk-frame",
-                                "format",
                                 "save-layers",
+                                "format",
                                 "save-transparent-pixels",
                                 "crop-layers",
                                 NULL);
@@ -1457,8 +1452,8 @@ save_dialog (GimpImage     *image,
                                 "compression",
                                 "bigtiff",
                                 "cmyk-frame",
-                                "format",
                                 "save-layers",
+                                "format",
                                 "save-transparent-pixels",
                                 "crop-layers",
                                 NULL);
@@ -1513,10 +1508,9 @@ update_format_options (GtkWidget *dialog,
    * - On Photoshop -> Standard: restore from dialog data.
    */
   GimpFormat format;
-  gboolean   save_layers             = FALSE;
-  gboolean   save_resources          = FALSE;
-  gboolean   save_transparent_pixels = FALSE;
-
+  gboolean   save_layers                  = FALSE;
+  gboolean   save_resources               = FALSE;
+  gboolean   save_transparent_pixels      = FALSE;
   gboolean   last_save_layers             = FALSE;
   gboolean   last_save_resources          = FALSE;
   gboolean   last_save_transparent_pixels = FALSE;
@@ -1659,10 +1653,10 @@ evaluate_format_options (GObject    *config,
                                         "save-layers-available"));
 
   /* Detect format transitions. */
-  format =
-    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "format");
+  format = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                "format");
 
-  prev_p = g_object_get_data (G_OBJECT (dialog), "tiff-prev-format");
+  prev_p      = g_object_get_data (G_OBJECT (dialog), "tiff-prev-format");
   prev_format = (GimpFormat) GPOINTER_TO_INT (prev_p);
 
   leaving_photoshop_mode =
@@ -1683,7 +1677,6 @@ evaluate_format_options (GObject    *config,
                          save_layers_available,
                          leaving_photoshop_mode,
                          entering_photoshop);
-
 }
 
 /* Convert n bytes of 0/1 to a line of bits */
@@ -1699,14 +1692,23 @@ byte2bit (const guchar *byteline,
   while (width >= 8)
     {
       bitval = 0;
-      if (*(byteline++)) bitval |= 0x80;
-      if (*(byteline++)) bitval |= 0x40;
-      if (*(byteline++)) bitval |= 0x20;
-      if (*(byteline++)) bitval |= 0x10;
-      if (*(byteline++)) bitval |= 0x08;
-      if (*(byteline++)) bitval |= 0x04;
-      if (*(byteline++)) bitval |= 0x02;
-      if (*(byteline++)) bitval |= 0x01;
+      if (*(byteline++))
+        bitval |= 0x80;
+      if (*(byteline++))
+        bitval |= 0x40;
+      if (*(byteline++))
+        bitval |= 0x20;
+      if (*(byteline++))
+        bitval |= 0x10;
+      if (*(byteline++))
+        bitval |= 0x08;
+      if (*(byteline++))
+        bitval |= 0x04;
+      if (*(byteline++))
+        bitval |= 0x02;
+      if (*(byteline++))
+        bitval |= 0x01;
+
       *(bitline++) = invert ? ~bitval : bitval;
       width -= 8;
     }
@@ -1715,15 +1717,25 @@ byte2bit (const guchar *byteline,
     {
       memset (rest, 0, 8);
       memcpy (rest, byteline, width);
-      bitval = 0;
+
+      bitval   = 0;
       byteline = rest;
-      if (*(byteline++)) bitval |= 0x80;
-      if (*(byteline++)) bitval |= 0x40;
-      if (*(byteline++)) bitval |= 0x20;
-      if (*(byteline++)) bitval |= 0x10;
-      if (*(byteline++)) bitval |= 0x08;
-      if (*(byteline++)) bitval |= 0x04;
-      if (*(byteline++)) bitval |= 0x02;
+
+      if (*(byteline++))
+        bitval |= 0x80;
+      if (*(byteline++))
+        bitval |= 0x40;
+      if (*(byteline++))
+        bitval |= 0x20;
+      if (*(byteline++))
+        bitval |= 0x10;
+      if (*(byteline++))
+        bitval |= 0x08;
+      if (*(byteline++))
+        bitval |= 0x04;
+      if (*(byteline++))
+        bitval |= 0x02;
+
       *bitline = invert ? ~bitval & (0xff << (8 - width)) : bitval;
     }
 }
@@ -1733,10 +1745,12 @@ get_layer_key (gshort bitspersample)
 {
   switch (bitspersample)
     {
-    case 8:  return "Layr";
-    case 16: return "Lr16";
-    case 32: return "Lr32";
-    default: return "Layr";
+    case 16:
+      return "Lr16";
+    case 32:
+      return "Lr32";
+    default:
+      return "Layr";
     }
 }
 
@@ -1747,20 +1761,26 @@ get_extra_format (gshort bitspersample, gshort sampleformat)
     {
       switch (bitspersample)
         {
-        case 8:  return babl_format ("Y u8");
-        case 16: return babl_format ("Y u16");
-        case 32: return babl_format ("Y u32");
-        default: return babl_format ("Y u8");
+        case 16:
+          return babl_format ("Y u16");
+        case 32:
+          return babl_format ("Y u32");
+        default:
+          return babl_format ("Y u8");
         }
     }
   else if (sampleformat == SAMPLEFORMAT_IEEEFP)
     {
       switch (bitspersample)
         {
-        case 16: return babl_format ("Y half");
-        case 32: return babl_format ("Y float");
-        case 64: return babl_format ("Y double");
-        default: return babl_format ("Y u8");
+        case 16:
+          return babl_format ("Y half");
+        case 32:
+          return babl_format ("Y float");
+        case 64:
+          return babl_format ("Y double");
+        default:
+          return babl_format ("Y u8");
         }
     }
   return babl_format ("Y u8");
@@ -1778,9 +1798,9 @@ should_export_layer_info (GimpImage *orig_image)
   gint       layer_offset_x;
   gint       layer_offset_y;
 
-  image_width = gimp_image_get_width (orig_image);
+  image_width  = gimp_image_get_width (orig_image);
   image_height = gimp_image_get_height (orig_image);
-  layers = gimp_image_list_layers (orig_image);
+  layers       = gimp_image_list_layers (orig_image);
 
   if (layers && layers->data)
     {
@@ -1807,7 +1827,8 @@ should_export_layer_info (GimpImage *orig_image)
       if (layer_width != image_width || layer_height != image_height)
         goto export_true;
 
-      gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &layer_offset_x, &layer_offset_y);
+      gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &layer_offset_x,
+                                 &layer_offset_y);
 
       if (layer_offset_x != 0 || layer_offset_y != 0)
         goto export_true;
