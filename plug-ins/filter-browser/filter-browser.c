@@ -99,7 +99,7 @@ create_filter_param_details (GParamSpec   *pspec,
   GtkWidget *label       = NULL;
   gchar     *name        = NULL;
   gchar     *type        = NULL;
-  GString   *blurb       = g_string_new (NULL);
+  GString   *blurb       = NULL;
   gboolean   is_unknown  = FALSE;
   GType      gtype       = 0;
 
@@ -116,6 +116,7 @@ create_filter_param_details (GParamSpec   *pspec,
       return label;
     }
 
+  blurb = g_string_new (NULL);
   gtype = G_PARAM_SPEC_VALUE_TYPE (pspec);
 
   param_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
