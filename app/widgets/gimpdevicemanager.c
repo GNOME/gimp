@@ -745,20 +745,11 @@ gimp_device_manager_device_defaults (GdkSeat           *seat,
           break;
         }
 
-      if (gdk_device_set_mode (device, mode))
-        {
-          g_printerr ("set device '%s' to mode: %s\n",
-                      gdk_device_get_name (device),
-                      g_enum_get_value (g_type_class_peek (GDK_TYPE_INPUT_MODE),
-                                        mode)->value_nick);
-        }
-      else
-        {
-          g_printerr ("failed to set device '%s' to mode: %s\n",
-                      gdk_device_get_name (device),
-                      g_enum_get_value (g_type_class_peek (GDK_TYPE_INPUT_MODE),
-                                        mode)->value_nick);
-         }
+      if (! gdk_device_set_mode (device, mode))
+        g_printerr ("failed to set device '%s' to mode: %s\n",
+                    gdk_device_get_name (device),
+                    g_enum_get_value (g_type_class_peek (GDK_TYPE_INPUT_MODE),
+                                      mode)->value_nick);
     }
 
   /* Reset curve for this device. */
