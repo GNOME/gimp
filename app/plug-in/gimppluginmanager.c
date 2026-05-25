@@ -62,10 +62,18 @@ enum
 };
 
 
-static void     gimp_plug_in_manager_finalize    (GObject    *object);
+static void     gimp_plug_in_manager_finalize       (GObject    *object);
 
-static gint64   gimp_plug_in_manager_get_memsize (GimpObject *object,
-                                                  gint64     *gui_size);
+static gint64   gimp_plug_in_manager_get_memsize    (GimpObject *object,
+                                                     gint64     *gui_size);
+
+
+static void     gimp_plug_in_manager_close_waitpid  (GPid        pid,
+                                                     gint        status,
+                                                     GimpPlugIn *plug_in);
+static void     gimp_plug_in_manager_cleanup_zombie (GimpPlugIn *plug_in,
+                                                     gpointer    value,
+                                                     gpointer    user_data);
 
 
 G_DEFINE_TYPE (GimpPlugInManager, gimp_plug_in_manager, GIMP_TYPE_OBJECT)
@@ -122,6 +130,8 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
 static void
 gimp_plug_in_manager_init (GimpPlugInManager *manager)
 {
+  manager->zombie_plug_ins = g_hash_table_new_full (g_direct_hash, NULL,
+                                                    g_object_unref, NULL);
 }
 
 static void
@@ -162,6 +172,23 @@ gimp_plug_in_manager_finalize (GObject *object)
   gimp_plug_in_manager_menu_branch_exit (manager);
   gimp_plug_in_manager_help_domain_exit (manager);
   gimp_plug_in_manager_data_free (manager);
+
+  /* Best case scenario is that if we have any plug-in process not
+   * returned yet, we'll be able to property close the PID by processing
+   * pending events.
+   */
+  while (g_hash_table_size (manager->zombie_plug_ins) > 0 &&
+         g_main_context_pending (NULL))
+    g_main_context_iteration (NULL, FALSE);
+  /* If that was not enough, just remove the source. */
+  g_hash_table_foreach (manager->zombie_plug_ins,
+                        (GHFunc) gimp_plug_in_manager_cleanup_zombie,
+                        NULL);
+  /* Finally free the GimpPlugIn object, otherwise we will leak
+   * GimpContext and get annoying and harder-to-diagnose messages on
+   * stderr.
+   */
+  g_hash_table_destroy (manager->zombie_plug_ins);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -423,6 +450,23 @@ gimp_plug_in_manager_remove_open_plug_in (GimpPlugInManager *manager,
 }
 
 void
+gimp_plug_in_manager_watch_zombie_plug_in (GimpPlugInManager *manager,
+                                           GimpPlugIn        *plug_in)
+{
+  guint source_id = 0;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  source_id = g_child_watch_add_full (G_PRIORITY_LOW, plug_in->pid,
+                                      (GChildWatchFunc) gimp_plug_in_manager_close_waitpid,
+                                      plug_in, NULL);
+  g_hash_table_insert (manager->zombie_plug_ins,
+                       g_object_ref (plug_in),
+                       GUINT_TO_POINTER (source_id));
+}
+
+void
 gimp_plug_in_manager_plug_in_push (GimpPlugInManager *manager,
                                    GimpPlugIn        *plug_in)
 {
@@ -448,4 +492,44 @@ gimp_plug_in_manager_plug_in_pop (GimpPlugInManager *manager)
     manager->current_plug_in = manager->plug_in_stack->data;
   else
     manager->current_plug_in = NULL;
+}
+
+
+/* Private functions */
+
+static void
+gimp_plug_in_manager_close_waitpid (GPid        pid,
+                                    gint        status,
+                                    GimpPlugIn *plug_in)
+{
+  GError *error = NULL;
+
+  if (plug_in->manager->gimp->be_verbose &&
+      ! g_spawn_check_wait_status (status, &error))
+    {
+      g_printerr ("Process for plug-in '%s' terminated with error: %s\n",
+                  gimp_object_get_name (plug_in),
+                  error->message);
+    }
+  g_clear_error (&error);
+
+  g_spawn_close_pid (pid);
+  g_hash_table_remove (plug_in->manager->zombie_plug_ins, plug_in);
+}
+
+static void
+gimp_plug_in_manager_cleanup_zombie (GimpPlugIn *plug_in,
+                                     gpointer    value,
+                                     gpointer    user_data)
+{
+  guint source_id = GPOINTER_TO_UINT (value);
+
+  /* Do not try to wait forever for plug-in process when exiting the
+   * application. We don't want them to block the main process forever
+   * waiting. Leaving a zombie plug-in process is better.
+   * Remove the source watch-PID and leave a stderr message for info.
+   */
+  g_printerr ("Zombie plug-in: the process of plug-in '%s' never exited.\n",
+              gimp_object_get_name (GIMP_OBJECT (plug_in)));
+  g_source_remove (source_id);
 }
