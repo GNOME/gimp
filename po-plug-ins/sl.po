@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-23 19:06+0000\n"
-"PO-Revision-Date: 2026-05-24 17:09+0200\n"
+"POT-Creation-Date: 2026-05-24 21:45+0000\n"
+"PO-Revision-Date: 2026-05-25 14:41+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -146,7 +146,7 @@ msgstr "Primer vstavka v JavaScriptu (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4064 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:4082 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -262,7 +262,7 @@ msgstr "_Vodoravni slog"
 
 #: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
-#: plug-ins/file-dds/dds.c:197 plug-ins/file-tiff/file-tiff.c:140
+#: plug-ins/file-dds/dds.c:197 plug-ins/file-tiff/file-tiff.c:152
 #: plug-ins/fractal-explorer/fractal-explorer.c:345
 #: plug-ins/fractal-explorer/fractal-explorer.c:355
 #: plug-ins/fractal-explorer/fractal-explorer.c:365
@@ -625,9 +625,9 @@ msgstr "Rolete"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3239 plug-ins/file-sgi/sgi.c:456
-#: plug-ins/file-tiff/file-tiff-load.c:1587
-#: plug-ins/file-tiff/file-tiff-load.c:2441
+#: plug-ins/file-psd/psd-load.c:3257 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-tiff/file-tiff-load.c:1666
+#: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
 #: plug-ins/gfig/gfig-dialog.c:1262 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:241
@@ -1247,9 +1247,10 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2450
-#: plug-ins/file-tiff/file-tiff-export.c:1087
-#: plug-ins/file-tiff/file-tiff-export.c:1177 plug-ins/flame/flame.c:586
+#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2532
+#: plug-ins/file-psd/psd-export.c:2700
+#: plug-ins/file-tiff/file-tiff-export.c:1101
+#: plug-ins/file-tiff/file-tiff-export.c:1221 plug-ins/flame/flame.c:586
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1396
 #: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
 #: plug-ins/lighting/lighting-ui.c:796
@@ -2021,9 +2022,10 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/file-icns/file-icns-load.c:684 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
-#: plug-ins/file-psd/psd-export.c:2456 plug-ins/file-psd/psd-load.c:190
-#: plug-ins/file-psd/psd-load.c:195 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:540
+#: plug-ins/file-psd/psd-export.c:2538 plug-ins/file-psd/psd-export.c:2706
+#: plug-ins/file-psd/psd-load.c:190 plug-ins/file-psd/psd-load.c:195
+#: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
+#: plug-ins/flame/flame.c:540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
 #: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:529
 #: plug-ins/help/gimphelplocale.c:257 plug-ins/help/gimphelplocale.c:273
@@ -2489,9 +2491,9 @@ msgstr "Dimenzije slike so prevelike: širina %d x višina %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:3618 plug-ins/file-tiff/file-tiff-load.c:1944
-#: plug-ins/file-tiff/file-tiff-load.c:2038
-#: plug-ins/file-tiff/file-tiff-load.c:2226
+#: plug-ins/file-psd/psd-load.c:3636 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-tiff/file-tiff-load.c:2081
+#: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
 msgid "There was not enough memory to complete the operation."
 msgstr "Ni dovolj pomnilnika, da bi dokončali operacijo."
@@ -2633,7 +2635,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
-#: plug-ins/file-tiff/file-tiff-load.c:304
+#: plug-ins/file-tiff/file-tiff-load.c:319
 #, c-format
 msgid "Opening '%s'"
 msgstr "Odpiranje »%s« ..."
@@ -2711,8 +2713,8 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2388
-#: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
+#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2470
+#: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1091
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Izvažanje »%s« ..."
@@ -4172,20 +4174,20 @@ msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Nepodprta JPEG 2000%s »%s« s/z %d komponentami."
 
 #: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:887
-#: plug-ins/file-psd/psd-export.c:2726
-#: plug-ins/file-tiff/file-tiff-export.c:1311
+#: plug-ins/file-psd/psd-export.c:2970
+#: plug-ins/file-tiff/file-tiff-export.c:1390
 msgid "No soft-proofing profile"
 msgstr "Brez profila preverjanja videza"
 
 #: plug-ins/common/file-jp2.c:1309 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2734
-#: plug-ins/file-tiff/file-tiff-export.c:1319
+#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2978
+#: plug-ins/file-tiff/file-tiff-export.c:1399
 msgid "Name of the color profile used for CMYK export."
 msgstr "Ime barvnega profila, uporabljenega za izvoz CMYK."
 
 #: plug-ins/common/file-jp2.c:1320 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2745
-#: plug-ins/file-tiff/file-tiff-export.c:1331
+#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2989
+#: plug-ins/file-tiff/file-tiff-export.c:1421
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
@@ -4324,7 +4326,7 @@ msgstr "mucka"
 msgid "tortoise (slower)"
 msgstr "želva (počasneje)"
 
-#: plug-ins/common/file-jpegxl.c:227 plug-ins/file-tiff/file-tiff.c:268
+#: plug-ins/common/file-jpegxl.c:227 plug-ins/file-tiff/file-tiff.c:286
 msgid "Export as CMY_K"
 msgstr "Izvozi kot CMY_K"
 
@@ -4701,14 +4703,14 @@ msgstr "»%s« ni datoteka PCX"
 
 #: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:625
+#: plug-ins/file-psd/psd-load.c:643
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Nepodprta ali neveljavna širina slike: %d"
 
 #: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:617
+#: plug-ins/file-psd/psd-load.c:635
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Nepodprta ali neveljavna višina slike: %d"
@@ -4919,7 +4921,7 @@ msgstr "Dodaj to sliko"
 #: plug-ins/common/file-pdf-export.c:1201
 #: plug-ins/common/file-pdf-export.c:1274
 #: plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2233
-#: plug-ins/file-tiff/file-tiff-load.c:1589
+#: plug-ins/file-tiff/file-tiff-load.c:1668
 #, c-format
 msgid "Page %d"
 msgstr "Stran %d"
@@ -5093,7 +5095,7 @@ msgstr "Zapiši kos pHYs (metapodatki PNG)"
 msgid "Write tIME chunk (PNG metadata)"
 msgstr "Zapiši kos tiME (metapodatki PNG)"
 
-#: plug-ins/common/file-png.c:381 plug-ins/file-tiff/file-tiff.c:261
+#: plug-ins/common/file-png.c:381 plug-ins/file-tiff/file-tiff.c:279
 msgid "Save color _values from transparent pixels"
 msgstr "Shrani _vrednosti barv iz prosojnih slikovnih točk"
 
@@ -10565,7 +10567,7 @@ msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr ""
 "Izvozi datoteke v široko podprtem zapisu slikovnih datotek JPEG z izgubami."
 
-#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:144
+#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:156
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -10703,11 +10705,11 @@ msgstr ""
 msgid "Use restart mar_kers"
 msgstr "Uporabi _označevalnike ponovnega začetka"
 
-#: plug-ins/file-psd/psd-export.c:573
+#: plug-ins/file-psd/psd-export.c:585
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Napaka: Osnovne vrste slike GIMP ni mogoče pretvoriti v način PSD"
 
-#: plug-ins/file-psd/psd-export.c:2375
+#: plug-ins/file-psd/psd-export.c:2457 plug-ins/file-psd/psd-export.c:2627
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -10716,7 +10718,7 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSD ne podpira slik, ki so daljše "
 "ali širše od 30.000 slikovnih točk."
 
-#: plug-ins/file-psd/psd-export.c:2381
+#: plug-ins/file-psd/psd-export.c:2463 plug-ins/file-psd/psd-export.c:2633
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images that are "
@@ -10725,7 +10727,7 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSB ne podpira slik, ki so daljše "
 "ali širše od 300.000 slikovnih točk."
 
-#: plug-ins/file-psd/psd-export.c:2423
+#: plug-ins/file-psd/psd-export.c:2505 plug-ins/file-psd/psd-export.c:2673
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -10734,7 +10736,7 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSD ne podpira slik s plastmi, ki so "
 "daljše ali širše od 30.000 slikovnih točk."
 
-#: plug-ins/file-psd/psd-export.c:2429
+#: plug-ins/file-psd/psd-export.c:2511 plug-ins/file-psd/psd-export.c:2679
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images with "
@@ -10743,7 +10745,7 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSB ne podpira slik s plastmi, ki so "
 "daljše ali širše od 300.000 slikovnih točk."
 
-#: plug-ins/file-psd/psd-export.c:2769
+#: plug-ins/file-psd/psd-export.c:3013
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -10751,7 +10753,7 @@ msgstr ""
 "Informacije o barvnem prostoru duotone bodo\n"
 "uporabljene iz izvorno uvožene slike."
 
-#: plug-ins/file-psd/psd-export.c:2838
+#: plug-ins/file-psd/psd-export.c:3082
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
@@ -10759,11 +10761,11 @@ msgstr ""
 "Datoteke PSD lahko shranijo do 998 poti. \n"
 "Ostalo bo zavrženo."
 
-#: plug-ins/file-psd/psd-export.c:2948
+#: plug-ins/file-psd/psd-export.c:3192
 msgid "Indexed Image Warning"
 msgstr "Opozorilo o indeksirani sliki"
 
-#: plug-ins/file-psd/psd-export.c:2949
+#: plug-ins/file-psd/psd-export.c:3193
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
@@ -10771,11 +10773,11 @@ msgstr ""
 "Photoshop ne podpira indeksiranih slik, ki imajo več kot eno plast. Plasti "
 "bodo združene ob izvozu."
 
-#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4103
+#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:4121
 msgid "Compatibility Notice"
 msgstr "Obvestilo o združljivosti"
 
-#: plug-ins/file-psd/psd-export.c:2971
+#: plug-ins/file-psd/psd-export.c:3215
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -10792,124 +10794,124 @@ msgstr ""
 msgid "Error loading PSD file: %s"
 msgstr "Napaka pri nalaganju datoteke PSD: %s"
 
-#: plug-ins/file-psd/psd-load.c:492
+#: plug-ins/file-psd/psd-load.c:510
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Neveljavna oblika plasti metapodatkov PSD"
 
-#: plug-ins/file-psd/psd-load.c:596
+#: plug-ins/file-psd/psd-load.c:614
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Ni veljavna datoteka dokumenta Photoshop"
 
-#: plug-ins/file-psd/psd-load.c:603
+#: plug-ins/file-psd/psd-load.c:621
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Nepodprta različica vrste datotek: %d"
 
-#: plug-ins/file-psd/psd-load.c:610
+#: plug-ins/file-psd/psd-load.c:628
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Preveč kanalov v datoteki: %d"
 
-#: plug-ins/file-psd/psd-load.c:634
+#: plug-ins/file-psd/psd-load.c:652
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost slike: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:649 plug-ins/file-psd/psd-load.c:659
+#: plug-ins/file-psd/psd-load.c:667 plug-ins/file-psd/psd-load.c:677
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Nepodprti barvni način: %s"
 
-#: plug-ins/file-psd/psd-load.c:686
+#: plug-ins/file-psd/psd-load.c:704
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Nepodprta bitna globina: %d"
 
-#: plug-ins/file-psd/psd-load.c:720 plug-ins/file-psd/psd-load.c:730
-#: plug-ins/file-psd/psd-load.c:981 plug-ins/file-psd/psd-load.c:1342
+#: plug-ins/file-psd/psd-load.c:738 plug-ins/file-psd/psd-load.c:748
+#: plug-ins/file-psd/psd-load.c:999 plug-ins/file-psd/psd-load.c:1360
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Datoteka je okvarjena!"
 
-#: plug-ins/file-psd/psd-load.c:910
+#: plug-ins/file-psd/psd-load.c:928
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Preveč kanalov v plasti: %d"
 
-#: plug-ins/file-psd/psd-load.c:1017
+#: plug-ins/file-psd/psd-load.c:1035
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Nepodprta ali neveljavna višina plasti: %d"
 
-#: plug-ins/file-psd/psd-load.c:1026
+#: plug-ins/file-psd/psd-load.c:1044
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Nepodprta ali neveljavna širina plasti: %d"
 
-#: plug-ins/file-psd/psd-load.c:1036
+#: plug-ins/file-psd/psd-load.c:1054
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1061
+#: plug-ins/file-psd/psd-load.c:1079
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Nepodprta ali neveljavna velikost podatkov o maski."
 
-#: plug-ins/file-psd/psd-load.c:1244
+#: plug-ins/file-psd/psd-load.c:1262
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Nepodprta ali neveljavna višina plasti maske: %d"
 
-#: plug-ins/file-psd/psd-load.c:1253
+#: plug-ins/file-psd/psd-load.c:1271
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Nepodprta ali neveljavna širina plasti maske: %d"
 
-#: plug-ins/file-psd/psd-load.c:1263
+#: plug-ins/file-psd/psd-load.c:1281
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti maske: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3610
+#: plug-ins/file-psd/psd-load.c:1893 plug-ins/file-psd/psd-load.c:3628
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nepodprta ali neveljavna velikost kanala"
 
-#: plug-ins/file-psd/psd-load.c:2252
+#: plug-ins/file-psd/psd-load.c:2270
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Neveljavne mere kanala %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2320 plug-ins/file-psd/psd-load.c:3208
+#: plug-ins/file-psd/psd-load.c:2338 plug-ins/file-psd/psd-load.c:3226
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nepodprti način stiskanja: %d"
 
-#: plug-ins/file-psd/psd-load.c:2937
+#: plug-ins/file-psd/psd-load.c:2955
 msgid "Inner Shadow"
 msgstr "Notranja senca"
 
-#: plug-ins/file-psd/psd-load.c:2938
+#: plug-ins/file-psd/psd-load.c:2956
 msgid "imported"
 msgstr "uvoženo"
 
-#: plug-ins/file-psd/psd-load.c:3385
+#: plug-ins/file-psd/psd-load.c:3403
 msgid "Extra"
 msgstr "Dodatno"
 
-#: plug-ins/file-psd/psd-load.c:3687
+#: plug-ins/file-psd/psd-load.c:3705
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Podatkov ni mogoče razpakirati"
 
-#: plug-ins/file-psd/psd-load.c:4080
+#: plug-ins/file-psd/psd-load.c:4098
 msgid "Duotone Import"
 msgstr "Uvoz duotone"
 
-#: plug-ins/file-psd/psd-load.c:4081
+#: plug-ins/file-psd/psd-load.c:4099
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10919,7 +10921,7 @@ msgstr ""
 "Podatki o barvnem prostoru duotone so shranjeni\n"
 "in se lahko ponovno uporabijo pri izvozu."
 
-#: plug-ins/file-psd/psd-load.c:4104
+#: plug-ins/file-psd/psd-load.c:4122
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -10927,26 +10929,26 @@ msgstr ""
 "Ta datoteka PSD vsebuje lastnosti, ki\n"
 " še niso v celoti podprte v GIMP-u:"
 
-#: plug-ins/file-psd/psd.c:136 plug-ins/file-psd/psd.c:219
-#: plug-ins/file-psd/psd.c:221
+#: plug-ins/file-psd/psd.c:140 plug-ins/file-psd/psd.c:223
+#: plug-ins/file-psd/psd.c:225
 msgid "Photoshop image"
 msgstr "Slika Photoshop"
 
-#: plug-ins/file-psd/psd.c:139 plug-ins/file-psd/psd.c:168
+#: plug-ins/file-psd/psd.c:143 plug-ins/file-psd/psd.c:172
 msgid "Loads images from the Photoshop PSD and PSB file formats"
 msgstr "Naloži slike iz zapisov Photoshop PSD in PSB"
 
-#: plug-ins/file-psd/psd.c:141
+#: plug-ins/file-psd/psd.c:145
 msgid ""
 "This plug-in loads images in Adobe Photoshop (TM) native PSD and PSB format."
 msgstr ""
 "Ta vstavek naloži slike v izvornem zapisu PSD in PSB Adobe Photoshop (TM)."
 
-#: plug-ins/file-psd/psd.c:165
+#: plug-ins/file-psd/psd.c:169
 msgid "Photoshop image (merged)"
 msgstr "Slika Photoshop (spojena)"
 
-#: plug-ins/file-psd/psd.c:170
+#: plug-ins/file-psd/psd.c:174
 msgid ""
 "This plug-in loads the merged image data in Adobe Photoshop (TM) native PSD "
 "and PSB format."
@@ -10954,11 +10956,11 @@ msgstr ""
 "Ta vtičnik naloži združene slikovne podatke v izvornem zapisu PSD in PSB "
 "Adobe Photoshop (TM)."
 
-#: plug-ins/file-psd/psd.c:197
+#: plug-ins/file-psd/psd.c:201
 msgid "Loads thumbnails from the Photoshop PSD file format"
 msgstr "Naloži ogledne sličice iz zapisa Photoshop PSD"
 
-#: plug-ins/file-psd/psd.c:199
+#: plug-ins/file-psd/psd.c:203
 msgid ""
 "This plug-in loads thumbnail images from Adobe Photoshop (TM) native PSD "
 "format files."
@@ -10966,11 +10968,11 @@ msgstr ""
 "Ta vtičnik naloži sličice iz izvornih datotek v zapisu PSD Adobe Photoshop "
 "(TM)."
 
-#: plug-ins/file-psd/psd.c:224
+#: plug-ins/file-psd/psd.c:228
 msgid "Saves files in the Photoshop (TM) PSD file format"
 msgstr "Shrani datoteke v zapisu Photoshop (™) PSD"
 
-#: plug-ins/file-psd/psd.c:226
+#: plug-ins/file-psd/psd.c:230
 msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
@@ -10980,15 +10982,15 @@ msgstr ""
 "Te datoteke so lahko poljubne vrste slike, ki jih podpira GIMP, z ali brez "
 "plasti, z maskami plasti, pomožnimi kanali in vodili."
 
-#: plug-ins/file-psd/psd.c:240 plug-ins/file-psd/psd.c:242
+#: plug-ins/file-psd/psd.c:244 plug-ins/file-psd/psd.c:246
 msgid "Photoshop Large image"
 msgstr "Slika Photoshop Large"
 
-#: plug-ins/file-psd/psd.c:245
+#: plug-ins/file-psd/psd.c:249
 msgid "Saves files in the Photoshop (TM) Large PSB file format"
 msgstr "Shrani datoteke v zapisu PSB Photoshop (TM) Large"
 
-#: plug-ins/file-psd/psd.c:247
+#: plug-ins/file-psd/psd.c:251
 msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
 "These files may be of any image type supported by GIMP, with or without "
@@ -10998,19 +11000,19 @@ msgstr ""
 "(TM) Large. Te datoteke so lahko poljubne vrste slike, ki jih podpira GIMP, "
 "z ali brez plasti, z maskami plasti, pomožnimi kanali in vodili."
 
-#: plug-ins/file-psd/psd.c:275
+#: plug-ins/file-psd/psd.c:279
 msgid "Assign a Clipping _Path"
 msgstr "Dodali _pot obrezovanja"
 
-#: plug-ins/file-psd/psd.c:276
+#: plug-ins/file-psd/psd.c:280
 msgid "Select a path to be the clipping path"
 msgstr "Izberite pot, ki bo uporabljena za obrezovanje"
 
-#: plug-ins/file-psd/psd.c:282
+#: plug-ins/file-psd/psd.c:286
 msgid "Clipping Path _Name"
 msgstr "I_me poti obrezovanja"
 
-#: plug-ins/file-psd/psd.c:283
+#: plug-ins/file-psd/psd.c:287
 msgid ""
 "Clipping path name\n"
 "(ignored if no clipping path)"
@@ -11018,11 +11020,11 @@ msgstr ""
 "Ime poti obrezovanja\n"
 "(prezrto, če ni poti obrezovanja)"
 
-#: plug-ins/file-psd/psd.c:289
+#: plug-ins/file-psd/psd.c:293
 msgid "Path _Flatness"
 msgstr "Plos_kost poti"
 
-#: plug-ins/file-psd/psd.c:290
+#: plug-ins/file-psd/psd.c:294
 msgid ""
 "Clipping path flatness in device pixels\n"
 "(ignored if no clipping path)"
@@ -11030,19 +11032,19 @@ msgstr ""
 "Ploskost poti obrezovanja v slik. točkah naprave\n"
 "(prezrto, če ni poti izrezovanja)"
 
-#: plug-ins/file-psd/psd.c:296
+#: plug-ins/file-psd/psd.c:300
 msgid "Export as _CMYK"
 msgstr "Izvozi kot _CMYK"
 
-#: plug-ins/file-psd/psd.c:297
+#: plug-ins/file-psd/psd.c:301
 msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgstr "Izvozite sliko PSD CMYK z uporabo barvnega profila preverjanja videza"
 
-#: plug-ins/file-psd/psd.c:302
+#: plug-ins/file-psd/psd.c:306
 msgid "Export as _Duotone"
 msgstr "Izvoz kot _dvotonalno (duotone)"
 
-#: plug-ins/file-psd/psd.c:303
+#: plug-ins/file-psd/psd.c:307
 msgid ""
 "Export as a Duotone PSD file if Duotone color space information was attached "
 "to the image when originally imported."
@@ -11050,15 +11052,15 @@ msgstr ""
 "Izvozite kot dvotonalno datoteko PSD (duotone), če so bili podatki o barvnem "
 "prostoru duotone priloženi sliki ob prvotnem uvozu."
 
-#: plug-ins/file-psd/psd.c:411
+#: plug-ins/file-psd/psd.c:454
 msgid "Import PSD"
 msgstr "Uvozi PSD"
 
-#: plug-ins/file-psd/psd.c:562
+#: plug-ins/file-psd/psd.c:605
 msgid "Import PSD metadata"
 msgstr "Uvozi metapodatke PSD"
 
-#: plug-ins/file-psd/psd.c:566
+#: plug-ins/file-psd/psd.c:609
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr ""
@@ -11263,35 +11265,51 @@ msgstr "Neveljavno število kanalov: %hu"
 msgid "Could not open '%s' for writing."
 msgstr "Datoteke »%s« ni mogoče odpreti za pisanje."
 
-#: plug-ins/file-tiff/file-tiff.c:141
+#: plug-ins/file-tiff/file-tiff.c:148
+msgid "Standard (pages)"
+msgstr "Navadno (strani)"
+
+#: plug-ins/file-tiff/file-tiff.c:148
+msgid "Store layers in TIFF directories (IFDs)"
+msgstr "Shrani plasti v mape TIFF (IFD-je)"
+
+#: plug-ins/file-tiff/file-tiff.c:149
+msgid "Photoshop (embedded layers)"
+msgstr "Photoshop (vdelane plasti)"
+
+#: plug-ins/file-tiff/file-tiff.c:149
+msgid "Store layers in TIFF tags (ImageSourceData/Photoshop)"
+msgstr "Shrani plasti v značke TIFF (ImageSourceData/Photoshop)"
+
+#: plug-ins/file-tiff/file-tiff.c:153
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/file-tiff/file-tiff.c:142
+#: plug-ins/file-tiff/file-tiff.c:154
 msgid "Pack Bits"
 msgstr "Zloži bite"
 
-#: plug-ins/file-tiff/file-tiff.c:143
+#: plug-ins/file-tiff/file-tiff.c:155
 msgid "Deflate"
 msgstr "Stisni"
 
-#: plug-ins/file-tiff/file-tiff.c:145
+#: plug-ins/file-tiff/file-tiff.c:157
 msgid "CCITT Group 3 fax"
 msgstr "Telefaks CCITT Group 3"
 
-#: plug-ins/file-tiff/file-tiff.c:146
+#: plug-ins/file-tiff/file-tiff.c:158
 msgid "CCITT Group 4 fax"
 msgstr "Telefaks CCITT Group 4"
 
-#: plug-ins/file-tiff/file-tiff.c:174 plug-ins/file-tiff/file-tiff.c:220
+#: plug-ins/file-tiff/file-tiff.c:186 plug-ins/file-tiff/file-tiff.c:238
 msgid "TIFF or BigTIFF image"
 msgstr "Slika TIFF ali BigTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:177
+#: plug-ins/file-tiff/file-tiff.c:189
 msgid "Loads files of the TIFF and BigTIFF file formats"
 msgstr "Naloži datoteke v zapisih datotek TIFF in BigTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:178
+#: plug-ins/file-tiff/file-tiff.c:190
 msgid ""
 "Loads files of the Tag Image File Format (TIFF) and its 64-bit offsets "
 "variant (BigTIFF)"
@@ -11299,15 +11317,27 @@ msgstr ""
 "Naloži datoteke oblike zapisa slikovne datoteke oznake (TIFF) in njene 64-"
 "bitne različice odmikov (BigTIFF)."
 
+#: plug-ins/file-tiff/file-tiff.c:208
+msgid "Keep composite image"
+msgstr "Ohrani sestavljeno sliko"
+
 #: plug-ins/file-tiff/file-tiff.c:209
+msgid ""
+"Keep the composite image of Sketchbook or Photoshop TIFF files as additional "
+"layer"
+msgstr ""
+"Ohranite sestavljeno sliko datotek TIFF Sketchbook ali Photoshop kot dodatno "
+"plast"
+
+#: plug-ins/file-tiff/file-tiff.c:227
 msgid "_Keep empty space around imported layers"
 msgstr "O_hrani prazni prostor okoli uvoženih plasti"
 
-#: plug-ins/file-tiff/file-tiff.c:223
+#: plug-ins/file-tiff/file-tiff.c:241
 msgid "Exports files in the TIFF or BigTIFF file formats"
 msgstr "Izvozi datoteke v zapisu slikovnih datotek TIFF ali BigTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:224
+#: plug-ins/file-tiff/file-tiff.c:242
 msgid ""
 "Exports files in the Tag Image File Format (TIFF) or its 64-bit offsets "
 "variant (BigTIFF) able to support much bigger file sizes"
@@ -11315,15 +11345,15 @@ msgstr ""
 "Izvozi datoteke v obliki zapisa slikovne datoteke TIFF ali njeni 64-bitni "
 "različici odmika (BigTIFF), ki lahko podpira veliko večje datoteke."
 
-#: plug-ins/file-tiff/file-tiff.c:236
+#: plug-ins/file-tiff/file-tiff.c:254
 msgid "TIFF"
 msgstr "TIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:248
+#: plug-ins/file-tiff/file-tiff.c:266
 msgid "Export in _BigTIFF variant file format"
 msgstr "Izvozi sliko v zapisu datoteke _BigTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:249
+#: plug-ins/file-tiff/file-tiff.c:267
 msgid ""
 "The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
 "4GiB files and bigger"
@@ -11331,15 +11361,15 @@ msgstr ""
 "Zapis datotek BigTIFF uporablja 64-bitne zamike, zato podpira tudi datoteke, "
 "večje od 4 GB"
 
-#: plug-ins/file-tiff/file-tiff.c:255
+#: plug-ins/file-tiff/file-tiff.c:273
 msgid "Co_mpression"
 msgstr "_Stiskanje"
 
-#: plug-ins/file-tiff/file-tiff.c:256
+#: plug-ins/file-tiff/file-tiff.c:274
 msgid "Compression type"
 msgstr "Vrsta stiskanja"
 
-#: plug-ins/file-tiff/file-tiff.c:262
+#: plug-ins/file-tiff/file-tiff.c:280
 msgid ""
 "Keep the color data masked by an alpha channel intact (do not store "
 "premultiplied components)"
@@ -11347,42 +11377,66 @@ msgstr ""
 "Ohrani barvne podatke, ki so maskirani s kanalom alfa, nedotaknjene (ne "
 "shranjuj predhodno pomnoženih komponent)"
 
-#: plug-ins/file-tiff/file-tiff.c:269
+#: plug-ins/file-tiff/file-tiff.c:287
 msgid "Create a CMYK TIFF image using the soft-proofing color profile"
 msgstr ""
 "Ustvarite sliko TIFF CMYK z uporabo barvnega profila preverjanja videza"
 
-#: plug-ins/file-tiff/file-tiff.c:274
+#: plug-ins/file-tiff/file-tiff.c:292
+msgid "Format"
+msgstr "Oblika"
+
+#: plug-ins/file-tiff/file-tiff.c:293
+msgid ""
+"How layers are stored: as TIFF directories (IFDs) or as TIFF tags (Photoshop/"
+"ImageSourceData)"
+msgstr ""
+"Kako so shranjene plasti: kot mape TIFF (IFD-ji) ali kot značke TIFF "
+"(Photoshop/ImageSourceData)"
+
+#: plug-ins/file-tiff/file-tiff.c:300
 msgid "Save La_yers"
 msgstr "Shrani p_lasti"
 
-#: plug-ins/file-tiff/file-tiff.c:275
+#: plug-ins/file-tiff/file-tiff.c:301
 msgid "Save Layers"
 msgstr "Shrani plasti"
 
-#: plug-ins/file-tiff/file-tiff.c:280
+#: plug-ins/file-tiff/file-tiff.c:306
 msgid "Crop L_ayers"
 msgstr "_Obreži plasti"
 
-#: plug-ins/file-tiff/file-tiff.c:281
+#: plug-ins/file-tiff/file-tiff.c:307
 msgid "Crop Layers"
 msgstr "Obreži plasti"
 
-#: plug-ins/file-tiff/file-tiff.c:286
+#: plug-ins/file-tiff/file-tiff.c:312
 msgid "Save _GeoTIFF data"
 msgstr "Shrani podatke _GeoTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:287
+#: plug-ins/file-tiff/file-tiff.c:313
 msgid "Save GeoTIFF data"
 msgstr "Shrani podatke GeoTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:426
+#: plug-ins/file-tiff/file-tiff.c:318
+msgid "Save Photoshop metadata"
+msgstr "Slika metapodatke Photoshop"
+
+#: plug-ins/file-tiff/file-tiff.c:319
+msgid ""
+"Store Photoshop image resources (paths, alpha channel names, ...) in TIFF "
+"tag (Photoshop)"
+msgstr ""
+"Shrani vire slike Photoshop (poti, imena kanalov alfa, …) v značke TIFF "
+"(Photoshop)"
+
+#: plug-ins/file-tiff/file-tiff.c:548
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
 "Možnost »Shrani plasti« ni nastavljena, ko skušate izvoziti več plasti."
 
-#: plug-ins/file-tiff/file-tiff-export.c:651
+#: plug-ins/file-tiff/file-tiff-export.c:516
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -11390,11 +11444,11 @@ msgstr ""
 "Z algoritmoma »CCITT Group 4« in »CCITT Group 3« lahko stiskate samo "
 "enobarvne slike."
 
-#: plug-ins/file-tiff/file-tiff-export.c:665
+#: plug-ins/file-tiff/file-tiff-export.c:530
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Indeksiranih slik ni mogoče stisniti z »JPEG«."
 
-#: plug-ins/file-tiff/file-tiff-export.c:724
+#: plug-ins/file-tiff/file-tiff-export.c:589
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -11407,12 +11461,12 @@ msgstr ""
 msgid "Failed a scanline write on row %d"
 msgstr "Spodletelo pisanje črte v vrstici %d"
 
-#: plug-ins/file-tiff/file-tiff-export.c:1202
+#: plug-ins/file-tiff/file-tiff-export.c:1246
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Zapisovanje strani z različnimi bitnimi globinami je čudno."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1277
+#: plug-ins/file-tiff/file-tiff-export.c:1369
 msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
@@ -11420,7 +11474,7 @@ msgstr ""
 "Opozorilo: največja velikost datoteke TIFF je presežena. Poskusite znova v "
 "zapisu BigTIFF, z drugim algoritmom stiskanja ali prekličite dejanje."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1336
+#: plug-ins/file-tiff/file-tiff-export.c:1426
 #, c-format
 msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
@@ -11429,17 +11483,17 @@ msgstr ""
 "Dodeljen profil preverjanja videza ni profil CMYK.\n"
 "Ta profil ne bo vključen v izvoženo sliko."
 
-#: plug-ins/file-tiff/file-tiff-load.c:312
+#: plug-ins/file-tiff/file-tiff-load.c:327
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Ni slika TIFF ali pa je slika okvarjena."
 
-#: plug-ins/file-tiff/file-tiff-load.c:339
+#: plug-ins/file-tiff/file-tiff-load.c:356
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF »%s« ne vsebuje nobenih map"
 
-#: plug-ins/file-tiff/file-tiff-load.c:346
+#: plug-ins/file-tiff/file-tiff-load.c:363
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -11460,7 +11514,7 @@ msgstr[3] ""
 "Štetje map TIFF »%s« po glavi je spodletelo, čeprav se zdi, da so %d strani. "
 "Sledi poskus nalaganja datoteke s to predpostavko."
 
-#: plug-ins/file-tiff/file-tiff-load.c:477
+#: plug-ins/file-tiff/file-tiff-load.c:494
 msgid "Extra channels with unspecified data."
 msgstr "Dodatni kanali z nedoločenimi podatki."
 
@@ -11471,16 +11525,16 @@ msgstr "Dodatni kanali z nedoločenimi podatki."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:489
+#: plug-ins/file-tiff/file-tiff-load.c:506
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Nekonformni TIFF: dodatni kanali brez polja »ExtraSamples«."
 
-#: plug-ins/file-tiff/file-tiff-load.c:586
+#: plug-ins/file-tiff/file-tiff-load.c:642
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Strani %d od %d ni možno prebrati. Slika je morda okvarjena.\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:615
+#: plug-ins/file-tiff/file-tiff-load.c:671
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -11489,7 +11543,7 @@ msgstr ""
 "Ta slika ima linearen barvni profil, vendar ni nastavljen na prvi plasti. "
 "Plasti pod plastjo št. %d bodo tolmačene kot nelinearne."
 
-#: plug-ins/file-tiff/file-tiff-load.c:623
+#: plug-ins/file-tiff/file-tiff-load.c:679
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -11499,32 +11553,32 @@ msgstr ""
 "v nepravilne rezultate, poskusite naložiti vsako plast posebej kot ločeno "
 "sliko."
 
-#: plug-ins/file-tiff/file-tiff-load.c:635
+#: plug-ins/file-tiff/file-tiff-load.c:691
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "Sumljiva bitna globina: %d za stran %d. Slika je morda okvarjena."
 
-#: plug-ins/file-tiff/file-tiff-load.c:709
+#: plug-ins/file-tiff/file-tiff-load.c:765
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Nepodprta bitna globina: %d za stran %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:724
+#: plug-ins/file-tiff/file-tiff-load.c:780
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Širine slike iz »%s« ni mogoče pridobiti"
 
-#: plug-ins/file-tiff/file-tiff-load.c:732
+#: plug-ins/file-tiff/file-tiff-load.c:788
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Dolžine slike iz »%s« ni mogoče pridobiti"
 
-#: plug-ins/file-tiff/file-tiff-load.c:740
+#: plug-ins/file-tiff/file-tiff-load.c:796
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr "Neveljavne mere slike (%u x %u) za stran %d. Slika je morda okvarjena."
 
-#: plug-ins/file-tiff/file-tiff-load.c:761
+#: plug-ins/file-tiff/file-tiff-load.c:817
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -11533,7 +11587,7 @@ msgstr ""
 "Fotometrije ni mogoče pridobiti iz »%s«. Slika je stisnjeni CCITT, predviden "
 "bo parameter min-is-white"
 
-#: plug-ins/file-tiff/file-tiff-load.c:768
+#: plug-ins/file-tiff/file-tiff-load.c:824
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -11542,7 +11596,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:800
+#: plug-ins/file-tiff/file-tiff-load.c:856
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -11550,7 +11604,7 @@ msgstr ""
 "Vrsta kanala alfa ni določena za %s. Predvideno bo, da alfa ni vnaprej "
 "množena."
 
-#: plug-ins/file-tiff/file-tiff-load.c:825
+#: plug-ins/file-tiff/file-tiff-load.c:881
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -11561,44 +11615,44 @@ msgstr ""
 "nastavljeno, medtem ko so prisotni dodatni kanali. Predvideno bo, da je prvi "
 "dodatni kanal ne vnaprej množena alfa."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1114
+#: plug-ins/file-tiff/file-tiff-load.c:1170
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Neveljavno ali neznano stiskanje %u. Nastavljanje stiskanja na »brez«."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1172
+#: plug-ins/file-tiff/file-tiff-load.c:1228
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Nove slike ni mogoče ustvariti: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1359
+#: plug-ins/file-tiff/file-tiff-load.c:1414
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Neznana vrsta enot ločljivosti %d, predvidevamo dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1369
+#: plug-ins/file-tiff/file-tiff-load.c:1424
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 "Opozorilo: navedena je ločljivost brez vrste enot, predvideno gre za dpi"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1377
+#: plug-ins/file-tiff/file-tiff-load.c:1432
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Opozorilo: ni podatkov ločljivosti x, predvideno bo enako kot x"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1398
+#: plug-ins/file-tiff/file-tiff-load.c:1453
 msgid "Invalid image resolution info, using default"
 msgstr ""
 "Neveljavni podatki o ločljivosti slike, uporabljena bo privzeta vrednost"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1460
+#: plug-ins/file-tiff/file-tiff-load.c:1515
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Barvnih vnosov oz. kataloga barv iz »%s« ni mogoče prebrati"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1469
+#: plug-ins/file-tiff/file-tiff-load.c:1524
 msgid ""
 "Indexed TIFFs with color maps larger than 256 colors are not yet supported"
 msgstr ""
@@ -11610,51 +11664,47 @@ msgstr ""
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1559
+#: plug-ins/file-tiff/file-tiff-load.c:1614
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "Sumljivo število dodatnih kanalov: %d. Možna okvara slike."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1624
+#: plug-ins/file-tiff/file-tiff-load.c:1628
+#: plug-ins/file-tiff/file-tiff-load.c:1655
+msgid "Composite"
+msgstr "Sestavek"
+
+#: plug-ins/file-tiff/file-tiff-load.c:1721
 msgid "TIFF Channel"
 msgstr "Kanal TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1782
+#: plug-ins/file-tiff/file-tiff-load.c:1911
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Podatkov ni mogoče prebrati iz TIFF »%s«. Datoteka je najverjetneje "
 "okvarjena."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1818
-#: plug-ins/file-tiff/file-tiff-load.c:1862
-#, c-format
-msgid ""
-"Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
-msgstr ""
-"Napaka pri odpiranju začasne %s-datoteke »%s« za nalaganje metapodatkov "
-"tiff: %s"
-
-#: plug-ins/file-tiff/file-tiff-load.c:1951
+#: plug-ins/file-tiff/file-tiff-load.c:1991
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: nepodprta vrsta slike, nalagalnik RGBA ni na voljo"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2077
-#: plug-ins/file-tiff/file-tiff-load.c:2285
+#: plug-ins/file-tiff/file-tiff-load.c:2123
+#: plug-ins/file-tiff/file-tiff-load.c:2343
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 "Branje datoteke je spodletelo. Slika je morda okvarjena pri vrstici %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2086
-#: plug-ins/file-tiff/file-tiff-load.c:2294
+#: plug-ins/file-tiff/file-tiff-load.c:2132
+#: plug-ins/file-tiff/file-tiff-load.c:2352
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Branje vrstice je spodletelo. Slika je morda okvarjena pri vrstici %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2553
+#: plug-ins/file-tiff/file-tiff-load.c:2615
 #, c-format
 msgid ""
 "Invalid image dimensions (%u x %u) for Sketchbook layer %i. Image may be "
@@ -11663,27 +11713,37 @@ msgstr ""
 "Neveljavne mere slike (%u x %u) za plast Sketchbook %i. Slika je morda "
 "okvarjena."
 
-#: plug-ins/file-tiff/file-tiff-load.c:3065
+#: plug-ins/file-tiff/file-tiff-load.c:2767
+#: plug-ins/file-tiff/file-tiff-load.c:2819
+#, c-format
+msgid ""
+"Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
+msgstr ""
+"Napaka pri odpiranju začasne %s-datoteke »%s« za nalaganje metapodatkov "
+"tiff: %s"
+
+#: plug-ins/file-tiff/file-tiff-load.c:3248
 msgid "Import from TIFF"
 msgstr "Uvozi iz TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3075
+#. Show Reduced
+#: plug-ins/file-tiff/file-tiff-load.c:3271
 msgid "_Show reduced images"
 msgstr "_Pokaži pomanjšane slike"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3118
+#: plug-ins/file-tiff/file-tiff-load.c:3323
 msgid "Process extra channel as:"
 msgstr "Obdelaj dodatni kanal kot:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3121
+#: plug-ins/file-tiff/file-tiff-load.c:3326
 msgid "_Non-premultiplied alpha"
 msgstr "Vnaprej _ne pomnožena alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3122
+#: plug-ins/file-tiff/file-tiff-load.c:3327
 msgid "Pre_multiplied alpha"
 msgstr "_Vnaprej pomnožena alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3123
+#: plug-ins/file-tiff/file-tiff-load.c:3328
 msgid "Channe_l"
 msgstr "Kana_l"
 
