@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-23 14:35+0000\n"
-"PO-Revision-Date: 2026-05-23 16:46+0200\n"
+"POT-Creation-Date: 2026-05-24 21:45+0000\n"
+"PO-Revision-Date: 2026-05-25 09:33+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -145,7 +145,7 @@ msgstr "Plug-in voorbeeld in Javascript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4063 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:4082 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -256,7 +256,7 @@ msgstr "_Horizontale stijl"
 
 #: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
-#: plug-ins/file-dds/dds.c:197 plug-ins/file-tiff/file-tiff.c:140
+#: plug-ins/file-dds/dds.c:197 plug-ins/file-tiff/file-tiff.c:152
 #: plug-ins/fractal-explorer/fractal-explorer.c:345
 #: plug-ins/fractal-explorer/fractal-explorer.c:355
 #: plug-ins/fractal-explorer/fractal-explorer.c:365
@@ -601,7 +601,7 @@ msgstr "Rolgordijnen"
 #: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1246
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
-#: plug-ins/common/file-drhalo.c:242 plug-ins/common/file-farbfeld.c:307
+#: plug-ins/common/file-drhalo.c:238 plug-ins/common/file-farbfeld.c:307
 #: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1229
 #: plug-ins/common/file-iff.c:431 plug-ins/common/file-jp2.c:1629
 #: plug-ins/common/file-macpaint.c:247 plug-ins/common/file-pcx.c:727
@@ -618,9 +618,9 @@ msgstr "Rolgordijnen"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3238 plug-ins/file-sgi/sgi.c:456
-#: plug-ins/file-tiff/file-tiff-load.c:1587
-#: plug-ins/file-tiff/file-tiff-load.c:2441
+#: plug-ins/file-psd/psd-load.c:3257 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-tiff/file-tiff-load.c:1666
+#: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
 #: plug-ins/gfig/gfig-dialog.c:1262 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:241
@@ -1247,9 +1247,10 @@ msgstr "CML-verkennerparameters opslaan"
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2450
-#: plug-ins/file-tiff/file-tiff-export.c:1087
-#: plug-ins/file-tiff/file-tiff-export.c:1177 plug-ins/flame/flame.c:586
+#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2532
+#: plug-ins/file-psd/psd-export.c:2700
+#: plug-ins/file-tiff/file-tiff-export.c:1101
+#: plug-ins/file-tiff/file-tiff-export.c:1221 plug-ins/flame/flame.c:586
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1396
 #: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
 #: plug-ins/lighting/lighting-ui.c:796
@@ -1976,7 +1977,7 @@ msgstr "Kan niet op lege selecties werken."
 #  Do not rely on librsvg setting GError on failure!
 #: plug-ins/common/curve-bend.c:808 plug-ins/common/file-cel.c:330
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
-#: plug-ins/common/file-drhalo.c:202 plug-ins/common/file-farbfeld.c:273
+#: plug-ins/common/file-drhalo.c:201 plug-ins/common/file-farbfeld.c:273
 #: plug-ins/common/file-gif-load.c:481 plug-ins/common/file-iff.c:277
 #: plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:198
 #: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
@@ -2001,9 +2002,10 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/file-icns/file-icns-load.c:684 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
-#: plug-ins/file-psd/psd-export.c:2456 plug-ins/file-psd/psd-load.c:190
-#: plug-ins/file-psd/psd-load.c:195 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:540
+#: plug-ins/file-psd/psd-export.c:2538 plug-ins/file-psd/psd-export.c:2706
+#: plug-ins/file-psd/psd-load.c:190 plug-ins/file-psd/psd-load.c:195
+#: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
+#: plug-ins/flame/flame.c:540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
 #: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:529
 #: plug-ins/help/gimphelplocale.c:257 plug-ins/help/gimphelplocale.c:273
@@ -2469,11 +2471,11 @@ msgstr "Witniveau"
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Afbeeldingsafmetingen te groot: breedte %d x hoogte %d"
 
-#: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:258
+#: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:3617 plug-ins/file-tiff/file-tiff-load.c:1944
-#: plug-ins/file-tiff/file-tiff-load.c:2038
-#: plug-ins/file-tiff/file-tiff-load.c:2226
+#: plug-ins/file-psd/psd-load.c:3636 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-tiff/file-tiff-load.c:2081
+#: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
 msgid "There was not enough memory to complete the operation."
 msgstr "Onvoldoende geheugen om de bewerking te voltooien."
@@ -2613,7 +2615,7 @@ msgstr "EOF of fout tijdens lezen afbeeldings-header"
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
-#: plug-ins/file-tiff/file-tiff-load.c:304
+#: plug-ins/file-tiff/file-tiff-load.c:319
 #, c-format
 msgid "Opening '%s'"
 msgstr "Openen van ‘%s’"
@@ -2689,8 +2691,8 @@ msgstr "‘%s’: EOF of fout tijdens lezen paletdata"
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2388
-#: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
+#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2470
+#: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1091
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exporteren van ‘%s’"
@@ -2972,23 +2974,23 @@ msgid "Load Dr. Halo CUT image format"
 msgstr "Laad Dr. Halo CUT afbeeldingsindeling"
 
 #  Do not rely on librsvg setting GError on failure!
-#: plug-ins/common/file-drhalo.c:214
+#: plug-ins/common/file-drhalo.c:211
 #, c-format
 msgid "Cannot open file for reading: %s\n"
 msgstr "Kan bestand niet openen om te lezen: %s\n"
 
-#: plug-ins/common/file-drhalo.c:227
+#: plug-ins/common/file-drhalo.c:223
 #, c-format
 msgid "Invalid dimensions: %d x %d"
 msgstr "Ongeldige afmetingen: %d x %d"
 
-#: plug-ins/common/file-drhalo.c:282 plug-ins/common/file-drhalo.c:288
-#: plug-ins/common/file-drhalo.c:303 plug-ins/common/file-drhalo.c:309
+#: plug-ins/common/file-drhalo.c:278 plug-ins/common/file-drhalo.c:284
+#: plug-ins/common/file-drhalo.c:299 plug-ins/common/file-drhalo.c:305
 #, c-format
 msgid "Error reading data. Image may be corrupt."
 msgstr "Fout bij het lezen van gegevens. Afbeelding kan beschadigd zijn."
 
-#: plug-ins/common/file-drhalo.c:324 plug-ins/common/file-drhalo.c:346
+#: plug-ins/common/file-drhalo.c:320 plug-ins/common/file-drhalo.c:342
 msgid "Invalid data: image may be corrupt."
 msgstr "Ongeldige gegevens: afbeelding zou corrupt kunnen zijn."
 
@@ -4107,20 +4109,20 @@ msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Niet-ondersteunde JPEG 2000%s ‘%s’ met %d componenten."
 
 #: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:887
-#: plug-ins/file-psd/psd-export.c:2726
-#: plug-ins/file-tiff/file-tiff-export.c:1311
+#: plug-ins/file-psd/psd-export.c:2970
+#: plug-ins/file-tiff/file-tiff-export.c:1390
 msgid "No soft-proofing profile"
 msgstr "Geen afdrukvoorbeeld-profiel"
 
 #: plug-ins/common/file-jp2.c:1309 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2734
-#: plug-ins/file-tiff/file-tiff-export.c:1319
+#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2978
+#: plug-ins/file-tiff/file-tiff-export.c:1399
 msgid "Name of the color profile used for CMYK export."
 msgstr "Naam van het kleurprofiel om te gebruiken voor CMYK export."
 
 #: plug-ins/common/file-jp2.c:1320 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2745
-#: plug-ins/file-tiff/file-tiff-export.c:1331
+#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2989
+#: plug-ins/file-tiff/file-tiff-export.c:1421
 #, c-format
 msgid "Profile: %s"
 msgstr "Profiel: %s"
@@ -4258,7 +4260,7 @@ msgstr "kat"
 msgid "tortoise (slower)"
 msgstr "schildpad (langzamer)"
 
-#: plug-ins/common/file-jpegxl.c:227 plug-ins/file-tiff/file-tiff.c:268
+#: plug-ins/common/file-jpegxl.c:227 plug-ins/file-tiff/file-tiff.c:286
 msgid "Export as CMY_K"
 msgstr "Afbeelding als CMY_K exporteren"
 
@@ -4626,14 +4628,14 @@ msgstr "‘%s’ is geen PCX-bestand"
 
 #: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:625
+#: plug-ins/file-psd/psd-load.c:643
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Ongeldige of niet-ondersteunde afbeeldingsbreedte: %d"
 
 #: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:617
+#: plug-ins/file-psd/psd-load.c:635
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Ongeldige of niet-ondersteunde afbeeldingshoogte: %d"
@@ -4838,7 +4840,7 @@ msgstr "Deze afbeelding toevoegen"
 #: plug-ins/common/file-pdf-export.c:1201
 #: plug-ins/common/file-pdf-export.c:1274
 #: plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2233
-#: plug-ins/file-tiff/file-tiff-load.c:1589
+#: plug-ins/file-tiff/file-tiff-load.c:1668
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
@@ -5009,7 +5011,7 @@ msgstr "Een pHYs blok opslaan (PNG metagegevens)"
 msgid "Write tIME chunk (PNG metadata)"
 msgstr "Een tIME blok opslaan (PNG metagegevens)"
 
-#: plug-ins/common/file-png.c:381 plug-ins/file-tiff/file-tiff.c:261
+#: plug-ins/common/file-png.c:381 plug-ins/file-tiff/file-tiff.c:279
 msgid "Save color _values from transparent pixels"
 msgstr "Kleurwaarden van transparante beeldpunten opslaan"
 
@@ -6517,7 +6519,7 @@ msgstr "_Titel"
 
 #: plug-ins/common/file-svg.c:357
 msgid "Optional <title> for SVG"
-msgstr "Optionele <titel> voor SVG"
+msgstr "Optionele <title> voor SVG"
 
 #: plug-ins/common/file-svg.c:362
 msgid "Em_bed raster layers as"
@@ -10377,7 +10379,7 @@ msgstr "Exporteren van bestanden in de JPEG-bestandsindeling"
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "Exporteren van bestanden in de alom bekende JPEG-bestandsindeling"
 
-#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:144
+#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:156
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -10506,67 +10508,67 @@ msgstr "Oudere software kan wiskundig gecodeerde afbeeldingen mogelijk niet open
 msgid "Use restart mar_kers"
 msgstr "He_rstartmarkeringen gebruiken"
 
-#: plug-ins/file-psd/psd-export.c:573
+#: plug-ins/file-psd/psd-export.c:585
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Fout: kan GIMP basisafbeeldingstype niet omzetten naar PSD-modus"
 
-#: plug-ins/file-psd/psd-export.c:2375
+#: plug-ins/file-psd/psd-export.c:2457 plug-ins/file-psd/psd-export.c:2627
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling PSD ondersteunt geen afbeeldingen die meer dan 30.000 pixels breed of hoog zijn."
 
-#: plug-ins/file-psd/psd-export.c:2381
+#: plug-ins/file-psd/psd-export.c:2463 plug-ins/file-psd/psd-export.c:2633
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images that are "
 "more than 300,000 pixels wide or tall."
 msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling PSB ondersteunt geen afbeeldingen die meer dan 300.000 pixels breed of hoog zijn."
 
-#: plug-ins/file-psd/psd-export.c:2423
+#: plug-ins/file-psd/psd-export.c:2505 plug-ins/file-psd/psd-export.c:2673
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling PSD ondersteunt geen afbeeldingen met lagen die meer dan 30.000 pixels breed of hoog zijn."
 
-#: plug-ins/file-psd/psd-export.c:2429
+#: plug-ins/file-psd/psd-export.c:2511 plug-ins/file-psd/psd-export.c:2679
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images with "
 "layers that are more than 300,000 pixels wide or tall."
 msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling PSB ondersteunt geen afbeeldingen met lagen die meer dan 300.000 pixels breed of hoog zijn."
 
-#: plug-ins/file-psd/psd-export.c:2769
+#: plug-ins/file-psd/psd-export.c:3013
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
 msgstr "Duotoon kleurruimte informatie uit de originele\n"
 "geïmporteerde afbeelding zal worden gebruikt."
 
-#: plug-ins/file-psd/psd-export.c:2838
+#: plug-ins/file-psd/psd-export.c:3082
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
 msgstr "PSD-bestanden kunnen maximaal 998 paden opslaan. \n"
 "De rest zal worden genegeerd."
 
-#: plug-ins/file-psd/psd-export.c:2948
+#: plug-ins/file-psd/psd-export.c:3192
 msgid "Indexed Image Warning"
 msgstr "Waarschuwing geïndexeerd bestand"
 
-#: plug-ins/file-psd/psd-export.c:2949
+#: plug-ins/file-psd/psd-export.c:3193
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
 msgstr "Photoshop ondersteunt geen geïndexeerde afbeeldingen die meer dan een laag hebben. Lagen zullen bij exporteren worden samengevoegd."
 
-#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4102
+#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:4121
 msgid "Compatibility Notice"
 msgstr "Melding compatibiliteit"
 
-#: plug-ins/file-psd/psd-export.c:2971
+#: plug-ins/file-psd/psd-export.c:3215
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -10579,124 +10581,124 @@ msgstr "Oudere modi voor lagen hebben een betere compatibiliteit met Photoshop, 
 msgid "Error loading PSD file: %s"
 msgstr "Fout bij laden PSD-bestand: %s"
 
-#: plug-ins/file-psd/psd-load.c:492
+#: plug-ins/file-psd/psd-load.c:510
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Ongeldige PSD metagegevenslaag formaat"
 
-#: plug-ins/file-psd/psd-load.c:596
+#: plug-ins/file-psd/psd-load.c:614
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Geen geldig Photoshop-bestand"
 
-#: plug-ins/file-psd/psd-load.c:603
+#: plug-ins/file-psd/psd-load.c:621
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Niet-ondersteunde versie van bestandsindeling: %d"
 
-#: plug-ins/file-psd/psd-load.c:610
+#: plug-ins/file-psd/psd-load.c:628
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Te veel kanalen in bestand: %d"
 
-#: plug-ins/file-psd/psd-load.c:634
+#: plug-ins/file-psd/psd-load.c:652
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige beeldgrootte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:649 plug-ins/file-psd/psd-load.c:659
+#: plug-ins/file-psd/psd-load.c:667 plug-ins/file-psd/psd-load.c:677
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Niet-ondersteunde kleurmodus: %s"
 
-#: plug-ins/file-psd/psd-load.c:686
+#: plug-ins/file-psd/psd-load.c:704
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Niet-ondersteunde bitdiepte: %d"
 
-#: plug-ins/file-psd/psd-load.c:720 plug-ins/file-psd/psd-load.c:730
-#: plug-ins/file-psd/psd-load.c:981 plug-ins/file-psd/psd-load.c:1342
+#: plug-ins/file-psd/psd-load.c:738 plug-ins/file-psd/psd-load.c:748
+#: plug-ins/file-psd/psd-load.c:999 plug-ins/file-psd/psd-load.c:1360
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Het bestand is beschadigd!"
 
-#: plug-ins/file-psd/psd-load.c:910
+#: plug-ins/file-psd/psd-load.c:928
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Te veel kanalen in laag: %d"
 
-#: plug-ins/file-psd/psd-load.c:1017
+#: plug-ins/file-psd/psd-load.c:1035
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Niet-ondersteunde of ongeldige laaghoogte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1026
+#: plug-ins/file-psd/psd-load.c:1044
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Niet-ondersteunde of ongeldige laagbreedte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1036
+#: plug-ins/file-psd/psd-load.c:1054
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige laaggrootte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1061
+#: plug-ins/file-psd/psd-load.c:1079
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Niet-ondersteunde of ongeldige maskerinfo-grootte."
 
-#: plug-ins/file-psd/psd-load.c:1244
+#: plug-ins/file-psd/psd-load.c:1262
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Niet-ondersteunde of ongeldige hoogte laagmasker: %d"
 
-#: plug-ins/file-psd/psd-load.c:1253
+#: plug-ins/file-psd/psd-load.c:1271
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Niet-ondersteunde of ongeldige breedte laagmasker: %d"
 
-#: plug-ins/file-psd/psd-load.c:1263
+#: plug-ins/file-psd/psd-load.c:1281
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige grootte laagmasker: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3609
+#: plug-ins/file-psd/psd-load.c:1893 plug-ins/file-psd/psd-load.c:3628
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ongeldige of niet-ondersteunde kanaalgrootte"
 
-#: plug-ins/file-psd/psd-load.c:2251
+#: plug-ins/file-psd/psd-load.c:2270
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Ongeldige dimensies kanaal %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2319 plug-ins/file-psd/psd-load.c:3207
+#: plug-ins/file-psd/psd-load.c:2338 plug-ins/file-psd/psd-load.c:3226
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Niet-ondersteunde compressiemethode: %d"
 
-#: plug-ins/file-psd/psd-load.c:2936
+#: plug-ins/file-psd/psd-load.c:2955
 msgid "Inner Shadow"
 msgstr "Binnenste schaduw"
 
-#: plug-ins/file-psd/psd-load.c:2937
+#: plug-ins/file-psd/psd-load.c:2956
 msgid "imported"
 msgstr "geïmporteerd"
 
-#: plug-ins/file-psd/psd-load.c:3384
+#: plug-ins/file-psd/psd-load.c:3403
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:3686
+#: plug-ins/file-psd/psd-load.c:3705
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Kon gegevens niet decomprimeren"
 
-#: plug-ins/file-psd/psd-load.c:4079
+#: plug-ins/file-psd/psd-load.c:4098
 msgid "Duotone Import"
 msgstr "Duotone Import"
 
-#: plug-ins/file-psd/psd-load.c:4080
+#: plug-ins/file-psd/psd-load.c:4099
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10704,130 +10706,130 @@ msgid ""
 msgstr "Afbeelding zal worden geïmporteerd als Grijswaarden.\n"
 "Duotoon kleurruimte informatie is opgeslagen en kan bij exporteren opnieuw worden gebruikt."
 
-#: plug-ins/file-psd/psd-load.c:4103
+#: plug-ins/file-psd/psd-load.c:4122
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
 msgstr "Dit PSD-bestand bevat functies die\n"
 "nog niet volledig worden ondersteund in GIMP:"
 
-#: plug-ins/file-psd/psd.c:136 plug-ins/file-psd/psd.c:219
-#: plug-ins/file-psd/psd.c:221
+#: plug-ins/file-psd/psd.c:140 plug-ins/file-psd/psd.c:223
+#: plug-ins/file-psd/psd.c:225
 msgid "Photoshop image"
 msgstr "Photoshop-afbeelding"
 
-#: plug-ins/file-psd/psd.c:139 plug-ins/file-psd/psd.c:168
+#: plug-ins/file-psd/psd.c:143 plug-ins/file-psd/psd.c:172
 msgid "Loads images from the Photoshop PSD and PSB file formats"
 msgstr "Inladen van bestanden in de Photoshop PSD en PSB bestandsindeling"
 
-#: plug-ins/file-psd/psd.c:141
+#: plug-ins/file-psd/psd.c:145
 msgid ""
 "This plug-in loads images in Adobe Photoshop (TM) native PSD and PSB format."
 msgstr "Deze plug-in laadt afbeeldingen in de PSD en PSB bestandsindelingen van Adobe Photoshop (TM)."
 
-#: plug-ins/file-psd/psd.c:165
+#: plug-ins/file-psd/psd.c:169
 msgid "Photoshop image (merged)"
 msgstr "Photoshop-afbeelding (samengevoegd)"
 
-#: plug-ins/file-psd/psd.c:170
+#: plug-ins/file-psd/psd.c:174
 msgid ""
 "This plug-in loads the merged image data in Adobe Photoshop (TM) native PSD "
 "and PSB format."
 msgstr "Deze plug-in laadt samengevoegde afbeeldingsinformatie in de PSD en PSB bestandsindelingen van Adobe Photoshop (TM)."
 
-#: plug-ins/file-psd/psd.c:197
+#: plug-ins/file-psd/psd.c:201
 msgid "Loads thumbnails from the Photoshop PSD file format"
 msgstr "Inladen van miniaturen in de PSD-bestandsindeling van Photoshop"
 
-#: plug-ins/file-psd/psd.c:199
+#: plug-ins/file-psd/psd.c:203
 msgid ""
 "This plug-in loads thumbnail images from Adobe Photoshop (TM) native PSD "
 "format files."
 msgstr "Deze plug-in laadt Miniatuurafbeeldingen in de PSD bestandsindeling van Adobe Photoshop (TM)."
 
-#: plug-ins/file-psd/psd.c:224
+#: plug-ins/file-psd/psd.c:228
 msgid "Saves files in the Photoshop (TM) PSD file format"
 msgstr "Opslaan van bestanden in de PSD indeling van Adobe Photoshop (TM)"
 
-#: plug-ins/file-psd/psd.c:226
+#: plug-ins/file-psd/psd.c:230
 msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
 "layer masks, aux channels and guides."
 msgstr "Deze plug-in slaat bestanden van Adobe Photoshop (TM) eigen indeling PSD op. Deze bestanden zouden van elk type kunnen zijn dat wordt ondersteund door GIMP, met of zonder lagen, laagmaskers, aux-kanalen en hulplijnen."
 
-#: plug-ins/file-psd/psd.c:240 plug-ins/file-psd/psd.c:242
+#: plug-ins/file-psd/psd.c:244 plug-ins/file-psd/psd.c:246
 msgid "Photoshop Large image"
 msgstr "Photoshop Large-afbeelding"
 
-#: plug-ins/file-psd/psd.c:245
+#: plug-ins/file-psd/psd.c:249
 msgid "Saves files in the Photoshop (TM) Large PSB file format"
 msgstr "Slaat bestanden op in de bestandsindeling PSB van Photoshop (TM) Large"
 
-#: plug-ins/file-psd/psd.c:247
+#: plug-ins/file-psd/psd.c:251
 msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
 "These files may be of any image type supported by GIMP, with or without "
 "layers, layer masks, aux channels and guides."
 msgstr "Deze plug-in slaat bestanden van Adobe Photoshop (TM) Large eigen indeling PSB op. Deze bestanden zouden van elk type kunnen zijn dat wordt ondersteund door GIMP, met of zonder lagen, laagmaskers, aux-kanalen en hulplijnen."
 
-#: plug-ins/file-psd/psd.c:275
+#: plug-ins/file-psd/psd.c:279
 msgid "Assign a Clipping _Path"
 msgstr "Een _uitknippad toewijzen"
 
-#: plug-ins/file-psd/psd.c:276
+#: plug-ins/file-psd/psd.c:280
 msgid "Select a path to be the clipping path"
 msgstr "Wijs een pad aan als het uitknippad"
 
-#: plug-ins/file-psd/psd.c:282
+#: plug-ins/file-psd/psd.c:286
 msgid "Clipping Path _Name"
 msgstr "_Naam van uitknippad"
 
-#: plug-ins/file-psd/psd.c:283
+#: plug-ins/file-psd/psd.c:287
 msgid ""
 "Clipping path name\n"
 "(ignored if no clipping path)"
 msgstr "De naam voor het uitknippad\n"
 "(alleen als er een uitknippad is aangewezen)"
 
-#: plug-ins/file-psd/psd.c:289
+#: plug-ins/file-psd/psd.c:293
 msgid "Path _Flatness"
 msgstr "_Platheid van het pad"
 
-#: plug-ins/file-psd/psd.c:290
+#: plug-ins/file-psd/psd.c:294
 msgid ""
 "Clipping path flatness in device pixels\n"
 "(ignored if no clipping path)"
 msgstr "Platheid van het uitknippad\n"
 "(alleen als er een uitknippad is aangewezen)"
 
-#: plug-ins/file-psd/psd.c:296
+#: plug-ins/file-psd/psd.c:300
 msgid "Export as _CMYK"
 msgstr "Exporteren als _CMYK"
 
-#: plug-ins/file-psd/psd.c:297
+#: plug-ins/file-psd/psd.c:301
 msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgstr "Een CMYK PSD-afbeelding exporteren met behulp van het afdrukvoorbeeld-kleurprofiel"
 
-#: plug-ins/file-psd/psd.c:302
+#: plug-ins/file-psd/psd.c:306
 msgid "Export as _Duotone"
 msgstr "Exporteren als _Duotoon"
 
-#: plug-ins/file-psd/psd.c:303
+#: plug-ins/file-psd/psd.c:307
 msgid ""
 "Export as a Duotone PSD file if Duotone color space information was attached "
 "to the image when originally imported."
 msgstr "Exporteren als _Duotoon PSD-bestand als Duotoon-kleurruimte-informatie in de oorspronkelijke afbeelding was geïmporteerd."
 
-#: plug-ins/file-psd/psd.c:411
+#: plug-ins/file-psd/psd.c:454
 msgid "Import PSD"
 msgstr "PSD importeren"
 
-#: plug-ins/file-psd/psd.c:562
+#: plug-ins/file-psd/psd.c:605
 msgid "Import PSD metadata"
 msgstr "PSD-metagegevens importeren"
 
-#: plug-ins/file-psd/psd.c:566
+#: plug-ins/file-psd/psd.c:609
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr "Metagegevens opvullagen worden niet ondersteund en zullen als lege laag worden getoond."
@@ -11026,126 +11028,172 @@ msgstr "Ongeldig aantal kanalen: %hu"
 msgid "Could not open '%s' for writing."
 msgstr "Kan ‘%s’ niet openen om te schrijven."
 
-#: plug-ins/file-tiff/file-tiff.c:141
+#: plug-ins/file-tiff/file-tiff.c:148
+msgid "Standard (pages)"
+msgstr "Standaard (pagina's)"
+
+#: plug-ins/file-tiff/file-tiff.c:148
+msgid "Store layers in TIFF directories (IFDs)"
+msgstr "Lagen opslaan in mappen TIFF (IFD's)"
+
+#: plug-ins/file-tiff/file-tiff.c:149
+msgid "Photoshop (embedded layers)"
+msgstr "Photoshop (ingebedde lagen)"
+
+#: plug-ins/file-tiff/file-tiff.c:149
+msgid "Store layers in TIFF tags (ImageSourceData/Photoshop)"
+msgstr "Lagen opslaan in TIFF-tags (ImageSourceData/Photoshop)"
+
+#: plug-ins/file-tiff/file-tiff.c:153
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/file-tiff/file-tiff.c:142
+#: plug-ins/file-tiff/file-tiff.c:154
 msgid "Pack Bits"
 msgstr "Pack Bits"
 
-#: plug-ins/file-tiff/file-tiff.c:143
+#: plug-ins/file-tiff/file-tiff.c:155
 msgid "Deflate"
 msgstr "Deflate"
 
-#: plug-ins/file-tiff/file-tiff.c:145
+#: plug-ins/file-tiff/file-tiff.c:157
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Groep 3 fax"
 
-#: plug-ins/file-tiff/file-tiff.c:146
+#: plug-ins/file-tiff/file-tiff.c:158
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Groep 4 fax"
 
-#: plug-ins/file-tiff/file-tiff.c:174 plug-ins/file-tiff/file-tiff.c:220
+#: plug-ins/file-tiff/file-tiff.c:186 plug-ins/file-tiff/file-tiff.c:238
 msgid "TIFF or BigTIFF image"
 msgstr "TIFF- of BigTIFF-afbeelding"
 
-#: plug-ins/file-tiff/file-tiff.c:177
+#: plug-ins/file-tiff/file-tiff.c:189
 msgid "Loads files of the TIFF and BigTIFF file formats"
 msgstr "Inladen van bestanden in de bestandsindelingen TIFF en BigTiff"
 
-#: plug-ins/file-tiff/file-tiff.c:178
+#: plug-ins/file-tiff/file-tiff.c:190
 msgid ""
 "Loads files of the Tag Image File Format (TIFF) and its 64-bit offsets "
 "variant (BigTIFF)"
 msgstr "Inladen van bestanden in de bestandsindelingen Tag Image File Format en de 64-bit variant BigTiff"
 
+#: plug-ins/file-tiff/file-tiff.c:208
+msgid "Keep composite image"
+msgstr "Samengestelde afbeelding behouden"
+
 #: plug-ins/file-tiff/file-tiff.c:209
+msgid ""
+"Keep the composite image of Sketchbook or Photoshop TIFF files as additional "
+"layer"
+msgstr "Behoud de samengestelde afbeelding van Sketchbook of Photoshop TIFF-bestanden als aanvullende laag"
+
+#: plug-ins/file-tiff/file-tiff.c:227
 msgid "_Keep empty space around imported layers"
 msgstr "Lege _ruimte rond geïmporteerde lagen behouden"
 
-#: plug-ins/file-tiff/file-tiff.c:223
+#: plug-ins/file-tiff/file-tiff.c:241
 msgid "Exports files in the TIFF or BigTIFF file formats"
 msgstr "Exporteren van bestanden in de bestandsindelingen TIFF en BigTiff"
 
-#: plug-ins/file-tiff/file-tiff.c:224
+#: plug-ins/file-tiff/file-tiff.c:242
 msgid ""
 "Exports files in the Tag Image File Format (TIFF) or its 64-bit offsets "
 "variant (BigTIFF) able to support much bigger file sizes"
 msgstr "Exporteren van bestanden in de bestandsindelingen Tag Image File Format en de 64-bit variant BigTiff waarin veel grotere bestanden worden ondersteund"
 
-#: plug-ins/file-tiff/file-tiff.c:236
+#: plug-ins/file-tiff/file-tiff.c:254
 msgid "TIFF"
 msgstr "TIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:248
+#: plug-ins/file-tiff/file-tiff.c:266
 msgid "Export in _BigTIFF variant file format"
 msgstr "Exporteren in _BigTIFF-bestandsindeling variatie"
 
-#: plug-ins/file-tiff/file-tiff.c:249
+#: plug-ins/file-tiff/file-tiff.c:267
 msgid ""
 "The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
 "4GiB files and bigger"
 msgstr "De BigTIFF-bestandsindeling maakt gebruik van 64-bit adressen en ondersteunt dus bestanden van 4GiB en groter"
 
-#: plug-ins/file-tiff/file-tiff.c:255
+#: plug-ins/file-tiff/file-tiff.c:273
 msgid "Co_mpression"
 msgstr "_Compressie"
 
-#: plug-ins/file-tiff/file-tiff.c:256
+#: plug-ins/file-tiff/file-tiff.c:274
 msgid "Compression type"
 msgstr "Compressietype"
 
-#: plug-ins/file-tiff/file-tiff.c:262
+#: plug-ins/file-tiff/file-tiff.c:280
 msgid ""
 "Keep the color data masked by an alpha channel intact (do not store "
 "premultiplied components)"
 msgstr "Houd de kleurgegevens gemaskeerd door een alfakanaal intact (sla geen vooraf vermenigvuldigde componenten op)"
 
-#: plug-ins/file-tiff/file-tiff.c:269
+#: plug-ins/file-tiff/file-tiff.c:287
 msgid "Create a CMYK TIFF image using the soft-proofing color profile"
 msgstr "Een CMYK TIFF afbeelding maken met het kleurprofiel van het afdrukvoorbeeld"
 
-#: plug-ins/file-tiff/file-tiff.c:274
+#: plug-ins/file-tiff/file-tiff.c:292
+msgid "Format"
+msgstr "Indeling"
+
+#: plug-ins/file-tiff/file-tiff.c:293
+msgid ""
+"How layers are stored: as TIFF directories (IFDs) or as TIFF tags (Photoshop/"
+"ImageSourceData)"
+msgstr "Hoe lagen worden opgeslagen: al mappen TIFF (IFD's) of als TIFF-tags (Photoshop/ImageSourceData)"
+
+#: plug-ins/file-tiff/file-tiff.c:300
 msgid "Save La_yers"
 msgstr "_Lagen bewaren"
 
-#: plug-ins/file-tiff/file-tiff.c:275
+#: plug-ins/file-tiff/file-tiff.c:301
 msgid "Save Layers"
 msgstr "Lagen bewaren"
 
-#: plug-ins/file-tiff/file-tiff.c:280
+#: plug-ins/file-tiff/file-tiff.c:306
 msgid "Crop L_ayers"
 msgstr "Lagen bij_snijden"
 
-#: plug-ins/file-tiff/file-tiff.c:281
+#: plug-ins/file-tiff/file-tiff.c:307
 msgid "Crop Layers"
 msgstr "Lagen bijsnijden"
 
-#: plug-ins/file-tiff/file-tiff.c:286
+#: plug-ins/file-tiff/file-tiff.c:312
 msgid "Save _GeoTIFF data"
 msgstr "_GeoTIFF-gegevens opslaan"
 
-#: plug-ins/file-tiff/file-tiff.c:287
+#: plug-ins/file-tiff/file-tiff.c:313
 msgid "Save GeoTIFF data"
 msgstr "GeoTIFF-gegevens opslaan"
 
-#: plug-ins/file-tiff/file-tiff.c:426
+#: plug-ins/file-tiff/file-tiff.c:318
+msgid "Save Photoshop metadata"
+msgstr "Metadata Photoshop opslaan"
+
+#: plug-ins/file-tiff/file-tiff.c:319
+msgid ""
+"Store Photoshop image resources (paths, alpha channel names, ...) in TIFF "
+"tag (Photoshop)"
+msgstr "Sla bronnen voor de afbeelding van Photoshop (paden, alfakanaal namen, …) op in TIFF-tag (Photoshop)"
+
+#: plug-ins/file-tiff/file-tiff.c:548
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
-msgstr "\"Lagen opslaan\"-optie niet geactiveerd tijdens poging om meerdere lagen te exporteren."
+msgstr "Optie \"Lagen opslaan\" niet geactiveerd tijdens poging om meerdere lagen te exporteren."
 
-#: plug-ins/file-tiff/file-tiff-export.c:651
+#: plug-ins/file-tiff/file-tiff-export.c:516
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
 msgstr "Alleen monochrome beelden kunnen gecomprimeerd worden met \"CCITT Group 4\" of \"CCITT Group 3\"."
 
-#: plug-ins/file-tiff/file-tiff-export.c:665
+#: plug-ins/file-tiff/file-tiff-export.c:530
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Geïndexeerde afbeeldingen kunnen niet naar JPG worden, weggeschreven."
 
-#: plug-ins/file-tiff/file-tiff-export.c:724
+#: plug-ins/file-tiff/file-tiff-export.c:589
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -11157,18 +11205,18 @@ msgstr "De indeling TIFF ondersteunt alleen opmerkingen in\n"
 msgid "Failed a scanline write on row %d"
 msgstr "Kon geen scanlijn schrijven op rij %d"
 
-#: plug-ins/file-tiff/file-tiff-export.c:1202
+#: plug-ins/file-tiff/file-tiff-export.c:1246
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Wegschrijven van pagina's met verschillende bitdiepte is merkwaardig."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1277
+#: plug-ins/file-tiff/file-tiff-export.c:1369
 msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
 msgstr "Waarschuwing: maximale bestandsgrootte voor TIFF is overschreden. Probeer opnieuw als BigTIFF of met een ander algoritme voor compressie, of annuleer."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1336
+#: plug-ins/file-tiff/file-tiff-export.c:1426
 #, c-format
 msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
@@ -11176,17 +11224,17 @@ msgid ""
 msgstr "Het toegewezen kleurprofiel voor afdrukvoorbeeld is geen CMYK-profiel.\n"
 "Dit profiel zal niet worden opgenomen in de geëxporteerde afbeelding."
 
-#: plug-ins/file-tiff/file-tiff-load.c:312
+#: plug-ins/file-tiff/file-tiff-load.c:327
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Dit is geen afbeelding TIFF of een beschadigde afbeelding."
 
-#: plug-ins/file-tiff/file-tiff-load.c:339
+#: plug-ins/file-tiff/file-tiff-load.c:356
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF ‘%s’ bevat geen enkele map"
 
-#: plug-ins/file-tiff/file-tiff-load.c:346
+#: plug-ins/file-tiff/file-tiff-load.c:363
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -11197,7 +11245,7 @@ msgid_plural ""
 msgstr[0] "TIFF '%s' tellen van mappen door koptekst is mislukt, hoewel er %d pagina lijkt te zijn. Proberen het bestand te laden met deze aanname."
 msgstr[1] "TIFF '%s' tellen van mappen door koptekst is mislukt, hoewel er %d pagina's lijken te zijn. Proberen het bestand te laden met deze aanname."
 
-#: plug-ins/file-tiff/file-tiff-load.c:477
+#: plug-ins/file-tiff/file-tiff-load.c:494
 msgid "Extra channels with unspecified data."
 msgstr "Extra kanalen met ongespecificeerde data."
 
@@ -11208,62 +11256,62 @@ msgstr "Extra kanalen met ongespecificeerde data."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:489
+#: plug-ins/file-tiff/file-tiff-load.c:506
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Niet-conforme TIFF: extra kanalen zonder veld ‘ExtraSamples’."
 
-#: plug-ins/file-tiff/file-tiff-load.c:586
+#: plug-ins/file-tiff/file-tiff-load.c:642
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Kon pagina %d van %d niet lezen. Afbeelding kan beschadigd zijn.\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:615
+#: plug-ins/file-tiff/file-tiff-load.c:671
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
 "The layers below layer # %d will be interpreted as non linear."
 msgstr "Deze afbeelding heeft een lineair kleurprofiel, maar dat was niet ingesteld op de eerste laag. De lagen onder laag # %d zullen worden geïnterpreteerd als niet lineair."
 
-#: plug-ins/file-tiff/file-tiff-load.c:623
+#: plug-ins/file-tiff/file-tiff-load.c:679
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
 msgstr "Deze afbeelding heeft meerdere kleurprofielen. We zullen het eerste gebruiken. Als dat leidt tot onjuiste resultaten zou u moeten overwegen om elke laag als een afzonderlijke afbeelding te laden."
 
-#: plug-ins/file-tiff/file-tiff-load.c:635
+#: plug-ins/file-tiff/file-tiff-load.c:691
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "Verdachte bitdiepte: %d voor pagina %d. Afbeelding kan beschadigd zijn."
 
-#: plug-ins/file-tiff/file-tiff-load.c:709
+#: plug-ins/file-tiff/file-tiff-load.c:765
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Niet-ondersteunde bitdiepte: %d voor pagina %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:724
+#: plug-ins/file-tiff/file-tiff-load.c:780
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Kan de breedte van de afbeelding niet bepalen van ‘%s’"
 
-#: plug-ins/file-tiff/file-tiff-load.c:732
+#: plug-ins/file-tiff/file-tiff-load.c:788
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Kan de hoogte van de afbeelding niet bepalen van ‘%s’"
 
-#: plug-ins/file-tiff/file-tiff-load.c:740
+#: plug-ins/file-tiff/file-tiff-load.c:796
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr "Ongeldige afmetingen voor afbeelding (%u x %u) voor pagina %d. Afbeelding kan beschadigd zijn."
 
-#: plug-ins/file-tiff/file-tiff-load.c:761
+#: plug-ins/file-tiff/file-tiff-load.c:817
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
 msgstr "Kon geen fotometrie verkrijgen uit ‘%s’. Image is met CCITT gecomprimeerd, neem aan dat min-is-white"
 
-#: plug-ins/file-tiff/file-tiff-load.c:768
+#: plug-ins/file-tiff/file-tiff-load.c:824
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr "Kon geen fotometrie verkrijgen uit ‘%s’. Neem aan dat min-is-black"
@@ -11271,13 +11319,13 @@ msgstr "Kon geen fotometrie verkrijgen uit ‘%s’. Neem aan dat min-is-black"
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:800
+#: plug-ins/file-tiff/file-tiff-load.c:856
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr "Type alfakanaal niet gedefinieerd voor %s. Neem aan dat alfa vooraf niet is vermenigvuldigd"
 
-#: plug-ins/file-tiff/file-tiff-load.c:825
+#: plug-ins/file-tiff/file-tiff-load.c:881
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -11285,42 +11333,42 @@ msgid ""
 "is non-premultiplied alpha."
 msgstr "Afbeelding ‘%s’ voldoet niet aan de specificatie TIFF: veld ExtraSamples is niet ingesteld, terwijl extra kanalen aanwezig zijn. Neem aan dat het eerste extra kanaal niet vooraf vermenigvuldigde alfa is."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1114
+#: plug-ins/file-tiff/file-tiff-load.c:1170
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Ongeldige of onbekende compressie %u. Instellen van compressie op geen."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1172
+#: plug-ins/file-tiff/file-tiff-load.c:1228
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Kon geen nieuwe afbeelding maken: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1359
+#: plug-ins/file-tiff/file-tiff-load.c:1414
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Onbekende eenheid voor resolutie %d, gaat uit van dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1369
+#: plug-ins/file-tiff/file-tiff-load.c:1424
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Waarschuwing: resolutie gespecificeerd zonder eenheid, gaat uit van dpi"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1377
+#: plug-ins/file-tiff/file-tiff-load.c:1432
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Waarschuwing: geen Y-resolutie informatie, gaat uit van gelijk aan x"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1398
+#: plug-ins/file-tiff/file-tiff-load.c:1453
 msgid "Invalid image resolution info, using default"
 msgstr "Ongeldige resolutie informatie, we gebruiken de standaardwaarde"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1460
+#: plug-ins/file-tiff/file-tiff-load.c:1515
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Kan kleurenkaart niet lezen uit ‘%s’"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1469
+#: plug-ins/file-tiff/file-tiff-load.c:1524
 msgid ""
 "Indexed TIFFs with color maps larger than 256 colors are not yet supported"
 msgstr "Geïndexeerde TIFF's met kleurenkaarten die groter zijn dan 256 kleuren worden nog niet ondersteund"
@@ -11330,74 +11378,80 @@ msgstr "Geïndexeerde TIFF's met kleurenkaarten die groter zijn dan 256 kleuren 
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1559
+#: plug-ins/file-tiff/file-tiff-load.c:1614
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "Verdacht aantal extra kanalen: %d. Mogelijk een corrupte afbeelding."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1624
+#: plug-ins/file-tiff/file-tiff-load.c:1628
+#: plug-ins/file-tiff/file-tiff-load.c:1655
+msgid "Composite"
+msgstr "Composiet"
+
+#: plug-ins/file-tiff/file-tiff-load.c:1721
 msgid "TIFF Channel"
 msgstr "TIFF-kanaal"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1782
+#: plug-ins/file-tiff/file-tiff-load.c:1911
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr "Geen gegevens konden worden gelezen uit TIFF ‘%s’. Het bestand is waarschijnlijk beschadigd."
 
-#  Do not rely on librsvg setting GError on failure!
-#: plug-ins/file-tiff/file-tiff-load.c:1818
-#: plug-ins/file-tiff/file-tiff-load.c:1862
-#, c-format
-msgid ""
-"Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
-msgstr "Fout bij openen tijdelijk %s bestand ‘%s’ om TIFF metagegevens in te laden: %s"
-
-#: plug-ins/file-tiff/file-tiff-load.c:1951
+#: plug-ins/file-tiff/file-tiff-load.c:1991
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: Niet-ondersteunde bestandsindeling, geen lader voor RGBA beschikbaar"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2077
-#: plug-ins/file-tiff/file-tiff-load.c:2285
+#: plug-ins/file-tiff/file-tiff-load.c:2123
+#: plug-ins/file-tiff/file-tiff-load.c:2343
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "Lezen van tegel mislukt. Afbeelding zou beschadigd kunnen zijn op regel %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2086
-#: plug-ins/file-tiff/file-tiff-load.c:2294
+#: plug-ins/file-tiff/file-tiff-load.c:2132
+#: plug-ins/file-tiff/file-tiff-load.c:2352
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Lezen van scanlijn mislukt. Afbeelding zou beschadigd kunnen zijn op regel %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2553
+#: plug-ins/file-tiff/file-tiff-load.c:2615
 #, c-format
 msgid ""
 "Invalid image dimensions (%u x %u) for Sketchbook layer %i. Image may be "
 "corrupt."
 msgstr "Ongeldige afmetingen voor afbeelding (%u x %u) voor Sketchbook-laag %i. Afbeelding kan beschadigd zijn."
 
-#: plug-ins/file-tiff/file-tiff-load.c:3065
+#  Do not rely on librsvg setting GError on failure!
+#: plug-ins/file-tiff/file-tiff-load.c:2767
+#: plug-ins/file-tiff/file-tiff-load.c:2819
+#, c-format
+msgid ""
+"Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
+msgstr "Fout bij openen tijdelijk %s bestand ‘%s’ om TIFF metagegevens in te laden: %s"
+
+#: plug-ins/file-tiff/file-tiff-load.c:3248
 msgid "Import from TIFF"
 msgstr "Uit TIFF importeren"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3075
+#. Show Reduced
+#: plug-ins/file-tiff/file-tiff-load.c:3271
 msgid "_Show reduced images"
 msgstr "Ge_reduceerde afbeeldingen tonen"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3118
+#: plug-ins/file-tiff/file-tiff-load.c:3323
 msgid "Process extra channel as:"
 msgstr "Extra kanaal verwerken als:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3121
+#: plug-ins/file-tiff/file-tiff-load.c:3326
 msgid "_Non-premultiplied alpha"
 msgstr "_Niet vooraf vermenigvuldigde alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3122
+#: plug-ins/file-tiff/file-tiff-load.c:3327
 msgid "Pre_multiplied alpha"
 msgstr "Vooraf ver_menigvuldigde alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3123
+#: plug-ins/file-tiff/file-tiff-load.c:3328
 msgid "Channe_l"
 msgstr "_Kanaal"
 
@@ -17763,9 +17817,6 @@ msgstr "Gegevens van scanner / camera worden overgebracht"
 
 #~ msgid "Export Image as Raw Data"
 #~ msgstr "Afbeelding als ruwe data exporteren"
-
-#~ msgid "_Standard (R,G,B)"
-#~ msgstr "_Standaard (R,G,B)"
 
 #~ msgid "_Planar (RRR,GGG,BBB)"
 #~ msgstr "_Planair (RRR,GGG,BBB)"
