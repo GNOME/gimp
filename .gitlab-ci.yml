@@ -939,6 +939,7 @@ abidiff:
     - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpui-3.0.so" "${LIB_DIR}/libgimpui-3.0.so"
 
 issue-bot:
+  extends: .default
   rules:
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "schedule" && ($GIMP_CI_MESON_CLANG != null || $GIMP_CI_MESON_MSVC != null || $GIMP_CI_MESON_APPLECLANG != null)
       when: on_failure
@@ -957,6 +958,7 @@ issue-bot:
   image: registry.gitlab.com/gitlab-org/distribution/issue-bot:latest
   variables:
     ISSUE_BOT_API_TOKEN: $WILBER_BOT
+    GIT_STRATEGY: none
   script:
     - LATEST_API_TOKEN=20270330
     - printf "(INFO) Token expire date is $(date -d "$LATEST_API_TOKEN" +"%x")\n"
