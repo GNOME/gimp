@@ -43,7 +43,8 @@ Graphical User Interface:
   * Levels tool now listens to the icon size setting.
   * Roadmap menu item removed from Help > GIMP Online menu.
   * We do not rotate the checkerboard anymore when rotating the canvas,
-    but also scrolling or zooming.
+    but also scrolling or zooming. This significantly improves performance
+    when interacting with a rotated canvas.
 
 Plug-Ins:
 
