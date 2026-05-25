@@ -111,12 +111,6 @@ static gboolean   gimp_plug_in_write                  (GIOChannel   *channel,
 static gboolean   gimp_plug_in_flush                  (GIOChannel   *channel,
                                                        gpointer      data);
 
-#ifndef G_OS_WIN32
-static void       gimp_plug_in_close_waitpid          (GPid          pid,
-                                                       gint          status,
-                                                       GimpPlugIn   *plug_in);
-#endif
-
 #ifdef __APPLE__
 static guint      gimp_plug_in_wire_count_bytes_ready (GIOChannel   *channel);
 #endif
@@ -358,27 +352,6 @@ gimp_plug_in_flush (GIOChannel *channel,
 
   return TRUE;
 }
-
-#ifndef G_OS_WIN32
-static void
-gimp_plug_in_close_waitpid (GPid        pid,
-                            gint        status,
-                            GimpPlugIn *plug_in)
-{
-  GError *error = NULL;
-
-  if (plug_in->manager->gimp->be_verbose &&
-      ! g_spawn_check_wait_status (status, &error))
-    {
-      g_printerr ("Process for plug-in '%s' terminated with error: %s\n",
-                  gimp_object_get_name (plug_in),
-                  error->message);
-    }
-  g_clear_error (&error);
-
-  g_spawn_close_pid (pid);
-}
-#endif
 
 #ifdef __APPLE__
 /* Returns the count of bytes in the channel.
@@ -733,10 +706,7 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
            * g_child_watch_add_full() do something better than
            * waitpid()?).
            */
-          g_object_ref (plug_in);
-          g_child_watch_add_full (G_PRIORITY_LOW, plug_in->pid,
-                                  (GChildWatchFunc) gimp_plug_in_close_waitpid,
-                                  plug_in, (GDestroyNotify) g_object_unref);
+          gimp_plug_in_manager_watch_zombie_plug_in (plug_in->manager, plug_in);
         }
 
 #else /* G_OS_WIN32 */

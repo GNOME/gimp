@@ -60,6 +60,8 @@ struct _GimpPlugInManager
   GSList            *open_plug_ins;
   GSList            *plug_in_stack;
 
+  GHashTable        *zombie_plug_ins;
+
   GimpPlugInShm     *shm;
   GimpInterpreterDB *interpreter_db;
   GimpEnvironTable  *environ_table;
@@ -110,6 +112,9 @@ void    gimp_plug_in_manager_remove_temp_proc     (GimpPlugInManager      *manag
 void    gimp_plug_in_manager_add_open_plug_in     (GimpPlugInManager   *manager,
                                                    GimpPlugIn          *plug_in);
 void    gimp_plug_in_manager_remove_open_plug_in  (GimpPlugInManager   *manager,
+                                                   GimpPlugIn          *plug_in);
+
+void    gimp_plug_in_manager_watch_zombie_plug_in (GimpPlugInManager   *manager,
                                                    GimpPlugIn          *plug_in);
 
 void    gimp_plug_in_manager_plug_in_push         (GimpPlugInManager   *manager,
