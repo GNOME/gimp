@@ -101,7 +101,7 @@ create_filter_param_details (GParamSpec   *pspec,
   gchar     *type        = NULL;
   GString   *blurb       = g_string_new (NULL);
   gboolean   is_unknown  = FALSE;
-  GType      gtype       = G_PARAM_SPEC_VALUE_TYPE (pspec);
+  GType      gtype       = 0;
 
   /* Some param specs are not supported by the wire. Thankfully, the
    * wire is well-behaved and returns NULL in such cases for each
@@ -115,6 +115,8 @@ create_filter_param_details (GParamSpec   *pspec,
 
       return label;
     }
+
+  gtype = G_PARAM_SPEC_VALUE_TYPE (pspec);
 
   param_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
