@@ -322,3 +322,31 @@ if not (GIMP_DISTRIB / "lib/pkgconfig/libcurl.pc").exists():
   text = exiv2_pc.read_text()
   new_text = text.replace("libcurl, ","").replace(" libcurl","")
   exiv2_pc.write_text(new_text)
+### Test if all bundled .pc, libs and headers are fine
+print(f"Testing if GIMP SDK works")
+clean_tests_env = os.environ.copy()
+clean_tests_env.pop("PKG_CONFIG_PATH", None)
+clean_tests_path = Path(os.getenv("MESON_BUILD_ROOT")) / "tools/gimptool-tests"
+os.chdir(clean_tests_path)
+gimpsdk_tests = {
+  "--build-noui"   : "c-hello-world.exe",
+  "--build"        : "c-hello-world-ui.exe",
+  "--build-geglop" : "gimp-tutorial-meta-op.dll",
+}
+for build_option, test_binary in gimpsdk_tests.items():
+  test_source = os.path.splitext(test_binary)[0] + ".c"
+  result = subprocess.run([GIMP_DISTRIB / "bin/gimptool.exe", build_option, clean_tests_path / test_source], env=clean_tests_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+  flags_output = result.stdout + result.stderr
+  msys_root = os.getenv('MSYS_ROOT', "none")
+  msys_root_posix = msys_root.replace("\\", "/")
+  leaked_flags = [
+      f"-I{msys_root}", f"-L{msys_root}",
+      f"-I{msys_root_posix}", f"-L{msys_root_posix}"
+    ]
+  if result.returncode != 0 or not (clean_tests_path / test_binary).exists():
+    print(f"\033[31m(ERROR)\033[0m: GIMP SDK test failed at runtime for {test_source}. Output:\n{flags_output}")
+    sys.exit(1)
+  elif any(flag in flags_output for flag in leaked_flags):
+    print(f"\033[31m(ERROR)\033[0m: GIMP SDK test failed under the hood for {test_source} (the SDK is leaking to MSYS2). Output:\n{flags_output}")
+    sys.exit(1)
+os.chdir(Path(os.getenv("MESON_BUILD_ROOT")))
