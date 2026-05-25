@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-22 20:11+0000\n"
-"PO-Revision-Date: 2026-05-24 17:04+0200\n"
+"POT-Creation-Date: 2026-05-24 17:35+0000\n"
+"PO-Revision-Date: 2026-05-25 14:37+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -5613,6 +5613,46 @@ msgstr "Poja_vna pomoč"
 msgctxt "help-action"
 msgid "Show the help for a specific user interface item"
 msgstr "Pokaži pomoč za določen element uporabniškega vmesnika"
+
+#: app/actions/help-actions.c:54
+msgctxt "help-action"
+msgid "_Main Web Site"
+msgstr "_Glavno spletišče"
+
+#: app/actions/help-actions.c:55
+msgctxt "help-action"
+msgid "Bookmark to the GIMP web site"
+msgstr "Zaznamek spletišča GIMP"
+
+#: app/actions/help-actions.c:60
+msgctxt "help-action"
+msgid "_User Manual Web Site"
+msgstr "Spletišče _uporabniškega vodnika"
+
+#: app/actions/help-actions.c:61
+msgctxt "help-action"
+msgid "Bookmark to the Documentation web site"
+msgstr "Zaznamek za spletišče dokumentacije"
+
+#: app/actions/help-actions.c:66
+msgctxt "help-action"
+msgid "_Bug Reports"
+msgstr "Poročanje o _hroščih"
+
+#: app/actions/help-actions.c:67
+msgctxt "help-action"
+msgid "Bookmark to the bug tracker of GIMP"
+msgstr "Zaznamek za sledilnik hroščev GIMP-a"
+
+#: app/actions/help-actions.c:72
+msgctxt "help-action"
+msgid "_Developer Web Site"
+msgstr "Spletišče _razvijalcev"
+
+#: app/actions/help-actions.c:73
+msgctxt "help-action"
+msgid "Bookmark to the Developer web site"
+msgstr "Zaznamek za spletišče za razvijalce"
 
 #: app/actions/image-actions.c:55
 msgctxt "image-action"
