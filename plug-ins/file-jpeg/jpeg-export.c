@@ -689,7 +689,7 @@ export_image (GFile                *file,
                                    &data_length, NULL) && data_length > 0)
             {
               guchar *full_data = g_try_malloc0 (sizeof (JPEG_APP_HEADER_PS) +
-                                                 data_length + 1);
+                                                 data_length);
 
               memcpy (full_data, JPEG_APP_HEADER_PS, sizeof (JPEG_APP_HEADER_PS));
               memcpy (full_data + sizeof (JPEG_APP_HEADER_PS), data_buffer,
@@ -697,11 +697,11 @@ export_image (GFile                *file,
 
 #ifdef GIMP_UNSTABLE
       g_print ("jpeg-export: saving Photoshop metadata (%d bytes)\n",
-               (gint) data_length + sizeof (JPEG_APP_HEADER_PS) + 2);
+               (gint) (data_length + sizeof (JPEG_APP_HEADER_PS)));
 #endif
 
               jpeg_write_marker (&cinfo, JPEG_APP0 + 13, full_data,
-                                 data_length + sizeof (JPEG_APP_HEADER_PS) + 1);
+                                 data_length + sizeof (JPEG_APP_HEADER_PS));
               g_free (full_data);
             }
         }
