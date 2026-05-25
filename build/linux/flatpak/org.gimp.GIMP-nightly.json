@@ -135,8 +135,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.11.tar.gz",
-                    "sha256": "63730442f5fd6c5a79395bdd199040ab3821c229066049f52a57424a984b16ed",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.12.tar.gz",
+                    "sha256": "a455779c389f65c64220d45b63ead2900081e5f6337cdf93431cb1032c3e2686",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -697,8 +697,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/14.1.5/graphviz-14.1.5.tar.gz",
-                    "sha256": "2cb3136bffb335346e9c5c99a7c615df32295839a6498df44f576adfc2937a93",
+                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/15.0.0/graphviz-15.0.0.tar.gz",
+                    "sha256": "dfa5be5c311f760aa9c88273c8f8101bb11f50b0de8b29bbd54acff3adc2d563",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1249,
