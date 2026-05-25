@@ -310,6 +310,13 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                                                NULL, FALSE,
                                                G_PARAM_READWRITE);
 
+      gimp_procedure_add_boolean_aux_argument (procedure, "save-resources",
+                                               _("Save Photoshop metadata"),
+                                               _("Store Photoshop image resources (paths, guides, "
+                                                 "...) in JPEG APP13 tag (Photoshop)"),
+                                               TRUE,
+                                               G_PARAM_READWRITE);
+
       gimp_export_procedure_set_support_exif      (GIMP_EXPORT_PROCEDURE (procedure), TRUE);
       gimp_export_procedure_set_support_iptc      (GIMP_EXPORT_PROCEDURE (procedure), TRUE);
       gimp_export_procedure_set_support_xmp       (GIMP_EXPORT_PROCEDURE (procedure), TRUE);
