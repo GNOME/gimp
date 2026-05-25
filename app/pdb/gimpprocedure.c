@@ -570,7 +570,6 @@ gimp_procedure_execute (GimpProcedure   *procedure,
         g_propagate_error (error, pdb_error);
       else
         g_error_free (pdb_error);
-
     }
 
   return return_vals;
