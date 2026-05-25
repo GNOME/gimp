@@ -317,3 +317,8 @@ while pcs_to_process:
 ### Special-case
 bundle(MSYSTEM_PREFIX, "lib/glib-2.0", "--dest", "lib")
 bundle(MSYSTEM_PREFIX, "include/brotli", "--dest", "include")
+if not (GIMP_DISTRIB / "lib/pkgconfig/libcurl.pc").exists():
+  exiv2_pc = GIMP_DISTRIB / "lib/pkgconfig/exiv2.pc"
+  text = exiv2_pc.read_text()
+  new_text = text.replace("libcurl, ","").replace(" libcurl","")
+  exiv2_pc.write_text(new_text)
