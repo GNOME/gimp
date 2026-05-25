@@ -236,6 +236,7 @@ export_image (GFile                *file,
   gint             orig_num_quant_tables = -1;
   gboolean         use_arithmetic_coding = FALSE;
   gboolean         use_restart           = FALSE;
+  gboolean         save_resources        = FALSE;
   gchar           *comment;
 
   g_object_get (config,
@@ -256,6 +257,7 @@ export_image (GFile                *file,
 
                 "include-color-profile",     &save_profile,
                 "include-comment",           &save_comment,
+                "save-resources",            &save_resources,
                 "gimp-comment",              &comment,
 
                 NULL);
@@ -659,6 +661,57 @@ export_image (GFile                *file,
   g_clear_object (&profile);
   g_clear_object (&cmyk_profile);
 
+  /* Step 4.3: Optionally write PSD metadata */
+  if (save_resources)
+    {
+      GFile             *temp_file   = NULL;
+      GimpProcedure     *procedure;
+      GimpValueArray    *return_vals = NULL;
+      GimpPDBStatusType  export_status;
+      guchar            *data_buffer = NULL;
+      gsize              data_length = 0;
+
+      temp_file   = gimp_temp_file ("tmp");
+      procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                               "file-psd-export-metadata");
+      return_vals = gimp_procedure_run (procedure,
+                                        "file",          temp_file,
+                                        "image",         orig_image,
+                                        "metadata-type", FALSE,
+                                        "cmyk",          FALSE,
+                                        NULL);
+
+      export_status = GIMP_VALUES_GET_ENUM (return_vals, 0);
+      if (export_status == GIMP_PDB_SUCCESS)
+        {
+          if (g_file_get_contents (g_file_peek_path (temp_file),
+                                   (gchar **) &data_buffer,
+                                   &data_length, NULL) && data_length > 0)
+            {
+              guchar *full_data = g_try_malloc0 (sizeof (JPEG_APP_HEADER_PS) +
+                                                 data_length);
+
+              memcpy (full_data, JPEG_APP_HEADER_PS, sizeof (JPEG_APP_HEADER_PS));
+              memcpy (full_data + sizeof (JPEG_APP_HEADER_PS), data_buffer,
+                      data_length);
+
+#ifdef GIMP_UNSTABLE
+      g_print ("jpeg-export: saving Photoshop metadata (%d bytes)\n",
+               (gint) (data_length + sizeof (JPEG_APP_HEADER_PS)));
+#endif
+
+              jpeg_write_marker (&cinfo, JPEG_APP0 + 13, full_data,
+                                 data_length + sizeof (JPEG_APP_HEADER_PS));
+              g_free (full_data);
+            }
+        }
+
+      g_free (data_buffer);
+      g_file_delete (temp_file, NULL, NULL);
+      g_object_unref (temp_file);
+      gimp_value_array_unref (return_vals);
+    }
+
   /* Step 5: while (scan lines remain to be written) */
   /*           jpeg_write_scanlines(...); */
 
@@ -1003,6 +1056,10 @@ save_dialog (GimpProcedure       *procedure,
   gtk_box_set_spacing (GTK_BOX (box), 12);
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_HORIZONTAL);
+
+  /* Add option for saving PSD metadata */
+  gimp_export_procedure_dialog_add_metadata (GIMP_EXPORT_PROCEDURE_DIALOG (dialog),
+                                             "save-resources");
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "jpeg-hbox", NULL);
