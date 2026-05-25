@@ -420,3 +420,29 @@ link_path = Path(f"{GIMP_DISTRIB}/lib/libzstd.dylib")
 link_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/lib/libzstd.1.dylib"), link_path.parent))
 bundle(OPT_PREFIX, "lib/glib-2.0", "--dest", "lib")
 bundle(OPT_PREFIX, "include/brotli", "--dest", "include")
+### Test if all bundled .pc, libs and headers are fine
+print(f"Testing if GIMP SDK works")
+clean_tests_env = os.environ.copy()
+clean_tests_env.pop("PKG_CONFIG_PATH", None)
+clean_tests_path = Path(os.getenv("MESON_BUILD_ROOT")) / "tools/gimptool-tests"
+os.chdir(clean_tests_path)
+gimpsdk_tests = {
+  "--build-noui"   : "c-hello-world",
+  "--build"        : "c-hello-world-ui",
+  "--build-geglop" : "gimp-tutorial-meta-op.dylib",
+}
+for build_option, test_binary in gimpsdk_tests.items():
+  test_source = os.path.splitext(test_binary)[0] + ".c"
+  result = subprocess.run([GIMP_DISTRIB / "MacOS/gimptool", build_option, clean_tests_path / test_source], env=clean_tests_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+  flags_output = result.stdout + result.stderr
+  opt_prefix = os.getenv('OPT_PREFIX', "none")
+  leaked_flags = [
+      f"-I{opt_prefix}", f"-L{opt_prefix}"
+    ]
+  if result.returncode != 0 or not (clean_tests_path / test_binary).exists():
+    print(f"\033[31m(ERROR)\033[0m: GIMP SDK test failed at runtime for {test_source}. Output:\n{flags_output}")
+    sys.exit(1)
+  elif any(flag in flags_output for flag in leaked_flags):
+    print(f"\033[31m(ERROR)\033[0m: GIMP SDK test failed under the hood for {test_source} (the SDK is leaking to MacPorts or Homebrew). Output:\n{flags_output}")
+    sys.exit(1)
+os.chdir(Path(os.getenv("MESON_BUILD_ROOT")))

@@ -1,4 +1,6 @@
 
+subdir('gimptool-tests')
+
 if platform_windows
   gimp_debug_resume = executable('gimp-debug-resume',
     'gimp-debug-resume.c',
