@@ -129,7 +129,7 @@ create_filter_param_details (GParamSpec   *pspec,
    * parameter information in the blurb of a placeholder GParamSpec.
    * See the definition of the procedure for more details.
    */
-  is_unknown = G_PARAM_SPEC_VALUE_TYPE (pspec) == G_TYPE_PARAM &&
+  is_unknown = g_type_is_a (gtype, G_TYPE_PARAM) &&
                g_strcmp0 (pspec->name, "unknown") == 0;
   if (is_unknown)
     {
@@ -148,7 +148,7 @@ create_filter_param_details (GParamSpec   *pspec,
       gchar *blurb_s = NULL;
 
       name    = (gchar *) g_param_spec_get_name (pspec);
-      type    = (gchar *) g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec));
+      type    = (gchar *) g_type_name (gtype);
       blurb_s = (gchar *) g_param_spec_get_blurb (pspec);
       g_string_append (blurb, blurb_s ? blurb_s : "");
     }
