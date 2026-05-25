@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-24 21:45+0000\n"
-"PO-Revision-Date: 2026-05-25 14:41+0200\n"
+"POT-Creation-Date: 2026-05-25 17:59+0000\n"
+"PO-Revision-Date: 2026-05-25 22:50+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1247,7 +1247,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2532
+#: plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2532
 #: plug-ins/file-psd/psd-export.c:2700
 #: plug-ins/file-tiff/file-tiff-export.c:1101
 #: plug-ins/file-tiff/file-tiff-export.c:1221 plug-ins/flame/flame.c:586
@@ -2043,7 +2043,7 @@ msgstr "Napaka pri branju »%s«: %s"
 msgid "Curve Bend"
 msgstr "Ukrivljanje slike"
 
-#: plug-ins/common/curve-bend.c:1173 plug-ins/file-jpeg/jpeg-export.c:853
+#: plug-ins/common/curve-bend.c:1173 plug-ins/file-jpeg/jpeg-export.c:906
 #: plug-ins/gfig/gfig-dialog.c:1186
 msgid "Options"
 msgstr "Možnosti"
@@ -2545,15 +2545,15 @@ msgid "ASCII art"
 msgstr "ASCII art"
 
 #: plug-ins/common/file-aa.c:138
-msgid "Saves grayscale image in various text formats"
-msgstr "Shrani sivinsko sliko v različnih besedilnih oblikah"
+msgid "Exports grayscale image in various text formats"
+msgstr "Izvozi sivinsko sliko v različnih besedilnih oblikah"
 
 #: plug-ins/common/file-aa.c:140
 msgid ""
-"This plug-in uses aalib to save grayscale image as ascii art into a variety "
-"of text formats"
+"This plug-in uses aalib to export grayscale image as ascii art into a "
+"variety of text formats"
 msgstr ""
-"Ta vstavek uporablja aalib za shranjevanje sivinske slike kot slike ascii v "
+"Ta vstavek uporablja aalib za izvažanje sivinske slike kot slike ascii v "
 "različnih oblikah besedila"
 
 #: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:244
@@ -2713,7 +2713,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2470
+#: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2470
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1091
 #, c-format
 msgid "Exporting '%s'"
@@ -3084,9 +3084,36 @@ msgstr "Čopič GIMP"
 msgid "Radiance RGBE"
 msgstr "Sevanje RGBE"
 
+#: plug-ins/common/file-gegl.c:122
+msgid "Loads files in the RGBE file format"
+msgstr "Naloži datoteke v zapisu RGBE"
+
+#: plug-ins/common/file-gegl.c:123
+msgid ""
+"This procedure loads images in the RGBE format, using \"gegl:rgbe-load\""
+msgstr "Ta postopek naloži slike v zapisu RGBE z uporabo »gegl:rgbe-load«"
+
+#: plug-ins/common/file-gegl.c:127
+msgid "Exports files in the RGBE file format"
+msgstr "Izvozi datoteke v zapisu slikovnih datotek RGBE."
+
+#: plug-ins/common/file-gegl.c:128
+msgid ""
+"This procedure exports images in the RGBE format, using \"gegl:rgbe-save\""
+msgstr "Ta postopek izvozi slike v zapisu RGBE z uporabo »gegl:rgbe-save«"
+
 #: plug-ins/common/file-gegl.c:132 plug-ins/file-exr/file-exr.c:111
 msgid "OpenEXR image"
 msgstr "Slika OpenEXR"
+
+#: plug-ins/common/file-gegl.c:141
+msgid "Exports files in the OpenEXR file format"
+msgstr "Izvozi datoteke v zapisu OpenEXR"
+
+#: plug-ins/common/file-gegl.c:142
+msgid ""
+"This procedure exports images in the OpenEXR format, using \"gegl:exr-save\""
+msgstr "Ta postopek izvozi datoteke v zapisu OpenEXR z uporabo »gegl:exr-save«"
 
 #: plug-ins/common/file-gegl.c:356
 #, c-format
@@ -3598,8 +3625,8 @@ msgid "C source code header"
 msgstr "Glava izvorne kode programskega jezika C"
 
 #: plug-ins/common/file-header.c:120
-msgid "Saves files as C unsigned character array"
-msgstr "Shrani datoteke kot polje nepredznačenih znakov C"
+msgid "Exports files as C unsigned character array"
+msgstr "Izvozi datoteke kot polje nepredznačenih znakov C"
 
 #: plug-ins/common/file-heif.c:224 plug-ins/common/file-heif.c:264
 msgid "HEIF/HEIC"
@@ -4173,20 +4200,20 @@ msgstr "Slika JPEG 2000 brez barvnega prostora"
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Nepodprta JPEG 2000%s »%s« s/z %d komponentami."
 
-#: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:887
+#: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:940
 #: plug-ins/file-psd/psd-export.c:2970
 #: plug-ins/file-tiff/file-tiff-export.c:1390
 msgid "No soft-proofing profile"
 msgstr "Brez profila preverjanja videza"
 
 #: plug-ins/common/file-jp2.c:1309 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2978
+#: plug-ins/file-jpeg/jpeg-export.c:948 plug-ins/file-psd/psd-export.c:2978
 #: plug-ins/file-tiff/file-tiff-export.c:1399
 msgid "Name of the color profile used for CMYK export."
 msgstr "Ime barvnega profila, uporabljenega za izvoz CMYK."
 
 #: plug-ins/common/file-jp2.c:1320 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2989
+#: plug-ins/file-jpeg/jpeg-export.c:959 plug-ins/file-psd/psd-export.c:2989
 #: plug-ins/file-tiff/file-tiff-export.c:1421
 #, c-format
 msgid "Profile: %s"
@@ -4267,8 +4294,8 @@ msgid "Loads files in the JPEG XL file format"
 msgstr "Naloži datoteke v zapisu JPEG XL"
 
 #: plug-ins/common/file-jpegxl.c:171 plug-ins/common/file-jpegxl.c:172
-msgid "Saves files in the JPEG XL file format"
-msgstr "Shrani datoteke v zapisu JPEG XL"
+msgid "Exports files in the JPEG XL file format"
+msgstr "Izvozi datoteke v zapisu slikovnih datotek JPEG XL"
 
 #: plug-ins/common/file-jpegxl.c:199
 msgid "Co_mpression/maxError"
@@ -4392,16 +4419,16 @@ msgid "MNG"
 msgstr "MNG"
 
 #: plug-ins/common/file-mng.c:259
-msgid "Saves images in the MNG file format"
-msgstr "Shrani datoteke v zapisu MNG"
+msgid "Exports images in the MNG file format"
+msgstr "Izvozi slike v zapisu datotek MNG"
 
 #: plug-ins/common/file-mng.c:260
 msgid ""
-"This plug-in saves images in the Multiple-image Network Graphics (MNG) "
+"This plug-in exports images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
 msgstr ""
-"Ta vstavek shrani slike v zapisu MNG (multi-image Network Graphics), ki se "
-"lahko uporablja kot zamenjava za animirane GIF-e in druge sorodne zapise."
+"Ta vstavek shrani slike v zapisu MNG (Multiple-image Network Graphics), ki "
+"se lahko uporablja kot zamenjava za animirane GIF-e in druge sorodne zapise."
 
 #: plug-ins/common/file-mng.c:286
 msgid "Use interlacing"
@@ -4767,16 +4794,16 @@ msgid "Portable Document Format"
 msgstr "PDF (Portable Document Format)"
 
 #: plug-ins/common/file-pdf-export.c:332 plug-ins/common/file-pdf-export.c:418
-msgid "Save files in PDF format"
-msgstr "Shrani datoteke v zapisu PDF"
+msgid "Exports files in PDF format"
+msgstr "Izvozi datoteke v zapisu PDF"
 
 #: plug-ins/common/file-pdf-export.c:333 plug-ins/common/file-pdf-export.c:419
 msgid ""
-"Saves files in Adobe's Portable Document Format. PDF is designed to be "
+"Exports files in Adobe's Portable Document Format. PDF is designed to be "
 "easily processed by a variety of different platforms, and is a distant "
 "cousin of PostScript."
 msgstr ""
-"Shrani datoteke v zapisu Adobe PDF (Portable Document Format). PDF je "
+"Izvozi datoteke v zapisu Adobe PDF (Portable Document Format). PDF je "
 "zasnovan tako, da ga je lahko enostavno obdelati na različnih platformah in "
 "je oddaljeni bratranec PostScripta."
 
@@ -4858,12 +4885,12 @@ msgid "_Create multipage PDF..."
 msgstr "_Ustvari večstranski PDF ..."
 
 #: plug-ins/common/file-pdf-export.c:471
-msgid "Save to"
-msgstr "Shrani v"
+msgid "Export to"
+msgstr "Izvozi v"
 
 #: plug-ins/common/file-pdf-export.c:472
-msgid "The URI of the file to save to"
-msgstr "URI datoteke, v katero bo shranjeno"
+msgid "The URI of the file to export to"
+msgstr "URI datoteke, v katero bo izvoženo"
 
 #: plug-ins/common/file-pdf-export.c:694
 #, c-format
@@ -6765,24 +6792,24 @@ msgstr "Glave datoteke »%s« ni mogoče prebrati"
 
 #: plug-ins/common/file-tim.c:168 plug-ins/common/file-tim.c:191
 #: plug-ins/common/file-tim.c:203
-msgid "Playstation TIM image"
-msgstr "Slika Playstation TIM"
+msgid "PlayStation TIM image"
+msgstr "Slika PlayStation TIM"
 
 #: plug-ins/common/file-tim.c:171
-msgid "Load file in the TIM file format"
+msgid "Loads file in the TIM file format"
 msgstr "Naloži datoteko v zapisu TIM"
 
 #: plug-ins/common/file-tim.c:172
-msgid "Load file in the Sony Playstation TIM file format"
-msgstr "Naloži datoteko v zapisu Sony Playstation TIM"
+msgid "Loads file in the Sony PlayStation TIM file format"
+msgstr "Naloži datoteko v zapisu Sony PlayStation TIM"
 
 #: plug-ins/common/file-tim.c:194
-msgid "Saves files in the TIM file format"
-msgstr "Shrani datoteke v zapisu TIM"
+msgid "Exports files in the TIM file format"
+msgstr "Izvozi datoteke v zapisu slikovnih datotek TIM"
 
 #: plug-ins/common/file-tim.c:195
-msgid "Saves files in the Playstation TIM file format"
-msgstr "Shrani datoteke v zapisu Playstation TIM"
+msgid "Exports files in the PlayStation TIM file format"
+msgstr "Izvozi datoteke v zapisu PlayStation TIM"
 
 #: plug-ins/common/file-tim.c:217
 msgid "_Type"
@@ -9276,7 +9303,7 @@ msgstr "Ukrivi"
 msgid "Basic Options"
 msgstr "Osnovne nastavitve"
 
-#: plug-ins/common/warp.c:448 plug-ins/file-jpeg/jpeg-export.c:947
+#: plug-ins/common/warp.c:448 plug-ins/file-jpeg/jpeg-export.c:1000
 #: plug-ins/file-webp/file-webp-dialog.c:98
 msgid "Advanced Options"
 msgstr "Napredne možnosti"
@@ -9449,8 +9476,8 @@ msgid "BMP"
 msgstr "BMP"
 
 #: plug-ins/file-bmp/bmp.c:185 plug-ins/file-bmp/bmp.c:186
-msgid "Saves files in Windows BMP file format"
-msgstr "Shrani datoteke v zapisu Windows BMP"
+msgid "Exports files in Windows BMP file format"
+msgstr "Izvozi datoteke v zapisu Windows BMP"
 
 #: plug-ins/file-bmp/bmp.c:206
 msgid "Ru_n-Length Encoded"
@@ -9590,8 +9617,8 @@ msgid "DDS"
 msgstr "DDS"
 
 #: plug-ins/file-dds/dds.c:176 plug-ins/file-dds/dds.c:177
-msgid "Saves files in DDS image format"
-msgstr "Shrani datoteke v zapisu DDS"
+msgid "Exports files in DDS image format"
+msgstr "Izvozi datoteke v zapisu DDS"
 
 #: plug-ins/file-dds/dds.c:198
 msgid "BC1 / DXT1"
@@ -9720,8 +9747,8 @@ msgid "Sav_e type"
 msgstr "Shrani v_rsto"
 
 #: plug-ins/file-dds/dds.c:252
-msgid "How to save the image"
-msgstr "Kako shraniti sliko"
+msgid "How to export the image"
+msgstr "Kako izvoziti sliko"
 
 #: plug-ins/file-dds/dds.c:253
 msgid "Selected layer"
@@ -10502,8 +10529,8 @@ msgid "Loads a preview from a Windows ANI files"
 msgstr "Nalaga predogled iz datotek Windows ANI"
 
 #: plug-ins/file-ico/ico.c:380 plug-ins/file-ico/ico.c:381
-msgid "Saves files in Windows ANI file format"
-msgstr "Shrani datoteke v zapisu Windows ANI"
+msgid "Exports files in Windows ANI file format"
+msgstr "Izvozi datoteke v zapisu Windows ANI"
 
 #: plug-ins/file-ico/ico.c:407
 msgid "Cursor Name (Optional)"
@@ -10518,15 +10545,15 @@ msgstr "Avtor kazalca (neobvezno)"
 msgid "File size without metadata: %s"
 msgstr "Velikost datoteke brez metapodatkov: %s"
 
-#: plug-ins/file-jpeg/jpeg-export.c:708
+#: plug-ins/file-jpeg/jpeg-export.c:761
 msgid "Calculating approximate file size..."
 msgstr "Računanje približne velikosti datoteke ..."
 
-#: plug-ins/file-jpeg/jpeg-export.c:798 plug-ins/file-jpeg/jpeg-export.c:874
+#: plug-ins/file-jpeg/jpeg-export.c:851 plug-ins/file-jpeg/jpeg-export.c:927
 msgid "File size without metadata: unknown"
 msgstr "Velikost datoteke brez metapodatkov: neznana"
 
-#: plug-ins/file-jpeg/jpeg-export.c:882
+#: plug-ins/file-jpeg/jpeg-export.c:935
 msgid "Enable preview to obtain the approximate file size."
 msgstr "Omogočite predogled za izračun približne velikosti datoteke."
 
@@ -10704,6 +10731,18 @@ msgstr ""
 #: plug-ins/file-jpeg/jpeg.c:309
 msgid "Use restart mar_kers"
 msgstr "Uporabi _označevalnike ponovnega začetka"
+
+#: plug-ins/file-jpeg/jpeg.c:314 plug-ins/file-tiff/file-tiff.c:318
+msgid "Save Photoshop metadata"
+msgstr "Slika metapodatke Photoshop"
+
+#: plug-ins/file-jpeg/jpeg.c:315
+msgid ""
+"Store Photoshop image resources (paths, guides, ...) in JPEG APP13 tag "
+"(Photoshop)"
+msgstr ""
+"Shrani vire slike Photoshop (poti, imena kanalov alfa, …) v značke JPEG "
+"APP13 (Photoshop)"
 
 #: plug-ins/file-psd/psd-export.c:585
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -10969,17 +11008,17 @@ msgstr ""
 "(TM)."
 
 #: plug-ins/file-psd/psd.c:228
-msgid "Saves files in the Photoshop (TM) PSD file format"
-msgstr "Shrani datoteke v zapisu Photoshop (™) PSD"
+msgid "Exports files in the Photoshop (TM) PSD file format"
+msgstr "Izvozi datoteke v zapisu Photoshop (TM) PSD"
 
 #: plug-ins/file-psd/psd.c:230
 msgid ""
-"This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
+"This plug-in exports files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
 "layer masks, aux channels and guides."
 msgstr ""
-"Ta vstavek shranjuje datoteke v izvornem zapisu PSD za Adobe Photoshop (TM). "
-"Te datoteke so lahko poljubne vrste slike, ki jih podpira GIMP, z ali brez "
+"Ta vstavek izvozi datoteke v izvornem zapisu PSD za Adobe Photoshop (TM). Te "
+"datoteke so lahko poljubne vrste slike, ki jih podpira GIMP, z ali brez "
 "plasti, z maskami plasti, pomožnimi kanali in vodili."
 
 #: plug-ins/file-psd/psd.c:244 plug-ins/file-psd/psd.c:246
@@ -10987,18 +11026,18 @@ msgid "Photoshop Large image"
 msgstr "Slika Photoshop Large"
 
 #: plug-ins/file-psd/psd.c:249
-msgid "Saves files in the Photoshop (TM) Large PSB file format"
-msgstr "Shrani datoteke v zapisu PSB Photoshop (TM) Large"
+msgid "Exports files in the Photoshop (TM) Large PSB file format"
+msgstr "Izvozi datoteke v zapisu PSB Photoshop (TM) Large"
 
 #: plug-ins/file-psd/psd.c:251
 msgid ""
-"This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
+"This plug-in exports files of Adobe Photoshop (TM) Large native PSB format. "
 "These files may be of any image type supported by GIMP, with or without "
 "layers, layer masks, aux channels and guides."
 msgstr ""
-"Ta vstavek shranjuje datoteke v domorodnem zapisu PSB za Adobe Photoshop "
-"(TM) Large. Te datoteke so lahko poljubne vrste slike, ki jih podpira GIMP, "
-"z ali brez plasti, z maskami plasti, pomožnimi kanali in vodili."
+"Ta vstavek izvozi datoteke v domorodnem zapisu PSB za Adobe Photoshop (TM) "
+"Large. Te datoteke so lahko poljubne vrste slike, ki jih podpira GIMP, z ali "
+"brez plasti, z maskami plasti, pomožnimi kanali in vodili."
 
 #: plug-ins/file-psd/psd.c:279
 msgid "Assign a Clipping _Path"
@@ -11418,10 +11457,6 @@ msgstr "Shrani podatke _GeoTIFF"
 msgid "Save GeoTIFF data"
 msgstr "Shrani podatke GeoTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:318
-msgid "Save Photoshop metadata"
-msgstr "Slika metapodatke Photoshop"
-
 #: plug-ins/file-tiff/file-tiff.c:319
 msgid ""
 "Store Photoshop image resources (paths, alpha channel names, ...) in TIFF "
@@ -11752,8 +11787,8 @@ msgid "WebP image"
 msgstr "Slika WebP"
 
 #: plug-ins/file-webp/file-webp.c:158 plug-ins/file-webp/file-webp.c:159
-msgid "Saves files in the WebP image format"
-msgstr "Shrani datoteke v zapisu WebP"
+msgid "Exports files in the WebP image format"
+msgstr "Izvozi datoteke v zapisu WebP"
 
 #: plug-ins/file-webp/file-webp.c:168
 msgid "WebP"
@@ -11863,8 +11898,8 @@ msgid "Force default delay on all frames"
 msgstr "Vsili privzeto zakasnitev za vse sličice"
 
 #: plug-ins/file-webp/file-webp.c:249
-msgid "Save a_nimation"
-msgstr "Shrani a_nimacijo"
+msgid "Export a_nimation"
+msgstr "Izvozi _animacijo"
 
 #: plug-ins/file-webp/file-webp.c:250
 msgid "Use layers for animation"
