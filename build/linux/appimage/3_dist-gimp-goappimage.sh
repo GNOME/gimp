@@ -571,6 +571,29 @@ bund_usr "$UNIX_PREFIX" "include/brotli"
 wipe_usr include/glob.h
 printf "\nif [ \"\$1\" = '--gimptool' ]; then\n  shift\n  exec \"\$APPDIR\"/usr/bin/gimptool-$GIMP_APP_VERSION \"\$@\"\nfi" >> "$APP_DIR/AppRun"
 
+### Test if all bundled .pc, libs and headers are fine
+printf "(INFO): testing if GIMP SDK works\n"
+clean_tests_path="$BUILD_DIR/tools/gimptool-tests"
+cd "$clean_tests_path"
+for gimpsdk_test in "--build-noui:c-hello-world" "--build:c-hello-world-ui" "--build-geglop:gimp-tutorial-meta-op.so"; do
+  build_option="${gimpsdk_test%%:*}"
+  test_binary="${gimpsdk_test#*:}"
+  test_source="${test_binary%.*}.c"
+  flags_output=$(
+    unset PKG_CONFIG_PATH
+    sh "$APP_DIR/AppRun" --gimptool $build_option "$clean_tests_path/$test_source" 2>&1
+  )
+  result=$?
+  if [ $result -ne 0 ] || [ ! -f "$clean_tests_path/$test_binary" ]; then
+    printf "\033[31m(ERROR)\033[0m: GIMP SDK test failed at runtime for ${test_source}. Output:\n${flags_output}\n"
+    exit 1
+  elif echo "$flags_output" | grep -q -- "-I${UNIX_PREFIX}" || echo "$flags_output" | grep -q -- "-L${UNIX_PREFIX}"; then
+    printf "\033[31m(ERROR)\033[0m: GIMP SDK test failed under the hood for ${test_source} (the SDK is leaking to system prefix). Output:\n${flags_output}\n"
+    exit 1
+  fi
+done
+cd $GIMP_DIR
+
 ## Revision (this does the same as '-Drevision' build option)
 before=$(cat "$(echo $USR_DIR/share/gimp/*/gimp-release)" | grep 'revision')
 after="revision=$REVISION"
