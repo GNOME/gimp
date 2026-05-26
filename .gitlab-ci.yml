@@ -101,6 +101,22 @@ workflow:
     when: always
 
 
+check-commit-log:
+  extends:
+    - .fdo.ci-fairy
+  stage: analysis
+  variables:
+    GIT_DEPTH: "100"
+    JUNIT_REPORT: commit-message-junit-report.xml
+  script:
+    - ci-fairy check-commits --junit-xml=$JUNIT_REPORT
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  artifacts:
+    expire_in: 1 week
+    reports:
+      junit: $JUNIT_REPORT
+
 stages:
   - dependencies
   - build
@@ -1065,11 +1081,14 @@ dist-appimage-weekly:
     expire_in: 8 days
 
 include:
-  project: GNOME/citemplates
-  file: flatpak/flatpak_ci_initiative.yml
-  #flatpak_ci_initiative.yml is extremely pervasive. See: https://gitlab.gnome.org/GNOME/citemplates/-/issues/35
-  #keep 'ref:' synced with submission section of build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh
-  ref: b8e6f8f5a6d2f39b2852d165cc2ab3550ac9e3fb
+  - project: GNOME/citemplates
+    file: flatpak/flatpak_ci_initiative.yml
+    #flatpak_ci_initiative.yml is extremely pervasive. See: https://gitlab.gnome.org/GNOME/citemplates/-/issues/35
+    #keep 'ref:' synced with submission section of build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh
+    ref: b8e6f8f5a6d2f39b2852d165cc2ab3550ac9e3fb
+  - project: Infrastructure/freedesktop-ci-templates
+    file: templates/ci-fairy.yml
+    ref: aec7a6ce7bb38902c70641526f6611e27141784a
 
 dist-flatpak-weekly:
   extends:
