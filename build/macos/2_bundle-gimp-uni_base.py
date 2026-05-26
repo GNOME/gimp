@@ -420,6 +420,7 @@ link_path = Path(f"{GIMP_DISTRIB}/lib/libzstd.dylib")
 link_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/lib/libzstd.1.dylib"), link_path.parent))
 bundle(OPT_PREFIX, "lib/glib-2.0", "--dest", "lib")
 bundle(OPT_PREFIX, "include/brotli", "--dest", "include")
+
 ### Test if all bundled .pc, libs and headers are fine
 print(f"Testing if GIMP SDK works")
 clean_tests_env = os.environ.copy()
