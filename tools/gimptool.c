@@ -52,6 +52,9 @@
 
 static gboolean     silent  = FALSE;
 static gboolean     dry_run = FALSE;
+#if defined(ENABLE_RELOCATABLE_RESOURCES) && !defined(G_OS_WIN32) && !defined(__APPLE__)
+static const gchar *appdir  = NULL;
+#endif
 static const gchar *cli_prefix;
 static const gchar *cli_exec_prefix;
 
@@ -351,7 +354,6 @@ find_out_env_flags (void)
 
 #if !defined(G_OS_WIN32) && !defined(__APPLE__)
       /* gimp_installation_directory() does not like gimptool on AppImage */
-      const gchar *appdir = g_getenv ("APPDIR");
       if (appdir != NULL && *appdir != '\0')
         prefix = g_build_filename (appdir, "usr", NULL);
 #endif
@@ -617,9 +619,6 @@ do_build_2 (const gchar *cflags,
 
   gchar       *tmp;
   gchar       *p, *q;
-#if defined(ENABLE_RELOCATABLE_RESOURCES) && !defined(G_OS_WIN32) && !defined(__APPLE__)
-  const gchar *appdir = g_getenv ("APPDIR");
-#endif
 
   if (install_dir != NULL)
     dest_dir = g_strconcat (install_dir, "/", NULL);
@@ -1168,6 +1167,10 @@ main (int    argc,
 {
   gint argi;
   gint i;
+
+#if defined(ENABLE_RELOCATABLE_RESOURCES) && !defined(G_OS_WIN32) && !defined(__APPLE__)
+  appdir = g_getenv ("APPDIR");
+#endif
 
   if (argc == 1)
     usage (EXIT_SUCCESS);
