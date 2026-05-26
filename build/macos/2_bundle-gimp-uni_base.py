@@ -81,10 +81,14 @@ def bundle(src_root, pattern, option="None", override=None):
       #link_etc_path.unlink(missing_ok=True)
       #link_etc_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/SharedSupport"), link_etc_path.parent))
     dest_path.parent.mkdir(parents=True, exist_ok=True)
+    current_mode = dest_path.parent.stat().st_mode
+    os.chmod(dest_path.parent, current_mode | stat.S_IWUSR)
     print(f"Bundling {src_path} to {dest_path.parent}")
     if src_path.is_dir():
       try:
         shutil.copytree(src_path, dest_path, dirs_exist_ok=True)
+        current_mode = dest_path.stat().st_mode
+        os.chmod(dest_path, current_mode | stat.S_IWUSR)
       except shutil.Error as e:
         print(f"\033[33m(WARNING)\033[0m: {dest_path} seems to already exist and have permission problems")
     else:
