@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-23 00:16+0000\n"
-"PO-Revision-Date: 2026-05-23 10:15+0800\n"
+"POT-Creation-Date: 2026-05-25 21:42+0000\n"
+"PO-Revision-Date: 2026-05-26 09:16+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -143,7 +143,7 @@ msgstr "JavaScript（GJS）插件示例"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4053 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:4082 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -258,7 +258,7 @@ msgstr "水平样式(_H)"
 
 #: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
-#: plug-ins/file-dds/dds.c:197 plug-ins/file-tiff/file-tiff.c:140
+#: plug-ins/file-dds/dds.c:197 plug-ins/file-tiff/file-tiff.c:152
 #: plug-ins/fractal-explorer/fractal-explorer.c:345
 #: plug-ins/fractal-explorer/fractal-explorer.c:355
 #: plug-ins/fractal-explorer/fractal-explorer.c:365
@@ -603,7 +603,7 @@ msgstr "百叶窗"
 #: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1246
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
-#: plug-ins/common/file-drhalo.c:242 plug-ins/common/file-farbfeld.c:307
+#: plug-ins/common/file-drhalo.c:238 plug-ins/common/file-farbfeld.c:307
 #: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1229
 #: plug-ins/common/file-iff.c:431 plug-ins/common/file-jp2.c:1629
 #: plug-ins/common/file-macpaint.c:247 plug-ins/common/file-pcx.c:727
@@ -620,9 +620,9 @@ msgstr "百叶窗"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3228 plug-ins/file-sgi/sgi.c:456
-#: plug-ins/file-tiff/file-tiff-load.c:1587
-#: plug-ins/file-tiff/file-tiff-load.c:2441
+#: plug-ins/file-psd/psd-load.c:3257 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-tiff/file-tiff-load.c:1666
+#: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
 #: plug-ins/gfig/gfig-dialog.c:1262 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:241
@@ -1212,7 +1212,7 @@ msgstr "当前设置的图表"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:573
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:741 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:744 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1189 plug-ins/gfig/gfig-dialog.c:1334
 #: plug-ins/ifs-compose/ifs-compose.c:1214
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -1238,9 +1238,10 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2450
-#: plug-ins/file-tiff/file-tiff-export.c:1087
-#: plug-ins/file-tiff/file-tiff-export.c:1177 plug-ins/flame/flame.c:586
+#: plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2532
+#: plug-ins/file-psd/psd-export.c:2700
+#: plug-ins/file-tiff/file-tiff-export.c:1101
+#: plug-ins/file-tiff/file-tiff-export.c:1221 plug-ins/flame/flame.c:586
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1396
 #: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
 #: plug-ins/lighting/lighting-ui.c:796
@@ -1968,7 +1969,7 @@ msgstr "无法对空选区进行操作。"
 
 #: plug-ins/common/curve-bend.c:808 plug-ins/common/file-cel.c:330
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
-#: plug-ins/common/file-drhalo.c:202 plug-ins/common/file-farbfeld.c:273
+#: plug-ins/common/file-drhalo.c:201 plug-ins/common/file-farbfeld.c:273
 #: plug-ins/common/file-gif-load.c:481 plug-ins/common/file-iff.c:277
 #: plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:198
 #: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
@@ -1993,9 +1994,10 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/file-icns/file-icns-load.c:684 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
-#: plug-ins/file-psd/psd-export.c:2456 plug-ins/file-psd/psd-load.c:190
-#: plug-ins/file-psd/psd-load.c:195 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:540
+#: plug-ins/file-psd/psd-export.c:2538 plug-ins/file-psd/psd-export.c:2706
+#: plug-ins/file-psd/psd-load.c:190 plug-ins/file-psd/psd-load.c:195
+#: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
+#: plug-ins/flame/flame.c:540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
 #: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:529
 #: plug-ins/help/gimphelplocale.c:257 plug-ins/help/gimphelplocale.c:273
@@ -2013,7 +2015,7 @@ msgstr "读取“%s”时出错：%s"
 msgid "Curve Bend"
 msgstr "曲线扭曲"
 
-#: plug-ins/common/curve-bend.c:1173 plug-ins/file-jpeg/jpeg-export.c:853
+#: plug-ins/common/curve-bend.c:1173 plug-ins/file-jpeg/jpeg-export.c:906
 #: plug-ins/gfig/gfig-dialog.c:1186
 msgid "Options"
 msgstr "选项"
@@ -2456,11 +2458,11 @@ msgstr "白色级别"
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "图像尺寸过大：宽 %d x 高 %d"
 
-#: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:258
+#: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:3607 plug-ins/file-tiff/file-tiff-load.c:1944
-#: plug-ins/file-tiff/file-tiff-load.c:2038
-#: plug-ins/file-tiff/file-tiff-load.c:2226
+#: plug-ins/file-psd/psd-load.c:3636 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-tiff/file-tiff-load.c:2081
+#: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
 msgid "There was not enough memory to complete the operation."
 msgstr "没有足够的内存完成此操作。"
@@ -2512,14 +2514,14 @@ msgid "ASCII art"
 msgstr "ASCII 艺术"
 
 #: plug-ins/common/file-aa.c:138
-msgid "Saves grayscale image in various text formats"
-msgstr "以多种文本格式保存灰度图像"
+msgid "Exports grayscale image in various text formats"
+msgstr "以多种文本格式导出灰度图像"
 
 #: plug-ins/common/file-aa.c:140
 msgid ""
-"This plug-in uses aalib to save grayscale image as ascii art into a variety "
-"of text formats"
-msgstr "该插件使用 aalib 将灰度图像作为 ascii 艺术保存为多种文本格式"
+"This plug-in uses aalib to export grayscale image as ascii art into a "
+"variety of text formats"
+msgstr "该插件使用 aalib 将灰度图像作为 ascii 艺术导出为多种文本格式"
 
 #: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:244
 msgid "_Format"
@@ -2600,7 +2602,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
-#: plug-ins/file-tiff/file-tiff-load.c:304
+#: plug-ins/file-tiff/file-tiff-load.c:319
 #, c-format
 msgid "Opening '%s'"
 msgstr "正在打开“%s”"
@@ -2676,8 +2678,8 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2388
-#: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
+#: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2470
+#: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1091
 #, c-format
 msgid "Exporting '%s'"
 msgstr "正在导出“%s”"
@@ -2963,23 +2965,23 @@ msgstr "Dr. Halo CUT 图像"
 msgid "Load Dr. Halo CUT image format"
 msgstr "加载 Dr. Halo CUT 格式的图像"
 
-#: plug-ins/common/file-drhalo.c:214
+#: plug-ins/common/file-drhalo.c:211
 #, c-format
 msgid "Cannot open file for reading: %s\n"
 msgstr "无法打开文件并读取：%s\n"
 
-#: plug-ins/common/file-drhalo.c:227
+#: plug-ins/common/file-drhalo.c:223
 #, c-format
 msgid "Invalid dimensions: %d x %d"
 msgstr "无效的尺寸：%d x %d"
 
-#: plug-ins/common/file-drhalo.c:282 plug-ins/common/file-drhalo.c:288
-#: plug-ins/common/file-drhalo.c:303 plug-ins/common/file-drhalo.c:309
+#: plug-ins/common/file-drhalo.c:278 plug-ins/common/file-drhalo.c:284
+#: plug-ins/common/file-drhalo.c:299 plug-ins/common/file-drhalo.c:305
 #, c-format
 msgid "Error reading data. Image may be corrupt."
 msgstr "读取数据时出错。图像可能已损坏。"
 
-#: plug-ins/common/file-drhalo.c:324 plug-ins/common/file-drhalo.c:346
+#: plug-ins/common/file-drhalo.c:320 plug-ins/common/file-drhalo.c:342
 msgid "Invalid data: image may be corrupt."
 msgstr "无效的数据：图像可能已损坏。"
 
@@ -3042,9 +3044,36 @@ msgstr "GIMP 笔刷"
 msgid "Radiance RGBE"
 msgstr "光辉 RGBE"
 
+#: plug-ins/common/file-gegl.c:122
+msgid "Loads files in the RGBE file format"
+msgstr "加载 RGBE 格式的文件"
+
+#: plug-ins/common/file-gegl.c:123
+msgid ""
+"This procedure loads images in the RGBE format, using \"gegl:rgbe-load\""
+msgstr "此程序会使用“gegl:rgbe-load”加载 RGBE 格式的图像"
+
+#: plug-ins/common/file-gegl.c:127
+msgid "Exports files in the RGBE file format"
+msgstr "以 RGBE 格式导出文件"
+
+#: plug-ins/common/file-gegl.c:128
+msgid ""
+"This procedure exports images in the RGBE format, using \"gegl:rgbe-save\""
+msgstr "此程序会使用“gegl:rgbe-save”导出 RGBE 格式的图像"
+
 #: plug-ins/common/file-gegl.c:132 plug-ins/file-exr/file-exr.c:111
 msgid "OpenEXR image"
 msgstr "OpenEXR 图像"
+
+#: plug-ins/common/file-gegl.c:141
+msgid "Exports files in the OpenEXR file format"
+msgstr "以 OpenEXR 格式导出文件"
+
+#: plug-ins/common/file-gegl.c:142
+msgid ""
+"This procedure exports images in the OpenEXR format, using \"gegl:exr-save\""
+msgstr "此程序会使用“gegl:exr-save”导出 OpenEXR 格式的图像"
 
 #: plug-ins/common/file-gegl.c:356
 #, c-format
@@ -3537,8 +3566,8 @@ msgid "C source code header"
 msgstr "C 源代码头文件"
 
 #: plug-ins/common/file-header.c:120
-msgid "Saves files as C unsigned character array"
-msgstr "将文件作为 C 无符号字符数组保存"
+msgid "Exports files as C unsigned character array"
+msgstr "将文件导出为 C 无符号字符数组"
 
 #: plug-ins/common/file-heif.c:224 plug-ins/common/file-heif.c:264
 msgid "HEIF/HEIC"
@@ -4103,21 +4132,21 @@ msgstr "JPEG 2000 图像不带色彩空间"
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "不支持 JPEG 2000%s “%s”带有 %d 分量。"
 
-#: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:887
-#: plug-ins/file-psd/psd-export.c:2726
-#: plug-ins/file-tiff/file-tiff-export.c:1311
+#: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:940
+#: plug-ins/file-psd/psd-export.c:2970
+#: plug-ins/file-tiff/file-tiff-export.c:1390
 msgid "No soft-proofing profile"
 msgstr "无软打样特性文件"
 
 #: plug-ins/common/file-jp2.c:1309 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2734
-#: plug-ins/file-tiff/file-tiff-export.c:1319
+#: plug-ins/file-jpeg/jpeg-export.c:948 plug-ins/file-psd/psd-export.c:2978
+#: plug-ins/file-tiff/file-tiff-export.c:1399
 msgid "Name of the color profile used for CMYK export."
 msgstr "用于 CMYK 导出的特性文件的名称。"
 
 #: plug-ins/common/file-jp2.c:1320 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2745
-#: plug-ins/file-tiff/file-tiff-export.c:1331
+#: plug-ins/file-jpeg/jpeg-export.c:959 plug-ins/file-psd/psd-export.c:2989
+#: plug-ins/file-tiff/file-tiff-export.c:1421
 #, c-format
 msgid "Profile: %s"
 msgstr "特性文件：%s"
@@ -4197,8 +4226,8 @@ msgid "Loads files in the JPEG XL file format"
 msgstr "加载 JPEG XL 格式的文件"
 
 #: plug-ins/common/file-jpegxl.c:171 plug-ins/common/file-jpegxl.c:172
-msgid "Saves files in the JPEG XL file format"
-msgstr "以 JPEG XL 格式保存文件"
+msgid "Exports files in the JPEG XL file format"
+msgstr "以 JPEG XL 格式导出文件"
 
 #: plug-ins/common/file-jpegxl.c:199
 msgid "Co_mpression/maxError"
@@ -4254,7 +4283,7 @@ msgstr "小猫"
 msgid "tortoise (slower)"
 msgstr "乌龟（较慢）"
 
-#: plug-ins/common/file-jpegxl.c:227 plug-ins/file-tiff/file-tiff.c:268
+#: plug-ins/common/file-jpegxl.c:227 plug-ins/file-tiff/file-tiff.c:286
 msgid "Export as CMY_K"
 msgstr "导出为 CMYK(_K)"
 
@@ -4317,14 +4346,14 @@ msgid "MNG"
 msgstr "MNG"
 
 #: plug-ins/common/file-mng.c:259
-msgid "Saves images in the MNG file format"
-msgstr "以 MNG 格式保存图像"
+msgid "Exports images in the MNG file format"
+msgstr "以 MNG 格式导出图像"
 
 #: plug-ins/common/file-mng.c:260
 msgid ""
-"This plug-in saves images in the Multiple-image Network Graphics (MNG) "
+"This plug-in exports images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
-msgstr "该插件把图像保存为可被用于代替 GIF 动画等的多图像网络图形（MNG）格式。"
+msgstr "该插件把图像导出为可被用于代替 GIF 动画等的多图像网络图形（MNG）格式。"
 
 #: plug-ins/common/file-mng.c:286
 msgid "Use interlacing"
@@ -4620,14 +4649,14 @@ msgstr "“%s”不是 PCX 文件"
 
 #: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:625
+#: plug-ins/file-psd/psd-load.c:643
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "不支持或无效的图像宽度：%d"
 
 #: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:617
+#: plug-ins/file-psd/psd-load.c:635
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "不支持或无效的图像高度：%d"
@@ -4684,16 +4713,16 @@ msgid "Portable Document Format"
 msgstr "便携式文档格式"
 
 #: plug-ins/common/file-pdf-export.c:332 plug-ins/common/file-pdf-export.c:418
-msgid "Save files in PDF format"
-msgstr "以 PDF 格式保存文件"
+msgid "Exports files in PDF format"
+msgstr "以 PDF 格式导出文件"
 
 #: plug-ins/common/file-pdf-export.c:333 plug-ins/common/file-pdf-export.c:419
 msgid ""
-"Saves files in Adobe's Portable Document Format. PDF is designed to be "
+"Exports files in Adobe's Portable Document Format. PDF is designed to be "
 "easily processed by a variety of different platforms, and is a distant "
 "cousin of PostScript."
 msgstr ""
-"将文件保存为 Adobe 的便携式文档格式。PDF 设计为多种不同平台便于处理，且为 "
+"将文件导出为 Adobe 的便携式文档格式。PDF 设计为便于多种不同平台处理，且为 "
 "PostScript 远房表亲的文件格式。"
 
 #: plug-ins/common/file-pdf-export.c:345 plug-ins/common/file-pdf-load.c:214
@@ -4772,12 +4801,12 @@ msgid "_Create multipage PDF..."
 msgstr "创建多页面 PDF(_C)…"
 
 #: plug-ins/common/file-pdf-export.c:471
-msgid "Save to"
-msgstr "保存到"
+msgid "Export to"
+msgstr "导出于"
 
 #: plug-ins/common/file-pdf-export.c:472
-msgid "The URI of the file to save to"
-msgstr "文件保存的地址"
+msgid "The URI of the file to export to"
+msgstr "要导出文件的 URI"
 
 #: plug-ins/common/file-pdf-export.c:694
 #, c-format
@@ -4834,7 +4863,7 @@ msgstr "添加该图像"
 #: plug-ins/common/file-pdf-export.c:1201
 #: plug-ins/common/file-pdf-export.c:1274
 #: plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2233
-#: plug-ins/file-tiff/file-tiff-load.c:1589
+#: plug-ins/file-tiff/file-tiff-load.c:1668
 #, c-format
 msgid "Page %d"
 msgstr "第 %d 页"
@@ -5003,7 +5032,7 @@ msgstr "写入 pHYs 数据块（PNG 元数据）"
 msgid "Write tIME chunk (PNG metadata)"
 msgstr "写入 tIME 数据块（PNG 元数据）"
 
-#: plug-ins/common/file-png.c:381 plug-ins/file-tiff/file-tiff.c:261
+#: plug-ins/common/file-png.c:381 plug-ins/file-tiff/file-tiff.c:279
 msgid "Save color _values from transparent pixels"
 msgstr "保存透明像素的颜色值(_V)"
 
@@ -6644,24 +6673,24 @@ msgstr "无法从“%s”读取文件头"
 
 #: plug-ins/common/file-tim.c:168 plug-ins/common/file-tim.c:191
 #: plug-ins/common/file-tim.c:203
-msgid "Playstation TIM image"
-msgstr "Playstation TIM 图像"
+msgid "PlayStation TIM image"
+msgstr "PlayStation TIM 图像"
 
 #: plug-ins/common/file-tim.c:171
-msgid "Load file in the TIM file format"
+msgid "Loads file in the TIM file format"
 msgstr "加载 TIM 格式的文件"
 
 #: plug-ins/common/file-tim.c:172
-msgid "Load file in the Sony Playstation TIM file format"
-msgstr "加载索尼 Playstation TIM 格式的文件"
+msgid "Loads file in the Sony PlayStation TIM file format"
+msgstr "加载索尼 PlayStation TIM 格式的文件"
 
 #: plug-ins/common/file-tim.c:194
-msgid "Saves files in the TIM file format"
-msgstr "以 TIM 格式保存文件"
+msgid "Exports files in the TIM file format"
+msgstr "以 TIM 格式导出文件"
 
 #: plug-ins/common/file-tim.c:195
-msgid "Saves files in the Playstation TIM file format"
-msgstr "以 Playstation TIM 格式保存文件"
+msgid "Exports files in the PlayStation TIM file format"
+msgstr "以 PlayStation TIM 格式导出文件"
 
 #: plug-ins/common/file-tim.c:217
 msgid "_Type"
@@ -7935,7 +7964,7 @@ msgstr ""
 "现插件菜单的树形列表。也可以帮助您找到新安装插件在菜单中的位置。"
 
 #: plug-ins/common/plugin-browser.c:370
-#: plug-ins/filter-browser/filter-browser.c:623
+#: plug-ins/filter-browser/filter-browser.c:626
 msgid "Searching by name"
 msgstr "按名称搜索"
 
@@ -7946,7 +7975,7 @@ msgid_plural "%d plug-ins"
 msgstr[0] "%d 个插件"
 
 #: plug-ins/common/plugin-browser.c:395
-#: plug-ins/filter-browser/filter-browser.c:690
+#: plug-ins/filter-browser/filter-browser.c:693
 msgid "No matches for your query"
 msgstr "您的查询无匹配结果"
 
@@ -7957,7 +7986,7 @@ msgid_plural "%d plug-ins match your query"
 msgstr[0] "共有 %d 个插件和您的查询匹配"
 
 #: plug-ins/common/plugin-browser.c:544
-#: plug-ins/filter-browser/filter-browser.c:692
+#: plug-ins/filter-browser/filter-browser.c:695
 msgid "No matches"
 msgstr "无匹配"
 
@@ -9107,7 +9136,7 @@ msgstr "翘曲"
 msgid "Basic Options"
 msgstr "基本选项"
 
-#: plug-ins/common/warp.c:448 plug-ins/file-jpeg/jpeg-export.c:947
+#: plug-ins/common/warp.c:448 plug-ins/file-jpeg/jpeg-export.c:1000
 #: plug-ins/file-webp/file-webp-dialog.c:98
 msgid "Advanced Options"
 msgstr "高级选项"
@@ -9279,8 +9308,8 @@ msgid "BMP"
 msgstr "BMP"
 
 #: plug-ins/file-bmp/bmp.c:185 plug-ins/file-bmp/bmp.c:186
-msgid "Saves files in Windows BMP file format"
-msgstr "以 Windows BMP 格式保存文件"
+msgid "Exports files in Windows BMP file format"
+msgstr "以 Windows BMP 格式导出文件"
 
 #: plug-ins/file-bmp/bmp.c:206
 msgid "Ru_n-Length Encoded"
@@ -9418,8 +9447,8 @@ msgid "DDS"
 msgstr "DDS"
 
 #: plug-ins/file-dds/dds.c:176 plug-ins/file-dds/dds.c:177
-msgid "Saves files in DDS image format"
-msgstr "以 DDS 图像格式保存文件"
+msgid "Exports files in DDS image format"
+msgstr "以 DDS 格式导出文件"
 
 #: plug-ins/file-dds/dds.c:198
 msgid "BC1 / DXT1"
@@ -9548,8 +9577,8 @@ msgid "Sav_e type"
 msgstr "保存类型(_E)"
 
 #: plug-ins/file-dds/dds.c:252
-msgid "How to save the image"
-msgstr "如何保存该图像"
+msgid "How to export the image"
+msgstr "导出图像的方式"
 
 #: plug-ins/file-dds/dds.c:253
 msgid "Selected layer"
@@ -10317,8 +10346,8 @@ msgid "Loads a preview from a Windows ANI files"
 msgstr "从 Windows ANI 文件中加载预览"
 
 #: plug-ins/file-ico/ico.c:380 plug-ins/file-ico/ico.c:381
-msgid "Saves files in Windows ANI file format"
-msgstr "以 Windows ANI 格式保存文件"
+msgid "Exports files in Windows ANI file format"
+msgstr "以 Windows ANI 格式导出文件"
 
 #: plug-ins/file-ico/ico.c:407
 msgid "Cursor Name (Optional)"
@@ -10333,15 +10362,15 @@ msgstr "指针作者（可选）"
 msgid "File size without metadata: %s"
 msgstr "不带元数据的文件大小：%s"
 
-#: plug-ins/file-jpeg/jpeg-export.c:708
+#: plug-ins/file-jpeg/jpeg-export.c:761
 msgid "Calculating approximate file size..."
 msgstr "正在计算近似文件大小…"
 
-#: plug-ins/file-jpeg/jpeg-export.c:798 plug-ins/file-jpeg/jpeg-export.c:874
+#: plug-ins/file-jpeg/jpeg-export.c:851 plug-ins/file-jpeg/jpeg-export.c:927
 msgid "File size without metadata: unknown"
 msgstr "不带元数据的文件大小：未知"
 
-#: plug-ins/file-jpeg/jpeg-export.c:882
+#: plug-ins/file-jpeg/jpeg-export.c:935
 msgid "Enable preview to obtain the approximate file size."
 msgstr "启用预览以获得近似文件大小。"
 
@@ -10379,7 +10408,7 @@ msgstr "以 JPEG 格式导出文件"
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "将文件导出为有损的，被广泛支持的 JPEG 格式"
 
-#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:144
+#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:156
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -10510,25 +10539,36 @@ msgstr "较旧的软件打开算法编码的图像可能会有问题"
 msgid "Use restart mar_kers"
 msgstr "使用重新开始标记(_K)"
 
-#: plug-ins/file-psd/psd-export.c:573
+#: plug-ins/file-jpeg/jpeg.c:314 plug-ins/file-tiff/file-tiff.c:318
+msgid "Save Photoshop metadata"
+msgstr "保存 Photoshop 元数据"
+
+#: plug-ins/file-jpeg/jpeg.c:315
+msgid ""
+"Store Photoshop image resources (paths, guides, ...) in JPEG APP13 tag "
+"(Photoshop)"
+msgstr ""
+"将 Photoshop 图像资源（路径、参考线等）存储在 JPEG APP13 标签（Photoshop）内"
+
+#: plug-ins/file-psd/psd-export.c:585
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "出错：无法将 GIMP 基础图像类型转换为 PSD 模式"
 
-#: plug-ins/file-psd/psd-export.c:2375
+#: plug-ins/file-psd/psd-export.c:2457 plug-ins/file-psd/psd-export.c:2627
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr "无法导出“%s”。PSD 文件格式不支持宽度或高度大于 30000 像素的图像。"
 
-#: plug-ins/file-psd/psd-export.c:2381
+#: plug-ins/file-psd/psd-export.c:2463 plug-ins/file-psd/psd-export.c:2633
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images that are "
 "more than 300,000 pixels wide or tall."
 msgstr "无法导出“%s”。PSB 文件格式不支持宽度或高度大于 300000 像素的图像。"
 
-#: plug-ins/file-psd/psd-export.c:2423
+#: plug-ins/file-psd/psd-export.c:2505 plug-ins/file-psd/psd-export.c:2673
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -10536,7 +10576,7 @@ msgid ""
 msgstr ""
 "无法导出“%s”。PSD 文件格式不支持含有宽度或高度大于 30000 像素图层的图像。"
 
-#: plug-ins/file-psd/psd-export.c:2429
+#: plug-ins/file-psd/psd-export.c:2511 plug-ins/file-psd/psd-export.c:2679
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images with "
@@ -10544,7 +10584,7 @@ msgid ""
 msgstr ""
 "无法导出“%s”。PSB 文件格式不支持含有宽度或高度大于 300000 像素图层的图像。"
 
-#: plug-ins/file-psd/psd-export.c:2769
+#: plug-ins/file-psd/psd-export.c:3013
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -10552,7 +10592,7 @@ msgstr ""
 "将使用来自原始导入图像的\n"
 "双色调颜色空间信息。"
 
-#: plug-ins/file-psd/psd-export.c:2838
+#: plug-ins/file-psd/psd-export.c:3082
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
@@ -10560,21 +10600,21 @@ msgstr ""
 "PSD 文件可以存储至多 998 个路径。\n"
 "其余路径将被丢弃。"
 
-#: plug-ins/file-psd/psd-export.c:2948
+#: plug-ins/file-psd/psd-export.c:3192
 msgid "Indexed Image Warning"
 msgstr "索引图像警告"
 
-#: plug-ins/file-psd/psd-export.c:2949
+#: plug-ins/file-psd/psd-export.c:3193
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
 msgstr "Photoshop 不支持多于一个图层的索引图像。图层将在导出时合并。"
 
-#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4092
+#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:4121
 msgid "Compatibility Notice"
 msgstr "兼容性注意"
 
-#: plug-ins/file-psd/psd-export.c:2971
+#: plug-ins/file-psd/psd-export.c:3215
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -10590,119 +10630,124 @@ msgstr ""
 msgid "Error loading PSD file: %s"
 msgstr "打开 PSD 文件出错：%s"
 
-#: plug-ins/file-psd/psd-load.c:492
+#: plug-ins/file-psd/psd-load.c:510
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "无效的 PSD 元数据图层格式"
 
-#: plug-ins/file-psd/psd-load.c:596
+#: plug-ins/file-psd/psd-load.c:614
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "不是有效的 Photoshop 文档文件"
 
-#: plug-ins/file-psd/psd-load.c:603
+#: plug-ins/file-psd/psd-load.c:621
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "不支持的文件格式版本：%d"
 
-#: plug-ins/file-psd/psd-load.c:610
+#: plug-ins/file-psd/psd-load.c:628
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "文件中的通道数太多：%d"
 
-#: plug-ins/file-psd/psd-load.c:634
+#: plug-ins/file-psd/psd-load.c:652
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "不支持或无效的图像尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:649 plug-ins/file-psd/psd-load.c:659
+#: plug-ins/file-psd/psd-load.c:667 plug-ins/file-psd/psd-load.c:677
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "不支持的色彩模式：%s"
 
-#: plug-ins/file-psd/psd-load.c:686
+#: plug-ins/file-psd/psd-load.c:704
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "不支持的位深度：%d"
 
-#: plug-ins/file-psd/psd-load.c:720 plug-ins/file-psd/psd-load.c:730
-#: plug-ins/file-psd/psd-load.c:981 plug-ins/file-psd/psd-load.c:1342
+#: plug-ins/file-psd/psd-load.c:738 plug-ins/file-psd/psd-load.c:748
+#: plug-ins/file-psd/psd-load.c:999 plug-ins/file-psd/psd-load.c:1360
 #, c-format
 msgid "The file is corrupt!"
 msgstr "文件损坏！"
 
-#: plug-ins/file-psd/psd-load.c:910
+#: plug-ins/file-psd/psd-load.c:928
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "图层中的通道数太多：%d"
 
-#: plug-ins/file-psd/psd-load.c:1017
+#: plug-ins/file-psd/psd-load.c:1035
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "不支持的或无效的图层高度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1026
+#: plug-ins/file-psd/psd-load.c:1044
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "不支持的或无效的图层宽度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1036
+#: plug-ins/file-psd/psd-load.c:1054
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "不支持的或无效的图层尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1061
+#: plug-ins/file-psd/psd-load.c:1079
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "不支持或无效的蒙板信息大小。"
 
-#: plug-ins/file-psd/psd-load.c:1244
+#: plug-ins/file-psd/psd-load.c:1262
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "不支持的或无效的图层蒙板高度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1253
+#: plug-ins/file-psd/psd-load.c:1271
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "不支持的或无效的图层蒙板宽度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1263
+#: plug-ins/file-psd/psd-load.c:1281
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "不支持的或无效的图层蒙板尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3599
+#: plug-ins/file-psd/psd-load.c:1893 plug-ins/file-psd/psd-load.c:3628
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "不支持或无效的通道尺寸"
 
-#: plug-ins/file-psd/psd-load.c:2309 plug-ins/file-psd/psd-load.c:3197
+#: plug-ins/file-psd/psd-load.c:2270
+#, c-format
+msgid "Invalid channel dimensions %u x %u"
+msgstr "无效通道尺寸 %u x %u"
+
+#: plug-ins/file-psd/psd-load.c:2338 plug-ins/file-psd/psd-load.c:3226
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "不支持的压缩模式：%d"
 
-#: plug-ins/file-psd/psd-load.c:2926
+#: plug-ins/file-psd/psd-load.c:2955
 msgid "Inner Shadow"
 msgstr "内阴影"
 
-#: plug-ins/file-psd/psd-load.c:2927
+#: plug-ins/file-psd/psd-load.c:2956
 msgid "imported"
 msgstr "已导入"
 
-#: plug-ins/file-psd/psd-load.c:3374
+#: plug-ins/file-psd/psd-load.c:3403
 msgid "Extra"
 msgstr "附加的"
 
-#: plug-ins/file-psd/psd-load.c:3676
+#: plug-ins/file-psd/psd-load.c:3705
 #, c-format
 msgid "Failed to decompress data"
 msgstr "解压缩数据失败"
 
-#: plug-ins/file-psd/psd-load.c:4069
+#: plug-ins/file-psd/psd-load.c:4098
 msgid "Duotone Import"
 msgstr "双色导入"
 
-#: plug-ins/file-psd/psd-load.c:4070
+#: plug-ins/file-psd/psd-load.c:4099
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10712,7 +10757,7 @@ msgstr ""
 "双色调颜色空间数据已保存\n"
 "且可在导出时重新应用。"
 
-#: plug-ins/file-psd/psd-load.c:4093
+#: plug-ins/file-psd/psd-load.c:4122
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -10720,83 +10765,83 @@ msgstr ""
 "该 PSD 文件包含 GIMP\n"
 "尚未完全支持的特性："
 
-#: plug-ins/file-psd/psd.c:136 plug-ins/file-psd/psd.c:219
-#: plug-ins/file-psd/psd.c:221
+#: plug-ins/file-psd/psd.c:140 plug-ins/file-psd/psd.c:223
+#: plug-ins/file-psd/psd.c:225
 msgid "Photoshop image"
 msgstr "Photoshop 图像"
 
-#: plug-ins/file-psd/psd.c:139 plug-ins/file-psd/psd.c:168
+#: plug-ins/file-psd/psd.c:143 plug-ins/file-psd/psd.c:172
 msgid "Loads images from the Photoshop PSD and PSB file formats"
 msgstr "加载 Photoshop PSD 和 PSB 格式的图像"
 
-#: plug-ins/file-psd/psd.c:141
+#: plug-ins/file-psd/psd.c:145
 msgid ""
 "This plug-in loads images in Adobe Photoshop (TM) native PSD and PSB format."
 msgstr "该插件加载 Adobe Photoshop (TM) 原生 PSD 和 PSB 格式的图像。"
 
-#: plug-ins/file-psd/psd.c:165
+#: plug-ins/file-psd/psd.c:169
 msgid "Photoshop image (merged)"
 msgstr "Photoshop 图像（已合并）"
 
-#: plug-ins/file-psd/psd.c:170
+#: plug-ins/file-psd/psd.c:174
 msgid ""
 "This plug-in loads the merged image data in Adobe Photoshop (TM) native PSD "
 "and PSB format."
 msgstr "该插件加载 Adobe Photoshop (TM) 原生 PSD 和 PSB 格式的已合并图像数据。"
 
-#: plug-ins/file-psd/psd.c:197
+#: plug-ins/file-psd/psd.c:201
 msgid "Loads thumbnails from the Photoshop PSD file format"
 msgstr "加载来自 Photoshop PSD 文件的缩略图"
 
-#: plug-ins/file-psd/psd.c:199
+#: plug-ins/file-psd/psd.c:203
 msgid ""
 "This plug-in loads thumbnail images from Adobe Photoshop (TM) native PSD "
 "format files."
 msgstr "该插件加载来自 Adobe Photoshop (TM) 原生 PSD 格式文件的缩略图像。"
 
-#: plug-ins/file-psd/psd.c:224
-msgid "Saves files in the Photoshop (TM) PSD file format"
-msgstr "以 Photoshop (TM) PSD 格式保存文件"
+#: plug-ins/file-psd/psd.c:228
+msgid "Exports files in the Photoshop (TM) PSD file format"
+msgstr "以 Photoshop (TM) PSD 格式导出文件"
 
-#: plug-ins/file-psd/psd.c:226
+#: plug-ins/file-psd/psd.c:230
 msgid ""
-"This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
+"This plug-in exports files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
 "layer masks, aux channels and guides."
 msgstr ""
-"该插件将文件保存为 Adobe Photoshop (TM) 原生 PSD 格式。这些文件可以为 GIMP 支"
+"该插件将文件导出为 Adobe Photoshop (TM) 原生 PSD 格式。这些文件可以为 GIMP 支"
 "持的任何图像类型，带或不带图层、蒙板、辅助通道和参考线。"
 
-#: plug-ins/file-psd/psd.c:240 plug-ins/file-psd/psd.c:242
+#: plug-ins/file-psd/psd.c:244 plug-ins/file-psd/psd.c:246
 msgid "Photoshop Large image"
 msgstr "Photoshop 大幅图像"
 
-#: plug-ins/file-psd/psd.c:245
-msgid "Saves files in the Photoshop (TM) Large PSB file format"
-msgstr "以 Photoshop (TM) 大型 PSB 格式保存文件"
+#: plug-ins/file-psd/psd.c:249
+msgid "Exports files in the Photoshop (TM) Large PSB file format"
+msgstr "以 Photoshop (TM) 大型 PSB 格式导出文件"
 
-#: plug-ins/file-psd/psd.c:247
+#: plug-ins/file-psd/psd.c:251
 msgid ""
-"This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
+"This plug-in exports files of Adobe Photoshop (TM) Large native PSB format. "
 "These files may be of any image type supported by GIMP, with or without "
 "layers, layer masks, aux channels and guides."
 msgstr ""
-"该插件将文件保存为 Adobe Photoshop (TM) 原生大型 PSB 格式。这些文件可以为 "
+"该插件将文件导出为 Adobe Photoshop (TM) 原生大型 PSB 格式。这些文件可以为 "
 "GIMP 支持的任何图像类型，带或不带图层、蒙板、辅助通道和参考线。"
 
-#: plug-ins/file-psd/psd.c:275
+#: plug-ins/file-psd/psd.c:279
 msgid "Assign a Clipping _Path"
 msgstr "指定剪切路径(_P)"
 
-#: plug-ins/file-psd/psd.c:276
+#: plug-ins/file-psd/psd.c:280
 msgid "Select a path to be the clipping path"
 msgstr "选择一个路径作为剪切路径"
 
-#: plug-ins/file-psd/psd.c:282
+#: plug-ins/file-psd/psd.c:286
 msgid "Clipping Path _Name"
 msgstr "剪切路径名称(_N)"
 
-#: plug-ins/file-psd/psd.c:283
+#: plug-ins/file-psd/psd.c:287
 msgid ""
 "Clipping path name\n"
 "(ignored if no clipping path)"
@@ -10804,11 +10849,11 @@ msgstr ""
 "剪切路径名称\n"
 "（如果无剪切路径则忽略）"
 
-#: plug-ins/file-psd/psd.c:289
+#: plug-ins/file-psd/psd.c:293
 msgid "Path _Flatness"
 msgstr "路径平整度(_F)"
 
-#: plug-ins/file-psd/psd.c:290
+#: plug-ins/file-psd/psd.c:294
 msgid ""
 "Clipping path flatness in device pixels\n"
 "(ignored if no clipping path)"
@@ -10816,33 +10861,33 @@ msgstr ""
 "设备像素中的剪切路径平整度\n"
 "（如果无剪切路径则忽略）"
 
-#: plug-ins/file-psd/psd.c:296
+#: plug-ins/file-psd/psd.c:300
 msgid "Export as _CMYK"
 msgstr "导出为 CMYK(_C)"
 
-#: plug-ins/file-psd/psd.c:297
+#: plug-ins/file-psd/psd.c:301
 msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgstr "使用软打样特性文件导出 CMYK PSD 图像"
 
-#: plug-ins/file-psd/psd.c:302
+#: plug-ins/file-psd/psd.c:306
 msgid "Export as _Duotone"
 msgstr "导出为双色调(_D)"
 
-#: plug-ins/file-psd/psd.c:303
+#: plug-ins/file-psd/psd.c:307
 msgid ""
 "Export as a Duotone PSD file if Duotone color space information was attached "
 "to the image when originally imported."
 msgstr "如果在原始导入时附加了双色调颜色空间信息则导出为双色调 PSD 文件。"
 
-#: plug-ins/file-psd/psd.c:411
+#: plug-ins/file-psd/psd.c:454
 msgid "Import PSD"
 msgstr "导入 PSD"
 
-#: plug-ins/file-psd/psd.c:562
+#: plug-ins/file-psd/psd.c:605
 msgid "Import PSD metadata"
 msgstr "导入 PSD 元数据"
 
-#: plug-ins/file-psd/psd.c:566
+#: plug-ins/file-psd/psd.c:609
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr "不支持元数据填充图层且将会显示为空白图层。"
@@ -10991,7 +11036,7 @@ msgstr "该插件加载 SGI 图像文件。"
 
 #: plug-ins/file-sgi/sgi.c:179
 msgid "Exports files in SGI image file format"
-msgstr "以 SGI 图像格式导出文件"
+msgstr "以 SGI 格式导出文件"
 
 #: plug-ins/file-sgi/sgi.c:180
 msgid "This plug-in exports SGI image files."
@@ -11042,49 +11087,75 @@ msgstr "无效的通道数：%hu"
 msgid "Could not open '%s' for writing."
 msgstr "无法打开“%s”并写入。"
 
-#: plug-ins/file-tiff/file-tiff.c:141
+#: plug-ins/file-tiff/file-tiff.c:148
+msgid "Standard (pages)"
+msgstr "标准（页面）"
+
+#: plug-ins/file-tiff/file-tiff.c:148
+msgid "Store layers in TIFF directories (IFDs)"
+msgstr "将图层存储在 TIFF 目录（IFD）内"
+
+#: plug-ins/file-tiff/file-tiff.c:149
+msgid "Photoshop (embedded layers)"
+msgstr "Photoshop（内嵌图层）"
+
+#: plug-ins/file-tiff/file-tiff.c:149
+msgid "Store layers in TIFF tags (ImageSourceData/Photoshop)"
+msgstr "将图层存储在 TIFF 标签（ImageSourceData/Photoshop）内"
+
+#: plug-ins/file-tiff/file-tiff.c:153
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/file-tiff/file-tiff.c:142
+#: plug-ins/file-tiff/file-tiff.c:154
 msgid "Pack Bits"
 msgstr "压缩位"
 
-#: plug-ins/file-tiff/file-tiff.c:143
+#: plug-ins/file-tiff/file-tiff.c:155
 msgid "Deflate"
 msgstr "收缩"
 
-#: plug-ins/file-tiff/file-tiff.c:145
+#: plug-ins/file-tiff/file-tiff.c:157
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 传真"
 
-#: plug-ins/file-tiff/file-tiff.c:146
+#: plug-ins/file-tiff/file-tiff.c:158
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 传真"
 
-#: plug-ins/file-tiff/file-tiff.c:174 plug-ins/file-tiff/file-tiff.c:220
+#: plug-ins/file-tiff/file-tiff.c:186 plug-ins/file-tiff/file-tiff.c:238
 msgid "TIFF or BigTIFF image"
 msgstr "TIFF 或 BigTIFF 图像"
 
-#: plug-ins/file-tiff/file-tiff.c:177
+#: plug-ins/file-tiff/file-tiff.c:189
 msgid "Loads files of the TIFF and BigTIFF file formats"
 msgstr "加载 TIFF 和 BigTIFF 格式的文件"
 
-#: plug-ins/file-tiff/file-tiff.c:178
+#: plug-ins/file-tiff/file-tiff.c:190
 msgid ""
 "Loads files of the Tag Image File Format (TIFF) and its 64-bit offsets "
 "variant (BigTIFF)"
 msgstr "加载标签图像文件格式（TIFF）和其 64 位偏移变种（BigTIFF）的文件"
 
-#: plug-ins/file-tiff/file-tiff.c:209
-msgid "_Keep empty space around imported layers"
-msgstr "保持导入图层周围的空白空间(_K)"
+#: plug-ins/file-tiff/file-tiff.c:208
+msgid "Keep composite image"
+msgstr "保留合成图像"
 
-#: plug-ins/file-tiff/file-tiff.c:223
+#: plug-ins/file-tiff/file-tiff.c:209
+msgid ""
+"Keep the composite image of Sketchbook or Photoshop TIFF files as additional "
+"layer"
+msgstr "将 Sketchbook 或 Photoshop TIFF 文件的合成图像作为附加图层保留"
+
+#: plug-ins/file-tiff/file-tiff.c:227
+msgid "_Keep empty space around imported layers"
+msgstr "保留导入图层周围的空白空间(_K)"
+
+#: plug-ins/file-tiff/file-tiff.c:241
 msgid "Exports files in the TIFF or BigTIFF file formats"
 msgstr "以 TIFF 或 BigTIFF 格式导出文件"
 
-#: plug-ins/file-tiff/file-tiff.c:224
+#: plug-ins/file-tiff/file-tiff.c:242
 msgid ""
 "Exports files in the Tag Image File Format (TIFF) or its 64-bit offsets "
 "variant (BigTIFF) able to support much bigger file sizes"
@@ -11092,78 +11163,96 @@ msgstr ""
 "将文件导出为标签图像文件格式（TIFF）或其能够支持更大文件大小的 64 位偏移变种"
 "（BigTIFF）"
 
-#: plug-ins/file-tiff/file-tiff.c:236
+#: plug-ins/file-tiff/file-tiff.c:254
 msgid "TIFF"
 msgstr "TIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:248
+#: plug-ins/file-tiff/file-tiff.c:266
 msgid "Export in _BigTIFF variant file format"
 msgstr "以 BigTIFF 变种文件格式导出(_B)"
 
-#: plug-ins/file-tiff/file-tiff.c:249
+#: plug-ins/file-tiff/file-tiff.c:267
 msgid ""
 "The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
 "4GiB files and bigger"
 msgstr "BigTIFF 变种文件格式使用 64 位偏移，因此支持大于 4GiB 的文件"
 
-#: plug-ins/file-tiff/file-tiff.c:255
+#: plug-ins/file-tiff/file-tiff.c:273
 msgid "Co_mpression"
 msgstr "压缩(_M)"
 
-#: plug-ins/file-tiff/file-tiff.c:256
+#: plug-ins/file-tiff/file-tiff.c:274
 msgid "Compression type"
 msgstr "压缩类型"
 
-#: plug-ins/file-tiff/file-tiff.c:262
+#: plug-ins/file-tiff/file-tiff.c:280
 msgid ""
 "Keep the color data masked by an alpha channel intact (do not store "
 "premultiplied components)"
 msgstr "完整保留被透明通道屏蔽的颜色数据（不存储预乘的分量）"
 
-#: plug-ins/file-tiff/file-tiff.c:269
+#: plug-ins/file-tiff/file-tiff.c:287
 msgid "Create a CMYK TIFF image using the soft-proofing color profile"
 msgstr "使用软打样特性文件创建 CMYK TIFF 图像"
 
-#: plug-ins/file-tiff/file-tiff.c:274
+#: plug-ins/file-tiff/file-tiff.c:292
+msgid "Format"
+msgstr "格式"
+
+#: plug-ins/file-tiff/file-tiff.c:293
+msgid ""
+"How layers are stored: as TIFF directories (IFDs) or as TIFF tags (Photoshop/"
+"ImageSourceData)"
+msgstr ""
+"图层存储的方式：TIFF 目录（IFD）或 TIFF 标签（Photoshop/ImageSourceData）"
+
+#: plug-ins/file-tiff/file-tiff.c:300
 msgid "Save La_yers"
 msgstr "保存图层(_Y)"
 
-#: plug-ins/file-tiff/file-tiff.c:275
+#: plug-ins/file-tiff/file-tiff.c:301
 msgid "Save Layers"
 msgstr "保存图层"
 
-#: plug-ins/file-tiff/file-tiff.c:280
+#: plug-ins/file-tiff/file-tiff.c:306
 msgid "Crop L_ayers"
 msgstr "剪裁图层(_A)"
 
-#: plug-ins/file-tiff/file-tiff.c:281
+#: plug-ins/file-tiff/file-tiff.c:307
 msgid "Crop Layers"
 msgstr "剪裁图层"
 
-#: plug-ins/file-tiff/file-tiff.c:286
+#: plug-ins/file-tiff/file-tiff.c:312
 msgid "Save _GeoTIFF data"
 msgstr "保存 GeoTIFF 数据(_G)"
 
-#: plug-ins/file-tiff/file-tiff.c:287
+#: plug-ins/file-tiff/file-tiff.c:313
 msgid "Save GeoTIFF data"
 msgstr "保存 GeoTIFF 数据"
 
-#: plug-ins/file-tiff/file-tiff.c:426
+#: plug-ins/file-tiff/file-tiff.c:319
+msgid ""
+"Store Photoshop image resources (paths, alpha channel names, ...) in TIFF "
+"tag (Photoshop)"
+msgstr ""
+"将 Photoshop 图像资源（路径、透明通道名称等）存储在 TIFF 标签（Photoshop）内"
+
+#: plug-ins/file-tiff/file-tiff.c:548
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr "尝试导出多个图层时未设置“保存图层”选项。"
 
-#: plug-ins/file-tiff/file-tiff-export.c:651
+#: plug-ins/file-tiff/file-tiff-export.c:516
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
 msgstr "只有单色图像可以使用“CCITT Group 4”或“CCITT Group 3”压缩。"
 
-#: plug-ins/file-tiff/file-tiff-export.c:665
+#: plug-ins/file-tiff/file-tiff-export.c:530
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "索引图像不能使用“JPEG”压缩。"
 
-#: plug-ins/file-tiff/file-tiff-export.c:724
+#: plug-ins/file-tiff/file-tiff-export.c:589
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -11176,19 +11265,19 @@ msgstr ""
 msgid "Failed a scanline write on row %d"
 msgstr "扫描线在第 %d 行写入失败"
 
-#: plug-ins/file-tiff/file-tiff-export.c:1202
+#: plug-ins/file-tiff/file-tiff-export.c:1246
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "写入具有不同位深的页面是怪异的。"
 
-#: plug-ins/file-tiff/file-tiff-export.c:1277
+#: plug-ins/file-tiff/file-tiff-export.c:1369
 msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
 msgstr ""
 "警告：超出 TIFF 文件大小最大值。用 BigTIFF 重试或使用不同压缩算法，或者取消。"
 
-#: plug-ins/file-tiff/file-tiff-export.c:1336
+#: plug-ins/file-tiff/file-tiff-export.c:1426
 #, c-format
 msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
@@ -11197,17 +11286,17 @@ msgstr ""
 "分配的软打样特性文件不是 CMYK 特性文件。\n"
 "该特性文件不会包含在导出的图像中。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:312
+#: plug-ins/file-tiff/file-tiff-load.c:327
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "不是 TIFF 图像或图像已损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:339
+#: plug-ins/file-tiff/file-tiff-load.c:356
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF “%s”不包含任何目录"
 
-#: plug-ins/file-tiff/file-tiff-load.c:346
+#: plug-ins/file-tiff/file-tiff-load.c:363
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -11219,7 +11308,7 @@ msgstr[0] ""
 "TIFF“%s”虽然看起来存在 %d 页但通过文件头计算目录失败。正在尝试使用该假设值加"
 "载文件。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:477
+#: plug-ins/file-tiff/file-tiff-load.c:494
 msgid "Extra channels with unspecified data."
 msgstr "具有未指明数据的额外通道。"
 
@@ -11230,16 +11319,16 @@ msgstr "具有未指明数据的额外通道。"
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:489
+#: plug-ins/file-tiff/file-tiff-load.c:506
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "非一致性 TIFF：没有“额外采样”区域的额外通道。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:586
+#: plug-ins/file-tiff/file-tiff-load.c:642
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "无法读取 %2$d 页中的第 %1$d 页。图像可能是损坏的。\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:615
+#: plug-ins/file-tiff/file-tiff-load.c:671
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -11248,7 +11337,7 @@ msgstr ""
 "该图像具有线性特性文件但未在第一个图层上设置。第 %d # 图层以下的图层将视为非"
 "线性。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:623
+#: plug-ins/file-tiff/file-tiff-load.c:679
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -11257,39 +11346,39 @@ msgstr ""
 "该图像具有多个特性文件。我们将使用第一个。如果这导致不正确的结果您应考虑将每"
 "个图层作为单独图像载入。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:635
+#: plug-ins/file-tiff/file-tiff-load.c:691
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "可疑的位深度：%2$d 页中的 %1$d。图像可能是损坏的。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:709
+#: plug-ins/file-tiff/file-tiff-load.c:765
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "不支持的位深度：第 %2$d 页的 %1$d。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:724
+#: plug-ins/file-tiff/file-tiff-load.c:780
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "无法从“%s”获取图像宽度"
 
-#: plug-ins/file-tiff/file-tiff-load.c:732
+#: plug-ins/file-tiff/file-tiff-load.c:788
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "无法从“%s”获取图像长度"
 
-#: plug-ins/file-tiff/file-tiff-load.c:740
+#: plug-ins/file-tiff/file-tiff-load.c:796
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr "第 %3$d 页有无效图像尺寸（%1$u x %2$u）。图像可能已损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:761
+#: plug-ins/file-tiff/file-tiff-load.c:817
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
 msgstr "无法从“%s”获取测光。图像是 CCITT 压缩的，假定最小值为白色"
 
-#: plug-ins/file-tiff/file-tiff-load.c:768
+#: plug-ins/file-tiff/file-tiff-load.c:824
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr "无法从“%s”获取测光。假定最小值为黑色"
@@ -11297,13 +11386,13 @@ msgstr "无法从“%s”获取测光。假定最小值为黑色"
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:800
+#: plug-ins/file-tiff/file-tiff-load.c:856
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr "没有为 %s 定义透明通道类型。假定透明不是自左乘的"
 
-#: plug-ins/file-tiff/file-tiff-load.c:825
+#: plug-ins/file-tiff/file-tiff-load.c:881
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -11313,42 +11402,42 @@ msgstr ""
 "图像“%s”不符合 TIFF 标准：额外通道呈现的情况下未设置额外采样域。假定第一个额"
 "外通道是非自左乘透明。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1114
+#: plug-ins/file-tiff/file-tiff-load.c:1170
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "无效或未知的压缩方式 %u。将设置压缩为无。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1172
+#: plug-ins/file-tiff/file-tiff-load.c:1228
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "无法创建新图像：%s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1359
+#: plug-ins/file-tiff/file-tiff-load.c:1414
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "未知的分辨率单位类型 %d，假定为 dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1369
+#: plug-ins/file-tiff/file-tiff-load.c:1424
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "警告：指定的分辨率没有单位类型，假定为 dpi"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1377
+#: plug-ins/file-tiff/file-tiff-load.c:1432
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "警告：没有 y 分辨率信息，假定与 x 相同"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1398
+#: plug-ins/file-tiff/file-tiff-load.c:1453
 msgid "Invalid image resolution info, using default"
 msgstr "无效的图像分辨率信息，将使用默认值"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1460
+#: plug-ins/file-tiff/file-tiff-load.c:1515
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "无法从“%s”获取颜色表"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1469
+#: plug-ins/file-tiff/file-tiff-load.c:1524
 msgid ""
 "Indexed TIFFs with color maps larger than 256 colors are not yet supported"
 msgstr "尚未支持带有大于 256 色色彩映射的索引 TIFF 文件"
@@ -11358,46 +11447,44 @@ msgstr "尚未支持带有大于 256 色色彩映射的索引 TIFF 文件"
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1559
+#: plug-ins/file-tiff/file-tiff-load.c:1614
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "可疑的额外通道数量：%d。可能是损坏的图像。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1624
+#: plug-ins/file-tiff/file-tiff-load.c:1628
+#: plug-ins/file-tiff/file-tiff-load.c:1655
+msgid "Composite"
+msgstr "合成"
+
+#: plug-ins/file-tiff/file-tiff-load.c:1721
 msgid "TIFF Channel"
 msgstr "TIFF 通道"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1782
+#: plug-ins/file-tiff/file-tiff-load.c:1911
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr "从 TIFF“%s”读取不到数据。该文件可能已损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1818
-#: plug-ins/file-tiff/file-tiff-load.c:1862
-#, c-format
-msgid ""
-"Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
-msgstr "试图打开临时的 %s 文件“%s”用于加载 TIFF 元数据时出错：%s"
-
-#: plug-ins/file-tiff/file-tiff-load.c:1951
+#: plug-ins/file-tiff/file-tiff-load.c:1991
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s：不支持的图像格式，没有可用的 RGBA 加载器"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2077
-#: plug-ins/file-tiff/file-tiff-load.c:2285
+#: plug-ins/file-tiff/file-tiff-load.c:2123
+#: plug-ins/file-tiff/file-tiff-load.c:2343
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "读取分块失败。图像可能在第 %d 行损坏。"
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2086
-#: plug-ins/file-tiff/file-tiff-load.c:2294
+#: plug-ins/file-tiff/file-tiff-load.c:2132
+#: plug-ins/file-tiff/file-tiff-load.c:2352
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "读取扫描线失败。图像可能在第 %d 行损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2553
+#: plug-ins/file-tiff/file-tiff-load.c:2615
 #, c-format
 msgid ""
 "Invalid image dimensions (%u x %u) for Sketchbook layer %i. Image may be "
@@ -11405,27 +11492,35 @@ msgid ""
 msgstr ""
 "用于 Sketchbook 图层 %3$i 的图像尺寸（%1$u x %2$u）无效。图像可能已损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3065
+#: plug-ins/file-tiff/file-tiff-load.c:2767
+#: plug-ins/file-tiff/file-tiff-load.c:2819
+#, c-format
+msgid ""
+"Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
+msgstr "试图打开临时的 %s 文件“%s”用于加载 TIFF 元数据时出错：%s"
+
+#: plug-ins/file-tiff/file-tiff-load.c:3248
 msgid "Import from TIFF"
 msgstr "从 TIFF 导入"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3075
+#. Show Reduced
+#: plug-ins/file-tiff/file-tiff-load.c:3271
 msgid "_Show reduced images"
 msgstr "显示缩减的图像(_S)"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3118
+#: plug-ins/file-tiff/file-tiff-load.c:3323
 msgid "Process extra channel as:"
 msgstr "处理额外通道为："
 
-#: plug-ins/file-tiff/file-tiff-load.c:3121
+#: plug-ins/file-tiff/file-tiff-load.c:3326
 msgid "_Non-premultiplied alpha"
 msgstr "非自左乘透明(_N)"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3122
+#: plug-ins/file-tiff/file-tiff-load.c:3327
 msgid "Pre_multiplied alpha"
 msgstr "自左乘透明(_M)"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3123
+#: plug-ins/file-tiff/file-tiff-load.c:3328
 msgid "Channe_l"
 msgstr "通道(_L)"
 
@@ -11434,8 +11529,8 @@ msgid "WebP image"
 msgstr "WebP 图像"
 
 #: plug-ins/file-webp/file-webp.c:158 plug-ins/file-webp/file-webp.c:159
-msgid "Saves files in the WebP image format"
-msgstr "以 WebP 图像格式保存文件"
+msgid "Exports files in the WebP image format"
+msgstr "以 WebP 格式导出文件"
 
 #: plug-ins/file-webp/file-webp.c:168
 msgid "WebP"
@@ -11543,8 +11638,8 @@ msgid "Force default delay on all frames"
 msgstr "在所有帧上强制使用默认延时"
 
 #: plug-ins/file-webp/file-webp.c:249
-msgid "Save a_nimation"
-msgstr "保存动画(_N)"
+msgid "Export a_nimation"
+msgstr "导出动画(_N)"
 
 #: plug-ins/file-webp/file-webp.c:250
 msgid "Use layers for animation"
@@ -11639,17 +11734,17 @@ msgstr "从“%s”解码 WebP 动画信息失败"
 msgid "Failed to decode animated WebP frame from '%s'"
 msgstr "从“%s”解码 WebP 动画帧失败"
 
-#: plug-ins/filter-browser/filter-browser.c:289
-#: plug-ins/filter-browser/filter-browser.c:331
+#: plug-ins/filter-browser/filter-browser.c:292
+#: plug-ins/filter-browser/filter-browser.c:334
 msgid "Allowed values:"
 msgstr "允许的值："
 
-#: plug-ins/filter-browser/filter-browser.c:434
+#: plug-ins/filter-browser/filter-browser.c:437
 #, c-format
 msgid "Operation name: %s"
 msgstr "操作名称：%s"
 
-#: plug-ins/filter-browser/filter-browser.c:447
+#: plug-ins/filter-browser/filter-browser.c:450
 #, c-format
 msgid "Categories: %s"
 msgstr "类别：%s"
@@ -11660,7 +11755,7 @@ msgstr "类别：%s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:477
+#: plug-ins/filter-browser/filter-browser.c:480
 #: plug-ins/gradient-flare/gradient-flare.c:2972
 #: plug-ins/gradient-flare/gradient-flare.c:3722
 #: plug-ins/gradient-flare/gradient-flare.c:3824
@@ -11668,64 +11763,64 @@ msgstr "类别：%s"
 msgid "Parameters"
 msgstr "参数"
 
-#: plug-ins/filter-browser/filter-browser.c:509
+#: plug-ins/filter-browser/filter-browser.c:512
 msgid "Additional Information"
 msgstr "附加信息"
 
-#: plug-ins/filter-browser/filter-browser.c:515
+#: plug-ins/filter-browser/filter-browser.c:518
 #, c-format
 msgid "License: %s"
 msgstr "许可证：%s"
 
-#: plug-ins/filter-browser/filter-browser.c:626
+#: plug-ins/filter-browser/filter-browser.c:629
 msgid "Searching by title"
 msgstr "按标题搜索"
 
-#: plug-ins/filter-browser/filter-browser.c:629
+#: plug-ins/filter-browser/filter-browser.c:632
 msgid "Searching by description"
 msgstr "按描述搜索"
 
-#: plug-ins/filter-browser/filter-browser.c:632
+#: plug-ins/filter-browser/filter-browser.c:635
 msgid "Searching by category"
 msgstr "按分类搜索"
 
-#: plug-ins/filter-browser/filter-browser.c:697
+#: plug-ins/filter-browser/filter-browser.c:700
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
 msgstr[0] "%d 个滤镜和您的查询匹配"
 
-#: plug-ins/filter-browser/filter-browser.c:703
+#: plug-ins/filter-browser/filter-browser.c:706
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
 msgstr[0] "%d 个滤镜"
 
-#: plug-ins/filter-browser/filter-browser.c:735
+#: plug-ins/filter-browser/filter-browser.c:738
 msgid "GEGL Filter Browser"
 msgstr "GEGL 滤镜浏览器"
 
-#: plug-ins/filter-browser/filter-browser.c:752
+#: plug-ins/filter-browser/filter-browser.c:755
 msgid "by name"
 msgstr "按名称"
 
-#: plug-ins/filter-browser/filter-browser.c:753
+#: plug-ins/filter-browser/filter-browser.c:756
 msgid "by title"
 msgstr "按标题"
 
-#: plug-ins/filter-browser/filter-browser.c:754
+#: plug-ins/filter-browser/filter-browser.c:757
 msgid "by description"
 msgstr "按描述"
 
-#: plug-ins/filter-browser/filter-browser.c:846
+#: plug-ins/filter-browser/filter-browser.c:849
 msgid "_GEGL Filter Browser"
 msgstr "_GEGL 滤镜浏览器"
 
-#: plug-ins/filter-browser/filter-browser.c:851
+#: plug-ins/filter-browser/filter-browser.c:854
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "显示关于可用 GEGL 操作的信息（如滤镜等）。"
 
-#: plug-ins/filter-browser/filter-browser.c:853
+#: plug-ins/filter-browser/filter-browser.c:856
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
@@ -12885,7 +12980,7 @@ msgstr "常规(_G)"
 
 #: plug-ins/gimpressionist/general.c:157
 msgid "Keep original"
-msgstr "保持原始"
+msgstr "保留原始"
 
 #: plug-ins/gimpressionist/general.c:158
 msgid "Preserve the original image as a background"
@@ -16686,6 +16781,27 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
 
+#~ msgid "Saves files in the JPEG XL file format"
+#~ msgstr "以 JPEG XL 格式保存文件"
+
+#~ msgid "Saves images in the MNG file format"
+#~ msgstr "以 MNG 格式保存图像"
+
+#~ msgid "Save files in PDF format"
+#~ msgstr "以 PDF 格式保存文件"
+
+#~ msgid "Save to"
+#~ msgstr "保存到"
+
+#~ msgid "Saves files in the TIM file format"
+#~ msgstr "以 TIM 格式保存文件"
+
+#~ msgid "Saves files in DDS image format"
+#~ msgstr "以 DDS 图像格式保存文件"
+
+#~ msgid "Save a_nimation"
+#~ msgstr "保存动画(_N)"
+
 #~ msgid "The operating system is out of memory or resources."
 #~ msgstr "操作系统内存或资源已用尽。"
 
@@ -18293,9 +18409,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "Export Image as Raw Data"
 #~ msgstr "导出图像为 Raw 数据"
-
-#~ msgid "_Standard (R,G,B)"
-#~ msgstr "标准（R,G,B）(_S)"
 
 #~ msgid "_Planar (RRR,GGG,BBB)"
 #~ msgstr "平面（RRR,GGG,BBB）(_P)"
