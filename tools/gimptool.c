@@ -493,18 +493,30 @@ do_cflags_nogimpui (void)
 }
 
 static gchar *
-get_cflags_geglop (void)
+get_cflags_geglop (const gchar *what)
 {
   gchar *pkg_flags = pkg_config ("--cflags gegl-0.4");
-  gchar *cflags = g_strconcat (pkg_flags, " -I.", NULL);
+  gchar *cflags    = NULL;
+
+#if defined(ENABLE_RELOCATABLE_RESOURCES) && !defined(G_OS_WIN32) && !defined(__APPLE__)
+  if (appdir != NULL && *appdir != '\0' && what != NULL)
+    {
+      gchar *source_parent = g_path_get_dirname (what);
+      cflags = g_strconcat (pkg_flags, " -I", source_parent, NULL);
+      g_free (source_parent);
+    }
+#endif
+  if (cflags == NULL)
+    cflags = g_strconcat (pkg_flags, " -I.", NULL);
+
   g_free (pkg_flags);
   return cflags;
 }
 
 static void
-do_cflags_geglop (void)
+do_cflags_geglop (const gchar *what)
 {
-  gchar *cflags = get_cflags_geglop ();
+  gchar *cflags = get_cflags_geglop (what);
 
   g_print ("%s\n", cflags);
   g_free (cflags);
@@ -815,7 +827,7 @@ do_build_nogimpui (const gchar *what)
 static void
 do_build_geglop (const gchar *what)
 {
-  gchar *cflags = get_cflags_geglop ();
+  gchar *cflags = get_cflags_geglop (what);
   gchar *libs   = get_libs_geglop ();
 
   is_gegl_op = TRUE;
@@ -1263,7 +1275,7 @@ main (int    argc,
       else if (strcmp (argv[argi], "--cflags-nogimpui") == 0)
         do_cflags_nogimpui ();
       else if (strcmp (argv[argi], "--cflags-geglop") == 0)
-        do_cflags_geglop ();
+        do_cflags_geglop (argv[++argi]);
       else if (strcmp (argv[argi], "--libs") == 0)
         do_libs ();
       else if (strcmp (argv[argi], "--libs-noui") == 0)
