@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-07 18:02+0000\n"
-"PO-Revision-Date: 2026-05-08 05:33+0200\n"
+"POT-Creation-Date: 2026-05-24 19:43+0000\n"
+"PO-Revision-Date: 2026-05-27 12:03+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -137,7 +137,7 @@ msgstr "დამატების მაგალითი JavaScript-ში (
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2659
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4053 plug-ins/flame/flame.c:824
+#: plug-ins/file-psd/psd-load.c:4064 plug-ins/flame/flame.c:824
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -609,7 +609,7 @@ msgstr "ჟალუზები"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3228 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3239 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1587
 #: plug-ins/file-tiff/file-tiff-load.c:2441
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -2420,7 +2420,7 @@ msgid "Image dimensions too large: width %d x height %d"
 msgstr ""
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
-#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3607
+#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3618
 #: plug-ins/file-tiff/file-tiff-load.c:1944
 #: plug-ins/file-tiff/file-tiff-load.c:2038
 #: plug-ins/file-tiff/file-tiff-load.c:2226
@@ -5986,7 +5986,7 @@ msgstr ""
 
 #: plug-ins/common/file-raw-data.c:417
 msgid "Little Endian"
-msgstr ""
+msgstr "წვრილბოლოიანი"
 
 #: plug-ins/common/file-raw-data.c:418
 msgid "Big Endian"
@@ -10396,7 +10396,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4092
+#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4103
 msgid "Compatibility Notice"
 msgstr "თავსებადობის შენიშვნა"
 
@@ -10494,45 +10494,50 @@ msgstr ""
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3599
+#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3610
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:2309 plug-ins/file-psd/psd-load.c:3197
+#: plug-ins/file-psd/psd-load.c:2252
+#, c-format
+msgid "Invalid channel dimensions %u x %u"
+msgstr "არასწორი არხის ზომები %u x %u"
+
+#: plug-ins/file-psd/psd-load.c:2320 plug-ins/file-psd/psd-load.c:3208
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:2926
+#: plug-ins/file-psd/psd-load.c:2937
 msgid "Inner Shadow"
 msgstr "შიდა ჩრდილი"
 
-#: plug-ins/file-psd/psd-load.c:2927
+#: plug-ins/file-psd/psd-load.c:2938
 msgid "imported"
 msgstr "შემოტანილია"
 
-#: plug-ins/file-psd/psd-load.c:3374
+#: plug-ins/file-psd/psd-load.c:3385
 msgid "Extra"
 msgstr "დამატებით"
 
-#: plug-ins/file-psd/psd-load.c:3676
+#: plug-ins/file-psd/psd-load.c:3687
 #, c-format
 msgid "Failed to decompress data"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:4069
+#: plug-ins/file-psd/psd-load.c:4080
 msgid "Duotone Import"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:4070
+#: plug-ins/file-psd/psd-load.c:4081
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
 "and can be reapplied on export."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:4093
+#: plug-ins/file-psd/psd-load.c:4104
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -15664,7 +15669,7 @@ msgstr ""
 
 #: plug-ins/metadata/metadata-editor.c:760
 msgid "_Edit Metadata"
-msgstr ""
+msgstr "მეტამონაცემების ჩასწორ_ება"
 
 #: plug-ins/metadata/metadata-editor.c:764
 msgid "Edit metadata (IPTC, EXIF, XMP)"
@@ -15682,7 +15687,7 @@ msgstr ""
 #: plug-ins/metadata/metadata-editor.c:1182
 #, c-format
 msgid "Metadata Editor: %s"
-msgstr ""
+msgstr "მეტამონაცემების რედაქტორი: %s"
 
 #: plug-ins/metadata/metadata-editor.c:1190
 msgid "_Write Metadata"
@@ -15697,7 +15702,7 @@ msgstr "IPTC"
 #. IPTC Extension tab
 #: plug-ins/metadata/metadata-editor.c:1238
 msgid "IPTC Extension"
-msgstr ""
+msgstr "IPTC-ის გაფართოება"
 
 #. Categories tab
 #: plug-ins/metadata/metadata-editor.c:1344
@@ -15761,7 +15766,7 @@ msgstr "მეტამონაცემების ჭდის %s დაყ�
 
 #: plug-ins/metadata/metadata-editor.c:5584
 msgid "Import Metadata File"
-msgstr ""
+msgstr "მეტამონაცემების ფაილის შემოტანა"
 
 #: plug-ins/metadata/metadata-editor.c:5588
 msgid "_Import"
@@ -15769,7 +15774,7 @@ msgstr "_შემოტანა"
 
 #: plug-ins/metadata/metadata-editor.c:5619
 msgid "Export Metadata File"
-msgstr ""
+msgstr "მეტამონაცემების ფაილის გატანა"
 
 #: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:210
 #: plug-ins/metadata/metadata-tags.c:270 plug-ins/metadata/metadata-tags.c:287
