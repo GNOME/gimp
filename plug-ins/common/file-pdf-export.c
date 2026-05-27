@@ -1603,7 +1603,7 @@ drawText (GimpLayer *layer,
   cairo_translate (cr, x, y);
 
   /* Offset */
-  gimp_text_layer_get_offsets (GIMP_TEXT_LAYER (layer), &x, &y);
+  gimp_text_layer_get_layout_offsets (GIMP_TEXT_LAYER (layer), &x, &y);
   cairo_translate (cr, x, y);
 
   /* Color */

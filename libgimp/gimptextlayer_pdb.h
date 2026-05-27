@@ -81,7 +81,7 @@ gboolean                 gimp_text_layer_set_line_spacing        (GimpTextLayer 
 gdouble                  gimp_text_layer_get_letter_spacing      (GimpTextLayer             *layer);
 gboolean                 gimp_text_layer_set_letter_spacing      (GimpTextLayer             *layer,
                                                                   gdouble                    letter_spacing);
-gboolean                 gimp_text_layer_get_offsets             (GimpTextLayer             *layer,
+gboolean                 gimp_text_layer_get_layout_offsets      (GimpTextLayer             *layer,
                                                                   gint                      *x,
                                                                   gint                      *y);
 GimpTextOutline          gimp_text_layer_get_outline             (GimpTextLayer             *layer);

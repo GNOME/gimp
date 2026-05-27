@@ -1175,23 +1175,30 @@ gimp_text_layer_set_letter_spacing (GimpTextLayer *layer,
 }
 
 /**
- * gimp_text_layer_get_offsets:
+ * gimp_text_layer_get_layout_offsets:
  * @layer: The text layer.
  * @x: (out): x offset.
  * @y: (out): y offset.
  *
  * Gets x, y offsets of the associated text layout.
  *
- * This procedure returns the offsets of the text layout.
+ * This procedure returns the offsets of the text layout. This will
+ * most often be `(0, 0)`, except when the logical rectangle is
+ * different than the ink rectangle.
+ * Do not confuse this with the offsets returned by
+ * [method@Drawable.get_offsets] which are the offsets relative to the
+ * canvas and are enough information if you only need the render's
+ * offset. Yet when you wish to reproduce the text layout itself, the
+ * layout offset will be of interest.
  *
  * Returns: TRUE on success.
  *
  * Since: 3.3
  **/
 gboolean
-gimp_text_layer_get_offsets (GimpTextLayer *layer,
-                             gint          *x,
-                             gint          *y)
+gimp_text_layer_get_layout_offsets (GimpTextLayer *layer,
+                                    gint          *x,
+                                    gint          *y)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1202,7 +1209,7 @@ gimp_text_layer_get_offsets (GimpTextLayer *layer,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-text-layer-get-offsets",
+                                               "gimp-text-layer-get-layout-offsets",
                                                args);
   gimp_value_array_unref (args);
 

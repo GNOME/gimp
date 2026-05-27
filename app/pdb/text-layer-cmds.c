@@ -968,12 +968,12 @@ text_layer_set_letter_spacing_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_offsets_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
-                                GError               **error)
+text_layer_get_layout_offsets_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -2521,14 +2521,15 @@ register_text_layer_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-text-layer-get-offsets
+   * gimp-text-layer-get-layout-offsets
    */
-  procedure = gimp_procedure_new (text_layer_get_offsets_invoker, FALSE);
+  procedure = gimp_procedure_new (text_layer_get_layout_offsets_invoker, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-text-layer-get-offsets");
+                               "gimp-text-layer-get-layout-offsets");
   gimp_procedure_set_static_help (procedure,
                                   "Gets x, y offsets of the associated text layout.",
-                                  "This procedure returns the offsets of the text layout.",
+                                  "This procedure returns the offsets of the text layout. This will most often be `(0, 0)`, except when the logical rectangle is different than the ink rectangle.\n"
+                                  "Do not confuse this with the offsets returned by [method@Drawable.get_offsets] which are the offsets relative to the canvas and are enough information if you only need the render's offset. Yet when you wish to reproduce the text layout itself, the layout offset will be of interest.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Idriss Fekir <mcsm224@gmail.com>",

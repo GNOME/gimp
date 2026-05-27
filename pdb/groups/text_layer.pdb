@@ -967,11 +967,18 @@ CODE
     );
 }
 
-sub text_layer_get_offsets {
+sub text_layer_get_layout_offsets {
     $blurb = 'Gets x, y offsets of the associated text layout.';
 
     $help = <<'HELP';
-This procedure returns the offsets of the text layout.
+This procedure returns the offsets of the text layout. This will most
+often be `(0, 0)`, except when the logical rectangle is different
+than the ink rectangle.
+
+Do not confuse this with the offsets returned by [method@Drawable.get_offsets]
+which are the offsets relative to the canvas and are enough information
+if you only need the render's offset. Yet when you wish to reproduce the
+text layout itself, the layout offset will be of interest.
 HELP
 
     $author = 'Idriss Fekir <mcsm224@gmail.com>';
@@ -1650,7 +1657,7 @@ CODE
             text_layer_set_line_spacing
             text_layer_get_letter_spacing
             text_layer_set_letter_spacing
-            text_layer_get_offsets
+            text_layer_get_layout_offsets
             text_layer_get_outline
             text_layer_set_outline
             text_layer_get_outline_antialias
