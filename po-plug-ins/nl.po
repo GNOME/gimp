@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-24 21:45+0000\n"
-"PO-Revision-Date: 2026-05-25 09:33+0200\n"
+"POT-Creation-Date: 026-0525-26 22:19+0000\n"
+"PO-Revision-Date: 2026-05-27 09:55+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -1221,7 +1221,7 @@ msgstr "Grafiek van de huidige instellingen"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:573
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:741 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:744 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1189 plug-ins/gfig/gfig-dialog.c:1334
 #: plug-ins/ifs-compose/ifs-compose.c:1214
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -1247,7 +1247,7 @@ msgstr "CML-verkennerparameters opslaan"
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
-#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2532
+#: plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2532
 #: plug-ins/file-psd/psd-export.c:2700
 #: plug-ins/file-tiff/file-tiff-export.c:1101
 #: plug-ins/file-tiff/file-tiff-export.c:1221 plug-ins/flame/flame.c:586
@@ -2023,7 +2023,7 @@ msgstr "Fout tijdens lezen van ‘%s’: %s"
 msgid "Curve Bend"
 msgstr "Ombuigen"
 
-#: plug-ins/common/curve-bend.c:1173 plug-ins/file-jpeg/jpeg-export.c:853
+#: plug-ins/common/curve-bend.c:1173 plug-ins/file-jpeg/jpeg-export.c:906
 #: plug-ins/gfig/gfig-dialog.c:1186
 msgid "Options"
 msgstr "Opties"
@@ -2527,14 +2527,14 @@ msgid "ASCII art"
 msgstr "ASCII-kunst"
 
 #: plug-ins/common/file-aa.c:138
-msgid "Saves grayscale image in various text formats"
-msgstr "Een afbeelding in grijswaarden opslaan in diverse tekstindelingen"
+msgid "Exports grayscale image in various text formats"
+msgstr "Exporteert een afbeelding in grijswaarden naar verscheidene tekstindelingen"
 
 #: plug-ins/common/file-aa.c:140
 msgid ""
-"This plug-in uses aalib to save grayscale image as ascii art into a variety "
-"of text formats"
-msgstr "Deze plug-in gebruikt aalib om een afbeelding in grijswaarden op te slaan als ASCII-kunst in verschillende tekstindelingen"
+"This plug-in uses aalib to export grayscale image as ascii art into a "
+"variety of text formats"
+msgstr "Deze plug-in gebruikt aalib om afbeelding grijswaarden als ASCII-kunst te exporteren naar een variëteit aan tekstindelingen"
 
 #: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:244
 msgid "_Format"
@@ -2691,7 +2691,7 @@ msgstr "‘%s’: EOF of fout tijdens lezen paletdata"
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
-#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2470
+#: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2470
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1091
 #, c-format
 msgid "Exporting '%s'"
@@ -3061,9 +3061,36 @@ msgstr "GIMP penseel"
 msgid "Radiance RGBE"
 msgstr "Radiance RGBE"
 
+#: plug-ins/common/file-gegl.c:122
+msgid "Loads files in the RGBE file format"
+msgstr "Laad bestanden in de bestandsindeling RGBE"
+
+#: plug-ins/common/file-gegl.c:123
+msgid ""
+"This procedure loads images in the RGBE format, using \"gegl:rgbe-load\""
+msgstr "Deze procedure laad afbeeldingen in de indeling RGBE, met \"gegl:rgbe-load\""
+
+#: plug-ins/common/file-gegl.c:127
+msgid "Exports files in the RGBE file format"
+msgstr "Exporteert bestanden naar de indeling RGBE"
+
+#: plug-ins/common/file-gegl.c:128
+msgid ""
+"This procedure exports images in the RGBE format, using \"gegl:rgbe-save\""
+msgstr "Deze procedure exporteert afbeeldingen in de indeling RGBE, met \"gegl:rgbe-save\""
+
 #: plug-ins/common/file-gegl.c:132 plug-ins/file-exr/file-exr.c:111
 msgid "OpenEXR image"
 msgstr "OpenEXR-afbeelding"
+
+#: plug-ins/common/file-gegl.c:141
+msgid "Exports files in the OpenEXR file format"
+msgstr "Exporteert bestanden in de bestandsindeling OpenEXR"
+
+#: plug-ins/common/file-gegl.c:142
+msgid ""
+"This procedure exports images in the OpenEXR format, using \"gegl:exr-save\""
+msgstr "Deze procedure exporteert afbeeldingen in de indeling OpenEXR, met \"gegl:exr-save\""
 
 #: plug-ins/common/file-gegl.c:356
 #, c-format
@@ -3549,8 +3576,8 @@ msgid "C source code header"
 msgstr "C-broncode header"
 
 #: plug-ins/common/file-header.c:120
-msgid "Saves files as C unsigned character array"
-msgstr "Slaat bestanden op als een C unsigned character array"
+msgid "Exports files as C unsigned character array"
+msgstr "Exporteert bestanden als C unsigned tekenarray"
 
 #: plug-ins/common/file-heif.c:224 plug-ins/common/file-heif.c:264
 msgid "HEIF/HEIC"
@@ -4108,20 +4135,20 @@ msgstr "JPEG 2000-afbeelding zonder kleurruimte"
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Niet-ondersteunde JPEG 2000%s ‘%s’ met %d componenten."
 
-#: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:887
+#: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:940
 #: plug-ins/file-psd/psd-export.c:2970
 #: plug-ins/file-tiff/file-tiff-export.c:1390
 msgid "No soft-proofing profile"
 msgstr "Geen afdrukvoorbeeld-profiel"
 
 #: plug-ins/common/file-jp2.c:1309 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:895 plug-ins/file-psd/psd-export.c:2978
+#: plug-ins/file-jpeg/jpeg-export.c:948 plug-ins/file-psd/psd-export.c:2978
 #: plug-ins/file-tiff/file-tiff-export.c:1399
 msgid "Name of the color profile used for CMYK export."
 msgstr "Naam van het kleurprofiel om te gebruiken voor CMYK export."
 
 #: plug-ins/common/file-jp2.c:1320 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:906 plug-ins/file-psd/psd-export.c:2989
+#: plug-ins/file-jpeg/jpeg-export.c:959 plug-ins/file-psd/psd-export.c:2989
 #: plug-ins/file-tiff/file-tiff-export.c:1421
 #, c-format
 msgid "Profile: %s"
@@ -4203,8 +4230,8 @@ msgid "Loads files in the JPEG XL file format"
 msgstr "Inladen van bestanden in de JPEG XL-bestandsindeling"
 
 #: plug-ins/common/file-jpegxl.c:171 plug-ins/common/file-jpegxl.c:172
-msgid "Saves files in the JPEG XL file format"
-msgstr "Opslaan van bestanden in de JPEG XL-indeling"
+msgid "Exports files in the JPEG XL file format"
+msgstr "Exporteert bestanden in de  bestandsindeling JPEG XL"
 
 #: plug-ins/common/file-jpegxl.c:199
 msgid "Co_mpression/maxError"
@@ -4323,14 +4350,14 @@ msgid "MNG"
 msgstr "MNG"
 
 #: plug-ins/common/file-mng.c:259
-msgid "Saves images in the MNG file format"
-msgstr "Opslaan van bestanden in de MNG-indeling"
+msgid "Exports images in the MNG file format"
+msgstr "Exporteert afbeeldingen in de indeling MNG"
 
 #: plug-ins/common/file-mng.c:260
 msgid ""
-"This plug-in saves images in the Multiple-image Network Graphics (MNG) "
+"This plug-in exports images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
-msgstr "Deze plug-in slaat afbeeldingen op in het Multiple-image Network Graphics (MNG)-formaat dat kan worden gebruikt als vervanging voor bewegende GIF's, en meer."
+msgstr "Deze plug-in exporteert afbeeldingen in de indeling Multiple-image Network Graphics (MNG), die kan worden gebruikt als vervanging voor geanimeerde GIF's, en meer."
 
 #: plug-ins/common/file-mng.c:286
 msgid "Use interlacing"
@@ -4692,15 +4719,15 @@ msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
 #: plug-ins/common/file-pdf-export.c:332 plug-ins/common/file-pdf-export.c:418
-msgid "Save files in PDF format"
-msgstr "Opslaan van bestanden in de PDF-indeling"
+msgid "Exports files in PDF format"
+msgstr "Exporteert bestanden in de indeling PDF"
 
 #: plug-ins/common/file-pdf-export.c:333 plug-ins/common/file-pdf-export.c:419
 msgid ""
-"Saves files in Adobe's Portable Document Format. PDF is designed to be "
+"Exports files in Adobe's Portable Document Format. PDF is designed to be "
 "easily processed by a variety of different platforms, and is a distant "
 "cousin of PostScript."
-msgstr "Slaat bestanden op in de indeling Portable Document Format van Adobe. PDF is ontworpen om gemakkelijk te worden verwerkt op een variëteit aan verschillende platformen en is een verre neef van PostScript."
+msgstr "Exporteert bestanden in de indeling van Adobe's Portable Document Format. PDF is ontworpen om gemakkelijk te worden verwerkt op een variëteit aan verschillende platformen en is een verre neef van PostScript."
 
 #: plug-ins/common/file-pdf-export.c:345 plug-ins/common/file-pdf-load.c:214
 msgid "PDF"
@@ -4780,12 +4807,12 @@ msgid "_Create multipage PDF..."
 msgstr "Aanmaken PDF met _meerdere pagina's…"
 
 #: plug-ins/common/file-pdf-export.c:471
-msgid "Save to"
-msgstr "Opslaan naar"
+msgid "Export to"
+msgstr "Exporteren naar"
 
 #: plug-ins/common/file-pdf-export.c:472
-msgid "The URI of the file to save to"
-msgstr "De URI voor de afbeelding om op te slaan"
+msgid "The URI of the file to export to"
+msgstr "De URI van het bestand waar naartoe moet worden geëxporteerd"
 
 #: plug-ins/common/file-pdf-export.c:694
 #, c-format
@@ -4804,7 +4831,7 @@ msgid ""
 "The following fonts cannot be found: %s.\n"
 "It is recommended to convert your text layers to image or to install the "
 "missing fonts before exporting, otherwise your design may not look right."
-msgstr "De volgende lettrtypen konden niet worden gevonden: %s.\n"
+msgstr "De volgende lettertypen konden niet worden gevonden: %s.\n"
 "Aanbevolen wordt uw tekstlagen om te zetten naar afbeeldingen of om de ontbrekende lettertypen voor het exporteren te installeren, anders zou uw ontwerp er niet correct uit kunnen zien."
 
 #: plug-ins/common/file-pdf-export.c:1032
@@ -6661,24 +6688,24 @@ msgstr "Kan header van ‘%s’ niet lezen"
 
 #: plug-ins/common/file-tim.c:168 plug-ins/common/file-tim.c:191
 #: plug-ins/common/file-tim.c:203
-msgid "Playstation TIM image"
+msgid "PlayStation TIM image"
 msgstr "Playstation TIM-afbeelding"
 
 #: plug-ins/common/file-tim.c:171
-msgid "Load file in the TIM file format"
+msgid "Loads file in the TIM file format"
 msgstr "Laad bestand in de bestandsindeling TIM"
 
 #: plug-ins/common/file-tim.c:172
-msgid "Load file in the Sony Playstation TIM file format"
+msgid "Loads file in the Sony PlayStation TIM file format"
 msgstr "Laad bestand in de bestandsindeling voor Sony Playstation TIM"
 
 #: plug-ins/common/file-tim.c:194
-msgid "Saves files in the TIM file format"
-msgstr "Slaat bestanden op in de bestandsindeling TIM"
+msgid "Exports files in the TIM file format"
+msgstr "Exporteert bestanden in de bestandsindeling TIM"
 
 #: plug-ins/common/file-tim.c:195
-msgid "Saves files in the Playstation TIM file format"
-msgstr "Slaat bestanden op in de bestandsindeling voor Playstation TIM"
+msgid "Exports files in the PlayStation TIM file format"
+msgstr "Exporteert bestanden in de bestandsindeling PlayStation TIM"
 
 #: plug-ins/common/file-tim.c:217
 msgid "_Type"
@@ -7922,7 +7949,7 @@ msgid ""
 msgstr "Maakt het mogelijk om in het menusysteem voor plug-ins te bladeren. U kunt zoeken op namen van plug-ins, sorteren op naam of menulocatie en u kunt een boomweergave van de menu's voor plug-ins bekijken. Kan ook nuttig zijn om uit te zoeken waar nieuwe plug-ins zichzelf hebben geïnstalleerd in de menu's."
 
 #: plug-ins/common/plugin-browser.c:370
-#: plug-ins/filter-browser/filter-browser.c:623
+#: plug-ins/filter-browser/filter-browser.c:626
 msgid "Searching by name"
 msgstr "Zoeken op naam"
 
@@ -7934,7 +7961,7 @@ msgstr[0] "%d plug-in"
 msgstr[1] "%d plug-ins"
 
 #: plug-ins/common/plugin-browser.c:395
-#: plug-ins/filter-browser/filter-browser.c:690
+#: plug-ins/filter-browser/filter-browser.c:693
 msgid "No matches for your query"
 msgstr "Geen overeenkomsten gevonden voor uw verzoek"
 
@@ -7946,7 +7973,7 @@ msgstr[0] "%d plug-in komt overeen met uw verzoek"
 msgstr[1] "%d plug-ins komen overeen met uw verzoek"
 
 #: plug-ins/common/plugin-browser.c:544
-#: plug-ins/filter-browser/filter-browser.c:692
+#: plug-ins/filter-browser/filter-browser.c:695
 msgid "No matches"
 msgstr "Geen overeenkomsten"
 
@@ -9094,7 +9121,7 @@ msgstr "Werpen"
 msgid "Basic Options"
 msgstr "Basisopties"
 
-#: plug-ins/common/warp.c:448 plug-ins/file-jpeg/jpeg-export.c:947
+#: plug-ins/common/warp.c:448 plug-ins/file-jpeg/jpeg-export.c:1000
 #: plug-ins/file-webp/file-webp-dialog.c:98
 msgid "Advanced Options"
 msgstr "Geavanceerde instellingen"
@@ -9274,8 +9301,8 @@ msgid "BMP"
 msgstr "BMP"
 
 #: plug-ins/file-bmp/bmp.c:185 plug-ins/file-bmp/bmp.c:186
-msgid "Saves files in Windows BMP file format"
-msgstr "Opslaan van bestanden in de Windows bestandsindeling BMP"
+msgid "Exports files in Windows BMP file format"
+msgstr "Exporteert bestanden in de bestandsindeling Windows BMP"
 
 #: plug-ins/file-bmp/bmp.c:206
 msgid "Ru_n-Length Encoded"
@@ -9413,8 +9440,8 @@ msgid "DDS"
 msgstr "DDS"
 
 #: plug-ins/file-dds/dds.c:176 plug-ins/file-dds/dds.c:177
-msgid "Saves files in DDS image format"
-msgstr "Opslaan van bestanden in de DDS-indeling"
+msgid "Exports files in DDS image format"
+msgstr "Exporteert bestanden in de afbeeldingsindeling DDS"
 
 #: plug-ins/file-dds/dds.c:198
 msgid "BC1 / DXT1"
@@ -9543,8 +9570,8 @@ msgid "Sav_e type"
 msgstr "_Wat opslaan"
 
 #: plug-ins/file-dds/dds.c:252
-msgid "How to save the image"
-msgstr "Wat van de afbeelding op te slaan"
+msgid "How to export the image"
+msgstr "Hoe de afbeelding te exporteren"
 
 #: plug-ins/file-dds/dds.c:253
 msgid "Selected layer"
@@ -10316,8 +10343,8 @@ msgid "Loads a preview from a Windows ANI files"
 msgstr "Voorbeeld van een Windows ANI-bestand laden"
 
 #: plug-ins/file-ico/ico.c:380 plug-ins/file-ico/ico.c:381
-msgid "Saves files in Windows ANI file format"
-msgstr "Opslaan van bestanden in de Windows ANI-indeling"
+msgid "Exports files in Windows ANI file format"
+msgstr "Exporteert bestanden in de bestandsindeling Windows ANI"
 
 #: plug-ins/file-ico/ico.c:407
 msgid "Cursor Name (Optional)"
@@ -10332,15 +10359,15 @@ msgstr "Cursor auteur (optioneel)"
 msgid "File size without metadata: %s"
 msgstr "Bestandsgrootte zonder metadata: %s"
 
-#: plug-ins/file-jpeg/jpeg-export.c:708
+#: plug-ins/file-jpeg/jpeg-export.c:761
 msgid "Calculating approximate file size..."
 msgstr "Berekenen van geschatte bestandsgrootte…"
 
-#: plug-ins/file-jpeg/jpeg-export.c:798 plug-ins/file-jpeg/jpeg-export.c:874
+#: plug-ins/file-jpeg/jpeg-export.c:851 plug-ins/file-jpeg/jpeg-export.c:927
 msgid "File size without metadata: unknown"
 msgstr "Bestandsgrootte zonder metadata: onbekend"
 
-#: plug-ins/file-jpeg/jpeg-export.c:882
+#: plug-ins/file-jpeg/jpeg-export.c:935
 msgid "Enable preview to obtain the approximate file size."
 msgstr "Voorbeeld inschakelen om de geschatte bestandsgrootte te verkrijgen."
 
@@ -10507,6 +10534,16 @@ msgstr "Oudere software kan wiskundig gecodeerde afbeeldingen mogelijk niet open
 #: plug-ins/file-jpeg/jpeg.c:309
 msgid "Use restart mar_kers"
 msgstr "He_rstartmarkeringen gebruiken"
+
+#: plug-ins/file-jpeg/jpeg.c:314 plug-ins/file-tiff/file-tiff.c:318
+msgid "Save Photoshop metadata"
+msgstr "Metadata Photoshop opslaan"
+
+#: plug-ins/file-jpeg/jpeg.c:315
+msgid ""
+"Store Photoshop image resources (paths, guides, ...) in JPEG APP13 tag "
+"(Photoshop)"
+msgstr "Photoshop afbeeldingsbronnen (paden, hulplijnen, …) opslaan in JPEG-tag APP13 (Photoshop)"
 
 #: plug-ins/file-psd/psd-export.c:585
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -10748,30 +10785,30 @@ msgid ""
 msgstr "Deze plug-in laadt Miniatuurafbeeldingen in de PSD bestandsindeling van Adobe Photoshop (TM)."
 
 #: plug-ins/file-psd/psd.c:228
-msgid "Saves files in the Photoshop (TM) PSD file format"
-msgstr "Opslaan van bestanden in de PSD indeling van Adobe Photoshop (TM)"
+msgid "Exports files in the Photoshop (TM) PSD file format"
+msgstr "Exporteert bestanden in de bestandsindeling Photoshop (TM) PSD"
 
 #: plug-ins/file-psd/psd.c:230
 msgid ""
-"This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
+"This plug-in exports files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
 "layer masks, aux channels and guides."
-msgstr "Deze plug-in slaat bestanden van Adobe Photoshop (TM) eigen indeling PSD op. Deze bestanden zouden van elk type kunnen zijn dat wordt ondersteund door GIMP, met of zonder lagen, laagmaskers, aux-kanalen en hulplijnen."
+msgstr "Deze plug-in exporteert bestanden van Adobe's Photoshop (TM) eigen indeling PSD. Deze bestanden zouden van elk type kunnen zijn dat wordt ondersteund door GIMP, met of zonder lagen, laagmaskers, aux-kanalen en hulplijnen."
 
 #: plug-ins/file-psd/psd.c:244 plug-ins/file-psd/psd.c:246
 msgid "Photoshop Large image"
 msgstr "Photoshop Large-afbeelding"
 
 #: plug-ins/file-psd/psd.c:249
-msgid "Saves files in the Photoshop (TM) Large PSB file format"
-msgstr "Slaat bestanden op in de bestandsindeling PSB van Photoshop (TM) Large"
+msgid "Exports files in the Photoshop (TM) Large PSB file format"
+msgstr "Exporteert bestanden in de bestandsindeling Photoshop (TM) Large PSB"
 
 #: plug-ins/file-psd/psd.c:251
 msgid ""
-"This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
+"This plug-in exports files of Adobe Photoshop (TM) Large native PSB format. "
 "These files may be of any image type supported by GIMP, with or without "
 "layers, layer masks, aux channels and guides."
-msgstr "Deze plug-in slaat bestanden van Adobe Photoshop (TM) Large eigen indeling PSB op. Deze bestanden zouden van elk type kunnen zijn dat wordt ondersteund door GIMP, met of zonder lagen, laagmaskers, aux-kanalen en hulplijnen."
+msgstr "Deze plug-in exporteert bestanden van Adobe's Photoshop (TM) Large eigen indeling PSB. Deze bestanden zouden van elk type kunnen zijn dat wordt ondersteund door GIMP, met of zonder lagen, laagmaskers, aux-kanalen en hulplijnen."
 
 #: plug-ins/file-psd/psd.c:279
 msgid "Assign a Clipping _Path"
@@ -11168,10 +11205,6 @@ msgstr "_GeoTIFF-gegevens opslaan"
 msgid "Save GeoTIFF data"
 msgstr "GeoTIFF-gegevens opslaan"
 
-#: plug-ins/file-tiff/file-tiff.c:318
-msgid "Save Photoshop metadata"
-msgstr "Metadata Photoshop opslaan"
-
 #: plug-ins/file-tiff/file-tiff.c:319
 msgid ""
 "Store Photoshop image resources (paths, alpha channel names, ...) in TIFF "
@@ -11460,8 +11493,8 @@ msgid "WebP image"
 msgstr "WebP-afbeelding"
 
 #: plug-ins/file-webp/file-webp.c:158 plug-ins/file-webp/file-webp.c:159
-msgid "Saves files in the WebP image format"
-msgstr "Opslaan van bestanden in de bestandsindeling WebP"
+msgid "Exports files in the WebP image format"
+msgstr "Exporteert bestanden in de bestandsindeling WebP"
 
 #: plug-ins/file-webp/file-webp.c:168
 msgid "WebP"
@@ -11569,8 +11602,8 @@ msgid "Force default delay on all frames"
 msgstr "Deze standaard vertraging voor alle frames gebruiken"
 
 #: plug-ins/file-webp/file-webp.c:249
-msgid "Save a_nimation"
-msgstr "A_nimatie opslaan"
+msgid "Export a_nimation"
+msgstr "A_nimatie exporteren"
 
 #: plug-ins/file-webp/file-webp.c:250
 msgid "Use layers for animation"
@@ -11578,11 +11611,11 @@ msgstr "Lagen gebruiken voor de animatie"
 
 #: plug-ins/file-webp/file-webp-dialog.c:48
 msgid "(no keyframes)"
-msgstr "(geen key-frames)"
+msgstr "(geen sleutelframes)"
 
 #: plug-ins/file-webp/file-webp-dialog.c:52
 msgid "(all frames are keyframes)"
-msgstr "(alle frames zijn key-frames)"
+msgstr "(alle frames zijn sleutelframes)"
 
 #: plug-ins/file-webp/file-webp-export.c:105
 msgid "out of memory"
@@ -11665,17 +11698,17 @@ msgstr "Kon geanimeerde WebP-informatie niet decoderen van ‘%s’"
 msgid "Failed to decode animated WebP frame from '%s'"
 msgstr "Kon geanimeerd WebP-frame van ‘%s’ niet ontcijferen"
 
-#: plug-ins/filter-browser/filter-browser.c:289
-#: plug-ins/filter-browser/filter-browser.c:331
+#: plug-ins/filter-browser/filter-browser.c:292
+#: plug-ins/filter-browser/filter-browser.c:334
 msgid "Allowed values:"
 msgstr "Toegestane waarden:"
 
-#: plug-ins/filter-browser/filter-browser.c:434
+#: plug-ins/filter-browser/filter-browser.c:437
 #, c-format
 msgid "Operation name: %s"
 msgstr "Naam bewerking: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:447
+#: plug-ins/filter-browser/filter-browser.c:450
 #, c-format
 msgid "Categories: %s"
 msgstr "Categorieën: %s"
@@ -11686,7 +11719,7 @@ msgstr "Categorieën: %s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:477
+#: plug-ins/filter-browser/filter-browser.c:480
 #: plug-ins/gradient-flare/gradient-flare.c:2972
 #: plug-ins/gradient-flare/gradient-flare.c:3722
 #: plug-ins/gradient-flare/gradient-flare.c:3824
@@ -11694,66 +11727,66 @@ msgstr "Categorieën: %s"
 msgid "Parameters"
 msgstr "Parameters"
 
-#: plug-ins/filter-browser/filter-browser.c:509
+#: plug-ins/filter-browser/filter-browser.c:512
 msgid "Additional Information"
 msgstr "Aanvullende informatie"
 
-#: plug-ins/filter-browser/filter-browser.c:515
+#: plug-ins/filter-browser/filter-browser.c:518
 #, c-format
 msgid "License: %s"
 msgstr "Licentie: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:626
+#: plug-ins/filter-browser/filter-browser.c:629
 msgid "Searching by title"
 msgstr "Zoeken op titel"
 
-#: plug-ins/filter-browser/filter-browser.c:629
+#: plug-ins/filter-browser/filter-browser.c:632
 msgid "Searching by description"
 msgstr "Zoeken op omschrijving"
 
-#: plug-ins/filter-browser/filter-browser.c:632
+#: plug-ins/filter-browser/filter-browser.c:635
 msgid "Searching by category"
 msgstr "Zoeken op categorie"
 
-#: plug-ins/filter-browser/filter-browser.c:697
+#: plug-ins/filter-browser/filter-browser.c:700
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
 msgstr[0] "%d filter komt overeen met uw verzoek"
 msgstr[1] "%d filters komen overeen met uw verzoek"
 
-#: plug-ins/filter-browser/filter-browser.c:703
+#: plug-ins/filter-browser/filter-browser.c:706
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
 msgstr[0] "%d filter"
 msgstr[1] "%d filters"
 
-#: plug-ins/filter-browser/filter-browser.c:735
+#: plug-ins/filter-browser/filter-browser.c:738
 msgid "GEGL Filter Browser"
 msgstr "GEGL Filter Browser"
 
-#: plug-ins/filter-browser/filter-browser.c:752
+#: plug-ins/filter-browser/filter-browser.c:755
 msgid "by name"
 msgstr "op naam"
 
-#: plug-ins/filter-browser/filter-browser.c:753
+#: plug-ins/filter-browser/filter-browser.c:756
 msgid "by title"
 msgstr "op titel"
 
-#: plug-ins/filter-browser/filter-browser.c:754
+#: plug-ins/filter-browser/filter-browser.c:757
 msgid "by description"
 msgstr "op omschrijving"
 
-#: plug-ins/filter-browser/filter-browser.c:846
+#: plug-ins/filter-browser/filter-browser.c:849
 msgid "_GEGL Filter Browser"
 msgstr "_GEGL Filter Browser"
 
-#: plug-ins/filter-browser/filter-browser.c:851
+#: plug-ins/filter-browser/filter-browser.c:854
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "Geeft informatie weer over beschikbare bewerkingen voor GEGL (d.i. filters)."
 
-#: plug-ins/filter-browser/filter-browser.c:853
+#: plug-ins/filter-browser/filter-browser.c:856
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
@@ -16752,6 +16785,27 @@ msgstr "Scannen niet mogelijk omdat er geen TWAIN driver is gevonden"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Gegevens van scanner / camera worden overgebracht"
+
+#~ msgid "Saves files in the JPEG XL file format"
+#~ msgstr "Opslaan van bestanden in de JPEG XL-indeling"
+
+#~ msgid "Saves images in the MNG file format"
+#~ msgstr "Opslaan van bestanden in de MNG-indeling"
+
+#~ msgid "Save files in PDF format"
+#~ msgstr "Opslaan van bestanden in de PDF-indeling"
+
+#~ msgid "Save to"
+#~ msgstr "Opslaan naar"
+
+#~ msgid "Saves files in the TIM file format"
+#~ msgstr "Slaat bestanden op in de bestandsindeling TIM"
+
+#~ msgid "Saves files in DDS image format"
+#~ msgstr "Opslaan van bestanden in de DDS-indeling"
+
+#~ msgid "Save a_nimation"
+#~ msgstr "A_nimatie opslaan"
 
 #~ msgid "The operating system is out of memory or resources."
 #~ msgstr "Het besturingssysteem heeft onvoldoende geheugen of bronnen."
