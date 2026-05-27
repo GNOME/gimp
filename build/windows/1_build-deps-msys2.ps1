@@ -80,6 +80,17 @@ if (-not $GIMP_PREFIX)
   }
 Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,9) -replace '> ','' -replace '- ','')
 
+echo "XDG_DATA_DIRS is $env:XDG_DATA_DIRS"
+
+$env:GETTEXTDATADIR="$PWD/vcpkg/installed/x64-windows-release/share/gettext" -replace '\\', '/'
+
+$env:GETTEXTDATADIRS="$PWD/vcpkg/installed/x64-windows-release/share/gettext" -replace '\\', '/'
+
+msgfmt -v -c --xml --template="extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in" -d "po-plug-ins" -o "org.gimp.extension.goat-exercises.metainfo.xml"
+
+Get-ChildItem 'vcpkg\installed\x64-windows-release\share\gettext\gettext-0.22.5\its'
+
+exit 1
 
 # Build babl and GEGL
 function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$options)
