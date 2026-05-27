@@ -86,6 +86,9 @@ if (Test-Path $CLEANCONFIG_PATH)
   }
 (Get-Content $CONFIG_PATH -Raw) -replace '/\*[\s\S]*?\*/', '' | Set-Content $CLEANCONFIG_PATH
 
+## Get namespace (same as DefaultDirName of gimp-setup.iss)
+$GIMP_INSTALL_LOCATION="GIMP $GIMP_MUTEX_VERSION"
+
 ## Get CUSTOM_GIMP_VERSION (GIMP version as we display for users in installer)
 $CUSTOM_GIMP_VERSION = $GIMP_VERSION
 if ($revision -notmatch '[1-9]' -or $CI_PIPELINE_SOURCE -eq 'schedule')
@@ -96,7 +99,7 @@ else
   {
     $CUSTOM_GIMP_VERSION = "$CUSTOM_GIMP_VERSION-$revision"
   }
-Write-Output "(INFO): GIMP version: $CUSTOM_GIMP_VERSION"
+Write-Output "(INFO): InstallLocation: $GIMP_INSTALL_LOCATION | GIMP version: $CUSTOM_GIMP_VERSION"
 
 ## Autodetects what arch bundles will be packaged
 # (The .iss script supports creating both an installer per arch or an universal installer with all arches)
