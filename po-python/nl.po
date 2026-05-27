@@ -10,8 +10,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-15 13:18+0000\n"
-"PO-Revision-Date: 2026-04-23 16:58+0200\n"
+"POT-Creation-Date: 2026-05-25 17:59+0000\n"
+"PO-Revision-Date: 2026-04-27 10:15+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -21,16 +21,20 @@ msgstr "Project-Id-Version: GIMP 3.0\n"
 "X-Generator: Omegat 6.1.0\n"
 
 #: plug-ins/python/colorxhtml.py:77
-msgid "Save as colored HTML text..."
-msgstr "Opslaan als gekleurde HTML-tekst…"
+msgid "Export as colored HTML text..."
+msgstr "Exporteren als gekleurde HTML-tekst…"
 
 #: plug-ins/python/colorxhtml.py:136
 msgid "Saving as colored XHTML"
 msgstr "Wordt opgeslagen als gekleurde XHTML"
 
 #: plug-ins/python/colorxhtml.py:210
-msgid "Save as colored HTML text"
-msgstr "Opslaan als gekleurde HTML"
+msgid "Exports as colored HTML text"
+msgstr "Exporteert als gekleurde HTML-tekst…"
+
+#: plug-ins/python/colorxhtml.py:211
+msgid "Exports the image as colored XHTML text"
+msgstr "Exporteert de afbeelding als gekleurde XHTML-tekst"
 
 #: plug-ins/python/colorxhtml.py:213
 msgid "Colored HTML text"
