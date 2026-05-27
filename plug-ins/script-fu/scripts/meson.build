@@ -20,6 +20,7 @@ scripts = [
   'fuzzyborder.scm',
   'gimp-online.scm',
   'gradient-example.scm',
+  'guides-from-rule.scm',
   'guides-from-selection.scm',
   'guides-new-percent.scm',
   'guides-new.scm',
