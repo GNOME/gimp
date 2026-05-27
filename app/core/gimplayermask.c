@@ -59,6 +59,7 @@ static void            gimp_layer_mask_convert_type         (GimpDrawable      *
                                                              GeglDitherMethod   mask_dither_type,
                                                              gboolean           push_undo,
                                                              GimpProgress      *progress);
+static void            gimp_layer_mask_filters_changed      (GimpDrawable      *drawable);
 
 
 G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
@@ -89,6 +90,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 
   drawable_class->bounding_box_changed = gimp_layer_mask_bounding_box_changed;
   drawable_class->convert_type         = gimp_layer_mask_convert_type;
+  drawable_class->filters_changed      = gimp_layer_mask_filters_changed;
 }
 
 static void
@@ -240,6 +242,14 @@ gimp_layer_mask_convert_type (GimpDrawable      *drawable,
                                                     mask_dither_type,
                                                     push_undo,
                                                     progress);
+}
+
+static void
+gimp_layer_mask_filters_changed (GimpDrawable *drawable)
+{
+  GimpLayerMask *layer_mask = GIMP_LAYER_MASK (drawable);
+
+  gimp_drawable_filters_changed (GIMP_DRAWABLE (layer_mask->layer));
 }
 
 GimpLayerMask *
