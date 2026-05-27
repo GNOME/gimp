@@ -1193,7 +1193,7 @@ gimp_text_layer_set_letter_spacing (GimpTextLayer *layer,
  *
  * Returns: TRUE on success.
  *
- * Since: 3.3
+ * Since: 3.4
  **/
 gboolean
 gimp_text_layer_get_layout_offsets (GimpTextLayer *layer,
@@ -1926,7 +1926,7 @@ gimp_text_layer_set_outline_width (GimpTextLayer *layer,
  *
  * Returns: Whether a text layer is dynamic.
  *
- * Since: 3.3
+ * Since: 3.4
  **/
 gboolean
 gimp_text_layer_is_dynamic (GimpTextLayer *layer)

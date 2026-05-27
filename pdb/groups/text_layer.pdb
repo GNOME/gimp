@@ -984,7 +984,7 @@ HELP
     $author = 'Idriss Fekir <mcsm224@gmail.com>';
     $copyright = 'Idriss Fekir';
     $date = '2026';
-    $since = '3.3';
+    $since = '3.4';
 
     @inargs = (
         { name => 'layer', type => 'text_layer',
@@ -1551,7 +1551,7 @@ HELP
     $author = 'Idriss Fekir <mcsm224@gmail.com>';
     $copyright = 'Idriss Fekir';
     $date = '2026';
-    $since = '3.3';
+    $since = '3.4';
 
     @inargs = (
         { name => 'layer', type => 'text_layer',
