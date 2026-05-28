@@ -1318,6 +1318,7 @@ xcf_load_image (Gimp     *gimp,
           gboolean                floating;
           gchar                  *name;
           gint                    position = 0;
+          gboolean                modified;
 
           selected = g_list_find (info->selected_layers, layer);
           linked   = g_list_find (info->linked_layers, layer);
@@ -1362,6 +1363,7 @@ xcf_load_image (Gimp     *gimp,
           /* Store current layer position so we can add it after the fact */
           parent   = gimp_layer_get_parent (layer);
           position = gimp_item_get_index (GIMP_ITEM (layer));
+          modified = vdata->modified;
 
           vlayer = gimp_layer_from_layer (layer, FALSE, GIMP_TYPE_VECTOR_LAYER,
                                           "image",                image,
@@ -1369,7 +1371,7 @@ xcf_load_image (Gimp     *gimp,
                                           NULL);
           g_object_unref (options);
 
-          if (vdata->modified)
+          if (modified)
             gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (vlayer), FALSE);
           gimp_image_add_layer (image, vlayer, parent, position, FALSE);
 
