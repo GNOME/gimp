@@ -12,8 +12,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-18 19:16+0000\n"
-"PO-Revision-Date: 2026-04-23 16:26+0200\n"
+"POT-Creation-Date: 2026-05-27 23:25+0000\n"
+"PO-Revision-Date: 2026-05-28 09:46+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -198,16 +198,16 @@ msgstr "%s:"
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-kleurselectie"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:405
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:395
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-bestandsselectie"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:408
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:398
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mapselectie"
 
 #. Log to stdout.  Later to Gimp.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:817
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:807
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fout tijdens uitvoeren van %s:"
@@ -745,87 +745,53 @@ msgstr "Op kopie werken"
 msgid "Flatten image"
 msgstr "Alle lagen samenvoegen"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:63
+#: plug-ins/script-fu/scripts/gimp-online.scm:59
 msgid "_Using Paths"
 msgstr "Paden _gebruiken"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:64
-#: plug-ins/script-fu/scripts/gimp-online.scm:75
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:97
-#: plug-ins/script-fu/scripts/gimp-online.scm:108
-#: plug-ins/script-fu/scripts/gimp-online.scm:119
-#: plug-ins/script-fu/scripts/gimp-online.scm:130
-#: plug-ins/script-fu/scripts/gimp-online.scm:141
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:60
+#: plug-ins/script-fu/scripts/gimp-online.scm:71
+#: plug-ins/script-fu/scripts/gimp-online.scm:82
+#: plug-ins/script-fu/scripts/gimp-online.scm:93
+#: plug-ins/script-fu/scripts/gimp-online.scm:104
+#: plug-ins/script-fu/scripts/gimp-online.scm:115
+#: plug-ins/script-fu/scripts/gimp-online.scm:126
+#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:147
 msgid "Bookmark to the user manual"
 msgstr "Bladwijzer naar de gebruikershandleiding"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:74
+#: plug-ins/script-fu/scripts/gimp-online.scm:70
 msgid "_Preparing your Images for the Web"
 msgstr "_Uw afbeeldingen voorbereiden voor het web"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:81
 msgid "_Working with Digital Camera Photos"
 msgstr "_Werken met foto’s van een digitale camera"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:96
+#: plug-ins/script-fu/scripts/gimp-online.scm:92
 msgid "Create, Open and Save _Files"
 msgstr "_Bestanden aanmaken, openen en opslaan"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:107
+#: plug-ins/script-fu/scripts/gimp-online.scm:103
 msgid "_Basic Concepts"
 msgstr "_Basisconcepten"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:118
+#: plug-ins/script-fu/scripts/gimp-online.scm:114
 msgid "How to Use _Dialogs"
 msgstr "Hoe _dialoogvensters gebruiken"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:129
+#: plug-ins/script-fu/scripts/gimp-online.scm:125
 msgid "Drawing _Simple Objects"
 msgstr "_Eenvoudige objecten tekenen"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:140
+#: plug-ins/script-fu/scripts/gimp-online.scm:136
 msgid "_Create and Use Selections"
 msgstr "_Maken en gebruiken van selecties"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/gimp-online.scm:146
 msgid "_Table of Contents"
 msgstr "_Inhoudsopgave"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:184
-msgid "_Main Web Site"
-msgstr "_Hoofdwebsite"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:185
-#: plug-ins/script-fu/scripts/gimp-online.scm:196
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
-msgid "Bookmark to the GIMP web site"
-msgstr "Bladwijzer naar de website van GIMP"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:195
-msgid "_Developer Web Site"
-msgstr "_Ontwikkelaarswebsite"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:206
-msgid "_Roadmaps"
-msgstr "_Routekaarten"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:207
-msgid "Bookmark to the roadmaps of GIMP"
-msgstr "Bladwijzer naar de routekaarten van GIMP"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "_Bug Reports and Feature Requests"
-msgstr "_Bugmeldingen en verzoeken om nieuwe functies"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "Bladwijzer naar de bug-tracker van GIMP"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:228
-msgid "_User Manual Web Site"
-msgstr "_Gebruikershandleiding website"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:73
 msgid "Custom _Gradient..."
@@ -854,6 +820,35 @@ msgstr "Hoogte"
 #: plug-ins/script-fu/scripts/gradient-example.scm:79
 msgid "Gradient reverse"
 msgstr "Omgekeerd kleurverloop"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:60
+msgid "New Guides from Rule..."
+msgstr "Nieuwe hulplijnen uit regel…"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:61
+msgid "Add guides based on a selected composition rule"
+msgstr "Voeg hulplijnen toe, gebaseerd op een geselecteerd regel voor samenstellen"
+
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:67
+msgid "R_ule"
+msgstr "R_egel"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:67
+msgid "Center lines"
+msgstr "Middellijnen"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:68
+msgid "Rule of thirds"
+msgstr "Regel van derden"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:69
+msgid "Rule of fifths"
+msgstr "Regel van vijfden"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:70
+msgid "Golden sections"
+msgstr "Gulden snedes"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
@@ -1508,6 +1503,30 @@ msgstr "X-verschuiving van slagschaduw"
 #: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Drop shadow Y offset"
 msgstr "Y-verschuiving slagschaduw"
+
+#~ msgid "_Main Web Site"
+#~ msgstr "_Hoofdwebsite"
+
+#~ msgid "Bookmark to the GIMP web site"
+#~ msgstr "Bladwijzer naar de website van GIMP"
+
+#~ msgid "_Developer Web Site"
+#~ msgstr "_Ontwikkelaarswebsite"
+
+#~ msgid "_Roadmaps"
+#~ msgstr "_Routekaarten"
+
+#~ msgid "Bookmark to the roadmaps of GIMP"
+#~ msgstr "Bladwijzer naar de routekaarten van GIMP"
+
+#~ msgid "_Bug Reports and Feature Requests"
+#~ msgstr "_Bugmeldingen en verzoeken om nieuwe functies"
+
+#~ msgid "Bookmark to the bug tracker of GIMP"
+#~ msgstr "Bladwijzer naar de bug-tracker van GIMP"
+
+#~ msgid "_User Manual Web Site"
+#~ msgstr "_Gebruikershandleiding website"
 
 #~ msgid "_Refresh Scripts"
 #~ msgstr "S_cripts verversen"
