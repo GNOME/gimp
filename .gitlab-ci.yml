@@ -907,6 +907,7 @@ abidiff:
       changes:
         paths:
           - libgimp*/*
+          - .gitlab-ci.yml #to test changes on script: below
         compare_to: 'refs/heads/gimp-3-2'
     - if: '$CI_COMMIT_TAG != null'
       interruptible: false
