@@ -52,7 +52,7 @@ if (platform_windows or platform_osx) and not meson.is_cross_build() and python.
   elif platform_osx
     # python* is needed to run plug-ins with right build-time interpreter when non-relocatable
     if not relocatable_bundle
-      python_config.set('PYTHON_EXE', python.path())
+      python_config.set('PYTHON_EXE', python.full_path())
 
     # python3 is needed to run plug-ins with right bundled interpreter when relocatable
     else
