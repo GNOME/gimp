@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-25 15:31+0000\n"
-"PO-Revision-Date: 2026-05-26 08:23+0800\n"
+"POT-Creation-Date: 2026-05-28 23:15+0000\n"
+"PO-Revision-Date: 2026-05-29 08:33+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -8795,6 +8795,16 @@ msgctxt "tools-action"
 msgid "Rotate image by an arbitrary angle"
 msgstr "任意角度旋转图像"
 
+#: app/actions/tools-actions.c:86
+msgctxt "tools-action"
+msgid "Set Brush Size in Pixels"
+msgstr "设置笔刷大小（像素）"
+
+#: app/actions/tools-actions.c:141
+msgctxt "tools-action"
+msgid "Set Ink Blob Size in Pixels"
+msgstr "设置墨斑大小（像素）"
+
 #: app/actions/tools-actions.c:172
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
@@ -8864,6 +8874,16 @@ msgstr "喷枪流量：减小 10"
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
 msgstr "喷枪流量：增大 10"
+
+#: app/actions/tools-actions.c:244
+msgctxt "tools-action"
+msgid "Set MyPaint Brush Diameter in Pixels"
+msgstr "设置 MyPaint 笔刷直径（像素）"
+
+#: app/actions/tools-actions.c:276
+msgctxt "tools-action"
+msgid "Set Warp Effect Size in Pixels"
+msgstr "设置扭曲效果大小（像素）"
 
 #: app/actions/tools-actions.c:299
 msgctxt "tools-action"
@@ -9214,6 +9234,61 @@ msgstr "工具的力度：相对减小"
 msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
 msgstr "工具的力度：相对增大"
+
+#: app/actions/tools-actions.c:607
+msgctxt "tools-action"
+msgid "Set Paint Select Brush Size in Pixels"
+msgstr "设置绘制选择笔刷大小（像素）"
+
+#: app/actions/tools-actions.c:614
+msgctxt "tools-action"
+msgid "Select Object 1 by Index"
+msgstr "通过索引选择对象 1"
+
+#: app/actions/tools-actions.c:618
+msgctxt "tools-action"
+msgid "First Object 1"
+msgstr "第一个对象 1"
+
+#: app/actions/tools-actions.c:622
+msgctxt "tools-action"
+msgid "Last Object 1"
+msgstr "最后一个对象 1"
+
+#: app/actions/tools-actions.c:626
+msgctxt "tools-action"
+msgid "Previous Object 1"
+msgstr "上个对象 1"
+
+#: app/actions/tools-actions.c:630
+msgctxt "tools-action"
+msgid "Next Object 1"
+msgstr "下个对象 1"
+
+#: app/actions/tools-actions.c:638
+msgctxt "tools-action"
+msgid "Select Object 2 by Index"
+msgstr "通过索引选择对象 2"
+
+#: app/actions/tools-actions.c:642
+msgctxt "tools-action"
+msgid "First Object 2"
+msgstr "第一个对象 2"
+
+#: app/actions/tools-actions.c:646
+msgctxt "tools-action"
+msgid "Last Object 2"
+msgstr "最后一个对象 2"
+
+#: app/actions/tools-actions.c:650
+msgctxt "tools-action"
+msgid "Previous Object 2"
+msgstr "上个对象 2"
+
+#: app/actions/tools-actions.c:654
+msgctxt "tools-action"
+msgid "Next Object 2"
+msgstr "下个对象 2"
 
 #: app/actions/tools-actions.c:830
 #, c-format
@@ -19407,7 +19482,7 @@ msgstr "单击并拖动以添加自由线段，单击以添加多边形线段"
 msgid "Rectangle: "
 msgstr "矩形："
 
-#: app/display/gimptoolrectangle.c:2172
+#: app/display/gimptoolrectangle.c:2155
 msgid "Position: "
 msgstr "位置："
 
@@ -21821,27 +21896,27 @@ msgstr "“%s”资源不可重命名"
 #. TODO: write a more explicit error message after
 #. * string freeze.
 #.
-#: app/pdb/text-layer-cmds.c:86 app/pdb/text-layer-cmds.c:113
+#: app/pdb/text-layer-cmds.c:87 app/pdb/text-layer-cmds.c:114
 #, c-format
 msgid "Failed to create text layer"
 msgstr "创建文字图层失败"
 
-#: app/pdb/text-layer-cmds.c:178 app/pdb/text-layer-cmds.c:316
-#: app/pdb/text-layer-cmds.c:381 app/pdb/text-layer-cmds.c:440
-#: app/pdb/text-layer-cmds.c:498 app/pdb/text-layer-cmds.c:556
-#: app/pdb/text-layer-cmds.c:614 app/pdb/text-layer-cmds.c:672
-#: app/pdb/text-layer-cmds.c:730 app/pdb/text-layer-cmds.c:786
-#: app/pdb/text-layer-cmds.c:844 app/pdb/text-layer-cmds.c:902
-#: app/pdb/text-layer-cmds.c:960 app/pdb/text-layer-cmds.c:1018
-#: app/pdb/text-layer-cmds.c:1076 app/pdb/text-layer-cmds.c:1134
-#: app/pdb/text-layer-cmds.c:1190 app/pdb/text-layer-cmds.c:1248
-#: app/pdb/text-layer-cmds.c:1306 app/pdb/text-layer-cmds.c:1364
-#: app/pdb/text-layer-cmds.c:1422 app/pdb/text-layer-cmds.c:1487
-#: app/pdb/text-layer-cmds.c:1523
+#: app/pdb/text-layer-cmds.c:179 app/pdb/text-layer-cmds.c:317
+#: app/pdb/text-layer-cmds.c:382 app/pdb/text-layer-cmds.c:441
+#: app/pdb/text-layer-cmds.c:499 app/pdb/text-layer-cmds.c:557
+#: app/pdb/text-layer-cmds.c:615 app/pdb/text-layer-cmds.c:673
+#: app/pdb/text-layer-cmds.c:731 app/pdb/text-layer-cmds.c:787
+#: app/pdb/text-layer-cmds.c:845 app/pdb/text-layer-cmds.c:903
+#: app/pdb/text-layer-cmds.c:961 app/pdb/text-layer-cmds.c:1060
+#: app/pdb/text-layer-cmds.c:1118 app/pdb/text-layer-cmds.c:1176
+#: app/pdb/text-layer-cmds.c:1232 app/pdb/text-layer-cmds.c:1290
+#: app/pdb/text-layer-cmds.c:1348 app/pdb/text-layer-cmds.c:1406
+#: app/pdb/text-layer-cmds.c:1464 app/pdb/text-layer-cmds.c:1529
+#: app/pdb/text-layer-cmds.c:1594
 msgid "Set text layer attribute"
 msgstr "设定文字图层属性"
 
-#: app/pdb/text-layer-cmds.c:247
+#: app/pdb/text-layer-cmds.c:248
 msgid "Set text layer markup"
 msgstr "设定文字图层标记"
 
@@ -22464,11 +22539,11 @@ msgstr "旋转文字图层"
 msgid "Transform Text Layer"
 msgstr "变换文字图层"
 
-#: app/text/gimptextlayer.c:775
+#: app/text/gimptextlayer.c:675 app/text/gimptextlayer.c:816
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "由于缺少字体，文字功能不可用。"
 
-#: app/text/gimptextlayer.c:989
+#: app/text/gimptextlayer.c:1030
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -28660,31 +28735,31 @@ msgstr ""
 "通过旧版本 GIMP 保存的损坏 XMP 元数据无法转换且会被忽略。\n"
 "如果您不知道 XMP 是什么，很可能您并不需要它。报告的错误：%s。"
 
-#: app/xcf/xcf-load.c:1454
+#: app/xcf/xcf-load.c:1456
 msgid "Linked Layers"
 msgstr "链接的图层"
 
-#: app/xcf/xcf-load.c:1464
+#: app/xcf/xcf-load.c:1466
 msgid "Linked Channels"
 msgstr "链接的通道"
 
-#: app/xcf/xcf-load.c:1489
+#: app/xcf/xcf-load.c:1491
 msgid "Linked Paths"
 msgstr "链接的路径"
 
-#: app/xcf/xcf-load.c:1537
+#: app/xcf/xcf-load.c:1539
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "此 XCF 文件已损坏！已尽可能抢救图像数据，但抢救得到的部分不完整。"
 
-#: app/xcf/xcf-load.c:1564
+#: app/xcf/xcf-load.c:1566
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "此 XCF 文件已损坏！未能抢救任何图像数据。"
 
-#: app/xcf/xcf-load.c:1758
+#: app/xcf/xcf-load.c:1760
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28694,14 +28769,14 @@ msgstr ""
 "未能正确地保存索引颜色表。\n"
 "将使用灰度颜色表取代原颜色表。"
 
-#: app/xcf/xcf-load.c:2589
+#: app/xcf/xcf-load.c:2591
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
 "to a raster layer."
 msgstr "XCF 警告：XCF 文件中有无效链接。链接图层“%s”已降级为栅格化图层。"
 
-#: app/xcf/xcf-load.c:2609
+#: app/xcf/xcf-load.c:2611
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
@@ -28709,7 +28784,7 @@ msgid ""
 msgstr ""
 "XCF 警告：检测到 XCF 文件中有循环引用。链接图层“%s”已降级为栅格化图层。"
 
-#: app/xcf/xcf-load.c:3342
+#: app/xcf/xcf-load.c:3344
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28721,7 +28796,7 @@ msgstr ""
 "染。\n"
 "这种情况不应发生。您应将该问题报告给滤镜的开发者。"
 
-#: app/xcf/xcf-load.c:4230
+#: app/xcf/xcf-load.c:4232
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
