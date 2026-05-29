@@ -74,6 +74,9 @@ try:
           src = os.path.join(GIMP_GLOBAL_BUILD_ROOT, plug_in)
       else:
         src = os.path.join(GIMP_GLOBAL_BUILD_ROOT, 'plug-ins', plug_in, plug_in)
+      if sys.platform in ['win32', 'cygwin'] and not is_script_file(src):
+        src += '.exe'
+        dst += '.exe'
       shutil.copyfile(src, dst)
       os.chmod(dst, stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
       if not is_script_file(dst):
