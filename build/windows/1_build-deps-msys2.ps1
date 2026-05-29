@@ -108,8 +108,11 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
         Write-Output "Using tag/branch of ${dep}: ${tag_branch}"
         git clone --branch=${tag_branch} --depth $GIT_DEPTH $repo
       }
+    else
+      {
+        git -C "$dep" pull
+      }
     Set-Location $dep
-    git pull
     if ($branch -like "*.patch*" -or $patches -like "*.patch*")
       {
         ### This allows to add some minor patch on a dependency without having a proper new release.
