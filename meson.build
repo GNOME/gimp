@@ -2024,9 +2024,7 @@ if meson.can_run_host_binaries() and have_gobject_introspection
 
   gimp_run_env.set('GIMP3_SYSCONFDIR', meson.global_source_root() / 'etc')
 
-  gimp_run_env.set('GIMP_TESTING_PLUGINDIRS', meson.global_build_root() / 'plug-ins')
-  gimp_run_env.append('GIMP_TESTING_PLUGINDIRS', meson.global_build_root() / 'plug-ins/python')
-  gimp_run_env.append('GIMP_TESTING_PLUGINDIRS', meson.global_build_root() / 'plug-ins/common/test-plug-ins/')
+  gimp_run_env.set('GIMP_TESTING_PLUG_INS', 'python/python-eval/')
 
   gimp_run_env.set('GIMP_TESTING_INTERPRETER_DIRS', meson.global_build_root() / 'plug-ins/python/')
   gimp_run_env.append('GIMP_TESTING_INTERPRETER_DIRS', meson.global_build_root() / 'extensions/')

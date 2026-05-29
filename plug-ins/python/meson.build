@@ -27,15 +27,6 @@ foreach plugin : python_plugins
 
   install_data(srcs, install_dir: gimpplugindir / 'plug-ins' / name,
                install_mode: 'rwxr-xr-x')
-
-  foreach src : srcs
-    # Ugly trick to copy Python plug-ins into subfolders so that we can run GIMP
-    # from the build directory without installing it.
-    # To be run even if we don't install Python plug-ins so that we can
-    # still run them for in-build scripts.
-    run_command(python, meson.project_source_root() / 'tools/cp-plug-in-subfolder.py',
-                meson.current_source_dir() / src, meson.current_build_dir() / name, check: true)
-  endforeach
 endforeach
 
 #.interp file read by gimp_interpreter_db_load_interp_file in gimpinterpreterdb.c

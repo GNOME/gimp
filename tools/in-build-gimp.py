@@ -11,6 +11,7 @@ import os
 import random
 import re
 import shutil
+import stat
 import string
 import subprocess
 import sys
@@ -28,13 +29,45 @@ def cleanup(lock):
     os.close(lock)
 
 try:
-  GIMP_GLOBAL_BUILD_ROOT = os.environ.get("GIMP_GLOBAL_BUILD_ROOT", ".")
+  if os.environ.get('GIMP_TESTING_PLUGINDIRS') is not None:
+    sys.stderr.write(f"ERROR: do not set $GIMP_TESTING_PLUGINDIRS. This script will take care of it.\n")
+    sys.stderr.write(f"       Set $GIMP_TESTING_PLUG_INS instead.\n")
+    sys.exit(1)
+
+  GIMP_GLOBAL_BUILD_ROOT  = os.environ.get("GIMP_GLOBAL_BUILD_ROOT", ".")
+  GIMP_GLOBAL_SOURCE_ROOT = os.environ.get("GIMP_GLOBAL_SOURCE_ROOT")
+  GIMP_TESTING_PLUG_INS   = os.environ.get("GIMP_TESTING_PLUG_INS")
 
   suffix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
   GIMP3_DIRECTORY = os.path.join(GIMP_GLOBAL_BUILD_ROOT, f".GIMP3-build-config-{suffix}")
   os.makedirs(GIMP3_DIRECTORY, mode=0o700, exist_ok=False)
   os.environ["GIMP3_DIRECTORY"] = GIMP3_DIRECTORY
   sys.stderr.write(f"INFO: temporary GIMP configuration directory: {GIMP3_DIRECTORY}\n")
+
+  if GIMP_TESTING_PLUG_INS is not None:
+    plugins_dir = os.path.join(GIMP3_DIRECTORY, 'plug-ins')
+    os.environ['GIMP_TESTING_PLUGINDIRS'] = plugins_dir
+    plug_ins = GIMP_TESTING_PLUG_INS.split(':')
+    for plug_in in plug_ins:
+      if plug_in[-1] == '/':
+        plug_in = plug_in[:-1]
+      plug_in_name = os.path.basename(plug_in)
+      plugin_dir = os.path.join(plugins_dir, plug_in_name)
+      os.makedirs(plugin_dir, mode=0o700, exist_ok=False)
+      dst = os.path.join(plugin_dir, plug_in_name)
+      if plug_in.startswith('common/'):
+        src = os.path.join(GIMP_GLOBAL_BUILD_ROOT, 'plug-ins', plug_in)
+      elif plug_in.startswith('python'):
+        src = os.path.join(GIMP_GLOBAL_SOURCE_ROOT, 'plug-ins', plug_in + '.py')
+      elif plug_in.startswith('libgimp'):
+        if plug_in.endswith('.py'):
+          src = os.path.join(GIMP_GLOBAL_SOURCE_ROOT, plug_in)
+        else:
+          src = os.path.join(GIMP_GLOBAL_BUILD_ROOT, plug_in)
+      else:
+        src = os.path.join(GIMP_GLOBAL_BUILD_ROOT, 'plug-ins', plug_in, plug_in)
+      shutil.copyfile(src, dst)
+      os.chmod(dst, stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
 
   # Earlier code used to set DYLD_LIBRARY_PATH environment variable instead, but
   # it didn't work on contributor's builds because of System Integrity

@@ -91,6 +91,7 @@ tests = [
 test_env=gimp_run_env
 test_env.set('GIMP_TESTING_ABS_TOP_SRCDIR', meson.project_source_root())
 test_env.set('GIMP_TESTING_ABS_TOP_BUILDDIR', meson.project_build_root())
+test_env.append('GIMP_TESTING_PLUG_INS', 'common/file-png', separator: ':')
 
 run_python_test = find_program(meson.project_source_root() / 'libgimp/tests/libgimp-run-python-test.py')
 foreach testinfo : tests
