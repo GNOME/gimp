@@ -88,9 +88,10 @@ self_build()
     fi
     printf "Using tag/branch of ${dep}: ${tag_branch}\n"
     git clone --branch=$tag_branch --depth $GIT_DEPTH $1
+  else
+    git -C "$dep" pull
   fi
   cd $dep
-  git pull
   if echo "$2" | grep -q '.patch' || echo "$3" | grep -q '.patch'; then
     for patch in $(if echo "$2" | grep -q '.patch'; then echo "$2"; else echo "$3"; fi); do
       git apply -v "$GIMP_DIR/$patch"
