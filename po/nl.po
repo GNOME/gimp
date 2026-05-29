@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-24 17:35+0000\n"
-"PO-Revision-Date: 2026-05-25 09:45+0200\n"
+"POT-Creation-Date: 2026-05-28 23:15+0000\n"
+"PO-Revision-Date: 2026-05-29 09:47+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -8900,6 +8900,16 @@ msgctxt "tools-action"
 msgid "Rotate image by an arbitrary angle"
 msgstr "De afbeelding draaien met een willekeurige hoek"
 
+#: app/actions/tools-actions.c:86
+msgctxt "tools-action"
+msgid "Set Brush Size in Pixels"
+msgstr "Grootte penseel instellen in pixels"
+
+#: app/actions/tools-actions.c:141
+msgctxt "tools-action"
+msgid "Set Ink Blob Size in Pixels"
+msgstr "Grootte inktvlek instellen in pixels"
+
 #: app/actions/tools-actions.c:172
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
@@ -8969,6 +8979,16 @@ msgstr "Snelheid verfspuit: verlagen met 10"
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
 msgstr "Snelheid verfspuit: verhogen met 10"
+
+#: app/actions/tools-actions.c:244
+msgctxt "tools-action"
+msgid "Set MyPaint Brush Diameter in Pixels"
+msgstr "Diameter penseel MyPaint instellen in pixels"
+
+#: app/actions/tools-actions.c:276
+msgctxt "tools-action"
+msgid "Set Warp Effect Size in Pixels"
+msgstr "Grootte effect vervormen in pixels"
 
 #: app/actions/tools-actions.c:299
 msgctxt "tools-action"
@@ -9322,6 +9342,61 @@ msgstr "Kracht gereedschap: relatief verminderen"
 msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
 msgstr "Kracht gereedschap: relatief vergroten"
+
+#: app/actions/tools-actions.c:607
+msgctxt "tools-action"
+msgid "Set Paint Select Brush Size in Pixels"
+msgstr "Grootte penseel Penseelselectie in pixels"
+
+#: app/actions/tools-actions.c:614
+msgctxt "tools-action"
+msgid "Select Object 1 by Index"
+msgstr "Object 1 op index selecteren"
+
+#: app/actions/tools-actions.c:618
+msgctxt "tools-action"
+msgid "First Object 1"
+msgstr "Eerste object 1"
+
+#: app/actions/tools-actions.c:622
+msgctxt "tools-action"
+msgid "Last Object 1"
+msgstr "Laatste object 1"
+
+#: app/actions/tools-actions.c:626
+msgctxt "tools-action"
+msgid "Previous Object 1"
+msgstr "Vorige object 1"
+
+#: app/actions/tools-actions.c:630
+msgctxt "tools-action"
+msgid "Next Object 1"
+msgstr "Volgende object 1"
+
+#: app/actions/tools-actions.c:638
+msgctxt "tools-action"
+msgid "Select Object 2 by Index"
+msgstr "Object 2 op index selecteren"
+
+#: app/actions/tools-actions.c:642
+msgctxt "tools-action"
+msgid "First Object 2"
+msgstr "Eerste object 2"
+
+#: app/actions/tools-actions.c:646
+msgctxt "tools-action"
+msgid "Last Object 2"
+msgstr "Laatste object 2"
+
+#: app/actions/tools-actions.c:650
+msgctxt "tools-action"
+msgid "Previous Object 2"
+msgstr "Vorige object 2"
+
+#: app/actions/tools-actions.c:654
+msgctxt "tools-action"
+msgid "Next Object 2"
+msgstr "Volgende object 2"
 
 #: app/actions/tools-actions.c:830
 #, c-format
@@ -19609,7 +19684,7 @@ msgstr "Klikken en slepen voegt een vrij segment toe, klikken voegt een veelhoek
 msgid "Rectangle: "
 msgstr "Rechthoek: "
 
-#: app/display/gimptoolrectangle.c:2172
+#: app/display/gimptoolrectangle.c:2155
 msgid "Position: "
 msgstr "Positie: "
 
@@ -21837,96 +21912,96 @@ msgstr "Afstandsmetriek"
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedure ‘%s’ gaf geen waarden terug"
 
-#: app/pdb/gimpprocedure.c:851
+#: app/pdb/gimpprocedure.c:850
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr "Procedure ‘%s’ gaf een verkeerd type waarde terug als teruggegeven waarde ‘%s’ (#%d). Verwachtte %s, kreeg %s."
 
-#: app/pdb/gimpprocedure.c:863
+#: app/pdb/gimpprocedure.c:862
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
 "(#%d). Expected %s, got %s."
 msgstr "Procedure ‘%s’ werd aangeroepen met een verkeerd type waarde voor argument ‘%s’ (#%d). Verwachtte %s, kreeg %s."
 
-#: app/pdb/gimpprocedure.c:900
+#: app/pdb/gimpprocedure.c:899
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr "Procedure ‘%s’ gaf een ongeldig ID terug voor argument ‘%s’. Het meest waarschijnlijk is dat een plug-in probeert te werken op een laag die niet meer bestaat."
 
-#: app/pdb/gimpprocedure.c:913
+#: app/pdb/gimpprocedure.c:912
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr "Procedure ‘%s’ werd aangeroepen met een ongeldig ID voor argument '%s'. Het meest waarschijnlijk is dat een plug-in probeert te werken op een laag die niet meer bestaat."
 
-#: app/pdb/gimpprocedure.c:930
+#: app/pdb/gimpprocedure.c:929
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr "Procedure ‘%s’ gaf een ongeldig ID terug voor argument ‘%s’. Het meest waarschijnlijk is dat een plug-in probeert te werken op een afbeelding die niet meer bestaat."
 
-#: app/pdb/gimpprocedure.c:943
+#: app/pdb/gimpprocedure.c:942
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr "Procedure ‘%s’ werd aangeroepen met een ongeldig ID voor argument '%s'. Het meest waarschijnlijk is dat een plug-in probeert te werken op een afbeelding die niet meer bestaat."
 
-#: app/pdb/gimpprocedure.c:964
+#: app/pdb/gimpprocedure.c:963
 #, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow pixel unit."
 msgstr "Procedure ‘%s’ gaf `gimp_unit_pixel()` terug als GimpUnit teruggegeven waarde #%d ‘%s’. Deze teruggegeven waarde staat de eenheid pixel niet toe."
 
-#: app/pdb/gimpprocedure.c:973
+#: app/pdb/gimpprocedure.c:972
 #, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow percent unit."
 msgstr "Procedure ‘%s’ gaf `gimp_unit_percent()` terug als GimpUnit teruggegeven waarde #%d ‘%s’. Deze teruggegeven waarde staat de eenheid percentage niet toe."
 
-#: app/pdb/gimpprocedure.c:985
+#: app/pdb/gimpprocedure.c:984
 #, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow pixel unit."
 msgstr "Procedure ‘%s’ werd aangeroepen met `gimp_unit_pixel()` voor GimpUnit argument #%d ‘%s’. Dat argument staat de eenheid pixel niet toe."
 
-#: app/pdb/gimpprocedure.c:995
+#: app/pdb/gimpprocedure.c:994
 #, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow percent unit."
 msgstr "Procedure ‘%s’ werd aangeroepen met `gimp_unit_percent()` voor GimpUnit argument #%d ‘%s’. Dat argument staat de eenheid percentage niet toe."
 
-#: app/pdb/gimpprocedure.c:1015
+#: app/pdb/gimpprocedure.c:1014
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr "Procedure ‘%s’ gaf  ‘%s’ terug als waarde ‘%s’ (#%d, type %s). Die waarde ligt buiten het bereik."
 
-#: app/pdb/gimpprocedure.c:1029
+#: app/pdb/gimpprocedure.c:1028
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr "Procedure ‘%s’ is aangeroepen met waarde ‘%s’ als argument ‘%s’ (#%d, type %s). Die waarde ligt buiten het bereik."
 
-#: app/pdb/gimpprocedure.c:1085
+#: app/pdb/gimpprocedure.c:1084
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedure ‘%s’ gaf een ongeldige UTF-8 tekenreeks terug voor argument ‘%s’."
 
-#: app/pdb/gimpprocedure.c:1095
+#: app/pdb/gimpprocedure.c:1094
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -22033,27 +22108,27 @@ msgstr "Object ‘%s’ kan niet hernoemd worden"
 #. TODO: write a more explicit error message after
 #. * string freeze.
 #.
-#: app/pdb/text-layer-cmds.c:86 app/pdb/text-layer-cmds.c:113
+#: app/pdb/text-layer-cmds.c:87 app/pdb/text-layer-cmds.c:114
 #, c-format
 msgid "Failed to create text layer"
 msgstr "Kon geen tekstlaag aanmaken"
 
-#: app/pdb/text-layer-cmds.c:178 app/pdb/text-layer-cmds.c:316
-#: app/pdb/text-layer-cmds.c:381 app/pdb/text-layer-cmds.c:440
-#: app/pdb/text-layer-cmds.c:498 app/pdb/text-layer-cmds.c:556
-#: app/pdb/text-layer-cmds.c:614 app/pdb/text-layer-cmds.c:672
-#: app/pdb/text-layer-cmds.c:730 app/pdb/text-layer-cmds.c:786
-#: app/pdb/text-layer-cmds.c:844 app/pdb/text-layer-cmds.c:902
-#: app/pdb/text-layer-cmds.c:960 app/pdb/text-layer-cmds.c:1018
-#: app/pdb/text-layer-cmds.c:1076 app/pdb/text-layer-cmds.c:1134
-#: app/pdb/text-layer-cmds.c:1190 app/pdb/text-layer-cmds.c:1248
-#: app/pdb/text-layer-cmds.c:1306 app/pdb/text-layer-cmds.c:1364
-#: app/pdb/text-layer-cmds.c:1422 app/pdb/text-layer-cmds.c:1487
-#: app/pdb/text-layer-cmds.c:1523
+#: app/pdb/text-layer-cmds.c:179 app/pdb/text-layer-cmds.c:317
+#: app/pdb/text-layer-cmds.c:382 app/pdb/text-layer-cmds.c:441
+#: app/pdb/text-layer-cmds.c:499 app/pdb/text-layer-cmds.c:557
+#: app/pdb/text-layer-cmds.c:615 app/pdb/text-layer-cmds.c:673
+#: app/pdb/text-layer-cmds.c:731 app/pdb/text-layer-cmds.c:787
+#: app/pdb/text-layer-cmds.c:845 app/pdb/text-layer-cmds.c:903
+#: app/pdb/text-layer-cmds.c:961 app/pdb/text-layer-cmds.c:1060
+#: app/pdb/text-layer-cmds.c:1118 app/pdb/text-layer-cmds.c:1176
+#: app/pdb/text-layer-cmds.c:1232 app/pdb/text-layer-cmds.c:1290
+#: app/pdb/text-layer-cmds.c:1348 app/pdb/text-layer-cmds.c:1406
+#: app/pdb/text-layer-cmds.c:1464 app/pdb/text-layer-cmds.c:1529
+#: app/pdb/text-layer-cmds.c:1594
 msgid "Set text layer attribute"
 msgstr "Tekstlaagattributen instellen"
 
-#: app/pdb/text-layer-cmds.c:247
+#: app/pdb/text-layer-cmds.c:248
 msgid "Set text layer markup"
 msgstr "Tekstlaag opmaak instellen"
 
@@ -22082,7 +22157,7 @@ msgstr "Verwijzing naar foutieve interpreter in interpreter-bestand %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Foutieve binaire opmaaktekenreeks in interpreter-bestand %s"
 
-#: app/plug-in/gimpplugin.c:260
+#: app/plug-in/gimpplugin.c:254
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -22116,11 +22191,11 @@ msgid "Cancelled"
 msgstr "Geannuleerd"
 
 # vertalers/interpretatieprogramma’s
-#: app/plug-in/gimppluginmanager.c:238
+#: app/plug-in/gimppluginmanager.c:265
 msgid "Plug-in Interpreters"
 msgstr "Plug-in-interpreters"
 
-#: app/plug-in/gimppluginmanager.c:248
+#: app/plug-in/gimppluginmanager.c:275
 msgid "Plug-in Environment"
 msgstr "Plug-in-omgeving"
 
@@ -22674,11 +22749,11 @@ msgstr "Tekstlaag draaien"
 msgid "Transform Text Layer"
 msgstr "Tekstlaag transformeren"
 
-#: app/text/gimptextlayer.c:775
+#: app/text/gimptextlayer.c:675 app/text/gimptextlayer.c:816
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Tekstfunctionaliteit ontbreekt, omdat er geen lettertypes zijn."
 
-#: app/text/gimptextlayer.c:989
+#: app/text/gimptextlayer.c:1030
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -28919,31 +28994,31 @@ msgid ""
 msgstr "Corrupte XMP-metadata, opgeslagen door een oudere versie van GIMP, kon niet worden omgezet en zal worden genegeerd.\n"
 "Als u niet weet wat XMP is, heeft u het heel waarschijnlijk niet nodig. Gerapporteerde fout: %s."
 
-#: app/xcf/xcf-load.c:1454
+#: app/xcf/xcf-load.c:1456
 msgid "Linked Layers"
 msgstr "Gekoppelde lagen"
 
-#: app/xcf/xcf-load.c:1464
+#: app/xcf/xcf-load.c:1466
 msgid "Linked Channels"
 msgstr "Gekoppelde kanalen"
 
-#: app/xcf/xcf-load.c:1489
+#: app/xcf/xcf-load.c:1491
 msgid "Linked Paths"
 msgstr "Gekoppelde paden"
 
-#: app/xcf/xcf-load.c:1537
+#: app/xcf/xcf-load.c:1539
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "Dit XCF-bestand is corrupt!  Ik heb er zoveel mogelijk van geladen, maar het is niet compleet."
 
-#: app/xcf/xcf-load.c:1564
+#: app/xcf/xcf-load.c:1566
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "Dit XCF-bestand is corrupt!  Ik kon er zelfs geen gedeeltelijke afbeeldingsgegevens van redden."
 
-#: app/xcf/xcf-load.c:1758
+#: app/xcf/xcf-load.c:1760
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28952,21 +29027,21 @@ msgstr "XCF waarschuwing: versie 0 van de XCF-bestandsindeling\n"
 "sloeg geïndexeerde kleurkaarten niet correct op.\n"
 "Vervangen van de kaart met grijswaarden."
 
-#: app/xcf/xcf-load.c:2589
+#: app/xcf/xcf-load.c:2591
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
 "to a raster layer."
 msgstr "XCF waarschuwing: ongeldige link in XCF-bestand. De gekoppelde laag ‘%s’ is gedowngraded naar een rasterlaag."
 
-#: app/xcf/xcf-load.c:2609
+#: app/xcf/xcf-load.c:2611
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
 "is downgraded to a raster layer."
 msgstr "XCF waarschuwing: cirkelverwijzing gedetecteerd in XCF-bestand. De gekoppelde laag ‘%s’ is gedowngraded naar een rasterlaag."
 
-#: app/xcf/xcf-load.c:3342
+#: app/xcf/xcf-load.c:3344
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28976,7 +29051,7 @@ msgid ""
 msgstr "XCF waarschuwing: versie %s van filter ‘%s’ heeft geen eigenschap %s. De eigenschap werd genegeerd en het filter zou niet juist kunnen renderen.\n"
 "Dit zou niet voor moeten komen. U zou het probleem moeten rapporteren bij de ontwikkelaars van het filter."
 
-#: app/xcf/xcf-load.c:4230
+#: app/xcf/xcf-load.c:4232
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
