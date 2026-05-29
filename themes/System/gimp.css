@@ -47,6 +47,21 @@ GimpDock GimpColorScales spinbutton entry {
     padding-bottom: 2px;
 }
 
+GimpColorScale {
+  padding:    2px 12px 2px 12px;
+  min-width:  24px;
+  min-height: 24px;
+}
+GimpColorScale contents trough {
+  min-width:  20px;
+  min-height: 20px;
+}
+GimpColorScale contents trough slider {
+  min-width:  12px;
+  min-height: 12px;
+  margin:     -6px -6px -6px -6px;
+}
+
 GimpColorSelect button.radio  {
   margin-right: 0px;
 }
