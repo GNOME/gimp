@@ -78,7 +78,7 @@ try:
         src += '.exe'
         dst += '.exe'
       shutil.copyfile(src, dst)
-      os.chmod(dst, stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
+      os.chmod(dst, stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH | stat.S_IWRITE)
       if not is_script_file(dst):
         processed_plugins.append(dst)
 
