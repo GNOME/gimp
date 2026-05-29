@@ -616,7 +616,6 @@ else
       extra_args: gir_args,
       include_directories: rootInclude,
       install: true,
-      env: gir_env,
     )
   endif
 
