@@ -28,6 +28,13 @@ def cleanup(lock):
     fcntl.flock(lock, fcntl.LOCK_UN)
     os.close(lock)
 
+def is_script_file(filepath):
+  try:
+    with open(filepath, 'rb') as f:
+      return f.read(2) == b'#!'
+  except IOError:
+    return False
+
 try:
   if os.environ.get('GIMP_TESTING_PLUGINDIRS') is not None:
     sys.stderr.write(f"ERROR: do not set $GIMP_TESTING_PLUGINDIRS. This script will take care of it.\n")
@@ -45,6 +52,7 @@ try:
   sys.stderr.write(f"INFO: temporary GIMP configuration directory: {GIMP3_DIRECTORY}\n")
 
   if GIMP_TESTING_PLUG_INS is not None:
+    processed_plugins = []
     plugins_dir = os.path.join(GIMP3_DIRECTORY, 'plug-ins')
     os.environ['GIMP_TESTING_PLUGINDIRS'] = plugins_dir
     plug_ins = GIMP_TESTING_PLUG_INS.split(':')
@@ -68,6 +76,8 @@ try:
         src = os.path.join(GIMP_GLOBAL_BUILD_ROOT, 'plug-ins', plug_in, plug_in)
       shutil.copyfile(src, dst)
       os.chmod(dst, stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
+      if not is_script_file(dst):
+        processed_plugins.append(dst)
 
   data_types = [ 'palettes', 'brushes', 'patterns', 'dynamics', 'gradients' ]
   for dtype in data_types:
@@ -99,7 +109,10 @@ try:
     lock = os.open(__file__, os.O_RDONLY)
     fcntl.flock(lock, fcntl.LOCK_EX)
 
-    for binary in os.environ["GIMP_TEMP_UPDATE_RPATH"].split(":"):
+    binaries_to_patch = os.environ.get("GIMP_TEMP_UPDATE_RPATH", "").split(":")
+    binaries_to_patch.extend(processed_plugins)
+
+    for binary in binaries_to_patch:
       result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE)
       out = result.stdout.decode('utf-8', errors='replace')
       regex = re.findall(r'path (.+?) \(offset', out)
@@ -138,7 +151,7 @@ try:
     shutil.rmtree(tmp_path, ignore_errors=True)
 
   if "GIMP_TEMP_UPDATE_RPATH" in os.environ:
-    for binary in os.environ["GIMP_TEMP_UPDATE_RPATH"].split(":"):
+    for binary in binaries_to_patch:
       result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE)
       out = result.stdout.decode('utf-8', errors='replace')
       regex = re.findall(r'path (.+?) \(offset', out)

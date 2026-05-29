@@ -2073,9 +2073,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
     gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpmodule.full_path())
     gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpthumb.full_path())
     gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpwidgets.full_path())
-    foreach plugin_exe : plugin_executables
-      gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', plugin_exe)
-    endforeach
   endif
 else
   # Cross-builds require an existing native GIMP installed, unless we
