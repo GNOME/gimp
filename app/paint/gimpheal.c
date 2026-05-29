@@ -206,7 +206,7 @@ gimp_heal_sub (GeglBuffer          *top_buffer,
     g_return_if_reached ();
 
   iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0, format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_CLAMP, 3);
 
   gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0, format,
                             GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
@@ -251,7 +251,7 @@ gimp_heal_add (GeglBuffer          *first_buffer,
   iter = gegl_buffer_iterator_new (first_buffer, first_rect, 0,
                                    babl_format_n (babl_type ("float"),
                                                   n_components),
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_CLAMP, 3);
 
   gegl_buffer_iterator_add (iter, second_buffer, second_rect, 0, format,
                             GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
@@ -568,7 +568,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
 
   if (! op)
     {
-      gimp_gegl_buffer_copy (src_buffer, src_rect, GEGL_ABYSS_NONE,
+      gimp_gegl_buffer_copy (src_buffer, src_rect, GEGL_ABYSS_CLAMP,
                              src_copy, gegl_buffer_get_extent (src_copy));
     }
   else
@@ -599,7 +599,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                          paint_buffer_y + dest_pickable_off_y,
                                          gegl_buffer_get_width  (paint_buffer),
                                          gegl_buffer_get_height (paint_buffer)),
-                         GEGL_ABYSS_NONE,
+                         GEGL_ABYSS_CLAMP,
                          paint_buffer,
                          GEGL_RECTANGLE (paint_area_offset_x,
                                          paint_area_offset_y,
