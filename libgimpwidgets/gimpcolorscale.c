@@ -150,8 +150,7 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
 static void
 gimp_color_scale_init (GimpColorScale *scale)
 {
-  GtkRange       *range = GTK_RANGE (scale);
-  GtkCssProvider *css;
+  GtkRange *range = GTK_RANGE (scale);
 
   gtk_widget_set_can_focus (GTK_WIDGET (scale), TRUE);
 
@@ -166,28 +165,6 @@ gimp_color_scale_init (GimpColorScale *scale)
                                   GTK_ORIENTATION_HORIZONTAL);
 
   scale->color = gegl_color_new ("black");
-
-  css = gtk_css_provider_new ();
-  gtk_css_provider_load_from_data (css,
-                                   "GimpColorScale {"
-                                   "  padding:    2px 12px 2px 12px;"
-                                   "  min-width:  24px;"
-                                   "  min-height: 24px;"
-                                   "}\n"
-                                   "GimpColorScale contents trough {"
-                                   "  min-width:  20px;"
-                                   "  min-height: 20px;"
-                                   "}\n"
-                                   "GimpColorScale contents trough slider {"
-                                   "  min-width:  12px;"
-                                   "  min-height: 12px;"
-                                   "  margin:     -6px -6px -6px -6px;"
-                                   "}",
-                                   -1, NULL);
-  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (scale)),
-                                  GTK_STYLE_PROVIDER (css),
-                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-  g_object_unref (css);
 }
 
 static void
