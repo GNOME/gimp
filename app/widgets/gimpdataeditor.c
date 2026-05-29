@@ -417,6 +417,7 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
                                 GimpData       *data)
 {
   gboolean editable;
+  gboolean name_editable;
 
   if (editor->data)
     {
@@ -431,29 +432,37 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
 
   editor->data = data;
 
+  name_editable = editor->data &&
+                  gimp_viewable_is_name_editable (GIMP_VIEWABLE (editor->data));
+
   if (editor->data)
     {
+      gchar *name;
+
       g_object_ref (editor->data);
+
+      if (name_editable)
+        name = g_strdup (gimp_object_get_name (editor->data));
+      else
+        name = g_strdup_printf (_("%s (read only)"),
+                                (gimp_object_get_name (editor->data)));
+
+      gtk_entry_set_text (GTK_ENTRY (editor->name_entry), name);
+      g_free (name);
 
       g_signal_connect (editor->data, "name-changed",
                         G_CALLBACK (gimp_data_editor_data_name_changed),
                         editor);
-
-      gtk_entry_set_text (GTK_ENTRY (editor->name_entry),
-                          gimp_object_get_name (editor->data));
     }
   else
     {
       gtk_entry_set_text (GTK_ENTRY (editor->name_entry), "");
     }
 
-  gtk_editable_set_editable (
-    GTK_EDITABLE (editor->name_entry),
-    editor->data &&
-    gimp_viewable_is_name_editable (GIMP_VIEWABLE (editor->data)));
+  gtk_editable_set_editable (GTK_EDITABLE (editor->name_entry),
+                             name_editable);
 
   editable = (editor->data && gimp_data_is_writable (editor->data));
-
   if (editor->data_editable != editable)
     {
       editor->data_editable = editable;
@@ -555,7 +564,8 @@ static void
 gimp_data_editor_name_activate (GtkWidget      *widget,
                                 GimpDataEditor *editor)
 {
-  if (editor->data)
+  if (editor->data &&
+      gimp_viewable_is_name_editable (GIMP_VIEWABLE (editor->data)))
     {
       gchar *new_name;
 
@@ -571,8 +581,8 @@ gimp_data_editor_name_activate (GtkWidget      *widget,
         {
           gtk_entry_set_text (GTK_ENTRY (widget),
                               gimp_object_get_name (editor->data));
-          g_free (new_name);
         }
+      g_free (new_name);
     }
 }
 
