@@ -554,6 +554,14 @@ else
     endif
   endforeach
 
+  # Silence 'duplicate -rpath' and other noisy warnings from Xcode 15+
+  # See: https://github.com/mesonbuild/meson/commit/17d1cc60ed8246b8e7f0786421bf1cdf5cb19254
+  gir_env = environment()
+  if platform_osx
+    gir_env.append('CFLAGS', '-Wno-unused-command-line-argument', separator: ' ')
+    gir_env.append('LDFLAGS', '-Wl,-w', separator: ' ')
+  endif
+
   gir_args = [
     '-DGIMP_COMPILATION',
     '-DGIMP_BASE_COMPILATION',
@@ -566,26 +574,51 @@ else
     '--quiet',
   ]
 
-  libgimp_gir = gnome.generate_gir(
-    libgimp,
-    libgimpbase,
-    libgimpcolor,
-    libgimpconfig,
-    libgimpmath,
-    libgimpmodule,
+  if meson.version().version_compare('>=1.2')
+    libgimp_gir = gnome.generate_gir(
+      libgimp,
+      libgimpbase,
+      libgimpcolor,
+      libgimpconfig,
+      libgimpmath,
+      libgimpmodule,
 
-    sources: libgimp_introspectable_files,
-    nsversion: gimp_api_version,
-    namespace: 'Gimp',
-    identifier_prefix: 'Gimp',
-    symbol_prefix: 'gimp',
-    export_packages: 'gimp-' + gimp_api_version,
-    header: 'libgimp/gimp.h',
-    includes: libgimp_gir_includes,
-    extra_args: gir_args,
-    include_directories: rootInclude,
-    install: true,
-  )
+      sources: libgimp_introspectable_files,
+      nsversion: gimp_api_version,
+      namespace: 'Gimp',
+      identifier_prefix: 'Gimp',
+      symbol_prefix: 'gimp',
+      export_packages: 'gimp-' + gimp_api_version,
+      header: 'libgimp/gimp.h',
+      includes: libgimp_gir_includes,
+      extra_args: gir_args,
+      include_directories: rootInclude,
+      install: true,
+      env: gir_env,
+    )
+  else
+    libgimp_gir = gnome.generate_gir(
+      libgimp,
+      libgimpbase,
+      libgimpcolor,
+      libgimpconfig,
+      libgimpmath,
+      libgimpmodule,
+
+      sources: libgimp_introspectable_files,
+      nsversion: gimp_api_version,
+      namespace: 'Gimp',
+      identifier_prefix: 'Gimp',
+      symbol_prefix: 'gimp',
+      export_packages: 'gimp-' + gimp_api_version,
+      header: 'libgimp/gimp.h',
+      includes: libgimp_gir_includes,
+      extra_args: gir_args,
+      include_directories: rootInclude,
+      install: true,
+      env: gir_env,
+    )
+  endif
 
   if platform_osx
     patched_libgimp_gir = custom_target('libgimp-macos-typelib.stamp',
@@ -607,22 +640,42 @@ else
                   build_by_default: true)
   endif
 
-  libgimpui_gir = gnome.generate_gir(
-    libgimpui,
-    libgimpwidgets,
+  if meson.version().version_compare('>=1.2')
+    libgimpui_gir = gnome.generate_gir(
+      libgimpui,
+      libgimpwidgets,
 
-    sources: libgimpui_introspectable_files,
-    nsversion: gimp_api_version,
-    namespace: 'GimpUi',
-    identifier_prefix: 'Gimp',
-    symbol_prefix: [ 'gimp_ui', 'gimp' ],
-    export_packages: 'gimp-ui-' + gimp_api_version,
-    header: 'libgimp/gimpui.h',
-    includes: [ libgimp_gir_includes, 'Gtk-3.0', libgimp_gir[0] ],
-    extra_args: gir_args,
-    include_directories: rootInclude,
-    install: true,
-  )
+      sources: libgimpui_introspectable_files,
+      nsversion: gimp_api_version,
+      namespace: 'GimpUi',
+      identifier_prefix: 'Gimp',
+      symbol_prefix: [ 'gimp_ui', 'gimp' ],
+      export_packages: 'gimp-ui-' + gimp_api_version,
+      header: 'libgimp/gimpui.h',
+      includes: [ libgimp_gir_includes, 'Gtk-3.0', libgimp_gir[0] ],
+      extra_args: gir_args,
+      include_directories: rootInclude,
+      install: true,
+      env: gir_env,
+    )
+  else
+    libgimpui_gir = gnome.generate_gir(
+      libgimpui,
+      libgimpwidgets,
+
+      sources: libgimpui_introspectable_files,
+      nsversion: gimp_api_version,
+      namespace: 'GimpUi',
+      identifier_prefix: 'Gimp',
+      symbol_prefix: [ 'gimp_ui', 'gimp' ],
+      export_packages: 'gimp-ui-' + gimp_api_version,
+      header: 'libgimp/gimpui.h',
+      includes: [ libgimp_gir_includes, 'Gtk-3.0', libgimp_gir[0] ],
+      extra_args: gir_args,
+      include_directories: rootInclude,
+      install: true,
+    )
+  endif
 
   if platform_osx
     patched_libgimpui_gir = custom_target('libgimpui-macos-typelib.stamp',
