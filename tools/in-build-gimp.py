@@ -69,6 +69,18 @@ try:
       shutil.copyfile(src, dst)
       os.chmod(dst, stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
 
+  data_types = [ 'palettes', 'brushes', 'patterns', 'dynamics', 'gradients' ]
+  for dtype in data_types:
+    env_var = os.environ.get("GIMP_TESTING_" + dtype.upper())
+    if env_var is not None:
+      ddir = os.path.join(GIMP3_DIRECTORY, dtype)
+      os.makedirs(ddir, mode=0o700, exist_ok=False)
+      datalist = env_var.split(':')
+      for data in datalist:
+        src = os.path.join(GIMP_GLOBAL_SOURCE_ROOT, data)
+        dst = os.path.join(ddir, os.path.basename(data))
+        shutil.copyfile(src, dst)
+
   # Earlier code used to set DYLD_LIBRARY_PATH environment variable instead, but
   # it didn't work on contributor's builds because of System Integrity
   # Protection (SIP), though it did work in the CI which had older macOS.
