@@ -330,10 +330,6 @@ help in that regard:
      Lua 5.1 (or LuaJIT) and LGI: Lua plug-in example is disabled by
        default because of stability issues with the Lua binding.
 
-     Webkit-GTK @WEBKITGTK_REQUIRED_VERSION@: the Help Browser and Webpage
-       plug-ins are disabled for lack of maintenance and issues with
-       Webkit-GTK
-
 
 
 Generic instructions for configuring and compiling auto-configured
@@ -394,10 +390,6 @@ These are:
 
   -Dwmf=disabled  The WMF plug-in needs libwmf2 and configure checks for
      its presence. Use -Dwmf=disabled if you run into problems.
-
-  -Dwebkit-unmaintained=true  We do not recommend to install the Help
-     browser and Webpage plug-ins anymore. If for some reason you want
-     these anyway, you can force the build with this explicit option.
 
   -Dprint=false  If for some reason you don't want to build the Print
      plug-in based on the GtkPrint API, you can build with -Dprint=false.
