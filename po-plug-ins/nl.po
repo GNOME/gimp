@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 026-0525-26 22:19+0000\n"
-"PO-Revision-Date: 2026-05-27 09:55+0200\n"
+"POT-Creation-Date: 2026-05-30 12:57+0000\n"
+"PO-Revision-Date: 2026-05-30 17:09+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -9379,15 +9379,15 @@ msgstr "Laad bestand in de bestandsindeling Digital Picture Exchange"
 msgid "Could not read Cineon header information."
 msgstr "Kon informatie van Cineon-header niet lezen."
 
-#: plug-ins/file-cin/cineon-lib.c:134
+#: plug-ins/file-cin/cineon-lib.c:134 plug-ins/file-cin/dpx-lib.c:233
 #, c-format
-msgid "Cineon: Image with %d channels not yet supported."
-msgstr "Cineon: Afbeelding met %d kanalen nog niet ondersteund."
+msgid "Image with %d channels not yet supported."
+msgstr "Afbeelding met %d kanalen nog niet ondersteund."
 
-#: plug-ins/file-cin/cineon-lib.c:154
+#: plug-ins/file-cin/cineon-lib.c:154 plug-ins/file-cin/dpx-lib.c:263
 #, c-format
-msgid "Cineon: Image with %d bpc not yet supported."
-msgstr "Cineon: Afbeelding met %d bpc nog niet ondersteund."
+msgid "Image with %d bpc not yet supported."
+msgstr "Afbeelding met %d bpc nog niet ondersteund."
 
 #: plug-ins/file-cin/cineon-lib.c:181 plug-ins/file-cin/cineon-lib.c:207
 #: plug-ins/file-cin/dpx-lib.c:292 plug-ins/file-cin/dpx-lib.c:318
@@ -9400,16 +9400,6 @@ msgstr "Kon geen gegevens voor afbeelding lezen vanaf ‘%s’"
 #, c-format
 msgid "Could not read DPX header information."
 msgstr "Kon informatie van DPX-header niet lezen."
-
-#: plug-ins/file-cin/dpx-lib.c:233
-#, c-format
-msgid "DPX: Image with %d channels not yet supported."
-msgstr "DPX: Afbeelding met %d kanalen nog niet ondersteund."
-
-#: plug-ins/file-cin/dpx-lib.c:263
-#, c-format
-msgid "DPX: Image with %d bpc not yet supported."
-msgstr "DPX: Afbeelding met %d bpc nog niet ondersteund."
 
 #: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:170
 msgid "DDS image"
@@ -16785,6 +16775,14 @@ msgstr "Scannen niet mogelijk omdat er geen TWAIN driver is gevonden"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Gegevens van scanner / camera worden overgebracht"
+
+#, c-format
+#~ msgid "Cineon: Image with %d channels not yet supported."
+#~ msgstr "Cineon: Afbeelding met %d kanalen nog niet ondersteund."
+
+#, c-format
+#~ msgid "Cineon: Image with %d bpc not yet supported."
+#~ msgstr "Cineon: Afbeelding met %d bpc nog niet ondersteund."
 
 #~ msgid "Saves files in the JPEG XL file format"
 #~ msgstr "Opslaan van bestanden in de JPEG XL-indeling"
