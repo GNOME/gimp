@@ -16,6 +16,7 @@ import string
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 # In some case, this script may not be run concurrently, in particular
@@ -67,6 +68,7 @@ try:
         src = os.path.join(GIMP_GLOBAL_BUILD_ROOT, 'plug-ins', plug_in)
       elif plug_in.startswith('python'):
         src = os.path.join(GIMP_GLOBAL_SOURCE_ROOT, 'plug-ins', plug_in + '.py')
+        dst += '.py'
       elif plug_in.startswith('libgimp'):
         if plug_in.endswith('.py'):
           src = os.path.join(GIMP_GLOBAL_SOURCE_ROOT, plug_in)
@@ -178,7 +180,18 @@ try:
       sys.stderr.write(f'       "{used_dir_prefix}" != "{tmpl_dir_prefix}"\n')
       sys.exit(1)
     sys.stderr.write(f"INFO: Running: shutil.rmtree({GIMP3_DIRECTORY})\n")
-    shutil.rmtree(GIMP3_DIRECTORY)
+    attempts = max_attempts = 3
+    while attempts > 0:
+      try:
+        shutil.rmtree(GIMP3_DIRECTORY)
+        break
+      except Exception as e:
+        attempts -= 1
+        if attempts == 0:
+          sys.stderr.write(f"Tree removal error after {max_attempts} attempts: {str(e)}\n")
+          sys.exit(1)
+        else:
+          time.sleep(1)
   elif not os.access(GIMP3_DIRECTORY, os.W_OK):
     sys.stderr.write(f"ERROR: $GIMP3_DIRECTORY ({GIMP3_DIRECTORY}) does not belong to the user\n")
     sys.exit(1)
