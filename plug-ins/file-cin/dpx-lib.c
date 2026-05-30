@@ -230,7 +230,7 @@ dpx_open (GFile   *file,
 
     default:
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                   _("DPX: Image with %d channels not yet supported."),
+                   _("Image with %d channels not yet supported."),
                    depth);
       fclose (fp);
       return NULL;
@@ -260,7 +260,7 @@ dpx_open (GFile   *file,
 
     default:
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                   _("DPX: Image with %d bpc not yet supported."),
+                   _("Image with %d bpc not yet supported."),
                    bpp);
       fclose (fp);
       g_free (buffer);
