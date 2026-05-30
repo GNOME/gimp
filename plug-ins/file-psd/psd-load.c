@@ -94,6 +94,9 @@ static void             add_legacy_layer_effects   (GimpLayer      *layer,
                                                     PSDlayer       *lyr_a,
                                                     PSDimage       *img_a);
 
+static void             add_adjustment_layer       (GimpLayer      *layer,
+                                                    PSDlayer       *lyr_a);
+
 static gint             add_merged_image           (GimpImage      *image,
                                                     PSDimage       *img_a,
                                                     GInputStream   *input,
@@ -1326,6 +1329,10 @@ read_layer_info (PSDimage      *img_a,
                             PSD_TELL(input), (gsize) block_rem);
 
           /* Adjustment layer info */           /* FIXME */
+          lyr_a[lidx]->adjustment_layer          = g_new (PSDAdjustmentLayer, 1);
+          lyr_a[lidx]->adjustment_layer->type[0] = '\0';
+
+          /* Layer styles info */
           lyr_a[lidx]->layer_styles = g_new (PSDLayerStyles, 1);
           lyr_a[lidx]->layer_styles->count = 0;
 
@@ -2487,7 +2494,15 @@ add_layers (GimpImage     *image,
             }
         }
 
-      if (lyr_a[lidx]->group_type != 0)
+      if (strlen (lyr_a[lidx]->adjustment_layer->type))
+        {
+          layer = GIMP_LAYER (gimp_group_layer_new (image, NULL));
+
+          gimp_layer_set_mode (layer, GIMP_LAYER_MODE_PASS_THROUGH);
+
+          add_adjustment_layer (layer, lyr_a[lidx]);
+        }
+      else if (lyr_a[lidx]->group_type != 0)
         {
           if (lyr_a[lidx]->group_type == 3)
             {
@@ -2600,7 +2615,8 @@ add_layers (GimpImage     *image,
             {
               /* Mode */
               psd_to_gimp_blend_mode (lyr_a[lidx], &mode_info);
-              gimp_layer_set_mode (layer, mode_info.mode);
+              if (! strlen (lyr_a[lidx]->adjustment_layer->type))
+                gimp_layer_set_mode (layer, mode_info.mode);
               gimp_layer_set_blend_space (layer, mode_info.blend_space);
               gimp_layer_set_composite_space (layer, mode_info.composite_space);
               gimp_layer_set_composite_mode (layer, mode_info.composite_mode);
@@ -2668,7 +2684,8 @@ add_layers (GimpImage     *image,
             }
 
           /* Set the layer data */
-          if (lyr_a[lidx]->group_type == 0)
+          if (lyr_a[lidx]->group_type == 0 &&
+              ! strlen (lyr_a[lidx]->adjustment_layer->type))
             {
               IFDBG(3) g_debug ("Draw layer");
 
@@ -2768,6 +2785,12 @@ add_layers (GimpImage     *image,
                 }
             }
 
+          /* TODO: Adjustment layer group masks must be deferred
+           * until after it has been resized to the image.
+           * For now, we'll discard it. */
+          if (strlen (lyr_a[lidx]->adjustment_layer->type))
+            user_mask = FALSE;
+
           /* Layer mask */
           if (user_mask && lyr_a[lidx]->group_type != 3)
             {
@@ -2845,7 +2868,8 @@ add_layers (GimpImage     *image,
 
             /* Insert the layer */
             if (lyr_a[lidx]->group_type == 0 || /* normal layer */
-                lyr_a[lidx]->group_type == 3    /* group layer end marker */)
+                lyr_a[lidx]->group_type == 3 || /* group layer end marker */
+                strlen (lyr_a[lidx]->adjustment_layer->type))
               {
                 gimp_image_insert_layer (image, layer, parent_group, 0);
               }
@@ -2855,6 +2879,7 @@ add_layers (GimpImage     *image,
 
       g_free (lyr_a[lidx]->chn_info);
       g_free (lyr_a[lidx]->name);
+      g_free (lyr_a[lidx]->adjustment_layer);
       g_free (lyr_a[lidx]->layer_styles);
       g_free (lyr_a[lidx]);
     }
@@ -3057,6 +3082,221 @@ add_legacy_layer_effects (GimpLayer *layer,
       g_object_unref (filter);
       g_object_unref (color);
     }
+}
+
+static void
+add_adjustment_layer (GimpLayer *layer,
+                      PSDlayer  *lyr_a)
+{
+  GimpDrawableFilter *filter = NULL;
+  PSDAdjustmentLayer *ladj   = lyr_a->adjustment_layer;
+
+  if (memcmp (ladj->type, PSD_LADJ_LEVEL, 4) == 0)
+    {
+      GimpDrawableFilterConfig *config;
+
+      filter =
+        gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                         "gimp:levels",
+                                         NULL,
+                                         GIMP_LAYER_MODE_REPLACE,
+                                         1.0,
+                                         NULL);
+
+      config = gimp_drawable_filter_get_config (filter);
+
+      for (gint i = 3; i >= 0; i--)
+        {
+          g_object_set (config, "channel", i, NULL);
+          gimp_drawable_filter_update (filter);
+          g_object_set (config,
+                        "trc",         GIMP_TRC_PERCEPTUAL,
+                        /* Per PSD specification, low-input range is 0 - 253 */
+                        "low-input",   ladj->in_out_gamma[i][0] / 253,
+                        "high-input",  ladj->in_out_gamma[i][1] / 255,
+                        "low-output",  ladj->in_out_gamma[i][2] / 255,
+                        "high-output", ladj->in_out_gamma[i][3] / 255,
+                        "gamma",       ladj->in_out_gamma[i][4] / 100,
+                        NULL);
+          gimp_drawable_filter_update (filter);
+        }
+    }
+  else if (memcmp (ladj->type, PSD_LADJ_BRIGHTNESS, 4) == 0)
+    {
+      gfloat brightness;
+      gfloat contrast;
+
+      /* TODO: The `brit` field is only written to in legacy PSDs.
+       * Modern PSD use Descriptors */
+      brightness = ladj->brightness / 128.0f;
+      contrast   = ladj->contrast / 128.0f;
+
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gimp:brightness-contrast",
+                                                NULL,
+                                                GIMP_LAYER_MODE_REPLACE,
+                                                1.0,
+                                                "brightness", brightness,
+                                                "contrast",   contrast,
+                                                NULL);
+    }
+  else if (memcmp (ladj->type, PSD_LADJ_BALANCE, 4) == 0)
+    {
+      GimpDrawableFilterConfig *config;
+
+      filter =
+        gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                         "gimp:color-balance",
+                                         NULL,
+                                         GIMP_LAYER_MODE_REPLACE,
+                                         1.0,
+                                         "range",         GIMP_TRANSFER_SHADOWS,
+                                         "cyan-red",      ladj->shadows[0] / 100.0f,
+                                         "magenta-green", ladj->shadows[1] / 100.0f,
+                                         "yellow-blue",   ladj->shadows[2] / 100.0f,
+                                         NULL);
+
+      config = gimp_drawable_filter_get_config (filter);
+
+      /* Shadows, midtones, and highlights have to be set separately,
+       * due to the filter design */
+      g_object_set (config, "range", GIMP_TRANSFER_MIDTONES, NULL);
+      gimp_drawable_filter_update (filter);
+      g_object_set (config,
+                    "cyan-red",      ladj->midtones[0] / 100.0f,
+                    "magenta-green", ladj->midtones[1] / 100.0f,
+                    "yellow-blue",   ladj->midtones[2] / 100.0f,
+                    NULL);
+      gimp_drawable_filter_update (filter);
+
+      g_object_set (config, "range", GIMP_TRANSFER_HIGHLIGHTS, NULL);
+      gimp_drawable_filter_update (filter);
+      g_object_set (config,
+                    "cyan-red",      ladj->highlights[0] / 100.0f,
+                    "magenta-green", ladj->highlights[1] / 100.0f,
+                    "yellow-blue",   ladj->highlights[2] / 100.0f,
+                    NULL);
+      gimp_drawable_filter_update (filter);
+    }
+  else if (memcmp (ladj->type, PSD_LADJ_HUE, 4) == 0 ||
+           memcmp (ladj->type, PSD_LADJ_HUE2, 4) == 0)
+    {
+      if (ladj->is_colorize)
+        {
+          GeglColor *color = gegl_color_new (NULL);
+
+          gegl_color_set_hsla (color, ladj->colorization[0],
+                               ladj->colorization[1], ladj->colorization[2],
+                               1.0, NULL);
+
+          filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                    "gimp:colorize",
+                                                    NULL,
+                                                    GIMP_LAYER_MODE_REPLACE,
+                                                    1.0,
+                                                    "hue",        ladj->colorization[0],
+                                                    "saturation", ladj->colorization[1],
+                                                    "lightness",  ladj->colorization[2],
+                                                    "color",      color,
+                                                    NULL);
+         g_clear_object (&color);
+        }
+      else
+        {
+          GimpHueRange              range = GIMP_HUE_RANGE_ALL;
+          GimpDrawableFilterConfig *config;
+
+          filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                    "gimp:hue-saturation",
+                                                    NULL,
+                                                    GIMP_LAYER_MODE_HSL_COLOR,
+                                                    1.0,
+                                                    "range",      range,
+                                                    "hue",        ladj->hsl[0][0],
+                                                    "saturation", ladj->hsl[0][1],
+                                                    "lightness",  ladj->hsl[0][2],
+                                                    NULL);
+
+          config = gimp_drawable_filter_get_config (filter);
+          for (gint i = 1; i < 7; i++)
+            {
+              /* Sequence is red, yellow, green, cyan, blue, and magenta */
+              range++;
+
+              g_object_set (config, "range", range, NULL);
+              gimp_drawable_filter_update (filter);
+
+              g_object_set (config,
+                            "hue",        ladj->hsl[i][0],
+                            "saturation", ladj->hsl[i][1],
+                            "lightness",  ladj->hsl[i][2],
+                            NULL);
+              gimp_drawable_filter_update (filter);
+            }
+
+        }
+    }
+  else if (memcmp (ladj->type, PSD_LADJ_MIXER, 4) == 0)
+    {
+      if (! ladj->is_mono)
+        filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                  "gegl:channel-mixer",
+                                                  NULL,
+                                                  GIMP_LAYER_MODE_REPLACE,
+                                                  1.0,
+                                                  "rr-gain", ladj->red[0] / 100.0f,
+                                                  "rg-gain", ladj->red[1] / 100.0f,
+                                                  "rb-gain", ladj->red[2] / 100.0f,
+                                                  "gr-gain", ladj->green[0] / 100.0f,
+                                                  "gg-gain", ladj->green[1] / 100.0f,
+                                                  "gb-gain", ladj->green[2] / 100.0f,
+                                                  "br-gain", ladj->blue[0] / 100.0f,
+                                                  "bg-gain", ladj->blue[1] / 100.0f,
+                                                  "bb-gain", ladj->blue[2] / 100.0f,
+                                                  NULL);
+      else
+        filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                  "gegl:mono-mixer",
+                                                  NULL,
+                                                  GIMP_LAYER_MODE_REPLACE,
+                                                  1.0,
+                                                  "red",   ladj->red[0] / 100.0f,
+                                                  "green", ladj->red[1] / 100.0f,
+                                                  "blue",  ladj->red[2] / 100.0f,
+                                                  NULL);
+    }
+  else if (memcmp (ladj->type, PSD_LADJ_INVERT, 4) == 0)
+    {
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gegl:invert-gamma",
+                                                NULL,
+                                                GIMP_LAYER_MODE_REPLACE,
+                                                1.0, NULL);
+    }
+  else if (memcmp (ladj->type, PSD_LADJ_POSTERIZE, 4) == 0)
+    {
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gimp:posterize",
+                                                NULL,
+                                                GIMP_LAYER_MODE_REPLACE,
+                                                1.0,
+                                                "levels", ladj->level,
+                                                NULL);
+    }
+  else if (memcmp (ladj->type, PSD_LADJ_THRESHOLD, 4) == 0)
+    {
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gimp:threshold",
+                                                NULL,
+                                                GIMP_LAYER_MODE_REPLACE,
+                                                1.0,
+                                                "low",     ladj->level / 255.0f,
+                                                "channel", GIMP_HISTOGRAM_LUMINANCE,
+                                                NULL);
+    }
+
+  if (filter)
+    g_object_unref (filter);
 }
 
 static gint

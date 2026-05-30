@@ -672,6 +672,37 @@ typedef struct
   PSDLayerStyleSolidFill     sofi; /* Solid Fill */
 } PSDLayerStyles;
 
+/* Adjustment Layer information */
+typedef struct
+{
+  gchar    type[4];
+  gint16   version;
+
+  gint16   level;               /* Threshold and Posterize */
+
+  gint16   is_mono;             /* Channel/Mono Mixer */
+  gint16   red[5];
+  gint16   green[5];
+  gint16   blue[5];
+  gint16   total[5];
+
+  guchar   brightness;          /* Brightness-Contrast */
+  guchar   contrast;
+
+  gchar    shadows[3];          /* Color Balance */
+  gchar    midtones[3];
+  gchar    highlights[3];
+  gboolean preserve_luminosity;
+
+  gdouble  in_out_gamma[4][5];  /* Levels */
+
+  gboolean is_colorize;         /* Hue-Saturation/Colorize */
+  gfloat   colorization[3];
+  gfloat   hsl[7][3];
+
+} PSDAdjustmentLayer;
+
+
 /* Partially or Unsupported Features */
 typedef struct
 {
@@ -717,6 +748,7 @@ typedef struct
   guchar                group_type;             /* 0 -> not a group; 1 -> open folder; 2 -> closed folder; 3 -> end of group */
   guint16               color_tag[4];           /* 4 * 16 bit color components */
   PSDLayerStyles       *layer_styles;           /* Older format of layer styles */
+  PSDAdjustmentLayer   *adjustment_layer;       /* Adjustment layer data */
 
   PSDSupport           *unsupported_features;
 } PSDlayer;
