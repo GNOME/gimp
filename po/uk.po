@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-25 15:29+0000\n"
-"PO-Revision-Date: 2026-05-25 18:49+0300\n"
+"POT-Creation-Date: 2026-05-29 14:01+0000\n"
+"PO-Revision-Date: 2026-05-31 19:17+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -5627,14 +5627,11 @@ msgid "_Main Web Site"
 msgstr "_Головна вебсторінка"
 
 #: app/actions/help-actions.c:55
-#| msgid "Visit the GIMP website"
 msgctxt "help-action"
 msgid "Bookmark to the GIMP web site"
 msgstr "Посилання на вебсайт GIMP"
 
 #: app/actions/help-actions.c:60
-#| msgctxt "help-action"
-#| msgid "_User Manual"
 msgctxt "help-action"
 msgid "_User Manual Web Site"
 msgstr "_Сайт з підручником користувача"
@@ -5645,7 +5642,6 @@ msgid "Bookmark to the Documentation web site"
 msgstr "Закладка на сайт документації"
 
 #: app/actions/help-actions.c:66
-#| msgid "Bug Reporting"
 msgctxt "help-action"
 msgid "_Bug Reports"
 msgstr "З_віти щодо вад"
@@ -8908,6 +8904,18 @@ msgctxt "tools-action"
 msgid "Rotate image by an arbitrary angle"
 msgstr "Обертання зображення на довільний кут"
 
+#: app/actions/tools-actions.c:86
+#| msgid "Size in pixels:"
+msgctxt "tools-action"
+msgid "Set Brush Size in Pixels"
+msgstr "Встановити розмір пензля у пікселях"
+
+#: app/actions/tools-actions.c:141
+#| msgid "Ink Blob Size"
+msgctxt "tools-action"
+msgid "Set Ink Blob Size in Pixels"
+msgstr "Встановити розмір плями чорнила у пікселях"
+
 #: app/actions/tools-actions.c:172
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
@@ -8977,6 +8985,17 @@ msgstr "Потік аерографа: зменшити на 10"
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
 msgstr "Потік аерографа: збільшити на 10"
+
+#: app/actions/tools-actions.c:244
+#| msgid "Select MyPaint Brush Folders"
+msgctxt "tools-action"
+msgid "Set MyPaint Brush Diameter in Pixels"
+msgstr "Встановити діаметр пензля MyPaint у пікселях"
+
+#: app/actions/tools-actions.c:276
+msgctxt "tools-action"
+msgid "Set Warp Effect Size in Pixels"
+msgstr "Встановити розмір ефекту викривлення у пікселях"
 
 #: app/actions/tools-actions.c:299
 msgctxt "tools-action"
@@ -9327,6 +9346,73 @@ msgstr "Потужність інструменту: зменшити відно
 msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
 msgstr "Потужність інструменту: збільшити відносно"
+
+#: app/actions/tools-actions.c:607
+msgctxt "tools-action"
+msgid "Set Paint Select Brush Size in Pixels"
+msgstr "Встановити розмір пензля позначення малюванням у пікселях"
+
+#: app/actions/tools-actions.c:614
+#| msgctxt "context-action"
+#| msgid "Font Selection: Select by Index"
+msgctxt "tools-action"
+msgid "Select Object 1 by Index"
+msgstr "Вибрати об'єкт 1 у покажчику"
+
+#: app/actions/tools-actions.c:618
+msgctxt "tools-action"
+msgid "First Object 1"
+msgstr "Перший об'єкт 1"
+
+#: app/actions/tools-actions.c:622
+#| msgid "Delete Object"
+msgctxt "tools-action"
+msgid "Last Object 1"
+msgstr "Останній об'єкт 1"
+
+#: app/actions/tools-actions.c:626
+#| msgctxt "windows-action"
+#| msgid "Previous Image"
+msgctxt "tools-action"
+msgid "Previous Object 1"
+msgstr "Попередній об'єкт 1"
+
+#: app/actions/tools-actions.c:630
+#| msgid "Delete Object"
+msgctxt "tools-action"
+msgid "Next Object 1"
+msgstr "Наступний об'єкт 1"
+
+#: app/actions/tools-actions.c:638
+#| msgctxt "context-action"
+#| msgid "Font Selection: Select by Index"
+msgctxt "tools-action"
+msgid "Select Object 2 by Index"
+msgstr "Вибрати об'єкт 2 у покажчику"
+
+#: app/actions/tools-actions.c:642
+msgctxt "tools-action"
+msgid "First Object 2"
+msgstr "Перший об'єкт 2"
+
+#: app/actions/tools-actions.c:646
+#| msgid "Delete Object"
+msgctxt "tools-action"
+msgid "Last Object 2"
+msgstr "Останній об'єкт 2"
+
+#: app/actions/tools-actions.c:650
+#| msgctxt "windows-action"
+#| msgid "Previous Image"
+msgctxt "tools-action"
+msgid "Previous Object 2"
+msgstr "Попередній об'єкт 2"
+
+#: app/actions/tools-actions.c:654
+#| msgid "Delete Object"
+msgctxt "tools-action"
+msgid "Next Object 2"
+msgstr "Наступний об'єкт 2"
 
 #: app/actions/tools-actions.c:830
 #, c-format
@@ -19854,7 +19940,7 @@ msgstr ""
 msgid "Rectangle: "
 msgstr "Прямокутник: "
 
-#: app/display/gimptoolrectangle.c:2172
+#: app/display/gimptoolrectangle.c:2155
 msgid "Position: "
 msgstr "Позиція:"
 
@@ -22096,7 +22182,7 @@ msgstr "Вимірювання відстані"
 msgid "Procedure '%s' returned no return values"
 msgstr "Процедура «%s» не повернула жодного значення"
 
-#: app/pdb/gimpprocedure.c:851
+#: app/pdb/gimpprocedure.c:850
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -22105,7 +22191,7 @@ msgstr ""
 "Процедура «%s» повернула некоректний тип значення для значення результату "
 "«%s» (#%d). Очікувався %s, отримано %s."
 
-#: app/pdb/gimpprocedure.c:863
+#: app/pdb/gimpprocedure.c:862
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
@@ -22114,7 +22200,7 @@ msgstr ""
 "Процедура «%s» викликана з деяким значенням аргументу «%s» (#%d). "
 "Очікувалось %s, отримано %s."
 
-#: app/pdb/gimpprocedure.c:900
+#: app/pdb/gimpprocedure.c:899
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -22123,7 +22209,7 @@ msgstr ""
 "Процедура «%s» повернула некоректний ідентифікатор для аргументу «%s». "
 "Ймовірно, модуль намагається працювати з шаром, який вже не існує."
 
-#: app/pdb/gimpprocedure.c:913
+#: app/pdb/gimpprocedure.c:912
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -22132,7 +22218,7 @@ msgstr ""
 "Процедура «%s» викликана з некоректним ідентифікатором для аргументу «%s». "
 "Ймовірно, модуль намагається працювати з шаром, який вже не існує."
 
-#: app/pdb/gimpprocedure.c:930
+#: app/pdb/gimpprocedure.c:929
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -22141,7 +22227,7 @@ msgstr ""
 "Процедура «%s» повернула некоректний ідентифікатор аргументу «%s». Ймовірно, "
 "модуль намагається працювати із зображенням, яке вже не існує."
 
-#: app/pdb/gimpprocedure.c:943
+#: app/pdb/gimpprocedure.c:942
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -22150,7 +22236,7 @@ msgstr ""
 "Процедура «%s» викликана з некоректним ідентифікатором аргументу «%s». "
 "Ймовірно, модуль намагається працювати із зображенням, яке вже не існує."
 
-#: app/pdb/gimpprocedure.c:964
+#: app/pdb/gimpprocedure.c:963
 #, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
@@ -22160,7 +22246,7 @@ msgstr ""
 "%d, яке рівне «%s». Повернуте значення не дозволяє використовувати одиницю-"
 "піксель."
 
-#: app/pdb/gimpprocedure.c:973
+#: app/pdb/gimpprocedure.c:972
 #, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
@@ -22170,7 +22256,7 @@ msgstr ""
 "значення %d, яке рівне «%s». Повернуте значення не дозволяє використовувати "
 "одиницю-відсоток."
 
-#: app/pdb/gimpprocedure.c:985
+#: app/pdb/gimpprocedure.c:984
 #, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
@@ -22179,7 +22265,7 @@ msgstr ""
 "Підпрограму «%s» було викликано з `gimp_unit_pixel()` для аргументу GimpUnit "
 "%d «%s». Цей аргумент не дозволяє використання одиниці-пікселя."
 
-#: app/pdb/gimpprocedure.c:995
+#: app/pdb/gimpprocedure.c:994
 #, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
@@ -22188,7 +22274,7 @@ msgstr ""
 "Підпрограму «%s» було викликано з `gimp_unit_percent()` для аргументу "
 "GimpUnit %d «%s». Цей аргумент не дозволяє використання одиниці-відсотка."
 
-#: app/pdb/gimpprocedure.c:1015
+#: app/pdb/gimpprocedure.c:1014
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -22197,7 +22283,7 @@ msgstr ""
 "Процедура «%s» повернула «%s» як значення «%s» (#%d, тип %s). Значення "
 "знаходиться поза межами припустимого діапазону"
 
-#: app/pdb/gimpprocedure.c:1029
+#: app/pdb/gimpprocedure.c:1028
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -22206,12 +22292,12 @@ msgstr ""
 "Процедура «%s» викликана із значенням «%s» аргументу «%s» (#%d, тип %s). "
 "Значення знаходиться поза межами допустимого діапазону."
 
-#: app/pdb/gimpprocedure.c:1085
+#: app/pdb/gimpprocedure.c:1084
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Процедура «%s» повернула некоректний рядок UTF-8 для аргументу «%s»"
 
-#: app/pdb/gimpprocedure.c:1095
+#: app/pdb/gimpprocedure.c:1094
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -22320,27 +22406,27 @@ msgstr "Ресурс «%s» не можна перейменовувати"
 #. TODO: write a more explicit error message after
 #. * string freeze.
 #.
-#: app/pdb/text-layer-cmds.c:86 app/pdb/text-layer-cmds.c:113
+#: app/pdb/text-layer-cmds.c:87 app/pdb/text-layer-cmds.c:114
 #, c-format
 msgid "Failed to create text layer"
 msgstr "Не вдалось створити текстовий шар"
 
-#: app/pdb/text-layer-cmds.c:178 app/pdb/text-layer-cmds.c:316
-#: app/pdb/text-layer-cmds.c:381 app/pdb/text-layer-cmds.c:440
-#: app/pdb/text-layer-cmds.c:498 app/pdb/text-layer-cmds.c:556
-#: app/pdb/text-layer-cmds.c:614 app/pdb/text-layer-cmds.c:672
-#: app/pdb/text-layer-cmds.c:730 app/pdb/text-layer-cmds.c:786
-#: app/pdb/text-layer-cmds.c:844 app/pdb/text-layer-cmds.c:902
-#: app/pdb/text-layer-cmds.c:960 app/pdb/text-layer-cmds.c:1018
-#: app/pdb/text-layer-cmds.c:1076 app/pdb/text-layer-cmds.c:1134
-#: app/pdb/text-layer-cmds.c:1190 app/pdb/text-layer-cmds.c:1248
-#: app/pdb/text-layer-cmds.c:1306 app/pdb/text-layer-cmds.c:1364
-#: app/pdb/text-layer-cmds.c:1422 app/pdb/text-layer-cmds.c:1487
-#: app/pdb/text-layer-cmds.c:1523
+#: app/pdb/text-layer-cmds.c:179 app/pdb/text-layer-cmds.c:317
+#: app/pdb/text-layer-cmds.c:382 app/pdb/text-layer-cmds.c:441
+#: app/pdb/text-layer-cmds.c:499 app/pdb/text-layer-cmds.c:557
+#: app/pdb/text-layer-cmds.c:615 app/pdb/text-layer-cmds.c:673
+#: app/pdb/text-layer-cmds.c:731 app/pdb/text-layer-cmds.c:787
+#: app/pdb/text-layer-cmds.c:845 app/pdb/text-layer-cmds.c:903
+#: app/pdb/text-layer-cmds.c:961 app/pdb/text-layer-cmds.c:1060
+#: app/pdb/text-layer-cmds.c:1118 app/pdb/text-layer-cmds.c:1176
+#: app/pdb/text-layer-cmds.c:1232 app/pdb/text-layer-cmds.c:1290
+#: app/pdb/text-layer-cmds.c:1348 app/pdb/text-layer-cmds.c:1406
+#: app/pdb/text-layer-cmds.c:1464 app/pdb/text-layer-cmds.c:1529
+#: app/pdb/text-layer-cmds.c:1594
 msgid "Set text layer attribute"
 msgstr "Зміна ознак текстового шару"
 
-#: app/pdb/text-layer-cmds.c:247
+#: app/pdb/text-layer-cmds.c:248
 msgid "Set text layer markup"
 msgstr "Встановити розмітку текстового шару"
 
@@ -22966,11 +23052,11 @@ msgstr "Обертання текстового шару"
 msgid "Transform Text Layer"
 msgstr "Перетворення текстового шару"
 
-#: app/text/gimptextlayer.c:775
+#: app/text/gimptextlayer.c:675 app/text/gimptextlayer.c:816
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Через брак шрифтів функціональні можливості тексту недоступні."
 
-#: app/text/gimptextlayer.c:989
+#: app/text/gimptextlayer.c:1030
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -29292,32 +29378,32 @@ msgstr ""
 "Якщо ви нічого не знаєте про XMP, ймовірно, ці дані вам не потрібні. "
 "Повідомлення про помилку: %s."
 
-#: app/xcf/xcf-load.c:1454
+#: app/xcf/xcf-load.c:1456
 msgid "Linked Layers"
 msgstr "Пов'язані шари"
 
-#: app/xcf/xcf-load.c:1464
+#: app/xcf/xcf-load.c:1466
 msgid "Linked Channels"
 msgstr "Пов'язані канали"
 
-#: app/xcf/xcf-load.c:1489
+#: app/xcf/xcf-load.c:1491
 msgid "Linked Paths"
 msgstr "Пов'язані контури"
 
-#: app/xcf/xcf-load.c:1537
+#: app/xcf/xcf-load.c:1539
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "Цей файл XCF зіпсований! Деяку його частину все ж вийшло відновити."
 
-#: app/xcf/xcf-load.c:1564
+#: app/xcf/xcf-load.c:1566
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Цей файл XCF пошкоджений! Не вдалось відновити навіть малу його частину!"
 
-#: app/xcf/xcf-load.c:1758
+#: app/xcf/xcf-load.c:1760
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -29327,7 +29413,7 @@ msgstr ""
 "неправильно зберігає індексовані мапи кольорів.\n"
 "Поточна мапа буде замінена на мапу у градаціях сірого."
 
-#: app/xcf/xcf-load.c:2589
+#: app/xcf/xcf-load.c:2591
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
@@ -29336,7 +29422,7 @@ msgstr ""
 "Попередження XCF: некоректне посилання у файлі XCF. Прив'язаний шар «%s» "
 "спрощено до растрового шару."
 
-#: app/xcf/xcf-load.c:2609
+#: app/xcf/xcf-load.c:2611
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
@@ -29345,7 +29431,7 @@ msgstr ""
 "Попередження XCF: виявлено циклічне посилання у файлі XCF. Прив'язаний шар "
 "«%s» спрощено до растрового шару."
 
-#: app/xcf/xcf-load.c:3342
+#: app/xcf/xcf-load.c:3344
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -29358,7 +29444,7 @@ msgstr ""
 "Цього не повинно було статися. Вам слід повідомити про цю проблему "
 "розробникам фільтра."
 
-#: app/xcf/xcf-load.c:4230
+#: app/xcf/xcf-load.c:4232
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
