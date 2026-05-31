@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-24 17:35+0000\n"
-"PO-Revision-Date: 2026-05-25 14:37+0200\n"
+"POT-Creation-Date: 2026-05-29 14:01+0000\n"
+"PO-Revision-Date: 2026-05-31 15:48+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -8889,6 +8889,16 @@ msgctxt "tools-action"
 msgid "Rotate image by an arbitrary angle"
 msgstr "Zasukaj sliko pod poljubnim kotom"
 
+#: app/actions/tools-actions.c:86
+msgctxt "tools-action"
+msgid "Set Brush Size in Pixels"
+msgstr "Nastavi velikost čopiča v slik. točkah"
+
+#: app/actions/tools-actions.c:141
+msgctxt "tools-action"
+msgid "Set Ink Blob Size in Pixels"
+msgstr "Nastavi velikost kapljice črnila v slik. Točkah"
+
 #: app/actions/tools-actions.c:172
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
@@ -8958,6 +8968,16 @@ msgstr "Pretok barvne pršilke: zmanjšaj za 10"
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
 msgstr "Pretok barvne pršilke: povečaj za 10"
+
+#: app/actions/tools-actions.c:244
+msgctxt "tools-action"
+msgid "Set MyPaint Brush Diameter in Pixels"
+msgstr "Nastavi premer čopiča MyPaint v slik. Točkah"
+
+#: app/actions/tools-actions.c:276
+msgctxt "tools-action"
+msgid "Set Warp Effect Size in Pixels"
+msgstr "Nastavi velikost učinka ukrivljanja v slikovnih točkah"
 
 #: app/actions/tools-actions.c:299
 msgctxt "tools-action"
@@ -9308,6 +9328,61 @@ msgstr "Sila orodja: zmanjšaj relativno"
 msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
 msgstr "Sila orodja: povečaj relativno"
+
+#: app/actions/tools-actions.c:607
+msgctxt "tools-action"
+msgid "Set Paint Select Brush Size in Pixels"
+msgstr "Določi velikost izbranega čopiča za slikanje v slik. Točkah"
+
+#: app/actions/tools-actions.c:614
+msgctxt "tools-action"
+msgid "Select Object 1 by Index"
+msgstr "Izberi predmet 1 po indeksu"
+
+#: app/actions/tools-actions.c:618
+msgctxt "tools-action"
+msgid "First Object 1"
+msgstr "Prvi predmet 1"
+
+#: app/actions/tools-actions.c:622
+msgctxt "tools-action"
+msgid "Last Object 1"
+msgstr "Zadnji predmet 1"
+
+#: app/actions/tools-actions.c:626
+msgctxt "tools-action"
+msgid "Previous Object 1"
+msgstr "Predhodni predmet 1"
+
+#: app/actions/tools-actions.c:630
+msgctxt "tools-action"
+msgid "Next Object 1"
+msgstr "Naslednji predmet 1"
+
+#: app/actions/tools-actions.c:638
+msgctxt "tools-action"
+msgid "Select Object 2 by Index"
+msgstr "Izberi predmet 2 po indeksu"
+
+#: app/actions/tools-actions.c:642
+msgctxt "tools-action"
+msgid "First Object 2"
+msgstr "Prvi predmet 2"
+
+#: app/actions/tools-actions.c:646
+msgctxt "tools-action"
+msgid "Last Object 2"
+msgstr "Zadnji predmet 2"
+
+#: app/actions/tools-actions.c:650
+msgctxt "tools-action"
+msgid "Previous Object 2"
+msgstr "Predhodni predmet 2"
+
+#: app/actions/tools-actions.c:654
+msgctxt "tools-action"
+msgid "Next Object 2"
+msgstr "Naslednji predmet 2"
 
 #: app/actions/tools-actions.c:830
 #, c-format
@@ -19773,7 +19848,7 @@ msgstr ""
 msgid "Rectangle: "
 msgstr "Pravokotnik: "
 
-#: app/display/gimptoolrectangle.c:2172
+#: app/display/gimptoolrectangle.c:2155
 msgid "Position: "
 msgstr "Položaj: "
 
@@ -22003,7 +22078,7 @@ msgstr "Mere razdalj"
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedura »%s« ni vrnila nobenih vrednosti"
 
-#: app/pdb/gimpprocedure.c:851
+#: app/pdb/gimpprocedure.c:850
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -22012,7 +22087,7 @@ msgstr ""
 "Procedura »%s« je vrnila napačno vrsto vrnjene vrednosti »%s« (#%d). "
 "Pričakovana vrednost %s, prejeta %s."
 
-#: app/pdb/gimpprocedure.c:863
+#: app/pdb/gimpprocedure.c:862
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
@@ -22021,7 +22096,7 @@ msgstr ""
 "Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« "
 "(#%d). Pričakovano %s, prejeto %s."
 
-#: app/pdb/gimpprocedure.c:900
+#: app/pdb/gimpprocedure.c:899
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -22030,7 +22105,7 @@ msgstr ""
 "Procedura »%s« je vrnila neveljaven ID za argument »%s«. Najverjetneje je od "
 "vtičnika pričakovano delovanje na plasti, ki več ne obstaja."
 
-#: app/pdb/gimpprocedure.c:913
+#: app/pdb/gimpprocedure.c:912
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -22039,7 +22114,7 @@ msgstr ""
 "Klic procedure »%s« ima neveljaven ID za argument »%s«. Najverjetneje "
 "poskuša vtičnik delovati na plasti, ki več ne obstaja."
 
-#: app/pdb/gimpprocedure.c:930
+#: app/pdb/gimpprocedure.c:929
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -22048,7 +22123,7 @@ msgstr ""
 "Procedura »%s« je vrnila neveljaven ID za argument »%s«. Najverjetneje "
 "poskuša vtičnik delovati na sliki, ki več ne obstaja."
 
-#: app/pdb/gimpprocedure.c:943
+#: app/pdb/gimpprocedure.c:942
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -22057,7 +22132,7 @@ msgstr ""
 "Klic procedure »%s« ima neveljaven ID za argument »%s«. Najverjetneje "
 "poskuša vtičnik delovati na sliki, ki več ne obstaja."
 
-#: app/pdb/gimpprocedure.c:964
+#: app/pdb/gimpprocedure.c:963
 #, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
@@ -22066,7 +22141,7 @@ msgstr ""
 "Procedura »%s« je vrnila »gimp_unit_pixel()« kot vrnjeno vrednost GimpUnit "
 "#%d '%s'. Ta vrnjena vrednost ne dovoli enot slikovnih točk."
 
-#: app/pdb/gimpprocedure.c:973
+#: app/pdb/gimpprocedure.c:972
 #, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
@@ -22075,7 +22150,7 @@ msgstr ""
 "Procedura »%s« je vrnila »gimp_unit_percent()« kot vrnjeno vrednost GimpUnit "
 "#%d '%s'. Ta vrnjena vrednost ne dovoli odstotkovnih enot."
 
-#: app/pdb/gimpprocedure.c:985
+#: app/pdb/gimpprocedure.c:984
 #, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
@@ -22084,7 +22159,7 @@ msgstr ""
 "Klic procedure »%s« z »gimp_unit_pixel()« za argument GimpUnit #%d '%s'. Ta "
 "argument ne dovoljuje enote slikovnih točk."
 
-#: app/pdb/gimpprocedure.c:995
+#: app/pdb/gimpprocedure.c:994
 #, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
@@ -22093,7 +22168,7 @@ msgstr ""
 "Klic procedure »%s« z »gimp_unit_percent()« za argument GimpUnit #%d '%s'. "
 "Ta argument ne dovoljuje odstotkovne enote."
 
-#: app/pdb/gimpprocedure.c:1015
+#: app/pdb/gimpprocedure.c:1014
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -22102,7 +22177,7 @@ msgstr ""
 "Procedura »%s« je vrnila »%s« kot vrnjeno vrednost »%s« (#%d, vrsta %s). Ta "
 "vrednost je izven dovoljenega obsega."
 
-#: app/pdb/gimpprocedure.c:1029
+#: app/pdb/gimpprocedure.c:1028
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -22111,12 +22186,12 @@ msgstr ""
 "Klic procedure »%s« ima vrednost »%s« za argument »%s« (#%d, vrsta %s). Ta "
 "vrednost je zunaj dovoljenega obsega."
 
-#: app/pdb/gimpprocedure.c:1085
+#: app/pdb/gimpprocedure.c:1084
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedura »%s« je vrnila neveljaven niz UTF-8 za argument »%s«."
 
-#: app/pdb/gimpprocedure.c:1095
+#: app/pdb/gimpprocedure.c:1094
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -22225,27 +22300,27 @@ msgstr "Vira »%s« ni mogoče preimenovati"
 #. TODO: write a more explicit error message after
 #. * string freeze.
 #.
-#: app/pdb/text-layer-cmds.c:86 app/pdb/text-layer-cmds.c:113
+#: app/pdb/text-layer-cmds.c:87 app/pdb/text-layer-cmds.c:114
 #, c-format
 msgid "Failed to create text layer"
 msgstr "Ustvarjanje plasti besedila ni uspelo"
 
-#: app/pdb/text-layer-cmds.c:178 app/pdb/text-layer-cmds.c:316
-#: app/pdb/text-layer-cmds.c:381 app/pdb/text-layer-cmds.c:440
-#: app/pdb/text-layer-cmds.c:498 app/pdb/text-layer-cmds.c:556
-#: app/pdb/text-layer-cmds.c:614 app/pdb/text-layer-cmds.c:672
-#: app/pdb/text-layer-cmds.c:730 app/pdb/text-layer-cmds.c:786
-#: app/pdb/text-layer-cmds.c:844 app/pdb/text-layer-cmds.c:902
-#: app/pdb/text-layer-cmds.c:960 app/pdb/text-layer-cmds.c:1018
-#: app/pdb/text-layer-cmds.c:1076 app/pdb/text-layer-cmds.c:1134
-#: app/pdb/text-layer-cmds.c:1190 app/pdb/text-layer-cmds.c:1248
-#: app/pdb/text-layer-cmds.c:1306 app/pdb/text-layer-cmds.c:1364
-#: app/pdb/text-layer-cmds.c:1422 app/pdb/text-layer-cmds.c:1487
-#: app/pdb/text-layer-cmds.c:1523
+#: app/pdb/text-layer-cmds.c:179 app/pdb/text-layer-cmds.c:317
+#: app/pdb/text-layer-cmds.c:382 app/pdb/text-layer-cmds.c:441
+#: app/pdb/text-layer-cmds.c:499 app/pdb/text-layer-cmds.c:557
+#: app/pdb/text-layer-cmds.c:615 app/pdb/text-layer-cmds.c:673
+#: app/pdb/text-layer-cmds.c:731 app/pdb/text-layer-cmds.c:787
+#: app/pdb/text-layer-cmds.c:845 app/pdb/text-layer-cmds.c:903
+#: app/pdb/text-layer-cmds.c:961 app/pdb/text-layer-cmds.c:1060
+#: app/pdb/text-layer-cmds.c:1118 app/pdb/text-layer-cmds.c:1176
+#: app/pdb/text-layer-cmds.c:1232 app/pdb/text-layer-cmds.c:1290
+#: app/pdb/text-layer-cmds.c:1348 app/pdb/text-layer-cmds.c:1406
+#: app/pdb/text-layer-cmds.c:1464 app/pdb/text-layer-cmds.c:1529
+#: app/pdb/text-layer-cmds.c:1594
 msgid "Set text layer attribute"
 msgstr "Določite atribute plasti besedila"
 
-#: app/pdb/text-layer-cmds.c:247
+#: app/pdb/text-layer-cmds.c:248
 msgid "Set text layer markup"
 msgstr "Določite označevanje plasti besedila"
 
@@ -22274,7 +22349,7 @@ msgstr "Nepravilen sklic prevajalnika v prevajalni datoteki %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Niz z nepravilnim dvojiškim nizom v prevajalski datoteki %s"
 
-#: app/plug-in/gimpplugin.c:260
+#: app/plug-in/gimpplugin.c:254
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -22312,11 +22387,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Preklicano"
 
-#: app/plug-in/gimppluginmanager.c:238
+#: app/plug-in/gimppluginmanager.c:265
 msgid "Plug-in Interpreters"
 msgstr "Prevajalniki vstavkov"
 
-#: app/plug-in/gimppluginmanager.c:248
+#: app/plug-in/gimppluginmanager.c:275
 msgid "Plug-in Environment"
 msgstr "Okolje vstavkov"
 
@@ -22871,11 +22946,11 @@ msgstr "Zasukaj plast besedila"
 msgid "Transform Text Layer"
 msgstr "Preoblikuj plast besedila"
 
-#: app/text/gimptextlayer.c:775
+#: app/text/gimptextlayer.c:675 app/text/gimptextlayer.c:816
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Zaradi odsotnosti vseh pisav funkcionalnost besedila ni na voljo."
 
-#: app/text/gimptextlayer.c:989
+#: app/text/gimptextlayer.c:1030
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -29178,19 +29253,19 @@ msgstr ""
 "Če ne veste, kaj je XMP, tega najverjetneje niti ne potrebujete. Javljena "
 "napaka: %s."
 
-#: app/xcf/xcf-load.c:1454
+#: app/xcf/xcf-load.c:1456
 msgid "Linked Layers"
 msgstr "Povezane plasti"
 
-#: app/xcf/xcf-load.c:1464
+#: app/xcf/xcf-load.c:1466
 msgid "Linked Channels"
 msgstr "Povezani kanali"
 
-#: app/xcf/xcf-load.c:1489
+#: app/xcf/xcf-load.c:1491
 msgid "Linked Paths"
 msgstr "Povezane poti"
 
-#: app/xcf/xcf-load.c:1537
+#: app/xcf/xcf-load.c:1539
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -29198,7 +29273,7 @@ msgstr ""
 "Datoteka XCF je okvarjena!  Naložen je njen začetni pravilno oblikovan del, "
 "vendar ne v celoti."
 
-#: app/xcf/xcf-load.c:1564
+#: app/xcf/xcf-load.c:1566
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -29206,7 +29281,7 @@ msgstr ""
 "Datoteka XCF je okvarjena!  Iz nje ni bilo mogoče rešiti niti najmanjšega "
 "dela podatkov."
 
-#: app/xcf/xcf-load.c:1758
+#: app/xcf/xcf-load.c:1760
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -29216,7 +29291,7 @@ msgstr ""
 "ni pravilno shranila indeksiranega kataloga barv.\n"
 "Zamenjevanje s sivinskim naborom."
 
-#: app/xcf/xcf-load.c:2589
+#: app/xcf/xcf-load.c:2591
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
@@ -29225,7 +29300,7 @@ msgstr ""
 "Opozorilo XCF: neveljavna povezava v datoteki XCF. Povezana plast »%s« je "
 "ponižana v rastrsko plast."
 
-#: app/xcf/xcf-load.c:2609
+#: app/xcf/xcf-load.c:2611
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
@@ -29234,7 +29309,7 @@ msgstr ""
 "Opozorilo: XCF: krožno sklicevanje zaznano v datoteki XCF. Povezana plast "
 "»%s« je ponižana v rastrsko plast."
 
-#: app/xcf/xcf-load.c:3342
+#: app/xcf/xcf-load.c:3344
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -29246,7 +29321,7 @@ msgstr ""
 "prezrta in filter morda ne bo pravilno izrisan.\n"
 "To se ne bi smelo zgoditi. Težavo sporočite razvijalcem filtra."
 
-#: app/xcf/xcf-load.c:4230
+#: app/xcf/xcf-load.c:4232
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
