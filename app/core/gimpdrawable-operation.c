@@ -37,6 +37,7 @@
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable.h"
 #include "gimpdrawablefilter.h"
+#include "gimpgrouplayer.h"
 #include "gimpprogress.h"
 #include "gimpsettings.h"
 
@@ -63,6 +64,7 @@ gimp_drawable_apply_operation_with_config (GimpDrawable *drawable,
 {
   GimpDrawableFilter *filter;
   GimpContainer      *filter_stack;
+  gboolean            non_destructive = FALSE;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -93,14 +95,24 @@ gimp_drawable_apply_operation_with_config (GimpDrawable *drawable,
 
   gimp_drawable_filter_apply  (filter, NULL);
 
+  /* Non-interactive filters should be applied non-destructively on
+   * group layers and non-rasterized layers */
+  if (GIMP_IS_GROUP_LAYER (drawable)                    ||
+      (gimp_item_is_rasterizable (GIMP_ITEM (drawable)) &&
+       ! gimp_item_is_rasterized (GIMP_ITEM (drawable))))
+    non_destructive = TRUE;
+
   /* For destructive filters, we want them to apply directly on the
    * drawable rather than merge down onto existing NDE filters */
   filter_stack = gimp_drawable_get_filters (drawable);
-  if (filter_stack)
+  if (filter_stack && ! non_destructive)
     gimp_container_reorder (filter_stack, GIMP_OBJECT (filter),
                             gimp_container_get_n_children (filter_stack) - 1);
 
-  gimp_drawable_filter_commit (filter, FALSE, progress, TRUE);
+  if (non_destructive)
+    gimp_drawable_filter_layer_mask_freeze (filter);
+
+  gimp_drawable_filter_commit (filter, non_destructive, progress, TRUE);
 
   g_object_unref (filter);
 

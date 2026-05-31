@@ -1013,12 +1013,7 @@ filters_actions_update (GimpActionGroup *group,
 
       if (filters_is_non_interactive (action_name))
         {
-          /* Even I'm not sure they should, right now non-interactive
-           * actions are always applied destructively. So these filters
-           * are incompatible with layers where non-destructivity is
-           * mandatory.
-           */
-          SET_SENSITIVE (action_name, writable && ! force_nde);
+          SET_SENSITIVE (action_name, writable);
         }
       else if (GIMP_IS_STRING_ACTION (action))
         {
