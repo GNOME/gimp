@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-25 21:42+0000\n"
-"PO-Revision-Date: 2026-05-26 16:55+0300\n"
+"POT-Creation-Date: 2026-05-30 12:57+0000\n"
+"PO-Revision-Date: 2026-05-31 19:59+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2553,21 +2553,16 @@ msgid "ASCII art"
 msgstr "Рисунки у ASCII"
 
 #: plug-ins/common/file-aa.c:138
-#| msgid "Saves grayscale image in various text formats"
 msgid "Exports grayscale image in various text formats"
 msgstr "Експортує зображення у відтінках сірого у різних текстових форматах"
 
 #: plug-ins/common/file-aa.c:140
-#| msgid ""
-#| "This plug-in uses aalib to save grayscale image as ascii art into a "
-#| "variety of text formats"
 msgid ""
 "This plug-in uses aalib to export grayscale image as ascii art into a "
 "variety of text formats"
 msgstr ""
-"Цей додаток використовує aalib для експортування зображення у відтінках"
-" сірого "
-"у формі ascii-арту у спектрі текстових форматів"
+"Цей додаток використовує aalib для експортування зображення у відтінках "
+"сірого у формі ascii-арту у спектрі текстових форматів"
 
 #: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:244
 msgid "_Format"
@@ -3106,47 +3101,41 @@ msgid "Radiance RGBE"
 msgstr "Radiance RGBE"
 
 #: plug-ins/common/file-gegl.c:122
-#| msgid "Loads files in the JPEG file format"
 msgid "Loads files in the RGBE file format"
 msgstr "Завантажує файли у форматі RGBE"
 
 #: plug-ins/common/file-gegl.c:123
-#| msgid "This procedure loads files in the xz compressed format."
 msgid ""
 "This procedure loads images in the RGBE format, using \"gegl:rgbe-load\""
 msgstr ""
-"Ця процедура завантажує зображення у форматі RGBE з використанням"
-" \"gegl:rgbe-load\""
+"Ця процедура завантажує зображення у форматі RGBE з використанням "
+"\"gegl:rgbe-load\""
 
 #: plug-ins/common/file-gegl.c:127
-#| msgid "Exports files in the PBM file format"
 msgid "Exports files in the RGBE file format"
 msgstr "Експортує файли у форматі RGBE"
 
 #: plug-ins/common/file-gegl.c:128
-#| msgid "This procedure exports files in the xz compressed format."
 msgid ""
 "This procedure exports images in the RGBE format, using \"gegl:rgbe-save\""
 msgstr ""
-"Ця процедура експортує зображення у форматі RGBE з використанням"
-" \"gegl:rgbe-save\""
+"Ця процедура експортує зображення у форматі RGBE з використанням \"gegl:rgbe-"
+"save\""
 
 #: plug-ins/common/file-gegl.c:132 plug-ins/file-exr/file-exr.c:111
 msgid "OpenEXR image"
 msgstr "Зображення OpenEXR"
 
 #: plug-ins/common/file-gegl.c:141
-#| msgid "Loads files in the OpenEXR file format"
 msgid "Exports files in the OpenEXR file format"
 msgstr "Експортує файли у форматі OpenEXR"
 
 #: plug-ins/common/file-gegl.c:142
-#| msgid "This procedure exports files in the xz compressed format."
 msgid ""
 "This procedure exports images in the OpenEXR format, using \"gegl:exr-save\""
 msgstr ""
-"Ця процедура експортує зображення у форматі OpenEXR з використанням"
-" \"gegl:exr-save\""
+"Ця процедура експортує зображення у форматі OpenEXR з використанням "
+"\"gegl:exr-save\""
 
 #: plug-ins/common/file-gegl.c:356
 #, c-format
@@ -3663,7 +3652,6 @@ msgid "C source code header"
 msgstr "Заголовок програми на С"
 
 #: plug-ins/common/file-header.c:120
-#| msgid "Saves files as C unsigned character array"
 msgid "Exports files as C unsigned character array"
 msgstr "Експортує файли у форматі масиву символів без знаку C"
 
@@ -4339,7 +4327,6 @@ msgid "Loads files in the JPEG XL file format"
 msgstr "Завантажує файли у форматі JPEG XL"
 
 #: plug-ins/common/file-jpegxl.c:171 plug-ins/common/file-jpegxl.c:172
-#| msgid "Exports files in the JPEG file format"
 msgid "Exports files in the JPEG XL file format"
 msgstr "Експортує файли у форматі JPEG XL"
 
@@ -4466,14 +4453,10 @@ msgid "MNG"
 msgstr "MNG"
 
 #: plug-ins/common/file-mng.c:259
-#| msgid "Export image in the QOI file format"
 msgid "Exports images in the MNG file format"
 msgstr "Експортує зображення у форматі файлів MNG"
 
 #: plug-ins/common/file-mng.c:260
-#| msgid ""
-#| "This plug-in saves images in the Multiple-image Network Graphics (MNG) "
-#| "format which can be used as a replacement for animated GIFs, and more."
 msgid ""
 "This plug-in exports images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
@@ -4848,15 +4831,10 @@ msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
 #: plug-ins/common/file-pdf-export.c:332 plug-ins/common/file-pdf-export.c:418
-#| msgid "Exports files in the PFM file format"
 msgid "Exports files in PDF format"
 msgstr "Експортує файли у форматі PDF"
 
 #: plug-ins/common/file-pdf-export.c:333 plug-ins/common/file-pdf-export.c:419
-#| msgid ""
-#| "Saves files in Adobe's Portable Document Format. PDF is designed to be "
-#| "easily processed by a variety of different platforms, and is a distant "
-#| "cousin of PostScript."
 msgid ""
 "Exports files in Adobe's Portable Document Format. PDF is designed to be "
 "easily processed by a variety of different platforms, and is a distant "
@@ -4944,12 +4922,10 @@ msgid "_Create multipage PDF..."
 msgstr "_Створити PDF з кількома сторінками…"
 
 #: plug-ins/common/file-pdf-export.c:471
-#| msgid "Export Icons"
 msgid "Export to"
 msgstr "Експортувати до"
 
 #: plug-ins/common/file-pdf-export.c:472
-#| msgid "The URI of the file to save to"
 msgid "The URI of the file to export to"
 msgstr "Адреса файла, до якого слід експортувати дані"
 
@@ -6888,27 +6864,22 @@ msgstr "Не вдається зчитати заголовок з «%s»"
 
 #: plug-ins/common/file-tim.c:168 plug-ins/common/file-tim.c:191
 #: plug-ins/common/file-tim.c:203
-#| msgid "Playstation TIM image"
 msgid "PlayStation TIM image"
 msgstr "Зображення TIM PlayStation"
 
 #: plug-ins/common/file-tim.c:171
-#| msgid "Load file in the TIM file format"
 msgid "Loads file in the TIM file format"
 msgstr "Завантажує файл у форматі TIM"
 
 #: plug-ins/common/file-tim.c:172
-#| msgid "Load file in the Sony Playstation TIM file format"
 msgid "Loads file in the Sony PlayStation TIM file format"
 msgstr "Завантажує файл у форматі TIM Sony PlayStation"
 
 #: plug-ins/common/file-tim.c:194
-#| msgid "Exports files in the PNM file format"
 msgid "Exports files in the TIM file format"
 msgstr "Експортує файли у форматі TIM"
 
 #: plug-ins/common/file-tim.c:195
-#| msgid "Saves files in the Playstation TIM file format"
 msgid "Exports files in the PlayStation TIM file format"
 msgstr "Експортує файли у форматі TIM PlayStation"
 
@@ -9602,7 +9573,6 @@ msgid "BMP"
 msgstr "BMP"
 
 #: plug-ins/file-bmp/bmp.c:185 plug-ins/file-bmp/bmp.c:186
-#| msgid "Saves files in Windows BMP file format"
 msgid "Exports files in Windows BMP file format"
 msgstr "Експортує файли у форматі BMP Windows"
 
@@ -9683,15 +9653,17 @@ msgstr "Завантажити файл у форматі Digital Picture Exchan
 msgid "Could not read Cineon header information."
 msgstr "Не вдалося прочитати дані заголовка Cineon."
 
-#: plug-ins/file-cin/cineon-lib.c:134
+#: plug-ins/file-cin/cineon-lib.c:134 plug-ins/file-cin/dpx-lib.c:233
 #, c-format
-msgid "Cineon: Image with %d channels not yet supported."
-msgstr "Cineon: підтримки зображень з %d каналами ще не передбачено."
+#| msgid "DPX: Image with %d channels not yet supported."
+msgid "Image with %d channels not yet supported."
+msgstr "Підтримки зображень з %d каналами ще не передбачено."
 
-#: plug-ins/file-cin/cineon-lib.c:154
+#: plug-ins/file-cin/cineon-lib.c:154 plug-ins/file-cin/dpx-lib.c:263
 #, c-format
-msgid "Cineon: Image with %d bpc not yet supported."
-msgstr "Cineon: підтримки зображень з %d бітами на канал ще не передбачено."
+#| msgid "DPX: Image with %d bpc not yet supported."
+msgid "Image with %d bpc not yet supported."
+msgstr "Підтримки зображень з %d бітами на канал ще не передбачено."
 
 #: plug-ins/file-cin/cineon-lib.c:181 plug-ins/file-cin/cineon-lib.c:207
 #: plug-ins/file-cin/dpx-lib.c:292 plug-ins/file-cin/dpx-lib.c:318
@@ -9704,16 +9676,6 @@ msgstr "Не вдалося прочитати дані зображення з 
 #, c-format
 msgid "Could not read DPX header information."
 msgstr "Не вдалося прочитати дані заголовка DPX."
-
-#: plug-ins/file-cin/dpx-lib.c:233
-#, c-format
-msgid "DPX: Image with %d channels not yet supported."
-msgstr "DPX: підтримки зображень з %d каналами ще не передбачено."
-
-#: plug-ins/file-cin/dpx-lib.c:263
-#, c-format
-msgid "DPX: Image with %d bpc not yet supported."
-msgstr "DPX: підтримки зображень з %d бітами на канал ще не передбачено."
 
 #: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:170
 msgid "DDS image"
@@ -9744,7 +9706,6 @@ msgid "DDS"
 msgstr "DDS"
 
 #: plug-ins/file-dds/dds.c:176 plug-ins/file-dds/dds.c:177
-#| msgid "Loads files in DDS image format"
 msgid "Exports files in DDS image format"
 msgstr "Експортує файли у форматі зображень DDS"
 
@@ -9875,7 +9836,6 @@ msgid "Sav_e type"
 msgstr "_Тип збереження"
 
 #: plug-ins/file-dds/dds.c:252
-#| msgid "How to save the image"
 msgid "How to export the image"
 msgstr "Спосіб експортування зображення"
 
@@ -10663,7 +10623,6 @@ msgid "Loads a preview from a Windows ANI files"
 msgstr "Завантажує попередній перегляд з файлів ANI Windows"
 
 #: plug-ins/file-ico/ico.c:380 plug-ins/file-ico/ico.c:381
-#| msgid "Saves files in Windows ANI file format"
 msgid "Exports files in Windows ANI file format"
 msgstr "Експортує файли у форматі ANI Windows"
 
@@ -10871,15 +10830,12 @@ msgid "Save Photoshop metadata"
 msgstr "Зберегти метадані Photoshop"
 
 #: plug-ins/file-jpeg/jpeg.c:315
-#| msgid ""
-#| "Store Photoshop image resources (paths, alpha channel names, ...) in TIFF "
-#| "tag (Photoshop)"
 msgid ""
 "Store Photoshop image resources (paths, guides, ...) in JPEG APP13 tag "
 "(Photoshop)"
 msgstr ""
-"Зберегти ресурси зображення Photoshop (контури, напрямні...) у "
-"мітці APP13 JPEG (Photoshop)"
+"Зберегти ресурси зображення Photoshop (контури, напрямні...) у мітці APP13 "
+"JPEG (Photoshop)"
 
 #: plug-ins/file-psd/psd-export.c:585
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -11147,15 +11103,10 @@ msgstr ""
 "PSB Adobe Photoshop (TM)."
 
 #: plug-ins/file-psd/psd.c:228
-#| msgid "Saves files in the Photoshop (TM) PSD file format"
 msgid "Exports files in the Photoshop (TM) PSD file format"
 msgstr "Експортує файли у форматі файлів PSD Photoshop (TM)"
 
 #: plug-ins/file-psd/psd.c:230
-#| msgid ""
-#| "This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
-#| "files may be of any image type supported by GIMP, with or without layers, "
-#| "layer masks, aux channels and guides."
 msgid ""
 "This plug-in exports files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
@@ -11171,25 +11122,19 @@ msgid "Photoshop Large image"
 msgstr "Велике зображення Photoshop"
 
 #: plug-ins/file-psd/psd.c:249
-#| msgid "Saves files in the Photoshop (TM) Large PSB file format"
 msgid "Exports files in the Photoshop (TM) Large PSB file format"
 msgstr "Експортує файли у форматі файлів великого PSB Photoshop (TM)"
 
 #: plug-ins/file-psd/psd.c:251
-#| msgid ""
-#| "This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
-#| "These files may be of any image type supported by GIMP, with or without "
-#| "layers, layer masks, aux channels and guides."
 msgid ""
 "This plug-in exports files of Adobe Photoshop (TM) Large native PSB format. "
 "These files may be of any image type supported by GIMP, with or without "
 "layers, layer masks, aux channels and guides."
 msgstr ""
-"Цей додаток експортує файли у власному форматі великого PSB Adobe"
-" Photoshop™. "
-"Ці файли можуть зберігати дані у будь-якому типі зображень, підтримку яких "
-"передбачено у GIMP, з шарами або без них, масками шарів, допоміжними "
-"каналами та напрямними."
+"Цей додаток експортує файли у власному форматі великого PSB Adobe "
+"Photoshop™. Ці файли можуть зберігати дані у будь-якому типі зображень, "
+"підтримку яких передбачено у GIMP, з шарами або без них, масками шарів, "
+"допоміжними каналами та напрямними."
 
 #: plug-ins/file-psd/psd.c:279
 msgid "Assign a Clipping _Path"
@@ -11955,7 +11900,6 @@ msgid "WebP image"
 msgstr "Зображення WebP"
 
 #: plug-ins/file-webp/file-webp.c:158 plug-ins/file-webp/file-webp.c:159
-#| msgid "Saves files in the WebP image format"
 msgid "Exports files in the WebP image format"
 msgstr "Експортує файли у форматі зображень WebP"
 
@@ -12067,7 +12011,6 @@ msgid "Force default delay on all frames"
 msgstr "Використати типову затримку для всіх кадрів"
 
 #: plug-ins/file-webp/file-webp.c:249
-#| msgid "Export GIF as animation?"
 msgid "Export a_nimation"
 msgstr "Експортувати _анімацію"
 
@@ -17264,6 +17207,14 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#, c-format
+#~ msgid "Cineon: Image with %d channels not yet supported."
+#~ msgstr "Cineon: підтримки зображень з %d каналами ще не передбачено."
+
+#, c-format
+#~ msgid "Cineon: Image with %d bpc not yet supported."
+#~ msgstr "Cineon: підтримки зображень з %d бітами на канал ще не передбачено."
 
 #~ msgid "Saves files in the JPEG XL file format"
 #~ msgstr "Зберігає файли у форматі JPEG XL"
