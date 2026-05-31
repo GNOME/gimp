@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-17 22:10+0000\n"
-"PO-Revision-Date: 2026-03-18 20:34+0200\n"
+"POT-Creation-Date: 2026-05-27 23:25+0000\n"
+"PO-Revision-Date: 2026-05-31 19:12+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 23.04.3\n"
 
 #: plug-ins/script-fu/script-fu.c:119
@@ -84,7 +84,7 @@ msgid "Script Console"
 msgstr "Консоль скриптів"
 
 #: plug-ins/script-fu/console/script-fu-console.c:124
-#: plug-ins/script-fu/console/script-fu-console.c:251
+#: plug-ins/script-fu/console/script-fu-console.c:249
 msgid "_Save"
 msgstr "_Зберегти"
 
@@ -93,7 +93,7 @@ msgid "C_lear"
 msgstr "_Очистити"
 
 #: plug-ins/script-fu/console/script-fu-console.c:126
-#: plug-ins/script-fu/console/script-fu-console.c:324
+#: plug-ins/script-fu/console/script-fu-console.c:313
 msgid "_Close"
 msgstr "З_акрити"
 
@@ -105,22 +105,22 @@ msgstr "О_гляд…"
 msgid "Save Script-Fu Console Output"
 msgstr "Зберегти вивід консолі скриптфу"
 
-#: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/console/script-fu-console.c:249
+#: plug-ins/script-fu/server/script-fu-server.c:968
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: plug-ins/script-fu/console/script-fu-console.c:293
+#: plug-ins/script-fu/console/script-fu-console.c:282
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не вдається відкрити '%s' для запису: %s"
 
-#: plug-ins/script-fu/console/script-fu-console.c:319
+#: plug-ins/script-fu/console/script-fu-console.c:308
 msgid "Script-Fu Procedure Browser"
 msgstr "Переглядач процедур скриптфу"
 
-#: plug-ins/script-fu/console/script-fu-console.c:323
+#: plug-ins/script-fu/console/script-fu-console.c:312
 msgid "_Apply"
 msgstr "За_стосувати"
 
@@ -132,27 +132,27 @@ msgstr "Ласкаво просимо до TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Керування GIMP за допомогою скриптів мовою Scheme"
 
-#: plug-ins/script-fu/server/script-fu-server.c:918
+#: plug-ins/script-fu/server/script-fu-server.c:964
 msgid "Script-Fu Server Options"
 msgstr "Скриптфу: Параметри сервера"
 
-#: plug-ins/script-fu/server/script-fu-server.c:923
+#: plug-ins/script-fu/server/script-fu-server.c:969
 msgid "_Start Server"
 msgstr "_Запустити сервер"
 
-#: plug-ins/script-fu/server/script-fu-server.c:956
+#: plug-ins/script-fu/server/script-fu-server.c:1002
 msgid "Listen on IP:"
 msgstr "Прослуховувати IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:963
+#: plug-ins/script-fu/server/script-fu-server.c:1009
 msgid "Server port:"
 msgstr "Порт сервера:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:969
+#: plug-ins/script-fu/server/script-fu-server.c:1015
 msgid "Server logfile:"
 msgstr "Журнал сервера:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:982
+#: plug-ins/script-fu/server/script-fu-server.c:1028
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -197,16 +197,16 @@ msgstr "%s:"
 msgid "Script-Fu Color Selection"
 msgstr "Скриптфу: Вибір кольору"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:405
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:395
 msgid "Script-Fu File Selection"
 msgstr "Скриптфу: Вибір файлу"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:408
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:398
 msgid "Script-Fu Folder Selection"
 msgstr "Скриптфу: Вибір теки"
 
 #. Log to stdout.  Later to Gimp.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:817
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:807
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Помилка під час виконання: %s"
@@ -307,7 +307,7 @@ msgid "Looped"
 msgstr "Циклічне"
 
 #. --- false form of "if-1"
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:218
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:220
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
@@ -315,11 +315,11 @@ msgstr ""
 "Сценарій випалювання потрібні рівно два шари: шар переднього плану з альфа-"
 "каналом та фоновий шар."
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:225
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:227
 msgid "B_urn-In..."
 msgstr "_Випалювання…"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:226
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:228
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
@@ -327,35 +327,35 @@ msgstr ""
 "Створити проміжні шари для переходу у вигляді анімаційні випалення між двома "
 "шарами"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:232
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Glow color"
 msgstr "Колір сяйва"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:233
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Fadeout"
 msgstr "Згасання"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:234
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:236
 msgid "Fadeout width"
 msgstr "Розмір кромки згасання"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:235
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:237
 msgid "Corona width"
 msgstr "Ширина корони"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:236
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "After glow"
 msgstr "Післясяйво"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:237
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:239
 msgid "Add glowing"
 msgstr "Додати сяйво"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:238
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:240
 msgid "Prepare for GIF"
 msgstr "Підготувати для GIF"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:239
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:241
 msgid "Speed (pixels/frame)"
 msgstr "Швидкість (точок/кадр)"
 
@@ -391,7 +391,6 @@ msgstr ""
 "зображення."
 
 #: plug-ins/script-fu/scripts/carve-it.scm:230
-#| msgid "Mask size"
 msgid "Mask image"
 msgstr "Маскування зображення"
 
@@ -423,20 +422,20 @@ msgstr "Шар 3"
 msgid "Drop Shadow"
 msgstr "Кинути тінь"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:286
+#: plug-ins/script-fu/scripts/chrome-it.scm:299
 msgid "Chrome"
 msgstr "Хром"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:287
+#: plug-ins/script-fu/scripts/chrome-it.scm:300
 #: plug-ins/script-fu/scripts/xach-effect.scm:69
 msgid "Highlight"
 msgstr "Підсвічування"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:307
+#: plug-ins/script-fu/scripts/chrome-it.scm:320
 msgid "Stencil C_hrome..."
 msgstr "_Хромувати за трафаретом…"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:308
+#: plug-ins/script-fu/scripts/chrome-it.scm:321
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
@@ -444,31 +443,31 @@ msgstr ""
 "Додати до виділення (чи альфа-каналу) ефект хромування за допомогою "
 "вказаного зразка"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:314
+#: plug-ins/script-fu/scripts/chrome-it.scm:327
 msgid "Chrome saturation"
 msgstr "Насиченість хрому"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:315
+#: plug-ins/script-fu/scripts/chrome-it.scm:328
 msgid "Chrome lightness"
 msgstr "Світлість хрому"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:316
+#: plug-ins/script-fu/scripts/chrome-it.scm:329
 msgid "Chrome factor"
 msgstr "Коефіцієнт хрому"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:317
+#: plug-ins/script-fu/scripts/chrome-it.scm:330
 msgid "Environment map"
 msgstr "Карта оточення"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:320
+#: plug-ins/script-fu/scripts/chrome-it.scm:333
 msgid "Highlight balance"
 msgstr "Баланс відблисків"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:321
+#: plug-ins/script-fu/scripts/chrome-it.scm:334
 msgid "Chrome balance"
 msgstr "Баланс хрому"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:322
+#: plug-ins/script-fu/scripts/chrome-it.scm:335
 msgid "Chrome white areas"
 msgstr "Білі ділянки хрому"
 
@@ -648,7 +647,7 @@ msgid "Blur radius"
 msgstr "Радіус розмивання"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:180
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:147
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:207
 msgid "Color"
 msgstr "Колір"
@@ -705,128 +704,94 @@ msgstr "Чорний на білому"
 msgid "Active colors"
 msgstr "Поточні кольори пер.плану та тла"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:140
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:142
 msgid "_Fuzzy Border..."
 msgstr "_Нечітка рамка…"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:141
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:143
 msgid "Add a jagged, fuzzy border to an image"
 msgstr "Додати до зображення нечітку рамку із зубцями"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:148
-#: plug-ins/script-fu/scripts/old-photo.scm:99
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
+#: plug-ins/script-fu/scripts/old-photo.scm:106
 msgid "Border size"
 msgstr "Розмір рамки"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:151
 msgid "Blur border"
 msgstr "Розмивати рамку"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:152
 msgid "Granularity (1 is Low)"
 msgstr "Зернистість (1 -- низька)"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:151
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:153
 msgid "Add shadow"
 msgstr "Додати тінь"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:152
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:154
 msgid "Shadow weight (%)"
 msgstr "Розмір тіні (%)"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:153
-#: plug-ins/script-fu/scripts/old-photo.scm:105
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:155
+#: plug-ins/script-fu/scripts/old-photo.scm:112
 #: plug-ins/script-fu/scripts/round-corners.scm:147
-#: plug-ins/script-fu/scripts/slide.scm:268
+#: plug-ins/script-fu/scripts/slide.scm:270
 #: plug-ins/script-fu/scripts/spinning-globe.scm:127
 msgid "Work on copy"
 msgstr "Працювати з копією"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:154
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:156
 msgid "Flatten image"
 msgstr "Звести зображення"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:63
+#: plug-ins/script-fu/scripts/gimp-online.scm:59
 msgid "_Using Paths"
 msgstr "_Використання контурів"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:64
-#: plug-ins/script-fu/scripts/gimp-online.scm:75
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:97
-#: plug-ins/script-fu/scripts/gimp-online.scm:108
-#: plug-ins/script-fu/scripts/gimp-online.scm:119
-#: plug-ins/script-fu/scripts/gimp-online.scm:130
-#: plug-ins/script-fu/scripts/gimp-online.scm:141
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:60
+#: plug-ins/script-fu/scripts/gimp-online.scm:71
+#: plug-ins/script-fu/scripts/gimp-online.scm:82
+#: plug-ins/script-fu/scripts/gimp-online.scm:93
+#: plug-ins/script-fu/scripts/gimp-online.scm:104
+#: plug-ins/script-fu/scripts/gimp-online.scm:115
+#: plug-ins/script-fu/scripts/gimp-online.scm:126
+#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:147
 msgid "Bookmark to the user manual"
 msgstr "Посилання на посібник користувача"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:74
+#: plug-ins/script-fu/scripts/gimp-online.scm:70
 msgid "_Preparing your Images for the Web"
 msgstr "Пі_дготовка зображений до публікації у Інтернет"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:81
 msgid "_Working with Digital Camera Photos"
 msgstr "Робота з цифровими _фотографіями"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:96
+#: plug-ins/script-fu/scripts/gimp-online.scm:92
 msgid "Create, Open and Save _Files"
 msgstr "Створення, відкривання та зберігання _файлів"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:107
+#: plug-ins/script-fu/scripts/gimp-online.scm:103
 msgid "_Basic Concepts"
 msgstr "Основні _концепції"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:118
+#: plug-ins/script-fu/scripts/gimp-online.scm:114
 msgid "How to Use _Dialogs"
 msgstr "Як використовувати _діалоги"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:129
+#: plug-ins/script-fu/scripts/gimp-online.scm:125
 msgid "Drawing _Simple Objects"
 msgstr "_Малювання простих об'єктів"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:140
+#: plug-ins/script-fu/scripts/gimp-online.scm:136
 msgid "_Create and Use Selections"
 msgstr "Створити і використати _вибране"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/gimp-online.scm:146
 msgid "_Table of Contents"
 msgstr "_Зміст"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:184
-msgid "_Main Web Site"
-msgstr "_Головна веб-сторінка"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:185
-#: plug-ins/script-fu/scripts/gimp-online.scm:196
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
-msgid "Bookmark to the GIMP web site"
-msgstr "Закладка на сайт GIMP"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:195
-msgid "_Developer Web Site"
-msgstr "_Веб-сторінка розробників"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:206
-msgid "_Roadmaps"
-msgstr "_Плани щодо розробки"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:207
-msgid "Bookmark to the roadmaps of GIMP"
-msgstr "Закладка для сторінки планів щодо розробки GIMP"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "_Bug Reports and Feature Requests"
-msgstr "З_віти щодо вад та запити щодо нових можливостей"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "Закладка для сторінки системи стеження за вадами у GIMP"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:228
-msgid "_User Manual Web Site"
-msgstr "_Сайт з посібником користувача"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:73
 msgid "Custom _Gradient..."
@@ -856,6 +821,37 @@ msgstr "Висота"
 msgid "Gradient reverse"
 msgstr "Обернути градієнт"
 
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:60
+#| msgid "New Guides from _Selection"
+msgid "New Guides from Rule..."
+msgstr "Нові напрямні з правила…"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:61
+msgid "Add guides based on a selected composition rule"
+msgstr "Додати напрямні на основі вибраного правила компонування"
+
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:67
+msgid "R_ule"
+msgstr "П_равило"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:67
+msgid "Center lines"
+msgstr "Центральні лінії"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:68
+msgid "Rule of thirds"
+msgstr "Правило третин"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:69
+msgid "Rule of fifths"
+msgstr "Правило п'ятин"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:70
+#| msgid "Keep selection"
+msgid "Golden sections"
+msgstr "Золоті перетини"
+
 #: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
 msgstr "Напрямні з виді_леного"
@@ -869,7 +865,8 @@ msgid "New Guide (by _Percent)..."
 msgstr "_Напрямна (за відсотком)…"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:31
-msgid "Add a guide at the position specified as a percentage of the image size"
+msgid ""
+"Add a guide at the position specified as a percentage of the image size"
 msgstr ""
 "Додати напрямні до розташування, вказаному у відсотках від розміру зображення"
 
@@ -1025,26 +1022,26 @@ msgstr "Е_ліптичний, з розмиванням…"
 msgid "Create an elliptical brush with feathered edges"
 msgstr "Створити еліптичний пензель з розмитими межами"
 
-#: plug-ins/script-fu/scripts/old-photo.scm:91
+#: plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "_Old Photo..."
 msgstr "Стара ф_отографія…"
 
-#: plug-ins/script-fu/scripts/old-photo.scm:92
+#: plug-ins/script-fu/scripts/old-photo.scm:99
 msgid "Make an image look like an old photo"
 msgstr "Зробити зображення схожим на стару фотографію"
 
-#: plug-ins/script-fu/scripts/old-photo.scm:98
+#: plug-ins/script-fu/scripts/old-photo.scm:105
 msgid "Defocus"
 msgstr "Розфокусувати"
 
 #. since this plug-in uses the fuzzy-border plug-in, I used the
 #. values of the latter, with the exception of the initial value
 #. and the 'minimum' value.
-#: plug-ins/script-fu/scripts/old-photo.scm:103
+#: plug-ins/script-fu/scripts/old-photo.scm:110
 msgid "Sepia"
 msgstr "Сепія"
 
-#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/old-photo.scm:111
 msgid "Mottle"
 msgstr "Накраплення"
 
@@ -1304,27 +1301,27 @@ msgstr "Р_адіус (%)"
 msgid "Co_ncave"
 msgstr "_Угнуте"
 
-#: plug-ins/script-fu/scripts/slide.scm:257
+#: plug-ins/script-fu/scripts/slide.scm:259
 msgid "_Slide..."
 msgstr "_Слайд…"
 
-#: plug-ins/script-fu/scripts/slide.scm:258
+#: plug-ins/script-fu/scripts/slide.scm:260
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
 msgstr "Додати до зображення рамку, що імітує вигляд фотоплівки"
 
-#: plug-ins/script-fu/scripts/slide.scm:264
+#: plug-ins/script-fu/scripts/slide.scm:266
 msgid "Text"
 msgstr "Текст"
 
-#: plug-ins/script-fu/scripts/slide.scm:265
+#: plug-ins/script-fu/scripts/slide.scm:267
 msgid "Number"
 msgstr "Номер"
 
-#: plug-ins/script-fu/scripts/slide.scm:266
+#: plug-ins/script-fu/scripts/slide.scm:268
 msgid "Font"
 msgstr "Шрифт"
 
-#: plug-ins/script-fu/scripts/slide.scm:267
+#: plug-ins/script-fu/scripts/slide.scm:269
 msgid "Font color"
 msgstr "Колір шрифту"
 
@@ -1333,7 +1330,8 @@ msgid "_Spinning Globe..."
 msgstr "_Куля, що обертається…"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm:117
-msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgid ""
+"Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
 "Створити анімацію із зображення, розмістивши його на сфері, що обертається"
 
@@ -1518,6 +1516,30 @@ msgstr "Зсув тіні вздовж X"
 #: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Drop shadow Y offset"
 msgstr "Зсув тіні вздовж Y"
+
+#~ msgid "_Main Web Site"
+#~ msgstr "_Головна веб-сторінка"
+
+#~ msgid "Bookmark to the GIMP web site"
+#~ msgstr "Закладка на сайт GIMP"
+
+#~ msgid "_Developer Web Site"
+#~ msgstr "_Веб-сторінка розробників"
+
+#~ msgid "_Roadmaps"
+#~ msgstr "_Плани щодо розробки"
+
+#~ msgid "Bookmark to the roadmaps of GIMP"
+#~ msgstr "Закладка для сторінки планів щодо розробки GIMP"
+
+#~ msgid "_Bug Reports and Feature Requests"
+#~ msgstr "З_віти щодо вад та запити щодо нових можливостей"
+
+#~ msgid "Bookmark to the bug tracker of GIMP"
+#~ msgstr "Закладка для сторінки системи стеження за вадами у GIMP"
+
+#~ msgid "_User Manual Web Site"
+#~ msgstr "_Сайт з посібником користувача"
 
 #~ msgid "Image to carve"
 #~ msgstr "Зображення для вирізання"
