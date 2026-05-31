@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-25 21:42+0000\n"
-"PO-Revision-Date: 2026-05-26 09:16+0800\n"
+"POT-Creation-Date: 2026-05-30 12:57+0000\n"
+"PO-Revision-Date: 2026-05-31 12:59+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -9386,15 +9386,15 @@ msgstr "加载数字图像交换格式的文件"
 msgid "Could not read Cineon header information."
 msgstr "无法读取 Cineon 文件头信息。"
 
-#: plug-ins/file-cin/cineon-lib.c:134
+#: plug-ins/file-cin/cineon-lib.c:134 plug-ins/file-cin/dpx-lib.c:233
 #, c-format
-msgid "Cineon: Image with %d channels not yet supported."
-msgstr "Cineon：尚未支持带 %d 通道的图像。"
+msgid "Image with %d channels not yet supported."
+msgstr "尚未支持带 %d 通道的图像。"
 
-#: plug-ins/file-cin/cineon-lib.c:154
+#: plug-ins/file-cin/cineon-lib.c:154 plug-ins/file-cin/dpx-lib.c:263
 #, c-format
-msgid "Cineon: Image with %d bpc not yet supported."
-msgstr "Cineon：尚未支持 %d bpc 的图像。"
+msgid "Image with %d bpc not yet supported."
+msgstr "尚未支持 %d bpc 的图像。"
 
 #: plug-ins/file-cin/cineon-lib.c:181 plug-ins/file-cin/cineon-lib.c:207
 #: plug-ins/file-cin/dpx-lib.c:292 plug-ins/file-cin/dpx-lib.c:318
@@ -9407,16 +9407,6 @@ msgstr "无法从“%s”读取图像数据"
 #, c-format
 msgid "Could not read DPX header information."
 msgstr "无法读取 DPX 文件头信息。"
-
-#: plug-ins/file-cin/dpx-lib.c:233
-#, c-format
-msgid "DPX: Image with %d channels not yet supported."
-msgstr "DPX：尚未支持带 %d 通道的图像。"
-
-#: plug-ins/file-cin/dpx-lib.c:263
-#, c-format
-msgid "DPX: Image with %d bpc not yet supported."
-msgstr "DPX：尚未支持 %d bpc 的图像。"
 
 #: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:170
 msgid "DDS image"
@@ -16780,6 +16770,14 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#, c-format
+#~ msgid "Cineon: Image with %d channels not yet supported."
+#~ msgstr "Cineon：尚未支持带 %d 通道的图像。"
+
+#, c-format
+#~ msgid "Cineon: Image with %d bpc not yet supported."
+#~ msgstr "Cineon：尚未支持 %d bpc 的图像。"
 
 #~ msgid "Saves files in the JPEG XL file format"
 #~ msgstr "以 JPEG XL 格式保存文件"
