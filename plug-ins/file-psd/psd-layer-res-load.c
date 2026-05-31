@@ -318,21 +318,12 @@ load_layer_resource (PSDlayerres   *res_a,
     }
 
   /* Process layer resource blocks */
-  if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_BLACK_WHITE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_SELECTIVE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_GRAD_MAP, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_PHOTO_FILT, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_EXPOSURE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0)
+  if (memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0       ||
+      memcmp (res_a->key, PSD_LADJ_BLACK_WHITE, 4) == 0 ||
+      memcmp (res_a->key, PSD_LADJ_SELECTIVE, 4) == 0   ||
+      memcmp (res_a->key, PSD_LADJ_GRAD_MAP, 4) == 0    ||
+      memcmp (res_a->key, PSD_LADJ_PHOTO_FILT, 4) == 0  ||
+      memcmp (res_a->key, PSD_LADJ_EXPOSURE, 4) == 0)
     {
       if (lyr_a)
         {
@@ -340,6 +331,19 @@ load_layer_resource (PSDlayerres   *res_a,
           lyr_a->unsupported_features->show_gui         = TRUE;
         }
 
+      load_resource_ladj (res_a, lyr_a, input, error);
+    }
+  /* TODO: Implement all adjustment layers */
+  else if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0      ||
+           memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0 ||
+           memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0    ||
+           memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0        ||
+           memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0       ||
+           memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0      ||
+           memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0     ||
+           memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0  ||
+           memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0)
+    {
       load_resource_ladj (res_a, lyr_a, input, error);
     }
 
@@ -512,6 +516,228 @@ load_resource_ladj (const PSDlayerres  *res_a,
   /* Load adjustment layer */
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Adjustment layer", res_a->key);
+
+  /* Level Adjustment Layer */
+  if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0)
+    {
+      guchar  in_out[4][8];
+      gushort gamma[4];
+      guchar  remainder[10 * 25];
+
+      memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_LEVEL, 4);
+
+      if (psd_read (input, &lyr_a->adjustment_layer->version, 2, error) < 2 ||
+          psd_read (input, in_out[0], 8, error) < 8                         ||
+          psd_read (input, &gamma[0], 2, error) < 2                         ||
+          psd_read (input, in_out[1], 8, error) < 8                         ||
+          psd_read (input, &gamma[1], 2, error) < 2                         ||
+          psd_read (input, in_out[2], 8, error) < 8                         ||
+          psd_read (input, &gamma[2], 2, error) < 2                         ||
+          psd_read (input, in_out[3], 8, error) < 8                         ||
+          psd_read (input, &gamma[3], 2, error) < 2                         ||
+          psd_read (input, remainder, 250, error) < 250)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      for (gint i = 0; i < 4; i++)
+        {
+          for (gint j = 0; j < 8; j += 2)
+            lyr_a->adjustment_layer->in_out_gamma[i][j / 2] =
+              in_out[i][j + 1];
+
+          lyr_a->adjustment_layer->in_out_gamma[i][4] =
+            GUINT16_FROM_BE (gamma[i]);
+        }
+    }
+  else if (memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0)
+    {
+      gushort brightness = 0;
+      gushort contrast   = 0;
+      gint    unused     = 0;
+
+      memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_BRIGHTNESS, 4);
+
+      if (psd_read (input, &lyr_a->adjustment_layer->version, 2, error) < 2 ||
+          psd_read (input, &brightness, 2, error) < 2                       ||
+          psd_read (input, &contrast, 2, error) < 2                         ||
+          psd_read (input, &unused, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      lyr_a->adjustment_layer->brightness =
+        (guchar) GUINT16_FROM_BE (brightness);
+      lyr_a->adjustment_layer->contrast =
+        (guchar) GUINT16_FROM_BE (contrast);
+    }
+  else if (memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0)
+    {
+      gshort   data[9];
+      gboolean preserve_luminosity = FALSE;
+
+      memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_BALANCE, 4);
+
+      if (psd_read (input, data, 18, error) < 18 ||
+          psd_read (input, &preserve_luminosity, 2, error) < 2)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      for (gint i = 0; i < 3; i++)
+        {
+          lyr_a->adjustment_layer->shadows[i] =
+            (gchar) GINT16_FROM_BE (data[i]);
+
+          lyr_a->adjustment_layer->midtones[i] =
+            (gchar) GINT16_FROM_BE (data[i + 3]);
+
+          lyr_a->adjustment_layer->highlights[i] =
+            (gchar) GINT16_FROM_BE (data[i + 6]);
+        }
+
+      lyr_a->adjustment_layer->preserve_luminosity = preserve_luminosity;
+    }
+  else if (memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0 ||
+           memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0)
+    {
+      guchar padding = 0;
+      gshort hsl[3];
+      gshort data[45];
+
+      memcpy (lyr_a->adjustment_layer->type, res_a->key, 4);
+
+      if (psd_read (input, &lyr_a->adjustment_layer->version, 2, error) < 2     ||
+          psd_read (input, &lyr_a->adjustment_layer->is_colorize, 1, error) < 1 ||
+          psd_read (input, &padding, 1, error) < 1                              ||
+          psd_read (input, hsl, 6, error) < 6                                   ||
+          psd_read (input, data, 90, error) < 90)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      for (gint i = 0; i < 3; i++)
+        {
+          lyr_a->adjustment_layer->colorization[i] =
+            GINT16_FROM_BE (hsl[i]);
+
+          lyr_a->adjustment_layer->hsl[0][i] =
+            GINT16_FROM_BE (data[i]);
+        }
+
+      for (gint i = 1; i < 7; i++)
+        {
+          /* Each value is stored as 4 range values (for CMYK), followed by
+           * 3 LAB value settings. Since we just use HSL, we need to offset
+           * by 4 each time to get the correct next values */
+          gint base = ((i - 1) * 3) + ((i - 1) * 4) + 7;
+
+          for (gint j = 0; j < 3; j++)
+            lyr_a->adjustment_layer->hsl[i][j] =
+              (gchar) GINT16_FROM_BE (data[base + j]);
+        }
+
+      /* The difference between old and new Hue-Saturation settings
+       * is the denominator of the HSL values */
+      if (memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0)
+        {
+          for (gint i = 0; i < 3; i++)
+            {
+              lyr_a->adjustment_layer->colorization[i] /= 100;
+            }
+          lyr_a->adjustment_layer->colorization[2] =
+            (lyr_a->adjustment_layer->colorization[2] + 1) / 2;
+        }
+      else
+        {
+          /* GIMP's Colorize hue & saturation ranges from 0.0 to 1.0, so we
+           * need to offset the imported values from PS */
+          lyr_a->adjustment_layer->colorization[0] /= 180.0;
+          lyr_a->adjustment_layer->colorization[1] /= 100.0;
+          lyr_a->adjustment_layer->colorization[2] /= 100.0;
+          for (gint i = 0; i < 2; i++)
+            {
+              lyr_a->adjustment_layer->colorization[i] += 1.0;
+              lyr_a->adjustment_layer->colorization[i] /= 2.0;
+            }
+        }
+
+      for (gint i = 0; i < 7; i++)
+        {
+          lyr_a->adjustment_layer->hsl[i][0] /= 180.0;
+          lyr_a->adjustment_layer->hsl[i][1] /= 100.0;
+          lyr_a->adjustment_layer->hsl[i][2] /= 100.0;
+        }
+    }
+  else if (memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0)
+    {
+      memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_MIXER, 4);
+
+      if (psd_read (input, &lyr_a->adjustment_layer->version, 2, error) < 2 ||
+          psd_read (input, &lyr_a->adjustment_layer->is_mono, 2, error) < 2 ||
+          psd_read (input, &lyr_a->adjustment_layer->red, 10, error) < 10   ||
+          psd_read (input, &lyr_a->adjustment_layer->green, 10, error) < 10 ||
+          psd_read (input, &lyr_a->adjustment_layer->blue, 10, error) < 10  ||
+          psd_read (input, &lyr_a->adjustment_layer->total, 10, error) < 10)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      for (gint i = 0; i < 5; i++)
+        {
+          lyr_a->adjustment_layer->red[i] =
+            GINT16_FROM_BE (lyr_a->adjustment_layer->red[i]);
+
+          lyr_a->adjustment_layer->green[i] =
+            GINT16_FROM_BE (lyr_a->adjustment_layer->green[i]);
+
+          lyr_a->adjustment_layer->blue[i] =
+            GINT16_FROM_BE (lyr_a->adjustment_layer->blue[i]);
+
+          lyr_a->adjustment_layer->total[i] =
+            GINT16_FROM_BE (lyr_a->adjustment_layer->total[i]);
+        }
+
+    }
+  else if (memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0)
+    {
+      memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_INVERT, 4);
+    }
+  else if (memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0)
+    {
+      gint16 levels = 0;
+      gint16 spacer = 0;
+
+      memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_POSTERIZE, 4);
+
+      if (psd_read (input, &levels, 2, error) < 2 ||
+          psd_read (input, &spacer, 2, error) < 2)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      lyr_a->adjustment_layer->level = GINT16_FROM_BE (levels);
+    }
+  else if ( memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0)
+    {
+      gint16 levels = 0;
+      gint16 spacer = 0;
+
+      memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_THRESHOLD, 4);
+
+      if (psd_read (input, &levels, 2, error) < 2 ||
+          psd_read (input, &spacer, 2, error) < 2)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      lyr_a->adjustment_layer->level = GINT16_FROM_BE (levels);
+    }
 
   return 0;
 }
