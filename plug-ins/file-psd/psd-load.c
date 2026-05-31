@@ -1328,7 +1328,7 @@ read_layer_info (PSDimage      *img_a,
           IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT ", Remaining length %" G_GSIZE_FORMAT,
                             PSD_TELL(input), (gsize) block_rem);
 
-          /* Adjustment layer info */           /* FIXME */
+          /* Adjustment layer info */
           lyr_a[lidx]->adjustment_layer          = g_new (PSDAdjustmentLayer, 1);
           lyr_a[lidx]->adjustment_layer->type[0] = '\0';
 
@@ -4381,8 +4381,9 @@ load_dialog (const gchar *title,
 
       if (unsupported_features->adjustment_layer)
         ADD_UNSUPPORTED_MESSAGE (message,
-                                 "Adjustment layers are not yet "
-                                 "supported and will show up as empty layers.");
+                                 "Adjustment layers are partially "
+                                 "supported. Unsupported adjustment layers "
+                                 "will show up as empty layers.");
       if (unsupported_features->psd_metadata)
         ADD_UNSUPPORTED_MESSAGE (message,
                                  "Metadata non-raster layers are not yet "
@@ -4412,8 +4413,8 @@ load_dialog (const gchar *title,
                                  "supported and will show up as empty layers.");
       if (unsupported_features->layer_effect)
         ADD_UNSUPPORTED_MESSAGE (message,
-                                 "Layer effects are not yet "
-                                 "supported and will show up as empty layers.");
+                                 "Layer effects are partially "
+                                 "supported. Unsupported effects will be discarded.");
       if (unsupported_features->smart_object)
         ADD_UNSUPPORTED_MESSAGE (message,
                                  "Smart objects are not yet "

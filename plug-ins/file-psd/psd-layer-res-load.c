@@ -553,9 +553,9 @@ load_resource_ladj (const PSDlayerres  *res_a,
     }
   else if (memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0)
     {
-      gushort brightness;
-      gushort contrast;
-      gint    unused;
+      gushort brightness = 0;
+      gushort contrast   = 0;
+      gint    unused     = 0;
 
       memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_BRIGHTNESS, 4);
 
@@ -576,7 +576,7 @@ load_resource_ladj (const PSDlayerres  *res_a,
   else if (memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0)
     {
       gshort   data[9];
-      gboolean preserve_luminosity;
+      gboolean preserve_luminosity = FALSE;
 
       memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_BALANCE, 4);
 
@@ -604,7 +604,7 @@ load_resource_ladj (const PSDlayerres  *res_a,
   else if (memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0 ||
            memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0)
     {
-      guchar padding;
+      guchar padding = 0;
       gshort hsl[3];
       gshort data[45];
 
