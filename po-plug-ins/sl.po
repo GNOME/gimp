@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-25 17:59+0000\n"
-"PO-Revision-Date: 2026-05-25 22:50+0200\n"
+"POT-Creation-Date: 2026-05-30 12:57+0000\n"
+"PO-Revision-Date: 2026-05-31 15:49+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1221,7 +1221,7 @@ msgstr "Graf trenutnih nastavitev"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:573
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:741 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:744 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1189 plug-ins/gfig/gfig-dialog.c:1334
 #: plug-ins/ifs-compose/ifs-compose.c:1214
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -8111,7 +8111,7 @@ msgstr ""
 "namestili v menije."
 
 #: plug-ins/common/plugin-browser.c:370
-#: plug-ins/filter-browser/filter-browser.c:623
+#: plug-ins/filter-browser/filter-browser.c:626
 msgid "Searching by name"
 msgstr "Iskanje po imenu"
 
@@ -8125,7 +8125,7 @@ msgstr[2] "%d vstavka"
 msgstr[3] "%d vstavki"
 
 #: plug-ins/common/plugin-browser.c:395
-#: plug-ins/filter-browser/filter-browser.c:690
+#: plug-ins/filter-browser/filter-browser.c:693
 msgid "No matches for your query"
 msgstr "Ni zadetkov"
 
@@ -8139,7 +8139,7 @@ msgstr[2] "%d vstavka ustrezata povpraševanju"
 msgstr[3] "%d vstavki ustrezajo povpraševanju"
 
 #: plug-ins/common/plugin-browser.c:544
-#: plug-ins/filter-browser/filter-browser.c:692
+#: plug-ins/filter-browser/filter-browser.c:695
 msgid "No matches"
 msgstr "Ni zadetkov"
 
@@ -9556,15 +9556,15 @@ msgstr "Naloži datoteko v zapisu Digital Picture Exchange"
 msgid "Could not read Cineon header information."
 msgstr "Glave datoteke Cineon ni možno prebrati."
 
-#: plug-ins/file-cin/cineon-lib.c:134
+#: plug-ins/file-cin/cineon-lib.c:134 plug-ins/file-cin/dpx-lib.c:233
 #, c-format
-msgid "Cineon: Image with %d channels not yet supported."
-msgstr "Cineon: slika s %d kanali še ni podprta."
+msgid "Image with %d channels not yet supported."
+msgstr "Slika s %d kanali še ni podprta."
 
-#: plug-ins/file-cin/cineon-lib.c:154
+#: plug-ins/file-cin/cineon-lib.c:154 plug-ins/file-cin/dpx-lib.c:263
 #, c-format
-msgid "Cineon: Image with %d bpc not yet supported."
-msgstr "Cineon: slika s %d biti na kanal še ni podprta."
+msgid "Image with %d bpc not yet supported."
+msgstr "Slika s %d biti na kanal še ni podprta."
 
 #: plug-ins/file-cin/cineon-lib.c:181 plug-ins/file-cin/cineon-lib.c:207
 #: plug-ins/file-cin/dpx-lib.c:292 plug-ins/file-cin/dpx-lib.c:318
@@ -9577,16 +9577,6 @@ msgstr "Ni bilo mogoče prebrati slikovnih podatkov iz »%s«"
 #, c-format
 msgid "Could not read DPX header information."
 msgstr "Podatkov glave DPX ni možno prebrati."
-
-#: plug-ins/file-cin/dpx-lib.c:233
-#, c-format
-msgid "DPX: Image with %d channels not yet supported."
-msgstr "DPX: slika s %d kanali še ni podprta."
-
-#: plug-ins/file-cin/dpx-lib.c:263
-#, c-format
-msgid "DPX: Image with %d bpc not yet supported."
-msgstr "DPX: slika s %d biti na kanal še ni podprta."
 
 #: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:170
 msgid "DDS image"
@@ -11994,17 +11984,17 @@ msgstr "Spodletelo dekodiranje informacije animiranega WebP iz »%s«"
 msgid "Failed to decode animated WebP frame from '%s'"
 msgstr "Spodletelo dekodiranje sličice animiranega WebP iz »%s«"
 
-#: plug-ins/filter-browser/filter-browser.c:289
-#: plug-ins/filter-browser/filter-browser.c:331
+#: plug-ins/filter-browser/filter-browser.c:292
+#: plug-ins/filter-browser/filter-browser.c:334
 msgid "Allowed values:"
 msgstr "Dovoljene vrednosti:"
 
-#: plug-ins/filter-browser/filter-browser.c:434
+#: plug-ins/filter-browser/filter-browser.c:437
 #, c-format
 msgid "Operation name: %s"
 msgstr "Ime operacije: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:447
+#: plug-ins/filter-browser/filter-browser.c:450
 #, c-format
 msgid "Categories: %s"
 msgstr "Kategorije: %s"
@@ -12015,7 +12005,7 @@ msgstr "Kategorije: %s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:477
+#: plug-ins/filter-browser/filter-browser.c:480
 #: plug-ins/gradient-flare/gradient-flare.c:2972
 #: plug-ins/gradient-flare/gradient-flare.c:3722
 #: plug-ins/gradient-flare/gradient-flare.c:3824
@@ -12023,28 +12013,28 @@ msgstr "Kategorije: %s"
 msgid "Parameters"
 msgstr "Parametri"
 
-#: plug-ins/filter-browser/filter-browser.c:509
+#: plug-ins/filter-browser/filter-browser.c:512
 msgid "Additional Information"
 msgstr "Dodatne podrobnosti"
 
-#: plug-ins/filter-browser/filter-browser.c:515
+#: plug-ins/filter-browser/filter-browser.c:518
 #, c-format
 msgid "License: %s"
 msgstr "Dovoljenje: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:626
+#: plug-ins/filter-browser/filter-browser.c:629
 msgid "Searching by title"
 msgstr "Iskanje po imenu"
 
-#: plug-ins/filter-browser/filter-browser.c:629
+#: plug-ins/filter-browser/filter-browser.c:632
 msgid "Searching by description"
 msgstr "Iskanje po opisu"
 
-#: plug-ins/filter-browser/filter-browser.c:632
+#: plug-ins/filter-browser/filter-browser.c:635
 msgid "Searching by category"
 msgstr "Iskanje po kategorijah"
 
-#: plug-ins/filter-browser/filter-browser.c:697
+#: plug-ins/filter-browser/filter-browser.c:700
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
@@ -12053,7 +12043,7 @@ msgstr[1] "%d vstavek ustreza povpraševanju filtra"
 msgstr[2] "%d vstavka ustrezata povpraševanju filtra"
 msgstr[3] "%d vstavki ustrezajo povpraševanju filtra"
 
-#: plug-ins/filter-browser/filter-browser.c:703
+#: plug-ins/filter-browser/filter-browser.c:706
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
@@ -12062,31 +12052,31 @@ msgstr[1] "%d filter"
 msgstr[2] "%d fittra"
 msgstr[3] "%d filtti"
 
-#: plug-ins/filter-browser/filter-browser.c:735
+#: plug-ins/filter-browser/filter-browser.c:738
 msgid "GEGL Filter Browser"
 msgstr "Brskalnik filtrov GEGL"
 
-#: plug-ins/filter-browser/filter-browser.c:752
+#: plug-ins/filter-browser/filter-browser.c:755
 msgid "by name"
 msgstr "po imenu"
 
-#: plug-ins/filter-browser/filter-browser.c:753
+#: plug-ins/filter-browser/filter-browser.c:756
 msgid "by title"
 msgstr "po naslovu"
 
-#: plug-ins/filter-browser/filter-browser.c:754
+#: plug-ins/filter-browser/filter-browser.c:757
 msgid "by description"
 msgstr "po opisu"
 
-#: plug-ins/filter-browser/filter-browser.c:846
+#: plug-ins/filter-browser/filter-browser.c:849
 msgid "_GEGL Filter Browser"
 msgstr "Brskalnik filtrov _GEGL"
 
-#: plug-ins/filter-browser/filter-browser.c:851
+#: plug-ins/filter-browser/filter-browser.c:854
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "Prikaži informacije o razpoložljivih operacijah GEGL (tj. filtrih)."
 
-#: plug-ins/filter-browser/filter-browser.c:853
+#: plug-ins/filter-browser/filter-browser.c:856
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
