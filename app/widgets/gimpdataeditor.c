@@ -581,8 +581,8 @@ gimp_data_editor_name_activate (GtkWidget      *widget,
         {
           gtk_entry_set_text (GTK_ENTRY (widget),
                               gimp_object_get_name (editor->data));
+          g_free (new_name);
         }
-      g_free (new_name);
     }
 }
 
