@@ -37,5 +37,4 @@ if cfitsio_dep.found()
               command: [python, '-c',
                         'open("@OUTPUT@", "w").write("Nice. I was built before calling in-build-gimp.py\\n")'],
               build_by_default: true)
-  plugin_executables += [plugin_exe.full_path()]
 endif
