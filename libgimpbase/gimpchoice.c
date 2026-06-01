@@ -38,6 +38,7 @@ typedef struct _GimpChoiceDesc
   gboolean  sensitive;
   gboolean  deprecated;
   gchar    *redirect_to;
+  GList    *aliases;
 } GimpChoiceDesc;
 
 enum
@@ -202,7 +203,8 @@ gimp_choice_add (GimpChoice  *choice,
   desc->help        = help != NULL ? g_strdup (help) : NULL;
   desc->sensitive   = TRUE;
   desc->deprecated  = FALSE;
-  desc->redirect_to = g_strdup (nick);
+  desc->redirect_to = NULL;
+  desc->aliases     = NULL;
   g_hash_table_insert (choice->choices, g_strdup (nick), desc);
 
   duplicate = g_list_find_custom (choice->keys, nick, (GCompareFunc) g_strcmp0);
@@ -220,10 +222,15 @@ gimp_choice_add (GimpChoice  *choice,
  * @choice:      the %GimpChoice.
  * @nick:        the nick of the deprecated @choice.
  * @id:          optional integer ID for @nick.
- * @redirect_to: the valid nick to redirect the deprecated one to
+ * @redirect_to: (nullable): the valid nick to redirect the deprecated one to
  *
- * This procedure is used to add a deprecated nick that should be redirected
- * to a valid nick in @choice.
+ * This procedure is used to add a deprecated nick. It may have a
+ * @redirect_to alias (when you are basically renaming a choice) or none
+ * (for planning choice removal through a deprecation period).
+ *
+ * If @redirect_to is non %NULL, then @id is ignored and instead, the ID
+ * of @redirect_to will be used for @nick. The @redirect_to value must
+ * not be deprecated itself.
  *
  * Since: 3.4
  **/
@@ -234,17 +241,27 @@ gimp_choice_add_deprecated (GimpChoice  *choice,
                             const gchar *redirect_to)
 {
   GimpChoiceDesc *deprecated_desc;
+  GimpChoiceDesc *redirect_desc = NULL;
   GList          *duplicate;
 
   g_return_if_fail (nick != NULL);
+  g_return_if_fail (redirect_to == NULL || g_strcmp0 (nick, redirect_to) != 0);
+
+  if (redirect_to)
+    {
+      redirect_desc = g_hash_table_lookup (choice->choices, redirect_to);
+      g_return_if_fail (redirect_desc != NULL && redirect_desc->deprecated == FALSE);
+      redirect_desc->aliases = g_list_prepend (redirect_desc->aliases, g_strdup (nick));
+    }
 
   deprecated_desc              = g_new0 (GimpChoiceDesc, 1);
-  deprecated_desc->id          = id;
-  deprecated_desc->label       = g_strdup (nick);
+  deprecated_desc->id          = redirect_desc ? redirect_desc->id : id;
+  deprecated_desc->label       = NULL;
   deprecated_desc->help        = NULL;
-  deprecated_desc->sensitive   = TRUE;
+  deprecated_desc->sensitive   = redirect_desc ? redirect_desc->sensitive : TRUE;
   deprecated_desc->deprecated  = TRUE;
   deprecated_desc->redirect_to = g_strdup (redirect_to);
+  deprecated_desc->aliases     = NULL;
 
   g_hash_table_insert (choice->choices, g_strdup (nick), deprecated_desc);
 
@@ -264,7 +281,7 @@ gimp_choice_add_deprecated (GimpChoice  *choice,
  * @nick:   the nick to check.
  *
  * This procedure checks if the given @nick is valid and refers to
- * an existing choice.
+ * an existing and sensitive choice.
  *
  * Returns: Whether the choice is valid.
  *
@@ -321,14 +338,9 @@ gimp_choice_get_id (GimpChoice  *choice,
   g_return_val_if_fail (nick != NULL, 0);
 
   desc = g_hash_table_lookup (choice->choices, nick);
-  if (desc && ! desc->deprecated)
-    return desc->id;
+  g_return_val_if_fail (desc != NULL, 0);
 
-  desc = g_hash_table_lookup (choice->choices, desc->redirect_to);
-  if (desc)
-    return desc->id;
-  else
-    return 0;
+  return desc->id;
 }
 
 /**
@@ -484,8 +496,23 @@ gimp_choice_set_sensitive (GimpChoice  *choice,
   g_return_if_fail (desc != NULL);
   if (desc->sensitive != sensitive)
     {
-      desc->sensitive = sensitive;
-      g_signal_emit (choice, gimp_choice_signals[SENSITIVITY_CHANGED], 0, nick);
+      if (desc->redirect_to)
+        {
+          gimp_choice_set_sensitive (choice, desc->redirect_to, sensitive);
+        }
+      else
+        {
+          desc->sensitive = sensitive;
+          for (GList *iter = desc->aliases; iter; iter = iter->next)
+            {
+              GimpChoiceDesc *alias_desc;
+
+              alias_desc = g_hash_table_lookup (choice->choices, iter->data);
+              alias_desc->sensitive = sensitive;
+              g_signal_emit (choice, gimp_choice_signals[SENSITIVITY_CHANGED], 0, (gchar *) iter->data);
+            }
+          g_signal_emit (choice, gimp_choice_signals[SENSITIVITY_CHANGED], 0, nick);
+        }
     }
 }
 
@@ -498,6 +525,7 @@ gimp_choice_desc_free (GimpChoiceDesc *desc)
   g_free (desc->label);
   g_free (desc->help);
   g_free (desc->redirect_to);
+  g_list_free_full (desc->aliases, g_free);
   g_free (desc);
 }
 
