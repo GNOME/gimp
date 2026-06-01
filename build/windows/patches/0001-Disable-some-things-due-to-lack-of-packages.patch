@@ -1,6 +1,6 @@
-From 206ba6c23bbe8adc70b404fc00a5dc3c04ead4fe Mon Sep 17 00:00:00 2001
+From 3411a7621e4f9329088d75f4296706f1c3c9c1f8 Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Wed, 27 May 2026 21:28:12 -0300
+Date: Mon, 1 Jun 2026 09:30:37 -0300
 Subject: [PATCH] Disable some things due to lack of packages
 
 ---
@@ -262,7 +262,7 @@ index 7dd25ed1ba..234a951148 100644
    subdir('reference')
  endif
 diff --git a/libgimp/meson.build b/libgimp/meson.build
-index e8c7516d4d..03f60aa98f 100644
+index f8e76278ec..7e8eba8684 100644
 --- a/libgimp/meson.build
 +++ b/libgimp/meson.build
 @@ -516,7 +516,9 @@ libgimpui_introspectable_files = [
@@ -277,7 +277,7 @@ index e8c7516d4d..03f60aa98f 100644
    gobject_introspection_warning = '\n      '.join(['',
      'GObject Introspection is disabled while cross-compiling because',
 diff --git a/meson.build b/meson.build
-index a6494520a3..c3217cf8d3 100644
+index efe827c6e7..e385f379cf 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -291,7 +291,7 @@ warning_cflags_common = [
@@ -362,9 +362,9 @@ index a6494520a3..c3217cf8d3 100644
    gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
  
    menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
-@@ -2079,18 +2068,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
-       gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', plugin_exe)
-     endforeach
+@@ -2074,18 +2063,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
+     gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpthumb.full_path())
+     gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpwidgets.full_path())
    endif
 -else
 -  # Cross-builds require an existing native GIMP installed, unless we
@@ -381,7 +381,7 @@ index a6494520a3..c3217cf8d3 100644
  endif
  
  gimp_exe = find_program('tools'/'in-build-gimp.py')
-@@ -2099,7 +2076,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
+@@ -2094,7 +2071,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
  # Subdirs: part 2
  
  # gimp-data submodule part 2
@@ -390,7 +390,7 @@ index a6494520a3..c3217cf8d3 100644
  
  # Unit testing
  subdir('app/tests')
-@@ -2284,7 +2261,7 @@ final_message = [
+@@ -2279,7 +2256,7 @@ final_message = [
  '''  Test appdata         @0@'''.format(appstreamcli.found()),
  '',
  '''Documentation:''',
