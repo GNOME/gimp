@@ -37,4 +37,3 @@ plugin_custom_targets += custom_target('dummy-' + plugin_name,
               command: [python, '-c',
                         'open("@OUTPUT@", "w").write("Nice. I was built before calling in-build-gimp.py\\n")'],
               build_by_default: true)
-plugin_executables += [plugin_exe.full_path()]

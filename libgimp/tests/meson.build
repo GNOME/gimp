@@ -57,7 +57,6 @@ foreach test_name, test_data : tests
                                          command: [python, '-c',
                                                    'open("@OUTPUT@", "w").write("Nice. I was built before calling in-build-gimp.py\\n")'],
                                          build_by_default: true)
-  plugin_executables += [meson.current_build_dir() / 'c-tests' / basename / fs.name(c_test_exe.full_path())]
 
   test_env.append('GIMP_TESTING_PLUG_INS', 'libgimp/tests' / fs.name(c_test_exe.full_path()), separator: ':')
 

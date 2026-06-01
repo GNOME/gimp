@@ -1983,7 +1983,6 @@ subdir('libgimpwidgets')
 subdir('libgimp')
 
 # Executables, plugins
-plugin_executables = []
 subdir('extensions')
 subdir('modules')
 subdir('plug-ins')
