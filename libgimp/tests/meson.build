@@ -49,6 +49,16 @@ foreach test_name, test_data : tests
                           c_test,
                           dependencies: [ libgimp_dep, pango ],
                           install: false)
+
+  # Ugly trick to add executables to plugin_custom_targets list (see root meson.build)
+  plugin_custom_targets += custom_target('dummy-c-test' + basename,
+                                         input: c_test_exe,
+                                         output: basename + '.dummy',
+                                         command: [python, '-c',
+                                                   'open("@OUTPUT@", "w").write("Nice. I was built before calling in-build-gimp.py\\n")'],
+                                         build_by_default: true)
+  plugin_executables += [meson.current_build_dir() / 'c-tests' / basename / fs.name(c_test_exe.full_path())]
+
   test_env.append('GIMP_TESTING_PLUG_INS', 'libgimp/tests' / fs.name(c_test_exe.full_path()), separator: ':')
 
   test(test_name, run_c_test,
