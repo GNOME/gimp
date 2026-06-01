@@ -31,6 +31,7 @@ Tools:
 
   * Gradient tool: new option "Editable gradient" to apply the gradient
     non-destructively.
+  * Heal tool: healing behaves more as expected near edges.
 
 Graphical User Interface:
 
@@ -45,6 +46,11 @@ Graphical User Interface:
   * We do not rotate the checkerboard anymore when rotating the canvas,
     but also scrolling or zooming. This significantly improves performance
     when interacting with a rotated canvas.
+  * GimpColorScale moved from hardcoded (bad!) to proper theme-based CSS
+    styling.
+  * Append "(read only)" to system resource (brushes, gradients,
+    palettes…) titles when trying to edit them in their respective
+    Editor dockables.
 
 Plug-Ins:
 
@@ -55,6 +61,14 @@ Plug-Ins:
     - Better apply embedded profile on pixel data for import and export.
     - New "file-psd-export-metadata" procedure to export PSD image resources or
       layer/mask data into a temporary file for use by other formats.
+    - Added support for importing 8 types of adjustment layers as GEGL
+      filters attached to layer groups with pass-through layer mode:
+      Posterize, Invert, Threshold, Channel/Mono Mixer, Color Balance,
+      Levels, Hue-Saturation/Colorize, and legacy Brightness/Contrast.
+    - Compatibility warnings for adjustment layers should now only show
+      when layers we don't yet support are included in the PSD. The
+      wording for the warning has been updated to show we now have
+      partial support.
   * New import support for MacPaint images.
   * GBR: fix exporting grayscale GBRs with alpha channels.
   * file-raw-data: various code improvements.
@@ -117,6 +131,8 @@ API:
     - New functions:
       + gimp_procedure_set_help_uri
       + gimp_procedure_get_help_file
+      + gimp_text_layer_is_dynamic
+      + gimp_text_layer_get_layout_offsets
   * libgimpui:
     - GimpProcedureDialog will now use the icon set on the associated
       GimpProcedure (likely only visible on platforms showing window
@@ -129,6 +145,10 @@ API:
     - New procedure (gimp-show-uri) to load any URI in your default
       software set for this type of file. This should be used instead of
       the now deprecated (plug-in-web-browser).
+    - New (script-fu-guides-from-rule) plug-in procedure to create
+      guides by common composition rules, such as "Rule of thirds" or
+      "Golden sections". It is available in menus as `Image > Guides >
+      New Guides from Rule`.
 
 Utilities:
 
