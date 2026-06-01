@@ -689,6 +689,8 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
            * immediately as it was just killed.
            */
           waitpid (plug_in->pid, &status, 0);
+          g_spawn_close_pid (plug_in->pid);
+          plug_in->pid = 0;
         }
       else
         {
@@ -739,9 +741,8 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
         }
 
       g_spawn_close_pid (plug_in->pid);
-#endif /* G_OS_WIN32 */
-
       plug_in->pid = 0;
+#endif /* G_OS_WIN32 */
     }
 
   /* Remove the input handler. */

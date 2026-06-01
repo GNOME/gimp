@@ -514,6 +514,8 @@ gimp_plug_in_manager_close_waitpid (GPid        pid,
   g_clear_error (&error);
 
   g_spawn_close_pid (pid);
+  plug_in->pid = 0;
+
   g_hash_table_remove (plug_in->manager->zombie_plug_ins, plug_in);
 }
 
@@ -532,4 +534,7 @@ gimp_plug_in_manager_cleanup_zombie (GimpPlugIn *plug_in,
   g_printerr ("Zombie plug-in: the process of plug-in '%s' never exited.\n",
               gimp_object_get_name (GIMP_OBJECT (plug_in)));
   g_source_remove (source_id);
+
+  g_spawn_close_pid (plug_in->pid);
+  plug_in->pid = 0;
 }
