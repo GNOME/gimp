@@ -509,8 +509,12 @@ gimp_tag_cache_load (GimpTagCache *cache)
     }
   else
     {
-      g_printerr ("Failed to parse tag cache: %s\n",
-                  error ? error->message : "Unknown error");
+      /* Ignore "No such file or directory" errors. The default tags.xml
+       * will be created in this case.
+       */
+      if (error->domain != G_FILE_ERROR || error->code != G_FILE_ERROR_NOENT)
+        g_printerr ("Failed to parse tag cache: %s\n",
+                    error ? error->message : "Unknown error");
       g_clear_error (&error);
     }
 
