@@ -180,6 +180,9 @@ try:
       sys.stderr.write(f'       "{used_dir_prefix}" != "{tmpl_dir_prefix}"\n')
       sys.exit(1)
     sys.stderr.write(f"INFO: Running: shutil.rmtree({GIMP3_DIRECTORY})\n")
+    # This weird retry loop is because Windows may still keep a hold to
+    # plug-in executable a bit longer than the process or even parent
+    # process life. See MR !2837.
     attempts = max_attempts = 3
     while attempts > 0:
       try:
