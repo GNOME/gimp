@@ -1,0 +1,7 @@
+patterns:
+  deny:
+    - regex: '^(?!((Issue #[0-9]+)|([A-Za-z0-9][A-Za-z0-9+_.-]*(,\s*[A-Za-z0-9][A-Za-z0-9+_.-]*)*)):\s).+'
+      message: "Commit message subject must start with '<section>:' (comma-separated allowed) or 'Issue #<id>:'"
+      where: subject
+    - regex: '\n(?!.*https?://).{80,}'
+      message: "Commit message description lines must not exceed 80 characters, please add a line break"

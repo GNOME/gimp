@@ -110,25 +110,6 @@ workflow:
     name: "${CI_JOB_NAME_SLUG}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     when: always
 
-
-check-commit-log:
-  extends:
-    - .default 
-    - .fdo.ci-fairy
-  stage: analysis
-  variables:
-    GIT_DEPTH: "100"
-    JUNIT_REPORT: commit-message-junit-report.xml
-  script:
-    - touch "$JUNIT_REPORT"
-    - ci-fairy check-commits --junit-xml=$JUNIT_REPORT
-  rules:
-    - <<: *CI_MERGE
-  artifacts:
-    expire_in: 1 week
-    reports:
-      junit: $JUNIT_REPORT
-
 stages:
   - dependencies
   - build
@@ -971,6 +952,24 @@ abidiff:
     - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpthumb-3.0.so" "${LIB_DIR}/libgimpthumb-3.0.so"
     - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpwidgets-3.0.so" "${LIB_DIR}/libgimpwidgets-3.0.so"
     - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpui-3.0.so" "${LIB_DIR}/libgimpui-3.0.so"
+
+check-commit-log:
+  extends:
+    - .default
+    - .fdo.ci-fairy
+  stage: analysis
+  variables:
+    GIT_DEPTH: "100"
+    JUNIT_REPORT: commit-message-junit-report.xml
+  script:
+    - touch "$JUNIT_REPORT"
+    - ci-fairy check-commits --textwidth 80 --rules-file=.gitlab/commit-rules.yml --junit-xml=$JUNIT_REPORT
+  rules:
+    - <<: *CI_COMMIT
+  artifacts:
+    expire_in: 1 week
+    reports:
+      junit: $JUNIT_REPORT
 
 issue-bot:
   extends: .default
