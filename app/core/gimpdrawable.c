@@ -458,8 +458,8 @@ gimp_drawable_size_changed (GimpViewable *viewable)
   if (GIMP_VIEWABLE_CLASS (parent_class)->size_changed)
     GIMP_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
 
-  width   = gimp_item_get_width (GIMP_ITEM (viewable));
-  height  = gimp_item_get_height (GIMP_ITEM (viewable));
+  width  = gimp_item_get_width (GIMP_ITEM (viewable));
+  height = gimp_item_get_height (GIMP_ITEM (viewable));
 
   for (list = GIMP_LIST (GIMP_DRAWABLE (viewable)->private->filter_stack)->queue->tail;
        list;
@@ -468,12 +468,9 @@ gimp_drawable_size_changed (GimpViewable *viewable)
       if (GIMP_IS_DRAWABLE_FILTER (list->data))
         {
           GimpDrawableFilter *filter = list->data;
-          GimpChannel        *mask   = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter));
           GeglRectangle       rect   = { 0, 0, width, height };
 
-          /* Don't resize partial layer effects */
-          if (gimp_channel_is_empty (mask))
-            gimp_drawable_filter_refresh_crop (filter, &rect);
+          gimp_drawable_filter_refresh_crop (filter, &rect);
         }
     }
 }
@@ -681,6 +678,7 @@ gimp_drawable_resize (GimpItem     *item,
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   GeglBuffer   *new_buffer;
+  GList        *list;
   gint          new_offset_x;
   gint          new_offset_y;
   gint          copy_x, copy_y;
@@ -753,6 +751,31 @@ gimp_drawable_resize (GimpItem     *item,
                                                  0,            0),
                                  TRUE);
   g_object_unref (new_buffer);
+
+  /* Since filter masks are channels, resizing the drawable will cause them
+   * to move based on the new top-left coordinate. We need to correct the offset
+   * after resizing. */
+  for (list = GIMP_LIST (GIMP_DRAWABLE (item)->private->filter_stack)->queue->tail;
+       list;
+       list = g_list_previous (list))
+    {
+      if (GIMP_IS_DRAWABLE_FILTER (list->data))
+        {
+          GimpDrawableFilter *filter = list->data;
+          GimpChannel        *mask;
+          gboolean            push_undo;
+
+          push_undo = (gimp_item_is_attached (item) &&
+                       drawable->private->push_resize_undo);
+
+          mask = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter));
+          if (! gimp_channel_is_empty (mask))
+            gimp_item_translate (GIMP_ITEM (mask),
+                                 offset_x,
+                                 offset_y,
+                                 push_undo);
+        }
+    }
 }
 
 static void
