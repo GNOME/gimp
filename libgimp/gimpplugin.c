@@ -157,6 +157,8 @@ typedef struct _GimpPlugInPrivate
   GHashTable *items;
   GHashTable *filters;
   GHashTable *resources;
+
+  gboolean    returned;
 } GimpPlugInPrivate;
 
 
@@ -312,6 +314,7 @@ gimp_plug_in_init (GimpPlugIn *plug_in)
   priv->procedure_stack     = NULL;
   priv->ran_procedure_stack = NULL;
   priv->temp_procedures     = NULL;
+  priv->returned            = FALSE;
 }
 
 static void
@@ -965,7 +968,13 @@ _gimp_plug_in_quit (GimpPlugIn *plug_in)
 
   _gimp_shm_close ();
 
-  gp_quit_write (priv->write_channel, plug_in);
+  /* A successful GP_PROC_RETURN message would have already triggered
+   * the main process to close the plug-in's IO channels. Sending a
+   * GP_QUIT now would at best be useless, or at worst lead to a channel
+   * write "Broken pipe" error.
+   */
+  if (! priv->returned)
+    gp_quit_write (priv->write_channel, plug_in);
 }
 
 GIOChannel *
@@ -1268,6 +1277,8 @@ gimp_plug_in_write (GIOChannel   *channel,
 
   priv = gimp_plug_in_get_instance_private (plug_in);
 
+  g_return_val_if_fail (priv->returned == FALSE, FALSE);
+
   while (count > 0)
     {
       gulong bytes;
@@ -1501,6 +1512,8 @@ gimp_plug_in_main_proc_run (GimpPlugIn *plug_in,
   if (! gp_proc_return_write (priv->write_channel,
                               &proc_return, plug_in))
     _gimp_quit ();
+  else
+    priv->returned = TRUE;
 
   _gimp_gp_params_free (proc_return.params, proc_return.n_params, TRUE);
 }
