@@ -99,6 +99,7 @@ create_filter_param_details (GParamSpec   *pspec,
   GtkWidget *label       = NULL;
   gchar     *name        = NULL;
   gchar     *type        = NULL;
+  gchar     *pspec_blurb = NULL;
   GString   *blurb       = NULL;
   gboolean   is_unknown  = FALSE;
   GType      gtype       = 0;
@@ -129,13 +130,15 @@ create_filter_param_details (GParamSpec   *pspec,
    * parameter information in the blurb of a placeholder GParamSpec.
    * See the definition of the procedure for more details.
    */
-  is_unknown = g_type_is_a (gtype, G_TYPE_PARAM) &&
-               g_strcmp0 (pspec->name, "unknown") == 0;
+  is_unknown  = g_type_is_a (gtype, G_TYPE_PARAM) &&
+                g_strcmp0 (pspec->name, "unknown") == 0;
+  pspec_blurb = (gchar *) g_param_spec_get_blurb (pspec);
+  pspec_blurb = pspec_blurb ? g_markup_escape_text (pspec_blurb, -1) : NULL;
   if (is_unknown)
     {
       gchar **parts = NULL;
 
-      parts = g_strsplit (g_param_spec_get_blurb (pspec), ":", 4);
+      parts = g_strsplit (pspec_blurb ? pspec_blurb : "", ":", 4);
 
       name  = g_strdup (parts[1]);
       type  = g_strdup (parts[2]);
@@ -145,13 +148,11 @@ create_filter_param_details (GParamSpec   *pspec,
     }
   else
     {
-      gchar *blurb_s = NULL;
-
-      name    = (gchar *) g_param_spec_get_name (pspec);
-      type    = (gchar *) g_type_name (gtype);
-      blurb_s = (gchar *) g_param_spec_get_blurb (pspec);
-      g_string_append (blurb, blurb_s ? blurb_s : "");
+      name = (gchar *) g_param_spec_get_name (pspec);
+      type = (gchar *) g_type_name (gtype);
+      g_string_append (blurb, pspec_blurb ? pspec_blurb : "");
     }
+  g_free (pspec_blurb);
 
   label = gtk_label_new (name);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
