@@ -756,13 +756,13 @@ load_image (PopplerDocument        *doc,
             gboolean                reverse_order,
             PdfSelectedPages       *pages)
 {
-  GimpImage  *image = NULL;
-  GimpImage **images   = NULL;
+  GimpImage  *image        = NULL;
+  GimpImage **images       = NULL;
   gint        i;
   gdouble     scale;
   gdouble     doc_progress = 0;
-  gint        base_index = 0;
-  gint        sign = 1;
+  gint        base_index   = 0;
+  gint        sign         = 1;
 
   if (reverse_order && pages->n_pages > 0)
     {
@@ -809,6 +809,8 @@ load_image (PopplerDocument        *doc,
 
           gimp_image_set_resolution (image, resolution, resolution);
         }
+      doc_width  = MAX (doc_width, width);
+      doc_height = MAX (doc_height, height);
 
       surface = render_page_to_surface (page, width, height, scale,
                                         antialias, white_background);
@@ -836,6 +838,10 @@ load_image (PopplerDocument        *doc,
 
   if (image)
     {
+      /* If PDF contains both portrait and landscape pages,
+       * then we need to resize the image to contain both */
+      gimp_image_resize (image, doc_width, doc_height, 0, 0);
+
       gimp_image_undo_enable (image);
       gimp_image_clean_all (image);
     }
