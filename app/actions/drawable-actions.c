@@ -28,6 +28,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayermask.h"
+#include "core/gimpgrouplayer.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
@@ -163,6 +164,7 @@ drawable_actions_update (GimpActionGroup *group,
   gboolean   all_writable  = TRUE;
   gboolean   all_movable   = TRUE;
   gboolean   none_children = TRUE;
+  gboolean   force_nde     = FALSE;
 
   image = action_data_get_image (data);
 
@@ -208,6 +210,11 @@ drawable_actions_update (GimpActionGroup *group,
           if (gimp_item_is_position_locked (item, NULL))
             all_movable = FALSE;
 
+          if (GIMP_IS_GROUP_LAYER (item)        ||
+              (gimp_item_is_rasterizable (item) &&
+               ! gimp_item_is_rasterized (item)))
+            force_nde = TRUE;
+
           if (has_visible && ! locked && ! locked_pos &&
               ! none_children && ! all_rgb &&
               ! all_writable && ! all_movable)
@@ -220,7 +227,8 @@ drawable_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("drawable-equalize",       drawables && all_writable && none_children);
+  /* For now, Equalize should not be non-destructive due to its histogram property */
+  SET_SENSITIVE ("drawable-equalize",       drawables && all_writable && none_children && ! force_nde);
   SET_SENSITIVE ("drawable-levels-stretch", drawables && all_writable && none_children && all_rgb);
 
   SET_SENSITIVE ("drawable-visible",       drawables);
