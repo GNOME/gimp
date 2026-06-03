@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-25 15:31+0000\n"
-"PO-Revision-Date: 2026-05-26 21:49+0200\n"
+"POT-Creation-Date: 2026-06-01 03:29+0000\n"
+"PO-Revision-Date: 2026-06-02 14:05+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -8851,6 +8851,16 @@ msgctxt "tools-action"
 msgid "Rotate image by an arbitrary angle"
 msgstr "Roter biletet med ein fritt vald vinkel"
 
+#: app/actions/tools-actions.c:86
+msgctxt "tools-action"
+msgid "Set Brush Size in Pixels"
+msgstr "Set penselstorleik i pikslar"
+
+#: app/actions/tools-actions.c:141
+msgctxt "tools-action"
+msgid "Set Ink Blob Size in Pixels"
+msgstr "Set storleik på blekkdråpen i pikslar"
+
 #: app/actions/tools-actions.c:172
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
@@ -8920,6 +8930,16 @@ msgstr "Luftpenselflyt: Minsk med 10"
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
 msgstr "Luftpenselflyt: Auk med 10"
+
+#: app/actions/tools-actions.c:244
+msgctxt "tools-action"
+msgid "Set MyPaint Brush Diameter in Pixels"
+msgstr "Set  MyPaint-diameteren i pikslar"
+
+#: app/actions/tools-actions.c:276
+msgctxt "tools-action"
+msgid "Set Warp Effect Size in Pixels"
+msgstr "Storleiken på forvrenginga i pikslar"
 
 #: app/actions/tools-actions.c:299
 msgctxt "tools-action"
@@ -9270,6 +9290,61 @@ msgstr "Verktøytvinging: Minsk relativt"
 msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
 msgstr "Verktøytvinging: Auk relativt"
+
+#: app/actions/tools-actions.c:607
+msgctxt "tools-action"
+msgid "Set Paint Select Brush Size in Pixels"
+msgstr "Set storleiken på teiknevala i pikslar"
+
+#: app/actions/tools-actions.c:614
+msgctxt "tools-action"
+msgid "Select Object 1 by Index"
+msgstr "Vel Objekt 1 etter indeks"
+
+#: app/actions/tools-actions.c:618
+msgctxt "tools-action"
+msgid "First Object 1"
+msgstr "Første objekt 1"
+
+#: app/actions/tools-actions.c:622
+msgctxt "tools-action"
+msgid "Last Object 1"
+msgstr "Siste Objekt 1"
+
+#: app/actions/tools-actions.c:626
+msgctxt "tools-action"
+msgid "Previous Object 1"
+msgstr "Førre Objekt 1"
+
+#: app/actions/tools-actions.c:630
+msgctxt "tools-action"
+msgid "Next Object 1"
+msgstr "Neste Objekt 1"
+
+#: app/actions/tools-actions.c:638
+msgctxt "tools-action"
+msgid "Select Object 2 by Index"
+msgstr "Vel Objekt 2 etter indeks"
+
+#: app/actions/tools-actions.c:642
+msgctxt "tools-action"
+msgid "First Object 2"
+msgstr "Første objekt 2"
+
+#: app/actions/tools-actions.c:646
+msgctxt "tools-action"
+msgid "Last Object 2"
+msgstr "Siste Objekt 2"
+
+#: app/actions/tools-actions.c:650
+msgctxt "tools-action"
+msgid "Previous Object 2"
+msgstr "Førre Objekt 2"
+
+#: app/actions/tools-actions.c:654
+msgctxt "tools-action"
+msgid "Next Object 2"
+msgstr "Neste Objekt 2"
 
 #: app/actions/tools-actions.c:830
 #, c-format
@@ -19704,7 +19779,7 @@ msgstr ""
 msgid "Rectangle: "
 msgstr "Rektangel: "
 
-#: app/display/gimptoolrectangle.c:2172
+#: app/display/gimptoolrectangle.c:2155
 msgid "Position: "
 msgstr "Posisjon: "
 
@@ -22160,27 +22235,27 @@ msgstr "Ressursen «%s» kan ikkje gjevast nytt namn"
 #. TODO: write a more explicit error message after
 #. * string freeze.
 #.
-#: app/pdb/text-layer-cmds.c:86 app/pdb/text-layer-cmds.c:113
+#: app/pdb/text-layer-cmds.c:87 app/pdb/text-layer-cmds.c:114
 #, c-format
 msgid "Failed to create text layer"
 msgstr "Fekk ikkje til å oppretta eit tekstlag"
 
-#: app/pdb/text-layer-cmds.c:178 app/pdb/text-layer-cmds.c:316
-#: app/pdb/text-layer-cmds.c:381 app/pdb/text-layer-cmds.c:440
-#: app/pdb/text-layer-cmds.c:498 app/pdb/text-layer-cmds.c:556
-#: app/pdb/text-layer-cmds.c:614 app/pdb/text-layer-cmds.c:672
-#: app/pdb/text-layer-cmds.c:730 app/pdb/text-layer-cmds.c:786
-#: app/pdb/text-layer-cmds.c:844 app/pdb/text-layer-cmds.c:902
-#: app/pdb/text-layer-cmds.c:960 app/pdb/text-layer-cmds.c:1018
-#: app/pdb/text-layer-cmds.c:1076 app/pdb/text-layer-cmds.c:1134
-#: app/pdb/text-layer-cmds.c:1190 app/pdb/text-layer-cmds.c:1248
-#: app/pdb/text-layer-cmds.c:1306 app/pdb/text-layer-cmds.c:1364
-#: app/pdb/text-layer-cmds.c:1422 app/pdb/text-layer-cmds.c:1487
-#: app/pdb/text-layer-cmds.c:1523
+#: app/pdb/text-layer-cmds.c:179 app/pdb/text-layer-cmds.c:317
+#: app/pdb/text-layer-cmds.c:382 app/pdb/text-layer-cmds.c:441
+#: app/pdb/text-layer-cmds.c:499 app/pdb/text-layer-cmds.c:557
+#: app/pdb/text-layer-cmds.c:615 app/pdb/text-layer-cmds.c:673
+#: app/pdb/text-layer-cmds.c:731 app/pdb/text-layer-cmds.c:787
+#: app/pdb/text-layer-cmds.c:845 app/pdb/text-layer-cmds.c:903
+#: app/pdb/text-layer-cmds.c:961 app/pdb/text-layer-cmds.c:1060
+#: app/pdb/text-layer-cmds.c:1118 app/pdb/text-layer-cmds.c:1176
+#: app/pdb/text-layer-cmds.c:1232 app/pdb/text-layer-cmds.c:1290
+#: app/pdb/text-layer-cmds.c:1348 app/pdb/text-layer-cmds.c:1406
+#: app/pdb/text-layer-cmds.c:1464 app/pdb/text-layer-cmds.c:1529
+#: app/pdb/text-layer-cmds.c:1594
 msgid "Set text layer attribute"
 msgstr "Rediger attributta for tekstlaget"
 
-#: app/pdb/text-layer-cmds.c:247
+#: app/pdb/text-layer-cmds.c:248
 msgid "Set text layer markup"
 msgstr "Set merke for tekstlaget"
 
@@ -22805,11 +22880,11 @@ msgstr "Roter tekstlaget"
 msgid "Transform Text Layer"
 msgstr "Transformer tekstlaget"
 
-#: app/text/gimptextlayer.c:775
+#: app/text/gimptextlayer.c:675 app/text/gimptextlayer.c:816
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Sidan skrifttypane manglar er ikkje tekstfunksjonane tilgjengelege."
 
-#: app/text/gimptextlayer.c:989
+#: app/text/gimptextlayer.c:1030
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -27433,7 +27508,7 @@ msgstr "I/T"
 msgid "Resolving symbol information..."
 msgstr "Løyser symbolinformasjon …"
 
-#: app/widgets/gimpdataeditor.c:412
+#: app/widgets/gimpdataeditor.c:412 app/widgets/gimpdataeditor.c:447
 #, c-format
 msgid "%s (read only)"
 msgstr "%s (berre for lesing)"
@@ -29095,19 +29170,19 @@ msgstr ""
 "Viss du ikkje veit kva XNP er, har du truleg ikkje bruk for det. Rapportert "
 "feil: %s."
 
-#: app/xcf/xcf-load.c:1454
+#: app/xcf/xcf-load.c:1456
 msgid "Linked Layers"
 msgstr "Lenkja lag"
 
-#: app/xcf/xcf-load.c:1464
+#: app/xcf/xcf-load.c:1466
 msgid "Linked Channels"
 msgstr "Lenkja kanalar"
 
-#: app/xcf/xcf-load.c:1489
+#: app/xcf/xcf-load.c:1491
 msgid "Linked Paths"
 msgstr "Lenkja banar"
 
-#: app/xcf/xcf-load.c:1537
+#: app/xcf/xcf-load.c:1539
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -29115,14 +29190,14 @@ msgstr ""
 "Denne XCF-fila er øydelagt. Eg har lasta inn så mykje eg kunne, men fekk "
 "ikkje med alt."
 
-#: app/xcf/xcf-load.c:1564
+#: app/xcf/xcf-load.c:1566
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Denne XCF-fila er øydelagt. Det er ikkje råd å lasta inn noko som helst."
 
-#: app/xcf/xcf-load.c:1758
+#: app/xcf/xcf-load.c:1760
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -29132,7 +29207,7 @@ msgstr ""
 "lagrar indekserte fargekart feil.\n"
 "Støtter derimot gråtonekart."
 
-#: app/xcf/xcf-load.c:2589
+#: app/xcf/xcf-load.c:2591
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
@@ -29141,7 +29216,7 @@ msgstr ""
 "XCF-åtvaring: ugyldig lenkje i XCF-fil. Lenkjelaget «%s» er lasta ned til "
 "eit rasterlag."
 
-#: app/xcf/xcf-load.c:2609
+#: app/xcf/xcf-load.c:2611
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
@@ -29150,7 +29225,7 @@ msgstr ""
 "XCF-åtvaring: sirkulær referanse opdaga i XCF-fil. Lenkjelaget «%s» er lasta "
 "ned til eit rasterlag."
 
-#: app/xcf/xcf-load.c:3342
+#: app/xcf/xcf-load.c:3344
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -29163,7 +29238,7 @@ msgstr ""
 "Dette bør ikkje skje. Du bør rapportera problemet til utviklarane av "
 "filteret."
 
-#: app/xcf/xcf-load.c:4230
+#: app/xcf/xcf-load.c:4232
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
