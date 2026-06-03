@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-25 21:42+0000\n"
-"PO-Revision-Date: 2026-05-26 22:22+0200\n"
+"POT-Creation-Date: 2026-05-31 18:44+0000\n"
+"PO-Revision-Date: 2026-06-02 14:12+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -144,7 +144,7 @@ msgstr "Programtillegg-eksempel i JavaScript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4082 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:4322 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -625,7 +625,7 @@ msgstr "Persienne"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3257 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3497 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -2026,7 +2026,7 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
 #: plug-ins/file-psd/psd-export.c:2538 plug-ins/file-psd/psd-export.c:2706
-#: plug-ins/file-psd/psd-load.c:190 plug-ins/file-psd/psd-load.c:195
+#: plug-ins/file-psd/psd-load.c:193 plug-ins/file-psd/psd-load.c:198
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
 #: plug-ins/flame/flame.c:540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
@@ -2494,7 +2494,7 @@ msgstr "Biletet er for stort: breidd %d x høgd %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:3636 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-psd/psd-load.c:3876 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -2634,7 +2634,7 @@ msgstr "EOF (filslutt) eller feil ved lesing av biletheading"
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
 #: plug-ins/file-icns/file-icns-load.c:623 plug-ins/file-ico/ico-load.c:703
 #: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:97
-#: plug-ins/file-psd/psd-load.c:203
+#: plug-ins/file-psd/psd-load.c:206
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
@@ -3025,7 +3025,7 @@ msgstr "Feil ved lesing av data. Biletet kan vera øydelagt."
 
 #: plug-ins/common/file-drhalo.c:320 plug-ins/common/file-drhalo.c:342
 msgid "Invalid data: image may be corrupt."
-msgstr "Ugyldige data: Biletet kan vera øydelagt!"
+msgstr "Ugyldige data: Biletet kan vera øydelagt."
 
 #: plug-ins/common/file-farbfeld.c:137 plug-ins/common/file-farbfeld.c:163
 msgid "Farbfeld"
@@ -4732,14 +4732,14 @@ msgstr "«%s» er ikkje ei PCX-fil"
 
 #: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:643
+#: plug-ins/file-psd/psd-load.c:646
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Ugyldig biletbreidd: %d"
 
 #: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:635
+#: plug-ins/file-psd/psd-load.c:638
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Ugyldig bilethøgd: %d"
@@ -9565,15 +9565,15 @@ msgstr "Last inn fil i Digital Picture Exchange-filformat"
 msgid "Could not read Cineon header information."
 msgstr "Kunne ikkje lesa Cineon header-informasjon."
 
-#: plug-ins/file-cin/cineon-lib.c:134
+#: plug-ins/file-cin/cineon-lib.c:134 plug-ins/file-cin/dpx-lib.c:233
 #, c-format
-msgid "Cineon: Image with %d channels not yet supported."
-msgstr "Cineon: Har førebels ikkje støtte for bilete med %d kanalar."
+msgid "Image with %d channels not yet supported."
+msgstr "Har førebels ikkje støtte for bilete med %d kanalar."
 
-#: plug-ins/file-cin/cineon-lib.c:154
+#: plug-ins/file-cin/cineon-lib.c:154 plug-ins/file-cin/dpx-lib.c:263
 #, c-format
-msgid "Cineon: Image with %d bpc not yet supported."
-msgstr "Cineon: Har førebels ikkje støtte for bilete med %d bpc."
+msgid "Image with %d bpc not yet supported."
+msgstr "Har førebels ikkje støtte for bilete med %d bpc."
 
 #: plug-ins/file-cin/cineon-lib.c:181 plug-ins/file-cin/cineon-lib.c:207
 #: plug-ins/file-cin/dpx-lib.c:292 plug-ins/file-cin/dpx-lib.c:318
@@ -9586,16 +9586,6 @@ msgstr "Klarte ikkje lesa biletdata frå «%s»"
 #, c-format
 msgid "Could not read DPX header information."
 msgstr "Klarte ikkje lesa informasjonen om DPX-header."
-
-#: plug-ins/file-cin/dpx-lib.c:233
-#, c-format
-msgid "DPX: Image with %d channels not yet supported."
-msgstr "DPX: Har førebels ikkje støtte for bilete med %d kanalar."
-
-#: plug-ins/file-cin/dpx-lib.c:263
-#, c-format
-msgid "DPX: Image with %d bpc not yet supported."
-msgstr "DPX: Har førebels ikkje støtte for bilete med %d bpc."
 
 #: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:170
 msgid "DDS image"
@@ -10818,7 +10808,7 @@ msgstr ""
 "Photoshop har ikkje støtte for indekserte bilete med meir enn eitt lag. Laga "
 "vert difor fletta saman ved eksport."
 
-#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:4121
+#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:4361
 msgid "Compatibility Notice"
 msgstr "Kompabilitetsnotis"
 
@@ -10834,129 +10824,129 @@ msgstr ""
 "Clipped Layers as Group». Hvis du støyter på skjermproblem, bør du vurdera å "
 "byta til desse lagmodusane."
 
-#: plug-ins/file-psd/psd-load.c:313 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:316 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Feil ved opninga av PSD-fila: %s"
 
-#: plug-ins/file-psd/psd-load.c:510
+#: plug-ins/file-psd/psd-load.c:513
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Ugyldige PSD-metadata lagformat"
 
-#: plug-ins/file-psd/psd-load.c:614
+#: plug-ins/file-psd/psd-load.c:617
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Ugyldig photoshop dokumentfil"
 
-#: plug-ins/file-psd/psd-load.c:621
+#: plug-ins/file-psd/psd-load.c:624
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Har ikkje støtte for filformatversjonen: %d"
 
-#: plug-ins/file-psd/psd-load.c:628
+#: plug-ins/file-psd/psd-load.c:631
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "For mange kanalar i fila %d"
 
-#: plug-ins/file-psd/psd-load.c:652
+#: plug-ins/file-psd/psd-load.c:655
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Ustøtta eller ugyldig biletstorleik: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:667 plug-ins/file-psd/psd-load.c:677
+#: plug-ins/file-psd/psd-load.c:670 plug-ins/file-psd/psd-load.c:680
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Har ikkje støtte for fargemodellen %s"
 
-#: plug-ins/file-psd/psd-load.c:704
+#: plug-ins/file-psd/psd-load.c:707
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Har ikkje støtte for bitdjupna %d"
 
-#: plug-ins/file-psd/psd-load.c:738 plug-ins/file-psd/psd-load.c:748
-#: plug-ins/file-psd/psd-load.c:999 plug-ins/file-psd/psd-load.c:1360
+#: plug-ins/file-psd/psd-load.c:741 plug-ins/file-psd/psd-load.c:751
+#: plug-ins/file-psd/psd-load.c:1002 plug-ins/file-psd/psd-load.c:1367
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Fila er øydelagt!"
 
-#: plug-ins/file-psd/psd-load.c:928
+#: plug-ins/file-psd/psd-load.c:931
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "For mange kanalar i laget %d"
 
-#: plug-ins/file-psd/psd-load.c:1035
+#: plug-ins/file-psd/psd-load.c:1038
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Laghøgda er ugyldig eller utan støtte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1044
+#: plug-ins/file-psd/psd-load.c:1047
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Lagbreidda er ugyldig eller utan støtte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1054
+#: plug-ins/file-psd/psd-load.c:1057
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Lagstorleiken er ugyldig eller utan støtte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1079
+#: plug-ins/file-psd/psd-load.c:1082
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Storleiken på maskeinfoen er ugyldig eller utan støtte."
 
-#: plug-ins/file-psd/psd-load.c:1262
+#: plug-ins/file-psd/psd-load.c:1265
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Lagmaskehøgda er ugyldig eller utan støtte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1271
+#: plug-ins/file-psd/psd-load.c:1274
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Lagmaskebreidda er ugyldig eller utan støtte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1281
+#: plug-ins/file-psd/psd-load.c:1284
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Lagmaskestorleiken er ugyldig eller utan støtte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1893 plug-ins/file-psd/psd-load.c:3628
+#: plug-ins/file-psd/psd-load.c:1900 plug-ins/file-psd/psd-load.c:3868
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ustøtta eller ugyldig kanalstorleik"
 
-#: plug-ins/file-psd/psd-load.c:2270
+#: plug-ins/file-psd/psd-load.c:2277
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Ugyldig kanaldimensjon %u × %u"
 
-#: plug-ins/file-psd/psd-load.c:2338 plug-ins/file-psd/psd-load.c:3226
+#: plug-ins/file-psd/psd-load.c:2345 plug-ins/file-psd/psd-load.c:3466
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Har ikkje støtte for kompresjonsmodus %d"
 
-#: plug-ins/file-psd/psd-load.c:2955
+#: plug-ins/file-psd/psd-load.c:2980
 msgid "Inner Shadow"
 msgstr "Indre skugge"
 
-#: plug-ins/file-psd/psd-load.c:2956
+#: plug-ins/file-psd/psd-load.c:2981
 msgid "imported"
 msgstr "importer"
 
-#: plug-ins/file-psd/psd-load.c:3403
+#: plug-ins/file-psd/psd-load.c:3643
 msgid "Extra"
 msgstr "Ekstra"
 
-#: plug-ins/file-psd/psd-load.c:3705
+#: plug-ins/file-psd/psd-load.c:3945
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Klarte ikkje dekomprimera data"
 
-#: plug-ins/file-psd/psd-load.c:4098
+#: plug-ins/file-psd/psd-load.c:4338
 msgid "Duotone Import"
 msgstr "Duotone import"
 
-#: plug-ins/file-psd/psd-load.c:4099
+#: plug-ins/file-psd/psd-load.c:4339
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10966,7 +10956,7 @@ msgstr ""
 "Duotone fargeromsdata er lagra\n"
 "og kan brukast på nytt ved eksport."
 
-#: plug-ins/file-psd/psd-load.c:4122
+#: plug-ins/file-psd/psd-load.c:4362
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -17085,6 +17075,14 @@ msgstr "Fann ikkje TWAIN-drivaren. Ikkje råd å skanna"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Overfører data frå skannar/kamera"
+
+#, c-format
+#~ msgid "Cineon: Image with %d channels not yet supported."
+#~ msgstr "Cineon: Har førebels ikkje støtte for bilete med %d kanalar."
+
+#, c-format
+#~ msgid "Cineon: Image with %d bpc not yet supported."
+#~ msgstr "Cineon: Har førebels ikkje støtte for bilete med %d bpc."
 
 #~ msgid "Saves files in the JPEG XL file format"
 #~ msgstr "Lagrar filer i JPEG XL-filformatet"
