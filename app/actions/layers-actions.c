@@ -1072,7 +1072,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-along-path",   text_layer && !ac);
 
   SET_SENSITIVE ("layers-resize",          n_selected_layers == 1 && all_writable && all_movable && !ac && has_raster);
-  SET_SENSITIVE ("layers-resize-to-image", all_writable && all_movable && !ac);
+  SET_SENSITIVE ("layers-resize-to-image", all_writable && all_movable && !ac && has_raster);
   SET_SENSITIVE ("layers-scale",           n_selected_layers == 1 && all_writable && all_movable && !ac);
 
   SET_SENSITIVE ("layers-crop-to-selection", all_writable && all_movable && sel);
