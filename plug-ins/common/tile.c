@@ -25,12 +25,21 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "libgimpbase/gimpversion-private.h"
 #include "libgimp/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-tile"
 #define PLUG_IN_BINARY "tile"
 #define PLUG_IN_ROLE   "gimp-tile"
+
+
+enum
+{
+  CURRENT_LAYER,
+  NEW_LAYER,
+  NEW_IMAGE,
+};
 
 
 typedef struct _Tile      Tile;
@@ -67,7 +76,7 @@ static void             tile                  (GimpImage            *image,
                                                GimpDrawable         *drawable,
                                                gint                  new_width,
                                                gint                  new_height,
-                                               gboolean              create_new_image,
+                                               guint                 create_format,
                                                GimpImage           **new_image,
                                                GimpLayer           **new_layer);
 
@@ -174,21 +183,36 @@ tile_create_procedure (GimpPlugIn  *plug_in,
                                             TRUE, TRUE, gimp_unit_pixel (),
                                             GIMP_PARAM_READWRITE);
 
-      gimp_procedure_add_boolean_argument (procedure, "new-image",
-                                           _("New _image"),
-                                           _("Create a new image"),
-                                           TRUE,
-                                           G_PARAM_READWRITE);
+      GIMP_WARNING_API_BREAK ("'new-image' parameter should be removed since "
+                              "'format' replaces it with more options");
+      gimp_procedure_add_boolean_aux_argument (procedure, "new-image",
+                                               _("New _image"),
+                                               _("Create a new image"),
+                                               TRUE,
+                                               G_PARAM_READWRITE);
+
+      gimp_procedure_add_choice_argument (procedure, "format",
+                                          _("Create _as"),
+                                          _("What format the tile should be "
+                                            "created as"),
+                                          gimp_choice_new_with_values ("current-layer", CURRENT_LAYER, _("Current layer"), NULL,
+                                                                       "new-layer",     NEW_LAYER,     _("New layer"),     NULL,
+                                                                       "new-image",     NEW_IMAGE,     _("New image"),     NULL,
+                                                                       NULL),
+                                          "new-image",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_image_return_value (procedure, "new-image",
                                              "New image",
-                                             "Output image (NULL if new-image == FALSE)",
+                                             "Output image (NULL if no new "
+                                             "image is created)",
                                              TRUE,
                                              G_PARAM_READWRITE);
 
       gimp_procedure_add_layer_return_value (procedure, "new-layer",
                                              "New layer",
-                                             "Output layer (NULL if new-image == FALSE)",
+                                             "Output layer (NULL if current "
+                                             "layer is used)",
                                              TRUE,
                                              G_PARAM_READWRITE);
     }
@@ -211,6 +235,7 @@ tile_run (GimpProcedure        *procedure,
   gint            new_width;
   gint            new_height;
   gboolean        create_new_image;
+  guint           create_format;
 
   gegl_init (NULL, NULL);
 
@@ -254,15 +279,23 @@ tile_run (GimpProcedure        *procedure,
                 "new-height", &new_height,
                 "new-image",  &create_new_image,
                 NULL);
+  create_format = gimp_procedure_config_get_choice_id (config, "format");
+
+  /* TODO: Remove "create_new_image" in next major version. For now, attempt
+   * to copy over 'new-image' settings for non-interactive mode. */
+  if (run_mode == GIMP_RUN_NONINTERACTIVE &&
+      create_format == NEW_IMAGE          &&
+      create_new_image == FALSE)
+    create_format = NEW_LAYER;
 
   gimp_progress_init (_("Tiling"));
 
   tile (image, drawable, new_width, new_height,
-        create_new_image, &new_image, &new_layer);
+        create_format, &new_image, &new_layer);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     {
-      if (create_new_image)
+      if (create_format == NEW_IMAGE)
         gimp_display_new (new_image);
       else
         gimp_displays_flush ();
@@ -348,19 +381,18 @@ tile (GimpImage     *image,
       GimpDrawable  *drawable,
       gint           new_width,
       gint           new_height,
-      gboolean       create_new_image,
+      guint          create_format,
       GimpImage    **new_image,
       GimpLayer    **new_layer)
 {
-  GimpDrawable *dst_drawable;
-  GeglBuffer   *dst_buffer;
-  GeglBuffer   *src_buffer;
-  gint          src_width  = gimp_drawable_get_width (drawable);
-  gint          src_height = gimp_drawable_get_height (drawable);
-
   GimpImageBaseType  image_type = GIMP_RGB;
+  GimpDrawable      *dst_drawable;
+  GeglBuffer        *dst_buffer;
+  GeglBuffer        *src_buffer;
+  gint               src_width  = gimp_drawable_get_width (drawable);
+  gint               src_height = gimp_drawable_get_height (drawable);
 
-  if (create_new_image)
+  if (create_format == NEW_IMAGE)
     {
       /*  create  a new image  */
       GimpColorProfile *profile   = gimp_image_get_color_profile (image);
@@ -413,20 +445,42 @@ tile (GimpImage     *image,
       *new_layer = NULL;
 
       gimp_image_undo_group_start (image);
-      gimp_image_resize (image, new_width, new_height, 0, 0);
 
-      if (gimp_item_is_layer (GIMP_ITEM (drawable)))
+      if (create_format == CURRENT_LAYER)
         {
-          gimp_layer_resize (GIMP_LAYER (drawable), new_width, new_height, 0, 0);
+          gimp_image_resize (image, new_width, new_height, 0, 0);
+
+          if (gimp_item_is_layer (GIMP_ITEM (drawable)))
+            {
+              gimp_layer_resize (GIMP_LAYER (drawable), new_width, new_height,
+                                0, 0);
+            }
+          else if (gimp_item_is_layer_mask (GIMP_ITEM (drawable)))
+            {
+              GimpLayer *layer;
+
+              layer = gimp_layer_from_mask (GIMP_LAYER_MASK (drawable));
+              gimp_layer_resize (layer, new_width, new_height, 0, 0);
+            }
+
+          dst_drawable = drawable;
         }
-      else if (gimp_item_is_layer_mask (GIMP_ITEM (drawable)))
+      else
         {
-          GimpLayer *layer = gimp_layer_from_mask (GIMP_LAYER_MASK (drawable));
+          gint position;
 
-          gimp_layer_resize (layer, new_width, new_height, 0, 0);
+          position =
+            gimp_image_get_item_position (image, GIMP_ITEM (drawable));
+
+          *new_layer = gimp_layer_new (image,
+                                       gimp_item_get_name (GIMP_ITEM (drawable)),
+                                       new_width, new_height,
+                                       gimp_drawable_type (drawable),
+                                       100,
+                                       gimp_image_get_default_new_layer_mode (image));
+          gimp_image_insert_layer (image, *new_layer, NULL, position);
+          dst_drawable = GIMP_DRAWABLE (*new_layer);
         }
-
-      dst_drawable = drawable;
     }
 
   src_buffer = gimp_drawable_get_buffer (drawable);
@@ -438,7 +492,7 @@ tile (GimpImage     *image,
   gegl_buffer_flush (dst_buffer);
   gimp_drawable_update (dst_drawable, 0, 0, new_width, new_height);
 
-  if (create_new_image)
+  if (create_format == NEW_IMAGE)
     {
       gimp_image_undo_enable (*new_image);
     }
@@ -492,7 +546,8 @@ tile_dialog (GimpProcedure       *procedure,
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dlg),
                                     "new-size-frame", "new-size-label", FALSE,
                                     "coordinates");
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dlg), "new-size-frame", "new-image", NULL);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dlg), "new-size-frame",
+                              "format", NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dlg));
 
