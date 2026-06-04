@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-28 23:15+0000\n"
-"PO-Revision-Date: 2026-05-29 08:33+0800\n"
+"POT-Creation-Date: 2026-06-04 23:05+0000\n"
+"PO-Revision-Date: 2026-06-05 07:51+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -3449,97 +3449,97 @@ msgid ""
 "recent documents list."
 msgstr "清除文档历史将从最近文档列表中永久删除所有图像。"
 
-#: app/actions/drawable-actions.c:45
+#: app/actions/drawable-actions.c:46
 msgctxt "drawable-action"
 msgid "_Equalize"
 msgstr "色相均化(_E)"
 
-#: app/actions/drawable-actions.c:46
+#: app/actions/drawable-actions.c:47
 msgctxt "drawable-action"
 msgid "Automatic contrast enhancement"
 msgstr "自动增强对比度"
 
-#: app/actions/drawable-actions.c:51
+#: app/actions/drawable-actions.c:52
 msgctxt "drawable-action"
 msgid "_White Balance"
 msgstr "白平衡(_W)"
 
-#: app/actions/drawable-actions.c:52
+#: app/actions/drawable-actions.c:53
 msgctxt "drawable-action"
 msgid "Automatic white balance correction"
 msgstr "自动校正白平衡"
 
-#: app/actions/drawable-actions.c:60
+#: app/actions/drawable-actions.c:61
 msgctxt "drawable-action"
 msgid "Toggle Drawables _Visibility"
 msgstr "切换可绘区的可见性(_V)"
 
-#: app/actions/drawable-actions.c:66
+#: app/actions/drawable-actions.c:67
 msgctxt "drawable-action"
 msgid "L_ock Pixels of Drawables"
 msgstr "锁定可绘区的像素(_O)"
 
-#: app/actions/drawable-actions.c:68
+#: app/actions/drawable-actions.c:69
 msgctxt "drawable-action"
 msgid "Keep the pixels on selected drawables from being modified"
 msgstr "保持此可绘区上的像素不被修改"
 
-#: app/actions/drawable-actions.c:74
+#: app/actions/drawable-actions.c:75
 msgctxt "drawable-action"
 msgid "L_ock Position of Drawables"
 msgstr "锁定可绘区的位置(_O)"
 
-#: app/actions/drawable-actions.c:76
+#: app/actions/drawable-actions.c:77
 msgctxt "drawable-action"
 msgid "Keep the position on selected drawables from being modified"
 msgstr "保持此可绘区上的位置不被修改"
 
-#: app/actions/drawable-actions.c:85
+#: app/actions/drawable-actions.c:86
 msgctxt "drawable-action"
 msgid "Flip _Horizontally"
 msgstr "水平翻转(_H)"
 
-#: app/actions/drawable-actions.c:86
+#: app/actions/drawable-actions.c:87
 msgctxt "drawable-action"
 msgid "Flip drawable horizontally"
 msgstr "水平翻转可绘区"
 
-#: app/actions/drawable-actions.c:91
+#: app/actions/drawable-actions.c:92
 msgctxt "drawable-action"
 msgid "Flip _Vertically"
 msgstr "竖直翻转(_V)"
 
-#: app/actions/drawable-actions.c:92
+#: app/actions/drawable-actions.c:93
 msgctxt "drawable-action"
 msgid "Flip drawable vertically"
 msgstr "竖直翻转可绘区"
 
-#: app/actions/drawable-actions.c:100
+#: app/actions/drawable-actions.c:101
 msgctxt "drawable-action"
 msgid "Rotate 90° _clockwise"
 msgstr "顺时针旋转 90 度(_C)"
 
-#: app/actions/drawable-actions.c:101
+#: app/actions/drawable-actions.c:102
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the right"
 msgstr "向右旋转可绘区 90 度"
 
-#: app/actions/drawable-actions.c:106
+#: app/actions/drawable-actions.c:107
 msgctxt "drawable-action"
 msgid "Rotate _180°"
 msgstr "旋转 _180 度"
 
-#: app/actions/drawable-actions.c:107
+#: app/actions/drawable-actions.c:108
 msgctxt "drawable-action"
 msgid "Turn drawable upside-down"
 msgstr "上下颠倒可绘区"
 
-#: app/actions/drawable-actions.c:112
+#: app/actions/drawable-actions.c:113
 msgctxt "drawable-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "逆时针旋转 90 度(_W)"
 
-#: app/actions/drawable-actions.c:113
+#: app/actions/drawable-actions.c:114
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
 msgstr "向左旋转可绘区 90 度"
@@ -5060,25 +5060,25 @@ msgstr "再次显示上次使用的滤镜对话框"
 msgid "%s..."
 msgstr "%s…"
 
-#: app/actions/filters-actions.c:1213
+#: app/actions/filters-actions.c:1208
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "重复“%s”(_P)"
 
-#: app/actions/filters-actions.c:1214
+#: app/actions/filters-actions.c:1209
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "重新显示“%s”(_E)"
 
-#: app/actions/filters-actions.c:1252
+#: app/actions/filters-actions.c:1247
 msgid "Repeat Last"
 msgstr "重复上次操作"
 
-#: app/actions/filters-actions.c:1254
+#: app/actions/filters-actions.c:1249
 msgid "Re-Show Last"
 msgstr "显示上次操作"
 
-#: app/actions/filters-actions.c:1257 app/actions/filters-actions.c:1259
+#: app/actions/filters-actions.c:1252 app/actions/filters-actions.c:1254
 msgid "No last used filters"
 msgstr "无上次使用滤镜"
 
@@ -13543,7 +13543,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdrawable.c:657 app/tools/gimpscaletool.c:121
+#: app/core/gimpdrawable.c:654 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "缩放"
@@ -27090,7 +27090,7 @@ msgstr "N/A"
 msgid "Resolving symbol information..."
 msgstr "解析符号信息…"
 
-#: app/widgets/gimpdataeditor.c:412
+#: app/widgets/gimpdataeditor.c:412 app/widgets/gimpdataeditor.c:447
 #, c-format
 msgid "%s (read only)"
 msgstr "%s（只读）"
@@ -27658,6 +27658,10 @@ msgstr "从剪贴板粘贴图标"
 msgid "Load Icon Image"
 msgstr "载入图标图像"
 
+#: app/widgets/gimpiconpicker.c:487
+msgid "Image files"
+msgstr "图像文件"
+
 #. Button
 #: app/widgets/gimpimagecommenteditor.c:107
 msgid "Use _default comment"
@@ -28009,27 +28013,19 @@ msgstr "该图像使用了来自 %s 的特性，且不能被旧版本 GIMP 读�
 msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr "元数据在早于 2.10 版本的 GIMP 中不可见。"
 
-#. TRANSLATORS: a helper label indicating the shortcut for an action,
-#. * it will be used within the generic "%s: %s" (also localized) string.
-#. * e.g.: "shortcut: Ctrl+Alt+O"
-#.
-#: app/widgets/gimpsearchpopup.c:296
-msgid "shortcut"
-msgstr "快捷键"
-
-#. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:300 app/widgets/gimpsearchpopup.c:322
-#, c-format
-msgid "%s: %s"
-msgstr "%s: %s"
-
 #. TRANSLATORS: a helper label indicating the menu path for an action,
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:318
+#: app/widgets/gimpsearchpopup.c:303
 msgid "menu"
 msgstr "菜单"
+
+#. TRANSLATORS: generic "title: value" label which will be used in various ways.
+#: app/widgets/gimpsearchpopup.c:307
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
 
 #: app/widgets/gimpselectiondata.c:250
 #, c-format
@@ -29387,6 +29383,9 @@ msgstr "工具预设菜单"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
+
+#~ msgid "shortcut"
+#~ msgstr "快捷键"
 
 #~ msgctxt "cursor-format"
 #~ msgid "Black & white"
