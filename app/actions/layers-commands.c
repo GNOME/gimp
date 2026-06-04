@@ -598,17 +598,20 @@ layers_new_group_cmd_callback (GimpAction *action,
   GimpLayer *group;
   GimpLayer *parent     = NULL;
   GList     *new_layers = NULL;
-  gint       position   = 0;
   GList     *layers;
   GList     *iter;
+  gint       position   = 0;
+  gint       n_layers;
 
   return_if_no_image (image, data);
 
-  layers = gimp_image_get_selected_layers (image);
-  layers = g_list_copy (layers);
+  layers   = gimp_image_get_selected_layers (image);
+  layers   = g_list_copy (layers);
+  n_layers = g_list_length (layers);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_ADD,
-                               _("New layer group"));
+                               (n_layers > 1) ? _("Group selected layers") :
+                                                _("New layer group"));
 
   group = gimp_group_layer_new (image);
   /* Insert at top of selection */
@@ -620,12 +623,18 @@ layers_new_group_cmd_callback (GimpAction *action,
   gimp_image_add_layer (image, group, parent, position, TRUE);
   new_layers = g_list_prepend (new_layers, group);
 
-  position = 0;
-  for (iter = layers; iter; iter = iter ? iter->next : NULL)
+  /* For now, we only group selected layers in the new layer group if
+   * more than one is selected. Otherwise, we just add a new empty
+   * layer group to the image */
+  if (n_layers > 1)
     {
-      gimp_image_reorder_item (image, GIMP_ITEM (iter->data),
-                               GIMP_ITEM (group), position, TRUE, NULL);
-      position++;
+      position = 0;
+      for (iter = layers; iter; iter = iter ? iter->next : NULL)
+        {
+          gimp_image_reorder_item (image, GIMP_ITEM (iter->data),
+                                   GIMP_ITEM (group), position, TRUE, NULL);
+          position++;
+        }
     }
   gimp_image_set_selected_layers (image, new_layers);
 
