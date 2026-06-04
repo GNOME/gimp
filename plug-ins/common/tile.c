@@ -441,8 +441,11 @@ tile (GimpImage     *image,
     }
   else
     {
+      GimpImageType type;
+
       *new_image = NULL;
       *new_layer = NULL;
+      type       = gimp_drawable_type (drawable);
 
       gimp_image_undo_group_start (image);
 
@@ -460,23 +463,35 @@ tile (GimpImage     *image,
               GimpLayer *layer;
 
               layer = gimp_layer_from_mask (GIMP_LAYER_MASK (drawable));
+
               gimp_layer_resize (layer, new_width, new_height, 0, 0);
             }
 
           dst_drawable = drawable;
         }
-      else
+      else /* Create as new layer */
         {
-          gint position;
+          gint position = 0;
 
-          position =
-            gimp_image_get_item_position (image, GIMP_ITEM (drawable));
+          if (gimp_item_is_layer (GIMP_ITEM (drawable)))
+            {
+              position =
+                gimp_image_get_item_position (image, GIMP_ITEM (drawable));
+            }
+          else if (gimp_item_is_layer_mask (GIMP_ITEM (drawable)))
+            {
+              GimpLayer *layer;
+
+              layer = gimp_layer_from_mask (GIMP_LAYER_MASK (drawable));
+              type  = gimp_drawable_type (GIMP_DRAWABLE (layer));
+
+              position =
+                gimp_image_get_item_position (image, GIMP_ITEM (layer));
+            }
 
           *new_layer = gimp_layer_new (image,
                                        gimp_item_get_name (GIMP_ITEM (drawable)),
-                                       new_width, new_height,
-                                       gimp_drawable_type (drawable),
-                                       100,
+                                       new_width, new_height, type, 100,
                                        gimp_image_get_default_new_layer_mode (image));
           gimp_image_insert_layer (image, *new_layer, NULL, position);
           dst_drawable = GIMP_DRAWABLE (*new_layer);
