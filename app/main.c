@@ -36,7 +36,7 @@
 
 #ifdef G_OS_WIN32
 #include <io.h> /* get_osfhandle */
-
+#include <cairo.h>
 #endif /* G_OS_WIN32 */
 
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
@@ -628,8 +628,12 @@ main (int    argc,
   g_free (utf8_name);
   g_free (name);
 
-  /* Enable Anti-Aliasing*/
-  g_setenv ("PANGOCAIRO_BACKEND", "fc", TRUE);
+  if (CAIRO_VERSION < CAIRO_VERSION_ENCODE(1, 18, 4))
+    {
+     /* Enable Anti-Aliasing. See: issue 5904*/
+      g_print ("Cairo version is old");
+      g_setenv ("PANGOCAIRO_BACKEND", "fc", TRUE);
+    }
 
   /* Reduce risks */
   SetDllDirectoryW (L"");
