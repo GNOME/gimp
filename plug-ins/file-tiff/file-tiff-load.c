@@ -227,7 +227,8 @@ tiff_get_page_name (TIFF *tif)
 
 /* is_non_conformant_tiff assumes TIFFTAG_EXTRASAMPLES was not set */
 static gboolean
-is_non_conformant_tiff (gushort photomet, gushort spp)
+is_non_conformant_tiff (gushort photomet,
+                        gushort spp)
 {
   switch (photomet)
     {
@@ -2091,8 +2092,8 @@ load_contiguous (TIFF         *tif,
   src_format = babl_format_n (type, spp);
 
   /* consistency check */
-  bytes_per_pixel = 0;
-  for (i = 0; i <= extra; i++)
+  bytes_per_pixel = babl_format_get_bytes_per_pixel (src_format);
+  for (i = 1; i <= extra; i++)
     {
       if (channel[i].format)
         bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
