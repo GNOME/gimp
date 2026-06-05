@@ -3096,8 +3096,6 @@ add_legacy_layer_effects (GimpLayer *layer,
 
       dsdw = lyr_a->layer_styles->dsdw;
 
-      g_printerr ("Drop Shadow: legacy intensity value: %f\n", dsdw.intensity);
-
       /* Photoshop uses an angle slider that goes from 0 to 180,
        * then -179 to 0. Since GEGL uses X/Y coordinates for distance,
        * we convert the Photoshop angle and distance and then flip the
@@ -3400,7 +3398,8 @@ get_json_string (JsonReader *reader, gchar *key, const gchar *default_value)
   else
     {
       const GError *error = json_reader_get_error (reader);
-      g_printerr ("Unable to read the element: %s\n", error->message);
+
+      g_warning ("Unable to read json element: %s", error->message);
     }
   json_reader_end_member (reader);
 
@@ -3436,14 +3435,15 @@ get_json_color (JsonReader *reader, const Babl *space)
               else if (json_string_equal (key, "Bl  "))
                 pixel[2] = get_json_double (color_reader, "value", 0.0) / 255.0;
               else
-                g_printerr ("Unexpected color tag '%s' in color descriptor!\n", key);
+                /* FIXME: It's not unlikely that we also need to handle
+                 *        CMYK and LAB. */
+                g_warning ("Unexpected color tag '%s' in color descriptor!", key);
 
               g_object_unref (color_reader);
             }
           json_reader_end_element (reader);
           }
         pixel[3] = 1.0; /* I guess PS doesn't set an alpha channel? */
-        g_debug ("Pixel values: R: %f, G: %f, B: %f", pixel[0], pixel[1], pixel[2]);
 
       /* This is not specified in the documentation, but based on sample files,
        * the color is assumed to be in the drawable's color space. */
@@ -3579,7 +3579,7 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
                   if (use_global_angle)
                     {
                       angle = global_angle;
-                      g_debug ("Using global lighting angle %d", global_angle);
+                      IFDBG(3) g_debug ("Using global lighting angle %d", global_angle);
                     }
                 }
               else if (! use_global_angle && json_string_equal (key, "lagl"))
@@ -3616,7 +3616,7 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
             {
               const GError *error = json_reader_get_error (reader);
 
-              g_debug ("Array index %d. Unable to read element: %s", i, error->message);
+              g_warning ("Array index %d. Unable to read json element: %s", i, error->message);
             }
           json_reader_end_element (reader);
         }
@@ -3641,7 +3641,6 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
           radians = (M_PI / 180) * angle;
           x       = distance * cos (radians);
           y       = distance * sin (radians);
-          g_printerr ("Angle: %f - Radians: %f, x: %f; y: %f\n", angle, radians, x, y);
 
           if (fabs(angle) > 180.0)
             angle = fmod (angle, 180.0);
@@ -3656,7 +3655,6 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
           else
             x = fabs (x);
 
-          g_printerr ("Adjusted x: %f; y: %f\n", x, y);
           gegl_blur = (blur / 250.0) * 100.0;
 
           /* FIXME Besides certain modes not working for Dropshadow in GIMP,
@@ -3704,6 +3702,9 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
               gimp_mode = GIMP_LAYER_MODE_REPLACE;
               filter_name = g_strdup_printf ("%s (%s)", _("Stroke"),
                                              _("imported"));
+              if (! g_str_equal (style, "OutF") ||
+                  ! g_str_equal (filltype, "SClr"))
+                g_message (_("Unhandled Stroke type: expect incorrect rendering."));
             }
 
           /* Nose (intensity) is not converted at this time. */
@@ -3712,7 +3713,7 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
           if (! color)
             {
               color = gegl_color_new ("none");
-              IFDBG(3) g_debug ("WARNING: Drop/Inner Shadow Color not initialized!");
+              IFDBG(3) g_debug ("WARNING: Color not initialized!");
             }
 
           filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
@@ -3736,7 +3737,7 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
     }
   else
     {
-      g_printerr ("ERROR: No descriptor found!\n");
+      g_message ("Something is wrong: no descriptor found!");
     }
   json_reader_end_member (reader);
 }
@@ -3766,7 +3767,7 @@ json_read_solidfill (JsonReader *reader, const Babl *space, GimpLayer *layer)
               JsonReader  *obj_reader = json_reader_new (json_reader_get_current_node (reader));
               const gchar *key        = get_json_string (obj_reader, "key", "");
 
-              g_debug ("Index %d - Member key: %s.", i, key);
+              IFDBG(3) g_debug ("Index %d - Member key: %s.", i, key);
 
               /* For documentation purposes I also list the members we currently do not
               * interpret:
@@ -3790,7 +3791,7 @@ json_read_solidfill (JsonReader *reader, const Babl *space, GimpLayer *layer)
             {
               const GError *error = json_reader_get_error (reader);
 
-              g_printerr ("Array index %d. Unable to read the element: %s\n", i, error->message);
+              g_warning ("Array index %d. Unable to read json element: %s", i, error->message);
             }
           json_reader_end_element (reader);
         }
@@ -3799,17 +3800,16 @@ json_read_solidfill (JsonReader *reader, const Babl *space, GimpLayer *layer)
           GimpDrawableFilter  *filter;
           GimpLayerMode        layer_mode;
 
-          /* FIXME The blend mode names in the descriptor
-           * are different than elsewhere in PSD's, so we need a new
-           * conversion function.
+          /* The blend mode names in the descriptor are different than
+           * elsewhere in PSD's, so we use a different conversion function.
            */
           convert_psd_effect_mode (mode, &layer_mode);
-          g_debug ("Solid Fill: Photoshop has layer mode %.4s.", mode);
+          IFDBG(3) g_debug ("Solid Fill: Photoshop has layer mode %.4s.", mode);
 
           if (! color)
             {
               color = gegl_color_new ("none");
-              g_printerr ("WARNING: Color not initialized!\n");
+              IFDBG(3) g_debug ("WARNING: Color not initialized!");
             }
 
       filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
@@ -3826,7 +3826,7 @@ json_read_solidfill (JsonReader *reader, const Babl *space, GimpLayer *layer)
     }
   else
     {
-      g_printerr ("No descriptor found!\n");
+      g_message ("Something is wrong: no descriptor found!");
     }
   json_reader_end_member (reader);
 }
@@ -3850,7 +3850,7 @@ add_layer_effects (GimpLayer *layer,
           gint cnt = json_reader_count_elements (root_reader);
           gint i;
 
-          g_debug ("Descriptor has %d elelements.", cnt);
+          IFDBG(3) g_debug ("Descriptor has %d elelements.", cnt);
 
           for (i = cnt-1; i >=0; i--)
             {
@@ -3876,7 +3876,7 @@ add_layer_effects (GimpLayer *layer,
 
                       json_reader_end_member (reader);
 
-                      g_debug ("Member classID: %s.", str);
+                      IFDBG(3) g_debug ("Member classID: %s.", str);
 
                       if (json_string_equal (str, "SoFi"))
                         {
@@ -3911,7 +3911,7 @@ add_layer_effects (GimpLayer *layer,
                         }
                       else if (json_string_equal (str, "ebbl"))
                         {
-                          /* Read (bevel & emboss?) settings */
+                          /* Read (bevel & emboss) settings */
                         }
                       else if (json_string_equal (str, "patternFill"))
                         {
@@ -3936,7 +3936,7 @@ add_layer_effects (GimpLayer *layer,
                 }
               else
                 {
-                  g_debug ("WARNING: Failed to read json element %d!", i);
+                  g_warning ("Unable to read json element %d!", i);
                 }
               json_reader_end_element (root_reader);
             }
@@ -3991,14 +3991,14 @@ get_linked_layer (GimpImage *image,
                   else if (json_string_equal (key, "Sz  "))
                     {
                       if (! get_json_dimensions (obj_reader, &width, &height))
-                        g_debug ("WARNING: Could not read dimensions!");
+                        g_warning ("Could not read dimensions!");
                     }
                 }
               else
                 {
                   const GError *error = json_reader_get_error (reader);
 
-                  g_debug ("Array index %d. Unable to read element: %s", i, error->message);
+                  g_warning ("Array index %d. Unable to read json element: %s", i, error->message);
                   break;
                 }
               json_reader_end_element (reader);
@@ -4006,8 +4006,9 @@ get_linked_layer (GimpImage *image,
         }
       else
         {
-          g_debug ("Failed to read linked layer descriptor!");
+          g_warning ("Failed to read linked layer descriptor!");
         }
+
       IFDBG(3) g_debug ("Linked File ID: %s, dimensions: %.0fx%.0f", file_id, width, height);
 
       json_reader_end_member (reader);
@@ -4055,7 +4056,7 @@ get_linked_layer (GimpImage *image,
                         {
                           const GError *error = json_reader_get_error (reader);
 
-                          g_debug ("Array index %d. Unable to read element: %s", i, error->message);
+                          g_warning ("Array index %d. Unable to read json element: %s", i, error->message);
                           break;
                         }
                       json_reader_end_element (reader);
@@ -4105,6 +4106,7 @@ get_linked_layer (GimpImage *image,
             }
           else
             {
+              /* FIXME */
               IFDBG(3) g_debug ("Non external file link (original file '%s'): skipped for now",
                                  data->original_filename);
             }
