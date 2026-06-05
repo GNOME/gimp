@@ -328,6 +328,11 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
         return gimp_param_spec_drawable_filter (name, nick, blurb,
                                                 param_def->meta.m_id.none_ok,
                                                 flags);
+
+      if (! strcmp (param_def->type_name, "GimpParamGradient"))
+        return gimp_param_spec_gradient (name, nick, blurb,
+                                         param_def->meta.m_id.none_ok,
+                                         NULL, TRUE, flags);
       break;
 
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
