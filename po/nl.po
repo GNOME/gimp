@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-28 23:15+0000\n"
-"PO-Revision-Date: 2026-05-29 09:47+0200\n"
+"POT-Creation-Date: 2026-06-04 23:05+0000\n"
+"PO-Revision-Date: 2026-06-05 10:29+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -3470,98 +3470,98 @@ msgid ""
 "recent documents list."
 msgstr "Het wissen van de documentgeschiedenis zal alle afbeeldingen voorgoed uit de lijst van recent geopende documenten verwijderen."
 
-#: app/actions/drawable-actions.c:45
+#: app/actions/drawable-actions.c:46
 msgctxt "drawable-action"
 msgid "_Equalize"
 msgstr "G_elijkmaken"
 
 # verhogen/vergroten
-#: app/actions/drawable-actions.c:46
+#: app/actions/drawable-actions.c:47
 msgctxt "drawable-action"
 msgid "Automatic contrast enhancement"
 msgstr "Automatisch contrast verbeteren"
 
-#: app/actions/drawable-actions.c:51
+#: app/actions/drawable-actions.c:52
 msgctxt "drawable-action"
 msgid "_White Balance"
 msgstr "_Witbalans"
 
-#: app/actions/drawable-actions.c:52
+#: app/actions/drawable-actions.c:53
 msgctxt "drawable-action"
 msgid "Automatic white balance correction"
 msgstr "Automatische witbalanscorrectie"
 
-#: app/actions/drawable-actions.c:60
+#: app/actions/drawable-actions.c:61
 msgctxt "drawable-action"
 msgid "Toggle Drawables _Visibility"
 msgstr "_Zichtbaarheid tekengebieden in/uitschakelen"
 
-#: app/actions/drawable-actions.c:66
+#: app/actions/drawable-actions.c:67
 msgctxt "drawable-action"
 msgid "L_ock Pixels of Drawables"
 msgstr "_Beeldpunten tekengebieden vergrendelen"
 
-#: app/actions/drawable-actions.c:68
+#: app/actions/drawable-actions.c:69
 msgctxt "drawable-action"
 msgid "Keep the pixels on selected drawables from being modified"
 msgstr "Verhinderen dat beeldpunten op deze tekengebieden aangepast worden"
 
-#: app/actions/drawable-actions.c:74
+#: app/actions/drawable-actions.c:75
 msgctxt "drawable-action"
 msgid "L_ock Position of Drawables"
 msgstr "Positie van tekengebieden _vastzetten"
 
-#: app/actions/drawable-actions.c:76
+#: app/actions/drawable-actions.c:77
 msgctxt "drawable-action"
 msgid "Keep the position on selected drawables from being modified"
 msgstr "Voorkomen dat positie van deze tekengebieden gewijzigd wordt"
 
-#: app/actions/drawable-actions.c:85
+#: app/actions/drawable-actions.c:86
 msgctxt "drawable-action"
 msgid "Flip _Horizontally"
 msgstr "_Horizontaal spiegelen"
 
-#: app/actions/drawable-actions.c:86
+#: app/actions/drawable-actions.c:87
 msgctxt "drawable-action"
 msgid "Flip drawable horizontally"
 msgstr "Tekengebied horizontaal spiegelen"
 
-#: app/actions/drawable-actions.c:91
+#: app/actions/drawable-actions.c:92
 msgctxt "drawable-action"
 msgid "Flip _Vertically"
 msgstr "_Verticaal spiegelen"
 
-#: app/actions/drawable-actions.c:92
+#: app/actions/drawable-actions.c:93
 msgctxt "drawable-action"
 msgid "Flip drawable vertically"
 msgstr "Tekengebied verticaal spiegelen"
 
-#: app/actions/drawable-actions.c:100
+#: app/actions/drawable-actions.c:101
 msgctxt "drawable-action"
 msgid "Rotate 90° _clockwise"
 msgstr "90° met de _klok mee draaien"
 
-#: app/actions/drawable-actions.c:101
+#: app/actions/drawable-actions.c:102
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the right"
 msgstr "Laag 90° naar rechts draaien"
 
-#: app/actions/drawable-actions.c:106
+#: app/actions/drawable-actions.c:107
 msgctxt "drawable-action"
 msgid "Rotate _180°"
 msgstr "_180° draaien"
 
-#: app/actions/drawable-actions.c:107
+#: app/actions/drawable-actions.c:108
 msgctxt "drawable-action"
 msgid "Turn drawable upside-down"
 msgstr "Laag 180° draaien"
 
-#: app/actions/drawable-actions.c:112
+#: app/actions/drawable-actions.c:113
 msgctxt "drawable-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "90° _tegen de klok in draaien"
 
-#: app/actions/drawable-actions.c:113
+#: app/actions/drawable-actions.c:114
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
 msgstr "Laag 90° naar links draaien"
@@ -5088,25 +5088,25 @@ msgstr "Het dialoogvenster van de laatst gebruikte plug-in opnieuw tonen"
 msgid "%s..."
 msgstr "%s..."
 
-#: app/actions/filters-actions.c:1213
+#: app/actions/filters-actions.c:1208
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "\"%s\" herhalen"
 
-#: app/actions/filters-actions.c:1214
+#: app/actions/filters-actions.c:1209
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Opni_euw tonen \"%s\""
 
-#: app/actions/filters-actions.c:1252
+#: app/actions/filters-actions.c:1247
 msgid "Repeat Last"
 msgstr "Laatste herhalen"
 
-#: app/actions/filters-actions.c:1254
+#: app/actions/filters-actions.c:1249
 msgid "Re-Show Last"
 msgstr "Laatste opnieuw tonen"
 
-#: app/actions/filters-actions.c:1257 app/actions/filters-actions.c:1259
+#: app/actions/filters-actions.c:1252 app/actions/filters-actions.c:1254
 msgid "No last used filters"
 msgstr "Geen laatst gebruikte filters"
 
@@ -13647,7 +13647,7 @@ msgstr "Kon gegevens niet laden:\n"
 "\n"
 "%s"
 
-#: app/core/gimpdrawable.c:657 app/tools/gimpscaletool.c:121
+#: app/core/gimpdrawable.c:654 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Schalen"
@@ -27345,7 +27345,7 @@ msgstr "Niet beschikbaar"
 msgid "Resolving symbol information..."
 msgstr "Verwerken symboolinformatie..."
 
-#: app/widgets/gimpdataeditor.c:412
+#: app/widgets/gimpdataeditor.c:412 app/widgets/gimpdataeditor.c:447
 #, c-format
 msgid "%s (read only)"
 msgstr "%s (alleen lezen)"
@@ -27915,6 +27915,10 @@ msgstr "Pictogram vanuit klembord plakken"
 msgid "Load Icon Image"
 msgstr "Pictogram laden"
 
+#: app/widgets/gimpiconpicker.c:487
+msgid "Image files"
+msgstr "Afbeeldingsbestanden"
+
 # format/formaat
 #. Button
 #: app/widgets/gimpimagecommenteditor.c:107
@@ -28270,27 +28274,19 @@ msgstr "De afbeelding gebruikt mogelijkheden van %s en kan niet door oudere GIMP
 msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr "Metadata zijn niet zichtbaar in GIMP-versies ouder dan 2.10."
 
-#. TRANSLATORS: a helper label indicating the shortcut for an action,
-#. * it will be used within the generic "%s: %s" (also localized) string.
-#. * e.g.: "shortcut: Ctrl+Alt+O"
-#.
-#: app/widgets/gimpsearchpopup.c:296
-msgid "shortcut"
-msgstr "sneltoets"
-
-#. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:300 app/widgets/gimpsearchpopup.c:322
-#, c-format
-msgid "%s: %s"
-msgstr "%s: %s"
-
 #. TRANSLATORS: a helper label indicating the menu path for an action,
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:318
+#: app/widgets/gimpsearchpopup.c:303
 msgid "menu"
 msgstr "menu"
+
+#. TRANSLATORS: generic "title: value" label which will be used in various ways.
+#: app/widgets/gimpsearchpopup.c:307
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
 
 #: app/widgets/gimpselectiondata.c:250
 #, c-format
@@ -29668,6 +29664,9 @@ msgstr "Menu Gereedschapsvoorinstellingen"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Menu Geschiedenis"
+
+#~ msgid "shortcut"
+#~ msgstr "sneltoets"
 
 #~ msgctxt "cursor-format"
 #~ msgid "Black & white"
