@@ -2266,8 +2266,14 @@ add_layers (GimpImage     *image,
           lyr_chn[cidx] = g_malloc (sizeof (PSDchannel) );
 
           lyr_chn[cidx]->id = lyr_a[lidx]->chn_info[cidx].channel_id;
-          lyr_chn[cidx]->rows = lyr_a[lidx]->bottom - lyr_a[lidx]->top;
-          lyr_chn[cidx]->columns = lyr_a[lidx]->right - lyr_a[lidx]->left;
+          if (lyr_a[lidx]->bottom > lyr_a[lidx]->top)
+            lyr_chn[cidx]->rows = lyr_a[lidx]->bottom - lyr_a[lidx]->top;
+          else
+            lyr_chn[cidx]->rows = 0;
+          if (lyr_a[lidx]->right > lyr_a[lidx]->left)
+            lyr_chn[cidx]->columns = lyr_a[lidx]->right - lyr_a[lidx]->left;
+          else
+            lyr_chn[cidx]->columns = 0;
           lyr_chn[cidx]->data = NULL;
 
           if (lyr_chn[cidx]->id == PSD_CHANNEL_EXTRA_MASK)
