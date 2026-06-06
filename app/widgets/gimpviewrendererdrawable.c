@@ -45,13 +45,13 @@ struct _GimpViewRendererDrawablePrivate
 {
   GimpAsync *render_async;
   GtkWidget *render_widget;
+  gint       render_scale_factor;
   gint       render_buf_x;
   gint       render_buf_y;
   gboolean   render_update;
 
   gint       prev_width;
   gint       prev_height;
-  gint       prev_scale_factor;
 };
 
 
@@ -140,7 +140,7 @@ gimp_view_renderer_drawable_render_async_callback (GimpAsync                *asy
         renderer,
         widget,
         render_buf,
-        renderdrawable->priv->prev_scale_factor,
+        renderdrawable->priv->render_scale_factor,
         renderdrawable->priv->render_buf_x,
         renderdrawable->priv->render_buf_y,
         -1,
@@ -310,11 +310,12 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
   if (async)
     {
-      renderdrawable->priv->render_async  = async;
-      renderdrawable->priv->render_widget = g_object_ref (widget);
-      renderdrawable->priv->render_buf_x  = dst_x * scale_factor;
-      renderdrawable->priv->render_buf_y  = dst_y * scale_factor;
-      renderdrawable->priv->render_update = FALSE;
+      renderdrawable->priv->render_async        = async;
+      renderdrawable->priv->render_widget       = g_object_ref (widget);
+      renderdrawable->priv->render_scale_factor = scale_factor;
+      renderdrawable->priv->render_buf_x        = dst_x * scale_factor;
+      renderdrawable->priv->render_buf_y        = dst_y * scale_factor;
+      renderdrawable->priv->render_update       = FALSE;
 
       gimp_async_add_callback_for_object (
         async,
@@ -338,9 +339,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
             }
         }
 
-      renderdrawable->priv->prev_width        = renderer->width ;
-      renderdrawable->priv->prev_height       = renderer->height;
-      renderdrawable->priv->prev_scale_factor = scale_factor;
+      renderdrawable->priv->prev_width  = renderer->width ;
+      renderdrawable->priv->prev_height = renderer->height;
 
       g_object_unref (async);
     }
