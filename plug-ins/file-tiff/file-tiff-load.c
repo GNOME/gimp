@@ -2092,12 +2092,15 @@ load_contiguous (TIFF         *tif,
   src_format = babl_format_n (type, spp);
 
   /* consistency check */
-  bytes_per_pixel = babl_format_get_bytes_per_pixel (src_format);
-  for (i = 1; i <= extra; i++)
+  bytes_per_pixel = 0;
+  for (i = 0; i <= extra; i++)
     {
       if (channel[i].format)
         bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
     }
+
+  if (bytes_per_pixel > spp)
+    bytes_per_pixel = spp;
 
   g_debug ("bytes_per_pixel: %d, format: %d",
            bytes_per_pixel,
@@ -2295,6 +2298,9 @@ load_separate (TIFF         *tif,
       if (channel[i].format)
         bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
     }
+
+  if (bytes_per_pixel > spp)
+    bytes_per_pixel = spp;
 
   g_debug ("bytes_per_pixel: %d, format: %d",
            bytes_per_pixel,
