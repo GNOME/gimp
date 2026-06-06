@@ -133,7 +133,7 @@ try:
     python_symlink = shutil.which("python3")
     pygobject_found=False
     if python_symlink and not os.path.samefile(python_symlink, os.environ.get("GIMP_PYTHON_WITH_GI")):
-      result = subprocess.run([python_symlink,"-c","import sys, gi; version='3.0'; sys.exit(gi.check_version(version))"], check=False)
+      result = subprocess.run([python_symlink,"-c","import sys, gi; version='3.0'; sys.exit(gi.check_version(version))"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
       pygobject_found = (result.returncode == 0)
     if not python_symlink or (python_symlink and not pygobject_found):
       different_python=True
