@@ -26,6 +26,7 @@ import re
 import shutil
 import sys
 import struct
+import glob
 
 ################################################################################
 # Global variables
@@ -37,6 +38,9 @@ sys_dlls = set()
 # Previously done DLLs/DYLIBs in previous runs
 done_dlls = set()
 
+# Previously checked undefined DYLIB symbols across all dependencies
+done_symbols = set()
+
 # Common paths
 bindir = 'bin'
 
@@ -47,8 +51,9 @@ is_macos = False
 # Functions
 
 # Main function
-def main(binary, srcdirs, destdir, debug, dll_file):
+def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
   global done_dlls
+  global done_symbols
   global is_macos
   try:
     if dll_file is not None:
@@ -56,6 +61,12 @@ def main(binary, srcdirs, destdir, debug, dll_file):
         done_dlls = { line.strip() for line in f if len(line.strip()) != 0 }
   except FileNotFoundError:
     pass
+
+  if symbols_file and os.path.exists(symbols_file):
+    with open(symbols_file, 'r') as f:
+      for line in f:
+        parts = line.strip().split(',')
+        done_symbols.add((parts[0], parts[1]))
 
   #sys.stdout.write("{} (INFO): searching for dependencies of {} in {}.\n".format(os.path.basename(__file__),
   #                                                                               binary, ', '.join(srcdirs)))
@@ -93,6 +104,11 @@ def main(binary, srcdirs, destdir, debug, dll_file):
   if dll_file is not None:
     with open(dll_file, 'w') as f:
       f.write("\n".join(set.union(done_dlls, dlls, sys_dlls)))
+
+  if symbols_file:
+    with open(symbols_file, 'w') as f:
+      for symbol, lib_name in done_symbols:
+        f.write(f"{symbol},{lib_name}\n")
 
 def find_dependencies(obj, srcdirs):
   '''
@@ -240,9 +256,83 @@ def check_macos_version(binary):
   out = result.stdout.decode('utf-8', errors='replace')
 
   bin_minos = re.findall(r'minos\s+([\d\.]+)', out)[0]
-  if tuple(map(int, bin_minos.split('.'))) > tuple(map(int, supported_minos.split('.'))):
+
+  try:
+    sdk_path = subprocess.run(['xcrun', '--show-sdk-path', '--sdk', 'macosx'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True).stdout.decode('utf-8').strip()
+  except (subprocess.CalledProcessError, FileNotFoundError):
+    sdk_path = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+
+  def parse_version(v):
+    parts = list(map(int, v.split('.')))
+    while len(parts) < 3:
+      #Work with two-digit MACOSX_DEPLOYMENT_TARGET
+      parts.append(0)
+    return tuple(parts)
+
+  # 1. Check for LC_BUILD_VERSION (minos)
+  if parse_version(bin_minos) > parse_version(supported_minos):
     sys.stderr.write(f"\033[31m(ERROR)\033[0m: {binary} requires macOS {bin_minos}, which is higher than macOS {supported_minos} which GIMP was built against.\n")
     sys.exit(1)
+
+  # 2. Check for LC_BUILD_VERSION (sdk) symbols
+  nm_res = subprocess.run(['nm', '-m', binary], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+  nm_out = nm_res.stdout.decode('utf-8', errors='replace')
+  sys_symbols = set()
+  for line in nm_out.splitlines():
+    if "(undefined)" in line and "(from " in line:
+      parts = line.split()
+      try:
+        from_idx = parts.index("(from")
+        lib_name = parts[from_idx + 1].rstrip(')')
+        symbol = parts[from_idx - 1].lstrip('_')
+        search_path = ""
+        if os.path.exists(f"{sdk_path}/usr/lib/{lib_name}.tbd"):
+          search_path = f"{sdk_path}/usr/include"
+        elif os.path.exists(f"{sdk_path}/System/Library/Frameworks/{lib_name}.framework/{lib_name}.tbd"):
+          search_path = f"{sdk_path}/System/Library/Frameworks/{lib_name}.framework/Headers"
+        if (not search_path or not os.path.isdir(search_path)) or glob.glob(os.path.join(args.dest, 'lib', f"{lib_name}*.dylib")) or (symbol, lib_name) in set.union(done_symbols, sys_symbols):
+          continue
+        sys_symbols.add((symbol, lib_name))
+      except ValueError:
+        continue
+  #2.1Parse headers only for newly encountered symbols
+  for symbol, lib_name in sys_symbols:
+    if (symbol, lib_name) in done_symbols:
+      continue
+    done_symbols.add((symbol, lib_name))
+    match_data = ""
+    symbol_pattern = re.compile(r'\b' + re.escape(symbol) + r'\b')
+    for root, _, files in os.walk(search_path):
+      for file in files:
+        filepath = os.path.join(root, file)
+        try:
+          with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            buffer = []
+            for line in f:
+              if symbol_pattern.search(line):
+                for b_line in buffer:
+                  match_data += f"{filepath}-{b_line}"
+                match_data += f"{filepath}:{line}"
+              # Keep a rolling buffer of 4 lines
+              buffer.append(line)
+              if len(buffer) > 4:
+                buffer.pop(0)
+        except Exception:
+          continue
+    if not match_data or not re.search(re.escape(symbol) + r'\s*\(', match_data):
+      continue
+    #2.2 Look for standard availability macro
+    violating_version = None
+    new_avail_match = re.search(r'__OSX_AVAILABLE\s*\(([0-9.]+)\)', match_data)
+    if new_avail_match:
+      violating_version = new_avail_match.group(1)
+    else:
+      old_avail_match = re.search(r'__OSX_AVAILABLE_STARTING\s*\(__MAC_([0-9_]+)', match_data)
+      if old_avail_match:
+        violating_version = old_avail_match.group(1).replace('_', '.')
+    if violating_version and parse_version(violating_version) > parse_version(supported_minos):
+      sys.stderr.write(f"\033[31m(ERROR)\033[0m: {binary} requires macOS {violating_version} due to '{symbol}' symbol, which is higher than macOS {supported_minos} which GIMP was built against.\n")
+      sys.exit(1)
 
 def set_rpath(binary, destbin=None):
   """
@@ -314,9 +404,10 @@ if __name__ == "__main__":
   parser.add_argument('--debug', dest='debug',
                       choices=['debug-only', 'debug-run', 'run-only'], default = 'run-only')
   parser.add_argument('--output-dll-list', dest='dll_file', action = 'store', default = None)
+  parser.add_argument('--output-dylib-symbols-list', dest='symbols_file', action='store', default=None)
   parser.add_argument('bin')
   parser.add_argument('src', nargs='+')
   parser.add_argument('dest')
   args = parser.parse_args(sys.argv[1:])
 
-  main(args.bin, args.src, args.dest, args.debug, args.dll_file)
+  main(args.bin, args.src, args.dest, args.debug, args.dll_file, args.symbols_file)

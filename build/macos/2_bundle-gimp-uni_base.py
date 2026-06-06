@@ -312,6 +312,8 @@ bundle(GIMP_PREFIX, "bin/gegl")
 ### We save the list of already copied DLLs to keep a state between 2_bundle-gimp-uni_dep runs.
 done_dylib = Path(f"{os.getenv('MESON_BUILD_ROOT')}/done-dylib.list")
 done_dylib.unlink(missing_ok=True)
+done_symbols = Path(f"{os.getenv('MESON_BUILD_ROOT')}/done-symbols.list")
+done_symbols.unlink(missing_ok=True)
 for dir in ["MacOS", "lib"]:
   search_dir = GIMP_DISTRIB / dir
   print(f"Searching for dependencies of {search_dir} in {GIMP_PREFIX} and {OPT_PREFIX}")
@@ -320,7 +322,8 @@ for dir in ["MacOS", "lib"]:
       subprocess.run([
         sys.executable, f"{GIMP_SOURCE}/tools/lib_bundle.py",
         str(dep), f"{GIMP_PREFIX}/", f"{OPT_PREFIX}/",
-        str(GIMP_DISTRIB), "--output-dll-list", done_dylib
+        str(GIMP_DISTRIB), "--output-dll-list", done_dylib,
+        "--output-dylib-symbols-list", done_symbols
       ], check=True)
 
 
