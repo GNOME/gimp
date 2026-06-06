@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-30 12:57+0000\n"
-"PO-Revision-Date: 2026-05-30 17:09+0200\n"
+"POT-Creation-Date: 2026-06-05 22:41+0000\n"
+"PO-Revision-Date: 2026-06-06 09:20+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -145,7 +145,7 @@ msgstr "Plug-in voorbeeld in Javascript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4082 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:5144 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -618,7 +618,7 @@ msgstr "Rolgordijnen"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3257 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:4319 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1221,7 +1221,7 @@ msgstr "Grafiek van de huidige instellingen"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:573
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:744 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:745 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1189 plug-ins/gfig/gfig-dialog.c:1334
 #: plug-ins/ifs-compose/ifs-compose.c:1214
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -2003,7 +2003,7 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
 #: plug-ins/file-psd/psd-export.c:2538 plug-ins/file-psd/psd-export.c:2706
-#: plug-ins/file-psd/psd-load.c:190 plug-ins/file-psd/psd-load.c:195
+#: plug-ins/file-psd/psd-load.c:206 plug-ins/file-psd/psd-load.c:211
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
 #: plug-ins/flame/flame.c:540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
@@ -2473,7 +2473,7 @@ msgstr "Afbeeldingsafmetingen te groot: breedte %d x hoogte %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:3636 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-psd/psd-load.c:4698 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -2611,7 +2611,7 @@ msgstr "EOF of fout tijdens lezen afbeeldings-header"
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
 #: plug-ins/file-icns/file-icns-load.c:623 plug-ins/file-ico/ico-load.c:703
 #: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:97
-#: plug-ins/file-psd/psd-load.c:203
+#: plug-ins/file-psd/psd-load.c:219
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
@@ -4655,14 +4655,14 @@ msgstr "‘%s’ is geen PCX-bestand"
 
 #: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:643
+#: plug-ins/file-psd/psd-load.c:668
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Ongeldige of niet-ondersteunde afbeeldingsbreedte: %d"
 
 #: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:635
+#: plug-ins/file-psd/psd-load.c:660
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Ongeldige of niet-ondersteunde afbeeldingshoogte: %d"
@@ -4957,7 +4957,7 @@ msgstr "Onjuist wachtwoord! Voer het juiste in:"
 msgid "Could not load '%s': %s"
 msgstr "Laden mislukt van ‘%s’: %s"
 
-#: plug-ins/common/file-pdf-load.c:1095
+#: plug-ins/common/file-pdf-load.c:1101
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Kan het aantal pagina’s van deze PDF niet vaststellen."
 
@@ -5764,7 +5764,7 @@ msgid "Error reading color palette"
 msgstr "Fout tijdens lezen kleuren palet"
 
 #: plug-ins/common/file-psp.c:1639 plug-ins/common/file-psp.c:1662
-#: plug-ins/file-psd/psd-util.c:176
+#: plug-ins/file-psd/psd-util.c:210
 #, c-format
 msgid "Error reading data. Most likely unexpected end of file."
 msgstr "Fout bij het lezen van gegevens. Hoogst waarschijnlijk onverwacht einde van bestand."
@@ -6283,7 +6283,7 @@ msgstr "Vlakke configuratie"
 msgid "Raw Data"
 msgstr "Gegevens raw"
 
-#: plug-ins/common/file-raw-data.c:623 plug-ins/file-psd/psd-util.c:199
+#: plug-ins/common/file-raw-data.c:623 plug-ins/file-psd/psd-util.c:233
 #, c-format
 msgid "Unexpected end of file"
 msgstr "Onverwacht einde bestand"
@@ -7949,7 +7949,7 @@ msgid ""
 msgstr "Maakt het mogelijk om in het menusysteem voor plug-ins te bladeren. U kunt zoeken op namen van plug-ins, sorteren op naam of menulocatie en u kunt een boomweergave van de menu's voor plug-ins bekijken. Kan ook nuttig zijn om uit te zoeken waar nieuwe plug-ins zichzelf hebben geïnstalleerd in de menu's."
 
 #: plug-ins/common/plugin-browser.c:370
-#: plug-ins/filter-browser/filter-browser.c:626
+#: plug-ins/filter-browser/filter-browser.c:627
 msgid "Searching by name"
 msgstr "Zoeken op naam"
 
@@ -7961,7 +7961,7 @@ msgstr[0] "%d plug-in"
 msgstr[1] "%d plug-ins"
 
 #: plug-ins/common/plugin-browser.c:395
-#: plug-ins/filter-browser/filter-browser.c:693
+#: plug-ins/filter-browser/filter-browser.c:694
 msgid "No matches for your query"
 msgstr "Geen overeenkomsten gevonden voor uw verzoek"
 
@@ -7973,7 +7973,7 @@ msgstr[0] "%d plug-in komt overeen met uw verzoek"
 msgstr[1] "%d plug-ins komen overeen met uw verzoek"
 
 #: plug-ins/common/plugin-browser.c:544
-#: plug-ins/filter-browser/filter-browser.c:695
+#: plug-ins/filter-browser/filter-browser.c:696
 msgid "No matches"
 msgstr "Geen overeenkomsten"
 
@@ -10591,7 +10591,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr "Photoshop ondersteunt geen geïndexeerde afbeeldingen die meer dan een laag hebben. Lagen zullen bij exporteren worden samengevoegd."
 
-#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:4121
+#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5183
 msgid "Compatibility Notice"
 msgstr "Melding compatibiliteit"
 
@@ -10603,129 +10603,142 @@ msgid ""
 "switching to those layer modes."
 msgstr "Oudere modi voor lagen hebben een betere compatibiliteit met Photoshop, maar ondersteunen niet Clip to Backdrop, wat nodig is voor het gebruiken van Photoshop's 'Uitkniplagen overvloeien als groep'. Als u problemen bij het weergeven tegenkomt, overweeg dan om te wisselen naar die modi voor lagen."
 
-#: plug-ins/file-psd/psd-load.c:313 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:330 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Fout bij laden PSD-bestand: %s"
 
-#: plug-ins/file-psd/psd-load.c:510
+#: plug-ins/file-psd/psd-load.c:533
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Ongeldige PSD metagegevenslaag formaat"
 
-#: plug-ins/file-psd/psd-load.c:614
+#: plug-ins/file-psd/psd-load.c:639
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Geen geldig Photoshop-bestand"
 
-#: plug-ins/file-psd/psd-load.c:621
+#: plug-ins/file-psd/psd-load.c:646
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Niet-ondersteunde versie van bestandsindeling: %d"
 
-#: plug-ins/file-psd/psd-load.c:628
+#: plug-ins/file-psd/psd-load.c:653
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Te veel kanalen in bestand: %d"
 
-#: plug-ins/file-psd/psd-load.c:652
+#: plug-ins/file-psd/psd-load.c:677
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige beeldgrootte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:667 plug-ins/file-psd/psd-load.c:677
+#: plug-ins/file-psd/psd-load.c:692 plug-ins/file-psd/psd-load.c:702
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Niet-ondersteunde kleurmodus: %s"
 
-#: plug-ins/file-psd/psd-load.c:704
+#: plug-ins/file-psd/psd-load.c:729
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Niet-ondersteunde bitdiepte: %d"
 
-#: plug-ins/file-psd/psd-load.c:738 plug-ins/file-psd/psd-load.c:748
-#: plug-ins/file-psd/psd-load.c:999 plug-ins/file-psd/psd-load.c:1360
+#: plug-ins/file-psd/psd-load.c:763 plug-ins/file-psd/psd-load.c:773
+#: plug-ins/file-psd/psd-load.c:1043 plug-ins/file-psd/psd-load.c:1408
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Het bestand is beschadigd!"
 
-#: plug-ins/file-psd/psd-load.c:928
+#: plug-ins/file-psd/psd-load.c:972
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Te veel kanalen in laag: %d"
 
-#: plug-ins/file-psd/psd-load.c:1035
+#: plug-ins/file-psd/psd-load.c:1079
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Niet-ondersteunde of ongeldige laaghoogte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1044
+#: plug-ins/file-psd/psd-load.c:1088
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Niet-ondersteunde of ongeldige laagbreedte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1054
+#: plug-ins/file-psd/psd-load.c:1098
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige laaggrootte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1079
+#: plug-ins/file-psd/psd-load.c:1123
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Niet-ondersteunde of ongeldige maskerinfo-grootte."
 
-#: plug-ins/file-psd/psd-load.c:1262
+#: plug-ins/file-psd/psd-load.c:1306
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Niet-ondersteunde of ongeldige hoogte laagmasker: %d"
 
-#: plug-ins/file-psd/psd-load.c:1271
+#: plug-ins/file-psd/psd-load.c:1315
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Niet-ondersteunde of ongeldige breedte laagmasker: %d"
 
-#: plug-ins/file-psd/psd-load.c:1281
+#: plug-ins/file-psd/psd-load.c:1325
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige grootte laagmasker: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1893 plug-ins/file-psd/psd-load.c:3628
+#: plug-ins/file-psd/psd-load.c:1940 plug-ins/file-psd/psd-load.c:4690
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ongeldige of niet-ondersteunde kanaalgrootte"
 
-#: plug-ins/file-psd/psd-load.c:2270
+#: plug-ins/file-psd/psd-load.c:2326
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Ongeldige dimensies kanaal %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2338 plug-ins/file-psd/psd-load.c:3226
+#: plug-ins/file-psd/psd-load.c:2394 plug-ins/file-psd/psd-load.c:4288
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Niet-ondersteunde compressiemethode: %d"
 
-#: plug-ins/file-psd/psd-load.c:2955
+#: plug-ins/file-psd/psd-load.c:3045 plug-ins/file-psd/psd-load.c:3682
 msgid "Inner Shadow"
 msgstr "Binnenste schaduw"
 
-#: plug-ins/file-psd/psd-load.c:2956
+#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-psd/psd-load.c:3683
+#: plug-ins/file-psd/psd-load.c:3694 plug-ins/file-psd/psd-load.c:3710
 msgid "imported"
 msgstr "geïmporteerd"
 
-#: plug-ins/file-psd/psd-load.c:3403
+#: plug-ins/file-psd/psd-load.c:3693
+msgid "Outer Glow"
+msgstr "Buitenste gloed"
+
+#: plug-ins/file-psd/psd-load.c:3709
+msgid "Stroke"
+msgstr "Lijn"
+
+#: plug-ins/file-psd/psd-load.c:3713
+msgid "Unhandled Stroke type: expect incorrect rendering."
+msgstr "Niet afgehandeld type Streek: verwacht onjuist renderen."
+
+#: plug-ins/file-psd/psd-load.c:4465
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:3705
+#: plug-ins/file-psd/psd-load.c:4767
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Kon gegevens niet decomprimeren"
 
-#: plug-ins/file-psd/psd-load.c:4098
+#: plug-ins/file-psd/psd-load.c:5160
 msgid "Duotone Import"
 msgstr "Duotone Import"
 
-#: plug-ins/file-psd/psd-load.c:4099
+#: plug-ins/file-psd/psd-load.c:5161
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10733,7 +10746,7 @@ msgid ""
 msgstr "Afbeelding zal worden geïmporteerd als Grijswaarden.\n"
 "Duotoon kleurruimte informatie is opgeslagen en kan bij exporteren opnieuw worden gebruikt."
 
-#: plug-ins/file-psd/psd-load.c:4122
+#: plug-ins/file-psd/psd-load.c:5184
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -11688,17 +11701,17 @@ msgstr "Kon geanimeerde WebP-informatie niet decoderen van ‘%s’"
 msgid "Failed to decode animated WebP frame from '%s'"
 msgstr "Kon geanimeerd WebP-frame van ‘%s’ niet ontcijferen"
 
-#: plug-ins/filter-browser/filter-browser.c:292
-#: plug-ins/filter-browser/filter-browser.c:334
+#: plug-ins/filter-browser/filter-browser.c:293
+#: plug-ins/filter-browser/filter-browser.c:335
 msgid "Allowed values:"
 msgstr "Toegestane waarden:"
 
-#: plug-ins/filter-browser/filter-browser.c:437
+#: plug-ins/filter-browser/filter-browser.c:438
 #, c-format
 msgid "Operation name: %s"
 msgstr "Naam bewerking: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:450
+#: plug-ins/filter-browser/filter-browser.c:451
 #, c-format
 msgid "Categories: %s"
 msgstr "Categorieën: %s"
@@ -11709,7 +11722,7 @@ msgstr "Categorieën: %s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:480
+#: plug-ins/filter-browser/filter-browser.c:481
 #: plug-ins/gradient-flare/gradient-flare.c:2972
 #: plug-ins/gradient-flare/gradient-flare.c:3722
 #: plug-ins/gradient-flare/gradient-flare.c:3824
@@ -11717,66 +11730,66 @@ msgstr "Categorieën: %s"
 msgid "Parameters"
 msgstr "Parameters"
 
-#: plug-ins/filter-browser/filter-browser.c:512
+#: plug-ins/filter-browser/filter-browser.c:513
 msgid "Additional Information"
 msgstr "Aanvullende informatie"
 
-#: plug-ins/filter-browser/filter-browser.c:518
+#: plug-ins/filter-browser/filter-browser.c:519
 #, c-format
 msgid "License: %s"
 msgstr "Licentie: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:629
+#: plug-ins/filter-browser/filter-browser.c:630
 msgid "Searching by title"
 msgstr "Zoeken op titel"
 
-#: plug-ins/filter-browser/filter-browser.c:632
+#: plug-ins/filter-browser/filter-browser.c:633
 msgid "Searching by description"
 msgstr "Zoeken op omschrijving"
 
-#: plug-ins/filter-browser/filter-browser.c:635
+#: plug-ins/filter-browser/filter-browser.c:636
 msgid "Searching by category"
 msgstr "Zoeken op categorie"
 
-#: plug-ins/filter-browser/filter-browser.c:700
+#: plug-ins/filter-browser/filter-browser.c:701
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
 msgstr[0] "%d filter komt overeen met uw verzoek"
 msgstr[1] "%d filters komen overeen met uw verzoek"
 
-#: plug-ins/filter-browser/filter-browser.c:706
+#: plug-ins/filter-browser/filter-browser.c:707
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
 msgstr[0] "%d filter"
 msgstr[1] "%d filters"
 
-#: plug-ins/filter-browser/filter-browser.c:738
+#: plug-ins/filter-browser/filter-browser.c:739
 msgid "GEGL Filter Browser"
 msgstr "GEGL Filter Browser"
 
-#: plug-ins/filter-browser/filter-browser.c:755
+#: plug-ins/filter-browser/filter-browser.c:756
 msgid "by name"
 msgstr "op naam"
 
-#: plug-ins/filter-browser/filter-browser.c:756
+#: plug-ins/filter-browser/filter-browser.c:757
 msgid "by title"
 msgstr "op titel"
 
-#: plug-ins/filter-browser/filter-browser.c:757
+#: plug-ins/filter-browser/filter-browser.c:758
 msgid "by description"
 msgstr "op omschrijving"
 
-#: plug-ins/filter-browser/filter-browser.c:849
+#: plug-ins/filter-browser/filter-browser.c:850
 msgid "_GEGL Filter Browser"
 msgstr "_GEGL Filter Browser"
 
-#: plug-ins/filter-browser/filter-browser.c:854
+#: plug-ins/filter-browser/filter-browser.c:855
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "Geeft informatie weer over beschikbare bewerkingen voor GEGL (d.i. filters)."
 
-#: plug-ins/filter-browser/filter-browser.c:856
+#: plug-ins/filter-browser/filter-browser.c:857
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
