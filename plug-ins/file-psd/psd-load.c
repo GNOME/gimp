@@ -2203,7 +2203,7 @@ add_layers (GimpImage     *image,
   gboolean              user_mask;
   gboolean              empty;
   gboolean              empty_mask;
-  gboolean              no_draw_layer;
+  gboolean              no_draw_layer   = FALSE;
   GeglBuffer           *buffer;
   GimpImageType         image_type;
   LayerModeInfo         mode_info;
@@ -3365,7 +3365,9 @@ add_adjustment_layer (GimpLayer *layer,
 }
 
 static gboolean
-get_json_boolean (JsonReader *reader, gchar *key, gboolean default_value)
+get_json_boolean (JsonReader *reader,
+                  gchar      *key,
+                  gboolean    default_value)
 {
   gboolean result = default_value;
 
@@ -3379,7 +3381,9 @@ get_json_boolean (JsonReader *reader, gchar *key, gboolean default_value)
 }
 
 static gdouble
-get_json_double (JsonReader *reader, gchar *key, gdouble default_value)
+get_json_double (JsonReader *reader,
+                 gchar      *key,
+                 gdouble     default_value)
 {
   gdouble result = default_value;
 
@@ -3393,7 +3397,9 @@ get_json_double (JsonReader *reader, gchar *key, gdouble default_value)
 }
 
 static const gchar *
-get_json_string (JsonReader *reader, gchar *key, const gchar *default_value)
+get_json_string (JsonReader  *reader,
+                 gchar       *key,
+                 const gchar *default_value)
 {
   const gchar *result = default_value;
 
@@ -3413,7 +3419,8 @@ get_json_string (JsonReader *reader, gchar *key, const gchar *default_value)
 }
 
 static GeglColor *
-get_json_color (JsonReader *reader, const Babl *space)
+get_json_color (JsonReader *reader,
+                const Babl *space)
 {
   GeglColor *color = gegl_color_new ("none");
 
@@ -3464,7 +3471,9 @@ get_json_color (JsonReader *reader, const Babl *space)
 }
 
 static gboolean
-get_json_dimensions (JsonReader *reader, gdouble *width, gdouble *height)
+get_json_dimensions (JsonReader *reader,
+                     gdouble    *width,
+                     gdouble    *height)
 {
   gboolean result = TRUE;
 
@@ -3506,8 +3515,11 @@ get_json_dimensions (JsonReader *reader, gdouble *width, gdouble *height)
 #define OP_COUNT       4
 
 static void
-json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint shadow_type,
-                  gint global_angle)
+json_read_shadow (JsonReader *reader,
+                  const Babl *space,
+                  GimpLayer  *layer,
+                  gint        shadow_type,
+                  gint        global_angle)
 {
   gboolean     enabled    = FALSE;
   gboolean     present    = TRUE;        /* Not always present in descriptor*/
@@ -3749,7 +3761,9 @@ json_read_shadow (JsonReader *reader, const Babl *space, GimpLayer *layer, gint 
 }
 
 static void
-json_read_solidfill (JsonReader *reader, const Babl *space, GimpLayer *layer)
+json_read_solidfill (JsonReader *reader,
+                     const Babl *space,
+                     GimpLayer  *layer)
 {
   gboolean     enabled   = FALSE;
   gboolean     present   = TRUE;        /* Not always present in descriptor*/
@@ -3862,7 +3876,7 @@ add_layer_effects (GimpLayer *layer,
             {
               if (json_reader_read_element (root_reader, i))
                 {
-                  JsonReader  *reader = json_reader_new (json_reader_get_current_node (root_reader));
+                  JsonReader *reader = json_reader_new (json_reader_get_current_node (root_reader));
 
                   /* We read classID here instead of key, because I have seen cases
                    * where e.g. key is "innerShadowMulti" while classID is "IrSh".
