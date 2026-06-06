@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-04 23:05+0000\n"
-"PO-Revision-Date: 2026-06-05 10:29+0200\n"
+"POT-Creation-Date: 2026-06-06 01:24+0000\n"
+"PO-Revision-Date: 2026-06-06 09:19+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -6132,7 +6132,7 @@ msgstr "Spiegelen"
 msgid "Rotating"
 msgstr "Draaien"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1433
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1423
 msgid "Cannot crop because the current selection is empty."
 msgstr "Kan niet bijsnijden omdat de huidige selectie leeg is."
 
@@ -6183,7 +6183,7 @@ msgstr "Afbeelding schalen"
 
 #  Scaling
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2704
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2694
 #: app/dialogs/preferences-dialog.c:1742 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
@@ -7079,7 +7079,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "_Naar nieuwe laag"
 
-#: app/actions/layers-commands.c:343 app/actions/layers-commands.c:2539
+#: app/actions/layers-commands.c:343 app/actions/layers-commands.c:2529
 msgid "Layer Attributes"
 msgstr "Laagattributen"
 
@@ -7100,7 +7100,7 @@ msgid_plural "Create %d New Layers"
 msgstr[0] "Nieuwe laag aanmaken"
 msgstr[1] "%d nieuwe lagen aanmaken"
 
-#: app/actions/layers-commands.c:501 app/actions/layers-commands.c:2421
+#: app/actions/layers-commands.c:501 app/actions/layers-commands.c:2411
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Nieuwe laag"
@@ -7111,196 +7111,198 @@ msgid "Visible"
 msgstr "Zichtbaar"
 
 #: app/actions/layers-commands.c:613
-msgid "New layer group"
-msgid_plural "New layer groups"
-msgstr[0] "Nieuwe laaggroep"
-msgstr[1] "Nieuwe laaggroepen"
+msgid "Group selected layers"
+msgstr "Geselecteerde lagen groeperen"
 
-#: app/actions/layers-commands.c:735
+#: app/actions/layers-commands.c:614
+msgid "New layer group"
+msgstr "Nieuwe laaggroep"
+
+#: app/actions/layers-commands.c:725
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "Laag omhoog"
 msgstr[1] "Lagen omhoog"
 
-#: app/actions/layers-commands.c:770
+#: app/actions/layers-commands.c:760
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "Laag bovenaan"
 msgstr[1] "Lagen bovenaan"
 
-#: app/actions/layers-commands.c:814
+#: app/actions/layers-commands.c:804
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "Laag omlaag"
 msgstr[1] "Lagen omlaag"
 
-#: app/actions/layers-commands.c:851
+#: app/actions/layers-commands.c:841
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "Laag onderaan"
 msgstr[1] "Lagen onderaan"
 
-#: app/actions/layers-commands.c:878
+#: app/actions/layers-commands.c:868
 msgid "Duplicate layers"
 msgstr "Lagen dupliceren"
 
-#: app/actions/layers-commands.c:1034
+#: app/actions/layers-commands.c:1024
 msgid "Cannot merge a pass through layer group."
 msgstr "Kan niet naar een laaggroep voor doorlaten samenvoegen."
 
-#: app/actions/layers-commands.c:1045
+#: app/actions/layers-commands.c:1035
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "%d laaggroepen samenvoegen"
 
-#: app/actions/layers-commands.c:1106
+#: app/actions/layers-commands.c:1096
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "%d lagen verwijderen"
 
-#: app/actions/layers-commands.c:1135
+#: app/actions/layers-commands.c:1125
 msgid "Rasterize Layers"
 msgstr "Lagen rasteriseren"
 
-#: app/actions/layers-commands.c:1158
+#: app/actions/layers-commands.c:1148
 msgid "Revert Rasterize"
 msgstr "Rasteriseren terugdraaien"
 
-#: app/actions/layers-commands.c:1182
+#: app/actions/layers-commands.c:1172
 msgid "Add Paths"
 msgstr "Paden toevoegen"
 
-#: app/actions/layers-commands.c:1311
+#: app/actions/layers-commands.c:1301
 msgid "Set Layer Boundary Size"
 msgstr "Laaggrensgrootte instellen"
 
-#: app/actions/layers-commands.c:1341
+#: app/actions/layers-commands.c:1331
 msgid "Layers to Image Size"
 msgstr "Lagen naar afbeeldingsgrootte"
 
-#: app/actions/layers-commands.c:1399
+#: app/actions/layers-commands.c:1389
 msgid "Scale Layer"
 msgstr "Laag schalen"
 
-#: app/actions/layers-commands.c:1438
+#: app/actions/layers-commands.c:1428
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "Laag bijsnijden tot selectie"
 msgstr[1] "%d lagen bijsnijden tot selectie"
 
-#: app/actions/layers-commands.c:1507
+#: app/actions/layers-commands.c:1497
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
 msgstr "Kan niet bijsnijden, omdat alle geselecteerde lagen al bijgesneden zijn tot aan hun inhoud."
 
-#: app/actions/layers-commands.c:1513
+#: app/actions/layers-commands.c:1503
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "Laag bijsnijden tot inhoud"
 msgstr[1] "%d lagen bijsnijden tot inhoud"
 
-#: app/actions/layers-commands.c:1652 app/actions/layers-commands.c:2637
+#: app/actions/layers-commands.c:1642 app/actions/layers-commands.c:2627
 msgid "Add Layer Masks"
 msgstr "Laagmaskers toevoegen"
 
-#: app/actions/layers-commands.c:1707
+#: app/actions/layers-commands.c:1697
 msgid "Apply Layer Masks"
 msgstr "Laagmaskers toepassen"
 
-#: app/actions/layers-commands.c:1711
+#: app/actions/layers-commands.c:1701
 msgid "Delete Layer Masks"
 msgstr "Laagmaskers verwijderen"
 
-#: app/actions/layers-commands.c:1803
+#: app/actions/layers-commands.c:1793
 msgid "Show Layer Masks"
 msgstr "Laagmaskers tonen"
 
-#: app/actions/layers-commands.c:1854
+#: app/actions/layers-commands.c:1844
 msgid "Disable Layer Masks"
 msgstr "Laagmaskers uitschakelen"
 
-#: app/actions/layers-commands.c:1893
+#: app/actions/layers-commands.c:1883
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Maskers naar selectie"
 
-#: app/actions/layers-commands.c:1897
+#: app/actions/layers-commands.c:1887
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Maskers aan selectie toevoegen"
 
 # afhalen
-#: app/actions/layers-commands.c:1901
+#: app/actions/layers-commands.c:1891
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Maskers van selectie aftrekken"
 
-#: app/actions/layers-commands.c:1905
+#: app/actions/layers-commands.c:1895
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Doorsnede van maskers met selectie"
 
-#: app/actions/layers-commands.c:1928
+#: app/actions/layers-commands.c:1918
 msgid "Add Alpha Channel"
 msgstr "Alfakanaal toevoegen"
 
-#: app/actions/layers-commands.c:1949
+#: app/actions/layers-commands.c:1939
 msgid "Remove Alpha Channel"
 msgstr "Alfakanaal verwijderen"
 
-#: app/actions/layers-commands.c:1977 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1967 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa naar selectie"
 
-#: app/actions/layers-commands.c:1981 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1971 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Alfa aan selectie toevoegen"
 
 # afhalen
-#: app/actions/layers-commands.c:1985 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1975 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Alfa van selectie aftrekken"
 
-#: app/actions/layers-commands.c:1989 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1979 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Doorsnede van alfa met selectie"
 
-#: app/actions/layers-commands.c:2002
+#: app/actions/layers-commands.c:1992
 msgid "Empty Selection"
 msgstr "Lege selectie"
 
-#: app/actions/layers-commands.c:2032 app/actions/layers-commands.c:2076
+#: app/actions/layers-commands.c:2022 app/actions/layers-commands.c:2066
 #: app/widgets/gimplayertreeview.c:1154
 msgid "Set layers opacity"
 msgstr "Laagdekking instellen"
 
-#: app/actions/layers-commands.c:2146
+#: app/actions/layers-commands.c:2136
 msgid "Set layers' blend space"
 msgstr "Laag kleurverloop instellen"
 
-#: app/actions/layers-commands.c:2200
+#: app/actions/layers-commands.c:2190
 msgid "Set layers' composite space"
 msgstr "Composietruimte lagen: auto"
 
-#: app/actions/layers-commands.c:2254
+#: app/actions/layers-commands.c:2244
 msgid "Set layers' composite mode"
 msgstr "Laag composietmodus instellen"
 
-#: app/actions/layers-commands.c:2339
+#: app/actions/layers-commands.c:2329
 msgid "Lock alpha channels"
 msgstr "Alfakanalen vergrendelen"
 
-#: app/actions/layers-commands.c:2339
+#: app/actions/layers-commands.c:2329
 msgid "Unlock alpha channels"
 msgstr "Alfakanalen ontgrendelen"
 
