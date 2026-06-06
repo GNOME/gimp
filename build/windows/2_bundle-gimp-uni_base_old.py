@@ -6,7 +6,6 @@ import subprocess
 import sys
 from pathlib import Path
 from glob import glob
-from concurrent.futures import ThreadPoolExecutor
 
 # This script is used to create a GIMP bundle dir on Windows. A bundle
 # is used as source of files for making both .exe installer and .msix package
@@ -53,7 +52,7 @@ def bundle(src_root, pattern, option="None", override=None):
   if not paths_to_bundle:
     print(f"\033[31m(ERROR)\033[0m: not found {src_root}/{pattern}")
     sys.exit(1)
-  def bundle_single_thread(src_path):
+  for src_path in paths_to_bundle:
     ## Copy found targets to bundle path
     if "--dest" in option:
       dest_path = GIMP_DISTRIB / Path(override) / src_path.name
@@ -81,29 +80,20 @@ def bundle(src_root, pattern, option="None", override=None):
                 shutil.copy2(typelib_path, dest_path.parent)
                 process_typelib(typelib, typelib_list)
         process_typelib(src_path)
-  with ThreadPoolExecutor(max_workers=4) as executor:
-    executor.map(bundle_single_thread, paths_to_bundle)
 
 def clean(base_path, pattern):
   base_path = Path(base_path)
   first_found = False
-  paths_to_delete = []
   for parent_path in base_path.glob(os.path.dirname(pattern)):
     for path in parent_path.rglob(os.path.basename(pattern)):
       if path.exists():
-        paths_to_delete.append(path)
         if not first_found:
            print(f"Cleaning {base_path}/{pattern}")
            first_found = True
-  def clean_single_thread(path):
-    if not path.exists():
-      return
-    if path.is_dir():
-      shutil.rmtree(path)
-    else:
-      path.unlink()
-  with ThreadPoolExecutor(max_workers=4) as executor:
-    executor.map(clean_single_thread, paths_to_delete)
+        if path.is_dir():
+          shutil.rmtree(path)
+        else:
+          path.unlink()
 
 
 ## PREPARE BUNDLE

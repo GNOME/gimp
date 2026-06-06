@@ -602,28 +602,13 @@ gimp-snap:
 - if ($env:VCPKG_ROOT) { $env:CC='clang-cl'; $env:CXX='clang-cl'; $env:PKG_CONFIG="$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_HOST_TRIPLET\tools\pkgconf\pkgconf.exe"; $env:PATH="$((Get-ChildItem "$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_HOST_TRIPLET\tools" -Recurse -Filter *.exe -ErrorAction SilentlyContinue | Select-Object -ExpandProperty DirectoryName -Unique) -join ';');$(Resolve-Path $env:VCPKG_ROOT\downloads\tools\perl\*.*\perl\bin -ErrorAction SilentlyContinue);$env:PATH"; $env:GIO_MODULE_DIR="$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_HOST_TRIPLET\plugins\glib-networking"; $env:LIBHEIF_PLUGIN_PATH="$env:VCPKG_ROOT\installed\$env:VCPKG_DEFAULT_HOST_TRIPLET\plugins\libheif" }
 - Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):win_environ$([char]13)$([char]27)[0K"
 
-deps-win:
-  extends: .win
-  stage: dependencies
-  script:
-    - build\windows\1_build-deps-msys2.ps1
-  artifacts:
-    paths:
-      - _install-*/
-      - babl/_build-*/meson-logs/meson-log.txt
-      - gegl/_build-*/meson-logs/meson-log.txt
-    expire_in: 4 hours
-
 gimp-win:
   extends: .win
-  needs:
-    - job: deps-win
-      #to allow running outside 'GNOME/gimp' namespace (on MRs)
-      optional: true
   stage: build
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
+    - build\windows\1_build-deps-msys2.ps1
     - build\windows\2_build-gimp-msys2.ps1
   artifacts:
     paths:
@@ -658,7 +643,7 @@ gimp-win:
         VARIANT: -homebrew
   parallel:
     matrix:
-      - ARCH: [arm64, x86_64]
+      - ARCH: [arm64]
   tags:
     - macos
     - marathon

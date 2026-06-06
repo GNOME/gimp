@@ -55,5 +55,23 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):g
 # Bundle GIMP
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle[collapsed=true]$([char]13)$([char]27)[0K$(if (-not (Select-String -Quiet '-Dwindows-installer=true' meson-logs/meson-log.txt) -and -not (Select-String -Quiet '-Dms-store=true' meson-logs/meson-log.txt)) {'Installing GIMP as non-relocatable on GIMP_PREFIX'} else {'Creating bundle'})"
 ninja install | Out-File ninja_install.log; if ("$LASTEXITCODE" -gt '0') { Get-Content ninja_install.log; exit 1 }; Remove-Item ninja_install.log
-Set-Location ..
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle$([char]13)$([char]27)[0K"
+
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle21[collapsed=true]$([char]13)$([char]27)[0K$(if (-not (Select-String -Quiet '-Dwindows-installer=true' meson-logs/meson-log.txt) -and -not (Select-String -Quiet '-Dms-store=true' meson-logs/meson-log.txt)) {'Installing GIMP as non-relocatable on GIMP_PREFIX'} else {'Creating bundle'})"
+ninja install | Out-File ninja_install.log; if ("$LASTEXITCODE" -gt '0') { Get-Content ninja_install.log; exit 1 }; Remove-Item ninja_install.log
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle21$([char]13)$([char]27)[0K"
+
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle2[collapsed=true]$([char]13)$([char]27)[0K$(if (-not (Select-String -Quiet '-Dwindows-installer=true' meson-logs/meson-log.txt) -and -not (Select-String -Quiet '-Dms-store=true' meson-logs/meson-log.txt)) {'Installing GIMP as non-relocatable on GIMP_PREFIX'} else {'Creating bundle'})"
+ninja install | Out-File ninja_install.log; if ("$LASTEXITCODE" -gt '0') { Get-Content ninja_install.log; exit 1 }; Remove-Item ninja_install.log
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle2$([char]13)$([char]27)[0K"
+
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle3[collapsed=true]$([char]13)$([char]27)[0K$(if (-not (Select-String -Quiet '-Dwindows-installer=true' meson-logs/meson-log.txt) -and -not (Select-String -Quiet '-Dms-store=true' meson-logs/meson-log.txt)) {'Installing GIMP as non-relocatable on GIMP_PREFIX'} else {'Creating bundle with old'})"
+Move-Item ../build/windows/2_bundle-gimp-uni_base.py ../build/windows/2_bundle-gimp-uni_base_new.py -Force
+Move-Item ../build/windows/2_bundle-gimp-uni_base_old.py ../build/windows/2_bundle-gimp-uni_base.py -Force
+ninja install | Out-File ninja_install.log; if ("$LASTEXITCODE" -gt '0') { Get-Content ninja_install.log; exit 1 }; Remove-Item ninja_install.log
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle3$([char]13)$([char]27)[0K"
+
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle4[collapsed=true]$([char]13)$([char]27)[0K$(if (-not (Select-String -Quiet '-Dwindows-installer=true' meson-logs/meson-log.txt) -and -not (Select-String -Quiet '-Dms-store=true' meson-logs/meson-log.txt)) {'Installing GIMP as non-relocatable on GIMP_PREFIX'} else {'Creating bundle with old'})"
+ninja install | Out-File ninja_install.log; if ("$LASTEXITCODE" -gt '0') { Get-Content ninja_install.log; exit 1 }; Remove-Item ninja_install.log
+Set-Location ..
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle4$([char]13)$([char]27)[0K"
