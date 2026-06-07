@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-30 12:57+0000\n"
-"PO-Revision-Date: 2026-05-31 12:59+0800\n"
+"POT-Creation-Date: 2026-06-06 18:46+0000\n"
+"PO-Revision-Date: 2026-06-07 08:16+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -143,7 +143,7 @@ msgstr "JavaScript（GJS）插件示例"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4082 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:5158 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -620,7 +620,7 @@ msgstr "百叶窗"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3257 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:4333 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1212,7 +1212,7 @@ msgstr "当前设置的图表"
 
 #: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:573
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:744 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:745 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1189 plug-ins/gfig/gfig-dialog.c:1334
 #: plug-ins/ifs-compose/ifs-compose.c:1214
 #: plug-ins/metadata/metadata-viewer.c:223
@@ -1995,7 +1995,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
 #: plug-ins/file-psd/psd-export.c:2538 plug-ins/file-psd/psd-export.c:2706
-#: plug-ins/file-psd/psd-load.c:190 plug-ins/file-psd/psd-load.c:195
+#: plug-ins/file-psd/psd-load.c:206 plug-ins/file-psd/psd-load.c:211
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
 #: plug-ins/flame/flame.c:540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
@@ -2460,7 +2460,7 @@ msgstr "图像尺寸过大：宽 %d x 高 %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:3636 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-psd/psd-load.c:4712 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -2598,7 +2598,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
 #: plug-ins/file-icns/file-icns-load.c:623 plug-ins/file-ico/ico-load.c:703
 #: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:97
-#: plug-ins/file-psd/psd-load.c:203
+#: plug-ins/file-psd/psd-load.c:219
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
@@ -4649,14 +4649,14 @@ msgstr "“%s”不是 PCX 文件"
 
 #: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:643
+#: plug-ins/file-psd/psd-load.c:668
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "不支持或无效的图像宽度：%d"
 
 #: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:635
+#: plug-ins/file-psd/psd-load.c:660
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "不支持或无效的图像高度：%d"
@@ -4952,7 +4952,7 @@ msgstr "密码错误！请输入正确密码："
 msgid "Could not load '%s': %s"
 msgstr "无法载入“%s”：%s"
 
-#: plug-ins/common/file-pdf-load.c:1095
+#: plug-ins/common/file-pdf-load.c:1101
 msgid "Error getting number of pages from the given PDF file."
 msgstr "从指定 PDF 文件获取页数时出错。"
 
@@ -5749,7 +5749,7 @@ msgid "Error reading color palette"
 msgstr "读取颜色色板时出错"
 
 #: plug-ins/common/file-psp.c:1639 plug-ins/common/file-psp.c:1662
-#: plug-ins/file-psd/psd-util.c:176
+#: plug-ins/file-psd/psd-util.c:210
 #, c-format
 msgid "Error reading data. Most likely unexpected end of file."
 msgstr "读取数据时出错。很可能是意料之外的文件尾。"
@@ -6260,7 +6260,7 @@ msgstr "平面配置"
 msgid "Raw Data"
 msgstr "Raw 数据"
 
-#: plug-ins/common/file-raw-data.c:623 plug-ins/file-psd/psd-util.c:199
+#: plug-ins/common/file-raw-data.c:623 plug-ins/file-psd/psd-util.c:233
 #, c-format
 msgid "Unexpected end of file"
 msgstr "意料之外的文件尾"
@@ -7964,7 +7964,7 @@ msgstr ""
 "现插件菜单的树形列表。也可以帮助您找到新安装插件在菜单中的位置。"
 
 #: plug-ins/common/plugin-browser.c:370
-#: plug-ins/filter-browser/filter-browser.c:626
+#: plug-ins/filter-browser/filter-browser.c:627
 msgid "Searching by name"
 msgstr "按名称搜索"
 
@@ -7975,7 +7975,7 @@ msgid_plural "%d plug-ins"
 msgstr[0] "%d 个插件"
 
 #: plug-ins/common/plugin-browser.c:395
-#: plug-ins/filter-browser/filter-browser.c:693
+#: plug-ins/filter-browser/filter-browser.c:694
 msgid "No matches for your query"
 msgstr "您的查询无匹配结果"
 
@@ -7986,7 +7986,7 @@ msgid_plural "%d plug-ins match your query"
 msgstr[0] "共有 %d 个插件和您的查询匹配"
 
 #: plug-ins/common/plugin-browser.c:544
-#: plug-ins/filter-browser/filter-browser.c:695
+#: plug-ins/filter-browser/filter-browser.c:696
 msgid "No matches"
 msgstr "无匹配"
 
@@ -10600,7 +10600,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr "Photoshop 不支持多于一个图层的索引图像。图层将在导出时合并。"
 
-#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:4121
+#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5197
 msgid "Compatibility Notice"
 msgstr "兼容性注意"
 
@@ -10615,129 +10615,142 @@ msgstr ""
 "图层混合成组”功能所需的剪裁至背景。如果您遇到显示问题，可以考虑切换为那些图层"
 "模式。"
 
-#: plug-ins/file-psd/psd-load.c:313 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:330 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "打开 PSD 文件出错：%s"
 
-#: plug-ins/file-psd/psd-load.c:510
+#: plug-ins/file-psd/psd-load.c:533
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "无效的 PSD 元数据图层格式"
 
-#: plug-ins/file-psd/psd-load.c:614
+#: plug-ins/file-psd/psd-load.c:639
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "不是有效的 Photoshop 文档文件"
 
-#: plug-ins/file-psd/psd-load.c:621
+#: plug-ins/file-psd/psd-load.c:646
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "不支持的文件格式版本：%d"
 
-#: plug-ins/file-psd/psd-load.c:628
+#: plug-ins/file-psd/psd-load.c:653
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "文件中的通道数太多：%d"
 
-#: plug-ins/file-psd/psd-load.c:652
+#: plug-ins/file-psd/psd-load.c:677
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "不支持或无效的图像尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:667 plug-ins/file-psd/psd-load.c:677
+#: plug-ins/file-psd/psd-load.c:692 plug-ins/file-psd/psd-load.c:702
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "不支持的色彩模式：%s"
 
-#: plug-ins/file-psd/psd-load.c:704
+#: plug-ins/file-psd/psd-load.c:729
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "不支持的位深度：%d"
 
-#: plug-ins/file-psd/psd-load.c:738 plug-ins/file-psd/psd-load.c:748
-#: plug-ins/file-psd/psd-load.c:999 plug-ins/file-psd/psd-load.c:1360
+#: plug-ins/file-psd/psd-load.c:763 plug-ins/file-psd/psd-load.c:773
+#: plug-ins/file-psd/psd-load.c:1043 plug-ins/file-psd/psd-load.c:1408
 #, c-format
 msgid "The file is corrupt!"
 msgstr "文件损坏！"
 
-#: plug-ins/file-psd/psd-load.c:928
+#: plug-ins/file-psd/psd-load.c:972
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "图层中的通道数太多：%d"
 
-#: plug-ins/file-psd/psd-load.c:1035
+#: plug-ins/file-psd/psd-load.c:1079
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "不支持的或无效的图层高度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1044
+#: plug-ins/file-psd/psd-load.c:1088
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "不支持的或无效的图层宽度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1054
+#: plug-ins/file-psd/psd-load.c:1098
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "不支持的或无效的图层尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1079
+#: plug-ins/file-psd/psd-load.c:1123
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "不支持或无效的蒙板信息大小。"
 
-#: plug-ins/file-psd/psd-load.c:1262
+#: plug-ins/file-psd/psd-load.c:1306
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "不支持的或无效的图层蒙板高度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1271
+#: plug-ins/file-psd/psd-load.c:1315
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "不支持的或无效的图层蒙板宽度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1281
+#: plug-ins/file-psd/psd-load.c:1325
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "不支持的或无效的图层蒙板尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1893 plug-ins/file-psd/psd-load.c:3628
+#: plug-ins/file-psd/psd-load.c:1940 plug-ins/file-psd/psd-load.c:4704
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "不支持或无效的通道尺寸"
 
-#: plug-ins/file-psd/psd-load.c:2270
+#: plug-ins/file-psd/psd-load.c:2326
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "无效通道尺寸 %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2338 plug-ins/file-psd/psd-load.c:3226
+#: plug-ins/file-psd/psd-load.c:2394 plug-ins/file-psd/psd-load.c:4302
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "不支持的压缩模式：%d"
 
-#: plug-ins/file-psd/psd-load.c:2955
+#: plug-ins/file-psd/psd-load.c:3045 plug-ins/file-psd/psd-load.c:3694
 msgid "Inner Shadow"
 msgstr "内阴影"
 
-#: plug-ins/file-psd/psd-load.c:2956
+#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-psd/psd-load.c:3695
+#: plug-ins/file-psd/psd-load.c:3706 plug-ins/file-psd/psd-load.c:3722
 msgid "imported"
 msgstr "已导入"
 
-#: plug-ins/file-psd/psd-load.c:3403
+#: plug-ins/file-psd/psd-load.c:3705
+msgid "Outer Glow"
+msgstr "外发光"
+
+#: plug-ins/file-psd/psd-load.c:3721
+msgid "Stroke"
+msgstr "描边"
+
+#: plug-ins/file-psd/psd-load.c:3725
+msgid "Unhandled Stroke type: expect incorrect rendering."
+msgstr "未处理的描边类型：预期为错误的渲染。"
+
+#: plug-ins/file-psd/psd-load.c:4479
 msgid "Extra"
 msgstr "附加的"
 
-#: plug-ins/file-psd/psd-load.c:3705
+#: plug-ins/file-psd/psd-load.c:4781
 #, c-format
 msgid "Failed to decompress data"
 msgstr "解压缩数据失败"
 
-#: plug-ins/file-psd/psd-load.c:4098
+#: plug-ins/file-psd/psd-load.c:5174
 msgid "Duotone Import"
 msgstr "双色导入"
 
-#: plug-ins/file-psd/psd-load.c:4099
+#: plug-ins/file-psd/psd-load.c:5175
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10747,7 +10760,7 @@ msgstr ""
 "双色调颜色空间数据已保存\n"
 "且可在导出时重新应用。"
 
-#: plug-ins/file-psd/psd-load.c:4122
+#: plug-ins/file-psd/psd-load.c:5198
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -11724,17 +11737,17 @@ msgstr "从“%s”解码 WebP 动画信息失败"
 msgid "Failed to decode animated WebP frame from '%s'"
 msgstr "从“%s”解码 WebP 动画帧失败"
 
-#: plug-ins/filter-browser/filter-browser.c:292
-#: plug-ins/filter-browser/filter-browser.c:334
+#: plug-ins/filter-browser/filter-browser.c:293
+#: plug-ins/filter-browser/filter-browser.c:335
 msgid "Allowed values:"
 msgstr "允许的值："
 
-#: plug-ins/filter-browser/filter-browser.c:437
+#: plug-ins/filter-browser/filter-browser.c:438
 #, c-format
 msgid "Operation name: %s"
 msgstr "操作名称：%s"
 
-#: plug-ins/filter-browser/filter-browser.c:450
+#: plug-ins/filter-browser/filter-browser.c:451
 #, c-format
 msgid "Categories: %s"
 msgstr "类别：%s"
@@ -11745,7 +11758,7 @@ msgstr "类别：%s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:480
+#: plug-ins/filter-browser/filter-browser.c:481
 #: plug-ins/gradient-flare/gradient-flare.c:2972
 #: plug-ins/gradient-flare/gradient-flare.c:3722
 #: plug-ins/gradient-flare/gradient-flare.c:3824
@@ -11753,64 +11766,64 @@ msgstr "类别：%s"
 msgid "Parameters"
 msgstr "参数"
 
-#: plug-ins/filter-browser/filter-browser.c:512
+#: plug-ins/filter-browser/filter-browser.c:513
 msgid "Additional Information"
 msgstr "附加信息"
 
-#: plug-ins/filter-browser/filter-browser.c:518
+#: plug-ins/filter-browser/filter-browser.c:519
 #, c-format
 msgid "License: %s"
 msgstr "许可证：%s"
 
-#: plug-ins/filter-browser/filter-browser.c:629
+#: plug-ins/filter-browser/filter-browser.c:630
 msgid "Searching by title"
 msgstr "按标题搜索"
 
-#: plug-ins/filter-browser/filter-browser.c:632
+#: plug-ins/filter-browser/filter-browser.c:633
 msgid "Searching by description"
 msgstr "按描述搜索"
 
-#: plug-ins/filter-browser/filter-browser.c:635
+#: plug-ins/filter-browser/filter-browser.c:636
 msgid "Searching by category"
 msgstr "按分类搜索"
 
-#: plug-ins/filter-browser/filter-browser.c:700
+#: plug-ins/filter-browser/filter-browser.c:701
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
 msgstr[0] "%d 个滤镜和您的查询匹配"
 
-#: plug-ins/filter-browser/filter-browser.c:706
+#: plug-ins/filter-browser/filter-browser.c:707
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
 msgstr[0] "%d 个滤镜"
 
-#: plug-ins/filter-browser/filter-browser.c:738
+#: plug-ins/filter-browser/filter-browser.c:739
 msgid "GEGL Filter Browser"
 msgstr "GEGL 滤镜浏览器"
 
-#: plug-ins/filter-browser/filter-browser.c:755
+#: plug-ins/filter-browser/filter-browser.c:756
 msgid "by name"
 msgstr "按名称"
 
-#: plug-ins/filter-browser/filter-browser.c:756
+#: plug-ins/filter-browser/filter-browser.c:757
 msgid "by title"
 msgstr "按标题"
 
-#: plug-ins/filter-browser/filter-browser.c:757
+#: plug-ins/filter-browser/filter-browser.c:758
 msgid "by description"
 msgstr "按描述"
 
-#: plug-ins/filter-browser/filter-browser.c:849
+#: plug-ins/filter-browser/filter-browser.c:850
 msgid "_GEGL Filter Browser"
 msgstr "_GEGL 滤镜浏览器"
 
-#: plug-ins/filter-browser/filter-browser.c:854
+#: plug-ins/filter-browser/filter-browser.c:855
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "显示关于可用 GEGL 操作的信息（如滤镜等）。"
 
-#: plug-ins/filter-browser/filter-browser.c:856
+#: plug-ins/filter-browser/filter-browser.c:857
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
