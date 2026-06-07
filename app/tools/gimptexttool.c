@@ -69,6 +69,7 @@
 #include "widgets/gimptextstyleeditor.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpcanvasgroup.h"
 #include "display/gimpdisplay.h"
@@ -268,6 +269,8 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 
   text_tool->handle_rectangle_change_complete = TRUE;
 
+  text_tool->active_cursor = FALSE;
+
   gimp_text_tool_editor_init (text_tool);
 
   gimp_tool_control_set_scroll_lock          (tool->control, TRUE);
@@ -322,6 +325,8 @@ gimp_text_tool_finalize (GObject *object)
   g_clear_object (&text_tool->buffer);
 
   gimp_text_tool_editor_finalize (text_tool);
+
+  text_tool->active_cursor = FALSE;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -566,7 +571,14 @@ gimp_text_tool_button_press (GimpTool            *tool,
             {
               text_tool->selecting = TRUE;
 
-              gimp_text_tool_editor_button_press (text_tool, x, y, press_type);
+              /* If we held down shift when clicking, make a selection */
+              if (state & gimp_get_extend_selection_mask () &&
+                  text_tool->active_cursor)
+                gimp_text_tool_editor_motion (text_tool, x, y);
+              else
+                gimp_text_tool_editor_button_press (text_tool, x, y, press_type);
+
+              text_tool->active_cursor = TRUE;
             }
           else
             {
@@ -691,7 +703,7 @@ gimp_text_tool_button_release (GimpTool              *tool,
           (y2 - y1) < 3)
         {
           /*  unless the rectangle is unreasonably small to hold any
-           *  real text (the user has eitherjust clicked or just made
+           *  real text (the user has either just clicked or just made
            *  a rectangle of a few pixels), so set the text box to
            *  dynamic and ignore rectangle-change-complete.
            */

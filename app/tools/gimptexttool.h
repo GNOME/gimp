@@ -46,6 +46,7 @@ struct _GimpTextTool
   guint           idle_id;
 
   gboolean        moving;
+  gboolean        active_cursor;
 
   GimpTextBuffer *buffer;
 
