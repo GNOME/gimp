@@ -293,7 +293,7 @@ static void gimp_image_rec_remove_layer_stack_dups (GimpImage       *image,
                                                     GSList          *start);
 static void     gimp_image_clean_layer_stack       (GimpImage       *image);
 static void     gimp_image_rec_filter_remove_undo  (GimpImage       *image,
-                                                    GimpLayer       *layer);
+                                                    GimpDrawable    *drawable);
 static void     gimp_image_remove_from_layer_stack (GimpImage       *image,
                                                     GimpLayer       *layer);
 static gint     gimp_image_selected_is_descendant  (GimpViewable    *selected,
@@ -2051,14 +2051,14 @@ gimp_image_clean_layer_stack (GimpImage *image)
 }
 
 static void
-gimp_image_rec_filter_remove_undo (GimpImage *image,
-                                   GimpLayer *layer)
+gimp_image_rec_filter_remove_undo (GimpImage    *image,
+                                   GimpDrawable *drawable)
 {
   GimpContainer *filters;
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
-      GimpContainer *stack = gimp_viewable_get_children (GIMP_VIEWABLE (layer));
+      GimpContainer *stack = gimp_viewable_get_children (GIMP_VIEWABLE (drawable));
       GList         *children;
       GList         *iter;
 
@@ -2066,13 +2066,13 @@ gimp_image_rec_filter_remove_undo (GimpImage *image,
 
       for (iter = children; iter; iter = iter->next)
         {
-          GimpLayer *child = iter->data;
+          GimpDrawable *child = iter->data;
 
           gimp_image_rec_filter_remove_undo (image, child);
         }
     }
 
-  filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+  filters = gimp_drawable_get_filters (drawable);
 
   if (gimp_container_get_n_children (filters) > 0)
     {
@@ -2088,8 +2088,7 @@ gimp_image_rec_filter_remove_undo (GimpImage *image,
 
               gimp_image_undo_push_filter_remove (image,
                                                   _("Remove filter"),
-                                                  GIMP_DRAWABLE (layer),
-                                                  filter);
+                                                  drawable, filter);
             }
         }
     }
@@ -5547,7 +5546,7 @@ gimp_image_remove_layer (GimpImage *image,
 
   if (push_undo)
     {
-      gimp_image_rec_filter_remove_undo (image, layer);
+      gimp_image_rec_filter_remove_undo (image, GIMP_DRAWABLE (layer));
       gimp_image_undo_push_layer_remove (image, undo_desc, layer,
                                          gimp_layer_get_parent (layer),
                                          gimp_item_get_index (GIMP_ITEM (layer)),
@@ -5747,10 +5746,15 @@ gimp_image_remove_channel (GimpImage   *image,
   selected_channels = g_list_copy (selected_channels);
 
   if (push_undo)
-    gimp_image_undo_push_channel_remove (image, C_("undo-type", "Remove Channel"), channel,
-                                         gimp_channel_get_parent (channel),
-                                         gimp_item_get_index (GIMP_ITEM (channel)),
-                                         selected_channels);
+    {
+      gimp_image_rec_filter_remove_undo (image, GIMP_DRAWABLE (channel));
+      gimp_image_undo_push_channel_remove (image,
+                                           C_("undo-type", "Remove Channel"),
+                                           channel,
+                                           gimp_channel_get_parent (channel),
+                                           gimp_item_get_index (GIMP_ITEM (channel)),
+                                           selected_channels);
+    }
 
   g_object_ref (channel);
 
