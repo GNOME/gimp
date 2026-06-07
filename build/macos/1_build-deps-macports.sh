@@ -52,6 +52,7 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
   fi
   eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/#.*//' | sed 's/|homebrew:[^ ]*//g' | tr -d '\\' | xargs)
   if echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] }; then
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port -Nq uninstall inactive || true
     mkdir -p macports-cached-$(uname -m) && cp -fa $OPT_PREFIX/var/macports/* macports-cached-$(uname -m) || true
   fi
 else
