@@ -21,6 +21,10 @@ if [ -z "$GITLAB_CI" ]; then
   PARENT_DIR='/..'
 fi
 
+ls macports-cached-$(uname -m)
+ls macports-cached-$(uname -m)/software/gtk3
+
+exit 1
 
 # Install part of the deps
 if [ -z "$OPT_PREFIX" ]; then
