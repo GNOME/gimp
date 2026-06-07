@@ -84,24 +84,14 @@ static void
 gimp_row_filter_init (GimpRowFilter *row)
 {
   GimpRowFilterPrivate *priv = GET_PRIVATE (row);
-  GtkWidget            *box;
 
-  box = _gimp_row_get_box (GIMP_ROW (row));
-
-  priv->active_toggle = gtk_toggle_button_new ();
-  gtk_box_pack_start (GTK_BOX (box), priv->active_toggle, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (box), priv->active_toggle, 0);
-  gtk_widget_set_visible (priv->active_toggle, TRUE);
+  priv->active_toggle = _gimp_row_add_toggle (GIMP_ROW (row),
+                                              GIMP_ICON_VISIBLE,
+                                              &priv->active_icon);
 
   g_signal_connect (priv->active_toggle, "toggled",
                     G_CALLBACK (gimp_row_filter_active_toggled),
                     row);
-
-  priv->active_icon = gtk_image_new_from_icon_name (GIMP_ICON_VISIBLE,
-                                                    GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER (priv->active_toggle),
-                     priv->active_icon);
-  gtk_widget_set_visible (priv->active_icon, TRUE);
 }
 
 static void

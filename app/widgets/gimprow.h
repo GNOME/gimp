@@ -81,3 +81,7 @@ GtkWidget    * _gimp_row_get_box        (GimpRow      *row);
 GtkWidget    * _gimp_row_get_icon       (GimpRow      *row);
 GtkWidget    * _gimp_row_get_view       (GimpRow      *row);
 GtkWidget    * _gimp_row_get_label      (GimpRow      *row);
+
+GtkWidget    * _gimp_row_add_toggle     (GimpRow      *row,
+                                         const gchar  *icon_name,
+                                         GtkWidget   **icon);

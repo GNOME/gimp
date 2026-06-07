@@ -68,6 +68,8 @@ struct _GimpRowPrivate
   gint          view_size;
   gint          view_border_width;
 
+  gint          n_toggles;
+
   GtkWidget    *box;
 
   GtkWidget    *icon;
@@ -807,6 +809,35 @@ _gimp_row_get_label (GimpRow *row)
   g_return_val_if_fail (GIMP_IS_ROW (row), NULL);
 
   return priv->label;
+}
+
+GtkWidget *
+_gimp_row_add_toggle (GimpRow      *row,
+                      const gchar  *icon_name,
+                      GtkWidget   **icon)
+{
+  GimpRowPrivate *priv = GET_PRIVATE (row);
+  GtkWidget      *toggle;
+  GtkWidget      *image;
+
+  g_return_val_if_fail (GIMP_IS_ROW (row), NULL);
+  g_return_val_if_fail (icon_name != NULL, NULL);
+  g_return_val_if_fail (icon != NULL, NULL);
+
+  toggle = gtk_toggle_button_new ();
+  gtk_box_pack_start (GTK_BOX (priv->box), toggle, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (priv->box), toggle, priv->n_toggles);
+  gtk_widget_set_visible (toggle, TRUE);
+
+  image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (toggle), image);
+  gtk_widget_set_visible (image, TRUE);
+
+  priv->n_toggles++;
+
+  *icon = image;
+
+  return toggle;
 }
 
 

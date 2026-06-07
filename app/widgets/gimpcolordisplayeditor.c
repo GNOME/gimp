@@ -341,8 +341,8 @@ gimp_color_display_editor_create_row (gpointer item,
   GimpColorDisplayEditor *editor = user_data;
   GimpColorDisplayType   *model;
   GtkWidget              *row;
-  GtkWidget              *hbox;
-  GtkWidget              *eye;
+  GtkWidget              *toggle;
+  GtkWidget              *icon;
 
   model = gimp_color_display_type_new (G_TYPE_FROM_INSTANCE (item));
   g_object_set_data (G_OBJECT (model), "color-display", item);
@@ -350,16 +350,13 @@ gimp_color_display_editor_create_row (gpointer item,
                                      gimp_get_user_context (editor->gimp));
   g_object_weak_ref (G_OBJECT (row), (GWeakNotify) g_object_unref, model);
 
-  hbox = _gimp_row_get_box (GIMP_ROW (row));
+  toggle = _gimp_row_add_toggle (GIMP_ROW (row), GIMP_ICON_VISIBLE, &icon);
 
-  eye = gimp_prop_toggle_new (G_OBJECT (item), "enabled",
-                              GIMP_ICON_VISIBLE, NULL, NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), eye, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (hbox), eye, 0);
-  gtk_widget_set_visible (eye, TRUE);
-
+  g_object_bind_property (item,   "enabled",
+                          toggle, "active",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
   g_object_bind_property (item, "enabled",
-                          gtk_bin_get_child (GTK_BIN (eye)), "visible",
+                          icon, "visible",
                           G_BINDING_SYNC_CREATE);
 
   return row;
