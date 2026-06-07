@@ -26,6 +26,12 @@ Core:
     option is enabled in Preferences.
   * Various layer modes are now being ported to work on non-RGBA
     contents when it makes sense.
+  * Non-GUI filters will be applied non-destructively on group layers as
+    well as non-raster layers. For now they are still applied
+    destructively only on raster layers, until a proper design decision
+    is taken on this topic.
+  * "Layers to Image Size" action is now only sensitive on raster
+    layers.
 
 Tools:
 
@@ -51,6 +57,14 @@ Graphical User Interface:
   * Append "(read only)" to system resource (brushes, gradients,
     palettes…) titles when trying to edit them in their respective
     Editor dockables.
+  * Action Search dialog:
+    - The shortcuts hints are moved to the right side, similar to the
+      rest of the application (e.g. shortcuts hints in menus).
+    - A ".search-results" class was added for the results row, and theme
+      was updated to highlight the hovered action row.
+  * Icon picker widget: the file filter name is now titled "Image
+    files".
+  * Multiple selected layers are now added to a new group.
 
 Plug-Ins:
 
@@ -69,6 +83,13 @@ Plug-Ins:
       when layers we don't yet support are included in the PSD. The
       wording for the warning has been updated to show we now have
       partial support.
+    - We now load and parse PSD descriptors, which brought us:
+      + Layer effects loading: includes so far support of Drop Shadow,
+        Solid Fill, Inner Shadow, Outer Glow, Partial Stroke layer effects.
+      + Placed and linked layer resources: support of external link
+        layers (embedded files are not supported at this time).
+      + TXT2 layer resources
+      + Compositor layer resources
   * New import support for MacPaint images.
   * GBR: fix exporting grayscale GBRs with alpha channels.
   * file-raw-data: various code improvements.
@@ -110,6 +131,8 @@ Plug-Ins:
     - Support "Inverse Alpha Mask" layer mode from Sketchbook on loading
       (equivalent to our Erase blend mode).
     - Differentiate correctly pass-through group layers.
+  * PDF: on export of multi-page documents, the image size is now made
+    so that all pages/layers are contained within the image.
 
 API:
 
