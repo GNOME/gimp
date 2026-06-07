@@ -658,7 +658,7 @@ gimp-win:
         VARIANT: -homebrew
   parallel:
     matrix:
-      - ARCH: [arm64, x86_64]
+      - ARCH: [x86_64]
   tags:
     - macos
     - marathon

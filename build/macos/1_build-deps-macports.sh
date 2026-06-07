@@ -48,10 +48,12 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync -Nv
   fi
   if [ "$OPT_PREFIX" != '/opt/local' ] && [ "$OPT_PREFIX" != '/opt/homebrew' ]; then
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port uninstall -Nv --follow-dependents libidn2
     opt='configure.cflags-append -Werror=unguarded-availability-new'; file="$OPT_PREFIX/var/macports/sources/rsync.macports.org/macports/release/tarballs/ports/mail/libidn2/Portfile"; grep -q -- "$opt" $file || printf "\n$opt\n" >> "$file"
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -Nv libidn2
   fi
   eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/#.*//' | sed 's/|homebrew:[^ ]*//g' | tr -d '\\' | xargs)
-  if echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] }; then
+  if echo "$CI_JOB_NAME" | grep -q 'deps'; then
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port -Nq uninstall inactive || true
     mkdir -p macports-cached-$(uname -m) && cp -fa $OPT_PREFIX/var/macports/* macports-cached-$(uname -m) || true
   fi
