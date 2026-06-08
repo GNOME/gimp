@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-08 00:29+0200\n"
-"PO-Revision-Date: 2026-06-08 01:23+0200\n"
+"PO-Revision-Date: 2026-06-08 09:39+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -1385,7 +1385,7 @@ msgstr "La procedura '%s' funziona solo con immagini indicizzate."
 
 #: ../plug-ins/common/colormap-remap.c:600
 msgid "Rearrange Colors"
-msgstr "Reimposta colori"
+msgstr "Riorganizza colori"
 
 #: ../plug-ins/common/colormap-remap.c:631
 msgid "Sort on Hue"
@@ -1417,7 +1417,7 @@ msgstr ""
 
 #: ../plug-ins/common/colormap-remap.c:726
 msgid "Rearranging the colormap"
-msgstr "Reimpostazione mappa colori"
+msgstr "Riorganizzo mappa colori"
 
 #. Decompositions availables.
 #. * All the following values have to be kept in sync with those of decompose.c
