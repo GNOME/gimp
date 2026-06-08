@@ -564,13 +564,16 @@ gimp_row_real_icon_changed (GimpRow *row)
 static void
 gimp_row_real_name_changed (GimpRow *row)
 {
-  GimpRowPrivate *priv        = GET_PRIVATE (row);
-  const gchar    *description = NULL;
+  GimpRowPrivate *priv = GET_PRIVATE (row);
+  gchar          *desc = NULL;
 
   if (priv->viewable)
-    description = gimp_viewable_get_description (priv->viewable, NULL);
+    desc = gimp_viewable_get_description (priv->viewable, NULL);
 
-  gtk_label_set_text (GTK_LABEL (priv->label), description);
+  gtk_label_set_text (GTK_LABEL (priv->label), desc);
+
+  if (desc)
+    g_free (desc);
 }
 
 static void
