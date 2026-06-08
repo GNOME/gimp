@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 13:00+0200\n"
-"PO-Revision-Date: 2026-05-07 13:00+0200\n"
+"POT-Creation-Date: 2026-06-08 09:14+0200\n"
+"PO-Revision-Date: 2026-06-08 09:28+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: it\n"
@@ -749,87 +749,53 @@ msgstr "Lavora su una copia"
 msgid "Flatten image"
 msgstr "Immagine appiattita"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:63
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
 msgid "_Using Paths"
 msgstr "_Uso dei tracciati"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:64
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:75
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:97
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:108
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:119
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:130
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:141
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:71
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:82
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:93
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:104
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:115
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:126
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:147
 msgid "Bookmark to the user manual"
 msgstr "Segnalibro al manuale utente"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:74
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:70
 msgid "_Preparing your Images for the Web"
 msgstr "_Preparazione delle immagini per il Web"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:81
 msgid "_Working with Digital Camera Photos"
 msgstr "Al la_voro con le foto digitali"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:96
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:92
 msgid "Create, Open and Save _Files"
 msgstr "Creare, aprire e salvare _file"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:107
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:103
 msgid "_Basic Concepts"
 msgstr "Concetti _base"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:118
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:114
 msgid "How to Use _Dialogs"
 msgstr "Come usare le finestre di _dialogo"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:129
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
 msgid "Drawing _Simple Objects"
 msgstr "Disegno di oggetti _semplici"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:140
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:136
 msgid "_Create and Use Selections"
 msgstr "_Crea e usa le selezioni"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:146
 msgid "_Table of Contents"
 msgstr "_Sommario"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:184
-msgid "_Main Web Site"
-msgstr "Sito Web _principale"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:185
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:196
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
-msgid "Bookmark to the GIMP web site"
-msgstr "Segnalibro al sito web di GIMP"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:195
-msgid "_Developer Web Site"
-msgstr "Sito web _degli sviluppatori"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:206
-msgid "_Roadmaps"
-msgstr "Tabella di ma_rcia"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:207
-msgid "Bookmark to the roadmaps of GIMP"
-msgstr "Segnalibro alla tabella di marcia di GIMP"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "_Bug Reports and Feature Requests"
-msgstr "_Rapporti difetti e richieste di funzionalità"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "Segnalibro alla segnalazione difetti di GIMP"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:228
-msgid "_User Manual Web Site"
-msgstr "Sito Web del manuale _utente"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:73
 msgid "Custom _Gradient..."
@@ -858,6 +824,35 @@ msgstr "Altezza"
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:79
 msgid "Gradient reverse"
 msgstr "Gradiente inverso"
+
+#: ../plug-ins/script-fu/scripts/guides-from-rule.scm:60
+msgid "New Guides from Rule..."
+msgstr "Nuove guide dalla regola..."
+
+#: ../plug-ins/script-fu/scripts/guides-from-rule.scm:61
+msgid "Add guides based on a selected composition rule"
+msgstr "Aggiungi guide in base ad una regola di disposizione"
+
+#. doesn't matter how many drawables are selected
+#: ../plug-ins/script-fu/scripts/guides-from-rule.scm:67
+msgid "R_ule"
+msgstr "Reg_ola"
+
+#: ../plug-ins/script-fu/scripts/guides-from-rule.scm:67
+msgid "Center lines"
+msgstr "Linee centrali"
+
+#: ../plug-ins/script-fu/scripts/guides-from-rule.scm:68
+msgid "Rule of thirds"
+msgstr "Regola dei terzi"
+
+#: ../plug-ins/script-fu/scripts/guides-from-rule.scm:69
+msgid "Rule of fifths"
+msgstr "Regola dei quinti"
+
+#: ../plug-ins/script-fu/scripts/guides-from-rule.scm:70
+msgid "Golden sections"
+msgstr "Selezioni auree"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
