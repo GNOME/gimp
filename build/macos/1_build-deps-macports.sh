@@ -44,7 +44,7 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
   elif echo "$CI_JOB_NAME" | grep -q 'deps'; then
     export first_cache=true
   fi
-  if echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] }; then
+  if [ -z "$GITLAB_CI" ] || { echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] } }; then
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync -Nv
   fi
   if [ "$OPT_PREFIX" != '/opt/local' ] && [ "$OPT_PREFIX" != '/opt/homebrew' ]; then
