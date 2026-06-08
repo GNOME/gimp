@@ -49,8 +49,8 @@ openjpeg|homebrew:openjpeg \
 pango +thai +quartz -x11|homebrew:pango \
 poppler +pinentry -pinentry_mac|homebrew:poppler \
 poppler-data \
-python313|homebrew:python \ py313-certifi|homebrew:certifi
-py313-gobject3|homebrew:pygobject3 \
+|homebrew:python \ py-certifi|homebrew:certifi
+py-gobject3|homebrew:pygobject3 \
 qoi #homebrew rejected qoi https://github.com/Homebrew/homebrew-core/pull/276182 \
 #suitesparse not built by Apple Clang
 #xpm depends on x11
