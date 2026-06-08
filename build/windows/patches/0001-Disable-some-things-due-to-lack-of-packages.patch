@@ -1,6 +1,6 @@
-From 3411a7621e4f9329088d75f4296706f1c3c9c1f8 Mon Sep 17 00:00:00 2001
+From 564773b44b59043215088fb3cb509a50db1a4ca0 Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Mon, 1 Jun 2026 09:30:37 -0300
+Date: Mon, 8 Jun 2026 13:40:51 -0300
 Subject: [PATCH] Disable some things due to lack of packages
 
 ---
@@ -277,7 +277,7 @@ index f8e76278ec..7e8eba8684 100644
    gobject_introspection_warning = '\n      '.join(['',
      'GObject Introspection is disabled while cross-compiling because',
 diff --git a/meson.build b/meson.build
-index efe827c6e7..e385f379cf 100644
+index 5559e84126..c06473b8d1 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -291,7 +291,7 @@ warning_cflags_common = [
@@ -330,10 +330,10 @@ index efe827c6e7..e385f379cf 100644
  ## Javascript
  
  gjs = find_program('gjs', required: false)
-@@ -1984,15 +1977,11 @@ subdir('libgimp')
+@@ -1983,15 +1976,11 @@ subdir('libgimpwidgets')
+ subdir('libgimp')
  
  # Executables, plugins
- plugin_executables = []
 -subdir('extensions')
  subdir('modules')
  subdir('plug-ins')
@@ -346,7 +346,7 @@ index efe827c6e7..e385f379cf 100644
  ################################################################################
  # Make GIMP runnable without being installed for unit-testing or as a build
  # tool.
-@@ -2010,13 +1999,13 @@ if get_option('debug-self-in-build')
+@@ -2009,13 +1998,13 @@ if get_option('debug-self-in-build')
  endif
  gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
  
@@ -362,7 +362,7 @@ index efe827c6e7..e385f379cf 100644
    gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
  
    menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
-@@ -2074,18 +2063,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
+@@ -2073,18 +2062,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
      gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpthumb.full_path())
      gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpwidgets.full_path())
    endif
@@ -381,7 +381,7 @@ index efe827c6e7..e385f379cf 100644
  endif
  
  gimp_exe = find_program('tools'/'in-build-gimp.py')
-@@ -2094,7 +2071,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
+@@ -2093,7 +2070,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
  # Subdirs: part 2
  
  # gimp-data submodule part 2
@@ -390,7 +390,7 @@ index efe827c6e7..e385f379cf 100644
  
  # Unit testing
  subdir('app/tests')
-@@ -2279,7 +2256,7 @@ final_message = [
+@@ -2278,7 +2255,7 @@ final_message = [
  '''  Test appdata         @0@'''.format(appstreamcli.found()),
  '',
  '''Documentation:''',
