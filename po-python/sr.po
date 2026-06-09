@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-02-21 11:22+0000\n"
+"POT-Creation-Date: 2026-05-25 17:59+0000\n"
 "PO-Revision-Date: 2026-03-18 21:05+0100\n"
 "Last-Translator: Марко М. Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <gnome-sr@googlegroups.com>\n"
@@ -24,20 +24,27 @@ msgstr ""
 "X-Generator: Poedit 3.9\n"
 
 #: plug-ins/python/colorxhtml.py:77
-msgid "Save as colored HTML text..."
-msgstr "Сачувај као HTML текст у боји…"
+#| msgid "Save as colored HTML text..."
+msgid "Export as colored HTML text..."
+msgstr "Извези као ХТМЛ текст у боји…"
 
 #: plug-ins/python/colorxhtml.py:136
 msgid "Saving as colored XHTML"
-msgstr "Чувам као XHTML у боји"
+msgstr "Чувам као Икс-ХТМЛ у боји"
 
 #: plug-ins/python/colorxhtml.py:210
-msgid "Save as colored HTML text"
-msgstr "Сачувај као HTML текст у боји"
+#| msgid "Save as colored HTML text"
+msgid "Exports as colored HTML text"
+msgstr "Извози као ХТМЛ текст у боји"
+
+#: plug-ins/python/colorxhtml.py:211
+#| msgid "Save as colored HTML text"
+msgid "Exports the image as colored XHTML text"
+msgstr "Извози слику као Икс-ХТМЛ текст у боји"
 
 #: plug-ins/python/colorxhtml.py:213
 msgid "Colored HTML text"
-msgstr "HTML текст у боји"
+msgstr "ХТМЛ текст у боји"
 
 #: plug-ins/python/colorxhtml.py:221
 msgid "Rea_d characters from file"
@@ -76,23 +83,23 @@ msgstr "Упиши засебну ЦСС датотеку"
 msgid "Choose File"
 msgstr "Изабери датотеку"
 
-#: plug-ins/python/file-openraster.py:504
-#: plug-ins/python/file-openraster.py:505
+#: plug-ins/python/file-openraster.py:507
+#: plug-ins/python/file-openraster.py:508
 msgid "export an OpenRaster (.ora) file"
 msgstr "извези OpenRaster (.ora) датотеку"
 
-#: plug-ins/python/file-openraster.py:507
-#: plug-ins/python/file-openraster.py:513
+#: plug-ins/python/file-openraster.py:510
+#: plug-ins/python/file-openraster.py:516
 msgid "OpenRaster"
 msgstr "OpenRaster"
 
-#: plug-ins/python/file-openraster.py:514
-#: plug-ins/python/file-openraster.py:515
+#: plug-ins/python/file-openraster.py:517
+#: plug-ins/python/file-openraster.py:518
 msgid "load an OpenRaster (.ora) file"
 msgstr "учитај OpenRaster (.ora) датотеку"
 
-#: plug-ins/python/file-openraster.py:524
-#: plug-ins/python/file-openraster.py:525
+#: plug-ins/python/file-openraster.py:527
+#: plug-ins/python/file-openraster.py:528
 msgid "loads a thumbnail from an OpenRaster (.ora) file"
 msgstr "учитава сличицу из OpenRaster (.ora) датотеке"
 
@@ -386,13 +393,15 @@ msgstr ""
 "    Облик је „start:nrows,length“. Све ставке су необавезне.\n"
 "\n"
 "    Празна ниска бира све ставке, као и „:“\n"
-"    „:4,“ прави избор од 4 реда од свих боја (дужина се самостално одређује)\n"
+"    „:4,“ прави избор од 4 реда од свих боја (дужина се самостално "
+"одређује)\n"
 "    „:4“ такође.\n"
 "    „:1,4“ бира прве 4 боје\n"
 "    „:,4“ бира редове од 4 боје (број редова се самостално одређује)\n"
 "    „:3,4“ бира 3 реда од 4 боје\n"
 "    „4:“ бира један ред свих боја након 4, укључиво.\n"
-"    „3:,4“ бира редове од 4 боје, почевши од 3 (број редова се самостално одређује)\n"
+"    „3:,4“ бира редове од 4 боје, почевши од 3 (број редова се самостално "
+"одређује)\n"
 "    „2:3,4“ бира 3 реда од 4 боје (укупно 12 боја), почевши од индекса 2.\n"
 "    „4“ је неисправно (двосмислено)\n"
 
@@ -976,7 +985,9 @@ msgstr "Сачекајте: Исцртавам шару"
 msgid ""
 "Uses current tool settings to draw Spyrograph patterns. The size and "
 "location of the pattern is based on the current selection."
-msgstr "Користи поставке тренутног алата за исцртавање спирографских мустри. Величина и место мустре су засновани на тренутном избору."
+msgstr ""
+"Користи поставке тренутног алата за исцртавање спирографских мустри. "
+"Величина и место мустре су засновани на тренутном избору."
 
 #: plug-ins/python/spyro-plus.py:2254
 msgid "Spyrogimp..."
@@ -1000,7 +1011,8 @@ msgstr "С_тране"
 
 #: plug-ins/python/spyro-plus.py:2278
 msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
-msgstr "Број страна фиксног зупчаника (3 или више). Користи се само код неких облика."
+msgstr ""
+"Број страна фиксног зупчаника (3 или више). Користи се само код неких облика."
 
 #: plug-ins/python/spyro-plus.py:2280
 msgid "_Morph"
@@ -1008,7 +1020,9 @@ msgstr "_Промена"
 
 #: plug-ins/python/spyro-plus.py:2281
 msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
-msgstr "Облик промене фиксног зупчаника, између 0 и 1. Користи се само код неких облика."
+msgstr ""
+"Облик промене фиксног зупчаника, између 0 и 1. Користи се само код неких "
+"облика."
 
 #: plug-ins/python/spyro-plus.py:2283
 msgid "Fi_xed gear teeth"
@@ -1030,7 +1044,9 @@ msgstr "Полупречник _рупе (%)"
 msgid ""
 "Location of hole in moving gear in percent, where 100 means that the hole is "
 "at the edge of the gear, and 0 means the hole is at the center"
-msgstr "Место рупе у помичном зупчанику у процентима, где 100 значи да је рупа на ивици зупчаника, а 0 значи да је рупа у средини"
+msgstr ""
+"Место рупе у помичном зупчанику у процентима, где 100 значи да је рупа на "
+"ивици зупчаника, а 0 значи да је рупа у средини"
 
 #: plug-ins/python/spyro-plus.py:2293
 msgid "Margin (_px)"
@@ -1060,4 +1076,6 @@ msgstr "Дугачки _прелив"
 msgid ""
 "Whether to apply a long gradient to match the length of the pattern. Only "
 "applicable to some of the tools."
-msgstr "Да ли применити дугачки прелив који одговара дужини мустре. Примењиво је само на неке од алата."
+msgstr ""
+"Да ли применити дугачки прелив који одговара дужини мустре. Примењиво је "
+"само на неке од алата."
