@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-06 01:24+0000\n"
-"PO-Revision-Date: 2026-06-06 09:19+0200\n"
+"POT-Creation-Date: 2026-06-09 04:46+0000\n"
+"PO-Revision-Date: 2026-06-09 09:17+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -2508,7 +2508,7 @@ msgstr "240 Seconden"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:376 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1093 app/tools/gimptexttool.c:1784
+#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1784
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -2591,7 +2591,7 @@ msgstr "Openen van ‘%s’ is mislukt:\n"
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2455
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2454
 #: app/core/gimppalette.c:587 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -13988,186 +13988,186 @@ msgstr "Symmetrie"
 msgid "Remove filter"
 msgstr "Filter verwijderen"
 
-#: app/core/gimpimage.c:2700
+#: app/core/gimpimage.c:2699
 msgid " (exported)"
 msgstr " (geëxporteerd)"
 
-#: app/core/gimpimage.c:2704
+#: app/core/gimpimage.c:2703
 msgid " (overwritten)"
 msgstr " (overschreven)"
 
-#: app/core/gimpimage.c:2713
+#: app/core/gimpimage.c:2712
 msgid " (imported)"
 msgstr " (geïmporteerd)"
 
-#: app/core/gimpimage.c:2887 app/core/gimpimage.c:2901
-#: app/core/gimpimage.c:2944
+#: app/core/gimpimage.c:2886 app/core/gimpimage.c:2900
+#: app/core/gimpimage.c:2943
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Laagmodus ‘%s’ is toegevoegd in %s"
 
-#: app/core/gimpimage.c:2965
+#: app/core/gimpimage.c:2964
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Laaggroepen toegevoegd in %s"
 
-#: app/core/gimpimage.c:2972
+#: app/core/gimpimage.c:2971
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maskers op laaggroepen zijn toegevoegd in %s"
 
-#: app/core/gimpimage.c:2979
+#: app/core/gimpimage.c:2978
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Positie vergrendelen op laaggroepen werd toegevoegd in %s"
 
-#: app/core/gimpimage.c:2986
+#: app/core/gimpimage.c:2985
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Alfakanaal vergrendelen op laaggroepen werd toegevoegd in %s"
 
-#: app/core/gimpimage.c:2994 app/core/gimpimage.c:3061
+#: app/core/gimpimage.c:2993 app/core/gimpimage.c:3060
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Vergrendelen van zichtbaarheid is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3005
+#: app/core/gimpimage.c:3004
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Weergave van de tekst in de tekstlaag is veranderd in %s"
 
-#: app/core/gimpimage.c:3013
+#: app/core/gimpimage.c:3012
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Laageffecten toegevoegd in %s"
 
-#: app/core/gimpimage.c:3025
+#: app/core/gimpimage.c:3024
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Een nieuwe perceptuele mengruimte werd toegevoegd %s"
 
-#: app/core/gimpimage.c:3039
+#: app/core/gimpimage.c:3038
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "Vectorlagen werden toegevoegd %s"
 
-#: app/core/gimpimage.c:3047
+#: app/core/gimpimage.c:3046
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "Koppelingslagen werden toegevoegd in %s"
 
-#: app/core/gimpimage.c:3070
+#: app/core/gimpimage.c:3069
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Selectie van meerdere paden is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3082
+#: app/core/gimpimage.c:3081
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Ondersteuning van kleurlabels in een pad toegevoegd in %s"
 
-#: app/core/gimpimage.c:3089
+#: app/core/gimpimage.c:3088
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Positie vergrendelen op paden werd toegevoegd in %s"
 
-#: app/core/gimpimage.c:3103
+#: app/core/gimpimage.c:3102
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Ondersteuning van grotere bitdiepte in %s"
 
-#: app/core/gimpimage.c:3111
+#: app/core/gimpimage.c:3110
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Fout tijdens coderen van afbeeldingen met grote bitdiepte hersteld in %s"
 
-#: app/core/gimpimage.c:3119
+#: app/core/gimpimage.c:3118
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Interne zlib-compressie toegevoegd in %s"
 
-#: app/core/gimpimage.c:3136
+#: app/core/gimpimage.c:3135
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Ondersteuning van afbeeldingen groter dan 4 GB toegevoegd in %s"
 
-#: app/core/gimpimage.c:3143
+#: app/core/gimpimage.c:3142
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Selectie van meerdere lagen is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3160
+#: app/core/gimpimage.c:3159
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Hulplijnen buiten het canvas toegevoegd in %s"
 
-#: app/core/gimpimage.c:3171
+#: app/core/gimpimage.c:3170
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Item instellen en patroon zoeken in itemnaam zijn toegevoegd in %s"
 
-#: app/core/gimpimage.c:3177
+#: app/core/gimpimage.c:3176
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Selectie van meerdere kanalen is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3297
+#: app/core/gimpimage.c:3296
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Afbeeldingsresolutie wijzigen"
 
-#: app/core/gimpimage.c:3349
+#: app/core/gimpimage.c:3348
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Afbeeldingseenheid wijzigen"
 
-#: app/core/gimpimage.c:4374
+#: app/core/gimpimage.c:4373
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "'gimp-commentaar' parasietvalidatie faalde: commentaar bevat ongeldige UTF-8 tekens"
 
-#: app/core/gimpimage.c:4436
+#: app/core/gimpimage.c:4435
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Parasiet aan afbeelding koppelen"
 
-#: app/core/gimpimage.c:4481
+#: app/core/gimpimage.c:4480
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Parasiet uit afbeelding verwijderen"
 
-#: app/core/gimpimage.c:5454
+#: app/core/gimpimage.c:5453
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Laag toevoegen"
 
-#: app/core/gimpimage.c:5514 app/core/gimpimage.c:5545
+#: app/core/gimpimage.c:5513 app/core/gimpimage.c:5544
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Laag verwijderen"
 
-#: app/core/gimpimage.c:5539
+#: app/core/gimpimage.c:5538
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Zwevende selectie verwijderen"
 
-#: app/core/gimpimage.c:5695
+#: app/core/gimpimage.c:5694
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Kanaal toevoegen"
 
-#: app/core/gimpimage.c:5725 app/core/gimpimage.c:5750
+#: app/core/gimpimage.c:5724 app/core/gimpimage.c:5752
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kanaal verwijderen"
 
-#: app/core/gimpimage.c:5810
+#: app/core/gimpimage.c:5814
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Pad toevoegen"
 
-#: app/core/gimpimage.c:5845 app/core/gimpimage.c:5853
+#: app/core/gimpimage.c:5849 app/core/gimpimage.c:5857
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Pad verwijderen"
@@ -21481,7 +21481,7 @@ msgstr "Geen paden gevonden in de buffer"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Kon paden niet importeren uit ‘%s’: %s"
 
-#: app/path/gimpvectorlayer.c:181 app/tools/gimppathtool.c:859
+#: app/path/gimpvectorlayer.c:181 app/tools/gimppathtool.c:867
 msgid "Vector Layer"
 msgstr "Vectorlaag"
 
@@ -24890,7 +24890,7 @@ msgid "Selection from Path"
 msgstr "Selectie uit pad"
 
 #: app/tools/gimppathoptions.c:560 app/tools/gimppathtool.c:746
-#: app/tools/gimppathtool.c:1062
+#: app/tools/gimppathtool.c:1073
 msgid "Create New Vector Layer"
 msgstr "Nieuwe vectorlaag maken"
 
@@ -24906,19 +24906,23 @@ msgstr "_Paden"
 msgid "Create Vector Layer from Path"
 msgstr "Vectorlaag uit pad maken"
 
-#: app/tools/gimppathtool.c:1085 app/tools/gimppathtool.c:1088
+#: app/tools/gimppathtool.c:865
+msgid "Add Vector Layer"
+msgstr "Vectorlaag toevoegen"
+
+#: app/tools/gimppathtool.c:1096 app/tools/gimppathtool.c:1099
 msgid "Confirm Path Editing"
 msgstr "Bevestig bewerken van pad"
 
-#: app/tools/gimppathtool.c:1092 app/tools/gimptexttool.c:1783
+#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1783
 msgid "Create _New Layer"
 msgstr "_Nieuwe laag aanmaken"
 
-#: app/tools/gimppathtool.c:1094 app/tools/gimptexttool.c:1785
+#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1785
 msgid "_Edit Anyway"
 msgstr "Toch b_ewerken"
 
-#: app/tools/gimppathtool.c:1116
+#: app/tools/gimppathtool.c:1127
 msgid ""
 "The vector layer you picked was rasterized. Editing its path will discard "
 "any modifications."
@@ -25006,7 +25010,7 @@ msgstr "Maateenheid selectiegrootte"
 
 #: app/tools/gimprectangleoptions.c:167
 msgid "Enable lock of aspect ratio, width, height or size"
-msgstr "Aspectratio, breedte, hoogte of grootte vergrendelen"
+msgstr "Verhouding, breedte, hoogte of grootte vergrendelen"
 
 #: app/tools/gimprectangleoptions.c:176
 msgid "Choose what has to be locked"
@@ -26319,17 +26323,17 @@ msgstr "Geselecteerd filter omlaag"
 msgid "Reset the selected filter to default values"
 msgstr "Geselecteerd filter terugzetten op standaardwaarden"
 
-#: app/widgets/gimpcolordisplayeditor.c:465
+#: app/widgets/gimpcolordisplayeditor.c:462
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "Voeg ‘%s’ toe aan de lijst van actieve filters"
 
-#: app/widgets/gimpcolordisplayeditor.c:491
+#: app/widgets/gimpcolordisplayeditor.c:488
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "Verwijder ‘%s’ uit de lijst van actieve filters"
 
-#: app/widgets/gimpcolordisplayeditor.c:529
+#: app/widgets/gimpcolordisplayeditor.c:526
 msgid "No filter selected"
 msgstr "Geen filter geselecteerd"
 
@@ -28219,7 +28223,7 @@ msgstr "Plug-in"
 msgid "Progress"
 msgstr "Voortgang"
 
-#: app/widgets/gimprow.c:616
+#: app/widgets/gimprow.c:621
 #, c-format
 msgid "Rename %s"
 msgstr "%s hernoemen"
