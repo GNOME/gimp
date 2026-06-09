@@ -304,21 +304,22 @@ def check_macos_version(binary):
     symbol_pattern = re.compile(r'\b' + re.escape(symbol) + r'\b')
     for root, _, files in os.walk(search_path):
       for file in files:
-        filepath = os.path.join(root, file)
-        try:
-          with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
-            buffer = []
-            for line in f:
-              if symbol_pattern.search(line):
-                for b_line in buffer:
-                  match_data += f"{filepath}-{b_line}"
-                match_data += f"{filepath}:{line}"
-              # Keep a rolling buffer of 4 lines
-              buffer.append(line)
-              if len(buffer) > 4:
-                buffer.pop(0)
-        except Exception:
-          continue
+        if file.endswith('.h'):
+          filepath = os.path.join(root, file)
+          try:
+            with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+              buffer = []
+              for line in f:
+                if symbol_pattern.search(line):
+                  for b_line in buffer:
+                    match_data += f"{filepath}-{b_line}"
+                  match_data += f"{filepath}:{line}"
+                # Keep a rolling buffer of 4 lines
+                buffer.append(line)
+                if len(buffer) > 4:
+                  buffer.pop(0)
+          except Exception:
+            continue
     if not match_data or not re.search(re.escape(symbol) + r'\s*\(', match_data):
       continue
     #2.2 Look for standard availability macro
