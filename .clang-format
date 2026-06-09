@@ -48,11 +48,7 @@ BreakBeforeTernaryOperators: false
 
 # Variables: https://developer.gimp.org/core/coding_style/#variables-declaration-and-definition
 AlignConsecutiveAssignments: AcrossComments
-AlignConsecutiveDeclarations:
-  Enabled: true
-  AcrossEmptyLines: false
-  AcrossComments: false
-  AlignFunctionDeclarations: false
+AlignConsecutiveDeclarations: None
 AlignConsecutiveBitFields: AcrossComments
 PointerAlignment: Right
 

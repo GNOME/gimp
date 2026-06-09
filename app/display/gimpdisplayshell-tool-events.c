@@ -829,13 +829,19 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 gdouble value_x;
                 gdouble value_y;
 
-                gimp_scroll_adjustment_values (sevent,
-                                               shell->hsbdata,
-                                               shell->vsbdata,
-                                               &value_x, &value_y);
+                /* convert scroll deltas to screen pixels w/o clamping
+                 * (otherwise we cannot overscroll!)
+                 **/
+                gimp_scroll_get_adjustment_values (sevent,
+                                                   shell->hsbdata,
+                                                   shell->vsbdata,
+                                                   &value_x, &value_y,
+                                                   FALSE);
 
-                gtk_adjustment_set_value (shell->hsbdata, value_x);
-                gtk_adjustment_set_value (shell->vsbdata, value_y);
+                gimp_display_shell_scroll (shell,
+                                           value_x - shell->offset_x,
+                                           value_y - shell->offset_y);
+
               }
           }
 

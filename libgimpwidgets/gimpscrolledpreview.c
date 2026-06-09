@@ -968,19 +968,21 @@ gimp_scrolled_preview_thaw (GimpScrolledPreview *preview)
 }
 
 /**
- * gimp_scroll_adjustment_values:
+ * gimp_scroll_get_adjustment_values:
  * @sevent: A #GdkEventScroll
- * @hadj: (nullable): Horizontal adjustment
- * @vadj: (nullable): Vertical adjustment
+ * @hadj: (nullable): Horizontal adjustment widget
+ * @vadj: (nullable): Vertical adjustment widget
  * @hvalue: (out) (optional): Return location for horizontal value, or %NULL
  * @vvalue: (out) (optional): Return location for vertical value, or %NULL
+ * @clamp_output: whether to clamp the output values to the widgets
  */
 void
-gimp_scroll_adjustment_values (GdkEventScroll *sevent,
-                               GtkAdjustment  *hadj,
-                               GtkAdjustment  *vadj,
-                               gdouble        *hvalue,
-                               gdouble        *vvalue)
+gimp_scroll_get_adjustment_values (GdkEventScroll *sevent,
+                                   GtkAdjustment  *hadj,
+                                   GtkAdjustment  *vadj,
+                                   gdouble        *hvalue,
+                                   gdouble        *vvalue,
+                                   gboolean        clamp_output)
 {
   GtkAdjustment *adj_x;
   GtkAdjustment *adj_y;
@@ -1055,19 +1057,27 @@ gimp_scroll_adjustment_values (GdkEventScroll *sevent,
         }
     }
 
-  if (adj_x)
+  /* optionally clamp X to widget*/
+  if (adj_x && clamp_output)
     value_x = CLAMP (value_x +
                      gtk_adjustment_get_value (adj_x),
                      gtk_adjustment_get_lower (adj_x),
                      gtk_adjustment_get_upper (adj_x) -
                      gtk_adjustment_get_page_size (adj_x));
 
-  if (adj_y)
+  else if (adj_x)
+    value_x += gtk_adjustment_get_value (adj_x);
+
+  /* optionally clamp Y to widget*/
+  if (adj_y && clamp_output)
     value_y = CLAMP (value_y +
                      gtk_adjustment_get_value (adj_y),
                      gtk_adjustment_get_lower (adj_y),
                      gtk_adjustment_get_upper (adj_y) -
                      gtk_adjustment_get_page_size (adj_y));
+
+  else if (adj_y)
+    value_y += gtk_adjustment_get_value (adj_y);
 
   if (sevent->state & GDK_SHIFT_MASK)
     {
@@ -1079,4 +1089,29 @@ gimp_scroll_adjustment_values (GdkEventScroll *sevent,
       if (hvalue) *hvalue = value_x;
       if (vvalue) *vvalue = value_y;
     }
+}
+
+/* Prior function signature retained for API compatibility */
+
+/**
+ * gimp_scroll_adjustment_values:
+ * @sevent: A #GdkEventScroll
+ * @hadj: (nullable): Horizontal adjustment widget
+ * @vadj: (nullable): Vertical adjustment widget
+ * @hvalue: (out) (optional): Return location for horizontal value, or %NULL
+ * @vvalue: (out) (optional): Return location for vertical value, or %NULL
+ */
+void
+gimp_scroll_adjustment_values (GdkEventScroll *sevent,
+                               GtkAdjustment  *hadj,
+                               GtkAdjustment  *vadj,
+                               gdouble        *hvalue,
+                               gdouble        *vvalue)
+{
+  gimp_scroll_get_adjustment_values (sevent,
+                                     hadj,
+                                     vadj,
+                                     hvalue,
+                                     vvalue,
+                                     TRUE);
 }
