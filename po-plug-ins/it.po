@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-08 00:29+0200\n"
-"PO-Revision-Date: 2026-06-08 09:39+0200\n"
+"PO-Revision-Date: 2026-06-09 11:40+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -15906,7 +15906,7 @@ msgstr "Autore"
 
 #: ../plug-ins/metadata/metadata-editor.c:493
 msgid "Author Title"
-msgstr "Titolo dell'autore"
+msgstr "Titolo autore"
 
 #. Description tab
 #: ../plug-ins/metadata/metadata-editor.c:494
@@ -15916,7 +15916,7 @@ msgstr "Descrizione"
 
 #: ../plug-ins/metadata/metadata-editor.c:495
 msgid "Description Writer"
-msgstr "Descrizione scrittore"
+msgstr "Autore descrizione"
 
 #: ../plug-ins/metadata/metadata-editor.c:496
 msgid "Rating"
