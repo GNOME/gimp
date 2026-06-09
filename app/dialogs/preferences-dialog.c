@@ -2041,7 +2041,7 @@ prefs_dialog_new (Gimp       *gimp,
     grid = prefs_grid_new (GTK_CONTAINER (vbox2));
     button = prefs_enum_combo_box_add (object, "theme-color-scheme",
                                        0, 0,
-                                       _("Color scheme variant (if available)"),
+                                       _("Color scheme (if available)"),
                                        GTK_GRID (grid), 0, NULL);
 
     /* Override icon sizes. */
