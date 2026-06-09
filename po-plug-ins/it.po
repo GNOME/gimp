@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-08 00:29+0200\n"
-"PO-Revision-Date: 2026-06-09 11:40+0200\n"
+"PO-Revision-Date: 2026-06-09 12:18+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -15985,7 +15985,7 @@ msgstr "Data di creazione"
 
 #: ../plug-ins/metadata/metadata-editor.c:519
 msgid "Intellectual Genre"
-msgstr "Genere"
+msgstr "Genere culturale"
 
 #: ../plug-ins/metadata/metadata-editor.c:520
 msgid "IPTC Scene Code"
@@ -16314,7 +16314,7 @@ msgstr "Editor metadati: %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:1190
 msgid "_Write Metadata"
-msgstr "Scrivi metadati (_w)"
+msgstr "Scrivi _metadati"
 
 #. IPTC tab
 #: ../plug-ins/metadata/metadata-editor.c:1232
