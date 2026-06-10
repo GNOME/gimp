@@ -343,6 +343,8 @@ def set_rpath(binary, destbin=None):
   result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE)
   out = result.stdout.decode('utf-8', errors='replace')
 
+  install_cmd = ['install_name_tool']
+
   # Handle LC_RPATH (only on executables as a rule)
   if (".dylib" not in binary and ".so" not in binary) or "cmd LC_RPATH" in out:
     regex = re.findall(r'path (.+?) \(offset', out)
@@ -350,17 +352,19 @@ def set_rpath(binary, destbin=None):
     for old_rpath in regex:
       if old_rpath == new_rpath:
         continue
-      try:
-        subprocess.run(['install_name_tool', '-delete_rpath', old_rpath, binary], check=True, stderr=subprocess.DEVNULL)
-        #sys.stdout.write(f"Removed LC_RPATH {old_rpath} from {binary}\n")
-      except subprocess.CalledProcessError as e:
-        sys.stderr.write(f"Failed to remove rpath {old_rpath} from {binary}: {e}\n")
+      install_cmd.extend(['-delete_rpath', old_rpath])
+      #try:
+      #  subprocess.run(['install_name_tool', '-delete_rpath', old_rpath, binary], check=True, stderr=subprocess.DEVNULL)
+      #  #sys.stdout.write(f"Removed LC_RPATH {old_rpath} from {binary}\n")
+      #except subprocess.CalledProcessError as e:
+      #  sys.stderr.write(f"Failed to remove rpath {old_rpath} from {binary}: {e}\n")
     if new_rpath not in regex:
-      try:
-        subprocess.run(['install_name_tool', '-add_rpath', new_rpath, binary], check=True, stderr=subprocess.DEVNULL)
-        #sys.stdout.write(f"Added LC_RPATH {new_rpath} to {binary}\n")
-      except subprocess.CalledProcessError as e:
-        sys.stderr.write(f"Failed to add rpath {new_rpath} to {binary}: {e}\n")
+      install_cmd.extend(['-add_rpath', new_rpath])
+      #try:
+      #  subprocess.run(['install_name_tool', '-add_rpath', new_rpath, binary], check=True, stderr=subprocess.DEVNULL)
+      #  #sys.stdout.write(f"Added LC_RPATH {new_rpath} to {binary}\n")
+      #except subprocess.CalledProcessError as e:
+      #  sys.stderr.write(f"Failed to add rpath {new_rpath} to {binary}: {e}\n")
 
   # Handle LC_LOAD_DYLIB (on executables, shared libraries)
   regex = re.findall(r'name (.+?) \(offset', out)
@@ -372,11 +376,12 @@ def set_rpath(binary, destbin=None):
     else:
       new_dylib_path = os.path.join("@rpath", os.path.basename(old_dylib_path))
     if old_dylib_path != new_dylib_path:
-      try:
-        subprocess.run(['install_name_tool', '-change', old_dylib_path, new_dylib_path, binary], check=True, stderr=subprocess.DEVNULL)
-        #sys.stdout.write(f"Rewrote LC_LOAD_DYLIB {old_dylib_path} -> {new_dylib_path}\n")
-      except subprocess.CalledProcessError as e:
-        sys.stderr.write(f"Failed to rewrite LC_LOAD_DYLIB {old_dylib_path}: {e}\n")
+      install_cmd.extend(['-change', old_dylib_path, new_dylib_path])
+      #try:
+      #  subprocess.run(['install_name_tool', '-change', old_dylib_path, new_dylib_path, binary], check=True, stderr=subprocess.DEVNULL)
+      #  #sys.stdout.write(f"Rewrote LC_LOAD_DYLIB {old_dylib_path} -> {new_dylib_path}\n")
+      #except subprocess.CalledProcessError as e:
+      #  sys.stderr.write(f"Failed to rewrite LC_LOAD_DYLIB {old_dylib_path}: {e}\n")
 
   # Handle LC_ID_DYLIB (only on shared libraries)
   regex = re.search(r'cmd LC_ID_DYLIB.*?\n\s*name (.+?) \(offset', out, re.DOTALL)
@@ -384,11 +389,19 @@ def set_rpath(binary, destbin=None):
     old_dylib_path = regex.group(1).strip()
     new_dylib_path = os.path.join("@rpath", os.path.basename(old_dylib_path))
     if old_dylib_path != new_dylib_path:
-      try:
-        subprocess.run(['install_name_tool', '-id', new_dylib_path, binary], check=True, stderr=subprocess.DEVNULL)
-        #sys.stdout.write(f"Rewrote LC_ID_DYLIB {old_dylib_path} -> {new_dylib_path}\n")
-      except subprocess.CalledProcessError as e:
-        sys.stderr.write(f"Failed to rewrite LC_ID_DYLIB {old_dylib_path}: {e}\n")
+      install_cmd.extend(['-id', new_dylib_path])
+      #try:
+      #  subprocess.run(['install_name_tool', '-id', new_dylib_path, binary], check=True, stderr=subprocess.DEVNULL)
+      #  #sys.stdout.write(f"Rewrote LC_ID_DYLIB {old_dylib_path} -> {new_dylib_path}\n")
+      #except subprocess.CalledProcessError as e:
+      #  sys.stderr.write(f"Failed to rewrite LC_ID_DYLIB {old_dylib_path}: {e}\n")
+
+  if len(install_cmd) > 1:
+    install_cmd.append(binary)
+    try:
+      subprocess.run(install_cmd, check=True, stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError as e:
+      sys.stderr.write(f"Failed to run install_name_tool on {binary}: {e}\n")
 
   # Normalize signature after all the changes
   result = subprocess.run(["codesign", "-v", binary], capture_output=True, text=True)
