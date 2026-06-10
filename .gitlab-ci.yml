@@ -726,6 +726,7 @@ gimp-macos:
       - gimp-*.app
       - _build*/meson-logs/meson-log.txt
       - _build*/done-dylib.list
+      - _build*/done-symbols.list
       # Needed by dist-mac-weekly
       - _build-*/config.h
       - _build-*/plug-ins/file_associations_mac.list
