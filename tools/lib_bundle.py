@@ -35,6 +35,9 @@ import glob
 dlls = set()
 sys_dlls = set()
 
+# Previously otooled DYLIBs
+dump_cache = {}
+
 # Previously done DLLs/DYLIBs in previous runs
 done_dlls = set()
 
@@ -126,6 +129,7 @@ def find_dependencies(obj, srcdirs):
   List DLLs/DYLIBs of an object file in a recursive way.
   '''
   global is_macos
+  global dump_cache
   if obj in set.union(done_dlls, sys_dlls):
     # Already processed, either in a previous run of the script
     # (done_dlls) or in this one.
@@ -208,6 +212,7 @@ def find_dependencies(obj, srcdirs):
       else:
         result = subprocess.run(['objdump', '--macho', '--private-headers', obj], stdout=subprocess.PIPE)
       out = result.stdout.decode('utf-8', errors='replace')
+      dump_cache[os.path.basename(obj)] = out
       regex = re.finditer(r"name\s+(?:\d+\s+)?(?:.*/)?([^/\s]+\.dylib)", out, re.MULTILINE)
     # Parse lines with DLL/DYLIB Name instead of lib*.dll/lib*.dylib directly
     for match in regex:
@@ -259,11 +264,16 @@ def check_macos_version(binary, supported_minos=None, sdk_path=None):
   """
   Check LC_BUILD_VERSION for compatibility with MACOSX_DEPLOYMENT_TARGET
   """
+  global dump_cache
+
   if not supported_minos:
     return
 
-  result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE, check=True)
-  out = result.stdout.decode('utf-8', errors='replace')
+  out = dump_cache.get(os.path.basename(binary))
+  if not out:
+    result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE, check=True)
+    out = result.stdout.decode('utf-8', errors='replace')
+    dump_cache[os.path.basename(binary)] = out
 
   bin_minos = re.findall(r'minos\s+([\d\.]+)', out)[0]
 
@@ -345,8 +355,12 @@ def set_rpath(binary, destbin=None):
   Remove all LC_RPATH entries except those identical to relative destbin,
   and set it if not. Also rewrite LC_LOAD_DYLIB and LC_ID_DYLIB to use it.
   """
-  result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE)
-  out = result.stdout.decode('utf-8', errors='replace')
+  global dump_cache
+  out = dump_cache.get(os.path.basename(binary))
+  if not out:
+    result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE)
+    out = result.stdout.decode('utf-8', errors='replace')
+    dump_cache[os.path.basename(binary)] = out
 
   install_cmd = ['install_name_tool']
 
