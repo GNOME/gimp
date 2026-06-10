@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-06 01:24+0000\n"
-"PO-Revision-Date: 2026-06-07 08:18+0800\n"
+"POT-Creation-Date: 2026-06-09 19:09+0000\n"
+"PO-Revision-Date: 2026-06-10 11:17+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -2496,7 +2496,7 @@ msgstr "240 秒"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:376 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1093 app/tools/gimptexttool.c:1784
+#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1784
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -2580,7 +2580,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2455
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2454
 #: app/core/gimppalette.c:587 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -13883,186 +13883,186 @@ msgstr "对称"
 msgid "Remove filter"
 msgstr "移除滤镜"
 
-#: app/core/gimpimage.c:2700
+#: app/core/gimpimage.c:2699
 msgid " (exported)"
 msgstr "（已导出）"
 
-#: app/core/gimpimage.c:2704
+#: app/core/gimpimage.c:2703
 msgid " (overwritten)"
 msgstr "（已覆盖）"
 
-#: app/core/gimpimage.c:2713
+#: app/core/gimpimage.c:2712
 msgid " (imported)"
 msgstr "（已导入）"
 
-#: app/core/gimpimage.c:2887 app/core/gimpimage.c:2901
-#: app/core/gimpimage.c:2944
+#: app/core/gimpimage.c:2886 app/core/gimpimage.c:2900
+#: app/core/gimpimage.c:2943
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "图层模式“%s”已添加到 %s"
 
-#: app/core/gimpimage.c:2965
+#: app/core/gimpimage.c:2964
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "图层组已添加到 %s"
 
-#: app/core/gimpimage.c:2972
+#: app/core/gimpimage.c:2971
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "图层组蒙板已添加到 %s"
 
-#: app/core/gimpimage.c:2979
+#: app/core/gimpimage.c:2978
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "图层组位置锁定已添加到 %s"
 
-#: app/core/gimpimage.c:2986
+#: app/core/gimpimage.c:2985
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "图层组透明通道锁定已添加到 %s"
 
-#: app/core/gimpimage.c:2994 app/core/gimpimage.c:3061
+#: app/core/gimpimage.c:2993 app/core/gimpimage.c:3060
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "可见性锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3005
+#: app/core/gimpimage.c:3004
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "文字图层中字体信息的格式已在 %s 中更改"
 
-#: app/core/gimpimage.c:3013
+#: app/core/gimpimage.c:3012
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "图层特效已添加到 %s"
 
-#: app/core/gimpimage.c:3025
+#: app/core/gimpimage.c:3024
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "在 %s 中添加了新的感知混合空间"
 
-#: app/core/gimpimage.c:3039
+#: app/core/gimpimage.c:3038
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "矢量图层已添加到 %s"
 
-#: app/core/gimpimage.c:3047
+#: app/core/gimpimage.c:3046
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "链接图层已添加到 %s"
 
-#: app/core/gimpimage.c:3070
+#: app/core/gimpimage.c:3069
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "多个路径选区已添加到 %s"
 
-#: app/core/gimpimage.c:3082
+#: app/core/gimpimage.c:3081
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "路径中存储的颜色标签已添加到 %s"
 
-#: app/core/gimpimage.c:3089
+#: app/core/gimpimage.c:3088
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "路径中存储的锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3103
+#: app/core/gimpimage.c:3102
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "高位深图像已添加到 %s"
 
-#: app/core/gimpimage.c:3111
+#: app/core/gimpimage.c:3110
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "高位深图像编码已固定到 %s"
 
-#: app/core/gimpimage.c:3119
+#: app/core/gimpimage.c:3118
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "内置 zlib 压缩已添加到 %s"
 
-#: app/core/gimpimage.c:3136
+#: app/core/gimpimage.c:3135
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "对大于 4GB 图像文件的支持已添加到 %s"
 
-#: app/core/gimpimage.c:3143
+#: app/core/gimpimage.c:3142
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "多个图层选区被添加进 %s"
 
-#: app/core/gimpimage.c:3160
+#: app/core/gimpimage.c:3159
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "画布外参考线添加至 %s"
 
-#: app/core/gimpimage.c:3171
+#: app/core/gimpimage.c:3170
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "项目设置和项目名称中的模式搜索已添加进 %s"
 
-#: app/core/gimpimage.c:3177
+#: app/core/gimpimage.c:3176
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "多个通道选择已添加进 %s"
 
-#: app/core/gimpimage.c:3297
+#: app/core/gimpimage.c:3296
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "改变图像分辨率"
 
-#: app/core/gimpimage.c:3349
+#: app/core/gimpimage.c:3348
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "改变图像单位"
 
-#: app/core/gimpimage.c:4374
+#: app/core/gimpimage.c:4373
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "“GIMP 注释”内嵌信息校验失败：注释包含无效的 UTF-8"
 
-#: app/core/gimpimage.c:4436
+#: app/core/gimpimage.c:4435
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "添加内嵌信息到图像"
 
-#: app/core/gimpimage.c:4481
+#: app/core/gimpimage.c:4480
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "从图像删除内嵌信息"
 
-#: app/core/gimpimage.c:5454
+#: app/core/gimpimage.c:5453
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "添加图层"
 
-#: app/core/gimpimage.c:5514 app/core/gimpimage.c:5545
+#: app/core/gimpimage.c:5513 app/core/gimpimage.c:5544
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "删除图层"
 
-#: app/core/gimpimage.c:5539
+#: app/core/gimpimage.c:5538
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "删除浮动选区"
 
-#: app/core/gimpimage.c:5695
+#: app/core/gimpimage.c:5694
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "添加通道"
 
-#: app/core/gimpimage.c:5725 app/core/gimpimage.c:5750
+#: app/core/gimpimage.c:5724 app/core/gimpimage.c:5752
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "删除通道"
 
-#: app/core/gimpimage.c:5810
+#: app/core/gimpimage.c:5814
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "添加路径"
 
-#: app/core/gimpimage.c:5845 app/core/gimpimage.c:5853
+#: app/core/gimpimage.c:5849 app/core/gimpimage.c:5857
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "删除路径"
@@ -17133,8 +17133,8 @@ msgid "Select Theme"
 msgstr "选择主题"
 
 #: app/dialogs/preferences-dialog.c:2044
-msgid "Color scheme variant (if available)"
-msgstr "颜色方案变种（如果可用）"
+msgid "Color scheme (if available)"
+msgstr "配色方案（如果可用）"
 
 #: app/dialogs/preferences-dialog.c:2049 app/dialogs/welcome-dialog.c:668
 msgid "_Override icon sizes set by the theme"
@@ -21258,7 +21258,7 @@ msgstr "缓冲区中未找到路径"
 msgid "Failed to import paths from '%s': %s"
 msgstr "无法从“%s”导入路径：%s"
 
-#: app/path/gimpvectorlayer.c:181 app/tools/gimppathtool.c:859
+#: app/path/gimpvectorlayer.c:181 app/tools/gimppathtool.c:867
 msgid "Vector Layer"
 msgstr "矢量图层"
 
@@ -24664,7 +24664,7 @@ msgid "Selection from Path"
 msgstr "从路径创建选区"
 
 #: app/tools/gimppathoptions.c:560 app/tools/gimppathtool.c:746
-#: app/tools/gimppathtool.c:1062
+#: app/tools/gimppathtool.c:1073
 msgid "Create New Vector Layer"
 msgstr "创建新矢量图层"
 
@@ -24680,19 +24680,23 @@ msgstr "路径(_H)"
 msgid "Create Vector Layer from Path"
 msgstr "从路径创建矢量图层"
 
-#: app/tools/gimppathtool.c:1085 app/tools/gimppathtool.c:1088
+#: app/tools/gimppathtool.c:865
+msgid "Add Vector Layer"
+msgstr "添加矢量图层"
+
+#: app/tools/gimppathtool.c:1096 app/tools/gimppathtool.c:1099
 msgid "Confirm Path Editing"
 msgstr "确认路径编辑"
 
-#: app/tools/gimppathtool.c:1092 app/tools/gimptexttool.c:1783
+#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1783
 msgid "Create _New Layer"
 msgstr "新建图层(_N)"
 
-#: app/tools/gimppathtool.c:1094 app/tools/gimptexttool.c:1785
+#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1785
 msgid "_Edit Anyway"
 msgstr "仍然编辑(_E)"
 
-#: app/tools/gimppathtool.c:1116
+#: app/tools/gimppathtool.c:1127
 msgid ""
 "The vector layer you picked was rasterized. Editing its path will discard "
 "any modifications."
@@ -26075,17 +26079,17 @@ msgstr "下移选中滤镜"
 msgid "Reset the selected filter to default values"
 msgstr "将选中的滤镜重置到默认值"
 
-#: app/widgets/gimpcolordisplayeditor.c:465
+#: app/widgets/gimpcolordisplayeditor.c:462
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "将“%s”添加到活动滤镜列表"
 
-#: app/widgets/gimpcolordisplayeditor.c:491
+#: app/widgets/gimpcolordisplayeditor.c:488
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "从活动滤镜列表中删除“%s”"
 
-#: app/widgets/gimpcolordisplayeditor.c:529
+#: app/widgets/gimpcolordisplayeditor.c:526
 msgid "No filter selected"
 msgstr "未选择滤镜"
 
@@ -27958,7 +27962,7 @@ msgstr "插件"
 msgid "Progress"
 msgstr "进度"
 
-#: app/widgets/gimprow.c:616
+#: app/widgets/gimprow.c:621
 #, c-format
 msgid "Rename %s"
 msgstr "重命名 %s"
