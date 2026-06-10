@@ -70,7 +70,15 @@ def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
 
   #sys.stdout.write("{} (INFO): searching for dependencies of {} in {}.\n".format(os.path.basename(__file__),
   #                                                                               binary, ', '.join(srcdirs)))
+  if is_macos:
+    global_supported_minos = os.environ.get("MACOSX_DEPLOYMENT_TARGET")
+    try:
+      global_sdk_path = subprocess.run(['xcrun', '--show-sdk-path', '--sdk', 'macosx'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True).stdout.decode('utf-8').strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+      global_sdk_path = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+
   find_dependencies(os.path.abspath(binary), srcdirs)
+
   if debug in ['debug-only', 'debug-run']:
     if debug == 'debug-only':
       print("Running in debug-only mode (no DLL/DYLIB moved) for '{}'".format(binary))
@@ -221,7 +229,7 @@ def copy_dlls(dll_list, srcdirs, destdir):
     abs_binary = os.path.abspath(args.bin)
     abs_destdir = os.path.abspath(destdir)
     if abs_binary.startswith(abs_destdir + os.sep):
-      #check_macos_version(abs_binary)
+      #check_macos_version(abs_binary, global_supported_minos, global_sdk_path)
       set_rpath(abs_binary, destbin)
   for dll in dll_list:
     if not os.path.exists(os.path.join(destbin, dll)):
@@ -232,7 +240,7 @@ def copy_dlls(dll_list, srcdirs, destdir):
         full_file_name = os.path.join(srcdir, bindir, dll)
         if os.path.isfile(full_file_name):
           if is_macos and not full_file_name.startswith(("/opt/local/", "/opt/homebrew/")):
-            check_macos_version(full_file_name)
+            check_macos_version(full_file_name, global_supported_minos, global_sdk_path)
           sys.stdout.write("Bundling {} to {}\n".format(full_file_name, destbin))
           shutil.copy(full_file_name, destbin)
           if is_macos:
@@ -244,11 +252,10 @@ def copy_dlls(dll_list, srcdirs, destdir):
         sys.stderr.write("Missing DLL/DYLIB: {}\n".format(dll))
         sys.exit(1)
 
-def check_macos_version(binary):
+def check_macos_version(binary, supported_minos=None, sdk_path=None):
   """
   Check LC_BUILD_VERSION for compatibility with MACOSX_DEPLOYMENT_TARGET
   """
-  supported_minos = os.environ.get("MACOSX_DEPLOYMENT_TARGET")
   if not supported_minos:
     return
 
@@ -256,11 +263,6 @@ def check_macos_version(binary):
   out = result.stdout.decode('utf-8', errors='replace')
 
   bin_minos = re.findall(r'minos\s+([\d\.]+)', out)[0]
-
-  try:
-    sdk_path = subprocess.run(['xcrun', '--show-sdk-path', '--sdk', 'macosx'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True).stdout.decode('utf-8').strip()
-  except (subprocess.CalledProcessError, FileNotFoundError):
-    sdk_path = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
 
   def parse_version(v):
     parts = list(map(int, v.split('.')))
