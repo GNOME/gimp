@@ -996,10 +996,9 @@ gimp_drawable_filters_editor_has_filters (GimpDrawable          *drawable,
 
   if (GIMP_IS_LAYER (drawable))
     {
-      GimpDrawable  *mask = NULL;
+      GimpDrawable *mask = NULL;
 
       mask = GIMP_DRAWABLE (gimp_layer_get_mask (GIMP_LAYER (drawable)));
-
       if (mask)
         {
           filters = gimp_drawable_get_filters (mask);
