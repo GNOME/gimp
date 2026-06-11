@@ -76,12 +76,14 @@ def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
   if sys.platform == "darwin":
     global global_supported_minos
     global global_sdk_path
+    global use_dyld
 
     global_supported_minos = os.environ.get("MACOSX_DEPLOYMENT_TARGET")
     try:
       global_sdk_path = subprocess.run(['xcrun', '--show-sdk-path', '--sdk', 'macosx'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True).stdout.decode('utf-8').strip()
     except (subprocess.CalledProcessError, FileNotFoundError):
       global_sdk_path = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+    use_dyld = shutil.which('dyld_info')
 
   find_dependencies(os.path.abspath(binary), srcdirs)
 
@@ -266,6 +268,7 @@ def check_macos_version(binary, supported_minos=None, sdk_path=None):
   Check LC_BUILD_VERSION for compatibility with MACOSX_DEPLOYMENT_TARGET
   """
   global dump_cache
+  global use_dyld
 
   if not supported_minos:
     return
@@ -291,16 +294,19 @@ def check_macos_version(binary, supported_minos=None, sdk_path=None):
     sys.exit(1)
 
   # 2. Check for LC_BUILD_VERSION (sdk) symbols
-  nm_res = subprocess.run(['nm', '-m', binary], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+  if use_dyld:
+    nm_res = subprocess.run(['dyld_info', '-imports', binary], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+  else:
+    nm_res = subprocess.run(['nm', '-m', binary], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
   nm_out = nm_res.stdout.decode('utf-8', errors='replace')
   sys_symbols = set()
   for line in nm_out.splitlines():
-    if "(undefined)" in line and "(from " in line:
-      parts = line.split()
+    if (use_dyld and "(from " in line) or (not use_dyld and "(undefined)" in line and "(from " in line):
+      parts = line.strip().split()
       try:
         from_idx = parts.index("(from")
         lib_name = parts[from_idx + 1].rstrip(')')
-        symbol = parts[from_idx - 1].lstrip('_')
+        symbol = parts[from_idx - 1 if parts[from_idx - 1] != "[weak-import]" else from_idx - 2].lstrip('_')
         search_path = ""
         if os.path.exists(f"{sdk_path}/usr/lib/{lib_name}.tbd"):
           search_path = f"{sdk_path}/usr/include"
