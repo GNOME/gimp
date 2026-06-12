@@ -30,7 +30,6 @@ Needs the tool "nm", "objdump", "dumpbin" or "dyld_info" to work
 """
 
 import os, sys, subprocess, shutil, glob
-
 from os import getenv, path
 
 def_files = (
@@ -80,7 +79,6 @@ elif sys.platform == 'darwin':
 for df in def_files:
    directory, name = path.split (df)
    basename, extension = name.split (".")
-
    libname = path.join(os.getcwd(), directory, libprefix + basename + "-*" + libextension)
    matches = glob.glob(libname)
    if matches:
@@ -122,9 +120,7 @@ for df in def_files:
    nmsymbols = ""
    if platform_linux:
       #nmsymbols = nm
-
       lines = nm.split(sep='\n')
-
       for line in lines:
          parts = line.split()
          if len(parts) == 3 and parts[1].upper() in "TDBR":
@@ -134,11 +130,7 @@ for df in def_files:
             nmsymbols += " 0 0 " + parts[1].split('@')[0]
 
    elif platform_win32 and not shutil.which("dumpbin"): # Windows MSYS2
-      # remove parts of objdump output we don't need: anything up to a few lines
-      # after Export Table: ' Ordinal      RVA  Name'
-
       objnm = nm.split(sep='\n')
-
       found = False
       nmsymbols = ""
       for s in objnm:
@@ -149,12 +141,9 @@ for df in def_files:
             if not s:
                break
             nmsymbols += " 0 0 " + s.split()[-1] # Keep the [2::3] logic happy
-         # else: skip this line
 
    elif platform_win32: # Windows MSVC
-
       dbin = nm.split(sep='\n')
-
       found = False
       nmsymbols = ""
       for s in dbin:
@@ -164,11 +153,9 @@ for df in def_files:
             parts = s.split()
             if len(parts) >= 4:
                nmsymbols += " 0 0 " + parts[3] # Keep the [2::3] logic happy
-         # else: skip this line
 
    elif platform_macos:
       lines = nm.split(sep='\n')
-
       for line in lines:
          parts = line.split()
          if parts and parts[0].startswith("0x"):
