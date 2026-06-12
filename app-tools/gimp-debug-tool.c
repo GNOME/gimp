@@ -27,6 +27,7 @@
 
 #include "config.h"
 
+#include <locale.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -41,6 +42,8 @@
 #endif
 
 #include <gtk/gtk.h>
+
+#include "libgimpbase/gimpbase.h"
 
 #include "app/widgets/gimpcriticaldialog.h"
 
@@ -113,6 +116,18 @@ main (int    argc,
       last_version = argv[6];
       release_date = argv[7];
     }
+
+  /* Initialize gettext. This is started as a separate process so the
+   * regular gimp_init_i18n() procedure of of app/main.c doesn't apply.
+   * It gets started by the main process though, so we inherit the
+   * LANGUAGE environment variable.
+   */
+  setlocale (LC_ALL, "");
+  gimp_bind_text_domain (GETTEXT_PACKAGE, gimp_locale_directory ());
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
+  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+#endif
+  textdomain (GETTEXT_PACKAGE);
 
   gtk_init (&argc, &argv);
 
