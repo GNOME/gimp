@@ -55,7 +55,7 @@ if len(sys.argv) > 1:
 
 libextension   = ".so"
 #command        = getenv("NM", default="nm") + " --defined-only --extern-only "
-command        = getenv("NM", default="nm") + " -D "
+command        = getenv("NM", default="nm") + " -D " #see https://gitlab.gnome.org/GNOME/gimp/-/work_items/16255
 libprefix      = "lib"
 platform_linux = True
 platform_win32 = False
