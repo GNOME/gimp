@@ -670,6 +670,8 @@ gimp-win:
     - export GIMP_PREFIX="$PWD/_install-$ARCH"
     - export PATH="$OPT_PREFIX/bin:$PATH"
     - if [ "$ARCH" = 'x86_64' ]; then softwareupdate --install-rosetta --agree-to-license; fi
+    - which brew
+    - brew install glib
   #4h is enough only on arm64 or if no macports port was updated/rebuilt, we need more time in case of port bumps
   timeout: 24h
 
