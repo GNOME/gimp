@@ -47,6 +47,48 @@
 
 #include "app/widgets/gimpcriticaldialog.h"
 
+static void
+apply_theme (void)
+{
+  GFile          *file;
+  GtkCssProvider *css_provider;
+  gchar          *contents;
+  GError         *error = NULL;
+  gboolean        prefer_dark_theme;
+
+  file = gimp_directory_file ("theme.css", NULL);
+
+  if (! g_file_load_contents (file, NULL, &contents, NULL, NULL, NULL))
+    {
+      /* not necessarily an error if crashed on first start before this
+       * file got generated */
+      g_object_unref (file);
+      return;
+    }
+
+  prefer_dark_theme = strstr (contents, "/* prefer-dark-theme */") != NULL;
+
+  g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
+                "gtk-application-prefer-dark-theme", prefer_dark_theme,
+                NULL);
+
+  g_free (contents);
+
+  css_provider = gtk_css_provider_new ();
+  gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
+                                             GTK_STYLE_PROVIDER (css_provider),
+                                             GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+  if (! gtk_css_provider_load_from_file (css_provider, file, &error))
+    {
+      g_printerr ("%s: error parsing %s: %s\n", G_STRFUNC,
+                  gimp_file_get_utf8_name (file), error->message);
+      g_clear_error (&error);
+    }
+
+  g_object_unref (file);
+  g_object_unref (css_provider);
+}
 
 
 int
@@ -130,6 +172,8 @@ main (int    argc,
   textdomain (GETTEXT_PACKAGE);
 
   gtk_init (&argc, &argv);
+
+  apply_theme();
 
   dialog = gimp_critical_dialog_new (_("GIMP Crash Debug"), last_version,
                                      release_date ? g_ascii_strtoll (release_date, NULL, 10) : -1);
