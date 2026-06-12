@@ -42,6 +42,7 @@
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
 #include "gimpcontainer.h"
+#include "gimpdrawable-filters.h"
 #include "gimpdrawable-floating-selection.h"
 #include "gimperror.h"
 #include "gimpgrouplayer.h"
@@ -2265,6 +2266,9 @@ gimp_layer_apply_mask (GimpLayer         *layer,
                                  0, 0,
                                  gimp_item_get_width  (item),
                                  gimp_item_get_height (item));
+
+      /* Merge any active NDE filters applied to the mask first */
+      gimp_drawable_merge_filters (GIMP_DRAWABLE (mask));
 
       /*  Combine the current layer's alpha channel and the mask  */
       mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
