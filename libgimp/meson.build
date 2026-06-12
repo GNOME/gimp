@@ -408,6 +408,13 @@ libgimp_deps_table = [
     { 'gir': 'Pango-1.0',         'vapi': 'gtk+-3.0',        },
   ]
 
+#Needed otherwise defcheck.py fails
+libgimp_def = configure_file(
+  input: 'gimp.def',
+  output: 'gimp.def',
+  copy: true
+)
+
 
 libgimp = library('gimp-'+ gimp_api_version,
   libgimp_sources,
@@ -432,7 +439,7 @@ libgimp = library('gimp-'+ gimp_api_version,
     libgimpconfig,
     libgimpmodule,
   ],
-  vs_module_defs: 'gimp.def',
+  vs_module_defs: libgimp_def,
   install: true,
   version: so_version,
   darwin_versions: darwin_versions,
@@ -458,6 +465,13 @@ libgimp_dep = declare_dependency(
 )
 
 
+#Needed otherwise defcheck.py fails
+libgimpui_def = configure_file(
+  input: 'gimpui.def',
+  output: 'gimpui.def',
+  copy: true
+)
+
 libgimpui = library('gimpui-'+ gimp_api_version,
   libgimpui_sources,
   dependencies: [
@@ -471,7 +485,7 @@ libgimpui = library('gimpui-'+ gimp_api_version,
   link_with: [
     libgimpwidgets,
   ],
-  vs_module_defs: 'gimpui.def',
+  vs_module_defs: libgimpui_def,
   install: true,
   version: so_version,
   darwin_versions: darwin_versions,
@@ -725,15 +739,15 @@ if host_machine.system() != 'emscripten'
   # We check this on non-Windows platform (Debian) on CI, and on Windows itself.
   custom_target('check-def-files',
     input: [
-      '../libgimpbase/gimpbase.def',
-      '../libgimpcolor/gimpcolor.def',
-      '../libgimpconfig/gimpconfig.def',
-      '../libgimp/gimp.def',
-      '../libgimp/gimpui.def',
-      '../libgimpmath/gimpmath.def',
-      '../libgimpmodule/gimpmodule.def',
-      '../libgimpthumb/gimpthumb.def',
-      '../libgimpwidgets/gimpwidgets.def',
+      libgimpbase_def,
+      libgimpcolor_def,
+      libgimpconfig_def,
+      libgimp_def,
+      libgimpui_def,
+      libgimpmath_def,
+      libgimpmodule_def,
+      libgimpthumb_def,
+      libgimpwidgets_def,
     ],
     depends: [
       libgimpbase,
@@ -749,7 +763,7 @@ if host_machine.system() != 'emscripten'
     env: nm.found() ? { 'NM': nm.full_path() } : {},
     output: [ 'check-def-files', ],
     command: [
-      python, meson.project_source_root() / 'tools' / 'defcheck.py', meson.project_source_root(),
+      python, meson.project_source_root() / 'tools' / 'defcheck.py', '@INPUT@',
     ],
     build_by_default: true,
   )

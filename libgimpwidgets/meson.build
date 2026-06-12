@@ -203,6 +203,13 @@ else
   ]
 endif
 
+#Needed otherwise defcheck.py on libgimp/meson.build fails
+libgimpwidgets_def = configure_file(
+  input: 'gimpwidgets.def',
+  output: 'gimpwidgets.def',
+  copy: true
+)
+
 libgimpwidgets = library('gimpwidgets-'+ gimp_api_version,
   libgimpwidgets_sources,
   include_directories: rootInclude,
@@ -215,7 +222,7 @@ libgimpwidgets = library('gimpwidgets-'+ gimp_api_version,
     libgimpcolor,
     libgimpconfig,
   ],
-  vs_module_defs: 'gimpwidgets.def',
+  vs_module_defs: libgimpwidgets_def,
   install: true,
   version: so_version,
   darwin_versions: darwin_versions,

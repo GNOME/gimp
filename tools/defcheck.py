@@ -21,9 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 This is a hack to check the consistency of the .def files compared to
 the respective libraries.
 
-Invoke in the top level of the gimp source tree after compiling GIMP.
-If srcdir != builddir, run it in the build directory and pass the name
-of the source directory on the command-line.
+Invoke in the build directory and pass the name
+of the built .def files on the command-line.
 
 Needs the tool "nm", "objdump", "dumpbin" or "dyld_info" to work
 
@@ -32,26 +31,9 @@ Needs the tool "nm", "objdump", "dumpbin" or "dyld_info" to work
 import os, sys, subprocess, shutil, glob
 from os import getenv, path
 
-def_files = (
-   "libgimpbase/gimpbase.def",
-   "libgimpcolor/gimpcolor.def",
-   "libgimpconfig/gimpconfig.def",
-   "libgimp/gimp.def",
-   "libgimp/gimpui.def",
-   "libgimpmath/gimpmath.def",
-   "libgimpmodule/gimpmodule.def",
-   "libgimpthumb/gimpthumb.def",
-   "libgimpwidgets/gimpwidgets.def"
-)
+def_files = sys.argv[1:]
 
 have_errors = 0
-
-srcdir = None
-if len(sys.argv) > 1:
-   srcdir = sys.argv[1]
-   if not path.exists(srcdir):
-      print("Directory '%s' does not exist" % srcdir)
-      sys.exit (-1)
 
 libextension   = ".so"
 #command        = getenv("NM", default="nm") + " --defined-only --extern-only "
@@ -87,14 +69,10 @@ for df in def_files:
    #print ("platform: " + sys.platform + " - extracting symbols from " + libname)
 
    filename = df
-   if srcdir:
-      filename = path.join(srcdir, df)
    try:
       defsymbols = open (filename).read ().split ()[1:]
    except IOError as message:
       print(message)
-      if not srcdir:
-         print("You should run this script from the toplevel source directory.")
       sys.exit (-1)
 
    doublesymbols = []

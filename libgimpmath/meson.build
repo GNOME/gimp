@@ -24,6 +24,12 @@ libgimpmath_introspectable = [
   libgimpmath_headers_introspectable,
 ]
 
+#Needed otherwise defcheck.py on libgimp/meson.build fails
+libgimpmath_def = configure_file(
+  input: 'gimpmath.def',
+  output: 'gimpmath.def',
+  copy: true
+)
 
 libgimpmath = library('gimpmath-' + gimp_api_version,
   libgimpmath_sources,
@@ -35,7 +41,7 @@ libgimpmath = library('gimpmath-' + gimp_api_version,
   link_with: [
     libgimpbase,
   ],
-  vs_module_defs: 'gimpmath.def',
+  vs_module_defs: libgimpmath_def,
   install: true,
   version: so_version,
   darwin_versions: darwin_versions,
