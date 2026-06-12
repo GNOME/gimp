@@ -1937,7 +1937,7 @@ if xmllint.found()
   )
 endif
 
-meson.add_dist_script('meson_dist_script.py',
+meson.add_dist_script('tools/meson_dist_script.py',
                       generate_version_h ?  gitversion_h.full_path() : gitversion_h,
                       meson.project_source_root(), meson.project_build_root())
 
