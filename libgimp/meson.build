@@ -735,8 +735,8 @@ endif
 if host_machine.system() != 'emscripten'
   nm = find_program('nm', required: false)
 
-  # Verify .def files for Windows linking.
-  # We check this on non-Windows platform (Debian) on CI, and on Windows itself.
+  # Verify .def files for Windows linking (and for macOS too when -Wl,-exported_symbols_list is used).
+  # We check this on non-Windows/non-macOS platform (Debian) on CI, and on Windows and macOS itself.
   custom_target('check-def-files',
     input: [
       libgimpbase_def,
