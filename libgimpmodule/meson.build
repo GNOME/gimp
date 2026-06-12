@@ -15,6 +15,13 @@ libgimpmodule_introspectable = [
   libgimpmodule_headers,
 ]
 
+#Needed otherwise defcheck.py on libgimp/meson.build fails
+libgimpmodule_def = configure_file(
+  input: 'gimpmodule.def',
+  output: 'gimpmodule.def',
+  copy: true
+)
+
 libgimpmodule = library('gimpmodule-' + gimp_api_version,
   libgimpmodule_sources,
   include_directories: rootInclude,
@@ -26,7 +33,7 @@ libgimpmodule = library('gimpmodule-' + gimp_api_version,
     libgimpbase,
     libgimpconfig,
   ],
-  vs_module_defs: 'gimpmodule.def',
+  vs_module_defs: libgimpmodule_def,
   install: true,
   version: so_version,
   darwin_versions: darwin_versions,

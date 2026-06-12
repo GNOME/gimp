@@ -66,6 +66,13 @@ libgimpconfig_introspectable = [
   libgimpconfig_sources_introspectable,
 ]
 
+#Needed otherwise defcheck.py on libgimp/meson.build fails
+libgimpconfig_def = configure_file(
+  input: 'gimpconfig.def',
+  output: 'gimpconfig.def',
+  copy: true
+)
+
 libgimpconfig = library('gimpconfig-' + gimp_api_version,
   libgimpconfig_sources,
   include_directories: rootInclude,
@@ -78,7 +85,7 @@ libgimpconfig = library('gimpconfig-' + gimp_api_version,
     libgimpcolor,
     libgimpmath,
   ],
-  vs_module_defs: 'gimpconfig.def',
+  vs_module_defs: libgimpconfig_def,
   install: true,
   version: so_version,
   darwin_versions: darwin_versions,

@@ -113,6 +113,13 @@ libgimpbase_introspectable = [
   libgimpbase_headers_introspectable,
 ]
 
+#Needed otherwise defcheck.py on libgimp/meson.build fails
+libgimpbase_def = configure_file(
+  input: 'gimpbase.def',
+  output: 'gimpbase.def',
+  copy: true
+)
+
 libgimpbase = library('gimpbase-' + gimp_api_version,
   libgimpbase_sources,
   include_directories: rootInclude,
@@ -126,7 +133,7 @@ libgimpbase = library('gimpbase-' + gimp_api_version,
     '-DG_LOG_DOMAIN="LibGimpBase"',
     '-DGIMP_BASE_COMPILATION',
   ],
-  vs_module_defs: 'gimpbase.def',
+  vs_module_defs: libgimpbase_def,
   install: true,
   version: so_version,
   darwin_versions: darwin_versions,

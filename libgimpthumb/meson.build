@@ -61,6 +61,13 @@ libgimpthumb_introspectable = [
   libgimpthumb_headers_introspectable,
 ]
 
+#Needed otherwise defcheck.py on libgimp/meson.build fails
+libgimpthumb_def = configure_file(
+  input: 'gimpthumb.def',
+  output: 'gimpthumb.def',
+  copy: true
+)
+
 libgimpthumb = library('gimpthumb-'+ gimp_api_version,
   libgimpthumb_sources,
   include_directories: rootInclude,
@@ -71,7 +78,7 @@ libgimpthumb = library('gimpthumb-'+ gimp_api_version,
   link_with:  [
     libgimpbase,
   ],
-  vs_module_defs: 'gimpthumb.def',
+  vs_module_defs: libgimpthumb_def,
   install: true,
   version: so_version,
   darwin_versions: darwin_versions,
