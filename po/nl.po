@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-09 19:09+0000\n"
-"PO-Revision-Date: 2026-06-10 09:35+0200\n"
+"POT-Creation-Date: 2026-06-12 14:48+0000\n"
+"PO-Revision-Date: 2026-06-13 10:21+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -455,7 +455,7 @@ msgid "File"
 msgstr "Bestand"
 
 # de F was nog ongebruikt
-#: app/actions/actions.c:171
+#: app/actions/actions.c:171 app/widgets/gimpdrawabletreeview-filters.c:192
 msgid "Filters"
 msgstr "Filters"
 
@@ -2507,7 +2507,7 @@ msgstr "240 Seconden"
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
-#: app/tools/gimpfiltertool.c:376 app/tools/gimpforegroundselecttool.c:333
+#: app/tools/gimpfiltertool.c:375 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1784
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
@@ -5111,9 +5111,9 @@ msgid "No last used filters"
 msgstr "Geen laatst gebruikte filters"
 
 #: app/actions/filters-commands.c:282 app/display/gimpdisplayshell-dnd.c:393
-#: app/tools/gimpfiltertool.c:340 app/tools/gimppainttool.c:355
+#: app/tools/gimpfiltertool.c:339 app/tools/gimppainttool.c:355
 #: app/tools/gimptransformtool.c:739
-#: app/widgets/gimpdrawabletreeview-filters.c:632
+#: app/widgets/gimpdrawabletreeview-filters.c:765
 msgid "A selected layer is not visible."
 msgstr "Een geselecteerde laag is niet zichtbaar."
 
@@ -7256,7 +7256,7 @@ msgid "Remove Alpha Channel"
 msgstr "Alfakanaal verwijderen"
 
 #: app/actions/layers-commands.c:1967 app/core/gimpchannel-select.c:433
-#: app/core/gimplayer.c:435
+#: app/core/gimplayer.c:436
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa naar selectie"
@@ -8100,7 +8100,7 @@ msgstr "Alle filters terugzetten"
 #: app/dialogs/preferences-dialog.c:1167 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
-#: app/tools/gimpfiltertool.c:375 app/tools/gimptransformgridtool.c:1261
+#: app/tools/gimpfiltertool.c:374 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:265
 msgid "_Reset"
 msgstr "_Standaardwaarden"
@@ -10331,7 +10331,7 @@ msgstr "Weergave openen"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:192
-#: app/tools/gimpfiltertool.c:377 app/widgets/gimpcolordialog.c:493
+#: app/tools/gimpfiltertool.c:376 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpdeviceinfoeditor.c:838 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:691
@@ -10715,7 +10715,7 @@ msgstr "Er trad een fout op bij het parsen van uw bestand ‘%s’. Standaard wa
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Patroonsyntaxis voor het zoeken en selecteren van items:"
 
-#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:406
+#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:407
 msgid "Layer"
 msgstr "Laag"
 
@@ -13670,7 +13670,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Gelijkmaken"
 
-#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:772
+#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:773
 msgid "Floating Selection"
 msgstr "Zwevende selectie"
 
@@ -13730,7 +13730,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Draaien"
 
-#: app/core/gimpdrawable-transform.c:1047 app/core/gimplayer.c:434
+#: app/core/gimpdrawable-transform.c:1047 app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Laag transformeren"
@@ -13764,8 +13764,8 @@ msgstr "GEGL-bewerking ‘%s’ werd aangeroepen met een ongeldige invoernaam vo
 msgid "Cannot rename effect masks."
 msgstr "Kan effectmaskers niet hernoemen."
 
-#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:732
-#: app/core/gimplayer.c:2032 app/core/gimplayermask.c:294
+#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:733
+#: app/core/gimplayer.c:2033 app/core/gimplayermask.c:304
 #, c-format
 msgid "%s mask"
 msgstr "%s masker"
@@ -13984,7 +13984,7 @@ msgid "Symmetry"
 msgstr "Symmetrie"
 
 #: app/core/gimpimage.c:2090 app/pdb/drawable-filter-cmds.c:661
-#: app/widgets/gimpdrawabletreeview-filters.c:838
+#: app/widgets/gimpdrawabletreeview-filters.c:974
 msgid "Remove filter"
 msgstr "Filter verwijderen"
 
@@ -14392,7 +14392,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "Kan niet naar een laaggroep samenvoegen."
 
 #: app/core/gimpimage-merge.c:362
-#: app/widgets/gimpdrawabletreeview-filters.c:809
+#: app/widgets/gimpdrawabletreeview-filters.c:948
 msgid "The layer to merge down to is locked."
 msgstr "De samen te voegen laag is vergrendeld."
 
@@ -14518,7 +14518,7 @@ msgstr "Kon miniatuurbestand ‘%s’ niet openen: %s"
 
 #: app/core/gimpitem.c:1858 app/core/gimpitem.c:1925
 #: app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730
-#: app/widgets/gimpdrawabletreeview-filters.c:639
+#: app/widgets/gimpdrawabletreeview-filters.c:772
 msgid "A selected layer's pixels are locked."
 msgstr "De pixels van een geselecteerde laag zijn vergrendeld."
 
@@ -14547,7 +14547,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zwevende selectie verankeren"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1078
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1079
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14558,79 +14558,79 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Zwevende selectie naar laag"
 
-#: app/core/gimplayer.c:428
+#: app/core/gimplayer.c:429
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Laag hernoemen"
 
-#: app/core/gimplayer.c:429
+#: app/core/gimplayer.c:430
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Laag verplaatsen"
 
-#: app/core/gimplayer.c:430
+#: app/core/gimplayer.c:431
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Laag schalen"
 
-#: app/core/gimplayer.c:431
+#: app/core/gimplayer.c:432
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Grootte laag wijzigen"
 
-#: app/core/gimplayer.c:432
+#: app/core/gimplayer.c:433
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Laag spiegelen"
 
-#: app/core/gimplayer.c:433
+#: app/core/gimplayer.c:434
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Laag draaien"
 
 # What does this mean?
-#: app/core/gimplayer.c:436
+#: app/core/gimplayer.c:437
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Laag herschikken"
 
-#: app/core/gimplayer.c:437
+#: app/core/gimplayer.c:438
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Laag omhoog"
 
-#: app/core/gimplayer.c:438
+#: app/core/gimplayer.c:439
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Laag bovenaan"
 
-#: app/core/gimplayer.c:439
+#: app/core/gimplayer.c:440
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Laag omlaag"
 
-#: app/core/gimplayer.c:440
+#: app/core/gimplayer.c:441
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Laag onderaan"
 
-#: app/core/gimplayer.c:441
+#: app/core/gimplayer.c:442
 msgid "Layer cannot be raised higher."
 msgstr "Laag kan niet verder naar boven."
 
-#: app/core/gimplayer.c:442
+#: app/core/gimplayer.c:443
 msgid "Layer cannot be lowered more."
 msgstr "Laag kan niet verder naar beneden."
 
-#: app/core/gimplayer.c:776
+#: app/core/gimplayer.c:777
 msgid "Floating Mask"
 msgstr "Zwevend masker"
 
-#: app/core/gimplayer.c:778
+#: app/core/gimplayer.c:779
 msgid "Floating Channel"
 msgstr "Zwevend kanaal"
 
-#: app/core/gimplayer.c:780
+#: app/core/gimplayer.c:781
 msgid "Floating Layer"
 msgstr "Zwevende laag"
 
@@ -14638,7 +14638,7 @@ msgstr "Zwevende laag"
 #. * either a "Floating Layer" or "Floating Mask" usually. The second will
 #. * be a layer name.
 #.
-#: app/core/gimplayer.c:785
+#: app/core/gimplayer.c:786
 #, c-format
 msgid ""
 "%s\n"
@@ -14646,87 +14646,87 @@ msgid ""
 msgstr "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1923
+#: app/core/gimplayer.c:1924
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan geen laagmasker toevoegen omdat de laag er al een heeft."
 
-#: app/core/gimplayer.c:1935
+#: app/core/gimplayer.c:1936
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Kan geen laagmasker toevoegen met andere afmetingen dan de gespecificeerde laag."
 
-#: app/core/gimplayer.c:1941
+#: app/core/gimplayer.c:1942
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Laagmaskers toevoegen"
 
-#: app/core/gimplayer.c:2071
+#: app/core/gimplayer.c:2072
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Alfa naar masker verplaatsen"
 
-#: app/core/gimplayer.c:2235
+#: app/core/gimplayer.c:2236
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Laagmaskers toepassen"
 
-#: app/core/gimplayer.c:2236
+#: app/core/gimplayer.c:2237
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Laagmaskers verwijderen"
 
-#: app/core/gimplayer.c:2343
+#: app/core/gimplayer.c:2347
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Laagmaskers inschakelen"
 
-#: app/core/gimplayer.c:2344
+#: app/core/gimplayer.c:2348
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Laagmaskers uitschakelen"
 
-#: app/core/gimplayer.c:2425
+#: app/core/gimplayer.c:2429
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Laagmaskers tonen"
 
-#: app/core/gimplayer.c:2504
+#: app/core/gimplayer.c:2508
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Alfakanaal toevoegen"
 
-#: app/core/gimplayer.c:2534
+#: app/core/gimplayer.c:2538
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Alfakanaal verwijderen"
 
-#: app/core/gimplayer.c:2555
+#: app/core/gimplayer.c:2559
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Laag naar afbeeldingsgrootte"
 
-#: app/core/gimplayer.c:2738
+#: app/core/gimplayer.c:2742
 msgid "Set layer's blend space"
 msgstr "De overvloeiruimte van de laag instellen"
 
-#: app/core/gimplayer.c:2785
+#: app/core/gimplayer.c:2789
 msgid "Set layer's composite space"
 msgstr "De composietruimte van de laag instellen"
 
-#: app/core/gimplayer.c:2832
+#: app/core/gimplayer.c:2836
 msgid "Set layer's composite mode"
 msgstr "Laagcompositiemodus instellen"
 
-#: app/core/gimplayermask.c:87
+#: app/core/gimplayermask.c:88
 msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "Laagmasker verplaatsen"
 
-#: app/core/gimplayermask.c:88
+#: app/core/gimplayermask.c:89
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
 msgstr "Laagmasker naar selectie"
 
-#: app/core/gimplayermask.c:203
+#: app/core/gimplayermask.c:205
 #, c-format
 msgid "Cannot rename layer masks."
 msgstr "Kan laagmaskers niet hernoemen."
@@ -15617,7 +15617,7 @@ msgstr "Po_sitie en afmeting vergrendelen"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:192
-#: app/widgets/gimpdrawabletreeview.c:176 app/widgets/gimpitemtreeview.c:596
+#: app/widgets/gimpdrawabletreeview.c:177 app/widgets/gimpitemtreeview.c:596
 msgid "Lock visibility"
 msgstr "Zichtbaarheid vergrendelen"
 
@@ -19129,15 +19129,15 @@ msgstr "Tekstlagen moeten worden gerasteriseerd (%s)."
 
 # Drag and drop
 #: app/display/gimpdisplayshell-dnd.c:507
-#: app/widgets/gimpdrawabletreeview.c:472
-#: app/widgets/gimpdrawabletreeview.c:678
+#: app/widgets/gimpdrawabletreeview.c:484
+#: app/widgets/gimpdrawabletreeview.c:704
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Patroon naar laag neerzetten"
 
 #: app/display/gimpdisplayshell-dnd.c:529
-#: app/widgets/gimpdrawabletreeview.c:503
-#: app/widgets/gimpdrawabletreeview.c:698
+#: app/widgets/gimpdrawabletreeview.c:515
+#: app/widgets/gimpdrawabletreeview.c:724
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Kleur naar laag neerzetten"
@@ -20738,7 +20738,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Kleuren omzetten naar grijstinten"
 
 #: app/operations/gimpoperationdesaturate.c:92
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1488
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1481
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimptransform3doptions.c:77
 #: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:397
 #: app/widgets/gimplayertreeview.c:286
@@ -20795,7 +20795,7 @@ msgstr "Transparante delen vervangen door een kleur"
 msgid "The color"
 msgstr "De kleur"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1451
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1444
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -23163,7 +23163,7 @@ msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Kan meerdere lagen niet vullen. Selecteer slechts een laag."
 
 #: app/tools/gimpbucketfilltool.c:601 app/tools/gimpcagetool.c:231
-#: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:317
+#: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:316
 #: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:213
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:300
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
@@ -23513,7 +23513,7 @@ msgstr[1] "Grootte %d lagen wijzigen"
 msgid "_Curves..."
 msgstr "_Curves…"
 
-#: app/tools/gimpcurvestool.c:215 app/tools/gimpfiltertool.c:313
+#: app/tools/gimpcurvestool.c:215 app/tools/gimpfiltertool.c:312
 #: app/tools/gimplevelstool.c:211 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
@@ -23721,31 +23721,31 @@ msgid ""
 msgstr "Indien ingeschakeld, het filter wordt onmiddellijk samengevoegd.\n"
 "Anders wordt het een bewerkbaar niet-destructief filter."
 
-#: app/tools/gimpfiltertool.c:328 app/tools/gimpselectiontool.c:595
+#: app/tools/gimpfiltertool.c:327 app/tools/gimpselectiontool.c:595
 #, c-format
 msgid "A selected item's pixels are locked."
 msgstr "De beeldpunten van het geselecteerde object zijn vergrendeld."
 
-#: app/tools/gimpfiltertool.c:457
+#: app/tools/gimpfiltertool.c:455
 msgid "Disabled because this filter depends on another image."
 msgstr "Uitgeschakeld, omdat deze afbeelding afhankelijk is van een andere afbeelding."
 
-#: app/tools/gimpfiltertool.c:459
-#: app/widgets/gimpdrawabletreeview-filters.c:493
+#: app/tools/gimpfiltertool.c:457
+#: app/widgets/gimpdrawabletreeview-filters.c:613
 msgid "Disabled because filters cannot be merged on vector layers."
 msgstr "Uitgeschakeld, omdat filters niet kunnen worden samengevoegd op vectorlagen."
 
-#: app/tools/gimpfiltertool.c:461
-#: app/widgets/gimpdrawabletreeview-filters.c:496
+#: app/tools/gimpfiltertool.c:459
+#: app/widgets/gimpdrawabletreeview-filters.c:616
 msgid "Disabled because filters cannot be merged on link layers."
 msgstr "Uitgeschakeld, omdat filters niet kunnen worden samengevoegd op koppelingslagen."
 
-#: app/tools/gimpfiltertool.c:463
-#: app/widgets/gimpdrawabletreeview-filters.c:499
+#: app/tools/gimpfiltertool.c:461
+#: app/widgets/gimpdrawabletreeview-filters.c:619
 msgid "Disabled because filters cannot be merged on text layers."
 msgstr "Uitgeschakeld, omdat filters op tekstlagen niet kunnen worden samengevoegd."
 
-#: app/tools/gimpfiltertool.c:465
+#: app/tools/gimpfiltertool.c:463
 msgid ""
 "Disabled because GEGL Graph is unsafe.\n"
 "For development purpose, set environment variable "
@@ -23753,48 +23753,48 @@ msgid ""
 msgstr "Uitgeschakeld, omdat GEGL Graph niet veilig is.\n"
 "Voor ontwikkelen, stel de omgevingsvariabele GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT in."
 
-#: app/tools/gimpfiltertool.c:786
+#: app/tools/gimpfiltertool.c:781
 msgid "Click to switch the original and filtered sides"
 msgstr "Klik om te wisselen tussen originele en gefilterde kanten"
 
-#: app/tools/gimpfiltertool.c:790
+#: app/tools/gimpfiltertool.c:785
 msgid "Click to switch between vertical and horizontal"
 msgstr "Klik om tussen verticaal en horizontaal te wisselen"
 
-#: app/tools/gimpfiltertool.c:794
+#: app/tools/gimpfiltertool.c:789
 msgid "Click to move the split guide"
 msgstr "Klik om de splits-hulplijn te verplaatsen"
 
-#: app/tools/gimpfiltertool.c:796
+#: app/tools/gimpfiltertool.c:791
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: wisselen origineel en gefilterde"
 
-#: app/tools/gimpfiltertool.c:797
+#: app/tools/gimpfiltertool.c:792
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: wisselen horizontaal en verticaal"
 
-#: app/tools/gimpfiltertool.c:1284 app/tools/gimpgradienttool.c:835
+#: app/tools/gimpfiltertool.c:1279 app/tools/gimpgradienttool.c:835
 msgid "Edit filter"
 msgstr "Filter bewerken"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1464
+#: app/tools/gimpfiltertool.c:1457
 msgid "Blending Options"
 msgstr "Mengopties"
 
-#: app/tools/gimpfiltertool.c:1975 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1968 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importeren ‘%s’-instellingen"
 
-#: app/tools/gimpfiltertool.c:1977 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1970 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exporteren ‘%s’-instellingen"
 
-#: app/tools/gimpfiltertool.c:2242 app/tools/gimpgradienttool.c:1362
+#: app/tools/gimpfiltertool.c:2235 app/tools/gimpgradienttool.c:1362
 #, c-format
 msgid "Editing '%s'..."
 msgstr "Bewerken ‘%s’…"
@@ -27575,57 +27575,57 @@ msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr "Als dit is ingeschakeld, volgt het dialoogvenster automatisch de afbeelding waar u aan werkt."
 
-#: app/widgets/gimpdrawabletreeview.c:172
+#: app/widgets/gimpdrawabletreeview.c:173
 msgid "Lock pixels"
 msgstr "Beeldpunten vergrendelen"
 
-#: app/widgets/gimpdrawabletreeview.c:174
+#: app/widgets/gimpdrawabletreeview.c:175
 msgid "Lock position and size"
 msgstr "Positie en afmeting vergrendelen"
 
-#: app/widgets/gimpdrawabletreeview.c:370
+#: app/widgets/gimpdrawabletreeview.c:371
 msgid "Cannot select items while a floating selection is active."
 msgstr "Kan geen object selecteren als er een zwevende selectie actief is."
 
-#: app/widgets/gimpdrawabletreeview.c:651 app/widgets/gimplayertreeview.c:978
+#: app/widgets/gimpdrawabletreeview.c:677 app/widgets/gimplayertreeview.c:978
 msgctxt "singular"
 msgid "New Layer"
 msgstr "Nieuwe laag"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:171
-msgid "Layer Effects"
-msgstr "Laageffecten"
-
-#: app/widgets/gimpdrawabletreeview-filters.c:201
+#: app/widgets/gimpdrawabletreeview-filters.c:222
 msgid "Toggle the visibility of all filters."
 msgstr "_Zichtbaarheid van alle filters in- en uitschakelen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:217
+#: app/widgets/gimpdrawabletreeview-filters.c:238
 msgid "Edit the selected filter."
 msgstr "Het geselecteerde filter bewerken."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:233
+#: app/widgets/gimpdrawabletreeview-filters.c:254
 msgid "Raise filter one step up in the stack."
 msgstr "Dit filter één plaats hoger zetten in de stapel."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:248
+#: app/widgets/gimpdrawabletreeview-filters.c:269
 msgid "Lower filter one step down in the stack."
 msgstr "Dit filter één plaats lager zetten in de stapel."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:264
-#: app/widgets/gimpdrawabletreeview-filters.c:507
-#: app/widgets/gimpdrawabletreeview-filters.c:517
+#: app/widgets/gimpdrawabletreeview-filters.c:285
+#: app/widgets/gimpdrawabletreeview-filters.c:626
+#: app/widgets/gimpdrawabletreeview-filters.c:636
 msgid "Merge all active filters down."
 msgstr "Alle actieve filters omlaag plaatsen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:280
+#: app/widgets/gimpdrawabletreeview-filters.c:301
 msgid "Remove the selected filter."
 msgstr "Geselecteerd filter verwijderen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:738
-#: app/widgets/gimpdrawabletreeview-filters.c:764
+#: app/widgets/gimpdrawabletreeview-filters.c:622
+msgid "Disabled because filters cannot be merged on group layers."
+msgstr "Uitgeschakeld, omdat filters niet kunnen worden samengevoegd op groepslagen."
+
+#: app/widgets/gimpdrawabletreeview-filters.c:873
+#: app/widgets/gimpdrawabletreeview-filters.c:901
 msgid "Cannot reorder a filter that is being edited."
-msgstr "Kan een filter die bewerkt wordt niet herschikken."
+msgstr "Kan een filter dat bewerkt wordt niet herschikken."
 
 #: app/widgets/gimpdynamicseditor.c:162
 #: app/widgets/gimpdynamicsoutputeditor.c:71
@@ -29670,6 +29670,9 @@ msgstr "Menu Gereedschapsvoorinstellingen"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Menu Geschiedenis"
+
+#~ msgid "Layer Effects"
+#~ msgstr "Laageffecten"
 
 #~ msgid "shortcut"
 #~ msgstr "sneltoets"
