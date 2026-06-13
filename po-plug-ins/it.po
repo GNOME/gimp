@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-08 00:29+0200\n"
-"PO-Revision-Date: 2026-06-09 12:18+0200\n"
+"POT-Creation-Date: 2026-06-13 19:49+0200\n"
+"PO-Revision-Date: 2026-06-13 19:49+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -2592,7 +2592,9 @@ msgstr "Esporta l'immagine in scala di grigi in vari formati di testo"
 msgid ""
 "This plug-in uses aalib to export grayscale image as ascii art into a "
 "variety of text formats"
-msgstr "Questo plugin usa aalib per esportare l'immagine in scala di grigi come ascii-art in una varietà di formati di testo"
+msgstr ""
+"Questo plugin usa aalib per esportare l'immagine in scala di grigi come "
+"ascii-art in una varietà di formati di testo"
 
 #: ../plug-ins/common/file-aa.c:164 ../plug-ins/file-dds/dds.c:244
 msgid "_Format"
@@ -3137,7 +3139,8 @@ msgstr "Carica file nel formato file RGBE"
 #: ../plug-ins/common/file-gegl.c:123
 msgid ""
 "This procedure loads images in the RGBE format, using \"gegl:rgbe-load\""
-msgstr "Questa procedura carica immagini nel formato RGBE, usando \"gegl:rgbe-load\""
+msgstr ""
+"Questa procedura carica immagini nel formato RGBE, usando \"gegl:rgbe-load\""
 
 #: ../plug-ins/common/file-gegl.c:127
 msgid "Exports files in the RGBE file format"
@@ -3146,7 +3149,8 @@ msgstr "Esporta file in formato RGBE"
 #: ../plug-ins/common/file-gegl.c:128
 msgid ""
 "This procedure exports images in the RGBE format, using \"gegl:rgbe-save\""
-msgstr "Questa procedura esporta immagini nel formato RGBE, usando \"gegl:rgbe-save\""
+msgstr ""
+"Questa procedura esporta immagini nel formato RGBE, usando \"gegl:rgbe-save\""
 
 #: ../plug-ins/common/file-gegl.c:132 ../plug-ins/file-exr/file-exr.c:111
 msgid "OpenEXR image"
@@ -3159,7 +3163,9 @@ msgstr "Esporta file in formato OpenEXR"
 #: ../plug-ins/common/file-gegl.c:142
 msgid ""
 "This procedure exports images in the OpenEXR format, using \"gegl:exr-save\""
-msgstr "Questa procedura esporta immagini nel formato OpenEXR, usando \"gegl:exr-save\""
+msgstr ""
+"Questa procedura esporta immagini nel formato OpenEXR, usando \"gegl:exr-"
+"save\""
 
 #: ../plug-ins/common/file-gegl.c:356
 #, c-format
@@ -4497,7 +4503,9 @@ msgstr "Esporta immagini in formato file MNG"
 msgid ""
 "This plug-in exports images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
-msgstr "Questo plug-in salva le immagini nel formato Multiple-image Network Graphics (MNG) che può essere usato al posto delle GIF animate e altro."
+msgstr ""
+"Questo plug-in salva le immagini nel formato Multiple-image Network Graphics "
+"(MNG) che può essere usato al posto delle GIF animate e altro."
 
 #: ../plug-ins/common/file-mng.c:286
 msgid "Use interlacing"
@@ -4876,7 +4884,10 @@ msgid ""
 "Exports files in Adobe's Portable Document Format. PDF is designed to be "
 "easily processed by a variety of different platforms, and is a distant "
 "cousin of PostScript."
-msgstr "Esporta file nel formato PDF di Adobe. Il PDF è progettato per essere facilmente elaborato da una varietà di piattaforme diverse ed è un lontano cugino di PostScript."
+msgstr ""
+"Esporta file nel formato PDF di Adobe. Il PDF è progettato per essere "
+"facilmente elaborato da una varietà di piattaforme diverse ed è un lontano "
+"cugino di PostScript."
 
 #: ../plug-ins/common/file-pdf-export.c:345
 #: ../plug-ins/common/file-pdf-load.c:214
@@ -10886,7 +10897,9 @@ msgstr "Salva metadati Photoshop"
 msgid ""
 "Store Photoshop image resources (paths, guides, ...) in JPEG APP13 tag "
 "(Photoshop)"
-msgstr "Archivia le risorse immagine Photoshop (tracciati, guide, ...) nel tag JPEG APP13 (Photoshop)"
+msgstr ""
+"Archivia le risorse immagine Photoshop (tracciati, guide, ...) nel tag JPEG "
+"APP13 (Photoshop)"
 
 #: ../plug-ins/file-psd/psd-export.c:585
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -11181,7 +11194,10 @@ msgid ""
 "This plug-in exports files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
 "layer masks, aux channels and guides."
-msgstr "Questo plug-in esporta i file nel formato PSD nativo di Adobe Photoshop (TM). Questi file possono essere di qualsiasi tipo di immagine supportato da GIMP, con o senza livelli, maschere di livello, canali ausiliari e guide."
+msgstr ""
+"Questo plug-in esporta i file nel formato PSD nativo di Adobe Photoshop "
+"(TM). Questi file possono essere di qualsiasi tipo di immagine supportato da "
+"GIMP, con o senza livelli, maschere di livello, canali ausiliari e guide."
 
 #: ../plug-ins/file-psd/psd.c:244 ../plug-ins/file-psd/psd.c:246
 msgid "Photoshop Large image"
@@ -11196,7 +11212,10 @@ msgid ""
 "This plug-in exports files of Adobe Photoshop (TM) Large native PSB format. "
 "These files may be of any image type supported by GIMP, with or without "
 "layers, layer masks, aux channels and guides."
-msgstr "Questo filtro esporta i file nel formato PSB largo nativo di Adobe Photoshop (TM). Questi file possono essere di qualsiasi tipo di immagine supportato da GIMP, con o senza livelli, maschere di livello, canali ausiliari e guide."
+msgstr ""
+"Questo filtro esporta i file nel formato PSB largo nativo di Adobe Photoshop "
+"(TM). Questi file possono essere di qualsiasi tipo di immagine supportato da "
+"GIMP, con o senza livelli, maschere di livello, canali ausiliari e guide."
 
 #: ../plug-ins/file-psd/psd.c:279
 msgid "Assign a Clipping _Path"
@@ -11523,7 +11542,9 @@ msgstr "Mantieni immagine composita"
 msgid ""
 "Keep the composite image of Sketchbook or Photoshop TIFF files as additional "
 "layer"
-msgstr "Mantieni l'immagine composita dei file TIFF di Sketchbook o Photoshop come livello aggiuntivo"
+msgstr ""
+"Mantieni l'immagine composita dei file TIFF di Sketchbook o Photoshop come "
+"livello aggiuntivo"
 
 #: ../plug-ins/file-tiff/file-tiff.c:227
 msgid "_Keep empty space around imported layers"
@@ -11587,7 +11608,9 @@ msgstr "Formato"
 msgid ""
 "How layers are stored: as TIFF directories (IFDs) or as TIFF tags (Photoshop/"
 "ImageSourceData)"
-msgstr "Modalità di memorizzazione dei livelli: come cartelle TIFF (IFD) o come tag TIFF (Photoshop/ImageSourceData)"
+msgstr ""
+"Modalità di memorizzazione dei livelli: come cartelle TIFF (IFD) o come tag "
+"TIFF (Photoshop/ImageSourceData)"
 
 #: ../plug-ins/file-tiff/file-tiff.c:300
 msgid "Save La_yers"
@@ -11617,7 +11640,9 @@ msgstr "Salva dati GeoTIFF"
 msgid ""
 "Store Photoshop image resources (paths, alpha channel names, ...) in TIFF "
 "tag (Photoshop)"
-msgstr "Memorizza le risorse immagine Photoshop (percorsi, nomi dei canali alfa, ...) nel tag TIFF (Photoshop)"
+msgstr ""
+"Memorizza le risorse immagine Photoshop (percorsi, nomi dei canali "
+"alfa, ...) nel tag TIFF (Photoshop)"
 
 #: ../plug-ins/file-tiff/file-tiff.c:548
 #, c-format
@@ -16254,7 +16279,7 @@ msgstr "ID studio"
 
 #: ../plug-ins/metadata/metadata-editor.c:708
 msgid "Referring Physician"
-msgstr "Medico di riferimento"
+msgstr "Medico curante"
 
 #: ../plug-ins/metadata/metadata-editor.c:709
 msgid "Study Date"
