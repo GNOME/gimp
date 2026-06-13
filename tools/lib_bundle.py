@@ -28,6 +28,7 @@ import sys
 import struct
 import glob
 
+
 ################################################################################
 # Global variables
 
@@ -35,14 +36,12 @@ import glob
 dlls = set()
 sys_dlls = set()
 
-# Previously otooled DYLIBs
-dump_cache = {}
-
 # Previously done DLLs/DYLIBs in previous runs
 done_dlls = set()
-
 # Previously checked undefined DYLIB symbols across all dependencies
 done_symbols = set()
+# Previously otooled DYLIBs
+dump_cache = {}
 
 # Platform mode
 is_win32 = sys.platform in ['win32', 'cygwin']
@@ -55,14 +54,15 @@ if is_win32:
 elif is_macos:
   bindir = 'lib'
 
+
 ################################################################################
 # Functions
 
 # Main function
 def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
+  #sys.stdout.write("{} (INFO): searching for dependencies of {} in {}.\n".format(os.path.basename(__file__),
+  #                                                                               binary, ', '.join(srcdirs)))
   global done_dlls
-  global done_symbols
-  global is_macos
   try:
     if dll_file is not None:
       with open(dll_file, 'r') as f:
@@ -70,27 +70,27 @@ def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
   except FileNotFoundError:
     pass
 
+  global done_symbols
   if symbols_file and os.path.exists(symbols_file):
     with open(symbols_file, 'r') as f:
       for line in f:
         parts = line.strip().split(',')
         done_symbols.add((parts[0], parts[1]))
 
-  #sys.stdout.write("{} (INFO): searching for dependencies of {} in {}.\n".format(os.path.basename(__file__),
-  #                                                                               binary, ', '.join(srcdirs)))
+  find_dependencies(os.path.abspath(binary), srcdirs)
+
+  #We set global_* and use_* here instead of in check_macos_version()/copy_dlls() to save resources
+  global is_macos
   if is_macos:
     global global_supported_minos
-    global global_sdk_path
-    global use_dyld
-
     global_supported_minos = os.environ.get("MACOSX_DEPLOYMENT_TARGET")
+    global global_sdk_path
     try:
       global_sdk_path = subprocess.run(['xcrun', '--show-sdk-path', '--sdk', 'macosx'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True).stdout.decode('utf-8').strip()
     except (subprocess.CalledProcessError, FileNotFoundError):
       global_sdk_path = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+    global use_dyld
     use_dyld = shutil.which('dyld_info')
-
-  find_dependencies(os.path.abspath(binary), srcdirs)
 
   if debug in ['debug-only', 'debug-run']:
     if debug == 'debug-only':
@@ -131,31 +131,32 @@ def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
       for symbol, lib_name in done_symbols:
         f.write(f"{symbol},{lib_name}\n")
 
+
 def find_dependencies(obj, srcdirs):
   '''
   List DLLs/DYLIBs of an object file in a recursive way.
   '''
-  global is_win32
-  global is_macos
-  global objdump
-  global dump_cache
   if obj in set.union(done_dlls, sys_dlls):
     # Already processed, either in a previous run of the script
     # (done_dlls) or in this one.
     return True
-
   if not os.path.isabs(obj):
     for srcdir in srcdirs:
+      # If found in srcdirs: consider it a non-system DLL/DYLIB (dlls)
       abs_dll = os.path.join(srcdir, bindir, obj)
       abs_dll = os.path.abspath(abs_dll)
       if find_dependencies(abs_dll, srcdirs):
         return True
     else:
-      # Found in none of the srcdirs: consider it a system DLL/DYLIB
+      # Found in none of the srcdirs: consider it a system DLL/DYLIB (sys_dlls)
       sys_dlls.add(os.path.basename(obj))
       return False
+
   elif os.path.exists(obj):
-    # If DLL/DYLIB exists, extract dependencies.
+    # If not processed (not done_dlls), and dlls but not not sys_dlls, extract dependencies.
+    global is_win32
+    global is_macos
+    global objdump
     if not objdump:
       if is_macos and shutil.which('otool'):
         objdump = 'otool'
@@ -182,6 +183,7 @@ def find_dependencies(obj, srcdirs):
         result = subprocess.run(['objdump', '--macho', '--private-headers', obj], stdout=subprocess.PIPE)
       out = result.stdout.decode('utf-8', errors='replace')
       #dump_cache can be used by check_macos_version and set_rpath
+      global dump_cache
       dump_cache[os.path.basename(obj)] = out
       regex = re.finditer(r"name\s+(?:\d+\s+)?(?:.*/)?([^/\s]+\.dylib)", out, re.MULTILINE)
     # Parse lines with DLL/DYLIB Name instead of lib*.dll/lib*.dylib directly
@@ -190,13 +192,15 @@ def find_dependencies(obj, srcdirs):
       if dll not in set.union(done_dlls, dlls, sys_dlls):
         dlls.add(dll)
         find_dependencies(dll, srcdirs)
-
     return True
   else:
     return False
 
-# Copy a DLL/DYLIB set into the /destdir/bin or /destdir/lib directory
+
 def copy_dlls(dll_list, srcdirs, destdir):
+  """
+  Copy a DLL/DYLIB set into the /destdir/bin or /destdir/lib directory
+  """
   global bindir
   destbin = os.path.join(destdir, bindir)
   os.makedirs(destbin, exist_ok=True)
@@ -225,24 +229,21 @@ def copy_dlls(dll_list, srcdirs, destdir):
         sys.stderr.write("Missing DLL/DYLIB: {}\n".format(dll))
         sys.exit(1)
 
+
 def check_macos_version(binary, supported_minos=None, sdk_path=None):
   """
   Check LC_BUILD_VERSION for compatibility with MACOSX_DEPLOYMENT_TARGET
   """
-  global dump_cache
-  global use_dyld
-
   if not supported_minos:
     return
 
+  global dump_cache
   out = dump_cache.get(os.path.basename(binary))
   if not out:
     result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE, check=True)
     out = result.stdout.decode('utf-8', errors='replace')
     dump_cache[os.path.basename(binary)] = out
-
   bin_minos = re.findall(r'minos\s+([\d\.]+)', out)[0]
-
   def parse_version(v):
     parts = list(map(int, v.split('.')))
     while len(parts) < 3:
@@ -256,6 +257,7 @@ def check_macos_version(binary, supported_minos=None, sdk_path=None):
     sys.exit(1)
 
   # 2. Check for LC_BUILD_VERSION (sdk) symbols
+  global use_dyld
   if use_dyld:
     nm_res = subprocess.run(['dyld_info', '-imports', binary], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
   else:
@@ -318,6 +320,7 @@ def check_macos_version(binary, supported_minos=None, sdk_path=None):
     if violating_version and parse_version(violating_version) > parse_version(supported_minos):
       sys.stderr.write(f"\033[31m(ERROR)\033[0m: {binary} requires macOS {violating_version} due to '{symbol}' symbol, which is higher than macOS {supported_minos} which GIMP was built against.\n")
       sys.exit(1)
+
 
 def set_rpath(binary, destbin=None):
   """
