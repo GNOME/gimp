@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-13 19:49+0200\n"
-"PO-Revision-Date: 2026-06-13 20:01+0200\n"
+"PO-Revision-Date: 2026-06-13 20:10+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -13330,7 +13330,7 @@ msgstr "Cambia la gamma (brillantezza) del pennello selezionato"
 
 #: ../plug-ins/gimpressionist/brush.c:572
 msgid "Select:"
-msgstr "Selezione:"
+msgstr "Seleziona:"
 
 #: ../plug-ins/gimpressionist/brush.c:588
 msgid "Save _as"
