@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-13 19:49+0200\n"
-"PO-Revision-Date: 2026-06-13 19:49+0200\n"
+"PO-Revision-Date: 2026-06-13 20:01+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -16291,7 +16291,7 @@ msgstr "Descrizione dello studio"
 
 #: ../plug-ins/metadata/metadata-editor.c:712
 msgid "Series Number"
-msgstr "Numero delle serie"
+msgstr "Numero di serie"
 
 #: ../plug-ins/metadata/metadata-editor.c:713
 msgid "Modality"
@@ -16299,19 +16299,19 @@ msgstr "Modalità"
 
 #: ../plug-ins/metadata/metadata-editor.c:714
 msgid "Series Date"
-msgstr "Data delle serie"
+msgstr "Data della serie"
 
 #: ../plug-ins/metadata/metadata-editor.c:716
 msgid "Series Description"
-msgstr "Descrizione delle serie"
+msgstr "Descrizione della serie"
 
 #: ../plug-ins/metadata/metadata-editor.c:718
 msgid "Equipment Institution"
-msgstr "Istituzione dell'equipaggiamento"
+msgstr "Ente dell'apparecchiatura"
 
 #: ../plug-ins/metadata/metadata-editor.c:719
 msgid "Equipment Manufacturer"
-msgstr "Fabbricante dell'equipaggiamento"
+msgstr "Fabbricante dell'apparecchiatura"
 
 #: ../plug-ins/metadata/metadata-editor.c:759
 msgid "_Edit Metadata"
