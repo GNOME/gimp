@@ -44,11 +44,16 @@ done_dlls = set()
 # Previously checked undefined DYLIB symbols across all dependencies
 done_symbols = set()
 
-# Common paths
-bindir = 'bin'
+# Platform mode
+is_win32 = sys.platform in ['win32', 'cygwin']
+is_macos = sys.platform == "darwin"
 
-# Platform mode (detected at runtime)
-is_macos = False
+# Common paths
+objdump = None
+if is_win32:
+  bindir = 'bin'
+elif is_macos:
+  bindir = 'lib'
 
 ################################################################################
 # Functions
@@ -73,7 +78,7 @@ def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
 
   #sys.stdout.write("{} (INFO): searching for dependencies of {} in {}.\n".format(os.path.basename(__file__),
   #                                                                               binary, ', '.join(srcdirs)))
-  if sys.platform == "darwin":
+  if is_macos:
     global global_supported_minos
     global global_sdk_path
     global use_dyld
@@ -130,7 +135,9 @@ def find_dependencies(obj, srcdirs):
   '''
   List DLLs/DYLIBs of an object file in a recursive way.
   '''
+  global is_win32
   global is_macos
+  global objdump
   global dump_cache
   if obj in set.union(done_dlls, sys_dlls):
     # Already processed, either in a previous run of the script
@@ -139,9 +146,6 @@ def find_dependencies(obj, srcdirs):
 
   if not os.path.isabs(obj):
     for srcdir in srcdirs:
-      bindir = 'bin'
-      if is_macos:
-        bindir = 'lib'
       abs_dll = os.path.join(srcdir, bindir, obj)
       abs_dll = os.path.abspath(abs_dll)
       if find_dependencies(abs_dll, srcdirs):
@@ -152,54 +156,17 @@ def find_dependencies(obj, srcdirs):
       return False
   elif os.path.exists(obj):
     # If DLL/DYLIB exists, extract dependencies.
-    objdump = None
-
-    try:
-      with open(obj, 'rb') as f:
-        f.seek(0x3C)
-        pe_offset = struct.unpack('<I', f.read(4))[0]
-        f.seek(pe_offset)
-        pe_sig = f.read(4)
-        if pe_sig == b'PE\0\0':
-          f.seek(pe_offset + 24)
-          file_type = struct.unpack('<H', f.read(2))[0]
-          if file_type == 0x20b:
-            objdump = 'x86_64-w64-mingw32-objdump'
-          elif file_type == 0x10b:
-            objdump = 'i686-w64-mingw32-objdump'
-          else:
-            return None
-        else:
-          # If not PE, then check for Mach-O magic (Feed Face/Face Feed variants)
-          f.seek(0) #rewind to start
-          magic = f.read(4)
-          if magic in [b'\xfe\xed\xfa\xce', b'\xfe\xed\xfa\xcf',
-                       b'\xce\xfa\xed\xfe', b'\xcf\xfa\xed\xfe',
-                       b'\xca\xfe\xba\xbe', b'\xbe\xba\xfe\xca']:
-            is_macos = True
-            objdump = 'no_cross_objdump'
-          else:
-            return None
-    except Exception as e:
-      sys.stderr.write("Cannot read PE/Mach-O header for {}: {}\n".format(obj, e))
-      return None
-
-    if objdump is None:
-      sys.stderr.write('File type of {} unknown: {}\n'.format(obj, file_type))
-      sys.exit(1)
-    elif shutil.which(objdump) is None:
-      # For native objdump case.
-      objdump = 'objdump'
-      if not is_macos and shutil.which('dumpbin'):
-        objdump = 'dumpbin'
+    if not objdump:
       if is_macos and shutil.which('otool'):
         objdump = 'otool'
-
-    if shutil.which(objdump) is None:
-      sys.stderr.write("Executable doesn't exist: {}\n".format(objdump))
-      sys.exit(1)
-
-    if not is_macos:
+      elif is_win32 and shutil.which('dumpbin'):
+        objdump = 'dumpbin'
+      elif shutil.which('objdump'):
+        objdump = 'objdump'
+      else:
+        sys.stderr.write("Object dumper executable doesn't exist.\n")
+        sys.exit(1)
+    if is_win32:
       if objdump == 'dumpbin':
         result = subprocess.run([objdump, '/DEPENDENTS', obj], stdout=subprocess.PIPE)
         out = result.stdout.decode('utf-8')
@@ -208,7 +175,7 @@ def find_dependencies(obj, srcdirs):
         result = subprocess.run([objdump, '-p', obj], stdout=subprocess.PIPE)
         out = result.stdout.decode('utf-8')
         regex = re.finditer(r"DLL Name: *(\S+.dll)", out, re.MULTILINE)
-    else:
+    elif is_macos:
       if objdump == 'otool':
         result = subprocess.run(['otool', '-l', obj], stdout=subprocess.PIPE)
       else:
@@ -231,10 +198,7 @@ def find_dependencies(obj, srcdirs):
 # Copy a DLL/DYLIB set into the /destdir/bin or /destdir/lib directory
 def copy_dlls(dll_list, srcdirs, destdir):
   global bindir
-  dest_bindir = bindir
-  if is_macos:
-    dest_bindir = 'lib'
-  destbin = os.path.join(destdir, dest_bindir)
+  destbin = os.path.join(destdir, bindir)
   os.makedirs(destbin, exist_ok=True)
   if is_macos:
     abs_binary = os.path.abspath(args.bin)
@@ -246,8 +210,6 @@ def copy_dlls(dll_list, srcdirs, destdir):
     if not os.path.exists(os.path.join(destbin, dll)):
       # Do not overwrite existing files.
       for srcdir in srcdirs:
-        if is_macos:
-          bindir = 'lib'
         full_file_name = os.path.join(srcdir, bindir, dll)
         if os.path.isfile(full_file_name):
           if is_macos and not full_file_name.startswith(("/opt/local/", "/opt/homebrew/")):
