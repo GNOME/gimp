@@ -76,7 +76,8 @@ foreach plugin : complex_plugins_list
   foreach sourcecode : plugin_sourcecode
     if plugin.get('name').startswith('file-')
       #.ico files are handled in a special way by installer and msix scripts
-      if plugin.get('name') == 'file-ico' and platform_windows
+      #.lnk files are handled internally by GIMP, they are not image files
+      if (plugin.get('name') == 'file-ico' and platform_windows) or plugin.get('name') == 'file-lnk'
         continue
       else
         all_plugins_sources += [ meson.current_source_dir() / plugin.get('name') / sourcecode ]
