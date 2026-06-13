@@ -28,6 +28,7 @@ import sys
 import struct
 import glob
 
+
 ################################################################################
 # Global variables
 
@@ -35,14 +36,12 @@ import glob
 dlls = set()
 sys_dlls = set()
 
-# Previously otooled DYLIBs
-dump_cache = {}
-
 # Previously done DLLs/DYLIBs in previous runs
 done_dlls = set()
-
 # Previously checked undefined DYLIB symbols across all dependencies
 done_symbols = set()
+# Previously otooled DYLIBs
+dump_cache = {}
 
 # Platform mode
 is_win32 = sys.platform in ['win32', 'cygwin']
@@ -54,6 +53,7 @@ if is_win32:
   bindir = 'bin'
 elif is_macos:
   bindir = 'lib'
+
 
 ################################################################################
 # Functions
@@ -131,6 +131,7 @@ def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
       for symbol, lib_name in done_symbols:
         f.write(f"{symbol},{lib_name}\n")
 
+
 def find_dependencies(obj, srcdirs):
   '''
   List DLLs/DYLIBs of an object file in a recursive way.
@@ -195,8 +196,11 @@ def find_dependencies(obj, srcdirs):
   else:
     return False
 
-# Copy a DLL/DYLIB set into the /destdir/bin or /destdir/lib directory
+
 def copy_dlls(dll_list, srcdirs, destdir):
+  """
+  Copy a DLL/DYLIB set into the /destdir/bin or /destdir/lib directory
+  """
   global bindir
   destbin = os.path.join(destdir, bindir)
   os.makedirs(destbin, exist_ok=True)
@@ -224,6 +228,7 @@ def copy_dlls(dll_list, srcdirs, destdir):
         # of the srcdirs.
         sys.stderr.write("Missing DLL/DYLIB: {}\n".format(dll))
         sys.exit(1)
+
 
 def check_macos_version(binary, supported_minos=None, sdk_path=None):
   """
@@ -315,6 +320,7 @@ def check_macos_version(binary, supported_minos=None, sdk_path=None):
     if violating_version and parse_version(violating_version) > parse_version(supported_minos):
       sys.stderr.write(f"\033[31m(ERROR)\033[0m: {binary} requires macOS {violating_version} due to '{symbol}' symbol, which is higher than macOS {supported_minos} which GIMP was built against.\n")
       sys.exit(1)
+
 
 def set_rpath(binary, destbin=None):
   """
