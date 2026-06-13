@@ -229,20 +229,16 @@ def check_macos_version(binary, supported_minos=None, sdk_path=None):
   """
   Check LC_BUILD_VERSION for compatibility with MACOSX_DEPLOYMENT_TARGET
   """
-  global dump_cache
-  global use_dyld
-
   if not supported_minos:
     return
 
+  global dump_cache
   out = dump_cache.get(os.path.basename(binary))
   if not out:
     result = subprocess.run(['otool', '-l', binary], stdout=subprocess.PIPE, check=True)
     out = result.stdout.decode('utf-8', errors='replace')
     dump_cache[os.path.basename(binary)] = out
-
   bin_minos = re.findall(r'minos\s+([\d\.]+)', out)[0]
-
   def parse_version(v):
     parts = list(map(int, v.split('.')))
     while len(parts) < 3:
@@ -256,6 +252,7 @@ def check_macos_version(binary, supported_minos=None, sdk_path=None):
     sys.exit(1)
 
   # 2. Check for LC_BUILD_VERSION (sdk) symbols
+  global use_dyld
   if use_dyld:
     nm_res = subprocess.run(['dyld_info', '-imports', binary], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
   else:
