@@ -31,4 +31,8 @@ GimpImage * load_thumbnail_image (GFile         *file,
                                   GimpImageType *type,
                                   GError       **error);
 
+gboolean    load_mpo_image       (GFile         *file,
+                                  GimpImage     *first_image,
+                                  GError       **error);
+
 #endif /* __JPEG_LOAD_H__ */

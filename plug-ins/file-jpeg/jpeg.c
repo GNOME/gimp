@@ -79,6 +79,13 @@ static GimpValueArray * jpeg_export           (GimpProcedure         *procedure,
                                                GimpProcedureConfig   *config,
                                                gpointer               run_data);
 
+static GimpValueArray * mpo_load              (GimpProcedure         *procedure,
+                                               GimpRunMode            run_mode,
+                                               GFile                 *file,
+                                               GimpMetadata          *metadata,
+                                               GimpMetadataLoadFlags *flags,
+                                               GimpProcedureConfig   *config,
+                                               gpointer               run_data);
 
 G_DEFINE_TYPE (Jpeg, jpeg, GIMP_TYPE_PLUG_IN)
 
@@ -115,6 +122,7 @@ jpeg_query_procedures (GimpPlugIn *plug_in)
 
   list = g_list_append (list, g_strdup (LOAD_THUMB_PROC));
   list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (LOAD_MPO_PROC));
   list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
@@ -170,6 +178,32 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                                       "Mukund Sivaraman <muks@mukund.org>, "
                                       "Sven Neumann <sven@gimp.org>",
                                       "November 15, 2004");
+    }
+  if (! strcmp (name, LOAD_MPO_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           mpo_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, _("MPO image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        _("Loads files in the MPO file format"),
+                                        _("Loads files in the MPO "
+                                          "(Multiple Picture Object) file format"),
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Sashi Kumar <ksashikumark93@gmail.com>",
+                                      "Sashi Kumar <ksashikumark93@gmail.com>",
+                                      "2013");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/mpo");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "mpo");
+
+      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+                                                LOAD_THUMB_PROC);
     }
   else if (! strcmp (name, EXPORT_PROC))
     {
@@ -608,6 +642,63 @@ jpeg_export (GimpProcedure        *procedure,
 
   g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
+}
+
+static GimpValueArray *
+mpo_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
+{
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  gboolean        resolution_loaded  = FALSE;
+  gboolean        ps_metadata_loaded = FALSE;
+  GError         *error              = NULL;
+
+  gegl_init (NULL, NULL);
+
+  preview_image = NULL;
+  preview_layer = NULL;
+
+  switch (run_mode)
+    {
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_ui_init (PLUG_IN_BINARY);
+      break;
+
+    default:
+      break;
+    }
+
+  image = load_image (file, run_mode, FALSE,
+                      &resolution_loaded, &ps_metadata_loaded, &error);
+
+  if (image)
+    {
+      if (resolution_loaded)
+        *flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
+    }
+
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
+  /* Read remaining images as layers */
+  load_mpo_image (file, image, &error);
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
 }
 
 /*

@@ -20,6 +20,7 @@
 
 #define LOAD_PROC       "file-jpeg-load"
 #define LOAD_THUMB_PROC "file-jpeg-load-thumb"
+#define LOAD_MPO_PROC   "file-mpo-load"
 #define EXPORT_PROC     "file-jpeg-export"
 #define PLUG_IN_BINARY  "file-jpeg"
 #define PLUG_IN_ROLE    "gimp-file-jpeg"

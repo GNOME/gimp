@@ -781,3 +781,122 @@ load_thumbnail_image (GFile         *file,
 
   return image;
 }
+
+gboolean
+load_mpo_image (GFile      *file,
+                GimpImage  *first_image,
+                GError    **error)
+{
+  FILE     *fp;
+  guchar   *data = NULL;
+  gsize     file_size;
+  gboolean  read_first_image = FALSE;
+
+  fp = g_fopen (g_file_peek_path (file), "rb");
+  if (! fp)
+    return FALSE;
+
+  fseek (fp, 0, SEEK_END);
+  file_size = ftell (fp);
+  fseek (fp, 0, SEEK_SET);
+
+  data = g_try_malloc0 (file_size);
+  if (! data)
+    {
+      fclose (fp);
+      return FALSE;
+    }
+
+  if (fread (data, 1, file_size, fp) < file_size)
+    {
+      fclose (fp);
+      g_free (data);
+      return FALSE;
+    }
+  fclose (fp);
+
+  /* TODO: Use APP2 marker information instead of looping through
+   * file data */
+  for (gint i = 0; i < file_size; i++)
+    {
+      if (data[0] == 0xFF &&
+          data[1] == 0xD8)
+        {
+          if (data[2] == 0xFF)
+            {
+              if (data[3] == 0xE1)
+                {
+                  /* Skip first image since we've already read it in */
+                  if (read_first_image)
+                    {
+                      GFile     *temp_file = NULL;
+                      GimpImage *temp_image = NULL;
+                      gboolean   dummy1;
+                      gboolean   dummy2;
+
+                      temp_file = gimp_temp_file ("tmp");
+                      fp        = g_fopen (g_file_peek_path (temp_file), "wb");
+
+                      if (! fp)
+                        {
+                          g_free (data);
+                          g_file_delete (temp_file, NULL, NULL);
+                          g_object_unref (temp_file);
+                          return FALSE;
+                        }
+
+                      fwrite (data, 1, file_size - i, fp);
+                      fclose (fp);
+
+                      temp_image = load_image (temp_file,
+                                               GIMP_RUN_NONINTERACTIVE, FALSE,
+                                               &dummy1, &dummy2, error);
+                      g_file_delete (temp_file, NULL, NULL);
+                      g_object_unref (temp_file);
+
+                      if (! temp_image)
+                        {
+                          g_free (data);
+                          return FALSE;
+                        }
+                      else
+                        {
+                          GimpLayer **layers;
+                          GimpLayer  *new_layer;
+
+                          layers    = gimp_image_get_layers (temp_image);
+                          new_layer =
+                            gimp_layer_new_from_drawable (GIMP_DRAWABLE (layers[0]),
+                                                          first_image);
+                          gimp_image_insert_layer (first_image, new_layer,
+                                                   NULL, 0);
+
+                          g_free (layers);
+                          gimp_image_delete (temp_image);
+                        }
+                    }
+                  read_first_image = TRUE;
+
+                  data += 4;
+                  i    += 3;
+                }
+              else
+                {
+                  data += 2;
+                  i    += 1;
+                }
+            }
+          else
+            {
+              data += 3;
+              i    += 2;
+            }
+        }
+      else
+        {
+          data++;
+        }
+    }
+
+  return TRUE;
+}
