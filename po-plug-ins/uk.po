@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-05 22:41+0000\n"
-"PO-Revision-Date: 2026-06-06 18:52+0300\n"
+"POT-Creation-Date: 2026-06-14 13:07+0000\n"
+"PO-Revision-Date: 2026-06-14 21:46+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -143,7 +143,7 @@ msgstr "Приклад додатка мовою JavaScript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:5144 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:5158 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -623,7 +623,7 @@ msgstr "Жалюзі"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:4319 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:4333 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -2499,7 +2499,7 @@ msgstr "Розміри зображення великі: ширина %d x ви
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:4698 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-psd/psd-load.c:4712 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -3682,7 +3682,7 @@ msgstr ""
 
 #: plug-ins/common/file-heif.c:291 plug-ins/common/file-heif.c:412
 #: plug-ins/common/file-heif.c:557 plug-ins/common/file-jp2.c:334
-#: plug-ins/common/file-jp2.c:422 plug-ins/file-jpeg/jpeg.c:210
+#: plug-ins/common/file-jp2.c:422 plug-ins/file-jpeg/jpeg.c:244
 msgid "_Quality"
 msgstr "Я_кість"
 
@@ -4130,7 +4130,7 @@ msgid "Exports files in JPEG 2000 file format"
 msgstr "Експортує файли у форматі JPEG 2000"
 
 #: plug-ins/common/file-jp2.c:335 plug-ins/common/file-jp2.c:423
-#: plug-ins/file-jpeg/jpeg.c:211
+#: plug-ins/file-jpeg/jpeg.c:245
 msgid "Quality of exported image"
 msgstr "Якість експортованого зображення"
 
@@ -10661,96 +10661,111 @@ msgstr ""
 "Помилка при відкриванні тимчасового файла %s, «%s», для завантаження "
 "метаданих jpeg: %s"
 
-#: plug-ins/file-jpeg/jpeg.c:135 plug-ins/file-jpeg/jpeg.c:182
+#: plug-ins/file-jpeg/jpeg.c:143 plug-ins/file-jpeg/jpeg.c:216
 msgid "JPEG image"
 msgstr "Перегляд JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:138 plug-ins/file-jpeg/jpeg.c:139
+#: plug-ins/file-jpeg/jpeg.c:146 plug-ins/file-jpeg/jpeg.c:147
 msgid "Loads files in the JPEG file format"
 msgstr "Завантажує файли у форматі JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:163
+#: plug-ins/file-jpeg/jpeg.c:171
 msgid "Loads a thumbnail from a JPEG image"
 msgstr "Завантажує мініатюри з файла JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:164
+#: plug-ins/file-jpeg/jpeg.c:172
 msgid "Loads a thumbnail from a JPEG image, if one exists"
 msgstr "Завантажує мініатюри з файла JPEG, якщо такий існує"
 
-#: plug-ins/file-jpeg/jpeg.c:185
+#: plug-ins/file-jpeg/jpeg.c:188
+#| msgid "PNG image"
+msgid "MPO image"
+msgstr "Зображення MPO"
+
+#: plug-ins/file-jpeg/jpeg.c:191
+#| msgid "Loads files in the PNM file format"
+msgid "Loads files in the MPO file format"
+msgstr "Завантажує файли у форматі MPO"
+
+#: plug-ins/file-jpeg/jpeg.c:192
+#| msgid "Load file in the PowerVR texture file format"
+msgid "Loads files in the MPO (Multiple Picture Object) file format"
+msgstr "Завантажити файл у форматі файлів MPO (Multiple Picture Object)"
+
+#: plug-ins/file-jpeg/jpeg.c:219
 msgid "Exports files in the JPEG file format"
 msgstr "Експортує файли у форматі JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:186
+#: plug-ins/file-jpeg/jpeg.c:220
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "Експортує файли у широкопідтримуваному форматі JPEG із втратою якості"
 
-#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:156
+#: plug-ins/file-jpeg/jpeg.c:229 plug-ins/file-tiff/file-tiff.c:156
 msgid "JPEG"
 msgstr "JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:216
+#: plug-ins/file-jpeg/jpeg.c:250
 msgid "S_moothing"
 msgstr "З_гладжування"
 
-#: plug-ins/file-jpeg/jpeg.c:217
+#: plug-ins/file-jpeg/jpeg.c:251
 msgid "Smoothing factor for exported image"
 msgstr "Коефіцієнт згладжування експортованого зображення"
 
-#: plug-ins/file-jpeg/jpeg.c:222
+#: plug-ins/file-jpeg/jpeg.c:256
 msgid "Optimi_ze"
 msgstr "_Оптимізувати"
 
-#: plug-ins/file-jpeg/jpeg.c:223
+#: plug-ins/file-jpeg/jpeg.c:257
 msgid "Use optimized tables during Huffman coding"
 msgstr "Використовувати оптимізовані таблиці під час кодування Гаффмана"
 
-#: plug-ins/file-jpeg/jpeg.c:228
+#: plug-ins/file-jpeg/jpeg.c:262
 msgid "_Progressive"
 msgstr "_Прогресивна"
 
-#: plug-ins/file-jpeg/jpeg.c:229
+#: plug-ins/file-jpeg/jpeg.c:263
 msgid "Create progressive JPEG images"
 msgstr "Створити прогресивні JPEG зображення"
 
-#: plug-ins/file-jpeg/jpeg.c:234
+#: plug-ins/file-jpeg/jpeg.c:268
 msgid "Export as CM_YK"
 msgstr "Експортувати як CM_YK"
 
-#: plug-ins/file-jpeg/jpeg.c:235
+#: plug-ins/file-jpeg/jpeg.c:269
 msgid "Create a CMYK JPEG image using the soft-proofing color profile"
 msgstr ""
 "Створити зображення JPEG CMYK з використанням профілю кольорів із пробником"
 
-#: plug-ins/file-jpeg/jpeg.c:240
+#: plug-ins/file-jpeg/jpeg.c:274
 msgid "Su_bsampling"
 msgstr "С_убдискретизація"
 
-#: plug-ins/file-jpeg/jpeg.c:241
+#: plug-ins/file-jpeg/jpeg.c:275
 msgid "Sub-sampling type"
 msgstr "Тип с_убдискретизації"
 
-#: plug-ins/file-jpeg/jpeg.c:242
+#: plug-ins/file-jpeg/jpeg.c:276
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (найвища якість)"
 
-#: plug-ins/file-jpeg/jpeg.c:243
+#: plug-ins/file-jpeg/jpeg.c:277
 msgid "4:2:2 (chroma halved horizontally)"
 msgstr "4:2:2 (колірність поділена навпіл горизонтально)"
 
-#: plug-ins/file-jpeg/jpeg.c:244
+#: plug-ins/file-jpeg/jpeg.c:278
 msgid "4:4:0 (chroma halved vertically)"
 msgstr "4:2:2 (колірність поділена навпіл вертикально)"
 
-#: plug-ins/file-jpeg/jpeg.c:245
+#: plug-ins/file-jpeg/jpeg.c:279
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (колірність поділена на чотири частини)"
 
-#: plug-ins/file-jpeg/jpeg.c:250
+#: plug-ins/file-jpeg/jpeg.c:284
 msgid "Baseline"
 msgstr "Базова лінія"
 
-#: plug-ins/file-jpeg/jpeg.c:251
+#: plug-ins/file-jpeg/jpeg.c:285
 msgid ""
 "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
 "decoders)"
@@ -10758,40 +10773,40 @@ msgstr ""
 "Примусове створення JPEG із базовою лінією (JPEG без базової лінії можуть "
 "читати не усі декодери)"
 
-#: plug-ins/file-jpeg/jpeg.c:257
+#: plug-ins/file-jpeg/jpeg.c:291
 msgid "Inter_val (MCU rows):"
 msgstr "І_нтервал (рядки MCU):"
 
-#: plug-ins/file-jpeg/jpeg.c:258
+#: plug-ins/file-jpeg/jpeg.c:292
 msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
 msgstr ""
 "Інтервал позначок перезапуску (у рядках MCU, 0 = без позначок перезапуску)"
 
-#: plug-ins/file-jpeg/jpeg.c:264
+#: plug-ins/file-jpeg/jpeg.c:298
 msgid "_DCT method"
 msgstr "Метод _DCT"
 
-#: plug-ins/file-jpeg/jpeg.c:265
+#: plug-ins/file-jpeg/jpeg.c:299
 msgid "DCT method to use"
 msgstr "Використаний метод DCT"
 
-#: plug-ins/file-jpeg/jpeg.c:266
+#: plug-ins/file-jpeg/jpeg.c:300
 msgid "Fast Integer"
 msgstr "Швидке ціле"
 
-#: plug-ins/file-jpeg/jpeg.c:267
+#: plug-ins/file-jpeg/jpeg.c:301
 msgid "Integer"
 msgstr "Ціле"
 
-#: plug-ins/file-jpeg/jpeg.c:268
+#: plug-ins/file-jpeg/jpeg.c:302
 msgid "Floating-Point"
 msgstr "З рухомою комою"
 
-#: plug-ins/file-jpeg/jpeg.c:275
+#: plug-ins/file-jpeg/jpeg.c:309
 msgid "_Use quality settings from original image"
 msgstr "Використовувати характеристики _якості початкового зображення"
 
-#: plug-ins/file-jpeg/jpeg.c:276
+#: plug-ins/file-jpeg/jpeg.c:310
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -10801,33 +10816,33 @@ msgstr ""
 "параметрами якості (таблиці квантування), використовувати цей параметр для "
 "отримання максимально схожої якості та розміру файлу."
 
-#: plug-ins/file-jpeg/jpeg.c:298
+#: plug-ins/file-jpeg/jpeg.c:332
 msgid "Sho_w preview in image window"
 msgstr "_Перегляд у вікні зображення"
 
-#: plug-ins/file-jpeg/jpeg.c:299
+#: plug-ins/file-jpeg/jpeg.c:333
 msgid "Creates a temporary layer with an export preview"
 msgstr "Створює тимчасовий шар із попереднім переглядом експортування"
 
-#: plug-ins/file-jpeg/jpeg.c:303
+#: plug-ins/file-jpeg/jpeg.c:337
 msgid "Use _arithmetic coding"
 msgstr "Використати _арифметичне кодування"
 
-#: plug-ins/file-jpeg/jpeg.c:304
+#: plug-ins/file-jpeg/jpeg.c:338
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
 "Старіші програми можуть мати проблеми з відкриттям арифметично кодованих "
 "зображень"
 
-#: plug-ins/file-jpeg/jpeg.c:309
+#: plug-ins/file-jpeg/jpeg.c:343
 msgid "Use restart mar_kers"
 msgstr "Використовувати _маркери перезапуску"
 
-#: plug-ins/file-jpeg/jpeg.c:314 plug-ins/file-tiff/file-tiff.c:318
+#: plug-ins/file-jpeg/jpeg.c:348 plug-ins/file-tiff/file-tiff.c:318
 msgid "Save Photoshop metadata"
 msgstr "Зберегти метадані Photoshop"
 
-#: plug-ins/file-jpeg/jpeg.c:315
+#: plug-ins/file-jpeg/jpeg.c:349
 msgid ""
 "Store Photoshop image resources (paths, guides, ...) in JPEG APP13 tag "
 "(Photoshop)"
@@ -10904,7 +10919,7 @@ msgstr ""
 "У Photoshop не передбачено підтримки індексованих зображень, у яких понад "
 "один шар. При експортуванні шари буде об'єднано."
 
-#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5183
+#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5197
 msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
@@ -11006,7 +11021,7 @@ msgstr "Непідтримувана чи хибна ширина маски: %d
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1940 plug-ins/file-psd/psd-load.c:4690
+#: plug-ins/file-psd/psd-load.c:1940 plug-ins/file-psd/psd-load.c:4704
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
@@ -11016,47 +11031,46 @@ msgstr "Непідтримуваний чи некоректний розмір 
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Некоректні розмірності каналу: %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2394 plug-ins/file-psd/psd-load.c:4288
+#: plug-ins/file-psd/psd-load.c:2394 plug-ins/file-psd/psd-load.c:4302
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: plug-ins/file-psd/psd-load.c:3045 plug-ins/file-psd/psd-load.c:3682
+#: plug-ins/file-psd/psd-load.c:3045 plug-ins/file-psd/psd-load.c:3694
 msgid "Inner Shadow"
 msgstr "Внутрішня тінь"
 
-#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-psd/psd-load.c:3683
-#: plug-ins/file-psd/psd-load.c:3694 plug-ins/file-psd/psd-load.c:3710
+#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-psd/psd-load.c:3695
+#: plug-ins/file-psd/psd-load.c:3706 plug-ins/file-psd/psd-load.c:3722
 msgid "imported"
 msgstr "імпортовано"
 
-#: plug-ins/file-psd/psd-load.c:3693
+#: plug-ins/file-psd/psd-load.c:3705
 msgid "Outer Glow"
 msgstr "Зовнішнє сяйво"
 
-#: plug-ins/file-psd/psd-load.c:3709
-#| msgid "_Stroke"
+#: plug-ins/file-psd/psd-load.c:3721
 msgid "Stroke"
 msgstr "Штрих"
 
-#: plug-ins/file-psd/psd-load.c:3713
+#: plug-ins/file-psd/psd-load.c:3725
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr "Невідомий тип штриха: очікуємо помилкової обробки."
 
-#: plug-ins/file-psd/psd-load.c:4465
+#: plug-ins/file-psd/psd-load.c:4479
 msgid "Extra"
 msgstr "Додатково"
 
-#: plug-ins/file-psd/psd-load.c:4767
+#: plug-ins/file-psd/psd-load.c:4781
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
 
-#: plug-ins/file-psd/psd-load.c:5160
+#: plug-ins/file-psd/psd-load.c:5174
 msgid "Duotone Import"
 msgstr "Двотонове імпортування"
 
-#: plug-ins/file-psd/psd-load.c:5161
+#: plug-ins/file-psd/psd-load.c:5175
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -11066,7 +11080,7 @@ msgstr ""
 "Дані двотонового простору кольорів було збережено,\n"
 "їх можна повторно застосувати при експортуванні."
 
-#: plug-ins/file-psd/psd-load.c:5184
+#: plug-ins/file-psd/psd-load.c:5198
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
