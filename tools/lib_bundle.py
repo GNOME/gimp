@@ -40,15 +40,19 @@ sys_dlls = set()
 done_dlls = set()
 # Previously checked undefined DYLIB symbols across all dependencies
 done_symbols = set()
-# Previously otooled DYLIBs
+
+# Previously otooled DYLIBs etc
+objdump_cache = None
 dump_cache = {}
+supported_minos_cache = None
+use_dyld_cache = None
+sdk_path_cache = None
 
 # Platform mode
 is_win32 = sys.platform in ['win32', 'cygwin']
 is_macos = sys.platform == "darwin"
 
 # Common paths
-objdump = None
 if is_win32:
   bindir = 'bin'
 elif is_macos:
@@ -78,19 +82,6 @@ def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
         done_symbols.add((parts[0], parts[1]))
 
   find_dependencies(os.path.abspath(binary), srcdirs)
-
-  #We set global_* and use_* here instead of in check_macos_version()/copy_dlls() to save resources
-  global is_macos
-  if is_macos:
-    global global_supported_minos
-    global_supported_minos = os.environ.get("MACOSX_DEPLOYMENT_TARGET")
-    global global_sdk_path
-    try:
-      global_sdk_path = subprocess.run(['xcrun', '--show-sdk-path', '--sdk', 'macosx'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True).stdout.decode('utf-8').strip()
-    except (subprocess.CalledProcessError, FileNotFoundError):
-      global_sdk_path = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
-    global use_dyld
-    use_dyld = shutil.which('dyld_info')
 
   if debug in ['debug-only', 'debug-run']:
     if debug == 'debug-only':
@@ -156,28 +147,28 @@ def find_dependencies(obj, srcdirs):
     # If not processed (not done_dlls), and dlls but not not sys_dlls, extract dependencies.
     global is_win32
     global is_macos
-    global objdump
-    if not objdump:
+    global objdump_cache
+    if not objdump_cache:
       if is_macos and shutil.which('otool'):
-        objdump = 'otool'
+        objdump_cache = 'otool'
       elif is_win32 and shutil.which('dumpbin'):
-        objdump = 'dumpbin'
+        objdump_cache = 'dumpbin'
       elif shutil.which('objdump'):
-        objdump = 'objdump'
+        objdump_cache = 'objdump'
       else:
         sys.stderr.write("Object dumper executable doesn't exist.\n")
         sys.exit(1)
     if is_win32:
-      if objdump == 'dumpbin':
-        result = subprocess.run([objdump, '/DEPENDENTS', obj], stdout=subprocess.PIPE)
+      if objdump_cache == 'dumpbin':
+        result = subprocess.run([objdump_cache, '/DEPENDENTS', obj], stdout=subprocess.PIPE)
         out = result.stdout.decode('utf-8')
         regex = re.finditer(r'\b([\w\-.]+\.dll)\b', out, re.MULTILINE)
       else:
-        result = subprocess.run([objdump, '-p', obj], stdout=subprocess.PIPE)
+        result = subprocess.run([objdump_cache, '-p', obj], stdout=subprocess.PIPE)
         out = result.stdout.decode('utf-8')
         regex = re.finditer(r"DLL Name: *(\S+.dll)", out, re.MULTILINE)
     elif is_macos:
-      if objdump == 'otool':
+      if objdump_cache == 'otool':
         result = subprocess.run(['otool', '-l', obj], stdout=subprocess.PIPE)
       else:
         result = subprocess.run(['objdump', '--macho', '--private-headers', obj], stdout=subprocess.PIPE)
@@ -208,7 +199,7 @@ def copy_dlls(dll_list, srcdirs, destdir):
     abs_binary = os.path.abspath(args.bin)
     abs_destdir = os.path.abspath(destdir)
     if abs_binary.startswith(abs_destdir + os.sep):
-      #check_macos_version(abs_binary, global_supported_minos, global_sdk_path)
+      #check_macos_version(abs_binary)
       set_rpath(abs_binary, destbin)
   for dll in dll_list:
     if not os.path.exists(os.path.join(destbin, dll)):
@@ -217,7 +208,7 @@ def copy_dlls(dll_list, srcdirs, destdir):
         full_file_name = os.path.join(srcdir, bindir, dll)
         if os.path.isfile(full_file_name):
           if is_macos and not full_file_name.startswith(("/opt/local/", "/opt/homebrew/")):
-            check_macos_version(full_file_name, global_supported_minos, global_sdk_path)
+            check_macos_version(full_file_name)
           sys.stdout.write("Bundling {} to {}\n".format(full_file_name, destbin))
           shutil.copy(full_file_name, destbin)
           if is_macos:
@@ -230,11 +221,14 @@ def copy_dlls(dll_list, srcdirs, destdir):
         sys.exit(1)
 
 
-def check_macos_version(binary, supported_minos=None, sdk_path=None):
+def check_macos_version(binary):
   """
   Check LC_BUILD_VERSION for compatibility with MACOSX_DEPLOYMENT_TARGET
   """
-  if not supported_minos:
+  global supported_minos_cache
+  if not supported_minos_cache:
+    supported_minos_cache = os.environ.get("MACOSX_DEPLOYMENT_TARGET", "not_set")
+  if supported_minos_cache == "not_set":
     return
 
   global dump_cache
@@ -252,30 +246,38 @@ def check_macos_version(binary, supported_minos=None, sdk_path=None):
     return tuple(parts)
 
   # 1. Check for LC_BUILD_VERSION (minos)
-  if parse_version(bin_minos) > parse_version(supported_minos):
-    sys.stderr.write(f"\033[31m(ERROR)\033[0m: {binary} requires macOS {bin_minos}, which is higher than macOS {supported_minos} which GIMP was built against.\n")
+  if parse_version(bin_minos) > parse_version(supported_minos_cache):
+    sys.stderr.write(f"\033[31m(ERROR)\033[0m: {binary} requires macOS {bin_minos}, which is higher than macOS {supported_minos_cache} which GIMP was built against.\n")
     sys.exit(1)
 
   # 2. Check for LC_BUILD_VERSION (sdk) symbols
-  global use_dyld
-  if use_dyld:
+  global use_dyld_cache
+  if not use_dyld_cache:
+    use_dyld_cache = shutil.which('dyld_info') or "not_found"
+  if use_dyld_cache != "not_found":
     nm_res = subprocess.run(['dyld_info', '-imports', binary], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
   else:
     nm_res = subprocess.run(['nm', '-m', binary], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
   nm_out = nm_res.stdout.decode('utf-8', errors='replace')
+  global sdk_path_cache
+  if not sdk_path_cache:
+    try:
+      sdk_path_cache = subprocess.run(['xcrun', '--show-sdk-path', '--sdk', 'macosx'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True).stdout.decode('utf-8').strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+      sdk_path_cache = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
   sys_symbols = set()
   for line in nm_out.splitlines():
-    if (use_dyld and "(from " in line) or (not use_dyld and "(undefined)" in line and "(from " in line):
+    if (use_dyld_cache and "(from " in line) or (not use_dyld_cache and "(undefined)" in line and "(from " in line):
       parts = line.strip().split()
       try:
         from_idx = parts.index("(from")
         lib_name = parts[from_idx + 1].rstrip(')')
         symbol = parts[from_idx - 1 if parts[from_idx - 1] != "[weak-import]" else from_idx - 2].lstrip('_')
         search_path = ""
-        if os.path.exists(f"{sdk_path}/usr/lib/{lib_name}.tbd"):
-          search_path = f"{sdk_path}/usr/include"
-        elif os.path.exists(f"{sdk_path}/System/Library/Frameworks/{lib_name}.framework/{lib_name}.tbd"):
-          search_path = f"{sdk_path}/System/Library/Frameworks/{lib_name}.framework/Headers"
+        if os.path.exists(f"{sdk_path_cache}/usr/lib/{lib_name}.tbd"):
+          search_path = f"{sdk_path_cache}/usr/include"
+        elif os.path.exists(f"{sdk_path_cache}/System/Library/Frameworks/{lib_name}.framework/{lib_name}.tbd"):
+          search_path = f"{sdk_path_cache}/System/Library/Frameworks/{lib_name}.framework/Headers"
         if (not search_path or not os.path.isdir(search_path)) or glob.glob(os.path.join(args.dest, 'lib', f"{lib_name}*.dylib")) or (symbol, lib_name) in set.union(done_symbols, sys_symbols):
           continue
         sys_symbols.add((symbol, lib_name))
@@ -317,8 +319,8 @@ def check_macos_version(binary, supported_minos=None, sdk_path=None):
       old_avail_match = re.search(r'__OSX_AVAILABLE_STARTING\s*\(__MAC_([0-9_]+)', match_data)
       if old_avail_match:
         violating_version = old_avail_match.group(1).replace('_', '.')
-    if violating_version and parse_version(violating_version) > parse_version(supported_minos):
-      sys.stderr.write(f"\033[31m(ERROR)\033[0m: {binary} requires macOS {violating_version} due to '{symbol}' symbol, which is higher than macOS {supported_minos} which GIMP was built against.\n")
+    if violating_version and parse_version(violating_version) > parse_version(supported_minos_cache):
+      sys.stderr.write(f"\033[31m(ERROR)\033[0m: {binary} requires macOS {violating_version} due to '{symbol}' symbol, which is higher than macOS {supported_minos_cache} which GIMP was built against.\n")
       sys.exit(1)
 
 
