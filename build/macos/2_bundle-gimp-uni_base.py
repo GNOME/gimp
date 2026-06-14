@@ -339,7 +339,7 @@ for dir in ["MacOS", "lib"]:
 for line in done_dylib.read_text().splitlines():
   if line.strip():
     bundled_dep = GIMP_DISTRIB / "lib" / line.strip()
-    if bundled_dep not in binaries_to_dsym:
+    if bundled_dep not in binaries_to_dsym and bundled_dep.exists():
       binaries_to_dsym.append(bundled_dep)
 for binary in binaries_to_dsym:
   result = subprocess.run(["dsymutil", "--no-output", binary], capture_output=True, text=True)
