@@ -317,34 +317,41 @@ done_dylib = Path(f"{BUILD_DIR}/done-dylib.list")
 done_dylib.unlink(missing_ok=True)
 done_symbols = Path(f"{BUILD_DIR}/done-symbols.list")
 done_symbols.unlink(missing_ok=True)
+binaries_to_dsym = []
 for dir in ["MacOS", "lib"]:
   search_dir = GIMP_DISTRIB / dir
   print(f"Searching for dependencies of {search_dir} in {GIMP_PREFIX} and {OPT_PREFIX}")
-  for dep in search_dir.rglob("*"):
-    if "Mach-O" in subprocess.run(["file", str(dep)], capture_output=True, text=True).stdout and ".dSYM" not in str(dep):
-      subprocess.run([
-        sys.executable, f"{GIMP_SOURCE}/tools/lib_bundle.py",
-        str(dep), f"{GIMP_PREFIX}/", f"{OPT_PREFIX}/",
-        str(GIMP_DISTRIB), "--output-dll-list", done_dylib,
-        "--output-dylib-symbols-list", done_symbols
-      ], check=True)
+  for root, dirs, files in os.walk(search_dir):
+    dirs[:] = [d for d in dirs if ".dSYM" not in d]
+    for file in files:
+      dep = Path(os.path.join(root, file))
+      if ".dSYM" not in str(dep) and not dep.is_symlink() and open(dep, "rb").read(4) in (b'\xfe\xed\xfa\xce', b'\xce\xfa\xed\xfe', b'\xfe\xed\xfa\xcf', b'\xcf\xfa\xed\xfe', b'\xca\xfe\xba\xbe', b'\xbe\xba\xfe\xca', b'\xca\xfe\xba\xbf', b'\xbf\xba\xfe\xca'):
+        subprocess.run([
+          sys.executable, f"{GIMP_SOURCE}/tools/lib_bundle.py",
+          str(dep), f"{GIMP_PREFIX}/", f"{OPT_PREFIX}/",
+          str(GIMP_DISTRIB), "--output-dll-list", done_dylib,
+          "--output-dylib-symbols-list", done_symbols
+        ], check=True)
+        binaries_to_dsym.append(dep)
 
 
 ## .DSYM/DWARF DEBUG SYMBOLS (from babl, gegl and GIMP binaries)
-for dir in ["MacOS", "lib"]:
-  search_dir = GIMP_DISTRIB / dir
-  for binary in search_dir.rglob("*"):
-    if "Mach-O" in subprocess.run(["file", str(binary)], capture_output=True, text=True).stdout and ".dSYM" not in str(binary) and not binary.is_symlink():
-      result = subprocess.run(["dsymutil", "--no-output", binary], capture_output=True, text=True)
-      if not "no debug symbols" in result.stdout + result.stderr and not "unable to open object file" in result.stdout + result.stderr:
-        print(f"(INFO): generating debug symbols file as {binary}.dSYM")
-        try:
-          subprocess.run(["dsymutil", binary, "-o", f"{binary}.dSYM"], check=True, stderr=subprocess.DEVNULL)
-        except subprocess.CalledProcessError as e:
-          sys.stderr.write(f"Failed to generate debug symbols from {binary}: {e}\n")
-      elif "unable to open object file" in result.stdout + result.stderr and not str(OPT_PREFIX) in result.stdout + result.stderr and "Python.framework" not in str(binary):
-        print(f"\n\033[31m(ERROR)\033[0m: {binary} is orphaned from .o file for .dSYM generation. Please make sure its build dir is present")
-        sys.exit(1)
+for line in done_dylib.read_text().splitlines():
+  if line.strip():
+    bundled_dep = GIMP_DISTRIB / "lib" / line.strip()
+    if bundled_dep not in binaries_to_dsym:
+      binaries_to_dsym.append(bundled_dep)
+for binary in binaries_to_dsym:
+  result = subprocess.run(["dsymutil", "--no-output", binary], capture_output=True, text=True)
+  if not "no debug symbols" in result.stdout + result.stderr and not "unable to open object file" in result.stdout + result.stderr:
+    print(f"(INFO): generating debug symbols file as {binary}.dSYM")
+    try:
+      subprocess.run(["dsymutil", binary, "-o", f"{binary}.dSYM"], check=True, stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError as e:
+      sys.stderr.write(f"Failed to generate debug symbols from {binary}: {e}\n")
+  elif "unable to open object file" in result.stdout + result.stderr and not str(OPT_PREFIX) in result.stdout + result.stderr and "Python.framework" not in str(binary):
+    print(f"\n\033[31m(ERROR)\033[0m: {binary} is orphaned from .o file for .dSYM generation. Please make sure its build dir is present")
+    sys.exit(1)
 
 
 ## DEVELOPMENT FILES ON UNIX-STYLE, NO MACOS-STYLE/.FRAMEWORK (see https://developer.gimp.org/resource/sdk/)
