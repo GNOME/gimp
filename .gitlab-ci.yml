@@ -664,7 +664,7 @@ gimp-win:
     - macos
     - marathon
   variables:
-    ORKA_RUNNER: tahoe-2
+    ORKA_RUNNER: tahoe-3
     #meson.build forces non-relocatable .pc. See: https://github.com/mesonbuild/meson/issues/14346
     PKGCONF_RELOCATABLE_OPTION: '-Dpkgconfig.relocatable=true'
   before_script:
