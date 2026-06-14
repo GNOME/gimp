@@ -409,7 +409,7 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
       gtk_container_add (GTK_CONTAINER (tr_options->direction_frame), hbox);
       gtk_widget_set_visible (hbox, TRUE);
 
-      gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
       g_object_unref (vbox2);
 
       button = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
@@ -418,6 +418,12 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
       gimp_chain_button_set_icon_size (GIMP_CHAIN_BUTTON (button),
                                        GTK_ICON_SIZE_MENU);
       gtk_widget_set_visible (button, TRUE);
+
+      gimp_help_set_help_data (button,
+                               _("If connected, you can reposition the "
+                                 "handles without altering the "
+                                 "transformation."),
+                               NULL);
 
       g_object_bind_property (config, "direction-linked",
                               button, "active",
