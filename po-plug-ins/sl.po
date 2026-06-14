@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-05 15:40+0000\n"
-"PO-Revision-Date: 2026-06-05 22:52+0200\n"
+"POT-Creation-Date: 2026-06-14 13:07+0000\n"
+"PO-Revision-Date: 2026-06-14 19:10+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -146,7 +146,7 @@ msgstr "Primer vstavka v JavaScriptu (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:5138 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:5158 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -625,7 +625,7 @@ msgstr "Rolete"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:4313 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:4333 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -2491,7 +2491,7 @@ msgstr "Dimenzije slike so prevelike: širina %d x višina %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:4692 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-psd/psd-load.c:4712 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -3654,7 +3654,7 @@ msgstr "Shrani sliko v zapisu HEIF (High Efficiency Image File Format)."
 
 #: plug-ins/common/file-heif.c:291 plug-ins/common/file-heif.c:412
 #: plug-ins/common/file-heif.c:557 plug-ins/common/file-jp2.c:334
-#: plug-ins/common/file-jp2.c:422 plug-ins/file-jpeg/jpeg.c:210
+#: plug-ins/common/file-jp2.c:422 plug-ins/file-jpeg/jpeg.c:244
 msgid "_Quality"
 msgstr "_Kakovost"
 
@@ -4100,7 +4100,7 @@ msgid "Exports files in JPEG 2000 file format"
 msgstr "Izvozi datoteke v zapisu slikovnih datotek JPEG 2000"
 
 #: plug-ins/common/file-jp2.c:335 plug-ins/common/file-jp2.c:423
-#: plug-ins/file-jpeg/jpeg.c:211
+#: plug-ins/file-jpeg/jpeg.c:245
 msgid "Quality of exported image"
 msgstr "Kakovost izvožene slike"
 
@@ -10559,97 +10559,109 @@ msgstr ""
 "Napaka pri odpiranju začasne %s-datoteke »%s« pri nalaganju metapodatkov "
 "jpeg: %s"
 
-#: plug-ins/file-jpeg/jpeg.c:135 plug-ins/file-jpeg/jpeg.c:182
+#: plug-ins/file-jpeg/jpeg.c:143 plug-ins/file-jpeg/jpeg.c:216
 msgid "JPEG image"
 msgstr "Slika JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:138 plug-ins/file-jpeg/jpeg.c:139
+#: plug-ins/file-jpeg/jpeg.c:146 plug-ins/file-jpeg/jpeg.c:147
 msgid "Loads files in the JPEG file format"
 msgstr "Naloži datoteke v zapisu JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:163
+#: plug-ins/file-jpeg/jpeg.c:171
 msgid "Loads a thumbnail from a JPEG image"
 msgstr "Naloži ogledno sličico iz datoteke JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:164
+#: plug-ins/file-jpeg/jpeg.c:172
 msgid "Loads a thumbnail from a JPEG image, if one exists"
 msgstr "Naloži ogledno sličico iz datoteke JPEG, če obstaja"
 
-#: plug-ins/file-jpeg/jpeg.c:185
+#: plug-ins/file-jpeg/jpeg.c:188
+msgid "MPO image"
+msgstr "Slika MPO"
+
+#: plug-ins/file-jpeg/jpeg.c:191
+msgid "Loads files in the MPO file format"
+msgstr "Naloži datoteke v zapisu MPO."
+
+#: plug-ins/file-jpeg/jpeg.c:192
+msgid "Loads files in the MPO (Multiple Picture Object) file format"
+msgstr "Naloži datoteko v zapisu MPO (Multiple Picture Object)."
+
+#: plug-ins/file-jpeg/jpeg.c:219
 msgid "Exports files in the JPEG file format"
 msgstr "Izvozi datoteke v zapisu slikovnih datotek JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:186
+#: plug-ins/file-jpeg/jpeg.c:220
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr ""
 "Izvozi datoteke v široko podprtem zapisu slikovnih datotek JPEG z izgubami."
 
-#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:156
+#: plug-ins/file-jpeg/jpeg.c:229 plug-ins/file-tiff/file-tiff.c:156
 msgid "JPEG"
 msgstr "JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:216
+#: plug-ins/file-jpeg/jpeg.c:250
 msgid "S_moothing"
 msgstr "Gla_jenje"
 
-#: plug-ins/file-jpeg/jpeg.c:217
+#: plug-ins/file-jpeg/jpeg.c:251
 msgid "Smoothing factor for exported image"
 msgstr "Faktor glajenja izvožene slike"
 
-#: plug-ins/file-jpeg/jpeg.c:222
+#: plug-ins/file-jpeg/jpeg.c:256
 msgid "Optimi_ze"
 msgstr "Optimi_ziraj"
 
-#: plug-ins/file-jpeg/jpeg.c:223
+#: plug-ins/file-jpeg/jpeg.c:257
 msgid "Use optimized tables during Huffman coding"
 msgstr "Uporabi optimizirane Huffmanove tabele pri kodiranju"
 
-#: plug-ins/file-jpeg/jpeg.c:228
+#: plug-ins/file-jpeg/jpeg.c:262
 msgid "_Progressive"
 msgstr "_Progresivno"
 
-#: plug-ins/file-jpeg/jpeg.c:229
+#: plug-ins/file-jpeg/jpeg.c:263
 msgid "Create progressive JPEG images"
 msgstr "Ustvari napredne slike JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:234
+#: plug-ins/file-jpeg/jpeg.c:268
 msgid "Export as CM_YK"
 msgstr "Izvozi kot CM_YK"
 
-#: plug-ins/file-jpeg/jpeg.c:235
+#: plug-ins/file-jpeg/jpeg.c:269
 msgid "Create a CMYK JPEG image using the soft-proofing color profile"
 msgstr ""
 "Ustvarite sliko JPEG CMYK z uporabo barvnega profila preverjanja videza"
 
-#: plug-ins/file-jpeg/jpeg.c:240
+#: plug-ins/file-jpeg/jpeg.c:274
 msgid "Su_bsampling"
 msgstr "Po_dvzorčenje"
 
-#: plug-ins/file-jpeg/jpeg.c:241
+#: plug-ins/file-jpeg/jpeg.c:275
 msgid "Sub-sampling type"
 msgstr "Vrsta podvzorčenja"
 
-#: plug-ins/file-jpeg/jpeg.c:242
+#: plug-ins/file-jpeg/jpeg.c:276
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (najvišja kakovost)"
 
-#: plug-ins/file-jpeg/jpeg.c:243
+#: plug-ins/file-jpeg/jpeg.c:277
 msgid "4:2:2 (chroma halved horizontally)"
 msgstr "4:2:2 navpično (razpolovljena kroma vodoravno)"
 
-#: plug-ins/file-jpeg/jpeg.c:244
+#: plug-ins/file-jpeg/jpeg.c:278
 msgid "4:4:0 (chroma halved vertically)"
 msgstr "4:2:2 navpično (razpolovljena kroma navpično)"
 
-#: plug-ins/file-jpeg/jpeg.c:245
+#: plug-ins/file-jpeg/jpeg.c:279
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (četrtinska kroma)"
 
-#: plug-ins/file-jpeg/jpeg.c:250
+#: plug-ins/file-jpeg/jpeg.c:284
 msgid "Baseline"
 msgstr "Osnovnica besedila"
 
-#: plug-ins/file-jpeg/jpeg.c:251
+#: plug-ins/file-jpeg/jpeg.c:285
 msgid ""
 "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
 "decoders)"
@@ -10657,41 +10669,41 @@ msgstr ""
 "Vsili ustvarjanje osnovnega zapisa JPEG (vsi dekodirniki ne morejo brati "
 "zapisov JPEG, ki niso osnovni)"
 
-#: plug-ins/file-jpeg/jpeg.c:257
+#: plug-ins/file-jpeg/jpeg.c:291
 msgid "Inter_val (MCU rows):"
 msgstr "Inter_val (vrstice MCU):"
 
-#: plug-ins/file-jpeg/jpeg.c:258
+#: plug-ins/file-jpeg/jpeg.c:292
 msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
 msgstr ""
 "Interval označevalnikov ponovnega začetka (v vrsticah MCU, 0 = brez "
 "označevalnikov ponovnega začetka)"
 
-#: plug-ins/file-jpeg/jpeg.c:264
+#: plug-ins/file-jpeg/jpeg.c:298
 msgid "_DCT method"
 msgstr "Metoda _DCT"
 
-#: plug-ins/file-jpeg/jpeg.c:265
+#: plug-ins/file-jpeg/jpeg.c:299
 msgid "DCT method to use"
 msgstr "Metoda DCT, ki bo uporabljena"
 
-#: plug-ins/file-jpeg/jpeg.c:266
+#: plug-ins/file-jpeg/jpeg.c:300
 msgid "Fast Integer"
 msgstr "hitri integer"
 
-#: plug-ins/file-jpeg/jpeg.c:267
+#: plug-ins/file-jpeg/jpeg.c:301
 msgid "Integer"
 msgstr "integer"
 
-#: plug-ins/file-jpeg/jpeg.c:268
+#: plug-ins/file-jpeg/jpeg.c:302
 msgid "Floating-Point"
 msgstr "plavajoča vejica"
 
-#: plug-ins/file-jpeg/jpeg.c:275
+#: plug-ins/file-jpeg/jpeg.c:309
 msgid "_Use quality settings from original image"
 msgstr "_Uporabi nastavitve kakovosti iz izvirne slike"
 
-#: plug-ins/file-jpeg/jpeg.c:276
+#: plug-ins/file-jpeg/jpeg.c:310
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -10701,32 +10713,32 @@ msgstr ""
 "nastavitev kakovosti (kvantizacijske tabele), potrdite to možnost, da dobite "
 "skoraj enako kakovost in velikost datoteke."
 
-#: plug-ins/file-jpeg/jpeg.c:298
+#: plug-ins/file-jpeg/jpeg.c:332
 msgid "Sho_w preview in image window"
 msgstr "Poka_ži predogled v oknu slike"
 
-#: plug-ins/file-jpeg/jpeg.c:299
+#: plug-ins/file-jpeg/jpeg.c:333
 msgid "Creates a temporary layer with an export preview"
 msgstr "Ustvari trenutno plast s predogledom izvoza"
 
-#: plug-ins/file-jpeg/jpeg.c:303
+#: plug-ins/file-jpeg/jpeg.c:337
 msgid "Use _arithmetic coding"
 msgstr "Uporabi _aritmetično kodiranje"
 
-#: plug-ins/file-jpeg/jpeg.c:304
+#: plug-ins/file-jpeg/jpeg.c:338
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
 "Starejše programje ima lahko težavo z odpiranjem aritmetično kodiranih slik"
 
-#: plug-ins/file-jpeg/jpeg.c:309
+#: plug-ins/file-jpeg/jpeg.c:343
 msgid "Use restart mar_kers"
 msgstr "Uporabi _označevalnike ponovnega začetka"
 
-#: plug-ins/file-jpeg/jpeg.c:314 plug-ins/file-tiff/file-tiff.c:318
+#: plug-ins/file-jpeg/jpeg.c:348 plug-ins/file-tiff/file-tiff.c:318
 msgid "Save Photoshop metadata"
 msgstr "Slika metapodatke Photoshop"
 
-#: plug-ins/file-jpeg/jpeg.c:315
+#: plug-ins/file-jpeg/jpeg.c:349
 msgid ""
 "Store Photoshop image resources (paths, guides, ...) in JPEG APP13 tag "
 "(Photoshop)"
@@ -10802,7 +10814,7 @@ msgstr ""
 "Photoshop ne podpira indeksiranih slik, ki imajo več kot eno plast. Plasti "
 "bodo združene ob izvozu."
 
-#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5177
+#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5197
 msgid "Compatibility Notice"
 msgstr "Obvestilo o združljivosti"
 
@@ -10904,56 +10916,56 @@ msgstr "Nepodprta ali neveljavna širina plasti maske: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti maske: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1940 plug-ins/file-psd/psd-load.c:4684
+#: plug-ins/file-psd/psd-load.c:1940 plug-ins/file-psd/psd-load.c:4704
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nepodprta ali neveljavna velikost kanala"
 
-#: plug-ins/file-psd/psd-load.c:2320
+#: plug-ins/file-psd/psd-load.c:2326
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Neveljavne mere kanala %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2388 plug-ins/file-psd/psd-load.c:4282
+#: plug-ins/file-psd/psd-load.c:2394 plug-ins/file-psd/psd-load.c:4302
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nepodprti način stiskanja: %d"
 
-#: plug-ins/file-psd/psd-load.c:3039 plug-ins/file-psd/psd-load.c:3676
+#: plug-ins/file-psd/psd-load.c:3045 plug-ins/file-psd/psd-load.c:3694
 msgid "Inner Shadow"
 msgstr "Notranja senca"
 
-#: plug-ins/file-psd/psd-load.c:3040 plug-ins/file-psd/psd-load.c:3677
-#: plug-ins/file-psd/psd-load.c:3688 plug-ins/file-psd/psd-load.c:3704
+#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-psd/psd-load.c:3695
+#: plug-ins/file-psd/psd-load.c:3706 plug-ins/file-psd/psd-load.c:3722
 msgid "imported"
 msgstr "uvoženo"
 
-#: plug-ins/file-psd/psd-load.c:3687
+#: plug-ins/file-psd/psd-load.c:3705
 msgid "Outer Glow"
 msgstr "Žarenje navzven"
 
-#: plug-ins/file-psd/psd-load.c:3703
+#: plug-ins/file-psd/psd-load.c:3721
 msgid "Stroke"
 msgstr "Poteza"
 
-#: plug-ins/file-psd/psd-load.c:3707
+#: plug-ins/file-psd/psd-load.c:3725
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr "Neobdelana vrsta poteze: pričakujte napačno izrisovanje."
 
-#: plug-ins/file-psd/psd-load.c:4459
+#: plug-ins/file-psd/psd-load.c:4479
 msgid "Extra"
 msgstr "Dodatno"
 
-#: plug-ins/file-psd/psd-load.c:4761
+#: plug-ins/file-psd/psd-load.c:4781
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Podatkov ni mogoče razpakirati"
 
-#: plug-ins/file-psd/psd-load.c:5154
+#: plug-ins/file-psd/psd-load.c:5174
 msgid "Duotone Import"
 msgstr "Uvoz duotone"
 
-#: plug-ins/file-psd/psd-load.c:5155
+#: plug-ins/file-psd/psd-load.c:5175
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10963,7 +10975,7 @@ msgstr ""
 "Podatki o barvnem prostoru duotone so shranjeni\n"
 "in se lahko ponovno uporabijo pri izvozu."
 
-#: plug-ins/file-psd/psd-load.c:5178
+#: plug-ins/file-psd/psd-load.c:5198
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
