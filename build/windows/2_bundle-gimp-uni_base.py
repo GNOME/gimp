@@ -212,16 +212,20 @@ bundle(GIMP_PREFIX, "bin/gegl.exe")
 ### We save the list of already copied DLLs to keep a state between 2_bundle-gimp-uni_dep runs.
 done_dll = Path(f"{BUILD_DIR}/done-dll.list")
 done_dll.unlink(missing_ok=True)
+bins_to_strip = []
 for dir in ["bin", "lib"]:
   search_dir = GIMP_DISTRIB / dir
   print(f"Searching for dependencies of {search_dir} in {GIMP_PREFIX} and {MSYSTEM_PREFIX}")
-  for ext in ("*.dll", "*.exe"):
-    for dep in search_dir.rglob(ext):
-      subprocess.run([
-        sys.executable, f"{GIMP_SOURCE}/tools/lib_bundle.py",
-        str(dep), f"{GIMP_PREFIX}/", f"{MSYSTEM_PREFIX}/",
-        str(GIMP_DISTRIB), "--output-dll-list", done_dll.as_posix()
-      ], check=True)
+  for root, dirs, files in os.walk(search_dir):
+    for file in files:
+      dep = Path(os.path.join(root, file))
+      if dep.suffix.lower() in (".dll", ".exe", ".pyd"):
+        subprocess.run([
+          sys.executable, f"{GIMP_SOURCE}/tools/lib_bundle.py",
+          str(dep), f"{GIMP_PREFIX}/", f"{MSYSTEM_PREFIX}/",
+          str(GIMP_DISTRIB), "--output-dll-list", done_dll.as_posix()
+        ], check=True)
+        bins_to_strip.append(dep)
 
 
 ## .PDB/CODEVIEW DEBUG SYMBOLS (from babl, gegl and GIMP binaries)
@@ -235,15 +239,19 @@ for file in files:
       print(f"(INFO): removing orphan {file}")
       os.remove(os.path.join(GIMP_DISTRIB / "bin", file))
 ### Remove ancient COFF symbol table (not used for debugging) from MSYS2 binaries
-for bin_path in GIMP_DISTRIB.rglob("*"):
-  if bin_path.suffix.lower() in (".dll", ".exe", ".pyd"):
-    with open(bin_path, "rb") as f:
-      if b"RSDS" not in f.read():
-        print(f"(INFO): stripping COFF symbols from {bin_path.name}")
-        try:
-          subprocess.run(["strip", str(bin_path)], check=True)
-        except:
-          continue
+for line in done_dll.read_text().splitlines():
+  if line.strip():
+    bundled_dep = GIMP_DISTRIB / "bin" / line.strip()
+    if bundled_dep not in bins_to_strip and bundled_dep.exists():
+      bins_to_strip.append(bundled_dep)
+for bin_path in bins_to_strip:
+  with open(bin_path, "rb") as f:
+    if b"RSDS" not in f.read():
+      print(f"(INFO): stripping COFF symbols from {bin_path.name}")
+      try:
+        subprocess.run(["strip", str(bin_path)], check=True)
+      except:
+        continue
 
 
 ## DEVELOPMENT FILES (to build GEGL filters and GIMP plug-ins). (see https://developer.gimp.org/resource/sdk/)
