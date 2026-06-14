@@ -37,62 +37,69 @@
 typedef struct _GimpTextTool       GimpTextTool;
 typedef struct _GimpTextToolClass  GimpTextToolClass;
 
+typedef enum
+{
+  GIMP_TEXT_SELECT_DEFAULT,
+  GIMP_TEXT_SELECT_WORDS,
+  GIMP_TEXT_SELECT_LINES
+} GimpTextSelectMode;
+
+
 struct _GimpTextTool
 {
-  GimpDrawTool    parent_instance;
+  GimpDrawTool        parent_instance;
 
-  GimpText       *proxy;
-  GList          *pending;
-  guint           idle_id;
+  GimpText           *proxy;
+  GList              *pending;
+  guint               idle_id;
 
-  gboolean        moving;
+  gboolean            moving;
 
-  GimpTextBuffer *buffer;
+  GimpTextBuffer     *buffer;
 
-  GimpText       *text;
-  GimpTextLayer  *layer;
-  GimpImage      *image;
+  GimpText           *text;
+  GimpTextLayer      *layer;
+  GimpImage          *image;
 
-  GtkWidget      *confirm_dialog;
+  GtkWidget          *confirm_dialog;
 
-  gboolean        handle_rectangle_change_complete;
-  gboolean        text_box_fixed;
+  gboolean            handle_rectangle_change_complete;
+  gboolean            text_box_fixed;
 
-  GimpTextLayout *layout;
-  gint            drawing_blocked;
+  GimpTextLayout     *layout;
+  gint                drawing_blocked;
 
-  GimpToolWidget *widget;
-  GimpToolWidget *grab_widget;
+  GimpToolWidget     *widget;
+  GimpToolWidget     *grab_widget;
 
   /* text editor state: */
 
-  GtkWidget      *style_overlay;
-  GtkWidget      *style_editor;
+  GtkWidget          *style_overlay;
+  GtkWidget          *style_editor;
 
   /* style overlay dragging: */
-  gboolean        overlay_dragging;
+  gboolean            overlay_dragging;
 
-  gboolean        selecting;
-  GtkTextIter     select_start_iter;
-  gboolean        select_words;
-  gboolean        select_lines;
+  /* Whether a click-and-drag selection uses whole words or lines */
+  GimpTextSelectMode  select_by;
 
-  GtkIMContext   *im_context;
-  gboolean        needs_im_reset;
+  gboolean            button_held;
+  GtkIMContext       *im_context;
+  gboolean            needs_im_reset;
 
-  gboolean        preedit_active;
-  gchar          *preedit_string;
-  gint            preedit_cursor;
-  GtkTextMark    *preedit_start;
-  GtkTextMark    *preedit_end;
+  gboolean            preedit_active;
+  gchar              *preedit_string;
+  gint                preedit_cursor;
+  GtkTextMark        *preedit_start;
+  GtkTextMark        *preedit_end;
 
-  gboolean        overwrite_mode;
-  gint            x_pos;
+  gboolean            overwrite_mode;
+  gint                x_pos;
 
-  GtkWidget      *offscreen_window;
-  GtkWidget      *proxy_text_view;
+  GtkWidget          *offscreen_window;
+  GtkWidget          *proxy_text_view;
 
-  GtkWidget      *editor_dialog;
+  GtkWidget          *editor_dialog;
 };
 
 struct _GimpTextToolClass

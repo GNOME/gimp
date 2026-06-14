@@ -69,6 +69,7 @@
 #include "widgets/gimptextstyleeditor.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpcanvasgroup.h"
 #include "display/gimpdisplay.h"
@@ -84,7 +85,7 @@
 
 
 #define TEXT_UNDO_TIMEOUT 3
-
+#define MIN_DRAG_SIZE     3 /* in screen pixels */
 
 /*  local function prototypes  */
 
@@ -439,7 +440,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
       else
         gimp_text_tool_reset_im_context (text_tool);
 
-      text_tool->selecting = FALSE;
+      text_tool->button_held = FALSE;
 
       if (gimp_tool_rectangle_point_in_rectangle (rectangle,
                                                   coords->x,
@@ -504,6 +505,9 @@ gimp_text_tool_button_press (GimpTool            *tool,
               gimp_image_set_selected_layers (image, selection);
               g_list_free (selection);
 
+              /* override shift+click due to the change in layers */
+              state = state & ~gimp_get_extend_selection_mask ();
+
               if (text_tool->image == image)
                 g_signal_handlers_unblock_by_func (image,
                                                    gimp_text_tool_layer_changed,
@@ -564,13 +568,22 @@ gimp_text_tool_button_press (GimpTool            *tool,
 
           if (text_tool->text && ! text_tool->moving)
             {
-              text_tool->selecting = TRUE;
+              /* Shift+click: select from (previous cursor) to (cursor) */
+              if (press_type == GIMP_BUTTON_PRESS_NORMAL &&
+                  state & gimp_get_extend_selection_mask ())
+                {
+                  gimp_text_tool_editor_motion (text_tool, x, y);
+                }
+              else
+                {
+                  gimp_text_tool_editor_button_press (text_tool, x, y, press_type);
+                }
 
-              gimp_text_tool_editor_button_press (text_tool, x, y, press_type);
+              text_tool->button_held = TRUE;
             }
           else
             {
-              text_tool->selecting = FALSE;
+              text_tool->button_held = FALSE;
             }
 
           gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -583,6 +596,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
     {
       /*  create a new text layer  */
       text_tool->text_box_fixed = FALSE;
+      text_tool->button_held    = FALSE;
 
       /* make sure the text tool has an image, even if the user didn't click
        * inside the active drawable, in particular, so that the text style
@@ -610,10 +624,9 @@ gimp_text_tool_button_release (GimpTool              *tool,
 
   gimp_tool_control_halt (tool->control);
 
-  if (text_tool->selecting)
+  if (text_tool->button_held)
     {
-      /*  we are in a selection process (user has initially clicked on
-       *  an existing text layer), so finish the selection process and
+      /*  if we were still doing a click-drag select, finish it and
        *  ignore rectangle-change-complete.
        */
 
@@ -638,7 +651,7 @@ gimp_text_tool_button_release (GimpTool              *tool,
                                          gimp_text_tool_buffer_begin_edit,
                                          text_tool);
 
-      text_tool->selecting = FALSE;
+      text_tool->button_held = FALSE;
 
       text_tool->handle_rectangle_change_complete = FALSE;
 
@@ -670,6 +683,7 @@ gimp_text_tool_button_release (GimpTool              *tool,
     }
   else
     {
+
       gdouble x1, y1;
       gdouble x2, y2;
 
@@ -687,11 +701,11 @@ gimp_text_tool_button_release (GimpTool              *tool,
                     NULL);
 
       if (release_type == GIMP_BUTTON_RELEASE_CLICK ||
-          (x2 - x1) < 3                             ||
-          (y2 - y1) < 3)
+          (x2 - x1) < MIN_DRAG_SIZE                 ||
+          (y2 - y1) < MIN_DRAG_SIZE)
         {
           /*  unless the rectangle is unreasonably small to hold any
-           *  real text (the user has eitherjust clicked or just made
+           *  real text (the user has either just clicked or just made
            *  a rectangle of a few pixels), so set the text box to
            *  dynamic and ignore rectangle-change-complete.
            */
@@ -723,7 +737,7 @@ gimp_text_tool_motion (GimpTool         *tool,
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
 
-  if (! text_tool->selecting)
+  if (! text_tool->button_held)
     {
       if (text_tool->grab_widget)
         {
