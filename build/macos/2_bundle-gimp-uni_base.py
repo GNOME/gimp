@@ -11,11 +11,13 @@ from glob import glob
 
 # This script is used to create a GIMP .app bundle on macOS. A bundle
 # is used as source of files for making the .dmg installer
-if not os.getenv("MESON_BUILD_ROOT"):
+BUILD_DIR = os.getenv("MESON_BUILD_ROOT")
+if not BUILD_DIR:
   # Let's prevent contributors from creating broken bundles
   print("\033[31m(ERROR)\033[0m: Script called standalone. Please build GIMP targeting DMG installer creation.")
   sys.exit(1)
 # Get variables from MESON_BUILD_ROOT/config.h that can be used on this script
+config_vars = {}
 with open("config.h") as file:
   for line in file:
     match = re.match(r'^#\s*define\s+(\S+)(?:\s+(.*))?$', line)
@@ -25,8 +27,9 @@ with open("config.h") as file:
         value = "1" #needed when there is no explicit value
       else:
         value = value.strip().strip('"').strip("'")
-      os.environ[key] = value
-if not os.getenv("ENABLE_RELOCATABLE_RESOURCES"):
+      config_vars[key] = value
+globals().update(config_vars)
+if not ENABLE_RELOCATABLE_RESOURCES:
   print("\n\033[31m(ERROR)\033[0m: No relocatable GIMP build found. You can build GIMP with '-Drelocatable-bundle=yes' to make a build suitable for .app creation.")
   sys.exit(1)
 
@@ -158,10 +161,10 @@ GIMP_DISTRIB.mkdir(parents=True, exist_ok=True)
 shutil.copy2(Path(f"{GIMP_SOURCE}/build/macos/Info.plist"), GIMP_DISTRIB)
 ### FIXME: Icon (generate Assets.car for Liquid Glass: https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/2159)
 (GIMP_DISTRIB / "Resources").mkdir(parents=True, exist_ok=True)
-subprocess.run(["xcrun","actool",str(Path(f"{os.getenv('MESON_BUILD_ROOT')}/gimp-data/images/logo/AppIcon.icon")),"--output-format","human-readable-text","--compile",f"{GIMP_DISTRIB / 'Resources'}","--include-all-app-icons","--enable-on-demand-resources","NO","--enable-icon-stack-fallback-generation","NO","--development-region","en","--target-device","mac","--platform","macosx","--minimum-deployment-target",os.getenv('MACOSX_DEPLOYMENT_TARGET', ".".join(platform.mac_ver()[0].split(".")[:2]))], check=True)
-shutil.copy2(Path(f"{os.getenv('MESON_BUILD_ROOT')}/gimp-data/images/logo/gimp.icns"), GIMP_DISTRIB / "Resources/AppIcon.icns")
-shutil.copy2(Path(f"{os.getenv('MESON_BUILD_ROOT')}/build/macos/fileicon-xcf.icns"), GIMP_DISTRIB / "Resources/fileicon-xcf.icns")
-shutil.copy2(Path(f"{os.getenv('MESON_BUILD_ROOT')}/build/macos/fileicon.icns"), GIMP_DISTRIB / "Resources/fileicon.icns")
+subprocess.run(["xcrun","actool",str(Path(f"{BUILD_DIR}/gimp-data/images/logo/AppIcon.icon")),"--output-format","human-readable-text","--compile",f"{GIMP_DISTRIB / 'Resources'}","--include-all-app-icons","--enable-on-demand-resources","NO","--enable-icon-stack-fallback-generation","NO","--development-region","en","--target-device","mac","--platform","macosx","--minimum-deployment-target",os.getenv('MACOSX_DEPLOYMENT_TARGET', ".".join(platform.mac_ver()[0].split(".")[:2]))], check=True)
+shutil.copy2(Path(f"{BUILD_DIR}/gimp-data/images/logo/gimp.icns"), GIMP_DISTRIB / "Resources/AppIcon.icns")
+shutil.copy2(Path(f"{BUILD_DIR}/build/macos/fileicon-xcf.icns"), GIMP_DISTRIB / "Resources/fileicon-xcf.icns")
+shutil.copy2(Path(f"{BUILD_DIR}/build/macos/fileicon.icns"), GIMP_DISTRIB / "Resources/fileicon.icns")
 
 
 ## BUNDLE BASE (BARE MINIMUM TO RUN GTK APPS).
@@ -231,8 +234,8 @@ bundle(OPT_PREFIX, "etc/fonts")
 fonts_conf = GIMP_DISTRIB / "etc/fonts/fonts.conf"
 text = fonts_conf.read_text()
 new_text = text.replace(
-  f"{os.getenv('OPT_PREFIX')}/var",
-  f"~/Library/Application Support/GIMP/{os.getenv('GIMP_APP_VERSION')}"
+  f"{OPT_PREFIX}/var",
+  f"~/Library/Application Support/GIMP/{GIMP_APP_VERSION}"
 )
 fonts_conf.write_text(new_text)
 ### Needed for 'th' word breaking in Text tool etc
@@ -273,15 +276,15 @@ bundle(OPT_PREFIX, "lib/graphviz/config*")
 bundle(GIMP_PREFIX, "lib/girepository-*/*.typelib")
 bundle(OPT_PREFIX, "lib/libgirepository-*.dylib")
 #### Python support
-bundle(OPT_PREFIX, f"bin/python{os.getenv('PYTHON_VERSION')}", "--rename", "MacOS/python3")
+bundle(OPT_PREFIX, f"bin/python{PYTHON_VERSION}", "--rename", "MacOS/python3")
 if os.path.exists(OPT_PREFIX / "bin/brew") or (os.path.exists(OPT_PREFIX / "bin/port") and os.getenv('GITLAB_CI')):
-  bundle(OPT_PREFIX, f"Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}", "--dest", "lib/Python.framework/Versions")
+  bundle(OPT_PREFIX, f"Frameworks/Python.framework/Versions/{PYTHON_VERSION}", "--dest", "lib/Python.framework/Versions")
 elif os.path.exists(OPT_PREFIX / "bin/port"):
-  bundle(OPT_PREFIX, f"Library/Frameworks/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}", "--dest", "lib/Python.framework/Versions")
-bundle(OPT_PREFIX, f"lib/python{os.getenv('PYTHON_VERSION')}/site-packages/*", "--dest", f"lib/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/lib/python{os.getenv('PYTHON_VERSION')}/site-packages")
+  bundle(OPT_PREFIX, f"Library/Frameworks/Python.framework/Versions/{PYTHON_VERSION}", "--dest", "lib/Python.framework/Versions")
+bundle(OPT_PREFIX, f"lib/python{PYTHON_VERSION}/site-packages/*", "--dest", f"lib/Python.framework/Versions/{PYTHON_VERSION}/lib/python{PYTHON_VERSION}/site-packages")
 clean(GIMP_DISTRIB, "lib/Python.framework/*.pyc")
 #####Needed for internet connection on python. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/14722
-pythonpath = Path(f"{GIMP_DISTRIB}/lib/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/lib/python{os.getenv('PYTHON_VERSION')}")
+pythonpath = Path(f"{GIMP_DISTRIB}/lib/Python.framework/Versions/{PYTHON_VERSION}/lib/python{PYTHON_VERSION}")
 for d in (pythonpath, pythonpath / "site-packages"):
   sitecustomize = d / "sitecustomize.py"
   code = """\nimport os\nimport certifi\n\n# Only set if not already configured by user\nif not os.environ.get('SSL_CERT_FILE'):\n    os.environ['SSL_CERT_FILE'] = certifi.where()\n"""
@@ -291,7 +294,7 @@ for d in (pythonpath, pythonpath / "site-packages"):
     sitecustomize.write_text(code)
 #####Needed since we use [[NSBundle mainBundle] bundlePath] on libgimpbase/gimpenv.c
 real_path = Path(f"{GIMP_DISTRIB}/share")
-link_path = Path(f"{GIMP_DISTRIB}/lib/Python.framework/Versions/{os.getenv('PYTHON_VERSION')}/Resources/Python.app/Contents/share")
+link_path = Path(f"{GIMP_DISTRIB}/lib/Python.framework/Versions/{PYTHON_VERSION}/Resources/Python.app/Contents/share")
 link_path.parent.mkdir(parents=True, exist_ok=True)
 link_path.symlink_to(os.path.relpath(real_path, link_path.parent))
 #### lua is buggy, and hard to bundle due to LUA_*PATH etc (see AppImage script)
@@ -310,9 +313,9 @@ if os.path.exists(OPT_PREFIX / "bin/brew"):
 bundle(GIMP_PREFIX, "bin/gegl")
 ### Deps (DYLIBs) of the binaries in 'MacOS' and 'lib' dirs
 ### We save the list of already copied DLLs to keep a state between 2_bundle-gimp-uni_dep runs.
-done_dylib = Path(f"{os.getenv('MESON_BUILD_ROOT')}/done-dylib.list")
+done_dylib = Path(f"{BUILD_DIR}/done-dylib.list")
 done_dylib.unlink(missing_ok=True)
-done_symbols = Path(f"{os.getenv('MESON_BUILD_ROOT')}/done-symbols.list")
+done_symbols = Path(f"{BUILD_DIR}/done-symbols.list")
 done_symbols.unlink(missing_ok=True)
 for dir in ["MacOS", "lib"]:
   search_dir = GIMP_DISTRIB / dir
@@ -339,7 +342,7 @@ for dir in ["MacOS", "lib"]:
           subprocess.run(["dsymutil", binary, "-o", f"{binary}.dSYM"], check=True, stderr=subprocess.DEVNULL)
         except subprocess.CalledProcessError as e:
           sys.stderr.write(f"Failed to generate debug symbols from {binary}: {e}\n")
-      elif "unable to open object file" in result.stdout + result.stderr and not os.getenv("OPT_PREFIX") in result.stdout + result.stderr and "Python.framework" not in str(binary):
+      elif "unable to open object file" in result.stdout + result.stderr and not str(OPT_PREFIX) in result.stdout + result.stderr and "Python.framework" not in str(binary):
         print(f"\n\033[31m(ERROR)\033[0m: {binary} is orphaned from .o file for .dSYM generation. Please make sure its build dir is present")
         sys.exit(1)
 
@@ -428,7 +431,7 @@ bundle(OPT_PREFIX, "include/brotli", "--dest", "include")
 print(f"Testing if GIMP SDK works")
 clean_tests_env = os.environ.copy()
 clean_tests_env.pop("PKG_CONFIG_PATH", None)
-clean_tests_path = Path(os.getenv("MESON_BUILD_ROOT")) / "tools/gimptool-tests"
+clean_tests_path = Path(BUILD_DIR) / "tools/gimptool-tests"
 os.chdir(clean_tests_path)
 gimpsdk_tests = {
   "--build-noui"   : "c-hello-world",
@@ -449,4 +452,4 @@ for build_option, test_binary in gimpsdk_tests.items():
   elif any(flag in flags_output for flag in leaked_flags):
     print(f"\033[31m(ERROR)\033[0m: GIMP SDK test failed under the hood for {test_source} (the SDK is leaking to MacPorts or Homebrew). Output:\n{flags_output}")
     sys.exit(1)
-os.chdir(Path(os.getenv("MESON_BUILD_ROOT")))
+os.chdir(Path(BUILD_DIR))
