@@ -9,11 +9,13 @@ from glob import glob
 
 # This script is used to create a GIMP bundle dir on Windows. A bundle
 # is used as source of files for making both .exe installer and .msix package
-if not os.getenv("MESON_BUILD_ROOT"):
+BUILD_DIR = os.getenv("MESON_BUILD_ROOT")
+if not BUILD_DIR:
   # Let's prevent contributors from creating broken bundles
   print("\033[31m(ERROR)\033[0m: Script called standalone. Please build GIMP targeting installer or msix creation.")
   sys.exit(1)
 # Get variables from MESON_BUILD_ROOT/config.h that can be used on this script
+config_vars = {}
 with open("config.h") as file:
   for line in file:
     match = re.match(r'^#\s*define\s+(\S+)(?:\s+(.*))?$', line)
@@ -23,8 +25,9 @@ with open("config.h") as file:
         value = "1" #needed when there is no explicit value
       else:
         value = value.strip().strip('"').strip("'")
-      os.environ[key] = value
-if not os.getenv("ENABLE_RELOCATABLE_RESOURCES"):
+      config_vars[key] = value
+globals().update(config_vars)
+if not ENABLE_RELOCATABLE_RESOURCES:
   print("\n\033[31m(ERROR)\033[0m: No relocatable GIMP build found. You can build GIMP with '-Drelocatable-bundle=yes' to make a build suitable for bundle creation.")
   sys.exit(1)
 
@@ -102,7 +105,7 @@ GIMP_DISTRIB.mkdir(parents=True, exist_ok=True)
 (GIMP_DISTRIB / ".gitignore").write_text("*\n")
 ### Add a wrapper at tree root, less messy than having to look for the
 ### binary inside bin/, in the middle of all the DLLs.
-(GIMP_DISTRIB / "gimp.cmd").write_text(f"powershell bin\\gimp-{os.getenv('GIMP_MUTEX_VERSION')}.exe\n")
+(GIMP_DISTRIB / "gimp.cmd").write_text(f"powershell bin\\gimp-{GIMP_MUTEX_VERSION}.exe\n")
 
 
 ## BUNDLE BASE (BARE MINIMUM TO RUN GTK APPS).
@@ -163,7 +166,7 @@ fonts_conf = GIMP_DISTRIB / "etc/fonts/fonts.conf"
 text = fonts_conf.read_text()
 new_text = text.replace(
   "LOCAL_APPDATA_FONTCONFIG_CACHE",
-  f"~/AppData/Local/GIMP/{os.getenv('GIMP_APP_VERSION')}/fontconfig/cache"
+  f"~/AppData/Local/GIMP/{GIMP_APP_VERSION}/fontconfig/cache"
 )
 fonts_conf.write_text(new_text)
 ### Needed for 'th' word breaking in Text tool etc
@@ -207,7 +210,7 @@ bundle(GIMP_PREFIX, "bin/gimp*.exe")
 bundle(GIMP_PREFIX, "bin/gegl.exe")
 ### Deps (DLLs) of the binaries in 'bin' and 'lib' dirs
 ### We save the list of already copied DLLs to keep a state between 2_bundle-gimp-uni_dep runs.
-done_dll = Path(f"{os.getenv('MESON_BUILD_ROOT')}/done-dll.list")
+done_dll = Path(f"{BUILD_DIR}/done-dll.list")
 done_dll.unlink(missing_ok=True)
 for dir in ["bin", "lib"]:
   search_dir = GIMP_DISTRIB / dir
@@ -327,7 +330,7 @@ if not (GIMP_DISTRIB / "lib/pkgconfig/libcurl.pc").exists():
 print(f"Testing if GIMP SDK works")
 clean_tests_env = os.environ.copy()
 clean_tests_env.pop("PKG_CONFIG_PATH", None)
-clean_tests_path = Path(os.getenv("MESON_BUILD_ROOT")) / "tools/gimptool-tests"
+clean_tests_path = Path(BUILD_DIR) / "tools/gimptool-tests"
 os.chdir(clean_tests_path)
 gimpsdk_tests = {
   "--build-noui"   : "c-hello-world.exe",
@@ -350,4 +353,4 @@ for build_option, test_binary in gimpsdk_tests.items():
   elif any(flag in flags_output for flag in leaked_flags):
     print(f"\033[31m(ERROR)\033[0m: GIMP SDK test failed under the hood for {test_source} (the SDK is leaking to MSYS2). Output:\n{flags_output}")
     sys.exit(1)
-os.chdir(Path(os.getenv("MESON_BUILD_ROOT")))
+os.chdir(Path(BUILD_DIR))
