@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-15 18:37+0200\n"
-"PO-Revision-Date: 2026-06-15 18:38+0200\n"
+"PO-Revision-Date: 2026-06-15 18:54+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -16518,11 +16518,11 @@ msgstr "Non applicabile"
 
 #: ../plug-ins/metadata/metadata-tags.c:213
 msgid "Unlimited Model Releases"
-msgstr "Rilasci modello illimitati"
+msgstr "Rilasci modelli illimitati"
 
 #: ../plug-ins/metadata/metadata-tags.c:214
 msgid "Limited or Incomplete Model Releases"
-msgstr "Rilasci modello limitati o incompleti"
+msgstr "Rilasci modelli limitati o incompleti"
 
 #: ../plug-ins/metadata/metadata-tags.c:225
 msgid "Unlimited Property Releases"
