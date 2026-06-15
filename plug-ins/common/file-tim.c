@@ -483,7 +483,7 @@ load_image (GFile        *file,
      if (num_colors > 0)
       {
         gboolean  promote_to_rgb = FALSE;
-        gsize     clut_size      = num_colors * num_cluts;
+        gsize     clut_size      = (gsize) num_colors * num_cluts;
         gushort  *clut_data;
         guchar   *color_map;
         guint32   image_offset;
@@ -553,9 +553,10 @@ load_image (GFile        *file,
                                 gimp_image_get_default_new_layer_mode (image));
         gimp_image_insert_layer (image, layer, NULL, 0);
 
-        gimp_palette_set_colormap (gimp_image_get_palette (image),
-                                   babl_format ("R'G'B'A u8"),
-                                   (guint8 *) color_map, clut_size * 4);
+        if (! promote_to_rgb)
+          gimp_palette_set_colormap (gimp_image_get_palette (image),
+                                     babl_format ("R'G'B'A u8"),
+                                     (guint8 *) color_map, clut_size * 4);
 
         buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
