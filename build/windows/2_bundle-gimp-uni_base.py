@@ -249,13 +249,8 @@ for line in done_dll.read_text().splitlines():
     if bundled_dep not in bins_to_strip and bundled_dep.exists():
       bins_to_strip.append(bundled_dep)
 for bin_path in bins_to_strip:
-  with open(bin_path, "rb") as f:
-    if b"RSDS" not in f.read():
-      print(f"(INFO): stripping COFF symbols from {bin_path.name}")
-      try:
-        subprocess.run(["strip", str(bin_path)], check=True)
-      except:
-        continue
+  print(f"(INFO): stripping COFF symbols from {bin_path.name}")
+  subprocess.run(["strip", str(bin_path)], check=True)
 
 
 ## DEVELOPMENT FILES (to build GEGL filters and GIMP plug-ins). (see https://developer.gimp.org/resource/sdk/)
