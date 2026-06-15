@@ -59,6 +59,8 @@ GIMP_WARNING_API_BREAK("Should nick and/or blurb be in Pango markup?")
  *
  * Add a new boolean argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -85,6 +87,8 @@ gimp_procedure_add_boolean_argument (GimpProcedure *procedure,
  *
  * Add a new boolean auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -110,6 +114,8 @@ gimp_procedure_add_boolean_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new boolean return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -138,6 +144,8 @@ gimp_procedure_add_boolean_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new integer argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -170,6 +178,8 @@ gimp_procedure_add_int_argument (GimpProcedure *procedure,
  *
  * Add a new integer auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -200,6 +210,8 @@ gimp_procedure_add_int_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new integer return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -232,6 +244,8 @@ gimp_procedure_add_int_return_value (GimpProcedure *procedure,
  *
  * Add a new unsigned integer argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -262,6 +276,8 @@ gimp_procedure_add_uint_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new unsigned integer auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -294,6 +310,8 @@ gimp_procedure_add_uint_aux_argument (GimpProcedure *procedure,
  *
  * Add a new unsigned integer return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -324,6 +342,8 @@ gimp_procedure_add_uint_return_value (GimpProcedure *procedure,
  * @flags:        argument flags.
  *
  * Add a new #GimpUnit argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -356,6 +376,8 @@ gimp_procedure_add_unit_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpUnit auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -386,6 +408,8 @@ gimp_procedure_add_unit_aux_argument (GimpProcedure *procedure,
  * @flags:        argument flags.
  *
  * Add a new #GimpUnit return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -418,6 +442,8 @@ gimp_procedure_add_unit_return_value (GimpProcedure *procedure,
  *
  * Add a new floating-point in double precision argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -448,6 +474,8 @@ gimp_procedure_add_double_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new floating-point in double precision auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -480,6 +508,8 @@ gimp_procedure_add_double_aux_argument (GimpProcedure *procedure,
  *
  * Add a new floating-point in double precision return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -510,6 +540,8 @@ gimp_procedure_add_double_return_value (GimpProcedure *procedure,
  *
  * Add a new enum argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -538,6 +570,8 @@ gimp_procedure_add_enum_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new enum auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -568,6 +602,8 @@ gimp_procedure_add_enum_aux_argument (GimpProcedure *procedure,
  *
  * Add a new enum return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -597,6 +633,8 @@ gimp_procedure_add_enum_return_value (GimpProcedure *procedure,
  *
  * Add a new #GimpChoice argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -624,6 +662,8 @@ gimp_procedure_add_choice_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpChoice auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -653,6 +693,8 @@ gimp_procedure_add_choice_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpChoice return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -680,6 +722,8 @@ gimp_procedure_add_choice_return_value (GimpProcedure *procedure,
  *
  * Add a new string argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -705,6 +749,8 @@ gimp_procedure_add_string_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new string auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -732,6 +778,8 @@ gimp_procedure_add_string_aux_argument (GimpProcedure *procedure,
  *
  * Add a new string return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -758,6 +806,8 @@ gimp_procedure_add_string_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GeglColor argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -787,6 +837,8 @@ gimp_procedure_add_color_argument (GimpProcedure *procedure,
  *
  * Add a new #GeglColor auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -815,6 +867,8 @@ gimp_procedure_add_color_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GeglColor return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -842,6 +896,8 @@ gimp_procedure_add_color_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GeglColor argument to @procedure from a string representation.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -872,6 +928,8 @@ gimp_procedure_add_color_from_string_argument (GimpProcedure *procedure,
  *
  * Add a new #GeglColor auxiliary argument to @procedure from a string representation.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -901,6 +959,8 @@ gimp_procedure_add_color_from_string_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GeglColor return value to @procedure from a string representation.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -928,6 +988,8 @@ gimp_procedure_add_color_from_string_return_value (GimpProcedure *procedure,
  *
  * Add a new #GimpParasite argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -951,6 +1013,8 @@ gimp_procedure_add_parasite_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpParasite auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -976,6 +1040,8 @@ gimp_procedure_add_parasite_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpParasite return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1000,6 +1066,8 @@ gimp_procedure_add_parasite_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new param argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1027,6 +1095,8 @@ gimp_procedure_add_param_argument (GimpProcedure *procedure,
  *
  * Add a new param auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1053,6 +1123,8 @@ gimp_procedure_add_param_aux_argument (GimpProcedure *procedure,
  *
  * Add a new param return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1078,6 +1150,8 @@ gimp_procedure_add_param_return_value (GimpProcedure *procedure,
  *
  * Add a new #GBytes argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1101,6 +1175,8 @@ gimp_procedure_add_bytes_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GBytes auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1126,6 +1202,8 @@ gimp_procedure_add_bytes_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GBytes return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1149,6 +1227,8 @@ gimp_procedure_add_bytes_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new integer array argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1174,6 +1254,8 @@ gimp_procedure_add_int32_array_argument (GimpProcedure *procedure,
  *
  * Add a new integer array auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1197,6 +1279,8 @@ gimp_procedure_add_int32_array_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new integer array return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1222,6 +1306,8 @@ gimp_procedure_add_int32_array_return_value (GimpProcedure *procedure,
  *
  * Add a new double array argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1245,6 +1331,8 @@ gimp_procedure_add_double_array_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new double array auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1270,6 +1358,8 @@ gimp_procedure_add_double_array_aux_argument (GimpProcedure *procedure,
  *
  * Add a new double array return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1293,6 +1383,8 @@ gimp_procedure_add_double_array_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new string array argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1318,6 +1410,8 @@ gimp_procedure_add_string_array_argument (GimpProcedure *procedure,
  *
  * Add a new string array auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1341,6 +1435,8 @@ gimp_procedure_add_string_array_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new string array return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1366,6 +1462,8 @@ gimp_procedure_add_string_array_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new object array argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1393,6 +1491,8 @@ gimp_procedure_add_core_object_array_argument (GimpProcedure *procedure,
  *
  * Add a new object array auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1418,6 +1518,8 @@ gimp_procedure_add_core_object_array_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new object array return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1445,6 +1547,8 @@ gimp_procedure_add_core_object_array_return_value (GimpProcedure *procedure,
  *
  * Add a new #GimpDisplay argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1470,6 +1574,8 @@ gimp_procedure_add_display_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpDisplay auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1497,6 +1603,8 @@ gimp_procedure_add_display_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpDisplay return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1522,6 +1630,8 @@ gimp_procedure_add_display_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpImage argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1549,6 +1659,8 @@ gimp_procedure_add_image_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpImage auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1574,6 +1686,8 @@ gimp_procedure_add_image_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpImage return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1601,6 +1715,8 @@ gimp_procedure_add_image_return_value (GimpProcedure *procedure,
  *
  * Add a new #GimpItem argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1626,6 +1742,8 @@ gimp_procedure_add_item_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpItem auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1653,6 +1771,8 @@ gimp_procedure_add_item_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpItem return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1678,6 +1798,8 @@ gimp_procedure_add_item_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpDrawable argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1705,6 +1827,8 @@ gimp_procedure_add_drawable_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpDrawable auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1730,6 +1854,8 @@ gimp_procedure_add_drawable_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpDrawable return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1757,6 +1883,8 @@ gimp_procedure_add_drawable_return_value (GimpProcedure *procedure,
  *
  * Add a new #GimpLayer argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1782,6 +1910,8 @@ gimp_procedure_add_layer_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpLayer auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1809,6 +1939,8 @@ gimp_procedure_add_layer_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpLayer return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1834,6 +1966,8 @@ gimp_procedure_add_layer_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpTextLayer argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1861,6 +1995,8 @@ gimp_procedure_add_text_layer_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpTextLayer auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -1886,6 +2022,8 @@ gimp_procedure_add_text_layer_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpTextLayer return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -1913,6 +2051,8 @@ gimp_procedure_add_text_layer_return_value (GimpProcedure *procedure,
  *
  * Add a new #GimpVectorLayer argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.2
  **/
 void
@@ -1938,6 +2078,8 @@ gimp_procedure_add_vector_layer_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpVectorLayer auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.2
  **/
@@ -1965,6 +2107,8 @@ gimp_procedure_add_vector_layer_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpVectorLayer return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.2
  **/
 void
@@ -1990,6 +2134,8 @@ gimp_procedure_add_vector_layer_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpLinkLayer argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.2
  **/
@@ -2017,6 +2163,8 @@ gimp_procedure_add_link_layer_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpLinkLayer auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.2
  **/
 void
@@ -2042,6 +2190,8 @@ void
  * @flags:       argument flags.
  *
  * Add a new #GimpLinkLayer return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.2
  **/
@@ -2069,6 +2219,8 @@ gimp_procedure_add_link_layer_return_value (GimpProcedure *procedure,
  *
  * Add a new [class@GroupLayer] argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2094,6 +2246,8 @@ gimp_procedure_add_group_layer_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new [class@GroupLayer] auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2121,6 +2275,8 @@ gimp_procedure_add_group_layer_aux_argument (GimpProcedure *procedure,
  *
  * Add a new [class@GroupLayer] return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2146,6 +2302,8 @@ gimp_procedure_add_group_layer_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpChannel argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2173,6 +2331,8 @@ gimp_procedure_add_channel_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpChannel auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2198,6 +2358,8 @@ gimp_procedure_add_channel_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpChannel return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2225,6 +2387,8 @@ gimp_procedure_add_channel_return_value (GimpProcedure *procedure,
  *
  * Add a new #GimpLayerMask argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2250,6 +2414,8 @@ gimp_procedure_add_layer_mask_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpLayerMask auxiliary argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2277,6 +2443,8 @@ gimp_procedure_add_layer_mask_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpLayerMask return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2302,6 +2470,8 @@ gimp_procedure_add_layer_mask_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpSelection argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2329,6 +2499,8 @@ gimp_procedure_add_selection_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpSelection auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2354,6 +2526,8 @@ gimp_procedure_add_selection_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpSelection return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2381,6 +2555,8 @@ gimp_procedure_add_selection_return_value (GimpProcedure *procedure,
  *
  * Add a new #GimpPath argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2407,6 +2583,8 @@ gimp_procedure_add_path_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpPath auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2432,6 +2610,8 @@ gimp_procedure_add_path_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpPath return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2460,6 +2640,8 @@ gimp_procedure_add_path_return_value (GimpProcedure *procedure,
  * @flags:         Argument flags.
  *
  * Add a new #GFile argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2492,6 +2674,8 @@ gimp_procedure_add_file_argument (GimpProcedure         *procedure,
  *
  * Add a new #GFile auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2520,6 +2704,8 @@ gimp_procedure_add_file_aux_argument (GimpProcedure         *procedure,
  *
  * Add a new #GFile return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2546,6 +2732,8 @@ gimp_procedure_add_file_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpResource argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2578,6 +2766,8 @@ gimp_procedure_add_resource_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpResource auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2607,6 +2797,8 @@ gimp_procedure_add_resource_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpResource return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2634,6 +2826,8 @@ gimp_procedure_add_resource_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpBrush argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2667,6 +2861,8 @@ gimp_procedure_add_brush_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpBrush auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2696,6 +2892,8 @@ gimp_procedure_add_brush_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpBrush return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2722,6 +2920,8 @@ gimp_procedure_add_brush_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpFont argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2755,6 +2955,8 @@ gimp_procedure_add_font_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpFont auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2784,6 +2986,8 @@ gimp_procedure_add_font_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpFont return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2810,6 +3014,8 @@ gimp_procedure_add_font_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpGradient argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2843,6 +3049,8 @@ gimp_procedure_add_gradient_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpGradient auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2872,6 +3080,8 @@ gimp_procedure_add_gradient_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpGradient return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2898,6 +3108,8 @@ gimp_procedure_add_gradient_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpPalette argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -2931,6 +3143,8 @@ gimp_procedure_add_palette_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpPalette auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2960,6 +3174,8 @@ gimp_procedure_add_palette_aux_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpPalette return value to @procedure.
  *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -2986,6 +3202,8 @@ gimp_procedure_add_palette_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpPattern argument to @procedure.
+ *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
@@ -3019,6 +3237,8 @@ gimp_procedure_add_pattern_argument (GimpProcedure *procedure,
  *
  * Add a new #GimpPattern auxiliary argument to @procedure.
  *
+ * The argument @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
+ *
  * Since: 3.0
  **/
 void
@@ -3047,6 +3267,8 @@ gimp_procedure_add_pattern_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpPattern return value to @procedure.
+ *
+ * The return value @name must respect the rules for [canonical parameter names][class@GObject.ParamSpec#parameter-names] of `GObject`.
  *
  * Since: 3.0
  **/
