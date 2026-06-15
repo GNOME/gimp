@@ -483,7 +483,7 @@ load_image (GFile        *file,
      if (num_colors > 0)
       {
         gboolean  promote_to_rgb = FALSE;
-        guint     clut_size      = num_colors * num_cluts;
+        gsize     clut_size      = num_colors * num_cluts;
         gushort  *clut_data;
         guchar   *color_map;
         guint32   image_offset;
