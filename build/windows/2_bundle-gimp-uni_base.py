@@ -195,6 +195,10 @@ bundle(MSYSTEM_PREFIX, "lib/python*")
 clean(GIMP_DISTRIB, "lib/python*/*.pyc")
 #####avoid lib_bundle.py bundling build-time libLLVM*.dll which is giant
 clean(GIMP_DISTRIB, "lib/python*/site-packages/lldb*")
+#####avoid lib_bundle.py bundling weird tk/tcl*.dll, which are not default in Debian nor MacPorts
+clean(GIMP_DISTRIB, "lib/python*/*tkinter*")
+#####avoid lib_bundle.py bundling unused libPyImath_*.dll, which is also not default in Debian nor MacPorts
+clean(GIMP_DISTRIB, "lib/python*/imath*")
 #####Needed for internet connection on python. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/14722
 bundle(MSYSTEM_PREFIX, "etc/ssl/cert.pem")
 #### FIXME: luajit crashes at startup: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
