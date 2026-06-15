@@ -423,7 +423,7 @@ bund_usr "$GIMP_PREFIX" "bin/gimp-debug-tool*" --dest "libexec"
 bund_usr "$GIMP_PREFIX" "bin/gegl"
 bund_usr "$GIMP_PREFIX" "share/applications/*.desktop"
 ### FIXME: go-appimagetool have too polluted output so we save as log. See: https://github.com/probonopd/go-appimage/issues/314
-"$bundler" -s deploy $(echo "$USR_DIR/share/applications/*.desktop") > appimagetool.log 2>&1 || { cat appimagetool.log; exit 1; }
+"$bundler" -s deploy $(echo "$USR_DIR/share/applications/*.desktop")
 ### FIXME: Undo the mess which breaks babl and GEGL etc. See: https://github.com/probonopd/go-appimage/issues/315
 cp -r $APP_DIR/lib/* $USR_DIR/${LIB_DIR}
 rm -r $APP_DIR/lib
