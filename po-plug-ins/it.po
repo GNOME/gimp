@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-13 19:49+0200\n"
-"PO-Revision-Date: 2026-06-13 20:10+0200\n"
+"POT-Creation-Date: 2026-06-15 18:37+0200\n"
+"PO-Revision-Date: 2026-06-15 18:38+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -1265,7 +1265,7 @@ msgstr "Salva parametri Esploratore CML"
 #: ../plug-ins/common/file-pcx.c:1218 ../plug-ins/common/file-pdf-export.c:683
 #: ../plug-ins/common/file-png.c:1944 ../plug-ins/common/file-raw-data.c:1523
 #: ../plug-ins/common/file-raw-data.c:1552 ../plug-ins/common/file-sunras.c:616
-#: ../plug-ins/common/file-tga.c:1225 ../plug-ins/common/file-tim.c:722
+#: ../plug-ins/common/file-tga.c:1225 ../plug-ins/common/file-tim.c:723
 #: ../plug-ins/common/file-xmc.c:1270 ../plug-ins/common/sphere-designer.c:2208
 #: ../plug-ins/file-bmp/bmp-export.c:336 ../plug-ins/file-fli/fli-gimp.c:799
 #: ../plug-ins/file-icns/file-icns-export.c:442
@@ -2750,7 +2750,7 @@ msgstr ""
 #: ../plug-ins/common/file-pnm.c:1632 ../plug-ins/common/file-ps.c:1372
 #: ../plug-ins/common/file-qoi.c:350 ../plug-ins/common/file-sunras.c:607
 #: ../plug-ins/common/file-svg.c:810 ../plug-ins/common/file-tga.c:1217
-#: ../plug-ins/common/file-tim.c:714 ../plug-ins/common/file-xbm.c:1030
+#: ../plug-ins/common/file-tim.c:715 ../plug-ins/common/file-xbm.c:1030
 #: ../plug-ins/common/file-xpm.c:720 ../plug-ins/common/file-xwd.c:693
 #: ../plug-ins/file-bmp/bmp-export.c:328 ../plug-ins/file-fits/fits.c:678
 #: ../plug-ins/file-fli/fli-gimp.c:766
@@ -3725,7 +3725,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-heif.c:291 ../plug-ins/common/file-heif.c:412
 #: ../plug-ins/common/file-heif.c:557 ../plug-ins/common/file-jp2.c:334
-#: ../plug-ins/common/file-jp2.c:422 ../plug-ins/file-jpeg/jpeg.c:210
+#: ../plug-ins/common/file-jp2.c:422 ../plug-ins/file-jpeg/jpeg.c:244
 msgid "_Quality"
 msgstr "_Qualità"
 
@@ -4173,7 +4173,7 @@ msgid "Exports files in JPEG 2000 file format"
 msgstr "Esporta file in formato JPEG 2000"
 
 #: ../plug-ins/common/file-jp2.c:335 ../plug-ins/common/file-jp2.c:423
-#: ../plug-ins/file-jpeg/jpeg.c:211
+#: ../plug-ins/file-jpeg/jpeg.c:245
 msgid "Quality of exported image"
 msgstr "Qualità dell'immagine esportata"
 
@@ -4688,8 +4688,8 @@ msgstr "Superficie principale"
 
 #: ../plug-ins/common/file-paa.c:341 ../plug-ins/common/file-paa.c:353
 #: ../plug-ins/common/file-tim.c:421 ../plug-ins/common/file-tim.c:451
-#: ../plug-ins/common/file-tim.c:498 ../plug-ins/common/file-tim.c:573
-#: ../plug-ins/common/file-tim.c:612 ../plug-ins/file-cin/cineon-lib.c:169
+#: ../plug-ins/common/file-tim.c:498 ../plug-ins/common/file-tim.c:574
+#: ../plug-ins/common/file-tim.c:613 ../plug-ins/file-cin/cineon-lib.c:169
 #: ../plug-ins/file-cin/dpx-lib.c:280
 #, c-format
 msgid "Memory could not be allocated."
@@ -7008,7 +7008,7 @@ msgstr "Tipo immagine TIM non supportata: %d"
 msgid "Could not read palette from '%s'"
 msgstr "Impossibile leggere la tavolozza da '%s'"
 
-#: ../plug-ins/common/file-tim.c:706
+#: ../plug-ins/common/file-tim.c:707
 #, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
@@ -7017,11 +7017,11 @@ msgstr ""
 "Impossibile esportare '%s'. Il formato file TIM non supporta immagini più "
 "larghe o alte di %d pixel."
 
-#: ../plug-ins/common/file-tim.c:924
+#: ../plug-ins/common/file-tim.c:925
 msgid "Image Origin"
 msgstr "Origine immagine"
 
-#: ../plug-ins/common/file-tim.c:939
+#: ../plug-ins/common/file-tim.c:940
 msgid "Palette Origin"
 msgstr "Origine tavolozza"
 
@@ -10727,95 +10727,107 @@ msgstr ""
 "Errore aprendo temporaneamente %s file '%s' per il caricamento metadati "
 "jpeg: %s"
 
-#: ../plug-ins/file-jpeg/jpeg.c:135 ../plug-ins/file-jpeg/jpeg.c:182
+#: ../plug-ins/file-jpeg/jpeg.c:143 ../plug-ins/file-jpeg/jpeg.c:216
 msgid "JPEG image"
 msgstr "Immagine JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:138 ../plug-ins/file-jpeg/jpeg.c:139
+#: ../plug-ins/file-jpeg/jpeg.c:146 ../plug-ins/file-jpeg/jpeg.c:147
 msgid "Loads files in the JPEG file format"
 msgstr "Carica file nel formato file JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:163
+#: ../plug-ins/file-jpeg/jpeg.c:171
 msgid "Loads a thumbnail from a JPEG image"
 msgstr "Carica miniatura da un'immagine JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:164
+#: ../plug-ins/file-jpeg/jpeg.c:172
 msgid "Loads a thumbnail from a JPEG image, if one exists"
 msgstr "Carica una miniatura da un'immagine JPEG, se c'è"
 
-#: ../plug-ins/file-jpeg/jpeg.c:185
+#: ../plug-ins/file-jpeg/jpeg.c:188
+msgid "MPO image"
+msgstr "Immagine MPO"
+
+#: ../plug-ins/file-jpeg/jpeg.c:191
+msgid "Loads files in the MPO file format"
+msgstr "Carica file in formato MPO"
+
+#: ../plug-ins/file-jpeg/jpeg.c:192
+msgid "Loads files in the MPO (Multiple Picture Object) file format"
+msgstr "Carica file in formato MPO (Multiple Picture Object)"
+
+#: ../plug-ins/file-jpeg/jpeg.c:219
 msgid "Exports files in the JPEG file format"
 msgstr "Esporta file in formato JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:186
+#: ../plug-ins/file-jpeg/jpeg.c:220
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "Esporta file nel formato, con perdite ma molto supportato, JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:195 ../plug-ins/file-tiff/file-tiff.c:156
+#: ../plug-ins/file-jpeg/jpeg.c:229 ../plug-ins/file-tiff/file-tiff.c:156
 msgid "JPEG"
 msgstr "JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:216
+#: ../plug-ins/file-jpeg/jpeg.c:250
 msgid "S_moothing"
 msgstr "S_mussamento"
 
-#: ../plug-ins/file-jpeg/jpeg.c:217
+#: ../plug-ins/file-jpeg/jpeg.c:251
 msgid "Smoothing factor for exported image"
 msgstr "Fattore smussamento dell'immagine esportata"
 
-#: ../plug-ins/file-jpeg/jpeg.c:222
+#: ../plug-ins/file-jpeg/jpeg.c:256
 msgid "Optimi_ze"
 msgstr "Ottimi_zza"
 
-#: ../plug-ins/file-jpeg/jpeg.c:223
+#: ../plug-ins/file-jpeg/jpeg.c:257
 msgid "Use optimized tables during Huffman coding"
 msgstr "Usa tabelle ottimizzate nella codifica Huffman"
 
-#: ../plug-ins/file-jpeg/jpeg.c:228
+#: ../plug-ins/file-jpeg/jpeg.c:262
 msgid "_Progressive"
 msgstr "_Progressiva"
 
-#: ../plug-ins/file-jpeg/jpeg.c:229
+#: ../plug-ins/file-jpeg/jpeg.c:263
 msgid "Create progressive JPEG images"
 msgstr "Crea immagine JPEG progressiva"
 
-#: ../plug-ins/file-jpeg/jpeg.c:234
+#: ../plug-ins/file-jpeg/jpeg.c:268
 msgid "Export as CM_YK"
 msgstr "Esporta come CM_YK"
 
-#: ../plug-ins/file-jpeg/jpeg.c:235
+#: ../plug-ins/file-jpeg/jpeg.c:269
 msgid "Create a CMYK JPEG image using the soft-proofing color profile"
 msgstr "Crea un'immagine JPEG CMYK usando il profilo colore del provino video"
 
-#: ../plug-ins/file-jpeg/jpeg.c:240
+#: ../plug-ins/file-jpeg/jpeg.c:274
 msgid "Su_bsampling"
 msgstr "Sotto_campionatura"
 
-#: ../plug-ins/file-jpeg/jpeg.c:241
+#: ../plug-ins/file-jpeg/jpeg.c:275
 msgid "Sub-sampling type"
 msgstr "Tipo Sottocampionatura"
 
-#: ../plug-ins/file-jpeg/jpeg.c:242
+#: ../plug-ins/file-jpeg/jpeg.c:276
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (migliore qualità)"
 
-#: ../plug-ins/file-jpeg/jpeg.c:243
+#: ../plug-ins/file-jpeg/jpeg.c:277
 msgid "4:2:2 (chroma halved horizontally)"
 msgstr "4:2:2 (crominanza dimezzata orizzontalmente)"
 
-#: ../plug-ins/file-jpeg/jpeg.c:244
+#: ../plug-ins/file-jpeg/jpeg.c:278
 msgid "4:4:0 (chroma halved vertically)"
 msgstr "4:4:0 (crominanza dimezzata verticalmente)"
 
-#: ../plug-ins/file-jpeg/jpeg.c:245
+#: ../plug-ins/file-jpeg/jpeg.c:279
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (crominanza ridotta ad un quarto)"
 
-#: ../plug-ins/file-jpeg/jpeg.c:250
+#: ../plug-ins/file-jpeg/jpeg.c:284
 msgid "Baseline"
 msgstr "Baseline"
 
-#: ../plug-ins/file-jpeg/jpeg.c:251
+#: ../plug-ins/file-jpeg/jpeg.c:285
 msgid ""
 "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
 "decoders)"
@@ -10823,41 +10835,41 @@ msgstr ""
 "Forza la creazione di un JPEG baseline (non tutti i decodificatori possono "
 "leggere JPEG non-baseline)"
 
-#: ../plug-ins/file-jpeg/jpeg.c:257
+#: ../plug-ins/file-jpeg/jpeg.c:291
 msgid "Inter_val (MCU rows):"
 msgstr "Inter_vallo (righe MCU):"
 
-#: ../plug-ins/file-jpeg/jpeg.c:258
+#: ../plug-ins/file-jpeg/jpeg.c:292
 msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
 msgstr ""
 "Intervallo di riavvio marcatori (in righe MCU, 0 = nessun marcatore di "
 "riavvio)"
 
-#: ../plug-ins/file-jpeg/jpeg.c:264
+#: ../plug-ins/file-jpeg/jpeg.c:298
 msgid "_DCT method"
 msgstr "Metodo _DCT"
 
-#: ../plug-ins/file-jpeg/jpeg.c:265
+#: ../plug-ins/file-jpeg/jpeg.c:299
 msgid "DCT method to use"
 msgstr "Metodo DCT da usare"
 
-#: ../plug-ins/file-jpeg/jpeg.c:266
+#: ../plug-ins/file-jpeg/jpeg.c:300
 msgid "Fast Integer"
 msgstr "Interi veloci"
 
-#: ../plug-ins/file-jpeg/jpeg.c:267
+#: ../plug-ins/file-jpeg/jpeg.c:301
 msgid "Integer"
 msgstr "Interi"
 
-#: ../plug-ins/file-jpeg/jpeg.c:268
+#: ../plug-ins/file-jpeg/jpeg.c:302
 msgid "Floating-Point"
 msgstr "Virgola mobile"
 
-#: ../plug-ins/file-jpeg/jpeg.c:275
+#: ../plug-ins/file-jpeg/jpeg.c:309
 msgid "_Use quality settings from original image"
 msgstr "_Usa le impostazioni di qualità dall'immagine originale"
 
-#: ../plug-ins/file-jpeg/jpeg.c:276
+#: ../plug-ins/file-jpeg/jpeg.c:310
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -10867,33 +10879,33 @@ msgstr ""
 "di qualità non standard (tabelle di quantizzazione), abilitare questa "
 "opzione per ottenere quasi la stessa qualità e dimensione del file."
 
-#: ../plug-ins/file-jpeg/jpeg.c:298
+#: ../plug-ins/file-jpeg/jpeg.c:332
 msgid "Sho_w preview in image window"
 msgstr "_Mostra anteprima nella finestra immagine"
 
-#: ../plug-ins/file-jpeg/jpeg.c:299
+#: ../plug-ins/file-jpeg/jpeg.c:333
 msgid "Creates a temporary layer with an export preview"
 msgstr "Crea un livello temporaneo con un'anteprima dell'esportazione"
 
-#: ../plug-ins/file-jpeg/jpeg.c:303
+#: ../plug-ins/file-jpeg/jpeg.c:337
 msgid "Use _arithmetic coding"
 msgstr "Usa codifica _aritmetica"
 
-#: ../plug-ins/file-jpeg/jpeg.c:304
+#: ../plug-ins/file-jpeg/jpeg.c:338
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
 "Il software datato può avere dei problemi ad aprire immagini a codifica "
 "aritmetica"
 
-#: ../plug-ins/file-jpeg/jpeg.c:309
+#: ../plug-ins/file-jpeg/jpeg.c:343
 msgid "Use restart mar_kers"
 msgstr "Usa riavvio mar_catori"
 
-#: ../plug-ins/file-jpeg/jpeg.c:314 ../plug-ins/file-tiff/file-tiff.c:318
+#: ../plug-ins/file-jpeg/jpeg.c:348 ../plug-ins/file-tiff/file-tiff.c:318
 msgid "Save Photoshop metadata"
 msgstr "Salva metadati Photoshop"
 
-#: ../plug-ins/file-jpeg/jpeg.c:315
+#: ../plug-ins/file-jpeg/jpeg.c:349
 msgid ""
 "Store Photoshop image resources (paths, guides, ...) in JPEG APP13 tag "
 "(Photoshop)"
@@ -16128,11 +16140,11 @@ msgstr "Voce di registro"
 
 #: ../plug-ins/metadata/metadata-editor.c:571
 msgid "Max. Available Width"
-msgstr "Larghezza disponibile massima"
+msgstr "Larghezza massima disponibile"
 
 #: ../plug-ins/metadata/metadata-editor.c:572
 msgid "Max. Available Height"
-msgstr "Altezza disponibile massima"
+msgstr "Altezza massima disponibile"
 
 #: ../plug-ins/metadata/metadata-editor.c:573
 msgid "Digital Source Type"
