@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-15 18:37+0200\n"
-"PO-Revision-Date: 2026-06-15 18:54+0200\n"
+"POT-Creation-Date: 2026-06-16 08:04+0200\n"
+"PO-Revision-Date: 2026-06-16 08:05+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -1267,7 +1267,7 @@ msgstr "Salva parametri Esploratore CML"
 #: ../plug-ins/common/file-raw-data.c:1552 ../plug-ins/common/file-sunras.c:616
 #: ../plug-ins/common/file-tga.c:1225 ../plug-ins/common/file-tim.c:723
 #: ../plug-ins/common/file-xmc.c:1270 ../plug-ins/common/sphere-designer.c:2208
-#: ../plug-ins/file-bmp/bmp-export.c:336 ../plug-ins/file-fli/fli-gimp.c:799
+#: ../plug-ins/file-bmp/bmp-export.c:336 ../plug-ins/file-fli/fli-gimp.c:808
 #: ../plug-ins/file-icns/file-icns-export.c:442
 #: ../plug-ins/file-ico/ico-export.c:1374
 #: ../plug-ins/file-ico/ico-export.c:1636
@@ -2753,7 +2753,7 @@ msgstr ""
 #: ../plug-ins/common/file-tim.c:715 ../plug-ins/common/file-xbm.c:1030
 #: ../plug-ins/common/file-xpm.c:720 ../plug-ins/common/file-xwd.c:693
 #: ../plug-ins/file-bmp/bmp-export.c:328 ../plug-ins/file-fits/fits.c:678
-#: ../plug-ins/file-fli/fli-gimp.c:766
+#: ../plug-ins/file-fli/fli-gimp.c:775
 #: ../plug-ins/file-icns/file-icns-export.c:821
 #: ../plug-ins/file-ico/ico-export.c:1366
 #: ../plug-ins/file-ico/ico-export.c:1620
@@ -4690,7 +4690,8 @@ msgstr "Superficie principale"
 #: ../plug-ins/common/file-tim.c:421 ../plug-ins/common/file-tim.c:451
 #: ../plug-ins/common/file-tim.c:498 ../plug-ins/common/file-tim.c:574
 #: ../plug-ins/common/file-tim.c:613 ../plug-ins/file-cin/cineon-lib.c:169
-#: ../plug-ins/file-cin/dpx-lib.c:280
+#: ../plug-ins/file-cin/dpx-lib.c:280 ../plug-ins/file-fli/fli-gimp.c:550
+#: ../plug-ins/file-fli/fli-gimp.c:819
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "La memoria non può essere allocata."
@@ -10309,7 +10310,7 @@ msgstr "Apri file FITS"
 
 #: ../plug-ins/file-fli/fli.c:45 ../plug-ins/file-fli/fli.c:59
 #: ../plug-ins/file-fli/fli.c:75 ../plug-ins/file-fli/fli.c:924
-#: ../plug-ins/file-fli/fli.c:1244 ../plug-ins/file-fli/fli.c:1524
+#: ../plug-ins/file-fli/fli.c:1245 ../plug-ins/file-fli/fli.c:1526
 #, c-format
 msgid "Error reading from file."
 msgstr "Errore leggendo dal file."
@@ -10395,21 +10396,21 @@ msgstr "Errore scrivendo il nero. "
 #: ../plug-ins/file-fli/fli.c:1094 ../plug-ins/file-fli/fli.c:1108
 #: ../plug-ins/file-fli/fli.c:1123 ../plug-ins/file-fli/fli.c:1132
 #: ../plug-ins/file-fli/fli.c:1146 ../plug-ins/file-fli/fli.c:1156
-#: ../plug-ins/file-fli/fli.c:1300 ../plug-ins/file-fli/fli.c:1327
-#: ../plug-ins/file-fli/fli.c:1343 ../plug-ins/file-fli/fli.c:1375
-#: ../plug-ins/file-fli/fli.c:1385 ../plug-ins/file-fli/fli.c:1399
-#: ../plug-ins/file-fli/fli.c:1409
+#: ../plug-ins/file-fli/fli.c:1301 ../plug-ins/file-fli/fli.c:1328
+#: ../plug-ins/file-fli/fli.c:1344 ../plug-ins/file-fli/fli.c:1376
+#: ../plug-ins/file-fli/fli.c:1386 ../plug-ins/file-fli/fli.c:1400
+#: ../plug-ins/file-fli/fli.c:1410
 msgid "Error writing frame. "
 msgstr "Errore scrivedo il fotogramma. "
 
 #: ../plug-ins/file-fli/fli.c:992 ../plug-ins/file-fli/fli.c:1004
 #: ../plug-ins/file-fli/fli.c:1015 ../plug-ins/file-fli/fli.c:1034
-#: ../plug-ins/file-fli/fli.c:1186 ../plug-ins/file-fli/fli.c:1200
-#: ../plug-ins/file-fli/fli.c:1213 ../plug-ins/file-fli/fli.c:1226
-#: ../plug-ins/file-fli/fli.c:1245 ../plug-ins/file-fli/fli.c:1440
-#: ../plug-ins/file-fli/fli.c:1456 ../plug-ins/file-fli/fli.c:1475
-#: ../plug-ins/file-fli/fli.c:1490 ../plug-ins/file-fli/fli.c:1503
-#: ../plug-ins/file-fli/fli.c:1525
+#: ../plug-ins/file-fli/fli.c:1187 ../plug-ins/file-fli/fli.c:1201
+#: ../plug-ins/file-fli/fli.c:1214 ../plug-ins/file-fli/fli.c:1227
+#: ../plug-ins/file-fli/fli.c:1246 ../plug-ins/file-fli/fli.c:1442
+#: ../plug-ins/file-fli/fli.c:1458 ../plug-ins/file-fli/fli.c:1477
+#: ../plug-ins/file-fli/fli.c:1492 ../plug-ins/file-fli/fli.c:1505
+#: ../plug-ins/file-fli/fli.c:1527
 msgid "Error reading compressed data. "
 msgstr "Errore leggendo i dati compressi."
 
@@ -10463,17 +10464,17 @@ msgid "End exporting with this frame (or -1 for all frames)"
 msgstr ""
 "Finisce l'esportazione con questo fotogramma (o -1 per tutti i fotogrammi)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:568
+#: ../plug-ins/file-fli/fli-gimp.c:577
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr "Fotogramma %d (%ums)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:595
+#: ../plug-ins/file-fli/fli-gimp.c:604
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "Fallita la lettura del fotogramma %d. Animazione rovinata?\n"
 
-#: ../plug-ins/file-fli/fli-gimp.c:927
+#: ../plug-ins/file-fli/fli-gimp.c:945
 msgid "Open FLIC Animation"
 msgstr "Apri animazione FLIC"
 
@@ -17121,12 +17122,11 @@ msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:235
 msgid "_Keep Knees"
-msgstr "Mantieni _ginocchi"
+msgstr "Mantieni _ginocchia"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:236
 msgid "Says whether or not to remove 'knee' points after finding the outline."
-msgstr ""
-"Indica se rimuovere o no i punti \"ginocchio\" dopo aver trovato il contorno."
+msgstr "Indica se rimuovere o no i punti 'ginocchio' dopo aver trovato il contorno."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:242
 msgid "_Line Reversion Threshold"
