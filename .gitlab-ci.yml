@@ -959,6 +959,8 @@ check-commit-log:
   extends:
     - .default
     - .fdo.ci-fairy
+  rules:
+    - <<: *CI_MERGE
   stage: analysis
   variables:
     GIT_DEPTH: "100"
@@ -966,12 +968,10 @@ check-commit-log:
   script:
     - touch "$JUNIT_REPORT"
     - ci-fairy check-commits --textwidth 80 --rules-file=.gitlab/commit-rules.yml --junit-xml=$JUNIT_REPORT
-  rules:
-    - <<: *CI_MERGE
   artifacts:
-    expire_in: 1 week
     reports:
       junit: $JUNIT_REPORT
+    expire_in: 2 days
 
 issue-bot:
   extends: .default
