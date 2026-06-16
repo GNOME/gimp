@@ -748,7 +748,7 @@ file-plug-in-tests:
         paths:
           - plug-ins/**/*
           - .gitlab-ci.yml #to test changes on script: below
-        compare_to: 'refs/heads/master'
+        compare_to: 'refs/heads/gimp-3-2'
   needs: ["gimp-debian-nonreloc"]
   stage: analysis
   variables:
