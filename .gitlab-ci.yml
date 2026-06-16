@@ -170,6 +170,7 @@ deps-debian-nonreloc:
   variables:
     GIT_STRATEGY: none
   script:
+    - echo $CI_COMMIT_USER_LOGIN
     - export BUILDAH_FORMAT=docker
     - export BUILDAH_ISOLATION=chroot
     - export STORAGE_DRIVER=vfs
