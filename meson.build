@@ -1944,6 +1944,8 @@ meson.add_dist_script('tools/meson_dist_script.py',
 ################################################################################
 # Subdirs: part 1
 
+message('I did nothing')
+
 rootInclude = include_directories('.')
 appInclude  = include_directories('app')
 
