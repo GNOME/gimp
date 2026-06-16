@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-06-16 02:13+0000\n"
-"PO-Revision-Date: 2026-06-16 21:31+0200\n"
+"PO-Revision-Date: 2026-06-17 00:12+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -10310,7 +10310,7 @@ msgstr "Error al leer la cabecera. "
 #: plug-ins/file-fli/fli.c:187
 #, c-format
 msgid "Invalid header: not a FLI/FLC animation!"
-msgstr "Encabezado no válido: no es una animación FLI/FLC"
+msgstr "Encabezado no válido: no es una animación FLI/FLC."
 
 #: plug-ins/file-fli/fli.c:205
 #, c-format
@@ -11180,7 +11180,7 @@ msgid ""
 "format files."
 msgstr ""
 "Este complemento carga miniaturas de imágenes a partir de archivos en "
-"formato PSD nativo de Adobe Photoshop (TM).0"
+"formato PSD nativo de Adobe Photoshop (TM)."
 
 #: plug-ins/file-psd/psd.c:228
 msgid "Exports files in the Photoshop (TM) PSD file format"
@@ -11407,8 +11407,8 @@ msgstr ""
 "No hay un cargador RAW instalado para abrir archivos «%s».\n"
 "\n"
 "Actualmente GIMP admite estos cargadores RAW:\n"
-"- darktable (https://www.darktable.org/), al menos 1.7\n"
-"- RawTherapee (https://rawtherapee.com/), al menos 5.2\n"
+"- darktable (https://www.darktable.org/), desde la 1.7\n"
+"- RawTherapee (https://rawtherapee.com/), desde la 5.2\n"
 "- ART (https://artraweditor.github.io/)\n"
 "\n"
 "Instale uno de ellos para cargar archivos RAW."
@@ -11930,8 +11930,8 @@ msgid ""
 "Invalid image dimensions (%u x %u) for Sketchbook layer %i. Image may be "
 "corrupt."
 msgstr ""
-"Dimensiones de imagen (%u x %u) no válidas para la capa %i de Sketchbook. La "
-"imagen podría estar dañada."
+"Dimensiones de imagen (%u x %u) no válidas para la capa %i de Sketchbook. Es "
+"posible que la imagen esté dañada."
 
 #: plug-ins/file-tiff/file-tiff-load.c:2767
 #: plug-ins/file-tiff/file-tiff-load.c:2819
