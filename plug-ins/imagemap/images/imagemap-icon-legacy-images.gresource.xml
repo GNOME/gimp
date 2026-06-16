@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/org/gimp/imagemap/icons">
-    <file preprocess="to-pixdata">imagemap-circle.png</file>
-    <file preprocess="to-pixdata">imagemap-coord.png</file>
-    <file preprocess="to-pixdata">imagemap-dimension.png</file>
-    <file preprocess="to-pixdata">imagemap-java.png</file>
-    <file preprocess="to-pixdata">imagemap-polygon.png</file>
-    <file preprocess="to-pixdata">imagemap-rectangle.png</file>
-    <file preprocess="to-pixdata">imagemap-to-back.png</file>
-    <file preprocess="to-pixdata">imagemap-to-front.png</file>
+    <file>imagemap-circle.png</file>
+    <file>imagemap-coord.png</file>
+    <file>imagemap-dimension.png</file>
+    <file>imagemap-java.png</file>
+    <file>imagemap-polygon.png</file>
+    <file>imagemap-rectangle.png</file>
+    <file>imagemap-to-back.png</file>
+    <file>imagemap-to-front.png</file>
   </gresource>
 </gresources>

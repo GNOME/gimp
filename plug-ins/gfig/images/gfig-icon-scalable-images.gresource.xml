@@ -15,6 +15,6 @@
     <file>gfig-show-all.svg</file>
     <file>gfig-spiral.svg</file>
     <file>gfig-star.svg</file>
-    <file preprocess="to-pixdata">gfig-logo.png</file>
+    <file>gfig-logo.png</file>
   </gresource>
 </gresources>

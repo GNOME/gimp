@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/org/gimp/gfig/icons">
-    <file preprocess="to-pixdata">gfig-bezier.png</file>
-    <file preprocess="to-pixdata">gfig-circle.png</file>
-    <file preprocess="to-pixdata">gfig-copy-object.png</file>
-    <file preprocess="to-pixdata">gfig-curve.png</file>
-    <file preprocess="to-pixdata">gfig-delete-object.png</file>
-    <file preprocess="to-pixdata">gfig-ellipse.png</file>
-    <file preprocess="to-pixdata">gfig-line.png</file>
-    <file preprocess="to-pixdata">gfig-move-object.png</file>
-    <file preprocess="to-pixdata">gfig-move-point.png</file>
-    <file preprocess="to-pixdata">gfig-polygon.png</file>
-    <file preprocess="to-pixdata">gfig-rectangle.png</file>
-    <file preprocess="to-pixdata">gfig-show-all.png</file>
-    <file preprocess="to-pixdata">gfig-spiral.png</file>
-    <file preprocess="to-pixdata">gfig-star.png</file>
-    <file preprocess="to-pixdata">gfig-logo.png</file>
+    <file>gfig-bezier.png</file>
+    <file>gfig-circle.png</file>
+    <file>gfig-copy-object.png</file>
+    <file>gfig-curve.png</file>
+    <file>gfig-delete-object.png</file>
+    <file>gfig-ellipse.png</file>
+    <file>gfig-line.png</file>
+    <file>gfig-move-object.png</file>
+    <file>gfig-move-point.png</file>
+    <file>gfig-polygon.png</file>
+    <file>gfig-rectangle.png</file>
+    <file>gfig-show-all.png</file>
+    <file>gfig-spiral.png</file>
+    <file>gfig-star.png</file>
+    <file>gfig-logo.png</file>
   </gresource>
 </gresources>
