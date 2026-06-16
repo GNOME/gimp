@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-06-04 12:08+0000\n"
-"PO-Revision-Date: 2026-06-16 21:12+0200\n"
+"PO-Revision-Date: 2026-06-16 23:56+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -3476,16 +3476,14 @@ msgid "inflate failed"
 msgstr "inflar ha fallado"
 
 #: plug-ins/common/file-gih.c:119
-#, fuzzy
 #| msgid "Placement"
 msgid "Incremental"
-msgstr "Posicionamiento"
+msgstr "Incremental"
 
 #: plug-ins/common/file-gih.c:120
-#, fuzzy
 #| msgid "Singular"
 msgid "Angular"
-msgstr "Singular"
+msgstr "Angular"
 
 #: plug-ins/common/file-gih.c:121 plug-ins/flame/flame.c:918
 #: plug-ins/gimpressionist/orientation.c:156 plug-ins/gimpressionist/size.c:163
@@ -3750,10 +3748,9 @@ msgid "Toggle saving XMP data"
 msgstr "Alternar el guardar los datos XMP"
 
 #: plug-ins/common/file-heif.c:352 plug-ins/common/file-heif.c:384
-#, fuzzy
 #| msgid "HEIF/HEIC"
 msgid "HEIF/AVIF"
-msgstr "HEIF/HEIC"
+msgstr "HEIF/AVIF"
 
 #: plug-ins/common/file-heif.c:355
 msgid "Loads AVIF images"
@@ -4128,23 +4125,23 @@ msgstr "Orden de pro_gresión"
 
 #: plug-ins/common/file-jp2.c:356 plug-ins/common/file-jp2.c:444
 msgid "LRCP"
-msgstr ""
+msgstr "LRCP"
 
 #: plug-ins/common/file-jp2.c:357 plug-ins/common/file-jp2.c:445
 msgid "RLCP"
-msgstr ""
+msgstr "RLCP"
 
 #: plug-ins/common/file-jp2.c:358 plug-ins/common/file-jp2.c:446
 msgid "RPCL"
-msgstr ""
+msgstr "RPCL"
 
 #: plug-ins/common/file-jp2.c:359 plug-ins/common/file-jp2.c:447
 msgid "PCRL"
-msgstr ""
+msgstr "PCRL"
 
 #: plug-ins/common/file-jp2.c:360 plug-ins/common/file-jp2.c:448
 msgid "CPRL"
-msgstr ""
+msgstr "CPRL"
 
 #: plug-ins/common/file-jp2.c:366 plug-ins/common/file-jp2.c:454
 msgid "Co_mpliance profile"
@@ -4162,15 +4159,15 @@ msgstr "Perfil estándar"
 
 #: plug-ins/common/file-jp2.c:369 plug-ins/common/file-jp2.c:457
 msgid "Cinema2K (24 FPS)"
-msgstr ""
+msgstr "Cinema2K (24 FPS)"
 
 #: plug-ins/common/file-jp2.c:370 plug-ins/common/file-jp2.c:458
 msgid "Cinema2K (48 FPS)"
-msgstr ""
+msgstr "Cinema2K (48 FPS)"
 
 #: plug-ins/common/file-jp2.c:371 plug-ins/common/file-jp2.c:459
 msgid "Cinema4K (24 FPS)"
-msgstr ""
+msgstr "Cinema4K (24 FPS)"
 
 #: plug-ins/common/file-jp2.c:380 plug-ins/common/file-jp2.c:468
 msgid "E_xport as CMYK"
@@ -4187,10 +4184,8 @@ msgid "Exports files in JPEG 2000 codestream format"
 msgstr "Exporta archivos en formato de flujo de código JPEG 2000"
 
 #: plug-ins/common/file-jp2.c:435
-#, fuzzy
-#| msgid "_Number of colors"
 msgid "_Number of Resolutions"
-msgstr "_Número de colores"
+msgstr "_Número de resoluciones"
 
 #. Not having color information is expected.
 #: plug-ins/common/file-jp2.c:1210
@@ -6795,31 +6790,23 @@ msgstr "No se pudo leer la cabecera de «%s»"
 #: plug-ins/common/file-tim.c:168 plug-ins/common/file-tim.c:191
 #: plug-ins/common/file-tim.c:203
 msgid "Playstation TIM image"
-msgstr ""
+msgstr "Imagen TIM de PlayStation"
 
 #: plug-ins/common/file-tim.c:171
-#, fuzzy
-#| msgid "Load file in the IFF file format"
 msgid "Load file in the TIM file format"
-msgstr "Carga un archivo en el formato de archivo IFF"
+msgstr "Cargar el archivo en formato TIM"
 
 #: plug-ins/common/file-tim.c:172
-#, fuzzy
-#| msgid "Loads files in the PNM file format"
 msgid "Load file in the Sony Playstation TIM file format"
-msgstr "Carga archivos en el formato de archivo PNM"
+msgstr "Cargar el archivo en formato TIM de Sony PlayStation"
 
 #: plug-ins/common/file-tim.c:194
-#, fuzzy
-#| msgid "Save file in the DICOM file format"
 msgid "Saves files in the TIM file format"
-msgstr "Guardar archivo en formato de archivo DICOM"
+msgstr "Guarda archivos en formato TIM"
 
 #: plug-ins/common/file-tim.c:195
-#, fuzzy
-#| msgid "Saves files in the JPEG XL file format"
 msgid "Saves files in the Playstation TIM file format"
-msgstr "Guarda archivos en el formato de archivo JPEG XL"
+msgstr "Guarda archivos en formato de archivo TIM de PlayStation"
 
 #: plug-ins/common/file-tim.c:217
 msgid "_Type"
@@ -6839,11 +6826,11 @@ msgstr "8BPP (Indexado)"
 
 #: plug-ins/common/file-tim.c:221
 msgid "16BPP (RGB)"
-msgstr ""
+msgstr "16BPP (RGB)"
 
 #: plug-ins/common/file-tim.c:222
 msgid "24BPP (RGB)"
-msgstr ""
+msgstr "24BPP (RGB)"
 
 #: plug-ins/common/file-tim.c:228
 msgid "Image _X"
@@ -11145,44 +11132,32 @@ msgid "Saves files in the Photoshop (TM) PSD file format"
 msgstr "Guarda archivos en el formato de archivo PSD de Photoshop (TM)"
 
 #: plug-ins/file-psd/psd.c:226
-#, fuzzy
-#| msgid ""
-#| "This filter saves files of Adobe Photoshop (TM) native PSD format. These "
-#| "files may be of any image type supported by GIMP, with or without layers, "
-#| "layer masks, aux channels and guides."
 msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
 "layer masks, aux channels and guides."
 msgstr ""
-"Este filtro guarda archivos de formato nativo PSD de Adobe Photoshop (TM). "
-"Estos archivos pueden ser de cualquier tipo de imagen soportado por GIMP, "
-"con o sin capas, máscaras de capa, canales auxiliares y guías."
+"Este complemento guarda archivos en formato PSD nativo de Adobe Photoshop "
+"(TM). Estos archivos pueden ser cualquier tipo de imagen compatible con "
+"GIMP, con o sin capas, máscaras de capa, canales auxiliares y guías."
 
 #: plug-ins/file-psd/psd.c:240 plug-ins/file-psd/psd.c:242
 msgid "Photoshop Large image"
 msgstr "Imagen grande de Photoshop"
 
 #: plug-ins/file-psd/psd.c:245
-#, fuzzy
-#| msgid "Saves files in the Photoshop (TM) PSD file format"
 msgid "Saves files in the Photoshop (TM) Large PSB file format"
-msgstr "Guarda archivos en el formato de archivo PSD de Photoshop (TM)"
+msgstr "Guarda archivos en formato PSB grande de Photoshop (TM)"
 
 #: plug-ins/file-psd/psd.c:247
-#, fuzzy
-#| msgid ""
-#| "This filter saves files of Adobe Photoshop (TM) native PSD format. These "
-#| "files may be of any image type supported by GIMP, with or without layers, "
-#| "layer masks, aux channels and guides."
 msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
 "These files may be of any image type supported by GIMP, with or without "
 "layers, layer masks, aux channels and guides."
 msgstr ""
-"Este filtro guarda archivos de formato nativo PSD de Adobe Photoshop (TM). "
-"Estos archivos pueden ser de cualquier tipo de imagen soportado por GIMP, "
-"con o sin capas, máscaras de capa, canales auxiliares y guías."
+"Este complemento guarda archivos en formato PSB nativo de Adobe Photoshop "
+"(TM) Large. Estos archivos pueden ser cualquier tipo de imagen compatible "
+"con GIMP, con o sin capas, máscaras de capa, canales auxiliares y guías."
 
 #: plug-ins/file-psd/psd.c:275
 msgid "Assign a Clipping _Path"
@@ -11363,15 +11338,7 @@ msgid "Raw Arriflex ARI"
 msgstr "Raw Arriflex ARI"
 
 #: plug-ins/file-raw/file-raw-placeholder.c:176
-#, fuzzy, c-format
-#| msgid ""
-#| "There is no RAW loader installed to open '%s' files.\n"
-#| "\n"
-#| "GIMP currently supports these RAW loaders:\n"
-#| "- darktable (http://www.darktable.org/), at least 1.7\n"
-#| "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
-#| "\n"
-#| "Please install one of them in order to load RAW files."
+#, c-format
 msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
@@ -11385,8 +11352,9 @@ msgstr ""
 "No hay un cargador RAW instalado para abrir archivos «%s».\n"
 "\n"
 "Actualmente GIMP admite estos cargadores RAW:\n"
-"- darktable (http://www.darktable.org/), al menos 1.7\n"
-"- RawTherapee (http://rawtherapee.com/), al menos 5.2\n"
+"- darktable (https://www.darktable.org/), al menos 1.7\n"
+"- RawTherapee (https://rawtherapee.com/), al menos 5.2\n"
+"- ART (https://artraweditor.github.io/)\n"
 "\n"
 "Instale uno de ellos para cargar archivos RAW."
 
@@ -11802,6 +11770,8 @@ msgstr "No se pudieron obtener los mapas de color de «%s»"
 msgid ""
 "Indexed TIFFs with color maps larger than 256colors are not yet supported"
 msgstr ""
+"Los archivos TIFF indexados con mapas de color de más de 256 colores aún no "
+"son compatibles"
 
 #. Validate number of channels to the same maximum as we use for
 #. * Photoshop. A higher number most likely means a corrupt image
