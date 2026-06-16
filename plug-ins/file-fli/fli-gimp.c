@@ -542,8 +542,17 @@ load_image (GFile    *file,
 
   image = gimp_image_new (fli_header.width, fli_header.height, GIMP_INDEXED);
 
-  fb  = g_malloc (fli_header.width * fli_header.height);
-  ofb = g_malloc (fli_header.width * fli_header.height);
+  fb  = g_try_malloc ((gsize) fli_header.width * fli_header.height);
+  ofb = g_try_malloc ((gsize) fli_header.width * fli_header.height);
+  if (! fb || ! ofb)
+    {
+      g_set_error (error, G_FILE_ERROR, 0,
+                   _("Memory could not be allocated."));
+      fclose (fp);
+      g_free (fb);
+      g_free (ofb);
+      return FALSE;
+    }
 
   /*
    * Skip to the beginning of requested frames:
@@ -802,8 +811,17 @@ export_image (GFile      *file,
     }
   fseek (fp, 128, SEEK_SET);
 
-  fb = g_malloc (fli_header.width * fli_header.height);
-  ofb = g_malloc (fli_header.width * fli_header.height);
+  fb  = g_try_malloc ((gsize) fli_header.width * fli_header.height);
+  ofb = g_try_malloc ((gsize) fli_header.width * fli_header.height);
+  if (! fb || ! ofb)
+    {
+      g_set_error (error, G_FILE_ERROR, 0,
+                   _("Memory could not be allocated."));
+      fclose (fp);
+      g_free (fb);
+      g_free (ofb);
+      return FALSE;
+    }
 
   /* initialize with bg color */
   memset (fb, bg, fli_header.width * fli_header.height);
