@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-16 08:04+0200\n"
-"PO-Revision-Date: 2026-06-16 08:05+0200\n"
+"PO-Revision-Date: 2026-06-16 10:56+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -16112,7 +16112,7 @@ msgstr "Età del modello"
 
 #: ../plug-ins/metadata/metadata-editor.c:561
 msgid "Minor Model Age Disclosure"
-msgstr "Divulgazione età modello minore"
+msgstr "Informativa sull'età dei modelli minorenni"
 
 #: ../plug-ins/metadata/metadata-editor.c:562
 msgid "Model Release Status"
