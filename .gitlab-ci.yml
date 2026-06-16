@@ -742,8 +742,12 @@ file-plug-in-tests:
   extends: .debian-nonreloc
   rules:
     # Don't run on release since the plug-in doesn't get installed in releases
-    - <<: *CI_MERGE
-    - <<: *CI_COMMIT
+    - if: ($CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null) || $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        paths:
+          - plug-ins/*
+          - .gitlab-ci.yml #to test changes on script: below
+        compare_to: 'refs/heads/master'
   needs: ["gimp-debian-nonreloc"]
   stage: analysis
   variables:
