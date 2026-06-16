@@ -397,8 +397,8 @@ def set_rpath(binary, destbin=None):
       sys.stderr.write(f"Failed to run install_name_tool on {binary}: {e}\n")
 
   # Normalize signature after all the changes
-  #result = subprocess.run(["codesign", "-v", binary], capture_output=True, text=True)
-  #if "invalid signature" in result.stdout + result.stderr:
+  result = subprocess.run(["codesign", "-v", binary], capture_output=True, text=True)
+  if "invalid signature" in result.stdout + result.stderr:
     try:
       subprocess.run(["codesign", "--sign", "-", "--force", "--preserve-metadata=entitlements,requirements,flags,runtime", binary], check=True, stderr=subprocess.DEVNULL)
       #sys.stdout.write(f"Re-signed {binary}\n")
