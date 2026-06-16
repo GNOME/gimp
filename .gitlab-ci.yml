@@ -630,7 +630,7 @@ gimp-win:
   extends: .win
   needs:
     - job: deps-win
-      #to allow running outside 'GNOME/gimp' namespace (on MRs)
+      #to allow running non-matrix outside 'GNOME/gimp' namespace (on MRs)
       optional: true
   stage: build
   variables:
@@ -718,7 +718,7 @@ gimp-macos:
   extends: .macos
   needs:
     - job: deps-macos
-      #to allow running Homebrew builds
+      #to allow running non-matrix Homebrew builds
       optional: true
   stage: build
   variables:
@@ -1101,7 +1101,7 @@ dist-installer-weekly:
     - !reference [.win, rules]
   needs:
     - job: gimp-win
-      #to allow running outside 'GNOME/gimp' namespace (on MRs)
+      #to allow running non-matrix outside 'GNOME/gimp' namespace (on MRs)
       optional: true
   stage: distribution
   tags:
@@ -1123,7 +1123,7 @@ dist-store-weekly:
     - !reference [.win, rules]
   needs:
     - job: gimp-win
-      #to allow running outside 'GNOME/gimp' namespace (on MRs)
+      #to allow running non-matrix outside 'GNOME/gimp' namespace (on MRs)
       optional: true
   stage: distribution
   tags:
