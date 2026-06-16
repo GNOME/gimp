@@ -583,7 +583,7 @@ gimp-snap:
         STORE_OPTION: '-Dms-store=true'
   parallel:
     matrix:
-      - RUNNER: [windows-aarch64, win32-ps]
+      - RUNNER: [win32-ps]
   tags:
     - $RUNNER
   variables:
@@ -1151,7 +1151,7 @@ dist-installer-weekly:
   tags:
     - win32-ps
   variables:
-    MSYS_ROOT: 'C:/msys64'
+    MSYS_ROOT: "" #ensure the installer .ps1 work without MSYS2
   script:
     - build\windows\installer\3_dist-gimp-inno.ps1
   artifacts:
