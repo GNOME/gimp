@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-06-16 02:13+0000\n"
-"PO-Revision-Date: 2026-06-16 17:29+0200\n"
+"PO-Revision-Date: 2026-06-16 21:31+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -6946,7 +6946,7 @@ msgstr "24BPP (RGB)"
 
 #: plug-ins/common/file-tim.c:228
 msgid "Image _X"
-msgstr "_X de imagen"
+msgstr "Imagen _X"
 
 #: plug-ins/common/file-tim.c:229
 msgid "Origin X coordinate"
@@ -6954,7 +6954,7 @@ msgstr "Coordenada X del origen"
 
 #: plug-ins/common/file-tim.c:234
 msgid "Image _Y"
-msgstr "_Y de imagen"
+msgstr "Imagen _Y"
 
 #: plug-ins/common/file-tim.c:235
 msgid "Origin Y coordinate"
@@ -6962,7 +6962,7 @@ msgstr "Coordenada Y del origen"
 
 #: plug-ins/common/file-tim.c:241
 msgid "_Palette X"
-msgstr "X de _paleta"
+msgstr "_Paleta X"
 
 #: plug-ins/common/file-tim.c:242
 msgid "Palette X coordinate"
@@ -6970,7 +6970,7 @@ msgstr "Coordenada X de la paleta"
 
 #: plug-ins/common/file-tim.c:247
 msgid "P_alette Y"
-msgstr "Y de p_aleta"
+msgstr "P_aleta Y"
 
 #: plug-ins/common/file-tim.c:248
 msgid "Palette Y coordinate"
@@ -8913,15 +8913,15 @@ msgstr "Escala Z"
 
 #: plug-ins/common/sphere-designer.c:2910
 msgid "Rotate X"
-msgstr "X de rotación"
+msgstr "Rotación X"
 
 #: plug-ins/common/sphere-designer.c:2918
 msgid "Rotate Y"
-msgstr "Y de rotación"
+msgstr "Rotación Y"
 
 #: plug-ins/common/sphere-designer.c:2926
 msgid "Rotate Z"
-msgstr "Z de rotación"
+msgstr "Rotación Z"
 
 #: plug-ins/common/sphere-designer.c:2935
 #: plug-ins/map-object/map-object-main.c:165
@@ -10310,7 +10310,7 @@ msgstr "Error al leer la cabecera. "
 #: plug-ins/file-fli/fli.c:187
 #, c-format
 msgid "Invalid header: not a FLI/FLC animation!"
-msgstr "Encabezado no válido: no es una animación FLI/FLC."
+msgstr "Encabezado no válido: no es una animación FLI/FLC"
 
 #: plug-ins/file-fli/fli.c:205
 #, c-format
@@ -11180,7 +11180,7 @@ msgid ""
 "format files."
 msgstr ""
 "Este complemento carga miniaturas de imágenes a partir de archivos en "
-"formato PSD nativo de Adobe Photoshop (TM)."
+"formato PSD nativo de Adobe Photoshop (TM).0"
 
 #: plug-ins/file-psd/psd.c:228
 msgid "Exports files in the Photoshop (TM) PSD file format"
@@ -11407,8 +11407,8 @@ msgstr ""
 "No hay un cargador RAW instalado para abrir archivos «%s».\n"
 "\n"
 "Actualmente GIMP admite estos cargadores RAW:\n"
-"- darktable (https://www.darktable.org/), a partir de la 1.7\n"
-"- RawTherapee (https://rawtherapee.com/), a partir de la 5.2\n"
+"- darktable (https://www.darktable.org/), al menos 1.7\n"
+"- RawTherapee (https://rawtherapee.com/), al menos 5.2\n"
 "- ART (https://artraweditor.github.io/)\n"
 "\n"
 "Instale uno de ellos para cargar archivos RAW."
