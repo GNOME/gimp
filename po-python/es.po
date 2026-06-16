@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-11 21:01+0000\n"
-"PO-Revision-Date: 2024-06-16 03:19+0200\n"
+"POT-Creation-Date: 2026-05-25 17:59+0000\n"
+"PO-Revision-Date: 2026-06-16 20:54+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -24,169 +24,172 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.3\n"
+"X-Generator: Poedit 3.9\n"
 
-#: plug-ins/python/colorxhtml.py:78
-msgid "Save as colored HTML text..."
-msgstr "Guardar como texto HTML coloreado…"
+#: plug-ins/python/colorxhtml.py:77
+msgid "Export as colored HTML text..."
+msgstr "Exportar como texto HTML coloreado…"
 
-#: plug-ins/python/colorxhtml.py:137
+#: plug-ins/python/colorxhtml.py:136
 msgid "Saving as colored XHTML"
 msgstr "Guardando como XHTML coloreado"
 
-#: plug-ins/python/colorxhtml.py:211
-msgid "Save as colored HTML text"
-msgstr "Guardar como texto HTML coloreado"
+#: plug-ins/python/colorxhtml.py:210
+msgid "Exports as colored HTML text"
+msgstr "Exporta como texto HTML coloreado"
 
-#: plug-ins/python/colorxhtml.py:214
+#: plug-ins/python/colorxhtml.py:211
+msgid "Exports the image as colored XHTML text"
+msgstr "Exporta la imagen como texto XHTML coloreado"
+
+#: plug-ins/python/colorxhtml.py:213
 msgid "Colored HTML text"
 msgstr "Texto HTML coloreado"
 
-#: plug-ins/python/colorxhtml.py:222
+#: plug-ins/python/colorxhtml.py:221
 msgid "Rea_d characters from file"
 msgstr "Lee_r caracteres desde un archivo"
 
-#: plug-ins/python/colorxhtml.py:223
+#: plug-ins/python/colorxhtml.py:222
 msgid "Read characters from file, if true, or use text entry"
 msgstr ""
 "Leer caracteres desde un archivo si es verdadero o usar la entrada de texto"
 
-#: plug-ins/python/colorxhtml.py:225
+#: plug-ins/python/colorxhtml.py:224
 msgid "Charac_ters"
 msgstr "Carac_teres"
 
-#: plug-ins/python/colorxhtml.py:226
+#: plug-ins/python/colorxhtml.py:225
 msgid "Characters that will be used as colored pixels."
 msgstr "Caracteres que se usarán como píxeles coloreados."
 
-#: plug-ins/python/colorxhtml.py:228
+#: plug-ins/python/colorxhtml.py:227
 msgid "Fo_nt size in pixels"
 msgstr "Ta_maño de la tipografía en píxeles"
 
-#: plug-ins/python/colorxhtml.py:229
+#: plug-ins/python/colorxhtml.py:228
 msgid "Font size in pixels"
 msgstr "Tamaño de la tipografía en píxeles"
 
-#: plug-ins/python/colorxhtml.py:231
+#: plug-ins/python/colorxhtml.py:230
 msgid "_Write a separate CSS file"
 msgstr "E_scribir un archivo CSS separado"
 
-#: plug-ins/python/colorxhtml.py:232
+#: plug-ins/python/colorxhtml.py:231
 msgid "Write a separate CSS file"
 msgstr "Escribir un archivo CSS separado"
 
 #. GUI only, used to create a widget to open a file if source-file is enabled
-#: plug-ins/python/colorxhtml.py:235
+#: plug-ins/python/colorxhtml.py:234
 msgid "Choose File"
 msgstr "Elegir un archivo"
 
-#: plug-ins/python/foggify.py:114
+#: plug-ins/python/file-openraster.py:507
+#: plug-ins/python/file-openraster.py:508
+msgid "export an OpenRaster (.ora) file"
+msgstr "exportar un archivo OpenRaster (.ora)"
+
+#: plug-ins/python/file-openraster.py:510
+#: plug-ins/python/file-openraster.py:516
+msgid "OpenRaster"
+msgstr "OpenRaster"
+
+#: plug-ins/python/file-openraster.py:517
+#: plug-ins/python/file-openraster.py:518
+msgid "load an OpenRaster (.ora) file"
+msgstr "cargar un archivo OpenRaster (.ora)"
+
+#: plug-ins/python/file-openraster.py:527
+#: plug-ins/python/file-openraster.py:528
+msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgstr "carga una miniatura de un archivo OpenRaster (.ora)"
+
+#: plug-ins/python/foggify.py:120
 msgid "Add a layer of fog"
 msgstr "Añadir una capa de niebla"
 
-#: plug-ins/python/foggify.py:115
+#: plug-ins/python/foggify.py:121
 msgid "Adds a layer of fog to the image."
 msgstr "Añadir una capa de niebla a la imagen."
 
-#: plug-ins/python/foggify.py:117
+#: plug-ins/python/foggify.py:123
 msgid "_Fog..."
 msgstr "_Niebla…"
 
-#: plug-ins/python/foggify.py:123
+#: plug-ins/python/foggify.py:129
 msgid "Layer _name"
 msgstr "_Nombre de la capa"
 
-#: plug-ins/python/foggify.py:123
+#: plug-ins/python/foggify.py:129
 msgid "Layer name"
 msgstr "Nombre de la capa"
 
-#: plug-ins/python/foggify.py:124
+#: plug-ins/python/foggify.py:130
 msgid "Clouds"
 msgstr "Nubes"
 
-#: plug-ins/python/foggify.py:125
+#: plug-ins/python/foggify.py:131
 msgid "_Fog color"
 msgstr "Color de la _niebla"
 
-#: plug-ins/python/foggify.py:125
+#: plug-ins/python/foggify.py:131
 msgid "Fog color"
 msgstr "Color de la niebla"
 
-#: plug-ins/python/foggify.py:127
+#: plug-ins/python/foggify.py:133
 msgid "_Turbulence"
 msgstr "_Turbulencia"
 
-#: plug-ins/python/foggify.py:127
+#: plug-ins/python/foggify.py:133
 msgid "Turbulence"
 msgstr "Turbulencia"
 
-#: plug-ins/python/foggify.py:129
+#: plug-ins/python/foggify.py:135
 msgid "O_pacity"
 msgstr "O_pacidad"
 
-#: plug-ins/python/foggify.py:129
+#: plug-ins/python/foggify.py:135
 msgid "Opacity"
 msgstr "Opacidad"
 
-#: plug-ins/python/gradients-save-as-css.py:94
-msgid "_File..."
-msgstr "_Archivo…"
-
-#: plug-ins/python/gradients-save-as-css.py:102
-msgid "Choose CSS file..."
-msgstr "Elegir un archivo CSS…"
-
-#: plug-ins/python/gradients-save-as-css.py:111
-msgid "Save as CSS file..."
-msgstr "Guardar como archivo CSS…"
-
-#: plug-ins/python/gradients-save-as-css.py:113
-#: plug-ins/python/python-console/python-console.py:272
-#: plug-ins/python/spyro-plus.py:1735
-msgid "_Cancel"
-msgstr "_Cancelar"
-
-#: plug-ins/python/gradients-save-as-css.py:114
-#: plug-ins/python/spyro-plus.py:1736
-msgid "_OK"
-msgstr "_Aceptar"
-
-#: plug-ins/python/gradients-save-as-css.py:192
-#: plug-ins/python/gradients-save-as-css.py:193
+#: plug-ins/python/gradients-save-as-css.py:132
+#: plug-ins/python/gradients-save-as-css.py:133
 msgid "Creates a new palette from a given gradient"
 msgstr "Crea una paleta nueva a partir de un degradado dado"
 
-#: plug-ins/python/gradients-save-as-css.py:195
+#: plug-ins/python/gradients-save-as-css.py:135
 msgid "Save Gradient as CSS..."
 msgstr "Guardar degradado como CSS…"
 
-#: plug-ins/python/gradients-save-as-css.py:201
-#: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
-#: plug-ins/python/palette-to-gradient.py:143
-#: plug-ins/python/python-console/python-console.py:300
+#: plug-ins/python/gradients-save-as-css.py:141
+#: plug-ins/python/palette-export-as-kpl.py:177
+#: plug-ins/python/palette-offset.py:53 plug-ins/python/palette-sort.py:350
+#: plug-ins/python/palette-to-gradient.py:146
+#: plug-ins/python/python-console/python-console.py:323
 msgid "Run mode"
 msgstr "Modo de ejecución"
 
-#: plug-ins/python/gradients-save-as-css.py:202
-#: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
-#: plug-ins/python/palette-to-gradient.py:144
-#: plug-ins/python/python-console/python-console.py:300
+#: plug-ins/python/gradients-save-as-css.py:142
+#: plug-ins/python/palette-export-as-kpl.py:178
+#: plug-ins/python/palette-offset.py:54 plug-ins/python/palette-sort.py:351
+#: plug-ins/python/palette-to-gradient.py:147
+#: plug-ins/python/python-console/python-console.py:324
 msgid "The run mode"
 msgstr "El modo de ejecución"
 
-#: plug-ins/python/gradients-save-as-css.py:205
+#: plug-ins/python/gradients-save-as-css.py:145
 msgid "_Gradient to use"
 msgstr "_Degradado que usar"
 
-#: plug-ins/python/gradients-save-as-css.py:207
+#: plug-ins/python/gradients-save-as-css.py:149
 msgid "_File"
 msgstr "_Archivo"
 
-#: plug-ins/python/histogram-export.py:153
+#: plug-ins/python/histogram-export.py:151
 msgid "File is either a directory or file name is empty."
 msgstr "El archivo es una carpeta o bien el nombre de archivo está vacío."
 
-#: plug-ins/python/histogram-export.py:156
+#: plug-ins/python/histogram-export.py:154
 msgid "Directory not found."
 msgstr "No se encontró la carpeta."
 
@@ -194,42 +197,42 @@ msgstr "No se encontró la carpeta."
 msgid "Histogram Export..."
 msgstr "Exportación de histograma…"
 
-#: plug-ins/python/histogram-export.py:215
+#: plug-ins/python/histogram-export.py:214
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Exporta el histograma de la imagen a un archivo de texto (CSV)"
 
-#: plug-ins/python/histogram-export.py:218
-msgid "_Export histogram..."
+#: plug-ins/python/histogram-export.py:217
+msgid "_Export Histogram..."
 msgstr "_Exportar histograma…"
 
 #. TODO: GFile props still don't have labels + only load existing files
 #. (here we likely want to create a new file).
-#: plug-ins/python/histogram-export.py:226
-msgid "Histogram File"
+#: plug-ins/python/histogram-export.py:225
+msgid "Histogram file"
 msgstr "Archivo del histograma"
 
-#: plug-ins/python/histogram-export.py:227
+#: plug-ins/python/histogram-export.py:226
 msgid "Histogram export file"
 msgstr "Archivo del histograma exportado"
 
 #: plug-ins/python/histogram-export.py:228
-msgid "_Bucket Size"
+msgid "_Bucket size"
 msgstr "Tamaño del _cubo"
 
 #: plug-ins/python/histogram-export.py:228
-msgid "Bucket Size"
+msgid "Bucket size"
 msgstr "Tamaño del cubo"
 
 #: plug-ins/python/histogram-export.py:230
-msgid "Sample _Average"
+msgid "Sample _average"
 msgstr "_Media simple"
 
 #: plug-ins/python/histogram-export.py:230
-msgid "Sample Average"
+msgid "Sample average"
 msgstr "Media simple"
 
 #: plug-ins/python/histogram-export.py:233
-msgid "Pixel Count"
+msgid "Pixel count"
 msgstr "Contador de píxeles"
 
 #: plug-ins/python/histogram-export.py:234
@@ -241,96 +244,137 @@ msgid "Percent"
 msgstr "Porcentaje"
 
 #: plug-ins/python/histogram-export.py:236
-msgid "Output _format"
+msgid "Output _Format"
 msgstr "_Formato de salida"
 
 #: plug-ins/python/histogram-export.py:236
 msgid "Output format"
 msgstr "Formato de salida"
 
-#: plug-ins/python/palette-offset.py:48
+#: plug-ins/python/palette-export-as-kpl.py:56
+msgid "Options"
+msgstr "Opciones"
+
+#: plug-ins/python/palette-export-as-kpl.py:61
+msgid "_Export"
+msgstr "_Exportar"
+
+#: plug-ins/python/palette-export-as-kpl.py:168
+#: plug-ins/python/palette-export-as-kpl.py:169
+msgid "Export palette as Krita .kpl"
+msgstr "Exportar paleta como Krita .kpl"
+
+#: plug-ins/python/palette-export-as-kpl.py:171
+msgid "_Krita palette..."
+msgstr "Paleta de _Krita…"
+
+#: plug-ins/python/palette-export-as-kpl.py:181
+msgid "_Palette to export"
+msgstr "_Paleta que exportar"
+
+#: plug-ins/python/palette-export-as-kpl.py:185
+msgid "_File (.kpl)"
+msgstr "_Archivo (.kpl)"
+
+#: plug-ins/python/palette-export-as-kpl.py:188
+msgid "Commen_t"
+msgstr "Comen_tario"
+
+#: plug-ins/python/palette-export-as-kpl.py:189
+msgid "Optional comment"
+msgstr "Comentario opcional"
+
+#: plug-ins/python/palette-export-as-kpl.py:192
+msgid "Re_ad only"
+msgstr "Solo lectur_a"
+
+#: plug-ins/python/palette-export-as-kpl.py:193
+msgid "The palette will be locked on import"
+msgstr "La paleta se bloqueará al importar"
+
+#: plug-ins/python/palette-offset.py:46
 msgid "_Offset Palette..."
 msgstr "_Desplazar paleta…"
 
-#: plug-ins/python/palette-offset.py:49
+#: plug-ins/python/palette-offset.py:47
 msgid "Offset the colors in a palette"
 msgstr "Desplazar los colores de una paleta"
 
-#: plug-ins/python/palette-offset.py:59 plug-ins/python/palette-sort.py:358
-#: plug-ins/python/palette-to-gradient.py:147
+#: plug-ins/python/palette-offset.py:57 plug-ins/python/palette-sort.py:354
+#: plug-ins/python/palette-to-gradient.py:150
 msgid "_Palette"
 msgstr "_Paleta"
 
-#: plug-ins/python/palette-offset.py:60 plug-ins/python/palette-sort.py:359
-#: plug-ins/python/palette-sort.py:399 plug-ins/python/palette-sort.py:400
-#: plug-ins/python/palette-to-gradient.py:148
+#: plug-ins/python/palette-offset.py:58 plug-ins/python/palette-sort.py:355
+#: plug-ins/python/palette-sort.py:396 plug-ins/python/palette-sort.py:397
+#: plug-ins/python/palette-to-gradient.py:151
 msgid "Palette"
 msgstr "Paleta"
 
-#: plug-ins/python/palette-offset.py:62
+#: plug-ins/python/palette-offset.py:61
 msgid "O_ffset"
 msgstr "Des_plazamiento"
 
-#: plug-ins/python/palette-offset.py:62
+#: plug-ins/python/palette-offset.py:61
 msgid "Offset"
 msgstr "Desplazamiento"
 
-#: plug-ins/python/palette-offset.py:64
+#: plug-ins/python/palette-offset.py:63
 msgid "The edited palette"
 msgstr "La paleta editada"
 
-#: plug-ins/python/palette-offset.py:65
+#: plug-ins/python/palette-offset.py:64
 msgid "The newly created palette when read-only, otherwise the input palette"
 msgstr ""
 "La paleta recién creada si es de sólo lectura o de la paleta de entrada en "
 "caso contrario"
 
 #. TODO: Re-incorporate LAB and LCHab options with GeglColor
-#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:463
+#: plug-ins/python/palette-sort.py:41 plug-ins/python/palette-sort.py:466
 msgid "Red"
 msgstr "Rojo"
 
-#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:464
+#: plug-ins/python/palette-sort.py:41 plug-ins/python/palette-sort.py:467
 msgid "Green"
 msgstr "Verde"
 
-#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
+#: plug-ins/python/palette-sort.py:41 plug-ins/python/palette-sort.py:468
 msgid "Blue"
 msgstr "Azul"
 
-#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:466
+#: plug-ins/python/palette-sort.py:42 plug-ins/python/palette-sort.py:469
 msgid "Luma (Y)"
 msgstr "Luma (Y)"
 
-#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:467
+#: plug-ins/python/palette-sort.py:43 plug-ins/python/palette-sort.py:470
 msgid "Hue"
 msgstr "Tono"
 
-#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:468
+#: plug-ins/python/palette-sort.py:43 plug-ins/python/palette-sort.py:471
 msgid "Saturation"
 msgstr "Saturación"
 
-#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
+#: plug-ins/python/palette-sort.py:43 plug-ins/python/palette-sort.py:472
 msgid "Value"
 msgstr "Valor"
 
-#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:470
+#: plug-ins/python/palette-sort.py:44 plug-ins/python/palette-sort.py:473
 msgid "Saturation (HSL)"
 msgstr "Saturación (HSL)"
 
-#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:471
+#: plug-ins/python/palette-sort.py:44 plug-ins/python/palette-sort.py:474
 msgid "Lightness (HSL)"
 msgstr "Claridad (HSL)"
 
-#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:472
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:475
 msgid "Index"
 msgstr "Índice"
 
-#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:473
+#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:476
 msgid "Random"
 msgstr "Aleatorio"
 
-#: plug-ins/python/palette-sort.py:94
+#: plug-ins/python/palette-sort.py:90
 msgid ""
 "\n"
 "    Format is 'start:nrows,length' . All items are optional.\n"
@@ -367,143 +411,143 @@ msgstr ""
 "comenzando en índice 2.\n"
 "    «4» es ilegal (ambiguo)\n"
 
-#: plug-ins/python/palette-sort.py:343
+#: plug-ins/python/palette-sort.py:339
 msgid "_Sort Palette..."
 msgstr "_Ordenar paleta…"
 
-#: plug-ins/python/palette-sort.py:345
+#: plug-ins/python/palette-sort.py:341
 msgid "Sort the colors in a palette"
 msgstr "Ordena los colores en una paleta"
 
-#: plug-ins/python/palette-sort.py:363
+#: plug-ins/python/palette-sort.py:360
 msgid "All"
 msgstr "Todos"
 
-#: plug-ins/python/palette-sort.py:364
+#: plug-ins/python/palette-sort.py:361
 msgid "Slice / Array"
 msgstr "Rodaja / vector"
 
-#: plug-ins/python/palette-sort.py:365
+#: plug-ins/python/palette-sort.py:362
 msgid "Autoslice (fg->bg)"
 msgstr "Troceado automático (frente->fondo)"
 
-#: plug-ins/python/palette-sort.py:366
+#: plug-ins/python/palette-sort.py:363
 msgid "Partitioned"
 msgstr "Particionado"
 
-#: plug-ins/python/palette-sort.py:367
+#: plug-ins/python/palette-sort.py:364
 msgid "Select_ions"
 msgstr "Selecc_iones"
 
-#: plug-ins/python/palette-sort.py:367
+#: plug-ins/python/palette-sort.py:364
 msgid "Selections"
 msgstr "Selecciones"
 
 #. TODO: It would be much simpler to replace the slice expression with three
 #. separate parameters: start-index, number-of-rows, row_length
-#: plug-ins/python/palette-sort.py:371
+#: plug-ins/python/palette-sort.py:368
 msgid "Slice _expression"
 msgstr "_Expresión de troceado"
 
-#: plug-ins/python/palette-sort.py:376
+#: plug-ins/python/palette-sort.py:373
 msgid "Channel _to sort"
 msgstr "Canal _que ordenar"
 
-#: plug-ins/python/palette-sort.py:376
+#: plug-ins/python/palette-sort.py:373
 msgid "Channel to sort"
 msgstr "Canal que ordenar"
 
-#: plug-ins/python/palette-sort.py:378
+#: plug-ins/python/palette-sort.py:375
 msgid "_Ascending"
 msgstr "_Ascendente"
 
-#: plug-ins/python/palette-sort.py:378 plug-ins/python/palette-sort.py:385
+#: plug-ins/python/palette-sort.py:375 plug-ins/python/palette-sort.py:382
 msgid "Ascending"
 msgstr "Ascendente"
 
-#: plug-ins/python/palette-sort.py:382
+#: plug-ins/python/palette-sort.py:379
 msgid "Secondary C_hannel to sort"
 msgstr "Canal sec_undario que ordenar"
 
-#: plug-ins/python/palette-sort.py:383
+#: plug-ins/python/palette-sort.py:380
 msgid "Secondary Channel to sort"
 msgstr "Canal secundario que ordenar"
 
-#: plug-ins/python/palette-sort.py:385
+#: plug-ins/python/palette-sort.py:382
 msgid "Ascen_ding"
 msgstr "Ascen_dente"
 
-#: plug-ins/python/palette-sort.py:387
+#: plug-ins/python/palette-sort.py:384
 msgid "_Quantization"
 msgstr "_Cuantización"
 
-#: plug-ins/python/palette-sort.py:388
+#: plug-ins/python/palette-sort.py:385
 msgid "Quantization"
 msgstr "Cuantización"
 
-#: plug-ins/python/palette-sort.py:392
+#: plug-ins/python/palette-sort.py:389
 msgid "Partitionin_g channel"
 msgstr "Canal de partició_n"
 
-#: plug-ins/python/palette-sort.py:393
+#: plug-ins/python/palette-sort.py:390
 msgid "Partitioning channel"
 msgstr "Canal de particionado"
 
-#: plug-ins/python/palette-sort.py:395
+#: plug-ins/python/palette-sort.py:392
 msgid "Partition q_uantization"
 msgstr "C_uantización del particionado"
 
-#: plug-ins/python/palette-sort.py:396
+#: plug-ins/python/palette-sort.py:393
 msgid "Partition quantization"
 msgstr "Cuantización del particionado"
 
-#: plug-ins/python/palette-sort.py:474
+#: plug-ins/python/palette-sort.py:477
 msgid "Lightness (LAB)"
 msgstr "Luminosidad (LAB)"
 
-#: plug-ins/python/palette-sort.py:475
+#: plug-ins/python/palette-sort.py:478
 msgid "A-color"
 msgstr "Color-A"
 
-#: plug-ins/python/palette-sort.py:476
+#: plug-ins/python/palette-sort.py:479
 msgid "B-color"
 msgstr "Color-B"
 
-#: plug-ins/python/palette-sort.py:477
+#: plug-ins/python/palette-sort.py:480
 msgid "Chroma (LCHab)"
 msgstr "Croma (LCTab)"
 
-#: plug-ins/python/palette-sort.py:478
+#: plug-ins/python/palette-sort.py:481
 msgid "Hue (LCHab)"
 msgstr "Tono (LCTab)"
 
-#: plug-ins/python/palette-to-gradient.py:127
+#: plug-ins/python/palette-to-gradient.py:130
 msgid "Palette to _Gradient"
 msgstr "Paleta a _degradado"
 
-#: plug-ins/python/palette-to-gradient.py:128
+#: plug-ins/python/palette-to-gradient.py:131
 msgid "Create a gradient using colors from the palette"
 msgstr "Crea un degradado usando los colores de la paleta"
 
-#: plug-ins/python/palette-to-gradient.py:129
+#: plug-ins/python/palette-to-gradient.py:132
 msgid "Create a new gradient using colors from the palette."
 msgstr "Crear un degradado nuevo usando los colores de la paleta."
 
-#: plug-ins/python/palette-to-gradient.py:132
+#: plug-ins/python/palette-to-gradient.py:135
 msgid "Palette to _Repeating Gradient"
 msgstr "Paleta a degradado _repetido"
 
-#: plug-ins/python/palette-to-gradient.py:133
+#: plug-ins/python/palette-to-gradient.py:136
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Crear un degradado que se repite, utilizando los colores de la paleta"
 
-#: plug-ins/python/palette-to-gradient.py:134
+#: plug-ins/python/palette-to-gradient.py:137
 msgid "Create a new repeating gradient using colors from the palette."
 msgstr ""
 "Crear un degradado nuevo que se repite, utilizando los colores de la paleta."
 
-#: plug-ins/python/palette-to-gradient.py:150
-#: plug-ins/python/palette-to-gradient.py:151
+#: plug-ins/python/palette-to-gradient.py:154
+#: plug-ins/python/palette-to-gradient.py:155
 msgid "The newly created gradient"
 msgstr "El degradado recién creado"
 
@@ -512,7 +556,7 @@ msgid "Python Console"
 msgstr "Consola de Python"
 
 #: plug-ins/python/python-console/python-console.py:81
-#: plug-ins/python/python-console/python-console.py:273
+#: plug-ins/python/python-console/python-console.py:279
 msgid "_Save"
 msgstr "_Guardar"
 
@@ -525,144 +569,149 @@ msgid "_Browse..."
 msgstr "_Examinar…"
 
 #: plug-ins/python/python-console/python-console.py:84
-#: plug-ins/python/python-console/python-console.py:221
+#: plug-ins/python/python-console/python-console.py:227
 msgid "_Close"
 msgstr "_Cerrar"
 
-#: plug-ins/python/python-console/python-console.py:218
+#: plug-ins/python/python-console/python-console.py:224
 msgid "Python Procedure Browser"
 msgstr "Examinador de procedimientos de Python"
 
-#: plug-ins/python/python-console/python-console.py:220
+#: plug-ins/python/python-console/python-console.py:226
 msgid "_Apply"
 msgstr "_Aplicar"
 
-#: plug-ins/python/python-console/python-console.py:246
+#: plug-ins/python/python-console/python-console.py:252
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "No se pudo abrir «%s» para escribir: %s"
 
-#: plug-ins/python/python-console/python-console.py:261
+#: plug-ins/python/python-console/python-console.py:267
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "No se pudo escribir en «%s»: %s"
 
-#: plug-ins/python/python-console/python-console.py:270
+#: plug-ins/python/python-console/python-console.py:276
 msgid "Save Python-Fu Console Output"
 msgstr "Guardar la salida de la consola de Python-Fu"
 
-#: plug-ins/python/python-console/python-console.py:321
+#: plug-ins/python/python-console/python-console.py:278
+#: plug-ins/python/spyro-plus.py:1748
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: plug-ins/python/python-console/python-console.py:316
 msgid "Python _Console"
 msgstr "_Consola de Python"
 
-#: plug-ins/python/python-console/python-console.py:322
+#: plug-ins/python/python-console/python-console.py:317
 msgid "Interactive GIMP Python interpreter"
 msgstr "Intérprete interactivo de Python en GIMP"
 
-#: plug-ins/python/python-console/python-console.py:323
+#: plug-ins/python/python-console/python-console.py:318
 msgid "Type in commands and see results"
 msgstr "Escriba los comandos y vea los resultados"
 
 #
-#: plug-ins/python/spyro-plus.py:51
+#: plug-ins/python/spyro-plus.py:49
 msgid "Spyro Layer"
 msgstr "Capa espiro"
 
-#: plug-ins/python/spyro-plus.py:52
+#: plug-ins/python/spyro-plus.py:50
 msgid "Spyro Path"
 msgstr "Ruta del espirógrafo"
 
-#: plug-ins/python/spyro-plus.py:62
+#: plug-ins/python/spyro-plus.py:60
 msgid "As New Layer"
 msgstr "Como capa nueva"
 
-#: plug-ins/python/spyro-plus.py:63
+#: plug-ins/python/spyro-plus.py:61
 msgid "Redraw on last active layer"
 msgstr "Redibujar en la última capa activa"
 
-#: plug-ins/python/spyro-plus.py:64
+#: plug-ins/python/spyro-plus.py:62
 msgid "As Path"
 msgstr "Como ruta"
 
-#: plug-ins/python/spyro-plus.py:112 plug-ins/python/spyro-plus.py:2255
+#: plug-ins/python/spyro-plus.py:110 plug-ins/python/spyro-plus.py:2268
 msgid "Circle"
 msgstr "Círculo"
 
-#: plug-ins/python/spyro-plus.py:148 plug-ins/python/spyro-plus.py:2259
+#: plug-ins/python/spyro-plus.py:146 plug-ins/python/spyro-plus.py:2272
 msgid "Polygon-Star"
 msgstr "Polígono estrellado"
 
 # Como seno, conseno, sinusoidal, sinusoide
 #. Sine wave on a circle ring.
-#: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:996
-#: plug-ins/python/spyro-plus.py:2250 plug-ins/python/spyro-plus.py:2260
+#: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:1009
+#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2273
 msgid "Sine"
 msgstr "Sinusoide"
 
 #. Semi-circles, based on a polygon
-#: plug-ins/python/spyro-plus.py:174 plug-ins/python/spyro-plus.py:2261
+#: plug-ins/python/spyro-plus.py:172 plug-ins/python/spyro-plus.py:2274
 msgid "Bumps"
 msgstr "Protuberancias"
 
-#: plug-ins/python/spyro-plus.py:279
+#: plug-ins/python/spyro-plus.py:277
 msgid "Rack"
 msgstr "Estante"
 
-#: plug-ins/python/spyro-plus.py:323
+#: plug-ins/python/spyro-plus.py:321
 msgid "Frame"
 msgstr "Cuadro"
 
-#: plug-ins/python/spyro-plus.py:436 plug-ins/python/spyro-plus.py:2258
+#: plug-ins/python/spyro-plus.py:434 plug-ins/python/spyro-plus.py:2271
 msgid "Selection"
 msgstr "Selección"
 
-#: plug-ins/python/spyro-plus.py:526 plug-ins/python/spyro-plus.py:2295
+#: plug-ins/python/spyro-plus.py:539 plug-ins/python/spyro-plus.py:2308
 msgid "Pencil"
 msgstr "Lápiz"
 
-#: plug-ins/python/spyro-plus.py:542 plug-ins/python/spyro-plus.py:2296
+#: plug-ins/python/spyro-plus.py:555 plug-ins/python/spyro-plus.py:2309
 msgid "AirBrush"
 msgstr "Aerógrafo"
 
-#: plug-ins/python/spyro-plus.py:609 plug-ins/python/spyro-plus.py:2293
+#: plug-ins/python/spyro-plus.py:622 plug-ins/python/spyro-plus.py:2306
 msgid "Preview"
 msgstr "Vista previa"
 
-#: plug-ins/python/spyro-plus.py:614 plug-ins/python/spyro-plus.py:2297
+#: plug-ins/python/spyro-plus.py:627 plug-ins/python/spyro-plus.py:2310
 msgid "Stroke"
 msgstr "Trazo"
 
-#: plug-ins/python/spyro-plus.py:661 plug-ins/python/spyro-plus.py:2294
+#: plug-ins/python/spyro-plus.py:674 plug-ins/python/spyro-plus.py:2307
 msgid "PaintBrush"
 msgstr "Pincel"
 
-#: plug-ins/python/spyro-plus.py:665 plug-ins/python/spyro-plus.py:2298
+#: plug-ins/python/spyro-plus.py:678 plug-ins/python/spyro-plus.py:2311
 msgid "Ink"
 msgstr "Tinta"
 
 # Quizá no se debería traducir.
-#: plug-ins/python/spyro-plus.py:666 plug-ins/python/spyro-plus.py:2299
+#: plug-ins/python/spyro-plus.py:679 plug-ins/python/spyro-plus.py:2312
 msgid "MyPaintBrush"
 msgstr "Pincel MyPaint"
 
-#: plug-ins/python/spyro-plus.py:982 plug-ins/python/spyro-plus.py:2248
+#: plug-ins/python/spyro-plus.py:995 plug-ins/python/spyro-plus.py:2261
 msgid "Spyrograph"
 msgstr "Espirógrafo"
 
-#: plug-ins/python/spyro-plus.py:989 plug-ins/python/spyro-plus.py:2249
+#: plug-ins/python/spyro-plus.py:1002 plug-ins/python/spyro-plus.py:2262
 msgid "Epitrochoid"
 msgstr "Epitrocoide"
 
 # Curva de Lissajous (nombre propio)
-#: plug-ins/python/spyro-plus.py:1016 plug-ins/python/spyro-plus.py:2251
+#: plug-ins/python/spyro-plus.py:1029 plug-ins/python/spyro-plus.py:2264
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: plug-ins/python/spyro-plus.py:1472 plug-ins/python/spyro-plus.py:2252
-msgid "Curve Type"
+#: plug-ins/python/spyro-plus.py:1485
+msgid "Curve type"
 msgstr "Tipo de curva"
 
-#: plug-ins/python/spyro-plus.py:1473
+#: plug-ins/python/spyro-plus.py:1486
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -671,22 +720,22 @@ msgstr ""
 "fijo."
 
 #. TODO: Add Clone option once it's fixed
-#: plug-ins/python/spyro-plus.py:1478 plug-ins/python/spyro-plus.py:2301
+#: plug-ins/python/spyro-plus.py:1491 plug-ins/python/spyro-plus.py:2314
 msgid "Tool"
 msgstr "Herramienta"
 
-#: plug-ins/python/spyro-plus.py:1479
+#: plug-ins/python/spyro-plus.py:1492
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "La herramienta con la que dibujar el patrón. La herramienta de vista previa "
 "simplemente dibuja rápido."
 
-#: plug-ins/python/spyro-plus.py:1484
+#: plug-ins/python/spyro-plus.py:1497
 msgid "Long Gradient"
 msgstr "Degradado largo"
 
-#: plug-ins/python/spyro-plus.py:1486
+#: plug-ins/python/spyro-plus.py:1499
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -697,11 +746,11 @@ msgstr ""
 "coincidir con la longitud del patrón, en función del degradado actual y el "
 "modo de repetición de la configuración de la herramienta de degradado."
 
-#: plug-ins/python/spyro-plus.py:1506
+#: plug-ins/python/spyro-plus.py:1519
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Especificar el patrón usando una de las siguientes pestañas:"
 
-#: plug-ins/python/spyro-plus.py:1508
+#: plug-ins/python/spyro-plus.py:1521
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -713,7 +762,7 @@ msgstr ""
 "aparecen en kits de juguetes. Si sigue las instrucciones de los manuales de "
 "los kits de juguetes, los resultados deberían ser similares."
 
-#: plug-ins/python/spyro-plus.py:1532
+#: plug-ins/python/spyro-plus.py:1545
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -721,11 +770,11 @@ msgstr ""
 "Número de dientes del engranaje fijo. El tamaño del engranaje fijo es "
 "proporcional al número de dientes."
 
-#: plug-ins/python/spyro-plus.py:1535 plug-ins/python/spyro-plus.py:1563
-msgid "Fixed Gear Teeth"
+#: plug-ins/python/spyro-plus.py:1548 plug-ins/python/spyro-plus.py:1576
+msgid "Fixed gear teeth"
 msgstr "Dientes del engranaje fijo"
 
-#: plug-ins/python/spyro-plus.py:1543
+#: plug-ins/python/spyro-plus.py:1556
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -733,16 +782,16 @@ msgstr ""
 "Número de dientes del engranaje móvil. El tamaño del engranaje móvil es "
 "proporcional al número de dientes."
 
-#: plug-ins/python/spyro-plus.py:1546 plug-ins/python/spyro-plus.py:1568
-msgid "Moving Gear Teeth"
+#: plug-ins/python/spyro-plus.py:1559 plug-ins/python/spyro-plus.py:1581
+msgid "Moving gear teeth"
 msgstr "Dientes del engranaje móvil"
 
-#: plug-ins/python/spyro-plus.py:1551
+#: plug-ins/python/spyro-plus.py:1564
 msgid "Hole percent"
 msgstr "Porcentaje del agujero"
 
 # Me pregunto si el símbolo de % va a dar problemas ya que reconoce la letra s como una variable tipo string.
-#: plug-ins/python/spyro-plus.py:1552
+#: plug-ins/python/spyro-plus.py:1565
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -750,11 +799,11 @@ msgstr ""
 "Cuan lejos está el agujero del centro del engranaje móvil. 100% significa "
 "que el agujero está en el borde del engranaje."
 
-#: plug-ins/python/spyro-plus.py:1573
-msgid "Hole Number"
+#: plug-ins/python/spyro-plus.py:1586
+msgid "Hole number"
 msgstr "Número del agujero"
 
-#: plug-ins/python/spyro-plus.py:1574
+#: plug-ins/python/spyro-plus.py:1587
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -763,27 +812,27 @@ msgstr ""
 "está cerca del centro. El número de agujero máximo es diferente para cada "
 "engranaje."
 
-#: plug-ins/python/spyro-plus.py:1585
-msgid "Flower Petals"
+#: plug-ins/python/spyro-plus.py:1598
+msgid "Flower petals"
 msgstr "Pétalos de flores"
 
-#: plug-ins/python/spyro-plus.py:1586
+#: plug-ins/python/spyro-plus.py:1599
 msgid "The number of petals in the pattern."
 msgstr "El número de pétalos en el patrón."
 
-#: plug-ins/python/spyro-plus.py:1591
-msgid "Petal Skip"
+#: plug-ins/python/spyro-plus.py:1604
+msgid "Petal skip"
 msgstr "Salto de pétalos"
 
-#: plug-ins/python/spyro-plus.py:1592
+#: plug-ins/python/spyro-plus.py:1605
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "El número de pétalos que avanzar para dibujar el pétalo siguiente."
 
-#: plug-ins/python/spyro-plus.py:1597
-msgid "Hole Radius(%)"
+#: plug-ins/python/spyro-plus.py:1610
+msgid "Hole radius(%)"
 msgstr "Radio del agujero(%)"
 
-#: plug-ins/python/spyro-plus.py:1598
+#: plug-ins/python/spyro-plus.py:1611
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -793,11 +842,11 @@ msgstr ""
 "como un porcentaje del tamaño del patrón. Un valor de 0 no producirá ningún "
 "agujero. Un valor de 99 producirá una línea delgada en el borde."
 
-#: plug-ins/python/spyro-plus.py:1619
+#: plug-ins/python/spyro-plus.py:1632
 msgid "Width(%)"
 msgstr "Anchura(%)"
 
-#: plug-ins/python/spyro-plus.py:1620
+#: plug-ins/python/spyro-plus.py:1633
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -807,23 +856,23 @@ msgstr ""
 "1 sólo dibujará un patrón delgado. Un valor de 100 llenará todo el engranaje "
 "fijo."
 
-#: plug-ins/python/spyro-plus.py:1631
+#: plug-ins/python/spyro-plus.py:1644
 msgid "Visual"
 msgstr "Visual"
 
-#: plug-ins/python/spyro-plus.py:1637
+#: plug-ins/python/spyro-plus.py:1650
 msgid "Toy Kit"
 msgstr "Kit de juguetes"
 
-#: plug-ins/python/spyro-plus.py:1643
+#: plug-ins/python/spyro-plus.py:1656
 msgid "Gears"
 msgstr "Engranajes"
 
-#: plug-ins/python/spyro-plus.py:1656 plug-ins/python/spyro-plus.py:1700
+#: plug-ins/python/spyro-plus.py:1669 plug-ins/python/spyro-plus.py:1713
 msgid "Rotation"
 msgstr "Rotación"
 
-#: plug-ins/python/spyro-plus.py:1657
+#: plug-ins/python/spyro-plus.py:1670
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -831,11 +880,11 @@ msgstr ""
 "Rotación del patrón, en grados. La posición inicial del engranaje móvil en "
 "el engranaje fijo."
 
-#: plug-ins/python/spyro-plus.py:1680 plug-ins/python/spyro-plus.py:2262
+#: plug-ins/python/spyro-plus.py:1693 plug-ins/python/spyro-plus.py:2275
 msgid "Shape"
 msgstr "Forma"
 
-#: plug-ins/python/spyro-plus.py:1681
+#: plug-ins/python/spyro-plus.py:1694
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -849,40 +898,40 @@ msgstr ""
 "agujero=100 en la notación de engranaje para tocar el límite. La selección "
 "abarcará los límites de la selección actual; intente algo no rectangular."
 
-#: plug-ins/python/spyro-plus.py:1690
+#: plug-ins/python/spyro-plus.py:1703
 msgid "Sides"
 msgstr "Lados"
 
-#: plug-ins/python/spyro-plus.py:1690
+#: plug-ins/python/spyro-plus.py:1703
 msgid "Number of sides of the shape."
 msgstr "El número de lados de la figura."
 
-#: plug-ins/python/spyro-plus.py:1695
+#: plug-ins/python/spyro-plus.py:1708
 msgid "Morph"
 msgstr "Transformar"
 
-#: plug-ins/python/spyro-plus.py:1695
+#: plug-ins/python/spyro-plus.py:1708
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Transformar la forma del engranaje fijo. Solo afecta a algunas formas."
 
-#: plug-ins/python/spyro-plus.py:1700
+#: plug-ins/python/spyro-plus.py:1713
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Rotación del engranaje fijo, en grados"
 
-#: plug-ins/python/spyro-plus.py:1715
+#: plug-ins/python/spyro-plus.py:1728
 msgid "Margin (px)"
 msgstr "Margen (px)"
 
-#: plug-ins/python/spyro-plus.py:1715
+#: plug-ins/python/spyro-plus.py:1728
 msgid "Margin from edge of selection."
 msgstr "Margen del borde de la selección."
 
-#: plug-ins/python/spyro-plus.py:1720 plug-ins/python/spyro-plus.py:2283
-#: plug-ins/python/spyro-plus.py:2284
+#: plug-ins/python/spyro-plus.py:1733 plug-ins/python/spyro-plus.py:2296
+#: plug-ins/python/spyro-plus.py:2297
 msgid "Make width and height equal"
 msgstr "Igualar la anchura y la altura"
 
-#: plug-ins/python/spyro-plus.py:1722
+#: plug-ins/python/spyro-plus.py:1735
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -891,11 +940,15 @@ msgstr ""
 "Cuando está marcado, el patrón tendrá el mismo ancho y alto, y estará "
 "centrado."
 
-#: plug-ins/python/spyro-plus.py:1737
+#: plug-ins/python/spyro-plus.py:1749
+msgid "_OK"
+msgstr "_Aceptar"
+
+#: plug-ins/python/spyro-plus.py:1750
 msgid "Re_draw"
 msgstr "Re_dibujar"
 
-#: plug-ins/python/spyro-plus.py:1739
+#: plug-ins/python/spyro-plus.py:1752
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -904,15 +957,15 @@ msgstr ""
 "selección, presione esto para obtener una vista previa del aspecto del "
 "patrón."
 
-#: plug-ins/python/spyro-plus.py:1742
+#: plug-ins/python/spyro-plus.py:1755
 msgid "_Reset"
 msgstr "_Restablecer"
 
-#: plug-ins/python/spyro-plus.py:1750
+#: plug-ins/python/spyro-plus.py:1763
 msgid "Save"
 msgstr "Guardar"
 
-#: plug-ins/python/spyro-plus.py:1751
+#: plug-ins/python/spyro-plus.py:1764
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -920,38 +973,38 @@ msgstr ""
 "Elija si quiere guardar como una capa nueva, volver a dibujar en la última "
 "capa activa o guardar en la ruta"
 
-#: plug-ins/python/spyro-plus.py:1765
+#: plug-ins/python/spyro-plus.py:1778
 msgid "Spyrogimp"
 msgstr "Espirogimp"
 
-#: plug-ins/python/spyro-plus.py:1774 plug-ins/python/spyro-plus.py:2237
+#: plug-ins/python/spyro-plus.py:1787 plug-ins/python/spyro-plus.py:2250
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 "Dibuja espirogramas usando la configuración y selección actual de la "
 "herramienta."
 
-#: plug-ins/python/spyro-plus.py:1787
+#: plug-ins/python/spyro-plus.py:1800
 msgid "Curve Pattern"
 msgstr "Patrón de curva"
 
-#: plug-ins/python/spyro-plus.py:1790
+#: plug-ins/python/spyro-plus.py:1803
 msgid "Fixed Gear"
 msgstr "Engranaje fijo"
 
-#: plug-ins/python/spyro-plus.py:1793
+#: plug-ins/python/spyro-plus.py:1806
 msgid "Size"
 msgstr "Tamaño"
 
 # Ahora sí que es trazando o dibujando y no renderizando.
-#: plug-ins/python/spyro-plus.py:2149
+#: plug-ins/python/spyro-plus.py:2162
 msgid "Rendering Pattern"
 msgstr "Trazando el patrón"
 
-#: plug-ins/python/spyro-plus.py:2161
+#: plug-ins/python/spyro-plus.py:2174
 msgid "Please wait : Rendering Pattern"
 msgstr "Espere : Trazando el patrón"
 
-#: plug-ins/python/spyro-plus.py:2238
+#: plug-ins/python/spyro-plus.py:2251
 msgid ""
 "Uses current tool settings to draw Spyrograph patterns. The size and "
 "location of the pattern is based on the current selection."
@@ -960,54 +1013,58 @@ msgstr ""
 "espirógrafo. El tamaño y la ubicación del patrón se basan en la selección "
 "actual."
 
-#: plug-ins/python/spyro-plus.py:2241
+#: plug-ins/python/spyro-plus.py:2254
 msgid "Spyrogimp..."
 msgstr "Espirogimp…"
 
-#: plug-ins/python/spyro-plus.py:2256
+#: plug-ins/python/spyro-plus.py:2265
+msgid "Curve Type"
+msgstr "Tipo de curva"
+
+#: plug-ins/python/spyro-plus.py:2269
 msgid "rack"
 msgstr "exhibidor"
 
-#: plug-ins/python/spyro-plus.py:2257
+#: plug-ins/python/spyro-plus.py:2270
 msgid "frame"
 msgstr "fotograma"
 
-#: plug-ins/python/spyro-plus.py:2264
+#: plug-ins/python/spyro-plus.py:2277
 msgid "Si_des"
 msgstr "La_dos"
 
-#: plug-ins/python/spyro-plus.py:2265
+#: plug-ins/python/spyro-plus.py:2278
 msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
 msgstr ""
 "Número de lados del engranaje fijo (3 o más). Solo lo usan algunas formas."
 
-#: plug-ins/python/spyro-plus.py:2267
+#: plug-ins/python/spyro-plus.py:2280
 msgid "_Morph"
 msgstr "_Transformar"
 
-#: plug-ins/python/spyro-plus.py:2268
+#: plug-ins/python/spyro-plus.py:2281
 msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
 msgstr ""
 "Transformar la forma del engranaje fijo, entre 0 y 1. Solo afecta a algunas "
 "formas."
 
-#: plug-ins/python/spyro-plus.py:2270
-msgid "Fi_xed Gear Teeth"
+#: plug-ins/python/spyro-plus.py:2283
+msgid "Fi_xed gear teeth"
 msgstr "Dientes del engranaje fi_jo"
 
-#: plug-ins/python/spyro-plus.py:2271 plug-ins/python/spyro-plus.py:2274
+#: plug-ins/python/spyro-plus.py:2284 plug-ins/python/spyro-plus.py:2287
 msgid "Number of teeth for fixed gear."
 msgstr "Número de dientes del engranaje fijo."
 
-#: plug-ins/python/spyro-plus.py:2273
-msgid "Mo_ving Gear Teeth"
+#: plug-ins/python/spyro-plus.py:2286
+msgid "Mo_ving gear teeth"
 msgstr "Dientes del engranaje mó_vil"
 
-#: plug-ins/python/spyro-plus.py:2276
-msgid "_Hole Radius (%)"
+#: plug-ins/python/spyro-plus.py:2289
+msgid "_Hole radius (%)"
 msgstr "Radio del _agujero (%)"
 
-#: plug-ins/python/spyro-plus.py:2277
+#: plug-ins/python/spyro-plus.py:2290
 msgid ""
 "Location of hole in moving gear in percent, where 100 means that the hole is "
 "at the edge of the gear, and 0 means the hole is at the center"
@@ -1016,37 +1073,43 @@ msgstr ""
 "que el agujero está en el borde del engranaje y 0 significa que el agujero "
 "está en el centro"
 
-#: plug-ins/python/spyro-plus.py:2280
+#: plug-ins/python/spyro-plus.py:2293
 msgid "Margin (_px)"
 msgstr "Margen (_px)"
 
-#: plug-ins/python/spyro-plus.py:2281
+#: plug-ins/python/spyro-plus.py:2294
 msgid "Margin from selection, in pixels"
 msgstr "Margen de la selección, en píxeles"
 
-#: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
+#: plug-ins/python/spyro-plus.py:2299 plug-ins/python/spyro-plus.py:2302
 msgid "_Rotation"
 msgstr "_Rotación"
 
-#: plug-ins/python/spyro-plus.py:2287
+#: plug-ins/python/spyro-plus.py:2300
 msgid "Pattern rotation, in degrees"
 msgstr "Rotación del patrón, en grados"
 
-#: plug-ins/python/spyro-plus.py:2290
+#: plug-ins/python/spyro-plus.py:2303
 msgid "Shape rotation of fixed gear, in degrees"
 msgstr "Rotación de forma del engranaje fijo, en grados"
 
-#: plug-ins/python/spyro-plus.py:2304
+#: plug-ins/python/spyro-plus.py:2317
 msgid "Long _Gradient"
 msgstr "De_gradado largo"
 
-#: plug-ins/python/spyro-plus.py:2305
+#: plug-ins/python/spyro-plus.py:2318
 msgid ""
 "Whether to apply a long gradient to match the length of the pattern. Only "
 "applicable to some of the tools."
 msgstr ""
 "Indica si aplicar un degradado largo para que coincida con la longitud del "
 "patrón. Solo aplicable a algunas de las herramientas."
+
+#~ msgid "Choose CSS file..."
+#~ msgstr "Elegir un archivo CSS…"
+
+#~ msgid "Save as CSS file..."
+#~ msgstr "Guardar como archivo CSS…"
 
 #~ msgid "Read characters from file..."
 #~ msgstr "Leer caracteres desde un archivo…"
