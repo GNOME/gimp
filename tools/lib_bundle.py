@@ -397,6 +397,7 @@ def set_rpath(binary, destbin=None):
       sys.stderr.write(f"Failed to run install_name_tool on {binary}: {e}\n")
 
   # Normalize signature after all the changes
+  # 'if "invalid signature"' is needed to not use 'codesign --force' on 3_dist-gimp-apple.sh
   result = subprocess.run(["codesign", "-v", binary], capture_output=True, text=True)
   if "invalid signature" in result.stdout + result.stderr:
     try:
