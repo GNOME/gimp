@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-06 18:46+0000\n"
-"PO-Revision-Date: 2026-06-14 03:52+0200\n"
+"POT-Creation-Date: 2026-06-16 02:13+0000\n"
+"PO-Revision-Date: 2026-06-16 17:29+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -1261,9 +1261,9 @@ msgstr "Guardar los parámetros del Examinador CML"
 #: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1523
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:722
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:723
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
-#: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
+#: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:808
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
 #: plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2532
@@ -2743,10 +2743,10 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: plug-ins/common/file-png.c:1936 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:810
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:714
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:715
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
-#: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
+#: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:775
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
 #: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2470
@@ -3543,12 +3543,10 @@ msgid "inflate failed"
 msgstr "inflar ha fallado"
 
 #: plug-ins/common/file-gih.c:119
-#| msgid "Placement"
 msgid "Incremental"
 msgstr "Incremental"
 
 #: plug-ins/common/file-gih.c:120
-#| msgid "Singular"
 msgid "Angular"
 msgstr "Angular"
 
@@ -3714,7 +3712,7 @@ msgstr ""
 
 #: plug-ins/common/file-heif.c:291 plug-ins/common/file-heif.c:412
 #: plug-ins/common/file-heif.c:557 plug-ins/common/file-jp2.c:334
-#: plug-ins/common/file-jp2.c:422 plug-ins/file-jpeg/jpeg.c:210
+#: plug-ins/common/file-jp2.c:422 plug-ins/file-jpeg/jpeg.c:244
 msgid "_Quality"
 msgstr "Ca_lidad"
 
@@ -3815,7 +3813,6 @@ msgid "Toggle saving XMP data"
 msgstr "Alternar el guardar los datos XMP"
 
 #: plug-ins/common/file-heif.c:352 plug-ins/common/file-heif.c:384
-#| msgid "HEIF/HEIC"
 msgid "HEIF/AVIF"
 msgstr "HEIF/AVIF"
 
@@ -4166,7 +4163,7 @@ msgid "Exports files in JPEG 2000 file format"
 msgstr "Exporta archivos en formato JPEG 2000"
 
 #: plug-ins/common/file-jp2.c:335 plug-ins/common/file-jp2.c:423
-#: plug-ins/file-jpeg/jpeg.c:211
+#: plug-ins/file-jpeg/jpeg.c:245
 msgid "Quality of exported image"
 msgstr "Calidad de la imagen exportada"
 
@@ -4493,16 +4490,13 @@ msgid "Exports images in the MNG file format"
 msgstr "Exporta imágenes en formato de archivo MNG"
 
 #: plug-ins/common/file-mng.c:260
-#, fuzzy
-#| msgid ""
-#| "This plug-in saves images in the Multiple-image Network Graphics (MNG) "
-#| "format which can be used as a replacement for animated GIFs, and more."
 msgid ""
 "This plug-in exports images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
 msgstr ""
-"Este complemento guarda imágenes en formato de gráficos de red de imágenes "
-"múltiples (MNG) que se puede usar como reemplazo de GIF animados y más."
+"Este complemento exporta imágenes en formato MNG (Multiple-image Network "
+"Graphics), que puede utilizarse como sustituto de los GIF animados, entre "
+"otras funciones."
 
 #: plug-ins/common/file-mng.c:286
 msgid "Use interlacing"
@@ -4671,10 +4665,9 @@ msgid "Could not read header from '%s'"
 msgstr "No se pudo leer la cabecera de «%s»"
 
 #: plug-ins/common/file-paa.c:255
-#, fuzzy, c-format
-#| msgid "Unsupported DXGI Format: %u"
+#, c-format
 msgid "Currently unsupported PAA format: '%d'"
-msgstr "Formato DXGI no soportado: %u"
+msgstr "Formato PAA actualmente no compatible: «%d»"
 
 #: plug-ins/common/file-paa.c:305
 #, c-format
@@ -4687,9 +4680,10 @@ msgstr "Superficie principal"
 
 #: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:353
 #: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
-#: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
-#: plug-ins/common/file-tim.c:612 plug-ins/file-cin/cineon-lib.c:169
-#: plug-ins/file-cin/dpx-lib.c:280
+#: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:574
+#: plug-ins/common/file-tim.c:613 plug-ins/file-cin/cineon-lib.c:169
+#: plug-ins/file-cin/dpx-lib.c:280 plug-ins/file-fli/fli-gimp.c:550
+#: plug-ins/file-fli/fli-gimp.c:819
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "No se pudo asignar memoria."
@@ -5313,10 +5307,9 @@ msgstr ""
 "posicionada fuera de la imagen."
 
 #: plug-ins/common/file-png.c:1376
-#, fuzzy, c-format
-#| msgid "Converting from '%s' to '%s'"
+#, c-format
 msgid "Importing APNG frames from '%s'"
-msgstr "Convirtiendo de «%s» a «%s»"
+msgstr "Importando fotogramas APNG desde «%s»"
 
 #: plug-ins/common/file-png.c:1399 plug-ins/common/file-png.c:1436
 #: plug-ins/common/file-png.c:1463
@@ -5331,10 +5324,10 @@ msgstr ""
 "APNG no válido: las dimensiones del fotograma fcTL superan la asignación IHDR"
 
 #: plug-ins/common/file-png.c:1571
-#, fuzzy, c-format
-#| msgid "Invalid PSD metadata layer format"
+#, c-format
 msgid "Invalid APNG: Image data appeared before actTL chunk."
-msgstr "Formato de capa de metadatos de PSD no válidos"
+msgstr ""
+"APNG no válido: Los datos de la imagen aparecieron antes del fragmento actTL."
 
 #: plug-ins/common/file-png.c:1659
 msgid "Apply PNG Offset"
@@ -6045,10 +6038,9 @@ msgid "Error reading end of selection chunk"
 msgstr "Error al leer el final del fragmento de selección"
 
 #: plug-ins/common/file-psp.c:2562
-#, fuzzy, c-format
-#| msgid "Invalid layer sub-block %s, should be CHANNEL"
+#, c-format
 msgid "Invalid selection sub-block %s, should be CHANNEL"
-msgstr "El sub-bloque de la capa %s no es válido, debería ser CANAL"
+msgstr "Subbloque de selección %s no válido, debería ser CHANNEL"
 
 #: plug-ins/common/file-psp.c:2654
 #, c-format
@@ -6131,50 +6123,41 @@ msgstr "Exportar no está todavía implementado."
 #: plug-ins/common/file-psp.c:3271 plug-ins/common/file-psp.c:3303
 #: plug-ins/common/file-psp.c:3359 plug-ins/common/file-psp.c:3438
 #: plug-ins/common/file-psp.c:3500 plug-ins/common/file-psp.c:3526
-#, fuzzy, c-format
-#| msgid "Error reading layer extension information"
+#, c-format
 msgid "Error reading adjustment layer extension information"
-msgstr "Error al leer la información de la extensión de la capa"
+msgstr "Error al leer la información de extensión de la capa de ajuste"
 
 #: plug-ins/common/file-psp.c:3094
-#, fuzzy, c-format
-#| msgid "Invalid layer sub-block %s, should be CHANNEL"
+#, c-format
 msgid "Invalid layer sub-block %s, should be ADJUSTMENT EXTENSION"
-msgstr "El sub-bloque de la capa %s no es válido, debería ser CANAL"
+msgstr "Subbloque de capa %s no válido, debería ser ADJUSTMENT EXTENSION"
 
 #: plug-ins/common/file-psp.c:3545
-#, fuzzy, c-format
-#| msgid "Unsupported or invalid layer width: %d"
+#, c-format
 msgid "Unsupported adjustment layer type %d"
-msgstr "Anchura de la capa no soportada o no válida: %d"
+msgstr "El tipo de capa de ajuste %d no es compatible"
 
 #: plug-ins/common/file-pvr.c:214
 msgid "PVR Image"
 msgstr "Imagen PVR"
 
 #: plug-ins/common/file-pvr.c:217
-#, fuzzy
-#| msgid "Loads files in the PNM file format"
 msgid "Load file in the PVR file format"
-msgstr "Carga archivos en el formato de archivo PNM"
+msgstr "Cargar archivo en formato PVR"
 
 #: plug-ins/common/file-pvr.c:218
-#, fuzzy
-#| msgid "Loads files in the PNM file format"
 msgid "Load file in the PowerVR texture file format"
-msgstr "Carga archivos en el formato de archivo PNM"
+msgstr "Cargar archivo en formato de archivo de textura PowerVR"
 
 #: plug-ins/common/file-pvr.c:324 plug-ins/common/file-pvr.c:334
-#, fuzzy, c-format
-#| msgid "Could not read XWD header from '%s'"
+#, c-format
 msgid "Could not read GBIX header from '%s'"
-msgstr "No se pudo leer la cabecera XWD de «%s»"
+msgstr "No se pudo leer el encabezado GBIX de «%s»"
 
 #: plug-ins/common/file-pvr.c:343
-#, fuzzy, c-format
-#| msgid "Unsupported DXGI Format: %u"
+#, c-format
 msgid "Unsupported PVR format: %s"
-msgstr "Formato DXGI no soportado: %u"
+msgstr "Formato PVR no compatible: %s"
 
 #: plug-ins/common/file-pvr.c:408
 #, c-format
@@ -6202,10 +6185,9 @@ msgid "Incomplete PVR codebook data."
 msgstr "Datos incompletos del libro de códigos PVR."
 
 #: plug-ins/common/file-pvr.c:560
-#, fuzzy, c-format
-#| msgid "Incomplete input"
+#, c-format
 msgid "Incomplete PVR data."
-msgstr "Entrada incompleta"
+msgstr "Datos PVR incompletos."
 
 #: plug-ins/common/file-pvr.c:580
 #, c-format
@@ -6213,10 +6195,9 @@ msgid "Unable to decode compressed PVR texture"
 msgstr "No se puede decodificar la textura PVR comprimida"
 
 #: plug-ins/common/file-pvr.c:598
-#, fuzzy, c-format
-#| msgid "Unsupported file format version: %d"
+#, c-format
 msgid "Unsupported PVR texture format: %d"
-msgstr "Versión del formato de archivo no soportada: %d"
+msgstr "Formato de textura PVR no compatible: %d"
 
 #: plug-ins/common/file-qoi.c:139 plug-ins/common/file-qoi.c:166
 msgid "Quite OK Image"
@@ -6576,10 +6557,8 @@ msgstr "Imagen de Seattle FilmWorks"
 
 #: plug-ins/common/file-seattle-filmworks.c:162
 #: plug-ins/common/file-seattle-filmworks.c:164
-#, fuzzy
-#| msgid "Load file in the Farbfeld file format"
 msgid "Load file in the Seattle FilmWorks file format"
-msgstr "Cargar el archivo en el formato de archivo Farbfeld"
+msgstr "Cargar archivo en formato de archivo de Seattle FilmWorks"
 
 #: plug-ins/common/file-seattle-filmworks.c:346
 #, c-format
@@ -6593,10 +6572,9 @@ msgid "Unable to convert SFW image."
 msgstr "No se pudo convertir la imagen SFW."
 
 #: plug-ins/common/file-seattle-filmworks.c:515
-#, fuzzy, c-format
-#| msgid "Unsupported brush format"
+#, c-format
 msgid "Unsupported SFW format '%s'"
-msgstr "Formato de pincel no soportado"
+msgstr "Formato SFW no compatible «%s»"
 
 #: plug-ins/common/file-sunras.c:276 plug-ins/common/file-sunras.c:302
 msgid "SUN Rasterfile image"
@@ -6999,34 +6977,29 @@ msgid "Palette Y coordinate"
 msgstr "Coordenada Y de la paleta"
 
 #: plug-ins/common/file-tim.c:374
-#, fuzzy, c-format
-#| msgid "Unsupported or invalid image width: %d"
+#, c-format
 msgid "Unsupported TIM image type: %d"
-msgstr "Anchura de imagen no soportada o no válida: %d"
+msgstr "Tipo de imagen TIM no compatible: %d"
 
 #: plug-ins/common/file-tim.c:519
-#, fuzzy, c-format
-#| msgid "Could not read header from '%s'"
+#, c-format
 msgid "Could not read palette from '%s'"
-msgstr "No se pudo leer la cabecera de «%s»"
+msgstr "No se pudo leer la paleta de «%s»"
 
-#: plug-ins/common/file-tim.c:706
-#, fuzzy, c-format
-#| msgid ""
-#| "Unable to export '%s'.  The GIF file format does not support images that "
-#| "are more than %d pixels wide or tall."
+#: plug-ins/common/file-tim.c:707
+#, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"Imposible exportar «%s». El formato de archivo GIF no soporta imágenes que\n"
+"No se puede exportar «%s».  El formato de archivo TIM no admite imágenes que "
 "tengan más de %d píxeles de ancho o alto."
 
-#: plug-ins/common/file-tim.c:924
+#: plug-ins/common/file-tim.c:925
 msgid "Image Origin"
 msgstr "Origen de la imagen"
 
-#: plug-ins/common/file-tim.c:939
+#: plug-ins/common/file-tim.c:940
 msgid "Palette Origin"
 msgstr "Origen de la paleta"
 
@@ -7062,30 +7035,26 @@ msgid "'%s' is not a valid WBMP file"
 msgstr "«%s» no es un archivo WBMP válido"
 
 #: plug-ins/common/file-wbmp.c:338
-#, fuzzy, c-format
-#| msgid "'%s': Invalid WBMP type value"
+#, c-format
 msgid "'%s': Invalid OTA type value"
-msgstr "«%s» no es un archivo de tipo WBMP válido"
+msgstr "«%s»: Valor de tipo OTA no válido"
 
 #: plug-ins/common/file-wbmp.c:352 plug-ins/common/file-wbmp.c:366
 #: plug-ins/common/file-wbmp.c:380
-#, fuzzy, c-format
-#| msgid "'%s': Invalid WBMP type value"
+#, c-format
 msgid "'%s': Invalid OTA header value"
-msgstr "«%s» no es un archivo de tipo WBMP válido"
+msgstr "«%s»: Valor de encabezado OTA no válido"
 
 #: plug-ins/common/file-wbmp.c:391
-#, fuzzy, c-format
-#| msgid "Invalid layer dimensions: %dx%d"
+#, c-format
 msgid "'%s': Invalid dimensions %u x %u"
-msgstr "Dimensiones de la capa no válidas: %dx%d"
+msgstr "«%s»: Dimensiones %u x %u no válidas"
 
 #: plug-ins/common/file-wbmp.c:517
-#, fuzzy, c-format
-#| msgid "Failed to read frame %d. Possibly corrupt animation.\n"
+#, c-format
 msgid "Read failure at position %u. Possibly corrupt image."
 msgstr ""
-"Error al leer el fotograma %d. La animación posiblemente está corrupta.\n"
+"Error de lectura en la posición %u. Posiblemente la imagen esté dañada."
 
 #: plug-ins/common/file-wmf.c:177
 msgid "Microsoft WMF file"
@@ -9709,58 +9678,47 @@ msgid "Kodak Cineon"
 msgstr "Kodak Cineon"
 
 #: plug-ins/file-cin/file-cin.c:139 plug-ins/file-cin/file-cin.c:140
-#, fuzzy
-#| msgid "Loads files of the dicom file format"
 msgid "Load file of the Kodak Cineon file format"
-msgstr "Carga archivos del formato de archivo dicom"
+msgstr "Cargar archivo en formato Kodak Cineon"
 
 #: plug-ins/file-cin/file-cin.c:163
 msgid "DPX"
 msgstr "DPX"
 
 #: plug-ins/file-cin/file-cin.c:166
-#, fuzzy
-#| msgid "Load file of the FITS file format"
 msgid "Load file of the DPX file format"
-msgstr "Carga un archivo en el formato de archivo FITS"
+msgstr "Cargar archivo en formato DPX"
 
 #: plug-ins/file-cin/file-cin.c:167
-#, fuzzy
-#| msgid "Load file of the SunRaster file format"
 msgid "Load file of the Digital Picture Exchange file format"
-msgstr "Cargar archivo del formato de archivo SunRaster"
+msgstr "Cargar archivo en formato de archivo Digital Picture Exchange"
 
 #: plug-ins/file-cin/cineon-lib.c:98
-#, fuzzy, c-format
-#| msgid "Could not read header from '%s'"
+#, c-format
 msgid "Could not read Cineon header information."
-msgstr "No se pudo leer la cabecera de «%s»"
+msgstr "No se pudo leer la información del encabezado de Cineon."
 
 #: plug-ins/file-cin/cineon-lib.c:134 plug-ins/file-cin/dpx-lib.c:233
-#, fuzzy, c-format
-#| msgid "This image depth is not supported"
+#, c-format
 msgid "Image with %d channels not yet supported."
-msgstr "Esta profundidad de imagen no está soportada"
+msgstr "Las imágenes con %d canales aún no son compatibles."
 
 #: plug-ins/file-cin/cineon-lib.c:154 plug-ins/file-cin/dpx-lib.c:263
-#, fuzzy, c-format
-#| msgid "This image depth is not supported"
+#, c-format
 msgid "Image with %d bpc not yet supported."
-msgstr "Esta profundidad de imagen no está soportada"
+msgstr "Las imágenes con %d bpc aún no son compatibles."
 
 #: plug-ins/file-cin/cineon-lib.c:181 plug-ins/file-cin/cineon-lib.c:207
 #: plug-ins/file-cin/dpx-lib.c:292 plug-ins/file-cin/dpx-lib.c:318
 #: plug-ins/file-cin/dpx-lib.c:331 plug-ins/file-cin/dpx-lib.c:351
-#, fuzzy, c-format
-#| msgid "Could not get image width from '%s'"
+#, c-format
 msgid "Could not read image data from '%s'"
-msgstr "No se pudo obtener la anchura de la imagen de «%s»"
+msgstr "No se pudieron leer los datos de la imagen «%s»"
 
 #: plug-ins/file-cin/dpx-lib.c:139 plug-ins/file-cin/dpx-lib.c:157
-#, fuzzy, c-format
-#| msgid "Could not read XWD header from '%s'"
+#, c-format
 msgid "Could not read DPX header information."
-msgstr "No se pudo leer la cabecera XWD de «%s»"
+msgstr "No se pudo leer la información del encabezado DPX."
 
 #: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:170
 msgid "DDS image"
@@ -9791,10 +9749,8 @@ msgid "DDS"
 msgstr "DDS"
 
 #: plug-ins/file-dds/dds.c:176 plug-ins/file-dds/dds.c:177
-#, fuzzy
-#| msgid "Loads files in DDS image format"
 msgid "Exports files in DDS image format"
-msgstr "Carga archivos en el formato de imagen DDS"
+msgstr "Exporta archivos en formato de imagen DDS"
 
 #: plug-ins/file-dds/dds.c:198
 msgid "BC1 / DXT1"
@@ -10341,7 +10297,7 @@ msgstr "Abrir archivo FITS"
 
 #: plug-ins/file-fli/fli.c:45 plug-ins/file-fli/fli.c:59
 #: plug-ins/file-fli/fli.c:75 plug-ins/file-fli/fli.c:924
-#: plug-ins/file-fli/fli.c:1244 plug-ins/file-fli/fli.c:1524
+#: plug-ins/file-fli/fli.c:1245 plug-ins/file-fli/fli.c:1526
 #, c-format
 msgid "Error reading from file."
 msgstr "Error al leer el archivo."
@@ -10354,7 +10310,7 @@ msgstr "Error al leer la cabecera. "
 #: plug-ins/file-fli/fli.c:187
 #, c-format
 msgid "Invalid header: not a FLI/FLC animation!"
-msgstr "Encabezado no válido: no es una animación FLI/FLC"
+msgstr "Encabezado no válido: no es una animación FLI/FLC."
 
 #: plug-ins/file-fli/fli.c:205
 #, c-format
@@ -10429,21 +10385,21 @@ msgstr "Error al escribir negro. "
 #: plug-ins/file-fli/fli.c:1094 plug-ins/file-fli/fli.c:1108
 #: plug-ins/file-fli/fli.c:1123 plug-ins/file-fli/fli.c:1132
 #: plug-ins/file-fli/fli.c:1146 plug-ins/file-fli/fli.c:1156
-#: plug-ins/file-fli/fli.c:1300 plug-ins/file-fli/fli.c:1327
-#: plug-ins/file-fli/fli.c:1343 plug-ins/file-fli/fli.c:1375
-#: plug-ins/file-fli/fli.c:1385 plug-ins/file-fli/fli.c:1399
-#: plug-ins/file-fli/fli.c:1409
+#: plug-ins/file-fli/fli.c:1301 plug-ins/file-fli/fli.c:1328
+#: plug-ins/file-fli/fli.c:1344 plug-ins/file-fli/fli.c:1376
+#: plug-ins/file-fli/fli.c:1386 plug-ins/file-fli/fli.c:1400
+#: plug-ins/file-fli/fli.c:1410
 msgid "Error writing frame. "
 msgstr "Error al escribir el fotograma. "
 
 #: plug-ins/file-fli/fli.c:992 plug-ins/file-fli/fli.c:1004
 #: plug-ins/file-fli/fli.c:1015 plug-ins/file-fli/fli.c:1034
-#: plug-ins/file-fli/fli.c:1186 plug-ins/file-fli/fli.c:1200
-#: plug-ins/file-fli/fli.c:1213 plug-ins/file-fli/fli.c:1226
-#: plug-ins/file-fli/fli.c:1245 plug-ins/file-fli/fli.c:1440
-#: plug-ins/file-fli/fli.c:1456 plug-ins/file-fli/fli.c:1475
-#: plug-ins/file-fli/fli.c:1490 plug-ins/file-fli/fli.c:1503
-#: plug-ins/file-fli/fli.c:1525
+#: plug-ins/file-fli/fli.c:1187 plug-ins/file-fli/fli.c:1201
+#: plug-ins/file-fli/fli.c:1214 plug-ins/file-fli/fli.c:1227
+#: plug-ins/file-fli/fli.c:1246 plug-ins/file-fli/fli.c:1442
+#: plug-ins/file-fli/fli.c:1458 plug-ins/file-fli/fli.c:1477
+#: plug-ins/file-fli/fli.c:1492 plug-ins/file-fli/fli.c:1505
+#: plug-ins/file-fli/fli.c:1527
 msgid "Error reading compressed data. "
 msgstr "Error al leer datos comprimidos. "
 
@@ -10499,18 +10455,18 @@ msgid "End exporting with this frame (or -1 for all frames)"
 msgstr ""
 "Finalizar la exportación con este fotograma (o -1 para todos los fotogramas)"
 
-#: plug-ins/file-fli/fli-gimp.c:568
+#: plug-ins/file-fli/fli-gimp.c:577
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr "Fotograma %d (%ums)"
 
-#: plug-ins/file-fli/fli-gimp.c:595
+#: plug-ins/file-fli/fli-gimp.c:604
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr ""
 "Error al leer el fotograma %d. La animación posiblemente está corrupta.\n"
 
-#: plug-ins/file-fli/fli-gimp.c:927
+#: plug-ins/file-fli/fli-gimp.c:945
 msgid "Open FLIC Animation"
 msgstr "Abrir animación FLIC"
 
@@ -10760,97 +10716,109 @@ msgstr ""
 "Error al intentar abrir el archivo %s temporal «%s» para la carga de "
 "metadatos jpeg: %s"
 
-#: plug-ins/file-jpeg/jpeg.c:135 plug-ins/file-jpeg/jpeg.c:182
+#: plug-ins/file-jpeg/jpeg.c:143 plug-ins/file-jpeg/jpeg.c:216
 msgid "JPEG image"
 msgstr "Imagen JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:138 plug-ins/file-jpeg/jpeg.c:139
+#: plug-ins/file-jpeg/jpeg.c:146 plug-ins/file-jpeg/jpeg.c:147
 msgid "Loads files in the JPEG file format"
 msgstr "Carga archivos en el formato de archivo JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:163
+#: plug-ins/file-jpeg/jpeg.c:171
 msgid "Loads a thumbnail from a JPEG image"
 msgstr "Carga una miniatura de una imagen JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:164
+#: plug-ins/file-jpeg/jpeg.c:172
 msgid "Loads a thumbnail from a JPEG image, if one exists"
 msgstr "Carga una miniatura de una imagen JPEG, si existe"
 
-#: plug-ins/file-jpeg/jpeg.c:185
+#: plug-ins/file-jpeg/jpeg.c:188
+msgid "MPO image"
+msgstr "Imagen MPO"
+
+#: plug-ins/file-jpeg/jpeg.c:191
+msgid "Loads files in the MPO file format"
+msgstr "Carga archivos en formato MPO"
+
+#: plug-ins/file-jpeg/jpeg.c:192
+msgid "Loads files in the MPO (Multiple Picture Object) file format"
+msgstr "Carga archivos en formato MPO (Multiple Picture Object)"
+
+#: plug-ins/file-jpeg/jpeg.c:219
 msgid "Exports files in the JPEG file format"
 msgstr "Exporta archivos en el formato de archivo JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:186
+#: plug-ins/file-jpeg/jpeg.c:220
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "Exporta archivos en el formato JPEG con pérdidas, ampliamente admitido"
 
-#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:156
+#: plug-ins/file-jpeg/jpeg.c:229 plug-ins/file-tiff/file-tiff.c:156
 msgid "JPEG"
 msgstr "JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:216
+#: plug-ins/file-jpeg/jpeg.c:250
 msgid "S_moothing"
 msgstr "S_uavizado"
 
-#: plug-ins/file-jpeg/jpeg.c:217
+#: plug-ins/file-jpeg/jpeg.c:251
 msgid "Smoothing factor for exported image"
 msgstr "Factor de suavizado para la imagen exportada"
 
-#: plug-ins/file-jpeg/jpeg.c:222
+#: plug-ins/file-jpeg/jpeg.c:256
 msgid "Optimi_ze"
 msgstr "Optimi_zar"
 
-#: plug-ins/file-jpeg/jpeg.c:223
+#: plug-ins/file-jpeg/jpeg.c:257
 msgid "Use optimized tables during Huffman coding"
 msgstr "Utilizar tablas optimizadas durante la codificación Huffman"
 
-#: plug-ins/file-jpeg/jpeg.c:228
+#: plug-ins/file-jpeg/jpeg.c:262
 msgid "_Progressive"
 msgstr "_Progresivo"
 
-#: plug-ins/file-jpeg/jpeg.c:229
+#: plug-ins/file-jpeg/jpeg.c:263
 msgid "Create progressive JPEG images"
 msgstr "Crear imágenes JPEG progresivas"
 
-#: plug-ins/file-jpeg/jpeg.c:234
+#: plug-ins/file-jpeg/jpeg.c:268
 msgid "Export as CM_YK"
 msgstr "Exportar como CM_YK"
 
-#: plug-ins/file-jpeg/jpeg.c:235
+#: plug-ins/file-jpeg/jpeg.c:269
 msgid "Create a CMYK JPEG image using the soft-proofing color profile"
 msgstr ""
 "Crear una imagen CMYK JPEG utilizando el perfil de color de la prueba de "
 "impresión"
 
-#: plug-ins/file-jpeg/jpeg.c:240
+#: plug-ins/file-jpeg/jpeg.c:274
 msgid "Su_bsampling"
 msgstr "Su_bmuestreo"
 
-#: plug-ins/file-jpeg/jpeg.c:241
+#: plug-ins/file-jpeg/jpeg.c:275
 msgid "Sub-sampling type"
 msgstr "Tipo de submuestreo"
 
-#: plug-ins/file-jpeg/jpeg.c:242
+#: plug-ins/file-jpeg/jpeg.c:276
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (la mejor calidad)"
 
-#: plug-ins/file-jpeg/jpeg.c:243
+#: plug-ins/file-jpeg/jpeg.c:277
 msgid "4:2:2 (chroma halved horizontally)"
 msgstr "4:2:2 (croma dividido a la mitad horizontalmente)"
 
-#: plug-ins/file-jpeg/jpeg.c:244
+#: plug-ins/file-jpeg/jpeg.c:278
 msgid "4:4:0 (chroma halved vertically)"
 msgstr "4:4:0 (croma dividido a la mitad verticalmente)"
 
-#: plug-ins/file-jpeg/jpeg.c:245
+#: plug-ins/file-jpeg/jpeg.c:279
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (un cuarto de croma)"
 
-#: plug-ins/file-jpeg/jpeg.c:250
+#: plug-ins/file-jpeg/jpeg.c:284
 msgid "Baseline"
 msgstr "Línea base"
 
-#: plug-ins/file-jpeg/jpeg.c:251
+#: plug-ins/file-jpeg/jpeg.c:285
 msgid ""
 "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
 "decoders)"
@@ -10858,41 +10826,41 @@ msgstr ""
 "Forzar la creación de un JPEG de referencia (los archivos JPEG que no son de "
 "referencia no pueden ser leídos por todos los decodificadores)"
 
-#: plug-ins/file-jpeg/jpeg.c:257
+#: plug-ins/file-jpeg/jpeg.c:291
 msgid "Inter_val (MCU rows):"
 msgstr "Inter_valo (filas de MCU):"
 
-#: plug-ins/file-jpeg/jpeg.c:258
+#: plug-ins/file-jpeg/jpeg.c:292
 msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
 msgstr ""
 "Intervalo de marcadores de reinicio (en filas de MCU, 0 = sin marcadores de "
 "reinicio)"
 
-#: plug-ins/file-jpeg/jpeg.c:264
+#: plug-ins/file-jpeg/jpeg.c:298
 msgid "_DCT method"
 msgstr "Método _DCT"
 
-#: plug-ins/file-jpeg/jpeg.c:265
+#: plug-ins/file-jpeg/jpeg.c:299
 msgid "DCT method to use"
 msgstr "Método DCT que usar"
 
-#: plug-ins/file-jpeg/jpeg.c:266
+#: plug-ins/file-jpeg/jpeg.c:300
 msgid "Fast Integer"
 msgstr "Entero rápido"
 
-#: plug-ins/file-jpeg/jpeg.c:267
+#: plug-ins/file-jpeg/jpeg.c:301
 msgid "Integer"
 msgstr "Entero"
 
-#: plug-ins/file-jpeg/jpeg.c:268
+#: plug-ins/file-jpeg/jpeg.c:302
 msgid "Floating-Point"
 msgstr "Coma flotante"
 
-#: plug-ins/file-jpeg/jpeg.c:275
+#: plug-ins/file-jpeg/jpeg.c:309
 msgid "_Use quality settings from original image"
 msgstr "Usar los ajustes de calidad de la i_magen original"
 
-#: plug-ins/file-jpeg/jpeg.c:276
+#: plug-ins/file-jpeg/jpeg.c:310
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -10902,33 +10870,33 @@ msgstr ""
 "ajustes de calidad no estándar (tablas de cuantización), habilite esta "
 "opción para obtener al menos la misma calidad y tamaño del archivo."
 
-#: plug-ins/file-jpeg/jpeg.c:298
+#: plug-ins/file-jpeg/jpeg.c:332
 msgid "Sho_w preview in image window"
 msgstr "Mostrar _vista previa en la ventana de la imagen"
 
-#: plug-ins/file-jpeg/jpeg.c:299
+#: plug-ins/file-jpeg/jpeg.c:333
 msgid "Creates a temporary layer with an export preview"
 msgstr "Crea una capa temporal con una vista previa de exportación"
 
-#: plug-ins/file-jpeg/jpeg.c:303
+#: plug-ins/file-jpeg/jpeg.c:337
 msgid "Use _arithmetic coding"
 msgstr "Utilizar codificación _aritmética"
 
-#: plug-ins/file-jpeg/jpeg.c:304
+#: plug-ins/file-jpeg/jpeg.c:338
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
 "El software antiguo puede tener problemas para abrir imágenes codificadas "
 "aritméticamente"
 
-#: plug-ins/file-jpeg/jpeg.c:309
+#: plug-ins/file-jpeg/jpeg.c:343
 msgid "Use restart mar_kers"
 msgstr "Usar mar_cadores de reinicio"
 
-#: plug-ins/file-jpeg/jpeg.c:314 plug-ins/file-tiff/file-tiff.c:318
+#: plug-ins/file-jpeg/jpeg.c:348 plug-ins/file-tiff/file-tiff.c:318
 msgid "Save Photoshop metadata"
 msgstr "Guardar metadatos de Photoshop"
 
-#: plug-ins/file-jpeg/jpeg.c:315
+#: plug-ins/file-jpeg/jpeg.c:349
 msgid ""
 "Store Photoshop image resources (paths, guides, ...) in JPEG APP13 tag "
 "(Photoshop)"
@@ -10951,16 +10919,13 @@ msgstr ""
 "tengan más de 30.000 píxeles de anchura o altura."
 
 #: plug-ins/file-psd/psd-export.c:2463 plug-ins/file-psd/psd-export.c:2633
-#, fuzzy, c-format
-#| msgid ""
-#| "Unable to export '%s'.  The PSD file format does not support images that "
-#| "are more than 30,000 pixels wide or tall."
+#, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images that are "
 "more than 300,000 pixels wide or tall."
 msgstr ""
-"Imposible exportar «%s». El formato de archivo PSD no soporta imágenes que "
-"tengan más de 30.000 píxeles de anchura o altura."
+"No se puede exportar «%s».  El formato de archivo PSB no admite imágenes de "
+"más de 300.000 píxeles de ancho o alto."
 
 #: plug-ins/file-psd/psd-export.c:2505 plug-ins/file-psd/psd-export.c:2673
 #, c-format
@@ -10972,16 +10937,13 @@ msgstr ""
 "capas que tengan más de 30.000 píxeles de anchura o altura."
 
 #: plug-ins/file-psd/psd-export.c:2511 plug-ins/file-psd/psd-export.c:2679
-#, fuzzy, c-format
-#| msgid ""
-#| "Unable to export '%s'.  The PSD file format does not support images with "
-#| "layers that are more than 30,000 pixels wide or tall."
+#, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images with "
 "layers that are more than 300,000 pixels wide or tall."
 msgstr ""
-"Imposible exportar «%s».  El formato de archivo PSD no soporta imágenes con "
-"capas que tengan más de 30.000 píxeles de anchura o altura."
+"No se puede exportar «%s».  El formato de archivo PSB no admite imágenes con "
+"capas de más de 300.000 píxeles de ancho o alto."
 
 #: plug-ins/file-psd/psd-export.c:3013
 msgid ""
@@ -11119,10 +11081,9 @@ msgid "Unsupported or invalid channel size"
 msgstr "Tamaño del canal no soportado o no válido"
 
 #: plug-ins/file-psd/psd-load.c:2326
-#, fuzzy, c-format
-#| msgid "Invalid layer dimensions: %dx%d"
+#, c-format
 msgid "Invalid channel dimensions %u x %u"
-msgstr "Dimensiones de la capa no válidas: %dx%d"
+msgstr "Dimensiones de canal %u x %u no válidas"
 
 #: plug-ins/file-psd/psd-load.c:2394 plug-ins/file-psd/psd-load.c:4302
 #, c-format
@@ -11219,26 +11180,21 @@ msgid ""
 "format files."
 msgstr ""
 "Este complemento carga miniaturas de imágenes a partir de archivos en "
-"formato PSD nativo de Adobe Photoshop (TM).0"
+"formato PSD nativo de Adobe Photoshop (TM)."
 
 #: plug-ins/file-psd/psd.c:228
 msgid "Exports files in the Photoshop (TM) PSD file format"
 msgstr "Exporta archivos en formato PSD de Photoshop (TM)"
 
 #: plug-ins/file-psd/psd.c:230
-#, fuzzy
-#| msgid ""
-#| "This filter saves files of Adobe Photoshop (TM) native PSD format. These "
-#| "files may be of any image type supported by GIMP, with or without layers, "
-#| "layer masks, aux channels and guides."
 msgid ""
 "This plug-in exports files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
 "layer masks, aux channels and guides."
 msgstr ""
-"Este filtro guarda archivos de formato nativo PSD de Adobe Photoshop (TM). "
-"Estos archivos pueden ser de cualquier tipo de imagen soportado por GIMP, "
-"con o sin capas, máscaras de capa, canales auxiliares y guías."
+"Este complemento exporta archivos en formato PSD nativo de Adobe Photoshop "
+"(TM). Estos archivos pueden ser de cualquier tipo de imagen compatible con "
+"GIMP, con o sin capas, máscaras de capa, canales auxiliares y guías."
 
 #: plug-ins/file-psd/psd.c:244 plug-ins/file-psd/psd.c:246
 msgid "Photoshop Large image"
@@ -11249,19 +11205,14 @@ msgid "Exports files in the Photoshop (TM) Large PSB file format"
 msgstr "Exporta archivos en formato PSB grande de Photoshop (TM)"
 
 #: plug-ins/file-psd/psd.c:251
-#, fuzzy
-#| msgid ""
-#| "This filter saves files of Adobe Photoshop (TM) native PSD format. These "
-#| "files may be of any image type supported by GIMP, with or without layers, "
-#| "layer masks, aux channels and guides."
 msgid ""
 "This plug-in exports files of Adobe Photoshop (TM) Large native PSB format. "
 "These files may be of any image type supported by GIMP, with or without "
 "layers, layer masks, aux channels and guides."
 msgstr ""
-"Este filtro guarda archivos de formato nativo PSD de Adobe Photoshop (TM). "
-"Estos archivos pueden ser de cualquier tipo de imagen soportado por GIMP, "
-"con o sin capas, máscaras de capa, canales auxiliares y guías."
+"Este complemento exporta archivos en formato PSB nativo de Adobe Photoshop "
+"(TM) Large. Estos archivos pueden ser de cualquier tipo de imagen compatible "
+"con GIMP, con o sin capas, máscaras de capa, canales auxiliares y guías."
 
 #: plug-ins/file-psd/psd.c:279
 msgid "Assign a Clipping _Path"
@@ -11442,15 +11393,7 @@ msgid "Raw Arriflex ARI"
 msgstr "Raw Arriflex ARI"
 
 #: plug-ins/file-raw/file-raw-placeholder.c:176
-#, fuzzy, c-format
-#| msgid ""
-#| "There is no RAW loader installed to open '%s' files.\n"
-#| "\n"
-#| "GIMP currently supports these RAW loaders:\n"
-#| "- darktable (http://www.darktable.org/), at least 1.7\n"
-#| "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
-#| "\n"
-#| "Please install one of them in order to load RAW files."
+#, c-format
 msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
@@ -11464,8 +11407,9 @@ msgstr ""
 "No hay un cargador RAW instalado para abrir archivos «%s».\n"
 "\n"
 "Actualmente GIMP admite estos cargadores RAW:\n"
-"- darktable (http://www.darktable.org/), al menos 1.7\n"
-"- RawTherapee (http://rawtherapee.com/), al menos 5.2\n"
+"- darktable (https://www.darktable.org/), a partir de la 1.7\n"
+"- RawTherapee (https://rawtherapee.com/), a partir de la 5.2\n"
+"- ART (https://artraweditor.github.io/)\n"
 "\n"
 "Instale uno de ellos para cargar archivos RAW."
 
@@ -11981,15 +11925,13 @@ msgstr ""
 "la línea %d."
 
 #: plug-ins/file-tiff/file-tiff-load.c:2615
-#, fuzzy, c-format
-#| msgid ""
-#| "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
+#, c-format
 msgid ""
 "Invalid image dimensions (%u x %u) for Sketchbook layer %i. Image may be "
 "corrupt."
 msgstr ""
-"Dimensiones (%u x %u) de la imagen no válidas en la página %d. Puede que la "
-"imagen esté dañada."
+"Dimensiones de imagen (%u x %u) no válidas para la capa %i de Sketchbook. La "
+"imagen podría estar dañada."
 
 #: plug-ins/file-tiff/file-tiff-load.c:2767
 #: plug-ins/file-tiff/file-tiff-load.c:2819
