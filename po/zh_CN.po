@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-12 14:48+0000\n"
-"PO-Revision-Date: 2026-06-13 07:47+0800\n"
+"POT-Creation-Date: 2026-06-15 04:11+0000\n"
+"PO-Revision-Date: 2026-06-16 08:38+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -2496,7 +2496,7 @@ msgstr "240 秒"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:375 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1784
+#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1798
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -21818,8 +21818,8 @@ msgid "Free Select"
 msgstr "自由选择"
 
 #: app/pdb/item-transform-cmds.c:318 app/tools/gimpperspectivetool.c:85
-#: app/tools/gimptransformgridoptions.c:574
-#: app/tools/gimptransformgridoptions.c:583
+#: app/tools/gimptransformgridoptions.c:580
+#: app/tools/gimptransformgridoptions.c:589
 msgid "Perspective"
 msgstr "透视"
 
@@ -22498,7 +22498,7 @@ msgstr ""
 "有些字体无法加载：\n"
 "%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1656
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1670
 msgid "Add Text Layer"
 msgstr "添加文字图层"
 
@@ -24441,8 +24441,8 @@ msgid "Show lattice"
 msgstr "显示网格"
 
 #: app/tools/gimpnpointdeformationoptions.c:227 app/tools/gimpscaletool.c:96
-#: app/tools/gimptransformgridoptions.c:568
-#: app/tools/gimptransformgridoptions.c:579
+#: app/tools/gimptransformgridoptions.c:574
+#: app/tools/gimptransformgridoptions.c:585
 msgid "Scale"
 msgstr "缩放"
 
@@ -24688,11 +24688,11 @@ msgstr "添加矢量图层"
 msgid "Confirm Path Editing"
 msgstr "确认路径编辑"
 
-#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1783
+#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1797
 msgid "Create _New Layer"
 msgstr "新建图层(_N)"
 
-#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1785
+#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1799
 msgid "_Edit Anyway"
 msgstr "仍然编辑(_E)"
 
@@ -24888,7 +24888,7 @@ msgstr "绘制选中区域的蒙板"
 msgid "Move the mouse to change threshold"
 msgstr "移动鼠标以更改阈值"
 
-#: app/tools/gimprotatetool.c:103 app/tools/gimptransformgridoptions.c:570
+#: app/tools/gimprotatetool.c:103 app/tools/gimptransformgridoptions.c:576
 #: app/tools/gimptransform3dtool.c:418
 msgid "Rotate"
 msgstr "旋转"
@@ -25031,8 +25031,8 @@ msgstr "无法从空白选区中减去。"
 msgid "Cannot intersect with an empty selection."
 msgstr "无法与空白选区相交。"
 
-#: app/tools/gimpsheartool.c:91 app/tools/gimptransformgridoptions.c:572
-#: app/tools/gimptransformgridoptions.c:581
+#: app/tools/gimpsheartool.c:91 app/tools/gimptransformgridoptions.c:578
+#: app/tools/gimptransformgridoptions.c:587
 msgid "Shear"
 msgstr "切变"
 
@@ -25223,57 +25223,57 @@ msgstr "文字框："
 msgid "Language:"
 msgstr "语言："
 
-#: app/tools/gimptexttool.c:220
+#: app/tools/gimptexttool.c:221
 msgid "Text"
 msgstr "文字"
 
-#: app/tools/gimptexttool.c:221
+#: app/tools/gimptexttool.c:222
 msgid "Text Tool: Create or edit text layers"
 msgstr "文字工具：创建或编辑文字图层"
 
-#: app/tools/gimptexttool.c:222
+#: app/tools/gimptexttool.c:223
 msgid "Te_xt"
 msgstr "文字(_X)"
 
-#: app/tools/gimptexttool.c:1040
+#: app/tools/gimptexttool.c:1054
 msgid "Fonts are still loading"
 msgstr "字体仍在加载中"
 
-#: app/tools/gimptexttool.c:1051
+#: app/tools/gimptexttool.c:1065
 msgid "Text box: "
 msgstr "文字框："
 
-#: app/tools/gimptexttool.c:1203
+#: app/tools/gimptexttool.c:1217
 msgid "Reshape Text Layer"
 msgstr "重塑文字图层"
 
-#: app/tools/gimptexttool.c:1776 app/tools/gimptexttool.c:1779
+#: app/tools/gimptexttool.c:1790 app/tools/gimptexttool.c:1793
 msgid "Confirm Text Editing"
 msgstr "确认文字编辑"
 
-#: app/tools/gimptexttool.c:1807
+#: app/tools/gimptexttool.c:1821
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
 msgstr "您选中的文字图层已栅格化。编辑其文字将丢弃所有修改。"
 
-#: app/tools/gimptexttool.c:2427
+#: app/tools/gimptexttool.c:2441
 msgid "Text is required."
 msgstr "需要文字。"
 
-#: app/tools/gimptexttool.c:2430
+#: app/tools/gimptexttool.c:2444
 msgid "No image."
 msgstr "无图像。"
 
-#: app/tools/gimptexttool.c:2433
+#: app/tools/gimptexttool.c:2447
 msgid "No layer."
 msgstr "无图层。"
 
-#: app/tools/gimptexttool.c:2444
+#: app/tools/gimptexttool.c:2458
 msgid "Exactly one path must be selected."
 msgstr "必须选择一个路径。"
 
-#: app/tools/gimptexttool-editor.c:1476
+#: app/tools/gimptexttool-editor.c:1492
 msgid "GIMP Text Editor"
 msgstr "GIMP 文字编辑器"
 
@@ -25344,7 +25344,7 @@ msgid "Opacity of the preview image"
 msgstr "预览图像的不透明度"
 
 #: app/tools/gimptransformgridoptions.c:139
-#: app/tools/gimptransformgridoptions.c:468
+#: app/tools/gimptransformgridoptions.c:474
 msgid "Guides"
 msgstr "参考线"
 
@@ -25352,121 +25352,127 @@ msgstr "参考线"
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "不同数量的组合参考线网格单元的大小"
 
-#: app/tools/gimptransformgridoptions.c:489
+#: app/tools/gimptransformgridoptions.c:423
+msgid ""
+"If connected, you can reposition the handles without altering the "
+"transformation."
+msgstr "如果连接，您可以在不改变变换的情况下重新确定控制柄的位置。"
+
+#: app/tools/gimptransformgridoptions.c:495
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 度 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:495
+#: app/tools/gimptransformgridoptions.c:501
 msgid "Limit rotation steps to 15 degrees"
 msgstr "限制每次旋转角度为 15 度"
 
-#: app/tools/gimptransformgridoptions.c:504
+#: app/tools/gimptransformgridoptions.c:510
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "保持宽高比 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:510
+#: app/tools/gimptransformgridoptions.c:516
 msgid "Keep the original aspect ratio"
 msgstr "保持原始宽高比"
 
-#: app/tools/gimptransformgridoptions.c:515
-#: app/tools/gimptransformgridoptions.c:542
+#: app/tools/gimptransformgridoptions.c:521
+#: app/tools/gimptransformgridoptions.c:548
 #, c-format
 msgid "Around center (%s)"
 msgstr "中心周围 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:521
+#: app/tools/gimptransformgridoptions.c:527
 msgid "Scale around the center point"
 msgstr "围绕中心点缩放"
 
-#: app/tools/gimptransformgridoptions.c:530
+#: app/tools/gimptransformgridoptions.c:536
 #, c-format
 msgid "Constrain handles (%s)"
 msgstr "限制控制柄 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:537
+#: app/tools/gimptransformgridoptions.c:543
 #, c-format
 msgid "Constrain handles to move along edges and diagonal (%s)"
 msgstr "限制控制柄沿边缘和对角线移动 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:549
+#: app/tools/gimptransformgridoptions.c:555
 msgid "Transform around the center point"
 msgstr "围绕中心点变换"
 
-#: app/tools/gimptransformgridoptions.c:565
+#: app/tools/gimptransformgridoptions.c:571
 #, c-format
 msgid "Constrain (%s)"
 msgstr "限制 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:566 app/tools/gimptransform3dtool.c:334
+#: app/tools/gimptransformgridoptions.c:572 app/tools/gimptransform3dtool.c:334
 msgid "Move"
 msgstr "移动"
 
-#: app/tools/gimptransformgridoptions.c:567
+#: app/tools/gimptransformgridoptions.c:573
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "从中心限制移动为 45 度 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:569
+#: app/tools/gimptransformgridoptions.c:575
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "缩放时保持宽高比 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:571
+#: app/tools/gimptransformgridoptions.c:577
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "限制旋转增量为 15 度 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:573
+#: app/tools/gimptransformgridoptions.c:579
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "仅沿边缘方向切变 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:575
+#: app/tools/gimptransformgridoptions.c:581
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr "限制透视控制柄沿边缘和对角线移动 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:578
+#: app/tools/gimptransformgridoptions.c:584
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "从轴心 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:580
+#: app/tools/gimptransformgridoptions.c:586
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "从轴心点缩放 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:582
+#: app/tools/gimptransformgridoptions.c:588
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "以相同的量切变对边 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:584
+#: app/tools/gimptransformgridoptions.c:590
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "改变透视时保持轴心位置 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:587
+#: app/tools/gimptransformgridoptions.c:593
 msgid "Pivot"
 msgstr "轴心"
 
-#: app/tools/gimptransformgridoptions.c:588
+#: app/tools/gimptransformgridoptions.c:594
 #, c-format
 msgid "Snap (%s)"
 msgstr "吸附 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:589
+#: app/tools/gimptransformgridoptions.c:595
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "将轴心吸附到角落和中心 (%s)"
 
-#: app/tools/gimptransformgridoptions.c:590
+#: app/tools/gimptransformgridoptions.c:596
 msgid "Lock"
 msgstr "锁定"
 
-#: app/tools/gimptransformgridoptions.c:591
+#: app/tools/gimptransformgridoptions.c:597
 msgid "Lock pivot position to canvas"
 msgstr "锁定轴心位置到画布"
 
