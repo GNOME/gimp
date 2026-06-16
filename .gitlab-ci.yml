@@ -746,7 +746,7 @@ file-plug-in-tests:
     - if: ($CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null) || $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:
         paths:
-          - plug-ins/*
+          - plug-ins/**/*
           - .gitlab-ci.yml #to test changes on script: below
         compare_to: 'refs/heads/master'
   needs: ["gimp-debian-nonreloc"]
