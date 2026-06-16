@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-12 14:48+0000\n"
-"PO-Revision-Date: 2026-06-13 19:16+0200\n"
+"POT-Creation-Date: 2026-06-15 04:11+0000\n"
+"PO-Revision-Date: 2026-06-16 20:35+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -2506,7 +2506,7 @@ msgstr "240 segundos"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:375 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1784
+#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1798
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -22397,8 +22397,8 @@ msgid "Free Select"
 msgstr "Selección libre"
 
 #: app/pdb/item-transform-cmds.c:318 app/tools/gimpperspectivetool.c:85
-#: app/tools/gimptransformgridoptions.c:574
-#: app/tools/gimptransformgridoptions.c:583
+#: app/tools/gimptransformgridoptions.c:580
+#: app/tools/gimptransformgridoptions.c:589
 msgid "Perspective"
 msgstr "Perspectiva"
 
@@ -23081,7 +23081,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1656
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1670
 msgid "Add Text Layer"
 msgstr "Añadir una capa de texto"
 
@@ -25102,8 +25102,8 @@ msgid "Show lattice"
 msgstr "Mostrar cuadrícula"
 
 #: app/tools/gimpnpointdeformationoptions.c:227 app/tools/gimpscaletool.c:96
-#: app/tools/gimptransformgridoptions.c:568
-#: app/tools/gimptransformgridoptions.c:579
+#: app/tools/gimptransformgridoptions.c:574
+#: app/tools/gimptransformgridoptions.c:585
 msgid "Scale"
 msgstr "Redimensionar"
 
@@ -25355,11 +25355,11 @@ msgstr "Añadir capa vectorial"
 msgid "Confirm Path Editing"
 msgstr "Confirmar la edición de ruta"
 
-#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1783
+#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1797
 msgid "Create _New Layer"
 msgstr "Crear una capa _nueva"
 
-#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1785
+#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1799
 msgid "_Edit Anyway"
 msgstr "_Editar de todas formas"
 
@@ -25562,7 +25562,7 @@ msgstr "Dibujar la máscara de la región seleccionada"
 msgid "Move the mouse to change threshold"
 msgstr "Mueva el ratón para cambiar el umbral"
 
-#: app/tools/gimprotatetool.c:103 app/tools/gimptransformgridoptions.c:570
+#: app/tools/gimprotatetool.c:103 app/tools/gimptransformgridoptions.c:576
 #: app/tools/gimptransform3dtool.c:418
 msgid "Rotate"
 msgstr "Rotar"
@@ -25710,8 +25710,8 @@ msgstr "No puede intersecarse con una selección vacía."
 
 # Viendo el programa, parece más bien "cizalla". FVD
 # Según la RAE cizallar es cortar usando la cizalla y aquí no se corta nada. RLM
-#: app/tools/gimpsheartool.c:91 app/tools/gimptransformgridoptions.c:572
-#: app/tools/gimptransformgridoptions.c:581
+#: app/tools/gimpsheartool.c:91 app/tools/gimptransformgridoptions.c:578
+#: app/tools/gimptransformgridoptions.c:587
 msgid "Shear"
 msgstr "Inclinar"
 
@@ -25909,35 +25909,35 @@ msgstr "Caja:"
 msgid "Language:"
 msgstr "Idioma:"
 
-#: app/tools/gimptexttool.c:220
+#: app/tools/gimptexttool.c:221
 msgid "Text"
 msgstr "Texto"
 
-#: app/tools/gimptexttool.c:221
+#: app/tools/gimptexttool.c:222
 msgid "Text Tool: Create or edit text layers"
 msgstr "Herramienta de texto: crear o editar capas de texto"
 
-#: app/tools/gimptexttool.c:222
+#: app/tools/gimptexttool.c:223
 msgid "Te_xt"
 msgstr "Te_xto"
 
-#: app/tools/gimptexttool.c:1040
+#: app/tools/gimptexttool.c:1054
 msgid "Fonts are still loading"
 msgstr "Las tipografías siguen cargando"
 
-#: app/tools/gimptexttool.c:1051
+#: app/tools/gimptexttool.c:1065
 msgid "Text box: "
 msgstr "Caja de texto: "
 
-#: app/tools/gimptexttool.c:1203
+#: app/tools/gimptexttool.c:1217
 msgid "Reshape Text Layer"
 msgstr "Cambiar forma de la capa de texto"
 
-#: app/tools/gimptexttool.c:1776 app/tools/gimptexttool.c:1779
+#: app/tools/gimptexttool.c:1790 app/tools/gimptexttool.c:1793
 msgid "Confirm Text Editing"
 msgstr "Confirmar la edición del texto"
 
-#: app/tools/gimptexttool.c:1807
+#: app/tools/gimptexttool.c:1821
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
@@ -25945,23 +25945,23 @@ msgstr ""
 "La capa de texto que seleccionó se rasterizó. Al editar su texto, se "
 "descartarán las modificaciones realizadas."
 
-#: app/tools/gimptexttool.c:2427
+#: app/tools/gimptexttool.c:2441
 msgid "Text is required."
 msgstr "Es necesario un texto."
 
-#: app/tools/gimptexttool.c:2430
+#: app/tools/gimptexttool.c:2444
 msgid "No image."
 msgstr "No hay imagen."
 
-#: app/tools/gimptexttool.c:2433
+#: app/tools/gimptexttool.c:2447
 msgid "No layer."
 msgstr "No hay capa."
 
-#: app/tools/gimptexttool.c:2444
+#: app/tools/gimptexttool.c:2458
 msgid "Exactly one path must be selected."
 msgstr "Se debe seleccionar exactamente una capa."
 
-#: app/tools/gimptexttool-editor.c:1476
+#: app/tools/gimptexttool-editor.c:1492
 msgid "GIMP Text Editor"
 msgstr "Editor de textos de GIMP"
 
@@ -26032,7 +26032,7 @@ msgid "Opacity of the preview image"
 msgstr "Opacidad de la imagen de vista previa"
 
 #: app/tools/gimptransformgridoptions.c:139
-#: app/tools/gimptransformgridoptions.c:468
+#: app/tools/gimptransformgridoptions.c:474
 msgid "Guides"
 msgstr "Guías"
 
@@ -26040,125 +26040,133 @@ msgstr "Guías"
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Tamaño de una celda para un número variable de guías de composición"
 
-#: app/tools/gimptransformgridoptions.c:489
+#: app/tools/gimptransformgridoptions.c:423
+msgid ""
+"If connected, you can reposition the handles without altering the "
+"transformation."
+msgstr ""
+"Si está conectado, puede reposicionar los tiradores sin alterar la "
+"transformación."
+
+#: app/tools/gimptransformgridoptions.c:495
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 grados (%s)"
 
-#: app/tools/gimptransformgridoptions.c:495
+#: app/tools/gimptransformgridoptions.c:501
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Limitar los pasos de rotación a 15 grados"
 
-#: app/tools/gimptransformgridoptions.c:504
+#: app/tools/gimptransformgridoptions.c:510
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "Mantener proporción (%s)"
 
-#: app/tools/gimptransformgridoptions.c:510
+#: app/tools/gimptransformgridoptions.c:516
 msgid "Keep the original aspect ratio"
 msgstr "Mantener la relación de aspecto original"
 
-#: app/tools/gimptransformgridoptions.c:515
-#: app/tools/gimptransformgridoptions.c:542
+#: app/tools/gimptransformgridoptions.c:521
+#: app/tools/gimptransformgridoptions.c:548
 #, c-format
 msgid "Around center (%s)"
 msgstr "Alrededor del centro (%s)"
 
-#: app/tools/gimptransformgridoptions.c:521
+#: app/tools/gimptransformgridoptions.c:527
 msgid "Scale around the center point"
 msgstr "Escalar alrededor del punto central"
 
-#: app/tools/gimptransformgridoptions.c:530
+#: app/tools/gimptransformgridoptions.c:536
 #, c-format
 msgid "Constrain handles (%s)"
 msgstr "Restringir tiradores (%s)"
 
-#: app/tools/gimptransformgridoptions.c:537
+#: app/tools/gimptransformgridoptions.c:543
 #, c-format
 msgid "Constrain handles to move along edges and diagonal (%s)"
 msgstr ""
 "Restringir los tiradores para que se muevan a lo largo los bordes y la "
 "diagonal (%s)"
 
-#: app/tools/gimptransformgridoptions.c:549
+#: app/tools/gimptransformgridoptions.c:555
 msgid "Transform around the center point"
 msgstr "Transformar alrededor del punto central"
 
-#: app/tools/gimptransformgridoptions.c:565
+#: app/tools/gimptransformgridoptions.c:571
 #, c-format
 msgid "Constrain (%s)"
 msgstr "Restringir (%s)"
 
-#: app/tools/gimptransformgridoptions.c:566 app/tools/gimptransform3dtool.c:334
+#: app/tools/gimptransformgridoptions.c:572 app/tools/gimptransform3dtool.c:334
 msgid "Move"
 msgstr "Mover"
 
-#: app/tools/gimptransformgridoptions.c:567
+#: app/tools/gimptransformgridoptions.c:573
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Restringir el movimiento a ángulos de 45 grados desde el centro (%s)"
 
-#: app/tools/gimptransformgridoptions.c:569
+#: app/tools/gimptransformgridoptions.c:575
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Mantener la proporción de aspecto cuando se escala (%s)"
 
-#: app/tools/gimptransformgridoptions.c:571
+#: app/tools/gimptransformgridoptions.c:577
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Restringir la rotación a incrementos de 15 grados (%s)"
 
-#: app/tools/gimptransformgridoptions.c:573
+#: app/tools/gimptransformgridoptions.c:579
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "Inclinar a lo largo de la dirección del borde solamente (%s)"
 
-#: app/tools/gimptransformgridoptions.c:575
+#: app/tools/gimptransformgridoptions.c:581
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Restringir la perspectiva de los tiradores para mover a lo largo los bordes y "
 "la diagonal (%s)"
 
-#: app/tools/gimptransformgridoptions.c:578
+#: app/tools/gimptransformgridoptions.c:584
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "Desde el pivote (%s)"
 
-#: app/tools/gimptransformgridoptions.c:580
+#: app/tools/gimptransformgridoptions.c:586
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "Escalar desde el punto de pivote (%s)"
 
-#: app/tools/gimptransformgridoptions.c:582
+#: app/tools/gimptransformgridoptions.c:588
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Inclinar el borde opuesto de la misma cantidad (%s)"
 
-#: app/tools/gimptransformgridoptions.c:584
+#: app/tools/gimptransformgridoptions.c:590
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Mantener la posición del pivote mientras se cambia la perspectiva (%s)"
 
-#: app/tools/gimptransformgridoptions.c:587
+#: app/tools/gimptransformgridoptions.c:593
 msgid "Pivot"
 msgstr "Pivote"
 
-#: app/tools/gimptransformgridoptions.c:588
+#: app/tools/gimptransformgridoptions.c:594
 #, c-format
 msgid "Snap (%s)"
 msgstr "Ajustar (%s)"
 
-#: app/tools/gimptransformgridoptions.c:589
+#: app/tools/gimptransformgridoptions.c:595
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Ajustar el pivote a las esquinas y el centro (%s)"
 
-#: app/tools/gimptransformgridoptions.c:590
+#: app/tools/gimptransformgridoptions.c:596
 msgid "Lock"
 msgstr "Bloquear"
 
-#: app/tools/gimptransformgridoptions.c:591
+#: app/tools/gimptransformgridoptions.c:597
 msgid "Lock pivot position to canvas"
 msgstr "Bloquear la posición del pivote al lienzo"
 
