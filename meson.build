@@ -454,7 +454,7 @@ fontconfig        = dependency(fontconfig_name,      version: '>='+fontconfig_mi
 freetype2_minver  = '2.1.7'
 freetype2         = dependency('freetype2',          version: '>='+freetype2_minver)
 
-gdk_pixbuf_minver = '2.30.8'
+gdk_pixbuf_minver = '2.32.0'
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>='+gdk_pixbuf_minver)
 gdk_pixbuf_version_split = gdk_pixbuf_minver.split('.')
 gdk_pixbuf_major = gdk_pixbuf_version_split[0].to_int()
