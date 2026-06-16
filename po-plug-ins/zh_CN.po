@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-06 18:46+0000\n"
-"PO-Revision-Date: 2026-06-07 08:16+0800\n"
+"POT-Creation-Date: 2026-06-15 04:48+0000\n"
+"PO-Revision-Date: 2026-06-16 08:32+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1233,7 +1233,7 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1523
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:722
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:723
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
 #: plug-ins/file-icns/file-icns-export.c:442
@@ -2672,7 +2672,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-png.c:1936 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:810
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:714
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:715
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
@@ -3595,7 +3595,7 @@ msgstr "以 HEIF（高效率图像文件格式）格式保存图像。"
 
 #: plug-ins/common/file-heif.c:291 plug-ins/common/file-heif.c:412
 #: plug-ins/common/file-heif.c:557 plug-ins/common/file-jp2.c:334
-#: plug-ins/common/file-jp2.c:422 plug-ins/file-jpeg/jpeg.c:210
+#: plug-ins/common/file-jp2.c:422 plug-ins/file-jpeg/jpeg.c:244
 msgid "_Quality"
 msgstr "质量(_Q)"
 
@@ -4033,7 +4033,7 @@ msgid "Exports files in JPEG 2000 file format"
 msgstr "以 JPEG 2000 格式导出文件"
 
 #: plug-ins/common/file-jp2.c:335 plug-ins/common/file-jp2.c:423
-#: plug-ins/file-jpeg/jpeg.c:211
+#: plug-ins/file-jpeg/jpeg.c:245
 msgid "Quality of exported image"
 msgstr "导出图像的质量"
 
@@ -4532,8 +4532,8 @@ msgstr "主表面"
 
 #: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:353
 #: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
-#: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
-#: plug-ins/common/file-tim.c:612 plug-ins/file-cin/cineon-lib.c:169
+#: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:574
+#: plug-ins/common/file-tim.c:613 plug-ins/file-cin/cineon-lib.c:169
 #: plug-ins/file-cin/dpx-lib.c:280
 #, c-format
 msgid "Memory could not be allocated."
@@ -6758,18 +6758,18 @@ msgstr "不支持的 TIM 图像类型：%d"
 msgid "Could not read palette from '%s'"
 msgstr "无法从“%s”读取调色板"
 
-#: plug-ins/common/file-tim.c:706
+#: plug-ins/common/file-tim.c:707
 #, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr "无法导出“%s”。TIM 文件格式不支持宽度或高度大于 %d 像素的图像。"
 
-#: plug-ins/common/file-tim.c:924
+#: plug-ins/common/file-tim.c:925
 msgid "Image Origin"
 msgstr "图像原点"
 
-#: plug-ins/common/file-tim.c:939
+#: plug-ins/common/file-tim.c:940
 msgid "Palette Origin"
 msgstr "色板原点"
 
@@ -10374,133 +10374,145 @@ msgid ""
 "Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
 msgstr "试图打开临时 %s 文件“%s”用于加载 JPEG 元数据时出错：%s"
 
-#: plug-ins/file-jpeg/jpeg.c:135 plug-ins/file-jpeg/jpeg.c:182
+#: plug-ins/file-jpeg/jpeg.c:143 plug-ins/file-jpeg/jpeg.c:216
 msgid "JPEG image"
 msgstr "JPEG 图像"
 
-#: plug-ins/file-jpeg/jpeg.c:138 plug-ins/file-jpeg/jpeg.c:139
+#: plug-ins/file-jpeg/jpeg.c:146 plug-ins/file-jpeg/jpeg.c:147
 msgid "Loads files in the JPEG file format"
 msgstr "加载 JPEG 格式的文件"
 
-#: plug-ins/file-jpeg/jpeg.c:163
+#: plug-ins/file-jpeg/jpeg.c:171
 msgid "Loads a thumbnail from a JPEG image"
 msgstr "从 JPEG 图像加载缩略图"
 
-#: plug-ins/file-jpeg/jpeg.c:164
+#: plug-ins/file-jpeg/jpeg.c:172
 msgid "Loads a thumbnail from a JPEG image, if one exists"
 msgstr "如果存在则从 JPEG 图像加载缩略图"
 
-#: plug-ins/file-jpeg/jpeg.c:185
+#: plug-ins/file-jpeg/jpeg.c:188
+msgid "MPO image"
+msgstr "MPO 图像"
+
+#: plug-ins/file-jpeg/jpeg.c:191
+msgid "Loads files in the MPO file format"
+msgstr "加载 MPO 格式的文件"
+
+#: plug-ins/file-jpeg/jpeg.c:192
+msgid "Loads files in the MPO (Multiple Picture Object) file format"
+msgstr "加载 MPO（多图像对象）格式的文件"
+
+#: plug-ins/file-jpeg/jpeg.c:219
 msgid "Exports files in the JPEG file format"
 msgstr "以 JPEG 格式导出文件"
 
-#: plug-ins/file-jpeg/jpeg.c:186
+#: plug-ins/file-jpeg/jpeg.c:220
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "将文件导出为有损的，被广泛支持的 JPEG 格式"
 
-#: plug-ins/file-jpeg/jpeg.c:195 plug-ins/file-tiff/file-tiff.c:156
+#: plug-ins/file-jpeg/jpeg.c:229 plug-ins/file-tiff/file-tiff.c:156
 msgid "JPEG"
 msgstr "JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:216
+#: plug-ins/file-jpeg/jpeg.c:250
 msgid "S_moothing"
 msgstr "平滑(_M)"
 
-#: plug-ins/file-jpeg/jpeg.c:217
+#: plug-ins/file-jpeg/jpeg.c:251
 msgid "Smoothing factor for exported image"
 msgstr "导出图像的平滑系数"
 
-#: plug-ins/file-jpeg/jpeg.c:222
+#: plug-ins/file-jpeg/jpeg.c:256
 msgid "Optimi_ze"
 msgstr "优化(_Z)"
 
-#: plug-ins/file-jpeg/jpeg.c:223
+#: plug-ins/file-jpeg/jpeg.c:257
 msgid "Use optimized tables during Huffman coding"
 msgstr "霍夫曼编码期间使用优化的码表"
 
-#: plug-ins/file-jpeg/jpeg.c:228
+#: plug-ins/file-jpeg/jpeg.c:262
 msgid "_Progressive"
 msgstr "渐进(_P)"
 
-#: plug-ins/file-jpeg/jpeg.c:229
+#: plug-ins/file-jpeg/jpeg.c:263
 msgid "Create progressive JPEG images"
 msgstr "创建渐进式 JPEG 图像"
 
-#: plug-ins/file-jpeg/jpeg.c:234
+#: plug-ins/file-jpeg/jpeg.c:268
 msgid "Export as CM_YK"
 msgstr "导出为 CMYK(_Y)"
 
-#: plug-ins/file-jpeg/jpeg.c:235
+#: plug-ins/file-jpeg/jpeg.c:269
 msgid "Create a CMYK JPEG image using the soft-proofing color profile"
 msgstr "使用软打样特性文件创建 CMYK JPEG 图像"
 
-#: plug-ins/file-jpeg/jpeg.c:240
+#: plug-ins/file-jpeg/jpeg.c:274
 msgid "Su_bsampling"
 msgstr "次采样(_B)"
 
-#: plug-ins/file-jpeg/jpeg.c:241
+#: plug-ins/file-jpeg/jpeg.c:275
 msgid "Sub-sampling type"
 msgstr "次采样类型"
 
-#: plug-ins/file-jpeg/jpeg.c:242
+#: plug-ins/file-jpeg/jpeg.c:276
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4（最好质量）"
 
-#: plug-ins/file-jpeg/jpeg.c:243
+#: plug-ins/file-jpeg/jpeg.c:277
 msgid "4:2:2 (chroma halved horizontally)"
 msgstr "4:2:2（彩度水平减半）"
 
-#: plug-ins/file-jpeg/jpeg.c:244
+#: plug-ins/file-jpeg/jpeg.c:278
 msgid "4:4:0 (chroma halved vertically)"
 msgstr "4:4:0（彩度竖直减半）"
 
-#: plug-ins/file-jpeg/jpeg.c:245
+#: plug-ins/file-jpeg/jpeg.c:279
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0（彩度四分之一）"
 
-#: plug-ins/file-jpeg/jpeg.c:250
+#: plug-ins/file-jpeg/jpeg.c:284
 msgid "Baseline"
 msgstr "基线"
 
-#: plug-ins/file-jpeg/jpeg.c:251
+#: plug-ins/file-jpeg/jpeg.c:285
 msgid ""
 "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
 "decoders)"
 msgstr "强制创建基线 JPEG（非基线 JPEG 无法被所有解码器读取）"
 
-#: plug-ins/file-jpeg/jpeg.c:257
+#: plug-ins/file-jpeg/jpeg.c:291
 msgid "Inter_val (MCU rows):"
 msgstr "间隔（MCU 行）(_V)："
 
-#: plug-ins/file-jpeg/jpeg.c:258
+#: plug-ins/file-jpeg/jpeg.c:292
 msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
 msgstr "重启标记的间隔（在 MCU 行中，0 = 无重启标记）"
 
-#: plug-ins/file-jpeg/jpeg.c:264
+#: plug-ins/file-jpeg/jpeg.c:298
 msgid "_DCT method"
 msgstr "DCT 方法(_D)"
 
-#: plug-ins/file-jpeg/jpeg.c:265
+#: plug-ins/file-jpeg/jpeg.c:299
 msgid "DCT method to use"
 msgstr "要使用的 DCT 方法"
 
-#: plug-ins/file-jpeg/jpeg.c:266
+#: plug-ins/file-jpeg/jpeg.c:300
 msgid "Fast Integer"
 msgstr "快速整数"
 
-#: plug-ins/file-jpeg/jpeg.c:267
+#: plug-ins/file-jpeg/jpeg.c:301
 msgid "Integer"
 msgstr "整数"
 
-#: plug-ins/file-jpeg/jpeg.c:268
+#: plug-ins/file-jpeg/jpeg.c:302
 msgid "Floating-Point"
 msgstr "浮点数"
 
-#: plug-ins/file-jpeg/jpeg.c:275
+#: plug-ins/file-jpeg/jpeg.c:309
 msgid "_Use quality settings from original image"
 msgstr "使用原图像的品质设定(_U)"
 
-#: plug-ins/file-jpeg/jpeg.c:276
+#: plug-ins/file-jpeg/jpeg.c:310
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -10509,31 +10521,31 @@ msgstr ""
 "如果原图像是从一个使用非标准品质设置(量化表)的 JPEG 文件读入的，启用此选项以"
 "取得几乎一致的品质和文件大小。"
 
-#: plug-ins/file-jpeg/jpeg.c:298
+#: plug-ins/file-jpeg/jpeg.c:332
 msgid "Sho_w preview in image window"
 msgstr "在图像窗口中显示预览(_W)"
 
-#: plug-ins/file-jpeg/jpeg.c:299
+#: plug-ins/file-jpeg/jpeg.c:333
 msgid "Creates a temporary layer with an export preview"
 msgstr "用导出预览创建一个临时图层"
 
-#: plug-ins/file-jpeg/jpeg.c:303
+#: plug-ins/file-jpeg/jpeg.c:337
 msgid "Use _arithmetic coding"
 msgstr "使用算法编码(_A)"
 
-#: plug-ins/file-jpeg/jpeg.c:304
+#: plug-ins/file-jpeg/jpeg.c:338
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr "较旧的软件打开算法编码的图像可能会有问题"
 
-#: plug-ins/file-jpeg/jpeg.c:309
+#: plug-ins/file-jpeg/jpeg.c:343
 msgid "Use restart mar_kers"
 msgstr "使用重新开始标记(_K)"
 
-#: plug-ins/file-jpeg/jpeg.c:314 plug-ins/file-tiff/file-tiff.c:318
+#: plug-ins/file-jpeg/jpeg.c:348 plug-ins/file-tiff/file-tiff.c:318
 msgid "Save Photoshop metadata"
 msgstr "保存 Photoshop 元数据"
 
-#: plug-ins/file-jpeg/jpeg.c:315
+#: plug-ins/file-jpeg/jpeg.c:349
 msgid ""
 "Store Photoshop image resources (paths, guides, ...) in JPEG APP13 tag "
 "(Photoshop)"
