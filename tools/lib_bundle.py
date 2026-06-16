@@ -27,6 +27,7 @@ import shutil
 import sys
 import struct
 import glob
+import time
 
 
 ################################################################################
@@ -64,8 +65,10 @@ elif is_macos:
 
 # Main function
 def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
-  #sys.stdout.write("{} (INFO): searching for dependencies of {} in {}.\n".format(os.path.basename(__file__),
-  #                                                                               binary, ', '.join(srcdirs)))
+  script_start_time = time.perf_counter()
+
+  ## LOAD STATE CACHES
+  section_start = time.perf_counter()
   global done_dlls
   try:
     if dll_file is not None:
@@ -80,9 +83,15 @@ def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
       for line in f:
         parts = line.strip().split(',')
         done_symbols.add((parts[0], parts[1]))
+  print(f"\033[34m(TIME)\033[0m: 'LOAD STATE CACHES' completed in {time.perf_counter() - section_start:.2f} seconds.")
 
+  ## DEPENDENCY RESOLUTION
+  section_start = time.perf_counter()
   find_dependencies(os.path.abspath(binary), srcdirs)
+  print(f"\033[34m(TIME)\033[0m: 'FIND DEPENDENCIES' completed in {time.perf_counter() - section_start:.2f} seconds.")
 
+  ## COPY & DEPLOYMENT PROCESSING
+  section_start = time.perf_counter()
   if debug in ['debug-only', 'debug-run']:
     if debug == 'debug-only':
       print("Running in debug-only mode (no DLL/DYLIB moved) for '{}'".format(binary))
@@ -112,7 +121,10 @@ def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
       copy_dlls(dlls - sys_dlls, srcdirs, destdir)
   else:
     copy_dlls(dlls - sys_dlls, srcdirs, destdir)
+  print(f"\033[34m(TIME)\033[0m: 'COPY & PROCESS DLLS' completed in {time.perf_counter() - section_start:.2f} seconds.")
 
+  ## SAVE STATE CACHES
+  section_start = time.perf_counter()
   if dll_file is not None:
     with open(dll_file, 'w') as f:
       f.write("\n".join(set.union(done_dlls, dlls, sys_dlls)))
@@ -121,6 +133,9 @@ def main(binary, srcdirs, destdir, debug, dll_file, symbols_file):
     with open(symbols_file, 'w') as f:
       for symbol, lib_name in done_symbols:
         f.write(f"{symbol},{lib_name}\n")
+  print(f"\033[34m(TIME)\033[0m: 'SAVE STATE CACHES' completed in {time.perf_counter() - section_start:.2f} seconds.")
+
+  print(f"\n\033[32m(SUCCESS)\033[0m: Sub-module dependency bundling finished in {time.perf_counter() - script_start_time:.2f} seconds.\n")
 
 
 def find_dependencies(obj, srcdirs):
@@ -200,7 +215,9 @@ def copy_dlls(dll_list, srcdirs, destdir):
     abs_destdir = os.path.abspath(destdir)
     if abs_binary.startswith(abs_destdir + os.sep):
       #check_macos_version(abs_binary)
+      set_rpath_start = time.perf_counter()
       set_rpath(abs_binary, destbin)
+      print(f"\033[34m(TIME)\033[0m: 'set_rpath' on main binary completed in {time.perf_counter() - set_rpath_start:.2f} seconds.")
   for dll in dll_list:
     if not os.path.exists(os.path.join(destbin, dll)):
       # Do not overwrite existing files.
@@ -208,11 +225,15 @@ def copy_dlls(dll_list, srcdirs, destdir):
         full_file_name = os.path.join(srcdir, bindir, dll)
         if os.path.isfile(full_file_name):
           if is_macos and not full_file_name.startswith(("/opt/local/", "/opt/homebrew/")):
+            check_ver_start = time.perf_counter()
             check_macos_version(full_file_name)
+            print(f"\033[34m(TIME)\033[0m: 'check_macos_version' for {dll} completed in {time.perf_counter() - check_ver_start:.2f} seconds.")
           sys.stdout.write("Bundling {} to {}\n".format(full_file_name, destbin))
           shutil.copy(full_file_name, destbin)
           if is_macos:
+            set_rpath_start = time.perf_counter()
             set_rpath(os.path.join(destbin, dll), destbin)
+            print(f"\033[34m(TIME)\033[0m: 'set_rpath' for {dll} completed in {time.perf_counter() - set_rpath_start:.2f} seconds.")
           break
       else:
         # This should not happen. We determined that the dll is in one
@@ -346,18 +367,8 @@ def set_rpath(binary, destbin=None):
       if old_rpath == new_rpath:
         continue
       install_cmd.extend(['-delete_rpath', old_rpath])
-      #try:
-      #  subprocess.run(['install_name_tool', '-delete_rpath', old_rpath, binary], check=True, stderr=subprocess.DEVNULL)
-      #  #sys.stdout.write(f"Removed LC_RPATH {old_rpath} from {binary}\n")
-      #except subprocess.CalledProcessError as e:
-      #  sys.stderr.write(f"Failed to remove rpath {old_rpath} from {binary}: {e}\n")
     if new_rpath not in regex:
       install_cmd.extend(['-add_rpath', new_rpath])
-      #try:
-      #  subprocess.run(['install_name_tool', '-add_rpath', new_rpath, binary], check=True, stderr=subprocess.DEVNULL)
-      #  #sys.stdout.write(f"Added LC_RPATH {new_rpath} to {binary}\n")
-      #except subprocess.CalledProcessError as e:
-      #  sys.stderr.write(f"Failed to add rpath {new_rpath} to {binary}: {e}\n")
 
   # Handle LC_LOAD_DYLIB (on executables, shared libraries)
   regex = re.findall(r'name (.+?) \(offset', out)
@@ -370,11 +381,6 @@ def set_rpath(binary, destbin=None):
       new_dylib_path = os.path.join("@rpath", os.path.basename(old_dylib_path))
     if old_dylib_path != new_dylib_path:
       install_cmd.extend(['-change', old_dylib_path, new_dylib_path])
-      #try:
-      #  subprocess.run(['install_name_tool', '-change', old_dylib_path, new_dylib_path, binary], check=True, stderr=subprocess.DEVNULL)
-      #  #sys.stdout.write(f"Rewrote LC_LOAD_DYLIB {old_dylib_path} -> {new_dylib_path}\n")
-      #except subprocess.CalledProcessError as e:
-      #  sys.stderr.write(f"Failed to rewrite LC_LOAD_DYLIB {old_dylib_path}: {e}\n")
 
   # Handle LC_ID_DYLIB (only on shared libraries)
   regex = re.search(r'cmd LC_ID_DYLIB.*?\n\s*name (.+?) \(offset', out, re.DOTALL)
@@ -383,11 +389,6 @@ def set_rpath(binary, destbin=None):
     new_dylib_path = os.path.join("@rpath", os.path.basename(old_dylib_path))
     if old_dylib_path != new_dylib_path:
       install_cmd.extend(['-id', new_dylib_path])
-      #try:
-      #  subprocess.run(['install_name_tool', '-id', new_dylib_path, binary], check=True, stderr=subprocess.DEVNULL)
-      #  #sys.stdout.write(f"Rewrote LC_ID_DYLIB {old_dylib_path} -> {new_dylib_path}\n")
-      #except subprocess.CalledProcessError as e:
-      #  sys.stderr.write(f"Failed to rewrite LC_ID_DYLIB {old_dylib_path}: {e}\n")
 
   if len(install_cmd) > 1:
     install_cmd.append(binary)
@@ -402,7 +403,6 @@ def set_rpath(binary, destbin=None):
   if "invalid signature" in result.stdout + result.stderr:
     try:
       subprocess.run(["codesign", "--sign", "-", "--force", "--preserve-metadata=entitlements,requirements,flags,runtime", binary], check=True, stderr=subprocess.DEVNULL)
-      #sys.stdout.write(f"Re-signed {binary}\n")
     except subprocess.CalledProcessError as e:
       sys.stderr.write(f"Failed to ad-hoc sign {binary}: {e}\n")
 

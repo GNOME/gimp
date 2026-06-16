@@ -6,6 +6,7 @@ import shutil
 import subprocess
 import stat
 import sys
+import time
 from pathlib import Path
 from glob import glob
 
@@ -153,7 +154,10 @@ def clean(base_path, pattern):
           path.unlink()
 
 
+script_start_time = time.perf_counter()
+
 ## PREPARE BUNDLE
+section_start = time.perf_counter()
 GIMP_DISTRIB.mkdir(parents=True, exist_ok=True)
 ### Prevent Git going crazy
 (GIMP_DISTRIB / ".." / ".gitignore").write_text("*\n")
@@ -165,9 +169,11 @@ subprocess.run(["xcrun","actool",str(Path(f"{BUILD_DIR}/gimp-data/images/logo/Ap
 shutil.copy2(Path(f"{BUILD_DIR}/gimp-data/images/logo/gimp.icns"), GIMP_DISTRIB / "Resources/AppIcon.icns")
 shutil.copy2(Path(f"{BUILD_DIR}/build/macos/fileicon-xcf.icns"), GIMP_DISTRIB / "Resources/fileicon-xcf.icns")
 shutil.copy2(Path(f"{BUILD_DIR}/build/macos/fileicon.icns"), GIMP_DISTRIB / "Resources/fileicon.icns")
+print(f"\033[34m(TIME)\033[0m: 'PREPARE BUNDLE' completed in {time.perf_counter() - section_start:.2f} seconds.")
 
 
 ## BUNDLE BASE (BARE MINIMUM TO RUN GTK APPS).
+section_start = time.perf_counter()
 ### Needed for file dialogs (only .compiled file is needed on macOS)
 bundle(OPT_PREFIX, "share/glib-*/schemas/gschemas.compiled")
 ### Mostly bogus since we do use macOS API directly from gimp to open remote files
@@ -199,9 +205,11 @@ new_text = re.sub(r'/.*?(?=gtk-3\.0/)', '', text)
 Path(im_cache[0]).write_text(new_text)
 ### Needed for MacOS-style keyboard shortcuts
 bundle(OPT_PREFIX, "share/themes/Mac")
+print(f"\033[34m(TIME)\033[0m: 'BUNDLE BASE' completed in {time.perf_counter() - section_start:.2f} seconds.")
 
 
 ## CORE FEATURES.
+section_start = time.perf_counter()
 bundle(GIMP_PREFIX, "lib/libbabl*-*.*.*.dylib")
 bundle(GIMP_PREFIX, "lib/babl-*")
 bundle(GIMP_PREFIX, "lib/libgegl*-*.*.*.dylib")
@@ -219,9 +227,11 @@ for lang in lang_array:
   if glob(f"{OPT_PREFIX}/share/locale/{lang}/LC_MESSAGES/iso_639_3.mo"):
     bundle(OPT_PREFIX, f"share/locale/{lang}/LC_MESSAGES/iso_639_3.mo")
 bundle(GIMP_PREFIX, "etc/gimp")
+print(f"\033[34m(TIME)\033[0m: 'CORE FEATURES' completed in {time.perf_counter() - section_start:.2f} seconds.")
 
 
 ## OTHER FEATURES AND PLUG-INS.
+section_start = time.perf_counter()
 ### Support for non .PAT patterns: https://gitlab.gnome.org/GNOME/gimp/-/issues/12351
 bundle(OPT_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-bmp*")
 bundle(OPT_PREFIX, "lib/gdk-pixbuf-*/*/loaders/libpixbufloader-gif*")
@@ -302,9 +312,11 @@ link_path.symlink_to(os.path.relpath(real_path, link_path.parent))
   #bundle(OPT_PREFIX, "bin/luajit", "--dest", "MacOS")
   #bundle(OPT_PREFIX, "lib/lua")
   #bundle(OPT_PREFIX, "share/lua")
+print(f"\033[34m(TIME)\033[0m: 'OTHER FEATURES AND PLUG-INS' completed in {time.perf_counter() - section_start:.2f} seconds.")
 
 
 ## MAIN EXECUTABLES AND DEPENDENCIES
+section_start = time.perf_counter()
 ### Minimal (and some additional) executables for the 'MacOS' folder
 bundle(GIMP_PREFIX, "bin/gimp*")
 if os.path.exists(OPT_PREFIX / "bin/brew"):
@@ -333,9 +345,11 @@ for dir in ["MacOS", "lib"]:
           "--output-dylib-symbols-list", done_symbols
         ], check=True)
         binaries_to_dsym.append(dep)
+print(f"\033[34m(TIME)\033[0m: 'MAIN EXECUTABLES AND DEPENDENCIES' completed in {time.perf_counter() - section_start:.2f} seconds.")
 
 
 ## .DSYM/DWARF DEBUG SYMBOLS (from babl, gegl and GIMP binaries)
+section_start = time.perf_counter()
 for line in done_dylib.read_text().splitlines():
   if line.strip():
     bundled_dep = GIMP_DISTRIB / "lib" / line.strip()
@@ -352,10 +366,12 @@ for binary in binaries_to_dsym:
   elif "unable to open object file" in result.stdout + result.stderr and not str(OPT_PREFIX) in result.stdout + result.stderr and "Python.framework" not in str(binary):
     print(f"\n\033[31m(ERROR)\033[0m: {binary} is orphaned from .o file for .dSYM generation. Please make sure its build dir is present")
     sys.exit(1)
+print(f"\033[34m(TIME)\033[0m: '.DSYM/DWARF DEBUG SYMBOLS' completed in {time.perf_counter() - section_start:.2f} seconds.")
 
 
 ## DEVELOPMENT FILES ON UNIX-STYLE, NO MACOS-STYLE/.FRAMEWORK (see https://developer.gimp.org/resource/sdk/)
 ### (to build GEGL filters and GIMP plug-ins).
+section_start = time.perf_counter()
 clean(GIMP_DISTRIB, "lib/*.a")
 bundle(GIMP_PREFIX, "include/gimp-*", "--dest", "include")
 bundle(GIMP_PREFIX, "include/babl-*", "--dest", "include")
@@ -433,8 +449,11 @@ link_path = Path(f"{GIMP_DISTRIB}/lib/libzstd.dylib")
 link_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/lib/libzstd.1.dylib"), link_path.parent))
 bundle(OPT_PREFIX, "lib/glib-2.0", "--dest", "lib")
 bundle(OPT_PREFIX, "include/brotli", "--dest", "include")
+print(f"\033[34m(TIME)\033[0m: 'DEVELOPMENT FILES SDK' completed in {time.perf_counter() - section_start:.2f} seconds.")
+
 
 ### Test if all bundled .pc, libs and headers are fine
+section_start = time.perf_counter()
 print(f"Testing if GIMP SDK works")
 clean_tests_env = os.environ.copy()
 clean_tests_env.pop("PKG_CONFIG_PATH", None)
@@ -460,3 +479,6 @@ for build_option, test_binary in gimpsdk_tests.items():
     print(f"\033[31m(ERROR)\033[0m: GIMP SDK test failed under the hood for {test_source} (the SDK is leaking to MacPorts or Homebrew). Output:\n{flags_output}")
     sys.exit(1)
 os.chdir(Path(BUILD_DIR))
+print(f"\033[34m(TIME)\033[0m: 'SDK WORK TESTING' completed in {time.perf_counter() - section_start:.2f} seconds.")
+
+print(f"\n\033[32m(SUCCESS)\033[0m: Entire bundling script finished execution in {time.perf_counter() - script_start_time:.2f} seconds.")
