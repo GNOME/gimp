@@ -52,7 +52,7 @@ ${MINGW_PACKAGE_PREFIX}-poppler-data|vcpkg:poppler-data
 ${MINGW_PACKAGE_PREFIX}-python|vcpkg:python3
 ${MINGW_PACKAGE_PREFIX}-python-gobject
 ${MINGW_PACKAGE_PREFIX}-qoi|vcpkg:qoi
-#${MI#NGW_PACKAGE_PREFIX}-suitesparse crashes. See #12838
+${MINGW_PACKAGE_PREFIX}-suitesparse
 ${MINGW_PACKAGE_PREFIX}-xpm-nox
 ${MINGW_PACKAGE_PREFIX}-xz|vcpkg:liblzma
 ${MINGW_PACKAGE_PREFIX}-zlib|vcpkg:zlib
