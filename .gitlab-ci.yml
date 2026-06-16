@@ -24,6 +24,16 @@ spec:
       default: 'none'
 ---
 
+include:
+  - project: GNOME/citemplates
+    file: flatpak/flatpak_ci_initiative.yml
+    #flatpak_ci_initiative.yml is extremely pervasive. See: https://gitlab.gnome.org/GNOME/citemplates/-/issues/35
+    #keep 'ref:' synced with submission section of build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh
+    ref: b8e6f8f5a6d2f39b2852d165cc2ab3550ac9e3fb
+  - project: Infrastructure/freedesktop-ci-templates
+    file: templates/ci-fairy.yml
+    ref: aec7a6ce7bb38902c70641526f6611e27141784a
+
 workflow:
   auto_cancel:
     on_new_commit: interruptible
@@ -99,7 +109,6 @@ workflow:
   artifacts:
     name: "${CI_JOB_NAME_SLUG}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     when: always
-
 
 stages:
   - dependencies
@@ -944,6 +953,24 @@ abidiff:
     - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpwidgets-3.0.so" "${LIB_DIR}/libgimpwidgets-3.0.so"
     - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpui-3.0.so" "${LIB_DIR}/libgimpui-3.0.so"
 
+check-commit-log:
+  extends:
+    - .default
+    - .fdo.ci-fairy
+  stage: analysis
+  variables:
+    GIT_DEPTH: "100"
+    JUNIT_REPORT: commit-message-junit-report.xml
+  script:
+    - touch "$JUNIT_REPORT"
+    - ci-fairy check-commits --textwidth 80 --rules-file=.gitlab/commit-rules.yml --junit-xml=$JUNIT_REPORT
+  rules:
+    - <<: *CI_MERGE
+  artifacts:
+    expire_in: 1 week
+    reports:
+      junit: $JUNIT_REPORT
+
 issue-bot:
   extends: .default
   rules:
@@ -1068,13 +1095,6 @@ dist-appimage-weekly:
     paths:
       - build/linux/appimage/_Output/
     expire_in: 8 days
-
-include:
-  project: GNOME/citemplates
-  file: flatpak/flatpak_ci_initiative.yml
-  #flatpak_ci_initiative.yml is extremely pervasive. See: https://gitlab.gnome.org/GNOME/citemplates/-/issues/35
-  #keep 'ref:' synced with submission section of build/linux/flatpak/3_dist-gimp-flatpakbuilder.sh
-  ref: b8e6f8f5a6d2f39b2852d165cc2ab3550ac9e3fb
 
 dist-flatpak-weekly:
   extends:
