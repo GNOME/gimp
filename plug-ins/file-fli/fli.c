@@ -883,7 +883,7 @@ fli_read_black (FILE          *f,
                 guchar        *framebuf,
                 GError       **error)
 {
-  memset (framebuf, 0, fli_header->width * fli_header->height);
+  memset (framebuf, 0, (gsize) fli_header->width * fli_header->height);
 
   return TRUE;
 }
@@ -1178,7 +1178,8 @@ fli_read_lc (FILE          *f,
   gushort  yc, firstline, numline;
   guchar  *pos;
 
-  memcpy (framebuf, old_framebuf, fli_header->width * fli_header->height);
+  memcpy (framebuf, old_framebuf,
+          (gint64) fli_header->width * fli_header->height);
 
   if (! fli_read_short (f, &firstline, error) ||
       ! fli_read_short (f, &numline, error))
@@ -1432,7 +1433,8 @@ fli_read_lc_2 (FILE          *f,
   guchar  *pos;
   guint32  len_read;
 
-  memcpy (framebuf, old_framebuf, fli_header->width * fli_header->height);
+  memcpy (framebuf, old_framebuf,
+          (gint64) fli_header->width * fli_header->height);
   yc = 0;
 
   if (! fli_read_short (f, &numline, error))
