@@ -794,7 +794,7 @@ file-plug-in-tests:
 meson-health:
   extends: .default
   rules:
-    - if: '$GITLAB_USER_LOGIN == "root"'
+    - if: '$CI_COMMIT_MESSAGE =~ /.*Update .*/ && $CI_COMMIT_MESSAGE =~ /.* translation.*/'
       #commits pushed by GNOME Translation Robot do not need this job
       when: never
     - <<: *CI_MERGE
@@ -829,7 +829,7 @@ clang-format:
 branches-check:
   extends: .default
   rules:
-    - if: '$GITLAB_USER_LOGIN == "root"'
+    - if: '$CI_COMMIT_MESSAGE =~ /.*Update .*/ && $CI_COMMIT_MESSAGE =~ /.* translation.*/'
       #commits pushed by GNOME Translation Robot do not need this job
       when: never
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
