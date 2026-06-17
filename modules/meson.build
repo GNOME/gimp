@@ -52,7 +52,6 @@ modules = [
   },
 ]
 
-print("I changed nothing")
 
 if have_linuxinput
   modules += {
