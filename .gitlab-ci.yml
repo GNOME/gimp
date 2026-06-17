@@ -128,7 +128,7 @@ stages:
     - <<: *CI_COMMIT
       variables: {}
     - if: '$GIMP_CI_MESON_CLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_CLANG.*/'
-      variables:
+      variables: &clang_vars
         CC: clang
         CXX: clang++
         CC_LD: lld
@@ -140,13 +140,7 @@ stages:
         MESON_OPTIONS: "-Dvector-icons=false"
         VARIANT: "-raster"
     - if: '($GIMP_CI_TARTAN != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_TARTAN.*/) && $CI_JOB_NAME !~ /.*gimp.*/'
-      variables:
-        CC: clang
-        CXX: clang++
-        CC_LD: lld
-        CXX_LD: lld
-        WARN_AS_ERROR_ON_CI: '-Dwerror=true'
-        VARIANT: -clang
+      variables: *clang_vars
     - <<: *CI_RELEASE
   before_script:
     - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install-${RUNNER}"
@@ -551,27 +545,23 @@ gimp-snap:
       when: never
     - if: '($CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/ && $CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/) || ($CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Windows Installer.*/ && $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Microsoft Store.*/)'
       interruptible: true
-      variables:
+      variables: &exe_msix_vars
         INSTALLER_OPTION: '-Dwindows-installer=true'
         STORE_OPTION: '-Dms-store=true'
     - if: '($CI_MERGE_REQUEST_LABELS =~ /.*Package:Windows Installer.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Windows Installer.*/) && $CI_JOB_NAME !~ /.*store.*/'
       interruptible: true
-      variables:
+      variables: &exe_vars
         INSTALLER_OPTION: '-Dwindows-installer=true'
     - if: '($CI_MERGE_REQUEST_LABELS =~ /.*Package:Microsoft Store.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Microsoft Store.*/) && $CI_JOB_NAME !~ /.*installer.*/'
       interruptible: true
-      variables:
+      variables: &msix_vars
         STORE_OPTION: '-Dms-store=true'
     - if: '$GIMP_CI_WIN_INSTALLER != null && $GIMP_CI_MS_STORE != null'
-      variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
-        STORE_OPTION: '-Dms-store=true'
+      variables: *exe_msix_vars
     - if: '($GIMP_CI_WIN_INSTALLER != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_WIN_INSTALLER.*/) && $CI_JOB_NAME !~ /.*store.*/'
-      variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
+      variables: *exe_vars
     - if: '($GIMP_CI_MS_STORE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MS_STORE.*/) && $CI_JOB_NAME !~ /.*installer.*/'
-      variables:
-        STORE_OPTION: '-Dms-store=true'
+      variables: *msix_vars
     - if: '($GIMP_CI_MESON_MSVC != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_MSVC.*/) && $CI_JOB_NAME !~ /.*installer.*/ && $CI_JOB_NAME !~ /.*store.*/ && $CI_JOB_NAME !~ /.*aarch64.*/'
       variables:
         MSYS_ROOT: ""
@@ -579,9 +569,7 @@ gimp-snap:
         WARN_AS_ERROR_ON_CI: '-Dwerror=true'
         VARIANT: "-msvc"
     - <<: *CI_RELEASE
-      variables:
-        INSTALLER_OPTION: '-Dwindows-installer=true'
-        STORE_OPTION: '-Dms-store=true'
+      variables: *exe_msix_vars
   parallel:
     matrix:
       - RUNNER: [windows-aarch64, win32-ps]
@@ -656,13 +644,11 @@ gimp-win:
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Macos Dmg.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Macos Dmg.*/'
       interruptible: true
-      variables:
+      variables: &dmg_vars
         OPT_PREFIX: /opt/macports
         DMG_OPTION: '-Ddmg=true'
     - if: '$GIMP_CI_MACOS != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_MACOS.*/'
-      variables:
-        OPT_PREFIX: /opt/macports
-        DMG_OPTION: '-Ddmg=true'
+      variables: *dmg_vars
     - if: '($GIMP_CI_MESON_APPLECLANG != null || "$[[ inputs.test_pipeline ]]" =~ /.*GIMP_CI_MESON_APPLECLANG.*/) && $CI_JOB_NAME !~ /.*x86_64.*/ && $CI_JOB_NAME !~ /.*dist-mac-.*/'
       variables:
         OPT_PREFIX: /opt/homebrew
