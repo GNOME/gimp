@@ -637,7 +637,7 @@ do_build_2 (const gchar *cflags,
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && !defined(G_OS_WIN32) && !defined(__APPLE__)
   else if (appdir != NULL && *appdir != '\0')
     {
-      /* Similar to 6e80f5a2 that adressed issue #13636 */
+      /* Similar to 6e80f5a2 that addressed issue #13636 */
       gchar *source_parent = g_path_get_dirname (what);
       dest_dir = g_strconcat (source_parent, "/", NULL);
       g_free (source_parent);
