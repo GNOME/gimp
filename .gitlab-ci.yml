@@ -103,7 +103,7 @@ workflow:
   image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   variables:
     DEB_VERSION: "trixie"
-    RUNNER: "x86_64_v3"
+    RUNNER: "x86_64_v3" #runner-image used by most jobs (e.g. dev-docs)
     # Common cloning procedure
     GIT_DEPTH: "1"
     GIT_SUBMODULE_STRATEGY: none
@@ -480,7 +480,7 @@ gimp-flatpak:
   image: $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}
   variables:
     SNAPCRAFT_BASE_VERSION: "8_core24"
-    RUNNER: x86_64_v3
+    RUNNER: x86_64_v3 #runner-image used by snap dist job
   timeout: 40m
 
 deps-snap:
