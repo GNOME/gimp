@@ -40,6 +40,10 @@ workflow:
   auto_cancel:
     on_new_commit: interruptible
 
+.artifacts_durations:
+  deps_duration: &short_expire "4 hours"
+  gimp_duration: &mid_expire "2 days"
+  dist_duration: &long_expire "8 days"
 
 ##################################################
 # There are five "TYPES" of pipelines on our CI: #
@@ -289,7 +293,7 @@ deps-debian-nonreloc:
       - babl/_build-${RUNNER}/config.h
       - gegl/_build-${RUNNER}/meson-logs/meson-log.txt
       - gegl/_build-${RUNNER}/config.h
-    expire_in: 4 hours
+    expire_in: *short_expire
 
 gimp-debian-nonreloc:
   extends: .debian-nonreloc
@@ -338,7 +342,7 @@ gimp-debian-nonreloc:
       - _build-${RUNNER}/config.h
     reports:
       junit: "_build-${RUNNER}/meson-logs/testlog.junit.xml"
-    expire_in: 2 days
+    expire_in: *mid_expire
 
 
 ## AppImage CI (Debian) ##
@@ -405,7 +409,7 @@ gimp-debian:
       - appimageignore*
       - _build-${RUNNER}/meson-logs/meson-log.txt
       - _build-${RUNNER}/config.h
-    expire_in: 2 days
+    expire_in: *mid_expire
 
 
 ## Flatpak CI (Fedora) ##
@@ -442,7 +446,7 @@ deps-flatpak:
       - flatpak-builder.log
       - babl-meson-log.txt
       - gegl-meson-log.txt
-    expire_in: 4 hours
+    expire_in: *short_expire
 
 gimp-flatpak:
   extends: .flatpak
@@ -458,7 +462,7 @@ gimp-flatpak:
       - repo*.tar
       - gimp-flatpak-builder.log
       - gimp-meson-log.txt
-    expire_in: 2 days
+    expire_in: *mid_expire
 
 
 ## Snap CI (Ubuntu) ##
@@ -517,7 +521,7 @@ deps-snap:
       - _build-$RUNNER.tar
       - babl-meson-log.tar
       - gegl-meson-log.tar
-    expire_in: 4 hours
+    expire_in: *short_expire
 
 gimp-snap:
   extends: .snap
@@ -532,7 +536,7 @@ gimp-snap:
       - temp*.snap
       - gimp-snapcraft.log
       - gimp-meson-log.tar
-    expire_in: 2 days
+    expire_in: *mid_expire
 
 
 ## WINDOWS pipelines (native MSYS2) ##
@@ -612,7 +616,7 @@ deps-win:
       - _install-*/
       - babl/_build-*/meson-logs/meson-log.txt
       - gegl/_build-*/meson-logs/meson-log.txt
-    expire_in: 4 hours
+    expire_in: *short_expire
 
 gimp-win:
   extends: .win
@@ -635,7 +639,7 @@ gimp-win:
       - _build-*/plug-ins/file_associations.list
       - _build-*/build/windows/installer/
       - _build-*/build/windows/store/
-    expire_in: 2 days
+    expire_in: *mid_expire
 
 
 ## macOS pipelines (MacPorts) ##
@@ -698,7 +702,7 @@ deps-macos:
       # The full build dir is needed due to its .o for .dSYM creation on next job
       - babl/_build-*
       - gegl/_build-*
-    expire_in: 4 hours
+    expire_in: *short_expire
 
 gimp-macos:
   extends: .macos
@@ -729,7 +733,7 @@ gimp-macos:
       - _build-*/plug-ins/file_associations_mac.list
       - _build-*/gimp-data/images/logo/gimp-dmg.png
       - _build-*/build/macos/.VolumeIcon.icns
-    expire_in: 2 days
+    expire_in: *mid_expire
 
 
 ## Analysis ##
@@ -776,7 +780,7 @@ file-plug-in-tests:
       - _log/
     reports:
       junit: "_log/import-tests.xml"
-    expire_in: 2 days
+    expire_in: *mid_expire
 
 meson-health:
   extends: .default
@@ -811,7 +815,7 @@ clang-format:
     paths:
       - fetch_upstream.log
       - fetch_origin.log
-    expire_in: 2 days
+    expire_in: *mid_expire
 
 branches-check:
   extends: .default
@@ -845,7 +849,7 @@ cppcheck:
   artifacts:
     paths:
       - report/
-    expire_in: 8 days
+    expire_in: *long_expire
 
 tartan-static-analysis:
   extends: .debian-nonreloc
@@ -907,7 +911,7 @@ tartan-static-analysis:
   artifacts:
     paths:
       - report/
-    expire_in: 8 days
+    expire_in: *long_expire
 
 check-commit-log:
   extends:
@@ -925,7 +929,7 @@ check-commit-log:
   artifacts:
     reports:
       junit: $JUNIT_REPORT
-    expire_in: 2 days
+    expire_in: *mid_expire
 
 issue-bot:
   extends: .default
@@ -979,7 +983,7 @@ sources-debian:
       - gimp-*.tar.xz
       - gimp-*.tar.xz.SHA256SUMS
       - gimp-*.tar.xz.SHA512SUMS
-    expire_in: 2 days
+    expire_in: *mid_expire
 
 dev-docs:
   extends: .default
@@ -1036,7 +1040,7 @@ dev-docs:
       - gimp-api-docs-*.tar.xz
       - gimp-api-docs-*.tar.xz.SHA256SUMS
       - gimp-api-docs-*.tar.xz.SHA512SUMS
-    expire_in: 2 days
+    expire_in: *mid_expire
 
 dist-appimage-weekly:
   extends: .default
@@ -1050,7 +1054,7 @@ dist-appimage-weekly:
     expose_as: 'Linux appimage'
     paths:
       - build/linux/appimage/_Output/
-    expire_in: 8 days
+    expire_in: *long_expire
 
 dist-flatpak-weekly:
   extends:
@@ -1069,7 +1073,7 @@ dist-flatpak-weekly:
     expose_as: 'Linux flatpak'
     paths:
       - build/linux/flatpak/_Output/
-    expire_in: 8 days
+    expire_in: *long_expire
 
 dist-snap-weekly:
   extends: .default
@@ -1085,7 +1089,7 @@ dist-snap-weekly:
     expose_as: 'Linux snap'
     paths:
       - build/linux/snap/_Output/
-    expire_in: 8 days
+    expire_in: *long_expire
 
 dist-installer-weekly:
   extends: .default
@@ -1107,7 +1111,7 @@ dist-installer-weekly:
     paths:
       - build/windows/installer/_Output/
       - inno.log
-    expire_in: 8 days
+    expire_in: *long_expire
 
 dist-store-weekly:
   extends: .default
@@ -1127,7 +1131,7 @@ dist-store-weekly:
     paths:
     - build/windows/store/_Output/
     - winsdk.log
-    expire_in: 8 days
+    expire_in: *long_expire
 
 dist-mac-weekly:
   extends: .default
@@ -1144,4 +1148,4 @@ dist-mac-weekly:
     expose_as: 'macOS dmg'
     paths:
       - build/macos/dmg/_Output/
-    expire_in: 8 days
+    expire_in: *long_expire
