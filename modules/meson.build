@@ -52,6 +52,8 @@ modules = [
   },
 ]
 
+print("I changed nothing")
+
 if have_linuxinput
   modules += {
     'name': 'controller-linux-input',
