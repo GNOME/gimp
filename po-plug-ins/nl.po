@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 30.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-15 04:48+0000\n"
-"PO-Revision-Date: 2026-06-15 10:44+0200\n"
+"POT-Creation-Date: 2026-06-18 06:02+0000\n"
+"PO-Revision-Date: 2026-06-18 09:29+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -606,7 +606,7 @@ msgstr "Rolgordijnen"
 #: plug-ins/common/file-iff.c:431 plug-ins/common/file-jp2.c:1629
 #: plug-ins/common/file-macpaint.c:247 plug-ins/common/file-pcx.c:727
 #: plug-ins/common/file-pcx.c:735 plug-ins/common/file-pcx.c:743
-#: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
+#: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1083
 #: plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:834 plug-ins/common/file-raw-data.c:1955
 #: plug-ins/common/file-sunras.c:1061 plug-ins/common/file-tga.c:1103
@@ -1240,11 +1240,11 @@ msgstr "CML-verkennerparameters opslaan"
 #: plug-ins/common/file-dicom.c:1582 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
 #: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
-#: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1523
+#: plug-ins/common/file-png.c:1948 plug-ins/common/file-raw-data.c:1523
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:723
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
-#: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
+#: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:808
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
 #: plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2532
@@ -1982,7 +1982,7 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:198
 #: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
-#: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
+#: plug-ins/common/file-png.c:801 plug-ins/common/file-png.c:1372
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3756
 #: plug-ins/common/file-psp.c:2844 plug-ins/common/file-psp.c:2894
 #: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
@@ -2600,7 +2600,7 @@ msgstr "EOF of fout tijdens lezen afbeeldings-header"
 #: plug-ins/common/file-heif.c:1051 plug-ins/common/file-jp2.c:1379
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
-#: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
+#: plug-ins/common/file-png.c:793 plug-ins/common/file-pnm.c:688
 #: plug-ins/common/file-ps.c:1148 plug-ins/common/file-raw-data.c:801
 #: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:427
 #: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:242
@@ -2682,13 +2682,13 @@ msgstr "‘%s’: EOF of fout tijdens lezen paletdata"
 #: plug-ins/common/file-gif-export.c:943 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1822 plug-ins/common/file-jpegxl.c:1389
 #: plug-ins/common/file-pcx.c:1101 plug-ins/common/file-pix.c:636
-#: plug-ins/common/file-png.c:1936 plug-ins/common/file-pnm.c:1632
+#: plug-ins/common/file-png.c:1940 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:810
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:715
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
-#: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
+#: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:775
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
 #: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2470
@@ -3411,7 +3411,8 @@ msgstr "‘%s’ wordt geopend (frame %d)"
 msgid "Frame %d"
 msgstr "Frame %d"
 
-#: plug-ins/common/file-gif-load.c:1289 plug-ins/file-webp/file-webp-load.c:227
+#: plug-ins/common/file-gif-load.c:1289 plug-ins/common/file-png.c:3018
+#: plug-ins/file-webp/file-webp-load.c:227
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Frame %d (%d%s)"
@@ -3644,7 +3645,7 @@ msgid "Bit depth of exported image"
 msgstr "Bitdiepte van geëxporteerde afbeelding"
 
 #: plug-ins/common/file-heif.c:315 plug-ins/common/file-heif.c:436
-#: plug-ins/common/file-heif.c:581 plug-ins/common/file-png.c:395
+#: plug-ins/common/file-heif.c:581 plug-ins/common/file-png.c:396
 msgid "_Pixel format"
 msgstr "_Beeldpunt formaat"
 
@@ -4322,13 +4323,15 @@ msgstr "Opent een bestand .lnk en als dat naar een afbeelding verwijst, vraagt h
 #: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:728
 #: plug-ins/common/file-raw-data.c:826
 #: plug-ins/common/file-seattle-filmworks.c:244
-#: plug-ins/common/file-seattle-filmworks.c:287
-#: plug-ins/common/file-seattle-filmworks.c:300
-#: plug-ins/common/file-seattle-filmworks.c:361
-#: plug-ins/common/file-seattle-filmworks.c:381
-#: plug-ins/common/file-seattle-filmworks.c:393
-#: plug-ins/common/file-seattle-filmworks.c:404
-#: plug-ins/common/file-seattle-filmworks.c:541
+#: plug-ins/common/file-seattle-filmworks.c:285
+#: plug-ins/common/file-seattle-filmworks.c:295
+#: plug-ins/common/file-seattle-filmworks.c:308
+#: plug-ins/common/file-seattle-filmworks.c:330
+#: plug-ins/common/file-seattle-filmworks.c:379
+#: plug-ins/common/file-seattle-filmworks.c:399
+#: plug-ins/common/file-seattle-filmworks.c:411
+#: plug-ins/common/file-seattle-filmworks.c:422
+#: plug-ins/common/file-seattle-filmworks.c:559
 #, c-format
 msgid "Invalid file."
 msgstr "Ongeldig bestand."
@@ -4444,7 +4447,7 @@ msgstr "Combineren"
 msgid "Replace"
 msgstr "Vervangen"
 
-#: plug-ins/common/file-mng.c:343 plug-ins/common/file-png.c:357
+#: plug-ins/common/file-mng.c:343 plug-ins/common/file-png.c:358
 msgid "Save _background color"
 msgstr "_Achtergrondkleur opslaan"
 
@@ -4468,7 +4471,7 @@ msgstr "_Resolutie opslaan"
 msgid "Write pHYs (image resolution) chunk"
 msgstr "Een pHYs (afbeelding resolutie) blok opslaan"
 
-#: plug-ins/common/file-mng.c:361 plug-ins/common/file-png.c:375
+#: plug-ins/common/file-mng.c:361 plug-ins/common/file-png.c:376
 msgid "Save creation _time"
 msgstr "Creatie_tijdstip opslaan"
 
@@ -4481,7 +4484,7 @@ msgstr "Aanmaakdatum-en-tijd opslaan"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:723 plug-ins/common/file-png.c:2803
+#: plug-ins/common/file-mng.c:723 plug-ins/common/file-png.c:2807
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Kon de transparantie niet zonder verlies opslaan, in de plaats daarvan wordt de dekking opgeslagen."
 
@@ -4539,7 +4542,8 @@ msgstr "Hoofdoppervlak"
 #: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
 #: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:574
 #: plug-ins/common/file-tim.c:613 plug-ins/file-cin/cineon-lib.c:169
-#: plug-ins/file-cin/dpx-lib.c:280
+#: plug-ins/file-cin/dpx-lib.c:280 plug-ins/file-fli/fli-gimp.c:550
+#: plug-ins/file-fli/fli-gimp.c:819
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "Geheugen kon niet worden toegewezen."
@@ -4986,205 +4990,205 @@ msgstr "Fout bij openen tijdelijk JPEG bestand ‘%s’ om Esm Software pix afbe
 msgid "Invalid Esm Software PIX file"
 msgstr "Ongeldig Esm Software PIX bestand"
 
-#: plug-ins/common/file-png.c:262 plug-ins/common/file-png.c:315
+#: plug-ins/common/file-png.c:263 plug-ins/common/file-png.c:316
 msgid "PNG image"
 msgstr "PNG-afbeelding"
 
-#: plug-ins/common/file-png.c:290
+#: plug-ins/common/file-png.c:291
 msgid "APNG image"
 msgstr "Afbeelding APNG"
 
-#: plug-ins/common/file-png.c:331
+#: plug-ins/common/file-png.c:332
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/file-png.c:345
+#: plug-ins/common/file-png.c:346
 msgid "_Interlacing (Adam7)"
 msgstr "_Interlacing (Adam7)"
 
-#: plug-ins/common/file-png.c:346
+#: plug-ins/common/file-png.c:347
 msgid "Use Adam7 interlacing"
 msgstr "Adam7 interlacing gebruiken"
 
-#: plug-ins/common/file-png.c:351
+#: plug-ins/common/file-png.c:352
 msgid "Co_mpression level"
 msgstr "Co_mpressieniveau"
 
-#: plug-ins/common/file-png.c:352
+#: plug-ins/common/file-png.c:353
 msgid "Deflate Compression factor (0..9)"
 msgstr "Gegevenscompressie factor (0..9)"
 
-#: plug-ins/common/file-png.c:358
+#: plug-ins/common/file-png.c:359
 msgid "Write bKGD chunk (PNG metadata)"
 msgstr "Een bKGD blok opslaan (PNG metagegevens)"
 
-#: plug-ins/common/file-png.c:363
+#: plug-ins/common/file-png.c:364
 msgid "Save layer o_ffset"
 msgstr "Laag_verspringing opslaan"
 
-#: plug-ins/common/file-png.c:364
+#: plug-ins/common/file-png.c:365
 msgid "Write oFFs chunk (PNG metadata)"
 msgstr "Een oFFs blok opslaan (PNG metagegevens)"
 
-#: plug-ins/common/file-png.c:369
+#: plug-ins/common/file-png.c:370
 msgid "Save resol_ution"
 msgstr "_Resolutie opslaan"
 
-#: plug-ins/common/file-png.c:370
+#: plug-ins/common/file-png.c:371
 msgid "Write pHYs chunk (PNG metadata)"
 msgstr "Een pHYs blok opslaan (PNG metagegevens)"
 
-#: plug-ins/common/file-png.c:376
+#: plug-ins/common/file-png.c:377
 msgid "Write tIME chunk (PNG metadata)"
 msgstr "Een tIME blok opslaan (PNG metagegevens)"
 
-#: plug-ins/common/file-png.c:381 plug-ins/file-tiff/file-tiff.c:279
+#: plug-ins/common/file-png.c:382 plug-ins/file-tiff/file-tiff.c:279
 msgid "Save color _values from transparent pixels"
 msgstr "Kleurwaarden van transparante beeldpunten opslaan"
 
-#: plug-ins/common/file-png.c:382
+#: plug-ins/common/file-png.c:383
 msgid "Preserve color of completely transparent pixels"
 msgstr "Kleurwaarden van transparante beeldpunten opslaan"
 
-#: plug-ins/common/file-png.c:387
+#: plug-ins/common/file-png.c:388
 msgid "_Optimize for smallest possible palette size"
 msgstr "Optimaliseren voor kleinst mogelijke palet grootte"
 
-#: plug-ins/common/file-png.c:388
+#: plug-ins/common/file-png.c:389
 msgid ""
 "When checked, save as 1, 2, 4, or 8-bit depending on number of colors used. "
 "When unchecked, always save as 8-bit"
 msgstr "Indien geselecteerd, opslaan als 1, 2, 4, of 8-bit, afhankelijk van het aantal gebruikte kleuren. Indien niet geselecteerd, altijd opslaan als 8-bit."
 
-#: plug-ins/common/file-png.c:396
+#: plug-ins/common/file-png.c:397
 msgid "PNG export format"
 msgstr "PNG-indeling voor exporteren"
 
-#: plug-ins/common/file-png.c:397 plug-ins/common/file-ps.c:423
+#: plug-ins/common/file-png.c:398 plug-ins/common/file-ps.c:423
 msgid "Automatic"
 msgstr "Automatisch"
 
-#: plug-ins/common/file-png.c:398
+#: plug-ins/common/file-png.c:399
 msgid "8 bpc RGB"
 msgstr "8 bpc RGB"
 
-#: plug-ins/common/file-png.c:399
+#: plug-ins/common/file-png.c:400
 msgid "8 bpc GRAY"
 msgstr "8 bpc GRAY"
 
-#: plug-ins/common/file-png.c:400
+#: plug-ins/common/file-png.c:401
 msgid "8 bpc RGBA"
 msgstr "8 bpc RGBA"
 
-#: plug-ins/common/file-png.c:401
+#: plug-ins/common/file-png.c:402
 msgid "8 bpc GRAYA"
 msgstr "8 bpc GRAYA"
 
-#: plug-ins/common/file-png.c:402
+#: plug-ins/common/file-png.c:403
 msgid "16 bpc RGB"
 msgstr "16 bpc RGB"
 
-#: plug-ins/common/file-png.c:403
+#: plug-ins/common/file-png.c:404
 msgid "16 bpc GRAY"
 msgstr "16 bpc GRAY"
 
-#: plug-ins/common/file-png.c:404
+#: plug-ins/common/file-png.c:405
 msgid "16 bpc RGBA"
 msgstr "16 bpc RGBA"
 
-#: plug-ins/common/file-png.c:405
+#: plug-ins/common/file-png.c:406
 msgid "16 bpc GRAYA"
 msgstr "16 bpc GRAYA"
 
-#: plug-ins/common/file-png.c:622
+#: plug-ins/common/file-png.c:623
 #, c-format
 msgid "Error loading PNG file: %s\n"
 msgstr "Fout bij openen PNG-bestand: %s\n"
 
-#: plug-ins/common/file-png.c:757
+#: plug-ins/common/file-png.c:758
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Fout tijdens het maken van de PNG read-struct tijdens het laden van ‘%s’."
 
-#: plug-ins/common/file-png.c:766
+#: plug-ins/common/file-png.c:767
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr "Fout bij het lezen van ‘%s’. Kon geen PNG header infostructuur maken."
 
-#: plug-ins/common/file-png.c:774
+#: plug-ins/common/file-png.c:775
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Fout bij het lezen van ‘%s’. Bestand beschadigd?"
 
 #  Aie! Unknown type
-#: plug-ins/common/file-png.c:1034
+#: plug-ins/common/file-png.c:1035
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Onbekend kleurmodel in PNG-bestand ‘%s’."
 
-#: plug-ins/common/file-png.c:1047 plug-ins/file-exr/file-exr.c:266
+#: plug-ins/common/file-png.c:1048 plug-ins/file-exr/file-exr.c:266
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Kon geen nieuw beeld maken voor ‘%s’: %s"
 
-#: plug-ins/common/file-png.c:1115
+#: plug-ins/common/file-png.c:1116
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr "Het PNG-bestand specificeert een verschuiving die de laag buiten de afbeelding plaatst."
 
-#: plug-ins/common/file-png.c:1376
+#: plug-ins/common/file-png.c:1378
 #, c-format
 msgid "Importing APNG frames from '%s'"
 msgstr "Importeren van frames APNG uit ‘%s’"
 
-#: plug-ins/common/file-png.c:1399 plug-ins/common/file-png.c:1436
-#: plug-ins/common/file-png.c:1463
+#: plug-ins/common/file-png.c:1401 plug-ins/common/file-png.c:1438
+#: plug-ins/common/file-png.c:1465
 #, c-format
 msgid "Could not read APNG frames. They will be discarded."
 msgstr "Kon geen APNG-frames lezen. Ze zullen worden genegeerd."
 
-#: plug-ins/common/file-png.c:1526
+#: plug-ins/common/file-png.c:1529
 #, c-format
 msgid "Invalid APNG: fcTL frame dimensions exceed IHDR allocation"
 msgstr "Ongeldige APNG: fcTL frame-dimensies overschrijden IHDR allocation"
 
-#: plug-ins/common/file-png.c:1571
+#: plug-ins/common/file-png.c:1574
 #, c-format
 msgid "Invalid APNG: Image data appeared before actTL chunk."
 msgstr "Ongeldige APNG: gegevens van de afbeelding verschenen voor het gedeelte actTL."
 
-#: plug-ins/common/file-png.c:1659
+#: plug-ins/common/file-png.c:1663
 msgid "Apply PNG Offset"
 msgstr "PNG-verschuiving toepassen"
 
-#: plug-ins/common/file-png.c:1663
+#: plug-ins/common/file-png.c:1667
 msgid "Ignore PNG offset"
 msgstr "PNG-verschuiving negeren"
 
-#: plug-ins/common/file-png.c:1664
+#: plug-ins/common/file-png.c:1668
 msgid "Apply PNG offset to layer"
 msgstr "PNG-verschuiving toepassen op laag"
 
-#: plug-ins/common/file-png.c:1689
+#: plug-ins/common/file-png.c:1693
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
 msgstr "De afbeelding PNG die u importeert specificeert een verschuiving van %d, %d. Wilt u die verschuiving echt op de laag toepassen?"
 
-#: plug-ins/common/file-png.c:1901
+#: plug-ins/common/file-png.c:1905
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Fout tijdens het maken van de PNG write-struct tijdens het exporteren van ‘%s’."
 
-#: plug-ins/common/file-png.c:1910
+#: plug-ins/common/file-png.c:1914
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr "Fout bij exporteren van ‘%s’.\n"
 " Kon geen PNG header infostructuur maken."
 
-#: plug-ins/common/file-png.c:1918
+#: plug-ins/common/file-png.c:1922
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Fout bij exporteren van ‘%s’.\n"
@@ -6366,18 +6370,18 @@ msgstr "Seattle FilmWorks Image"
 msgid "Load file in the Seattle FilmWorks file format"
 msgstr "Laad bestand in de bestandsindeling Seattle FilmWorks"
 
-#: plug-ins/common/file-seattle-filmworks.c:346
+#: plug-ins/common/file-seattle-filmworks.c:364
 #, c-format
 msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "Niet gecomprimeerde indeling SFW94A wordt nog niet ondersteund."
 
-#: plug-ins/common/file-seattle-filmworks.c:440
-#: plug-ins/common/file-seattle-filmworks.c:556
+#: plug-ins/common/file-seattle-filmworks.c:458
+#: plug-ins/common/file-seattle-filmworks.c:574
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "Kan afbeelding SFW niet converteren."
 
-#: plug-ins/common/file-seattle-filmworks.c:515
+#: plug-ins/common/file-seattle-filmworks.c:533
 #, c-format
 msgid "Unsupported SFW format '%s'"
 msgstr "Niet ondersteunde indeling SFW ‘%s’"
@@ -9971,7 +9975,7 @@ msgstr "FITS-bestand openen"
 
 #: plug-ins/file-fli/fli.c:45 plug-ins/file-fli/fli.c:59
 #: plug-ins/file-fli/fli.c:75 plug-ins/file-fli/fli.c:924
-#: plug-ins/file-fli/fli.c:1244 plug-ins/file-fli/fli.c:1524
+#: plug-ins/file-fli/fli.c:1245 plug-ins/file-fli/fli.c:1526
 #, c-format
 msgid "Error reading from file."
 msgstr "Fout bij het lezen bestand."
@@ -10057,21 +10061,21 @@ msgstr "Fout tijdens opslaan zwart. "
 #: plug-ins/file-fli/fli.c:1094 plug-ins/file-fli/fli.c:1108
 #: plug-ins/file-fli/fli.c:1123 plug-ins/file-fli/fli.c:1132
 #: plug-ins/file-fli/fli.c:1146 plug-ins/file-fli/fli.c:1156
-#: plug-ins/file-fli/fli.c:1300 plug-ins/file-fli/fli.c:1327
-#: plug-ins/file-fli/fli.c:1343 plug-ins/file-fli/fli.c:1375
-#: plug-ins/file-fli/fli.c:1385 plug-ins/file-fli/fli.c:1399
-#: plug-ins/file-fli/fli.c:1409
+#: plug-ins/file-fli/fli.c:1301 plug-ins/file-fli/fli.c:1328
+#: plug-ins/file-fli/fli.c:1344 plug-ins/file-fli/fli.c:1376
+#: plug-ins/file-fli/fli.c:1386 plug-ins/file-fli/fli.c:1400
+#: plug-ins/file-fli/fli.c:1410
 msgid "Error writing frame. "
 msgstr "Fout bij het schrijven frame. "
 
 #: plug-ins/file-fli/fli.c:992 plug-ins/file-fli/fli.c:1004
 #: plug-ins/file-fli/fli.c:1015 plug-ins/file-fli/fli.c:1034
-#: plug-ins/file-fli/fli.c:1186 plug-ins/file-fli/fli.c:1200
-#: plug-ins/file-fli/fli.c:1213 plug-ins/file-fli/fli.c:1226
-#: plug-ins/file-fli/fli.c:1245 plug-ins/file-fli/fli.c:1440
-#: plug-ins/file-fli/fli.c:1456 plug-ins/file-fli/fli.c:1475
-#: plug-ins/file-fli/fli.c:1490 plug-ins/file-fli/fli.c:1503
-#: plug-ins/file-fli/fli.c:1525
+#: plug-ins/file-fli/fli.c:1187 plug-ins/file-fli/fli.c:1201
+#: plug-ins/file-fli/fli.c:1214 plug-ins/file-fli/fli.c:1227
+#: plug-ins/file-fli/fli.c:1246 plug-ins/file-fli/fli.c:1442
+#: plug-ins/file-fli/fli.c:1458 plug-ins/file-fli/fli.c:1477
+#: plug-ins/file-fli/fli.c:1492 plug-ins/file-fli/fli.c:1505
+#: plug-ins/file-fli/fli.c:1527
 msgid "Error reading compressed data. "
 msgstr "Fout tijdens lezen van gecomprimeerde gegevens. "
 
@@ -10125,17 +10129,17 @@ msgstr "Begin met exporteren vanaf dit frame"
 msgid "End exporting with this frame (or -1 for all frames)"
 msgstr "Exporteren beëindigen na dit frame (of -1 om alle beelden te exporteren)"
 
-#: plug-ins/file-fli/fli-gimp.c:568
+#: plug-ins/file-fli/fli-gimp.c:577
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr "Frame %d (%ums)"
 
-#: plug-ins/file-fli/fli-gimp.c:595
+#: plug-ins/file-fli/fli-gimp.c:604
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "Lezen van frame %d mislukt. Mogelijk corrupte animatie.\n"
 
-#: plug-ins/file-fli/fli-gimp.c:927
+#: plug-ins/file-fli/fli-gimp.c:945
 msgid "Open FLIC Animation"
 msgstr "FLIC-animatie openen"
 
@@ -11001,17 +11005,17 @@ msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
 "GIMP currently supports these RAW loaders:\n"
-"- darktable (http://www.darktable.org/), at least 1.7\n"
-"- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
-"- ART (https://art.pixls.us/)\n"
+"- darktable (https://www.darktable.org/), at least 1.7\n"
+"- RawTherapee (https://rawtherapee.com/), at least 5.2\n"
+"- ART (https://artraweditor.github.io/)\n"
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr "Er is geen RAW-lader geïnstalleerd om ‘%s’-bestanden te openen.\n"
 "\n"
 "GIMP ondersteunt momenteel deze RAW-laders:\n"
 "- darktable (https://www.darktable.org/), ten minste 1.7\n"
-"- RawTherapee (http://rawtherapee.com/), ten minste 5.2\n"
-"- ART (https://art.pixls.us/)\n"
+"- RawTherapee (https://rawtherapee.com/), ten minste 5.2\n"
+"- ART (https://artraweditor.github.io/)\n"
 "\n"
 "Installeer er een van om RAW-bestanden te kunnen laden."
 
