@@ -205,6 +205,7 @@ static void         create_apng_layer        (GimpImage             *image,
                                               APNGFrame             *apng_frame,
                                               guchar                *prior_pixels,
                                               GimpImageType          image_type,
+                                              guint                  frame_no,
                                               guchar                *alpha,
                                               gboolean               is_indexed_alpha,
                                               gint                   dispose_op,
@@ -1345,6 +1346,7 @@ load_apng_image (GFile      *file,
   guint           sequence_num     = 0;
   guint           frame_no;
   guint           playback_no;
+  guint           frame_count      = 2;
   gsize           frame_data_size  = 0;
 
   layers     = gimp_image_get_layers (image);
@@ -1495,8 +1497,9 @@ load_apng_image (GFile      *file,
                       if (end_apng_processing (pp, info) && sequence_num > frame_start)
                         {
                           create_apng_layer (image, &apng_frame, prior_pixels,
-                                             image_type, trns, is_indexed_alpha,
-                                             dispose_op, blend_op);
+                                             image_type, frame_count++, trns,
+                                             is_indexed_alpha, dispose_op,
+                                             blend_op);
                           memcpy (prior_pixels, apng_frame.pixels, frame_data_size);
                         }
                     }
@@ -1589,8 +1592,9 @@ load_apng_image (GFile      *file,
                   if (idat_read && end_apng_processing (pp, info))
                     {
                       create_apng_layer (image, &apng_frame, prior_pixels,
-                                         image_type, trns, is_indexed_alpha,
-                                         dispose_op, blend_op);
+                                         image_type, frame_count++, trns,
+                                         is_indexed_alpha, dispose_op,
+                                         blend_op);
                       memcpy (prior_pixels, apng_frame.pixels, frame_data_size);
                     }
 
@@ -2991,6 +2995,7 @@ create_apng_layer (GimpImage     *image,
                    APNGFrame     *apng_frame,
                    guchar        *prior_pixels,
                    GimpImageType  image_type,
+                   guint          frame_no,
                    guchar        *alpha,
                    gboolean       is_indexed_alpha,
                    gint           dispose_op,
@@ -2999,14 +3004,27 @@ create_apng_layer (GimpImage     *image,
   GimpLayer    *layer;
   GeglBuffer   *buffer;
   GimpParasite *parasite;
+  guint         milliseconds = 0;
+  gchar        *layer_name;
   gchar        *str;
 
-  layer = gimp_layer_new (image, NULL,
+  /* Per the specifications, if the frame rate denominator is 0,
+   * we should treat it as being 100 */
+  apng_frame->delay_den = (apng_frame->delay_den == 0) ?
+                          100 : apng_frame->delay_den;
+  milliseconds =
+    (guint) (((gfloat) apng_frame->delay_num / apng_frame->delay_den) * 1000);
+
+  layer_name = g_strdup_printf (_("Frame %d (%d%s)"),
+                                frame_no, milliseconds, "ms");
+
+  layer = gimp_layer_new (image, layer_name,
                           apng_frame->width, apng_frame->height,
                           image_type, 100,
                           gimp_image_get_default_new_layer_mode (image));
   gimp_layer_set_offsets (layer, apng_frame->offset_x, apng_frame->offset_y);
   gimp_image_insert_layer (image, layer, NULL, 0);
+  g_free (layer_name);
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
