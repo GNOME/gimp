@@ -756,7 +756,7 @@ do_build_2 (const gchar *cflags,
 #ifndef G_OS_WIN32
 #ifdef __APPLE__
       if (macosx_deployment_target)
-        here_comes_linker_flags = g_strdup_printf (" -mmacos-version-min=%s", macosx_deployment_target);
+        here_comes_linker_flags = g_strdup_printf (" -mmacos-version-min=%s -Werror=unguarded-availability-new", macosx_deployment_target);
       /* Needed by install_name_tool() below for plug-ins and filters */
       here_comes_linker_flags = g_strconcat (here_comes_linker_flags," -Wl,-headerpad_max_install_names", NULL);
 #endif
