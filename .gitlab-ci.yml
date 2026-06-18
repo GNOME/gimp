@@ -747,12 +747,12 @@ file-plug-in-tests:
   extends: .debian-nonreloc
   rules:
     # Don't run on release since the plug-in doesn't get installed in releases
-    - if: ($CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null) || $CI_PIPELINE_SOURCE == "merge_request_event"
+    - <<: *CI_MERGE
       changes:
         paths:
           - plug-ins/**/*
           - .gitlab-ci.yml #to test changes on script: below
-        compare_to: 'refs/heads/master'
+    - if: ($CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null) && ($CI_COMMIT_MESSAGE =~ /^plug-ins:.*/ || $CI_COMMIT_MESSAGE =~ /^gitlab-ci:.*/)
   needs: ["gimp-debian-nonreloc"]
   stage: analysis
   variables:
@@ -919,15 +919,13 @@ tartan-static-analysis:
 abidiff:
   extends: .debian-nonreloc
   rules:
-    - if: ($CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null) || $CI_PIPELINE_SOURCE == "merge_request_event"
+    - <<: *CI_MERGE
       changes:
         paths:
           - libgimp*/*
           - .gitlab-ci.yml #to test changes on script: below
-        compare_to: 'refs/heads/master'
-    - if: '$CI_COMMIT_TAG != null'
-      interruptible: false
-    - when: never
+    - if: ($CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null) && ($CI_COMMIT_MESSAGE =~ /^libgimp.*:.*/ || $CI_COMMIT_MESSAGE =~ /^gitlab-ci:.*/)
+    - <<: *CI_RELEASE
   needs: ["gimp-debian-nonreloc"]
   stage: analysis
   script:
