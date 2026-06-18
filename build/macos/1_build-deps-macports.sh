@@ -22,6 +22,14 @@ if [ -z "$GITLAB_CI" ]; then
 fi
 
 
+du -hd 1 "macports-cached-$(uname -m)"
+
+port -Nq reclaim || true
+
+du -hd 1 "macports-cached-$(uname -m)"
+
+exit 1
+
 # Install part of the deps
 if [ -z "$OPT_PREFIX" ]; then
   export OPT_PREFIX=$(which port | sed 's|/bin/port||' || brew --prefix)
