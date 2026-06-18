@@ -44,18 +44,18 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
   elif echo "$CI_JOB_NAME" | grep -q 'deps'; then
     export first_cache=true
   fi
-  if [ -z "$GITLAB_CI" ] || { echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] } }; then
+  #if [ -z "$GITLAB_CI" ] || { echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] } }; then
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync -Nv
-  fi
+  #fi
   if [ "$OPT_PREFIX" != '/opt/local' ] && [ "$OPT_PREFIX" != '/opt/homebrew' ]; then
     opt='configure.cflags-append -Werror=unguarded-availability-new'; file="$OPT_PREFIX/var/macports/sources/rsync.macports.org/macports/release/tarballs/ports/mail/libidn2/Portfile"; grep -q -- "$opt" $file || printf "\n$opt\n" >> "$file"
   fi
   eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/#.*//' | sed 's/|homebrew:[^ ]*//g' | tr -d '\\' | xargs)
-  if echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] }; then
-    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port -Nq reclaim || true
+  #if echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] }; then
+    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port -Nq uninstall inactive || true #let's use uninstall since reclaim is buggy
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port -Nq clean --dist installed || true #distfiles/ is too big, only useful on revision bumps
     mkdir -p macports-cached-$(uname -m) && cp -fa $OPT_PREFIX/var/macports/* macports-cached-$(uname -m) || true
-  fi
+  #fi
 else
   brew upgrade --quiet
   brew install --quiet $(tr '\\' '\n' < build/macos/all-deps-uni.txt | sed 's/#.*//' | sed -n 's/.*|homebrew://p' | awk '{print $1}' | xargs) || { if [ "$GITLAB_CI" ]; then printf "\033[31m(ERROR)\033[0m: macOS $(sw_vers -productVersion) or $(brew --version) is likely outdated. Please, ask Hesselle to provide a new ORKA_RUNNER image\n"; fi; exit 1; }
@@ -64,6 +64,7 @@ fi
 printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
 if find "$OPT_PREFIX/lib" -maxdepth 1 -name "libX11*.dylib" | grep -q .; then printf "\033[33m(WARNING)\033[0m: X11 is installed on macOS. Please remove the wrong dependency from all-deps-uni.txt or report to $( [ -f "$OPT_PREFIX/bin/port" ] && echo MacPorts || echo Homebrew )\n"; fi
 
+exit 0
 
 # Prepare env (only GIMP_PREFIX is needed for flatpak)
 GIMP_DIR="$PWD"
