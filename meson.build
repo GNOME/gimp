@@ -218,6 +218,10 @@ osx_ldflags = []
 if platform_osx
   conf.set('PLATFORM_OSX', 1)
   add_languages('objc', native: true)
+  osx_cflags = '-Werror=unguarded-availability-new'
+  if cc.has_argument(osx_cflags)
+    add_project_arguments(osx_cflags, language: ['objc', 'c'])
+  endif
   osx_ldflags += ['-Wl,-framework,Foundation', '-Wl,-framework,AppKit', '-ObjC']
   add_project_link_arguments(osx_ldflags, language : ['objc', 'c'])
   # libgimp_cflags += '-xobjective-c'
