@@ -741,6 +741,42 @@ gimp-macos:
 
 ## Analysis ##
 
+clang-format:
+  extends: .default
+  rules:
+    - <<: *CI_MERGE
+  stage: analysis
+  script:
+    - apt-get update
+    - apt-get install -y clang-format
+                         git
+    - sh .gitlab/run_style_check_diff.sh
+  allow_failure: true
+  artifacts:
+    when: on_failure
+    paths:
+      - fetch_upstream.log
+      - fetch_origin.log
+    expire_in: *mid_expire
+
+check-commit-log:
+  extends:
+    - .default
+    - .fdo.ci-fairy
+  rules:
+    - <<: *CI_MERGE
+  stage: analysis
+  variables:
+    GIT_DEPTH: "100"
+    JUNIT_REPORT: commit-message-junit-report.xml
+  script:
+    - touch "$JUNIT_REPORT"
+    - ci-fairy check-commits --textwidth 80 --rules-file=.gitlab/commit-rules.yml --junit-xml=$JUNIT_REPORT
+  artifacts:
+    reports:
+      junit: $JUNIT_REPORT
+    expire_in: *mid_expire
+
 file-plug-in-tests:
   # FIXME: Do we need another job testing this under Windows? MSYS2 usually has
   #        the latest deps. It might be a good idea to test that too, maybe weekly?
@@ -785,6 +821,43 @@ file-plug-in-tests:
       junit: "_log/import-tests.xml"
     expire_in: *mid_expire
 
+abidiff:
+  extends: .debian-nonreloc
+  rules:
+    - <<: *CI_MERGE
+      changes:
+        paths:
+          - libgimp*/*
+          - .gitlab-ci.yml #to test changes on script: below
+    - if: ($CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null) && ($CI_COMMIT_MESSAGE =~ /^libgimp.*:.*/ || $CI_COMMIT_MESSAGE =~ /^gitlab-ci:.*/)
+    - <<: *CI_RELEASE
+  needs: ["gimp-debian-nonreloc"]
+  stage: analysis
+  script:
+    - apt-get update
+    - apt-get install -y abigail-tools libgimp-3.0
+    - gcc -print-multi-os-directory 2>/dev/null | grep -q ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
+    - gcc -print-multiarch 2>/dev/null | grep -q . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/') || export LIB_SUBDIR=
+    - export OLD_LIB_DIR="/usr/${LIB_DIR}/${LIB_SUBDIR}/"
+    - export LIB_DIR="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}"
+    # We ignore added symbols. Technically these could still be API
+    # breaks if it comes with expected behavior changes (e.g. if you are
+    # expected to call a new function for proper running).
+    # But let's just assume devs thought these through.
+    # For other types of changes:
+    # * If abidiff returns 4, a manual verification is required.
+    # * If abidiff returns 12 (0b1100), this is a definitive API or ABI break.
+    # See also: https://developers.redhat.com/articles/2025/02/04/how-analyze-changes-enum-types-using-abidiff
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimp-3.0.so" "${LIB_DIR}/libgimp-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpbase-3.0.so" "${LIB_DIR}/libgimpbase-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpcolor-3.0.so" "${LIB_DIR}/libgimpcolor-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpconfig-3.0.so" "${LIB_DIR}/libgimpconfig-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpmath-3.0.so" "${LIB_DIR}/libgimpmath-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpmodule-3.0.so" "${LIB_DIR}/libgimpmodule-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpthumb-3.0.so" "${LIB_DIR}/libgimpthumb-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpwidgets-3.0.so" "${LIB_DIR}/libgimpwidgets-3.0.so"
+    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpui-3.0.so" "${LIB_DIR}/libgimpui-3.0.so"
+
 meson-health:
   extends: .default
   rules:
@@ -801,24 +874,6 @@ meson-health:
     - apt-get install -qq -y --no-install-recommends git shellcheck devscripts
     - sh .gitlab/run_meson_health_diff.sh
   allow_failure: true
-
-clang-format:
-  extends: .default
-  rules:
-    - <<: *CI_MERGE
-  stage: analysis
-  script:
-    - apt-get update
-    - apt-get install -y clang-format
-                         git
-    - sh .gitlab/run_style_check_diff.sh
-  allow_failure: true
-  artifacts:
-    when: on_failure
-    paths:
-      - fetch_upstream.log
-      - fetch_origin.log
-    expire_in: *mid_expire
 
 branches-check:
   extends: .default
@@ -915,61 +970,6 @@ tartan-static-analysis:
     paths:
       - report/
     expire_in: *long_expire
-
-abidiff:
-  extends: .debian-nonreloc
-  rules:
-    - <<: *CI_MERGE
-      changes:
-        paths:
-          - libgimp*/*
-          - .gitlab-ci.yml #to test changes on script: below
-    - if: ($CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null) && ($CI_COMMIT_MESSAGE =~ /^libgimp.*:.*/ || $CI_COMMIT_MESSAGE =~ /^gitlab-ci:.*/)
-    - <<: *CI_RELEASE
-  needs: ["gimp-debian-nonreloc"]
-  stage: analysis
-  script:
-    - apt-get update
-    - apt-get install -y abigail-tools libgimp-3.0
-    - gcc -print-multi-os-directory 2>/dev/null | grep -q ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
-    - gcc -print-multiarch 2>/dev/null | grep -q . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/') || export LIB_SUBDIR=
-    - export OLD_LIB_DIR="/usr/${LIB_DIR}/${LIB_SUBDIR}/"
-    - export LIB_DIR="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}"
-    # We ignore added symbols. Technically these could still be API
-    # breaks if it comes with expected behavior changes (e.g. if you are
-    # expected to call a new function for proper running).
-    # But let's just assume devs thought these through.
-    # For other types of changes:
-    # * If abidiff returns 4, a manual verification is required.
-    # * If abidiff returns 12 (0b1100), this is a definitive API or ABI break.
-    # See also: https://developers.redhat.com/articles/2025/02/04/how-analyze-changes-enum-types-using-abidiff
-    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimp-3.0.so" "${LIB_DIR}/libgimp-3.0.so"
-    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpbase-3.0.so" "${LIB_DIR}/libgimpbase-3.0.so"
-    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpcolor-3.0.so" "${LIB_DIR}/libgimpcolor-3.0.so"
-    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpconfig-3.0.so" "${LIB_DIR}/libgimpconfig-3.0.so"
-    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpmath-3.0.so" "${LIB_DIR}/libgimpmath-3.0.so"
-    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpmodule-3.0.so" "${LIB_DIR}/libgimpmodule-3.0.so"
-    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpthumb-3.0.so" "${LIB_DIR}/libgimpthumb-3.0.so"
-    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpwidgets-3.0.so" "${LIB_DIR}/libgimpwidgets-3.0.so"
-    - abidiff --no-added-syms "${OLD_LIB_DIR}/libgimpui-3.0.so" "${LIB_DIR}/libgimpui-3.0.so"
-
-check-commit-log:
-  extends:
-    - .default
-    - .fdo.ci-fairy
-  rules:
-    - <<: *CI_MERGE
-  stage: analysis
-  variables:
-    GIT_DEPTH: "100"
-    JUNIT_REPORT: commit-message-junit-report.xml
-  script:
-    - touch "$JUNIT_REPORT"
-    - ci-fairy check-commits --textwidth 80 --rules-file=.gitlab/commit-rules.yml --junit-xml=$JUNIT_REPORT
-  artifacts:
-    reports:
-      junit: $JUNIT_REPORT
-    expire_in: *mid_expire
 
 issue-bot:
   extends: .default
