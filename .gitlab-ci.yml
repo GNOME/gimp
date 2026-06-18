@@ -60,9 +60,10 @@ workflow:
 
 ## 1. On MERGE REQUESTS, the following are triggered:
 ## - Abbreviated Linux build
-## - Building quality tests (static code analysis)
 ## - clang-format (static code analysis)
+## - Commit log check (static code analysis)
 ## - Execution tests (dynamic code analysis)
+## - Building quality tests (static code analysis)
 .pipeline_merge: &CI_MERGE
   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   interruptible: true
@@ -74,8 +75,9 @@ workflow:
 
 ## 3. On COMMITS except tags.
 ## - Linux build
-## - Building quality tests (static code analysis)
 ## - Execution tests (dynamic code analysis)
+## - Building quality tests (static code analysis)
+## - Check for forgotten branches by developers
 ## - Source tarball
 ## - Developer documentation
 .pipeline_commit: &CI_COMMIT
