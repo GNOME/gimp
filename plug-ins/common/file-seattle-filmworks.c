@@ -277,7 +277,15 @@ load_image (GFile        *file,
       gboolean        has_huffman_table = FALSE;
 
       if (data_size > 0)
-        data = g_malloc0 (data_size);
+        data = g_try_malloc0 (data_size);
+
+      if (data == NULL)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Invalid file."));
+          fclose (fp);
+          return NULL;
+        }
 
       /* Load Camera Roll Number and Date metadata first */
       if (fseek (fp, 0xE0, SEEK_SET) != 0 ||
@@ -312,16 +320,26 @@ load_image (GFile        *file,
       /* Only load metadata if it is valid */
       if (metadata_len[1])
         {
-          roll_num   = g_malloc (metadata_len[0] + 1);
-          photo_date = g_malloc (metadata_len[1] + 1);
+          roll_num   = g_try_malloc0 (metadata_len[0] + 1);
+          photo_date = g_try_malloc0 ((index - metadata_len[1]) + 1);
+
+          if (roll_num == NULL || photo_date == NULL)
+            {
+              g_set_error (error, G_FILE_ERROR,
+                           g_file_error_from_errno (errno),
+                           _("Invalid file."));
+              fclose (fp);
+              g_free (data);
+              g_free (roll_num);
+              g_free (photo_date);
+              return NULL;
+            }
 
           fseek (fp, 0xE0, SEEK_SET);
           fread (roll_num, metadata_len[0], 1, fp);
-          roll_num[metadata_len[0]] = '\0';
 
           fseek (fp, 0xE0 + metadata_len[1] + 1, SEEK_SET);
           fread (photo_date, index - metadata_len[1], 1, fp);
-          photo_date[metadata_len[1]] = '\0';
         }
 
       fclose (fp);
