@@ -35,6 +35,19 @@ include:
   - project: Infrastructure/freedesktop-ci-templates
     file: templates/ci-fairy.yml
     ref: aec7a6ce7bb38902c70641526f6611e27141784a
+#needed by deps-debian* and deps-snap
+.buildah_prepare_image:
+  script:
+    - export BUILDAH_FORMAT=docker
+    - export BUILDAH_ISOLATION=chroot
+    - export STORAGE_DRIVER=vfs
+    - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - existing_image_id="$(skopeo inspect --config "docker://$CI_REGISTRY_IMAGE:${BUILDAH_IMAGE}" 2>/dev/null | sed -n '/"diff_ids"/,/\]/p' | grep -o 'sha256:[a-f0-9]*' | tr '\n' ',' || echo "none")"
+    - if [ "$existing_image_id" = 'none' ]; then buildah build --log-level error --volume "$CI_PROJECT_DIR:$CI_PROJECT_DIR:Z" --file "$CI_PROJECT_DIR/Dockerfile" --tag $CI_REGISTRY_IMAGE:${BUILDAH_IMAGE} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h --iidfile new_image_id.txt 2>&1 | grep -v STEP; fi
+    - if [ -f 'new_image_id.txt' ] && [ "$existing_image_id" != "$(buildah inspect --format '{{if .OCIv1.RootFS}}{{range .OCIv1.RootFS.DiffIDs}}{{.}},{{end}}{{else}}{{range .Docker.RootFS.DiffIDs}}{{.}},{{end}}{{end}}' "$(cat new_image_id.txt)")" ]; then buildah push --log-level error --compression-format zstd --compression-level 3 --force-compression $CI_REGISTRY_IMAGE:${BUILDAH_IMAGE} 2>&1 | grep -v STEP; fi
+.buildah_run_image:
+  script:
+    - buildah build --log-level error --volume "$CI_PROJECT_DIR:$CI_PROJECT_DIR:Z" --file "$CI_PROJECT_DIR/Dockerfile2" --no-cache 2>&1 | grep -v -e 'STEP' -e 'Trying to pull' -e 'Getting image' -e 'Copying blob' -e 'Copying config' -e 'Writing manifest' -e '^COMMIT' -e '-->' -e '^[0-9a-f]\{64\}$'
 
 workflow:
   auto_cancel:
@@ -171,10 +184,6 @@ deps-debian-nonreloc:
   variables:
     GIT_STRATEGY: none
   script:
-    - export BUILDAH_FORMAT=docker
-    - export BUILDAH_ISOLATION=chroot
-    - export STORAGE_DRIVER=vfs
-    - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     # Install deps
     - echo "FROM debian:${DEB_VERSION}" > Dockerfile
     - echo "WORKDIR $CI_PROJECT_DIR" >> Dockerfile
@@ -247,7 +256,8 @@ deps-debian-nonreloc:
             xdg-utils" >> Dockerfile
     - echo "RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen" >> Dockerfile
     # Prepare environ
-    - echo "FROM $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" > Dockerfile2;
+    - export BUILDAH_IMAGE="build-debian-${DEB_VERSION}-${RUNNER}"
+    - echo "FROM $CI_REGISTRY_IMAGE:${BUILDAH_IMAGE}" > Dockerfile2;
     - echo "RUN printf \"\e[0Ksection_start:\`date +%s\`:environ[collapsed=true]\r\e[0KPreparing build environment\n\"" >> Dockerfile2;
     - echo "ENV PKG_CONFIG_PATH=\"${GIMP_PREFIX}/lib/$([ "$(uname -m)" = 'aarch64' ] && echo "aarch64-linux-gnu/" || echo "x86_64-linux-gnu/")pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}\"" >> Dockerfile2;
     - echo "ENV XDG_DATA_DIRS=\"${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}\"" >> Dockerfile2;
@@ -281,11 +291,9 @@ deps-debian-nonreloc:
     - echo "RUN printf \"\e[0Ksection_end:\`date +%s\`:gegl_build\r\e[0K\n\"" >> Dockerfile2;
     #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
     - printf "\e[0Ksection_start:`date +%s`:deps_install[collapsed=true]\r\e[0KInstalling dependencies provided by Debian $DEB_VERSION\n"
-    - existing_image_id="$(skopeo inspect --config "docker://$CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}" 2>/dev/null | sed -n '/"diff_ids"/,/\]/p' | grep -o 'sha256:[a-f0-9]*' | tr '\n' ',' || echo "none")"
-    - if [ "$existing_image_id" = 'none' ]; then buildah build --log-level error --volume "$CI_PROJECT_DIR:$CI_PROJECT_DIR:Z" --file "$CI_PROJECT_DIR/Dockerfile" --tag $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h --iidfile new_image_id.txt 2>&1 | grep -v STEP; fi
-    - if [ -f 'new_image_id.txt' ] && [ "$existing_image_id" != "$(buildah inspect --format '{{if .OCIv1.RootFS}}{{range .OCIv1.RootFS.DiffIDs}}{{.}},{{end}}{{else}}{{range .Docker.RootFS.DiffIDs}}{{.}},{{end}}{{end}}' "$(cat new_image_id.txt)")" ]; then buildah push --log-level error --compression-format zstd --compression-level 3 --force-compression $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} 2>&1 | grep -v STEP; fi
+    - !reference [.buildah_prepare_image, script]
     - printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
-    - buildah build --log-level error --volume "$CI_PROJECT_DIR:$CI_PROJECT_DIR:Z" --file "$CI_PROJECT_DIR/Dockerfile2" --no-cache 2>&1 | grep -v -e 'STEP' -e 'Trying to pull' -e 'Getting image' -e 'Copying blob' -e 'Copying config' -e 'Writing manifest' -e '^COMMIT' -e '-->' -e '^[0-9a-f]\{64\}$'
+    - !reference [.buildah_run_image, script]
   artifacts:
     paths:
       - _install-${RUNNER}/
@@ -489,10 +497,6 @@ deps-snap:
   stage: dependencies
   image: quay.io/containers/aio:latest
   script:
-    - export BUILDAH_FORMAT=docker
-    - export BUILDAH_ISOLATION=chroot
-    - export STORAGE_DRIVER=vfs
-    - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     # Install deps
     - echo "FROM ghcr.io/canonical/snapcraft:${SNAPCRAFT_BASE_VERSION}" > Dockerfile
     - echo "ENTRYPOINT [\"\"]" >> Dockerfile
@@ -505,16 +509,15 @@ deps-snap:
     - echo "RUN cp -r /usr/lib/python3.*/site-packages/extensions/* /usr/share/snapcraft/extensions/ && ln -s /usr/libexec/snapcraft/craftctl /usr/bin/craftctl" >> Dockerfile
     - echo "RUN sh build/linux/snap/1_build-deps-snapcraft.sh --install-snaps" >> Dockerfile;
     # Build babl and GEGL
-    - echo "FROM $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}" > Dockerfile2;
+    - export BUILDAH_IMAGE="build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}"
+    - echo "FROM $CI_REGISTRY_IMAGE:${BUILDAH_IMAGE}" > Dockerfile2;
     - if [ "$CI_COMMIT_TAG" ]; then
         echo "ENV CI_COMMIT_TAG=\"$CI_COMMIT_TAG\"" >> Dockerfile2;
       fi
     - echo "RUN sh build/linux/snap/1_build-deps-snapcraft.sh" >> Dockerfile2;
     #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
-    - existing_image_id="$(skopeo inspect --config "docker://$CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}" 2>/dev/null | sed -n '/"diff_ids"/,/\]/p' | grep -o 'sha256:[a-f0-9]*' | tr '\n' ',' || echo "none")"
-    - if [ "$existing_image_id" = 'none' ]; then buildah build --log-level error --volume "$CI_PROJECT_DIR:$CI_PROJECT_DIR:Z" --file "$CI_PROJECT_DIR/Dockerfile" --tag $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h --iidfile new_image_id.txt 2>&1 | grep -v STEP; fi
-    - if [ -f 'new_image_id.txt' ] && [ "$existing_image_id" != "$(buildah inspect --format '{{if .OCIv1.RootFS}}{{range .OCIv1.RootFS.DiffIDs}}{{.}},{{end}}{{else}}{{range .Docker.RootFS.DiffIDs}}{{.}},{{end}}{{end}}' "$(cat new_image_id.txt)")" ]; then buildah push --log-level error --compression-format zstd --compression-level 3 --force-compression $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER} 2>&1 | grep -v STEP; fi
-    - buildah build --log-level error --volume "$CI_PROJECT_DIR:$CI_PROJECT_DIR:Z" --file "$CI_PROJECT_DIR/Dockerfile2" --no-cache 2>&1 | grep -v -e 'STEP' -e 'Trying to pull' -e 'Getting image' -e 'Copying blob' -e 'Copying config' -e 'Writing manifest' -e '^COMMIT' -e '-->' -e '^[0-9a-f]\{64\}$'
+    - !reference [.buildah_prepare_image, script]
+    - !reference [.buildah_run_image, script]
   artifacts:
     paths:
       - _install-$RUNNER.tar
