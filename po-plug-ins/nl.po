@@ -12,9 +12,10 @@
 # value             helderheid ("brightness" is immers een synoniem voor "value": HSV en HSB zijn dezelfde kleurmodellen)
 # luminosity        helderheid
 msgid ""
-msgstr "Project-Id-Version: gimp 3.0\n"
+msgstr ""
+"Project-Id-Version: gimp 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-24 19:43+0000\n"
+"POT-Creation-Date: 2026-06-16 18:37+0000\n"
 "PO-Revision-Date: 2026-05-25 10:03+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
@@ -123,8 +124,11 @@ msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
 "Check out the last version of the source code online by clicking the "
 "\"Source\" button."
-msgstr "Deze plug-in is een oefening in ‘%s’ om het maken van plug-ins te demonstreren.\n"
-"Bekijk online de laatste versie van de boncode door te klikken op de knop \"Bron\"."
+msgstr ""
+"Deze plug-in is een oefening in ‘%s’ om het maken van plug-ins te "
+"demonstreren.\n"
+"Bekijk online de laatste versie van de boncode door te klikken op de knop "
+"\"Bron\"."
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:63
 msgid "Plug-In Example in _JavaScript"
@@ -236,7 +240,13 @@ msgid ""
 "in a different programming language. They all create a GTK dialog with a "
 "text view displaying their own code (hence also demonstrating how to package "
 "data) and a button which calls a GEGL operation on the active layer."
-msgstr "Deze uitbreiding verschaft een set basisvoorbeelden om te demonstreren hoe uw uw eigen plug-ins kunt maken. Elke plug-in doet hetzelfde, behalve dat die is ontwikkeld in een andere programmeertaal. Ze maken allemaal een GTK-dialoogvenster met een tekstweergave die hun eigen code weergeeft (daarom ook demonstrerend hoe gegevens te verpakken) en een knop die een bewerking van GEGL aanroept op de actieve laag."
+msgstr ""
+"Deze uitbreiding verschaft een set basisvoorbeelden om te demonstreren hoe "
+"uw uw eigen plug-ins kunt maken. Elke plug-in doet hetzelfde, behalve dat "
+"die is ontwikkeld in een andere programmeertaal. Ze maken allemaal een GTK-"
+"dialoogvenster met een tekstweergave die hun eigen code weergeeft (daarom "
+"ook demonstrerend hoe gegevens te verpakken) en een knop die een bewerking "
+"van GEGL aanroept op de actieve laag."
 
 #: plug-ins/common/align-layers.c:178
 msgid "Align Visi_ble Layers..."
@@ -367,7 +377,9 @@ msgstr "Optimaliseren (voor _GIF)"
 
 #: plug-ins/common/animation-optimize.c:180
 msgid "Modify image to reduce size when saved as GIF animation"
-msgstr "Afbeelding aanpassen om bestandsgrootte te verkleinen bij opslaan als GIF-animatie"
+msgstr ""
+"Afbeelding aanpassen om bestandsgrootte te verkleinen bij opslaan als GIF-"
+"animatie"
 
 #: plug-ins/common/animation-optimize.c:205
 msgid "_Optimize (Difference)"
@@ -992,7 +1004,11 @@ msgid ""
 "Automata on continuous (value) domain. In GIMP_RUN_NONINTERACTIVE, the name "
 "of a parameter file is passed as the 4th arg. You can control CML_explorer "
 "via parameter file."
-msgstr "Maak een afbeelding van Coupled-Map Lattice (CML). CML is een soort Cellular Automata op een doorlopend (waarden) domein. In GIMP_RUN_NONINTERACTIVE wordt de naam van een parameterbestand doorgegevens als het 4e arg. U kunt CML_explorer beheren via het parameterbestand."
+msgstr ""
+"Maak een afbeelding van Coupled-Map Lattice (CML). CML is een soort Cellular "
+"Automata op een doorlopend (waarden) domein. In GIMP_RUN_NONINTERACTIVE "
+"wordt de naam van een parameterbestand doorgegevens als het 4e arg. U kunt "
+"CML_explorer beheren via het parameterbestand."
 
 #: plug-ins/common/cml-explorer.c:535
 msgid "Parameter File"
@@ -1002,7 +1018,9 @@ msgstr "Parameterbestand"
 msgid ""
 "The parameter file from which CML_explorer makes an image. This argument is "
 "only used in non-interactive runs."
-msgstr "Het parameterbestand waaruit CML_explorer een afbeelding maakt. Dit argument wordt alleen gebruikt in niet-interactieve uitvoeringen."
+msgstr ""
+"Het parameterbestand waaruit CML_explorer een afbeelding maakt. Dit argument "
+"wordt alleen gebruikt in niet-interactieve uitvoeringen."
 
 # What is 'to evolute'? vgl. "evolution" kan ook "worteltrekking" betekenen -> "evolute" = "(vierkants)wortel trekken"?
 #: plug-ins/common/cml-explorer.c:909
@@ -1096,7 +1114,9 @@ msgstr "Beginverschuiving:"
 
 #: plug-ins/common/cml-explorer.c:1547
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "Beginwaarde voor het trekken van een willekeurig getal (alleen voor \"met beginwaarde\"-modi)"
+msgstr ""
+"Beginwaarde voor het trekken van een willekeurig getal (alleen voor \"met "
+"beginwaarde\"-modi)"
 
 #: plug-ins/common/cml-explorer.c:1557
 msgid "Seed:"
@@ -1112,8 +1132,12 @@ msgid ""
 "The same seed produces the same image, if (1) the widths of images are same "
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
-msgstr "Knop \"Vaste beginwaarde\" is een alias van me.\n"
-"Dezelfde beginwaarde produceert dezelfde afbeelding, als (1) de breedten van de afbeeldingen hetzelfde zijn (dat is de reden waarom een afbeelding op een tekenbare er anders uitziet dan in het voorbeeld), en (2) alle mutatiewaarden gelijk zijn nul."
+msgstr ""
+"Knop \"Vaste beginwaarde\" is een alias van me.\n"
+"Dezelfde beginwaarde produceert dezelfde afbeelding, als (1) de breedten van "
+"de afbeeldingen hetzelfde zijn (dat is de reden waarom een afbeelding op een "
+"tekenbare er anders uitziet dan in het voorbeeld), en (2) alle "
+"mutatiewaarden gelijk zijn nul."
 
 #: plug-ins/common/cml-explorer.c:1589
 msgid "O_thers"
@@ -1284,7 +1308,9 @@ msgstr "Waarschuwing: ‘%s’ is een oud formaat bestand."
 #: plug-ins/common/cml-explorer.c:2495
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
-msgstr "Waarschuwing: ‘%s’ is een parameterbestand voor een nieuwere versie van CML-verkenner."
+msgstr ""
+"Waarschuwing: ‘%s’ is een parameterbestand voor een nieuwere versie van CML-"
+"verkenner."
 
 #: plug-ins/common/cml-explorer.c:2566
 msgid "Error: failed to load parameters"
@@ -1302,7 +1328,10 @@ msgstr "De kleurenkaart herordenen"
 msgid ""
 "This procedure takes an indexed image and lets you alter the positions of "
 "colors in the colormap without visually changing the image."
-msgstr "Bij deze procedure wordt een geïndexeerde afbeelding gebruikt en kunt u de posities van kleuren in de kleurenkaart wijzigen zonder de afbeelding visueel te wijzigen."
+msgstr ""
+"Bij deze procedure wordt een geïndexeerde afbeelding gebruikt en kunt u de "
+"posities van kleuren in de kleurenkaart wijzigen zonder de afbeelding "
+"visueel te wijzigen."
 
 #: plug-ins/common/colormap-remap.c:198
 msgid "Map"
@@ -1324,7 +1353,10 @@ msgstr "Twee kleuren in een kleurenkaart omwisselen"
 msgid ""
 "This procedure takes an indexed image and lets you swap the positions of two "
 "colors in the colormap without visually changing the image."
-msgstr "Bij deze procedure wordt een geïndexeerde afbeelding gebruikt en kunt u de posities van twee kleuren in de kleurenkaart omwisselen zonder de afbeelding visueel te wijzigen."
+msgstr ""
+"Bij deze procedure wordt een geïndexeerde afbeelding gebruikt en kunt u de "
+"posities van twee kleuren in de kleurenkaart omwisselen zonder de afbeelding "
+"visueel te wijzigen."
 
 #: plug-ins/common/colormap-remap.c:231
 msgid "Index 1"
@@ -1375,7 +1407,8 @@ msgstr "Volgorde herstellen"
 msgid ""
 "Drag and drop colors to rearrange the colormap.\n"
 "The numbers shown are the original indices."
-msgstr "Sleep en zet kleuren neer om de ordening te wijzigen.\n"
+msgstr ""
+"Sleep en zet kleuren neer om de ordening te wijzigen.\n"
 "De weergegeven getallen zijn de originele indices."
 
 #: plug-ins/common/colormap-remap.c:726
@@ -1554,11 +1587,15 @@ msgstr "_Samenstellen..."
 
 #: plug-ins/common/compose.c:410
 msgid "Create an image using multiple gray images as color channels"
-msgstr "Een afbeelding aanmaken uit verschillende afbeeldingen grijswaarden als kleurkanalen"
+msgstr ""
+"Een afbeelding aanmaken uit verschillende afbeeldingen grijswaarden als "
+"kleurkanalen"
 
 #: plug-ins/common/compose.c:412
 msgid "This function creates a new image from multiple gray images"
-msgstr "Deze functie maakt een afbeelding door verschillende afbeeldingen grijswaarden te gebruiken als kleurkanalen"
+msgstr ""
+"Deze functie maakt een afbeelding door verschillende afbeeldingen "
+"grijswaarden te gebruiken als kleurkanalen"
 
 #: plug-ins/common/compose.c:421
 msgid "Image 2"
@@ -1621,12 +1658,15 @@ msgstr "Nieuwe afbeelding"
 
 #: plug-ins/common/compose.c:473
 msgid "Compose an image from multiple drawables of gray images"
-msgstr "Een afbeelding samenstellen uit verschillende afbeeldingen grijswaarden"
+msgstr ""
+"Een afbeelding samenstellen uit verschillende afbeeldingen grijswaarden"
 
 #: plug-ins/common/compose.c:475
 msgid ""
 "This function creates a new image from multiple drawables of gray images"
-msgstr "Deze functie maakt een afbeelding door verschillende afbeeldingen grijswaarden te gebruiken als kleurkanalen"
+msgstr ""
+"Deze functie maakt een afbeelding door verschillende afbeeldingen "
+"grijswaarden te gebruiken als kleurkanalen"
 
 #: plug-ins/common/compose.c:484
 msgid "Drawable 2"
@@ -1665,27 +1705,36 @@ msgid ""
 "This function recombines the grayscale layers produced by Decompose into a "
 "single RGB or RGBA layer, and replaces the originally decomposed layer with "
 "the result."
-msgstr "Deze functie combineert de grijswaardenlagen geproduceerd door Ontleden opnieuw in een enkele RGB- of RGBA-laag, en vervangt de oorspronkelijk ontlede laag door het resultaat."
+msgstr ""
+"Deze functie combineert de grijswaardenlagen geproduceerd door Ontleden "
+"opnieuw in een enkele RGB- of RGBA-laag, en vervangt de oorspronkelijk "
+"ontlede laag door het resultaat."
 
 #: plug-ins/common/compose.c:606
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
-msgstr "U kunt 'Opnieuw samenstellen' enkel uitvoeren als de huidige afbeelding oorspronkelijk aangemaakt is met 'Ontleden'."
+msgstr ""
+"U kunt 'Opnieuw samenstellen' enkel uitvoeren als de huidige afbeelding "
+"oorspronkelijk aangemaakt is met 'Ontleden'."
 
 #: plug-ins/common/compose.c:649
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr "Fout bij het doorzoeken van de 'decompose-data'-parasiet: er zijn te weinig lagen gevonden"
+msgstr ""
+"Fout bij het doorzoeken van de 'decompose-data'-parasiet: er zijn te weinig "
+"lagen gevonden"
 
 #: plug-ins/common/compose.c:664
 #, c-format
 msgid "Cannot recompose: Specified source layer ID %d not found"
-msgstr "Opnieuw samenstellen mislukt, de opgegeven bronlaag-ID %d niet gevonden"
+msgstr ""
+"Opnieuw samenstellen mislukt, de opgegeven bronlaag-ID %d niet gevonden"
 
 #: plug-ins/common/compose.c:684
 #, c-format
 msgid "Cannot recompose: Specified layer #%d ID %d not found"
-msgstr "Opnieuw samenstellen mislukt, de opgegeven laag #%d ID %d niet gevonden"
+msgstr ""
+"Opnieuw samenstellen mislukt, de opgegeven laag #%d ID %d niet gevonden"
 
 # What is the Dutch translation of the term 'Compose'?
 #: plug-ins/common/compose.c:713
@@ -1748,7 +1797,11 @@ msgid ""
 "method that enhances a digital image in terms of dynamic range compression, "
 "color independence from the spectral distribution of the scene illuminant, "
 "and color/lightness rendition."
-msgstr "Het algoritme Retinex beeldverbetering is een automatische methode voor beeldverbetering die een digitaal beeld verbetert in termen van compressie van het dynamische bereik, kleuronafhankelijkheid van de spectrale distributie van de lichtbron van de scène en weergave van kleur/lichtheid."
+msgstr ""
+"Het algoritme Retinex beeldverbetering is een automatische methode voor "
+"beeldverbetering die een digitaal beeld verbetert in termen van compressie "
+"van het dynamische bereik, kleuronafhankelijkheid van de spectrale "
+"distributie van de lichtbron van de scène en weergave van kleur/lichtheid."
 
 #: plug-ins/common/contrast-retinex.c:198
 msgid "Scal_e"
@@ -1815,7 +1868,8 @@ msgstr "B_edreven bijsnijden"
 
 #: plug-ins/common/crop-zealous.c:117
 msgid "Autocrop unused space from edges and middle"
-msgstr "Ongebruikte ruimte aan de randen en in het midden automatisch wegsnijden"
+msgstr ""
+"Ongebruikte ruimte aan de randen en in het midden automatisch wegsnijden"
 
 #: plug-ins/common/crop-zealous.c:142
 msgid "Zealous cropping"
@@ -1846,7 +1900,19 @@ msgid ""
 "other directions than vertical. Bending usually changes the size of the "
 "handled layer. This plug-in sets the offsets of the handled layer to keep "
 "its center at the same position."
-msgstr "Deze plug-in buigt de actieve laag. Als er een huidige selectie is, dan wordt die gekopieerd naar een zwevende selectie en de vervorming curve_bend wordt uitgevoerd op de zwevende selectie. Als de parameter work_on_copy TRUE is, wordt de vervorming curve_bend uitgevoerd op ene kopie van de actieve laag (of zwevende selectie). De boven- en onderranden worden gebogen in de vorm van 2 spline curves. Beide (boven en onder) curves worden bepaald door maximaal 17 punten of door 256 Y-waarden als curve_type == 1 (modus Vrije hand). Als de draaiing niet 0 is, wordt de laag gedraaid voor en na de bewerking van buigen. Dat schakelt buigen in andere richtingen dan verticaal in. Buigen verandert meestal de grootte van de afgehandelde laag. Deze plug-in stelt de verschuivingen van de afgehandelde laag zo in dat zijn middelpunt op dezelfde plaats wordt behouden."
+msgstr ""
+"Deze plug-in buigt de actieve laag. Als er een huidige selectie is, dan "
+"wordt die gekopieerd naar een zwevende selectie en de vervorming curve_bend "
+"wordt uitgevoerd op de zwevende selectie. Als de parameter work_on_copy TRUE "
+"is, wordt de vervorming curve_bend uitgevoerd op ene kopie van de actieve "
+"laag (of zwevende selectie). De boven- en onderranden worden gebogen in de "
+"vorm van 2 spline curves. Beide (boven en onder) curves worden bepaald door "
+"maximaal 17 punten of door 256 Y-waarden als curve_type == 1 (modus Vrije "
+"hand). Als de draaiing niet 0 is, wordt de laag gedraaid voor en na de "
+"bewerking van buigen. Dat schakelt buigen in andere richtingen dan verticaal "
+"in. Buigen verandert meestal de grootte van de afgehandelde laag. Deze plug-"
+"in stelt de verschuivingen van de afgehandelde laag zo in dat zijn "
+"middelpunt op dezelfde plaats wordt behouden."
 
 #  Rotate spinbutton
 #: plug-ins/common/curve-bend.c:424
@@ -1889,7 +1955,8 @@ msgstr "Type cur_ve"
 #: plug-ins/common/curve-bend.c:450
 msgid ""
 "Whether to use Smooth (17 points) or Freehand (256 points) to draw the curve"
-msgstr "Keuze om een gladde (17 punten) of vrije hand (256 punten) curve te gebruiken"
+msgstr ""
+"Keuze om een gladde (17 punten) of vrije hand (256 punten) curve te gebruiken"
 
 #: plug-ins/common/curve-bend.c:452
 msgid "Smooth"
@@ -2267,7 +2334,8 @@ msgstr "Ontle_den..."
 
 #: plug-ins/common/decompose.c:285
 msgid "Decompose an image into separate colorspace components"
-msgstr "Een afbeelding ontleden in afzonderlijke componenten van de kleurruimte"
+msgstr ""
+"Een afbeelding ontleden in afzonderlijke componenten van de kleurruimte"
 
 # Wavelet, letterlijk: golfjes
 # Maar wavelet-ontleding is een begrip, dus laat ik het onvertaald.
@@ -2293,7 +2361,10 @@ msgid ""
 "When enabled, pixels in the foreground color will appear black in all output "
 "images. This can be used for things like crop marks that have to show up on "
 "all channels."
-msgstr "Indien ingeschakeld zullen pixels in de voorgrondkleur zwart verschijnen in uitgevoerde afbeeldingen. Dit kan worden gebruikt voor dingen zoals markeringen voor bijsnijden, die moeten verschijnen in alle kanalen."
+msgstr ""
+"Indien ingeschakeld zullen pixels in de voorgrondkleur zwart verschijnen in "
+"uitgevoerde afbeeldingen. Dit kan worden gebruikt voor dingen zoals "
+"markeringen voor bijsnijden, die moeten verschijnen in alle kanalen."
 
 #: plug-ins/common/decompose.c:400
 msgid "Decomposing"
@@ -2407,7 +2478,9 @@ msgstr "Spikkelruis van de afbeelding verwijderen"
 msgid ""
 "This plug-in selectively performs a median or adaptive box filter on an "
 "image."
-msgstr "Deze plug-in voert selectief een mediaan- of adaptief box-filter uit op een afbeelding."
+msgstr ""
+"Deze plug-in voert selectief een mediaan- of adaptief box-filter uit op een "
+"afbeelding."
 
 #: plug-ins/common/despeckle.c:187
 msgid "R_adius"
@@ -2488,7 +2561,8 @@ msgstr "Verticale strepen verwijderen uit de afbeelding"
 
 #: plug-ins/common/destripe.c:131
 msgid "This plug-in tries to remove vertical stripes from an image."
-msgstr "Deze plug-in probeert verticale strepen te verwijderen uit de afbeelding."
+msgstr ""
+"Deze plug-in probeert verticale strepen te verwijderen uit de afbeelding."
 
 #: plug-ins/common/destripe.c:140 plug-ins/common/file-html-table.c:199
 #: plug-ins/common/file-ps.c:524 plug-ins/common/file-raw-data.c:367
@@ -2528,7 +2602,9 @@ msgstr "Een afbeelding in grijswaarden opslaan in diverse tekstindelingen"
 msgid ""
 "This plug-in uses aalib to save grayscale image as ascii art into a variety "
 "of text formats"
-msgstr "Deze plug-in gebruikt aalib om een afbeelding in grijswaarden op te slaan als ASCII-kunst in verschillende tekstindelingen"
+msgstr ""
+"Deze plug-in gebruikt aalib om een afbeelding in grijswaarden op te slaan "
+"als ASCII-kunst in verschillende tekstindelingen"
 
 #: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:221
 msgid "_Format"
@@ -2629,7 +2705,9 @@ msgstr "ongeldige bpp-waarde in afbeelding: %hhu"
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
 "vertical offset: %d"
-msgstr "ongeldige beeldafmetingen: breedte: %d, horizontale verschuiving: %d, hoogte: %d, verticale verschuiving: %d"
+msgstr ""
+"ongeldige beeldafmetingen: breedte: %d, horizontale verschuiving: %d, "
+"hoogte: %d, verticale verschuiving: %d"
 
 #: plug-ins/common/file-cel.c:468
 #, c-format
@@ -2793,7 +2871,8 @@ msgstr "Exporteert bestanden die worden gecomprimeerd met gzip"
 
 #: plug-ins/common/file-compressor.c:244
 msgid "This procedure exports files in the gzip compressed format."
-msgstr "Deze procedure exporteert bestanden in de gecomprimeerde indeling gzip."
+msgstr ""
+"Deze procedure exporteert bestanden in de gecomprimeerde indeling gzip."
 
 #: plug-ins/common/file-compressor.c:249
 msgid "bzip archive"
@@ -2813,7 +2892,8 @@ msgstr "Exporteert bestanden die worden gecomprimeerd met bzip2"
 
 #: plug-ins/common/file-compressor.c:263
 msgid "This procedure exports files in the bzip2 compressed format."
-msgstr "Deze procedure exporteert bestanden in de gecomprimeerde indeling bzip2."
+msgstr ""
+"Deze procedure exporteert bestanden in de gecomprimeerde indeling bzip2."
 
 #: plug-ins/common/file-compressor.c:268
 msgid "xz archive"
@@ -2849,7 +2929,8 @@ msgstr "Deze procedure laadt bestanden in de gecomprimeerde indeling zip."
 
 #: plug-ins/common/file-compressor.c:482
 msgid "No sensible file extension, saving as compressed XCF."
-msgstr "Geen zinvolle extensie, bestand wordt opgeslagen als gecomprimeerd XCF."
+msgstr ""
+"Geen zinvolle extensie, bestand wordt opgeslagen als gecomprimeerd XCF."
 
 #: plug-ins/common/file-compressor.c:508
 #, c-format
@@ -2858,7 +2939,8 @@ msgstr "Comprimeren van ‘%s’"
 
 #: plug-ins/common/file-compressor.c:546
 msgid "No sensible file extension, attempting to load with file magic."
-msgstr "Geen zinvolle extensie, probeer bestand te laden met \"bestandsmagie\"."
+msgstr ""
+"Geen zinvolle extensie, probeer bestand te laden met \"bestandsmagie\"."
 
 #. Leave a chance for the load to succeed (in case the first
 #. * file happens to be an image file), yet still warns. This
@@ -2891,7 +2973,10 @@ msgid ""
 "Load a file in the DICOM standard format. The standard is defined at http://"
 "medical.nema.org/. The plug-in currently only supports reading images with "
 "uncompressed pixel sections."
-msgstr "Laad een bestand in de standaard indeling DICOM. De standaard is gedefinieerd op http://medical.nema.org/. De plug-in ondersteunt momenteel alleen het lezen van afbeeldingen met niet gecomprimeerde pixelsecties."
+msgstr ""
+"Laad een bestand in de standaard indeling DICOM. De standaard is "
+"gedefinieerd op http://medical.nema.org/. De plug-in ondersteunt momenteel "
+"alleen het lezen van afbeeldingen met niet gecomprimeerde pixelsecties."
 
 #: plug-ins/common/file-dicom.c:207
 msgid "Digital Imaging and Communications in Medicine image"
@@ -2907,7 +2992,12 @@ msgid ""
 "defined at http://medical.nema.org/. The file format is defined in section "
 "10 of the standard. The files are saved uncompressed and the compulsory "
 "DICOM tags are filled with default dummy values."
-msgstr "Sla een afbeelding op in de medische standaard indelingen van DICOM. De standaard is gedefinieerd op http://medical.nema.org/. De bestandsindeling wordt gedefinieerd in deel 10 van de standaard. De bestanden worden niet gecomprimeerd opgeslagen en de verplichte tags voor DICOM worden gevuld met standaard dummy-waarden."
+msgstr ""
+"Sla een afbeelding op in de medische standaard indelingen van DICOM. De "
+"standaard is gedefinieerd op http://medical.nema.org/. De bestandsindeling "
+"wordt gedefinieerd in deel 10 van de standaard. De bestanden worden niet "
+"gecomprimeerd opgeslagen en de verplichte tags voor DICOM worden gevuld met "
+"standaard dummy-waarden."
 
 #: plug-ins/common/file-dicom.c:387
 #, c-format
@@ -2917,7 +3007,9 @@ msgstr "‘%s’ is geen DICOM-bestand."
 #: plug-ins/common/file-dicom.c:513
 #, c-format
 msgid "'%s' has an incorrect value for field size. Possibly corrupt image."
-msgstr "'%s' heeft een onjuiste waarde voor de veldgrootte. Mogelijk een corrupte afbeelding."
+msgstr ""
+"'%s' heeft een onjuiste waarde voor de veldgrootte. Mogelijk een corrupte "
+"afbeelding."
 
 #: plug-ins/common/file-dicom.c:574
 #, c-format
@@ -2927,7 +3019,8 @@ msgstr "Syntaxis voor overdracht %s wordt niet ondersteund door GIMP."
 #: plug-ins/common/file-dicom.c:629
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
-msgstr "%s wordt niet ondersteund door GIMP in combinatie met %d monsters per pixel"
+msgstr ""
+"%s wordt niet ondersteund door GIMP in combinatie met %d monsters per pixel"
 
 #: plug-ins/common/file-dicom.c:712
 #, c-format
@@ -2937,7 +3030,8 @@ msgstr "‘%s’ heeft een bpp van %d dat GIMP niet kan afhandelen."
 #: plug-ins/common/file-dicom.c:723 plug-ins/file-fits/fits.c:483
 #, c-format
 msgid "'%s' has a larger image size (%d x %d) than GIMP can handle."
-msgstr "‘%s’ heeft een grotere afbeeldingsgrootte (%d x %d) dan GIMP kan afhandelen."
+msgstr ""
+"‘%s’ heeft een grotere afbeeldingsgrootte (%d x %d) dan GIMP kan afhandelen."
 
 #: plug-ins/common/file-dicom.c:734
 #, c-format
@@ -2947,7 +3041,8 @@ msgstr "‘%s’ heeft monsters per pixel van %d dat GIMP niet kan afhandelen."
 #: plug-ins/common/file-dicom.c:745
 #, c-format
 msgid "'%s' has not enough pixel data. Possibly corrupt image."
-msgstr "‘%s’ heeft niet voldoende pixelgegevens. Mogelijk een corrupte afbeelding."
+msgstr ""
+"‘%s’ heeft niet voldoende pixelgegevens. Mogelijk een corrupte afbeelding."
 
 #: plug-ins/common/file-dicom.c:1547
 msgid "Cannot save images with alpha channel."
@@ -3055,7 +3150,13 @@ msgid ""
 "'as-animation' parameter as TRUE. The plug-in will interpret <50% alpha as "
 "transparent. When run non-interactively, the value for the comment is taken "
 "from the 'gimp-comment' parasite."
-msgstr "Exporteer een bestand in de indeling GIF, met mogelijke animatie, transparantie en opmerking. Exporteren van een animatie, werk op een bestand met meerdere lagen en stel de parameter 'as-animation' in op TRUE. De plug-in zal <50% alfa interpreteren als transparant. Indien niet-interactief uitgevoerd wordt de waarde voor de opmerking genomen uit de parasiet 'gimp-comment'."
+msgstr ""
+"Exporteer een bestand in de indeling GIF, met mogelijke animatie, "
+"transparantie en opmerking. Exporteren van een animatie, werk op een bestand "
+"met meerdere lagen en stel de parameter 'as-animation' in op TRUE. De plug-"
+"in zal <50% alfa interpreteren als transparant. Indien niet-interactief "
+"uitgevoerd wordt de waarde voor de opmerking genomen uit de parasiet 'gimp-"
+"comment'."
 
 #: plug-ins/common/file-gif-export.c:192 plug-ins/common/file-mng.c:285
 msgid "_Interlace"
@@ -3079,7 +3180,9 @@ msgstr "_Aantal herhalingen"
 
 #: plug-ins/common/file-gif-export.c:205
 msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
-msgstr "(gif animatie) Aantal herhalingen (genegeerd als eindeloos herhalen Aan staat)"
+msgstr ""
+"(gif animatie) Aantal herhalingen (genegeerd als eindeloos herhalen Aan "
+"staat)"
 
 #: plug-ins/common/file-gif-export.c:211
 msgid "_Delay between frames when unspecified"
@@ -3143,42 +3246,56 @@ msgstr "Opmerking voor afbeelding"
 
 #: plug-ins/common/file-gif-export.c:549
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
-msgstr "Kon eenvoudigweg kleuren niet verder vereenvoudigen. Exporteren als doorzichtig."
+msgstr ""
+"Kon eenvoudigweg kleuren niet verder vereenvoudigen. Exporteren als "
+"doorzichtig."
 
 #: plug-ins/common/file-gif-export.c:668
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
-msgstr "Kan ‘%s’ niet exporteren.  De GIF-bestandsindeling ondersteunt geen afbeldingen die groter zijn dan %d pixels breed of hoog."
+msgstr ""
+"Kan ‘%s’ niet exporteren.  De GIF-bestandsindeling ondersteunt geen "
+"afbeldingen die groter zijn dan %d pixels breed of hoog."
 
 #: plug-ins/common/file-gif-export.c:691
 #, c-format
 msgid ""
 "Unable to export '%s'.  Please convert your image to 8 bit integer "
 "precision, as the GIF file format does not support higher precisions."
-msgstr "Kan ‘%s’ niet exporteren.  Converteer uw afbeelding naar 8bit integer precisie, omdat de bestandsindeling GIF geen hogere precisies ondersteunt."
+msgstr ""
+"Kan ‘%s’ niet exporteren.  Converteer uw afbeelding naar 8bit integer "
+"precisie, omdat de bestandsindeling GIF geen hogere precisies ondersteunt."
 
 #: plug-ins/common/file-gif-export.c:820
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
-msgstr "De indeling GIF ondersteunt alleen opmerkingen in 7bit ASCII codering. Geen opmerking opgeslagen."
+msgstr ""
+"De indeling GIF ondersteunt alleen opmerkingen in 7bit ASCII codering. Geen "
+"opmerking opgeslagen."
 
 #: plug-ins/common/file-gif-export.c:916
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
-msgstr "Kan geen kleurafbeeldingen RGB exporteren. Converteer eerst naar geïndexeerde kleuren of grijswaarden."
+msgstr ""
+"Kan geen kleurafbeeldingen RGB exporteren. Converteer eerst naar "
+"geïndexeerde kleuren of grijswaarden."
 
 #: plug-ins/common/file-gif-export.c:1136
 msgid "Delay inserted to prevent evil CPU-sucking animation."
-msgstr "Wachttijd ingevoegd om te verhinderen dat boosaardige animatie rekentijd vreet."
+msgstr ""
+"Wachttijd ingevoegd om te verhinderen dat boosaardige animatie rekentijd "
+"vreet."
 
 #: plug-ins/common/file-gif-export.c:1208
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
-msgstr "De afbeelding die u probeert te exporteren in de indeling GIF bevat lagen die zich uitstrekken tot voorbij de feitelijke grenzen van de afbeelding."
+msgstr ""
+"De afbeelding die u probeert te exporteren in de indeling GIF bevat lagen "
+"die zich uitstrekken tot voorbij de feitelijke grenzen van de afbeelding."
 
 #: plug-ins/common/file-gif-export.c:1214
 msgid "Cr_op"
@@ -3188,14 +3305,19 @@ msgstr "_Bijsnijden"
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
-msgstr "De bestandsindeling GIF staat dit niet toe.  U kunt ervoor kiezen om alle lagen bij te snijden tot de grenzen van de afbeelding, of dit exporteren annuleren."
+msgstr ""
+"De bestandsindeling GIF staat dit niet toe.  U kunt ervoor kiezen om alle "
+"lagen bij te snijden tot de grenzen van de afbeelding, of dit exporteren "
+"annuleren."
 
 #: plug-ins/common/file-gif-export.c:1283
 msgid ""
 "The GIF format only supports 8 bit integer precision.\n"
 "Your image will be converted on export, which may change the pixel values."
-msgstr "De indeling GIF ondersteunt alleen 8bit integer precisie.\n"
-"Uw afbeelding zal worden geconverteerd bij exporteren, wat de pixelwaarden zou kunnen wijzigen."
+msgstr ""
+"De indeling GIF ondersteunt alleen 8bit integer precisie.\n"
+"Uw afbeelding zal worden geconverteerd bij exporteren, wat de pixelwaarden "
+"zou kunnen wijzigen."
 
 #: plug-ins/common/file-gif-export.c:1351 plug-ins/common/file-mng.c:1645
 msgid "milliseconds"
@@ -3209,7 +3331,9 @@ msgstr "Geanimeerde GIF"
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
-msgstr "U kunt alleen als animatie exporteren als de afbeelding meer dan een laag heeft.\n"
+msgstr ""
+"U kunt alleen als animatie exporteren als de afbeelding meer dan een laag "
+"heeft.\n"
 "De afbeelding die u probeert te exporteren heeft slechts één laag."
 
 #: plug-ins/common/file-gif-load.c:247
@@ -3265,7 +3389,9 @@ msgstr "lokale kleurenkaart"
 #: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:448
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
-msgstr "Niet-vierkante pixels. Afbeelding lijkt platgeslagen als modus Dot for Dot is ingeschakeld."
+msgstr ""
+"Niet-vierkante pixels. Afbeelding lijkt platgeslagen als modus Dot for Dot "
+"is ingeschakeld."
 
 #: plug-ins/common/file-gif-load.c:707 plug-ins/common/file-gif-load.c:712
 #, c-format
@@ -3359,7 +3485,10 @@ msgstr "Frame %d (%d%s)"
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
-msgstr "GIF: Niet gedocumenteerde GIF composiettype %d wordt niet afgehandeld.  Animatie zou niet af kunnen spelen of niet perfect opnieuw kunnen worden opgeslagen."
+msgstr ""
+"GIF: Niet gedocumenteerde GIF composiettype %d wordt niet afgehandeld.  "
+"Animatie zou niet af kunnen spelen of niet perfect opnieuw kunnen worden "
+"opgeslagen."
 
 #: plug-ins/common/file-gif-load.c:1326
 #, c-format
@@ -3371,7 +3500,8 @@ msgstr "Onbekend composiettype %d. %s"
 msgid ""
 "Can't handle non-alpha RGB frames.\n"
 "Please file a bug report at https://gitlab.gnome.org/GNOME/gimp/issues"
-msgstr "Kan geen niet-alfa RGB-frames afhandelen.\n"
+msgstr ""
+"Kan geen niet-alfa RGB-frames afhandelen.\n"
 "Dien een bugrapport in op https://gitlab.gnome.org/GNOME/gimp/issues"
 
 #: plug-ins/common/file-gif-load.c:1498
@@ -3425,7 +3555,12 @@ msgid ""
 "brush pipe, RGBA layers are used, otherwise the layers should be grayscale "
 "masks. The image can be multi-layered, and additionally the layers can be "
 "divided into a rectangular array of brushes."
-msgstr "Deze plug-in exporteert een afbeelding in de GIMP-penseel pipe-indeling. Voor een gekleurde penseelpipe worden lagen RGBA gebruikt, anders zouden de lagen maskers in grijswaarden moeten zijn. De afbeelding mag meerdere lagen hebben en aanvullend mogen de lagen worden opgedeeld in een rechthoekige array van penselen."
+msgstr ""
+"Deze plug-in exporteert een afbeelding in de GIMP-penseel pipe-indeling. "
+"Voor een gekleurde penseelpipe worden lagen RGBA gebruikt, anders zouden de "
+"lagen maskers in grijswaarden moeten zijn. De afbeelding mag meerdere lagen "
+"hebben en aanvullend mogen de lagen worden opgedeeld in een rechthoekige "
+"array van penselen."
 
 #: plug-ins/common/file-gih.c:185
 msgid "Brush Pipe"
@@ -3529,7 +3664,10 @@ msgstr "HEIF-afbeeldingen inladen"
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
-msgstr "Laad afbeelding die is opgeslagen in de indeling HEIF (High Efficiency Image File Format). Gewoonlijk zijn achtervoegsels voor bestanden HEIF .heif, .heic."
+msgstr ""
+"Laad afbeelding die is opgeslagen in de indeling HEIF (High Efficiency Image "
+"File Format). Gewoonlijk zijn achtervoegsels voor bestanden "
+"HEIF .heif, .heic."
 
 #: plug-ins/common/file-heif.c:269
 msgid "Exports HEIF images"
@@ -3537,7 +3675,8 @@ msgstr "Exporteert afbeeldingen HEIF"
 
 #: plug-ins/common/file-heif.c:270
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
-msgstr "Afbeelding opslaan in de indeling HEIF (High Efficiency Image File Format)."
+msgstr ""
+"Afbeelding opslaan in de indeling HEIF (High Efficiency Image File Format)."
 
 #: plug-ins/common/file-heif.c:291 plug-ins/common/file-heif.c:412
 #: plug-ins/common/file-heif.c:557 plug-ins/common/file-jp2.c:334
@@ -3704,7 +3843,9 @@ msgstr "Laden van afbeelding HEIF mislukte: %s"
 
 #: plug-ins/common/file-heif.c:1113
 msgid "Loading HEIF image failed: Input file contains no readable images"
-msgstr "Laden van afbeelding HEIF mislukte: invoerbestand bevat geen leesbare afbeeldingen"
+msgstr ""
+"Laden van afbeelding HEIF mislukte: invoerbestand bevat geen leesbare "
+"afbeeldingen"
 
 #: plug-ins/common/file-heif.c:1349
 msgid "image content"
@@ -3763,7 +3904,9 @@ msgstr "GIMP Tabelmagie"
 
 #: plug-ins/common/file-html-table.c:159
 msgid "Allows you to draw an HTML table in GIMP. See help for more info."
-msgstr "Stelt u in staat een HTML-tabrl in GIMP te tekenen. Bekijk Hulp voor meer informatie."
+msgstr ""
+"Stelt u in staat een HTML-tabrl in GIMP te tekenen. Bekijk Hulp voor meer "
+"informatie."
 
 #: plug-ins/common/file-html-table.c:180
 msgid "Use c_aption"
@@ -3811,7 +3954,9 @@ msgstr "_Genereer volledig HTML-document"
 msgid ""
 "If enabled GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
-msgstr "Indien geselecteerd zal GTM een compleet HTML-document produceren met tags als <HTML>, <BODY> enz., in plaats van slechts de HTML-code voor de tabel."
+msgstr ""
+"Indien geselecteerd zal GTM een compleet HTML-document produceren met tags "
+"als <HTML>, <BODY> enz., in plaats van slechts de HTML-code voor de tabel."
 
 #: plug-ins/common/file-html-table.c:221
 msgid "_Border"
@@ -3829,7 +3974,9 @@ msgstr "_Celbreedte gebruiken"
 msgid ""
 "If enabled GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
-msgstr "Indien geselecteerd zal GTM rechthoekige delen van identiek gekleurde blokken vervangen door een grote cel met waarden ROWSPAN en COLSPAN."
+msgstr ""
+"Indien geselecteerd zal GTM rechthoekige delen van identiek gekleurde "
+"blokken vervangen door een grote cel met waarden ROWSPAN en COLSPAN."
 
 #: plug-ins/common/file-html-table.c:236
 msgid "Co_mpress TD tags"
@@ -3839,7 +3986,10 @@ msgstr "Co_mprimeer TD-tags"
 msgid ""
 "Enabling this will cause GTM to leave no whitespace between the TD tags and "
 "the cell content. This is only necessary for pixel level positioning control."
-msgstr "Inschakelen hiervan zal ervoor zorgen dat GTM geen witruimte laat tussen de tags TD en de celinhoud. Dit is alleen nodig voor positiebeheer op pixelniveau."
+msgstr ""
+"Inschakelen hiervan zal ervoor zorgen dat GTM geen witruimte laat tussen de "
+"tags TD en de celinhoud. Dit is alleen nodig voor positiebeheer op "
+"pixelniveau."
 
 #: plug-ins/common/file-html-table.c:246
 msgid "Cell-pa_dding"
@@ -3862,7 +4012,8 @@ msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
 "crash your browser."
-msgstr "U staat op het punt een zeer groot HTML-\n"
+msgstr ""
+"U staat op het punt een zeer groot HTML-\n"
 "bestand aan te maken waarmee u hoogst-\n"
 "waarschijnlijk uw browser laat crashen."
 
@@ -3967,7 +4118,11 @@ msgid ""
 "will try to guess, which is only possible for few spaces (such as "
 "grayscale). Most such calls will fail. You are rather expected to know the "
 "color space of your data."
-msgstr "Laadt een JPEG 2000 codestroom. Als de kleurruimte is ingesteld op ONBEKEND (0), zullen we proberen te raden, wat alleen mogelijk is voor een beperkt aantal ruimten (zoals grijswaarden). De meeste van dergelijke aanroepen zullen mislukken. U wordt geacht de kleurruimte van uw gegevens te weten."
+msgstr ""
+"Laadt een JPEG 2000 codestroom. Als de kleurruimte is ingesteld op ONBEKEND "
+"(0), zullen we proberen te raden, wat alleen mogelijk is voor een beperkt "
+"aantal ruimten (zoals grijswaarden). De meeste van dergelijke aanroepen "
+"zullen mislukken. U wordt geacht de kleurruimte van uw gegevens te weten."
 
 #: plug-ins/common/file-jp2.c:314 plug-ins/common/file-jp2.c:315
 msgid "Exports files in JPEG 2000 file format"
@@ -4048,7 +4203,8 @@ msgstr "E_xporteren als CMYK"
 
 #: plug-ins/common/file-jp2.c:381 plug-ins/common/file-jp2.c:469
 msgid "Create a CMYK JPEG 2000 image using the soft-proofing color profile"
-msgstr "Een CMYK JPEG 2000 afbeelding maken met het afdrukvoorbeeld-kleurprofiel"
+msgstr ""
+"Een CMYK JPEG 2000 afbeelding maken met het afdrukvoorbeeld-kleurprofiel"
 
 #: plug-ins/common/file-jp2.c:402 plug-ins/common/file-jp2.c:403
 msgid "Exports files in JPEG 2000 codestream format"
@@ -4179,7 +4335,9 @@ msgstr "Co_mpressie/maxFout"
 msgid ""
 "Max. butteraugli distance, lower = higher quality. Range: 0 .. 15. 1.0 = "
 "visually lossless."
-msgstr "Max. afstand Butteraugli, lager = hogere kwaliteit. Bereik: 0 … 15. 1,0 = visueel zonder verlies."
+msgstr ""
+"Max. afstand Butteraugli, lager = hogere kwaliteit. Bereik: 0 … 15. 1,0 = "
+"visueel zonder verlies."
 
 #: plug-ins/common/file-jpegxl.c:211
 msgid "Effort/S_peed"
@@ -4231,7 +4389,9 @@ msgstr "Afbeelding als CMY_K exporteren"
 
 #: plug-ins/common/file-jpegxl.c:228
 msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
-msgstr "Een CMYK JPEG XL-afbeelding maken met behulp van het afdrukvoorbeeld-kleurprofiel"
+msgstr ""
+"Een CMYK JPEG XL-afbeelding maken met behulp van het afdrukvoorbeeld-"
+"kleurprofiel"
 
 #: plug-ins/common/file-jpegxl.c:2019
 msgid "16 bit/channel"
@@ -4253,7 +4413,9 @@ msgstr "Volgt een link naar een afbeelding in een bestand .lnk"
 msgid ""
 "Opens a .lnk file and if it points to an image, it asks GIMP to open the "
 "linked image."
-msgstr "Opent een bestand .lnk en als dat naar een afbeelding verwijst, vraagt het GIMP de gekoppelde afbeelding te openen."
+msgstr ""
+"Opent een bestand .lnk en als dat naar een afbeelding verwijst, vraagt het "
+"GIMP de gekoppelde afbeelding te openen."
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
@@ -4287,7 +4449,10 @@ msgstr "Opslaan van bestanden in de MNG-indeling"
 msgid ""
 "This plug-in saves images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
-msgstr "Deze plug-in slaat afbeeldingen op in het Multiple-image Network Graphics (MNG)-formaat dat kan worden gebruikt als vervanging voor bewegende GIF's, en meer."
+msgstr ""
+"Deze plug-in slaat afbeeldingen op in het Multiple-image Network Graphics "
+"(MNG)-formaat dat kan worden gebruikt als vervanging voor bewegende GIF's, "
+"en meer."
 
 #: plug-ins/common/file-mng.c:286
 msgid "Use interlacing"
@@ -4300,7 +4465,8 @@ msgstr "_PNG-compressieniveau"
 #: plug-ins/common/file-mng.c:292
 msgid ""
 "PNG compression level, choose a high compression level for small file size"
-msgstr "PNG compressieniveau, kies een hoog compressieniveau voor een kleiner bestand"
+msgstr ""
+"PNG compressieniveau, kies een hoog compressieniveau voor een kleiner bestand"
 
 #: plug-ins/common/file-mng.c:298
 msgid "JPEG compression _quality"
@@ -4413,7 +4579,9 @@ msgstr "Aanmaakdatum-en-tijd opslaan"
 #.
 #: plug-ins/common/file-mng.c:723 plug-ins/common/file-png.c:2803
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr "Kon de transparantie niet zonder verlies opslaan, in de plaats daarvan wordt de dekking opgeslagen."
+msgstr ""
+"Kon de transparantie niet zonder verlies opslaan, in de plaats daarvan wordt "
+"de dekking opgeslagen."
 
 #: plug-ins/common/file-mng.c:1598
 msgid "MNG Options"
@@ -4427,7 +4595,9 @@ msgstr "Opties voor geanimeerde MNG's"
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
-msgstr "Deze opties zijn alleen beschikbaar als de geëxporteerde afbeelding meer dan een laag heeft. De afbeelding die u exporteert heeft slechts een laag."
+msgstr ""
+"Deze opties zijn alleen beschikbaar als de geëxporteerde afbeelding meer dan "
+"een laag heeft. De afbeelding die u exporteert heeft slechts een laag."
 
 #: plug-ins/common/file-paa.c:150
 msgid "PAA Image"
@@ -4497,7 +4667,9 @@ msgstr "Exporteert een afbeelding als patroon voor GIMP (.PAT)"
 msgid ""
 "New GIMP patterns can be created by exporting them in the appropriate place "
 "with this plug-in."
-msgstr "Nieuwe patronen voor GIMP kunnen worden gemaakt door ze met deze plug-in naar de juiste plaats te exporteren."
+msgstr ""
+"Nieuwe patronen voor GIMP kunnen worden gemaakt door ze met deze plug-in "
+"naar de juiste plaats te exporteren."
 
 #: plug-ins/common/file-pat.c:127 plug-ins/common/qbist.c:953
 #: plug-ins/gfig/gfig-dialog.c:567
@@ -4528,7 +4700,9 @@ msgstr "_Paletopties"
 msgid ""
 "Whether to use the built-in palette or a black and white palette for 1 bit "
 "images."
-msgstr "Of het ingebouwde palet of een zwart-witpalet gebruiken voor 1-bitsafbeeldingen."
+msgstr ""
+"Of het ingebouwde palet of een zwart-witpalet gebruiken voor 1-"
+"bitsafbeeldingen."
 
 #: plug-ins/common/file-pcx.c:226 plug-ins/common/file-pcx.c:260
 msgid "Use PCX image's built-in palette"
@@ -4656,7 +4830,10 @@ msgid ""
 "Saves files in Adobe's Portable Document Format. PDF is designed to be "
 "easily processed by a variety of different platforms, and is a distant "
 "cousin of PostScript."
-msgstr "Slaat bestanden op in de indeling Portable Document Format van Adobe. PDF is ontworpen om gemakkelijk te worden verwerkt op een variëteit aan verschillende platformen en is een verre neef van PostScript."
+msgstr ""
+"Slaat bestanden op in de indeling Portable Document Format van Adobe. PDF is "
+"ontworpen om gemakkelijk te worden verwerkt op een variëteit aan "
+"verschillende platformen en is een verre neef van PostScript."
 
 #: plug-ins/common/file-pdf-export.c:345 plug-ins/common/file-pdf-load.c:214
 msgid "PDF"
@@ -4686,7 +4863,9 @@ msgstr "L_aagmaskers toepassen"
 msgid ""
 "Apply layer masks before saving (Keeping the mask will not change the "
 "output, only the PDF structure)"
-msgstr "Laagmaskers toepassen alvorens te bewaren (Maskers behouden, zal de uitvoer niet wijzigen, alleen de PDF-structuur)"
+msgstr ""
+"Laagmaskers toepassen alvorens te bewaren (Maskers behouden, zal de uitvoer "
+"niet wijzigen, alleen de PDF-structuur)"
 
 #: plug-ins/common/file-pdf-export.c:374
 msgid "La_yers as pages"
@@ -4750,9 +4929,11 @@ msgid ""
 "%s\n"
 "Make sure you entered a valid filename and that the selected location isn't "
 "read only!"
-msgstr "Er trad een fout op tijdens met aanmaken van het PDF-bestand:\n"
+msgstr ""
+"Er trad een fout op tijdens met aanmaken van het PDF-bestand:\n"
 "%s\n"
-"Wees er zeker van dat u een geldige bestandsnaam hebt opgegeven en dat de gekozen locatie niet beschermd is tegen schrijven!"
+"Wees er zeker van dat u een geldige bestandsnaam hebt opgegeven en dat de "
+"gekozen locatie niet beschermd is tegen schrijven!"
 
 #: plug-ins/common/file-pdf-export.c:962
 #, c-format
@@ -4760,8 +4941,11 @@ msgid ""
 "The following fonts cannot be found: %s.\n"
 "It is recommended to convert your text layers to image or to install the "
 "missing fonts before exporting, otherwise your design may not look right."
-msgstr "De volgende lettrtypen konden niet worden gevonden: %s.\n"
-"Aanbevolen wordt uw tekstlagen om te zetten naar afbeeldingen of om de ontbrekende lettertypen voor het exporteren te installeren, anders zou uw ontwerp er niet correct uit kunnen zien."
+msgstr ""
+"De volgende lettrtypen konden niet worden gevonden: %s.\n"
+"Aanbevolen wordt uw tekstlagen om te zetten naar afbeeldingen of om de "
+"ontbrekende lettertypen voor het exporteren te installeren, anders zou uw "
+"ontwerp er niet correct uit kunnen zien."
 
 #: plug-ins/common/file-pdf-export.c:1032
 msgid "Export Image as Multi-Page PDF"
@@ -4803,11 +4987,15 @@ msgstr "Pagina %d"
 
 #: plug-ins/common/file-pdf-export.c:1241
 msgid "Error! In order to save the file, at least one image should be added!"
-msgstr "Fout! Om het bestand op te kunnen slaan, zou er ten minste één afbeelding moeten zijn toegevoegd!"
+msgstr ""
+"Fout! Om het bestand op te kunnen slaan, zou er ten minste één afbeelding "
+"moeten zijn toegevoegd!"
 
 #: plug-ins/common/file-pdf-export.c:1419 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
-msgstr "Afstand van de linkerkant van het papier tot de rechterkant van de afbeelding."
+msgstr ""
+"Afstand van de linkerkant van het papier tot de rechterkant van de "
+"afbeelding."
 
 #: plug-ins/common/file-pdf-load.c:226
 msgid "PDF password"
@@ -4855,7 +5043,8 @@ msgstr "_Transparante gebieden vullen met wit"
 
 #: plug-ins/common/file-pdf-load.c:276
 msgid "Render all pages as opaque by filling the background in white"
-msgstr "Alle pagina's openen als ondoorschijnend door de achtergrond wit te maken"
+msgstr ""
+"Alle pagina's openen als ondoorschijnend door de achtergrond wit te maken"
 
 #. TRANSLATORS: first argument is file name,
 #. * second is out-of-range page number,
@@ -4866,8 +5055,10 @@ msgstr "Alle pagina's openen als ondoorschijnend door de achtergrond wit te make
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
-msgstr[0] "PDF-document ‘%1$s’ heeft %3$d pagina. Pagina %2$d ligt buiten het bereik."
-msgstr[1] "PDF-document ‘%1$s’ heeft %3$d pagina's. Pagina %2$d ligt buiten het bereik."
+msgstr[0] ""
+"PDF-document ‘%1$s’ heeft %3$d pagina. Pagina %2$d ligt buiten het bereik."
+msgstr[1] ""
+"PDF-document ‘%1$s’ heeft %3$d pagina's. Pagina %2$d ligt buiten het bereik."
 
 #: plug-ins/common/file-pdf-load.c:572
 msgid "PDF is password protected, please input the password:"
@@ -4886,7 +5077,7 @@ msgstr "Onjuist wachtwoord! Voer het juiste in:"
 msgid "Could not load '%s': %s"
 msgstr "Laden mislukt van ‘%s’: %s"
 
-#: plug-ins/common/file-pdf-load.c:1095
+#: plug-ins/common/file-pdf-load.c:1101
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Kan het aantal pagina’s van deze PDF niet vaststellen."
 
@@ -4896,11 +5087,15 @@ msgstr "Alias Pix-afbeelding"
 
 #: plug-ins/common/file-pix.c:176 plug-ins/common/file-pix.c:178
 msgid "Loads files of the Alias|Wavefront or Esm Software Pix file format"
-msgstr "Inladen van bestanden in het Alias|Wavefront of Esm Software Pix-bestandsformaat"
+msgstr ""
+"Inladen van bestanden in het Alias|Wavefront of Esm Software Pix-"
+"bestandsformaat"
 
 #: plug-ins/common/file-pix.c:207 plug-ins/common/file-pix.c:209
 msgid "Export file in the Alias|Wavefront pix/matte file format"
-msgstr "Exporteren van bestanden in het Alias|Wavefront of Esm Software Pix-bestandsformaat"
+msgstr ""
+"Exporteren van bestanden in het Alias|Wavefront of Esm Software Pix-"
+"bestandsformaat"
 
 #  Do not rely on librsvg setting GError on failure!
 #: plug-ins/common/file-pix.c:564
@@ -4908,7 +5103,9 @@ msgstr "Exporteren van bestanden in het Alias|Wavefront of Esm Software Pix-best
 msgid ""
 "Error trying to open temporary JPEG file '%s' for Esm Software pix loading: "
 "%s"
-msgstr "Fout bij openen tijdelijk JPEG bestand ‘%s’ om Esm Software pix afbeelding te laden: %s"
+msgstr ""
+"Fout bij openen tijdelijk JPEG bestand ‘%s’ om Esm Software pix afbeelding "
+"te laden: %s"
 
 #: plug-ins/common/file-pix.c:582
 #, c-format
@@ -4983,7 +5180,9 @@ msgstr "Optimaliseren voor kleinst mogelijke palet grootte"
 msgid ""
 "When checked, save as 1, 2, 4, or 8-bit depending on number of colors used. "
 "When unchecked, always save as 8-bit"
-msgstr "Indien geselecteerd, opslaan als 1, 2, 4, of 8-bit, afhankelijk van het aantal gebruikte kleuren. Indien niet geselecteerd, altijd opslaan als 8-bit."
+msgstr ""
+"Indien geselecteerd, opslaan als 1, 2, 4, of 8-bit, afhankelijk van het "
+"aantal gebruikte kleuren. Indien niet geselecteerd, altijd opslaan als 8-bit."
 
 #: plug-ins/common/file-png.c:396
 msgid "PNG export format"
@@ -5033,7 +5232,8 @@ msgstr "Fout bij openen PNG-bestand: %s\n"
 #: plug-ins/common/file-png.c:757
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
-msgstr "Fout tijdens het maken van de PNG read-struct tijdens het laden van ‘%s’."
+msgstr ""
+"Fout tijdens het maken van de PNG read-struct tijdens het laden van ‘%s’."
 
 #: plug-ins/common/file-png.c:766
 #, c-format
@@ -5060,7 +5260,9 @@ msgstr "Kon geen nieuw beeld maken voor ‘%s’: %s"
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
-msgstr "Het PNG-bestand specificeert een verschuiving die de laag buiten de afbeelding plaatst."
+msgstr ""
+"Het PNG-bestand specificeert een verschuiving die de laag buiten de "
+"afbeelding plaatst."
 
 #: plug-ins/common/file-png.c:1376
 #, c-format
@@ -5081,7 +5283,9 @@ msgstr "Ongeldige APNG: fcTL frame-dimensies overschrijden IHDR allocation"
 #: plug-ins/common/file-png.c:1571
 #, c-format
 msgid "Invalid APNG: Image data appeared before actTL chunk."
-msgstr "Ongeldige APNG: gegevens van de afbeelding verschenen voor het gedeelte actTL."
+msgstr ""
+"Ongeldige APNG: gegevens van de afbeelding verschenen voor het gedeelte "
+"actTL."
 
 #: plug-ins/common/file-png.c:1659
 msgid "Apply PNG Offset"
@@ -5100,23 +5304,29 @@ msgstr "PNG-verschuiving toepassen op laag"
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
-msgstr "De afbeelding PNG die u importeert specificeert een verschuiving van %d, %d. Wilt u die verschuiving echt op de laag toepassen?"
+msgstr ""
+"De afbeelding PNG die u importeert specificeert een verschuiving van %d, %d. "
+"Wilt u die verschuiving echt op de laag toepassen?"
 
 #: plug-ins/common/file-png.c:1901
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Fout tijdens het maken van de PNG write-struct tijdens het exporteren van ‘%s’."
+msgstr ""
+"Fout tijdens het maken van de PNG write-struct tijdens het exporteren van "
+"‘%s’."
 
 #: plug-ins/common/file-png.c:1910
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
-msgstr "Fout bij exporteren van ‘%s’.\n"
+msgstr ""
+"Fout bij exporteren van ‘%s’.\n"
 " Kon geen PNG header infostructuur maken."
 
 #: plug-ins/common/file-png.c:1918
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
-msgstr "Fout bij exporteren van ‘%s’.\n"
+msgstr ""
+"Fout bij exporteren van ‘%s’.\n"
 " Kon afbeelding niet exporteren."
 
 #: plug-ins/common/file-pnm.c:320
@@ -5129,7 +5339,9 @@ msgstr "Inladen van bestanden in de bestandsindeling PNM"
 
 #: plug-ins/common/file-pnm.c:324
 msgid "This plug-in loads files in the various Netpbm portable file formats."
-msgstr "Deze plug-in laadt bestanden in de verschillende overdraagbare bestandsindelingen Netpbm."
+msgstr ""
+"Deze plug-in laadt bestanden in de verschillende overdraagbare "
+"bestandsindelingen Netpbm."
 
 #: plug-ins/common/file-pnm.c:353
 msgid "PNM image"
@@ -5181,7 +5393,8 @@ msgstr "Exporteren van bestanden in de bestandsindeling PBM"
 
 #: plug-ins/common/file-pnm.c:404
 msgid "PBM exporting produces mono images without transparency."
-msgstr "PBM exporteren produceert monochroom afbeeldingen zonder transparantie."
+msgstr ""
+"PBM exporteren produceert monochroom afbeeldingen zonder transparantie."
 
 #: plug-ins/common/file-pnm.c:442
 msgid "PGM image"
@@ -5197,7 +5410,8 @@ msgstr "Exporteren van bestanden in de bestandsindeling PGM"
 
 #: plug-ins/common/file-pnm.c:447
 msgid "PGM exporting produces grayscale images without transparency."
-msgstr "PGM exporteren produceert afbeeldingen grijswaarden zonder transparantie."
+msgstr ""
+"PGM exporteren produceert afbeeldingen grijswaarden zonder transparantie."
 
 #: plug-ins/common/file-pnm.c:485
 msgid "PPM image"
@@ -5416,7 +5630,9 @@ msgstr "Afbeelding exporteren als PostScript-document"
 msgid ""
 "PostScript exporting handles all image types except those with alpha "
 "channels."
-msgstr "PostScript export kan alle soorten afbeeldingen exporteren behalve die met alfakanalen."
+msgstr ""
+"PostScript export kan alle soorten afbeeldingen exporteren behalve die met "
+"alfakanalen."
 
 #: plug-ins/common/file-ps.c:480
 msgid "PS"
@@ -5432,11 +5648,15 @@ msgstr "EPS"
 
 #: plug-ins/common/file-ps.c:525
 msgid "Width of the image in PostScript file (0: use input image size)"
-msgstr "Breedte van de afbeelding in PostScript-bestand (0: gebruik de grootte van de invoerafbeelding)"
+msgstr ""
+"Breedte van de afbeelding in PostScript-bestand (0: gebruik de grootte van "
+"de invoerafbeelding)"
 
 #: plug-ins/common/file-ps.c:532
 msgid "Height of the image in PostScript file (0: use input image size)"
-msgstr "Hoogte van de afbeelding in PostScript-bestand (0: gebruik de grootte van de invoerafbeelding)"
+msgstr ""
+"Hoogte van de afbeelding in PostScript-bestand (0: gebruik de grootte van de "
+"invoerafbeelding)"
 
 #: plug-ins/common/file-ps.c:538
 msgid "_X offset"
@@ -5480,7 +5700,9 @@ msgstr "Va_ste verhouding"
 msgid ""
 "If enabled, aspect ratio will be maintained on export. Otherwise, the width "
 "and height values will be used."
-msgstr "Indien ingeschakeld zullen de verhoudingen worden behouden bij exporteren. Anders zullen de waarden voor breedte en hoogte worden gebruikt."
+msgstr ""
+"Indien ingeschakeld zullen de verhoudingen worden behouden bij exporteren. "
+"Anders zullen de waarden voor breedte en hoogte worden gebruikt."
 
 #: plug-ins/common/file-ps.c:565 plug-ins/map-object/map-object-ui.c:734
 msgid "Rotation"
@@ -5494,7 +5716,9 @@ msgstr "PostScript niveau _2"
 msgid ""
 "If enabled, export in PostScript Level 2 format. Otherwise, export in "
 "PostScript Level 1 format."
-msgstr "Indien ingeschakeld, exporteren in indeling PostScript Level 2. Anders exporteren in indeling PostScript Level 1."
+msgstr ""
+"Indien ingeschakeld, exporteren in indeling PostScript Level 2. Anders "
+"exporteren in indeling PostScript Level 1."
 
 #: plug-ins/common/file-ps.c:578
 msgid "Encapsula_ted PostScript"
@@ -5504,7 +5728,9 @@ msgstr "_Encapsulated PostScript"
 msgid ""
 "If enabled, export as Encapsulated PostScript. Otherwise, export as "
 "PostScript."
-msgstr "Indien ingeschakeld, exporteren als Encapsulated PostScript. Anders exporteren als PostScript."
+msgstr ""
+"Indien ingeschakeld, exporteren als Encapsulated PostScript. Anders "
+"exporteren als PostScript."
 
 #: plug-ins/common/file-ps.c:585 plug-ins/imagemap/imap_grid.c:301
 msgid "_Preview"
@@ -5539,7 +5765,9 @@ msgstr "%s-pagina's"
 #: plug-ins/common/file-ps.c:1354
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
-msgstr "Exporteren naar PostScript kan geen afbeeldingen afhandelen die alfakanalen bevatten"
+msgstr ""
+"Exporteren naar PostScript kan geen afbeeldingen afhandelen die alfakanalen "
+"bevatten"
 
 #: plug-ins/common/file-ps.c:3842
 msgid "Pages:"
@@ -5558,7 +5786,9 @@ msgstr "Openen als"
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
-msgstr "Indien geselecteerd zal de resulterende afbeelding geschaald worden om in de opgegeven grootte te passen zonder de verhoudingen te veranderen."
+msgstr ""
+"Indien geselecteerd zal de resulterende afbeelding geschaald worden om in de "
+"opgegeven grootte te passen zonder de verhoudingen te veranderen."
 
 #: plug-ins/common/file-ps.c:3946
 msgid "Image Size"
@@ -5598,7 +5828,10 @@ msgstr "Inladen van bestanden in de bestandsindeling PSP van Paint Shop Pro"
 msgid ""
 "This plug-in loads and exports images in Paint Shop Pro's native PSP format. "
 "Vector layers aren't handled. Exporting isn't yet implemented."
-msgstr "Deze plug-in laadt en exporteert afbeeldingen in de eigen indeling PSP van Paint Shop Pro. Vectorlagen worden niet afgehandeld. Exporteren is nog niet geïmplementeerd."
+msgstr ""
+"Deze plug-in laadt en exporteert afbeeldingen in de eigen indeling PSP van "
+"Paint Shop Pro. Vectorlagen worden niet afgehandeld. Exporteren is nog niet "
+"geïmplementeerd."
 
 #: plug-ins/common/file-psp.c:726
 msgid "_Data Compression"
@@ -5648,7 +5881,8 @@ msgstr "Ongeldige afmeting algemeen afbeeldingsattribuut."
 #: plug-ins/common/file-psp.c:1007
 #, c-format
 msgid "Error reading general image attribute block."
-msgstr "Fout tijdens lezen van algemeen blok met attributen voor de afbeelding."
+msgstr ""
+"Fout tijdens lezen van algemeen blok met attributen voor de afbeelding."
 
 #: plug-ins/common/file-psp.c:1022
 #, c-format
@@ -5696,7 +5930,9 @@ msgstr "Fout tijdens lezen kleuren palet"
 #: plug-ins/file-psd/psd-util.c:176
 #, c-format
 msgid "Error reading data. Most likely unexpected end of file."
-msgstr "Fout bij het lezen van gegevens. Hoogst waarschijnlijk onverwacht einde van bestand."
+msgstr ""
+"Fout bij het lezen van gegevens. Hoogst waarschijnlijk onverwacht einde van "
+"bestand."
 
 #: plug-ins/common/file-psp.c:1749 plug-ins/common/file-psp.c:1763
 #, c-format
@@ -6157,7 +6393,13 @@ msgid ""
 "colors are grayscale by default and the contrast will be quite low on most "
 "earth relief. Therefore you will likely want to remap elevation to colors as "
 "a second step, for instance with the \"Gradient Map\" plug-in."
-msgstr "Laadt gegevens van Digital Elevation Model in indeling HGT van de Shuttle Radar Topography Mission als afbeeldingen. Hoewel de uitgevoerde afbeelding RGB zal zijn, zijn standaard alle kleuren grijswaarden en het contrast zal vrij laag zijn voor het meeste reliëf op aarde. Daarom zou u waarschijnlijk de hoogte opnieuw in kaart willen brengen als kleuren, als een tweede stap, bijvoorbeeld met de plug-in \"Kleurverloopprojectie\"."
+msgstr ""
+"Laadt gegevens van Digital Elevation Model in indeling HGT van de Shuttle "
+"Radar Topography Mission als afbeeldingen. Hoewel de uitgevoerde afbeelding "
+"RGB zal zijn, zijn standaard alle kleuren grijswaarden en het contrast zal "
+"vrij laag zijn voor het meeste reliëf op aarde. Daarom zou u waarschijnlijk "
+"de hoogte opnieuw in kaart willen brengen als kleuren, als een tweede stap, "
+"bijvoorbeeld met de plug-in \"Kleurverloopprojectie\"."
 
 #: plug-ins/common/file-raw-data.c:482
 msgid "Sa_mple spacing"
@@ -6195,7 +6437,9 @@ msgstr "Gegevens raw"
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
-msgstr "%d is geen geldige afstand voor monsters. Geldige waarden zijn: 0 (automatisch detecteren), 1 en 3."
+msgstr ""
+"%d is geen geldige afstand voor monsters. Geldige waarden zijn: 0 "
+"(automatisch detecteren), 1 en 3."
 
 #: plug-ins/common/file-raw-data.c:658
 #, c-format
@@ -6203,7 +6447,11 @@ msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
 "valid HGT file or its variant is not supported yet. Supported HGT files are: "
 "SRTM-1 and SRTM-3. If you know the variant, run with argument 1 or 3."
-msgstr "Automatisch detecteren van afstand voor monsters mislukt. ‘%s’ lijkt geen geldig bestand HGT te zijn of deze variant wordt nog niet ondersteund. Ondersteunde bestanden HGT zijn: SRTM-1 en SRTM-3. Als u de variant weet, voer het met argument 1 of 3 uit."
+msgstr ""
+"Automatisch detecteren van afstand voor monsters mislukt. ‘%s’ lijkt geen "
+"geldig bestand HGT te zijn of deze variant wordt nog niet ondersteund. "
+"Ondersteunde bestanden HGT zijn: SRTM-1 en SRTM-3. Als u de variant weet, "
+"voer het met argument 1 of 3 uit."
 
 #: plug-ins/common/file-raw-data.c:1720
 #, c-format
@@ -6300,7 +6548,9 @@ msgstr "Exporteren van bestanden in de SunRaster-bestandsindeling"
 #: plug-ins/common/file-sunras.c:307
 msgid ""
 "SUNRAS exporting handles all image types except those with alpha channels."
-msgstr "SunRas export kan alle soorten afbeeldingen exporteren behalve die met alfakanalen."
+msgstr ""
+"SunRas export kan alle soorten afbeeldingen exporteren behalve die met "
+"alfakanalen."
 
 #: plug-ins/common/file-sunras.c:317
 msgid "SUNRAS"
@@ -6350,7 +6600,8 @@ msgstr "‘%s’: Geen afbeeldingsbreedte opgegeven"
 msgid ""
 "'%s':\n"
 "Image width is larger than GIMP can handle"
-msgstr "‘%s’:\n"
+msgstr ""
+"‘%s’:\n"
 "Afbeeldingsbreedte is groter dan dat GIMP aankan"
 
 #: plug-ins/common/file-sunras.c:519 plug-ins/common/file-xbm.c:833
@@ -6359,7 +6610,8 @@ msgstr "‘%s’:\n"
 msgid ""
 "'%s':\n"
 "No image height specified"
-msgstr "‘%s’:\n"
+msgstr ""
+"‘%s’:\n"
 " Geen afbeeldingshoogte opgegeven"
 
 #: plug-ins/common/file-sunras.c:527 plug-ins/common/file-xbm.c:841
@@ -6368,7 +6620,8 @@ msgstr "‘%s’:\n"
 msgid ""
 "'%s':\n"
 "Image height is larger than GIMP can handle"
-msgstr "‘%s’:\n"
+msgstr ""
+"‘%s’:\n"
 "Afbeeldingshoogte is groter dan dat GIMP aankan"
 
 #: plug-ins/common/file-sunras.c:563
@@ -6416,7 +6669,9 @@ msgstr "Pa_den"
 #: plug-ins/common/file-svg.c:306
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
-msgstr "Of en hoe paden te importeren, zodat ze met het gereedschap Pad gebruikt kunnen worden"
+msgstr ""
+"Of en hoe paden te importeren, zodat ze met het gereedschap Pad gebruikt "
+"kunnen worden"
 
 #: plug-ins/common/file-svg.c:307
 msgid "Don't import paths"
@@ -6499,16 +6754,22 @@ msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
 "consume too much memory."
-msgstr "Er trad een fout op bij het parsen.\n"
-"Uitschakelen van de veiligheidslimieten zou kunnen helpen. Kwaadaardige SVG-bestanden zouden dit kunnen gebruiken om teveel geheugen te gebruiken."
+msgstr ""
+"Er trad een fout op bij het parsen.\n"
+"Uitschakelen van de veiligheidslimieten zou kunnen helpen. Kwaadaardige SVG-"
+"bestanden zouden dit kunnen gebruiken om teveel geheugen te gebruiken."
 
 #: plug-ins/common/file-svg.c:449
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr "Om veiligheidsredenen zou dit alleen gebruikt moeten worden voor vertrouwde invoer!"
+msgstr ""
+"Om veiligheidsredenen zou dit alleen gebruikt moeten worden voor vertrouwde "
+"invoer!"
 
 #: plug-ins/common/file-svg.c:456
 msgid "Retry without limits preventing to parse huge data?"
-msgstr "Opnieuw proberen zonder veiligheidslimieten te parsen van gigantische hoeveelheid gegevens?"
+msgstr ""
+"Opnieuw proberen zonder veiligheidslimieten te parsen van gigantische "
+"hoeveelheid gegevens?"
 
 #: plug-ins/common/file-svg.c:758 plug-ins/file-exr/file-exr.c:380
 #: plug-ins/file-exr/file-exr.c:394
@@ -6529,8 +6790,12 @@ msgid ""
 "and JPEG images.\n"
 "Your image links external image files in other formats which may not show up "
 "in all viewers."
-msgstr "De indeling SVG vereist alleen dat kijkprogramma's koppelingen naar afbeeldingen van SVG, PNG, en JPEG weergeven.\n"
-"Uw afbeelding koppelt naar externe afbeeldingsbestanden in andere indelingen, die niet zouden kunnen worden weergegeven in alle kijkprogramma's."
+msgstr ""
+"De indeling SVG vereist alleen dat kijkprogramma's koppelingen naar "
+"afbeeldingen van SVG, PNG, en JPEG weergeven.\n"
+"Uw afbeelding koppelt naar externe afbeeldingsbestanden in andere "
+"indelingen, die niet zouden kunnen worden weergegeven in alle "
+"kijkprogramma's."
 
 #: plug-ins/common/file-tga.c:262 plug-ins/common/file-tga.c:288
 msgid "TarGA image"
@@ -6671,7 +6936,9 @@ msgstr "Kon palet niet lezen van ‘%s’"
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
 "more than %d pixels wide or tall."
-msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling TIM ondersteunt geen afbeeldingen die meer dan %d pixels breed of hoog zijn."
+msgstr ""
+"Kan ‘%s’ niet exporteren.  De bestandsindeling TIM ondersteunt geen "
+"afbeeldingen die meer dan %d pixels breed of hoog zijn."
 
 #: plug-ins/common/file-tim.c:924
 msgid "Image Origin"
@@ -6687,7 +6954,9 @@ msgstr "Wireless BMP-afbeelding"
 
 #: plug-ins/common/file-wbmp.c:132 plug-ins/common/file-wbmp.c:133
 msgid "Loads files of Wireless BMP file format"
-msgstr "Laden van bestanden in de bestandsindeling Wireless Application Protocol Bitmap Format (wbmp)"
+msgstr ""
+"Laden van bestanden in de bestandsindeling Wireless Application Protocol "
+"Bitmap Format (wbmp)"
 
 #: plug-ins/common/file-wbmp.c:151
 msgid "Nokia Over The Air Bitmap image"
@@ -6757,17 +7026,23 @@ msgstr "Inladen van bestanden in de bestandsindeling X10 of X11 bitmap (XBM)"
 msgid ""
 "Load a file in X10 or X11 bitmap (XBM) file format. XBM is a lossless format "
 "for flat black-and-white (two color indexed) images."
-msgstr "Inladen van bestanden in de bestandsindeling X10 of X11 bitmap (XBM) XBM is een verliesloze indeling voor platte zwart/wit (twee kleuren geïndexeerd) afbeeldingen."
+msgstr ""
+"Inladen van bestanden in de bestandsindeling X10 of X11 bitmap (XBM) XBM is "
+"een verliesloze indeling voor platte zwart/wit (twee kleuren geïndexeerd) "
+"afbeeldingen."
 
 #: plug-ins/common/file-xbm.c:192
 msgid "Export a file in X10 or X11 bitmap (XBM) file format"
-msgstr "Exporteren van bestanden in de bestandsindeling X10 of X11 bitmap (XBM)"
+msgstr ""
+"Exporteren van bestanden in de bestandsindeling X10 of X11 bitmap (XBM)"
 
 #: plug-ins/common/file-xbm.c:194
 msgid ""
 "X10 or X11 bitmap (XBM) file format. XBM is a lossless format for flat black-"
 "and-white (two color indexed) images."
-msgstr "X10 of X11 bitmap (XBM) bestandsindeling. XBM is een verliesloze indeling voor platte zwart/wit (twee kleuren geïndexeerd) afbeeldingen."
+msgstr ""
+"X10 of X11 bitmap (XBM) bestandsindeling. XBM is een verliesloze indeling "
+"voor platte zwart/wit (twee kleuren geïndexeerd) afbeeldingen."
 
 #: plug-ins/common/file-xbm.c:205
 msgid "XBM"
@@ -6862,7 +7137,8 @@ msgstr "‘%s’: kon header niet lezen (ftell == %ld)"
 msgid ""
 "'%s':\n"
 "No image data type specified"
-msgstr "‘%s’:\n"
+msgstr ""
+"‘%s’:\n"
 "Geen gegevenstype afbeelding opgegeven"
 
 #. The image is not black-and-white.
@@ -6872,22 +7148,28 @@ msgid ""
 "colors.\n"
 "\n"
 "Please convert it to a black and white (1-bit) indexed image and try again."
-msgstr "De afbeelding, die u probeert te exporteren als een XBM, bevat meer dan twee kleuren.\n"
+msgstr ""
+"De afbeelding, die u probeert te exporteren als een XBM, bevat meer dan twee "
+"kleuren.\n"
 "\n"
-"Zet hem om naar een zwart/wit (1-bit) geïndexeerde afbeelding en probeer het opnieuw."
+"Zet hem om naar een zwart/wit (1-bit) geïndexeerde afbeelding en probeer het "
+"opnieuw."
 
 #: plug-ins/common/file-xbm.c:1006
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
-msgstr "U kunt een cursormasker niet opslaan voor\n"
+msgstr ""
+"U kunt een cursormasker niet opslaan voor\n"
 "een afbeelding zonder alfakanaal."
 
 #: plug-ins/common/file-xbm.c:1238
 msgid ""
 "Writing a comment will make the XBM file unreadable by some applications.\n"
 "The comment will not affect embedding the XBM in C source code."
-msgstr "Schrijven van een opmerking zal het XBM-bestand onleesbaar maken voor sommige toepassingen.\n"
+msgstr ""
+"Schrijven van een opmerking zal het XBM-bestand onleesbaar maken voor "
+"sommige toepassingen.\n"
 "De opmerking zal het inbedden van de XBM in C-broncode niet beïnvloeden."
 
 #: plug-ins/common/file-xmc.c:300 plug-ins/common/file-xmc.c:349
@@ -6901,13 +7183,18 @@ msgstr "Inladen van bestanden in de bestandsindeling X11 Muis Cursor"
 
 #: plug-ins/common/file-xmc.c:305
 msgid "This plug-in loads X11 Mouse Cursor (XMC) files."
-msgstr "Deze plug-in laadt van bestanden in de bestandsindeling X11 Muis Cursor (XMC)."
+msgstr ""
+"Deze plug-in laadt van bestanden in de bestandsindeling X11 Muis Cursor "
+"(XMC)."
 
 #: plug-ins/common/file-xmc.c:330
 msgid ""
 "Loads only first frame of X11 Mouse Cursor's animation sequence which "
 "nominal size is the closest of thumb-size to be used as a thumbnail"
-msgstr "Laadt alleen het eerste frame van een X11 Muis Cursor-bestand van de reeks waarvan de grootte het best past bij de afmeting om als pictogram te gebruiken"
+msgstr ""
+"Laadt alleen het eerste frame van een X11 Muis Cursor-bestand van de reeks "
+"waarvan de grootte het best past bij de afmeting om als pictogram te "
+"gebruiken"
 
 #: plug-ins/common/file-xmc.c:354
 msgid "Exports files of X11 cursor file"
@@ -6915,7 +7202,9 @@ msgstr "Exporteren van bestanden in de bestandsindeling X11 Muis Cursor"
 
 #: plug-ins/common/file-xmc.c:355
 msgid "This plug-in exports X11 Mouse Cursor (XMC) files"
-msgstr "Deze plug-in exporteert een afbeelding in de bestandsindeling X11 Muis Cursor (XMC)"
+msgstr ""
+"Deze plug-in exporteert een afbeelding in de bestandsindeling X11 Muis "
+"Cursor (XMC)"
 
 # What does 'Hot Spot' mean here?
 #: plug-ins/common/file-xmc.c:376
@@ -6924,11 +7213,15 @@ msgstr "Hotspot _X"
 
 #: plug-ins/common/file-xmc.c:377
 msgid "X-coordinate of hot spot (use -1, -1 to keep original hot spot)"
-msgstr "X-coördinaat van de hotspot (gebruik -1, -1 om de originele hotspot te behouden)"
+msgstr ""
+"X-coördinaat van de hotspot (gebruik -1, -1 om de originele hotspot te "
+"behouden)"
 
 #: plug-ins/common/file-xmc.c:384
 msgid "Y-coordinate of hot spot (use -1, -1 to keep original hot spot)"
-msgstr "Y-coördinaat van de hotspot (gebruik -1, -1 om de originele hotspot te behouden)"
+msgstr ""
+"Y-coördinaat van de hotspot (gebruik -1, -1 om de originele hotspot te "
+"behouden)"
 
 #: plug-ins/common/file-xmc.c:390
 msgid "_Auto Crop all frames"
@@ -6960,7 +7253,8 @@ msgstr "_Vertraging tussen frames indien niet apart opgegeven"
 
 #: plug-ins/common/file-xmc.c:418
 msgid "Default time span in milliseconds in which each frame is rendered"
-msgstr "Geef tijdspanne in milliseconden op waarbinnen elk frame wordt opgebouwd"
+msgstr ""
+"Geef tijdspanne in milliseconden op waarbinnen elk frame wordt opgebouwd"
 
 #: plug-ins/common/file-xmc.c:424
 msgid "Use default delay for all _frames"
@@ -6995,7 +7289,8 @@ msgstr "Optionele opmerking"
 msgid ""
 "Cannot set the hot spot!\n"
 "You must arrange layers so that all of them have an intersection."
-msgstr "Kan de hotspot niet instellen!\n"
+msgstr ""
+"Kan de hotspot niet instellen!\n"
 "U moet lagen herschikken zodat ze allemaal een kruising hebben."
 
 #: plug-ins/common/file-xmc.c:663
@@ -7035,11 +7330,13 @@ msgstr "Er trad een leesfout op."
 
 #: plug-ins/common/file-xmc.c:1108
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
-msgstr "Voer de X-coördinaat van de hotspot in. De oorsprong is de linkerbovenhoek."
+msgstr ""
+"Voer de X-coördinaat van de hotspot in. De oorsprong is de linkerbovenhoek."
 
 #: plug-ins/common/file-xmc.c:1119
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
-msgstr "Voer de Y-coördinaat van de hotspot in. De oorsprong is de linkerbovenhoek."
+msgstr ""
+"Voer de Y-coördinaat van de hotspot in. De oorsprong is de linkerbovenhoek."
 
 #: plug-ins/common/file-xmc.c:1131
 msgid ""
@@ -7047,9 +7344,12 @@ msgid ""
 "This reduces the file size and may fix the problem that some large cursors "
 "disorder the screen.\n"
 "Uncheck if you plan to edit the exported cursor using other programs."
-msgstr "Lege randen van alle frames verwijderen.\n"
-"Dit verkleint de bestandsgrootte en zou het probleem kunnen oplossen dat sommige grote cursors het scherm verstoren.\n"
-"Deselecteer als u van plan bent de geëxporteerde cursor te bewerken met andere programma's."
+msgstr ""
+"Lege randen van alle frames verwijderen.\n"
+"Dit verkleint de bestandsgrootte en zou het probleem kunnen oplossen dat "
+"sommige grote cursors het scherm verstoren.\n"
+"Deselecteer als u van plan bent de geëxporteerde cursor te bewerken met "
+"andere programma's."
 
 #: plug-ins/common/file-xmc.c:1143
 msgid ""
@@ -7060,10 +7360,15 @@ msgid ""
 "It is only used to determine which frame depends on which animation "
 "sequence, and which sequence is used based on the value of \"gtk-cursor-"
 "theme-size\"."
-msgstr "Kies de nominale grootte voor de frames.\n"
-"Als u geen plannen hebt om corsors van meerdere grootten te maken, of u hebt geen idee, laat het dan op \"32px\" staan.\n"
-"Nominale grootte heeft geen relatie met de feitelijke grootte (breedte of hoogte).\n"
-"Het wordt alleen gebruikt om te bepalen welk frame afhankelijk is van welke animatiereeks en welke reeks wordt gebruikt is gebaseerd op de waarde van \"gtk-cursor-theme-size\"."
+msgstr ""
+"Kies de nominale grootte voor de frames.\n"
+"Als u geen plannen hebt om corsors van meerdere grootten te maken, of u hebt "
+"geen idee, laat het dan op \"32px\" staan.\n"
+"Nominale grootte heeft geen relatie met de feitelijke grootte (breedte of "
+"hoogte).\n"
+"Het wordt alleen gebruikt om te bepalen welk frame afhankelijk is van welke "
+"animatiereeks en welke reeks wordt gebruikt is gebaseerd op de waarde van "
+"\"gtk-cursor-theme-size\"."
 
 #. Begin displaying export progress
 #: plug-ins/common/file-xmc.c:1257 plug-ins/file-webp/file-webp-export.c:203
@@ -7093,8 +7398,10 @@ msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or export without auto-"
 "crop."
-msgstr "Kan de cursor niet exporteren omdat de hotspot niet op ‘%s’ staat.\n"
-"Probeer de positie van de hotspot, geometrie van de laag te wijzigen of exporteer zonder automatisch bijsnijden."
+msgstr ""
+"Kan de cursor niet exporteren omdat de hotspot niet op ‘%s’ staat.\n"
+"Probeer de positie van de hotspot, geometrie van de laag te wijzigen of "
+"exporteer zonder automatisch bijsnijden."
 
 #: plug-ins/common/file-xmc.c:1550
 #, c-format
@@ -7103,7 +7410,10 @@ msgid ""
 "whose width or height is more than %ipx, a historical max dimension value "
 "for X bitmap cursors.\n"
 "It might be unsupported by some environments."
-msgstr "Uw cursor werd met succes geëexporteerd, maar die bevat een of meer frames waarvan de breedte of hoogte meer is dan %ipx, een historische maximale dimensiewaarde voor X bitmap-cursors.\n"
+msgstr ""
+"Uw cursor werd met succes geëexporteerd, maar die bevat een of meer frames "
+"waarvan de breedte of hoogte meer is dan %ipx, een historische maximale "
+"dimensiewaarde voor X bitmap-cursors.\n"
 "Het zou door sommige omgevingen niet ondersteund kunnen worden."
 
 #: plug-ins/common/file-xmc.c:1558
@@ -7112,8 +7422,13 @@ msgid ""
 "whose nominal size is not supported by GNOME settings.\n"
 "You can satisfy it by checking \"Replace the size of all frames...\" in the "
 "export dialog, or your cursor may not appear in GNOME settings."
-msgstr "Uw cursor werd met succes geëexporteerd, maar die bevat een of meer frames waarvan de nominale grootte niet wordt ondersteund door de instellingen van GNOME.\n"
-"U kunt eraan voldoen door \"Vervang de grootte van alle frames…\" te selecteren in het dialoogvenster voor exporteren, of uw cursor zou niet kunnen verschijnen in de instellingen van GNOME."
+msgstr ""
+"Uw cursor werd met succes geëexporteerd, maar die bevat een of meer frames "
+"waarvan de nominale grootte niet wordt ondersteund door de instellingen van "
+"GNOME.\n"
+"U kunt eraan voldoen door \"Vervang de grootte van alle frames…\" te "
+"selecteren in het dialoogvenster voor exporteren, of uw cursor zou niet "
+"kunnen verschijnen in de instellingen van GNOME."
 
 #: plug-ins/common/file-xmc.c:1841
 #, c-format
@@ -7121,8 +7436,11 @@ msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose size is over 8 digits.\n"
 "We clamped it to %dpx. You should check the exported cursor."
-msgstr "Uw cursor werd met succes geëxporteerd, maar het bevat een of meer frames waarvan de grootte meer is dan 8 cijfers.\n"
-"We hebben het verkleind tot %dpx. U zou de geëxporteerde cursor moeten controleren."
+msgstr ""
+"Uw cursor werd met succes geëxporteerd, maar het bevat een of meer frames "
+"waarvan de grootte meer is dan 8 cijfers.\n"
+"We hebben het verkleind tot %dpx. U zou de geëxporteerde cursor moeten "
+"controleren."
 
 #. translators: the %i is *always* 8 here
 #: plug-ins/common/file-xmc.c:1938
@@ -7130,7 +7448,9 @@ msgstr "Uw cursor werd met succes geëxporteerd, maar het bevat een of meer fram
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
 "nominal sizes."
-msgstr "Sorry, deze plug-in kan niet overweg met een cursor die meer dan %i verschillende nominale groottes heeft."
+msgstr ""
+"Sorry, deze plug-in kan niet overweg met een cursor die meer dan %i "
+"verschillende nominale groottes heeft."
 
 #: plug-ins/common/file-xpm.c:197 plug-ins/common/file-xpm.c:232
 msgid "X PixMap image"
@@ -7147,7 +7467,13 @@ msgid ""
 "read this format. Newer code should however be using gdk-pixbuf-csource "
 "instead. XPM supports colored images, unlike the XBM format which XPM was "
 "designed to replace."
-msgstr "Laden van bestanden in de bestandsindeling XPM (X11 Pixmap). XPM is een draagbare afbeeldingsindeling, ontworpen om te worden opgenomen in C-broncode. XLib verschaft functies die het mogelijk maken deze indeling te lezen. Nieuwere code zou echter in plaats daarvan gdk-pixbuf-csource moeten gebruiken. XPM ondersteunt gekleurde afbeeldingen, anders dan de indeling XBM, waarvoor XPM werd ontworpen om die te vervangen."
+msgstr ""
+"Laden van bestanden in de bestandsindeling XPM (X11 Pixmap). XPM is een "
+"draagbare afbeeldingsindeling, ontworpen om te worden opgenomen in C-"
+"broncode. XLib verschaft functies die het mogelijk maken deze indeling te "
+"lezen. Nieuwere code zou echter in plaats daarvan gdk-pixbuf-csource moeten "
+"gebruiken. XPM ondersteunt gekleurde afbeeldingen, anders dan de indeling "
+"XBM, waarvoor XPM werd ontworpen om die te vervangen."
 
 #: plug-ins/common/file-xpm.c:235
 msgid "Export files in XPM (X11 Pixmap) format."
@@ -7160,7 +7486,13 @@ msgid ""
 "read this format. Newer code should however be using gdk-pixbuf-csource "
 "instead. XPM supports colored images, unlike the XBM format which XPM was "
 "designed to replace."
-msgstr "Exporteren van bestanden in de bestandsindeling XPM (X11 Pixmap). XPM is een draagbare afbeeldingsindeling, ontworpen om te worden opgenomen in C-broncode. XLib verschaft functies die het mogelijk maken deze indeling te lezen. Nieuwere code zou echter in plaats daarvan gdk-pixbuf-csource moeten gebruiken. XPM ondersteunt gekleurde afbeeldingen, anders dan de indeling XBM, waarvoor XPM werd ontworpen om die te vervangen."
+msgstr ""
+"Exporteren van bestanden in de bestandsindeling XPM (X11 Pixmap). XPM is een "
+"draagbare afbeeldingsindeling, ontworpen om te worden opgenomen in C-"
+"broncode. XLib verschaft functies die het mogelijk maken deze indeling te "
+"lezen. Nieuwere code zou echter in plaats daarvan gdk-pixbuf-csource moeten "
+"gebruiken. XPM ondersteunt gekleurde afbeeldingen, anders dan de indeling "
+"XBM, waarvoor XPM werd ontworpen om die te vervangen."
 
 #: plug-ins/common/file-xpm.c:253
 msgid "XPM"
@@ -7211,7 +7543,8 @@ msgstr "Zoekfout: %s"
 msgid ""
 "'%s':\n"
 "Illegal number of colormap entries: %u"
-msgstr "‘%s’:\n"
+msgstr ""
+"‘%s’:\n"
 "Ongeldig aantal kleurenkaartingangen: %u"
 
 #: plug-ins/common/file-xwd.c:535
@@ -7219,7 +7552,8 @@ msgstr "‘%s’:\n"
 msgid ""
 "'%s':\n"
 "Number of colormap entries < number of colors"
-msgstr "‘%s’:\n"
+msgstr ""
+"‘%s’:\n"
 "Aantal items kleurenkaart < aantal kleuren"
 
 #: plug-ins/common/file-xwd.c:561
@@ -7232,7 +7566,9 @@ msgstr "Kan kleuritems niet lezen"
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
-msgstr "XWD-bestand %s heeft de indeling %d, diepte %d en bits per pixel %d. Dit wordt momenteel niet ondersteund."
+msgstr ""
+"XWD-bestand %s heeft de indeling %d, diepte %d en bits per pixel %d. Dit "
+"wordt momenteel niet ondersteund."
 
 #: plug-ins/common/file-xwd.c:677
 msgid "Cannot export images with alpha channels."
@@ -7270,7 +7606,8 @@ msgstr "XWD-bestand %s is beschadigd."
 msgid ""
 "'%s':\n"
 "Invalid color map"
-msgstr "‘%s’:\n"
+msgstr ""
+"‘%s’:\n"
 "Foutieve kleurenkaart"
 
 #: plug-ins/common/film.c:185
@@ -7359,7 +7696,8 @@ msgstr "Afstand tot _gaatjes"
 
 #: plug-ins/common/film.c:264
 msgid "The offset from the edge of film, as fraction of the strip height"
-msgstr "De afstand vanaf de rand van de filmstrook als gedeelte van de totale hoogte"
+msgstr ""
+"De afstand vanaf de rand van de filmstrook als gedeelte van de totale hoogte"
 
 #: plug-ins/common/film.c:269
 msgid "Hole _width"
@@ -7458,7 +7796,8 @@ msgstr "_Kleurverloopprojectie"
 
 #: plug-ins/common/gradient-map.c:135
 msgid "Recolor the image using colors from the active gradient"
-msgstr "De afbeelding opnieuw inkleuren met kleuren van het huidige kleurverloop"
+msgstr ""
+"De afbeelding opnieuw inkleuren met kleuren van het huidige kleurverloop"
 
 #: plug-ins/common/gradient-map.c:167
 msgid "_Palette Map"
@@ -7489,7 +7828,9 @@ msgstr "Een raster op de afbeelding tekenen"
 msgid ""
 "Draws a grid using the specified colors. The grid origin is the upper left "
 "corner."
-msgstr "Tekent een raster met de gespecificeerde kleuren. De oorsprong van het raster is de linkerbovenhoek."
+msgstr ""
+"Tekent een raster met de gespecificeerde kleuren. De oorsprong van het "
+"raster is de linkerbovenhoek."
 
 #: plug-ins/common/grid.c:180 plug-ins/common/grid.c:181
 msgid "Horizontal width"
@@ -7552,7 +7893,8 @@ msgstr "Opdelen met gebruik van h_ulplijnen"
 
 #: plug-ins/common/guillotine.c:115
 msgid "Slice the image into subimages using guides"
-msgstr "De afbeelding opdelen in verschillende afbeelding met gebruik van hulplijnen"
+msgstr ""
+"De afbeelding opdelen in verschillende afbeelding met gebruik van hulplijnen"
 
 #: plug-ins/common/guillotine.c:158
 msgid "Guillotine"
@@ -7710,13 +8052,17 @@ msgstr "De afbeeldingen verzenden via e-mail"
 
 #: plug-ins/common/mail.c:193
 msgid "Sendmail is used to send emails and must be properly configured."
-msgstr "Sendmail wordt gebruikt om e-mails te verzenden en moet correct geconfigureerd zijn."
+msgstr ""
+"Sendmail wordt gebruikt om e-mails te verzenden en moet correct "
+"geconfigureerd zijn."
 
 #: plug-ins/common/mail.c:196
 msgid ""
 "The preferred email composer is used to send emails and must be properly "
 "configured."
-msgstr "Het favoriete e-mailprogramma wordt gebruikt om e-mails te verzenden en moet correct geconfigureerd zijn."
+msgstr ""
+"Het favoriete e-mailprogramma wordt gebruikt om e-mails te verzenden en moet "
+"correct geconfigureerd zijn."
 
 #: plug-ins/common/mail.c:209
 msgid "File_name"
@@ -7783,7 +8129,9 @@ msgstr "Niet-Lineaire \"Zwitsers zakmes\"-filter"
 msgid ""
 "This is the pnmnlfilt, in GIMP's clothing. See the pnmnlfilt manpage for "
 "details."
-msgstr "Dit is de pnmnlfilt, in kleren van GIMP. Bekijk de pagina van de handleiding van pnmnlfilt voor details."
+msgstr ""
+"Dit is de pnmnlfilt, in kleren van GIMP. Bekijk de pagina van de handleiding "
+"van pnmnlfilt voor details."
 
 #: plug-ins/common/nl-filter.c:173
 msgid "_Alpha"
@@ -7839,7 +8187,12 @@ msgid ""
 "names, sort by name or menu location and you can view a tree representation "
 "of the plug-in menus. Can also be of help to find where new plug-ins have "
 "installed themselves in the menus."
-msgstr "Maakt het mogelijk om in het menusysteem voor plug-ins te bladeren. U kunt zoeken op namen van plug-ins, sorteren op naam of menulocatie en u kunt een boomweergave van de menu's voor plug-ins bekijken. Kan ook nuttig zijn om uit te zoeken waar nieuwe plug-ins zichzelf hebben geïnstalleerd in de menu's."
+msgstr ""
+"Maakt het mogelijk om in het menusysteem voor plug-ins te bladeren. U kunt "
+"zoeken op namen van plug-ins, sorteren op naam of menulocatie en u kunt een "
+"boomweergave van de menu's voor plug-ins bekijken. Kan ook nuttig zijn om "
+"uit te zoeken waar nieuwe plug-ins zichzelf hebben geïnstalleerd in de "
+"menu's."
 
 #: plug-ins/common/plugin-browser.c:370
 #: plug-ins/filter-browser/filter-browser.c:622
@@ -7932,7 +8285,10 @@ msgid ""
 "This Plug-in is based on an article by Jörn Loviscach (appeared in c't "
 "10/95, page 326). It generates modern art pictures from a random genetic "
 "formula."
-msgstr "Deze Plug-in is gebaseerd op een artikel van Jörn Loviscach (verschenen in c't 10/95, pagina 326). Het genereert moderne kunstafbeeldingen vanuit een willekeurige genetische formule."
+msgstr ""
+"Deze Plug-in is gebaseerd op een artikel van Jörn Loviscach (verschenen in "
+"c't 10/95, pagina 326). Het genereert moderne kunstafbeeldingen vanuit een "
+"willekeurige genetische formule."
 
 #: plug-ins/common/qbist.c:204
 msgid "_Anti-aliasing"
@@ -7944,7 +8300,9 @@ msgstr "Anti-aliasing inschakelen met behulp van een oversampling-algoritme"
 
 #: plug-ins/common/qbist.c:219
 msgid "Any file which will be used as source for pattern generation"
-msgstr "Willekeurig bestand dat wordt gebruikt als bron voor het genereren van patronen"
+msgstr ""
+"Willekeurig bestand dat wordt gebruikt als bron voor het genereren van "
+"patronen"
 
 #: plug-ins/common/qbist.c:363
 msgid "Qbist"
@@ -7974,7 +8332,8 @@ msgstr "_Inkleuren met monstering..."
 # 29/03/08: niet letterlijk, maar wel duidelijk zo
 #: plug-ins/common/sample-colorize.c:329
 msgid "Colorize image using a sample image as a guide"
-msgstr "Een afbeelding inkleuren op basis van de kleuren van een andere afbeelding"
+msgstr ""
+"Een afbeelding inkleuren op basis van de kleuren van een andere afbeelding"
 
 #: plug-ins/common/sample-colorize.c:339
 msgid "Sample drawable"
@@ -8000,7 +8359,9 @@ msgstr "Oorspronkelijke i_ntensiteit"
 msgid ""
 "TRUE: hold brightness of original intensity levels, FALSE: Hold Intensity of "
 "input levels"
-msgstr "AAN: de helderheid van de oorspronkelijke intensiteitsniveaus behouden, UIT: de intensiteit van de invoerniveaus behouden"
+msgstr ""
+"AAN: de helderheid van de oorspronkelijke intensiteitsniveaus behouden, UIT: "
+"de intensiteit van de invoerniveaus behouden"
 
 #: plug-ins/common/sample-colorize.c:359
 msgid "Us_e subcolors"
@@ -8010,7 +8371,9 @@ msgstr "Subkleuren g_ebruiken"
 msgid ""
 "TRUE: Use all subcolors of same intensity, FALSE: Use only one color per "
 "intensity"
-msgstr "AAN: gebruik alle subkleuren met dezelfde intensiteit. UIT: gebruik slechts één kleur per intensiteit"
+msgstr ""
+"AAN: gebruik alle subkleuren met dezelfde intensiteit. UIT: gebruik slechts "
+"één kleur per intensiteit"
 
 #: plug-ins/common/sample-colorize.c:366
 msgid "Smooth sam_ples"
@@ -8020,7 +8383,9 @@ msgstr "_Gladde monstering"
 msgid ""
 "TRUE: guess samplecolors for the missing intensity values, FALSE: use only "
 "colors found in the sample"
-msgstr "AAN: raad de voorbeeldkleuren voor de ontbrekende intensiteitswaarden, UIT: gebruik alleen de kleuren die in het monster voorkomen"
+msgstr ""
+"AAN: raad de voorbeeldkleuren voor de ontbrekende intensiteitswaarden, UIT: "
+"gebruik alleen de kleuren die in het monster voorkomen"
 
 #: plug-ins/common/sample-colorize.c:374
 msgid "_Low"
@@ -8196,7 +8561,9 @@ msgstr "Heldere punten in sterachtige fonkelingen omzetten"
 msgid ""
 "Uses a percentage based luminosity threshold to find candidate pixels for "
 "adding some sparkles (spikes)."
-msgstr "Gebruikt een op een percentage gebaseerde helderheidsdrempel om kandidaatpixels te vinden voor het toevoegen van wat fonkeling (spikes)."
+msgstr ""
+"Gebruikt een op een percentage gebaseerde helderheidsdrempel om "
+"kandidaatpixels te vinden voor het toevoegen van wat fonkeling (spikes)."
 
 #: plug-ins/common/sparkle.c:195
 msgid "Lu_minosity threshold"
@@ -8649,11 +9016,15 @@ msgstr "Opgeslagen"
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
-msgstr "De definitie van een eenheid zal alleen worden opgeslagen voor GIMP afsluit als deze kolom is aangevinkt."
+msgstr ""
+"De definitie van een eenheid zal alleen worden opgeslagen voor GIMP afsluit "
+"als deze kolom is aangevinkt."
 
 #: plug-ins/common/unit-editor.c:114
 msgid "The name to be used to identify this unit in the graphical interface"
-msgstr "Deze naam wordt gebruikt om een eenheid te identificeren in de grafische interface van GIMP"
+msgstr ""
+"Deze naam wordt gebruikt om een eenheid te identificeren in de grafische "
+"interface van GIMP"
 
 #: plug-ins/common/unit-editor.c:116
 msgid "Factor"
@@ -8672,7 +9043,11 @@ msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
-msgstr "Dit veld is een hint voor numerieke invoervelden. Het specificeert hoeveel decimale cijfers het invoerveld zou moeten verschaffen om bij benadering dezelfde nauwkeurigheid te krijgen als een invoerveld \"inch\" met twee decimale cijfers."
+msgstr ""
+"Dit veld is een hint voor numerieke invoervelden. Het specificeert hoeveel "
+"decimale cijfers het invoerveld zou moeten verschaffen om bij benadering "
+"dezelfde nauwkeurigheid te krijgen als een invoerveld \"inch\" met twee "
+"decimale cijfers."
 
 #: plug-ins/common/unit-editor.c:122
 msgid "Symbol"
@@ -8682,7 +9057,9 @@ msgstr "Symbool"
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
-msgstr "Het symbool van de eenheid, als het dat heeft (bijv. \" voor inches). De afkorting van de eenheid wordt gebruikt als het geen symbool heeft."
+msgstr ""
+"Het symbool van de eenheid, als het dat heeft (bijv. \" voor inches). De "
+"afkorting van de eenheid wordt gebruikt als het geen symbool heeft."
 
 #: plug-ins/common/unit-editor.c:125
 msgid "Abbreviation"
@@ -8722,7 +9099,8 @@ msgstr "Een nieuwe eenheid aanmaken"
 
 #: plug-ins/common/unit-editor.c:290
 msgid "Create a new unit using the currently selected unit as template"
-msgstr "Een nieuwe eenheid aanmaken op basis van de huidige geselecteerde eenheid"
+msgstr ""
+"Een nieuwe eenheid aanmaken op basis van de huidige geselecteerde eenheid"
 
 #: plug-ins/common/unit-editor.c:423
 msgid "Add a New Unit"
@@ -8875,7 +9253,10 @@ msgid ""
 "Smears an image along vector paths calculated as the gradient of a separate "
 "control matrix. The effect can look like brushstrokes of acrylic or "
 "watercolor paint, in some cases."
-msgstr "Smeert een afbeelding uit over vectorpaden, die worden berekend als het kleurverloop van een afzonderlijke beheersmatrix. Het effect kan er, in sommige gevallen, uitzien als penseelstreken van acryl- of waterverf."
+msgstr ""
+"Smeert een afbeelding uit over vectorpaden, die worden berekend als het "
+"kleurverloop van een afzonderlijke beheersmatrix. Het effect kan er, in "
+"sommige gevallen, uitzien als penseelstreken van acryl- of waterverf."
 
 #: plug-ins/common/warp.c:234
 msgid "Step si_ze"
@@ -9106,7 +9487,9 @@ msgstr "Het opgegeven pad werd niet gevonden."
 #: plug-ins/common/web-browser.c:187
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
-msgstr "Het .exe-bestand is ongeldig (non-Microsoft Win32 .exe of fout in .exe-bestand)."
+msgstr ""
+"Het .exe-bestand is ongeldig (non-Microsoft Win32 .exe of fout in .exe-"
+"bestand)."
 
 #: plug-ins/common/web-browser.c:190
 msgid "The operating system denied access to the specified file."
@@ -9255,7 +9638,9 @@ msgstr "WIA stuurprogramma niet gevonden, scannen niet beschikbaar"
 
 #: plug-ins/file-bmp/bmp-export.c:192 plug-ins/file-bmp/bmp-export.c:225
 msgid "Cannot export indexed image with transparency in BMP file format."
-msgstr "Kan geïndexeerde afbeelding met alfakanaal niet exporteren naar BMP-bestandsindeling."
+msgstr ""
+"Kan geïndexeerde afbeelding met alfakanaal niet exporteren naar BMP-"
+"bestandsindeling."
 
 #: plug-ins/file-bmp/bmp-export.c:194 plug-ins/file-bmp/bmp-export.c:227
 msgid "Alpha channel will be ignored."
@@ -9276,7 +9661,11 @@ msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Disabling this "
 "option will cause GIMP to not write color space information to the file."
-msgstr "Sommige toepassingen kunnen geen afbeeldingen BMP lezen die informatie over kleurruimte bevatten. GIMP schrijft standaard informatie over de kleurruimte. Uitschakelen van deze optie zal ervoor zorgen dat GIMP geen informatie over de kleurruimte naar het bestand schrijft."
+msgstr ""
+"Sommige toepassingen kunnen geen afbeeldingen BMP lezen die informatie over "
+"kleurruimte bevatten. GIMP schrijft standaard informatie over de "
+"kleurruimte. Uitschakelen van deze optie zal ervoor zorgen dat GIMP geen "
+"informatie over de kleurruimte naar het bestand schrijft."
 
 #: plug-ins/file-bmp/bmp-load.c:169
 msgid "Bad colormap"
@@ -9339,7 +9728,9 @@ msgstr "_RunLength-gecodeerd (RLE)"
 msgid ""
 "Use run-length-encoding compression (only valid for 4 and 8-bit indexed "
 "images)"
-msgstr "Gebruik run-length-coderingscompressie (alleen geldig voor 4- en 8-bits geïndexeerde afbeeldingen)"
+msgstr ""
+"Gebruik run-length-coderingscompressie (alleen geldig voor 4- en 8-bits "
+"geïndexeerde afbeeldingen)"
 
 #: plug-ins/file-bmp/bmp.c:213
 msgid "_Write color space information"
@@ -9585,7 +9976,9 @@ msgstr "Transparant volgnummer"
 
 #: plug-ins/file-dds/dds.c:268
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
-msgstr "Volgnummer op de kleurenkaart van transparant of -1 voor dekkende afbeelding (alleen bij geïndexeerde afbeeldingen)"
+msgstr ""
+"Volgnummer op de kleurenkaart van transparant of -1 voor dekkende afbeelding "
+"(alleen bij geïndexeerde afbeeldingen)"
 
 #: plug-ins/file-dds/dds.c:274
 msgid "_Mipmaps"
@@ -9710,7 +10103,9 @@ msgstr "_Alfatest-drempel"
 #: plug-ins/file-dds/dds.c:338
 msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
-msgstr "Drempelwaarde voor de alfatest waarvoor de dekking van de alfatest behouden moet blijven"
+msgstr ""
+"Drempelwaarde voor de alfatest waarvoor de dekking van de alfatest behouden "
+"moet blijven"
 
 #: plug-ins/file-dds/ddsread.c:179
 #, c-format
@@ -9722,7 +10117,8 @@ msgstr "Bezig met laden: %s"
 msgid ""
 "Unsupported DDS pixel format:\n"
 "bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
-msgstr "Niet-ondersteund DDS pixel formaat:\n"
+msgstr ""
+"Niet-ondersteund DDS pixel formaat:\n"
 "bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
 
 #: plug-ins/file-dds/ddsread.c:405
@@ -9753,7 +10149,9 @@ msgstr "Ongeldig magisch getal van DDS-indeling."
 #: plug-ins/file-dds/ddsread.c:885
 msgid ""
 "File lacks expected pixel format flags! Image may not be decoded correctly."
-msgstr "In het bestand ontbreken verwachte vlaggen voor pixelindelingen! Afbeelding zou niet juist gedecodeerd kunnen worden."
+msgstr ""
+"In het bestand ontbreken verwachte vlaggen voor pixelindelingen! Afbeelding "
+"zou niet juist gedecodeerd kunnen worden."
 
 #: plug-ins/file-dds/ddsread.c:920
 #, c-format
@@ -9871,7 +10269,8 @@ msgstr "Onbekende kanaalnaam"
 msgid ""
 "The image contains a single unknown channel.\n"
 "It has been converted to grayscale."
-msgstr "De afbeelding bevat een enkel onbekend kanaal.\n"
+msgstr ""
+"De afbeelding bevat een enkel onbekend kanaal.\n"
 "Het is omgezet naar grijswaarden."
 
 #: plug-ins/file-faxg3/faxg3.c:139
@@ -9887,7 +10286,8 @@ msgstr "Kon geen buffergeheugen krijgen om gegevens te bewerken."
 #: plug-ins/file-faxg3/faxg3.c:569
 #, c-format
 msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
-msgstr "Ongeldige afmetingen afbeelding (%d x %d). Afbeelding kan beschadigd zijn."
+msgstr ""
+"Ongeldige afmetingen afbeelding (%d x %d). Afbeelding kan beschadigd zijn."
 
 # afsluiten/sluiten
 #: plug-ins/file-faxg3/faxg3.c:579
@@ -9905,7 +10305,9 @@ msgstr "Laden van bestanden in de FITS-bestandsindeling"
 
 #: plug-ins/file-fits/fits.c:184
 msgid "Load file of the FITS file format (Flexible Image Transport System)"
-msgstr "Laden van bestanden in de FITS-bestandsindeling (Flexible Image Transport System)"
+msgstr ""
+"Laden van bestanden in de FITS-bestandsindeling (Flexible Image Transport "
+"System)"
 
 #: plug-ins/file-fits/fits.c:201
 msgid "Re_placement for undefined pixels"
@@ -9927,7 +10329,9 @@ msgstr "Exporteren van bestanden in de FITS-bestandsindeling"
 #: plug-ins/file-fits/fits.c:222
 msgid ""
 "FITS exporting handles all image types except those with alpha channels."
-msgstr "FITS export kan alle soorten afbeeldingen exporteren behalve die met alfakanalen."
+msgstr ""
+"FITS export kan alle soorten afbeeldingen exporteren behalve die met "
+"alfakanalen."
 
 #: plug-ins/file-fits/fits.c:381
 msgid "Error during opening of FITS file"
@@ -10002,7 +10406,8 @@ msgstr "Ongeldige afmeting van frame wijst voorbij het einde van het bestand!"
 #: plug-ins/file-fli/fli.c:353
 #, c-format
 msgid "Invalid chunk size points past end of file!"
-msgstr "Ongeldige afmeting van datablok wijst voorbij het einde van het bestand!"
+msgstr ""
+"Ongeldige afmeting van datablok wijst voorbij het einde van het bestand!"
 
 #: plug-ins/file-fli/fli.c:476
 #, c-format
@@ -10058,7 +10463,8 @@ msgstr "Fout tijdens lezen van gecomprimeerde gegevens. "
 #: plug-ins/file-fli/fli.c:1022
 #, c-format
 msgid "Overflow reading compressed data. Possibly corrupt file."
-msgstr "Overstroming bij lezen van gecomprimeerde gegevens. Mogelijk corrupt bestand."
+msgstr ""
+"Overstroming bij lezen van gecomprimeerde gegevens. Mogelijk corrupt bestand."
 
 #: plug-ins/file-fli/fli-gimp.c:185 plug-ins/file-fli/fli-gimp.c:222
 msgid "AutoDesk FLIC animation"
@@ -10103,7 +10509,8 @@ msgstr "Begin met exporteren vanaf dit frame"
 
 #: plug-ins/file-fli/fli-gimp.c:255
 msgid "End exporting with this frame (or -1 for all frames)"
-msgstr "Exporteren beëindigen na dit frame (of -1 om alle beelden te exporteren)"
+msgstr ""
+"Exporteren beëindigen na dit frame (of -1 om alle beelden te exporteren)"
 
 #: plug-ins/file-fli/fli-gimp.c:568
 #, c-format
@@ -10124,7 +10531,8 @@ msgstr "FLIC-animatie openen"
 msgid ""
 "Invalid icon size. \n"
 "It will not be exported"
-msgstr "Ongeldige grootte pictogram. \n"
+msgstr ""
+"Ongeldige grootte pictogram. \n"
 "Die zal niet worden geëxporteerd"
 
 #: plug-ins/file-icns/file-icns-export.c:242
@@ -10132,7 +10540,8 @@ msgstr "Ongeldige grootte pictogram. \n"
 msgid ""
 "Duplicate layer size. \n"
 "It will not be exported"
-msgstr "Duplicaat grootte laag. \n"
+msgstr ""
+"Duplicaat grootte laag. \n"
 "Die zal niet worden geëxporteerd"
 
 #: plug-ins/file-icns/file-icns-export.c:319
@@ -10141,7 +10550,8 @@ msgid ""
 " 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
 "64x64, 128x128, 256x256, 512x512, and 1024x1024.\n"
 "Any other sized layers will be ignored on export."
-msgstr "Geldige grootten voor pictogrammen ICNS zijn:\n"
+msgstr ""
+"Geldige grootten voor pictogrammen ICNS zijn:\n"
 " 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
 "64x64, 128x128, 256x256, 512x512, en 1024x1024.\n"
 "Elke andere grootte van laag zal bij exporteren worden genegeerd."
@@ -10163,14 +10573,20 @@ msgstr "Fout bij het exporteren van icns: %s"
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
 "24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
-msgstr "Geen lagen met geldige grootte. Geldige grootten voor lagen zijn alleen 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512 of 1024x1024."
+msgstr ""
+"Geen lagen met geldige grootte. Geldige grootten voor lagen zijn alleen "
+"16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, "
+"512x512 of 1024x1024."
 
 #: plug-ins/file-icns/file-icns-export.c:809
 #, c-format
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
 "24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
-msgstr "Ongeldige grootte(n) laag. Geldige grootten voor lagen zijn alleen 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512 of 1024x1024."
+msgstr ""
+"Ongeldige grootte(n) laag. Geldige grootten voor lagen zijn alleen 16x12, "
+"16x16, 18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512 "
+"of 1024x1024."
 
 #  Do not rely on librsvg setting GError on failure!
 #: plug-ins/file-icns/file-icns-load.c:535
@@ -10233,7 +10649,9 @@ msgstr "Pictogramdetails"
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
-msgstr "Grote pictogrammen en compressie worden niet door alle programma's ondersteund. Oudere toepassingen zouden dit bestand niet juist kunnen openen."
+msgstr ""
+"Grote pictogrammen en compressie worden niet door alle programma's "
+"ondersteund. Oudere toepassingen zouden dit bestand niet juist kunnen openen."
 
 #: plug-ins/file-ico/ico-dialog.c:267
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
@@ -10274,7 +10692,9 @@ msgstr "Hotspot _Y:"
 msgid ""
 "Called non-interactively with %d and %d hotspot coordinates with an image of "
 "%d icons."
-msgstr "Niet-interactief aangeroepen met %d en %d coördinaten voor hotspot met een afbeelding van %d pictogrammen."
+msgstr ""
+"Niet-interactief aangeroepen met %d en %d coördinaten voor hotspot met een "
+"afbeelding van %d pictogrammen."
 
 #: plug-ins/file-ico/ico-load.c:228
 #, c-format
@@ -10350,7 +10770,8 @@ msgstr "JPEG-voorbeeld"
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
-msgstr "Fout bij openen tijdelijk %s bestand ‘%s’ om jpeg metagegevens te laden: %s"
+msgstr ""
+"Fout bij openen tijdelijk %s bestand ‘%s’ om jpeg metagegevens te laden: %s"
 
 #: plug-ins/file-jpeg/jpeg.c:135 plug-ins/file-jpeg/jpeg.c:182
 msgid "JPEG image"
@@ -10444,7 +10865,9 @@ msgstr "Basislijn-JPEG"
 msgid ""
 "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
 "decoders)"
-msgstr "Forceer het maken van een basislijn-JPEG (niet-basislijn-JPEG's kunnen niet door alle decoders worden gelezen)"
+msgstr ""
+"Forceer het maken van een basislijn-JPEG (niet-basislijn-JPEG's kunnen niet "
+"door alle decoders worden gelezen)"
 
 #: plug-ins/file-jpeg/jpeg.c:257
 msgid "Inter_val (MCU rows):"
@@ -10452,7 +10875,8 @@ msgstr "_Interval (MCU-rijen):"
 
 #: plug-ins/file-jpeg/jpeg.c:258
 msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
-msgstr "Interval van herstartmarkeringen (in MCU-rijen, 0 = geen herstartmarkeringen)"
+msgstr ""
+"Interval van herstartmarkeringen (in MCU-rijen, 0 = geen herstartmarkeringen)"
 
 #: plug-ins/file-jpeg/jpeg.c:264
 msgid "_DCT method"
@@ -10483,7 +10907,10 @@ msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
 "quality and file size."
-msgstr "Als de oorspronkelijke JPEG niet-standaard kwaliteitsinstellingen gebruikte, schakel dan deze optie in om bijna dezelfde kwaliteit en bestandsgrootte te verkrijgen."
+msgstr ""
+"Als de oorspronkelijke JPEG niet-standaard kwaliteitsinstellingen gebruikte, "
+"schakel dan deze optie in om bijna dezelfde kwaliteit en bestandsgrootte te "
+"verkrijgen."
 
 #: plug-ins/file-jpeg/jpeg.c:298
 msgid "Sho_w preview in image window"
@@ -10499,7 +10926,8 @@ msgstr "Gebruik _wiskundige codering"
 
 #: plug-ins/file-jpeg/jpeg.c:304
 msgid "Older software may have trouble opening arithmetic-coded images"
-msgstr "Oudere software kan wiskundig gecodeerde afbeeldingen mogelijk niet openen"
+msgstr ""
+"Oudere software kan wiskundig gecodeerde afbeeldingen mogelijk niet openen"
 
 #: plug-ins/file-jpeg/jpeg.c:309
 msgid "Use restart mar_kers"
@@ -10514,41 +10942,51 @@ msgstr "Fout: kan GIMP basisafbeeldingstype niet omzetten naar PSD-modus"
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
-msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling PSD ondersteunt geen afbeeldingen die meer dan 30.000 pixels breed of hoog zijn."
+msgstr ""
+"Kan ‘%s’ niet exporteren.  De bestandsindeling PSD ondersteunt geen "
+"afbeeldingen die meer dan 30.000 pixels breed of hoog zijn."
 
 #: plug-ins/file-psd/psd-export.c:2381
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images that are "
 "more than 300,000 pixels wide or tall."
-msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling PSB ondersteunt geen afbeeldingen die meer dan 300.000 pixels breed of hoog zijn."
+msgstr ""
+"Kan ‘%s’ niet exporteren.  De bestandsindeling PSB ondersteunt geen "
+"afbeeldingen die meer dan 300.000 pixels breed of hoog zijn."
 
 #: plug-ins/file-psd/psd-export.c:2423
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
-msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling PSD ondersteunt geen afbeeldingen met lagen die meer dan 30.000 pixels breed of hoog zijn."
+msgstr ""
+"Kan ‘%s’ niet exporteren.  De bestandsindeling PSD ondersteunt geen "
+"afbeeldingen met lagen die meer dan 30.000 pixels breed of hoog zijn."
 
 #: plug-ins/file-psd/psd-export.c:2429
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images with "
 "layers that are more than 300,000 pixels wide or tall."
-msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling PSB ondersteunt geen afbeeldingen met lagen die meer dan 300.000 pixels breed of hoog zijn."
+msgstr ""
+"Kan ‘%s’ niet exporteren.  De bestandsindeling PSB ondersteunt geen "
+"afbeeldingen met lagen die meer dan 300.000 pixels breed of hoog zijn."
 
 #: plug-ins/file-psd/psd-export.c:2769
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
-msgstr "Duotoon kleurruimte informatie uit de originele\n"
+msgstr ""
+"Duotoon kleurruimte informatie uit de originele\n"
 "geïmporteerde afbeelding zal worden gebruikt."
 
 #: plug-ins/file-psd/psd-export.c:2838
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
-msgstr "PSD-bestanden kunnen maximaal 998 paden opslaan. \n"
+msgstr ""
+"PSD-bestanden kunnen maximaal 998 paden opslaan. \n"
 "De rest zal worden genegeerd."
 
 #: plug-ins/file-psd/psd-export.c:2948
@@ -10559,7 +10997,9 @@ msgstr "Waarschuwing geïndexeerd bestand"
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
-msgstr "Photoshop ondersteunt geen geïndexeerde afbeeldingen die meer dan een laag hebben. Lagen zullen bij exporteren worden samengevoegd."
+msgstr ""
+"Photoshop ondersteunt geen geïndexeerde afbeeldingen die meer dan een laag "
+"hebben. Lagen zullen bij exporteren worden samengevoegd."
 
 #: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4103
 msgid "Compatibility Notice"
@@ -10571,7 +11011,11 @@ msgid ""
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
 "Clipped Layers as Group'. If you encounter display issues, consider "
 "switching to those layer modes."
-msgstr "Oudere modi voor lagen hebben een betere compatibiliteit met Photoshop, maar ondersteunen niet Clip to Backdrop, wat nodig is voor het gebruiken van Photoshop's 'Uitkniplagen overvloeien als groep'. Als u problemen bij het weergeven tegenkomt, overweeg dan om te wisselen naar die modi voor lagen."
+msgstr ""
+"Oudere modi voor lagen hebben een betere compatibiliteit met Photoshop, maar "
+"ondersteunen niet Clip to Backdrop, wat nodig is voor het gebruiken van "
+"Photoshop's 'Uitkniplagen overvloeien als groep'. Als u problemen bij het "
+"weergeven tegenkomt, overweeg dan om te wisselen naar die modi voor lagen."
 
 #: plug-ins/file-psd/psd-load.c:313 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
@@ -10700,14 +11144,17 @@ msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
 "and can be reapplied on export."
-msgstr "Afbeelding zal worden geïmporteerd als Grijswaarden.\n"
-"Duotoon kleurruimte informatie is opgeslagen en kan bij exporteren opnieuw worden gebruikt."
+msgstr ""
+"Afbeelding zal worden geïmporteerd als Grijswaarden.\n"
+"Duotoon kleurruimte informatie is opgeslagen en kan bij exporteren opnieuw "
+"worden gebruikt."
 
 #: plug-ins/file-psd/psd-load.c:4104
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
-msgstr "Dit PSD-bestand bevat functies die\n"
+msgstr ""
+"Dit PSD-bestand bevat functies die\n"
 "nog niet volledig worden ondersteund in GIMP:"
 
 #: plug-ins/file-psd/psd-util.c:199
@@ -10727,7 +11174,9 @@ msgstr "Inladen van bestanden in de Photoshop PSD en PSB bestandsindeling"
 #: plug-ins/file-psd/psd.c:141
 msgid ""
 "This plug-in loads images in Adobe Photoshop (TM) native PSD and PSB format."
-msgstr "Deze plug-in laadt afbeeldingen in de PSD en PSB bestandsindelingen van Adobe Photoshop (TM)."
+msgstr ""
+"Deze plug-in laadt afbeeldingen in de PSD en PSB bestandsindelingen van "
+"Adobe Photoshop (TM)."
 
 #: plug-ins/file-psd/psd.c:165
 msgid "Photoshop image (merged)"
@@ -10737,7 +11186,9 @@ msgstr "Photoshop-afbeelding (samengevoegd)"
 msgid ""
 "This plug-in loads the merged image data in Adobe Photoshop (TM) native PSD "
 "and PSB format."
-msgstr "Deze plug-in laadt samengevoegde afbeeldingsinformatie in de PSD en PSB bestandsindelingen van Adobe Photoshop (TM)."
+msgstr ""
+"Deze plug-in laadt samengevoegde afbeeldingsinformatie in de PSD en PSB "
+"bestandsindelingen van Adobe Photoshop (TM)."
 
 #: plug-ins/file-psd/psd.c:197
 msgid "Loads thumbnails from the Photoshop PSD file format"
@@ -10747,7 +11198,9 @@ msgstr "Inladen van miniaturen in de PSD-bestandsindeling van Photoshop"
 msgid ""
 "This plug-in loads thumbnail images from Adobe Photoshop (TM) native PSD "
 "format files."
-msgstr "Deze plug-in laadt Miniatuurafbeeldingen in de PSD bestandsindeling van Adobe Photoshop (TM)."
+msgstr ""
+"Deze plug-in laadt Miniatuurafbeeldingen in de PSD bestandsindeling van "
+"Adobe Photoshop (TM)."
 
 #: plug-ins/file-psd/psd.c:224
 msgid "Saves files in the Photoshop (TM) PSD file format"
@@ -10758,7 +11211,10 @@ msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) native PSD format. These "
 "files may be of any image type supported by GIMP, with or without layers, "
 "layer masks, aux channels and guides."
-msgstr "Deze plug-in slaat bestanden van Adobe Photoshop (TM) eigen indeling PSD op. Deze bestanden zouden van elk type kunnen zijn dat wordt ondersteund door GIMP, met of zonder lagen, laagmaskers, aux-kanalen en hulplijnen."
+msgstr ""
+"Deze plug-in slaat bestanden van Adobe Photoshop (TM) eigen indeling PSD op. "
+"Deze bestanden zouden van elk type kunnen zijn dat wordt ondersteund door "
+"GIMP, met of zonder lagen, laagmaskers, aux-kanalen en hulplijnen."
 
 #: plug-ins/file-psd/psd.c:240 plug-ins/file-psd/psd.c:242
 msgid "Photoshop Large image"
@@ -10773,7 +11229,10 @@ msgid ""
 "This plug-in saves files of Adobe Photoshop (TM) Large native PSB format. "
 "These files may be of any image type supported by GIMP, with or without "
 "layers, layer masks, aux channels and guides."
-msgstr "Deze plug-in slaat bestanden van Adobe Photoshop (TM) Large eigen indeling PSB op. Deze bestanden zouden van elk type kunnen zijn dat wordt ondersteund door GIMP, met of zonder lagen, laagmaskers, aux-kanalen en hulplijnen."
+msgstr ""
+"Deze plug-in slaat bestanden van Adobe Photoshop (TM) Large eigen indeling "
+"PSB op. Deze bestanden zouden van elk type kunnen zijn dat wordt ondersteund "
+"door GIMP, met of zonder lagen, laagmaskers, aux-kanalen en hulplijnen."
 
 #: plug-ins/file-psd/psd.c:275
 msgid "Assign a Clipping _Path"
@@ -10791,7 +11250,8 @@ msgstr "_Naam van uitknippad"
 msgid ""
 "Clipping path name\n"
 "(ignored if no clipping path)"
-msgstr "De naam voor het uitknippad\n"
+msgstr ""
+"De naam voor het uitknippad\n"
 "(alleen als er een uitknippad is aangewezen)"
 
 #: plug-ins/file-psd/psd.c:289
@@ -10802,7 +11262,8 @@ msgstr "_Platheid van het pad"
 msgid ""
 "Clipping path flatness in device pixels\n"
 "(ignored if no clipping path)"
-msgstr "Platheid van het uitknippad\n"
+msgstr ""
+"Platheid van het uitknippad\n"
 "(alleen als er een uitknippad is aangewezen)"
 
 #: plug-ins/file-psd/psd.c:296
@@ -10811,7 +11272,9 @@ msgstr "Exporteren als _CMYK"
 
 #: plug-ins/file-psd/psd.c:297
 msgid "Export a CMYK PSD image using the soft-proofing color profile"
-msgstr "Een CMYK PSD-afbeelding exporteren met behulp van het afdrukvoorbeeld-kleurprofiel"
+msgstr ""
+"Een CMYK PSD-afbeelding exporteren met behulp van het afdrukvoorbeeld-"
+"kleurprofiel"
 
 #: plug-ins/file-psd/psd.c:302
 msgid "Export as _Duotone"
@@ -10821,7 +11284,9 @@ msgstr "Exporteren als _Duotoon"
 msgid ""
 "Export as a Duotone PSD file if Duotone color space information was attached "
 "to the image when originally imported."
-msgstr "Exporteren als _Duotoon PSD-bestand als Duotoon-kleurruimte-informatie in de oorspronkelijke afbeelding was geïmporteerd."
+msgstr ""
+"Exporteren als _Duotoon PSD-bestand als Duotoon-kleurruimte-informatie in de "
+"oorspronkelijke afbeelding was geïmporteerd."
 
 #: plug-ins/file-psd/psd.c:411
 msgid "Import PSD"
@@ -10834,7 +11299,9 @@ msgstr "PSD-metagegevens importeren"
 #: plug-ins/file-psd/psd.c:566
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
-msgstr "Metagegevens opvullagen worden niet ondersteund en zullen als lege laag worden getoond."
+msgstr ""
+"Metagegevens opvullagen worden niet ondersteund en zullen als lege laag "
+"worden getoond."
 
 #: plug-ins/file-raw/file-darktable.c:280
 msgid "Load thumbnail from a raw image via darktable"
@@ -10843,7 +11310,9 @@ msgstr "Laadt een miniatuurafbeelding uit een afbeelding raw via darktable"
 #: plug-ins/file-raw/file-darktable.c:282
 msgid ""
 "This plug-in loads a thumbnail from a raw image by calling darktable-cli."
-msgstr "Deze plug-in laadt een miniatuurafbeelding uit een afbeelding raw door darktable-cli te gebruiken."
+msgstr ""
+"Deze plug-in laadt een miniatuurafbeelding uit een afbeelding raw door "
+"darktable-cli te gebruiken."
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -10951,17 +11420,18 @@ msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
 "GIMP currently supports these RAW loaders:\n"
-"- darktable (http://www.darktable.org/), at least 1.7\n"
-"- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
-"- ART (https://art.pixls.us/)\n"
+"- darktable (https://www.darktable.org/), at least 1.7\n"
+"- RawTherapee (https://rawtherapee.com/), at least 5.2\n"
+"- ART (https://artraweditor.github.io/)\n"
 "\n"
 "Please install one of them in order to load RAW files."
-msgstr "Er is geen RAW-lader geïnstalleerd om ‘%s’-bestanden te openen.\n"
+msgstr ""
+"Er is geen RAW-lader geïnstalleerd om ‘%s’-bestanden te openen.\n"
 "\n"
 "GIMP ondersteunt momenteel deze RAW-laders:\n"
 "- darktable (https://www.darktable.org/), ten minste 1.7\n"
-"- RawTherapee (http://rawtherapee.com/), ten minste 5.2\n"
-"- ART (https://art.pixls.us/)\n"
+"- RawTherapee (https://rawtherapee.com/), ten minste 5.2\n"
+"- ART (https://artraweditor.github.io/)\n"
 "\n"
 "Installeer er een van om RAW-bestanden te kunnen laden."
 
@@ -11062,7 +11532,9 @@ msgstr "Inladen van bestanden in de bestandsindelingen TIFF en BigTiff"
 msgid ""
 "Loads files of the Tag Image File Format (TIFF) and its 64-bit offsets "
 "variant (BigTIFF)"
-msgstr "Inladen van bestanden in de bestandsindelingen Tag Image File Format en de 64-bit variant BigTiff"
+msgstr ""
+"Inladen van bestanden in de bestandsindelingen Tag Image File Format en de "
+"64-bit variant BigTiff"
 
 #: plug-ins/file-tiff/file-tiff.c:209
 msgid "_Keep empty space around imported layers"
@@ -11076,7 +11548,9 @@ msgstr "Exporteren van bestanden in de bestandsindelingen TIFF en BigTiff"
 msgid ""
 "Exports files in the Tag Image File Format (TIFF) or its 64-bit offsets "
 "variant (BigTIFF) able to support much bigger file sizes"
-msgstr "Exporteren van bestanden in de bestandsindelingen Tag Image File Format en de 64-bit variant BigTiff waarin veel grotere bestanden worden ondersteund"
+msgstr ""
+"Exporteren van bestanden in de bestandsindelingen Tag Image File Format en "
+"de 64-bit variant BigTiff waarin veel grotere bestanden worden ondersteund"
 
 #: plug-ins/file-tiff/file-tiff.c:236
 msgid "TIFF"
@@ -11090,7 +11564,9 @@ msgstr "Exporteren in _BigTIFF-bestandsindeling variatie"
 msgid ""
 "The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
 "4GiB files and bigger"
-msgstr "De BigTIFF-bestandsindeling maakt gebruik van 64-bit adressen en ondersteunt dus bestanden van 4GiB en groter"
+msgstr ""
+"De BigTIFF-bestandsindeling maakt gebruik van 64-bit adressen en ondersteunt "
+"dus bestanden van 4GiB en groter"
 
 #: plug-ins/file-tiff/file-tiff.c:255
 msgid "Co_mpression"
@@ -11104,11 +11580,14 @@ msgstr "Compressietype"
 msgid ""
 "Keep the color data masked by an alpha channel intact (do not store "
 "premultiplied components)"
-msgstr "Houd de kleurgegevens gemaskeerd door een alfakanaal intact (sla geen vooraf vermenigvuldigde componenten op)"
+msgstr ""
+"Houd de kleurgegevens gemaskeerd door een alfakanaal intact (sla geen vooraf "
+"vermenigvuldigde componenten op)"
 
 #: plug-ins/file-tiff/file-tiff.c:269
 msgid "Create a CMYK TIFF image using the soft-proofing color profile"
-msgstr "Een CMYK TIFF afbeelding maken met het kleurprofiel van het afdrukvoorbeeld"
+msgstr ""
+"Een CMYK TIFF afbeelding maken met het kleurprofiel van het afdrukvoorbeeld"
 
 #: plug-ins/file-tiff/file-tiff.c:274
 msgid "Save La_yers"
@@ -11137,13 +11616,17 @@ msgstr "GeoTIFF-gegevens opslaan"
 #: plug-ins/file-tiff/file-tiff.c:426
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
-msgstr "\"Lagen opslaan\"-optie niet geactiveerd tijdens poging om meerdere lagen te exporteren."
+msgstr ""
+"\"Lagen opslaan\"-optie niet geactiveerd tijdens poging om meerdere lagen te "
+"exporteren."
 
 #: plug-ins/file-tiff/file-tiff-export.c:651
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
-msgstr "Alleen monochrome beelden kunnen gecomprimeerd worden met \"CCITT Group 4\" of \"CCITT Group 3\"."
+msgstr ""
+"Alleen monochrome beelden kunnen gecomprimeerd worden met \"CCITT Group 4\" "
+"of \"CCITT Group 3\"."
 
 #: plug-ins/file-tiff/file-tiff-export.c:665
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
@@ -11153,7 +11636,8 @@ msgstr "Geïndexeerde afbeeldingen kunnen niet naar JPG worden, weggeschreven."
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
-msgstr "De indeling TIFF ondersteunt alleen opmerkingen in\n"
+msgstr ""
+"De indeling TIFF ondersteunt alleen opmerkingen in\n"
 "codering 7bit ASCII. Geen opmerking opgeslagen."
 
 #: plug-ins/file-tiff/file-tiff-export.c:866
@@ -11170,14 +11654,17 @@ msgstr "Wegschrijven van pagina's met verschillende bitdiepte is merkwaardig."
 msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
-msgstr "Waarschuwing: maximale bestandsgrootte voor TIFF is overschreden. Probeer opnieuw als BigTIFF of met een ander algoritme voor compressie, of annuleer."
+msgstr ""
+"Waarschuwing: maximale bestandsgrootte voor TIFF is overschreden. Probeer "
+"opnieuw als BigTIFF of met een ander algoritme voor compressie, of annuleer."
 
 #: plug-ins/file-tiff/file-tiff-export.c:1336
 #, c-format
 msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
 "This profile will not be included in the exported image."
-msgstr "Het toegewezen kleurprofiel voor afdrukvoorbeeld is geen CMYK-profiel.\n"
+msgstr ""
+"Het toegewezen kleurprofiel voor afdrukvoorbeeld is geen CMYK-profiel.\n"
 "Dit profiel zal niet worden opgenomen in de geëxporteerde afbeelding."
 
 #: plug-ins/file-tiff/file-tiff-load.c:312
@@ -11198,8 +11685,12 @@ msgid ""
 msgid_plural ""
 "TIFF '%s' directory count by header failed though there seem to be %d pages. "
 "Attempting to load the file with this assumption."
-msgstr[0] "TIFF '%s' tellen van mappen door koptekst is mislukt, hoewel er %d pagina lijkt te zijn. Proberen het bestand te laden met deze aanname."
-msgstr[1] "TIFF '%s' tellen van mappen door koptekst is mislukt, hoewel er %d pagina's lijken te zijn. Proberen het bestand te laden met deze aanname."
+msgstr[0] ""
+"TIFF '%s' tellen van mappen door koptekst is mislukt, hoewel er %d pagina "
+"lijkt te zijn. Proberen het bestand te laden met deze aanname."
+msgstr[1] ""
+"TIFF '%s' tellen van mappen door koptekst is mislukt, hoewel er %d pagina's "
+"lijken te zijn. Proberen het bestand te laden met deze aanname."
 
 #: plug-ins/file-tiff/file-tiff-load.c:477
 msgid "Extra channels with unspecified data."
@@ -11226,19 +11717,26 @@ msgstr "Kon pagina %d van %d niet lezen. Afbeelding kan beschadigd zijn.\n"
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
 "The layers below layer # %d will be interpreted as non linear."
-msgstr "Deze afbeelding heeft een lineair kleurprofiel, maar dat was niet ingesteld op de eerste laag. De lagen onder laag # %d zullen worden geïnterpreteerd als niet lineair."
+msgstr ""
+"Deze afbeelding heeft een lineair kleurprofiel, maar dat was niet ingesteld "
+"op de eerste laag. De lagen onder laag # %d zullen worden geïnterpreteerd "
+"als niet lineair."
 
 #: plug-ins/file-tiff/file-tiff-load.c:623
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
-msgstr "Deze afbeelding heeft meerdere kleurprofielen. We zullen het eerste gebruiken. Als dat leidt tot onjuiste resultaten zou u moeten overwegen om elke laag als een afzonderlijke afbeelding te laden."
+msgstr ""
+"Deze afbeelding heeft meerdere kleurprofielen. We zullen het eerste "
+"gebruiken. Als dat leidt tot onjuiste resultaten zou u moeten overwegen om "
+"elke laag als een afzonderlijke afbeelding te laden."
 
 #: plug-ins/file-tiff/file-tiff-load.c:635
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
-msgstr "Verdachte bitdiepte: %d voor pagina %d. Afbeelding kan beschadigd zijn."
+msgstr ""
+"Verdachte bitdiepte: %d voor pagina %d. Afbeelding kan beschadigd zijn."
 
 #: plug-ins/file-tiff/file-tiff-load.c:709
 #, c-format
@@ -11258,14 +11756,18 @@ msgstr "Kan de hoogte van de afbeelding niet bepalen van ‘%s’"
 #: plug-ins/file-tiff/file-tiff-load.c:740
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
-msgstr "Ongeldige afmetingen voor afbeelding (%u x %u) voor pagina %d. Afbeelding kan beschadigd zijn."
+msgstr ""
+"Ongeldige afmetingen voor afbeelding (%u x %u) voor pagina %d. Afbeelding "
+"kan beschadigd zijn."
 
 #: plug-ins/file-tiff/file-tiff-load.c:761
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
-msgstr "Kon geen fotometrie verkrijgen uit ‘%s’. Image is met CCITT gecomprimeerd, neem aan dat min-is-white"
+msgstr ""
+"Kon geen fotometrie verkrijgen uit ‘%s’. Image is met CCITT gecomprimeerd, "
+"neem aan dat min-is-white"
 
 #: plug-ins/file-tiff/file-tiff-load.c:768
 #, c-format
@@ -11279,7 +11781,9 @@ msgstr "Kon geen fotometrie verkrijgen uit ‘%s’. Neem aan dat min-is-black"
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
-msgstr "Type alfakanaal niet gedefinieerd voor %s. Neem aan dat alfa vooraf niet is vermenigvuldigd"
+msgstr ""
+"Type alfakanaal niet gedefinieerd voor %s. Neem aan dat alfa vooraf niet is "
+"vermenigvuldigd"
 
 #: plug-ins/file-tiff/file-tiff-load.c:825
 #, c-format
@@ -11287,12 +11791,16 @@ msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
 "not set while extra channels are present. Assuming the first extra channel "
 "is non-premultiplied alpha."
-msgstr "Afbeelding ‘%s’ voldoet niet aan de specificatie TIFF: veld ExtraSamples is niet ingesteld, terwijl extra kanalen aanwezig zijn. Neem aan dat het eerste extra kanaal niet vooraf vermenigvuldigde alfa is."
+msgstr ""
+"Afbeelding ‘%s’ voldoet niet aan de specificatie TIFF: veld ExtraSamples is "
+"niet ingesteld, terwijl extra kanalen aanwezig zijn. Neem aan dat het eerste "
+"extra kanaal niet vooraf vermenigvuldigde alfa is."
 
 #: plug-ins/file-tiff/file-tiff-load.c:1114
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
-msgstr "Ongeldige of onbekende compressie %u. Instellen van compressie op geen."
+msgstr ""
+"Ongeldige of onbekende compressie %u. Instellen van compressie op geen."
 
 #: plug-ins/file-tiff/file-tiff-load.c:1172
 #, c-format
@@ -11308,7 +11816,8 @@ msgstr "Onbekende eenheid voor resolutie %d, gaat uit van dpi"
 #. old AppleScan software produces these
 #: plug-ins/file-tiff/file-tiff-load.c:1369
 msgid "Warning: resolution specified without unit type, assuming dpi"
-msgstr "Waarschuwing: resolutie gespecificeerd zonder eenheid, gaat uit van dpi"
+msgstr ""
+"Waarschuwing: resolutie gespecificeerd zonder eenheid, gaat uit van dpi"
 
 #. xres but no yres
 #: plug-ins/file-tiff/file-tiff-load.c:1377
@@ -11327,7 +11836,9 @@ msgstr "Kan kleurenkaart niet lezen uit ‘%s’"
 #: plug-ins/file-tiff/file-tiff-load.c:1469
 msgid ""
 "Indexed TIFFs with color maps larger than 256colors are not yet supported"
-msgstr "Geïndexeerde TIFF's met kleurenkaarten die groter zijn dan 256 kleuren worden nog niet ondersteund"
+msgstr ""
+"Geïndexeerde TIFF's met kleurenkaarten die groter zijn dan 256 kleuren "
+"worden nog niet ondersteund"
 
 #. Validate number of channels to the same maximum as we use for
 #. * Photoshop. A higher number most likely means a corrupt image
@@ -11346,7 +11857,9 @@ msgstr "TIFF-kanaal"
 #: plug-ins/file-tiff/file-tiff-load.c:1782
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
-msgstr "Geen gegevens konden worden gelezen uit TIFF ‘%s’. Het bestand is waarschijnlijk beschadigd."
+msgstr ""
+"Geen gegevens konden worden gelezen uit TIFF ‘%s’. Het bestand is "
+"waarschijnlijk beschadigd."
 
 #  Do not rely on librsvg setting GError on failure!
 #: plug-ins/file-tiff/file-tiff-load.c:1818
@@ -11354,32 +11867,40 @@ msgstr "Geen gegevens konden worden gelezen uit TIFF ‘%s’. Het bestand is wa
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
-msgstr "Fout bij openen tijdelijk %s bestand ‘%s’ om TIFF metagegevens in te laden: %s"
+msgstr ""
+"Fout bij openen tijdelijk %s bestand ‘%s’ om TIFF metagegevens in te laden: "
+"%s"
 
 #: plug-ins/file-tiff/file-tiff-load.c:1951
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
-msgstr "%s: Niet-ondersteunde bestandsindeling, geen lader voor RGBA beschikbaar"
+msgstr ""
+"%s: Niet-ondersteunde bestandsindeling, geen lader voor RGBA beschikbaar"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2077
 #: plug-ins/file-tiff/file-tiff-load.c:2285
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
-msgstr "Lezen van tegel mislukt. Afbeelding zou beschadigd kunnen zijn op regel %d."
+msgstr ""
+"Lezen van tegel mislukt. Afbeelding zou beschadigd kunnen zijn op regel %d."
 
 #. Error reading scanline, stop loading
 #: plug-ins/file-tiff/file-tiff-load.c:2086
 #: plug-ins/file-tiff/file-tiff-load.c:2294
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
-msgstr "Lezen van scanlijn mislukt. Afbeelding zou beschadigd kunnen zijn op regel %d."
+msgstr ""
+"Lezen van scanlijn mislukt. Afbeelding zou beschadigd kunnen zijn op regel "
+"%d."
 
 #: plug-ins/file-tiff/file-tiff-load.c:2553
 #, c-format
 msgid ""
 "Invalid image dimensions (%u x %u) for Sketchbook layer %i. Image may be "
 "corrupt."
-msgstr "Ongeldige afmetingen voor afbeelding (%u x %u) voor Sketchbook-laag %i. Afbeelding kan beschadigd zijn."
+msgstr ""
+"Ongeldige afmetingen voor afbeelding (%u x %u) voor Sketchbook-laag %i. "
+"Afbeelding kan beschadigd zijn."
 
 #: plug-ins/file-tiff/file-tiff-load.c:3065
 msgid "Import from TIFF"
@@ -11508,7 +12029,9 @@ msgstr "_Default vertraging tussen frames"
 msgid ""
 "Default delay (in milliseconds) to use when timestamps for frames are not "
 "available or forced."
-msgstr "Standaard vertraging (in milliseconden) die moet worden gebruikt wanneer tijdstempels voor frames niet beschikbaar of bruikbaar zijn."
+msgstr ""
+"Standaard vertraging (in milliseconden) die moet worden gebruikt wanneer "
+"tijdstempels voor frames niet beschikbaar of bruikbaar zijn."
 
 #: plug-ins/file-webp/file-webp.c:243
 msgid "Use default dela_y for all frames"
@@ -11701,14 +12224,18 @@ msgstr "_GEGL Filter Browser"
 
 #: plug-ins/filter-browser/filter-browser.c:850
 msgid "Display information about available GEGL operations (i.e., filters)."
-msgstr "Geeft informatie weer over beschikbare bewerkingen voor GEGL (d.i. filters)."
+msgstr ""
+"Geeft informatie weer over beschikbare bewerkingen voor GEGL (d.i. filters)."
 
 #: plug-ins/filter-browser/filter-browser.c:852
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
 "GIMP and plug-ins loaded by GEGL."
-msgstr "Geeft een lijst weer van alle bewerkingen van GEGL, hun details en met welke parameters ze kunnen worden geconfigureerd. De lijst bevat bewerkingen die zijn verschaft door GEGL zelf, GIMP en plug-ins die door GEGL zijn geladen."
+msgstr ""
+"Geeft een lijst weer van alle bewerkingen van GEGL, hun details en met welke "
+"parameters ze kunnen worden geconfigureerd. De lijst bevat bewerkingen die "
+"zijn verschaft door GEGL zelf, GIMP en plug-ins die door GEGL zijn geladen."
 
 #: plug-ins/flame/flame.c:179
 msgid "_Flame..."
@@ -11941,7 +12468,8 @@ msgid ""
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
-msgstr "Geen %s in gimprc:\n"
+msgstr ""
+"Geen %s in gimprc:\n"
 "U moet een item toevoegen zoals\n"
 "(%s \"%s\")\n"
 "in uw %s-bestand."
@@ -11958,7 +12486,8 @@ msgstr "Re_altime-voorbeeld"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:668
 msgid "If enabled the preview will be redrawn automatically"
-msgstr "Indien ingeschakeld zal het voorbeeld automatisch opnieuw worden getekend"
+msgstr ""
+"Indien ingeschakeld zal het voorbeeld automatisch opnieuw worden getekend"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:671
 msgid "R_edraw preview"
@@ -12166,7 +12695,9 @@ msgstr "Kleurmodus"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:315
 msgid "Apply specified color map or active gradient to final image"
-msgstr "Opgegeven kleurenkaart of actief kleurverloop toepassen op uiteindelijke afbeelding"
+msgstr ""
+"Opgegeven kleurenkaart of actief kleurverloop toepassen op uiteindelijke "
+"afbeelding"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:316
 msgid "As specified above"
@@ -12278,7 +12809,8 @@ msgstr "Fractal wordt gegenereerd"
 #: plug-ins/gradient-flare/gradient-flare.c:3351
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr "Weet u zeker dat u \"%s\" uit de lijst en van de schijf wilt verwijderen?"
+msgstr ""
+"Weet u zeker dat u \"%s\" uit de lijst en van de schijf wilt verwijderen?"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:882
 msgid "Delete Fractal"
@@ -12295,7 +12827,8 @@ msgstr "Bestand ‘%s’ is geen bestand van FractalExplorer"
 msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
-msgstr "Bestand ‘%s’ is beschadigd.\n"
+msgstr ""
+"Bestand ‘%s’ is beschadigd.\n"
 "Regel %d Optie-deel onjuist"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:1288
@@ -12336,7 +12869,8 @@ msgstr "Lijnrand tonen"
 
 #: plug-ins/gfig/gfig-bezier.c:417
 msgid "Draws lines between the control points. Only during curve creation"
-msgstr "Tekent lijnen tussen de controlepunten. Alleen bij het maken van de curve"
+msgstr ""
+"Tekent lijnen tussen de controlepunten. Alleen bij het maken van de curve"
 
 #. Start building the dialog up
 #: plug-ins/gfig/gfig-dialog.c:345
@@ -12616,7 +13150,9 @@ msgstr "Transparant"
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
-msgstr "Type achtergrond laag. Kopiëren veroorzaakt dat de vorige laag wordt gekopieerd voordat het tekenen is uitgevoerd."
+msgstr ""
+"Type achtergrond laag. Kopiëren veroorzaakt dat de vorige laag wordt "
+"gekopieerd voordat het tekenen is uitgevoerd."
 
 #: plug-ins/gfig/gfig-dialog.c:1301
 msgid "Background:"
@@ -12737,7 +13273,9 @@ msgstr "Geometrische vormen aanmaken"
 #: plug-ins/gfig/gfig.c:851
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
-msgstr "Fout bij opslaan van figuur als een parasiet: parasiet kan niet aan tekengebied worden toegevoegd."
+msgstr ""
+"Fout bij opslaan van figuur als een parasiet: parasiet kan niet aan "
+"tekengebied worden toegevoegd."
 
 #  Do not rely on librsvg setting GError on failure!
 #: plug-ins/gfig/gfig.c:881
@@ -12836,7 +13374,9 @@ msgstr "Reliëf:"
 
 #: plug-ins/gimpressionist/brush.c:628 plug-ins/gimpressionist/paper.c:204
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr "Bepaalt de hoeveelheid reliëf die op de afbeelding moet worden toegepast (in procenten)"
+msgstr ""
+"Bepaalt de hoeveelheid reliëf die op de afbeelding moet worden toegepast (in "
+"procenten)"
 
 #: plug-ins/gimpressionist/color.c:59
 msgid "Co_lor"
@@ -12852,7 +13392,9 @@ msgstr "_Midden van penseel"
 
 #: plug-ins/gimpressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr "Kleur wordt berekend uit het gemiddelde van alle beeldpunten onder het penseel"
+msgstr ""
+"Kleur wordt berekend uit het gemiddelde van alle beeldpunten onder het "
+"penseel"
 
 #: plug-ins/gimpressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
@@ -12893,7 +13435,9 @@ msgstr "Uniform gekleurde achtergrond"
 
 #: plug-ins/gimpressionist/general.c:195
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr "Een transparante achtergrond gebruiken. Alleen de geschilderde streken zullen zichtbaar zijn"
+msgstr ""
+"Een transparante achtergrond gebruiken. Alleen de geschilderde streken "
+"zullen zichtbaar zijn"
 
 #: plug-ins/gimpressionist/general.c:212
 msgid "Paint edges"
@@ -12943,7 +13487,9 @@ msgstr "Schaduwdiepte:"
 #: plug-ins/gimpressionist/general.c:267
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr "De diepte van de slagschaduw: hoe ver deze van het object verwijderd moet zijn"
+msgstr ""
+"De diepte van de slagschaduw: hoe ver deze van het object verwijderd moet "
+"zijn"
 
 #: plug-ins/gimpressionist/general.c:273
 msgid "Shadow blur:"
@@ -13022,13 +13568,16 @@ msgstr "De hoekbreedte van het eerste penseel dat wordt aangemaakt"
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
-msgstr "Laat de helderheid van het gebied de richting van de penseelstreek bepalen"
+msgstr ""
+"Laat de helderheid van het gebied de richting van de penseelstreek bepalen"
 
 #: plug-ins/gimpressionist/orientation.c:153
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr "De afstand tot het midden van de afbeelding bepaalt de richting van de penseelstreek"
+msgstr ""
+"De afstand tot het midden van de afbeelding bepaalt de richting van de "
+"penseelstreek"
 
 #: plug-ins/gimpressionist/orientation.c:157
 msgid "Selects a random direction of each stroke"
@@ -13040,7 +13589,9 @@ msgstr "Radiaal"
 
 #: plug-ins/gimpressionist/orientation.c:161
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr "Laat de richting naar het midden bepalen wat de richting van de penseelstreek wordt"
+msgstr ""
+"Laat de richting naar het midden bepalen wat de richting van de "
+"penseelstreek wordt"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
 msgid "Flowing"
@@ -13056,7 +13607,9 @@ msgstr "De tint van het gebied bepaalt de richting van de penseelstreek"
 
 #: plug-ins/gimpressionist/orientation.c:177
 msgid "The direction that matches the original image the closest is selected"
-msgstr "De richting die het best past bij de oorspronkelijke afbeelding wordt geselecteerd"
+msgstr ""
+"De richting die het best past bij de oorspronkelijke afbeelding wordt "
+"geselecteerd"
 
 #: plug-ins/gimpressionist/orientation.c:184 plug-ins/gimpressionist/size.c:192
 msgid "Manual"
@@ -13084,7 +13637,10 @@ msgstr "Vectoren"
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
-msgstr "Het vectorveld. Klik met links om de geselecteerde vector te verplaatsen, klik met rechts om het in de richting van de muis te laten wijzen, klik met middelste knop om een nieuwe vector toe te voegen."
+msgstr ""
+"Het vectorveld. Klik met links om de geselecteerde vector te verplaatsen, "
+"klik met rechts om het in de richting van de muis te laten wijzen, klik met "
+"middelste knop om een nieuwe vector toe te voegen."
 
 #: plug-ins/gimpressionist/orientmap.c:587
 #: plug-ins/gimpressionist/sizemap.c:460
@@ -13145,7 +13701,9 @@ msgstr "_Voronoi"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "Voronoi-modus zorgt ervoor dat alleen de vector die het dichtst bij een bepaald punt is invloed heeft"
+msgstr ""
+"Voronoi-modus zorgt ervoor dat alleen de vector die het dichtst bij een "
+"bepaald punt is invloed heeft"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -13209,7 +13767,9 @@ msgstr "Schaal:"
 
 #: plug-ins/gimpressionist/paper.c:193
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr "Geeft de schaal van de textuur aan (als een percentage van het oorspronkelijke bestand)"
+msgstr ""
+"Geeft de schaal van de textuur aan (als een percentage van het "
+"oorspronkelijke bestand)"
 
 #: plug-ins/gimpressionist/placement.c:66
 msgid "Pl_acement"
@@ -13340,12 +13900,16 @@ msgstr "Grootte afhankelijk van:"
 #: plug-ins/gimpressionist/size.c:156
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "Laat de waarde (helderheid) van het gebied de grootte van de penseelstreek bepalen"
+msgstr ""
+"Laat de waarde (helderheid) van het gebied de grootte van de penseelstreek "
+"bepalen"
 
 #: plug-ins/gimpressionist/size.c:160
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
-msgstr "De afstand tot het midden van de afbeelding bepaalt de grootte van de penseelstreek"
+msgstr ""
+"De afstand tot het midden van de afbeelding bepaalt de grootte van de "
+"penseelstreek"
 
 #: plug-ins/gimpressionist/size.c:164
 msgid "Selects a random size for each stroke"
@@ -13353,7 +13917,8 @@ msgstr "Kies een willekeurige grootte voor elke penseelstreek"
 
 #: plug-ins/gimpressionist/size.c:168
 msgid "Let the direction from the center determine the size of the stroke"
-msgstr "Laat de richting naar het midden de grootte van de penseelstreek bepalen"
+msgstr ""
+"Laat de richting naar het midden de grootte van de penseelstreek bepalen"
 
 #: plug-ins/gimpressionist/size.c:180
 msgid "The hue of the region determines the size of the stroke"
@@ -13361,7 +13926,9 @@ msgstr "De tint van het gebied bepaalt de grootte van de penseelstreek"
 
 #: plug-ins/gimpressionist/size.c:184
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr "De penseelgrootte die het best past bij de oorspronkelijke afbeelding wordt gebruikt"
+msgstr ""
+"De penseelgrootte die het best past bij de oorspronkelijke afbeelding wordt "
+"gebruikt"
 
 #: plug-ins/gimpressionist/size.c:193
 msgid "Manually specify the stroke size"
@@ -13503,7 +14070,9 @@ msgid ""
 "GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
 "(gflare-path \"%s\")\n"
 "and make a folder '%s', then you can save your own GFlares into that folder."
-msgstr "GFlare ‘%s’ is niet opgeslagen. Als u een nieuw item toevoegt in ‘%s’, zoals:\n"
+msgstr ""
+"GFlare ‘%s’ is niet opgeslagen. Als u een nieuw item toevoegt in ‘%s’, "
+"zoals:\n"
 "(gflare-path \"%s\")\n"
 "en een map ‘%s’ maakt, dan kunt u uw eigen GFlares in die map opslaan."
 
@@ -13799,7 +14368,9 @@ msgstr "De GIMP-gebruikershandleiding is niet beschikbaar."
 msgid ""
 "Please install the additional help package or use the online user manual at: "
 "https://docs.gimp.org/"
-msgstr "Installeer het aanvullende hulppakket of gebruik de online gebruikershandleiding op https://docs.gimp.org/"
+msgstr ""
+"Installeer het aanvullende hulppakket of gebruik de online "
+"gebruikershandleiding op https://docs.gimp.org/"
 
 #: plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -13825,7 +14396,8 @@ msgstr "Laden mislukt van ‘%s’: %s"
 msgid ""
 "Parse error in '%s':\n"
 "%s"
-msgstr "Verwerkingsfout in ‘%s’:\n"
+msgstr ""
+"Verwerkingsfout in ‘%s’:\n"
 "%s"
 
 #: plug-ins/ifs-compose/ifs-compose.c:433
@@ -14117,7 +14689,11 @@ msgid ""
 "their width, height, and spacing from each other. This allows you to rapidly "
 "create the most common image map type - image collection of \"thumbnails\", "
 "suitable for navigation bars."
-msgstr "Hulplijnen zijn vooraf gedefinieerde rechthoeken die de afbeelding bedekken. U definieert ze met hun breedte, hoogte en afstand tot elkaar. Dat stelt u in staat snel het meest voorkomende type afbeeldingskaart te maken - collectie afbeeldingen van \"miniaturen\", geschikt voor navigatiebalken."
+msgstr ""
+"Hulplijnen zijn vooraf gedefinieerde rechthoeken die de afbeelding bedekken. "
+"U definieert ze met hun breedte, hoogte en afstand tot elkaar. Dat stelt u "
+"in staat snel het meest voorkomende type afbeeldingskaart te maken - "
+"collectie afbeeldingen van \"miniaturen\", geschikt voor navigatiebalken."
 
 #: plug-ins/imagemap/imap_cmd_guides.c:178
 msgid "_Left start at:"
@@ -14259,7 +14835,8 @@ msgstr "e-_mail"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:309
 msgid "_URL to activate when this area is clicked: (required)"
-msgstr "_URL die geactiveerd wordt als op dit gebied wordt geklikt: (verplicht)"
+msgstr ""
+"_URL die geactiveerd wordt als op dit gebied wordt geklikt: (verplicht)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:311
 msgid "Select HTML file"
@@ -15008,7 +15585,8 @@ msgstr "Oplichten"
 
 #: plug-ins/lighting/lighting-main.c:297
 msgid "Material highlight (note, it's exponential) (Polished)"
-msgstr "Hoge lichten in het materiaal (let op: exponentiële schaal) (Polijsten)"
+msgstr ""
+"Hoge lichten in het materiaal (let op: exponentiële schaal) (Polijsten)"
 
 #: plug-ins/lighting/lighting-main.c:303
 msgid "Metallic"
@@ -15913,7 +16491,9 @@ msgstr "Handvat van omvattende venster"
 #: plug-ins/metadata/metadata-editor.c:778
 msgid ""
 "The opaque handle of the window to set this plug-in's dialog transient to"
-msgstr "Het dialoogvenster van deze plug-in instellen op de dekkende handgreep van dit venster"
+msgstr ""
+"Het dialoogvenster van deze plug-in instellen op de dekkende handgreep van "
+"dit venster"
 
 #: plug-ins/metadata/metadata-editor.c:1182
 #, c-format
@@ -15975,9 +16555,12 @@ msgid ""
 "10deg 15' 20\", or 10° 15' 20\", or 10:15:20.45, or 10 15 20, or 10 15.30, "
 "or 10.45\n"
 "Delete all text to remove the current value."
-msgstr "Voer hier GPS-waarde in of bewerk die.\n"
-"Geldige waarden bestaan uit 1, 2 of 3 getallen (graden, minuten, seconden), bekijk de volgende voorbeelden:\n"
-"10deg 15' 20\", of 10° 15' 20\", of 10:15:20.45, of 10 15 20, of 10 15.30, of 10.45\n"
+msgstr ""
+"Voer hier GPS-waarde in of bewerk die.\n"
+"Geldige waarden bestaan uit 1, 2 of 3 getallen (graden, minuten, seconden), "
+"bekijk de volgende voorbeelden:\n"
+"10deg 15' 20\", of 10° 15' 20\", of 10:15:20.45, of 10 15 20, of 10 15.30, "
+"of 10.45\n"
 "Wis alle tekst om de huidige waarde te verwijderen."
 
 #: plug-ins/metadata/metadata-editor.c:2440
@@ -15988,10 +16571,12 @@ msgid ""
 "Depending on the selected measurement type the value should be entered in "
 "meter (m) or feet (ft)\n"
 "Delete all text to remove the current value."
-msgstr "Voer hier GPS-waarde vor de hoogte in of bewerk die.\n"
+msgstr ""
+"Voer hier GPS-waarde vor de hoogte in of bewerk die.\n"
 "Een geldige waarde bestaat uit een getal:\n"
 "bijv. 100, of 12,24\n"
-"Afhankelijk van het geselecteerde type maateenheid zou de waarde moeten worden ingevoerd in meter (m) of feet (ft)\n"
+"Afhankelijk van het geselecteerde type maateenheid zou de waarde moeten "
+"worden ingevoerd in meter (m) of feet (ft)\n"
 "Wis alle tekst om de huidige waarde te verwijderen."
 
 # Komt achter tekst "Waardering"
@@ -16582,7 +17167,10 @@ msgid ""
 "If the angle defined by a point and its predecessors and successors is "
 "smaller than this, it's a corner, even if it's within 'corner_surround' "
 "pixels of a point with a smaller angle."
-msgstr "Als de hoek die is gedefinieerd door een punt en zijn voorgangers en opvolgers kleiner is dan dit, is het een hoek, zelfs als deze binnen de 'omgeving hoek'-pixels van een punt met een kleinere hoek ligt."
+msgstr ""
+"Als de hoek die is gedefinieerd door een punt en zijn voorgangers en "
+"opvolgers kleiner is dan dit, is het een hoek, zelfs als deze binnen de "
+"'omgeving hoek'-pixels van een punt met een kleinere hoek ligt."
 
 #: plug-ins/selection-to-path/selection-to-path.c:167
 msgid "Corner _Surround"
@@ -16601,7 +17189,9 @@ msgstr "Drempelwaarde hoek"
 msgid ""
 "If a point, its predecessors, and its successors define an angle smaller "
 "than this, it's a corner."
-msgstr "Als een punt, z'n voorgangers en z'n opvolgers een hoek bepalen die kleiner is dan dit, is het een hoek."
+msgstr ""
+"Als een punt, z'n voorgangers en z'n opvolgers een hoek bepalen die kleiner "
+"is dan dit, is het een hoek."
 
 #: plug-ins/selection-to-path/selection-to-path.c:181
 msgid "Error Thres_hold"
@@ -16611,7 +17201,9 @@ msgstr "Foutdrempelwaarde"
 msgid ""
 "Amount of error at which a fitted spline is unacceptable. If any pixel is "
 "further away than this from the fitted curve, we try again."
-msgstr "Hoeveelheid fouten waarbij een vaste spline niet acceptabel is. Als een pixel verder weg is van een vaste curve dan dit, proberen we het opnieuw."
+msgstr ""
+"Hoeveelheid fouten waarbij een vaste spline niet acceptabel is. Als een "
+"pixel verder weg is van een vaste curve dan dit, proberen we het opnieuw."
 
 #: plug-ins/selection-to-path/selection-to-path.c:189
 msgid "_Filter Alternative Surround"
@@ -16619,7 +17211,9 @@ msgstr "_Filter Alternatieve omgeving"
 
 #: plug-ins/selection-to-path/selection-to-path.c:190
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Een tweede aantal nabij liggende punten om in overweging te nemen tijdens het filteren."
+msgstr ""
+"Een tweede aantal nabij liggende punten om in overweging te nemen tijdens "
+"het filteren."
 
 #: plug-ins/selection-to-path/selection-to-path.c:196
 msgid "Filter E_psilon"
@@ -16630,7 +17224,10 @@ msgid ""
 "If the angles between the vectors produced by filter_surround and "
 "filter_alternative_surround points differ by more than this, use the one "
 "from filter_alternative_surround."
-msgstr "Als de hoeken tussen de vectoren geproduceerd door filter_surround en filter_alternative_surround punten meer verschillen dan dit, gebruik dan die van filter_alternative_surround."
+msgstr ""
+"Als de hoeken tussen de vectoren geproduceerd door filter_surround en "
+"filter_alternative_surround punten meer verschillen dan dit, gebruik dan die "
+"van filter_alternative_surround."
 
 #: plug-ins/selection-to-path/selection-to-path.c:205
 msgid "Filter Iteration Co_unt"
@@ -16642,7 +17239,11 @@ msgid ""
 "dramatically --- to 50 or so --- can produce vastly better results. But if "
 "any points that 'should' be corners aren't found, the curve goes to hell "
 "around that point."
-msgstr "Aantal keren om de originele gegevenspunten glad te maken.  Dramatisch verhogen van dit getal --- naar 50 of zo --- kan veel betere resultaten geven. Maar als er geen punten worden gevonden die hoeken 'zouden' moeten zijn, gaat de curve op dat punt de mist in."
+msgstr ""
+"Aantal keren om de originele gegevenspunten glad te maken.  Dramatisch "
+"verhogen van dit getal --- naar 50 of zo --- kan veel betere resultaten "
+"geven. Maar als er geen punten worden gevonden die hoeken 'zouden' moeten "
+"zijn, gaat de curve op dat punt de mist in."
 
 #: plug-ins/selection-to-path/selection-to-path.c:215
 msgid "Filt_er Percent"
@@ -16651,7 +17252,9 @@ msgstr "Filter_percentage"
 #: plug-ins/selection-to-path/selection-to-path.c:216
 msgid ""
 "To produce the new point, use the old point plus this times the neighbors."
-msgstr "Om het nieuwe punt aan te maken, gebruikt u het oude punt plus dit aantal keren de buren."
+msgstr ""
+"Om het nieuwe punt aan te maken, gebruikt u het oude punt plus dit aantal "
+"keren de buren."
 
 #: plug-ins/selection-to-path/selection-to-path.c:222
 msgid "Filter Secondar_y Surround"
@@ -16661,7 +17264,9 @@ msgstr "Filter Secondar_y Surround"
 msgid ""
 "Number of adjacent points to consider if 'filter_surround' points defines a "
 "straight line."
-msgstr "Aantal nabij liggende punten om te beoordelen of 'filter-surround'-punten een rechte lijn definiëren."
+msgstr ""
+"Aantal nabij liggende punten om te beoordelen of 'filter-surround'-punten "
+"een rechte lijn definiëren."
 
 #: plug-ins/selection-to-path/selection-to-path.c:229
 msgid "Filter Surroun_d"
@@ -16677,7 +17282,9 @@ msgstr "Knieën behouden"
 
 #: plug-ins/selection-to-path/selection-to-path.c:236
 msgid "Says whether or not to remove 'knee' points after finding the outline."
-msgstr "Zegt of de 'kniepunten' al dan niet verwijderd moeten worden nadat de contour gevonden is."
+msgstr ""
+"Zegt of de 'kniepunten' al dan niet verwijderd moeten worden nadat de "
+"contour gevonden is."
 
 #: plug-ins/selection-to-path/selection-to-path.c:242
 msgid "_Line Reversion Threshold"
@@ -16689,7 +17296,11 @@ msgid ""
 "line, even if it would otherwise be changed back to a curve. This is "
 "weighted by the square of the curve length, to make shorter curves more "
 "likely to be reverted."
-msgstr "Als een spline dichter bij een rechte lijn is dan dit, blijft het een rechte lijn, zelfs als het anders terug zou worden veranderd naar een curve. Dit wordt gewogen door de wortel van de lengte van de curve, om het voor kortere curves meer waarschijnlijk te maken om te worden teruggedraaid."
+msgstr ""
+"Als een spline dichter bij een rechte lijn is dan dit, blijft het een rechte "
+"lijn, zelfs als het anders terug zou worden veranderd naar een curve. Dit "
+"wordt gewogen door de wortel van de lengte van de curve, om het voor kortere "
+"curves meer waarschijnlijk te maken om te worden teruggedraaid."
 
 #: plug-ins/selection-to-path/selection-to-path.c:252
 msgid "L_ine Threshold"
@@ -16699,7 +17310,9 @@ msgstr "_Lijndrempel"
 msgid ""
 "How many pixels (on the average) a spline can diverge from the line "
 "determined by its endpoints before it is changed to a straight line."
-msgstr "Hoeveel pixels (gemiddeld) een kromme van de lijn bepaald door zijn eindpunten kan afwijken, voordat het veranderd wordt in een rechte lijn."
+msgstr ""
+"Hoeveel pixels (gemiddeld) een kromme van de lijn bepaald door zijn "
+"eindpunten kan afwijken, voordat het veranderd wordt in een rechte lijn."
 
 #: plug-ins/selection-to-path/selection-to-path.c:260
 msgid "Reparametri_ze Improvement"
@@ -16709,7 +17322,10 @@ msgstr "Verbetering door _nieuwe parameter"
 msgid ""
 "If reparameterization doesn't improve the fit by this much percent, stop "
 "doing it. Amount of error at which it is pointless to reparameterize."
-msgstr "Als herparametreren het passend maken niet verbeterd met dit percentage, stopt het algoritme met de uitvoering ervan. Hoeveelheid fouten waarbij het nutteloos is om te herparametreren."
+msgstr ""
+"Als herparametreren het passend maken niet verbeterd met dit percentage, "
+"stopt het algoritme met de uitvoering ervan. Hoeveelheid fouten waarbij het "
+"nutteloos is om te herparametreren."
 
 #: plug-ins/selection-to-path/selection-to-path.c:268
 msgid "Repara_metrize Threshold"
@@ -16722,7 +17338,13 @@ msgid ""
 "with a single spline. The initial fit is not good enough for the Newton-"
 "Raphson iteration to improve it.  It may be that it would be better to "
 "detect the cases where we didn't find any corners."
-msgstr "Hoeveelheid fouten waarbij het nutteloos is om te herparametreren.  Dit gebeurt bijvoorbeeld als we proberen de omtrek van de buitenzijde van een 'O' in een enkele spline te stoppen. De initiële passing is niet goed genoeg voor de herhaling van Newton-Raphson om het te verbeteren.  Het zou kunnen zijn dat het beter is om de gevallen te detecteren waarbij we geen hoeken vonden."
+msgstr ""
+"Hoeveelheid fouten waarbij het nutteloos is om te herparametreren.  Dit "
+"gebeurt bijvoorbeeld als we proberen de omtrek van de buitenzijde van een "
+"'O' in een enkele spline te stoppen. De initiële passing is niet goed genoeg "
+"voor de herhaling van Newton-Raphson om het te verbeteren.  Het zou kunnen "
+"zijn dat het beter is om de gevallen te detecteren waarbij we geen hoeken "
+"vonden."
 
 #: plug-ins/selection-to-path/selection-to-path.c:279
 msgid "Subdi_vide Search"
@@ -16732,7 +17354,9 @@ msgstr "Onder_verdeling Zoeken"
 msgid ""
 "Percentage of the curve away from the worst point to look for a better place "
 "to subdivide."
-msgstr "Percentage van de curve verwijderd van het slechtste punt om naar een betere plek voor onderverdeling te zoeken."
+msgstr ""
+"Percentage van de curve verwijderd van het slechtste punt om naar een betere "
+"plek voor onderverdeling te zoeken."
 
 #: plug-ins/selection-to-path/selection-to-path.c:286
 msgid "Su_bdivide Surround"
@@ -16742,7 +17366,9 @@ msgstr "On_derverdeling Surround"
 msgid ""
 "Number of points to consider when deciding whether a given point is a better "
 "place to subdivide."
-msgstr "Aantal punten om in ogenschouw te nemen om te beslissen of een gegeven punt een betere plek is om onder te verdelen."
+msgstr ""
+"Aantal punten om in ogenschouw te nemen om te beslissen of een gegeven punt "
+"een betere plek is om onder te verdelen."
 
 #: plug-ins/selection-to-path/selection-to-path.c:293
 msgid "Subdivide Th_reshold"
@@ -16752,7 +17378,9 @@ msgstr "_Drempel Onderverdeling"
 msgid ""
 "How many pixels a point can diverge from a straight line and still be "
 "considered a better place to subdivide."
-msgstr "Hoeveel pixels een punt kan afliggen van een rechte lijn en nog steeds als een betere plek kan worden gezien om onder te verdelen."
+msgstr ""
+"Hoeveel pixels een punt kan afliggen van een rechte lijn en nog steeds als "
+"een betere plek kan worden gezien om onder te verdelen."
 
 #: plug-ins/selection-to-path/selection-to-path.c:301
 msgid "_Tangent Surround"
@@ -16762,7 +17390,9 @@ msgstr "_Tangent Surround"
 msgid ""
 "Number of points to look at on either side of a point when computing the "
 "approximation to the tangent at that point."
-msgstr "Aantal punten waarnaar aan elke zijde van een punt moet worden gekeken wanneer de benadering van de raaklijn op dat punt wordt berekend."
+msgstr ""
+"Aantal punten waarnaar aan elke zijde van een punt moet worden gekeken "
+"wanneer de benadering van de raaklijn op dat punt wordt berekend."
 
 #: plug-ins/selection-to-path/selection-to-path.c:324
 msgid "No selection to convert"
