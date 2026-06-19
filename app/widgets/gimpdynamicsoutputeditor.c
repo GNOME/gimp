@@ -71,7 +71,8 @@ inputs[] =
   { "use-velocity",  "velocity-curve",  N_("Velocity"),         { 0.0, 1.0, 0.0, 1.0 } },
   { "use-direction", "direction-curve", N_("Direction"),        { 0.0, 0.0, 1.0, 1.0 } },
   { "use-tilt",      "tilt-curve",      N_("Tilt"),             { 1.0, 0.5, 0.0, 1.0 } },
-  { "use-wheel",     "wheel-curve",     N_("Wheel / Rotation"), { 1.0, 0.0, 1.0, 1.0 } },
+  { "use-wheel",     "wheel-curve",     N_("Wheel"),            { 1.0, 0.0, 1.0, 1.0 } },
+  { "use-rotation",  "rotation-curve",  N_("Rotation"),         { 0.5, 0.5, 1.0, 1.0 } },
   { "use-random",    "random-curve",    N_("Random"),           { 0.0, 1.0, 1.0, 1.0 } },
   { "use-fade",      "fade-curve",      N_("Fade"),             { 0.5, 0.5, 0.5, 0.0 } }
 };

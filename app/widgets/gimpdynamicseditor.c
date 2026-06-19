@@ -127,7 +127,7 @@ gimp_dynamics_editor_constructed (GObject *object)
   GimpDataEditor     *data_editor = GIMP_DATA_EDITOR (object);
   GimpDynamicsEditor *editor      = GIMP_DYNAMICS_EDITOR (object);
   GimpDynamics       *dynamics    = editor->dynamics_model;
-  GtkWidget          *input_labels[7];
+  GtkWidget          *input_labels[8];
   GtkWidget          *vbox;
   GtkWidget          *icon_box;
   GtkWidget          *grid;
@@ -162,9 +162,10 @@ gimp_dynamics_editor_constructed (GObject *object)
   input_labels[1] = gtk_label_new (_("Velocity"));
   input_labels[2] = gtk_label_new (_("Direction"));
   input_labels[3] = gtk_label_new (_("Tilt"));
-  input_labels[4] = gtk_label_new (_("Wheel/Rotation"));
-  input_labels[5] = gtk_label_new (_("Random"));
-  input_labels[6] = gtk_label_new (_("Fade"));
+  input_labels[4] = gtk_label_new (_("Wheel"));
+  input_labels[5] = gtk_label_new (_("Rotation"));
+  input_labels[6] = gtk_label_new (_("Random"));
+  input_labels[7] = gtk_label_new (_("Fade"));
 
   for (i = 0; i < n_inputs; i++)
     {
@@ -349,6 +350,10 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
   column++;
 
   dynamics_check_button_new (config,  "use-wheel",
+                             grid, column, row);
+  column++;
+
+  dynamics_check_button_new (config,  "use-rotation",
                              grid, column, row);
   column++;
 

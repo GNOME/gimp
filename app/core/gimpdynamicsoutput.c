@@ -42,6 +42,7 @@
 #define DEFAULT_USE_DIRECTION FALSE
 #define DEFAULT_USE_TILT      FALSE
 #define DEFAULT_USE_WHEEL     FALSE
+#define DEFAULT_USE_ROTATION  FALSE
 #define DEFAULT_USE_RANDOM    FALSE
 #define DEFAULT_USE_FADE      FALSE
 
@@ -56,6 +57,7 @@ enum
   PROP_USE_DIRECTION,
   PROP_USE_TILT,
   PROP_USE_WHEEL,
+  PROP_USE_ROTATION,
   PROP_USE_RANDOM,
   PROP_USE_FADE,
   PROP_PRESSURE_CURVE,
@@ -63,6 +65,7 @@ enum
   PROP_DIRECTION_CURVE,
   PROP_TILT_CURVE,
   PROP_WHEEL_CURVE,
+  PROP_ROTATION_CURVE,
   PROP_RANDOM_CURVE,
   PROP_FADE_CURVE
 };
@@ -79,6 +82,7 @@ struct _GimpDynamicsOutputPrivate
   gboolean                use_direction;
   gboolean                use_tilt;
   gboolean                use_wheel;
+  gboolean                use_rotation;
   gboolean                use_random;
   gboolean                use_fade;
 
@@ -87,6 +91,7 @@ struct _GimpDynamicsOutputPrivate
   GimpCurve              *direction_curve;
   GimpCurve              *tilt_curve;
   GimpCurve              *wheel_curve;
+  GimpCurve              *rotation_curve;
   GimpCurve              *random_curve;
   GimpCurve              *fade_curve;
 };
@@ -166,7 +171,13 @@ gimp_dynamics_output_class_init (GimpDynamicsOutputClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_WHEEL,
                             "use-wheel",
                             NULL, NULL,
-                            DEFAULT_USE_TILT,
+                            DEFAULT_USE_WHEEL,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_ROTATION,
+                            "use-rotation",
+                            NULL, NULL,
+                            DEFAULT_USE_ROTATION,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_RANDOM,
@@ -211,6 +222,12 @@ gimp_dynamics_output_class_init (GimpDynamicsOutputClass *klass)
                            GIMP_TYPE_CURVE,
                            GIMP_CONFIG_PARAM_AGGREGATE);
 
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_ROTATION_CURVE,
+                           "rotation-curve",
+                            NULL, NULL,
+                           GIMP_TYPE_CURVE,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
+
   GIMP_CONFIG_PROP_OBJECT (object_class, PROP_RANDOM_CURVE,
                            "random-curve",
                             NULL, NULL,
@@ -239,6 +256,8 @@ gimp_dynamics_output_init (GimpDynamicsOutput *output)
                                                                 "tilt-curve");
   private->wheel_curve     = gimp_dynamics_output_create_curve (output,
                                                                 "wheel-curve");
+  private->rotation_curve  = gimp_dynamics_output_create_curve (output,
+                                                                "rotation-curve");
   private->random_curve    = gimp_dynamics_output_create_curve (output,
                                                                 "random-curve");
   private->fade_curve      = gimp_dynamics_output_create_curve (output,
@@ -255,6 +274,7 @@ gimp_dynamics_output_finalize (GObject *object)
   g_clear_object (&private->direction_curve);
   g_clear_object (&private->tilt_curve);
   g_clear_object (&private->wheel_curve);
+  g_clear_object (&private->rotation_curve);
   g_clear_object (&private->random_curve);
   g_clear_object (&private->fade_curve);
 
@@ -295,6 +315,10 @@ gimp_dynamics_output_set_property (GObject      *object,
       private->use_wheel = g_value_get_boolean (value);
       break;
 
+    case PROP_USE_ROTATION:
+      private->use_rotation = g_value_get_boolean (value);
+      break;
+
     case PROP_USE_RANDOM:
       private->use_random = g_value_get_boolean (value);
       break;
@@ -326,6 +350,11 @@ gimp_dynamics_output_set_property (GObject      *object,
     case PROP_WHEEL_CURVE:
       gimp_dynamics_output_copy_curve (g_value_get_object (value),
                                        private->wheel_curve);
+      break;
+
+    case PROP_ROTATION_CURVE:
+      gimp_dynamics_output_copy_curve (g_value_get_object (value),
+                                       private->rotation_curve);
       break;
 
     case PROP_RANDOM_CURVE:
@@ -378,6 +407,10 @@ gimp_dynamics_output_get_property (GObject    *object,
       g_value_set_boolean (value, private->use_wheel);
       break;
 
+    case PROP_USE_ROTATION:
+      g_value_set_boolean (value, private->use_rotation);
+      break;
+
     case PROP_USE_RANDOM:
       g_value_set_boolean (value, private->use_random);
       break;
@@ -404,6 +437,10 @@ gimp_dynamics_output_get_property (GObject    *object,
 
     case PROP_WHEEL_CURVE:
       g_value_set_object (value, private->wheel_curve);
+      break;
+
+    case PROP_ROTATION_CURVE:
+      g_value_set_object (value, private->rotation_curve);
       break;
 
     case PROP_RANDOM_CURVE:
@@ -445,6 +482,7 @@ gimp_dynamics_output_is_enabled (GimpDynamicsOutput *output)
           private->use_direction ||
           private->use_tilt      ||
           private->use_wheel     ||
+          private->use_rotation  ||
           private->use_random    ||
           private->use_fade);
 }
@@ -496,6 +534,12 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
       wheel = coords->wheel;
 
       total += gimp_curve_map_value (private->wheel_curve, wheel);
+      factors++;
+    }
+
+  if (private->use_rotation)
+    {
+      total += gimp_curve_map_value (private->rotation_curve, coords->rotation);
       factors++;
     }
 
@@ -614,6 +658,12 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
       factors++;
     }
 
+  if (private->use_rotation)
+    {
+      total += 1.0 - gimp_curve_map_value (private->rotation_curve, coords->rotation);
+      factors++;
+    }
+
   if (private->use_random)
     {
       total += gimp_curve_map_value (private->random_curve,
@@ -703,7 +753,29 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
 
       total += 1.0;
       factors++;
+    }
 
+  if (private->use_rotation)
+    {
+      gdouble rotation = gimp_curve_map_value (private->rotation_curve,
+                                               coords->rotation);
+
+      if (rotation > 0.5)
+        {
+          sign = -1.0;
+
+          if (rotation > 0.75)
+            rotation = 1.0 - rotation;
+          else
+            rotation -= 0.5;
+        }
+      else if (rotation > 0.25)
+        {
+          rotation = 0.5 - rotation;
+        }
+
+      total += 4.0 * fabs (rotation);
+      factors++;
     }
 
   if (private->use_random)
