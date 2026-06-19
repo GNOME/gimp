@@ -1084,7 +1084,7 @@ load_resource_llnk (const PSDlayerres     *res_a,
           return -1;
         }
 
-      IFDBG(3) g_debug ("Next data block offset: %" G_GSIZE_FORMAT, link_data_offset + data_size + 8);
+      IFDBG(3) g_debug ("Next data block offset: %" G_GUINT64_FORMAT, (guint64)(link_data_offset + data_size + 8));
 
       link_data = g_new0 (PSDLinkedData, 1);
       if (img_a->linked_files.linked_data == NULL)
