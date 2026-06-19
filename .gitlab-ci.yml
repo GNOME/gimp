@@ -985,7 +985,6 @@ tartan-static-analysis:
     - mkdir report
     - mv ${GIMP_BUILDDIR}/meson-logs/scanbuild/* ./report/
     - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
-  allow_failure: true
   artifacts:
     paths:
       - report/
@@ -996,7 +995,7 @@ issue-bot:
   rules:
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "schedule" && ($GIMP_CI_MESON_CLANG != null || $GIMP_CI_MESON_MSVC != null || $GIMP_CI_MESON_APPLECLANG != null)
       when: on_failure
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "schedule" && ($GIMP_CI_RASTER_ICONS != null || $GIMP_CI_CPPCHECK != null)
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "schedule" && ($GIMP_CI_RASTER_ICONS != null || $GIMP_CI_CPPCHECK != null || $GIMP_CI_TARTAN != null)
       when: on_failure
   needs:
     - job: gimp-debian-nonreloc
