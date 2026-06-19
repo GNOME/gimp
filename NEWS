@@ -32,12 +32,19 @@ Core:
     is taken on this topic.
   * "Layers to Image Size" action is now only sensitive on raster
     layers.
+  * Layer Masks can now have non-destructive filters (listed separately
+    in the NDE popover).
+  * Added "Rotation" input for dynamics. This gives us support of the
+    Wacom Art Pen 2 stylus at least.
 
 Tools:
 
   * Gradient tool: new option "Editable gradient" to apply the gradient
     non-destructively.
   * Heal tool: healing behaves more as expected near edges.
+  * Text tool: allow selecting with Shift-Click.
+  * Transform tools: add a tooltip on the chain icon to better explain
+    what it does.
 
 Graphical User Interface:
 
@@ -133,6 +140,11 @@ Plug-Ins:
     - Differentiate correctly pass-through group layers.
   * PDF: on export of multi-page documents, the image size is now made
     so that all pages/layers are contained within the image.
+  * JPEG: initial MPO loading support. MPO, Multiple Picture Object
+    image format, is an extension of the JPEG standard. It can store
+    multiple views of a scene, often used for 3D or stereo images.
+  * APNG: add frame delay to layer names, just like in GIF and WebP
+    support.
 
 API:
 
@@ -193,3 +205,7 @@ Build:
   * More file loading tests added relevant to recent security issues.
   * New analysis job "abidiff" to verify that our libgimp* libraries
     don't break their API or ABI.
+  * New check-commit-log CI job on MR events to validate commit
+    messages.
+  * meson-health, branches-check, file-plug-in-tests and abidiff CI jobs
+    are skipped for commits pushed by the GNOME Translation Robot.
