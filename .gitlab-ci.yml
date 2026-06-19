@@ -785,13 +785,16 @@ file-plug-in-tests:
   #        the latest deps. It might be a good idea to test that too, maybe weekly?
   extends: .debian-nonreloc
   rules:
-    # Don't run on release since the plug-in doesn't get installed in releases
+    - if: '$CI_COMMIT_MESSAGE =~ /^Update.*translation.*/'
+      #commits pushed by GNOME Translation Robot do not need this job
+      when: never
     - <<: *CI_MERGE
       changes:
         paths:
           - plug-ins/**/*
           - .gitlab-ci.yml #to test changes on script: below
-    - if: ($CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null) && ($CI_COMMIT_MESSAGE =~ /^plug-ins:.*/ || $CI_COMMIT_MESSAGE =~ /^gitlab-ci:.*/)
+    - <<: *CI_COMMIT
+    # Don't run on release since the plug-in doesn't get installed in releases
   needs: ["gimp-debian-nonreloc"]
   stage: analysis
   variables:
