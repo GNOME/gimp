@@ -2148,9 +2148,10 @@ static gint parse_text_loop (guint32      len,
 
   desc_obj  = json_node_get_object (*node);
 
+#define COMMAND_SIZE 128 /* No idea what the real Photoshop maximum is. */
+
   while (data->bufpos < len)
     {
-      const gint COMMAND_SIZE = 128; /* No idea what the real Photoshop maximum is. */
       gchar token;
       gchar command[COMMAND_SIZE+1];
       gchar simple_value[COMMAND_SIZE+1];
@@ -2409,6 +2410,8 @@ static gint parse_text_loop (guint32      len,
         }
       data->bufpos++;
     }
+
+#undef COMMAND_SIZE
 
   /* Check here for conditions that could indicate a broken image or
    * an issue with our parser. */
