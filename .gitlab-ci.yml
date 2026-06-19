@@ -875,6 +875,16 @@ meson-health:
       #commits pushed by GNOME Translation Robot do not need this job
       when: never
     - <<: *CI_MERGE
+      changes:
+        paths:
+          - "**/*.build"
+          - "**/*.py"
+          - "**/*.sh"
+          - "**/*.ps1"
+          - build/**/*
+          - tools/**/*
+          - .gitlab/**/*
+          - .gitlab-ci.yml #to test changes on script: below
     - <<: *CI_COMMIT
   stage: analysis
   variables:
