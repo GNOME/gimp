@@ -793,7 +793,7 @@ file-plug-in-tests:
         paths:
           - plug-ins/**/*
           - .gitlab-ci.yml #to test changes on script: below
-    - <<: *CI_COMMIT
+    - <<: *CI_COMMIT #fallback, runs even without changes
     # Don't run on release since the plug-in doesn't get installed in releases
   needs: ["gimp-debian-nonreloc"]
   stage: analysis
@@ -844,7 +844,7 @@ meson-health:
           - tools/**/*
           - .gitlab/**/*
           - .gitlab-ci.yml #to test changes on script: below
-    - <<: *CI_COMMIT
+    - <<: *CI_COMMIT #fallback, runs even without changes
   stage: analysis
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
