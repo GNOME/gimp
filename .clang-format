@@ -33,6 +33,9 @@ UseTab: Never
 SpaceBeforeParens: Always
 SpaceAfterLogicalNot: true
 SpaceAfterCStyleCast: true
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: None
 
 # Braces / Switch: https://developer.gimp.org/core/coding_style/#switch
 BreakBeforeBraces: GNU
