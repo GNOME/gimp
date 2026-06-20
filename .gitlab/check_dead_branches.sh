@@ -4,7 +4,7 @@ printf "\e[0Ksection_start:`date +%s`:branch_check[collapsed=false]\r\e[0KChecki
 git branch -r | grep -v 'origin/HEAD' | grep -v "origin/$CI_DEFAULT_BRANCH" | while IFS= read remote_branch; do
   remote_branch=$(printf "%s\n" "$remote_branch" | sed 's/^ *//;s/ *$//')
   branch_name=$(printf "%s\n" "$remote_branch" | sed 's|origin/||')
-  
+
   # NOT CHECKING
   ## Skip old stable branches
   if echo "$branch_name" | grep -q "^gimp-[0-9]-" || [ "$branch_name" = "gnome-2-2" ] || [ "$branch_name" = "gnome-2-4" ]; then
