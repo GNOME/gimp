@@ -87,6 +87,7 @@
 #define TEXT_UNDO_TIMEOUT 3
 #define MIN_DRAG_SIZE     3 /* in screen pixels */
 
+
 /*  local function prototypes  */
 
 static void      gimp_text_tool_constructed     (GObject           *object);
@@ -683,7 +684,6 @@ gimp_text_tool_button_release (GimpTool              *tool,
     }
   else
     {
-
       gdouble x1, y1;
       gdouble x2, y2;
 
@@ -1242,12 +1242,17 @@ gimp_text_tool_rectangle_change_complete (GimpToolRectangle *rectangle,
         {
           gimp_text_tool_block_drawing (text_tool);
 
+          gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
+                                       _("Move Text Layer"));
+
           gimp_text_tool_apply (text_tool, TRUE);
 
           gimp_item_translate (item,
                                x1 - gimp_item_get_offset_x (item),
                                y1 - gimp_item_get_offset_y (item),
                                TRUE);
+
+          gimp_image_undo_group_end (text_tool->image);
 
           gimp_text_tool_unblock_drawing (text_tool);
 
