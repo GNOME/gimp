@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-18 06:02+0000\n"
-"PO-Revision-Date: 2026-06-18 17:12+0200\n"
+"POT-Creation-Date: 2026-06-19 19:26+0000\n"
+"PO-Revision-Date: 2026-06-20 12:46+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -10833,6 +10833,19 @@ msgstr ""
 "podpirajo Clip to Backdrop, ki je potreben za uporabo Photoshopove ‘Blend "
 "Clipped Layers as Group’. Če naletite na težave s prikazom, preklopite na te "
 "vrste oz. načine plasti."
+
+#: plug-ins/file-psd/psd-layer-res-load.c:2102
+msgid "Invalid root node!"
+msgstr "Neveljaven korenski vozlišče!"
+
+#: plug-ins/file-psd/psd-layer-res-load.c:2442
+#, c-format
+msgid "Error creating json node."
+msgstr "Napaka pri ustvarjanju vozlišča JSON."
+
+#: plug-ins/file-psd/psd-layer-res-load.c:3139
+msgid "Could not read enough bytes!"
+msgstr "Ni možno prebrati dovolj bajtov!"
 
 #: plug-ins/file-psd/psd-load.c:330 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
