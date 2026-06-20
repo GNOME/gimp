@@ -12,10 +12,10 @@
 # value             helderheid ("brightness" is immers een synoniem voor "value": HSV en HSB zijn dezelfde kleurmodellen)
 # luminosity        helderheid
 msgid ""
-msgstr "Project-Id-Version: GIMP 30.0\n"
+msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-18 06:02+0000\n"
-"PO-Revision-Date: 2026-06-18 09:29+0200\n"
+"POT-Creation-Date: 2026-06-19 19:26+0000\n"
+"PO-Revision-Date: 2026-06-20 11:49+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -10619,6 +10619,19 @@ msgid ""
 "switching to those layer modes."
 msgstr "Oudere modi voor lagen hebben een betere compatibiliteit met Photoshop, maar ondersteunen niet Clip to Backdrop, wat nodig is voor het gebruiken van Photoshop's 'Uitkniplagen overvloeien als groep'. Als u problemen bij het weergeven tegenkomt, overweeg dan om te wisselen naar die modi voor lagen."
 
+#: plug-ins/file-psd/psd-layer-res-load.c:2102
+msgid "Invalid root node!"
+msgstr "Ongeldige bronknoop!"
+
+#: plug-ins/file-psd/psd-layer-res-load.c:2442
+#, c-format
+msgid "Error creating json node."
+msgstr "Fout bij maken knoop JSON.in"
+
+#: plug-ins/file-psd/psd-layer-res-load.c:3139
+msgid "Could not read enough bytes!"
+msgstr "Kon niet voldoende bytes lezen!"
+
 #: plug-ins/file-psd/psd-load.c:330 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
@@ -10627,7 +10640,7 @@ msgstr "Fout bij laden PSD-bestand: %s"
 #: plug-ins/file-psd/psd-load.c:533
 #, c-format
 msgid "Invalid PSD metadata layer format"
-msgstr "Ongeldige PSD metagegevenslaag formaat"
+msgstr "Ongeldige indeling PSD metagegevenslaag"
 
 #: plug-ins/file-psd/psd-load.c:639
 #, c-format
