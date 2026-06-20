@@ -7,32 +7,7 @@
 
 BasedOnStyle: GNU
 
-AlignAfterOpenBracket: Align
-AlignArrayOfStructures: Left
-AlignConsecutiveAssignments: AcrossComments
-AlignConsecutiveDeclarations: AcrossComments
-AlignConsecutiveBitFields: AcrossComments
-AlignConsecutiveMacros: AcrossComments
-AlignEscapedNewlines: Left
-
-AllowAllArgumentsOnNextLine: false
-AllowAllParametersOfDeclarationOnNextLine: false
-AlwaysBreakAfterReturnType: AllDefinitions
-BinPackArguments: true
-# Uncomment when our CI uses LLVM 20.
-# See: https://github.com/llvm/llvm-project/issues/117830
-# BinPackParameters: AlwaysOnePerLine
-BreakBeforeBinaryOperators: None
-BreakBeforeBraces: GNU
-BreakBeforeTernaryOperators: false
-IndentWidth: 2
-PointerAlignment: Right
-UseTab: Never
-
-SpaceBeforeParens: Always
-SpaceAfterLogicalNot: true
-SpaceAfterCStyleCast: true
-
+# Line width: https://developer.gimp.org/core/coding_style/#line-width
 # Our column limit is more around 80 characters but we want to avoid
 # this rule to be over-agressive. So for clang-format, let's use a
 # higher limit. Then let's put some biggish penalties on breaking on
@@ -49,3 +24,42 @@ PenaltyExcessCharacter: 1
 # more space to breath.
 PenaltyBreakString: 60
 PenaltyReturnTypeOnItsOwnLine: 50
+
+# Whitespaces / Indentation: https://developer.gimp.org/core/coding_style/#indentation
+IndentWidth: 2
+UseTab: Never
+
+# Whitespaces / Horizontal spaces: https://developer.gimp.org/core/coding_style/#horizontal-spaces
+SpaceBeforeParens: Always
+SpaceAfterLogicalNot: true
+SpaceAfterCStyleCast: true
+
+# Braces / Switch: https://developer.gimp.org/core/coding_style/#switch
+BreakBeforeBraces: GNU
+
+# Conditions: https://developer.gimp.org/core/coding_style/#conditions
+BreakBeforeBinaryOperators: None
+BreakBeforeTernaryOperators: false
+
+# Variables: https://developer.gimp.org/core/coding_style/#variables-declaration-and-definition
+AlignConsecutiveAssignments: AcrossComments
+AlignConsecutiveDeclarations: AcrossComments
+AlignConsecutiveBitFields: AcrossComments
+PointerAlignment: Right
+
+# Functions: https://developer.gimp.org/core/coding_style/#functions
+AlignAfterOpenBracket: Align
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AlwaysBreakAfterReturnType: AllDefinitions
+BinPackArguments: true
+# Uncomment when our CI uses LLVM 20.
+# See: https://github.com/llvm/llvm-project/issues/117830
+# BinPackParameters: AlwaysOnePerLine
+
+# Macros: https://developer.gimp.org/core/coding_style/#macros
+AlignConsecutiveMacros: AcrossComments
+AlignEscapedNewlines: Left
+
+# Structures: https://developer.gimp.org/core/coding_style/#structures
+AlignArrayOfStructures: Left
