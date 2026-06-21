@@ -133,8 +133,8 @@ gimp_message_box_init (GimpMessageBox *box)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_VERTICAL);
 
-  gtk_box_set_spacing (GTK_BOX (box), 12);
-  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
+  gtk_box_set_spacing (GTK_BOX (box), GIMP_MESSAGE_BOX_SPACING);
+  gtk_container_set_border_width (GTK_CONTAINER (box), GIMP_MESSAGE_BOX_SPACING);
 
   for (i = 0; i < 2; i++)
     {
@@ -255,7 +255,9 @@ gimp_message_box_get_preferred_width (GtkWidget *widget,
                                       gint      *minimum_width,
                                       gint      *natural_width)
 {
-  GimpMessageBox *box = GIMP_MESSAGE_BOX (widget);
+  GimpMessageBox *box            = GIMP_MESSAGE_BOX (widget);
+  gint            labels_minimum = 0;
+  gint            labels_natural = 0;
 
   GTK_WIDGET_CLASS (parent_class)->get_preferred_width (widget,
                                                         minimum_width,
@@ -272,6 +274,29 @@ gimp_message_box_get_preferred_width (GtkWidget *widget,
       *minimum_width += image_minimum + GIMP_MESSAGE_BOX_SPACING;
       *natural_width += image_natural + GIMP_MESSAGE_BOX_SPACING;
     }
+
+  for (gint i = 0; i < 3; i++)
+    {
+      gint label_minimum = 0;
+      gint label_natural = 0;
+
+      if (box->label[i])
+        {
+          gtk_widget_get_preferred_width (box->label[i],
+                                          &label_minimum, &label_natural);
+
+          labels_minimum = MAX (labels_minimum, label_minimum);
+          labels_natural = MAX (labels_natural, label_natural);
+        }
+    }
+  /* If I don't set the natural width as minimum width, we may end up
+   * with a truncated message and no way to scroll through it (apart
+   * e.g. redimensioning the container dialog to give more space to the
+   * box). So let's just request a minimum width which shows the full
+   * label text. See #16473.
+   */
+  *minimum_width += labels_natural + GIMP_MESSAGE_BOX_SPACING;
+  *natural_width += labels_natural + GIMP_MESSAGE_BOX_SPACING;
 }
 
 static void
@@ -280,6 +305,8 @@ gimp_message_box_get_preferred_height (GtkWidget *widget,
                                        gint      *natural_height)
 {
   GimpMessageBox *box = GIMP_MESSAGE_BOX (widget);
+  gint            computed_minimum;
+  gint            computed_natural;
 
   GTK_WIDGET_CLASS (parent_class)->get_preferred_height (widget,
                                                          minimum_height,
@@ -287,15 +314,32 @@ gimp_message_box_get_preferred_height (GtkWidget *widget,
 
   if (box->image && gtk_widget_get_visible (box->image))
     {
-      gint image_minimum;
-      gint image_natural;
-
       gtk_widget_get_preferred_height (box->image,
-                                       &image_minimum, &image_natural);
+                                       &computed_minimum, &computed_natural);
 
-      *minimum_height = MAX (*minimum_height, image_minimum);
-      *natural_height = MAX (*natural_height, image_natural);
+      *minimum_height = MAX (*minimum_height, computed_minimum);
+      *natural_height = MAX (*natural_height, computed_natural);
     }
+
+  computed_minimum = 0;
+  computed_natural = 0;
+  for (gint i = 0; i < 3; i++)
+    {
+      if (box->label[i])
+        {
+          gint label_minimum;
+          gint label_natural;
+
+          gtk_widget_get_preferred_height (box->label[i],
+                                           &label_minimum, &label_natural);
+
+          computed_minimum += label_minimum + (computed_minimum > 0 ? GIMP_MESSAGE_BOX_SPACING : 0);
+          computed_natural += label_natural + (computed_natural > 0 ? GIMP_MESSAGE_BOX_SPACING : 0);
+        }
+    }
+
+  *minimum_height = MAX (*minimum_height, computed_minimum);
+  *natural_height = MAX (*natural_height, computed_natural);
 }
 
 static void
