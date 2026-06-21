@@ -81,6 +81,7 @@ static gint    gimp_plug_in_manager_file_proc_compare (gconstpointer         a,
                                                        gconstpointer         b,
                                                        gpointer              data);
 
+static guint64 gimp_plug_in_manager_get_file_time     (GFileInfo            *info);
 
 
 void
@@ -218,15 +219,15 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
     {
       if (gimp_file_is_executable (list->data))
         {
-          guint64 mtime;
           GFileInfo *info;
 
-          info = g_file_query_info (list->data, G_FILE_ATTRIBUTE_TIME_MODIFIED,
-                                    G_FILE_QUERY_INFO_NONE, NULL, NULL);
-          mtime = g_file_info_get_attribute_uint64 (info,
-                                                    G_FILE_ATTRIBUTE_TIME_MODIFIED);
-          gimp_plug_in_manager_add_from_file (manager, list->data, mtime);
-          g_object_unref (info);
+              info = g_file_query_info (list->data,
+                                        G_FILE_ATTRIBUTE_TIME_MODIFIED ","
+                                        G_FILE_ATTRIBUTE_TIME_CREATED,
+                                        G_FILE_QUERY_INFO_NONE, NULL, NULL);
+              gimp_plug_in_manager_add_from_file (manager, list->data,
+                                                  gimp_plug_in_manager_get_file_time (info));
+              g_object_unref (info);
         }
     }
 
@@ -258,7 +259,8 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
   enumerator = g_file_enumerate_children (directory,
                                           G_FILE_ATTRIBUTE_STANDARD_NAME ","
                                           G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
-                                          G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                                          G_FILE_ATTRIBUTE_TIME_MODIFIED ","
+                                          G_FILE_ATTRIBUTE_TIME_CREATED,
                                           G_FILE_QUERY_INFO_NONE,
                                           NULL, NULL);
   if (enumerator)
@@ -292,7 +294,8 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
               enumerator2 = g_file_enumerate_children (child,
                                                        G_FILE_ATTRIBUTE_STANDARD_NAME ","
                                                        G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
-                                                       G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                                                       G_FILE_ATTRIBUTE_TIME_MODIFIED ","
+                                                       G_FILE_ATTRIBUTE_TIME_CREATED,
                                                        G_FILE_QUERY_INFO_NONE,
                                                        NULL, NULL);
               if (enumerator2)
@@ -321,12 +324,8 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
                       if (g_strcmp0 (file_name, g_file_info_get_name (info)) == 0 &&
                           gimp_file_is_executable (child2))
                         {
-                          guint64 mtime;
-
-                          mtime = g_file_info_get_attribute_uint64 (info2,
-                                                                    G_FILE_ATTRIBUTE_TIME_MODIFIED);
-
-                          gimp_plug_in_manager_add_from_file (manager, child2, mtime);
+                          gimp_plug_in_manager_add_from_file (manager, child2,
+                                                              gimp_plug_in_manager_get_file_time (info2));
 
                           g_free (file_name);
                           g_object_unref (child2);
@@ -346,12 +345,8 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
             {
               if (g_getenv ("GIMP_TESTING_PLUGINDIRS"))
                 {
-                  guint64 mtime;
-
-                  mtime = g_file_info_get_attribute_uint64 (info,
-                                                            G_FILE_ATTRIBUTE_TIME_MODIFIED);
-
-                  gimp_plug_in_manager_add_from_file (manager, child, mtime);
+                  gimp_plug_in_manager_add_from_file (manager, child,
+                                                      gimp_plug_in_manager_get_file_time (info));
                 }
               else
                 {
@@ -1032,4 +1027,25 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
     }
 
   return strcmp (gimp_object_get_name (proc_a), gimp_object_get_name (proc_b));
+}
+
+static guint64
+gimp_plug_in_manager_get_file_time (GFileInfo *info)
+{
+  guint64 mtime;
+
+  mtime = g_file_info_get_attribute_uint64 (info,
+                                            G_FILE_ATTRIBUTE_TIME_MODIFIED);
+
+  /* ostree and therefore flatpak resets all file modification time to
+   * UNIX epoch. Fortunately it breaks our check to determine if a
+   * plug-in needs to be requeried.
+   * Let's fallback to the creation time (which fortunately is not
+   * resetted) instead. See #16499.
+   */
+  if (mtime == 0)
+    mtime = g_file_info_get_attribute_uint64 (info,
+                                              G_FILE_ATTRIBUTE_TIME_CREATED);
+
+  return mtime;
 }
