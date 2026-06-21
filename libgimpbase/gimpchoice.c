@@ -659,8 +659,10 @@ gimp_param_choice_value_is_valid (GParamSpec   *pspec,
   GimpChoice          *choice = cspec->choice;
   const gchar         *reason = NULL;
   const gchar         *alias  = NULL;
+  gboolean             valid;
 
-  if (gimp_choice_is_deprecated (choice, strval, &alias, &reason) &&
+  valid = gimp_choice_is_valid (choice, strval);
+  if (valid && gimp_choice_is_deprecated (choice, strval, &alias, &reason) &&
       /* Typically when calling a PDB procedure, we will first set
        * properties to a GimpProcedureConfig, which will later be copied
        * to a second one prefixed with "GimpProcedureConfigRun-".
@@ -678,7 +680,7 @@ gimp_param_choice_value_is_valid (GParamSpec   *pspec,
                     strval, pspec->name, g_type_name (pspec->owner_type), reason);
     }
 
-  return gimp_choice_is_valid (choice, strval);
+  return valid;
 }
 
 static gint
