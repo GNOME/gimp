@@ -176,7 +176,7 @@ placeholder_load (GimpProcedure         *procedure,
                _("There is no RAW loader installed to open '%s' files.\n"
                  "\n"
                  "GIMP currently supports these RAW loaders:\n"
-                 "- darktable (https://www.darktable.org/), at least 1.7\n"
+                 "- darktable (https://www.darktable.org/), at least 5.6\n"
                  "- RawTherapee (https://rawtherapee.com/), at least 5.2\n"
                  "- ART (https://artraweditor.github.io/)\n"
                  "\n"
