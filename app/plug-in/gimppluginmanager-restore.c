@@ -237,7 +237,7 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
 
               info = g_file_query_info (file,
                                         G_FILE_ATTRIBUTE_TIME_MODIFIED ","
-                                        G_FILE_ATTRIBUTE_TIME_CREATED,
+                                        G_FILE_ATTRIBUTE_TIME_CHANGED,
                                         G_FILE_QUERY_INFO_NONE, NULL, NULL);
               gimp_plug_in_manager_add_from_file (manager, file, root_folder,
                                                   gimp_plug_in_manager_get_file_time (info));
@@ -277,7 +277,7 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
                                           G_FILE_ATTRIBUTE_STANDARD_NAME ","
                                           G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
                                           G_FILE_ATTRIBUTE_TIME_MODIFIED ","
-                                          G_FILE_ATTRIBUTE_TIME_CREATED,
+                                          G_FILE_ATTRIBUTE_TIME_CHANGED,
                                           G_FILE_QUERY_INFO_NONE,
                                           NULL, NULL);
   if (enumerator)
@@ -312,7 +312,7 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
                                                        G_FILE_ATTRIBUTE_STANDARD_NAME ","
                                                        G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
                                                        G_FILE_ATTRIBUTE_TIME_MODIFIED ","
-                                                       G_FILE_ATTRIBUTE_TIME_CREATED,
+                                                       G_FILE_ATTRIBUTE_TIME_CHANGED,
                                                        G_FILE_QUERY_INFO_NONE,
                                                        NULL, NULL);
               if (enumerator2)
@@ -1058,12 +1058,12 @@ gimp_plug_in_manager_get_file_time (GFileInfo *info)
   /* ostree and therefore flatpak resets all file modification time to
    * UNIX epoch. Fortunately it breaks our check to determine if a
    * plug-in needs to be requeried.
-   * Let's fallback to the creation time (which fortunately is not
+   * Let's fallback to the changed time (which fortunately is not
    * resetted) instead. See #16499.
    */
   if (mtime == 0)
     mtime = g_file_info_get_attribute_uint64 (info,
-                                              G_FILE_ATTRIBUTE_TIME_CREATED);
+                                              G_FILE_ATTRIBUTE_TIME_CHANGED);
 
   return mtime;
 }
