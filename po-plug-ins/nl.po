@@ -11796,7 +11796,7 @@ msgstr[1] "%d filters"
 
 #: plug-ins/filter-browser/filter-browser.c:739
 msgid "GEGL Filter Browser"
-msgstr "GEGL Filter Browser"
+msgstr "GEGL filterbrowser"
 
 #: plug-ins/filter-browser/filter-browser.c:756
 msgid "by name"
@@ -11812,7 +11812,7 @@ msgstr "op omschrijving"
 
 #: plug-ins/filter-browser/filter-browser.c:850
 msgid "_GEGL Filter Browser"
-msgstr "_GEGL Filter Browser"
+msgstr "_GEGL filterbrowser"
 
 #: plug-ins/filter-browser/filter-browser.c:855
 msgid "Display information about available GEGL operations (i.e., filters)."
