@@ -207,7 +207,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                                             "ycocg",  DDS_COMPRESS_YCOCG,  _("YCoCg (DXT5)"),          NULL,
                                             "ycocgs", DDS_COMPRESS_YCOCGS, _("YCoCg scaled (DXT5)"),   NULL,
                                             NULL);
-      gimp_choice_add_deprecated (choice, "bc3, ", DDS_COMPRESS_BC3, "bc3");
+      gimp_choice_add_deprecated (choice, "bc3, ", DDS_COMPRESS_BC3, "bc3", NULL);
 
       gimp_procedure_add_choice_argument (procedure, "compression-format",
                                           _("Compressio_n"),
@@ -238,7 +238,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                                             "aexp",    DDS_FORMAT_AEXP,    _("AEXP"),    NULL,
                                             "ycocg",   DDS_FORMAT_YCOCG,   _("YCOCG"),   NULL,
                                             NULL);
-      gimp_choice_add_deprecated (choice, "abgr8, ", DDS_FORMAT_ABGR8, "abgr8");
+      gimp_choice_add_deprecated (choice, "abgr8, ", DDS_FORMAT_ABGR8, "abgr8", NULL);
 
       gimp_procedure_add_choice_argument (procedure, "format",
                                           _("_Format"),

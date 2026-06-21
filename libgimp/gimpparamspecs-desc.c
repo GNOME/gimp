@@ -73,7 +73,7 @@ gimp_param_spec_choice_desc (GParamSpec *pspec)
       gchar    *label = NULL;
       gchar    *help  = NULL;
 
-      if (! gimp_choice_get_deprecated (choice, nick))
+      if (! gimp_choice_is_deprecated (choice, nick, NULL, NULL))
         {
           gimp_choice_get_documentation (choice, (const gchar *) nick,
                                          (const gchar **) &label,

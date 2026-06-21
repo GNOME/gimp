@@ -36,8 +36,11 @@ typedef struct _GimpChoiceDesc
   gchar    *help;
   gint      id;
   gboolean  sensitive;
+
   gboolean  deprecated;
   gchar    *redirect_to;
+  gchar    *reason;
+
   GList    *aliases;
 } GimpChoiceDesc;
 
@@ -204,6 +207,7 @@ gimp_choice_add (GimpChoice  *choice,
   desc->sensitive   = TRUE;
   desc->deprecated  = FALSE;
   desc->redirect_to = NULL;
+  desc->reason      = NULL;
   desc->aliases     = NULL;
   g_hash_table_insert (choice->choices, g_strdup (nick), desc);
 
@@ -223,14 +227,15 @@ gimp_choice_add (GimpChoice  *choice,
  * @nick:        the nick of the deprecated @choice.
  * @id:          optional integer ID for @nick.
  * @redirect_to: (nullable): the valid nick to redirect the deprecated one to
+ * @reason: (nullable): the deprecation reason.
  *
- * This procedure is used to add a deprecated nick. It may have a
- * @redirect_to alias (when you are basically renaming a choice) or none
- * (for planning choice removal through a deprecation period).
+ * This procedure is used to add a deprecated nick. It must either have
+ * a valid @redirect_to alias (when you are basically renaming a choice)
+ * or a free-text @reason (e.g. for planning choice removal through a
+ * deprecation period).
  *
- * If @redirect_to is non %NULL, then @id is ignored and instead, the ID
- * of @redirect_to will be used for @nick. The @redirect_to value must
- * not be deprecated itself.
+ * If @redirect_to is non %NULL, then @id must be identical to the ID
+ * of @redirect_to. The @redirect_to value must not be deprecated itself.
  *
  * Since: 3.4
  **/
@@ -238,7 +243,8 @@ void
 gimp_choice_add_deprecated (GimpChoice  *choice,
                             const gchar *nick,
                             gint         id,
-                            const gchar *redirect_to)
+                            const gchar *redirect_to,
+                            const gchar *reason)
 {
   GimpChoiceDesc *deprecated_desc;
   GimpChoiceDesc *redirect_desc = NULL;
@@ -246,11 +252,15 @@ gimp_choice_add_deprecated (GimpChoice  *choice,
 
   g_return_if_fail (nick != NULL);
   g_return_if_fail (redirect_to == NULL || g_strcmp0 (nick, redirect_to) != 0);
+  g_return_if_fail ((redirect_to == NULL && reason != NULL) ||
+                    (reason == NULL && redirect_to != NULL && g_strcmp0 (nick, redirect_to) != 0));
 
   if (redirect_to)
     {
       redirect_desc = g_hash_table_lookup (choice->choices, redirect_to);
-      g_return_if_fail (redirect_desc != NULL && redirect_desc->deprecated == FALSE);
+      g_return_if_fail (redirect_desc != NULL       &&
+                        ! redirect_desc->deprecated &&
+                        redirect_desc->id == id);
       redirect_desc->aliases = g_list_prepend (redirect_desc->aliases, g_strdup (nick));
     }
 
@@ -261,6 +271,7 @@ gimp_choice_add_deprecated (GimpChoice  *choice,
   deprecated_desc->sensitive   = redirect_desc ? redirect_desc->sensitive : TRUE;
   deprecated_desc->deprecated  = TRUE;
   deprecated_desc->redirect_to = g_strdup (redirect_to);
+  deprecated_desc->reason      = g_strdup (reason);
   deprecated_desc->aliases     = NULL;
 
   g_hash_table_insert (choice->choices, g_strdup (nick), deprecated_desc);
@@ -425,49 +436,41 @@ gimp_choice_get_documentation (GimpChoice   *choice,
 }
 
 /**
- * gimp_choice_get_deprecated:
+ * gimp_choice_is_deprecated:
  * @choice: a %GimpChoice.
  * @nick:   the nick to lookup.
+ * @redirect_to: (out) (nullable) (transfer none): the non-deprecated alias, if any.
+ * @reason: (out) (nullable) (transfer none): the deprecation reason if @redirect_to is %NULL.
  *
- * Returns: If @nick is deprecated.
+ * Lookup whether @nick is a deprecated choice or not. If it is
+ * deprecated, either @redirect_to will be set or @reason will be,
+ * depending on whether @nick was simply renamed or if the deprecation
+ * requires a more complex human-readable reason.
+ *
+ * Returns: %TRUE if @nick is deprecated.
  *
  * Since: 3.4
  **/
 gboolean
-gimp_choice_get_deprecated (GimpChoice   *choice,
-                            const gchar  *nick)
+gimp_choice_is_deprecated (GimpChoice   *choice,
+                           const gchar  *nick,
+                           const gchar **redirect_to,
+                           const gchar **reason)
 {
   GimpChoiceDesc *desc;
 
-  desc = g_hash_table_lookup (choice->choices, nick);
-  if (desc)
-    return desc->deprecated;
-
-  return FALSE;
-}
-
-/**
- * gimp_choice_get_redirect:
- * @choice: a %GimpChoice.
- * @nick:   the nick to lookup.
- *
- * Returns: (transfer none): The redirected nick for @nick.
- *
- * Since: 3.4
- **/
-const gchar *
-gimp_choice_get_redirect (GimpChoice  *choice,
-                          const gchar *nick)
-{
-  GimpChoiceDesc *desc;
-
-  g_return_val_if_fail (GIMP_IS_CHOICE (choice), NULL);
-  g_return_val_if_fail (nick != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_CHOICE (choice), FALSE);
+  g_return_val_if_fail (nick != NULL, FALSE);
 
   desc = g_hash_table_lookup (choice->choices, nick);
-  g_return_val_if_fail (desc != NULL, NULL);
+  g_return_val_if_fail (desc != NULL, FALSE);
 
-  return desc->redirect_to;
+  if (redirect_to)
+    *redirect_to = desc->redirect_to;
+  if (reason)
+    *reason = desc->reason;
+
+  return desc->deprecated;
 }
 
 /**
@@ -525,6 +528,7 @@ gimp_choice_desc_free (GimpChoiceDesc *desc)
   g_free (desc->label);
   g_free (desc->help);
   g_free (desc->redirect_to);
+  g_free (desc->reason);
   g_list_free_full (desc->aliases, g_free);
   g_free (desc);
 }
@@ -653,8 +657,10 @@ gimp_param_choice_value_is_valid (GParamSpec   *pspec,
   GimpParamSpecChoice *cspec  = GIMP_PARAM_SPEC_CHOICE (pspec);
   const gchar         *strval = g_value_get_string (value);
   GimpChoice          *choice = cspec->choice;
+  const gchar         *reason = NULL;
+  const gchar         *alias  = NULL;
 
-  if (gimp_choice_get_deprecated (choice, strval) &&
+  if (gimp_choice_is_deprecated (choice, strval, &alias, &reason) &&
       /* Typically when calling a PDB procedure, we will first set
        * properties to a GimpProcedureConfig, which will later be copied
        * to a second one prefixed with "GimpProcedureConfigRun-".
@@ -662,10 +668,15 @@ gimp_param_choice_value_is_valid (GParamSpec   *pspec,
        * object, so let's avoid 2 WARNINGs for a single object set.
        */
       ! g_str_has_prefix (g_type_name (pspec->owner_type), "GimpProcedureConfigRun-"))
-    g_critical ("Value \"%s\" is deprecated for property \"%s\" of %s. "
-                "Use \"%s\" instead.", strval,
-                pspec->name, g_type_name (pspec->owner_type),
-                gimp_choice_get_redirect (choice, strval));
+    {
+      if (alias)
+        g_critical ("Value \"%s\" is deprecated for property \"%s\" of %s. "
+                    "Use \"%s\" instead.", strval, pspec->name,
+                    g_type_name (pspec->owner_type), alias);
+      else
+        g_critical ("Value \"%s\" is deprecated for property \"%s\" of %s. %s",
+                    strval, pspec->name, g_type_name (pspec->owner_type), reason);
+    }
 
   return gimp_choice_is_valid (choice, strval);
 }

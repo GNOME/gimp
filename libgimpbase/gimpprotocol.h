@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0118
+#define GIMP_PROTOCOL_VERSION  0x0119
 
 
 enum

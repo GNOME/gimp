@@ -2724,7 +2724,7 @@ gimp_prop_choice_combo_box_new (GObject     *config,
       const gchar *nick  = iter->data;
       const gchar *label = gimp_choice_get_label (choice, nick);
 
-      if (! gimp_choice_get_deprecated (choice, nick))
+      if (! gimp_choice_is_deprecated (choice, nick, NULL, NULL))
         gtk_list_store_insert_with_values (store, NULL, -1,
                                            0, nick,
                                            1, label,
@@ -2867,7 +2867,7 @@ gimp_prop_choice_radio_frame_new (GObject     *config,
       const gchar *label = gimp_choice_get_label (choice, nick);
       gint         id    = gimp_choice_get_id (choice, nick);
 
-      if (! gimp_choice_get_deprecated (choice, nick))
+      if (! gimp_choice_is_deprecated (choice, nick, NULL, NULL))
         gtk_list_store_insert_with_values (GTK_LIST_STORE (store), NULL, -1,
                                            GIMP_INT_STORE_VALUE, id,
                                            GIMP_INT_STORE_LABEL, label,
