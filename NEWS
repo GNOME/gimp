@@ -36,6 +36,10 @@ Core:
     in the NDE popover).
   * Added "Rotation" input for dynamics. This gives us support of the
     Wacom Art Pen 2 stylus at least.
+  * We now verify if a plug-in has been updated since last start by
+    using the changed time (ctime) as fallback when the modified time
+    (mtime) is 0. This is because on some environment (such as ostree,
+    hence flatpak), all files mtimes are set to the UNIX epoch.
 
 Tools:
 
@@ -157,8 +161,7 @@ API:
   * libgimpbase:
     - New functions:
       + gimp_choice_add_deprecated
-      + gimp_choice_get_deprecated
-      + gimp_choice_get_redirect
+      + gimp_choice_is_deprecated
     - Deprecated:
       + GP_EXTENSION_ACK in favor of GP_PERSISTENT_ACK
       + gp_extension_ack_write in favor of gp_persistent_ack_write
