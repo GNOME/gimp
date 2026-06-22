@@ -197,8 +197,6 @@
 #define GIMP_HELP_LAYER_TEXT_DISCARD              "gimp-layer-text-discard"
 #define GIMP_HELP_LAYER_TEXT_TO_PATH              "gimp-layer-text-to-path"
 #define GIMP_HELP_LAYER_TEXT_ALONG_PATH           "gimp-layer-text-along-path"
-#define GIMP_HELP_LAYER_VECTOR_DISCARD            "gimp-layer-vector-discard"
-#define GIMP_HELP_LAYER_VECTOR_FILL_STROKE        "gimp-layer-vector-fill-stroke"
 #define GIMP_HELP_LAYER_PREVIOUS                  "gimp-layer-previous"
 #define GIMP_HELP_LAYER_NEXT                      "gimp-layer-next"
 #define GIMP_HELP_LAYER_TOP                       "gimp-layer-top"
