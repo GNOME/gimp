@@ -841,6 +841,7 @@ gimp_path_tool_create_vector_layer (GimpPathTool *path_tool)
   GimpImage       *image;
   GimpVectorLayer *layer;
   GimpPathOptions *options = GIMP_PATH_TOOL_GET_OPTIONS (path_tool);
+  gboolean         needs_new_path;
 
   if (! path_tool->current_image)
     return;
@@ -852,11 +853,18 @@ gimp_path_tool_create_vector_layer (GimpPathTool *path_tool)
                                    path_tool);
 
   /* If there's already an active vector layer, or no paths are
-   * selected, create a new blank path.
-   */
-  if (path_tool->current_vector_layer || ! path_tool->path)
+   * selected, create a new blank path. */
+  needs_new_path = (path_tool->current_vector_layer || ! path_tool->path);
+  if (needs_new_path)
     {
-      GimpPath *new_path = gimp_path_new (image, _("Vector Layer"));
+      GimpPath *new_path;
+
+      /* An undo group is needed to combine both the path and
+       * vector layer creation into a single undo item */
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE,
+                                   _("Add Vector Layer"));
+
+      new_path = gimp_path_new (image, _("Vector Layer"));
 
       gimp_image_add_path (image, new_path, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
       gimp_path_tool_set_path (path_tool, NULL, new_path);
@@ -888,6 +896,9 @@ gimp_path_tool_create_vector_layer (GimpPathTool *path_tool)
                         GIMP_IMAGE_ACTIVE_PARENT,
                         -1,
                         TRUE);
+
+  if (needs_new_path)
+    gimp_image_undo_group_end (image);
 
   gimp_path_tool_set_layer (path_tool, layer);
 
