@@ -61,53 +61,19 @@ typedef struct
     float m_low_frequency_partition_weight;
 } bc7enc_compress_block_params;
 
-inline void bc7enc_compress_block_params_init_linear_weights(bc7enc_compress_block_params *p)
-{
-    p->m_perceptual = FALSE;
-    p->m_weights[0] = 1;
-    p->m_weights[1] = 1;
-    p->m_weights[2] = 1;
-    p->m_weights[3] = 1;
-}
-
-inline void bc7enc_compress_block_params_init_perceptual_weights(bc7enc_compress_block_params *p)
-{
-    p->m_perceptual = TRUE;
-    p->m_weights[0] = 128;
-    p->m_weights[1] = 64;
-    p->m_weights[2] = 16;
-    p->m_weights[3] = 32;
-}
-
-inline void bc7enc_compress_block_params_init(bc7enc_compress_block_params *p)
-{
-    p->m_mode_mask = UINT32_MAX;
-    p->m_max_partitions = BC7ENC_MAX_PARTITIONS;
-    p->m_try_least_squares = TRUE;
-    p->m_mode17_partition_estimation_filterbank = FALSE;
-    p->m_uber_level = 4;
-    p->m_force_selectors = FALSE;
-    p->m_force_alpha = FALSE;
-    p->m_quant_mode6_endpoints = TRUE;
-    p->m_bias_mode1_pbits = TRUE;
-    p->m_pbit1_weight = 1.0f;
-    p->m_mode1_error_weight = 1.0f;
-    p->m_mode5_error_weight = 1.0f;
-    p->m_mode6_error_weight = 1.0f;
-    p->m_mode7_error_weight = 1.0f;
-    p->m_low_frequency_partition_weight = 1.0f;
-
-    if (p->m_perceptual)
-      bc7enc_compress_block_params_init_perceptual_weights (p);
-    else
-      bc7enc_compress_block_params_init_linear_weights (p);
-}
-
 /* bc7enc_compress_block_init() MUST be called before calling
  * bc7enc_compress_block() (or you'll get artifacts). */
-void bc7enc_compress_block_init (void);
+void     bc7enc_compress_block_init        (void);
 
-/* Packs a single block of 16x16 RGBA pixels (R first in memory) to 128-bit BC7 block pBlock, using either mode 1 and/or 6.
- * Alpha blocks will always use mode 6, and by default opaque blocks will use either modes 1 or 6.
- * Returns TRUE if the block had any pixels with alpha < 255, otherwise it return FALSE. (This is not an error code - a block is always encoded.) */
-gboolean bc7enc_compress_block(void *pBlock, const void *pPixelsRGBA, const bc7enc_compress_block_params *pComp_params);
+/* Packs a single block of 16x16 RGBA pixels (R first in memory)
+ * to 128-bit BC7 block pBlock, using either mode 1 and/or 6.
+ * Alpha blocks will always use mode 6, and by default opaque blocks
+ * will use either modes 1 or 6.
+ *
+ * Returns TRUE if the block had any pixels with alpha < 255, otherwise
+ * it return FALSE. (This is not an error code - a block is always encoded.) */
+gboolean bc7enc_compress_block             (void                               *pBlock,
+                                            const void                         *pPixelsRGBA,
+                                            const bc7enc_compress_block_params *pComp_params);
+
+void     bc7enc_compress_block_params_init (bc7enc_compress_block_params       *p);
