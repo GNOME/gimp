@@ -93,6 +93,7 @@ static GimpImage      *         load_image            (GFile                 *fi
 static gboolean                 read_tag              (FILE                  *fp,
                                                        GError               **error);
 static gboolean                 decode_lzss           (guchar                *raw_data,
+                                                       guint32                raw_data_size,
                                                        guchar                *uncompressed_data,
                                                        gint                   estimated_size);
 
@@ -298,14 +299,20 @@ load_image (GFile                *file,
                    ((guint32) block_size_array[1] << 8)  +
                    block_size_array[0];
 
-      raw_data = g_malloc0 (block_size);
+      raw_data = g_try_malloc0 (block_size);
+      if (raw_data == NULL)
+        {
+          g_set_error (error, G_FILE_ERROR, 0,
+                       _("Memory could not be allocated."));
+          return image;
+        }
+
       if (fread (raw_data, block_size, 1, fp) == 0)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Couldn't read image data from '%s'"),
                        gimp_file_get_utf8_name (file));
-
-          return NULL;
+          return image;
         }
 
       if (image == NULL)
@@ -355,7 +362,8 @@ load_image (GFile                *file,
               return NULL;
             }
 
-          if (! decode_lzss (raw_data, uncompressed_data, estimated_size))
+          if (! decode_lzss (raw_data, block_size, uncompressed_data,
+                             estimated_size))
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Couldn't decompress image data from '%s'"),
@@ -476,9 +484,10 @@ read_tag (FILE    *fp,
  * https://github.com/PackJC/Paint.NET-PAA-PAC-Importer/
    blob/main/BIS/Core/Compression/LZSS.cs */
 static gboolean
-decode_lzss (guchar *raw_data,
-             guchar *uncompressed_data,
-             gint    estimated_size)
+decode_lzss (guchar  *raw_data,
+             guint32  raw_data_size,
+             guchar  *uncompressed_data,
+             gint     estimated_size)
 {
   gchar  char_array[4113];
   gint   index       = 4078;
@@ -486,7 +495,7 @@ decode_lzss (guchar *raw_data,
   gint   raw_index   = 0;
   gint   data_index  = 0;
 
-  if (estimated_size <= 0)
+  if (raw_data_size <= 0 || estimated_size <= 0)
     return FALSE;
 
   for (gint i = 0; i < index; i++)
@@ -494,13 +503,20 @@ decode_lzss (guchar *raw_data,
 
   while (estimated_size > 0)
     {
+      if (raw_index > raw_data_size - 1)
+        return FALSE;
+
       if (((flag >>= 1) & 256) == 0)
-          flag = raw_data[raw_index++] | 65280;
+        flag = raw_data[raw_index++] | 65280;
 
       if ((flag & 1) != 0)
         {
-          guchar value = raw_data[raw_index++];
+          guchar value;
 
+          if (raw_index > raw_data_size - 1)
+            return FALSE;
+
+          value = raw_data[raw_index++];
           uncompressed_data[data_index++] = value;
           estimated_size--;
 
@@ -510,15 +526,22 @@ decode_lzss (guchar *raw_data,
         }
       else
         {
-          gint b1  = raw_data[raw_index++];
-          gint b2  = raw_data[raw_index++];
-          gint b3  = b1 | (b2 & 0xF0) << 4;
-          gint b4  = (b2 & 0x0F) + 2;
+          gint b[4];
+          gint offset;
+          gint end_offset;
 
-          gint offset     = index - b3;
-          gint end_offset = b4 + offset;
+          if (raw_index > raw_data_size - 2)
+            return FALSE;
 
-          if ((b4 + 1) > (guint32) estimated_size)
+          b[0] = raw_data[raw_index++];
+          b[1] = raw_data[raw_index++];
+          b[2] = b[0] | (b[1] & 0xF0) << 4;
+          b[3] = (b[1] & 0x0F) + 2;
+
+          offset     = index - b[2];
+          end_offset = b[3] + offset;
+
+          if ((b[3] + 1) > (guint32) estimated_size)
             return FALSE;
 
           for (; offset <= end_offset; offset++)
