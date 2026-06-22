@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-15 04:11+0000\n"
-"PO-Revision-Date: 2026-06-15 09:15+0200\n"
+"POT-Creation-Date: 2026-06-22 02:05+0000\n"
+"PO-Revision-Date: 2026-06-22 07:26+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2510,7 +2510,7 @@ msgstr "240 s"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:375 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1798
+#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1803
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -13949,7 +13949,7 @@ msgstr "Mask učinkov ni mogoče preimenovati."
 msgid "%s mask"
 msgstr "Maska %s"
 
-#: app/core/gimpdynamicsoutput.c:136
+#: app/core/gimpdynamicsoutput.c:141
 msgid "Output type"
 msgstr "Vrsta izhoda"
 
@@ -13976,7 +13976,7 @@ msgstr "Operjeni robovi"
 msgid "Enable feathering of fill edges"
 msgstr "Omogoči operjanje robov polnjenja"
 
-#: app/core/gimpfilloptions.c:145 app/paint/gimpmybrushoptions.c:107
+#: app/core/gimpfilloptions.c:145 app/paint/gimpmybrushoptions.c:108
 #: app/tools/gimpbucketfilloptions.c:200 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:105 app/widgets/gimpbrusheditor.c:160
@@ -21193,42 +21193,50 @@ msgstr "Čopič MyPaint"
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "Za to orodje čopiči MyPaint niso na voljo."
 
-#: app/paint/gimpmybrushoptions.c:93
+#: app/paint/gimpmybrushoptions.c:94
 msgid "View Zoom"
 msgstr "Približanje pogleda"
 
-#: app/paint/gimpmybrushoptions.c:100
+#: app/paint/gimpmybrushoptions.c:101
 msgid "View Rotation"
 msgstr "Sukanje pogleda"
 
-#: app/paint/gimpmybrushoptions.c:114
+#: app/paint/gimpmybrushoptions.c:115
 msgid "Base Opacity"
 msgstr "Prekrivnost osnove"
 
-#: app/paint/gimpmybrushoptions.c:121 app/paint/gimppaintoptions.c:241
+#: app/paint/gimpmybrushoptions.c:122 app/paint/gimppaintoptions.c:241
 #: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:180
 msgid "Hardness"
 msgstr "Trdota"
 
-#: app/paint/gimpmybrushoptions.c:128
+#: app/paint/gimpmybrushoptions.c:129
 msgid "Gain"
 msgstr "Ojačitev"
 
-#: app/paint/gimpmybrushoptions.c:129
+#: app/paint/gimpmybrushoptions.c:130
 msgid "Adjust strength of input pressure"
 msgstr "Prilagodite moč pritiska vnosa"
 
-#: app/paint/gimpmybrushoptions.c:153
+#: app/paint/gimpmybrushoptions.c:136
+msgid "Pigment"
+msgstr "Pigment"
+
+#: app/paint/gimpmybrushoptions.c:155
 msgid "Erase with this brush"
 msgstr "Radiraj s tem čopičem"
 
-#: app/paint/gimpmybrushoptions.c:160
+#: app/paint/gimpmybrushoptions.c:162
 msgid "No erasing effect"
 msgstr "Brez učinka brisanja"
 
-#: app/paint/gimpmybrushoptions.c:161 app/paint/gimpsmudgeoptions.c:87
+#: app/paint/gimpmybrushoptions.c:163 app/paint/gimpsmudgeoptions.c:87
 msgid "Never decrease alpha of existing pixels"
 msgstr "Nikoli ne zmanjšaj alfe obstoječih slikovnih pik"
+
+#: app/paint/gimpmybrushoptions.c:169 app/tools/gimpmybrushoptions-gui.c:104
+msgid "Spectral Blending"
+msgstr "Spektralno zlivanje"
 
 #: app/paint/gimppaintbrush.c:82 app/tools/gimppaintbrushtool.c:59
 msgid "Paintbrush"
@@ -22406,15 +22414,15 @@ msgstr "Vstavka »%s« ni mogoče zagnati"
 msgid "Unknown file type"
 msgstr "Neznana vrsta datoteke"
 
-#: app/plug-in/gimppluginmanager-restore.c:216
+#: app/plug-in/gimppluginmanager-restore.c:217
 msgid "Loading extension plug-ins"
 msgstr "Nalaganje razširitvenih vtičnikov"
 
-#: app/plug-in/gimppluginmanager-restore.c:250
+#: app/plug-in/gimppluginmanager-restore.c:251
 msgid "Searching plug-ins"
 msgstr "Iskanje vstavkov"
 
-#: app/plug-in/gimppluginmanager-restore.c:375
+#: app/plug-in/gimppluginmanager-restore.c:370
 #, c-format
 msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
@@ -22423,24 +22431,24 @@ msgstr ""
 "Preskakovanje potencialnega vstavka »%s«: vstavki morajo biti nameščeni v "
 "podmapah.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:382
+#: app/plug-in/gimppluginmanager-restore.c:377
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
 msgstr "Preskakovanje neznane datoteke »%s« v mapi vstavkov.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:429
+#: app/plug-in/gimppluginmanager-restore.c:424
 msgid "Resource configuration"
 msgstr "Nastavitev virov"
 
-#: app/plug-in/gimppluginmanager-restore.c:465
+#: app/plug-in/gimppluginmanager-restore.c:460
 msgid "Querying new Plug-ins"
 msgstr "Povpraševanje po novih vtičnikih"
 
-#: app/plug-in/gimppluginmanager-restore.c:519
+#: app/plug-in/gimppluginmanager-restore.c:514
 msgid "Initializing Plug-ins"
 msgstr "Inicializacija vtičnikov"
 
-#: app/plug-in/gimppluginmanager-restore.c:592
+#: app/plug-in/gimppluginmanager-restore.c:587
 msgid "Starting Extensions"
 msgstr "Zaganjanje razširitev"
 
@@ -22902,7 +22910,7 @@ msgstr ""
 "Nekaterih pisav ni mogoče naložiti: \n"
 "%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1670
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1675
 msgid "Add Text Layer"
 msgstr "Dodaj plast besedila"
 
@@ -22922,7 +22930,7 @@ msgstr "Plast besedila"
 msgid "Rename Text Layer"
 msgstr "Preimenuj plast besedila"
 
-#: app/text/gimptextlayer.c:169
+#: app/text/gimptextlayer.c:169 app/tools/gimptexttool.c:1246
 msgid "Move Text Layer"
 msgstr "Premakni plast besedila"
 
@@ -24558,7 +24566,7 @@ msgstr "Prilagoditev"
 msgid "Sensitivity"
 msgstr "Občutljivost"
 
-#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:110
+#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:123
 #: app/tools/gimppaintoptions-gui.c:532
 msgid "Fill Layer Mask With"
 msgstr "Zapolni masko plasti s/z"
@@ -25146,11 +25154,11 @@ msgstr "Dodaj vektorsko plast"
 msgid "Confirm Path Editing"
 msgstr "Potrdi urejanje poti"
 
-#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1797
+#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1802
 msgid "Create _New Layer"
 msgstr "Ustvari _novo plast"
 
-#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1799
+#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1804
 msgid "_Edit Anyway"
 msgstr "Vs_eeno uredi"
 
@@ -25691,15 +25699,15 @@ msgstr "Polje:"
 msgid "Language:"
 msgstr "Jezik:"
 
-#: app/tools/gimptexttool.c:221
+#: app/tools/gimptexttool.c:222
 msgid "Text"
 msgstr "Besedilo"
 
-#: app/tools/gimptexttool.c:222
+#: app/tools/gimptexttool.c:223
 msgid "Text Tool: Create or edit text layers"
 msgstr "Orodje za besedilo: Ustvari ali uredi plasti besedila"
 
-#: app/tools/gimptexttool.c:223
+#: app/tools/gimptexttool.c:224
 msgid "Te_xt"
 msgstr "_Besedilo"
 
@@ -25715,11 +25723,11 @@ msgstr "Besedilno polje: "
 msgid "Reshape Text Layer"
 msgstr "Preoblikuj plast besedila"
 
-#: app/tools/gimptexttool.c:1790 app/tools/gimptexttool.c:1793
+#: app/tools/gimptexttool.c:1795 app/tools/gimptexttool.c:1798
 msgid "Confirm Text Editing"
 msgstr "Potrdi urejevanje besedila"
 
-#: app/tools/gimptexttool.c:1821
+#: app/tools/gimptexttool.c:1826
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
@@ -25727,19 +25735,19 @@ msgstr ""
 "Besedilna plast, ki ste jo izbrali, je bila rasterizirana. Urejanje besedila "
 "bo zavrglo vse spremembe."
 
-#: app/tools/gimptexttool.c:2441
+#: app/tools/gimptexttool.c:2446
 msgid "Text is required."
 msgstr "Besedilo je obvezno."
 
-#: app/tools/gimptexttool.c:2444
+#: app/tools/gimptexttool.c:2449
 msgid "No image."
 msgstr "Ni slike."
 
-#: app/tools/gimptexttool.c:2447
+#: app/tools/gimptexttool.c:2452
 msgid "No layer."
 msgstr "Ni plasti."
 
-#: app/tools/gimptexttool.c:2458
+#: app/tools/gimptexttool.c:2463
 msgid "Exactly one path must be selected."
 msgstr "Izbrana mora biti natanko ena pot."
 
@@ -27642,7 +27650,8 @@ msgstr "Nagib Y"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: app/widgets/gimpdeviceinfo.c:68
+#: app/widgets/gimpdeviceinfo.c:68 app/widgets/gimpdynamicseditor.c:165
+#: app/widgets/gimpdynamicsoutputeditor.c:74
 msgid "Wheel"
 msgstr "Kolešček"
 
@@ -27650,7 +27659,8 @@ msgstr "Kolešček"
 msgid "Distance"
 msgstr "Razdalja"
 
-#: app/widgets/gimpdeviceinfo.c:70
+#: app/widgets/gimpdeviceinfo.c:70 app/widgets/gimpdynamicseditor.c:166
+#: app/widgets/gimpdynamicsoutputeditor.c:75
 msgid "Rotation"
 msgstr "Sukanje"
 
@@ -27703,7 +27713,7 @@ msgid "Pressure Curve"
 msgstr "Krivulja pritiska"
 
 #: app/widgets/gimpdeviceinfoeditor.c:353
-#: app/widgets/gimpdynamicsoutputeditor.c:206
+#: app/widgets/gimpdynamicsoutputeditor.c:207
 msgid "_Reset Curve"
 msgstr "Po_nastavi krivuljo"
 
@@ -27877,31 +27887,23 @@ msgstr "Filtra, ki ga urejate, ni mogoče prerazvrstiti."
 msgid "Velocity"
 msgstr "Hitrost"
 
-#: app/widgets/gimpdynamicseditor.c:165
-msgid "Wheel/Rotation"
-msgstr "Kolešček/sukanje"
-
-#: app/widgets/gimpdynamicseditor.c:166
-#: app/widgets/gimpdynamicsoutputeditor.c:75
+#: app/widgets/gimpdynamicseditor.c:167
+#: app/widgets/gimpdynamicsoutputeditor.c:76
 msgid "Random"
 msgstr "Naključno"
 
-#: app/widgets/gimpdynamicseditor.c:167
-#: app/widgets/gimpdynamicsoutputeditor.c:76
+#: app/widgets/gimpdynamicseditor.c:168
+#: app/widgets/gimpdynamicsoutputeditor.c:77
 msgid "Fade"
 msgstr "Pojemanje"
 
-#: app/widgets/gimpdynamicseditor.c:180
+#: app/widgets/gimpdynamicseditor.c:181
 msgid "Mapping matrix"
 msgstr "Matrika preslikave"
 
-#: app/widgets/gimpdynamicseditor.c:313 app/widgets/gimptoolpreseteditor.c:152
+#: app/widgets/gimpdynamicseditor.c:314 app/widgets/gimptoolpreseteditor.c:152
 msgid "Icon:"
 msgstr "Ikona:"
-
-#: app/widgets/gimpdynamicsoutputeditor.c:74
-msgid "Wheel / Rotation"
-msgstr "Kolešček / sukanje"
 
 #: app/widgets/gimperrordialog.c:176
 msgid "Too many error messages!"
@@ -28384,7 +28386,7 @@ msgstr "Zasidraj plavajočo plast"
 msgid "No channels to create a layer mask from."
 msgstr "Ni kanalov, da bi iz njih ustvarili masko plasti."
 
-#: app/widgets/gimpmessagebox.c:446
+#: app/widgets/gimpmessagebox.c:490
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
