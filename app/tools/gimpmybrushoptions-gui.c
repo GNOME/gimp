@@ -85,6 +85,15 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
                                     0.1, 0.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 
+  /* pigment */
+  scale = gimp_prop_spin_scale_new (config, "pigment",
+                                    0.1, 1.0, 2);
+  frame = gimp_prop_expanding_frame_new (config, "pigment-use", NULL, scale,
+                                         NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
+  gtk_widget_set_visible (frame, TRUE);
+
   /* erase mode */
   scale = gimp_prop_check_button_new (config, "eraser", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
@@ -92,19 +101,6 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
   /* no erasing */
   scale = gimp_prop_check_button_new (config, "no-erasing", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-
-  /* pigment */
-  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-
-  scale = gimp_prop_spin_scale_new (config, "pigment",
-                                    0.1, 1.0, 2);
-  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-
-  frame = gimp_prop_expanding_frame_new (config, "pigment-use",
-                                         _("Spectral Blending"), vbox2, NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   /* Expand layer options */
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
