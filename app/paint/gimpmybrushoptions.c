@@ -166,7 +166,7 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PIGMENT_USE,
                             "pigment-use",
-                            _("Use spectral blending"),
+                            _("Spectral blending"),
                             _("If checked, use MyPaint's subtractive "
                               "blending to mimic real world pigment mixing"),
                             FALSE,
