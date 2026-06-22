@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-22 02:05+0000\n"
-"PO-Revision-Date: 2026-06-22 07:26+0200\n"
+"POT-Creation-Date: 2026-06-22 06:05+0000\n"
+"PO-Revision-Date: 2026-06-22 08:46+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -21234,9 +21234,17 @@ msgstr "Brez učinka brisanja"
 msgid "Never decrease alpha of existing pixels"
 msgstr "Nikoli ne zmanjšaj alfe obstoječih slikovnih pik"
 
-#: app/paint/gimpmybrushoptions.c:169 app/tools/gimpmybrushoptions-gui.c:104
-msgid "Spectral Blending"
+#: app/paint/gimpmybrushoptions.c:169
+msgid "Spectral blending"
 msgstr "Spektralno zlivanje"
+
+#: app/paint/gimpmybrushoptions.c:170
+msgid ""
+"If checked, use MyPaint's subtractive blending to mimic real world pigment "
+"mixing"
+msgstr ""
+"Če je ta možnost izbrana, se uporabi odštevalno zlivanje MyPaint, kar "
+"posnema mešanje pigmentov v resničnem svetu"
 
 #: app/paint/gimppaintbrush.c:82 app/tools/gimppaintbrushtool.c:59
 msgid "Paintbrush"
@@ -24566,7 +24574,7 @@ msgstr "Prilagoditev"
 msgid "Sensitivity"
 msgstr "Občutljivost"
 
-#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:123
+#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:119
 #: app/tools/gimppaintoptions-gui.c:532
 msgid "Fill Layer Mask With"
 msgstr "Zapolni masko plasti s/z"
