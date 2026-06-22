@@ -44,11 +44,11 @@ struct _GimpMybrushOptions
   gdouble           hardness;
   gdouble           gain;
   gdouble           pigment;
+  gboolean          pigment_use;
   gdouble           posterize;
   gdouble           posterize_num;
   gboolean          eraser;
   gboolean          no_erasing;
-  gboolean          pigment_use;
 };
 
 struct _GimpMybrushOptionsClass

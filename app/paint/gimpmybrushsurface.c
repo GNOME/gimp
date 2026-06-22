@@ -32,6 +32,7 @@
 #include "gimpmybrushsurface.h"
 
 #define WGM_EPSILON 0.001
+#define WGM_OFFSET  0.999
 
 /*From MyPaint*/
 static const float T_MATRIX_SMALL[3][10] =
@@ -279,39 +280,31 @@ rgb_to_spectral (float r,
                  float b,
                  float *spectral_)
 {
-  float offset;
-  float spec_r [10] = {0};
-  float spec_g [10] = {0};
-  float spec_b [10] = {0};
-  int   i;
+  gfloat spec_r [10] = {0};
+  gfloat spec_g [10] = {0};
+  gfloat spec_b [10] = {0};
+  gint   i;
 
-  offset = 1.0f - WGM_EPSILON;
-  r      = r * offset + WGM_EPSILON;
-  g      = g * offset + WGM_EPSILON;
-  b      = b * offset + WGM_EPSILON;
+  r = (r * WGM_OFFSET) + WGM_EPSILON;
+  g = (g * WGM_OFFSET) + WGM_EPSILON;
+  b = (b * WGM_OFFSET) + WGM_EPSILON;
 
   for (i = 0; i < 10; i++)
-    spec_r[i] = spectral_r_small[i] * r;
+    {
+      spec_r[i] = spectral_r_small[i] * r;
+      spec_g[i] = spectral_g_small[i] * g;
+      spec_b[i] = spectral_b_small[i] * b;
 
-  for (i = 0; i < 10; i++)
-    spec_g[i] = spectral_g_small[i] * g;
-
-  for (i = 0; i < 10; i++)
-    spec_b[i] = spectral_b_small[i] * b;
-
-  for (i = 0; i < 10; i++)
-    spectral_[i] += spec_r[i] + spec_g[i] + spec_b[i];
+      spectral_[i] += spec_r[i] + spec_g[i] + spec_b[i];
+    }
 }
 
 static void
 spectral_to_rgb (float *spectral,
                  float *rgb_)
 {
-  float offset;
   float tmp[3] = {0};
   int   i;
-
-  offset = 1.0f - WGM_EPSILON;
 
   for (i = 0; i < 10; i++)
     {
@@ -321,14 +314,14 @@ spectral_to_rgb (float *spectral,
     }
 
   for (i = 0; i < 3; i++)
-    rgb_[i] = CLAMP ((tmp[i] - WGM_EPSILON) / offset, 0.0f, 1.0f);
+    rgb_[i] = CLAMP ((tmp[i] - WGM_EPSILON) / WGM_OFFSET, 0.0f, 1.0f);
 }
 
 static float
 spectral_blend_factor (float x)
 {
-  const float ver_fac = 1.65f; /* vertical compression factor */
-  const float hor_fac = 8.0f;  /* horizontal compression factor */
+  const float ver_fac  = 1.65f; /* vertical compression factor */
+  const float hor_fac  = 8.0f;  /* horizontal compression factor */
   const float hor_offs = 3.0f; /* horizontal offset */
   float       b;
 
@@ -360,117 +353,126 @@ gimp_mypaint_surface_get_color_2 (MyPaintSurface2 *base_surface,
   *color_b = 0.0f;
   *color_a = 0.0f;
 
-
   if (dabRect.width > 0 || dabRect.height > 0)
-  {
-    const float one_over_radius2 = 1.0f / (radius * radius);
-    float sum_weight = 0.0f;
-    float sum_r = 0.0f;
-    float sum_g = 0.0f;
-    float sum_b = 0.0f;
-    float sum_a = 0.0f;
-    float avg_spectral[10] = {0};
+    {
+      const float one_over_radius2 = 1.0f / (radius * radius);
+      float sum_weight             = 0.0f;
+      float sum_r                  = 0.0f;
+      float sum_g                  = 0.0f;
+      float sum_b                  = 0.0f;
+      float sum_a                  = 0.0f;
+      float avg_spectral[10]       = {0};
 
-     /* Read in clamp mode to avoid transparency bleeding in at the edges */
-    GeglBufferIterator *iter = gegl_buffer_iterator_new (surface->buffer, &dabRect, 0,
-                                                         babl_format ("R'aG'aB'aA float"),
-                                                         GEGL_BUFFER_READ,
-                                                         GEGL_ABYSS_CLAMP, 2);
-    if (surface->paint_mask)
-      {
-        GeglRectangle mask_roi = dabRect;
-        mask_roi.x -= surface->paint_mask_x;
-        mask_roi.y -= surface->paint_mask_y;
-        gegl_buffer_iterator_add (iter, surface->paint_mask, &mask_roi, 0,
-                                  babl_format ("Y float"),
-                                  GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-      }
+       /* Read in clamp mode to avoid transparency bleeding in at the edges */
+      GeglBufferIterator *iter = gegl_buffer_iterator_new (surface->buffer, &dabRect, 0,
+                                                           babl_format ("R'aG'aB'aA float"),
+                                                           GEGL_BUFFER_READ,
+                                                           GEGL_ABYSS_CLAMP, 2);
+      if (surface->paint_mask)
+        {
+          GeglRectangle mask_roi = dabRect;
+          mask_roi.x -= surface->paint_mask_x;
+          mask_roi.y -= surface->paint_mask_y;
+          gegl_buffer_iterator_add (iter, surface->paint_mask, &mask_roi, 0,
+                                    babl_format ("Y float"),
+                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+        }
 
-    while (gegl_buffer_iterator_next (iter))
-      {
-        float *pixel = (float *)iter->items[0].data;
-        float *mask;
-        float  spectral[10] = {0};
-        int    iy, ix, i;
+      while (gegl_buffer_iterator_next (iter))
+        {
+          float *pixel = (float *)iter->items[0].data;
+          float *mask;
+          float  spectral[10] = {0};
+          int    iy, ix, i;
 
-        if (surface->paint_mask)
-          mask = iter->items[1].data;
-        else
-          mask = NULL;
+          if (surface->paint_mask)
+            mask = iter->items[1].data;
+          else
+            mask = NULL;
 
-        for (iy = iter->items[0].roi.y; iy < iter->items[0].roi.y + iter->items[0].roi.height; iy++)
-          {
-            float yy = (iy + 0.5f - y);
-            for (ix = iter->items[0].roi.x; ix < iter->items[0].roi.x +  iter->items[0].roi.width; ix++)
-              {
-                /* pixel_weight == a standard dab with hardness = 0.5, aspect_ratio = 1.0, and angle = 0.0 */
-                float xx = (ix + 0.5f - x);
-                float rr = (yy * yy + xx * xx) * one_over_radius2;
-                float pixel_weight = 0.0f;
+          for (iy = iter->items[0].roi.y; iy < iter->items[0].roi.y + iter->items[0].roi.height; iy++)
+            {
+              float yy = (iy + 0.5f - y);
 
-                if (rr <= 1.0f)
-                  pixel_weight = 1.0f - rr;
+              for (ix = iter->items[0].roi.x; ix < iter->items[0].roi.x + iter->items[0].roi.width; ix++)
+                {
+                  /* pixel_weight == a standard dab with hardness = 0.5,
+                   * aspect_ratio = 1.0, and angle = 0.0 */
+                  float xx = (ix + 0.5f - x);
+                  float rr = (yy * yy + xx * xx) * one_over_radius2;
+                  float pixel_weight = 0.0f;
 
-                if (mask)
-                  pixel_weight *= *mask;
+                  if (rr <= 1.0f)
+                    pixel_weight = 1.0f - rr;
 
-                sum_a += pixel_weight * pixel[ALPHA];
-                sum_weight += pixel_weight;
+                  if (mask)
+                    pixel_weight *= *mask;
 
-                if (paint > 0.0f && pixel[ALPHA] > 0.0f)
-                  {
-                    float fac_a = pixel_weight * pixel[ALPHA];
-                    float fac_b = sum_a > 0.0f ? 1.0f - (fac_a / sum_a) : 0.0f;
-                    fac_a = sum_a > 0.0f ? fac_a / sum_a : 0.0f;
+                  sum_a += pixel_weight * pixel[ALPHA];
+                  sum_weight += pixel_weight;
 
-                    rgb_to_spectral (pixel[RED] / pixel[ALPHA], pixel[GREEN] / pixel[ALPHA], pixel[BLUE] / pixel[ALPHA], spectral);
+                  if (paint > 0.0f && pixel[ALPHA] > 0.0f)
+                    {
+                      float fac_a = pixel_weight * pixel[ALPHA];
+                      float fac_b = (sum_a > 0.0f) ? 1.0f - (fac_a / sum_a) : 0.0f;
 
-                    for (i = 0; i < 10; i++)
-                      avg_spectral[i] = powf (spectral[i], fac_a) * powf (avg_spectral[i], fac_b);
-                  }
+                      fac_a = sum_a > 0.0f ? fac_a / sum_a : 0.0f;
+                      rgb_to_spectral (pixel[RED] / pixel[ALPHA],
+                                       pixel[GREEN] / pixel[ALPHA],
+                                       pixel[BLUE] / pixel[ALPHA], spectral);
 
-                if (paint < 1.0f)
-                  {
-                    sum_r += pixel_weight * pixel[RED];
-                    sum_g += pixel_weight * pixel[GREEN];
-                    sum_b += pixel_weight * pixel[BLUE];
-                  }
-              }
-          }
-      }
+                      for (i = 0; i < 10; i++)
+                        avg_spectral[i] = powf (spectral[i], fac_a) *
+                                          powf (avg_spectral[i], fac_b);
+                    }
 
-    if (sum_a > 0.0f && sum_weight > 0.0f)
-      {
-        sum_r /= sum_weight;
-        sum_g /= sum_weight;
-        sum_b /= sum_weight;
-        sum_a /= sum_weight;
+                  if (paint < 1.0f)
+                    {
+                      sum_r += pixel_weight * pixel[RED];
+                      sum_g += pixel_weight * pixel[GREEN];
+                      sum_b += pixel_weight * pixel[BLUE];
+                    }
 
-        if (paint > 0.0f)
-          {
-            float rgb[3] = {0};
-            spectral_to_rgb (avg_spectral, rgb);
+                  pixel += 4;
+                  if (mask)
+                    mask += 1;
+                }
+            }
+        }
 
-            sum_r = (sum_r / sum_a) * (1.0f - paint) + rgb[0] * paint;
-            sum_g = (sum_g / sum_a) * (1.0f - paint) + rgb[1] * paint;
-            sum_b = (sum_b / sum_a) * (1.0f - paint) + rgb[2] * paint;
+      if (sum_a > 0.0f && sum_weight > 0.0f)
+        {
+          sum_r /= sum_weight;
+          sum_g /= sum_weight;
+          sum_b /= sum_weight;
+          sum_a /= sum_weight;
 
-          }
-        else
-          {
-            sum_r /= sum_a;
-            sum_g /= sum_a;
-            sum_b /= sum_a;
-          }
+          if (paint > 0.0f)
+            {
+              float rgb[3] = {0};
+              spectral_to_rgb (avg_spectral, rgb);
+
+              sum_r = (sum_r / sum_a) * (1.0f - paint) + rgb[0] * paint;
+              sum_g = (sum_g / sum_a) * (1.0f - paint) + rgb[1] * paint;
+              sum_b = (sum_b / sum_a) * (1.0f - paint) + rgb[2] * paint;
+
+            }
+          else
+            {
+              sum_r /= sum_a;
+              sum_g /= sum_a;
+              sum_b /= sum_a;
+            }
 
 
-        /* FIXME: Clamping is wrong because GEGL allows alpha > 1, this should probably re-multipy things */
-        *color_r = CLAMP(sum_r, 0.0f, 1.0f);
-        *color_g = CLAMP(sum_g, 0.0f, 1.0f);
-        *color_b = CLAMP(sum_b, 0.0f, 1.0f);
-        *color_a = CLAMP(sum_a, 0.0f, 1.0f);
-      }
-  }
+          /* FIXME: Clamping is wrong because GEGL allows alpha > 1,
+           * this should probably re-multipy things */
+          *color_r = CLAMP (sum_r, 0.0f, 1.0f);
+          *color_g = CLAMP (sum_g, 0.0f, 1.0f);
+          *color_b = CLAMP (sum_b, 0.0f, 1.0f);
+          *color_a = CLAMP (sum_a, 0.0f, 1.0f);
+        }
+    }
 }
 
 static void
