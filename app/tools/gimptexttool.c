@@ -35,6 +35,7 @@
 #include "core/gimpasyncset.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimperror.h"
@@ -45,6 +46,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer-floating-selection.h"
+#include "core/gimplayermask.h"
 #include "core/gimplist.h"
 #include "core/gimprasterizable.h"
 #include "core/gimptoolinfo.h"
@@ -542,6 +544,19 @@ gimp_text_tool_button_press (GimpTool            *tool,
           drawable = drawables->data;
         }
       g_list_free (drawables);
+
+      /* If we clicked on a layer mask attached TO a text layer,
+       * try to pick the underlying text layer instead (issue #16514)) */
+      if (drawable && GIMP_IS_LAYER_MASK (drawable))
+        {
+          GimpLayer *layer = gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable));
+
+          if (GIMP_IS_TEXT_LAYER (layer))
+            {
+              drawable = GIMP_DRAWABLE (layer);
+              gimp_layer_set_edit_mask (layer, FALSE); /* optional here? */
+            }
+        }
 
       /*  did the user click on a text layer?  */
       if (drawable &&
