@@ -1,6 +1,6 @@
-From 564773b44b59043215088fb3cb509a50db1a4ca0 Mon Sep 17 00:00:00 2001
+From 8f92f0dfdf4e8cec8a555dd9e837ed913b7415dc Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Mon, 8 Jun 2026 13:40:51 -0300
+Date: Mon, 22 Jun 2026 10:17:22 -0300
 Subject: [PATCH] Disable some things due to lack of packages
 
 ---
@@ -184,10 +184,10 @@ index 9489eda9fb..5fdf498c9b 100644
    'file-data-pat.c',
    'file-data.c',
 diff --git a/app/plug-in/gimppluginmanager-restore.c b/app/plug-in/gimppluginmanager-restore.c
-index b817be4e1c..dffb7422d6 100644
+index deecd7dc55..8420f04b53 100644
 --- a/app/plug-in/gimppluginmanager-restore.c
 +++ b/app/plug-in/gimppluginmanager-restore.c
-@@ -186,7 +186,6 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
+@@ -187,7 +187,6 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
  {
    const gchar *path_str;
    GList       *paths;
@@ -195,7 +195,7 @@ index b817be4e1c..dffb7422d6 100644
    GList       *iter;
  
  #ifdef G_OS_WIN32
-@@ -213,40 +212,6 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
+@@ -214,40 +213,6 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
      }
  #endif /* G_OS_WIN32 */
  
@@ -218,14 +218,14 @@ index b817be4e1c..dffb7422d6 100644
 -
 -          if (gimp_file_is_executable (file))
 -            {
--              guint64 mtime;
 -              GFileInfo *info;
 -
--              info = g_file_query_info (file, G_FILE_ATTRIBUTE_TIME_MODIFIED,
+-              info = g_file_query_info (file,
+-                                        G_FILE_ATTRIBUTE_TIME_MODIFIED ","
+-                                        G_FILE_ATTRIBUTE_TIME_CHANGED,
 -                                        G_FILE_QUERY_INFO_NONE, NULL, NULL);
--              mtime = g_file_info_get_attribute_uint64 (info,
--                                                        G_FILE_ATTRIBUTE_TIME_MODIFIED);
--              gimp_plug_in_manager_add_from_file (manager, file, root_folder, mtime);
+-              gimp_plug_in_manager_add_from_file (manager, file, root_folder,
+-                                                  gimp_plug_in_manager_get_file_time (info));
 -              g_object_unref (info);
 -            }
 -        }
@@ -262,10 +262,10 @@ index 7dd25ed1ba..234a951148 100644
    subdir('reference')
  endif
 diff --git a/libgimp/meson.build b/libgimp/meson.build
-index f8e76278ec..7e8eba8684 100644
+index 06ceea343e..e81e1240be 100644
 --- a/libgimp/meson.build
 +++ b/libgimp/meson.build
-@@ -516,7 +516,9 @@ libgimpui_introspectable_files = [
+@@ -530,7 +530,9 @@ libgimpui_introspectable_files = [
    libgimpwidgets_introspectable,
  ]
  
@@ -277,10 +277,10 @@ index f8e76278ec..7e8eba8684 100644
    gobject_introspection_warning = '\n      '.join(['',
      'GObject Introspection is disabled while cross-compiling because',
 diff --git a/meson.build b/meson.build
-index 5559e84126..c06473b8d1 100644
+index 20b8932a35..c270300366 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -291,7 +291,7 @@ warning_cflags_common = [
+@@ -296,7 +296,7 @@ warning_cflags_common = [
    '-fno-common',
  
    '-Wformat',
@@ -289,7 +289,7 @@ index 5559e84126..c06473b8d1 100644
    '-Winit-self',
    '-Wlogical-op',
    '-Wmissing-declarations',
-@@ -701,7 +701,7 @@ endif
+@@ -706,7 +706,7 @@ endif
  # Check for extension support
  
  appstream_minver = '0.16.1'
@@ -298,7 +298,7 @@ index 5559e84126..c06473b8d1 100644
  
  libarchive = dependency('libarchive')
  
-@@ -1195,7 +1195,7 @@ pygobject_found = ''
+@@ -1200,7 +1200,7 @@ pygobject_found = ''
  pygobject_gexiv2_found = false
  foreach py : py_candidates
    #Check if PyGobject installation have pycairo (#13105)
@@ -307,7 +307,7 @@ index 5559e84126..c06473b8d1 100644
    if python_tmp.found() and python_tmp.language_version().version_compare(python3_minver)
      python = python_tmp
      #Check if PyGObject installation have minimum version
-@@ -1214,9 +1214,7 @@ foreach py : py_candidates
+@@ -1219,9 +1219,7 @@ foreach py : py_candidates
                                          '''except (ImportError):''',
                                          '''    sys.exit(1)''']),
                                          check: false).returncode() == 0
@@ -318,7 +318,7 @@ index 5559e84126..c06473b8d1 100644
    endif
  endforeach
  
-@@ -1225,11 +1223,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
+@@ -1230,11 +1228,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
  endif
  message('Found Python @0@'.format(python.language_version()))
  
@@ -330,7 +330,7 @@ index 5559e84126..c06473b8d1 100644
  ## Javascript
  
  gjs = find_program('gjs', required: false)
-@@ -1983,15 +1976,11 @@ subdir('libgimpwidgets')
+@@ -1988,15 +1981,11 @@ subdir('libgimpwidgets')
  subdir('libgimp')
  
  # Executables, plugins
@@ -346,7 +346,7 @@ index 5559e84126..c06473b8d1 100644
  ################################################################################
  # Make GIMP runnable without being installed for unit-testing or as a build
  # tool.
-@@ -2009,13 +1998,13 @@ if get_option('debug-self-in-build')
+@@ -2014,13 +2003,13 @@ if get_option('debug-self-in-build')
  endif
  gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
  
@@ -362,7 +362,7 @@ index 5559e84126..c06473b8d1 100644
    gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
  
    menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
-@@ -2073,18 +2062,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
+@@ -2078,18 +2067,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
      gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpthumb.full_path())
      gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpwidgets.full_path())
    endif
@@ -381,7 +381,7 @@ index 5559e84126..c06473b8d1 100644
  endif
  
  gimp_exe = find_program('tools'/'in-build-gimp.py')
-@@ -2093,7 +2070,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
+@@ -2098,7 +2075,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
  # Subdirs: part 2
  
  # gimp-data submodule part 2
@@ -390,7 +390,7 @@ index 5559e84126..c06473b8d1 100644
  
  # Unit testing
  subdir('app/tests')
-@@ -2278,7 +2255,7 @@ final_message = [
+@@ -2283,7 +2260,7 @@ final_message = [
  '''  Test appdata         @0@'''.format(appstreamcli.found()),
  '',
  '''Documentation:''',
