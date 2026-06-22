@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-15 04:11+0000\n"
-"PO-Revision-Date: 2026-06-15 10:41+0200\n"
+"POT-Creation-Date: 06-0615-22 06:05+0000\n"
+"PO-Revision-Date: 2026-06-22 10:00+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -2508,7 +2508,7 @@ msgstr "240 Seconden"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:375 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1798
+#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1803
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -13770,7 +13770,7 @@ msgstr "Kan effectmaskers niet hernoemen."
 msgid "%s mask"
 msgstr "%s masker"
 
-#: app/core/gimpdynamicsoutput.c:136
+#: app/core/gimpdynamicsoutput.c:141
 msgid "Output type"
 msgstr "Uitvoertype"
 
@@ -13798,7 +13798,7 @@ msgstr "Randen verzachten"
 msgid "Enable feathering of fill edges"
 msgstr "Verzachten van omtrekranden inschakelen"
 
-#: app/core/gimpfilloptions.c:145 app/paint/gimpmybrushoptions.c:107
+#: app/core/gimpfilloptions.c:145 app/paint/gimpmybrushoptions.c:108
 #: app/tools/gimpbucketfilloptions.c:200 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:105 app/widgets/gimpbrusheditor.c:160
@@ -21029,42 +21029,56 @@ msgstr "MyBrush"
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "Geen MyPaint-penselen beschikbaar voor dit gereedschap."
 
-#: app/paint/gimpmybrushoptions.c:93
+#: app/paint/gimpmybrushoptions.c:94
 msgid "View Zoom"
 msgstr "Weergave zoomen"
 
-#: app/paint/gimpmybrushoptions.c:100
+#: app/paint/gimpmybrushoptions.c:101
 msgid "View Rotation"
 msgstr "Weergave draaien"
 
-#: app/paint/gimpmybrushoptions.c:114
+#: app/paint/gimpmybrushoptions.c:115
 msgid "Base Opacity"
 msgstr "Basisondoorzichtigheid"
 
-#: app/paint/gimpmybrushoptions.c:121 app/paint/gimppaintoptions.c:241
+#: app/paint/gimpmybrushoptions.c:122 app/paint/gimppaintoptions.c:241
 #: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:180
 msgid "Hardness"
 msgstr "Hardheid"
 
-#: app/paint/gimpmybrushoptions.c:128
+#: app/paint/gimpmybrushoptions.c:129
 msgid "Gain"
 msgstr "Versterking"
 
-#: app/paint/gimpmybrushoptions.c:129
+#: app/paint/gimpmybrushoptions.c:130
 msgid "Adjust strength of input pressure"
 msgstr "Aanpassen van sterkte van druk voor invoer"
 
-#: app/paint/gimpmybrushoptions.c:153
+#: app/paint/gimpmybrushoptions.c:136
+msgid "Pigment"
+msgstr "Pigment"
+
+#: app/paint/gimpmybrushoptions.c:155
 msgid "Erase with this brush"
 msgstr "Gum met dit penseel"
 
-#: app/paint/gimpmybrushoptions.c:160
+#: app/paint/gimpmybrushoptions.c:162
 msgid "No erasing effect"
 msgstr "Geen gumeffect"
 
-#: app/paint/gimpmybrushoptions.c:161 app/paint/gimpsmudgeoptions.c:87
+#: app/paint/gimpmybrushoptions.c:163 app/paint/gimpsmudgeoptions.c:87
 msgid "Never decrease alpha of existing pixels"
 msgstr "Nooit alfa van bestaande pixels verlagen"
+
+#: app/paint/gimpmybrushoptions.c:169
+msgid "Spectral blending"
+msgstr "Spectraal mengen"
+
+#: app/paint/gimpmybrushoptions.c:170
+msgid ""
+"If checked, use MyPaint's subtractive blending to mimic real world pigment "
+"mixing"
+msgstr "Indien geselecteerd, gebruikt MyPaint subtractief mengen om het mixen van pigment in de echte wereld na te bootsen"
 
 #: app/paint/gimppaintbrush.c:82 app/tools/gimppaintbrushtool.c:59
 msgid "Paintbrush"
@@ -22212,39 +22226,39 @@ msgstr "Plug-in ‘%s’ kon niet worden uitgevoerd"
 msgid "Unknown file type"
 msgstr "Onbekend bestandstype"
 
-#: app/plug-in/gimppluginmanager-restore.c:216
+#: app/plug-in/gimppluginmanager-restore.c:217
 msgid "Loading extension plug-ins"
 msgstr "Laden van uitbreidingen-plug-ins"
 
-#: app/plug-in/gimppluginmanager-restore.c:250
+#: app/plug-in/gimppluginmanager-restore.c:251
 msgid "Searching plug-ins"
 msgstr "Opzoeken plug-ins"
 
-#: app/plug-in/gimppluginmanager-restore.c:375
+#: app/plug-in/gimppluginmanager-restore.c:370
 #, c-format
 msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
 "subdirectories.\n"
 msgstr "Potentiële plug-in ‘%s’ overgeslagen: plug-ins moeten geïnstalleerd zijn in submappen.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:382
+#: app/plug-in/gimppluginmanager-restore.c:377
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
 msgstr "Onbekend bestand ‘%s’ in plug-in map overgeslagen.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:429
+#: app/plug-in/gimppluginmanager-restore.c:424
 msgid "Resource configuration"
 msgstr "Bronconfiguratie"
 
-#: app/plug-in/gimppluginmanager-restore.c:465
+#: app/plug-in/gimppluginmanager-restore.c:460
 msgid "Querying new Plug-ins"
 msgstr "Nieuwe plug-ins worden opgevraagd"
 
-#: app/plug-in/gimppluginmanager-restore.c:519
+#: app/plug-in/gimppluginmanager-restore.c:514
 msgid "Initializing Plug-ins"
 msgstr "Plug-ins worden geïnitialiseerd"
 
-#: app/plug-in/gimppluginmanager-restore.c:592
+#: app/plug-in/gimppluginmanager-restore.c:587
 msgid "Starting Extensions"
 msgstr "Uitbreidingen starten"
 
@@ -22707,7 +22721,7 @@ msgid ""
 msgstr "Sommige lettertypen konden niet worden geladen:\n"
 "%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1670
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1675
 msgid "Add Text Layer"
 msgstr "Tekstlaag toevoegen"
 
@@ -22727,7 +22741,7 @@ msgstr "Tekstlaag"
 msgid "Rename Text Layer"
 msgstr "Tekstlaag hernoemen"
 
-#: app/text/gimptextlayer.c:169
+#: app/text/gimptextlayer.c:169 app/tools/gimptexttool.c:1246
 msgid "Move Text Layer"
 msgstr "Tekstlaag verplaatsen"
 
@@ -24321,7 +24335,7 @@ msgstr "Aanpassing"
 msgid "Sensitivity"
 msgstr "Gevoeligheid"
 
-#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:110
+#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:119
 #: app/tools/gimppaintoptions-gui.c:532
 msgid "Fill Layer Mask With"
 msgstr "Laagmasker vullen met"
@@ -24914,11 +24928,11 @@ msgstr "Vectorlaag toevoegen"
 msgid "Confirm Path Editing"
 msgstr "Bevestig bewerken van pad"
 
-#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1797
+#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1802
 msgid "Create _New Layer"
 msgstr "_Nieuwe laag aanmaken"
 
-#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1799
+#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1804
 msgid "_Edit Anyway"
 msgstr "Toch b_ewerken"
 
@@ -25454,15 +25468,15 @@ msgstr "Vak:"
 msgid "Language:"
 msgstr "Taal:"
 
-#: app/tools/gimptexttool.c:221
+#: app/tools/gimptexttool.c:222
 msgid "Text"
 msgstr "Tekst"
 
-#: app/tools/gimptexttool.c:222
+#: app/tools/gimptexttool.c:223
 msgid "Text Tool: Create or edit text layers"
 msgstr "Tekst: tekstlagen aanmaken of bewerken"
 
-#: app/tools/gimptexttool.c:223
+#: app/tools/gimptexttool.c:224
 msgid "Te_xt"
 msgstr "T_ekst"
 
@@ -25479,29 +25493,29 @@ msgstr "Tekstvak: "
 msgid "Reshape Text Layer"
 msgstr "Tekstlaag hervormen"
 
-#: app/tools/gimptexttool.c:1790 app/tools/gimptexttool.c:1793
+#: app/tools/gimptexttool.c:1795 app/tools/gimptexttool.c:1798
 msgid "Confirm Text Editing"
 msgstr "Tekstbewerken bevestigen"
 
-#: app/tools/gimptexttool.c:1821
+#: app/tools/gimptexttool.c:1826
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
 msgstr "De tekstlaag die u koos werd gerasteriseerd. Bewerken van zijn tekst zal alle wijzigingen ongedaan maken."
 
-#: app/tools/gimptexttool.c:2441
+#: app/tools/gimptexttool.c:2446
 msgid "Text is required."
 msgstr "Tekst is vereist."
 
-#: app/tools/gimptexttool.c:2444
+#: app/tools/gimptexttool.c:2449
 msgid "No image."
 msgstr "Geen afbeelding."
 
-#: app/tools/gimptexttool.c:2447
+#: app/tools/gimptexttool.c:2452
 msgid "No layer."
 msgstr "Geen laag."
 
-#: app/tools/gimptexttool.c:2458
+#: app/tools/gimptexttool.c:2463
 msgid "Exactly one path must be selected."
 msgstr "U moet precies één pad selecteren."
 
@@ -27402,7 +27416,8 @@ msgstr "Helling Y"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: app/widgets/gimpdeviceinfo.c:68
+#: app/widgets/gimpdeviceinfo.c:68 app/widgets/gimpdynamicseditor.c:165
+#: app/widgets/gimpdynamicsoutputeditor.c:74
 msgid "Wheel"
 msgstr "Wiel"
 
@@ -27410,7 +27425,8 @@ msgstr "Wiel"
 msgid "Distance"
 msgstr "Afstand"
 
-#: app/widgets/gimpdeviceinfo.c:70
+#: app/widgets/gimpdeviceinfo.c:70 app/widgets/gimpdynamicseditor.c:166
+#: app/widgets/gimpdynamicsoutputeditor.c:75
 msgid "Rotation"
 msgstr "Draaiing"
 
@@ -27464,7 +27480,7 @@ msgid "Pressure Curve"
 msgstr "Drukcurve"
 
 #: app/widgets/gimpdeviceinfoeditor.c:353
-#: app/widgets/gimpdynamicsoutputeditor.c:206
+#: app/widgets/gimpdynamicsoutputeditor.c:207
 msgid "_Reset Curve"
 msgstr "Curve _herstellen"
 
@@ -27638,31 +27654,23 @@ msgstr "Kan een filter dat bewerkt wordt niet herschikken."
 msgid "Velocity"
 msgstr "Snelheid"
 
-#: app/widgets/gimpdynamicseditor.c:165
-msgid "Wheel/Rotation"
-msgstr "Wiel/Rotatie"
-
-#: app/widgets/gimpdynamicseditor.c:166
-#: app/widgets/gimpdynamicsoutputeditor.c:75
+#: app/widgets/gimpdynamicseditor.c:167
+#: app/widgets/gimpdynamicsoutputeditor.c:76
 msgid "Random"
 msgstr "Willekeurig"
 
-#: app/widgets/gimpdynamicseditor.c:167
-#: app/widgets/gimpdynamicsoutputeditor.c:76
+#: app/widgets/gimpdynamicseditor.c:168
+#: app/widgets/gimpdynamicsoutputeditor.c:77
 msgid "Fade"
 msgstr "Uitvloeien"
 
-#: app/widgets/gimpdynamicseditor.c:180
+#: app/widgets/gimpdynamicseditor.c:181
 msgid "Mapping matrix"
 msgstr "Toewijzingsmatrix"
 
-#: app/widgets/gimpdynamicseditor.c:313 app/widgets/gimptoolpreseteditor.c:152
+#: app/widgets/gimpdynamicseditor.c:314 app/widgets/gimptoolpreseteditor.c:152
 msgid "Icon:"
 msgstr "Pictogram:"
-
-#: app/widgets/gimpdynamicsoutputeditor.c:74
-msgid "Wheel / Rotation"
-msgstr "Wiel/Rotatie"
 
 #: app/widgets/gimperrordialog.c:176
 msgid "Too many error messages!"
@@ -28138,7 +28146,7 @@ msgstr "De zwevende laag verankeren"
 msgid "No channels to create a layer mask from."
 msgstr "Geen kanalen om een laagmasker van te maken."
 
-#: app/widgets/gimpmessagebox.c:446
+#: app/widgets/gimpmessagebox.c:490
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
@@ -29676,6 +29684,12 @@ msgstr "Menu Gereedschapsvoorinstellingen"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Menu Geschiedenis"
+
+#~ msgid "Wheel/Rotation"
+#~ msgstr "Wiel/Rotatie"
+
+#~ msgid "Wheel / Rotation"
+#~ msgstr "Wiel/Rotatie"
 
 #~ msgid "Layer Effects"
 #~ msgstr "Laageffecten"
