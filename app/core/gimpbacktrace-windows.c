@@ -317,7 +317,7 @@ gimp_backtrace_start (void)
                  SYMOPT_DEFERRED_LOADS    |
                  SYMOPT_DEBUG;
 
-#ifdef ARCH_X86_64
+#if defined(ARCH_ARM64) || defined(ARCH_X86_64)
       options |= SYMOPT_INCLUDE_32BIT_MODULES;
 #endif
 
@@ -433,7 +433,15 @@ gimp_backtrace_new (gboolean include_current_thread)
           continue;
         }
 
-#ifdef ARCH_X86_64
+#ifdef ARCH_ARM64
+      machine_type = IMAGE_FILE_MACHINE_ARM64;
+      frame.AddrPC.Offset    = context.Pc;
+      frame.AddrPC.Mode      = AddrModeFlat;
+      frame.AddrStack.Offset = context.Sp;
+      frame.AddrStack.Mode   = AddrModeFlat;
+      frame.AddrFrame.Offset = context.Fp;
+      frame.AddrFrame.Mode   = AddrModeFlat;
+#elif defined (ARCH_X86_64)
       machine_type = IMAGE_FILE_MACHINE_AMD64;
       frame.AddrPC.Offset    = context.Rip;
       frame.AddrPC.Mode      = AddrModeFlat;
