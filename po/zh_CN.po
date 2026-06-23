@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-15 04:11+0000\n"
-"PO-Revision-Date: 2026-06-16 08:38+0800\n"
+"POT-Creation-Date: 2026-06-22 06:05+0000\n"
+"PO-Revision-Date: 2026-06-23 08:10+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -2496,7 +2496,7 @@ msgstr "240 秒"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:375 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1798
+#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1803
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -13666,7 +13666,7 @@ msgstr "无法重命名特效蒙板。"
 msgid "%s mask"
 msgstr "%s 蒙板"
 
-#: app/core/gimpdynamicsoutput.c:136
+#: app/core/gimpdynamicsoutput.c:141
 msgid "Output type"
 msgstr "输出类型"
 
@@ -13693,7 +13693,7 @@ msgstr "羽化边缘"
 msgid "Enable feathering of fill edges"
 msgstr "启用填充边缘羽化"
 
-#: app/core/gimpfilloptions.c:145 app/paint/gimpmybrushoptions.c:107
+#: app/core/gimpfilloptions.c:145 app/paint/gimpmybrushoptions.c:108
 #: app/tools/gimpbucketfilloptions.c:200 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:105 app/widgets/gimpbrusheditor.c:160
@@ -20814,42 +20814,56 @@ msgstr "Mybrush"
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "没有可供此工具使用的 MyPaint 笔刷。"
 
-#: app/paint/gimpmybrushoptions.c:93
+#: app/paint/gimpmybrushoptions.c:94
 msgid "View Zoom"
 msgstr "视图缩放"
 
-#: app/paint/gimpmybrushoptions.c:100
+#: app/paint/gimpmybrushoptions.c:101
 msgid "View Rotation"
 msgstr "视图旋转"
 
-#: app/paint/gimpmybrushoptions.c:114
+#: app/paint/gimpmybrushoptions.c:115
 msgid "Base Opacity"
 msgstr "基础不透明度"
 
-#: app/paint/gimpmybrushoptions.c:121 app/paint/gimppaintoptions.c:241
+#: app/paint/gimpmybrushoptions.c:122 app/paint/gimppaintoptions.c:241
 #: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:180
 msgid "Hardness"
 msgstr "硬度"
 
-#: app/paint/gimpmybrushoptions.c:128
+#: app/paint/gimpmybrushoptions.c:129
 msgid "Gain"
 msgstr "增益"
 
-#: app/paint/gimpmybrushoptions.c:129
+#: app/paint/gimpmybrushoptions.c:130
 msgid "Adjust strength of input pressure"
 msgstr "调整输入压力的强度"
 
-#: app/paint/gimpmybrushoptions.c:153
+#: app/paint/gimpmybrushoptions.c:136
+msgid "Pigment"
+msgstr "颜料"
+
+#: app/paint/gimpmybrushoptions.c:155
 msgid "Erase with this brush"
 msgstr "使用此笔刷擦除"
 
-#: app/paint/gimpmybrushoptions.c:160
+#: app/paint/gimpmybrushoptions.c:162
 msgid "No erasing effect"
 msgstr "没有擦除效果"
 
-#: app/paint/gimpmybrushoptions.c:161 app/paint/gimpsmudgeoptions.c:87
+#: app/paint/gimpmybrushoptions.c:163 app/paint/gimpsmudgeoptions.c:87
 msgid "Never decrease alpha of existing pixels"
 msgstr "永不减小现存像素的透明度"
+
+#: app/paint/gimpmybrushoptions.c:169
+msgid "Spectral blending"
+msgstr "光谱混合"
+
+#: app/paint/gimpmybrushoptions.c:170
+msgid ""
+"If checked, use MyPaint's subtractive blending to mimic real world pigment "
+"mixing"
+msgstr "如果启用，使用 MyPaint 的减法混合以模仿真实世界的颜料混合"
 
 #: app/paint/gimppaintbrush.c:82 app/tools/gimppaintbrushtool.c:59
 msgid "Paintbrush"
@@ -22004,39 +22018,39 @@ msgstr "“%s”插件启用失败"
 msgid "Unknown file type"
 msgstr "未知文件类型"
 
-#: app/plug-in/gimppluginmanager-restore.c:216
+#: app/plug-in/gimppluginmanager-restore.c:217
 msgid "Loading extension plug-ins"
 msgstr "正在加载扩展插件"
 
-#: app/plug-in/gimppluginmanager-restore.c:250
+#: app/plug-in/gimppluginmanager-restore.c:251
 msgid "Searching plug-ins"
 msgstr "正在搜索插件"
 
-#: app/plug-in/gimppluginmanager-restore.c:375
+#: app/plug-in/gimppluginmanager-restore.c:370
 #, c-format
 msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
 "subdirectories.\n"
 msgstr "跳过潜在的插件“%s”：插件必须安装在子文件夹中。\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:382
+#: app/plug-in/gimppluginmanager-restore.c:377
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
 msgstr "跳过插件文件夹中的未知文件“%s”。\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:429
+#: app/plug-in/gimppluginmanager-restore.c:424
 msgid "Resource configuration"
 msgstr "资源配置"
 
-#: app/plug-in/gimppluginmanager-restore.c:465
+#: app/plug-in/gimppluginmanager-restore.c:460
 msgid "Querying new Plug-ins"
 msgstr "正在查询新的插件"
 
-#: app/plug-in/gimppluginmanager-restore.c:519
+#: app/plug-in/gimppluginmanager-restore.c:514
 msgid "Initializing Plug-ins"
 msgstr "正在初始化插件"
 
-#: app/plug-in/gimppluginmanager-restore.c:592
+#: app/plug-in/gimppluginmanager-restore.c:587
 msgid "Starting Extensions"
 msgstr "正在启动扩展"
 
@@ -22498,7 +22512,7 @@ msgstr ""
 "有些字体无法加载：\n"
 "%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1670
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1675
 msgid "Add Text Layer"
 msgstr "添加文字图层"
 
@@ -22518,7 +22532,7 @@ msgstr "文字图层"
 msgid "Rename Text Layer"
 msgstr "重命名文字图层"
 
-#: app/text/gimptextlayer.c:169
+#: app/text/gimptextlayer.c:169 app/tools/gimptexttool.c:1246
 msgid "Move Text Layer"
 msgstr "移动文字图层"
 
@@ -24102,7 +24116,7 @@ msgstr "调整"
 msgid "Sensitivity"
 msgstr "灵敏度"
 
-#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:110
+#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:119
 #: app/tools/gimppaintoptions-gui.c:532
 msgid "Fill Layer Mask With"
 msgstr "填充图层蒙板为"
@@ -24688,11 +24702,11 @@ msgstr "添加矢量图层"
 msgid "Confirm Path Editing"
 msgstr "确认路径编辑"
 
-#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1797
+#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1802
 msgid "Create _New Layer"
 msgstr "新建图层(_N)"
 
-#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1799
+#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1804
 msgid "_Edit Anyway"
 msgstr "仍然编辑(_E)"
 
@@ -25223,15 +25237,15 @@ msgstr "文字框："
 msgid "Language:"
 msgstr "语言："
 
-#: app/tools/gimptexttool.c:221
+#: app/tools/gimptexttool.c:222
 msgid "Text"
 msgstr "文字"
 
-#: app/tools/gimptexttool.c:222
+#: app/tools/gimptexttool.c:223
 msgid "Text Tool: Create or edit text layers"
 msgstr "文字工具：创建或编辑文字图层"
 
-#: app/tools/gimptexttool.c:223
+#: app/tools/gimptexttool.c:224
 msgid "Te_xt"
 msgstr "文字(_X)"
 
@@ -25247,29 +25261,29 @@ msgstr "文字框："
 msgid "Reshape Text Layer"
 msgstr "重塑文字图层"
 
-#: app/tools/gimptexttool.c:1790 app/tools/gimptexttool.c:1793
+#: app/tools/gimptexttool.c:1795 app/tools/gimptexttool.c:1798
 msgid "Confirm Text Editing"
 msgstr "确认文字编辑"
 
-#: app/tools/gimptexttool.c:1821
+#: app/tools/gimptexttool.c:1826
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
 msgstr "您选中的文字图层已栅格化。编辑其文字将丢弃所有修改。"
 
-#: app/tools/gimptexttool.c:2441
+#: app/tools/gimptexttool.c:2446
 msgid "Text is required."
 msgstr "需要文字。"
 
-#: app/tools/gimptexttool.c:2444
+#: app/tools/gimptexttool.c:2449
 msgid "No image."
 msgstr "无图像。"
 
-#: app/tools/gimptexttool.c:2447
+#: app/tools/gimptexttool.c:2452
 msgid "No layer."
 msgstr "无图层。"
 
-#: app/tools/gimptexttool.c:2458
+#: app/tools/gimptexttool.c:2463
 msgid "Exactly one path must be selected."
 msgstr "必须选择一个路径。"
 
@@ -27149,7 +27163,8 @@ msgstr "Y 倾斜"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: app/widgets/gimpdeviceinfo.c:68
+#: app/widgets/gimpdeviceinfo.c:68 app/widgets/gimpdynamicseditor.c:165
+#: app/widgets/gimpdynamicsoutputeditor.c:74
 msgid "Wheel"
 msgstr "滚轮"
 
@@ -27157,7 +27172,8 @@ msgstr "滚轮"
 msgid "Distance"
 msgstr "距离"
 
-#: app/widgets/gimpdeviceinfo.c:70
+#: app/widgets/gimpdeviceinfo.c:70 app/widgets/gimpdynamicseditor.c:166
+#: app/widgets/gimpdynamicsoutputeditor.c:75
 msgid "Rotation"
 msgstr "旋转"
 
@@ -27210,7 +27226,7 @@ msgid "Pressure Curve"
 msgstr "压力曲线"
 
 #: app/widgets/gimpdeviceinfoeditor.c:353
-#: app/widgets/gimpdynamicsoutputeditor.c:206
+#: app/widgets/gimpdynamicsoutputeditor.c:207
 msgid "_Reset Curve"
 msgstr "重置曲线(_R)"
 
@@ -27383,31 +27399,23 @@ msgstr "无法重新排列正在编辑的滤镜。"
 msgid "Velocity"
 msgstr "速率"
 
-#: app/widgets/gimpdynamicseditor.c:165
-msgid "Wheel/Rotation"
-msgstr "滚轮/旋转"
-
-#: app/widgets/gimpdynamicseditor.c:166
-#: app/widgets/gimpdynamicsoutputeditor.c:75
+#: app/widgets/gimpdynamicseditor.c:167
+#: app/widgets/gimpdynamicsoutputeditor.c:76
 msgid "Random"
 msgstr "随机"
 
-#: app/widgets/gimpdynamicseditor.c:167
-#: app/widgets/gimpdynamicsoutputeditor.c:76
+#: app/widgets/gimpdynamicseditor.c:168
+#: app/widgets/gimpdynamicsoutputeditor.c:77
 msgid "Fade"
 msgstr "淡出"
 
-#: app/widgets/gimpdynamicseditor.c:180
+#: app/widgets/gimpdynamicseditor.c:181
 msgid "Mapping matrix"
 msgstr "映射矩阵"
 
-#: app/widgets/gimpdynamicseditor.c:313 app/widgets/gimptoolpreseteditor.c:152
+#: app/widgets/gimpdynamicseditor.c:314 app/widgets/gimptoolpreseteditor.c:152
 msgid "Icon:"
 msgstr "图标："
-
-#: app/widgets/gimpdynamicsoutputeditor.c:74
-msgid "Wheel / Rotation"
-msgstr "滚轮/旋转"
 
 #: app/widgets/gimperrordialog.c:176
 msgid "Too many error messages!"
@@ -27878,7 +27886,7 @@ msgstr "固定浮动图层"
 msgid "No channels to create a layer mask from."
 msgstr "没有可用于创建图层蒙板的通道。"
 
-#: app/widgets/gimpmessagebox.c:446
+#: app/widgets/gimpmessagebox.c:490
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
@@ -29396,6 +29404,12 @@ msgstr "工具预设菜单"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
+
+#~ msgid "Wheel/Rotation"
+#~ msgstr "滚轮/旋转"
+
+#~ msgid "Wheel / Rotation"
+#~ msgstr "滚轮/旋转"
 
 #~ msgid "Layer Effects"
 #~ msgstr "图层特效"
