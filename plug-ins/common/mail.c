@@ -36,6 +36,10 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #endif
+#ifdef __APPLE__
+#import <Foundation/Foundation.h>
+#import <ScriptingBridge/ScriptingBridge.h>
+#endif
 
 #include <glib/gstdio.h>
 
@@ -134,7 +138,7 @@ static GList *
 mail_init_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
-  gchar *email_bin;
+  gchar *email_bin = NULL;
 
   /* Check if xdg-email or sendmail is installed.
    * TODO: allow setting the location of the executable in preferences.
@@ -156,11 +160,17 @@ mail_init_procedures (GimpPlugIn *plug_in)
         }
     }
 #else
+#ifndef __APPLE__
   email_bin = g_find_program_in_path ("xdg-email");
+#else
+  /* On macOS, we use native Mail.app, so we don't need xdg-email */
+  email_bin = g_strdup ("dummy-apple-mail");
+#endif
 #endif
 
   if (email_bin)
     list = g_list_append (list, g_strdup (PLUG_IN_PROC));
+  g_free (email_bin);
 
   return list;
 }
@@ -291,11 +301,17 @@ send_image (GObject       *config,
   gchar             *filepath = NULL;
   GFile             *tmp_dir  = NULL;
   GFileEnumerator   *enumerator;
+#ifndef __APPLE__
   gint               i;
+#endif
 #else /* SENDMAIL */
   gchar             *mailcmd[3];
   GPid               mailpid;
   FILE              *mailpipe = NULL;
+#endif
+#ifdef __APPLE__
+  id                 mailapp;
+  id                 message;
 #endif
   GError            *error    = NULL;
   gchar             *filename = NULL;
@@ -399,6 +415,48 @@ send_image (GObject       *config,
       g_object_unref (target);
     }
 
+#ifdef __APPLE__
+  @autoreleasepool {
+    mailapp = [NSClassFromString(@"SBApplication") applicationWithBundleIdentifier:@"com.apple.mail"];
+
+    if (mailapp)
+      {
+        NSMutableDictionary *msgProps = [NSMutableDictionary dictionary];
+
+        if (subject)
+          [msgProps setObject:[NSString stringWithUTF8String:subject] forKey:@"subject"];
+        if (comment)
+          [msgProps setObject:[NSString stringWithUTF8String:comment] forKey:@"content"];
+        [msgProps setObject:@YES forKey:@"visible"];
+        message = [[[mailapp classForScriptingClass:@"outgoing message"] alloc] initWithProperties:msgProps];
+        [[mailapp valueForKey:@"outgoingMessages"] addObject:message];
+
+        if (filepath)
+          {
+            id attachment = [[[mailapp classForScriptingClass:@"attachment"] alloc] initWithProperties:@{
+                @"fileName": [NSString stringWithUTF8String:filepath]
+            }];
+            [[message valueForKey:@"attachments"] addObject:attachment];
+          }
+
+        if (receipt && strlen(receipt) > 0)
+          {
+            id recipient = [[[mailapp classForScriptingClass:@"to recipient"] alloc] initWithProperties:@{
+                @"address": [NSString stringWithUTF8String:receipt]
+            }];
+            [[message valueForKey:@"toRecipients"] addObject:recipient];
+          }
+
+        [mailapp activate];
+      }
+    else
+      {
+        g_message ("Could not connect to Mail.app via ScriptingBridge");
+        goto error;
+      }
+  }
+
+#else /* ! __APPLE__ so LINUX */
   mailcmd[0] = g_strdup ("xdg-email");
   mailcmd[1] = "--attach";
   mailcmd[2] = filepath;
@@ -427,6 +485,7 @@ send_image (GObject       *config,
       g_error_free (error);
       goto error;
     }
+#endif /* ! __APPLE__ so LINUX */
 
 #else /* SENDMAIL */
   /* construct the "sendmail user@location" line */
