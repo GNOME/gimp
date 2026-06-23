@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-12 14:48+0000\n"
-"PO-Revision-Date: 2026-06-13 04:06+0200\n"
+"POT-Creation-Date: 2026-06-22 06:05+0000\n"
+"PO-Revision-Date: 2026-06-23 04:01+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -2472,7 +2472,7 @@ msgstr "240 წამი"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:375 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1784
+#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1803
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -13715,7 +13715,7 @@ msgstr "ეფექტის ნიღბების სახელის გ
 msgid "%s mask"
 msgstr "ნიღაბი %s"
 
-#: app/core/gimpdynamicsoutput.c:136
+#: app/core/gimpdynamicsoutput.c:141
 msgid "Output type"
 msgstr "გამოსვლის ტიპი"
 
@@ -13742,7 +13742,7 @@ msgstr "კუთხეების მომრგვალება"
 msgid "Enable feathering of fill edges"
 msgstr "შევსებული კუთხეების მომრგვალების ჩართვა"
 
-#: app/core/gimpfilloptions.c:145 app/paint/gimpmybrushoptions.c:107
+#: app/core/gimpfilloptions.c:145 app/paint/gimpmybrushoptions.c:108
 #: app/tools/gimpbucketfilloptions.c:200 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:105 app/widgets/gimpbrusheditor.c:160
@@ -20858,42 +20858,56 @@ msgstr "Mybrush"
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "ამ ხელსაწყოსთან ერთად MyPaint-ის ფუნჯები ხელმიუწვდომელია."
 
-#: app/paint/gimpmybrushoptions.c:93
+#: app/paint/gimpmybrushoptions.c:94
 msgid "View Zoom"
 msgstr "ხედის მასშტაბი"
 
-#: app/paint/gimpmybrushoptions.c:100
+#: app/paint/gimpmybrushoptions.c:101
 msgid "View Rotation"
 msgstr "შემობრუნების ნახვა"
 
-#: app/paint/gimpmybrushoptions.c:114
+#: app/paint/gimpmybrushoptions.c:115
 msgid "Base Opacity"
 msgstr "საწყისი _გაუმჭვირვალობა"
 
-#: app/paint/gimpmybrushoptions.c:121 app/paint/gimppaintoptions.c:241
+#: app/paint/gimpmybrushoptions.c:122 app/paint/gimppaintoptions.c:241
 #: app/tools/gimpwarpoptions.c:99 app/widgets/gimpbrusheditor.c:180
 msgid "Hardness"
 msgstr "სიმაგრე"
 
-#: app/paint/gimpmybrushoptions.c:128
+#: app/paint/gimpmybrushoptions.c:129
 msgid "Gain"
 msgstr "გაძლიერება"
 
-#: app/paint/gimpmybrushoptions.c:129
+#: app/paint/gimpmybrushoptions.c:130
 msgid "Adjust strength of input pressure"
 msgstr "შეყვანის წნევის სიძლიერის გასწორება"
 
-#: app/paint/gimpmybrushoptions.c:153
+#: app/paint/gimpmybrushoptions.c:136
+msgid "Pigment"
+msgstr "პიგმენტი"
+
+#: app/paint/gimpmybrushoptions.c:155
 msgid "Erase with this brush"
 msgstr "ფუნჯით წაშლა"
 
-#: app/paint/gimpmybrushoptions.c:160
+#: app/paint/gimpmybrushoptions.c:162
 msgid "No erasing effect"
 msgstr "წაშლის ეფექტის გარეშე"
 
-#: app/paint/gimpmybrushoptions.c:161 app/paint/gimpsmudgeoptions.c:87
+#: app/paint/gimpmybrushoptions.c:163 app/paint/gimpsmudgeoptions.c:87
 msgid "Never decrease alpha of existing pixels"
 msgstr "არსებული პიქსელების ალფა არასდროს შემცირდება"
+
+#: app/paint/gimpmybrushoptions.c:169
+msgid "Spectral blending"
+msgstr "სპექტრული შერევა"
+
+#: app/paint/gimpmybrushoptions.c:170
+msgid ""
+"If checked, use MyPaint's subtractive blending to mimic real world pigment "
+"mixing"
+msgstr ""
 
 #: app/paint/gimppaintbrush.c:82 app/tools/gimppaintbrushtool.c:59
 msgid "Paintbrush"
@@ -21860,8 +21874,8 @@ msgid "Free Select"
 msgstr "თავისუფალი მონიშვნა"
 
 #: app/pdb/item-transform-cmds.c:318 app/tools/gimpperspectivetool.c:85
-#: app/tools/gimptransformgridoptions.c:574
-#: app/tools/gimptransformgridoptions.c:583
+#: app/tools/gimptransformgridoptions.c:580
+#: app/tools/gimptransformgridoptions.c:589
 msgid "Perspective"
 msgstr "პერსპექტივა"
 
@@ -22041,39 +22055,39 @@ msgstr "შეცდომა დამატება %s-ის გაშვე
 msgid "Unknown file type"
 msgstr "ფაილის უცნობი ტიპი"
 
-#: app/plug-in/gimppluginmanager-restore.c:216
+#: app/plug-in/gimppluginmanager-restore.c:217
 msgid "Loading extension plug-ins"
 msgstr "გაფართოებადი დამატებების გაშვება"
 
-#: app/plug-in/gimppluginmanager-restore.c:250
+#: app/plug-in/gimppluginmanager-restore.c:251
 msgid "Searching plug-ins"
 msgstr "დამატებების ძებნა"
 
-#: app/plug-in/gimppluginmanager-restore.c:375
+#: app/plug-in/gimppluginmanager-restore.c:370
 #, c-format
 msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
 "subdirectories.\n"
 msgstr ""
 
-#: app/plug-in/gimppluginmanager-restore.c:382
+#: app/plug-in/gimppluginmanager-restore.c:377
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
 msgstr ""
 
-#: app/plug-in/gimppluginmanager-restore.c:429
+#: app/plug-in/gimppluginmanager-restore.c:424
 msgid "Resource configuration"
 msgstr "რესურსების გამართვა"
 
-#: app/plug-in/gimppluginmanager-restore.c:465
+#: app/plug-in/gimppluginmanager-restore.c:460
 msgid "Querying new Plug-ins"
 msgstr "ახალი დამატებების ძებნა"
 
-#: app/plug-in/gimppluginmanager-restore.c:519
+#: app/plug-in/gimppluginmanager-restore.c:514
 msgid "Initializing Plug-ins"
 msgstr "დამატებების ინიციალიზაცია"
 
-#: app/plug-in/gimppluginmanager-restore.c:592
+#: app/plug-in/gimppluginmanager-restore.c:587
 msgid "Starting Extensions"
 msgstr "გაფართოებების გაშვება"
 
@@ -22533,7 +22547,7 @@ msgstr ""
 "ზოგიერთი ფონტის ჩატვირთვის შეცდომა:\n"
 "%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1656
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1675
 msgid "Add Text Layer"
 msgstr "ტექსტური ფენის დამატება"
 
@@ -22553,7 +22567,7 @@ msgstr "ტექსტური ფენა"
 msgid "Rename Text Layer"
 msgstr "ტექსტური ფენის სახელის გადარქმევა"
 
-#: app/text/gimptextlayer.c:169
+#: app/text/gimptextlayer.c:169 app/tools/gimptexttool.c:1246
 msgid "Move Text Layer"
 msgstr "ტექსტური ფენის გადაადგილება"
 
@@ -24134,7 +24148,7 @@ msgstr "დარეგულირება"
 msgid "Sensitivity"
 msgstr "მგრძნობიარობა"
 
-#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:110
+#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:119
 #: app/tools/gimppaintoptions-gui.c:532
 msgid "Fill Layer Mask With"
 msgstr "ფენის ნიღბის შევსება"
@@ -24474,8 +24488,8 @@ msgid "Show lattice"
 msgstr "ბადის ჩვენება"
 
 #: app/tools/gimpnpointdeformationoptions.c:227 app/tools/gimpscaletool.c:96
-#: app/tools/gimptransformgridoptions.c:568
-#: app/tools/gimptransformgridoptions.c:579
+#: app/tools/gimptransformgridoptions.c:574
+#: app/tools/gimptransformgridoptions.c:585
 msgid "Scale"
 msgstr "მასშტაბირება"
 
@@ -24720,11 +24734,11 @@ msgstr "ვექტორული ფენის დამატება"
 msgid "Confirm Path Editing"
 msgstr "კონტურის რედაქტირების დადასტურება"
 
-#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1783
+#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1802
 msgid "Create _New Layer"
 msgstr "ახალი ფენის შექმნა"
 
-#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1785
+#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1804
 msgid "_Edit Anyway"
 msgstr "მაინც _ჩასწორება"
 
@@ -24920,7 +24934,7 @@ msgstr "მონიშნული რეგიონის ნიღბის 
 msgid "Move the mouse to change threshold"
 msgstr "ზღვარის შესაცვლელად გაარხიეთ თაგუნა"
 
-#: app/tools/gimprotatetool.c:103 app/tools/gimptransformgridoptions.c:570
+#: app/tools/gimprotatetool.c:103 app/tools/gimptransformgridoptions.c:576
 #: app/tools/gimptransform3dtool.c:418
 msgid "Rotate"
 msgstr "დატრიალება"
@@ -25063,8 +25077,8 @@ msgstr "ცარიელ მონიშნულს ვერაფერს 
 msgid "Cannot intersect with an empty selection."
 msgstr "ცარიელ მონიშნულს ვერაფერთან გადავკვეთთ."
 
-#: app/tools/gimpsheartool.c:91 app/tools/gimptransformgridoptions.c:572
-#: app/tools/gimptransformgridoptions.c:581
+#: app/tools/gimpsheartool.c:91 app/tools/gimptransformgridoptions.c:578
+#: app/tools/gimptransformgridoptions.c:587
 msgid "Shear"
 msgstr "დახრა"
 
@@ -25255,57 +25269,57 @@ msgstr "ყუთი:"
 msgid "Language:"
 msgstr "ენა:"
 
-#: app/tools/gimptexttool.c:220
+#: app/tools/gimptexttool.c:222
 msgid "Text"
 msgstr "ტექსტი"
 
-#: app/tools/gimptexttool.c:221
+#: app/tools/gimptexttool.c:223
 msgid "Text Tool: Create or edit text layers"
 msgstr "ტექსტის ხელსაწყო: ტექსტის ფენების შექმნა და ჩასწორება"
 
-#: app/tools/gimptexttool.c:222
+#: app/tools/gimptexttool.c:224
 msgid "Te_xt"
 msgstr "ტე_ქსტი"
 
-#: app/tools/gimptexttool.c:1040
+#: app/tools/gimptexttool.c:1054
 msgid "Fonts are still loading"
 msgstr "ფონტები ჯერ კიდევ იტვირთება"
 
-#: app/tools/gimptexttool.c:1051
+#: app/tools/gimptexttool.c:1065
 msgid "Text box: "
 msgstr "ტექსტის ადგილი: "
 
-#: app/tools/gimptexttool.c:1203
+#: app/tools/gimptexttool.c:1217
 msgid "Reshape Text Layer"
 msgstr "ტექსტის ფენის ფორმის შეცვლა"
 
-#: app/tools/gimptexttool.c:1776 app/tools/gimptexttool.c:1779
+#: app/tools/gimptexttool.c:1795 app/tools/gimptexttool.c:1798
 msgid "Confirm Text Editing"
 msgstr "ტექსტის რედაქტირების დადასტურება"
 
-#: app/tools/gimptexttool.c:1807
+#: app/tools/gimptexttool.c:1826
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
 msgstr ""
 
-#: app/tools/gimptexttool.c:2427
+#: app/tools/gimptexttool.c:2446
 msgid "Text is required."
 msgstr "საჭიროა ტექსტი."
 
-#: app/tools/gimptexttool.c:2430
+#: app/tools/gimptexttool.c:2449
 msgid "No image."
 msgstr "გამოსახულების გარეშე."
 
-#: app/tools/gimptexttool.c:2433
+#: app/tools/gimptexttool.c:2452
 msgid "No layer."
 msgstr "ფენის გარეშე."
 
-#: app/tools/gimptexttool.c:2444
+#: app/tools/gimptexttool.c:2463
 msgid "Exactly one path must be selected."
 msgstr "არჩიეთ მხოლოდ ერთი კონტური."
 
-#: app/tools/gimptexttool-editor.c:1476
+#: app/tools/gimptexttool-editor.c:1492
 msgid "GIMP Text Editor"
 msgstr "GIMP-ის ტექსტური რედაქტორი"
 
@@ -25376,7 +25390,7 @@ msgid "Opacity of the preview image"
 msgstr "ხედის სურათის გაუმჭვირვალობა"
 
 #: app/tools/gimptransformgridoptions.c:139
-#: app/tools/gimptransformgridoptions.c:468
+#: app/tools/gimptransformgridoptions.c:474
 msgid "Guides"
 msgstr "გიდები"
 
@@ -25384,121 +25398,127 @@ msgstr "გიდები"
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr ""
 
-#: app/tools/gimptransformgridoptions.c:489
+#: app/tools/gimptransformgridoptions.c:423
+msgid ""
+"If connected, you can reposition the handles without altering the "
+"transformation."
+msgstr ""
+
+#: app/tools/gimptransformgridoptions.c:495
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 გრადუსი (%s)"
 
-#: app/tools/gimptransformgridoptions.c:495
+#: app/tools/gimptransformgridoptions.c:501
 msgid "Limit rotation steps to 15 degrees"
 msgstr "ტრიალის ბიჯის 15 გრადუსზე შეზღუდვა"
 
-#: app/tools/gimptransformgridoptions.c:504
+#: app/tools/gimptransformgridoptions.c:510
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "%s  ფარდობის შენარჩუნება"
 
-#: app/tools/gimptransformgridoptions.c:510
+#: app/tools/gimptransformgridoptions.c:516
 msgid "Keep the original aspect ratio"
 msgstr "საწყისი თანაფარდობის შენარჩუნება"
 
-#: app/tools/gimptransformgridoptions.c:515
-#: app/tools/gimptransformgridoptions.c:542
+#: app/tools/gimptransformgridoptions.c:521
+#: app/tools/gimptransformgridoptions.c:548
 #, c-format
 msgid "Around center (%s)"
 msgstr "%s-ის ცენტრის გარშემო"
 
-#: app/tools/gimptransformgridoptions.c:521
+#: app/tools/gimptransformgridoptions.c:527
 msgid "Scale around the center point"
 msgstr "მასშტაბირება ცენტრალური წერტილის გარეშემო"
 
-#: app/tools/gimptransformgridoptions.c:530
+#: app/tools/gimptransformgridoptions.c:536
 #, c-format
 msgid "Constrain handles (%s)"
 msgstr "სახელურების შეზღუდვა (%s)"
 
-#: app/tools/gimptransformgridoptions.c:537
+#: app/tools/gimptransformgridoptions.c:543
 #, c-format
 msgid "Constrain handles to move along edges and diagonal (%s)"
 msgstr ""
 
-#: app/tools/gimptransformgridoptions.c:549
+#: app/tools/gimptransformgridoptions.c:555
 msgid "Transform around the center point"
 msgstr "შუა წერტილის გარშემო გარდაქმნა"
 
-#: app/tools/gimptransformgridoptions.c:565
+#: app/tools/gimptransformgridoptions.c:571
 #, c-format
 msgid "Constrain (%s)"
 msgstr "შეზღუდვა (%s)"
 
-#: app/tools/gimptransformgridoptions.c:566 app/tools/gimptransform3dtool.c:334
+#: app/tools/gimptransformgridoptions.c:572 app/tools/gimptransform3dtool.c:334
 msgid "Move"
 msgstr "გადატანა"
 
-#: app/tools/gimptransformgridoptions.c:567
+#: app/tools/gimptransformgridoptions.c:573
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr ""
 
-#: app/tools/gimptransformgridoptions.c:569
+#: app/tools/gimptransformgridoptions.c:575
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "გადიდებისას თანაფარდობის შენარჩუნება (%s)"
 
-#: app/tools/gimptransformgridoptions.c:571
+#: app/tools/gimptransformgridoptions.c:577
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "ბრუნვის შეზღუდვა 15 გრადუსიან ბიჯებზე (%s)"
 
-#: app/tools/gimptransformgridoptions.c:573
+#: app/tools/gimptransformgridoptions.c:579
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr ""
 
-#: app/tools/gimptransformgridoptions.c:575
+#: app/tools/gimptransformgridoptions.c:581
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 
-#: app/tools/gimptransformgridoptions.c:578
+#: app/tools/gimptransformgridoptions.c:584
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "საყრდენიდან  (%s)"
 
-#: app/tools/gimptransformgridoptions.c:580
+#: app/tools/gimptransformgridoptions.c:586
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "საყრდენი წერტილიდან(%s) მასშტაბირება"
 
-#: app/tools/gimptransformgridoptions.c:582
+#: app/tools/gimptransformgridoptions.c:588
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr ""
 
-#: app/tools/gimptransformgridoptions.c:584
+#: app/tools/gimptransformgridoptions.c:590
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "პერსპექტივის (%s) ცვლილებისას საყრდენის მდებარეობის შენარჩუნება"
 
-#: app/tools/gimptransformgridoptions.c:587
+#: app/tools/gimptransformgridoptions.c:593
 msgid "Pivot"
 msgstr "საყრდენი წერტილი"
 
-#: app/tools/gimptransformgridoptions.c:588
+#: app/tools/gimptransformgridoptions.c:594
 #, c-format
 msgid "Snap (%s)"
 msgstr "მიწებება(%s)"
 
-#: app/tools/gimptransformgridoptions.c:589
+#: app/tools/gimptransformgridoptions.c:595
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "საწყრდენი წერტილის კუთხეებზე და ცენტრზე მიბმა(%s)"
 
-#: app/tools/gimptransformgridoptions.c:590
+#: app/tools/gimptransformgridoptions.c:596
 msgid "Lock"
 msgstr "ჩაკეტვა"
 
-#: app/tools/gimptransformgridoptions.c:591
+#: app/tools/gimptransformgridoptions.c:597
 msgid "Lock pivot position to canvas"
 msgstr "საყრდენი მდებარეობის ტილოზე ჩაკეტვა"
 
@@ -27176,7 +27196,8 @@ msgstr "Y მოხრა"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: app/widgets/gimpdeviceinfo.c:68
+#: app/widgets/gimpdeviceinfo.c:68 app/widgets/gimpdynamicseditor.c:165
+#: app/widgets/gimpdynamicsoutputeditor.c:74
 msgid "Wheel"
 msgstr "ბორბალი"
 
@@ -27184,7 +27205,8 @@ msgstr "ბორბალი"
 msgid "Distance"
 msgstr "მანძილი"
 
-#: app/widgets/gimpdeviceinfo.c:70
+#: app/widgets/gimpdeviceinfo.c:70 app/widgets/gimpdynamicseditor.c:166
+#: app/widgets/gimpdynamicsoutputeditor.c:75
 msgid "Rotation"
 msgstr "შემობრუნება"
 
@@ -27237,7 +27259,7 @@ msgid "Pressure Curve"
 msgstr "წნევის მრუდი"
 
 #: app/widgets/gimpdeviceinfoeditor.c:353
-#: app/widgets/gimpdynamicsoutputeditor.c:206
+#: app/widgets/gimpdynamicsoutputeditor.c:207
 msgid "_Reset Curve"
 msgstr "მრუდის საწყის მნიშვნელობაზე დაბრუნება"
 
@@ -27411,31 +27433,23 @@ msgstr "ვერ გადაალაგებთ ფილტრს, რო�
 msgid "Velocity"
 msgstr "აჩქარება"
 
-#: app/widgets/gimpdynamicseditor.c:165
-msgid "Wheel/Rotation"
-msgstr "ბორბალი/შემობრუნება"
-
-#: app/widgets/gimpdynamicseditor.c:166
-#: app/widgets/gimpdynamicsoutputeditor.c:75
+#: app/widgets/gimpdynamicseditor.c:167
+#: app/widgets/gimpdynamicsoutputeditor.c:76
 msgid "Random"
 msgstr "შემთხვევით"
 
-#: app/widgets/gimpdynamicseditor.c:167
-#: app/widgets/gimpdynamicsoutputeditor.c:76
+#: app/widgets/gimpdynamicseditor.c:168
+#: app/widgets/gimpdynamicsoutputeditor.c:77
 msgid "Fade"
 msgstr "მინავლება"
 
-#: app/widgets/gimpdynamicseditor.c:180
+#: app/widgets/gimpdynamicseditor.c:181
 msgid "Mapping matrix"
 msgstr "მიბმის მატრიცა"
 
-#: app/widgets/gimpdynamicseditor.c:313 app/widgets/gimptoolpreseteditor.c:152
+#: app/widgets/gimpdynamicseditor.c:314 app/widgets/gimptoolpreseteditor.c:152
 msgid "Icon:"
 msgstr "_ხატულა:"
-
-#: app/widgets/gimpdynamicsoutputeditor.c:74
-msgid "Wheel / Rotation"
-msgstr "ბორბალი / შემობრუნება"
 
 #: app/widgets/gimperrordialog.c:176
 msgid "Too many error messages!"
@@ -27907,7 +27921,7 @@ msgstr "მცურავი ფენის დამაგრება"
 msgid "No channels to create a layer mask from."
 msgstr "ფენის ნიღბის შესაქმნელად არხები აღმოჩენილი არაა."
 
-#: app/widgets/gimpmessagebox.c:446
+#: app/widgets/gimpmessagebox.c:490
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
@@ -29417,6 +29431,12 @@ msgstr "ხელსაწყოს პრესეტების მენი�
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "დაბრუნების ისტორია"
+
+#~ msgid "Wheel/Rotation"
+#~ msgstr "ბორბალი/შემობრუნება"
+
+#~ msgid "Wheel / Rotation"
+#~ msgstr "ბორბალი / შემობრუნება"
 
 #~ msgid "Layer Effects"
 #~ msgstr "ფენის ეფექტები"
