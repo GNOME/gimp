@@ -41,6 +41,8 @@
     <false/>
     <key>NLSRequiresNativeExecution</key>
     <true/>
+    <key>NSAppleEventsUsageDescription</key>
+    <string>This will let you use the mail plug-in. You can change this later in System Settings.</string>
     <key>CFBundleDocumentTypes</key>
     <array>
       <dict>
