@@ -181,7 +181,9 @@ if platform_linux
   }
 endif
 if not platform_windows
-  common_plugins_list += { 'name': 'mail', }
+  common_plugins_list += {
+    'name': 'mail',
+    'deps': [ scriptingbridge ],}
 endif
 
 if get_option('webkit-unmaintained')
