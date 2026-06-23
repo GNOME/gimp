@@ -1159,6 +1159,7 @@ else
     warnings += mail_warning
   endif
 endif
+scriptingbridge = platform_osx ? dependency('appleframeworks', modules: 'ScriptingBridge', required: true) : no_dep
 
 
 ################################################################################

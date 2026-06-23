@@ -417,7 +417,7 @@ send_image (GObject       *config,
 
 #ifdef __APPLE__
   @autoreleasepool {
-    mailapp = [NSClassFromString(@"SBApplication") applicationWithBundleIdentifier:@"com.apple.mail"];
+    mailapp = [SBApplication applicationWithBundleIdentifier:@"com.apple.mail"];
 
     if (mailapp)
       {
