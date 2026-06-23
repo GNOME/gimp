@@ -259,10 +259,6 @@ gimp_message_box_get_preferred_width (GtkWidget *widget,
   gint            labels_minimum = 0;
   gint            labels_natural = 0;
 
-  GTK_WIDGET_CLASS (parent_class)->get_preferred_width (widget,
-                                                        minimum_width,
-                                                        natural_width);
-
   if (box->image && gtk_widget_get_visible (box->image))
     {
       gint image_minimum;
@@ -271,8 +267,8 @@ gimp_message_box_get_preferred_width (GtkWidget *widget,
       gtk_widget_get_preferred_width (box->image,
                                       &image_minimum, &image_natural);
 
-      *minimum_width += image_minimum + GIMP_MESSAGE_BOX_SPACING;
-      *natural_width += image_natural + GIMP_MESSAGE_BOX_SPACING;
+      *minimum_width = image_minimum;
+      *natural_width = image_natural;
     }
 
   for (gint i = 0; i < 3; i++)
@@ -295,8 +291,20 @@ gimp_message_box_get_preferred_width (GtkWidget *widget,
    * box). So let's just request a minimum width which shows the full
    * label text. See #16473.
    */
-  *minimum_width += labels_natural + GIMP_MESSAGE_BOX_SPACING;
-  *natural_width += labels_natural + GIMP_MESSAGE_BOX_SPACING;
+  *minimum_width += labels_natural;
+  *natural_width += labels_natural;
+
+  if (*minimum_width > 0)
+    {
+      *minimum_width += GIMP_MESSAGE_BOX_SPACING;
+      *natural_width += GIMP_MESSAGE_BOX_SPACING;
+    }
+  else
+    {
+      GTK_WIDGET_CLASS (parent_class)->get_preferred_width (widget,
+                                                            minimum_width,
+                                                            natural_width);
+    }
 }
 
 static void
