@@ -157,13 +157,10 @@ host_cpu_family = host_machine.cpu_family()
 message('Host machine cpu family: ' + host_cpu_family)
 
 host_cpu_family = host_machine.cpu_family()
-have_x86 = false
 have_ppc = false
 if   host_cpu_family == 'x86'
-  have_x86 = true
   conf.set10('ARCH_X86',    true)
 elif host_cpu_family == 'x86_64'
-  have_x86 = true
   conf.set10('ARCH_X86',    true)
   conf.set10('ARCH_X86_64', true)
 elif host_cpu_family == 'ppc'
@@ -174,7 +171,7 @@ elif host_cpu_family == 'ppc64'
   conf.set10('ARCH_PPC',    true)
   conf.set10('ARCH_PPC64',  true)
 elif host_cpu_family == 'aarch64'
-  conf.set10('ARCH_AMR64',  true)
+  conf.set10('ARCH_ARM64',  true)
 endif
 
 
@@ -777,11 +774,7 @@ conf.set('HAVE_EXECINFO_H', have_execinfo_h ? 1 : false)
 # See app/core/gimpbacktrace-backend.h for supported platforms.
 dashboard_backtrace='no (unsupported platform)'
 if platform_windows
-  if have_x86
-    dashboard_backtrace='yes'
-  else
-    dashboard_backtrace='no (x86 only on Windows)'
-  endif
+  dashboard_backtrace='yes'
 elif platform_linux
   if not have_execinfo_h
     dashboard_backtrace='no (missing: execinfo.h)'
