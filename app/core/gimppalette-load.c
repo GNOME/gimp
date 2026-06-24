@@ -60,31 +60,39 @@ typedef struct
   gboolean     copy_name;
   gboolean     copy_values;
   gint         sorted_position;
-} SwatchBookerData;
+} ZipPaletteData;
 
 /* SwatchBooker XML parser functions */
-static void swatchbooker_load_start_element (GMarkupParseContext *context,
-                                             const gchar         *element_name,
-                                             const gchar        **attribute_names,
-                                             const gchar        **attribute_values,
-                                             gpointer             user_data,
-                                             GError             **error);
-static void swatchbooker_load_end_element   (GMarkupParseContext *context,
-                                             const gchar         *element_name,
-                                             gpointer             user_data,
-                                             GError             **error);
-static void swatchbooker_load_text          (GMarkupParseContext *context,
-                                             const gchar         *text,
-                                             gsize                text_len,
-                                             gpointer             user_data,
-                                             GError             **error);
+static void     swatchbooker_load_start_element (GMarkupParseContext *context,
+                                                 const gchar         *element_name,
+                                                 const gchar        **attribute_names,
+                                                 const gchar        **attribute_values,
+                                                 gpointer             user_data,
+                                                 GError             **error);
+static void     swatchbooker_load_end_element   (GMarkupParseContext *context,
+                                                 const gchar         *element_name,
+                                                 gpointer             user_data,
+                                                 GError             **error);
+static void     swatchbooker_load_text          (GMarkupParseContext *context,
+                                                 const gchar         *text,
+                                                 gsize                text_len,
+                                                 gpointer             user_data,
+                                                 GError             **error);
 
-static gchar * gimp_palette_load_acb_string     (GInputStream  *input,
-                                                 goffset        file_size,
-                                                 GError       **error);
-static gchar * gimp_palette_load_ase_block_name (GInputStream  *input,
-                                                 goffset        file_size,
-                                                 GError       **error);
+/* Krita XML parser function */
+static void     krita_load_start_element        (GMarkupParseContext *context,
+                                                 const gchar         *element_name,
+                                                 const gchar        **attribute_names,
+                                                 const gchar        **attribute_values,
+                                                 gpointer             user_data,
+                                                 GError             **error);
+
+static gchar * gimp_palette_load_acb_string     (GInputStream        *input,
+                                                 goffset              file_size,
+                                                 GError             **error);
+static gchar * gimp_palette_load_ase_block_name (GInputStream        *input,
+                                                 goffset              file_size,
+                                                 GError             **error);
 
 
 GList *
@@ -1383,7 +1391,7 @@ gimp_palette_load_sbz (GimpContext   *context,
                        GInputStream  *input,
                        GError       **error)
 {
-  SwatchBookerData      sbz_data;
+  ZipPaletteData        sbz_data;
   gchar                *palette_name;
   gchar                *xml_data = NULL;
   struct archive       *a;
@@ -1822,6 +1830,160 @@ gimp_palette_load_procreate (GimpContext   *context,
   return g_list_prepend (NULL, palette);
 }
 
+GList *
+gimp_palette_load_krita (GimpContext   *context,
+                         GFile         *file,
+                         GInputStream  *input,
+                         GError       **error)
+{
+  ZipPaletteData        kpl_data;
+  gchar                *palette_name;
+  gchar                *xml_data = NULL;
+  struct archive       *a;
+  struct archive_entry *entry;
+  size_t                entry_size;
+  int                   r;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  palette_name     = g_path_get_basename (gimp_file_get_utf8_name (file));
+  kpl_data.palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
+  g_free (palette_name);
+
+  kpl_data.position          = 0;
+  kpl_data.sorted_position   = 0;
+  kpl_data.in_color_tag      = FALSE;
+  kpl_data.in_book_tag       = FALSE;
+  kpl_data.copy_name         = FALSE;
+  kpl_data.copy_values       = FALSE;
+  kpl_data.palette_name      = NULL;
+  kpl_data.embedded_profiles = NULL;
+
+  if ((a = archive_read_new ()))
+    {
+      const gchar *name = gimp_file_get_utf8_name (file);
+      int          archive_ret;
+
+      archive_read_support_format_all (a);
+      r = archive_read_open_filename (a, name, 10240);
+      if (r != ARCHIVE_OK)
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Unable to read KPL file: %s"),
+                       archive_error_string (a));
+
+          archive_read_free (a);
+
+          return NULL;
+        }
+
+      while ((archive_ret = archive_read_next_header (a, &entry)) != ARCHIVE_EOF)
+        {
+          const char *pathname;
+          gchar      *lower;
+
+          if (archive_ret == ARCHIVE_RETRY)
+            continue;
+          else if (archive_ret == ARCHIVE_FATAL)
+            break;
+
+          pathname = archive_entry_pathname (entry);
+          lower    = g_ascii_strdown (pathname, -1);
+          if (g_str_has_suffix (lower, "colorset.xml"))
+            {
+              if (xml_data == NULL)
+                {
+                  entry_size = archive_entry_size (entry);
+                  xml_data   = (gchar *) g_malloc (entry_size);
+
+                  r = archive_read_data (a, xml_data, entry_size);
+                }
+              else
+                {
+                  g_printerr ("Ignoring second XML file '%s' in KPL palette: %s",
+                              pathname, gimp_file_get_utf8_name (file));
+                }
+            }
+          else if (g_str_has_suffix (lower, ".icc") || g_str_has_suffix (lower, ".icm"))
+            {
+              GimpColorProfile *profile  = NULL;
+              size_t            icc_size = archive_entry_size (entry);
+              uint8_t          *icc_data = g_malloc (icc_size);
+
+              r = archive_read_data (a, icc_data, icc_size);
+
+              if (icc_data)
+                profile = gimp_color_profile_new_from_icc_profile (icc_data, icc_size,
+                                                                   NULL);
+
+              if (profile)
+                {
+                  PaletteColorProfile *kpl_profile;
+
+                  kpl_profile          = g_new0 (PaletteColorProfile, 1);
+                  kpl_profile->profile = profile;
+                  kpl_profile->id      = g_strdup (archive_entry_pathname (entry));
+
+                  kpl_data.embedded_profiles =
+                    g_list_append (kpl_data.embedded_profiles, kpl_profile);
+                }
+            }
+
+          g_free (lower);
+        }
+
+      if (archive_ret == ARCHIVE_FATAL)
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Unable to read KPL file: %s"),
+                       archive_error_string (a));
+
+          archive_read_free (a);
+          return NULL;
+        }
+
+      if (xml_data)
+        {
+          GimpXmlParser *xml_parser;
+          GMarkupParser  markup_parser;
+
+          markup_parser.start_element = krita_load_start_element;
+          markup_parser.end_element   = NULL;
+          markup_parser.text          = NULL;
+          markup_parser.passthrough   = NULL;
+          markup_parser.error         = NULL;
+
+          xml_parser = gimp_xml_parser_new (&markup_parser, &kpl_data);
+
+          gimp_xml_parser_parse_buffer (xml_parser, xml_data, entry_size, NULL);
+          gimp_xml_parser_free (xml_parser);
+
+          g_free (xml_data);
+        }
+      else
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Unable to open KPL file"));
+
+          archive_read_free (a);
+          return NULL;
+        }
+
+
+      r = archive_read_free (a);
+    }
+  else
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Unable to open KPL file"));
+      return NULL;
+    }
+
+  return g_list_prepend (NULL, kpl_data.palette);
+}
+
 static void
 swatchbooker_load_start_element (GMarkupParseContext *context,
                                  const gchar         *element_name,
@@ -1830,8 +1992,8 @@ swatchbooker_load_start_element (GMarkupParseContext *context,
                                  gpointer             user_data,
                                  GError             **error)
 {
-  SwatchBookerData *sbz_data = user_data;
-  gchar            *lower_elt_name;
+  ZipPaletteData *sbz_data = user_data;
+  gchar          *lower_elt_name;
 
   sbz_data->copy_values = FALSE;
   sbz_data->color_model = NULL;
@@ -1940,8 +2102,8 @@ swatchbooker_load_end_element (GMarkupParseContext *context,
                                gpointer             user_data,
                                GError             **error)
 {
-  SwatchBookerData *sbz_data = user_data;
-  gchar            *lower_elt_name;
+  ZipPaletteData *sbz_data = user_data;
+  gchar          *lower_elt_name;
 
   lower_elt_name = g_ascii_strdown (element_name, -1);
   if (! strcmp (lower_elt_name, "color"))
@@ -1959,10 +2121,10 @@ swatchbooker_load_text (GMarkupParseContext *context,
                         gpointer             user_data,
                         GError             **error)
 {
-  SwatchBookerData  *sbz_data = user_data;
-  gchar            **values;
-  gint               i;
-  gint               total = 0;
+  ZipPaletteData  *sbz_data = user_data;
+  gchar          **values;
+  gint             i;
+  gint             total = 0;
 
   /* Save palette name */
   if (sbz_data->copy_name)
@@ -2056,6 +2218,371 @@ swatchbooker_load_text (GMarkupParseContext *context,
     }
 }
 
+static void
+krita_load_start_element (GMarkupParseContext *context,
+                          const gchar         *element_name,
+                          const gchar        **attribute_names,
+                          const gchar        **attribute_values,
+                          gpointer             user_data,
+                          GError             **error)
+{
+  ZipPaletteData *kpl_data    = user_data;
+  gchar          *lower_elt_name;
+  gboolean        add_palette = FALSE;
+  GeglColor      *color       = NULL;
+  const Babl     *space       = NULL;
+  gfloat          pixel[4]    = { 0 };
+  gchar          *format      = NULL;
+
+  kpl_data->copy_values = FALSE;
+  kpl_data->color_model = NULL;
+  kpl_data->color_space = NULL;
+
+  lower_elt_name = g_ascii_strdown (element_name, -1);
+  if (! strcmp (lower_elt_name, "colorsetentry"))
+    {
+      while (*attribute_names)
+        {
+          gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
+
+          if (! strcmp (lower_att_name, "name"))
+            kpl_data->palette_name = g_strdup (*attribute_values);
+
+          attribute_names++;
+          attribute_values++;
+
+          g_free (lower_att_name);
+        }
+    }
+  else if (! strcmp (lower_elt_name, "colorset"))
+    {
+      while (*attribute_names)
+        {
+          gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
+
+          if (! strcmp (lower_att_name, "name"))
+            {
+              gimp_object_take_name (GIMP_OBJECT (kpl_data->palette_name),
+                                     g_strdup (*attribute_values));
+            }
+          else if (! strcmp (lower_att_name, "columns"))
+            {
+              gint columns = atoi (*attribute_values);
+
+              if (columns > 0)
+                gimp_palette_set_columns (kpl_data->palette, columns);
+            }
+
+          attribute_names++;
+          attribute_values++;
+
+          g_free (lower_att_name);
+        }
+    }
+  else if (! strcmp (lower_elt_name, "rgb") ||
+           ! strcmp (lower_elt_name, "srgb"))
+    {
+      add_palette = TRUE;
+      color       = gegl_color_new ("black");
+      format      = g_strdup ("R'G'B' float");
+
+      while (*attribute_names)
+        {
+          gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
+
+          if (! strcmp (lower_att_name, "r"))
+            {
+              pixel[0] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "g"))
+            {
+              pixel[1] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "b"))
+            {
+              pixel[2] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "space"))
+            {
+              GList *profile_list;
+
+              for (profile_list = g_list_copy (kpl_data->embedded_profiles);
+                   profile_list;
+                   profile_list = g_list_next (profile_list))
+                {
+                  PaletteColorProfile *icc = profile_list->data;
+
+                  if (g_str_has_suffix (icc->id, *attribute_values))
+                    {
+                      space = gimp_color_profile_get_space (icc->profile,
+                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                            NULL);
+                      break;
+                    }
+                }
+            }
+          attribute_names++;
+          attribute_values++;
+
+          g_free (lower_att_name);
+        }
+    }
+  else if (! strcmp (lower_elt_name, "cmyk"))
+    {
+      add_palette = TRUE;
+      color       = gegl_color_new ("black");
+      format      = g_strdup ("CMYK float");
+
+      while (*attribute_names)
+        {
+          gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
+
+          if (! strcmp (lower_att_name, "c"))
+            {
+              pixel[0] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "m"))
+            {
+              pixel[1] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "y"))
+            {
+              pixel[2] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "k"))
+            {
+              pixel[3] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "space"))
+            {
+              GList *profile_list;
+
+              for (profile_list = g_list_copy (kpl_data->embedded_profiles);
+                   profile_list;
+                   profile_list = g_list_next (profile_list))
+                {
+                  PaletteColorProfile *icc = profile_list->data;
+
+                  if (g_str_has_suffix (icc->id, *attribute_values))
+                    {
+                      space = gimp_color_profile_get_space (icc->profile,
+                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                            NULL);
+                      break;
+                    }
+                }
+            }
+          attribute_names++;
+          attribute_values++;
+
+          g_free (lower_att_name);
+        }
+    }
+  else if (! strcmp (lower_elt_name, "gray"))
+    {
+      add_palette = TRUE;
+      color       = gegl_color_new ("black");
+      format      = g_strdup ("Y' float");
+
+      while (*attribute_names)
+        {
+          gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
+
+          if (! strcmp (lower_att_name, "g"))
+            {
+              pixel[0] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "space"))
+            {
+              GList *profile_list;
+
+              for (profile_list = g_list_copy (kpl_data->embedded_profiles);
+                   profile_list;
+                   profile_list = g_list_next (profile_list))
+                {
+                  PaletteColorProfile *icc = profile_list->data;
+
+                  if (g_str_has_suffix (icc->id, *attribute_values))
+                    {
+                      space = gimp_color_profile_get_space (icc->profile,
+                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                            NULL);
+                      break;
+                    }
+                }
+            }
+          attribute_names++;
+          attribute_values++;
+
+          g_free (lower_att_name);
+        }
+    }
+  else if (! strcmp (lower_elt_name, "lab"))
+    {
+      add_palette = TRUE;
+      color       = gegl_color_new ("black");
+      format      = g_strdup ("CIE Lab float");
+
+      while (*attribute_names)
+        {
+          gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
+
+          if (! strcmp (lower_att_name, "l"))
+            {
+              pixel[0] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "a"))
+            {
+              pixel[1] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "b"))
+            {
+              pixel[2] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "space"))
+            {
+              GList *profile_list;
+
+              for (profile_list = g_list_copy (kpl_data->embedded_profiles);
+                   profile_list;
+                   profile_list = g_list_next (profile_list))
+                {
+                  PaletteColorProfile *icc = profile_list->data;
+
+                  if (g_str_has_suffix (icc->id, *attribute_values))
+                    {
+                      space = gimp_color_profile_get_space (icc->profile,
+                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                            NULL);
+                      break;
+                    }
+                }
+            }
+          attribute_names++;
+          attribute_values++;
+
+          g_free (lower_att_name);
+        }
+    }
+  else if (! strcmp (lower_elt_name, "xyz"))
+    {
+      add_palette = TRUE;
+      color       = gegl_color_new ("black");
+      format      = g_strdup ("CIE XYZ float");
+
+      while (*attribute_names)
+        {
+          gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
+
+          if (! strcmp (lower_att_name, "x"))
+            {
+              pixel[0] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "y"))
+            {
+              pixel[1] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "z"))
+            {
+              pixel[2] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "space"))
+            {
+              GList *profile_list;
+
+              for (profile_list = g_list_copy (kpl_data->embedded_profiles);
+                   profile_list;
+                   profile_list = g_list_next (profile_list))
+                {
+                  PaletteColorProfile *icc = profile_list->data;
+
+                  if (g_str_has_suffix (icc->id, *attribute_values))
+                    {
+                      space = gimp_color_profile_get_space (icc->profile,
+                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                            NULL);
+                      break;
+                    }
+                }
+            }
+          attribute_names++;
+          attribute_values++;
+
+          g_free (lower_att_name);
+        }
+    }
+  else if (! strcmp (lower_elt_name, "ycbcr"))
+    {
+      add_palette = TRUE;
+      color       = gegl_color_new ("black");
+      format      = g_strdup ("Y'CbCr float");
+
+      while (*attribute_names)
+        {
+          gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
+
+          if (! strcmp (lower_att_name, "y"))
+            {
+              pixel[0] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "cb"))
+            {
+              pixel[1] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "cr"))
+            {
+              pixel[2] = atof (*attribute_values);
+            }
+          else if (! strcmp (lower_att_name, "space"))
+            {
+              GList *profile_list;
+
+              for (profile_list = g_list_copy (kpl_data->embedded_profiles);
+                   profile_list;
+                   profile_list = g_list_next (profile_list))
+                {
+                  PaletteColorProfile *icc = profile_list->data;
+
+                  if (g_str_has_suffix (icc->id, *attribute_values))
+                    {
+                      space = gimp_color_profile_get_space (icc->profile,
+                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                            NULL);
+                      break;
+                    }
+                }
+            }
+          attribute_names++;
+          attribute_values++;
+
+          g_free (lower_att_name);
+        }
+    }
+
+  if (add_palette)
+    {
+
+
+      gegl_color_set_pixel (color,
+                            babl_format_with_space (format, space),
+                            pixel);
+      gimp_palette_add_entry (kpl_data->palette, kpl_data->position,
+                              NULL, color);
+      if (kpl_data->palette_name)
+        {
+          gimp_palette_set_entry_name (kpl_data->palette,
+                                       kpl_data->position,
+                                       kpl_data->palette_name);
+
+        }
+      kpl_data->position++;
+      g_free (format);
+      g_clear_object (&color);
+    }
+
+  g_free (lower_elt_name);
+}
+
 GimpPaletteFileFormat
 gimp_palette_load_detect_format (GFile        *file,
                                  GInputStream *input)
@@ -2114,6 +2641,10 @@ gimp_palette_load_detect_format (GFile        *file,
       else if (g_str_has_suffix (lower, ".swatches"))
         {
           format = GIMP_PALETTE_FILE_FORMAT_PROCREATE;
+        }
+      else if (g_str_has_suffix (lower, ".kpl"))
+        {
+          format = GIMP_PALETTE_FILE_FORMAT_KRITA;
         }
 
       g_free (lower);
