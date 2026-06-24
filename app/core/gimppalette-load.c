@@ -94,6 +94,9 @@ static gchar * gimp_palette_load_ase_block_name (GInputStream        *input,
                                                  goffset              file_size,
                                                  GError             **error);
 
+static const Babl * gimp_palette_load_get_space (ZipPaletteData      *data,
+                                                 const gchar         *profile_name);
+
 
 GList *
 gimp_palette_load (GimpContext   *context,
@@ -2153,24 +2156,8 @@ swatchbooker_load_text (GMarkupParseContext *context,
           /* Load profile if applicable */
           if (sbz_data->embedded_profiles &&
               sbz_data->color_space)
-            {
-              GList *profile_list;
-
-              for (profile_list = g_list_copy (sbz_data->embedded_profiles);
-                   profile_list;
-                   profile_list = g_list_next (profile_list))
-                {
-                  PaletteColorProfile *icc = profile_list->data;
-
-                  if (g_str_has_suffix (icc->id, sbz_data->color_space))
-                    {
-                      space = gimp_color_profile_get_space (icc->profile,
-                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                                            NULL);
-                      break;
-                    }
-                }
-            }
+            space = gimp_palette_load_get_space (sbz_data,
+                                                 sbz_data->color_space);
 
           for (i = 0; values[i]; i++)
             true_values[i] = atof (values[i]);
@@ -2291,36 +2278,14 @@ krita_load_start_element (GMarkupParseContext *context,
           gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
 
           if (! strcmp (lower_att_name, "r"))
-            {
-              pixel[0] = atof (*attribute_values);
-            }
+            pixel[0] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "g"))
-            {
-              pixel[1] = atof (*attribute_values);
-            }
+            pixel[1] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "b"))
-            {
-              pixel[2] = atof (*attribute_values);
-            }
+            pixel[2] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "space"))
-            {
-              GList *profile_list;
+            space = gimp_palette_load_get_space (kpl_data, *attribute_values);
 
-              for (profile_list = g_list_copy (kpl_data->embedded_profiles);
-                   profile_list;
-                   profile_list = g_list_next (profile_list))
-                {
-                  PaletteColorProfile *icc = profile_list->data;
-
-                  if (g_str_has_suffix (icc->id, *attribute_values))
-                    {
-                      space = gimp_color_profile_get_space (icc->profile,
-                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                                            NULL);
-                      break;
-                    }
-                }
-            }
           attribute_names++;
           attribute_values++;
 
@@ -2338,40 +2303,16 @@ krita_load_start_element (GMarkupParseContext *context,
           gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
 
           if (! strcmp (lower_att_name, "c"))
-            {
-              pixel[0] = atof (*attribute_values);
-            }
+            pixel[0] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "m"))
-            {
-              pixel[1] = atof (*attribute_values);
-            }
+            pixel[1] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "y"))
-            {
-              pixel[2] = atof (*attribute_values);
-            }
+            pixel[2] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "k"))
-            {
-              pixel[3] = atof (*attribute_values);
-            }
+            pixel[3] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "space"))
-            {
-              GList *profile_list;
+            space = gimp_palette_load_get_space (kpl_data, *attribute_values);
 
-              for (profile_list = g_list_copy (kpl_data->embedded_profiles);
-                   profile_list;
-                   profile_list = g_list_next (profile_list))
-                {
-                  PaletteColorProfile *icc = profile_list->data;
-
-                  if (g_str_has_suffix (icc->id, *attribute_values))
-                    {
-                      space = gimp_color_profile_get_space (icc->profile,
-                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                                            NULL);
-                      break;
-                    }
-                }
-            }
           attribute_names++;
           attribute_values++;
 
@@ -2389,28 +2330,10 @@ krita_load_start_element (GMarkupParseContext *context,
           gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
 
           if (! strcmp (lower_att_name, "g"))
-            {
-              pixel[0] = atof (*attribute_values);
-            }
+            pixel[0] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "space"))
-            {
-              GList *profile_list;
+            space = gimp_palette_load_get_space (kpl_data, *attribute_values);
 
-              for (profile_list = g_list_copy (kpl_data->embedded_profiles);
-                   profile_list;
-                   profile_list = g_list_next (profile_list))
-                {
-                  PaletteColorProfile *icc = profile_list->data;
-
-                  if (g_str_has_suffix (icc->id, *attribute_values))
-                    {
-                      space = gimp_color_profile_get_space (icc->profile,
-                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                                            NULL);
-                      break;
-                    }
-                }
-            }
           attribute_names++;
           attribute_values++;
 
@@ -2428,36 +2351,14 @@ krita_load_start_element (GMarkupParseContext *context,
           gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
 
           if (! strcmp (lower_att_name, "l"))
-            {
-              pixel[0] = atof (*attribute_values);
-            }
+            pixel[0] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "a"))
-            {
-              pixel[1] = atof (*attribute_values);
-            }
+            pixel[1] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "b"))
-            {
-              pixel[2] = atof (*attribute_values);
-            }
+            pixel[2] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "space"))
-            {
-              GList *profile_list;
+            space = gimp_palette_load_get_space (kpl_data, *attribute_values);
 
-              for (profile_list = g_list_copy (kpl_data->embedded_profiles);
-                   profile_list;
-                   profile_list = g_list_next (profile_list))
-                {
-                  PaletteColorProfile *icc = profile_list->data;
-
-                  if (g_str_has_suffix (icc->id, *attribute_values))
-                    {
-                      space = gimp_color_profile_get_space (icc->profile,
-                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                                            NULL);
-                      break;
-                    }
-                }
-            }
           attribute_names++;
           attribute_values++;
 
@@ -2475,36 +2376,14 @@ krita_load_start_element (GMarkupParseContext *context,
           gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
 
           if (! strcmp (lower_att_name, "x"))
-            {
-              pixel[0] = atof (*attribute_values);
-            }
+            pixel[0] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "y"))
-            {
-              pixel[1] = atof (*attribute_values);
-            }
+            pixel[1] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "z"))
-            {
-              pixel[2] = atof (*attribute_values);
-            }
+            pixel[2] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "space"))
-            {
-              GList *profile_list;
+            space = gimp_palette_load_get_space (kpl_data, *attribute_values);
 
-              for (profile_list = g_list_copy (kpl_data->embedded_profiles);
-                   profile_list;
-                   profile_list = g_list_next (profile_list))
-                {
-                  PaletteColorProfile *icc = profile_list->data;
-
-                  if (g_str_has_suffix (icc->id, *attribute_values))
-                    {
-                      space = gimp_color_profile_get_space (icc->profile,
-                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                                            NULL);
-                      break;
-                    }
-                }
-            }
           attribute_names++;
           attribute_values++;
 
@@ -2522,36 +2401,14 @@ krita_load_start_element (GMarkupParseContext *context,
           gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
 
           if (! strcmp (lower_att_name, "y"))
-            {
-              pixel[0] = atof (*attribute_values);
-            }
+            pixel[0] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "cb"))
-            {
-              pixel[1] = atof (*attribute_values);
-            }
+            pixel[1] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "cr"))
-            {
-              pixel[2] = atof (*attribute_values);
-            }
+            pixel[2] = atof (*attribute_values);
           else if (! strcmp (lower_att_name, "space"))
-            {
-              GList *profile_list;
+            space = gimp_palette_load_get_space (kpl_data, *attribute_values);
 
-              for (profile_list = g_list_copy (kpl_data->embedded_profiles);
-                   profile_list;
-                   profile_list = g_list_next (profile_list))
-                {
-                  PaletteColorProfile *icc = profile_list->data;
-
-                  if (g_str_has_suffix (icc->id, *attribute_values))
-                    {
-                      space = gimp_color_profile_get_space (icc->profile,
-                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                                            NULL);
-                      break;
-                    }
-                }
-            }
           attribute_names++;
           attribute_values++;
 
@@ -2561,8 +2418,6 @@ krita_load_start_element (GMarkupParseContext *context,
 
   if (add_palette)
     {
-
-
       gegl_color_set_pixel (color,
                             babl_format_with_space (format, space),
                             pixel);
@@ -2582,6 +2437,32 @@ krita_load_start_element (GMarkupParseContext *context,
 
   g_free (lower_elt_name);
 }
+
+static const Babl *
+gimp_palette_load_get_space (ZipPaletteData *data,
+                             const gchar    *profile_name)
+{
+  GList      *profile_list;
+  const Babl *space = NULL;
+
+  for (profile_list = g_list_copy (data->embedded_profiles);
+       profile_list;
+       profile_list = g_list_next (profile_list))
+    {
+      PaletteColorProfile *icc = profile_list->data;
+
+      if (g_str_has_suffix (icc->id, profile_name))
+        {
+          space = gimp_color_profile_get_space (icc->profile,
+                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                NULL);
+          return space;
+        }
+    }
+
+  return NULL;
+}
+
 
 GimpPaletteFileFormat
 gimp_palette_load_detect_format (GFile        *file,
