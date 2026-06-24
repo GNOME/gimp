@@ -33,13 +33,56 @@ gint                    psd_read               (GInputStream        *input,
                                                 gint                 count,
                                                 GError             **error);
 
+gboolean                psd_read_chars         (GInputStream        *input,
+                                                gchar               *data,
+                                                gint                 count,
+                                                gboolean             ibm_pc_format,
+                                                GError             **error);
+
+gboolean                psd_read_int16         (GInputStream        *input,
+                                                gint16              *data,
+                                                gboolean             ibm_pc_format,
+                                                GError             **error);
+
+gboolean                psd_read_uint16        (GInputStream        *input,
+                                                guint16             *data,
+                                                gboolean             ibm_pc_format,
+                                                GError             **error);
+
+gboolean                psd_read_int32         (GInputStream        *input,
+                                                gint32              *data,
+                                                gboolean             ibm_pc_format,
+                                                GError             **error);
+
+gboolean                psd_read_uint32        (GInputStream        *input,
+                                                guint32             *data,
+                                                gboolean             ibm_pc_format,
+                                                GError             **error);
+
+gboolean                psd_read_int64         (GInputStream        *input,
+                                                gint64              *data,
+                                                gboolean             ibm_pc_format,
+                                                GError             **error);
+
+gboolean                psd_read_uint64        (GInputStream        *input,
+                                                guint64             *data,
+                                                gboolean             ibm_pc_format,
+                                                GError             **error);
+
+gboolean                psd_read_fixed_float   (GInputStream        *input,
+                                                gfloat              *data,
+                                                gboolean             ibm_pc_format,
+                                                GError             **error);
+
 gboolean                psd_read_len           (GInputStream        *input,
                                                 guint64             *data,
                                                 gint                 psd_version,
+                                                gboolean             ibm_pc_format,
                                                 GError            **error);
 
 gboolean                psd_read_double        (GInputStream        *input,
                                                 gdouble             *data,
+                                                gboolean             ibm_pc_format,
                                                 GError            **error);
 
 gboolean                psd_seek               (GInputStream        *input,

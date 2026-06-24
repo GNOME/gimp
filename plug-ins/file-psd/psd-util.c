@@ -34,6 +34,10 @@
 /*  Local constants  */
 #define MIN_RUN     3
 
+/* Adobe uses fixed point ints which consist of four bytes: a 16-bit number and
+ * 16-bit fraction */
+#define FIXED_TO_FLOAT(num,fract) (gfloat) num + fract / 65535.0f
+
 /*  Local types  */
 typedef struct
 {
@@ -237,9 +241,175 @@ psd_read (GInputStream  *input,
 }
 
 gboolean
+psd_read_chars (GInputStream  *input,
+                gchar         *data,
+                gint           count,
+                gboolean       ibm_pc_format,
+                GError       **error)
+{
+  if (psd_read (input, data, count, error) < count)
+    {
+      psd_set_error (error);
+      return FALSE;
+    }
+
+  if (ibm_pc_format)
+    {
+      for (gint i = 0; i < count / 2; i++)
+        {
+          gchar tmp = data[i];
+          data[i] = data[count - 1 - i];
+          data[count - 1 - i] = tmp;
+        }
+    }
+
+  return TRUE;
+}
+
+gboolean
+psd_read_int16 (GInputStream  *input,
+                gint16        *data,
+                gboolean       ibm_pc_format,
+                GError       **error)
+{
+  if (psd_read (input, data, sizeof (gint16), error) < sizeof (gint16))
+    {
+      psd_set_error (error);
+      return FALSE;
+    }
+
+  if (ibm_pc_format)
+    *data = GINT16_FROM_LE (*data);
+  else
+    *data = GINT16_FROM_BE (*data);
+
+  return TRUE;
+}
+
+gboolean
+psd_read_uint16 (GInputStream  *input,
+                 guint16        *data,
+                 gboolean       ibm_pc_format,
+                 GError       **error)
+{
+  if (psd_read (input, data, sizeof (guint16), error) < sizeof (guint16))
+    {
+      psd_set_error (error);
+      return FALSE;
+    }
+
+  if (ibm_pc_format)
+    *data = GUINT16_FROM_LE (*data);
+  else
+    *data = GUINT16_FROM_BE (*data);
+
+  return TRUE;
+}
+
+gboolean
+psd_read_int32 (GInputStream  *input,
+                gint32        *data,
+                gboolean       ibm_pc_format,
+                GError       **error)
+{
+  if (psd_read (input, data, sizeof (gint32), error) < sizeof (gint32))
+    {
+      psd_set_error (error);
+      return FALSE;
+    }
+
+  if (ibm_pc_format)
+    *data = GINT32_FROM_LE (*data);
+  else
+    *data = GINT32_FROM_BE (*data);
+
+  return TRUE;
+}
+
+gboolean
+psd_read_uint32 (GInputStream  *input,
+                 guint32        *data,
+                 gboolean       ibm_pc_format,
+                 GError       **error)
+{
+  if (psd_read (input, data, sizeof (guint32), error) < sizeof (guint32))
+    {
+      psd_set_error (error);
+      return FALSE;
+    }
+
+  if (ibm_pc_format)
+    *data = GUINT32_FROM_LE (*data);
+  else
+    *data = GUINT32_FROM_BE (*data);
+
+  return TRUE;
+}
+
+gboolean
+psd_read_int64 (GInputStream  *input,
+                gint64        *data,
+                gboolean       ibm_pc_format,
+                GError       **error)
+{
+  if (psd_read (input, data, sizeof (gint64), error) < sizeof (gint64))
+    {
+      psd_set_error (error);
+      return FALSE;
+    }
+
+  if (ibm_pc_format)
+    *data = GINT64_FROM_LE (*data);
+  else
+    *data = GINT64_FROM_BE (*data);
+
+  return TRUE;
+}
+
+gboolean
+psd_read_uint64 (GInputStream  *input,
+                 guint64        *data,
+                 gboolean       ibm_pc_format,
+                 GError       **error)
+{
+  if (psd_read (input, data, sizeof (guint64), error) < sizeof (guint64))
+    {
+      psd_set_error (error);
+      return FALSE;
+    }
+
+  if (ibm_pc_format)
+    *data = GUINT64_FROM_LE (*data);
+  else
+    *data = GUINT64_FROM_BE (*data);
+
+  return TRUE;
+}
+
+gboolean
+psd_read_fixed_float (GInputStream  *input,
+                      gfloat        *data,
+                      gboolean       ibm_pc_format,
+                      GError       **error)
+{
+  guint16 temp[2];
+  if (! psd_read_uint16 (input, &temp[0], ibm_pc_format, error) ||
+      ! psd_read_uint16 (input, &temp[1], ibm_pc_format, error))
+    {
+      psd_set_error (error);
+      return FALSE;
+    }
+
+  *data = FIXED_TO_FLOAT (temp[0], temp[1]);
+
+  return TRUE;
+}
+
+gboolean
 psd_read_len (GInputStream  *input,
               guint64       *data,
               gint           psd_version,
+              gboolean       ibm_pc_format,
               GError       **error)
 {
   gint block_len_size = (psd_version == 1 ? 4 : 8);
@@ -251,15 +421,27 @@ psd_read_len (GInputStream  *input,
     }
 
   if (psd_version == 1)
-    *data = GUINT32_FROM_BE (*data);
+    {
+      if (! ibm_pc_format)
+        *data = GUINT32_FROM_BE (*data);
+      else
+        *data = GUINT32_FROM_LE (*data);
+    }
   else
-    *data = GUINT64_FROM_BE (*data);
+    {
+      if (! ibm_pc_format)
+        *data = GUINT64_FROM_BE (*data);
+      else
+        *data = GUINT64_FROM_LE (*data);
+    }
+
   return TRUE;
 }
 
 gboolean
 psd_read_double (GInputStream  *input,
                  gdouble       *data,
+                 gboolean       ibm_pc_format,
                  GError       **error)
 {
   union conv_double {
@@ -267,13 +449,17 @@ psd_read_double (GInputStream  *input,
     gdouble double_tmp;
   } conv_double = {};
 
-  if (psd_read (input, &conv_double, 8, error) < 8)
+  if (psd_read (input, &conv_double, sizeof (guint64), error) < sizeof (guint64))
     {
       psd_set_error (error);
       return FALSE;
     }
 
-  conv_double.u64_tmp = GUINT64_FROM_BE (conv_double.u64_tmp);
+  if (ibm_pc_format)
+    conv_double.u64_tmp = GUINT64_FROM_LE (conv_double.u64_tmp);
+  else
+    conv_double.u64_tmp = GUINT64_FROM_BE (conv_double.u64_tmp);
+
   *data = conv_double.double_tmp;
 
   return TRUE;

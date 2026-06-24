@@ -184,7 +184,7 @@ load_image (GFile        *file,
   GimpImage     *image = NULL;
   GError        *error = NULL;
 
-  img_a.ibm_pc_format  = FALSE;
+  img_a.ibm_pc_format = FALSE;
   img_a.cmyk_transform = img_a.cmyk_transform_alpha = NULL;
   img_a.cmyk_profile = NULL;
   img_a.rgb_space = NULL;
@@ -901,15 +901,13 @@ read_layer_info (PSDimage      *img_a,
   IFDBG(1) g_debug ("Reading layer info at offset %" G_GOFFSET_FORMAT,
                     PSD_TELL(input));
   /* Get number of layers */
-  if (psd_read (input, &img_a->num_layers, 2, error) < 2)
+  if (! psd_read_int16 (input, &img_a->num_layers, img_a->ibm_pc_format, error))
     {
       psd_set_error (error);
       img_a->num_layers = -1;
       return NULL;
     }
 
-  if (! img_a->ibm_pc_format)
-    img_a->num_layers = GINT16_FROM_BE (img_a->num_layers);
   IFDBG(2) g_debug ("Number of layers: %d (negative means transparency present)", img_a->num_layers);
 
   if (img_a->num_layers < 0)
@@ -934,6 +932,8 @@ read_layer_info (PSDimage      *img_a,
     {
       /* Read layer records */
       PSDlayerres  res_a;
+      guint32      extra_len32;
+      guint32      block_len32;
 
       /* Create pointer array for the layer records */
       lyr_a = g_new0 (PSDlayer *, img_a->num_layers);
@@ -945,25 +945,15 @@ read_layer_info (PSDimage      *img_a,
           /* Allocate layer record */
           lyr_a[lidx] = (PSDlayer *) g_malloc0 (sizeof (PSDlayer) );
 
-          if (psd_read (input, &lyr_a[lidx]->top,          4, error) < 4 ||
-              psd_read (input, &lyr_a[lidx]->left,         4, error) < 4 ||
-              psd_read (input, &lyr_a[lidx]->bottom,       4, error) < 4 ||
-              psd_read (input, &lyr_a[lidx]->right,        4, error) < 4 ||
-              psd_read (input, &lyr_a[lidx]->num_channels, 2, error) < 2)
+          if (! psd_read_int32 (input, &lyr_a[lidx]->top, img_a->ibm_pc_format, error) ||
+              ! psd_read_int32 (input, &lyr_a[lidx]->left, img_a->ibm_pc_format, error) ||
+              ! psd_read_int32 (input, &lyr_a[lidx]->bottom, img_a->ibm_pc_format, error) ||
+              ! psd_read_int32 (input, &lyr_a[lidx]->right, img_a->ibm_pc_format, error) ||
+              ! psd_read_uint16 (input, &lyr_a[lidx]->num_channels, img_a->ibm_pc_format, error))
             {
               psd_set_error (error);
               free_lyr_a (lyr_a, img_a->num_layers);
               return NULL;
-            }
-
-          if (! img_a->ibm_pc_format)
-            {
-              lyr_a[lidx]->top = GINT32_FROM_BE (lyr_a[lidx]->top);
-              lyr_a[lidx]->left = GINT32_FROM_BE (lyr_a[lidx]->left);
-              lyr_a[lidx]->bottom = GINT32_FROM_BE (lyr_a[lidx]->bottom);
-              lyr_a[lidx]->right = GINT32_FROM_BE (lyr_a[lidx]->right);
-              lyr_a[lidx]->num_channels =
-                GUINT16_FROM_BE (lyr_a[lidx]->num_channels);
             }
 
           if (lyr_a[lidx]->num_channels > MAX_CHANNELS)
@@ -983,21 +973,13 @@ read_layer_info (PSDimage      *img_a,
 
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
             {
-              if (psd_read (input, &lyr_a[lidx]->chn_info[cidx].channel_id, 2, error) < 2 ||
-                  ! psd_read_len (input, &lyr_a[lidx]->chn_info[cidx].data_len,
-                                  img_a->version, error))
+              if (! psd_read_int16 (input, &lyr_a[lidx]->chn_info[cidx].channel_id, img_a->ibm_pc_format, error) ||
+                  ! psd_read_len (input, &lyr_a[lidx]->chn_info[cidx].data_len, img_a->version, img_a->ibm_pc_format, error))
                 {
                   psd_set_error (error);
                   free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
-
-              if (! img_a->ibm_pc_format)
-                lyr_a[lidx]->chn_info[cidx].channel_id =
-                  GINT16_FROM_BE (lyr_a[lidx]->chn_info[cidx].channel_id);
-              else
-                lyr_a[lidx]->chn_info[cidx].data_len =
-                  GUINT32_FROM_LE (lyr_a[lidx]->chn_info[cidx].data_len);
 
               img_a->layer_data_len += lyr_a[lidx]->chn_info[cidx].data_len;
               IFDBG(3) g_debug ("Channel ID %d, data len %" G_GSIZE_FORMAT,
@@ -1005,32 +987,20 @@ read_layer_info (PSDimage      *img_a,
                                 (gsize) lyr_a[lidx]->chn_info[cidx].data_len);
             }
 
-          if (psd_read (input, lyr_a[lidx]->mode_key,   4, error) < 4 ||
-              psd_read (input, lyr_a[lidx]->blend_mode, 4, error) < 4 ||
+          if (! psd_read_chars (input, lyr_a[lidx]->mode_key,   4, img_a->ibm_pc_format, error) ||
+              ! psd_read_chars (input, lyr_a[lidx]->blend_mode, 4, img_a->ibm_pc_format, error) ||
               psd_read (input, &lyr_a[lidx]->opacity,   1, error) < 1 ||
               psd_read (input, &lyr_a[lidx]->clipping,  1, error) < 1 ||
               psd_read (input, &lyr_a[lidx]->flags,     1, error) < 1 ||
               psd_read (input, &lyr_a[lidx]->filler,    1, error) < 1 ||
-              psd_read (input, &lyr_a[lidx]->extra_len, 4, error) < 4)
+              ! psd_read_uint32 (input, &extra_len32, img_a->ibm_pc_format, error))
             {
               psd_set_error (error);
               free_lyr_a (lyr_a, img_a->num_layers);
               return NULL;
             }
 
-          /* Reverse relevant IBM PC Format entries */
-          if (img_a->ibm_pc_format)
-            {
-              gchar blend_mode[4];
-
-              for (gint i = 0; i < 4; i++)
-                blend_mode[i] = lyr_a[lidx]->blend_mode[3 - i];
-              for (gint i = 0; i < 4; i++)
-                lyr_a[lidx]->blend_mode[i] = blend_mode[i];
-
-              lyr_a[lidx]->extra_len =
-                GUINT32_FROM_LE (lyr_a[lidx]->extra_len);
-            }
+          lyr_a[lidx]->extra_len = extra_len32;
 
           /* Not sure if 8B64 is possible here but it won't hurt to check. */
           if (memcmp (lyr_a[lidx]->mode_key, "8BIM", 4) != 0 &&
@@ -1053,8 +1023,6 @@ read_layer_info (PSDimage      *img_a,
           else
             lyr_a[lidx]->layer_flags.irrelevant = FALSE;
 
-          if (! img_a->ibm_pc_format)
-            lyr_a[lidx]->extra_len = GUINT32_FROM_BE (lyr_a[lidx]->extra_len);
           block_rem = lyr_a[lidx]->extra_len;
           IFDBG(2) g_debug ("\n\tLayer mode sig: %.4s\n\tBlend mode: %.4s\n\t"
                             "Opacity: %d\n\tClipping: %d\n\tExtra data len: %" G_GSIZE_FORMAT "\n\t"
@@ -1076,8 +1044,8 @@ read_layer_info (PSDimage      *img_a,
                   lyr_a[lidx]->bottom - lyr_a[lidx]->top > GIMP_MAX_IMAGE_SIZE)
                 {
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                              _("Unsupported or invalid layer height: %d"),
-                              lyr_a[lidx]->bottom - lyr_a[lidx]->top);
+                               _("Unsupported or invalid layer height: %d"),
+                               lyr_a[lidx]->bottom - lyr_a[lidx]->top);
                   free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
@@ -1085,8 +1053,8 @@ read_layer_info (PSDimage      *img_a,
                   lyr_a[lidx]->right - lyr_a[lidx]->left > GIMP_MAX_IMAGE_SIZE)
                 {
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                              _("Unsupported or invalid layer width: %d"),
-                              lyr_a[lidx]->right - lyr_a[lidx]->left);
+                               _("Unsupported or invalid layer width: %d"),
+                               lyr_a[lidx]->right - lyr_a[lidx]->left);
                   free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
@@ -1095,26 +1063,22 @@ read_layer_info (PSDimage      *img_a,
                   G_MAXINT32 / MAX (lyr_a[lidx]->bottom - lyr_a[lidx]->top, 1))
                 {
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                              _("Unsupported or invalid layer size: %dx%d"),
-                              lyr_a[lidx]->right - lyr_a[lidx]->left,
-                              lyr_a[lidx]->bottom - lyr_a[lidx]->top);
+                               _("Unsupported or invalid layer size: %dx%d"),
+                               lyr_a[lidx]->right - lyr_a[lidx]->left,
+                               lyr_a[lidx]->bottom - lyr_a[lidx]->top);
                   free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
             }
 
           /* Layer mask data */
-          if (psd_read (input, &block_len, 4, error) < 4)
+          if (! psd_read_uint32 (input, &block_len32, img_a->ibm_pc_format, error))
             {
               psd_set_error (error);
               free_lyr_a (lyr_a, img_a->num_layers);
               return NULL;
             }
-
-          if (! img_a->ibm_pc_format)
-            block_len = GUINT32_FROM_BE (block_len);
-          else
-            block_len = GUINT32_FROM_LE (block_len);
+          block_len = block_len32;
 
           IFDBG(3) g_debug ("Layer mask record size %" G_GOFFSET_FORMAT, block_len);
           if (block_len + 4 > block_rem)
@@ -1152,29 +1116,18 @@ read_layer_info (PSDimage      *img_a,
 
           if (block_len > 0)
             {
-              if (psd_read (input, &lyr_a[lidx]->layer_mask.top,       4, error) < 4 ||
-                  psd_read (input, &lyr_a[lidx]->layer_mask.left,      4, error) < 4 ||
-                  psd_read (input, &lyr_a[lidx]->layer_mask.bottom,    4, error) < 4 ||
-                  psd_read (input, &lyr_a[lidx]->layer_mask.right,     4, error) < 4 ||
+              if (! psd_read_int32 (input, &lyr_a[lidx]->layer_mask.top, img_a->ibm_pc_format, error) ||
+                  ! psd_read_int32 (input, &lyr_a[lidx]->layer_mask.left, img_a->ibm_pc_format, error) ||
+                  ! psd_read_int32 (input, &lyr_a[lidx]->layer_mask.bottom, img_a->ibm_pc_format, error) ||
+                  ! psd_read_int32 (input, &lyr_a[lidx]->layer_mask.right, img_a->ibm_pc_format, error) ||
                   psd_read (input, &lyr_a[lidx]->layer_mask.def_color, 1, error) < 1 ||
-                  psd_read (input, &lyr_a[lidx]->layer_mask.flags,     1, error) < 1)
+                  psd_read (input, &lyr_a[lidx]->layer_mask.flags, 1, error) < 1)
                 {
                   psd_set_error (error);
                   free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
 
-              if (! img_a->ibm_pc_format)
-                {
-                  lyr_a[lidx]->layer_mask.top =
-                    GINT32_FROM_BE (lyr_a[lidx]->layer_mask.top);
-                  lyr_a[lidx]->layer_mask.left =
-                    GINT32_FROM_BE (lyr_a[lidx]->layer_mask.left);
-                  lyr_a[lidx]->layer_mask.bottom =
-                    GINT32_FROM_BE (lyr_a[lidx]->layer_mask.bottom);
-                  lyr_a[lidx]->layer_mask.right =
-                    GINT32_FROM_BE (lyr_a[lidx]->layer_mask.right);
-                }
               lyr_a[lidx]->layer_mask.mask_flags.relative_pos =
                 lyr_a[lidx]->layer_mask.flags & 1 ? TRUE : FALSE;
               lyr_a[lidx]->layer_mask.mask_flags.disabled =
@@ -1203,28 +1156,16 @@ read_layer_info (PSDimage      *img_a,
                 {
                   if (psd_read (input, &lyr_a[lidx]->layer_mask.extra_flags,     1, error) < 1 ||
                       psd_read (input, &lyr_a[lidx]->layer_mask.extra_def_color, 1, error) < 1 ||
-                      psd_read (input, &lyr_a[lidx]->layer_mask_extra.top,       4, error) < 4 ||
-                      psd_read (input, &lyr_a[lidx]->layer_mask_extra.left,      4, error) < 4 ||
-                      psd_read (input, &lyr_a[lidx]->layer_mask_extra.bottom,    4, error) < 4 ||
-                      psd_read (input, &lyr_a[lidx]->layer_mask_extra.right,     4, error) < 4)
+                      ! psd_read_int32 (input, &lyr_a[lidx]->layer_mask_extra.top, img_a->ibm_pc_format, error) ||
+                      ! psd_read_int32 (input, &lyr_a[lidx]->layer_mask_extra.left, img_a->ibm_pc_format, error) ||
+                      ! psd_read_int32 (input, &lyr_a[lidx]->layer_mask_extra.bottom, img_a->ibm_pc_format, error) ||
+                      ! psd_read_int32 (input, &lyr_a[lidx]->layer_mask_extra.right, img_a->ibm_pc_format, error))
                     {
                       psd_set_error (error);
                       free_lyr_a (lyr_a, img_a->num_layers);
                       return NULL;
                     }
                   block_len -= 18;
-
-                  if (! img_a->ibm_pc_format)
-                    {
-                      lyr_a[lidx]->layer_mask_extra.top =
-                        GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.top);
-                      lyr_a[lidx]->layer_mask_extra.left =
-                        GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.left);
-                      lyr_a[lidx]->layer_mask_extra.bottom =
-                        GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.bottom);
-                      lyr_a[lidx]->layer_mask_extra.right =
-                        GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.right);
-                    }
 
                   IFDBG(2) g_debug ("Rect enclosing Layer mask %d %d %d %d",
                                     lyr_a[lidx]->layer_mask_extra.left,
@@ -1332,15 +1273,14 @@ read_layer_info (PSDimage      *img_a,
             }
 
           /* Layer blending ranges */           /* FIXME  */
-          if (psd_read (input, &block_len, 4, error) < 4)
+          if (! psd_read_uint32 (input, &block_len32, img_a->ibm_pc_format, error))
             {
               psd_set_error (error);
               free_lyr_a (lyr_a, img_a->num_layers);
               return NULL;
             }
+          block_len = block_len32;
 
-          if (! img_a->ibm_pc_format)
-            block_len = GUINT32_FROM_BE (block_len);
           block_rem -= (block_len + 4);
           IFDBG(3) g_debug ("Blending ranges size %" G_GSIZE_FORMAT
                             " (not imported)", (gsize) block_len);
@@ -1462,7 +1402,7 @@ read_layer_block (PSDimage      *img_a,
    * then mask_layer_len will have its size preloaded */
   if (img_a->mask_layer_len == 0)
     {
-      if (! psd_read_len (input, &block_len, img_a->version, error))
+      if (! psd_read_len (input, &block_len, img_a->version, img_a->ibm_pc_format, error))
         {
           img_a->num_layers = -1;
           return NULL;
@@ -1496,7 +1436,8 @@ read_layer_block (PSDimage      *img_a,
       block_end = img_a->mask_layer_start + img_a->mask_layer_len;
 
       /* Layer info */
-      if (! psd_read_len (input, &block_len, img_a->version, error))
+      if (! psd_read_len (input, &block_len, img_a->version,
+                          img_a->ibm_pc_format, error))
         {
           lyr_a = NULL;
           return NULL;
@@ -1506,10 +1447,7 @@ read_layer_block (PSDimage      *img_a,
           guint64 adjusted_block_len;
 
           if (img_a->ibm_pc_format)
-            {
-              block_len = GUINT64_FROM_BE (block_len);
-              IFDBG(1) g_debug ("IBM PC format data detected");
-            }
+            IFDBG(1) g_debug ("IBM PC format data detected");
 
           IFDBG(1) g_debug ("Layer info size = %" G_GOFFSET_FORMAT, block_len);
           /* To make computations easier add the size of block_len */
@@ -1562,7 +1500,7 @@ read_layer_block (PSDimage      *img_a,
               if (! img_a->ibm_pc_format)
                 block_len = GUINT32_FROM_BE (block_len);
               else
-                block_len = GUINT32_TO_LE (block_len);
+                block_len = GUINT32_FROM_LE (block_len);
 
               IFDBG(1) g_debug ("Global layer mask info size = %" G_GOFFSET_FORMAT, block_len);
 
