@@ -948,6 +948,12 @@ palette_import_file_set_filters (GtkFileChooser *file_chooser)
   gtk_file_filter_add_pattern (filter, "*.PAL");
   gtk_file_chooser_add_filter (file_chooser, filter);
 
+ filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, "Krita (*.kpl)");
+  gtk_file_filter_add_pattern (filter, "*.kpl");
+  gtk_file_filter_add_pattern (filter, "*.KPL");
+  gtk_file_chooser_add_filter (file_chooser, filter);
+
   filter = gtk_file_filter_new ();
   gtk_file_filter_set_name (filter, "Procreate (*.swatches)");
   gtk_file_filter_add_pattern (filter, "*.swatches");
