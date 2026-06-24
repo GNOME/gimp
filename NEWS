@@ -40,6 +40,7 @@ Core:
     using the changed time (ctime) as fallback when the modified time
     (mtime) is 0. This is because on some environment (such as ostree,
     hence flatpak), all files mtimes are set to the UNIX epoch.
+  * Added support of dashboard backtraces on Windows ARM64.
 
 Tools:
 
@@ -49,6 +50,8 @@ Tools:
   * Text tool: allow selecting with Shift-Click.
   * Transform tools: add a tooltip on the chain icon to better explain
     what it does.
+  * MyPaint Brush tool: new "Spectral Blending" checkbox and "Pigment"
+    slider to blend spectrally while painting.
 
 Graphical User Interface:
 
@@ -144,9 +147,15 @@ Plug-Ins:
     - Differentiate correctly pass-through group layers.
   * PDF: on export of multi-page documents, the image size is now made
     so that all pages/layers are contained within the image.
-  * JPEG: initial MPO loading support. MPO, Multiple Picture Object
-    image format, is an extension of the JPEG standard. It can store
-    multiple views of a scene, often used for 3D or stereo images.
+  * JPEG:
+    - initial MPO loading support. MPO, Multiple Picture Object
+      image format, is an extension of the JPEG standard. It can store
+      multiple views of a scene, often used for 3D or stereo images.
+    - With recent enough libjpeg-turbo (3.1.90+), all 8-bit JPEG will
+      now be loaded as 16bpc directly through the 12-bit pipeline. This
+      improves the recoverable dynamic range in cases where encoded
+      input was not limited to 8-bit input, as well as accuracy during
+      color conversion and resampling.
   * APNG: add frame delay to layer names, just like in GIF and WebP
     support.
 
