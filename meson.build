@@ -157,17 +157,14 @@ host_cpu_family = host_machine.cpu_family()
 message('Host machine cpu family: ' + host_cpu_family)
 
 host_cpu_family = host_machine.cpu_family()
-have_ppc = false
 if   host_cpu_family == 'x86'
   conf.set10('ARCH_X86',    true)
 elif host_cpu_family == 'x86_64'
   conf.set10('ARCH_X86',    true)
   conf.set10('ARCH_X86_64', true)
 elif host_cpu_family == 'ppc'
-  have_ppc = true
   conf.set10('ARCH_PPC',    true)
 elif host_cpu_family == 'ppc64'
-  have_ppc = true
   conf.set10('ARCH_PPC',    true)
   conf.set10('ARCH_PPC64',  true)
 elif host_cpu_family == 'aarch64'
