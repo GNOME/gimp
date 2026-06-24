@@ -42,7 +42,7 @@ try:
   GIMP3_DIRECTORY = os.path.join(GIMP_GLOBAL_BUILD_ROOT, f".GIMP3-build-config-{suffix}")
   os.makedirs(GIMP3_DIRECTORY, mode=0o700, exist_ok=False)
   os.environ["GIMP3_DIRECTORY"] = GIMP3_DIRECTORY
-  sys.stderr.write(f"INFO: temporary GIMP configuration directory: {GIMP3_DIRECTORY}\n")
+  sys.stderr.write(f"INFO: temporary GIMP configuration directory: {os.path.relpath(GIMP3_DIRECTORY)}\n")
 
   # Copy just the strictly needed plug-ins by the script or test (seee issue #11385)
   def is_script_file(filepath):
@@ -141,12 +141,14 @@ try:
       os.environ["PATH"] = tmp_path + os.pathsep + os.environ.get("PATH", "")
 
   # Finally, run gimp!
+  gimp_self = os.environ.get("GIMP_SELF_IN_BUILD")
   if "GIMP_DEBUG_SELF_WRAPPER" in os.environ and shutil.which("gdb"):
-    sys.stderr.write(f"RUNNING: {os.environ['GIMP_DEBUG_SELF_WRAPPER']} --batch -x {os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py --args {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}\n")
-    subprocess.run([os.environ["GIMP_DEBUG_SELF_WRAPPER"],"--return-child-result","--batch","-x",f"{os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py","--args", os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:], stdin=sys.stdin, check=True)
+    gimp_debug_self = os.environ.get("GIMP_DEBUG_SELF_WRAPPER")
+    sys.stderr.write(f"RUNNING: {os.path.relpath(gimp_debug_self)} --batch -x {os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py --args {os.path.relpath(gimp_self)} {' '.join(sys.argv[1:])}\n")
+    subprocess.run([gimp_debug_self,"--return-child-result","--batch","-x",f"{os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py","--args", gimp_self] + sys.argv[1:], stdin=sys.stdin, check=True)
   else:
-    sys.stderr.write(f"RUNNING: {os.environ['GIMP_SELF_IN_BUILD']} {' '.join(sys.argv[1:])}\n")
-    subprocess.run([os.environ["GIMP_SELF_IN_BUILD"]] + sys.argv[1:],stdin=sys.stdin, check=True)
+    sys.stderr.write(f"RUNNING: {os.path.relpath(gimp_self)} {' '.join(sys.argv[1:])}\n")
+    subprocess.run([gimp_self] + sys.argv[1:],stdin=sys.stdin, check=True)
 
   # Undo GIMP_PYTHON_WITH_GI trick
   if sys.platform not in ['win32', 'cygwin'] and different_python:
@@ -178,7 +180,7 @@ try:
       sys.stderr.write(f"ERROR: $GIMP3_DIRECTORY ({GIMP3_DIRECTORY}) should be under the build directory with a specific prefix.\n")
       sys.stderr.write(f'       "{used_dir_prefix}" != "{tmpl_dir_prefix}"\n')
       sys.exit(1)
-    sys.stderr.write(f"INFO: Running: shutil.rmtree({GIMP3_DIRECTORY})\n")
+    sys.stderr.write(f"INFO: Running: shutil.rmtree({os.path.relpath(GIMP3_DIRECTORY)})\n")
     # This weird retry loop is because Windows may still keep a hold to
     # plug-in executable a bit longer than the process or even parent
     # process life. See MR !2837.
