@@ -50,8 +50,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 15:26+0200\n"
-"PO-Revision-Date: 2026-06-16 15:33+0200\n"
+"POT-Creation-Date: 2026-06-24 15:44+0200\n"
+"PO-Revision-Date: 2026-06-24 15:47+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -2473,7 +2473,7 @@ msgstr "240 secondi"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:131
 #: ../app/tools/gimpfiltertool.c:375
 #: ../app/tools/gimpforegroundselecttool.c:333 ../app/tools/gimppathtool.c:1104
-#: ../app/tools/gimptexttool.c:1798 ../app/tools/gimptransformgridtool.c:1264
+#: ../app/tools/gimptexttool.c:1803 ../app/tools/gimptransformgridtool.c:1264
 #: ../app/tools/gimptransformtool.c:429 ../app/widgets/gimpactionview.c:621
 #: ../app/widgets/gimpcolordialog.c:492
 #: ../app/widgets/gimpcontrollereditor.c:665
@@ -14034,7 +14034,7 @@ msgstr "Impossibile rinominare le maschere effetti."
 msgid "%s mask"
 msgstr "%s maschera"
 
-#: ../app/core/gimpdynamicsoutput.c:136
+#: ../app/core/gimpdynamicsoutput.c:141
 msgid "Output type"
 msgstr "Tipo di uscita"
 
@@ -14061,7 +14061,7 @@ msgstr "Margini sfumati"
 msgid "Enable feathering of fill edges"
 msgstr "Abilita la sfumatura dei bordi del riempimento"
 
-#: ../app/core/gimpfilloptions.c:145 ../app/paint/gimpmybrushoptions.c:107
+#: ../app/core/gimpfilloptions.c:145 ../app/paint/gimpmybrushoptions.c:108
 #: ../app/tools/gimpbucketfilloptions.c:200 ../app/tools/gimpcoloroptions.c:86
 #: ../app/tools/gimprectangleselectoptions.c:101
 #: ../app/tools/gimpselectionoptions.c:105 ../app/widgets/gimpbrusheditor.c:160
@@ -15118,27 +15118,27 @@ msgstr "Modifica la restrizione formato mappa colori"
 msgid "%s (occurs %u)"
 msgstr "%s (%u ricorrenze)"
 
-#: ../app/core/gimppalette-import.c:577
+#: ../app/core/gimppalette-import.c:581
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Tipo file tavolozza sconosciuto: %s"
 
-#: ../app/core/gimppalette-load.c:119
+#: ../app/core/gimppalette-load.c:130
 #, c-format
 msgid "Missing magic header."
 msgstr "Magic header mancante."
 
-#: ../app/core/gimppalette-load.c:142
+#: ../app/core/gimppalette-load.c:153
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Stringa UTF-8 non valida nel file tavolozza '%s'"
 
-#: ../app/core/gimppalette-load.c:162
+#: ../app/core/gimppalette-load.c:173
 #, c-format
 msgid "Invalid column count."
 msgstr "Conteggio colonne non valido."
 
-#: ../app/core/gimppalette-load.c:169
+#: ../app/core/gimppalette-load.c:180
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -15147,164 +15147,174 @@ msgstr ""
 "Lettura file tavolozza '%s': numero di colonne non valido alla riga %d. Uso "
 "il valore predefinito."
 
-#: ../app/core/gimppalette-load.c:213
+#: ../app/core/gimppalette-load.c:224
 #, c-format
 msgid "Reading palette file '%s': red component out of range in line %d."
 msgstr ""
 "Lettura file tavolozza '%s': componente rossa fuori campo alla riga %d."
 
-#: ../app/core/gimppalette-load.c:221
+#: ../app/core/gimppalette-load.c:232
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Lettura file tavolozza '%s': manca la componente ROSSA alla riga %d."
 
-#: ../app/core/gimppalette-load.c:235
+#: ../app/core/gimppalette-load.c:246
 #, c-format
 msgid "Reading palette file '%s': green component out of range in line %d."
 msgstr "Lettura file tavolozza '%s': valori RGB fuori campo alla riga %d."
 
-#: ../app/core/gimppalette-load.c:243
+#: ../app/core/gimppalette-load.c:254
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "Lettura file tavolozza '%s': manca la componente VERDE alla riga %d."
 
-#: ../app/core/gimppalette-load.c:256
+#: ../app/core/gimppalette-load.c:267
 #, c-format
 msgid "Reading palette file '%s': blue component out of range in line %d."
 msgstr "Lettura file tavolozza '%s': componente blu fuori campo alla riga %d."
 
-#: ../app/core/gimppalette-load.c:264
+#: ../app/core/gimppalette-load.c:275
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Lettura file tavolozza '%s': manca la componente BLU alla riga %d."
 
-#: ../app/core/gimppalette-load.c:290 ../app/core/gimppalette-load.c:546
+#: ../app/core/gimppalette-load.c:301 ../app/core/gimppalette-load.c:557
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr "Lettura file tavolozza '%s': letti %d colori da file troncato: %s."
 
-#: ../app/core/gimppalette-load.c:310
+#: ../app/core/gimppalette-load.c:321
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "Alla riga %d del file tavolozza: "
 
-#: ../app/core/gimppalette-load.c:517 ../app/core/gimppalette-load.c:722
-#: ../app/core/gimppalette-load.c:1069 ../app/core/gimppalette-load.c:1620
-#: ../app/core/gimppalette-load.c:1641
+#: ../app/core/gimppalette-load.c:528 ../app/core/gimppalette-load.c:733
+#: ../app/core/gimppalette-load.c:1080 ../app/core/gimppalette-load.c:1631
+#: ../app/core/gimppalette-load.c:1652
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Impossibile leggere l'intestazione dal file tavolozza '%s': "
 
-#: ../app/core/gimppalette-load.c:551
+#: ../app/core/gimppalette-load.c:562
 msgid "Premature end of file."
 msgstr "Fine file prematura."
 
-#: ../app/core/gimppalette-load.c:732
+#: ../app/core/gimppalette-load.c:743
 #, c-format
 msgid "Invalid ACB palette version."
 msgstr "Versione tavolozza ACB non valida."
 
-#: ../app/core/gimppalette-load.c:739
+#: ../app/core/gimppalette-load.c:750
 #, c-format
 msgid "GIMP only supports version 1 ACB palettes"
 msgstr "GIMP supporta solo tavolozze ACB versione 1"
 
-#: ../app/core/gimppalette-load.c:747
+#: ../app/core/gimppalette-load.c:758
 #, c-format
 msgid "Invalid ACB palette identifier."
 msgstr "Identificatore tavolozza ACB non valido."
 
-#: ../app/core/gimppalette-load.c:763 ../app/core/gimppalette-load.c:782
-#: ../app/core/gimppalette-load.c:1002 ../app/core/gimppalette-load.c:1023
+#: ../app/core/gimppalette-load.c:774 ../app/core/gimppalette-load.c:793
+#: ../app/core/gimppalette-load.c:1013 ../app/core/gimppalette-load.c:1034
 #, c-format
 msgid "Invalid ACB palette name."
 msgstr "Nome tavolozza ACB non valido."
 
-#: ../app/core/gimppalette-load.c:798
+#: ../app/core/gimppalette-load.c:809
 #, c-format
 msgid "Invalid ACB palette suffix."
 msgstr "Suffisso tavolozza ACB non valido."
 
-#: ../app/core/gimppalette-load.c:817 ../app/core/gimppalette-load.c:1089
+#: ../app/core/gimppalette-load.c:828 ../app/core/gimppalette-load.c:1100
 #, c-format
 msgid "Invalid number of colors in palette."
 msgstr "Numero di colori nella tavolozza non valido."
 
-#: ../app/core/gimppalette-load.c:824 ../app/core/gimppalette-load.c:1096
+#: ../app/core/gimppalette-load.c:835 ../app/core/gimppalette-load.c:1107
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "Numero di colori non valido: %s."
 
-#: ../app/core/gimppalette-load.c:837 ../app/core/gimppalette-load.c:847
+#: ../app/core/gimppalette-load.c:848 ../app/core/gimppalette-load.c:858
 #, c-format
 msgid "Invalid ACB palette page info."
 msgstr "Informazioni pagina tavolozza ACB non valide."
 
-#: ../app/core/gimppalette-load.c:859 ../app/core/gimppalette-load.c:872
+#: ../app/core/gimppalette-load.c:870 ../app/core/gimppalette-load.c:883
 #, c-format
 msgid "Invalid ACB palette color space."
 msgstr "Spazio colore tavolozza ACB non valido."
 
-#: ../app/core/gimppalette-load.c:1012
+#: ../app/core/gimppalette-load.c:1023
 #, c-format
 msgid "Invalid ACB name size."
 msgstr "Dimensione nome ACB non valida."
 
-#: ../app/core/gimppalette-load.c:1080
+#: ../app/core/gimppalette-load.c:1091
 #, c-format
 msgid "Invalid ASE header: %s"
 msgstr "Intestazione ASE non valida: %s"
 
-#: ../app/core/gimppalette-load.c:1107
+#: ../app/core/gimppalette-load.c:1118
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "File ASE non valido: %s."
 
-#: ../app/core/gimppalette-load.c:1198
+#: ../app/core/gimppalette-load.c:1209
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "Componenti colore non validi: %s."
 
-#: ../app/core/gimppalette-load.c:1210 ../app/core/gimppalette-load.c:1235
+#: ../app/core/gimppalette-load.c:1221 ../app/core/gimppalette-load.c:1246
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "Voce colore ASE non valida: %s."
 
-#: ../app/core/gimppalette-load.c:1267 ../app/core/gimppalette-load.c:1283
-#: ../app/core/gimppalette-load.c:1302
+#: ../app/core/gimppalette-load.c:1278 ../app/core/gimppalette-load.c:1294
+#: ../app/core/gimppalette-load.c:1313
 #, c-format
 msgid "Invalid ASE palette name."
 msgstr "Nome tavolozza ASE non valido."
 
-#: ../app/core/gimppalette-load.c:1276
+#: ../app/core/gimppalette-load.c:1287
 #, c-format
 msgid "Invalid ASE block size."
 msgstr "Dimensione blocco ASE non valida."
 
-#: ../app/core/gimppalette-load.c:1292
+#: ../app/core/gimppalette-load.c:1303
 #, c-format
 msgid "Invalid ASE name size."
 msgstr "Dimensione nome ASE non valida."
 
-#: ../app/core/gimppalette-load.c:1421 ../app/core/gimppalette-load.c:1491
+#: ../app/core/gimppalette-load.c:1432 ../app/core/gimppalette-load.c:1502
 #, c-format
 msgid "Unable to read SBZ file: %s"
 msgstr "Impossibile leggere file SBZ: %s"
 
-#: ../app/core/gimppalette-load.c:1519 ../app/core/gimppalette-load.c:1531
+#: ../app/core/gimppalette-load.c:1530 ../app/core/gimppalette-load.c:1542
 #, c-format
 msgid "Unable to open SBZ file"
 msgstr "Impossibile aprire file SBZ"
 
-#: ../app/core/gimppalette-load.c:1565 ../app/core/gimppalette-load.c:1602
+#: ../app/core/gimppalette-load.c:1576 ../app/core/gimppalette-load.c:1613
 #, c-format
 msgid "Unable to read Procreate swatches file: %s"
 msgstr "Impossibile leggere il file di campioni di colore Procreate: %s"
 
-#: ../app/core/gimppalette-load.c:1807 ../app/core/gimppalette-load.c:1818
+#: ../app/core/gimppalette-load.c:1818 ../app/core/gimppalette-load.c:1829
 #, c-format
 msgid "Unable to read Procreate swatches file"
 msgstr "Impossibile leggere il file dei campioni di colore Procreate"
+
+#: ../app/core/gimppalette-load.c:1877 ../app/core/gimppalette-load.c:1943
+#, c-format
+msgid "Unable to read KPL file: %s"
+msgstr "Impossibile leggere file KPL: %s"
+
+#: ../app/core/gimppalette-load.c:1971 ../app/core/gimppalette-load.c:1982
+#, c-format
+msgid "Unable to open KPL file"
+msgstr "Impossibile aprire file KPL"
 
 #: ../app/core/gimppalettemru.c:125 ../app/core/gimppalettemru.c:271
 msgid "History Color"
@@ -16907,7 +16917,7 @@ msgstr "Cascading Style Sheet (*.css)"
 msgid "JASC or RIFF Palette (*.pal)"
 msgstr "Tavolozza RIFF o JASC (*.pal)"
 
-#: ../app/dialogs/palette-import-dialog.c:958
+#: ../app/dialogs/palette-import-dialog.c:964
 msgid "SwatchBooker (*.sbz)"
 msgstr "SwatchBooker (*.sbz)"
 
@@ -21371,42 +21381,56 @@ msgstr "Mypennello"
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "Nessun pennello MyPaint disponibile da usare con questo strumento."
 
-#: ../app/paint/gimpmybrushoptions.c:93
+#: ../app/paint/gimpmybrushoptions.c:94
 msgid "View Zoom"
 msgstr "Zoom"
 
-#: ../app/paint/gimpmybrushoptions.c:100
+#: ../app/paint/gimpmybrushoptions.c:101
 msgid "View Rotation"
 msgstr "Rotazione"
 
-#: ../app/paint/gimpmybrushoptions.c:114
+#: ../app/paint/gimpmybrushoptions.c:115
 msgid "Base Opacity"
 msgstr "Opacità base"
 
-#: ../app/paint/gimpmybrushoptions.c:121 ../app/paint/gimppaintoptions.c:241
+#: ../app/paint/gimpmybrushoptions.c:122 ../app/paint/gimppaintoptions.c:241
 #: ../app/tools/gimpwarpoptions.c:99 ../app/widgets/gimpbrusheditor.c:180
 msgid "Hardness"
 msgstr "Durezza"
 
-#: ../app/paint/gimpmybrushoptions.c:128
+#: ../app/paint/gimpmybrushoptions.c:129
 msgid "Gain"
 msgstr "Guadagno"
 
-#: ../app/paint/gimpmybrushoptions.c:129
+#: ../app/paint/gimpmybrushoptions.c:130
 msgid "Adjust strength of input pressure"
 msgstr "Regola l'intensità della pressione di ingresso"
 
-#: ../app/paint/gimpmybrushoptions.c:153
+#: ../app/paint/gimpmybrushoptions.c:136
+msgid "Pigment"
+msgstr "Pigmento"
+
+#: ../app/paint/gimpmybrushoptions.c:155
 msgid "Erase with this brush"
 msgstr "Cancella con questo pennello"
 
-#: ../app/paint/gimpmybrushoptions.c:160
+#: ../app/paint/gimpmybrushoptions.c:162
 msgid "No erasing effect"
 msgstr "Nessun effetto cancellazione"
 
-#: ../app/paint/gimpmybrushoptions.c:161 ../app/paint/gimpsmudgeoptions.c:87
+#: ../app/paint/gimpmybrushoptions.c:163 ../app/paint/gimpsmudgeoptions.c:87
 msgid "Never decrease alpha of existing pixels"
 msgstr "Non decrementare mai l'alfa dei pixel esistenti"
+
+#: ../app/paint/gimpmybrushoptions.c:169
+msgid "Spectral blending"
+msgstr "Mescola spettrale"
+
+#: ../app/paint/gimpmybrushoptions.c:170
+msgid ""
+"If checked, use MyPaint's subtractive blending to mimic real world pigment "
+"mixing"
+msgstr "Se selezionata, usa il mescolamento sottrattivo di MyPaint per simulare la mescola dei pigmenti nel mondo reale."
 
 #: ../app/paint/gimppaintbrush.c:82 ../app/tools/gimppaintbrushtool.c:59
 msgid "Paintbrush"
@@ -22613,15 +22637,15 @@ msgstr "Fallita l'esecuzione del plug-in \"%s\""
 msgid "Unknown file type"
 msgstr "Tipo file sconosciuto"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:216
+#: ../app/plug-in/gimppluginmanager-restore.c:217
 msgid "Loading extension plug-ins"
 msgstr "Caricamento plug-in estensioni"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:250
+#: ../app/plug-in/gimppluginmanager-restore.c:251
 msgid "Searching plug-ins"
 msgstr "Ricerca plug-in"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:375
+#: ../app/plug-in/gimppluginmanager-restore.c:370
 #, c-format
 msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
@@ -22630,24 +22654,24 @@ msgstr ""
 "Ignorato possibile plug-in \"%s\": il plug-ins deve essere installato in "
 "sottocartelle.\n"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:382
+#: ../app/plug-in/gimppluginmanager-restore.c:377
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
 msgstr "Ignorato file sconosciuto \"%s\" nella cartella plu-in.\n"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:429
+#: ../app/plug-in/gimppluginmanager-restore.c:424
 msgid "Resource configuration"
 msgstr "Configurazione risorse"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:465
+#: ../app/plug-in/gimppluginmanager-restore.c:460
 msgid "Querying new Plug-ins"
 msgstr "Interrogazione nuovi plug-in"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:519
+#: ../app/plug-in/gimppluginmanager-restore.c:514
 msgid "Initializing Plug-ins"
 msgstr "Inizializzazione plug-in"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:592
+#: ../app/plug-in/gimppluginmanager-restore.c:587
 msgid "Starting Extensions"
 msgstr "Avvio estensioni"
 
@@ -23111,7 +23135,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:101 ../app/tools/gimptexttool.c:1670
+#: ../app/text/gimptext-compat.c:101 ../app/tools/gimptexttool.c:1675
 msgid "Add Text Layer"
 msgstr "Aggiungi livello testo"
 
@@ -23131,7 +23155,7 @@ msgstr "Livello testo"
 msgid "Rename Text Layer"
 msgstr "Rinomina livello di testo"
 
-#: ../app/text/gimptextlayer.c:169
+#: ../app/text/gimptextlayer.c:169 ../app/tools/gimptexttool.c:1246
 msgid "Move Text Layer"
 msgstr "Sposta livello di testo"
 
@@ -24801,7 +24825,7 @@ msgid "Sensitivity"
 msgstr "Sensibilità"
 
 #: ../app/tools/gimpinkoptions-gui.c:147
-#: ../app/tools/gimpmybrushoptions-gui.c:110
+#: ../app/tools/gimpmybrushoptions-gui.c:119
 #: ../app/tools/gimppaintoptions-gui.c:532
 msgid "Fill Layer Mask With"
 msgstr "Riempi maschera di livello con"
@@ -25402,11 +25426,11 @@ msgstr "Aggiungi livello vettoriale"
 msgid "Confirm Path Editing"
 msgstr "Conferma modifica tracciato"
 
-#: ../app/tools/gimppathtool.c:1103 ../app/tools/gimptexttool.c:1797
+#: ../app/tools/gimppathtool.c:1103 ../app/tools/gimptexttool.c:1802
 msgid "Create _New Layer"
 msgstr "Crea un _nuovo livello"
 
-#: ../app/tools/gimppathtool.c:1105 ../app/tools/gimptexttool.c:1799
+#: ../app/tools/gimppathtool.c:1105 ../app/tools/gimptexttool.c:1804
 msgid "_Edit Anyway"
 msgstr "Modifica comunqu_e"
 
@@ -25960,15 +25984,15 @@ msgstr "Rettangolo:"
 msgid "Language:"
 msgstr "Lingua:"
 
-#: ../app/tools/gimptexttool.c:221
+#: ../app/tools/gimptexttool.c:222
 msgid "Text"
 msgstr "Testo"
 
-#: ../app/tools/gimptexttool.c:222
+#: ../app/tools/gimptexttool.c:223
 msgid "Text Tool: Create or edit text layers"
 msgstr "Strumento testo: crea o modifica livelli di testo"
 
-#: ../app/tools/gimptexttool.c:223
+#: ../app/tools/gimptexttool.c:224
 msgid "Te_xt"
 msgstr "_Testo"
 
@@ -25984,11 +26008,11 @@ msgstr "Riquadro di testo: "
 msgid "Reshape Text Layer"
 msgstr "Risagoma il livello di testo"
 
-#: ../app/tools/gimptexttool.c:1790 ../app/tools/gimptexttool.c:1793
+#: ../app/tools/gimptexttool.c:1795 ../app/tools/gimptexttool.c:1798
 msgid "Confirm Text Editing"
 msgstr "Conferma modifica del testo"
 
-#: ../app/tools/gimptexttool.c:1821
+#: ../app/tools/gimptexttool.c:1826
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
@@ -25996,19 +26020,19 @@ msgstr ""
 "Il livello di testo selezionato è stato rasterizzato. Modificando il testo, "
 "tutte le modifiche verranno ignorate."
 
-#: ../app/tools/gimptexttool.c:2441
+#: ../app/tools/gimptexttool.c:2446
 msgid "Text is required."
 msgstr "È necessario un testo."
 
-#: ../app/tools/gimptexttool.c:2444
+#: ../app/tools/gimptexttool.c:2449
 msgid "No image."
 msgstr "Nessuna immagine."
 
-#: ../app/tools/gimptexttool.c:2447
+#: ../app/tools/gimptexttool.c:2452
 msgid "No layer."
 msgstr "Nessun livello."
 
-#: ../app/tools/gimptexttool.c:2458
+#: ../app/tools/gimptexttool.c:2463
 msgid "Exactly one path must be selected."
 msgstr "Esattamente un tracciato deve essere selezionato."
 
@@ -26097,7 +26121,9 @@ msgstr ""
 msgid ""
 "If connected, you can reposition the handles without altering the "
 "transformation."
-msgstr "Se connessi, è possibile riposizionare gli appigli senza alterare la trasformazione."
+msgstr ""
+"Se connessi, è possibile riposizionare gli appigli senza alterare la "
+"trasformazione."
 
 #: ../app/tools/gimptransformgridoptions.c:495
 #, c-format
@@ -27946,7 +27972,8 @@ msgstr "Inclinazione Y"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: ../app/widgets/gimpdeviceinfo.c:68
+#: ../app/widgets/gimpdeviceinfo.c:68 ../app/widgets/gimpdynamicseditor.c:165
+#: ../app/widgets/gimpdynamicsoutputeditor.c:74
 msgid "Wheel"
 msgstr "Rotellina"
 
@@ -27954,7 +27981,8 @@ msgstr "Rotellina"
 msgid "Distance"
 msgstr "Distanza"
 
-#: ../app/widgets/gimpdeviceinfo.c:70
+#: ../app/widgets/gimpdeviceinfo.c:70 ../app/widgets/gimpdynamicseditor.c:166
+#: ../app/widgets/gimpdynamicsoutputeditor.c:75
 msgid "Rotation"
 msgstr "Rotazione"
 
@@ -28007,7 +28035,7 @@ msgid "Pressure Curve"
 msgstr "Curva di pressione"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:353
-#: ../app/widgets/gimpdynamicsoutputeditor.c:206
+#: ../app/widgets/gimpdynamicsoutputeditor.c:207
 msgid "_Reset Curve"
 msgstr "_Reimposta la curva"
 
@@ -28172,7 +28200,8 @@ msgstr "Rimuovi il filtro selezionato."
 
 #: ../app/widgets/gimpdrawabletreeview-filters.c:622
 msgid "Disabled because filters cannot be merged on group layers."
-msgstr "Disabilitato perché i filtri non possono essere fusi su gruppi di livelli."
+msgstr ""
+"Disabilitato perché i filtri non possono essere fusi su gruppi di livelli."
 
 #: ../app/widgets/gimpdrawabletreeview-filters.c:873
 #: ../app/widgets/gimpdrawabletreeview-filters.c:901
@@ -28184,32 +28213,24 @@ msgstr "Impossibile riordinare un filtro in fase di modifica."
 msgid "Velocity"
 msgstr "Velocità"
 
-#: ../app/widgets/gimpdynamicseditor.c:165
-msgid "Wheel/Rotation"
-msgstr "Rotella/rotazione"
-
-#: ../app/widgets/gimpdynamicseditor.c:166
-#: ../app/widgets/gimpdynamicsoutputeditor.c:75
+#: ../app/widgets/gimpdynamicseditor.c:167
+#: ../app/widgets/gimpdynamicsoutputeditor.c:76
 msgid "Random"
 msgstr "Casualità"
 
-#: ../app/widgets/gimpdynamicseditor.c:167
-#: ../app/widgets/gimpdynamicsoutputeditor.c:76
+#: ../app/widgets/gimpdynamicseditor.c:168
+#: ../app/widgets/gimpdynamicsoutputeditor.c:77
 msgid "Fade"
 msgstr "Dissolvenza"
 
-#: ../app/widgets/gimpdynamicseditor.c:180
+#: ../app/widgets/gimpdynamicseditor.c:181
 msgid "Mapping matrix"
 msgstr "Matrice di mappatura"
 
-#: ../app/widgets/gimpdynamicseditor.c:313
+#: ../app/widgets/gimpdynamicseditor.c:314
 #: ../app/widgets/gimptoolpreseteditor.c:152
 msgid "Icon:"
 msgstr "Icona:"
-
-#: ../app/widgets/gimpdynamicsoutputeditor.c:74
-msgid "Wheel / Rotation"
-msgstr "Rotella / Rotazione"
 
 #: ../app/widgets/gimperrordialog.c:176
 msgid "Too many error messages!"
@@ -28697,7 +28718,7 @@ msgstr "Àncora il livello fluttuante"
 msgid "No channels to create a layer mask from."
 msgstr "Nessun canale da cui creare una maschera di livello."
 
-#: ../app/widgets/gimpmessagebox.c:446
+#: ../app/widgets/gimpmessagebox.c:498
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
