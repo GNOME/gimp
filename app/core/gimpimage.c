@@ -24,6 +24,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 #include <gexiv2/gexiv2.h>
+#include <glib/gstdio.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
@@ -786,6 +787,9 @@ gimp_image_init (GimpImage *image)
   private->simulation_intent   = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
   private->simulation_bpc      = FALSE;
 
+  private->cache_folder        = NULL;
+  private->buffers_folder      = NULL;
+
   private->dirty               = 1;
   private->dirty_time          = 0;
   private->undo_freeze_count   = 0;
@@ -1231,6 +1235,32 @@ gimp_image_finalize (GObject *object)
 
   g_clear_pointer (&private->display_name, g_free);
   g_clear_pointer (&private->display_path, g_free);
+
+  /* First delete the buffers folder, then the root cache folder.
+   * We expect each folder to be empty when we delete them, but we don't
+   * raise CRITICALs here, because if the user stored some file manually
+   * in one of these folders, there is nothing GIMP can do (and we
+   * certainly are not going to delete files we haven't created
+   * ourselves). So we just print to stderr for letting people know.
+   *
+   * Each child item is responsible for cleaning up after itself.
+   */
+  if (private->buffers_folder)
+    {
+      if (g_rmdir (private->buffers_folder) == -1)
+        g_printerr ("%s: failed to delete the cached buffers folder `%s`: %s\n",
+                    G_STRFUNC, private->buffers_folder, g_strerror (errno));
+
+      g_free (private->buffers_folder);
+    }
+  if (private->cache_folder)
+    {
+      if (g_rmdir (private->cache_folder) == -1)
+        g_printerr ("%s: failed to delete the image cache folder `%s`: %s\n",
+                    G_STRFUNC, private->cache_folder, g_strerror (errno));
+
+      g_free (private->cache_folder);
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 
@@ -2818,6 +2848,57 @@ gimp_image_get_export_proc (GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return GIMP_IMAGE_GET_PRIVATE (image)->export_proc;
+}
+
+const gchar *
+gimp_image_get_cache_folder (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->cache_folder == NULL)
+    {
+      gchar *folder_name = g_strdup_printf ("image-%d", gimp_image_get_id (image));
+      gchar *path        = g_build_filename (gimp_cache_directory (), "images", folder_name, NULL);
+
+      private->cache_folder = path;
+
+      g_free (folder_name);
+    }
+
+  return private->cache_folder;
+}
+
+const gchar *
+gimp_image_get_buffers_folder (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (gimp_image_get_cache_folder (image) != NULL, NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->buffers_folder == NULL)
+    {
+      gchar *folder;
+
+      folder = g_build_filename (gimp_image_get_cache_folder (image), "buffers", NULL);
+      if (g_mkdir_with_parents (folder, S_IRUSR | S_IWUSR | S_IXUSR) == -1)
+        {
+          g_critical ("%s: failed to create the buffer folder `%s`: %s\n",
+                      G_STRFUNC, folder, g_strerror (errno));
+          g_free (folder);
+          return NULL;
+        }
+
+      private->buffers_folder = folder;
+    }
+
+  return private->buffers_folder;
 }
 
 gint

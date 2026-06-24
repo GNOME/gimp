@@ -20,6 +20,7 @@
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -203,6 +204,9 @@ static void       gimp_drawable_real_set_buffer    (GimpDrawable      *drawable,
                                                     const gchar       *undo_desc,
                                                     GeglBuffer        *buffer,
                                                     const GeglRectangle *bounds);
+static void       gimp_drawable_buffer_changed     (GeglBuffer          *buffer,
+                                                    const GeglRectangle *rect,
+                                                    GimpDrawable        *drawable);
 
 static GeglRectangle gimp_drawable_real_get_bounding_box
                                                    (GimpDrawable      *drawable);
@@ -342,6 +346,9 @@ gimp_drawable_init (GimpDrawable *drawable)
 {
   drawable->private = gimp_drawable_get_instance_private (drawable);
 
+  drawable->private->cache_path     = NULL;
+  drawable->private->cache_outdated = TRUE;
+
   _gimp_drawable_filters_init (drawable);
 }
 
@@ -395,6 +402,15 @@ gimp_drawable_finalize (GObject *object)
   g_clear_object (&drawable->private->buffer_source_node);
 
   _gimp_drawable_filters_finalize (drawable);
+
+  if (drawable->private->cache_path)
+    {
+      if (g_unlink (drawable->private->cache_path) == -1)
+        g_critical ("%s: failed to delete the drawable cache `%s`: %s\n",
+                    G_STRFUNC, drawable->private->cache_path,
+                    g_strerror (errno));
+      g_free (drawable->private->cache_path);
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1054,6 +1070,10 @@ gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
     {
       old_format    = gimp_drawable_get_format (drawable);
       old_has_alpha = gimp_drawable_has_alpha (drawable);
+
+      g_signal_handlers_disconnect_by_func (drawable->private->buffer,
+                                            gimp_drawable_buffer_changed,
+                                            drawable);
     }
 
   if (! GIMP_IS_GROUP_LAYER (drawable) && (extent->x != 0 || extent->y != 0))
@@ -1113,6 +1133,20 @@ gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
 
   if (free_buffer)
     g_object_unref (buffer);
+
+  gegl_buffer_signal_connect (drawable->private->buffer,
+                              "changed",
+                              G_CALLBACK (gimp_drawable_buffer_changed),
+                              drawable);
+  drawable->private->cache_outdated = TRUE;
+}
+
+static void
+gimp_drawable_buffer_changed (GeglBuffer          *buffer,
+                              const GeglRectangle *rect,
+                              GimpDrawable        *drawable)
+{
+  drawable->private->cache_outdated = TRUE;
 }
 
 static GeglRectangle
@@ -2253,4 +2287,39 @@ gimp_drawable_is_painting (GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
   return drawable->private->paint_count > 0;
+}
+
+gboolean
+gimp_drawable_save_buffer (GimpDrawable *drawable)
+{
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  g_return_val_if_fail (image != NULL, FALSE);
+
+  if (! drawable->private->cache_outdated)
+    return TRUE;
+
+  if (! drawable->private->cache_path)
+    {
+      const gchar *folder;
+      gchar       *path;
+      gchar       *filename;
+
+      g_return_val_if_fail (gimp_image_get_buffers_folder (image) != NULL, FALSE);
+
+      folder   = gimp_image_get_buffers_folder (image);
+      filename = g_strdup_printf ("%s-%d.buffer",
+                                  g_type_name (G_TYPE_FROM_INSTANCE (drawable)),
+                                  gimp_item_get_id (GIMP_ITEM (drawable)));
+      path     = g_build_filename (folder, filename, NULL);
+      drawable->private->cache_path = path;
+
+      g_free (filename);
+    }
+
+  gegl_buffer_save (gimp_drawable_get_buffer (drawable),
+                    drawable->private->cache_path, NULL);
+  drawable->private->cache_outdated = FALSE;
+
+  return TRUE;
 }

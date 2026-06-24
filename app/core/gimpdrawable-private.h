@@ -23,6 +23,9 @@ struct _GimpDrawablePrivate
   GeglBuffer       *buffer; /* buffer for drawable data */
   GeglBuffer       *shadow; /* shadow buffer            */
 
+  gchar            *cache_path;
+  gboolean          cache_outdated;
+
   GimpColorProfile *format_profile;
 
   GeglNode         *source_node;
