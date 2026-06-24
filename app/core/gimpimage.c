@@ -5551,6 +5551,13 @@ gimp_image_remove_layer (GimpImage *image,
                                          gimp_layer_get_parent (layer),
                                          gimp_item_get_index (GIMP_ITEM (layer)),
                                          selected_layers);
+
+      if (gimp_layer_get_mask (layer) != NULL)
+        {
+          GimpLayerMask *mask = gimp_layer_get_mask (layer);
+
+          gimp_image_rec_filter_remove_undo (image, GIMP_DRAWABLE (mask));
+        }
     }
 
   g_object_ref (layer);
