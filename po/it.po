@@ -50,8 +50,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-24 15:44+0200\n"
-"PO-Revision-Date: 2026-06-24 15:47+0200\n"
+"POT-Creation-Date: 2026-06-24 17:56+0200\n"
+"PO-Revision-Date: 2026-06-24 17:56+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -21430,7 +21430,9 @@ msgstr "Mescola spettrale"
 msgid ""
 "If checked, use MyPaint's subtractive blending to mimic real world pigment "
 "mixing"
-msgstr "Se selezionata, usa il mescolamento sottrattivo di MyPaint per simulare la mescola dei pigmenti nel mondo reale."
+msgstr ""
+"Se selezionata, usa il mescolamento sottrattivo di MyPaint per simulare la "
+"mescola dei pigmenti nel mondo reale."
 
 #: ../app/paint/gimppaintbrush.c:82 ../app/tools/gimppaintbrushtool.c:59
 msgid "Paintbrush"
@@ -23668,7 +23670,7 @@ msgstr "Strumento selezione per colore: seleziona regioni con colori simili"
 
 #: ../app/tools/gimpbycolorselecttool.c:73
 msgid "_By Color Select"
-msgstr "Per _colore"
+msgstr "Selezione per _colore"
 
 #: ../app/tools/gimpbycolorselecttool.c:86
 msgctxt "command"
@@ -24148,7 +24150,7 @@ msgstr "Strumento selezione ellittica: seleziona un'area di forma ellittica"
 
 #: ../app/tools/gimpellipseselecttool.c:66
 msgid "_Ellipse Select"
-msgstr "_Ellittica"
+msgstr "Selezione _ellittica"
 
 #: ../app/tools/gimperasertool.c:72
 msgid "Eraser Tool: Erase to background or transparency using a brush"
@@ -24423,7 +24425,7 @@ msgstr ""
 
 #: ../app/tools/gimpforegroundselecttool.c:197
 msgid "F_oreground Select"
-msgstr "Prim_o piano"
+msgstr "Selezione prim_o piano"
 
 #: ../app/tools/gimpforegroundselecttool.c:295
 msgid "Cannot select from multiple layers."
@@ -24483,7 +24485,7 @@ msgstr ""
 
 #: ../app/tools/gimpfreeselecttool.c:108
 msgid "_Free Select"
-msgstr "A mano _libera"
+msgstr "Selezione a mano _libera"
 
 #: ../app/tools/gimpfreeselecttool.c:339
 msgctxt "command"
@@ -24501,7 +24503,7 @@ msgstr ""
 
 #: ../app/tools/gimpfuzzyselecttool.c:71
 msgid "Fu_zzy Select"
-msgstr "Fu_zzy"
+msgstr "Selezione fu_zzy"
 
 #: ../app/tools/gimpfuzzyselecttool.c:84
 msgctxt "command"
@@ -25596,7 +25598,7 @@ msgstr ""
 
 #: ../app/tools/gimprectangleselecttool.c:151
 msgid "_Rectangle Select"
-msgstr "_Rettangolare"
+msgstr "Selezione _rettangolare"
 
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Ellipse: "
