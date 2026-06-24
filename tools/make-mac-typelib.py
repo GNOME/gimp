@@ -22,8 +22,6 @@ prefix = sys.argv[4]
 compiler = sys.argv[5]
 mode = sys.argv[6] if len(sys.argv) > 6 else "in-build"
 
-print("ARGS:", " ".join(sys.argv[1:]))
-
 # This is only for macOS (see the rationale in the comment above).
 tmp_gir_dir = Path(builddir) if mode not in ["in-build"] else Path(builddir) / "tmp"
 tmp_gir_dir.mkdir(parents=True, exist_ok=True)
