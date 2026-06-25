@@ -665,6 +665,7 @@ gimp-win:
         WARN_AS_ERROR_ON_CI: '-Dwerror=true'
         VARIANT: -homebrew
     - <<: *CI_RELEASE
+      variables: *dmg_vars
   parallel:
     matrix:
       - ARCH: [arm64, x86_64]
