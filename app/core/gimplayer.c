@@ -50,12 +50,14 @@
 #include "gimpimage-undo.h"
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
+#include "gimpitemstack.h"
 #include "gimplayer-floating-selection.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimpobjectqueue.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"
+#include "gimpsavable.h"
 
 #include "gimp-intl.h"
 
@@ -94,6 +96,7 @@ enum
 
 static void       gimp_color_managed_iface_init (GimpColorManagedInterface *iface);
 static void       gimp_pickable_iface_init      (GimpPickableInterface     *iface);
+static void       gimp_savable_iface_init       (GimpSavableInterface      *iface);
 
 static void       gimp_layer_set_property       (GObject            *object,
                                                  guint               property_id,
@@ -212,6 +215,12 @@ static gdouble gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
                                                  gint                y);
 
+
+static void    gimp_layer_savable_save          (GimpSavable        *savable,
+                                                 GOutputStream *output,
+                                                 gint                indent,
+                                                 GHashTable         *icc_references);
+
 static gboolean gimp_layer_real_is_alpha_locked (GimpLayer          *layer,
                                                  GimpLayer         **locked_layer);
 static void       gimp_layer_real_translate     (GimpLayer          *layer,
@@ -281,9 +290,13 @@ G_DEFINE_TYPE_WITH_CODE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
                                                 gimp_color_managed_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_pickable_iface_init))
+                                                gimp_pickable_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_savable_iface_init))
 
 #define parent_class gimp_layer_parent_class
+
+static GimpSavableInterface *parent_savable_interface = NULL;
 
 static guint layer_signals[LAST_SIGNAL] = { 0 };
 
@@ -570,6 +583,14 @@ static void
 gimp_pickable_iface_init (GimpPickableInterface *iface)
 {
   iface->get_opacity_at = gimp_layer_get_opacity_at;
+}
+
+static void
+gimp_savable_iface_init (GimpSavableInterface *iface)
+{
+  parent_savable_interface = g_type_interface_peek_parent (iface);
+
+  iface->save = gimp_layer_savable_save;
 }
 
 static void
@@ -1621,6 +1642,54 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
     }
 
   return value;
+}
+
+static void
+gimp_layer_savable_save (GimpSavable   *savable,
+                         GOutputStream *output,
+                         gint           indent,
+                         GHashTable    *icc_references)
+{
+  GimpLayer  *layer = GIMP_LAYER (savable);
+  GimpImage  *image = gimp_item_get_image (GIMP_ITEM (layer));
+  gchar      *layer_name;
+  const Babl *image_format;
+  const Babl *format;
+
+  /* Trigger a saving to be sure we have the latest buffer on disk. */
+  gimp_drawable_save_buffer (GIMP_DRAWABLE (layer));
+
+  layer_name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (layer)), -1);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<layer name='%s'>\n", indent, ' ', layer_name);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<dimensions width='%d' height='%d'/>\n",
+                          indent + 2, ' ',
+                          gimp_item_get_width (GIMP_ITEM (layer)),
+                          gimp_item_get_height (GIMP_ITEM (layer)));
+
+  parent_savable_interface->save (savable, output, indent + 2, icc_references);
+
+  /* Do not store the format if it's the same as the image. */
+  image_format = gimp_image_get_layer_format (image, TRUE);
+  format       = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  if (image_format != format)
+    gimp_savable_format_save (format, output, indent + 2, icc_references);
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) != NULL)
+    {
+      GimpContainer *stack = gimp_viewable_get_children (GIMP_VIEWABLE (layer));
+      GList         *child;
+
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c  <layers>\n", indent, ' ');
+
+      child = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (stack));
+      for (; child; child = child->next)
+        gimp_savable_save (GIMP_SAVABLE (child->data), output, indent + 4, icc_references);
+
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c  </layers>\n", indent, ' ');
+    }
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</layer>\n", indent, ' ');
+
+  g_free (layer_name);
 }
 
 static gboolean

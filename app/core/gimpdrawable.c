@@ -56,6 +56,7 @@
 #include "gimpmarshal.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"
+#include "gimpsavable.h"
 
 #include "gimp-log.h"
 
@@ -87,6 +88,7 @@ enum
 
 static void       gimp_color_managed_iface_init    (GimpColorManagedInterface *iface);
 static void       gimp_pickable_iface_init         (GimpPickableInterface     *iface);
+static void       gimp_savable_iface_init          (GimpSavableInterface     *iface);
 
 static void       gimp_drawable_dispose            (GObject           *object);
 static void       gimp_drawable_finalize           (GObject           *object);
@@ -168,6 +170,11 @@ static void       gimp_drawable_get_pixel_average  (GimpPickable      *pickable,
                                                     const Babl        *format,
                                                     gpointer           pixel);
 
+static void       gimp_drawable_save               (GimpSavable       *savable,
+                                                    GOutputStream     *output,
+                                                    gint               indent,
+                                                    GHashTable        *icc_references);
+
 static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               x,
                                                     gint               y,
@@ -227,7 +234,8 @@ static GeglNode * gimp_drawable_real_get_source_node (GimpDrawable    *drawable)
 static void       gimp_drawable_format_changed     (GimpDrawable      *drawable);
 static void       gimp_drawable_alpha_changed      (GimpDrawable      *drawable);
 
-static void       gimp_drawable_cache_thread       (GimpDrawable      *drawable);
+static const gchar * gimp_drawable_get_cache_file     (GimpDrawable    *drawable);
+static void          gimp_drawable_cache_thread       (GimpDrawable    *drawable);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
@@ -235,7 +243,9 @@ G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
                                                 gimp_color_managed_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_pickable_iface_init))
+                                                gimp_pickable_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_savable_iface_init))
 
 #define parent_class gimp_drawable_parent_class
 
@@ -376,6 +386,12 @@ gimp_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_buffer_with_effects = (GeglBuffer    * (*) (GimpPickable *pickable)) gimp_drawable_get_buffer_with_effects;
   iface->get_pixel_at            = gimp_drawable_get_pixel_at;
   iface->get_pixel_average       = gimp_drawable_get_pixel_average;
+}
+
+static void
+gimp_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_drawable_save;
 }
 
 static void
@@ -961,6 +977,22 @@ gimp_drawable_get_pixel_average (GimpPickable        *pickable,
 }
 
 static void
+gimp_drawable_save (GimpSavable   *savable,
+                    GOutputStream *output,
+                    gint           indent,
+                    GHashTable    *icc_references)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (savable);
+  gchar        *filename;
+
+  filename = g_path_get_basename (gimp_drawable_get_cache_file (drawable));
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "%*c<buffer file='%s'/>\n", indent, ' ', filename);
+
+  g_free (filename);
+}
+
+static void
 gimp_drawable_real_update (GimpDrawable *drawable,
                            gint          x,
                            gint          y,
@@ -1266,6 +1298,36 @@ static void
 gimp_drawable_alpha_changed (GimpDrawable *drawable)
 {
   g_signal_emit (drawable, gimp_drawable_signals[ALPHA_CHANGED], 0);
+}
+
+static const gchar *
+gimp_drawable_get_cache_file (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  if (! drawable->private->cache_path)
+    {
+      GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      const gchar *folder;
+      gchar       *path;
+      gchar       *filename;
+
+      g_return_val_if_fail (image != NULL, NULL);
+      g_return_val_if_fail (gimp_image_get_buffers_folder (image) != NULL, FALSE);
+
+      folder   = gimp_image_get_buffers_folder (image);
+      filename = g_strdup_printf ("%s-%d.buffer",
+                                  g_type_name (G_TYPE_FROM_INSTANCE (drawable)),
+                                  gimp_item_get_id (GIMP_ITEM (drawable)));
+      path     = g_build_filename (folder, filename, NULL);
+      drawable->private->cache_path = path;
+
+      g_free (filename);
+    }
+
+  g_return_val_if_fail (drawable->private->cache_path != NULL, FALSE);
+
+  return drawable->private->cache_path;
 }
 
 static void
@@ -2320,29 +2382,7 @@ gimp_drawable_is_painting (GimpDrawable *drawable)
 gboolean
 gimp_drawable_save_buffer (GimpDrawable *drawable)
 {
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_val_if_fail (image != NULL, FALSE);
-
-  if (! drawable->private->cache_path)
-    {
-      const gchar *folder;
-      gchar       *path;
-      gchar       *filename;
-
-      g_return_val_if_fail (gimp_image_get_buffers_folder (image) != NULL, FALSE);
-
-      folder   = gimp_image_get_buffers_folder (image);
-      filename = g_strdup_printf ("%s-%d.buffer",
-                                  g_type_name (G_TYPE_FROM_INSTANCE (drawable)),
-                                  gimp_item_get_id (GIMP_ITEM (drawable)));
-      path     = g_build_filename (folder, filename, NULL);
-      drawable->private->cache_path = path;
-
-      g_free (filename);
-
-      g_return_val_if_fail (drawable->private->cache_path != NULL, FALSE);
-    }
+  g_return_val_if_fail (gimp_drawable_get_cache_file (drawable), FALSE);
 
   /* If we cannot lock the mutex or we already have a running thread,
    * let's just ignore the save attempt. It's not a huge issue since the

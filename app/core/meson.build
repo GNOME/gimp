@@ -229,6 +229,7 @@ libappcore_sources = [
   'gimpresource.c',
   'gimpsamplepoint.c',
   'gimpsamplepointundo.c',
+  'gimpsavable.c',
   'gimpscanconvert.c',
   'gimpselection.c',
   'gimpsettings.c',

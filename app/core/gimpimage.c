@@ -80,6 +80,7 @@
 #include "gimpprojectable.h"
 #include "gimpprojection.h"
 #include "gimpsamplepoint.h"
+#include "gimpsavable.h"
 #include "gimpselection.h"
 #include "gimpsymmetry.h"
 #include "gimptempbuf.h"
@@ -160,6 +161,7 @@ enum
 static void     gimp_color_managed_iface_init    (GimpColorManagedInterface *iface);
 static void     gimp_projectable_iface_init      (GimpProjectableInterface  *iface);
 static void     gimp_pickable_iface_init         (GimpPickableInterface     *iface);
+static void     gimp_savable_iface_init          (GimpSavableInterface      *iface);
 
 static void     gimp_image_constructed           (GObject           *object);
 static void     gimp_image_set_property          (GObject           *object,
@@ -242,6 +244,11 @@ static void         gimp_image_get_pixel_average (GimpPickable      *pickable,
                                                   const Babl        *format,
                                                   gpointer           pixel);
 
+static void     gimp_image_savable_save          (GimpSavable       *savable,
+                                                  GOutputStream     *output,
+                                                  gint               n_ident,
+                                                  GHashTable        *icc_references);
+
 static void     gimp_image_projection_buffer_notify
                                                  (GimpProjection    *projection,
                                                   const GParamSpec  *pspec,
@@ -300,6 +307,10 @@ static void     gimp_image_remove_from_layer_stack (GimpImage       *image,
 static gint     gimp_image_selected_is_descendant  (GimpViewable    *selected,
                                                     GimpViewable    *viewable);
 
+static const gchar * gimp_image_get_cache_folder   (GimpImage       *image);
+static GFile       * gimp_image_get_cache_xml_file (GimpImage       *image);
+
+
 G_DEFINE_TYPE_WITH_CODE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE,
                          G_ADD_PRIVATE (GimpImage)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
@@ -307,7 +318,9 @@ G_DEFINE_TYPE_WITH_CODE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROJECTABLE,
                                                 gimp_projectable_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_pickable_iface_init))
+                                                gimp_pickable_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_savable_iface_init))
 
 #define parent_class gimp_image_parent_class
 
@@ -750,6 +763,12 @@ gimp_pickable_iface_init (GimpPickableInterface *iface)
 }
 
 static void
+gimp_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_image_savable_save;
+}
+
+static void
 gimp_image_init (GimpImage *image)
 {
   GimpImagePrivate *private = gimp_image_get_instance_private (image);
@@ -787,6 +806,7 @@ gimp_image_init (GimpImage *image)
   private->simulation_intent   = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
   private->simulation_bpc      = FALSE;
 
+  private->cache_xml           = NULL;
   private->cache_folder        = NULL;
   private->buffers_folder      = NULL;
 
@@ -1245,6 +1265,18 @@ gimp_image_finalize (GObject *object)
    *
    * Each child item is responsible for cleaning up after itself.
    */
+  if (private->cache_xml)
+    {
+      GError *error = NULL;
+
+      if (! g_file_delete (private->cache_xml, NULL, &error))
+        g_printerr ("%s: failed to delete the cached XML file `%s`: %s\n",
+                    G_STRFUNC, g_file_peek_path (private->cache_xml),
+                    error->message);
+
+      g_object_unref (private->cache_xml);
+      g_clear_error (&error);
+    }
   if (private->buffers_folder)
     {
       if (g_rmdir (private->buffers_folder) == -1)
@@ -1771,6 +1803,74 @@ gimp_image_get_graph (GimpProjectable *projectable)
 }
 
 static void
+gimp_image_savable_save (GimpSavable   *savable,
+                         GOutputStream *output,
+                         gint           n_indent,
+                         GHashTable    *icc_references)
+{
+  GimpImage        *image   = GIMP_IMAGE (savable);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  GList            *iter;
+  GHashTable       *icc_refs;
+  gint              icc_id = 0;
+  const Babl       *space;
+
+  /* Saving all ICC profiles stored in this XCF. */
+  icc_refs = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, NULL);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "  <formats>\n");
+  space = gimp_image_get_layer_space (image);
+  if (space != NULL && space != babl_space ("sRGB"))
+    {
+      gimp_savable_space_save (space, output, 4, NULL, icc_id);
+      g_hash_table_insert (icc_refs, (gpointer) babl_get_name (space), GINT_TO_POINTER (icc_id++));
+    }
+
+  iter = gimp_image_get_layer_list (image);
+  for (; iter; iter = iter->next)
+    {
+      GimpDrawable *drawable = iter->data;
+
+      space = gimp_drawable_get_space (drawable);
+      if (space != babl_space ("sRGB") &&
+          ! g_hash_table_lookup_extended (icc_refs, babl_get_name (space), NULL, NULL))
+        {
+          gimp_savable_space_save (space, output, 4, NULL, icc_id);
+          g_hash_table_insert (icc_refs, (gpointer) babl_get_name (space), GUINT_TO_POINTER (icc_id++));
+        }
+    }
+  g_list_free (iter);
+  g_output_stream_printf (output, NULL, NULL, NULL, "  </formats>\n");
+
+  /* Saving the project itself */
+  g_output_stream_printf (output, NULL, NULL, NULL, "  <project>\n");
+  /* To avoid having dozens of <project> attributes, I break the various
+   * properties down into sub-elements. This will also make these easier
+   * to update in further versions, e.g. if we add concept of infinite
+   * canvas, or add multi dimension concept (e.g. multi-page documents
+   * whose pages may be different dimensions), if we reorganize how we
+   * store some data, such as the print dimensions/pixel density
+   * arguments, etc.
+   */
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "    <dimensions width='%d' height='%d'/>\n",
+                          private->width, private->height);
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "    <print-dimensions xres='%f' yres='%f'/>\n",
+                          private->xresolution, private->yresolution);
+  gimp_savable_format_save (gimp_image_get_layer_format (image, TRUE), output, 4, icc_refs);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "    <layers>\n");
+  iter = gimp_image_get_layer_iter (image);
+  for (; iter; iter = iter->next)
+    gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, icc_refs);
+  g_output_stream_printf (output, NULL, NULL, NULL, "    </layers>\n");
+  g_output_stream_printf (output, NULL, NULL, NULL, "  </project>\n");
+
+  g_hash_table_unref (icc_refs);
+}
+
+static void
 gimp_image_projection_buffer_notify (GimpProjection   *projection,
                                      const GParamSpec *pspec,
                                      GimpImage        *image)
@@ -2187,6 +2287,51 @@ gimp_image_selected_is_descendant (GimpViewable *selected,
     return 0;
   else
     return 1;
+}
+
+static const gchar *
+gimp_image_get_cache_folder (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->cache_folder == NULL)
+    {
+      gchar *folder_name = g_strdup_printf ("image-%d", gimp_image_get_id (image));
+      gchar *path        = g_build_filename (gimp_cache_directory (), "images", folder_name, NULL);
+
+      private->cache_folder = path;
+
+      g_free (folder_name);
+    }
+
+  return private->cache_folder;
+}
+
+static GFile *
+gimp_image_get_cache_xml_file (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (gimp_image_get_cache_folder (image) != NULL, NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->cache_xml == NULL)
+    {
+      gchar *path;
+
+      path = g_build_filename (gimp_image_get_cache_folder (image), "wlbr-project.xml", NULL);
+
+      private->cache_xml = g_file_new_for_path (path);
+      g_free (path);
+    }
+
+  return private->cache_xml;
 }
 
 
@@ -2864,28 +3009,6 @@ gimp_image_get_export_proc (GimpImage *image)
 }
 
 const gchar *
-gimp_image_get_cache_folder (GimpImage *image)
-{
-  GimpImagePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  if (private->cache_folder == NULL)
-    {
-      gchar *folder_name = g_strdup_printf ("image-%d", gimp_image_get_id (image));
-      gchar *path        = g_build_filename (gimp_cache_directory (), "images", folder_name, NULL);
-
-      private->cache_folder = path;
-
-      g_free (folder_name);
-    }
-
-  return private->cache_folder;
-}
-
-const gchar *
 gimp_image_get_buffers_folder (GimpImage *image)
 {
   GimpImagePrivate *private;
@@ -2912,6 +3035,59 @@ gimp_image_get_buffers_folder (GimpImage *image)
     }
 
   return private->buffers_folder;
+}
+
+void
+gimp_image_save_to_cache (GimpImage *image)
+{
+  GimpImagePrivate *private;
+  const gchar      *folder;
+  GFile            *file;
+  GOutputStream    *output;
+  GError           *error = NULL;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  folder = gimp_image_get_cache_folder (image);
+  if (g_mkdir_with_parents (folder,
+                            S_IRUSR | S_IWUSR | S_IXUSR) == -1)
+    {
+      g_critical ("%s: failed to create the image cache folder `%s`: %s\n",
+                  G_STRFUNC, private->cache_folder, g_strerror (errno));
+      return;
+    }
+  file   = gimp_image_get_cache_xml_file (image);
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, &error));
+  if (output == NULL)
+    {
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    _("Error creating '%s': %s"),
+                    gimp_file_get_utf8_name (file),
+                    error->message);
+      g_clear_error (&error);
+      return;
+    }
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "<?xml version='1.0' encoding='UTF-8'?>\n");
+  g_output_stream_printf (output, NULL, NULL, NULL, "<xcf version='%d'>\n", WLBR_VERSION);
+
+  gimp_image_savable_save (GIMP_SAVABLE (image), output, 0, NULL);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "</xcf>");
+
+  if (! g_output_stream_close (output, NULL, &error))
+    {
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    _("Error closing '%s': %s"),
+                    gimp_file_get_utf8_name (file),
+                    error->message);
+      g_clear_error (&error);
+    }
+  g_object_unref (output);
 }
 
 gint

@@ -84,6 +84,7 @@ struct _GimpImagePrivate
   GFile             *save_a_copy_file;      /*  the image's save-a-copy file */
   GFile             *untitled_file;         /*  a file saying "Untitled"     */
 
+  GFile             *cache_xml;
   gchar             *cache_folder;
   gchar             *buffers_folder;
   gboolean           xcf_compression;       /*  XCF compression enabled?     */

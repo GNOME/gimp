@@ -181,8 +181,8 @@ GimpPlugInProcedure * gimp_image_get_export_proc (GimpImage          *image);
 void            gimp_image_exported              (GimpImage          *image,
                                                   GFile              *file);
 
-const gchar   * gimp_image_get_cache_folder      (GimpImage          *image);
 const gchar   * gimp_image_get_buffers_folder    (GimpImage          *image);
+void            gimp_image_save_to_cache         (GimpImage          *image);
 gint            gimp_image_get_xcf_version       (GimpImage          *image,
                                                   gboolean            zlib_compression,
                                                   gint               *gimp_version,

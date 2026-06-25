@@ -226,6 +226,7 @@ typedef struct _GimpCancelable                  GimpCancelable;  /* dummy typede
 typedef struct _GimpPickable                    GimpPickable;    /* dummy typedef */
 typedef struct _GimpProgress                    GimpProgress;    /* dummy typedef */
 typedef struct _GimpProjectable                 GimpProjectable; /* dummy typedef */
+typedef struct _GimpSavable                     GimpSavable;     /* dummy typedef */
 typedef struct _GimpTagged                      GimpTagged;      /* dummy typedef */
 typedef struct _GimpWaitable                    GimpWaitable;    /* dummy typedef */
 
