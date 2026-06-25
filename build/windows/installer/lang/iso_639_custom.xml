@@ -360,7 +360,7 @@ To fill data for a new entry:
 		name="יידיש" />
 	<iso_639_entry
 		dl_code="zh_CN"
-		inno_code="Languages\\Unofficial\\ChineseSimplified.isl"
+		inno_code="Languages\\ChineseSimplified.isl"
 		name="簡體中文" />
 	<iso_639_entry
 		dl_code="zh_HK"
@@ -368,6 +368,6 @@ To fill data for a new entry:
 		name="香港中文" />
 	<iso_639_entry
 		dl_code="zh_TW"
-		inno_code="Languages\\Unofficial\\ChineseTraditional.isl"
+		inno_code="Languages\\ChineseTraditional.isl"
 		name="繁體中文" />
 </iso_639_entries>
