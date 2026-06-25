@@ -135,8 +135,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.12.tar.gz",
-                    "sha256": "a455779c389f65c64220d45b63ead2900081e5f6337cdf93431cb1032c3e2686",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.13.tar.gz",
+                    "sha256": "1ed0cee48ac8c77da235c8ca8ab85d031d43cd790eda36af87fed4cf316cf2df",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
