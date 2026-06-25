@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 06-0615-22 06:05+0000\n"
-"PO-Revision-Date: 2026-06-22 10:00+0200\n"
+"POT-Creation-Date: 2026-06-24 20:34+0000\n"
+"PO-Revision-Date: 2026-06-25 11:21+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -14152,22 +14152,22 @@ msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Zwevende selectie verwijderen"
 
-#: app/core/gimpimage.c:5694
+#: app/core/gimpimage.c:5701
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Kanaal toevoegen"
 
-#: app/core/gimpimage.c:5724 app/core/gimpimage.c:5752
+#: app/core/gimpimage.c:5731 app/core/gimpimage.c:5759
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kanaal verwijderen"
 
-#: app/core/gimpimage.c:5814
+#: app/core/gimpimage.c:5821
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Pad toevoegen"
 
-#: app/core/gimpimage.c:5849 app/core/gimpimage.c:5857
+#: app/core/gimpimage.c:5856 app/core/gimpimage.c:5864
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Pad verwijderen"
@@ -14837,190 +14837,200 @@ msgstr "Beperking indeling kleurenkaart wijzigen"
 msgid "%s (occurs %u)"
 msgstr "%s (%u treedt op)"
 
-#: app/core/gimppalette-import.c:577
+#: app/core/gimppalette-import.c:581
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Onbekend type paletbestand: %s"
 
-#: app/core/gimppalette-load.c:119
+#: app/core/gimppalette-load.c:130
 #, c-format
 msgid "Missing magic header."
 msgstr "Magic header ontbreekt."
 
-#: app/core/gimppalette-load.c:142
+#: app/core/gimppalette-load.c:153
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Ongeldige UTF-8-tekenreeks in paletbestand ‘%s’"
 
-#: app/core/gimppalette-load.c:162
+#: app/core/gimppalette-load.c:173
 #, c-format
 msgid "Invalid column count."
 msgstr "Ongeldig aantal kolommen."
 
-#: app/core/gimppalette-load.c:169
+#: app/core/gimppalette-load.c:180
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr "Lezen paletbestand ‘%s’: Ongeldig aantal kolommen op regel %d. Gebruikt standaard waarde."
 
-#: app/core/gimppalette-load.c:213
+#: app/core/gimppalette-load.c:224
 #, c-format
 msgid "Reading palette file '%s': red component out of range in line %d."
 msgstr "Paletbestand ‘%s’ wordt ingelezen: roodcomponent buiten bereik op regel %d."
 
-#: app/core/gimppalette-load.c:221
+#: app/core/gimppalette-load.c:232
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Paletbestand ‘%s’ wordt ingelezen: ontbrekende roodcomponent in regel %d."
 
-#: app/core/gimppalette-load.c:235
+#: app/core/gimppalette-load.c:246
 #, c-format
 msgid "Reading palette file '%s': green component out of range in line %d."
 msgstr "Paletbestand ‘%s’ wordt ingelezen: groencomponent buiten bereik op regel %d."
 
-#: app/core/gimppalette-load.c:243
+#: app/core/gimppalette-load.c:254
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "Paletbestand ‘%s’ wordt ingelezen: ontbrekende groencomponent in regel %d."
 
-#: app/core/gimppalette-load.c:256
+#: app/core/gimppalette-load.c:267
 #, c-format
 msgid "Reading palette file '%s': blue component out of range in line %d."
 msgstr "Paletbestand ‘%s’ wordt ingelezen: blauwcomponent buiten bereik op regel %d."
 
-#: app/core/gimppalette-load.c:264
+#: app/core/gimppalette-load.c:275
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Paletbestand ‘%s’ wordt ingelezen: ontbrekende blauwcomponent in regel %d."
 
-#: app/core/gimppalette-load.c:290 app/core/gimppalette-load.c:546
+#: app/core/gimppalette-load.c:301 app/core/gimppalette-load.c:557
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr "Paletbestand ‘%s’ wordt ingelezen: lees %d kleuren van gebroken bestand: %s"
 
-#: app/core/gimppalette-load.c:310
+#: app/core/gimppalette-load.c:321
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "In regel %d van paletbestand: "
 
-#: app/core/gimppalette-load.c:517 app/core/gimppalette-load.c:722
-#: app/core/gimppalette-load.c:1069 app/core/gimppalette-load.c:1620
-#: app/core/gimppalette-load.c:1641
+#: app/core/gimppalette-load.c:528 app/core/gimppalette-load.c:733
+#: app/core/gimppalette-load.c:1080 app/core/gimppalette-load.c:1631
+#: app/core/gimppalette-load.c:1652
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Kon header van paletbestand ‘%s’ niet lezen: "
 
-#: app/core/gimppalette-load.c:551
+#: app/core/gimppalette-load.c:562
 msgid "Premature end of file."
 msgstr "Voortijdig einde bestand."
 
-#: app/core/gimppalette-load.c:732
+#: app/core/gimppalette-load.c:743
 #, c-format
 msgid "Invalid ACB palette version."
 msgstr "Ongeldige ACB-paletversie."
 
-#: app/core/gimppalette-load.c:739
+#: app/core/gimppalette-load.c:750
 #, c-format
 msgid "GIMP only supports version 1 ACB palettes"
 msgstr "GIMP ondersteunt alleen versie 1 ACB-paletten"
 
-#: app/core/gimppalette-load.c:747
+#: app/core/gimppalette-load.c:758
 #, c-format
 msgid "Invalid ACB palette identifier."
 msgstr "Ongeldige ACB-palet identificatie."
 
-#: app/core/gimppalette-load.c:763 app/core/gimppalette-load.c:782
-#: app/core/gimppalette-load.c:1002 app/core/gimppalette-load.c:1023
+#: app/core/gimppalette-load.c:774 app/core/gimppalette-load.c:793
+#: app/core/gimppalette-load.c:1013 app/core/gimppalette-load.c:1034
 #, c-format
 msgid "Invalid ACB palette name."
 msgstr "Ongeldige ACB-paletnaam."
 
-#: app/core/gimppalette-load.c:798
+#: app/core/gimppalette-load.c:809
 #, c-format
 msgid "Invalid ACB palette suffix."
 msgstr "Ongeldige ACB-palet extensie."
 
-#: app/core/gimppalette-load.c:817 app/core/gimppalette-load.c:1089
+#: app/core/gimppalette-load.c:828 app/core/gimppalette-load.c:1100
 #, c-format
 msgid "Invalid number of colors in palette."
 msgstr "Ongeldig aantal kleuren in het palet."
 
-#: app/core/gimppalette-load.c:824 app/core/gimppalette-load.c:1096
+#: app/core/gimppalette-load.c:835 app/core/gimppalette-load.c:1107
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "Ongeldig aantal kleuren: %s."
 
-#: app/core/gimppalette-load.c:837 app/core/gimppalette-load.c:847
+#: app/core/gimppalette-load.c:848 app/core/gimppalette-load.c:858
 #, c-format
 msgid "Invalid ACB palette page info."
 msgstr "Ongeldige ACB-palet pagina info."
 
-#: app/core/gimppalette-load.c:859 app/core/gimppalette-load.c:872
+#: app/core/gimppalette-load.c:870 app/core/gimppalette-load.c:883
 #, c-format
 msgid "Invalid ACB palette color space."
 msgstr "Ongeldige ACB-palet kleurruimte."
 
-#: app/core/gimppalette-load.c:1012
+#: app/core/gimppalette-load.c:1023
 #, c-format
 msgid "Invalid ACB name size."
 msgstr "Lengte van ACB-naam onjuist."
 
-#: app/core/gimppalette-load.c:1080
+#: app/core/gimppalette-load.c:1091
 #, c-format
 msgid "Invalid ASE header: %s"
 msgstr "Ongeldige ASE-header: %s"
 
-#: app/core/gimppalette-load.c:1107
+#: app/core/gimppalette-load.c:1118
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "Ongeldig ASE-bestand: %s."
 
-#: app/core/gimppalette-load.c:1198
+#: app/core/gimppalette-load.c:1209
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "Ongeldige kleurcomponenten: %s."
 
-#: app/core/gimppalette-load.c:1210 app/core/gimppalette-load.c:1235
+#: app/core/gimppalette-load.c:1221 app/core/gimppalette-load.c:1246
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "Ongeldige ASE-kleur: %s."
 
-#: app/core/gimppalette-load.c:1267 app/core/gimppalette-load.c:1283
-#: app/core/gimppalette-load.c:1302
+#: app/core/gimppalette-load.c:1278 app/core/gimppalette-load.c:1294
+#: app/core/gimppalette-load.c:1313
 #, c-format
 msgid "Invalid ASE palette name."
 msgstr "Ongeldige ASE-paletnaam."
 
-#: app/core/gimppalette-load.c:1276
+#: app/core/gimppalette-load.c:1287
 #, c-format
 msgid "Invalid ASE block size."
 msgstr "Ongeldige ASE-blokgrootte."
 
-#: app/core/gimppalette-load.c:1292
+#: app/core/gimppalette-load.c:1303
 #, c-format
 msgid "Invalid ASE name size."
 msgstr "Lengte van ASE-naam onjuist."
 
-#: app/core/gimppalette-load.c:1421 app/core/gimppalette-load.c:1491
+#: app/core/gimppalette-load.c:1432 app/core/gimppalette-load.c:1502
 #, c-format
 msgid "Unable to read SBZ file: %s"
 msgstr "Kon SBZ-bestand niet lezen: %s"
 
-#: app/core/gimppalette-load.c:1519 app/core/gimppalette-load.c:1531
+#: app/core/gimppalette-load.c:1530 app/core/gimppalette-load.c:1542
 #, c-format
 msgid "Unable to open SBZ file"
 msgstr "Kon SBZ-bestand niet openen"
 
-#: app/core/gimppalette-load.c:1565 app/core/gimppalette-load.c:1602
+#: app/core/gimppalette-load.c:1576 app/core/gimppalette-load.c:1613
 #, c-format
 msgid "Unable to read Procreate swatches file: %s"
 msgstr "Kon bestand voor vooraf gedefinieerde kleuren niet lezen: %s niet lezen"
 
-#: app/core/gimppalette-load.c:1807 app/core/gimppalette-load.c:1818
+#: app/core/gimppalette-load.c:1818 app/core/gimppalette-load.c:1829
 #, c-format
 msgid "Unable to read Procreate swatches file"
 msgstr "Kon bestand voor vooraf gedefinieerde kleuren niet lezen"
+
+#: app/core/gimppalette-load.c:1877 app/core/gimppalette-load.c:1943
+#, c-format
+msgid "Unable to read KPL file: %s"
+msgstr "Kan KPL-bestand niet lezen: %s"
+
+#: app/core/gimppalette-load.c:1971 app/core/gimppalette-load.c:1982
+#, c-format
+msgid "Unable to open KPL file"
+msgstr "Kan KPL-bestand niet openen"
 
 #: app/core/gimppalettemru.c:125 app/core/gimppalettemru.c:271
 msgid "History Color"
@@ -16616,7 +16626,7 @@ msgstr "Cascading Style Sheet (*.css)"
 msgid "JASC or RIFF Palette (*.pal)"
 msgstr "JASC- of RIFF-palet (*.pal)"
 
-#: app/dialogs/palette-import-dialog.c:958
+#: app/dialogs/palette-import-dialog.c:964
 msgid "SwatchBooker (*.sbz)"
 msgstr "SwatchBooker (*.sbz)"
 
@@ -28146,7 +28156,7 @@ msgstr "De zwevende laag verankeren"
 msgid "No channels to create a layer mask from."
 msgstr "Geen kanalen om een laagmasker van te maken."
 
-#: app/widgets/gimpmessagebox.c:490
+#: app/widgets/gimpmessagebox.c:498
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
