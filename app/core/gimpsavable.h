@@ -58,12 +58,22 @@ void   gimp_savable_save        (GimpSavable   *savable,
 
 /* Shared Utils */
 
-void   gimp_savable_format_save (const Babl    *format,
-                                 GOutputStream *output,
-                                 gint           n_indent,
-                                 GHashTable    *icc_references);
-void   gimp_savable_space_save  (const Babl    *space,
-                                 GOutputStream *output,
-                                 gint           n_indent,
-                                 GHashTable    *icc_references,
-                                 gint           space_id);
+void         gimp_savable_format_save     (const Babl    *format,
+                                           GOutputStream *output,
+                                           gint           n_indent,
+                                           GHashTable    *icc_references);
+void         gimp_savable_space_save      (const Babl    *space,
+                                           GOutputStream *output,
+                                           gint           n_indent,
+                                           GHashTable    *icc_references,
+                                           gint           space_id);
+void         gimp_savable_color_save      (GeglColor     *color,
+                                           const gchar   *name,
+                                           const Babl    *restricted_format,
+                                           GOutputStream *output,
+                                           gint           n_indent,
+                                           GHashTable    *icc_references);
+
+GHashTable * gimp_savable_save_all_spaces (GimpImage     *image,
+                                           GOutputStream *output,
+                                           gint           n_indent);

@@ -36,6 +36,7 @@
 #include "gimppalette.h"
 #include "gimppalette-load.h"
 #include "gimppalette-save.h"
+#include "gimpsavable.h"
 #include "gimptagged.h"
 #include "gimptempbuf.h"
 
@@ -54,6 +55,7 @@ enum
 /*  local function prototypes  */
 
 static void          gimp_palette_tagged_iface_init   (GimpTaggedInterface  *iface);
+static void          gimp_palette_savable_iface_init  (GimpSavableInterface *iface);
 
 static void          gimp_palette_finalize            (GObject              *object);
 
@@ -91,6 +93,11 @@ static gint64        gimp_palette_entry_get_memsize   (GimpPaletteEntry     *ent
                                                        gint64               *gui_size);
 static gchar       * gimp_palette_get_checksum        (GimpTagged           *tagged);
 
+static void          gimp_palette_savable_save        (GimpSavable          *savable,
+                                                       GOutputStream        *output,
+                                                       gint                  indent,
+                                                       GHashTable           *icc_references);
+
 static void          gimp_palette_image_space_updated (GimpImage            *image,
                                                        GimpPalette          *palette);
 static void          gimp_palette_notify_image        (GimpPalette          *palette,
@@ -100,7 +107,9 @@ static void          gimp_palette_notify_image        (GimpPalette          *pal
 
 G_DEFINE_TYPE_WITH_CODE (GimpPalette, gimp_palette, GIMP_TYPE_DATA,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
-                                                gimp_palette_tagged_iface_init))
+                                                gimp_palette_tagged_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_palette_savable_iface_init))
 
 #define parent_class gimp_palette_parent_class
 
@@ -144,6 +153,12 @@ static void
 gimp_palette_tagged_iface_init (GimpTaggedInterface *iface)
 {
   iface->get_checksum = gimp_palette_get_checksum;
+}
+
+static void
+gimp_palette_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_palette_savable_save;
 }
 
 static void
@@ -430,6 +445,36 @@ gimp_palette_get_checksum (GimpTagged *tagged)
     }
 
   return checksum_string;
+}
+
+static void
+gimp_palette_savable_save (GimpSavable   *savable,
+                           GOutputStream *output,
+                           gint           n_indent,
+                           GHashTable    *icc_references)
+{
+  GimpPalette *palette = GIMP_PALETTE (savable);
+  GList       *iter;
+  const Babl  *format;
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<palette name='%s'>\n", n_indent, ' ',
+                          gimp_object_get_name (palette));
+
+  format = gimp_palette_get_restriction (palette);
+  if (format != NULL)
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<restriction>\n", n_indent + 2, ' ');
+      gimp_savable_format_save (format, output, n_indent + 4, icc_references);
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</restriction>\n", n_indent + 2, ' ');
+    }
+
+  for (iter = palette->colors; iter; iter = iter->next)
+    {
+      GimpPaletteEntry *entry = iter->data;
+      gimp_savable_color_save  (entry->color, entry->name, format,
+                                output, n_indent + 2, icc_references);
+    }
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</palette>\n", n_indent, ' ');
 }
 
 static void

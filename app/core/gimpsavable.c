@@ -26,6 +26,10 @@
 
 #include "core-types.h"
 
+#include "gimpimage.h"
+#include "gimpimage-colormap.h"
+#include "gimpdrawable.h"
+#include "gimppalette.h"
 #include "gimpsavable.h"
 
 
@@ -123,4 +127,131 @@ gimp_savable_space_save (const Babl    *space,
       else
         g_critical ("%s: the space was not previously stored: %s", G_STRFUNC, babl_get_name (space));
     }
+}
+
+void
+gimp_savable_color_save  (GeglColor     *color,
+                          const gchar   *name,
+                          const Babl    *restricted_format,
+                          GOutputStream *output,
+                          gint           n_indent,
+                          GHashTable    *icc_references)
+{
+  const Babl *format;
+  gchar      *pixel_b64;
+  guint8      pixel[40];
+  gint        bpp;
+
+  g_return_if_fail (icc_references != NULL);
+
+  if (name != NULL)
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<color name='%s'>\n", n_indent, ' ', name);
+  else
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<color>\n", n_indent, ' ');
+
+  /* XXX Do we want to make it possible to have a restricted format yet
+   * store the colors in their source format (which may be higher
+   * bit-depth)? If we were able to drop the restriction, we would not
+   * lose precision data.
+   */
+  if (restricted_format)
+    {
+      format = restricted_format;
+    }
+  else
+    {
+      format = gegl_color_get_format (color);
+      gimp_savable_format_save (format, output, n_indent + 2, icc_references);
+    }
+
+  gegl_color_get_pixel (color, format, pixel);
+  bpp = babl_format_get_bytes_per_pixel (format);
+  pixel_b64 = g_base64_encode ((const guchar*) pixel, bpp);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<pixel>%s</pixel>\n", n_indent + 2, ' ', pixel_b64);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</color>\n", n_indent, ' ');
+
+  g_free (pixel_b64);
+}
+
+GHashTable *
+gimp_savable_save_all_spaces (GimpImage     *image,
+                              GOutputStream *output,
+                              gint           n_indent)
+{
+  GHashTable *icc_refs;
+  GList      *iter;
+  const Babl *space;
+  gint        icc_id = 0;
+
+  icc_refs = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, NULL);
+
+  /* Save the space of the image itself. */
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<formats>\n", n_indent, ' ');
+  space = gimp_image_get_layer_space (image);
+  if (space != NULL && space != babl_space ("sRGB"))
+    {
+      gimp_savable_space_save (space, output, 4, NULL, icc_id);
+      g_hash_table_insert (icc_refs, (gpointer) babl_get_name (space), GINT_TO_POINTER (icc_id++));
+    }
+
+  /* Save the space of the layers (preparing a future where layers may
+   * have their own model and space.
+   */
+  iter = gimp_image_get_layer_list (image);
+  for (; iter; iter = iter->next)
+    {
+      GimpDrawable *drawable = iter->data;
+
+      space = gimp_drawable_get_space (drawable);
+      if (space != babl_space ("sRGB") &&
+          ! g_hash_table_lookup_extended (icc_refs, babl_get_name (space), NULL, NULL))
+        {
+          gimp_savable_space_save (space, output, 4, NULL, icc_id);
+          g_hash_table_insert (icc_refs, (gpointer) babl_get_name (space), GUINT_TO_POINTER (icc_id++));
+        }
+    }
+  g_list_free (iter);
+
+  /* Save the space of the palette colors (preparing a future where they
+   * may have their own model and space.
+   */
+  if (gimp_image_get_colormap_palette (image))
+    {
+      GimpPalette *palette = gimp_image_get_colormap_palette (image);
+      const Babl  *format;
+
+      format = gimp_palette_get_restriction (palette);
+
+      if (format == NULL)
+        {
+          iter = gimp_palette_get_colors (palette);
+          for (; iter; iter = iter->next)
+            {
+              GimpPaletteEntry *entry = iter->data;
+
+              format = gegl_color_get_format (entry->color);
+              space = babl_format_get_space (format);
+              if (space != babl_space ("sRGB") &&
+                  ! g_hash_table_lookup_extended (icc_refs, babl_get_name (space), NULL, NULL))
+                {
+                  gimp_savable_space_save (space, output, 4, NULL, icc_id);
+                  g_hash_table_insert (icc_refs, (gpointer) babl_get_name (space), GUINT_TO_POINTER (icc_id++));
+                }
+            }
+        }
+      else
+        {
+          space = babl_format_get_space (format);
+          if (space != babl_space ("sRGB") &&
+              ! g_hash_table_lookup_extended (icc_refs, babl_get_name (space), NULL, NULL))
+            {
+              gimp_savable_space_save (space, output, 4, NULL, icc_id);
+              g_hash_table_insert (icc_refs, (gpointer) babl_get_name (space), GUINT_TO_POINTER (icc_id++));
+            }
+        }
+    }
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</formats>\n", n_indent, ' ');
+
+  return icc_refs;
 }

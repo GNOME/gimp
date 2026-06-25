@@ -1812,35 +1812,9 @@ gimp_image_savable_save (GimpSavable   *savable,
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GList            *iter;
   GHashTable       *icc_refs;
-  gint              icc_id = 0;
-  const Babl       *space;
 
   /* Saving all ICC profiles stored in this XCF. */
-  icc_refs = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, NULL);
-
-  g_output_stream_printf (output, NULL, NULL, NULL, "  <formats>\n");
-  space = gimp_image_get_layer_space (image);
-  if (space != NULL && space != babl_space ("sRGB"))
-    {
-      gimp_savable_space_save (space, output, 4, NULL, icc_id);
-      g_hash_table_insert (icc_refs, (gpointer) babl_get_name (space), GINT_TO_POINTER (icc_id++));
-    }
-
-  iter = gimp_image_get_layer_list (image);
-  for (; iter; iter = iter->next)
-    {
-      GimpDrawable *drawable = iter->data;
-
-      space = gimp_drawable_get_space (drawable);
-      if (space != babl_space ("sRGB") &&
-          ! g_hash_table_lookup_extended (icc_refs, babl_get_name (space), NULL, NULL))
-        {
-          gimp_savable_space_save (space, output, 4, NULL, icc_id);
-          g_hash_table_insert (icc_refs, (gpointer) babl_get_name (space), GUINT_TO_POINTER (icc_id++));
-        }
-    }
-  g_list_free (iter);
-  g_output_stream_printf (output, NULL, NULL, NULL, "  </formats>\n");
+  icc_refs = gimp_savable_save_all_spaces (image, output, 2);
 
   /* Saving the project itself */
   g_output_stream_printf (output, NULL, NULL, NULL, "  <project>\n");
@@ -1859,6 +1833,13 @@ gimp_image_savable_save (GimpSavable   *savable,
                           "    <print-dimensions xres='%f' yres='%f'/>\n",
                           private->xresolution, private->yresolution);
   gimp_savable_format_save (gimp_image_get_layer_format (image, TRUE), output, 4, icc_refs);
+
+  /* Image Properties */
+  if (gimp_image_get_colormap_palette (image))
+    {
+      GimpPalette *palette = gimp_image_get_colormap_palette (image);
+      gimp_savable_save (GIMP_SAVABLE (palette), output, 4, icc_refs);
+    }
 
   g_output_stream_printf (output, NULL, NULL, NULL, "    <layers>\n");
   iter = gimp_image_get_layer_iter (image);
