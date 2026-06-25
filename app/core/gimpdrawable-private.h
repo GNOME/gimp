@@ -25,6 +25,8 @@ struct _GimpDrawablePrivate
 
   gchar            *cache_path;
   gboolean          cache_outdated;
+  GMutex            cache_mutex;
+  GThread          *cache_thread;
 
   GimpColorProfile *format_profile;
 

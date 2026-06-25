@@ -227,6 +227,8 @@ static GeglNode * gimp_drawable_real_get_source_node (GimpDrawable    *drawable)
 static void       gimp_drawable_format_changed     (GimpDrawable      *drawable);
 static void       gimp_drawable_alpha_changed      (GimpDrawable      *drawable);
 
+static void       gimp_drawable_cache_thread       (GimpDrawable      *drawable);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
                          G_ADD_PRIVATE (GimpDrawable)
@@ -348,6 +350,8 @@ gimp_drawable_init (GimpDrawable *drawable)
 
   drawable->private->cache_path     = NULL;
   drawable->private->cache_outdated = TRUE;
+  drawable->private->cache_thread   = NULL;
+  g_mutex_init (&drawable->private->cache_mutex);
 
   _gimp_drawable_filters_init (drawable);
 }
@@ -411,6 +415,8 @@ gimp_drawable_finalize (GObject *object)
                     g_strerror (errno));
       g_free (drawable->private->cache_path);
     }
+  g_mutex_clear (&drawable->private->cache_mutex);
+  g_clear_pointer (&drawable->private->cache_thread, g_thread_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1138,7 +1144,10 @@ gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
                               "changed",
                               G_CALLBACK (gimp_drawable_buffer_changed),
                               drawable);
+
+  g_mutex_lock (&drawable->private->cache_mutex);
   drawable->private->cache_outdated = TRUE;
+  g_mutex_unlock (&drawable->private->cache_mutex);
 }
 
 static void
@@ -1146,7 +1155,9 @@ gimp_drawable_buffer_changed (GeglBuffer          *buffer,
                               const GeglRectangle *rect,
                               GimpDrawable        *drawable)
 {
+  g_mutex_lock (&drawable->private->cache_mutex);
   drawable->private->cache_outdated = TRUE;
+  g_mutex_unlock (&drawable->private->cache_mutex);
 }
 
 static GeglRectangle
@@ -1255,6 +1266,23 @@ static void
 gimp_drawable_alpha_changed (GimpDrawable *drawable)
 {
   g_signal_emit (drawable, gimp_drawable_signals[ALPHA_CHANGED], 0);
+}
+
+static void
+gimp_drawable_cache_thread (GimpDrawable *drawable)
+{
+  g_mutex_lock (&drawable->private->cache_mutex);
+
+  if (drawable->private->cache_outdated)
+    {
+      gegl_buffer_save (gimp_drawable_get_buffer (drawable),
+                        drawable->private->cache_path, NULL);
+      drawable->private->cache_outdated = FALSE;
+    }
+
+  g_clear_pointer (&drawable->private->cache_thread, g_thread_unref);
+  g_mutex_unlock (&drawable->private->cache_mutex);
+  g_object_unref (drawable);
 }
 
 
@@ -2296,9 +2324,6 @@ gimp_drawable_save_buffer (GimpDrawable *drawable)
 
   g_return_val_if_fail (image != NULL, FALSE);
 
-  if (! drawable->private->cache_outdated)
-    return TRUE;
-
   if (! drawable->private->cache_path)
     {
       const gchar *folder;
@@ -2315,11 +2340,22 @@ gimp_drawable_save_buffer (GimpDrawable *drawable)
       drawable->private->cache_path = path;
 
       g_free (filename);
+
+      g_return_val_if_fail (drawable->private->cache_path != NULL, FALSE);
     }
 
-  gegl_buffer_save (gimp_drawable_get_buffer (drawable),
-                    drawable->private->cache_path, NULL);
-  drawable->private->cache_outdated = FALSE;
+  /* If we cannot lock the mutex or we already have a running thread,
+   * let's just ignore the save attempt. It's not a huge issue since the
+   * automatic save can just happen later.
+   */
+  if (g_mutex_trylock (&drawable->private->cache_mutex))
+    {
+      if (drawable->private->cache_thread == NULL)
+        drawable->private->cache_thread = g_thread_new ("drawable-caching",
+                                                        (GThreadFunc) gimp_drawable_cache_thread,
+                                                        g_object_ref (drawable));
+      g_mutex_unlock (&drawable->private->cache_mutex);
+    }
 
   return TRUE;
 }

@@ -1881,6 +1881,7 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GList            *layers  = gimp_image_get_selected_layers (image);
+  GList            *iter;
 
   if (layers)
     {
@@ -1899,6 +1900,18 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
 
   if (layers && gimp_image_get_selected_channels (image))
     gimp_image_set_selected_channels (image, NULL);
+
+  /* When changing the layer selection, we try and save all layers which
+   * are not selected.
+   */
+  iter = gimp_image_get_layer_list (image);
+  for (; iter; iter = iter->next)
+    {
+      GimpLayer *layer = GIMP_LAYER (iter->data);
+
+      if (! g_list_find (layers, layer))
+        gimp_drawable_save_buffer (GIMP_DRAWABLE (layer));
+    }
 
   g_signal_emit (image, gimp_image_signals[SELECTED_LAYERS_CHANGED], 0);
 }
