@@ -33,6 +33,7 @@
 #include "gimpchannel.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable.h"
+#include "gimpdrawable-filters.h"
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
 #include "gimpimage-new.h"
@@ -69,7 +70,8 @@ gimp_image_pick_color (GimpImage   *image,
                             FALSE);
     }
 
-  if (sample_merged && g_list_length (drawables) == 1)
+  if (sample_merged && g_list_length (drawables) == 1 &&
+      ! gimp_drawable_has_visible_filters (drawables->data))
     {
       if ((GIMP_IS_LAYER (drawables->data) &&
            gimp_image_get_n_layers (image) == 1) ||
@@ -77,7 +79,8 @@ gimp_image_pick_color (GimpImage   *image,
            gimp_image_get_n_channels (image) == 1))
         {
           /* Let's add a special exception when an image has only one
-           * layer. This was useful in particular for indexed image as
+           * layer with no visible filters.
+           * This was useful in particular for indexed image as
            * it allows to pick the right index value even when "Sample
            * merged" is checked. There are more possible exceptions, but
            * we can't just take them all in considerations unless we
