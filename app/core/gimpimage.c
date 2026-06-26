@@ -1871,6 +1871,9 @@ gimp_image_savable_save (GimpSavable   *savable,
   if (gimp_image_get_grid (image))
     gimp_savable_save (GIMP_SAVABLE (gimp_image_get_grid (image)), output, 4, icc_refs);
 
+  if (gimp_image_get_metadata (image))
+    gimp_savable_metadata_save (gimp_image_get_metadata (image), output, 4);
+
   g_output_stream_printf (output, NULL, NULL, NULL, "    <layers>\n");
   iter = gimp_image_get_layer_iter (image);
   for (; iter; iter = iter->next)
