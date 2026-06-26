@@ -41,7 +41,7 @@
  */
 
 /*
- * History:
+ * History: change
  * 1.0 first release
  * 1.1 first support for FLI saving (BRUN and LC chunks)
  * 1.2 support for load/save ranges, fixed SGI & SUN problems (I hope...), fixed FLC

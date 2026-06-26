@@ -756,7 +756,7 @@ clang-format:
     - apt-get update
     - apt-get install -y clang-format
                          git
-    - sh .gitlab/run_style_check_diff.sh
+    - sh -x .gitlab/run_style_check_diff.sh
   allow_failure: true #.clang-format file can be imperfect and produce false positives
   artifacts:
     when: on_failure
