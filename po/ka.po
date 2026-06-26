@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-22 06:05+0000\n"
-"PO-Revision-Date: 2026-06-23 04:01+0200\n"
+"POT-Creation-Date: 2026-06-24 20:34+0000\n"
+"PO-Revision-Date: 2026-06-26 06:06+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -14102,22 +14102,22 @@ msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "მცურავი მონიშვნის ამოღება"
 
-#: app/core/gimpimage.c:5694
+#: app/core/gimpimage.c:5701
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "არხის დამატება"
 
-#: app/core/gimpimage.c:5724 app/core/gimpimage.c:5752
+#: app/core/gimpimage.c:5731 app/core/gimpimage.c:5759
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "არხის ამოღება"
 
-#: app/core/gimpimage.c:5814
+#: app/core/gimpimage.c:5821
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "კონტურის დამატება"
 
-#: app/core/gimpimage.c:5849 app/core/gimpimage.c:5857
+#: app/core/gimpimage.c:5856 app/core/gimpimage.c:5864
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "კონტურის ამოღება"
@@ -14787,27 +14787,27 @@ msgstr "ფერების რუკის ფორმატის შეზ
 msgid "%s (occurs %u)"
 msgstr "%s (ხდება %u)"
 
-#: app/core/gimppalette-import.c:577
+#: app/core/gimppalette-import.c:581
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "პალტრის ფაილის უცნობი ტიპი: %s"
 
-#: app/core/gimppalette-load.c:119
+#: app/core/gimppalette-load.c:130
 #, c-format
 msgid "Missing magic header."
 msgstr "ვერ ვიპოვე magic header."
 
-#: app/core/gimppalette-load.c:142
+#: app/core/gimppalette-load.c:153
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "არასწორი UTF-8 მონაცემები პალიტრის ფაილში '%s'."
 
-#: app/core/gimppalette-load.c:162
+#: app/core/gimppalette-load.c:173
 #, c-format
 msgid "Invalid column count."
 msgstr "სვეტების არასწორი რიცხვი."
 
-#: app/core/gimppalette-load.c:169
+#: app/core/gimppalette-load.c:180
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -14816,171 +14816,181 @@ msgstr ""
 "პალეტის ფაილის %s კითხვისას: სვეტების არასწორი რაოდენობა ხაზზე %d. "
 "გამოიყენება ნაგულისხმევი მნიშვნელობები."
 
-#: app/core/gimppalette-load.c:213
+#: app/core/gimppalette-load.c:224
 #, c-format
 msgid "Reading palette file '%s': red component out of range in line %d."
 msgstr ""
 "პალეტის ფაილის '%s' კითხვისას: წითელი კომპონენტი დაშვებულ შუალედს გარეთაა "
 "ხაზზე %d."
 
-#: app/core/gimppalette-load.c:221
+#: app/core/gimppalette-load.c:232
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr ""
 "პალეტის ფაილის '%s' კითხვისას: გამოტოვებული წითელი კომპონენტი ხაზზე %d."
 
-#: app/core/gimppalette-load.c:235
+#: app/core/gimppalette-load.c:246
 #, c-format
 msgid "Reading palette file '%s': green component out of range in line %d."
 msgstr ""
 "პალეტის ფაილის '%s' კითხვისას: მწვანე კომპონენტი დაშვებულ შუალედს გარეთაა "
 "ხაზზე %d."
 
-#: app/core/gimppalette-load.c:243
+#: app/core/gimppalette-load.c:254
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr ""
 "პალეტის ფაილის '%s' კითხვისას: გამოტოვებული მწვანე კომპონენტი ხაზზე %d."
 
-#: app/core/gimppalette-load.c:256
+#: app/core/gimppalette-load.c:267
 #, c-format
 msgid "Reading palette file '%s': blue component out of range in line %d."
 msgstr ""
 "პალეტის ფაილის '%s' კითხვისას: ლურჯი კომპონენტი დაშვებულ შუალედს გარეთაა "
 "ხაზზე %d."
 
-#: app/core/gimppalette-load.c:264
+#: app/core/gimppalette-load.c:275
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "პალეტის ფაილის '%s' კითხვისას: გამოტოვებული ლურჯი კომპონენტი ხაზზე %d."
 
-#: app/core/gimppalette-load.c:290 app/core/gimppalette-load.c:546
+#: app/core/gimppalette-load.c:301 app/core/gimppalette-load.c:557
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr ""
 
-#: app/core/gimppalette-load.c:310
+#: app/core/gimppalette-load.c:321
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "პალეტის ფაილის ხაზზე %d: "
 
-#: app/core/gimppalette-load.c:517 app/core/gimppalette-load.c:722
-#: app/core/gimppalette-load.c:1069 app/core/gimppalette-load.c:1620
-#: app/core/gimppalette-load.c:1641
+#: app/core/gimppalette-load.c:528 app/core/gimppalette-load.c:733
+#: app/core/gimppalette-load.c:1080 app/core/gimppalette-load.c:1631
+#: app/core/gimppalette-load.c:1652
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "პალეტის ფაილ %s-ის ჰედერის კთხვის შეცდომა: "
 
-#: app/core/gimppalette-load.c:551
+#: app/core/gimppalette-load.c:562
 msgid "Premature end of file."
 msgstr "ფაილის მოულოდნელი დასასრული."
 
-#: app/core/gimppalette-load.c:732
+#: app/core/gimppalette-load.c:743
 #, c-format
 msgid "Invalid ACB palette version."
 msgstr "არასწორი ACB პალიტრის ვერსია."
 
-#: app/core/gimppalette-load.c:739
+#: app/core/gimppalette-load.c:750
 #, c-format
 msgid "GIMP only supports version 1 ACB palettes"
 msgstr "GIMP-ს ACB პალიტრების მხოლოდ v1-ის მხარდაჭერა აქვს"
 
-#: app/core/gimppalette-load.c:747
+#: app/core/gimppalette-load.c:758
 #, c-format
 msgid "Invalid ACB palette identifier."
 msgstr "არასწორი ACB პალიტრის იდენტიფიკატორი."
 
-#: app/core/gimppalette-load.c:763 app/core/gimppalette-load.c:782
-#: app/core/gimppalette-load.c:1002 app/core/gimppalette-load.c:1023
+#: app/core/gimppalette-load.c:774 app/core/gimppalette-load.c:793
+#: app/core/gimppalette-load.c:1013 app/core/gimppalette-load.c:1034
 #, c-format
 msgid "Invalid ACB palette name."
 msgstr "არასწორი ACB პალიტრის სახელი."
 
-#: app/core/gimppalette-load.c:798
+#: app/core/gimppalette-load.c:809
 #, c-format
 msgid "Invalid ACB palette suffix."
 msgstr "არასწორი ACB პალიტრის სუფიქსი."
 
-#: app/core/gimppalette-load.c:817 app/core/gimppalette-load.c:1089
+#: app/core/gimppalette-load.c:828 app/core/gimppalette-load.c:1100
 #, c-format
 msgid "Invalid number of colors in palette."
 msgstr "პალიტრაში არსებული ფერების რაოდენობა არასწორია."
 
-#: app/core/gimppalette-load.c:824 app/core/gimppalette-load.c:1096
+#: app/core/gimppalette-load.c:835 app/core/gimppalette-load.c:1107
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "ფერების არასწორი რაოდენობა: %s."
 
-#: app/core/gimppalette-load.c:837 app/core/gimppalette-load.c:847
+#: app/core/gimppalette-load.c:848 app/core/gimppalette-load.c:858
 #, c-format
 msgid "Invalid ACB palette page info."
 msgstr "არასწორი ACB პალიტრის გვერდის ინფორმაცია."
 
-#: app/core/gimppalette-load.c:859 app/core/gimppalette-load.c:872
+#: app/core/gimppalette-load.c:870 app/core/gimppalette-load.c:883
 #, c-format
 msgid "Invalid ACB palette color space."
 msgstr "არასწორი ACB პალიტრის ფერების სივრცე."
 
-#: app/core/gimppalette-load.c:1012
+#: app/core/gimppalette-load.c:1023
 #, c-format
 msgid "Invalid ACB name size."
 msgstr "არასწორი ACB სახელის ზომა."
 
-#: app/core/gimppalette-load.c:1080
+#: app/core/gimppalette-load.c:1091
 #, c-format
 msgid "Invalid ASE header: %s"
 msgstr "არასწორი ASE თავსართი: %s"
 
-#: app/core/gimppalette-load.c:1107
+#: app/core/gimppalette-load.c:1118
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "არასწორი ASE ფაილი: %s."
 
-#: app/core/gimppalette-load.c:1198
+#: app/core/gimppalette-load.c:1209
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "არასწორი ფერის კომპონენტები: %s."
 
-#: app/core/gimppalette-load.c:1210 app/core/gimppalette-load.c:1235
+#: app/core/gimppalette-load.c:1221 app/core/gimppalette-load.c:1246
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "არასწორი ASE ფერის ჩანაწერი: %s."
 
-#: app/core/gimppalette-load.c:1267 app/core/gimppalette-load.c:1283
-#: app/core/gimppalette-load.c:1302
+#: app/core/gimppalette-load.c:1278 app/core/gimppalette-load.c:1294
+#: app/core/gimppalette-load.c:1313
 #, c-format
 msgid "Invalid ASE palette name."
 msgstr "არასწორი ASE პალიტრის სახელი."
 
-#: app/core/gimppalette-load.c:1276
+#: app/core/gimppalette-load.c:1287
 #, c-format
 msgid "Invalid ASE block size."
 msgstr "არასწორი ASE ბლოკის ზომა."
 
-#: app/core/gimppalette-load.c:1292
+#: app/core/gimppalette-load.c:1303
 #, c-format
 msgid "Invalid ASE name size."
 msgstr "არასწორი ASE სახელის ზომა."
 
-#: app/core/gimppalette-load.c:1421 app/core/gimppalette-load.c:1491
+#: app/core/gimppalette-load.c:1432 app/core/gimppalette-load.c:1502
 #, c-format
 msgid "Unable to read SBZ file: %s"
 msgstr "SBZ ფაილის წაკითხვის შეცდომა: %s"
 
-#: app/core/gimppalette-load.c:1519 app/core/gimppalette-load.c:1531
+#: app/core/gimppalette-load.c:1530 app/core/gimppalette-load.c:1542
 #, c-format
 msgid "Unable to open SBZ file"
 msgstr "SBZ ფაილის გახსნის შეცდომა"
 
-#: app/core/gimppalette-load.c:1565 app/core/gimppalette-load.c:1602
+#: app/core/gimppalette-load.c:1576 app/core/gimppalette-load.c:1613
 #, c-format
 msgid "Unable to read Procreate swatches file: %s"
 msgstr "Procreate-ის ფერადი კვადრატების ფაილის წაკითხვის შეცდომა: %s"
 
-#: app/core/gimppalette-load.c:1807 app/core/gimppalette-load.c:1818
+#: app/core/gimppalette-load.c:1818 app/core/gimppalette-load.c:1829
 #, c-format
 msgid "Unable to read Procreate swatches file"
 msgstr "Procreate-ის ფერადი კვადრატების ფაილის წაკითხვის შეცდომა"
+
+#: app/core/gimppalette-load.c:1877 app/core/gimppalette-load.c:1943
+#, c-format
+msgid "Unable to read KPL file: %s"
+msgstr "KPL ფაილის წაკითხვის შეცდომა: %s"
+
+#: app/core/gimppalette-load.c:1971 app/core/gimppalette-load.c:1982
+#, c-format
+msgid "Unable to open KPL file"
+msgstr "KPL ფაილის გახსნის შეცდომა"
 
 #: app/core/gimppalettemru.c:125 app/core/gimppalettemru.c:271
 msgid "History Color"
@@ -16532,7 +16542,7 @@ msgstr "Cascading Style Sheet (*.css)"
 msgid "JASC or RIFF Palette (*.pal)"
 msgstr "JASC or RIFF Palette (*.pal)"
 
-#: app/dialogs/palette-import-dialog.c:958
+#: app/dialogs/palette-import-dialog.c:964
 msgid "SwatchBooker (*.sbz)"
 msgstr "SwatchBooker (*.sbz)"
 
@@ -27921,7 +27931,7 @@ msgstr "მცურავი ფენის დამაგრება"
 msgid "No channels to create a layer mask from."
 msgstr "ფენის ნიღბის შესაქმნელად არხები აღმოჩენილი არაა."
 
-#: app/widgets/gimpmessagebox.c:490
+#: app/widgets/gimpmessagebox.c:498
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
