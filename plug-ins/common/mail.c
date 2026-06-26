@@ -52,6 +52,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
+
 
 #define BUFFER_SIZE 256
 
@@ -321,7 +325,7 @@ send_image (GObject       *config,
   id                 message;
 #endif
 #ifdef _WIN32
-  ULONG              mailstatus;
+  HMODULE            maildll;
   MapiMessageW       message;
   MapiFileDescW      attachment;
   MapiRecipDescW     recipient;
@@ -332,6 +336,8 @@ send_image (GObject       *config,
   gchar             *receipt_address       = NULL;
   wchar_t           *receipt_address_utf16 = NULL;
   wchar_t           *receipt_utf16         = NULL;
+  LPMAPISENDMAILW    lazy_MAPISendMailW;
+  ULONG              mailstatus            = MAPI_E_FAILURE;
 #endif
   GError            *error    = NULL;
   gchar             *filename = NULL;
@@ -477,56 +483,64 @@ send_image (GObject       *config,
   }
 
 #elif defined (G_OS_WIN32)
-  memset (&message, 0, sizeof (MapiMessageW));
-  if (subject && strlen (subject) > 0)
+  maildll = LoadLibraryW(L"mapi32.dll");
+  if (maildll)
     {
-      subject_utf16 = (wchar_t *) g_utf8_to_utf16 (subject, -1, NULL, NULL, NULL);
-      message.lpszSubject = subject_utf16;
-    }
-  if (comment && strlen (comment) > 0)
-    {
-      comment_utf16 = (wchar_t *) g_utf8_to_utf16 (comment, -1, NULL, NULL, NULL);
-      message.lpszNoteText = comment_utf16;
-    }
+      memset (&message, 0, sizeof (MapiMessageW));
+      if (subject && strlen (subject) > 0)
+        {
+          subject_utf16 = (wchar_t *) g_utf8_to_utf16 (subject, -1, NULL, NULL, NULL);
+          message.lpszSubject = subject_utf16;
+        }
+      if (comment && strlen (comment) > 0)
+        {
+          comment_utf16 = (wchar_t *) g_utf8_to_utf16 (comment, -1, NULL, NULL, NULL);
+          message.lpszNoteText = comment_utf16;
+        }
 
-  memset (&attachment, 0, sizeof (MapiFileDescW));
-  if (filepath)
-    {
-      filepath_utf16 = (wchar_t *) g_utf8_to_utf16 (filepath, -1, NULL, NULL, NULL);
-      filename_utf16 = (wchar_t *) g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
-      attachment.nPosition = (ULONG)-1;
-      attachment.lpszPathName = filepath_utf16;
-      attachment.lpszFileName = filename_utf16;
-      message.nFileCount = 1;
-      message.lpFiles = &attachment;
-    }
+      memset (&attachment, 0, sizeof (MapiFileDescW));
+      if (filepath)
+        {
+          filepath_utf16 = (wchar_t *) g_utf8_to_utf16 (filepath, -1, NULL, NULL, NULL);
+          filename_utf16 = (wchar_t *) g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
+          attachment.nPosition = (ULONG)-1;
+          attachment.lpszPathName = filepath_utf16;
+          attachment.lpszFileName = filename_utf16;
+          message.nFileCount = 1;
+          message.lpFiles = &attachment;
+        }
 
-  memset (&recipient, 0, sizeof (MapiRecipDescW));
-  if (receipt && strlen (receipt) > 0)
-    {
-      receipt_address = g_strdup_printf ("SMTP:%s", receipt);
-      receipt_address_utf16 = (wchar_t *) g_utf8_to_utf16 (receipt_address, -1, NULL, NULL, NULL);
-      receipt_utf16 = (wchar_t *) g_utf8_to_utf16 (receipt, -1, NULL, NULL, NULL);
-      recipient.ulRecipClass = MAPI_TO;
-      recipient.lpszAddress = receipt_address_utf16;
-      recipient.lpszName = receipt_utf16;
-      message.nRecipCount = 1;
-      message.lpRecips = &recipient;
-    }
+      memset (&recipient, 0, sizeof (MapiRecipDescW));
+      if (receipt && strlen (receipt) > 0)
+        {
+          receipt_address = g_strdup_printf ("SMTP:%s", receipt);
+          receipt_address_utf16 = (wchar_t *) g_utf8_to_utf16 (receipt_address, -1, NULL, NULL, NULL);
+          receipt_utf16 = (wchar_t *) g_utf8_to_utf16 (receipt, -1, NULL, NULL, NULL);
+          recipient.ulRecipClass = MAPI_TO;
+          recipient.lpszAddress = receipt_address_utf16;
+          recipient.lpszName = receipt_utf16;
+          message.nRecipCount = 1;
+          message.lpRecips = &recipient;
+        }
 
-  mailstatus = MAPISendMailW (0, 0, &message, MAPI_DIALOG | MAPI_LOGON_UI, 0);
-  g_free (subject_utf16);
-  g_free (comment_utf16);
-  g_free (filepath_utf16);
-  g_free (filename_utf16);
-  g_free (receipt_address);
-  g_free (receipt_address_utf16);
-  g_free (receipt_utf16);
+      /* We can not link to MAPISendMailW directly, it is not on MSVC's mapi32.lib,
+         only on libmapi32.a/libmapistub.a as a non-standard MINGW courtesy */
+      lazy_MAPISendMailW = (LPMAPISENDMAILW)GetProcAddress(maildll, "MAPISendMailW");
+      mailstatus = lazy_MAPISendMailW (0, 0, &message, MAPI_DIALOG | MAPI_LOGON_UI, 0);
+      FreeLibrary(maildll);
+      g_free (subject_utf16);
+      g_free (comment_utf16);
+      g_free (filepath_utf16);
+      g_free (filename_utf16);
+      g_free (receipt_address);
+      g_free (receipt_address_utf16);
+      g_free (receipt_utf16);
 
-  if (mailstatus != SUCCESS_SUCCESS && mailstatus != MAPI_USER_ABORT)
-    {
-      g_message ("Windows MAPI failed with error code: %lu", mailstatus);
-      goto error;
+      if (mailstatus != SUCCESS_SUCCESS && mailstatus != MAPI_USER_ABORT)
+        {
+          g_message ("Windows MAPI failed with error code: %lu", mailstatus);
+          goto error;
+        }
     }
 
 #else /* ! __APPLE__ so LINUX */
