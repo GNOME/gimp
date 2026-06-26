@@ -1829,9 +1829,6 @@ gimp_image_savable_save (GimpSavable   *savable,
   g_output_stream_printf (output, NULL, NULL, NULL,
                           "    <dimensions width='%d' height='%d'/>\n",
                           private->width, private->height);
-  g_output_stream_printf (output, NULL, NULL, NULL,
-                          "    <print-dimensions xres='%f' yres='%f'/>\n",
-                          private->xresolution, private->yresolution);
   gimp_savable_format_save (gimp_image_get_layer_format (image, TRUE), output, 4, icc_refs);
 
   /* Image Properties */
@@ -1840,6 +1837,31 @@ gimp_image_savable_save (GimpSavable   *savable,
       GimpPalette *palette = gimp_image_get_colormap_palette (image);
       gimp_savable_save (GIMP_SAVABLE (palette), output, 4, icc_refs);
     }
+  if (gimp_image_get_guides (image))
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "    <guides>\n");
+      iter = gimp_image_get_guides (image);
+      for (; iter; iter = iter->next)
+        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, icc_refs);
+      g_output_stream_printf (output, NULL, NULL, NULL, "    </guides>\n");
+    }
+  if (gimp_image_get_sample_points (image))
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "    <sample-points>\n");
+      iter = gimp_image_get_sample_points (image);
+      for (; iter; iter = iter->next)
+        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, icc_refs);
+      g_output_stream_printf (output, NULL, NULL, NULL, "    </sample-points>\n");
+    }
+  /* TODO: should we make resolution optional? E.g. for images "made for
+   * random screen" instead of "made for printing"?
+   */
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "    <print-dimensions xres='%f' yres='%f'/>\n",
+                          private->xresolution, private->yresolution);
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "    <tattoo>%u</tattoo\n",
+                          (guint) gimp_image_get_tattoo_state (image));
 
   g_output_stream_printf (output, NULL, NULL, NULL, "    <layers>\n");
   iter = gimp_image_get_layer_iter (image);

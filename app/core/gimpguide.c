@@ -28,6 +28,7 @@
 #include "core-types.h"
 
 #include "gimpguide.h"
+#include "gimpsavable.h"
 
 
 enum
@@ -48,17 +49,27 @@ struct _GimpGuidePrivate
 };
 
 
-static void   gimp_guide_get_property (GObject      *object,
-                                       guint         property_id,
-                                       GValue       *value,
-                                       GParamSpec   *pspec);
-static void   gimp_guide_set_property (GObject      *object,
-                                       guint         property_id,
-                                       const GValue *value,
-                                       GParamSpec   *pspec);
+static void   gimp_guide_savable_iface_init (GimpSavableInterface *iface);
+
+static void   gimp_guide_get_property       (GObject              *object,
+                                             guint                 property_id,
+                                             GValue               *value,
+                                             GParamSpec           *pspec);
+static void   gimp_guide_set_property       (GObject              *object,
+                                             guint                 property_id,
+                                             const GValue         *value,
+                                             GParamSpec           *pspec);
+
+static void   gimp_guide_savable_save       (GimpSavable          *savable,
+                                             GOutputStream        *output,
+                                             gint                  n_indent,
+                                             GHashTable           *icc_references);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpGuide, gimp_guide, GIMP_TYPE_AUX_ITEM)
+G_DEFINE_TYPE_WITH_CODE (GimpGuide, gimp_guide, GIMP_TYPE_AUX_ITEM,
+                         G_ADD_PRIVATE (GimpGuide)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_guide_savable_iface_init))
 
 
 static void
@@ -90,6 +101,12 @@ gimp_guide_class_init (GimpGuideClass *klass)
                          GIMP_TYPE_GUIDE_STYLE,
                          GIMP_GUIDE_STYLE_NONE,
                          0);
+}
+
+static void
+gimp_guide_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_guide_savable_save;
 }
 
 static void
@@ -146,6 +163,21 @@ gimp_guide_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_guide_savable_save (GimpSavable   *savable,
+                         GOutputStream *output,
+                         gint           n_indent,
+                         GHashTable    *icc_references)
+{
+  GimpGuide *guide = GIMP_GUIDE (savable);
+
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "%*c<guide orientation='%s' position='%d' />\n",
+                          n_indent, ' ',
+                          guide->priv->orientation == GIMP_ORIENTATION_HORIZONTAL ? "horizontal" : "vertical",
+                          guide->priv->position);
 }
 
 GimpGuide *

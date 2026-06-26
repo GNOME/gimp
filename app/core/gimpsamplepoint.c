@@ -25,6 +25,7 @@
 #include "core-types.h"
 
 #include "gimpsamplepoint.h"
+#include "gimpsavable.h"
 
 
 enum
@@ -44,18 +45,27 @@ struct _GimpSamplePointPrivate
 };
 
 
-static void   gimp_sample_point_get_property (GObject      *object,
-                                              guint         property_id,
-                                              GValue       *value,
-                                              GParamSpec   *pspec);
-static void   gimp_sample_point_set_property (GObject      *object,
-                                              guint         property_id,
-                                              const GValue *value,
-                                              GParamSpec   *pspec);
+static void   gimp_sample_point_savable_iface_init (GimpSavableInterface *iface);
+
+static void   gimp_sample_point_get_property       (GObject              *object,
+                                                    guint                 property_id,
+                                                    GValue               *value,
+                                                    GParamSpec           *pspec);
+static void   gimp_sample_point_set_property       (GObject              *object,
+                                                    guint                 property_id,
+                                                    const GValue         *value,
+                                                    GParamSpec           *pspec);
+
+static void   gimp_sample_point_savable_save       (GimpSavable          *savable,
+                                                    GOutputStream        *output,
+                                                    gint                  n_indent,
+                                                    GHashTable           *icc_references);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpSamplePoint, gimp_sample_point,
-                            GIMP_TYPE_AUX_ITEM)
+G_DEFINE_TYPE_WITH_CODE (GimpSamplePoint, gimp_sample_point, GIMP_TYPE_AUX_ITEM,
+                         G_ADD_PRIVATE (GimpSamplePoint)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_sample_point_savable_iface_init))
 
 
 static void
@@ -88,6 +98,12 @@ gimp_sample_point_class_init (GimpSamplePointClass *klass)
                          GIMP_TYPE_COLOR_PICK_MODE,
                          GIMP_COLOR_PICK_MODE_PIXEL,
                          0);
+}
+
+static void
+gimp_sample_point_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_sample_point_savable_save;
 }
 
 static void
@@ -146,6 +162,31 @@ gimp_sample_point_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_sample_point_savable_save (GimpSavable   *savable,
+                                GOutputStream *output,
+                                gint           n_indent,
+                                GHashTable    *icc_references)
+{
+  GimpSamplePoint   *sample_point = GIMP_SAMPLE_POINT (savable);
+  GEnumClass        *enum_class;
+  GEnumValue        *enum_value;
+  GimpColorPickMode  pick_mode;
+
+  /* XXX At this point, I just store the enum because that's what we
+   * were already doing in XCF, but the question can be raised whether
+   * we'd want a more generic sample points which can display colors in
+   * a random model and space in the future?
+   */
+  pick_mode  = gimp_sample_point_get_pick_mode (sample_point);
+  enum_class = g_type_class_ref (GIMP_TYPE_COLOR_PICK_MODE);
+  enum_value = g_enum_get_value (enum_class, pick_mode);
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "%*c<sample-point pick-mode='%s' />\n",
+                          n_indent, ' ', enum_value->value_nick);
+  g_type_class_unref (enum_class);
 }
 
 GimpSamplePoint *
