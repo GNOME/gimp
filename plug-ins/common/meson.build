@@ -67,6 +67,9 @@ common_plugins_list = [
   { 'name': 'guillotine', },
   { 'name': 'hot', },
   { 'name': 'jigsaw', },
+  { 'name': 'mail',
+    'deps': [ scriptingbridge, mapi ],
+  },
   { 'name': 'nl-filter', },
   { 'name': 'plugin-browser', },
   { 'name': 'procedure-browser', },
@@ -181,11 +184,7 @@ if platform_linux
     'name': 'file-desktop-link',
   }
 endif
-if not platform_windows
-  common_plugins_list += {
-    'name': 'mail',
-    'deps': [ scriptingbridge ],}
-endif
+
 
 plugin_custom_targets = []
 foreach plugin : common_plugins_list
