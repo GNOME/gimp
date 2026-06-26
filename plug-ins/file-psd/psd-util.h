@@ -29,7 +29,7 @@
 void                    psd_set_error          (GError             **error);
 
 gint                    psd_read               (GInputStream        *input,
-                                                gconstpointer        data,
+                                                gpointer             data,
                                                 gint                 count,
                                                 GError             **error);
 
