@@ -66,7 +66,7 @@ common_plugins_list = [
   { 'name': 'hot', },
   { 'name': 'jigsaw', },
   { 'name': 'mail',
-    'deps': [ scriptingbridge, mapi ],
+    'deps': [ scriptingbridge ],
   },
   { 'name': 'nl-filter', },
   { 'name': 'plugin-browser', },
