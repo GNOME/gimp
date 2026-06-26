@@ -57,6 +57,7 @@
 #include "gimpimage-color-profile.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-grid.h"
 #include "gimpimage-item-list.h"
 #include "gimpimage-metadata.h"
 #include "gimpimage-sample-points.h"
@@ -1866,6 +1867,9 @@ gimp_image_savable_save (GimpSavable   *savable,
    * dimensions into some element about physical dimensions?
    */
   gimp_savable_unit_save (gimp_image_get_unit (image), output, 4);
+
+  if (gimp_image_get_grid (image))
+    gimp_savable_save (GIMP_SAVABLE (gimp_image_get_grid (image)), output, 4, icc_refs);
 
   g_output_stream_printf (output, NULL, NULL, NULL, "    <layers>\n");
   iter = gimp_image_get_layer_iter (image);

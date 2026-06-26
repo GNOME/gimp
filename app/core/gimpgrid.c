@@ -35,6 +35,7 @@
 #include "core-types.h"
 
 #include "gimpgrid.h"
+#include "gimpsavable.h"
 
 #include "gimp-intl.h"
 
@@ -54,19 +55,28 @@ enum
 };
 
 
-static void   gimp_grid_finalize     (GObject      *object);
-static void   gimp_grid_get_property (GObject      *object,
-                                      guint         property_id,
-                                      GValue       *value,
-                                      GParamSpec   *pspec);
-static void   gimp_grid_set_property (GObject      *object,
-                                      guint         property_id,
-                                      const GValue *value,
-                                      GParamSpec   *pspec);
+static void   gimp_grid_savable_iface_init (GimpSavableInterface *iface);
+
+static void   gimp_grid_finalize           (GObject              *object);
+static void   gimp_grid_get_property       (GObject              *object,
+                                            guint                 property_id,
+                                            GValue               *value,
+                                            GParamSpec           *pspec);
+static void   gimp_grid_set_property       (GObject              *object,
+                                            guint                 property_id,
+                                            const GValue         *value,
+                                            GParamSpec           *pspec);
+
+static void   gimp_grid_savable_save       (GimpSavable           *savable,
+                                            GOutputStream         *output,
+                                            gint                   n_indent,
+                                            GHashTable            *icc_references);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpGrid, gimp_grid, GIMP_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_grid_savable_iface_init))
 
 #define parent_class gimp_grid_parent_class
 
@@ -153,6 +163,12 @@ gimp_grid_class_init (GimpGridClass *klass)
 
   g_object_unref (black);
   g_object_unref (white);
+}
+
+static void
+gimp_grid_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_grid_savable_save;
 }
 
 static void
@@ -259,6 +275,46 @@ gimp_grid_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_grid_savable_save (GimpSavable   *savable,
+                        GOutputStream *output,
+                        gint           n_indent,
+                        GHashTable    *icc_references)
+{
+  GimpGrid   *grid = GIMP_GRID (savable);
+  GEnumClass *enum_class;
+  GEnumValue *enum_value;
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<grid>\n", n_indent, ' ');
+
+  enum_class = g_type_class_ref (GIMP_TYPE_GRID_STYLE);
+  enum_value = g_enum_get_value (enum_class, grid->style);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<style>%s</style>\n",
+                          n_indent + 2, ' ', enum_value->value_nick);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<foreground>\n", n_indent + 2, ' ');
+  gimp_savable_color_save (grid->fgcolor, NULL, NULL, output, n_indent + 4, icc_references);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</foreground>\n", n_indent + 2, ' ');
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<background>\n", n_indent + 2, ' ');
+  gimp_savable_color_save (grid->bgcolor, NULL, NULL, output, n_indent + 4, icc_references);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</background>\n", n_indent + 2, ' ');
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<spacing x='%f' y='%f/'>\n",
+                          n_indent + 2, ' ', grid->xspacing, grid->yspacing);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<spacing-unit>\n", n_indent + 2, ' ');
+  gimp_savable_unit_save (grid->spacing_unit, output, n_indent + 4);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</spacing-unit>\n", n_indent + 2, ' ');
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<offset x='%f' y='%f/'>\n",
+                          n_indent + 2, ' ', grid->xoffset, grid->yoffset);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<offset-unit>\n", n_indent + 2, ' ');
+  gimp_savable_unit_save (grid->offset_unit, output, n_indent + 4);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</offset-unit>\n", n_indent + 2, ' ');
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</grid>\n", n_indent, ' ');
 }
 
 
