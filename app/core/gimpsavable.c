@@ -24,6 +24,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "gimpimage.h"
@@ -254,4 +256,40 @@ gimp_savable_save_all_spaces (GimpImage     *image,
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c</formats>\n", n_indent, ' ');
 
   return icc_refs;
+}
+
+void
+gimp_savable_unit_save (GimpUnit      *unit,
+                        GOutputStream *output,
+                        gint           n_indent)
+{
+  if (gimp_unit_is_built_in (unit))
+    {
+      GEnumClass *enum_class;
+      GEnumValue *enum_value;
+      guint32     uid = gimp_unit_get_id (unit);
+
+      g_return_if_fail (uid > GIMP_UNIT_PIXEL && uid < GIMP_UNIT_END);
+
+      enum_class = g_type_class_ref (GIMP_TYPE_UNIT_ID);
+      enum_value = g_enum_get_value (enum_class, uid);
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<unit built-in='%s'/>\n",
+                              n_indent, ' ', enum_value->value_nick);
+      g_type_class_unref (enum_class);
+    }
+  else
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<unit>\n", n_indent, ' ');
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<factor>%f</factor>\n",
+                              n_indent + 2, ' ', gimp_unit_get_factor (unit));
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<digits>%d</digits>\n",
+                              n_indent + 2, ' ', gimp_unit_get_digits (unit));
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<name>%s</name>\n",
+                              n_indent + 2, ' ', gimp_unit_get_name (unit));
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<symbol>%s</symbol>\n",
+                              n_indent + 2, ' ', gimp_unit_get_symbol (unit));
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<abbrev>%s</abbrev>\n",
+                              n_indent + 2, ' ', gimp_unit_get_abbreviation (unit));
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</unit>\n", n_indent, ' ');
+    }
 }

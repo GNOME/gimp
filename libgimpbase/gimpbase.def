@@ -238,6 +238,7 @@ EXPORTS
 	gimp_unit_get_scaled_digits
 	gimp_unit_get_symbol
 	gimp_unit_get_type
+	gimp_unit_id_get_type
 	gimp_unit_inch
 	gimp_unit_is_built_in
 	gimp_unit_is_metric

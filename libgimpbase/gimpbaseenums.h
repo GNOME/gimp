@@ -1308,8 +1308,17 @@ typedef enum
  * Integer IDs of built-in units used for dimensions in images. These
  * IDs are meant to stay stable but user-created units IDs may change
  * from one session to another.
+ *
+ * It means you may compare these with the integer returned by
+ * [method@Gimp.Unit.get_id] and it will stay stable across sessions.
+ * For all other non built-in units, you should be careful at comparing
+ * IDs across sessions.
  **/
-typedef enum /*< skip >*/
+#define GIMP_TYPE_UNIT_ID (gimp_unit_id_get_type ())
+
+GType gimp_unit_id_get_type (void) G_GNUC_CONST;
+
+typedef enum
 {
   GIMP_UNIT_PIXEL   = 0,
 

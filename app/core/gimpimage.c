@@ -1862,6 +1862,10 @@ gimp_image_savable_save (GimpSavable   *savable,
   g_output_stream_printf (output, NULL, NULL, NULL,
                           "    <tattoo>%u</tattoo\n",
                           (guint) gimp_image_get_tattoo_state (image));
+  /* XXX: maybe we should merge the image unit  with the print
+   * dimensions into some element about physical dimensions?
+   */
+  gimp_savable_unit_save (gimp_image_get_unit (image), output, 4);
 
   g_output_stream_printf (output, NULL, NULL, NULL, "    <layers>\n");
   iter = gimp_image_get_layer_iter (image);

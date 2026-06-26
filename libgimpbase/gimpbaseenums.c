@@ -1949,6 +1949,46 @@ gimp_transform_resize_get_type (void)
 }
 
 GType
+gimp_unit_id_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_UNIT_PIXEL, "GIMP_UNIT_PIXEL", "pixel" },
+    { GIMP_UNIT_INCH, "GIMP_UNIT_INCH", "inch" },
+    { GIMP_UNIT_MM, "GIMP_UNIT_MM", "mm" },
+    { GIMP_UNIT_POINT, "GIMP_UNIT_POINT", "point" },
+    { GIMP_UNIT_PICA, "GIMP_UNIT_PICA", "pica" },
+    { GIMP_UNIT_END, "GIMP_UNIT_END", "end" },
+    { GIMP_UNIT_PERCENT, "GIMP_UNIT_PERCENT", "percent" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_UNIT_PIXEL, "GIMP_UNIT_PIXEL", NULL },
+    { GIMP_UNIT_INCH, "GIMP_UNIT_INCH", NULL },
+    { GIMP_UNIT_MM, "GIMP_UNIT_MM", NULL },
+    { GIMP_UNIT_POINT, "GIMP_UNIT_POINT", NULL },
+    { GIMP_UNIT_PICA, "GIMP_UNIT_PICA", NULL },
+    { GIMP_UNIT_END, "GIMP_UNIT_END", NULL },
+    { GIMP_UNIT_PERCENT, "GIMP_UNIT_PERCENT", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpUnitID", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "unit-id");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_path_stroke_type_get_type (void)
 {
   static const GEnumValue values[] =

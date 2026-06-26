@@ -77,3 +77,7 @@ void         gimp_savable_color_save      (GeglColor     *color,
 GHashTable * gimp_savable_save_all_spaces (GimpImage     *image,
                                            GOutputStream *output,
                                            gint           n_indent);
+
+void         gimp_savable_unit_save       (GimpUnit      *unit,
+                                           GOutputStream *output,
+                                           gint           n_indent);
