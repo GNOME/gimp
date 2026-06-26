@@ -40,6 +40,10 @@
 #import <Foundation/Foundation.h>
 #import <ScriptingBridge/ScriptingBridge.h>
 #endif
+#ifdef _WIN32
+#include <windows.h>
+#include <mapi.h>
+#endif
 
 #include <glib/gstdio.h>
 
@@ -160,11 +164,14 @@ mail_init_procedures (GimpPlugIn *plug_in)
         }
     }
 #else
-#ifndef __APPLE__
-  email_bin = g_find_program_in_path ("xdg-email");
-#else
+#if defined(__APPLE__)
   /* On macOS, we use native Mail.app, so we don't need xdg-email */
   email_bin = g_strdup ("dummy-apple-mail");
+#elif defined(G_OS_WIN32)
+  /* On macOS, we use native Windows MAPI, so we don't need xdg-email */
+  email_bin = g_strdup ("dummy-windows-mapi");
+#else
+  email_bin = g_find_program_in_path ("xdg-email");
 #endif
 #endif
 
@@ -301,7 +308,7 @@ send_image (GObject       *config,
   gchar             *filepath = NULL;
   GFile             *tmp_dir  = NULL;
   GFileEnumerator   *enumerator;
-#ifndef __APPLE__
+#if !defined(_WIN32) && !defined(__APPLE__)
   gint               i;
 #endif
 #else /* SENDMAIL */
@@ -312,6 +319,19 @@ send_image (GObject       *config,
 #ifdef __APPLE__
   id                 mailapp;
   id                 message;
+#endif
+#ifdef _WIN32
+  ULONG              mailstatus;
+  MapiMessageW       message;
+  MapiFileDescW      attachment;
+  MapiRecipDescW     recipient;
+  wchar_t           *subject_utf16         = NULL;
+  wchar_t           *comment_utf16         = NULL;
+  wchar_t           *filepath_utf16        = NULL;
+  wchar_t           *filename_utf16        = NULL;
+  gchar             *receipt_address       = NULL;
+  wchar_t           *receipt_address_utf16 = NULL;
+  wchar_t           *receipt_utf16         = NULL;
 #endif
   GError            *error    = NULL;
   gchar             *filename = NULL;
@@ -455,6 +475,59 @@ send_image (GObject       *config,
         goto error;
       }
   }
+
+#elif defined (G_OS_WIN32)
+  memset (&message, 0, sizeof (MapiMessageW));
+  if (subject && strlen (subject) > 0)
+    {
+      subject_utf16 = (wchar_t *) g_utf8_to_utf16 (subject, -1, NULL, NULL, NULL);
+      message.lpszSubject = subject_utf16;
+    }
+  if (comment && strlen (comment) > 0)
+    {
+      comment_utf16 = (wchar_t *) g_utf8_to_utf16 (comment, -1, NULL, NULL, NULL);
+      message.lpszNoteText = comment_utf16;
+    }
+
+  memset (&attachment, 0, sizeof (MapiFileDescW));
+  if (filepath)
+    {
+      filepath_utf16 = (wchar_t *) g_utf8_to_utf16 (filepath, -1, NULL, NULL, NULL);
+      filename_utf16 = (wchar_t *) g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
+      attachment.nPosition = (ULONG)-1;
+      attachment.lpszPathName = filepath_utf16;
+      attachment.lpszFileName = filename_utf16;
+      message.nFileCount = 1;
+      message.lpFiles = &attachment;
+    }
+
+  memset (&recipient, 0, sizeof (MapiRecipDescW));
+  if (receipt && strlen (receipt) > 0)
+    {
+      receipt_address = g_strdup_printf ("SMTP:%s", receipt);
+      receipt_address_utf16 = (wchar_t *) g_utf8_to_utf16 (receipt_address, -1, NULL, NULL, NULL);
+      receipt_utf16 = (wchar_t *) g_utf8_to_utf16 (receipt, -1, NULL, NULL, NULL);
+      recipient.ulRecipClass = MAPI_TO;
+      recipient.lpszAddress = receipt_address_utf16;
+      recipient.lpszName = receipt_utf16;
+      message.nRecipCount = 1;
+      message.lpRecips = &recipient;
+    }
+
+  mailstatus = MAPISendMailW (0, 0, &message, MAPI_DIALOG | MAPI_LOGON_UI, 0);
+  g_free (subject_utf16);
+  g_free (comment_utf16);
+  g_free (filepath_utf16);
+  g_free (filename_utf16);
+  g_free (receipt_address);
+  g_free (receipt_address_utf16);
+  g_free (receipt_utf16);
+
+  if (mailstatus != SUCCESS_SUCCESS && mailstatus != MAPI_USER_ABORT)
+    {
+      g_message ("Windows MAPI failed with error code: %lu", mailstatus);
+      goto error;
+    }
 
 #else /* ! __APPLE__ so LINUX */
   mailcmd[0] = g_strdup ("xdg-email");

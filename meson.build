@@ -1165,6 +1165,7 @@ else
   endif
 endif
 scriptingbridge = platform_osx ? dependency('appleframeworks', modules: 'ScriptingBridge', required: true) : no_dep
+mapi = platform_windows ? cc.find_library('mapi32', required: true) : no_dep
 
 
 ################################################################################
