@@ -119,6 +119,88 @@ static void        about_dialog_download_clicked
                                               (GtkButton   *button,
                                                const gchar *link);
 
+static gchar *
+gimp_native_date_time_format (GDateTime   *datetime,
+                              const gchar *format)
+{
+#define FORMAT_DATE 1
+#define FORMAT_TIME 2
+  gint   mode     = (g_strcmp0 (format, "%x") == 0) ? FORMAT_DATE : FORMAT_TIME;
+  gchar *result   = NULL;
+
+#if defined(PLATFORM_OSX)
+  NSAutoreleasePool *pool         = [[NSAutoreleasePool alloc] init];
+  NSDateFormatter   *formatter    = [[NSDateFormatter alloc] init];
+  NSDate            *current_date = [NSDate date];
+  NSString          *formatted    = NULL;
+
+  formatter.locale = [NSLocale currentLocale];
+
+  if (mode == FORMAT_DATE)
+    {
+      formatter.dateStyle = NSDateFormatterShortStyle;
+      formatter.timeStyle = NSDateFormatterNoStyle;
+    }
+  else
+    {
+      formatter.dateStyle = NSDateFormatterNoStyle;
+      formatter.timeStyle = NSDateFormatterMediumStyle;
+    }
+  formatted = [formatter stringFromDate:current_date];
+
+  if (formatted)
+    result = g_strdup ([formatted UTF8String]);
+
+  [formatter release];
+  [pool drain];
+
+  if (result)
+    return result;
+
+#elif defined(G_OS_WIN32)
+  SYSTEMTIME st;
+  int        date_len, time_len;
+  wchar_t   *date_buf = NULL;
+  wchar_t   *time_buf = NULL;
+
+  GetLocalTime (&st);
+
+  if (mode == FORMAT_DATE)
+    {
+      date_len = GetDateFormatEx (LOCALE_NAME_USER_DEFAULT, 0, &st,
+                                  NULL, NULL, 0, NULL);
+      if (date_len > 0)
+        {
+          date_buf = g_malloc (date_len * sizeof (wchar_t));
+          if (GetDateFormatEx(LOCALE_NAME_USER_DEFAULT, 0, &st, NULL, date_buf, date_len, NULL))
+            result = g_utf16_to_utf8 ((gunichar2*) date_buf, -1, NULL, NULL, NULL);
+          g_free (date_buf);
+        }
+    }
+  else
+    {
+      time_len = GetTimeFormatEx (LOCALE_NAME_USER_DEFAULT, 0, &st,
+                                  NULL, NULL, 0);
+      if (time_len > 0)
+        {
+          time_buf = g_malloc (time_len * sizeof (wchar_t));
+          if (GetTimeFormatEx(LOCALE_NAME_USER_DEFAULT, 0, &st, NULL, time_buf, time_len))
+            result = g_utf16_to_utf8 ((gunichar2*) time_buf, -1, NULL, NULL, NULL);
+          g_free (time_buf);
+        }
+    }
+
+  if (result)
+    return result;
+#endif
+
+  /* Fallback for Linux/Unix and for Windows/macOS API failures */
+  return g_date_time_format (datetime, format);
+
+#undef FORMAT_DATE
+#undef FORMAT_TIME
+}
+
 GtkWidget *
 about_dialog_create (Gimp           *gimp,
                      GimpCoreConfig *config)
@@ -434,7 +516,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
 
       /* The preferred localized date representation without the time. */
       datetime = g_date_time_new_from_unix_local (config->last_release_timestamp);
-      date = g_date_time_format (datetime, "%x");
+      date = gimp_native_date_time_format (datetime, "%x");
       g_date_time_unref (datetime);
 
       if (config->last_revision > 0)
@@ -514,87 +596,11 @@ about_dialog_add_update (GimpAboutDialog *dialog,
     {
       gchar             *subtext;
       gchar             *time;
-#if defined(PLATFORM_OSX)
-      NSAutoreleasePool *pool         = [[NSAutoreleasePool alloc] init];
-      NSDateFormatter   *formatter    = [[NSDateFormatter alloc] init];
-      NSDate            *current_date = [NSDate date];
-      NSString          *formatted_date;
-      NSString          *formatted_time;
-#elif defined(G_OS_WIN32)
-      SYSTEMTIME         st;
-      int                date_len, time_len;
-      wchar_t           *date_buf = NULL;
-      wchar_t           *time_buf = NULL;
-#endif
 
       datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
 
-#if defined(PLATFORM_OSX)
-      formatter.locale = [NSLocale currentLocale];
-
-      formatter.dateStyle = NSDateFormatterShortStyle;
-      formatter.timeStyle = NSDateFormatterNoStyle;
-      formatted_date      = [formatter stringFromDate:current_date];
-
-      formatter.dateStyle = NSDateFormatterNoStyle;
-      formatter.timeStyle = NSDateFormatterMediumStyle;
-      formatted_time      = [formatter stringFromDate:current_date];
-
-      if (formatted_date)
-        date = g_strdup ([formatted_date UTF8String]);
-      else
-        date = g_date_time_format (datetime, "%x");
-
-      if (formatted_time)
-        time = g_strdup ([formatted_time UTF8String]);
-      else
-        time = g_date_time_format (datetime, "%X");
-
-      [formatter release];
-      [pool drain];
-#elif defined(G_OS_WIN32)
-      GetLocalTime (&st);
-
-      date_len = GetDateFormatEx (LOCALE_NAME_USER_DEFAULT, 0, &st,
-                                  NULL, NULL, 0, NULL);
-      if (date_len > 0)
-       {
-          date_buf = g_malloc (date_len * sizeof (wchar_t));
-          if (! GetDateFormatEx(LOCALE_NAME_USER_DEFAULT, 0, &st, NULL, date_buf, date_len, NULL))
-            {
-              g_free (date_buf);
-              date_buf = NULL;
-            }
-        }
-
-      time_len = GetTimeFormatEx (LOCALE_NAME_USER_DEFAULT, 0, &st,
-                                  NULL, NULL, 0);
-      if (time_len > 0)
-        {
-            time_buf = g_malloc (time_len * sizeof (wchar_t));
-            if (! GetTimeFormatEx (LOCALE_NAME_USER_DEFAULT, 0, &st, NULL, time_buf, time_len))
-              {
-                g_free (time_buf);
-                time_buf = NULL;
-              }
-        }
-
-      if (date_buf)
-        date = g_utf16_to_utf8 ((gunichar2*) date_buf, -1, NULL, NULL, NULL);
-      else
-        date = g_date_time_format (datetime, "%x");
-
-      if (time_buf)
-        time = g_utf16_to_utf8 ((gunichar2*) time_buf, -1, NULL, NULL, NULL);
-      else
-        time = g_date_time_format (datetime, "%X");
-
-      g_free (date_buf);
-      g_free (time_buf);
-#else
-      date = g_date_time_format (datetime, "%x");
-      time = g_date_time_format (datetime, "%X");
-#endif
+      date = gimp_native_date_time_format (datetime, "%x");
+      time = gimp_native_date_time_format (datetime, "%X");
       if (config->last_known_release != NULL)
         /* Translators: first string is the date in the locale's date
         * representation (e.g., 12/31/99), second is the time in the
