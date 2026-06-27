@@ -125,8 +125,11 @@ gimp_native_date_time_format (GDateTime   *datetime,
 {
 #define FORMAT_DATE 1
 #define FORMAT_TIME 2
+
+#if defined(PLATFORM_OSX) || defined(G_OS_WIN32)
   gint   mode     = (g_strcmp0 (format, "%x") == 0) ? FORMAT_DATE : FORMAT_TIME;
   gchar *result   = NULL;
+#endif
 
 #if defined(PLATFORM_OSX)
   NSAutoreleasePool *pool         = [[NSAutoreleasePool alloc] init];
