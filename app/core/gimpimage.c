@@ -1891,6 +1891,10 @@ gimp_image_savable_save (GimpSavable   *savable,
       g_output_stream_printf (output, NULL, NULL, NULL, "    </symmetries>\n");
     }
 
+  if (gimp_parasite_list_length (private->parasites) > 0 &&
+      gimp_parasite_list_persistent_length (private->parasites) > 0)
+    gimp_savable_save (GIMP_SAVABLE (private->parasites), output, 4, icc_refs);
+
   g_output_stream_printf (output, NULL, NULL, NULL, "    <layers>\n");
   iter = gimp_image_get_layer_iter (image);
   for (; iter; iter = iter->next)

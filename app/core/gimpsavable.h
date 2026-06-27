@@ -90,3 +90,7 @@ void         gimp_savable_unit_save       (GimpUnit      *unit,
 void         gimp_savable_metadata_save   (GimpMetadata  *metadata,
                                            GOutputStream *output,
                                            gint           n_indent);
+
+void         gimp_savable_parasite_save   (GimpParasite  *parasite,
+                                           GOutputStream *output,
+                                           gint           n_indent);

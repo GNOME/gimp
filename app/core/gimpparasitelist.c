@@ -28,6 +28,7 @@
 
 #include "gimp-memsize.h"
 #include "gimpparasitelist.h"
+#include "gimpsavable.h"
 
 
 enum
@@ -37,38 +38,56 @@ enum
   LAST_SIGNAL
 };
 
+typedef struct
+{
+  GOutputStream *output;
+  gint           n_indent;
+} GimpParasiteListSavableData;
 
-static void     gimp_parasite_list_finalize          (GObject     *object);
-static gint64   gimp_parasite_list_get_memsize       (GimpObject  *object,
-                                                      gint64      *gui_size);
 
-static void     gimp_parasite_list_config_iface_init (gpointer     iface,
-                                                      gpointer     iface_data);
-static gboolean gimp_parasite_list_serialize    (GimpConfig       *list,
-                                                 GimpConfigWriter *writer,
-                                                 gpointer          data);
-static gboolean gimp_parasite_list_deserialize  (GimpConfig       *list,
-                                                 GScanner         *scanner,
-                                                 gint              nest_level,
-                                                 gpointer          data);
+static void     gimp_parasite_list_finalize            (GObject                     *object);
+static gint64   gimp_parasite_list_get_memsize         (GimpObject                  *object,
+                                                        gint64                      *gui_size);
 
-static void     parasite_serialize           (const gchar      *key,
-                                              GimpParasite     *parasite,
-                                              GimpConfigWriter *writer);
-static void     parasite_copy                (const gchar      *key,
-                                              GimpParasite     *parasite,
-                                              GimpParasiteList *list);
-static gboolean parasite_free                (const gchar      *key,
-                                              GimpParasite     *parasite,
-                                              gpointer          unused);
-static void     parasite_count_if_persistent (const gchar      *key,
-                                              GimpParasite     *parasite,
-                                              gint             *count);
+static void     gimp_parasite_list_config_iface_init   (gpointer                     iface,
+                                                        gpointer                     iface_data);
+static void     gimp_parasite_list_savable_iface_init  (GimpSavableInterface        *iface);
+
+static gboolean gimp_parasite_list_serialize           (GimpConfig                  *list,
+                                                        GimpConfigWriter            *writer,
+                                                        gpointer                     data);
+static gboolean gimp_parasite_list_deserialize         (GimpConfig                  *list,
+                                                        GScanner                    *scanner,
+                                                        gint                         nest_level,
+                                                        gpointer                     data);
+
+static void     gimp_parasite_list_save_parasite_func  (gchar                       *key,
+                                                        GimpParasite                *parasite,
+                                                        GimpParasiteListSavableData *data);
+static void     gimp_parasite_list_savable_save        (GimpSavable                 *savable,
+                                                        GOutputStream               *output,
+                                                        gint                         n_indent,
+                                                        GHashTable                  *icc_references);
+
+static void     parasite_serialize                     (const gchar                 *key,
+                                                        GimpParasite                *parasite,
+                                                        GimpConfigWriter            *writer);
+static void     parasite_copy                          (const gchar                 *key,
+                                                        GimpParasite                *parasite,
+                                                        GimpParasiteList            *list);
+static gboolean parasite_free                          (const gchar                 *key,
+                                                        GimpParasite                *parasite,
+                                                        gpointer                     unused);
+static void     parasite_count_if_persistent           (const gchar                 *key,
+                                                        GimpParasite                *parasite,
+                                                        gint                        *count);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpParasiteList, gimp_parasite_list, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_parasite_list_config_iface_init))
+                                                gimp_parasite_list_config_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_parasite_list_savable_iface_init))
 
 #define parent_class gimp_parasite_list_parent_class
 
@@ -116,6 +135,12 @@ gimp_parasite_list_config_iface_init (gpointer  iface,
 
   config_iface->serialize   = gimp_parasite_list_serialize;
   config_iface->deserialize = gimp_parasite_list_deserialize;
+}
+
+static void
+gimp_parasite_list_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_parasite_list_savable_save;
 }
 
 static void
@@ -276,6 +301,31 @@ gimp_parasite_list_deserialize (GimpConfig *list,
     }
 
   return gimp_config_deserialize_return (scanner, token, nest_level);
+}
+
+static void
+gimp_parasite_list_save_parasite_func (gchar                       *key,
+                                       GimpParasite                *parasite,
+                                       GimpParasiteListSavableData *data)
+{
+  gimp_savable_parasite_save (parasite, data->output, data->n_indent);
+}
+
+static void
+gimp_parasite_list_savable_save (GimpSavable   *savable,
+                                 GOutputStream *output,
+                                 gint           n_indent,
+                                 GHashTable    *icc_references)
+{
+  GimpParasiteList            *list = GIMP_PARASITE_LIST (savable);
+  GimpParasiteListSavableData  data;
+
+  data.output   = output;
+  data.n_indent = n_indent + 2;
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<parasites>\n", n_indent, ' ');
+  gimp_parasite_list_foreach (list, (GHFunc) gimp_parasite_list_save_parasite_func, &data);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</parasites>\n", n_indent, ' ');
 }
 
 GimpParasiteList *

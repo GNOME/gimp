@@ -381,3 +381,33 @@ gimp_savable_metadata_save (GimpMetadata  *metadata,
   g_free (meta_string);
   g_free (escaped);
 }
+
+void
+gimp_savable_parasite_save (GimpParasite  *parasite,
+                            GOutputStream *output,
+                            gint           n_indent)
+{
+  if (gimp_parasite_is_persistent (parasite))
+    {
+      const gchar   *name;
+      gchar         *escaped;
+      gulong         flags;
+      gconstpointer  data;
+      guint32        data_length;
+      gchar         *data_b64;
+
+      name    = gimp_parasite_get_name (parasite);
+      escaped = g_markup_escape_text (name, -1);
+      flags   = gimp_parasite_get_flags (parasite);
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<parasite name='%s' flags='%ld'>",
+                              n_indent, ' ', escaped, flags);
+
+      data     = gimp_parasite_get_data (parasite, &data_length);
+      data_b64 = g_base64_encode ((const guchar*) data, data_length);
+
+      g_output_stream_printf (output, NULL, NULL, NULL, "%s</parasite>\n", data_b64);
+
+      g_free (escaped);
+      g_free (data_b64);
+    }
+}
