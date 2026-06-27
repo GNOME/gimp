@@ -16,15 +16,8 @@ clang-format --version
 git diff -U0 --no-color "${newest_common_ancestor_sha}" | clang-format-diff -p1 > format-diff.log
 )
 exit_status=$?
-
-if [ ${exit_status} -ne 0 ]; then
-  printf '\033[31m(ERROR)\033[0m: git diff or clang-format-diff pipeline failed with exit code ${exit_status}.\n'
-  exit ${exit_status}
-fi
-
 format_diff="$(cat format-diff.log)"
-
-if [ -n "${format_diff}" ]; then
+if [ ${exit_status} -ne 0 ] || [ -n "${format_diff}" ]; then
   printf '\033[31m(ERROR)\033[0m: Coding Style check failed. Please make the following changes:\n'
   cat format-diff.log
   exit 1
