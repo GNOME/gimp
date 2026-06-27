@@ -35,6 +35,7 @@
 #include "gimpitemlist.h"
 #include "gimplayer.h"
 #include "gimpmarshal.h"
+#include "gimpsavable.h"
 
 #include "path/gimppath.h"
 
@@ -76,41 +77,51 @@ struct _GimpItemListPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_item_list_constructed         (GObject        *object);
-static void       gimp_item_list_dispose             (GObject        *object);
-static void       gimp_item_list_finalize            (GObject        *object);
-static void       gimp_item_list_set_property        (GObject        *object,
-                                                      guint           property_id,
-                                                      const GValue   *value,
-                                                      GParamSpec     *pspec);
-static void       gimp_item_list_get_property        (GObject        *object,
-                                                      guint           property_id,
-                                                      GValue         *value,
-                                                      GParamSpec     *pspec);
+static void       gimp_item_list_savable_iface_init  (GimpSavableInterface  *iface);
 
-static void       gimp_item_list_item_add            (GimpContainer  *container,
-                                                      GimpObject     *object,
-                                                      GimpItemList   *set);
-static void       gimp_item_list_item_remove         (GimpContainer  *container,
-                                                      GimpObject     *object,
-                                                      GimpItemList   *set);
+static void       gimp_item_list_constructed         (GObject               *object);
+static void       gimp_item_list_dispose             (GObject               *object);
+static void       gimp_item_list_finalize            (GObject               *object);
+static void       gimp_item_list_set_property        (GObject               *object,
+                                                      guint                  property_id,
+                                                      const GValue          *value,
+                                                      GParamSpec            *pspec);
+static void       gimp_item_list_get_property        (GObject               *object,
+                                                      guint                  property_id,
+                                                      GValue                *value,
+                                                      GParamSpec            *pspec);
 
-static GList *    gimp_item_list_get_items_by_substr (GimpItemList   *set,
-                                                      const gchar    *pattern,
-                                                      GError        **error);
-static GList *    gimp_item_list_get_items_by_glob   (GimpItemList   *set,
-                                                      const gchar    *pattern,
-                                                      GError        **error);
-static GList *    gimp_item_list_get_items_by_regexp (GimpItemList   *set,
-                                                      const gchar    *pattern,
-                                                      GError        **error);
-static void       gimp_item_list_clean_deleted_items (GimpItemList   *set,
-                                                      GimpItem       *searched,
-                                                      gboolean       *found);
-static void       gimp_item_list_free_deleted_item   (GWeakRef       *item);
+static void       gimp_item_list_savable_save        (GimpSavable           *savable,
+                                                      GOutputStream         *output,
+                                                      gint                   n_indent,
+                                                      GHashTable            *icc_references);
+
+static void       gimp_item_list_item_add            (GimpContainer         *container,
+                                                      GimpObject            *object,
+                                                      GimpItemList          *set);
+static void       gimp_item_list_item_remove         (GimpContainer         *container,
+                                                      GimpObject            *object,
+                                                      GimpItemList          *set);
+
+static GList *    gimp_item_list_get_items_by_substr (GimpItemList          *set,
+                                                      const gchar           *pattern,
+                                                      GError               **error);
+static GList *    gimp_item_list_get_items_by_glob   (GimpItemList          *set,
+                                                      const gchar           *pattern,
+                                                      GError               **error);
+static GList *    gimp_item_list_get_items_by_regexp (GimpItemList          *set,
+                                                      const gchar           *pattern,
+                                                      GError               **error);
+static void       gimp_item_list_clean_deleted_items (GimpItemList          *set,
+                                                      GimpItem              *searched,
+                                                      gboolean              *found);
+static void       gimp_item_list_free_deleted_item   (GWeakRef              *item);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpItemList, gimp_item_list, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (GimpItemList, gimp_item_list, GIMP_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpItemList)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_item_list_savable_iface_init))
 
 #define parent_class gimp_item_list_parent_class
 
@@ -166,6 +177,12 @@ gimp_item_list_class_init (GimpItemListClass *klass)
                                                                  G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, N_PROPS, gimp_item_list_props);
+}
+
+static void
+gimp_item_list_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_item_list_savable_save;
 }
 
 static void
@@ -309,6 +326,56 @@ gimp_item_list_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_item_list_savable_save (GimpSavable   *savable,
+                             GOutputStream *output,
+                             gint           n_indent,
+                             GHashTable    *icc_references)
+{
+  GimpItemList     *list = GIMP_ITEM_LIST (savable);
+  gchar            *encoded;
+  GimpSelectMethod  pattern_syntax;
+
+  encoded = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (list)), -1);
+
+  if (gimp_item_list_is_pattern (list, &pattern_syntax))
+    {
+      GEnumClass *enum_class;
+      GEnumValue *enum_value;
+
+      enum_class = g_type_class_ref (GIMP_TYPE_SELECT_METHOD);
+      enum_value = g_enum_get_value (enum_class, pattern_syntax);
+
+      g_output_stream_printf (output, NULL, NULL, NULL,
+                              "%*c<item-set type='%s'>\n", n_indent, ' ',
+                              g_type_name (gimp_item_list_get_item_type (list)));
+      g_output_stream_printf (output, NULL, NULL, NULL,
+                              "%*c<pattern method='%s'>%s</pattern>\n",
+                              n_indent + 2, ' ', enum_value->value_nick, encoded);
+
+      g_type_class_unref (enum_class);
+    }
+  else
+    {
+      GList *iter;
+
+      g_output_stream_printf (output, NULL, NULL, NULL,
+                              "%*c<item-set type='%s' name='%s'>\n",
+                              n_indent, ' ',
+                              g_type_name (gimp_item_list_get_item_type (list)),
+                              encoded);
+      for (iter = list->p->items; iter; iter = iter->next)
+        g_output_stream_printf (output, NULL, NULL, NULL,
+                                "%*c<item tattooref='%u'/>\n",
+                                n_indent + 2, ' ',
+                                (guint) gimp_item_get_tattoo (GIMP_ITEM (iter->data)));
+    }
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</item-set>\n", n_indent, ' ');
+
+  g_free (encoded);
 }
 
 

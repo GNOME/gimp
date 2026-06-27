@@ -1895,6 +1895,28 @@ gimp_image_savable_save (GimpSavable   *savable,
       gimp_parasite_list_persistent_length (private->parasites) > 0)
     gimp_savable_save (GIMP_SAVABLE (private->parasites), output, 4, icc_refs);
 
+  if (private->stored_layer_sets)
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "    <layer-sets>\n");
+      for (iter = private->stored_layer_sets; iter; iter = iter->next)
+        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, icc_refs);
+      g_output_stream_printf (output, NULL, NULL, NULL, "    </layer-sets>\n");
+    }
+  if (private->stored_channel_sets)
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "    <channel-sets>\n");
+      for (iter = private->stored_channel_sets; iter; iter = iter->next)
+        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, icc_refs);
+      g_output_stream_printf (output, NULL, NULL, NULL, "    </channel-sets>\n");
+    }
+  if (private->stored_path_sets)
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "    <path-sets>\n");
+      for (iter = private->stored_path_sets; iter; iter = iter->next)
+        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, icc_refs);
+      g_output_stream_printf (output, NULL, NULL, NULL, "    </path-sets>\n");
+    }
+
   g_output_stream_printf (output, NULL, NULL, NULL, "    <layers>\n");
   iter = gimp_image_get_layer_iter (image);
   for (; iter; iter = iter->next)
