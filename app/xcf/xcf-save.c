@@ -2176,7 +2176,6 @@ xcf_save_layer (XcfInfo    *info,
                 }
             }
         }
-      g_list_free (list);
     }
 
   return TRUE;
