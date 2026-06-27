@@ -35,6 +35,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
@@ -46,15 +47,18 @@
 
 #include "gimp.h"
 #include "gimpchannel.h"
+#include "gimpcontext.h"
 #include "gimpdrawable-filters.h"
 #include "gimpdrawablefilter.h"
 #include "gimpdrawablefiltermask.h"
 #include "gimperror.h"
+#include "gimpgradient.h"
 #include "gimpidtable.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplist.h"
 #include "gimpprogress.h"
+#include "gimpsavable.h"
 
 #include "gimp-intl.h"
 
@@ -122,65 +126,75 @@ struct _GimpDrawableFilter
   gboolean                to_be_merged;
 };
 
-static void       gimp_drawable_filter_set_property          (GObject             *object,
-                                                              guint                property_id,
-                                                              const GValue        *value,
-                                                              GParamSpec          *pspec);
 
-static void       gimp_drawable_filter_get_property          (GObject             *object,
-                                                              guint                property_id,
-                                                              GValue              *value,
-                                                              GParamSpec          *pspec);
-static void       gimp_drawable_filter_dispose               (GObject             *object);
-static void       gimp_drawable_filter_finalize              (GObject             *object);
+static void       gimp_savable_iface_init                    (GimpSavableInterface *iface);
 
-static void       gimp_drawable_filter_sync_active           (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_clip             (GimpDrawableFilter  *filter,
-                                                              gboolean             sync_region);
-static void       gimp_drawable_filter_sync_region           (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_crop             (GimpDrawableFilter  *filter,
-                                                              gboolean             old_crop_enabled,
-                                                              const GeglRectangle *old_crop_rect,
-                                                              gboolean             old_preview_split_enabled,
-                                                              GimpAlignmentType    old_preview_split_alignment,
-                                                              gint                 old_preview_split_position,
-                                                              gboolean             update);
-static void       gimp_drawable_filter_sync_opacity          (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_mode             (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_affect           (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_format           (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_mask             (GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_set_property          (GObject              *object,
+                                                              guint                 property_id,
+                                                              const GValue         *value,
+                                                              GParamSpec           *pspec);
 
-static gboolean   gimp_drawable_filter_is_added              (GimpDrawableFilter  *filter);
-static gboolean   gimp_drawable_filter_is_active             (GimpDrawableFilter  *filter);
-static gboolean   gimp_drawable_filter_add_filter            (GimpDrawableFilter  *filter);
-static gboolean   gimp_drawable_filter_remove_filter         (GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_get_property          (GObject              *object,
+                                                              guint                 property_id,
+                                                              GValue               *value,
+                                                              GParamSpec           *pspec);
+static void       gimp_drawable_filter_dispose               (GObject              *object);
+static void       gimp_drawable_filter_finalize              (GObject              *object);
 
-static void       gimp_drawable_filter_update_drawable       (GimpDrawableFilter  *filter,
-                                                              const GeglRectangle *area);
+static void       gimp_drawable_filter_save                  (GimpSavable          *savable,
+                                                              GOutputStream        *output,
+                                                              gint                  n_indent,
+                                                              GHashTable           *icc_references);
 
-static void       gimp_drawable_filter_affect_changed        (GimpImage           *image,
-                                                              GimpChannelType      channel,
-                                                              GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_mask_changed          (GimpImage           *image,
-                                                              GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_lock_position_changed (GimpDrawable        *drawable,
-                                                              GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_format_changed        (GimpDrawable        *drawable,
-                                                              GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_drawable_removed      (GimpDrawable        *drawable,
-                                                              GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_lock_alpha_changed    (GimpLayer           *layer,
-                                                              GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_sync_active           (GimpDrawableFilter   *filter);
+static void       gimp_drawable_filter_sync_clip             (GimpDrawableFilter   *filter,
+                                                              gboolean              sync_region);
+static void       gimp_drawable_filter_sync_region           (GimpDrawableFilter   *filter);
+static void       gimp_drawable_filter_sync_crop             (GimpDrawableFilter   *filter,
+                                                              gboolean              old_crop_enabled,
+                                                              const GeglRectangle  *old_crop_rect,
+                                                              gboolean              old_preview_split_enabled,
+                                                              GimpAlignmentType     old_preview_split_alignment,
+                                                              gint                  old_preview_split_position,
+                                                              gboolean              update);
+static void       gimp_drawable_filter_sync_opacity          (GimpDrawableFilter   *filter);
+static void       gimp_drawable_filter_sync_mode             (GimpDrawableFilter   *filter);
+static void       gimp_drawable_filter_sync_affect           (GimpDrawableFilter   *filter);
+static void       gimp_drawable_filter_sync_format           (GimpDrawableFilter   *filter);
+static void       gimp_drawable_filter_sync_mask             (GimpDrawableFilter   *filter);
 
-static void       gimp_drawable_filter_reorder               (GimpFilterStack    *stack,
-                                                              GimpDrawableFilter *reordered_filter,
-                                                              gint                old_index,
-                                                              gint                new_index,
-                                                              GimpDrawableFilter *filter);
+static gboolean   gimp_drawable_filter_is_added              (GimpDrawableFilter   *filter);
+static gboolean   gimp_drawable_filter_is_active             (GimpDrawableFilter   *filter);
+static gboolean   gimp_drawable_filter_add_filter            (GimpDrawableFilter   *filter);
+static gboolean   gimp_drawable_filter_remove_filter         (GimpDrawableFilter   *filter);
+
+static void       gimp_drawable_filter_update_drawable       (GimpDrawableFilter   *filter,
+                                                              const GeglRectangle  *area);
+
+static void       gimp_drawable_filter_affect_changed        (GimpImage            *image,
+                                                              GimpChannelType       channel,
+                                                              GimpDrawableFilter   *filter);
+static void       gimp_drawable_filter_mask_changed          (GimpImage            *image,
+                                                              GimpDrawableFilter   *filter);
+static void       gimp_drawable_filter_lock_position_changed (GimpDrawable         *drawable,
+                                                              GimpDrawableFilter   *filter);
+static void       gimp_drawable_filter_format_changed        (GimpDrawable         *drawable,
+                                                              GimpDrawableFilter   *filter);
+static void       gimp_drawable_filter_drawable_removed      (GimpDrawable         *drawable,
+                                                              GimpDrawableFilter   *filter);
+static void       gimp_drawable_filter_lock_alpha_changed    (GimpLayer            *layer,
+                                                              GimpDrawableFilter   *filter);
+
+static void       gimp_drawable_filter_reorder               (GimpFilterStack      *stack,
+                                                              GimpDrawableFilter   *reordered_filter,
+                                                              gint                  old_index,
+                                                              gint                  new_index,
+                                                              GimpDrawableFilter   *filter);
 
 
-G_DEFINE_TYPE (GimpDrawableFilter, gimp_drawable_filter, GIMP_TYPE_FILTER)
+G_DEFINE_TYPE_WITH_CODE (GimpDrawableFilter, gimp_drawable_filter, GIMP_TYPE_FILTER,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_savable_iface_init))
 
 #define parent_class gimp_drawable_filter_parent_class
 
@@ -239,6 +253,12 @@ gimp_drawable_filter_class_init (GimpDrawableFilterClass *klass)
                                                                    GIMP_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, N_PROPS, drawable_filter_props);
+}
+
+static void
+gimp_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_drawable_filter_save;
 }
 
 static void
@@ -369,6 +389,216 @@ gimp_drawable_filter_finalize (GObject *object)
   g_clear_object (&drawable_filter->mask);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_drawable_filter_save (GimpSavable   *savable,
+                           GOutputStream *output,
+                           gint           n_indent,
+                           GHashTable    *icc_references)
+{
+  GimpDrawableFilter      *filter = GIMP_DRAWABLE_FILTER (savable);
+  GimpDrawableFilterMask  *mask;
+  GeglNode                *node;
+  gchar                   *operation;
+  gchar                   *op_version;
+  GParamSpec             **pspecs;
+  guint                    n_pspecs;
+  gchar                   *name;
+  gchar                   *icon;
+  GEnumClass              *enum_class;
+  GEnumValue              *enum_value;
+  gboolean                 has_custom_name;
+  GimpLayerMode            mode;
+  GimpLayerColorSpace      space;
+  GimpLayerCompositeMode   composite_mode;
+  GimpFilterRegion         region;
+
+  node = gimp_drawable_filter_get_operation (filter);
+
+  gegl_node_get (node,
+                 "operation", &operation,
+                 NULL);
+
+  g_object_get (filter,
+                "name",        &name,
+                "icon-name",   &icon,
+                "custom-name", &has_custom_name,
+                NULL);
+
+  if (has_custom_name)
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<filter name='%s'>\n", n_indent, ' ', name);
+  else
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<filter>\n", n_indent, ' ');
+
+  if (icon && *icon)
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<icon>%s</icon>\n", n_indent + 2, ' ', icon);
+
+  op_version = g_markup_escape_text (gegl_operation_get_op_version (operation), -1);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<operation name='%s' version='%s'>\n",
+                          n_indent + 2, ' ', operation, op_version);
+  pspecs = gegl_operation_list_properties (operation, &n_pspecs);
+  for (gint i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec *pspec  = pspecs[i];
+      GValue      value  = G_VALUE_INIT;
+      gchar      *strval = NULL;
+
+      g_value_init (&value, pspec->value_type);
+      gegl_node_get_property (node, pspec->name, &value);
+
+      switch (G_VALUE_TYPE (&value))
+        {
+          case G_TYPE_INT:
+            strval = g_strdup_printf ("%d", g_value_get_int (&value));
+            break;
+
+          case G_TYPE_UINT:
+            strval = g_strdup_printf ("%u", g_value_get_uint (&value));
+            break;
+
+          case G_TYPE_BOOLEAN:
+            strval = g_strdup_printf ("%s", g_value_get_boolean (&value) ? "true" : "false");
+            break;
+
+          case G_TYPE_FLOAT:
+          case G_TYPE_DOUBLE:
+            strval = g_strdup_printf ("%f", g_value_get_double (&value));
+            break;
+
+          case G_TYPE_STRING:
+            strval = g_strdup (g_value_get_string (&value));
+            break;
+
+          default:
+            if (g_type_is_a (G_VALUE_TYPE (&value), GIMP_TYPE_CONTEXT))
+              {
+                /* No need to save the context - we'll set it on load */
+              }
+            else if (g_type_is_a (G_VALUE_TYPE (&value), GIMP_TYPE_GRADIENT))
+              {
+                g_output_stream_printf (output, NULL, NULL, NULL,
+                                        "%*c<argument name='%s' type='%s'>\n",
+                                        n_indent + 4, ' ',
+                                        pspec->name, g_type_name (G_VALUE_TYPE (&value)));
+                gimp_savable_save (g_value_get_object (&value), output, n_indent + 6, icc_references);
+                g_output_stream_printf (output, NULL, NULL, NULL, "%*c</argument>\n", n_indent + 4, ' ');
+              }
+            else if (g_type_is_a (G_VALUE_TYPE (&value), GIMP_TYPE_CONFIG))
+              {
+                g_output_stream_printf (output, NULL, NULL, NULL,
+                                        "%*c<argument name='%s' type='%s'>\n",
+                                        n_indent + 4, ' ',
+                                        pspec->name, g_type_name (G_VALUE_TYPE (&value)));
+                gimp_savable_config_save (g_value_get_object (&value),
+                                          g_type_name (G_VALUE_TYPE (&value)),
+                                          output, n_indent + 6, icc_references);
+                g_output_stream_printf (output, NULL, NULL, NULL, "%*c</argument>\n", n_indent + 4, ' ');
+              }
+            else if (g_type_is_a (G_VALUE_TYPE (&value), G_TYPE_ENUM))
+              {
+                enum_class = g_type_class_ref (G_VALUE_TYPE (&value));
+                if (enum_class)
+                  {
+                    enum_value = g_enum_get_value (enum_class, g_value_get_enum (&value));
+                    strval = g_strdup (enum_value->value_nick);
+                    g_type_class_unref (enum_class);
+                  }
+                else
+                  {
+                    strval = g_strdup_printf ("%d", g_value_get_enum (&value));
+                  }
+              }
+            else if (g_type_is_a (G_VALUE_TYPE (&value), GEGL_TYPE_COLOR))
+              {
+                g_output_stream_printf (output, NULL, NULL, NULL,
+                                        "%*c<argument name='%s' type='%s'>\n",
+                                        n_indent + 4, ' ',
+                                        pspec->name, g_type_name (G_VALUE_TYPE (&value)));
+                gimp_savable_color_save (g_value_get_object (&value),
+                                         NULL, NULL, output, n_indent + 6,
+                                         icc_references);
+                g_output_stream_printf (output, NULL, NULL, NULL, "%*c</argument>\n", n_indent + 4, ' ');
+              }
+            else
+              {
+                GimpImage *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
+
+                gimp_message (image->gimp, NULL,
+                              GIMP_MESSAGE_WARNING,
+                              "XCF Warning: argument \"%s\" of filter %s has "
+                              "unsupported type %s. It was discarded.",
+                              pspec->name, operation,
+                              g_type_name (G_VALUE_TYPE (&value)));
+              }
+            break;
+        }
+      if (strval)
+        g_output_stream_printf (output, NULL, NULL, NULL,
+                                "%*c<argument name='%s' type='%s'>%s</argument>\n",
+                                n_indent + 4, ' ',
+                                pspec->name, g_type_name (G_VALUE_TYPE (&value)), strval);
+
+      g_value_unset (&value);
+      g_free (strval);
+    }
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</operation>\n", n_indent + 2, ' ');
+
+  if ((mask = gimp_drawable_filter_get_mask (filter)))
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<mask>\n", n_indent + 2, ' ');
+      gimp_savable_save (GIMP_SAVABLE (mask), output, n_indent + 4, icc_references);
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</mask>\n", n_indent + 2, ' ');
+    }
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<visible>%s</visible>\n", n_indent + 2, ' ',
+                          gimp_filter_get_active (GIMP_FILTER (filter)) ? "true" : "false");
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<opacity>%f</opacity>\n", n_indent + 2, ' ',
+                          gimp_drawable_filter_get_opacity (GIMP_DRAWABLE_FILTER (filter)));
+
+  mode = gimp_drawable_filter_get_paint_mode (GIMP_DRAWABLE_FILTER (filter));
+  enum_class = g_type_class_ref (GIMP_TYPE_LAYER_MODE);
+  enum_value = g_enum_get_value (enum_class, mode);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<mode>%s</mode>\n",
+                          n_indent + 2, ' ', enum_value->value_nick);
+  g_type_class_unref (enum_class);
+
+  space = gimp_drawable_filter_get_blend_space (GIMP_DRAWABLE_FILTER (filter));
+  enum_class = g_type_class_ref (GIMP_TYPE_LAYER_COLOR_SPACE);
+  enum_value = g_enum_get_value (enum_class, space);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<blend-space>%s</blend-space>\n",
+                          n_indent + 2, ' ', enum_value->value_nick);
+
+  space = gimp_drawable_filter_get_composite_space (GIMP_DRAWABLE_FILTER (filter));
+  enum_value = g_enum_get_value (enum_class, space);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<composite-space>%s</composite-space>\n",
+                          n_indent + 2, ' ', enum_value->value_nick);
+  g_type_class_unref (enum_class);
+
+  composite_mode = gimp_drawable_filter_get_composite_mode (filter);
+  enum_class = g_type_class_ref (GIMP_TYPE_LAYER_COMPOSITE_MODE);
+  enum_value = g_enum_get_value (enum_class, composite_mode);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<composite-mode>%s</composite-mode>\n",
+                          n_indent + 2, ' ', enum_value->value_nick);
+  g_type_class_unref (enum_class);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<clip>%s</clip>\n", n_indent + 2, ' ',
+                          gimp_drawable_filter_get_clip (filter) ?  "true" : "false");
+
+  region = gimp_drawable_filter_get_region (filter);
+  enum_class = g_type_class_ref (GIMP_TYPE_FILTER_REGION);
+  enum_value = g_enum_get_value (enum_class, region);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<region>%s</region>\n", n_indent + 2, ' ',
+                          enum_value->value_nick);
+  g_type_class_unref (enum_class);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</filter>\n", n_indent, ' ');
+
+  g_free (name);
+  g_free (icon);
+  g_free (operation);
+  g_free (op_version);
+  g_free (pspecs);
 }
 
 GimpDrawableFilter *

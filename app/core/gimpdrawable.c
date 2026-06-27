@@ -979,18 +979,72 @@ gimp_drawable_get_pixel_average (GimpPickable        *pickable,
 static void
 gimp_drawable_save (GimpSavable   *savable,
                     GOutputStream *output,
-                    gint           indent,
+                    gint           n_indent,
                     GHashTable    *icc_references)
 {
-  GimpDrawable *drawable = GIMP_DRAWABLE (savable);
-  gchar        *filename;
+  GimpDrawable  *drawable = GIMP_DRAWABLE (savable);
+  GimpContainer *filters;
+  GList         *iter;
+  gchar         *filename;
+  gint           num_effects = 0;
 
   /* Trigger a saving to be sure we have the latest buffer on disk. */
   gimp_drawable_save_buffer (drawable);
 
   filename = g_path_get_basename (gimp_drawable_get_cache_file (drawable));
   g_output_stream_printf (output, NULL, NULL, NULL,
-                          "%*c<buffer file='%s'/>\n", indent, ' ', filename);
+                          "%*c<buffer file='%s'/>\n", n_indent, ' ', filename);
+
+  /* Get filter information */
+  filters = gimp_drawable_get_filters (drawable);
+  /* Since floating selections are also stored in the filter stack,
+   * we need to verify what's in there to get the correct count */
+  for (iter = GIMP_LIST (filters)->queue->tail; iter; iter = g_list_previous (iter))
+    {
+      if (GIMP_IS_DRAWABLE_FILTER (iter->data) &&
+          ! gimp_drawable_filter_get_temporary (iter->data))
+        {
+          GimpDrawableFilter     *filter  = iter->data;
+          GimpDrawableFilterMask *mask    = NULL;
+          GeglNode               *op_node = NULL;
+
+          mask    = gimp_drawable_filter_get_mask (filter);
+          op_node = gimp_drawable_filter_get_operation (filter);
+
+          /* For now, prevent tool-based filters from being saved */
+          if (mask    != NULL &&
+              op_node != NULL &&
+              strcmp (gegl_node_get_operation (op_node), "GraphNode") != 0)
+            num_effects++;
+        }
+    }
+
+  if (num_effects > 0)
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<filters>\n", n_indent, ' ');
+
+      for (iter = GIMP_LIST (filters)->queue->head; iter; iter = iter->next)
+        {
+          if (GIMP_IS_DRAWABLE_FILTER (iter->data) &&
+              ! gimp_drawable_filter_get_temporary (iter->data))
+            {
+              GimpDrawableFilter     *filter  = iter->data;
+              GimpDrawableFilterMask *mask    = NULL;
+              GeglNode               *op_node = NULL;
+
+              mask    = gimp_drawable_filter_get_mask (filter);
+              op_node = gimp_drawable_filter_get_operation (filter);
+
+               /* For now, prevent tool-based filters from being saved */
+              if (mask    != NULL &&
+                  op_node != NULL &&
+                  strcmp (gegl_node_get_operation (op_node), "GraphNode") != 0)
+                gimp_savable_save (GIMP_SAVABLE (filter), output, n_indent + 2, icc_references);
+            }
+        }
+
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</filters>\n", n_indent, ' ');
+    }
 
   g_free (filename);
 }

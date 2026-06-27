@@ -32,6 +32,7 @@
 #include "gimpgradient.h"
 #include "gimpgradient-load.h"
 #include "gimpgradient-save.h"
+#include "gimpsavable.h"
 #include "gimptagged.h"
 #include "gimptempbuf.h"
 
@@ -41,46 +42,53 @@
 #define EPSILON 1e-10
 
 
-static void          gimp_gradient_tagged_iface_init (GimpTaggedInterface *iface);
-static void          gimp_gradient_finalize          (GObject             *object);
+static void          gimp_gradient_tagged_iface_init  (GimpTaggedInterface  *iface);
+static void          gimp_gradient_savable_iface_init (GimpSavableInterface *iface);
 
-static gint64        gimp_gradient_get_memsize       (GimpObject          *object,
-                                                      gint64              *gui_size);
+static void          gimp_gradient_finalize           (GObject              *object);
 
-static void          gimp_gradient_get_preview_size  (GimpViewable        *viewable,
-                                                      gint                 size,
-                                                      gboolean             popup,
-                                                      gboolean             dot_for_dot,
-                                                      gint                *width,
-                                                      gint                *height);
-static gboolean      gimp_gradient_get_popup_size    (GimpViewable        *viewable,
-                                                      gint                 width,
-                                                      gint                 height,
-                                                      gboolean             dot_for_dot,
-                                                      gint                *popup_width,
-                                                      gint                *popup_height);
-static GimpTempBuf * gimp_gradient_get_new_preview   (GimpViewable        *viewable,
-                                                      GimpContext         *context,
-                                                      gint                 width,
-                                                      gint                 height,
-                                                      gint                 scale_factor,
-                                                      GeglColor           *fg_color);
+static gint64        gimp_gradient_get_memsize        (GimpObject           *object,
+                                                       gint64               *gui_size);
 
-static const gchar * gimp_gradient_get_extension     (GimpData            *data);
-static void          gimp_gradient_copy              (GimpData            *data,
-                                                      GimpData            *src_data);
-static gint          gimp_gradient_compare           (GimpData            *data1,
-                                                      GimpData            *data2);
+static void          gimp_gradient_get_preview_size   (GimpViewable         *viewable,
+                                                       gint                  size,
+                                                       gboolean              popup,
+                                                       gboolean              dot_for_dot,
+                                                       gint                 *width,
+                                                       gint                 *height);
+static gboolean      gimp_gradient_get_popup_size     (GimpViewable         *viewable,
+                                                       gint                  width,
+                                                       gint                  height,
+                                                       gboolean              dot_for_dot,
+                                                       gint                 *popup_width,
+                                                       gint                 *popup_height);
+static GimpTempBuf * gimp_gradient_get_new_preview    (GimpViewable         *viewable,
+                                                       GimpContext          *context,
+                                                       gint                  width,
+                                                       gint                  height,
+                                                       gint                  scale_factor,
+                                                       GeglColor            *fg_color);
 
-static gchar       * gimp_gradient_get_checksum      (GimpTagged          *tagged);
+static const gchar * gimp_gradient_get_extension      (GimpData             *data);
+static void          gimp_gradient_copy               (GimpData             *data,
+                                                       GimpData             *src_data);
+static gint          gimp_gradient_compare            (GimpData             *data1,
+                                                       GimpData             *data2);
+
+static gchar       * gimp_gradient_get_checksum       (GimpTagged           *tagged);
+
+static void          gimp_gradient_savable_save       (GimpSavable          *savable,
+                                                       GOutputStream        *output,
+                                                       gint                  n_indent,
+                                                       GHashTable           *icc_references);
 
 static inline GimpGradientSegment *
-              gimp_gradient_get_segment_at_internal  (GimpGradient        *gradient,
-                                                      GimpGradientSegment *seg,
-                                                      gdouble              pos);
-static GeglColor   * gimp_gradient_get_flat_color    (GimpContext         *context,
-                                                      GeglColor           *color,
-                                                      GimpGradientColor    color_type);
+              gimp_gradient_get_segment_at_internal   (GimpGradient         *gradient,
+                                                       GimpGradientSegment  *seg,
+                                                       gdouble               pos);
+static GeglColor   * gimp_gradient_get_flat_color     (GimpContext          *context,
+                                                       GeglColor            *color,
+                                                       GimpGradientColor     color_type);
 
 
 static inline gdouble  gimp_gradient_calc_linear_factor            (gdouble  middle,
@@ -99,7 +107,9 @@ static inline gdouble  gimp_gradient_calc_step_factor              (gdouble  mid
 
 G_DEFINE_TYPE_WITH_CODE (GimpGradient, gimp_gradient, GIMP_TYPE_DATA,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
-                                                gimp_gradient_tagged_iface_init))
+                                                gimp_gradient_tagged_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_gradient_savable_iface_init))
 
 #define parent_class gimp_gradient_parent_class
 
@@ -146,6 +156,12 @@ static void
 gimp_gradient_tagged_iface_init (GimpTaggedInterface *iface)
 {
   iface->get_checksum = gimp_gradient_get_checksum;
+}
+
+static void
+gimp_gradient_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_gradient_savable_save;
 }
 
 static void
@@ -410,6 +426,79 @@ gimp_gradient_get_checksum (GimpTagged *tagged)
     }
 
   return checksum_string;
+}
+
+void
+gimp_gradient_savable_save (GimpSavable   *savable,
+                            GOutputStream *output,
+                            gint           n_indent,
+                            GHashTable    *icc_references)
+{
+  GimpGradient        *gradient = GIMP_GRADIENT (savable);
+  GEnumClass          *gradient_color_class;
+  GEnumClass          *gradient_segment_type_class;
+  GEnumClass          *gradient_segment_color_class;
+  GimpGradientSegment *seg;
+  gchar               *name;
+  guint32              version  = 1;
+
+  name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (gradient)), -1);
+
+  gradient_color_class         = g_type_class_ref (GIMP_TYPE_GRADIENT_COLOR);
+  gradient_segment_type_class  = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_TYPE);
+  gradient_segment_color_class = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_COLOR);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<gradient name='%s' version='%d'>\n",
+                          n_indent, ' ', name, version);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<segments>\n", n_indent + 2, ' ');
+  for (seg = gradient->segments; seg; seg = seg->next)
+    {
+      GEnumValue               *enum_value;
+      GEnumValue               *enum_value2;
+      gdouble                   left             = seg->left;
+      gdouble                   middle           = seg->middle;
+      gdouble                   right            = seg->right;
+      GimpGradientSegmentType   type             = seg->type;
+      GimpGradientSegmentColor  color            = seg->color;
+      GimpGradientColor         left_color_type  = seg->left_color_type;
+      GimpGradientColor         right_color_type = seg->right_color_type;
+
+      enum_value  = g_enum_get_value (gradient_segment_type_class, type);
+      enum_value2 = g_enum_get_value (gradient_segment_color_class, color);
+      g_output_stream_printf (output, NULL, NULL, NULL,
+                              "%*c<segment blend='%s' color='%s'>\n",
+                              n_indent + 4, ' ',
+                              enum_value->value_nick, enum_value2->value_nick);
+
+      enum_value = g_enum_get_value (gradient_color_class, left_color_type);
+      g_output_stream_printf (output, NULL, NULL, NULL,
+                              "%*c<left position='%f' type='%s'>\n",
+                              n_indent + 6, ' ', left, enum_value->value_nick);
+      gimp_savable_color_save (seg->left_color, NULL, NULL, output, n_indent + 8, icc_references);
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</left>\n", n_indent + 6, ' ');
+
+      g_output_stream_printf (output, NULL, NULL, NULL,
+                              "%*c<center position='%f'/>\n",
+                              n_indent + 6, ' ', middle);
+
+      enum_value = g_enum_get_value (gradient_color_class, right_color_type);
+      g_output_stream_printf (output, NULL, NULL, NULL,
+                              "%*c<right position='%f' type='%s'>\n",
+                              n_indent + 6, ' ', right, enum_value->value_nick);
+      gimp_savable_color_save (seg->right_color, NULL, NULL, output, n_indent + 8, icc_references);
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</right>\n", n_indent + 6, ' ');
+
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</segment>\n", n_indent + 4, ' ');
+    }
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</segments>\n", n_indent + 2, ' ');
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</gradient>\n", n_indent, ' ');
+
+  g_type_class_unref (gradient_color_class);
+  g_type_class_unref (gradient_segment_type_class);
+  g_type_class_unref (gradient_segment_color_class);
+  g_free (name);
 }
 
 

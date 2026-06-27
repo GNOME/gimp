@@ -194,10 +194,34 @@ gimp_savable_space_save (const Babl    *space,
       gpointer space_id;
 
       if (g_hash_table_lookup_extended (references, babl_get_name (space), &key, &space_id))
-        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<space idref='space-%d'>\n", n_indent, ' ',
-                                GPOINTER_TO_UINT (space_id));
+        {
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<space idref='space-%d'>\n", n_indent, ' ',
+                                  GPOINTER_TO_UINT (space_id));
+        }
       else
-        g_critical ("%s: the space was not previously stored: %s", G_STRFUNC, babl_get_name (space));
+        {
+          /* We stored the easy target spaces at the start of the XCF
+           * file, such as spaces of the image itself, layers and from
+           * the colormap of indexed images.
+           * We don't go as far as looking for colors used as filter
+           * arguments, or inside gradient arguments.
+           * XXX Should we update gimp_savable_save_all_spaces() to also
+           * store these?
+           * For now let's create an explicit space, but we could
+           * imagine it generates duplicates.
+           * g_critical ("%s: the space was not previously stored: %s", G_STRFUNC, babl_get_name (space));
+           */
+          int         icc_length = 0;
+          const char *icc = babl_space_get_icc (space, &icc_length);
+          gchar      *icc_b64;
+
+          icc_b64 = g_base64_encode ((const guchar*) icc, icc_length);
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<space>\n", n_indent, ' ');
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<icc>%s</icc>\n", n_indent + 2, ' ', icc_b64);
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c</space>\n", n_indent, ' ');
+
+          g_free (icc_b64);
+        }
     }
 }
 
