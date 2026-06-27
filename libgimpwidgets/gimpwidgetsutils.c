@@ -1237,6 +1237,14 @@ gimp_widget_free_native_handle (GtkWidget  *widget,
  * showing animation. It can be used to turn off or hide unnecessary
  * animations such as the scrolling credits or Easter Egg animations.
  *
+ * Note that depending on the plaforms, some might have a settings
+ * called "Reduce Motion", others "Enable Animation", and sometimes even
+ * both. This function tries to make the best sense of all combinations.
+ * It should be used as an accessibility hint to decide whether to
+ * reduce animated parts only to the required parts for usability of a
+ * feature (either removing totally the animation or making it at least
+ * less needlessly changing when possible).
+ *
  * Returns: %TRUE if the user has animations enabled on their system
  *
  * Since: 3.0
@@ -1252,6 +1260,15 @@ gimp_widget_animation_enabled (void)
   g_object_get (gtk_settings_get_default (),
                 "gtk-enable-animations", &animation_enabled,
                 NULL);
+  if (animation_enabled)
+    {
+      GtkReducedMotion reduced_motion = GTK_REDUCED_MOTION_NO_PREFERENCE;
+
+      g_object_get (gtk_settings_get_default (),
+                    "gtk-interface-reduced-motion", &reduced_motion,
+                    NULL);
+      animation_enabled = ! (reduced_motion == GTK_REDUCED_MOTION_REDUCE);
+    }
 
 #ifdef PLATFORM_OSX
   /* The MacOS setting is TRUE if the user wants animations turned off, so
