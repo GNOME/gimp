@@ -8,29 +8,25 @@ echo "https://developer.gimp.org/core/coding_style/"
 
 clang-format --version
 
+# Wrap everything in a subshell so we can propagate the exit status.
+(
+
 . .gitlab/search-common-ancestor.sh
 
-git_diff_log='git-diff.log'
-git diff -U0 --no-color "${newest_common_ancestor_sha}" > "$git_diff_log"
-git_status=$?
-if [ $git_status -ne 0 ]; then
-  printf "\033[31m(ERROR)\033[0m: git diff failed with exit code ${git_status}:\n"
-  cat "$git_diff_log"
-  exit $git_status
+git diff -U0 --no-color "${newest_common_ancestor_sha}" | clang-format-diff -p1 > format-diff.log
+)
+exit_status=$?
+
+if [ ${exit_status} -ne 0 ]; then
+  printf '\033[31m(ERROR)\033[0m: git diff or clang-format-diff pipeline failed with exit code ${exit_status}.\n'
+  exit ${exit_status}
 fi
 
-format_diff_log="format-diff.log"
-clang-format-diff -p1 < "$git_diff_log" > "$format_diff_log"
-format_status=$?
-if [ $format_status -ne 0 ]; then
-  printf "\033[31m(ERROR)\033[0m: clang-format-diff failed with exit code ${format_status}:\n"
-  cat "$format_diff_log"
-  exit $format_status
-fi
+format_diff="$(cat format-diff.log)"
 
-if [ -s "$format_diff_log" ]; then
+if [ -n "${format_diff}" ]; then
   printf '\033[31m(ERROR)\033[0m: Coding Style check failed. Please make the following changes:\n'
-  cat "$format_diff_log"
+  cat format-diff.log
   exit 1
 else
   printf '(INFO): code is alright regarding being style-compliant.\n'
