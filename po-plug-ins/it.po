@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-24 15:49+0200\n"
-"PO-Revision-Date: 2026-06-24 15:53+0200\n"
+"POT-Creation-Date: 2026-06-27 03:07+0200\n"
+"PO-Revision-Date: 2026-06-27 03:06+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -162,7 +162,7 @@ msgstr "Esempio di plugin in JavaScript (GJS)"
 #: ../plug-ins/common/file-pdf-load.c:586
 #: ../plug-ins/common/sphere-designer.c:2644
 #: ../plug-ins/common/unit-editor.c:260 ../plug-ins/file-exr/file-exr.c:457
-#: ../plug-ins/file-psd/psd-load.c:5158 ../plug-ins/flame/flame.c:810
+#: ../plug-ins/file-psd/psd-load.c:5096 ../plug-ins/flame/flame.c:810
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: ../plug-ins/gimpressionist/orientmap.c:529
 #: ../plug-ins/gimpressionist/presets.c:647
@@ -416,7 +416,7 @@ msgstr "Ottimizzazione animazione"
 
 #: ../plug-ins/common/animation-play.c:336
 msgid "_Playback..."
-msgstr "_Esecuzione..."
+msgstr "Ri_produzione..."
 
 #: ../plug-ins/common/animation-play.c:341
 msgid "Preview a GIMP layer-based animation"
@@ -485,7 +485,7 @@ msgstr "%.1f %%"
 #. Image Name
 #: ../plug-ins/common/animation-play.c:698
 msgid "Animation Playback:"
-msgstr "Esecuzione animazione:"
+msgstr "Riproduzione animazione:"
 
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
@@ -632,7 +632,7 @@ msgstr "Strisce"
 #: ../plug-ins/file-faxg3/faxg3.c:583 ../plug-ins/file-fits/fits.c:705
 #: ../plug-ins/file-jpeg/jpeg-load.c:259
 #: ../plug-ins/file-psd/psd-image-res-load.c:1103
-#: ../plug-ins/file-psd/psd-load.c:4333 ../plug-ins/file-sgi/sgi.c:456
+#: ../plug-ins/file-psd/psd-load.c:4271 ../plug-ins/file-sgi/sgi.c:456
 #: ../plug-ins/file-tiff/file-tiff-load.c:1666
 #: ../plug-ins/file-tiff/file-tiff-load.c:2503
 #: ../plug-ins/file-webp/file-webp-load.c:159
@@ -2530,7 +2530,7 @@ msgstr "Dimensioni immagine troppo ampie: larghezza %d × altezza %d"
 
 #: ../plug-ins/common/despeckle.c:369 ../plug-ins/common/file-drhalo.c:254
 #: ../plug-ins/common/file-farbfeld.c:316
-#: ../plug-ins/common/file-macpaint.c:260 ../plug-ins/file-psd/psd-load.c:4712
+#: ../plug-ins/common/file-macpaint.c:260 ../plug-ins/file-psd/psd-load.c:4650
 #: ../plug-ins/file-tiff/file-tiff-load.c:1984
 #: ../plug-ins/file-tiff/file-tiff-load.c:2081
 #: ../plug-ins/file-tiff/file-tiff-load.c:2278
@@ -5972,7 +5972,7 @@ msgid "Error reading color palette"
 msgstr "Errore leggendo la tavolozza"
 
 #: ../plug-ins/common/file-psp.c:1639 ../plug-ins/common/file-psp.c:1662
-#: ../plug-ins/file-psd/psd-util.c:210
+#: ../plug-ins/file-psd/psd-util.c:214
 #, c-format
 msgid "Error reading data. Most likely unexpected end of file."
 msgstr "Errore nella lettura dati. Probabilmente fine file inaspettata."
@@ -6502,7 +6502,7 @@ msgstr "configurazione planare"
 msgid "Raw Data"
 msgstr "Dati raw"
 
-#: ../plug-ins/common/file-raw-data.c:623 ../plug-ins/file-psd/psd-util.c:233
+#: ../plug-ins/common/file-raw-data.c:623 ../plug-ins/file-psd/psd-util.c:237
 #, c-format
 msgid "Unexpected end of file"
 msgstr "Fine del file prematura"
@@ -7134,7 +7134,7 @@ msgid "Write a comment at the beginning of the file."
 msgstr "Scrivi un commento all'inizio del file."
 
 #: ../plug-ins/common/file-xbm.c:225 ../plug-ins/common/file-xmc.c:448
-#: ../plug-ins/common/mail.c:243
+#: ../plug-ins/common/mail.c:254
 msgid "Co_mment"
 msgstr "Co_mmento"
 
@@ -8109,21 +8109,21 @@ msgstr "Numero di pezzi"
 msgid "Bevel Edges"
 msgstr "Contorni rilievo"
 
-#: ../plug-ins/common/mail.c:196
+#: ../plug-ins/common/mail.c:207
 msgid "Send by E_mail..."
 msgstr "Invia per email..."
 
-#: ../plug-ins/common/mail.c:201
+#: ../plug-ins/common/mail.c:212
 msgid "Send the image by email"
 msgstr "Invia l'immagine per email"
 
-#: ../plug-ins/common/mail.c:203
+#: ../plug-ins/common/mail.c:214
 msgid "Sendmail is used to send emails and must be properly configured."
 msgstr ""
 "Sendmail viene usato per inviare email e deve essere configurato "
 "correttamente."
 
-#: ../plug-ins/common/mail.c:206
+#: ../plug-ins/common/mail.c:217
 msgid ""
 "The preferred email composer is used to send emails and must be properly "
 "configured."
@@ -8131,55 +8131,55 @@ msgstr ""
 "Il programma di posta elettronica preferito viene utilizzato per inviare e-"
 "mail e deve essere configurato correttamente."
 
-#: ../plug-ins/common/mail.c:219
+#: ../plug-ins/common/mail.c:230
 msgid "File_name"
 msgstr "_Nome file"
 
-#: ../plug-ins/common/mail.c:220
+#: ../plug-ins/common/mail.c:231
 msgid "The name of the file to save the image in"
 msgstr "Il nome del file nel quale salvare l'immagine"
 
-#: ../plug-ins/common/mail.c:225
+#: ../plug-ins/common/mail.c:236
 msgid "_To"
 msgstr "_A"
 
-#: ../plug-ins/common/mail.c:226
+#: ../plug-ins/common/mail.c:237
 msgid "The email address to send to"
 msgstr "L'indirizzo email a cui inviare"
 
-#: ../plug-ins/common/mail.c:231
+#: ../plug-ins/common/mail.c:242
 msgid "_From"
 msgstr "_Da"
 
-#: ../plug-ins/common/mail.c:232
+#: ../plug-ins/common/mail.c:243
 msgid "The email address for the From: field"
 msgstr "L'indirizzo email per il campo Da:"
 
-#: ../plug-ins/common/mail.c:237
+#: ../plug-ins/common/mail.c:248
 msgid "Su_bject"
 msgstr "_Oggetto"
 
-#: ../plug-ins/common/mail.c:238
+#: ../plug-ins/common/mail.c:249
 msgid "The subject"
 msgstr "L'oggetto della email"
 
-#: ../plug-ins/common/mail.c:244
+#: ../plug-ins/common/mail.c:255
 msgid "The comment"
 msgstr "Il commento"
 
-#: ../plug-ins/common/mail.c:594
+#: ../plug-ins/common/mail.c:681
 msgid "Send by Email"
 msgstr "Invia per email"
 
-#: ../plug-ins/common/mail.c:598
+#: ../plug-ins/common/mail.c:685
 msgid "Send"
 msgstr "Invia"
 
-#: ../plug-ins/common/mail.c:734
+#: ../plug-ins/common/mail.c:821
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "estensione del file errata o mancante"
 
-#: ../plug-ins/common/mail.c:919
+#: ../plug-ins/common/mail.c:1006
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Impossibile eseguire sendmail (%s)"
@@ -10989,7 +10989,7 @@ msgstr ""
 "Photoshop non supporta le immagini indicizzate che hanno più di un livello. "
 "I livelli verranno uniti durante l'esportazione."
 
-#: ../plug-ins/file-psd/psd-export.c:3214 ../plug-ins/file-psd/psd-load.c:5197
+#: ../plug-ins/file-psd/psd-export.c:3214 ../plug-ins/file-psd/psd-load.c:5135
 msgid "Compatibility Notice"
 msgstr "Nota di compatibilità"
 
@@ -11006,16 +11006,16 @@ msgstr ""
 "riscontrano problemi di visualizzazione, valutare la possibilità di passare "
 "a queste modalità di livello."
 
-#: ../plug-ins/file-psd/psd-layer-res-load.c:2102
+#: ../plug-ins/file-psd/psd-layer-res-load.c:2103
 msgid "Invalid root node!"
 msgstr "Nodo radice non valido!"
 
-#: ../plug-ins/file-psd/psd-layer-res-load.c:2442
+#: ../plug-ins/file-psd/psd-layer-res-load.c:2444
 #, c-format
 msgid "Error creating json node."
 msgstr "Errore nel creare il nodo json."
 
-#: ../plug-ins/file-psd/psd-layer-res-load.c:3139
+#: ../plug-ins/file-psd/psd-layer-res-load.c:3141
 msgid "Could not read enough bytes!"
 msgstr "Impossibile leggere abbastanza byte!"
 
@@ -11061,101 +11061,101 @@ msgid "Unsupported bit depth: %d"
 msgstr "Profondità bit non supportata: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:763 ../plug-ins/file-psd/psd-load.c:773
-#: ../plug-ins/file-psd/psd-load.c:1043 ../plug-ins/file-psd/psd-load.c:1408
+#: ../plug-ins/file-psd/psd-load.c:1013 ../plug-ins/file-psd/psd-load.c:1348
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Il file è danneggiato!"
 
-#: ../plug-ins/file-psd/psd-load.c:972
+#: ../plug-ins/file-psd/psd-load.c:962
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Troppi canali nel livello: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1079
+#: ../plug-ins/file-psd/psd-load.c:1047
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Altezza livello non supportata o non valida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1088
+#: ../plug-ins/file-psd/psd-load.c:1056
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Larghezza livello non supportata o non valida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1098
+#: ../plug-ins/file-psd/psd-load.c:1066
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Dimensioni livello non supportate o non valide: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1123
+#: ../plug-ins/file-psd/psd-load.c:1087
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Dimensione info maschera non supportata o non valida."
 
-#: ../plug-ins/file-psd/psd-load.c:1306
+#: ../plug-ins/file-psd/psd-load.c:1247
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Altezza maschera di livello non supportata o non valida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1315
+#: ../plug-ins/file-psd/psd-load.c:1256
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Larghezza maschera di livello non supportata o non valida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1325
+#: ../plug-ins/file-psd/psd-load.c:1266
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Dimensioni maschera di livello non supportate o non valide: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1940 ../plug-ins/file-psd/psd-load.c:4704
+#: ../plug-ins/file-psd/psd-load.c:1878 ../plug-ins/file-psd/psd-load.c:4642
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Dimensione canale non supportata o non valida."
 
-#: ../plug-ins/file-psd/psd-load.c:2326
+#: ../plug-ins/file-psd/psd-load.c:2264
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Dimensioni canale non valide: %u x %u"
 
-#: ../plug-ins/file-psd/psd-load.c:2394 ../plug-ins/file-psd/psd-load.c:4302
+#: ../plug-ins/file-psd/psd-load.c:2332 ../plug-ins/file-psd/psd-load.c:4240
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modalità di compressione non supportata: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:3045 ../plug-ins/file-psd/psd-load.c:3694
+#: ../plug-ins/file-psd/psd-load.c:2983 ../plug-ins/file-psd/psd-load.c:3632
 msgid "Inner Shadow"
 msgstr "Ombra interna"
 
-#: ../plug-ins/file-psd/psd-load.c:3046 ../plug-ins/file-psd/psd-load.c:3695
-#: ../plug-ins/file-psd/psd-load.c:3706 ../plug-ins/file-psd/psd-load.c:3722
+#: ../plug-ins/file-psd/psd-load.c:2984 ../plug-ins/file-psd/psd-load.c:3633
+#: ../plug-ins/file-psd/psd-load.c:3644 ../plug-ins/file-psd/psd-load.c:3660
 msgid "imported"
 msgstr "importata"
 
-#: ../plug-ins/file-psd/psd-load.c:3705
+#: ../plug-ins/file-psd/psd-load.c:3643
 msgid "Outer Glow"
 msgstr "Bagliore esterno"
 
-#: ../plug-ins/file-psd/psd-load.c:3721
+#: ../plug-ins/file-psd/psd-load.c:3659
 msgid "Stroke"
 msgstr "Delinea"
 
-#: ../plug-ins/file-psd/psd-load.c:3725
+#: ../plug-ins/file-psd/psd-load.c:3663
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr "Tipo di tratto non gestito: il rendering potrebbe non essere corretto."
 
-#: ../plug-ins/file-psd/psd-load.c:4479
+#: ../plug-ins/file-psd/psd-load.c:4417
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:4781
+#: ../plug-ins/file-psd/psd-load.c:4719
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Fallita la decompressione dati"
 
-#: ../plug-ins/file-psd/psd-load.c:5174
+#: ../plug-ins/file-psd/psd-load.c:5112
 msgid "Duotone Import"
 msgstr "Importazione Duotone"
 
-#: ../plug-ins/file-psd/psd-load.c:5175
+#: ../plug-ins/file-psd/psd-load.c:5113
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -11165,7 +11165,7 @@ msgstr ""
 "I dati dello spazio colore Duotone sono stati salvati\n"
 "e possono essere riapplicati all'esportazione."
 
-#: ../plug-ins/file-psd/psd-load.c:5198
+#: ../plug-ins/file-psd/psd-load.c:5136
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
