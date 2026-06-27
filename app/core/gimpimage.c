@@ -1874,6 +1874,23 @@ gimp_image_savable_save (GimpSavable   *savable,
   if (gimp_image_get_metadata (image))
     gimp_savable_metadata_save (gimp_image_get_metadata (image), output, 4);
 
+  if (g_list_length (gimp_image_symmetry_get (image)))
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "    <symmetries>\n");
+      for (iter = gimp_image_symmetry_get (image); iter; iter = iter->next)
+        {
+          GimpSymmetry *symmetry;
+
+          symmetry = GIMP_SYMMETRY (iter->data);
+          if (G_TYPE_FROM_INSTANCE (symmetry) == GIMP_TYPE_SYMMETRY)
+            /* Do not save the identity symmetry. */
+            continue;
+
+          gimp_savable_config_save (GIMP_CONFIG (symmetry), "symmetry", output, 6, icc_references);
+        }
+      g_output_stream_printf (output, NULL, NULL, NULL, "    </symmetries>\n");
+    }
+
   g_output_stream_printf (output, NULL, NULL, NULL, "    <layers>\n");
   iter = gimp_image_get_layer_iter (image);
   for (; iter; iter = iter->next)

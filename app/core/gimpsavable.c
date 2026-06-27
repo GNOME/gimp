@@ -25,6 +25,7 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
@@ -45,6 +46,75 @@ gimp_savable_default_init (GimpSavableInterface *iface)
 
 
 /*  public functions  */
+
+void
+gimp_savable_config_save (GimpConfig    *config,
+                          const gchar   *element_name,
+                          GOutputStream *output,
+                          gint           n_indent,
+                          GHashTable    *icc_references)
+{
+  GObjectClass  *klass;
+  GParamSpec   **property_specs;
+  guint          n_property_specs;
+  guint          i;
+
+  g_return_if_fail (G_IS_OBJECT (config));
+  g_return_if_fail (element_name != NULL);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s type='%s'>\n",
+                          n_indent, ' ', element_name,
+                          g_type_name (G_TYPE_FROM_INSTANCE (config)));
+
+  klass = G_OBJECT_GET_CLASS (config);
+
+  property_specs = g_object_class_list_properties (klass, &n_property_specs);
+
+  if (! property_specs)
+    return;
+
+  for (i = 0; i < n_property_specs; i++)
+    {
+      GParamSpec *prop_spec = property_specs[i];
+      GValue      value     = G_VALUE_INIT;
+
+      if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
+        continue;
+
+      g_value_init (&value, prop_spec->value_type);
+      g_object_get_property (G_OBJECT (config), prop_spec->name, &value);
+
+      if (G_VALUE_HOLDS_BOOLEAN (&value))
+        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%s</%s>\n",
+                                n_indent + 2, ' ', prop_spec->name,
+                                g_value_get_boolean (&value) ? "true" : "false",
+                                prop_spec->name);
+      else if (G_VALUE_HOLDS_INT (&value))
+        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%d</%s>\n",
+                                n_indent + 2, ' ', prop_spec->name,
+                                g_value_get_int (&value), prop_spec->name);
+      else if (G_VALUE_HOLDS_STRING (&value))
+        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%s</%s>\n",
+                                n_indent + 2, ' ', prop_spec->name,
+                                g_value_get_string (&value), prop_spec->name);
+      else if (G_VALUE_HOLDS_DOUBLE (&value))
+        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%f</%s>\n",
+                                n_indent + 2, ' ', prop_spec->name,
+                                g_value_get_double (&value), prop_spec->name);
+      else if (G_VALUE_HOLDS_FLOAT (&value))
+        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%f</%s>\n",
+                                n_indent + 2, ' ', prop_spec->name,
+                                g_value_get_float (&value), prop_spec->name);
+      else
+        g_critical ("%s: value for property '%s' of type '%s' is not supported.",
+                    G_STRFUNC, prop_spec->name, g_type_name (prop_spec->value_type));
+    }
+
+  g_free (property_specs);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</%s>\n",
+                          n_indent, ' ', element_name);
+}
 
 void
 gimp_savable_save (GimpSavable   *savable,

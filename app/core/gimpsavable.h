@@ -58,6 +58,12 @@ void   gimp_savable_save        (GimpSavable   *savable,
 
 /* Shared Utils */
 
+void         gimp_savable_config_save     (GimpConfig    *config,
+                                           const gchar   *element_name,
+                                           GOutputStream *output,
+                                           gint           n_indent,
+                                           GHashTable    *icc_references);
+
 void         gimp_savable_format_save     (const Babl    *format,
                                            GOutputStream *output,
                                            gint           n_indent,
