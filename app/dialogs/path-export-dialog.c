@@ -45,19 +45,15 @@ struct _PathExportDialog
 
 
 /*  local function prototypes  */
-#ifdef G_OS_WIN32
-static void   path_export_dialog_realize  (GtkWidget           *dialog,
-                                           PathExportDialog *data);
-#endif
 static void   path_export_dialog_free     (PathExportDialog *private);
-static void   path_export_dialog_response (GtkWidget           *widget,
-                                           gint                 response_id,
+static void   path_export_dialog_response (GtkNativeDialog  *dialog,
+                                           gint              response_id,
                                            PathExportDialog *private);
 
 
 /*  public function  */
 
-GtkWidget *
+GtkNativeDialog *
 path_export_dialog_new (GimpImage              *image,
                         GtkWidget              *parent,
                         GFile                  *export_folder,
@@ -65,8 +61,9 @@ path_export_dialog_new (GimpImage              *image,
                         GimpPathExportCallback  callback,
                         gpointer                user_data)
 {
-  PathExportDialog *private;
-  GtkWidget        *dialog;
+  PathExportDialog     *private;
+  GtkFileChooserNative *dialog;
+  GtkFileFilter        *filter;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
@@ -81,24 +78,9 @@ path_export_dialog_new (GimpImage              *image,
   private->callback    = callback;
   private->user_data   = user_data;
 
-  dialog = gtk_file_chooser_dialog_new (_("Export Path to SVG"), NULL,
-                                        GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                        _("_Save"),   GTK_RESPONSE_OK,
-
-                                        NULL);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                            -1);
-
-  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-paths-export");
-  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-  gtk_window_set_screen (GTK_WINDOW (dialog),
-                         gtk_widget_get_screen (parent));
+  dialog = gtk_file_chooser_native_new (_("Export Paths to SVG"),
+                                        NULL, GTK_FILE_CHOOSER_ACTION_SAVE,
+                                        _("_Save"), _("_Cancel"));
 
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                   TRUE);
@@ -107,54 +89,30 @@ path_export_dialog_new (GimpImage              *image,
     gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
                                               export_folder, NULL);
 
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("All Files"));
+  gtk_file_filter_add_pattern (filter, "*");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("SVG (*.svg)"));
+  gtk_file_filter_add_pattern (filter, "*.svg");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) path_export_dialog_free, private);
-
-  g_signal_connect_object (image, "disconnect",
-                           G_CALLBACK (gtk_widget_destroy),
-                           dialog, 0);
-
-#ifdef G_OS_WIN32
-  g_signal_connect (dialog, "realize",
-                    G_CALLBACK (path_export_dialog_realize),
-                    private);
-#endif
-  g_signal_connect (dialog, "delete-event",
-                    G_CALLBACK (gtk_true),
-                    NULL);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (path_export_dialog_response),
                     private);
 
-  /* Add dropdown option for which path(s) to export */
-  if (dialog)
-    {
-      const gchar *options[3] = { "selected", "all", NULL };
-      const gchar *labels[3]  = { _("Export the selected paths"),
-                                  _("Export all paths from this image"),
-                                  NULL };
-
-      gtk_file_chooser_add_choice (GTK_FILE_CHOOSER (dialog), "export-paths",
-                                   NULL, options, labels);
-      gtk_file_chooser_set_choice (GTK_FILE_CHOOSER (dialog), "export-paths",
-                                   private->active_only ? "selected" : "all");
-    }
-
-  return dialog;
+  return GTK_NATIVE_DIALOG (dialog);
 }
 
 
 /*  private functions  */
-
-#ifdef G_OS_WIN32
-static void
-path_export_dialog_realize (GtkWidget        *dialog,
-                            PathExportDialog *data)
-{
-  gimp_window_set_title_bar_theme (data->image->gimp, dialog);
-}
-#endif
 
 static void
 path_export_dialog_free (PathExportDialog *private)
@@ -163,20 +121,16 @@ path_export_dialog_free (PathExportDialog *private)
 }
 
 static void
-path_export_dialog_response (GtkWidget        *dialog,
+path_export_dialog_response (GtkNativeDialog  *dialog,
                              gint              response_id,
                              PathExportDialog *private)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == GTK_RESPONSE_ACCEPT)
     {
       GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
       GFile          *file;
-      const gchar    *export_paths;
 
-      file         = gtk_file_chooser_get_file (chooser);
-      export_paths = gtk_file_chooser_get_choice (chooser, "export-paths");
-
-      private->active_only = (! g_strcmp0 (export_paths, "selected"));
+      file = gtk_file_chooser_get_file (chooser);
 
       if (file)
         {
@@ -197,8 +151,5 @@ path_export_dialog_response (GtkWidget        *dialog,
           g_object_unref (file);
         }
     }
-  else
-    {
-      gtk_widget_destroy (dialog);
-    }
+  gtk_native_dialog_destroy (dialog);
 }

@@ -43,8 +43,9 @@
       <section>
         <item><attribute name="action">app.paths-copy</attribute></item>
         <item><attribute name="action">app.paths-paste</attribute></item>
-        <item><attribute name="action">app.paths-export</attribute></item>
         <item><attribute name="action">app.paths-import</attribute></item>
+        <item><attribute name="action">app.paths-export-selected</attribute></item>
+        <item><attribute name="action">app.paths-export-all</attribute></item>
       </section>
     </submenu>
   </menu>

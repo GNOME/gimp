@@ -82,10 +82,13 @@ void   paths_copy_cmd_callback                 (GimpAction *action,
 void   paths_paste_cmd_callback                (GimpAction *action,
                                                 GVariant   *value,
                                                 gpointer    data);
-void   paths_export_cmd_callback               (GimpAction *action,
+void   paths_import_cmd_callback               (GimpAction *action,
                                                 GVariant   *value,
                                                 gpointer    data);
-void   paths_import_cmd_callback               (GimpAction *action,
+void   paths_export_selected_cmd_callback      (GimpAction *action,
+                                                GVariant   *value,
+                                                gpointer    data);
+void   paths_export_all_cmd_callback           (GimpAction *action,
                                                 GVariant   *value,
                                                 gpointer    data);
 

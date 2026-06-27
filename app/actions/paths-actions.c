@@ -141,15 +141,20 @@ static const GimpActionEntry paths_actions[] =
     paths_paste_cmd_callback,
     GIMP_HELP_PATH_PASTE },
 
-  { "paths-export", GIMP_ICON_DOCUMENT_SAVE,
-    NC_("paths-action", "E_xport Paths..."), NULL, { NULL }, NULL,
-    paths_export_cmd_callback,
-    GIMP_HELP_PATH_EXPORT },
-
   { "paths-import", GIMP_ICON_DOCUMENT_OPEN,
     NC_("paths-action", "I_mport Path..."), NULL, { NULL }, NULL,
     paths_import_cmd_callback,
     GIMP_HELP_PATH_IMPORT },
+
+  { "paths-export-selected", GIMP_ICON_DOCUMENT_SAVE_AS,
+    NC_("paths-action", "E_xport Selected Paths..."), NULL, { NULL }, NULL,
+    paths_export_selected_cmd_callback,
+    GIMP_HELP_PATH_EXPORT },
+
+  { "paths-export-all", GIMP_ICON_DOCUMENT_SAVE,
+    NC_("paths-action", "E_xport _All Paths..."), NULL, { NULL }, NULL,
+    paths_export_all_cmd_callback,
+    GIMP_HELP_PATH_EXPORT },
 
   { "paths-to-vector-layer", NULL,
     NC_("paths-action", "Path to Vector Layer"), NULL, { NULL }, NULL,
@@ -429,10 +434,11 @@ paths_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("paths-lower",           n_selected_paths > 0 && have_next && !last_selected);
   SET_SENSITIVE ("paths-lower-to-bottom", n_selected_paths > 0 && have_next);
 
-  SET_SENSITIVE ("paths-copy",   n_selected_paths > 0);
-  SET_SENSITIVE ("paths-paste",  image);
-  SET_SENSITIVE ("paths-export", n_selected_paths > 0);
-  SET_SENSITIVE ("paths-import", image);
+  SET_SENSITIVE ("paths-copy",            n_selected_paths > 0);
+  SET_SENSITIVE ("paths-paste",           image);
+  SET_SENSITIVE ("paths-import",          image);
+  SET_SENSITIVE ("paths-export-selected", n_selected_paths > 0);
+  SET_SENSITIVE ("paths-export-all",      n_paths > 0);
 
   SET_SENSITIVE ("paths-to-vector-layer", n_selected_paths == 1);
 
