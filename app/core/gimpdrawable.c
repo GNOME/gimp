@@ -985,6 +985,9 @@ gimp_drawable_save (GimpSavable   *savable,
   GimpDrawable *drawable = GIMP_DRAWABLE (savable);
   gchar        *filename;
 
+  /* Trigger a saving to be sure we have the latest buffer on disk. */
+  gimp_drawable_save_buffer (drawable);
+
   filename = g_path_get_basename (gimp_drawable_get_cache_file (drawable));
   g_output_stream_printf (output, NULL, NULL, NULL,
                           "%*c<buffer file='%s'/>\n", indent, ' ', filename);

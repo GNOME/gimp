@@ -2067,7 +2067,11 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
       GimpLayer *layer = GIMP_LAYER (iter->data);
 
       if (! g_list_find (layers, layer))
-        gimp_drawable_save_buffer (GIMP_DRAWABLE (layer));
+        {
+          gimp_drawable_save_buffer (GIMP_DRAWABLE (layer));
+          if (gimp_layer_get_mask (layer))
+            gimp_drawable_save_buffer (GIMP_DRAWABLE (gimp_layer_get_mask (layer)));
+        }
     }
 
   g_signal_emit (image, gimp_image_signals[SELECTED_LAYERS_CHANGED], 0);

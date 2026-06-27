@@ -1647,7 +1647,7 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
 static void
 gimp_layer_savable_save (GimpSavable   *savable,
                          GOutputStream *output,
-                         gint           indent,
+                         gint           n_indent,
                          GHashTable    *icc_references)
 {
   GimpLayer  *layer = GIMP_LAYER (savable);
@@ -1656,38 +1656,44 @@ gimp_layer_savable_save (GimpSavable   *savable,
   const Babl *image_format;
   const Babl *format;
 
-  /* Trigger a saving to be sure we have the latest buffer on disk. */
-  gimp_drawable_save_buffer (GIMP_DRAWABLE (layer));
-
   layer_name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (layer)), -1);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<layer name='%s'>\n", indent, ' ', layer_name);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<layer name='%s'>\n", n_indent, ' ', layer_name);
+  if (gimp_image_get_floating_selection (image) == layer)
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<floating/>\n", n_indent + 2, ' ');
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<dimensions width='%d' height='%d'/>\n",
-                          indent + 2, ' ',
+                          n_indent + 2, ' ',
                           gimp_item_get_width (GIMP_ITEM (layer)),
                           gimp_item_get_height (GIMP_ITEM (layer)));
 
-  parent_savable_interface->save (savable, output, indent + 2, icc_references);
+  parent_savable_interface->save (savable, output, n_indent + 2, icc_references);
 
   /* Do not store the format if it's the same as the image. */
   image_format = gimp_image_get_layer_format (image, TRUE);
   format       = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
   if (image_format != format)
-    gimp_savable_format_save (format, output, indent + 2, icc_references);
+    gimp_savable_format_save (format, output, n_indent + 2, icc_references);
+
+  if (gimp_layer_get_mask (layer))
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<mask>\n", n_indent + 2, ' ');
+      gimp_savable_save (GIMP_SAVABLE (gimp_layer_get_mask (layer)), output, n_indent + 4, icc_references);
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</mask>\n", n_indent + 2, ' ');
+    }
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) != NULL)
     {
       GimpContainer *stack = gimp_viewable_get_children (GIMP_VIEWABLE (layer));
       GList         *child;
 
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c  <layers>\n", indent, ' ');
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<layers>\n", n_indent + 2, ' ');
 
       child = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (stack));
       for (; child; child = child->next)
-        gimp_savable_save (GIMP_SAVABLE (child->data), output, indent + 4, icc_references);
+        gimp_savable_save (GIMP_SAVABLE (child->data), output, n_indent + 4, icc_references);
 
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c  </layers>\n", indent, ' ');
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</layers>\n", n_indent + 2, ' ');
     }
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</layer>\n", indent, ' ');
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</layer>\n", n_indent, ' ');
 
   g_free (layer_name);
 }
