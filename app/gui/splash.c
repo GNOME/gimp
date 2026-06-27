@@ -295,7 +295,7 @@ splash_create (Gimp         *gimp,
   /*  add a progress bar  */
   splash->progress = gtk_progress_bar_new ();
   gtk_box_pack_end (GTK_BOX (vbox), splash->progress, FALSE, FALSE, 0);
-  gtk_widget_show (splash->progress);
+  gtk_widget_set_visible (splash->progress, gimp_widget_animation_enabled ());
 
   g_signal_connect (splash->window, "focus",
                     G_CALLBACK (splash_window_focus),
@@ -353,6 +353,16 @@ splash_update (const gchar *text1,
 
   if (! splash)
     return;
+
+  if (! gimp_widget_animation_enabled ())
+    {
+      /* When reducing animation, we use the title text, which are
+       * bigger sections of loading as secondary text, so that we get a
+       * lot less text quickly changing.
+       */
+      text2 = text1;
+      text1 = _("Loading");
+    }
 
   splash_position_layouts (splash, text1, text2, &expose);
   gdk_rectangle_union (&expose, &prev_expose, &expose);
