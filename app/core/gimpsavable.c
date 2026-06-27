@@ -399,7 +399,7 @@ gimp_savable_metadata_save (GimpMetadata  *metadata,
   meta_string = gimp_metadata_serialize (metadata);
   escaped     = g_markup_escape_text (meta_string, -1);
   if (meta_string)
-    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<metadata>%s</metadata\n",
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<metadata>%s</metadata>\n",
                             n_indent, ' ', escaped);
 
   g_free (meta_string);
