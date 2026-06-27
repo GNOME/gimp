@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-27 03:07+0200\n"
-"PO-Revision-Date: 2026-06-27 03:06+0200\n"
+"PO-Revision-Date: 2026-06-27 03:13+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -431,7 +431,7 @@ msgstr "La procedura '%s' funziona solo in modalità interattiva."
 #: ../plug-ins/common/animation-play.c:945
 #: ../plug-ins/common/animation-play.c:1457
 msgid "Start playback"
-msgstr "Inizia esecuzione"
+msgstr "Inizia riproduzione"
 
 #: ../plug-ins/common/animation-play.c:395
 #: ../plug-ins/common/animation-play.c:949
@@ -512,7 +512,7 @@ msgstr "Velocità predefinita"
 
 #: ../plug-ins/common/animation-play.c:851
 msgid "Playback speed"
-msgstr "Velocità di esecuzione"
+msgstr "Velocità riproduzione"
 
 #. Zoom Options
 #: ../plug-ins/common/animation-play.c:881
@@ -550,7 +550,7 @@ msgstr "Immagine non valida. Forse è chiusa?"
 
 #: ../plug-ins/common/animation-play.c:1457
 msgid "Stop playback"
-msgstr "Ferma esecuzione"
+msgstr "Ferma riproduzione"
 
 #: ../plug-ins/common/blinds.c:139
 msgid "_Blinds..."
