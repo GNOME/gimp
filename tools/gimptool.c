@@ -137,7 +137,7 @@ win32_command (const gchar *command)
 static gchar *
 hollow_g_shell_quote (const gchar *input)
 {
-  return g_strdup (input);
+  return g_strdup_printf ("\"%s\"", input);
 }
 
 #define g_shell_quote hollow_g_shell_quote
