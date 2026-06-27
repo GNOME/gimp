@@ -2020,7 +2020,7 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
       GSList *prev_layers;
 
       while ((prev_layers = g_slist_find_custom (private->layer_stack, layers,
-                                                (GCompareFunc) gimp_image_layer_stack_cmp)))
+                                                 (GCompareFunc) gimp_image_layer_stack_cmp)))
         {
           g_list_free (prev_layers->data);
           private->layer_stack = g_slist_delete_link (private->layer_stack,
