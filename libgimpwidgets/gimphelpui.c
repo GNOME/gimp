@@ -378,6 +378,7 @@ gimp_help_menu_item_query_tooltip (GtkWidget  *widget,
   label = gtk_label_new (text);
   gtk_label_set_use_markup (GTK_LABEL (label), use_markup);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_max_width_chars (GTK_LABEL (label), 65);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
