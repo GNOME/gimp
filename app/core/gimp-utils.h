@@ -26,8 +26,8 @@
   { GTimer *_timer = g_timer_new ();
 
 #define GIMP_TIMER_END(message) \
-  g_printerr ("%s: %s took %0.4f seconds\n", \
-              G_STRFUNC, message, g_timer_elapsed (_timer, NULL)); \
+  g_debug ("%s: %s took %0.4f seconds\n", \
+           G_STRFUNC, message, g_timer_elapsed (_timer, NULL)); \
   g_timer_destroy (_timer); }
 #endif
 
